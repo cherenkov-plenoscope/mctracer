@@ -5,7 +5,6 @@ Plane::Plane(){
 }
 //======================
 bool Plane::set_plane(	double min_x, double max_x, double min_y, double max_y){
-	// SLOW
 	//===================
 	// set x range
 	//===================

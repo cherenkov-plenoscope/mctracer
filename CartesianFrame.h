@@ -38,6 +38,8 @@ protected:
 void post_initializing();
 public:
 //======================================================================
+void post_initialize_radius_of_sphere_enclosing_all_children();
+//======================================================================
 const std::string* get_pointer_to_name_of_frame() const;
 //======================
 const Vector3D* 
@@ -76,10 +78,14 @@ virtual void disp()const;
 //======================
 std::string get_frame_string()const;
 //======================
+std::string get_frame_prompt_including_children(unsigned depth)const;
+//======================
+private:
 void add_mother(CartesianFrame *const new_mother);
 //======================
 void add_child(CartesianFrame * const new_child);
 //======================
+public:
 void set_mother_and_child(CartesianFrame *new_child);
 //======================
 void post_initialize_me_and_all_my_children();
@@ -113,15 +119,5 @@ virtual void set_surface_properties
 //======================
 virtual bool get_sensor_flag()const;
 //======================
-/*
-virtual void push_back_intersection(
-const Intersection* intersection_information, 
-double dbl_new_complete_passed_distance){
-	cout<<"virtual push_back_intersection() ";
-	cout<<"called in class frame!"<<endl;
-}
-//======================
-virtual void push_back_SensorIntersection(
-SensorIntersection new_sensor_hit);*/
 };
 #endif // __CARTESIANFRAME_H_INCLUDED__

@@ -27,6 +27,12 @@ HomoTrafo3D();
 //==================================================================
 void set_transformation(const Rotation3D R,const Vector3D pos);
 //==================================================================
+void set_transformation(
+const Vector3D rot_x,
+const Vector3D rot_y,
+const Vector3D rot_z,
+const Vector3D pos);
+//==================================================================
 void transform_orientation(Vector3D* orientation_to_transform) const;
 //==================================================================
 void transform_position(Vector3D* position_to_transform) const;

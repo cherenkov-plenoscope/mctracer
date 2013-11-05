@@ -18,6 +18,7 @@ FreeOrbitCamera::FreeOrbitCamera(){
 	);
 
 	// default image size and FoV
+	//stereo_view  = false;
 	ImageResolutionInX = 256;
 	ImageResolutionInY = 256;
 	FieldOfView_in_rad = M_PI/2.0; //90Deg
@@ -35,6 +36,11 @@ FreeOrbitCamera::FreeOrbitCamera(){
 	//==================//
 	// snapshot
 	snapshot_counter = 0;
+	
+	//==================//
+	// stereo view
+	stereo_offset_in_m = 0.0;
+	stereo_offset_increment_in_m = 0.0025;
 }
 //======================================================================
 void FreeOrbitCamera::set_free_orbit(CartesianFrame *ptr_to_new_world,
@@ -46,8 +52,22 @@ void FreeOrbitCamera::set_free_orbit(CartesianFrame *ptr_to_new_world,
 //======================================================================
 void FreeOrbitCamera::aquire_image(){
 	if(flag_world_and_settings_are_set){
-		FlyingPinHoleCamera.
-		cam_acquire_image_parallel(ptr_to_world,ptr_to_globalsettings);
+		
+		if(stereo_offset_in_m > 0.0){
+			FlyingPinHoleCamera.
+			cam_acquire_stereo_anaglyph_image(
+			ptr_to_world,
+			ptr_to_globalsettings,
+			stereo_offset_in_m
+			);
+		}else{
+			FlyingPinHoleCamera.
+			cam_acquire_image_parallel(
+			ptr_to_world,
+			ptr_to_globalsettings
+			);
+		}
+
 	}else{
 		std::cout<<"free_orbit->aquire_image():";
 		std::cout<<"Can not aquire image because";
@@ -57,42 +77,59 @@ void FreeOrbitCamera::aquire_image(){
 //======================================================================
 void FreeOrbitCamera::update_free_orbit_display(){
 	aquire_image();
-	cv::imshow(
-	free_orbit_display_name,
-	FlyingPinHoleCamera.get_image()
-	); 
+	cv::imshow(free_orbit_display_name,FlyingPinHoleCamera.get_image()); 
 }
 //======================================================================
 void FreeOrbitCamera::move_forward(){
 	// increment
 	double dbl_increment = 0.5/FieldOfView_in_rad;
+	
 	// calculate current poining direction of camera
 	Vector3D CameraPointingDirection=
 	FlyingPinHoleCamera.get_pointing_direction();
-	CameraPointingDirection=CameraPointingDirection/CameraPointingDirection.norm2();
+	
+	CameraPointingDirection = 
+	CameraPointingDirection/CameraPointingDirection.norm2();
 
-	t_World2Camera = t_World2Camera+CameraPointingDirection*dbl_increment;
-	FlyingPinHoleCamera.set_cam(free_orbit_display_name,
-						t_World2Camera,R_World2Camera,ImageResolutionInX,ImageResolutionInY);
+	t_World2Camera = 
+	t_World2Camera+CameraPointingDirection*dbl_increment;
+	
+	FlyingPinHoleCamera.set_cam(
+	free_orbit_display_name,
+	t_World2Camera,
+	R_World2Camera,
+	ImageResolutionInX,
+	ImageResolutionInY);
+	
 	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);	
 	
-	std::cout<<"free_orbit->move forward: "<<t_World2Camera.get_string()<<std::endl;
+	std::cout<<"free_orbit->move forward: "<<t_World2Camera<<std::endl;
 }
 //======================================================================
 void FreeOrbitCamera::move_backward(){
 	// increment
 	double dbl_increment = 0.5/FieldOfView_in_rad;
+	
 	// calculate current poining direction of camera
 	Vector3D CameraPointingDirection=
 	FlyingPinHoleCamera.get_pointing_direction();
-	CameraPointingDirection=CameraPointingDirection/CameraPointingDirection.norm2();
 	
-	t_World2Camera = t_World2Camera - CameraPointingDirection*dbl_increment;
-	FlyingPinHoleCamera.set_cam(free_orbit_display_name,
-						t_World2Camera,R_World2Camera,ImageResolutionInX,ImageResolutionInY);
+	CameraPointingDirection = 
+	CameraPointingDirection/CameraPointingDirection.norm2();
+	
+	t_World2Camera = 
+	t_World2Camera - CameraPointingDirection*dbl_increment;
+	
+	FlyingPinHoleCamera.set_cam(
+	free_orbit_display_name,
+	t_World2Camera,
+	R_World2Camera,
+	ImageResolutionInX,
+	ImageResolutionInY);
+	
 	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);	
 	
-	std::cout<<"free_orbit->move backward: "<<t_World2Camera.get_string()<<std::endl;
+	std::cout<<"free_orbit->move backward: "<<t_World2Camera<<std::endl;
 }
 //======================================================================
 void FreeOrbitCamera::move_left(){
@@ -246,7 +283,7 @@ void FreeOrbitCamera::take_snapshot(){
 	);
 	
 	if(object_distance==0.0){
-		object_distance = 5.0;
+		object_distance = 25.0;
 	}
 		
 	Mamiya645.set_object_distance(object_distance);
@@ -255,14 +292,20 @@ void FreeOrbitCamera::take_snapshot(){
 	std::stringstream export_name_Mamiya645;  
 	export_name_Mamiya645<<"snap_"<<snapshot_counter<<"_Mamiya645";
 	
-	Mamiya645.cam_acquire_image(ptr_to_world,
-								ptr_to_globalsettings,
-								export_name_Mamiya645.str());
+	if(stereo_offset_in_m > 0.0){
+		Mamiya645.cam_acquire_stereo_anaglyph_image
+		(ptr_to_world,ptr_to_globalsettings,stereo_offset_in_m);
+	}else{
+		Mamiya645.cam_acquire_image
+		(ptr_to_world,ptr_to_globalsettings);
+	}
+								
+	Mamiya645.save_image(export_name_Mamiya645.str());
 								
 	std::cout<<"free_orbit-> snapshot:"<<std::endl;
 }
 //======================================================================
-void FreeOrbitCamera::display_help(){
+void FreeOrbitCamera::display_help()const{
 	std::stringstream out;
 	out<<"______________________________________________________"<<std::endl;
 	out<<"| HELP for >free orbit<"<<std::endl;
@@ -281,13 +324,18 @@ void FreeOrbitCamera::display_help(){
 	out<<"| | look right..............[l]"<<std::endl;
 	out<<"| |____________________________"<<std::endl;
 	out<<"|"<<std::endl;
+	out<<"| __stereo_3D_anaglyph_red/blue"<<std::endl;
+	out<<"| | increase offset.........[x]"<<std::endl;
+	out<<"| | decrease offset.........[y]"<<std::endl;
+	out<<"| |____________________________"<<std::endl;
+	out<<"|"<<std::endl;
 	out<<"| __camera_field_of_view_______"<<std::endl;
 	out<<"| | increace FoV............[+]"<<std::endl;
 	out<<"| | decreace FoV............[-]"<<std::endl;
 	out<<"| |____________________________"<<std::endl;
 	out<<"|"<<std::endl;
-	out<<"| __Snapshot_Mamiya645_________"<<std::endl;
-	out<<"| | take snapshot...........[p]"<<std::endl;
+	out<<"| __Snapshot_Mamiya645_f80mm_F2.8"<<std::endl;
+	out<<"| | take snapshot...........[n]"<<std::endl;
 	out<<"| |____________________________"<<std::endl;
 	out<<"|"<<std::endl;
 	out<<"| __exit_free_orbit____________"<<std::endl;
@@ -297,6 +345,32 @@ void FreeOrbitCamera::display_help(){
 	
 	int system_call_return_value = system("clear");
 	std::cout<<out.str();
+}
+//======================================================================
+void FreeOrbitCamera::increase_stereo_offset(){
+	
+	if(stereo_offset_in_m + stereo_offset_increment_in_m < 0.1){
+		stereo_offset_in_m += stereo_offset_increment_in_m;
+		std::cout<<"free_orbit-> stereo offset increased to: ";
+		std::cout<<stereo_offset_in_m<<"[m]"<<std::endl;
+	}else{
+		std::cout<<"free_orbit-> stereo offset is maximal: ";
+		std::cout<<stereo_offset_in_m<<"[m]"<<std::endl;
+	}
+}
+//======================================================================
+void FreeOrbitCamera::decrease_stereo_offset(){
+			
+	if(stereo_offset_in_m - stereo_offset_increment_in_m > 
+	stereo_offset_increment_in_m/2.0){
+		stereo_offset_in_m -= stereo_offset_increment_in_m;
+		std::cout<<"free_orbit-> stereo offset decreased to: ";
+		std::cout<<stereo_offset_in_m<<"[m]"<<std::endl;
+	}else{	
+		stereo_offset_in_m = 0.0;
+		std::cout<<"free_orbit-> stereo offset is minimal: ";
+		std::cout<<stereo_offset_in_m<<"[m]"<<std::endl;
+	}
 }
 //======================================================================
 void FreeOrbitCamera::start_free_orbit(){
@@ -335,7 +409,14 @@ void FreeOrbitCamera::start_free_orbit(){
 			break;
 			case 'l' : look_right();
 			break;
-			case 'p' : take_snapshot();
+			case 'x' : increase_stereo_offset();
+			break;
+			case 'y' : decrease_stereo_offset();
+			break;
+			case 'n' : {
+				take_snapshot();
+				flag_int_key_stroke_requires_image_update = false;
+			};
 			break;
 			case 'h' : {
 				display_help();

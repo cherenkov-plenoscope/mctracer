@@ -56,7 +56,7 @@ FIND_PACKAGE( Boost COMPONENTS log REQUIRED )
 include_directories( ${Boost_INCLUDE_DIR} )
 TARGET_LINK_LIBRARIES(tracer ${Boost_LOG_LIBRARY} )
 #BOOST SPIRIT
-FIND_PACKAGE( Boost 1.56 REQUIRED )
+FIND_PACKAGE( Boost 1.54 REQUIRED )
 #=======================================================================
 find_package(OpenMP)
 if (OPENMP_FOUND)

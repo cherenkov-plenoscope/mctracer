@@ -19,6 +19,9 @@ double y;
 double z;
 public:
 //======================
+Vector3D();
+Vector3D(const double nx,const double ny,const double nz);
+//======================
 void set_vec3D(const double nx,const double ny,const double nz);
 //======================
 double norm2() const;
@@ -57,6 +60,6 @@ double get_y() const;
 //======================
 double get_z() const;
 //======================
+friend std::ostream& operator<<(std::ostream& os, const Vector3D& vec);
 };
-
 #endif // __VECTOR3D_H_INCLUDED__ 

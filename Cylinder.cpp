@@ -120,7 +120,7 @@ double new_CylinderLength){
 	return true;
 }
 //==================================================================
-void Cylinder::disp(){
+void Cylinder::disp()const{
 	stringstream out;
 	out.str("");
 	out<<"cylinder:"<<name_of_frame<<"_________________________________"<<endl;
@@ -131,7 +131,7 @@ void Cylinder::disp(){
 	cout<<out.str();
 }
 //==================================================================
-string Cylinder::get_cylinder_string(){
+string Cylinder::get_cylinder_string()const{
 	stringstream out;
 	out.str("");
 	out<<"||| cylinder radius: "<<CylinderRadius<<" [m]"<<endl;

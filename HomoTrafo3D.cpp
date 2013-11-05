@@ -167,6 +167,104 @@ void HomoTrafo3D::set_transformation(const Rotation3D R,const Vector3D pos){
 	set_Mat(3,3,rot_tra_comp.get_Mat(3,3));
 }
 //==================================================================
+void HomoTrafo3D::set_transformation(
+Vector3D rot_x,
+Vector3D rot_y,
+Vector3D rot_z,
+const Vector3D pos){
+
+	rot_x = rot_x/rot_x.norm2();
+	rot_y = rot_y/rot_y.norm2();
+	rot_z = rot_z/rot_z.norm2();
+		
+	// homogenous T
+	//  0,0	0,1	0,2	0,3
+	//	1,0	1,1	1,2	1,3
+	//	2,0	2,1	2,2	2,3
+	//	3,0	3,1	3,2	3,3
+	HomoTrafo3D T_Rot;
+	HomoTrafo3D T_tra;
+
+	//~ std::cout<<"Set homoT by using rotated unit vectors."<<std::endl;	
+	//==============================================================
+	// rotation
+	//==============================================================
+
+	// HOMO ROTATION MATRIX T_Rot
+	// create Rotatin Matrix R_xyz[3x3] in homoT Matrix [4x4]
+	// homoT = 	[ R(0,0) R(0,1) R(0,2) 0 ]
+	//			[ R(1,0) R(1,1) R(1,2) 0 ]
+	//			[ R(2,0) R(2,1) R(2,2) 0 ]
+	//			[ 0      0      0      1 ]
+	// first row
+	T_Rot.set_Mat(0,0,rot_x.get_x());
+	T_Rot.set_Mat(1,0,rot_x.get_y());
+	T_Rot.set_Mat(2,0,rot_x.get_z());
+	
+	// second row
+	T_Rot.set_Mat(0,1,rot_y.get_x());
+	T_Rot.set_Mat(1,1,rot_y.get_y());
+	T_Rot.set_Mat(2,1,rot_y.get_z());	
+
+	// third row
+	T_Rot.set_Mat(0,2,rot_z.get_x());
+	T_Rot.set_Mat(1,2,rot_z.get_y());
+	T_Rot.set_Mat(2,2,rot_z.get_z());	
+		
+	// translation part of T_Rot
+	T_Rot.set_Mat(0,3,0.0);
+	T_Rot.set_Mat(1,3,0.0);
+	T_Rot.set_Mat(2,3,0.0);
+	// the rest of T_Rot
+	T_Rot.set_Mat(3,0,0.0);
+	T_Rot.set_Mat(3,1,0.0);
+	T_Rot.set_Mat(3,2,0.0);
+	T_Rot.set_Mat(3,3,1.0);
+	
+	//==============================================================
+	// translation 
+	//==============================================================
+	// create Translation Matrix in homoT Matrix [4x4]
+	// homoT = 	[ 1 0 0 T(1) 	]
+	//			[ 0 1 0 T(2) 	]
+	//			[ 0 0 1	T(3) 	]
+	//			[ 0 0 0 1 		]
+	
+	// Translation vector
+	T_tra.set_Mat(0,3,pos.get_x());
+	T_tra.set_Mat(1,3,pos.get_y());
+	T_tra.set_Mat(2,3,pos.get_z());
+
+	//==============================================================
+	// composition
+	//==============================================================
+	
+	HomoTrafo3D rot_tra_comp;
+	//rot_tra_comp = T_Rot*T_tra;
+	rot_tra_comp = T_tra*T_Rot;
+	//rot_tra_comp.disp();
+	
+	set_Mat(0,0,rot_tra_comp.get_Mat(0,0));
+	set_Mat(0,1,rot_tra_comp.get_Mat(0,1));
+	set_Mat(0,2,rot_tra_comp.get_Mat(0,2));
+	set_Mat(0,3,rot_tra_comp.get_Mat(0,3));
+	
+	set_Mat(1,0,rot_tra_comp.get_Mat(1,0));
+	set_Mat(1,1,rot_tra_comp.get_Mat(1,1));
+	set_Mat(1,2,rot_tra_comp.get_Mat(1,2));
+	set_Mat(1,3,rot_tra_comp.get_Mat(1,3));
+	
+	set_Mat(2,0,rot_tra_comp.get_Mat(2,0));
+	set_Mat(2,1,rot_tra_comp.get_Mat(2,1));
+	set_Mat(2,2,rot_tra_comp.get_Mat(2,2));
+	set_Mat(2,3,rot_tra_comp.get_Mat(2,3));
+	
+	set_Mat(3,0,rot_tra_comp.get_Mat(3,0));
+	set_Mat(3,1,rot_tra_comp.get_Mat(3,1));
+	set_Mat(3,2,rot_tra_comp.get_Mat(3,2));
+	set_Mat(3,3,rot_tra_comp.get_Mat(3,3));
+}
+//==================================================================
 void HomoTrafo3D::transform_orientation
 (Vector3D* orientation_to_transform)const{
 	orientation_to_transform->set_vec3D(

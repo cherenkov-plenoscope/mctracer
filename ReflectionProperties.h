@@ -31,5 +31,8 @@ public:
 	std::string get_string() const;
 //======================================================================
 	void disp() const;
+//======================================================================
+friend 
+std::ostream& operator<<(std::ostream& os, const ReflectionProperties& ref);
 };
 #endif // __REFLECTIONPROPERTIES_H_INCLUDED__ 

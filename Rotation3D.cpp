@@ -1,16 +1,22 @@
 #include "Rotation3D.h"
 //======================
-void Rotation3D::set_rotation(double Phi, double The, double Psi)
-{
+Rotation3D::Rotation3D(){}
+Rotation3D::Rotation3D(double Phi, double The, double Psi){
+	Rx = Phi;
+	Ry = The;
+	Rz = Psi;
+}
+//======================
+void Rotation3D::set_rotation(double Phi, double The, double Psi){
 	flag_euler_angles = true;
 	
-	while(Phi >= 2*M_PI){Phi = Phi - 2*M_PI;}
-	while(The >= 2*M_PI){The = The - 2*M_PI;}
-	while(Psi >= 2*M_PI){Psi = Psi - 2*M_PI;}
-	
-	while(Phi <= -2*M_PI){Phi = Phi + 2*M_PI;}
-	while(The <= -2*M_PI){The = The + 2*M_PI;}
-	while(Psi <= -2*M_PI){Psi = Psi + 2*M_PI;}
+	//~ while(Phi >= 2*M_PI){Phi = Phi - 2*M_PI;}
+	//~ while(The >= 2*M_PI){The = The - 2*M_PI;}
+	//~ while(Psi >= 2*M_PI){Psi = Psi - 2*M_PI;}
+	//~ 
+	//~ while(Phi <= -2*M_PI){Phi = Phi + 2*M_PI;}
+	//~ while(The <= -2*M_PI){The = The + 2*M_PI;}
+	//~ while(Psi <= -2*M_PI){Psi = Psi + 2*M_PI;}
 	Rx = Phi;
 	Ry = The;
 	Rz = Psi;
@@ -89,6 +95,10 @@ std::string Rotation3D::get_string() const{
 	}
 	return out.str();
 }
+//======================
+double Rotation3D::get_rot_x()const{return Rx;}
+double Rotation3D::get_rot_y()const{return Ry;}
+double Rotation3D::get_rot_z()const{return Rz;}
 //======================
 double Rotation3D::cosPhi() const {return cos(Rx);}
 double Rotation3D::cosThe() const {return cos(Ry);}

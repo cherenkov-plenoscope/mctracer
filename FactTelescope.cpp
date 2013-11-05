@@ -360,8 +360,9 @@ void FactTelescope::init(){
 			mirror_number<list_of_mirrors.size();
 			mirror_number++)
 	{
-			add_child(list_of_mirrors.at(mirror_number));
-			list_of_mirrors.at(mirror_number)->add_mother(this);
+			set_mother_and_child(list_of_mirrors.at(mirror_number));
+			//~ add_child(list_of_mirrors.at(mirror_number));
+			//~ list_of_mirrors.at(mirror_number)->add_mother(this);
 	}
 }
 //======================================================================	

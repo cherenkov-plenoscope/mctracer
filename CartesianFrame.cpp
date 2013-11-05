@@ -115,11 +115,9 @@ void CartesianFrame::disp()const{
 std::string CartesianFrame::get_frame_string()const{
 	std::stringstream out;
 	out.str("");
-	out<<"| pos in mother = "<<position_relative_to_mother.
-	get_string()<<std::endl;
-	out<<"| rot in mother = "<<rotation_relative_to_mother.
-	get_string()<<std::endl;
-	out<<"| pos in world  = "<<pos_in_world.get_string()<<std::endl;
+	out<<"| pos in mother = "<<position_relative_to_mother<<std::endl;
+	out<<"| rot in mother = "<<rotation_relative_to_mother<<std::endl;
+	out<<"| pos in world  = "<<pos_in_world<<std::endl;
 	out<<"| max radius = "<<radius_of_sphere_enclosing_all_children<<" [m]"<<std::endl;
 	// disp  T_world2frame
 	out<<"| T_world2"<<name_of_frame<<std::endl;
@@ -133,9 +131,51 @@ std::string CartesianFrame::get_frame_string()const{
 	}else{
 		out<<"| mother: "<<mother->name_of_frame<<std::endl;
 	}
+	// children
 	out<<"| children: "<<children.size()<<std::endl;
 	for (unsigned i=0; i<children.size(); i++){
 		out<<"| child "<<(1+i)<<": "<<children.at(i)->name_of_frame<<std::endl;
+	}
+	return out.str();
+}
+//======================
+std::string CartesianFrame::get_frame_prompt_including_children
+(unsigned depth)const{
+	std::stringstream out;
+	out.str("");	
+	std::string gap;
+	for(unsigned depth_iterator = 0;depth_iterator<depth;depth_iterator++){
+		gap +="    ";
+		//out<<"gap iterator: "<<depth_iterator<<std::endl;
+	}
+	
+	//out<<"depth: "<<depth<<std::endl;
+	out<<gap<<" __name_=_"<<name_of_frame<<"__"<<std::endl;
+	out<<gap<<"| pos in mother = "<<position_relative_to_mother<<std::endl;
+	out<<gap<<"| rot in mother = "<<rotation_relative_to_mother<<std::endl;
+	out<<gap<<"| pos in world  = "<<pos_in_world<<std::endl;
+	out<<gap<<"| max radius = ";
+	out<<radius_of_sphere_enclosing_all_children<<" [m]"<<std::endl;
+	// disp  T_world2frame
+	//out<<gap<<"| T_world2"<<name_of_frame<<std::endl;
+	//out<<gap<<T_world2frame.get_string();
+	// disp  T_frame2world
+	//out<<gap<<"| T_"<<name_of_frame<<"2world"<<std::endl;
+	//out<<gap<<T_frame2world.get_string();
+	// mother
+	if(mother == 0){
+		out<<gap<<"| mother: 0"<<std::endl;
+	}else{
+		out<<gap<<"| mother: "<<mother->name_of_frame<<std::endl;
+	}
+	// children
+	depth++;
+	out<<gap<<"| children: "<<children.size()<<std::endl;
+	for (unsigned i=0; i<children.size(); i++){
+		out<<gap<<"| child "<<(1+i)<<": "<<children.at(i)->name_of_frame<<std::endl;
+		
+		out<< children.at(i)->
+		get_frame_prompt_including_children(depth);
 	}
 	return out.str();
 }
@@ -234,17 +274,46 @@ bool CartesianFrame::get_sensor_flag()const{
 	return false;
 }
 //======================
-/*
-virtual void push_back_intersection(
-const Intersection* intersection_information, 
-double dbl_new_complete_passed_distance){
-	std::cout<<"virtual push_back_intersection() ";
-	std::cout<<"called in class frame!"<<std::endl;
-
-//======================
-void CartesianFrame::push_back_SensorIntersection(
-SensorIntersection new_sensor_hit){
-	std::cout<<"virtual push_back_SensorIntersection() ";
-	std::cout<<"called in class frame!"<<std::endl;
+void CartesianFrame::
+post_initialize_radius_of_sphere_enclosing_all_children(){
+	
+	// calculate max norm radius with each child seperatley
+	// and choose the biggest radius
+	double new_max_norm_radius = 
+	radius_of_sphere_enclosing_all_children;
+	
+	for(
+	unsigned child_iterator = 0;
+	child_iterator<children.size();
+	child_iterator++){
+		
+		children.at(child_iterator)->
+		post_initialize_radius_of_sphere_enclosing_all_children();
+		
+		double max_norm_radius_of_child = 
+		children.at(child_iterator)->
+		radius_of_sphere_enclosing_all_children;
+		
+		double distance_between_child_and_this_frame = 
+		children.at(child_iterator)->
+		position_relative_to_mother.norm2();
+		
+		double max_norm_circle_when_only_takeing_this_child_into_acount=
+		max_norm_radius_of_child + 
+		distance_between_child_and_this_frame;
+		
+		if(
+		max_norm_circle_when_only_takeing_this_child_into_acount
+		>
+		new_max_norm_radius
+		){
+			new_max_norm_radius = 
+			max_norm_circle_when_only_takeing_this_child_into_acount;
+		}
+	}
+	
+	// seting the new radius
+	radius_of_sphere_enclosing_all_children = 
+	new_max_norm_radius;
 }
-}*/
+//======================

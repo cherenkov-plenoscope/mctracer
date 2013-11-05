@@ -6,8 +6,7 @@ ColourProperties::ColourProperties(){
 }
 //======================================================================
 void ColourProperties::set_colour_0to255
-(const int new_red,const int new_green,const int new_blue)
-{
+(const int new_red,const int new_green,const int new_blue){
 	if(	new_red >= 0 && new_red <= 255 &&
 		new_green >= 0 && new_green <= 255 &&
 		new_blue >= 0 && new_blue <= 255)
@@ -27,6 +26,15 @@ void ColourProperties::set_colour_0to255
 		out<<"is not valid."<<std::endl;
 		std::cout<<out.str();
 	}
+}
+//======================================================================
+void ColourProperties::set_colour_0to255
+(const double new_red,const double new_green,const double new_blue){
+	set_colour_0to255(
+	int(round(new_red)),
+	int(round(new_green)),
+	int(round(new_blue))
+	);
 }
 //======================================================================
 unsigned char ColourProperties::get_red()const {

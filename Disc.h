@@ -1,7 +1,7 @@
 //=================================
 // include guard
-#ifndef __CYLINDER_H_INCLUDED__
-#define __CYLINDER_H_INCLUDED__
+#ifndef __DISC_H_INCLUDED__
+#define __DISC_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
@@ -11,32 +11,23 @@
 #include <iostream> 
 #include <string>
 #include <sstream>
+#include <vector>
 #include "SurfaceEntity.h"
-#include "Vector3D.h"
 #include "Intersection.h"
-
-using namespace std;
-
 //=================================
-class Cylinder :public SurfaceEntity{
+class Disc :public SurfaceEntity{
 protected:
-	double CylinderRadius;
-	double CylinderLength;
+	double dbl_Disc_radius_in_m; 	
 public:
 //==================================================================
-Cylinder();
+Disc();
 //==================================================================
-bool set_cylinder(	double new_dbl_cylinder_radius,
-					Vector3D vec_start, Vector3D vec_end);
+bool set_Disc(double dbl_new_Disc_radius_in_m);
 //==================================================================
-bool set_cylinder(	double new_dbl_cylinder_radius,
-					double new_dbl_cylinder_length);
+void disp();
 //==================================================================
-void disp()const;
-//==================================================================
-std::string get_cylinder_string()const;
+std::string get_Disc_string();
 //==================================================================
 void hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const;
-private:
 };
-#endif // __CYLINDER_H_INCLUDED__
+#endif // __DISC_H_INCLUDED__

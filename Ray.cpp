@@ -380,7 +380,7 @@ CartesianFrame* calculate_closest_frame(	CartesianFrame *pointer_to_closest_fram
 //======================================================================
 Intersection* Ray::calculate_closest_intersection(	
 		Intersection *pointer_to_closest_intersection,
-		std::vector<Intersection*> *pointer_to_list_of_intersections)
+		std::vector<Intersection*> *pointer_to_list_of_intersections)const
 {
 	//==============================================================
 	// find the closest intersection
@@ -694,8 +694,8 @@ void Ray::trace_science(CartesianFrame* world,
 double Ray::get_distance_to_closest_object(const CartesianFrame* world,
 				int refl_count,
 				CartesianFrame* object_reflected_from,
-				GlobalSettings *settings,
-				double dbl_passed_distance_from_source_to_sensor){
+				const GlobalSettings *settings,
+				double dbl_passed_distance_from_source_to_sensor)const{
 	
 	double distance_to_closets_object = 0.0;
 	//==================================================================

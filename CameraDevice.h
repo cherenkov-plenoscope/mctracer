@@ -18,7 +18,7 @@
 #include "Ray.h"
 //=================================
 class CameraDevice{
-	protected:
+protected:
 	//basic
 	std::string     CameraName;
 	// position and direction of camera
@@ -28,11 +28,12 @@ class CameraDevice{
 	Rotation3D      CameraOrientationInWorld;
 	Vector3D        CameraPointingDirection;
 	Ray             OpticalAxis;
-	public:
+
 	// Sensor
 	int SensorResolutionU;
 	int SensorResolutionV;
 	int SensorResolutionUTimesV;
+public:
 	//======================
 	bool set_cam(	
 	std::string new_camera_name, 
@@ -41,10 +42,26 @@ class CameraDevice{
 	int 		newSensorResolutionU,
 	int 		newSensorResolutionV);
 	//======================
+	bool set_pointing_direction(
+	Vector3D new_camera_pointing_direction_in_World,
+	Vector3D new_camera_image_upwards_image_orientation_in_world);
+	//======================
 	std::string get_cam_string()const;
+	//======================
+	void disp()const;
 	//======================
 	Vector3D get_pointing_direction()const;
 	//======================
-	void disp()const;
+	Vector3D get_image_upwards_direction_in_world_frame()const;
+	//======================
+	void calculate_stereo_parameters(
+	const CartesianFrame* world,
+	const GlobalSettings* settings,
+	const double cmaera_offset_in_m,
+	Vector3D &left_camera_position,
+	Vector3D &left_camera_pointing_direction,	
+	Vector3D &right_camera_position,
+	Vector3D &right_camera_pointing_direction)const;
+	//======================	
 };
 #endif // __CAMERADEVICE_H_INCLUDED__ 

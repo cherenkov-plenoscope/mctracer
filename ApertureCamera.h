@@ -13,9 +13,9 @@ class GlobalSettings;
 #include <highgui.h>
 #include <opencv2/opencv.hpp>
 #include "CameraDevice.h"
-
+#include "CameraImage.h"
 //=================================
-class ApertureCamera :public CameraDevice{
+class ApertureCamera :public CameraDevice, public CameraImage{
 protected:
 	double FStopNumber;			
 	double ApertureRadius_in_m;	
@@ -47,8 +47,12 @@ public:
 	//======================
 	void cam_acquire_image(
 	CartesianFrame* world,
-	GlobalSettings* settings,
-	std::string str_image_file_name
+	GlobalSettings* settings
 	);
+	//======================
+	void cam_acquire_stereo_anaglyph_image(
+	CartesianFrame* world,
+	GlobalSettings* settings,
+	double cmaera_offset_in_m);
 };
 #endif // __APERTURECAMERA_H_INCLUDED__

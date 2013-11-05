@@ -74,7 +74,7 @@ Ray *ray_reflection_on_object);
 //======================================================================
 Intersection* calculate_closest_intersection(	
 		Intersection *pointer_to_closest_intersection,
-		std::vector<Intersection*> *pointer_to_list_of_intersections);
+		std::vector<Intersection*> *pointer_to_list_of_intersections)const;
 //======================================================================
 ColourProperties trace(const CartesianFrame* world,
 				int refl_count,
@@ -91,8 +91,8 @@ void trace_science(CartesianFrame* world,
 double get_distance_to_closest_object(const CartesianFrame* world,
 				int refl_count,
 				CartesianFrame* object_reflected_from,
-				GlobalSettings *settings,
-				double dbl_passed_distance_from_source_to_sensor);
+				const GlobalSettings *settings,
+				double dbl_passed_distance_from_source_to_sensor)const;
 //======================================================================
 bool operator() (Intersection* one, Intersection* two)const;
 //======================================================================

@@ -12,29 +12,23 @@ class GlobalSettings;
 #include <cv.h>
 #include <highgui.h>
 #include <opencv2/opencv.hpp>
-
+#include "CameraImage.h"
 // parallel computing
 #include <omp.h>
 
 #include "Vector3D.h"
 #include "CameraDevice.h"
 
-//=================================
-class PinHoleCamera:public CameraDevice{
-	protected:
+//======================================================================
+class PinHoleCamera:public CameraDevice, public CameraImage{
+protected:
 	Vector3D PrincipalPointOfSensorPlane;
 	Vector3D SensorDirectionU;
 	Vector3D SensorDirectionV;
 	double FieldOfView_in_Rad;
 	double dist_camera_base_2_principal_point;
-	// image
-	bool CameraImageAlreadyAllocated;
-	cv::Mat *CameraImage;
-	public:
-	//======================
-	PinHoleCamera();
-	//======================
-	~PinHoleCamera();
+//======================================================================
+public:
 	//======================
 	void set_pin_hole_cam(double fov);
 	//======================
@@ -48,13 +42,10 @@ class PinHoleCamera:public CameraDevice{
 	CartesianFrame* world,
 	GlobalSettings* settings);
 	//======================
-	void cam_save_image(std::string str_image_name);
-	//======================
-	void cam_acquire_image(
+	void cam_acquire_stereo_anaglyph_image(
 	CartesianFrame* world,
-	GlobalSettings *settings,
-	std::string str_image_name);
+	GlobalSettings* settings,
+	double cmaera_offset_in_m);
 	//======================
-	cv::Mat get_image()const;
 };
 #endif // __PINHOLECAMERA_H_INCLUDED__

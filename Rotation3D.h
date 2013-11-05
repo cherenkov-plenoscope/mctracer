@@ -28,6 +28,10 @@ Vector3D vec_rot_axis;
 double 	dbl_rot_angle_in_rad;
 public:
 //======================
+Rotation3D();
+//======================
+Rotation3D(double Phi, double The, double Psi);
+//======================
 void set_rotation(double Phi,double The,double Psi);
 //======================
 void set_rotation
@@ -43,11 +47,17 @@ void disp() const;
 //======================
 std::string get_string() const;
 //======================
+double get_rot_x()const;
+double get_rot_y()const;
+double get_rot_z()const;
+//======================
 double cosPhi() const;
 double cosThe() const;
 double cosPsi() const;
 double sinPhi() const;
 double sinThe() const;
 double sinPsi() const;
+//======================
+friend std::ostream& operator<<(std::ostream& os, const Rotation3D& rot);
 };
 #endif // __ROTATION3D_H_INCLUDED__ 

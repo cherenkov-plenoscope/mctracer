@@ -28,8 +28,7 @@ double new_FStopNumber,
 double new_FocalLength,
 double new_SensorSizeX,
 double new_SensorSizeY,
-int new_NumberOfRaysPerPixelToBeEmitted
-){
+int new_NumberOfRaysPerPixelToBeEmitted){
 	//======================
 	// set FStopNumber
 	//======================
@@ -116,6 +115,7 @@ int new_NumberOfRaysPerPixelToBeEmitted
 
 	// init back transformation T_cam2world
 	T_World2Camera = T_Camera2World.inverse();
+	
 	//======================
 	// init pseudo random number generator
 	//======================
@@ -125,6 +125,12 @@ int new_NumberOfRaysPerPixelToBeEmitted
 	// init image resolution
 	//======================
 	SensorResolutionUTimesV = SensorResolutionU * SensorResolutionV;
+	
+	//======================
+	// allocate image memory
+	//======================
+	allocate_memory_for_image(SensorResolutionV,SensorResolutionU);
+
 	return true;
 }
 //======================
@@ -245,19 +251,17 @@ void ApertureCamera::cam_send_ray
 //======================
 void ApertureCamera::cam_acquire_image(
 CartesianFrame* world,
-GlobalSettings* settings,
-std::string str_image_file_name
-){
+GlobalSettings* settings){
 	// modify filename
-	str_image_file_name += ".png";
+	//~ str_image_file_name += ".png";
 	
 	int thread_id;
 	
 	// init image
-	cv::Mat image(SensorResolutionV,SensorResolutionU, CV_8UC3);
-	std::vector<int> compression_params;
-	compression_params.push_back(CV_IMWRITE_PNG_COMPRESSION);
-	compression_params.push_back(9);		
+	//~ cv::Mat image(SensorResolutionV,SensorResolutionU, CV_8UC3);
+	//~ std::vector<int> compression_params;
+	//~ compression_params.push_back(CV_IMWRITE_PNG_COMPRESSION);
+	//~ compression_params.push_back(9);		
 	
 	//std::cout <<"Hello from "<<CameraName<<" in non parallel mode:"<<std::endl;
 	// Fork a team of threads giving them their own copies of
@@ -275,9 +279,9 @@ std::string str_image_file_name
 	ColourProperties imag_col;
 	ColourProperties col_of_single_ray;
 	int i;
-	int in_ray_count;
+	int ray_per_pixel_iterator;
 	
-	#pragma omp parallel shared(image,settings,world) private(i,in_ray_count,cam_ray,imag_col,col_of_single_ray,intensity,u,v,thread_id) 
+	#pragma omp parallel shared(settings,world) private(i,ray_per_pixel_iterator,cam_ray,imag_col,col_of_single_ray,intensity,u,v,thread_id) 
 	{	
 		// Obtain thread id 
 		//thread_id = omp_get_thread_num();
@@ -302,9 +306,9 @@ std::string str_image_file_name
 			//std::cout<<WeightOfSingleRayForColourMixture<<std::endl;
 			imag_col.set_colour_0to255(0,0,0);
 			//std::cout<<"single pixel"<<std::endl;
-			for(in_ray_count=0;
-			 in_ray_count<NumberOfRaysPerPixelToBeEmitted;
-			  in_ray_count++)
+			for(ray_per_pixel_iterator=0;
+			 ray_per_pixel_iterator<NumberOfRaysPerPixelToBeEmitted;
+			  ray_per_pixel_iterator++)
 				{
 					
 				cam_send_ray(u,v,&cam_ray);
@@ -319,17 +323,136 @@ std::string str_image_file_name
 			intensity.val[0]=imag_col.get_blue();
 			intensity.val[1]=imag_col.get_green();
 			intensity.val[2]=imag_col.get_red();
-			image.at<cv::Vec3b>(int(u),int(v)) = intensity;
+			//~image.at<cv::Vec3b>(int(u),int(v)) = intensity;
+			Image->at<cv::Vec3b>(int(u),int(v)) = intensity;
 		}
 	}  
 	//==============================================================
 	// All threads join master thread and disband
 	//==============================================================
 	// save image
-	try {
-		cv::imwrite(str_image_file_name, image, compression_params);
-	}
-	catch (std::runtime_error& ex) {
-		fprintf(stderr, "Exception converting image to PNG format: %s\n", ex.what());
-	}
+	//~ try {
+		//~ cv::imwrite(str_image_file_name, image, compression_params);
+	//~ }
+	//~ catch (std::runtime_error& ex) {
+		//~ fprintf(stderr, "Exception converting image to PNG format: %s\n", ex.what());
+	//~ }
 }
+//======================
+void ApertureCamera::cam_acquire_stereo_anaglyph_image(
+CartesianFrame* world,
+GlobalSettings* settings,
+double cmaera_offset_in_m){
+	
+	if(cmaera_offset_in_m <= 0.0){
+		cmaera_offset_in_m = 0.1;
+		std::cout<<"ApertureCamera-> stereo -> offset was set to ";
+		std::cout<<cmaera_offset_in_m<<" because it was zero ";
+		std::cout<<"or negative!"<<std::endl;
+	}	
+	
+	Vector3D left_camera_position;
+	Vector3D left_camera_pointing_direction;
+	
+	Vector3D right_camera_position;
+	Vector3D right_camera_pointing_direction;
+	
+	calculate_stereo_parameters(world,settings,cmaera_offset_in_m,
+	left_camera_position,
+	left_camera_pointing_direction,
+	right_camera_position,
+	right_camera_pointing_direction);
+	//==================================================================	
+	// taking two images for stereo vision
+	//==================================================================
+	
+	ApertureCamera ApertureCam_left;
+	ApertureCamera ApertureCam_right;
+
+	ApertureCam_left.set_cam(
+	"left_Cam",
+	left_camera_position,
+	CameraOrientationInWorld,
+	SensorResolutionU,
+	SensorResolutionV);
+
+	ApertureCam_right.set_cam(
+	"right_Cam",
+	right_camera_position,
+	CameraOrientationInWorld,
+	SensorResolutionU,
+	SensorResolutionV);
+
+	ApertureCam_left.set_aperture_cam(
+	FStopNumber,
+	FocalLength_in_m,
+	SensorSizeX_in_m,
+	SensorSizeY_in_m,
+	NumberOfRaysPerPixelToBeEmitted);
+	
+	ApertureCam_right.set_aperture_cam(
+	FStopNumber,
+	FocalLength_in_m,
+	SensorSizeX_in_m,
+	SensorSizeY_in_m,
+	NumberOfRaysPerPixelToBeEmitted);
+	
+	//==============================================================	
+	// left
+	//==============================================================
+	
+	ApertureCam_left.set_pointing_direction(
+	left_camera_pointing_direction,
+	this->get_image_upwards_direction_in_world_frame());
+	
+	//~ ApertureCam_left.disp();
+	ApertureCam_left.set_object_distance(ObjectDistance_in_m);
+	ApertureCam_left.cam_acquire_image(world,settings);
+	
+	cv::Mat left_image = ApertureCam_left.get_image();
+	//==============================================================	
+	// right
+	//==============================================================	
+	
+	ApertureCam_right.set_pointing_direction(
+	right_camera_pointing_direction,
+	this->get_image_upwards_direction_in_world_frame());
+	
+	//~ ApertureCam_right.disp();
+	ApertureCam_right.set_object_distance(ObjectDistance_in_m);
+	ApertureCam_right.cam_acquire_image(world,settings);
+	
+	cv::Mat right_image = ApertureCam_right.get_image();							
+//==================================================================	
+// mix images
+//==================================================================	
+	// BGR
+	CameraImage stereo_image;
+	stereo_image.allocate_memory_for_image(SensorResolutionU,SensorResolutionV);	
+	
+	std::vector<cv::Mat> BGR_left(3);
+	cv::split(left_image, BGR_left);
+	
+	std::vector<cv::Mat> BGR_right(3);
+	cv::split(right_image, BGR_right);
+	
+	std::vector<cv::Mat> anaglyph_image_channels;		
+	
+	// 0 -> B 
+	anaglyph_image_channels.push_back(BGR_right.at(0));
+	// 1 -> G 
+	anaglyph_image_channels.push_back(BGR_right.at(1));
+	// 2 -> R 
+	anaglyph_image_channels.push_back(BGR_left.at(2) );
+	
+	cv::merge(anaglyph_image_channels,*Image);
+					
+	//~ std::cout<<"PinHoleCam-> stereo -> end"<<std::endl;
+}
+//======================
+//~ double automatic_object_distance_estimation_aka_auto_focus(CartesianFrame* world,
+//~ GlobalSettings* settings){
+//~ 
+//~ 
+//~ 
+//~ }

@@ -7,8 +7,7 @@ ReflectionProperties::ReflectionProperties(){
 }
 //======================================================================
 void ReflectionProperties::set_reflection_coefficient
-(const double new_reflection_coefficient)
-{
+(const double new_reflection_coefficient){
 	if(new_reflection_coefficient >= 0.0 && 
 	new_reflection_coefficient <= 1.0)
 	{

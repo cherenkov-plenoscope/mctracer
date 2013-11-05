@@ -1,7 +1,7 @@
 //=================================
 // include guard
-#ifndef __MYCLASS_H_INCLUDED__
-#define __MYCLASS_H_INCLUDED__
+#ifndef __FREEORBITCAMERA_H_INCLUDED__
+#define __FREEORBITCAMERA_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
@@ -25,6 +25,8 @@ double FieldOfView_in_rad;
 int ImageResolutionInX;
 int ImageResolutionInY;
 
+
+
 Vector3D t_World2Camera;
 double RotWorld2CameraY_in_rad;
 double RotWorld2CameraZ_in_rad;
@@ -42,6 +44,11 @@ std::string free_orbit_display_name;
 //==================//
 // snapshot
 int snapshot_counter;
+
+//==================//
+// stereo view
+double stereo_offset_increment_in_m;
+double stereo_offset_in_m;
 public:
 //======================================================================
 FreeOrbitCamera();
@@ -50,6 +57,9 @@ void set_free_orbit(
 CartesianFrame *ptr_to_new_world,
 GlobalSettings *ptr_to_new_globalsettings);
 //======================================================================
+void start_free_orbit();
+//======================================================================
+private:
 void aquire_image();
 //======================================================================
 void update_free_orbit_display();
@@ -76,11 +86,14 @@ void look_right();
 //======================================================================
 void take_snapshot();
 //======================================================================
-void display_help();
+void display_help()const;
 //======================================================================
-void start_free_orbit();
+void increase_stereo_offset();
+void decrease_stereo_offset();
+//======================================================================
+
 };
-#endif // __MYCLASS_H_INCLUDED__
+#endif // __FREEORBITCAMERA_H_INCLUDED__
 
 
 

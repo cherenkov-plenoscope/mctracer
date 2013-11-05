@@ -1,13 +1,5 @@
 #include "PinHoleCamera.h"
 //======================
-PinHoleCamera::PinHoleCamera(){
-	CameraImageAlreadyAllocated=false;
-}
-//======================
-PinHoleCamera::~PinHoleCamera(){
-	delete CameraImage;
-}
-//======================
 void PinHoleCamera::set_pin_hole_cam(double fov){
 	//set field of view
 	FieldOfView_in_Rad=fov;
@@ -47,13 +39,8 @@ void PinHoleCamera::set_pin_hole_cam(double fov){
 	SensorDirectionV.set_unit_vector_y();
 	T_Camera2World.transform_orientation(&SensorDirectionU);
 	T_Camera2World.transform_orientation(&SensorDirectionV);
-	// allocate ram for image
-	if(CameraImageAlreadyAllocated){
-	}else{
-		std::cout<<"PinHoleCamera->allocate image memory"<<std::endl;
-		CameraImage =new cv::Mat (SensorResolutionV,SensorResolutionU, CV_8UC3);
-		CameraImageAlreadyAllocated=true;
-	}
+	// allocate memory for image
+	allocate_memory_for_image(SensorResolutionV,SensorResolutionU);
 }
 //======================
 std::string PinHoleCamera::get_pin_hole_cam_string(){
@@ -101,8 +88,7 @@ Ray PinHoleCamera::cam_send_ray(int Uu,int Vv){
 //======================
 void PinHoleCamera::cam_acquire_image_parallel(
 CartesianFrame* world,
-GlobalSettings* settings
-){
+GlobalSettings* settings){
 	//init open mp variables
 	//int number_of_threads, thread_id;
 	
@@ -146,7 +132,8 @@ GlobalSettings* settings
 			intensity.val[1]=imag_col.get_green();
 			intensity.val[2]=imag_col.get_red();
 
-			CameraImage->at<cv::Vec3b>(u,v) = intensity;
+			//CameraImage->at<cv::Vec3b>(u,v) = intensity;
+			Image->at<cv::Vec3b>(u,v) = intensity;
 		}
 	}
 	//==============================================================
@@ -154,83 +141,187 @@ GlobalSettings* settings
 	//==============================================================
 }
 //==================================================================
-void PinHoleCamera::cam_save_image(std::string str_image_name){
-	// modify filename
-	str_image_name += ".png";
-	
-	std::vector<int> compression_params;
-	compression_params.push_back(CV_IMWRITE_PNG_COMPRESSION);
-	compression_params.push_back(1);			
-	
-	try {
-		cv::imwrite(str_image_name, *CameraImage, compression_params);
-	}
-	catch (std::runtime_error& ex) {
-		fprintf(stderr,"Exception converting image to PNG format: %s\n", ex.what());
-	}
-}
-//======================
-void PinHoleCamera::cam_acquire_image(
+void PinHoleCamera::cam_acquire_stereo_anaglyph_image(
 CartesianFrame* world,
-GlobalSettings *settings,
-std::string str_image_name
-){
-	// modify filename
-	str_image_name += ".png";
+GlobalSettings* settings,
+double cmaera_offset_in_m){
 	
-	// init image
-	cv::Mat image(SensorResolutionV,SensorResolutionU, CV_8UC3);
-	std::vector<int> compression_params;
-	compression_params.push_back(CV_IMWRITE_PNG_COMPRESSION);
-	compression_params.push_back(9);	
-		
-	std::stringstream out; out.str("");
-	out<<"__________________________________________________"<<std::endl;
-	out<<"| Tracing "<<str_image_name<<std::endl;
-	out<<"| using seriall mode with pin-hole-cam model."<<std::endl;
-	//==============================================================
-	// tracing
-	//==============================================================
-	//#pragma omp parallel private(number_of_threads, thread_id)
-	{
-		int u; int v;
-		cv::Vec3b intensity;
-		Ray cam_ray;
-		ColourProperties imag_col;
-		for (int pixel_itterator = 0; 
-			pixel_itterator < SensorResolutionUTimesV;
-			pixel_itterator++) {
-			
-			u = pixel_itterator/SensorResolutionU;
-			v = pixel_itterator%SensorResolutionU;
-			//std::cout<<pixel_itterator<<"("<<u<<"|"<<v<<"), ";
-			cam_ray = cam_send_ray(u,v);
-			//cam_ray.disp();
-			imag_col = cam_ray.trace(world,0,NULL,settings);
-			// BGR
-			intensity.val[0]=imag_col.get_blue();
-			intensity.val[1]=imag_col.get_green();
-			intensity.val[2]=imag_col.get_red();
-			image.at<cv::Vec3b>(u,v) = intensity;
-			//imag_col;
-			//intensity.
-		}
+	if(cmaera_offset_in_m <= 0.0){
+		cmaera_offset_in_m = 0.1;
+		std::cout<<"PinHoleCam-> stereo -> offset was set to ";
+		std::cout<<cmaera_offset_in_m<<" because it was zero ";
+		std::cout<<"or negative!"<<std::endl;
+	}
+	
+	
+	Vector3D left_camera_position;
+	Vector3D left_camera_pointing_direction;
+	
+	Vector3D right_camera_position;
+	Vector3D right_camera_pointing_direction;
+	
+	calculate_stereo_parameters(world,settings,cmaera_offset_in_m,
+	left_camera_position,
+	left_camera_pointing_direction,
+	right_camera_position,
+	right_camera_pointing_direction);
+	/*
+	double object_distance = OpticalAxis.get_distance_to_closest_object(
+	world,
+	0,
+	NULL,
+	settings,
+	0.0
+	);
+	
+	//~ std::cout<<"PinHoleCam-> stereo -> camera position: ";
+	//~ std::cout<<CameraPositionInWorld<<std::endl;
+	
+	// default
+	if(object_distance==0.0)
+		object_distance = 100.0;
+	
+	//~ std::cout<<"PinHoleCam-> stereo -> object distance: ";
+	//~ std::cout<<object_distance<<"[m]"<<std::endl;
+	
+	//calculate intersection point of center ray
+	Vector3D intersection_point = 
+	OpticalAxis.get_position_on_ray(object_distance);
+	
+	//~ std::cout<<"PinHoleCam-> stereo -> ";
+	//~ std::cout<<"intersection point of optical axis and object: ";
+	//~ std::cout<<intersection_point<<std::endl;	
+	
+	Vector3D z_unit; 
+	
+	z_unit.set_unit_vector_z();
+	
+	Vector3D axis_direction_of_stereo_cameras = 
+	CameraPointingDirection.cross_product(z_unit);
 
-	}  
+	axis_direction_of_stereo_cameras = 
+	axis_direction_of_stereo_cameras/
+	axis_direction_of_stereo_cameras.norm2();
+	
+	//~ std::cout<<"PinHoleCam-> stereo -> ";
+	//~ std::cout<<"axis_direction_of_stereo_cameras: ";
+	//~ std::cout<<axis_direction_of_stereo_cameras<<std::endl;		
+	
+	//left camera position
+	Vector3D left_camera_position = 
+	CameraPositionInWorld + 
+	axis_direction_of_stereo_cameras*cmaera_offset_in_m/2.0;
+	
+	//left camera poining direction
+	Vector3D left_camera_pointing_direction = 
+	intersection_point - left_camera_position;
+
+	left_camera_pointing_direction = 
+	left_camera_pointing_direction/
+	left_camera_pointing_direction.norm2();
+	
+	//~ std::cout<<"PinHoleCam-> stereo -> ";
+	//~ std::cout<<"left  camera pos: ";
+	//~ std::cout<<left_camera_position<<", ";			
+	//~ std::cout<<"dir: ";
+	//~ std::cout<<left_camera_pointing_direction<<std::endl;	
+		
+	//right camera position
+	Vector3D right_camera_position = 
+	CameraPositionInWorld - 
+	axis_direction_of_stereo_cameras*cmaera_offset_in_m/2.0;
+		
+	//right camera poining direction
+	Vector3D right_camera_pointing_direction = 
+	intersection_point - right_camera_position;
+	
+	right_camera_pointing_direction = 
+	right_camera_pointing_direction/
+	right_camera_pointing_direction.norm2();
+	
+	//~ std::cout<<"PinHoleCam-> stereo -> ";
+	//~ std::cout<<"right camera pos: ";
+	//~ std::cout<<right_camera_position<<", ";		
+	//~ std::cout<<"dir: ";
+	//~ std::cout<<right_camera_pointing_direction<<std::endl;
+	*/
+	//==================================================================	
+	// taking two images for stereo vision
+	//==================================================================
+	
+	PinHoleCamera PinHoleCam_left;
+	PinHoleCamera PinHoleCam_right;
+
+	PinHoleCam_left.set_cam(
+	"left_Cam",
+	left_camera_position,
+	CameraOrientationInWorld,
+	SensorResolutionU,
+	SensorResolutionV);
+
+	PinHoleCam_right.set_cam(
+	"right_Cam",
+	right_camera_position,
+	CameraOrientationInWorld,
+	SensorResolutionU,
+	SensorResolutionV);
+
+	PinHoleCam_left.set_pin_hole_cam(FieldOfView_in_Rad);
+	PinHoleCam_right.set_pin_hole_cam(FieldOfView_in_Rad);
+	
+	//==============================================================	
+	// left
 	//==============================================================
-	// save image
-	//==============================================================
-	try {
-		cv::imwrite(str_image_name, image, compression_params);
-	}
-	catch (std::runtime_error& ex) {
-		fprintf(stderr, "Exception converting image to PNG format: %s\n", ex.what());
-	}
-	out<<"|_________________________________________________"<<std::endl;
-	out<<std::endl;
-	std::cout<<out.str();
+	
+	PinHoleCam_left.set_pointing_direction(
+	left_camera_pointing_direction,
+	this->get_image_upwards_direction_in_world_frame());
+	
+	//~ PinHoleCam_left.disp();
+	
+	PinHoleCam_left.
+	cam_acquire_image_parallel(world,settings);
+	
+	cv::Mat left_image = PinHoleCam_left.get_image();
+	//==============================================================	
+	// right
+	//==============================================================	
+	
+	PinHoleCam_right.set_pointing_direction(
+	right_camera_pointing_direction,
+	this->get_image_upwards_direction_in_world_frame());
+	
+	//~ PinHoleCam_right.disp();
+	
+	PinHoleCam_right.
+	cam_acquire_image_parallel(world,settings);
+	
+	cv::Mat right_image = PinHoleCam_right.get_image();							
+//==================================================================	
+// mix images
+//==================================================================	
+	// BGR
+	CameraImage stereo_image;
+	stereo_image.allocate_memory_for_image(SensorResolutionU,SensorResolutionV);	
+	
+	std::vector<cv::Mat> BGR_left(3);
+	cv::split(left_image, BGR_left);
+	
+	std::vector<cv::Mat> BGR_right(3);
+	cv::split(right_image, BGR_right);
+	
+	std::vector<cv::Mat> anaglyph_image_channels;		
+	
+	// 0 -> B 
+	anaglyph_image_channels.push_back(BGR_right.at(0));
+	// 1 -> G 
+	anaglyph_image_channels.push_back(BGR_right.at(1));
+	// 2 -> R 
+	anaglyph_image_channels.push_back(BGR_left.at(2) );
+	
+	cv::merge(anaglyph_image_channels,*Image);
+					
+	//~ std::cout<<"PinHoleCam-> stereo -> end"<<std::endl;
+
 }
 //======================
-cv::Mat PinHoleCamera::get_image()const{
-	return *CameraImage;
-}

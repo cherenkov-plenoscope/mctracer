@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <math.h> 
 #include "ReflectionProperties.h"
 
 //======================================================================
@@ -26,6 +27,9 @@ ColourProperties();
 void set_colour_0to255
 (const int new_red,const int new_green,const int new_blue);
 //======================================================================
+void set_colour_0to255
+(const double new_red,const double new_green,const double new_blue);
+//======================================================================
 unsigned char get_red()const;
 unsigned char get_green()const;
 unsigned char get_blue()const;
@@ -40,5 +44,8 @@ void reflection_mix
 void mixture(
 const ColourProperties *coulour_to_mix_with,
 const double mixture_coefficient);
+//======================================================================
+friend 
+std::ostream& operator<<(std::ostream& os, const ColourProperties& col);
 };
 #endif // __COLOURPROPERTIES_H_INCLUDED__ 

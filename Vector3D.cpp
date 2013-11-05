@@ -1,5 +1,12 @@
 #include "Vector3D.h"
 //======================
+Vector3D::Vector3D(){
+}
+//======================
+Vector3D::Vector3D(const double nx,const double ny,const double nz){
+	x=nx; y=ny; z=nz;
+}
+//======================
 void Vector3D::set_vec3D
 (const double nx,const double ny,const double nz){
 	x=nx; y=ny; z=nz;
