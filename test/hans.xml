@@ -12,12 +12,12 @@
 		<set_surface refl="0.0" colour="[200,200,0]"/>
 		<set_cylinder radius="0.25" start_pos="[0,0,0]" end_pos="[0,0,1.5]"/>	
 	</cylinder>		
+
 </frame>
 
 <frame>
 	<set_frame name="house" pos="[5,0,0]" rot="[0,0,0]"/>	
 
-	
 	<plane>
 		<set_frame name="wall_1" pos="[1,0,1]" rot="[0,1.57,0.0]"/>
 		<set_surface refl="0.0" colour="[180,180,180]"/>
@@ -59,7 +59,6 @@
 		
 	</frame>	
 	
-
 	<frame>
 		<set_frame name="chimney" pos="[0.0,0.6,2.1]" rot="[0,0,0]"/>	
 		

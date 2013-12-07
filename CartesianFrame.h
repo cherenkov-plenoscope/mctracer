@@ -78,7 +78,10 @@ virtual void disp()const;
 //======================
 std::string get_frame_string()const;
 //======================
+private:
 std::string get_frame_prompt_including_children(unsigned depth)const;
+public:
+std::string get_frame_prompt_including_children()const;
 //======================
 private:
 void add_mother(CartesianFrame *const new_mother);

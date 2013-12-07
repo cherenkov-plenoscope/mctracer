@@ -1,5 +1,6 @@
 #include "CartesianFrame.h"
-void CartesianFrame::post_initializing(){
+void CartesianFrame::
+post_initializing(){
 	//initialize eye matrices
 	Vector3D p; p.set_vec3D(0.0,0.0,0.0);
 	Rotation3D r; r.set_rotation(0.0,0.0,0.0);
@@ -25,64 +26,78 @@ void CartesianFrame::post_initializing(){
 	pos_in_world = T_frame2world.get_translation();
 };
 //======================================================================
-const std::string* CartesianFrame::get_pointer_to_name_of_frame() const{
+const std::string* CartesianFrame::
+get_pointer_to_name_of_frame() const{
 	return &name_of_frame;
 }
 //======================
 const Vector3D* 
-CartesianFrame::get_pointer_to_position_of_frame_in_mother_frame() const{
+CartesianFrame::
+get_pointer_to_position_of_frame_in_mother_frame() const{
 	return &position_relative_to_mother;
 }	
 //======================
 const Rotation3D*
-CartesianFrame::get_pointer_to_rotation_of_frame_in_mother_frame() const{
+CartesianFrame::
+get_pointer_to_rotation_of_frame_in_mother_frame() const{
 	return &rotation_relative_to_mother;
 }	
 //======================
 const double*
-CartesianFrame::get_pointer_to_radius_of_sphere_enclosing_all_children() const{
+CartesianFrame::
+get_pointer_to_radius_of_sphere_enclosing_all_children() const{
 	return &radius_of_sphere_enclosing_all_children;
 }
 //======================
 const Vector3D* 
-CartesianFrame::get_pointer_to_position_of_frame_in_world_frame() const{
+CartesianFrame::
+get_pointer_to_position_of_frame_in_world_frame() const{
 	return &pos_in_world;
 }
 //======================
-const HomoTrafo3D* CartesianFrame::get_pointer_to_T_frame2mother() const{
+const HomoTrafo3D* CartesianFrame::
+get_pointer_to_T_frame2mother() const{
 	return &T_frame2mother;
 }
 //======================
-const HomoTrafo3D* CartesianFrame::get_pointer_to_T_mother2frame() const{
+const HomoTrafo3D* CartesianFrame::
+get_pointer_to_T_mother2frame() const{
 	return &T_mother2frame;
 }
 //======================
-const HomoTrafo3D* CartesianFrame::get_pointer_to_T_world2frame() const{
+const HomoTrafo3D* CartesianFrame::
+get_pointer_to_T_world2frame() const{
 	return &T_world2frame;
 }
 //======================
-const HomoTrafo3D* CartesianFrame::get_pointer_to_T_frame2world() const{
+const HomoTrafo3D* CartesianFrame::
+get_pointer_to_T_frame2world() const{
 	return &T_frame2world;
 }
 //======================
-const CartesianFrame* CartesianFrame::get_pointer_to_mother_frame() const{
+const CartesianFrame* CartesianFrame::
+get_pointer_to_mother_frame() const{
 	return mother;
 }
 //======================
-const CartesianFrame* CartesianFrame::get_pointer_to_child
+const CartesianFrame* CartesianFrame::
+get_pointer_to_child
 (const int child_position_in_list)const{
 	return children.at(child_position_in_list);
 }
 //======================
-const int CartesianFrame::get_number_of_children()const{	
+const int CartesianFrame::
+get_number_of_children()const{	
 	return children.size();
 }
 //======================
-CartesianFrame::CartesianFrame(){
+CartesianFrame::
+CartesianFrame(){
 }
 //======================
-void CartesianFrame::set_frame
-(const std::string new_name,const Vector3D npos,const Rotation3D nrot){
+void CartesianFrame::
+set_frame(
+const std::string new_name,const Vector3D npos,const Rotation3D nrot){
 	// init name_of_frame
 	name_of_frame = new_name;
 	
@@ -139,8 +154,8 @@ std::string CartesianFrame::get_frame_string()const{
 	return out.str();
 }
 //======================
-std::string CartesianFrame::get_frame_prompt_including_children
-(unsigned depth)const{
+std::string CartesianFrame::
+get_frame_prompt_including_children(unsigned depth)const{
 	std::stringstream out;
 	out.str("");	
 	std::string gap;
@@ -180,11 +195,18 @@ std::string CartesianFrame::get_frame_prompt_including_children
 	return out.str();
 }
 //======================
-void CartesianFrame::add_mother(CartesianFrame *const new_mother){
+std::string CartesianFrame::
+get_frame_prompt_including_children()const{
+	return get_frame_prompt_including_children(0);
+}
+//======================
+void CartesianFrame::
+add_mother(CartesianFrame *const new_mother){
 	mother = new_mother;
 }
 //======================
-void CartesianFrame::add_child(CartesianFrame * const new_child){
+void CartesianFrame::
+add_child(CartesianFrame * const new_child){
 	children.push_back(new_child);
 	//===================
 	// calculate new childs diameter in this frame
@@ -204,12 +226,14 @@ void CartesianFrame::add_child(CartesianFrame * const new_child){
 		radius_of_sphere_enclosing_all_children = max_diameter_of_new_child_in_this_frame;
 }
 //======================
-void CartesianFrame::set_mother_and_child(CartesianFrame *new_child){
+void CartesianFrame::
+set_mother_and_child(CartesianFrame *new_child){
 	this->add_child(new_child);
 	new_child->add_mother(this);
 }
 //======================
-void CartesianFrame::post_initialize_me_and_all_my_children(){
+void CartesianFrame::
+post_initialize_me_and_all_my_children(){
 	// post initialize all frames in world.
 	// This has to be done to ensure the relationship 
 	// declarations are set.
@@ -229,47 +253,58 @@ void CartesianFrame::post_initialize_me_and_all_my_children(){
 	}
 }
 //======================
-void CartesianFrame::hit(
+void CartesianFrame::
+hit(
 Vector3D *base,Vector3D *dir,
 Intersection *intersection)const{
 	std::cout<<"call of virtual void hit in class frame"<<std::endl;
 }
 //======================
-bool CartesianFrame::is_hit(){
+bool CartesianFrame::
+is_hit(){
 	return false;}
 //======================
-double CartesianFrame::get_hit_dist(){
+double CartesianFrame::
+get_hit_dist(){
 	return 0;}
 //======================
-bool CartesianFrame::get_hit_reflection_flag()const{
+bool CartesianFrame::
+get_hit_reflection_flag()const{
 	return false;}
 //======================
-ColourProperties CartesianFrame::get_hit_colour()const{
+ColourProperties CartesianFrame::
+get_hit_colour()const{
 	ColourProperties defcol; return defcol;}
 //======================
-const ReflectionProperties* CartesianFrame::get_ptr2_reflection()const{
+const ReflectionProperties* CartesianFrame::
+get_ptr2_reflection()const{
 	std::cout<<"virtual  get_ptr2_reflection() called in class frame!"<<std::endl;
 	return NULL;} 
 //======================
-void CartesianFrame::get_reflection_direction_in_object_system
+void CartesianFrame::
+get_reflection_direction_in_object_system
 (Vector3D* vec){
 }
 //======================
-void CartesianFrame::get_intersection_vec_in_object_system(Vector3D *inter){
+void CartesianFrame::
+get_intersection_vec_in_object_system(Vector3D *inter){
 }
 //======================
-bool CartesianFrame::set_spheric_hexag(double new_dbl_focal_length,
+bool CartesianFrame::
+set_spheric_hexag(double new_dbl_focal_length,
 double new_dbl_mirror_radius){ 
 	std::cout<<"virtual set_spheric_hexag() called in class frame!"<<std::endl;
 	return false;
 }
 //======================
-void CartesianFrame::set_surface_properties
+void CartesianFrame::
+set_surface_properties
 (ReflectionProperties *n_refl, ColourProperties *n_col){
 	std::cout<<"virtual set_surface_properties() called in class frame!"<<std::endl;
 }
 //======================
-bool CartesianFrame::get_sensor_flag()const{
+bool CartesianFrame::
+get_sensor_flag()const{
 	std::cout<<"virtual get_sensor_flag() called in class frame!"<<std::endl;
 	return false;
 }

@@ -26,11 +26,7 @@
 // XML parser library 
 #include "pugixml.hpp"
 
-// trivial boos logging
-#include <boost/log/core.hpp>
-#include <boost/log/trivial.hpp>
-#include <boost/log/expressions.hpp>
-
+//======================================================================
 class tuple3{
 public:
 	double x;
@@ -38,8 +34,117 @@ public:
 	double z;
 tuple3(){ x=0.0; y=0.0; z=0.0; }	
 };
-
-//=================================
+//======================================================================
+class WorldFactoryException{
+public:
+	virtual void ReportException() = 0;
+	void ExceptionPrompt(){
+		
+		std::stringstream out;
+		out.str("");
+		out << "Frame factory: ";
+		std::cout << out.str();		
+	}
+};
+//==========================
+class UnknowenObject : public WorldFactoryException{
+public:
+UnknowenObject(std::string new_name_of_unknowen_object){
+	name_of_unknown_object = new_name_of_unknowen_object;
+}
+void ReportException(){ 
+	ExceptionPrompt();
+	
+	std::stringstream out;	
+	out.str("");
+	out << "Do not know an object called ";
+	out << "'"<<name_of_unknown_object<<"'"<<"!";
+	std::cout << out.str() << endl;
+}
+private:
+	std::string name_of_unknown_object;
+};
+//==========================
+class SyntaxError : public WorldFactoryException{
+public:
+SyntaxError(
+std::string new_syntax_template,
+std::string new_syntax_causing_error){
+	syntax_template = new_syntax_template;
+	syntax_causing_error = new_syntax_causing_error;	
+	I_have_an_idea_of_what_caused_the_syntax_error = false;	
+}
+SyntaxError(
+std::string new_syntax_template,
+std::string new_syntax_causing_error,
+std::string new_my_idea_of_what_caused_the_syntax_error){
+	
+	syntax_template = 
+	new_syntax_template;
+	
+	syntax_causing_error = 
+	new_syntax_causing_error;
+		
+	my_idea_of_what_caused_the_syntax_error = 
+	new_my_idea_of_what_caused_the_syntax_error;
+	
+	I_have_an_idea_of_what_caused_the_syntax_error = true;	
+}
+void ReportException(){ 
+	ExceptionPrompt();
+	
+	std::stringstream out;
+	out.str("");
+	out << "Syntax error! ";
+	out << "I expect a syntax like >" << syntax_template << "< ";
+	out << "but I found this >" << syntax_causing_error << "<.";
+	
+	if(I_have_an_idea_of_what_caused_the_syntax_error){
+		out << " I think it is because of: ";
+		out << my_idea_of_what_caused_the_syntax_error;
+	}
+	
+	out << "\n";
+	std::cout << out.str() << endl;
+}
+private:
+	bool 		I_have_an_idea_of_what_caused_the_syntax_error;
+	std::string syntax_template;
+	std::string syntax_causing_error;
+	std::string my_idea_of_what_caused_the_syntax_error;
+};
+//==========================
+class MissingItem : public WorldFactoryException{
+public:
+MissingItem(std::string new_name_of_missing_item){
+	name_of_missing_item = new_name_of_missing_item;
+	I_have_more_percise_information = false;
+}
+MissingItem(
+std::string new_name_of_missing_item,
+std::string new_more_percise_information){
+	name_of_missing_item = new_name_of_missing_item;
+	more_percise_information = new_more_percise_information;
+	I_have_more_percise_information = true;
+}
+void ReportException(){ 
+	ExceptionPrompt();
+	
+	std::stringstream out;	
+	out.str("");
+	out << "I miss an item called ";
+	out << "'"<<name_of_missing_item<<"'"<<"!";
+	if(I_have_more_percise_information){
+		out << " " << more_percise_information;
+	}
+	std::cout << out.str() << endl;
+}
+private:
+	std::string name_of_missing_item;
+	std::string more_percise_information;
+	bool I_have_more_percise_information;
+};
+//======================================================================
 class WorldFactory   {
 	
 	CartesianFrame* root_of_World;
@@ -81,13 +186,18 @@ CartesianFrame* produceTriangle
 //=================================
 bool parse3tuple(tuple3 &tuple,const std::string text);
 //=================================
-bool extract_frame(std::string &name,Vector3D &position,
+void parseFloatingNumber(
+double &FloatingNumber,
+std::string text_to_parse);
+//=================================
+bool set_frame(std::string &name,Vector3D &position,
 Rotation3D &rotation,const pugi::xml_node frame_node);
 //=================================
 bool set_surface(ReflectionProperties &reflection_cefficient,
 ColourProperties &colour,const pugi::xml_node node);
 //=================================
-bool set_plane(double &min_x, double &max_x, double &min_y, double &max_y,
+bool set_plane(
+double &min_x, double &max_x, double &min_y, double &max_y,
 const pugi::xml_node node);
 //=================================
 bool set_sphere(double &radius,const pugi::xml_node node);

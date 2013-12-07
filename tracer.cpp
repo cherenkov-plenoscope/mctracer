@@ -41,27 +41,21 @@
 //			make
 //
 //======================================================================
-#include <cv.h>
-#include <highgui.h>
-#include <opencv2/opencv.hpp>
-
-// parallel computing
-#include <omp.h>
 
 // std
 #include <iostream> 
 #include <string>
 #include <sstream>
-#include <vector>
-#include <stdio.h>
-#include <stdlib.h>
-#include <chrono>
+//#include <vector>
+//#include <stdio.h>
+//#include <stdlib.h>
+//#include <chrono>
 #include <random>
-#include <fstream>
-#define _USE_MATH_DEFINES
-#include <math.h>
-#include <algorithm>
-#include <time.h>
+//#include <fstream>
+//#define _USE_MATH_DEFINES
+//#include <math.h>
+//#include <algorithm>
+//#include <time.h>
 
 // project includes
 //#include "ConfigFileHandle.h"
@@ -99,20 +93,13 @@
 #include "OpticalMirrorEllipsoidHexagonal.h"
 
 #include "FactTelescope.h"
-// trivial boos logging
-#include <boost/log/core.hpp>
-#include <boost/log/trivial.hpp>
-#include <boost/log/expressions.hpp>
-
-namespace logging = boost::log;
-
 
 // namespaces
 using namespace cv;
 using namespace std;
 
-//======================================================================
 // friends of osstream
+//======================================================================
 std::ostream& operator<<(std::ostream& os, const Vector3D& vec){
     os << "("<<vec.get_x()<<"|"<<vec.get_y()<<"|"<<vec.get_z()<<")";
     os << "[m]";
@@ -146,16 +133,6 @@ std::ostream& operator<<(std::ostream& os, const ReflectionProperties& refl){
 	return os;
 }
 //======================================================================
-// boost trivial logging
-//======================================================================
-namespace logging = boost::log;
-void initialize_logging(){
-    logging::core::get()->set_filter
-    (
-        logging::trivial::severity >= logging::trivial::trace
-    );
-}
-//======================================================================
 // main
 //======================================================================
 int main(){
@@ -165,14 +142,6 @@ int main(){
 	int system_call_return_value = system("clear");
 	system_call_return_value = system("clear");
 	system_call_return_value = system("clear");
-	
-	initialize_logging();
-	//~ BOOST_LOG_TRIVIAL(trace) << "A trace severity message";
-    //~ BOOST_LOG_TRIVIAL(debug) << "A debug severity message";
-    //~ BOOST_LOG_TRIVIAL(info) << "An informational severity message";
-    //~ BOOST_LOG_TRIVIAL(warning) << "A warning severity message";
-    //~ BOOST_LOG_TRIVIAL(error) << "An error severity message";
-    //~ BOOST_LOG_TRIVIAL(fatal) << "A fatal severity message";
 	
 	stringstream out;
 	out.str("");
@@ -202,11 +171,23 @@ int main(){
 	// open / read file
 	//==================================================================
 	WorldFactory file2world;
-	file2world.load_file("hans.xml");
-	CartesianFrame *Mworld = file2world.get_pointer_to_world();
-	//Mworld->disp();
+	
+	string user_input;
+	cout << "Enter a file to load: ";
+	cin  >> user_input;
+	
+	bool loading_file_was_successful = file2world.load_file(user_input);
+	
+	if(loading_file_was_successful){
+		
+		CartesianFrame *Mworld = file2world.get_pointer_to_world();
 
-	cout<<Mworld->get_frame_prompt_including_children(0);
+		//cout << Mworld->get_frame_prompt_including_children();
+		
+		FreeOrbitCamera free;
+		free.set_free_orbit(Mworld,&settings);
+		free.start_free_orbit();
+	}
 
 	//==================================================================
 	// decleration of objects;
@@ -654,9 +635,9 @@ int main(){
 		//~ 
 		
 		// free orbit
-		FreeOrbitCamera free;
-		free.set_free_orbit(Mworld,&settings);
-		free.start_free_orbit();
+		//~ FreeOrbitCamera free;
+		//~ free.set_free_orbit(Mworld,&settings);
+		//~ free.start_free_orbit();
 		
 		//==================================================================
 		/*

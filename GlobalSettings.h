@@ -12,7 +12,6 @@
 #include <chrono>
 
 //=================================
-// the actual class
 class GlobalSettings {
 private:
 	int number_of_max_reflections;
