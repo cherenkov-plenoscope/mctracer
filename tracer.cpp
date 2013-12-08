@@ -46,19 +46,8 @@
 #include <iostream> 
 #include <string>
 #include <sstream>
-//#include <vector>
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <chrono>
 #include <random>
-//#include <fstream>
-//#define _USE_MATH_DEFINES
-//#include <math.h>
-//#include <algorithm>
-//#include <time.h>
 
-// project includes
-//#include "ConfigFileHandle.h"
 #include "WorldFactory.h"
 #include "SensorIntersection.h"
 #include "ReflectionProperties.h"
@@ -678,14 +667,3 @@ int main(){
 //}
 	return 0;
 }
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//

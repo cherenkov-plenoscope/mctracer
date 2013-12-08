@@ -4,7 +4,7 @@ FreeOrbitCamera::FreeOrbitCamera(){
 	//free orbit display
 	free_orbit_display_name = "free orbit";
 	
-	bool flag_world_and_settings_are_set = false;
+	flag_world_and_settings_are_set = false;
 	
 	// default position and orientation for pin_hole_camera
 	t_World2Camera.set_null_vector();

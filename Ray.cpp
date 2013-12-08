@@ -59,7 +59,7 @@ std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMax
 		{
 				// this frame has children to be tested
 				for(
-				unsigned int child_itterator=0; 
+				int child_itterator=0; 
 				child_itterator<
 				frame_to_check_for_interaction_of_ray_and_max_sphere->
 				get_number_of_children();

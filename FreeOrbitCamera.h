@@ -25,8 +25,6 @@ double FieldOfView_in_rad;
 int ImageResolutionInX;
 int ImageResolutionInY;
 
-
-
 Vector3D t_World2Camera;
 double RotWorld2CameraY_in_rad;
 double RotWorld2CameraZ_in_rad;

@@ -14,21 +14,21 @@
 class LightSource: public CameraDevice{
 private:
 double OpeningAngle_in_rad;
-//
-//
-//          camera direction
-//                /\
-//          \     |     /   In this cone photons will be 
-//           \    |____/    emitted.
-//            \   | a /
-//             \  |  /
-//              \ | /
-//              _\|/_
-//             /light\
-//             |sour-|
-//             \_ce__/
-//
-// a = OpeningAngle_in_rad
+/*
+          camera direction
+                /\
+          \     |     /   In this cone photons will be 
+           \    |____/    emitted.
+            \   | a /
+             \  |  /
+              \ | /
+              _\|/_
+             /light\
+             |sour-|
+             \_ce__/
+
+ a = OpeningAngle_in_rad
+*/
 public:
 //======================================================================
 void set_opening_angle(double new_OpeningAngle_in_rad);

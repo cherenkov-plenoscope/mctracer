@@ -6,7 +6,6 @@
 //=================================
 // forward declared dependencies
 
-
 //=================================
 // included dependencies
 #include <iostream> 
@@ -143,6 +142,25 @@ private:
 	std::string name_of_missing_item;
 	std::string more_percise_information;
 	bool I_have_more_percise_information;
+};
+//==========================
+class MultipleUsageOfName : public WorldFactoryException{
+public:
+MultipleUsageOfName(std::string new_name_of_name_in_multiple_usage){
+	name_of_name_in_multiple_usage = new_name_of_name_in_multiple_usage;
+}
+void ReportException(){ 
+	ExceptionPrompt();
+	
+	std::stringstream out;	
+	out.str("");
+	out << "The name ";
+	out << "'"<<name_of_name_in_multiple_usage<<"' ";
+	out << "is already in use! It must not be used twice!";
+	std::cout << out.str() << endl;
+}
+private:
+	std::string name_of_name_in_multiple_usage;
 };
 //======================================================================
 class WorldFactory   {

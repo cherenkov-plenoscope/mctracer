@@ -3,32 +3,33 @@
 void PinHoleCamera::set_pin_hole_cam(double fov){
 	//set field of view
 	FieldOfView_in_Rad=fov;
-	// calculate principal point (intersection of optical axis and
-	// image sensor plane)
-	// calculate distance of camera base and principal point
-	// using FieldOfView_in_Rad angle 
-	//
-	//	         camera base
-	//	              /|  \
-	//	             / |  |
-	//	            /  |  |
-	//	           /   |  |
-	//	          /    |  |
-	//	         /fov/2|  |
-	//	        /______|  |
-	//	       /       |   \
-	//	      /        |   /dist_camera_base_2_principal_point
-	//	     /         |  |
-	//	    /          |  |
-	//	   /       ____|  |
-	//	  /       | o  |  |
-	//	 /________|____|  /
-	//	        principal_point
-	//	\______  ______/
-	//	       \/
-	//	      Uu/2
-	//
-	// distance
+	/*
+	 calculate principal point (intersection of optical axis and
+	 image sensor plane)
+	 calculate distance of camera base and principal point
+	 using FieldOfView_in_Rad angle 
+	
+		         camera base
+		              /|  \
+		             / |  |
+		            /  |  |
+		           /   |  |
+		          /    |  |
+		         /fov/2|  |
+		        /______|  |
+		       /       |   \
+		      /        |   /dist_camera_base_2_principal_point
+		     /         |  |
+		    /          |  |
+		   /       ____|  |
+		  /       | o  |  |
+		 /________|____|  /
+		        principal_point
+		\______  ______/
+		       \/
+		      Uu/2
+	*/
+	//distance
 	dist_camera_base_2_principal_point =
 	((SensorResolutionU/2)/tan(FieldOfView_in_Rad/2));
 	// principal point

@@ -83,7 +83,7 @@ int 		newSensorResolutionV){
 	return true;
 }
 //======================================================================
-bool CameraDevice::set_pointing_direction(	
+void CameraDevice::set_pointing_direction(	
 Vector3D new_camera_pointing_direction_in_World,
 Vector3D new_camera_image_upwards_image_orientation_in_world){
 	

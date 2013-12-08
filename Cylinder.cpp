@@ -83,6 +83,8 @@ Vector3D vec_end){
 		pow(CylinderRadius,2.0)+
 		pow((CylinderLength/2.0),2.0)
 	);
+	
+	return true;
 }
 //==================================================================
 bool Cylinder::set_cylinder(
@@ -204,7 +206,7 @@ Intersection *intersection)const{
 		double dbl_lambda;
 		
 		bool flag_minus_hit = false;
-		bool flag_plus_hit = false;
+		//bool flag_plus_hit = false;
 		
 		if( 	fabs(vec_intersection_minus.get_z())
 				<=(CylinderLength/2.0) )
@@ -215,10 +217,10 @@ Intersection *intersection)const{
 		if( 	fabs(vec_intersection_plus.get_z())
 				<=(CylinderLength/2.0) )
 		{
-			flag_plus_hit = true;
+			//flag_plus_hit = true;
 		}
 		
-		
+		/*
 		bool flag_source_outside = false;
 		if(dbl_lambda_minus>=0.0 && dbl_lambda_plus>=0.0){
 			flag_source_outside = true;
@@ -227,9 +229,9 @@ Intersection *intersection)const{
 		}else if(dbl_lambda_minus<0.0 && dbl_lambda_plus<0.0){
 			flag_source_outside = true;
 		}else{
-		}
+		}*/
 		
-		bool flag_hit = false;
+		//bool flag_hit = false;
 		
 		if(dbl_lambda_minus>=0.0 && dbl_lambda_plus>=0.0
 		&& flag_minus_hit)

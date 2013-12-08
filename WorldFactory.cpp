@@ -138,8 +138,7 @@ void WorldFactory::go_on_with_children_of_node
 CartesianFrame* WorldFactory::produceCartesianFrame
 (CartesianFrame* mother,const pugi::xml_node node){
 	
-	pugi::xml_node check_node = node.child("set_frame");
-	if(check_node == NULL){
+	if(node.child("set_frame") == NULL){
 		throw MissingItem("set_frame",
 		"A frame requires the 'set_frame' statement!");
 	}
@@ -162,27 +161,24 @@ CartesianFrame* WorldFactory::produceCartesianFrame
 CartesianFrame* WorldFactory::producePlane
 (CartesianFrame* mother,const pugi::xml_node node){
 
-	pugi::xml_node check_node = node.child("set_frame");
-	if(check_node == NULL){
+	if(node.child("set_frame") == NULL){
 		throw MissingItem("set_frame",
 		"A plane requires the 'set_frame' statement!");
 	}
 	
-	check_node = node.child("set_surface");
-	if(check_node == NULL){
+	if(node.child("set_surface") == NULL){
 		throw MissingItem("set_surface",
 		"A plane requires the 'set_surface' statement!");
 	}
 	
-	check_node = node.child("set_plane");
-	if(check_node == NULL){
+	if(node.child("set_plane") == NULL){
 		throw MissingItem("set_plane",
 		"A plane requires the 'set_plane' statement!");
 	}	
 	
 	std::string name;
-	Vector3D position;
-	Rotation3D rotation;
+	Vector3D    position;
+	Rotation3D  rotation;
 	
 	ReflectionProperties reflection_cefficient; 
 	ColourProperties colour;
@@ -197,23 +193,9 @@ CartesianFrame* WorldFactory::producePlane
 	Plane *new_plane;
 	new_plane = new Plane;
 	
-	if(!set_frame(name,position,rotation,node)){
-		std::stringstream out;
-		out<<"producePlane -> set_frame is not valid!";
-		cout << out.str() << endl;
-	}
-		
-	if(!set_surface(reflection_cefficient,colour,node)){
-		std::stringstream out;
-		out<<"producePlane -> set_surface is not valid!";
-		cout << out.str() << endl;
-	}
-	
-	if(!set_plane(min_x, max_x, min_y, max_y,node)){
-		std::stringstream out;
-		out<<"producePlane -> set_plane is not valid!";
-		cout << out.str() << endl;		
-	}
+	set_frame(name,position,rotation,node);
+	set_surface(reflection_cefficient,colour,node);
+	set_plane(min_x, max_x, min_y, max_y,node);
 			
 	new_plane->set_frame(name,position,rotation);
 	new_plane->set_surface_properties(&reflection_cefficient,&colour);
@@ -226,6 +208,21 @@ CartesianFrame* WorldFactory::producePlane
 CartesianFrame* WorldFactory::produceSphere
 (CartesianFrame* mother,const pugi::xml_node node){
 	
+	if(node.child("set_frame") == NULL){
+		throw MissingItem("set_frame",
+		"A sphere requires the 'set_frame' statement!");
+	}
+	
+	if(node.child("set_surface") == NULL){
+		throw MissingItem("set_surface",
+		"A sphere requires the 'set_surface' statement!");
+	}
+
+	if(node.child("set_sphere") == NULL){
+		throw MissingItem("set_sphere",
+		"A sphere requires the 'set_sphere' statement!");
+	}
+		
 	std::string name;
 	Vector3D 	position;
 	Rotation3D 	rotation;
@@ -239,23 +236,9 @@ CartesianFrame* WorldFactory::produceSphere
 	Sphere *new_sphere;
 	new_sphere = new Sphere;
 	
-	if(!set_frame(name,position,rotation,node)){
-		std::stringstream out;
-		out<<"produceSphere -> set_frame is not valid!";
-		cout << out.str() << endl;
-	}
-		
-	if(!set_surface(reflection_cefficient,colour,node)){
-		std::stringstream out;
-		out<<"produceSphere -> set_surface is not valid!";
-		cout << out.str() << endl;
-	}
-	
-	if(!set_sphere(radius,node)){
-		std::stringstream out;
-		out<<"produceSphere -> set_Sphere is not valid!";
-		cout << out.str() << endl;		
-	}
+	set_frame(name,position,rotation,node);
+	set_surface(reflection_cefficient,colour,node);
+	set_sphere(radius,node);
 			
 	new_sphere->set_frame(name,position,rotation);
 	new_sphere->set_surface_properties(&reflection_cefficient,&colour);
@@ -267,7 +250,22 @@ CartesianFrame* WorldFactory::produceSphere
 //=================================
 CartesianFrame* WorldFactory::produceCylinder
 (CartesianFrame* mother,const pugi::xml_node node){
+
+	if(node.child("set_frame") == NULL){
+		throw MissingItem("set_frame",
+		"A cylinder requires the 'set_frame' statement!");
+	}
 	
+	if(node.child("set_surface") == NULL){
+		throw MissingItem("set_surface",
+		"A cylinder requires the 'set_surface' statement!");
+	}
+
+	if(node.child("set_cylinder") == NULL){
+		throw MissingItem("set_cylinder",
+		"A cylinder requires the 'set_cylinder' statement!");
+	}
+
 	// frame related
 	std::string name;
 	Vector3D 	position;
@@ -283,26 +281,10 @@ CartesianFrame* WorldFactory::produceCylinder
 	Vector3D end_of_cylinder;
 					
 	// collect all information for cylinder
-
 	
-	if(!set_frame(name,position,rotation,node)){
-		std::stringstream out;
-		out<<"produceSphere -> set_frame is not valid!";
-		cout << out.str() << endl;
-	}
-		
-	if(!set_surface(reflection_cefficient,colour,node)){
-		std::stringstream out;
-		out<<"produceSphere -> set_surface is not valid!";
-		cout << out.str() << endl;
-	}
-	
-	if(!set_Cylinder(
-	cylinder_radius,start_of_cylinder,end_of_cylinder,node)){
-		std::stringstream out;
-		out<<"produceSphere -> set_Sphere is not valid!";
-		cout << out.str() << endl;		
-	}
+	set_frame(name,position,rotation,node);
+	set_surface(reflection_cefficient,colour,node);
+	set_Cylinder(cylinder_radius,start_of_cylinder,end_of_cylinder,node);
 	
 	Cylinder *new_Cylinder;
 	new_Cylinder = new Cylinder;	
@@ -321,6 +303,16 @@ CartesianFrame* WorldFactory::produceCylinder
 //=================================
 CartesianFrame* WorldFactory::produceFactReflector
 (CartesianFrame* mother,const pugi::xml_node node){
+
+	if(node.child("set_frame") == NULL){
+		throw MissingItem("set_frame",
+		"The FACT reflector requires the 'set_frame' statement!");
+	}
+	
+	if(node.child("set_FACT_reflector") == NULL){
+		throw MissingItem("set_FACT_reflector",
+		"The FACT reflector requires the 'set_FACT_reflector' statement!");
+	}
 	
 	// frame related
 	std::string name;
@@ -330,18 +322,9 @@ CartesianFrame* WorldFactory::produceFactReflector
 	// fact reflector related	
 	double alpha;
 					
-	// collect all information for cylinder
-	if(!set_frame(name,position,rotation,node)){
-		std::stringstream out;
-		out<<"produceFactReflector -> set_frame is not valid!";
-		cout << out.str() << endl;
-	}
-		
-	if(!set_fact_reflector(alpha,node)){
-		std::stringstream out;
-		out<<"produceFactReflector -> set_fact_reflector is not valid!";
-		cout << out.str() << endl;
-	}
+	// collect all information for Fact
+	set_frame(name,position,rotation,node);
+	set_fact_reflector(alpha,node);
 	
 	FactTelescope *new_FactTelescope;
 	new_FactTelescope = new FactTelescope(alpha);			
@@ -355,6 +338,21 @@ CartesianFrame* WorldFactory::produceFactReflector
 CartesianFrame* WorldFactory::produceDisc
 (CartesianFrame* mother,const pugi::xml_node node){
 
+	if(node.child("set_frame") == NULL){
+		throw MissingItem("set_frame",
+		"A disc requires the 'set_frame' statement!");
+	}
+	
+	if(node.child("set_surface") == NULL){
+		throw MissingItem("set_surface",
+		"A disc requires the 'set_surface' statement!");
+	}
+
+	if(node.child("set_disc") == NULL){
+		throw MissingItem("set_disc",
+		"A disc requires the 'set_disc' statement!");
+	}
+
 	std::string name;
 	Vector3D position;
 	Rotation3D rotation;
@@ -366,23 +364,9 @@ CartesianFrame* WorldFactory::produceDisc
 
 	// set disc
 	
-	if(!set_frame(name,position,rotation,node)){
-		std::stringstream out;
-		out<<"produceDisc -> set_frame is not valid!";
-		cout << out.str() << endl;
-	}
-		
-	if(!set_surface(reflection_cefficient,colour,node)){
-		std::stringstream out;
-		out<<"produceDisc -> set_surface is not valid!";
-		cout << out.str() << endl;
-	}
-	
-	if(!set_Disc(radius,node)){
-		std::stringstream out;
-		out<<"produceDisc -> set_disc is not valid!";
-		cout << out.str() << endl;		
-	}
+	set_frame(name,position,rotation,node);
+	set_surface(reflection_cefficient,colour,node);
+	set_Disc(radius,node);
 	
 	Disc *new_Disc;
 	new_Disc = new Disc;			
@@ -397,6 +381,21 @@ CartesianFrame* WorldFactory::produceDisc
 CartesianFrame* WorldFactory::produceTriangle
 (CartesianFrame* mother,const pugi::xml_node node){
 
+	if(node.child("set_frame") == NULL){
+		throw MissingItem("set_frame",
+		"A triangle requires the 'set_frame' statement!");
+	}
+	
+	if(node.child("set_surface") == NULL){
+		throw MissingItem("set_surface",
+		"A triangle requires the 'set_surface' statement!");
+	}
+
+	if(node.child("set_triangle") == NULL){
+		throw MissingItem("set_disc",
+		"A triangle requires the 'set_disc' statement!");
+	}
+	
 	std::string name;
 	Vector3D position;
 	Rotation3D rotation;
@@ -409,23 +408,9 @@ CartesianFrame* WorldFactory::produceTriangle
 	Vector3D point_C;
 	// set triangle
 	
-	if(!set_frame(name,position,rotation,node)){
-		std::stringstream out;
-		out<<"produceTriangle -> set_frame is not valid!";
-		cout << out.str() << endl;
-	}
-		
-	if(!set_surface(reflection_cefficient,colour,node)){
-		std::stringstream out;
-		out<<"produceTriangle -> set_surface is not valid!";
-		cout << out.str() << endl;
-	}
-	
-	if(!set_Triangle(point_A,point_B,point_C,node)){
-		std::stringstream out;
-		out<<"produceTriangle -> set_disc is not valid!";
-		cout << out.str() << endl;		
-	}
+	set_frame(name,position,rotation,node);
+	set_surface(reflection_cefficient,colour,node);
+	set_Triangle(point_A,point_B,point_C,node);
 	
 	Triangle *new_Triangle;
 	new_Triangle = new Triangle;			
@@ -442,6 +427,15 @@ bool WorldFactory::set_surface(
 ReflectionProperties &reflection_cefficient, ColourProperties &colour,
 const pugi::xml_node node){
 	
+	if(node.child("set_surface").attribute("refl") == NULL){
+		throw MissingItem("refl",
+		"set_surface requires the 'refl' statement! 'refl' is short for reflection.");
+	}
+	if(node.child("set_surface").attribute("colour") == NULL){
+		throw MissingItem("colour",
+		"set_surface requires the 'colour' statement!");
+	}
+		
 	// check reflection coeficient
 	double FloatingNumber;
 	parseFloatingNumber(
@@ -467,22 +461,22 @@ bool WorldFactory::set_frame(
 std::string &name, Vector3D &position, Rotation3D &rotation,
 const pugi::xml_node node){
 	
-	pugi::xml_node check_node = node.child("set_frame");
-	if(check_node == NULL){
-		throw MissingItem("set_frame",
-		"A frame requires the 'set_frame' statement!");
+	if(node.child("set_frame").attribute("name") == NULL){
+		throw MissingItem("name",
+		"set_frame requires the 'name' statement!");
 	}
+	if(node.child("set_frame").attribute("pos") == NULL){
+		throw MissingItem("pos",
+		"set_frame requires the 'pos' statement!");
+	}
+	if(node.child("set_frame").attribute("rot") == NULL){
+		throw MissingItem("rot",
+		"set_frame requires the 'rot' statement!");
+	}	
 	
 	name = node.child("set_frame").attribute("name").value();
 
-	if(!check_name_for_multiple_usage(root_of_World,name)){
-		std::stringstream out;
-		out << "set_frame can not set name >";
-		out << node.child("set_frame").attribute("name").value();
-		out<<"< because it is already in use !";
-		cout << out.str() << endl;		
-		return false;
-	}
+	check_name_for_multiple_usage(root_of_World,name);
 	
 	tuple3 VecTuple; 
 	// check position
@@ -508,12 +502,23 @@ bool WorldFactory::set_plane(
 double &min_x, double &max_x, double &min_y, double &max_y,
 const pugi::xml_node node){
 	
-	pugi::xml_node check_node = node.child("set_plane");
-	if(check_node == NULL){
-		throw MissingItem("set_plane",
-		"A plane requires the 'set_plane' statement!");
+	if(node.child("set_plane").attribute("min_x") == NULL){
+		throw MissingItem("min_x",
+		"set_plane requires the 'min_x' statement!");
 	}
-	
+	if(node.child("set_plane").attribute("max_x") == NULL){
+		throw MissingItem("max_x",
+		"set_plane requires the 'max_x' statement!");
+	}
+	if(node.child("set_plane").attribute("min_y") == NULL){
+		throw MissingItem("min_y",
+		"set_plane requires the 'min_y' statement!");
+	}
+	if(node.child("set_plane").attribute("max_y") == NULL){
+		throw MissingItem("max_y",
+		"set_plane requires the 'max_y' statement!");
+	}
+			
 	double FloatingNumber;
 	parseFloatingNumber(
 	FloatingNumber,node.child("set_plane").attribute("min_x").value());
@@ -530,11 +535,6 @@ const pugi::xml_node node){
 	parseFloatingNumber(
 	FloatingNumber,node.child("set_plane").attribute("max_y").value());
 	max_y = FloatingNumber;	
-	
-//~ min_x = node.child("set_plane").attribute("min_x").as_double();
-//~ max_x = node.child("set_plane").attribute("max_x").as_double();
-//~ min_y = node.child("set_plane").attribute("min_y").as_double();
-//~ max_y = node.child("set_plane").attribute("max_y").as_double();
 
 	std::stringstream out;
 	out << "set_plane (";
@@ -549,11 +549,10 @@ return true;
 //=================================
 bool WorldFactory::set_sphere(
 double &radius,const pugi::xml_node node){
-	
-	pugi::xml_node check_node = node.child("set_sphere");
-	if(check_node == NULL){
-		throw MissingItem("set_sphere",
-		"A sphere requires the 'set_sphere' statement!");
+
+	if(node.child("set_sphere").attribute("radius") == NULL){
+		throw MissingItem("radius",
+		"set_sphere requires the 'radius' statement!");
 	}
 	
 	double FloatingNumber;
@@ -561,8 +560,6 @@ double &radius,const pugi::xml_node node){
 	FloatingNumber,
 	node.child("set_sphere").attribute("radius").value());
 	radius = FloatingNumber;
-	
-	//radius = node.child("set_sphere").attribute("radius").as_double();
 	
 	std::stringstream out;
 	out << "set_sphere (";
@@ -576,22 +573,26 @@ double &cylinder_radius,
 Vector3D &start_of_cylinder,
 Vector3D &end_of_cylinder,
 const pugi::xml_node node){
-	
-	pugi::xml_node check_node = node.child("set_cylinder");
-	if(check_node == NULL){
-		throw MissingItem("set_cylinder",
-		"A cylinder requires the 'set_cylinder' statement!");
+
+	if(node.child("set_cylinder").attribute("radius") == NULL){
+		throw MissingItem("radius",
+		"set_cylinder requires the 'radius' statement!");
 	}
-	
+	if(node.child("set_cylinder").attribute("start_pos") == NULL){
+		throw MissingItem("start_pos",
+		"set_cylinder requires the 'start_pos' statement!");
+	}
+	if(node.child("set_cylinder").attribute("end_pos") == NULL){
+		throw MissingItem("end_pos",
+		"set_cylinder requires the 'end_pos' statement!");
+	}
+		
 	double FloatingNumber;
 	parseFloatingNumber(
 	FloatingNumber,
 	node.child("set_cylinder").attribute("radius").value());
 	cylinder_radius = FloatingNumber;
 	
-	//~ cylinder_radius = 
-	//~ node.child("set_cylinder").attribute("radius").as_double();
-
 	// check start_of_cylinder
 	tuple3 VecTuple; 
 	parse3tuple(
@@ -614,11 +615,10 @@ const pugi::xml_node node){
 //=================================
 bool WorldFactory::set_fact_reflector(
 double &alpha,const pugi::xml_node node){
-	
-	pugi::xml_node check_node = node.child("set_FACT_reflector");
-	if(check_node == NULL){
-		throw MissingItem("set_FACT_reflector",
-		"The FACT reflector requires the 'set_FACT_reflector' statement!");
+
+	if(node.child("set_FACT_reflector").attribute("alpha") == NULL){
+		throw MissingItem("alpha",
+		"set_FACT_reflector requires the 'alpha' statement! Alpha=0 is a Davies-Cotton Reflector, alpha=1 is a paraboloid reflector. Alpha in between 0 and 1 is a mixture of both.");
 	}
 	
 	double FloatingNumber;
@@ -626,9 +626,6 @@ double &alpha,const pugi::xml_node node){
 	FloatingNumber,
 	node.child("set_FACT_reflector").attribute("alpha").value());
 	alpha = FloatingNumber;
-	
-	//~ alpha = 
-	//~ node.child("set_FACT_reflector").attribute("alpha").as_double();
 	
 	std::stringstream out;
 	out << "set_fact_reflector (";
@@ -639,10 +636,9 @@ double &alpha,const pugi::xml_node node){
 //=================================
 bool WorldFactory::set_Disc(double &radius,const pugi::xml_node node){
 
-	pugi::xml_node check_node = node.child("set_disc");
-	if(check_node == NULL){
-		throw MissingItem("set_disc",
-		"A disc requires the 'set_disc' statement!");
+	if(node.child("set_disc").attribute("radius") == NULL){
+		throw MissingItem("radius",
+		"set_disc requires the 'radius' statement!");
 	}
 
 	double FloatingNumber;
@@ -650,8 +646,6 @@ bool WorldFactory::set_Disc(double &radius,const pugi::xml_node node){
 	FloatingNumber,node.child("set_disc").attribute("radius").value());
 	radius = FloatingNumber;	
 
-	//~ radius = node.child("set_disc").attribute("radius").as_double();
-	
 	std::stringstream out;
 	out << "set_Disc (";
 	out << "radius "<<radius<<"[m])";
@@ -664,13 +658,20 @@ Vector3D &point_A,
 Vector3D &point_B,
 Vector3D &point_C,
 const pugi::xml_node node){
-	
-	pugi::xml_node check_node = node.child("set_triangle");
-	if(check_node == NULL){
-		throw MissingItem("set_triangle",
-		"A triangle requires the 'set_triangle' statement!");
-	}
 
+	if(node.child("set_triangle").attribute("A") == NULL){
+		throw MissingItem("A",
+		"set_triangle requires the 'A' statement!");
+	}
+	if(node.child("set_triangle").attribute("B") == NULL){
+		throw MissingItem("B",
+		"set_triangle requires the 'B' statement!");
+	}
+	if(node.child("set_triangle").attribute("C") == NULL){
+		throw MissingItem("C",
+		"set_triangle requires the 'C' statement!");
+	}
+	
 	tuple3 VecTuple; 	
 	
 	// check point A
@@ -716,7 +717,7 @@ const CartesianFrame *entitie_in_world,std::string name){
 		out<<"by frame >";
 		out<<*entitie_in_world->get_pointer_to_name_of_frame()<<"<";
 		cout << out.str() << endl;
-
+		throw MultipleUsageOfName(name);
 		return false;
 	}else{
 		for(int cild_iterator = 0;

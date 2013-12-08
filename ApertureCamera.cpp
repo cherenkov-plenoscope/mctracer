@@ -255,7 +255,7 @@ GlobalSettings* settings){
 	// modify filename
 	//~ str_image_file_name += ".png";
 	
-	int thread_id;
+	//int thread_id;
 	
 	// init image
 	//~ cv::Mat image(SensorResolutionV,SensorResolutionU, CV_8UC3);
@@ -281,7 +281,7 @@ GlobalSettings* settings){
 	int i;
 	int ray_per_pixel_iterator;
 	
-	#pragma omp parallel shared(settings,world) private(i,ray_per_pixel_iterator,cam_ray,imag_col,col_of_single_ray,intensity,u,v,thread_id) 
+	#pragma omp parallel shared(settings,world) private(i,ray_per_pixel_iterator,cam_ray,imag_col,col_of_single_ray,intensity,u,v) 
 	{	
 		// Obtain thread id 
 		//thread_id = omp_get_thread_num();
