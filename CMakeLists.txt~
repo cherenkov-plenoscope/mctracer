@@ -1,6 +1,6 @@
 #=======================================================================
 cmake_minimum_required(VERSION 2.8)
-set (CMAKE_CXX_FLAGS "-std=gnu++11 -O3") # -Wall
+set (CMAKE_CXX_FLAGS "-std=gnu++11 -Wall -O3 -ftest-coverage") # 
 #=======================================================================
 project( tracer )
 #=======================================================================
@@ -47,16 +47,16 @@ include_directories(/usr/include)
 include_directories(/usr/local/include)
 target_link_libraries( tracer ${OpenCV_LIBS} )
 #=======================================================================
-set(Boost_USE_STATIC_LIBS OFF) 
-set(Boost_USE_MULTITHREADED ON)  
-set(Boost_USE_STATIC_RUNTIME OFF) 
-#BOOST LOG
-ADD_DEFINITIONS(-DBOOST_LOG_DYN_LINK)
-FIND_PACKAGE( Boost COMPONENTS log REQUIRED )
-include_directories( ${Boost_INCLUDE_DIR} )
-TARGET_LINK_LIBRARIES(tracer ${Boost_LOG_LIBRARY} )
-#BOOST SPIRIT
-FIND_PACKAGE( Boost 1.54 REQUIRED )
+#set(Boost_USE_STATIC_LIBS OFF) 
+#set(Boost_USE_MULTITHREADED ON)  
+#set(Boost_USE_STATIC_RUNTIME OFF) 
+##BOOST LOG
+#ADD_DEFINITIONS(-DBOOST_LOG_DYN_LINK)
+#FIND_PACKAGE( Boost COMPONENTS log REQUIRED )
+#include_directories( ${Boost_INCLUDE_DIR} )
+#TARGET_LINK_LIBRARIES(tracer ${Boost_LOG_LIBRARY} )
+##BOOST SPIRIT
+#FIND_PACKAGE( Boost 1.56 REQUIRED )
 #=======================================================================
 find_package(OpenMP)
 if (OPENMP_FOUND)
@@ -64,7 +64,3 @@ if (OPENMP_FOUND)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 endif()
 #=======================================================================
-
-# configiration file library: libconfig
-#target_link_libraries(tracer config++)
-

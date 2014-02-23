@@ -106,3 +106,13 @@ double Rotation3D::cosPsi() const {return cos(Rz);}
 double Rotation3D::sinPhi() const {return sin(Rx);}
 double Rotation3D::sinThe() const {return sin(Ry);}
 double Rotation3D::sinPsi() const {return sin(Rz);}
+//======================================================================
+// friends of osstream
+//======================================================================
+std::ostream& operator<<(std::ostream& os, const Rotation3D& rot){
+    os << "("<<rot.get_rot_x()<<"|";
+    os <<      rot.get_rot_y()<<"|";
+    os <<      rot.get_rot_z()<<")";
+    os << "[rad]";
+    return os;
+}

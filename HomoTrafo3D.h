@@ -50,8 +50,8 @@ HomoTrafo3D operator* (const HomoTrafo3D G) const;
 HomoTrafo3D inverse() const;
 //==================================================================
 private:
-void 	set_Mat(const int x,const int y,const double dbl);
+void set(const int x,const int y,const double value);
 //==================================================================
-double 	get_Mat(const int x,const int y) const;	
+double get(const int x,const int y) const;	
 };
 #endif // __HOMOTRAFO3D_H_INCLUDED__ 

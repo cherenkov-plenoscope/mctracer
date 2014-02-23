@@ -56,3 +56,16 @@ std::string ReflectionProperties::get_string() const{
 void ReflectionProperties::disp() const{ 
 	std::cout<<get_string();
 }
+//======================================================================
+// friends of osstream
+//======================================================================
+std::ostream& operator<<(std::ostream& os, const ReflectionProperties& refl){
+    
+    if(refl.get_reflection_flag()) {
+		os << "refl. coeff.=";
+		os << refl.get_reflection_coefficient();
+	}else{
+		os << "FALSE";
+	}
+	return os;
+}

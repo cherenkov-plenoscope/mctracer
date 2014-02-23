@@ -183,4 +183,11 @@ double Vector3D::get_y() const{
 double Vector3D::get_z() const{
 	return z;
 }
-//======================
+//======================================================================
+// friends of osstream
+//======================================================================
+std::ostream& operator<<(std::ostream& os, const Vector3D& vec){
+    os << "("<<vec.get_x()<<"|"<<vec.get_y()<<"|"<<vec.get_z()<<")";
+    os << "[m]";
+    return os;
+}

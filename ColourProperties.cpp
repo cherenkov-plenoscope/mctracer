@@ -88,3 +88,13 @@ green_0to255 + mixture_coefficient*coulour_to_mix_with->green_0to255;
 blue_0to255 = 
 blue_0to255 + mixture_coefficient*coulour_to_mix_with->blue_0to255;
 }
+//======================================================================
+// friends of osstream
+//======================================================================
+std::ostream& operator<<(std::ostream& os, const ColourProperties& col){
+    os << "("<<int(col.get_red())<<"|";
+    os <<      int(col.get_green())<<"|";
+    os <<      int(col.get_blue())<<")";
+    os << "[RGB 8bit]";
+    return os;
+}

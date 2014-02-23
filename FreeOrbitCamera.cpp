@@ -19,8 +19,8 @@ FreeOrbitCamera::FreeOrbitCamera(){
 
 	// default image size and FoV
 	//stereo_view  = false;
-	ImageResolutionInX = 256;
-	ImageResolutionInY = 256;
+	ImageResolutionInX = 450;
+	ImageResolutionInY = 338;
 	FieldOfView_in_rad = M_PI/2.0; //90Deg
 	
 	// set up camera
@@ -133,55 +133,96 @@ void FreeOrbitCamera::move_backward(){
 }
 //======================================================================
 void FreeOrbitCamera::move_left(){
-	double dbl_increment = 0.5/FieldOfView_in_rad;
-	Vector3D CameraPointingDirection=
-	FlyingPinHoleCamera.get_pointing_direction();
-	CameraPointingDirection=CameraPointingDirection/CameraPointingDirection.norm2();
 	
-	Vector3D ez; ez.set_unit_vector_z(); 
+	double dbl_increment = 0.5/FieldOfView_in_rad;
+	
+	Vector3D CameraPointingDirection =
+	FlyingPinHoleCamera.get_pointing_direction();
+	
+	CameraPointingDirection = 
+	CameraPointingDirection/CameraPointingDirection.norm2();
+	
+	Vector3D ez; 
+	ez.set_unit_vector_z(); 
 	Vector3D vec_left;
 	vec_left=ez.cross_product(CameraPointingDirection);
 
 	t_World2Camera = t_World2Camera - vec_left*dbl_increment;
-	FlyingPinHoleCamera.set_cam(free_orbit_display_name,
-						t_World2Camera,R_World2Camera,ImageResolutionInX,ImageResolutionInY);
-	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);	
-	std::cout<<"free_orbit->move left: "<<t_World2Camera.get_string()<<std::endl;
+	
+	FlyingPinHoleCamera.set_cam(
+	free_orbit_display_name,
+	t_World2Camera,
+	R_World2Camera,
+	ImageResolutionInX,
+	ImageResolutionInY);
+	
+	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);
+		
+	std::cout<<"free_orbit->move left: ";
+	std::cout<<t_World2Camera.get_string()<<std::endl;
 }
 //======================================================================
 void FreeOrbitCamera::move_right(){
-	double dbl_increment = 0.5/FieldOfView_in_rad;
-	Vector3D CameraPointingDirection=
-	FlyingPinHoleCamera.get_pointing_direction();
-	CameraPointingDirection=CameraPointingDirection/CameraPointingDirection.norm2();
 	
-	Vector3D ez; ez.set_unit_vector_z(); 
+	double dbl_increment = 0.5/FieldOfView_in_rad;
+	
+	Vector3D CameraPointingDirection =
+	FlyingPinHoleCamera.get_pointing_direction();
+	
+	CameraPointingDirection = 
+	CameraPointingDirection/CameraPointingDirection.norm2();
+	
+	Vector3D ez; 
+	ez.set_unit_vector_z(); 
 	Vector3D vec_left;
 	vec_left=ez.cross_product(CameraPointingDirection);
 
 	t_World2Camera = t_World2Camera + vec_left*dbl_increment;
-	FlyingPinHoleCamera.set_cam(free_orbit_display_name,
-						t_World2Camera,R_World2Camera,ImageResolutionInX,ImageResolutionInY);
-	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);	
-	std::cout<<"free_orbit->move left: "<<t_World2Camera.get_string()<<std::endl;
+	
+	FlyingPinHoleCamera.set_cam(
+	free_orbit_display_name,
+	t_World2Camera,
+	R_World2Camera,
+	ImageResolutionInX,
+	ImageResolutionInY);
+	
+	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);
+		
+	std::cout<<"free_orbit->move left: ";
+	std::cout<<t_World2Camera.get_string()<<std::endl;
+	
 }
 //======================================================================
 void FreeOrbitCamera::increase_FoV(){
-	if(FieldOfView_in_rad<((M_PI*2.0)/360)*120.0){
-	FieldOfView_in_rad = FieldOfView_in_rad + ((M_PI*2.0)/360)*10.0;
-	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);
-	std::cout<<"free_orbit-> FoV: "<<FieldOfView_in_rad*360.0/(2.0*M_PI);
-	std::cout<<" [DEG]"<<std::endl;
+	
+	if( FieldOfView_in_rad < ((M_PI*2.0)/360)*120.0 ){
+		
+		FieldOfView_in_rad = FieldOfView_in_rad + ((M_PI*2.0)/360)*10.0;
+		
+		FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);
+		
+		std::cout<<"free_orbit-> FoV: ";
+		std::cout<<FieldOfView_in_rad*360.0/(2.0*M_PI);
+		std::cout<<" [DEG]"<<std::endl;
+		
 	}
+	
 }
 //======================================================================
 void FreeOrbitCamera::decrease_FoV(){
-	if(FieldOfView_in_rad>((M_PI*2.0)/360)*15.0){
-	FieldOfView_in_rad = FieldOfView_in_rad - ((M_PI*2.0)/360)*10.0;
-	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);
-	std::cout<<"free_orbit-> FoV: "<<FieldOfView_in_rad*360.0/(2.0*M_PI);
-	std::cout<<" [DEG]"<<std::endl;
+	
+	if( FieldOfView_in_rad > ((M_PI*2.0)/360)*15.0 ){
+		
+		FieldOfView_in_rad = FieldOfView_in_rad - ((M_PI*2.0)/360)*10.0;
+		
+		FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);
+		
+		std::cout<<"free_orbit-> FoV: ";
+		std::cout<<FieldOfView_in_rad*360.0/(2.0*M_PI);
+		std::cout<<" [DEG]"<<std::endl;
+		
 	}
+	
 }
 //======================================================================
 void FreeOrbitCamera::look_up(){
