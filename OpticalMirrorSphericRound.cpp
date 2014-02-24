@@ -198,7 +198,7 @@ void OpticalMirrorSphericRound::hit(Vector3D *base,Vector3D *dir, Intersection *
 			,-0.5);
 			
 
-			surface_normal.set_vec3D(
+			surface_normal.set(
 			//x
 			vec_intersec_sphere.get_x()*dbl_surf_norm_factor,
 			//y

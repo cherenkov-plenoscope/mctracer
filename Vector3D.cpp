@@ -4,23 +4,19 @@ Vector3D::Vector3D(){
 }
 //======================
 Vector3D::Vector3D(const double nx,const double ny,const double nz){
-	x=nx; y=ny; z=nz;
+	x=nx; 
+	y=ny; 
+	z=nz;
 }
 //======================
-void Vector3D::set_vec3D
-(const double nx,const double ny,const double nz){
-	x=nx; y=ny; z=nz;
+void Vector3D::set(const double nx,const double ny,const double nz){
+	x=nx; 
+	y=ny; 
+	z=nz;
 }
 //======================
 double Vector3D::norm2() const{
-/*!
- * Let \f$ \vec{a} \f$ be a three dimensional vector represented by
- * Vector3D. The Euclidean norm aka norm 2  aka the length of this vector
- * is given by a.norm2() which calculates:
- * \f{eqnarray*}{ \Vert \vec{a} \Vert_2 &=& \sqrt{a_x^2 + a_y^2 + a_z^2 }
- * \f}
- */
-	return sqrt( pow(x,2) + pow(y,2) + pow(z,2) );
+	return sqrt( pow(x,2.0) + pow(y,2.0) + pow(z,2.0) );
 }
 //======================
 Vector3D Vector3D::cross_product(const Vector3D v) const{
@@ -77,10 +73,7 @@ void Vector3D::operator=(const Vector3D eq){
 }
 //======================
 void Vector3D::disp() const{
-	std::stringstream out; 
-	out.str("");
-	out<<"vector: ("<<x<<"|"<<y<<"|"<<z<<") [m]"<<std::endl;
-	std::cout<<out.str();
+	std::cout<<get_string();
 }
 //======================
 std::string Vector3D::get_string() const{
@@ -132,7 +125,7 @@ void Vector3D::mirror(Vector3D* ray) const{
 	//
 	// dir_of_ray_to_be_reflected is overwritten with the reflected ray.
 	//
-	ray->set_vec3D(
+	ray->set(
 	//x component
 	(1.0-2.0*pow(x,2.0))*ray->x +
 	(-2.0*x*y)*ray->y +

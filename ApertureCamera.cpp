@@ -182,7 +182,7 @@ void ApertureCamera::cam_send_ray
 	y = -Yy+(SensorResolutionU/2);
 	
 	Vector3D vec_pixel_x_y;
-	vec_pixel_x_y.set_vec3D(
+	vec_pixel_x_y.set(
 	//x
 	x*PixelPitch_in_m,
 	//y
@@ -201,7 +201,7 @@ void ApertureCamera::cam_send_ray
 	//std::cout<<"r: "<<r<<" phi: "<<phi<<std::endl;
 	
 	Vector3D vec_lens_inersection;
-	vec_lens_inersection.set_vec3D(
+	vec_lens_inersection.set(
 	//x
 	r*cos(phi),
 	//y
@@ -214,7 +214,7 @@ void ApertureCamera::cam_send_ray
 	//calculate object plane intersection
 	//======================
 	Vector3D vec_object_plane_intersection;
-	vec_object_plane_intersection.set_vec3D(
+	vec_object_plane_intersection.set(
 	//x
 	-x*PixelPitch_in_m * ObjectDistance_in_m/SensorDistance_in_m,
 	//y

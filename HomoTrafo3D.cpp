@@ -266,7 +266,7 @@ const Vector3D pos){
 //==================================================================
 void HomoTrafo3D::transform_orientation
 (Vector3D* orientation_to_transform)const{
-	orientation_to_transform->set_vec3D(
+	orientation_to_transform->set(
 	//x
 	orientation_to_transform->get_x()*get(0,0) + 
 	orientation_to_transform->get_y()*get(0,1) +
@@ -286,7 +286,7 @@ void HomoTrafo3D::transform_orientation
 //==================================================================
 void HomoTrafo3D::transform_position
 (Vector3D* position_to_transform)const{
-	position_to_transform->set_vec3D(
+	position_to_transform->set(
 	//x
 	position_to_transform->get_x()*get(0,0) + 
 	position_to_transform->get_y()*get(0,1) + 
@@ -306,7 +306,7 @@ void HomoTrafo3D::transform_position
 //==================================================================
 Vector3D HomoTrafo3D::get_translation() const{
 	Vector3D vec_translation;
-	vec_translation.set_vec3D(
+	vec_translation.set(
 	get(0,3),get(1,3),get(2,3));
 	return vec_translation;
 }

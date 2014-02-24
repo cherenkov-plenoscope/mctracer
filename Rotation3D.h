@@ -24,17 +24,17 @@ double Rx;
 double Ry;
 double Rz;
 // rot_axis mode
-Vector3D vec_rot_axis;
-double 	dbl_rot_angle_in_rad;
+Vector3D 	rot_axis;
+double 	rot_angle_in_rad;
 public:
 //======================
 Rotation3D();
 //======================
 Rotation3D(double Phi, double The, double Psi);
 //======================
-void set_rotation(double Phi,double The,double Psi);
+void set(double Phi,double The,double Psi);
 //======================
-void set_rotation
+void set
 (const Vector3D vec_new_rot_axis,const double dbl_new_rot_angle_on_rad);
 //======================
 Vector3D get_rot_axis() const;

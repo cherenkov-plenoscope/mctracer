@@ -11,7 +11,7 @@ FreeOrbitCamera::FreeOrbitCamera(){
 	RotWorld2CameraY_in_rad = -M_PI/2.0;
 	RotWorld2CameraZ_in_rad = 0.0;
 	
-	R_World2Camera.set_rotation(
+	R_World2Camera.set(
 	0.0,
 	RotWorld2CameraY_in_rad,
 	RotWorld2CameraZ_in_rad
@@ -231,7 +231,7 @@ void FreeOrbitCamera::look_up(){
 	if(RotWorld2CameraY_in_rad<0.0 + dbl_step){
 	RotWorld2CameraY_in_rad = RotWorld2CameraY_in_rad + dbl_step;
 	
-	R_World2Camera.set_rotation(0.0,RotWorld2CameraY_in_rad,RotWorld2CameraZ_in_rad);
+	R_World2Camera.set(0.0,RotWorld2CameraY_in_rad,RotWorld2CameraZ_in_rad);
 	FlyingPinHoleCamera.set_cam(free_orbit_display_name,
 						t_World2Camera,R_World2Camera,ImageResolutionInX,ImageResolutionInY);
 	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);					
@@ -247,7 +247,7 @@ void FreeOrbitCamera::look_down(){
 	if(RotWorld2CameraY_in_rad > -M_PI + dbl_step){
 	RotWorld2CameraY_in_rad = RotWorld2CameraY_in_rad - dbl_step;
 	
-	R_World2Camera.set_rotation(0.0,RotWorld2CameraY_in_rad,RotWorld2CameraZ_in_rad);
+	R_World2Camera.set(0.0,RotWorld2CameraY_in_rad,RotWorld2CameraZ_in_rad);
 	FlyingPinHoleCamera.set_cam(free_orbit_display_name,
 						t_World2Camera,R_World2Camera,ImageResolutionInX,ImageResolutionInY);
 	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);					
@@ -264,7 +264,7 @@ void FreeOrbitCamera::look_left(){
 	
 	RotWorld2CameraZ_in_rad = RotWorld2CameraZ_in_rad + dbl_step;
 	
-	R_World2Camera.set_rotation(0.0,RotWorld2CameraY_in_rad,RotWorld2CameraZ_in_rad);
+	R_World2Camera.set(0.0,RotWorld2CameraY_in_rad,RotWorld2CameraZ_in_rad);
 	FlyingPinHoleCamera.set_cam(free_orbit_display_name,
 						t_World2Camera,R_World2Camera,ImageResolutionInX,ImageResolutionInY);
 	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);					
@@ -280,7 +280,7 @@ void FreeOrbitCamera::look_right(){
 	
 	RotWorld2CameraZ_in_rad = RotWorld2CameraZ_in_rad - dbl_step;
 	
-	R_World2Camera.set_rotation(0.0,RotWorld2CameraY_in_rad,RotWorld2CameraZ_in_rad);
+	R_World2Camera.set(0.0,RotWorld2CameraY_in_rad,RotWorld2CameraZ_in_rad);
 	FlyingPinHoleCamera.set_cam(free_orbit_display_name,
 						t_World2Camera,R_World2Camera,ImageResolutionInX,ImageResolutionInY);
 	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);					

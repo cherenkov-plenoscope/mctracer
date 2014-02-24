@@ -51,7 +51,7 @@ GlobalSettings* settings)const{
 		dbl_phi_in_rad =  2.0 *M_PI *
 		(double)RNG_mt19937()/(double)RNG_mt19937.max();		
 		
-		vec_dir_of_emitted_ray.set_vec3D(	
+		vec_dir_of_emitted_ray.set(	
 							sin(dbl_theta_in_rad)*cos(dbl_phi_in_rad),
 							sin(dbl_theta_in_rad)*sin(dbl_phi_in_rad),
 							cos(dbl_theta_in_rad)

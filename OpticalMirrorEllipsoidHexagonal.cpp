@@ -253,7 +253,7 @@ void OpticalMirrorEllipsoidHexagonal::hit
 					,0.5);
 					
 			Vector3D surface_normal;
-			surface_normal.set_vec3D(
+			surface_normal.set(
 			-dbl_surface_normal_factor*
 			(2.0*vec_intersec_ellipsoid.get_x()/(A*A)),
 			-dbl_surface_normal_factor*
@@ -327,7 +327,7 @@ void OpticalMirrorEllipsoidHexagonal::hit
 		  //
 		  
 		Vector3D surface_normal;
-		surface_normal.set_vec3D(
+		surface_normal.set(
 			vec_intersec_sphere.get_x()/(A*A),
 			vec_intersec_sphere.get_y()/(B*B),
 			(vec_intersec_sphere.get_z() - C) / (C*C) 

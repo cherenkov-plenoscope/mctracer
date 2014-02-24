@@ -24,8 +24,8 @@ protected:
     std::string name_of_frame;
     Vector3D 	position_relative_to_mother; 
     Rotation3D 	rotation_relative_to_mother;
-    double radius_of_sphere_enclosing_all_children; 
-    Vector3D pos_in_world;
+    double 	radius_of_sphere_enclosing_all_children; 
+    Vector3D 	pos_in_world;
     
     HomoTrafo3D T_frame2mother;
     HomoTrafo3D T_mother2frame;
@@ -35,11 +35,10 @@ protected:
     std::vector<CartesianFrame*> children;
 	CartesianFrame *mother;
 //======================================================================
-void post_initializing();
-public:
+public: ////////////////////////////////////////////////////////////////
 //======================================================================
 void post_initialize_radius_of_sphere_enclosing_all_children();
-//======================================================================
+//======================
 const std::string* get_pointer_to_name_of_frame() const;
 //======================
 const Vector3D* 
@@ -74,30 +73,28 @@ CartesianFrame();
 void set_frame
 (const std::string new_name,const Vector3D npos,const Rotation3D nrot);
 //======================
-virtual void disp()const;
-//======================
 std::string get_frame_string()const;
 //======================
-private:
-std::string get_frame_prompt_including_children(unsigned depth)const;
-public:
 std::string get_frame_prompt_including_children()const;
 //======================
-private:
-void add_mother(CartesianFrame *const new_mother);
-//======================
-void add_child(CartesianFrame * const new_child);
-//======================
-public:
 void set_mother_and_child(CartesianFrame *new_child);
 //======================
 void post_initialize_me_and_all_my_children();
 //======================================================================
-// virtual 
+private: ///////////////////////////////////////////////////////////////
 //======================================================================
-virtual void hit(
-Vector3D *base,Vector3D *dir,
-Intersection *intersection)const;
+std::string get_frame_prompt_including_children(unsigned depth)const;
+//======================
+void add_mother(CartesianFrame *const new_mother);
+//======================
+void add_child(CartesianFrame * const new_child);
+//======================
+void post_initializing();
+//======================================================================
+public: // VIRTUAL /////////////////////////////////////////////////////
+//======================================================================
+virtual void hit
+(Vector3D *base,Vector3D *dir,Intersection *intersection)const;
 //======================
 virtual bool is_hit();
 //======================
@@ -112,15 +109,17 @@ virtual const ReflectionProperties* get_ptr2_reflection()const;
 virtual void get_reflection_direction_in_object_system
 (Vector3D* vec);
 //======================
-virtual void get_intersection_vec_in_object_system(Vector3D *inter);
+virtual void get_intersection_vec_in_object_system
+(Vector3D *inter);
 //======================
-virtual bool set_spheric_hexag(double new_dbl_focal_length,
-double new_dbl_mirror_radius);
+virtual bool set_spheric_hexag
+(double new_dbl_focal_length,double new_dbl_mirror_radius);
 //======================
 virtual void set_surface_properties
 (ReflectionProperties *n_refl, ColourProperties *n_col);
 //======================
 virtual bool get_sensor_flag()const;
 //======================
+virtual void disp()const;
 };
 #endif // __CARTESIANFRAME_H_INCLUDED__

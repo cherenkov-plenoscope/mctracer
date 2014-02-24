@@ -6,7 +6,7 @@ void Ray::set_ray(const Vector3D nbase,const Vector3D ndir){
 }
 //======================================================================
 void Ray::set_base(const double x,const double y,const double z){
-	base.set_vec3D(x,y,z);
+	base.set(x,y,z);
 }
 //======================================================================
 void Ray::set_base(const Vector3D nbase){
@@ -14,7 +14,7 @@ void Ray::set_base(const Vector3D nbase){
 }
 //======================================================================
 void Ray::set_dir(const double x,const double y,const double z){
-	dir.set_vec3D(x,y,z);
+	dir.set(x,y,z);
 	dir = dir/dir.norm2();
 }
 //======================================================================

@@ -482,13 +482,13 @@ const pugi::xml_node node){
 	// check position
 	parse3tuple(
 	VecTuple,node.child("set_frame").attribute("pos").value());
-	position.set_vec3D(VecTuple.x,VecTuple.y,VecTuple.z);
+	position.set(VecTuple.x,VecTuple.y,VecTuple.z);
 
 	
 	//check rotation
 	parse3tuple(
 	VecTuple,node.child("set_frame").attribute("rot").value());
-	rotation.set_rotation(VecTuple.x,VecTuple.y,VecTuple.z);
+	rotation.set(VecTuple.x,VecTuple.y,VecTuple.z);
 	
 	std::stringstream out;
 	out << "set_frame (name: "<<name;
@@ -597,12 +597,12 @@ const pugi::xml_node node){
 	tuple3 VecTuple; 
 	parse3tuple(
 	VecTuple,node.child("set_cylinder").attribute("start_pos").value());
-	start_of_cylinder.set_vec3D(VecTuple.x,VecTuple.y,VecTuple.z);
+	start_of_cylinder.set(VecTuple.x,VecTuple.y,VecTuple.z);
 	
 	// check end_of_cylinder
 	parse3tuple(
 	VecTuple,node.child("set_cylinder").attribute("end_pos").value());
-	end_of_cylinder.set_vec3D(VecTuple.x,VecTuple.y,VecTuple.z);
+	end_of_cylinder.set(VecTuple.x,VecTuple.y,VecTuple.z);
 	
 	std::stringstream out;
 	out << "set_cylinder (";
@@ -677,17 +677,17 @@ const pugi::xml_node node){
 	// check point A
 	parse3tuple(
 	VecTuple,node.child("set_triangle").attribute("A").value());
-	point_A.set_vec3D(VecTuple.x,VecTuple.y,VecTuple.z);
+	point_A.set(VecTuple.x,VecTuple.y,VecTuple.z);
 
 	// check point B
 	parse3tuple(
 	VecTuple,node.child("set_triangle").attribute("B").value());
-	point_B.set_vec3D(VecTuple.x,VecTuple.y,VecTuple.z);
+	point_B.set(VecTuple.x,VecTuple.y,VecTuple.z);
 
 	// check point C 
 	parse3tuple(
 	VecTuple,node.child("set_triangle").attribute("C").value());
-	point_C.set_vec3D(VecTuple.x,VecTuple.y,VecTuple.z);
+	point_C.set(VecTuple.x,VecTuple.y,VecTuple.z);
 
 	std::stringstream out;
 	out << "set_Triangle (";

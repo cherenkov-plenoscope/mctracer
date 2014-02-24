@@ -227,7 +227,7 @@ FactTelescope::FactTelescope(double alpha){
 				telescope_table<<"| z_hybrid     :   ";
 				telescope_table<<z_hybrid<<" [m]"<<std::endl;
 				
-				mirror_pos.set_vec3D(
+				mirror_pos.set(
 				//x
 				circle_radius_of_mirror_positions[radius]*
 				sin(angle),
@@ -248,7 +248,7 @@ FactTelescope::FactTelescope(double alpha){
 					//==============================================
 				Vector3D focal_point; 
 				focal_point.
-				set_vec3D(0.0,0.0,dbl_focal_length_telescope);
+				set(0.0,0.0,dbl_focal_length_telescope);
 				
 				Vector3D focal_point_to_mirror_pos = 
 				focal_point - mirror_pos;
@@ -294,7 +294,7 @@ FactTelescope::FactTelescope(double alpha){
 				// set rotation 
 				//==================================================
 				mirror_rotation.
-				set_rotation(vec_rotation_axis,-dbl_rot_angle);
+				set(vec_rotation_axis,-dbl_rot_angle);
 				
 				//==================================================
 				// test rotation
@@ -303,7 +303,7 @@ FactTelescope::FactTelescope(double alpha){
 				Vector3D test_vec; test_vec.set_unit_vector_z();
 				test_vec.disp();
 				
-				Vector3D none_translation; none_translation.set_vec3D(0.0,0.0,0.0);
+				Vector3D none_translation; none_translation.set(0.0,0.0,0.0);
 				HomoTrafo3D homoT_test;
 				homoT_test.set_transformation(mirror_rotation,none_translation);
 				homoT_test.disp();

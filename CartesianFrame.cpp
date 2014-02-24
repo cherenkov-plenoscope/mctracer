@@ -2,8 +2,8 @@
 void CartesianFrame::
 post_initializing(){
 	//initialize eye matrices
-	Vector3D p; p.set_vec3D(0.0,0.0,0.0);
-	Rotation3D r; r.set_rotation(0.0,0.0,0.0);
+	Vector3D p; p.set(0.0,0.0,0.0);
+	Rotation3D r; r.set(0.0,0.0,0.0);
 	T_mother2frame.set_transformation(r,p);
 	T_world2frame.set_transformation(r,p);
 	

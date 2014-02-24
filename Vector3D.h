@@ -22,7 +22,7 @@ public:
 Vector3D();
 Vector3D(const double nx,const double ny,const double nz);
 //======================
-void set_vec3D(const double nx,const double ny,const double nz);
+void set(const double nx,const double ny,const double nz);
 //======================
 double norm2() const;
 //======================

@@ -138,7 +138,7 @@ void OpticalMirrorParabolicHexagonal::hit(Vector3D *base,Vector3D *dir, Intersec
 			Vector3D intersec_parabola = *base + *dir *t;
 			// surface normal
 			Vector3D surface_normal;
-			surface_normal.set_vec3D(
+			surface_normal.set(
 			//x
 			-1.0/(2.0*FocalLength_m)*intersec_parabola.get_x(),
 			//y

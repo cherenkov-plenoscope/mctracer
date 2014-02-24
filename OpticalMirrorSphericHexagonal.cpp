@@ -194,7 +194,7 @@ void OpticalMirrorSphericHexagonal::hit(Vector3D *base,Vector3D *dir, Intersecti
 				pow(vec_intersec_sphere.get_y()	,2.0)
 			,-0.5);
 			
-			surface_normal.set_vec3D(
+			surface_normal.set(
 			//x
 			vec_intersec_sphere.get_x()*dbl_surf_norm_factor,
 			//y

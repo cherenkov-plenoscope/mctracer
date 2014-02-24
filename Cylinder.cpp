@@ -52,7 +52,7 @@ Vector3D vec_end){
 	fabs(vec_ez*vec_rotsym_axis_in_world_frame/
 	vec_rotsym_axis_in_world_frame.norm2())== 1.0)
 	{
-		euler_new_rot.set_rotation(vec_ez,0.0);
+		euler_new_rot.set(vec_ez,0.0);
 	}
 	else
 	{
@@ -69,7 +69,7 @@ Vector3D vec_end){
 		//cout<<"rot angle: "<<dbl_new_rot_angle_in_rad<<endl;
 		
 		euler_new_rot.
-		set_rotation(vec_rot_axis,dbl_new_rot_angle_in_rad);
+		set(vec_rot_axis,dbl_new_rot_angle_in_rad);
 	}
 	//===================
 	// reset frame
@@ -238,7 +238,7 @@ Intersection *intersection)const{
 		{
 			dbl_lambda = dbl_lambda_minus;
 			vec_intersection = *base + (*dir)*dbl_lambda;
-			vec_surface_normal.set_vec3D(
+			vec_surface_normal.set(
 			vec_intersection.get_x(),
 			vec_intersection.get_y(),
 			0.0);
