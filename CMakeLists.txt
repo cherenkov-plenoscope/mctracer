@@ -7,6 +7,7 @@ project( tracer )
 find_package( OpenCV REQUIRED )
 add_executable( 
 tracer tracer.cpp 
+CsvHandler.cpp
 #ConfigFileHandle.cpp 
 WorldFactory.cpp
 SensorIntersection.cpp 
@@ -20,6 +21,9 @@ Intersection.cpp
 CartesianFrame.cpp 
 SurfaceEntity.cpp 
 Ray.cpp 
+Photon.cpp
+CameraRay.cpp
+ListOfPropagations.cpp
 CameraDevice.cpp 
 CameraImage.cpp
 PinHoleCamera.cpp 

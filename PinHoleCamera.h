@@ -36,7 +36,7 @@ public:
 	//======================
 	void disp();
 	//======================
-	Ray cam_send_ray(int Uu,int Vv);
+	CameraRay cam_send_ray(int Uu,int Vv);
 	//======================
 	void cam_acquire_image_parallel(
 	CartesianFrame* world,

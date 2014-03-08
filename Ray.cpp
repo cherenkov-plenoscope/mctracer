@@ -23,17 +23,25 @@ void Ray::set_dir(const Vector3D ndir){
 }
 //======================================================================
 void Ray::disp()const{
-	std::cout<<get_string();
+	std::cout << "Ray -> " << get_string() << "\n";
 }
 //======================================================================
 std::string Ray::get_string()const{
 	std::stringstream out; out.str("");
-	out<<"ray : "<<base.get_string()<<" + var*"<<dir.get_string()<<std::endl;
+	out<<"support: " << base <<", direction: " << dir;
 	return out.str();
 }
 //======================================================================
 Vector3D Ray::get_position_on_ray(const double scalar)const{
 	return (base + dir*scalar);
+}
+//======================================================================
+Vector3D Ray::get_support()const{
+	return base;
+}
+//======================================================================
+Vector3D Ray::get_direction()const{
+	return dir;
 }
 //======================================================================
 void Ray::pre_trace(
@@ -427,7 +435,7 @@ ColourProperties Ray::trace(const CartesianFrame* world,
 		
 	//==================================================================
 	// test wether there is at least one object intersecting the ray or
-	// not using the size of the list_of_intersecting_objects
+	// not by using the size of the list_of_intersecting_objects
 	//==================================================================
 	ColourProperties colour_to_return;
 	
@@ -513,14 +521,12 @@ ColourProperties Ray::trace(const CartesianFrame* world,
 	//=============
 	//free memory list_of_ptr_to_intersections 
 	//=============
-	for(unsigned int i=0;
-		i<list_of_ptr_to_intersections_which_might_take_place.size();
-		i++ )
-	{
-		delete 
-		list_of_ptr_to_intersections_which_might_take_place.
-		at(i);
-	}	
+	for (Intersection *ptr_to_intersection : 
+	list_of_ptr_to_intersections_which_might_take_place ) {
+		
+		delete ptr_to_intersection;
+		
+	}
 	//=============
 	return colour_to_return;
 }
@@ -749,3 +755,23 @@ bool Ray::operator() (Intersection* one, Intersection* two)const{
 			two->get_intersection_distance();
 }
 //======================================================================
+std::string Ray::get_csv_line()const{
+	uint decimal_precision = 6;
+	return get_csv_line(decimal_precision);
+}
+//======================================================================
+std::string Ray::get_csv_line(uint decimal_precision)const{
+
+	std::stringstream out;
+	out << base.get_csv(decimal_precision) << ",";
+	out << dir.get_csv(decimal_precision);
+	
+	return out.str();
+}
+//======================================================================
+// friends of osstream
+//======================================================================
+std::ostream& operator<<(std::ostream& os, const Ray& ray_to_be_displayed){
+    os << ray_to_be_displayed.get_string();
+    return os;
+}

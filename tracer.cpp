@@ -46,7 +46,6 @@
 #include <iostream> 
 #include <string>
 #include <sstream>
-#include <random>
 
 #include "WorldFactory.h"
 #include "SensorIntersection.h"
@@ -59,7 +58,12 @@
 #include "Intersection.h"
 #include "CartesianFrame.h"
 #include "SurfaceEntity.h"
+//====================
 #include "Ray.h"
+#include "Photon.h"
+#include "CameraRay.h"
+//====================
+#include "ListOfPropagations.h"
 #include "CameraDevice.h"
 #include "PinHoleCamera.h"
 #include "ApertureCamera.h"
@@ -84,7 +88,6 @@
 #include "FactTelescope.h"
 
 // namespaces
-using namespace cv;
 using namespace std;
 
 //======================================================================
@@ -110,11 +113,29 @@ int main(){
 	out<<"|  Author: Sebastian Mueller              year 2013  |"<<endl;
 	out<<"|____________________________________________________|"<<endl;
 	cout<<out.str();
-	//==================================================================
-	// random number seed
-	// only call once !
-	//==================================================================
-	srand(time(0));
+	
+	ListOfPropagations mylist("my little list");
+	
+	Ray* Hans;
+	Hans = new Ray;
+	Hans->set_base(13,42,3.1415);
+	Hans->set_dir(666.3,1.1e3,6.0e-19);
+	Hans->disp();
+	
+	Photon* Franz;
+	Franz = new Photon(*Hans,475e-9);
+	Franz->disp();
+	
+	CameraRay* Bob;
+	Bob = new CameraRay;
+	Bob->disp();
+	
+	mylist.push_back(Hans);
+	mylist.push_back(Franz);
+	mylist.push_back(Bob);
+	
+	cout << mylist;
+	mylist.export_csv("mylist.csv");
 	
 	//==================================================================
 	// set up global settings

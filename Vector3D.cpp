@@ -83,6 +83,22 @@ std::string Vector3D::get_string() const{
 	return out.str();
 }
 //======================
+std::string  Vector3D::get_csv() const{
+	uint decimal_precision = 6;
+	return get_csv(decimal_precision);
+}
+//======================
+std::string  Vector3D::get_csv(uint decimal_precision) const{
+	
+	std::stringstream out; 
+	out.precision(decimal_precision);
+	out << std::scientific;
+	
+	out.str("");
+	out << x << "," << y << "," << z;
+	return out.str();
+}
+//======================
 void Vector3D::mirror(Vector3D* ray) const{
 	// mirror martix
 	//

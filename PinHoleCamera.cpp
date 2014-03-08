@@ -62,8 +62,7 @@ void PinHoleCamera::disp(){
 	std::cout<<get_pin_hole_cam_string();
 }
 //======================
-Ray PinHoleCamera::cam_send_ray(int Uu,int Vv){
-	//FAST
+CameraRay PinHoleCamera::cam_send_ray(int Uu,int Vv){
 	//calculate pixel coordinates
 	int u = Uu-(SensorResolutionV/2);
 	int v = Vv-(SensorResolutionU/2);
@@ -82,7 +81,7 @@ Ray PinHoleCamera::cam_send_ray(int Uu,int Vv){
 	Vector3D vec_ray_dir;
 	vec_ray_dir = vec_intersection_ray_and_sensor - CameraPositionInWorld;
 	// return
-	Ray camera_ray;
+	CameraRay camera_ray;
 	camera_ray.set_ray(CameraPositionInWorld,vec_ray_dir);
 	return camera_ray;
 }
@@ -102,7 +101,7 @@ GlobalSettings* settings){
 	//==============================================================
 	int i,u,v;
 	cv::Vec3b intensity;
-	Ray cam_ray;
+	CameraRay cam_ray;
 	ColourProperties imag_col;
 
 	#pragma omp parallel shared(settings,world) private(i,cam_ray,imag_col,intensity,u,v) 

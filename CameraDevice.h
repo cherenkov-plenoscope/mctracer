@@ -15,7 +15,8 @@
 #include "Rotation3D.h"
 #include "Vector3D.h"
 #include "HomoTrafo3D.h"
-#include "Ray.h"
+//#include "Ray.h"
+#include "CameraRay.h"
 //=================================
 class CameraDevice{
 protected:
@@ -27,7 +28,7 @@ protected:
 	Vector3D        CameraPositionInWorld;
 	Rotation3D      CameraOrientationInWorld;
 	Vector3D        CameraPointingDirection;
-	Ray             OpticalAxis;
+	CameraRay       OpticalAxis;
 
 	// Sensor
 	int SensorResolutionU;

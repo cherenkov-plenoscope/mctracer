@@ -27,6 +27,10 @@ protected:
 	double PixelPitch_in_m; 	
 
 	int NumberOfRaysPerPixelToBeEmitted;
+	
+	// mt19937 is a standard mersenne_twister_engine
+	std::mt19937 pRNG_mt19937;
+
 public:
 	//======================
 	bool set_object_distance(double n_object_distance);
@@ -43,7 +47,7 @@ public:
 	//======================
 	void disp();
 	//======================
-	void cam_send_ray(double Xx,double Yy,Ray* ray_camera_pixel_x_y);
+	void cam_send_ray(double Xx,double Yy,CameraRay* ray_camera_pixel_x_y);
 	//======================
 	void cam_acquire_image(
 	CartesianFrame* world,

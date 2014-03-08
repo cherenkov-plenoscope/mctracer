@@ -171,7 +171,7 @@ void ApertureCamera::disp(){
 }
 //======================
 void ApertureCamera::cam_send_ray
-(double Xx,double Yy,Ray* ray_camera_pixel_x_y){
+(double Xx,double Yy,CameraRay* ray_camera_pixel_x_y){
 
 	//======================
 	//calculate pixel coordinates
@@ -196,8 +196,12 @@ void ApertureCamera::cam_send_ray
 	//======================
 	double r;
 	double phi;
-	r = (double)rand()/(double)RAND_MAX * ApertureRadius_in_m;
-	phi = (double)rand()/(double)RAND_MAX * 2.0 * M_PI;
+	
+	r   = double(pRNG_mt19937())/double(pRNG_mt19937.max())
+			*ApertureRadius_in_m;
+			
+	phi = double(pRNG_mt19937())/double(pRNG_mt19937.max())
+			*2.0 * M_PI;
 	//std::cout<<"r: "<<r<<" phi: "<<phi<<std::endl;
 	
 	Vector3D vec_lens_inersection;
@@ -266,7 +270,11 @@ GlobalSettings* settings){
 	//std::cout <<"Hello from "<<CameraName<<" in non parallel mode:"<<std::endl;
 	// Fork a team of threads giving them their own copies of
 	// variables to fight the pixels !
-
+	
+	// Pseudo Random Number Generator Seed	
+	pRNG_mt19937.seed(
+	settings->get_seed_for_random_number_generator_mt19937()); 
+	
 	//==============================================================
 	// parallel !!! FIRE !!!
 	//==============================================================
@@ -275,7 +283,7 @@ GlobalSettings* settings){
 	
 	double u; double v;
 	cv::Vec3b intensity;
-	Ray cam_ray;
+	CameraRay cam_ray;
 	ColourProperties imag_col;
 	ColourProperties col_of_single_ray;
 	int i;

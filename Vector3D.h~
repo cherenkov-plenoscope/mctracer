@@ -22,7 +22,7 @@ public:
 Vector3D();
 Vector3D(const double nx,const double ny,const double nz);
 //======================
-void set(const double nx,const double ny,const double nz);
+void set_vec3D(const double nx,const double ny,const double nz);
 //======================
 double norm2() const;
 //======================
@@ -43,9 +43,6 @@ void operator=(const Vector3D eq);
 void disp() const;
 //======================
 std::string get_string() const;
-//======================
-std::string get_csv() const;
-std::string get_csv(uint decimal_precision) const;
 //======================
 void mirror(Vector3D* ray) const;
 //======================

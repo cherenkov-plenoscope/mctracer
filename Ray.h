@@ -24,10 +24,13 @@ class GlobalSettings;
 #include "GlobalSettings.h"
 //=================================
 class Ray{
-private:
+protected:
 Vector3D base;
 Vector3D dir;
 public:
+//======================================================================
+virtual std::string get_csv_line()const;
+virtual std::string get_csv_line(uint decimal_precision)const;
 //======================================================================
 void set_ray(const Vector3D nbase,const Vector3D ndir);
 //======================================================================
@@ -38,6 +41,10 @@ void set_base(const Vector3D nbase);
 void set_dir(const double x,const double y,const double z);
 //======================================================================
 void set_dir(const Vector3D ndir);
+//======================================================================
+Vector3D get_support()const;
+//======================================================================
+Vector3D get_direction()const;
 //======================================================================
 void disp()const;
 //======================================================================
@@ -96,5 +103,6 @@ double get_distance_to_closest_object(const CartesianFrame* world,
 //======================================================================
 bool operator() (Intersection* one, Intersection* two)const;
 //======================================================================
+friend std::ostream& operator<<(std::ostream& os, const Ray& ray_to_be_displayed);
 };
 #endif // __RAY_H_INCLUDED__ 
