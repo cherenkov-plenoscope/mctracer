@@ -87,7 +87,7 @@
 </frame>
 
 <frame>
-	<set_frame name="FACT" pos="[0,0,0]" rot="[0,0,0]"/>
+	<set_frame name="FACT" pos="[0,0,1]" rot="[0.2,0.2,0]"/>
 	
 	<FACT_reflector>
 		<set_frame name="reflector" pos="[0,0,0]" rot="[0,0,0]"/>

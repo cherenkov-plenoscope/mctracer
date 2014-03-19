@@ -68,3 +68,28 @@ if (OPENMP_FOUND)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 endif()
 #=======================================================================
+# GTest
+################################
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+enable_testing()
+
+################################
+# Unit Tests
+################################
+# Add test cpp file
+add_executable( tracerUnitTests ./test/test.cpp 
+Vector3D.cpp
+)
+# Link test executable against gtest & gtest_main
+target_link_libraries(tracerUnitTests gtest gtest_main)
+add_test( tracerUnitTests tracerUnitTests )
+
+
+
+
+
+
+
+
+
