@@ -1,13 +1,11 @@
 #include "OpticalMirrorSphericRound.h"
 //==================================================================
 OpticalMirrorSphericRound::OpticalMirrorSphericRound(){
-	flag_sensor = false;
-	//str_regex="spheric_round";
 }
 //======================
 bool OpticalMirrorSphericRound::set_spheric_round(double new_FocalLength_m,
 double new_MirrorRadius_m){
-	// SLOW
+
 	if(set_optical_mirror(	new_FocalLength_m,
 							new_MirrorRadius_m)){
 			

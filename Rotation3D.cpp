@@ -1,53 +1,51 @@
 #include "Rotation3D.h"
 //======================
-Rotation3D::Rotation3D(){}
+Rotation3D::Rotation3D(){
+}
+//======================
 Rotation3D::Rotation3D(double Phi, double The, double Psi){
-	Rx = Phi;
-	Ry = The;
-	Rz = Psi;
+	set(Phi,The,Psi);
 }
 //======================
 void Rotation3D::set(double Phi, double The, double Psi){
-	flag_euler_angles = true;
+	flag_rot_angles_xyz = true;
 	
-	//~ while(Phi >= 2*M_PI){Phi = Phi - 2*M_PI;}
-	//~ while(The >= 2*M_PI){The = The - 2*M_PI;}
-	//~ while(Psi >= 2*M_PI){Psi = Psi - 2*M_PI;}
-	//~ 
-	//~ while(Phi <= -2*M_PI){Phi = Phi + 2*M_PI;}
-	//~ while(The <= -2*M_PI){The = The + 2*M_PI;}
-	//~ while(Psi <= -2*M_PI){Psi = Psi + 2*M_PI;}
 	Rx = Phi;
 	Ry = The;
 	Rz = Psi;
 }
 //======================
-void Rotation3D::set
-(const Vector3D vec_new_rot_axis,const double new_rot_angle_in_rad){
-	flag_euler_angles = false;
+Rotation3D::Rotation3D(
+	const Vector3D new_rot_axis,const double new_rot_angle_in_rad){
+	set(new_rot_axis,new_rot_angle_in_rad);
+}
+//======================
+void Rotation3D::set(
+	const Vector3D vec_new_rot_axis,const double new_rot_angle_in_rad){
+	flag_rot_angles_xyz = false;
 	rot_axis = vec_new_rot_axis;
 	rot_axis = rot_axis/rot_axis.norm2();
 	rot_angle_in_rad = new_rot_angle_in_rad;
 }
 //======================
 Vector3D Rotation3D::get_rot_axis() const{
-	if(flag_euler_angles==true)
-	{
+	if(flag_rot_angles_xyz==true){
+		
 		std::cout<<"Warning in Rotation-> get_rot_axis() !"<<std::endl;
 		std::cout<<"rot_axis was not set!";
 		std::cout<<" Returning default ez."<<std::endl;
 		Vector3D temp_vec;
 		temp_vec.set_unit_vector_z();
 		return temp_vec;
-	}
-	else
-	{
+	
+	}else{
+		
 		return rot_axis;
 	}
 }
 //======================
 double Rotation3D::get_rot_angle_in_rad() const{
-	if(flag_euler_angles==true)
+	if(flag_rot_angles_xyz==true)
 	{
 		std::cout<<"Warning in Rotation-> get_rot_angle_in_rad() !";
 		std::cout<<std::endl;
@@ -55,36 +53,38 @@ double Rotation3D::get_rot_angle_in_rad() const{
 		std::cout<<" Returning default 0.0 [rad]."<<std::endl;
 		double temp_rot_angle_in_rad =0.0;
 		return temp_rot_angle_in_rad;
-	}
-	else
-	{
+	
+	}else{
+		
 		return rot_angle_in_rad;
 	}
 }
 //======================
 bool Rotation3D::get_flag_is_rot_angles_xyz() const{
-	return flag_euler_angles;
+	return flag_rot_angles_xyz;
 }
 //======================
 void Rotation3D::disp() const{
 	std::stringstream out; 
-	if(flag_euler_angles==true)
-	{
+	if(flag_rot_angles_xyz==true){
+		
 		out.str("");
 		out<<"euler : ("<<Rx<<"|"<<Ry<<"|"<<Rz<<")"<<std::endl;
 
 	}else{
+		
 		out.str("");
 		out<<"euler : rot-axis: "<<rot_axis.get_string();
 		out<<" rot-angle: "<<rot_angle_in_rad<<std::endl;
+		
 	}
 	std::cout<<out.str();
 }
 //======================
 std::string Rotation3D::get_string() const{
 	std::stringstream out; 
-	if(flag_euler_angles==true)
-	{
+	if(flag_rot_angles_xyz==true){
+		
 		out.str("");
 		out<<"("<<Rx<<"|"<<Ry<<"|"<<Rz<<") [rad]";
 
@@ -100,12 +100,12 @@ double Rotation3D::get_rot_x()const{return Rx;}
 double Rotation3D::get_rot_y()const{return Ry;}
 double Rotation3D::get_rot_z()const{return Rz;}
 //======================
-double Rotation3D::cosPhi() const {return cos(Rx);}
-double Rotation3D::cosThe() const {return cos(Ry);}
-double Rotation3D::cosPsi() const {return cos(Rz);}
-double Rotation3D::sinPhi() const {return sin(Rx);}
-double Rotation3D::sinThe() const {return sin(Ry);}
-double Rotation3D::sinPsi() const {return sin(Rz);}
+double Rotation3D::cosRx() const {return cos(Rx);}
+double Rotation3D::cosRy() const {return cos(Ry);}
+double Rotation3D::cosRz() const {return cos(Rz);}
+double Rotation3D::sinRx() const {return sin(Rx);}
+double Rotation3D::sinRy() const {return sin(Ry);}
+double Rotation3D::sinRz() const {return sin(Rz);}
 //======================================================================
 // friends of osstream
 //======================================================================

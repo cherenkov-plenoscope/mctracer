@@ -1,8 +1,6 @@
 #include "OpticalMirrorSphericHexagonal.h"
 //======================
 OpticalMirrorSphericHexagonal::OpticalMirrorSphericHexagonal(){
-	flag_sensor = false;
-	//str_regex="spheric_hexag";
 }
 //======================
 bool OpticalMirrorSphericHexagonal::set_spheric_hexag(double new_FocalLength_m,

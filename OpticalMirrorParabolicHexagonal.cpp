@@ -1,7 +1,6 @@
 #include "OpticalMirrorParabolicHexagonal.h"
 //======================
 OpticalMirrorParabolicHexagonal::OpticalMirrorParabolicHexagonal(){
-	flag_sensor = false;
 }
 //======================
 bool OpticalMirrorParabolicHexagonal::set_parabolic_hexag(double new_FocalLength_m,

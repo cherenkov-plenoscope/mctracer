@@ -1,16 +1,30 @@
 #include "Cylinder.h"
 //==================================================================
 Cylinder::Cylinder(){
-	flag_sensor = false;
-	//str_regex = "cylinder";
 }
 //==================================================================
-bool Cylinder::set_cylinder(	
+void Cylinder::set_cylinder_radius(double new_cylinder_radius){
+	//===================
+	// set cylinder radius
+	//===================
+	if(new_cylinder_radius > 0.0){
+		CylinderRadius=new_cylinder_radius;
+	}else{
+		throw BadValue("cylinder radius",
+		"The cylinder radius must be larger then 0.0[m]!");
+	}
+}
+//----------------------------------------------------------------------
+void Cylinder::set_cylinder(	
 double new_CylinderRadius,
 Vector3D vec_start, 
 Vector3D vec_end){
-	//cout<<"start: "<<vec_start.get_string()<<endl;
-	//cout<<"end  : "<<vec_end.get_string()<<endl;
+
+	if((vec_start-vec_end).norm2()==0.0){
+		throw BadValue("start and end positions of cylinder",
+		"The start and end point of a cylinder must not be the same!");
+	}
+	
 	//===================
 	// rotation axis in world frame
 	//===================
@@ -20,14 +34,8 @@ Vector3D vec_end){
 	//===================
 	// set cylinder radius
 	//===================
-	if(new_CylinderRadius > 0.0){
-		CylinderRadius=new_CylinderRadius;
-	}else{
-		cout<<"set_cylinder -> cylinder radius: ";
-		cout<<new_CylinderRadius<<">0.0";
-		cout<<" is not true!"<<endl;
-		return false;
-	}
+	set_cylinder_radius(new_CylinderRadius);
+	
 	//===================
 	// set cylinder length
 	//===================
@@ -83,34 +91,24 @@ Vector3D vec_end){
 		pow(CylinderRadius,2.0)+
 		pow((CylinderLength/2.0),2.0)
 	);
-	
-	return true;
 }
 //==================================================================
-bool Cylinder::set_cylinder(
+void Cylinder::set_cylinder(
 double new_CylinderRadius,
 double new_CylinderLength){
 	//===================
 	// set cylinder radius
 	//===================
-	if(new_CylinderRadius > 0.0){
-		CylinderRadius=new_CylinderRadius;
-	}else{
-		cout<<"set_cylinder -> cylinder radius: ";
-		cout<<new_CylinderRadius<<">0.0";
-		cout<<" is not true!"<<endl;
-		return false;
-	}
+	set_cylinder_radius(new_CylinderRadius);
+	
 	//===================
 	// set cylinder length
 	//===================
 	if(new_CylinderLength > 0.0){
 		CylinderLength=new_CylinderLength;
 	}else{
-		cout<<"set_cylinder -> cylinder length: ";
-		cout<<new_CylinderLength<<">0.0";
-		cout<<" is not true!"<<endl;
-		return false;
+		throw BadValue("cylinder length",
+		"The cylinder length must be larger then 0.0[m]!");
 	}
 	//===================
 	// set max radius
@@ -119,7 +117,6 @@ double new_CylinderLength){
 		pow(CylinderRadius,2.0)+
 		pow((CylinderLength/2.0),2.0)
 	);
-	return true;
 }
 //==================================================================
 void Cylinder::disp()const{

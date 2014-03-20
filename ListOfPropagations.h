@@ -24,15 +24,14 @@ class ListOfPropagations{
 	
 //=================================	
 public:
-ListOfPropagations(std::string new_name_for_list_of_propagations);
-void push_back(Ray* ptr_to_ray_to_push_back);
-void export_csv(std::string name_of_csv_file_to_be_exported)const;
-void disp()const;
-void propagate()const;
+	ListOfPropagations(std::string new_name_for_list_of_propagations);
+	void push_back(Ray* ptr_to_ray_to_push_back);
+	void export_csv(std::string name_of_csv_file_to_be_exported)const;
+	void disp()const;
+	void propagate()const;
+	friend std::ostream& operator<<(std::ostream& os, const ListOfPropagations& list);
 private:
-std::string get_info_string()const;
-std::string get_csv_table()const;
-public:
-friend std::ostream& operator<<(std::ostream& os, const ListOfPropagations& list);
+	std::string get_info_string()const;
+	std::string get_csv_table()const;
 };
 #endif // __LISTOFRAYS_H_INCLUDED__

@@ -22,11 +22,11 @@ public:
 	//======================
 	Sphere();
 	//======================
-	bool set_sphere(double nradius);
+	void set_sphere(double nradius);
 	//======================
 	void disp();
 	//======================
-	std::string get_sphere_string();
+	std::string get_sphere_string()const;
 	//======================
 	void hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const;
 };

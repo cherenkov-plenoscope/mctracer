@@ -15,14 +15,11 @@
 // the actual class
 class SurfaceEntity :public CartesianFrame {
 protected:
-	bool flag_sensor;
 	ReflectionProperties 	reflection;
 	ColourProperties 		colour;
 public:
 //======================
 SurfaceEntity();
-//======================
-bool get_sensor_flag()const;
 //======================
 void set_surface_properties(
 ReflectionProperties *new_reflection_properties, 

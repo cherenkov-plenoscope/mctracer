@@ -23,7 +23,7 @@ bool WorldFactory::load_file(std::string filename){
 			frame_factory(root_of_World,doc);
 			return true;
 		}
-		catch(WorldFactoryException& error)
+		catch(TracerException& error)
 		{
 			error.ReportException();
 			return false;

@@ -1,6 +1,7 @@
 #include "ListOfPropagations.h"
 //==================================================================
 ListOfPropagations::ListOfPropagations(std::string new_name_for_list_of_propagations){
+
 	name_of_list_of_propagations = new_name_for_list_of_propagations;
 }
 //==================================================================

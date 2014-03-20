@@ -1,7 +1,6 @@
 #include "OpticalMirrorParabolicRound.h"
 //======================
 OpticalMirrorParabolicRound::OpticalMirrorParabolicRound(){
-	flag_sensor = false;
 }
 //======================
 bool OpticalMirrorParabolicRound::set_parabolic_round(double new_FocalLength_m,

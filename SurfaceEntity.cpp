@@ -1,11 +1,6 @@
 #include "SurfaceEntity.h"
 //======================
 SurfaceEntity::SurfaceEntity(){
-	flag_sensor = false;
-}
-//======================
-bool SurfaceEntity::get_sensor_flag()const{
-	return flag_sensor;
 }
 //======================
 void SurfaceEntity::set_surface_properties(

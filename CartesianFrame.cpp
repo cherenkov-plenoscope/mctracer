@@ -1,9 +1,10 @@
 #include "CartesianFrame.h"
+//======================================================================
 void CartesianFrame::
 post_initializing(){
 	//initialize eye matrices
-	Vector3D p; p.set(0.0,0.0,0.0);
-	Rotation3D r; r.set(0.0,0.0,0.0);
+	Vector3D   p(0.0,0.0,0.0);
+	Rotation3D r(0.0,0.0,0.0);
 	T_mother2frame.set_transformation(r,p);
 	T_world2frame.set_transformation(r,p);
 	
@@ -31,26 +32,22 @@ get_pointer_to_name_of_frame() const{
 	return &name_of_frame;
 }
 //======================
-const Vector3D* 
-CartesianFrame::
+const Vector3D* CartesianFrame::
 get_pointer_to_position_of_frame_in_mother_frame() const{
 	return &position_relative_to_mother;
 }	
 //======================
-const Rotation3D*
-CartesianFrame::
+const Rotation3D* CartesianFrame::
 get_pointer_to_rotation_of_frame_in_mother_frame() const{
 	return &rotation_relative_to_mother;
 }	
 //======================
-const double*
-CartesianFrame::
+const double* CartesianFrame::
 get_pointer_to_radius_of_sphere_enclosing_all_children() const{
 	return &radius_of_sphere_enclosing_all_children;
 }
 //======================
-const Vector3D* 
-CartesianFrame::
+const Vector3D* CartesianFrame::
 get_pointer_to_position_of_frame_in_world_frame() const{
 	return &pos_in_world;
 }
@@ -94,11 +91,15 @@ get_number_of_children()const{
 CartesianFrame::
 CartesianFrame(){
 }
-//======================
+//======================================================================
 void CartesianFrame::
 set_frame(
 const std::string new_name,const Vector3D npos,const Rotation3D nrot){
+
 	// init name_of_frame
+	if(new_name.length()==0){
+		throw BadValue("name of frame","The name must not be empty!");
+	}
 	name_of_frame = new_name;
 	
 	// init position_relative_to_mother and rotation_relative_to_mother
@@ -118,7 +119,7 @@ const std::string new_name,const Vector3D npos,const Rotation3D nrot){
 	// init empty list with pointer to children
 	children.clear();
 };
-//======================
+//======================================================================
 void CartesianFrame::disp()const{
 	std::stringstream out;
 	out.str("");
@@ -213,17 +214,21 @@ add_child(CartesianFrame * const new_child){
 	//===================
 		// calculate the distance from the base of this frame
 		// to the base of the childs frame.
-		double dist_this_base2_child_base = new_child->position_relative_to_mother.norm2();
+		double dist_this_base2_child_base = 
+		new_child->position_relative_to_mother.norm2();
 		// get the diameter of the new child
-		double child_diameter = new_child->radius_of_sphere_enclosing_all_children;
+		double child_diameter = 
+		new_child->radius_of_sphere_enclosing_all_children;
 		// the max diameter of the new child in this frame is
 		double max_diameter_of_new_child_in_this_frame = 
 		dist_this_base2_child_base + child_diameter;
 	//===================
 	// test if the new childs diameter is bigger than the old one
 	//===================
-	if(max_diameter_of_new_child_in_this_frame > radius_of_sphere_enclosing_all_children)
-		radius_of_sphere_enclosing_all_children = max_diameter_of_new_child_in_this_frame;
+	if(	max_diameter_of_new_child_in_this_frame > 
+		radius_of_sphere_enclosing_all_children)
+		radius_of_sphere_enclosing_all_children = 
+		max_diameter_of_new_child_in_this_frame;
 }
 //======================
 void CartesianFrame::
@@ -278,7 +283,8 @@ get_hit_colour()const{
 //======================
 const ReflectionProperties* CartesianFrame::
 get_ptr2_reflection()const{
-	std::cout<<"virtual  get_ptr2_reflection() called in class frame!"<<std::endl;
+	std::cout << "virtual get_ptr2_reflection() ";
+	std::cout << "called in class frame!" << std::endl;
 	return NULL;} 
 //======================
 void CartesianFrame::
@@ -348,7 +354,6 @@ post_initialize_radius_of_sphere_enclosing_all_children(){
 	}
 	
 	// seting the new radius
-	radius_of_sphere_enclosing_all_children = 
-	new_max_norm_radius;
+	radius_of_sphere_enclosing_all_children = new_max_norm_radius;
 }
 //======================

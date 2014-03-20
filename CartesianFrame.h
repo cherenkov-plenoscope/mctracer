@@ -17,7 +17,53 @@ class ReflectionProperties;
 #include "Rotation3D.h"
 #include "HomoTrafo3D.h"
 #include "ColourProperties.h"
+#include "TracerException.h"
 
+//======================================================================
+// exceptions of the frames
+class CartesianFrameException: public TracerException{
+	public:
+
+	void ExceptionPrompt()const{
+		std::stringstream out;
+		out.str("");
+		out << "Cartesian frame: ";
+		std::cout << out.str();		
+	}
+};
+//---------------------------------------
+class BadValue : public CartesianFrameException{
+	public:
+	
+	BadValue(const std::string name){
+		name_of_bad_value = name;
+		additional_information = false;
+	}
+	
+	BadValue(const std::string name,const std::string i){
+		name_of_bad_value = name;
+		info = i;
+		additional_information = true;
+	}
+	
+	void ReportException()const{ 
+		ExceptionPrompt();
+	
+		std::stringstream out;	
+		out.str("");
+		out << "Initialzing " << name_of_bad_value;
+		out << " is not possible. ";
+		if(additional_information){
+			out << info << "\n";
+		}
+		std::cout << out.str() << std::endl;
+	}	
+	
+	private:
+	std::string name_of_bad_value;
+	std::string info;
+	bool additional_information;
+};
 //======================================================================
 class CartesianFrame {
 protected:

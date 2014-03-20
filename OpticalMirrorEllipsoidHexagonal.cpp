@@ -1,8 +1,6 @@
 #include "OpticalMirrorEllipsoidHexagonal.h"
 //==================================================================
-OpticalMirrorEllipsoidHexagonal::OpticalMirrorEllipsoidHexagonal( ){
-	flag_sensor = false;
-	//str_regex="ellipsoid_hexag";        
+OpticalMirrorEllipsoidHexagonal::OpticalMirrorEllipsoidHexagonal( ){      
 }
 //==================================================================
 bool OpticalMirrorEllipsoidHexagonal::set_ellipsoid_hexag( 

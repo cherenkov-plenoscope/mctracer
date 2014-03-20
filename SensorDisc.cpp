@@ -2,7 +2,6 @@
 //==================================================================
 SensorDisc::SensorDisc(){
 	reflection.set_reflection_coefficient(0.0);
-	flag_sensor = true;
 }
 //==================================================================
 SensorDisc::~SensorDisc(){

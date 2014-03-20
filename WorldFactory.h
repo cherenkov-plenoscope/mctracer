@@ -24,6 +24,7 @@
 #include "ColourProperties.h"
 // XML parser library 
 #include "pugixml.hpp"
+#include "TracerException.h"
 
 //======================================================================
 class tuple3{
@@ -34,10 +35,11 @@ public:
 tuple3(){ x=0.0; y=0.0; z=0.0; }	
 };
 //======================================================================
-class WorldFactoryException{
-public:
-	virtual void ReportException() = 0;
-	void ExceptionPrompt(){
+class WorldFactoryException : public TracerException{
+	public:
+	
+	//virtual void ReportException()const = 0;
+	void ExceptionPrompt()const{
 		
 		std::stringstream out;
 		out.str("");
@@ -51,7 +53,7 @@ public:
 UnknowenObject(std::string new_name_of_unknowen_object){
 	name_of_unknown_object = new_name_of_unknowen_object;
 }
-void ReportException(){ 
+void ReportException()const{ 
 	ExceptionPrompt();
 	
 	std::stringstream out;	
@@ -89,7 +91,7 @@ std::string new_my_idea_of_what_caused_the_syntax_error){
 	
 	I_have_an_idea_of_what_caused_the_syntax_error = true;	
 }
-void ReportException(){ 
+void ReportException()const{ 
 	ExceptionPrompt();
 	
 	std::stringstream out;
@@ -126,7 +128,7 @@ std::string new_more_percise_information){
 	more_percise_information = new_more_percise_information;
 	I_have_more_percise_information = true;
 }
-void ReportException(){ 
+void ReportException()const{ 
 	ExceptionPrompt();
 	
 	std::stringstream out;	
@@ -149,7 +151,7 @@ public:
 MultipleUsageOfName(std::string new_name_of_name_in_multiple_usage){
 	name_of_name_in_multiple_usage = new_name_of_name_in_multiple_usage;
 }
-void ReportException(){ 
+void ReportException()const{ 
 	ExceptionPrompt();
 	
 	std::stringstream out;	

@@ -1,8 +1,6 @@
 #include "Disc.h"
 //==================================================================
 Disc::Disc(){
-	flag_sensor = false;
-	//str_regex = "Disc";
 }
 //==================================================================
 bool Disc::set_Disc(double dbl_new_Disc_radius_in_m){

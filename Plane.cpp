@@ -1,7 +1,6 @@
 #include "Plane.h"
 //======================
 Plane::Plane(){
-	flag_sensor = false;
 }
 //======================
 bool Plane::set_plane(	double min_x, double max_x, double min_y, double max_y){

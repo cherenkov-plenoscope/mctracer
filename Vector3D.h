@@ -65,4 +65,14 @@ double get_z() const;
 //======================
 friend std::ostream& operator<<(std::ostream& os, const Vector3D& vec);
 };
+/*
+bool operator==(const Vector3D v1,const Vector3D v2){
+	if( v1.get_x() == v2.get_x() && 
+	    v1.get_y() == v2.get_y() && 
+	    v1.get_z() == v2.get_z() ){
+		return true;
+	}else{
+		return false;
+	}
+}*/
 #endif // __VECTOR3D_H_INCLUDED__ 

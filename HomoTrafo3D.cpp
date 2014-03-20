@@ -52,22 +52,22 @@ void HomoTrafo3D::set_transformation(const Rotation3D R,const Vector3D pos){
 		//			[ 0      0      0      1 ]
 		// first line
 		T_Rot.set
-		(0,0, (R.cosThe()*R.cosPsi()));
+		(0,0, (R.cosRy()*R.cosRz()));
 		
 		T_Rot.set
-		(0,1, R.cosPhi()*R.sinPsi() + R.sinPhi()*R.sinThe()*R.cosPsi());
+		(0,1, R.cosRx()*R.sinRz() + R.sinRx()*R.sinRy()*R.cosRz());
 		
 		T_Rot.set
-		(0,2, R.sinPhi()*R.sinPsi() - R.cosPhi()*R.sinThe()*R.cosPsi());
+		(0,2, R.sinRx()*R.sinRz() - R.cosRx()*R.sinRy()*R.cosRz());
 		
 		// second line
-		T_Rot.set(1,0,-R.cosThe()*R.sinPsi());
-		T_Rot.set(1,1, R.cosPhi()*R.cosPsi() - R.sinPhi()*R.sinThe()*R.sinPsi());
-		T_Rot.set(1,2, R.sinPhi()*R.cosPsi() + R.cosPhi()*R.sinThe()*R.sinPsi());
+		T_Rot.set(1,0,-R.cosRy()*R.sinRz());
+		T_Rot.set(1,1, R.cosRx()*R.cosRz() - R.sinRx()*R.sinRy()*R.sinRz());
+		T_Rot.set(1,2, R.sinRx()*R.cosRz() + R.cosRx()*R.sinRy()*R.sinRz());
 		// third line
-		T_Rot.set(2,0, R.sinThe());
-		T_Rot.set(2,1,-R.sinPhi()*R.cosThe());
-		T_Rot.set(2,2, R.cosPhi()*R.cosThe());
+		T_Rot.set(2,0, R.sinRy());
+		T_Rot.set(2,1,-R.sinRx()*R.cosRy());
+		T_Rot.set(2,2, R.cosRx()*R.cosRy());
 		// translation part of T_Rot
 		T_Rot.set(0,3,0.0);
 		T_Rot.set(1,3,0.0);

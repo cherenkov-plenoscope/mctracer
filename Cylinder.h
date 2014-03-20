@@ -26,10 +26,10 @@ public:
 //==================================================================
 Cylinder();
 //==================================================================
-bool set_cylinder(	double new_dbl_cylinder_radius,
+void set_cylinder(	double new_dbl_cylinder_radius,
 					Vector3D vec_start, Vector3D vec_end);
 //==================================================================
-bool set_cylinder(	double new_dbl_cylinder_radius,
+void set_cylinder(	double new_dbl_cylinder_radius,
 					double new_dbl_cylinder_length);
 //==================================================================
 void disp()const;
@@ -38,5 +38,6 @@ std::string get_cylinder_string()const;
 //==================================================================
 void hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const;
 private:
+void set_cylinder_radius(double new_cylinder_radius);
 };
 #endif // __CYLINDER_H_INCLUDED__

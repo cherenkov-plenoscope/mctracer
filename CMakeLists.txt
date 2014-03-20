@@ -7,6 +7,7 @@ project( tracer )
 find_package( OpenCV REQUIRED )
 add_executable( 
 tracer tracer.cpp 
+TracerException.cpp
 CsvHandler.cpp
 #ConfigFileHandle.cpp 
 WorldFactory.cpp
@@ -78,8 +79,10 @@ enable_testing()
 # Unit Tests
 ################################
 # Add test cpp file
-add_executable( tracerUnitTests ./test/test.cpp 
+add_executable( tracerUnitTests 
+./test/test.cpp 
 Vector3D.cpp
+Rotation3D.cpp
 )
 # Link test executable against gtest & gtest_main
 target_link_libraries(tracerUnitTests gtest gtest_main)

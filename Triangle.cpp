@@ -5,8 +5,6 @@ Triangle::Triangle(){
 	A.set_unit_vector_x();
 	B.set_unit_vector_y();
 	C.set_unit_vector_z();
-	
-	flag_sensor = false;
 }
 //======================
 bool Triangle::set_Triangle(
