@@ -5,16 +5,21 @@
 
 //=================================
 // forward declared dependencies
-
+class Intersection;
 //=================================
 // included dependencies
 #include "Ray.h"
+#include <list>
 //======================================================================
 class Photon :public Ray{
 protected:
 
 	double wavelength;
 	//polarisation?
+	//phase?
+
+	// propagation history
+	std::list<Intersection*> PhotonPropagationHistory;
 	
 //=================================================
 public:
@@ -25,12 +30,16 @@ double dirX, double dirY, double dirZ,
 double new_wavelength);
 //=================================
 Photon(Ray prototype_ray_for_photon,double new_wavelength);
+void propagate(	const CartesianFrame* world, 
+				int interaction_count,
+				const CartesianFrame* object_reflected_from,
+				const GlobalSettings* settings);
 //=================================
 void disp()const;
 std::string get_string()const;
-std::string get_csv_line()const;
 //=================================
-std::string get_csv_line(uint decimal_precision)const;
+CsvRow getPhotonCsvRow(GlobalSettings& settings)const;
+CsvRow getCsvRow(GlobalSettings& settings)const;
 //=================================
 friend std::ostream& operator<<(std::ostream& os, 
 const Photon& photon_to_be_displayed);

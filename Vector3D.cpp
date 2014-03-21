@@ -83,22 +83,6 @@ std::string Vector3D::get_string() const{
 	return out.str();
 }
 //======================
-std::string  Vector3D::get_csv() const{
-	uint decimal_precision = 6;
-	return get_csv(decimal_precision);
-}
-//======================
-std::string  Vector3D::get_csv(uint decimal_precision) const{
-	
-	std::stringstream out; 
-	out.precision(decimal_precision);
-	out << std::scientific;
-	
-	out.str("");
-	out << x << "," << y << "," << z;
-	return out.str();
-}
-//======================
 void Vector3D::mirror(Vector3D* ray) const{
 	// mirror martix
 	//
@@ -191,6 +175,35 @@ double Vector3D::get_y() const{
 //======================
 double Vector3D::get_z() const{
 	return z;
+}
+//======================
+bool Vector3D::operator == (const Vector3D& eqVec) const{
+	if( x == eqVec.x && y == eqVec.y && z == eqVec.z){
+		return true;
+	}else{
+		return false;
+	} 
+}
+//======================
+CsvRow Vector3D::getCsvRow(GlobalSettings& settings) const{
+	CsvRow row;
+
+	stringstream out;
+	out.precision(settings.get_decimal_precision_for_csv_output());
+
+	out << x;
+	row.push_back( out.str() );
+	out.str("");
+
+	out << y;
+	row.push_back( out.str() );
+	out.str("");
+
+	out << z;
+	row.push_back( out.str() );
+	out.str("");
+
+	return row;
 }
 //======================================================================
 // friends of osstream

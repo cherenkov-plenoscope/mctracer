@@ -21,8 +21,8 @@ public:
 //=================================
 void disp()const;
 std::string get_string()const;
-std::string get_csv_line()const;
-std::string get_csv_line(uint decimal_precision)const;
+CsvRow getCameraRayCsvRow(GlobalSettings& settings)const;
+CsvRow getCsvRow(GlobalSettings& settings)const;
 //=================================
 friend std::ostream& operator<<(std::ostream& os, 
 const CameraRay& camera_ray_to_be_displayed);

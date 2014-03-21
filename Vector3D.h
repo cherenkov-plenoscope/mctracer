@@ -11,6 +11,8 @@
 #include <iostream>
 #include <math.h>
 #include <sstream>
+#include "CsvHandler.h"
+#include "GlobalSettings.h"
 //=================================
 class Vector3D {
 private:
@@ -44,8 +46,8 @@ void disp() const;
 //======================
 std::string get_string() const;
 //======================
-std::string get_csv() const;
-std::string get_csv(uint decimal_precision) const;
+//std::string get_csv() const;
+//std::string get_csv(uint decimal_precision) const;
 //======================
 void mirror(Vector3D* ray) const;
 //======================
@@ -63,16 +65,11 @@ double get_y() const;
 //======================
 double get_z() const;
 //======================
+CsvRow getCsvRow(GlobalSettings& settings) const;
+//======================
+bool operator == (const Vector3D& eqVec) const;
+//======================
 friend std::ostream& operator<<(std::ostream& os, const Vector3D& vec);
 };
-/*
-bool operator==(const Vector3D v1,const Vector3D v2){
-	if( v1.get_x() == v2.get_x() && 
-	    v1.get_y() == v2.get_y() && 
-	    v1.get_z() == v2.get_z() ){
-		return true;
-	}else{
-		return false;
-	}
-}*/
+
 #endif // __VECTOR3D_H_INCLUDED__ 

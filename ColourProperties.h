@@ -33,6 +33,9 @@ void set_colour_0to255
 unsigned char get_red()const;
 unsigned char get_green()const;
 unsigned char get_blue()const;
+double red()const;
+double green()const;
+double blue()const;
 //======================================================================
 std::string get_string()const;
 //======================================================================

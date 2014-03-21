@@ -49,6 +49,10 @@ unsigned char ColourProperties::get_blue()const {
 	return (unsigned char)(blue_0to255);
 }
 //======================================================================
+double ColourProperties::red()const{return red_0to255;};
+double ColourProperties::green()const{return green_0to255;};
+double ColourProperties::blue()const{return blue_0to255;};
+//======================================================================
 std::string ColourProperties::get_string()const{
 	std::stringstream out; out.str("");
 	out<<"colour: ";

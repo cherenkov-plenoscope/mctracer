@@ -44,6 +44,11 @@ Vector3D Ray::get_direction()const{
 	return dir;
 }
 //======================================================================
+void Ray::operator= (Ray eqray){
+	base = eqray.base;
+	dir  = eqray.dir;
+}
+//======================================================================
 void Ray::pre_trace(
 const CartesianFrame* frame_to_check_for_interaction_of_ray_and_max_sphere, 
 std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre
@@ -54,17 +59,14 @@ std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMax
 	// THIS IS A SPEED UP IN 
 	// O(number_of_objects^1) --> O( log(number_of_objects) )
 
-	if(
-	is_ray_hitting_frame(
+	if(is_ray_hitting_frame(
 	frame_to_check_for_interaction_of_ray_and_max_sphere)
-	)
-	{
+	){
 		// the frame is hit by this ray
 		if(
 		frame_to_check_for_interaction_of_ray_and_max_sphere->
 		get_number_of_children() > 0
-		)
-		{
+		){
 				// this frame has children to be tested
 				for(
 				int child_itterator=0; 
@@ -72,8 +74,7 @@ std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMax
 				frame_to_check_for_interaction_of_ray_and_max_sphere->
 				get_number_of_children();
 				child_itterator++
-				)
-				{
+				){
 					pre_trace(
 					frame_to_check_for_interaction_of_ray_and_max_sphere->
 					get_pointer_to_child(child_itterator),
@@ -200,11 +201,6 @@ void Ray::disp_possible_hit_list(const CartesianFrame *frame)const{
 	std::cout<<out.str();
 }
 //======================================================================
-void Ray::operator= (Ray ray){
-	base=ray.base;
-	dir =ray.dir;
-}
-//======================================================================
 void Ray::homo_transformation_of_ray(Ray* ray,const HomoTrafo3D *T)const{
 	//transform base vector
 	T->transform_position(&ray->base);
@@ -323,8 +319,8 @@ void Ray::test_intersection_for_hit_candidates(
 }
 //======================================================================
 void Ray::calculate_reflected_ray(	
-Intersection * pointer_to_closest_intersection,
-Ray *ray_reflection_on_object){
+			Intersection * pointer_to_closest_intersection,
+			Ray *ray_reflection_on_object){
 			//==========================================================
 			// calculate reflection ray in object system
 			//==========================================================
@@ -346,11 +342,9 @@ Ray *ray_reflection_on_object){
 			pointer_to_closest_intersection->
 			get_reflection_direction_in_object_system(&refl_dir);
 
-			
 			Vector3D refl_base;
 			pointer_to_closest_intersection->
 			get_intersection_vec_in_object_system(&refl_base);
-			
 			
 			ray_reflection_on_object->set_ray(refl_base,refl_dir);
 
@@ -369,27 +363,10 @@ Ray *ray_reflection_on_object){
 			//ray_reflection_on_object->disp();		
 }
 //======================================================================
-/*
-CartesianFrame* calculate_closest_frame(	CartesianFrame *pointer_to_closest_frame,
-		std::vector<CartesianFrame*> *pointer_to_list_of_intersecting_objects)
-{
-	//==============================================================
-	// find the closest object
-	//==============================================================
-	// insert comparator function into template
-	std::vector<CartesianFrame*>::iterator pointer_to_pointer_to_closest_object = 
-	min_element( 	pointer_to_list_of_intersecting_objects->begin(),
-					pointer_to_list_of_intersecting_objects->end() ,
-					compare_distance);
-						
-	//(*pointer_to_pointer_to_closest_object)->disp();	
-	return 	(*pointer_to_pointer_to_closest_object);
-}*/
-//======================================================================
 Intersection* Ray::calculate_closest_intersection(	
 		Intersection *pointer_to_closest_intersection,
-		std::vector<Intersection*> *pointer_to_list_of_intersections)const
-{
+		std::vector<Intersection*> *pointer_to_list_of_intersections
+)const{
 	//==============================================================
 	// find the closest intersection
 	//==============================================================
@@ -407,7 +384,8 @@ Intersection* Ray::calculate_closest_intersection(
 ColourProperties Ray::trace(const CartesianFrame* world,
 				int refl_count,
 				const CartesianFrame* object_reflected_from,
-				GlobalSettings *settings){
+				GlobalSettings *settings)
+{
 	
 	//==================================================================
 	// claculate a list/vector containing all possible intersection
@@ -531,6 +509,12 @@ ColourProperties Ray::trace(const CartesianFrame* world,
 	return colour_to_return;
 }
 //======================================================================
+void Ray::propagate(	const CartesianFrame* world, 
+						int interaction_count,
+						const CartesianFrame* object_reflected_from,
+						const GlobalSettings* settings){
+	std::cout << "Calling propagate of an Ray instance!" << endl;
+}
 /*
 void Ray::trace_science(CartesianFrame* world,
 				int refl_count,
@@ -697,11 +681,29 @@ void Ray::trace_science(CartesianFrame* world,
 	//=============
 }*/
 //======================================================================
+/*
+CartesianFrame* calculate_closest_frame(	CartesianFrame *pointer_to_closest_frame,
+		std::vector<CartesianFrame*> *pointer_to_list_of_intersecting_objects)
+{
+	//==============================================================
+	// find the closest object
+	//==============================================================
+	// insert comparator function into template
+	std::vector<CartesianFrame*>::iterator pointer_to_pointer_to_closest_object = 
+	min_element( 	pointer_to_list_of_intersecting_objects->begin(),
+					pointer_to_list_of_intersecting_objects->end() ,
+					compare_distance);
+						
+	//(*pointer_to_pointer_to_closest_object)->disp();	
+	return 	(*pointer_to_pointer_to_closest_object);
+}*/
+//======================================================================
 double Ray::get_distance_to_closest_object(const CartesianFrame* world,
 				int refl_count,
 				CartesianFrame* object_reflected_from,
 				const GlobalSettings *settings,
-				double dbl_passed_distance_from_source_to_sensor)const{
+				double dbl_passed_distance_from_source_to_sensor
+)const{
 	
 	double distance_to_closets_object = 0.0;
 	//==================================================================
@@ -755,18 +757,29 @@ bool Ray::operator() (Intersection* one, Intersection* two)const{
 			two->get_intersection_distance();
 }
 //======================================================================
-std::string Ray::get_csv_line()const{
-	uint decimal_precision = 6;
-	return get_csv_line(decimal_precision);
+CsvRow Ray::getRayCsvRow(GlobalSettings& settings)const{
+	
+	CsvRow row;
+
+	CsvRow row_base_vector = base.getCsvRow(settings);
+	CsvRow row_dir_vector  =  dir.getCsvRow(settings);
+
+	row.append(row_base_vector);
+	row.append(row_dir_vector );
+
+	return row;
 }
 //======================================================================
-std::string Ray::get_csv_line(uint decimal_precision)const{
-
-	std::stringstream out;
-	out << base.get_csv(decimal_precision) << ",";
-	out << dir.get_csv(decimal_precision);
+CsvRow Ray::getCsvRow(GlobalSettings& settings)const{
 	
-	return out.str();
+	CsvRow row;
+
+	if(settings.ShowCsvIdentifier())
+	row.push_back("Ray");
+
+	row.append(getRayCsvRow(settings));
+	
+	return row;
 }
 //======================================================================
 // friends of osstream

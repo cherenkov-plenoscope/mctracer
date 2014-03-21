@@ -1,24 +1,5 @@
 #include "CameraRay.h"
 //======================================================================
-std::string CameraRay::get_csv_line()const{
-	uint decimal_precision = 6;
-	return get_csv_line(decimal_precision);
-}
-//======================================================================
-std::string CameraRay::get_csv_line(uint decimal_precision)const{
-
-	std::stringstream out; 
-	out.precision(decimal_precision);
-	out << std::scientific;
-	
-	out << base.get_csv(decimal_precision) << ",";
-	out << dir.get_csv(decimal_precision) << ",";
-	out << int(colour.get_red()) << ",";
-	out << int(colour.get_green()) << ",";
-	out << int(colour.get_blue());
-	return out.str();
-}
-//======================================================================
 std::string CameraRay::get_string()const{
 	std::stringstream out; 
 	out << Ray::get_string() << ", colour: " << colour;
@@ -27,6 +8,44 @@ std::string CameraRay::get_string()const{
 //======================================================================
 void CameraRay::disp()const{
 	std::cout << "CameraRay -> " << get_string() << "\n";
+}
+//======================================================================
+CsvRow CameraRay::getCameraRayCsvRow(GlobalSettings& settings)const{
+
+	CsvRow row;
+
+	stringstream out;
+	out.precision(settings.get_decimal_precision_for_csv_output());
+
+	out << colour.blue();
+	row.push_back( out.str() );
+	out.str("");
+
+	out << colour.green();
+	row.push_back( out.str() );
+	out.str("");
+
+	out << colour.red();
+	row.push_back( out.str() );
+	out.str("");
+
+	return row;
+}
+//======================================================================
+CsvRow CameraRay::getCsvRow(GlobalSettings& settings)const{
+	
+	CsvRow combinedRow;
+
+	if(settings.ShowCsvIdentifier())
+	combinedRow.push_back("Cam");
+
+	CsvRow RowOfRay 	= getRayCsvRow(settings);
+	CsvRow RowOfPhoton 	= getCameraRayCsvRow(settings);
+	
+	combinedRow.append(RowOfRay);
+	combinedRow.append(RowOfPhoton);
+
+	return combinedRow;
 }
 //======================================================================
 // friends of osstream

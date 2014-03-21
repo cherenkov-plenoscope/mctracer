@@ -21,11 +21,11 @@ private:
 // object. This information is not kept inside the objects to enable
 // multi thread, parallel computing without copying all objects for
 // each thread.
-const CartesianFrame*	ptr_to_intersecting_object;
-bool 		flag_intersection;
-Vector3D 	intersection_point;
-Vector3D 	surfacenormal_in_intersection_point;
-double 	 	distance_of_ray_in_m;
+	const CartesianFrame*	ptr_to_intersecting_object;
+	bool 		flag_intersection;
+	Vector3D 	intersection_point;
+	Vector3D 	surfacenormal_in_intersection_point;
+	double 	 	distance_of_ray_in_m;
 public:
 //==================================================================
 const CartesianFrame* get_pointer_to_intersecting_object()const;

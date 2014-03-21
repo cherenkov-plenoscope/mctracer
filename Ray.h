@@ -5,10 +5,9 @@
 
 //=================================
 // forward declared dependencies
-//class CartesianFrame;
+
 class HomoTrafo3D;
-//class Intersection;
-class GlobalSettings;
+
 //=================================
 // included dependencies
 #include <iostream>
@@ -22,15 +21,16 @@ class GlobalSettings;
 #include "CartesianFrame.h"
 #include "Intersection.h"
 #include "GlobalSettings.h"
+#include "CsvHandler.h"
 //=================================
 class Ray{
 protected:
-Vector3D base;
-Vector3D dir;
+	Vector3D base;
+	Vector3D dir;
 public:
 //======================================================================
-virtual std::string get_csv_line()const;
-virtual std::string get_csv_line(uint decimal_precision)const;
+CsvRow getRayCsvRow(GlobalSettings& settings)const;
+virtual CsvRow getCsvRow(GlobalSettings& settings)const;
 //======================================================================
 void set_ray(const Vector3D nbase,const Vector3D ndir);
 //======================================================================
@@ -88,12 +88,10 @@ ColourProperties trace(const CartesianFrame* world,
 				const CartesianFrame* object_reflected_from,
 				GlobalSettings *settings);
 //======================================================================
-/*
-void trace_science(CartesianFrame* world,
-				int refl_count,
-				const CartesianFrame* object_reflected_from,
-				GlobalSettings *settings,
-				double dbl_passed_distance_from_source_to_sensor);*/
+virtual void propagate(	const CartesianFrame* world, 
+						int interaction_count,
+						const CartesianFrame* object_reflected_from,
+						const GlobalSettings* settings);
 //======================================================================
 double get_distance_to_closest_object(const CartesianFrame* world,
 				int refl_count,

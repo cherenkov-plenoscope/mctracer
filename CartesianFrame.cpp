@@ -98,7 +98,10 @@ const std::string new_name,const Vector3D npos,const Rotation3D nrot){
 
 	// init name_of_frame
 	if(new_name.length()==0){
-		throw BadValue("name of frame","The name must not be empty!");
+		throw BadValue(
+			"CartesianFrame -> set_frame()",
+			"name_of_frame",
+			"The name of the frame must not be empty!");
 	}
 	name_of_frame = new_name;
 	

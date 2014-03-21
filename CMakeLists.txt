@@ -83,6 +83,11 @@ add_executable( tracerUnitTests
 ./test/test.cpp 
 Vector3D.cpp
 Rotation3D.cpp
+GlobalSettings.cpp 
+CsvHandler.cpp
+ColourProperties.cpp 
+TracerException.cpp
+ReflectionProperties.cpp 
 )
 # Link test executable against gtest & gtest_main
 target_link_libraries(tracerUnitTests gtest gtest_main)

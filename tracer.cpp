@@ -42,51 +42,23 @@
 //
 //======================================================================
 
-// std
 #include <iostream> 
 #include <string>
 #include <sstream>
 
 #include "WorldFactory.h"
-#include "SensorIntersection.h"
-#include "ReflectionProperties.h"
-#include "ColourProperties.h"
-#include "GlobalSettings.h"
 #include "Vector3D.h"
-#include "Rotation3D.h"
-#include "HomoTrafo3D.h"
-#include "Intersection.h"
-#include "CartesianFrame.h"
-#include "SurfaceEntity.h"
+
 //====================
 #include "Ray.h"
 #include "Photon.h"
 #include "CameraRay.h"
 //====================
 #include "ListOfPropagations.h"
-#include "CameraDevice.h"
-#include "PinHoleCamera.h"
-#include "ApertureCamera.h"
-#include "LightSource.h"
+
 #include "FreeOrbitCamera.h"
-// geometry
-#include "Triangle.h"
-#include "Plane.h"
-#include "Disc.h"
-#include "SensorDisc.h"
-#include "Sphere.h"
-#include "Cylinder.h"
-#include "OpticalMirror.h"
-#include "OpticalMirrorRound.h"
-#include "OpticalMirrorHexagonal.h"
-#include "OpticalMirrorSphericRound.h"
-#include "OpticalMirrorSphericHexagonal.h"
-#include "OpticalMirrorParabolicRound.h"
-#include "OpticalMirrorParabolicHexagonal.h"
-#include "OpticalMirrorEllipsoidHexagonal.h"
 
-#include "FactTelescope.h"
-
+#include "CsvHandler.h"
 // namespaces
 using namespace std;
 
@@ -113,7 +85,24 @@ int main(){
 	out<<"|  Author: Sebastian Mueller              year 2013  |"<<endl;
 	out<<"|____________________________________________________|"<<endl;
 	cout<<out.str();
-	
+
+	//==================================================================
+	// set up global settings
+	//==================================================================
+	GlobalSettings settings;
+	try{
+
+		settings.set_max_number_of_reflections(3);
+		settings.set_csv_decimal_presicion(6);
+
+	}catch(TracerException& error){
+
+		error.ReportException();
+		return false;
+	}	
+	//==================================================================
+	// list of propagations
+	//==================================================================	
 	ListOfPropagations mylist("my little list");
 	
 	Ray* Hans;
@@ -135,14 +124,23 @@ int main(){
 	mylist.push_back(Bob);
 	
 	cout << mylist;
-	mylist.export_csv("mylist.csv");
+	mylist.export_csv("mylist.csv",settings);
 	
-	//==================================================================
-	// set up global settings
-	//==================================================================
-	GlobalSettings settings;
-	settings.set_max_number_of_reflections(3);
-	
+	// test csv parser
+	/*
+    ifstream	infile("mylist.csv");
+    ofstream	outfile;
+    outfile.open("my_Gnarf.csv");
+
+    CsvRow		row;
+    while(infile >> row)
+    {
+    	cout << "4th Element(" << row[3] << ")\n";
+ 		outfile << row;
+    }
+    outfile.close();
+	*/
+
 	//==================================================================
 	// open / read file
 	//==================================================================
