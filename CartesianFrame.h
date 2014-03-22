@@ -71,8 +71,9 @@ const int get_number_of_children()const;
 //======================
 CartesianFrame();
 //======================
-void set_frame
-(const std::string new_name,const Vector3D npos,const Rotation3D nrot);
+CartesianFrame(const std::string new_name,const Vector3D npos,const Rotation3D nrot);
+//======================
+void set_frame(const std::string new_name,const Vector3D npos,const Rotation3D nrot);
 //======================
 std::string get_frame_string()const;
 //======================

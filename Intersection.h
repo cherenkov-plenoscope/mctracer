@@ -5,7 +5,7 @@
 
 //=================================
 // forward declared dependencies
-class CartesianFrame;
+//class CartesianFrame;
 
 //=================================
 // included dependencies
@@ -13,6 +13,7 @@ class CartesianFrame;
 #include <string>
 #include <sstream>
 #include "Vector3D.h"
+#include "CartesianFrame.h"
 
 //=================================
 class Intersection {

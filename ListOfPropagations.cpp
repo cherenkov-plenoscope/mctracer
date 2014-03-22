@@ -47,6 +47,22 @@ std::string ListOfPropagations::get_info_string()const{
 	return out.str();
 }
 //======================================================================
+void ListOfPropagations::propagate(	
+	const CartesianFrame* world, 
+	ListOfInteractions* history,
+	const GlobalSettings* settings
+){
+	for(Ray* single_ray : list_of_ptrs_to_propagations){
+		single_ray->propagate(
+			world,
+			history,
+			0,
+			NULL,
+			settings
+		);
+	}
+}
+//======================================================================
 // friends of osstream
 //======================================================================
 std::ostream& operator<<(

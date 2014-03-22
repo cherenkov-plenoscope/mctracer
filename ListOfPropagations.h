@@ -36,7 +36,11 @@ public:
 	
 	void disp()const;
 	
-	void propagate()const;
+	void propagate(	
+		const CartesianFrame* world, 
+		ListOfInteractions* history,
+		const GlobalSettings* settings
+	);
 
 	friend std::ostream& operator<<(std::ostream& os,const ListOfPropagations& list);
 

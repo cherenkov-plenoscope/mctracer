@@ -49,8 +49,15 @@ void Ray::operator= (Ray eqray){
 	dir  = eqray.dir;
 }
 //======================================================================
+void Ray::homo_transformation_of_ray(Ray* ray,const HomoTrafo3D *T)const{
+	//transform base vector
+	T->transform_position(&ray->base);
+	//transform direction
+	T->transform_orientation(&ray->dir);
+}
+//======================================================================
 void Ray::pre_trace(
-const CartesianFrame* frame_to_check_for_interaction_of_ray_and_max_sphere, 
+const CartesianFrame* Frame2CheckForIntersectionOfRayAndMaxSphere, 
 std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre
 )const{
 	// the pretracer calculates a list of objects to be testet
@@ -60,23 +67,23 @@ std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMax
 	// O(number_of_objects^1) --> O( log(number_of_objects) )
 
 	if(is_ray_hitting_frame(
-	frame_to_check_for_interaction_of_ray_and_max_sphere)
+	Frame2CheckForIntersectionOfRayAndMaxSphere)
 	){
 		// the frame is hit by this ray
 		if(
-		frame_to_check_for_interaction_of_ray_and_max_sphere->
+		Frame2CheckForIntersectionOfRayAndMaxSphere->
 		get_number_of_children() > 0
 		){
 				// this frame has children to be tested
 				for(
-				int child_itterator=0; 
-				child_itterator<
-				frame_to_check_for_interaction_of_ray_and_max_sphere->
-				get_number_of_children();
-				child_itterator++
+					int child_itterator=0; 
+					child_itterator<
+					Frame2CheckForIntersectionOfRayAndMaxSphere->
+					get_number_of_children();
+					child_itterator++
 				){
 					pre_trace(
-					frame_to_check_for_interaction_of_ray_and_max_sphere->
+					Frame2CheckForIntersectionOfRayAndMaxSphere->
 					get_pointer_to_child(child_itterator),
 					Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre
 					);
@@ -86,7 +93,7 @@ std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMax
 				// so it is an object
 				Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre->
 				push_back(
-				frame_to_check_for_interaction_of_ray_and_max_sphere
+				Frame2CheckForIntersectionOfRayAndMaxSphere
 				);
 		}
 	}else{
@@ -201,36 +208,30 @@ void Ray::disp_possible_hit_list(const CartesianFrame *frame)const{
 	std::cout<<out.str();
 }
 //======================================================================
-void Ray::homo_transformation_of_ray(Ray* ray,const HomoTrafo3D *T)const{
-	//transform base vector
-	T->transform_position(&ray->base);
-	//transform direction
-	T->transform_orientation(&ray->dir);
-}
-//======================================================================
 void Ray::test_intersection_for_hit_candidates(
 			std::vector<const CartesianFrame*> *list_of_objects_which_might_intersect,
-			std::vector<const CartesianFrame*> *list_of_intersecting_objects,
-			std::vector<Intersection*> 
-			*ptr_to_list_of_ptr_to_intersections_which_might_take_place,
 			std::vector<Intersection*> *ptr_to_list_of_ptr_to_intersections,
 			const CartesianFrame* object_reflected_from,
 			int refl_count
 )const{
+
+	std::vector<Intersection*> list_of_ptr_to_intersections_which_might_take_place;
+
 	//==================================================================
 	// for all possible hit candidates test intersections
 	//==================================================================
 	
-	int number_of_objects_to_test = 
+	size_t number_of_objects_to_test = 
 	list_of_objects_which_might_intersect->size();
 	
 	//std::cout<<"list_of_objects_which_might_intersect->size()";
 	//std::cout<<list_of_objects_which_might_intersect->size()<<std::endl;
 	
-	for(int object_itterator=0;
+	for(
+		size_t object_itterator=0;
 		object_itterator<number_of_objects_to_test;
-		object_itterator++ )
-	{
+		object_itterator++ 
+	){
 		/*
 		std::cout<<"tracer testing object: ";
 		std::cout<<*list_of_objects_which_might_intersect.
@@ -244,9 +245,9 @@ void Ray::test_intersection_for_hit_candidates(
 		ray_in_object_system.set_ray(base,dir);
 		
 		homo_transformation_of_ray(
-		&ray_in_object_system,
-		list_of_objects_which_might_intersect->
-		at(object_itterator)->get_pointer_to_T_world2frame()
+			&ray_in_object_system,
+			list_of_objects_which_might_intersect->at(object_itterator)->
+			get_pointer_to_T_world2frame()
 		);
 		
 		//==============================================================
@@ -256,66 +257,65 @@ void Ray::test_intersection_for_hit_candidates(
 		Intersection* ptr_to_new_intersection;
 		ptr_to_new_intersection = new Intersection;
 		
-		ptr_to_list_of_ptr_to_intersections_which_might_take_place->
+		list_of_ptr_to_intersections_which_might_take_place.
 		push_back(ptr_to_new_intersection);
 		
-		list_of_objects_which_might_intersect
-		->at(object_itterator)->
-		hit(	&ray_in_object_system.base,	
-				&ray_in_object_system.dir,
-				ptr_to_list_of_ptr_to_intersections_which_might_take_place
-				->at(object_itterator)
-				);
+		list_of_objects_which_might_intersect->at(object_itterator)->
+		hit(	
+			&ray_in_object_system.base,	
+			&ray_in_object_system.dir,
+			list_of_ptr_to_intersections_which_might_take_place.
+			at(object_itterator)
+		);
 		
-		/*
-		ptr_to_list_of_ptr_to_intersections_which_might_take_place
-		->at(object_itterator)->disp();
-			*/	
 		//==============================================================
 		// add object to list of hits when hit_flag == true
 		//==============================================================
-		/*
-		if(list_of_objects_which_might_intersect->at(object_itterator)
-		->is_hit())*/
-		if(ptr_to_list_of_ptr_to_intersections_which_might_take_place
-		->at(object_itterator)->get_intersection_flag())
-		{
-			//std::cout<<"ptr_to_list_of_ptr_to_intersections_which_might_take_place->at(object_itterator)->get_intersection_flag()";
-		
-			if(refl_count == 0)
-			{
-			list_of_intersecting_objects->push_back(
-			// pointer to intersecting object
-			list_of_objects_which_might_intersect->at(object_itterator));	
+
+		if(
+			list_of_ptr_to_intersections_which_might_take_place.
+			at(object_itterator)->get_intersection_flag()
+		){
 			
-			ptr_to_list_of_ptr_to_intersections->push_back(
-			ptr_to_list_of_ptr_to_intersections_which_might_take_place->
-			at(object_itterator)
-			);			
+			if(refl_count == 0){
+			
+				ptr_to_list_of_ptr_to_intersections->push_back(
+					list_of_ptr_to_intersections_which_might_take_place.
+					at(object_itterator)
+				);			
 			
 			}else{
 				// test wether the object is reflecting onto itself
 				// or not
 				if(
-				list_of_objects_which_might_intersect->at(object_itterator) 
-				!=
-				object_reflected_from
-				)
-				{
+					list_of_objects_which_might_intersect->at(object_itterator) 
+					!=
+					object_reflected_from
+				){
+
 					ptr_to_list_of_ptr_to_intersections->push_back(
-					ptr_to_list_of_ptr_to_intersections_which_might_take_place->
-					at(object_itterator)
+						list_of_ptr_to_intersections_which_might_take_place.
+						at(object_itterator)
 					);
 					
-					list_of_intersecting_objects->push_back(
-					// pointer to hitted object
-					list_of_objects_which_might_intersect->at(object_itterator));	
 				}else{
 					//std::cout<<"refl onto itself."<<std::endl;
+					list_of_ptr_to_intersections_which_might_take_place.
+					at(object_itterator)->set_intersection_flag(false);
 				}
 			}
 		}
 	}
+	// free mempory
+	for(
+		Intersection *ptr_to_intersection : 
+		list_of_ptr_to_intersections_which_might_take_place
+	){
+		if(!ptr_to_intersection->get_intersection_flag()){
+			delete ptr_to_intersection;
+		}
+	}
+
 }
 //======================================================================
 void Ray::calculate_reflected_ray(	
@@ -399,14 +399,10 @@ ColourProperties Ray::trace(const CartesianFrame* world,
 	// objects_which_might_intersect
 	//==================================================================
 
-	std::vector<const CartesianFrame*> list_of_intersecting_objects;
-	std::vector<Intersection*> list_of_ptr_to_intersections_which_might_take_place;
 	std::vector<Intersection*> list_of_ptr_to_intersections;
 	
 	test_intersection_for_hit_candidates(
 						&list_of_objects_which_might_intersect,
-						&list_of_intersecting_objects,
-						&list_of_ptr_to_intersections_which_might_take_place,
 						&list_of_ptr_to_intersections,
 						object_reflected_from,
 						refl_count);
@@ -499,204 +495,26 @@ ColourProperties Ray::trace(const CartesianFrame* world,
 	//=============
 	//free memory list_of_ptr_to_intersections 
 	//=============
-	for (Intersection *ptr_to_intersection : 
-	list_of_ptr_to_intersections_which_might_take_place ) {
+	for(
+		Intersection *ptr_to_intersection : 
+		list_of_ptr_to_intersections
+	){
 		
 		delete ptr_to_intersection;
-		
 	}
-	//=============
+
 	return colour_to_return;
 }
 //======================================================================
-void Ray::propagate(	const CartesianFrame* world, 
-						int interaction_count,
-						const CartesianFrame* object_reflected_from,
-						const GlobalSettings* settings){
+void Ray::propagate(	
+	const CartesianFrame* world, 
+	ListOfInteractions* history,
+	int interaction_count,
+	const CartesianFrame* object_reflected_from,
+	const GlobalSettings* settings
+){
 	std::cout << "Calling propagate of an Ray instance!" << endl;
 }
-/*
-void Ray::trace_science(CartesianFrame* world,
-				int refl_count,
-				const CartesianFrame* object_reflected_from,
-				GlobalSettings *settings,
-				double dbl_passed_distance_from_source_to_sensor){
-	
-	//==================================================================
-	// claculate a list/vector containing all possible intersection
-	// candidates using pre-trace
-	//==================================================================
-	std::vector<CartesianFrame*> list_of_objects_which_might_intersect;
-	pre_trace( world , &list_of_objects_which_might_intersect );
-	
-	//==================================================================
-	// calculate a list of objects wich _do_ intersect from the list_of_
-	// objects_which_might_intersect
-	//==================================================================
-	std::vector<CartesianFrame*> list_of_intersecting_objects;
-	std::vector<Intersection*> list_of_ptr_to_intersections_which_might_take_place;
-	std::vector<Intersection*> list_of_ptr_to_intersections;
-	
-	test_intersection_for_hit_candidates(
-						&list_of_objects_which_might_intersect,
-						&list_of_intersecting_objects,
-						&list_of_ptr_to_intersections_which_might_take_place,
-						&list_of_ptr_to_intersections,
-						object_reflected_from,
-						refl_count);
-	
-	//==================================================================
-	// test wether there is at least one object intersecting the ray or
-	// not using the size of the list_of_intersecting_objects
-	//==================================================================
-	if(list_of_ptr_to_intersections.size()==0)
-	{
-		// do nothing because there are no intersections
-	}else{
-		//==============================================================
-		// find the closest object in the list of 
-		// list_of_intersecting_objects
-		//==============================================================
-
-		Intersection *ptr_to_closest_intersection = NULL;
-		ptr_to_closest_intersection = calculate_closest_intersection(
-		ptr_to_closest_intersection,
-		&list_of_ptr_to_intersections
-		);
-		
-		
-		//~ CartesianFrame *pointer_to_closest_frame;
-		//~ pointer_to_closest_frame = calculate_closest_frame(
-		//~ pointer_to_closest_frame,
-		//~ &list_of_intersecting_objects);
-		
-		//==============================================================
-		// test reflection of the object pointer_to_closest_frame is
-		// pointing to
-		//==============================================================
-		
-		
-		Vector3D vec_intersection_in_world_system;
-		
-		ptr_to_closest_intersection->
-		get_intersection_vec_in_object_system(
-		&vec_intersection_in_world_system);
-		
-		ptr_to_closest_intersection->
-		get_pointer_to_intersecting_object()->
-		get_pointer_to_T_frame2world()->
-		transform_position(&vec_intersection_in_world_system);
-		
-		Vector3D vec_additional;
-		vec_additional =  (base-vec_intersection_in_world_system);
-		//vec_additional.disp();
-		double dbl_new_additional_distance = vec_additional.norm2();
-		
-		double dbl_new_complete_passed_distance = 
-		dbl_passed_distance_from_source_to_sensor+
-		dbl_new_additional_distance;
-			
-		if(
-		ptr_to_closest_intersection->get_pointer_to_intersecting_object()->
-		get_hit_reflection_flag()
-		&& refl_count < settings->get_max_number_of_reflections())
-		{	
-			refl_count++;
-			//std::cout<<"refl count: "<<refl_count<<std::endl;
-			//std::cout<<"ray dist  : "<<dbl_new_complete_passed_distance<<" [m]"<<std::endl;
-			//==========================================================
-			// calculate the ray reflected by the object
-			// pointer_to_closest_frame is pointing to relativ to
-			// the world coordinate system
-			//==========================================================
-			
-			Ray ray_reflection_on_object;
-			calculate_reflected_ray(
-				ptr_to_closest_intersection,
-				&ray_reflection_on_object);
-				
-			// calculate new additional distance
-			
-			// pass ray on to next object and add the new distance	
-			ray_reflection_on_object.	
-			trace_science(
-			world,
-			refl_count,
-			ptr_to_closest_intersection->get_pointer_to_intersecting_object(),
-			settings,
-			dbl_new_complete_passed_distance);
-			//std::cout<<"science_ray was reflected"<<std::endl;
-			//ray_reflection_on_object.disp();
-		}else{
-			if(	ptr_to_closest_intersection->get_pointer_to_intersecting_object()
-				->get_sensor_flag())
-			{	
-				//========================================
-				// create sensorinteraction object
-				SensorIntersection *new_sensor_hit;
-				new_sensor_hit = new SensorIntersection;
-		
-				Vector3D vec_intersection_in_object_system;
-				
-				ptr_to_closest_intersection->
-				get_intersection_vec_in_object_system(
-				&vec_intersection_in_object_system);
-				
-				new_sensor_hit->set_sensor_hit(
-				vec_intersection_in_object_system.get_x(),
-				vec_intersection_in_object_system.get_y(),
-				dbl_new_complete_passed_distance);
-				
-				ptr_to_closest_intersection->
-				get_pointer_to_intersecting_object()->
-				push_back_SensorIntersection(new_sensor_hit);
-				//========================================
-				
-				//~ ptr_to_closest_intersection->
-				//~ get_pointer_to_intersecting_object()->
-				//~ push_back_intersection(
-				//~ ptr_to_closest_intersection,
-				//~ dbl_new_complete_passed_distance
-				//~ );
-				
-				//std::cout<<"Hit it!"<<std::endl;
-				//if(refl_count>0){std::cout<<"Hit it after reflection"<<std::endl;}
-			}else{
-				// do nothing, this ray is lost
-			}
-		}	
-	}
-
-	//=============
-	//free memory list_of_ptr_to_intersections 
-	//=============
-	for(unsigned int i=0;
-		i<list_of_ptr_to_intersections_which_might_take_place.size();
-		i++ )
-	{
-		delete 
-		list_of_ptr_to_intersections_which_might_take_place.
-		at(i);
-	}	
-	//=============
-}*/
-//======================================================================
-/*
-CartesianFrame* calculate_closest_frame(	CartesianFrame *pointer_to_closest_frame,
-		std::vector<CartesianFrame*> *pointer_to_list_of_intersecting_objects)
-{
-	//==============================================================
-	// find the closest object
-	//==============================================================
-	// insert comparator function into template
-	std::vector<CartesianFrame*>::iterator pointer_to_pointer_to_closest_object = 
-	min_element( 	pointer_to_list_of_intersecting_objects->begin(),
-					pointer_to_list_of_intersecting_objects->end() ,
-					compare_distance);
-						
-	//(*pointer_to_pointer_to_closest_object)->disp();	
-	return 	(*pointer_to_pointer_to_closest_object);
-}*/
 //======================================================================
 double Ray::get_distance_to_closest_object(const CartesianFrame* world,
 				int refl_count,
@@ -717,14 +535,10 @@ double Ray::get_distance_to_closest_object(const CartesianFrame* world,
 	// calculate a list of objects wich _do_ intersect from the list_of_
 	// objects_which_might_intersect
 	//==================================================================
-	std::vector<const CartesianFrame*> list_of_intersecting_objects;
-	std::vector<Intersection*> list_of_ptr_to_intersections_which_might_take_place;
 	std::vector<Intersection*> list_of_ptr_to_intersections;
 	
 	test_intersection_for_hit_candidates(
 						&list_of_objects_which_might_intersect,
-						&list_of_intersecting_objects,
-						&list_of_ptr_to_intersections_which_might_take_place,
 						&list_of_ptr_to_intersections,
 						object_reflected_from,
 						refl_count);

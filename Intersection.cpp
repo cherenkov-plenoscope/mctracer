@@ -60,10 +60,11 @@ std::string Intersection::get_string() const{
 		out<<"Distance passed by ray: ";
 		out<<distance_of_ray_in_m<<std::endl;
 		out<<"Object: ";
-		if(ptr_to_intersecting_object==NULL)
-			{out<<"NULL";}
-		else
-			{out<<"is set";}
+		if(ptr_to_intersecting_object==NULL){
+			out<<"NULL";
+		}else{
+			out<< *(ptr_to_intersecting_object->get_pointer_to_name_of_frame());
+		}
 		out<<std::endl;
 	}
 	return  out.str();

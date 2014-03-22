@@ -25,6 +25,7 @@ Ray.cpp
 Photon.cpp
 CameraRay.cpp
 ListOfPropagations.cpp
+ListOfInteractions.cpp
 CameraDevice.cpp 
 CameraImage.cpp
 PinHoleCamera.cpp 
@@ -83,14 +84,29 @@ add_executable( tracerUnitTests
 ./test/test.cpp 
 Vector3D.cpp
 Rotation3D.cpp
+HomoTrafo3D.cpp
 GlobalSettings.cpp 
 CsvHandler.cpp
 ColourProperties.cpp 
 TracerException.cpp
 ReflectionProperties.cpp 
+SurfaceEntity.cpp
+Plane.cpp
+CartesianFrame.cpp
+Intersection.cpp
+Ray.cpp
+Photon.cpp
+FreeOrbitCamera.cpp
+CameraDevice.cpp
+CameraImage.cpp
+PinHoleCamera.cpp
+ApertureCamera.cpp
+CameraRay.cpp
+ListOfInteractions.cpp
 )
 # Link test executable against gtest & gtest_main
 target_link_libraries(tracerUnitTests gtest gtest_main)
+target_link_libraries( tracerUnitTests ${OpenCV_LIBS} )
 add_test( tracerUnitTests tracerUnitTests )
 
 

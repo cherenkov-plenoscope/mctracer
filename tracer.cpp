@@ -153,9 +153,10 @@ int main(){
 	bool loading_file_was_successful = file2world.load_file(user_input);
 	
 	if(loading_file_was_successful){
-		
-		CartesianFrame *Mworld = file2world.get_pointer_to_world();
 
+		CartesianFrame *Mworld = file2world.get_pointer_to_world();
+		
+		//mylist.propagate(Mworld,&settings);
 		//cout << Mworld->get_frame_prompt_including_children();
 		
 		FreeOrbitCamera free;

@@ -1,7 +1,10 @@
 #include "CartesianFrame.h"
 //======================================================================
-void CartesianFrame::
-post_initializing(){
+CartesianFrame::CartesianFrame(const std::string new_name,const Vector3D npos,const Rotation3D nrot){
+	set_frame(new_name,npos,nrot);
+}
+//======================================================================
+void CartesianFrame::post_initializing(){
 	//initialize eye matrices
 	Vector3D   p(0.0,0.0,0.0);
 	Rotation3D r(0.0,0.0,0.0);
@@ -246,7 +249,7 @@ post_initialize_me_and_all_my_children(){
 	// This has to be done to ensure the relationship 
 	// declarations are set.
 	// rekursiv
-	std::cout<<"post initialization of: "<<name_of_frame<<std::endl;
+	// std::cout<<"post initialization of: "<<name_of_frame<<std::endl;
 	post_initializing();
 	// and all children
 	if(children.size()>0){

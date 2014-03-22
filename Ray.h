@@ -7,7 +7,7 @@
 // forward declared dependencies
 
 class HomoTrafo3D;
-
+class ListOfInteractions;
 //=================================
 // included dependencies
 #include <iostream>
@@ -22,8 +22,10 @@ class HomoTrafo3D;
 #include "Intersection.h"
 #include "GlobalSettings.h"
 #include "CsvHandler.h"
+//#include "ListOfInteractions.h"
 //=================================
 class Ray{
+	//friend class ListOfInteractions;
 protected:
 	Vector3D base;
 	Vector3D dir;
@@ -53,8 +55,8 @@ std::string get_string()const;
 Vector3D get_position_on_ray(const double scalar)const;
 //======================================================================
 void pre_trace(
-const CartesianFrame* frame_to_check_for_interaction_of_ray_and_max_sphere, 
-std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre
+	const CartesianFrame* frame_to_check_for_interaction_of_ray_and_max_sphere, 
+	std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre
 )const;
 //======================================================================
 bool is_ray_hitting_frame(const CartesianFrame* frame)const;
@@ -66,38 +68,45 @@ void operator= (Ray ray);
 void homo_transformation_of_ray(Ray* ray,const HomoTrafo3D *T)const;
 //======================================================================
 void test_intersection_for_hit_candidates(
-std::vector<const CartesianFrame*> *list_of_objects_which_might_intersect,
-std::vector<const CartesianFrame*> *list_of_intersecting_objects,
-std::vector<Intersection*> 
-*ptr_to_list_of_ptr_to_intersections_which_might_take_place,
-std::vector<Intersection*> *ptr_to_list_of_ptr_to_intersections,
-const CartesianFrame* object_reflected_from,
-int refl_count
+	std::vector<const CartesianFrame*> *list_of_objects_which_might_intersect,
+	//std::vector<Intersection*> *ptr_to_list_of_ptr_to_intersections_which_might_take_place,
+	std::vector<Intersection*> *ptr_to_list_of_ptr_to_intersections,
+	const CartesianFrame* object_reflected_from,
+	int refl_count
 )const;
 //======================================================================
 void calculate_reflected_ray(	
-Intersection * pointer_to_closest_intersection,
-Ray *ray_reflection_on_object);
+	Intersection * pointer_to_closest_intersection,
+	Ray *ray_reflection_on_object
+);
 //======================================================================
 Intersection* calculate_closest_intersection(	
-		Intersection *pointer_to_closest_intersection,
-		std::vector<Intersection*> *pointer_to_list_of_intersections)const;
+	Intersection *pointer_to_closest_intersection,
+	std::vector<Intersection*> *pointer_to_list_of_intersections
+)const;
 //======================================================================
-ColourProperties trace(const CartesianFrame* world,
-				int refl_count,
-				const CartesianFrame* object_reflected_from,
-				GlobalSettings *settings);
+ColourProperties trace(
+	const CartesianFrame* world,
+	int refl_count,
+	const CartesianFrame* object_reflected_from,
+	GlobalSettings *settings
+);
 //======================================================================
-virtual void propagate(	const CartesianFrame* world, 
-						int interaction_count,
-						const CartesianFrame* object_reflected_from,
-						const GlobalSettings* settings);
+virtual void propagate(	
+	const CartesianFrame* world, 
+	ListOfInteractions* history,
+	int interaction_count,
+	const CartesianFrame* object_reflected_from,
+	const GlobalSettings* settings
+);
 //======================================================================
-double get_distance_to_closest_object(const CartesianFrame* world,
-				int refl_count,
-				CartesianFrame* object_reflected_from,
-				const GlobalSettings *settings,
-				double dbl_passed_distance_from_source_to_sensor)const;
+double get_distance_to_closest_object(
+	const CartesianFrame* world,
+	int refl_count,
+	CartesianFrame* object_reflected_from,
+	const GlobalSettings *settings,
+	double dbl_passed_distance_from_source_to_sensor
+)const;
 //======================================================================
 bool operator() (Intersection* one, Intersection* two)const;
 //======================================================================

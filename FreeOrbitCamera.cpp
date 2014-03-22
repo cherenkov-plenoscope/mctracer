@@ -188,7 +188,7 @@ void FreeOrbitCamera::move_right(){
 	
 	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);
 		
-	std::cout<<"free_orbit->move left: ";
+	std::cout<<"free_orbit->move right: ";
 	std::cout<<t_World2Camera.get_string()<<std::endl;
 	
 }
