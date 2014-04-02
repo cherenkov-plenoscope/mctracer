@@ -90,9 +90,9 @@ void HomoTrafo3D::set_transformation(const Rotation3D R,const Vector3D pos){
 		Vector3D rot_axis = R.get_rot_axis();
 		rot_axis = rot_axis/rot_axis.norm2();
 		
-		double rx = rot_axis.get_x();
-		double ry = rot_axis.get_y();
-		double rz = rot_axis.get_z();		
+		double rx = rot_axis.x();
+		double ry = rot_axis.y();
+		double rz = rot_axis.z();		
 		
 		double rot_angle_in_rad = R.get_rot_angle_in_rad();
 		// 
@@ -135,9 +135,9 @@ void HomoTrafo3D::set_transformation(const Rotation3D R,const Vector3D pos){
 	//			[ 0 0 0 1 		]
 	
 	// Translation vector
-	T_tra.set(0,3,pos.get_x());
-	T_tra.set(1,3,pos.get_y());
-	T_tra.set(2,3,pos.get_z());
+	T_tra.set(0,3,pos.x());
+	T_tra.set(1,3,pos.y());
+	T_tra.set(2,3,pos.z());
 	
 	HomoTrafo3D rot_tra_comp;
 	//rot_tra_comp = T_Rot*T_tra;
@@ -196,19 +196,19 @@ const Vector3D pos){
 	//			[ R(2,0) R(2,1) R(2,2) 0 ]
 	//			[ 0      0      0      1 ]
 	// first row
-	T_Rot.set(0,0,rot_x.get_x());
-	T_Rot.set(1,0,rot_x.get_y());
-	T_Rot.set(2,0,rot_x.get_z());
+	T_Rot.set(0,0,rot_x.x());
+	T_Rot.set(1,0,rot_x.y());
+	T_Rot.set(2,0,rot_x.z());
 	
 	// second row
-	T_Rot.set(0,1,rot_y.get_x());
-	T_Rot.set(1,1,rot_y.get_y());
-	T_Rot.set(2,1,rot_y.get_z());	
+	T_Rot.set(0,1,rot_y.x());
+	T_Rot.set(1,1,rot_y.y());
+	T_Rot.set(2,1,rot_y.z());	
 
 	// third row
-	T_Rot.set(0,2,rot_z.get_x());
-	T_Rot.set(1,2,rot_z.get_y());
-	T_Rot.set(2,2,rot_z.get_z());	
+	T_Rot.set(0,2,rot_z.x());
+	T_Rot.set(1,2,rot_z.y());
+	T_Rot.set(2,2,rot_z.z());	
 		
 	// translation part of T_Rot
 	T_Rot.set(0,3,0.0);
@@ -230,9 +230,9 @@ const Vector3D pos){
 	//			[ 0 0 0 1 		]
 	
 	// Translation vector
-	T_tra.set(0,3,pos.get_x());
-	T_tra.set(1,3,pos.get_y());
-	T_tra.set(2,3,pos.get_z());
+	T_tra.set(0,3,pos.x());
+	T_tra.set(1,3,pos.y());
+	T_tra.set(2,3,pos.z());
 
 	//==============================================================
 	// composition
@@ -268,19 +268,19 @@ void HomoTrafo3D::transform_orientation
 (Vector3D* orientation_to_transform)const{
 	orientation_to_transform->set(
 	//x
-	orientation_to_transform->get_x()*get(0,0) + 
-	orientation_to_transform->get_y()*get(0,1) +
-	orientation_to_transform->get_z()*get(0,2)
+	orientation_to_transform->x()*get(0,0) + 
+	orientation_to_transform->y()*get(0,1) +
+	orientation_to_transform->z()*get(0,2)
 	,
 	//y
-	orientation_to_transform->get_x()*get(1,0) + 
-	orientation_to_transform->get_y()*get(1,1) + 
-	orientation_to_transform->get_z()*get(1,2)
+	orientation_to_transform->x()*get(1,0) + 
+	orientation_to_transform->y()*get(1,1) + 
+	orientation_to_transform->z()*get(1,2)
 	,
 	//z
-	orientation_to_transform->get_x()*get(2,0) + 
-	orientation_to_transform->get_y()*get(2,1) + 
-	orientation_to_transform->get_z()*get(2,2)
+	orientation_to_transform->x()*get(2,0) + 
+	orientation_to_transform->y()*get(2,1) + 
+	orientation_to_transform->z()*get(2,2)
 	);
 }
 //==================================================================
@@ -288,19 +288,19 @@ void HomoTrafo3D::transform_position
 (Vector3D* position_to_transform)const{
 	position_to_transform->set(
 	//x
-	position_to_transform->get_x()*get(0,0) + 
-	position_to_transform->get_y()*get(0,1) + 
-	position_to_transform->get_z()*get(0,2) + 1.0*get(0,3)
+	position_to_transform->x()*get(0,0) + 
+	position_to_transform->y()*get(0,1) + 
+	position_to_transform->z()*get(0,2) + 1.0*get(0,3)
 	,
 	//y
-	position_to_transform->get_x()*get(1,0) + 
-	position_to_transform->get_y()*get(1,1) + 
-	position_to_transform->get_z()*get(1,2) + 1.0*get(1,3)
+	position_to_transform->x()*get(1,0) + 
+	position_to_transform->y()*get(1,1) + 
+	position_to_transform->z()*get(1,2) + 1.0*get(1,3)
 	,
 	//z
-	position_to_transform->get_x()*get(2,0) + 
-	position_to_transform->get_y()*get(2,1) + 
-	position_to_transform->get_z()*get(2,2) + 1.0*get(2,3)
+	position_to_transform->x()*get(2,0) + 
+	position_to_transform->y()*get(2,1) + 
+	position_to_transform->z()*get(2,2) + 1.0*get(2,3)
 	);		
 }
 //==================================================================

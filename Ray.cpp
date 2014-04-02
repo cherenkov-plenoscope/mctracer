@@ -62,19 +62,61 @@ std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMax
 )const{
 	// the pretracer calculates a list of objects to be testet
 	// in having intersections with a ray.
-	//
-	// THIS IS A SPEED UP IN 
+	// The key is to extract a list as small as possible to avoid unneccesary
+	// intersection tests 
+	// 
+	// Using bounding Volume spheres and OctTrees, a speed up in the order of 
 	// O(number_of_objects^1) --> O( log(number_of_objects) )
+	// is achieved / desired
 
-	if(is_ray_hitting_frame(
-	Frame2CheckForIntersectionOfRayAndMaxSphere)
+	if(
+		IntersectionWithBoundingSphere(
+			Frame2CheckForIntersectionOfRayAndMaxSphere
+		)
 	){
-		// the frame is hit by this ray
-		if(
-		Frame2CheckForIntersectionOfRayAndMaxSphere->
-		get_number_of_children() > 0
+		// Check the frame for an OctTree
+		const OctTreeCube *OctTreeOfFrame2CheckForIntersectionOfRayAndMaxSphere = 
+		Frame2CheckForIntersectionOfRayAndMaxSphere->get_OctTree();
+		
+		if(OctTreeOfFrame2CheckForIntersectionOfRayAndMaxSphere != NULL){
+			// This Frame uses an OctTree to store its children
+			std::unordered_set<CartesianFrame*> IntersectionCandidates;
+
+			// initialize a special Ray with additional information for 
+			// the OctTree traversal
+			OctTreeTraversingRay SpecialRay(this);
+
+			// transform the special Ray to the Cartesian frame where 
+			// the OctTree lives
+			homo_transformation_of_ray(
+				&SpecialRay,
+				Frame2CheckForIntersectionOfRayAndMaxSphere->
+				get_pointer_to_T_world2frame()
+			);
+
+			// update the special information in the special Ray
+			SpecialRay.update();
+
+			// find the intersection candidates
+			SpecialRay.IntersectionCandidatesInOctTree(
+				OctTreeOfFrame2CheckForIntersectionOfRayAndMaxSphere,
+				&IntersectionCandidates
+			);
+
+			// add the intersection candidates to the list of frames to check for 
+			// an intersection
+			for(CartesianFrame* FrameFoundInOctTree : IntersectionCandidates){
+				pre_trace(FrameFoundInOctTree,
+				Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre
+				);
+			}
+
+			//cout << IntersectionCandidates.size() << endl;
+		}else if(
+			Frame2CheckForIntersectionOfRayAndMaxSphere->
+			get_number_of_children() > 0
 		){
-				// this frame has children to be tested
+				// this frame has children to be tested and no OctTree
 				for(
 					int child_itterator=0; 
 					child_itterator<
@@ -90,19 +132,92 @@ std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMax
 				}
 		}else{
 				// there are no children in this frame
-				// so it is an object
+				// so it is an object itself
 				Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre->
 				push_back(
-				Frame2CheckForIntersectionOfRayAndMaxSphere
+					Frame2CheckForIntersectionOfRayAndMaxSphere
 				);
+				// Only here frames are added to the list of intersection 
+				// candidates
 		}
 	}else{
 		// the frame (and its children in case there are some) does not
-		// intersect with this ray.
+		// intersect with this ray at all.
 	}
 }
 //======================================================================
-bool Ray::is_ray_hitting_frame(const CartesianFrame* frame)const{
+void OctTreeTraversingRay::IntersectionCandidatesInOctTree(
+	const OctTreeCube *Cube,
+	std::unordered_set<CartesianFrame*> *IntersectionCandidates)const{
+
+	// Check whether this Cube is a leaf or has children
+	if(Cube->ChildCubes.size()==0){
+		// There are no more sub Cubes in this tree
+		// This cube is a leaf of the tree so all the Frames in this leaf 
+		// are possible hit candidates and are added to the 
+		// IntersectionCandidates
+		for(CartesianFrame* FrameInChildCube : Cube->ChildFrames){
+			IntersectionCandidates->insert(FrameInChildCube);
+		}
+		// here in the leaf of the OctTree the recursion ends.
+	}else{
+		// There are more sub cubes in this OctTree
+		for(OctTreeCube* ChildCube : Cube->ChildCubes){
+			// check all child cubes of this non leaf cube 
+			// for intersections with this ray
+
+			if(IntersectionWithOctTreeCube(ChildCube)){
+				// this child cube is intersecting the ray.
+				// Now IntersectionCandidatesInOctTree() is called 
+				// in a recursive fashion to go through the OctTree
+				IntersectionCandidatesInOctTree(
+					ChildCube,
+					IntersectionCandidates
+				);
+			}
+			// when there is no intersection of the ray and the cube then 
+			// also the frames inside the cube do not intersect and can be 
+			// neglected
+		}
+	}
+}
+//======================================================================
+bool OctTreeTraversingRay::IntersectionWithOctTreeCube(const OctTreeCube* Cube)const{
+	/*
+	  An Efficient and Robust Ray–Box Intersection Algorithm
+	Amy Williams, Steve Barrus, R. Keith Morley, Peter Shirley
+	                   University of Utah
+	*/
+
+	double tmin, tmax, tYmin, tYmax, tZmin, tZmax;
+	
+	tmin  = (Cube->limits[0][  sign[0]] - base.x())*inv_dir.x();
+	tmax  = (Cube->limits[0][1-sign[0]] - base.x())*inv_dir.x(); 
+
+	tYmin = (Cube->limits[1][  sign[1]] - base.y())*inv_dir.y();
+	tYmax = (Cube->limits[1][1-sign[1]] - base.y())*inv_dir.y();
+
+	if ( (tmin > tYmax) || (tYmin > tmax) )
+		return false;
+	if (tYmin > tmin)
+		tmin = tYmin;
+	if (tYmax < tmax)
+		tmax = tYmax;
+
+	tZmin = (Cube->limits[2][  sign[2]] - base.z())*inv_dir.z();
+	tZmax = (Cube->limits[2][1-sign[2]] - base.z())*inv_dir.z();
+
+	if ( (tmin > tZmax) || (tZmin > tmax) )
+		return false;
+	if (tZmin > tmin)
+		tmin = tZmin;
+	if (tZmax < tmax)
+		tmax = tZmax;
+
+	return (tmax > 0.0) ;
+}
+//======================================================================
+bool Ray::IntersectionWithBoundingSphere(const CartesianFrame* frame)const{
 	// create a plane orthogonal to this ray and containing the center
 	// of the max norm sphere
 	// plane equation

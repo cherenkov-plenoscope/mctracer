@@ -18,6 +18,7 @@ class ReflectionProperties;
 #include "HomoTrafo3D.h"
 #include "ColourProperties.h"
 #include "TracerException.h"
+#include "OctTreeCube.h"
 
 //======================================================================
 class CartesianFrame {
@@ -35,9 +36,20 @@ protected:
     
     std::vector<CartesianFrame*> children;
 	CartesianFrame *mother;
+
+    OctTreeCube *OctTree;
+    uint max_number_of_frames_in_OctTree;
+    //double minimal_OctTree_EdgeLength;
+	
 //======================================================================
 public: ////////////////////////////////////////////////////////////////
 //======================================================================
+CartesianFrame();
+//======================
+CartesianFrame(const std::string new_name,const Vector3D npos,const Rotation3D nrot);
+//======================
+void BasicSetUp();
+//======================
 void post_initialize_radius_of_sphere_enclosing_all_children();
 //======================
 const std::string* get_pointer_to_name_of_frame() const;
@@ -69,10 +81,6 @@ const CartesianFrame* get_pointer_to_child
 //======================
 const int get_number_of_children()const;
 //======================
-CartesianFrame();
-//======================
-CartesianFrame(const std::string new_name,const Vector3D npos,const Rotation3D nrot);
-//======================
 void set_frame(const std::string new_name,const Vector3D npos,const Rotation3D nrot);
 //======================
 std::string get_frame_string()const;
@@ -82,6 +90,8 @@ std::string get_frame_prompt_including_children()const;
 void set_mother_and_child(CartesianFrame *new_child);
 //======================
 void post_initialize_me_and_all_my_children();
+//======================
+const OctTreeCube* get_OctTree()const;
 //======================================================================
 private: ///////////////////////////////////////////////////////////////
 //======================================================================
@@ -92,6 +102,37 @@ void add_mother(CartesianFrame *const new_mother);
 void add_child(CartesianFrame * const new_child);
 //======================
 void post_initializing();
+//=====================================================================
+// OctTree ////////////////////////////////////////////////////////////
+//=====================================================================
+void SetOctTree(
+    OctTreeCube *Ptr2OctTree,   
+    Vector3D CubesCenterPosition,
+    double LengthOfEdge);
+//======================
+void FillOctTree(
+    OctTreeCube *Ptr2OctTree,  
+    std::vector<CartesianFrame*> ChildrenToFillIn
+);
+//======================
+Vector3D CalculateCentrePositionOfChildCube(OctTreeCube *Ptr2OctTree,uint x,uint y,uint z)const;
+//======================
+double CalculateEdgeLengthOfChildCube(OctTreeCube *Ptr2OctTree)const;
+//======================
+std::vector<CartesianFrame*> CalculateSubSetOfFramesInCube(
+    OctTreeCube *Ptr2OctTree,
+    std::vector<CartesianFrame*> possible_children
+);
+//======================
+std::string prompt_OctTree_including_children(
+    OctTreeCube *Ptr2OctTree,
+    unsigned depth
+)const;
+//======================
+std::vector<CartesianFrame*> CalculateHitCandidates(
+    Vector3D support,
+    Vector3D direction
+)const;
 //======================================================================
 public: // VIRTUAL /////////////////////////////////////////////////////
 //======================================================================

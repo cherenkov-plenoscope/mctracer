@@ -16,9 +16,9 @@
 //=================================
 class Vector3D {
 private:
-double x;
-double y;
-double z;
+double X;
+double Y;
+double Z;
 public:
 //======================
 Vector3D();
@@ -59,11 +59,11 @@ void set_unit_vector_z();
 //======================
 void set_null_vector();
 //======================
-double get_x() const;
+double x() const;
 //======================
-double get_y() const;
+double y() const;
 //======================
-double get_z() const;
+double z() const;
 //======================
 CsvRow getCsvRow(GlobalSettings& settings) const;
 //======================

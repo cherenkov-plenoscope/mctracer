@@ -20,6 +20,7 @@ Rotation3D.cpp
 HomoTrafo3D.cpp 
 Intersection.cpp 
 CartesianFrame.cpp 
+OctTreeCube.cpp
 SurfaceEntity.cpp 
 Ray.cpp 
 Photon.cpp
@@ -93,6 +94,7 @@ ReflectionProperties.cpp
 SurfaceEntity.cpp
 Plane.cpp
 CartesianFrame.cpp
+OctTreeCube.cpp
 Intersection.cpp
 Ray.cpp
 Photon.cpp

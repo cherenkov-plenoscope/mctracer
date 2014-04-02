@@ -135,12 +135,12 @@ void OpticalMirrorEllipsoidHexagonal::hit
 
 	// I create some short cuts here ... they will all be optimized away
 	// by the compiler I guess ... so I don't care!
-	double dx = dir->get_x();
-	double dy = dir->get_y();
-	double dz = dir->get_z();
-	double bx = base->get_x();
-	double by = base->get_y();
-	double bz = base->get_z();
+	double dx = dir->x();
+	double dy = dir->y();
+	double dz = dir->z();
+	double bx = base->x();
+	double by = base->y();
+	double bz = base->z();
 	
 	double A = 2.0*short_focal_length;
 	double B = 2.0*long_focal_length;
@@ -151,11 +151,11 @@ void OpticalMirrorEllipsoidHexagonal::hit
 	double c = (bx*bx)/(A*A) + (by*by)/(B*B) +  (bz*bz-2.0*bz*C)/(C*C);
 	
 	
-	double dbl_inner_part_of_square_root_p_q = (b*b) - 4.0*a*c;
+	double inner_part_of_square_root_p_q = (b*b) - 4.0*a*c;
 	
-	if(dbl_inner_part_of_square_root_p_q < 0){
+	if(inner_part_of_square_root_p_q < 0){
 		// no hit at all
-
+		return;
 	}else{
 		// hit in ellipsoid
 
@@ -163,40 +163,41 @@ void OpticalMirrorEllipsoidHexagonal::hit
 		double tm;
 		double tp;
 		double t;
-		Vector3D vec_intersec_ellipsoid_tp;
-		Vector3D vec_intersec_ellipsoid_tm;
+
+		Vector3D intersec_ellipsoid_tp;
+		Vector3D intersec_ellipsoid_tm;
 
 		//intersection flags
 		bool hit_valid_tp;
 		bool hit_valid_tm;
 		bool hit_inside_cylinder_flag;
 		//intersection vector
-		Vector3D vec_intersec_ellipsoid;
+		Vector3D intersec_ellipsoid;
 
-		tp = (-b + sqrt(dbl_inner_part_of_square_root_p_q))/(2.0*a);
-		tm = (-b - sqrt(dbl_inner_part_of_square_root_p_q))/(2.0*a);
+		tp = (-b + sqrt(inner_part_of_square_root_p_q))/(2.0*a);
+		tm = (-b - sqrt(inner_part_of_square_root_p_q))/(2.0*a);
 		t=0.0;
 
 		// intersection points of ray and parabola
-		vec_intersec_ellipsoid_tp = *base + *dir *tp;
-		vec_intersec_ellipsoid_tm = *base + *dir *tm;
+		intersec_ellipsoid_tp = *base + *dir *tp;
+		intersec_ellipsoid_tm = *base + *dir *tm;
 		
 		//test wether intersections are inside defined zylinder 
 		// or not
 		hit_valid_tp = false;
 		hit_valid_tm = false;
 		
-		hit_valid_tp = test_hexa_fit(&vec_intersec_ellipsoid_tp);
-		hit_valid_tm = test_hexa_fit(&vec_intersec_ellipsoid_tm);
+		hit_valid_tp = test_hexa_fit(&intersec_ellipsoid_tp);
+		hit_valid_tm = test_hexa_fit(&intersec_ellipsoid_tm);
 		
 		//we do only want to see the lower part of the 
 		//ellipsoid and not the part on the top of it.
 		//this is a crude approxymation for thin mirrors.
 		
-		if(vec_intersec_ellipsoid_tm.get_z()>radius_of_sphere_enclosing_all_children)
+		if(intersec_ellipsoid_tm.z()>radius_of_sphere_enclosing_all_children)
 			hit_valid_tm = false;
 		
-		if(vec_intersec_ellipsoid_tp.get_z()>radius_of_sphere_enclosing_all_children)
+		if(intersec_ellipsoid_tp.z()>radius_of_sphere_enclosing_all_children)
 			hit_valid_tp = false;
 		
 		// we only want to see objects in front of the camera
@@ -209,13 +210,11 @@ void OpticalMirrorEllipsoidHexagonal::hit
 			hit_valid_tp = false;
 			
 		hit_inside_cylinder_flag = false;
-		if(hit_valid_tp && hit_valid_tm)
-		{
+		if(hit_valid_tp && hit_valid_tm){
 			// the tp solution is covered by the tm solution
 			t=tm; 
 			hit_inside_cylinder_flag=true;
-		}else if(hit_valid_tp)
-		{	
+		}else if(hit_valid_tp){	
 			//tp is valid only
 			t=tp; 
 			hit_inside_cylinder_flag=true;
@@ -229,7 +228,7 @@ void OpticalMirrorEllipsoidHexagonal::hit
 		}
 		
 		if(hit_inside_cylinder_flag){ 
-			vec_intersec_ellipsoid = *base + *dir *t;
+			intersec_ellipsoid = *base + *dir *t;
 			// surface normal is given as  ( -dz/dx , -dz/dy , 1 )
 			// 
 			// z(x,y) = C*sqrt(1-x^2/A^2-y^2/B^2)+C
@@ -240,22 +239,23 @@ void OpticalMirrorEllipsoidHexagonal::hit
 			//
 			// normal = ( -dz/dx , -dz/dy , 1 )
 			//
-			// dbl_surface_normal_factor = 
+			// surface_normal_factor = 
 			// C*1/2*(1-x^2/A^2-y^2/B^2)^(-1/2) 
 
-			double dbl_surface_normal_factor = 
+			double surface_normal_factor = 
 			C*(0.5)*pow(
 					1.0
-					-pow(vec_intersec_ellipsoid.get_x(),2.0)/(A*A)
-					-pow(vec_intersec_ellipsoid.get_y(),2.0)/(B*B)
-					,0.5);
+					-pow(intersec_ellipsoid.x(),2.0)/(A*A)
+					-pow(intersec_ellipsoid.y(),2.0)/(B*B)
+					,0.5
+					);
 					
 			Vector3D surface_normal;
 			surface_normal.set(
-			-dbl_surface_normal_factor*
-			(2.0*vec_intersec_ellipsoid.get_x()/(A*A)),
-			-dbl_surface_normal_factor*
-			(2.0*vec_intersec_ellipsoid.get_y()/(B*B)),
+			-surface_normal_factor*
+			(2.0*intersec_ellipsoid.x()/(A*A)),
+			-surface_normal_factor*
+			(2.0*intersec_ellipsoid.y()/(B*B)),
 			1.0);
 	
 			surface_normal = surface_normal/surface_normal.norm2();
@@ -264,83 +264,10 @@ void OpticalMirrorEllipsoidHexagonal::hit
 			intersection->set_intersection_flag(true);
 			intersection->set_pointer_to_intersecting_object(this);
 			intersection->set_intersection(
-				&vec_intersec_ellipsoid,
+				&intersec_ellipsoid,
 				&surface_normal,
 				&t
 			);
 		}
 	}
-	
-	/*
-	
-	if(discriminant >= 0){
-		
-		double tp = (-b + sqrt(discriminant))/(2.0*a);
-		double tm = (-b - sqrt(discriminant))/(2.0*a);
-		// if all hits are behind us, we can already return... nothing to do.
-		if ( tm < 0. && tm < 0.) return;
-		
-		// intersection points of ray and surface
-		Vector3D vec_intersec_sphere_tp = *base + *dir *tp;
-		Vector3D vec_intersec_sphere_tm = *base + *dir *tm;
-		
-		//test wether intersections are inside defined cylinder or not
-		bool hit_valid_tp = test_hexa_fit(&vec_intersec_sphere_tp);
-		bool hit_valid_tm = test_hexa_fit(&vec_intersec_sphere_tm);
-		
-		//if( hit_valid_tp) cout<<"hit_valid_tp is TRUE"<<endl;
-		//if( hit_valid_tm) cout<<"hit_valid_tm is TRUE"<<endl;
-		
-		double t;
-		if(hit_valid_tp && hit_valid_tm){
-			//cout<<"hit_valid_tp && hit_valid_tm"<<endl; 
-			if(tp > 0.0 && tm <0.0){
-				t=tp;
-			}else if(tm >0.0 && tp <0.0){
-				t=tm;
-			}else if(tm >0.0 && tp > 0.0){
-				t = tm;
-			}
-			//t = max(tp,tm);
-		}else if(hit_valid_tp && tp > 0.0){
-			//cout<<"hit_valid_tp && tp > 0."<<endl; 
-			t = tp;
-		}else if(hit_valid_tm && tm > 0.0){
-			//cout<<"hit_valid_tm && tm > 0.0"<<endl; 
-			t = tm;
-		}else{
-			// nothing was hit .. so we simply return here... 
-			//cout<<"nothing was hit .."<<endl;  
-			return;
-		} 
-
-		Vector3D vec_intersec_sphere = *base + *dir *t;
-		
-		 // surface normal is given as grad f(x,y,z)
-		 // 
-		 // In our case of an ellipsoid grad f(x,y,z) is:
-		 // grad f(x,y,z) = ( 2x/A^2 , 2y/B^2 , 2(z-C)/C^2 )
-		  // 
-		 // so we can express n  = grad f / |grad f|
-		  //
-		  
-		Vector3D surface_normal;
-		surface_normal.set(
-			vec_intersec_sphere.get_x()/(A*A),
-			vec_intersec_sphere.get_y()/(B*B),
-			(vec_intersec_sphere.get_z() - C) / (C*C) 
-								);
-								
-		surface_normal = surface_normal/surface_normal.norm2();
-		
-		// the new intersection feature
-		intersection->set_intersection_flag(true);
-		intersection->set_pointer_to_intersecting_object(this);
-		intersection->set_intersection(
-			&vec_intersec_sphere,
-			&surface_normal,
-			&t
-		);
-	}
-	*/
 }

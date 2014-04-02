@@ -92,7 +92,7 @@ GlobalSettings* settings){
 	//init open mp variables
 	//int number_of_threads, thread_id;
 	
-	std::cout <<"PinHoleCamera->acquire_image_parallel()"<<std::endl;
+	//std::cout <<"PinHoleCamera->acquire_image_parallel()"<<std::endl;
 	// Fork a team of threads giving them their own copies of
 	// variables to fight the pixels !
 

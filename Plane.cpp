@@ -86,7 +86,7 @@ void Plane::hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const{
 	// z-component
 	// 0 = bz+v*dz  <=>  
 	// v = -bz/dz   watch out! dz might be 0 !
-	if(dir->get_z() == 0.0)
+	if(dir->z() == 0.0)
 	{
 		// the plane is parallel to the ray
 		// default hit flag is false
@@ -100,7 +100,7 @@ void Plane::hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const{
 		double v ;
 		// the ray is not parallel to the plane
 		//double v;
-		v = -base->get_z()/dir->get_z();
+		v = -base->z()/dir->z();
 		
 		//Vector3D vec_intersection; 
 		vec_intersection = *base + ( *dir)*v;
@@ -108,10 +108,10 @@ void Plane::hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const{
 		
 		// test wether intersection is inside 
 		// plane definition or not
-		if(	vec_intersection.get_x() >  range_x_min &&
-			vec_intersection.get_x() <  range_x_max &&
-			vec_intersection.get_y() >  range_y_min &&
-			vec_intersection.get_y() <  range_y_max	&& 
+		if(	vec_intersection.x() >  range_x_min &&
+			vec_intersection.x() <  range_x_max &&
+			vec_intersection.y() >  range_y_min &&
+			vec_intersection.y() <  range_y_max	&& 
 			v > 0.0) //v must be positiv
 		{
 			// the intersection

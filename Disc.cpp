@@ -49,7 +49,7 @@ void Disc::hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const{
 	// z-component
 	// 0 = bz+v*dz  <=>  
 	// v = -bz/dz   watch out! dz might be 0 !
-	if(dir->get_z() == 0.0)
+	if(dir->z() == 0.0)
 	{
 		// the Disc-surface is parallel to the ray
 		// default hit flag is false
@@ -60,25 +60,25 @@ void Disc::hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const{
 		surface_normal_ez.set_unit_vector_z();
 		
 		Vector3D vec_intersection;
-		double dbl_v ;
+		double alpha;
 		
 		// the ray is not parallel to the Disc-surface
 		//double v;
-		dbl_v = -base->get_z()/dir->get_z();
+		alpha = -base->z()/dir->z();
 		
 		//Vector3D vec_intersection; 
-		vec_intersection = *base + ( *dir)*dbl_v;
+		vec_intersection = *base + ( *dir)*alpha;
 		//vec_intersection.disp();
 		
 		// test wether intersection is inside 
 		// Disc definition or not
 		if(	sqrt(
-				pow(vec_intersection.get_x(),2.0)
+				pow(vec_intersection.x(),2.0)
 				+
-				pow(vec_intersection.get_y(),2.0) 
+				pow(vec_intersection.y(),2.0) 
 				)
 				<= dbl_Disc_radius_in_m &&
-			dbl_v > 0.0) //v must be positiv
+			alpha > 0.0) //v must be positiv
 		{
 			// ray is inside range
 			// store hit information in SurfaceEntity
@@ -89,7 +89,7 @@ void Disc::hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const{
 			intersection->set_intersection(
 				&vec_intersection,
 				&surface_normal_ez,
-				&dbl_v
+				&alpha
 			);
 		}
 	} 

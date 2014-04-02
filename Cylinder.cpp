@@ -162,16 +162,16 @@ Intersection *intersection)const{
 	
 	// d = norm((q-p)*n)/norm(n)
 
-	double dbl_denominator =( 	pow(dir->get_x(),2.0) +
-								pow(dir->get_y(),2.0)
+	double dbl_denominator =( 	pow(dir->x(),2.0) +
+								pow(dir->y(),2.0)
 							);
 
-	double dbl_p = 2.0*( 	base->get_x()*dir->get_x() + 
-							base->get_y()*dir->get_y() )/
+	double dbl_p = 2.0*( 	base->x()*dir->x() + 
+							base->y()*dir->y() )/
 							dbl_denominator;
 							
-	double dbl_q =(	pow(base->get_x(),2.0) +
-					pow(base->get_y(),2.0) -
+	double dbl_q =(	pow(base->x(),2.0) +
+					pow(base->y(),2.0) -
 					pow(CylinderRadius,2.0) )/
 					dbl_denominator;
 	
@@ -205,13 +205,13 @@ Intersection *intersection)const{
 		bool flag_minus_hit = false;
 		//bool flag_plus_hit = false;
 		
-		if( 	fabs(vec_intersection_minus.get_z())
+		if( 	fabs(vec_intersection_minus.z())
 				<=(CylinderLength/2.0) )
 		{
 			flag_minus_hit = true;
 		}
 		
-		if( 	fabs(vec_intersection_plus.get_z())
+		if( 	fabs(vec_intersection_plus.z())
 				<=(CylinderLength/2.0) )
 		{
 			//flag_plus_hit = true;
@@ -236,8 +236,8 @@ Intersection *intersection)const{
 			dbl_lambda = dbl_lambda_minus;
 			vec_intersection = *base + (*dir)*dbl_lambda;
 			vec_surface_normal.set(
-			vec_intersection.get_x(),
-			vec_intersection.get_y(),
+			vec_intersection.x(),
+			vec_intersection.y(),
 			0.0);
 			
 			// the new intersection feature

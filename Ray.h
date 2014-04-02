@@ -5,7 +5,6 @@
 
 //=================================
 // forward declared dependencies
-
 class HomoTrafo3D;
 class ListOfInteractions;
 //=================================
@@ -15,6 +14,7 @@ class ListOfInteractions;
 #include <sstream>
 #include <math.h>
 #include <vector>
+#include <unordered_set>
 #include <algorithm>
 #include "Vector3D.h"
 #include "ColourProperties.h"
@@ -22,10 +22,13 @@ class ListOfInteractions;
 #include "Intersection.h"
 #include "GlobalSettings.h"
 #include "CsvHandler.h"
-//#include "ListOfInteractions.h"
+#include "OctTreeCube.h"
+
 //=================================
+class OctTreeTraversingRay;
+
 class Ray{
-	//friend class ListOfInteractions;
+
 protected:
 	Vector3D base;
 	Vector3D dir;
@@ -59,7 +62,7 @@ void pre_trace(
 	std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre
 )const;
 //======================================================================
-bool is_ray_hitting_frame(const CartesianFrame* frame)const;
+bool IntersectionWithBoundingSphere(const CartesianFrame* frame)const;
 //======================================================================
 void disp_possible_hit_list(const CartesianFrame *frame)const;
 //======================================================================
@@ -111,5 +114,46 @@ double get_distance_to_closest_object(
 bool operator() (Intersection* one, Intersection* two)const;
 //======================================================================
 friend std::ostream& operator<<(std::ostream& os, const Ray& ray_to_be_displayed);
+};
+
+//======================================================================
+// A special Ray to traverse the Oct Tree Structure
+//======================================================================
+/*here additional signum and inverse direction information are stored 
+with in the ray to speed up the Oct Tree traversal. Idea is taken from 
+
+	  An Efficient and Robust Ray–Box Intersection Algorithm
+	Amy Williams, Steve Barrus, R. Keith Morley, Peter Shirley
+	                   University of Utah
+*/
+
+class OctTreeTraversingRay : public Ray{
+public:
+	Vector3D inv_dir;
+	int sign[3];
+
+	OctTreeTraversingRay(const Ray *r){
+		base = r->get_support();
+		dir  = r->get_direction();
+		//update();
+	}
+//======================================================================
+	void IntersectionCandidatesInOctTree(
+	const OctTreeCube *Cube,
+	std::unordered_set<CartesianFrame*> *IntersectionCandidates)const;
+//======================================================================
+	bool IntersectionWithOctTreeCube(const OctTreeCube* Cube)const;
+//======================================================================
+	void update(){
+		/* after any usual transformation of the ray this update has to 
+		be performed to update the additional information which is not 
+		stored or touched with in the usual Ray routines.*/
+		inv_dir.set( 1.0/dir.x() , 1.0/dir.y() , 1.0/dir.z() );
+
+		sign[0] = (inv_dir.x() < 0.0);
+		sign[1] = (inv_dir.y() < 0.0);
+		sign[2] = (inv_dir.z() < 0.0);
+	}
+//======================================================================
 };
 #endif // __RAY_H_INCLUDED__ 

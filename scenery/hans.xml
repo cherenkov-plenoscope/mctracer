@@ -12,7 +12,6 @@
 		<set_surface refl="0.0" colour="[200,200,0]"/>
 		<set_cylinder radius="0.25" start_pos="[0,0,0]" end_pos="[0,0,1.5]"/>	
 	</cylinder>		
-
 </frame>
 
 <frame>
@@ -83,11 +82,10 @@
 			<set_plane min_x="-0.5" max_x="+0.15" min_y="-0.15" max_y="+0.15"/>
 		</plane>	
 	</frame>
-
 </frame>
 
 <frame>
-	<set_frame name="FACT" pos="[0,0,1]" rot="[0.2,0.2,0]"/>
+	<set_frame name="FACT" pos="[0,0,0]" rot="[0.0,0.0,0.0]"/>
 	
 	<FACT_reflector>
 		<set_frame name="reflector" pos="[0,0,0]" rot="[0,0,0]"/>
@@ -178,3 +176,4 @@
 		</cylinder>	
 	</frame>
 </frame>
+

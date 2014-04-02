@@ -88,11 +88,11 @@ void OpticalMirrorSphericRound::hit(Vector3D *base,Vector3D *dir, Intersection *
 	
 	//calculate p of pq equation
 	double p; p=2.0*
-	(dbl_baseTdir-dbl_curvature_radius*dir->get_z())/dbl_dirTdir;
+	(dbl_baseTdir-dbl_curvature_radius*dir->z())/dbl_dirTdir;
 	
 	//calculate q of pq equation
 	double q; q=
-	(dbl_baseTbase-2.0*dbl_curvature_radius*base->get_z())/dbl_dirTdir;
+	(dbl_baseTbase-2.0*dbl_curvature_radius*base->z())/dbl_dirTdir;
 	
 	//calculate the inner part of sqrt()
 	double dbl_inner_part_of_square_root_p_q;
@@ -191,16 +191,16 @@ void OpticalMirrorSphericRound::hit(Vector3D *base,Vector3D *dir, Intersection *
 			dbl_surf_norm_factor = 
 			-pow(
 				pow(dbl_curvature_radius	,2.0)-
-				pow(vec_intersec_sphere.get_x()	,2.0)-
-				pow(vec_intersec_sphere.get_y()	,2.0)
+				pow(vec_intersec_sphere.x()	,2.0)-
+				pow(vec_intersec_sphere.y()	,2.0)
 			,-0.5);
 			
 
 			surface_normal.set(
 			//x
-			vec_intersec_sphere.get_x()*dbl_surf_norm_factor,
+			vec_intersec_sphere.x()*dbl_surf_norm_factor,
 			//y
-			vec_intersec_sphere.get_y()*dbl_surf_norm_factor,
+			vec_intersec_sphere.y()*dbl_surf_norm_factor,
 			//z
 			1.0
 			);

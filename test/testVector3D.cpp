@@ -47,9 +47,9 @@ TEST_F(Vector3DTest, ConstructorAndGetter) {
   const double y = (rand()-.5);
   const double z = (rand()-.5);
   Vector3D v(x,y,z); 
-  EXPECT_EQ(x, v.get_x());
-  EXPECT_EQ(y, v.get_y());
-  EXPECT_EQ(z, v.get_z());
+  EXPECT_EQ(x, v.x());
+  EXPECT_EQ(y, v.y());
+  EXPECT_EQ(z, v.z());
 }
 //----------------------------------------------------------------------
 TEST_F(Vector3DTest, SetterAndGetter) {
@@ -58,9 +58,9 @@ TEST_F(Vector3DTest, SetterAndGetter) {
   const double z = (rand()-.5);
   Vector3D v;
   v.set(x,y,z);
-  EXPECT_EQ(x, v.get_x());
-  EXPECT_EQ(y, v.get_y());
-  EXPECT_EQ(z, v.get_z());
+  EXPECT_EQ(x, v.x());
+  EXPECT_EQ(y, v.y());
+  EXPECT_EQ(z, v.z());
 }
 //----------------------------------------------------------------------
 TEST_F(Vector3DTest, EuclideanNorm) {
@@ -86,7 +86,7 @@ TEST_F(Vector3DTest, CrossProduct) {
   Vector3D v(0.0,1.0,0.0);
   Vector3D w = u.cross_product(v);
   
-  EXPECT_EQ(1.0, w.get_z());
+  EXPECT_EQ(1.0, w.z());
   
   double x1, y1, z1, x2, y2, z2; 
   x1 = rand();
@@ -103,9 +103,9 @@ TEST_F(Vector3DTest, CrossProduct) {
                z1*x2 - z2*x1,
                x1*y2 - x2*y1);
   
-  EXPECT_EQ(v3.get_x(), ( v1.cross_product(v2) ).get_x());  
-  EXPECT_EQ(v3.get_y(), ( v1.cross_product(v2) ).get_y());  
-  EXPECT_EQ(v3.get_z(), ( v1.cross_product(v2) ).get_z());    
+  EXPECT_EQ(v3.x(), ( v1.cross_product(v2) ).x());  
+  EXPECT_EQ(v3.y(), ( v1.cross_product(v2) ).y());  
+  EXPECT_EQ(v3.z(), ( v1.cross_product(v2) ).z());    
 }
 //----------------------------------------------------------------------
 TEST_F(Vector3DTest, ScalarProduct) {
@@ -144,9 +144,9 @@ TEST_F(Vector3DTest, ScalarMultiplication) {
 	Vector3D a(x,y,z); 
 	double factor = rand();
   
-	EXPECT_EQ(factor*x, (a*factor ).get_x());
-	EXPECT_EQ(factor*y, (a*factor ).get_y());
-	EXPECT_EQ(factor*z, (a*factor ).get_z());
+	EXPECT_EQ(factor*x, (a*factor ).x());
+	EXPECT_EQ(factor*y, (a*factor ).y());
+	EXPECT_EQ(factor*z, (a*factor ).z());
 }
 //----------------------------------------------------------------------
 TEST_F(Vector3DTest, ScalarDiviation) {
@@ -156,18 +156,18 @@ TEST_F(Vector3DTest, ScalarDiviation) {
 	Vector3D a(x,y,z); 
 	double factor = (rand()-.5);
   
-	EXPECT_EQ(x/factor, (a/factor ).get_x());
-	EXPECT_EQ(y/factor, (a/factor ).get_y());
-	EXPECT_EQ(z/factor, (a/factor ).get_z());
+	EXPECT_EQ(x/factor, (a/factor ).x());
+	EXPECT_EQ(y/factor, (a/factor ).y());
+	EXPECT_EQ(z/factor, (a/factor ).z());
 }
 //----------------------------------------------------------------------
 TEST_F(Vector3DTest, NullVector) {
 	Vector3D a;
 	a.set_null_vector(); 
 
-	EXPECT_EQ(0.0, a.get_x());
-	EXPECT_EQ(0.0, a.get_y());
-	EXPECT_EQ(0.0, a.get_z());
+	EXPECT_EQ(0.0, a.x());
+	EXPECT_EQ(0.0, a.y());
+	EXPECT_EQ(0.0, a.z());
 	EXPECT_EQ(0.0, a.norm2());
 }
 //----------------------------------------------------------------------
@@ -175,20 +175,20 @@ TEST_F(Vector3DTest, UnitVectors) {
 	Vector3D a;
 	
 	a.set_unit_vector_x(); 
-	EXPECT_EQ(1.0, a.get_x());
-	EXPECT_EQ(0.0, a.get_y());
-	EXPECT_EQ(0.0, a.get_z());
+	EXPECT_EQ(1.0, a.x());
+	EXPECT_EQ(0.0, a.y());
+	EXPECT_EQ(0.0, a.z());
 	EXPECT_EQ(1.0, a.norm2());
 	
 	a.set_unit_vector_y(); 
-	EXPECT_EQ(0.0, a.get_x());
-	EXPECT_EQ(1.0, a.get_y());
-	EXPECT_EQ(0.0, a.get_z());
+	EXPECT_EQ(0.0, a.x());
+	EXPECT_EQ(1.0, a.y());
+	EXPECT_EQ(0.0, a.z());
 	EXPECT_EQ(1.0, a.norm2());
 	
 	a.set_unit_vector_z(); 
-	EXPECT_EQ(0.0, a.get_x());
-	EXPECT_EQ(0.0, a.get_y());
-	EXPECT_EQ(1.0, a.get_z());
+	EXPECT_EQ(0.0, a.x());
+	EXPECT_EQ(0.0, a.y());
+	EXPECT_EQ(1.0, a.z());
 	EXPECT_EQ(1.0, a.norm2());
 }

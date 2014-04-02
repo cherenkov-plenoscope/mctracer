@@ -5,8 +5,8 @@ bool OpticalMirrorRound::test_zylinder_fit
 	
 	double dbl_dist_ez_axis_to_vec_intersection;
 	dbl_dist_ez_axis_to_vec_intersection=
-		sqrt(	pow(vec_intersection->get_x(),2.0) +
-				pow(vec_intersection->get_y(),2.0));
+		sqrt(	pow(vec_intersection->x(),2.0) +
+				pow(vec_intersection->y(),2.0));
 				
 	if(dbl_dist_ez_axis_to_vec_intersection<=MirrorRadius_m)
 	{

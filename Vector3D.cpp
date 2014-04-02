@@ -4,72 +4,72 @@ Vector3D::Vector3D(){
 }
 //======================
 Vector3D::Vector3D(const double nx,const double ny,const double nz){
-	x=nx; 
-	y=ny; 
-	z=nz;
+	X=nx; 
+	Y=ny; 
+	Z=nz;
 }
 //======================
 void Vector3D::set(const double nx,const double ny,const double nz){
-	x=nx; 
-	y=ny; 
-	z=nz;
+	X=nx; 
+	Y=ny; 
+	Z=nz;
 }
 //======================
 double Vector3D::norm2() const{
-	return sqrt( pow(x,2.0) + pow(y,2.0) + pow(z,2.0) );
+	return sqrt( pow(X,2.0) + pow(Y,2.0) + pow(Z,2.0) );
 }
 //======================
 Vector3D Vector3D::cross_product(const Vector3D v) const{
 // crossproduct
 	Vector3D temp;
-	temp.x = y*v.z - z*v.y;
-	temp.y = z*v.x - x*v.z;
-	temp.z = x*v.y - y*v.x;
+	temp.X = Y*v.Z - Z*v.Y;
+	temp.Y = Z*v.X - X*v.Z;
+	temp.Z = X*v.Y - Y*v.X;
 	return temp;
 }
 //======================
 double Vector3D::operator*(const Vector3D vec_two) const{
 	double scalarproduct;
-	scalarproduct = vec_two.x*x + vec_two.y*y + vec_two.z*z;
+	scalarproduct = vec_two.X*X + vec_two.Y*Y + vec_two.Z*Z;
 	return scalarproduct;
 }
 //======================
 Vector3D Vector3D::operator*(const double scalar) const{
 	Vector3D  temp;
-	temp.x=x*scalar;
-	temp.y=y*scalar;
-	temp.z=z*scalar;
+	temp.X=X*scalar;
+	temp.Y=Y*scalar;
+	temp.Z=Z*scalar;
 	return temp;
 }
 //======================
 Vector3D Vector3D::operator-(const Vector3D vec_two) const{
 	Vector3D temp;
-	temp.x = x-vec_two.x;
-	temp.y = y-vec_two.y;
-	temp.z = z-vec_two.z;
+	temp.X = X-vec_two.X;
+	temp.Y = Y-vec_two.Y;
+	temp.Z = Z-vec_two.Z;
 	return temp;
 }
 //======================
 Vector3D Vector3D::operator+(const Vector3D vec_two) const{
 	Vector3D temp;
-	temp.x = x+vec_two.x;
-	temp.y = y+vec_two.y;
-	temp.z = z+vec_two.z;
+	temp.X = X+vec_two.X;
+	temp.Y = Y+vec_two.Y;
+	temp.Z = Z+vec_two.Z;
 	return temp;
 }
 //======================
 Vector3D Vector3D::operator/(const double scalar) const{
 Vector3D temp;
-	temp.x=x/scalar;
-	temp.y=y/scalar;
-	temp.z=z/scalar;
+	temp.X=X/scalar;
+	temp.Y=Y/scalar;
+	temp.Z=Z/scalar;
 	return temp;
 }
 //======================
 void Vector3D::operator=(const Vector3D eq){
-	x =eq.x;
-	y =eq.y;
-	z =eq.z;
+	X =eq.X;
+	Y =eq.Y;
+	Z =eq.Z;
 }
 //======================
 void Vector3D::disp() const{
@@ -79,7 +79,7 @@ void Vector3D::disp() const{
 std::string Vector3D::get_string() const{
 	std::stringstream out; 
 	out.str("");
-	out<<"("<<x<<"|"<<y<<"|"<<z<<") [m]";
+	out<<"("<<X<<"|"<<Y<<"|"<<Z<<") [m]";
 	return out.str();
 }
 //======================
@@ -126,59 +126,59 @@ void Vector3D::mirror(Vector3D* ray) const{
 	// dir_of_ray_to_be_reflected is overwritten with the reflected ray.
 	//
 	ray->set(
-	//x component
-	(1.0-2.0*pow(x,2.0))*ray->x +
-	(-2.0*x*y)*ray->y +
-	(-2.0*x*z)*ray->z,
-	//y component
-	(-2.0*x*y)*ray->x +
-	(1.0-2.0*pow(y,2.0))*ray->y +
-	(-2.0*y*z)*ray->z,
-	//z component
-	(-2.0*x*z)*ray->x + 
-	(-2.0*y*z)*ray->y + 
-	(1.0-2.0*pow(z,2.0))*ray->z
+	//X component
+	(1.0-2.0*pow(X,2.0))*ray->X +
+	(-2.0*X*Y)*ray->Y +
+	(-2.0*X*Z)*ray->Z,
+	//Y component
+	(-2.0*X*Y)*ray->X +
+	(1.0-2.0*pow(Y,2.0))*ray->Y +
+	(-2.0*Y*Z)*ray->Z,
+	//Z component
+	(-2.0*X*Z)*ray->X + 
+	(-2.0*Y*Z)*ray->Y + 
+	(1.0-2.0*pow(Z,2.0))*ray->Z
 	);
 }
 //======================
 void Vector3D::set_unit_vector_x(){
-	x = 1.0;
-	y = 0.0;
-	z = 0.0;
+	X = 1.0;
+	Y = 0.0;
+	Z = 0.0;
 }
 //======================
 void Vector3D::set_unit_vector_y(){
-	x = 0.0;
-	y = 1.0;
-	z = 0.0;
+	X = 0.0;
+	Y = 1.0;
+	Z = 0.0;
 }
 //======================
 void Vector3D::set_unit_vector_z(){
-	x = 0.0;
-	y = 0.0;
-	z = 1.0;
+	X = 0.0;
+	Y = 0.0;
+	Z = 1.0;
 }
 //======================
 void Vector3D::set_null_vector(){
-	x = 0.0;
-	y = 0.0;
-	z = 0.0;
+	X = 0.0;
+	Y = 0.0;
+	Z = 0.0;
 }
 //======================
-double Vector3D::get_x() const{
-	return x;
+double Vector3D::x() const{
+	return X;
 }
 //======================
-double Vector3D::get_y() const{
-	return y;
+double Vector3D::y() const{
+	return Y;
 }
 //======================
-double Vector3D::get_z() const{
-	return z;
+double Vector3D::z() const{
+	return Z;
 }
 //======================
 bool Vector3D::operator == (const Vector3D& eqVec) const{
-	if( x == eqVec.x && y == eqVec.y && z == eqVec.z){
+	if( X == eqVec.X && Y == eqVec.Y && Z == eqVec.Z){
 		return true;
 	}else{
 		return false;
@@ -191,15 +191,15 @@ CsvRow Vector3D::getCsvRow(GlobalSettings& settings) const{
 	stringstream out;
 	out.precision(settings.get_decimal_precision_for_csv_output());
 
-	out << x;
+	out << X;
 	row.push_back( out.str() );
 	out.str("");
 
-	out << y;
+	out << Y;
 	row.push_back( out.str() );
 	out.str("");
 
-	out << z;
+	out << Z;
 	row.push_back( out.str() );
 	out.str("");
 
@@ -209,7 +209,7 @@ CsvRow Vector3D::getCsvRow(GlobalSettings& settings) const{
 // friends of osstream
 //======================================================================
 std::ostream& operator<<(std::ostream& os, const Vector3D& vec){
-    os << "("<<vec.get_x()<<"|"<<vec.get_y()<<"|"<<vec.get_z()<<")";
+    os << "("<<vec.x()<<"|"<<vec.y()<<"|"<<vec.z()<<")";
     os << "[m]";
     return os;
 }

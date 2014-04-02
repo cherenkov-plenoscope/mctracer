@@ -62,14 +62,14 @@ void OpticalMirrorParabolicHexagonal::hit(Vector3D *base,Vector3D *dir, Intersec
 	cout<<"dir: "<<endl;
 	dir->disp();
 	*/
-	double p=(2.0*(	base->get_x()*dir->get_x() +
-					base->get_y()*dir->get_y() )
-			-4.0*FocalLength_m*dir->get_z())/
-			(pow(dir->get_x(),2.0) + pow(dir->get_y(),2.0));
+	double p=(2.0*(	base->x()*dir->x() +
+					base->y()*dir->y() )
+			-4.0*FocalLength_m*dir->z())/
+			(pow(dir->x(),2.0) + pow(dir->y(),2.0));
 	
-	double q=( pow(base->get_x(),2.0) + pow(base->get_y(),2.0)-
-			4.0*FocalLength_m*base->get_z())/
-			(pow(dir->get_x(),2.0) + pow(dir->get_y(),2.0));
+	double q=( pow(base->x(),2.0) + pow(base->y(),2.0)-
+			4.0*FocalLength_m*base->z())/
+			(pow(dir->x(),2.0) + pow(dir->y(),2.0));
 	
 	// the inner part of sqrt()
 	double dbl_inner_part_of_square_root_p_q =
@@ -139,9 +139,9 @@ void OpticalMirrorParabolicHexagonal::hit(Vector3D *base,Vector3D *dir, Intersec
 			Vector3D surface_normal;
 			surface_normal.set(
 			//x
-			-1.0/(2.0*FocalLength_m)*intersec_parabola.get_x(),
+			-1.0/(2.0*FocalLength_m)*intersec_parabola.x(),
 			//y
-			-1.0/(2.0*FocalLength_m)*intersec_parabola.get_y(),
+			-1.0/(2.0*FocalLength_m)*intersec_parabola.y(),
 			//z
 			1.0
 			);

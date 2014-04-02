@@ -57,9 +57,9 @@ TEST_F(Rotation3DTest, ConstructorAndGetter) {
 
   Rotation3D p(v,angle);
   EXPECT_EQ(angle, p.get_rot_angle_in_rad());
-  EXPECT_EQ(v.get_x(), (p.get_rot_axis()).get_x());
-  EXPECT_EQ(v.get_y(), (p.get_rot_axis()).get_y());
-  EXPECT_EQ(v.get_z(), (p.get_rot_axis()).get_z());
+  EXPECT_EQ(v.x(), (p.get_rot_axis()).x());
+  EXPECT_EQ(v.y(), (p.get_rot_axis()).y());
+  EXPECT_EQ(v.z(), (p.get_rot_axis()).z());
   EXPECT_FALSE(p.get_flag_is_rot_angles_xyz());
 }
 //----------------------------------------------------------------------
@@ -79,9 +79,9 @@ TEST_F(Rotation3DTest, SetterAndGetter) {
 
   Rotation3D p; p.set(v,angle);
   EXPECT_EQ(angle, p.get_rot_angle_in_rad());
-  EXPECT_EQ(v.get_x(), (p.get_rot_axis()).get_x());
-  EXPECT_EQ(v.get_y(), (p.get_rot_axis()).get_y());
-  EXPECT_EQ(v.get_z(), (p.get_rot_axis()).get_z());
+  EXPECT_EQ(v.x(), (p.get_rot_axis()).x());
+  EXPECT_EQ(v.y(), (p.get_rot_axis()).y());
+  EXPECT_EQ(v.z(), (p.get_rot_axis()).z());
   EXPECT_FALSE(p.get_flag_is_rot_angles_xyz());
 }
 //----------------------------------------------------------------------
