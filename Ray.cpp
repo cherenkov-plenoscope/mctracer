@@ -704,11 +704,19 @@ CsvRow Ray::getCsvRow(GlobalSettings& settings)const{
 	CsvRow row;
 
 	if(settings.ShowCsvIdentifier())
-	row.push_back("Ray");
+		row.push_back("Ray");
 
 	row.append(getRayCsvRow(settings));
 	
 	return row;
+}
+//======================================================================
+void Ray::set_history(ListOfInteractions* nhistory){
+	history = nhistory;
+}
+//======================================================================
+ListOfInteractions* Ray::get_history()const{
+	return history;
 }
 //======================================================================
 // friends of osstream
@@ -717,3 +725,4 @@ std::ostream& operator<<(std::ostream& os, const Ray& ray_to_be_displayed){
     os << ray_to_be_displayed.get_string();
     return os;
 }
+

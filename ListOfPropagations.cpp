@@ -11,7 +11,8 @@ void ListOfPropagations::push_back(Ray* ptr_to_ray_to_push_back){
 //==================================================================
 void ListOfPropagations::export_csv(
 	std::string name_of_csv_file_to_be_exported,
-	GlobalSettings& settings)const{
+	GlobalSettings& settings
+)const{
 	
 	ofstream	csv_output_file;
 	csv_output_file.open(name_of_csv_file_to_be_exported);
@@ -49,18 +50,52 @@ std::string ListOfPropagations::get_info_string()const{
 //======================================================================
 void ListOfPropagations::propagate(	
 	const CartesianFrame* world, 
-	ListOfInteractions* history,
+	//ListOfInteractions* history,
 	const GlobalSettings* settings
 ){
-	for(Ray* single_ray : list_of_ptrs_to_propagations){
-		single_ray->propagate(
-			world,
-			history,
-			0,
-			NULL,
-			settings
-		);
+
+	unsigned long long i;
+
+	#pragma omp parallel shared(settings,world)
+	{	
+
+		#pragma omp for schedule(dynamic) private(i) 
+		for(i = 0LL; i<list_of_ptrs_to_propagations.size(); i++ ){
+
+			ListOfInteractions* history_of_this_specific_ray;
+			history_of_this_specific_ray = new ListOfInteractions;
+
+			list_of_ptrs_to_propagations.at(i) -> 
+			set_history(history_of_this_specific_ray);
+
+			list_of_ptrs_to_propagations.at(i) -> propagate(
+				world,
+				history_of_this_specific_ray,
+				0,
+				NULL,
+				settings
+			);
+
+		}
 	}
+
+}
+//==================================================================
+void ListOfPropagations::export_history_csv(
+	std::string name_of_csv_file_to_be_exported,
+	GlobalSettings& settings,
+	std::string options
+)const{
+	
+	ofstream	csv_output_file;
+	csv_output_file.open(name_of_csv_file_to_be_exported);
+
+	for(Ray* single_ray : list_of_ptrs_to_propagations){
+		CsvRow row =  single_ray->get_history()->getCsvRow(settings,options);
+		csv_output_file << row;
+	}	
+
+	csv_output_file.close();
 }
 //======================================================================
 // friends of osstream

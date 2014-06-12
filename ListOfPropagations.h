@@ -19,7 +19,7 @@ using namespace std;
 class ListOfPropagations{
 	
 	std::string 				name_of_list_of_propagations;
-	std::list<Ray*> 			list_of_ptrs_to_propagations;
+	std::vector<Ray*> 			list_of_ptrs_to_propagations;
 	std::vector<std::string> 	list_of_files_fed_into_list;
 	
 //=================================	
@@ -38,9 +38,15 @@ public:
 	
 	void propagate(	
 		const CartesianFrame* world, 
-		ListOfInteractions* history,
+		//ListOfInteractions* history,
 		const GlobalSettings* settings
 	);
+
+	void export_history_csv(
+		std::string name_of_csv_file_to_be_exported,
+		GlobalSettings& settings,
+		std::string options
+	)const;
 
 	friend std::ostream& operator<<(std::ostream& os,const ListOfPropagations& list);
 

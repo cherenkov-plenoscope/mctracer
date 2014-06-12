@@ -11,6 +11,7 @@
 #include <iostream> 
 #include <list>
 #include "Intersection.h"
+#include "ListOfInteractions.h"
 //=================================
 class ListOfInteractions{
 public:	
@@ -18,6 +19,6 @@ public:
 	void show()const;
 	~ListOfInteractions();
 	double get_accumulative_distance()const;
-	CsvRow getCsvRow(GlobalSettings& settings)const;
+	CsvRow getCsvRow(GlobalSettings& settings,std::string options)const;
 };
 #endif // __LISTOFINTERACTIONS_H_INCLUDED__ 

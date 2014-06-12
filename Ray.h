@@ -6,7 +6,7 @@
 //=================================
 // forward declared dependencies
 class HomoTrafo3D;
-class ListOfInteractions;
+//class ListOfInteractions;
 //=================================
 // included dependencies
 #include <iostream>
@@ -23,6 +23,7 @@ class ListOfInteractions;
 #include "GlobalSettings.h"
 #include "CsvHandler.h"
 #include "OctTreeCube.h"
+#include "ListOfInteractions.h"
 
 //=================================
 class OctTreeTraversingRay;
@@ -32,10 +33,14 @@ class Ray{
 protected:
 	Vector3D base;
 	Vector3D dir;
+	ListOfInteractions* history;
 public:
 //======================================================================
 CsvRow getRayCsvRow(GlobalSettings& settings)const;
 virtual CsvRow getCsvRow(GlobalSettings& settings)const;
+//======================================================================
+void set_history(ListOfInteractions *nhistory);
+ListOfInteractions* get_history()const;
 //======================================================================
 void set_ray(const Vector3D nbase,const Vector3D ndir);
 //======================================================================

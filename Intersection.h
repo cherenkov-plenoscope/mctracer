@@ -6,7 +6,7 @@
 //=================================
 // forward declared dependencies
 //class CartesianFrame;
-
+class GlobalSettings;
 //=================================
 // included dependencies
 #include <iostream>
@@ -14,6 +14,7 @@
 #include <sstream>
 #include "Vector3D.h"
 #include "CartesianFrame.h"
+#include "CsvHandler.h"
 
 //=================================
 class Intersection {
@@ -54,6 +55,8 @@ double get_intersection_distance()const;
 void get_reflection_direction_in_object_system(Vector3D* vec)const;
 //======================
 void get_intersection_vec_in_object_system(Vector3D *inter)const;
+//======================
+CsvRow getCsvRow(GlobalSettings &settings)const;
 };
 
 #endif // __INTERSECTION_H_INCLUDED__ 

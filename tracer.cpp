@@ -93,7 +93,7 @@ int main(){
 	try{
 
 		settings.set_max_number_of_reflections(3);
-		settings.set_csv_decimal_presicion(6);
+		settings.set_csv_decimal_presicion(9);
 
 	}catch(TracerException& error){
 
@@ -105,23 +105,21 @@ int main(){
 	//==================================================================	
 	ListOfPropagations mylist("my little list");
 	
-	Ray* Hans;
-	Hans = new Ray;
-	Hans->set_base(13,42,3.1415);
-	Hans->set_dir(666.3,1.1e3,6.0e-19);
+	Photon* Hans;
+	Hans = new Photon( 0,0.1,0, 0,0,1, 475e-9);
 	Hans->disp();
 	
 	Photon* Franz;
-	Franz = new Photon(*Hans,475e-9);
+	Franz = new Photon( 0,0,0, 0,0,1, 475e-9);
 	Franz->disp();
 	
-	CameraRay* Bob;
-	Bob = new CameraRay;
-	Bob->disp();
+	//CameraRay* Bob;
+	//Bob = new CameraRay;
+	//Bob->disp();
 	
 	mylist.push_back(Hans);
 	mylist.push_back(Franz);
-	mylist.push_back(Bob);
+	//mylist.push_back(Bob);
 	
 	cout << mylist;
 	mylist.export_csv("mylist.csv",settings);
@@ -152,9 +150,24 @@ int main(){
 	
 	bool loading_file_was_successful = file2world.load_file(user_input);
 	
+
+
+
 	if(loading_file_was_successful){
 
 		CartesianFrame *Mworld = file2world.get_pointer_to_world();
+
+		//ListOfInteractions result_List;
+
+		// test list of propagations
+		mylist.propagate(Mworld,&settings);
+		//result_List.show();
+		mylist.export_history_csv(
+			"camera_window_interaction.csv",
+			settings,
+			"GAPD_camera_window,ToF"
+		);
+		
 		
 		//mylist.propagate(Mworld,&settings);
 		//cout << Mworld->get_frame_prompt_including_children();
