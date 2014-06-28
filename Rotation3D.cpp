@@ -106,6 +106,14 @@ double Rotation3D::cosRz() const {return cos(Rz);}
 double Rotation3D::sinRx() const {return sin(Rx);}
 double Rotation3D::sinRy() const {return sin(Ry);}
 double Rotation3D::sinRz() const {return sin(Rz);}
+//======================
+bool Rotation3D::operator == (const Rotation3D& eqRot)const{	
+	if( Rx == eqRot.Rx && Ry == eqRot.Ry && Rz == eqRot.Rz){
+		return true;
+	}else{
+		return false;
+	} 
+}
 //======================================================================
 // friends of osstream
 //======================================================================

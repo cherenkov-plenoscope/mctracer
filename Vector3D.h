@@ -16,59 +16,46 @@
 //=================================
 class Vector3D {
 private:
-double X;
-double Y;
-double Z;
+	// in meters
+	double X;
+	double Y;
+	double Z;
 public:
-//======================
+//------------------------------------------------------------------------------
+// SET
 Vector3D();
 Vector3D(const double nx,const double ny,const double nz);
-//======================
 void set(const double nx,const double ny,const double nz);
-//======================
-double norm2() const;
-//======================
-Vector3D cross_product(const Vector3D v) const;
-//======================
-double operator*(const Vector3D vec_two) const;
-//======================
-Vector3D operator*(const double scalar) const;
-//======================
-Vector3D operator-(const Vector3D vec_two) const;
-//======================
-Vector3D operator+(const Vector3D vec_two) const;
-//======================
-Vector3D operator/(const double scalar) const;
-//======================
-void operator=(const Vector3D eq);
-//======================
-void disp() const;
-//======================
-std::string get_string() const;
-//======================
-//std::string get_csv() const;
-//std::string get_csv(uint decimal_precision) const;
-//======================
-void mirror(Vector3D* ray) const;
-//======================
-void set_unit_vector_x();
-//======================
-void set_unit_vector_y();
-//======================
-void set_unit_vector_z();
-//======================
-void set_null_vector();
-//======================
+//------------------------------------------------------------------------------
+// GET
 double x() const;
-//======================
 double y() const;
-//======================
 double z() const;
-//======================
-CsvRow getCsvRow(GlobalSettings& settings) const;
-//======================
+//------------------------------------------------------------------------------
+// Functionality
+double norm2() const;
+Vector3D CrossProduct(const Vector3D v) const;
+void mirror(Vector3D* ray) const;
+void set_unit_vector_x();
+void set_unit_vector_y();
+void set_unit_vector_z();
+void set_null_vector();
+//------------------------------------------------------------------------------
+// Operators
+double operator*(const Vector3D vec_two) const;
+Vector3D operator*(const double scalar) const;
+Vector3D operator-(const Vector3D vec_two) const;
+Vector3D operator+(const Vector3D vec_two) const;
+Vector3D operator/(const double scalar) const;
+void operator=(const Vector3D eq);
 bool operator == (const Vector3D& eqVec) const;
-//======================
+//------------------------------------------------------------------------------
+// Printing
+void disp() const;
+std::string get_string() const;
+CsvRow getCsvRow(GlobalSettings& settings) const;
+//------------------------------------------------------------------------------
+// ostream
 friend std::ostream& operator<<(std::ostream& os, const Vector3D& vec);
 };
 

@@ -9,6 +9,7 @@ class GlobalSettings;
 //=================================
 // included dependencies
 #include <iostream>
+#include <omp.h>
 #include "Ray.h"
 #include "CsvHandler.h"
 #include <list>
@@ -20,7 +21,6 @@ class ListOfPropagations{
 	
 	std::string 				name_of_list_of_propagations;
 	std::vector<Ray*> 			list_of_ptrs_to_propagations;
-	std::vector<std::string> 	list_of_files_fed_into_list;
 	
 //=================================	
 public:
@@ -29,28 +29,39 @@ public:
 
 	void push_back(Ray* ptr_to_ray_to_push_back);
 	
-	void export_csv(
-		std::string name_of_csv_file_to_be_exported,
+	void export_propagations_csv(
 		GlobalSettings& settings
 	)const;
+
+	void import_propagations_csv(
+	std::string name_of_file_to_import,
+	GlobalSettings& settings
+	);
 	
 	void disp()const;
 	
 	void propagate(	
 		const CartesianFrame* world, 
-		//ListOfInteractions* history,
 		const GlobalSettings* settings
 	);
 
 	void export_history_csv(
-		std::string name_of_csv_file_to_be_exported,
 		GlobalSettings& settings,
-		std::string options
+		std::string name_of_csv_file_to_be_exported
+	)const;
+
+	void export_history_csv(
+		GlobalSettings& settings
 	)const;
 
 	friend std::ostream& operator<<(std::ostream& os,const ListOfPropagations& list);
 
 private:
 	std::string get_info_string()const;
+	void PropagateSingleRay(	
+		const CartesianFrame* world, 
+		const GlobalSettings* settings,
+		unsigned long long index
+	);
 };
 #endif // __LISTOFPROPAGATIONS_H_INCLUDED__

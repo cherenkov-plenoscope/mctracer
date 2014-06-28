@@ -87,7 +87,7 @@ int main(){
 	cout<<out.str();
 
 	//==================================================================
-	// set up global settings
+	// set up settings
 	//==================================================================
 	GlobalSettings settings;
 	try{
@@ -98,19 +98,22 @@ int main(){
 	}catch(TracerException& error){
 
 		error.ReportException();
-		return false;
+		return 0;
 	}	
+
 	//==================================================================
 	// list of propagations
 	//==================================================================	
-	ListOfPropagations mylist("my little list");
+	ListOfPropagations mylist("my_little_list");
 	
 	Photon* Hans;
 	Hans = new Photon( 0,0.1,0, 0,0,1, 475e-9);
+	Hans->SetID(13);
 	Hans->disp();
 	
 	Photon* Franz;
 	Franz = new Photon( 0,0,0, 0,0,1, 475e-9);
+	Franz->SetID(42);
 	Franz->disp();
 	
 	//CameraRay* Bob;
@@ -122,8 +125,11 @@ int main(){
 	//mylist.push_back(Bob);
 	
 	cout << mylist;
-	mylist.export_csv("mylist.csv",settings);
-	
+	mylist.export_propagations_csv(settings);
+
+
+	ListOfPropagations my2ndlist("my_2nd_little_list");
+	my2ndlist.import_propagations_csv("my_little_list.csv",settings);
 	// test csv parser
 	/*
     ifstream	infile("mylist.csv");
@@ -142,40 +148,35 @@ int main(){
 	//==================================================================
 	// open / read file
 	//==================================================================
+	
 	WorldFactory file2world;
 	
 	string user_input;
 	cout << "Enter a file to load: ";
 	cin  >> user_input;
 	
-	bool loading_file_was_successful = file2world.load_file(user_input);
-	
+	try{
 
-
-
-	if(loading_file_was_successful){
+		file2world.load_file(user_input);
 
 		CartesianFrame *Mworld = file2world.get_pointer_to_world();
+		//std::cout << Mworld->get_frame_prompt_including_children();
 
-		//ListOfInteractions result_List;
 
 		// test list of propagations
-		mylist.propagate(Mworld,&settings);
-		//result_List.show();
-		mylist.export_history_csv(
-			"camera_window_interaction.csv",
-			settings,
-			"GAPD_camera_window,ToF"
-		);
-		
-		
 		//mylist.propagate(Mworld,&settings);
-		//cout << Mworld->get_frame_prompt_including_children();
+
+		//mylist.export_history_csv(settings);
 		
 		FreeOrbitCamera free;
 		free.set_free_orbit(Mworld,&settings);
 		free.start_free_orbit();
-	}
-	
+
+	}catch(TracerException& error){
+
+		error.ReportException();
+		return 0;
+	}	
+
 	return 0;
 }

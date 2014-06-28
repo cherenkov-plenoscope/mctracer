@@ -63,8 +63,8 @@ TEST_F(PhotonTest, ConstructorAndGetter) {
   );
 
   Ray prototype;
-  prototype.set_base(support);
-  prototype.set_dir(direction);
+  prototype.SetSupport(support);
+  prototype.SetDirection(direction);
 
 
   Photon G(prototype,wavelength);
@@ -75,7 +75,7 @@ TEST_F(PhotonTest, ConstructorAndGetter) {
   );
 }
 //----------------------------------------------------------------------
-TEST_F(PhotonTest, propagation){
+TEST_F(PhotonTest, Propagation){
 
   GlobalSettings setup;
 
@@ -95,7 +95,7 @@ TEST_F(PhotonTest, propagation){
   pos.set(0.0,0.0,0.0);
   rot.set(0.0,0.0,0.0);
   
-  refl.set_reflection_coefficient(0.7);
+  refl.SetReflectionCoefficient(0.7);
   colo.set_colour_0to255(200,128,128);
 
   //------------mirror 1----------------
@@ -130,7 +130,7 @@ TEST_F(PhotonTest, propagation){
   //-----------send Photon----------------------
   // the photon is starting in between the to mirrors
   // traveling to the upper mirror
-  Vector3D support(0.0,0.0,0.5);
+  Vector3D Support(0.0,0.0,0.5);
   Vector3D direction(0.0,0.0,1.0);
   double wavelength = 433e-9;
   
@@ -138,7 +138,7 @@ TEST_F(PhotonTest, propagation){
   {
 
     ListOfInteractions history;
-    Photon P(support,direction,wavelength);
+    Photon P(Support,direction,wavelength);
 
     P.propagate(&world,&history,&setup);
 

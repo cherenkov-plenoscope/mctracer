@@ -83,12 +83,12 @@ void OpticalMirrorSphericRound::hit(Vector3D *base,Vector3D *dir, Intersection *
 	dbl_baseTbase = (*base)*(*base);
 	
 	//calculate bTd
-	double dbl_baseTdir;
-	dbl_baseTdir = (*base)*(*dir);
+	double dbl_baSetDirection;
+	dbl_baSetDirection = (*base)*(*dir);
 	
 	//calculate p of pq equation
 	double p; p=2.0*
-	(dbl_baseTdir-dbl_curvature_radius*dir->z())/dbl_dirTdir;
+	(dbl_baSetDirection-dbl_curvature_radius*dir->z())/dbl_dirTdir;
 	
 	//calculate q of pq equation
 	double q; q=

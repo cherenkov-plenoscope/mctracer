@@ -36,8 +36,12 @@ tuple3(){ x=0.0; y=0.0; z=0.0; }
 };
 //======================================================================
 class WorldFactoryException : public TracerException{
+	protected:
+	std::string file_name;
+	uint line_number;
 	public:
-	
+	std::string FileName()const{return file_name;};
+	uint LineNumber()const{return line_number;};
 	//virtual void ReportException()const = 0;
 	void ExceptionPrompt()const{
 		
@@ -48,20 +52,52 @@ class WorldFactoryException : public TracerException{
 	}
 };
 //==========================
-class UnknowenObject : public WorldFactoryException{
+class BadXMLFile : public WorldFactoryException{
+	std::string info;
 public:
-UnknowenObject(std::string new_name_of_unknowen_object){
-	name_of_unknown_object = new_name_of_unknowen_object;
-}
-void ReportException()const{ 
-	ExceptionPrompt();
-	
-	std::stringstream out;	
-	out.str("");
-	out << "Do not know an object called ";
-	out << "'"<<name_of_unknown_object<<"'"<<"!";
-	std::cout << out.str() << endl;
-}
+	BadXMLFile(
+		std::string path_to_XML_file_causing_trouble,
+		std::string new_info
+	){
+		file_name = path_to_XML_file_causing_trouble;
+		info = new_info;
+	}
+
+	void ReportException()const{ 
+		ExceptionPrompt();
+		
+		std::stringstream out;	
+		out.str("");
+		out << "Cannot open/read XML file ";
+		out << "'" << file_name << "'" << "!\n";
+		out << "Additional info by pugi XML:\n";
+		out << info;
+		std::cout << out.str() << endl;
+	}
+};
+//==========================
+class UnknownObject : public WorldFactoryException{
+public:
+	UnknownObject(
+		std::string new_name_of_unknowen_object
+	){
+		name_of_unknown_object = new_name_of_unknowen_object;
+	};
+
+	std::string GetUnknownObjectName()const
+	{
+		return name_of_unknown_object;
+	};
+
+	void ReportException()const{ 
+		ExceptionPrompt();
+		
+		std::stringstream out;	
+		out.str("");
+		out << "Do not know an object called ";
+		out << "'"<<name_of_unknown_object<<"'"<<"!";
+		std::cout << out.str() << endl;
+	};
 private:
 	std::string name_of_unknown_object;
 };
@@ -168,47 +204,35 @@ private:
 class WorldFactory   {
 	
 	CartesianFrame* root_of_World;
-	
+	bool prompt;
 public:
 WorldFactory();
-//=================================
-bool load_file(std::string filename);
-//=================================
+void load_file(std::string filename);
 CartesianFrame* get_pointer_to_world();
-//=================================
 private:
-void frame_factory
-(CartesianFrame* mother,const pugi::xml_node frame_node);
-//=================================
-void go_on_with_children_of_node
-(CartesianFrame* mother,const pugi::xml_node node);
-//=================================
-CartesianFrame* produceCartesianFrame
-(CartesianFrame* mother,const pugi::xml_node frame_node);
-//=================================
-CartesianFrame* producePlane
-(CartesianFrame* mother,const pugi::xml_node frame_node);
-//=================================
-CartesianFrame* produceSphere
-(CartesianFrame* mother,const pugi::xml_node node);
-//=================================
-CartesianFrame* produceCylinder
-(CartesianFrame* mother,const pugi::xml_node node);
-//=================================
-CartesianFrame* produceFactReflector
-(CartesianFrame* mother,const pugi::xml_node node);
-//=================================
-CartesianFrame* produceDisc
-(CartesianFrame* mother,const pugi::xml_node node);
-//=================================
-CartesianFrame* produceTriangle
-(CartesianFrame* mother,const pugi::xml_node node);
-//=================================
+void load_file(CartesianFrame* mother,std::string filename);
+void set_path(std::string &path,const pugi::xml_node node);
+void include_file(CartesianFrame* mother,const pugi::xml_node node);
+void frame_factory(
+	CartesianFrame* mother,const pugi::xml_node frame_node);
+void go_on_with_children_of_node(
+	CartesianFrame* mother,const pugi::xml_node node);
+CartesianFrame* produceCartesianFrame(
+	CartesianFrame* mother,const pugi::xml_node frame_node);
+CartesianFrame* producePlane(
+	CartesianFrame* mother,const pugi::xml_node frame_node);
+CartesianFrame* produceSphere(
+	CartesianFrame* mother,const pugi::xml_node node);
+CartesianFrame* produceCylinder(
+	CartesianFrame* mother,const pugi::xml_node node);
+CartesianFrame* produceFactReflector(
+	CartesianFrame* mother,const pugi::xml_node node);
+CartesianFrame* produceDisc(
+	CartesianFrame* mother,const pugi::xml_node node);
+CartesianFrame* produceTriangle(
+	CartesianFrame* mother,const pugi::xml_node node);
 bool parse3tuple(tuple3 &tuple,const std::string text);
-//=================================
-void parseFloatingNumber(
-double &FloatingNumber,
-std::string text_to_parse);
+void parseFloatingNumber(double &FloatingNumber,std::string text_to_parse);
 //=================================
 bool set_frame(std::string &name,Vector3D &position,
 Rotation3D &rotation,const pugi::xml_node frame_node);

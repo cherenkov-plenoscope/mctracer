@@ -26,7 +26,7 @@ void set_vec3D(const double nx,const double ny,const double nz);
 //======================
 double norm2() const;
 //======================
-Vector3D cross_product(const Vector3D v) const;
+Vector3D CrossProduct(const Vector3D v) const;
 //======================
 double operator*(const Vector3D vec_two) const;
 //======================

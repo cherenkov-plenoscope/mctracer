@@ -14,6 +14,8 @@
 class CameraRay :public Ray{
 protected:
 
+	unsigned int pixel_x;
+	unsigned int pixel_y;
 	ColourProperties colour;
 	
 //=================================================

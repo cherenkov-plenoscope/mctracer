@@ -11,7 +11,6 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-
 //=======================================================================
 class ReflectionProperties {
 	// this class stores reflection information of an object
@@ -22,9 +21,10 @@ public:
 //======================================================================
 	ReflectionProperties();
 //======================================================================
-	void set_reflection_coefficient(const double new_refl_coeff);
+	void SetReflectionCoefficient(const double new_refl_coeff);
 //======================================================================
-	double get_reflection_coefficient() const;
+	double ReflectionCoefficient() const;
+	double ReflectionCoefficient(double wavelength) const;	
 //======================================================================
 	bool get_reflection_flag() const;
 //======================================================================

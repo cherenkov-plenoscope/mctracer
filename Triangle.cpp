@@ -36,8 +36,8 @@ const Vector3D new_C){
 		return false;
 	}	
 		
-	std::cout<<"Triangle -> set_Triangle() -> ";
-	std::cout<<get_Triangle_string()<<std::endl;
+	//std::cout<<"Triangle -> set_Triangle() -> ";
+	//std::cout<<get_Triangle_string()<<std::endl;
 
 	//===================
 	// set radius_of_sphere_enclosing_all_children
@@ -55,12 +55,13 @@ const Vector3D new_C){
 	dist_corner_to_base.begin() ,
 	dist_corner_to_base.end() );
 
+	/*
 	std::cout<<"Triangle -> set_Triangle() -> ";
 	std::cout<<get_Triangle_string();
 	std::cout<<" enclosing sphere radius: ";
 	std::cout<<radius_of_sphere_enclosing_all_children;
 	std::cout<<"[m]"<<std::endl;
-	
+	*/
 	return true;
 }
 //======================
@@ -84,7 +85,7 @@ void Triangle::hit(Vector3D *base,Vector3D *dir, Intersection *intersection)cons
 	// calculate normal vector n of plane including triangle ABC
 	Vector3D AB = B-A;
 	Vector3D AC = C-A;
-	Vector3D n = AB.cross_product(AC);
+	Vector3D n = AB.CrossProduct(AC);
 	n = n/n.norm2();
 	
 	// calculate intersection point P of plane defined by normalvector 

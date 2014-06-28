@@ -49,9 +49,9 @@ unsigned char ColourProperties::get_blue()const {
 	return (unsigned char)(blue_0to255);
 }
 //======================================================================
-double ColourProperties::red()const{return red_0to255;};
-double ColourProperties::green()const{return green_0to255;};
-double ColourProperties::blue()const{return blue_0to255;};
+double ColourProperties::red()const{return red_0to255;}
+double ColourProperties::green()const{return green_0to255;}
+double ColourProperties::blue()const{return blue_0to255;}
 //======================================================================
 std::string ColourProperties::get_string()const{
 	std::stringstream out; out.str("");
@@ -68,16 +68,16 @@ void ColourProperties::disp()const{
 void ColourProperties::reflection_mix
 (const ColourProperties *c ,const ReflectionProperties *refl){
 	red_0to255 = 
-	(1.0 - refl->get_reflection_coefficient())*red_0to255 + 
-	refl->get_reflection_coefficient()*c->red_0to255;
+	(1.0 - refl->ReflectionCoefficient())*red_0to255 + 
+	refl->ReflectionCoefficient()*c->red_0to255;
 	
 	green_0to255 = 
-	(1.0 - refl->get_reflection_coefficient())*green_0to255 + 
-	refl->get_reflection_coefficient()*c->green_0to255;
+	(1.0 - refl->ReflectionCoefficient())*green_0to255 + 
+	refl->ReflectionCoefficient()*c->green_0to255;
 	
 	blue_0to255 = 
-	(1.0 - refl->get_reflection_coefficient())*blue_0to255 + 
-	refl->get_reflection_coefficient()*c->blue_0to255;
+	(1.0 - refl->ReflectionCoefficient())*blue_0to255 + 
+	refl->ReflectionCoefficient()*c->blue_0to255;
 }
 //======================================================================
 void ColourProperties::mixture(

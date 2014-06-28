@@ -21,7 +21,7 @@ public:
 	string const& operator[](size_t index)const;
 	void push_back(string new_token);
 	size_t size()const;
-	void ReadNextRow(istream& stream);
+	bool ReadNextRow(istream& stream);
 	string WriteNextRow(ostream& stream)const;
 	void append(CsvRow row_to_append);
 	friend istream& operator >> (istream& str,CsvRow& data);

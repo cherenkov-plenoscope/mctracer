@@ -2,12 +2,17 @@
 //==================================================================
 FactTelescope::FactTelescope(double alpha){
 	
+	bool prompt = false;
+
 	// check telescope type
 	if(alpha < 0.0 || alpha > 1.0){
 		alpha = 0.0;
-		std::cout<<"fact_telescope->alpha out of range->";
-		std::cout<<"building default Davies-Cotton reflector.";
-		std::cout<<std::endl;
+
+		if(prompt){
+			std::cout<<"fact_telescope->alpha out of range->";
+			std::cout<<"building default Davies-Cotton reflector.";
+			std::cout<<std::endl;
+		}
 	}
 	
 	//str_regex = "fact_telescope";
@@ -21,7 +26,7 @@ FactTelescope::FactTelescope(double alpha){
 	ColourProperties 	mirror_colour;
 				mirror_colour.set_colour_0to255(255,255,255);
 	ReflectionProperties mirror_reflection;
-				mirror_reflection.set_reflection_coefficient(0.9);	
+				mirror_reflection.SetReflectionCoefficient(0.9);	
 	//==============================================================
 	// declare FACT geometry, only mirror positions
 	//==============================================================
@@ -256,7 +261,7 @@ FactTelescope::FactTelescope(double alpha){
 				Vector3D EZ; EZ.set_unit_vector_z();
 				Vector3D vec_rotation_axis;
 				vec_rotation_axis = 
-				focal_point_to_mirror_pos.cross_product(EZ);
+				focal_point_to_mirror_pos.CrossProduct(EZ);
 				//cout<<"rotation axis: ";
 				//vec_rotation_axis.disp();
 				
@@ -349,7 +354,10 @@ FactTelescope::FactTelescope(double alpha){
 	telescope_table<<"| final_mean_distance_of_mirrors_and_image_plane"<<std::endl;
 	telescope_table<<"| "<<final_mean_distance_of_mirrors_and_image_plane<<"[m]"<<std::endl;
 	telescope_table<<"|________________________________________________"<<std::endl;
-	std::cout<<telescope_table.str();
+	
+	if(prompt){
+		std::cout<<telescope_table.str();
+	}
 }
 //======================================================================	
 void FactTelescope::init(){	
@@ -361,8 +369,6 @@ void FactTelescope::init(){
 			mirror_number++)
 	{
 			set_mother_and_child(list_of_mirrors.at(mirror_number));
-			//~ add_child(list_of_mirrors.at(mirror_number));
-			//~ list_of_mirrors.at(mirror_number)->add_mother(this);
 	}
 }
 //======================================================================	
@@ -402,12 +408,5 @@ FactTelescope::~FactTelescope(){
 	//==============================================================
 	// destructor free each mirrors memory
 	//==============================================================
-	/*
-	for(unsigned int mirror_number=0;
-			mirror_number<list_of_mirrors.size();
-			mirror_number++)
-	{
-		delete list_of_mirrors.at(mirror_number);
-	}*/
 	list_of_mirrors.clear();
 }

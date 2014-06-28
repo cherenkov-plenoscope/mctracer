@@ -18,7 +18,7 @@ void ListOfInteractions::show()const{
 	std::cout << "______________________________" << endl;
 }
 //======================================================================
-CsvRow ListOfInteractions::getCsvRow(GlobalSettings& settings,std::string options)const{
+CsvRow ListOfInteractions::getCsvRow(GlobalSettings& settings)const{
 	
 	// only the last intersection
 	return Interactions.back() -> getCsvRow( settings );

@@ -250,7 +250,7 @@ void ApertureCamera::cam_send_ray
 	// dir in world frame
 	T_Camera2World.transform_orientation(&vec_dir_ray);
 	
-	ray_camera_pixel_x_y->set_ray(vec_ray_base,vec_dir_ray);
+	ray_camera_pixel_x_y->SetRay(vec_ray_base,vec_dir_ray);
 }
 //======================
 void ApertureCamera::cam_acquire_image(

@@ -49,10 +49,11 @@ void CartesianFrame::post_initializing(){
 	minimize the costly intersection test 
 	*/
 	if(children.size() >= max_number_of_frames_in_OctTree){
+		/*
 		std::cout << "In frame " << name_of_frame;
 		std::cout << " an OctTree is created because there are ";
 		std::cout << children.size() << " children in this frame." << endl;
-
+		*/
 		// create an octree
 		OctTree = new OctTreeCube;
 		Vector3D center(0.0,0.0,0.0);
@@ -142,7 +143,7 @@ void CartesianFrame::FillOctTree(
             }
         }
     }
-};
+}
 //-----------------------------------------------------------------------------
 std::vector<CartesianFrame*> CartesianFrame::CalculateSubSetOfFramesInCube(
 	OctTreeCube *Cube,
@@ -269,7 +270,7 @@ std::string CartesianFrame::prompt_OctTree_including_children(
 	out << gap << "|_____________________" << std::endl;
 
     return out.str();
-};
+}
 //======================================================================
 const std::string* CartesianFrame::
 get_pointer_to_name_of_frame() const{
@@ -361,7 +362,7 @@ const std::string new_name,const Vector3D npos,const Rotation3D nrot){
 	mother = NULL;
 	// init empty list with pointer to children
 	children.clear();
-};
+}
 //======================================================================
 void CartesianFrame::disp()const{
 	std::stringstream out;
@@ -501,7 +502,7 @@ void CartesianFrame::
 hit(
 Vector3D *base,Vector3D *dir,
 Intersection *intersection)const{
-	std::cout<<"call of virtual void hit in class frame"<<std::endl;
+		//"Calling virtual void hit() in class frame but frame can not interact with rays."
 }
 //======================
 bool CartesianFrame::
@@ -596,3 +597,15 @@ post_initialize_radius_of_sphere_enclosing_all_children(){
 	radius_of_sphere_enclosing_all_children = new_max_norm_radius;
 }
 //======================
+void  CartesianFrame::take_children(CartesianFrame *frame_to_take_chidren_from){
+
+	// take all children of the frame_to_take_chidren_from and 
+	// put them to this frame
+
+	for(CartesianFrame *single_child_to_take_from_frame_to_take_chidren_from:
+		frame_to_take_chidren_from->children){
+		set_mother_and_child(
+			single_child_to_take_from_frame_to_take_chidren_from
+		);
+	}
+}

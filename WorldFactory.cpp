@@ -4,55 +4,91 @@ WorldFactory::WorldFactory(){
 	root_of_World = new CartesianFrame;
 	root_of_World->
 	set_frame("world",Vector3D(0.0,0.0,0.0),Rotation3D(0.0,0.0,0.0));
+
+	prompt = false;
 }
 //=================================
-bool WorldFactory::load_file(std::string filename){
-    
+void WorldFactory::load_file(std::string filename){
+    load_file(root_of_World,filename);
+}
+//=================================
+void WorldFactory::load_file(CartesianFrame* mother,std::string filename){
     pugi::xml_document doc;
     pugi::xml_parse_result result = doc.load_file(filename.c_str());
 	
 	std::stringstream out;
 	
     if (result){
-        out << "XML [" << filename << "] ";
-        out << "parsing successful";
-		cout << out.str() << endl;
-		
-		try
-		{
-			frame_factory(root_of_World,doc);
-			return true;
+
+    	if(prompt){
+        	out << "XML [" << filename << "] ";
+        	out << "parsing successful";
+			cout << out.str() << endl;
 		}
-		catch(TracerException& error)
-		{
-			error.ReportException();
-			return false;
-		}
+
+	frame_factory(mother,doc);
 		
     }else{
-        out << "XML [" << filename << "] ";
-        out << "parsed with errors, attr value: [";
-        out << doc.child("node").attribute("attr").value() << "]\n";
-        out << "Error description: " << result.description() << "\n";
-		out << "Number of character in file: " << result.offset;
-		//out << "(error at [..." << (filename + result.offset) << "]\n\n";
-		
-		cout << out.str() << endl;
-		
-		return false;
+
+    	std::stringstream info;
+        info << "XML [" << filename << "] ";
+        info << "parsed with errors, attr value: [";
+        info << doc.child("node").attribute("attr").value() << "]\n";
+        info << "Error description: " << result.description() << "\n";
+		info << "Number of character in file: " << result.offset;
+		//info << "(error at [..." << (filename + result.offset) << "]\n\n";
+
+		throw BadXMLFile(filename,info.str());
 	}
+}
+//=================================
+void WorldFactory::include_file(CartesianFrame* mother,const pugi::xml_node node){
+
+	// get path to file to be included
+	std::string path_to_include_file;
+
+	// set path
+	set_path(path_to_include_file,node);
+	
+	CartesianFrame* temp_root_of_included_world;
+	temp_root_of_included_world = new CartesianFrame;
+	
+	temp_root_of_included_world->set_frame(
+		"temp_root_of_included_world",
+		Vector3D(0.0,0.0,0.0),
+		Rotation3D(0.0,0.0,0.0)
+	);
+
+	load_file(temp_root_of_included_world , path_to_include_file);
+
+	mother->take_children(temp_root_of_included_world);
+
+}
+//=================================
+void WorldFactory::set_path(std::string &path,const pugi::xml_node node){
+	
+	if(node.attribute("path") == NULL){
+		throw MissingItem("path",
+		"include needs the 'path' statement to define the path to the xml file to be included!");
+	}
+	path = node.attribute("path").value();
+
+	if(prompt){
+		std::cout << "Include path = " << node.attribute("path").value() << "\n";
+	}		
 }
 //=================================
 void WorldFactory::frame_factory(
 CartesianFrame* mother,const pugi::xml_node node){
 	
 	// prompt info
-	std::stringstream out;
-	out << "frame factory checking node: "<<node.name();
-	out << " name=";
-	out << node.child("set_frame").attribute("name").value();
-	cout << out.str() << endl;
-	
+	if(prompt){
+		std::stringstream out;
+		out << "frame factory checking node: "<<node.name();
+		out << " name=";
+		out << node.child("set_frame").attribute("name").value();
+		cout << out.str() << endl;
+	}
 	//check node
 	std::string node_name = node.name();
 	if 		(node_name.compare("frame")==0){
@@ -74,22 +110,28 @@ CartesianFrame* mother,const pugi::xml_node node){
 		mother = produceDisc(mother,node);	
 	
 	}else if(node_name.compare("FACT_reflector")==0){
-		mother = produceFactReflector(mother,node);		
+		mother = produceFactReflector(mother,node);	
+
+	}else if(node_name.compare("include")==0){
+		include_file(mother,node);	
+		if(prompt){
+			std::cout << "Found an include\n";
+		}		
 		
 	}else{
 		if(mother->get_number_of_children()==0){
 			// Ignore the root of the world. 
 			// Here no frame pos and rot must be set!
 		}else{
-			throw UnknowenObject(node_name);
+			throw UnknownObject(node_name);
 		}
 	}
 	
 	go_on_with_children_of_node(mother,node);
 }
 //=================================
-void WorldFactory::go_on_with_children_of_node
-(CartesianFrame* mother,const pugi::xml_node node){
+void WorldFactory::go_on_with_children_of_node(
+	CartesianFrame* mother,const pugi::xml_node node){
 	
 	// go on with children of node
 	for(pugi::xml_node sub_node = node.first_child(); 
@@ -98,6 +140,9 @@ void WorldFactory::go_on_with_children_of_node
 		
 		std::string sub_node_name = sub_node.name();
 		bool valid_child = false;
+
+		if(sub_node_name.compare("include")==0){
+			frame_factory(mother,sub_node); valid_child=true;}				
 		
 		if(sub_node_name.compare("frame")==0){
 			frame_factory(mother,sub_node); valid_child=true;}
@@ -119,17 +164,21 @@ void WorldFactory::go_on_with_children_of_node
 
 		if(sub_node_name.compare("FACT_reflector")==0){
 			frame_factory(mother,sub_node); valid_child=true;}	
-	
+
 		if(valid_child){
-			std::stringstream out;
-			out<<"frame_factory -> calling frame_factory for child >";
-			out<<sub_node.name()<<"< of node >";
-			out<<node.child("set_frame").attribute("name").value()<<"<";
-			cout << out.str() << endl;	
+
+			if(prompt){
+				std::stringstream out;
+				out<<"frame_factory -> calling frame_factory for child >";
+				out<<sub_node.name()<<"< of node >";
+				out<<node.child("set_frame").attribute("name").value()<<"<";
+				cout << out.str() << endl;	
+			}
+
 		}else{
 			if(sub_node_name.find("set") == std::string::npos){
 				// this is no "setter" and it is no known object
-				throw UnknowenObject(sub_node_name);
+				throw UnknownObject(sub_node_name);
 			}
 		}
 	}	
@@ -440,7 +489,7 @@ const pugi::xml_node node){
 	double FloatingNumber;
 	parseFloatingNumber(
 	FloatingNumber,node.child("set_surface").attribute("refl").value());
-	reflection_cefficient.set_reflection_coefficient(FloatingNumber);
+	reflection_cefficient.SetReflectionCoefficient(FloatingNumber);
 	
 	// check colour
 	tuple3 VecTuple; 
@@ -448,11 +497,13 @@ const pugi::xml_node node){
 	VecTuple,node.child("set_surface").attribute("colour").value());
 	colour.set_colour_0to255(VecTuple.x,VecTuple.y,VecTuple.z);
 
-	std::stringstream out;
-	out << "set_surface (";
-	out << "reflection : "<<reflection_cefficient<<", ";
-	out << "colour: "<<colour<<" )";
-	cout << out.str() << endl;
+	if(prompt){
+		std::stringstream out;
+		out << "set_surface (";
+		out << "reflection : "<<reflection_cefficient<<", ";
+		out << "colour: "<<colour<<" )";
+		cout << out.str() << endl;
+	}
 	
 	return true;
 }
@@ -490,11 +541,14 @@ const pugi::xml_node node){
 	VecTuple,node.child("set_frame").attribute("rot").value());
 	rotation.set(VecTuple.x,VecTuple.y,VecTuple.z);
 	
-	std::stringstream out;
-	out << "set_frame (name: "<<name;
-	out <<",pos: "<<position;
-	out <<",rot: "<<rotation<<")";
-	cout << out.str() << endl;
+	if(prompt){
+		std::stringstream out;
+		out << "set_frame (name: "<<name;
+		out <<",pos: "<<position;
+		out <<",rot: "<<rotation<<")";
+		cout << out.str() << endl;
+	}
+
 	return true;
 }
 //=================================
@@ -536,15 +590,17 @@ const pugi::xml_node node){
 	FloatingNumber,node.child("set_plane").attribute("max_y").value());
 	max_y = FloatingNumber;	
 
-	std::stringstream out;
-	out << "set_plane (";
-	out << "min_x: "<<min_x<<", ";
-	out << "max_x: "<<max_x<<", ";
-	out << "min_y: "<<min_y<<", ";
-	out << "max_y: "<<max_y<<")";
-	cout << out.str() << endl;
+	if(prompt){
+		std::stringstream out;
+		out << "set_plane (";
+		out << "min_x: "<<min_x<<", ";
+		out << "max_x: "<<max_x<<", ";
+		out << "min_y: "<<min_y<<", ";
+		out << "max_y: "<<max_y<<")";
+		cout << out.str() << endl;
+	}
 
-return true;
+	return true;
 }
 //=================================
 bool WorldFactory::set_sphere(
@@ -561,10 +617,13 @@ double &radius,const pugi::xml_node node){
 	node.child("set_sphere").attribute("radius").value());
 	radius = FloatingNumber;
 	
-	std::stringstream out;
-	out << "set_sphere (";
-	out << "radius "<<radius<<"[m])";
-	cout << out.str() << endl;
+	if(prompt){
+		std::stringstream out;
+		out << "set_sphere (";
+		out << "radius "<<radius<<"[m])";
+		cout << out.str() << endl;
+	}
+
 	return true;
 }
 //=================================
@@ -604,12 +663,15 @@ const pugi::xml_node node){
 	VecTuple,node.child("set_cylinder").attribute("end_pos").value());
 	end_of_cylinder.set(VecTuple.x,VecTuple.y,VecTuple.z);
 	
-	std::stringstream out;
-	out << "set_cylinder (";
-	out << "radius "<<cylinder_radius<<"[m], ";
-	out << "start_pos: "<<start_of_cylinder<<", ";
-	out << "end_pos: "<<end_of_cylinder<<")";
-	cout << out.str() << endl;
+	if(prompt){
+		std::stringstream out;
+		out << "set_cylinder (";
+		out << "radius "<<cylinder_radius<<"[m], ";
+		out << "start_pos: "<<start_of_cylinder<<", ";
+		out << "end_pos: "<<end_of_cylinder<<")";
+		cout << out.str() << endl;
+	}
+
 	return true;
 }
 //=================================
@@ -626,11 +688,14 @@ double &alpha,const pugi::xml_node node){
 	FloatingNumber,
 	node.child("set_FACT_reflector").attribute("alpha").value());
 	alpha = FloatingNumber;
-	
-	std::stringstream out;
-	out << "set_fact_reflector (";
-	out << "alpha "<<alpha<<")";
-	cout << out.str() << endl;
+
+	if(prompt){
+		std::stringstream out;
+		out << "set_fact_reflector (";
+		out << "alpha "<<alpha<<")";
+		cout << out.str() << endl;
+	}
+
 	return true;
 }
 //=================================
@@ -645,11 +710,14 @@ bool WorldFactory::set_Disc(double &radius,const pugi::xml_node node){
 	parseFloatingNumber(
 	FloatingNumber,node.child("set_disc").attribute("radius").value());
 	radius = FloatingNumber;	
+	
+	if(prompt){
+		std::stringstream out;
+		out << "set_Disc (";
+		out << "radius "<<radius<<"[m])";
+		cout << out.str() << endl;
+	}
 
-	std::stringstream out;
-	out << "set_Disc (";
-	out << "radius "<<radius<<"[m])";
-	cout << out.str() << endl;
 	return true;	
 }
 //=================================
@@ -689,34 +757,34 @@ const pugi::xml_node node){
 	VecTuple,node.child("set_triangle").attribute("C").value());
 	point_C.set(VecTuple.x,VecTuple.y,VecTuple.z);
 
-	std::stringstream out;
-	out << "set_Triangle (";
-	out << "A: "<<point_A<<", B: "<<point_B<<",C: "<<point_C<<")";
-	cout << out.str() << endl;
+	if(prompt){
+		std::stringstream out;
+		out << "set_Triangle (";
+		out << "A: "<<point_A<<", B: "<<point_B<<",C: "<<point_C<<")";
+		cout << out.str() << endl;
+	}
+
 	return true;
 }
 //=================================
 bool WorldFactory::check_name_for_multiple_usage(
 const CartesianFrame *entitie_in_world,std::string name){
-
-	//~ std::stringstream out;
-	//~ out<<"check_name_for_multiple_usage() ";
-	//~ out<<"check >"<<name<<"< and frame ";
-	//~ out<<">";
-	//~ out<<*entitie_in_world->get_pointer_to_name_of_frame()<<"<";
-	//~ cout << out.str() << endl;
 	
 	if(
 	entitie_in_world->
 	get_pointer_to_name_of_frame()->
 	compare(name) == 0){
 		// this name is already in use!
-		std::stringstream out;
-		out<<"check_name_for_multiple_usage() ";
-		out<<"the name to check >"<<name<<"< is already in use ";
-		out<<"by frame >";
-		out<<*entitie_in_world->get_pointer_to_name_of_frame()<<"<";
-		cout << out.str() << endl;
+
+		if(prompt){
+			std::stringstream out;
+			out<<"check_name_for_multiple_usage() ";
+			out<<"the name to check >"<<name<<"< is already in use ";
+			out<<"by frame >";
+			out<<*entitie_in_world->get_pointer_to_name_of_frame()<<"<";
+			cout << out.str() << endl;
+		}
+
 		throw MultipleUsageOfName(name);
 		return false;
 	}else{
@@ -731,7 +799,6 @@ const CartesianFrame *entitie_in_world,std::string name){
 		}
 		return true;
 	}
-	
 }
 //=================================
 bool WorldFactory::parse3tuple(tuple3 &tuple,std::string text){
@@ -794,7 +861,7 @@ bool WorldFactory::parse3tuple(tuple3 &tuple,std::string text){
 		std::stringstream out;
 		out<<"The string >" << sx << "< ";
 		out<<"in argument x ";
-		out<<"is not a valid floating point number!";		
+		out<<"is not a valid floating point number!";	
 		throw SyntaxError("[float,float,float]",input_text,out.str());
 	}
 	tuple.y = std::strtod(sy.c_str(), &e);

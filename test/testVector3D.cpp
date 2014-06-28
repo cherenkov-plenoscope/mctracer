@@ -84,7 +84,7 @@ TEST_F(Vector3DTest, CrossProduct) {
 
   Vector3D u(1.0,0.0,0.0);
   Vector3D v(0.0,1.0,0.0);
-  Vector3D w = u.cross_product(v);
+  Vector3D w = u.CrossProduct(v);
   
   EXPECT_EQ(1.0, w.z());
   
@@ -103,9 +103,9 @@ TEST_F(Vector3DTest, CrossProduct) {
                z1*x2 - z2*x1,
                x1*y2 - x2*y1);
   
-  EXPECT_EQ(v3.x(), ( v1.cross_product(v2) ).x());  
-  EXPECT_EQ(v3.y(), ( v1.cross_product(v2) ).y());  
-  EXPECT_EQ(v3.z(), ( v1.cross_product(v2) ).z());    
+  EXPECT_EQ(v3.x(), ( v1.CrossProduct(v2) ).x());  
+  EXPECT_EQ(v3.y(), ( v1.CrossProduct(v2) ).y());  
+  EXPECT_EQ(v3.z(), ( v1.CrossProduct(v2) ).z());    
 }
 //----------------------------------------------------------------------
 TEST_F(Vector3DTest, ScalarProduct) {

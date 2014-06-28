@@ -1,23 +1,23 @@
 #include "Photon.h"
 //======================================================================
-Photon::Photon(	double baseX,double baseY,double baseZ,
+Photon::Photon(	double supX,double supY,double supZ,
 				double dirX,double dirY,double dirZ,
 				double new_wavelength){
 	wavelength = new_wavelength;
-	base.set(baseX,baseY,baseZ);
-	dir.set(dirX,dirY,dirZ);
+	support.set(supX,supY,supZ);
+	direction.set(dirX,dirY,dirZ);
 }
 //======================================================================
-Photon::Photon(Vector3D support, Vector3D direction, double new_wavelength){
-	base = support; 
-	dir  = direction;
+Photon::Photon(Vector3D new_support, Vector3D new_direction, double new_wavelength){
+	support = new_support; 
+	direction  = new_direction;
 	wavelength = new_wavelength;
 }
 //======================================================================
 Photon::Photon(Ray prototype_ray_for_photon,double new_wavelength){
 	wavelength = new_wavelength;
-	base = prototype_ray_for_photon.get_support();
-	dir  = prototype_ray_for_photon.get_direction();
+	support = prototype_ray_for_photon.Support();
+	direction  = prototype_ray_for_photon.Direction();
 }
 //======================================================================
 Photon::Photon(double new_wavelength){
@@ -59,11 +59,8 @@ CsvRow Photon::getCsvRow(GlobalSettings& settings)const{
 	if(settings.ShowCsvIdentifier())
 	combinedRow.push_back("Pho");
 
-	CsvRow RowOfRay 	= getRayCsvRow(settings);
-	CsvRow RowOfPhoton 	= getPhotonCsvRow(settings);
-
-	combinedRow.append(RowOfRay);
-	combinedRow.append(RowOfPhoton);
+	combinedRow.append( getRayCsvRow(settings) );
+	combinedRow.append( getPhotonCsvRow(settings) );
 
 	return combinedRow;
 }
@@ -82,9 +79,7 @@ void Photon::propagate(
 	const GlobalSettings* settings)
 {
 	int interaction_count = 0;
-
-	const CartesianFrame* object_reflected_from;
-	object_reflected_from = NULL,
+	const CartesianFrame* object_reflected_from = NULL;
 
 	propagate(world,history,interaction_count,object_reflected_from,settings);
 

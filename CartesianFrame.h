@@ -39,68 +39,46 @@ protected:
 
     OctTreeCube *OctTree;
     uint max_number_of_frames_in_OctTree;
-    //double minimal_OctTree_EdgeLength;
 	
 //======================================================================
 public: ////////////////////////////////////////////////////////////////
 //======================================================================
 CartesianFrame();
-//======================
 CartesianFrame(const std::string new_name,const Vector3D npos,const Rotation3D nrot);
 //======================
-void BasicSetUp();
-//======================
 void post_initialize_radius_of_sphere_enclosing_all_children();
-//======================
-const std::string* get_pointer_to_name_of_frame() const;
-//======================
-const Vector3D* 
-get_pointer_to_position_of_frame_in_mother_frame() const;
-//======================
-const Rotation3D*
-get_pointer_to_rotation_of_frame_in_mother_frame() const;
-//======================
-const double*
-get_pointer_to_radius_of_sphere_enclosing_all_children() const;
-//======================
-const Vector3D* 
-get_pointer_to_position_of_frame_in_world_frame() const;
-//======================
-const HomoTrafo3D* get_pointer_to_T_frame2mother() const;
-//======================
-const HomoTrafo3D* get_pointer_to_T_mother2frame() const;
-//======================
-const HomoTrafo3D* get_pointer_to_T_world2frame() const;
-//======================
-const HomoTrafo3D* get_pointer_to_T_frame2world() const;
-//======================
-const CartesianFrame* get_pointer_to_mother_frame() const;
-//======================
-const CartesianFrame* get_pointer_to_child
-(const int child_position_in_list)const;
-//======================
-const int get_number_of_children()const;
-//======================
-void set_frame(const std::string new_name,const Vector3D npos,const Rotation3D nrot);
-//======================
-std::string get_frame_string()const;
-//======================
-std::string get_frame_prompt_including_children()const;
-//======================
-void set_mother_and_child(CartesianFrame *new_child);
-//======================
 void post_initialize_me_and_all_my_children();
-//======================
+void take_children(CartesianFrame *frame_to_take_chidren_from);
+//======================================================================
+//  GET ////////////////////////////////////////////////////////////////
+//======================================================================
+const std::string* get_pointer_to_name_of_frame() const;
+const Vector3D* get_pointer_to_position_of_frame_in_mother_frame() const;
+const Rotation3D* get_pointer_to_rotation_of_frame_in_mother_frame() const;
+const double* get_pointer_to_radius_of_sphere_enclosing_all_children() const;
+const Vector3D* get_pointer_to_position_of_frame_in_world_frame() const;
+const HomoTrafo3D* get_pointer_to_T_frame2mother() const;
+const HomoTrafo3D* get_pointer_to_T_mother2frame() const;
+const HomoTrafo3D* get_pointer_to_T_world2frame() const;
+const HomoTrafo3D* get_pointer_to_T_frame2world() const;
+const CartesianFrame* get_pointer_to_mother_frame() const;
+const CartesianFrame* get_pointer_to_child(const int child_position_in_list)const;
+const int get_number_of_children()const;
+std::string get_frame_string()const;
+std::string get_frame_prompt_including_children()const;
+//======================================================================
+//  SET ////////////////////////////////////////////////////////////////
+//======================================================================
+void set_frame(const std::string new_name,const Vector3D npos,const Rotation3D nrot);
+void set_mother_and_child(CartesianFrame *new_child);
 const OctTreeCube* get_OctTree()const;
 //======================================================================
 private: ///////////////////////////////////////////////////////////////
 //======================================================================
+void BasicSetUp();
 std::string get_frame_prompt_including_children(unsigned depth)const;
-//======================
 void add_mother(CartesianFrame *const new_mother);
-//======================
 void add_child(CartesianFrame * const new_child);
-//======================
 void post_initializing();
 //=====================================================================
 // OctTree ////////////////////////////////////////////////////////////
@@ -136,33 +114,17 @@ std::vector<CartesianFrame*> CalculateHitCandidates(
 //======================================================================
 public: // VIRTUAL /////////////////////////////////////////////////////
 //======================================================================
-virtual void hit
-(Vector3D *base,Vector3D *dir,Intersection *intersection)const;
-//======================
+virtual void hit(Vector3D *base,Vector3D *dir,Intersection *intersection)const;
 virtual bool is_hit();
-//======================
 virtual double get_hit_dist();
-//======================
 virtual bool get_hit_reflection_flag()const;
-//======================
 virtual ColourProperties get_hit_colour()const;
-//======================
 virtual const ReflectionProperties* get_ptr2_reflection()const;
-//======================
-virtual void get_reflection_direction_in_object_system
-(Vector3D* vec);
-//======================
-virtual void get_intersection_vec_in_object_system
-(Vector3D *inter);
-//======================
-virtual bool set_spheric_hexag
-(double new_dbl_focal_length,double new_dbl_mirror_radius);
-//======================
-virtual void set_surface_properties
-(ReflectionProperties *n_refl, ColourProperties *n_col);
-//======================
+virtual void get_reflection_direction_in_object_system(Vector3D* vec);
+virtual void get_intersection_vec_in_object_system(Vector3D *inter);
+virtual bool set_spheric_hexag(double new_dbl_focal_length,double new_dbl_mirror_radius);
+virtual void set_surface_properties(ReflectionProperties *n_refl, ColourProperties *n_col);
 virtual bool get_sensor_flag()const;
-//======================
 virtual void disp()const;
 };
 #endif // __CARTESIANFRAME_H_INCLUDED__

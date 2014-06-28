@@ -1,25 +1,33 @@
 #include "Ray.h"
 //======================================================================
-void Ray::set_ray(const Vector3D nbase,const Vector3D ndir){
-	base = nbase;
-	dir  = ndir/ndir.norm2();
+void Ray::SetID(unsigned long long int nID){
+	identifier_number = nID;
 }
 //======================================================================
-void Ray::set_base(const double x,const double y,const double z){
-	base.set(x,y,z);
+unsigned long long int Ray::ID()const{
+	return identifier_number;
 }
 //======================================================================
-void Ray::set_base(const Vector3D nbase){
-	base = nbase;
+void Ray::SetRay(const Vector3D nsup,const Vector3D ndir){
+	support = nsup;
+	direction  = ndir/ndir.norm2();
 }
 //======================================================================
-void Ray::set_dir(const double x,const double y,const double z){
-	dir.set(x,y,z);
-	dir = dir/dir.norm2();
+void Ray::SetSupport(const double x,const double y,const double z){
+	support.set(x,y,z);
 }
 //======================================================================
-void Ray::set_dir(const Vector3D ndir){
-	dir = ndir/ndir.norm2();
+void Ray::SetSupport(const Vector3D nsup){
+	support = nsup;
+}
+//======================================================================
+void Ray::SetDirection(const double x,const double y,const double z){
+	direction.set(x,y,z);
+	direction = direction/direction.norm2();
+}
+//======================================================================
+void Ray::SetDirection(const Vector3D ndir){
+	direction = ndir/ndir.norm2();
 }
 //======================================================================
 void Ray::disp()const{
@@ -28,37 +36,37 @@ void Ray::disp()const{
 //======================================================================
 std::string Ray::get_string()const{
 	std::stringstream out; out.str("");
-	out<<"support: " << base <<", direction: " << dir;
+	out<<"support: " << support <<", direction: " << direction;
 	return out.str();
 }
 //======================================================================
-Vector3D Ray::get_position_on_ray(const double scalar)const{
-	return (base + dir*scalar);
+Vector3D Ray::PositionOnRay(const double scalar)const{
+	return (support + direction*scalar);
 }
 //======================================================================
-Vector3D Ray::get_support()const{
-	return base;
+Vector3D Ray::Support()const{
+	return support;
 }
 //======================================================================
-Vector3D Ray::get_direction()const{
-	return dir;
+Vector3D Ray::Direction()const{
+	return direction;
 }
 //======================================================================
 void Ray::operator= (Ray eqray){
-	base = eqray.base;
-	dir  = eqray.dir;
+	support = eqray.support;
+	direction  = eqray.direction;
 }
 //======================================================================
 void Ray::homo_transformation_of_ray(Ray* ray,const HomoTrafo3D *T)const{
-	//transform base vector
-	T->transform_position(&ray->base);
+	//transform support vector
+	T->transform_position(&ray->support);
 	//transform direction
-	T->transform_orientation(&ray->dir);
+	T->transform_orientation(&ray->direction);
 }
 //======================================================================
 void Ray::pre_trace(
-const CartesianFrame* Frame2CheckForIntersectionOfRayAndMaxSphere, 
-std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre
+	const CartesianFrame* Frame2CheckForIntersectionOfRayAndMaxSphere, 
+	std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre
 )const{
 	// the pretracer calculates a list of objects to be testet
 	// in having intersections with a ray.
@@ -149,7 +157,6 @@ std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMax
 void OctTreeTraversingRay::IntersectionCandidatesInOctTree(
 	const OctTreeCube *Cube,
 	std::unordered_set<CartesianFrame*> *IntersectionCandidates)const{
-
 	// Check whether this Cube is a leaf or has children
 	if(Cube->ChildCubes.size()==0){
 		// There are no more sub Cubes in this tree
@@ -191,11 +198,11 @@ bool OctTreeTraversingRay::IntersectionWithOctTreeCube(const OctTreeCube* Cube)c
 
 	double tmin, tmax, tYmin, tYmax, tZmin, tZmax;
 	
-	tmin  = (Cube->limits[0][  sign[0]] - base.x())*inv_dir.x();
-	tmax  = (Cube->limits[0][1-sign[0]] - base.x())*inv_dir.x(); 
+	tmin  = (Cube->limits[0][  sign[0]] - support.x())*inv_dir.x();
+	tmax  = (Cube->limits[0][1-sign[0]] - support.x())*inv_dir.x(); 
 
-	tYmin = (Cube->limits[1][  sign[1]] - base.y())*inv_dir.y();
-	tYmax = (Cube->limits[1][1-sign[1]] - base.y())*inv_dir.y();
+	tYmin = (Cube->limits[1][  sign[1]] - support.y())*inv_dir.y();
+	tYmax = (Cube->limits[1][1-sign[1]] - support.y())*inv_dir.y();
 
 	if ( (tmin > tYmax) || (tYmin > tmax) )
 		return false;
@@ -204,8 +211,8 @@ bool OctTreeTraversingRay::IntersectionWithOctTreeCube(const OctTreeCube* Cube)c
 	if (tYmax < tmax)
 		tmax = tYmax;
 
-	tZmin = (Cube->limits[2][  sign[2]] - base.z())*inv_dir.z();
-	tZmax = (Cube->limits[2][1-sign[2]] - base.z())*inv_dir.z();
+	tZmin = (Cube->limits[2][  sign[2]] - support.z())*inv_dir.z();
+	tZmax = (Cube->limits[2][1-sign[2]] - support.z())*inv_dir.z();
 
 	if ( (tmin > tZmax) || (tZmin > tmax) )
 		return false;
@@ -223,27 +230,27 @@ bool Ray::IntersectionWithBoundingSphere(const CartesianFrame* frame)const{
 	// plane equation
 	// 	d = x*a + y*b + z*c
 	// set normal vector n of plane to ray direction
-	//  a=dir.x b=dir.y c=dir.z
-	// insert base point of frame into plane eqaution
-	//  d = frame_base.x*dirx + frame_base.y*diry + frame_base.z*dirz
+	//  a=direction.x b=direction.y c=direction.z
+	// insert support point of frame into plane eqaution
+	//  d = frame_sup.x*dirx + frame_sup.y*diry + frame_sup.z*dirz
 	//std::cout<<"frame: "<<frame->name_of_frame<<" P: "<<frame->pos.get_string()<<" "; 
 	
 	//Vector3D pos = frame->T_frame2world.get_translation();
 	
-	double d = dir*(
+	double d = direction*(
 	*frame->get_pointer_to_position_of_frame_in_world_frame()
 	);
 	
 	// Insert ray into plane equation and solve out the ray variable v
-	// ray: base + v*dir
+	// ray: support + v*direction
 	
-	double v = (d - base*dir)/(dir*dir);
+	double v = (d - support*direction)/(direction*direction);
 	//std::cout<<"v: "<<v<<" ";
 	
 	// Calculate point Q. Q is on the ray and in the plane. So Q is the 
 	// closest point of ray to the point P
 	
-	Vector3D Q = base + dir*v;
+	Vector3D Q = support + direction*v;
 	
 	// calculate the connection vector of Q and P called W
 	
@@ -255,7 +262,7 @@ bool Ray::IntersectionWithBoundingSphere(const CartesianFrame* frame)const{
 	
 	double dist = W.norm2();  
 	
-	//std::cout<<"dist to base: "<<dist<<" ";
+	//std::cout<<"dist to support: "<<dist<<" ";
 	//std::cout<<"radius_of_sphere_enclosing_all_children: "<<frame->radius_of_sphere_enclosing_all_children<<" ";
 	
 	// compare dist and diameter of frame
@@ -268,26 +275,26 @@ bool Ray::IntersectionWithBoundingSphere(const CartesianFrame* frame)const{
 	}else{
 		//std::cout<<"hit: Distance ray to frame is small enough."<<std::endl;
 		if(v<0){
-			// the frame base is behind the source of this ray
+			// the frame support is behind the source of this ray
 			// test wether the source of this ray is still inside of the
 			// frame
 			if( 
 			(
-			base*(-1.0)+
+			support*(-1.0)+
 			*frame->get_pointer_to_position_of_frame_in_world_frame()
 			).norm2() 
 			< 
 			*frame->
 			get_pointer_to_radius_of_sphere_enclosing_all_children() 
 			){
-				// the base of this ray is still inside the frame
+				// the support of this ray is still inside the frame
 				return true;
 			}else{
-				// the base of this ray is not inside the frame
+				// the support of this ray is not inside the frame
 				return false;
 			}
 		}else{
-			// the frame base is in front of the source of this ray
+			// the frame support is in front of the source of this ray
 			return true;
 		}
 	}
@@ -357,7 +364,7 @@ void Ray::test_intersection_for_hit_candidates(
 		// homogenous transformation
 		//==============================================================
 		Ray ray_in_object_system;
-		ray_in_object_system.set_ray(base,dir);
+		ray_in_object_system.SetRay(support,direction);
 		
 		homo_transformation_of_ray(
 			&ray_in_object_system,
@@ -377,8 +384,8 @@ void Ray::test_intersection_for_hit_candidates(
 		
 		list_of_objects_which_might_intersect->at(object_itterator)->
 		hit(	
-			&ray_in_object_system.base,	
-			&ray_in_object_system.dir,
+			&ray_in_object_system.support,	
+			&ray_in_object_system.direction,
 			list_of_ptr_to_intersections_which_might_take_place.
 			at(object_itterator)
 		);
@@ -443,7 +450,7 @@ void Ray::calculate_reflected_ray(
 			// transform ray_in_object_system into the system of this 
 			// particular frame.
 			Ray ray_in_object_system;
-			ray_in_object_system.set_ray(base,dir);
+			ray_in_object_system.SetRay(support,direction);
 			homo_transformation_of_ray(
 			&ray_in_object_system,
 			pointer_to_closest_intersection->
@@ -452,16 +459,16 @@ void Ray::calculate_reflected_ray(
 			);
 			
 			Vector3D refl_dir; 
-			refl_dir = ray_in_object_system.dir;
+			refl_dir = ray_in_object_system.direction;
 			// mirror
 			pointer_to_closest_intersection->
 			get_reflection_direction_in_object_system(&refl_dir);
 
-			Vector3D refl_base;
+			Vector3D refl_sup;
 			pointer_to_closest_intersection->
-			get_intersection_vec_in_object_system(&refl_base);
+			get_intersection_vec_in_object_system(&refl_sup);
 			
-			ray_reflection_on_object->set_ray(refl_base,refl_dir);
+			ray_reflection_on_object->SetRay(refl_sup,refl_dir);
 
 			//==========================================================
 			// calculate reflection ray in world system
@@ -690,33 +697,57 @@ CsvRow Ray::getRayCsvRow(GlobalSettings& settings)const{
 	
 	CsvRow row;
 
-	CsvRow row_base_vector = base.getCsvRow(settings);
-	CsvRow row_dir_vector  =  dir.getCsvRow(settings);
+	if( settings.ShowCsvIdentity() )
+		row.append( getCsvID() );
 
-	row.append(row_base_vector);
-	row.append(row_dir_vector );
+	row.append( support.getCsvRow(settings) );
+	row.append(  direction.getCsvRow(settings) );
 
 	return row;
 }
 //======================================================================
 CsvRow Ray::getCsvRow(GlobalSettings& settings)const{
-	
+
 	CsvRow row;
 
-	if(settings.ShowCsvIdentifier())
+	if( settings.ShowCsvIdentifier() == true )
 		row.push_back("Ray");
 
-	row.append(getRayCsvRow(settings));
+	row.append( getRayCsvRow(settings) );
 	
 	return row;
 }
 //======================================================================
-void Ray::set_history(ListOfInteractions* nhistory){
+CsvRow Ray::getCsvID()const{
+
+	CsvRow rowID;
+
+	rowID.push_back(
+		static_cast<ostringstream*>
+		( &(ostringstream() << identifier_number ) )->str()
+	);
+
+	return rowID;
+}
+//======================================================================
+void Ray::SetHistory(ListOfInteractions* nhistory){
 	history = nhistory;
 }
 //======================================================================
-ListOfInteractions* Ray::get_history()const{
+ListOfInteractions* Ray::GetHistory()const{
 	return history;
+}
+//======================================================================
+CsvRow Ray::getCsvRowHistory(GlobalSettings& settings)const{
+	
+	CsvRow row;
+
+	if( settings.ShowCsvIdentity() )
+		row.append( getCsvID() );	
+
+	row.append( history->getCsvRow(settings) );
+
+	return row;
 }
 //======================================================================
 // friends of osstream

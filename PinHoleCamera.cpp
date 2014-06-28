@@ -82,7 +82,7 @@ CameraRay PinHoleCamera::cam_send_ray(int Uu,int Vv){
 	vec_ray_dir = vec_intersection_ray_and_sensor - CameraPositionInWorld;
 	// return
 	CameraRay camera_ray;
-	camera_ray.set_ray(CameraPositionInWorld,vec_ray_dir);
+	camera_ray.SetRay(CameraPositionInWorld,vec_ray_dir);
 	return camera_ray;
 }
 //======================
@@ -186,7 +186,7 @@ double cmaera_offset_in_m){
 	
 	//calculate intersection point of center ray
 	Vector3D intersection_point = 
-	OpticalAxis.get_position_on_ray(object_distance);
+	OpticalAxis.PositionOnRay(object_distance);
 	
 	//~ std::cout<<"PinHoleCam-> stereo -> ";
 	//~ std::cout<<"intersection point of optical axis and object: ";
@@ -197,7 +197,7 @@ double cmaera_offset_in_m){
 	z_unit.set_unit_vector_z();
 	
 	Vector3D axis_direction_of_stereo_cameras = 
-	CameraPointingDirection.cross_product(z_unit);
+	CameraPointingDirection.CrossProduct(z_unit);
 
 	axis_direction_of_stereo_cameras = 
 	axis_direction_of_stereo_cameras/

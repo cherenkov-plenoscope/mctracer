@@ -145,7 +145,7 @@ void FreeOrbitCamera::move_left(){
 	Vector3D ez; 
 	ez.set_unit_vector_z(); 
 	Vector3D vec_left;
-	vec_left=ez.cross_product(CameraPointingDirection);
+	vec_left=ez.CrossProduct(CameraPointingDirection);
 
 	t_World2Camera = t_World2Camera - vec_left*dbl_increment;
 	
@@ -175,7 +175,7 @@ void FreeOrbitCamera::move_right(){
 	Vector3D ez; 
 	ez.set_unit_vector_z(); 
 	Vector3D vec_left;
-	vec_left=ez.cross_product(CameraPointingDirection);
+	vec_left=ez.CrossProduct(CameraPointingDirection);
 
 	t_World2Camera = t_World2Camera + vec_left*dbl_increment;
 	
@@ -313,7 +313,7 @@ void FreeOrbitCamera::take_snapshot(){
 	rot_mat.transform_orientation(&center_ray_direction);
 	
 	Ray center_ray_of_camera;
-	center_ray_of_camera.set_ray(t_World2Camera,center_ray_direction);
+	center_ray_of_camera.SetRay(t_World2Camera,center_ray_direction);
 	double object_distance = 
 	center_ray_of_camera.get_distance_to_closest_object(
 	ptr_to_world,

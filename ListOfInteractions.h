@@ -19,6 +19,6 @@ public:
 	void show()const;
 	~ListOfInteractions();
 	double get_accumulative_distance()const;
-	CsvRow getCsvRow(GlobalSettings& settings,std::string options)const;
+	CsvRow getCsvRow(GlobalSettings& settings)const;
 };
 #endif // __LISTOFINTERACTIONS_H_INCLUDED__ 

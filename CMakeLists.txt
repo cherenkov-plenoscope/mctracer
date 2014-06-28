@@ -1,6 +1,6 @@
 #=======================================================================
 cmake_minimum_required(VERSION 2.8)
-set (CMAKE_CXX_FLAGS "-std=gnu++11 -Wall -O3") # 
+set (CMAKE_CXX_FLAGS "-std=gnu++11 -Wall -pedantic -O3") # 
 #=======================================================================
 project( tracer )
 #=======================================================================
@@ -105,6 +105,18 @@ PinHoleCamera.cpp
 ApertureCamera.cpp
 CameraRay.cpp
 ListOfInteractions.cpp
+WorldFactory.cpp
+pugixml.cpp
+FactTelescope.cpp
+Triangle.cpp
+Disc.cpp 
+Cylinder.cpp
+Sphere.cpp
+OpticalMirrorHexagonal.cpp
+OpticalMirrorSphericHexagonal.cpp
+OpticalMirrorRound.cpp
+OpticalMirrorHexagonal.cpp
+OpticalMirror.cpp
 )
 # Link test executable against gtest & gtest_main
 target_link_libraries(tracerUnitTests gtest gtest_main)

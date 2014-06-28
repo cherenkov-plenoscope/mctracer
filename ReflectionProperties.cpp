@@ -6,7 +6,7 @@ ReflectionProperties::ReflectionProperties(){
 	reflection_coefficient = 0.0;
 }
 //======================================================================
-void ReflectionProperties::set_reflection_coefficient
+void ReflectionProperties::SetReflectionCoefficient
 (const double new_reflection_coefficient){
 	if(new_reflection_coefficient >= 0.0 && 
 	new_reflection_coefficient <= 1.0)
@@ -31,9 +31,12 @@ void ReflectionProperties::set_reflection_coefficient
 	}
 }
 //======================================================================
-double ReflectionProperties::get_reflection_coefficient() const{
+double ReflectionProperties::ReflectionCoefficient() const{
 	return reflection_coefficient;
 }
+double ReflectionProperties::ReflectionCoefficient(double wavelength) const{
+	return reflection_coefficient;
+}	
 //======================================================================
 bool ReflectionProperties::get_reflection_flag() const{
 	return reflection_flag;
@@ -63,7 +66,7 @@ std::ostream& operator<<(std::ostream& os, const ReflectionProperties& refl){
     
     if(refl.get_reflection_flag()) {
 		os << "refl. coeff.=";
-		os << refl.get_reflection_coefficient();
+		os << refl.ReflectionCoefficient();
 	}else{
 		os << "FALSE";
 	}

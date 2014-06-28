@@ -88,12 +88,12 @@ void OpticalMirrorSphericHexagonal::hit(Vector3D *base,Vector3D *dir, Intersecti
 	baseTbase = (*base)*(*base);
 	
 	//calculate bTd
-	double baseTdir;
-	baseTdir = (*base)*(*dir);
+	double baSetDirection;
+	baSetDirection = (*base)*(*dir);
 	
 	//calculate p of pq equation
 	double p; p=2.0*
-	(baseTdir-dbl_curvature_radius*dir->z())/dirTdir;
+	(baSetDirection-dbl_curvature_radius*dir->z())/dirTdir;
 	
 	//calculate q of pq equation
 	double q; q=

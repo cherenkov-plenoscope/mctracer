@@ -19,7 +19,7 @@ double Vector3D::norm2() const{
 	return sqrt( pow(X,2.0) + pow(Y,2.0) + pow(Z,2.0) );
 }
 //======================
-Vector3D Vector3D::cross_product(const Vector3D v) const{
+Vector3D Vector3D::CrossProduct(const Vector3D v) const{
 // crossproduct
 	Vector3D temp;
 	temp.X = Y*v.Z - Z*v.Y;

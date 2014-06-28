@@ -13,7 +13,7 @@ void TracerException::ReportException()const{
 	out.str("");
 	out << "Default Exception Report: ";
 	std::cout << out.str();		
-};
+}
 //----------------------------------------------------------------------
 BadValue::BadValue(const std::string sit, const std::string nam){
 	name_of_bad_value = nam;

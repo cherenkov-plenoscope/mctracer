@@ -65,7 +65,7 @@ Vector3D vec_end){
 	else
 	{
 		Vector3D vec_rot_axis=
-		vec_rotsym_axis_in_world_frame.cross_product(vec_ez);
+		vec_rotsym_axis_in_world_frame.CrossProduct(vec_ez);
 		//cout<<"rot axis: "<<vec_rot_axis.get_string()<<endl;
 		// rot angle
 		
@@ -158,7 +158,7 @@ Intersection *intersection)const{
 	// h: q + s*v
 	// q=base, v=dir
 	
-	// n = cross_product(u,v);
+	// n = CrossProduct(u,v);
 	
 	// d = norm((q-p)*n)/norm(n)
 

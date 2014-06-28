@@ -60,8 +60,8 @@ GlobalSettings* settings)const{
 		//vec_dir_of_emitted_ray.disp();				
 		T_Camera2World.transform_orientation(&vec_dir_of_emitted_ray);				
 		//vec_dir_of_emitted_ray.disp();
-		ray_emitted_ray.set_base(CameraPositionInWorld);
-		ray_emitted_ray.set_dir(vec_dir_of_emitted_ray);
+		ray_emitted_ray.SetSupport(CameraPositionInWorld);
+		ray_emitted_ray.SetDirection(vec_dir_of_emitted_ray);
 		
 		//ray_emitted_ray.trace_science(world,0,NULL,settings,0.0);
 		//ray_emitted_ray.disp();

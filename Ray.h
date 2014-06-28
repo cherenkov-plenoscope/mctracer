@@ -31,75 +31,67 @@ class OctTreeTraversingRay;
 class Ray{
 
 protected:
-	Vector3D base;
-	Vector3D dir;
-	ListOfInteractions* history;
+	Vector3D support;                 // support vector
+	Vector3D direction;               // direction vector
+	ListOfInteractions* history;      // interaction history of this ray
+	unsigned long long int identifier_number;    // The identifier ID of this ray
+
 public:
-//======================================================================
+//------------------------------------------------------------------------------
+// SET
+void SetRay(const Vector3D nsup,const Vector3D ndir);	
+void SetDirection(const Vector3D ndir);
+void SetDirection(const double x,const double y,const double z);
+void SetSupport(const Vector3D nsup);
+void SetSupport(const double x,const double y,const double z);
+void SetID(unsigned long long int nID);
+void SetHistory(ListOfInteractions *nhistory);
+//------------------------------------------------------------------------------
+// GET
+Vector3D Support()const;
+Vector3D Direction()const;
+Vector3D PositionOnRay(const double scalar)const;
+unsigned long long int ID()const;
+ListOfInteractions* GetHistory()const;
+CsvRow getCsvID()const;
 CsvRow getRayCsvRow(GlobalSettings& settings)const;
 virtual CsvRow getCsvRow(GlobalSettings& settings)const;
-//======================================================================
-void set_history(ListOfInteractions *nhistory);
-ListOfInteractions* get_history()const;
-//======================================================================
-void set_ray(const Vector3D nbase,const Vector3D ndir);
-//======================================================================
-void set_base(const double x,const double y,const double z);
-//======================================================================
-void set_base(const Vector3D nbase);
-//======================================================================
-void set_dir(const double x,const double y,const double z);
-//======================================================================
-void set_dir(const Vector3D ndir);
-//======================================================================
-Vector3D get_support()const;
-//======================================================================
-Vector3D get_direction()const;
-//======================================================================
-void disp()const;
-//======================================================================
-std::string get_string()const;
-//======================================================================
-Vector3D get_position_on_ray(const double scalar)const;
-//======================================================================
+virtual CsvRow getCsvRowHistory(GlobalSettings& settings)const;
+//------------------------------------------------------------------------------
+// Functionality
 void pre_trace(
 	const CartesianFrame* frame_to_check_for_interaction_of_ray_and_max_sphere, 
 	std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre
 )const;
-//======================================================================
+
 bool IntersectionWithBoundingSphere(const CartesianFrame* frame)const;
-//======================================================================
-void disp_possible_hit_list(const CartesianFrame *frame)const;
-//======================================================================
-void operator= (Ray ray);
-//======================================================================
+
 void homo_transformation_of_ray(Ray* ray,const HomoTrafo3D *T)const;
-//======================================================================
+
 void test_intersection_for_hit_candidates(
 	std::vector<const CartesianFrame*> *list_of_objects_which_might_intersect,
-	//std::vector<Intersection*> *ptr_to_list_of_ptr_to_intersections_which_might_take_place,
 	std::vector<Intersection*> *ptr_to_list_of_ptr_to_intersections,
 	const CartesianFrame* object_reflected_from,
 	int refl_count
 )const;
-//======================================================================
+
 void calculate_reflected_ray(	
 	Intersection * pointer_to_closest_intersection,
 	Ray *ray_reflection_on_object
 );
-//======================================================================
+
 Intersection* calculate_closest_intersection(	
 	Intersection *pointer_to_closest_intersection,
 	std::vector<Intersection*> *pointer_to_list_of_intersections
 )const;
-//======================================================================
+
 ColourProperties trace(
 	const CartesianFrame* world,
 	int refl_count,
 	const CartesianFrame* object_reflected_from,
 	GlobalSettings *settings
 );
-//======================================================================
+
 virtual void propagate(	
 	const CartesianFrame* world, 
 	ListOfInteractions* history,
@@ -107,7 +99,7 @@ virtual void propagate(
 	const CartesianFrame* object_reflected_from,
 	const GlobalSettings* settings
 );
-//======================================================================
+
 double get_distance_to_closest_object(
 	const CartesianFrame* world,
 	int refl_count,
@@ -115,9 +107,17 @@ double get_distance_to_closest_object(
 	const GlobalSettings *settings,
 	double dbl_passed_distance_from_source_to_sensor
 )const;
-//======================================================================
+//------------------------------------------------------------------------------
+// printing
+void disp()const;
+void disp_possible_hit_list(const CartesianFrame *frame)const;
+std::string get_string()const;
+//------------------------------------------------------------------------------
+// operators
 bool operator() (Intersection* one, Intersection* two)const;
-//======================================================================
+void operator= (Ray ray);
+//------------------------------------------------------------------------------
+// ostream
 friend std::ostream& operator<<(std::ostream& os, const Ray& ray_to_be_displayed);
 };
 
@@ -138,8 +138,8 @@ public:
 	int sign[3];
 
 	OctTreeTraversingRay(const Ray *r){
-		base = r->get_support();
-		dir  = r->get_direction();
+		support = r->Support();
+		direction = r->Direction();
 		//update();
 	}
 //======================================================================
@@ -153,7 +153,7 @@ public:
 		/* after any usual transformation of the ray this update has to 
 		be performed to update the additional information which is not 
 		stored or touched with in the usual Ray routines.*/
-		inv_dir.set( 1.0/dir.x() , 1.0/dir.y() , 1.0/dir.z() );
+		inv_dir.set( 1.0/direction.x() , 1.0/direction.y() , 1.0/direction.z() );
 
 		sign[0] = (inv_dir.x() < 0.0);
 		sign[1] = (inv_dir.y() < 0.0);

@@ -38,7 +38,7 @@ int 		newSensorResolutionV){
 	//======================
 	// calculate optical axis
 	//======================
-	OpticalAxis.set_ray(CameraPositionInWorld,CameraPointingDirection);
+	OpticalAxis.SetRay(CameraPositionInWorld,CameraPointingDirection);
 	
 	//======================
 	//init sensor properties
@@ -99,7 +99,7 @@ Vector3D new_camera_image_upwards_image_orientation_in_world){
 	Vector3D rotated_y = 
 	new_camera_image_upwards_image_orientation_in_world;
 	
-	rotated_x = rotated_y.cross_product(rotated_z);
+	rotated_x = rotated_y.CrossProduct(rotated_z);
 	
 	//~ std::cout<<"CameraDevice -> set_pointing_direction() -> ";
 	//~ std::cout<<"x: "<<rotated_x<<",y: "<<rotated_y<<",z: "<<rotated_z;
@@ -124,7 +124,7 @@ Vector3D new_camera_image_upwards_image_orientation_in_world){
 	//======================
 	// calculate optical axis
 	//======================
-	OpticalAxis.set_ray(CameraPositionInWorld,CameraPointingDirection);
+	OpticalAxis.SetRay(CameraPositionInWorld,CameraPointingDirection);
 }
 //======================================================================
 Vector3D CameraDevice::get_image_upwards_direction_in_world_frame()const{
@@ -186,7 +186,7 @@ Vector3D &right_camera_pointing_direction)const{
 	
 	//calculate intersection point of center ray
 	Vector3D intersection_point = 
-	OpticalAxis.get_position_on_ray(object_distance);
+	OpticalAxis.PositionOnRay(object_distance);
 	
 	//~ std::cout<<"CameraDevice-> stereo -> ";
 	//~ std::cout<<"intersection point of optical axis and object: ";
@@ -197,7 +197,7 @@ Vector3D &right_camera_pointing_direction)const{
 	z_unit.set_unit_vector_z();
 	
 	Vector3D axis_direction_of_stereo_cameras = 
-	CameraPointingDirection.cross_product(z_unit);
+	CameraPointingDirection.CrossProduct(z_unit);
 
 	axis_direction_of_stereo_cameras = 
 	axis_direction_of_stereo_cameras/
@@ -212,7 +212,7 @@ Vector3D &right_camera_pointing_direction)const{
 	CameraPositionInWorld + 
 	axis_direction_of_stereo_cameras*cmaera_offset_in_m/2.0;
 	
-	//left camera poining direction
+	//left camera pointing direction
 	left_camera_pointing_direction = 
 	intersection_point - left_camera_position;
 
@@ -231,7 +231,7 @@ Vector3D &right_camera_pointing_direction)const{
 	CameraPositionInWorld - 
 	axis_direction_of_stereo_cameras*cmaera_offset_in_m/2.0;
 		
-	//right camera poining direction
+	//right camera pointing direction
 	right_camera_pointing_direction = 
 	intersection_point - right_camera_position;
 	
@@ -245,5 +245,5 @@ Vector3D &right_camera_pointing_direction)const{
 	//~ std::cout<<"dir: ";
 	//~ std::cout<<right_camera_pointing_direction<<std::endl;
 	
-};
+}
 //======================================================================

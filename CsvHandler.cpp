@@ -12,16 +12,20 @@ size_t CsvRow::size()const{
 	return tokenized_csv_row.size();
 }
 //----------------------------------------------------------------------
-void CsvRow::ReadNextRow(istream& stream){
+bool CsvRow::ReadNextRow(istream& stream){
 	string csv_line;
-	getline(stream,csv_line);
 
-	stringstream lineStream(csv_line);
-	string token;
+	if( getline(stream,csv_line) ){
+		stringstream lineStream(csv_line);
+		string token;
 
-	tokenized_csv_row.clear();
-	while(getline(lineStream,token,',')){
-		tokenized_csv_row.push_back(token);
+		tokenized_csv_row.clear();
+		while(getline(lineStream,token,',')){
+			tokenized_csv_row.push_back(token);
+		}
+		return true;
+	}else{
+		return false;
 	}
 }
 //----------------------------------------------------------------------

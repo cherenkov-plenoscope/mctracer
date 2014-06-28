@@ -1,7 +1,7 @@
 #include "SensorDisc.h"
 //==================================================================
 SensorDisc::SensorDisc(){
-	reflection.set_reflection_coefficient(0.0);
+	reflection.SetReflectionCoefficient(0.0);
 }
 //==================================================================
 SensorDisc::~SensorDisc(){
