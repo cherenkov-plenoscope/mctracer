@@ -204,34 +204,45 @@ private:
 class WorldFactory   {
 	
 	CartesianFrame* root_of_World;
+	std::string absolute_path;
 	bool prompt;
 public:
 WorldFactory();
-void load_file(std::string filename);
+void load_file(std::string path);
 CartesianFrame* get_pointer_to_world();
 private:
-void load_file(CartesianFrame* mother,std::string filename);
+void load_file(CartesianFrame* mother,std::string path,std::string filename);
 void set_path(std::string &path,const pugi::xml_node node);
 void include_file(CartesianFrame* mother,const pugi::xml_node node);
 void frame_factory(
 	CartesianFrame* mother,const pugi::xml_node frame_node);
+//=================================
 void go_on_with_children_of_node(
 	CartesianFrame* mother,const pugi::xml_node node);
+//=================================
 CartesianFrame* produceCartesianFrame(
 	CartesianFrame* mother,const pugi::xml_node frame_node);
+//=================================
 CartesianFrame* producePlane(
 	CartesianFrame* mother,const pugi::xml_node frame_node);
+//=================================
 CartesianFrame* produceSphere(
 	CartesianFrame* mother,const pugi::xml_node node);
+//=================================
 CartesianFrame* produceCylinder(
 	CartesianFrame* mother,const pugi::xml_node node);
+//=================================
 CartesianFrame* produceFactReflector(
 	CartesianFrame* mother,const pugi::xml_node node);
+//=================================
 CartesianFrame* produceDisc(
 	CartesianFrame* mother,const pugi::xml_node node);
+//=================================
 CartesianFrame* produceTriangle(
 	CartesianFrame* mother,const pugi::xml_node node);
+//=================================
 bool parse3tuple(tuple3 &tuple,const std::string text);
+//=================================
 void parseFloatingNumber(double &FloatingNumber,std::string text_to_parse);
 //=================================
 bool set_frame(std::string &name,Vector3D &position,

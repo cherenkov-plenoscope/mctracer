@@ -4,7 +4,8 @@ CartesianFrame::CartesianFrame(){
 	BasicSetUp();
 }
 //======================================================================
-CartesianFrame::CartesianFrame(const std::string new_name,const Vector3D npos,const Rotation3D nrot){
+CartesianFrame::CartesianFrame(
+	const std::string new_name,const Vector3D npos,const Rotation3D nrot){
 	BasicSetUp();
 	set_frame(new_name,npos,nrot);
 }
@@ -242,11 +243,11 @@ std::string CartesianFrame::prompt_OctTree_including_children(
     
     //out<<"depth: "<<depth<<std::endl;
     out << gap << " _____OctTreeCube_____" << std::endl;
-    out << gap << "| pos in mother   : " << Cube->CenterPosition << std::endl;
-    out << gap << "| edge length     : " << Cube->EdgeLength << " [m]" << std::endl;
-    out << gap << "| depth           : " << depth << std::endl;
-    out << gap << "| child cubes     : " << Cube->ChildCubes.size() << std::endl;   
-	out << gap << "| Number of Frames: " << Cube->ChildFrames.size()<<std::endl;
+    out << gap << "| pos in mother   : "<< Cube->CenterPosition << std::endl;
+    out << gap << "| edge length     : "<<Cube->EdgeLength <<" [m]"<< std::endl;
+    out << gap << "| depth           : "<< depth << std::endl;
+    out << gap << "| child cubes     : "<< Cube->ChildCubes.size() << std::endl;   
+	out << gap << "| Number of Frames: "<< Cube->ChildFrames.size()<<std::endl;
     // children
 
 	if(Cube->ChildCubes.size() != 0){
@@ -256,7 +257,7 @@ std::string CartesianFrame::prompt_OctTree_including_children(
         for(uint x=0;x<2;x++){
             for(uint y=0;y<2;y++){
                 for(uint z=0;z<2;z++){
-                	out << gap << "x" << x << " y" << y << " z" << z << std::endl;
+                	out << gap<< "x" << x << " y" << y << " z" << z <<std::endl;
                 	out << prompt_OctTree_including_children(
 						Cube->ChildCubes.at(child_it),
 						depth
@@ -432,7 +433,8 @@ get_frame_prompt_including_children(unsigned depth)const{
 	depth++;
 	out<<gap<<"| children: "<<children.size()<<std::endl;
 	for (unsigned i=0; i<children.size(); i++){
-		out<<gap<<"| child "<<(1+i)<<": "<<children.at(i)->name_of_frame<<std::endl;
+		out<<gap<<"| child "<<(1+i)<<": ";
+		out<<children.at(i)->name_of_frame<<std::endl;
 		
 		out<< children.at(i)->
 		get_frame_prompt_including_children(depth);

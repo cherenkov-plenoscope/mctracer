@@ -1,0 +1,9 @@
+<frame>
+	<set_frame name="test ball" pos="[0,0,0]" rot="[0,0,0]"/>	
+	
+	<sphere>
+		<set_frame name="test_ball" pos="[0,0,0]" rot="[0,0,0]"/>
+		<set_surface refl="0.25" colour="[25,200,0]"/>
+		<set_sphere radius="1"/>
+	</sphere>	
+</frame>

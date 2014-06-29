@@ -118,9 +118,16 @@ bool Rotation3D::operator == (const Rotation3D& eqRot)const{
 // friends of osstream
 //======================================================================
 std::ostream& operator<<(std::ostream& os, const Rotation3D& rot){
-    os << "("<<rot.get_rot_x()<<"|";
-    os <<      rot.get_rot_y()<<"|";
-    os <<      rot.get_rot_z()<<")";
-    os << "[rad]";
-    return os;
+    
+    if(rot.get_flag_is_rot_angles_xyz()){
+        os << "("<<rot.get_rot_x()<<"|";
+	    os <<      rot.get_rot_y()<<"|";
+	    os <<      rot.get_rot_z()<<")";
+	    os << "[rad]";
+	    return os;	
+    }else{
+        os << "axis " << rot.get_rot_axis();
+        os << ", angle " << rot.get_rot_angle_in_rad() << "[rad]";
+	    return os;	
+    }
 }

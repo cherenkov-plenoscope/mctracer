@@ -6,22 +6,49 @@ WorldFactory::WorldFactory(){
 	set_frame("world",Vector3D(0.0,0.0,0.0),Rotation3D(0.0,0.0,0.0));
 
 	prompt = false;
+
+	absolute_path ="";
 }
 //=================================
-void WorldFactory::load_file(std::string filename){
-    load_file(root_of_World,filename);
+void WorldFactory::load_file(std::string path){
+
+	// determine directory
+	int position_in_path = path.find_last_of("/\\");
+
+	if ( position_in_path == -1 )	{
+		absolute_path = "";
+	}else{
+		absolute_path = path.substr(0,position_in_path + 1); 
+	}
+
+	std::string filename = path.substr(position_in_path + 1); 
+
+	if(prompt){
+		std::cout << "path: " << path << "\n";
+		std::cout << "directory ends at position: " << position_in_path << "\n";
+		std::cout << "directory: " << absolute_path << "\n";
+		std::cout << "filename : " << filename << "\n";
+	}
+
+    load_file(root_of_World, absolute_path, filename);
 }
 //=================================
-void WorldFactory::load_file(CartesianFrame* mother,std::string filename){
+void WorldFactory::load_file(
+	CartesianFrame* mother,
+	std::string path,
+	std::string filename
+){
+	std::string path_of_file_to_load = path  + filename;
+
     pugi::xml_document doc;
-    pugi::xml_parse_result result = doc.load_file(filename.c_str());
+    pugi::xml_parse_result result = doc.load_file(path_of_file_to_load.c_str());
 	
 	std::stringstream out;
 	
     if (result){
 
     	if(prompt){
-        	out << "XML [" << filename << "] ";
+        	out << "XML [" << path_of_file_to_load << "] ";
         	out << "parsing successful";
 			cout << out.str() << endl;
 		}
@@ -31,38 +58,28 @@ void WorldFactory::load_file(CartesianFrame* mother,std::string filename){
     }else{
 
     	std::stringstream info;
-        info << "XML [" << filename << "] ";
+        info << "XML [" << path_of_file_to_load << "] ";
         info << "parsed with errors, attr value: [";
         info << doc.child("node").attribute("attr").value() << "]\n";
         info << "Error description: " << result.description() << "\n";
 		info << "Number of character in file: " << result.offset;
 		//info << "(error at [..." << (filename + result.offset) << "]\n\n";
 
-		throw BadXMLFile(filename,info.str());
+		throw BadXMLFile(path_of_file_to_load,info.str());
 	}
 }
 //=================================
-void WorldFactory::include_file(CartesianFrame* mother,const pugi::xml_node node){
+void WorldFactory::include_file(
+	CartesianFrame* mother,const pugi::xml_node node){
 
 	// get path to file to be included
-	std::string path_to_include_file;
+	std::string relative_path;
 
 	// set path
-	set_path(path_to_include_file,node);
+	set_path(relative_path,node);
 	
-	CartesianFrame* temp_root_of_included_world;
-	temp_root_of_included_world = new CartesianFrame;
-	
-	temp_root_of_included_world->set_frame(
-		"temp_root_of_included_world",
-		Vector3D(0.0,0.0,0.0),
-		Rotation3D(0.0,0.0,0.0)
-	);
-
-	load_file(temp_root_of_included_world , path_to_include_file);
-
-	mother->take_children(temp_root_of_included_world);
-
+	// load included file into mother node
+	load_file(mother, absolute_path, relative_path);
 }
 //=================================
 void WorldFactory::set_path(std::string &path,const pugi::xml_node node){
@@ -532,13 +549,17 @@ const pugi::xml_node node){
 	tuple3 VecTuple; 
 	// check position
 	parse3tuple(
-	VecTuple,node.child("set_frame").attribute("pos").value());
+		VecTuple,node.child("set_frame").attribute("pos").value()
+	);
+
 	position.set(VecTuple.x,VecTuple.y,VecTuple.z);
 
 	
 	//check rotation
 	parse3tuple(
-	VecTuple,node.child("set_frame").attribute("rot").value());
+		VecTuple,node.child("set_frame").attribute("rot").value()
+	);
+
 	rotation.set(VecTuple.x,VecTuple.y,VecTuple.z);
 	
 	if(prompt){
