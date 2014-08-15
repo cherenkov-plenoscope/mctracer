@@ -36,9 +36,24 @@
 //			This is the most important feature which gains a speed up
 //			in the number of objects n in a scene by
 //			O(n^1) to O(log(n)).
+//
+//  dependencies:
+//          If on Ubuntu (14.04), you can install the dependencies using
+//          syaptic, jist install these two:
+//          
+//          * libopencv-dev
+//          * libgtest-dev
+//
+//          gtest is a header only library, but in order to use it
+//          one needs to build it first. See this thread on askubuntu
+//          for details:
+//          http://askubuntu.com/questions/145887/why-no-library-files-installed-for-google-test
+//
 //  compile:
-//			cmake .
-//			make
+//          mkdir build
+//          cd build
+//          cmake ..
+//          make
 //
 //------------------------------------------------------------------------------
 
