@@ -152,18 +152,15 @@ TEST_F(WorldFactoryTest, ReadFileWithUnknownObject) {
 }
 //------------------------------------------------------------------------------
 TEST_F(WorldFactoryTest, IncludeXMLFiles) {
+try{
 
   WorldFactory file2world;
 
-  CartesianFrame *Mworld = NULL;
+  string xml_file = "./test_scenery/including_other_xml_files.xml";
 
-  string xml_file = 
-  "./test_scenery/including_other_xml_files.xml";
+  file2world.load_file(xml_file);
 
-  try{
-    
-    file2world.load_file(xml_file);
-    Mworld = file2world.get_pointer_to_world();
+  CartesianFrame *Mworld = file2world.get_pointer_to_world();
 
   }catch(TracerException& error){
     error.ReportException();

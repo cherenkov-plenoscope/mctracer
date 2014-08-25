@@ -62,5 +62,4 @@ class Rotation3D {
 	bool operator == (const Rotation3D& eqRot)const;
 	friend std::ostream& operator<<(std::ostream& os, const Rotation3D& rot);
 };
-
 #endif // __ROTATION3D_H_INCLUDED__ 

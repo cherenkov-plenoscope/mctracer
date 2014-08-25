@@ -10,7 +10,7 @@
 // included dependencies
 #include "ApertureCamera.h"
 #include "PinHoleCamera.h"
-
+#include "Functions.h"
 //=================================
 class FreeOrbitCamera {
 // Fly through the scene like you want!
@@ -20,6 +20,8 @@ class FreeOrbitCamera {
 // view can be modified by the user during run time.
 // The image is displayed in a additional window and not written to the
 // harddisk.
+// Above this one can take snapshots using a aperture camera set to the Mamiya 645
+// By using two spatial seperater cameras also 3D stereo images are possible
 private:
 double FieldOfView_in_rad;
 int ImageResolutionInX;
@@ -32,9 +34,9 @@ Rotation3D R_World2Camera;
 
 PinHoleCamera FlyingPinHoleCamera;
 //==================//
-bool flag_world_and_settings_are_set;
-CartesianFrame *ptr_to_world;
-GlobalSettings *ptr_to_globalsettings;
+//ool flag_world_and_settings_are_set;
+CartesianFrame *world;
+GlobalSettings *settings;
 //==================//
 // free orbit display name
 std::string free_orbit_display_name;
@@ -49,10 +51,7 @@ double stereo_offset_increment_in_m;
 double stereo_offset_in_m;
 public:
 //======================================================================
-FreeOrbitCamera();
-//======================================================================
-void set_free_orbit(
-CartesianFrame *ptr_to_new_world,
+FreeOrbitCamera(CartesianFrame *ptr_to_new_world,
 GlobalSettings *ptr_to_new_globalsettings);
 //======================================================================
 void start_free_orbit();

@@ -63,16 +63,14 @@
 
 #include "WorldFactory.h"
 #include "Vector3D.h"
-
+#include "Functions.h"
 //====================
 #include "Ray.h"
 #include "Photon.h"
 #include "CameraRay.h"
 //====================
 #include "ListOfPropagations.h"
-
 #include "FreeOrbitCamera.h"
-
 #include "CsvHandler.h"
 // namespaces
 using namespace std;
@@ -84,7 +82,7 @@ int main(){
 	//--------------------------------------------------------------------------
 	// start tracer
 	//--------------------------------------------------------------------------
-	int system_call_return_value = system("clear");
+	ClearScreen();
 	
 	stringstream out;
 	out.str("");
@@ -184,8 +182,8 @@ int main(){
 
 		//mylist.export_history_csv(settings);
 		
-		FreeOrbitCamera free;
-		free.set_free_orbit(Mworld,&settings);
+		FreeOrbitCamera free(Mworld,&settings);
+		//free.set_free_orbit();
 		free.start_free_orbit();
 
 	}catch(TracerException& error){
