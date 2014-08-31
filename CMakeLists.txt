@@ -54,6 +54,7 @@ pugixml.cpp
 # python extension
 mcPYtracer/testPyTracer.cpp
 Functions.cpp
+SmartImage.cpp
 )
 include_directories(/usr/include)
 include_directories(/usr/local/include)
@@ -113,6 +114,7 @@ OpticalMirrorHexagonal.cpp
 OpticalMirror.cpp
 Functions.cpp
 mcPYtracer/testPyTracer.cpp
+SmartImage.cpp
 )
 # Link test executable against gtest & gtest_main
 target_link_libraries(mctracerUnitTests gtest gtest_main)

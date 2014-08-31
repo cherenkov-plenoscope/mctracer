@@ -72,8 +72,10 @@
 #include "ListOfPropagations.h"
 #include "FreeOrbitCamera.h"
 #include "CsvHandler.h"
+
+//#include "SmartImage.h"
 // namespaces
-using namespace std;
+//using namespace std;
 
 //------------------------------------------------------------------------------
 // main
@@ -84,7 +86,7 @@ int main(){
 	//--------------------------------------------------------------------------
 	ClearScreen();
 	
-	stringstream out;
+	std::stringstream out;
 	out.str("");
 	//               1         2         3         4         5         6
 	//      123456789012345678901234567890123456789012345678901234567890
@@ -139,17 +141,17 @@ int main(){
 	//mylist.push_back(Bob);
 	
 	cout << mylist;
-	mylist.export_propagations_csv(settings);
+	//mylist.export_propagations_csv(settings);
+	*/
 
-
-	ListOfPropagations my2ndlist("my_2nd_little_list");
-	my2ndlist.import_propagations_csv("my_little_list.csv",settings);
+	//ListOfPropagations my2ndlist("my_2nd_little_list");
+	//my2ndlist.import_propagations_csv("my_little_list.csv",settings);
 	// test csv parser
 	
-    ifstream	infile("mylist.csv");
-    ofstream	outfile;
-    outfile.open("my_Gnarf.csv");
-
+    //ifstream	infile("mylist.csv");
+    //ofstream	outfile;
+    //outfile.open("my_Gnarf.csv");
+/*
     CsvRow		row;
     while(infile >> row)
     {
@@ -160,14 +162,18 @@ int main(){
 	*/
 	
 	//==================================================================
+	// test SmartImage
+	//==================================================================
+	//SmartImage Hans(16,9,4);
+	//==================================================================
 	// open / read file
 	//==================================================================
 	
 	WorldFactory file2world;
 	
-	string user_input;
-	cout << "Enter a file to load: ";
-	cin  >> user_input;
+	std::string user_input;
+	std::cout << "Enter a file to load: ";
+	std::cin  >> user_input;
 	
 	try{
 

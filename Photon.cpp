@@ -141,7 +141,7 @@ void Photon::propagate(
 		);
 
 		//==============================================================
-		// test reflection of the object pointer_to_closest_frame is
+		// test reflection of the object ClosestIntersection is
 		// pointing to
 		//==============================================================
 		if(
@@ -157,7 +157,7 @@ void Photon::propagate(
 
 		){	
 			//==========================================================
-			// the object pointer_to_closest_frame is pointing to
+			// the object ClosestIntersection is pointing to
 			// does reflect, so we increase the reflection counter
 			//==========================================================
 			
@@ -165,7 +165,7 @@ void Photon::propagate(
 			
 			//==========================================================
 			// calculate the ray reflected by the object
-			// pointer_to_closest_frame is pointing to relativ to
+			// ClosestIntersection is pointing to relativ to
 			// the world coordinate system
 			//==========================================================
 			Photon ReflectedPhoton(wavelength);

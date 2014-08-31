@@ -24,6 +24,8 @@ class ReflectionProperties;
 class CartesianFrame {
 protected:
     std::string name_of_frame;
+    uint ID;
+
     Vector3D 	position_relative_to_mother; 
     Rotation3D 	rotation_relative_to_mother;
     double 	radius_of_sphere_enclosing_all_children; 
@@ -37,6 +39,7 @@ protected:
     std::vector<CartesianFrame*> children;
 	CartesianFrame *mother;
 
+    // OctTree sub structure
     OctTreeCube *OctTree;
     uint max_number_of_frames_in_OctTree;
 	
@@ -64,12 +67,14 @@ const HomoTrafo3D* get_pointer_to_T_frame2world() const;
 const CartesianFrame* get_pointer_to_mother_frame() const;
 const CartesianFrame* get_pointer_to_child(const int child_position_in_list)const;
 const int get_number_of_children()const;
+const uint get_ID() const{ return ID; };
 std::string get_frame_string()const;
 std::string get_frame_prompt_including_children()const;
 //======================================================================
 //  SET ////////////////////////////////////////////////////////////////
 //======================================================================
 void set_frame(const std::string new_name,const Vector3D npos,const Rotation3D nrot);
+void set_ID( uint newID ){ ID = newID; };
 void set_mother_and_child(CartesianFrame *new_child);
 const OctTreeCube* get_OctTree()const;
 //======================================================================

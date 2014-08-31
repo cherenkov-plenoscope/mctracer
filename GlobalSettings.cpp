@@ -7,7 +7,7 @@ GlobalSettings::GlobalSettings(){
 	flag_show_csv_row_identifier = true;
 	flag_store_only_final_intersection = false;
 	flag_show_csv_row_identity = true;
-	flag_multithread = true;
+	multithread = true;
 }
 //======================================================================
 void GlobalSettings::set_max_number_of_reflections(
@@ -78,20 +78,10 @@ bool  GlobalSettings::ShowCsvIdentifier()const{
 	return flag_show_csv_row_identifier;
 }
 //======================================================================
-bool GlobalSettings::StoreOnlyLastIntersection()const{
-	return flag_store_only_final_intersection;
-}
-//======================================================================
 bool GlobalSettings::ShowCsvIdentity()const{
 	return flag_show_csv_row_identity;
 }
 //======================================================================
 void GlobalSettings::set_ShowCsvIdentity(bool show){
 	flag_show_csv_row_identity = show;
-}
-void GlobalSettings::SetMultiThreadFlag(bool new_flag_multithread){
-	flag_multithread = new_flag_multithread;
-}
-bool GlobalSettings::MultiThreadFlag()const{
-	return flag_multithread;
 }

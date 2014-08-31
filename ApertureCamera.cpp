@@ -286,7 +286,7 @@ GlobalSettings* settings){
 	CameraRay cam_ray;
 	ColourProperties imag_col;
 	ColourProperties col_of_single_ray;
-	int i;
+	uint i;
 	int ray_per_pixel_iterator;
 	
 	#pragma omp parallel shared(settings,world) private(i,ray_per_pixel_iterator,cam_ray,imag_col,col_of_single_ray,intensity,u,v) 

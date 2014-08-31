@@ -34,7 +34,8 @@ protected:
 	Vector3D support;                 // support vector
 	Vector3D direction;               // direction vector
 	ListOfInteractions* history;      // interaction history of this ray
-	unsigned long long int identifier_number;    // The identifier ID of this ray
+	 // The identifier ID of this ray
+	unsigned long long int identifier_number;   
 
 public:
 //------------------------------------------------------------------------------
@@ -59,6 +60,11 @@ virtual CsvRow getCsvRow(GlobalSettings& settings)const;
 virtual CsvRow getCsvRowHistory(GlobalSettings& settings)const;
 //------------------------------------------------------------------------------
 // Functionality
+Intersection* get_closest_intersection(
+	const CartesianFrame* world,
+	GlobalSettings *settings
+);
+
 void pre_trace(
 	const CartesianFrame* frame_to_check_for_interaction_of_ray_and_max_sphere, 
 	std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre

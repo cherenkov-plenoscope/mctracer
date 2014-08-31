@@ -503,6 +503,61 @@ Intersection* Ray::calculate_closest_intersection(
 	return 	(*pointer_to_pointer_to_closest_intersection);
 }
 //======================================================================
+Intersection* Ray::get_closest_intersection(
+	const CartesianFrame* world,
+	GlobalSettings *settings
+){
+	int refl_count = 0;
+	const CartesianFrame* object_reflected_from = NULL;
+	//==================================================================
+	// claculate a list/vector containing all possible intersection
+	// candidates using pre-trace
+	//==================================================================
+	std::vector<const CartesianFrame*> list_of_objects_which_might_intersect;
+	pre_trace( world , &list_of_objects_which_might_intersect );
+	
+	//==================================================================
+	// calculate a list of objects wich _do_ intersect from the list_of_
+	// objects_which_might_intersect
+	//==================================================================
+
+	std::vector<Intersection*> list_of_ptr_to_intersections;
+	
+	test_intersection_for_hit_candidates(
+		&list_of_objects_which_might_intersect,
+		&list_of_ptr_to_intersections,
+		object_reflected_from,
+		refl_count
+	);
+		
+	//==================================================================
+	// test wether there is at least one object intersecting the ray or
+	// not by using the size of the list_of_intersecting_objects
+	//==================================================================
+	Intersection *ptr_to_closest_intersection;	
+
+	if( list_of_ptr_to_intersections.size() == 0 ){
+		
+		ptr_to_closest_intersection = new Intersection;
+		ptr_to_closest_intersection->set_intersection_flag( false );
+		
+		return ptr_to_closest_intersection;
+	}else{
+		//==============================================================
+		// find the closest object in the list of 
+		// list_of_intersecting_objects
+		//==============================================================
+
+
+		ptr_to_closest_intersection = calculate_closest_intersection(
+			ptr_to_closest_intersection,
+			&list_of_ptr_to_intersections
+		);
+
+		return ptr_to_closest_intersection;
+	}
+}
+//======================================================================
 ColourProperties Ray::trace(const CartesianFrame* world,
 				int refl_count,
 				const CartesianFrame* object_reflected_from,

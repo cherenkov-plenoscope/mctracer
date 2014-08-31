@@ -5,7 +5,7 @@ FreeOrbitCamera::FreeOrbitCamera(
 	GlobalSettings *ptr_to_new_globalsettings
 ){
 	//free orbit display
-	free_orbit_display_name = "free orbit";
+	free_orbit_display_name = "Monte Carlo Tracer -> Free Orbit";
 	
 	// default position for camera
 	t_World2Camera.set_null_vector();
@@ -15,23 +15,23 @@ FreeOrbitCamera::FreeOrbitCamera(
 	RotWorld2CameraZ_in_rad = 0.0;
 	
 	R_World2Camera.set(
-	0.0,
-	RotWorld2CameraY_in_rad,
-	RotWorld2CameraZ_in_rad
+		0.0,
+		RotWorld2CameraY_in_rad,
+		RotWorld2CameraZ_in_rad
 	);
 
 	// default image size and FoV
-	ImageResolutionInX = 120;
-	ImageResolutionInY = 90;
 	FieldOfView_in_rad = M_PI/2.0; //90Deg
+	
+	Image.Set( MCT_QVGA );
 	
 	// set up camera
 	FlyingPinHoleCamera.set_cam(
 		free_orbit_display_name,
 		t_World2Camera,
 		R_World2Camera,
-		ImageResolutionInX,
-		ImageResolutionInY
+		Image.Width(),
+		Image.Hight()
 	);
 	
 	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);
@@ -83,12 +83,9 @@ void FreeOrbitCamera::move_forward(){
 	t_World2Camera = 
 	t_World2Camera+CameraPointingDirection*scaling_factor;
 	
-	FlyingPinHoleCamera.set_cam(
-		free_orbit_display_name,
+	FlyingPinHoleCamera.SetPositionAndOrientation(
 		t_World2Camera,
-		R_World2Camera,
-		ImageResolutionInX,
-		ImageResolutionInY
+		R_World2Camera
 	);
 	
 	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);	
@@ -110,12 +107,9 @@ void FreeOrbitCamera::move_backward(){
 	t_World2Camera = 
 	t_World2Camera - CameraPointingDirection*scaling_factor;
 	
-	FlyingPinHoleCamera.set_cam(
-		free_orbit_display_name,
+	FlyingPinHoleCamera.SetPositionAndOrientation(
 		t_World2Camera,
-		R_World2Camera,
-		ImageResolutionInX,
-		ImageResolutionInY
+		R_World2Camera
 	);
 	
 	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);	
@@ -140,12 +134,9 @@ void FreeOrbitCamera::move_left(){
 
 	t_World2Camera = t_World2Camera - vec_left*scaling_factor;
 	
-	FlyingPinHoleCamera.set_cam(
-		free_orbit_display_name,
+	FlyingPinHoleCamera.SetPositionAndOrientation(
 		t_World2Camera,
-		R_World2Camera,
-		ImageResolutionInX,
-		ImageResolutionInY
+		R_World2Camera
 	);
 	
 	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);
@@ -171,12 +162,9 @@ void FreeOrbitCamera::move_right(){
 
 	t_World2Camera = t_World2Camera + vec_left*scaling_factor;
 	
-	FlyingPinHoleCamera.set_cam(
-		free_orbit_display_name,
+	FlyingPinHoleCamera.SetPositionAndOrientation(
 		t_World2Camera,
-		R_World2Camera,
-		ImageResolutionInX,
-		ImageResolutionInY
+		R_World2Camera
 	);
 	
 	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);
@@ -222,12 +210,9 @@ void FreeOrbitCamera::look_up(){
 		
 		R_World2Camera.set(0.0,RotWorld2CameraY_in_rad,RotWorld2CameraZ_in_rad);
 
-		FlyingPinHoleCamera.set_cam(
-			free_orbit_display_name,
+		FlyingPinHoleCamera.SetPositionAndOrientation(
 			t_World2Camera,
-			R_World2Camera,
-			ImageResolutionInX,
-			ImageResolutionInY
+			R_World2Camera
 		);
 
 		FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);					
@@ -245,11 +230,9 @@ void FreeOrbitCamera::look_down(){
 		
 		R_World2Camera.set(0.0,RotWorld2CameraY_in_rad,RotWorld2CameraZ_in_rad);
 
-		FlyingPinHoleCamera.set_cam(
-			free_orbit_display_name,
-			t_World2Camera,R_World2Camera,
-			ImageResolutionInX,
-			ImageResolutionInY
+		FlyingPinHoleCamera.SetPositionAndOrientation(
+			t_World2Camera,
+			R_World2Camera
 		);
 
 		FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);					
@@ -268,12 +251,9 @@ void FreeOrbitCamera::look_left(){
 	
 	R_World2Camera.set(0.0,RotWorld2CameraY_in_rad,RotWorld2CameraZ_in_rad);
 
-	FlyingPinHoleCamera.set_cam(
-		free_orbit_display_name,
+	FlyingPinHoleCamera.SetPositionAndOrientation(
 		t_World2Camera,
-		R_World2Camera,
-		ImageResolutionInX,
-		ImageResolutionInY
+		R_World2Camera
 	);
 
 	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);					
@@ -291,12 +271,9 @@ void FreeOrbitCamera::look_right(){
 	
 	R_World2Camera.set(0.0,RotWorld2CameraY_in_rad,RotWorld2CameraZ_in_rad);
 
-	FlyingPinHoleCamera.set_cam(
-		free_orbit_display_name,
+	FlyingPinHoleCamera.SetPositionAndOrientation(
 		t_World2Camera,
-		R_World2Camera,
-		ImageResolutionInX,
-		ImageResolutionInY
+		R_World2Camera
 	);
 
 	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);					
@@ -438,20 +415,104 @@ void FreeOrbitCamera::decrease_stereo_offset(){
 	}
 }
 //==============================================================================
+void FreeOrbitCamera::onMouse(int event, int x, int y, int flags, void *param){
+		
+		FreeOrbitCamera* p = (FreeOrbitCamera*)param;
+		
+		if( event != cv::EVENT_LBUTTONDOWN )
+		return;
+		// todo
+		p->DispImageInfo( x, y );
+		//std::cout << "You pressed the left mouse button on ("<<x<<"|"<<y<<")" << std::endl;
+}
+//==============================================================================
+void FreeOrbitCamera::DispImageInfo(int x, int y){
+
+	// get the corresponding ray 
+	Ray Line = FlyingPinHoleCamera.cam_send_ray( y, x );
+
+	Intersection* ClosestIntersection = Line.get_closest_intersection(
+		world,
+		settings
+	);
+
+	ClearScreen();
+	std::stringstream out;
+
+	//      0        1         2         3         4         5         6
+	//      123456789012345678901234567890123456789012345678901234567890
+
+	out << " _Info_for_Pixel_(_" << x << "_|_" << y << "_)__________________\n";
+	out << "|\n";
+	out << "| Ray emitted by camera:\n";
+	out << "| " << Line << "\n";
+	out << "|\n";
+	if( ClosestIntersection->get_intersection_flag() ){
+
+	out << "| Distance to first intersection: ";
+	out << ClosestIntersection->get_intersection_distance() << " [m]\n";
+	out << "|\n";
+	out << "| ID of Object: ";
+	out << 	ClosestIntersection->get_pointer_to_intersecting_object()->
+			get_ID() << "\n";
+	out << "|\n";
+	out << "| Name of Object:\n";
+	out << "|  " << *ClosestIntersection->
+					get_pointer_to_intersecting_object()->
+					get_pointer_to_name_of_frame() << "\n";
+
+	const CartesianFrame *FrameIterator = ClosestIntersection->
+			get_pointer_to_intersecting_object()->
+			get_pointer_to_mother_frame();
+
+	uint level = 0;
+	while( FrameIterator != NULL ){
+		level++;
+		out << "|";
+		for(uint i=0;i<level;i++){ out << "  "; }
+		out << "> ";	
+		out << *FrameIterator->get_pointer_to_name_of_frame();
+		FrameIterator = FrameIterator->get_pointer_to_mother_frame();
+		
+		out << "\n";
+  	}
+
+	out << "|\n";
+	out << "| In frame of intersecting object___________________________\n";
+	out << "| |\n";
+	out << "| | intesection point: ";
+	 	out<< ClosestIntersection->
+	 	get_intersection_point_in_object_system() << "\n";
+	out << "| | surface normal   : ";
+	 	out<< ClosestIntersection->
+	 	get_surface_normal_in_object_system() << "\n";
+	out << "| |_________________________________________________________\n";
+	}else{
+	out << "| No Intersection with an object.\n";	
+	}
+	out << "|___________________________________________________________\n";
+	
+	std::cout<<out.str();
+}
+//==============================================================================
 void FreeOrbitCamera::start_free_orbit(){
 	display_help();
-	int key=0;
+	int key = 0;
 	bool key_stroke_requires_image_update = true;
 	
-	cv::namedWindow(free_orbit_display_name, CV_WINDOW_AUTOSIZE );
-	while(key!=27)
-	{
-		if(key_stroke_requires_image_update){
-		update_free_orbit_display();
+	cv::namedWindow( free_orbit_display_name, CV_WINDOW_AUTOSIZE );
+
+	FreeOrbitCamera* p = this;
+	cv::setMouseCallback( free_orbit_display_name.c_str(), onMouse, (void *)p );
+
+	while( key != 27 ){
+
+		if( key_stroke_requires_image_update ){
+			update_free_orbit_display();
 		}
 		
-		key_stroke_requires_image_update=true;
-		key=cvWaitKey(0);
+		key_stroke_requires_image_update = true;
+		key = cvWaitKey(0);
 
 		switch(key){
 			case 'w': move_forward();

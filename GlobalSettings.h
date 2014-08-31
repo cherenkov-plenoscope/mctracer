@@ -26,6 +26,7 @@ private:
 	unsigned seed_for_random_number_generator_mt19937;
 
 	// precision in csv table exports
+
 	unsigned csv_decimal_presicion;
 	bool flag_show_csv_row_identifier;
 	bool flag_show_csv_row_identity;
@@ -34,12 +35,21 @@ private:
 	bool flag_store_only_final_intersection;
 
 	// multithread
-	bool flag_multithread;
+	bool multithread;
 
 public:
 //======================================================================
 GlobalSettings();
-bool StoreOnlyLastIntersection()const;
+//======================================================================
+bool StoreOnlyLastIntersection()const{
+	return flag_store_only_final_intersection;
+};
+void SetStoreOnlyLastIntersection(bool flag){
+	flag_store_only_final_intersection = flag;
+};
+//======================================================================
+bool MultiThread()const{ return multithread; }
+void SetMultiThread( bool flag ){ multithread = flag; }
 //======================================================================
 void set_max_number_of_reflections(const int new_max_number_of_reflections);
 //======================================================================
@@ -58,8 +68,6 @@ unsigned get_decimal_precision_for_csv_output()const;
 void initialize_random_rumber_generator_seed_mt19937();
 //======================================================================
 unsigned get_seed_for_random_number_generator_mt19937()const;
-void SetMultiThreadFlag(bool new_flag_multithread);
-bool MultiThreadFlag()const;
 };
 
 #endif // __GLOBALSETTINGS_H_INCLUDED__ 

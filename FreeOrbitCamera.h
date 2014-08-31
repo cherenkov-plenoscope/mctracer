@@ -10,6 +10,7 @@
 // included dependencies
 #include "ApertureCamera.h"
 #include "PinHoleCamera.h"
+#include "SmartImage.h"
 #include "Functions.h"
 //=================================
 class FreeOrbitCamera {
@@ -24,28 +25,26 @@ class FreeOrbitCamera {
 // By using two spatial seperater cameras also 3D stereo images are possible
 private:
 double FieldOfView_in_rad;
-int ImageResolutionInX;
-int ImageResolutionInY;
 
-Vector3D t_World2Camera;
-double RotWorld2CameraY_in_rad;
-double RotWorld2CameraZ_in_rad;
-Rotation3D R_World2Camera;
+SmartImage 	Image;
+
+Vector3D 	t_World2Camera;
+double 		RotWorld2CameraY_in_rad;
+double 		RotWorld2CameraZ_in_rad;
+Rotation3D 	R_World2Camera;
 
 PinHoleCamera FlyingPinHoleCamera;
-//==================//
+
 //ool flag_world_and_settings_are_set;
 CartesianFrame *world;
 GlobalSettings *settings;
-//==================//
+
 // free orbit display name
 std::string free_orbit_display_name;
 
-//==================//
 // snapshot
 int snapshot_counter;
 
-//==================//
 // stereo view
 double stereo_offset_increment_in_m;
 double stereo_offset_in_m;
@@ -86,9 +85,10 @@ void take_snapshot();
 void display_help()const;
 //======================================================================
 void increase_stereo_offset();
-void decrease_stereo_offset();
 //======================================================================
-
+void decrease_stereo_offset();
+static void onMouse(int event, int x, int y, int flags, void *param);
+void DispImageInfo(int x, int y);
 };
 #endif // __FREEORBITCAMERA_H_INCLUDED__
 

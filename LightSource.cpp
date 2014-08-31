@@ -33,7 +33,7 @@ GlobalSettings* settings)const{
 	(settings->get_seed_for_random_number_generator_mt19937()); 
 		 	
 	Ray ray_emitted_ray;
-	for( int i=0; i<SensorResolutionUTimesV; i++)
+	for( uint i = 0; i < SensorResolutionUTimesV; i++)
 	{	
 
 		//cout << "Random value: ";

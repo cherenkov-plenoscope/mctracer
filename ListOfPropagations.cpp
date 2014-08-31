@@ -1,4 +1,12 @@
 #include "ListOfPropagations.h"
+//======================================================================
+// friends of osstream
+//======================================================================
+std::ostream& operator<<(
+	std::ostream& os, const ListOfPropagations& list){
+    os << list.get_info_string();
+    return os;
+}
 //==================================================================
 ListOfPropagations::ListOfPropagations(std::string new_name_for_list_of_propagations){
 
@@ -7,37 +15,6 @@ ListOfPropagations::ListOfPropagations(std::string new_name_for_list_of_propagat
 //==================================================================
 void ListOfPropagations::push_back(Ray* ptr_to_ray_to_push_back){
 	list_of_ptrs_to_propagations.push_back(ptr_to_ray_to_push_back);
-}
-//==================================================================
-void ListOfPropagations::export_propagations_csv(
-	GlobalSettings& settings
-)const{
-	ofstream	csv_output_file;
-	csv_output_file.open(name_of_list_of_propagations+".csv");
-
-	for(Ray* single_ray : list_of_ptrs_to_propagations){
-		CsvRow row =  single_ray->getCsvRow(settings);
-		csv_output_file << row;
-	}	
-
-	csv_output_file.close();
-}
-//==================================================================
-void ListOfPropagations::import_propagations_csv(
-	std::string name_of_file_to_import,
-	GlobalSettings& settings
-){
-	ifstream csv_input_file( name_of_file_to_import );
-
-	CsvRow SingleRow;
-
-	if( csv_input_file.is_open() ){
-   		while ( SingleRow.ReadNextRow( csv_input_file ) )
-   			cout << SingleRow << endl;
-    	csv_input_file.close();		
-	}else{
-		cout << "Unable to open file" << endl;
-	}
 }
 //==================================================================
 void ListOfPropagations::disp()const{
@@ -63,7 +40,7 @@ void ListOfPropagations::propagate(
 
 	std::cout << "Propagate list of " << list_of_ptrs_to_propagations.size() << " rays...\n";
 
-	if(settings->MultiThreadFlag()){
+	if(settings->MultiThread()){
 		// MULTITHREAD
 
 		int number_of_threads, thread_id, ray_counter;
@@ -116,7 +93,7 @@ void ListOfPropagations::PropagateSingleRay(
 	);
 }
 //==================================================================
-void ListOfPropagations::export_history_csv(
+/*void ListOfPropagations::export_history_csv(
 	GlobalSettings& settings,
 	std::string name_of_csv_file_to_be_exported
 )const{
@@ -130,18 +107,41 @@ void ListOfPropagations::export_history_csv(
 	}	
 
 	csv_output_file.close();
-}
+}*/
 //======================================================================
-void ListOfPropagations::export_history_csv(
+/*void ListOfPropagations::export_history_csv(
 		GlobalSettings& settings
 )const{
 	export_history_csv(settings,name_of_list_of_propagations);
-}
-//======================================================================
-// friends of osstream
-//======================================================================
-std::ostream& operator<<(
-	std::ostream& os, const ListOfPropagations& list){
-    os << list.get_info_string();
-    return os;
-}
+}*/
+//==================================================================
+/*void ListOfPropagations::export_propagations_csv(
+	GlobalSettings& settings
+)const{
+	ofstream	csv_output_file;
+	csv_output_file.open(name_of_list_of_propagations+".csv");
+
+	for(Ray* single_ray : list_of_ptrs_to_propagations){
+		CsvRow row =  single_ray->getCsvRow(settings);
+		csv_output_file << row;
+	}	
+
+	csv_output_file.close();
+}*/
+//==================================================================
+/*void ListOfPropagations::import_propagations_csv(
+	std::string name_of_file_to_import,
+	GlobalSettings& settings
+){
+	ifstream csv_input_file( name_of_file_to_import );
+
+	CsvRow SingleRow;
+
+	if( csv_input_file.is_open() ){
+   		while ( SingleRow.ReadNextRow( csv_input_file ) )
+   			cout << SingleRow << endl;
+    	csv_input_file.close();		
+	}else{
+		cout << "Unable to open file" << endl;
+	}
+}*/

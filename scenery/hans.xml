@@ -1,13 +1,13 @@
 <frame>
 	<set_frame name="tree" pos="[5,5,0]" rot="[0,0,0]"/>	
 	
-	<sphere>
+	<sphere ID="9001">
 		<set_frame name="leaf_ball" pos="[0,0,3]" rot="[0,0,0]"/>
 		<set_surface refl="0.0" colour="[25,200,0]"/>
 		<set_sphere radius="1.5"/>
 	</sphere>	
 
-	<cylinder>
+	<cylinder ID="9002">
 		<set_frame name="pole" pos="[0,0,0]" rot="[0,0,0]"/>
 		<set_surface refl="0.0" colour="[200,200,0]"/>
 		<set_cylinder radius="0.25" start_pos="[0,0,0]" end_pos="[0,0,1.5]"/>	
@@ -17,22 +17,22 @@
 <frame>
 	<set_frame name="house" pos="[5,0,0]" rot="[0,0,0]"/>	
 
-	<plane>
+	<plane ID="1001">
 		<set_frame name="wall_1" pos="[1,0,1]" rot="[0,1.57,0.0]"/>
 		<set_surface refl="0.0" colour="[180,180,180]"/>
 		<set_plane min_x="-1.0" max_x="+0.5" min_y="-1.0" max_y="+1.0"/>
 	</plane>
-	<plane>
+	<plane ID="1002">
 		<set_frame name="wall_2" pos="[-1,0,1]" rot="[0,1.57,0]"/>
 		<set_surface refl="0.0" colour="[180,180,180]"/>
 		<set_plane min_x="-1.0" max_x="+0.5" min_y="-1.0" max_y="+1.0"/>
 	</plane>
-	<plane>
+	<plane ID="1003">
 		<set_frame name="wall_3" pos="[0,1,1]" rot="[0,1.57,1.57]"/>
 		<set_surface refl="0.0" colour="[180,180,180]"/>
 		<set_plane min_x="-1.0" max_x="+0.5" min_y="-1.0" max_y="+1.0"/>
 	</plane>	
-	<plane>
+	<plane ID="1004">
 		<set_frame name="wall_4" pos="[0,-1,1]" rot="[0,1.57,1.57]"/>
 		<set_surface refl="0.0" colour="[180,180,180]"/>
 		<set_plane min_x="-1.0" max_x="+0.5" min_y="-1.0" max_y="+1.0"/>
@@ -40,12 +40,12 @@
 
 	<frame>
 		<set_frame name="roof" pos="[0,0,1.1]" rot="[0,0,0]"/>
-		<plane>
+		<plane ID="1005">
 			<set_frame name="roof_1" pos="[0,0.707,0.707]" rot="[0,0.7853,1.57]"/>
 			<set_surface refl="0.0" colour="[230,20,120]"/>
 			<set_plane min_x="-1.0" max_x="+1.0" min_y="-1.1" max_y="+1.1"/>
 		</plane>
-		<plane>
+		<plane ID="1006">
 			<set_frame name="roof_2" pos="[0,-0.707,0.707]" rot="[0,0.7853,-1.57]"/>
 			<set_surface refl="0.0" colour="[230,20,120]"/>
 			<set_plane min_x="-1.0" max_x="+1.0" min_y="-1.1" max_y="+1.1"/>
@@ -55,28 +55,27 @@
 			<set_surface refl="0.0" colour="[180,180,180]"/>
 			<set_triangle A="[1,0,0]" B="[-1,0,0]" C="[0.5,0,1]"/>		
 		</triangle>
-		
 	</frame>	
 	
 	<frame>
 		<set_frame name="chimney" pos="[0.0,0.6,2.1]" rot="[0,0,0]"/>	
 		
-		<plane>
+		<plane ID="2001">
 			<set_frame name="chimney_wall_1" pos="[0.15,0,0.15]" rot="[0,1.57,0.0]"/>
 			<set_surface refl="0.0" colour="[180,180,180]"/>
 			<set_plane min_x="-0.5" max_x="+0.15" min_y="-0.15" max_y="+0.15"/>
 		</plane>	
-		<plane>
+		<plane ID="2002">
 			<set_frame name="chimney_wall_2" pos="[-0.15,0,0.15]" rot="[0,1.57,0]"/>
 			<set_surface refl="0.0" colour="[180,180,180]"/>
 			<set_plane min_x="-0.5" max_x="+0.15" min_y="-0.15" max_y="+0.15"/>
 		</plane>
-		<plane>
+		<plane ID="2003">
 			<set_frame name="chimney_wall_3" pos="[0,0.15,0.15]" rot="[0,1.57,1.57]"/>
 			<set_surface refl="0.0" colour="[180,180,180]"/>
 			<set_plane min_x="-0.5" max_x="+0.15" min_y="-0.15" max_y="+0.15"/>
 		</plane>	
-		<plane>
+		<plane ID="2004">
 			<set_frame name="chimney_wall_4" pos="[0,-0.15,0.15]" rot="[0,1.57,1.57]"/>
 			<set_surface refl="0.0" colour="[180,180,180]"/>
 			<set_plane min_x="-0.5" max_x="+0.15" min_y="-0.15" max_y="+0.15"/>
@@ -95,25 +94,25 @@
 	<frame>
 		<set_frame name="GAPD_camera" pos="[0,0,4.8892]" rot="[0,0,0]"/>		
 		
-		<disc>
+		<disc ID="13372">
 			<set_frame name="GAPD_camera_window" pos="[0,0,0.01]" rot="[0,0,0]"/>		
 			<set_surface refl="0.0" colour="[230,230,215]"/>	
 			<set_disc radius="0.33"/>
 		</disc>
 
-		<disc>
+		<disc ID="13373">
 			<set_frame name="GAPD_camera_top" pos="[0,0,0.89]" rot="[0,0,0]"/>		
 			<set_surface refl="0.0" colour="[230,230,215]"/>	
 			<set_disc radius="0.33"/>
 		</disc>
 
-		<disc>
+		<disc ID="1337">
 			<set_frame name="GAPD_sensor" pos="[0,0,0.0]" rot="[0,0,0]"/>		
 			<set_surface refl="0.0" colour="[0,255,128]"/>	
 			<set_disc radius="0.195"/>
 		</disc>
 		
-		<cylinder>
+		<cylinder ID="13371">
 			<set_frame name="GAPD_camera_cylinder" pos="[0,0,445]" rot="[0,0,0]"/>
 			<set_surface refl="0.0" colour="[230,230,215]"/>
 			<set_cylinder radius="0.33" start_pos="[0,0,0]" end_pos="[0,0,0.89]"/>	
@@ -123,25 +122,25 @@
 	<frame>
 		<set_frame name="small_support_tubes" pos="[0,0,2.7]" rot="[0,0,0]"/>
 		
-		<cylinder>
+		<cylinder ID="5001">
 			<set_frame name="support_tube_1_1" pos="[0,0,0]" rot="[0,0,0]"/>
 			<set_surface refl="0.0" colour="[75,75,75]"/>
 			<set_cylinder radius="0.015" start_pos="[-0.83,0.57,0.0]" end_pos="[+0.83,0.57,0.0]"/>	
 		</cylinder>	
 
-		<cylinder>
+		<cylinder ID="5002">
 			<set_frame name="support_tube_1_2" pos="[0,0,0]" rot="[0,0,0]"/>
 			<set_surface refl="0.0" colour="[75,75,75]"/>
 			<set_cylinder radius="0.015" start_pos="[-0.83,-0.57,0.0]" end_pos="[+0.83,-0.57,0.0]"/>	
 		</cylinder>		
 		
-		<cylinder>
+		<cylinder ID="5003">
 			<set_frame name="support_tube_1_3" pos="[0,0,0]" rot="[0,0,0]"/>
 			<set_surface refl="0.0" colour="[75,75,75]"/>
 			<set_cylinder radius="0.015" start_pos="[+0.83,+0.57,0.0]" end_pos="[+0.83,-0.57,0.0]"/>	
 		</cylinder>		
 		
-		<cylinder>
+		<cylinder ID="5004">
 			<set_frame name="support_tube_1_4" pos="[0,0,0]" rot="[0,0,0]"/>
 			<set_surface refl="0.0" colour="[75,75,75]"/>
 			<set_cylinder radius="0.015" start_pos="[-0.83,-0.57,0.0]" end_pos="[-0.83,+0.57,0.0]"/>	
@@ -151,25 +150,25 @@
 	<frame>
 		<set_frame name="support_tubes" pos="[0,0,0]" rot="[0,0,0]"/>	
 		
-		<cylinder>
+		<cylinder ID="5011">
 			<set_frame name="support_tube_1" pos="[0,0,0]" rot="[0,0,0]"/>
 			<set_surface refl="0.0" colour="[75,75,75]"/>
 			<set_cylinder radius="0.03" start_pos="[1.5,1.0,0.0]" end_pos="[0.2,0.2,4.9]"/>	
 		</cylinder>	
 		
-		<cylinder>
+		<cylinder ID="5012">
 			<set_frame name="support_tube_2" pos="[0,0,0]" rot="[0,0,0]"/>
 			<set_surface refl="0.0" colour="[75,75,75]"/>
 			<set_cylinder radius="0.03" start_pos="[1.5,-1.0,0.0]" end_pos="[0.2,-0.2,4.9]"/>	
 		</cylinder>	
 		
-		<cylinder>
+		<cylinder ID="5013">
 			<set_frame name="support_tube_3" pos="[0,0,0]" rot="[0,0,0]"/>
 			<set_surface refl="0.0" colour="[75,75,75]"/>
 			<set_cylinder radius="0.03" start_pos="[-1.5,-1.0,0.0]" end_pos="[-0.2,-0.2,4.9]"/>	
 		</cylinder>	
 		
-		<cylinder>
+		<cylinder ID="5014">
 			<set_frame name="support_tube_4" pos="[0,0,0]" rot="[0,0,0]"/>
 			<set_surface refl="0.0" colour="[75,75,75]"/>
 			<set_cylinder radius="0.03" start_pos="[-1.5,1.0,0.0]" end_pos="[-0.2,0.2,4.9]"/>	

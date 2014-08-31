@@ -12,8 +12,8 @@ CartesianFrame::CartesianFrame(
 //======================================================================
 void CartesianFrame::BasicSetUp(){
 	OctTree = NULL;
-	max_number_of_frames_in_OctTree = 7;	
-	//minimal_OctTree_EdgeLength = 0.001;
+	max_number_of_frames_in_OctTree = 7;
+	ID = 0;
 }
 //======================================================================
 void CartesianFrame::post_initializing(){
@@ -32,10 +32,9 @@ void CartesianFrame::post_initializing(){
 	
 	while(ptr_to_mother != NULL){
 		
-		T_frame2world_t= 
-		ptr_to_mother->T_frame2mother*T_frame2world_t;
-
-		ptr_to_mother= ptr_to_mother->mother; 
+		T_frame2world_t = 
+		ptr_to_mother -> T_frame2mother*T_frame2world_t;
+		ptr_to_mother = ptr_to_mother->mother; 
 	}
 
 	T_frame2world = T_frame2world_t;
@@ -139,7 +138,6 @@ void CartesianFrame::FillOctTree(
                     FillOctTree(ChildCube,SubSetOfFrames);
 
                     Cube->ChildCubes.push_back(ChildCube);
-
                 }
             }
         }

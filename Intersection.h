@@ -52,6 +52,13 @@ std::string get_string()const;
 //==================================================================
 double get_intersection_distance()const;
 //======================
+Vector3D get_surface_normal_in_object_system()const{
+	return surfacenormal_in_intersection_point;
+};
+Vector3D get_intersection_point_in_object_system()const{
+	return intersection_point;
+};
+//======================
 void get_reflection_direction_in_object_system(Vector3D* vec)const;
 //======================
 void get_intersection_vec_in_object_system(Vector3D *inter)const;

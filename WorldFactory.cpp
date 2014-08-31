@@ -224,8 +224,12 @@ CartesianFrame* WorldFactory::produceCartesianFrame
 	return frame;
 }
 //=================================
-CartesianFrame* WorldFactory::producePlane
-(CartesianFrame* mother,const pugi::xml_node node){
+CartesianFrame* WorldFactory::producePlane(
+	CartesianFrame* mother,const pugi::xml_node node
+){
+	if(node.attribute("ID") == NULL){
+		throw MissingItem("ID", MissingID("plane") );
+	}
 
 	if(node.child("set_frame") == NULL){
 		throw MissingItem("set_frame",
@@ -236,12 +240,13 @@ CartesianFrame* WorldFactory::producePlane
 		throw MissingItem("set_surface",
 		"A plane requires the 'set_surface' statement!");
 	}
-	
+
 	if(node.child("set_plane") == NULL){
 		throw MissingItem("set_plane",
 		"A plane requires the 'set_plane' statement!");
 	}	
 	
+	uint 		ID = std::stoi( node.attribute("ID").value() );
 	std::string name;
 	Vector3D    position;
 	Rotation3D  rotation;
@@ -262,7 +267,8 @@ CartesianFrame* WorldFactory::producePlane
 	set_frame(name,position,rotation,node);
 	set_surface(reflection_cefficient,colour,node);
 	set_plane(min_x, max_x, min_y, max_y,node);
-			
+	
+	new_plane->set_ID(ID);
 	new_plane->set_frame(name,position,rotation);
 	new_plane->set_surface_properties(&reflection_cefficient,&colour);
 	new_plane->set_plane(min_x, max_x, min_y, max_y);
@@ -271,9 +277,19 @@ CartesianFrame* WorldFactory::producePlane
 	return new_plane;
 }
 //=================================
-CartesianFrame* WorldFactory::produceSphere
-(CartesianFrame* mother,const pugi::xml_node node){
-	
+std::string WorldFactory::MissingID(std::string NameOfSurfaceEntity){
+	return 	"A " + NameOfSurfaceEntity + 
+	" is a 'SurfaceEntity' and therefore needs an unique ID " +
+	"to keep track of Photon Surface interactions.";
+}
+//=================================
+CartesianFrame* WorldFactory::produceSphere(
+	CartesianFrame* mother,const pugi::xml_node node
+){
+	if(node.attribute("ID") == NULL){
+		throw MissingItem("ID", MissingID("sphere") );
+	}
+
 	if(node.child("set_frame") == NULL){
 		throw MissingItem("set_frame",
 		"A sphere requires the 'set_frame' statement!");
@@ -288,7 +304,8 @@ CartesianFrame* WorldFactory::produceSphere
 		throw MissingItem("set_sphere",
 		"A sphere requires the 'set_sphere' statement!");
 	}
-		
+	
+	uint 		ID = std::stoi( node.attribute("ID").value() );
 	std::string name;
 	Vector3D 	position;
 	Rotation3D 	rotation;
@@ -306,6 +323,7 @@ CartesianFrame* WorldFactory::produceSphere
 	set_surface(reflection_cefficient,colour,node);
 	set_sphere(radius,node);
 			
+	new_sphere->set_ID(ID);
 	new_sphere->set_frame(name,position,rotation);
 	new_sphere->set_surface_properties(&reflection_cefficient,&colour);
 	new_sphere->set_sphere(radius);
@@ -314,8 +332,12 @@ CartesianFrame* WorldFactory::produceSphere
 	return new_sphere;
 }
 //=================================
-CartesianFrame* WorldFactory::produceCylinder
-(CartesianFrame* mother,const pugi::xml_node node){
+CartesianFrame* WorldFactory::produceCylinder(
+	CartesianFrame* mother,const pugi::xml_node node
+){
+	if(node.attribute("ID") == NULL){
+		throw MissingItem("ID", MissingID("cylinder") );
+	}
 
 	if(node.child("set_frame") == NULL){
 		throw MissingItem("set_frame",
@@ -333,6 +355,8 @@ CartesianFrame* WorldFactory::produceCylinder
 	}
 
 	// frame related
+	uint 		ID = std::stoi( node.attribute("ID").value() );
+
 	std::string name;
 	Vector3D 	position;
 	Rotation3D 	rotation;
@@ -354,22 +378,25 @@ CartesianFrame* WorldFactory::produceCylinder
 	
 	Cylinder *new_Cylinder;
 	new_Cylinder = new Cylinder;	
-			
+
+	new_Cylinder->set_ID(ID);		
 	new_Cylinder->set_frame(name,position,rotation);
 	new_Cylinder->set_surface_properties(
-						&reflection_cefficient,&colour);
+		&reflection_cefficient,&colour
+	);
 	new_Cylinder->set_cylinder(
-						cylinder_radius,
-						start_of_cylinder, 
-						end_of_cylinder);
+		cylinder_radius,
+		start_of_cylinder, 
+		end_of_cylinder
+	);
 	
 	mother->set_mother_and_child(new_Cylinder);
 	return new_Cylinder;
 }
 //=================================
-CartesianFrame* WorldFactory::produceFactReflector
-(CartesianFrame* mother,const pugi::xml_node node){
-
+CartesianFrame* WorldFactory::produceFactReflector(
+	CartesianFrame* mother,const pugi::xml_node node
+){
 	if(node.child("set_frame") == NULL){
 		throw MissingItem("set_frame",
 		"The FACT reflector requires the 'set_frame' statement!");
@@ -401,8 +428,12 @@ CartesianFrame* WorldFactory::produceFactReflector
 	return new_FactTelescope;
 }
 //=================================
-CartesianFrame* WorldFactory::produceDisc
-(CartesianFrame* mother,const pugi::xml_node node){
+CartesianFrame* WorldFactory::produceDisc(
+	CartesianFrame* mother,const pugi::xml_node node
+){
+	if(node.attribute("ID") == NULL){
+		throw MissingItem("ID", MissingID("disc") );
+	}
 
 	if(node.child("set_frame") == NULL){
 		throw MissingItem("set_frame",
@@ -419,9 +450,10 @@ CartesianFrame* WorldFactory::produceDisc
 		"A disc requires the 'set_disc' statement!");
 	}
 
+	uint 		ID = std::stoi( node.attribute("ID").value() );
 	std::string name;
-	Vector3D position;
-	Rotation3D rotation;
+	Vector3D 	position;
+	Rotation3D 	rotation;
 	
 	ReflectionProperties reflection_cefficient; 
 	ColourProperties colour;
@@ -435,7 +467,8 @@ CartesianFrame* WorldFactory::produceDisc
 	set_Disc(radius,node);
 	
 	Disc *new_Disc;
-	new_Disc = new Disc;			
+	new_Disc = new Disc;	
+	new_Disc->set_ID(ID);		
 	new_Disc->set_frame(name,position,rotation);
 	new_Disc->set_surface_properties(&reflection_cefficient,&colour);
 	new_Disc->set_Disc(radius);
@@ -444,9 +477,9 @@ CartesianFrame* WorldFactory::produceDisc
 	return new_Disc;
 }
 //=================================
-CartesianFrame* WorldFactory::produceTriangle
-(CartesianFrame* mother,const pugi::xml_node node){
-
+CartesianFrame* WorldFactory::produceTriangle(
+	CartesianFrame* mother,const pugi::xml_node node
+){
 	if(node.child("set_frame") == NULL){
 		throw MissingItem("set_frame",
 		"A triangle requires the 'set_frame' statement!");
@@ -490,8 +523,10 @@ CartesianFrame* WorldFactory::produceTriangle
 }
 //=================================
 bool WorldFactory::set_surface(
-ReflectionProperties &reflection_cefficient, ColourProperties &colour,
-const pugi::xml_node node){
+	ReflectionProperties &reflection_cefficient, 
+	ColourProperties &colour,
+	const pugi::xml_node node
+){
 	
 	if(node.child("set_surface").attribute("refl") == NULL){
 		throw MissingItem("refl",
@@ -524,11 +559,11 @@ const pugi::xml_node node){
 	
 	return true;
 }
-//=================================
+//=================================	
 bool WorldFactory::set_frame(
-std::string &name, Vector3D &position, Rotation3D &rotation,
-const pugi::xml_node node){
-	
+	std::string &name, Vector3D &position, Rotation3D &rotation,
+	const pugi::xml_node node
+){	
 	if(node.child("set_frame").attribute("name") == NULL){
 		throw MissingItem("name",
 		"set_frame requires the 'name' statement!");
@@ -574,9 +609,9 @@ const pugi::xml_node node){
 }
 //=================================
 bool WorldFactory::set_plane(
-double &min_x, double &max_x, double &min_y, double &max_y,
-const pugi::xml_node node){
-	
+	double &min_x, double &max_x, double &min_y, double &max_y,
+	const pugi::xml_node node
+){
 	if(node.child("set_plane").attribute("min_x") == NULL){
 		throw MissingItem("min_x",
 		"set_plane requires the 'min_x' statement!");
@@ -625,8 +660,8 @@ const pugi::xml_node node){
 }
 //=================================
 bool WorldFactory::set_sphere(
-double &radius,const pugi::xml_node node){
-
+	double &radius,const pugi::xml_node node
+){
 	if(node.child("set_sphere").attribute("radius") == NULL){
 		throw MissingItem("radius",
 		"set_sphere requires the 'radius' statement!");
@@ -649,10 +684,11 @@ double &radius,const pugi::xml_node node){
 }
 //=================================
 bool WorldFactory::set_Cylinder(
-double &cylinder_radius,
-Vector3D &start_of_cylinder,
-Vector3D &end_of_cylinder,
-const pugi::xml_node node){
+	double &cylinder_radius,
+	Vector3D &start_of_cylinder,
+	Vector3D &end_of_cylinder,
+	const pugi::xml_node node
+){
 
 	if(node.child("set_cylinder").attribute("radius") == NULL){
 		throw MissingItem("radius",
@@ -697,11 +733,17 @@ const pugi::xml_node node){
 }
 //=================================
 bool WorldFactory::set_fact_reflector(
-double &alpha,const pugi::xml_node node){
-
+	double &alpha,const pugi::xml_node node
+){
 	if(node.child("set_FACT_reflector").attribute("alpha") == NULL){
-		throw MissingItem("alpha",
-		"set_FACT_reflector requires the 'alpha' statement! Alpha=0 is a Davies-Cotton Reflector, alpha=1 is a paraboloid reflector. Alpha in between 0 and 1 is a mixture of both.");
+		
+		std::stringstream info;
+		info << "set_FACT_reflector requires the 'alpha' statement!";
+		info << " Alpha=0 is a Davies-Cotton Reflector, alpha=1 is ";
+		info << "a paraboloid reflector. Alpha in between 0 and 1 ";
+		info << "is a mixture of both.";
+
+		throw MissingItem( "alpha", info.str() );
 	}
 	
 	double FloatingNumber;
@@ -743,11 +785,11 @@ bool WorldFactory::set_Disc(double &radius,const pugi::xml_node node){
 }
 //=================================
 bool WorldFactory::set_Triangle(
-Vector3D &point_A,
-Vector3D &point_B,
-Vector3D &point_C,
-const pugi::xml_node node){
-
+	Vector3D &point_A,
+	Vector3D &point_B,
+	Vector3D &point_C,
+	const pugi::xml_node node
+){
 	if(node.child("set_triangle").attribute("A") == NULL){
 		throw MissingItem("A",
 		"set_triangle requires the 'A' statement!");
@@ -789,7 +831,8 @@ const pugi::xml_node node){
 }
 //=================================
 bool WorldFactory::check_name_for_multiple_usage(
-const CartesianFrame *entitie_in_world,std::string name){
+	const CartesianFrame *entitie_in_world,std::string name
+){
 	
 	if(
 	entitie_in_world->
@@ -823,6 +866,7 @@ const CartesianFrame *entitie_in_world,std::string name){
 }
 //=================================
 bool WorldFactory::parse3tuple(tuple3 &tuple,std::string text){
+	
 	std::string input_text = text;
 
 	std::string sx;
@@ -906,8 +950,8 @@ bool WorldFactory::parse3tuple(tuple3 &tuple,std::string text){
 }
 //=================================
 void WorldFactory::parseFloatingNumber(
-double &FloatingNumber,std::string text_to_parse){
-	
+	double &FloatingNumber,std::string text_to_parse
+){	
 	if(text_to_parse.compare("")==0){
 		throw SyntaxError
 		("float",text_to_parse,"The floating number string is empty!");
@@ -924,7 +968,7 @@ double &FloatingNumber,std::string text_to_parse){
 	}
 }
 //=================================
-CartesianFrame*  WorldFactory::get_pointer_to_world(){
+CartesianFrame* WorldFactory::get_pointer_to_world(){
 	
 	root_of_World->
 	post_initialize_me_and_all_my_children();
@@ -933,7 +977,5 @@ CartesianFrame*  WorldFactory::get_pointer_to_world(){
 	post_initialize_radius_of_sphere_enclosing_all_children();
 	
 	return root_of_World;
-	
 }
 //=================================
-//

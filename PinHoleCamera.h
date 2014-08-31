@@ -13,6 +13,7 @@ class GlobalSettings;
 #include <highgui.h>
 #include <opencv2/opencv.hpp>
 #include "CameraImage.h"
+//#include "SmartImage.h"
 // parallel computing
 #include <omp.h>
 
@@ -27,8 +28,9 @@ protected:
 	Vector3D SensorDirectionV;
 	double FieldOfView_in_Rad;
 	double dist_camera_base_2_principal_point;
-//======================================================================
 public:
+	CameraRay cam_send_ray(int Uu,int Vv);
+	//Ray Pixel2Ray( int u, int v );
 	//======================
 	void set_pin_hole_cam(double fov);
 	//======================
@@ -36,16 +38,14 @@ public:
 	//======================
 	void disp();
 	//======================
-	CameraRay cam_send_ray(int Uu,int Vv);
-	//======================
 	void cam_acquire_image_parallel(
-	CartesianFrame* world,
-	GlobalSettings* settings);
+		CartesianFrame* world,
+		GlobalSettings* settings);
 	//======================
 	void cam_acquire_stereo_anaglyph_image(
-	CartesianFrame* world,
-	GlobalSettings* settings,
-	double cmaera_offset_in_m);
+		CartesianFrame* world,
+		GlobalSettings* settings,
+		double cmaera_offset_in_m);
 	//======================
 };
 #endif // __PINHOLECAMERA_H_INCLUDED__

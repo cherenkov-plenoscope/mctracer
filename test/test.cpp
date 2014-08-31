@@ -2,6 +2,7 @@
 #include "testRotation3D.cpp"
 #include "testPhoton.cpp"
 #include "testWorldFactory.cpp"
+#include "testSmartImage.cpp"
 #include "gtest/gtest.h"
 
 int main(int argc, char **argv) {

@@ -216,6 +216,17 @@ void set_path(std::string &path,const pugi::xml_node node);
 void include_file(CartesianFrame* mother,const pugi::xml_node node);
 void frame_factory(
 	CartesianFrame* mother,const pugi::xml_node frame_node);
+std::string MissingID(std::string NameOfSurfaceEntity);
+/*void CheckForMissingChildAttribute(
+	std::string Item, 
+	std::string Attribute,
+	const pugi::xml_node &node
+);
+void CheckForMissingAttribute(
+	std::string Item, 
+	std::string Attribute,
+	const pugi::xml_node &node
+);*/
 //=================================
 void go_on_with_children_of_node(
 	CartesianFrame* mother,const pugi::xml_node node);
@@ -244,6 +255,7 @@ CartesianFrame* produceTriangle(
 bool parse3tuple(tuple3 &tuple,const std::string text);
 //=================================
 void parseFloatingNumber(double &FloatingNumber,std::string text_to_parse);
+//void parseIntegerNumber(long &IntegerNumber,std::string text_to_parse);
 //=================================
 bool set_frame(std::string &name,Vector3D &position,
 Rotation3D &rotation,const pugi::xml_node frame_node);
