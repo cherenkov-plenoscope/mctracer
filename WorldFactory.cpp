@@ -85,13 +85,18 @@ void WorldFactory::include_file(
 void WorldFactory::set_path(std::string &path,const pugi::xml_node node){
 	
 	if(node.attribute("path") == NULL){
-		throw MissingItem("path",
-		"include needs the 'path' statement to define the path to the xml file to be included!");
+
+		std::stringstream info;
+		info << "include needs the 'path' statement to define ";
+		info << "the path to the xml file to be included!";
+
+		throw MissingItem("path",info.str());
 	}
 	path = node.attribute("path").value();
 
 	if(prompt){
-		std::cout << "Include path = " << node.attribute("path").value() << "\n";
+		std::cout << "Include path = ";
+		std::cout << node.attribute("path").value() << "\n";
 	}		
 }
 //=================================
@@ -227,9 +232,9 @@ CartesianFrame* WorldFactory::produceCartesianFrame
 CartesianFrame* WorldFactory::producePlane(
 	CartesianFrame* mother,const pugi::xml_node node
 ){
-	if(node.attribute("ID") == NULL){
-		throw MissingItem("ID", MissingID("plane") );
-	}
+	//if(node.attribute("ID") == NULL){
+	//	throw MissingItem("ID", MissingID("plane") );
+	//}
 
 	if(node.child("set_frame") == NULL){
 		throw MissingItem("set_frame",
@@ -246,7 +251,7 @@ CartesianFrame* WorldFactory::producePlane(
 		"A plane requires the 'set_plane' statement!");
 	}	
 	
-	uint 		ID = std::stoi( node.attribute("ID").value() );
+	//uint 		ID = std::stoi( node.attribute("ID").value() );
 	std::string name;
 	Vector3D    position;
 	Rotation3D  rotation;
@@ -265,10 +270,13 @@ CartesianFrame* WorldFactory::producePlane(
 	new_plane = new Plane;
 	
 	set_frame(name,position,rotation,node);
+
+	check_name_for_multiple_usage(mother,name);
+
 	set_surface(reflection_cefficient,colour,node);
 	set_plane(min_x, max_x, min_y, max_y,node);
 	
-	new_plane->set_ID(ID);
+	//new_plane->set_ID(ID);
 	new_plane->set_frame(name,position,rotation);
 	new_plane->set_surface_properties(&reflection_cefficient,&colour);
 	new_plane->set_plane(min_x, max_x, min_y, max_y);
@@ -277,18 +285,18 @@ CartesianFrame* WorldFactory::producePlane(
 	return new_plane;
 }
 //=================================
-std::string WorldFactory::MissingID(std::string NameOfSurfaceEntity){
-	return 	"A " + NameOfSurfaceEntity + 
-	" is a 'SurfaceEntity' and therefore needs an unique ID " +
-	"to keep track of Photon Surface interactions.";
-}
+//std::string WorldFactory::MissingID(std::string NameOfSurfaceEntity){
+//	return 	"A " + NameOfSurfaceEntity + 
+//	" is a 'SurfaceEntity' and therefore needs an unique ID " +
+//	"to keep track of Photon Surface interactions.";
+//}
 //=================================
 CartesianFrame* WorldFactory::produceSphere(
 	CartesianFrame* mother,const pugi::xml_node node
 ){
-	if(node.attribute("ID") == NULL){
-		throw MissingItem("ID", MissingID("sphere") );
-	}
+	//if(node.attribute("ID") == NULL){
+	//	throw MissingItem("ID", MissingID("sphere") );
+	//}
 
 	if(node.child("set_frame") == NULL){
 		throw MissingItem("set_frame",
@@ -305,7 +313,7 @@ CartesianFrame* WorldFactory::produceSphere(
 		"A sphere requires the 'set_sphere' statement!");
 	}
 	
-	uint 		ID = std::stoi( node.attribute("ID").value() );
+	//uint 		ID = std::stoi( node.attribute("ID").value() );
 	std::string name;
 	Vector3D 	position;
 	Rotation3D 	rotation;
@@ -320,10 +328,13 @@ CartesianFrame* WorldFactory::produceSphere(
 	new_sphere = new Sphere;
 	
 	set_frame(name,position,rotation,node);
+
+	check_name_for_multiple_usage(mother,name);
+
 	set_surface(reflection_cefficient,colour,node);
 	set_sphere(radius,node);
 			
-	new_sphere->set_ID(ID);
+	//new_sphere->set_ID(ID);
 	new_sphere->set_frame(name,position,rotation);
 	new_sphere->set_surface_properties(&reflection_cefficient,&colour);
 	new_sphere->set_sphere(radius);
@@ -335,9 +346,9 @@ CartesianFrame* WorldFactory::produceSphere(
 CartesianFrame* WorldFactory::produceCylinder(
 	CartesianFrame* mother,const pugi::xml_node node
 ){
-	if(node.attribute("ID") == NULL){
-		throw MissingItem("ID", MissingID("cylinder") );
-	}
+	//if(node.attribute("ID") == NULL){
+	//	throw MissingItem("ID", MissingID("cylinder") );
+	//}
 
 	if(node.child("set_frame") == NULL){
 		throw MissingItem("set_frame",
@@ -355,7 +366,7 @@ CartesianFrame* WorldFactory::produceCylinder(
 	}
 
 	// frame related
-	uint 		ID = std::stoi( node.attribute("ID").value() );
+	//uint 		ID = std::stoi( node.attribute("ID").value() );
 
 	std::string name;
 	Vector3D 	position;
@@ -373,13 +384,16 @@ CartesianFrame* WorldFactory::produceCylinder(
 	// collect all information for cylinder
 	
 	set_frame(name,position,rotation,node);
+
+	check_name_for_multiple_usage(mother,name);
+
 	set_surface(reflection_cefficient,colour,node);
 	set_Cylinder(cylinder_radius,start_of_cylinder,end_of_cylinder,node);
 	
 	Cylinder *new_Cylinder;
 	new_Cylinder = new Cylinder;	
 
-	new_Cylinder->set_ID(ID);		
+	//new_Cylinder->set_ID(ID);		
 	new_Cylinder->set_frame(name,position,rotation);
 	new_Cylinder->set_surface_properties(
 		&reflection_cefficient,&colour
@@ -417,6 +431,9 @@ CartesianFrame* WorldFactory::produceFactReflector(
 					
 	// collect all information for Fact
 	set_frame(name,position,rotation,node);
+
+	check_name_for_multiple_usage(mother,name);
+
 	set_fact_reflector(alpha,node);
 	
 	FactTelescope *new_FactTelescope;
@@ -431,9 +448,9 @@ CartesianFrame* WorldFactory::produceFactReflector(
 CartesianFrame* WorldFactory::produceDisc(
 	CartesianFrame* mother,const pugi::xml_node node
 ){
-	if(node.attribute("ID") == NULL){
-		throw MissingItem("ID", MissingID("disc") );
-	}
+	//if(node.attribute("ID") == NULL){
+	//	throw MissingItem("ID", MissingID("disc") );
+	//}
 
 	if(node.child("set_frame") == NULL){
 		throw MissingItem("set_frame",
@@ -450,7 +467,7 @@ CartesianFrame* WorldFactory::produceDisc(
 		"A disc requires the 'set_disc' statement!");
 	}
 
-	uint 		ID = std::stoi( node.attribute("ID").value() );
+	//uint 		ID = std::stoi( node.attribute("ID").value() );
 	std::string name;
 	Vector3D 	position;
 	Rotation3D 	rotation;
@@ -463,12 +480,15 @@ CartesianFrame* WorldFactory::produceDisc(
 	// set disc
 	
 	set_frame(name,position,rotation,node);
+
+	check_name_for_multiple_usage(mother,name);
+
 	set_surface(reflection_cefficient,colour,node);
 	set_Disc(radius,node);
 	
 	Disc *new_Disc;
 	new_Disc = new Disc;	
-	new_Disc->set_ID(ID);		
+	//new_Disc->set_ID(ID);		
 	new_Disc->set_frame(name,position,rotation);
 	new_Disc->set_surface_properties(&reflection_cefficient,&colour);
 	new_Disc->set_Disc(radius);
@@ -508,6 +528,9 @@ CartesianFrame* WorldFactory::produceTriangle(
 	// set triangle
 	
 	set_frame(name,position,rotation,node);
+
+	check_name_for_multiple_usage(mother,name);
+
 	set_surface(reflection_cefficient,colour,node);
 	set_Triangle(point_A,point_B,point_C,node);
 	
@@ -529,8 +552,12 @@ bool WorldFactory::set_surface(
 ){
 	
 	if(node.child("set_surface").attribute("refl") == NULL){
-		throw MissingItem("refl",
-		"set_surface requires the 'refl' statement! 'refl' is short for reflection.");
+		
+		std::stringstream info;
+		info << "set_surface requires the 'refl' statement!";
+		info << " 'refl' is short for reflection.";
+
+		throw MissingItem("refl",info.str());
 	}
 	if(node.child("set_surface").attribute("colour") == NULL){
 		throw MissingItem("colour",
@@ -579,7 +606,7 @@ bool WorldFactory::set_frame(
 	
 	name = node.child("set_frame").attribute("name").value();
 
-	check_name_for_multiple_usage(root_of_World,name);
+	//check_name_for_multiple_usage(root_of_World,name);
 	
 	tuple3 VecTuple; 
 	// check position
@@ -830,42 +857,26 @@ bool WorldFactory::set_Triangle(
 	return true;
 }
 //=================================
-bool WorldFactory::check_name_for_multiple_usage(
-	const CartesianFrame *entitie_in_world,std::string name
-){
-	
-	if(
-	entitie_in_world->
-	get_pointer_to_name_of_frame()->
-	compare(name) == 0){
-		// this name is already in use!
-
-		if(prompt){
-			std::stringstream out;
-			out<<"check_name_for_multiple_usage() ";
-			out<<"the name to check >"<<name<<"< is already in use ";
-			out<<"by frame >";
-			out<<*entitie_in_world->get_pointer_to_name_of_frame()<<"<";
-			cout << out.str() << endl;
-		}
-
-		throw MultipleUsageOfName(name);
-		return false;
+void WorldFactory::check_name_for_multiple_usage(
+	const CartesianFrame *mother,
+	std::string name_of_additional_child
+)const{
+	if( 
+		mother->get_pointer_to_specific_child(name_of_additional_child)
+		 == NULL
+	){
+		// This name is not given to child yet, so it can be used
+		return;
 	}else{
-		for(int cild_iterator = 0;
-		cild_iterator<entitie_in_world->get_number_of_children();
-		cild_iterator++)
-		{
-			return check_name_for_multiple_usage(
-			entitie_in_world->get_pointer_to_child(cild_iterator),
-			name
-			);
-		}
-		return true;
+		// There is already a child in the mother frame wit this name.
+		// There must not be a second one!
+		throw MultipleUsageOfName( 
+			mother->get_path() + "/" + name_of_additional_child
+		);
 	}
 }
 //=================================
-bool WorldFactory::parse3tuple(tuple3 &tuple,std::string text){
+bool WorldFactory::parse3tuple(tuple3 &tuple,std::string text)const{
 	
 	std::string input_text = text;
 
@@ -875,8 +886,7 @@ bool WorldFactory::parse3tuple(tuple3 &tuple,std::string text){
 	
 	std::size_t pos = text.find("[");
 	if(pos != std::string::npos){
-		text = text.substr(pos+1);
-		//std::cout<<"vector construct found >[< the rest is >"<<text<<"<"<<std::endl;	
+		text = text.substr(pos+1);	
 	}else{
 		throw SyntaxError(
 		"[float,float,float]",
@@ -887,7 +897,6 @@ bool WorldFactory::parse3tuple(tuple3 &tuple,std::string text){
 	pos = text.find(",");
 	if(pos != std::string::npos){
 		sx = text.substr(0,pos);
-		//std::cout<<"vector construct found sx >"<<sx<<"<"<<std::endl;	
 		text = text.substr(pos+1);
 	}else{
 		throw SyntaxError(
@@ -899,7 +908,6 @@ bool WorldFactory::parse3tuple(tuple3 &tuple,std::string text){
 	pos = text.find(",");
 	if(pos != std::string::npos){
 		sy = text.substr(0,pos);
-		//std::cout<<"vector construct found sy >"<<sx<<"<"<<std::endl;	
 		text = text.substr(pos+1);
 	}else{
 		throw SyntaxError(
@@ -911,7 +919,6 @@ bool WorldFactory::parse3tuple(tuple3 &tuple,std::string text){
 	pos = text.find("]");
 	if(pos != std::string::npos){
 		sz = text.substr(0,pos);
-		//std::cout<<"vector construct found sz >"<<sx<<"<"<<std::endl;	
 	}else{
 		throw SyntaxError(
 		"[float,float,float]",
@@ -951,7 +958,7 @@ bool WorldFactory::parse3tuple(tuple3 &tuple,std::string text){
 //=================================
 void WorldFactory::parseFloatingNumber(
 	double &FloatingNumber,std::string text_to_parse
-){	
+)const{	
 	if(text_to_parse.compare("")==0){
 		throw SyntaxError
 		("float",text_to_parse,"The floating number string is empty!");

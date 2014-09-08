@@ -183,108 +183,109 @@ private:
 };
 //==========================
 class MultipleUsageOfName : public WorldFactoryException{
+	std::string PathOfFrame;
 public:
-MultipleUsageOfName(std::string new_name_of_name_in_multiple_usage){
-	name_of_name_in_multiple_usage = new_name_of_name_in_multiple_usage;
+MultipleUsageOfName(std::string newPathOfFrame){
+	PathOfFrame = newPathOfFrame;
 }
 void ReportException()const{ 
 	ExceptionPrompt();
 	
 	std::stringstream out;	
 	out.str("");
-	out << "The name ";
-	out << "'"<<name_of_name_in_multiple_usage<<"' ";
-	out << "is already in use! It must not be used twice!";
+	out << "The frame: ";
+	out << PathOfFrame << " ";
+	out << "is already in use! It must not be used twice per mother frame!";
 	std::cout << out.str() << endl;
 }
+std::string GetPath(){return PathOfFrame;}
 private:
 	std::string name_of_name_in_multiple_usage;
 };
-//======================================================================
+//==============================================================================
 class WorldFactory   {
 	
 	CartesianFrame* root_of_World;
 	std::string absolute_path;
 	bool prompt;
 public:
-WorldFactory();
-void load_file(std::string path);
-CartesianFrame* get_pointer_to_world();
+	WorldFactory();
+	void load_file(std::string path);
+	CartesianFrame* get_pointer_to_world();
 private:
-void load_file(CartesianFrame* mother,std::string path,std::string filename);
-void set_path(std::string &path,const pugi::xml_node node);
-void include_file(CartesianFrame* mother,const pugi::xml_node node);
-void frame_factory(
+	void load_file(
+		CartesianFrame* mother,
+		std::string path,
+		std::string filename
+	);
+
+	void set_path(std::string &path,const pugi::xml_node node);
+
+	void include_file(CartesianFrame* mother,const pugi::xml_node node);
+
+	void frame_factory(CartesianFrame* mother,const pugi::xml_node frame_node);
+
+	void go_on_with_children_of_node(
+	CartesianFrame* mother,const pugi::xml_node node);
+
+	CartesianFrame* produceCartesianFrame(
 	CartesianFrame* mother,const pugi::xml_node frame_node);
-std::string MissingID(std::string NameOfSurfaceEntity);
-/*void CheckForMissingChildAttribute(
-	std::string Item, 
-	std::string Attribute,
-	const pugi::xml_node &node
-);
-void CheckForMissingAttribute(
-	std::string Item, 
-	std::string Attribute,
-	const pugi::xml_node &node
-);*/
-//=================================
-void go_on_with_children_of_node(
-	CartesianFrame* mother,const pugi::xml_node node);
-//=================================
-CartesianFrame* produceCartesianFrame(
+
+	CartesianFrame* producePlane(
 	CartesianFrame* mother,const pugi::xml_node frame_node);
-//=================================
-CartesianFrame* producePlane(
-	CartesianFrame* mother,const pugi::xml_node frame_node);
-//=================================
-CartesianFrame* produceSphere(
+
+	CartesianFrame* produceSphere(
 	CartesianFrame* mother,const pugi::xml_node node);
-//=================================
-CartesianFrame* produceCylinder(
+
+	CartesianFrame* produceCylinder(
 	CartesianFrame* mother,const pugi::xml_node node);
-//=================================
-CartesianFrame* produceFactReflector(
+
+	CartesianFrame* produceFactReflector(
 	CartesianFrame* mother,const pugi::xml_node node);
-//=================================
-CartesianFrame* produceDisc(
+
+	CartesianFrame* produceDisc(
 	CartesianFrame* mother,const pugi::xml_node node);
-//=================================
-CartesianFrame* produceTriangle(
+
+	CartesianFrame* produceTriangle(
 	CartesianFrame* mother,const pugi::xml_node node);
-//=================================
-bool parse3tuple(tuple3 &tuple,const std::string text);
-//=================================
-void parseFloatingNumber(double &FloatingNumber,std::string text_to_parse);
-//void parseIntegerNumber(long &IntegerNumber,std::string text_to_parse);
-//=================================
-bool set_frame(std::string &name,Vector3D &position,
-Rotation3D &rotation,const pugi::xml_node frame_node);
-//=================================
-bool set_surface(ReflectionProperties &reflection_cefficient,
-ColourProperties &colour,const pugi::xml_node node);
-//=================================
-bool set_plane(
-double &min_x, double &max_x, double &min_y, double &max_y,
-const pugi::xml_node node);
-//=================================
-bool set_sphere(double &radius,const pugi::xml_node node);
-//=================================
-bool set_Cylinder(double &cylinder_radius,Vector3D &start_of_cylinder,
-Vector3D &end_of_cylinder,const pugi::xml_node node);
-//=================================
-bool set_fact_reflector(double &alpha,const pugi::xml_node node);
-//=================================
-bool set_Disc(double &radius,const pugi::xml_node node);
-//=================================
-bool set_Triangle(
-Vector3D &point_A,
-Vector3D &point_B,
-Vector3D &point_C,
-const pugi::xml_node node);
-//=================================
-bool check_name_for_multiple_usage(const 
-CartesianFrame *entitie_in_world,std::string name);
-//=================================
+
+	bool parse3tuple(tuple3 &tuple,const std::string text)const;
+
+	void parseFloatingNumber(
+		double &FloatingNumber,
+		std::string text_to_parse
+	)const;
+
+	bool set_frame(std::string &name,Vector3D &position,
+	Rotation3D &rotation,const pugi::xml_node frame_node);
+
+	bool set_surface(ReflectionProperties &reflection_cefficient,
+	ColourProperties &colour,const pugi::xml_node node);
+
+	bool set_plane(
+	double &min_x, double &max_x, double &min_y, double &max_y,
+	const pugi::xml_node node);
+
+	bool set_sphere(double &radius,const pugi::xml_node node);
+
+	bool set_Cylinder(double &cylinder_radius,Vector3D &start_of_cylinder,
+	Vector3D &end_of_cylinder,const pugi::xml_node node);
+
+	bool set_fact_reflector(double &alpha,const pugi::xml_node node);
+
+	bool set_Disc(double &radius,const pugi::xml_node node);
+
+	bool set_Triangle(
+		Vector3D &point_A,
+		Vector3D &point_B,
+		Vector3D &point_C,
+		const pugi::xml_node node
+	);
+
+	void check_name_for_multiple_usage(
+		const CartesianFrame *mother,
+		std::string name_of_additional_child
+	)const;
 };
 
 #endif // __WORLDFACTORY_H_INCLUDED__ 

@@ -452,31 +452,17 @@ void FreeOrbitCamera::DispImageInfo(int x, int y){
 	out << "| Distance to first intersection: ";
 	out << ClosestIntersection->get_intersection_distance() << " [m]\n";
 	out << "|\n";
-	out << "| ID of Object: ";
-	out << 	ClosestIntersection->get_pointer_to_intersecting_object()->
-			get_ID() << "\n";
-	out << "|\n";
-	out << "| Name of Object:\n";
-	out << "|  " << *ClosestIntersection->
+	//out << "| ID of Object: ";
+	//out << 	ClosestIntersection->get_pointer_to_intersecting_object()->
+	//		get_ID() << "\n";
+	out << "| Name of Object: " << *ClosestIntersection->
 					get_pointer_to_intersecting_object()->
 					get_pointer_to_name_of_frame() << "\n";
 
-	const CartesianFrame *FrameIterator = ClosestIntersection->
-			get_pointer_to_intersecting_object()->
-			get_pointer_to_mother_frame();
-
-	uint level = 0;
-	while( FrameIterator != NULL ){
-		level++;
-		out << "|";
-		for(uint i=0;i<level;i++){ out << "  "; }
-		out << "> ";	
-		out << *FrameIterator->get_pointer_to_name_of_frame();
-		FrameIterator = FrameIterator->get_pointer_to_mother_frame();
-		
-		out << "\n";
-  	}
-
+	out << "| Path of Object: " << ClosestIntersection->
+					get_pointer_to_intersecting_object()->
+					get_path() << "\n";
+					
 	out << "|\n";
 	out << "| In frame of intersecting object___________________________\n";
 	out << "| |\n";

@@ -38,7 +38,6 @@ FreeOrbitCamera.cpp
 Triangle.cpp
 Plane.cpp 
 Disc.cpp 
-SensorDisc.cpp 
 Sphere.cpp
 Cylinder.cpp
 OpticalMirror.cpp

@@ -19,16 +19,17 @@ class ReflectionProperties;
 #include "ColourProperties.h"
 #include "TracerException.h"
 #include "OctTreeCube.h"
+#include "Functions.h"
 
 //======================================================================
 class CartesianFrame {
 protected:
     std::string name_of_frame;
-    uint ID;
+    //uint ID;
 
     Vector3D 	position_relative_to_mother; 
     Rotation3D 	rotation_relative_to_mother;
-    double 	radius_of_sphere_enclosing_all_children; 
+    double 	    radius_of_sphere_enclosing_all_children; 
     Vector3D 	pos_in_world;
     
     HomoTrafo3D T_frame2mother;
@@ -66,15 +67,18 @@ const HomoTrafo3D* get_pointer_to_T_world2frame() const;
 const HomoTrafo3D* get_pointer_to_T_frame2world() const;
 const CartesianFrame* get_pointer_to_mother_frame() const;
 const CartesianFrame* get_pointer_to_child(const int child_position_in_list)const;
+const CartesianFrame* get_pointer_to_specific_frame( std::string path )const;
+const CartesianFrame* get_pointer_to_specific_child( std::string specific_name )const;
+std::string get_path()const;
 const int get_number_of_children()const;
-const uint get_ID() const{ return ID; };
+//const uint get_ID() const{ return ID; };
 std::string get_frame_string()const;
 std::string get_frame_prompt_including_children()const;
 //======================================================================
 //  SET ////////////////////////////////////////////////////////////////
 //======================================================================
 void set_frame(const std::string new_name,const Vector3D npos,const Rotation3D nrot);
-void set_ID( uint newID ){ ID = newID; };
+//void set_ID( uint newID ){ ID = newID; };
 void set_mother_and_child(CartesianFrame *new_child);
 const OctTreeCube* get_OctTree()const;
 //======================================================================

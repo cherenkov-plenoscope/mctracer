@@ -160,9 +160,26 @@ try{
 
   file2world.load_file(xml_file);
 
-  CartesianFrame *Mworld = file2world.get_pointer_to_world();
+  //CartesianFrame *Mworld = file2world.get_pointer_to_world();
 
   }catch(TracerException& error){
+    error.ReportException();
+  }
+}
+//------------------------------------------------------------------------------
+TEST_F(WorldFactoryTest, MultipleUsageOfName) {
+try{
+
+  WorldFactory file2world;
+
+  string xml_file = "./test_scenery/multiple_usage_of_name_klaus.xml";
+
+  file2world.load_file(xml_file);
+
+  }catch(MultipleUsageOfName& error){
+    EXPECT_EQ( error.GetPath() , "/house/chimney/klaus" );
+  }
+  catch(TracerException& error){
     error.ReportException();
   }
 }
