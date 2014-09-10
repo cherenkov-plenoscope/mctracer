@@ -8,6 +8,7 @@ mctracer is short for Monte Carlo Ray traceing.
 - SWIG for python rapping
 - cmake
 - make
+- gcc >= 4.7 for C++11 support
 
 ## run mctracer
 
