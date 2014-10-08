@@ -32,7 +32,7 @@ sudo mv libg* /usr/lib/
 #!bash
 mkdir build
 cd build
-cmake ..
+cmake ../mctracer
 make
 
 ```
