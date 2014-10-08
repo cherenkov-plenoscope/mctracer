@@ -16,6 +16,7 @@ one needs to build it first. See this thread on askubuntu
 for details:
 http://askubuntu.com/questions/145887/why-no-library-files-installed-for-google-test
 ```
+#!bash
 cd /usr/src/gtest
 sudo cmake .
 sudo make
@@ -36,5 +37,11 @@ make
 
 ```
 ## run mctracer
+```
+#!bash
+cd mctracer/scenery
+../../build/mctracer
+
+```
 
 ## run Unit Tests
