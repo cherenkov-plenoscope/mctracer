@@ -15,8 +15,16 @@ gtest is a header only library, but in order to use it
 one needs to build it first. See this thread on askubuntu
 for details:
 http://askubuntu.com/questions/145887/why-no-library-files-installed-for-google-test
+```
+cd /usr/src/gtest
+sudo cmake .
+sudo make
+sudo mv libg* /usr/lib/
+```
+
 
 * swig
+* python-dev
 
 ### compile:
 ```
