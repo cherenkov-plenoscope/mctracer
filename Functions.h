@@ -25,7 +25,6 @@ void CutOutFirstToken(
 	const std::string delimiter 
 );
 void ClearScreen();
-
 #endif // __FUNCTIONS_H_INCLUDED__
 
 

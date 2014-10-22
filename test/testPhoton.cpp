@@ -7,7 +7,8 @@
 #include "../SurfaceEntity.h"
 #include "../Plane.h"
 #include "../FreeOrbitCamera.h"
-//#include "../ListOfInteractions.h"
+#include "../PseRanNumGen.h"
+#include "../ListOfPropagations.h"
 
 using namespace std;
 
@@ -40,7 +41,7 @@ class PhotonTest : public ::testing::Test {
 
   // Objects declared here can be used by all tests in the test case for Foo.
 };
-//----------------------------------------------------------------------
+//------------------------------------------------------------------------------
 TEST_F(PhotonTest, ConstructorAndGetter) {
 
   Vector3D support(0.0,0.0,0.0);
@@ -74,8 +75,8 @@ TEST_F(PhotonTest, ConstructorAndGetter) {
     G.get_string() 
   );
 }
-//----------------------------------------------------------------------
-TEST_F(PhotonTest, Propagation){
+//------------------------------------------------------------------------------
+TEST_F(PhotonTest, PropagationSimpleGeometry){
 
   GlobalSettings setup;
 
@@ -95,7 +96,7 @@ TEST_F(PhotonTest, Propagation){
   pos.set(0.0,0.0,0.0);
   rot.set(0.0,0.0,0.0);
   
-  refl.SetReflectionCoefficient(0.7);
+  refl.SetReflectionCoefficient(1.0);
   colo.set_colour_0to255(200,128,128);
 
   //------------mirror 1----------------
@@ -134,17 +135,123 @@ TEST_F(PhotonTest, Propagation){
   Vector3D direction(0.0,0.0,1.0);
   double wavelength = 433e-9;
   
+  PseRanNumGen dice;
+
   for(int i=0; i<1e2; i++)
   {
 
     ListOfInteractions history;
     Photon P(Support,direction,wavelength);
 
-    P.propagate(&world,&history,&setup);
+    P.propagate(&world,&history,&setup,&dice);
 
     //history.show();
     EXPECT_EQ(number_of_bounces*1.0-0.5, history.get_accumulative_distance() );
     EXPECT_EQ(number_of_bounces,history.Interactions.size());
   }
+}
+//------------------------------------------------------------------------------
+TEST_F(PhotonTest, Reflections){
+/* This test is about the propagation process  
+                                 \ mirror pos(0,0,0)
+    Light Source ->------>------>-\      
+    pos(-2,0,0)                   |\
+    dir(+1,0,0)                   |
+                                  |
+                                  |
+                                  |
+                             _____\/_____
+    o-------------> +X       absorber pos(0,2,0)
+    | coordinate frame
+    |
+    |
+    |
+    |
+    \/ +Y
+
+*/                              
+  GlobalSettings setup;
+
+  Vector3D    pos(0,0,0);
+  Rotation3D  rot(0,0,0);
+
+  // create a test setup with two mirrors bouncing the photon
+  CartesianFrame world("world",pos,rot);
+
+  CartesianFrame optical_table("optical table",pos,rot);
+   
+  ColourProperties colo;
+  pos.set(0.0,0.0,0.0);
+  rot.set(0.0,0.0,0.0);
+  
+  //------------mirror----------------
+  ReflectionProperties  mirror_reflection;
+  mirror_reflection.
+  SetReflectionCoefficient("./test_scenery/Function1D/function1D_complete.xml"); 
+  pos.set(0.0,0.0,0.0);
+  //90Deg in Y and 45DEG in Z
+  rot.set(0.0,Deg2Rad(90.0),Deg2Rad(45.0));
+  colo.set_colour_0to255(200,64,64);
+
+  Plane mirror;
+  mirror.set_frame("mirror",pos,rot);
+  mirror.set_surface_properties(&mirror_reflection,&colo);
+  mirror.set_plane(-.5,.5,-.5,.5);
+  
+  //------------absorber----------------
+  ReflectionProperties  absorber_reflection;
+  absorber_reflection.SetReflectionCoefficient(0.0);
+  pos.set(0.0,+2.0,0.0);
+  rot.set(Deg2Rad(90.0),0.0,0.0);
+  colo.set_colour_0to255(50,50,50);
+  Plane absorber;
+  absorber.set_frame("absorber",pos,rot);
+  absorber.set_surface_properties(&absorber_reflection,&colo);
+  absorber.set_plane(-.5,.5,-.5,.5);
+
+  //----------declare relationships------------
+  optical_table.set_mother_and_child(&mirror);
+  optical_table.set_mother_and_child(&absorber);
+
+  world.set_mother_and_child(&optical_table);
+
+  //---post initialize the world to calculate all bounding spheres---
+  world.post_initialize_me_and_all_my_children();
+
+  //----------free orbit-----------------------
+  
+  //FreeOrbitCamera free(&world,&setup);
+  //free.start_free_orbit();
+  
+  //-----------send Photon----------------------
+  // the photon is starting in between the to mirrors
+  // traveling to the upper mirror
+  Vector3D Support(-2.0,0.0,0.0);
+  Vector3D direction(1.0,0.0,0.0);
+  
+  PseRanNumGen dice;
+
+  ListOfPropagations LoP("my_test_propagation_list");
+
+  for(int i=1; i<=1e7; i++)
+  {
+    // wavelength form 1nm to 1000nm
+    double wavelength = double(i)*1e-2*1e-9;
+
+    Photon *P;
+    P = new Photon(Support,direction,wavelength);
+    LoP.push_back(P);
+
+    //ListOfInteractions history;
+    //Photon P(Support,direction,wavelength);
+
+    //P.propagate(&world,&history,&setup,&dice);
+
+    //history.show();
+    //EXPECT_EQ(number_of_bounces*1.0-0.5, history.get_accumulative_distance() );
+    //EXPECT_EQ(number_of_bounces,history.Interactions.size());
+  }
+
+  LoP.propagate(&world,&setup);
   
 }

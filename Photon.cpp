@@ -76,12 +76,20 @@ const Photon& photon_to_be_displayed){
 void Photon::propagate(
 	const CartesianFrame* world, 
 	ListOfInteractions* history,
-	const GlobalSettings* settings)
-{
+	const GlobalSettings* settings,
+	PseRanNumGen* dice
+){
 	int interaction_count = 0;
 	const CartesianFrame* object_reflected_from = NULL;
 
-	propagate(world,history,interaction_count,object_reflected_from,settings);
+	propagate(
+		world,
+		history,
+		interaction_count,
+		object_reflected_from,
+		settings,
+		dice
+	);
 
 }
 //======================================================================
@@ -90,8 +98,9 @@ void Photon::propagate(
 	ListOfInteractions* history,
 	int interaction_count,
 	const CartesianFrame* object_reflected_from,
-	const GlobalSettings* settings)
-{
+	const GlobalSettings* settings,
+	PseRanNumGen* dice
+){
 
 	//std::cout << interaction_count <<endl;
 	//==================================================================
@@ -134,9 +143,7 @@ void Photon::propagate(
 		// ListOfIntersectingObjects
 		//==============================================================
 
-		ClosestIntersection = 
-		calculate_closest_intersection(
-			ClosestIntersection,
+		ClosestIntersection = calculate_closest_intersection(
 			&VecOfPtr2Intersections
 		);
 
@@ -146,9 +153,9 @@ void Photon::propagate(
 		//==============================================================
 		if(
 
-		ClosestIntersection
-			->get_pointer_to_intersecting_object()
-			->get_hit_reflection_flag()
+		ClosestIntersection->
+		get_pointer_to_intersecting_object()->
+		get_hit_reflection_flag()
 
 		&& 
 
@@ -157,36 +164,57 @@ void Photon::propagate(
 
 		){	
 			//==========================================================
-			// the object ClosestIntersection is pointing to
-			// does reflect, so we increase the reflection counter
+			// The object ClosestIntersection is pointing to
+			// does reflect and there are still reflections left to be 
+			// performed. We now check whether the photon survives 
+			// this reflection or it gets absorbed here.
 			//==========================================================
-			
-			interaction_count++;
-			
-			//==========================================================
-			// calculate the ray reflected by the object
-			// ClosestIntersection is pointing to relativ to
-			// the world coordinate system
-			//==========================================================
-			Photon ReflectedPhoton(wavelength);
 
-			calculate_reflected_ray(
-				ClosestIntersection,
-				&ReflectedPhoton
-			);
-			
-			if( !settings->StoreOnlyLastIntersection() ){
+			if(	
+
+			dice->uniform() 
+			<=
+			ClosestIntersection->
+			get_pointer_to_intersecting_object()->
+			get_ptr2_reflection()->
+			ReflectionCoefficient(wavelength)
+
+			){
+				// reflection takes place
+
+				interaction_count++;
+				
+				//==========================================================
+				// calculate the ray reflected by the object
+				// ClosestIntersection is pointing to relativ to
+				// the world coordinate system
+				//==========================================================
+				Photon ReflectedPhoton(wavelength);
+
+				calculate_reflected_ray(
+					ClosestIntersection,
+					&ReflectedPhoton
+				);
+				
+				if( !settings->StoreOnlyLastIntersection() ){
+					history->Interactions.push_back(ClosestIntersection);
+				}
+				
+				ReflectedPhoton.propagate(
+					world,
+					history,
+					interaction_count,
+					ClosestIntersection->
+					get_pointer_to_intersecting_object(),
+					settings,
+					dice
+				);
+
+			}else{
+				// There is no reflection at all. The Photon is absorbed completley
+				// store final intersection
 				history->Interactions.push_back(ClosestIntersection);
 			}
-			
-			ReflectedPhoton.propagate(
-				world,
-				history,
-				interaction_count,
-				ClosestIntersection->
-				get_pointer_to_intersecting_object(),
-				settings
-			);
 
 		}else{
 			// There is no reflection at all. The Photon is absorbed completley

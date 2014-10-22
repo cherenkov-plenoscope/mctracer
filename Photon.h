@@ -6,6 +6,7 @@
 //=================================
 // forward declared dependencies
 class Intersection;
+//class PseRanNumGen;
 //=================================
 // included dependencies
 #include "Ray.h"
@@ -42,14 +43,16 @@ public:
 	void propagate(
 		const CartesianFrame* world, 
 		ListOfInteractions* history,
-		const GlobalSettings* settings
+		const GlobalSettings* settings,
+		PseRanNumGen* dice
 	);
 	void propagate(	
 		const CartesianFrame* world, 
 		ListOfInteractions* history,
 		int interaction_count,
 		const CartesianFrame* object_reflected_from,
-		const GlobalSettings* settings
+		const GlobalSettings* settings,
+		PseRanNumGen* dice
 	);
 //=================================
 double get_wavelength()const;

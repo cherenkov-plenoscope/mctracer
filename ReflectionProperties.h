@@ -11,22 +11,29 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <vector>
+#include <utility>
+#include "Function1D.h"
+#include "TracerException.h"
+
 //=======================================================================
 class ReflectionProperties {
 	// this class stores reflection information of an object
 private:	
-	bool  reflection_flag;
-	double reflection_coefficient;
+	bool  reflection_flag = false;
+	double simple_reflection_coefficient = 0.0;
+
+	bool reflection_function_was_set = false;
+	Function1D reflection_function;
 public:
 //======================================================================
-	ReflectionProperties();
-//======================================================================
 	void SetReflectionCoefficient(const double new_refl_coeff);
+	void SetReflectionCoefficient(const std::string path2xml);
 //======================================================================
 	double ReflectionCoefficient() const;
 	double ReflectionCoefficient(double wavelength) const;	
 //======================================================================
-	bool get_reflection_flag() const;
+	bool flag()const{return reflection_flag;};
 //======================================================================
 	std::string get_string() const;
 //======================================================================

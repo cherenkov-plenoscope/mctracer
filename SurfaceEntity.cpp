@@ -29,7 +29,7 @@ std::string SurfaceEntity::get_surface_propertie_prompt()const{
 }
 //======================
 bool SurfaceEntity::get_hit_reflection_flag()const{
-	return reflection.get_reflection_flag();
+	return reflection.flag();
 }
 //======================
 ColourProperties SurfaceEntity::get_hit_colour()const{

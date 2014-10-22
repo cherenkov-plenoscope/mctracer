@@ -48,6 +48,8 @@ void ListOfPropagations::propagate(
 
 		#pragma omp parallel shared(settings,world) private(number_of_threads, thread_id, out, ray_counter)
 		{	
+
+			PseRanNumGen dice_for_this_thread_only;
 			ray_counter = 0;
 			thread_id = omp_get_thread_num();
 			number_of_threads = omp_get_num_threads();
@@ -56,18 +58,27 @@ void ListOfPropagations::propagate(
 			for(i = 0LL; i<list_of_ptrs_to_propagations.size(); i++ )
 			{
 				ray_counter++;
-				PropagateSingleRay(world,settings,i);
+				PropagateSingleRay(
+					world,settings,
+					&dice_for_this_thread_only,
+					i
+				);
 			}
 
-			out << "Thread " << thread_id+1 << "/" << number_of_threads << " is doing ";
-			out << ray_counter << "/" << list_of_ptrs_to_propagations.size() << " rays\n";
+			out << "Thread " << thread_id+1 << "/" << number_of_threads;
+			out << " is doing " << ray_counter << "/";
+			out << list_of_ptrs_to_propagations.size() << " rays. ";
+			out << "Seed: " << dice_for_this_thread_only.seed() << "\n";
 			cout << out.str();
 		}
 	}else{
 		// SINGLETHREAD
+
+		PseRanNumGen dice;
+
 		for(i = 0LL; i<list_of_ptrs_to_propagations.size(); i++ )
 		{
-		PropagateSingleRay(world,settings,i);
+			PropagateSingleRay(world,settings,&dice,i);
 		}
 		cout << "Single thread is doing all the rays\n";
 	}
@@ -76,6 +87,7 @@ void ListOfPropagations::propagate(
 void ListOfPropagations::PropagateSingleRay(	
 	const CartesianFrame* world, 
 	const GlobalSettings* settings,
+	PseRanNumGen *dice,
 	unsigned long long index
 ){
 	ListOfInteractions* history_of_this_specific_ray;
@@ -89,7 +101,8 @@ void ListOfPropagations::PropagateSingleRay(
 		history_of_this_specific_ray,
 		0,
 		NULL,
-		settings
+		settings,
+		dice
 	);
 }
 //==================================================================

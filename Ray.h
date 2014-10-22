@@ -24,6 +24,7 @@ class HomoTrafo3D;
 #include "CsvHandler.h"
 #include "OctTreeCube.h"
 #include "ListOfInteractions.h"
+#include "PseRanNumGen.h"
 
 //=================================
 class OctTreeTraversingRay;
@@ -87,7 +88,6 @@ void calculate_reflected_ray(
 );
 
 Intersection* calculate_closest_intersection(	
-	Intersection *pointer_to_closest_intersection,
 	std::vector<Intersection*> *pointer_to_list_of_intersections
 )const;
 
@@ -103,7 +103,8 @@ virtual void propagate(
 	ListOfInteractions* history,
 	int interaction_count,
 	const CartesianFrame* object_reflected_from,
-	const GlobalSettings* settings
+	const GlobalSettings* settings,
+	PseRanNumGen* dice
 );
 
 double get_distance_to_closest_object(

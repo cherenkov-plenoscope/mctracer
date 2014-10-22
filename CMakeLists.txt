@@ -54,6 +54,7 @@ pugixml.cpp
 mcPYtracer/testPyTracer.cpp
 Functions.cpp
 SmartImage.cpp
+Function1D.cpp
 )
 include_directories(/usr/include)
 include_directories(/usr/local/include)
@@ -99,6 +100,7 @@ PinHoleCamera.cpp
 ApertureCamera.cpp
 CameraRay.cpp
 ListOfInteractions.cpp
+ListOfPropagations.cpp
 WorldFactory.cpp
 pugixml.cpp
 FactTelescope.cpp
@@ -114,6 +116,7 @@ OpticalMirror.cpp
 Functions.cpp
 mcPYtracer/testPyTracer.cpp
 SmartImage.cpp
+Function1D.cpp
 )
 # Link test executable against gtest & gtest_main
 target_link_libraries(mctracerUnitTests gtest gtest_main)

@@ -12,13 +12,44 @@
 #include <string>
 #include <sstream>
 
-//=================================
+//------------------------------------------------------------------------------
 class TracerException{
 	public:
 	virtual void ReportException()const;
 	virtual void ExceptionPrompt()const;
 };
-//=================================
+//------------------------------------------------------------------------------
+class Info: public TracerException{
+	std::string info="";
+public:
+	Info();
+	Info(std::string new_info){ info = new_info;};
+	void ReportException()const{
+		ExceptionPrompt();
+		std::cout << info << std::endl;
+	};
+};
+//------------------------------------------------------------------------------
+class FileIoException: public TracerException{
+	public:
+	FileIoException(const std::string new_filename, const std::string new_info){
+		filename = new_filename;
+		info = new_info;
+	}
+	void ReportException()const{
+
+		ExceptionPrompt();
+
+		std::stringstream out;
+		out << "File IO exception in file: " << filename << "\n";
+		out << "Additional information: " << info << "\n";
+		std::cout << out.str();
+	}
+	private:
+	std::string filename;
+	std::string info;
+};
+//------------------------------------------------------------------------------
 class BadValue : public TracerException{
 	public:
 	

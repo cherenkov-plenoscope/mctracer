@@ -486,7 +486,6 @@ void Ray::calculate_reflected_ray(
 }
 //======================================================================
 Intersection* Ray::calculate_closest_intersection(	
-		Intersection *pointer_to_closest_intersection,
 		std::vector<Intersection*> *pointer_to_list_of_intersections
 )const{
 	//==============================================================
@@ -550,7 +549,6 @@ Intersection* Ray::get_closest_intersection(
 
 
 		ptr_to_closest_intersection = calculate_closest_intersection(
-			ptr_to_closest_intersection,
 			&list_of_ptr_to_intersections
 		);
 
@@ -602,8 +600,7 @@ ColourProperties Ray::trace(const CartesianFrame* world,
 		
 		Intersection *ptr_to_closest_intersection;
 		ptr_to_closest_intersection = calculate_closest_intersection(
-		ptr_to_closest_intersection,
-		&list_of_ptr_to_intersections
+			&list_of_ptr_to_intersections
 		);
 		
 		//==============================================================
@@ -688,9 +685,10 @@ void Ray::propagate(
 	ListOfInteractions* history,
 	int interaction_count,
 	const CartesianFrame* object_reflected_from,
-	const GlobalSettings* settings
+	const GlobalSettings* settings,
+	PseRanNumGen* dice
 ){
-	std::cout << "Calling propagate of an Ray instance!" << endl;
+	std::cout << "Calling propagate of a Ray instance!" << endl;
 }
 //======================================================================
 double Ray::get_distance_to_closest_object(const CartesianFrame* world,
@@ -735,8 +733,7 @@ double Ray::get_distance_to_closest_object(const CartesianFrame* world,
 
 		Intersection *ptr_to_closest_intersection;
 		ptr_to_closest_intersection = calculate_closest_intersection(
-		ptr_to_closest_intersection,
-		&list_of_ptr_to_intersections
+			&list_of_ptr_to_intersections
 		);
 		return ptr_to_closest_intersection->get_intersection_distance();
 	}

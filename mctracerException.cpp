@@ -9,10 +9,7 @@ void TracerException::ExceptionPrompt()const{
 }
 //----------------------------------------------------------------------
 void TracerException::ReportException()const{
-	std::stringstream out;
-	out.str("");
-	out << "Default Exception Report: ";
-	std::cout << out.str();		
+	ExceptionPrompt();		
 }
 //----------------------------------------------------------------------
 BadValue::BadValue(const std::string sit, const std::string nam){
@@ -29,7 +26,6 @@ BadValue::BadValue(const std::string sit, const std::string nam,const std::strin
 }
 //----------------------------------------------------------------------	
 void BadValue::ReportException()const{ 
-		
 
 	ExceptionPrompt();
 	

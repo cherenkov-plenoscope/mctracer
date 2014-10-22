@@ -2,12 +2,12 @@
 //======================================================================
 GlobalSettings::GlobalSettings(){
 	default_colour.set_colour_0to255(128,128,128);
-	number_of_max_reflections = 5;
+	//number_of_max_reflections = 5;
 	initialize_random_rumber_generator_seed_mt19937();
 	flag_show_csv_row_identifier = true;
-	flag_store_only_final_intersection = false;
+	//flag_store_only_final_intersection = false;
 	flag_show_csv_row_identity = true;
-	multithread = true;
+	//multithread = true;
 }
 //======================================================================
 void GlobalSettings::set_max_number_of_reflections(
@@ -65,8 +65,13 @@ unsigned GlobalSettings::get_decimal_precision_for_csv_output()const{
 void GlobalSettings::initialize_random_rumber_generator_seed_mt19937(){
 	// Mersenne Twister 1997 by Matsumoto and Nishimura
 	// obtain a seed from the system clock:
+
+	// get the seed
 	seed_for_random_number_generator_mt19937 = 
 	std::chrono::system_clock::now().time_since_epoch().count();
+
+	// set the seed in the pRNG engine
+	//pRNG_mt19937.seed(seed_for_random_number_generator_mt19937); 
 }
 //======================================================================
 unsigned GlobalSettings::get_seed_for_random_number_generator_mt19937()
