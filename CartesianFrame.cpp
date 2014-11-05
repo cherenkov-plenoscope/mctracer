@@ -1,21 +1,5 @@
 #include "CartesianFrame.h"
 //==============================================================================
-CartesianFrame::CartesianFrame(){
-	BasicSetUp();
-}
-//==============================================================================
-CartesianFrame::CartesianFrame(
-	const std::string new_name,const Vector3D npos,const Rotation3D nrot){
-	BasicSetUp();
-	set_frame(new_name,npos,nrot);
-}
-//==============================================================================
-void CartesianFrame::BasicSetUp(){
-	OctTree = NULL;
-	max_number_of_frames_in_OctTree = 7;
-	//ID = 0;
-}
-//==============================================================================
 void CartesianFrame::post_initializing(){
 	//initialize eye matrices
 	Vector3D   p(0.0,0.0,0.0);
@@ -216,14 +200,10 @@ double CartesianFrame::CalculateEdgeLengthOfChildCube(OctTreeCube *Cube)const{
     return Cube->EdgeLength/2.0;
 }
 //==============================================================================
-const OctTreeCube* CartesianFrame::get_OctTree()const{
-	return OctTree;
-}
-//==============================================================================
 std::string CartesianFrame::prompt_OctTree_including_children(
 	OctTreeCube *Cube,
 	unsigned depth
-	)const{
+)const{
 
 	if(Cube == NULL) 
 		return "There is no OctTree in this frame!";
@@ -273,70 +253,11 @@ std::string CartesianFrame::prompt_OctTree_including_children(
     return out.str();
 }
 //==============================================================================
-const std::string* CartesianFrame::
-get_pointer_to_name_of_frame() const{
-	return &name_of_frame;
-}
-//==============================================================================
-const Vector3D* CartesianFrame::
-get_pointer_to_position_of_frame_in_mother_frame() const{
-	return &position_relative_to_mother;
-}	
-//==============================================================================
-const Rotation3D* CartesianFrame::
-get_pointer_to_rotation_of_frame_in_mother_frame() const{
-	return &rotation_relative_to_mother;
-}	
-//==============================================================================
-const double* CartesianFrame::
-get_pointer_to_radius_of_sphere_enclosing_all_children() const{
-	return &radius_of_sphere_enclosing_all_children;
-}
-//==============================================================================
-const Vector3D* CartesianFrame::
-get_pointer_to_position_of_frame_in_world_frame() const{
-	return &pos_in_world;
-}
-//==============================================================================
-const HomoTrafo3D* CartesianFrame::
-get_pointer_to_T_frame2mother() const{
-	return &T_frame2mother;
-}
-//==============================================================================
-const HomoTrafo3D* CartesianFrame::
-get_pointer_to_T_mother2frame() const{
-	return &T_mother2frame;
-}
-//==============================================================================
-const HomoTrafo3D* CartesianFrame::
-get_pointer_to_T_world2frame() const{
-	return &T_world2frame;
-}
-//==============================================================================
-const HomoTrafo3D* CartesianFrame::
-get_pointer_to_T_frame2world() const{
-	return &T_frame2world;
-}
-//==============================================================================
-const CartesianFrame* CartesianFrame::
-get_pointer_to_mother_frame() const{
-	return mother;
-}
-//==============================================================================
-const CartesianFrame* CartesianFrame::
-get_pointer_to_child
-(const int child_position_in_list)const{
-	return children.at(child_position_in_list);
-}
-//==============================================================================
-const int CartesianFrame::
-get_number_of_children()const{	
-	return children.size();
-}
-//==============================================================================
-void CartesianFrame::
-set_frame(
-const std::string new_name,const Vector3D npos,const Rotation3D nrot){
+void CartesianFrame::set_frame(
+	const std::string new_name,
+	const Vector3D npos,
+	const Rotation3D nrot
+){
 
 	// init name_of_frame
 	if(new_name.length()==0){
@@ -401,8 +322,9 @@ std::string CartesianFrame::get_frame_string()const{
 	return out.str();
 }
 //==============================================================================
-std::string CartesianFrame::
-get_frame_prompt_including_children(unsigned depth)const{
+std::string CartesianFrame::get_frame_prompt_including_children(
+	unsigned depth
+)const{
 	std::stringstream out;
 	out.str("");	
 	std::string gap;
@@ -443,18 +365,15 @@ get_frame_prompt_including_children(unsigned depth)const{
 	return out.str();
 }
 //==============================================================================
-std::string CartesianFrame::
-get_frame_prompt_including_children()const{
+std::string CartesianFrame::get_frame_prompt_including_children()const{
 	return get_frame_prompt_including_children(0);
 }
 //==============================================================================
-void CartesianFrame::
-add_mother(CartesianFrame *const new_mother){
+void CartesianFrame::add_mother(CartesianFrame *const new_mother){
 	mother = new_mother;
 }
 //==============================================================================
-void CartesianFrame::
-add_child(CartesianFrame * const new_child){
+void CartesianFrame::add_child(CartesianFrame * const new_child){
 	children.push_back(new_child);
 	//===================
 	// calculate new childs diameter in this frame
@@ -478,14 +397,12 @@ add_child(CartesianFrame * const new_child){
 		max_diameter_of_new_child_in_this_frame;
 }
 //==============================================================================
-void CartesianFrame::
-set_mother_and_child(CartesianFrame *new_child){
+void CartesianFrame::set_mother_and_child(CartesianFrame *new_child){
 	this->add_child(new_child);
 	new_child->add_mother(this);
 }
 //==============================================================================
-void CartesianFrame::
-post_initialize_me_and_all_my_children(){
+void CartesianFrame::post_initialize_me_and_all_my_children(){
 	// post initialize all frames in world.
 	// This has to be done to ensure the relationship 
 	// declarations are set.
@@ -501,104 +418,37 @@ post_initialize_me_and_all_my_children(){
 	}
 }
 //==============================================================================
-void CartesianFrame::
-hit(
-Vector3D *base,Vector3D *dir,
-Intersection *intersection)const{
-	//"Calling virtual void hit() in class 
-	//frame but frame can not interact with rays."
-}
-//==============================================================================
-bool CartesianFrame::
-is_hit(){
-	return false;}
-//==============================================================================
-double CartesianFrame::
-get_hit_dist(){
-	return 0;}
-//==============================================================================
-bool CartesianFrame::
-get_hit_reflection_flag()const{
-	return false;}
-//==============================================================================
-ColourProperties CartesianFrame::
-get_hit_colour()const{
-	ColourProperties defcol; return defcol;}
-//==============================================================================
-const ReflectionProperties* CartesianFrame::
-get_ptr2_reflection()const{
-	std::cout << "virtual get_ptr2_reflection() ";
-	std::cout << "called in class frame!" << std::endl;
-	return NULL;} 
-//==============================================================================
-void CartesianFrame::
-get_reflection_direction_in_object_system
-(Vector3D* vec){
-}
-//==============================================================================
-void CartesianFrame::
-get_intersection_vec_in_object_system(Vector3D *inter){
-}
-//==============================================================================
-bool CartesianFrame::
-set_spheric_hexag(double new_dbl_focal_length,
-double new_dbl_mirror_radius){ 
-	std::cout<<"virtual set_spheric_hexag() called in class frame!"<<std::endl;
-	return false;
-}
-//==============================================================================
-void CartesianFrame::
-set_surface_properties
-(ReflectionProperties *n_refl, ColourProperties *n_col){
-	std::cout << "virtual set_surface_properties() called in class frame!";
-	std::cout << std::endl;
-}
-//==============================================================================
-bool CartesianFrame::
-get_sensor_flag()const{
-	std::cout << "virtual get_sensor_flag() called in class frame!";
-	std::cout << std::endl;
-	return false;
-}
-//==============================================================================
-void CartesianFrame::
-post_initialize_radius_of_sphere_enclosing_all_children(){
+void CartesianFrame::post_initialize_radius_of_sphere_enclosing_all_children(){
 	
 	// calculate max norm radius with each child seperatley
 	// and choose the biggest radius
 	double new_max_norm_radius = 
 	radius_of_sphere_enclosing_all_children;
 	
-	for(
-	unsigned child_iterator = 0;
-	child_iterator<children.size();
-	child_iterator++){
-		
-		children.at(child_iterator)->
-		post_initialize_radius_of_sphere_enclosing_all_children();
-		
+	for(CartesianFrame *child : children){
+
+		child->post_initialize_radius_of_sphere_enclosing_all_children();
+
 		double max_norm_radius_of_child = 
-		children.at(child_iterator)->
-		radius_of_sphere_enclosing_all_children;
-		
+		child->radius_of_sphere_enclosing_all_children;
+
 		double distance_between_child_and_this_frame = 
-		children.at(child_iterator)->
-		position_relative_to_mother.norm2();
-		
+		child->position_relative_to_mother.norm2();
+
 		double max_norm_circle_when_only_takeing_this_child_into_acount=
 		max_norm_radius_of_child + 
 		distance_between_child_and_this_frame;
-		
+
 		if(
-		max_norm_circle_when_only_takeing_this_child_into_acount
-		>
-		new_max_norm_radius
+			max_norm_circle_when_only_takeing_this_child_into_acount
+			>
+			new_max_norm_radius
 		){
 			new_max_norm_radius = 
 			max_norm_circle_when_only_takeing_this_child_into_acount;
 		}
 	}
-	
+
 	// seting the new radius
 	radius_of_sphere_enclosing_all_children = new_max_norm_radius;
 }
@@ -629,50 +479,34 @@ const CartesianFrame* CartesianFrame::get_pointer_to_specific_frame(
 	/// eg.      /house/roof/chimney/chimney_wall_2 insead of
 	///     world/house/roof/chimney/chimney_wall_2
 
-	//--------------------------------------------------------------------------
 	// remove leading delimiter
-	//--------------------------------------------------------------------------
 	if( path.find( "/" ) == 0 )
 		path.erase(0,1);
 
-	//--------------------------------------------------------------------------	
 	// Cut out first token of the path
-	//--------------------------------------------------------------------------
 	std::string FirstToken;
 	CutOutFirstToken( &path, &FirstToken, "/");
 
-	//--------------------------------------------------------------------------
 	// Get the pointer to the child with the name given in FirstToken
-	//--------------------------------------------------------------------------
 	const CartesianFrame* SpecificChild = 
 	get_pointer_to_specific_child( FirstToken );
 
-	//--------------------------------------------------------------------------
 	// Check whether there is a child with the name of FirstToken or not
-	//--------------------------------------------------------------------------
 	if( SpecificChild != NULL ){
-		//----------------------------------------------------------------------
 		// There is a child of this frame which has the same name as FirstToken
-		//----------------------------------------------------------------------
 		if( path.length() == 0 ){
-			//------------------------------------------------------------------
 			// There is no path left, so this actually the final child 
 			// we are looking for
-			//------------------------------------------------------------------
 			return SpecificChild;
 		}else{
-			//------------------------------------------------------------------
 			// There is still path to check. We have not reached our final
 			// Frame yet so lets proceed with the child
-			//------------------------------------------------------------------
 			return SpecificChild -> get_pointer_to_specific_frame( path );
 		}
 	}else{
-		//----------------------------------------------------------------------
 		// there is no child on this frame which matches the name in FirstToken
 		// This is: There is no such Frame in this Tree of frames as described
 		// in path.
-		//----------------------------------------------------------------------
 		return NULL;
 	}
 }
@@ -696,9 +530,7 @@ std::string CartesianFrame::get_path()const{
 	/// unix systems.
 	/// eg. City/Street14/house18/roof/chimney/chimney_wall_2
 
-	//----------------------------------------------------------------------
 	// chech if this frame has a mother frame 
-	//----------------------------------------------------------------------
 	if( mother != NULL ){
 		// This frame has a mother. Therefore it is not the root frame. 
 		// Here we add at least the delimiter to the path and ,at least there 

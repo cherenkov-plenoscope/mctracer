@@ -42,7 +42,7 @@ TEST_F(WorldFactoryTest, DefaultWorld) {
   CartesianFrame *Mworld = file2world.get_pointer_to_world();
 
   // name of default world
-  EXPECT_EQ( *Mworld->get_pointer_to_name_of_frame() , "world");
+  EXPECT_EQ( Mworld->get_name_of_frame() , "world");
 
   // default world has no children
   EXPECT_EQ( Mworld->get_number_of_children() , 0 );
@@ -82,7 +82,7 @@ TEST_F(WorldFactoryTest, ReadEmptyXML) {
   } 
 
   // name of default world
-  EXPECT_EQ( *Mworld->get_pointer_to_name_of_frame() , "world");
+  EXPECT_EQ( Mworld->get_name_of_frame() , "world");
   // no children in world
   EXPECT_EQ( Mworld->get_number_of_children() , 0 );
   // enclosing radius must be zero
@@ -105,7 +105,7 @@ TEST_F(WorldFactoryTest, ReadNotExistingFile) {
 
     // the root of a file is always called world also the file does not 
     // exist
-    EXPECT_EQ( *Mworld->get_pointer_to_name_of_frame() , "world");
+    EXPECT_EQ( Mworld->get_name_of_frame() , "world");
 
   }catch(BadXMLFile& error){
 
@@ -135,7 +135,7 @@ TEST_F(WorldFactoryTest, ReadFileWithUnknownObject) {
 
     // the root of a file is always called world also the file does not 
     // exist
-    EXPECT_EQ( *Mworld->get_pointer_to_name_of_frame() , "world");
+    EXPECT_EQ( Mworld->get_name_of_frame() , "world");
 
   }catch(UnknownObject& error){
 

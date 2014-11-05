@@ -233,7 +233,7 @@ TEST_F(PhotonTest, Reflections){
 
   ListOfPropagations LoP("my_test_propagation_list");
 
-  for(int i=1; i<=1e7; i++)
+  for(int i=1; i<=1e5; i++)
   {
     // wavelength form 1nm to 1000nm
     double wavelength = double(i)*1e-2*1e-9;

@@ -109,10 +109,7 @@ virtual void propagate(
 
 double get_distance_to_closest_object(
 	const CartesianFrame* world,
-	int refl_count,
-	CartesianFrame* object_reflected_from,
-	const GlobalSettings *settings,
-	double dbl_passed_distance_from_source_to_sensor
+	const GlobalSettings *settings
 )const;
 //------------------------------------------------------------------------------
 // printing

@@ -33,7 +33,6 @@ CameraDevice.cpp
 CameraImage.cpp
 PinHoleCamera.cpp 
 ApertureCamera.cpp 
-LightSource.cpp 
 FreeOrbitCamera.cpp 
 Triangle.cpp
 Plane.cpp 

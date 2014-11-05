@@ -1,8 +1,5 @@
 #include "SurfaceEntity.h"
 //======================
-SurfaceEntity::SurfaceEntity(){
-}
-//======================
 void SurfaceEntity::set_surface_properties(
 ReflectionProperties *new_reflection_properties, 
 ColourProperties *new_colour_properties){

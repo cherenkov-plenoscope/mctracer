@@ -66,7 +66,7 @@ std::string Intersection::get_string() const{
 		if( ptr_to_intersecting_object == NULL ){
 			out<<"NULL";
 		}else{
-			out<< *(ptr_to_intersecting_object->get_pointer_to_name_of_frame());
+			out<< ptr_to_intersecting_object->get_name_of_frame();
 		}
 	}
 	return  out.str();

@@ -136,7 +136,7 @@ void CameraDevice::calculate_stereo_parameters(
 	//~ std::cout<<cmaera_offset_in_m<<"[m]"<<std::endl;
 	
 	double object_distance = OpticalAxis.
-	get_distance_to_closest_object(world,0,NULL,settings,0.0);
+	get_distance_to_closest_object(world,settings);
 	
 	//~ std::cout<<"CameraDevice-> stereo -> camera position: ";
 	//~ std::cout<<CameraPositionInWorld<<std::endl;

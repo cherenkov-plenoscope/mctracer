@@ -19,11 +19,12 @@ protected:
 	ColourProperties 		colour;
 public:
 //======================
-SurfaceEntity();
+SurfaceEntity(){};
 //======================
 void set_surface_properties(
-ReflectionProperties *new_reflection_properties, 
-ColourProperties *new_colour_properties);
+	ReflectionProperties *new_reflection_properties, 
+	ColourProperties *new_colour_properties
+);
 //======================
 void disp()const;
 //======================

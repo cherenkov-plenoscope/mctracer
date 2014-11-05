@@ -21,7 +21,7 @@ FreeOrbitCamera::FreeOrbitCamera(
 	);
 
 	// default image size and FoV
-	FieldOfView_in_rad = M_PI/2.0; //90Deg
+	FieldOfView_in_rad = Deg2Rad(90.0); //90Deg
 	
 	Image.Set( MCT_QVGA );
 	
@@ -314,10 +314,7 @@ void FreeOrbitCamera::take_snapshot(){
 	double object_distance = 
 	center_ray_of_camera.get_distance_to_closest_object(
 		world,
-		0,
-		NULL,
-		settings,
-		0.0
+		settings
 	);
 	
 	if(object_distance==0.0) // default object distance is set to 25m
@@ -455,9 +452,9 @@ void FreeOrbitCamera::DispImageInfo(int x, int y){
 	//out << "| ID of Object: ";
 	//out << 	ClosestIntersection->get_pointer_to_intersecting_object()->
 	//		get_ID() << "\n";
-	out << "| Name of Object: " << *ClosestIntersection->
+	out << "| Name of Object: " << ClosestIntersection->
 					get_pointer_to_intersecting_object()->
-					get_pointer_to_name_of_frame() << "\n";
+					get_name_of_frame() << "\n";
 
 	out << "| Path of Object: " << ClosestIntersection->
 					get_pointer_to_intersecting_object()->
@@ -491,6 +488,7 @@ void FreeOrbitCamera::start_free_orbit(){
 	FreeOrbitCamera* p = this;
 	cv::setMouseCallback( free_orbit_display_name.c_str(), onMouse, (void *)p );
 
+	// Key 27 is the ESC key to leave the FreeOrbit
 	while( key != 27 ){
 
 		if( key_stroke_requires_image_update ){

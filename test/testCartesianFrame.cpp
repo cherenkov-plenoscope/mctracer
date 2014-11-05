@@ -51,11 +51,7 @@ TEST_F(CartesianFrameTest, find_specific_frame) {
   const CartesianFrame* SpecificFrameInWorldWeAreLookingFor = 
   world->get_pointer_to_specific_frame( "/tree/pole" );
 
-  EXPECT_EQ(
-    "pole",
-    *SpecificFrameInWorldWeAreLookingFor->
-    get_pointer_to_name_of_frame()
-  );
+  EXPECT_EQ("pole", SpecificFrameInWorldWeAreLookingFor->get_name_of_frame());
 
   // Lets do a second test with one additional layer
   SpecificFrameInWorldWeAreLookingFor = world->
@@ -65,9 +61,8 @@ TEST_F(CartesianFrameTest, find_specific_frame) {
     std::cout << "OMG the Pointer is NULL!!!\n";
 
   EXPECT_EQ(
-    "chimney_wall_4",
-    *SpecificFrameInWorldWeAreLookingFor->
-    get_pointer_to_name_of_frame()
+    "chimney_wall_4", 
+    SpecificFrameInWorldWeAreLookingFor->get_name_of_frame()
   );
   // In addition we test if the path is restored correctly by the frame
   std::string RestoredPath = 

@@ -58,6 +58,7 @@ private:
 
 	/* the actual data structure storing the information of the function*/
 	std::vector< std::pair<double,double> > func;
+	std::vector< std::vector< double > > vunc;
 
 	std::string Name = "";
 	std::string Unit_of_argument = "";
