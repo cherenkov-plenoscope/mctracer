@@ -981,7 +981,7 @@ CartesianFrame* WorldFactory::get_pointer_to_world(){
 	post_initialize_me_and_all_my_children();
 	
 	root_of_World->
-	post_initialize_radius_of_sphere_enclosing_all_children();
+	update_enclosing_sphere_for_all_children();
 	
 	return root_of_World;
 }

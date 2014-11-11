@@ -56,6 +56,7 @@ protected:
 
     // since there is only an OctTree substructure the pointer to the OctTree
     // is nullptr by default
+private:
     OctTreeCube *OctTree = nullptr;
 
     // the max number of children is constant and definfes the max number of 
@@ -81,7 +82,7 @@ public:
     );
     void set_mother_and_child(CartesianFrame *new_child);
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-    void post_initialize_radius_of_sphere_enclosing_all_children();
+    void update_enclosing_sphere_for_all_children();
     void post_initialize_me_and_all_my_children();
     void take_children(CartesianFrame *frame_to_take_chidren_from);
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -103,15 +104,15 @@ public:
         return &pos_in_world;
     };
 
-    const HomoTrafo3D* get_pointer_to_T_frame2mother()const{
+    const HomoTrafo3D* frame2mother()const{
         return &T_frame2mother;
     };
 
-    const HomoTrafo3D* get_pointer_to_T_mother2frame()const{
+    const HomoTrafo3D* mother2frame()const{
         return &T_mother2frame;
     };
 
-    const HomoTrafo3D* get_pointer_to_T_world2frame()const{
+    const HomoTrafo3D* world2frame()const{
         return &T_world2frame;
     };
 
@@ -119,7 +120,7 @@ public:
         return mother;
     };
 
-    const HomoTrafo3D* get_pointer_to_T_frame2world()const{
+    const HomoTrafo3D* frame2world()const{
         return &T_frame2world;
     };
 
@@ -150,10 +151,10 @@ public:
 private:
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     std::string get_frame_prompt_including_children(unsigned depth)const;
-    void add_mother(CartesianFrame *const new_mother);
+    void set_mother(CartesianFrame *const new_mother);
     void add_child(CartesianFrame * const new_child);
     void post_initializing();
-
+    void update_sphere_enclosing_all_children(CartesianFrame *new_child);
     // OctTree
     void SetOctTree(
         OctTreeCube *Ptr2OctTree,   
@@ -197,8 +198,6 @@ public:
         Vector3D *dir,
         Intersection *intersection
     )const{};
-
-    virtual bool is_hit()const{ return false; };
 
     virtual double get_hit_dist()const{ return 0.0; };
 

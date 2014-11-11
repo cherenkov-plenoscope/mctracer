@@ -149,7 +149,12 @@ SET(CMAKE_SWIG_FLAGS "")
 
 SET_SOURCE_FILES_PROPERTIES(../mctracer/mcPYtracer/testPyTracer.i PROPERTIES CPLUSPLUS ON)
 SET_SOURCE_FILES_PROPERTIES(../mctracer/mcPYtracer/testPyTracer.i PROPERTIES SWIG_FLAGS "-includeall")
-SWIG_ADD_MODULE(mctracer python ../mctracer/mcPYtracer/testPyTracer.i ../mctracer/mcPYtracer/testPyTracer.cpp)
+
+SWIG_ADD_MODULE(mctracer python 
+../mctracer/mcPYtracer/testPyTracer.i 
+../mctracer/mcPYtracer/testPyTracer.cpp
+)
+
 SWIG_LINK_LIBRARIES(mctracer ${PYTHON_LIBRARIES})
 SWIG_LINK_LIBRARIES(mctracer gtest gtest_main)
 SWIG_LINK_LIBRARIES(mctracer ${OpenCV_LIBS})

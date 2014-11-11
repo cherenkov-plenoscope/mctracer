@@ -78,7 +78,7 @@ void homo_transformation_of_ray(Ray* ray,const HomoTrafo3D *T)const;
 void test_intersection_for_hit_candidates(
 	std::vector<const CartesianFrame*> *list_of_objects_which_might_intersect,
 	std::vector<Intersection*> *ptr_to_list_of_ptr_to_intersections,
-	const CartesianFrame* object_reflected_from,
+	const CartesianFrame* object_propagated_from,
 	int refl_count
 )const;
 
@@ -94,7 +94,7 @@ Intersection* calculate_closest_intersection(
 ColourProperties trace(
 	const CartesianFrame* world,
 	int refl_count,
-	const CartesianFrame* object_reflected_from,
+	const CartesianFrame* object_propagated_from,
 	GlobalSettings *settings
 );
 
@@ -102,7 +102,7 @@ virtual void propagate(
 	const CartesianFrame* world, 
 	ListOfInteractions* history,
 	int interaction_count,
-	const CartesianFrame* object_reflected_from,
+	const CartesianFrame* object_propagated_from,
 	const GlobalSettings* settings,
 	PseRanNumGen* dice
 );

@@ -80,13 +80,13 @@ void Photon::propagate(
 	PseRanNumGen* dice
 ){
 	int interaction_count = 0;
-	const CartesianFrame* object_reflected_from = NULL;
+	const CartesianFrame* object_propagated_from = NULL;
 
 	propagate(
 		world,
 		history,
 		interaction_count,
-		object_reflected_from,
+		object_propagated_from,
 		settings,
 		dice
 	);
@@ -97,7 +97,7 @@ void Photon::propagate(
 	const CartesianFrame* world, 
 	ListOfInteractions* history,
 	int interaction_count,
-	const CartesianFrame* object_reflected_from,
+	const CartesianFrame* object_propagated_from,
 	const GlobalSettings* settings,
 	PseRanNumGen* dice
 ){
@@ -122,7 +122,7 @@ void Photon::propagate(
 	test_intersection_for_hit_candidates(
 		&ListOfObjectsWhichMightIntersect,
 		&VecOfPtr2Intersections,
-		object_reflected_from,
+		object_propagated_from,
 		interaction_count
 	);
 

@@ -1,4 +1,5 @@
 #include <time.h>
+
 double My_variable = 3.0;
 
 int fact(int n) {

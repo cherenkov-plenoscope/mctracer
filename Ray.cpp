@@ -99,7 +99,7 @@ void Ray::pre_trace(
 			homo_transformation_of_ray(
 				&SpecialRay,
 				Frame2CheckForIntersectionOfRayAndMaxSphere->
-				get_pointer_to_T_world2frame()
+				world2frame()
 			);
 
 			// update the special information in the special Ray
@@ -391,7 +391,7 @@ void Ray::disp_possible_hit_list(const CartesianFrame *frame)const{
 void Ray::test_intersection_for_hit_candidates(
 	std::vector<const CartesianFrame*> *list_of_objects_which_might_intersect,
 	std::vector<Intersection*> *ptr_to_list_of_ptr_to_intersections,
-  	const CartesianFrame* object_reflected_from,
+  	const CartesianFrame* object_propagated_from,
 	int refl_count
 )const{
 
@@ -427,7 +427,7 @@ void Ray::test_intersection_for_hit_candidates(
 		homo_transformation_of_ray(
 			&ray_in_object_system,
 			list_of_objects_which_might_intersect->at(object_itterator)->
-			get_pointer_to_T_world2frame()
+			world2frame()
 		);
 		
 		//==============================================================
@@ -470,7 +470,7 @@ void Ray::test_intersection_for_hit_candidates(
 				if(
 					list_of_objects_which_might_intersect->at(object_itterator) 
 					!=
-					object_reflected_from
+					object_propagated_from
 				){
 
 					ptr_to_list_of_ptr_to_intersections->push_back(
@@ -513,7 +513,7 @@ void Ray::calculate_reflected_ray(
 	&ray_in_object_system,
 	pointer_to_closest_intersection->
 	get_pointer_to_intersecting_object()->
-	get_pointer_to_T_world2frame()
+	world2frame()
 	);
 	
 	Vector3D refl_dir; 
@@ -538,7 +538,7 @@ void Ray::calculate_reflected_ray(
 	ray_reflection_on_object,
 	pointer_to_closest_intersection->
 	get_pointer_to_intersecting_object()->
-	get_pointer_to_T_frame2world()
+	frame2world()
 	);	
 	//ray_reflection_on_object->disp();		
 }
@@ -564,7 +564,7 @@ Intersection* Ray::get_closest_intersection(
 	GlobalSettings *settings
 ){
 	int refl_count = 0;
-	const CartesianFrame* object_reflected_from = NULL;
+	const CartesianFrame* object_propagated_from = NULL;
 	//==================================================================
 	// claculate a list/vector containing all possible intersection
 	// candidates using pre-trace
@@ -582,7 +582,7 @@ Intersection* Ray::get_closest_intersection(
 	test_intersection_for_hit_candidates(
 		&list_of_objects_which_might_intersect,
 		&list_of_ptr_to_intersections,
-		object_reflected_from,
+		object_propagated_from,
 		refl_count
 	);
 		
@@ -615,7 +615,7 @@ Intersection* Ray::get_closest_intersection(
 //==============================================================================
 ColourProperties Ray::trace(const CartesianFrame* world,
 				int refl_count,
-				const CartesianFrame* object_reflected_from,
+				const CartesianFrame* object_propagated_from,
 				GlobalSettings *settings)
 {
 	
@@ -636,7 +636,7 @@ ColourProperties Ray::trace(const CartesianFrame* world,
 	test_intersection_for_hit_candidates(
 						&list_of_objects_which_might_intersect,
 						&list_of_ptr_to_intersections,
-						object_reflected_from,
+						object_propagated_from,
 						refl_count);
 		
 	//==================================================================
@@ -741,7 +741,7 @@ void Ray::propagate(
 	const CartesianFrame* world, 
 	ListOfInteractions* history,
 	int interaction_count,
-	const CartesianFrame* object_reflected_from,
+	const CartesianFrame* object_propagated_from,
 	const GlobalSettings* settings,
 	PseRanNumGen* dice
 ){
@@ -768,12 +768,12 @@ double Ray::get_distance_to_closest_object(
 	std::vector<Intersection*> list_of_ptr_to_intersections;
 	
 	int refl_count = 0;
-	CartesianFrame* object_reflected_from = nullptr;
+	CartesianFrame* object_propagated_from = nullptr;
 
 	test_intersection_for_hit_candidates(
 		&list_of_objects_which_might_intersect,
 		&list_of_ptr_to_intersections,
-		object_reflected_from,
+		object_propagated_from,
 		refl_count
 	);
 	

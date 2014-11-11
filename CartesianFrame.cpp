@@ -264,7 +264,8 @@ void CartesianFrame::set_frame(
 		throw BadValue(
 			"CartesianFrame -> set_frame()",
 			"name_of_frame",
-			"The name of the frame must not be empty!");
+			"The name of the frame must not be empty!"
+		);
 	}
 	name_of_frame = new_name;
 	
@@ -281,7 +282,7 @@ void CartesianFrame::set_frame(
 	);
 	
 	// init mother pointer
-	mother = NULL;
+	mother = nullptr;
 	// init empty list with pointer to children
 	children.clear();
 }
@@ -325,14 +326,10 @@ std::string CartesianFrame::get_frame_string()const{
 std::string CartesianFrame::get_frame_prompt_including_children(
 	unsigned depth
 )const{
+
 	std::stringstream out;
-	out.str("");	
-	std::string gap;
-	for(unsigned depth_iterator = 0;depth_iterator<depth;depth_iterator++){
-		gap +="    ";
-		//out<<"gap iterator: "<<depth_iterator<<std::endl;
-	}
-	
+	std::string gap = std::string( 4*depth,' ' );
+
 	//out<<"depth: "<<depth<<std::endl;
 	out<<gap<<" __name_=_"<<name_of_frame<<"__"<<std::endl;
 	out<<gap<<"| pos in mother = "<<position_relative_to_mother<<std::endl;
@@ -347,8 +344,8 @@ std::string CartesianFrame::get_frame_prompt_including_children(
 	//out<<gap<<"| T_"<<name_of_frame<<"2world"<<std::endl;
 	//out<<gap<<T_frame2world.get_string();
 	// mother
-	if(mother == 0){
-		out<<gap<<"| mother: 0"<<std::endl;
+	if(mother == nullptr){
+		out<<gap<<"| mother: nullptr"<<std::endl;
 	}else{
 		out<<gap<<"| mother: "<<mother->name_of_frame<<std::endl;
 	}
@@ -369,37 +366,95 @@ std::string CartesianFrame::get_frame_prompt_including_children()const{
 	return get_frame_prompt_including_children(0);
 }
 //==============================================================================
-void CartesianFrame::add_mother(CartesianFrame *const new_mother){
+void CartesianFrame::set_mother(CartesianFrame *const new_mother){
 	mother = new_mother;
 }
 //==============================================================================
 void CartesianFrame::add_child(CartesianFrame * const new_child){
+	
 	children.push_back(new_child);
-	//===================
-	// calculate new childs diameter in this frame
-	//===================
-		// calculate the distance from the base of this frame
-		// to the base of the childs frame.
-		double dist_this_base2_child_base = 
-		new_child->position_relative_to_mother.norm2();
-		// get the diameter of the new child
-		double child_diameter = 
-		new_child->radius_of_sphere_enclosing_all_children;
-		// the max diameter of the new child in this frame is
-		double max_diameter_of_new_child_in_this_frame = 
-		dist_this_base2_child_base + child_diameter;
-	//===================
-	// test if the new childs diameter is bigger than the old one
-	//===================
-	if(	max_diameter_of_new_child_in_this_frame > 
-		radius_of_sphere_enclosing_all_children)
+
+	update_sphere_enclosing_all_children(new_child);
+}
+//==============================================================================
+void CartesianFrame::update_sphere_enclosing_all_children(
+	CartesianFrame *new_child
+){
+	// When a child frame is added to a frame we have to check if the sphere 
+	// enclosing all the frames previous children is also enclosing the new
+	// child. In case the old sphere is to small we have to increase its radius
+	// to enclose all the childrens again.
+	// To do so we calculate the radius needed to enclose only the new child.
+	
+	// Case: The new child is not enclosed by the previous sphere of this frame
+	//-------             _______________                                     //
+	//               ____/               \____                                //
+	//            __/     \                   \__                             //
+	//           /         \  radius             \                            //
+    //          |           \  enclosing           |                          //
+    //         |             \  all                |                          //
+    //         |              \  (previous)        |          new child       //
+    //        |  ___           \  children          |            ___          //
+	//        |/     \          \                   |          /     \        //
+    //        |       |          x------------------|---------|---x   |       //
+    //        |\ ___ /         frame                |          \ _._ /.       //
+    //        | previous child   .                  |             .   . 
+    //         | defining        .                 |              .   .
+    //         |  the current    .                 |              .   .
+	//          |  radius        .                |               .   .
+	//           \__             .             __/                .   .
+	//              \___         .        ____/                   .   .
+	//                  \________._______/                        .   .
+	//                           .                                .   .
+	//                           \_________________  ____________/\_ _/
+	//                                             \/               V
+	//                                   new childs rel. pos    new childs
+	//                                      to mother frame       radius
+	//                                             \________  _______/
+	//                                                      \/
+	//                         new radius of sphere enclosing all children   
+	// 
+	// Here we have to update the radius of the sphere enclosing all children.
+	//      
+	// Case: The new child is not enclosed by the previous sphere of this frame
+	//-------
+	//                    _______________
+	//               ____/               \____                                //
+	//            __/     \ radius            \__                             // 
+	//           /         \ enclosing           \                            //
+    //          |           \  all                |                        
+    //         |             \  (previous)         |
+    //         |              \  children           |            
+    //        |                \           ___      |            
+	//        |                 \        /     \    |          
+    //        |                  x------|---x   |   |
+    //        |                frame     \ ___ /    |          
+    //        |                  .      new child   |                 
+    //         |                 .                 |                 
+    //         |                 .                 |                  
+	//          |                .                |                   
+	//           \__             .             __/                    
+	//              \___         .        ____/                       
+	//                  \________________/                            
+	//                                                              
+	//                             
+	// In this case the old radius remains because it is already enclosing the 
+	// new child.
+
+	double radius_needed_to_enclose_new_child = 
+	new_child->position_relative_to_mother.norm2() + 
+	new_child->radius_of_sphere_enclosing_all_children;
+
+	if(	radius_needed_to_enclose_new_child > 
+		radius_of_sphere_enclosing_all_children
+	)
 		radius_of_sphere_enclosing_all_children = 
-		max_diameter_of_new_child_in_this_frame;
+		radius_needed_to_enclose_new_child;	
 }
 //==============================================================================
 void CartesianFrame::set_mother_and_child(CartesianFrame *new_child){
 	this->add_child(new_child);
-	new_child->add_mother(this);
+	new_child->set_mother(this);
 }
 //==============================================================================
 void CartesianFrame::post_initialize_me_and_all_my_children(){
@@ -409,48 +464,24 @@ void CartesianFrame::post_initialize_me_and_all_my_children(){
 	// rekursiv
 	// std::cout<<"post initialization of: "<<name_of_frame<<std::endl;
 	post_initializing();
+
 	// and all children
-	if(children.size() > 0){
-		//this frame has children
-		for(CartesianFrame* child : children){
-			 child->post_initialize_me_and_all_my_children();
-		}
-	}
+	for(CartesianFrame* child : children)
+		child->post_initialize_me_and_all_my_children();
 }
 //==============================================================================
-void CartesianFrame::post_initialize_radius_of_sphere_enclosing_all_children(){
+void CartesianFrame::update_enclosing_sphere_for_all_children(){
 	
-	// calculate max norm radius with each child seperatley
-	// and choose the biggest radius
-	double new_max_norm_radius = 
-	radius_of_sphere_enclosing_all_children;
-	
+	// when there is already a treee structure of frames and one is adding a
+	// new frame later on, makeing it the child of a previous frame, then one
+	// has to update the spheres enclosing the children of all mother frames
+	// of the frame where the new frame was added to.
+	// Here we do this in a recursive way.
+
 	for(CartesianFrame *child : children){
-
-		child->post_initialize_radius_of_sphere_enclosing_all_children();
-
-		double max_norm_radius_of_child = 
-		child->radius_of_sphere_enclosing_all_children;
-
-		double distance_between_child_and_this_frame = 
-		child->position_relative_to_mother.norm2();
-
-		double max_norm_circle_when_only_takeing_this_child_into_acount=
-		max_norm_radius_of_child + 
-		distance_between_child_and_this_frame;
-
-		if(
-			max_norm_circle_when_only_takeing_this_child_into_acount
-			>
-			new_max_norm_radius
-		){
-			new_max_norm_radius = 
-			max_norm_circle_when_only_takeing_this_child_into_acount;
-		}
+		child->update_enclosing_sphere_for_all_children();
+		update_sphere_enclosing_all_children(child);
 	}
-
-	// seting the new radius
-	radius_of_sphere_enclosing_all_children = new_max_norm_radius;
 }
 //==============================================================================
 void  CartesianFrame::take_children(CartesianFrame *frame_to_take_chidren_from){
@@ -458,12 +489,8 @@ void  CartesianFrame::take_children(CartesianFrame *frame_to_take_chidren_from){
 	// take all children of the frame_to_take_chidren_from and 
 	// put them to this frame
 
-	for(CartesianFrame *single_child_to_take_from_frame_to_take_chidren_from:
-		frame_to_take_chidren_from->children){
-		set_mother_and_child(
-			single_child_to_take_from_frame_to_take_chidren_from
-		);
-	}
+	for(CartesianFrame *child_to_take: frame_to_take_chidren_from->children)
+		set_mother_and_child( child_to_take);
 }
 //==============================================================================
 const CartesianFrame* CartesianFrame::get_pointer_to_specific_frame( 

@@ -39,7 +39,7 @@ std::string Disc::get_Disc_string(){
 	return out.str();
 }
 //==================================================================
-void Disc::hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const{
+void Disc::hit(Vector3D *sup, Vector3D *dir, Intersection *intersection)const{
 	// hit_flag = false;
 	// calculate intersection of  ray: g=b + v*d 
 	//						and plane: P=a*ex + b*ey
@@ -64,10 +64,10 @@ void Disc::hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const{
 		
 		// the ray is not parallel to the Disc-surface
 		//double v;
-		alpha = -base->z()/dir->z();
+		alpha = -sup->z()/dir->z();
 		
 		//Vector3D vec_intersection; 
-		vec_intersection = *base + ( *dir)*alpha;
+		vec_intersection = *sup + ( *dir)*alpha;
 		//vec_intersection.disp();
 		
 		// test wether intersection is inside 
