@@ -99,7 +99,7 @@ int main(){
 	out << "|                                                           |\n";
 	out << "|     Author: Sebastian Mueller              year 2013      |\n";
 	out << "|___________________________________________________________|\n";
-	cout << out.str();
+	cout << out.str() << endl;
 
 	//--------------------------------------------------------------------------
 	// set up settings
@@ -109,12 +109,6 @@ int main(){
 
 		settings.set_max_number_of_reflections(3);
 		settings.set_csv_decimal_presicion(9);
-
-	}catch(TracerException& error){
-
-		error.ReportException();
-		return 0;
-	}	
 
 	//--------------------------------------------------------------------------
 	// list of propagations
@@ -175,13 +169,14 @@ int main(){
 	std::cout << "Enter a file to load: ";
 	std::cin  >> user_input;
 	
-	try{
+		if( is_ending(user_input, ".xml") )
+			std::cout << "yes it is" << std::endl;
 
-		file2world.load_file(user_input);
+		file2world.load(user_input);
 
-		CartesianFrame *Mworld = file2world.get_pointer_to_world();
-		//std::cout << Mworld->get_frame_prompt_including_children();
-
+		CartesianFrame *Mworld = file2world.world();
+		
+		//Mworld->disp();
 
 		// test list of propagations
 		//mylist.propagate(Mworld,&settings);
@@ -189,14 +184,14 @@ int main(){
 		//mylist.export_history_csv(settings);
 		
 		FreeOrbitCamera free(Mworld,&settings);
-		//free.set_free_orbit();
+
+		//std::cout << Mworld->print_with_all_children();
+
 		free.start_free_orbit();
 
-	}catch(TracerException& error){
-
-		error.ReportException();
+	}catch(std::exception& error){
+		cerr << error.what(); 
 		return 0;
 	}	
-
 	return 0;
 }

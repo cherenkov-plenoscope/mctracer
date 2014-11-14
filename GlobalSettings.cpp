@@ -17,16 +17,12 @@ void GlobalSettings::set_max_number_of_reflections(
 		number_of_max_reflections=new_max_number_of_reflections;
 
 	}else{
-
 		std::stringstream out;
+		out << "GlobalSettings::set_max_number_of_reflections\n";
 		out << "The number_of_max_reflections in the Settings ";
 		out << "must not be zero or negative!\n";
 		out << "Actual it is " << new_max_number_of_reflections << "\n";
-
-		throw BadValue(
-			"Settings -> set_max_number_of_reflections()",
-			"number_of_max_reflections",
-			out.str());
+		throw TracerException(out.str());
 	}
 }
 //======================================================================
@@ -37,16 +33,12 @@ void GlobalSettings::set_csv_decimal_presicion(
 		csv_decimal_presicion = unsigned(new_csv_decimal_presicion);
 
 	}else{
-
-		std::stringstream out;
+		std::stringstream out;		
+		out << "GlobalSettings::set_csv_decimal_presicion\n";
 		out << "The csv_decimal_presicion for cvs output in the Settings ";
 		out << "must not be zero or negative!\n";
 		out << "Actual it is " << new_csv_decimal_presicion << "\n";
-
-		throw BadValue(
-			"Settings -> set_csv_decimal_presicion_in_csv_output()",
-			"csv_decimal_presicion",
-			out.str());
+		throw TracerException(out.str());
 	}
 }
 //======================================================================

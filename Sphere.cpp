@@ -6,8 +6,11 @@ Sphere::Sphere(){
 void Sphere::set_sphere(double new_radius){
 
 	if(new_radius < 0.0){
-		throw BadValue("radius of sphere",
-		"The radius of a sphere must be larger than 0.0[m]!");
+		std::stringstream info;
+		info << "Sphere::set_sphere\n";
+		info << "The radius of a sphere must be larger than 0.0m !\n";
+		info << "Expected: >0.0, but actual: " << new_radius << "\n";
+		throw TracerException(info.str());
 	}
 	
 	radius = new_radius;

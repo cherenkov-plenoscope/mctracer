@@ -209,7 +209,7 @@ CsvRow Vector3D::getCsvRow(GlobalSettings& settings) const{
 // friends of osstream
 //======================================================================
 std::ostream& operator<<(std::ostream& os, const Vector3D& vec){
-    os << "("<<vec.x()<<"|"<<vec.y()<<"|"<<vec.z()<<")";
-    os << "[m]";
+    os << "( " << vec.x() << " " << vec.y() << " " << vec.z() <<" )";
+    os << " m";
     return os;
 }

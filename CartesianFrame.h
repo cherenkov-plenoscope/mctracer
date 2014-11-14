@@ -20,6 +20,7 @@ class ReflectionProperties;
 #include "TracerException.h"
 #include "OctTreeCube.h"
 #include "Functions.h"
+#include "pugixml.hpp"
 
 class CartesianFrame {
     // The CartesianFrame is the fundamental geometry in this framework.
@@ -80,6 +81,9 @@ public:
         const Vector3D npos,
         const Rotation3D nrot
     );
+
+    //void fabricate_frame(const pugi::xml_node node);
+
     void set_mother_and_child(CartesianFrame *new_child);
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     void update_enclosing_sphere_for_all_children();
@@ -144,13 +148,19 @@ public:
 
     std::string get_frame_string()const;
 
-    std::string get_frame_prompt_including_children()const;
+    std::string print_with_all_children()const;
 
     const OctTreeCube* get_OctTree()const{ return OctTree; };
 
 private:
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-    std::string get_frame_prompt_including_children(unsigned depth)const;
+    std::string get_print(
+        unsigned depth, 
+        bool wtih_all_children
+    )const;
+
+    std::string get_frame_string(unsigned int depth)const;
+
     void set_mother(CartesianFrame *const new_mother);
     void add_child(CartesianFrame * const new_child);
     void post_initializing();
@@ -181,7 +191,7 @@ private:
         std::vector<CartesianFrame*> possible_children
     );
 
-    std::string prompt_OctTree_including_children(
+    std::string print_OctTree_including_children(
         OctTreeCube *Ptr2OctTree,
         unsigned depth
     )const;

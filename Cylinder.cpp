@@ -10,8 +10,11 @@ void Cylinder::set_cylinder_radius(double new_cylinder_radius){
 	if(new_cylinder_radius > 0.0){
 		CylinderRadius=new_cylinder_radius;
 	}else{
-		throw BadValue("cylinder radius",
-		"The cylinder radius must be larger then 0.0[m]!");
+		std::stringstream info;
+		info << "Cylinder::set_cylinder_radius\n";
+		info << "The radius of a cylinder must be larger than 0.0m !\n";
+		info << "Expected: >0.0, but actual: " << new_cylinder_radius << "\n";
+		throw TracerException(info.str());
 	}
 }
 //----------------------------------------------------------------------
@@ -21,8 +24,11 @@ Vector3D vec_start,
 Vector3D vec_end){
 
 	if((vec_start-vec_end).norm2()==0.0){
-		throw BadValue("start and end positions of cylinder",
-		"The start and end point of a cylinder must not be the same!");
+		std::stringstream info;
+		info << "Cylinder::set_cylinder\n";
+		info << "The start and end point of a cylinder must not be the same!\n";
+		info << "Start: " << vec_start << " and end: " << vec_end << ".\n";
+		throw TracerException(info.str());
 	}
 	
 	//===================
@@ -107,8 +113,11 @@ double new_CylinderLength){
 	if(new_CylinderLength > 0.0){
 		CylinderLength=new_CylinderLength;
 	}else{
-		throw BadValue("cylinder length",
-		"The cylinder length must be larger then 0.0[m]!");
+		std::stringstream info;
+		info << "Cylinder::set_cylinder\n";
+		info << "The length of a cylinder must be larger than 0.0m !\n";
+		info << "Expected: >0.0, but actual: " << new_CylinderLength << "\n";
+		throw TracerException(info.str());
 	}
 	//===================
 	// set max radius

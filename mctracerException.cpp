@@ -1,44 +1,18 @@
 #include "TracerException.h"
-//----------------------------------------------------------------------
-void TracerException::ExceptionPrompt()const{	
-	
-	std::stringstream out;
-	out.str("");
-	out << "Tracer Exception:\n";
-	std::cout << out.str();		
-}
-//----------------------------------------------------------------------
-void TracerException::ReportException()const{
-	ExceptionPrompt();		
-}
-//----------------------------------------------------------------------
-BadValue::BadValue(const std::string sit, const std::string nam){
-	name_of_bad_value = nam;
-	situation = sit;
-	additional_information = false;
-}
-//----------------------------------------------------------------------
-BadValue::BadValue(const std::string sit, const std::string nam,const std::string i){
-	name_of_bad_value = nam;
-	situation = sit;
-	info = i;
-	additional_information = true;
-}
-//----------------------------------------------------------------------	
-void BadValue::ReportException()const{ 
 
-	ExceptionPrompt();
-	
-	std::stringstream out;	
-	out.str("");
+TracerException::TracerException(std::string new_message){
+	message = new_message;
+}
 
-	out << "Bad Value: " << situation << "\n";
-	out << "Initialzing " << name_of_bad_value << " is not possible. \n";
+const char * TracerException::what () const throw (){
+	std::string type = "TracerException:\n";
+	return (type + message).c_str();
+}
 
-	if(additional_information){
-		out << info << "\n";
-	}
+TracerException::TracerException(){
+	message = "Empty";
+}
 
-	std::cout << out.str() << std::endl;
-}	
-	
+BadValue::BadValue(std::string new_message){
+	message = new_message;
+}

@@ -50,7 +50,7 @@ void CartesianFrame::post_initializing(){
 
 		FillOctTree(OctTree,children);
 
-		//std::cout << prompt_OctTree_including_children(OctTree,0);
+		//std::cout << print_OctTree_including_children(OctTree,0);
 	}else{
 		OctTree = NULL;
 	}
@@ -90,9 +90,9 @@ void CartesianFrame::FillOctTree(
 
         //std::cout<<"Center Position " <<Cube->CenterPosition<<endl;
 
-        for(uint x=0;x<2;x++){
-            for(uint y=0;y<2;y++){
-                for(uint z=0;z<2;z++){
+        for(uint x=0; x<2; x++){
+            for(uint y=0; y<2; y++){
+                for(uint z=0; z<2; z++){
                     //std::cout << "x" << x << " y"<<y<<" z"<<z<<endl;
 
                     //cube_itterator++;
@@ -200,7 +200,7 @@ double CartesianFrame::CalculateEdgeLengthOfChildCube(OctTreeCube *Cube)const{
     return Cube->EdgeLength/2.0;
 }
 //==============================================================================
-std::string CartesianFrame::prompt_OctTree_including_children(
+std::string CartesianFrame::print_OctTree_including_children(
 	OctTreeCube *Cube,
 	unsigned depth
 )const{
@@ -238,7 +238,7 @@ std::string CartesianFrame::prompt_OctTree_including_children(
             for( uint y=0; y<2; y++ ){
                 for( uint z=0; z<2; z++ ){
                 	out << gap<< "x" << x << " y" << y << " z" << z <<std::endl;
-                	out << prompt_OctTree_including_children(
+                	out << print_OctTree_including_children(
 						Cube->ChildCubes.at(child_it),
 						depth
 					);
@@ -261,11 +261,10 @@ void CartesianFrame::set_frame(
 
 	// init name_of_frame
 	if(new_name.length()==0){
-		throw BadValue(
-			"CartesianFrame -> set_frame()",
-			"name_of_frame",
-			"The name of the frame must not be empty!"
-		);
+		std::stringstream info;
+		info << "CartesianFrame::set_frame\n";
+		info << "The name of the frame must not be empty!\n";
+		throw TracerException(info.str());
 	}
 	name_of_frame = new_name;
 	
@@ -288,82 +287,58 @@ void CartesianFrame::set_frame(
 }
 //==============================================================================
 void CartesianFrame::disp()const{
-	std::stringstream out;
-	out.str("");
-	out<<"frame_:"<<name_of_frame<<"_____________________________"<<std::endl;
-	out<<get_frame_string();
-	std::cout<<out.str();
+	std::cout << get_print(0,false);
 }
 //==============================================================================
 std::string CartesianFrame::get_frame_string()const{
+	return get_frame_string(0);
+}
+//==============================================================================
+std::string CartesianFrame::get_frame_string(unsigned int depth)const{
+
 	std::stringstream out;
-	out.str("");
-	out << "| pos in mother = " << position_relative_to_mother << std::endl;
-	out << "| rot in mother = " << rotation_relative_to_mother << std::endl;
-	out << "| pos in world  = " << pos_in_world << std::endl;
-	out << "| max radius = ";
-	out << radius_of_sphere_enclosing_all_children << " [m]" << std::endl;
-	// disp  T_world2frame
-	out<<"| T_world2"<<name_of_frame<<std::endl;
-	out<<T_world2frame.get_string();
-	// disp  T_frame2world
-	out<<"| T_"<<name_of_frame<<"2world"<<std::endl;
-	out<<T_frame2world.get_string();
-	// mother
-	if(mother == 0){
-		out<<"| mother: 0"<<std::endl;
+	std::string gap = multi("|   ", depth);
+
+	out << gap << " _____" << name_of_frame << "____\n";
+	out << gap << "| pos in mother = " << position_relative_to_mother << "\n";
+	out << gap << "| rot in mother = " << rotation_relative_to_mother << "\n";
+	out << gap << "| pos in world  = " << pos_in_world << "\n";
+	out << gap << "| radius = ";
+	out << radius_of_sphere_enclosing_all_children << " m\n";
+
+	if(mother == nullptr){
+		out << gap << "| mother: nullptr\n";
 	}else{
-		out<<"| mother: "<<mother->name_of_frame<<std::endl;
+		out << gap << "| mother: " << mother->name_of_frame << "\n";
 	}
-	// children
-	out<<"| children: "<<children.size()<<std::endl;
-	for (unsigned i=0; i<children.size(); i++){
-		out<<"| child "<<(1+i)<<": "<<children.at(i)->name_of_frame<<std::endl;
-	}
+
+	out << gap << "| children: " << children.size() << "\n";
 	return out.str();
 }
 //==============================================================================
-std::string CartesianFrame::get_frame_prompt_including_children(
-	unsigned depth
+std::string CartesianFrame::get_print(
+	unsigned depth, bool wtih_all_children
 )const{
 
 	std::stringstream out;
-	std::string gap = std::string( 4*depth,' ' );
 
-	//out<<"depth: "<<depth<<std::endl;
-	out<<gap<<" __name_=_"<<name_of_frame<<"__"<<std::endl;
-	out<<gap<<"| pos in mother = "<<position_relative_to_mother<<std::endl;
-	out<<gap<<"| rot in mother = "<<rotation_relative_to_mother<<std::endl;
-	out<<gap<<"| pos in world  = "<<pos_in_world<<std::endl;
-	out<<gap<<"| max radius = ";
-	out<<radius_of_sphere_enclosing_all_children<<" [m]"<<std::endl;
-	// disp  T_world2frame
-	//out<<gap<<"| T_world2"<<name_of_frame<<std::endl;
-	//out<<gap<<T_world2frame.get_string();
-	// disp  T_frame2world
-	//out<<gap<<"| T_"<<name_of_frame<<"2world"<<std::endl;
-	//out<<gap<<T_frame2world.get_string();
-	// mother
-	if(mother == nullptr){
-		out<<gap<<"| mother: nullptr"<<std::endl;
-	}else{
-		out<<gap<<"| mother: "<<mother->name_of_frame<<std::endl;
+	out << get_frame_string(depth);
+
+	if( wtih_all_children ){
+
+		for( CartesianFrame* child : children )
+			out << child->get_print( depth+1, wtih_all_children );
 	}
-	// children
-	depth++;
-	out<<gap<<"| children: "<<children.size()<<std::endl;
-	for (unsigned i=0; i<children.size(); i++){
-		out<<gap<<"| child "<<(1+i)<<": ";
-		out<<children.at(i)->name_of_frame<<std::endl;
-		
-		out<< children.at(i)->
-		get_frame_prompt_including_children(depth);
-	}
+
+	std::string gap = multi("|   ", depth);
+	out << gap << "|____________________________\n";
+	out << gap << "\n";
+
 	return out.str();
 }
 //==============================================================================
-std::string CartesianFrame::get_frame_prompt_including_children()const{
-	return get_frame_prompt_including_children(0);
+std::string CartesianFrame::print_with_all_children()const{
+	return get_print(0,true);
 }
 //==============================================================================
 void CartesianFrame::set_mother(CartesianFrame *const new_mother){
@@ -391,7 +366,7 @@ void CartesianFrame::update_sphere_enclosing_all_children(
 	//               ____/               \____                                //
 	//            __/     \                   \__                             //
 	//           /         \  radius             \                            //
-    //          |           \  enclosing           |                          //
+    //          |           \  enclosing          |                           //
     //         |             \  all                |                          //
     //         |              \  (previous)        |          new child       //
     //        |  ___           \  children          |            ___          //
@@ -570,3 +545,48 @@ std::string CartesianFrame::get_path()const{
 	}
 }
 //==============================================================================
+/*
+void fabricate_frame(const pugi::xml_node node){
+
+	if(node.child("set_frame").attribute("name") == NULL){
+		throw MissingItem("name",
+		"set_frame requires the 'name' statement!");
+	}
+	if(node.child("set_frame").attribute("pos") == NULL){
+		throw MissingItem("pos",
+		"set_frame requires the 'pos' statement!");
+	}
+	if(node.child("set_frame").attribute("rot") == NULL){
+		throw MissingItem("rot",
+		"set_frame requires the 'rot' statement!");
+	}	
+	
+	name = node.child("set_frame").attribute("name").value();
+
+	//check_name_for_multiple_usage(root_of_World,name);
+	
+	tuple3 VecTuple; 
+	// check position
+	parse3tuple(
+		VecTuple,node.child("set_frame").attribute("pos").value()
+	);
+
+	position.set(VecTuple.x,VecTuple.y,VecTuple.z);
+
+	
+	//check rotation
+	parse3tuple(
+		VecTuple,node.child("set_frame").attribute("rot").value()
+	);
+
+	rotation.set(VecTuple.x,VecTuple.y,VecTuple.z);
+	
+	if(prompt){
+		std::stringstream out;
+		out << "set_frame (name: "<<name;
+		out <<",pos: "<<position;
+		out <<",rot: "<<rotation<<")";
+		cout << out.str() << endl;
+	}
+}
+*/

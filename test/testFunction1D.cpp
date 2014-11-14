@@ -42,7 +42,7 @@ TEST_F(Function1DTest, ConstructorAndGetter) {
     bool problem_detected = FALSE;
     try{
         Function1D f("ThisFileDoesNotExist.xml");
-    }catch(FileIoException &error){
+    }catch(XmlIoException &error){
         problem_detected = TRUE;
     } 
     EXPECT_EQ( TRUE , problem_detected );
@@ -53,9 +53,9 @@ TEST_F(Function1DTest, ConstructorAndGetter) {
         EXPECT_EQ( "my_assignment" , f.name() ); 
         //f.disp();
 
-    }catch(FileIoException &error){
+    }catch(XmlIoException &error){
         problem_detected = TRUE;
-        error.ReportException();
+        cout << error.what() << endl;
     } 
     EXPECT_EQ( FALSE , problem_detected ); 
 }
@@ -65,7 +65,7 @@ TEST_F(Function1DTest, MissingIdentifiers) {
     bool problem_detected = FALSE;
     try{
         Function1D f("./test_scenery/Function1D/function1D_missing_name.xml");
-    }catch(FileIoException &error){
+    }catch(XmlIoException &error){
         problem_detected = TRUE;
         //error.ReportException();
     } 
@@ -77,7 +77,7 @@ TEST_F(Function1DTest, InvalidFloatingNumber){
     try{
         Function1D f
         ("./test_scenery/Function1D/function1D_invalid_floating_number.xml");
-    }catch(FileIoException &error){
+    }catch(XmlIoException &error){
         problem_detected = TRUE;
         //error.ReportException();
     } 
@@ -89,7 +89,7 @@ TEST_F(Function1DTest, SameArgumentTwice){
     try{
         Function1D f
         ("./test_scenery/Function1D/function1D_same_argument_twice.xml");
-    }catch(FileIoException &error){
+    }catch(XmlIoException &error){
         problem_detected = TRUE;
         //error.ReportException();
     } 
@@ -107,7 +107,7 @@ TEST_F(Function1DTest, At){
           //cout << arg << "," << f.at(arg) << "\n";
         }
     }catch(TracerException &error){
-        error.ReportException();
+        cout << error.what() << endl;
     } 
 }
 //------------------------------------------------------------------------------
@@ -118,7 +118,7 @@ TEST_F(Function1DTest, Integral){
         
         EXPECT_EQ( 42.0 , f.mean_value() );     
     }catch(TracerException &error){
-        error.ReportException();
+        cout << error.what() << endl;
     } 
 }
 //------------------------------------------------------------------------------

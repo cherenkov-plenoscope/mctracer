@@ -43,8 +43,8 @@ TEST_F(CartesianFrameTest, find_specific_frame) {
   // load some world
   string xml_file = "./test_scenery/including_other_xml_files.xml";
   WorldFactory file2world;
-  file2world.load_file(xml_file);
-  CartesianFrame *world = file2world.get_pointer_to_world();
+  file2world.load(xml_file);
+  CartesianFrame *world = file2world.world();
 
   // Now get the pointer to the frame we are looking for
   // In the case of "tree/pole" we know that it must be in the test xml file.

@@ -10,8 +10,9 @@ find_package( OpenCV REQUIRED )
 add_executable( 
 mctracer mctracer.cpp 
 mctracerException.cpp
+XmlIoException.cpp
 CsvHandler.cpp
-#ConfigFileHandle.cpp 
+XmlFileIo.cpp
 WorldFactory.cpp
 SensorIntersection.cpp 
 ReflectionProperties.cpp 
@@ -84,6 +85,7 @@ GlobalSettings.cpp
 CsvHandler.cpp
 ColourProperties.cpp 
 mctracerException.cpp
+XmlIoException.cpp
 ReflectionProperties.cpp 
 SurfaceEntity.cpp
 Plane.cpp
@@ -100,6 +102,7 @@ ApertureCamera.cpp
 CameraRay.cpp
 ListOfInteractions.cpp
 ListOfPropagations.cpp
+XmlFileIo.cpp
 WorldFactory.cpp
 pugixml.cpp
 FactTelescope.cpp

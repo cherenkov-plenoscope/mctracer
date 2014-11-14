@@ -11,6 +11,7 @@
 #include "math.h"	  
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <vector>
 
 double Deg2Rad(double angle_in_Deg);
@@ -25,7 +26,9 @@ void CutOutFirstToken(
 	const std::string delimiter 
 );
 void ClearScreen();
+
+std::string multi( std::string text_to_repeat, unsigned int times );
+
+bool is_ending(std::string text, std::string ending);
+
 #endif // __FUNCTIONS_H_INCLUDED__
-
-
-

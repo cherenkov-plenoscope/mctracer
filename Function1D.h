@@ -16,20 +16,22 @@
 #include <utility>
 #include "pugixml.hpp"
 #include "TracerException.h"
+#include "XmlIoException.h"
+#include "XmlFileIo.h"
 //==============================================================================
-/* Function1D allows an assignment of one floating number to annother. 
-For example when one wants to express the absorbtion coefficient of a 
-material in dependence of the wavelength of the traversing photon, 
-one can feed this function 
-wavelegth |-> absorption_coefficient(wavelength)
-*/
+// Function1D allows an assignment of one floating number to annother. 
+// For example when one wants to express the absorbtion coefficient of a 
+// material in dependence of the wavelength of the traversing photon, 
+// one can feed this function 
+// wavelegth |-> absorption_coefficient(wavelength)
+
 
 enum boundary_mode {ZERO,CLOSEST,STRICT};
 
-class Function1D{
+class Function1D :public XmlFileIo{
 private:
-	/* to parse the information of a function out of a xml file here some 
-	identifier are defined which are expected to show up in a xml file.*/
+	// to parse the information of a function out of a xml file here some 
+	// identifier are defined which are expected to show up in a xml file.
 	std::string xml_func_node_id = "function1D";
 	std::string xml_func_name_id = "name";
 	std::string xml_func_pair_id = "pair";
@@ -39,24 +41,24 @@ private:
 	std::string xml_func_val_id = "y";	
 	std::string xml_func_boundary_mode_id = "boundary";
 	
-	std::string xml_path = "";
+	//std::string xml_path = "";
 
-	/* The boundary mode declares how queries are handled, i.e. values are 
-	returned, when the requested argument is not in the range of the argument 
-	list. For example you want the reflection index of some material so you 
-	define a Function1D and feed it pairs of wavelength as a argument and 
-	reflection coefficients as corresponding values.
-	wavelength [nm] | refl. coefficient [1]
-    ----------------|----------------------
-    450             | 0.1
-    521             | 0.2
-    606             | 0.6
-    786             | 0.98
-    1337            | 0.42
-	*/
+	// The boundary mode declares how queries are handled, i.e. values are 
+	// returned, when the requested argument is not in the range of the argument 
+	// list. For example you want the reflection index of some material so you 
+	// define a Function1D and feed it pairs of wavelength as a argument and 
+	// reflection coefficients as corresponding values.
+	// wavelength [nm] | refl. coefficient [1]
+    // ----------------|----------------------
+    // 450             | 0.1
+    // 521             | 0.2
+    // 606             | 0.6
+    // 786             | 0.98
+    // 1337            | 0.42
+
 	boundary_mode mode = STRICT; // default is strict
 
-	/* the actual data structure storing the information of the function*/
+	// the actual data structure storing the information of the function
 	std::vector< std::pair<double,double> > func;
 	std::vector< std::vector< double > > vunc;
 

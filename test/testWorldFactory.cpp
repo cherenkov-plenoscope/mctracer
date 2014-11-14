@@ -39,7 +39,7 @@ class WorldFactoryTest : public ::testing::Test {
 TEST_F(WorldFactoryTest, DefaultWorld) {
 
   WorldFactory file2world;
-  CartesianFrame *Mworld = file2world.get_pointer_to_world();
+  CartesianFrame *Mworld = file2world.world();
 
   // name of default world
   EXPECT_EQ( Mworld->get_name_of_frame() , "world");
@@ -73,12 +73,11 @@ TEST_F(WorldFactoryTest, ReadEmptyXML) {
 
   try{
 
-    file2world.load_file("./test_scenery/empty.xml");
-    Mworld = file2world.get_pointer_to_world();
+    file2world.load("./test_scenery/empty.xml");
+    Mworld = file2world.world();
 
-  }catch(TracerException& error){
-
-    error.ReportException();
+  }catch(std::exception& error){
+    cout << error.what() << endl;
   } 
 
   // name of default world
@@ -100,23 +99,22 @@ TEST_F(WorldFactoryTest, ReadNotExistingFile) {
 
   try{
 
-    file2world.load_file(xml_file);
-    CartesianFrame *Mworld = file2world.get_pointer_to_world();
+    file2world.load(xml_file);
+    CartesianFrame *Mworld = file2world.world();
 
     // the root of a file is always called world also the file does not 
     // exist
     EXPECT_EQ( Mworld->get_name_of_frame() , "world");
 
-  }catch(BadXMLFile& error){
+  }catch(XmlIoException& error){
 
-    //error.ReportException();
     //check whether the exception knows the bad file path or not
-    EXPECT_EQ( error.FileName() , xml_file );
+    EXPECT_EQ( error.filename() , xml_file );
   }
-  catch(TracerException& error){
+  catch(std::exception& error){
 
-    // only BadXMLFile exceptions are acceptable
-    error.ReportException();
+    // only XmlIoException exceptions are acceptable
+    cout << error.what() << endl;
     EXPECT_EQ( true , false );
   }
 }
@@ -130,23 +128,23 @@ TEST_F(WorldFactoryTest, ReadFileWithUnknownObject) {
 
   try{
 
-    file2world.load_file(xml_file);
-    CartesianFrame *Mworld = file2world.get_pointer_to_world();
+    file2world.load(xml_file);
+    CartesianFrame *Mworld = file2world.world();
 
     // the root of a file is always called world also the file does not 
     // exist
     EXPECT_EQ( Mworld->get_name_of_frame() , "world");
 
-  }catch(UnknownObject& error){
+  }catch(UnknownItem& unknown){
 
     //error.ReportException();
     //check whether the exception knows the bad file path or not
-    EXPECT_EQ( error.GetUnknownObjectName() , "MarioMuellerWesternhagen" );
+    EXPECT_EQ( unknown.name() , "MarioMuellerWesternhagen" );
   }
-  catch(TracerException& error){
+  catch(std::exception& error){
 
     //only UnknownObject exceptions are acceptable
-    error.ReportException();
+    cout << error.what();
     EXPECT_EQ( true , false );
   }
 }
@@ -158,12 +156,12 @@ try{
 
   string xml_file = "./test_scenery/including_other_xml_files.xml";
 
-  file2world.load_file(xml_file);
+  file2world.load(xml_file);
 
-  //CartesianFrame *Mworld = file2world.get_pointer_to_world();
+  //CartesianFrame *Mworld = file2world.world();
 
-  }catch(TracerException& error){
-    error.ReportException();
+  }catch(std::exception& error){
+    cout << error.what();
   }
 }
 //------------------------------------------------------------------------------
@@ -174,12 +172,12 @@ try{
 
   string xml_file = "./test_scenery/multiple_usage_of_name_klaus.xml";
 
-  file2world.load_file(xml_file);
+  file2world.load(xml_file);
 
-  }catch(MultipleUsageOfName& error){
-    EXPECT_EQ( error.GetPath() , "/house/chimney/klaus" );
-  }
-  catch(TracerException& error){
-    error.ReportException();
+//  }catch(MultipleUsageOfName& multiple){
+//    EXPECT_EQ( multiple.name() , "/house/chimney/klaus" );
+//  }
+  }catch(std::exception& error){
+    cout << error.what();
   }
 }

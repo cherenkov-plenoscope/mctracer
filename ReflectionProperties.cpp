@@ -14,7 +14,11 @@ void ReflectionProperties::SetReflectionCoefficient(
 			reflection_flag = true;
 		}
 	}else{
-		throw BadValue("out of range [0,1]","reflection coefficient");
+		std::stringstream info;
+		info << "ReflectionProperties::SetReflectionCoefficient\n";
+		info << "Out of range. Expected: [0,1], but actual: ";
+		info  << new_reflection_coefficient << "\n";
+		throw BadValue(info.str());
 	}
 }
 //------------------------------------------------------------------------------
@@ -31,8 +35,11 @@ void ReflectionProperties::SetReflectionCoefficient(const std::string path2xml){
 	){
 		if( it->second > 1.0 || it->second < 0.0 ){
 			std::stringstream info;
-			info << "reflection coefficient in file " << path2xml << "\n";			
-			throw BadValue("out of range [0,1]",info.str());
+			info << "ReflectionProperties::SetReflectionCoefficient\n";
+			info << "In flie: " << path2xml << "\n";
+			info << "Out of range. Expected: [0,1], but actual: ";
+			info << it->second << "\n";
+			throw BadValue(info.str());
 		}
 		// if only one value of the reflection function is above zero, the 
 		// reflection flag is set to true 

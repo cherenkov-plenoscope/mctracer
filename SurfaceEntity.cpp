@@ -9,19 +9,19 @@ ColourProperties *new_colour_properties){
 //======================
 void SurfaceEntity::disp()const{
 	std::stringstream out;
-	out.str("");
-	out<<get_frame_string();
-	out<<get_surface_propertie_prompt();
-	out<<"__________________________"<<std::endl;
-	std::cout<<out.str();
+
+	out << get_frame_string();
+	out << get_surface_propertie_prompt();
+	out << "__________________________"<<std::endl;
+	std::cout << out.str();
 }
 //======================
 std::string SurfaceEntity::get_surface_propertie_prompt()const{
 	std::stringstream out;
-	out.str("");
-	out<<"|| surface: "<<std::endl;
-	out<<"|| "<<reflection.get_string();
-	out<<"|| "<<colour.get_string();
+	
+	out << "|| surface: \n";
+	out << "|| " << reflection.get_string();
+	out << "|| " << colour.get_string();
 	return out.str();
 }
 //======================
