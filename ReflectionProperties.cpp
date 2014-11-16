@@ -47,7 +47,7 @@ void ReflectionProperties::SetReflectionCoefficient(const std::string path2xml){
 	}
 
 	// overwrite the simple reflection coefficient
-	simple_reflection_coefficient = reflection_function.mean_value();
+	simple_reflection_coefficient = reflection_function.weighted_mean();
 
 	reflection_function_was_set = true;
 }

@@ -29,36 +29,28 @@
 #include "XmlFileIo.h"
 
 //------------------------------------------------------------------------------
-class tuple3{
-public:
-	double x;
-	double y;
-	double z;
-tuple3(){ x=0.0; y=0.0; z=0.0; }	
-};
-//------------------------------------------------------------------------------
 class WorldFactory : public XmlFileIo{
 	
 	CartesianFrame* root_of_World;
-	std::string absolute_path;
-	bool verbose;
-
+	std::string absolute_path ="";
 public:
+
 	WorldFactory();
 	void load(std::string path);
 	CartesianFrame* world();
 private:
+
 	void load_file(
 		CartesianFrame* mother,
 		std::string path,
 		std::string filename
 	);
 
-	void extract_path(std::string &path,const pugi::xml_node node);
+	void extract_include_path(std::string &path,const pugi::xml_node node);
 
 	void include_file(CartesianFrame* mother,const pugi::xml_node node);
 
-	void frame_factory(CartesianFrame* mother,const pugi::xml_node frame_node);
+	void fabricate_frame(CartesianFrame* mother,const pugi::xml_node frame_node);
 
 	void go_on_with_children_of_node(
 		CartesianFrame* mother,
@@ -138,39 +130,9 @@ private:
 		const pugi::xml_node node
 	);
 
-	void strto3tuple(tuple3 &tuple, const std::string text)const;
-
-	double pedantic_strtod(std::string text_to_parse)const;
-
-	void check_name_for_multiple_usage(
+	void assert_name_of_child_frame_is_not_in_use_yet(
 		const CartesianFrame *mother,
 		const std::string name_of_additional_child
-	)const;
-
-	void check(
-		const pugi::xml_node node,
-		const std::string child_name,
-		const std::string attribute_name
-	)const;
-
-	void check(
-		const pugi::xml_node node,
-		const std::string child_name
-	)const;
-
-	void build_offset_data_to_locate_line_and_column(
-		std::vector<ptrdiff_t>& result, 
-		const char* file
-	)const;
-
-	std::pair<int, int> get_line_and_column_location(
-		const std::vector<ptrdiff_t>& data,
-		ptrdiff_t offset
-	)const;
-
-	std::pair<int, int> offste_to_line_and_column(
-		const char* file,
-		ptrdiff_t offset
 	)const;
 
 	bool file_can_be_opened(const char* file)const;

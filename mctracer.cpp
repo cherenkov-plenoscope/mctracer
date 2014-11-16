@@ -168,9 +168,6 @@ int main(){
 	std::string user_input;
 	std::cout << "Enter a file to load: ";
 	std::cin  >> user_input;
-	
-		if( is_ending(user_input, ".xml") )
-			std::cout << "yes it is" << std::endl;
 
 		file2world.load(user_input);
 

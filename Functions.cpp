@@ -76,4 +76,4 @@ bool is_ending(std::string text, std::string ending){
 	}else{
 		return false;
 	}
-};
+}

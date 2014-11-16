@@ -8,10 +8,6 @@ WorldFactory::WorldFactory(){
 		Vector3D(0.0,0.0,0.0),
 		Rotation3D(0.0,0.0,0.0)
 	);
-
-	verbose = false;
-
-	absolute_path ="";
 }
 //------------------------------------------------------------------------------
 void WorldFactory::load(std::string path){
@@ -26,13 +22,6 @@ void WorldFactory::load(std::string path){
 	}
 
 	std::string filename = path.substr(position_in_path + 1); 
-
-	if(verbose){
-		std::cout << "path: " << path << "\n";
-		std::cout << "directory ends at position: " << position_in_path << "\n";
-		std::cout << "directory: " << absolute_path << "\n";
-		std::cout << "filename : " << filename << "\n";
-	}
 
     load_file(root_of_World, absolute_path, filename);
 }
@@ -54,14 +43,7 @@ void WorldFactory::load_file(
 
     if(result){
 
-    	if(verbose){
-    		std::stringstream out;
-        	out << "XML [" << path_of_file_to_load << "] ";
-        	out << "parsing successful";
-			cout << out.str() << endl;
-		}
-
-		frame_factory(mother,doc);	
+		fabricate_frame(mother,doc);	
     }else{
     	std::stringstream info;
 		info << "WorldFactory::"<<__func__<<"()";
@@ -70,13 +52,13 @@ void WorldFactory::load_file(
 }
 //------------------------------------------------------------------------------
 void WorldFactory::include_file(
-	CartesianFrame* mother,const pugi::xml_node node){
-	
-	std::string relative_path;
-	extract_path(relative_path,node);
+	CartesianFrame* mother, const pugi::xml_node node
+){
+	std::string relative_path_to_xml_to_be_included;
+	extract_include_path(relative_path_to_xml_to_be_included, node);
 
 	WorldFactory fab;
-	fab.load(absolute_path + relative_path);
+	fab.load(absolute_path + relative_path_to_xml_to_be_included);
 
 	CartesianFrame *sub_world;
 	sub_world = fab.world();
@@ -84,74 +66,47 @@ void WorldFactory::include_file(
 	mother->take_children(sub_world);
 }
 //------------------------------------------------------------------------------
-void WorldFactory::extract_path(std::string &path,const pugi::xml_node node){
-	
-	if(node.attribute("path") == NULL){
+void WorldFactory::extract_include_path(
+	std::string &path,const pugi::xml_node node
+){
+	assert_attribute_exists(node, "path");
 
-		std::stringstream info;
-		info << "The 'include' statement needs the 'path' statement to define ";
-		info << "the path to the xml file to be included!";
-		throw XmlIoException(info.str(),this);
-	}
-
-	path = node.attribute("path").value();
-
-	if(verbose)
-		std::cout << "Include path = " << path << std::endl;	
+	path = node.attribute("path").value();	
 }
 //------------------------------------------------------------------------------
-void WorldFactory::frame_factory(
+void WorldFactory::fabricate_frame(
 CartesianFrame* mother,const pugi::xml_node node){
 	
-	if(verbose){
-		std::stringstream out;
-		out << "frame factory checking node: "<<node.name();
-		out << " name=";
-		out << node.child("set_frame").attribute("name").value();
-		cout << out.str() << endl;
-	}
-
-	// set the cureent node working on
 	XmlNode = node;
 
-	//check node
-	std::string node_name = node.name();
-	if 		(node_name.compare("frame")==0){
+	if(		 pedantic_str_comp(node.name(),"frame")){
 		mother = produceCartesianFrame(mother,node);
 
-	}else if(node_name.compare("triangle")==0){
+	}else if(pedantic_str_comp(node.name(),"triangle")){
 		mother = produceTriangle(mother,node);
 		
-	}else if(node_name.compare("plane")==0){
+	}else if(pedantic_str_comp(node.name(),"plane")){
 		mother = producePlane(mother,node);
 		
-	}else if(node_name.compare("sphere")==0){
+	}else if(pedantic_str_comp(node.name(),"sphere")){
 		mother = produceSphere(mother,node);	
 
-	}else if(node_name.compare("cylinder")==0){
+	}else if(pedantic_str_comp(node.name(),"cylinder")){
 		mother = produceCylinder(mother,node);	
 
-	}else if(node_name.compare("disc")==0){
+	}else if(pedantic_str_comp(node.name(),"disc")){
 		mother = produceDisc(mother,node);	
 	
-	}else if(node_name.compare("FACT_reflector")==0){
+	}else if(pedantic_str_comp(node.name(),"FACT_reflector")){
 		mother = produceFactReflector(mother,node);	
 
-	}else if(node_name.compare("include")==0){
-		include_file(mother,node);	
-		if(verbose){
-			std::cout << "Found an include\n";
-		}		
+	}else if(pedantic_str_comp(node.name(),"include")){
+		include_file(mother,node);		
 		
-	}else{
-		if(mother->get_number_of_children()==0){
-			// Ignore the root of the world. 
-			// Here no frame pos and rot must be set!
-		}else{
-			std::stringstream info;
-			info << "WorldFactory::"<<__func__<<"() found an unknown item.";
-			throw UnknownItem( info.str(), this ,node_name);
-		}
+	}else if( mother->has_mother() ){	
+		std::stringstream info;
+		info << "WorldFactory::"<<__func__<<"() found an unknown item.";
+		throw UnknownItem( info.str(), this ,node.name());
 	}
 	
 	go_on_with_children_of_node(mother,node);
@@ -170,40 +125,32 @@ void WorldFactory::go_on_with_children_of_node(
 		std::string sub_node_name = sub_node.name();
 		bool valid_child = false;
 
-		if(sub_node_name.compare("include")==0){
-			frame_factory(mother,sub_node); valid_child=true;
+		if(pedantic_str_comp(sub_node_name,"include")){
+			fabricate_frame(mother,sub_node); valid_child=true;
 		}				
-		if(sub_node_name.compare("frame")==0){
-			frame_factory(mother,sub_node); valid_child=true;
+		if(pedantic_str_comp(sub_node_name,"frame")){
+			fabricate_frame(mother,sub_node); valid_child=true;
 		}
-		if(sub_node_name.compare("triangle")==0){
-			frame_factory(mother,sub_node); valid_child=true;
+		if(pedantic_str_comp(sub_node_name,"triangle")){
+			fabricate_frame(mother,sub_node); valid_child=true;
 		}	
-		if(sub_node_name.compare("plane")==0){
-			frame_factory(mother,sub_node); valid_child=true;
+		if(pedantic_str_comp(sub_node_name,"plane")){
+			fabricate_frame(mother,sub_node); valid_child=true;
 		}
-		if(sub_node_name.compare("sphere")==0){
-			frame_factory(mother,sub_node); valid_child=true;
+		if(pedantic_str_comp(sub_node_name,"sphere")){
+			fabricate_frame(mother,sub_node); valid_child=true;
 		}
-		if(sub_node_name.compare("cylinder")==0){
-			frame_factory(mother,sub_node); valid_child=true;
+		if(pedantic_str_comp(sub_node_name,"cylinder")){
+			fabricate_frame(mother,sub_node); valid_child=true;
 		}	
-		if(sub_node_name.compare("disc")==0){
-			frame_factory(mother,sub_node); valid_child=true;
+		if(pedantic_str_comp(sub_node_name,"disc")){
+			fabricate_frame(mother,sub_node); valid_child=true;
 		}	
-		if(sub_node_name.compare("FACT_reflector")==0){
-			frame_factory(mother,sub_node); valid_child=true;
+		if(pedantic_str_comp(sub_node_name,"FACT_reflector")){
+			fabricate_frame(mother,sub_node); valid_child=true;
 		}	
-		if(valid_child){
-
-			if(verbose){
-				std::stringstream out;
-				out << "frame_factory -> calling frame_factory for child >";
-				out << sub_node.name() << "< of node >";
-				out << node.child("set_frame").attribute("name").value() << "<";
-				cout << out.str() << endl;	
-			}
-		}else{
+		
+		if(!valid_child){
 			if(sub_node_name.find("set") == std::string::npos){
 
 				std::stringstream info;
@@ -218,13 +165,13 @@ CartesianFrame* WorldFactory::produceCartesianFrame(
 	CartesianFrame* mother,
 	const pugi::xml_node node
 ){
-	check(node, "set_frame");
+	assert_child_exists(node, "set_frame");
 
 	std::string 			name;
 	Vector3D 				position;
 	Rotation3D 				rotation;
 	
-	extract_Frame_props(name,position,rotation,node);
+	extract_Frame_props(name, position, rotation, node.child("set_frame") );
 		
 	CartesianFrame *frame;
 	frame = new CartesianFrame;
@@ -238,9 +185,9 @@ CartesianFrame* WorldFactory::produceCartesianFrame(
 CartesianFrame* WorldFactory::producePlane(
 	CartesianFrame* mother,const pugi::xml_node node
 ){
-	check(node, "set_frame");
-	check(node, "set_surface");
-	check(node, "set_plane");
+	assert_child_exists(node, "set_frame");
+	assert_child_exists(node, "set_surface");
+	assert_child_exists(node, "set_plane");
 
 	std::string 			name;
 	Vector3D    			position;
@@ -249,11 +196,11 @@ CartesianFrame* WorldFactory::producePlane(
 	ColourProperties 		colour;
 	double 					min_x, max_x, min_y, max_y;
 	
-	extract_Frame_props(name,position,rotation,node);
-	extract_Surface_props(refl_prop,colour,node);
-	extract_Plane_props(min_x, max_x, min_y, max_y,node);
+	extract_Frame_props(name, position, rotation, node.child("set_frame"));
+	extract_Surface_props(refl_prop, colour, node.child("set_surface"));
+	extract_Plane_props(min_x, max_x, min_y, max_y, node.child("set_plane"));
 
-	check_name_for_multiple_usage(mother,name);	
+	assert_name_of_child_frame_is_not_in_use_yet(mother, name);	
 
 	Plane *new_plane;
 	new_plane = new Plane;
@@ -269,9 +216,9 @@ CartesianFrame* WorldFactory::producePlane(
 CartesianFrame* WorldFactory::produceSphere(
 	CartesianFrame* mother,const pugi::xml_node node
 ){
-	check(node, "set_frame");
-	check(node, "set_surface");
-	check(node, "set_sphere");
+	assert_child_exists(node, "set_frame");
+	assert_child_exists(node, "set_surface");
+	assert_child_exists(node, "set_sphere");
 
 	std::string 			name;
 	Vector3D 				position;
@@ -280,11 +227,11 @@ CartesianFrame* WorldFactory::produceSphere(
 	ColourProperties 		colour;
 	double 					radius;
 
-	extract_Frame_props(name,position,rotation,node);
-	extract_Surface_props(refl_prop,colour,node);
-	extract_Sphere_props(radius,node);
+	extract_Frame_props(name, position, rotation, node.child("set_frame"));
+	extract_Surface_props(refl_prop, colour, node.child("set_surface"));
+	extract_Sphere_props(radius,node.child("set_sphere"));
 
-	check_name_for_multiple_usage(mother,name);
+	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
 
 	Sphere *new_sphere;
 	new_sphere = new Sphere;	
@@ -300,29 +247,29 @@ CartesianFrame* WorldFactory::produceSphere(
 CartesianFrame* WorldFactory::produceCylinder(
 	CartesianFrame* mother,const pugi::xml_node node
 ){
-	check(node, "set_frame");
-	check(node, "set_surface");
-	check(node, "set_cylinder");
+	assert_child_exists(node, "set_frame");
+	assert_child_exists(node, "set_surface");
+	assert_child_exists(node, "set_cylinder");
 
 	std::string 			name;
 	Vector3D 				position;
 	Rotation3D 				rotation;
 	ReflectionProperties 	refl_prop; 
 	ColourProperties 		colour;
-	double 					cyl_radius;
-	Vector3D 				start_of_cylinder, end_of_cylinder;
+	double 					radius;
+	Vector3D 				start, end;
 					
-	extract_Frame_props(name,position, rotation,node);
-	extract_Surface_props(refl_prop, colour,node);
-	extract_Cylinder_props(cyl_radius, start_of_cylinder, end_of_cylinder,node);
+	extract_Frame_props(name,position, rotation, node.child("set_frame"));
+	extract_Surface_props(refl_prop, colour, node.child("set_surface"));
+	extract_Cylinder_props(radius, start, end, node.child("set_cylinder"));
 
-	check_name_for_multiple_usage(mother,name);
+	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
 
 	Cylinder *new_Cylinder;
 	new_Cylinder = new Cylinder;
 	new_Cylinder->set_frame(name,position, rotation);
 	new_Cylinder->set_surface_properties(&refl_prop, &colour);
-	new_Cylinder->set_cylinder(cyl_radius, start_of_cylinder, end_of_cylinder);
+	new_Cylinder->set_cylinder(radius, start, end);
 	
 	mother->set_mother_and_child(new_Cylinder);
 	return new_Cylinder;
@@ -331,18 +278,18 @@ CartesianFrame* WorldFactory::produceCylinder(
 CartesianFrame* WorldFactory::produceFactReflector(
 	CartesianFrame* mother,const pugi::xml_node node
 ){
-	check(node, "set_frame");	
-	check(node, "set_FACT_reflector");
+	assert_child_exists(node, "set_frame");	
+	assert_child_exists(node, "set_FACT_reflector");
 	
 	std::string 		name;
 	Vector3D 			position;
 	Rotation3D 			rotation;
 	double 				alpha;
 					
-	extract_Frame_props(name,position,rotation,node);
-	extract_FACT_props(alpha,node);
+	extract_Frame_props(name, position, rotation, node.child("set_frame"));
+	extract_FACT_props(alpha, node.child("set_FACT_reflector"));
 
-	check_name_for_multiple_usage(mother,name);
+	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
 
 	FactTelescope *new_FactTelescope;
 	new_FactTelescope = new FactTelescope(alpha);			
@@ -356,9 +303,9 @@ CartesianFrame* WorldFactory::produceFactReflector(
 CartesianFrame* WorldFactory::produceDisc(
 	CartesianFrame* mother,const pugi::xml_node node
 ){
-	check(node, "set_frame");	
-	check(node, "set_surface");
-	check(node, "set_disc");
+	assert_child_exists(node, "set_frame");	
+	assert_child_exists(node, "set_surface");
+	assert_child_exists(node, "set_disc");
 
 	std::string 			name;
 	Vector3D 				position;
@@ -367,11 +314,11 @@ CartesianFrame* WorldFactory::produceDisc(
 	ColourProperties 		colour;
 	double 					radius;
 
-	extract_Frame_props(name, position, rotation, node);
-	extract_Surface_props(refl_prop, colour,node);
-	extract_Disc_props(radius, node);
+	extract_Frame_props(name, position, rotation, node.child("set_frame"));
+	extract_Surface_props(refl_prop, colour, node.child("set_surface"));
+	extract_Disc_props(radius, node.child("set_disc"));
 
-	check_name_for_multiple_usage(mother, name);
+	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
 	
 	Disc *new_Disc;
 	new_Disc = new Disc;	
@@ -387,28 +334,28 @@ CartesianFrame* WorldFactory::produceDisc(
 CartesianFrame* WorldFactory::produceTriangle(
 	CartesianFrame* mother,const pugi::xml_node node
 ){
-	check(node, "set_frame");
-	check(node, "set_surface");
-	check(node, "set_triangle");
+	assert_child_exists(node, "set_frame");
+	assert_child_exists(node, "set_surface");
+	assert_child_exists(node, "set_triangle");
 	
 	std::string 			name;
 	Vector3D 				position;
 	Rotation3D 				rotation;
 	ReflectionProperties 	refl_prop; 
 	ColourProperties 		colour;
-	Vector3D 				point_A, point_B, point_C;
+	Vector3D 				pA, pB, pC;
 
-	extract_Frame_props(name, position, rotation,node);
-	extract_Surface_props(refl_prop, colour,node);
-	extract_Triangle_props(point_A, point_B, point_C, node);
+	extract_Frame_props(name, position, rotation, node.child("set_frame"));
+	extract_Surface_props(refl_prop, colour, node.child("set_surface"));
+	extract_Triangle_props(pA, pB, pC, node.child("set_triangle"));
 
-	check_name_for_multiple_usage(mother, name);
+	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
 
 	Triangle *new_Triangle;
 	new_Triangle = new Triangle;			
 	new_Triangle->set_frame(name,position,rotation);
 	new_Triangle->set_surface_properties(&refl_prop, &colour);
-	new_Triangle->set_Triangle(point_A, point_B, point_C);
+	new_Triangle->set_Triangle(pA, pB, pC);
 	
 	mother->set_mother_and_child(new_Triangle);
 	return new_Triangle;
@@ -419,11 +366,10 @@ void WorldFactory::extract_Surface_props(
 	ColourProperties &colour,
 	const pugi::xml_node node
 ){
-	check(node, "set_surface", "refl");
-	check(node, "set_surface", "colour");
+	assert_attribute_exists(node, "refl");
+	assert_attribute_exists(node, "colour");
 
-	std::string refl_attribure = 
-		node.child("set_surface").attribute("refl").value();
+	std::string refl_attribure = node.attribute("refl").value();
 
 	// In case the reflection attribute string ends with '.xml', then the
 	// reflection coefficient is parsed in out of a xml file. 
@@ -431,7 +377,6 @@ void WorldFactory::extract_Surface_props(
 	// wavelength. 
 	if( is_ending(refl_attribure, ".xml") ){
 		// set wavelength depending reflection coefficient
-		std::cout << refl_attribure<<std::endl;
 		refl_prop.SetReflectionCoefficient( (absolute_path + refl_attribure) );
 	}else{
 		// set reflection coefficient independent of wavelength	
@@ -439,212 +384,96 @@ void WorldFactory::extract_Surface_props(
 	}	
 
 	// color properties for camera rays to render images of the scenery
-	tuple3 VecTuple; 
-	strto3tuple(
-		VecTuple,node.child("set_surface").attribute("colour").value()
-	);
-	colour.set_colour_0to255(VecTuple.x,VecTuple.y,VecTuple.z);
-
-	if(verbose){
-		std::stringstream out;
-		out << "set_surface (";
-		out << "reflection : "<<refl_prop<<", ";
-		out << "colour: "<<colour<<" )";
-		cout << out.str() << endl;
-	}
-}
-//------------------------------------------------------------------------------
-void WorldFactory::check(
-	const pugi::xml_node node,
-	const std::string child_name,
-	const std::string attribute_name
-)const{
-	if(
-		node.child( child_name.c_str() ).attribute( attribute_name.c_str() ) 
-		== NULL
-	){
-		std::stringstream info;
-		info << "WorldFactory: Missing attribute. The Node: '" << child_name;
-		info << "' requires '" << attribute_name << "'.";
-		throw MissingItem( info.str(), this, attribute_name);
-	}
-}
-//------------------------------------------------------------------------------
-void WorldFactory::check(
-	const pugi::xml_node node,
-	const std::string child_name
-)const{
-	if(node.child( child_name.c_str() ) == NULL){
-		std::stringstream info;
-		info << "WorldFactory: Missing Node.";
-		throw MissingItem( info.str(), this, child_name);
-	}
+	//tuple3 col; 
+	double red, blu, gre;
+	strto3tuple(red, blu, gre, node.attribute("colour").value());
+	colour.set_colour_0to255(red, blu, gre);
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_Frame_props(
 	std::string &name, Vector3D &position, Rotation3D &rotation,
 	const pugi::xml_node node
 ){	
-	check(node, "set_frame", "name");
-	check(node, "set_frame", "pos");	
-	check(node, "set_frame", "rot");	
+	assert_attribute_exists(node, "name");
+	assert_attribute_exists(node, "pos");
+	assert_attribute_exists(node, "rot");	
 
-	name = node.child("set_frame").attribute("name").value();
+	name = node.attribute("name").value();
 
-	tuple3 VecTuple; 
-	// check position
-	strto3tuple(
-		VecTuple,node.child("set_frame").attribute("pos").value()
-	);
+	double pX, pY, pZ;
+	strto3tuple(pX, pY, pZ, node.attribute("pos").value());
+	position.set(pX, pY, pZ);
 
-	position.set(VecTuple.x,VecTuple.y,VecTuple.z);
-
-	//check rotation
-	strto3tuple(
-		VecTuple,node.child("set_frame").attribute("rot").value()
-	);
-
-	rotation.set(VecTuple.x,VecTuple.y,VecTuple.z);
-	
-	if(verbose){
-		std::stringstream out;
-		out << "set_frame (name: " << name;
-		out << ",pos: " << position;
-		out << ",rot: " << rotation << ")";
-		cout << out.str() << endl;
-	}
+	double rX, rY, rZ;
+	strto3tuple(rX, rY, rZ, node.attribute("rot").value());
+	rotation.set(rX, rY, rZ);
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_Plane_props(
 	double &min_x, double &max_x, double &min_y, double &max_y,
 	const pugi::xml_node node
 ){
-	check(node, "set_plane", "min_x");	
-	check(node, "set_plane", "max_x");	
-	check(node, "set_plane", "min_y");	
-	check(node, "set_plane", "max_y");	
-			
-	min_x = pedantic_strtod(
-		node.child("set_plane").attribute("min_x").value()
-	);
-
-	max_x = pedantic_strtod(
-		node.child("set_plane").attribute("max_x").value()
-	);
-
-	min_y = pedantic_strtod(
-		node.child("set_plane").attribute("min_y").value()
-	);
-
-	max_y = pedantic_strtod(
-		node.child("set_plane").attribute("max_y").value()
-	);
-
-	if(verbose){
-		std::stringstream out;
-		out << "set_plane (";
-		out << "min_x: " << min_x << ", ";
-		out << "max_x: " << max_x << ", ";
-		out << "min_y: " << min_y << ", ";
-		out << "max_y: " << max_y << ")";
-		cout << out.str() << endl;
-	}
+	assert_attribute_exists(node, "min_x");
+	assert_attribute_exists(node, "min_x");
+	assert_attribute_exists(node, "min_x");
+	assert_attribute_exists(node, "min_x");
+	
+	min_x = pedantic_strtod(node.attribute("min_x").value());
+	max_x = pedantic_strtod(node.attribute("max_x").value());
+	min_y = pedantic_strtod(node.attribute("min_y").value());
+	max_y = pedantic_strtod(node.attribute("max_y").value());
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_Sphere_props(
 	double &radius,const pugi::xml_node node
 ){
-	check(node, "set_sphere", "radius");	
+	assert_attribute_exists(node, "radius");	
 	
-	radius = pedantic_strtod(
-		node.child("set_sphere").attribute("radius").value()
-	);	
-
-	if(verbose){
-		std::stringstream out;
-		out << "set_sphere (";
-		out << "radius "<<radius<<"[m])";
-		cout << out.str() << endl;
-	}
+	radius = pedantic_strtod(node.attribute("radius").value());
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_Cylinder_props(
-	double &cylinder_radius,
-	Vector3D &start_of_cylinder,
-	Vector3D &end_of_cylinder,
+	double &radius,
+	Vector3D &start,
+	Vector3D &end,
 	const pugi::xml_node node
 ){
-	check(node, "set_cylinder", "radius");
-	check(node, "set_cylinder", "start_pos");
-	check(node, "set_cylinder", "end_pos");
+	assert_attribute_exists(node, "radius");
+	assert_attribute_exists(node, "start_pos");
+	assert_attribute_exists(node, "end_pos");
 		
-	cylinder_radius = pedantic_strtod(
-		node.child("set_cylinder").attribute("radius").value()
-	);
+	radius = pedantic_strtod(node.attribute("radius").value());
 	
-	// check start_of_cylinder
-	tuple3 VecTuple;
-
-	strto3tuple(
-		VecTuple,node.child("set_cylinder").attribute("start_pos").value()
-	);
-	start_of_cylinder.set(VecTuple.x,VecTuple.y,VecTuple.z);
+	double sX, sY, sZ;
+	strto3tuple(sX, sY, sZ, node.attribute("start_pos").value());
+	start.set(sX, sY, sZ);
 	
-	// check end_of_cylinder
-	strto3tuple(
-		VecTuple,node.child("set_cylinder").attribute("end_pos").value()
-	);
-	end_of_cylinder.set(VecTuple.x,VecTuple.y,VecTuple.z);
-	
-	if(verbose){
-		std::stringstream out;
-		out << "set_cylinder (";
-		out << "radius "<<cylinder_radius<<"[m], ";
-		out << "start_pos: "<<start_of_cylinder<<", ";
-		out << "end_pos: "<<end_of_cylinder<<")";
-		cout << out.str() << endl;
-	}
+	double eX, eY, eZ;
+	strto3tuple(eX, eY, eZ, node.attribute("end_pos").value());
+	end.set(eX, eY, eZ);
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_FACT_props(
 	double &alpha,const pugi::xml_node node
 ){
-	if(node.child("set_FACT_reflector").attribute("alpha") == NULL){
+	if(node.attribute("alpha") == NULL){
 		
 		std::stringstream info;
-		info << "set_FACT_reflector requires the 'alpha' statement!";
-		info << " Alpha=0 is a Davies-Cotton Reflector, alpha=1 is ";
+		info << "The set_FACT_reflector requires the 'alpha' statement! ";
+		info << "Alpha=0 is a Davies-Cotton Reflector, alpha=1 is ";
 		info << "a paraboloid reflector. Alpha in between 0 and 1 ";
 		info << "is a mixture of both.";
-		//throw MissingItem( "alpha", info.str() );
+		throw MissingItem(info.str(), this, "alpha" );
 	}
 	
-	alpha = pedantic_strtod(
-		node.child("set_FACT_reflector").attribute("alpha").value()
-	);
-
-	if(verbose){
-		std::stringstream out;
-		out << "set_fact_reflector (";
-		out << "alpha "<<alpha<<")";
-		cout << out.str() << endl;
-	}
+	alpha = pedantic_strtod(node.attribute("alpha").value());
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_Disc_props(double &radius,const pugi::xml_node node){
 
-	check(node, "set_disc", "radius");
+	assert_attribute_exists(node, "radius");
 
-	radius = pedantic_strtod(
-		node.child("set_disc").attribute("radius").value()
-	);
-	
-	if(verbose){
-		std::stringstream out;
-		out << "set_Disc (";
-		out << "radius "<<radius<<"[m])";
-		cout << out.str() << endl;
-	}
+	radius = pedantic_strtod(node.attribute("radius").value());
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_Triangle_props(
@@ -653,47 +482,29 @@ void WorldFactory::extract_Triangle_props(
 	Vector3D &point_C,
 	const pugi::xml_node node
 ){
-	check(node, "set_triangle", "A");
-	check(node, "set_triangle", "B");
-	check(node, "set_triangle", "C");
-	
-	tuple3 VecTuple; 	
-	
-	// check point A
-	strto3tuple(
-		VecTuple,node.child("set_triangle").attribute("A").value()
-	);
-	point_A.set(VecTuple.x,VecTuple.y,VecTuple.z);
+	assert_attribute_exists(node, "A");
+	assert_attribute_exists(node, "B");
+	assert_attribute_exists(node, "C");
+ 	
+	double 		aX, aY, aZ;	
+	strto3tuple(aX, aY, aZ, node.attribute("A").value());
+	point_A.set(aX, aY, aZ);
 
-	// check point B
-	strto3tuple(
-		VecTuple,node.child("set_triangle").attribute("B").value()
-	);
-	point_B.set(VecTuple.x,VecTuple.y,VecTuple.z);
+	double 		bX, bY, bZ;	
+	strto3tuple(bX, bY, bZ, node.attribute("B").value());
+	point_B.set(bX, bY, bZ);
 
-	// check point C 
-	strto3tuple(
-		VecTuple,node.child("set_triangle").attribute("C").value()
-	);
-	point_C.set(VecTuple.x,VecTuple.y,VecTuple.z);
-
-	if(verbose){
-		std::stringstream out;
-		out << "set_Triangle (";
-		out << "A: " << point_A << ", B: " << point_B << ",C: " << point_C;
-		out << ")";
-		cout << out.str() << endl;
-	}
+	double 		cX, cY, cZ;	
+	strto3tuple(cX, cY, cZ, node.attribute("C").value());
+	point_C.set(cX, cY, cZ);
 }
 //------------------------------------------------------------------------------
-void WorldFactory::check_name_for_multiple_usage(
+void WorldFactory::assert_name_of_child_frame_is_not_in_use_yet(
 	const CartesianFrame *mother,
 	const std::string name_of_additional_child
 )const{
-	if( 
-		mother->get_pointer_to_specific_child(name_of_additional_child)
-		 != nullptr
-	){
+
+	if( mother->has_child_with_name(name_of_additional_child) ){
 		// There is already a child in the mother frame wit this name.
 		// There must not be a second one!
 		stringstream info;
@@ -704,74 +515,6 @@ void WorldFactory::check_name_for_multiple_usage(
 			get_path()
 		);
 	}
-}
-//------------------------------------------------------------------------------
-void WorldFactory::strto3tuple(tuple3 &tuple, const std::string text)const{
-	
-	std::string TextToWorkOn = text;
-	
-	std::size_t pos = TextToWorkOn.find("[");
-	if(pos != std::string::npos){
-		TextToWorkOn = TextToWorkOn.substr(pos+1);	
-	}else{
-		std::stringstream info;
-		info << "Error parsing tuple: [float,float,float]\n";
-		info << "I can not find the opening '[' in '" << text << "' !\n";
-		throw BadAttribute(info.str(), this, text);
-	}
-	
-	pos = TextToWorkOn.find(",");
-	if(pos != std::string::npos){
-		tuple.x = pedantic_strtod(TextToWorkOn.substr(0,pos));	
-		TextToWorkOn = TextToWorkOn.substr(pos+1);
-	}else{
-		std::stringstream info;
-		info << "Error parsing tuple: [float,float,float]\n"; 
-		info << "I can not find the comma ',' in '" << text << "' !\n";
-		throw BadAttribute(info.str(), this, text);
-	}
-	
-	pos = TextToWorkOn.find(",");
-	if(pos != std::string::npos){
-		tuple.y = pedantic_strtod(TextToWorkOn.substr(0,pos));
-		TextToWorkOn = TextToWorkOn.substr(pos+1);
-	}else{
-		std::stringstream info;
-		info << "Error parsing tuple: [float,float,float]\n";  
-		info << "I can not find the comma ',' in '" << text << "' !\n";
-		throw BadAttribute(info.str(), this, text);
-	}	
-
-	pos = TextToWorkOn.find("]");
-	if(pos != std::string::npos){
-		tuple.z = pedantic_strtod(TextToWorkOn.substr(0,pos));
-	}else{
-		std::stringstream info;
-		info << "Error parsing tuple: [float,float,float]\n";  
-		info << "I can not find the closing ']' in '" << text << "' !\n";
-		throw BadAttribute(info.str(), this, text);
-	}	
-}
-//------------------------------------------------------------------------------
-double WorldFactory::pedantic_strtod(std::string text_to_parse)const{
-
-	if(text_to_parse.compare("") == 0){
-		std::stringstream info;
-		info << "WorldFactory::"<<__func__<<"() ";
-		info << "attribute string is empty.";
-		throw BadAttribute(info.str(), this, text_to_parse);
-	}
-	
-	char * e;
-	double number_parsed_in = std::strtod(text_to_parse.c_str(), &e);
-
-	if (*e != 0){
-		std::stringstream info;
-		info << "WorldFactory::"<<__func__<<"() ";
-		info << "can not convert attribute string to floating point number.";
-		throw BadAttribute(info.str(), this, text_to_parse);
-	}
-	return number_parsed_in;
 }
 //------------------------------------------------------------------------------
 CartesianFrame* WorldFactory::world(){

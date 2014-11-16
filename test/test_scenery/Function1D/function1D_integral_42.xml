@@ -1,4 +1,4 @@
-<function1D name="my_assignment" unit_x="nm" value="reflection coefficient" unit_y="1">
+<function1D name="my_assignment" unit_x="nm" value="reflection coefficient" unit_y="1" boundary="STRICT">
 	<pair x="0.0" y="0.0"/>
 	<pair x="0.5" y="84.0"/>
 	<pair x="1.0" y="0.0"/>

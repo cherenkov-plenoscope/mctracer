@@ -116,7 +116,7 @@ TEST_F(Function1DTest, Integral){
     try{
         Function1D f("./test_scenery/Function1D/function1D_integral_42.xml");
         
-        EXPECT_EQ( 42.0 , f.mean_value() );     
+        EXPECT_EQ( 42.0 , f.weighted_mean() );     
     }catch(TracerException &error){
         cout << error.what() << endl;
     } 

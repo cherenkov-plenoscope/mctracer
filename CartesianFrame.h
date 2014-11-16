@@ -152,6 +152,9 @@ public:
 
     const OctTreeCube* get_OctTree()const{ return OctTree; };
 
+    bool has_child_with_name(const std::string name_of_child)const;
+    bool has_mother()const;
+
 private:
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     std::string get_print(

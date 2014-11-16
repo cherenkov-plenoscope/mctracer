@@ -1,12 +1,12 @@
 #include "XmlIoException.h"
 //------------------------------------------------------------------------------
-XmlIoException::XmlIoException(std::string msg,const XmlFileIo *file_info){
+XmlIoException::XmlIoException(std::string msg,const XmlIoFileInfo *file_info){
 	set_up(msg,file_info);
 }
 //------------------------------------------------------------------------------
 XmlIoException::XmlIoException(){}
 //------------------------------------------------------------------------------
-void XmlIoException::set_up(std::string msg,const XmlFileIo *file_info){
+void XmlIoException::set_up(std::string msg,const XmlIoFileInfo *file_info){
 	message 		= msg;
 	Filename		= file_info->get_XmlName();
 	parsing_result 	= file_info->get_XmlResult();
@@ -171,7 +171,7 @@ std::string XmlIoException::pugi_encoding_to_str(int encoding)const{
 //------------------------------------------------------------------------------
 UnknownItem::UnknownItem(
 	std::string msg,
-	const XmlFileIo *file_info, 
+	const XmlIoFileInfo *file_info, 
 	std::string name_of_unknown_item
 ){
 	set_up(msg,file_info);
@@ -180,7 +180,7 @@ UnknownItem::UnknownItem(
 //------------------------------------------------------------------------------
 MissingItem::MissingItem(
 	std::string msg,
-	const XmlFileIo *file_info, 
+	const XmlIoFileInfo *file_info, 
 	std::string name_of_missing_item
 ){
 	set_up(msg,file_info);
@@ -189,7 +189,7 @@ MissingItem::MissingItem(
 //------------------------------------------------------------------------------
 MultipleUseage::MultipleUseage(
 	std::string msg,
-	const XmlFileIo *file_info, 
+	const XmlIoFileInfo *file_info, 
 	std::string path_of_frame_multiple_in_use
 ){
 	set_up(msg,file_info);
@@ -198,7 +198,7 @@ MultipleUseage::MultipleUseage(
 //------------------------------------------------------------------------------
 BadAttribute::BadAttribute(
 	std::string msg,
-	const XmlFileIo *file_info, 
+	const XmlIoFileInfo *file_info, 
 	std::string attribute_value
 ){
 	set_up(msg,file_info);

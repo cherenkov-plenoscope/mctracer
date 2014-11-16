@@ -67,10 +67,7 @@ private:
 	std::string Unit_of_value = "";
 
 	//--------------------------------------------------------------------------
-	std::string prompt()const;
-	//--------------------------------------------------------------------------
-	double pedantic_str2float(std::string text)const;
-	bool pedantic_str_comp(const std::string A,const std::string B)const;
+	std::string get_print()const;
 	//--------------------------------------------------------------------------
 	void read();
 	//--------------------------------------------------------------------------
@@ -80,11 +77,11 @@ private:
 		return ( B.first > A);
 	};
 	//--------------------------------------------------------------------------
-	/*double interpolate_linear(
-		const double &x0,const double &y0,
-		const double &x1,const double &y1,
-		const double &x
-	);*/
+	double interpolate_linear(
+		const std::pair<double,double> p0, 
+		const std::pair<double,double> p1, 
+		const double x
+	)const;
 	//--------------------------------------------------------------------------
 public:
 	void set(std::string path2xml_input_file);
@@ -97,7 +94,7 @@ public:
 	//--------------------------------------------------------------------------
 	std::string name()const;
 	//--------------------------------------------------------------------------
-	void disp()const{std::cout << prompt() << std::endl;}
+	void disp()const{std::cout << get_print() << std::endl;}
 	//--------------------------------------------------------------------------
 	std::vector< std::pair<double,double> >::const_iterator begin()const{
 		return func.begin();
@@ -107,7 +104,17 @@ public:
 		return func.end();
 	}
 	//--------------------------------------------------------------------------
-	double mean_value()const;
+	double weighted_mean()const;
 	//--------------------------------------------------------------------------
+	double integral()const;
+	//--------------------------------------------------------------------------
+	double range()const;
+	//--------------------------------------------------------------------------
+	double at_with_Boundary_Mode_CLOSEST(double func_arg)const;
+	double at_with_Boundary_Mode_STRICT(double func_arg)const;
+	double at_with_Boundary_Mode_ZERO(double func_arg)const;
+	//--------------------------------------------------------------------------	
+	std::vector< std::pair<double,double> >::const_iterator get_upper_bound(double func_arg)const;
+	void set_boundary_mode(const std::string mode_text);
 };
 #endif // __FUNCTION1D_H_INCLUDED__

@@ -545,48 +545,27 @@ std::string CartesianFrame::get_path()const{
 	}
 }
 //==============================================================================
-/*
-void fabricate_frame(const pugi::xml_node node){
-
-	if(node.child("set_frame").attribute("name") == NULL){
-		throw MissingItem("name",
-		"set_frame requires the 'name' statement!");
-	}
-	if(node.child("set_frame").attribute("pos") == NULL){
-		throw MissingItem("pos",
-		"set_frame requires the 'pos' statement!");
-	}
-	if(node.child("set_frame").attribute("rot") == NULL){
-		throw MissingItem("rot",
-		"set_frame requires the 'rot' statement!");
+bool CartesianFrame::has_child_with_name(const std::string name_of_child)const{
+	if( get_pointer_to_specific_child(name_of_child) == nullptr ){
+		return false;
+	}else{
+		return true;
 	}	
-	
-	name = node.child("set_frame").attribute("name").value();
-
-	//check_name_for_multiple_usage(root_of_World,name);
-	
-	tuple3 VecTuple; 
-	// check position
-	parse3tuple(
-		VecTuple,node.child("set_frame").attribute("pos").value()
-	);
-
-	position.set(VecTuple.x,VecTuple.y,VecTuple.z);
-
-	
-	//check rotation
-	parse3tuple(
-		VecTuple,node.child("set_frame").attribute("rot").value()
-	);
-
-	rotation.set(VecTuple.x,VecTuple.y,VecTuple.z);
-	
-	if(prompt){
-		std::stringstream out;
-		out << "set_frame (name: "<<name;
-		out <<",pos: "<<position;
-		out <<",rot: "<<rotation<<")";
-		cout << out.str() << endl;
+}
+//==============================================================================
+bool CartesianFrame::has_mother()const{
+	if(mother == nullptr){
+		return false;
+	}else{
+		return true;
 	}
 }
-*/
+//==============================================================================
+/*
+bool CartesianFrame::has_children()const{
+	if(get_number_of_children() > 0){
+		return true;
+	}else{
+		return false;
+	}
+}*/

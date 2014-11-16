@@ -28,9 +28,9 @@ class XmlIoException :public TracerException{
 public:
 	XmlIoException();
 
-	void set_up(std::string msg,const XmlFileIo *file_info);
+	void set_up(std::string msg,const XmlIoFileInfo *file_info);
 
-	XmlIoException(std::string msg,const XmlFileIo *file_info);
+	XmlIoException(std::string msg,const XmlIoFileInfo *file_info);
 
 	std::string filename()const{
 		return Filename;
@@ -58,7 +58,7 @@ public:
 
 	UnknownItem(
 		std::string msg,
-		const XmlFileIo *file_info, 
+		const XmlIoFileInfo *file_info, 
 		std::string name_of_unknown_item
 	);
 
@@ -90,7 +90,7 @@ public:
 
 	MissingItem(
 		std::string msg,
-		const XmlFileIo *file_info,
+		const XmlIoFileInfo *file_info,
 		std::string name_of_missing_item);
 
 	std::string name()const{
@@ -121,7 +121,7 @@ public:
 
 	MultipleUseage(
 		std::string msg,
-		const XmlFileIo *file_info,
+		const XmlIoFileInfo *file_info,
 		std::string path_of_frame_multiple_in_use);
 
 	std::string name()const{
@@ -153,7 +153,7 @@ public:
 
 	BadAttribute(
 		std::string msg,
-		const XmlFileIo *file_info,
+		const XmlIoFileInfo *file_info,
 		std::string attribute_value);
 
 	std::string name()const{
