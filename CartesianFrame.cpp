@@ -31,7 +31,7 @@ void CartesianFrame::create_OctTree(){
 		2.0*radius_of_sphere_enclosing_all_children
 	);
 
-	FillOctTree(OctTree,children);
+	FillOctTree(OctTree, children);
 }
 //==============================================================================
 void CartesianFrame::post_initialize_Transformations(){
@@ -86,44 +86,41 @@ HomoTrafo3D CartesianFrame::calculate_frame2world()const{
 //==============================================================================
 void CartesianFrame::SetOctTree(
 	OctTreeCube *Cube,   
-    Vector3D CubesCenterPosition,
+    Vector3D CenterPosition,
     double LengthOfEdge)
 {
-    Cube->CenterPosition = CubesCenterPosition;
-    Cube->EdgeLength = LengthOfEdge;
+    Cube-> CenterPosition = CenterPosition;
+    Cube-> EdgeLength = LengthOfEdge;
 
-    double HalfTheEdge = LengthOfEdge/2.0;
-
-    Cube->limits[0][0] = Cube->CenterPosition.x() - HalfTheEdge;
-    Cube->limits[0][1] = Cube->CenterPosition.x() + HalfTheEdge;
-
-    Cube->limits[1][0] = Cube->CenterPosition.y() - HalfTheEdge;
-    Cube->limits[1][1] = Cube->CenterPosition.y() + HalfTheEdge;
-
-    Cube->limits[2][0] = Cube->CenterPosition.z() - HalfTheEdge;
-    Cube->limits[2][1] = Cube->CenterPosition.z() + HalfTheEdge;	
+	SetOctTreeLimits(Cube, CenterPosition);	
 }
+//==============================================================================
+void CartesianFrame::SetOctTreeLimits(
+	OctTreeCube *Cube, 
+	Vector3D CenterPosition
+){
+	Cube->limits[0][0] = Cube->CenterPosition.x() - EdgeLengthOfChildCube(Cube);
+    Cube->limits[0][1] = Cube->CenterPosition.x() + EdgeLengthOfChildCube(Cube);
+
+    Cube->limits[1][0] = Cube->CenterPosition.y() - EdgeLengthOfChildCube(Cube);
+    Cube->limits[1][1] = Cube->CenterPosition.y() + EdgeLengthOfChildCube(Cube);
+
+    Cube->limits[2][0] = Cube->CenterPosition.z() - EdgeLengthOfChildCube(Cube);
+    Cube->limits[2][1] = Cube->CenterPosition.z() + EdgeLengthOfChildCube(Cube);
+} 
 //==============================================================================
 void CartesianFrame::FillOctTree(
 	OctTreeCube *Cube,  
 	std::vector<CartesianFrame*> ChildrenToFillIn
 ){
-
 	Cube->ChildFrames = ChildrenToFillIn;
 
     if(ChildrenToFillIn.size() > max_number_of_frames_in_OctTree){
 
-    	double ChildCubeEdgeLength = 
-    	CalculateEdgeLengthOfChildCube(Cube);
-
-        //std::cout<<"Center Position " <<Cube->CenterPosition<<endl;
-
         for(uint x=0; x<2; x++){
             for(uint y=0; y<2; y++){
                 for(uint z=0; z<2; z++){
-                    //std::cout << "x" << x << " y"<<y<<" z"<<z<<endl;
 
-                    //cube_itterator++;
                     OctTreeCube * ChildCube;
                     ChildCube = new OctTreeCube;
 
@@ -135,15 +132,11 @@ void CartesianFrame::FillOctTree(
                     SetOctTree(
                     	ChildCube,
                     	ChildCubesCenterPosition,
-                    	ChildCubeEdgeLength
+                    	EdgeLengthOfChildCube(Cube)
                     );
 
-                    //std::cout << "Childs center position ";
-                    //std::cout << ChildCubesCenterPosition<<endl;
-                    //std::cout << "Childs edge length "
-                    //std::cout << ChildCubeEdgeLength <<"[m]"<<endl;
-
                     std::vector<CartesianFrame*> SubSetOfFrames = 
+                    
                     CalculateSubSetOfFramesInCube(
                     	ChildCube,
                     	ChildrenToFillIn
@@ -176,23 +169,12 @@ std::vector<CartesianFrame*> CartesianFrame::CalculateSubSetOfFramesInCube(
     	// range of the bounding sphere of a frame in 
     	// its mother frame coordinates
 
-    	double Xmin = 
-    	position_of_frame_in_mother_frame.x() - radius_of_frame;
-
-    	double Xmax = 
-    	position_of_frame_in_mother_frame.x() + radius_of_frame;
-
-    	double Ymin = 
-    	position_of_frame_in_mother_frame.y() - radius_of_frame;
-
-    	double Ymax = 
-    	position_of_frame_in_mother_frame.y() + radius_of_frame;
-
-     	double Zmin = 
-    	position_of_frame_in_mother_frame.z() - radius_of_frame;
-
-    	double Zmax = 
-    	position_of_frame_in_mother_frame.z() + radius_of_frame;
+    	double Xmin = position_of_frame_in_mother_frame.x() - radius_of_frame;
+    	double Xmax = position_of_frame_in_mother_frame.x() + radius_of_frame;
+    	double Ymin = position_of_frame_in_mother_frame.y() - radius_of_frame;
+    	double Ymax = position_of_frame_in_mother_frame.y() + radius_of_frame;
+     	double Zmin = position_of_frame_in_mother_frame.z() - radius_of_frame;
+    	double Zmax = position_of_frame_in_mother_frame.z() + radius_of_frame;
 
     	if( (
     		Xmax >= Cube->limits[0][0] && 
@@ -224,7 +206,7 @@ Vector3D CartesianFrame::CalculateCentrePositionOfChildCube(
     return ChildCubesCenterPosition;
 }
 //-----------------------------------------------------------------------------
-double CartesianFrame::CalculateEdgeLengthOfChildCube(OctTreeCube *Cube)const{
+double CartesianFrame::EdgeLengthOfChildCube(OctTreeCube *Cube)const{
     return Cube->EdgeLength/2.0;
 }
 //==============================================================================

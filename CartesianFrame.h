@@ -7,6 +7,7 @@
 // forward declared dependencies
 class Intersection;
 class ReflectionProperties;
+//class OctTreeCube;
 //=================================
 // included dependencies
 #include <iostream>
@@ -70,6 +71,7 @@ private:
 public:
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     CartesianFrame(){};
+
     CartesianFrame(
         const std::string new_name,
         const Vector3D    new_pos,
@@ -174,9 +176,10 @@ private:
     void create_OctTree();
     void update_sphere_enclosing_all_children(CartesianFrame *new_child);
     // OctTree
+
     void SetOctTree(
-        OctTreeCube *Ptr2OctTree,   
-        Vector3D CubesCenterPosition,
+        OctTreeCube *Cube,   
+        Vector3D CenterPosition,
         double LengthOfEdge
     );
 
@@ -192,7 +195,9 @@ private:
         uint z
     )const;
 
-    double CalculateEdgeLengthOfChildCube(OctTreeCube *Ptr2OctTree)const;
+    void SetOctTreeLimits(OctTreeCube *Cube, Vector3D CenterPosition);
+
+    double EdgeLengthOfChildCube(OctTreeCube *Ptr2OctTree)const;
 
     std::vector<CartesianFrame*> CalculateSubSetOfFramesInCube(
         OctTreeCube *Ptr2OctTree,
@@ -229,6 +234,8 @@ public:
         Vector3D *dir,
         Intersection *intersection
     )const{};
+
+    //virtual Intersection* calculate_intersection(  )
 
     virtual double get_hit_dist()const{ return 0.0; };
 

@@ -6,6 +6,7 @@
 #include "testCartesianFrame.cpp"
 #include "testReflectionProperties.cpp"
 #include "testFunction1D.cpp"
+#include "ToolTest.cpp"
 #include "gtest/gtest.h"
 
 int main(int argc, char **argv) {

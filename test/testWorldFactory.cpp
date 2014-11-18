@@ -168,16 +168,14 @@ try{
 TEST_F(WorldFactoryTest, MultipleUsageOfName) {
 try{
 
-  WorldFactory file2world;
+    WorldFactory file2world;
+    string xml_file = "./test_scenery/multiple_usage_of_name_klaus.xml";
+    file2world.load(xml_file);
 
-  string xml_file = "./test_scenery/multiple_usage_of_name_klaus.xml";
-
-  file2world.load(xml_file);
-
-//  }catch(MultipleUsageOfName& multiple){
-//    EXPECT_EQ( multiple.name() , "/house/chimney/klaus" );
-//  }
-  }catch(std::exception& error){
+  }catch(MultipleUseage& multiple){
+    EXPECT_EQ( multiple.name() , "/house/chimney/klaus" );
+  }
+  catch(std::exception& error){
     cout << error.what();
   }
 }

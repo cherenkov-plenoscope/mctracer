@@ -430,3 +430,16 @@ void HomoTrafo3D::set_unity(){
 	// 0 0 0 1
 	set_transformation(unity_rotation, unity_translation);
 }
+//==================================================================
+bool HomoTrafo3D::operator== (HomoTrafo3D G)const{
+
+	int count = 0;
+	for(int row=0; row<4; row++){
+		for(int col=0; col<4; col++){
+			if( get(row,col) != G.get(row,col) )
+				count++;
+		}
+	}
+
+	return (count == 0)? true : false;
+}

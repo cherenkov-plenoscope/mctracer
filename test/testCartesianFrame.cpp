@@ -4,6 +4,9 @@
 
 #include "gtest/gtest.h"
 #include "../CartesianFrame.h"
+#include "../Vector3D.h"
+#include "../Rotation3D.h"
+#include "../HomoTrafo3D.h"
 //#include "../Photon.h"
 
 using namespace std;
@@ -78,3 +81,86 @@ TEST_F(CartesianFrameTest, find_specific_frame) {
   EXPECT_EQ( NULL, SpecificFrameInWorldWeAreLookingFor );
 }
 //----------------------------------------------------------------------
+TEST_F(CartesianFrameTest, assert_name_is_valid) {
+
+  Vector3D    pos(0.0,0.0,0.0);
+  Rotation3D  rot(0.0,0.0,0.0);
+
+  CartesianFrame Peter;
+//---------------------------------
+  bool error_detected = false;
+  try{
+    Peter.set_frame("A_nice_name",pos,rot);
+  }catch(std::exception &error){
+    cout << error.what();
+    error_detected = true;
+  }
+  EXPECT_FALSE(error_detected);
+//---------------------------------
+  error_detected = false;
+  try{
+    Peter.set_frame("I feel like using whitespaces",pos,rot);
+  }catch(TracerException &error){
+    EXPECT_EQ(WHITE_SPACE_IN_NAME_OF_FRAME, error.type());
+    error_detected = true;
+  }
+  EXPECT_TRUE(error_detected);
+//---------------------------------
+  error_detected = false;
+  try{
+    Peter.set_frame("I\tfeel\rlike\tusing\nwhitespaces",pos,rot);
+  }catch(TracerException &error){
+    EXPECT_EQ(WHITE_SPACE_IN_NAME_OF_FRAME, error.type());
+    error_detected = true;
+  }
+  EXPECT_TRUE(error_detected);
+//---------------------------------
+  error_detected = false;
+  try{
+    Peter.set_frame("",pos,rot);
+  }catch(TracerException &error){
+    EXPECT_EQ(EMPTY_NAME_OF_FRAME, error.type());
+    error_detected = true;
+  }
+  EXPECT_TRUE(error_detected);  
+//---------------------------------
+  error_detected = false;
+  try{
+    Peter.set_frame("I/feel/like/using/the/delimiter/symbol",pos,rot);
+  }catch(TracerException &error){
+    EXPECT_EQ(DELIMITER_SYMBOL_IN_NAME_OF_FRAME, error.type());
+    error_detected = true;
+  }
+  EXPECT_TRUE(error_detected); 
+//---------------------------------
+  error_detected = false;
+  try{
+    Peter.set_frame(" ",pos,rot);
+  }catch(TracerException &error){
+    EXPECT_EQ(WHITE_SPACE_IN_NAME_OF_FRAME, error.type());
+    error_detected = true;
+  }
+  EXPECT_TRUE(error_detected); 
+}
+//==============================================================================
+TEST_F(CartesianFrameTest, set_frame) {
+
+  Vector3D    pos(1.3,3.7,4.2);
+  Rotation3D  rot(3.1,4.1,7.7);
+
+  CartesianFrame Peter;
+  Peter.set_frame("A_nice_name",pos,rot);
+
+  EXPECT_FALSE(Peter.has_mother()) << "There must not be a mother after set";
+  EXPECT_FALSE(Peter.has_children()) << "There must not be children after set";
+  EXPECT_FALSE(Peter.has_child_with_name("any_child"));
+
+  EXPECT_EQ(pos, *Peter.get_pointer_to_position_of_frame_in_mother_frame());
+  EXPECT_EQ(rot, *Peter.get_pointer_to_rotation_of_frame_in_mother_frame());
+
+  HomoTrafo3D T_frame2mother;
+  T_frame2mother.set_transformation(rot, pos);
+
+  EXPECT_EQ(T_frame2mother, *Peter.frame2mother());
+}
+//==============================================================================

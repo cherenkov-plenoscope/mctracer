@@ -51,9 +51,13 @@ HomoTrafo3D operator* (const HomoTrafo3D G) const;
 //==================================================================
 HomoTrafo3D inverse() const;
 //==================================================================
+bool operator== (HomoTrafo3D G)const;
+//==================================================================
 private:
 void set(const int x,const int y,const double value);
 //==================================================================
 double get(const int x,const int y) const;	
+//==================================================================
+
 };
 #endif // __HOMOTRAFO3D_H_INCLUDED__ 

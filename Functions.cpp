@@ -12,7 +12,7 @@ void ClearScreen(){
 	std::cout << std::string( 100, '\n' );
 }
 //------------------------------------------------------------------------------
-std::vector< std::string > StingOfTokens2Vector( 
+/*std::vector< std::string > StingOfTokens2Vector( 
 	std::string TextToBeTokenized, 
 	std::string delimiter 
 ){
@@ -32,7 +32,7 @@ std::vector< std::string > StingOfTokens2Vector(
 	VectorOfTokens.push_back( TextToBeTokenized ); 
 
 	return VectorOfTokens;
-}
+}*/
 //------------------------------------------------------------------------------
 std::string cut_leading_token( 
 	std::string& text_of_tokens, 
@@ -67,12 +67,12 @@ std::string multi( std::string text_to_repeat, unsigned int times ){
 }
 //------------------------------------------------------------------------------
 bool is_ending(std::string text, std::string ending){
-	std::size_t length_of_ending 	= ending.length();
 	std::size_t length_of_text   	= text.length();
 	std::size_t found_first 		= text.find(ending);
+	std::size_t found_last			= text.find_last_of(ending);
 
 	if (found_first != std::string::npos){
-		return (found_first+length_of_ending == length_of_text );
+		return ((found_last+1) == length_of_text);
 	}else{
 		return false;
 	}
