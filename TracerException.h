@@ -11,15 +11,25 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+
+enum ExceptionType {
+	NOT_SPECIFIED,
+	EMPTY_NAME_OF_FRAME,
+	DELIMITER_SYMBOL_IN_NAME_OF_FRAME,
+	WHITE_SPACE_IN_NAME_OF_FRAME
+};
+
 //------------------------------------------------------------------------------
 class TracerException :public std::exception{
 protected:
 	std::string message = "";
+	ExceptionType Type = NOT_SPECIFIED;
 public:
 
 	TracerException(std::string new_message);
+	TracerException(std::string new_message, ExceptionType Type);
 	TracerException();
-
+	ExceptionType type()const;
 	const char * what () const throw ();
 };
 

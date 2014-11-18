@@ -3,16 +3,10 @@
 void ReflectionProperties::SetReflectionCoefficient(
 	const double new_reflection_coefficient){
 
-	if( new_reflection_coefficient >= 0.0 && 
-		new_reflection_coefficient <= 1.0
-	){
+	if( new_reflection_coefficient >= 0.0 && new_reflection_coefficient <= 1.0){
+
 		simple_reflection_coefficient = new_reflection_coefficient;
-		if(new_reflection_coefficient==0.0)
-		{
-			reflection_flag = false;
-		}else{
-			reflection_flag = true;
-		}
+		reflection_flag = (new_reflection_coefficient == 0) ? false : true;
 	}else{
 		std::stringstream info;
 		info << "ReflectionProperties::SetReflectionCoefficient\n";

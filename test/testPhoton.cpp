@@ -89,7 +89,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
   // create a test setup with two mirrors bouncing the photon
   CartesianFrame world("world",pos,rot);
 
-  CartesianFrame optical_table("optical table",pos,rot);
+  CartesianFrame optical_table("optical_table",pos,rot);
   
   ReflectionProperties  refl; 
   ColourProperties      colo;
@@ -101,7 +101,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
 
   //------------mirror 1----------------
   Plane mirror1;
-  mirror1.set_frame("mirror 1",pos,rot);
+  mirror1.set_frame("mirror_1",pos,rot);
   mirror1.set_surface_properties(&refl,&colo);
   mirror1.set_plane(-.5,.5,-.5,.5);
   
@@ -109,7 +109,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
   pos.set(0.0,0.0,1.0);
   rot.set(0.0,0.0,0.0);
   Plane mirror2;
-  mirror2.set_frame("mirror 2",pos,rot);
+  mirror2.set_frame("mirror_2",pos,rot);
   mirror2.set_surface_properties(&refl,&colo);
   mirror2.set_plane(-.5,.5,-.5,.5);
 
@@ -178,7 +178,7 @@ TEST_F(PhotonTest, Reflections){
   // create a test setup with two mirrors bouncing the photon
   CartesianFrame world("world",pos,rot);
 
-  CartesianFrame optical_table("optical table",pos,rot);
+  CartesianFrame optical_table("optical_table",pos,rot);
    
   ColourProperties colo;
   pos.set(0.0,0.0,0.0);

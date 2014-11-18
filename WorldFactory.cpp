@@ -121,43 +121,38 @@ void WorldFactory::go_on_with_children_of_node(
 		sub_node; 
 		sub_node = sub_node.next_sibling()
 	){	
-		
 		std::string sub_node_name = sub_node.name();
-		bool valid_child = false;
 
-		if(pedantic_str_comp(sub_node_name,"include")){
-			fabricate_frame(mother,sub_node); valid_child=true;
-		}				
-		if(pedantic_str_comp(sub_node_name,"frame")){
-			fabricate_frame(mother,sub_node); valid_child=true;
-		}
-		if(pedantic_str_comp(sub_node_name,"triangle")){
-			fabricate_frame(mother,sub_node); valid_child=true;
-		}	
-		if(pedantic_str_comp(sub_node_name,"plane")){
-			fabricate_frame(mother,sub_node); valid_child=true;
-		}
-		if(pedantic_str_comp(sub_node_name,"sphere")){
-			fabricate_frame(mother,sub_node); valid_child=true;
-		}
-		if(pedantic_str_comp(sub_node_name,"cylinder")){
-			fabricate_frame(mother,sub_node); valid_child=true;
-		}	
-		if(pedantic_str_comp(sub_node_name,"disc")){
-			fabricate_frame(mother,sub_node); valid_child=true;
-		}	
-		if(pedantic_str_comp(sub_node_name,"FACT_reflector")){
-			fabricate_frame(mother,sub_node); valid_child=true;
-		}	
-		
-		if(!valid_child){
-			if(sub_node_name.find("set") == std::string::npos){
+		if 		(pedantic_str_comp(sub_node_name,"include")){
 
-				std::stringstream info;
-				info << "WorldFactory::"<<__func__<<"() found an unknown item.";
-				throw UnknownItem(info.str(), this, sub_node_name);
-			}
-		}
+			fabricate_frame(mother,sub_node);
+		}else if(pedantic_str_comp(sub_node_name,"frame")){
+
+			fabricate_frame(mother,sub_node);
+		}else if(pedantic_str_comp(sub_node_name,"triangle")){
+
+			fabricate_frame(mother,sub_node);
+		}else if(pedantic_str_comp(sub_node_name,"plane")){
+
+			fabricate_frame(mother,sub_node);
+		}else if(pedantic_str_comp(sub_node_name,"sphere")){
+
+			fabricate_frame(mother,sub_node);
+		}else if(pedantic_str_comp(sub_node_name,"cylinder")){
+
+			fabricate_frame(mother,sub_node);
+		}else if(pedantic_str_comp(sub_node_name,"disc")){
+
+			fabricate_frame(mother,sub_node); 
+		}else if(pedantic_str_comp(sub_node_name,"FACT_reflector")){
+
+			fabricate_frame(mother,sub_node);
+		}else if(sub_node_name.find("set") == std::string::npos){
+
+			std::stringstream info;
+			info << "WorldFactory::"<<__func__<<"() found an unknown item.";
+			throw UnknownItem(info.str(), this, sub_node_name);
+		}	
 	}	
 }
 //------------------------------------------------------------------------------

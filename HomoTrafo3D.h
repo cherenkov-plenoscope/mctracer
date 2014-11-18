@@ -33,6 +33,8 @@ const Vector3D rot_y,
 const Vector3D rot_z,
 const Vector3D pos);
 //==================================================================
+void set_unity();
+//==================================================================
 void transform_orientation(Vector3D* orientation_to_transform) const;
 //==================================================================
 void transform_position(Vector3D* position_to_transform) const;

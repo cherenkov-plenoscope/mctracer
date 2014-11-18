@@ -10,6 +10,7 @@
 // included dependencies
 #include "pugixml.hpp"
 #include "TracerException.h"
+#include "Functions.h"
 //------------------------------------------------------------------------------
 class XmlIoFileInfo{
 public:
@@ -29,8 +30,6 @@ protected:
 class XmlFileIo: public XmlIoFileInfo{
 public:
 	double pedantic_strtod(std::string text_to_parse)const;
-
-	bool pedantic_str_comp(const std::string A,const std::string B)const;
 
 	void strto3tuple(
 		double &x, 

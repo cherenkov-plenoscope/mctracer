@@ -70,10 +70,6 @@ void XmlFileIo::strto3tuple(
 	}	
 }
 //------------------------------------------------------------------------------
-bool XmlFileIo::pedantic_str_comp(const std::string A,const std::string B)const{
-	return (A.compare(B)==0 && A.length() == B.length() );
-}
-//------------------------------------------------------------------------------
 void XmlFileIo::assert_child_exists(
 	const pugi::xml_node &node, const std::string child_name){
 

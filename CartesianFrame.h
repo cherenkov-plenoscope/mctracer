@@ -37,8 +37,8 @@ protected:
     // Evey frame has a human readable name e.g. Tree, House, Mirror
     std::string name_of_frame;
 
-    Vector3D 	position_relative_to_mother; 
-    Rotation3D 	rotation_relative_to_mother;
+    Vector3D 	pos_in_mother; 
+    Rotation3D 	rot_in_mother;
     double 	    radius_of_sphere_enclosing_all_children; 
     Vector3D 	pos_in_world;
     
@@ -65,6 +65,8 @@ private:
     // OctTreeNode is divided itself to store the children frames in its own
     // OctTreeNodes.
     const uint max_number_of_frames_in_OctTree = 7;
+
+    const char delimiter_for_frame_path = '/';
 public:
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     CartesianFrame(){};
@@ -77,11 +79,10 @@ public:
     };
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     void set_frame(
-        const std::string new_name,
-        const Vector3D npos,
-        const Rotation3D nrot
+        const std::string name_of_frame,
+        const Vector3D pos_in_mother,
+        const Rotation3D rot_in_mother
     );
-
     //void fabricate_frame(const pugi::xml_node node);
 
     void set_mother_and_child(CartesianFrame *new_child);
@@ -93,11 +94,11 @@ public:
     const std::string get_name_of_frame()const{ return name_of_frame; };
 
     const Vector3D* get_pointer_to_position_of_frame_in_mother_frame()const{
-        return &position_relative_to_mother;
+        return &pos_in_mother;
     };
 
     const Rotation3D* get_pointer_to_rotation_of_frame_in_mother_frame() const{
-        return &rotation_relative_to_mother;
+        return &rot_in_mother;
     };
 
     const double* get_pointer_to_radius_of_sphere_enclosing_all_children()const{
@@ -154,7 +155,7 @@ public:
 
     bool has_child_with_name(const std::string name_of_child)const;
     bool has_mother()const;
-
+    bool has_children()const;
 private:
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     std::string get_print(
@@ -166,7 +167,11 @@ private:
 
     void set_mother(CartesianFrame *const new_mother);
     void add_child(CartesianFrame * const new_child);
-    void post_initializing();
+    void post_initialize();
+    void post_initialize_Transformations();
+    void post_initialize_OctTree();
+    HomoTrafo3D calculate_frame2world()const;
+    void create_OctTree();
     void update_sphere_enclosing_all_children(CartesianFrame *new_child);
     // OctTree
     void SetOctTree(
@@ -203,7 +208,20 @@ private:
         Vector3D support,
         Vector3D direction
     )const;
-    
+
+    void assert_name_is_valid(const std::string name_to_check)const;
+
+    void assert_name_is_not_empty(
+        const std::string name_to_check
+    )const;
+
+    void assert_name_has_no_whitespaces(
+        const std::string name_to_check
+    )const;
+
+    void assert_name_has_no_delimiter_symbol(
+        const std::string name_to_check
+    )const;
 public:
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     virtual void hit(

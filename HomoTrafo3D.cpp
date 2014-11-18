@@ -264,8 +264,7 @@ const Vector3D pos){
 	set(3,3,rot_tra_comp.get(3,3));
 }
 //==================================================================
-void HomoTrafo3D::transform_orientation
-(Vector3D* orientation_to_transform)const{
+void HomoTrafo3D::transform_orientation(Vector3D* orientation_to_transform)const{
 	orientation_to_transform->set(
 	//x
 	orientation_to_transform->x()*get(0,0) + 
@@ -284,8 +283,7 @@ void HomoTrafo3D::transform_orientation
 	);
 }
 //==================================================================
-void HomoTrafo3D::transform_position
-(Vector3D* position_to_transform)const{
+void HomoTrafo3D::transform_position(Vector3D* position_to_transform)const{
 	position_to_transform->set(
 	//x
 	position_to_transform->x()*get(0,0) + 
@@ -413,3 +411,22 @@ void HomoTrafo3D::set(const int row,const int col,const double value){
 double HomoTrafo3D::get(const int row,const int col) const{
 	return E[row*4+col];
 }	
+//==================================================================
+void HomoTrafo3D::set_unity(){
+	// unitiy rotation:
+	// 1 0 0
+	// 0 1 0
+	// 0 0 1
+	Rotation3D unity_rotation(0.0, 0.0, 0.0);
+
+	// unity translation
+	// (0 0 0)^T
+	Vector3D unity_translation(0.0, 0.0, 0.0);
+
+	// resulting homo transformation
+	// 1 0 0 0
+	// 0 1 0 0
+	// 0 0 1 0
+	// 0 0 0 1
+	set_transformation(unity_rotation, unity_translation);
+}
