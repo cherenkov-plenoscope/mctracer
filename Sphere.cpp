@@ -5,7 +5,7 @@ Sphere::Sphere(){
 //======================
 void Sphere::set_sphere(double new_radius){
 
-	if(new_radius < 0.0){
+	if(new_radius <= 0.0){
 		std::stringstream info;
 		info << "Sphere::set_sphere\n";
 		info << "The radius of a sphere must be larger than 0.0m !\n";
@@ -20,7 +20,6 @@ void Sphere::set_sphere(double new_radius){
 //======================
 void Sphere::disp(){
 	std::stringstream out;
-	out.str("");
 	out<<"sphere:"<<name_of_frame;
 	out<<"_________________________________"<<std::endl;
 	out<<get_frame_string();
@@ -32,7 +31,6 @@ void Sphere::disp(){
 //======================
 std::string Sphere::get_sphere_string()const{
 	std::stringstream out;
-	out.str("");
 	out<<"||| radius of sphere: "<<radius<<std::endl;
 	return out.str();
 }
@@ -48,24 +46,20 @@ void Sphere::hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const{
 	// 	   	0 = v^2 + v 2(bd/dd) + (bb/dd -r^2)
 	//		solve quadrativ eqaution in v
 
-	double p;
-	p = 2*( (*base * *dir) / (*dir * *dir) );
-	double q;
-	q = (*base * *base) / (*dir * *dir) -pow(radius,2.0);
-	double inside_square_root_in_p_q_eq ;
-	inside_square_root_in_p_q_eq = pow((p/2),2.0)-q;
-	
-	if( inside_square_root_in_p_q_eq  >= 0){
+	QuadraticEquation quadratic_eq_in_v(
+		2*( (*base * *dir) / (*dir * *dir) ),
+		(*base * *base) / (*dir * *dir) -pow(radius,2.0)
+	);
+
+	if( quadratic_eq_in_v.has_valid_solutions() ){
 		// at least one hit
-		double v_Plus;
-		double v_Minus;
-		
+
+		double v_Plus  = quadratic_eq_in_v.plus_solution();
+		double v_Minus = quadratic_eq_in_v.minus_solution();
+
 		Vector3D vec_intersection;
 		Vector3D vec_surface_normal;
-		
-		v_Plus  = -p/2 + sqrt(inside_square_root_in_p_q_eq);
-		v_Minus = -p/2 - sqrt(inside_square_root_in_p_q_eq);
-		
+
 		if(v_Plus >= 0.0 && v_Minus >= 0.0){
 			// facing the sphere from the outside
 			
@@ -88,7 +82,6 @@ void Sphere::hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const{
 				// looking away from the sphere from outside
 			}else{
 				// ray starts inside of the sphere
-				
 				vec_intersection = *base + *dir *v_Plus;
 				vec_surface_normal =
 				vec_intersection/vec_intersection.norm2();

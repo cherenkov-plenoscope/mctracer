@@ -49,6 +49,8 @@ Vector3D operator+(const Vector3D vec_two) const;
 Vector3D operator/(const double scalar) const;
 void operator=(const Vector3D eq);
 bool operator == (const Vector3D& eqVec) const;
+bool operator != (const Vector3D& eqVec) const;
+double distance_to(const Vector3D &v)const;
 //------------------------------------------------------------------------------
 // Printing
 void disp() const;

@@ -24,7 +24,7 @@ class HomoTrafo3D;
 #include "CsvHandler.h"
 #include "OctTreeCube.h"
 #include "ListOfInteractions.h"
-#include "PseRanNumGen.h"
+#include "PseudoRandomNumberGenerator.h"
 
 //=================================
 class OctTreeTraversingRay;
@@ -104,7 +104,7 @@ virtual void propagate(
 	int interaction_count,
 	const CartesianFrame* object_propagated_from,
 	const GlobalSettings* settings,
-	PseRanNumGen* dice
+	PseudoRandomNumberGenerator* dice
 );
 
 double get_distance_to_closest_object(

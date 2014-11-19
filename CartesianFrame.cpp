@@ -25,11 +25,7 @@ void CartesianFrame::create_OctTree(){
 	OctTree = new OctTreeCube;
 	Vector3D center(0.0, 0.0 ,0.0);
 	
-	SetOctTree(
-		OctTree,
-		center,
-		2.0*radius_of_sphere_enclosing_all_children
-	);
+	SetOctTree(OctTree, center, 2.0*radius_of_sphere_enclosing_all_children);
 
 	FillOctTree(OctTree, children);
 }
@@ -95,9 +91,7 @@ void CartesianFrame::SetOctTree(
 	SetOctTreeLimits(Cube, CenterPosition);	
 }
 //==============================================================================
-void CartesianFrame::SetOctTreeLimits(
-	OctTreeCube *Cube, 
-	Vector3D CenterPosition
+void CartesianFrame::SetOctTreeLimits(OctTreeCube *Cube, Vector3D CenterPosition
 ){
 	Cube->limits[0][0] = Cube->CenterPosition.x() - EdgeLengthOfChildCube(Cube);
     Cube->limits[0][1] = Cube->CenterPosition.x() + EdgeLengthOfChildCube(Cube);

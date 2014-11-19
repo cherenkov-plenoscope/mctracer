@@ -60,7 +60,7 @@ double Rotation3D::get_rot_angle_in_rad() const{
 	}
 }
 //======================
-bool Rotation3D::get_flag_is_rot_angles_xyz() const{
+bool Rotation3D::uses_xyz_angels() const{
 	return flag_rot_angles_xyz;
 }
 //======================
@@ -119,7 +119,7 @@ bool Rotation3D::operator == (const Rotation3D& eqRot)const{
 //======================================================================
 std::ostream& operator<<(std::ostream& os, const Rotation3D& rot){
     
-    if(rot.get_flag_is_rot_angles_xyz()){
+    if(rot.uses_xyz_angels()){
         os << "( " << rot.get_rot_x() << " ";
 	    os <<         rot.get_rot_y() << " ";
 	    os <<         rot.get_rot_z() << " )";

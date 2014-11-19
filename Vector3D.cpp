@@ -78,8 +78,7 @@ void Vector3D::disp() const{
 //======================
 std::string Vector3D::get_string() const{
 	std::stringstream out; 
-	out.str("");
-	out<<"("<<X<<"|"<<Y<<"|"<<Z<<") [m]";
+	out << "( " << X << " " << Y << " " << Z << " ) m";
 	return out.str();
 }
 //======================
@@ -126,18 +125,18 @@ void Vector3D::mirror(Vector3D* ray) const{
 	// dir_of_ray_to_be_reflected is overwritten with the reflected ray.
 	//
 	ray->set(
-	//X component
-	(1.0-2.0*pow(X,2.0))*ray->X +
-	(-2.0*X*Y)*ray->Y +
-	(-2.0*X*Z)*ray->Z,
-	//Y component
-	(-2.0*X*Y)*ray->X +
-	(1.0-2.0*pow(Y,2.0))*ray->Y +
-	(-2.0*Y*Z)*ray->Z,
-	//Z component
-	(-2.0*X*Z)*ray->X + 
-	(-2.0*Y*Z)*ray->Y + 
-	(1.0-2.0*pow(Z,2.0))*ray->Z
+		//X component
+		(1.0-2.0*pow(X,2.0))*ray->X +
+		(-2.0*X*Y)*ray->Y +
+		(-2.0*X*Z)*ray->Z,
+		//Y component
+		(-2.0*X*Y)*ray->X +
+		(1.0-2.0*pow(Y,2.0))*ray->Y +
+		(-2.0*Y*Z)*ray->Z,
+		//Z component
+		(-2.0*X*Z)*ray->X + 
+		(-2.0*Y*Z)*ray->Y + 
+		(1.0-2.0*pow(Z,2.0))*ray->Z
 	);
 }
 //======================
@@ -178,11 +177,14 @@ double Vector3D::z() const{
 }
 //======================
 bool Vector3D::operator == (const Vector3D& eqVec) const{
-	if( X == eqVec.X && Y == eqVec.Y && Z == eqVec.Z){
-		return true;
-	}else{
-		return false;
-	} 
+	return (distance_to(eqVec) < 1e-12) ? true : false;
+}
+bool Vector3D::operator != (const Vector3D& eqVec) const{
+	return (distance_to(eqVec) < 1e-12) ? false : true;
+}
+//======================
+double Vector3D::distance_to(const Vector3D &v)const{
+	return (*this-v).norm2();
 }
 //======================
 CsvRow Vector3D::getCsvRow(GlobalSettings& settings) const{

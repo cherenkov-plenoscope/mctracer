@@ -743,7 +743,7 @@ void Ray::propagate(
 	int interaction_count,
 	const CartesianFrame* object_propagated_from,
 	const GlobalSettings* settings,
-	PseRanNumGen* dice
+	PseudoRandomNumberGenerator* dice
 ){
 	std::cout << "Calling propagate of a Ray instance!" << endl;
 }

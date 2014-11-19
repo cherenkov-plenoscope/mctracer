@@ -15,7 +15,7 @@
 //=================================
 class ListOfInteractions{
 public:	
-	list<Intersection*> Interactions;
+	std::vector<Intersection*> Interactions;
 	void show()const;
 	~ListOfInteractions();
 	double get_accumulative_distance()const;

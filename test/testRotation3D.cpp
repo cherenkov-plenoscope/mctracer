@@ -49,7 +49,7 @@ TEST_F(Rotation3DTest, ConstructorAndGetter) {
   EXPECT_EQ(x, r.get_rot_x());
   EXPECT_EQ(y, r.get_rot_y());
   EXPECT_EQ(z, r.get_rot_z());
-  EXPECT_TRUE(r.get_flag_is_rot_angles_xyz());
+  EXPECT_TRUE(r.uses_xyz_angels());
 
   // axis mode
   Vector3D v(0.0,0.0,1.0);
@@ -60,7 +60,7 @@ TEST_F(Rotation3DTest, ConstructorAndGetter) {
   EXPECT_EQ(v.x(), (p.get_rot_axis()).x());
   EXPECT_EQ(v.y(), (p.get_rot_axis()).y());
   EXPECT_EQ(v.z(), (p.get_rot_axis()).z());
-  EXPECT_FALSE(p.get_flag_is_rot_angles_xyz());
+  EXPECT_FALSE(p.uses_xyz_angels());
 }
 //----------------------------------------------------------------------
 TEST_F(Rotation3DTest, SetterAndGetter) {
@@ -71,7 +71,7 @@ TEST_F(Rotation3DTest, SetterAndGetter) {
   EXPECT_EQ(x, r.get_rot_x());
   EXPECT_EQ(y, r.get_rot_y());
   EXPECT_EQ(z, r.get_rot_z());
-  EXPECT_TRUE(r.get_flag_is_rot_angles_xyz());
+  EXPECT_TRUE(r.uses_xyz_angels());
 
   // axis mode
   Vector3D v(0.0,0.0,1.0);
@@ -82,7 +82,7 @@ TEST_F(Rotation3DTest, SetterAndGetter) {
   EXPECT_EQ(v.x(), (p.get_rot_axis()).x());
   EXPECT_EQ(v.y(), (p.get_rot_axis()).y());
   EXPECT_EQ(v.z(), (p.get_rot_axis()).z());
-  EXPECT_FALSE(p.get_flag_is_rot_angles_xyz());
+  EXPECT_FALSE(p.uses_xyz_angels());
 }
 //----------------------------------------------------------------------
 TEST_F(Rotation3DTest, SineAndCosineWhenSetXYZ) {

@@ -44,15 +44,13 @@ bool Intersection::get_intersection_flag()const{
 //==================================================================
 void Intersection::disp() const{
 	std::stringstream out; 
-	out.str("");
-	out<<"Intersection:"<<std::endl;
-	out<<get_string();
-	std::cout<<out.str();
+	out << "Intersection:\n";
+	out << get_string();
+	std::cout << out.str();
 }
 //==================================================================
 std::string Intersection::get_string() const{
 	std::stringstream out; 
-	out.str("");
 	out<<"flag_intersection: ";
 	if(flag_intersection){out<<"true";}else{out<<"false";}out << std::endl;
 	if(flag_intersection){

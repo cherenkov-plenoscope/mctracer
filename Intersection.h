@@ -32,8 +32,9 @@ public:
 //==================================================================
 const CartesianFrame* get_pointer_to_intersecting_object()const;
 //==================================================================
-void set_pointer_to_intersecting_object
-(const CartesianFrame* new_ptr_to_intersectiong_object);
+void set_pointer_to_intersecting_object(
+	const CartesianFrame* new_ptr_to_intersectiong_object
+);
 //==================================================================
 Intersection();
 //==================================================================

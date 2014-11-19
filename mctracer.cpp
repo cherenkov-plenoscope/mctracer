@@ -1,62 +1,3 @@
-//------------------------------------------------------------------------------
-// Author: 	Sebastian Mueller 
-// 		Department of Physics 
-//		University of Dortmund in Germany
-//		Chair e5b supervised by Prof. Dr. Dr. Wolfgang Rhode
-//		year 2013
-// Title:	
-//			Tracer is a raytracing rendering programm made by the author
-//			in his freetime.
-//			
-//			A rendering algorithm transforms 3D objects and light 
-//			phenomena into a 2D plane, aka an image.
-//
-//			Tracer was inspired by all the beautifull light 
-//			phenomenas in nature which are visible by the human eye 
-//			while riding ones bikecycle.
-//		
-//			This version of tracer is the first cpp implementation.
-//			When you are new to raytracing consider to use "pov ray" to
-//			fit your wishes.
-//			Tracer is much less powerfull by means of varity of the 
-//			supported features. 
-//			It is only used because the author likes it and is known to
-//			it. But anyway the authuor invites you to make tracer a 
-//			powerfull tool in scientific research.
-//			 
-// 			This version was made to investigate optical devices like
-//			Telescopes.
-//			Espacially the Cherenkov Light FACT-Telescope on La Palma,
-//			Spain
-//			
-//	features:
-//			Tracer supports a tree structure to store its 3D objects.
-//			A pre-tracer is used to generate a list of hit candidates
-//			using a maximum norm calculation of each pixel.
-//			This is the most important feature which gains a speed up
-//			in the number of objects n in a scene by
-//			O(n^1) to O(log(n)).
-//
-//  dependencies:
-//          If on Ubuntu (14.04), you can install the dependencies using
-//          syaptic, jist install these two:
-//          
-//          * libopencv-dev
-//          * libgtest-dev
-//
-//          gtest is a header only library, but in order to use it
-//          one needs to build it first. See this thread on askubuntu
-//          for details:
-//          http://askubuntu.com/questions/145887/why-no-library-files-installed-for-google-test
-//
-//  compile:
-//          mkdir build
-//          cd build
-//          cmake ..
-//          make
-//
-//------------------------------------------------------------------------------
-
 #include <iostream> 
 #include <string>
 #include <sstream>
@@ -73,21 +14,10 @@
 #include "FreeOrbitCamera.h"
 #include "CsvHandler.h"
 
-//#include "SmartImage.h"
-// namespaces
-//using namespace std;
-
-//------------------------------------------------------------------------------
-// main
-//------------------------------------------------------------------------------
 int main(){
-	//--------------------------------------------------------------------------
-	// start tracer
-	//--------------------------------------------------------------------------
 	ClearScreen();
 	
 	std::stringstream out;
-	out.str("");
 	//               1         2         3         4         5         6
 	//      123456789012345678901234567890123456789012345678901234567890
 	out << " ___________________________________________________________ \n";
@@ -101,92 +31,26 @@ int main(){
 	out << "|___________________________________________________________|\n";
 	cout << out.str() << endl;
 
-	//--------------------------------------------------------------------------
-	// set up settings
-	//--------------------------------------------------------------------------
 	GlobalSettings settings;
+	
 	try{
 
 		settings.set_max_number_of_reflections(3);
 		settings.set_csv_decimal_presicion(9);
+		
+		std::string user_input;
+		std::cout << "Enter a file to load: ";
+		std::cin  >> user_input;
 
-	//--------------------------------------------------------------------------
-	// list of propagations
-	//--------------------------------------------------------------------------	
-	/*
-	ListOfPropagations mylist("my_little_list");
-	
-	Photon* Hans;
-	Hans = new Photon( 0,0.1,0, 0,0,1, 475e-9);
-	Hans->SetID(13);
-	Hans->disp();
-	
-	Photon* Franz;
-	Franz = new Photon( 0,0,0, 0,0,1, 475e-9);
-	Franz->SetID(42);
-	Franz->disp();
-	
-	//CameraRay* Bob;
-	//Bob = new CameraRay;
-	//Bob->disp();
-	
-	mylist.push_back(Hans);
-	mylist.push_back(Franz);
-	//mylist.push_back(Bob);
-	
-	cout << mylist;
-	//mylist.export_propagations_csv(settings);
-	*/
-
-	//ListOfPropagations my2ndlist("my_2nd_little_list");
-	//my2ndlist.import_propagations_csv("my_little_list.csv",settings);
-	// test csv parser
-	
-    //ifstream	infile("mylist.csv");
-    //ofstream	outfile;
-    //outfile.open("my_Gnarf.csv");
-/*
-    CsvRow		row;
-    while(infile >> row)
-    {
-    	cout << "4th Element(" << row[3] << ")\n";
- 		outfile << row;
-    }
-    outfile.close();
-	*/
-	
-	//==================================================================
-	// test SmartImage
-	//==================================================================
-	//SmartImage Hans(16,9,4);
-	//==================================================================
-	// open / read file
-	//==================================================================
-	
-	WorldFactory file2world;
-	
-	std::string user_input;
-	std::cout << "Enter a file to load: ";
-	std::cin  >> user_input;
-
+		WorldFactory file2world;
 		file2world.load(user_input);
-
 		CartesianFrame *Mworld = file2world.world();
-		
-		//Mworld->disp();
 
-		// test list of propagations
-		//mylist.propagate(Mworld,&settings);
-
-		//mylist.export_history_csv(settings);
-		
 		FreeOrbitCamera free(Mworld,&settings);
-
-		//std::cout << Mworld->print_with_all_children();
-
 		free.start_free_orbit();
 
 	}catch(std::exception& error){
+		
 		cerr << error.what(); 
 		return 0;
 	}	

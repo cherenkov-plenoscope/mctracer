@@ -49,7 +49,7 @@ void ListOfPropagations::propagate(
 		#pragma omp parallel shared(settings,world) private(number_of_threads, thread_id, out, ray_counter)
 		{	
 
-			PseRanNumGen dice_for_this_thread_only;
+			PseudoRandomNumberGenerator dice_for_this_thread_only;
 			ray_counter = 0;
 			thread_id = omp_get_thread_num();
 			number_of_threads = omp_get_num_threads();
@@ -74,7 +74,7 @@ void ListOfPropagations::propagate(
 	}else{
 		// SINGLETHREAD
 
-		PseRanNumGen dice;
+		PseudoRandomNumberGenerator dice;
 
 		for(i = 0LL; i<list_of_ptrs_to_propagations.size(); i++ )
 		{
@@ -87,7 +87,7 @@ void ListOfPropagations::propagate(
 void ListOfPropagations::PropagateSingleRay(	
 	const CartesianFrame* world, 
 	const GlobalSettings* settings,
-	PseRanNumGen *dice,
+	PseudoRandomNumberGenerator *dice,
 	unsigned long long index
 ){
 	ListOfInteractions* history_of_this_specific_ray;

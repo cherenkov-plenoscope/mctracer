@@ -55,6 +55,7 @@ mcPYtracer/testPyTracer.cpp
 Functions.cpp
 SmartImage.cpp
 Function1D.cpp
+QuadraticEquation.cpp
 )
 include_directories(/usr/include)
 include_directories(/usr/local/include)
@@ -119,6 +120,7 @@ Functions.cpp
 mcPYtracer/testPyTracer.cpp
 SmartImage.cpp
 Function1D.cpp
+QuadraticEquation.cpp
 )
 # Link test executable against gtest & gtest_main
 target_link_libraries(mctracerUnitTests gtest gtest_main)

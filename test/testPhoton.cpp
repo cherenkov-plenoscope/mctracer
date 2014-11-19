@@ -7,7 +7,7 @@
 #include "../SurfaceEntity.h"
 #include "../Plane.h"
 #include "../FreeOrbitCamera.h"
-#include "../PseRanNumGen.h"
+#include "../PseudoRandomNumberGenerator.h"
 #include "../ListOfPropagations.h"
 
 using namespace std;
@@ -135,7 +135,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
   Vector3D direction(0.0,0.0,1.0);
   double wavelength = 433e-9;
   
-  PseRanNumGen dice;
+  PseudoRandomNumberGenerator dice;
 
   for(int i=0; i<1e2; i++)
   {
@@ -229,7 +229,7 @@ TEST_F(PhotonTest, Reflections){
   Vector3D Support(-2.0,0.0,0.0);
   Vector3D direction(1.0,0.0,0.0);
   
-  PseRanNumGen dice;
+  PseudoRandomNumberGenerator dice;
 
   ListOfPropagations LoP("my_test_propagation_list");
 

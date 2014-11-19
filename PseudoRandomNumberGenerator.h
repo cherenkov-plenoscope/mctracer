@@ -11,19 +11,18 @@
 
 //==============================================================================
 
-class PseRanNumGen{
-private:
-	// Randon number generator
+class PseudoRandomNumberGenerator{
+	
 	unsigned Seed;
 	// mt19937 is a standard mersenne_twister_engine
 	std::mt19937 pRNG_mt19937;
 public:
 	//--------------------------------------------------------------------------
-	PseRanNumGen(){
-		init_now();
+	PseudoRandomNumberGenerator(){
+		set_seed_now_using_system_clock();
 	};
 	//--------------------------------------------------------------------------
-	void init_now(){
+	void set_seed_now_using_system_clock(){
 		Seed = std::chrono::system_clock::now().time_since_epoch().count();
 		pRNG_mt19937.seed(Seed);
 	};

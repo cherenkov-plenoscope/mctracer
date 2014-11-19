@@ -13,6 +13,7 @@
 #include <sstream>
 #include "SurfaceEntity.h"
 #include "Intersection.h"
+#include "QuadraticEquation.h"
 
 //=================================
 class Sphere :public SurfaceEntity{

@@ -1,8 +1,8 @@
 #include "ListOfInteractions.h"	
 //----------------------------------------------------------------------
 ListOfInteractions::~ListOfInteractions(){
-	for(Intersection* inter : Interactions){
-		delete inter;
+	for(Intersection* an_Intersection : Interactions){
+		delete an_Intersection;
 	}
 }
 //----------------------------------------------------------------------
@@ -10,8 +10,8 @@ void ListOfInteractions::show()const{
 
 	std::cout << "___List of " << Interactions.size() << " interactions:____" << endl;
 
-	for(Intersection* interact : Interactions){
-		std::cout << interact->get_string() << "\n";
+	for(Intersection* an_Intersection : Interactions){
+		std::cout << an_Intersection->get_string() << "\n";
 		std::cout << "_____________" << endl;
 	}
 
@@ -21,15 +21,15 @@ void ListOfInteractions::show()const{
 CsvRow ListOfInteractions::getCsvRow(GlobalSettings& settings)const{
 	
 	// only the last intersection
-	return Interactions.back() -> getCsvRow( settings );
+	return Interactions.at(Interactions.size() - 1) -> getCsvRow( settings );
 }
 //======================================================================
 double ListOfInteractions::get_accumulative_distance()const{
   	
   	double accumulative_distance = 0.0;
 	
-	for(Intersection* inter : Interactions){
-      accumulative_distance += inter->get_intersection_distance();
+	for(Intersection* an_Intersection : Interactions){
+      accumulative_distance += an_Intersection->get_intersection_distance();
     }	
 
     return accumulative_distance;

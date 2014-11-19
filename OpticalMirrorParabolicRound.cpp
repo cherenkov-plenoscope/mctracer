@@ -3,8 +3,9 @@
 OpticalMirrorParabolicRound::OpticalMirrorParabolicRound(){
 }
 //======================
-bool OpticalMirrorParabolicRound::set_parabolic_round(double new_FocalLength_m,
-double new_MirrorRadius_m
+bool OpticalMirrorParabolicRound::set_parabolic_round(
+	double new_FocalLength_m,
+	double new_MirrorRadius_m
 ){
 	if(set_optical_mirror(
 	new_FocalLength_m,

@@ -7,6 +7,9 @@
 #include "testReflectionProperties.cpp"
 #include "testFunction1D.cpp"
 #include "ToolTest.cpp"
+#include "SphereTest.cpp"
+#include "SphereIntersectionTest.cpp"
+#include "QuadraticEquationTest.cpp"
 #include "gtest/gtest.h"
 
 int main(int argc, char **argv) {

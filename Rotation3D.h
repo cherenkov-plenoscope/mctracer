@@ -42,7 +42,7 @@ class Rotation3D {
 	//======================
 	double get_rot_angle_in_rad() const;
 	//======================
-	bool get_flag_is_rot_angles_xyz() const;
+	bool uses_xyz_angels() const;
 	//======================
 	void disp() const;
 	//======================

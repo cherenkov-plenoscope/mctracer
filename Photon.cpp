@@ -77,7 +77,7 @@ void Photon::propagate(
 	const CartesianFrame* world, 
 	ListOfInteractions* history,
 	const GlobalSettings* settings,
-	PseRanNumGen* dice
+	PseudoRandomNumberGenerator* dice
 ){
 	int interaction_count = 0;
 	const CartesianFrame* object_propagated_from = NULL;
@@ -99,7 +99,7 @@ void Photon::propagate(
 	int interaction_count,
 	const CartesianFrame* object_propagated_from,
 	const GlobalSettings* settings,
-	PseRanNumGen* dice
+	PseudoRandomNumberGenerator* dice
 ){
 
 	//std::cout << interaction_count <<endl;

@@ -28,7 +28,7 @@ class ListOfPropagations{
 	void PropagateSingleRay(	
 		const CartesianFrame* world, 
 		const GlobalSettings* settings,
-		PseRanNumGen *dice,
+		PseudoRandomNumberGenerator *dice,
 		unsigned long long index
 	);
 public:

@@ -192,3 +192,39 @@ TEST_F(Vector3DTest, UnitVectors) {
 	EXPECT_EQ(1.0, a.z());
 	EXPECT_EQ(1.0, a.norm2());
 }
+//----------------------------------------------------------------------
+TEST_F(Vector3DTest, distance_to) {
+  Vector3D a;
+  a.set_unit_vector_x(); 
+  
+  Vector3D b;
+  b.set_unit_vector_y(); 
+
+  EXPECT_EQ( sqrt(2.0), a.distance_to(b) );
+}
+//----------------------------------------------------------------------
+TEST_F(Vector3DTest, distance_to_itself) {
+  
+  Vector3D a(1.3,3.7,4.2); 
+  EXPECT_EQ( 0.0, a.distance_to(a) );
+}
+//----------------------------------------------------------------------
+TEST_F(Vector3DTest, Operator_equals_expect_true) {
+  
+  Vector3D a(1.3,3.7,4.2); 
+  Vector3D b(1.3,3.7,4.2 + 1e-20); 
+
+  EXPECT_EQ(a, b);
+  EXPECT_TRUE(a == b);
+  EXPECT_FALSE(a != b);
+}
+//----------------------------------------------------------------------
+TEST_F(Vector3DTest, Operator_equals_expect_false) {
+  
+  Vector3D a(1.3,3.7,4.2); 
+  Vector3D b(1.3,3.7,4.2 + 1e-9); 
+
+  EXPECT_NE(a, b);
+  EXPECT_TRUE(a != b);
+  EXPECT_FALSE(a == b);
+}
