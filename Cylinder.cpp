@@ -1,156 +1,144 @@
 #include "Cylinder.h"
-//==================================================================
+//------------------------------------------------------------------------------
 Cylinder::Cylinder(){
 }
-//==================================================================
-void Cylinder::set_cylinder_radius(double new_cylinder_radius){
-	//===================
-	// set cylinder radius
-	//===================
-	if(new_cylinder_radius > 0.0){
-		CylinderRadius=new_cylinder_radius;
-	}else{
-		std::stringstream info;
-		info << "Cylinder::set_cylinder_radius\n";
-		info << "The radius of a cylinder must be larger than 0.0m !\n";
-		info << "Expected: >0.0, but actual: " << new_cylinder_radius << "\n";
-		throw TracerException(info.str());
-	}
-}
-//----------------------------------------------------------------------
-void Cylinder::set_cylinder(	
-double new_CylinderRadius,
-Vector3D vec_start, 
-Vector3D vec_end){
-
-	if((vec_start-vec_end).norm2()==0.0){
-		std::stringstream info;
-		info << "Cylinder::set_cylinder\n";
-		info << "The start and end point of a cylinder must not be the same!\n";
-		info << "Start: " << vec_start << " and end: " << vec_end << ".\n";
-		throw TracerException(info.str());
-	}
-	
-	//===================
-	// rotation axis in world frame
-	//===================
-	Vector3D vec_rotsym_axis_in_world_frame;
-	vec_rotsym_axis_in_world_frame = vec_end - vec_start;
-	
-	//===================
-	// set cylinder radius
-	//===================
-	set_cylinder_radius(new_CylinderRadius);
-	
-	//===================
-	// set cylinder length
-	//===================
-	double dbl_new_cylinder_length;
-	dbl_new_cylinder_length = vec_rotsym_axis_in_world_frame.norm2();
-	CylinderLength = dbl_new_cylinder_length;
-	
-	//===================
-	// new world position
-	//===================
-	Vector3D vec_new_pos;
-	vec_new_pos = vec_start + vec_rotsym_axis_in_world_frame/2.0;
-	
-	//===================
-	// new rotation
-	//===================
-	// rot axis
-	Rotation3D euler_new_rot;
-	Vector3D vec_ez; vec_ez.set_unit_vector_z();
-	
-	if(
-	fabs(vec_ez*vec_rotsym_axis_in_world_frame/
-	vec_rotsym_axis_in_world_frame.norm2())== 1.0)
-	{
-		euler_new_rot.set(vec_ez,0.0);
-	}
-	else
-	{
-		Vector3D vec_rot_axis=
-		vec_rotsym_axis_in_world_frame.CrossProduct(vec_ez);
-		//cout<<"rot axis: "<<vec_rot_axis.get_string()<<endl;
-		// rot angle
-		
-		double dbl_new_rot_angle_in_rad;
-		dbl_new_rot_angle_in_rad = -acos(
-		(vec_ez* vec_rotsym_axis_in_world_frame)/ 
-		vec_rotsym_axis_in_world_frame.norm2()
-		);
-		//cout<<"rot angle: "<<dbl_new_rot_angle_in_rad<<endl;
-		
-		euler_new_rot.
-		set(vec_rot_axis,dbl_new_rot_angle_in_rad);
-	}
-	//===================
-	// reset frame
-	//===================
-	set_frame(name_of_frame,vec_new_pos, euler_new_rot);
-	
-	//===================
-	// set max radius
-	//===================
-	radius_of_sphere_enclosing_all_children = sqrt(
-		pow(CylinderRadius,2.0)+
-		pow((CylinderLength/2.0),2.0)
-	);
-}
-//==================================================================
+//------------------------------------------------------------------------------
 void Cylinder::set_cylinder(
-double new_CylinderRadius,
-double new_CylinderLength){
-	//===================
-	// set cylinder radius
-	//===================
-	set_cylinder_radius(new_CylinderRadius);
+	double CylinderRadius,
+	Vector3D start_pos,
+	Vector3D end_pos
+){
+	set_cylinder_radius(CylinderRadius);
+	set_cylinder_length(start_pos, end_pos);
+	set_position_and_orientation(start_pos, end_pos);
+}
+//------------------------------------------------------------------------------
+void Cylinder::set_position_and_orientation(
+	const Vector3D start_pos, 
+	const Vector3D end_pos
+){
+	Vector3D rotsym_axis = end_pos - start_pos;
+	Vector3D new_position_in_mother = start_pos + rotsym_axis/2.0;
 	
-	//===================
-	// set cylinder length
-	//===================
-	if(new_CylinderLength > 0.0){
-		CylinderLength=new_CylinderLength;
+	Rotation3D rotation_in_mother = 
+	calculate_new_rotation_in_mother(rotsym_axis);
+
+	set_frame(name_of_frame, new_position_in_mother, rotation_in_mother);
+	post_initialize_radius_of_enclosing_sphere();
+}
+//------------------------------------------------------------------------------
+Rotation3D Cylinder::calculate_new_rotation_in_mother(
+	const Vector3D rotsym_axis
+){
+	Rotation3D rotation_in_mother;
+	Vector3D ez; ez.set_unit_vector_z();
+	
+	if( is_paralell_to_z_axis(rotsym_axis) ){
+
+		rotation_in_mother.set(ez,0.0);
+	}else{
+
+		Vector3D rot_axis_in_mother = rotsym_axis.CrossProduct(ez);
+		
+		double new_rot_angle_in_rad = -acos( 
+			(ez* rotsym_axis)/rotsym_axis.norm2()
+		);
+
+		rotation_in_mother.set(rot_axis_in_mother, new_rot_angle_in_rad);
+	}	
+	return rotation_in_mother;
+}
+//------------------------------------------------------------------------------
+bool Cylinder::is_paralell_to_z_axis(const Vector3D direction)const{
+	Vector3D ez; ez.set_unit_vector_z();
+
+	return (fabs(ez*direction/direction.norm2()) == 1.0)? true : false;
+}
+//------------------------------------------------------------------------------
+void Cylinder::assert_start_and_end_point_are_distinct(
+	Vector3D start_pos, Vector3D end_pos
+){
+	if( start_pos == end_pos ){
+		std::stringstream info;
+		info << "Cylinder::" << __func__ << "()\n";
+		info << "The start and end point of a cylinder must not be the same!\n";
+		info << "Start: " << start_pos << " and end: " << end_pos << ".\n";
+		throw TracerException(info.str());
+	}
+}
+//------------------------------------------------------------------------------
+void Cylinder::set_cylinder(double CylinderRadius,double CylinderLength){
+
+	set_cylinder_radius(CylinderRadius);
+	set_cylinder_length(CylinderLength);
+	post_initialize_radius_of_enclosing_sphere();
+}
+//------------------------------------------------------------------------------
+void Cylinder::set_cylinder_length(
+	const Vector3D start_pos, 
+	const Vector3D end_pos
+){
+	assert_start_and_end_point_are_distinct(start_pos, end_pos);
+	set_cylinder_length( (end_pos - start_pos).norm2());
+}
+//------------------------------------------------------------------------------
+void Cylinder::set_cylinder_length(const double CylinderLength){
+	if(CylinderLength > 0.0){
+		this->CylinderLength = CylinderLength;
 	}else{
 		std::stringstream info;
 		info << "Cylinder::set_cylinder\n";
 		info << "The length of a cylinder must be larger than 0.0m !\n";
-		info << "Expected: >0.0, but actual: " << new_CylinderLength << "\n";
+		info << "Expected: >0.0, but actual: " << CylinderLength << "\n";
 		throw TracerException(info.str());
 	}
-	//===================
-	// set max radius
-	//===================
-	radius_of_sphere_enclosing_all_children = sqrt(
-		pow(CylinderRadius,2.0)+
-		pow((CylinderLength/2.0),2.0)
+}
+//------------------------------------------------------------------------------
+void Cylinder::set_cylinder_radius(const double CylinderRadius){
+	if(CylinderRadius > 0.0){
+		this->CylinderRadius = CylinderRadius;
+	}else{
+		std::stringstream info;
+		info << "Cylinder::" << __func__ << "()\n";
+		info << "The radius of a cylinder must be larger than 0.0m !\n";
+		info << "Expected: >0.0, but actual: " << CylinderRadius << "\n";
+		throw TracerException(info.str());
+	}
+}
+//------------------------------------------------------------------------------
+void Cylinder::post_initialize_radius_of_enclosing_sphere(){
+
+	double half_the_cylinder_length = 0.5*CylinderLength;
+
+	radius_of_sphere_enclosing_all_children = hypot(
+		half_the_cylinder_length,
+		CylinderRadius
 	);
 }
-//==================================================================
+//------------------------------------------------------------------------------
 void Cylinder::disp()const{
-	stringstream out;
-	out.str("");
-	out<<"cylinder:"<<name_of_frame<<"_________________________________"<<endl;
-	out<<get_frame_string();
-	out<<get_surface_propertie_prompt();
-	out<<get_cylinder_string();
-	out<<"_________________________________"<<endl;
-	cout<<out.str();
+	std::stringstream out;
+	out << "cylinder:" << name_of_frame;
+	out << "_________________________________\n";
+	out << get_frame_string();
+	out << get_surface_propertie_prompt();
+	out << get_cylinder_string();
+	out << "_________________________________\n";
+	std::cout << out.str();
 }
-//==================================================================
-string Cylinder::get_cylinder_string()const{
-	stringstream out;
-	out.str("");
-	out<<"||| cylinder radius: "<<CylinderRadius<<" [m]"<<endl;
-	out<<"||| cylinder length: "<<CylinderLength<<" [m]"<<endl;
+//------------------------------------------------------------------------------
+std::string Cylinder::get_cylinder_string()const{
+	std::stringstream out;
+	out << "||| cylinder radius: " << CylinderRadius << " m\n";
+	out << "||| cylinder length: " << CylinderLength << " m\n";
 	return out.str();
 }
-//==================================================================
+//------------------------------------------------------------------------------
 void Cylinder::hit(
-Vector3D *base,
-Vector3D *dir,
-Intersection *intersection)const{
+	Vector3D *base,
+	Vector3D *dir,
+	Intersection *intersection
+)const{
 	// When there is a long cylinder id est 
 	// CylinderLength >> CylinderRadius
 	// then max radius is also big but the projected intersection 
