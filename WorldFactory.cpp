@@ -189,11 +189,11 @@ CartesianFrame* WorldFactory::producePlane(
 	Rotation3D  			rotation;
 	ReflectionProperties 	refl_prop; 
 	ColourProperties 		colour;
-	double 					min_x, max_x, min_y, max_y;
+	double 					x_width, y_width;
 	
 	extract_Frame_props(name, position, rotation, node.child("set_frame"));
 	extract_Surface_props(refl_prop, colour, node.child("set_surface"));
-	extract_Plane_props(min_x, max_x, min_y, max_y, node.child("set_plane"));
+	extract_Plane_props(x_width, y_width, node.child("set_plane"));
 
 	assert_name_of_child_frame_is_not_in_use_yet(mother, name);	
 
@@ -202,7 +202,7 @@ CartesianFrame* WorldFactory::producePlane(
 
 	new_plane->set_frame(name,position,rotation);
 	new_plane->set_surface_properties(&refl_prop,&colour);
-	new_plane->set_plane(min_x, max_x, min_y, max_y);
+	new_plane->set_plane_using_x_and_y_width(x_width, y_width);
 	
 	mother->set_mother_and_child(new_plane);
 	return new_plane;
@@ -405,18 +405,13 @@ void WorldFactory::extract_Frame_props(
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_Plane_props(
-	double &min_x, double &max_x, double &min_y, double &max_y,
-	const pugi::xml_node node
+	double &x_width, double &y_width, const pugi::xml_node node 
 ){
-	assert_attribute_exists(node, "min_x");
-	assert_attribute_exists(node, "min_x");
-	assert_attribute_exists(node, "min_x");
-	assert_attribute_exists(node, "min_x");
+	assert_attribute_exists(node, "x_width");
+	assert_attribute_exists(node, "y_width");
 	
-	min_x = pedantic_strtod(node.attribute("min_x").value());
-	max_x = pedantic_strtod(node.attribute("max_x").value());
-	min_y = pedantic_strtod(node.attribute("min_y").value());
-	max_y = pedantic_strtod(node.attribute("max_y").value());
+	x_width = pedantic_strtod(node.attribute("x_width").value());
+	y_width = pedantic_strtod(node.attribute("y_width").value());
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_Sphere_props(

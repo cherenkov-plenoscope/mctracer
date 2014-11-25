@@ -1,24 +1,24 @@
 #include "Vector3D.h"
-//======================
+//------------------------------------------------------------------------------
 Vector3D::Vector3D(){
 }
-//======================
+//------------------------------------------------------------------------------
 Vector3D::Vector3D(const double nx,const double ny,const double nz){
 	X=nx; 
 	Y=ny; 
 	Z=nz;
 }
-//======================
+//------------------------------------------------------------------------------
 void Vector3D::set(const double nx,const double ny,const double nz){
 	X=nx; 
 	Y=ny; 
 	Z=nz;
 }
-//======================
+//------------------------------------------------------------------------------
 double Vector3D::norm2() const{
 	return sqrt( pow(X,2.0) + pow(Y,2.0) + pow(Z,2.0) );
 }
-//======================
+//------------------------------------------------------------------------------
 Vector3D Vector3D::CrossProduct(const Vector3D v) const{
 // crossproduct
 	Vector3D temp;
@@ -27,13 +27,13 @@ Vector3D Vector3D::CrossProduct(const Vector3D v) const{
 	temp.Z = X*v.Y - Y*v.X;
 	return temp;
 }
-//======================
+//------------------------------------------------------------------------------
 double Vector3D::operator*(const Vector3D vec_two) const{
 	double scalarproduct;
 	scalarproduct = vec_two.X*X + vec_two.Y*Y + vec_two.Z*Z;
 	return scalarproduct;
 }
-//======================
+//------------------------------------------------------------------------------
 Vector3D Vector3D::operator*(const double scalar) const{
 	Vector3D  temp;
 	temp.X=X*scalar;
@@ -41,7 +41,7 @@ Vector3D Vector3D::operator*(const double scalar) const{
 	temp.Z=Z*scalar;
 	return temp;
 }
-//======================
+//------------------------------------------------------------------------------
 Vector3D Vector3D::operator-(const Vector3D vec_two) const{
 	Vector3D temp;
 	temp.X = X-vec_two.X;
@@ -49,7 +49,7 @@ Vector3D Vector3D::operator-(const Vector3D vec_two) const{
 	temp.Z = Z-vec_two.Z;
 	return temp;
 }
-//======================
+//------------------------------------------------------------------------------
 Vector3D Vector3D::operator+(const Vector3D vec_two) const{
 	Vector3D temp;
 	temp.X = X+vec_two.X;
@@ -57,31 +57,31 @@ Vector3D Vector3D::operator+(const Vector3D vec_two) const{
 	temp.Z = Z+vec_two.Z;
 	return temp;
 }
-//======================
+//------------------------------------------------------------------------------
 Vector3D Vector3D::operator/(const double scalar) const{
-Vector3D temp;
+	Vector3D temp;
 	temp.X=X/scalar;
 	temp.Y=Y/scalar;
 	temp.Z=Z/scalar;
 	return temp;
 }
-//======================
+//------------------------------------------------------------------------------
 void Vector3D::operator=(const Vector3D eq){
 	X =eq.X;
 	Y =eq.Y;
 	Z =eq.Z;
 }
-//======================
+//------------------------------------------------------------------------------
 void Vector3D::disp() const{
 	std::cout<<get_string();
 }
-//======================
+//------------------------------------------------------------------------------
 std::string Vector3D::get_string() const{
 	std::stringstream out; 
 	out << "( " << X << " " << Y << " " << Z << " ) m";
 	return out.str();
 }
-//======================
+//------------------------------------------------------------------------------
 void Vector3D::mirror(Vector3D* ray) const{
 	// mirror martix
 	//
@@ -139,54 +139,54 @@ void Vector3D::mirror(Vector3D* ray) const{
 		(1.0-2.0*pow(Z,2.0))*ray->Z
 	);
 }
-//======================
+//------------------------------------------------------------------------------
 void Vector3D::set_unit_vector_x(){
 	X = 1.0;
 	Y = 0.0;
 	Z = 0.0;
 }
-//======================
+//------------------------------------------------------------------------------
 void Vector3D::set_unit_vector_y(){
 	X = 0.0;
 	Y = 1.0;
 	Z = 0.0;
 }
-//======================
+//------------------------------------------------------------------------------
 void Vector3D::set_unit_vector_z(){
 	X = 0.0;
 	Y = 0.0;
 	Z = 1.0;
 }
-//======================
+//------------------------------------------------------------------------------
 void Vector3D::set_null_vector(){
 	X = 0.0;
 	Y = 0.0;
 	Z = 0.0;
 }
-//======================
+//------------------------------------------------------------------------------
 double Vector3D::x() const{
 	return X;
 }
-//======================
+//------------------------------------------------------------------------------
 double Vector3D::y() const{
 	return Y;
 }
-//======================
+//------------------------------------------------------------------------------
 double Vector3D::z() const{
 	return Z;
 }
-//======================
+//------------------------------------------------------------------------------
 bool Vector3D::operator == (const Vector3D& eqVec) const{
 	return (distance_to(eqVec) < 1e-12) ? true : false;
 }
 bool Vector3D::operator != (const Vector3D& eqVec) const{
 	return (distance_to(eqVec) < 1e-12) ? false : true;
 }
-//======================
+//------------------------------------------------------------------------------
 double Vector3D::distance_to(const Vector3D &v)const{
 	return (*this-v).norm2();
 }
-//======================
+//------------------------------------------------------------------------------
 CsvRow Vector3D::getCsvRow(GlobalSettings& settings) const{
 	CsvRow row;
 
@@ -207,9 +207,17 @@ CsvRow Vector3D::getCsvRow(GlobalSettings& settings) const{
 
 	return row;
 }
-//======================================================================
+//------------------------------------------------------------------------------
+bool Vector3D::is_paralell_to_z_axis()const{
+	return ( X==0.0 && Y==0.0 && Z>0.0 ) ? true : false;
+}
+//------------------------------------------------------------------------------
+bool Vector3D::is_parallel_to_x_y_plane()const{
+	return( Z==0 && ( X!=0.0 || Y!=0.0 ) ) ? true : false;
+}
+//------------------------------------------------------------------------------
 // friends of osstream
-//======================================================================
+//------------------------------------------------------------------------------
 std::ostream& operator<<(std::ostream& os, const Vector3D& vec){
     os << "( " << vec.x() << " " << vec.y() << " " << vec.z() <<" )";
     os << " m";

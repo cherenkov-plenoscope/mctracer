@@ -39,7 +39,7 @@ public:
 	std::string get_XmlIo_print()const;
 	std::string get_message_print()const;
 
-	const char * what () const throw ();
+	virtual const char * what () const throw ();
 private:
 	std::string pugi_encoding_to_str(int encoding)const;
 	bool build_offset_data_to_locate_line_and_column(
@@ -74,13 +74,12 @@ public:
 	}
 
 	const char * what () const throw (){	
-	std::string type = " ____UnknownItem_Exception_______________________\n|\n";
-		return (
-			type + 
-			get_UnknownItem_print() +
-			get_message_print() +
-			get_XmlIo_print()
-		).c_str();
+		std::stringstream msg;
+		msg << " ____UnknownItem_Exception_______________________\n|\n";
+		msg << get_UnknownItem_print();
+		msg << get_message_print();
+		msg << get_XmlIo_print();
+		return msg.str().c_str();
 	}
 };
 //------------------------------------------------------------------------------
@@ -105,13 +104,12 @@ public:
 	}
 
 	const char * what () const throw (){
-	std::string type = " ____MissingItem_Exception_______________________\n|\n";
-		return (
-			type + 
-			get_MissingItem_print() +
-			get_message_print() +
-			get_XmlIo_print()
-		).c_str();
+		std::stringstream msg;
+		msg << " ____MissingItem_Exception_______________________\n|\n";
+		msg << get_MissingItem_print();
+		msg << get_message_print();
+		msg << get_XmlIo_print();
+		return msg.str().c_str();
 	}
 };
 //------------------------------------------------------------------------------
@@ -137,13 +135,12 @@ public:
 	}
 
 	const char * what () const throw (){
-		std::string type = " ____MultipleUseage_Exception________________\n|\n";
-		return (
-			type + 
-			get_MultipleUseage_print() +
-			get_message_print() +
-			get_XmlIo_print()
-		).c_str();
+		std::stringstream msg;
+		msg << " ____MultipleUseage_Exception________________\n|\n";
+		msg << get_MultipleUseage_print();
+		msg << get_message_print();
+		msg << get_XmlIo_print();
+		return msg.str().c_str();
 	}
 };
 //------------------------------------------------------------------------------
@@ -168,13 +165,12 @@ public:
 	}
 
 	const char * what () const throw (){
-		std::string type = " ____BadAttribute_Exception__________________\n|\n";
-		return (
-			type + 
-			get_BadAttribute_print() +
-			get_message_print() +
-			get_XmlIo_print()
-		).c_str();
+		std::stringstream msg;
+		msg << " ____BadAttribute_Exception__________________\n|\n";
+		msg << get_BadAttribute_print();
+		msg << get_message_print();
+		msg << get_XmlIo_print();
+		return msg.str().c_str();		
 	}
 };
 //------------------------------------------------------------------------------

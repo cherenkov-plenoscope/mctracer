@@ -106,8 +106,7 @@ private:
 	);
 
 	void extract_Plane_props(
-		double &min_x, double &max_x, double &min_y, double &max_y,
-		const pugi::xml_node node
+		double &x_width, double &y_width, const pugi::xml_node node 
 	);
 
 	void extract_Sphere_props(double &radius,const pugi::xml_node node);

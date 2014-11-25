@@ -8,6 +8,7 @@
 #include "testFunction1D.cpp"
 #include "ToolTest.cpp"
 #include "SphereTest.cpp"
+#include "DiscTest.cpp"
 #include "SphereIntersectionTest.cpp"
 #include "QuadraticEquationTest.cpp"
 #include "gtest/gtest.h"

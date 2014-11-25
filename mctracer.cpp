@@ -47,9 +47,7 @@ int main(){
 		CartesianFrame *Mworld = file2world.world();
 
 		FreeOrbitCamera free(Mworld,&settings);
-		free.start_free_orbit();
-
-	}catch(std::exception& error){
+	}catch(std::exception &error){
 		
 		cerr << error.what(); 
 		return 0;

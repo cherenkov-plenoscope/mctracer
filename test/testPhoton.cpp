@@ -103,7 +103,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
   Plane mirror1;
   mirror1.set_frame("mirror_1",pos,rot);
   mirror1.set_surface_properties(&refl,&colo);
-  mirror1.set_plane(-.5,.5,-.5,.5);
+  mirror1.set_plane_using_x_and_y_width(1.0, 1.0);
   
   //------------mirror 2----------------
   pos.set(0.0,0.0,1.0);
@@ -111,7 +111,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
   Plane mirror2;
   mirror2.set_frame("mirror_2",pos,rot);
   mirror2.set_surface_properties(&refl,&colo);
-  mirror2.set_plane(-.5,.5,-.5,.5);
+  mirror2.set_plane_using_x_and_y_width(1.0, 1.0);
 
   //----------declare relationships------------
   optical_table.set_mother_and_child(&mirror1);
@@ -123,11 +123,10 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
   world.post_initialize_me_and_all_my_children();
 
   //----------free orbit-----------------------
-  /*
-  FreeOrbitCamera free;
-  free.set_free_orbit(&world,&setup);
-  free.start_free_orbit();
-  */
+  
+  //FreeOrbitCamera free(&world,&setup);
+  //free.start_free_orbit();
+
   //-----------send Photon----------------------
   // the photon is starting in between the to mirrors
   // traveling to the upper mirror
@@ -196,7 +195,7 @@ TEST_F(PhotonTest, Reflections){
   Plane mirror;
   mirror.set_frame("mirror",pos,rot);
   mirror.set_surface_properties(&mirror_reflection,&colo);
-  mirror.set_plane(-.5,.5,-.5,.5);
+  mirror.set_plane_using_x_and_y_width(1.0, 1.0);
   
   //------------absorber----------------
   ReflectionProperties  absorber_reflection;
@@ -207,7 +206,7 @@ TEST_F(PhotonTest, Reflections){
   Plane absorber;
   absorber.set_frame("absorber",pos,rot);
   absorber.set_surface_properties(&absorber_reflection,&colo);
-  absorber.set_plane(-.5,.5,-.5,.5);
+  absorber.set_plane_using_x_and_y_width(1.0, 1.0);
 
   //----------declare relationships------------
   optical_table.set_mother_and_child(&mirror);

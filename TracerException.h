@@ -9,6 +9,7 @@
 //=================================
 // included dependencies
 #include <iostream>
+#include <stdexcept>
 #include <string>
 #include <sstream>
 
@@ -30,7 +31,7 @@ public:
 	TracerException(std::string new_message, ExceptionType Type);
 	TracerException();
 	ExceptionType type()const;
-	const char * what () const throw ();
+	virtual const char * what () const throw ();
 };
 
 class BadValue :public TracerException{

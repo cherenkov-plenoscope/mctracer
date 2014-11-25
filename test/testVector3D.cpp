@@ -228,3 +228,16 @@ TEST_F(Vector3DTest, Operator_equals_expect_false) {
   EXPECT_TRUE(a != b);
   EXPECT_FALSE(a == b);
 }
+//----------------------------------------------------------------------
+TEST_F(Vector3DTest, parallel_to_x_y_plane) {
+  
+  Vector3D a(1.0,2.0,0.0);
+  EXPECT_TRUE( a.is_parallel_to_x_y_plane() );
+
+  Vector3D b(1.3,3.7,4.2 + 1e-9); 
+  EXPECT_FALSE( b.is_parallel_to_x_y_plane() );
+
+  Vector3D c(0.0,2.0,5.5); 
+  EXPECT_FALSE( c.is_parallel_to_x_y_plane() );
+
+}

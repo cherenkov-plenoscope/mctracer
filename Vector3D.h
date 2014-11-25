@@ -51,6 +51,8 @@ void operator=(const Vector3D eq);
 bool operator == (const Vector3D& eqVec) const;
 bool operator != (const Vector3D& eqVec) const;
 double distance_to(const Vector3D &v)const;
+bool is_paralell_to_z_axis()const;
+bool is_parallel_to_x_y_plane()const;
 //------------------------------------------------------------------------------
 // Printing
 void disp() const;

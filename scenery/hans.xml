@@ -20,24 +20,24 @@
 	<set_frame name="house" pos="[5,0,0]" rot="[0,0,0]"/>	
 
 	<plane>
-		<set_frame name="wall_1" pos="[1,0,1]" rot="[0,1.57,0.0]"/>
-		<set_surface refl="0.0" colour="[180,180,180]"/>
-		<set_plane min_x="-1.0" max_x="+0.5" min_y="-1.0" max_y="+1.0"/>
+		<set_frame name="wall_1" pos="[1,0,0.75]" rot="[0,1.57,0.0]"/>
+		<set_surface refl="0.5" colour="[180,180,180]"/>
+		<set_plane x_width="1.5" y_width="2.0" /> 
 	</plane>
 	<plane>
-		<set_frame name="wall_2" pos="[-1,0,1]" rot="[0,1.57,0]"/>
-		<set_surface refl="0.0" colour="[180,180,180]"/>
-		<set_plane min_x="-1.0" max_x="+0.5" min_y="-1.0" max_y="+1.0"/>
+		<set_frame name="wall_2" pos="[-1,0,0.75]" rot="[0,1.57,0]"/>
+		<set_surface refl="0.5" colour="[180,180,180]"/>
+		<set_plane x_width="1.5" y_width="2.0" /> 
 	</plane>
 	<plane>
-		<set_frame name="wall_3" pos="[0,1,1]" rot="[0,1.57,1.57]"/>
-		<set_surface refl="0.0" colour="[180,180,180]"/>
-		<set_plane min_x="-1.0" max_x="+0.5" min_y="-1.0" max_y="+1.0"/>
+		<set_frame name="wall_3" pos="[0,1,0.75]" rot="[0,1.57,1.57]"/>
+		<set_surface refl="0.5" colour="[180,180,180]"/>
+		<set_plane x_width="1.5" y_width="2.0" /> 
 	</plane>	
 	<plane>
-		<set_frame name="wall_4" pos="[0,-1,1]" rot="[0,1.57,1.57]"/>
-		<set_surface refl="0.0" colour="[180,180,180]"/>
-		<set_plane min_x="-1.0" max_x="+0.5" min_y="-1.0" max_y="+1.0"/>
+		<set_frame name="wall_4" pos="[0,-1,0.75]" rot="[0,1.57,1.57]"/>
+		<set_surface refl="0.5" colour="[180,180,180]"/>
+		<set_plane x_width="1.5" y_width="2.0" /> 
 	</plane>
 
 	<frame>
@@ -45,12 +45,12 @@
 		<plane>
 			<set_frame name="roof_1" pos="[0,0.707,0.707]" rot="[0,0.7853,1.57]"/>
 			<set_surface refl="0.0" colour="[230,20,120]"/>
-			<set_plane min_x="-1.0" max_x="+1.0" min_y="-1.1" max_y="+1.1"/>
+			<set_plane x_width="2.0" y_width="2.2" /> 
 		</plane>
 		<plane>
 			<set_frame name="roof_2" pos="[0,-0.707,0.707]" rot="[0,0.7853,-1.57]"/>
 			<set_surface refl="0.0" colour="[230,20,120]"/>
-			<set_plane min_x="-1.0" max_x="+1.0" min_y="-1.1" max_y="+1.1"/>
+			<set_plane x_width="2.0" y_width="2.2" /> 
 		</plane>
 		<triangle>
 			<set_frame name="front_wall" pos="[0,0,0]" rot="[0,0,0]"/>
@@ -63,24 +63,24 @@
 		<set_frame name="chimney" pos="[0.0,0.6,2.1]" rot="[0,0,0]"/>	
 		
 		<plane>
-			<set_frame name="chimney_wall_1" pos="[0.15,0,0.15]" rot="[0,1.57,0.0]"/>
+			<set_frame name="chimney_wall_1" pos="[0.15,0,0]" rot="[0,1.57,0.0]"/>
 			<set_surface refl="0.0" colour="[180,180,180]"/>
-			<set_plane min_x="-0.5" max_x="+0.15" min_y="-0.15" max_y="+0.15"/>
+			<set_plane x_width="0.65" y_width="0.3" /> 
 		</plane>	
 		<plane>
-			<set_frame name="chimney_wall_2" pos="[-0.15,0,0.15]" rot="[0,1.57,0]"/>
+			<set_frame name="chimney_wall_2" pos="[-0.15,0,0]" rot="[0,1.57,0]"/>
 			<set_surface refl="0.0" colour="[180,180,180]"/>
-			<set_plane min_x="-0.5" max_x="+0.15" min_y="-0.15" max_y="+0.15"/>
+			<set_plane x_width="0.65" y_width="0.3" /> 
 		</plane>
 		<plane>
-			<set_frame name="chimney_wall_3" pos="[0,0.15,0.15]" rot="[0,1.57,1.57]"/>
+			<set_frame name="chimney_wall_3" pos="[0,0.15,0]" rot="[0,1.57,1.57]"/>
 			<set_surface refl="0.0" colour="[180,180,180]"/>
-			<set_plane min_x="-0.5" max_x="+0.15" min_y="-0.15" max_y="+0.15"/>
+			<set_plane x_width="0.65" y_width="0.3" /> 
 		</plane>	
 		<plane>
-			<set_frame name="chimney_wall_4" pos="[0,-0.15,0.15]" rot="[0,1.57,1.57]"/>
+			<set_frame name="chimney_wall_4" pos="[0,-0.15,0]" rot="[0,1.57,1.57]"/>
 			<set_surface refl="0.0" colour="[180,180,180]"/>
-			<set_plane min_x="-0.5" max_x="+0.15" min_y="-0.15" max_y="+0.15"/>
+			<set_plane x_width="0.65" y_width="0.3" /> 
 		</plane>	
 	</frame>
 </frame>

@@ -119,6 +119,10 @@ Vector3D CameraDevice::get_pointing_direction()const{
 	return CameraPointingDirection;
 }
 //======================================================================
+Vector3D CameraDevice::get_normalized_pointing_direction()const{
+	return CameraPointingDirection/CameraPointingDirection.norm2();
+}
+//======================================================================
 void CameraDevice::disp()const{
 	std::cout << get_cam_string();
 }

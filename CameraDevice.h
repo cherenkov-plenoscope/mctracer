@@ -67,6 +67,7 @@ public:
 	void disp()const;
 	//======================
 	Vector3D get_pointing_direction()const;
+	Vector3D get_normalized_pointing_direction()const;
 	//======================	
 	/*virtual void Acquire(		
 		CartesianFrame &world,

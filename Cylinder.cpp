@@ -1,22 +1,22 @@
 #include "Cylinder.h"
 //------------------------------------------------------------------------------
-Cylinder::Cylinder(){
-}
-//------------------------------------------------------------------------------
 void Cylinder::set_cylinder(
-	double CylinderRadius,
-	Vector3D start_pos,
-	Vector3D end_pos
+	const double radius,
+	const Vector3D start_pos, 
+	const Vector3D end_pos
 ){
-	set_cylinder_radius(CylinderRadius);
+
+	set_cylinder_radius(radius);
 	set_cylinder_length(start_pos, end_pos);
 	set_position_and_orientation(start_pos, end_pos);
+	post_initialize_radius_of_enclosing_sphere();
 }
 //------------------------------------------------------------------------------
 void Cylinder::set_position_and_orientation(
 	const Vector3D start_pos, 
 	const Vector3D end_pos
 ){
+
 	Vector3D rotsym_axis = end_pos - start_pos;
 	Vector3D new_position_in_mother = start_pos + rotsym_axis/2.0;
 	
@@ -24,16 +24,16 @@ void Cylinder::set_position_and_orientation(
 	calculate_new_rotation_in_mother(rotsym_axis);
 
 	set_frame(name_of_frame, new_position_in_mother, rotation_in_mother);
-	post_initialize_radius_of_enclosing_sphere();
 }
 //------------------------------------------------------------------------------
 Rotation3D Cylinder::calculate_new_rotation_in_mother(
 	const Vector3D rotsym_axis
-){
+)const{
+
 	Rotation3D rotation_in_mother;
 	Vector3D ez; ez.set_unit_vector_z();
 	
-	if( is_paralell_to_z_axis(rotsym_axis) ){
+	if( rotsym_axis.is_paralell_to_z_axis() ){
 
 		rotation_in_mother.set(ez,0.0);
 	}else{
@@ -49,15 +49,10 @@ Rotation3D Cylinder::calculate_new_rotation_in_mother(
 	return rotation_in_mother;
 }
 //------------------------------------------------------------------------------
-bool Cylinder::is_paralell_to_z_axis(const Vector3D direction)const{
-	Vector3D ez; ez.set_unit_vector_z();
-
-	return (fabs(ez*direction/direction.norm2()) == 1.0)? true : false;
-}
-//------------------------------------------------------------------------------
 void Cylinder::assert_start_and_end_point_are_distinct(
-	Vector3D start_pos, Vector3D end_pos
-){
+	const Vector3D start_pos, const Vector3D end_pos
+)const{
+
 	if( start_pos == end_pos ){
 		std::stringstream info;
 		info << "Cylinder::" << __func__ << "()\n";
@@ -67,10 +62,10 @@ void Cylinder::assert_start_and_end_point_are_distinct(
 	}
 }
 //------------------------------------------------------------------------------
-void Cylinder::set_cylinder(double CylinderRadius,double CylinderLength){
+void Cylinder::set_cylinder(const double radius, const double length){
 
-	set_cylinder_radius(CylinderRadius);
-	set_cylinder_length(CylinderLength);
+	set_cylinder_radius(radius);
+	set_cylinder_length(length);
 	post_initialize_radius_of_enclosing_sphere();
 }
 //------------------------------------------------------------------------------
@@ -78,45 +73,49 @@ void Cylinder::set_cylinder_length(
 	const Vector3D start_pos, 
 	const Vector3D end_pos
 ){
+	
 	assert_start_and_end_point_are_distinct(start_pos, end_pos);
 	set_cylinder_length( (end_pos - start_pos).norm2());
 }
 //------------------------------------------------------------------------------
-void Cylinder::set_cylinder_length(const double CylinderLength){
-	if(CylinderLength > 0.0){
-		this->CylinderLength = CylinderLength;
+void Cylinder::set_cylinder_length(const double Length){
+
+	if(Length > 0.0){
+		this->Length = Length;
 	}else{
 		std::stringstream info;
 		info << "Cylinder::set_cylinder\n";
 		info << "The length of a cylinder must be larger than 0.0m !\n";
-		info << "Expected: >0.0, but actual: " << CylinderLength << "\n";
+		info << "Expected: >0.0, but actual: " << Length << "\n";
 		throw TracerException(info.str());
 	}
 }
 //------------------------------------------------------------------------------
-void Cylinder::set_cylinder_radius(const double CylinderRadius){
-	if(CylinderRadius > 0.0){
-		this->CylinderRadius = CylinderRadius;
+void Cylinder::set_cylinder_radius(const double Radius){
+
+	if(Radius > 0.0){
+		this->Radius = Radius;
 	}else{
 		std::stringstream info;
 		info << "Cylinder::" << __func__ << "()\n";
 		info << "The radius of a cylinder must be larger than 0.0m !\n";
-		info << "Expected: >0.0, but actual: " << CylinderRadius << "\n";
+		info << "Expected: >0.0, but actual: " << Radius << "\n";
 		throw TracerException(info.str());
 	}
 }
 //------------------------------------------------------------------------------
 void Cylinder::post_initialize_radius_of_enclosing_sphere(){
 
-	double half_the_cylinder_length = 0.5*CylinderLength;
+	double half_the_cylinder_length = 0.5*Length;
 
 	radius_of_sphere_enclosing_all_children = hypot(
 		half_the_cylinder_length,
-		CylinderRadius
+		Radius
 	);
 }
 //------------------------------------------------------------------------------
 void Cylinder::disp()const{
+
 	std::stringstream out;
 	out << "cylinder:" << name_of_frame;
 	out << "_________________________________\n";
@@ -128,9 +127,10 @@ void Cylinder::disp()const{
 }
 //------------------------------------------------------------------------------
 std::string Cylinder::get_cylinder_string()const{
+
 	std::stringstream out;
-	out << "||| cylinder radius: " << CylinderRadius << " m\n";
-	out << "||| cylinder length: " << CylinderLength << " m\n";
+	out << "||| cylinder radius: " << Radius << " m\n";
+	out << "||| cylinder length: " << Length << " m\n";
 	return out.str();
 }
 //------------------------------------------------------------------------------
@@ -140,7 +140,7 @@ void Cylinder::hit(
 	Intersection *intersection
 )const{
 	// When there is a long cylinder id est 
-	// CylinderLength >> CylinderRadius
+	// Length >> Radius
 	// then max radius is also big but the projected intersection 
 	// surface is still small.
 	// To speed up the hit calculation we first calculate the 
@@ -169,7 +169,7 @@ void Cylinder::hit(
 							
 	double dbl_q =(	pow(base->x(),2.0) +
 					pow(base->y(),2.0) -
-					pow(CylinderRadius,2.0) )/
+					pow(Radius,2.0) )/
 					dbl_denominator;
 	
 	double dbl_inner_part_of_square_root_p_q = 
@@ -203,13 +203,13 @@ void Cylinder::hit(
 		//bool flag_plus_hit = false;
 		
 		if( 	fabs(vec_intersection_minus.z())
-				<=(CylinderLength/2.0) )
+				<=(Length/2.0) )
 		{
 			flag_minus_hit = true;
 		}
 		
 		if( 	fabs(vec_intersection_plus.z())
-				<=(CylinderLength/2.0) )
+				<=(Length/2.0) )
 		{
 			//flag_plus_hit = true;
 		}

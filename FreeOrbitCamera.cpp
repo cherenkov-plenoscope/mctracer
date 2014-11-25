@@ -1,12 +1,9 @@
 #include "FreeOrbitCamera.h"
 //==============================================================================
 FreeOrbitCamera::FreeOrbitCamera(
-	CartesianFrame *ptr_to_new_world,
-	GlobalSettings *ptr_to_new_globalsettings
+	CartesianFrame *world,
+	GlobalSettings *settings
 ){
-	//free orbit display
-	free_orbit_display_name = "Monte Carlo Tracer -> Free Orbit";
-	
 	// default position for camera
 	t_World2Camera.set_null_vector();
 
@@ -21,7 +18,7 @@ FreeOrbitCamera::FreeOrbitCamera(
 	);
 
 	// default image size and FoV
-	FieldOfView_in_rad = Deg2Rad(90.0); //90Deg
+	FieldOfView_in_rad = Deg2Rad(90.0); 
 	
 	Image.Set( MCT_QVGA );
 	
@@ -45,8 +42,10 @@ FreeOrbitCamera::FreeOrbitCamera(
 	stereo_offset_increment_in_m = 0.0025;
 
 	// set the world frame and global settings
-	world = ptr_to_new_world;
-	settings = ptr_to_new_globalsettings;
+	this->world = world;
+	this->settings = settings;
+
+	start_free_orbit();
 }
 //==============================================================================
 void FreeOrbitCamera::aquire_image(){
@@ -70,108 +69,68 @@ void FreeOrbitCamera::update_free_orbit_display(){
 }
 //==============================================================================
 void FreeOrbitCamera::move_forward(){
-	// increment
-	double scaling_factor = 0.5/FieldOfView_in_rad;
-	
-	// calculate current poining direction of camera
-	Vector3D CameraPointingDirection=
-	FlyingPinHoleCamera.get_pointing_direction();
-	
-	CameraPointingDirection = 
-	CameraPointingDirection/CameraPointingDirection.norm2();
 
-	t_World2Camera = 
-	t_World2Camera+CameraPointingDirection*scaling_factor;
-	
-	FlyingPinHoleCamera.SetPositionAndOrientation(
-		t_World2Camera,
-		R_World2Camera
+	update_camera_position(
+		t_World2Camera + 
+		FlyingPinHoleCamera.get_normalized_pointing_direction()*
+		translation_increment() 
 	);
-	
-	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);	
-	
-	std::cout<<"free_orbit->move forward: "<<t_World2Camera<<std::endl;
+
+	std::cout << get_prefix_print() << "move forward: " << t_World2Camera << std::endl;
 }
 //==============================================================================
 void FreeOrbitCamera::move_backward(){
-	// increment
-	double scaling_factor = 0.5/FieldOfView_in_rad;
-	
-	// calculate current poining direction of camera
-	Vector3D CameraPointingDirection=
-	FlyingPinHoleCamera.get_pointing_direction();
-	
-	CameraPointingDirection = 
-	CameraPointingDirection/CameraPointingDirection.norm2();
-	
-	t_World2Camera = 
-	t_World2Camera - CameraPointingDirection*scaling_factor;
-	
-	FlyingPinHoleCamera.SetPositionAndOrientation(
-		t_World2Camera,
-		R_World2Camera
+
+	update_camera_position(
+		t_World2Camera - 
+		FlyingPinHoleCamera.get_normalized_pointing_direction()*
+		translation_increment() 
 	);
-	
-	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);	
-	
-	std::cout<<"free_orbit->move backward: "<<t_World2Camera<<std::endl;
+
+	std::cout << get_prefix_print() << "move backward: " << t_World2Camera << std::endl;
 }
 //==============================================================================
 void FreeOrbitCamera::move_left(){
-	
-	double scaling_factor = 0.5/FieldOfView_in_rad;
-	
-	Vector3D CameraPointingDirection =
-	FlyingPinHoleCamera.get_pointing_direction();
-	
-	CameraPointingDirection = 
-	CameraPointingDirection/CameraPointingDirection.norm2();
-	
+
 	Vector3D ez; 
 	ez.set_unit_vector_z(); 
-	Vector3D vec_left;
-	vec_left=ez.CrossProduct(CameraPointingDirection);
-
-	t_World2Camera = t_World2Camera - vec_left*scaling_factor;
-	
-	FlyingPinHoleCamera.SetPositionAndOrientation(
-		t_World2Camera,
-		R_World2Camera
+	Vector3D move_left = ez.CrossProduct(
+		FlyingPinHoleCamera.get_normalized_pointing_direction()
 	);
+
+	update_camera_position(t_World2Camera - move_left*translation_increment() );
 	
-	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);
-		
-	std::cout<<"free_orbit->move left: ";
-	std::cout<<t_World2Camera.get_string()<<std::endl;
+	std::cout << get_prefix_print() << "move left: " << t_World2Camera << std::endl;
 }
 //==============================================================================
 void FreeOrbitCamera::move_right(){
-	
-	double scaling_factor = 0.5/FieldOfView_in_rad;
-	
-	Vector3D CameraPointingDirection =
-	FlyingPinHoleCamera.get_pointing_direction();
-	
-	CameraPointingDirection = 
-	CameraPointingDirection/CameraPointingDirection.norm2();
-	
+
 	Vector3D ez; 
 	ez.set_unit_vector_z(); 
-	Vector3D vec_left;
-	vec_left=ez.CrossProduct(CameraPointingDirection);
+	Vector3D move_right = ez.CrossProduct(
+		FlyingPinHoleCamera.get_normalized_pointing_direction()
+	);
 
-	t_World2Camera = t_World2Camera + vec_left*scaling_factor;
+	update_camera_position(t_World2Camera + move_right*translation_increment() );
 	
+	std::cout << get_prefix_print() << "move right: " << t_World2Camera << std::endl;	
+}
+//==============================================================================
+void FreeOrbitCamera::update_camera_position(
+	Vector3D new_translation_World2Camera
+){
+	t_World2Camera = new_translation_World2Camera;
+
 	FlyingPinHoleCamera.SetPositionAndOrientation(
 		t_World2Camera,
 		R_World2Camera
 	);
-	
+
 	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);
-		
-	std::cout<<"free_orbit->move right: ";
-	std::cout<<t_World2Camera.get_string()<<std::endl;
-	
+}
+//==============================================================================
+double FreeOrbitCamera::translation_increment()const{
+	return 0.5/FieldOfView_in_rad;
 }
 //==============================================================================
 void FreeOrbitCamera::increase_FoV(){
@@ -182,9 +141,9 @@ void FreeOrbitCamera::increase_FoV(){
 		
 		FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);
 		
-		std::cout<< "free_orbit-> FoV: ";
+		std::cout << get_prefix_print() << "FoV: ";
 		std::cout<< Rad2Deg(FieldOfView_in_rad);
-		std::cout<< " [DEG]"<<std::endl;
+		std::cout<< " DEG"<<std::endl;
 	}
 }
 //==============================================================================
@@ -196,17 +155,16 @@ void FreeOrbitCamera::decrease_FoV(){
 		
 		FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);
 		
-		std::cout<< "free_orbit-> FoV: ";
+		std::cout << get_prefix_print() << "FoV: ";
 		std::cout<< Rad2Deg(FieldOfView_in_rad);
-		std::cout<< " [DEG]"<<std::endl;	
+		std::cout<< " DEG"<<std::endl;	
 	}
 }
 //==============================================================================
 void FreeOrbitCamera::look_up(){
-	double increment_in_rad = FieldOfView_in_rad/25.0;
-	
-	if(RotWorld2CameraY_in_rad<0.0 + increment_in_rad){
-		RotWorld2CameraY_in_rad = RotWorld2CameraY_in_rad + increment_in_rad;
+
+	if(RotWorld2CameraY_in_rad<0.0 + rotation_increment()){
+		RotWorld2CameraY_in_rad = RotWorld2CameraY_in_rad + rotation_increment();
 		
 		R_World2Camera.set(0.0,RotWorld2CameraY_in_rad,RotWorld2CameraZ_in_rad);
 
@@ -217,16 +175,15 @@ void FreeOrbitCamera::look_up(){
 
 		FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);					
 							
-		std::cout<<"free_orbit-> rot y: "<<Rad2Deg(RotWorld2CameraY_in_rad);
-		std::cout<<" [DEG]"<<std::endl;
+		std::cout << get_prefix_print() << "rot y: "<<Rad2Deg(RotWorld2CameraY_in_rad);
+		std::cout << " DEG\n";
 	}
 }
 //==============================================================================
 void FreeOrbitCamera::look_down(){
-	double increment_in_rad = FieldOfView_in_rad/25.0;
-
-	if(RotWorld2CameraY_in_rad > -M_PI + increment_in_rad){
-		RotWorld2CameraY_in_rad = RotWorld2CameraY_in_rad - increment_in_rad;
+	
+	if(RotWorld2CameraY_in_rad > -M_PI + rotation_increment()){
+		RotWorld2CameraY_in_rad = RotWorld2CameraY_in_rad - rotation_increment();
 		
 		R_World2Camera.set(0.0,RotWorld2CameraY_in_rad,RotWorld2CameraZ_in_rad);
 
@@ -237,17 +194,16 @@ void FreeOrbitCamera::look_down(){
 
 		FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);					
 							
-		std::cout<<"free_orbit-> rot y: "<<Rad2Deg(RotWorld2CameraY_in_rad);
-		std::cout<<" [DEG]"<<std::endl;
+		std::cout << get_prefix_print() << "rot y: "<<Rad2Deg(RotWorld2CameraY_in_rad);
+		std::cout << " DEG\n";
 	}
 }
 //==============================================================================
 void FreeOrbitCamera::look_left(){
-	double increment_in_rad = FieldOfView_in_rad/25.0;
-	
-	RotWorld2CameraZ_in_rad = fmod(RotWorld2CameraZ_in_rad,(2.0*M_PI));
-	
-	RotWorld2CameraZ_in_rad = RotWorld2CameraZ_in_rad + increment_in_rad;
+
+	assert_RotWorld2CameraZ_is_not_overtwisting();
+
+	RotWorld2CameraZ_in_rad = RotWorld2CameraZ_in_rad + rotation_increment();
 	
 	R_World2Camera.set(0.0,RotWorld2CameraY_in_rad,RotWorld2CameraZ_in_rad);
 
@@ -258,16 +214,15 @@ void FreeOrbitCamera::look_left(){
 
 	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);					
 						
-	std::cout<<"free_orbit-> rot z: "<<Rad2Deg(RotWorld2CameraZ_in_rad);
-	std::cout<<" [DEG]"<<std::endl;
+	std::cout << get_prefix_print() << "rot z: "<<Rad2Deg(RotWorld2CameraZ_in_rad);
+	std::cout << " DEG\n";
 }
 //==============================================================================
 void FreeOrbitCamera::look_right(){
-	double increment_in_rad = FieldOfView_in_rad/25.0;
-	
-	RotWorld2CameraZ_in_rad = fmod(RotWorld2CameraZ_in_rad,(2.0*M_PI));
-	
-	RotWorld2CameraZ_in_rad = RotWorld2CameraZ_in_rad - increment_in_rad;
+
+	assert_RotWorld2CameraZ_is_not_overtwisting();
+
+	RotWorld2CameraZ_in_rad = RotWorld2CameraZ_in_rad - rotation_increment();
 	
 	R_World2Camera.set(0.0,RotWorld2CameraY_in_rad,RotWorld2CameraZ_in_rad);
 
@@ -278,30 +233,22 @@ void FreeOrbitCamera::look_right(){
 
 	FlyingPinHoleCamera.set_pin_hole_cam(FieldOfView_in_rad);					
 						
-	std::cout<<"free_orbit-> rot z: "<<Rad2Deg(RotWorld2CameraZ_in_rad);
-	std::cout<<" [DEG]"<<std::endl;
+	std::cout << get_prefix_print() << "rot z: "<<Rad2Deg(RotWorld2CameraZ_in_rad);
+	std::cout << " DEG\n";
+}
+//==============================================================================
+void FreeOrbitCamera::assert_RotWorld2CameraZ_is_not_overtwisting(){
+	RotWorld2CameraZ_in_rad = fmod(RotWorld2CameraZ_in_rad,(2.0*M_PI));
+}
+//==============================================================================
+double FreeOrbitCamera::rotation_increment()const{
+	return FieldOfView_in_rad/25.0;
 }
 //==============================================================================
 void FreeOrbitCamera::take_snapshot(){
 	snapshot_counter++;
 	
-	ApertureCamera Mamiya645;
-	// The real Mamiya Sekor has F=2.3 here it is "dreamlens" setup with F=0.95
-	double Mamiya_F_stop_number = 0.95;
-	double Mamiya_focal_length_in_m = 0.08;
-	double Mamiya_sensor_width_in_m = 0.06;
-	double Mamiya_sensor_hight_in_m = 0.045;
-	double Mamiya_number_of_rays_emitted_per_pixel = 5;
-	
-	Mamiya645.set_cam("Mamiya645",t_World2Camera,R_World2Camera,1280,1);
-
-	Mamiya645.set_aperture_cam(
-		Mamiya_F_stop_number,
-		Mamiya_focal_length_in_m,
-		Mamiya_sensor_width_in_m,
-		Mamiya_sensor_hight_in_m,
-		Mamiya_number_of_rays_emitted_per_pixel
-	);
+	ApertureCamera Mamiya645 = create_Mamiya645_based_on_free_orbit_camera();
 	
 	Vector3D center_ray_direction;
 	center_ray_direction.set_unit_vector_z();
@@ -336,7 +283,30 @@ void FreeOrbitCamera::take_snapshot(){
 								
 	Mamiya645.save_image(export_name_Mamiya645.str());
 								
-	std::cout<<"free_orbit-> snapshot:"<<std::endl;
+	std::cout << get_prefix_print() << "snapshot:"<<std::endl;
+}
+//==============================================================================
+ApertureCamera FreeOrbitCamera::create_Mamiya645_based_on_free_orbit_camera()const{
+
+	ApertureCamera Mamiya645;
+	// The real Mamiya Sekor has F=2.3 here it is "dreamlens" setup with F=0.95
+	double Mamiya_F_stop_number = 0.95;
+	double Mamiya_focal_length_in_m = 0.08;
+	double Mamiya_sensor_width_in_m = 0.06;
+	double Mamiya_sensor_hight_in_m = 0.045;
+	double Mamiya_number_of_rays_emitted_per_pixel = 5;
+	
+	Mamiya645.set_cam("Mamiya645",t_World2Camera,R_World2Camera,1280,1);
+
+	Mamiya645.set_aperture_cam(
+		Mamiya_F_stop_number,
+		Mamiya_focal_length_in_m,
+		Mamiya_sensor_width_in_m,
+		Mamiya_sensor_hight_in_m,
+		Mamiya_number_of_rays_emitted_per_pixel
+	);
+
+	return Mamiya645;
 }
 //==============================================================================
 void FreeOrbitCamera::display_help()const{
@@ -390,10 +360,10 @@ void FreeOrbitCamera::increase_stereo_offset(){
 	
 	if(stereo_offset_in_m + stereo_offset_increment_in_m < 0.1){
 		stereo_offset_in_m += stereo_offset_increment_in_m;
-		std::cout<<"free_orbit-> stereo offset increased to: ";
+		std::cout << get_prefix_print() << "stereo offset increased to: ";
 		std::cout<<stereo_offset_in_m<<"[m]"<<std::endl;
 	}else{
-		std::cout<<"free_orbit-> stereo offset is maximal: ";
+		std::cout << get_prefix_print() << "stereo offset is maximal: ";
 		std::cout<<stereo_offset_in_m<<"[m]"<<std::endl;
 	}
 }
@@ -403,11 +373,11 @@ void FreeOrbitCamera::decrease_stereo_offset(){
 	if(stereo_offset_in_m - stereo_offset_increment_in_m > 
 	stereo_offset_increment_in_m/2.0){
 		stereo_offset_in_m -= stereo_offset_increment_in_m;
-		std::cout<<"free_orbit-> stereo offset decreased to: ";
+		std::cout << get_prefix_print() << "stereo offset decreased to: ";
 		std::cout<<stereo_offset_in_m<<"[m]"<<std::endl;
 	}else{	
 		stereo_offset_in_m = 0.0;
-		std::cout<<"free_orbit-> stereo offset is minimal: ";
+		std::cout << get_prefix_print() << "stereo offset is minimal: ";
 		std::cout<<stereo_offset_in_m<<"[m]"<<std::endl;
 	}
 }
@@ -417,10 +387,9 @@ void FreeOrbitCamera::onMouse(int event, int x, int y, int flags, void *param){
 		FreeOrbitCamera* p = (FreeOrbitCamera*)param;
 		
 		if( event != cv::EVENT_LBUTTONDOWN )
-		return;
-		// todo
+			return;
+
 		p->DispImageInfo( x, y );
-		//std::cout << "You pressed the left mouse button on ("<<x<<"|"<<y<<")" << std::endl;
 }
 //==============================================================================
 void FreeOrbitCamera::DispImageInfo(int x, int y){
@@ -488,8 +457,7 @@ void FreeOrbitCamera::start_free_orbit(){
 	FreeOrbitCamera* p = this;
 	cv::setMouseCallback( free_orbit_display_name.c_str(), onMouse, (void *)p );
 
-	// Key 27 is the ESC key to leave the FreeOrbit
-	while( key != 27 ){
+	while( is_not_Escape(key) ){
 
 		if( key_stroke_requires_image_update ){
 			update_free_orbit_display();
@@ -537,4 +505,12 @@ void FreeOrbitCamera::start_free_orbit(){
 		}
 	}
 	cv::destroyWindow(free_orbit_display_name);
+}
+//==============================================================================
+bool FreeOrbitCamera::is_not_Escape(const int key)const{
+	return (key == 27) ? false : true;
+}
+//==============================================================================
+std::string FreeOrbitCamera::get_prefix_print()const{
+	return "free_orbit->";
 }

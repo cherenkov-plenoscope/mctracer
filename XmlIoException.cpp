@@ -51,12 +51,11 @@ std::string XmlIoException::get_message_print()const{
 }
 //------------------------------------------------------------------------------
 const char * XmlIoException::what () const throw (){
-	std::string type = " ____xml_IO_Exception____________________________\n|\n";
-	return (
-		type + 
-		get_message_print() +
-		get_XmlIo_print()
-	).c_str();
+	std::stringstream msg;
+	msg << " ____xml_IO_Exception____________________________\n|\n";
+	msg << get_message_print();
+	msg << get_XmlIo_print();
+	return msg.str().c_str();
 }
 //------------------------------------------------------------------------------
 // Pugi XML can not give us the line number and the column in a xml file 
