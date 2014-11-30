@@ -11,6 +11,8 @@
 #include "DiscTest.cpp"
 #include "SphereIntersectionTest.cpp"
 #include "QuadraticEquationTest.cpp"
+#include "CameraManTest.cpp"
+#include "Stereo3DCameraTest.cpp"
 #include "gtest/gtest.h"
 
 int main(int argc, char **argv) {

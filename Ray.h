@@ -39,6 +39,8 @@ protected:
 	unsigned long long int identifier_number;   
 
 public:
+	Ray(){};
+	Ray(const Vector3D support, const Vector3D direction);
 //------------------------------------------------------------------------------
 // SET
 void SetRay(const Vector3D nsup,const Vector3D ndir);	
@@ -95,7 +97,7 @@ ColourProperties trace(
 	const CartesianFrame* world,
 	int refl_count,
 	const CartesianFrame* object_propagated_from,
-	GlobalSettings *settings
+	const GlobalSettings *settings
 );
 
 virtual void propagate(	

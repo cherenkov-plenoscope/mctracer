@@ -15,6 +15,10 @@ void Vector3D::set(const double nx,const double ny,const double nz){
 	Z=nz;
 }
 //------------------------------------------------------------------------------
+void Vector3D::normalize() {
+	*this = *this/this->norm2();
+}
+//------------------------------------------------------------------------------
 double Vector3D::norm2() const{
 	return sqrt( pow(X,2.0) + pow(Y,2.0) + pow(Z,2.0) );
 }

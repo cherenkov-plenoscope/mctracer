@@ -1,4 +1,7 @@
 #include "CameraRay.h"
+CameraRay::CameraRay(const Vector3D support, const Vector3D direction){
+	SetRay(support, direction);
+}
 //======================================================================
 std::string CameraRay::get_string()const{
 	std::stringstream out; 

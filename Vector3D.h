@@ -34,6 +34,7 @@ double z() const;
 //------------------------------------------------------------------------------
 // Functionality
 double norm2() const;
+void normalize();
 Vector3D CrossProduct(const Vector3D v) const;
 void mirror(Vector3D* ray) const;
 void set_unit_vector_x();

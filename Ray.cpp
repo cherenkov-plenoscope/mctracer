@@ -1,13 +1,17 @@
 #include "Ray.h"
-//==============================================================================
+//------------------------------------------------------------------------------
+Ray::Ray(const Vector3D support, const Vector3D direction){
+	SetRay(support, direction);
+}
+//------------------------------------------------------------------------------
 void Ray::SetID(unsigned long long int nID){
 	identifier_number = nID;
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 unsigned long long int Ray::ID()const{
 	return identifier_number;
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 void Ray::SetRay(const Vector3D nsup,const Vector3D ndir){
 	support = nsup;
 	direction  = ndir/ndir.norm2();
@@ -614,10 +618,10 @@ Intersection* Ray::get_closest_intersection(
 }
 //==============================================================================
 ColourProperties Ray::trace(const CartesianFrame* world,
-				int refl_count,
-				const CartesianFrame* object_propagated_from,
-				GlobalSettings *settings)
-{
+	int refl_count,
+	const CartesianFrame* object_propagated_from,
+	const GlobalSettings *settings
+){
 	
 	//==================================================================
 	// claculate a list/vector containing all possible intersection

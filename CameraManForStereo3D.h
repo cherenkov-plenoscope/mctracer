@@ -1,0 +1,70 @@
+//=================================
+// include guard
+#ifndef __CAMERAMANFORSTEREO3D_H_INCLUDE__
+#define __CAMERAMANFORSTEREO3D_H_INCLUDE__
+
+//=================================
+// forward declared dependencies
+
+//=================================
+// included dependencies
+#include "CameraDevice.h"
+#include "Functions.h"
+//=================================
+class CameraManForStereo3D {
+public:
+	CameraManForStereo3D(CameraDevice* camera_to_work_with);
+	void aquire_stereo_image(	
+		const CartesianFrame* world,
+		const GlobalSettings* settings
+	);
+	void increase_stereo_offset();
+	void decrease_stereo_offset();
+	cv::Mat get_anaglyph_stereo3D_image();
+private:
+	CameraDevice* camera;
+
+	cv::Mat left_image;
+	cv::Mat right_image;
+
+	Vector3D initial_camera_pos;
+	Rotation3D initial_camera_rotation;
+	Vector3D initial_camera_image_upward_direction;
+
+	Vector3D left_camera_pos;
+	Rotation3D left_camera_rotation;
+	Vector3D left_camera_direction_optical_axis;
+
+	Vector3D right_camera_pos;
+	Rotation3D right_camera_rotation;
+	Vector3D right_camera_direction_optical_axis;
+
+	double distance_to_object;
+	Vector3D intersection_point_for_l_and_r_optical_axes;
+
+	double stereo_offset_in_m = 6e-2;
+	void prepare_geometric_stereo_set_up(	
+		const CartesianFrame* world,
+		const GlobalSettings* settings
+	);
+	void acquire_left_and_right_image(
+		const CartesianFrame* world,
+		const GlobalSettings* settings
+	);
+	void restore_initial_camera_set_up();
+	void remember_initial_camera_position_and_rotation();
+	void remmber_initial_camera_image_upward_direction();
+	void set_positions_for_left_and_right_stereo_config();
+	void set_object_distance_to_focus_on(
+		const CartesianFrame* world,
+		const GlobalSettings* settings
+	);
+	void set_intersec_point_for_left_and_right_optical_axis();
+	void set_pointing_dir_for_left_and_right_stereo_config();
+	void set_up_camera_in_left_stereo_config();
+	void set_up_camera_in_right_stereo_config();
+	Vector3D offset_to_the_right()const;
+	void set_intersection_for_l_and_r_cameras_optical_axes();
+	void print_stereo_offset_manipulation(const std::string status)const;
+};
+#endif // __CAMERAMANFORSTEREO3D_H_INCLUDE__

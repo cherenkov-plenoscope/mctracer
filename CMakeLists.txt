@@ -56,6 +56,11 @@ Functions.cpp
 SmartImage.cpp
 Function1D.cpp
 QuadraticEquation.cpp
+CameraMan.cpp
+CameraManForTranslation.cpp
+CameraManForRotation.cpp
+Stereo3DCamera.cpp
+CameraManForStereo3D.cpp
 )
 include_directories(/usr/include)
 include_directories(/usr/local/include)
@@ -121,6 +126,11 @@ mcPYtracer/testPyTracer.cpp
 SmartImage.cpp
 Function1D.cpp
 QuadraticEquation.cpp
+CameraMan.cpp
+CameraManForTranslation.cpp
+CameraManForRotation.cpp
+Stereo3DCamera.cpp
+CameraManForStereo3D.cpp
 )
 # Link test executable against gtest & gtest_main
 target_link_libraries(mctracerUnitTests gtest gtest_main)

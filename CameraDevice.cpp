@@ -1,216 +1,161 @@
 #include "CameraDevice.h"
-//======================================================================
-void CameraDevice::set_cam(	
-	std::string new_camera_name, 
-	Vector3D 	new_camera_position_in_World,
-	Rotation3D 	new_camera_orientation_in_World, 
-	uint 		newSensorResolutionU,
-	uint 		newSensorResolutionV
-){
-
-	// camera CameraName
-	CameraName = new_camera_name;
-	
-	// camera position and orientation
-	SetPositionAndOrientation(
-		new_camera_position_in_World,
-		new_camera_orientation_in_World
-
-	);
-
-	// sensor properties
-		SensorResolutionU = newSensorResolutionU;
-		SensorResolutionV = newSensorResolutionV;
-		SensorResolutionUTimesV = SensorResolutionU*SensorResolutionV;
+//------------------------------------------------------------------------------
+CameraDevice::CameraDevice(
+	const std::string camera_name, 
+	const uint sensor_cols, 
+	const uint sensor_rows
+): CameraName(camera_name){
+	image = new CameraImage(sensor_cols, sensor_rows);
 }
-//======================================================================
-void CameraDevice::SetPositionAndOrientation(	
-	Vector3D 	new_camera_position_in_World,
-	Rotation3D 	new_camera_orientation_in_World
-){
-	// camera position
-	CameraPositionInWorld = new_camera_position_in_World;
-	
-
-	//camera orientation
-	CameraOrientationInWorld = new_camera_orientation_in_World;
-
-	// calculate homgene Transformation
-	T_Camera2World.set_transformation(
-	new_camera_orientation_in_World,
-	new_camera_position_in_World
+//------------------------------------------------------------------------------
+void CameraDevice::update_position(const Vector3D new_cam_pos_in_world) {
+	update_position_and_orientation(
+		new_cam_pos_in_world, 
+		CameraOrientationInWorld
 	);
-	
-	// calculate direction of optical axis using T_Camera2World
-	// default camera direction is unit-z vector.
+}
+//------------------------------------------------------------------------------
+void CameraDevice::update_orientation(const Rotation3D new_cam_rot_in_world) {
+	update_position_and_orientation(
+		CameraPositionInWorld, 
+		new_cam_rot_in_world
+	);
+}
+//------------------------------------------------------------------------------
+void CameraDevice::update_position_and_orientation(		
+	const Vector3D new_cam_pos_in_world,
+	const Rotation3D new_cam_rot_in_world
+){
+	set_position_and_orientation(new_cam_pos_in_world, new_cam_rot_in_world);
+	update_optical_axis_and_orientation();
+}
+//------------------------------------------------------------------------------
+void CameraDevice::set_position_and_orientation(	
+	const Vector3D cam_pos_in_world,
+	const Rotation3D cam_rot_in_world
+){
+	this->CameraPositionInWorld = cam_pos_in_world;
+	this->CameraOrientationInWorld = cam_rot_in_world;
+
+	T_Camera2World.set_transformation(
+		CameraOrientationInWorld,
+		CameraPositionInWorld
+	);
+}
+//------------------------------------------------------------------------------
+void CameraDevice::update_optical_axis_and_orientation() {
 	CameraPointingDirection.set_unit_vector_z();
 	T_Camera2World.transform_orientation(&CameraPointingDirection);
 
-	// calculate optical axis
-	OpticalAxis.SetRay(CameraPositionInWorld,CameraPointingDirection);
+	OpticalAxis.SetRay(CameraPositionInWorld, CameraPointingDirection);	
 }
-//======================================================================
+//------------------------------------------------------------------------------
 void CameraDevice::set_pointing_direction(	
-	Vector3D new_camera_pointing_direction_in_World,
-	Vector3D new_camera_image_upwards_image_orientation_in_world
+	Vector3D camera_pointing_direction_in_World,
+	Vector3D camera_image_upwards_image_dir_in_world
 ){
-	
-	new_camera_pointing_direction_in_World = 
-	new_camera_pointing_direction_in_World/
-	new_camera_pointing_direction_in_World.norm2();
+	camera_pointing_direction_in_World.normalize();
 	
 	// image orientation is defined by x,y.
 	// camera y is supposed to point "upwards" in world system
-	Vector3D rotated_z = new_camera_pointing_direction_in_World;
-	Vector3D rotated_x;
-	Vector3D rotated_y = 
-	new_camera_image_upwards_image_orientation_in_world;
+	Vector3D cam_z_axis_in_world = camera_pointing_direction_in_World;
+	Vector3D cam_y_axis_in_world = camera_image_upwards_image_dir_in_world;
+	Vector3D cam_x_axis_in_world = 
+		cam_y_axis_in_world.CrossProduct(cam_z_axis_in_world);
 	
-	rotated_x = rotated_y.CrossProduct(rotated_z);
-	
-	//~ std::cout<<"CameraDevice -> set_pointing_direction() -> ";
-	//~ std::cout<<"x: "<<rotated_x<<",y: "<<rotated_y<<",z: "<<rotated_z;
-	//~ std::cout<<std::endl;
-
-	//init / reinit camera orientation
 	T_Camera2World.set_transformation(
-	rotated_x,
-	rotated_y,
-	rotated_z,
-	CameraPositionInWorld
+		cam_x_axis_in_world,
+		cam_y_axis_in_world,
+		cam_z_axis_in_world,
+		CameraPositionInWorld
 	);
 	
-	// calculate direction of optical axis using T_Camera2World
-	// default camera direction is unit-z vector.
-	CameraPointingDirection.set_unit_vector_z();
-	T_Camera2World.transform_orientation(&CameraPointingDirection);
-	//CameraPointingDirection.disp();
-
-	// calculate optical axis
-	OpticalAxis.SetRay(CameraPositionInWorld,CameraPointingDirection);
+	update_optical_axis_and_orientation();
 }
-//======================================================================
+//------------------------------------------------------------------------------
 Vector3D CameraDevice::get_image_upwards_direction_in_world_frame()const{
-	// image upwards direction in camera frame
+
 	Vector3D image_upwards_direction_in_world_frame;
 	image_upwards_direction_in_world_frame.set_unit_vector_y();
 	
-	// image upwards direction in world frame
 	T_Camera2World.transform_orientation(
-	&image_upwards_direction_in_world_frame);
+		&image_upwards_direction_in_world_frame
+	);
 	
 	return image_upwards_direction_in_world_frame;
 }
-//======================================================================
-std::string CameraDevice::get_cam_string()const{
-	std::stringstream out; out.str("");
-	out << std::endl;
-	out << "camera: " << CameraName << "________________" << std::endl;
-	out << "|T_" << CameraName << "2world:" << std::endl;
-	out << T_Camera2World.get_string();	
-	out << "|camera position          : ";
-	out << CameraPositionInWorld.get_string() << std::endl;
-	out << "|direction of optical axis: ";
-	out << CameraPointingDirection.get_string() << std::endl;
+//------------------------------------------------------------------------------
+std::string CameraDevice::get_camera_print()const{
+	std::stringstream out;
+	out << " _camera:_" << CameraName << "________________\n";
+	out << "| T_" << CameraName << "2world:\n" << T_Camera2World.get_string();	
+	out << "| camera position          : " << CameraPositionInWorld << "\n";
+	out << "| direction of optical axis: " << CameraPointingDirection << "\n";
+	out << "| field of view: " << Rad2Deg(FoV_in_rad) <<" deg\n";
+	out << "| resolution: cols x rows : ";
+	out << image->get_number_of_cols() << "x";
+	out << image->get_number_of_rows() <<" pixels";
+	out << " / " << image->get_resolution()/1e6 << " M pixels\n";
 	return out.str();
 }
-//======================================================================
-Vector3D CameraDevice::get_pointing_direction()const{
-	return CameraPointingDirection;
-}
-//======================================================================
+//------------------------------------------------------------------------------
 Vector3D CameraDevice::get_normalized_pointing_direction()const{
 	return CameraPointingDirection/CameraPointingDirection.norm2();
 }
-//======================================================================
-void CameraDevice::disp()const{
-	std::cout << get_cam_string();
+//------------------------------------------------------------------------------
+void CameraDevice::print()const{
+	std::cout << get_camera_print();
 }
-//======================================================================
-void CameraDevice::calculate_stereo_parameters(
-	const CartesianFrame* world,
-	const GlobalSettings* settings,
-	const double cmaera_offset_in_m,
-	Vector3D &left_camera_position,
-	Vector3D &left_camera_pointing_direction,	
-	Vector3D &right_camera_position,
-	Vector3D &right_camera_pointing_direction
-)const{
-	//~ std::cout<<"CameraDevice-> stereo -> cmaera offset: ";
-	//~ std::cout<<cmaera_offset_in_m<<"[m]"<<std::endl;
-	
-	double object_distance = OpticalAxis.
-	get_distance_to_closest_object(world,settings);
-	
-	//~ std::cout<<"CameraDevice-> stereo -> camera position: ";
-	//~ std::cout<<CameraPositionInWorld<<std::endl;
-	
-	// default
-	if(object_distance==0.0)
-		object_distance = 100.0;
-	
-	//~ std::cout<<"CameraDevice-> stereo -> object distance: ";
-	//~ std::cout<<object_distance<<"[m]"<<std::endl;
-	
-	//calculate intersection point of center ray
-	Vector3D intersection_point = 
-	OpticalAxis.PositionOnRay(object_distance);
-	
-	//~ std::cout<<"CameraDevice-> stereo -> ";
-	//~ std::cout<<"intersection point of optical axis and object: ";
-	//~ std::cout<<intersection_point<<std::endl;	
-	
-	Vector3D z_unit; 
-	
-	z_unit.set_unit_vector_z();
-	
-	Vector3D axis_direction_of_stereo_cameras = 
-	CameraPointingDirection.CrossProduct(z_unit);
-
-	axis_direction_of_stereo_cameras = 
-	axis_direction_of_stereo_cameras/
-	axis_direction_of_stereo_cameras.norm2();
-	
-	//~ std::cout<<"CameraDevice-> stereo -> ";
-	//~ std::cout<<"axis_direction_of_stereo_cameras: ";
-	//~ std::cout<<axis_direction_of_stereo_cameras<<std::endl;		
-	
-	//left camera position
-	left_camera_position = 
-	CameraPositionInWorld + 
-	axis_direction_of_stereo_cameras*cmaera_offset_in_m/2.0;
-	
-	//left camera pointing direction
-	left_camera_pointing_direction = 
-	intersection_point - left_camera_position;
-
-	left_camera_pointing_direction = 
-	left_camera_pointing_direction/
-	left_camera_pointing_direction.norm2();
-	
-	//~ std::cout<<"CameraDevice-> stereo -> ";
-	//~ std::cout<<"left  camera pos: ";
-	//~ std::cout<<left_camera_position<<", ";			
-	//~ std::cout<<"dir: ";
-	//~ std::cout<<left_camera_pointing_direction<<std::endl;	
-		
-	//right camera position
-	right_camera_position = 
-	CameraPositionInWorld - 
-	axis_direction_of_stereo_cameras*cmaera_offset_in_m/2.0;
-		
-	//right camera pointing direction
-	right_camera_pointing_direction = 
-	intersection_point - right_camera_position;
-	
-	right_camera_pointing_direction = 
-	right_camera_pointing_direction/
-	right_camera_pointing_direction.norm2();
-	
-	//~ std::cout<<"CameraDevice-> stereo -> ";
-	//~ std::cout<<"right camera pos: ";
-	//~ std::cout<<right_camera_position<<", ";		
-	//~ std::cout<<"dir: ";
-	//~ std::cout<<right_camera_pointing_direction<<std::endl;	
+//------------------------------------------------------------------------------
+void CameraDevice::set_FoV_in_rad(const double FoV_in_rad) {
+	assert_FoV_is_valid(FoV_in_rad);
+	this -> FoV_in_rad = FoV_in_rad;
 }
-//======================================================================
+//------------------------------------------------------------------------------
+double CameraDevice::get_FoV_in_rad()const {
+	return FoV_in_rad;
+}
+//------------------------------------------------------------------------------
+void CameraDevice::assert_FoV_is_valid(const double FoV_in_rad)const {
+	if( FoV_in_rad <= Deg2Rad(0.0) || FoV_in_rad > Deg2Rad(180.0) ) {
+		std::stringstream info;
+		info << "CameraDevice::" << __func__ << "()\n";
+		info << "Expected 0.0DEG < FoV < 180.0DEG, but actual FoV: ";
+		info << Rad2Deg(FoV_in_rad) << "DEG\n";
+		throw TracerException(info.str());
+	}
+}
+//------------------------------------------------------------------------------
+std::string CameraDevice::get_name()const {
+	return CameraName;
+}
+//------------------------------------------------------------------------------
+cv::Mat CameraDevice::get_image()const {
+	return image->get_image();
+}
+//------------------------------------------------------------------------------
+void CameraDevice::save_image(const std::string image_path)const {
+	image->save_image_to_file(image_path);
+}
+//------------------------------------------------------------------------------
+Vector3D CameraDevice::get_position_in_world()const{
+	return CameraPositionInWorld;
+}
+//------------------------------------------------------------------------------
+Rotation3D CameraDevice::get_rotation_in_world()const{
+	return CameraOrientationInWorld;
+}
+//------------------------------------------------------------------------------
+Vector3D CameraDevice::direction_to_the_right_of_the_camera()const{
+	Vector3D ez; ez.set_unit_vector_z(); 
+	return ez.CrossProduct(get_normalized_pointing_direction());	
+}
+Ray CameraDevice::get_optical_axis_in_world()const{
+	return OpticalAxis;
+}
+//------------------------------------------------------------------------------
+void CameraDevice::acquire_image(
+	const CartesianFrame* world, const GlobalSettings* settings
+){
+	std::cout << "Calling " << __func__ << " in CameraDevice!\n";
+}

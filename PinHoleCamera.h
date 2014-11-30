@@ -9,43 +9,49 @@ class CartesianFrame;
 class GlobalSettings;
 //=================================
 // included dependencies
-#include <cv.h>
-#include <highgui.h>
-#include <opencv2/opencv.hpp>
-#include "CameraImage.h"
-//#include "SmartImage.h"
-// parallel computing
-#include <omp.h>
-
-#include "Vector3D.h"
+//#include <omp.h>
 #include "CameraDevice.h"
 
 //======================================================================
-class PinHoleCamera:public CameraDevice, public CameraImage{
-protected:
-	Vector3D PrincipalPointOfSensorPlane;
+class PinHoleCamera:public CameraDevice{
+public:
+	using CameraDevice::CameraDevice;
+
+	void update_position_and_orientation(		
+		const Vector3D cam_pos_in_world,
+		const Rotation3D cam_rot_in_world
+	);
+
+	void print()const;
+
+	void acquire_image(	
+		const CartesianFrame* world, 
+		const GlobalSettings* settings
+	);
+
+	void set_FoV_in_rad(const double FoV_in_rad);
+
+	CameraRay get_ray_for_pixel_in_row_and_col(
+		const int row, const int col
+	)const;
+	
+private:
+	Vector3D principal_point;
 	Vector3D SensorDirectionU;
 	Vector3D SensorDirectionV;
 	double FieldOfView_in_Rad;
-	double dist_camera_base_2_principal_point;
-public:
-	CameraRay cam_send_ray(int Uu,int Vv);
-	//Ray Pixel2Ray( int u, int v );
-	//======================
-	void set_pin_hole_cam(double fov);
-	//======================
-	std::string get_pin_hole_cam_string();
-	//======================
-	void disp();
-	//======================
-	void cam_acquire_image_parallel(
-		CartesianFrame* world,
-		GlobalSettings* settings);
-	//======================
-	void cam_acquire_stereo_anaglyph_image(
-		CartesianFrame* world,
-		GlobalSettings* settings,
-		double cmaera_offset_in_m);
-	//======================
+	double dist_camera_support_to_principal_point;
+
+	void update_principal_point_for_current_FoV();
+
+	Vector3D get_intersection_of_ray_on_image_sensor_for_pixel(
+		const int row, const int col
+	)const;
+
+	Vector3D get_direction_of_ray_for_pixel(
+		const int row, const int col
+	)const;
+
+	std::string get_pin_hole_cam_print()const;
 };
 #endif // __PINHOLECAMERA_H_INCLUDED__
