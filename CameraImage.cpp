@@ -1,8 +1,12 @@
 #include "CameraImage.h"
 //------------------------------------------------------------------------------
-CameraImage::CameraImage(const uint _cols,const uint _rows):
-cols(_cols),rows(_rows){
+CameraImage::CameraImage(const uint cols,const uint rows){
 	Image =new cv::Mat (rows, cols,	CV_8UC3);
+}
+//------------------------------------------------------------------------------
+CameraImage::CameraImage(const CameraImage* image_to_copy_from){
+	Image = new cv::Mat();
+	*Image = image_to_copy_from->Image->clone();
 }
 //------------------------------------------------------------------------------
 CameraImage::~CameraImage(){
@@ -41,11 +45,11 @@ uint CameraImage::get_resolution()const {
 }
 //------------------------------------------------------------------------------
 uint CameraImage::get_number_of_cols()const {
- 	return cols; 
+ 	return Image->cols; 
 }
 //------------------------------------------------------------------------------
 uint CameraImage::get_number_of_rows()const {
- 	return rows; 
+ 	return Image->rows; 
 }
 //------------------------------------------------------------------------------
 void CameraImage::set_pixel_row_col_to_color(
@@ -61,4 +65,33 @@ void CameraImage::set_pixel_row_col_to_color(
 //------------------------------------------------------------------------------
 double CameraImage::get_width_to_height_ratio()const {
 	return double(get_number_of_cols())/double(get_number_of_rows());
+}
+//------------------------------------------------------------------------------
+void CameraImage::merge_left_and_right_image_to_anaglyph_3DStereo(
+	CameraImage* left_image, CameraImage* right_image
+) {
+	// convert both input images to grayscale
+	cv::cvtColor(*left_image->Image, *left_image->Image, CV_RGB2GRAY);
+	cv::cvtColor(*left_image->Image, *left_image->Image, CV_GRAY2RGB);
+
+	cv::cvtColor(*right_image->Image, *right_image->Image, CV_RGB2GRAY);
+	cv::cvtColor(*right_image->Image, *right_image->Image, CV_GRAY2RGB);
+
+	// BGR
+	std::vector<cv::Mat> BGR_left(3);
+	cv::split(*left_image->Image, BGR_left);
+	
+	std::vector<cv::Mat> BGR_right(3);
+	cv::split(*right_image->Image, BGR_right);
+	
+	std::vector<cv::Mat> anaglyph_image_channels;		
+
+	// 0 -> B 
+	anaglyph_image_channels.push_back(BGR_right.at(0));
+	// 1 -> G 
+	anaglyph_image_channels.push_back(BGR_right.at(1));
+	// 2 -> R 
+	anaglyph_image_channels.push_back(BGR_left.at(2) );
+	
+	cv::merge(anaglyph_image_channels, *Image);
 }

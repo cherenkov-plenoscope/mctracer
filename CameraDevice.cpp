@@ -130,8 +130,8 @@ std::string CameraDevice::get_name()const {
 	return CameraName;
 }
 //------------------------------------------------------------------------------
-cv::Mat CameraDevice::get_image()const {
-	return image->get_image();
+const CameraImage* CameraDevice::get_image()const {
+	return image;
 }
 //------------------------------------------------------------------------------
 void CameraDevice::save_image(const std::string image_path)const {

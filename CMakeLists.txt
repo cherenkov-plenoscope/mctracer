@@ -59,7 +59,6 @@ QuadraticEquation.cpp
 CameraMan.cpp
 CameraManForTranslation.cpp
 CameraManForRotation.cpp
-Stereo3DCamera.cpp
 CameraManForStereo3D.cpp
 )
 include_directories(/usr/include)
@@ -129,7 +128,6 @@ QuadraticEquation.cpp
 CameraMan.cpp
 CameraManForTranslation.cpp
 CameraManForRotation.cpp
-Stereo3DCamera.cpp
 CameraManForStereo3D.cpp
 )
 # Link test executable against gtest & gtest_main

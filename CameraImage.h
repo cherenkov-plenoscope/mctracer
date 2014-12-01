@@ -16,12 +16,11 @@
 
 //=================================
 class CameraImage{
-	const uint cols;
-	const uint rows;
 public:
 	cv::Mat *Image;
 
 	CameraImage(const uint cols, const uint rows);
+	CameraImage(const CameraImage* image_to_copy_from);
 	
 	~CameraImage();
 	
@@ -40,5 +39,9 @@ public:
 	double get_width_to_height_ratio()const;
 
 	cv::Mat get_image()const;
+
+	void merge_left_and_right_image_to_anaglyph_3DStereo(
+		CameraImage* left_image, CameraImage* right_image
+	);
 };
 #endif // __CAMERAIMAGE_H_INCLUDED__

@@ -21,6 +21,7 @@ class ReflectionProperties;
 #include "TracerException.h"
 #include "OctTreeCube.h"
 #include "Functions.h"
+//include "RestrictiveName.h"
 #include "pugixml.hpp"
 
 class CartesianFrame {

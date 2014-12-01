@@ -87,29 +87,31 @@ double ApertureCamera::get_average_object_distance(
 	const CartesianFrame* world,
 	const GlobalSettings* settings
 ){
-	double average_object_distance = 0.0;
-	uint valid_distances = 0;
+	double sum_of_valid_object_distances = 0.0;
+	uint number_of_valid_distances = 0;
 	const uint fraction_of_image_pixels = image->get_resolution()*5e-2;
 
 	for(uint pixel_it=0; pixel_it < fraction_of_image_pixels; pixel_it++) {
 
-		double dist_of_ray = dist_2_closest_intersec_for_ray_of_pixel_row_col(
-			get_random_row(),
-			get_random_col(),
-			world,
-			settings
-		);
+		double single_rays_distance_to_closest_intersection = 
+			dist_2_closest_intersec_for_ray_of_pixel_row_col(
+				get_random_row(),
+				get_random_col(),
+				world,
+				settings
+			);
 
-		if(dist_of_ray != 0.0){
-			valid_distances++;
-			average_object_distance = average_object_distance + dist_of_ray;
+		if(single_rays_distance_to_closest_intersection != 0.0){
+			number_of_valid_distances++;
+			sum_of_valid_object_distances += 
+				single_rays_distance_to_closest_intersection;
 		}
 	}
 
-	if(valid_distances == 0){
+	if(number_of_valid_distances == 0){
 		return default_object_distance_in_m;
 	}else{
-		return average_object_distance/double(valid_distances);
+		return sum_of_valid_object_distances/double(number_of_valid_distances);
 	}
 }
 //------------------------------------------------------------------------------

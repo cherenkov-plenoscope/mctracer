@@ -61,13 +61,21 @@ public:
 
 	void save_image(const std::string image_path)const;
 
-	virtual cv::Mat get_image()const;
+	virtual const CameraImage* get_image()const;
 
 	Vector3D get_position_in_world()const;
 
 	Rotation3D get_rotation_in_world()const;
 
 	Vector3D get_image_upwards_direction_in_world_frame()const;
+
+	uint get_number_of_sensor_cols()const {
+		return image->get_number_of_cols();
+	}
+
+	uint get_number_of_sensor_rows()const {
+		return image->get_number_of_rows();
+	}
 protected:
 	const std::string CameraName;
 

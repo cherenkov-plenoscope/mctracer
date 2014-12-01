@@ -1,5 +1,10 @@
 #include "QuadraticEquation.h"
 //------------------------------------------------------------------------------
+// y = a*x^2 + b*x + c
+// p = b/a
+// q = c/a
+// x_m = -p/2 - sqrt((-p/2)^2 - q)
+// x_p = -p/2 + sqrt((-p/2)^2 - q)
 QuadraticEquation::QuadraticEquation(double p, double q){
 	p_over_2  = 0.5*p;
 	this -> q = q;
@@ -17,7 +22,7 @@ void QuadraticEquation::calculate_squareroot_if_possible(){
 }
 //------------------------------------------------------------------------------
 bool QuadraticEquation::has_valid_solutions(){
-	return ( inner_part_of_squareroot >= 0.0 )? true : false;
+	return ( inner_part_of_squareroot >= 0.0 );
 }
 //------------------------------------------------------------------------------
 double QuadraticEquation::minus_solution(){

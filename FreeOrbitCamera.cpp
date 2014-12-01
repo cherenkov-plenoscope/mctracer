@@ -113,13 +113,13 @@ void FreeOrbitCamera::update_free_orbit_display(){
 		Stereo_operator->aquire_stereo_image(world, settings);
 		cv::imshow(
 			free_orbit_display_name,
-			Stereo_operator->get_anaglyph_stereo3D_image()
+			*(Stereo_operator->get_anaglyph_stereo3D_image()->Image)
 		); 
 	}else{
 		flying_camera->acquire_image(world, settings);
 		cv::imshow(
 			free_orbit_display_name,
-			flying_camera->get_image()
+			*(flying_camera->get_image()->Image)
 		); 
 	}
 }
@@ -156,13 +156,15 @@ void FreeOrbitCamera::take_snapshot(){
 
 	Mamiya645.print();
 
-	//if(stereo3D){
-		//CameraManForStereo3D op(&Mamiya645);
-		//op.aquire_stereo_image(world, settings);
-	//}else{
+	if(stereo3D){
+		CameraManForStereo3D op(&Mamiya645);
+		op.aquire_stereo_image(world, settings);
+		op.get_anaglyph_stereo3D_image()->
+			save_image_to_file(get_snapshot_filename());
+	}else{
 		Mamiya645.acquire_image(world, settings);
 		Mamiya645.save_image(get_snapshot_filename());
-	//}
+	}
 }
 //==============================================================================
 std::string FreeOrbitCamera::get_snapshot_filename(){
@@ -175,7 +177,7 @@ std::string FreeOrbitCamera::get_snapshot_filename(){
 //==============================================================================
 ApertureCamera FreeOrbitCamera::get_Mamiya645_based_on_free_orbit_camera()const{
 
-	ApertureCamera Mamiya645("Mamiya645", Image.Width(), Image.Hight());
+	ApertureCamera Mamiya645("Mamiya645", 4*Image.Width(), 4*Image.Hight());
 
 	// The real Mamiya Sekor has F=2.3 here it is "dreamlens" setup with F=0.95
 	double Mamiya_F_stop_number = 0.95;
@@ -258,44 +260,26 @@ void FreeOrbitCamera::print_free_orbit_help_text()const{
 	ClearScreen();
 	std::stringstream out;
 
-	//      0        1         2         3         4         5         6
-	//      123456789012345678901234567890123456789012345678901234567890
-
-	out << " _______________________________________\n";
-	out << "| HELP for >free orbit<\n";
+	//      0        1         2         3         4         5         6         7         8
+	//      12345678901234567890123456789012345678901234567890123456789012345678901234567890
+	out << " _______________________________________________________________________________\n";
 	out << "|\n";
-	out << "|  _camera_position______________\n";
-	out << "| | move forward............[ w ]\n";
-	out << "| | move backward...........[ s ]\n";
-	out << "| | move left...............[ a ]\n";
-	out << "| | move right..............[ d ]\n";
-	out << "| |______________________________\n";
+	out << "|  _Camera_position_______________     _Camera_orientation____________ \n";
+	out << "| | move forward............[ w ] |   | look up.................[ i ] |\n";
+	out << "| | move backward...........[ s ] |   | look down...............[ k ] |\n";
+	out << "| | move left...............[ a ] |   | look left...............[ j ] |\n";
+	out << "| | move right..............[ d ] |   | look right..............[ l ] |\n";
+	out << "| |_______________________________|   |_______________________________|\n";
 	out << "|\n";
-	out << "|  _camera_orientation_________\n";
-	out << "| | look up.................[ i ]\n";
-	out << "| | look down...............[ k ]\n";
-	out << "| | look left...............[ j ]\n";
-	out << "| | look right..............[ l ]\n";
-	out << "| |____________________________\n";
+	out << "|  _Stereo3D_left:red_right:blue__     _camera_Field_of_View__________ \n";
+	out << "| | toggle stereo 3D........[ t ] |   | increace FoV............[ n ] |\n";
+	out << "| | increase offset.........[ x ] |   | decreace FoV............[ m ] |\n";
+	out << "| | decrease offset.........[ y ] |   |_______________________________|\n";
+	out << "| |_______________________________|\n";
 	out << "|\n";
-	out << "|  _stereo_3D_anaglyph_red/blue__\n";
-	out << "| | increase offset.........[ x ]\n";
-	out << "| | decrease offset.........[ y ]\n";
-	out << "| |______________________________\n";
-	out << "|\n";
-	out << "|  _camera_field_of_view_________\n";
-	out << "| | increace FoV............[ n ]\n";
-	out << "| | decreace FoV............[ m ]\n";
-	out << "| |______________________________\n";
-	out << "|\n";
-	out << "|  _Snapshot_Mamiya645_f80mm_F2.8\n";
-	out << "| | take snapshot...........[ g ]\n";
-	out << "| |______________________________\n";
-	out << "|\n";
-	out << "|  _exit_free_orbit______________\n";
-	out << "| | exit....................[ESC]\n";
-	out << "| |______________________________\n";
-	out << "|_______________________________________\n";
-	
+	out << "|  _Mamiya645_medium_format_camera     _exit_free_orbit______________\n";
+	out << "| | take snapshot...........[ g ] |   | exit....................[ESC]\n";
+	out << "| |_______________________________|   |______________________________\n";
+	out << "|_______________________________________________________________________________\n";
 	std::cout << out.str();
 }

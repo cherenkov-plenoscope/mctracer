@@ -20,12 +20,12 @@ public:
 	);
 	void increase_stereo_offset();
 	void decrease_stereo_offset();
-	cv::Mat get_anaglyph_stereo3D_image();
+	const CameraImage* get_anaglyph_stereo3D_image();
 private:
 	CameraDevice* camera;
 
-	cv::Mat left_image;
-	cv::Mat right_image;
+	CameraImage *left_image;
+	CameraImage *right_image;
 
 	Vector3D initial_camera_pos;
 	Rotation3D initial_camera_rotation;
@@ -43,15 +43,12 @@ private:
 	Vector3D intersection_point_for_l_and_r_optical_axes;
 
 	double stereo_offset_in_m = 6e-2;
-	void prepare_geometric_stereo_set_up(	
+	void calc_pos_and_rot_for_left_and_right_camera_config(	
 		const CartesianFrame* world,
 		const GlobalSettings* settings
 	);
-	void acquire_left_and_right_image(
-		const CartesianFrame* world,
-		const GlobalSettings* settings
-	);
-	void restore_initial_camera_set_up();
+	void remember_initial_camera_config();
+	void set_up_camera_back_to_initial_config();
 	void remember_initial_camera_position_and_rotation();
 	void remmber_initial_camera_image_upward_direction();
 	void set_positions_for_left_and_right_stereo_config();
@@ -66,5 +63,13 @@ private:
 	Vector3D offset_to_the_right()const;
 	void set_intersection_for_l_and_r_cameras_optical_axes();
 	void print_stereo_offset_manipulation(const std::string status)const;
+	void take_left_image(	
+		const CartesianFrame* world,
+		const GlobalSettings* settings
+	);
+	void take_right_image(	
+		const CartesianFrame* world,
+		const GlobalSettings* settings
+	);
 };
 #endif // __CAMERAMANFORSTEREO3D_H_INCLUDE__

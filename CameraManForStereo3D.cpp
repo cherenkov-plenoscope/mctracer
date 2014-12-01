@@ -1,6 +1,6 @@
 #include "CameraManForStereo3D.h"
 
-CameraManForStereo3D::CameraManForStereo3D(CameraDevice* camera_to_work_with){
+CameraManForStereo3D::CameraManForStereo3D(CameraDevice* camera_to_work_with) {
 	camera = camera_to_work_with;
 }
 
@@ -8,34 +8,28 @@ void CameraManForStereo3D::aquire_stereo_image(
 	const CartesianFrame* world,
 	const GlobalSettings* settings
 ){
-	prepare_geometric_stereo_set_up(world, settings);
-	acquire_left_and_right_image(world, settings);
-	restore_initial_camera_set_up();
+	remember_initial_camera_config();
+	calc_pos_and_rot_for_left_and_right_camera_config(world, settings);
+	set_up_camera_in_left_stereo_config();
+	take_left_image(world, settings);
+	set_up_camera_in_right_stereo_config();
+	take_right_image(world, settings);
+	set_up_camera_back_to_initial_config();
 }
 
-void CameraManForStereo3D::prepare_geometric_stereo_set_up(
+void CameraManForStereo3D::calc_pos_and_rot_for_left_and_right_camera_config(
 	const CartesianFrame* world,
 	const GlobalSettings* settings
 ){
-	remember_initial_camera_position_and_rotation();
-	remmber_initial_camera_image_upward_direction();
 	set_positions_for_left_and_right_stereo_config();
 	set_object_distance_to_focus_on(world, settings);
 	set_intersec_point_for_left_and_right_optical_axis();
 	set_pointing_dir_for_left_and_right_stereo_config();	
 }
 
-void CameraManForStereo3D::acquire_left_and_right_image(
-	const CartesianFrame* world,
-	const GlobalSettings* settings
-){
-	set_up_camera_in_left_stereo_config();
-	camera->acquire_image(world, settings);
-	camera->get_image().copyTo(left_image);	
-
-	set_up_camera_in_right_stereo_config();
-	camera->acquire_image(world, settings);
-	camera->get_image().copyTo(right_image);	
+void CameraManForStereo3D::remember_initial_camera_config(){
+	remember_initial_camera_position_and_rotation();
+	remmber_initial_camera_image_upward_direction();
 }
 
 void CameraManForStereo3D::remember_initial_camera_position_and_rotation(){
@@ -46,6 +40,22 @@ void CameraManForStereo3D::remember_initial_camera_position_and_rotation(){
 void CameraManForStereo3D::set_positions_for_left_and_right_stereo_config(){
 	left_camera_pos = initial_camera_pos - offset_to_the_right();
 	right_camera_pos = initial_camera_pos + offset_to_the_right();
+}
+
+void CameraManForStereo3D::take_left_image(
+	const CartesianFrame* world,
+	const GlobalSettings* settings
+){
+	camera->acquire_image(world, settings);
+	left_image = new CameraImage(camera->get_image());
+}
+
+void CameraManForStereo3D::take_right_image(
+	const CartesianFrame* world,
+	const GlobalSettings* settings
+){
+	camera->acquire_image(world, settings);
+	right_image = new CameraImage(camera->get_image());
 }
 
 Vector3D CameraManForStereo3D::offset_to_the_right()const {
@@ -72,7 +82,6 @@ void CameraManForStereo3D::set_object_distance_to_focus_on(
 void CameraManForStereo3D::set_intersec_point_for_left_and_right_optical_axis(){
 	intersection_point_for_l_and_r_optical_axes = 
 		camera->get_optical_axis_in_world().PositionOnRay(distance_to_object);
-	std::cout << "object distance: "<<distance_to_object<<"\n";
 }
 
 void CameraManForStereo3D::set_pointing_dir_for_left_and_right_stereo_config(){
@@ -102,7 +111,7 @@ void CameraManForStereo3D::set_up_camera_in_right_stereo_config(){
 	);	
 }
 
-void CameraManForStereo3D::restore_initial_camera_set_up(){
+void CameraManForStereo3D::set_up_camera_back_to_initial_config(){
 	camera->update_position_and_orientation(
 		initial_camera_pos,
 		initial_camera_rotation
@@ -126,30 +135,10 @@ void CameraManForStereo3D::print_stereo_offset_manipulation(
 	std::cout << stereo_offset_in_m << "m\n";
 }
 
-cv::Mat CameraManForStereo3D::get_anaglyph_stereo3D_image() {
-
-	CameraImage stereo_image(
-		left_image.cols,
-		left_image.rows
-	);	
-
-	// BGR
-	std::vector<cv::Mat> BGR_left(3);
-	cv::split(left_image, BGR_left);
-	
-	std::vector<cv::Mat> BGR_right(3);
-	cv::split(right_image, BGR_right);
-	
-	std::vector<cv::Mat> anaglyph_image_channels;		
-	
-	// 0 -> B 
-	anaglyph_image_channels.push_back(BGR_right.at(0));
-	// 1 -> G 
-	anaglyph_image_channels.push_back(BGR_right.at(1));
-	// 2 -> R 
-	anaglyph_image_channels.push_back(BGR_left.at(2) );
-	
-	cv::merge(anaglyph_image_channels, stereo_image.get_image());
-
-	return stereo_image.get_image();
+const CameraImage* CameraManForStereo3D::get_anaglyph_stereo3D_image() {
+	left_image->merge_left_and_right_image_to_anaglyph_3DStereo(
+		left_image,
+		right_image	
+	);
+	return left_image;
 }
