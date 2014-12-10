@@ -18,22 +18,26 @@
 //=================================
 // the actual class
 class OpticalMirrorEllipsoidHexagonal :public OpticalMirrorHexagonal{
-public:
+private:
     double long_focal_length;
     double short_focal_length;
-    //double inner_radius_of_hexagonal_shape;
-	//==================================================================
+public:	
     OpticalMirrorEllipsoidHexagonal( );
-	//==================================================================
-    bool set_ellipsoid_hexag( 
-    double new_long_focal_length, 
-	double new_short_focal_length,
-	double new_inner_radius_of_hexagonal_shape);
-	//==================================================================
+	
+    void set_ellipsoid_hexag( 
+        double new_long_focal_length, 
+    	double new_short_focal_length,
+    	double new_inner_radius_of_hexagonal_shape
+    );
+
     void disp();
-   	//==================================================================
-    string get_spherical_hexag_string();
-	//==================================================================
+   	
 	void hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const;
+private:
+    std::string get_ellipsoid_hexag_print()const;
+
+    void assert_named_variable_is_positiv(
+        const double variable_to_test, const std::string name_of_variable
+    )const;
 };
 #endif // __MYCLASS_H_INCLUDED__ 

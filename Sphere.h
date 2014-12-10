@@ -25,7 +25,7 @@ public:
 	//======================
 	void set_sphere(double nradius);
 	//======================
-	void disp();
+	void disp()const;
 	//======================
 	std::string get_sphere_string()const;
 	//======================

@@ -500,9 +500,7 @@ void WorldFactory::assert_name_of_child_frame_is_not_in_use_yet(
 		stringstream info;
 		info << "WorldFactory::"<<__func__<<"()";
 		throw MultipleUseage(info.str(), this, 
-			mother->
-			get_pointer_to_specific_child(name_of_additional_child)->
-			get_path()
+			mother->get_child_by_name(name_of_additional_child)->get_path()
 		);
 	}
 }

@@ -1,5 +1,8 @@
 #include "Ray.h"
 //------------------------------------------------------------------------------
+Ray::Ray(){
+}
+//------------------------------------------------------------------------------
 Ray::Ray(const Vector3D support, const Vector3D direction){
 	SetRay(support, direction);
 }
@@ -14,166 +17,161 @@ unsigned long long int Ray::ID()const{
 //------------------------------------------------------------------------------
 void Ray::SetRay(const Vector3D nsup,const Vector3D ndir){
 	support = nsup;
-	direction  = ndir/ndir.norm2();
+	direction  = ndir;
+	normalize_direction();
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 void Ray::SetSupport(const double x,const double y,const double z){
 	support.set(x,y,z);
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 void Ray::SetSupport(const Vector3D nsup){
 	support = nsup;
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 void Ray::SetDirection(const double x,const double y,const double z){
 	direction.set(x,y,z);
-	direction = direction/direction.norm2();
+	normalize_direction();
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 void Ray::SetDirection(const Vector3D ndir){
-	direction = ndir/ndir.norm2();
+	direction = ndir;
+	normalize_direction();
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 void Ray::disp()const{
 	std::cout << "Ray -> " << get_string() << "\n";
 }
-//==============================================================================
-std::string Ray::get_string()const{
-	std::stringstream out; out.str("");
-	out<<"support: " << support <<", direction: " << direction;
+//------------------------------------------------------------------------------
+void Ray::normalize_direction(){
+	direction.normalize();
+}
+//------------------------------------------------------------------------------
+std::string Ray::get_string()const {
+	std::stringstream out;
+	out << "support: " << support << ", direction: " << direction;
 	return out.str();
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 Vector3D Ray::PositionOnRay(const double scalar)const{
-	return (support + direction*scalar);
+	return support + direction*scalar;
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 Vector3D Ray::Support()const{
 	return support;
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 Vector3D Ray::Direction()const{
 	return direction;
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 void Ray::operator= (Ray eqray){
 	support = eqray.support;
 	direction  = eqray.direction;
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 void Ray::homo_transformation_of_ray(Ray* ray,const HomoTrafo3D *T)const{
 	//transform support vector
 	T->transform_position(&ray->support);
 	//transform direction
 	T->transform_orientation(&ray->direction);
 }
-//==============================================================================
-void Ray::pre_trace(
-	const CartesianFrame* Frame2CheckForIntersectionOfRayAndMaxSphere, 
-	std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre
+//------------------------------------------------------------------------------
+void Ray::find_intersection_candidates_in_tree_of_frames(
+	const CartesianFrame* frame, 
+	std::vector<const CartesianFrame*> *frames_with_intersection_in_bounding_sphere
 )const{
-	// the pretracer calculates a list of objects to be testet
-	// in having intersections with a ray.
-	// The key is to extract a list as small as possible to avoid unneccesary
-	// intersection tests 
-	// 
-	// Using bounding Volume spheres and OctTrees, a speed up in the order of 
-	// O(number_of_objects^1) --> O( log(number_of_objects) )
-	// is achieved / desired
+	if(has_intersection_with_bounding_sphere_of(frame)) {
 
-	if(
-		IntersectionWithBoundingSphere(
-			Frame2CheckForIntersectionOfRayAndMaxSphere
-		)
-	){
-		// Check the frame for an OctTree
-		const OctTreeCube *OctTreeOfFrame2CheckForIntersectionOfRayAndMaxSphere = 
-		Frame2CheckForIntersectionOfRayAndMaxSphere->get_OctTree();
-		
-		if(OctTreeOfFrame2CheckForIntersectionOfRayAndMaxSphere != NULL){
-			// This Frame uses an OctTree to store its children
-			std::unordered_set<CartesianFrame*> IntersectionCandidates;
+		if(frame->has_children()) {
 
-			// initialize a special Ray with additional information for 
-			// the OctTree traversal
-			OctTreeTraversingRay SpecialRay(this);
-
-			// transform the special Ray to the Cartesian frame where 
-			// the OctTree lives
-			homo_transformation_of_ray(
-				&SpecialRay,
-				Frame2CheckForIntersectionOfRayAndMaxSphere->
-				world2frame()
-			);
-
-			// update the special information in the special Ray
-			SpecialRay.update();
-
-			// find the intersection candidates
-			SpecialRay.IntersectionCandidatesInOctTree(
-				OctTreeOfFrame2CheckForIntersectionOfRayAndMaxSphere,
-				&IntersectionCandidates
-			);
-
-			// add the intersection candidates to the list of frames to check for 
-			// an intersection
-			for(CartesianFrame* FrameFoundInOctTree : IntersectionCandidates){
-				pre_trace(FrameFoundInOctTree,
-				Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre
+			if(frame->uses_oct_trees_to_store_its_children()) {
+				find_intersections_for_children_in_oct_trees(
+					frame,
+					frames_with_intersection_in_bounding_sphere
+				);
+			}else{
+				find_intersections_for_all_children_on(
+					frame,
+					frames_with_intersection_in_bounding_sphere
 				);
 			}
-
-			//cout << IntersectionCandidates.size() << endl;
-		}else if(
-			Frame2CheckForIntersectionOfRayAndMaxSphere->
-			get_number_of_children() > 0
-		){
-				// this frame has children to be tested and no OctTree
-				for(
-					int child_itterator=0; 
-					child_itterator<
-					Frame2CheckForIntersectionOfRayAndMaxSphere->
-					get_number_of_children();
-					child_itterator++
-				){
-					pre_trace(
-					Frame2CheckForIntersectionOfRayAndMaxSphere->
-					get_pointer_to_child(child_itterator),
-					Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre
-					);
-				}
 		}else{
-				// there are no children in this frame
-				// so it is an object itself
-				Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre->
-				push_back(
-					Frame2CheckForIntersectionOfRayAndMaxSphere
-				);
-				// Only here frames are added to the list of intersection 
-				// candidates
+			frames_with_intersection_in_bounding_sphere->push_back(frame);		
 		}
-	}else{
-		// the frame (and its children in case there are some) does not
-		// intersect with this ray at all.
 	}
 }
-//==============================================================================
+//------------------------------------------------------------------------------
+void Ray::find_intersections_for_children_in_oct_trees(	
+	const CartesianFrame* frame, 
+	std::vector<const CartesianFrame*> *frames_with_intersection_in_bounding_sphere
+)const {
+	const OctTreeCube *OctTreeOfFrame2CheckForIntersectionOfRayAndMaxSphere = 
+	frame->get_OctTree();
+	
+	if(OctTreeOfFrame2CheckForIntersectionOfRayAndMaxSphere != NULL){
+		// This Frame uses an OctTree to store its children
+		std::unordered_set<CartesianFrame*> IntersectionCandidates;
+
+		// initialize a special Ray with additional information for 
+		// the OctTree traversal
+		OctTreeTraversingRay SpecialRay(this);
+
+		// transform the special Ray to the Cartesian frame where 
+		// the OctTree lives
+		homo_transformation_of_ray(
+			&SpecialRay,
+			frame->
+			world2frame()
+		);
+
+		// update the special information in the special Ray
+		SpecialRay.update();
+
+		// find the intersection candidates
+		SpecialRay.IntersectionCandidatesInOctTree(
+			OctTreeOfFrame2CheckForIntersectionOfRayAndMaxSphere,
+			&IntersectionCandidates
+		);
+
+		// add the intersection candidates to the list of frames to check for 
+		// an intersection
+		for(CartesianFrame* FrameFoundInOctTree : IntersectionCandidates){
+			find_intersection_candidates_in_tree_of_frames(FrameFoundInOctTree,
+				frames_with_intersection_in_bounding_sphere
+			);
+		}
+	}
+}
+//------------------------------------------------------------------------------
+void Ray::find_intersections_for_all_children_on(
+	const CartesianFrame* frame, 
+	std::vector<const CartesianFrame*> *frames_with_intersection_in_bounding_sphere
+)const {
+	for(
+		uint child_itterator=0; 
+		child_itterator<
+		frame->
+		get_number_of_children();
+		child_itterator++
+	){
+		find_intersection_candidates_in_tree_of_frames(
+			frame->
+			get_pointer_to_child(child_itterator),
+			frames_with_intersection_in_bounding_sphere
+		);
+	}
+}
+//------------------------------------------------------------------------------
 void OctTreeTraversingRay::IntersectionCandidatesInOctTree(
 	const OctTreeCube *Cube,
-	std::unordered_set<CartesianFrame*> *IntersectionCandidates)const{
+	std::unordered_set<CartesianFrame*> *IntersectionCandidates
+)const{
 	// Check whether this Cube is a leaf or has children
-	if(Cube->ChildCubes.size()==0){
-		// There are no more sub Cubes in this tree
-		// This cube is a leaf of the tree so all the Frames in this leaf 
-		// are possible hit candidates and are added to the 
-		// IntersectionCandidates
-		for(CartesianFrame* FrameInChildCube : Cube->ChildFrames){
-			IntersectionCandidates->insert(FrameInChildCube);
-		}
-		// here in the leaf of the OctTree the recursion ends.
-	}else{
+	//if(Cube->ChildCubes.size()==0){
+	if(Cube->has_child_cubes())
 		// There are more sub cubes in this OctTree
-		for(OctTreeCube* ChildCube : Cube->ChildCubes){
+		for(OctTreeCube* const ChildCube : Cube->get_child_cubes()){
 			// check all child cubes of this non leaf cube 
 			// for intersections with this ray
 
@@ -189,11 +187,21 @@ void OctTreeTraversingRay::IntersectionCandidatesInOctTree(
 			// when there is no intersection of the ray and the cube then 
 			// also the frames inside the cube do not intersect and can be 
 			// neglected
+	}else{
+		// There are no more sub Cubes in this tree
+		// This cube is a leaf of the tree so all the Frames in this leaf 
+		// are possible hit candidates and are added to the 
+		// IntersectionCandidates
+		for(CartesianFrame* const FrameInChildCube : Cube->get_child_frames()) {
+			IntersectionCandidates->insert(FrameInChildCube);
 		}
+		// here in the leaf of the OctTree the recursion ends.
 	}
 }
-//==============================================================================
-bool OctTreeTraversingRay::IntersectionWithOctTreeCube(const OctTreeCube* Cube)const{
+//------------------------------------------------------------------------------
+bool OctTreeTraversingRay::IntersectionWithOctTreeCube(
+	const OctTreeCube* Cube
+)const{
 	/*
 	  An Efficient and Robust Ray–Box Intersection Algorithm
 	Amy Williams, Steve Barrus, R. Keith Morley, Peter Shirley
@@ -227,57 +235,57 @@ bool OctTreeTraversingRay::IntersectionWithOctTreeCube(const OctTreeCube* Cube)c
 
 	return (tmax > 0.0) ;
 }
-//==============================================================================
-bool Ray::IntersectionWithBoundingSphere(const CartesianFrame* frame)const{
-	// Here we check whether this ray is intersecting the boundary sphere of
-	// a CartesianFrame 'frame'. The boundary sphere is the sphere enclosing
-	// all the frame's children frames.
-	// We create a plane orthogonal to this ray and containing the center
-	// of the boundary sphere.
+//------------------------------------------------------------------------------
+double Ray::get_parameter_on_ray_for_closest_distance_to_point(
+	const Vector3D &point
+)const {
+	// We create a plane orthogonal to this ray the point
 	// plane equation:
-	//
 	// 	d = x*a + y*b + z*c
 	//
 	// We set the normal vector n of the plane to the ray's direction vector:
-	//
 	//  a=direction.x b=direction.y c=direction.z
 	//
 	// Now we insert the support vevtor of the frame into the plane eqaution:
-	//
-	//  d = frame_sup.x*dirx + frame_sup.y*diry + frame_sup.z*dirz
-
-	double d = direction*(
-		*frame->get_pointer_to_position_of_frame_in_world_frame()
-	);
+	//  d = point.x*dirx + point.y*diry + point.z*dirz
+	double d = direction * point;
 	
-	// Insert the ray into plane equation and solve for the ray variable v
-	// ray: support + v * direction
-	
-	double v = (d - support*direction)/(direction*direction);
-	
+	// Insert the ray into plane equation and solve for the ray parameter
+	return (d - support * direction) / (direction * direction);
+}
+//------------------------------------------------------------------------------
+double Ray::get_distance_to_point_from_position_of_ray_at(
+	const Vector3D &point, const double ray_parameter_for_position_on_ray
+)const {
 	// Calculate point Q. Q is on the ray and in the plane. So Q is the 
 	// closest point on the ray to the center of the frame
-	
-	Vector3D Q = support + direction*v;
-	
+	Vector3D Q = PositionOnRay(ray_parameter_for_position_on_ray);
+
 	// Calculate the connection vector between Q and and the center of the
 	// frame called W
-	
-	Vector3D W = Q*(-1.0) + 
-	*frame->get_pointer_to_position_of_frame_in_world_frame();
+	Vector3D W = point - Q;
 	
 	// Calculate length of W. The lenght of W is the closest distance
 	// between ray and object
-	
-	double dist = W.norm2();  
+	return W.norm2();  
+}
+//------------------------------------------------------------------------------
+bool Ray::has_intersection_with_bounding_sphere_of(const CartesianFrame* frame)const{
 
-	// Now compare the distance in between the ray and the center of the frame
-	// 'dist' and the radius of the boundary sphere of the frame which encloses 
-	// all the children frames of the frame.
-	if(
-	dist > 
-	*frame->get_pointer_to_radius_of_sphere_enclosing_all_children()
-	){
+	double ray_parameter_for_closest_distance_to_center_of_bounding_sphere = 
+		get_parameter_on_ray_for_closest_distance_to_point(
+			*frame->get_pointer_to_position_of_frame_in_world_frame()
+		);
+
+	double distance_to_center_of_bounding_sphere = 
+		get_distance_to_point_from_position_of_ray_at(
+			*frame->get_pointer_to_position_of_frame_in_world_frame(),
+			ray_parameter_for_closest_distance_to_center_of_bounding_sphere
+		);
+
+	if(distance_to_center_of_bounding_sphere > 
+		frame->get_radius_of_sphere_enclosing_all_children()
+	) {
 		//
 		// -------------+-----\--------> ray
 		//              |     |
@@ -291,19 +299,11 @@ bool Ray::IntersectionWithBoundingSphere(const CartesianFrame* frame)const{
 		// The ray does not intersect the frame's boundary sphere.
 		return false;
 	}else{
-		if(v<0){
+		if(ray_parameter_for_closest_distance_to_center_of_bounding_sphere < 0.0){
 			// The frame support is behind the source of this ray.
 			// We test whether the source of this ray is still inside of the
 			// frame, i.e. inside the boundary sphere, or completley behind it.
-			if( 
-			(
-			support*(-1.0)+
-			*frame->get_pointer_to_position_of_frame_in_world_frame()
-			).norm2() 
-			< 
-			*frame->
-			get_pointer_to_radius_of_sphere_enclosing_all_children() 
-			){
+			if(support_of_ray_is_inside_of_bounding_sphere_of(frame)) {
 				// The support of the ray is inside the frame's boundary sphere
 				// 
 				//               _________
@@ -363,26 +363,41 @@ bool Ray::IntersectionWithBoundingSphere(const CartesianFrame* frame)const{
 		}
 	}
 }
-//==============================================================================
+//------------------------------------------------------------------------------
+bool Ray::support_of_ray_is_inside_of_bounding_sphere_of(
+	const CartesianFrame *frame
+)const {
+	double distance_between_support_and_frame = 
+		( 
+			support*(-1.0) +
+			*frame->get_pointer_to_position_of_frame_in_world_frame()
+		).norm2();
+
+	return (
+		distance_between_support_and_frame
+		< 
+		frame->get_radius_of_sphere_enclosing_all_children() 
+	);
+}
+//------------------------------------------------------------------------------
 void Ray::disp_possible_hit_list(const CartesianFrame *frame)const{
-	// initialize empty vector/list
+	
 	std::vector<const CartesianFrame*> list_of_possible_hits;
-	// run pre_tracer to test hits
-	pre_trace(frame,&list_of_possible_hits);
-	// disp result
-	std::stringstream out; out.str("");
-	out<<"list of possible hit candidates:"<<std::endl;
-	out<<get_string();
+	find_intersection_candidates_in_tree_of_frames(frame,&list_of_possible_hits);
+	
+	std::stringstream out;
+	out << "list of possible hit candidates:\n";
+	out << get_string();
+
 	for(unsigned int i=0; i<list_of_possible_hits.size(); i++)
 	{
-		out<<(i+1)<<". "<<list_of_possible_hits.at(i)->get_name_of_frame();
+		out << (i+1) << ". " << list_of_possible_hits.at(i)->get_name_of_frame();
 		
 		const CartesianFrame * ptr_to_mother_frame = 
-		list_of_possible_hits.at(i)->get_pointer_to_mother_frame();
+			list_of_possible_hits.at(i)->get_pointer_to_mother_frame();
 		
-		while(ptr_to_mother_frame != NULL)
-		{
-			out<<" -> "<<ptr_to_mother_frame->get_name_of_frame();
+		while(ptr_to_mother_frame != NULL) {
+			out << " -> " << ptr_to_mother_frame->get_name_of_frame();
 			
 			ptr_to_mother_frame = 
 			ptr_to_mother_frame->get_pointer_to_mother_frame();
@@ -391,356 +406,169 @@ void Ray::disp_possible_hit_list(const CartesianFrame *frame)const{
 	}
 	std::cout<<out.str();
 }
-//==============================================================================
-void Ray::test_intersection_for_hit_candidates(
-	std::vector<const CartesianFrame*> *list_of_objects_which_might_intersect,
-	std::vector<Intersection*> *ptr_to_list_of_ptr_to_intersections,
-  	const CartesianFrame* object_propagated_from,
-	int refl_count
+//------------------------------------------------------------------------------
+void Ray::find_intersections_in_intersection_candidate_frames(
+	std::vector<const CartesianFrame*> *objects_which_might_intersect,
+	std::vector<Intersection*> *intersections_taking_place,
+  	const CartesianFrame* object_propagated_from
 )const{
 
-	std::vector<Intersection*> list_of_ptr_to_intersections_which_might_take_place;
+	std::vector<Intersection*> intersections_which_might_take_place;
 
-	//==================================================================
-	// for all possible hit candidates test intersections
-	//==================================================================
-	
-	size_t number_of_objects_to_test = 
-	list_of_objects_which_might_intersect->size();
-	
-	//std::cout<<"list_of_objects_which_might_intersect->size()";
-	//std::cout<<list_of_objects_which_might_intersect->size()<<std::endl;
-	
-	for(
-		size_t object_itterator=0;
-		object_itterator<number_of_objects_to_test;
-		object_itterator++ 
-	){
-		/*
-		std::cout<<"tracer testing object: ";
-		std::cout<<*list_of_objects_which_might_intersect.
-		at(object_itterator)->get_pointer_to_name_of_frame()<<std::endl;
-		*/
-		//==============================================================
-		// transform ray into object system using
-		// homogenous transformation
-		//==============================================================
-		Ray ray_in_object_system;
-		ray_in_object_system.SetRay(support,direction);
+	for(const CartesianFrame* object : *objects_which_might_intersect) {
+
+		// transform ray into object system using homogenous transformation
+		Ray ray_in_object_system(support,direction);
 		
 		homo_transformation_of_ray(
 			&ray_in_object_system,
-			list_of_objects_which_might_intersect->at(object_itterator)->
-			world2frame()
+			object->world2frame()
 		);
 		
-		//==============================================================
 		// requesting hit in corresponding object
 		// a virtual hit in CartesianFrame decleration is needed to do this
-		//==============================================================
-		Intersection* ptr_to_new_intersection;
-		ptr_to_new_intersection = new Intersection;
+		Intersection* intersection_which_might_take_place;
+		intersection_which_might_take_place = new Intersection;
 		
-		list_of_ptr_to_intersections_which_might_take_place.
-		push_back(ptr_to_new_intersection);
+		intersections_which_might_take_place.
+		push_back(intersection_which_might_take_place);
 		
-		list_of_objects_which_might_intersect->at(object_itterator)->
-		hit(	
+		object->hit(	
 			&ray_in_object_system.support,	
 			&ray_in_object_system.direction,
-			list_of_ptr_to_intersections_which_might_take_place.
-			at(object_itterator)
+			intersections_which_might_take_place.back()
 		);
 		
-		//==============================================================
 		// add object to list of hits when hit_flag == true
-		//==============================================================
 
-		if(
-			list_of_ptr_to_intersections_which_might_take_place.
-			at(object_itterator)->get_intersection_flag()
-		){
-			
-			if(refl_count == 0){
-			
-				ptr_to_list_of_ptr_to_intersections->push_back(
-					list_of_ptr_to_intersections_which_might_take_place.
-					at(object_itterator)
-				);			
-			
+		if(intersections_which_might_take_place.back()->get_intersection_flag()
+		) {
+			if(object != object_propagated_from) {
+				intersections_taking_place->push_back(
+					intersections_which_might_take_place.back()
+				);
 			}else{
-				// test wether the object is reflecting onto itself
-				// or not
-				if(
-					list_of_objects_which_might_intersect->at(object_itterator) 
-					!=
-					object_propagated_from
-				){
-
-					ptr_to_list_of_ptr_to_intersections->push_back(
-						list_of_ptr_to_intersections_which_might_take_place.
-						at(object_itterator)
-					);
-					
-				}else{
-					//std::cout<<"refl onto itself."<<std::endl;
-					list_of_ptr_to_intersections_which_might_take_place.
-					at(object_itterator)->set_intersection_flag(false);
-				}
+				intersections_which_might_take_place.
+					back()->set_intersection_flag(false);
 			}
 		}
 	}
 	// free mempory
-	for(
-		Intersection *ptr_to_intersection : 
-		list_of_ptr_to_intersections_which_might_take_place
-	){
-		if(!ptr_to_intersection->get_intersection_flag()){
-			delete ptr_to_intersection;
+	for(Intersection *intersection_which_might_take_place : intersections_which_might_take_place
+	) {
+		if(!intersection_which_might_take_place->get_intersection_flag()) {
+			delete intersection_which_might_take_place;
 		}
 	}
 
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 void Ray::calculate_reflected_ray(	
-	Intersection * pointer_to_closest_intersection,
-	Ray *ray_reflection_on_object){
-	//==========================================================
-	// calculate reflection ray in object system
-	//==========================================================
-	
+	const Intersection * closest_intersection,
+	Ray *ray_reflection_on_object
+)const{
 	// transform ray_in_object_system into the system of this 
 	// particular frame.
 	Ray ray_in_object_system;
 	ray_in_object_system.SetRay(support,direction);
+
 	homo_transformation_of_ray(
-	&ray_in_object_system,
-	pointer_to_closest_intersection->
-	get_pointer_to_intersecting_object()->
-	world2frame()
+		&ray_in_object_system,
+		closest_intersection->
+			get_pointer_to_intersecting_object()->world2frame()
 	);
 	
-	Vector3D refl_dir; 
-	refl_dir = ray_in_object_system.direction;
+	Vector3D refl_dir = ray_in_object_system.direction;
 	// mirror
-	pointer_to_closest_intersection->
-	get_reflection_direction_in_object_system(&refl_dir);
+	closest_intersection->
+		get_reflection_direction_in_object_system(&refl_dir);
 
 	Vector3D refl_sup;
-	pointer_to_closest_intersection->
-	get_intersection_vec_in_object_system(&refl_sup);
+	closest_intersection->
+		get_intersection_vec_in_object_system(&refl_sup);
 	
 	ray_reflection_on_object->SetRay(refl_sup,refl_dir);
 
-	//==========================================================
 	// calculate reflection ray in world system
-	//==========================================================
-	
-	//std::cout<<"b and a"<<std::endl;
-	
 	homo_transformation_of_ray(
-	ray_reflection_on_object,
-	pointer_to_closest_intersection->
-	get_pointer_to_intersecting_object()->
-	frame2world()
+		ray_reflection_on_object,
+		closest_intersection->
+			get_pointer_to_intersecting_object()->frame2world()
 	);	
-	//ray_reflection_on_object->disp();		
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 Intersection* Ray::calculate_closest_intersection(	
-		std::vector<Intersection*> *pointer_to_list_of_intersections
+		std::vector<Intersection*> *intersections
 )const{
 	// In a list of valid intersectios with this ray and some frames we look 
 	// for the intersection which is closest to the support vector of the ray.
 	// We return the intersection closest to the support of the vector.
-	std::vector<Intersection*>::
-	iterator pointer_to_pointer_to_closest_intersection = min_element( 	
-		pointer_to_list_of_intersections->begin(),
-		pointer_to_list_of_intersections->end() ,
+	std::vector<Intersection*>::iterator closest_intersection = min_element( 	
+		intersections->begin(),
+		intersections->end() ,
 		*this
 	);
 
-	return 	(*pointer_to_pointer_to_closest_intersection);
+	return 	*closest_intersection;
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 Intersection* Ray::get_closest_intersection(
 	const CartesianFrame* world,
-	GlobalSettings *settings
-){
-	int refl_count = 0;
+	const GlobalSettings *settings
+)const {
+	std::vector<const CartesianFrame*> objects_which_might_intersect;
+	find_intersection_candidates_in_tree_of_frames( 
+		world , 
+		&objects_which_might_intersect
+	);
+	
+	std::vector<Intersection*> intersections;
+	
 	const CartesianFrame* object_propagated_from = NULL;
-	//==================================================================
-	// claculate a list/vector containing all possible intersection
-	// candidates using pre-trace
-	//==================================================================
-	std::vector<const CartesianFrame*> list_of_objects_which_might_intersect;
-	pre_trace( world , &list_of_objects_which_might_intersect );
-	
-	//==================================================================
-	// calculate a list of objects wich _do_ intersect from the list_of_
-	// objects_which_might_intersect
-	//==================================================================
-
-	std::vector<Intersection*> list_of_ptr_to_intersections;
-	
-	test_intersection_for_hit_candidates(
-		&list_of_objects_which_might_intersect,
-		&list_of_ptr_to_intersections,
-		object_propagated_from,
-		refl_count
+	find_intersections_in_intersection_candidate_frames(
+		&objects_which_might_intersect,
+		&intersections,
+		object_propagated_from
 	);
 		
-	//==================================================================
-	// test wether there is at least one object intersecting the ray or
-	// not by using the size of the list_of_intersecting_objects
-	//==================================================================
-	Intersection *ptr_to_closest_intersection;	
-
-	if( list_of_ptr_to_intersections.size() == 0 ){
-		
-		ptr_to_closest_intersection = new Intersection;
-		ptr_to_closest_intersection->set_intersection_flag( false );
-		
-		return ptr_to_closest_intersection;
+	if( intersections.size() == 0 ){
+		Intersection *false_intersection;
+		false_intersection = new Intersection;
+		false_intersection->set_intersection_flag( false );
+		return false_intersection;
 	}else{
-		//==============================================================
-		// find the closest object in the list of 
-		// list_of_intersecting_objects
-		//==============================================================
-
-
-		ptr_to_closest_intersection = calculate_closest_intersection(
-			&list_of_ptr_to_intersections
-		);
-
-		return ptr_to_closest_intersection;
+		return calculate_closest_intersection(&intersections);
 	}
 }
-//==============================================================================
-ColourProperties Ray::trace(const CartesianFrame* world,
-	int refl_count,
-	const CartesianFrame* object_propagated_from,
-	const GlobalSettings *settings
-){
-	
-	//==================================================================
-	// claculate a list/vector containing all possible intersection
-	// candidates using pre-trace
-	//==================================================================
-	std::vector<const CartesianFrame*> list_of_objects_which_might_intersect;
-	pre_trace( world , &list_of_objects_which_might_intersect );
-	
-	//==================================================================
-	// calculate a list of objects wich _do_ intersect from the list_of_
-	// objects_which_might_intersect
-	//==================================================================
+//------------------------------------------------------------------------------
+std::vector<Intersection*> Ray::get_intersections(
+	const CartesianFrame* world,
+	const CartesianFrame* object_propagated_from
+)const{
 
-	std::vector<Intersection*> list_of_ptr_to_intersections;
+	std::vector<const CartesianFrame*> objects_which_might_intersect;
+	find_intersection_candidates_in_tree_of_frames( 
+		world, 
+		&objects_which_might_intersect 
+	);
 	
-	test_intersection_for_hit_candidates(
-						&list_of_objects_which_might_intersect,
-						&list_of_ptr_to_intersections,
-						object_propagated_from,
-						refl_count);
-		
-	//==================================================================
-	// test wether there is at least one object intersecting the ray or
-	// not by using the size of the list_of_intersecting_objects
-	//==================================================================
-	ColourProperties colour_to_return;
+	std::vector<Intersection*> intersections;
 	
-	if(list_of_ptr_to_intersections.size()==0)
-	{
-		// RETURN
-		colour_to_return = settings->get_default_colour();
-	}else{
-		//==============================================================
-		// find the closest object in the list of 
-		// list_of_intersecting_objects
-		//==============================================================
-		
-		Intersection *ptr_to_closest_intersection;
-		ptr_to_closest_intersection = calculate_closest_intersection(
-			&list_of_ptr_to_intersections
-		);
-		
-		//==============================================================
-		// test reflection of the object pointer_to_closest_frame is
-		// pointing to
-		//==============================================================
-		if(
-		ptr_to_closest_intersection->get_pointer_to_intersecting_object()
-		->get_hit_reflection_flag()
-		&& refl_count < settings->get_max_number_of_reflections())
-		{	
-			//==========================================================
-			// the object pointer_to_closest_frame is pointing to
-			// does reflect, so we increase the reflection counter
-			//==========================================================
-			
-			refl_count++;
-			
-			//==========================================================
-			// calculate the ray reflected by the object
-			// pointer_to_closest_frame is pointing to relativ to
-			// the world coordinate system
-			//==========================================================
-			Ray ray_reflection_on_object;
-			calculate_reflected_ray(
-				ptr_to_closest_intersection,
-				&ray_reflection_on_object);
-			
-			//==========================================================
-			// mix colours
-			//==========================================================
-			// RETURN
-			colour_to_return = 
-			ptr_to_closest_intersection->
-			get_pointer_to_intersecting_object()->
-			get_hit_colour();
-			
-			// use itterativ call of trace to handle reflections
-			ColourProperties colour_of_reflected_ray;
-			
-			colour_of_reflected_ray = 
-			ray_reflection_on_object.trace(
-			world,
-			refl_count,
-			ptr_to_closest_intersection->
-			get_pointer_to_intersecting_object(),
-			settings
-			);
-			
-			colour_to_return.reflection_mix(
-			&colour_of_reflected_ray,
-			ptr_to_closest_intersection->
-			get_pointer_to_intersecting_object()->
-			get_ptr2_reflection()
-			);
+	find_intersections_in_intersection_candidate_frames(
+		&objects_which_might_intersect,
+		&intersections,
+		object_propagated_from
+	);
 
-		}else{
-			// std::cout<<"there are no reflections."<<std::endl;
-			
-			// RETURN
-			colour_to_return = ptr_to_closest_intersection->
-			get_pointer_to_intersecting_object()->
-			get_hit_colour();
-		}	
-	}
-	//=============
-	//free memory list_of_ptr_to_intersections 
-	//=============
-	for(
-		Intersection *ptr_to_intersection : 
-		list_of_ptr_to_intersections
-	){
-		
-		delete ptr_to_intersection;
-	}
-
-	return colour_to_return;
+	return intersections;
 }
-//==============================================================================
+//------------------------------------------------------------------------------
+void Ray::delete_intersections(std::vector<Intersection*> &Intersections)const {
+	for(Intersection *an_intersection : Intersections) {	
+		delete an_intersection;
+	}
+}
+//------------------------------------------------------------------------------
 void Ray::propagate(	
 	const CartesianFrame* world, 
 	ListOfInteractions* history,
@@ -751,62 +579,24 @@ void Ray::propagate(
 ){
 	std::cout << "Calling propagate of a Ray instance!" << endl;
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 double Ray::get_distance_to_closest_object(
-	const CartesianFrame* world,
+	const CartesianFrame *world,
 	const GlobalSettings *settings
 )const{
-	
-	double distance_to_closets_object = 0.0;
-	//==================================================================
-	// claculate a list/vector containing all possible intersection
-	// candidates using pre-trace
-	//==================================================================
-	std::vector<const CartesianFrame*> list_of_objects_which_might_intersect;
-	pre_trace( world , &list_of_objects_which_might_intersect );
-	
-	//==================================================================
-	// calculate a list of objects wich _do_ intersect from the list_of_
-	// objects_which_might_intersect
-	//==================================================================
-	std::vector<Intersection*> list_of_ptr_to_intersections;
-	
-	int refl_count = 0;
-	CartesianFrame* object_propagated_from = nullptr;
+	Intersection *closest = get_closest_intersection(world, settings);
 
-	test_intersection_for_hit_candidates(
-		&list_of_objects_which_might_intersect,
-		&list_of_ptr_to_intersections,
-		object_propagated_from,
-		refl_count
-	);
-	
-	//==================================================================
-	// test wether there is at least one object intersecting the ray or
-	// not using the size of the list_of_intersecting_objects
-	//==================================================================
-	if(list_of_ptr_to_intersections.size()==0)
-	{
-		// do nothing because there are no intersections
+	if(closest->get_intersection_flag()) {
+		return closest->get_intersection_distance();
 	}else{
-		//==============================================================
-		// find the closest object in the list of 
-		// list_of_intersecting_objects
-		//==============================================================
-
-		Intersection *ptr_to_closest_intersection;
-		ptr_to_closest_intersection = calculate_closest_intersection(
-			&list_of_ptr_to_intersections
-		);
-		return ptr_to_closest_intersection->get_intersection_distance();
+		return 0.0;
 	}
-	return distance_to_closets_object;
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 bool Ray::operator() (Intersection* one, Intersection* two)const{
 	return 	one->get_intersection_distance() < two->get_intersection_distance();
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 CsvRow Ray::getRayCsvRow(GlobalSettings& settings)const{
 	
 	CsvRow row;
@@ -819,7 +609,7 @@ CsvRow Ray::getRayCsvRow(GlobalSettings& settings)const{
 
 	return row;
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 CsvRow Ray::getCsvRow(GlobalSettings& settings)const{
 
 	CsvRow row;
@@ -831,7 +621,7 @@ CsvRow Ray::getCsvRow(GlobalSettings& settings)const{
 	
 	return row;
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 CsvRow Ray::getCsvID()const{
 
 	CsvRow rowID;
@@ -843,15 +633,15 @@ CsvRow Ray::getCsvID()const{
 
 	return rowID;
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 void Ray::SetHistory(ListOfInteractions* nhistory){
 	history = nhistory;
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 ListOfInteractions* Ray::GetHistory()const{
 	return history;
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 CsvRow Ray::getCsvRowHistory(GlobalSettings& settings)const{
 	
 	CsvRow row;
@@ -863,9 +653,9 @@ CsvRow Ray::getCsvRowHistory(GlobalSettings& settings)const{
 
 	return row;
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 // friends of osstream
-//==============================================================================
+//------------------------------------------------------------------------------
 std::ostream& operator<<(std::ostream& os, const Ray& ray_to_be_displayed){
     os << ray_to_be_displayed.get_string();
     return os;

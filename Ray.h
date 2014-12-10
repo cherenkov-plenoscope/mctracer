@@ -32,99 +32,118 @@ class OctTreeTraversingRay;
 class Ray{
 
 protected:
-	Vector3D support;                 // support vector
-	Vector3D direction;               // direction vector
-	ListOfInteractions* history;      // interaction history of this ray
-	 // The identifier ID of this ray
-	unsigned long long int identifier_number;   
-
+	Vector3D support;	
+	Vector3D direction;
+	ListOfInteractions* history = nullptr;	// interaction history of this ray
+	unsigned long long int identifier_number;
+	
+	void normalize_direction();
 public:
-	Ray(){};
+	Ray();
 	Ray(const Vector3D support, const Vector3D direction);
-//------------------------------------------------------------------------------
-// SET
-void SetRay(const Vector3D nsup,const Vector3D ndir);	
-void SetDirection(const Vector3D ndir);
-void SetDirection(const double x,const double y,const double z);
-void SetSupport(const Vector3D nsup);
-void SetSupport(const double x,const double y,const double z);
-void SetID(unsigned long long int nID);
-void SetHistory(ListOfInteractions *nhistory);
-//------------------------------------------------------------------------------
-// GET
-Vector3D Support()const;
-Vector3D Direction()const;
-Vector3D PositionOnRay(const double scalar)const;
-unsigned long long int ID()const;
-ListOfInteractions* GetHistory()const;
-CsvRow getCsvID()const;
-CsvRow getRayCsvRow(GlobalSettings& settings)const;
-virtual CsvRow getCsvRow(GlobalSettings& settings)const;
-virtual CsvRow getCsvRowHistory(GlobalSettings& settings)const;
-//------------------------------------------------------------------------------
-// Functionality
-Intersection* get_closest_intersection(
-	const CartesianFrame* world,
-	GlobalSettings *settings
-);
 
-void pre_trace(
-	const CartesianFrame* frame_to_check_for_interaction_of_ray_and_max_sphere, 
-	std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre
-)const;
+	void SetRay(const Vector3D nsup,const Vector3D ndir);	
+	void SetDirection(const Vector3D ndir);
+	void SetDirection(const double x,const double y,const double z);
+	void SetSupport(const Vector3D nsup);
+	void SetSupport(const double x,const double y,const double z);
+	void SetID(unsigned long long int nID);
+	void SetHistory(ListOfInteractions *nhistory);
 
-bool IntersectionWithBoundingSphere(const CartesianFrame* frame)const;
 
-void homo_transformation_of_ray(Ray* ray,const HomoTrafo3D *T)const;
+	Vector3D Support()const;
+	Vector3D Direction()const;
+	Vector3D PositionOnRay(const double scalar)const;
+	unsigned long long int ID()const;
+	ListOfInteractions* GetHistory()const;
+	CsvRow getCsvID()const;
+	CsvRow getRayCsvRow(GlobalSettings& settings)const;
+	virtual CsvRow getCsvRow(GlobalSettings& settings)const;
+	virtual CsvRow getCsvRowHistory(GlobalSettings& settings)const;
 
-void test_intersection_for_hit_candidates(
-	std::vector<const CartesianFrame*> *list_of_objects_which_might_intersect,
-	std::vector<Intersection*> *ptr_to_list_of_ptr_to_intersections,
-	const CartesianFrame* object_propagated_from,
-	int refl_count
-)const;
+	double get_distance_to_point_from_position_of_ray_at(
+		const Vector3D &point, const double ray_parameter_for_position_on_ray
+	)const;
 
-void calculate_reflected_ray(	
-	Intersection * pointer_to_closest_intersection,
-	Ray *ray_reflection_on_object
-);
+	bool support_of_ray_is_inside_of_bounding_sphere_of(
+		const CartesianFrame *frame
+	)const;
 
-Intersection* calculate_closest_intersection(	
-	std::vector<Intersection*> *pointer_to_list_of_intersections
-)const;
+	Intersection* get_closest_intersection(
+		const CartesianFrame* world,
+		const GlobalSettings *settings
+	)const;
 
-ColourProperties trace(
-	const CartesianFrame* world,
-	int refl_count,
-	const CartesianFrame* object_propagated_from,
-	const GlobalSettings *settings
-);
+	void find_intersection_candidates_in_tree_of_frames(
+		const CartesianFrame* frame_to_check_for_interaction_of_ray_and_max_sphere, 
+		std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre
+	)const;
 
-virtual void propagate(	
-	const CartesianFrame* world, 
-	ListOfInteractions* history,
-	int interaction_count,
-	const CartesianFrame* object_propagated_from,
-	const GlobalSettings* settings,
-	PseudoRandomNumberGenerator* dice
-);
+	void find_intersections_for_children_in_oct_trees(	
+		const CartesianFrame* frame, 
+		std::vector<const CartesianFrame*> *frames_with_intersection_in_bounding_sphere
+	)const;
 
-double get_distance_to_closest_object(
-	const CartesianFrame* world,
-	const GlobalSettings *settings
-)const;
-//------------------------------------------------------------------------------
-// printing
-void disp()const;
-void disp_possible_hit_list(const CartesianFrame *frame)const;
-std::string get_string()const;
-//------------------------------------------------------------------------------
-// operators
-bool operator() (Intersection* one, Intersection* two)const;
-void operator= (Ray ray);
-//------------------------------------------------------------------------------
-// ostream
-friend std::ostream& operator<<(std::ostream& os, const Ray& ray_to_be_displayed);
+	void find_intersections_for_all_children_on(
+		const CartesianFrame* frame, 
+		std::vector<const CartesianFrame*> *frames_with_intersection_in_bounding_sphere
+	)const;
+
+	bool has_intersection_with_bounding_sphere_of(
+		const CartesianFrame* frame
+	)const;
+
+	void homo_transformation_of_ray(Ray* ray,const HomoTrafo3D *T)const;
+
+	void find_intersections_in_intersection_candidate_frames(
+		std::vector<const CartesianFrame*> *objects_which_might_intersect,
+		std::vector<Intersection*> *ptr_to_list_of_ptr_to_intersections,
+		const CartesianFrame* object_propagated_from
+	)const;
+
+	void calculate_reflected_ray(	
+		const Intersection * pointer_to_closest_intersection,
+		Ray *ray_reflection_on_object
+	)const;
+
+	Intersection* calculate_closest_intersection(	
+		std::vector<Intersection*> *pointer_to_list_of_intersections
+	)const;
+
+	double get_parameter_on_ray_for_closest_distance_to_point(
+		const Vector3D &point
+	)const;
+
+	double get_closest_distance_to_point(const Vector3D &point)const;
+
+	virtual void propagate(	
+		const CartesianFrame* world, 
+		ListOfInteractions* history,
+		int interaction_count,
+		const CartesianFrame* object_propagated_from,
+		const GlobalSettings* settings,
+		PseudoRandomNumberGenerator* dice
+	);
+
+	double get_distance_to_closest_object(
+		const CartesianFrame* world,
+		const GlobalSettings *settings
+	)const;
+
+	std::vector<Intersection*> get_intersections(
+		const CartesianFrame* world,
+		const CartesianFrame* object_propagated_from
+	)const;
+
+	void disp()const;
+	void disp_possible_hit_list(const CartesianFrame *frame)const;
+	std::string get_string()const;
+
+	bool operator() (Intersection* one, Intersection* two)const;
+	void operator= (Ray ray);
+	void delete_intersections(std::vector<Intersection*> &Intersections)const;
+
+	friend std::ostream& operator<<(std::ostream& os, const Ray& ray_to_be_displayed);
 };
 
 //======================================================================

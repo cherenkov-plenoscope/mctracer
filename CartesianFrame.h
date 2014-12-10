@@ -62,13 +62,7 @@ protected:
 private:
     OctTreeCube *OctTree = nullptr;
 
-    // the max number of children is constant and definfes the max number of 
-    // children which can be assigned to a single OctTreeNode until the 
-    // OctTreeNode is divided itself to store the children frames in its own
-    // OctTreeNodes.
-    const uint max_number_of_frames_in_OctTree = 7;
-
-    const char delimiter_for_frame_path = '/';
+    static const char delimiter_for_frame_path = '/';
 public:
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     CartesianFrame(){};
@@ -80,20 +74,18 @@ public:
     ){ 
         set_frame(new_name, new_pos, new_rot); 
     };
-//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
     void set_frame(
         const std::string name_of_frame,
         const Vector3D pos_in_mother,
         const Rotation3D rot_in_mother
     );
-    //void fabricate_frame(const pugi::xml_node node);
 
     void set_mother_and_child(CartesianFrame *new_child);
-//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     void update_enclosing_sphere_for_all_children();
     void post_initialize_me_and_all_my_children();
     void take_children(CartesianFrame *frame_to_take_chidren_from);
-//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
     const std::string get_name_of_frame()const{ return name_of_frame; };
 
     const Vector3D* get_pointer_to_position_of_frame_in_mother_frame()const{
@@ -104,8 +96,8 @@ public:
         return &rot_in_mother;
     };
 
-    const double* get_pointer_to_radius_of_sphere_enclosing_all_children()const{
-        return &radius_of_sphere_enclosing_all_children;
+    double get_radius_of_sphere_enclosing_all_children()const{
+        return radius_of_sphere_enclosing_all_children;
     };
 
     const Vector3D* get_pointer_to_position_of_frame_in_world_frame()const{
@@ -138,17 +130,13 @@ public:
         return children.at(child_position_in_list);
     };
 
-    const CartesianFrame* get_pointer_to_specific_frame( 
-        std::string path
-    )const;
+    const CartesianFrame* get_frame_in_tree_by_path(std::string path)const;
 
-    const CartesianFrame* get_pointer_to_specific_child(
-        std::string specific_name
-    )const;
+    const CartesianFrame* get_child_by_name(std::string specific_name)const;
 
     std::string get_path()const;
 
-    const int get_number_of_children()const{ return children.size(); };
+    uint get_number_of_children()const;
 
     std::string get_frame_string()const;
 
@@ -156,11 +144,14 @@ public:
 
     const OctTreeCube* get_OctTree()const{ return OctTree; };
 
+    bool uses_oct_trees_to_store_its_children()const;
     bool has_child_with_name(const std::string name_of_child)const;
     bool has_mother()const;
     bool has_children()const;
 private:
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    void reset_all_connections_to_children_and_mother();
+
     std::string get_print(
         unsigned depth, 
         bool wtih_all_children
@@ -177,38 +168,9 @@ private:
     void create_OctTree();
     void update_sphere_enclosing_all_children(CartesianFrame *new_child);
     // OctTree
+    void reset_OctTree();
 
-    void SetOctTree(
-        OctTreeCube *Cube,   
-        Vector3D CenterPosition,
-        double LengthOfEdge
-    );
-
-    void FillOctTree(
-        OctTreeCube *Ptr2OctTree,  
-        std::vector<CartesianFrame*> ChildrenToFillIn
-    );
-
-    Vector3D CalculateCentrePositionOfChildCube(
-        OctTreeCube *Ptr2OctTree,
-        uint x,
-        uint y,
-        uint z
-    )const;
-
-    void SetOctTreeLimits(OctTreeCube *Cube, Vector3D CenterPosition);
-
-    double EdgeLengthOfChildCube(OctTreeCube *Ptr2OctTree)const;
-
-    std::vector<CartesianFrame*> CalculateSubSetOfFramesInCube(
-        OctTreeCube *Ptr2OctTree,
-        std::vector<CartesianFrame*> possible_children
-    );
-
-    std::string print_OctTree_including_children(
-        OctTreeCube *Ptr2OctTree,
-        unsigned depth
-    )const;
+    bool there_are_so_many_children_that_we_need_an_OctTree()const;
 
     std::vector<CartesianFrame*> CalculateHitCandidates(
         Vector3D support,

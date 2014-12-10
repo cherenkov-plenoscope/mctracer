@@ -13,9 +13,8 @@
 //------------------------------------------------------------------------------
 class CameraRay :public Ray{
 protected:
-
-	unsigned int pixel_x;
-	unsigned int pixel_y;
+	//unsigned int pixel_x;
+	//unsigned int pixel_y;
 	ColourProperties colour;
 public:
 	CameraRay(){};
@@ -24,7 +23,12 @@ public:
 	std::string get_string()const;
 	CsvRow getCameraRayCsvRow(GlobalSettings& settings)const;
 	CsvRow getCsvRow(GlobalSettings& settings)const;
-
+	ColourProperties trace(
+		const CartesianFrame* world,
+		int refl_count,
+		const CartesianFrame* object_propagated_from,
+		const GlobalSettings *settings
+	)const;
 	friend std::ostream& operator<<(std::ostream& os, 
 	const CameraRay& camera_ray_to_be_displayed);
 };

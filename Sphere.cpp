@@ -18,18 +18,18 @@ void Sphere::set_sphere(double new_radius){
 
 }
 //======================
-void Sphere::disp(){
+void Sphere::disp()const {
 	std::stringstream out;
-	out<<"sphere:"<<name_of_frame;
-	out<<"_________________________________"<<std::endl;
-	out<<get_frame_string();
-	out<<get_surface_propertie_prompt();
-	out<<get_sphere_string();
-	out<<"_________________________________"<<std::endl;
-	std::cout<<out.str();
+	out << "sphere:" <<name_of_frame;
+	out << "_________________________________\n";
+	out << get_frame_string();
+	out << get_surface_propertie_prompt();
+	out << get_sphere_string();
+	out << "_________________________________\n";
+	std::cout << out.str();
 }
 //======================
-std::string Sphere::get_sphere_string()const{
+std::string Sphere::get_sphere_string()const {
 	std::stringstream out;
 	out<<"||| radius of sphere: "<<radius<<std::endl;
 	return out.str();

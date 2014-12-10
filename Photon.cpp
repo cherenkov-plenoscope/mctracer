@@ -108,7 +108,7 @@ void Photon::propagate(
 	// candidates using pre-trace
 	//==================================================================
 	std::vector<const CartesianFrame*> ListOfObjectsWhichMightIntersect;
-	pre_trace( world , &ListOfObjectsWhichMightIntersect );
+	find_intersection_candidates_in_tree_of_frames( world , &ListOfObjectsWhichMightIntersect );
 
 	//==================================================================
 	// calculate a list of objects wich _do_ intersect from the list_of_
@@ -119,11 +119,11 @@ void Photon::propagate(
 	//std::vector<Intersection*> VecOfPtr2Intersections_which_might_take_place;
 	std::vector<Intersection*> VecOfPtr2Intersections;
 	
-	test_intersection_for_hit_candidates(
+	find_intersections_in_intersection_candidate_frames(
 		&ListOfObjectsWhichMightIntersect,
 		&VecOfPtr2Intersections,
-		object_propagated_from,
-		interaction_count
+		object_propagated_from//,
+		//interaction_count
 	);
 
 	//==================================================================

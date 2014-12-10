@@ -1,4 +1,6 @@
 #include "testVector3D.cpp"
+#include "RayTest.cpp"
+#include "RayAndFrameInteractionTest.cpp"
 #include "testRotation3D.cpp"
 #include "testPhoton.cpp"
 #include "testWorldFactory.cpp"
@@ -12,6 +14,8 @@
 #include "SphereIntersectionTest.cpp"
 #include "QuadraticEquationTest.cpp"
 #include "CameraManTest.cpp"
+#include "OctTreeCubeTest.cpp"
+#include "ApertureCameraTest.cpp"
 #include "gtest/gtest.h"
 
 int main(int argc, char **argv) {

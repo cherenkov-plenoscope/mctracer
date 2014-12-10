@@ -35,7 +35,7 @@ int main(){
 	
 	try{
 
-		settings.set_max_number_of_reflections(3);
+		settings.set_max_number_of_reflections(5);
 		settings.set_csv_decimal_presicion(9);
 		
 		std::string user_input;

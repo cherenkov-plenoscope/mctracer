@@ -89,7 +89,7 @@ double ApertureCamera::get_average_object_distance(
 ){
 	double sum_of_valid_object_distances = 0.0;
 	uint number_of_valid_distances = 0;
-	const uint fraction_of_image_pixels = image->get_resolution()*5e-2;
+	const uint fraction_of_image_pixels = image->get_resolution()*5e-4;
 
 	for(uint pixel_it=0; pixel_it < fraction_of_image_pixels; pixel_it++) {
 
@@ -196,7 +196,7 @@ std::string ApertureCamera::get_aperture_camera_print()const {
 	out << 1e3*sensor_width_in_m << " x " << 1e3*sensor_height_in_m << " mm^2\n";	
 	out << "| Pixel pitch      : " << PixelPitch_in_m*1e6 << " um\n";
 	out << "| Object distance  : " << ObjectDistance_in_m << " m\n";
-	out << "| Sensor distance  : " << SensorDistance_in_m << " m\n";
+	out << "| Sensor distance  : " << SensorDistance_in_m*1e3 << " mm\n";
 	out << "| Rays per pixel   : " << rays_per_pixel << "\n";
 	out << "| Rays per image   : " << 
 	double(rays_per_pixel *	image->get_resolution()/1e6) << " M rays\n";

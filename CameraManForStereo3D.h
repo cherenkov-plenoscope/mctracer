@@ -21,6 +21,7 @@ public:
 	void increase_stereo_offset();
 	void decrease_stereo_offset();
 	const CameraImage* get_anaglyph_stereo3D_image();
+	void use_same_stereo_offset_as(const CameraManForStereo3D *college);
 private:
 	CameraDevice* camera;
 

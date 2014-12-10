@@ -50,6 +50,80 @@ CsvRow CameraRay::getCsvRow(GlobalSettings& settings)const{
 
 	return combinedRow;
 }
+//------------------------------------------------------------------------------
+ColourProperties CameraRay::trace(
+	const CartesianFrame* world,
+	int refl_count,
+	const CartesianFrame* object_propagated_from,
+	const GlobalSettings *settings
+)const {
+
+	std::vector<Intersection*> list_of_ptr_to_intersections = 
+		get_intersections(world,object_propagated_from);
+
+	ColourProperties colour_to_return = settings->get_default_colour();
+	
+	if(list_of_ptr_to_intersections.size()==0) {
+
+		colour_to_return = settings->get_default_colour();
+	}else{
+		// find the closest object in the list of 
+		// list_of_intersecting_objects
+		const Intersection *closest_intersection =
+			calculate_closest_intersection(&list_of_ptr_to_intersections);
+		
+		if(
+			closest_intersection->get_pointer_to_intersecting_object()
+			->get_hit_reflection_flag()
+			&& refl_count < settings->get_max_number_of_reflections())
+		{	
+			// the object pointer_to_closest_frame is pointing to
+			// does reflect, so we increase the reflection counter
+			refl_count++;
+			
+			// calculate the ray reflected by the object
+			// pointer_to_closest_frame is pointing to relativ to
+			// the world coordinate system
+			CameraRay ray_reflection_on_object;
+			calculate_reflected_ray(
+				closest_intersection,
+				&ray_reflection_on_object
+			);
+
+			// mix colours
+			colour_to_return = closest_intersection->
+			get_pointer_to_intersecting_object()->
+			get_hit_colour();
+
+			// use itterativ call of trace to handle reflections
+			ColourProperties colour_of_reflected_ray;
+		
+			colour_of_reflected_ray = ray_reflection_on_object.trace(
+				world,
+				refl_count,
+				closest_intersection->get_pointer_to_intersecting_object(),
+				settings
+			);
+
+			colour_to_return.reflection_mix(
+				&colour_of_reflected_ray,
+				closest_intersection->
+				get_pointer_to_intersecting_object()->get_ptr2_reflection()
+			);
+		}else{
+
+			colour_to_return = closest_intersection->
+				get_pointer_to_intersecting_object()->
+				get_hit_colour();
+		}	
+	}
+
+	for(Intersection *ptr_to_intersection : list_of_ptr_to_intersections) {	
+		delete ptr_to_intersection;
+	}
+
+	return colour_to_return;
+}
 //======================================================================
 // friends of osstream
 //======================================================================

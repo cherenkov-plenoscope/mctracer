@@ -149,19 +149,21 @@ void FreeOrbitCamera::take_snapshot(){
 	
 	ApertureCamera Mamiya645 = get_Mamiya645_based_on_free_orbit_camera();
 
-
 	Mamiya645.auto_focus(world, settings);
-
-	std::cout << get_prefix_print() << "snapshot:\n";
 
 	Mamiya645.print();
 
 	if(stereo3D){
+		std::cout << get_prefix_print() << "stereo snapshot:\n";
+
 		CameraManForStereo3D op(&Mamiya645);
+		op.use_same_stereo_offset_as(Stereo_operator);
 		op.aquire_stereo_image(world, settings);
 		op.get_anaglyph_stereo3D_image()->
 			save_image_to_file(get_snapshot_filename());
 	}else{
+		std::cout << get_prefix_print() << "snapshot:\n";
+
 		Mamiya645.acquire_image(world, settings);
 		Mamiya645.save_image(get_snapshot_filename());
 	}
@@ -277,9 +279,9 @@ void FreeOrbitCamera::print_free_orbit_help_text()const{
 	out << "| | decrease offset.........[ y ] |   |_______________________________|\n";
 	out << "| |_______________________________|\n";
 	out << "|\n";
-	out << "|  _Mamiya645_medium_format_camera     _exit_free_orbit______________\n";
-	out << "| | take snapshot...........[ g ] |   | exit....................[ESC]\n";
-	out << "| |_______________________________|   |______________________________\n";
+	out << "|  _Mamiya645_medium_format_camera     _exit_free_orbit_______________ \n";
+	out << "| | take snapshot...........[ g ] |   | exit....................[ESC] |\n";
+	out << "| |_______________________________|   |_______________________________|\n";
 	out << "|_______________________________________________________________________________\n";
 	std::cout << out.str();
 }

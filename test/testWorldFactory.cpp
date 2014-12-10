@@ -86,10 +86,7 @@ TEST_F(WorldFactoryTest, ReadEmptyXML) {
   // no children in world
   EXPECT_EQ( Mworld->get_number_of_children() , 0 );
   // enclosing radius must be zero
-  EXPECT_EQ( 
-    *Mworld->get_pointer_to_radius_of_sphere_enclosing_all_children(),
-     0.0
-  );
+  EXPECT_EQ( 0.0, Mworld->get_radius_of_sphere_enclosing_all_children() );
 }
 //------------------------------------------------------------------------------
 TEST_F(WorldFactoryTest, ReadNotExistingFile) {

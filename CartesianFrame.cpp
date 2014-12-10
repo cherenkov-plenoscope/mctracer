@@ -1,33 +1,48 @@
 #include "CartesianFrame.h"
 //==============================================================================
-void CartesianFrame::post_initialize(){
-
+void CartesianFrame::post_initialize() {
 	post_initialize_Transformations();
 	post_initialize_OctTree();
 }
 //==============================================================================
-void CartesianFrame::post_initialize_OctTree(){
-	// When there are more then max_number_of_frames_in_OctTree children frames 
+void CartesianFrame::post_initialize_OctTree() {
+	// When there are more then 
+	// max_number_of_frames_in_single_OctTreeCube children frames 
 	// in a frame, the children frames are stored in a oct tree structure to
 	// minimize the costly intersection tests later during ray/photon 
 	// propagation.
-	if(children.size() >= max_number_of_frames_in_OctTree){
+	reset_OctTree();
+
+	if(there_are_so_many_children_that_we_need_an_OctTree())
 		create_OctTree();
-	}else{
-		// this frame does not need a OctTree substructure to store its children
-		// since there are so few of them.
-		OctTree = nullptr;
-	}
 }
 //==============================================================================
-void CartesianFrame::create_OctTree(){
+void CartesianFrame::create_OctTree() {
+	Vector3D origin_of_frame_with_respect_to_itself;
+	origin_of_frame_with_respect_to_itself.set_null_vector();
 
-	OctTree = new OctTreeCube;
-	Vector3D center(0.0, 0.0 ,0.0);
-	
-	SetOctTree(OctTree, center, 2.0*radius_of_sphere_enclosing_all_children);
+	OctTree = new OctTreeCube(
+		origin_of_frame_with_respect_to_itself, 
+		2.0*radius_of_sphere_enclosing_all_children
+	);
 
-	FillOctTree(OctTree, children);
+	OctTree->fill(children);
+}
+//==============================================================================
+void CartesianFrame::reset_OctTree() {
+	delete OctTree;
+	OctTree = nullptr;
+}
+//==============================================================================
+bool CartesianFrame::there_are_so_many_children_that_we_need_an_OctTree()const {
+	OctTreeCube temp(Vector3D(0.0,0.0,0.0),1.0);
+	return(
+		get_number_of_children() >= temp.get_max_number_of_frames_in_cube()
+	);
+}
+//==============================================================================
+uint CartesianFrame::get_number_of_children()const{ 
+	return children.size(); 
 }
 //==============================================================================
 void CartesianFrame::post_initialize_Transformations(){
@@ -80,191 +95,27 @@ HomoTrafo3D CartesianFrame::calculate_frame2world()const{
 	return Trafo_on_our_way_towards_the_root;
 }
 //==============================================================================
-void CartesianFrame::SetOctTree(
-	OctTreeCube *Cube,   
-    Vector3D CenterPosition,
-    double LengthOfEdge)
-{
-    Cube-> CenterPosition = CenterPosition;
-    Cube-> EdgeLength = LengthOfEdge;
-
-	SetOctTreeLimits(Cube, CenterPosition);	
-}
-//==============================================================================
-void CartesianFrame::SetOctTreeLimits(OctTreeCube *Cube, Vector3D CenterPosition
-){
-	Cube->limits[0][0] = Cube->CenterPosition.x() - EdgeLengthOfChildCube(Cube);
-    Cube->limits[0][1] = Cube->CenterPosition.x() + EdgeLengthOfChildCube(Cube);
-
-    Cube->limits[1][0] = Cube->CenterPosition.y() - EdgeLengthOfChildCube(Cube);
-    Cube->limits[1][1] = Cube->CenterPosition.y() + EdgeLengthOfChildCube(Cube);
-
-    Cube->limits[2][0] = Cube->CenterPosition.z() - EdgeLengthOfChildCube(Cube);
-    Cube->limits[2][1] = Cube->CenterPosition.z() + EdgeLengthOfChildCube(Cube);
-} 
-//==============================================================================
-void CartesianFrame::FillOctTree(
-	OctTreeCube *Cube,  
-	std::vector<CartesianFrame*> ChildrenToFillIn
-){
-	Cube->ChildFrames = ChildrenToFillIn;
-
-    if(ChildrenToFillIn.size() > max_number_of_frames_in_OctTree){
-
-        for(uint x=0; x<2; x++){
-            for(uint y=0; y<2; y++){
-                for(uint z=0; z<2; z++){
-
-                    OctTreeCube * ChildCube;
-                    ChildCube = new OctTreeCube;
-
-                    // calculate CubesCenterPosition position of child cube
-
-                    Vector3D ChildCubesCenterPosition = 
-                    CalculateCentrePositionOfChildCube(Cube,x,y,z);
-
-                    SetOctTree(
-                    	ChildCube,
-                    	ChildCubesCenterPosition,
-                    	EdgeLengthOfChildCube(Cube)
-                    );
-
-                    std::vector<CartesianFrame*> SubSetOfFrames = 
-                    
-                    CalculateSubSetOfFramesInCube(
-                    	ChildCube,
-                    	ChildrenToFillIn
-                    );
-
-                    FillOctTree(ChildCube,SubSetOfFrames);
-
-                    Cube->ChildCubes.push_back(ChildCube);
-                }
-            }
-        }
-    }
-}
-//==============================================================================
-std::vector<CartesianFrame*> CartesianFrame::CalculateSubSetOfFramesInCube(
-	OctTreeCube *Cube,
-	std::vector<CartesianFrame*> possible_children
-){
-
-	std::vector<CartesianFrame*> SubSetOfFrames;
-
-    for(CartesianFrame* child : possible_children){
-
-    	Vector3D position_of_frame_in_mother_frame = 
-    	*child->get_pointer_to_position_of_frame_in_mother_frame();
-
-    	double radius_of_frame = 
-    	*(child->get_pointer_to_radius_of_sphere_enclosing_all_children());
-
-    	// range of the bounding sphere of a frame in 
-    	// its mother frame coordinates
-
-    	double Xmin = position_of_frame_in_mother_frame.x() - radius_of_frame;
-    	double Xmax = position_of_frame_in_mother_frame.x() + radius_of_frame;
-    	double Ymin = position_of_frame_in_mother_frame.y() - radius_of_frame;
-    	double Ymax = position_of_frame_in_mother_frame.y() + radius_of_frame;
-     	double Zmin = position_of_frame_in_mother_frame.z() - radius_of_frame;
-    	double Zmax = position_of_frame_in_mother_frame.z() + radius_of_frame;
-
-    	if( (
-    		Xmax >= Cube->limits[0][0] && 
-    		Xmin <= Cube->limits[0][1] ) && (
-    		Ymax >= Cube->limits[1][0] && 
-    		Ymin <= Cube->limits[1][1] ) && (
-    		Zmax >= Cube->limits[2][0] && 
-    		Zmin <= Cube->limits[2][1] ) 
-    	){
-    		SubSetOfFrames.push_back(child);
-    	}
-    }
-    return SubSetOfFrames;
-}
-//==============================================================================
-Vector3D CartesianFrame::CalculateCentrePositionOfChildCube(
-	OctTreeCube *Cube, 
-	uint x,uint y,uint z
-)const{
-    
-    Vector3D offset(
-        -Cube->EdgeLength/4.0 + x*Cube->EdgeLength/2.0,
-        -Cube->EdgeLength/4.0 + y*Cube->EdgeLength/2.0,
-        -Cube->EdgeLength/4.0 + z*Cube->EdgeLength/2.0
-    );
-
-    Vector3D ChildCubesCenterPosition = Cube->CenterPosition + offset;
-
-    return ChildCubesCenterPosition;
-}
-//-----------------------------------------------------------------------------
-double CartesianFrame::EdgeLengthOfChildCube(OctTreeCube *Cube)const{
-    return Cube->EdgeLength/2.0;
-}
-//==============================================================================
-std::string CartesianFrame::print_OctTree_including_children(
-	OctTreeCube *Cube,
-	unsigned depth
-)const{
-
-	if(Cube == nullptr) 
-		return "There is no OctTree in this frame!";
-
-    std::stringstream out;
-    out.str("");  
-
-	std::string gap = multi("    ", depth);
-    
-    out << gap << " _____OctTreeCube_____" << std::endl;
-    out << gap << "| pos in mother   : "<< Cube->CenterPosition << std::endl;
-    out << gap << "| edge length     : "<<Cube->EdgeLength <<" [m]"<< std::endl;
-    out << gap << "| depth           : "<< depth << std::endl;
-    out << gap << "| child cubes     : "<< Cube->ChildCubes.size() << std::endl;   
-	out << gap << "| Number of Frames: "<< Cube->ChildFrames.size()<<std::endl;
-    // children
-
-	if(Cube->ChildCubes.size() != 0){
-	    depth++;
-
-	    uint child_it = 0;
-        for( uint x=0; x<2; x++ ){
-            for( uint y=0; y<2; y++ ){
-                for( uint z=0; z<2; z++ ){
-                	out << gap<< "x" << x << " y" << y << " z" << z <<std::endl;
-                	out << print_OctTree_including_children(
-						Cube->ChildCubes.at(child_it),
-						depth
-					);
-                	child_it++;  
-                }
-            }
-        }
-	}
-
-	out << gap << "|_____________________" << std::endl;
-
-    return out.str();
-}
-//==============================================================================
 void CartesianFrame::set_frame(
 	const std::string name_of_frame,
 	const Vector3D pos_in_mother,
 	const Rotation3D rot_in_mother
 ){
 	assert_name_is_valid(name_of_frame);
-	this -> name_of_frame = name_of_frame;
+	this->name_of_frame = name_of_frame;
 	
-	this -> pos_in_mother = pos_in_mother;
-	this -> rot_in_mother = rot_in_mother;
+	this->pos_in_mother = pos_in_mother;
+	this->rot_in_mother = rot_in_mother;
 
 	// The only transformation set yet is the frame2mother. The others are set
 	// when the construction of the world tree has finished and the post 
 	// initialization is performed.
 	T_frame2mother.set_transformation(rot_in_mother, pos_in_mother);
 
-	// reset all connections of this frame
+	reset_all_connections_to_children_and_mother();
+}
+//==============================================================================
+void CartesianFrame::reset_all_connections_to_children_and_mother() {
+	reset_OctTree();
 	radius_of_sphere_enclosing_all_children = 0.0;	 
 	mother = nullptr;
 	children.clear();
@@ -375,9 +226,7 @@ void CartesianFrame::set_mother(CartesianFrame *const new_mother){
 }
 //==============================================================================
 void CartesianFrame::add_child(CartesianFrame * const new_child){
-	
 	children.push_back(new_child);
-
 	update_sphere_enclosing_all_children(new_child);
 }
 //==============================================================================
@@ -473,7 +322,6 @@ void CartesianFrame::post_initialize_me_and_all_my_children(){
 }
 //==============================================================================
 void CartesianFrame::update_enclosing_sphere_for_all_children(){
-	
 	// when there is already a treee structure of frames and one is adding a
 	// new frame later on, makeing it the child of a previous frame, then one
 	// has to update the spheres enclosing the children of all mother frames
@@ -487,7 +335,6 @@ void CartesianFrame::update_enclosing_sphere_for_all_children(){
 }
 //==============================================================================
 void  CartesianFrame::take_children(CartesianFrame *frame_to_take_chidren_from){
-
 	// take all children of the frame_to_take_chidren_from and 
 	// put them to this frame
 
@@ -495,7 +342,7 @@ void  CartesianFrame::take_children(CartesianFrame *frame_to_take_chidren_from){
 		set_mother_and_child( child_to_take);
 }
 //==============================================================================
-const CartesianFrame* CartesianFrame::get_pointer_to_specific_frame( 
+const CartesianFrame* CartesianFrame::get_frame_in_tree_by_path( 
 	std::string path_to_frame 
 )const{
 	/// Input is a string called path. It is string of concatenated sub strings 
@@ -520,13 +367,12 @@ const CartesianFrame* CartesianFrame::get_pointer_to_specific_frame(
 		if( path_to_frame.empty() ){
 			// There is no path left, so this frame is actually the final child 
 			// we are looking for
-			return get_pointer_to_specific_child(name_of_leading_frame);
+			return get_child_by_name(name_of_leading_frame);
 		}else{
 			// There is still path to check. We have not reached our final
 			// Frame yet so lets proceed with the child
-			return 
-			get_pointer_to_specific_child(name_of_leading_frame)->
-			get_pointer_to_specific_frame(path_to_frame);
+			return get_child_by_name(name_of_leading_frame)->
+			get_frame_in_tree_by_path(path_to_frame);
 		}
 	}else{
 		// there is no child on this frame which matches the name of the leading
@@ -536,16 +382,13 @@ const CartesianFrame* CartesianFrame::get_pointer_to_specific_frame(
 	}
 }
 //==============================================================================
-const CartesianFrame* CartesianFrame::get_pointer_to_specific_child( 
+const CartesianFrame* CartesianFrame::get_child_by_name( 
 	std::string specific_name 
 )const{
-
-	for( CartesianFrame* child : children ){
-		// Note: Of course it must be only one child in here with the name given
-		// in specific_name!
+	for( CartesianFrame* child : children )
 		if( pedantic_str_comp(child->name_of_frame, specific_name) )
 			return child;
-	}
+
 	return nullptr;
 }
 //==============================================================================
@@ -556,11 +399,11 @@ std::string CartesianFrame::get_path()const{
 	/// eg. City/Street14/house18/roof/chimney/chimney_wall_2
 
 	// chech if this frame has a mother frame 
-	if( mother != nullptr ){
+	if( has_mother() ){
 		// This frame has a mother. Therefore it is not the root frame. 
 		// Here we add at least the delimiter to the path and ,at least there 
 		// is one, the path of its mother
-		return mother -> get_path() + delimiter_for_frame_path +  name_of_frame;
+		return mother -> get_path() + delimiter_for_frame_path + name_of_frame;
 	}else{
 		// This frame has not a mother. So this is the root frame. Here is 
 		// nothing added to the string
@@ -570,13 +413,17 @@ std::string CartesianFrame::get_path()const{
 //==============================================================================
 bool CartesianFrame::has_child_with_name(const std::string name_of_child)const{
 	return 
-	( get_pointer_to_specific_child(name_of_child) == nullptr ) ? false : true;
+	( get_child_by_name(name_of_child) == nullptr ) ? false : true;
 }
 //==============================================================================
 bool CartesianFrame::has_mother()const{
-	return (mother == nullptr)? false : true;
+	return (mother != nullptr);
 }
 //==============================================================================
 bool CartesianFrame::has_children()const{
-	return (get_number_of_children() > 0) ? true : false; 
+	return (get_number_of_children() > 0); 
+}
+//------------------------------------------------------------------------------
+bool CartesianFrame::uses_oct_trees_to_store_its_children()const {
+	return (OctTree != nullptr);
 }

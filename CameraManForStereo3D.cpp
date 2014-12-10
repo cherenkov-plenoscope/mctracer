@@ -142,3 +142,9 @@ const CameraImage* CameraManForStereo3D::get_anaglyph_stereo3D_image() {
 	);
 	return left_image;
 }
+
+void CameraManForStereo3D::use_same_stereo_offset_as(
+	const CameraManForStereo3D *college
+) {
+	stereo_offset_in_m = college->stereo_offset_in_m;
+}

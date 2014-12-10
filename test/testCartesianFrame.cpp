@@ -52,13 +52,13 @@ TEST_F(CartesianFrameTest, find_specific_frame) {
   // Now get the pointer to the frame we are looking for
   // In the case of "tree/pole" we know that it must be in the test xml file.
   const CartesianFrame* SpecificFrameInWorldWeAreLookingFor = 
-  world->get_pointer_to_specific_frame( "/tree/pole" );
+  world->get_frame_in_tree_by_path( "/tree/pole" );
 
   EXPECT_EQ("pole", SpecificFrameInWorldWeAreLookingFor->get_name_of_frame());
 
   // Lets do a second test with one additional layer
   SpecificFrameInWorldWeAreLookingFor = world->
-  get_pointer_to_specific_frame( "/house/chimney/chimney_wall_4" );
+  get_frame_in_tree_by_path( "/house/chimney/chimney_wall_4" );
 
   if(SpecificFrameInWorldWeAreLookingFor == NULL)
     std::cout << "OMG the Pointer is NULL!!!\n";
@@ -76,7 +76,7 @@ TEST_F(CartesianFrameTest, find_specific_frame) {
   // Now lets look something up which is not in our test xml file.
   // In this case a NULL pointer is expected to be returned
   SpecificFrameInWorldWeAreLookingFor = 
-  world->get_pointer_to_specific_frame( "your/Mama" );
+  world->get_frame_in_tree_by_path( "your/Mama" );
 
   EXPECT_EQ( NULL, SpecificFrameInWorldWeAreLookingFor );
 }

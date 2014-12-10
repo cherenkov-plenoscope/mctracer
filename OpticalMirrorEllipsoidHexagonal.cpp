@@ -1,83 +1,67 @@
 #include "OpticalMirrorEllipsoidHexagonal.h"
-//==================================================================
+//------------------------------------------------------------------------------
 OpticalMirrorEllipsoidHexagonal::OpticalMirrorEllipsoidHexagonal( ){      
 }
-//==================================================================
-bool OpticalMirrorEllipsoidHexagonal::set_ellipsoid_hexag( 
-double new_long_focal_length, 
-double new_short_focal_length,
-double new_inner_radius_of_hexagonal_shape)
-{
-	if(new_long_focal_length <= 0.){
-		stringstream out;
-		out << "OpticalMirrorEllipsoidHexagonal : long_focal_length <= 0. --> ";
-		out << new_long_focal_length << endl;
-		cout<<out.str();
-		return false;
-	}else{
-		long_focal_length = new_long_focal_length;
-	}
+//------------------------------------------------------------------------------
+void OpticalMirrorEllipsoidHexagonal::set_ellipsoid_hexag( 
+	double long_focal_length, 
+	double short_focal_length,
+	double inner_radius_of_hexagonal_shape
+) {
+	assert_named_variable_is_positiv(long_focal_length,"long focal length");
+	this->long_focal_length = long_focal_length;
 	
-	if(new_short_focal_length <= 0.){
-		stringstream out;
-		out << "OpticalMirrorEllipsoidHexagonal : short_focal_length <= 0. --> ";
-		out << new_short_focal_length << endl;
-		cout<<out.str();
-		return false;
-	}else{
-		short_focal_length = new_short_focal_length;
-	}
-	
-	if(new_inner_radius_of_hexagonal_shape <= 0.){
-		stringstream out;
-		out << "OpticalMirrorEllipsoidHexagonal :";
-		out << "inner_radius_of_hexagonal_shape <= 0. --> ";
-		out << new_inner_radius_of_hexagonal_shape << endl;
-		cout<<out.str();
-		return false;
-	}else{
-		MirrorRadius_m = new_inner_radius_of_hexagonal_shape;
-	}
+	assert_named_variable_is_positiv(short_focal_length,"short focal length");
+	this->short_focal_length = short_focal_length;
+
+	assert_named_variable_is_positiv(inner_radius_of_hexagonal_shape,"inner hexagon radius");
+	this->MirrorRadius_m = inner_radius_of_hexagonal_shape;
 	
 	double mean_focal_length = 
 	(long_focal_length + short_focal_length)/2.0;
 	
-	if(set_optical_hexag(mean_focal_length,MirrorRadius_m)){
-		
-	}else{
-		return false;
-	}
-	
+	set_optical_hexag(mean_focal_length,MirrorRadius_m);
+
 	// max norm() radius
 	// this is a crude guess for thin mirrors
 	radius_of_sphere_enclosing_all_children = MirrorRadius_m*1.1;
-	return true;
 }
-//==================================================================
-void OpticalMirrorEllipsoidHexagonal::disp(){
-	stringstream out;
-	out.str("");
-	out<<"ellipsoid hexagonal mirror:"<<name_of_frame<<endl;
-	out<<"_________________________________"<<endl;
-	out<<get_frame_string();
-	out<<get_surface_propertie_prompt();
-	out<<get_spherical_hexag_string();
-	out<<"_________________________________"<<endl;
-	cout<<out.str();
+//------------------------------------------------------------------------------
+void OpticalMirrorEllipsoidHexagonal::assert_named_variable_is_positiv(
+	const double variable_to_test, const std::string name_of_variable
+)const{
+	if(variable_to_test <= 0.0) {
+		std::stringstream info;
+		info << "OpticalMirrorEllipsoidHexagonal\n";
+		info << "The '" << name_of_variable << "' must be positiv!\n";
+		info << "Expected: >0.0, but actual: " << variable_to_test << "\n";
+		throw TracerException(info.str());
+	}
 }
-//==================================================================
-string OpticalMirrorEllipsoidHexagonal::get_spherical_hexag_string(){
+//------------------------------------------------------------------------------
+void OpticalMirrorEllipsoidHexagonal::disp() {
 	stringstream out;
-	out<<"||| ellipsoid, hexag mirror:"<<endl;
-	out<<"||| long focal length : "<<long_focal_length<<" [m]"<<endl;
-	out<<"||| short focal length: "<<short_focal_length<<" [m]"<<endl;
-	out<<"||| inner radius of hexagonal shape: ";
-	out<<MirrorRadius_m<<" [m]"<<endl;
+	out << "ellipsoid hexagonal mirror:" << name_of_frame << "\n";
+	out << "_________________________________\n";
+	out << get_frame_string();
+	out << get_surface_propertie_prompt();
+	out << get_ellipsoid_hexag_print();
+	out << "_________________________________\n";
+	cout << out.str();
+}
+//------------------------------------------------------------------------------
+std::string OpticalMirrorEllipsoidHexagonal::get_ellipsoid_hexag_print()const {
+	stringstream out;
+	out << "||| ellipsoid, hexag mirror:\n";
+	out << "||| long focal length : " << long_focal_length << " m\n";
+	out << "||| short focal length: " << short_focal_length << " m\n";
+	out << "||| inner radius of hexagonal shape: " << MirrorRadius_m << " m\n";
 	return out.str();
 }
-//==================================================================
-void OpticalMirrorEllipsoidHexagonal::hit
-(Vector3D *base,Vector3D *dir, Intersection *intersection)const{
+//------------------------------------------------------------------------------
+void OpticalMirrorEllipsoidHexagonal::hit(
+	Vector3D *base,Vector3D *dir, Intersection *intersection
+)const{
 /*!
  * A mirror with the shape of an ellipsoid is described by
  * \f{eqnarray*}{ f(x,y,z) &=& 0
