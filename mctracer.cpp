@@ -14,6 +14,9 @@
 #include "FreeOrbitCamera.h"
 #include "CsvHandler.h"
 
+#include "MmcsCorsikaFullEventGetter.h"
+#include "MmcsCorsikaPhotonData.h"
+
 int main(){
 	ClearScreen();
 	
@@ -39,12 +42,23 @@ int main(){
 		settings.set_csv_decimal_presicion(9);
 		
 		std::string user_input;
-		std::cout << "Enter a file to load: ";
+		std::cout << "Enter a world file to load: ";
 		std::cin  >> user_input;
 
 		WorldFactory file2world;
 		file2world.load(user_input);
 		CartesianFrame *Mworld = file2world.world();
+
+		string filename = "../test/MMCS_files/cer000005";
+		MmcsCorsikaFullEventGetter event_getter(filename);
+
+		while(event_getter.has_still_events_left()) {
+			
+			MmcsCorsikaEvent event = event_getter.get_next_event();	
+			ListOfPropagations *photons = event.transform_to_mcTracer_photons();
+			photons->disp();
+			photons->propagate(Mworld,&settings);
+		}
 
 		FreeOrbitCamera free(Mworld,&settings);
 	}catch(std::exception &error){

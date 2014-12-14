@@ -11,16 +11,23 @@
 #include "CameraDevice.h"
 #include "Functions.h"
 //=================================
-class CameraManFoV {
+class CameraMan {
+protected:
+	bool verbosity = false;
+public:
+	void set_verbosity(const bool verbosity) {
+		this->verbosity = verbosity;
+	}
+};
+
+class CameraManFoV: public CameraMan {
 public:
 	CameraManFoV(CameraDevice* camera_to_work_with);
 	void increase_FoV_when_possible();
 	void decrease_FoV_when_possible();
 	void set_default_FoV();
 	double get_default_FoV_in_rad()const;
-	void set_verbosity(const bool verbosity);
 private:
-	bool verbosity = false;
 	CameraDevice* camera;
 
 	const double max_FoV_in_rad = Deg2Rad(175.0);

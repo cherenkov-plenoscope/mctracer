@@ -16,6 +16,7 @@
 #include "CameraManTest.cpp"
 #include "OctTreeCubeTest.cpp"
 #include "ApertureCameraTest.cpp"
+#include "MmcsCorsikaEventGetterTest.cpp"
 #include "gtest/gtest.h"
 
 int main(int argc, char **argv) {

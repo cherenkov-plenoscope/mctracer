@@ -5,6 +5,7 @@
 #include "gtest/gtest.h"
 #include "CameraMan.h"
 #include "CameraManForStereo3D.h"
+#include "CameraManForRotation.h"
 
 using namespace std;
 
@@ -96,7 +97,43 @@ TEST_F(CameraManTest, increase_and_decrease_FoV) {
 	EXPECT_TRUE(cam->get_FoV_in_rad() < Deg2Rad(180.0));
 }
 //------------------------------------------------------------------------------
-TEST_F(CameraManTest, StereoCameraMan) {
+/*TEST_F(CameraManTest, StereoCameraMan) {
 
 	CameraManForStereo3D stereo_operator( cam );
+}*/
+//------------------------------------------------------------------------------
+TEST_F(CameraManTest, default_rotation) {
+
+	Rotation3D non_default_rotation(1.2,3.4,5.6);
+	Rotation3D looking_in_pos_x_dir(0.0,Deg2Rad(-90.0),0.0);
+
+	cam->update_orientation(non_default_rotation);
+	CameraManForRotation rot_operator( cam );
+	rot_operator.set_default_rotation();
+
+	EXPECT_EQ(looking_in_pos_x_dir, cam->get_rotation_in_world());
+}
+//------------------------------------------------------------------------------
+TEST_F(CameraManTest, look_up) {
+
+	CameraManForRotation rot_operator( cam );
+	rot_operator.set_default_rotation();
+
+	for(int i=0; i<50; i++)
+		rot_operator.look_further_up_when_possible();
+
+	EXPECT_GT(Deg2Rad( 0.1), cam->get_rotation_in_world().get_rot_y());
+	EXPECT_LT(Deg2Rad(-0.1), cam->get_rotation_in_world().get_rot_y());
+}
+//------------------------------------------------------------------------------
+TEST_F(CameraManTest, look_down) {
+
+	CameraManForRotation rot_operator( cam );
+	rot_operator.set_default_rotation();
+
+	for(int i=0; i<50; i++)
+		rot_operator.look_further_down_when_possible();
+
+	EXPECT_GT(Deg2Rad(-179.9), cam->get_rotation_in_world().get_rot_y());
+	EXPECT_LT(Deg2Rad(-180.1), cam->get_rotation_in_world().get_rot_y());
 }

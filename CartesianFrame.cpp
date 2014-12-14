@@ -14,10 +14,10 @@ void CartesianFrame::post_initialize_OctTree() {
 	reset_OctTree();
 
 	if(there_are_so_many_children_that_we_need_an_OctTree())
-		create_OctTree();
+		set_up_OctTree_with_children_of_frame();
 }
 //==============================================================================
-void CartesianFrame::create_OctTree() {
+void CartesianFrame::set_up_OctTree_with_children_of_frame() {
 	Vector3D origin_of_frame_with_respect_to_itself;
 	origin_of_frame_with_respect_to_itself.set_null_vector();
 
@@ -35,7 +35,7 @@ void CartesianFrame::reset_OctTree() {
 }
 //==============================================================================
 bool CartesianFrame::there_are_so_many_children_that_we_need_an_OctTree()const {
-	OctTreeCube temp(Vector3D(0.0,0.0,0.0),1.0);
+	OctTreeCube temp(Vector3D(0.0, 0.0, 0.0), 1.0);
 	return(
 		get_number_of_children() >= temp.get_max_number_of_frames_in_cube()
 	);

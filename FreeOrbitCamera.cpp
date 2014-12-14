@@ -22,7 +22,10 @@ void FreeOrbitCamera::create_CameraMen_to_safely_operate_the_flying_camera(){
 	FoV_operator->set_verbosity(true);
 
 	Translation_operator = new CameraManForTranslation(flying_camera);
+
 	Rotation_operator = new CameraManForRotation(flying_camera);
+	Rotation_operator->set_verbosity(true);
+
 	Stereo_operator = new CameraManForStereo3D(flying_camera);
 }
 //==============================================================================
@@ -264,24 +267,19 @@ void FreeOrbitCamera::print_free_orbit_help_text()const{
 
 	//      0        1         2         3         4         5         6         7         8
 	//      12345678901234567890123456789012345678901234567890123456789012345678901234567890
-	out << " _______________________________________________________________________________\n";
-	out << "|\n";
-	out << "|  _Camera_position_______________     _Camera_orientation____________ \n";
-	out << "| | move forward............[ w ] |   | look up.................[ i ] |\n";
-	out << "| | move backward...........[ s ] |   | look down...............[ k ] |\n";
-	out << "| | move left...............[ a ] |   | look left...............[ j ] |\n";
-	out << "| | move right..............[ d ] |   | look right..............[ l ] |\n";
-	out << "| |_______________________________|   |_______________________________|\n";
-	out << "|\n";
-	out << "|  _Stereo3D_left:red_right:blue__     _camera_Field_of_View__________ \n";
-	out << "| | toggle stereo 3D........[ t ] |   | increace FoV............[ n ] |\n";
-	out << "| | increase offset.........[ x ] |   | decreace FoV............[ m ] |\n";
-	out << "| | decrease offset.........[ y ] |   |_______________________________|\n";
-	out << "| |_______________________________|\n";
-	out << "|\n";
-	out << "|  _Mamiya645_medium_format_camera     _exit_free_orbit_______________ \n";
-	out << "| | take snapshot...........[ g ] |   | exit....................[ESC] |\n";
-	out << "| |_______________________________|   |_______________________________|\n";
-	out << "|_______________________________________________________________________________\n";
+	out << "_Camera_position_______________   _Camera_orientation____________\n";
+	out << " move forward............[ w ]     look up.................[ i ]\n";
+	out << " move backward...........[ s ]     look down...............[ k ]\n";
+	out << " move left...............[ a ]     look left...............[ j ]\n";
+	out << " move right..............[ d ]     look right..............[ l ]\n";
+	out << "\n";
+	out << "_Stereo3D_left:red_right:blue__   _camera_Field_of_View__________\n";
+	out << " toggle stereo 3D........[ t ]     increace FoV............[ n ]\n";
+	out << " increase offset.........[ x ]     decreace FoV............[ m ]\n";
+	out << " decrease offset.........[ y ]\n";
+	out << "                                  _free_orbit___________________\n";
+	out << "_Mamiya645_medium_format_camera    help....................[ h ]\n";
+	out << " take snapshot...........[ g ]     exit....................[ESC]\n";
+	out << "\n";
 	std::cout << out.str();
 }

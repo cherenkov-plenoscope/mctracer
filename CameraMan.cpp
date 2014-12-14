@@ -51,10 +51,6 @@ double CameraManFoV::get_default_FoV_in_rad()const {
 	return default_FoV_in_rad;
 }
 
-void CameraManFoV::set_verbosity(const bool verbosity) {
-	this->verbosity = verbosity;
-}
-
 void CameraManFoV::print_FoV_manipulation_when_verbose()const {
 	if(verbosity){
 		print_prefix();

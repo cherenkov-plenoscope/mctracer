@@ -60,6 +60,12 @@ CameraMan.cpp
 CameraManForTranslation.cpp
 CameraManForRotation.cpp
 CameraManForStereo3D.cpp
+MmcsCorsikaSubBlock.cpp
+MmcsCorsikaSubBlockGetter.cpp
+MmcsCorsikaFullEventGetter.cpp
+MmcsCorsikaRunHeader.cpp
+MmcsCorsikaPhotonData.cpp
+MmcsCorsikaEvent.cpp
 )
 include_directories(/usr/include)
 include_directories(/usr/local/include)
@@ -129,6 +135,12 @@ CameraMan.cpp
 CameraManForTranslation.cpp
 CameraManForRotation.cpp
 CameraManForStereo3D.cpp
+MmcsCorsikaSubBlock.cpp
+MmcsCorsikaSubBlockGetter.cpp
+MmcsCorsikaFullEventGetter.cpp
+MmcsCorsikaRunHeader.cpp
+MmcsCorsikaPhotonData.cpp
+MmcsCorsikaEvent.cpp
 )
 # Link test executable against gtest & gtest_main
 target_link_libraries(mctracerUnitTests gtest gtest_main)

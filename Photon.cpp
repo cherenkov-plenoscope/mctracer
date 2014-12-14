@@ -6,11 +6,13 @@ Photon::Photon(	double supX,double supY,double supZ,
 	wavelength = new_wavelength;
 	support.set(supX,supY,supZ);
 	direction.set(dirX,dirY,dirZ);
+	direction.normalize();
 }
 //======================================================================
 Photon::Photon(Vector3D new_support, Vector3D new_direction, double new_wavelength){
 	support = new_support; 
 	direction  = new_direction;
+	direction.normalize();
 	wavelength = new_wavelength;
 }
 //======================================================================

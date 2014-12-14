@@ -165,7 +165,7 @@ private:
     void post_initialize_Transformations();
     void post_initialize_OctTree();
     HomoTrafo3D calculate_frame2world()const;
-    void create_OctTree();
+    void set_up_OctTree_with_children_of_frame();
     void update_sphere_enclosing_all_children(CartesianFrame *new_child);
     // OctTree
     void reset_OctTree();

@@ -111,7 +111,7 @@ TEST_F(Tools, remove_if_leading) {
   remove_if_leading(Dieter,' '); 
   EXPECT_EQ("Dieter", Dieter); 
 }
-//----------------------------------------------------------------------
+//------------------------------------------------------------------------------
 TEST_F(Tools, cut_leading_token) {
   string names = "Hans,Peter,Klaus";
   string first_name = cut_leading_token(names,','); 
@@ -137,4 +137,70 @@ TEST_F(Tools, cut_leading_token) {
   first_name = cut_leading_token(names,','); 
   EXPECT_EQ(" Hans", first_name);
   EXPECT_EQ("Peter,Klaus", names);
+}
+//------------------------------------------------------------------------------
+TEST_F(Tools, word_size_is_too_large) {
+
+  string h = "Hans Peter";
+
+  bool error_detected = false;
+  try{
+    float H = ToolBox::four_byte_str_2_float_binary_mapping(h);
+    H=H;
+  }catch(TracerException &e){
+    //std::cout << e.what();
+    error_detected = true;
+  }
+
+  EXPECT_TRUE(error_detected);
+}
+//------------------------------------------------------------------------------
+TEST_F(Tools, word_size_is_zero) {
+
+  string h = "";
+
+  bool error_detected = false;
+  try{
+    float H = ToolBox::four_byte_str_2_float_binary_mapping(h);
+    H=H;
+  }catch(TracerException &e){
+    //std::cout << e.what();
+    error_detected = true;
+  }
+
+  EXPECT_TRUE(error_detected);
+}
+//------------------------------------------------------------------------------
+TEST_F(Tools, word_2_float) {
+
+  string h = "hans";
+
+  float H = ToolBox::four_byte_str_2_float_binary_mapping(h);
+  string r = ToolBox::float_2_four_byte_str_binary_mapping(H);
+
+  EXPECT_EQ(h, r);
+}
+//------------------------------------------------------------------------------
+TEST_F(Tools, float_2_word) {
+
+  float leet = 1.337;
+
+  string leet_word = ToolBox::float_2_four_byte_str_binary_mapping(leet);
+  float r_leet = ToolBox::four_byte_str_2_float_binary_mapping(leet_word);
+
+  EXPECT_EQ(leet, r_leet);
+}
+//------------------------------------------------------------------------------
+TEST_F(Tools, zero_float_2_word) {
+
+  float n = 0.0;
+  string emp = ToolBox::float_2_four_byte_str_binary_mapping(n);
+  EXPECT_EQ(string(4, '\0'), emp);
+}
+//------------------------------------------------------------------------------
+TEST_F(Tools, zero_word_2_float) {
+
+  string emp(4, '\0');
+  float n = ToolBox::four_byte_str_2_float_binary_mapping(emp);
+  EXPECT_EQ(0.0, n);
 }
