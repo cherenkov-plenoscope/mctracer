@@ -94,14 +94,14 @@ uint file_size_in_bytes(const std::string name_of_file_to_get_size_of) {
 	if (!file.is_open()) {
 		std::stringstream info;
 		info << "Toolbox: " << __func__ << "()\n";
-		info << "Error reading file: '" << name_of_file_to_get_size_of;
-		info << "'.\n";
+		info << "Can not open file : '" << name_of_file_to_get_size_of;
+		info << "' in order to get file size.\n";
 		throw TracerException(info.str());	
 	}
 	return file.tellg();	
 }
 //------------------------------------------------------------------------------
-float four_byte_str_2_float_binary_mapping(const std::string word) {
+float str2float_4byte_bin_map(const std::string word) {
 
 	if(word.size() != 4) {
 		std::stringstream info;
@@ -118,7 +118,7 @@ float four_byte_str_2_float_binary_mapping(const std::string word) {
 	return f;
 }
 //------------------------------------------------------------------------------
-std::string float_2_four_byte_str_binary_mapping(const float word_in_float) {
+std::string float2str_4byte_bin_map(const float word_in_float) {
 
 	char word_array[4];
 
@@ -141,4 +141,29 @@ std::string float_vec_2_str_using_delimiter(
 	return out.str();
 }
 //------------------------------------------------------------------------------
+void print_welcome_screen() {
+	std::stringstream out;
+	//               1         2         3         4         5         6
+	//      123456789012345678901234567890123456789012345678901234567890
+	out << " ___________________________________________________________ \n";
+	out << "|                                                           |\n";
+	out << "|                 welcome to MCtracer                       |\n";
+	out << "|                                                           |\n";
+	out << "|      high performance raytracing tool to design and       |\n";
+	out << "|     investigate optical devices for particle physics      |\n";
+	out << "|                                                           |\n";
+	out << "|     Author: Sebastian Mueller              year 2013      |\n";
+	out << "|___________________________________________________________|\n";
+	std::cout << out.str();	
+}
+//------------------------------------------------------------------------------
+}
+//------------------------------------------------------------------------------
+namespace UserInteraction {
+	std::string input(const std::string request) {
+		std::cout << request;
+		std::string user_input;
+		std::cin  >> user_input;	
+		return user_input;
+	}
 }

@@ -53,7 +53,7 @@ void MmcsCorsikaRunHeader::assert_sub_block_has_Run_Header()const {
 		info << "MmcsCorsikaRunHeader:\n";
 		info << "A sub_block of MMCS file has no valid Run Header.\n";
 		info << "Expected first word of block to be: 'RUNH', but actual: '";
-		info << ToolBox::float_2_four_byte_str_binary_mapping(mmcs_sub_block[0]);
+		info << ToolBox::float2str_4byte_bin_map(mmcs_sub_block[0]);
 		info << "'\n";
 		throw TracerException(info.str());		
 	}
@@ -89,7 +89,10 @@ void MmcsCorsikaRunHeader::assert_number_of_observation_levels_is_valid()const {
 }
 //------------------------------------------------------------------------------
 void MmcsCorsikaRunHeader::print()const {
-
+	std::cout << get_print();
+}
+//------------------------------------------------------------------------------
+std::string MmcsCorsikaRunHeader::get_print()const {
 	std::stringstream out;
 	out << "MMCS_Run_Header_________________________________________________\n";
 	out << "| run_number " << run_number << "\n";
@@ -125,7 +128,7 @@ void MmcsCorsikaRunHeader::print()const {
 	out << "| NFLPI0_plus_100_times_NFLPIF " << NFLPI0_plus_100_times_NFLPIF << "\n";
 	out << "| NFLCHE_plus_100_times_NFRAGM " << NFLCHE_plus_100_times_NFRAGM << "\n";
 	out << "|_______________________________________________________________\n";
-	std::cout << out.str();
+ 	return out.str();	
 }
 //------------------------------------------------------------------------------
 void MmcsCorsikaRunHeader::fill_from_until(

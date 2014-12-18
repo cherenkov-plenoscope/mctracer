@@ -16,7 +16,6 @@
 //=================================
 class MmcsCorsikaRunHeader {
     MmcsCorsikaSubBlock mmcs_sub_block;
-	//const float* mmcs_sub_block;
 
 	float run_number;
 	int date_of_begin_run;
@@ -60,9 +59,9 @@ class MmcsCorsikaRunHeader {
     float NFLPI0_plus_100_times_NFLPIF;
     float NFLCHE_plus_100_times_NFRAGM;
 public:
-	//void create_from_mmcs_sub_block(const float* mmcs_sub_block);
     void create_from_mmcs_sub_block(const MmcsCorsikaSubBlock &mmcs_sub_block);    
    	void print()const;
+    std::string get_print()const;
 private:
 	void fill_basic_run_information();
    	void fill_observation_levels();

@@ -7,7 +7,7 @@ FreeOrbitCamera::FreeOrbitCamera(
 	this->world = world;
 	this->settings = settings;
 
-	Image.Set( MCT_QVGA );
+	Image.Set( MCT_VGA );
 
 	flying_camera = new PinHoleCamera("Cam",Image.Width(), Image.Hight());
 

@@ -1,24 +1,25 @@
 #include "MmcsCorsikaSubBlock.h"
+//------------------------------------------------------------------------------
 MmcsCorsikaSubBlock::MmcsCorsikaSubBlock() {
 	init_sub_block();
 }
 //------------------------------------------------------------------------------
-std::string MmcsCorsikaSubBlock::get_4char_string_representation_at(uint at)const {
-	assert_range_is_valid(at);
-	return ToolBox::float_2_four_byte_str_binary_mapping(sub_block[at]);
+std::string MmcsCorsikaSubBlock::get_4char_string_representation_at(const uint i)const {
+	assert_range_is_valid(i);
+	return ToolBox::float2str_4byte_bin_map(sub_block[i]);
 }
 //------------------------------------------------------------------------------
-bool MmcsCorsikaSubBlock::get_bool_representation_at(uint at)const {
-	assert_range_is_valid(at);
-	return  bool(sub_block[at]);
+bool MmcsCorsikaSubBlock::get_bool_representation_at(const uint i)const {
+	assert_range_is_valid(i);
+	return  bool(sub_block[i]);
 }
 //------------------------------------------------------------------------------
-void MmcsCorsikaSubBlock::assert_range_is_valid(uint at)const {
-	if(at > sub_block_size_in_words) {
+void MmcsCorsikaSubBlock::assert_range_is_valid(const uint i)const {
+	if(i >= sub_block_size_in_words) {
 		std::stringstream info;
 		info << "MmcsCorsikaSubBlock:\n";
-		info << "Invalid range. Expected 0 <= at < " << size();
-		info << ", but actual at = " << at << "\n";
+		info << "Invalid range. Expected 0 <= i < " << size();
+		info << ", but actual i = " << i << "\n";
 		throw TracerException(info.str());
 	}
 }
@@ -47,7 +48,7 @@ uint MmcsCorsikaSubBlock::size_in_words()const {
 //------------------------------------------------------------------------------
 void MmcsCorsikaSubBlock::init_sub_block() {
 	sub_block.clear();
-	sub_block.resize(size(),0.0);
+	sub_block.resize(sub_block_size_in_words, 0.0);
 } 
 //------------------------------------------------------------------------------
 void MmcsCorsikaSubBlock::operator=(MmcsCorsikaSubBlock eq) {
@@ -55,22 +56,23 @@ void MmcsCorsikaSubBlock::operator=(MmcsCorsikaSubBlock eq) {
 } 
 //------------------------------------------------------------------------------
 bool MmcsCorsikaSubBlock::is_event_header()const {
-	return sub_block[0] == ToolBox::four_byte_str_2_float_binary_mapping("EVTH");
+	return sub_block[0] == ToolBox::str2float_4byte_bin_map("EVTH");
 }
 //------------------------------------------------------------------------------
 bool MmcsCorsikaSubBlock::is_event_end()const {
-	return sub_block[0] == ToolBox::four_byte_str_2_float_binary_mapping("EVTE");
+	return sub_block[0] == ToolBox::str2float_4byte_bin_map("EVTE");
 }
 //------------------------------------------------------------------------------
 bool MmcsCorsikaSubBlock::is_run_footer()const {
-	return sub_block[0] == ToolBox::four_byte_str_2_float_binary_mapping("RUNE");
+	return sub_block[0] == ToolBox::str2float_4byte_bin_map("RUNE");
 }
 //------------------------------------------------------------------------------
 bool MmcsCorsikaSubBlock::is_run_header()const {
-	return sub_block[0] == ToolBox::four_byte_str_2_float_binary_mapping("RUNH");
+	return sub_block[0] == ToolBox::str2float_4byte_bin_map("RUNH");
 }
 //------------------------------------------------------------------------------
 bool MmcsCorsikaSubBlock::is_photon_data()const {
+
 	if(is_event_header())
 		return false;
 
@@ -82,6 +84,7 @@ bool MmcsCorsikaSubBlock::is_photon_data()const {
 
 	if(is_run_footer())
 		return false;
+
 	return true;
 }
 //------------------------------------------------------------------------------
@@ -116,3 +119,4 @@ uint MmcsCorsikaSubBlock::cols()const {
 uint MmcsCorsikaSubBlock::rows()const {
 	return size_in_words()/number_of_columns;
 }
+//------------------------------------------------------------------------------

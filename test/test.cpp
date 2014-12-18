@@ -18,6 +18,7 @@
 #include "ApertureCameraTest.cpp"
 #include "MmcsCorsikaEventGetterTest.cpp"
 #include "gtest/gtest.h"
+#include "FiniteStateMashineTEST.cpp"
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

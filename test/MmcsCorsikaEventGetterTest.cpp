@@ -38,7 +38,47 @@ class MmcsCorsikaEventGetterTest : public ::testing::Test {
   }
 
   // Objects declared here can be used by all tests in the test case for Foo.
+  void EXPECT_EXCEPTION_OF_TYPE_FOR_FILE(
+  	const int problem_type,const std::string &file
+  )const {
+ 	bool exception_detected = false;
+ 	try{
+		MmcsCorsikaFullEventGetter event_getter(file);
+		while(event_getter.has_still_events_left())
+			MmcsCorsikaEvent event = event_getter.get_next_event();	
+	}catch(TracerException &e ) {
+		exception_detected = true;
+		EXPECT_EQ(problem_type, e.type());
+		if(problem_type != e.type())
+			throw e;
+	}
+	EXPECT_TRUE(exception_detected);	 	
+  }
 };
+//----------------------------------------------------------------------
+TEST_F(MmcsCorsikaEventGetterTest, invalid_file_size) {
+
+	EXPECT_EXCEPTION_OF_TYPE_FOR_FILE(
+		FILE_SIZE_IS_NOT_MULTIPLE_OF_MMCS_BLOCKSIZE,
+		"./MMCS_files/not_a_valid_MMCS_file"
+	);
+}
+//----------------------------------------------------------------------
+TEST_F(MmcsCorsikaEventGetterTest, gzip_file) {
+
+	EXPECT_EXCEPTION_OF_TYPE_FOR_FILE(
+		CAN_NOT_HANDLE_GZIP_FILE,
+		"./MMCS_files/gzip_file_ending.tar.gz"
+	);
+}
+//----------------------------------------------------------------------
+TEST_F(MmcsCorsikaEventGetterTest, not_existing_file) {
+
+	EXPECT_EXCEPTION_OF_TYPE_FOR_FILE(
+		CAN_NOT_OPEN_MMCS_FILE,
+		"./no_such_path/no_such_file"
+	);
+}
 //----------------------------------------------------------------------
 TEST_F(MmcsCorsikaEventGetterTest, sub_block_getter) {
 
@@ -65,7 +105,7 @@ TEST_F(MmcsCorsikaEventGetterTest, FullEventGetter) {
 			
 			MmcsCorsikaEvent event = event_getter.get_next_event();	
 			ListOfPropagations *photons = event.transform_to_mcTracer_photons();
-			photons->disp();
+			//photons->disp();
 		}
 
 	}catch(TracerException &e ){
@@ -77,7 +117,6 @@ TEST_F(MmcsCorsikaEventGetterTest, has_still_events_left) {
 
 	try{
 		MmcsCorsikaFullEventGetter event_getter("./MMCS_files/cer000005");
-
 		EXPECT_TRUE(event_getter.has_still_events_left());
 	}catch(TracerException &e ){
 		std::cout << e.what();

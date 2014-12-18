@@ -19,15 +19,11 @@
 //=================================
 class MmcsCorsikaSubBlockGetter {
     const uint block_size_in_bytes = 22932;
-    //const uint sub_block_size_in_bytes = 1092;
-
     const uint block_size_in_words = block_size_in_bytes / 4;
-    //const uint sub_block_size_in_words = sub_block_size_in_bytes / 4;
 
     float *block;
 
     MmcsCorsikaSubBlock SubBlock;
-    //float *sub_block;
 
     uint sub_block_in_block_counter = 0;
     uint block_counter = 0;
@@ -39,9 +35,9 @@ public:
     MmcsCorsikaSubBlockGetter(const std::string filename);
     ~MmcsCorsikaSubBlockGetter();
     bool has_still_sub_blocks_left()const;
-    //float* get_next_sub_block();
     MmcsCorsikaSubBlock get_next_sub_block();
 	void print();
+	std::string get_print();
 	void print_sub_block()const;
 private:
    	bool is_a_gzip_file()const;
@@ -69,5 +65,6 @@ private:
 	uint total_number_of_sub_blocks()const;
 	uint sum_of_sub_blocks_so_far()const;
 	uint number_of_completed_blocks()const;
+	void throw_can_not_open_Mmcs_file(std::string details)const;
 };
 #endif // __MMCSCORSIKASUBBLOCKGETTER_H_INCLUDE__ 

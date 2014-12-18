@@ -11,13 +11,23 @@ MmcsCorsikaEvent::MmcsCorsikaEvent(
 }
 //------------------------------------------------------------------------------
 ListOfPropagations* MmcsCorsikaEvent::transform_to_mcTracer_photons()const {
+// CORSIKA Coordinate system
+// The coordinates in CORSIKA are defined with respect to a Cartesian coordinate
+// system with the positive x-axis pointing to the magnetic north, the positive
+// y-axis to the west, and the z-axis upwards. 
+// The origin is located at sea level. This definition is necessary, 
+// because the Earth’s magnetic field is taken into account. By default it is
+// implemented for the location of Karlsruhe (49o N, 8oE). The zenith angle
+// Theta of a particle trajectory is measured between the particle momen-
+// tum vector and the negative z-axis, and the azimuthal angle Phi between the 
+// positive x-axis and the x-y-component of the particle momentum vector 
+// (i.e. with respect to north) proceeding counterclockwise.
 	
 	ListOfPropagations *cherenkov_photons;
 	cherenkov_photons = new ListOfPropagations("MmcsEvent");
 
-	for(uint i=0; i<photon_data.number_of_photons(); i++) {
+	for(uint i=0; i<photon_data.number_of_photons(); i++)
 		cherenkov_photons->push_back(get_mcTracer_photon(i));
-	}
 
 	return cherenkov_photons;
 }
@@ -39,12 +49,8 @@ Photon* MmcsCorsikaEvent::get_mcTracer_photon(const uint i)const {
 		ray_running_upwards_from_ground_to_pos_of_production.
 		PositionOnRay(ray_parameter_for_production_height);
 
-	Photon* cherenkov_photon;
-	cherenkov_photon = new Photon(
-		causal_support,
-		causal_dir,
-		wavelength_in_m_of_photon(i)
-	);	
+	Photon* cherenkov_photon = 
+		new Photon(causal_support, causal_dir, wavelength_in_m(i));	
 
 	return cherenkov_photon;
 }
@@ -73,7 +79,7 @@ double MmcsCorsikaEvent::production_height_in_m(const uint i)const {
 	return photon_data.get_production_height_in_cm(i)/1e2;
 }
 //------------------------------------------------------------------------------
-double MmcsCorsikaEvent::wavelength_in_m_of_photon(const uint i)const {
+double MmcsCorsikaEvent::wavelength_in_m(const uint i)const {
 	return photon_data.get_wavelength_in_nm(i)/1e9;
 }
 //------------------------------------------------------------------------------

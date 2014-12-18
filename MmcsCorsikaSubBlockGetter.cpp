@@ -24,11 +24,15 @@ void MmcsCorsikaSubBlockGetter::handle_gzip_file()const {
 	std::stringstream info;
 	info << "Gzip files are not supported yet. Can not open MMCS file '";
 	info << filename << "'\n";
-	throw TracerException(info.str());
+	throw TracerException(info.str(), CAN_NOT_HANDLE_GZIP_FILE);
 }
 //------------------------------------------------------------------------------
 void MmcsCorsikaSubBlockGetter::remember_MMCS_file_size_in_bytes() {
-	file_size_in_bytes = ToolBox::file_size_in_bytes(filename);
+	try{
+		file_size_in_bytes = ToolBox::file_size_in_bytes(filename);
+	}catch(TracerException &e){
+		throw_can_not_open_Mmcs_file(e.what());
+	}
 }
 //------------------------------------------------------------------------------
 void MmcsCorsikaSubBlockGetter::open_MMCS_file() {
@@ -41,11 +45,15 @@ void MmcsCorsikaSubBlockGetter::assert_MMCS_file_is_valid()const {
 }
 //------------------------------------------------------------------------------
 void MmcsCorsikaSubBlockGetter::assert_file_reading_is_fine(const std::ifstream &file)const {
-	if (!file.is_open()) {
-		std::stringstream info;
-		info << "Can not open MMCS file: '" << filename << "'\n";
-		throw TracerException(info.str());		
-	}
+	if (!file.is_open())
+		throw_can_not_open_Mmcs_file("fstream returns: 'false'");
+}
+//------------------------------------------------------------------------------
+void MmcsCorsikaSubBlockGetter::throw_can_not_open_Mmcs_file(std::string details)const {
+	std::stringstream info;
+	info << "Can not open MMCS file: '" << filename << "'\n";
+	info << details << "\n";
+	throw TracerException(info.str(), CAN_NOT_OPEN_MMCS_FILE);		
 }
 //------------------------------------------------------------------------------
 MmcsCorsikaSubBlockGetter::~MmcsCorsikaSubBlockGetter() {
@@ -59,7 +67,7 @@ void MmcsCorsikaSubBlockGetter::assert_file_size_is_multiple_of_MMCS_block_size(
 		info << "' is not an exact multiple of the MMCS block size.\n";
 		info << "File size : " << file_size_in_bytes << "byte\n";
 		info << "Block size: " << block_size_in_bytes << "byte\n";
-		throw TracerException(info.str());			
+		throw TracerException(info.str(), FILE_SIZE_IS_NOT_MULTIPLE_OF_MMCS_BLOCKSIZE);			
 	}
 }
 //------------------------------------------------------------------------------
@@ -172,6 +180,10 @@ uint MmcsCorsikaSubBlockGetter::number_of_completed_blocks()const {
 }
 //------------------------------------------------------------------------------
 void MmcsCorsikaSubBlockGetter::print() {
+	std::cout << get_print();
+}
+//------------------------------------------------------------------------------
+std::string MmcsCorsikaSubBlockGetter::get_print() {
 	std::stringstream out;
 	out << " MMCS_Sub_Block_Getter__________________________________________\n";
 	out << "| file name..................... '" << filename << "'\n";	
@@ -187,7 +199,7 @@ void MmcsCorsikaSubBlockGetter::print() {
 	out << "| sum of sub blocks so far....... " << sum_of_sub_blocks_so_far() << "\n";
 	out << "| total number of sub blocks..... " << total_number_of_sub_blocks() << "\n";
 	out << "|_______________________________________________________________\n";
-	std::cout << out.str();
+	return out.str();	
 }
 //------------------------------------------------------------------------------
 void MmcsCorsikaSubBlockGetter::print_sub_block()const {

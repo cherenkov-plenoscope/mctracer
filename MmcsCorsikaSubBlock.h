@@ -23,7 +23,7 @@ public:
 	MmcsCorsikaSubBlock();
     float& operator[] (const size_t);
     const float &operator[] (const size_t) const;
-	std::string get_4char_string_representation_at(uint at)const;
+	std::string get_4char_string_representation_at(const uint i)const;
 	uint size_in_bytes()const;
 	uint size_in_words()const;
 	uint size()const;
@@ -33,13 +33,13 @@ public:
 	bool is_run_footer()const;
 	bool is_run_header()const;
 	bool is_photon_data()const;
-	bool get_bool_representation_at(uint at)const;
+	bool get_bool_representation_at(const uint i)const;
 	void print()const;
 	std::string get_print()const;
 	uint cols()const;
 	uint rows()const;
 private:
-	void assert_range_is_valid(uint at)const;
+	void assert_range_is_valid(const uint i)const;
 	void init_sub_block();
 	std::string get_print_of_row_number(const uint row)const;
 };

@@ -66,6 +66,7 @@ MmcsCorsikaFullEventGetter.cpp
 MmcsCorsikaRunHeader.cpp
 MmcsCorsikaPhotonData.cpp
 MmcsCorsikaEvent.cpp
+FiniteStateMashine.cpp
 )
 include_directories(/usr/include)
 include_directories(/usr/local/include)
@@ -141,6 +142,7 @@ MmcsCorsikaFullEventGetter.cpp
 MmcsCorsikaRunHeader.cpp
 MmcsCorsikaPhotonData.cpp
 MmcsCorsikaEvent.cpp
+FiniteStateMashine.cpp
 )
 # Link test executable against gtest & gtest_main
 target_link_libraries(mctracerUnitTests gtest gtest_main)

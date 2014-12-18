@@ -37,12 +37,22 @@ void remove_if_leading(std::string &text, const char character_to_remove );
 
 bool pedantic_str_comp(const std::string text_A,const std::string text_B);
 namespace ToolBox {
+	
 	uint file_size_in_bytes(const std::string name_of_file_to_get_size_of);
-	float four_byte_str_2_float_binary_mapping(const std::string word);
-	std::string float_2_four_byte_str_binary_mapping(const float word_in_float);
+	
+	float str2float_4byte_bin_map(const std::string word);
+	
+	std::string float2str_4byte_bin_map(const float word_in_float);
+	
 	std::string float_vec_2_str_using_delimiter(
 		const std::vector<float> vec, 
 		const std::string delimiter
 	);
+	void print_welcome_screen();
+}
+
+namespace UserInteraction {
+	
+	std::string input(const std::string request);
 }
 #endif // __FUNCTIONS_H_INCLUDED__
