@@ -1,0 +1,20 @@
+set(SOURCE
+   	${SOURCE}
+  	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaSubBlock.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaSubBlockGetter.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaFullEventGetter.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaRunHeader.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaPhotonData.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaEvent.cpp
+   	PARENT_SCOPE
+)
+set(HEADERS
+	${HEADERS}
+  	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaSubBlock.h
+	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaSubBlockGetter.h
+	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaFullEventGetter.h
+	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaRunHeader.h
+	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaPhotonData.h
+	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaEvent.h
+	PARENT_SCOPE
+)

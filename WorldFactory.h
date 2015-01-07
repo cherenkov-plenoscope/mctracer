@@ -23,7 +23,7 @@
 #include "ReflectionProperties.h"
 #include "ColourProperties.h"
 // XML parser library 
-#include "pugixml.hpp"
+#include "PugiXml/pugixml.hpp"
 #include "TracerException.h"
 #include "XmlIoException.h"
 #include "XmlFileIo.h"

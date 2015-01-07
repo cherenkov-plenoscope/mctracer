@@ -14,7 +14,7 @@
 #include <vector>
 #include <algorithm>    // std::lower_bound, std::upper_bound, std::sort
 #include <utility>
-#include "pugixml.hpp"
+#include "PugiXml/pugixml.hpp"
 #include "TracerException.h"
 #include "XmlIoException.h"
 #include "XmlFileIo.h"

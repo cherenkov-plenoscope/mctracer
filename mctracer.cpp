@@ -8,18 +8,17 @@
 //====================
 #include "Ray.h"
 #include "Photon.h"
-#include "CameraRay.h"
 //====================
 #include "ListOfPropagations.h"
-#include "FreeOrbitCamera.h"
+#include "Cameras/FreeOrbitCamera.h"
 #include "CsvHandler.h"
 
-#include "MmcsCorsikaFullEventGetter.h"
-#include "MmcsCorsikaPhotonData.h"
+#include "MmcsCorsikaFileIO/MmcsCorsikaFullEventGetter.h"
+#include "MmcsCorsikaFileIO/MmcsCorsikaPhotonData.h"
 
 int main(){
 	try{
-		ToolBox::print_welcome_screen();
+		UserInteraction::print_welcome_screen();
 		
 		GlobalSettings settings;		
 		settings.set_max_number_of_reflections(5);

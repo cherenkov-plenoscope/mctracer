@@ -1,0 +1,30 @@
+set(SOURCE
+   	${SOURCE}
+   	${CMAKE_CURRENT_SOURCE_DIR}/CameraDevice.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/PinHoleCamera.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/ApertureCamera.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/FreeOrbitCamera.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/CameraManForTranslation.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CameraManForRotation.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CameraManForStereo3D.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CameraMan.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SmartImage.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CameraImage.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CameraRay.cpp
+   	PARENT_SCOPE
+)
+set(HEADERS
+	${HEADERS}
+   	${CMAKE_CURRENT_SOURCE_DIR}/CameraDevice.h
+	${CMAKE_CURRENT_SOURCE_DIR}/PinHoleCamera.h 
+	${CMAKE_CURRENT_SOURCE_DIR}/ApertureCamera.h 
+	${CMAKE_CURRENT_SOURCE_DIR}/FreeOrbitCamera.h 
+	${CMAKE_CURRENT_SOURCE_DIR}/CameraManForTranslation.h
+	${CMAKE_CURRENT_SOURCE_DIR}/CameraManForRotation.h
+	${CMAKE_CURRENT_SOURCE_DIR}/CameraManForStereo3D.h
+	${CMAKE_CURRENT_SOURCE_DIR}/CameraMan.h
+	${CMAKE_CURRENT_SOURCE_DIR}/SmartImage.h
+	${CMAKE_CURRENT_SOURCE_DIR}/CameraImage.h
+	${CMAKE_CURRENT_SOURCE_DIR}/CameraRay.h
+	PARENT_SCOPE
+)

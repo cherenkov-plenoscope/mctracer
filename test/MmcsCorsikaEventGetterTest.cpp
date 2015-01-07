@@ -3,9 +3,9 @@
 #include <math.h>
 
 #include "gtest/gtest.h"
-#include "MmcsCorsikaFullEventGetter.h"
-#include "MmcsCorsikaSubBlockGetter.h"
-#include "MmcsCorsikaPhotonData.h"
+#include "MmcsCorsikaFileIO/MmcsCorsikaFullEventGetter.h"
+#include "MmcsCorsikaFileIO/MmcsCorsikaSubBlockGetter.h"
+#include "MmcsCorsikaFileIO/MmcsCorsikaPhotonData.h"
 #include "ListOfPropagations.h"
 
 using namespace std;

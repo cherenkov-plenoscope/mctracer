@@ -79,28 +79,28 @@ CartesianFrame* mother,const pugi::xml_node node){
 	
 	XmlNode = node;
 
-	if(		 pedantic_str_comp(node.name(),"frame")){
+	if(		 StringUtilities::is_equal(node.name(),"frame")){
 		mother = produceCartesianFrame(mother,node);
 
-	}else if(pedantic_str_comp(node.name(),"triangle")){
+	}else if(StringUtilities::is_equal(node.name(),"triangle")){
 		mother = produceTriangle(mother,node);
 		
-	}else if(pedantic_str_comp(node.name(),"plane")){
+	}else if(StringUtilities::is_equal(node.name(),"plane")){
 		mother = producePlane(mother,node);
 		
-	}else if(pedantic_str_comp(node.name(),"sphere")){
+	}else if(StringUtilities::is_equal(node.name(),"sphere")){
 		mother = produceSphere(mother,node);	
 
-	}else if(pedantic_str_comp(node.name(),"cylinder")){
+	}else if(StringUtilities::is_equal(node.name(),"cylinder")){
 		mother = produceCylinder(mother,node);	
 
-	}else if(pedantic_str_comp(node.name(),"disc")){
+	}else if(StringUtilities::is_equal(node.name(),"disc")){
 		mother = produceDisc(mother,node);	
 	
-	}else if(pedantic_str_comp(node.name(),"FACT_reflector")){
+	}else if(StringUtilities::is_equal(node.name(),"FACT_reflector")){
 		mother = produceFactReflector(mother,node);	
 
-	}else if(pedantic_str_comp(node.name(),"include")){
+	}else if(StringUtilities::is_equal(node.name(),"include")){
 		include_file(mother,node);		
 		
 	}else if( mother->has_mother() ){	
@@ -123,28 +123,28 @@ void WorldFactory::go_on_with_children_of_node(
 	){	
 		std::string sub_node_name = sub_node.name();
 
-		if 		(pedantic_str_comp(sub_node_name,"include")){
+		if 		(StringUtilities::is_equal(sub_node_name,"include")){
 
 			fabricate_frame(mother,sub_node);
-		}else if(pedantic_str_comp(sub_node_name,"frame")){
+		}else if(StringUtilities::is_equal(sub_node_name,"frame")){
 
 			fabricate_frame(mother,sub_node);
-		}else if(pedantic_str_comp(sub_node_name,"triangle")){
+		}else if(StringUtilities::is_equal(sub_node_name,"triangle")){
 
 			fabricate_frame(mother,sub_node);
-		}else if(pedantic_str_comp(sub_node_name,"plane")){
+		}else if(StringUtilities::is_equal(sub_node_name,"plane")){
 
 			fabricate_frame(mother,sub_node);
-		}else if(pedantic_str_comp(sub_node_name,"sphere")){
+		}else if(StringUtilities::is_equal(sub_node_name,"sphere")){
 
 			fabricate_frame(mother,sub_node);
-		}else if(pedantic_str_comp(sub_node_name,"cylinder")){
+		}else if(StringUtilities::is_equal(sub_node_name,"cylinder")){
 
 			fabricate_frame(mother,sub_node);
-		}else if(pedantic_str_comp(sub_node_name,"disc")){
+		}else if(StringUtilities::is_equal(sub_node_name,"disc")){
 
 			fabricate_frame(mother,sub_node); 
-		}else if(pedantic_str_comp(sub_node_name,"FACT_reflector")){
+		}else if(StringUtilities::is_equal(sub_node_name,"FACT_reflector")){
 
 			fabricate_frame(mother,sub_node);
 		}else if(sub_node_name.find("set") == std::string::npos){

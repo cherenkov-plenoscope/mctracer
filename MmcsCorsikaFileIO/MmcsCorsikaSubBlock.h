@@ -38,6 +38,8 @@ public:
 	std::string get_print()const;
 	uint cols()const;
 	uint rows()const;
+	std::vector<float> get_words_from_until(const uint begin, const uint end)const;
+	float get_word(const uint at)const;
 private:
 	void assert_range_is_valid(const uint i)const;
 	void init_sub_block();

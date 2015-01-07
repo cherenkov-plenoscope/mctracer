@@ -386,7 +386,7 @@ const CartesianFrame* CartesianFrame::get_child_by_name(
 	std::string specific_name 
 )const{
 	for( CartesianFrame* child : children )
-		if( pedantic_str_comp(child->name_of_frame, specific_name) )
+		if( StringUtilities::is_equal(child->name_of_frame, specific_name) )
 			return child;
 
 	return nullptr;

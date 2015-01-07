@@ -8,7 +8,6 @@
 
 //=================================
 // included dependencies
-#include <map>
 #include <algorithm>
 #include "MmcsCorsikaSubBlock.h"
 #include "MmcsCorsikaSubBlockGetter.h"
@@ -43,7 +42,6 @@ class MmcsCorsikaRunHeader {
 
     float theta_angle_of_normal_vector_of_inclined_observation_plane;
     float phi_angle_of_normal_vector_of_inclined_observation_plane;
-    // now some constants, I don't understand
     
     std::vector<float> CKA;
     std::vector<float> CETA;

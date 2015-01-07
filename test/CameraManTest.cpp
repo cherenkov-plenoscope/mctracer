@@ -3,9 +3,9 @@
 #include <math.h>
 
 #include "gtest/gtest.h"
-#include "CameraMan.h"
-#include "CameraManForStereo3D.h"
-#include "CameraManForRotation.h"
+#include "Cameras/CameraMan.h"
+#include "Cameras/CameraManForStereo3D.h"
+#include "Cameras/CameraManForRotation.h"
 
 using namespace std;
 

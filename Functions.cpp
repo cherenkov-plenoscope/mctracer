@@ -8,10 +8,6 @@ double Rad2Deg(double angle_in_Rad) {
 	return (angle_in_Rad/M_PI)*180.0;
 }
 //------------------------------------------------------------------------------
-void ClearScreen() {
-	std::cout << std::string( 100, '\n' );
-}
-//------------------------------------------------------------------------------
 /*std::vector< std::string > StingOfTokens2Vector( 
 	std::string TextToBeTokenized, 
 	std::string delimiter 
@@ -81,8 +77,10 @@ void remove_if_leading(std::string &text, const char character_to_remove ){
 		text.erase(0,1);
 }
 //------------------------------------------------------------------------------
-bool pedantic_str_comp(const std::string text_A,const std::string text_B){
-	return (text_A.compare(text_B)==0 && text_A.length() == text_B.length() );
+namespace StringUtilities {
+	bool is_equal(const std::string text_A,const std::string text_B){
+		return (text_A.compare(text_B)==0 && text_A.length()==text_B.length());
+	}
 }
 //------------------------------------------------------------------------------
 namespace ToolBox {
@@ -141,22 +139,6 @@ std::string float_vec_2_str_using_delimiter(
 	return out.str();
 }
 //------------------------------------------------------------------------------
-void print_welcome_screen() {
-	std::stringstream out;
-	//               1         2         3         4         5         6
-	//      123456789012345678901234567890123456789012345678901234567890
-	out << " ___________________________________________________________ \n";
-	out << "|                                                           |\n";
-	out << "|                 welcome to MCtracer                       |\n";
-	out << "|                                                           |\n";
-	out << "|      high performance raytracing tool to design and       |\n";
-	out << "|     investigate optical devices for particle physics      |\n";
-	out << "|                                                           |\n";
-	out << "|     Author: Sebastian Mueller              year 2013      |\n";
-	out << "|___________________________________________________________|\n";
-	std::cout << out.str();	
-}
-//------------------------------------------------------------------------------
 }
 //------------------------------------------------------------------------------
 namespace UserInteraction {
@@ -165,5 +147,25 @@ namespace UserInteraction {
 		std::string user_input;
 		std::cin  >> user_input;	
 		return user_input;
+	}
+    //--------------------------------------------------------------------------
+	void print_welcome_screen() {
+		std::stringstream out;
+		//               1         2         3         4         5         6
+		//      123456789012345678901234567890123456789012345678901234567890
+		out << " ___________________________________________________________ \n";
+		out << "|                                                           |\n";
+		out << "|                 welcome to MCtracer                       |\n";
+		out << "|                                                           |\n";
+		out << "|      high performance raytracing tool to design and       |\n";
+		out << "|     investigate optical devices for particle physics      |\n";
+		out << "|                                                           |\n";
+		out << "|     Author: Sebastian Mueller              year 2013      |\n";
+		out << "|___________________________________________________________|\n";
+		std::cout << out.str();	
+	}
+	//--------------------------------------------------------------------------
+	void ClearScreen() {
+		std::cout << std::string( 100, '\n' );
 	}
 }

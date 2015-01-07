@@ -156,6 +156,17 @@ TEST_F(FiniteStateMashineTEST, define_valid_transitions) {
 	fsm.define_state_to_state_when_event(1,2,42);
 }
 //------------------------------------------------------------------------------
+TEST_F(FiniteStateMashineTEST, no_transition_for_unknown_event) {
+
+	FiniteStateMashine fsm;
+	fsm.define_state(0);
+	fsm.define_state(1);
+	fsm.define_state(2);
+	fsm.define_state_to_state_when_event(0,1,1337);
+	fsm.define_state_to_state_when_event(1,2,42);
+	EXPECT_FALSE(fsm.transition_given_event(9999));
+}
+//------------------------------------------------------------------------------
 TEST_F(FiniteStateMashineTEST, must_not_define_state_after_transition) {
 	
 	try{

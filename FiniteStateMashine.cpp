@@ -55,7 +55,6 @@ bool FiniteStateMashine::transition_given_event(const int event) {
 		get_transition_for_current_state_given(event);
 
 	if(transition_to_make.is_valid()) {
-
 		state = transition_to_make.get_to_state();
 		return true;
 	}else{
@@ -72,7 +71,7 @@ void FiniteStateMashine::assert_no_transition_made_so_far()const {
 		info << "Expected no transition took place yet, ";
 		info << "but actual it does.\n";
 		throw TracerException(info.str(), 
-				FINITE_STATE_MASHINE_DEFINE_STATE_AFTER_TRANSITION);		
+			FINITE_STATE_MASHINE_DEFINE_STATE_AFTER_TRANSITION);		
 	}
 }
 //------------------------------------------------------------------------------

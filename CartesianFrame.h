@@ -22,7 +22,6 @@ class ReflectionProperties;
 #include "OctTreeCube.h"
 #include "Functions.h"
 //include "RestrictiveName.h"
-#include "pugixml.hpp"
 
 class CartesianFrame {
     // The CartesianFrame is the fundamental geometry in this framework.

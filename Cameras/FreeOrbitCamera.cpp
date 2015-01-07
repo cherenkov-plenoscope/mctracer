@@ -218,7 +218,7 @@ void FreeOrbitCamera::print_info_of_probing_ray_for_pixel_x_y(int x, int y){
 		settings
 	);
 
-	ClearScreen();
+	UserInteraction::ClearScreen();
 	std::stringstream out;
 
 	//      0        1         2         3         4         5         6
@@ -262,7 +262,7 @@ void FreeOrbitCamera::print_info_of_probing_ray_for_pixel_x_y(int x, int y){
 //==============================================================================
 void FreeOrbitCamera::print_free_orbit_help_text()const{
 
-	ClearScreen();
+	UserInteraction::ClearScreen();
 	std::stringstream out;
 
 	//      0        1         2         3         4         5         6         7         8

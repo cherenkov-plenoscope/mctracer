@@ -120,3 +120,19 @@ uint MmcsCorsikaSubBlock::rows()const {
 	return size_in_words()/number_of_columns;
 }
 //------------------------------------------------------------------------------
+std::vector<float> MmcsCorsikaSubBlock::get_words_from_until(
+	const uint begin, 
+	const uint end
+)const {
+	std::vector<float> words;
+	for(uint j=begin; j<end; j++) {
+		assert_range_is_valid(j);
+		words.push_back( sub_block[j] );
+	}
+	return words;		
+}
+//------------------------------------------------------------------------------
+float MmcsCorsikaSubBlock::get_word(const uint at)const {
+	assert_range_is_valid(at);
+	return sub_block[at];	
+}

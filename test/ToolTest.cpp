@@ -77,17 +77,17 @@ TEST_F(Tools, is_ending) {
   EXPECT_TRUE ( is_ending("abc\n","\n") );
 }
 //----------------------------------------------------------------------
-TEST_F(Tools, pedantic_str_comp) {
-  EXPECT_TRUE ( pedantic_str_comp("","")   );
-  EXPECT_FALSE( pedantic_str_comp("a","b") );
-  EXPECT_TRUE ( pedantic_str_comp("a","a") );
-  EXPECT_FALSE( pedantic_str_comp("a","A") );
-  EXPECT_TRUE ( pedantic_str_comp("Auto","Auto") );
-  EXPECT_FALSE( pedantic_str_comp("Auto","auto") );
-  EXPECT_TRUE ( pedantic_str_comp("Auto ","Auto ") );
-  EXPECT_FALSE( pedantic_str_comp("Auto ","Auto") );
-  EXPECT_TRUE ( pedantic_str_comp("\n","\n") );
-  EXPECT_FALSE( pedantic_str_comp(" Auto","Auto") );
+TEST_F(Tools, StringUtilities_is_equal) {
+  EXPECT_TRUE ( StringUtilities::is_equal("","")   );
+  EXPECT_FALSE( StringUtilities::is_equal("a","b") );
+  EXPECT_TRUE ( StringUtilities::is_equal("a","a") );
+  EXPECT_FALSE( StringUtilities::is_equal("a","A") );
+  EXPECT_TRUE ( StringUtilities::is_equal("Auto","Auto") );
+  EXPECT_FALSE( StringUtilities::is_equal("Auto","auto") );
+  EXPECT_TRUE ( StringUtilities::is_equal("Auto ","Auto ") );
+  EXPECT_FALSE( StringUtilities::is_equal("Auto ","Auto") );
+  EXPECT_TRUE ( StringUtilities::is_equal("\n","\n") );
+  EXPECT_FALSE( StringUtilities::is_equal(" Auto","Auto") );
 }
 //----------------------------------------------------------------------
 TEST_F(Tools, remove_if_leading) {

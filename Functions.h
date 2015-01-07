@@ -27,7 +27,6 @@ std::vector< std::string > StingOfTokens2Vector(
 std::string cut_leading_token( 
 	std::string& text_of_tokens, const char delimiter 
 );
-void ClearScreen();
 
 std::string multi( std::string text_to_repeat, unsigned int times );
 
@@ -35,7 +34,9 @@ bool is_ending(std::string text, std::string ending);
 
 void remove_if_leading(std::string &text, const char character_to_remove );
 
-bool pedantic_str_comp(const std::string text_A,const std::string text_B);
+namespace StringUtilities {
+	bool is_equal(const std::string text_A,const std::string text_B);
+}
 namespace ToolBox {
 	
 	uint file_size_in_bytes(const std::string name_of_file_to_get_size_of);
@@ -48,11 +49,12 @@ namespace ToolBox {
 		const std::vector<float> vec, 
 		const std::string delimiter
 	);
-	void print_welcome_screen();
+
 }
 
 namespace UserInteraction {
-	
+	void print_welcome_screen();	
 	std::string input(const std::string request);
+	void ClearScreen();
 }
 #endif // __FUNCTIONS_H_INCLUDED__

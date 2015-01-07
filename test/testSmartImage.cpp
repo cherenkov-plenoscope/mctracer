@@ -2,7 +2,7 @@
 #include <string>
 #include <math.h>
 
-#include "SmartImage.h"
+#include "Cameras/SmartImage.h"
 
 #include "gtest/gtest.h"
 

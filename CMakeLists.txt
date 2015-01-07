@@ -1,73 +1,62 @@
 
 #=======================================================================
 cmake_minimum_required(VERSION 2.8)
-set (CMAKE_CXX_FLAGS "-std=gnu++11 -Wall -pedantic -O3") # 
+set (CMAKE_CXX_FLAGS "-std=gnu++11 -Wall -pedantic -O3 -Idir")
 #=======================================================================
 project( mctracer )
 #=======================================================================
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
 find_package( OpenCV REQUIRED )
-add_executable( 
-mctracer mctracer.cpp 
-mctracerException.cpp
-XmlIoException.cpp
-CsvHandler.cpp
-XmlFileIo.cpp
-WorldFactory.cpp
-SensorIntersection.cpp 
-ReflectionProperties.cpp 
-ColourProperties.cpp 
-GlobalSettings.cpp 
-Vector3D.cpp 
-Rotation3D.cpp 
-HomoTrafo3D.cpp 
-Intersection.cpp 
-CartesianFrame.cpp 
-OctTreeCube.cpp
-SurfaceEntity.cpp 
-Ray.cpp 
-Photon.cpp
-CameraRay.cpp
-ListOfPropagations.cpp
-ListOfInteractions.cpp
-CameraDevice.cpp 
-CameraImage.cpp
-PinHoleCamera.cpp 
-ApertureCamera.cpp 
-FreeOrbitCamera.cpp 
-Triangle.cpp
-Plane.cpp 
-Disc.cpp 
-Sphere.cpp
-Cylinder.cpp
-OpticalMirror.cpp
-OpticalMirrorRound.cpp
-OpticalMirrorHexagonal.cpp
-FactTelescope.cpp
-OpticalMirrorSphericHexagonal.cpp
-OpticalMirrorParabolicRound.cpp
-OpticalMirrorSphericRound.cpp
-OpticalMirrorParabolicHexagonal.cpp
-OpticalMirrorEllipsoidHexagonal.cpp
-pugixml.cpp
+
+set(SOURCE
+	${CMAKE_CURRENT_SOURCE_DIR}/mctracerException.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/XmlIoException.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CsvHandler.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/XmlFileIo.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/WorldFactory.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SensorIntersection.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/ReflectionProperties.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/ColourProperties.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/GlobalSettings.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/Vector3D.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/Rotation3D.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/HomoTrafo3D.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/Intersection.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/CartesianFrame.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/OctTreeCube.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceEntity.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/Ray.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/Photon.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ListOfPropagations.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ListOfInteractions.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Triangle.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Plane.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/Disc.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/Sphere.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Cylinder.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirror.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorRound.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorHexagonal.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/FactTelescope.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorSphericHexagonal.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorParabolicRound.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorSphericRound.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorParabolicHexagonal.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorEllipsoidHexagonal.cpp
 # python extension
-mcPYtracer/testPyTracer.cpp
-Functions.cpp
-SmartImage.cpp
-Function1D.cpp
-QuadraticEquation.cpp
-CameraMan.cpp
-CameraManForTranslation.cpp
-CameraManForRotation.cpp
-CameraManForStereo3D.cpp
-MmcsCorsikaSubBlock.cpp
-MmcsCorsikaSubBlockGetter.cpp
-MmcsCorsikaFullEventGetter.cpp
-MmcsCorsikaRunHeader.cpp
-MmcsCorsikaPhotonData.cpp
-MmcsCorsikaEvent.cpp
-FiniteStateMashine.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/mcPYtracer/testPyTracer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Functions.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Function1D.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/QuadraticEquation.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/FiniteStateMashine.cpp
 )
+
+add_subdirectory("${PROJECT_SOURCE_DIR}/PugiXml")
+add_subdirectory("${PROJECT_SOURCE_DIR}/MmcsCorsikaFileIO")
+add_subdirectory("${PROJECT_SOURCE_DIR}/Cameras")
+
+add_executable( mctracer mctracer.cpp ${SOURCE} )
+
 include_directories(/usr/include)
 include_directories(/usr/local/include)
 target_link_libraries( mctracer ${OpenCV_LIBS} )
@@ -83,71 +72,19 @@ endif()
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 enable_testing()
-
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 ################################
 # Unit Tests
 ################################
-# Add test cpp file
-add_executable( mctracerUnitTests 
-./test/test.cpp 
-Vector3D.cpp
-Rotation3D.cpp
-HomoTrafo3D.cpp
-GlobalSettings.cpp 
-CsvHandler.cpp
-ColourProperties.cpp 
-mctracerException.cpp
-XmlIoException.cpp
-ReflectionProperties.cpp 
-SurfaceEntity.cpp
-Plane.cpp
-CartesianFrame.cpp
-OctTreeCube.cpp
-Intersection.cpp
-Ray.cpp
-Photon.cpp
-FreeOrbitCamera.cpp
-CameraDevice.cpp
-CameraImage.cpp
-PinHoleCamera.cpp
-ApertureCamera.cpp
-CameraRay.cpp
-ListOfInteractions.cpp
-ListOfPropagations.cpp
-XmlFileIo.cpp
-WorldFactory.cpp
-pugixml.cpp
-FactTelescope.cpp
-Triangle.cpp
-Disc.cpp 
-Cylinder.cpp
-Sphere.cpp
-OpticalMirrorHexagonal.cpp
-OpticalMirrorSphericHexagonal.cpp
-OpticalMirrorRound.cpp
-OpticalMirrorHexagonal.cpp
-OpticalMirror.cpp
-Functions.cpp
-mcPYtracer/testPyTracer.cpp
-SmartImage.cpp
-Function1D.cpp
-QuadraticEquation.cpp
-CameraMan.cpp
-CameraManForTranslation.cpp
-CameraManForRotation.cpp
-CameraManForStereo3D.cpp
-MmcsCorsikaSubBlock.cpp
-MmcsCorsikaSubBlockGetter.cpp
-MmcsCorsikaFullEventGetter.cpp
-MmcsCorsikaRunHeader.cpp
-MmcsCorsikaPhotonData.cpp
-MmcsCorsikaEvent.cpp
-FiniteStateMashine.cpp
-)
+
+#set(SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/test/test.cpp)
+
+add_executable( mctracerTests ./test/test.cpp ${SOURCE})
+
 # Link test executable against gtest & gtest_main
-target_link_libraries(mctracerUnitTests gtest gtest_main)
-target_link_libraries( mctracerUnitTests ${OpenCV_LIBS} )
-add_test( mctracerUnitTests mctracerUnitTests )
+target_link_libraries( mctracerTests gtest gtest_main)
+target_link_libraries( mctracerTests ${OpenCV_LIBS} )
+add_test( mctracerTests mctracerTests )
 
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)

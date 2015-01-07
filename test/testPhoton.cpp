@@ -6,7 +6,7 @@
 #include "../Photon.h"
 #include "../SurfaceEntity.h"
 #include "../Plane.h"
-#include "../FreeOrbitCamera.h"
+#include "Cameras/FreeOrbitCamera.h"
 #include "../PseudoRandomNumberGenerator.h"
 #include "../ListOfPropagations.h"
 
