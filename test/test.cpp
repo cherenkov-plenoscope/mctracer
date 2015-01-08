@@ -19,6 +19,7 @@
 #include "MmcsCorsikaEventGetterTest.cpp"
 #include "gtest/gtest.h"
 #include "FiniteStateMashineTEST.cpp"
+#include "ConfigurationFactoryTest.cpp"
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

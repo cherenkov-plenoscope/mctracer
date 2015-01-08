@@ -12,6 +12,7 @@
 #include <string>
 #include "TracerException.h"
 #include "Functions.h"
+#include "FileTools.h"
 #include <fstream>
 #include <stdio.h>
 #include <string.h>

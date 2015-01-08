@@ -39,7 +39,7 @@ namespace StringUtilities {
 }
 namespace ToolBox {
 	
-	uint file_size_in_bytes(const std::string name_of_file_to_get_size_of);
+	//uint file_size_in_bytes(const std::string name_of_file_to_get_size_of);
 	
 	float str2float_4byte_bin_map(const std::string word);
 	
@@ -49,12 +49,13 @@ namespace ToolBox {
 		const std::vector<float> vec, 
 		const std::string delimiter
 	);
-
 }
 
 namespace UserInteraction {
 	void print_welcome_screen();	
 	std::string input(const std::string request);
 	void ClearScreen();
+	std::string parse_config_file_path(int number_of_arguments, char* arguments[]);
+	
 }
 #endif // __FUNCTIONS_H_INCLUDED__

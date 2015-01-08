@@ -85,20 +85,6 @@ namespace StringUtilities {
 //------------------------------------------------------------------------------
 namespace ToolBox {
 //------------------------------------------------------------------------------
-uint file_size_in_bytes(const std::string name_of_file_to_get_size_of) {
-	std::ifstream file;
-	file.open(name_of_file_to_get_size_of, std::ios::binary | std::ios::ate);
-
-	if (!file.is_open()) {
-		std::stringstream info;
-		info << "Toolbox: " << __func__ << "()\n";
-		info << "Can not open file : '" << name_of_file_to_get_size_of;
-		info << "' in order to get file size.\n";
-		throw TracerException(info.str());	
-	}
-	return file.tellg();	
-}
-//------------------------------------------------------------------------------
 float str2float_4byte_bin_map(const std::string word) {
 
 	if(word.size() != 4) {
@@ -167,5 +153,23 @@ namespace UserInteraction {
 	//--------------------------------------------------------------------------
 	void ClearScreen() {
 		std::cout << std::string( 100, '\n' );
+	}
+	//--------------------------------------------------------------------------
+	std::string parse_config_file_path(int number_of_arguments, char* arguments[]) {
+		
+		/*std::cout << "Have " << number_of_arguments << " arguments:" << std::endl;
+	    for (int i = 0; i < number_of_arguments; ++i) {
+	        std::cout << arguments[i] << std::endl;
+	    }*/
+
+		if(number_of_arguments != 2) {
+			std::stringstream info;
+			info << "Wrong number of input arguments, expected 1, but actual: ";
+			info << number_of_arguments-1 << ".\n";
+			throw TracerException(info.str());
+		}
+
+		std::string config_path(arguments[1]);
+	    return config_path;
 	}
 }

@@ -21,8 +21,8 @@ private:
 	// propagation options
 
 	unsigned int number_of_max_reflections = 5;
-		// A Ray, CameraRay or a Photon will only be traced until it
-		// wasthis ofter reflected.
+		// A Ray, CameraRay or a Photon will only be traced until the max 
+		// number of reflections is reached.
 
 	bool flag_store_only_final_intersection = false;
 		// Each Photon emitted has a history object storing its propagation
@@ -97,10 +97,6 @@ public:
 	//--------------------------------------------------------------------------
 	unsigned get_seed_for_random_number_generator_mt19937()const;
 	//--------------------------------------------------------------------------
-	/*
-	double Uniform(){
-		return double( pRNG_mt19937() )/double( pRNG_mt19937.max() ); 
-	};*/
 };
 
 #endif // __GLOBALSETTINGS_H_INCLUDED__ 

@@ -29,7 +29,7 @@ void MmcsCorsikaSubBlockGetter::handle_gzip_file()const {
 //------------------------------------------------------------------------------
 void MmcsCorsikaSubBlockGetter::remember_MMCS_file_size_in_bytes() {
 	try{
-		file_size_in_bytes = ToolBox::file_size_in_bytes(filename);
+		file_size_in_bytes = FileTools::size_in_bytes(filename);
 	}catch(TracerException &e){
 		throw_can_not_open_Mmcs_file(e.what());
 	}

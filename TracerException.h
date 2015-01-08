@@ -36,16 +36,16 @@ protected:
 	ExceptionType Type = NOT_SPECIFIED;
 public:
 
-	TracerException(std::string new_message);
-	TracerException(std::string new_message, ExceptionType Type);
+	TracerException(std::string message);
+	TracerException(std::string message, ExceptionType Type);
 	TracerException();
 	ExceptionType type()const;
-	virtual const char * what () const throw ();
+	const char * what () const noexcept;
 };
 
 class BadValue :public TracerException{
 public:
-	BadValue(std::string new_message);
+	BadValue(std::string message);
 };
 
 #endif // __TRACEREXCEPTION_H_INCLUDED__

@@ -4,6 +4,7 @@
 
 #include "gtest/gtest.h"
 #include "../Functions.h"
+#include "FileTools.h"
 
 using namespace std;
 
@@ -203,4 +204,12 @@ TEST_F(Tools, zero_word_2_float) {
   string emp(4, '\0');
   float n = ToolBox::str2float_4byte_bin_map(emp);
   EXPECT_EQ(0.0, n);
+}
+//------------------------------------------------------------------------------
+TEST_F(Tools, file_existance_on_not_existing_file) {
+  EXPECT_FALSE(FileTools::can_be_opened("no_such_file"));
+}
+//------------------------------------------------------------------------------
+TEST_F(Tools, file_existance_on_existing_file) {
+  EXPECT_TRUE(FileTools::can_be_opened("ToolTest.cpp"));
 }

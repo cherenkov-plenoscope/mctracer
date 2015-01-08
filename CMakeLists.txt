@@ -47,9 +47,11 @@ set(SOURCE
 # python extension
 	${CMAKE_CURRENT_SOURCE_DIR}/mcPYtracer/testPyTracer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Functions.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/FileTools.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Function1D.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/QuadraticEquation.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/FiniteStateMashine.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ConfigurationFactory.cpp
 )
 
 add_subdirectory("${PROJECT_SOURCE_DIR}/PugiXml")
