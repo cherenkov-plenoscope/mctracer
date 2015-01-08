@@ -9,24 +9,28 @@
 //=================================
 // included dependencies
 #include "MmcsCorsikaSubBlock.h"
+#include "MmcsCorsikaEventHeader.h"
 #include "MmcsCorsikaPhotonData.h"
 #include "ListOfPropagations.h"
 #include "Photon.h"
 //=================================
 class MmcsCorsikaEvent {
 
-MmcsCorsikaSubBlock event_header;
-MmcsCorsikaPhotonData photon_data;
-MmcsCorsikaSubBlock event_end;
+	MmcsCorsikaEventHeader event_header;
+	MmcsCorsikaPhotonData photon_data;
+	MmcsCorsikaSubBlock event_end;
 
 public:
 	MmcsCorsikaEvent(
-		MmcsCorsikaSubBlock event_header,
+		MmcsCorsikaEventHeader event_header,
 		MmcsCorsikaPhotonData photon_data,
 		MmcsCorsikaSubBlock event_end
 	);
 
 	ListOfPropagations* transform_to_mcTracer_photons()const;
+
+	void print()const;
+	std::string get_print()const;
 private:
 	double x_pos_on_xy_plane_in_m(const uint i)const;
 	double y_pos_on_xy_plane_in_m(const uint i)const;

@@ -35,6 +35,7 @@ public:
 	float get_wavelength_in_nm(const uint at)const;
 	float get_production_time_in_ns(const uint at)const;
 	std::string get_photon_print_at(const uint at)const;
+	std::string get_statistics_print()const;
 private:
 	bool row_has_only_zeros(std::vector<float> &photon_row)const;
 	void access_is_in_range(const uint at)const;

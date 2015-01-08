@@ -1,7 +1,7 @@
 #include "MmcsCorsikaEvent.h"
 //------------------------------------------------------------------------------
 MmcsCorsikaEvent::MmcsCorsikaEvent(
-		MmcsCorsikaSubBlock event_header,
+		MmcsCorsikaEventHeader event_header,
 		MmcsCorsikaPhotonData photon_data,
 		MmcsCorsikaSubBlock event_end
 ){
@@ -81,5 +81,19 @@ double MmcsCorsikaEvent::production_height_in_m(const uint i)const {
 //------------------------------------------------------------------------------
 double MmcsCorsikaEvent::wavelength_in_m(const uint i)const {
 	return photon_data.get_wavelength_in_nm(i)/1e9;
+}
+//------------------------------------------------------------------------------
+void MmcsCorsikaEvent::print()const { 
+	std::cout << get_print();
+}
+//------------------------------------------------------------------------------
+std::string MmcsCorsikaEvent::get_print()const {
+	std::stringstream out;
+	out << " ____MAGCIC_MC_CORSIKA_EVENT____\n";
+	out << "|\n";
+	out << event_header.get_print();
+	out << photon_data.get_statistics_print();
+	out << "|_______________________________\n";
+	return out.str();
 }
 //------------------------------------------------------------------------------

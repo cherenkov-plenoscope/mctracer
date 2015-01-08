@@ -11,6 +11,7 @@
 #include "MmcsCorsikaSubBlockGetter.h"
 #include "MmcsCorsikaSubBlock.h"
 #include "MmcsCorsikaRunHeader.h"
+#include "MmcsCorsikaEventHeader.h"
 #include "MmcsCorsikaPhotonData.h"
 #include "MmcsCorsikaEvent.h"
 #include "FiniteStateMashine.h"

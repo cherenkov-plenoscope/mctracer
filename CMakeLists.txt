@@ -1,10 +1,11 @@
-
-#=======================================================================
+# mctracer scientific raytracing
+# Author Sebastian Mueller
+#-------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 2.8)
 set (CMAKE_CXX_FLAGS "-std=gnu++11 -Wall -pedantic -O3 -Idir")
-#=======================================================================
+#-------------------------------------------------------------------------------
 project( mctracer )
-#=======================================================================
+#-------------------------------------------------------------------------------
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
 find_package( OpenCV REQUIRED )
 
@@ -60,32 +61,26 @@ add_executable( mctracer mctracer.cpp ${SOURCE} )
 include_directories(/usr/include)
 include_directories(/usr/local/include)
 target_link_libraries( mctracer ${OpenCV_LIBS} )
-#=======================================================================
+#-------------------------------------------------------------------------------
 find_package(OpenMP)
 if (OPENMP_FOUND)
     set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 endif()
-#=======================================================================
+#-------------------------------------------------------------------------------
 # GTest
-################################
+
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 enable_testing()
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-################################
-# Unit Tests
-################################
-
-#set(SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/test/test.cpp)
 
 add_executable( mctracerTests ./test/test.cpp ${SOURCE})
 
-# Link test executable against gtest & gtest_main
 target_link_libraries( mctracerTests gtest gtest_main)
 target_link_libraries( mctracerTests ${OpenCV_LIBS} )
 add_test( mctracerTests mctracerTests )
-
+#-------------------------------------------------------------------------------
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
@@ -96,7 +91,7 @@ elseif(COMPILER_SUPPORTS_CXX0X)
 else()
     message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
-#=======================================================================
+#-------------------------------------------------------------------------------
 # http://stackoverflow.com/questions/992068/building-a-python-shared-object-binding-with-cmake-which-depends-upon-external
 # http://www.swig.org/Doc1.3/Introduction.html#Introduction_build_system
 # This is a CMake example for Python

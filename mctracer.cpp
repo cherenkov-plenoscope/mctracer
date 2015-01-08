@@ -31,14 +31,15 @@ int main(){
 		file2world.load(file_chosen_by_user);
 		CartesianFrame *Mworld = file2world.world();
 
-		string filename = "../test/MMCS_files/cer000005";
+		string filename = UserInteraction::input("Enter Mmcs CORSIKA file: ");
 		MmcsCorsikaFullEventGetter event_getter(filename);
 
 		while(event_getter.has_still_events_left()) {
 
 			MmcsCorsikaEvent event = event_getter.get_next_event();	
+			event.print();
 			ListOfPropagations *photons = event.transform_to_mcTracer_photons();
-			photons->disp();
+			//photons->disp();
 			photons->propagate(Mworld,&settings);
 		}
 

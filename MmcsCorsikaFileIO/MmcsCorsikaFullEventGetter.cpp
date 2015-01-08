@@ -35,9 +35,9 @@ void MmcsCorsikaFullEventGetter::assert_MMCS_file_syntax_is_valid(
 //------------------------------------------------------------------------------
 MmcsCorsikaEvent MmcsCorsikaFullEventGetter::get_next_event() {
 
-	MmcsCorsikaSubBlock   event_header = next_event_header;
+	MmcsCorsikaEventHeader event_header(next_event_header);// = next_event_header;
 	MmcsCorsikaPhotonData photon_data;
-	MmcsCorsikaSubBlock   event_end;
+	MmcsCorsikaSubBlock event_end;
 
 	while(sub_block_getter.has_still_sub_blocks_left() && !event_is_complet()) {
 		get_next_sub_block();

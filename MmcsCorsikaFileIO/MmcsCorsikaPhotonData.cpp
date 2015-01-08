@@ -1,7 +1,14 @@
 #include "MmcsCorsikaPhotonData.h"
 //------------------------------------------------------------------------------
 void MmcsCorsikaPhotonData::print()const {
-	std::cout << get_print();
+	std::cout << get_statistics_print();
+}
+//------------------------------------------------------------------------------
+std::string MmcsCorsikaPhotonData::get_statistics_print()const {
+	std::stringstream out;
+	out << "__Photon Data__\n";
+	out << "number_of_photons: " << number_of_photons() << "\n";
+	return out.str();
 }
 //------------------------------------------------------------------------------
 std::string MmcsCorsikaPhotonData::get_print()const {
