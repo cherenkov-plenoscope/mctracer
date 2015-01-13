@@ -21,25 +21,26 @@ ColourProperties CameraRay::trace(
 	const GlobalSettings *settings
 )const {
 
-	std::vector<Intersection*> list_of_ptr_to_intersections = 
+	std::vector<Intersection*> intersections = 
 		get_intersections(world,object_propagated_from);
 
 	ColourProperties colour_to_return = settings->get_default_colour();
 	
-	if(list_of_ptr_to_intersections.size()==0) {
+	if(intersections.size()==0) {
 
 		colour_to_return = settings->get_default_colour();
 	}else{
 		// find the closest object in the list of 
 		// list_of_intersecting_objects
 		const Intersection *closest_intersection =
-			calculate_closest_intersection(&list_of_ptr_to_intersections);
+			calculate_closest_intersection(&intersections);
 		
 		if(
-			closest_intersection->get_pointer_to_intersecting_object()
-			->get_reflection_flag()
-			&& refl_count < settings->get_max_number_of_reflections())
-		{	
+			closest_intersection->
+				get_pointer_to_intersecting_object()->get_reflection_flag()
+			&& 
+			settings->max_number_of_reflections_is_not_reached_yet(refl_count)
+		) {	
 			// the object pointer_to_closest_frame is pointing to
 			// does reflect, so we increase the reflection counter
 			refl_count++;
@@ -80,7 +81,7 @@ ColourProperties CameraRay::trace(
 		}	
 	}
 
-	for(Intersection *ptr_to_intersection : list_of_ptr_to_intersections) {	
+	for(Intersection *ptr_to_intersection : intersections) {	
 		delete ptr_to_intersection;
 	}
 

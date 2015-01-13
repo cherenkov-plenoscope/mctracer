@@ -243,12 +243,6 @@ std::vector<Intersection*> Ray::get_intersections(
 	return intersections;
 }
 //------------------------------------------------------------------------------
-void Ray::delete_intersections(std::vector<Intersection*> &Intersections)const {
-	for(Intersection *an_intersection : Intersections) {	
-		delete an_intersection;
-	}
-}
-//------------------------------------------------------------------------------
 void Ray::propagate(	
 	const CartesianFrame* world, 
 	ListOfInteractions* history,

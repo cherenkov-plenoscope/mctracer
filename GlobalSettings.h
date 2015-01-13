@@ -97,6 +97,9 @@ public:
 	//--------------------------------------------------------------------------
 	unsigned get_seed_for_random_number_generator_mt19937()const;
 	//--------------------------------------------------------------------------
+	bool max_number_of_reflections_is_not_reached_yet(
+		const uint reflection_counter
+	)const;
 };
 
 #endif // __GLOBALSETTINGS_H_INCLUDED__ 

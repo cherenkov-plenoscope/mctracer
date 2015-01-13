@@ -90,7 +90,7 @@ public:
 	bool support_of_ray_is_inside_bounding_sphere_of(
 		const CartesianFrame *frame
 	)const;
-	
+
 	bool has_intersection_with_bounding_sphere_of(
 		const CartesianFrame* frame
 	)const;
@@ -115,8 +115,6 @@ public:
 		const CartesianFrame* world,
 		const GlobalSettings *settings
 	)const;
-
-	void delete_intersections(std::vector<Intersection*> &Intersections)const;
 
 	void find_intersection_candidates_in_tree_of_frames(
 		const CartesianFrame* frame_to_check_for_interaction_of_ray_and_max_sphere, 

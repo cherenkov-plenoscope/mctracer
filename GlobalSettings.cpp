@@ -14,7 +14,7 @@ void GlobalSettings::set_max_number_of_reflections(
 	const int new_max_number_of_reflections){
 	if( new_max_number_of_reflections>0 ){
 
-		number_of_max_reflections=new_max_number_of_reflections;
+		number_of_max_reflections = new_max_number_of_reflections;
 
 	}else{
 		std::stringstream out;
@@ -24,6 +24,12 @@ void GlobalSettings::set_max_number_of_reflections(
 		out << "Actual it is " << new_max_number_of_reflections << "\n";
 		throw TracerException(out.str());
 	}
+}
+//======================================================================
+bool GlobalSettings::max_number_of_reflections_is_not_reached_yet(
+	const uint reflection_counter
+)const {
+	return reflection_counter < number_of_max_reflections;
 }
 //======================================================================
 void GlobalSettings::set_csv_decimal_presicion(
