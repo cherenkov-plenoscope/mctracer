@@ -209,11 +209,11 @@ void Function1D::read(){
 //------------------------------------------------------------------------------
 void Function1D::set_boundary_mode(const std::string mode_text){
 
-	if(StringUtilities::is_equal(mode_text,"STRICT")){
+	if(StringTools::is_equal(mode_text,"STRICT")){
 		mode = STRICT;
-	}else if(StringUtilities::is_equal(mode_text,"ZERO")){
+	}else if(StringTools::is_equal(mode_text,"ZERO")){
 		mode = ZERO;
-	}else if(StringUtilities::is_equal(mode_text,"CLOSEST")){
+	}else if(StringTools::is_equal(mode_text,"CLOSEST")){
 		mode = CLOSEST;
 	}else{
 		// the mode is unknown. this is not acceptable

@@ -10,7 +10,6 @@
 // included dependencies
 #include "CameraMan.h"
 #include "CameraDevice.h"
-#include "Functions.h"
 //=================================
 class CameraManForRotation: public CameraMan {
 public:

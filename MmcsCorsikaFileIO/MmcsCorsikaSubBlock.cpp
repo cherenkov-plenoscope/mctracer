@@ -6,7 +6,7 @@ MmcsCorsikaSubBlock::MmcsCorsikaSubBlock() {
 //------------------------------------------------------------------------------
 std::string MmcsCorsikaSubBlock::get_4char_string_representation_at(const uint i)const {
 	assert_range_is_valid(i);
-	return ToolBox::float2str_4byte_bin_map(sub_block[i]);
+	return MmcsCorsikaTools::float2str_4byte_bin_map(sub_block[i]);
 }
 //------------------------------------------------------------------------------
 bool MmcsCorsikaSubBlock::get_bool_representation_at(const uint i)const {
@@ -56,19 +56,19 @@ void MmcsCorsikaSubBlock::operator=(MmcsCorsikaSubBlock eq) {
 } 
 //------------------------------------------------------------------------------
 bool MmcsCorsikaSubBlock::is_event_header()const {
-	return sub_block[0] == ToolBox::str2float_4byte_bin_map("EVTH");
+	return sub_block[0] == MmcsCorsikaTools::str2float_4byte_bin_map("EVTH");
 }
 //------------------------------------------------------------------------------
 bool MmcsCorsikaSubBlock::is_event_end()const {
-	return sub_block[0] == ToolBox::str2float_4byte_bin_map("EVTE");
+	return sub_block[0] == MmcsCorsikaTools::str2float_4byte_bin_map("EVTE");
 }
 //------------------------------------------------------------------------------
 bool MmcsCorsikaSubBlock::is_run_footer()const {
-	return sub_block[0] == ToolBox::str2float_4byte_bin_map("RUNE");
+	return sub_block[0] == MmcsCorsikaTools::str2float_4byte_bin_map("RUNE");
 }
 //------------------------------------------------------------------------------
 bool MmcsCorsikaSubBlock::is_run_header()const {
-	return sub_block[0] == ToolBox::str2float_4byte_bin_map("RUNH");
+	return sub_block[0] == MmcsCorsikaTools::str2float_4byte_bin_map("RUNH");
 }
 //------------------------------------------------------------------------------
 bool MmcsCorsikaSubBlock::is_photon_data()const {

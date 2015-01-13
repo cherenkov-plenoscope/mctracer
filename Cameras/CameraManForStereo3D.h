@@ -9,7 +9,6 @@
 //=================================
 // included dependencies
 #include "CameraDevice.h"
-#include "Functions.h"
 //=================================
 class CameraManForStereo3D {
 public:

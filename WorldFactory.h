@@ -8,6 +8,7 @@
 
 //=================================
 // included dependencies
+#include "Tools/StringTools.h"
 #include <iostream> 
 #include <string>
 #include <sstream>
@@ -22,11 +23,8 @@
 #include "Rotation3D.h"
 #include "ReflectionProperties.h"
 #include "ColourProperties.h"
-// XML parser library 
-#include "PugiXml/pugixml.hpp"
+#include "XmlIO/XmlFileIo.h"
 #include "TracerException.h"
-#include "XmlIoException.h"
-#include "XmlFileIo.h"
 
 //------------------------------------------------------------------------------
 class WorldFactory : public XmlFileIo{

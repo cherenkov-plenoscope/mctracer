@@ -9,7 +9,8 @@
 //=================================
 // included dependencies
 #include <vector>
-#include "Functions.h"
+#include "MmcsCorsikaTools.h"
+#include "Tools/StringTools.h"
 #include "TracerException.h"
 //=================================
 class MmcsCorsikaSubBlock {

@@ -3,8 +3,9 @@
 #include <math.h>
 
 #include "gtest/gtest.h"
-#include "../Functions.h"
-#include "FileTools.h"
+#include "Tools/StringTools.h"
+#include "Tools/FileTools.h"
+#include "Tools/StringTools.h"
 
 using namespace std;
 
@@ -65,145 +66,82 @@ TEST_F(Tools, Rad2Deg) {
 }
 //----------------------------------------------------------------------
 TEST_F(Tools, is_ending) {
-  EXPECT_TRUE ( is_ending("hans.xml",".xml") );
-  EXPECT_FALSE( is_ending("hans.xml",".XML") );
-  EXPECT_FALSE( is_ending("blabla_text_bla",".xml") );
-  EXPECT_FALSE( is_ending("text.xmltext",".xml") );
-  EXPECT_TRUE ( is_ending(".xml",".xml") );
-  EXPECT_TRUE ( is_ending(".xml.xml",".xml") );
-  EXPECT_TRUE ( is_ending("\t\n\r.xml",".xml") );
-  EXPECT_TRUE ( is_ending("text .xml",".xml") );
-  EXPECT_FALSE( is_ending("text.x ml",".xml") );
-  EXPECT_TRUE ( is_ending("abc","c") );
-  EXPECT_TRUE ( is_ending("abc\n","\n") );
+  EXPECT_TRUE ( StringTools::is_ending("hans.xml",".xml") );
+  EXPECT_FALSE( StringTools::is_ending("hans.xml",".XML") );
+  EXPECT_FALSE( StringTools::is_ending("blabla_text_bla",".xml") );
+  EXPECT_FALSE( StringTools::is_ending("text.xmltext",".xml") );
+  EXPECT_TRUE ( StringTools::is_ending(".xml",".xml") );
+  EXPECT_TRUE ( StringTools::is_ending(".xml.xml",".xml") );
+  EXPECT_TRUE ( StringTools::is_ending("\t\n\r.xml",".xml") );
+  EXPECT_TRUE ( StringTools::is_ending("text .xml",".xml") );
+  EXPECT_FALSE( StringTools::is_ending("text.x ml",".xml") );
+  EXPECT_TRUE ( StringTools::is_ending("abc","c") );
+  EXPECT_TRUE ( StringTools::is_ending("abc\n","\n") );
 }
 //----------------------------------------------------------------------
 TEST_F(Tools, StringUtilities_is_equal) {
-  EXPECT_TRUE ( StringUtilities::is_equal("","")   );
-  EXPECT_FALSE( StringUtilities::is_equal("a","b") );
-  EXPECT_TRUE ( StringUtilities::is_equal("a","a") );
-  EXPECT_FALSE( StringUtilities::is_equal("a","A") );
-  EXPECT_TRUE ( StringUtilities::is_equal("Auto","Auto") );
-  EXPECT_FALSE( StringUtilities::is_equal("Auto","auto") );
-  EXPECT_TRUE ( StringUtilities::is_equal("Auto ","Auto ") );
-  EXPECT_FALSE( StringUtilities::is_equal("Auto ","Auto") );
-  EXPECT_TRUE ( StringUtilities::is_equal("\n","\n") );
-  EXPECT_FALSE( StringUtilities::is_equal(" Auto","Auto") );
+  EXPECT_TRUE ( StringTools::is_equal("","")   );
+  EXPECT_FALSE( StringTools::is_equal("a","b") );
+  EXPECT_TRUE ( StringTools::is_equal("a","a") );
+  EXPECT_FALSE( StringTools::is_equal("a","A") );
+  EXPECT_TRUE ( StringTools::is_equal("Auto","Auto") );
+  EXPECT_FALSE( StringTools::is_equal("Auto","auto") );
+  EXPECT_TRUE ( StringTools::is_equal("Auto ","Auto ") );
+  EXPECT_FALSE( StringTools::is_equal("Auto ","Auto") );
+  EXPECT_TRUE ( StringTools::is_equal("\n","\n") );
+  EXPECT_FALSE( StringTools::is_equal(" Auto","Auto") );
 }
 //----------------------------------------------------------------------
 TEST_F(Tools, remove_if_leading) {
   string Hans = "Hans";
-  remove_if_leading(Hans,'H'); 
+  StringTools::remove_char_from_text_if_leading('H', Hans); 
   EXPECT_EQ("ans", Hans);
 
   string Klaus = "Klaus";
-  remove_if_leading(Klaus,'H'); 
+  StringTools::remove_char_from_text_if_leading('H', Klaus); 
   EXPECT_EQ("Klaus", Klaus);
 
   string Peter = "Peter";
-  remove_if_leading(Peter,'t'); 
+  StringTools::remove_char_from_text_if_leading('t', Peter); 
   EXPECT_EQ("Peter", Peter); 
 
   string Willi = " Willi";
-  remove_if_leading(Willi,'W'); 
+  StringTools::remove_char_from_text_if_leading('W', Willi); 
   EXPECT_EQ(" Willi", Willi); 
 
   string Dieter = " Dieter";
-  remove_if_leading(Dieter,' '); 
+  StringTools::remove_char_from_text_if_leading(' ', Dieter); 
   EXPECT_EQ("Dieter", Dieter); 
 }
 //------------------------------------------------------------------------------
 TEST_F(Tools, cut_leading_token) {
   string names = "Hans,Peter,Klaus";
-  string first_name = cut_leading_token(names,','); 
+
+  string first_name = 
+    StringTools::cut_leading_token_infront_of_delimiter(names,',');
+    
   EXPECT_EQ("Hans", first_name);
   EXPECT_EQ("Peter,Klaus", names);
 
   names = ",Hans,Peter,Klaus";
-  first_name = cut_leading_token(names,','); 
+  first_name = StringTools::cut_leading_token_infront_of_delimiter(names,','); 
   EXPECT_EQ("", first_name);
   EXPECT_EQ("Hans,Peter,Klaus", names);
 
   names = ",Hans/Peter/Klaus/";
-  first_name = cut_leading_token(names,'/'); 
+  first_name = StringTools::cut_leading_token_infront_of_delimiter(names,'/'); 
   EXPECT_EQ(",Hans", first_name);
   EXPECT_EQ("Peter/Klaus/", names);
 
   names = "Hans ,Peter,Klaus";
-  first_name = cut_leading_token(names,','); 
+  first_name = StringTools::cut_leading_token_infront_of_delimiter(names,','); 
   EXPECT_EQ("Hans ", first_name);
   EXPECT_EQ("Peter,Klaus", names);
 
   names =  " Hans,Peter,Klaus";
-  first_name = cut_leading_token(names,','); 
+  first_name = StringTools::cut_leading_token_infront_of_delimiter(names,','); 
   EXPECT_EQ(" Hans", first_name);
   EXPECT_EQ("Peter,Klaus", names);
-}
-//------------------------------------------------------------------------------
-TEST_F(Tools, word_size_is_too_large) {
-
-  string h = "Hans Peter";
-
-  bool error_detected = false;
-  try{
-    float H = ToolBox::str2float_4byte_bin_map(h);
-    H=H;
-  }catch(TracerException &e){
-    //std::cout << e.what();
-    error_detected = true;
-  }
-
-  EXPECT_TRUE(error_detected);
-}
-//------------------------------------------------------------------------------
-TEST_F(Tools, word_size_is_zero) {
-
-  string h = "";
-
-  bool error_detected = false;
-  try{
-    float H = ToolBox::str2float_4byte_bin_map(h);
-    H=H;
-  }catch(TracerException &e){
-    //std::cout << e.what();
-    error_detected = true;
-  }
-
-  EXPECT_TRUE(error_detected);
-}
-//------------------------------------------------------------------------------
-TEST_F(Tools, word_2_float) {
-
-  string h = "hans";
-
-  float H = ToolBox::str2float_4byte_bin_map(h);
-  string r = ToolBox::float2str_4byte_bin_map(H);
-
-  EXPECT_EQ(h, r);
-}
-//------------------------------------------------------------------------------
-TEST_F(Tools, float_2_word) {
-
-  float leet = 1.337;
-
-  string leet_word = ToolBox::float2str_4byte_bin_map(leet);
-  float r_leet = ToolBox::str2float_4byte_bin_map(leet_word);
-
-  EXPECT_EQ(leet, r_leet);
-}
-//------------------------------------------------------------------------------
-TEST_F(Tools, zero_float_2_word) {
-
-  float n = 0.0;
-  string emp = ToolBox::float2str_4byte_bin_map(n);
-  EXPECT_EQ(string(4, '\0'), emp);
-}
-//------------------------------------------------------------------------------
-TEST_F(Tools, zero_word_2_float) {
-
-  string emp(4, '\0');
-  float n = ToolBox::str2float_4byte_bin_map(emp);
-  EXPECT_EQ(0.0, n);
 }
 //------------------------------------------------------------------------------
 TEST_F(Tools, file_existance_on_not_existing_file) {

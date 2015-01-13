@@ -17,7 +17,7 @@ MmcsCorsikaSubBlockGetter::MmcsCorsikaSubBlockGetter(const std::string _filename
 }
 //------------------------------------------------------------------------------
 bool MmcsCorsikaSubBlockGetter::is_a_gzip_file()const { 
-	return is_ending(filename, ".gz");
+	return StringTools::is_ending(filename, ".gz");
 }
 //------------------------------------------------------------------------------
 void MmcsCorsikaSubBlockGetter::handle_gzip_file()const {

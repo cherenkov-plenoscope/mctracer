@@ -9,9 +9,9 @@
 //=================================
 // included dependencies
 #include <algorithm>
+#include "MmcsCorsikaTools.h"
 #include "MmcsCorsikaSubBlock.h"
 #include "MmcsCorsikaSubBlockGetter.h"
-#include "Functions.h"
 //=================================
 class MmcsCorsikaRunHeader {
     MmcsCorsikaSubBlock mmcs_sub_block;

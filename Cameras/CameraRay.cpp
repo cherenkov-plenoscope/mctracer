@@ -1,54 +1,17 @@
 #include "CameraRay.h"
+//------------------------------------------------------------------------------
 CameraRay::CameraRay(const Vector3D support, const Vector3D direction){
 	SetRay(support, direction);
 }
-//======================================================================
+//------------------------------------------------------------------------------
 std::string CameraRay::get_string()const{
 	std::stringstream out; 
 	out << Ray::get_string() << ", colour: " << colour;
 	return out.str();
 }
-//======================================================================
+//------------------------------------------------------------------------------
 void CameraRay::disp()const{
 	std::cout << "CameraRay -> " << get_string() << "\n";
-}
-//======================================================================
-CsvRow CameraRay::getCameraRayCsvRow(GlobalSettings& settings)const{
-
-	CsvRow row;
-
-	stringstream out;
-	out.precision(settings.get_decimal_precision_for_csv_output());
-
-	out << colour.blue();
-	row.push_back( out.str() );
-	out.str("");
-
-	out << colour.green();
-	row.push_back( out.str() );
-	out.str("");
-
-	out << colour.red();
-	row.push_back( out.str() );
-	out.str("");
-
-	return row;
-}
-//======================================================================
-CsvRow CameraRay::getCsvRow(GlobalSettings& settings)const{
-	
-	CsvRow combinedRow;
-
-	if(settings.ShowCsvIdentifier())
-	combinedRow.push_back("Cam");
-
-	CsvRow RowOfRay 	= getRayCsvRow(settings);
-	CsvRow RowOfPhoton 	= getCameraRayCsvRow(settings);
-	
-	combinedRow.append(RowOfRay);
-	combinedRow.append(RowOfPhoton);
-
-	return combinedRow;
 }
 //------------------------------------------------------------------------------
 ColourProperties CameraRay::trace(
@@ -74,7 +37,7 @@ ColourProperties CameraRay::trace(
 		
 		if(
 			closest_intersection->get_pointer_to_intersecting_object()
-			->get_hit_reflection_flag()
+			->get_reflection_flag()
 			&& refl_count < settings->get_max_number_of_reflections())
 		{	
 			// the object pointer_to_closest_frame is pointing to
@@ -92,8 +55,7 @@ ColourProperties CameraRay::trace(
 
 			// mix colours
 			colour_to_return = closest_intersection->
-			get_pointer_to_intersecting_object()->
-			get_hit_colour();
+			get_pointer_to_intersecting_object()->get_colour();
 
 			// use itterativ call of trace to handle reflections
 			ColourProperties colour_of_reflected_ray;
@@ -108,13 +70,13 @@ ColourProperties CameraRay::trace(
 			colour_to_return.reflection_mix(
 				&colour_of_reflected_ray,
 				closest_intersection->
-				get_pointer_to_intersecting_object()->get_ptr2_reflection()
+					get_pointer_to_intersecting_object()->
+						get_reflection_properties()
 			);
 		}else{
 
 			colour_to_return = closest_intersection->
-				get_pointer_to_intersecting_object()->
-				get_hit_colour();
+				get_pointer_to_intersecting_object()->get_colour();
 		}	
 	}
 

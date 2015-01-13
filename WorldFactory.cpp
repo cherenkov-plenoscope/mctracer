@@ -79,28 +79,28 @@ CartesianFrame* mother,const pugi::xml_node node){
 	
 	XmlNode = node;
 
-	if(		 StringUtilities::is_equal(node.name(),"frame")){
+	if(		 StringTools::is_equal(node.name(),"frame")){
 		mother = produceCartesianFrame(mother,node);
 
-	}else if(StringUtilities::is_equal(node.name(),"triangle")){
+	}else if(StringTools::is_equal(node.name(),"triangle")){
 		mother = produceTriangle(mother,node);
 		
-	}else if(StringUtilities::is_equal(node.name(),"plane")){
+	}else if(StringTools::is_equal(node.name(),"plane")){
 		mother = producePlane(mother,node);
 		
-	}else if(StringUtilities::is_equal(node.name(),"sphere")){
+	}else if(StringTools::is_equal(node.name(),"sphere")){
 		mother = produceSphere(mother,node);	
 
-	}else if(StringUtilities::is_equal(node.name(),"cylinder")){
+	}else if(StringTools::is_equal(node.name(),"cylinder")){
 		mother = produceCylinder(mother,node);	
 
-	}else if(StringUtilities::is_equal(node.name(),"disc")){
+	}else if(StringTools::is_equal(node.name(),"disc")){
 		mother = produceDisc(mother,node);	
 	
-	}else if(StringUtilities::is_equal(node.name(),"FACT_reflector")){
+	}else if(StringTools::is_equal(node.name(),"FACT_reflector")){
 		mother = produceFactReflector(mother,node);	
 
-	}else if(StringUtilities::is_equal(node.name(),"include")){
+	}else if(StringTools::is_equal(node.name(),"include")){
 		include_file(mother,node);		
 		
 	}else if( mother->has_mother() ){	
@@ -123,28 +123,28 @@ void WorldFactory::go_on_with_children_of_node(
 	){	
 		std::string sub_node_name = sub_node.name();
 
-		if 		(StringUtilities::is_equal(sub_node_name,"include")){
+		if 		(StringTools::is_equal(sub_node_name,"include")){
 
 			fabricate_frame(mother,sub_node);
-		}else if(StringUtilities::is_equal(sub_node_name,"frame")){
+		}else if(StringTools::is_equal(sub_node_name,"frame")){
 
 			fabricate_frame(mother,sub_node);
-		}else if(StringUtilities::is_equal(sub_node_name,"triangle")){
+		}else if(StringTools::is_equal(sub_node_name,"triangle")){
 
 			fabricate_frame(mother,sub_node);
-		}else if(StringUtilities::is_equal(sub_node_name,"plane")){
+		}else if(StringTools::is_equal(sub_node_name,"plane")){
 
 			fabricate_frame(mother,sub_node);
-		}else if(StringUtilities::is_equal(sub_node_name,"sphere")){
+		}else if(StringTools::is_equal(sub_node_name,"sphere")){
 
 			fabricate_frame(mother,sub_node);
-		}else if(StringUtilities::is_equal(sub_node_name,"cylinder")){
+		}else if(StringTools::is_equal(sub_node_name,"cylinder")){
 
 			fabricate_frame(mother,sub_node);
-		}else if(StringUtilities::is_equal(sub_node_name,"disc")){
+		}else if(StringTools::is_equal(sub_node_name,"disc")){
 
 			fabricate_frame(mother,sub_node); 
-		}else if(StringUtilities::is_equal(sub_node_name,"FACT_reflector")){
+		}else if(StringTools::is_equal(sub_node_name,"FACT_reflector")){
 
 			fabricate_frame(mother,sub_node);
 		}else if(sub_node_name.find("set") == std::string::npos){
@@ -370,7 +370,7 @@ void WorldFactory::extract_Surface_props(
 	// reflection coefficient is parsed in out of a xml file. 
 	// There the reflection coefficient can be defined as a function of the
 	// wavelength. 
-	if( is_ending(refl_attribure, ".xml") ){
+	if( StringTools::is_ending(refl_attribure, ".xml") ){
 		// set wavelength depending reflection coefficient
 		refl_prop.SetReflectionCoefficient( (absolute_path + refl_attribure) );
 	}else{

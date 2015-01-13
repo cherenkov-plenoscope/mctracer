@@ -6,7 +6,7 @@
 //=================================
 // forward declared dependencies
 class HomoTrafo3D;
-//class ListOfInteractions;
+class OctTreeTraversingRay;
 //=================================
 // included dependencies
 #include <iostream>
@@ -21,13 +21,9 @@ class HomoTrafo3D;
 #include "CartesianFrame.h"
 #include "Intersection.h"
 #include "GlobalSettings.h"
-#include "CsvHandler.h"
 #include "OctTreeCube.h"
 #include "ListOfInteractions.h"
 #include "PseudoRandomNumberGenerator.h"
-
-//=================================
-class OctTreeTraversingRay;
 
 class Ray{
 
@@ -40,39 +36,87 @@ protected:
 	void normalize_direction();
 public:
 	Ray();
+	
 	Ray(const Vector3D support, const Vector3D direction);
 
 	void SetRay(const Vector3D nsup,const Vector3D ndir);	
+	
 	void SetDirection(const Vector3D ndir);
+	
 	void SetDirection(const double x,const double y,const double z);
+	
 	void SetSupport(const Vector3D nsup);
+	
 	void SetSupport(const double x,const double y,const double z);
+	
 	void SetID(unsigned long long int nID);
-	void SetHistory(ListOfInteractions *nhistory);
 
+	unsigned long long int ID()const;
+
+	void SetHistory(ListOfInteractions *history);
+
+	ListOfInteractions* GetHistory()const;
 
 	Vector3D Support()const;
+	
 	Vector3D Direction()const;
+	
 	Vector3D PositionOnRay(const double scalar)const;
-	unsigned long long int ID()const;
-	ListOfInteractions* GetHistory()const;
-	CsvRow getCsvID()const;
-	CsvRow getRayCsvRow(GlobalSettings& settings)const;
-	virtual CsvRow getCsvRow(GlobalSettings& settings)const;
-	virtual CsvRow getCsvRowHistory(GlobalSettings& settings)const;
-
+	
 	double get_distance_to_point_from_position_of_ray_at(
 		const Vector3D &point, const double ray_parameter_for_position_on_ray
 	)const;
 
-	bool support_of_ray_is_inside_of_bounding_sphere_of(
-		const CartesianFrame *frame
+	void homo_transformation_of_ray(Ray* ray,const HomoTrafo3D *T)const;
+
+	double get_parameter_on_ray_for_closest_distance_to_point(
+		const Vector3D &point
 	)const;
 
-	Intersection* get_closest_intersection(
+	double get_closest_distance_to_point(const Vector3D &point)const;
+
+	void disp()const;
+	
+	std::string get_string()const;
+
+	bool operator() (Intersection* one, Intersection* two)const;
+	
+	void operator= (Ray ray);
+
+	friend std::ostream& operator<<(std::ostream& os, const Ray& ray_to_be_displayed);
+	//--------------------------------------------------------------------------
+	// Ray and bounding sphere of Frame
+
+	bool support_of_ray_is_inside_bounding_sphere_of(
+		const CartesianFrame *frame
+	)const;
+	
+	bool has_intersection_with_bounding_sphere_of(
+		const CartesianFrame* frame
+	)const;
+	//--------------------------------------------------------------------------
+	// Ray and Frame
+
+	std::vector<Intersection*> get_intersections(
+		const CartesianFrame* world,
+		const CartesianFrame* object_propagated_from
+	)const;
+
+	virtual void propagate(	
+		const CartesianFrame* world, 
+		ListOfInteractions* history,
+		int interaction_count,
+		const CartesianFrame* object_propagated_from,
+		const GlobalSettings* settings,
+		PseudoRandomNumberGenerator* dice
+	);
+
+	double get_distance_to_closest_object(
 		const CartesianFrame* world,
 		const GlobalSettings *settings
 	)const;
+
+	void delete_intersections(std::vector<Intersection*> &Intersections)const;
 
 	void find_intersection_candidates_in_tree_of_frames(
 		const CartesianFrame* frame_to_check_for_interaction_of_ray_and_max_sphere, 
@@ -89,11 +133,10 @@ public:
 		std::vector<const CartesianFrame*> *frames_with_intersection_in_bounding_sphere
 	)const;
 
-	bool has_intersection_with_bounding_sphere_of(
-		const CartesianFrame* frame
+	Intersection* get_closest_intersection(
+		const CartesianFrame* world,
+		const GlobalSettings *settings
 	)const;
-
-	void homo_transformation_of_ray(Ray* ray,const HomoTrafo3D *T)const;
 
 	void find_intersections_in_intersection_candidate_frames(
 		std::vector<const CartesianFrame*> *objects_which_might_intersect,
@@ -109,81 +152,5 @@ public:
 	Intersection* calculate_closest_intersection(	
 		std::vector<Intersection*> *pointer_to_list_of_intersections
 	)const;
-
-	double get_parameter_on_ray_for_closest_distance_to_point(
-		const Vector3D &point
-	)const;
-
-	double get_closest_distance_to_point(const Vector3D &point)const;
-
-	virtual void propagate(	
-		const CartesianFrame* world, 
-		ListOfInteractions* history,
-		int interaction_count,
-		const CartesianFrame* object_propagated_from,
-		const GlobalSettings* settings,
-		PseudoRandomNumberGenerator* dice
-	);
-
-	double get_distance_to_closest_object(
-		const CartesianFrame* world,
-		const GlobalSettings *settings
-	)const;
-
-	std::vector<Intersection*> get_intersections(
-		const CartesianFrame* world,
-		const CartesianFrame* object_propagated_from
-	)const;
-
-	void disp()const;
-	void disp_possible_hit_list(const CartesianFrame *frame)const;
-	std::string get_string()const;
-
-	bool operator() (Intersection* one, Intersection* two)const;
-	void operator= (Ray ray);
-	void delete_intersections(std::vector<Intersection*> &Intersections)const;
-
-	friend std::ostream& operator<<(std::ostream& os, const Ray& ray_to_be_displayed);
-};
-
-//======================================================================
-// A special Ray to traverse the Oct Tree Structure
-//======================================================================
-/*here additional signum and inverse direction information are stored 
-with in the ray to speed up the Oct Tree traversal. Idea is taken from 
-
-	  An Efficient and Robust Ray–Box Intersection Algorithm
-	Amy Williams, Steve Barrus, R. Keith Morley, Peter Shirley
-	                   University of Utah
-*/
-
-class OctTreeTraversingRay : public Ray{
-public:
-	Vector3D inv_dir;
-	int sign[3];
-
-	OctTreeTraversingRay(const Ray *r){
-		support = r->Support();
-		direction = r->Direction();
-		//update();
-	}
-//======================================================================
-	void IntersectionCandidatesInOctTree(
-	const OctTreeCube *Cube,
-	std::unordered_set<CartesianFrame*> *IntersectionCandidates)const;
-//======================================================================
-	bool IntersectionWithOctTreeCube(const OctTreeCube* Cube)const;
-//======================================================================
-	void update(){
-		/* after any usual transformation of the ray this update has to 
-		be performed to update the additional information which is not 
-		stored or touched with in the usual Ray routines.*/
-		inv_dir.set( 1.0/direction.x() , 1.0/direction.y() , 1.0/direction.z() );
-
-		sign[0] = (inv_dir.x() < 0.0);
-		sign[1] = (inv_dir.y() < 0.0);
-		sign[2] = (inv_dir.z() < 0.0);
-	}
-//======================================================================
 };
 #endif // __RAY_H_INCLUDED__ 

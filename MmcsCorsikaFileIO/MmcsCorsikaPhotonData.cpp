@@ -21,7 +21,7 @@ std::string MmcsCorsikaPhotonData::get_matrix_print()const {
 	std::stringstream out;
 
 	for(std::vector<float> row : photon_matrix)
-		out << ToolBox::float_vec_2_str_using_delimiter(row," ") << "\n";
+		out << MmcsCorsikaTools::float_vec_2_str_using_delimiter(row," ") << "\n";
 
 	return out.str();
 }

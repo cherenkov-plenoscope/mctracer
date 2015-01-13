@@ -8,8 +8,8 @@
 
 //=================================
 // included_dependencies
-#include "Functions.h"
-#include "FileTools.h"
+#include "Tools/StringTools.h"
+#include "Tools/FileTools.h"
 #include "TracerException.h"
 //=================================
 class ConfigurationFactory {

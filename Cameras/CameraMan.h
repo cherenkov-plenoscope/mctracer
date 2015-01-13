@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "CameraDevice.h"
-#include "Functions.h"
+#include "Tools/Tools.h"
 //=================================
 class CameraMan {
 protected:

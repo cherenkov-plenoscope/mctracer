@@ -20,8 +20,8 @@ class ReflectionProperties;
 #include "ColourProperties.h"
 #include "TracerException.h"
 #include "OctTreeCube.h"
-#include "Functions.h"
-//include "RestrictiveName.h"
+#include "Tools/StringTools.h"
+#include "Tools/Tools.h"
 
 class CartesianFrame {
     // The CartesianFrame is the fundamental geometry in this framework.
@@ -201,13 +201,14 @@ public:
 
     virtual double get_hit_dist()const{ return 0.0; };
 
-    virtual bool get_hit_reflection_flag()const{ return false; };
+    virtual bool get_reflection_flag()const{ return false; };
 
-    virtual ColourProperties get_hit_colour()const{ 
-        ColourProperties defcol; return defcol; 
+    virtual ColourProperties get_colour()const{ 
+        ColourProperties default_colour; 
+        return default_colour; 
     };
 
-    virtual const ReflectionProperties* get_ptr2_reflection()const{ 
+    virtual const ReflectionProperties* get_reflection_properties()const{ 
         return nullptr; 
     };
 

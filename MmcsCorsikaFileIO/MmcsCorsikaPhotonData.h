@@ -11,7 +11,8 @@
 #include <vector>
 #include <math.h>
 #include <sstream>
-#include "Functions.h"
+#include "Tools/StringTools.h"
+#include "MmcsCorsikaTools.h"
 #include "MmcsCorsikaSubBlock.h"
 #include "TracerException.h"
 //=================================

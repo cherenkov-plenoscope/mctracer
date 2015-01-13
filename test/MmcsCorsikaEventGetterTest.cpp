@@ -6,6 +6,7 @@
 #include "MmcsCorsikaFileIO/MmcsCorsikaFullEventGetter.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaSubBlockGetter.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaPhotonData.h"
+#include "MmcsCorsikaFileIO/MmcsCorsikaTools.h"
 #include "ListOfPropagations.h"
 
 using namespace std;
@@ -56,6 +57,54 @@ class MmcsCorsikaEventGetterTest : public ::testing::Test {
   }
 };
 //----------------------------------------------------------------------
+TEST_F(MmcsCorsikaEventGetterTest, word_size_is_too_large) {
+  	EXPECT_THROW(
+  		{MmcsCorsikaTools::str2float_4byte_bin_map("Hans Peter");},
+ 		TracerException
+	);
+}
+//------------------------------------------------------------------------------
+TEST_F(MmcsCorsikaEventGetterTest, word_size_is_zero) {
+  	EXPECT_THROW(
+  		{MmcsCorsikaTools::str2float_4byte_bin_map("");},
+ 		TracerException
+	);
+}
+//------------------------------------------------------------------------------
+TEST_F(Tools, word_2_float) {
+
+  string h = "hans";
+
+  float H = MmcsCorsikaTools::str2float_4byte_bin_map(h);
+  string r = MmcsCorsikaTools::float2str_4byte_bin_map(H);
+
+  EXPECT_EQ(h, r);
+}
+//------------------------------------------------------------------------------
+TEST_F(Tools, float_2_word) {
+
+  float leet = 1.337;
+
+  string leet_word = MmcsCorsikaTools::float2str_4byte_bin_map(leet);
+  float r_leet = MmcsCorsikaTools::str2float_4byte_bin_map(leet_word);
+
+  EXPECT_EQ(leet, r_leet);
+}
+//------------------------------------------------------------------------------
+TEST_F(Tools, zero_float_2_word) {
+
+  float n = 0.0;
+  string emp = MmcsCorsikaTools::float2str_4byte_bin_map(n);
+  EXPECT_EQ(string(4, '\0'), emp);
+}
+//------------------------------------------------------------------------------
+TEST_F(Tools, zero_word_2_float) {
+
+  string emp(4, '\0');
+  float n = MmcsCorsikaTools::str2float_4byte_bin_map(emp);
+  EXPECT_EQ(0.0, n);
+}
+//----------------------------------------------------------------------
 TEST_F(MmcsCorsikaEventGetterTest, invalid_file_size) {
 
 	EXPECT_EXCEPTION_OF_TYPE_FOR_FILE(
@@ -73,6 +122,14 @@ TEST_F(MmcsCorsikaEventGetterTest, gzip_file) {
 }
 //----------------------------------------------------------------------
 TEST_F(MmcsCorsikaEventGetterTest, not_existing_file) {
+
+	EXPECT_THROW(
+		{MmcsCorsikaFullEventGetter event_getter("./no_such_path/no_such_file");},
+		TracerException
+	);
+}
+//----------------------------------------------------------------------
+TEST_F(MmcsCorsikaEventGetterTest, not_existing_file_exception_type) {
 
 	EXPECT_EXCEPTION_OF_TYPE_FOR_FILE(
 		CAN_NOT_OPEN_MMCS_FILE,

@@ -4,7 +4,7 @@
 
 #include "WorldFactory.h"
 #include "Vector3D.h"
-#include "Functions.h"
+#include "Tools/Tools.h"
 //====================
 #include "Ray.h"
 #include "Photon.h"
@@ -21,8 +21,8 @@ int main(int argc, char* argv[]) {
 	try{
 		UserInteraction::print_welcome_screen();
 
-		std::string config_file_path = 
-			UserInteraction::parse_config_file_path(argc, argv);
+		//std::string config_file_path = 
+		//	UserInteraction::parse_config_file_path(argc, argv);
 
 		GlobalSettings settings;		
 		settings.set_max_number_of_reflections(5);

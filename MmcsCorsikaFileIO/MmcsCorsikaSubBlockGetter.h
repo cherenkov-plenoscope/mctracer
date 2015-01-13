@@ -11,12 +11,14 @@
 #include <iostream> 
 #include <string>
 #include "TracerException.h"
-#include "Functions.h"
-#include "FileTools.h"
+#include "Tools/Tools.h"
+#include "Tools/FileTools.h"
+#include "Tools/StringTools.h"
 #include <fstream>
 #include <stdio.h>
 #include <string.h>
 #include "MmcsCorsikaSubBlock.h"
+
 //=================================
 class MmcsCorsikaSubBlockGetter {
     const uint block_size_in_bytes = 22932;

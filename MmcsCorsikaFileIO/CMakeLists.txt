@@ -7,6 +7,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaEventHeader.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaPhotonData.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaEvent.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaTools.cpp
    	PARENT_SCOPE
 )
 set(HEADERS
@@ -15,9 +16,9 @@ set(HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaSubBlockGetter.h
 	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaFullEventGetter.h
 	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaRunHeader.h
-
 	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaEventHeader.h
 	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaPhotonData.h
 	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaEvent.h
+	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaTools.h
 	PARENT_SCOPE
 )

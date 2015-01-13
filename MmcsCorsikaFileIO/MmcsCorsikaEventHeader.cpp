@@ -125,9 +125,9 @@ std::string MmcsCorsikaEventHeader::get_print()const {
 	out << "number of uses of each Cherenkov event: ";
 	out << number_of_uses_of_each_Cherenkov_event << "\n";
 	out << "core positions: \n";
-	out << "x:  " << ToolBox::float_vec_2_str_using_delimiter(
+	out << "x:  " << MmcsCorsikaTools::float_vec_2_str_using_delimiter(
 		x_coordinate_of_core_location_for_scattered_events_in_cm, " ") << "\n";
-	out << "y:  " << ToolBox::float_vec_2_str_using_delimiter(
+	out << "y:  " << MmcsCorsikaTools::float_vec_2_str_using_delimiter(
 		y_coordinate_of_core_location_for_scattered_events_in_cm, " ") << "\n";
 	return out.str();
 }

@@ -11,7 +11,7 @@
 #include "ApertureCamera.h"
 #include "PinHoleCamera.h"
 #include "SmartImage.h"
-#include "Functions.h"
+#include "Tools/Tools.h"
 #include "CameraMan.h"
 #include "CameraManForTranslation.h"
 #include "CameraManForRotation.h"

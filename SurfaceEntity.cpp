@@ -25,15 +25,15 @@ std::string SurfaceEntity::get_surface_propertie_prompt()const{
 	return out.str();
 }
 //======================
-bool SurfaceEntity::get_hit_reflection_flag()const{
+bool SurfaceEntity::get_reflection_flag()const{
 	return reflection.flag();
 }
 //======================
-ColourProperties SurfaceEntity::get_hit_colour()const{
+ColourProperties SurfaceEntity::get_colour()const{
 	return colour;
 }
 //======================
-const ReflectionProperties* SurfaceEntity::get_ptr2_reflection()const{
+const ReflectionProperties* SurfaceEntity::get_reflection_properties()const{
 	return &reflection;
 } 
 //======================

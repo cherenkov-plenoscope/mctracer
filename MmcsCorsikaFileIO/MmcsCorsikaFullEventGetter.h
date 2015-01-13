@@ -15,7 +15,7 @@
 #include "MmcsCorsikaPhotonData.h"
 #include "MmcsCorsikaEvent.h"
 #include "FiniteStateMashine.h"
-#include "Functions.h"
+#include "Tools/StringTools.h"
 
 namespace MMCS {
 	enum states_during_file_reading {

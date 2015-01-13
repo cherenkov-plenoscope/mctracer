@@ -1,6 +1,6 @@
 #include "testVector3D.cpp"
 #include "RayTest.cpp"
-#include "RayAndFrameInteractionTest.cpp"
+#include "RayAndBoundingSphereOfFrameInteractionTest.cpp"
 #include "testRotation3D.cpp"
 #include "testPhoton.cpp"
 #include "testWorldFactory.cpp"

@@ -179,7 +179,7 @@ std::string CartesianFrame::get_frame_string()const{
 std::string CartesianFrame::get_frame_string(unsigned int depth)const{
 
 	std::stringstream out;
-	std::string gap = multi("|   ", depth);
+	std::string gap = StringTools::repeat_multiple_times("|   ", depth);
 
 	out << gap << " _____" << name_of_frame << "____\n";
 	out << gap << "| pos in mother = " << pos_in_mother << "\n";
@@ -210,7 +210,7 @@ std::string CartesianFrame::get_print(
 			out << child->get_print( depth+1, print_wtih_all_children );
 	}
 
-	std::string gap = multi("|   ", depth);
+	std::string gap = StringTools::repeat_multiple_times("|   ", depth);
 	out << gap << "|____________________________\n";
 	out << gap << "\n";
 
@@ -355,12 +355,15 @@ const CartesianFrame* CartesianFrame::get_frame_in_tree_by_path(
 	/// eg.      /house/roof/chimney/chimney_wall_2 insead of
 	///     world/house/roof/chimney/chimney_wall_2
 
-	remove_if_leading(path_to_frame, delimiter_for_frame_path);
-
-	std::string name_of_leading_frame = cut_leading_token(
-		path_to_frame,
-	 	delimiter_for_frame_path
+	StringTools::remove_char_from_text_if_leading(
+		delimiter_for_frame_path, path_to_frame
 	);
+
+	std::string name_of_leading_frame = 
+		StringTools::cut_leading_token_infront_of_delimiter(
+			path_to_frame,
+	 		delimiter_for_frame_path
+		);
 
 	if( has_child_with_name(name_of_leading_frame) ){
 
@@ -386,7 +389,7 @@ const CartesianFrame* CartesianFrame::get_child_by_name(
 	std::string specific_name 
 )const{
 	for( CartesianFrame* child : children )
-		if( StringUtilities::is_equal(child->name_of_frame, specific_name) )
+		if( StringTools::is_equal(child->name_of_frame, specific_name) )
 			return child;
 
 	return nullptr;

@@ -14,10 +14,9 @@
 #include <vector>
 #include <algorithm>    // std::lower_bound, std::upper_bound, std::sort
 #include <utility>
-#include "PugiXml/pugixml.hpp"
+#include "XmlIO/XmlFileIo.h"
 #include "TracerException.h"
-#include "XmlIoException.h"
-#include "XmlFileIo.h"
+#include "Tools/StringTools.h"
 //==============================================================================
 // Function1D allows an assignment of one floating number to annother. 
 // For example when one wants to express the absorbtion coefficient of a 

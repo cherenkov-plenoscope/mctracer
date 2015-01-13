@@ -28,23 +28,24 @@ protected:
 	Photon(double new_wavelength);
 //=================================================
 public:
-//=================================
+
 	Photon(
 		double baseX,double baseY,double baseZ,
 		double dirX, double dirY, double dirZ,
 		double new_wavelength
 	);
-//=================================
+
 	Photon(Vector3D support, Vector3D direction,double new_wavelength);
-//=================================
+
 	Photon(Ray prototype_ray_for_photon,double new_wavelength);
-//=================================
+
 	void propagate(
 		const CartesianFrame* world, 
 		ListOfInteractions* history,
 		const GlobalSettings* settings,
 		PseudoRandomNumberGenerator* dice
 	);
+
 	void propagate(	
 		const CartesianFrame* world, 
 		ListOfInteractions* history,
@@ -53,21 +54,21 @@ public:
 		const GlobalSettings* settings,
 		PseudoRandomNumberGenerator* dice
 	);
-//=================================
-double get_wavelength()const;
-//=================================
-void disp()const;
-//=================================
-std::string get_string()const;
-//=================================
-CsvRow getPhotonCsvRow(GlobalSettings& settings)const;
-//=================================
-CsvRow getCsvRow(GlobalSettings& settings)const;
-//=================================
-friend std::ostream& operator<<(
-	std::ostream& os, 
-	const Photon& photon_to_be_displayed
-);
-//=================================
+
+	double get_wavelength()const;
+
+	void disp()const;
+
+	std::string get_string()const;
+
+	friend std::ostream& operator<<(
+		std::ostream& os, 
+		const Photon& photon_to_be_displayed
+	);
+
+private:
+	bool reflection_takes_place_in_intesection(
+		Intersection* intersection, PseudoRandomNumberGenerator* dice
+	);
 };
 #endif // __PHOTON_H_INCLUDED__ 

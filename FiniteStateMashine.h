@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "Functions.h"
+#include "Tools/StringTools.h"
 #include <iostream>
 #include <TracerException.h>
 #include <string>

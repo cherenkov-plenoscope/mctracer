@@ -8,9 +8,9 @@
 
 //=================================
 // included_dependencies
+#include "MmcsCorsikaTools.h"
 #include "MmcsCorsikaSubBlock.h"
 #include "MmcsCorsikaSubBlockGetter.h"
-#include "Functions.h"
 //=================================
 class MmcsCorsikaEventHeader {
 

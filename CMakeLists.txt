@@ -10,26 +10,34 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake-mod
 find_package( OpenCV REQUIRED )
 
 set(SOURCE
-	${CMAKE_CURRENT_SOURCE_DIR}/mctracerException.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/XmlIoException.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/CsvHandler.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/XmlFileIo.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/WorldFactory.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/SensorIntersection.cpp 
-	${CMAKE_CURRENT_SOURCE_DIR}/ReflectionProperties.cpp 
-	${CMAKE_CURRENT_SOURCE_DIR}/ColourProperties.cpp 
-	${CMAKE_CURRENT_SOURCE_DIR}/GlobalSettings.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Vector3D.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Rotation3D.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/HomoTrafo3D.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Intersection.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/CartesianFrame.cpp 
-	${CMAKE_CURRENT_SOURCE_DIR}/OctTreeCube.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceEntity.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Ray.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/RayAndBoundingSphereInteraction.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/RayAndFrameInteraction.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/OctTreeTraversingRay.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Photon.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ListOfPropagations.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ListOfInteractions.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/QuadraticEquation.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/FiniteStateMashine.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/OctTreeCube.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ReflectionProperties.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/ColourProperties.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/TracerException.cpp
+
+	${CMAKE_CURRENT_SOURCE_DIR}/ConfigurationFactory.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/GlobalSettings.cpp 
+
+	${CMAKE_CURRENT_SOURCE_DIR}/WorldFactory.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Function1D.cpp
+
+	${CMAKE_CURRENT_SOURCE_DIR}/CsvHandler.cpp
+
 	${CMAKE_CURRENT_SOURCE_DIR}/Triangle.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Plane.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Disc.cpp 
@@ -46,15 +54,9 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorEllipsoidHexagonal.cpp
 # python extension
 	${CMAKE_CURRENT_SOURCE_DIR}/mcPYtracer/testPyTracer.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Functions.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/FileTools.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Function1D.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/QuadraticEquation.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/FiniteStateMashine.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ConfigurationFactory.cpp
 )
-
-add_subdirectory("${PROJECT_SOURCE_DIR}/PugiXml")
+add_subdirectory("${PROJECT_SOURCE_DIR}/Tools")
+add_subdirectory("${PROJECT_SOURCE_DIR}/XmlIO")
 add_subdirectory("${PROJECT_SOURCE_DIR}/MmcsCorsikaFileIO")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Cameras")
 
