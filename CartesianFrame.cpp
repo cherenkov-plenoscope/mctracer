@@ -2,7 +2,7 @@
 //==============================================================================
 void CartesianFrame::post_initialize() {
 	post_initialize_Transformations();
-	post_initialize_OctTree();
+	//post_initialize_OctTree();
 }
 //==============================================================================
 void CartesianFrame::post_initialize_OctTree() {
@@ -430,3 +430,16 @@ bool CartesianFrame::has_children()const{
 bool CartesianFrame::uses_oct_trees_to_store_its_children()const {
 	return (OctTree != nullptr);
 }
+//------------------------------------------------------------------------------
+#include "Ray.h"
+#include "Intersection.h"
+Intersection* CartesianFrame::calculate_intersection_with(const Ray& ray)const {
+	return nullptr;
+}
+//------------------------------------------------------------------------------
+Intersection* CartesianFrame::empty_intersection()const {
+	Intersection* intersection;
+	intersection = new Intersection();
+	return intersection;
+}
+//------------------------------------------------------------------------------

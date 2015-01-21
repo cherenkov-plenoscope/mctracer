@@ -23,13 +23,24 @@ private:
 public:
 //======================================================================
 ColourProperties();
-//======================================================================
-void set_colour_0to255
-(const int new_red,const int new_green,const int new_blue);
-//======================================================================
-void set_colour_0to255
-(const double new_red,const double new_green,const double new_blue);
-//======================================================================
+ColourProperties(const int r, const int g, const int b) {
+	set_colour_0to255(r, g, b);
+}
+ColourProperties(const double r, const double g, const double b) {
+	set_colour_0to255(r, g, b);
+}
+
+void set_colour_0to255(
+	const int new_red,
+	const int new_green,
+	const int new_blue
+);
+void set_colour_0to255(
+	const double new_red,
+	const double new_green,
+	const double new_blue
+);
+
 unsigned char get_red()const;
 unsigned char get_green()const;
 unsigned char get_blue()const;

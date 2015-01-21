@@ -8,6 +8,7 @@ OctTreeTraversingRay::OctTreeTraversingRay(const Ray *r) {
 void OctTreeTraversingRay::IntersectionCandidatesInOctTree(
 	const OctTreeCube *Cube,
 	std::unordered_set<CartesianFrame*> *IntersectionCandidates
+	//std::vector<CartesianFrame*> *IntersectionCandidates
 )const{
 	// Check whether this Cube is a leaf or has children
 	//if(Cube->ChildCubes.size()==0){
@@ -36,6 +37,7 @@ void OctTreeTraversingRay::IntersectionCandidatesInOctTree(
 		// IntersectionCandidates
 		for(CartesianFrame* const FrameInChildCube : Cube->get_child_frames()) {
 			IntersectionCandidates->insert(FrameInChildCube);
+			//IntersectionCandidates->push_back(FrameInChildCube);
 		}
 		// here in the leaf of the OctTree the recursion ends.
 	}

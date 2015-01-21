@@ -26,6 +26,11 @@ private:
 	bool reflection_function_was_set = false;
 	Function1D reflection_function;
 public:
+	ReflectionProperties() {}
+	
+	ReflectionProperties(const double refl_coef) {
+		SetReflectionCoefficient(refl_coef);
+	}
 //======================================================================
 	void SetReflectionCoefficient(const double new_refl_coeff);
 	void SetReflectionCoefficient(const std::string path2xml);

@@ -8,11 +8,9 @@
 
 using namespace std;
 
-// The fixture for testing class Foo.
 class SphereIntersectionTest : public ::testing::Test {
  protected:
-  // You can remove any or all of the following functions if its body
-  // is empty.
+
 	GlobalSettings setup;
 	Vector3D    pos;
 	Rotation3D  rot;
@@ -31,14 +29,7 @@ class SphereIntersectionTest : public ::testing::Test {
   virtual ~SphereIntersectionTest() {
     // You can do clean-up work that doesn't throw exceptions here.
   }
-
-  // If the constructor and destructor are not enough for setting up
-  // and cleaning up each test, you can define the following methods:
-
   virtual void SetUp() {
-    // Code here will be called immediately after the constructor (right
-    // before each test).
-
   	pos.set(0.0,0.0,0.0);
   	rot.set(0.0,0.0,0.0);
 
@@ -59,13 +50,6 @@ class SphereIntersectionTest : public ::testing::Test {
 	//---post initialize the world to calculate all bounding spheres---
 	world.post_initialize_me_and_all_my_children();
   }
-
-  virtual void TearDown() {
-    // Code here will be called immediately after each test (right
-    // before the destructor).
-  }
-
-  // Objects declared here can be used by all tests in the test case for Foo.
 };
 //------------------------------------------------------------------------------
 TEST_F(SphereIntersectionTest, frontal) {
@@ -139,3 +123,83 @@ TEST_F(SphereIntersectionTest, tangential_intersection) {
 		1e-12
 	);
 }
+//------------------------------------------------------------------------------
+// NEW INTERSECTION METHOD
+//------------------------------------------------------------------------------
+TEST_F(SphereIntersectionTest, ray_frontal_intersection) {
+
+  Ray ray_with_intersection(Vector3D(0.0,0.0,-2.0), Vector3D(0.0,0.0,1.0));
+
+  Intersection* intersec = 
+  	MySphere.calculate_intersection_with(ray_with_intersection);
+
+  ASSERT_TRUE(intersec->does_intersect());
+  EXPECT_EQ(intersec->get_intersecting_object(), &MySphere);
+  EXPECT_EQ(
+  	Vector3D(0.0,0.0,-1.0),
+  	intersec->get_intersection_vector_in_object_system()
+  );
+  EXPECT_EQ(
+  	Vector3D(0.0,0.0,-1.0),
+  	intersec->get_surface_normal_in_object_system()
+  );
+}
+//------------------------------------------------------------------------------
+TEST_F(SphereIntersectionTest, ray_intersection_but_no_causal_intersection) {
+
+  Ray ray_without_intersection(Vector3D(0.0,0.0,+2.0), Vector3D(0.0,0.0,1.0));
+
+  Intersection* empty_intersec = 
+    MySphere.calculate_intersection_with(ray_without_intersection);
+
+  EXPECT_FALSE(empty_intersec->does_intersect());
+}
+//------------------------------------------------------------------------------
+TEST_F(SphereIntersectionTest, ray_completely_outside_of_sphere) {
+
+  Ray ray_outside(Vector3D(5.0,0.0,0.0), Vector3D(0.0,0.0,1.0));
+
+  Intersection* intersec = 
+    MySphere.calculate_intersection_with(ray_outside);
+
+  EXPECT_FALSE(intersec->does_intersect());
+}
+//------------------------------------------------------------------------------
+TEST_F(SphereIntersectionTest, ray_starts_inside_sphere) {
+
+  Ray ray_inside(Vector3D(0.0,0.0,0.0), Vector3D(0.0,0.0,1.0));
+
+  Intersection* intersec = 
+    MySphere.calculate_intersection_with(ray_inside);
+
+  ASSERT_TRUE(intersec->does_intersect());
+  EXPECT_EQ(intersec->get_intersecting_object(), &MySphere);
+  EXPECT_EQ(
+  	Vector3D(0.0,0.0,+1.0),
+  	intersec->get_intersection_vector_in_object_system()
+  );
+  EXPECT_EQ(
+  	Vector3D(0.0,0.0,+1.0),
+  	intersec->get_surface_normal_in_object_system()
+  );
+}
+//------------------------------------------------------------------------------
+TEST_F(SphereIntersectionTest, ray_tangents_sphere) {
+
+  Ray ray_inside(Vector3D(1.0, 0.0, -2.0), Vector3D(0.0, 0.0, 1.0));
+
+  Intersection* intersec = 
+    MySphere.calculate_intersection_with(ray_inside);
+
+  ASSERT_TRUE(intersec->does_intersect());
+  EXPECT_EQ(intersec->get_intersecting_object(), &MySphere);
+  EXPECT_EQ(
+  	Vector3D(1.0, 0.0, 0.0),
+  	intersec->get_intersection_vector_in_object_system())
+  ;
+  EXPECT_EQ(
+  	Vector3D(1.0, 0.0, 0.0),
+  	intersec->get_surface_normal_in_object_system()
+  );
+}
+//------------------------------------------------------------------------------

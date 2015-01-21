@@ -68,6 +68,6 @@ private:
 	uint total_number_of_sub_blocks()const;
 	uint sum_of_sub_blocks_so_far()const;
 	uint number_of_completed_blocks()const;
-	void throw_can_not_open_Mmcs_file(std::string details)const;
+	void throw_can_not_open_Mmcs_file(const std::string details)const;
 };
 #endif // __MMCSCORSIKASUBBLOCKGETTER_H_INCLUDE__ 

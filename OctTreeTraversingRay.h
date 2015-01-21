@@ -30,6 +30,7 @@ public:
 	void IntersectionCandidatesInOctTree(
 		const OctTreeCube *Cube,
 		std::unordered_set<CartesianFrame*> *IntersectionCandidates
+		//std::vector<CartesianFrame*> *IntersectionCandidates
 	)const;
 
 	bool IntersectionWithOctTreeCube(const OctTreeCube* Cube)const;

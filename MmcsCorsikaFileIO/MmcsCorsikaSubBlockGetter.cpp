@@ -28,11 +28,10 @@ void MmcsCorsikaSubBlockGetter::handle_gzip_file()const {
 }
 //------------------------------------------------------------------------------
 void MmcsCorsikaSubBlockGetter::remember_MMCS_file_size_in_bytes() {
-	try{
+	if(FileTools::can_be_opened(filename))
 		file_size_in_bytes = FileTools::size_in_bytes(filename);
-	}catch(TracerException &e){
-		throw_can_not_open_Mmcs_file(e.what());
-	}
+	else
+		throw_can_not_open_Mmcs_file("Failed to estimate file size");
 }
 //------------------------------------------------------------------------------
 void MmcsCorsikaSubBlockGetter::open_MMCS_file() {
@@ -46,14 +45,14 @@ void MmcsCorsikaSubBlockGetter::assert_MMCS_file_is_valid()const {
 //------------------------------------------------------------------------------
 void MmcsCorsikaSubBlockGetter::assert_file_reading_is_fine(const std::ifstream &file)const {
 	if (!file.is_open())
-		throw_can_not_open_Mmcs_file("fstream returns: 'false'");
+		throw_can_not_open_Mmcs_file("fstream.is_open() returns: 'false'");
 }
 //------------------------------------------------------------------------------
-void MmcsCorsikaSubBlockGetter::throw_can_not_open_Mmcs_file(std::string details)const {
+void MmcsCorsikaSubBlockGetter::throw_can_not_open_Mmcs_file(const std::string details)const {
 	std::stringstream info;
 	info << "Can not open MMCS file: '" << filename << "'\n";
 	info << details << "\n";
-	throw TracerException(info.str(), CAN_NOT_OPEN_MMCS_FILE);		
+	throw TracerException( info.str(), CAN_NOT_OPEN_MMCS_FILE);		
 }
 //------------------------------------------------------------------------------
 MmcsCorsikaSubBlockGetter::~MmcsCorsikaSubBlockGetter() {

@@ -13,7 +13,7 @@ ExceptionType TracerException::type()const{
 	return Type;
 }
 
-const char * TracerException::what () const noexcept {
+const char * TracerException::what () const throw() {
 	std::stringstream out;
 	out << "TracerException:\n" << message;
 	return out.str().c_str();

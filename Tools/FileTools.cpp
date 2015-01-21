@@ -14,11 +14,16 @@ uint FileTools::size_in_bytes(const std::string name_of_file_to_get_size_of) {
 	file.open(name_of_file_to_get_size_of, std::ios::binary | std::ios::ate);
 
 	if (!file.is_open()) {
+		file.close();
 		std::stringstream info;
 		info << "Toolbox: " << __func__ << "()\n";
 		info << "Can not open file : '" << name_of_file_to_get_size_of;
 		info << "' in order to get file size.\n";
-		throw TracerException(info.str());	
+		throw TracerException(info.str());
 	}
-	return file.tellg();	
+
+	uint size_in_bytes = file.tellg();
+	file.close();
+
+	return size_in_bytes;
 }

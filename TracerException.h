@@ -40,7 +40,7 @@ public:
 	TracerException(std::string message, ExceptionType Type);
 	TracerException();
 	ExceptionType type()const;
-	const char * what () const noexcept;
+	const char * what () const throw();
 };
 
 class BadValue :public TracerException{

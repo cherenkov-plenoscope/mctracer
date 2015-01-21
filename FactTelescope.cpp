@@ -9,35 +9,29 @@ FactTelescope::FactTelescope(double alpha){
 		alpha = 0.0;
 
 		if(prompt){
-			std::cout<<"fact_telescope->alpha out of range->";
-			std::cout<<"building default Davies-Cotton reflector.";
-			std::cout<<std::endl;
+			std::cout << "fact_telescope->alpha out of range->";
+			std::cout << "building default Davies-Cotton reflector.\n";
 		}
 	}
 	
-	//str_regex = "fact_telescope";
-	
-	//==============================================================
 	// mirror properties
-	//==============================================================
-	std::stringstream	mirror_name;
 	Vector3D  	mirror_pos; 		//to be set individual
 	Rotation3D 	mirror_rotation;	//to be set individual
-	ColourProperties 	mirror_colour;
-				mirror_colour.set_colour_0to255(255,255,255);
+
+	ColourProperties mirror_colour;
+		mirror_colour.set_colour_0to255(255,255,255);
+
 	ReflectionProperties mirror_reflection;
-				mirror_reflection.SetReflectionCoefficient(0.9);	
-	//==============================================================
+		mirror_reflection.SetReflectionCoefficient(0.9);	
+
 	// declare FACT geometry, only mirror positions
-	//==============================================================
 	dbl_focal_length_telescope = 4.8892;
 	/// distribution of focal length of mirrors (4.8892 plus minus 0.002)m 
 	/// as in Ann Kristins Diploma Thesis
 	MirrorRadius_m = 0.345;
 	const int int_number_of_circles = 4;
 	const int int_number_of_mirrors_in_circle[int_number_of_circles] = 
-	{6,6,6,12};
-	//{6,0,0,0};
+		{6,6,6,12};
 	//========================
 	// all radii
 	//========================
@@ -156,208 +150,172 @@ FactTelescope::FactTelescope(double alpha){
 	mirror_number =0;
 	angle = 0.0;
 	double final_mean_distance_of_mirrors_and_image_plane = 0.0;
-	for(int radius=0;radius<int_number_of_circles;radius++){
-		//cout<<"Radius: ";
-		//cout<<circle_radius_of_mirror_positions[radius]<<endl;
-		for(	int circ1=0;
-				circ1<int_number_of_mirrors_in_circle[radius];
-				circ1++){
-				// get angle 
-				switch(radius){
+
+	for(int radius=0; radius<int_number_of_circles; radius++) {
+		for(int circ1=0; circ1<int_number_of_mirrors_in_circle[radius];	circ1++) {
+			// get angle 
+			switch(radius){
 				case 0: angle=circle_angle_R1[circ1]; break;
 				case 1: angle=circle_angle_R2[circ1]; break;
 				case 2: angle=circle_angle_R3[circ1]; break;
 				case 3: angle=circle_angle_R4[circ1]; break;
-				}
-				//cout<<"Angle: ";
-				//cout<<angle<<endl;
-				//=====================
-				// calculate mirror position
-				//=====================
-				// z component of mirror position
-				/*
-				double mirror_position_z = 0.0;
-				
-				// DAVIES COTTON
-				if(flag_davies_cotton){
-					mirror_position_z = (
-					dbl_focal_length_telescope-
-					sqrt( 
-						pow(dbl_focal_length_telescope,2.0) -
-						pow(circle_radius_of_mirror_positions[radius],2.0)
-						)
-					);
-				}
-				// PARABOLOID
-				if(flag_paraboloid){
-					mirror_position_z =
-					1.0/(4.0*dbl_focal_length_telescope)*
-					pow(circle_radius_of_mirror_positions[radius],2.0);
-					mirror_position_z += 0.09048;
-				}
-				
-				*/
-				//==================================================
-				// HYBRID 
-				//==================================================
-				telescope_table<<"________Mirror_"<<mirror_number+1;
-				telescope_table<<"_{"<<radius+1<<","<<circ1+1<<"}______________"<<std::endl;
-				telescope_table<<"| alpha: "<<alpha<<" [1]"<<std::endl;
-				double z_Davies_Cotton = ( 
+			}
+
+			//==================================================
+			// HYBRID 
+			//==================================================
+			telescope_table << "________Mirror_" << mirror_number+1;
+			telescope_table << "_{" << radius+1 << "," << circ1+1 << "}______________\n";
+			telescope_table << "| alpha: " << alpha << " [1]\n";
+			
+			double z_Davies_Cotton = ( 
 				dbl_focal_length_telescope-
 				sqrt( 
-				pow(dbl_focal_length_telescope,2.0) -
-				pow(circle_radius_of_mirror_positions[radius],2.0)
+					pow(dbl_focal_length_telescope,2.0) -
+					pow(circle_radius_of_mirror_positions[radius],2.0)
 				)
-				);
-				telescope_table<<"| z_Davies_Cotton: ";
-				telescope_table<<z_Davies_Cotton<<" [m]"<<std::endl;
-				
-				double z_parabolic = 
-				1.0/(4.0*dbl_focal_length_telescope)*
-				pow(circle_radius_of_mirror_positions[radius],2.0);
-				telescope_table<<"| z_parabolic:     ";
-				telescope_table<< z_parabolic <<" [m]"<<std::endl;
-				
-				// the naive mirror position in z without image 
-				// distance adaption 
-				double z_hybrid_tick= 
+			);
+
+			telescope_table<<"| z_Davies_Cotton: ";
+			telescope_table<<z_Davies_Cotton<<" [m]\n";
+			
+			double z_parabolic = 
+			1.0/(4.0*dbl_focal_length_telescope)*
+			pow(circle_radius_of_mirror_positions[radius],2.0);
+			telescope_table<<"| z_parabolic:     ";
+			telescope_table<< z_parabolic <<" [m]\n";
+			
+			// the naive mirror position in z without image 
+			// distance adaption 
+			double z_hybrid_tick = 
 				alpha*z_Davies_Cotton + (1.0-alpha)*z_parabolic;
-				telescope_table<<"| z_hybrid_tick:   ";
-				telescope_table<<z_hybrid_tick<<" [m]"<<std::endl;
-					
-				double z_hybrid = 
+			
+			telescope_table << "| z_hybrid_tick:   ";
+			telescope_table << z_hybrid_tick << " [m]\n";
+				
+			double z_hybrid = 
 				z_hybrid_tick + mean_image_distance_deviation;
 
-				telescope_table<<"| z_hybrid     :   ";
-				telescope_table<<z_hybrid<<" [m]"<<std::endl;
-				
-				mirror_pos.set(
-				//x
-				circle_radius_of_mirror_positions[radius]*
-				sin(angle),
-				//y
-				circle_radius_of_mirror_positions[radius]*
-				cos(angle),
-				//z 
+			telescope_table << "| z_hybrid     :   ";
+			telescope_table << z_hybrid << " [m]\n";
+			
+			mirror_pos.set(
+				circle_radius_of_mirror_positions[radius]*sin(angle),
+				circle_radius_of_mirror_positions[radius]*cos(angle),
 				z_hybrid
-				);
-				telescope_table<<"| final mirror position m_{"<<radius+1<<","<<circ1+1<<"}:   ";
-				telescope_table<<mirror_pos.get_string()<<std::endl;
-				//==================================================
-				// calculate mirror orientation
-				//==================================================
+			);
 
-					//==============================================
-					// calculate rotation axis
-					//==============================================
-				Vector3D focal_point; 
-				focal_point.
-				set(0.0,0.0,dbl_focal_length_telescope);
+			telescope_table << "| final mirror position m_{" << radius+1 << "," << circ1+1 << "}:   ";
+			telescope_table << mirror_pos.get_string() << "\n";
+			//==================================================
+			// calculate mirror orientation
+			//==================================================
+
+				//==============================================
+				// calculate rotation axis
+				//==============================================
+			Vector3D focal_point(0.0, 0.0, dbl_focal_length_telescope);
+			
+			Vector3D focal_point_to_mirror_pos = focal_point - mirror_pos;
 				
-				Vector3D focal_point_to_mirror_pos = 
-				focal_point - mirror_pos;
-					
-				Vector3D EZ; EZ.set_unit_vector_z();
-				Vector3D vec_rotation_axis;
-				vec_rotation_axis = 
+			Vector3D EZ; EZ.set_unit_vector_z();
+			Vector3D vec_rotation_axis;
+			
+			vec_rotation_axis = 
 				focal_point_to_mirror_pos.CrossProduct(EZ);
-				//cout<<"rotation axis: ";
-				//vec_rotation_axis.disp();
-				
-					//==============================================
-					// calculate rotation angle to rotation axis
-					//==============================================
-				
-				Vector3D direction_of_focal_point_to_mirror_pos =
+
+				//==============================================
+				// calculate rotation angle to rotation axis
+				//==============================================
+			
+			Vector3D direction_of_focal_point_to_mirror_pos =
 				focal_point_to_mirror_pos/
 				focal_point_to_mirror_pos.norm2();
-				
-				telescope_table<<"| direction_of_focal_point_to_mirror_pos: ";
-				telescope_table<<
-				direction_of_focal_point_to_mirror_pos.get_string()<<std::endl;
 			
-				double 
-				angle_between_EZ_and_focal_point_to_mirror_pos =
+			telescope_table << "| direction_of_focal_point_to_mirror_pos: ";
+			telescope_table << direction_of_focal_point_to_mirror_pos.get_string() << "\n";
+		
+			double angle_between_EZ_and_focal_point_to_mirror_pos =
 				acos(EZ*direction_of_focal_point_to_mirror_pos);
-				
-				double dbl_rot_angle = 1.0/2.0*
+			
+			double dbl_rot_angle = 1.0/2.0*
 				angle_between_EZ_and_focal_point_to_mirror_pos;
+			
+			// acos(EZ*vec_mirror_surface_normal_in_center);
+			telescope_table << "| rotation angle: ";
+			telescope_table << dbl_rot_angle << " [rad], ";
+			telescope_table << dbl_rot_angle/(M_PI*2.0)*360 << " [DEG]\n";
+			
+			final_mean_distance_of_mirrors_and_image_plane +=
+			focal_point_to_mirror_pos.norm2();
+			
+			telescope_table << "| distance mirror to image plane: ";
+			telescope_table << focal_point_to_mirror_pos.norm2() << " [m]\n";
+			telescope_table << "|____________________________________\n";
+			//==================================================
+			// set rotation 
+			//==================================================
+			mirror_rotation.set(vec_rotation_axis, -dbl_rot_angle);
+			
+			//==================================================
+			// test rotation
+			//==================================================
+			/*
+			Vector3D test_vec; test_vec.set_unit_vector_z();
+			test_vec.disp();
+			
+			Vector3D none_translation; none_translation.set(0.0,0.0,0.0);
+			HomoTrafo3D homoT_test;
+			homoT_test.set_transformation(mirror_rotation,none_translation);
+			homoT_test.disp();
+			
+			homoT_test.transform_orientation(&test_vec);
+			cout<<"surface normal: ";
+			cout<<"test    normal: ";
+			test_vec.disp();
+			*/
+			//==================================================
+			// allocate memory for new mirror
+			//==================================================
+			CartesianFrame* mirror = new OpticalMirrorSphericHexagonal;
+			list_of_mirrors.push_back(mirror);
 				
-				// acos(EZ*vec_mirror_surface_normal_in_center);
-				telescope_table<<"| rotation angle: ";
-				telescope_table<<dbl_rot_angle<<" [rad], ";
-				telescope_table<<dbl_rot_angle/(M_PI*2.0)*360<<" [DEG]"<<std::endl;
+			//==================================================
+			// initialize mirror
+			//==================================================
+			mirror_number++;
+
+			std::stringstream mirror_name;
+			mirror_name << "fact_mirror_" << mirror_number;
+			
+			mirror->set_frame(
+				mirror_name.str(),
+				mirror_pos,
+				mirror_rotation
+			);
+			
+			mirror->set_surface_properties(
+				&mirror_reflection,
+				&mirror_colour
+			);	
 				
-				final_mean_distance_of_mirrors_and_image_plane +=
-				focal_point_to_mirror_pos.norm2();
-				
-				telescope_table<<"| distance mirror to image plane: ";
-				telescope_table<<focal_point_to_mirror_pos.norm2()<<" [m]"<<std::endl;
-				telescope_table<<"|____________________________________"<<std::endl;
-				//==================================================
-				// set rotation 
-				//==================================================
-				mirror_rotation.
-				set(vec_rotation_axis,-dbl_rot_angle);
-				
-				//==================================================
-				// test rotation
-				//==================================================
-				/*
-				Vector3D test_vec; test_vec.set_unit_vector_z();
-				test_vec.disp();
-				
-				Vector3D none_translation; none_translation.set(0.0,0.0,0.0);
-				HomoTrafo3D homoT_test;
-				homoT_test.set_transformation(mirror_rotation,none_translation);
-				homoT_test.disp();
-				
-				homoT_test.transform_orientation(&test_vec);
-				cout<<"surface normal: ";
-				cout<<"test    normal: ";
-				test_vec.disp();
-				*/
-				//==================================================
-				// allocate memory for new mirror
-				//==================================================
-				CartesianFrame* ptr_to_mirror = new OpticalMirrorSphericHexagonal;
-				list_of_mirrors.push_back(ptr_to_mirror);
-					
-				//==================================================
-				// initialize mirror
-				//==================================================
-				mirror_number++;
-				mirror_name.str("");
-				mirror_name<<"fact_mirror_";
-				mirror_name<<mirror_number;
-				
-				ptr_to_mirror->
-				set_frame(
-					mirror_name.str(),
-					mirror_pos,
-					mirror_rotation);
-				
-				ptr_to_mirror->
-				set_surface_properties(&mirror_reflection,&mirror_colour);	
-					
-				ptr_to_mirror->
-				set_spheric_hexag(
-					dbl_focal_length_telescope,
-					MirrorRadius_m);
-				
+			mirror->set_spheric_hexag(
+				dbl_focal_length_telescope,
+				MirrorRadius_m
+			);
 		}
 	}
+
 	final_mean_distance_of_mirrors_and_image_plane = 
-	final_mean_distance_of_mirrors_and_image_plane/mirror_number;
-	telescope_table<<" ________________________________________________"<<std::endl;
-	telescope_table<<"| final_mean_distance_of_mirrors_and_image_plane"<<std::endl;
-	telescope_table<<"| "<<final_mean_distance_of_mirrors_and_image_plane<<"[m]"<<std::endl;
-	telescope_table<<"|________________________________________________"<<std::endl;
+		final_mean_distance_of_mirrors_and_image_plane/mirror_number;
+
+	telescope_table << " ________________________________________________\n";
+	telescope_table << "| final_mean_distance_of_mirrors_and_image_plane\n";
+	telescope_table << "| " << final_mean_distance_of_mirrors_and_image_plane << "[m]\n";
+	telescope_table << "|________________________________________________\n";
 	
-	if(prompt){
-		std::cout<<telescope_table.str();
-	}
+	if(prompt)
+		std::cout << telescope_table.str();
 }
 //======================================================================	
 void FactTelescope::init(){	
@@ -372,35 +330,32 @@ void FactTelescope::init(){
 	}
 }
 //======================================================================	
-void FactTelescope::disp(){
-	std::cout<<get_fact_string();
+void FactTelescope::disp() {
+	std::cout << get_fact_string();
 }
 //======================================================================	
-std::string FactTelescope::get_fact_string(){
-	std::stringstream out; out.str("");
-	out<<endl;
-	out<<"[ FACT Telescope ]"<<std::endl;
-	out<<get_frame_string();
-	out<<"||__________FACT mirrors:_________________________"<<std::endl;	
-	for(unsigned int i=0;i<list_of_mirrors.size();i++){
-			out<<list_of_mirrors.at(i)->get_frame_string();
-	}
-	out<<"||________________________________________________"<<std::endl;
+std::string FactTelescope::get_fact_string() {
+	std::stringstream out;
+	out << "\n";
+	out << "[ FACT Telescope ]\n";
+	out << get_frame_string();
+	out << "||__________FACT mirrors:_________________________\n";	
+	for(unsigned int i=0; i<list_of_mirrors.size(); i++)
+			out << list_of_mirrors.at(i)->get_frame_string();
+	out << "||________________________________________________\n";
 	return out.str();
 }
 //==================================================================
-void FactTelescope::export_table_of_telescope(string telescope_table_file_name){
-ofstream myfile (telescope_table_file_name.c_str());
-if (myfile.is_open())
-{
-	myfile << telescope_table.str();
-	myfile.close();
-}		
-	else
-	{
-		std::cout<<"FACT-telescope->export_table_of_telescope():";
-		std::cout<<" Unable to open file: ";
-		std::cout<<telescope_table_file_name<<std::endl;
+void FactTelescope::export_table_of_telescope(string telescope_table_file_name) {
+	
+	ofstream myfile (telescope_table_file_name.c_str());
+	if(myfile.is_open()){
+		myfile << telescope_table.str();
+		myfile.close();
+	}else{
+		std::cout << "FACT-telescope->export_table_of_telescope():";
+		std::cout << " Unable to open file: ";
+		std::cout << telescope_table_file_name << "\n";
 	}
 }
 //======================================================================	

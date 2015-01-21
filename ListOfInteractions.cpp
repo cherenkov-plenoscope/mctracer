@@ -18,11 +18,11 @@ void ListOfInteractions::show()const{
 	std::cout << "______________________________" << endl;
 }
 //======================================================================
-CsvRow ListOfInteractions::getCsvRow(GlobalSettings& settings)const{
+/*CsvRow ListOfInteractions::getCsvRow(GlobalSettings& settings)const{
 	
 	// only the last intersection
 	return Interactions.at(Interactions.size() - 1) -> getCsvRow( settings );
-}
+}*/
 //======================================================================
 double ListOfInteractions::get_accumulative_distance()const{
   	

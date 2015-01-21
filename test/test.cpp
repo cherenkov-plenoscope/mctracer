@@ -20,6 +20,7 @@
 #include "gtest/gtest.h"
 #include "FiniteStateMashineTEST.cpp"
 #include "ConfigurationFactoryTest.cpp"
+#include "RayAndFrameInteractionTest.cpp"
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

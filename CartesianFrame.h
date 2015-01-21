@@ -5,6 +5,7 @@
 
 //=================================
 // forward declared dependencies
+class Ray;
 class Intersection;
 class ReflectionProperties;
 //class OctTreeCube;
@@ -65,7 +66,6 @@ private:
 public:
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     CartesianFrame(){};
-
     CartesianFrame(
         const std::string new_name,
         const Vector3D    new_pos,
@@ -197,7 +197,10 @@ public:
         Intersection *intersection
     )const{};
 
-    //virtual Intersection* calculate_intersection(  )
+// new concept
+    virtual Intersection* calculate_intersection_with(const Ray& ray)const;
+
+    Intersection* empty_intersection()const;
 
     virtual double get_hit_dist()const{ return 0.0; };
 

@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
 		while(event_getter.has_still_events_left()) {
 
 			MmcsCorsikaEvent event = event_getter.get_next_event();	
-			event.print();
+			//event.print();
 			ListOfPropagations *photons = event.transform_to_mcTracer_photons();
 			//photons->disp();
 			photons->propagate(Mworld,&settings);

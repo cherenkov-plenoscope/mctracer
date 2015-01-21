@@ -151,3 +151,16 @@ TEST_F(Tools, file_existance_on_not_existing_file) {
 TEST_F(Tools, file_existance_on_existing_file) {
   EXPECT_TRUE(FileTools::can_be_opened("ToolTest.cpp"));
 }
+//------------------------------------------------------------------------------
+TEST_F(Tools, file_size_of_not_existing_file) {
+  EXPECT_THROW(
+    {FileTools::size_in_bytes("no_such_file");},
+    TracerException
+  );
+}
+//------------------------------------------------------------------------------
+TEST_F(Tools, file_size_of_existing_file) {
+  EXPECT_NO_THROW(
+    {FileTools::size_in_bytes("ToolTest.cpp");}
+  );
+}

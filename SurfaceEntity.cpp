@@ -1,10 +1,11 @@
 #include "SurfaceEntity.h"
 //======================
 void SurfaceEntity::set_surface_properties(
-ReflectionProperties *new_reflection_properties, 
-ColourProperties *new_colour_properties){
-	reflection 	= *new_reflection_properties;
-	colour 		= *new_colour_properties;
+	ReflectionProperties *new_reflection_properties, 
+	ColourProperties *new_colour_properties
+) {
+	reflection = *new_reflection_properties;
+	colour = *new_colour_properties;
 }
 //======================
 void SurfaceEntity::disp()const{
@@ -12,7 +13,7 @@ void SurfaceEntity::disp()const{
 
 	out << get_frame_string();
 	out << get_surface_propertie_prompt();
-	out << "__________________________"<<std::endl;
+	out << "__________________________" << std::endl;
 	std::cout << out.str();
 }
 //======================

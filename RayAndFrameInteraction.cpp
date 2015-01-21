@@ -1,6 +1,35 @@
 #include "Ray.h"
 #include "OctTreeTraversingRay.h"
 //------------------------------------------------------------------------------
+/*Intersection* Ray::get_first_intersection(const CartesianFrame* frame)const {
+	
+	std::vector<Intersection*> intersections;
+
+	if(has_intersection_with_bounding_sphere_of(frame)) {
+		if(frame->has_children()) {
+
+		}else{
+			frame->hit(this)
+		}
+	}
+
+	return sort_out_closest_intersection_and_delete_the_rest(intersections);
+}
+//------------------------------------------------------------------------------
+Intersection* Ray::sort_out_closest_intersection_and_delete_the_rest(
+	std::vector<Intersection*> &all_intersections
+)const {
+	Intersection* closest_intersection = 
+		calculate_closest_intersection(all_intersections);
+
+	for(Intersection *intersection : all_intersections)
+		if(intersection != closest_intersection)
+			delete intersection;
+
+	return closest_intersection;
+}*/
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 void Ray::find_intersection_candidates_in_tree_of_frames(
 	const CartesianFrame* frame, 
 	std::vector<const CartesianFrame*> *frames_with_intersection_in_bounding_sphere
@@ -33,38 +62,29 @@ void Ray::find_intersections_for_children_in_oct_trees(
 	const OctTreeCube *OctTreeOfFrame2CheckForIntersectionOfRayAndMaxSphere = 
 	frame->get_OctTree();
 	
-	if(OctTreeOfFrame2CheckForIntersectionOfRayAndMaxSphere != NULL){
-		// This Frame uses an OctTree to store its children
-		std::unordered_set<CartesianFrame*> IntersectionCandidates;
+	std::unordered_set<CartesianFrame*> IntersectionCandidates;
+	//std::vector<CartesianFrame*> IntersectionCandidates;
+	
+	OctTreeTraversingRay SpecialRay(this);
+	homo_transformation_of_ray(
+		&SpecialRay,
+		frame->
+		world2frame()
+	);
+	SpecialRay.update();
 
-		// initialize a special Ray with additional information for 
-		// the OctTree traversal
-		OctTreeTraversingRay SpecialRay(this);
+	// find the intersection candidates
+	SpecialRay.IntersectionCandidatesInOctTree(
+		OctTreeOfFrame2CheckForIntersectionOfRayAndMaxSphere,
+		&IntersectionCandidates
+	);
 
-		// transform the special Ray to the Cartesian frame where 
-		// the OctTree lives
-		homo_transformation_of_ray(
-			&SpecialRay,
-			frame->
-			world2frame()
+	// add the intersection candidates to the list of frames to check for 
+	// an intersection
+	for(CartesianFrame* FrameFoundInOctTree : IntersectionCandidates){
+		find_intersection_candidates_in_tree_of_frames(FrameFoundInOctTree,
+			frames_with_intersection_in_bounding_sphere
 		);
-
-		// update the special information in the special Ray
-		SpecialRay.update();
-
-		// find the intersection candidates
-		SpecialRay.IntersectionCandidatesInOctTree(
-			OctTreeOfFrame2CheckForIntersectionOfRayAndMaxSphere,
-			&IntersectionCandidates
-		);
-
-		// add the intersection candidates to the list of frames to check for 
-		// an intersection
-		for(CartesianFrame* FrameFoundInOctTree : IntersectionCandidates){
-			find_intersection_candidates_in_tree_of_frames(FrameFoundInOctTree,
-				frames_with_intersection_in_bounding_sphere
-			);
-		}
 	}
 }
 //------------------------------------------------------------------------------
@@ -72,16 +92,9 @@ void Ray::find_intersections_for_all_children_on(
 	const CartesianFrame* frame, 
 	std::vector<const CartesianFrame*> *frames_with_intersection_in_bounding_sphere
 )const {
-	for(
-		uint child_itterator=0; 
-		child_itterator<
-		frame->
-		get_number_of_children();
-		child_itterator++
-	){
+	for(uint child_itterator=0; child_itterator<frame->get_number_of_children(); child_itterator++) {
 		find_intersection_candidates_in_tree_of_frames(
-			frame->
-			get_pointer_to_child(child_itterator),
+			frame->get_pointer_to_child(child_itterator),
 			frames_with_intersection_in_bounding_sphere
 		);
 	}
