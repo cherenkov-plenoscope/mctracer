@@ -131,7 +131,7 @@ TEST_F(SphereIntersectionTest, ray_frontal_intersection) {
   Ray ray_with_intersection(Vector3D(0.0,0.0,-2.0), Vector3D(0.0,0.0,1.0));
 
   Intersection* intersec = 
-  	MySphere.calculate_intersection_with(ray_with_intersection);
+  	MySphere.calculate_intersection_with(&ray_with_intersection);
 
   ASSERT_TRUE(intersec->does_intersect());
   EXPECT_EQ(intersec->get_intersecting_object(), &MySphere);
@@ -150,7 +150,7 @@ TEST_F(SphereIntersectionTest, ray_intersection_but_no_causal_intersection) {
   Ray ray_without_intersection(Vector3D(0.0,0.0,+2.0), Vector3D(0.0,0.0,1.0));
 
   Intersection* empty_intersec = 
-    MySphere.calculate_intersection_with(ray_without_intersection);
+    MySphere.calculate_intersection_with(&ray_without_intersection);
 
   EXPECT_FALSE(empty_intersec->does_intersect());
 }
@@ -160,7 +160,7 @@ TEST_F(SphereIntersectionTest, ray_completely_outside_of_sphere) {
   Ray ray_outside(Vector3D(5.0,0.0,0.0), Vector3D(0.0,0.0,1.0));
 
   Intersection* intersec = 
-    MySphere.calculate_intersection_with(ray_outside);
+    MySphere.calculate_intersection_with(&ray_outside);
 
   EXPECT_FALSE(intersec->does_intersect());
 }
@@ -170,7 +170,7 @@ TEST_F(SphereIntersectionTest, ray_starts_inside_sphere) {
   Ray ray_inside(Vector3D(0.0,0.0,0.0), Vector3D(0.0,0.0,1.0));
 
   Intersection* intersec = 
-    MySphere.calculate_intersection_with(ray_inside);
+    MySphere.calculate_intersection_with(&ray_inside);
 
   ASSERT_TRUE(intersec->does_intersect());
   EXPECT_EQ(intersec->get_intersecting_object(), &MySphere);
@@ -189,7 +189,7 @@ TEST_F(SphereIntersectionTest, ray_tangents_sphere) {
   Ray ray_inside(Vector3D(1.0, 0.0, -2.0), Vector3D(0.0, 0.0, 1.0));
 
   Intersection* intersec = 
-    MySphere.calculate_intersection_with(ray_inside);
+    MySphere.calculate_intersection_with(&ray_inside);
 
   ASSERT_TRUE(intersec->does_intersect());
   EXPECT_EQ(intersec->get_intersecting_object(), &MySphere);

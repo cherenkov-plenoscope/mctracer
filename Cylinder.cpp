@@ -120,7 +120,7 @@ void Cylinder::disp()const{
 	out << "cylinder:" << name_of_frame;
 	out << "_________________________________\n";
 	out << get_frame_string();
-	out << get_surface_propertie_prompt();
+	out << get_surface_print();
 	out << get_cylinder_string();
 	out << "_________________________________\n";
 	std::cout << out.str();
@@ -132,6 +132,40 @@ std::string Cylinder::get_cylinder_string()const{
 	out << "||| cylinder radius: " << Radius << " m\n";
 	out << "||| cylinder length: " << Length << " m\n";
 	return out.str();
+}
+//------------------------------------------------------------------------------
+Intersection* Cylinder::calculate_intersection_with(const Ray* ray)const {
+	ZaxisCylinderRayIntersectionEquation cylRayEquation(Radius, ray);
+
+	if(cylRayEquation.has_causal_solution()) {
+
+		double v = cylRayEquation.get_ray_parameter_for_intersection();
+		Vector3D intersection_vector = ray->PositionOnRay(v);
+
+		if(is_in_cylinders_z_bounds(&intersection_vector)) {
+
+			Intersection* intersec;
+			intersec = new Intersection(
+				this,
+				intersection_vector,
+				get_surface_normal_for_intersection_vec(&intersection_vector),
+				v
+			);
+
+			return intersec;			
+		}
+
+	}
+	return empty_intersection();
+}
+//------------------------------------------------------------------------------
+bool Cylinder::is_in_cylinders_z_bounds(const Vector3D* vec)const {
+	return fabs(vec->z()) <= Length/2.0;
+}
+//------------------------------------------------------------------------------
+Vector3D Cylinder::get_surface_normal_for_intersection_vec(const Vector3D* vec)const {
+	Vector3D surface_normal = *vec / vec->norm2();
+	return surface_normal;
 }
 //------------------------------------------------------------------------------
 void Cylinder::hit(

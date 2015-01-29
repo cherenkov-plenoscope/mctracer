@@ -17,7 +17,7 @@ Intersection::Intersection(
 	distance_of_ray_in_m = distance_of_ray_support_to_intersection;
 }
 //------------------------------------------------------------------------------
-bool Intersection::does_intersect()const{
+bool Intersection::does_intersect()const {
 	return intersecting_object != nullptr;
 }
 //------------------------------------------------------------------------------
@@ -116,22 +116,3 @@ void Intersection::get_intersection_vec_in_object_system(
 	*inter = intersection_point;
 }
 //------------------------------------------------------------------------------
-/*CsvRow Intersection::getCsvRow(GlobalSettings &settings)const{
-	CsvRow row;
-
-	CsvRow row_intersection_vector = intersection_point.getCsvRow(settings);
-
-	//-------------- build  csv entry of double DoF -------------
-	CsvRow row_Distance_of_Flight;
-	stringstream DoF;
-	DoF.precision(settings.get_decimal_precision_for_csv_output());
-	DoF << distance_of_ray_in_m;
-
-	row_Distance_of_Flight.push_back( DoF.str() );
-	//-----------------------------------------------------------
-
-	row.append(row_intersection_vector);
-	row.append(row_Distance_of_Flight);
-
-	return row;
-}*/

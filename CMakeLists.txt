@@ -23,7 +23,12 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Photon.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ListOfPropagations.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ListOfInteractions.cpp
+
 	${CMAKE_CURRENT_SOURCE_DIR}/QuadraticEquation.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/XyPlaneRayIntersectionEquation.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ZaxisCylinderRayIntersectionEquation.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/RectangularPrismZ.cpp	
+	${CMAKE_CURRENT_SOURCE_DIR}/CylinderPrismZ.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/FiniteStateMashine.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/OctTreeCube.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ReflectionProperties.cpp 

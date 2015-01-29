@@ -44,7 +44,7 @@ void OpticalMirrorEllipsoidHexagonal::disp() {
 	out << "ellipsoid hexagonal mirror:" << name_of_frame << "\n";
 	out << "_________________________________\n";
 	out << get_frame_string();
-	out << get_surface_propertie_prompt();
+	out << get_surface_print();
 	out << get_ellipsoid_hexag_print();
 	out << "_________________________________\n";
 	cout << out.str();

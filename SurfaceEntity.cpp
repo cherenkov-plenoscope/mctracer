@@ -12,12 +12,12 @@ void SurfaceEntity::disp()const{
 	std::stringstream out;
 
 	out << get_frame_string();
-	out << get_surface_propertie_prompt();
+	out << get_surface_print();
 	out << "__________________________" << std::endl;
 	std::cout << out.str();
 }
 //======================
-std::string SurfaceEntity::get_surface_propertie_prompt()const{
+std::string SurfaceEntity::get_surface_print()const{
 	std::stringstream out;
 	
 	out << "|| surface: \n";

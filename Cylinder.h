@@ -14,6 +14,7 @@
 #include "SurfaceEntity.h"
 #include "Vector3D.h"
 #include "Intersection.h"
+#include "ZaxisCylinderRayIntersectionEquation.h"
 
 //=================================
 class Cylinder :public SurfaceEntity{
@@ -34,6 +35,8 @@ public:
 
 	std::string get_cylinder_string()const;
 
+	Intersection* calculate_intersection_with(const Ray* ray)const;
+
 	void hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const;
 private:
 	void set_cylinder_length(const double Length);
@@ -52,6 +55,10 @@ private:
 		const Vector3D start_pos,
 		const Vector3D end_pos
 	);
+
+	bool is_in_cylinders_z_bounds(const Vector3D* vec)const;
+
+	Vector3D get_surface_normal_for_intersection_vec(const Vector3D* vec)const;
 
 	Rotation3D calculate_new_rotation_in_mother(const Vector3D rotsym_axis)const;
 };

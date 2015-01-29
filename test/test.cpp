@@ -21,6 +21,9 @@
 #include "FiniteStateMashineTEST.cpp"
 #include "ConfigurationFactoryTest.cpp"
 #include "RayAndFrameInteractionTest.cpp"
+#include "XyPlaneRayEquationTest.cpp"
+#include "PlaneIntersectionTest.cpp"
+#include "ZaxisCylinderRayIntersectionEquationTest.cpp"
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

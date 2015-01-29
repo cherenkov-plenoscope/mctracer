@@ -14,6 +14,7 @@ void CameraRay::disp()const{
 	std::cout << "CameraRay -> " << get_string() << "\n";
 }
 //------------------------------------------------------------------------------
+/*
 ColourProperties CameraRay::trace(
 	const CartesianFrame* world,
 	int refl_count,
@@ -86,7 +87,29 @@ ColourProperties CameraRay::trace(
 	}
 
 	return colour_to_return;
+}*/
+//------------------------------------------------------------------------------
+ColourProperties CameraRay::trace(
+	const CartesianFrame* world,
+	int refl_count,
+	const CartesianFrame* object_propagated_from,
+	const GlobalSettings *settings
+)const {
+
+	ColourProperties color;
+
+	Intersection* intersection = get_first_intersection(world);
+
+	if(intersection->does_intersect()) {
+		color = intersection->get_intersecting_object()->get_colour();
+	}else{
+		color = settings->get_default_colour();
+	}
+
+	delete intersection;
+	return color;
 }
+//------------------------------------------------------------------------------
 //======================================================================
 // friends of osstream
 //======================================================================

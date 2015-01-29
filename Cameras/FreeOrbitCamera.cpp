@@ -213,9 +213,13 @@ void FreeOrbitCamera::print_info_of_probing_ray_for_pixel_x_y(int x, int y){
 
 	Ray probing_ray = flying_camera->get_ray_for_pixel_in_row_and_col(y, x);
 
-	Intersection* ClosestIntersection = probing_ray.get_closest_intersection(
+	/*Intersection* ClosestIntersection = probing_ray.get_closest_intersection(
 		world,
 		settings
+	);*/
+
+	Intersection* ClosestIntersection = probing_ray.get_first_intersection(
+		world
 	);
 
 	UserInteraction::ClearScreen();
@@ -229,7 +233,7 @@ void FreeOrbitCamera::print_info_of_probing_ray_for_pixel_x_y(int x, int y){
 	out << "| Ray emitted by camera:\n";
 	out << "| " << probing_ray << "\n";
 	out << "|\n";
-	if( ClosestIntersection->get_intersection_flag() ){
+	if( ClosestIntersection->does_intersect() ){
 
 	out << "| Distance to first intersection: ";
 	out << ClosestIntersection->get_intersection_distance() << " [m]\n";

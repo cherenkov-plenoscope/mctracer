@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
 		file2world.load(file_chosen_by_user);
 		CartesianFrame *Mworld = file2world.world();
 
-		string filename = UserInteraction::input("Enter Mmcs CORSIKA file: ");
+		/*string filename = UserInteraction::input("Enter Mmcs CORSIKA file: ");
 		MmcsCorsikaFullEventGetter event_getter(filename);
 
 		while(event_getter.has_still_events_left()) {
@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
 			ListOfPropagations *photons = event.transform_to_mcTracer_photons();
 			//photons->disp();
 			photons->propagate(Mworld,&settings);
-		}
+		}*/
 
 		FreeOrbitCamera free(Mworld,&settings);
 

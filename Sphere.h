@@ -27,11 +27,11 @@ public:
 
 	void disp()const;
 
-	std::string get_sphere_string()const;
+	std::string get_sphere_print()const;
 
 	void hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const;
 
-	Intersection* calculate_intersection_with(const Ray& ray)const;
+	Intersection* calculate_intersection_with(const Ray* ray)const;
 private:
 	bool facing_sphere_from_outside_given_p_m(
 		const double v_Plus,
@@ -44,12 +44,12 @@ private:
 	)const;
 
 	Intersection* sphere_intersection_for_ray_parameter(
-		const Ray &ray, 
+		const Ray* ray, 
 		const double ray_parameter
 	)const;
 
 	QuadraticEquation get_ray_parameter_equation_for_intersections_with_sphere(
-		const Ray &ray
+		const Ray* ray
 	)const;
 };
 #endif // __SPHERE_H_INCLUDED__

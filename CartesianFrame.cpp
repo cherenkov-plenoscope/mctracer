@@ -5,7 +5,7 @@ void CartesianFrame::post_initialize() {
 	//post_initialize_OctTree();
 }
 //==============================================================================
-void CartesianFrame::post_initialize_OctTree() {
+/*void CartesianFrame::post_initialize_OctTree() {
 	// When there are more then 
 	// max_number_of_frames_in_single_OctTreeCube children frames 
 	// in a frame, the children frames are stored in a oct tree structure to
@@ -39,7 +39,7 @@ bool CartesianFrame::there_are_so_many_children_that_we_need_an_OctTree()const {
 	return(
 		get_number_of_children() >= temp.get_max_number_of_frames_in_cube()
 	);
-}
+}*/
 //==============================================================================
 uint CartesianFrame::get_number_of_children()const{ 
 	return children.size(); 
@@ -115,7 +115,7 @@ void CartesianFrame::set_frame(
 }
 //==============================================================================
 void CartesianFrame::reset_all_connections_to_children_and_mother() {
-	reset_OctTree();
+	//reset_OctTree();
 	radius_of_sphere_enclosing_all_children = 0.0;	 
 	mother = nullptr;
 	children.clear();
@@ -427,19 +427,29 @@ bool CartesianFrame::has_children()const{
 	return (get_number_of_children() > 0); 
 }
 //------------------------------------------------------------------------------
-bool CartesianFrame::uses_oct_trees_to_store_its_children()const {
+/*bool CartesianFrame::uses_oct_trees_to_store_its_children()const {
 	return (OctTree != nullptr);
-}
+}*/
 //------------------------------------------------------------------------------
 #include "Ray.h"
 #include "Intersection.h"
-Intersection* CartesianFrame::calculate_intersection_with(const Ray& ray)const {
-	return nullptr;
+//------------------------------------------------------------------------------
+Intersection* CartesianFrame::calculate_intersection_with(const Ray* ray)const {
+	return empty_intersection();
 }
 //------------------------------------------------------------------------------
 Intersection* CartesianFrame::empty_intersection()const {
 	Intersection* intersection;
 	intersection = new Intersection();
 	return intersection;
+}
+//------------------------------------------------------------------------------
+void CartesianFrame::find_intersection_candidates_for_all_children_and_ray(
+	const Ray* ray,
+	std::vector<const CartesianFrame*> *candidate_frames
+)const {
+
+	for(CartesianFrame *child : children)
+		ray->find_intersection_candidates_in_tree_of_frames(child, candidate_frames);
 }
 //------------------------------------------------------------------------------

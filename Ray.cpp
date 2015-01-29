@@ -3,6 +3,10 @@
 Ray::Ray(){
 }
 //------------------------------------------------------------------------------
+Ray::Ray(const Ray* ray) {
+	SetRay(ray->support, ray->direction);
+}
+//------------------------------------------------------------------------------
 Ray::Ray(const Vector3D support, const Vector3D direction){
 	SetRay(support, direction);
 }
@@ -71,10 +75,13 @@ void Ray::operator= (Ray eqray){
 }
 //------------------------------------------------------------------------------
 void Ray::homo_transformation_of_ray(Ray* ray,const HomoTrafo3D *T)const{
-	//transform support vector
 	T->transform_position(&ray->support);
-	//transform direction
 	T->transform_orientation(&ray->direction);
+}
+//------------------------------------------------------------------------------
+void Ray::transform(const HomoTrafo3D *T) {
+	T->transform_position(&support);
+	T->transform_orientation(&direction);	
 }
 //------------------------------------------------------------------------------
 double Ray::get_parameter_on_ray_for_closest_distance_to_point(
@@ -121,6 +128,15 @@ void Ray::SetHistory(ListOfInteractions* history) {
 //------------------------------------------------------------------------------
 ListOfInteractions* Ray::GetHistory()const {
 	return history;
+}
+//------------------------------------------------------------------------------
+Ray Ray::get_ray_transformed_in_object_system_of(const CartesianFrame* frame)const {
+	
+	Ray ray_in_object_system_of_frame(this);
+
+	ray_in_object_system_of_frame.transform(frame->world2frame());
+
+	return ray_in_object_system_of_frame;
 }
 //------------------------------------------------------------------------------
 std::ostream& operator<<(std::ostream& os, const Ray& ray_to_be_displayed) {

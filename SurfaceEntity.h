@@ -27,7 +27,7 @@ public:
 
 	void disp()const;
 
-	std::string get_surface_propertie_prompt()const;
+	std::string get_surface_print()const;
 
 	bool get_reflection_flag()const;
 

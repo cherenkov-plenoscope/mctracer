@@ -27,7 +27,7 @@ void OpticalMirrorParabolicHexagonal::disp(){
 	out<<"parabolic hexagonal mirror:"<<name_of_frame;
 	out<<"_________________________________"<<std::endl;
 	out<<get_frame_string();
-	out<<get_surface_propertie_prompt();
+	out<<get_surface_print();
 	out<<get_optical_mirror_string();
 	out<<"_________________________________"<<std::endl;
 	std::cout<<out.str();

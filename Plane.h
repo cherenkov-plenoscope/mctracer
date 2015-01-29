@@ -16,32 +16,28 @@
 #include <math.h>
 #include "SurfaceEntity.h"
 #include "Intersection.h"
+#include "XyPlaneRayIntersectionEquation.h"
+#include "RectangularPrismZ.h"
 //=================================
 class Plane :public SurfaceEntity{
 protected:	
-	double half_x_width;
-	double half_y_width;
+	RectangularPrismZ RectBounds;
 
 	const Vector3D plane_surface_normal = Vector3D(0.0,0.0,1.0);
-	std::string get_plane_print();
 public:
+
 	void set_plane_using_x_and_y_width(
 		const double x_width,
 		const double y_width
 	);
 
-	void disp();
+	void disp()const;
 
 	void hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const;
+
+	Intersection* calculate_intersection_with(const Ray* ray)const;
 private:
-	void set_planes_x_width(const double x_width);
-
-	void set_planes_y_width(const double y_width);
-
-	void assert_width_is_positive(
-		const double width, 
-		const std::string dim
-	)const;
+	std::string get_plane_print()const;
 
 	void post_initialize_radius_of_enclosing_sphere();
 };

@@ -39,6 +39,8 @@ public:
 	
 	Ray(const Vector3D support, const Vector3D direction);
 
+	Ray(const Ray* ray);
+
 	void SetRay(const Vector3D nsup,const Vector3D ndir);	
 	
 	void SetDirection(const Vector3D ndir);
@@ -67,6 +69,8 @@ public:
 		const Vector3D &point, const double ray_parameter_for_position_on_ray
 	)const;
 
+	void transform(const HomoTrafo3D *T);
+
 	void homo_transformation_of_ray(Ray* ray,const HomoTrafo3D *T)const;
 
 	double get_parameter_on_ray_for_closest_distance_to_point(
@@ -83,6 +87,8 @@ public:
 	
 	void operator= (Ray ray);
 
+	Ray get_ray_transformed_in_object_system_of(const CartesianFrame* frame)const;
+	
 	friend std::ostream& operator<<(std::ostream& os, const Ray& ray_to_be_displayed);
 	//--------------------------------------------------------------------------
 	// Ray and bounding sphere of Frame
@@ -97,6 +103,30 @@ public:
 	//--------------------------------------------------------------------------
 	// Ray and Frame
 
+public:
+	
+	Intersection* get_first_intersection(const CartesianFrame* frame)const;
+
+protected:
+	std::vector<const CartesianFrame*> get_intersection_candidate_objects(
+		const CartesianFrame* frame
+	)const;
+
+	std::vector<Intersection*> get_intersections_in_candidate_objects(
+		std::vector<const CartesianFrame*> *candidate_objects
+	)const;
+
+	Intersection* get_closest_intersection_and_delete_the_rest(	
+		std::vector<Intersection*> *intersections
+	)const;
+
+
+	Intersection* calculate_closest_intersection(
+			std::vector<Intersection*> *intersections
+	)const;
+
+	// old
+public:
 	std::vector<Intersection*> get_intersections(
 		const CartesianFrame* world,
 		const CartesianFrame* object_propagated_from
@@ -121,16 +151,6 @@ public:
 		std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre
 	)const;
 
-	void find_intersections_for_children_in_oct_trees(	
-		const CartesianFrame* frame, 
-		std::vector<const CartesianFrame*> *frames_with_intersection_in_bounding_sphere
-	)const;
-
-	void find_intersections_for_all_children_on(
-		const CartesianFrame* frame, 
-		std::vector<const CartesianFrame*> *frames_with_intersection_in_bounding_sphere
-	)const;
-
 	Intersection* get_closest_intersection(
 		const CartesianFrame* world,
 		const GlobalSettings *settings
@@ -145,10 +165,6 @@ public:
 	void calculate_reflected_ray(	
 		const Intersection * pointer_to_closest_intersection,
 		Ray *ray_reflection_on_object
-	)const;
-
-	Intersection* calculate_closest_intersection(	
-		std::vector<Intersection*> *pointer_to_list_of_intersections
 	)const;
 };
 #endif // __RAY_H_INCLUDED__ 

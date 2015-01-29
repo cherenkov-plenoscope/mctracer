@@ -22,13 +22,13 @@ void Sphere::disp()const {
 	out << "sphere:" <<name_of_frame;
 	out << "_________________________________\n";
 	out << get_frame_string();
-	out << get_surface_propertie_prompt();
-	out << get_sphere_string();
+	out << get_surface_print();
+	out << get_sphere_print();
 	out << "_________________________________\n";
 	std::cout << out.str();
 }
 //------------------------------------------------------------------------------
-std::string Sphere::get_sphere_string()const {
+std::string Sphere::get_sphere_print()const {
 	std::stringstream out;
 	out << "||| radius of sphere: " << radius << " m\n";
 	return out.str();
@@ -116,7 +116,7 @@ bool Sphere::facing_away_from_outside_given_p_m(
 }
 //------------------------------------------------------------------------------
 QuadraticEquation Sphere::get_ray_parameter_equation_for_intersections_with_sphere(
-	const Ray &ray
+	const Ray* ray
 )const {
 	// 
 	// 		r = sqrt( x^2 + y^2 + z^2 )
@@ -128,9 +128,9 @@ QuadraticEquation Sphere::get_ray_parameter_equation_for_intersections_with_sphe
 	// 	   	0 = v^2 + v 2(bd/dd) + (bb/dd -r^2)
 	//		solve quadrativ eqaution in v
 
-	double sup_times_dir = ray.Support() * ray.Direction();
-	double dir_times_dir = ray.Direction() * ray.Direction();
-	double sup_times_sup = ray.Support() * ray.Support();
+	double sup_times_dir = ray->Support() * ray->Direction();
+	double dir_times_dir = ray->Direction() * ray->Direction();
+	double sup_times_sup = ray->Support() * ray->Support();
 	double radius_square = radius*radius;
 
 	QuadraticEquation quadratic_eq_in_v(
@@ -142,11 +142,11 @@ QuadraticEquation Sphere::get_ray_parameter_equation_for_intersections_with_sphe
 }
 //------------------------------------------------------------------------------
 Intersection* Sphere::sphere_intersection_for_ray_parameter(
-	const Ray &ray, 
+	const Ray* ray, 
 	const double ray_parameter
 )const {
 
-	Vector3D intersection_point = ray.PositionOnRay(ray_parameter);
+	Vector3D intersection_point = ray->PositionOnRay(ray_parameter);
 	Vector3D surface_normal = intersection_point/intersection_point.norm2();
 	
 	Intersection* intersec;
@@ -160,7 +160,7 @@ Intersection* Sphere::sphere_intersection_for_ray_parameter(
 	return intersec;
 }
 //------------------------------------------------------------------------------
-Intersection* Sphere::calculate_intersection_with(const Ray &ray)const {
+Intersection* Sphere::calculate_intersection_with(const Ray* ray)const {
 
 	QuadraticEquation rayParamEqForIntersections = 
 		get_ray_parameter_equation_for_intersections_with_sphere(ray);
