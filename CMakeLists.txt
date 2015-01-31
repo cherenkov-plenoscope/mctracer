@@ -27,8 +27,10 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/QuadraticEquation.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/XyPlaneRayIntersectionEquation.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ZaxisCylinderRayIntersectionEquation.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SphericalCapRayIntersectionEquation.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/RectangularPrismZ.cpp	
-	${CMAKE_CURRENT_SOURCE_DIR}/CylinderPrismZ.cpp	
+	${CMAKE_CURRENT_SOURCE_DIR}/CylinderPrismZ.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/HexagonalPrismZ.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/FiniteStateMashine.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/OctTreeCube.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ReflectionProperties.cpp 
@@ -52,6 +54,9 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorRound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorHexagonal.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/FactTelescope.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceWithOuterPrismBound.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithCylinderBound.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithHexagonalBound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorSphericHexagonal.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorParabolicRound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorSphericRound.cpp

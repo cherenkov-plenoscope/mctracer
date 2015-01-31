@@ -8,13 +8,10 @@
 
 //=================================
 // included dependencies
-#include <iostream>
-#include <string>
-#include <sstream>
-#include "Vector3D.h"
+#include "PrismZ.h"
 
 //=================================
-class RectangularPrismZ {
+class RectangularPrismZ :public PrismZ {
 private:	
 	double half_x_width;
 	double half_y_width;

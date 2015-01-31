@@ -97,11 +97,51 @@ ColourProperties CameraRay::trace(
 )const {
 
 	ColourProperties color;
-
+			
 	Intersection* intersection = get_first_intersection(world);
 
 	if(intersection->does_intersect()) {
-		color = intersection->get_intersecting_object()->get_colour();
+		if(	
+			intersection->get_intersecting_object()->get_reflection_flag() &&
+			settings->max_number_of_reflections_is_not_reached_yet(refl_count)
+		) {
+			refl_count++;
+			
+			// calculate the ray reflected by the object
+			// pointer_to_closest_frame is pointing to relativ to
+			// the world coordinate system
+			CameraRay ray_reflection_on_object;
+			calculate_reflected_ray(
+				intersection,
+				&ray_reflection_on_object
+			);
+
+			//std::cout << ray_reflection_on_object << std::endl;
+			// mix colours
+			
+			color = intersection->
+				get_intersecting_object()->get_colour();
+
+			// use itterativ call of trace to handle reflections
+			ColourProperties color_of_reflected_ray;
+			
+			color_of_reflected_ray = ray_reflection_on_object.trace(
+				world,
+				refl_count,
+				intersection->get_intersecting_object(),
+				settings
+			);
+			
+			color.reflection_mix(
+				&color_of_reflected_ray,
+				intersection->
+					get_intersecting_object()->
+						get_reflection_properties()
+			);
+			
+		}else{
+			color = intersection->get_intersecting_object()->get_colour();
+		}
 	}else{
 		color = settings->get_default_colour();
 	}

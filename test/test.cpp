@@ -24,6 +24,7 @@
 #include "XyPlaneRayEquationTest.cpp"
 #include "PlaneIntersectionTest.cpp"
 #include "ZaxisCylinderRayIntersectionEquationTest.cpp"
+#include "HexagonalPrismZTest.cpp"
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

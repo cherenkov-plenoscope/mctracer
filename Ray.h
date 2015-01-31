@@ -125,6 +125,7 @@ protected:
 			std::vector<Intersection*> *intersections
 	)const;
 
+	bool support_equals_intersection_point(const Intersection* intersec)const;
 	// old
 public:
 	std::vector<Intersection*> get_intersections(

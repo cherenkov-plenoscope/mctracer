@@ -239,23 +239,24 @@ void FreeOrbitCamera::print_info_of_probing_ray_for_pixel_x_y(int x, int y){
 	out << ClosestIntersection->get_intersection_distance() << " [m]\n";
 	out << "|\n";
 	out << "| Name of Object: " << ClosestIntersection->
-					get_pointer_to_intersecting_object()->
+					get_intersecting_object()->
 					get_name_of_frame() << "\n";
 
 	out << "| Path of Object: " << ClosestIntersection->
-					get_pointer_to_intersecting_object()->
+					get_intersecting_object()->
 					get_path() << "\n";
 					
 	out << "|\n";
 	out << "|  _In frame of intersecting object_________________________\n";
 	out << "| |\n";
 	out << "| | intesection point: ";
-	 	out<< ClosestIntersection->
+	 	out << ClosestIntersection->
 	 	get_intersection_point_in_object_system() << "\n";
 	out << "| | surface normal   : ";
-	 	out<< ClosestIntersection->
+	 	out << ClosestIntersection->
 	 	get_surface_normal_in_object_system() << "\n";
 	out << "| |_________________________________________________________\n";
+	//out << ClosestIntersection->get_intersecting_object()->get_print();
 	}else{
 	out << "| No Intersection with an object.\n";	
 	}

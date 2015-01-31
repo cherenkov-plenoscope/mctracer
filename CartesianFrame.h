@@ -51,16 +51,7 @@ protected:
     
     std::vector<CartesianFrame*> children;
 	CartesianFrame *mother;
-
-    // OctTree sub structure
-    // When there are more then 7 children in a frame the childrens are stored
-    // in sub structures made out of OctTrees filling the three dimensional
-    // space where the children frames live in
-
-    // since there is only an OctTree substructure the pointer to the OctTree
-    // is nullptr by default
 private:
-    //OctTreeCube *OctTree = nullptr;
 
     static const char delimiter_for_frame_path = '/';
 public:
@@ -141,8 +132,6 @@ public:
 
     std::string print_with_all_children()const;
 
-    //const OctTreeCube* get_OctTree()const{ return OctTree; };
-
     bool uses_oct_trees_to_store_its_children()const;
     bool has_child_with_name(const std::string name_of_child)const;
     bool has_mother()const;
@@ -166,15 +155,8 @@ private:
     void set_mother(CartesianFrame *const new_mother);
     void add_child(CartesianFrame * const new_child);
     void post_initialize();
-    void post_initialize_Transformations();
-    void post_initialize_OctTree();
     HomoTrafo3D calculate_frame2world()const;
-    void set_up_OctTree_with_children_of_frame();
     void update_sphere_enclosing_all_children(CartesianFrame *new_child);
-    // OctTree
-    //void reset_OctTree();
-
-    //bool there_are_so_many_children_that_we_need_an_OctTree()const;
 
     std::vector<CartesianFrame*> CalculateHitCandidates(
         Vector3D support,

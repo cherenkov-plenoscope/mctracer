@@ -181,10 +181,10 @@ double Vector3D::z() const{
 }
 //------------------------------------------------------------------------------
 bool Vector3D::operator == (const Vector3D& eqVec) const{
-	return (distance_to(eqVec) < 1e-12) ? true : false;
+	return (distance_to(eqVec) < 1e-10) ? true : false;
 }
 bool Vector3D::operator != (const Vector3D& eqVec) const{
-	return (distance_to(eqVec) < 1e-12) ? false : true;
+	return (distance_to(eqVec) < 1e-10) ? false : true;
 }
 //------------------------------------------------------------------------------
 double Vector3D::distance_to(const Vector3D &v)const{

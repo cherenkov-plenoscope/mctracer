@@ -14,17 +14,18 @@
 #include <vector>
 #include <fstream>
 #include "CartesianFrame.h"
-#include "OpticalMirrorSphericHexagonal.h"
+#include "SphereCapWithHexagonalBound.h"
+
 //=================================
 class FactTelescope :public CartesianFrame{
 // the fact telescope class stores the geometric information of fact
-// and creates a 3D telescope in the world
+// and creates a 3D telescope reflector in the world
 	std::stringstream telescope_table;
 
 // the inner radius R1 reflector part
 	double dbl_focal_length_telescope;
 	double MirrorRadius_m;
-	std::vector<CartesianFrame*> list_of_mirrors;
+	std::vector<SphereCapWithHexagonalBound*> list_of_mirrors;
 public:
 //======================================================================
 	FactTelescope(double alpha);

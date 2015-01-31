@@ -277,7 +277,8 @@ FactTelescope::FactTelescope(double alpha){
 			//==================================================
 			// allocate memory for new mirror
 			//==================================================
-			CartesianFrame* mirror = new OpticalMirrorSphericHexagonal;
+			//CartesianFrame* mirror = new OpticalMirrorSphericHexagonal;
+			SphereCapWithHexagonalBound* mirror = new SphereCapWithHexagonalBound;
 			list_of_mirrors.push_back(mirror);
 				
 			//==================================================
@@ -299,7 +300,8 @@ FactTelescope::FactTelescope(double alpha){
 				&mirror_colour
 			);	
 				
-			mirror->set_spheric_hexag(
+			//mirror->set_spheric_hexag(
+			mirror->set_focal_length_and_outer_hex_radius(
 				dbl_focal_length_telescope,
 				MirrorRadius_m
 			);

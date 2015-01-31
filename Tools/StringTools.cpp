@@ -57,4 +57,8 @@ namespace StringTools {
 		if( text.find( character_to_remove ) == 0 )
 			text.erase(0,1);
 	}
+	//--------------------------------------------------------------------------
+	bool string_contains_char(const std::string &text, const char ch) {
+		return text.find(ch) != std::string::npos;
+	}
 }

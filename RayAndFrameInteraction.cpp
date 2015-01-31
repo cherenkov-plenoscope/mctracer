@@ -53,20 +53,25 @@ std::vector<Intersection*> Ray::get_intersections_in_candidate_objects(
 		Intersection* candidate_intersection = 
 			object->calculate_intersection_with(&ray_in_object_system);
 		
-		if(candidate_intersection->does_intersect())
-			intersections.push_back(candidate_intersection);
-		else
+		if(candidate_intersection->does_intersect()) {
+			if( !ray_in_object_system.support_equals_intersection_point(candidate_intersection))
+				intersections.push_back(candidate_intersection);
+		}else
 			delete candidate_intersection;
 	}
 
 	return intersections;
 }
 //------------------------------------------------------------------------------
+bool Ray::support_equals_intersection_point(const Intersection* intersec)const {
+	return 	intersec->get_intersection_vector_in_object_system() == Support();
+}
+//------------------------------------------------------------------------------
 Intersection* Ray::calculate_closest_intersection(	
 		std::vector<Intersection*> *intersections
 )const{
 
-	if(intersections->size() == 0){
+	if(intersections->size() == 0) {
 
 		Intersection* empty_intersection;
 		empty_intersection = new Intersection();

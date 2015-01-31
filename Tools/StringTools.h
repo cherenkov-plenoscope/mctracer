@@ -33,6 +33,8 @@ namespace StringTools {
 		const char character_to_remove,
 		std::string &text
 	);
+
+	bool string_contains_char(const std::string &text, const char ch);
 }
 
 #endif // __STRINGTOOLS_H_INCLUDE__

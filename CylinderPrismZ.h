@@ -8,14 +8,10 @@
 
 //=================================
 // included dependencies
-#include <iostream> 
-#include <string>
-#include <sstream>
-#include <math.h>
-#include "Vector3D.h"
+#include "PrismZ.h"
 
 //=================================
-class CylinderPrismZ {
+class CylinderPrismZ :public PrismZ {
 protected:
 	double radius; 	
 public:

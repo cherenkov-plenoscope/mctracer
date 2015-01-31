@@ -11,17 +11,11 @@ class Intersection;
 #include "Ray.h"
 #include <list>
 #include "ListOfInteractions.h"
-//======================================================================
-//struct PhotonProperties{
-	//double wavelength;
-	//polarisation?
-	//phase?
-//};
+
 //=================================
 class Photon :public Ray{
 protected:
 
-	//PhotonProperties properties;
 	double wavelength;
 	//polarisation?
 	//phase?
@@ -35,9 +29,9 @@ public:
 		double new_wavelength
 	);
 
-	Photon(Vector3D support, Vector3D direction,double new_wavelength);
+	Photon(Vector3D support, Vector3D direction, double new_wavelength);
 
-	Photon(Ray prototype_ray_for_photon,double new_wavelength);
+	Photon(Ray prototype_ray_for_photon, double new_wavelength);
 
 	void propagate(
 		const CartesianFrame* world, 

@@ -79,7 +79,7 @@ TEST_F(Tools, is_ending) {
   EXPECT_TRUE ( StringTools::is_ending("abc\n","\n") );
 }
 //----------------------------------------------------------------------
-TEST_F(Tools, StringUtilities_is_equal) {
+TEST_F(Tools, StringTools_is_equal) {
   EXPECT_TRUE ( StringTools::is_equal("","")   );
   EXPECT_FALSE( StringTools::is_equal("a","b") );
   EXPECT_TRUE ( StringTools::is_equal("a","a") );
@@ -92,7 +92,7 @@ TEST_F(Tools, StringUtilities_is_equal) {
   EXPECT_FALSE( StringTools::is_equal(" Auto","Auto") );
 }
 //----------------------------------------------------------------------
-TEST_F(Tools, remove_if_leading) {
+TEST_F(Tools, StringTools_remove_if_leading) {
   string Hans = "Hans";
   StringTools::remove_char_from_text_if_leading('H', Hans); 
   EXPECT_EQ("ans", Hans);
@@ -114,7 +114,7 @@ TEST_F(Tools, remove_if_leading) {
   EXPECT_EQ("Dieter", Dieter); 
 }
 //------------------------------------------------------------------------------
-TEST_F(Tools, cut_leading_token) {
+TEST_F(Tools, StringTools_cut_leading_token) {
   string names = "Hans,Peter,Klaus";
 
   string first_name = 
@@ -142,6 +142,16 @@ TEST_F(Tools, cut_leading_token) {
   first_name = StringTools::cut_leading_token_infront_of_delimiter(names,','); 
   EXPECT_EQ(" Hans", first_name);
   EXPECT_EQ("Peter,Klaus", names);
+}
+//------------------------------------------------------------------------------
+TEST_F(Tools, StringTools_contains_char) {
+  string text = "Hans Peter is an awesome engineer who build AMS!";
+  EXPECT_TRUE(StringTools::string_contains_char(text, 'H'));
+  EXPECT_TRUE(StringTools::string_contains_char(text, 'A'));
+  EXPECT_TRUE(StringTools::string_contains_char(text, 'w'));
+  EXPECT_TRUE(StringTools::string_contains_char(text, '!'));
+  EXPECT_FALSE(StringTools::string_contains_char(text, '?'));
+  EXPECT_FALSE(StringTools::string_contains_char(text, '*'));
 }
 //------------------------------------------------------------------------------
 TEST_F(Tools, file_existance_on_not_existing_file) {
