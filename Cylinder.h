@@ -31,13 +31,11 @@ public:
 
 	void set_cylinder(const double radius, const double length);
 
-	void disp()const;
+	std::string get_print()const;
 
-	std::string get_cylinder_string()const;
+	std::string get_cylinder_print()const;
 
 	Intersection* calculate_intersection_with(const Ray* ray)const;
-
-	void hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const;
 private:
 	void set_cylinder_length(const double Length);
 

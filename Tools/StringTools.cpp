@@ -61,4 +61,17 @@ namespace StringTools {
 	bool string_contains_char(const std::string &text, const char ch) {
 		return text.find(ch) != std::string::npos;
 	}
+	//--------------------------------------------------------------------------
+	std::string place_first_infront_of_each_new_line_of_second(
+		const std::string front,
+		std::string text
+	) {
+		std::stringstream out;
+		while(!text.empty()) {
+			out << front << cut_leading_token_infront_of_delimiter(text, '\n');
+			out << '\n';
+		}
+		return out.str();
+	}
+	//--------------------------------------------------------------------------
 }

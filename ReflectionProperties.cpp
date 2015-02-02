@@ -62,16 +62,16 @@ double ReflectionProperties::ReflectionCoefficient(double wavelength) const{
 //------------------------------------------------------------------------------
 std::string ReflectionProperties::get_string() const{
 
-	std::stringstream out; out.str("");
-	out<<"reflection flag: ";
-	if(reflection_flag)
-	{
-		out<<"true"<<std::endl; 
-		out<<"reflection coefficient: ";
-		out<<simple_reflection_coefficient<<std::endl;
-	}else{
-		out<<"false"<<std::endl;
-	}
+	std::stringstream out;
+	
+	if(reflection_flag) {
+		out << "mean coef: " << simple_reflection_coefficient;
+
+		if(!reflection_function.get_XmlName().empty())
+			out << ", file: " << reflection_function.get_XmlName();
+	}else
+		out << "none";
+	
 	return out.str();
 }
 //------------------------------------------------------------------------------

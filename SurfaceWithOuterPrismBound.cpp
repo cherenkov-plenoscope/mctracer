@@ -13,10 +13,10 @@ Intersection* SurfaceWithOuterPrismBound::get_causeal_intersection(
 	bool m_is_inside = outer_bound->is_inside(&minus_intersec);
 
 	bool p_is_causal = eq->get_plus_solution() > 0.0 && 
-		 plus_intersec.norm2() <= radius_of_sphere_enclosing_all_children;
+		plus_intersec.norm2_is_less_equal_than(radius_of_sphere_enclosing_all_children);
 
 	bool m_is_causal = eq->get_minus_solution() > 0.0 &&
-		minus_intersec.norm2() <= radius_of_sphere_enclosing_all_children;
+		minus_intersec.norm2_is_less_equal_than(radius_of_sphere_enclosing_all_children);
 
 	bool p_and_m_are_inside = p_is_inside && m_is_inside;
 	bool p_and_m_are_causal = p_is_causal && m_is_causal;

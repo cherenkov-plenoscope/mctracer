@@ -25,11 +25,9 @@ public:
 
 	void set_sphere(double nradius);
 
-	void disp()const;
+	std::string get_print()const;
 
 	std::string get_sphere_print()const;
-
-	void hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const;
 
 	Intersection* calculate_intersection_with(const Ray* ray)const;
 private:

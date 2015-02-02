@@ -49,7 +49,7 @@ void OpticalMirrorSphericHexagonal::disp(){
 	out.str("");
 	out<<"spherical hexagonal mirror:"<<name_of_frame;
 	out<<"_________________________________"<<endl;
-	out<<get_frame_string();
+	out<<get_frame_print();
 	out<<get_surface_print();
 	out<<get_spherical_hexag_string();
 	out<<"_________________________________"<<endl;

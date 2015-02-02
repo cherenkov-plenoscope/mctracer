@@ -30,7 +30,7 @@ class Ray{
 protected:
 	Vector3D support;	
 	Vector3D direction;
-	ListOfInteractions* history = nullptr;	// interaction history of this ray
+	ListOfInteractions* history = nullptr;
 	unsigned long long int identifier_number;
 	
 	void normalize_direction();
@@ -102,12 +102,30 @@ public:
 	)const;
 	//--------------------------------------------------------------------------
 	// Ray and Frame
-
 public:
 	
 	Intersection* get_first_intersection(const CartesianFrame* frame)const;
 
+	void find_intersection_candidates_in_tree_of_frames(
+		const CartesianFrame* frame, 
+		std::vector<const CartesianFrame*> *candidate_frames
+	)const;
+
+	void calculate_reflected_ray(	
+		const Intersection * pointer_to_closest_intersection,
+		Ray *ray_reflection_on_object
+	)const;
+
+	virtual void propagate(	
+		const CartesianFrame* world, 
+		ListOfInteractions* history,
+		int interaction_count,
+		const CartesianFrame* object_propagated_from,
+		const GlobalSettings* settings,
+		PseudoRandomNumberGenerator* dice
+	);
 protected:
+
 	std::vector<const CartesianFrame*> get_intersection_candidate_objects(
 		const CartesianFrame* frame
 	)const;
@@ -126,46 +144,5 @@ protected:
 	)const;
 
 	bool support_equals_intersection_point(const Intersection* intersec)const;
-	// old
-public:
-	std::vector<Intersection*> get_intersections(
-		const CartesianFrame* world,
-		const CartesianFrame* object_propagated_from
-	)const;
-
-	virtual void propagate(	
-		const CartesianFrame* world, 
-		ListOfInteractions* history,
-		int interaction_count,
-		const CartesianFrame* object_propagated_from,
-		const GlobalSettings* settings,
-		PseudoRandomNumberGenerator* dice
-	);
-
-	double get_distance_to_closest_object(
-		const CartesianFrame* world,
-		const GlobalSettings *settings
-	)const;
-
-	void find_intersection_candidates_in_tree_of_frames(
-		const CartesianFrame* frame_to_check_for_interaction_of_ray_and_max_sphere, 
-		std::vector<const CartesianFrame*> *Ptr2ListOfFramesWithIntersectionsOfRayAndMaxSpehre
-	)const;
-
-	Intersection* get_closest_intersection(
-		const CartesianFrame* world,
-		const GlobalSettings *settings
-	)const;
-
-	void find_intersections_in_intersection_candidate_frames(
-		std::vector<const CartesianFrame*> *objects_which_might_intersect,
-		std::vector<Intersection*> *ptr_to_list_of_ptr_to_intersections,
-		const CartesianFrame* object_propagated_from
-	)const;
-
-	void calculate_reflected_ray(	
-		const Intersection * pointer_to_closest_intersection,
-		Ray *ray_reflection_on_object
-	)const;
 };
 #endif // __RAY_H_INCLUDED__ 

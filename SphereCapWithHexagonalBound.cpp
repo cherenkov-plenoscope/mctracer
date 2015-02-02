@@ -28,19 +28,23 @@ void SphereCapWithHexagonalBound::restrict_outer_hex_radius_to_curvature_radius(
 		outer_hex_radius = curvature_radius;
 }
 //------------------------------------------------------------------------------
-void SphereCapWithHexagonalBound::print()const {
+std::string SphereCapWithHexagonalBound::get_print()const {
 	std::stringstream out;
-	out << "SphereCapWithHexagonalBound: " << name_of_frame << "\n";
+	out << get_frame_print();
+	out << get_surface_print();
 	out << get_SphereCapWithHexagonalBound_print();
-	std::cout << out.str();
+	return out.str();
 }
 //------------------------------------------------------------------------------
 std::string SphereCapWithHexagonalBound::get_SphereCapWithHexagonalBound_print()const {
 	std::stringstream out;
-	out << "focal length = " << focal_length << "m\n";
-	out << "curvature radius = " << curvature_radius << "m\n";
-	out << "outer hex radius = " << outer_hex_radius << "m\n";
-	out << "f/D max = " << focal_length/(2.0*outer_hex_radius) << "\n";
+	out << "sphere cap with hexagonal bound:\n";
+	out << "| focal length: " << focal_length << "m\n";
+	out << "| curvature radius: " << curvature_radius << "m\n";
+	out << "| outer hex radius: " << outer_hex_radius << "m\n";
+	out << "| f/D max: " << focal_length/(2.0*outer_hex_radius) << "\n";
+	out << "| frontal projected area: ";
+	out << hexBounds.get_projected_area_in_xy_plane() << "m^2\n"; 
 	return out.str();
 }
 //------------------------------------------------------------------------------

@@ -50,7 +50,8 @@ private:
 	GlobalSettings *settings;
 
 	int snapshot_counter = 0;
-	
+	uint iteration_counter = 0;
+
 	void toggle_stereo3D();
 	void create_CameraMen_to_safely_operate_the_flying_camera();
 	void start_free_orbit();
@@ -68,7 +69,6 @@ private:
 		void *param
 	);
 	void print_info_of_probing_ray_for_pixel_x_y(int x, int y);
-	bool is_not_Escape(const int user_input_key)const;
 	void update_current_camera_position(Vector3D new_translation_World2Camera);
 	std::string get_prefix_print()const;
 	ApertureCamera get_Mamiya645_based_on_free_orbit_camera()const;
@@ -81,5 +81,6 @@ private:
 	bool stereo_offset_wont_be_too_small_when_decreased()const;
 	void print_stereo_offset_manipulation(const std::string status)const;
 	std::string get_snapshot_filename();
+	bool it_is_time_again_to_show_the_help();
 };
 #endif // __FREEORBITCAMERA_H_INCLUDED__

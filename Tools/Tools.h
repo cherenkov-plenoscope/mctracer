@@ -25,5 +25,6 @@ namespace UserInteraction {
 	std::string input(const std::string request);
 	void ClearScreen();
 	std::string parse_config_file_path(int number_of_arguments, char* arguments[]);
+	bool is_Escape_key(const int user_input_key);
 }
 #endif // __TOOLS_H_INCLUDED__

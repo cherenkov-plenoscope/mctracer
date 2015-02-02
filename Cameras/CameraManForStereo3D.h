@@ -8,6 +8,7 @@
 
 //=================================
 // included dependencies
+#include "DistanceMeter.h"
 #include "CameraDevice.h"
 //=================================
 class CameraManForStereo3D {

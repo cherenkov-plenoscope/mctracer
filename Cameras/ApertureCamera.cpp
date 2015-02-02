@@ -86,25 +86,24 @@ void ApertureCamera::auto_focus(
 double ApertureCamera::get_average_object_distance(
 	const CartesianFrame* world,
 	const GlobalSettings* settings
-){
+) {
 	double sum_of_valid_object_distances = 0.0;
 	uint number_of_valid_distances = 0;
 	const uint fraction_of_image_pixels = image->get_resolution()*5e-4;
 
 	for(uint pixel_it=0; pixel_it < fraction_of_image_pixels; pixel_it++) {
 
-		double single_rays_distance_to_closest_intersection = 
-			dist_2_closest_intersec_for_ray_of_pixel_row_col(
-				get_random_row(),
-				get_random_col(),
-				world,
-				settings
-			);
+		CameraRay ray = get_ray_for_pixel_in_row_and_col(
+			get_random_row(),
+			get_random_col()
+		);
 
-		if(single_rays_distance_to_closest_intersection != 0.0){
+		DistanceMeter dist_meter(&ray, world);
+
+		if(dist_meter.does_face_an_object()) {
 			number_of_valid_distances++;
 			sum_of_valid_object_distances += 
-				single_rays_distance_to_closest_intersection;
+				dist_meter.get_distance_to_closest_object();
 		}
 	}
 
@@ -113,19 +112,6 @@ double ApertureCamera::get_average_object_distance(
 	}else{
 		return sum_of_valid_object_distances/double(number_of_valid_distances);
 	}
-}
-//------------------------------------------------------------------------------
-double ApertureCamera::dist_2_closest_intersec_for_ray_of_pixel_row_col(
-	const uint row, const uint col,
-	const CartesianFrame* world,
-	const GlobalSettings* settings
-){
-	CameraRay ray = get_ray_for_pixel_in_row_and_col(row, col);
-
-	return ray.get_distance_to_closest_object(
-		world,
-		settings
-	);
 }
 //------------------------------------------------------------------------------
 uint ApertureCamera::get_random_row(){

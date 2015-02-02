@@ -73,7 +73,6 @@ void Cylinder::set_cylinder_length(
 	const Vector3D start_pos, 
 	const Vector3D end_pos
 ){
-	
 	assert_start_and_end_point_are_distinct(start_pos, end_pos);
 	set_cylinder_length( (end_pos - start_pos).norm2());
 }
@@ -114,23 +113,21 @@ void Cylinder::post_initialize_radius_of_enclosing_sphere(){
 	);
 }
 //------------------------------------------------------------------------------
-void Cylinder::disp()const{
-
+std::string Cylinder::get_print()const {
 	std::stringstream out;
-	out << "cylinder:" << name_of_frame;
-	out << "_________________________________\n";
-	out << get_frame_string();
+	out << get_frame_print();
 	out << get_surface_print();
-	out << get_cylinder_string();
-	out << "_________________________________\n";
-	std::cout << out.str();
+	out << get_cylinder_print();
+	return out.str();
 }
 //------------------------------------------------------------------------------
-std::string Cylinder::get_cylinder_string()const{
+std::string Cylinder::get_cylinder_print()const {
 
 	std::stringstream out;
-	out << "||| cylinder radius: " << Radius << " m\n";
-	out << "||| cylinder length: " << Length << " m\n";
+	out << "cylinder:\n";
+	out << "| radius: " << Radius << "m\n";
+	out << "| length: " << Length << "m\n";
+	out << "| area:   " << 2.0*Radius*M_PI*Length << "m^2\n";
 	return out.str();
 }
 //------------------------------------------------------------------------------
@@ -164,123 +161,6 @@ bool Cylinder::is_in_cylinders_z_bounds(const Vector3D* vec)const {
 }
 //------------------------------------------------------------------------------
 Vector3D Cylinder::get_surface_normal_for_intersection_vec(const Vector3D* vec)const {
-	Vector3D surface_normal = *vec / vec->norm2();
-	return surface_normal;
-}
-//------------------------------------------------------------------------------
-void Cylinder::hit(
-	Vector3D *base,
-	Vector3D *dir,
-	Intersection *intersection
-)const{
-	// When there is a long cylinder id est 
-	// Length >> Radius
-	// then max radius is also big but the projected intersection 
-	// surface is still small.
-	// To speed up the hit calculation we first calculate the 
-	// distance of the ray relative to the z-Axis which is the 
-	// rotational axis of each cylinder in its own frame.
-	
-	// g: rotation axis
-	// g: p + t*u
-	// p=(0,0,0)^T u=(0,0,1)^T
-	
-	// h: incomming ray
-	// h: q + s*v
-	// q=base, v=dir
-	
-	// n = CrossProduct(u,v);
-	
-	// d = norm((q-p)*n)/norm(n)
-
-	double dbl_denominator =( 	pow(dir->x(),2.0) +
-								pow(dir->y(),2.0)
-							);
-
-	double dbl_p = 2.0*( 	base->x()*dir->x() + 
-							base->y()*dir->y() )/
-							dbl_denominator;
-							
-	double dbl_q =(	pow(base->x(),2.0) +
-					pow(base->y(),2.0) -
-					pow(Radius,2.0) )/
-					dbl_denominator;
-	
-	double dbl_inner_part_of_square_root_p_q = 
-	pow((dbl_p/2.0),2.0) - dbl_q;
-			
-	//cout<<"dbl_inner_part_of_square_root_p_q ";
-	//cout<<dbl_inner_part_of_square_root_p_q<<endl;
-	if(dbl_inner_part_of_square_root_p_q>=0.0)
-	{
-		//cout<<"dbl_inner_part_of_square_root_p_q ";
-		//cout<<dbl_inner_part_of_square_root_p_q<<endl;
-		//at least one hit
-		
-		double dbl_lambda_plus = -(dbl_p/2.0) + 
-		sqrt(dbl_inner_part_of_square_root_p_q);
-
-		double dbl_lambda_minus= -(dbl_p/2.0) - 
-		sqrt(dbl_inner_part_of_square_root_p_q);
-
-		Vector3D vec_intersection_minus;
-		vec_intersection_minus = *base +(*dir)*dbl_lambda_minus; 
-
-		Vector3D vec_intersection_plus;
-		vec_intersection_plus = *base +(*dir)*dbl_lambda_plus; 
-
-		Vector3D vec_intersection;
-		Vector3D vec_surface_normal;
-		double dbl_lambda;
-		
-		bool flag_minus_hit = false;
-		//bool flag_plus_hit = false;
-		
-		if( 	fabs(vec_intersection_minus.z())
-				<=(Length/2.0) )
-		{
-			flag_minus_hit = true;
-		}
-		
-		if( 	fabs(vec_intersection_plus.z())
-				<=(Length/2.0) )
-		{
-			//flag_plus_hit = true;
-		}
-		
-		/*
-		bool flag_source_outside = false;
-		if(dbl_lambda_minus>=0.0 && dbl_lambda_plus>=0.0){
-			flag_source_outside = true;
-		}else if(dbl_lambda_minus<0.0 && dbl_lambda_plus>=0.0){
-			flag_source_outside = false;
-		}else if(dbl_lambda_minus<0.0 && dbl_lambda_plus<0.0){
-			flag_source_outside = true;
-		}else{
-		}*/
-		
-		//bool flag_hit = false;
-		
-		if(dbl_lambda_minus>=0.0 && dbl_lambda_plus>=0.0
-		&& flag_minus_hit)
-		{
-			dbl_lambda = dbl_lambda_minus;
-			vec_intersection = *base + (*dir)*dbl_lambda;
-			vec_surface_normal.set(
-			vec_intersection.x(),
-			vec_intersection.y(),
-			0.0);
-			
-			// the new intersection feature
-			intersection->set_intersection_flag(true);
-			intersection->set_pointer_to_intersecting_object(this);
-			intersection->set_intersection(
-			&vec_intersection_minus,
-			&vec_surface_normal,
-			&dbl_lambda_plus	);	
-		}
-
-	}else{
-		// no hit at all
-	}
+	Vector3D surface_normal(vec->x(), vec->y(), 0.0);
+	return surface_normal / surface_normal.norm2();
 }

@@ -34,7 +34,7 @@ namespace UserInteraction {
 	}
 	//--------------------------------------------------------------------------
 	void ClearScreen() {
-		std::cout << std::string( 100, '\n' );
+		std::cout << std::string( 5, '\n' );
 	}
 	//--------------------------------------------------------------------------
 	std::string parse_config_file_path(int number_of_arguments, char* arguments[]) {
@@ -53,5 +53,9 @@ namespace UserInteraction {
 
 		std::string config_path(arguments[1]);
 	    return config_path;
+	}
+	//--------------------------------------------------------------------------
+	bool is_Escape_key(const int user_input_key) {
+		return user_input_key == 27;
 	}
 }

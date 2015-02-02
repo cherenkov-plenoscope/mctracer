@@ -43,11 +43,15 @@ void FreeOrbitCamera::start_free_orbit(){
 	int user_input_key = 0;
 	bool key_stroke_requires_image_update = true;
 
-	while( is_not_Escape(user_input_key) ){
+	while(!UserInteraction::is_Escape_key(user_input_key)) {
 
-		if( key_stroke_requires_image_update ){
+		iteration_counter++;
+
+		if(it_is_time_again_to_show_the_help())
+			print_free_orbit_help_text();
+
+		if(key_stroke_requires_image_update)
 			update_free_orbit_display();
-		}
 		
 		key_stroke_requires_image_update = true;
 		user_input_key = cvWaitKey(0);
@@ -93,6 +97,15 @@ void FreeOrbitCamera::start_free_orbit(){
 		}
 	}
 	destroy_free_orbit_display();
+}
+//==============================================================================
+bool FreeOrbitCamera::it_is_time_again_to_show_the_help() {
+	if(iteration_counter > 15) {
+		iteration_counter = 0;
+		return true;
+	}else{
+		return false;
+	}
 }
 //==============================================================================
 void FreeOrbitCamera::create_free_orbit_display(){
@@ -142,10 +155,6 @@ void FreeOrbitCamera::toggle_stereo3D(){
 	stereo3D = !stereo3D;
 	std::cout << get_prefix_print() << "Stereo 3D : ";
 	std::cout << ((stereo3D == true)? "On": "Off") << "\n";
-}
-//==============================================================================
-bool FreeOrbitCamera::is_not_Escape(const int user_input_key)const{
-	return user_input_key != 27;
 }
 //==============================================================================
 void FreeOrbitCamera::take_snapshot(){
@@ -213,11 +222,6 @@ void FreeOrbitCamera::print_info_of_probing_ray_for_pixel_x_y(int x, int y){
 
 	Ray probing_ray = flying_camera->get_ray_for_pixel_in_row_and_col(y, x);
 
-	/*Intersection* ClosestIntersection = probing_ray.get_closest_intersection(
-		world,
-		settings
-	);*/
-
 	Intersection* ClosestIntersection = probing_ray.get_first_intersection(
 		world
 	);
@@ -234,31 +238,29 @@ void FreeOrbitCamera::print_info_of_probing_ray_for_pixel_x_y(int x, int y){
 	out << "| " << probing_ray << "\n";
 	out << "|\n";
 	if( ClosestIntersection->does_intersect() ){
-
-	out << "| Distance to first intersection: ";
-	out << ClosestIntersection->get_intersection_distance() << " [m]\n";
-	out << "|\n";
-	out << "| Name of Object: " << ClosestIntersection->
-					get_intersecting_object()->
-					get_name_of_frame() << "\n";
-
-	out << "| Path of Object: " << ClosestIntersection->
+	out << "| Object: " << ClosestIntersection->
 					get_intersecting_object()->
 					get_path() << "\n";
-					
+	out << "| Distance to first intersection: ";
+	out << ClosestIntersection->get_intersection_distance() << "m\n";
 	out << "|\n";
-	out << "|  _In frame of intersecting object_________________________\n";
-	out << "| |\n";
+	out << "| In frame of intersecting object\n";
+	
 	out << "| | intesection point: ";
 	 	out << ClosestIntersection->
-	 	get_intersection_point_in_object_system() << "\n";
+	 		get_intersection_vector_in_object_system() << "\n";
 	out << "| | surface normal   : ";
 	 	out << ClosestIntersection->
-	 	get_surface_normal_in_object_system() << "\n";
-	out << "| |_________________________________________________________\n";
-	//out << ClosestIntersection->get_intersecting_object()->get_print();
+	 		get_surface_normal_in_object_system() << "\n";
+	out << "|\n";
+	
+	out << StringTools::place_first_infront_of_each_new_line_of_second(
+		"| ",
+		ClosestIntersection->get_intersecting_object()->get_print()
+	);
+
 	}else{
-	out << "| No Intersection with an object.\n";	
+	out << "| No intersection with any object.\n";	
 	}
 	out << "|___________________________________________________________\n";
 	
@@ -285,6 +287,8 @@ void FreeOrbitCamera::print_free_orbit_help_text()const{
 	out << "                                  _free_orbit___________________\n";
 	out << "_Mamiya645_medium_format_camera    help....................[ h ]\n";
 	out << " take snapshot...........[ g ]     exit....................[ESC]\n";
+	out << "\n";
+	out << "[ left click ] into the image to gain additional information.\n";
 	out << "\n";
 	std::cout << out.str();
 }

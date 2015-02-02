@@ -72,11 +72,14 @@ void CameraManForStereo3D::set_object_distance_to_focus_on(
 	const CartesianFrame* world,
 	const GlobalSettings* settings
 ){
-	distance_to_object = camera->get_optical_axis_in_world().
-		get_distance_to_closest_object(world,settings);
+	Ray optical_axis = camera->get_optical_axis_in_world();
+	DistanceMeter dist_meter(&optical_axis, world);
 
-	if(distance_to_object == 0.0)
+	if(dist_meter.does_face_an_object()) {
+		distance_to_object = dist_meter.get_distance_to_closest_object();
+	}else{
 		distance_to_object = 1e2;
+	}
 }
 
 void CameraManForStereo3D::set_intersec_point_for_left_and_right_optical_axis(){

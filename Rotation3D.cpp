@@ -76,10 +76,10 @@ std::string Rotation3D::get_string()const {
 	std::stringstream out; 
 	if(flag_rot_angles_xyz == true) {
 		
-		out << "(" << Rx << " " << Ry << " " << Rz << ") rad";
+		out << "(" << Rx << " " << Ry << " " << Rz << ")rad";
 	}else{
-		out << "euler : rot-axis: " << rot_axis << ", rot-angle: ";
-		out << rot_angle_in_rad << " rad";
+		out << "rot-axis: " << rot_axis << ", rot-angle: ";
+		out << rot_angle_in_rad << "rad";
 	}
 	return out.str();
 }

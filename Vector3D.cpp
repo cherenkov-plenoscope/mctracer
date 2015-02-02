@@ -20,7 +20,7 @@ void Vector3D::normalize() {
 }
 //------------------------------------------------------------------------------
 double Vector3D::norm2() const{
-	return sqrt( pow(X,2.0) + pow(Y,2.0) + pow(Z,2.0) );
+	return sqrt( X*X + Y*Y + Z*Z );
 }
 //------------------------------------------------------------------------------
 Vector3D Vector3D::CrossProduct(const Vector3D v) const{
@@ -76,13 +76,13 @@ void Vector3D::operator=(const Vector3D eq){
 	Z =eq.Z;
 }
 //------------------------------------------------------------------------------
-void Vector3D::disp() const{
-	std::cout<<get_string();
+void Vector3D::print() const{
+	std::cout << get_string();
 }
 //------------------------------------------------------------------------------
 std::string Vector3D::get_string() const{
 	std::stringstream out; 
-	out << "( " << X << " " << Y << " " << Z << " ) m";
+	out << "(" << X << " " << Y << " " << Z << ")m";
 	return out.str();
 }
 //------------------------------------------------------------------------------
@@ -191,27 +191,6 @@ double Vector3D::distance_to(const Vector3D &v)const{
 	return (*this-v).norm2();
 }
 //------------------------------------------------------------------------------
-CsvRow Vector3D::getCsvRow(GlobalSettings& settings) const{
-	CsvRow row;
-
-	stringstream out;
-	out.precision(settings.get_decimal_precision_for_csv_output());
-
-	out << X;
-	row.push_back( out.str() );
-	out.str("");
-
-	out << Y;
-	row.push_back( out.str() );
-	out.str("");
-
-	out << Z;
-	row.push_back( out.str() );
-	out.str("");
-
-	return row;
-}
-//------------------------------------------------------------------------------
 bool Vector3D::is_paralell_to_z_axis()const{
 	return ( X==0.0 && Y==0.0 && Z>0.0 ) ? true : false;
 }
@@ -220,10 +199,12 @@ bool Vector3D::is_parallel_to_x_y_plane()const{
 	return( Z==0 && ( X!=0.0 || Y!=0.0 ) ) ? true : false;
 }
 //------------------------------------------------------------------------------
-// friends of osstream
+bool Vector3D::norm2_is_less_equal_than(const double length_to_compare)const {
+	// avoid the sqrt for speed up
+	return (*this)*(*this) <= length_to_compare*length_to_compare;
+}
 //------------------------------------------------------------------------------
 std::ostream& operator<<(std::ostream& os, const Vector3D& vec){
-    os << "( " << vec.x() << " " << vec.y() << " " << vec.z() <<" )";
-    os << " m";
+    os << vec.get_string();
     return os;
 }

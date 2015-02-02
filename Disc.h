@@ -22,13 +22,12 @@ protected:
 public:
 	void set_Disc(const double radius);
 
-	void disp();
+	std::string get_print()const;
 
-	std::string get_Disc_string();
+	std::string get_Disc_print()const;
 
 	Intersection* calculate_intersection_with(const Ray* ray)const;
 
-	void hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const;
 private:
 	void post_initialize_radius_of_enclosing_sphere();
 };

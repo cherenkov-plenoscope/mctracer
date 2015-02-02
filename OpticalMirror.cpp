@@ -31,7 +31,7 @@ void OpticalMirror::disp(){
 	out.str("");
 	out<<"optical mirror:"<<name_of_frame;
 	out<<"_________________________________"<<endl;
-	out<<get_frame_string();
+	out<<get_frame_print();
 	out<<get_surface_print();
 	out<<get_optical_mirror_string();
 	out<<"_________________________________"<<endl;

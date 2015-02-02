@@ -3,16 +3,34 @@
 <frame>
 	<set_frame name="house" pos="[5,0,0]" rot="[0,0,0]"/>	
 
-	<plane>
-		<set_frame name="wall_1" pos="[1,0,0.75]" rot="[0,1.57,0.0]"/>
-		<set_surface refl="0.0" colour="[180,180,180]"/>
-		<set_plane x_width="1.5" y_width="2.0" /> 
-	</plane>
-	<plane>
-		<set_frame name="wall_2" pos="[-1,0,0.75]" rot="[0,1.57,0]"/>
-		<set_surface refl="0.0" colour="[180,180,180]"/>
-		<set_plane x_width="1.5" y_width="2.0" /> 
-	</plane>
+	<frame>
+		<set_frame name="big_wall_1" pos="[1,0,0]" rot="[0,0,0]"/>	
+		<plane>
+			<set_frame name="lower_wall" pos="[0,0,0.75]" rot="[0,1.57,0.0]"/>
+			<set_surface refl="0.0" colour="[180,180,180]"/>
+			<set_plane x_width="1.5" y_width="2.0" /> 
+		</plane>
+		<triangle>
+			<set_frame name="upper_wall" pos="[0,0,1.5]" rot="[-1.57,0.0,-1.57]"/>
+			<set_surface refl="0.0" colour="[180,180,180]"/>
+			<set_triangle Ax="-1" Ay="0.0" Bx="+1" By="0.0" Cx="0.0" Cy="1.0"/>		
+		</triangle>
+	</frame>
+
+	<frame>
+		<set_frame name="big_wall_1" pos="[-1,0,0]" rot="[0,0,0]"/>	
+		<plane>
+			<set_frame name="lower_wall" pos="[0,0,0.75]" rot="[0,1.57,0.0]"/>
+			<set_surface refl="0.0" colour="[180,180,180]"/>
+			<set_plane x_width="1.5" y_width="2.0" /> 
+		</plane>
+		<triangle>
+			<set_frame name="upper_wall" pos="[0,0,1.5]" rot="[-1.57,0.0,-1.57]"/>
+			<set_surface refl="0.0" colour="[180,180,180]"/>
+			<set_triangle Ax="-1" Ay="0.0" Bx="+1" By="0.0" Cx="0.0" Cy="1.0"/>		
+		</triangle>
+	</frame>
+
 	<plane>
 		<set_frame name="wall_3" pos="[0,1,0.75]" rot="[0,1.57,1.57]"/>
 		<set_surface refl="0.0" colour="[180,180,180]"/>
@@ -36,11 +54,6 @@
 			<set_surface refl="0.0" colour="[230,20,120]"/>
 			<set_plane x_width="2.0" y_width="2.2" /> 
 		</plane>
-		<triangle>
-			<set_frame name="front_wall" pos="[0,0,0]" rot="[0,0,0]"/>
-			<set_surface refl="0.0" colour="[180,180,180]"/>
-			<set_triangle A="[1,0,0]" B="[-1,0,0]" C="[0.5,0,1]"/>		
-		</triangle>
 	</frame>	
 	
 	<frame>

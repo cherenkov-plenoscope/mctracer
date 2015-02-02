@@ -154,6 +154,27 @@ TEST_F(Tools, StringTools_contains_char) {
   EXPECT_FALSE(StringTools::string_contains_char(text, '*'));
 }
 //------------------------------------------------------------------------------
+TEST_F(Tools, place_item_infront_of_each_line) {
+  std::stringstream out;
+  out << "Dear Customer,\n";
+  out << "\n";
+  out << "Please Shut the fuck up!\n";
+  out << "\n";
+  out << "Kind regards, your customer service\n";
+
+  std::string result =
+    StringTools::place_first_infront_of_each_new_line_of_second("->",out.str());
+
+  std::stringstream expected_out;
+  expected_out << "->Dear Customer,\n";
+  expected_out << "->\n";
+  expected_out << "->Please Shut the fuck up!\n";
+  expected_out << "->\n";
+  expected_out << "->Kind regards, your customer service\n";
+
+  EXPECT_TRUE(StringTools::is_equal(expected_out.str(), result));
+}
+//------------------------------------------------------------------------------
 TEST_F(Tools, file_existance_on_not_existing_file) {
   EXPECT_FALSE(FileTools::can_be_opened("no_such_file"));
 }

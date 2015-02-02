@@ -44,7 +44,7 @@ void OpticalMirrorSphericRound::disp(){
 	out.str("");
 	out<<"spherical round mirror:"<<name_of_frame;
 	out<<"_________________________________"<<endl;
-	out<<get_frame_string();
+	out<<get_frame_print();
 	out<<get_surface_print();
 	out<<get_spherical_round_string();
 	out<<"_________________________________"<<endl;

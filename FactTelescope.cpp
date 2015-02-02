@@ -340,10 +340,10 @@ std::string FactTelescope::get_fact_string() {
 	std::stringstream out;
 	out << "\n";
 	out << "[ FACT Telescope ]\n";
-	out << get_frame_string();
+	out << get_frame_print();
 	out << "||__________FACT mirrors:_________________________\n";	
 	for(unsigned int i=0; i<list_of_mirrors.size(); i++)
-			out << list_of_mirrors.at(i)->get_frame_string();
+			out << list_of_mirrors.at(i)->get_frame_print();
 	out << "||________________________________________________\n";
 	return out.str();
 }

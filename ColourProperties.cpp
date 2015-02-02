@@ -55,9 +55,8 @@ double ColourProperties::blue()const{return blue_0to255;}
 //======================================================================
 std::string ColourProperties::get_string()const{
 	std::stringstream out; out.str("");
-	out<<"colour: ";
-	out<<"("<<red_0to255<<"|"<<green_0to255<<"|"<<blue_0to255<<") ";
-	out<<"[rgb]"<<std::endl;
+	out << "(" << red_0to255 << " " << green_0to255 << " " << blue_0to255 << ")";
+	out << "8 Bit RGB";
 	return out.str();
 }
 //======================================================================

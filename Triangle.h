@@ -16,25 +16,39 @@
 #include <math.h>
 #include "SurfaceEntity.h"
 #include "Intersection.h"
+#include "XyPlaneRayIntersectionEquation.h"
 
 //=================================
-class Triangle  :public SurfaceEntity{
-protected:	
-	// three corners of a triangle
+class Triangle  :public SurfaceEntity{	
+
 	Vector3D A;
 	Vector3D B;	
 	Vector3D C;
 public:
-//======================
-Triangle();
-//======================
-bool set_Triangle(const	Vector3D A,const Vector3D B,const Vector3D C);
-//======================
-void disp()const;
-//======================
-std::string get_Triangle_string()const;
-//======================
-void hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const;
-};
+	void set_corners_in_xy_plane(
+		const double Ax, const double Ay,
+		const double Bx, const double By,  
+		const double Cx, const double Cy
+	);
 
+	std::string get_print()const;
+
+	Intersection* calculate_intersection_with(const Ray* ray)const;
+private:
+	void assert_edge_length_is_non_zero(
+		const double edge_length, 
+		const std::string edge
+	)const;
+
+	void post_initialize_radius_of_enclosing_sphere();
+
+
+	double sign(
+		const Vector3D &P1, const Vector3D &P2, const Vector3D &P3
+	)const;
+
+	bool is_inside_triangle(const Vector3D &intersec_vec)const;
+
+	std::string get_Triangle_print()const;
+}; 
 #endif // __TRIANGLE_H_INCLUDED__ 

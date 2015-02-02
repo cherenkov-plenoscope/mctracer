@@ -9,6 +9,7 @@ class CartesianFrame;
 class GlobalSettings;
 //=================================
 // included dependencies
+#include "DistanceMeter.h"
 #include "CameraDevice.h"
 #include "PseudoRandomNumberGenerator.h"
 //=================================
@@ -39,6 +40,7 @@ public:
 		const CartesianFrame* world,
 		const GlobalSettings* settings
 	);
+
 private:
 	double FStopNumber;			
 	double ApertureRadius_in_m;	
@@ -95,12 +97,6 @@ private:
 	uint get_random_col();
 
 	double get_average_object_distance(
-		const CartesianFrame* world,
-		const GlobalSettings* settings
-	);
-
-	double dist_2_closest_intersec_for_ray_of_pixel_row_col(
-		const uint row, const uint col,
 		const CartesianFrame* world,
 		const GlobalSettings* settings
 	);

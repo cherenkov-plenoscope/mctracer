@@ -1,5 +1,13 @@
 #include "CartesianFrame.h"
 //------------------------------------------------------------------------------
+CartesianFrame::CartesianFrame(
+    const std::string new_name,
+    const Vector3D    new_pos,
+    const Rotation3D  new_rot
+) { 
+    set_frame(new_name, new_pos, new_rot); 
+}
+//------------------------------------------------------------------------------
 uint CartesianFrame::get_number_of_children()const { 
 	return children.size(); 
 }
@@ -126,57 +134,18 @@ void CartesianFrame::assert_name_has_no_delimiter_symbol(
 	}
 }
 //------------------------------------------------------------------------------
-void CartesianFrame::disp()const {
-	std::cout << get_print(0,false);
+std::string CartesianFrame::get_print()const {
+	return get_frame_print();
 }
 //------------------------------------------------------------------------------
-std::string CartesianFrame::get_frame_string()const {
-	return get_frame_string(0);
-}
-//------------------------------------------------------------------------------
-std::string CartesianFrame::get_frame_string(unsigned int depth)const {
-
+std::string CartesianFrame::get_frame_print()const {
 	std::stringstream out;
-	std::string gap = StringTools::repeat_multiple_times("|   ", depth);
-
-	out << gap << " _____" << name_of_frame << "____\n";
-	out << gap << "| pos in mother = " << pos_in_mother << "\n";
-	out << gap << "| rot in mother = " << rot_in_mother << "\n";
-	out << gap << "| pos in world  = " << pos_in_world << "\n";
-	out << gap << "| radius = ";
-	out << radius_of_sphere_enclosing_all_children << " m\n";
-
-	if(mother == nullptr){
-		out << gap << "| mother: nullptr\n";
-	}else{
-		out << gap << "| mother: " << mother->name_of_frame << "\n";
-	}
-
-	out << gap << "| children: " << children.size() << "\n";
+	out << "frame: " << name_of_frame << "\n";
+	out << "| pos in mother: " << pos_in_mother << "\n";
+	out << "| rot in mother: " << rot_in_mother << "\n";
+	out << "| pos in world:  " << pos_in_world << "\n";
+	out << "| radius: " << radius_of_sphere_enclosing_all_children << "m\n";	
 	return out.str();
-}
-//------------------------------------------------------------------------------
-std::string CartesianFrame::get_print(
-	unsigned depth, bool print_wtih_all_children
-)const{
-
-	std::stringstream out;
-	out << get_frame_string(depth);
-
-	if( print_wtih_all_children ){
-		for( CartesianFrame* child : children )
-			out << child->get_print( depth+1, print_wtih_all_children );
-	}
-
-	std::string gap = StringTools::repeat_multiple_times("|   ", depth);
-	out << gap << "|____________________________\n";
-	out << gap << "\n";
-
-	return out.str();
-}
-//------------------------------------------------------------------------------
-std::string CartesianFrame::print_with_all_children()const {
-	return get_print(0,true);
 }
 //------------------------------------------------------------------------------
 void CartesianFrame::set_mother(CartesianFrame *const new_mother) {
@@ -405,4 +374,3 @@ void CartesianFrame::find_intersection_candidates_for_all_children_and_ray(
 	for(CartesianFrame *child : children)
 		ray->find_intersection_candidates_in_tree_of_frames(child, candidate_frames);
 }
-//------------------------------------------------------------------------------

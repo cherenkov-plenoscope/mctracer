@@ -338,11 +338,11 @@ CartesianFrame* WorldFactory::produceTriangle(
 	Rotation3D 				rotation;
 	ReflectionProperties 	refl_prop; 
 	ColourProperties 		colour;
-	Vector3D 				pA, pB, pC;
+	double 					Ax, Ay, Bx, By, Cx, Cy;
 
 	extract_Frame_props(name, position, rotation, node.child("set_frame"));
 	extract_Surface_props(refl_prop, colour, node.child("set_surface"));
-	extract_Triangle_props(pA, pB, pC, node.child("set_triangle"));
+	extract_Triangle_props(Ax, Ay, Bx, By, Cx, Cy, node.child("set_triangle"));
 
 	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
 
@@ -350,7 +350,7 @@ CartesianFrame* WorldFactory::produceTriangle(
 	new_Triangle = new Triangle;			
 	new_Triangle->set_frame(name,position,rotation);
 	new_Triangle->set_surface_properties(&refl_prop, &colour);
-	new_Triangle->set_Triangle(pA, pB, pC);
+	new_Triangle->set_corners_in_xy_plane(Ax, Ay, Bx, By, Cx, Cy);
 	
 	mother->set_mother_and_child(new_Triangle);
 	return new_Triangle;
@@ -467,26 +467,24 @@ void WorldFactory::extract_Disc_props(double &radius,const pugi::xml_node node){
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_Triangle_props(
-	Vector3D &point_A,
-	Vector3D &point_B,
-	Vector3D &point_C,
+	double &Ax, double &Ay, 
+	double &Bx, double &By, 
+	double &Cx, double &Cy,
 	const pugi::xml_node node
 ){
-	assert_attribute_exists(node, "A");
-	assert_attribute_exists(node, "B");
-	assert_attribute_exists(node, "C");
+	assert_attribute_exists(node, "Ax");
+	assert_attribute_exists(node, "Ay");
+	assert_attribute_exists(node, "Bx");
+	assert_attribute_exists(node, "By");
+	assert_attribute_exists(node, "Cx");
+	assert_attribute_exists(node, "Cy");
  	
-	double 		aX, aY, aZ;	
-	strto3tuple(aX, aY, aZ, node.attribute("A").value());
-	point_A.set(aX, aY, aZ);
-
-	double 		bX, bY, bZ;	
-	strto3tuple(bX, bY, bZ, node.attribute("B").value());
-	point_B.set(bX, bY, bZ);
-
-	double 		cX, cY, cZ;	
-	strto3tuple(cX, cY, cZ, node.attribute("C").value());
-	point_C.set(cX, cY, cZ);
+ 	Ax = pedantic_strtod(node.attribute("Ax").value());
+  	Ay = pedantic_strtod(node.attribute("Ay").value());
+   	Bx = pedantic_strtod(node.attribute("Bx").value());
+ 	By = pedantic_strtod(node.attribute("By").value());
+    Cx = pedantic_strtod(node.attribute("Cx").value());
+ 	Cy = pedantic_strtod(node.attribute("Cy").value());
 }
 //------------------------------------------------------------------------------
 void WorldFactory::assert_name_of_child_frame_is_not_in_use_yet(

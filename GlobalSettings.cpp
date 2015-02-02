@@ -29,7 +29,7 @@ void GlobalSettings::set_max_number_of_reflections(
 bool GlobalSettings::max_number_of_reflections_is_not_reached_yet(
 	const uint reflection_counter
 )const {
-	return reflection_counter < number_of_max_reflections;
+	return reflection_counter < number_of_max_reflections -1;
 }
 //======================================================================
 void GlobalSettings::set_csv_decimal_presicion(

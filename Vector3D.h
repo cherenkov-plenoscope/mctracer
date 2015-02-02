@@ -54,11 +54,11 @@ bool operator != (const Vector3D& eqVec) const;
 double distance_to(const Vector3D &v)const;
 bool is_paralell_to_z_axis()const;
 bool is_parallel_to_x_y_plane()const;
+bool norm2_is_less_equal_than(const double length_to_compare)const;
 //------------------------------------------------------------------------------
 // Printing
-void disp() const;
+void print() const;
 std::string get_string() const;
-CsvRow getCsvRow(GlobalSettings& settings) const;
 //------------------------------------------------------------------------------
 // ostream
 friend std::ostream& operator<<(std::ostream& os, const Vector3D& vec);

@@ -121,9 +121,9 @@ private:
 	void extract_Disc_props(double &radius,const pugi::xml_node node);
 
 	void extract_Triangle_props(
-		Vector3D &point_A,
-		Vector3D &point_B,
-		Vector3D &point_C,
+		double &Ax, double &Ay, 
+		double &Bx, double &By, 
+		double &Cx, double &Cy,
 		const pugi::xml_node node
 	);
 

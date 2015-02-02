@@ -31,19 +31,18 @@ public:
 	ReflectionProperties(const double refl_coef) {
 		SetReflectionCoefficient(refl_coef);
 	}
-//======================================================================
+
 	void SetReflectionCoefficient(const double new_refl_coeff);
 	void SetReflectionCoefficient(const std::string path2xml);
-//======================================================================
+
 	double ReflectionCoefficient() const;
 	double ReflectionCoefficient(double wavelength) const;	
-//======================================================================
+
 	bool flag()const{return reflection_flag;};
-//======================================================================
+
 	std::string get_string() const;
-//======================================================================
+
 	void disp() const;
-//======================================================================
 friend 
 std::ostream& operator<<(std::ostream& os, const ReflectionProperties& ref);
 };

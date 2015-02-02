@@ -35,6 +35,11 @@ namespace StringTools {
 	);
 
 	bool string_contains_char(const std::string &text, const char ch);
+
+	std::string place_first_infront_of_each_new_line_of_second(
+		const std::string front,
+		std::string text
+	);
 }
 
 #endif // __STRINGTOOLS_H_INCLUDE__

@@ -52,14 +52,14 @@ TEST_F(PhotonTest, ConstructorAndGetter) {
 
   EXPECT_EQ(wavelength , P.get_wavelength() );
   EXPECT_EQ(
-    "support: ( 0 0 0 ) m, direction: ( 0 0 1 ) m, wavelength: 433[nm]",
+    "support: (0 0 0)m, direction: (0 0 1)m, wavelength: 433[nm]",
     P.get_string() 
   );
 
   Photon D(0,0,0,0,0,1,wavelength);
   EXPECT_EQ(wavelength , D.get_wavelength() );
   EXPECT_EQ(
-    "support: ( 0 0 0 ) m, direction: ( 0 0 1 ) m, wavelength: 433[nm]",
+    "support: (0 0 0)m, direction: (0 0 1)m, wavelength: 433[nm]",
     D.get_string() 
   );
 
@@ -71,7 +71,7 @@ TEST_F(PhotonTest, ConstructorAndGetter) {
   Photon G(prototype,wavelength);
   EXPECT_EQ(wavelength , G.get_wavelength() );
   EXPECT_EQ(
-    "support: ( 0 0 0 ) m, direction: ( 0 0 1 ) m, wavelength: 433[nm]",
+    "support: (0 0 0)m, direction: (0 0 1)m, wavelength: 433[nm]",
     G.get_string() 
   );
 }

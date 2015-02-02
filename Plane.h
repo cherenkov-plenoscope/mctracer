@@ -31,9 +31,7 @@ public:
 		const double y_width
 	);
 
-	void disp()const;
-
-	void hit(Vector3D *base,Vector3D *dir, Intersection *intersection)const;
+	std::string get_print()const;
 
 	Intersection* calculate_intersection_with(const Ray* ray)const;
 private:

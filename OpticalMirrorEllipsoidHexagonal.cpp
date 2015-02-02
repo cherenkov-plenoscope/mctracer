@@ -43,7 +43,7 @@ void OpticalMirrorEllipsoidHexagonal::disp() {
 	stringstream out;
 	out << "ellipsoid hexagonal mirror:" << name_of_frame << "\n";
 	out << "_________________________________\n";
-	out << get_frame_string();
+	out << get_frame_print();
 	out << get_surface_print();
 	out << get_ellipsoid_hexag_print();
 	out << "_________________________________\n";

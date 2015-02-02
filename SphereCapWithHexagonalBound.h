@@ -27,7 +27,7 @@ public:
 		const double outer_hex_radius
 	);
 
-	void print()const;
+	std::string get_print()const;
 
 	Intersection* calculate_intersection_with(const Ray* ray)const;
 private:
@@ -36,5 +36,7 @@ private:
 	std::string get_SphereCapWithHexagonalBound_print()const;
 
 	void post_initialize_radius_of_enclosing_sphere();
+
+	double get_frontal_projected_area()const;
 };
 #endif // __SPHERECAPWITHCYLINDERBOUND_H_INCLUDED__
