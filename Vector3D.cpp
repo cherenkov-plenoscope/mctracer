@@ -64,9 +64,9 @@ Vector3D Vector3D::operator+(const Vector3D vec_two) const{
 //------------------------------------------------------------------------------
 Vector3D Vector3D::operator/(const double scalar) const{
 	Vector3D temp;
-	temp.X=X/scalar;
-	temp.Y=Y/scalar;
-	temp.Z=Z/scalar;
+	temp.X = X/scalar;
+	temp.Y = Y/scalar;
+	temp.Z = Z/scalar;
 	return temp;
 }
 //------------------------------------------------------------------------------
@@ -127,20 +127,20 @@ void Vector3D::mirror(Vector3D* ray) const{
 	// vec_surface_normal.mirror(dir_of_ray_to_be_reflected);
 	//
 	// dir_of_ray_to_be_reflected is overwritten with the reflected ray.
-	//
+
 	ray->set(
-		//X component
-		(1.0-2.0*pow(X,2.0))*ray->X +
-		(-2.0*X*Y)*ray->Y +
-		(-2.0*X*Z)*ray->Z,
-		//Y component
-		(-2.0*X*Y)*ray->X +
-		(1.0-2.0*pow(Y,2.0))*ray->Y +
-		(-2.0*Y*Z)*ray->Z,
-		//Z component
-		(-2.0*X*Z)*ray->X + 
-		(-2.0*Y*Z)*ray->Y + 
-		(1.0-2.0*pow(Z,2.0))*ray->Z
+		//X
+		(1.0 - 2.0*X*X) * ray->X +
+		     - 2.0*X*Y  * ray->Y +
+		     - 2.0*X*Z  * ray->Z,
+		//Y
+		     - 2.0*X*Y  * ray->X +
+		(1.0 - 2.0*Y*Y) * ray->Y +
+		     - 2.0*Y*Z  * ray->Z,
+		//Z
+		     - 2.0*X*Z  * ray->X + 
+		     - 2.0*Y*Z  * ray->Y + 
+		(1.0 - 2.0*Z*Z) * ray->Z
 	);
 }
 //------------------------------------------------------------------------------

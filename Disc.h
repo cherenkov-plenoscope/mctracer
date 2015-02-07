@@ -20,7 +20,7 @@ class Disc :public SurfaceEntity{
 protected:
 	CylinderPrismZ cylinder_bounds;
 public:
-	void set_Disc(const double radius);
+	void set_disc_radius(const double radius);
 
 	std::string get_print()const;
 

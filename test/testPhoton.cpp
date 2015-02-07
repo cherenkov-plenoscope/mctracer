@@ -52,15 +52,8 @@ TEST_F(PhotonTest, ConstructorAndGetter) {
 
   EXPECT_EQ(wavelength , P.get_wavelength() );
   EXPECT_EQ(
-    "support: (0 0 0)m, direction: (0 0 1)m, wavelength: 433[nm]",
-    P.get_string() 
-  );
-
-  Photon D(0,0,0,0,0,1,wavelength);
-  EXPECT_EQ(wavelength , D.get_wavelength() );
-  EXPECT_EQ(
-    "support: (0 0 0)m, direction: (0 0 1)m, wavelength: 433[nm]",
-    D.get_string() 
+    "support: (0 0 0)m, direction: (0 0 1)m, wavelength: 433nm",
+    P.get_print() 
   );
 
   Ray prototype;
@@ -71,8 +64,8 @@ TEST_F(PhotonTest, ConstructorAndGetter) {
   Photon G(prototype,wavelength);
   EXPECT_EQ(wavelength , G.get_wavelength() );
   EXPECT_EQ(
-    "support: (0 0 0)m, direction: (0 0 1)m, wavelength: 433[nm]",
-    G.get_string() 
+    "support: (0 0 0)m, direction: (0 0 1)m, wavelength: 433nm",
+    G.get_print() 
   );
 }
 //------------------------------------------------------------------------------
@@ -97,7 +90,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
   rot.set(0.0,0.0,0.0);
   
   refl.SetReflectionCoefficient(1.0);
-  colo.set_colour_0to255(200,128,128);
+  colo.set_RGB_0to255(200,128,128);
 
   //------------mirror 1----------------
   Plane mirror1;
@@ -120,7 +113,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
   world.set_mother_and_child(&optical_table);
 
   //---post initialize the world to calculate all bounding spheres---
-  world.post_initialize_me_and_all_my_children();
+  world.setup_tree_based_on_mother_child_relations();
 
   //----------free orbit-----------------------
   
@@ -190,7 +183,7 @@ TEST_F(PhotonTest, Reflections){
   pos.set(0.0,0.0,0.0);
   //90Deg in Y and 45DEG in Z
   rot.set(0.0,Deg2Rad(90.0),Deg2Rad(45.0));
-  colo.set_colour_0to255(200,64,64);
+  colo.set_RGB_0to255(200,64,64);
 
   Plane mirror;
   mirror.set_frame("mirror",pos,rot);
@@ -202,7 +195,7 @@ TEST_F(PhotonTest, Reflections){
   absorber_reflection.SetReflectionCoefficient(0.0);
   pos.set(0.0,+2.0,0.0);
   rot.set(Deg2Rad(90.0),0.0,0.0);
-  colo.set_colour_0to255(50,50,50);
+  colo.set_RGB_0to255(50,50,50);
   Plane absorber;
   absorber.set_frame("absorber",pos,rot);
   absorber.set_surface_properties(&absorber_reflection,&colo);
@@ -215,7 +208,7 @@ TEST_F(PhotonTest, Reflections){
   world.set_mother_and_child(&optical_table);
 
   //---post initialize the world to calculate all bounding spheres---
-  world.post_initialize_me_and_all_my_children();
+  world.setup_tree_based_on_mother_child_relations();
 
   //----------free orbit-----------------------
   

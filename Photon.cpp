@@ -1,14 +1,5 @@
 #include "Photon.h"
 //------------------------------------------------------------------------------
-Photon::Photon(	double supX,double supY,double supZ,
-				double dirX,double dirY,double dirZ,
-				double new_wavelength){
-	wavelength = new_wavelength;
-	support.set(supX,supY,supZ);
-	direction.set(dirX,dirY,dirZ);
-	direction.normalize();
-}
-//------------------------------------------------------------------------------
 Photon::Photon(Vector3D new_support, Vector3D new_direction, double new_wavelength){
 	support = new_support; 
 	direction  = new_direction;
@@ -30,19 +21,18 @@ double Photon::get_wavelength()const{
 	return wavelength;
 }
 //------------------------------------------------------------------------------
-std::string Photon::get_string()const{
+std::string Photon::get_print()const{
 	std::stringstream out; 
-	out << Ray::get_string() << ", wavelength: ";
-	out << wavelength*1e9    << "[nm]";
+	out << get_ray_print() << ", wavelength: " << wavelength*1e9    << "nm";
 	return out.str();
 }
 //------------------------------------------------------------------------------
-void Photon::disp()const{
-	std::cout << "Photon -> " << get_string() << "\n";
+void Photon::print()const{
+	std::cout << "Photon -> " << get_print() << "\n";
 }
 //------------------------------------------------------------------------------
 std::ostream& operator<<(std::ostream& os,const Photon& photon_to_be_displayed){
-    os << photon_to_be_displayed.get_string();
+    os << photon_to_be_displayed.get_print();
     return os;
 }
 //------------------------------------------------------------------------------
@@ -53,17 +43,14 @@ void Photon::propagate(
 	PseudoRandomNumberGenerator* dice
 ){
 	int interaction_count = 0;
-	const CartesianFrame* object_propagated_from = NULL;
 
 	propagate(
 		world,
 		history,
 		interaction_count,
-		object_propagated_from,
 		settings,
 		dice
 	);
-
 }
 //------------------------------------------------------------------------------
 bool Photon::reflection_takes_place_in_intesection(
@@ -78,58 +65,118 @@ bool Photon::reflection_takes_place_in_intesection(
 void Photon::propagate(	
 	const CartesianFrame* world, 
 	ListOfInteractions* history,
-	int interaction_count,
-	const CartesianFrame* object_propagated_from,
+	uint interaction_count,
 	const GlobalSettings* settings,
 	PseudoRandomNumberGenerator* dice
 ) {
-	Intersection* intersection = get_first_intersection(world);
+	Intersection* intersection = get_first_intersection_in(world);
 
 	if(intersection->does_intersect()) {
 
 		if(	
-			intersection->get_intersecting_object()->get_reflection_flag() &&
+			intersection->get_intersecting_object()->does_reflect() &&
 			settings->max_number_of_reflections_is_not_reached_yet(interaction_count)
 		) {
-			// The object intersection is pointing to
-			// does reflect and there are still reflections left to be 
-			// performed. We now check whether the photon survives 
-			// this reflection or it gets absorbed here.
 
-			if(reflection_takes_place_in_intesection(intersection, dice)) {
-				
-				interaction_count++;
-				
-				// calculate the ray reflected by the object
-				// intersection is pointing to relativ to
-				// the world coordinate system
+			reflect_on_surface(
+				world,
+				history,
+				interaction_count,
+				settings,
+				dice,
+				intersection
+			);
 
-				Photon ReflectedPhoton(wavelength);
-				calculate_reflected_ray(
-					intersection,
-					&ReflectedPhoton
-				);
-				
-				if( !settings->StoreOnlyLastIntersection() ) {
-					history->Interactions.push_back(intersection);
-				}
-				
-				ReflectedPhoton.propagate(
-					world,
-					history,
-					interaction_count,
-					intersection->get_intersecting_object(),
-					settings,
-					dice
-				);
+		}else if(
+			intersection->get_intersecting_object()->does_refract() &&
+			settings->max_number_of_reflections_is_not_reached_yet(interaction_count)
+		) {
 
-			}else{
-				// reflection took not place by chance, absorbtion
-				history->Interactions.push_back(intersection);
-			}			
+			refract_on_surface(
+				world, 
+				history,
+				interaction_count,
+				settings,
+				dice,
+				intersection
+			);
+
 		}else{
 			// absorbed
 			history->Interactions.push_back(intersection);
 		}	
 	}
 }
+//------------------------------------------------------------------------------
+void Photon::reflect_on_surface(
+	const CartesianFrame* world, 
+	ListOfInteractions* history,
+	uint interaction_count,
+	const GlobalSettings* settings,
+	PseudoRandomNumberGenerator* dice,
+	Intersection* intersection
+) {
+	// The object intersection is pointing to
+	// does reflect and there are still reflections left to be 
+	// performed. We now check whether the photon survives 
+	// this reflection or it gets absorbed here.
+
+	if(reflection_takes_place_in_intesection(intersection, dice)) {
+		
+		interaction_count++;
+		
+		// calculate the ray reflected by the object
+		// intersection is pointing to relativ to
+		// the world coordinate system
+
+		Photon ReflectedPhoton(wavelength);
+		calculate_reflected_ray(
+			intersection,
+			&ReflectedPhoton
+		);
+		
+		if( !settings->StoreOnlyLastIntersection() )
+			history->Interactions.push_back(intersection);
+		
+		ReflectedPhoton.propagate(
+			world,
+			history,
+			interaction_count,
+			settings,
+			dice
+		);
+	}else{
+		// reflection took not place by chance, absorbtion
+		history->Interactions.push_back(intersection);
+	}		
+}
+//------------------------------------------------------------------------------
+void Photon::refract_on_surface(
+	const CartesianFrame* world, 
+	ListOfInteractions* history,
+	uint interaction_count,
+	const GlobalSettings* settings,
+	PseudoRandomNumberGenerator* dice,
+	Intersection* intersection
+) {
+	interaction_count++;
+
+	// refraction
+	Photon refracted_photon(
+		intersection->get_intersection_vector_in_world_system(),
+		direction,
+		wavelength
+	);
+
+	if( !settings->StoreOnlyLastIntersection() )
+		history->Interactions.push_back(intersection);
+
+	refracted_photon.propagate(
+		world,
+		history,
+		interaction_count,
+		settings,
+		dice
+	);	
+}
+//------------------------------------------------------------------------------

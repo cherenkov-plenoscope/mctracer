@@ -1,7 +1,7 @@
 //=================================
 // include guard
-#ifndef __SPHERECAPWITHCYLINDERBOUND_H_INCLUDED__
-#define __SPHERECAPWITHCYLINDERBOUND_H_INCLUDED__
+#ifndef __SphereCapWithHexagonalBound_H_INCLUDED__
+#define __SphereCapWithHexagonalBound_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
@@ -39,4 +39,4 @@ private:
 
 	double get_frontal_projected_area()const;
 };
-#endif // __SPHERECAPWITHCYLINDERBOUND_H_INCLUDED__
+#endif // __SphereCapWithHexagonalBound_H_INCLUDED__

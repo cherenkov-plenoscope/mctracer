@@ -19,8 +19,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Ray.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeter.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/RayAndBoundingSphereInteraction.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/RayAndFrameInteraction.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/OctTreeTraversingRay.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/RayAndFrameInteraction.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Photon.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ListOfPropagations.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ListOfInteractions.cpp
@@ -33,7 +32,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/CylinderPrismZ.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/HexagonalPrismZ.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/FiniteStateMashine.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/OctTreeCube.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ReflectionProperties.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/RefractiveIndex.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/ColourProperties.cpp
@@ -45,25 +43,22 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/WorldFactory.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Function1D.cpp
 
-	${CMAKE_CURRENT_SOURCE_DIR}/CsvHandler.cpp
-
 	${CMAKE_CURRENT_SOURCE_DIR}/Triangle.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Plane.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Disc.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Sphere.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Cylinder.cpp
-	#${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirror.cpp
-	#${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorRound.cpp
-	#${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorHexagonal.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/FactTelescope.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceWithOuterPrismBound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithCylinderBound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithHexagonalBound.cpp
-	#${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorSphericHexagonal.cpp
-	#${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorParabolicRound.cpp
-	#${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorSphericRound.cpp
-	#${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorParabolicHexagonal.cpp
 	#${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorEllipsoidHexagonal.cpp
+
+	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceProperties.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/VolumeProperties.cpp
+
+	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLens.cpp
+
 # python extension
 	${CMAKE_CURRENT_SOURCE_DIR}/mcPYtracer/testPyTracer.cpp
 )

@@ -37,7 +37,7 @@ class PlaneIntersectionTest : public ::testing::Test {
 	world.set_frame("world",pos,rot);
 
 	refl.SetReflectionCoefficient(1.0);
-	colo.set_colour_0to255(200,128,128);
+	colo.set_RGB_0to255(200,128,128);
 
 	//------------Plane----------------
 	plane.set_frame("My_Plane", pos, rot);
@@ -48,7 +48,7 @@ class PlaneIntersectionTest : public ::testing::Test {
 	world.set_mother_and_child(&plane);
 
 	//---post initialize the world to calculate all bounding spheres---
-	world.post_initialize_me_and_all_my_children();
+	world.setup_tree_based_on_mother_child_relations();
   }
 };
 //------------------------------------------------------------------------------
@@ -56,7 +56,7 @@ TEST_F(PlaneIntersectionTest, frontal) {
 
 	Ray ray(Vector3D(0.0, 0.0, -1.0), Vector3D(0.0, 0.0, 1.0));
 
-	Intersection* intersec = ray.get_first_intersection(&world);
+	Intersection* intersec = ray.get_first_intersection_in(&world);
 
 	ASSERT_TRUE(intersec->does_intersect());
 	EXPECT_EQ(&plane, intersec->get_intersecting_object());
@@ -74,7 +74,7 @@ TEST_F(PlaneIntersectionTest, frontal_lateral_offset_alwas_intersection) {
 
 			Ray ray(Vector3D(x_support, y_support, -1.0), Vector3D(0.0, 0.0, 1.0));
 
-			Intersection* intersec = ray.get_first_intersection(&world);
+			Intersection* intersec = ray.get_first_intersection_in(&world);
 
 			ASSERT_TRUE(intersec->does_intersect());
 			EXPECT_EQ(&plane, intersec->get_intersecting_object());
@@ -87,14 +87,14 @@ TEST_F(PlaneIntersectionTest, frontal_lateral_offset_alwas_intersection) {
 TEST_F(PlaneIntersectionTest, close_miss_x) {
 
 	Ray ray(Vector3D(x_width/2.0+0.01, 0.0, -1.0), Vector3D(0.0, 0.0, 1.0));
-	Intersection* intersec = ray.get_first_intersection(&world);
+	Intersection* intersec = ray.get_first_intersection_in(&world);
 	EXPECT_FALSE(intersec->does_intersect());
 }
 //------------------------------------------------------------------------------
 TEST_F(PlaneIntersectionTest, close_miss_y) {
 
 	Ray ray(Vector3D(0.0, y_width/2.0+0.01, -1.0), Vector3D(0.0, 0.0, 1.0));
-	Intersection* intersec = ray.get_first_intersection(&world);
+	Intersection* intersec = ray.get_first_intersection_in(&world);
 	EXPECT_FALSE(intersec->does_intersect());
 }
 //------------------------------------------------------------------------------
@@ -107,7 +107,7 @@ TEST_F(PlaneIntersectionTest, move_plane_up) {
 	world.set_frame("world",pos,rot);
 
 	refl.SetReflectionCoefficient(1.0);
-	colo.set_colour_0to255(200,128,128);
+	colo.set_RGB_0to255(200,128,128);
 
 	//------------sphere----------------
 	pos.set(0.0,0.0,1.0);
@@ -119,9 +119,9 @@ TEST_F(PlaneIntersectionTest, move_plane_up) {
 	world.set_mother_and_child(&plane);
 
 	//---post initialize the world to calculate all bounding spheres---
-	world.post_initialize_me_and_all_my_children();
+	world.setup_tree_based_on_mother_child_relations();
 
 	Ray ray(Vector3D(0.0, 0.0, -1.0), Vector3D(0.0, 0.0, 1.0));
-	Intersection* intersec = ray.get_first_intersection(&world);
+	Intersection* intersec = ray.get_first_intersection_in(&world);
 	EXPECT_TRUE(intersec->does_intersect());
 }

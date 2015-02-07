@@ -69,7 +69,7 @@ TEST_F(CartesianFrameTest, find_specific_frame) {
   );
   // In addition we test if the path is restored correctly by the frame
   std::string RestoredPath = 
-  SpecificFrameInWorldWeAreLookingFor->get_path();
+  SpecificFrameInWorldWeAreLookingFor->get_path_in_tree_of_frames();
 
   EXPECT_EQ( "/house/chimney/chimney_wall_4" , RestoredPath );
 
@@ -155,12 +155,69 @@ TEST_F(CartesianFrameTest, set_frame) {
   EXPECT_FALSE(Peter.has_children()) << "There must not be children after set";
   EXPECT_FALSE(Peter.has_child_with_name("any_child"));
 
-  EXPECT_EQ(pos, *Peter.get_pointer_to_position_of_frame_in_mother_frame());
-  EXPECT_EQ(rot, *Peter.get_pointer_to_rotation_of_frame_in_mother_frame());
+  EXPECT_EQ(pos, *Peter.get_position_of_frame_in_mother_frame());
+  EXPECT_EQ(rot, *Peter.get_rotation_of_frame_in_mother_frame());
 
   HomoTrafo3D T_frame2mother;
   T_frame2mother.set_transformation(rot, pos);
 
   EXPECT_EQ(T_frame2mother, *Peter.frame2mother());
+}
+//==============================================================================
+TEST_F(CartesianFrameTest, root_of_world_on_complete_tree) {
+
+  //-----define frames
+  CartesianFrame tree;
+  tree.set_frame("tree" ,Vector3D(0.0,0.0,0.0), Rotation3D(0.0, 0.0, 0.0));
+
+  CartesianFrame leaf1;
+  leaf1.set_frame("leaf1" ,Vector3D(1.0,0.0,0.0), Rotation3D(0.0, 0.0, 0.0));
+
+  CartesianFrame leaf2;
+  leaf2.set_frame("leaf2" ,Vector3D(-1.0,0.0,0.0), Rotation3D(0.0, 0.0, 0.0));
+
+  CartesianFrame branch;
+  branch.set_frame("branch" ,Vector3D(0.0,0.0,1.0), Rotation3D(0.0, 0.0, 0.0));
+
+  CartesianFrame leaf1_on_branch;
+  leaf1_on_branch.set_frame(
+    "leaf1_on_branch",
+    Vector3D(1.0,0.0,0.0),
+    Rotation3D(0.0, 0.0, 0.0)
+  );
+
+  CartesianFrame leaf2_on_branch;
+  leaf2_on_branch.set_frame(
+    "leaf2_on_branch",
+    Vector3D(0.0,1.0,0.0),
+    Rotation3D(0.0, 0.0, 0.0)
+  );
+
+  //-----declare relationschips
+  branch.set_mother_and_child(&leaf1_on_branch);
+  branch.set_mother_and_child(&leaf2_on_branch);
+
+  tree.set_mother_and_child(&leaf1);
+  tree.set_mother_and_child(&leaf2);
+
+  tree.set_mother_and_child(&branch);
+
+  //-----post initialize 
+  tree.setup_tree_based_on_mother_child_relations();
+
+  //-----test
+  EXPECT_EQ(&tree, tree.get_root_of_world());
+  EXPECT_EQ(&tree, leaf1.get_root_of_world());
+  EXPECT_EQ(&tree, leaf2.get_root_of_world());
+  EXPECT_EQ(&tree, branch.get_root_of_world());
+  EXPECT_EQ(&tree, leaf1_on_branch.get_root_of_world());
+  EXPECT_EQ(&tree, leaf2_on_branch.get_root_of_world());
+}
+//==============================================================================
+TEST_F(CartesianFrameTest, root_of_world_default) {
+
+  CartesianFrame tree;
+  tree.set_frame("tree" ,Vector3D(0.0,0.0,0.0), Rotation3D(0.0, 0.0, 0.0));
+  EXPECT_EQ(&tree, tree.get_root_of_world());
 }
 //==============================================================================

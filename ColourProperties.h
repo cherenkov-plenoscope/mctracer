@@ -14,52 +14,53 @@
 #include <math.h> 
 #include "ReflectionProperties.h"
 
-//======================================================================
 class ColourProperties {
-private:
+
 	double red_0to255;
 	double green_0to255;
 	double blue_0to255;
 public:
-//======================================================================
-ColourProperties();
-ColourProperties(const int r, const int g, const int b) {
-	set_colour_0to255(r, g, b);
-}
-ColourProperties(const double r, const double g, const double b) {
-	set_colour_0to255(r, g, b);
-}
 
-void set_colour_0to255(
-	const int new_red,
-	const int new_green,
-	const int new_blue
-);
-void set_colour_0to255(
-	const double new_red,
-	const double new_green,
-	const double new_blue
-);
+	ColourProperties();
+	ColourProperties(const int r, const int g, const int b);
+	ColourProperties(const double r, const double g, const double b);
 
-unsigned char get_red()const;
-unsigned char get_green()const;
-unsigned char get_blue()const;
-double red()const;
-double green()const;
-double blue()const;
-//======================================================================
-std::string get_string()const;
-//======================================================================
-void disp()const;
-//======================================================================
-void reflection_mix
-(const ColourProperties *c ,const ReflectionProperties *refl);
-//======================================================================
-void mixture(
-const ColourProperties *coulour_to_mix_with,
-const double mixture_coefficient);
-//======================================================================
-friend 
-std::ostream& operator<<(std::ostream& os, const ColourProperties& col);
+	void set_RGB_0to255(
+		const int red,
+		const int green,
+		const int blue
+	);
+
+	void set_RGB_0to255(
+		const double red,
+		const double green,
+		const double blue
+	);
+
+	unsigned char get_R_as_uchar()const;
+	unsigned char get_G_as_uchar()const;
+	unsigned char get_B_as_uchar()const;
+	
+	double get_R_as_double()const;
+	double get_G_as_double()const;
+	double get_B_as_double()const;
+
+	std::string get_print()const;
+
+	void reflection_mix(
+		const ColourProperties *c,
+		const ReflectionProperties *refl
+	);
+
+	void mixture(
+		const ColourProperties *coulour_to_mix_with,
+		const double mixture_coefficient
+	);
+
+	friend std::ostream& operator<<(std::ostream& os, const ColourProperties& col);
+private:
+	void set_to_default_color();
+	void assert_is_in_valid_8Bit_range(const int channel)const;
+	void assert_is_in_valid_8Bit_range(const double channel)const;
 };
 #endif // __COLOURPROPERTIES_H_INCLUDED__ 

@@ -1,7 +1,7 @@
 #include "GlobalSettings.h"
 //======================================================================
 GlobalSettings::GlobalSettings(){
-	default_colour.set_colour_0to255(128,128,128);
+	default_colour.set_RGB_0to255(128,128,128);
 	//number_of_max_reflections = 5;
 	initialize_random_rumber_generator_seed_mt19937();
 	flag_show_csv_row_identifier = true;

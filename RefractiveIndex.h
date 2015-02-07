@@ -20,7 +20,7 @@
 class RefractiveIndex {
 	
 	double simple_refractive_index_independent_of_wavelength = 1.0;
-	Function1D refraction_function;
+	Function1D* refraction_function = nullptr;
 public:
 	RefractiveIndex(const double simple_refractive_index_independent_of_wavelength);
 	RefractiveIndex(const std::string path_to_file);
@@ -29,6 +29,7 @@ public:
 	double get_index(double wavelength)const;
 private:
 	std::string get_print()const;
+	void reset_refraction_function();
 friend 
 	std::ostream& operator<<(std::ostream& os, const RefractiveIndex& refraci_ndex);
 };

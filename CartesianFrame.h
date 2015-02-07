@@ -18,6 +18,7 @@ class ReflectionProperties;
 #include "Rotation3D.h"
 #include "HomoTrafo3D.h"
 #include "ColourProperties.h"
+#include "RefractiveIndex.h"
 #include "TracerException.h"
 #include "OctTreeCube.h"
 #include "Tools/StringTools.h"
@@ -50,6 +51,7 @@ protected:
     
     std::vector<CartesianFrame*> children;
 	CartesianFrame *mother;
+    const CartesianFrame *root_of_world;
 private:
 
     static const char delimiter_for_frame_path = '/';
@@ -71,28 +73,26 @@ public:
 
     void set_mother_and_child(CartesianFrame *new_child);
 
-    void update_enclosing_sphere_for_all_children();
+    void setup_tree_based_on_mother_child_relations();
 
-    void post_initialize_me_and_all_my_children();
-
-    void take_children(CartesianFrame *frame_to_take_chidren_from);
+    void take_children_from(CartesianFrame *frame_to_take_chidren_from);
 
     const std::string get_name_of_frame()const{ return name_of_frame; };
 
-    const Vector3D* get_pointer_to_position_of_frame_in_mother_frame()const{
+    const Vector3D* get_position_of_frame_in_mother_frame()const{
         return &pos_in_mother;
     };
 
-    const Rotation3D* get_pointer_to_rotation_of_frame_in_mother_frame() const{
+    const Rotation3D* get_rotation_of_frame_in_mother_frame() const{
         return &rot_in_mother;
+    };
+
+    const Vector3D* get_position_of_frame_in_world_frame()const{
+        return &pos_in_world;
     };
 
     double get_radius_of_sphere_enclosing_all_children()const{
         return radius_of_sphere_enclosing_all_children;
-    };
-
-    const Vector3D* get_pointer_to_position_of_frame_in_world_frame()const{
-        return &pos_in_world;
     };
 
     const HomoTrafo3D* frame2mother()const{
@@ -113,16 +113,20 @@ public:
 
     const CartesianFrame* get_frame_in_tree_by_path(std::string path)const;
 
+    bool has_child_with_name(const std::string name_of_child)const;
     const CartesianFrame* get_child_by_name(std::string specific_name)const;
 
-    std::string get_path()const;
+    const CartesianFrame* get_root_of_world()const;
+
+    std::string get_path_in_tree_of_frames()const;
 
     uint get_number_of_children()const;
 
     virtual std::string get_print()const;
+
     std::string get_frame_print()const;
 
-    bool has_child_with_name(const std::string name_of_child)const;
+    std::string get_tree_print()const;
 
     bool has_mother()const;
 
@@ -134,18 +138,25 @@ public:
     )const;
 private:
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    // post initialization
+    void post_initialize_root_of_world();
+
+    void update_enclosing_sphere_for_all_children();
+
+    void post_initialize_me_and_all_my_children();
+
+    // initialize
     void reset_all_connections_to_children_and_mother();
 
     void set_mother(CartesianFrame *const new_mother);
-    void add_child(CartesianFrame * const new_child);
-    void post_initialize();
-    HomoTrafo3D calculate_frame2world()const;
-    void update_sphere_enclosing_all_children(CartesianFrame *new_child);
 
-    std::vector<CartesianFrame*> CalculateHitCandidates(
-        Vector3D support,
-        Vector3D direction
-    )const;
+    void add_child(CartesianFrame * const new_child);
+
+    void post_initialize_transformations();
+
+    HomoTrafo3D calculate_frame2world()const;
+
+    void update_sphere_enclosing_all_children(CartesianFrame *new_child);
 
     void assert_name_is_valid(const std::string name_to_check)const;
 
@@ -166,17 +177,42 @@ public:
 
     Intersection* empty_intersection()const;
 
-    virtual bool get_reflection_flag()const{ return false; };
-
-    virtual ColourProperties get_color()const{ 
-        ColourProperties default_colour; 
-        return default_colour; 
-    };
-
-    virtual const ReflectionProperties* get_reflection_properties()const{ 
-        return nullptr; 
-    };
-
     virtual void get_reflection_direction_in_object_system(Vector3D* vec)const{};
+
+// - - - - -
+    virtual void set_reflection_properties(ReflectionProperties* reflection_coefficient){};
+    virtual void set_color(ColourProperties* color){};
+    virtual void set_refraction_properties(RefractiveIndex* refractive_index){};
+    virtual void set_allowed_frames_to_propagate_to(CartesianFrame* frame){};
+
+    virtual bool has_color()const{return false;};
+    virtual bool does_reflect()const{return false;};
+    virtual bool has_restrictions_on_frames_to_propagate_to()const{return false;};
+    virtual bool does_refract()const{return false;};
+
+    virtual const ColourProperties* get_color()const{
+        throw TracerException("A pure frame was asked for its surface color.");
+        ColourProperties* ret;
+        ret = new ColourProperties;
+        return ret;
+    };
+    virtual const ReflectionProperties* get_reflection_properties()const{
+        throw TracerException("A pure frame was asked for its reflection properties.");
+        ReflectionProperties* ret;
+        ret = new ReflectionProperties;
+        return ret;
+    };
+    virtual const RefractiveIndex* get_refraction_properties()const{
+        throw TracerException("A pure frame was asked for its refraction properties.");
+        RefractiveIndex* ret;
+        ret = new RefractiveIndex(1.0);
+        return ret;
+    };
+    virtual const CartesianFrame* get_allowed_frame_to_propagate_to()const{
+        throw TracerException("A pure frame was asked for its allowed frames to propagate to.");
+        CartesianFrame* ret;
+        ret = new CartesianFrame;
+        return ret;
+    };
 };
 #endif // __CARTESIANFRAME_H_INCLUDED__

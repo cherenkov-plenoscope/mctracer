@@ -14,6 +14,7 @@ class GlobalSettings;
 #include "CsvHandler.h"
 #include <list>
 #include <sstream>
+#include "PseudoRandomNumberGenerator.h"
 
 //=================================
 class ListOfPropagations{

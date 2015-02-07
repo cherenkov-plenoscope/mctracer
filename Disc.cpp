@@ -1,6 +1,6 @@
 #include "Disc.h"
 //------------------------------------------------------------------------------
-void Disc::set_Disc(const double radius){
+void Disc::set_disc_radius(const double radius){
 
 	cylinder_bounds.set_radius(radius);
 	//set_Disc_radius(radius);

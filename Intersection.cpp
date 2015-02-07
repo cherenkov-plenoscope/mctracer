@@ -2,7 +2,6 @@
 //------------------------------------------------------------------------------
 Intersection::Intersection() {
 	intersecting_object = nullptr;
-	has_intersection = false;
 }
 //------------------------------------------------------------------------------
 Intersection::Intersection(
@@ -29,34 +28,34 @@ Vector3D Intersection::get_intersection_vector_in_object_system()const {
 	return intersection_point;
 }
 //------------------------------------------------------------------------------
+Vector3D Intersection::get_intersection_vector_in_world_system()const {
+	return intersecting_object->
+		frame2world()->get_transformed_position(intersection_point);
+}
+//------------------------------------------------------------------------------
 Vector3D Intersection::get_surface_normal_in_object_system()const {
 	return surfacenormal_in_intersection_point;
+}
+//------------------------------------------------------------------------------
+Vector3D Intersection::get_surface_normal_in_world_system()const {
+	return intersecting_object->
+		frame2world()->get_transformed_orientation(surfacenormal_in_intersection_point);	
 }
 //------------------------------------------------------------------------------
 double Intersection::get_intersection_distance()const {
 	return distance_of_ray_in_m;
 }
 //------------------------------------------------------------------------------
-std::string Intersection::get_string()const {
+std::string Intersection::get_print()const {
 
 	std::stringstream out; 
-	out << "has_intersection: ";
-	if(has_intersection) {
-		out << "true\n";
-		out << "intersection vector: ";
-		out << intersection_point.get_string() << "\n";
-		out << "intersection object surface normal: ";
-		out << surfacenormal_in_intersection_point.get_string() << "\n";
-		out << "Distance passed by ray: ";
-		out << distance_of_ray_in_m << " [m]"<< "\n";
-		out << "Object: ";
-		if( intersecting_object == NULL )
-			out <<"NULL";
-		else
-			out << intersecting_object->get_name_of_frame();
-	}else{
-		out << "false\n"; 
-	}
+	if(does_intersect()) {
+		out << intersecting_object->get_name_of_frame() << " in ";
+		out << get_intersection_vector_in_world_system() << " after ";
+		out << get_intersection_distance() << "m";
+	}else
+		out << "no intersection with any object";
+	out << "\n";
 	return out.str();
 }
 //------------------------------------------------------------------------------

@@ -1,103 +1,118 @@
 #include "ColourProperties.h"
-//======================================================================
+//------------------------------------------------------------------------------
 ColourProperties::ColourProperties(){
-	// default
-	set_colour_0to255(128,128,128);
+	set_to_default_color();
 }
-//======================================================================
-void ColourProperties::set_colour_0to255
-(const int new_red,const int new_green,const int new_blue){
-	if(	new_red >= 0 && new_red <= 255 &&
-		new_green >= 0 && new_green <= 255 &&
-		new_blue >= 0 && new_blue <= 255)
-	{
-		red_0to255=(double)new_red;
-		green_0to255=(double)new_green;
-		blue_0to255=(double)new_blue;
-	}else{
-		red_0to255 		= 128.0;
-		green_0to255 	= 128.0;
-		blue_0to255 	= 128.0;
-		std::stringstream out;
-		out.str("");
-		out<<"Setting color failed!"<<std::endl;
-		out<<"Color (r|g|b) is out of 8bit (0-255) bounds."<<std::endl;
-		out<<"("<<new_red<<"|"<<new_green<<"|"<<new_blue<<") ";
-		out<<"is not valid."<<std::endl;
-		std::cout<<out.str();
-	}
+//------------------------------------------------------------------------------
+ColourProperties::ColourProperties(const int r, const int g, const int b) {
+	set_RGB_0to255(r, g, b);
 }
-//======================================================================
-void ColourProperties::set_colour_0to255
-(const double new_red,const double new_green,const double new_blue){
-	set_colour_0to255(
-	int(round(new_red)),
-	int(round(new_green)),
-	int(round(new_blue))
+//------------------------------------------------------------------------------
+ColourProperties::ColourProperties(const double r, const double g, const double b) {
+	set_RGB_0to255(r, g, b);
+}
+//------------------------------------------------------------------------------
+void ColourProperties::set_RGB_0to255(
+	const int red,
+	const int green,
+	const int blue
+) {
+	assert_is_in_valid_8Bit_range(red);
+	assert_is_in_valid_8Bit_range(green);
+	assert_is_in_valid_8Bit_range(blue);	
+
+	red_0to255 = (double)red;
+	green_0to255 = (double)green;
+	blue_0to255 = (double)blue;
+}
+//------------------------------------------------------------------------------
+void ColourProperties::set_RGB_0to255(
+	const double red,
+	const double green,
+	const double blue
+) {
+	set_RGB_0to255(
+		int(round(red)),
+		int(round(green)),
+		int(round(blue))
 	);
 }
-//======================================================================
-unsigned char ColourProperties::get_red()const {
+//------------------------------------------------------------------------------
+unsigned char ColourProperties::get_R_as_uchar()const {
 	return (unsigned char)(red_0to255);
 }	
-//======================================================================
-unsigned char ColourProperties::get_green()const {
+//------------------------------------------------------------------------------
+unsigned char ColourProperties::get_G_as_uchar()const {
 	return (unsigned char)(green_0to255);
 }
-//======================================================================
-unsigned char ColourProperties::get_blue()const {
+//------------------------------------------------------------------------------
+unsigned char ColourProperties::get_B_as_uchar()const {
 	return (unsigned char)(blue_0to255);
 }
-//======================================================================
-double ColourProperties::red()const{return red_0to255;}
-double ColourProperties::green()const{return green_0to255;}
-double ColourProperties::blue()const{return blue_0to255;}
-//======================================================================
-std::string ColourProperties::get_string()const{
-	std::stringstream out; out.str("");
+//------------------------------------------------------------------------------
+double ColourProperties::get_R_as_double()const {return red_0to255;}
+double ColourProperties::get_G_as_double()const {return green_0to255;}
+double ColourProperties::get_B_as_double()const {return blue_0to255;}
+//------------------------------------------------------------------------------
+std::string ColourProperties::get_print()const {
+	std::stringstream out;
 	out << "(" << red_0to255 << " " << green_0to255 << " " << blue_0to255 << ")";
 	out << "8 Bit RGB";
 	return out.str();
 }
-//======================================================================
-void ColourProperties::disp()const{
-	std::cout<<get_string();
-}
-//======================================================================
-void ColourProperties::reflection_mix
-(const ColourProperties *c ,const ReflectionProperties *refl){
+//------------------------------------------------------------------------------
+void ColourProperties::reflection_mix(
+	const ColourProperties *c,
+	const ReflectionProperties *refl
+) {
 	red_0to255 = 
-	(1.0 - refl->ReflectionCoefficient())*red_0to255 + 
-	refl->ReflectionCoefficient()*c->red_0to255;
+		(1.0 - refl->ReflectionCoefficient())*red_0to255 + 
+		refl->ReflectionCoefficient()*c->red_0to255;
 	
 	green_0to255 = 
-	(1.0 - refl->ReflectionCoefficient())*green_0to255 + 
-	refl->ReflectionCoefficient()*c->green_0to255;
+		(1.0 - refl->ReflectionCoefficient())*green_0to255 + 
+		refl->ReflectionCoefficient()*c->green_0to255;
 	
 	blue_0to255 = 
-	(1.0 - refl->ReflectionCoefficient())*blue_0to255 + 
-	refl->ReflectionCoefficient()*c->blue_0to255;
+		(1.0 - refl->ReflectionCoefficient())*blue_0to255 + 
+		refl->ReflectionCoefficient()*c->blue_0to255;
 }
-//======================================================================
+//------------------------------------------------------------------------------
 void ColourProperties::mixture(
-const ColourProperties *coulour_to_mix_with,
-const double mixture_coefficient){
-red_0to255 = 
-red_0to255 + mixture_coefficient*coulour_to_mix_with->red_0to255;
+	const ColourProperties *coulour_to_mix_with,
+	const double mixture_coefficient
+) {
+	red_0to255 = 
+		red_0to255 + mixture_coefficient*coulour_to_mix_with->red_0to255;
 
-green_0to255 = 
-green_0to255 + mixture_coefficient*coulour_to_mix_with->green_0to255;
+	green_0to255 = 
+		green_0to255 + mixture_coefficient*coulour_to_mix_with->green_0to255;
 
-blue_0to255 = 
-blue_0to255 + mixture_coefficient*coulour_to_mix_with->blue_0to255;
+	blue_0to255 = 
+		blue_0to255 + mixture_coefficient*coulour_to_mix_with->blue_0to255;
 }
-//======================================================================
-// friends of osstream
-//======================================================================
+//------------------------------------------------------------------------------
+void ColourProperties::set_to_default_color() {
+	set_RGB_0to255(128, 128, 128);
+}
+//------------------------------------------------------------------------------
+void ColourProperties::assert_is_in_valid_8Bit_range(const int channel)const {
+	assert_is_in_valid_8Bit_range(double(channel));
+}
+//------------------------------------------------------------------------------
+void ColourProperties::assert_is_in_valid_8Bit_range(const double channel)const {
+	
+	if( channel < 0.0 || channel > 255.0 ) {
+		std::stringstream info;
+		info << "ColourProperties::" << __func__ << "()\n";
+		info << "Each RGB color channel must be within the valid 8 Bit range\n";
+		info << "Expected channels to be: 0 <= channel <= 255, but actual: ";
+		info << get_print() << "\n";
+		throw TracerException(info.str());	
+	}
+}
+//------------------------------------------------------------------------------
 std::ostream& operator<<(std::ostream& os, const ColourProperties& col){
-    os << "("<<int(col.get_red())<<"|";
-    os <<      int(col.get_green())<<"|";
-    os <<      int(col.get_blue())<<")";
-    os << "[RGB 8bit]";
+    os << col.get_print();
     return os;
 }

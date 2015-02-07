@@ -53,7 +53,7 @@ TEST_F(WorldFactoryTest, DefaultWorld) {
   null_vector.set_null_vector();
 
   EXPECT_EQ( 
-    *Mworld->get_pointer_to_position_of_frame_in_mother_frame(),
+    *Mworld->get_position_of_frame_in_mother_frame(),
     null_vector
   );
 
@@ -62,7 +62,7 @@ TEST_F(WorldFactoryTest, DefaultWorld) {
   null_rotation.set_null_rotation();
 
   EXPECT_EQ( 
-    *Mworld->get_pointer_to_rotation_of_frame_in_mother_frame(),
+    *Mworld->get_rotation_of_frame_in_mother_frame(),
     null_rotation
   );
 }

@@ -11,7 +11,7 @@ class Intersection;
 #include "Ray.h"
 #include <list>
 #include "ListOfInteractions.h"
-
+#include "PseudoRandomNumberGenerator.h"
 //=================================
 class Photon :public Ray{
 protected:
@@ -20,15 +20,7 @@ protected:
 	//polarisation?
 	//phase?
 	Photon(double new_wavelength);
-//=================================================
 public:
-
-	Photon(
-		double baseX,double baseY,double baseZ,
-		double dirX, double dirY, double dirZ,
-		double new_wavelength
-	);
-
 	Photon(Vector3D support, Vector3D direction, double new_wavelength);
 
 	Photon(Ray prototype_ray_for_photon, double new_wavelength);
@@ -43,17 +35,16 @@ public:
 	void propagate(	
 		const CartesianFrame* world, 
 		ListOfInteractions* history,
-		int interaction_count,
-		const CartesianFrame* object_reflected_from,
+		uint interaction_count,
 		const GlobalSettings* settings,
 		PseudoRandomNumberGenerator* dice
 	);
 
 	double get_wavelength()const;
 
-	void disp()const;
+	void print()const;
 
-	std::string get_string()const;
+	std::string get_print()const;
 
 	friend std::ostream& operator<<(
 		std::ostream& os, 
@@ -63,6 +54,24 @@ public:
 private:
 	bool reflection_takes_place_in_intesection(
 		Intersection* intersection, PseudoRandomNumberGenerator* dice
+	);
+
+	void reflect_on_surface(
+		const CartesianFrame* world, 
+		ListOfInteractions* history,
+		uint interaction_count,
+		const GlobalSettings* settings,
+		PseudoRandomNumberGenerator* dice,
+		Intersection* intersection
+	);
+
+	void refract_on_surface(
+		const CartesianFrame* world, 
+		ListOfInteractions* history,
+		uint interaction_count,
+		const GlobalSettings* settings,
+		PseudoRandomNumberGenerator* dice,
+		Intersection* intersection
 	);
 };
 #endif // __PHOTON_H_INCLUDED__ 

@@ -74,13 +74,13 @@ void Rotation3D::disp()const {
 //------------------------------------------------------------------------------
 std::string Rotation3D::get_string()const {
 	std::stringstream out; 
-	if(flag_rot_angles_xyz == true) {
-		
+
+	if(flag_rot_angles_xyz == true)
 		out << "(" << Rx << " " << Ry << " " << Rz << ")rad";
-	}else{
-		out << "rot-axis: " << rot_axis << ", rot-angle: ";
-		out << rot_angle_in_rad << "rad";
-	}
+	else
+		out << "rot-axis: " << rot_axis << ", rot-angle: " 
+			<< rot_angle_in_rad << "rad";
+
 	return out.str();
 }
 //------------------------------------------------------------------------------
@@ -96,14 +96,11 @@ double Rotation3D::sinRy() const {return sin(Ry);}
 double Rotation3D::sinRz() const {return sin(Rz);}
 //------------------------------------------------------------------------------
 bool Rotation3D::operator == (const Rotation3D& eqRot)const {	
-	if( Rx == eqRot.Rx && Ry == eqRot.Ry && Rz == eqRot.Rz) {
+	if( Rx == eqRot.Rx && Ry == eqRot.Ry && Rz == eqRot.Rz)
 		return true;
-	}else{
+	else
 		return false;
-	} 
 }
-//------------------------------------------------------------------------------
-// friends of osstream
 //------------------------------------------------------------------------------
 std::ostream& operator<<(std::ostream& os, const Rotation3D& rot) {
     os << rot.get_string();

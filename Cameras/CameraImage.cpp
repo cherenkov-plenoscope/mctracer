@@ -56,9 +56,9 @@ void CameraImage::set_pixel_row_col_to_color(
 	const uint row, const uint col, const ColourProperties &color){
 	cv::Vec3b intensity;
 
-	intensity.val[0] = color.get_blue();
-	intensity.val[1] = color.get_green();
-	intensity.val[2] = color.get_red();
+	intensity.val[0] = color.get_B_as_uchar();
+	intensity.val[1] = color.get_G_as_uchar();
+	intensity.val[2] = color.get_R_as_uchar();
 
 	Image->at<cv::Vec3b>(row,col) = intensity;
 }
@@ -70,28 +70,24 @@ double CameraImage::get_width_to_height_ratio()const {
 void CameraImage::merge_left_and_right_image_to_anaglyph_3DStereo(
 	CameraImage* left_image, CameraImage* right_image
 ) {
-	// convert both input images to grayscale
-	cv::cvtColor(*left_image->Image, *left_image->Image, CV_RGB2GRAY);
-	cv::cvtColor(*left_image->Image, *left_image->Image, CV_GRAY2RGB);
+	left_image->convert_to_grayscale();
+	right_image->convert_to_grayscale();
 
-	cv::cvtColor(*right_image->Image, *right_image->Image, CV_RGB2GRAY);
-	cv::cvtColor(*right_image->Image, *right_image->Image, CV_GRAY2RGB);
-
-	// BGR
-	std::vector<cv::Mat> BGR_left(3);
-	cv::split(*left_image->Image, BGR_left);
+	std::vector<cv::Mat> single_channels_left(3);
+	cv::split(*left_image->Image, single_channels_left);
 	
-	std::vector<cv::Mat> BGR_right(3);
-	cv::split(*right_image->Image, BGR_right);
+	std::vector<cv::Mat> single_channels_right(3);
+	cv::split(*right_image->Image, single_channels_right);
 	
 	std::vector<cv::Mat> anaglyph_image_channels;		
-
-	// 0 -> B 
-	anaglyph_image_channels.push_back(BGR_right.at(0));
-	// 1 -> G 
-	anaglyph_image_channels.push_back(BGR_right.at(1));
-	// 2 -> R 
-	anaglyph_image_channels.push_back(BGR_left.at(2) );
+	anaglyph_image_channels.push_back(single_channels_right.at(0)); //Blue
+	anaglyph_image_channels.push_back(single_channels_right.at(1)); //Green
+	anaglyph_image_channels.push_back(single_channels_left.at(2) ); //Red
 	
 	cv::merge(anaglyph_image_channels, *Image);
+}
+//------------------------------------------------------------------------------
+void CameraImage::convert_to_grayscale() {
+	cv::cvtColor(*Image, *Image, CV_RGB2GRAY);
+	cv::cvtColor(*Image, *Image, CV_GRAY2RGB);
 }

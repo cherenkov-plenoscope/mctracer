@@ -88,7 +88,11 @@ Vector3D CameraDevice::get_image_upwards_direction_in_world_frame()const{
 std::string CameraDevice::get_camera_print()const{
 	std::stringstream out;
 	out << " _camera:_" << CameraName << "________________\n";
-	out << "| T_" << CameraName << "2world:\n" << T_Camera2World.get_string();	
+	out << "| T_" << CameraName << "2world:\n";
+	out << StringTools::place_first_infront_of_each_new_line_of_second(
+		"| ",
+		T_Camera2World.get_print()
+	);	
 	out << "| camera position          : " << CameraPositionInWorld << "\n";
 	out << "| direction of optical axis: " << CameraPointingDirection << "\n";
 	out << "| field of view: " << Rad2Deg(FoV_in_rad) <<" deg\n";

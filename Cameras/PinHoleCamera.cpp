@@ -112,7 +112,7 @@ void PinHoleCamera::acquire_image(
 			col = i % image->get_number_of_cols();
 
 			cam_ray = get_ray_for_pixel_in_row_and_col(row, col);
-			color = cam_ray.trace(world, 0, NULL, settings);
+			color = cam_ray.trace(world, 0, settings);
 
 			image->set_pixel_row_col_to_color(row, col, color);
 		}

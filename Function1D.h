@@ -28,7 +28,6 @@
 enum boundary_mode {ZERO,CLOSEST,STRICT};
 
 class Function1D :public XmlFileIo{
-private:
 	// to parse the information of a function out of a xml file here some 
 	// identifier are defined which are expected to show up in a xml file.
 	std::string xml_func_node_id = "function1D";
@@ -59,61 +58,53 @@ private:
 
 	// the actual data structure storing the information of the function
 	std::vector< std::pair<double,double> > func;
-	std::vector< std::vector< double > > vunc;
 
 	std::string Name = "";
 	std::string Unit_of_argument = "";
 	std::string Unit_of_value = "";
+public:
+	
+	Function1D(std::string path2xml_input_file);
+	
+	double at(const double argument)const;
+	
+	std::string name()const;	
+	
+	double get_weighted_mean_of_value()const;
 
-	//--------------------------------------------------------------------------
+	double get_integral_over_value()const;
+	
+	double get_range_of_argument()const;
+
 	std::string get_print()const;
-	//--------------------------------------------------------------------------
-	void read();
-	//--------------------------------------------------------------------------
-	void check_and_sort();
-	//--------------------------------------------------------------------------
+private:
+
+	void read_in_function_from_xml_file();
+	
+	void sort_function_arguments();
+
+	void assert_no_duplicate_argument_on_sorted_arguments()const;
+	
 	static bool comp_upp( const double A, const std::pair<double,double> B ){
 		return ( B.first > A);
 	};
-	//--------------------------------------------------------------------------
+	
 	double interpolate_linear(
 		const std::pair<double,double> p0, 
 		const std::pair<double,double> p1, 
 		const double x
 	)const;
-	//--------------------------------------------------------------------------
-public:
-	void set(std::string path2xml_input_file);
-	//--------------------------------------------------------------------------
-	Function1D();
-	//--------------------------------------------------------------------------
-	Function1D(std::string path2xml_input_file);
-	//--------------------------------------------------------------------------
-	double at(const double argument)const;
-	//--------------------------------------------------------------------------
-	std::string name()const;
-	//--------------------------------------------------------------------------
-	void disp()const{std::cout << get_print() << std::endl;}
-	//--------------------------------------------------------------------------
-	std::vector< std::pair<double,double> >::const_iterator begin()const{
-		return func.begin();
-	}
-	//--------------------------------------------------------------------------
-	std::vector< std::pair<double,double> >::const_iterator end()const{
-		return func.end();
-	}
-	//--------------------------------------------------------------------------
-	double weighted_mean()const;
-	//--------------------------------------------------------------------------
-	double integral()const;
-	//--------------------------------------------------------------------------
-	double range()const;
-	//--------------------------------------------------------------------------
+
 	double at_with_Boundary_Mode_CLOSEST(double func_arg)const;
+	
 	double at_with_Boundary_Mode_STRICT(double func_arg)const;
+	
 	double at_with_Boundary_Mode_ZERO(double func_arg)const;
-	//--------------------------------------------------------------------------	
+		
 	std::vector< std::pair<double,double> >::const_iterator get_upper_bound(double func_arg)const;
+	
 	void set_boundary_mode(const std::string mode_text);
+
+	void set(std::string path2xml_input_file);
 };
 #endif // __FUNCTION1D_H_INCLUDED__

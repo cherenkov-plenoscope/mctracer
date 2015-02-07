@@ -7,6 +7,7 @@
 // forward declared dependencies
 class HomoTrafo3D;
 class OctTreeTraversingRay;
+class PseudoRandomNumberGenerator;
 //=================================
 // included dependencies
 #include <iostream>
@@ -23,7 +24,6 @@ class OctTreeTraversingRay;
 #include "GlobalSettings.h"
 #include "OctTreeCube.h"
 #include "ListOfInteractions.h"
-#include "PseudoRandomNumberGenerator.h"
 
 class Ray{
 
@@ -79,9 +79,9 @@ public:
 
 	double get_closest_distance_to_point(const Vector3D &point)const;
 
-	void disp()const;
-	
-	std::string get_string()const;
+	virtual std::string get_print()const;
+
+	std::string get_ray_print()const;
 
 	bool operator() (Intersection* one, Intersection* two)const;
 	
@@ -104,7 +104,7 @@ public:
 	// Ray and Frame
 public:
 	
-	Intersection* get_first_intersection(const CartesianFrame* frame)const;
+	Intersection* get_first_intersection_in(const CartesianFrame* frame)const;
 
 	void find_intersection_candidates_in_tree_of_frames(
 		const CartesianFrame* frame, 
@@ -119,8 +119,7 @@ public:
 	virtual void propagate(	
 		const CartesianFrame* world, 
 		ListOfInteractions* history,
-		int interaction_count,
-		const CartesianFrame* object_propagated_from,
+		uint interaction_count,
 		const GlobalSettings* settings,
 		PseudoRandomNumberGenerator* dice
 	);

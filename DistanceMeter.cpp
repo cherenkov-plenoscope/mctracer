@@ -1,11 +1,12 @@
 #include "DistanceMeter.h"
 //------------------------------------------------------------------------------
 DistanceMeter::DistanceMeter(const Ray* ray, const CartesianFrame* world) {
-	Intersection* closest_intersec = ray->get_first_intersection(world);
+	Intersection* closest_intersec = ray->get_first_intersection_in(world);
 
 	if(closest_intersec->does_intersect()) {
 		does_DistanceMeter_face_an_object = true;
-		distance_to_closest_object = closest_intersec->get_intersection_distance();
+		distance_to_closest_object = 
+			closest_intersec->get_intersection_distance();
 	}
 
 	delete closest_intersec;

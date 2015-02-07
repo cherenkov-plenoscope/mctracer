@@ -1,7 +1,7 @@
 #include "Ray.h"
 #include "OctTreeTraversingRay.h"
 //------------------------------------------------------------------------------
-Intersection* Ray::get_first_intersection(const CartesianFrame* frame)const {
+Intersection* Ray::get_first_intersection_in(const CartesianFrame* frame)const {
 
 	std::vector<const CartesianFrame*> candidate_objects =
 		get_intersection_candidate_objects(frame);
@@ -104,8 +104,7 @@ Intersection* Ray::get_closest_intersection_and_delete_the_rest(
 void Ray::propagate(	
 	const CartesianFrame* world, 
 	ListOfInteractions* history,
-	int interaction_count,
-	const CartesianFrame* object_propagated_from,
+	uint interaction_count,
 	const GlobalSettings* settings,
 	PseudoRandomNumberGenerator* dice
 ){

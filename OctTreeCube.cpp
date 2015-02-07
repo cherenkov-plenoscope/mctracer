@@ -107,7 +107,7 @@ bool OctTreeCube::is_intersecting_cube_boundary_volume(
     CartesianFrame* frame
 )const {
     Vector3D position_of_frame_in_mother_frame = 
-        *frame->get_pointer_to_position_of_frame_in_mother_frame();
+        *frame->get_position_of_frame_in_mother_frame();
 
     double radius_of_frame =
         frame->get_radius_of_sphere_enclosing_all_children();

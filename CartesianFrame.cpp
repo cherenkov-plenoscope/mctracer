@@ -12,7 +12,7 @@ uint CartesianFrame::get_number_of_children()const {
 	return children.size(); 
 }
 //------------------------------------------------------------------------------
-void CartesianFrame::post_initialize() {
+void CartesianFrame::post_initialize_transformations() {
 	// in the set_frame() function the transformation frame2mother has been set
 	// using the new relative position to the mother and the new relative
 	// orientation/rotation with respect to the mother frame.
@@ -84,6 +84,7 @@ void CartesianFrame::set_frame(
 void CartesianFrame::reset_all_connections_to_children_and_mother() {
 	radius_of_sphere_enclosing_all_children = 0.0;	 
 	mother = nullptr;
+	root_of_world = this;
 	children.clear();
 }
 //------------------------------------------------------------------------------
@@ -145,6 +146,18 @@ std::string CartesianFrame::get_frame_print()const {
 	out << "| rot in mother: " << rot_in_mother << "\n";
 	out << "| pos in world:  " << pos_in_world << "\n";
 	out << "| radius: " << radius_of_sphere_enclosing_all_children << "m\n";	
+	return out.str();
+}
+//------------------------------------------------------------------------------
+std::string CartesianFrame::get_tree_print()const {
+	
+	std::stringstream out;
+	out << name_of_frame << ", " << get_number_of_children();
+	out << " children, " << radius_of_sphere_enclosing_all_children << "m\n";
+
+	for(CartesianFrame* child : children)
+		out << "| " << child->get_tree_print();
+
 	return out.str();
 }
 //------------------------------------------------------------------------------
@@ -237,11 +250,17 @@ void CartesianFrame::set_mother_and_child(CartesianFrame *new_child) {
 	new_child->set_mother(this);
 }
 //------------------------------------------------------------------------------
+void CartesianFrame::setup_tree_based_on_mother_child_relations() {
+	post_initialize_me_and_all_my_children();
+	update_enclosing_sphere_for_all_children();
+	post_initialize_root_of_world();
+}
+//------------------------------------------------------------------------------
 void CartesianFrame::post_initialize_me_and_all_my_children() {
 	// post initialize all frames in world tree of frames.
 	// This has to be done to ensure the relationships between each frame and
 	// the root frame are declared in each frame.
-	post_initialize();
+	post_initialize_transformations();
 
 	// and all children
 	for(CartesianFrame* child : children)
@@ -261,7 +280,24 @@ void CartesianFrame::update_enclosing_sphere_for_all_children() {
 	}
 }
 //------------------------------------------------------------------------------
-void  CartesianFrame::take_children(CartesianFrame *frame_to_take_chidren_from){
+void CartesianFrame::post_initialize_root_of_world() {
+
+	if(has_mother())
+		root_of_world = mother->get_root_of_world();
+	else
+		root_of_world = this;
+
+	for(CartesianFrame* child : children)
+		child->post_initialize_root_of_world();
+}
+//------------------------------------------------------------------------------
+const CartesianFrame* CartesianFrame::get_root_of_world()const {
+	return root_of_world;
+}
+//------------------------------------------------------------------------------
+void  CartesianFrame::take_children_from(
+	CartesianFrame *frame_to_take_chidren_from
+) {
 	// take all children of the frame_to_take_chidren_from and 
 	// put them to this frame
 
@@ -322,7 +358,7 @@ const CartesianFrame* CartesianFrame::get_child_by_name(
 	return nullptr;
 }
 //------------------------------------------------------------------------------
-std::string CartesianFrame::get_path()const {
+std::string CartesianFrame::get_path_in_tree_of_frames()const {
 	/// The path of a frame is returned here. The root frame called world is not 
 	/// included in the path. The delimiter sign is '/' as for directorys on 
 	/// unix systems.
@@ -333,7 +369,8 @@ std::string CartesianFrame::get_path()const {
 		// This frame has a mother. Therefore it is not the root frame. 
 		// Here we add at least the delimiter to the path and ,at least there 
 		// is one, the path of its mother
-		return mother -> get_path() + delimiter_for_frame_path + name_of_frame;
+		return mother->get_path_in_tree_of_frames() + 
+			delimiter_for_frame_path + name_of_frame;
 	}else{
 		// This frame has not a mother. So this is the root frame. Here is 
 		// nothing added to the string

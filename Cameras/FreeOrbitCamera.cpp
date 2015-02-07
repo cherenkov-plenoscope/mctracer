@@ -222,7 +222,7 @@ void FreeOrbitCamera::print_info_of_probing_ray_for_pixel_x_y(int x, int y){
 
 	Ray probing_ray = flying_camera->get_ray_for_pixel_in_row_and_col(y, x);
 
-	Intersection* ClosestIntersection = probing_ray.get_first_intersection(
+	Intersection* ClosestIntersection = probing_ray.get_first_intersection_in(
 		world
 	);
 
@@ -240,12 +240,11 @@ void FreeOrbitCamera::print_info_of_probing_ray_for_pixel_x_y(int x, int y){
 	if( ClosestIntersection->does_intersect() ){
 	out << "| Object: " << ClosestIntersection->
 					get_intersecting_object()->
-					get_path() << "\n";
+					get_path_in_tree_of_frames() << "\n";
 	out << "| Distance to first intersection: ";
 	out << ClosestIntersection->get_intersection_distance() << "m\n";
 	out << "|\n";
 	out << "| In frame of intersecting object\n";
-	
 	out << "| | intesection point: ";
 	 	out << ClosestIntersection->
 	 		get_intersection_vector_in_object_system() << "\n";
@@ -253,7 +252,14 @@ void FreeOrbitCamera::print_info_of_probing_ray_for_pixel_x_y(int x, int y){
 	 	out << ClosestIntersection->
 	 		get_surface_normal_in_object_system() << "\n";
 	out << "|\n";
+	out << "| In world frame\n";
+	out << "| | intesection point: ";
+		out << ClosestIntersection->get_intersection_vector_in_world_system() << "\n";
+	out << "| | surface normal   : ";
+	 	out << ClosestIntersection->
+	 		get_surface_normal_in_world_system() << "\n";
 	
+	out << "|\n";		
 	out << StringTools::place_first_infront_of_each_new_line_of_second(
 		"| ",
 		ClosestIntersection->get_intersecting_object()->get_print()

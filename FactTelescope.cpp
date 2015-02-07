@@ -19,7 +19,7 @@ FactTelescope::FactTelescope(double alpha){
 	Rotation3D 	mirror_rotation;	//to be set individual
 
 	ColourProperties mirror_colour;
-		mirror_colour.set_colour_0to255(255,255,255);
+		mirror_colour.set_RGB_0to255(255,255,255);
 
 	ReflectionProperties mirror_reflection;
 		mirror_reflection.SetReflectionCoefficient(0.9);	

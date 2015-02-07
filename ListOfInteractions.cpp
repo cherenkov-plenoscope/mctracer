@@ -1,36 +1,35 @@
 #include "ListOfInteractions.h"	
-//----------------------------------------------------------------------
-ListOfInteractions::~ListOfInteractions(){
-	for(Intersection* an_Intersection : Interactions){
-		delete an_Intersection;
-	}
+//------------------------------------------------------------------------------
+ListOfInteractions::~ListOfInteractions() {
+	for(Intersection* intersection : Interactions)
+		delete intersection;
 }
-//----------------------------------------------------------------------
-void ListOfInteractions::show()const{
-
-	std::cout << "___List of " << Interactions.size() << " interactions:____" << endl;
-
-	for(Intersection* an_Intersection : Interactions){
-		std::cout << an_Intersection->get_string() << "\n";
-		std::cout << "_____________" << endl;
-	}
-
-	std::cout << "______________________________" << endl;
-}
-//======================================================================
-/*CsvRow ListOfInteractions::getCsvRow(GlobalSettings& settings)const{
-	
-	// only the last intersection
-	return Interactions.at(Interactions.size() - 1) -> getCsvRow( settings );
-}*/
-//======================================================================
-double ListOfInteractions::get_accumulative_distance()const{
+//------------------------------------------------------------------------------
+double ListOfInteractions::get_accumulative_distance()const {
   	
   	double accumulative_distance = 0.0;
 	
-	for(Intersection* an_Intersection : Interactions){
-      accumulative_distance += an_Intersection->get_intersection_distance();
-    }	
+	for(Intersection* intersection : Interactions) 
+      	accumulative_distance += intersection->get_intersection_distance();
 
     return accumulative_distance;
+}
+//------------------------------------------------------------------------------
+void ListOfInteractions::print()const {
+	std::cout << get_print();
+}
+//------------------------------------------------------------------------------
+std::string ListOfInteractions::get_print()const {
+	
+	std::stringstream out;
+	out << "_interaction_history_(" << Interactions.size() << ")_\n";
+	for(Intersection* intersection : Interactions)
+		out << "| " << intersection->get_print();
+
+	return out.str();	
+}
+//------------------------------------------------------------------------------
+std::ostream& operator<<(std::ostream& os, const ListOfInteractions& intersec_list){
+    os << intersec_list.get_print();
+    return os;
 }

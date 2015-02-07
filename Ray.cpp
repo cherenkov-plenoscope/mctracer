@@ -43,15 +43,15 @@ void Ray::SetDirection(const Vector3D ndir){
 	normalize_direction();
 }
 //------------------------------------------------------------------------------
-void Ray::disp()const{
-	std::cout << "Ray -> " << get_string() << "\n";
-}
-//------------------------------------------------------------------------------
 void Ray::normalize_direction(){
 	direction.normalize();
 }
 //------------------------------------------------------------------------------
-std::string Ray::get_string()const {
+std::string Ray::get_print()const {
+	return get_ray_print();
+}
+//------------------------------------------------------------------------------
+std::string Ray::get_ray_print()const {
 	std::stringstream out;
 	out << "support: " << support << ", direction: " << direction;
 	return out.str();
@@ -131,15 +131,12 @@ ListOfInteractions* Ray::GetHistory()const {
 }
 //------------------------------------------------------------------------------
 Ray Ray::get_ray_transformed_in_object_system_of(const CartesianFrame* frame)const {
-	
 	Ray ray_in_object_system_of_frame(this);
-
 	ray_in_object_system_of_frame.transform(frame->world2frame());
-
 	return ray_in_object_system_of_frame;
 }
 //------------------------------------------------------------------------------
 std::ostream& operator<<(std::ostream& os, const Ray& ray_to_be_displayed) {
-    os << ray_to_be_displayed.get_string();
+    os << ray_to_be_displayed.get_print();
     return os;
 }

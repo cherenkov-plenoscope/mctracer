@@ -161,7 +161,7 @@ TEST_F(MmcsCorsikaEventGetterTest, FullEventGetter) {
 		while(event_getter.has_still_events_left()) {
 			
 			MmcsCorsikaEvent event = event_getter.get_next_event();	
-			ListOfPropagations *photons = event.transform_to_mcTracer_photons();
+			//ListOfPropagations *photons = event.transform_to_mcTracer_photons();
 			//photons->disp();
 		}
 

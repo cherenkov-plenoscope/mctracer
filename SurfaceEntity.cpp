@@ -1,26 +1,26 @@
 #include "SurfaceEntity.h"
 //------------------------------------------------------------------------------
-void SurfaceEntity::set_color(ColourProperties* color){
+void SurfaceEntity::set_color(const ColourProperties* color){
 	color_was_set = true;
 	this->color = color;
 }
 //------------------------------------------------------------------------------
-void SurfaceEntity::set_reflection_coefficient(
-	ReflectionProperties* reflection_coefficient
+void SurfaceEntity::set_reflection_properties(
+	const ReflectionProperties* reflection_coefficient
 ) {
 	reflection_coefficient_was_set = true;
 	this->reflection_coefficient = reflection_coefficient;
 }
 //------------------------------------------------------------------------------
-void SurfaceEntity::set_refractive_index(
-	RefractiveIndex* refractive_index_going_to
+void SurfaceEntity::set_refraction_properties(
+	const RefractiveIndex* refractive_index_going_to
 ) {
 	refractive_index_going_to_was_set = true;
 	this->refractive_index_going_to = refractive_index_going_to;
 }
 //------------------------------------------------------------------------------
 void SurfaceEntity::set_allowed_frames_to_propagate_to(
-	CartesianFrame* allowed_frame_to_propagate_to
+	const CartesianFrame* allowed_frame_to_propagate_to
 ) {	
 	allowed_frame_to_propagate_to_was_set = false;
 	this->allowed_frame_to_propagate_to =  allowed_frame_to_propagate_to;
@@ -42,15 +42,15 @@ bool SurfaceEntity::does_refract()const {
  	return refractive_index_going_to_was_set;
 }
 //------------------------------------------------------------------------------
-ColourProperties SurfaceEntity::get_color()const {
-	return *color;
+const ColourProperties* SurfaceEntity::get_color()const {
+	return color;
 }
 //------------------------------------------------------------------------------
 const ReflectionProperties* SurfaceEntity::get_reflection_properties()const {
 	return reflection_coefficient;
 }
 //------------------------------------------------------------------------------
-const RefractiveIndex* SurfaceEntity::get_refractive_index_going_to()const {
+const RefractiveIndex* SurfaceEntity::get_refraction_properties()const {
 	return refractive_index_going_to;
 }
 //------------------------------------------------------------------------------
@@ -68,27 +68,41 @@ std::string SurfaceEntity::get_print()const {
 std::string SurfaceEntity::get_surface_print()const {
 	std::stringstream out;
 	out << "surface: \n";
-	out << "| reflection: " << reflection_coefficient->get_string() << "\n";
-	out << "| color: " << color->get_string() << "\n";
+	
+	out << "| reflection: ";
+	if(does_reflect())
+		out << reflection_coefficient;
+	else 
+		out << "none";
+	out << "\n";
+	
+	out << "| color: ";
+	if(has_color())
+		out << *color;
+	else 
+		out << "none";
+	out << "\n";
+	
 	return out.str();
 }
 //------------------------------------------------------------------------------
 // OLD
 //------------------------------------------------------------------------------
 void SurfaceEntity::set_surface_properties(
-	ReflectionProperties *new_reflection_properties, 
-	ColourProperties *new_colour_properties
+	const ReflectionProperties *new_reflection_properties, 
+	const ColourProperties *new_colour_properties
 ) {
-	color = new ColourProperties;
-	*color = *new_colour_properties;
+	ColourProperties* col;
+	col = new ColourProperties;
+	*col = *new_colour_properties;
+	color = col;
 
-	reflection_coefficient = new ReflectionProperties;
-	*reflection_coefficient = *new_reflection_properties;
-	
-	//reflection = *new_reflection_properties;
-	//colour = *new_colour_properties;
-}
-//------------------------------------------------------------------------------
-bool SurfaceEntity::get_reflection_flag()const {
-	return reflection_coefficient->flag();
+
+	ReflectionProperties* refl;
+	refl = new ReflectionProperties;
+	*refl = *new_reflection_properties;
+	reflection_coefficient = refl;
+
+	reflection_coefficient_was_set = reflection_coefficient->flag();
+	color_was_set = true;
 }

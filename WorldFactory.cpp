@@ -63,7 +63,7 @@ void WorldFactory::include_file(
 	CartesianFrame *sub_world;
 	sub_world = fab.world();
 
-	mother->take_children(sub_world);
+	mother->take_children_from(sub_world);
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_include_path(
@@ -320,7 +320,7 @@ CartesianFrame* WorldFactory::produceDisc(
 	
 	new_Disc->set_frame(name, position, rotation);
 	new_Disc->set_surface_properties(&refl_prop, &colour);
-	new_Disc->set_Disc(radius);
+	new_Disc->set_disc_radius(radius);
 	
 	mother->set_mother_and_child(new_Disc);
 	return new_Disc;
@@ -382,7 +382,7 @@ void WorldFactory::extract_Surface_props(
 	//tuple3 col; 
 	double red, blu, gre;
 	strto3tuple(red, blu, gre, node.attribute("colour").value());
-	colour.set_colour_0to255(red, blu, gre);
+	colour.set_RGB_0to255(red, blu, gre);
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_Frame_props(
@@ -498,15 +498,13 @@ void WorldFactory::assert_name_of_child_frame_is_not_in_use_yet(
 		stringstream info;
 		info << "WorldFactory::"<<__func__<<"()";
 		throw MultipleUseage(info.str(), this, 
-			mother->get_child_by_name(name_of_additional_child)->get_path()
+			mother->get_child_by_name(name_of_additional_child)->get_path_in_tree_of_frames()
 		);
 	}
 }
 //------------------------------------------------------------------------------
 CartesianFrame* WorldFactory::world(){
-	
-	root_of_World->post_initialize_me_and_all_my_children();
-	root_of_World->update_enclosing_sphere_for_all_children();
+	root_of_World->setup_tree_based_on_mother_child_relations();
 	return root_of_World;
 }
 //------------------------------------------------------------------------------

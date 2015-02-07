@@ -14,7 +14,7 @@
 #include "SphereIntersectionTest.cpp"
 #include "QuadraticEquationTest.cpp"
 #include "CameraManTest.cpp"
-#include "OctTreeCubeTest.cpp"
+//#include "OctTreeCubeTest.cpp"
 #include "ApertureCameraTest.cpp"
 #include "MmcsCorsikaEventGetterTest.cpp"
 #include "gtest/gtest.h"
@@ -25,6 +25,8 @@
 #include "PlaneIntersectionTest.cpp"
 #include "ZaxisCylinderRayIntersectionEquationTest.cpp"
 #include "HexagonalPrismZTest.cpp"
+#include "BiConvexLensTest.cpp"
+#include "HomoTrafo3DTest.cpp"
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

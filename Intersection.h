@@ -18,7 +18,6 @@
 class Intersection {
 private:
 	const CartesianFrame*	intersecting_object;
-	bool 		has_intersection;
 	Vector3D 	intersection_point;
 	Vector3D 	surfacenormal_in_intersection_point;
 	double 	 	distance_of_ray_in_m;
@@ -39,11 +38,15 @@ public:
 
 	Vector3D get_intersection_vector_in_object_system()const;
 
+	Vector3D get_intersection_vector_in_world_system()const;
+
 	Vector3D get_surface_normal_in_object_system()const;
+	
+	Vector3D get_surface_normal_in_world_system()const;
 
 	double get_intersection_distance()const;
 
-	std::string get_string()const;
+	std::string get_print()const;
 //------------------------------------------------------------------------------
 // OLD
 //------------------------------------------------------------------------------

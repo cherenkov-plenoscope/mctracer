@@ -16,9 +16,10 @@
 class ListOfInteractions{
 public:	
 	std::vector<Intersection*> Interactions;
-	void show()const;
+	void print()const;
+	std::string get_print()const;
 	~ListOfInteractions();
 	double get_accumulative_distance()const;
-	//CsvRow getCsvRow(GlobalSettings& settings)const;
+	friend std::ostream& operator<<(std::ostream& os, const ListOfInteractions& intersec_list);
 };
 #endif // __LISTOFINTERACTIONS_H_INCLUDED__ 

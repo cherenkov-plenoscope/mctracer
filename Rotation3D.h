@@ -13,21 +13,18 @@
 #include <sstream>
 #include "Vector3D.h"
 //=================================
-// the actual class
+
 class Rotation3D {
 
-	private:
-	// modus
 	bool flag_rot_angles_xyz;
-	// rot angles xyz
+
 	double Rx;
 	double Ry;
 	double Rz;
-	// rot_axis mode
-	Vector3D 	rot_axis;
-	double 	rot_angle_in_rad;
 
-	public:
+	Vector3D rot_axis;
+	double rot_angle_in_rad;
+public:
 	
 	Rotation3D();
 	Rotation3D(double Phi, double The, double Psi);
@@ -49,9 +46,7 @@ class Rotation3D {
 	double sinRx()const;
 	double sinRy()const;
 	double sinRz()const;
-	
 	bool operator == (const Rotation3D& eqRot)const;
-
 	friend std::ostream& operator<<(std::ostream& os, const Rotation3D& rot);
 };
 #endif // __ROTATION3D_H_INCLUDED__ 

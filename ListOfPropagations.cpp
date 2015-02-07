@@ -77,11 +77,12 @@ void ListOfPropagations::PropagateSingleRay(
 
 	propagations.at(index)->SetHistory(history_of_this_specific_ray);
 
+	uint interaction_count = 0;
+
 	propagations.at(index)->propagate(
 		world,
 		history_of_this_specific_ray,
-		0,
-		NULL,
+		interaction_count,
 		settings,
 		dice
 	);

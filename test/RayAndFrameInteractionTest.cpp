@@ -46,14 +46,14 @@ class RayAndFrameInteractionTest : public ::testing::Test {
       sphere->set_sphere(1.0);
 
       ReflectionProperties refl;
-      ColourProperties color; color.set_colour_0to255(200,25,25);
+      ColourProperties color; color.set_RGB_0to255(200,25,25);
 
       sphere->set_surface_properties(&refl, &color);
 
       spheres_in_a_row_along_x_r1m->set_mother_and_child(sphere);
     }
 
-    spheres_in_a_row_along_x_r1m->post_initialize_me_and_all_my_children();
+    spheres_in_a_row_along_x_r1m->setup_tree_based_on_mother_child_relations();
 
     return spheres_in_a_row_along_x_r1m;
   }

@@ -4,16 +4,11 @@ Function1D::Function1D(std::string path2xml_input_file){
 	set(path2xml_input_file);
 }
 //------------------------------------------------------------------------------
-Function1D::Function1D(){}
-//------------------------------------------------------------------------------
 void Function1D::set(std::string path2xml_input_file){
-	// the xml path is stored in the Function to be accessable to all the sub
-	// in here functions throwing exceptions
 	XmlName = path2xml_input_file;
-	// read in the xml file storing the function data tuples
-	read();
-	// sort the func using the argument
-	check_and_sort();
+	read_in_function_from_xml_file();
+	sort_function_arguments();
+	assert_no_duplicate_argument_on_sorted_arguments();
 }
 //------------------------------------------------------------------------------
 double Function1D::at(const double argument)const{
@@ -131,7 +126,7 @@ std::string Function1D::get_print()const{
 	return out.str();
 }
 //------------------------------------------------------------------------------
-void Function1D::read(){
+void Function1D::read_in_function_from_xml_file(){
 	
     pugi::xml_document doc;
 
@@ -225,30 +220,31 @@ void Function1D::set_boundary_mode(const std::string mode_text){
 	}
 }
 //------------------------------------------------------------------------------
-void Function1D::check_and_sort(){
+void Function1D::sort_function_arguments(){
 	// sort the func using the arguments
 	std::sort(func.begin(), func.end());
-
+}
+//------------------------------------------------------------------------------
+void Function1D::assert_no_duplicate_argument_on_sorted_arguments()const {
 	// there must not be an argument twice! This is enforced here by throwing an
 	// exception in case it is. Since the list is now sorted, same arguments will
 	// be next to each other. We go through the vector and compare each element
 	// with its upper neighbor.
-	for(uint i=0; i < func.size()-1; i++){
-
-		if( func.at(i).first == func.at(i+1).first ){
-
+	for(uint i=0; i < func.size()-1; i++) {
+		if( func.at(i).first == func.at(i+1).first ) {
 			std::stringstream info;
         	info << "The argument " << func.at(i).first;
         	info << " must not appear twice!";
 			throw XmlIoException(info.str(), this);	
 		}
-	}
+	}	
 }
 //------------------------------------------------------------------------------
 double Function1D::interpolate_linear(
 	const std::pair<double,double> p0, 
 	const std::pair<double,double> p1, 
-	const double x)const{
+	const double x
+)const{
 	// 	point p0: (x0,y0)
 	//	point p1: (x1,y1)
 	//	the line in between point p0 and p1 is
@@ -261,11 +257,11 @@ double Function1D::interpolate_linear(
 	return a*x + p0.second - a*p0.first;
 }
 //------------------------------------------------------------------------------
-double Function1D::weighted_mean()const{
+double Function1D::get_weighted_mean_of_value()const{
 
-	double Range = range();
+	double Range = get_range_of_argument();
 
-	if(Range == 0){
+	if(Range == 0.0){
 		std::stringstream info;
 		info << "The weighted mean of the function: '" << Name << "', ";
 		info << "defined in file: '" << XmlName <<"' does not exist! ";
@@ -273,11 +269,11 @@ double Function1D::weighted_mean()const{
 		info << "and the range in this case is ZERO!\n";
 		throw TracerException( info.str() );			
 	}else{
-		return integral()/Range;		
+		return get_integral_over_value()/Range;		
 	}
 }
 //------------------------------------------------------------------------------
-double Function1D::integral()const{
+double Function1D::get_integral_over_value()const{
 	// integral
 
 	double integral_over_value = 0.0;
@@ -295,6 +291,23 @@ double Function1D::integral()const{
 	return integral_over_value;
 }
 //------------------------------------------------------------------------------
-double Function1D::range()const{
+double Function1D::get_range_of_argument()const{
 	return (func.end()-1)->first - func.begin()->first;
 }
+//------------------------------------------------------------------------------
+/*double Function1D::get_min_value()const {
+	double min_value;
+
+	for(uint i=0; i < func.size()-1; i++) {
+		if( func.at(i).first == func.at(i+1).first ) {
+			std::stringstream info;
+        	info << "The argument " << func.at(i).first;
+        	info << " must not appear twice!";
+			throw XmlIoException(info.str(), this);	
+		}
+	}	
+}
+//------------------------------------------------------------------------------
+double Function1D::get_max_value()const {
+
+}*/

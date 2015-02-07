@@ -18,19 +18,18 @@
 
 //=======================================================================
 class ReflectionProperties {
-	// this class stores reflection information of an object
+
 private:	
+
 	bool  reflection_flag = false;
 	double simple_reflection_coefficient = 0.0;
 
 	bool reflection_function_was_set = false;
-	Function1D reflection_function;
+	Function1D* reflection_function = nullptr;
 public:
-	ReflectionProperties() {}
-	
-	ReflectionProperties(const double refl_coef) {
-		SetReflectionCoefficient(refl_coef);
-	}
+
+	ReflectionProperties();
+	ReflectionProperties(const double refl_coef);
 
 	void SetReflectionCoefficient(const double new_refl_coeff);
 	void SetReflectionCoefficient(const std::string path2xml);
@@ -38,11 +37,12 @@ public:
 	double ReflectionCoefficient() const;
 	double ReflectionCoefficient(double wavelength) const;	
 
-	bool flag()const{return reflection_flag;};
+	bool flag()const;
 
-	std::string get_string() const;
-
-	void disp() const;
+	std::string get_print() const;
+private:
+	void reset_reflection_function();
+	void assert_in_range_0_to_1(const double refl)const;
 friend 
 std::ostream& operator<<(std::ostream& os, const ReflectionProperties& ref);
 };

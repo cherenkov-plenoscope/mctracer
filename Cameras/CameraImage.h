@@ -43,5 +43,7 @@ public:
 	void merge_left_and_right_image_to_anaglyph_3DStereo(
 		CameraImage* left_image, CameraImage* right_image
 	);
+private:
+	void convert_to_grayscale();
 };
 #endif // __CAMERAIMAGE_H_INCLUDED__

@@ -36,7 +36,7 @@ class SphereIntersectionTest : public ::testing::Test {
 	world.set_frame("world",pos,rot);
 
 	refl.SetReflectionCoefficient(1.0);
-	colo.set_colour_0to255(200,128,128);
+	colo.set_RGB_0to255(200,128,128);
 
 	//------------sphere----------------
 	radius = 1.0;
@@ -48,7 +48,7 @@ class SphereIntersectionTest : public ::testing::Test {
 	world.set_mother_and_child(&MySphere);
 
 	//---post initialize the world to calculate all bounding spheres---
-	world.post_initialize_me_and_all_my_children();
+	world.setup_tree_based_on_mother_child_relations();
   }
 };
 //------------------------------------------------------------------------------

@@ -20,14 +20,11 @@ public:
 
 	CameraRay(const Vector3D support, const Vector3D direction);
 
-	void disp()const;
-
-	std::string get_string()const;
+	std::string get_print()const;
 
 	ColourProperties trace(
 		const CartesianFrame* world,
-		int refl_count,
-		const CartesianFrame* object_propagated_from,
+		uint refl_count,
 		const GlobalSettings *settings
 	)const;
 
