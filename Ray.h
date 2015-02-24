@@ -5,9 +5,7 @@
 
 //=================================
 // forward declared dependencies
-class HomoTrafo3D;
-class OctTreeTraversingRay;
-class PseudoRandomNumberGenerator;
+
 //=================================
 // included dependencies
 #include <iostream>
@@ -15,49 +13,23 @@ class PseudoRandomNumberGenerator;
 #include <sstream>
 #include <math.h>
 #include <vector>
-#include <unordered_set>
 #include <algorithm>
 #include "Vector3D.h"
-#include "ColourProperties.h"
 #include "CartesianFrame.h"
 #include "Intersection.h"
 #include "GlobalSettings.h"
-#include "OctTreeCube.h"
-#include "ListOfInteractions.h"
 
 class Ray{
 
 protected:
 	Vector3D support;	
 	Vector3D direction;
-	ListOfInteractions* history = nullptr;
-	unsigned long long int identifier_number;
-	
-	void normalize_direction();
 public:
-	Ray();
-	
 	Ray(const Vector3D support, const Vector3D direction);
 
-	Ray(const Ray* ray);
-
-	void SetRay(const Vector3D nsup,const Vector3D ndir);	
-	
 	void SetDirection(const Vector3D ndir);
-	
-	void SetDirection(const double x,const double y,const double z);
-	
+
 	void SetSupport(const Vector3D nsup);
-	
-	void SetSupport(const double x,const double y,const double z);
-	
-	void SetID(unsigned long long int nID);
-
-	unsigned long long int ID()const;
-
-	void SetHistory(ListOfInteractions *history);
-
-	ListOfInteractions* GetHistory()const;
 
 	Vector3D Support()const;
 	
@@ -85,8 +57,6 @@ public:
 
 	bool operator() (Intersection* one, Intersection* two)const;
 	
-	void operator= (Ray ray);
-
 	Ray get_ray_transformed_in_object_system_of(const CartesianFrame* frame)const;
 	
 	friend std::ostream& operator<<(std::ostream& os, const Ray& ray_to_be_displayed);
@@ -102,7 +72,6 @@ public:
 	)const;
 	//--------------------------------------------------------------------------
 	// Ray and Frame
-public:
 	
 	Intersection* get_first_intersection_in(const CartesianFrame* frame)const;
 
@@ -112,18 +81,24 @@ public:
 	)const;
 
 	void calculate_reflected_ray(	
-		const Intersection * pointer_to_closest_intersection,
+		const Intersection * intersec,
 		Ray *ray_reflection_on_object
 	)const;
 
-	virtual void propagate(	
+	/*virtual void propagate(	
 		const CartesianFrame* world, 
-		ListOfInteractions* history,
 		uint interaction_count,
 		const GlobalSettings* settings,
 		PseudoRandomNumberGenerator* dice
-	);
+	);*/
+
+	//virtual void propagate_in(PropagationEnvironment* env);
+
+	bool is_outer_surface_of_object_in(const Intersection* intersec)const;
 protected:
+	Ray();
+
+	void SetRay(const Vector3D nsup,const Vector3D ndir);	
 
 	std::vector<const CartesianFrame*> get_intersection_candidate_objects(
 		const CartesianFrame* frame
@@ -143,5 +118,7 @@ protected:
 	)const;
 
 	bool support_equals_intersection_point(const Intersection* intersec)const;
+
+	void normalize_direction();
 };
 #endif // __RAY_H_INCLUDED__ 

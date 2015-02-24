@@ -16,6 +16,7 @@ class PlaneIntersectionTest : public ::testing::Test {
 	Rotation3D  rot;
 	ReflectionProperties  refl; 
 	ColourProperties      colo;
+	SurfaceProperties surf;
 	double x_width = 2.5;
 	double y_width = 1.3;
 	Plane plane;
@@ -39,9 +40,13 @@ class PlaneIntersectionTest : public ::testing::Test {
 	refl.SetReflectionCoefficient(1.0);
 	colo.set_RGB_0to255(200,128,128);
 
+	surf.set_color(&colo);
+	surf.set_reflection(&refl);
+
 	//------------Plane----------------
 	plane.set_frame("My_Plane", pos, rot);
-	plane.set_surface_properties(&refl, &colo);
+	plane.set_inner_surface(&surf);
+	plane.set_outer_surface(&surf);
 	plane.set_plane_using_x_and_y_width(x_width, y_width);
 
 	//----------declare relationships------------
@@ -112,7 +117,8 @@ TEST_F(PlaneIntersectionTest, move_plane_up) {
 	//------------sphere----------------
 	pos.set(0.0,0.0,1.0);
 	plane.set_frame("MySphere", pos, rot);
-	plane.set_surface_properties(&refl, &colo);
+	plane.set_inner_surface(&surf);
+	plane.set_outer_surface(&surf);
 	plane.set_plane_using_x_and_y_width(x_width, y_width);
 
 	//----------declare relationships------------

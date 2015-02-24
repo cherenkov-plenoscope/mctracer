@@ -69,9 +69,10 @@ double ReflectionProperties::ReflectionCoefficient(double wavelength)const {
 std::string ReflectionProperties::get_print()const {
 	std::stringstream out;
 	if(reflection_flag) {
+
 		out << "mean " << simple_reflection_coefficient;
 
-		if(!reflection_function->get_XmlName().empty())
+		if(reflection_function_was_set)
 			out << ", file: " << reflection_function->get_XmlName();
 	}else
 		out << "none";

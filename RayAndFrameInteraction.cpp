@@ -1,5 +1,4 @@
 #include "Ray.h"
-#include "OctTreeTraversingRay.h"
 //------------------------------------------------------------------------------
 Intersection* Ray::get_first_intersection_in(const CartesianFrame* frame)const {
 
@@ -54,7 +53,8 @@ std::vector<Intersection*> Ray::get_intersections_in_candidate_objects(
 			object->calculate_intersection_with(&ray_in_object_system);
 		
 		if(candidate_intersection->does_intersect()) {
-			if( !ray_in_object_system.support_equals_intersection_point(candidate_intersection))
+			if( !ray_in_object_system.
+					support_equals_intersection_point(candidate_intersection))
 				intersections.push_back(candidate_intersection);
 		}else
 			delete candidate_intersection;
@@ -101,44 +101,30 @@ Intersection* Ray::get_closest_intersection_and_delete_the_rest(
 	return closest_intersection;
 }
 //------------------------------------------------------------------------------
-void Ray::propagate(	
-	const CartesianFrame* world, 
-	ListOfInteractions* history,
-	uint interaction_count,
-	const GlobalSettings* settings,
-	PseudoRandomNumberGenerator* dice
-){
-	std::cout << "Calling propagate of a Ray instance!" << endl;
-}
-//------------------------------------------------------------------------------
 void Ray::calculate_reflected_ray(	
-	const Intersection * closest_intersection,
+	const Intersection * intersec,
 	Ray *ray_reflection_on_object
 )const{
 
 	Ray ray_in_object_system = get_ray_transformed_in_object_system_of(
-		closest_intersection->get_intersecting_object()
+		intersec->get_intersecting_object()
 	);
 	
 	Vector3D refl_dir = ray_in_object_system.direction;
 	// mirror
-	closest_intersection->
-		get_reflection_direction_in_object_system(&refl_dir);
+	intersec->get_reflection_direction_in_object_system(&refl_dir);
 
-	/*
-	Vector3D refl_sup;
-	closest_intersection->
-		get_intersection_vec_in_object_system(&refl_sup);
-	*/
-	Vector3D refl_sup = closest_intersection->
-		get_intersection_vector_in_object_system();
+	Vector3D refl_sup = intersec->get_intersection_vector_in_object_system();
 
 	ray_reflection_on_object->SetRay(refl_sup,refl_dir);
 
 	// calculate reflection ray in world system
 	homo_transformation_of_ray(
 		ray_reflection_on_object,
-		closest_intersection->
-			get_intersecting_object()->frame2world()
+		intersec->get_intersecting_object()->frame2world()
 	);	
+}
+//------------------------------------------------------------------------------
+bool Ray::is_outer_surface_of_object_in(const Intersection* intersec)const {
+	return intersec->object_surface_normal_parallel_to_direction_of(this);	
 }

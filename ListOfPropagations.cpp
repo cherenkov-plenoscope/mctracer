@@ -5,11 +5,11 @@ ListOfPropagations::ListOfPropagations(std::string name) {
 	this->name = name;
 }
 //------------------------------------------------------------------------------
-void ListOfPropagations::push_back(Ray* ptr_to_ray_to_push_back){
-	propagations.push_back(ptr_to_ray_to_push_back);
+void ListOfPropagations::push_back(RayForPropagation* ray){
+	propagations.push_back(ray);
 }
 //------------------------------------------------------------------------------
-void ListOfPropagations::propagate(	
+void ListOfPropagations::propagate_in_world_with_settings(	
 	const CartesianFrame* world, const GlobalSettings* settings
 ) {
 	std::cout << "Propagate list of " << propagations.size() << " rays...\n";
@@ -35,15 +35,16 @@ void ListOfPropagations::propagate_using_multi_thread(
 		thread_id = omp_get_thread_num();
 		number_of_threads = omp_get_num_threads();
 
+		PropagationEnvironment env_for_this_thread_only;
+		env_for_this_thread_only.world_geometry = world;
+		env_for_this_thread_only.propagation_options = settings;
+		env_for_this_thread_only.random_engine = &dice_for_this_thread_only;
+
 		#pragma omp for schedule(dynamic) private(i) 
 		for(i = 0; i<propagations.size(); i++ )
 		{
 			ray_counter++;
-			PropagateSingleRay(
-				world,settings,
-				&dice_for_this_thread_only,
-				i
-			);
+			propagations.at(i)->propagate_in(&env_for_this_thread_only);
 		}
 
 		out << "Thread " << thread_id+1 << "/" << number_of_threads;
@@ -60,41 +61,21 @@ void ListOfPropagations::propagate_using_single_thread(
 ) {
 	PseudoRandomNumberGenerator dice;
 
+	PropagationEnvironment env;
+	env.world_geometry = world;
+	env.propagation_options = settings;
+	env.random_engine = &dice;
+
 	for(uint i = 0; i<propagations.size(); i++ )
-		PropagateSingleRay(world,settings,&dice,i);
+		propagations.at(i)->propagate_in(&env);
+		//PropagateSingleRay(world,settings,&dice,i);
 
 	cout << "Single thread is doing all the rays\n";	
-}
-//------------------------------------------------------------------------------
-void ListOfPropagations::PropagateSingleRay(	
-	const CartesianFrame* world, 
-	const GlobalSettings* settings,
-	PseudoRandomNumberGenerator *dice,
-	unsigned long long index
-) {
-	ListOfInteractions* history_of_this_specific_ray;
-	history_of_this_specific_ray = new ListOfInteractions;
-
-	propagations.at(index)->SetHistory(history_of_this_specific_ray);
-
-	uint interaction_count = 0;
-
-	propagations.at(index)->propagate(
-		world,
-		history_of_this_specific_ray,
-		interaction_count,
-		settings,
-		dice
-	);
 }
 //------------------------------------------------------------------------------
 std::ostream& operator<<(std::ostream& os, const ListOfPropagations& list) {
     os << list.get_print();
     return os;
-}
-//------------------------------------------------------------------------------
-void ListOfPropagations::disp()const {
-	std::cout << get_print();
 }
 //------------------------------------------------------------------------------
 std::string ListOfPropagations::get_print()const {

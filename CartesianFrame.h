@@ -7,7 +7,6 @@
 // forward declared dependencies
 class Ray;
 class Intersection;
-class ReflectionProperties;
 //=================================
 // included dependencies
 #include <iostream>
@@ -17,8 +16,8 @@ class ReflectionProperties;
 #include "Vector3D.h"
 #include "Rotation3D.h"
 #include "HomoTrafo3D.h"
-#include "ColourProperties.h"
-#include "RefractiveIndex.h"
+#include "SurfaceProperties.h"
+#include "VolumeProperties.h"
 #include "TracerException.h"
 #include "OctTreeCube.h"
 #include "Tools/StringTools.h"
@@ -58,7 +57,7 @@ private:
 public:
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     CartesianFrame(){};
-
+    
     CartesianFrame(
         const std::string new_name,
         const Vector3D    new_pos,
@@ -136,6 +135,9 @@ public:
         const Ray* ray,
         std::vector<const CartesianFrame*> *candidate_frames
     )const;
+
+protected:
+    //CartesianFrame(){};
 private:
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     // post initialization
@@ -180,39 +182,47 @@ public:
     virtual void get_reflection_direction_in_object_system(Vector3D* vec)const{};
 
 // - - - - -
-    virtual void set_reflection_properties(ReflectionProperties* reflection_coefficient){};
-    virtual void set_color(ColourProperties* color){};
-    virtual void set_refraction_properties(RefractiveIndex* refractive_index){};
-    virtual void set_allowed_frames_to_propagate_to(CartesianFrame* frame){};
+    virtual void set_outer_surface(const SurfaceProperties *outer_surface){};
+    virtual void set_inner_surface(const SurfaceProperties *inner_surface){};
+    virtual bool has_inner_surface()const{ return false; };
+    virtual bool has_outer_surface()const{ return false; };
+    virtual const SurfaceProperties* get_outer_surface()const{
+        throw TracerException(__func__);
+        SurfaceProperties* ret;
+        ret = new SurfaceProperties;
+        return ret;       
+    };
+    virtual const SurfaceProperties* get_inner_surface()const{
+        throw TracerException(__func__);
+        SurfaceProperties* ret;
+        ret = new SurfaceProperties;
+        return ret; 
+    };
 
-    virtual bool has_color()const{return false;};
-    virtual bool does_reflect()const{return false;};
-    virtual bool has_restrictions_on_frames_to_propagate_to()const{return false;};
-    virtual bool does_refract()const{return false;};
+    virtual void set_outer_medium(const VolumeProperties* outer_medium){};
+    virtual void set_inner_medium(const VolumeProperties* inner_medium){};
+    virtual bool has_inner_medium()const{ return false; };
+    virtual bool has_outer_medium()const{ return false; };
+    virtual const VolumeProperties* get_outer_medium()const{
+        throw TracerException(__func__);
+        VolumeProperties* ret;
+        ret = new VolumeProperties;
+        return ret; 
+    };
+    virtual const VolumeProperties* get_inner_medium()const{
+        throw TracerException(__func__);
+        VolumeProperties* ret;
+        ret = new VolumeProperties;
+        return ret; 
+    };    
 
-    virtual const ColourProperties* get_color()const{
-        throw TracerException("A pure frame was asked for its surface color.");
-        ColourProperties* ret;
-        ret = new ColourProperties;
-        return ret;
-    };
-    virtual const ReflectionProperties* get_reflection_properties()const{
-        throw TracerException("A pure frame was asked for its reflection properties.");
-        ReflectionProperties* ret;
-        ret = new ReflectionProperties;
-        return ret;
-    };
-    virtual const RefractiveIndex* get_refraction_properties()const{
-        throw TracerException("A pure frame was asked for its refraction properties.");
-        RefractiveIndex* ret;
-        ret = new RefractiveIndex(1.0);
-        return ret;
-    };
+    virtual bool has_restrictions_on_frames_to_propagate_to()const{ return false; };
     virtual const CartesianFrame* get_allowed_frame_to_propagate_to()const{
-        throw TracerException("A pure frame was asked for its allowed frames to propagate to.");
+        throw TracerException(__func__);
         CartesianFrame* ret;
         ret = new CartesianFrame;
         return ret;
     };
+    virtual void set_allowed_frames_to_propagate_to(const CartesianFrame* frame){};
 };
 #endif // __CARTESIANFRAME_H_INCLUDED__

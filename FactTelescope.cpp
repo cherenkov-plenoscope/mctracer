@@ -1,31 +1,58 @@
 #include "FactTelescope.h"
+void FactTelescope::init_outer_mirror_surface() {
+	ColourProperties* mirror_colour;
+	mirror_colour = new ColourProperties;
+	mirror_colour->set_RGB_0to255(255,255,255);
+
+	ReflectionProperties* outer_mirror_reflection;
+	outer_mirror_reflection = new ReflectionProperties;
+	outer_mirror_reflection->SetReflectionCoefficient(0.9);	
+
+	outer_mirror_surface = new SurfaceProperties;
+	outer_mirror_surface->set_reflection(outer_mirror_reflection);
+	outer_mirror_surface->set_color(mirror_colour);	
+}
+//==================================================================
+void FactTelescope::init_inner_mirror_surface() {
+	ColourProperties* inner_mirror_colour;
+	inner_mirror_colour = new ColourProperties;
+	inner_mirror_colour->set_RGB_0to255(64,64,64);
+
+	ReflectionProperties* inner_mirror_reflection;
+	inner_mirror_reflection = new ReflectionProperties;
+	inner_mirror_reflection->SetReflectionCoefficient(0.0);	
+
+	inner_mirror_surface = new SurfaceProperties;
+	inner_mirror_surface->set_reflection(inner_mirror_reflection);
+	inner_mirror_surface->set_color(inner_mirror_colour);	
+}
+//==================================================================
+void FactTelescope::assert_alpha_geometry_parameter_is_valid(
+	const double alpha
+)const {
+
+	if(alpha < 0.0 || alpha > 1.0){
+		std::stringstream info;
+		info << "FactTelescope::" << __func__ << "()\n";
+		info << "Expected 0.0 <= alpha <= 1.0, but actual: alpha = ";
+		info << alpha;
+		throw TracerException(info.str());
+	}	
+}
 //==================================================================
 FactTelescope::FactTelescope(double alpha){
 	
+	init_outer_mirror_surface();
+	init_inner_mirror_surface();
+	assert_alpha_geometry_parameter_is_valid(alpha);
 	bool prompt = false;
 
-	// check telescope type
-	if(alpha < 0.0 || alpha > 1.0){
-		alpha = 0.0;
-
-		if(prompt){
-			std::cout << "fact_telescope->alpha out of range->";
-			std::cout << "building default Davies-Cotton reflector.\n";
-		}
-	}
-	
 	// mirror properties
 	Vector3D  	mirror_pos; 		//to be set individual
 	Rotation3D 	mirror_rotation;	//to be set individual
 
-	ColourProperties mirror_colour;
-		mirror_colour.set_RGB_0to255(255,255,255);
-
-	ReflectionProperties mirror_reflection;
-		mirror_reflection.SetReflectionCoefficient(0.9);	
-
 	// declare FACT geometry, only mirror positions
-	dbl_focal_length_telescope = 4.8892;
+	focal_length_telescope = 4.8892;
 	/// distribution of focal length of mirrors (4.8892 plus minus 0.002)m 
 	/// as in Ann Kristins Diploma Thesis
 	MirrorRadius_m = 0.345;
@@ -115,16 +142,16 @@ FactTelescope::FactTelescope(double alpha){
 				
 				//cout<<"alpha: "<<alpha<<" [1]"<<endl;
 				double z_Davies_Cotton = ( 
-				dbl_focal_length_telescope-
+				focal_length_telescope-
 				sqrt( 
-				pow(dbl_focal_length_telescope,2.0) -
+				pow(focal_length_telescope,2.0) -
 				pow(circle_radius_of_mirror_positions[radius],2.0)
 				)
 				);
 				//cout<<"z_Davies_Cotton: "<<z_Davies_Cotton<<" [m]"<<endl;
 				
 				double z_parabolic = 
-				1.0/(4.0*dbl_focal_length_telescope)*
+				1.0/(4.0*focal_length_telescope)*
 				pow(circle_radius_of_mirror_positions[radius],2.0);
 				//cout<<"z_parabolic: "<< z_parabolic <<" [m]"<<endl;
 
@@ -169,9 +196,9 @@ FactTelescope::FactTelescope(double alpha){
 			telescope_table << "| alpha: " << alpha << " [1]\n";
 			
 			double z_Davies_Cotton = ( 
-				dbl_focal_length_telescope-
+				focal_length_telescope-
 				sqrt( 
-					pow(dbl_focal_length_telescope,2.0) -
+					pow(focal_length_telescope,2.0) -
 					pow(circle_radius_of_mirror_positions[radius],2.0)
 				)
 			);
@@ -180,7 +207,7 @@ FactTelescope::FactTelescope(double alpha){
 			telescope_table<<z_Davies_Cotton<<" [m]\n";
 			
 			double z_parabolic = 
-			1.0/(4.0*dbl_focal_length_telescope)*
+			1.0/(4.0*focal_length_telescope)*
 			pow(circle_radius_of_mirror_positions[radius],2.0);
 			telescope_table<<"| z_parabolic:     ";
 			telescope_table<< z_parabolic <<" [m]\n";
@@ -214,7 +241,7 @@ FactTelescope::FactTelescope(double alpha){
 				//==============================================
 				// calculate rotation axis
 				//==============================================
-			Vector3D focal_point(0.0, 0.0, dbl_focal_length_telescope);
+			Vector3D focal_point(0.0, 0.0, focal_length_telescope);
 			
 			Vector3D focal_point_to_mirror_pos = focal_point - mirror_pos;
 				
@@ -295,14 +322,11 @@ FactTelescope::FactTelescope(double alpha){
 				mirror_rotation
 			);
 			
-			mirror->set_surface_properties(
-				&mirror_reflection,
-				&mirror_colour
-			);	
+			mirror->set_outer_surface(outer_mirror_surface);
+			mirror->set_inner_surface(inner_mirror_surface);
 				
-			//mirror->set_spheric_hexag(
 			mirror->set_focal_length_and_outer_hex_radius(
-				dbl_focal_length_telescope,
+				focal_length_telescope,
 				MirrorRadius_m
 			);
 		}
@@ -318,18 +342,55 @@ FactTelescope::FactTelescope(double alpha){
 	
 	if(prompt)
 		std::cout << telescope_table.str();
+
+	init();
 }
+//======================================================================
+/*CartesianFrame* get_full_mirror(
+	const std::string name,
+	const Vector3D pos,
+	const Rotation3D rot,
+	const double focal_length_telescope,
+	const double MirrorRadius_m
+)const {
+
+	std::string name_surface = name;
+	name_surface.append("_surface");
+
+	CartesianFrame* full_mirror = new CartesianFrame;
+	full_mirror.set_frame(name, pos, rot);
+
+	SphereCapWithHexagonalBound* mirror_surface = new SphereCapWithHexagonalBound;
+	mirror_surface->set_frame(name_surface, mirror_pos, mirror_rotation);
+	mirror->set_outer_surface(outer_mirror_surface);
+	mirror->set_inner_surface(inner_mirror_surface);		
+	mirror->set_focal_length_and_outer_hex_radius(
+		focal_length_telescope,
+		MirrorRadius_m
+	);
+
+	full_mirror.set_mother_and_child(mirror_surface);
+
+	Rotation3D edge_rotation(0.0, M_PI/2.0, 0.0);
+
+	for(uint i=0; i<6; i++) {
+		Plane* mirror_edge = new Plane;
+		Plane.set_frame();
+	}
+
+}*/
 //======================================================================	
 void FactTelescope::init(){	
-	//==============================================================
 	//set relationships
-	//==============================================================
 	for(unsigned int mirror_number=0;
 			mirror_number<list_of_mirrors.size();
 			mirror_number++)
 	{
 			set_mother_and_child(list_of_mirrors.at(mirror_number));
 	}
+
+	/*for(CartesianFrame* mirror : list_of_mirrors) 
+		set_mother_and_child(mirror);*/
 }
 //======================================================================	
 void FactTelescope::disp() {

@@ -15,11 +15,23 @@
 //=================================
 class ListOfInteractions{
 public:	
-	std::vector<Intersection*> Interactions;
+	std::vector<const Intersection*> Interactions;
+
+	void push_back(const Intersection* intersection);
+
 	void print()const;
+
 	std::string get_print()const;
+
 	~ListOfInteractions();
+
 	double get_accumulative_distance()const;
-	friend std::ostream& operator<<(std::ostream& os, const ListOfInteractions& intersec_list);
+
+	uint size()const;
+
+	friend std::ostream& operator<<(
+		std::ostream& os,
+		const ListOfInteractions& intersec_list
+	);
 };
 #endif // __LISTOFINTERACTIONS_H_INCLUDED__ 

@@ -222,9 +222,7 @@ void FreeOrbitCamera::print_info_of_probing_ray_for_pixel_x_y(int x, int y){
 
 	Ray probing_ray = flying_camera->get_ray_for_pixel_in_row_and_col(y, x);
 
-	Intersection* ClosestIntersection = probing_ray.get_first_intersection_in(
-		world
-	);
+	Intersection* intersec = probing_ray.get_first_intersection_in(world);
 
 	UserInteraction::ClearScreen();
 	std::stringstream out;
@@ -237,32 +235,35 @@ void FreeOrbitCamera::print_info_of_probing_ray_for_pixel_x_y(int x, int y){
 	out << "| Ray emitted by camera:\n";
 	out << "| " << probing_ray << "\n";
 	out << "|\n";
-	if( ClosestIntersection->does_intersect() ){
-	out << "| Object: " << ClosestIntersection->
+	if( intersec->does_intersect() ){
+	out << "| Object: " << intersec->
 					get_intersecting_object()->
 					get_path_in_tree_of_frames() << "\n";
 	out << "| Distance to first intersection: ";
-	out << ClosestIntersection->get_intersection_distance() << "m\n";
+	out << intersec->get_intersection_distance() << "m\n";
 	out << "|\n";
 	out << "| In frame of intersecting object\n";
 	out << "| | intesection point: ";
-	 	out << ClosestIntersection->
-	 		get_intersection_vector_in_object_system() << "\n";
+	 	out << intersec->get_intersection_vector_in_object_system() << "\n";
 	out << "| | surface normal   : ";
-	 	out << ClosestIntersection->
-	 		get_surface_normal_in_object_system() << "\n";
+	 	out << intersec->get_surface_normal_in_object_system() << "\n";
+	out << "| | facing surface   : ";
+		if(probing_ray.is_outer_surface_of_object_in(intersec))
+			out << "outside";
+		else
+			out << "inside";
+	out << "\n";
 	out << "|\n";
 	out << "| In world frame\n";
 	out << "| | intesection point: ";
-		out << ClosestIntersection->get_intersection_vector_in_world_system() << "\n";
+		out << intersec->get_intersection_vector_in_world_system() << "\n";
 	out << "| | surface normal   : ";
-	 	out << ClosestIntersection->
-	 		get_surface_normal_in_world_system() << "\n";
+	 	out << intersec->get_surface_normal_in_world_system() << "\n";
 	
 	out << "|\n";		
 	out << StringTools::place_first_infront_of_each_new_line_of_second(
 		"| ",
-		ClosestIntersection->get_intersecting_object()->get_print()
+		intersec->get_intersecting_object()->get_print()
 	);
 
 	}else{

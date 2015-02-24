@@ -15,6 +15,7 @@
 #include <fstream>
 #include "CartesianFrame.h"
 #include "SphereCapWithHexagonalBound.h"
+#include "SurfaceProperties.h"
 
 //=================================
 class FactTelescope :public CartesianFrame{
@@ -23,21 +24,27 @@ class FactTelescope :public CartesianFrame{
 	std::stringstream telescope_table;
 
 // the inner radius R1 reflector part
-	double dbl_focal_length_telescope;
+	double focal_length_telescope;
 	double MirrorRadius_m;
 	std::vector<SphereCapWithHexagonalBound*> list_of_mirrors;
+
+	SurfaceProperties* outer_mirror_surface;
+	SurfaceProperties* inner_mirror_surface;
 public:
-//======================================================================
+
 	FactTelescope(double alpha);
-//======================================================================	
-	void init();
-//======================================================================	
+	
 	void disp();
-//======================================================================	
+	
 	std::string get_fact_string();
-//======================================================================
+
 	void export_table_of_telescope(std::string telescope_table_file_name);
-//======================================================================	
+	
 	~FactTelescope();
+	void init();
+private:
+	void assert_alpha_geometry_parameter_is_valid(const double alpha)const;
+	void init_outer_mirror_surface();
+	void init_inner_mirror_surface();
 };
 #endif // __FACTTELESCOPE_H_INCLUDED__ 

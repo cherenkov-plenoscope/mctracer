@@ -27,6 +27,8 @@
 #include "HexagonalPrismZTest.cpp"
 #include "BiConvexLensTest.cpp"
 #include "HomoTrafo3DTest.cpp"
+#include "RayForPropagationTest.cpp"
+#include "PropagationEnvironmentTest.cpp"
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

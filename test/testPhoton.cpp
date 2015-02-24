@@ -15,11 +15,15 @@ using namespace std;
 // The fixture for testing class Foo.
 class PhotonTest : public ::testing::Test {
  protected:
-  // You can remove any or all of the following functions if its body
-  // is empty.
-	
+
+  Vector3D origin;
+  Vector3D ez;
+  double wavelength;
+
   PhotonTest() {
-    // You can do set-up work for each test here.
+    origin.set(0.0, 0.0, 0.0);
+    ez.set(0.0, 0.0, 1.0);
+    wavelength = 433.0e-9;
   }
 
   virtual ~PhotonTest() {
@@ -42,31 +46,15 @@ class PhotonTest : public ::testing::Test {
   // Objects declared here can be used by all tests in the test case for Foo.
 };
 //------------------------------------------------------------------------------
-TEST_F(PhotonTest, ConstructorAndGetter) {
+TEST_F(PhotonTest, creation_constructor) {
+  Photon pho(origin, ez*1.337, wavelength);
 
-  Vector3D support(0.0,0.0,0.0);
-  Vector3D direction(0.0,0.0,1.0);
-  double wavelength = 433e-9;
-
-  Photon P(support,direction,wavelength);
-
-  EXPECT_EQ(wavelength , P.get_wavelength() );
-  EXPECT_EQ(
-    "support: (0 0 0)m, direction: (0 0 1)m, wavelength: 433nm",
-    P.get_print() 
-  );
-
-  Ray prototype;
-  prototype.SetSupport(support);
-  prototype.SetDirection(direction);
-
-
-  Photon G(prototype,wavelength);
-  EXPECT_EQ(wavelength , G.get_wavelength() );
-  EXPECT_EQ(
-    "support: (0 0 0)m, direction: (0 0 1)m, wavelength: 433nm",
-    G.get_print() 
-  );
+  EXPECT_EQ(ez, pho.Direction());
+  EXPECT_EQ(origin, pho.Support());
+  EXPECT_EQ(1.0, pho.Direction().norm2());
+  EXPECT_EQ(wavelength, pho.get_wavelength());
+  ASSERT_FALSE(nullptr == pho.get_propagation_history() );
+  EXPECT_EQ(0, pho.get_propagation_history()->size() );
 }
 //------------------------------------------------------------------------------
 TEST_F(PhotonTest, PropagationSimpleGeometry){
@@ -86,16 +74,22 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
   
   ReflectionProperties  refl; 
   ColourProperties      colo;
-  pos.set(0.0,0.0,0.0);
-  rot.set(0.0,0.0,0.0);
-  
+
   refl.SetReflectionCoefficient(1.0);
   colo.set_RGB_0to255(200,128,128);
 
+  SurfaceProperties mirror_surface;
+  mirror_surface.set_color(&colo);
+  mirror_surface.set_reflection(&refl);
+
+  pos.set(0.0,0.0,0.0);
+  rot.set(0.0,0.0,0.0);
+  
   //------------mirror 1----------------
   Plane mirror1;
   mirror1.set_frame("mirror_1",pos,rot);
-  mirror1.set_surface_properties(&refl,&colo);
+  mirror1.set_outer_surface(&mirror_surface);
+  mirror1.set_inner_surface(&mirror_surface);  
   mirror1.set_plane_using_x_and_y_width(1.0, 1.0);
   
   //------------mirror 2----------------
@@ -103,7 +97,8 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
   rot.set(0.0,0.0,0.0);
   Plane mirror2;
   mirror2.set_frame("mirror_2",pos,rot);
-  mirror2.set_surface_properties(&refl,&colo);
+  mirror2.set_outer_surface(&mirror_surface);
+  mirror2.set_inner_surface(&mirror_surface); 
   mirror2.set_plane_using_x_and_y_width(1.0, 1.0);
 
   //----------declare relationships------------
@@ -128,18 +123,21 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
   double wavelength = 433e-9;
   
   PseudoRandomNumberGenerator dice;
+  PropagationEnvironment environment;
+  environment.world_geometry = &world;
+  environment.propagation_options = &setup;
+  environment.random_engine = &dice;
+  environment.assert_completeness();
 
   for(int i=0; i<1e2; i++)
   {
+    Photon P(Support, direction, wavelength);
 
-    ListOfInteractions history;
-    Photon P(Support,direction,wavelength);
-
-    P.propagate(&world,&history,&setup,&dice);
+    P.propagate_in(&environment);
 
     //history.show();
-    EXPECT_EQ(number_of_bounces*1.0-0.5, history.get_accumulative_distance() );
-    EXPECT_EQ(number_of_bounces,history.Interactions.size());
+    //EXPECT_EQ(number_of_bounces*1.0-0.5, history.get_accumulative_distance() );
+    //EXPECT_EQ(number_of_bounces,history.size());
   }
 }
 //------------------------------------------------------------------------------
@@ -172,22 +170,29 @@ TEST_F(PhotonTest, Reflections){
 
   CartesianFrame optical_table("optical_table",pos,rot);
    
-  ColourProperties colo;
   pos.set(0.0,0.0,0.0);
   rot.set(0.0,0.0,0.0);
   
   //------------mirror----------------
   ReflectionProperties  mirror_reflection;
-  mirror_reflection.
-  SetReflectionCoefficient("./test_scenery/Function1D/function1D_complete.xml"); 
+  mirror_reflection.SetReflectionCoefficient(
+    "./test_scenery/Function1D/function1D_complete.xml"
+  ); 
   pos.set(0.0,0.0,0.0);
   //90Deg in Y and 45DEG in Z
   rot.set(0.0,Deg2Rad(90.0),Deg2Rad(45.0));
-  colo.set_RGB_0to255(200,64,64);
+
+  ColourProperties mirror_color;
+  mirror_color.set_RGB_0to255(200,64,64);
+
+  SurfaceProperties mirror_surface;
+  mirror_surface.set_color(&mirror_color);
+  mirror_surface.set_reflection(&mirror_reflection);
 
   Plane mirror;
   mirror.set_frame("mirror",pos,rot);
-  mirror.set_surface_properties(&mirror_reflection,&colo);
+  mirror.set_outer_surface(&mirror_surface);
+  mirror.set_inner_surface(&mirror_surface); 
   mirror.set_plane_using_x_and_y_width(1.0, 1.0);
   
   //------------absorber----------------
@@ -195,10 +200,18 @@ TEST_F(PhotonTest, Reflections){
   absorber_reflection.SetReflectionCoefficient(0.0);
   pos.set(0.0,+2.0,0.0);
   rot.set(Deg2Rad(90.0),0.0,0.0);
-  colo.set_RGB_0to255(50,50,50);
+
+  
+  ColourProperties absorber_color;
+  absorber_color.set_RGB_0to255(50,50,50);
+
+  SurfaceProperties absorber_surface;
+  absorber_surface.set_color(&absorber_color);
+
   Plane absorber;
   absorber.set_frame("absorber",pos,rot);
-  absorber.set_surface_properties(&absorber_reflection,&colo);
+  absorber.set_outer_surface(&absorber_surface);
+  absorber.set_inner_surface(&absorber_surface); 
   absorber.set_plane_using_x_and_y_width(1.0, 1.0);
 
   //----------declare relationships------------
@@ -244,6 +257,6 @@ TEST_F(PhotonTest, Reflections){
     //EXPECT_EQ(number_of_bounces,history.Interactions.size());
   }
 
-  LoP.propagate(&world,&setup);
+  LoP.propagate_in_world_with_settings(&world, &setup);
   
 }

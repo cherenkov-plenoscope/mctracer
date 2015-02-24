@@ -3,39 +3,18 @@
 Ray::Ray(){
 }
 //------------------------------------------------------------------------------
-Ray::Ray(const Ray* ray) {
-	SetRay(ray->support, ray->direction);
-}
-//------------------------------------------------------------------------------
 Ray::Ray(const Vector3D support, const Vector3D direction){
 	SetRay(support, direction);
 }
 //------------------------------------------------------------------------------
-void Ray::SetID(unsigned long long int nID){
-	identifier_number = nID;
-}
-//------------------------------------------------------------------------------
-unsigned long long int Ray::ID()const{
-	return identifier_number;
-}
-//------------------------------------------------------------------------------
-void Ray::SetRay(const Vector3D nsup,const Vector3D ndir){
+void Ray::SetRay(const Vector3D nsup, const Vector3D ndir){
 	support = nsup;
 	direction  = ndir;
 	normalize_direction();
 }
 //------------------------------------------------------------------------------
-void Ray::SetSupport(const double x,const double y,const double z){
-	support.set(x,y,z);
-}
-//------------------------------------------------------------------------------
 void Ray::SetSupport(const Vector3D nsup){
 	support = nsup;
-}
-//------------------------------------------------------------------------------
-void Ray::SetDirection(const double x,const double y,const double z){
-	direction.set(x,y,z);
-	normalize_direction();
 }
 //------------------------------------------------------------------------------
 void Ray::SetDirection(const Vector3D ndir){
@@ -67,11 +46,6 @@ Vector3D Ray::Support()const{
 //------------------------------------------------------------------------------
 Vector3D Ray::Direction()const{
 	return direction;
-}
-//------------------------------------------------------------------------------
-void Ray::operator= (Ray eqray){
-	support = eqray.support;
-	direction  = eqray.direction;
 }
 //------------------------------------------------------------------------------
 void Ray::homo_transformation_of_ray(Ray* ray,const HomoTrafo3D *T)const{
@@ -118,20 +92,21 @@ double Ray::get_distance_to_point_from_position_of_ray_at(
 	return W.norm2();  
 }
 //------------------------------------------------------------------------------
+double Ray::get_closest_distance_to_point(const Vector3D &point)const {
+	return get_distance_to_point_from_position_of_ray_at(
+		point, 
+		get_parameter_on_ray_for_closest_distance_to_point(point)
+	);
+}
+//------------------------------------------------------------------------------
 bool Ray::operator() (Intersection* one, Intersection* two)const {
 	return 	one->get_intersection_distance() < two->get_intersection_distance();
 }
 //------------------------------------------------------------------------------
-void Ray::SetHistory(ListOfInteractions* history) {
-	this->history = history;
-}
-//------------------------------------------------------------------------------
-ListOfInteractions* Ray::GetHistory()const {
-	return history;
-}
-//------------------------------------------------------------------------------
-Ray Ray::get_ray_transformed_in_object_system_of(const CartesianFrame* frame)const {
-	Ray ray_in_object_system_of_frame(this);
+Ray Ray::get_ray_transformed_in_object_system_of(
+	const CartesianFrame* frame
+)const {
+	Ray ray_in_object_system_of_frame = *this;
 	ray_in_object_system_of_frame.transform(frame->world2frame());
 	return ray_in_object_system_of_frame;
 }

@@ -47,7 +47,8 @@ void CameraDevice::update_optical_axis_and_orientation() {
 	CameraPointingDirection.set_unit_vector_z();
 	T_Camera2World.transform_orientation(&CameraPointingDirection);
 
-	OpticalAxis.SetRay(CameraPositionInWorld, CameraPointingDirection);	
+	OpticalAxis.SetSupport(CameraPositionInWorld);
+	OpticalAxis.SetDirection(CameraPointingDirection);	
 }
 //------------------------------------------------------------------------------
 void CameraDevice::set_pointing_direction(	

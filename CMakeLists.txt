@@ -17,12 +17,14 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/CartesianFrame.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceEntity.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Ray.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/RayForPropagation.cpp 	
 	${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeter.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/RayAndBoundingSphereInteraction.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/RayAndFrameInteraction.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Photon.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ListOfPropagations.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ListOfInteractions.cpp
+	#${CMAKE_CURRENT_SOURCE_DIR}/ListOfInteractions.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/PropagationEnvironment.cpp	
 
 	${CMAKE_CURRENT_SOURCE_DIR}/QuadraticEquation.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/XyPlaneRayIntersectionEquation.cpp
@@ -56,6 +58,8 @@ set(SOURCE
 
 	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceProperties.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/VolumeProperties.cpp
+
+	${CMAKE_CURRENT_SOURCE_DIR}/InteractionSurfaceFinder.cpp
 
 	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLens.cpp
 

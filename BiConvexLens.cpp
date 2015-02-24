@@ -51,10 +51,19 @@ SphereCapWithCylinderBound* BiConvexLens::create_cap_with_pos_rot_name_focal_len
 	SphereCapWithCylinderBound* cap;
 	cap = new SphereCapWithCylinderBound;
 	cap->set_frame(name, pos, rot);
-	if(this->has_color())
-		cap->set_color(this->get_color());
-	if(this->does_refract())
-		cap->set_refraction_properties(this->get_refraction_properties());
+
+	if(has_inner_surface())
+		cap->set_inner_surface(get_inner_surface());
+
+	if(has_outer_surface())
+		cap->set_outer_surface(get_outer_surface());
+
+	if(has_inner_medium())
+		cap->set_inner_medium(get_inner_medium());
+
+	if(has_outer_medium())
+		cap->set_outer_medium(get_outer_medium());
+
 	cap->set_focal_length_and_cap_radius(focal_length/2.0, diameter/2.0);
 	cap->set_allowed_frames_to_propagate_to(this);	
 

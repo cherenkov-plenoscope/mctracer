@@ -5,44 +5,32 @@
 
 //=================================
 // forward declared dependencies
-class Intersection;
+
 //=================================
 // included dependencies
-#include "Ray.h"
-#include <list>
-#include "ListOfInteractions.h"
-#include "PseudoRandomNumberGenerator.h"
+#include "RayForPropagation.h"
+#include "PropagationEnvironment.h"
+#include "InteractionSurfaceFinder.h"
+
 //=================================
-class Photon :public Ray{
+class Photon :public RayForPropagation{
 protected:
 
 	double wavelength;
 	//polarisation?
 	//phase?
-	Photon(double new_wavelength);
 public:
-	Photon(Vector3D support, Vector3D direction, double new_wavelength);
-
-	Photon(Ray prototype_ray_for_photon, double new_wavelength);
-
-	void propagate(
-		const CartesianFrame* world, 
-		ListOfInteractions* history,
-		const GlobalSettings* settings,
-		PseudoRandomNumberGenerator* dice
+	Photon(
+		const Vector3D support,
+		const Vector3D direction,
+		const double wavelength
 	);
 
-	void propagate(	
-		const CartesianFrame* world, 
-		ListOfInteractions* history,
-		uint interaction_count,
-		const GlobalSettings* settings,
-		PseudoRandomNumberGenerator* dice
-	);
+	Photon(const Photon* photon_to_be_carried_on);
+
+	void propagate_in(PropagationEnvironment* environment);
 
 	double get_wavelength()const;
-
-	void print()const;
 
 	std::string get_print()const;
 
@@ -50,28 +38,11 @@ public:
 		std::ostream& os, 
 		const Photon& photon_to_be_displayed
 	);
-
 private:
-	bool reflection_takes_place_in_intesection(
-		Intersection* intersection, PseudoRandomNumberGenerator* dice
-	);
+	Photon(const double new_wavelength);
 
-	void reflect_on_surface(
-		const CartesianFrame* world, 
-		ListOfInteractions* history,
-		uint interaction_count,
-		const GlobalSettings* settings,
-		PseudoRandomNumberGenerator* dice,
-		Intersection* intersection
-	);
+	void interaction_with_object(const Intersection* intersec);
 
-	void refract_on_surface(
-		const CartesianFrame* world, 
-		ListOfInteractions* history,
-		uint interaction_count,
-		const GlobalSettings* settings,
-		PseudoRandomNumberGenerator* dice,
-		Intersection* intersection
-	);
+	void absorbtion_in_void_space(const Intersection* intersec);
 };
 #endif // __PHOTON_H_INCLUDED__ 

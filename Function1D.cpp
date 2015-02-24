@@ -245,16 +245,16 @@ double Function1D::interpolate_linear(
 	const std::pair<double,double> p1, 
 	const double x
 )const{
-	// 	point p0: (x0,y0)
-	//	point p1: (x1,y1)
+	// 	point p0: (x0, y0)
+	//	point p1: (x1, y1)
 	//	the line in between point p0 and p1 is
-	//	f(x) = a*x + b
+	//	f(x) = slope*x + y_intercept
 	//
-	//	a = (y0-y1)/(x0-x1)
-	//	b = y0-a*x0
+	//	slope = (y0 - y1) / (x0 - x1)
+	//	y_intercept = y0 - slope*x0
 	
-	double a = (p0.second - p1.second)/(p0.first - p1.first);
-	return a*x + p0.second - a*p0.first;
+	double slope = (p0.second - p1.second) / (p0.first - p1.first);
+	return slope*x + p0.second - slope*p0.first;
 }
 //------------------------------------------------------------------------------
 double Function1D::get_weighted_mean_of_value()const{

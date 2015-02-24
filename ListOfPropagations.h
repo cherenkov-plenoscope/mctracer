@@ -10,33 +10,29 @@ class GlobalSettings;
 // included dependencies
 #include <iostream>
 #include <omp.h>
-#include "Ray.h"
-#include "CsvHandler.h"
-#include <list>
+#include "RayForPropagation.h"
 #include <sstream>
+#include "PropagationEnvironment.h"
 #include "PseudoRandomNumberGenerator.h"
 
 //=================================
 class ListOfPropagations{
 	
 	std::string name;
-	std::vector<Ray*> propagations;
+	std::vector<RayForPropagation*> propagations;
 public:
+	
 	ListOfPropagations(std::string new_name_for_list_of_propagations);
-	void push_back(Ray* ptr_to_ray_to_push_back);
-	void disp()const;
-	void propagate(	
+	
+	void push_back(RayForPropagation* ray);
+	
+	void propagate_in_world_with_settings(
 		const CartesianFrame* world, 
 		const GlobalSettings* settings
 	);
-private:
-	void PropagateSingleRay(	
-		const CartesianFrame* world, 
-		const GlobalSettings* settings,
-		PseudoRandomNumberGenerator *dice,
-		unsigned long long index
-	);
+
 	std::string get_print()const;	
+private:
 
 	void propagate_using_single_thread(
 		const CartesianFrame* world, 
@@ -48,6 +44,9 @@ private:
 		const GlobalSettings* settings
 	);
 
-	friend std::ostream& operator<<(std::ostream& os,const ListOfPropagations& list);
+	friend std::ostream& operator<<(
+		std::ostream& os,
+		const ListOfPropagations& list
+	);
 };
 #endif // __LISTOFPROPAGATIONS_H_INCLUDED__

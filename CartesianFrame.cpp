@@ -145,7 +145,7 @@ std::string CartesianFrame::get_frame_print()const {
 	out << "| pos in mother: " << pos_in_mother << "\n";
 	out << "| rot in mother: " << rot_in_mother << "\n";
 	out << "| pos in world:  " << pos_in_world << "\n";
-	out << "| radius: " << radius_of_sphere_enclosing_all_children << "m\n";	
+	out << "| enclosing boundary radius: " << radius_of_sphere_enclosing_all_children << "m\n";	
 	return out.str();
 }
 //------------------------------------------------------------------------------

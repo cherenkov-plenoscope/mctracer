@@ -39,86 +39,61 @@ class Function1DTest : public ::testing::Test {
 //------------------------------------------------------------------------------
 TEST_F(Function1DTest, ConstructorAndGetter) {
   
-    bool problem_detected = FALSE;
-    try{
+    EXPECT_THROW({
         Function1D f("ThisFileDoesNotExist.xml");
-    }catch(XmlIoException &error){
-        problem_detected = TRUE;
-    } 
-    EXPECT_EQ( TRUE , problem_detected );
+    }, XmlIoException);
 
-    problem_detected = FALSE;
-    try{
+    EXPECT_NO_THROW({
         Function1D f("./test_scenery/Function1D/function1D_complete.xml");
         EXPECT_EQ( "my_assignment" , f.name() ); 
-        //f.disp();
-
-    }catch(XmlIoException &error){
-        problem_detected = TRUE;
-        cout << error.what() << endl;
-    } 
-    EXPECT_EQ( FALSE , problem_detected ); 
+    }); 
 }
 //------------------------------------------------------------------------------
 TEST_F(Function1DTest, MissingIdentifiers) {
 
-    bool problem_detected = FALSE;
-    try{
+    EXPECT_THROW({
         Function1D f("./test_scenery/Function1D/function1D_missing_name.xml");
-    }catch(XmlIoException &error){
-        problem_detected = TRUE;
-        //error.ReportException();
-    } 
-    EXPECT_EQ( TRUE , problem_detected );
+    }, XmlIoException);
 }
 //------------------------------------------------------------------------------
 TEST_F(Function1DTest, InvalidFloatingNumber){
-     bool problem_detected = FALSE;
-    try{
-        Function1D f
-        ("./test_scenery/Function1D/function1D_invalid_floating_number.xml");
-    }catch(XmlIoException &error){
-        problem_detected = TRUE;
-        //error.ReportException();
-    } 
-    EXPECT_EQ( TRUE , problem_detected );
+
+    EXPECT_THROW({
+        Function1D f(
+            "./test_scenery/Function1D/function1D_invalid_floating_number.xml"
+        );
+    }, XmlIoException);
 }
 //------------------------------------------------------------------------------
 TEST_F(Function1DTest, SameArgumentTwice){
-    bool problem_detected = FALSE;
-    try{
-        Function1D f
-        ("./test_scenery/Function1D/function1D_same_argument_twice.xml");
-    }catch(XmlIoException &error){
-        problem_detected = TRUE;
-        //error.ReportException();
-    } 
-    EXPECT_EQ( TRUE , problem_detected );
+    
+    EXPECT_THROW({
+        Function1D f(
+            "./test_scenery/Function1D/function1D_same_argument_twice.xml"
+        );
+    }, XmlIoException);
 }
 //------------------------------------------------------------------------------
 TEST_F(Function1DTest, At){
 
-    try{
+    EXPECT_NO_THROW({
         Function1D f("./test_scenery/Function1D/function1D_complete.xml");
-        // f.disp();
+        
         double arg = 0.0;
-        for(uint i=0; i<150; i++){
+        double integral = 0.0;
+
+        for(uint i=0; i<150; i++) {
           arg = arg + 6.666;
-          //cout << arg << "," << f.at(arg) << "\n";
+          integral = integral + f.at(arg);
         }
-    }catch(TracerException &error){
-        cout << error.what() << endl;
-    } 
+    }); 
 }
 //------------------------------------------------------------------------------
 TEST_F(Function1DTest, Integral){
 
-    try{
+    EXPECT_NO_THROW({ 
         Function1D f("./test_scenery/Function1D/function1D_integral_42.xml");
-        
-        EXPECT_EQ( 42.0 , f.get_weighted_mean_of_value() );     
-    }catch(TracerException &error){
-        cout << error.what() << endl;
-    } 
+        EXPECT_EQ( 42.0 , f.get_weighted_mean_of_value() );  
+    }); 
 }
 //------------------------------------------------------------------------------

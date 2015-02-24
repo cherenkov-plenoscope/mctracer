@@ -33,6 +33,14 @@ class RayAndFrameInteractionTest : public ::testing::Test {
       Rotation3D(0.0,0.0,0.0)
     );
 
+    ColourProperties* color; 
+    color = new ColourProperties;
+    color->set_RGB_0to255(200,25,25);
+
+    SurfaceProperties* surf;
+    surf = new SurfaceProperties;
+    surf->set_color(color);
+
     for(uint i=0; i<number_of_spheres; i++) {
       Sphere* sphere = new Sphere;
 
@@ -44,12 +52,8 @@ class RayAndFrameInteractionTest : public ::testing::Test {
       );
 
       sphere->set_sphere(1.0);
-
-      ReflectionProperties refl;
-      ColourProperties color; color.set_RGB_0to255(200,25,25);
-
-      sphere->set_surface_properties(&refl, &color);
-
+      sphere->set_inner_surface(surf);
+      sphere->set_outer_surface(surf);   
       spheres_in_a_row_along_x_r1m->set_mother_and_child(sphere);
     }
 

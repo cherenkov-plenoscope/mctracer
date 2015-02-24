@@ -59,8 +59,26 @@ std::string Intersection::get_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-// OLD
-//------------------------------------------------------------------------------
-void Intersection::get_reflection_direction_in_object_system(Vector3D* vec)const {
+void Intersection::get_reflection_direction_in_object_system(
+	Vector3D* vec
+)const {
 	surfacenormal_in_intersection_point.mirror(vec);
 }
+//------------------------------------------------------------------------------
+Vector3D Intersection::get_reflection_direction_in_world_system(
+	Vector3D incomming_dir_in_world
+)const {
+	intersecting_object->world2frame()->transform_orientation(&incomming_dir_in_world);
+	surfacenormal_in_intersection_point.mirror(&incomming_dir_in_world);
+	intersecting_object->frame2world()->transform_orientation(&incomming_dir_in_world);
+	return incomming_dir_in_world;
+}
+//------------------------------------------------------------------------------
+#include "Ray.h"
+//------------------------------------------------------------------------------
+bool Intersection::object_surface_normal_parallel_to_direction_of(
+	const Ray* ray
+)const{
+	return get_surface_normal_in_world_system()*ray->Direction() < 0.0;
+}
+//------------------------------------------------------------------------------

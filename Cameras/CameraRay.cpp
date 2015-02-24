@@ -21,41 +21,34 @@ ColourProperties CameraRay::trace(
 	Intersection* intersection = get_first_intersection_in(world);
 
 	if(intersection->does_intersect()) {
-		if(	
-			intersection->get_intersecting_object()->does_reflect() &&
-			settings->max_number_of_reflections_is_not_reached_yet(refl_count)
-		) {
-			refl_count++;
-			
-			// calculate the ray reflected by the object
-			// pointer_to_closest_frame is pointing to relativ to
-			// the world coordinate system
-			CameraRay ray_reflection_on_object;
-			calculate_reflected_ray(
-				intersection,
-				&ray_reflection_on_object
-			);
 
-			color = *intersection->get_intersecting_object()->get_color();
+		InteractionSurfaceFinder surface_finder(this, intersection);
 
-			// use itterativ call of trace to handle reflections
-			ColourProperties color_of_reflected_ray;
-			
-			color_of_reflected_ray = ray_reflection_on_object.trace(
-				world,
-				refl_count,
-				settings
-			);
-			
-			color.reflection_mix(
-				&color_of_reflected_ray,
-				intersection->
-					get_intersecting_object()->
-						get_reflection_properties()
-			);
-			
-		}else{
-			color = *intersection->get_intersecting_object()->get_color();
+		if(surface_finder.has_surface_interaction()) {
+			if(surface_finder.get_interaction_surface()->has_color())
+				color = *surface_finder.get_interaction_surface()->get_color();
+
+			if(surface_finder.get_interaction_surface()->has_reflection()) {
+				if(surface_finder.get_interaction_surface()->get_reflection()->flag()) {
+					// reflection takes place
+
+					refl_count++;
+
+					CameraRay reflected_ray(
+						intersection->get_intersection_vector_in_world_system(),
+						intersection->get_reflection_direction_in_world_system(Direction())
+					);
+
+					ColourProperties reflection_color = 
+						reflected_ray.trace(world, refl_count, settings);
+
+					color = *surface_finder.get_interaction_surface()->get_color();
+					color.reflection_mix(
+						&reflection_color,
+						surface_finder.get_interaction_surface()->get_reflection()
+					);
+				}
+			}
 		}
 	}else{
 		color = settings->get_default_colour();

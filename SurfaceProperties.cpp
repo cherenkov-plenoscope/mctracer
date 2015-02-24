@@ -37,24 +37,23 @@ std::string SurfaceProperties::get_print()const {
 	out << "color: ";
 
 	if(has_color())
-		out << color;
+		out << *color;
 	else
-		out << "-";
+		out << "- ";
 
 	out << ", reflection: ";
 
 	if(has_reflection())
-		out << reflection;
+		out << reflection->get_print();
 	else 
-		out << "-";
+		out << "- ";
 	
 	out << ", BDRF: ";
 /*
 	if(has_BRDF())
 		out << bdrf;
 	else*/
-		out << "-";
+		out << "- ";
 
-	out << "\n";
 	return out.str();
 }
