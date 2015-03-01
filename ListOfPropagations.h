@@ -32,6 +32,12 @@ public:
 	);
 
 	std::string get_print()const;	
+
+	uint get_number_of_propagations()const;
+
+	uint get_number_of_propagations_absorbed_in_object(
+		const CartesianFrame* obj
+	)const;
 private:
 
 	void propagate_using_single_thread(

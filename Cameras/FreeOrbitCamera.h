@@ -10,7 +10,6 @@
 // included dependencies
 #include "ApertureCamera.h"
 #include "PinHoleCamera.h"
-#include "SmartImage.h"
 #include "Tools/Tools.h"
 #include "CameraMan.h"
 #include "CameraManForTranslation.h"
@@ -30,12 +29,10 @@ class FreeOrbitCamera {
 // By using two spatial seperater cameras also 3D stereo images are possible
 public:
 	
-	FreeOrbitCamera(CartesianFrame *world,	GlobalSettings *settings);
+	FreeOrbitCamera(const CartesianFrame *world, const GlobalSettings *settings);
 private:
 	const std::string free_orbit_display_name = 
 		"Monte Carlo Tracer -> Free Orbit";
-
-	SmartImage 	Image;
 
 	PinHoleCamera *flying_camera;
 
@@ -46,8 +43,8 @@ private:
 
 	bool stereo3D = false;
 
-	CartesianFrame *world;
-	GlobalSettings *settings;
+	const CartesianFrame *world;
+	const GlobalSettings *settings;
 
 	int snapshot_counter = 0;
 	uint iteration_counter = 0;
@@ -82,5 +79,7 @@ private:
 	void print_stereo_offset_manipulation(const std::string status)const;
 	std::string get_snapshot_filename();
 	bool it_is_time_again_to_show_the_help();
+
+	void move_right_and_shoot_video();
 };
 #endif // __FREEORBITCAMERA_H_INCLUDED__

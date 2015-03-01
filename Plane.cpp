@@ -51,7 +51,8 @@ Intersection* Plane::calculate_intersection_with(const Ray* ray)const {
 				this,
 				intersection_vector,
 				xyPlaneRayEquation.get_plane_normal_vector(),
-				v
+				v,
+				ray->Direction()
 			);
 
 			return intersec;

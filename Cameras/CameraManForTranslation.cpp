@@ -51,3 +51,11 @@ void CameraManForTranslation::print_camera_moved_in_direction(
 	std::cout << camera->get_name() << " move " << dir << ": ";
 	std::cout << camera->get_position_in_world() << "\n";
 }
+
+void CameraManForTranslation::move_right(const double step_in_m){
+	camera->update_position(
+		camera->get_position_in_world() +
+		camera->direction_to_the_right_of_the_camera()*step_in_m 
+	);
+	print_camera_moved_in_direction("right");
+}

@@ -1,15 +1,13 @@
 #include "FreeOrbitCamera.h"
 //==============================================================================
 FreeOrbitCamera::FreeOrbitCamera(
-	CartesianFrame *world,
-	GlobalSettings *settings
+	const CartesianFrame *world,
+	const GlobalSettings *settings
 ){	
 	this->world = world;
 	this->settings = settings;
 
-	Image.Set( MCT_VGA );
-
-	flying_camera = new PinHoleCamera("Cam",Image.Width(), Image.Hight());
+	flying_camera = new PinHoleCamera("Cam", 640, 480);
 
 	create_CameraMen_to_safely_operate_the_flying_camera();
 
@@ -57,6 +55,8 @@ void FreeOrbitCamera::start_free_orbit(){
 		user_input_key = cvWaitKey(0);
 
 		switch(user_input_key){
+			case 'z': move_right_and_shoot_video();
+			break;
 			case 't': toggle_stereo3D();
 			break;
 			case 'w': Translation_operator->move_forward();
@@ -151,6 +151,19 @@ void FreeOrbitCamera::left_mouse_button_event(
 		p->print_info_of_probing_ray_for_pixel_x_y( x, y );
 }
 //==============================================================================
+void FreeOrbitCamera::move_right_and_shoot_video() {
+
+	double fps = 24;
+	double x_velocity_in_m_over_s = 0.1; 
+	double step = x_velocity_in_m_over_s/fps;
+
+	for(uint frame=0; frame<fps*10; frame++) {
+		take_snapshot();
+		Translation_operator->move_right(step);
+	}
+
+}
+//==============================================================================
 void FreeOrbitCamera::toggle_stereo3D(){
 	stereo3D = !stereo3D;
 	std::cout << get_prefix_print() << "Stereo 3D : ";
@@ -191,12 +204,12 @@ std::string FreeOrbitCamera::get_snapshot_filename(){
 //==============================================================================
 ApertureCamera FreeOrbitCamera::get_Mamiya645_based_on_free_orbit_camera()const{
 
-	ApertureCamera Mamiya645("Mamiya645", 4*Image.Width(), 4*Image.Hight());
+	ApertureCamera Mamiya645("Mamiya645", 1280, 720);
 
 	// The real Mamiya Sekor has F=2.3 here it is "dreamlens" setup with F=0.95
 	double Mamiya_F_stop_number = 0.95;
 	double Mamiya_sensor_width_in_m = 0.06;
-	uint   Mamiya_number_of_rays_emitted_per_pixel = 5;
+	uint   Mamiya_number_of_rays_emitted_per_pixel = 1;
 	
 	Mamiya645.set_aperture_cam(
 		Mamiya_F_stop_number,
@@ -248,7 +261,7 @@ void FreeOrbitCamera::print_info_of_probing_ray_for_pixel_x_y(int x, int y){
 	out << "| | surface normal   : ";
 	 	out << intersec->get_surface_normal_in_object_system() << "\n";
 	out << "| | facing surface   : ";
-		if(probing_ray.is_outer_surface_of_object_in(intersec))
+		if(intersec->from_outside_to_inside())
 			out << "outside";
 		else
 			out << "inside";

@@ -12,7 +12,7 @@ void ListOfPropagations::push_back(RayForPropagation* ray){
 void ListOfPropagations::propagate_in_world_with_settings(	
 	const CartesianFrame* world, const GlobalSettings* settings
 ) {
-	std::cout << "Propagate list of " << propagations.size() << " rays...\n";
+	//std::cout << "Propagate list of " << propagations.size() << " rays...\n";
 
 	if(settings->MultiThread())
 		propagate_using_multi_thread(world, settings);
@@ -51,7 +51,7 @@ void ListOfPropagations::propagate_using_multi_thread(
 		out << " is doing " << ray_counter << "/";
 		out << propagations.size() << " rays. ";
 		out << "Seed: " << dice_for_this_thread_only.seed() << "\n";
-		cout << out.str();
+		//cout << out.str();
 	}
 }
 //------------------------------------------------------------------------------
@@ -67,10 +67,9 @@ void ListOfPropagations::propagate_using_single_thread(
 	env.random_engine = &dice;
 
 	for(uint i = 0; i<propagations.size(); i++ )
-		propagations.at(i)->propagate_in(&env);
-		//PropagateSingleRay(world,settings,&dice,i);
+		propagations.at(i)->propagate_in(&env);;
 
-	cout << "Single thread is doing all the rays\n";	
+	//cout << "Single thread is doing all the rays\n";	
 }
 //------------------------------------------------------------------------------
 std::ostream& operator<<(std::ostream& os, const ListOfPropagations& list) {
@@ -84,10 +83,27 @@ std::string ListOfPropagations::get_print()const {
 	out << " _____List_of_Rays_____\n";
 	out << "| name: " << name << "\n";
 	out << "| number of Rays: " << propagations.size() << "\n";
-	out << "| here are 1/1e4 of the rays:\n";
-	for(int i=0; i<propagations.size()/1e4; i++)
+	out << "| here are some of the rays:\n";
+	for(uint i=0; i<propagations.size(); i++)
 		out << *propagations.at(i) << "\n";
 	out << "|______________________\n";
 	
 	return out.str();
 }
+//------------------------------------------------------------------------------
+uint ListOfPropagations::get_number_of_propagations()const {
+	return propagations.size();
+}
+//------------------------------------------------------------------------------
+uint ListOfPropagations::get_number_of_propagations_absorbed_in_object(
+	const CartesianFrame* obj
+)const {
+	uint counter = 0;
+
+	for(RayForPropagation* ray : propagations)
+		if(ray->get_final_intersection()->get_intersecting_object() == obj)
+			counter++;
+
+	return counter;
+}
+//------------------------------------------------------------------------------

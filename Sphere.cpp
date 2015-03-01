@@ -89,7 +89,8 @@ Intersection* Sphere::sphere_intersection_for_ray_parameter(
 		this,
 		intersection_point,
 		surface_normal,
-		ray_parameter
+		ray_parameter,
+		ray->Direction()
 	);
 
 	return intersec;

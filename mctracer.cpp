@@ -11,22 +11,14 @@
 //====================
 #include "ListOfPropagations.h"
 #include "Cameras/FreeOrbitCamera.h"
-#include "CsvHandler.h"
-
 #include "MmcsCorsikaFileIO/MmcsCorsikaFullEventGetter.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaPhotonData.h"
-#include "ConfigurationFactory.h"
 
 int main(int argc, char* argv[]) {
 	try{
 		UserInteraction::print_welcome_screen();
 
-		//std::string config_file_path = 
-		//	UserInteraction::parse_config_file_path(argc, argv);
-
 		GlobalSettings settings;		
-		settings.set_max_number_of_reflections(5);
-		settings.set_csv_decimal_presicion(9);
 		
 		std::string file_chosen_by_user = 
 			UserInteraction::input("Enter a world file to load: ");
@@ -36,22 +28,27 @@ int main(int argc, char* argv[]) {
 		CartesianFrame *Mworld = file2world.world();
 
 		/*
-		string filename = UserInteraction::input("Enter Mmcs CORSIKA file: ");
+		//string filename = UserInteraction::input("Enter Mmcs CORSIKA file: ");
+		std::string filename = "../../cer002600";
 		MmcsCorsikaFullEventGetter event_getter(filename);
 
 		while(event_getter.has_still_events_left()) {
 
 			MmcsCorsikaEvent event = event_getter.get_next_event();	
-			event.print();
-			ListOfPropagations *photons = event.transform_to_mcTracer_photons();
-			//photons->disp();
-			photons->propagate(Mworld,&settings);
+
+			//std::cout << event.get_print() << std::endl;
+			while(event.can_be_reused_again()) {
+				
+				ListOfPropagations *photons = 
+					event.use_once_more_and_get_mctracer_photons();
+					
+				photons->propagate_in_world_with_settings(Mworld, &settings);
+			}
 		}*/
 
-		FreeOrbitCamera free(Mworld,&settings);
-
+		FreeOrbitCamera free(Mworld, &settings);
 	}catch(std::exception &error){
-		cerr << error.what(); 
+		std::cerr << error.what(); 
 	}	
 	return 0;
 }

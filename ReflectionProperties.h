@@ -27,12 +27,8 @@ private:
 	bool reflection_function_was_set = false;
 	Function1D* reflection_function = nullptr;
 public:
-
-	ReflectionProperties();
 	ReflectionProperties(const double refl_coef);
-
-	void SetReflectionCoefficient(const double new_refl_coeff);
-	void SetReflectionCoefficient(const std::string path2xml);
+	ReflectionProperties(const std::string path2xml);
 
 	double ReflectionCoefficient() const;
 	double ReflectionCoefficient(double wavelength) const;	
@@ -41,6 +37,9 @@ public:
 
 	std::string get_print() const;
 private:
+	void SetReflectionCoefficient(const double new_refl_coeff);
+	void SetReflectionCoefficient(const std::string path2xml);
+
 	void reset_reflection_function();
 	void assert_in_range_0_to_1(const double refl)const;
 friend 

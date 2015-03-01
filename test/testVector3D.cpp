@@ -262,3 +262,33 @@ TEST_F(Vector3DTest, normalize) {
   a.normalize();
   EXPECT_TRUE( std::isnan(a.norm2()) == 1 );
 }
+//----------------------------------------------------------------------
+TEST_F(Vector3DTest, angle_in_between) {
+  
+  Vector3D a(1.0, 0.0, 0.0);
+  EXPECT_EQ( 1.0, a.norm2());
+
+  Vector3D b(1.0, 0.0, 0.0);
+  EXPECT_EQ( 1.0, b.norm2());
+
+  EXPECT_EQ(0.0, a.get_angle_in_between_in_rad(b));
+  EXPECT_EQ(b.get_angle_in_between_in_rad(a), a.get_angle_in_between_in_rad(b));
+
+  Vector3D c(5.0, 0.0, 0.0);
+  EXPECT_NE( 1.0, c.norm2());
+
+  Vector3D d(0.5, 0.0, 0.0);
+  EXPECT_NE( 1.0, d.norm2());
+
+  EXPECT_EQ(0.0, d.get_angle_in_between_in_rad(c));  
+  EXPECT_EQ(c.get_angle_in_between_in_rad(d), d.get_angle_in_between_in_rad(c));
+
+
+  Vector3D foo(5.0, 5.0, 0.0);
+  EXPECT_NE( 1.0, c.norm2());
+
+  Vector3D bar(0.5, 0.0, 0.0);
+  EXPECT_NE( 1.0, d.norm2());
+
+  EXPECT_NEAR(Deg2Rad(45.0) , foo.get_angle_in_between_in_rad(bar), 1e-5);
+}

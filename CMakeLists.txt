@@ -22,9 +22,10 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/RayAndBoundingSphereInteraction.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/RayAndFrameInteraction.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Photon.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ListOfPropagations.cpp
-	#${CMAKE_CURRENT_SOURCE_DIR}/ListOfInteractions.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PropagationEnvironment.cpp	
+	#${CMAKE_CURRENT_SOURCE_DIR}/Interaction.cpp	
 
 	${CMAKE_CURRENT_SOURCE_DIR}/QuadraticEquation.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/XyPlaneRayIntersectionEquation.cpp
@@ -35,11 +36,11 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/HexagonalPrismZ.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/FiniteStateMashine.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ReflectionProperties.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/AbsorptionProperties.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/RefractiveIndex.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/ColourProperties.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TracerException.cpp
 
-	${CMAKE_CURRENT_SOURCE_DIR}/ConfigurationFactory.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GlobalSettings.cpp 
 
 	${CMAKE_CURRENT_SOURCE_DIR}/WorldFactory.cpp
@@ -54,12 +55,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceWithOuterPrismBound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithCylinderBound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithHexagonalBound.cpp
-	#${CMAKE_CURRENT_SOURCE_DIR}/OpticalMirrorEllipsoidHexagonal.cpp
-
-	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceProperties.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/VolumeProperties.cpp
-
-	${CMAKE_CURRENT_SOURCE_DIR}/InteractionSurfaceFinder.cpp
 
 	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLens.cpp
 

@@ -1,6 +1,7 @@
 #include "ReflectionProperties.h"
-ReflectionProperties::ReflectionProperties() {
-
+//------------------------------------------------------------------------------
+ReflectionProperties::ReflectionProperties(const std::string path2xml) {
+	SetReflectionCoefficient(path2xml);
 }
 //------------------------------------------------------------------------------
 ReflectionProperties::ReflectionProperties(const double refl_coef) {

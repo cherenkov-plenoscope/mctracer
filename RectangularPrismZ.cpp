@@ -34,7 +34,7 @@ void RectangularPrismZ::assert_width_is_positive(
 }
 //------------------------------------------------------------------------------
 bool RectangularPrismZ::is_inside(const Vector3D* vec)const {
-	return abs( vec->x() ) < half_x_width && abs( vec->y() ) <  half_y_width;
+	return fabs(vec->x()) < half_x_width && fabs(vec->y()) <  half_y_width;
 }
 //------------------------------------------------------------------------------
 double RectangularPrismZ::get_half_x_width()const {

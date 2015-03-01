@@ -1,30 +1,12 @@
 #include "FactTelescope.h"
+//==================================================================
 void FactTelescope::init_outer_mirror_surface() {
-	ColourProperties* mirror_colour;
-	mirror_colour = new ColourProperties;
-	mirror_colour->set_RGB_0to255(255,255,255);
-
-	ReflectionProperties* outer_mirror_reflection;
-	outer_mirror_reflection = new ReflectionProperties;
-	outer_mirror_reflection->SetReflectionCoefficient(0.9);	
-
-	outer_mirror_surface = new SurfaceProperties;
-	outer_mirror_surface->set_reflection(outer_mirror_reflection);
-	outer_mirror_surface->set_color(mirror_colour);	
+	mirror_colour = new ColourProperties(255,255,255);
+	outer_mirror_reflection = new ReflectionProperties(0.9);
 }
 //==================================================================
 void FactTelescope::init_inner_mirror_surface() {
-	ColourProperties* inner_mirror_colour;
-	inner_mirror_colour = new ColourProperties;
-	inner_mirror_colour->set_RGB_0to255(64,64,64);
-
-	ReflectionProperties* inner_mirror_reflection;
-	inner_mirror_reflection = new ReflectionProperties;
-	inner_mirror_reflection->SetReflectionCoefficient(0.0);	
-
-	inner_mirror_surface = new SurfaceProperties;
-	inner_mirror_surface->set_reflection(inner_mirror_reflection);
-	inner_mirror_surface->set_color(inner_mirror_colour);	
+	inner_mirror_colour = new ColourProperties(64,64,64);
 }
 //==================================================================
 void FactTelescope::assert_alpha_geometry_parameter_is_valid(
@@ -322,8 +304,9 @@ FactTelescope::FactTelescope(double alpha){
 				mirror_rotation
 			);
 			
-			mirror->set_outer_surface(outer_mirror_surface);
-			mirror->set_inner_surface(inner_mirror_surface);
+			mirror->set_outer_color(mirror_colour);
+			mirror->set_inner_color(inner_mirror_colour);
+			mirror->set_outer_reflection(outer_mirror_reflection);
 				
 			mirror->set_focal_length_and_outer_hex_radius(
 				focal_length_telescope,
@@ -409,9 +392,9 @@ std::string FactTelescope::get_fact_string() {
 	return out.str();
 }
 //==================================================================
-void FactTelescope::export_table_of_telescope(string telescope_table_file_name) {
+void FactTelescope::export_table_of_telescope(std::string telescope_table_file_name) {
 	
-	ofstream myfile (telescope_table_file_name.c_str());
+	std::ofstream myfile (telescope_table_file_name.c_str());
 	if(myfile.is_open()){
 		myfile << telescope_table.str();
 		myfile.close();

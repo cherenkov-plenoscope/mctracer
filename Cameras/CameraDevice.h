@@ -26,6 +26,8 @@ public:
 		const uint sensor_rows
 	);
 
+	~CameraDevice();
+
 	virtual void acquire_image(	
 		const CartesianFrame* world, 
 		const GlobalSettings* settings

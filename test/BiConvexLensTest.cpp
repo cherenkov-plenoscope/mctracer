@@ -18,10 +18,10 @@ class BiConvexLensTest : public ::testing::Test {
     set_up_settings();
     set_up_test_bench();
 
-  lens_test_bench_environment.world_geometry = test_bench;
-  lens_test_bench_environment.propagation_options = &settings;
-  lens_test_bench_environment.random_engine = &dice;
-  lens_test_bench_environment.assert_completeness();
+    lens_test_bench_environment.world_geometry = test_bench;
+    lens_test_bench_environment.propagation_options = &settings;
+    lens_test_bench_environment.random_engine = &dice;
+    lens_test_bench_environment.assert_completeness();
   }
   //------------------
   void set_up_settings() {
@@ -53,20 +53,14 @@ class BiConvexLensTest : public ::testing::Test {
     ColourProperties* lens_color;
     lens_color = new ColourProperties(255, 128, 128);
 
-    SurfaceProperties* outer_lens_surface;
-    outer_lens_surface = new SurfaceProperties;
-    outer_lens_surface->set_color(lens_color);
-
     RefractiveIndex* lens_refractive_index;
     lens_refractive_index = new RefractiveIndex(1.3);
 
-    VolumeProperties* inner_lens_medium;
-    inner_lens_medium = new VolumeProperties;
-    inner_lens_medium->set_refraction(lens_refractive_index);
-
-    lens->set_inner_surface(outer_lens_surface);
-    lens->set_inner_medium(inner_lens_medium);
-    lens->set_focal_length_and_diameter(2.0, 0.5);
+    //////////////////////////////////
+    lens->set_outer_color(lens_color);
+    lens->set_inner_color(lens_color);
+    lens->set_inner_refraction(lens_refractive_index);
+    lens->set_curvature_radius_and_diameter(0.7, 0.5);
     return lens;
   }
   //------------------
@@ -84,12 +78,8 @@ class BiConvexLensTest : public ::testing::Test {
     ColourProperties* sensor_color;
     sensor_color = new ColourProperties(128, 255, 128);
 
-    SurfaceProperties* sensor_surface;
-    sensor_surface = new SurfaceProperties;
-    sensor_surface->set_color(sensor_color);
-
-    image_sensor->set_inner_surface(sensor_surface);
-    image_sensor->set_outer_surface(sensor_surface);
+    image_sensor->set_outer_color(sensor_color);
+    image_sensor->set_inner_color(sensor_color);
     image_sensor->set_disc_radius(0.05); 
     return image_sensor;   
   }
@@ -114,12 +104,51 @@ class BiConvexLensTest : public ::testing::Test {
 //----------------------------------------------------------------------
 TEST_F(BiConvexLensTest, send_photon_frontal_into_lens) {
 
-  Photon blue_photon(Vector3D(0.0, 0.0, 1.0), Vector3D(0.0, 0.0, -1.0), 433e-9);
+  uint total_propagations = 1e4; 
+  uint number_of_photons_reaching_sensor_disc = 0;
+  for(uint i=0; i<total_propagations; i++) {
 
-  blue_photon.propagate_in(&lens_test_bench_environment);
+    Photon blue_photon(Vector3D(0.0, 0.0, 1.0), Vector3D(0.0, 0.0, -1.0), 433e-9);
+    blue_photon.propagate_in(&lens_test_bench_environment);
 
-  EXPECT_EQ(3.0, blue_photon.get_accumulative_distance());
+    if(3.0 == blue_photon.get_accumulative_distance())
+      number_of_photons_reaching_sensor_disc++;
+  }
 
-  //std::cout << blue_photons_history << "\n" << test_bench->get_tree_print();
-  //FreeOrbitCamera free(test_bench, &settings);
+  EXPECT_NEAR(
+    0.97,
+    double(number_of_photons_reaching_sensor_disc)/double(total_propagations),
+    5.0e-2
+  );
+}
+//----------------------------------------------------------------------
+TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
+
+  uint total_propagations = 1e4; 
+  double number_of_photons_reaching_center_of_sensor_disc = 0.0;
+
+  for(uint i=0; i<total_propagations; i++) {
+    double x_support = (i-0.5*total_propagations)/total_propagations*0.5;
+
+    Photon phot(Vector3D(x_support, 0.0, 1.0), Vector3D(0.0, 0.0, -1.0), 433e-9);
+    phot.propagate_in(&lens_test_bench_environment);
+
+    double x_on_sensor_disc = phot.get_intersection_at(
+      phot.get_number_of_interactions_so_far()-1
+      )->get_intersection_vector_in_object_system().x();
+      
+    if(fabs(x_on_sensor_disc) < 3e-2)
+      number_of_photons_reaching_center_of_sensor_disc++;
+  }
+
+  EXPECT_NEAR(
+    0.97, 
+    number_of_photons_reaching_center_of_sensor_disc/double(total_propagations),
+    1.0e-2
+  );
+
+  /*FreeOrbitCamera free(
+    lens_test_bench_environment.world_geometry, 
+    lens_test_bench_environment.propagation_options
+  );*/
 }

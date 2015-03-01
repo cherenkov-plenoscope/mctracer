@@ -1,15 +1,20 @@
 #include "BiConvexLens.h"
 //------------------------------------------------------------------------------
-void BiConvexLens::set_focal_length_and_diameter(const double focal_length, const double diameter) {
+void BiConvexLens::set_curvature_radius_and_diameter(
+	const double curvature_radius,
+	const double diameter
+) {
 
-	double offset = 0.5*
-		height_of_a_cap_given_focal_length_and_diameter(focal_length, diameter);
+	double offset = 0.5*height_of_a_cap_given_curv_radius_and_diameter(
+			curvature_radius, 
+			diameter
+		);
 
 	front_cap = create_cap_with_pos_rot_name_focal_lengt_and_diameter(
 		Vector3D(0.0, 0.0, -offset),
 		Rotation3D(0.0, 0.0, 0.0),
 		name_of_mother_frame_plus("_front_cap"),
-		focal_length,
+		curvature_radius,
 		diameter
 	);
 
@@ -17,7 +22,7 @@ void BiConvexLens::set_focal_length_and_diameter(const double focal_length, cons
 		Vector3D(0.0, 0.0, +offset),
 		Rotation3D(M_PI, 0.0, 0.0),
 		name_of_mother_frame_plus("_rear_cap"),
-		focal_length,
+		curvature_radius,
 		diameter
 	);
 
@@ -30,10 +35,9 @@ std::string BiConvexLens::name_of_mother_frame_plus(const std::string appendix)c
 	return front_cap_name.append(appendix);
 }
 //------------------------------------------------------------------------------
-double BiConvexLens::height_of_a_cap_given_focal_length_and_diameter(
-	const double focal_length, const double diameter
+double BiConvexLens::height_of_a_cap_given_curv_radius_and_diameter(
+	const double curvature_radius, const double diameter
 )const {
-	double curvature_radius = focal_length/2.0;
 	double outer_radius = diameter/2.0;
 
 	return curvature_radius - 
@@ -44,7 +48,7 @@ SphereCapWithCylinderBound* BiConvexLens::create_cap_with_pos_rot_name_focal_len
 	const Vector3D pos, 
 	const Rotation3D rot, 
 	const std::string name,
-	const double focal_length, 
+	const double curv_radius, 
 	const double diameter
 )const {
 
@@ -52,19 +56,9 @@ SphereCapWithCylinderBound* BiConvexLens::create_cap_with_pos_rot_name_focal_len
 	cap = new SphereCapWithCylinderBound;
 	cap->set_frame(name, pos, rot);
 
-	if(has_inner_surface())
-		cap->set_inner_surface(get_inner_surface());
+	cap->take_boundary_layer_properties_but_inside_out_from(this);
 
-	if(has_outer_surface())
-		cap->set_outer_surface(get_outer_surface());
-
-	if(has_inner_medium())
-		cap->set_inner_medium(get_inner_medium());
-
-	if(has_outer_medium())
-		cap->set_outer_medium(get_outer_medium());
-
-	cap->set_focal_length_and_cap_radius(focal_length/2.0, diameter/2.0);
+	cap->set_focal_length_and_cap_radius(curv_radius, diameter/2.0);
 	cap->set_allowed_frames_to_propagate_to(this);	
 
 	return cap;

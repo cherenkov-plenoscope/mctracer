@@ -39,17 +39,11 @@ class ReflectionPropertiesTest : public ::testing::Test {
 //------------------------------------------------------------------------------
 TEST_F(ReflectionPropertiesTest, ConstructorAndGetter) {
 
-  ReflectionProperties refl;
-
-  // the default reflection is false when using the default constructor
-  EXPECT_EQ( 0.0, refl.ReflectionCoefficient() );
-
   const double coef = 0.1337;
-  refl.SetReflectionCoefficient( coef );
+  ReflectionProperties refl(coef);
+  EXPECT_EQ(coef, refl.ReflectionCoefficient() );
 
-  EXPECT_EQ(coef , refl.ReflectionCoefficient() );
-
-
+/*
   // check input values below 0
   bool problem_detected = FALSE;
   try{
@@ -68,8 +62,8 @@ TEST_F(ReflectionPropertiesTest, ConstructorAndGetter) {
   }
   EXPECT_EQ( TRUE , problem_detected );
 
-  /* check input values min and max
-  the minimum of 0 is still valid as it the maximum of 1*/
+  // check input values min and max
+  // the minimum of 0 is still valid as it the maximum of 1
   problem_detected = FALSE;
   try{
     refl.SetReflectionCoefficient(1.0);
@@ -77,16 +71,6 @@ TEST_F(ReflectionPropertiesTest, ConstructorAndGetter) {
   }catch(BadValue &error){
     problem_detected = TRUE;
   }
-  EXPECT_EQ( FALSE , problem_detected );
+  EXPECT_EQ( FALSE , problem_detected );*/
 }
 //------------------------------------------------------------------------------
-/*
-TEST_F(ReflectionPropertiesTest, FunctionFromXML) {
-  
-  ReflectionProperties refl;
-
-  refl.
-  SetReflectionCoefficient("./test_scenery/Function1D/function1D_complete.xml");
-
-
-}*/

@@ -10,7 +10,7 @@
 // included dependencies
 #include "Ray.h"
 #include "ColourProperties.h"
-#include "InteractionSurfaceFinder.h"
+//#include "InteractionSurfaceFinder.h"
 //------------------------------------------------------------------------------
 class CameraRay :public Ray{
 protected:

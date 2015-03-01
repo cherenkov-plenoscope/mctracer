@@ -13,7 +13,7 @@ Photon::Photon(
 Photon::Photon(
 	const Photon* photon_to_be_carried_on
 ) {
-	expand_propagation_properties_of_ray(photon_to_be_carried_on);
+	carry_on_propagation_properties_of_ray(photon_to_be_carried_on);
 	wavelength = photon_to_be_carried_on->wavelength;
 }
 //------------------------------------------------------------------------------
@@ -23,7 +23,8 @@ double Photon::get_wavelength()const {
 //------------------------------------------------------------------------------
 std::string Photon::get_print()const {
 	std::stringstream out; 
-	out << get_ray_print() << ", wavelength: " << wavelength*1e9 << "nm";
+	out << get_ray_print() << ", wavelength: " << wavelength*1e9 << "nm, ";
+	out << get_rayforpropagation_print();
 	return out.str();
 }
 //------------------------------------------------------------------------------
@@ -33,34 +34,114 @@ std::ostream& operator<<(std::ostream& os,const Photon& photon_to_be_displayed){
 }
 //------------------------------------------------------------------------------
 void Photon::propagate_in(PropagationEnvironment* environment) {
+	this->environment = environment;
+
+	if(limit_of_interactions_is_not_reached_yet()) 
+		work_on_first_causal_intersection();
+}
+//------------------------------------------------------------------------------
+void Photon::work_on_first_causal_intersection() {
 	
-	Intersection* first_intersection = 
-		get_first_intersection_in(environment->world_geometry);
+	intersection = get_first_intersection_in(environment->world_geometry);
 
-	if(first_intersection->does_intersect()) {
-		interaction_with_object(first_intersection);
-	}else{
-		absorbtion_in_void_space(first_intersection);
-	}	
+	if(intersection->does_intersect())
+		interact_with_object();
+	else
+		get_absorbed_in_void_space();
 }
 //------------------------------------------------------------------------------
-void Photon::interaction_with_object(const Intersection* intersection) {
-
-	InteractionSurfaceFinder surface_finder(this, intersection);
-
-	if(surface_finder.has_surface_interaction()) {
-		surface_finder.get_interaction_surface();
-		push_back_to_propagation_history(intersection);	
-	}else{
-
-	}
-}
-//------------------------------------------------------------------------------
-void Photon::absorbtion_in_void_space(const Intersection* intersec) {
-	//push_back_to_propagation_history(intersec);	
-}
-//------------------------------------------------------------------------------
-/*void Photon::propagate_further_on_and_ignore_intersection() {
-	Photon photon_extension(this);
-	photon_extension
+/*void Photon::get_absorbed_on_way_or_interact_with_object() {
+	if(intersection)
 }*/
+//------------------------------------------------------------------------------
+void Photon::interact_with_object() {
+
+	if(	intersection->get_facing_reflection_propability(wavelength) > 
+		environment->random_engine->uniform() ) 
+		reflect_on_surface_and_propagate_on();
+	else
+		reach_boundary_layer(); 
+}
+//------------------------------------------------------------------------------
+void Photon::reflect_on_surface_and_propagate_on() {
+
+	Photon reflected_photon(this);
+	calculate_reflected_ray(intersection, &reflected_photon);
+
+	push_back_intersection_and_type_to_propagation_history(
+		intersection, 
+		reflection_on_surface
+	);
+
+	reflected_photon.propagate_in(environment);
+}
+//------------------------------------------------------------------------------
+void Photon::reach_boundary_layer() {
+
+	if(intersection->boundary_layer_is_transparent())
+		fresnel_refraction_and_reflection();
+	else
+		get_absorbed_on_surface();
+}
+//------------------------------------------------------------------------------
+void Photon::fresnel_refraction_and_reflection() {
+
+	FresnelRefractionAndReflection fresnel(
+		intersection->world2object()->get_transformed_orientation(Direction()),
+		intersection->get_normal_in_faceing_surface_system(),
+		intersection->get_refractive_index_coming_from(wavelength),
+		intersection->get_refractive_index_going_to(wavelength)
+	);
+
+	if(fresnel.reflection_propability() > environment->random_engine->uniform())
+		reflect_on_surface_and_propagate_on(); 
+	else
+		pass_the_boundary_layer(fresnel);
+}
+//------------------------------------------------------------------------------
+void Photon::pass_the_boundary_layer(
+	const FresnelRefractionAndReflection &fresnel 
+) {
+	
+	if(intersection->from_outside_to_inside())
+		push_back_intersection_and_type_to_propagation_history(
+			intersection, 
+			refraction_to_inside
+		);	
+	else
+		push_back_intersection_and_type_to_propagation_history(
+			intersection, 
+			refraction_to_outside
+		);			
+
+	Photon refracted_photon(this);
+
+	refracted_photon.SetRay(
+		intersection->get_intersection_vector_in_world_system(),
+		intersection->object2world()->get_transformed_orientation(
+			fresnel.get_refrac_dir_in_object_system()
+		)
+	);
+	
+	refracted_photon.propagate_in(environment);
+} 
+//------------------------------------------------------------------------------
+void Photon::get_absorbed_on_surface() {
+	push_back_intersection_and_type_to_propagation_history(
+		intersection, 
+		absorption_on_surface
+	);	
+}
+//------------------------------------------------------------------------------
+void Photon::get_absorbed_in_void_space() {
+	push_back_intersection_and_type_to_propagation_history(
+		intersection, 
+		absorption_in_void
+	);	
+}
+//------------------------------------------------------------------------------
+bool Photon::limit_of_interactions_is_not_reached_yet()const {
+	return environment->propagation_options->
+		max_number_of_reflections_is_not_reached_yet(
+			get_number_of_interactions_so_far());
+}

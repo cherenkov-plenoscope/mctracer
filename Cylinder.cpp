@@ -146,7 +146,8 @@ Intersection* Cylinder::calculate_intersection_with(const Ray* ray)const {
 				this,
 				intersection_vector,
 				get_surface_normal_for_intersection_vec(&intersection_vector),
-				v
+				v,
+				ray->Direction()
 			);
 
 			return intersec;			

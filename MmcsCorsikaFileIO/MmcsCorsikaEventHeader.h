@@ -13,7 +13,7 @@
 #include "MmcsCorsikaSubBlockGetter.h"
 //=================================
 class MmcsCorsikaEventHeader {
-
+public:
     std::string EVTH_word;
     int event_number;
     int particle_id;
@@ -91,7 +91,7 @@ class MmcsCorsikaEventHeader {
     std::vector<float> x_coordinate_of_core_location_for_scattered_events_in_cm;
     std::vector<float> y_coordinate_of_core_location_for_scattered_events_in_cm;
     //----------------------------
-public:
+
     MmcsCorsikaEventHeader();    
     MmcsCorsikaEventHeader(const MmcsCorsikaSubBlock &sub_block);
     void create_from_MMCS_sub_block(const MmcsCorsikaSubBlock &sub_block); 

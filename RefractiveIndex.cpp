@@ -30,7 +30,7 @@ std::string RefractiveIndex::get_print()const {
 	std::stringstream out;
 	out << "mean index: " << simple_refractive_index_independent_of_wavelength;
 
-	if(!refraction_function->get_XmlName().empty())
+	if(refraction_function != nullptr)
 		out << ", file: " << refraction_function->get_XmlName();
 
 	return out.str();	

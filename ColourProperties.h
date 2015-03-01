@@ -49,7 +49,7 @@ public:
 
 	void reflection_mix(
 		const ColourProperties *c,
-		const ReflectionProperties *refl
+		const double refl_coeff
 	);
 
 	void mixture(

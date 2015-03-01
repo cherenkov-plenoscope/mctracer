@@ -8,6 +8,10 @@ CameraDevice::CameraDevice(
 	image = new CameraImage(sensor_cols, sensor_rows);
 }
 //------------------------------------------------------------------------------
+CameraDevice::~CameraDevice() {
+	delete image;
+}
+//------------------------------------------------------------------------------
 void CameraDevice::update_position(const Vector3D new_cam_pos_in_world) {
 	update_position_and_orientation(
 		new_cam_pos_in_world, 

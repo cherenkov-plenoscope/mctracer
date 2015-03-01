@@ -11,7 +11,6 @@
 #include <iostream>
 #include <math.h>
 #include <sstream>
-#include "CsvHandler.h"
 #include "GlobalSettings.h"
 //=================================
 class Vector3D {
@@ -41,6 +40,7 @@ void set_unit_vector_x();
 void set_unit_vector_y();
 void set_unit_vector_z();
 void set_null_vector();
+double get_angle_in_between_in_rad(const Vector3D& vec)const;
 //------------------------------------------------------------------------------
 // Operators
 double operator*(const Vector3D vec_two) const;

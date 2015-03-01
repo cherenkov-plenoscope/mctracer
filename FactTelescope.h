@@ -15,7 +15,6 @@
 #include <fstream>
 #include "CartesianFrame.h"
 #include "SphereCapWithHexagonalBound.h"
-#include "SurfaceProperties.h"
 
 //=================================
 class FactTelescope :public CartesianFrame{
@@ -28,8 +27,9 @@ class FactTelescope :public CartesianFrame{
 	double MirrorRadius_m;
 	std::vector<SphereCapWithHexagonalBound*> list_of_mirrors;
 
-	SurfaceProperties* outer_mirror_surface;
-	SurfaceProperties* inner_mirror_surface;
+	ColourProperties* mirror_colour;
+	ReflectionProperties* outer_mirror_reflection;
+	ColourProperties* inner_mirror_colour;
 public:
 
 	FactTelescope(double alpha);

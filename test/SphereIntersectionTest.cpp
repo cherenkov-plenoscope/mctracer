@@ -13,9 +13,8 @@ class SphereIntersectionTest : public ::testing::Test {
 
 	GlobalSettings setup;
 	Vector3D    pos;
-	Rotation3D  rot;
-	ReflectionProperties  refl; 
-	ColourProperties      colo;
+	Rotation3D  rot; 
+	ColourProperties*      colo;
 	double radius;
 	Sphere MySphere;
 	CartesianFrame world;
@@ -36,17 +35,13 @@ class SphereIntersectionTest : public ::testing::Test {
 
 	world.set_frame("world",pos,rot);
 
-	refl.SetReflectionCoefficient(1.0);
-	colo.set_RGB_0to255(200,128,128);
+	colo = new ColourProperties(200,128,128);
 
-	SurfaceProperties sphere_surface;
-	sphere_surface.set_color(&colo);
-	sphere_surface.set_reflection(&refl);
 	//------------sphere----------------
 	radius = 1.0;
 	MySphere.set_frame("MySphere", pos, rot);
-	MySphere.set_outer_surface(&sphere_surface);
-	MySphere.set_inner_surface(&sphere_surface);
+	MySphere.set_inner_color(colo);
+	MySphere.set_outer_color(colo);
 	MySphere.set_sphere(radius);
 
 	//----------declare relationships------------
@@ -72,8 +67,8 @@ TEST_F(SphereIntersectionTest, frontal) {
 	Photon P(Support,direction,wavelength);
 	P.propagate_in(&sphere_test_environment);
 
-	ASSERT_EQ(1, P.get_propagation_history()->size() ) << "There should be exactly 1 "
-	"interaction stored in the history expect it to intersect with the sphere "
+	ASSERT_EQ(1, P.get_number_of_interactions_so_far() ) << "There should be 2 "
+	"interaction stored in the history, expect it to intersect with the sphere "
 	" only once.";
 
 	EXPECT_EQ(-radius-x_pos, P.get_accumulative_distance() ) << 
@@ -83,7 +78,7 @@ TEST_F(SphereIntersectionTest, frontal) {
 	Vector3D normal; normal.set_unit_vector_x(); normal = normal*-1.0;
 	EXPECT_EQ(
 		normal,
-		P.get_propagation_history()->at(0)->get_surface_normal_in_object_system()
+		P.get_intersection_at(0)->get_surface_normal_in_object_system()
 	);
 }
 //------------------------------------------------------------------------------
@@ -95,7 +90,7 @@ TEST_F(SphereIntersectionTest, emmitting_close_above_surface_tangential) {
 	Photon P(Support,direction,wavelength);
 	P.propagate_in(&sphere_test_environment);
 
-	ASSERT_EQ(0, P.get_propagation_history()->size() );
+	ASSERT_EQ(absorption_in_void, P.get_final_interaction_type() );
 }
 //------------------------------------------------------------------------------
 TEST_F(SphereIntersectionTest, emmitting_close_above_surface_straigtht_away) {
@@ -106,7 +101,7 @@ TEST_F(SphereIntersectionTest, emmitting_close_above_surface_straigtht_away) {
 	Photon P(Support,direction,wavelength);
 	P.propagate_in(&sphere_test_environment);
 
-	ASSERT_EQ(0, P.get_propagation_history()->size() );
+	ASSERT_EQ(absorption_in_void, P.get_final_interaction_type() );
 }
 //------------------------------------------------------------------------------
 TEST_F(SphereIntersectionTest, tangential_intersection) {
@@ -117,14 +112,14 @@ TEST_F(SphereIntersectionTest, tangential_intersection) {
 	Photon P(Support,direction,wavelength);
 	P.propagate_in(&sphere_test_environment);
 
-	ASSERT_EQ(1, P.get_propagation_history()->size() );
+	ASSERT_EQ(1, P.get_number_of_interactions_so_far() );
 
 	Vector3D normal; normal.set_unit_vector_z();
 
 	EXPECT_NEAR(
 		0.0,
 		normal.distance_to(
-			P.get_propagation_history()->at(0)->get_surface_normal_in_object_system()
+			P.get_intersection_at(0)->get_surface_normal_in_object_system()
 		),
 		1e-12
 	);

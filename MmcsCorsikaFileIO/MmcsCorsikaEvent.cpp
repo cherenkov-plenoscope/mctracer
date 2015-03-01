@@ -10,7 +10,7 @@ MmcsCorsikaEvent::MmcsCorsikaEvent(
 	this->event_end	= event_end;
 }
 //------------------------------------------------------------------------------
-ListOfPropagations* MmcsCorsikaEvent::transform_to_mcTracer_photons()const {
+ListOfPropagations* MmcsCorsikaEvent::use_once_more_and_get_mctracer_photons() {
 // CORSIKA Coordinate system
 // The coordinates in CORSIKA are defined with respect to a Cartesian coordinate
 // system with the positive x-axis pointing to the magnetic north, the positive
@@ -23,16 +23,23 @@ ListOfPropagations* MmcsCorsikaEvent::transform_to_mcTracer_photons()const {
 // positive x-axis and the x-y-component of the particle momentum vector 
 // (i.e. with respect to north) proceeding counterclockwise.
 	
+	reuse_counter++;
+
 	ListOfPropagations *cherenkov_photons;
 	cherenkov_photons = new ListOfPropagations("MmcsEvent");
 
 	for(uint i=0; i<photon_data.number_of_photons(); i++)
-		cherenkov_photons->push_back(get_mcTracer_photon(i));
+		cherenkov_photons->push_back(get_mctracer_photons(i));
 
 	return cherenkov_photons;
 }
 //------------------------------------------------------------------------------
-Photon* MmcsCorsikaEvent::get_mcTracer_photon(const uint i)const {
+bool MmcsCorsikaEvent::can_be_reused_again()const {
+	return reuse_counter < 
+		event_header.number_of_uses_of_each_Cherenkov_event;
+}
+//------------------------------------------------------------------------------
+Photon* MmcsCorsikaEvent::get_mctracer_photons(const uint i)const {
 
 	Vector3D causal_dir = causal_direction(i);
 
@@ -64,7 +71,33 @@ Vector3D MmcsCorsikaEvent::causal_direction(const uint i)const {
 }
 //------------------------------------------------------------------------------
 Vector3D MmcsCorsikaEvent::intersection_with_xy_floor_plane(const uint i)const {
-	return Vector3D(x_pos_on_xy_plane_in_m(i), y_pos_on_xy_plane_in_m(i), 0.0);	
+	
+	Vector3D ground_pos(
+		x_pos_on_xy_plane_in_m(i), 
+		y_pos_on_xy_plane_in_m(i), 
+		0.0
+	);
+
+	if(event_header.number_of_uses_of_each_Cherenkov_event > 0)
+		ground_pos = ground_pos - Vector3D(
+			x_core_position_in_m(),
+			y_core_position_in_m(),
+			0.0
+		);
+
+	return ground_pos;
+}
+//------------------------------------------------------------------------------
+double MmcsCorsikaEvent::x_core_position_in_m()const {
+	return event_header.
+		x_coordinate_of_core_location_for_scattered_events_in_cm.
+			at(reuse_counter-1)*1e-2;
+}
+//------------------------------------------------------------------------------
+double MmcsCorsikaEvent::y_core_position_in_m()const {
+	return event_header.
+		y_coordinate_of_core_location_for_scattered_events_in_cm.
+			at(reuse_counter-1)*1e-2;
 }
 //------------------------------------------------------------------------------
 double MmcsCorsikaEvent::x_pos_on_xy_plane_in_m(const uint i)const {
@@ -83,17 +116,20 @@ double MmcsCorsikaEvent::wavelength_in_m(const uint i)const {
 	return photon_data.get_wavelength_in_nm(i)/1e9;
 }
 //------------------------------------------------------------------------------
-void MmcsCorsikaEvent::print()const { 
-	std::cout << get_print();
-}
-//------------------------------------------------------------------------------
 std::string MmcsCorsikaEvent::get_print()const {
 	std::stringstream out;
-	out << " ____MAGCIC_MC_CORSIKA_EVENT____\n";
-	out << "|\n";
-	out << event_header.get_print();
-	out << photon_data.get_statistics_print();
-	out << "|_______________________________\n";
+	out << "____MAGCIC_MC_CORSIKA_EVENT____\n";
+	out << "\n";
+	out << StringTools::place_first_infront_of_each_new_line_of_second(
+		" ",
+		event_header.get_print()
+	);
+	out << "\n";
+	out << StringTools::place_first_infront_of_each_new_line_of_second(
+		" ",
+		photon_data.get_statistics_print()
+	);
+	out << "\n";
 	return out.str();
 }
 //------------------------------------------------------------------------------

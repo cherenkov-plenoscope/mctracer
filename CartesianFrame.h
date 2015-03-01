@@ -16,10 +16,7 @@ class Intersection;
 #include "Vector3D.h"
 #include "Rotation3D.h"
 #include "HomoTrafo3D.h"
-#include "SurfaceProperties.h"
-#include "VolumeProperties.h"
 #include "TracerException.h"
-#include "OctTreeCube.h"
 #include "Tools/StringTools.h"
 #include "Tools/Tools.h"
 
@@ -135,9 +132,6 @@ public:
         const Ray* ray,
         std::vector<const CartesianFrame*> *candidate_frames
     )const;
-
-protected:
-    //CartesianFrame(){};
 private:
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     // post initialization
@@ -178,51 +172,5 @@ public:
     virtual Intersection* calculate_intersection_with(const Ray* ray)const;
 
     Intersection* empty_intersection()const;
-
-    virtual void get_reflection_direction_in_object_system(Vector3D* vec)const{};
-
-// - - - - -
-    virtual void set_outer_surface(const SurfaceProperties *outer_surface){};
-    virtual void set_inner_surface(const SurfaceProperties *inner_surface){};
-    virtual bool has_inner_surface()const{ return false; };
-    virtual bool has_outer_surface()const{ return false; };
-    virtual const SurfaceProperties* get_outer_surface()const{
-        throw TracerException(__func__);
-        SurfaceProperties* ret;
-        ret = new SurfaceProperties;
-        return ret;       
-    };
-    virtual const SurfaceProperties* get_inner_surface()const{
-        throw TracerException(__func__);
-        SurfaceProperties* ret;
-        ret = new SurfaceProperties;
-        return ret; 
-    };
-
-    virtual void set_outer_medium(const VolumeProperties* outer_medium){};
-    virtual void set_inner_medium(const VolumeProperties* inner_medium){};
-    virtual bool has_inner_medium()const{ return false; };
-    virtual bool has_outer_medium()const{ return false; };
-    virtual const VolumeProperties* get_outer_medium()const{
-        throw TracerException(__func__);
-        VolumeProperties* ret;
-        ret = new VolumeProperties;
-        return ret; 
-    };
-    virtual const VolumeProperties* get_inner_medium()const{
-        throw TracerException(__func__);
-        VolumeProperties* ret;
-        ret = new VolumeProperties;
-        return ret; 
-    };    
-
-    virtual bool has_restrictions_on_frames_to_propagate_to()const{ return false; };
-    virtual const CartesianFrame* get_allowed_frame_to_propagate_to()const{
-        throw TracerException(__func__);
-        CartesianFrame* ret;
-        ret = new CartesianFrame;
-        return ret;
-    };
-    virtual void set_allowed_frames_to_propagate_to(const CartesianFrame* frame){};
 };
 #endif // __CARTESIANFRAME_H_INCLUDED__

@@ -9,13 +9,33 @@ class PropagationEnvironment;
 //=================================
 // included dependencies
 #include "Ray.h"
+#include "Intersection.h"
+#include "PropagationEnvironment.h"
 
+enum InteractionType { 
+	absorption_in_void,
+	absorption_in_medium,
+	absorption_on_surface,
+	fresnel_reflection,
+	reflection_on_surface, 
+	refraction_to_outside,
+	refraction_to_inside,
+	scattering 
+};
+
+//=================================
 class RayForPropagation :public Ray{
 protected:
-	std::vector<const Intersection*>* propagation_history;
+
+	std::vector<const Intersection*>* intersection_history;
+	std::vector<InteractionType>* interaction_type_history;
+
 	uint identifier_number;
+
+	PropagationEnvironment* environment = nullptr;
+	Intersection* intersection = nullptr;
 public:
-	RayForPropagation(const RayForPropagation* ray_to_be_expanded);
+	RayForPropagation(const RayForPropagation* ray_to_be_carried_on);
 
 	RayForPropagation(const Vector3D support, const Vector3D direction);
 
@@ -25,9 +45,10 @@ public:
 
 	uint get_id()const;
 
-	void push_back_to_propagation_history(const Intersection* intersec);
-
-	const std::vector<const Intersection*>* get_propagation_history()const;
+	void push_back_intersection_and_type_to_propagation_history(
+		const Intersection* interact, 
+		const InteractionType type
+	);
 
 	std::string get_print()const;
 
@@ -38,9 +59,21 @@ public:
 		const Ray& ray_to_be_displayed
 	);
 
-
 	virtual void propagate_in(PropagationEnvironment* env);
+
+	uint get_number_of_interactions_so_far()const;
+
+	const Intersection* get_intersection_at(const uint index)const;
+
+	InteractionType get_final_interaction_type()const {
+		return interaction_type_history->back();
+	};
+	
+	const Intersection* get_final_intersection()const;
+
 protected:
+	std::string get_history_print()const;
+
 	std::string get_rayforpropagation_print()const;
 
 	RayForPropagation();
@@ -49,8 +82,10 @@ protected:
 
 	void delete_propagation_history();
 
-	void expand_propagation_properties_of_ray(
-		const RayForPropagation* ray_to_be_expanded
+	void carry_on_propagation_properties_of_ray(
+		const RayForPropagation* ray_to_be_carried_on
 	);
+
+	std::string get_type_print(const InteractionType type)const;
 };
 #endif // __RayForPropagation_H_INCLUDED__ 

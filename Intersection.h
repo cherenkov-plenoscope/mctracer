@@ -11,30 +11,34 @@ class Ray;
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <limits>
 #include "Vector3D.h"
-#include "CartesianFrame.h"
+#include "SurfaceEntity.h"
 
 //=================================
 class Intersection {
-private:
-	const CartesianFrame*	intersecting_object;
+protected:
+	const SurfaceEntity*	intersecting_object;
 	Vector3D 	intersection_point;
 	Vector3D 	surfacenormal_in_intersection_point;
 	double 	 	distance_of_ray_in_m;
+	bool _from_outside_to_inside;
 
+	static const SurfaceEntity* void_object;
 public:
 	Intersection();
 
 	Intersection(
-		const CartesianFrame* intersectiong_object,
+		const SurfaceEntity* intersectiong_object,
 		const Vector3D intersection_vector,
 		const Vector3D surfacenormal_in_intersection_point,
-		const double distance_of_ray_support_to_intersection
+		const double distance_of_ray_support_to_intersection,
+		const Vector3D incident_in_obj_sys
 	);
 
 	bool does_intersect()const;
 
-	const CartesianFrame * get_intersecting_object()const;
+	const SurfaceEntity * get_intersecting_object()const;
 
 	Vector3D get_intersection_vector_in_object_system()const;
 
@@ -54,22 +58,32 @@ public:
 		Vector3D incomming_dir_in_world
 	)const;
 
-	bool object_surface_normal_parallel_to_direction_of(const Ray* ray)const;
+	double get_facing_reflection_propability()const;
+	double get_facing_reflection_propability(const double wavelength)const;
 
-	bool object_has_outer_surface()const {
-		return intersecting_object->has_outer_surface();
-	};
+	double get_outer_half_way_depth()const;
+	double get_outer_half_way_depth(const double wavelength)const;
+	double get_inner_half_way_depth()const;
+	double get_inner_half_way_depth(const double wavelength)const;
 
-	bool object_has_inner_surface()const {
-		return intersecting_object->has_inner_surface();
-	};
+	double get_refractive_index_going_to()const;
+	double get_refractive_index_going_to(const double wavelength)const;
+	double get_refractive_index_coming_from()const;
+	double get_refractive_index_coming_from(const double wavelength)const;
 
-	bool object_has_outer_medium()const {
-		return intersecting_object->has_outer_medium();
-	};
+	bool boundary_layer_is_transparent()const;
+	bool from_outside_to_inside()const;
 
-	bool object_has_inner_medium()const {
-		return intersecting_object->has_inner_medium();
-	};
+	const ColourProperties get_facing_color()const;
+
+	const HomoTrafo3D* world2object()const;
+	const HomoTrafo3D* object2world()const;
+
+	Vector3D get_normal_in_faceing_surface_system()const;
+
+protected:
+	bool ray_is_running_from_outside_to_inside(
+		const Vector3D incident_in_obj_sys
+	)const;
 };
 #endif // __INTERSECTION_H_INCLUDED__ 

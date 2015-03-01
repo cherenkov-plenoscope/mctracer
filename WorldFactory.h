@@ -21,9 +21,8 @@
 #include "FactTelescope.h"
 #include "Vector3D.h"
 #include "Rotation3D.h"
-//#include "ReflectionProperties.h"
-//#include "ColourProperties.h"
-#include "SurfaceProperties.h"
+#include "ReflectionProperties.h"
+#include "ColourProperties.h"
 #include "XmlIO/XmlFileIo.h"
 #include "TracerException.h"
 
@@ -98,15 +97,9 @@ private:
 		const pugi::xml_node frame_node
 	);
 
-	/*void extract_Surface_props(
-		ReflectionProperties* reflection_cefficient,
-		ColourProperties* colour,
-		const pugi::xml_node node
-	);*/
+	const ColourProperties* extract_color(const pugi::xml_node node);
 
-	SurfaceProperties* extract_Surface_props(
-		const pugi::xml_node node
-	);
+	const ReflectionProperties* extract_reflection(const pugi::xml_node node);
 
 	void extract_Plane_props(
 		double &x_width, double &y_width, const pugi::xml_node node 

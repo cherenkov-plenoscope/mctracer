@@ -53,8 +53,7 @@ TEST_F(PhotonTest, creation_constructor) {
   EXPECT_EQ(origin, pho.Support());
   EXPECT_EQ(1.0, pho.Direction().norm2());
   EXPECT_EQ(wavelength, pho.get_wavelength());
-  ASSERT_FALSE(nullptr == pho.get_propagation_history() );
-  EXPECT_EQ(0, pho.get_propagation_history()->size() );
+  EXPECT_EQ(0, pho.get_number_of_interactions_so_far() );
 }
 //------------------------------------------------------------------------------
 TEST_F(PhotonTest, PropagationSimpleGeometry){
@@ -72,15 +71,8 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
 
   CartesianFrame optical_table("optical_table",pos,rot);
   
-  ReflectionProperties  refl; 
-  ColourProperties      colo;
-
-  refl.SetReflectionCoefficient(1.0);
-  colo.set_RGB_0to255(200,128,128);
-
-  SurfaceProperties mirror_surface;
-  mirror_surface.set_color(&colo);
-  mirror_surface.set_reflection(&refl);
+  ReflectionProperties  refl(1.0); 
+  ColourProperties      colo(200,128,128);
 
   pos.set(0.0,0.0,0.0);
   rot.set(0.0,0.0,0.0);
@@ -88,8 +80,10 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
   //------------mirror 1----------------
   Plane mirror1;
   mirror1.set_frame("mirror_1",pos,rot);
-  mirror1.set_outer_surface(&mirror_surface);
-  mirror1.set_inner_surface(&mirror_surface);  
+  mirror1.set_outer_color(&colo);
+  mirror1.set_inner_color(&colo);
+  mirror1.set_outer_reflection(&refl);
+  mirror1.set_inner_reflection(&refl); 
   mirror1.set_plane_using_x_and_y_width(1.0, 1.0);
   
   //------------mirror 2----------------
@@ -97,8 +91,10 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
   rot.set(0.0,0.0,0.0);
   Plane mirror2;
   mirror2.set_frame("mirror_2",pos,rot);
-  mirror2.set_outer_surface(&mirror_surface);
-  mirror2.set_inner_surface(&mirror_surface); 
+  mirror2.set_outer_color(&colo);
+  mirror2.set_inner_color(&colo);
+  mirror2.set_outer_reflection(&refl);
+  mirror2.set_inner_reflection(&refl);
   mirror2.set_plane_using_x_and_y_width(1.0, 1.0);
 
   //----------declare relationships------------
@@ -136,8 +132,8 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
     P.propagate_in(&environment);
 
     //history.show();
-    //EXPECT_EQ(number_of_bounces*1.0-0.5, history.get_accumulative_distance() );
-    //EXPECT_EQ(number_of_bounces,history.size());
+    EXPECT_EQ(number_of_bounces*1.0-0.5, P.get_accumulative_distance() );
+    EXPECT_EQ(number_of_bounces, P.get_number_of_interactions_so_far() );
   }
 }
 //------------------------------------------------------------------------------
@@ -174,10 +170,9 @@ TEST_F(PhotonTest, Reflections){
   rot.set(0.0,0.0,0.0);
   
   //------------mirror----------------
-  ReflectionProperties  mirror_reflection;
-  mirror_reflection.SetReflectionCoefficient(
-    "./test_scenery/Function1D/function1D_complete.xml"
-  ); 
+  const double reflection_coefficient = 0.42;
+  ReflectionProperties  mirror_reflection(reflection_coefficient);
+
   pos.set(0.0,0.0,0.0);
   //90Deg in Y and 45DEG in Z
   rot.set(0.0,Deg2Rad(90.0),Deg2Rad(45.0));
@@ -185,19 +180,16 @@ TEST_F(PhotonTest, Reflections){
   ColourProperties mirror_color;
   mirror_color.set_RGB_0to255(200,64,64);
 
-  SurfaceProperties mirror_surface;
-  mirror_surface.set_color(&mirror_color);
-  mirror_surface.set_reflection(&mirror_reflection);
-
   Plane mirror;
   mirror.set_frame("mirror",pos,rot);
-  mirror.set_outer_surface(&mirror_surface);
-  mirror.set_inner_surface(&mirror_surface); 
+  mirror.set_outer_color(&mirror_color);
+  mirror.set_inner_color(&mirror_color);
+  mirror.set_outer_reflection(&mirror_reflection);
+  mirror.set_inner_reflection(&mirror_reflection); 
   mirror.set_plane_using_x_and_y_width(1.0, 1.0);
   
   //------------absorber----------------
-  ReflectionProperties  absorber_reflection;
-  absorber_reflection.SetReflectionCoefficient(0.0);
+  ReflectionProperties  absorber_reflection(0.0);
   pos.set(0.0,+2.0,0.0);
   rot.set(Deg2Rad(90.0),0.0,0.0);
 
@@ -205,13 +197,10 @@ TEST_F(PhotonTest, Reflections){
   ColourProperties absorber_color;
   absorber_color.set_RGB_0to255(50,50,50);
 
-  SurfaceProperties absorber_surface;
-  absorber_surface.set_color(&absorber_color);
-
   Plane absorber;
   absorber.set_frame("absorber",pos,rot);
-  absorber.set_outer_surface(&absorber_surface);
-  absorber.set_inner_surface(&absorber_surface); 
+  absorber.set_outer_color(&absorber_color);
+  absorber.set_inner_color(&absorber_color);
   absorber.set_plane_using_x_and_y_width(1.0, 1.0);
 
   //----------declare relationships------------
@@ -238,25 +227,23 @@ TEST_F(PhotonTest, Reflections){
 
   ListOfPropagations LoP("my_test_propagation_list");
 
-  for(int i=1; i<=1e5; i++)
-  {
+  for(int i=1; i<=1e4; i++) {
     // wavelength form 1nm to 1000nm
     double wavelength = double(i)*1e-2*1e-9;
 
     Photon *P;
-    P = new Photon(Support,direction,wavelength);
+    P = new Photon(Support, direction, wavelength);
+    P->set_id(i);
     LoP.push_back(P);
-
-    //ListOfInteractions history;
-    //Photon P(Support,direction,wavelength);
-
-    //P.propagate(&world,&history,&setup,&dice);
-
-    //history.show();
-    //EXPECT_EQ(number_of_bounces*1.0-0.5, history.get_accumulative_distance() );
-    //EXPECT_EQ(number_of_bounces,history.Interactions.size());
   }
 
   LoP.propagate_in_world_with_settings(&world, &setup);
-  
+
+  EXPECT_NEAR(
+    reflection_coefficient, 
+    double(LoP.get_number_of_propagations_absorbed_in_object(&absorber))/
+    double(LoP.get_number_of_propagations()),
+    1e-2
+  );
+  //std::cout << LoP.get_print();
 }

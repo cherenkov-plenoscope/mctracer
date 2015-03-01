@@ -6,8 +6,8 @@ void MmcsCorsikaPhotonData::print()const {
 //------------------------------------------------------------------------------
 std::string MmcsCorsikaPhotonData::get_statistics_print()const {
 	std::stringstream out;
-	out << "__Photon Data__\n";
-	out << "number_of_photons: " << number_of_photons() << "\n";
+	out << "__Photon_Data__\n";
+	out << " number_of_photons: " << number_of_photons() << "\n";
 	return out.str();
 }
 //------------------------------------------------------------------------------

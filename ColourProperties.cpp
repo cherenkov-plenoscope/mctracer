@@ -63,19 +63,11 @@ std::string ColourProperties::get_print()const {
 //------------------------------------------------------------------------------
 void ColourProperties::reflection_mix(
 	const ColourProperties *c,
-	const ReflectionProperties *refl
+	const double refl_coeff
 ) {
-	red_0to255 = 
-		(1.0 - refl->ReflectionCoefficient())*red_0to255 + 
-		refl->ReflectionCoefficient()*c->red_0to255;
-	
-	green_0to255 = 
-		(1.0 - refl->ReflectionCoefficient())*green_0to255 + 
-		refl->ReflectionCoefficient()*c->green_0to255;
-	
-	blue_0to255 = 
-		(1.0 - refl->ReflectionCoefficient())*blue_0to255 + 
-		refl->ReflectionCoefficient()*c->blue_0to255;
+	red_0to255 = (1.0 - refl_coeff)*red_0to255 + refl_coeff*c->red_0to255;
+	green_0to255 = (1.0 - refl_coeff)*green_0to255 + refl_coeff*c->green_0to255;
+	blue_0to255 = (1.0 - refl_coeff)*blue_0to255 + refl_coeff*c->blue_0to255;
 }
 //------------------------------------------------------------------------------
 void ColourProperties::mixture(

@@ -4,7 +4,6 @@
 #include "testRotation3D.cpp"
 #include "testPhoton.cpp"
 #include "testWorldFactory.cpp"
-#include "testSmartImage.cpp"
 #include "testCartesianFrame.cpp"
 #include "testReflectionProperties.cpp"
 #include "testFunction1D.cpp"
@@ -19,7 +18,6 @@
 #include "MmcsCorsikaEventGetterTest.cpp"
 #include "gtest/gtest.h"
 #include "FiniteStateMashineTEST.cpp"
-#include "ConfigurationFactoryTest.cpp"
 #include "RayAndFrameInteractionTest.cpp"
 #include "XyPlaneRayEquationTest.cpp"
 #include "PlaneIntersectionTest.cpp"
@@ -29,6 +27,7 @@
 #include "HomoTrafo3DTest.cpp"
 #include "RayForPropagationTest.cpp"
 #include "PropagationEnvironmentTest.cpp"
+#include "FresnelRefractionAndReflectionTest.cpp"
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

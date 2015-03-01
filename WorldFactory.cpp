@@ -184,11 +184,13 @@ CartesianFrame* WorldFactory::producePlane(
 	std::string 			name;
 	Vector3D    			position;
 	Rotation3D  			rotation;
-	SurfaceProperties*		surface;
+	const ColourProperties*		color;
+	const ReflectionProperties*	refl_prop;
 	double 					x_width, y_width;
 	
 	extract_Frame_props(name, position, rotation, node.child("set_frame"));
-	surface = extract_Surface_props(node.child("set_surface"));
+	color = extract_color(node.child("set_surface"));
+	refl_prop = extract_reflection(node.child("set_surface"));
 	extract_Plane_props(x_width, y_width, node.child("set_plane"));
 
 	assert_name_of_child_frame_is_not_in_use_yet(mother, name);	
@@ -197,8 +199,11 @@ CartesianFrame* WorldFactory::producePlane(
 	new_plane = new Plane;
 
 	new_plane->set_frame(name,position,rotation);
-	new_plane->set_inner_surface(surface);
-	new_plane->set_outer_surface(surface);	
+	new_plane->set_inner_color(color);
+	new_plane->set_outer_color(color);
+	new_plane->set_outer_reflection(refl_prop);
+	new_plane->set_inner_reflection(refl_prop);
+	
 	new_plane->set_plane_using_x_and_y_width(x_width, y_width);
 	
 	mother->set_mother_and_child(new_plane);
@@ -215,11 +220,13 @@ CartesianFrame* WorldFactory::produceSphere(
 	std::string 			name;
 	Vector3D 				position;
 	Rotation3D 				rotation;
-	SurfaceProperties*		surface;
+	const ColourProperties*		color;
+	const ReflectionProperties*	refl_prop;
 	double 					radius;
 
 	extract_Frame_props(name, position, rotation, node.child("set_frame"));
-	surface = extract_Surface_props( node.child("set_surface"));
+	color = extract_color(node.child("set_surface"));
+	refl_prop = extract_reflection(node.child("set_surface"));
 	extract_Sphere_props(radius,node.child("set_sphere"));
 
 	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
@@ -228,8 +235,11 @@ CartesianFrame* WorldFactory::produceSphere(
 	new_sphere = new Sphere;	
 
 	new_sphere->set_frame(name,position,rotation);
-	new_sphere->set_inner_surface(surface);
-	new_sphere->set_outer_surface(surface);	
+	new_sphere->set_inner_color(color);
+	new_sphere->set_outer_color(color);
+	new_sphere->set_outer_reflection(refl_prop);
+	new_sphere->set_inner_reflection(refl_prop);
+
 	new_sphere->set_sphere(radius);
 	
 	mother->set_mother_and_child(new_sphere);
@@ -246,12 +256,14 @@ CartesianFrame* WorldFactory::produceCylinder(
 	std::string 			name;
 	Vector3D 				position;
 	Rotation3D 				rotation;
-	SurfaceProperties*		surface;
+	const ColourProperties*		color;
+	const ReflectionProperties*	refl_prop;
 	double 					radius;
 	Vector3D 				start, end;
 					
 	extract_Frame_props(name,position, rotation, node.child("set_frame"));
-	surface = extract_Surface_props( node.child("set_surface"));
+	color = extract_color(node.child("set_surface"));
+	refl_prop = extract_reflection(node.child("set_surface"));
 	extract_Cylinder_props(radius, start, end, node.child("set_cylinder"));
 
 	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
@@ -259,8 +271,11 @@ CartesianFrame* WorldFactory::produceCylinder(
 	Cylinder *new_Cylinder;
 	new_Cylinder = new Cylinder;
 	new_Cylinder->set_frame(name,position, rotation);
-	new_Cylinder->set_inner_surface(surface);
-	new_Cylinder->set_outer_surface(surface);	
+	new_Cylinder->set_inner_color(color);
+	new_Cylinder->set_outer_color(color);
+	new_Cylinder->set_outer_reflection(refl_prop);
+	new_Cylinder->set_inner_reflection(refl_prop);	
+
 	new_Cylinder->set_cylinder(radius, start, end);
 	
 	mother->set_mother_and_child(new_Cylinder);
@@ -302,11 +317,13 @@ CartesianFrame* WorldFactory::produceDisc(
 	std::string 			name;
 	Vector3D 				position;
 	Rotation3D 				rotation;
-	SurfaceProperties*		surface;
+	const ColourProperties*		color;
+	const ReflectionProperties*	refl_prop;
 	double 					radius;
 
 	extract_Frame_props(name, position, rotation, node.child("set_frame"));
-	surface = extract_Surface_props( node.child("set_surface"));
+	color = extract_color(node.child("set_surface"));
+	refl_prop = extract_reflection(node.child("set_surface"));
 	extract_Disc_props(radius, node.child("set_disc"));
 
 	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
@@ -315,8 +332,11 @@ CartesianFrame* WorldFactory::produceDisc(
 	new_Disc = new Disc;	
 	
 	new_Disc->set_frame(name, position, rotation);
-	new_Disc->set_inner_surface(surface);
-	new_Disc->set_outer_surface(surface);	
+	new_Disc->set_inner_color(color);
+	new_Disc->set_outer_color(color);
+	new_Disc->set_outer_reflection(refl_prop);
+	new_Disc->set_inner_reflection(refl_prop);	
+
 	new_Disc->set_disc_radius(radius);
 	
 	mother->set_mother_and_child(new_Disc);
@@ -333,11 +353,13 @@ CartesianFrame* WorldFactory::produceTriangle(
 	std::string 			name;
 	Vector3D 				position;
 	Rotation3D 				rotation;
-	SurfaceProperties*		surface;
+	const ColourProperties*		color;
+	const ReflectionProperties*	refl_prop;
 	double 					Ax, Ay, Bx, By, Cx, Cy;
 
 	extract_Frame_props(name, position, rotation, node.child("set_frame"));
-	surface = extract_Surface_props( node.child("set_surface"));
+	color = extract_color(node.child("set_surface"));
+	refl_prop = extract_reflection(node.child("set_surface"));
 	extract_Triangle_props(Ax, Ay, Bx, By, Cx, Cy, node.child("set_triangle"));
 
 	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
@@ -345,19 +367,21 @@ CartesianFrame* WorldFactory::produceTriangle(
 	Triangle *new_Triangle;
 	new_Triangle = new Triangle;			
 	new_Triangle->set_frame(name,position,rotation);
-	new_Triangle->set_inner_surface(surface);
-	new_Triangle->set_outer_surface(surface);	
+	new_Triangle->set_inner_color(color);
+	new_Triangle->set_outer_color(color);
+	new_Triangle->set_outer_reflection(refl_prop);
+	new_Triangle->set_inner_reflection(refl_prop);
+
 	new_Triangle->set_corners_in_xy_plane(Ax, Ay, Bx, By, Cx, Cy);
 	
 	mother->set_mother_and_child(new_Triangle);
 	return new_Triangle;
 }
 //------------------------------------------------------------------------------
-SurfaceProperties* WorldFactory::extract_Surface_props(
+const ReflectionProperties* WorldFactory::extract_reflection(
 	const pugi::xml_node node
-){
+) {
 	assert_attribute_exists(node, "refl");
-	assert_attribute_exists(node, "colour");
 
 	std::string refl_attribure = node.attribute("refl").value();
 
@@ -365,30 +389,27 @@ SurfaceProperties* WorldFactory::extract_Surface_props(
 	// reflection coefficient is parsed in out of a xml file. 
 	// There the reflection coefficient can be defined as a function of the
 	// wavelength. 
+
 	ReflectionProperties* refl_prop;
-	refl_prop = new ReflectionProperties;
 	if( StringTools::is_ending(refl_attribure, ".xml") ){
 		// set wavelength depending reflection coefficient
-		refl_prop->SetReflectionCoefficient( (absolute_path + refl_attribure) );
+		refl_prop = new ReflectionProperties( (absolute_path + refl_attribure) );
 	}else{
 		// set reflection coefficient independent of wavelength	
-		refl_prop->SetReflectionCoefficient(pedantic_strtod(refl_attribure));
-	}	
+		refl_prop = new ReflectionProperties(pedantic_strtod(refl_attribure));
+	}
+
+	return refl_prop;
+}
+//------------------------------------------------------------------------------
+const ColourProperties* WorldFactory::extract_color(const pugi::xml_node node) {
+	assert_attribute_exists(node, "colour");
 
 	double red, blu, gre;
 	strto3tuple(red, blu, gre, node.attribute("colour").value());
 	
-	ColourProperties* colour;
-	colour = new ColourProperties;
-	colour->set_RGB_0to255(red, blu, gre);
-
-	SurfaceProperties* surface;
-	surface = new SurfaceProperties;
-
-	surface->set_color(colour);
-	surface->set_reflection(refl_prop);
-
-	return surface;
+	ColourProperties* colour = new ColourProperties(red, blu, gre);
+	return colour;
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_Frame_props(
@@ -501,7 +522,7 @@ void WorldFactory::assert_name_of_child_frame_is_not_in_use_yet(
 	if( mother->has_child_with_name(name_of_additional_child) ){
 		// There is already a child in the mother frame wit this name.
 		// There must not be a second one!
-		stringstream info;
+		std::stringstream info;
 		info << "WorldFactory::"<<__func__<<"()";
 		throw MultipleUseage(info.str(), this, 
 			mother->get_child_by_name(name_of_additional_child)->get_path_in_tree_of_frames()

@@ -124,7 +124,3 @@ void Ray::calculate_reflected_ray(
 		intersec->get_intersecting_object()->frame2world()
 	);	
 }
-//------------------------------------------------------------------------------
-bool Ray::is_outer_surface_of_object_in(const Intersection* intersec)const {
-	return intersec->object_surface_normal_parallel_to_direction_of(this);	
-}

@@ -77,7 +77,7 @@ TEST_F(RayAndFrameTest, frontal_and_steep_hits) {
 
     Ray my_ray(Vector3D(0.0, offset_in_y, z_below_bounding_sphere), ez);
 
-    if(abs(offset_in_y) > radius_of_test_frame ) {
+    if(fabs(offset_in_y) > radius_of_test_frame ) {
       EXPECT_FALSE(
         my_ray.has_intersection_with_bounding_sphere_of(&frame_r_4p2m)
       );

@@ -144,6 +144,12 @@ void Vector3D::mirror(Vector3D* ray) const{
 	);
 }
 //------------------------------------------------------------------------------
+double Vector3D::get_angle_in_between_in_rad(const Vector3D& vec)const {
+	Vector3D this_normalized = *this/this->norm2();
+	Vector3D that_normalized = vec/vec.norm2(); 
+	return acos(this_normalized*that_normalized);
+}
+//------------------------------------------------------------------------------
 void Vector3D::set_unit_vector_x(){
 	X = 1.0;
 	Y = 0.0;

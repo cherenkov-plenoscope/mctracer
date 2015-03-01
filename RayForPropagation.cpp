@@ -11,28 +11,30 @@ RayForPropagation::RayForPropagation(
 }
 //------------------------------------------------------------------------------
 void RayForPropagation::init_propagation_history() {
-	propagation_history = new std::vector<const Intersection*>;	
+	intersection_history = new std::vector<const Intersection*>;	
+	interaction_type_history = new std::vector<InteractionType>;	
 }
 //------------------------------------------------------------------------------
 RayForPropagation::RayForPropagation(
-	const RayForPropagation* ray_to_be_expanded
+	const RayForPropagation* ray_to_be_carried_on
 ) {
-	expand_propagation_properties_of_ray(ray_to_be_expanded);
+	carry_on_propagation_properties_of_ray(ray_to_be_carried_on);
 }
 //------------------------------------------------------------------------------
-void RayForPropagation::expand_propagation_properties_of_ray(
-	const RayForPropagation* ray_to_be_expanded
-) {
-	identifier_number = ray_to_be_expanded->identifier_number;
-	propagation_history = ray_to_be_expanded->propagation_history;	
+void RayForPropagation::carry_on_propagation_properties_of_ray(
+	const RayForPropagation* ray_to_be_carried_on
+) {	
+	identifier_number = ray_to_be_carried_on->identifier_number;
+	intersection_history = ray_to_be_carried_on->intersection_history;
+	interaction_type_history = ray_to_be_carried_on->interaction_type_history;
 }
 //------------------------------------------------------------------------------
 RayForPropagation::~RayForPropagation() {
-	delete_propagation_history();
+	//delete_propagation_history();
 }
 //------------------------------------------------------------------------------
 void RayForPropagation::delete_propagation_history() {
-	for(const Intersection* intersec: *propagation_history)
+	for(const Intersection* intersec: *intersection_history)
 		delete intersec;
 }
 //------------------------------------------------------------------------------
@@ -44,35 +46,47 @@ uint RayForPropagation::get_id()const {
 	return identifier_number;
 }
 //------------------------------------------------------------------------------
-const std::vector<const Intersection*>* RayForPropagation::get_propagation_history()const {
-	return propagation_history;
-}
-//------------------------------------------------------------------------------
 std::string RayForPropagation::get_print()const {
 	std::stringstream out;
 	out << get_ray_print() << ", " << get_rayforpropagation_print();
 	return out.str();
 }
 //------------------------------------------------------------------------------
+std::string RayForPropagation::get_history_print()const {
+	std::stringstream out;
+	int index = 0;
+	for(InteractionType type : *interaction_type_history) {
+		out << ++index << ") " << get_type_print(type) << " in ";
+		out << intersection_history->at(index-1)->
+			get_intersecting_object()->get_name_of_frame();
+		out << " " << intersection_history->at(index-1)->	
+			get_intersection_vector_in_world_system() << "\n";
+	}
+	return out.str();
+}
+//------------------------------------------------------------------------------
 std::string RayForPropagation::get_rayforpropagation_print()const {
 	std::stringstream out;
 	out << "ID: " << identifier_number << ", Interactions: " ;
-	out << propagation_history->size();
+	out << get_number_of_interactions_so_far() << "\n";
+	out << get_history_print();
 	return out.str();	
 }
 //------------------------------------------------------------------------------
-void RayForPropagation::push_back_to_propagation_history(
-	const Intersection* intersec
+void RayForPropagation::push_back_intersection_and_type_to_propagation_history(
+	const Intersection* interact, 
+	const InteractionType type
 ) {
-	propagation_history->push_back(intersec);
+	intersection_history->push_back(interact);
+	interaction_type_history->push_back(type);	
 }
 //------------------------------------------------------------------------------
 double RayForPropagation::get_accumulative_distance()const {
   	
   	double accumulative_distance = 0.0;
 	
-	for(const Intersection* intersec : *propagation_history) 
-      	accumulative_distance += intersec->get_intersection_distance();
+	for(const Intersection* intersection : *intersection_history) 
+      	accumulative_distance += intersection->get_intersection_distance();
 
     return accumulative_distance;	
 }
@@ -86,6 +100,32 @@ std::ostream& operator<<(
 }
 //------------------------------------------------------------------------------
 void RayForPropagation::propagate_in(PropagationEnvironment* env) {
-	std::cout << "screw u\n";
-	//throw TracerException("Prototype RayForPropagation must not be propagated itself, only its children such as he photon are meant to be propagated.");
+	throw TracerException("Prototype RayForPropagation must not be propagated itself, only its children such as the photon are meant to be propagated.");
+}
+//------------------------------------------------------------------------------
+uint RayForPropagation::get_number_of_interactions_so_far()const {
+	return uint(intersection_history->size());
+}
+//------------------------------------------------------------------------------
+const Intersection* RayForPropagation::get_intersection_at(
+	const uint index
+)const{
+	return intersection_history->at(index);
+}
+//------------------------------------------------------------------------------
+std::string RayForPropagation::get_type_print(const InteractionType type)const {
+	switch(type) {
+		case absorption_in_void: return "absorption_in_void"; break;
+		case absorption_in_medium: return "absorption_in_medium"; break;
+		case absorption_on_surface: return "absorption_on_surface"; break;
+		case reflection_on_surface: return "reflection_on_surface"; break;
+		case refraction_to_outside: return "refraction_to_outside"; break;
+		case refraction_to_inside: return "refraction_to_inside"; break;
+		case scattering: return "scattering"; break;
+    	default: return "unknown_interaction"; break;
+	}
+}
+//------------------------------------------------------------------------------
+const Intersection* RayForPropagation::get_final_intersection()const {
+	return intersection_history->back();
 }

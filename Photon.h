@@ -9,8 +9,7 @@
 //=================================
 // included dependencies
 #include "RayForPropagation.h"
-#include "PropagationEnvironment.h"
-#include "InteractionSurfaceFinder.h"
+#include "FresnelRefractionAndReflection.h"
 
 //=================================
 class Photon :public RayForPropagation{
@@ -41,8 +40,26 @@ public:
 private:
 	Photon(const double new_wavelength);
 
-	void interaction_with_object(const Intersection* intersec);
+	void interact_with_object();
 
-	void absorbtion_in_void_space(const Intersection* intersec);
+	void get_absorbed_in_void_space();
+
+	void work_on_first_causal_intersection();
+
+	bool limit_of_interactions_is_not_reached_yet()const;
+
+	void get_absorbed_on_surface();
+
+	void get_reflected_on_surface();
+
+	void reflect_on_surface_and_propagate_on();
+
+	void reach_boundary_layer();
+
+	void fresnel_refraction_and_reflection();
+
+	void pass_the_boundary_layer(
+		const FresnelRefractionAndReflection &fresnel
+	);
 };
 #endif // __PHOTON_H_INCLUDED__ 

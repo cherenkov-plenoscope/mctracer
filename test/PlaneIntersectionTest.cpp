@@ -14,9 +14,8 @@ class PlaneIntersectionTest : public ::testing::Test {
 	GlobalSettings setup;
 	Vector3D    pos;
 	Rotation3D  rot;
-	ReflectionProperties  refl; 
-	ColourProperties      colo;
-	SurfaceProperties surf;
+	ReflectionProperties*  refl; 
+	ColourProperties*      colo;
 	double x_width = 2.5;
 	double y_width = 1.3;
 	Plane plane;
@@ -37,16 +36,15 @@ class PlaneIntersectionTest : public ::testing::Test {
 
 	world.set_frame("world",pos,rot);
 
-	refl.SetReflectionCoefficient(1.0);
-	colo.set_RGB_0to255(200,128,128);
-
-	surf.set_color(&colo);
-	surf.set_reflection(&refl);
+	refl = new ReflectionProperties(1.0);
+	colo = new ColourProperties(200,128,128);;
 
 	//------------Plane----------------
 	plane.set_frame("My_Plane", pos, rot);
-	plane.set_inner_surface(&surf);
-	plane.set_outer_surface(&surf);
+	plane.set_outer_color(colo);
+	plane.set_inner_color(colo);
+	plane.set_outer_reflection(refl);
+	plane.set_inner_reflection(refl);
 	plane.set_plane_using_x_and_y_width(x_width, y_width);
 
 	//----------declare relationships------------
@@ -105,20 +103,21 @@ TEST_F(PlaneIntersectionTest, close_miss_y) {
 //------------------------------------------------------------------------------
 TEST_F(PlaneIntersectionTest, move_plane_up) {
 
-
  	pos.set(0.0,0.0,0.0);
   	rot.set(0.0,0.0,0.0);
 
 	world.set_frame("world",pos,rot);
 
-	refl.SetReflectionCoefficient(1.0);
-	colo.set_RGB_0to255(200,128,128);
+	refl = new ReflectionProperties(1.0);
+	colo = new ColourProperties(200,128,128);;
 
 	//------------sphere----------------
 	pos.set(0.0,0.0,1.0);
 	plane.set_frame("MySphere", pos, rot);
-	plane.set_inner_surface(&surf);
-	plane.set_outer_surface(&surf);
+	plane.set_outer_color(colo);
+	plane.set_inner_color(colo);
+	plane.set_outer_reflection(refl);
+	plane.set_inner_reflection(refl);
 	plane.set_plane_using_x_and_y_width(x_width, y_width);
 
 	//----------declare relationships------------

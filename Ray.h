@@ -85,16 +85,6 @@ public:
 		Ray *ray_reflection_on_object
 	)const;
 
-	/*virtual void propagate(	
-		const CartesianFrame* world, 
-		uint interaction_count,
-		const GlobalSettings* settings,
-		PseudoRandomNumberGenerator* dice
-	);*/
-
-	//virtual void propagate_in(PropagationEnvironment* env);
-
-	bool is_outer_surface_of_object_in(const Intersection* intersec)const;
 protected:
 	Ray();
 

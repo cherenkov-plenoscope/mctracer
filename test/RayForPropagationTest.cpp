@@ -35,8 +35,7 @@ TEST_F(RayForPropagationTest, Constructor_using_vectors) {
 
   EXPECT_EQ(support, prop_ray.Support() );
   EXPECT_EQ(direction, prop_ray.Direction() );
-  ASSERT_FALSE(nullptr == prop_ray.get_propagation_history() );
-  EXPECT_EQ(0, prop_ray.get_propagation_history()->size() );
+  EXPECT_EQ(0, prop_ray.get_number_of_interactions_so_far() );
   EXPECT_EQ(1337, prop_ray.get_id());
 }
 //------------------------------------------------------------------------------
@@ -47,8 +46,7 @@ TEST_F(RayForPropagationTest, Constructor_using_ray_to_be_expanded) {
 
   RayForPropagation reflected_prop_ray(&prop_ray);
 
-  ASSERT_FALSE(nullptr == reflected_prop_ray.get_propagation_history() );
-  EXPECT_EQ(0, reflected_prop_ray.get_propagation_history()->size() );
+  EXPECT_EQ(0, reflected_prop_ray.get_number_of_interactions_so_far() );
   EXPECT_EQ(1337, reflected_prop_ray.get_id());
 
   reflected_prop_ray.SetSupport(support);

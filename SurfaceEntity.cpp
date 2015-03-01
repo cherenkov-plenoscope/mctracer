@@ -1,51 +1,25 @@
 #include "SurfaceEntity.h"
 //------------------------------------------------------------------------------
-void SurfaceEntity::set_outer_surface(const SurfaceProperties *outer_surface) {
-	this->outer_surface = outer_surface;
-}
+const ReflectionProperties* SurfaceEntity::default_reflec = new ReflectionProperties(0.0);
+const RefractiveIndex* SurfaceEntity::default_refrac = new RefractiveIndex(1.0);
+const AbsorptionProperties* SurfaceEntity::default_absorp = new AbsorptionProperties(0.0);
+const ColourProperties* SurfaceEntity::default_color = new ColourProperties(25,25,25);
 //------------------------------------------------------------------------------
-void SurfaceEntity::set_inner_surface(const SurfaceProperties *inner_surface) {
-	this->inner_surface = inner_surface;
-}
-//------------------------------------------------------------------------------
-bool SurfaceEntity::has_inner_surface()const {
-	return inner_surface != nullptr;
-}
-//------------------------------------------------------------------------------
-bool SurfaceEntity::has_outer_surface()const {
-	return outer_surface != nullptr;
-}
-//------------------------------------------------------------------------------
-const SurfaceProperties* SurfaceEntity::get_outer_surface()const {
-	return outer_surface;
-}
-//------------------------------------------------------------------------------
-const SurfaceProperties* SurfaceEntity::get_inner_surface()const {
-	return inner_surface;
-}
-//------------------------------------------------------------------------------
-void SurfaceEntity::set_outer_medium(const VolumeProperties* outer_medium) {
-	this->outer_medium = outer_medium;
-}
-//------------------------------------------------------------------------------
-void SurfaceEntity::set_inner_medium(const VolumeProperties* inner_medium) {
-	this->inner_medium = inner_medium;
-}
-//------------------------------------------------------------------------------
-bool SurfaceEntity::has_inner_medium()const {
-	return inner_medium != nullptr;
-}
-//------------------------------------------------------------------------------
-bool SurfaceEntity::has_outer_medium()const {
-	return outer_medium != nullptr;
-}
-//------------------------------------------------------------------------------
-const VolumeProperties* SurfaceEntity::get_outer_medium()const {
-	return outer_medium;
-}
-//------------------------------------------------------------------------------
-const VolumeProperties* SurfaceEntity::get_inner_medium()const {
-	return inner_medium;
+SurfaceEntity::SurfaceEntity() {
+
+	outer_reflec = default_reflec;
+	inner_reflec = default_reflec;
+
+	outer_refrac = default_refrac;
+	inner_refrac = default_refrac;
+
+	outer_color = default_color;
+	inner_color = default_color;
+
+	outer_absorption = default_absorp;
+	inner_absorption = default_absorp;
+
+	_boundary_layer_is_transparent = false;
 }
 //------------------------------------------------------------------------------
 void SurfaceEntity::set_allowed_frames_to_propagate_to(
@@ -57,7 +31,6 @@ void SurfaceEntity::set_allowed_frames_to_propagate_to(
 bool SurfaceEntity::has_restrictions_on_frames_to_propagate_to()const {
 	return allowed_frame_to_propagate_to != nullptr;
 }
-
 //------------------------------------------------------------------------------
 const CartesianFrame* SurfaceEntity::get_allowed_frame_to_propagate_to()const {
 	return allowed_frame_to_propagate_to;
@@ -70,32 +43,81 @@ std::string SurfaceEntity::get_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
+void SurfaceEntity::set_outer_color(const ColourProperties* color) {outer_color = color;}
+void SurfaceEntity::set_inner_color(const ColourProperties* color) {inner_color = color;}
+void SurfaceEntity::set_outer_reflection(const ReflectionProperties* refl) {outer_reflec = refl;}
+void SurfaceEntity::set_inner_reflection(const ReflectionProperties* refl) {inner_reflec = refl;}
+void SurfaceEntity::set_outer_refraction(const RefractiveIndex* refrac) {
+	outer_refrac = refrac;
+	if(outer_refrac != default_refrac)
+		_boundary_layer_is_transparent = true;
+}
+void SurfaceEntity::set_inner_refraction(const RefractiveIndex* refrac) {
+	inner_refrac = refrac;
+	if(inner_refrac != default_refrac)
+		_boundary_layer_is_transparent = true;
+}
+void SurfaceEntity::set_outer_absorption(const AbsorptionProperties* absorp) {outer_absorption = absorp;}
+void SurfaceEntity::set_inner_absorption(const AbsorptionProperties* absorp) {inner_absorption = absorp;}
+//------------------------------------------------------------------------------
+const ColourProperties* SurfaceEntity::get_outer_color()const {return outer_color;}
+const ColourProperties* SurfaceEntity::get_inner_color()const {return inner_color;}
+const ReflectionProperties* SurfaceEntity::get_outer_reflection()const {return outer_reflec;}
+const ReflectionProperties* SurfaceEntity::get_inner_reflection()const {return inner_reflec;}
+const RefractiveIndex* SurfaceEntity::get_outer_refraction()const {return outer_refrac;}
+const RefractiveIndex* SurfaceEntity::get_inner_refraction()const {return inner_refrac;}
+const AbsorptionProperties* SurfaceEntity::get_outer_absorption()const {return outer_absorption;}
+const AbsorptionProperties* SurfaceEntity::get_inner_absorption()const {return inner_absorption;}
+bool SurfaceEntity::boundary_layer_is_transparent()const {return _boundary_layer_is_transparent;}
+//------------------------------------------------------------------------------
+void SurfaceEntity::take_boundary_layer_properties_from(
+	const SurfaceEntity* proto
+) {
+	set_outer_color(proto->get_outer_color());
+	set_inner_color(proto->get_inner_color());
+	set_outer_reflection(proto->get_outer_reflection());
+	set_inner_reflection(proto->get_inner_reflection());
+	set_outer_refraction(proto->get_outer_refraction());
+	set_inner_refraction(proto->get_inner_refraction());
+	set_outer_absorption(proto->get_outer_absorption());
+	set_inner_absorption(proto->get_inner_absorption());
+}
+void SurfaceEntity::take_boundary_layer_properties_but_inside_out_from(
+	const SurfaceEntity* proto
+) {
+	set_outer_color(proto->get_inner_color());
+	set_inner_color(proto->get_outer_color());
+	set_outer_reflection(proto->get_inner_reflection());
+	set_inner_reflection(proto->get_outer_reflection());
+	set_outer_refraction(proto->get_inner_refraction());
+	set_inner_refraction(proto->get_outer_refraction());
+	set_outer_absorption(proto->get_inner_absorption());
+	set_inner_absorption(proto->get_outer_absorption());
+}
+//------------------------------------------------------------------------------
 std::string SurfaceEntity::get_surface_print()const {
 	std::stringstream out;
-	out << "surface: \n";
+	out << " inner surface:\n";
+	out << "| color : " << *inner_color << "\n";
+	out << "| reflec: " << *inner_reflec << "\n";
+	out << "| refrac: " << *inner_refrac << "\n";
+	out << "| absorp: " << *inner_absorption << "\n";
 
-	//std::cout << __func__ <<": "<<__LINE__<<"\n";
-	if(has_outer_surface())
-		out << "| outer surface: " << outer_surface->get_print() << "\n";
+	out << " outer surface:\n";
+	out << "| color : " << *outer_color << "\n";
+	out << "| reflec: " << *outer_reflec << "\n";
+	out << "| refrac: " << *outer_refrac << "\n";
+	out << "| absorp: " << *outer_absorption << "\n";
 
-	//std::cout << __func__ <<": "<<__LINE__<<"\n";
-	if(has_inner_surface())
-		out << "| inner surface: " << inner_surface->get_print()  << "\n";
+	out << " boundary layer: ";
+	if(_boundary_layer_is_transparent)
+		out << "transparent" << "\n";
+	else
+		out << "opaque" << "\n";
 
-	//std::cout << __func__ <<": "<<__LINE__<<"\n";
-	if(has_outer_medium())
-		out << "| outer medium: " << outer_medium->get_print()  << "\n";
-	
-	//std::cout << __func__ <<": "<<__LINE__<<"\n";
-	if(has_inner_medium())
-		out << "| inner medium: " << inner_medium->get_print() << "\n";
-	
-	//std::cout << __func__ <<": "<<__LINE__<<"\n";
 	if(has_restrictions_on_frames_to_propagate_to())
-		out << "| inner frame: " << allowed_frame_to_propagate_to->
+		out << " inner frame: " << allowed_frame_to_propagate_to->
 			get_path_in_tree_of_frames() << "\n";
 
-
-	//std::cout << __func__ <<": "<<__LINE__<<"\n";
 	return out.str();
 }

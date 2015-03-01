@@ -15,7 +15,6 @@ class RayAndFrameInteractionTest : public ::testing::Test {
 
   RayAndFrameInteractionTest() {
     settings.set_max_number_of_reflections(5);
-    settings.set_csv_decimal_presicion(9);
   }
 
   CartesianFrame* spheres_r1m_in_a_row(
@@ -34,12 +33,7 @@ class RayAndFrameInteractionTest : public ::testing::Test {
     );
 
     ColourProperties* color; 
-    color = new ColourProperties;
-    color->set_RGB_0to255(200,25,25);
-
-    SurfaceProperties* surf;
-    surf = new SurfaceProperties;
-    surf->set_color(color);
+    color = new ColourProperties(200,25,25);
 
     for(uint i=0; i<number_of_spheres; i++) {
       Sphere* sphere = new Sphere;
@@ -52,8 +46,8 @@ class RayAndFrameInteractionTest : public ::testing::Test {
       );
 
       sphere->set_sphere(1.0);
-      sphere->set_inner_surface(surf);
-      sphere->set_outer_surface(surf);   
+      sphere->set_outer_color(color);
+      sphere->set_inner_color(color);  
       spheres_in_a_row_along_x_r1m->set_mother_and_child(sphere);
     }
 

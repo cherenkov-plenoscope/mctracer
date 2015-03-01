@@ -22,33 +22,26 @@ ColourProperties CameraRay::trace(
 
 	if(intersection->does_intersect()) {
 
-		InteractionSurfaceFinder surface_finder(this, intersection);
+		double refl_coeff = intersection->get_facing_reflection_propability();
+		if(refl_coeff > 0.0) {
+			refl_count++;
 
-		if(surface_finder.has_surface_interaction()) {
-			if(surface_finder.get_interaction_surface()->has_color())
-				color = *surface_finder.get_interaction_surface()->get_color();
+			CameraRay reflected_ray(
+				intersection->get_intersection_vector_in_world_system(),
+				intersection->get_reflection_direction_in_world_system(Direction())
+			);
 
-			if(surface_finder.get_interaction_surface()->has_reflection()) {
-				if(surface_finder.get_interaction_surface()->get_reflection()->flag()) {
-					// reflection takes place
+			ColourProperties reflection_color = 
+				reflected_ray.trace(world, refl_count, settings);
 
-					refl_count++;
+			color = intersection->get_facing_color();
+			color.reflection_mix(
+				&reflection_color,
+				refl_coeff
+			);
 
-					CameraRay reflected_ray(
-						intersection->get_intersection_vector_in_world_system(),
-						intersection->get_reflection_direction_in_world_system(Direction())
-					);
-
-					ColourProperties reflection_color = 
-						reflected_ray.trace(world, refl_count, settings);
-
-					color = *surface_finder.get_interaction_surface()->get_color();
-					color.reflection_mix(
-						&reflection_color,
-						surface_finder.get_interaction_surface()->get_reflection()
-					);
-				}
-			}
+		}else{
+			color = intersection->get_facing_color();
 		}
 	}else{
 		color = settings->get_default_colour();
