@@ -32,8 +32,8 @@ public:
 	bool can_be_reused_again()const;
 
 	std::string get_print()const;
-	//double get_azimuth()const{return event_header.azimuth_angle_Phi_in_radian;}
-	//double get_zenith()const{return event_header.zenith_angle_Theta_in_radian;}
+	double get_Az()const{return event_header.azimuth_angle_Phi_in_radian;}
+	double get_Zd()const{return event_header.zenith_angle_Theta_in_radian;}
 
 private:
 	double x_core_position_in_m()const;

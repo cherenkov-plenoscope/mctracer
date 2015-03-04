@@ -55,6 +55,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceWithOuterPrismBound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithCylinderBound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithHexagonalBound.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/TelescopeFrame.cpp
 
 	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLens.cpp
 

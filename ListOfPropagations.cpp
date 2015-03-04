@@ -107,3 +107,100 @@ uint ListOfPropagations::get_number_of_propagations_absorbed_in_object(
 	return counter;
 }
 //------------------------------------------------------------------------------
+std::string ListOfPropagations::get_csv_print_for_propagations_ending_in(
+	const CartesianFrame* frame
+)const {
+	
+	uint counter = 0;
+	std::stringstream body;
+	for(RayForPropagation* ray : propagations) {
+		
+		if(ray->get_final_intersection()->get_intersecting_object() == frame) {
+
+			counter++;
+			// ID
+			body << ray->get_id() << ", ";
+			// x in obj sys
+			
+			body << ray->get_final_intersection()->
+				get_intersection_vector_in_object_system().x() << ", ";
+			// y in obj sys
+			body << ray->get_final_intersection()->
+				get_intersection_vector_in_object_system().y() << ", ";
+			// time
+			body << ray->get_time_of_flight();
+			body << "\n";
+		}
+	}
+
+	std::stringstream head;
+	head << "# ListOfPropagations: " << name << "\n";
+	head << "# final absorbtions in: " << frame->get_path_in_tree_of_frames() << "\n";
+	head << "# " << 100.0*double(counter)/double(propagations.size()) << " percent\n";
+	head << "# ID, x_obj_sys [m], y_obj_sys [m], time[s]\n";
+
+	std::stringstream out;
+	out << head.str() << body.str();
+	return out.str();
+}
+//------------------------------------------------------------------------------
+CartesianFrame* ListOfPropagations::get_trajectories()const {
+	CartesianFrame* all_trajectories = new CartesianFrame;
+	all_trajectories->set_frame(
+		name,
+	 	Vector3D(0.0, 0.0, 0.0), 
+	 	Rotation3D(0.0, 0.0, 0.0)
+	);
+
+	for(RayForPropagation* ray : propagations)
+		all_trajectories->set_mother_and_child(ray->get_trajectory_lines());
+
+	all_trajectories->setup_tree_based_on_mother_child_relations();
+
+	return all_trajectories;
+}
+//------------------------------------------------------------------------------
+CartesianFrame* ListOfPropagations::get_mean_trajectoy_in_world_using_options(
+	const CartesianFrame* world, const GlobalSettings* settings
+) {
+
+	Vector3D mean_support = Vector3D(0.0, 0.0 ,0.0);
+	Vector3D mean_direction = Vector3D(0.0, 0.0, 0.0);
+
+	uint num_of_rays = 0;
+	for(RayForPropagation* ray : propagations) {
+		num_of_rays++;
+		mean_direction = mean_direction + ray->Direction();
+		mean_support = mean_support + ray->Support();
+	}
+
+	mean_support = mean_support/num_of_rays;
+	mean_direction = mean_direction/num_of_rays;
+	mean_direction.normalize();
+
+	Photon mean_photon(mean_support, mean_direction, 433.0);
+
+	PseudoRandomNumberGenerator dice;
+	PropagationEnvironment env;
+	env.world_geometry = world;
+	env.propagation_options = settings;
+	env.random_engine = &dice;
+
+	mean_photon.propagate_in(&env);
+
+
+	std::cout << mean_photon;
+
+	return mean_photon.get_trajectory_lines();
+}
+//------------------------------------------------------------------------------
+CartesianFrame* ListOfPropagations::get_next_trajectoy() {
+
+	std::cout << *(propagations.at(number_of_trajectories_handed_out));
+
+	return propagations.at(number_of_trajectories_handed_out++)->get_trajectory_lines();
+}
+//------------------------------------------------------------------------------
+bool ListOfPropagations::has_still_trajectoies_left()const {
+	return number_of_trajectories_handed_out <= propagations.size();
+}

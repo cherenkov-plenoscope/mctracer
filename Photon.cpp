@@ -58,19 +58,19 @@ void Photon::interact_with_object() {
 
 	if(	intersection->get_facing_reflection_propability(wavelength) > 
 		environment->random_engine->uniform() ) 
-		reflect_on_surface_and_propagate_on();
+		reflect_on_surface_and_propagate_on(reflection_on_surface);
 	else
 		reach_boundary_layer(); 
 }
 //------------------------------------------------------------------------------
-void Photon::reflect_on_surface_and_propagate_on() {
+void Photon::reflect_on_surface_and_propagate_on(const InteractionType type) {
 
 	Photon reflected_photon(this);
 	calculate_reflected_ray(intersection, &reflected_photon);
 
 	push_back_intersection_and_type_to_propagation_history(
 		intersection, 
-		reflection_on_surface
+		type
 	);
 
 	reflected_photon.propagate_in(environment);
@@ -94,7 +94,7 @@ void Photon::fresnel_refraction_and_reflection() {
 	);
 
 	if(fresnel.reflection_propability() > environment->random_engine->uniform())
-		reflect_on_surface_and_propagate_on(); 
+		reflect_on_surface_and_propagate_on(fresnel_reflection_on_surface); 
 	else
 		pass_the_boundary_layer(fresnel);
 }
@@ -145,3 +145,33 @@ bool Photon::limit_of_interactions_is_not_reached_yet()const {
 		max_number_of_reflections_is_not_reached_yet(
 			get_number_of_interactions_so_far());
 }
+//------------------------------------------------------------------------------
+double Photon::get_time_to_pass_distance_in_refractive_index(
+	const double distance_in_medium,
+	const double refractive_index_in_medium
+)const {
+	return refractive_index_in_medium * 
+		distance_in_medium / PhysicalConstantsSI::speed_of_light_in_vacuum;
+}
+//------------------------------------------------------------------------------
+double Photon::get_time_of_flight()const {
+
+	double time_of_flight = 0.0;
+
+	uint i =0;
+	for(const Intersection* intersec : *intersection_history){
+
+		//std::cout << *this << "\ni: " << i <<"\n"<<intersec->get_print()<<"\n";
+
+		if(i!=0)
+			time_of_flight += get_time_to_pass_distance_in_refractive_index(
+				intersec->get_intersection_distance(),
+				intersec->get_refractive_index_coming_from(wavelength)
+			);
+
+		i++;
+	}
+	
+	return time_of_flight;
+}
+//------------------------------------------------------------------------------

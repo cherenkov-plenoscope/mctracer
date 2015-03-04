@@ -73,9 +73,15 @@ Intersection* Ray::calculate_closest_intersection(
 
 	if(intersections->size() == 0) {
 
-		Intersection* empty_intersection;
-		empty_intersection = new Intersection();
-		return empty_intersection;
+		Intersection* void_intersection;
+		void_intersection = new Intersection(
+			Intersection::void_object,
+			PositionOnRay(1e4),
+			direction,
+			1e4,
+			direction
+		);
+		return void_intersection;
 	}else{
 
 		std::vector<Intersection*>::iterator closest_intersection = min_element( 	

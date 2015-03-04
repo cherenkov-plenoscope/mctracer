@@ -1,5 +1,7 @@
 #include "Intersection.h"
+//------------------------------------------------------------------------------
 const SurfaceEntity* Intersection::void_object = new SurfaceEntity();
+const SurfaceEntity* Intersection::source_object = new SurfaceEntity();
 //------------------------------------------------------------------------------
 Intersection::Intersection() {
 	intersecting_object = void_object;

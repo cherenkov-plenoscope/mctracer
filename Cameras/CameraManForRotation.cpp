@@ -5,7 +5,7 @@ CameraManForRotation::CameraManForRotation(CameraDevice* camera_to_work_with){
 }
 
 void CameraManForRotation::set_default_rotation(){
-	RotWorld2CameraY_in_rad = -M_PI/2.0;
+	RotWorld2CameraY_in_rad = -M_PI;//2.0;
 	RotWorld2CameraZ_in_rad = 0.0;
 	update_R_World2Camera();
 }

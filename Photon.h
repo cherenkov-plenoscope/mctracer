@@ -10,6 +10,7 @@
 // included dependencies
 #include "RayForPropagation.h"
 #include "FresnelRefractionAndReflection.h"
+#include "PhysicalConstantsSI.h"
 
 //=================================
 class Photon :public RayForPropagation{
@@ -37,6 +38,9 @@ public:
 		std::ostream& os, 
 		const Photon& photon_to_be_displayed
 	);
+
+	double get_time_of_flight()const;
+
 private:
 	Photon(const double new_wavelength);
 
@@ -52,7 +56,7 @@ private:
 
 	void get_reflected_on_surface();
 
-	void reflect_on_surface_and_propagate_on();
+	void reflect_on_surface_and_propagate_on(const InteractionType type);
 
 	void reach_boundary_layer();
 
@@ -61,5 +65,10 @@ private:
 	void pass_the_boundary_layer(
 		const FresnelRefractionAndReflection &fresnel
 	);
+
+	double get_time_to_pass_distance_in_refractive_index(
+		const double distance_in_medium,
+		const double refractive_index_in_medium
+	)const;
 };
 #endif // __PHOTON_H_INCLUDED__ 

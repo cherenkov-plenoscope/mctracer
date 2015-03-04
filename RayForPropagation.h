@@ -11,15 +11,23 @@ class PropagationEnvironment;
 #include "Ray.h"
 #include "Intersection.h"
 #include "PropagationEnvironment.h"
+#include "SurfaceEntity.h"
+#include "Cylinder.h"
+#include "Sphere.h"
 
 enum InteractionType { 
+	production,
 	absorption_in_void,
+
 	absorption_in_medium,
 	absorption_on_surface,
-	fresnel_reflection,
-	reflection_on_surface, 
+
+	fresnel_reflection_on_surface,
+	reflection_on_surface,
+
 	refraction_to_outside,
 	refraction_to_inside,
+
 	scattering 
 };
 
@@ -34,6 +42,8 @@ protected:
 
 	PropagationEnvironment* environment = nullptr;
 	Intersection* intersection = nullptr;
+
+	static const SurfaceEntity* source_object;
 public:
 	RayForPropagation(const RayForPropagation* ray_to_be_carried_on);
 
@@ -71,6 +81,9 @@ public:
 	
 	const Intersection* get_final_intersection()const;
 
+	virtual double get_time_of_flight()const;
+
+	CartesianFrame* get_trajectory_lines()const;
 protected:
 	std::string get_history_print()const;
 
@@ -87,5 +100,12 @@ protected:
 	);
 
 	std::string get_type_print(const InteractionType type)const;
+
+private:
+	void push_back_production_of_ray();
+
+	static const ColourProperties* trajectory_col;
+	static const ColourProperties* absorption_in_void_col;
+	static const ColourProperties* interaction_col;
 };
 #endif // __RayForPropagation_H_INCLUDED__ 

@@ -32,7 +32,7 @@ private:
 
 	const double max_FoV_in_rad = Deg2Rad(175.0);
 	const double min_FoV_in_rad = Deg2Rad(5.0);
-	const double default_FoV_in_rad = Deg2Rad(90.0);
+	const double default_FoV_in_rad = Deg2Rad(65.0);
 
 	void increase_FoV();
 	void decrease_FoV();

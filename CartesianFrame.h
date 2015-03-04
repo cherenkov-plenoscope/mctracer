@@ -132,7 +132,7 @@ public:
         const Ray* ray,
         std::vector<const CartesianFrame*> *candidate_frames
     )const;
-private:
+protected:
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     // post initialization
     void post_initialize_root_of_world();

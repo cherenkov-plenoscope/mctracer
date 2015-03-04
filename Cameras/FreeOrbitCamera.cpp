@@ -28,7 +28,7 @@ void FreeOrbitCamera::create_CameraMen_to_safely_operate_the_flying_camera(){
 }
 //==============================================================================
 void FreeOrbitCamera::reset_camera(){
-	Translation_operator->set_default_position();
+	Translation_operator->set_default_position(Vector3D(0.0, 0.0, 10.0));
 	Rotation_operator->set_default_rotation();
 	FoV_operator->set_default_FoV();
 }
@@ -204,12 +204,12 @@ std::string FreeOrbitCamera::get_snapshot_filename(){
 //==============================================================================
 ApertureCamera FreeOrbitCamera::get_Mamiya645_based_on_free_orbit_camera()const{
 
-	ApertureCamera Mamiya645("Mamiya645", 1280, 720);
+	ApertureCamera Mamiya645("Mamiya645", 1920, 1080);
 
 	// The real Mamiya Sekor has F=2.3 here it is "dreamlens" setup with F=0.95
 	double Mamiya_F_stop_number = 0.95;
 	double Mamiya_sensor_width_in_m = 0.06;
-	uint   Mamiya_number_of_rays_emitted_per_pixel = 1;
+	uint   Mamiya_number_of_rays_emitted_per_pixel = 3;
 	
 	Mamiya645.set_aperture_cam(
 		Mamiya_F_stop_number,

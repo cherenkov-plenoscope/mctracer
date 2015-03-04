@@ -23,9 +23,12 @@ protected:
 	Vector3D 	surfacenormal_in_intersection_point;
 	double 	 	distance_of_ray_in_m;
 	bool _from_outside_to_inside;
+public:
 
 	static const SurfaceEntity* void_object;
-public:
+	
+	static const SurfaceEntity* source_object;
+
 	Intersection();
 
 	Intersection(

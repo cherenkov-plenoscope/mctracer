@@ -8,6 +8,10 @@ void CameraManForTranslation::set_default_position(){
 	camera->update_position(default_position);
 }
 
+void CameraManForTranslation::set_default_position(const Vector3D default_pos) {
+	default_position = default_pos;
+	camera->update_position(default_position);
+}
 
 void CameraManForTranslation::move_forward(){
 	camera->update_position(

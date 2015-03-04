@@ -15,6 +15,7 @@ class CameraManForTranslation {
 public:
 	CameraManForTranslation(CameraDevice* camera_to_work_with);
 	void set_default_position();
+	void set_default_position(const Vector3D default_pos);
 	void move_forward();
 	void move_backward();
 	void move_left();
@@ -23,8 +24,7 @@ public:
 private:
 	CameraDevice* camera;
 	bool verbosity = false;
-	const Vector3D default_position = Vector3D(0.0,0.0,0.0);
-	const Rotation3D default_orientatio = Rotation3D(0.0,0.0,0.0);
+	Vector3D default_position = Vector3D(0.0,0.0,0.0);
 
 	void print_camera_moved_in_direction(const std::string dir)const;
 	double translation_increment()const;

@@ -16,6 +16,7 @@
 #include <algorithm>
 #include "Vector3D.h"
 #include "CartesianFrame.h"
+#include "SurfaceEntity.h"
 #include "Intersection.h"
 #include "GlobalSettings.h"
 
@@ -83,8 +84,7 @@ public:
 	void calculate_reflected_ray(	
 		const Intersection * intersec,
 		Ray *ray_reflection_on_object
-	)const;
-
+	)const; 
 protected:
 	Ray();
 
