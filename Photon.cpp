@@ -56,17 +56,25 @@ void Photon::work_on_first_causal_intersection() {
 //------------------------------------------------------------------------------
 void Photon::interact_with_object() {
 
-	if(	intersection->get_facing_reflection_propability(wavelength) > 
-		environment->random_engine->uniform() ) 
+	if(	intersection->get_facing_reflection_propability(wavelength) >= 
+		environment->random_engine->uniform() 
+	) {
 		reflect_on_surface_and_propagate_on(reflection_on_surface);
-	else
+	}else{
 		reach_boundary_layer(); 
+	}
 }
 //------------------------------------------------------------------------------
 void Photon::reflect_on_surface_and_propagate_on(const InteractionType type) {
 
 	Photon reflected_photon(this);
-	calculate_reflected_ray(intersection, &reflected_photon);
+
+	reflected_photon.SetRay(
+		intersection->get_intersection_vector_in_world_system(),
+		intersection->get_reflection_direction_in_world_system(Direction())
+	);
+
+	//calculate_reflected_ray(intersection, &reflected_photon);
 
 	push_back_intersection_and_type_to_propagation_history(
 		intersection, 

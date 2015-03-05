@@ -2,7 +2,7 @@
 //==================================================================
 void FactTelescope::init_outer_mirror_surface() {
 	mirror_colour = new ColourProperties(255,255,255);
-	outer_mirror_reflection = new ReflectionProperties(0.9);
+	outer_mirror_reflection = new ReflectionProperties(1.0);
 }
 //==================================================================
 void FactTelescope::init_inner_mirror_surface() {

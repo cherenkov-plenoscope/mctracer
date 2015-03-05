@@ -78,7 +78,15 @@ std::string RayForPropagation::get_history_print()const {
 		out << intersection_history->at(index-1)->
 			get_intersecting_object()->get_name_of_frame();
 		out << " " << intersection_history->at(index-1)->	
-			get_intersection_vector_in_world_system() << "\n";
+			get_intersection_vector_in_world_system() << ", dist to prev.:";
+
+		if(index>1) {
+			out << intersection_history->at(index-1)->get_intersection_vector_in_world_system().distance_to(
+			   		intersection_history->at(index-2)->get_intersection_vector_in_world_system()
+				)*1e9 << "nm";
+			}
+
+		out << "\n";
 	}
 	return out.str();
 }

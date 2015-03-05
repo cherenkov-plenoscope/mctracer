@@ -13,7 +13,6 @@
 #include "SphereIntersectionTest.cpp"
 #include "QuadraticEquationTest.cpp"
 #include "CameraManTest.cpp"
-//#include "OctTreeCubeTest.cpp"
 #include "ApertureCameraTest.cpp"
 #include "MmcsCorsikaEventGetterTest.cpp"
 #include "gtest/gtest.h"
@@ -28,6 +27,7 @@
 #include "RayForPropagationTest.cpp"
 #include "PropagationEnvironmentTest.cpp"
 #include "FresnelRefractionAndReflectionTest.cpp"
+#include "TrajectoryFactoryTest.cpp"
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

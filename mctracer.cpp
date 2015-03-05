@@ -34,10 +34,9 @@ int main(int argc, char* argv[]) {
 		CartesianFrame *Mworld = file2world.world();
 		*/
 
-		// FACT TELESCOPE
+		//TELESCOPE world
 		CartesianFrame Mworld;
 		Mworld.set_frame("world", Vector3D(0.0, 0.0, 0.0), Rotation3D(0.0,0.0,0.0));
-
 
 		//ground
 		Disc ground;
@@ -60,7 +59,7 @@ int main(int argc, char* argv[]) {
 		Sensor.set_frame("Sensor", Vector3D(0.0, 0.0, 4.889), Rotation3D(0.0,0.0,0.0));
  		
 		ColourProperties* sensor_color = new ColourProperties(255,0,0);
-		Sensor.set_disc_radius(0.32);
+		Sensor.set_disc_radius(0.185);
  		Sensor.set_outer_color(sensor_color);
  		Sensor.set_inner_color(sensor_color);
 
@@ -108,7 +107,6 @@ int main(int argc, char* argv[]) {
 				std::cout << photons->get_csv_print_for_propagations_ending_in(
 					Mworld.get_frame_in_tree_by_path(
 						"FACT/Sensor"
-						//GAPD_sensor_plane
 					)
 				);
 
