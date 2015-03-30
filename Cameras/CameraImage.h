@@ -12,7 +12,7 @@
 #include <highgui.h>
 #include <opencv2/opencv.hpp>
 #include "TracerException.h"
-#include "ColourProperties.h"
+#include "Color.h"
 
 //=================================
 class CameraImage{
@@ -33,7 +33,7 @@ public:
 	void save_image_to_file(std::string str_image_name)const;
 
 	void set_pixel_row_col_to_color(
-		const uint row, const uint col, const ColourProperties &color
+		const uint row, const uint col, const Color &color
 	);
 
 	double get_width_to_height_ratio()const;

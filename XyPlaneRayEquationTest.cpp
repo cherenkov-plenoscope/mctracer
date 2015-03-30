@@ -39,7 +39,5 @@ TEST_F(XyPlaneRayEquationTest, always_ez_normal_vector) {
   Ray ray(Vector3D(0.0, 0.0, 1.0), Vector3D(1.0, 0.0, 0.0));
   XyPlaneRayIntersectionEquation eq(&ray);
 
-  Vector3D ez; ez.set_unit_vector_z();
-
-  EXPECT_EQ(ez, eq.get_plane_normal_vector());
+  EXPECT_EQ(Vector3D::unit_z, eq.get_plane_normal_vector());
 }

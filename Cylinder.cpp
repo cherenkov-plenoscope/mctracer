@@ -31,7 +31,7 @@ Rotation3D Cylinder::calculate_new_rotation_in_mother(
 )const{
 
 	Rotation3D rotation_in_mother;
-	Vector3D ez; ez.set_unit_vector_z();
+	Vector3D ez = Vector3D::unit_z;
 	
 	if( rotsym_axis.is_paralell_to_z_axis() ){
 
@@ -131,7 +131,7 @@ std::string Cylinder::get_cylinder_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-Intersection* Cylinder::calculate_intersection_with(const Ray* ray)const {
+const Intersection* Cylinder::calculate_intersection_with(const Ray* ray)const {
 	ZaxisCylinderRayIntersectionEquation cylRayEquation(Radius, ray);
 
 	if(cylRayEquation.has_causal_solution()) {

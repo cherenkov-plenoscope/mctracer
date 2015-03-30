@@ -15,7 +15,7 @@ class PlaneIntersectionTest : public ::testing::Test {
 	Vector3D    pos;
 	Rotation3D  rot;
 	ReflectionProperties*  refl; 
-	ColourProperties*      colo;
+	Color*      colo;
 	double x_width = 2.5;
 	double y_width = 1.3;
 	Plane plane;
@@ -37,7 +37,7 @@ class PlaneIntersectionTest : public ::testing::Test {
 	world.set_frame("world",pos,rot);
 
 	refl = new ReflectionProperties(1.0);
-	colo = new ColourProperties(200,128,128);;
+	colo = new Color(200,128,128);;
 
 	//------------Plane----------------
 	plane.set_frame("My_Plane", pos, rot);
@@ -59,11 +59,11 @@ TEST_F(PlaneIntersectionTest, frontal) {
 
 	Ray ray(Vector3D(0.0, 0.0, -1.0), Vector3D(0.0, 0.0, 1.0));
 
-	Intersection* intersec = ray.get_first_intersection_in(&world);
+	const Intersection* intersec = ray.get_first_intersection_in(&world);
 
 	ASSERT_TRUE(intersec->does_intersect());
 	EXPECT_EQ(&plane, intersec->get_intersecting_object());
-	EXPECT_EQ(Vector3D(0.0, 0.0, 0.0), intersec->get_intersection_vector_in_object_system());
+	EXPECT_EQ(Vector3D::null, intersec->get_intersection_vector_in_object_system());
 	EXPECT_EQ(Vector3D(0.0, 0.0, 1.0), intersec->get_surface_normal_in_object_system());
 }
 //------------------------------------------------------------------------------
@@ -77,7 +77,7 @@ TEST_F(PlaneIntersectionTest, frontal_lateral_offset_alwas_intersection) {
 
 			Ray ray(Vector3D(x_support, y_support, -1.0), Vector3D(0.0, 0.0, 1.0));
 
-			Intersection* intersec = ray.get_first_intersection_in(&world);
+			const Intersection* intersec = ray.get_first_intersection_in(&world);
 
 			ASSERT_TRUE(intersec->does_intersect());
 			EXPECT_EQ(&plane, intersec->get_intersecting_object());
@@ -90,14 +90,14 @@ TEST_F(PlaneIntersectionTest, frontal_lateral_offset_alwas_intersection) {
 TEST_F(PlaneIntersectionTest, close_miss_x) {
 
 	Ray ray(Vector3D(x_width/2.0+0.01, 0.0, -1.0), Vector3D(0.0, 0.0, 1.0));
-	Intersection* intersec = ray.get_first_intersection_in(&world);
+	const Intersection* intersec = ray.get_first_intersection_in(&world);
 	EXPECT_FALSE(intersec->does_intersect());
 }
 //------------------------------------------------------------------------------
 TEST_F(PlaneIntersectionTest, close_miss_y) {
 
 	Ray ray(Vector3D(0.0, y_width/2.0+0.01, -1.0), Vector3D(0.0, 0.0, 1.0));
-	Intersection* intersec = ray.get_first_intersection_in(&world);
+	const Intersection* intersec = ray.get_first_intersection_in(&world);
 	EXPECT_FALSE(intersec->does_intersect());
 }
 //------------------------------------------------------------------------------
@@ -109,7 +109,7 @@ TEST_F(PlaneIntersectionTest, move_plane_up) {
 	world.set_frame("world",pos,rot);
 
 	refl = new ReflectionProperties(1.0);
-	colo = new ColourProperties(200,128,128);;
+	colo = new Color(200,128,128);;
 
 	//------------sphere----------------
 	pos.set(0.0,0.0,1.0);
@@ -127,6 +127,6 @@ TEST_F(PlaneIntersectionTest, move_plane_up) {
 	world.setup_tree_based_on_mother_child_relations();
 
 	Ray ray(Vector3D(0.0, 0.0, -1.0), Vector3D(0.0, 0.0, 1.0));
-	Intersection* intersec = ray.get_first_intersection_in(&world);
+	const Intersection* intersec = ray.get_first_intersection_in(&world);
 	EXPECT_TRUE(intersec->does_intersect());
 }

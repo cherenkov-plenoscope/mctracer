@@ -27,4 +27,21 @@ namespace UserInteraction {
 	std::string parse_config_file_path(int number_of_arguments, char* arguments[]);
 	bool is_Escape_key(const int user_input_key);
 }
+
+namespace AssertionTools {
+	void value_with_name_is_greater_zero_given_context(
+		const double value, 
+		const std::string name, 
+		const std::string context
+	);
+
+	void value_with_name_is_in_min_max_given_context(
+		const double value, 
+		const std::string name,
+		const double min,
+		const double max, 
+		const std::string context
+	);
+}
+
 #endif // __TOOLS_H_INCLUDED__

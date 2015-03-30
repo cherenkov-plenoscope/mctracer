@@ -35,7 +35,7 @@ TEST_F(RayForPropagationTest, Constructor_using_vectors) {
 
   EXPECT_EQ(support, prop_ray.Support() );
   EXPECT_EQ(direction, prop_ray.Direction() );
-  EXPECT_EQ(0, prop_ray.get_number_of_interactions_so_far() );
+  EXPECT_EQ(1, prop_ray.get_number_of_interactions_so_far()); //creation itselt
   EXPECT_EQ(1337, prop_ray.get_id());
 }
 //------------------------------------------------------------------------------
@@ -46,7 +46,7 @@ TEST_F(RayForPropagationTest, Constructor_using_ray_to_be_expanded) {
 
   RayForPropagation reflected_prop_ray(&prop_ray);
 
-  EXPECT_EQ(0, reflected_prop_ray.get_number_of_interactions_so_far() );
+  EXPECT_EQ(1, reflected_prop_ray.get_number_of_interactions_so_far() );
   EXPECT_EQ(1337, reflected_prop_ray.get_id());
 
   reflected_prop_ray.SetSupport(support);
@@ -60,4 +60,10 @@ TEST_F(RayForPropagationTest, direction_normalized) {
 
   RayForPropagation prop_ray(support, direction*42.0);
   EXPECT_EQ(1.0, prop_ray.Direction().norm2());
+}
+//------------------------------------------------------------------------------
+TEST_F(RayForPropagationTest, distance_passed_after_creation) {
+
+  RayForPropagation prop_ray(support, direction);
+  EXPECT_EQ(0.0, prop_ray.get_accumulative_distance());
 }

@@ -181,15 +181,15 @@ Vector3D HomoTrafo3D::get_transformed_position(const Vector3D& pos)const {
 }
 //------------------------------------------------------------------------------
 Vector3D HomoTrafo3D::get_translation()const {
-	Vector3D vec_translation;
+	Vector3D translation_component;
 
-	vec_translation.set(
+	translation_component.set(
 		T[0][3], 
 		T[1][3], 
 		T[2][3]
 	);
 
-	return vec_translation;
+	return translation_component;
 }
 //------------------------------------------------------------------------------
 std::string HomoTrafo3D::get_print()const {

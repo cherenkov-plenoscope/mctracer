@@ -145,15 +145,19 @@ std::string ListOfPropagations::get_csv_print_for_propagations_ending_in(
 }
 //------------------------------------------------------------------------------
 CartesianFrame* ListOfPropagations::get_trajectories()const {
+	
 	CartesianFrame* all_trajectories = new CartesianFrame;
+	
 	all_trajectories->set_frame(
 		name,
-	 	Vector3D(0.0, 0.0, 0.0), 
-	 	Rotation3D(0.0, 0.0, 0.0)
+	 	Vector3D::null, 
+	 	Rotation3D::null
 	);
 
-	for(RayForPropagation* ray : propagations)
-		all_trajectories->set_mother_and_child(ray->get_trajectory_lines());
+	for(RayForPropagation* ray : propagations) {
+		TrajectoryFactory factory(ray);
+		all_trajectories->set_mother_and_child(factory.get_trajectory());
+	}
 
 	all_trajectories->setup_tree_based_on_mother_child_relations();
 
@@ -165,7 +169,7 @@ CartesianFrame* ListOfPropagations::get_mean_trajectoy_in_world_using_options(
 ) {
 
 	Vector3D mean_support = Vector3D(0.0, 0.0 ,0.0);
-	Vector3D mean_direction = Vector3D(0.0, 0.0, 0.0);
+	Vector3D mean_direction = Vector3D::null;
 
 	uint num_of_rays = 0;
 	for(RayForPropagation* ray : propagations) {
@@ -191,14 +195,18 @@ CartesianFrame* ListOfPropagations::get_mean_trajectoy_in_world_using_options(
 
 	std::cout << mean_photon;
 
-	return mean_photon.get_trajectory_lines();
+	TrajectoryFactory factory(&mean_photon);
+	return factory.get_trajectory();
 }
 //------------------------------------------------------------------------------
 CartesianFrame* ListOfPropagations::get_next_trajectoy() {
 
 	std::cout << *(propagations.at(number_of_trajectories_handed_out));
 
-	return propagations.at(number_of_trajectories_handed_out++)->get_trajectory_lines();
+	TrajectoryFactory factory(
+		propagations.at(number_of_trajectories_handed_out++)
+	);
+	return factory.get_trajectory();
 }
 //------------------------------------------------------------------------------
 bool ListOfPropagations::has_still_trajectoies_left()const {

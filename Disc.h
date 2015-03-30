@@ -26,7 +26,7 @@ public:
 
 	std::string get_Disc_print()const;
 
-	Intersection* calculate_intersection_with(const Ray* ray)const;
+	const Intersection* calculate_intersection_with(const Ray* ray)const;
 
 private:
 	void post_initialize_radius_of_enclosing_sphere();

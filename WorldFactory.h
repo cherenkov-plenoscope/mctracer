@@ -22,7 +22,7 @@
 #include "Vector3D.h"
 #include "Rotation3D.h"
 #include "ReflectionProperties.h"
-#include "ColourProperties.h"
+#include "Color.h"
 #include "XmlIO/XmlFileIo.h"
 #include "TracerException.h"
 
@@ -97,7 +97,7 @@ private:
 		const pugi::xml_node frame_node
 	);
 
-	const ColourProperties* extract_color(const pugi::xml_node node);
+	const Color* extract_color(const pugi::xml_node node);
 
 	const ReflectionProperties* extract_reflection(const pugi::xml_node node);
 

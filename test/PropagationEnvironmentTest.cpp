@@ -20,7 +20,7 @@ TEST_F(PropagationEnvironmentTest, assert_completeness) {
 
   PropagationEnvironment env;
 
-  CartesianFrame world("my_world",Vector3D(0.0,0.0,0.0), Rotation3D(0.0,0.0,0.0));
+  CartesianFrame world("my_world",Vector3D::null, Rotation3D::null);
   GlobalSettings opt;
   PseudoRandomNumberGenerator dice;
 

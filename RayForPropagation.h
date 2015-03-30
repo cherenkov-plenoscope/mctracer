@@ -12,8 +12,6 @@ class PropagationEnvironment;
 #include "Intersection.h"
 #include "PropagationEnvironment.h"
 #include "SurfaceEntity.h"
-#include "Cylinder.h"
-#include "Sphere.h"
 
 enum InteractionType { 
 	production,
@@ -33,6 +31,7 @@ enum InteractionType {
 
 //=================================
 class RayForPropagation :public Ray{
+	friend class TrajectoryFactory;
 protected:
 
 	std::vector<const Intersection*>* intersection_history;
@@ -41,9 +40,8 @@ protected:
 	uint identifier_number;
 
 	PropagationEnvironment* environment = nullptr;
-	Intersection* intersection = nullptr;
+	const Intersection* intersection = nullptr;
 
-	static const SurfaceEntity* source_object;
 public:
 	RayForPropagation(const RayForPropagation* ray_to_be_carried_on);
 
@@ -82,8 +80,6 @@ public:
 	const Intersection* get_final_intersection()const;
 
 	virtual double get_time_of_flight()const;
-
-	CartesianFrame* get_trajectory_lines()const;
 protected:
 	std::string get_history_print()const;
 
@@ -104,8 +100,8 @@ protected:
 private:
 	void push_back_production_of_ray();
 
-	static const ColourProperties* trajectory_col;
-	static const ColourProperties* absorption_in_void_col;
-	static const ColourProperties* interaction_col;
+	static const Color* trajectory_col;
+	static const Color* absorption_in_void_col;
+	static const Color* interaction_col;
 };
 #endif // __RayForPropagation_H_INCLUDED__ 

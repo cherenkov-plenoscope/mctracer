@@ -15,70 +15,75 @@
 #include "MmcsCorsikaFileIO/MmcsCorsikaFullEventGetter.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaPhotonData.h"
 #include "TelescopeFrame.h"
+#include "SegmetedReflectorGenerator.h"
 
 #include "Intersection.h"
 
 int main(int argc, char* argv[]) {
 	try{
-
-		//std::cout << Intersection::source_object->get_print();
 		UserInteraction::print_welcome_screen();
 
 		GlobalSettings settings;		
 		
-		/*std::string file_chosen_by_user = 
-			UserInteraction::input("Enter a world file to load: ");
+		//std::string file_chosen_by_user = 
+		//	UserInteraction::input("Enter a world file to load: ");
 
-		WorldFactory file2world;
-		file2world.load(file_chosen_by_user);
-		CartesianFrame *Mworld = file2world.world();
-		*/
+		//WorldFactory file2world;
+		//file2world.load(file_chosen_by_user);
+		//CartesianFrame *world = file2world.world();
 
 		//TELESCOPE world
-		CartesianFrame Mworld;
-		Mworld.set_frame("world", Vector3D(0.0, 0.0, 0.0), Rotation3D(0.0,0.0,0.0));
+		CartesianFrame world;
+		world.set_frame("world", Vector3D::null, Rotation3D::null);
 
 		//ground
 		Disc ground;
-		ground.set_frame("ground", Vector3D(0.0, 0.0, -2.0), Rotation3D(0.0,0.0,0.0));
+		ground.set_frame("ground", Vector3D(0.0, 0.0, -2.0), Rotation3D::null);
  		
-		ColourProperties* ground_color = new ColourProperties(0,55,0);
+		Color* ground_color = new Color(0,55,0);
 		ground.set_disc_radius(1e3);
  		ground.set_outer_color(ground_color);
  		ground.set_inner_color(ground_color);
 
 		//telescope
 		TelescopeFrame FACT;
-		FACT.set_frame("FACT", Vector3D(0.0, 0.0, 0.0), Rotation3D(0.0,0.0,0.0));
+		FACT.set_frame("FACT", Vector3D::null, Rotation3D::null);
 
 		//reflector
-		FactTelescope Reflector(0.5);
+		SegmetedReflectorGenerator reflector_generator;
+
+		reflector_generator.set_focal_length(4.889);
+		reflector_generator.set_facet_spacing(0.62);
+		reflector_generator.set_max_outer_diameter(3.5);
+		reflector_generator.set_hybrid_geometry(0.5);
+		CartesianFrame* reflector = reflector_generator.get_reflector();
+		//std::cout << reflector_generator.get_print();
 
 		//sensor
 		Disc Sensor;
-		Sensor.set_frame("Sensor", Vector3D(0.0, 0.0, 4.889), Rotation3D(0.0,0.0,0.0));
+		Sensor.set_frame("Sensor", Vector3D(0.0, 0.0, 4.889), Rotation3D::null);
  		
-		ColourProperties* sensor_color = new ColourProperties(255,0,0);
-		Sensor.set_disc_radius(0.185);
+		Color* sensor_color = new Color(255,0,0);
+		Sensor.set_disc_radius(0.32);//(0.185);
  		Sensor.set_outer_color(sensor_color);
  		Sensor.set_inner_color(sensor_color);
 
 		//sensor_housing_lower_cap
 		Disc sensor_housing_lower_cap;
-		sensor_housing_lower_cap.set_frame("sensor_housing_lower_cap", Vector3D(0.0, 0.0, 4.890), Rotation3D(0.0,0.0,0.0));
-		ColourProperties* sensor_housing_color = new ColourProperties(200,255,200);
+		sensor_housing_lower_cap.set_frame("sensor_housing_lower_cap", Vector3D(0.0, 0.0, 4.890), Rotation3D::null);
+		Color* sensor_housing_color = new Color(200,255,200);
 		sensor_housing_lower_cap.set_disc_radius(0.32);
  		sensor_housing_lower_cap.set_outer_color(sensor_housing_color);
  		sensor_housing_lower_cap.set_inner_color(sensor_housing_color);
 
  		//relations
-		FACT.set_mother_and_child(&Reflector);
+		FACT.set_mother_and_child(reflector);
 		FACT.set_mother_and_child(&Sensor);
 		FACT.set_mother_and_child(&sensor_housing_lower_cap);	
 
-		Mworld.set_mother_and_child(&FACT);
-		Mworld.set_mother_and_child(&ground);
-		Mworld.setup_tree_based_on_mother_child_relations();
+		world.set_mother_and_child(&FACT);
+		world.set_mother_and_child(&ground);
+		world.setup_tree_based_on_mother_child_relations();
 		
 		// CORSIKA PHOTONS
 		//string filename = UserInteraction::input("Enter Mmcs CORSIKA file: ");
@@ -95,35 +100,38 @@ int main(int argc, char* argv[]) {
 
 				event_counter++;
 
-				FACT.move_to_Az_Zd_in_Rad(event.get_Az(), event.get_Zd());
+				FACT.move_to_Az_Zd(event.get_Az(), event.get_Zd());
 
 				ListOfPropagations *photons = 
 					event.use_once_more_and_get_mctracer_photons();
 					
-				photons->propagate_in_world_with_settings(&Mworld, &settings);
+				photons->propagate_in_world_with_settings(&world, &settings);
 
-				std::cout << "event_counter: " << event_counter << "\n";
+				//std::cout << "event_counter: " << event_counter << "\n";
 				
-				std::cout << photons->get_csv_print_for_propagations_ending_in(
-					Mworld.get_frame_in_tree_by_path(
-						"FACT/Sensor"
-					)
-				);
-
 				//std::cout << event.get_print() << "\n";
 				//std::cout << FACT.get_pointing_print() << "\n";
 
 				if(event_counter == 444) {
-					while(photons->has_still_trajectoies_left()) {
+
+
+					std::cout << photons->get_csv_print_for_propagations_ending_in(
+						world.get_frame_in_tree_by_path(
+							"FACT/Sensor"
+						)
+					);
+
+					uint count = 0;
+					while(photons->has_still_trajectoies_left() && count < 10) {
 						
-						CartesianFrame SWorld = Mworld;
+						count++;
+						CartesianFrame SWorld = world;
 						SWorld.set_mother_and_child(photons->get_next_trajectoy());
 						SWorld.setup_tree_based_on_mother_child_relations();
 
 						FreeOrbitCamera free(&SWorld, &settings);
 					}
 				}
-
 			}
 		}
 

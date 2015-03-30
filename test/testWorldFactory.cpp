@@ -49,21 +49,15 @@ TEST_F(WorldFactoryTest, DefaultWorld) {
   EXPECT_EQ( Mworld->get_number_of_children() , 0 );
 
   // position of default world in mother frame is null vector
-  Vector3D null_vector;
-  null_vector.set_null_vector();
-
   EXPECT_EQ( 
     *Mworld->get_position_of_frame_in_mother_frame(),
-    null_vector
+    Vector3D::null
   );
 
   // rotation of default world in mother frame is null
-  Rotation3D null_rotation;
-  null_rotation.set_null_rotation();
-
   EXPECT_EQ( 
     *Mworld->get_rotation_of_frame_in_mother_frame(),
-    null_rotation
+    Rotation3D::null
   );
 }
 //------------------------------------------------------------------------------

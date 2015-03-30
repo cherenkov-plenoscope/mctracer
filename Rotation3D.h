@@ -12,6 +12,7 @@
 #include <math.h>
 #include <sstream>
 #include "Vector3D.h"
+#include "TracerException.h"
 //=================================
 
 class Rotation3D {
@@ -25,11 +26,11 @@ class Rotation3D {
 	Vector3D rot_axis;
 	double rot_angle_in_rad;
 public:
+	static const Rotation3D null;
 	
 	Rotation3D();
 	Rotation3D(double Phi, double The, double Psi);
 	void set(double Phi,double The,double Psi);
-	void set_null_rotation();
 	Rotation3D(const Vector3D new_rot_axis, const double new_rot_angle_on_rad);
 	void set(const Vector3D new_rot_axis, const double new_rot_angle_on_rad);
 	Vector3D get_rot_axis()const;

@@ -4,8 +4,8 @@ WorldFactory::WorldFactory(){
 
 	root_of_World = new CartesianFrame(
 		"world",
-		Vector3D(0.0,0.0,0.0),
-		Rotation3D(0.0,0.0,0.0)
+		Vector3D::null,
+		Rotation3D::null
 	);
 }
 //------------------------------------------------------------------------------
@@ -184,7 +184,7 @@ CartesianFrame* WorldFactory::producePlane(
 	std::string 			name;
 	Vector3D    			position;
 	Rotation3D  			rotation;
-	const ColourProperties*		color;
+	const Color*		color;
 	const ReflectionProperties*	refl_prop;
 	double 					x_width, y_width;
 	
@@ -220,7 +220,7 @@ CartesianFrame* WorldFactory::produceSphere(
 	std::string 			name;
 	Vector3D 				position;
 	Rotation3D 				rotation;
-	const ColourProperties*		color;
+	const Color*		color;
 	const ReflectionProperties*	refl_prop;
 	double 					radius;
 
@@ -256,7 +256,7 @@ CartesianFrame* WorldFactory::produceCylinder(
 	std::string 			name;
 	Vector3D 				position;
 	Rotation3D 				rotation;
-	const ColourProperties*		color;
+	const Color*		color;
 	const ReflectionProperties*	refl_prop;
 	double 					radius;
 	Vector3D 				start, end;
@@ -317,7 +317,7 @@ CartesianFrame* WorldFactory::produceDisc(
 	std::string 			name;
 	Vector3D 				position;
 	Rotation3D 				rotation;
-	const ColourProperties*		color;
+	const Color*		color;
 	const ReflectionProperties*	refl_prop;
 	double 					radius;
 
@@ -353,7 +353,7 @@ CartesianFrame* WorldFactory::produceTriangle(
 	std::string 			name;
 	Vector3D 				position;
 	Rotation3D 				rotation;
-	const ColourProperties*		color;
+	const Color*		color;
 	const ReflectionProperties*	refl_prop;
 	double 					Ax, Ay, Bx, By, Cx, Cy;
 
@@ -402,13 +402,13 @@ const ReflectionProperties* WorldFactory::extract_reflection(
 	return refl_prop;
 }
 //------------------------------------------------------------------------------
-const ColourProperties* WorldFactory::extract_color(const pugi::xml_node node) {
+const Color* WorldFactory::extract_color(const pugi::xml_node node) {
 	assert_attribute_exists(node, "colour");
 
 	double red, blu, gre;
 	strto3tuple(red, blu, gre, node.attribute("colour").value());
 	
-	ColourProperties* colour = new ColourProperties(red, blu, gre);
+	Color* colour = new Color(red, blu, gre);
 	return colour;
 }
 //------------------------------------------------------------------------------

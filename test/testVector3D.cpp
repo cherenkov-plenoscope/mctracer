@@ -162,8 +162,7 @@ TEST_F(Vector3DTest, ScalarDiviation) {
 }
 //----------------------------------------------------------------------
 TEST_F(Vector3DTest, NullVector) {
-	Vector3D a;
-	a.set_null_vector(); 
+	Vector3D a = Vector3D::null;
 
 	EXPECT_EQ(0.0, a.x());
 	EXPECT_EQ(0.0, a.y());
@@ -174,19 +173,19 @@ TEST_F(Vector3DTest, NullVector) {
 TEST_F(Vector3DTest, UnitVectors) {
 	Vector3D a;
 	
-	a.set_unit_vector_x(); 
+	a = Vector3D::unit_x;
 	EXPECT_EQ(1.0, a.x());
 	EXPECT_EQ(0.0, a.y());
 	EXPECT_EQ(0.0, a.z());
 	EXPECT_EQ(1.0, a.norm2());
 	
-	a.set_unit_vector_y(); 
+  a = Vector3D::unit_y; 
 	EXPECT_EQ(0.0, a.x());
 	EXPECT_EQ(1.0, a.y());
 	EXPECT_EQ(0.0, a.z());
 	EXPECT_EQ(1.0, a.norm2());
-	
-	a.set_unit_vector_z(); 
+
+  a = Vector3D::unit_z; 
 	EXPECT_EQ(0.0, a.x());
 	EXPECT_EQ(0.0, a.y());
 	EXPECT_EQ(1.0, a.z());
@@ -194,11 +193,9 @@ TEST_F(Vector3DTest, UnitVectors) {
 }
 //----------------------------------------------------------------------
 TEST_F(Vector3DTest, distance_to) {
-  Vector3D a;
-  a.set_unit_vector_x(); 
+  Vector3D a = Vector3D::unit_x;
   
-  Vector3D b;
-  b.set_unit_vector_y(); 
+  Vector3D b = Vector3D::unit_y;
 
   EXPECT_EQ( sqrt(2.0), a.distance_to(b) );
 }
@@ -222,7 +219,7 @@ TEST_F(Vector3DTest, Operator_equals_expect_true) {
 TEST_F(Vector3DTest, Operator_equals_expect_false) {
   
   Vector3D a(1.3,3.7,4.2); 
-  Vector3D b(1.3,3.7,4.2 + 1e-9); 
+  Vector3D b(1.3,3.7,4.2 + 2e-7); 
 
   EXPECT_NE(a, b);
   EXPECT_TRUE(a != b);

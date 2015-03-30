@@ -74,11 +74,11 @@ TEST_F(CartesianFrameTest, find_specific_frame) {
   EXPECT_EQ( "/house/chimney/chimney_wall_4" , RestoredPath );
 
   // Now lets look something up which is not in our test xml file.
-  // In this case a NULL pointer is expected to be returned
+  // In this case the void_frame is returned
   SpecificFrameInWorldWeAreLookingFor = 
   world->get_frame_in_tree_by_path( "your/Mama" );
 
-  EXPECT_EQ( NULL, SpecificFrameInWorldWeAreLookingFor );
+  EXPECT_EQ( CartesianFrame::void_frame, SpecificFrameInWorldWeAreLookingFor );
 }
 //----------------------------------------------------------------------
 TEST_F(CartesianFrameTest, assert_name_is_valid) {
@@ -168,29 +168,29 @@ TEST_F(CartesianFrameTest, root_of_world_on_complete_tree) {
 
   //-----define frames
   CartesianFrame tree;
-  tree.set_frame("tree" ,Vector3D(0.0,0.0,0.0), Rotation3D(0.0, 0.0, 0.0));
+  tree.set_frame("tree" ,Vector3D::null, Rotation3D::null);
 
   CartesianFrame leaf1;
-  leaf1.set_frame("leaf1" ,Vector3D(1.0,0.0,0.0), Rotation3D(0.0, 0.0, 0.0));
+  leaf1.set_frame("leaf1" ,Vector3D(1.0,0.0,0.0), Rotation3D::null);
 
   CartesianFrame leaf2;
-  leaf2.set_frame("leaf2" ,Vector3D(-1.0,0.0,0.0), Rotation3D(0.0, 0.0, 0.0));
+  leaf2.set_frame("leaf2" ,Vector3D(-1.0,0.0,0.0), Rotation3D::null);
 
   CartesianFrame branch;
-  branch.set_frame("branch" ,Vector3D(0.0,0.0,1.0), Rotation3D(0.0, 0.0, 0.0));
+  branch.set_frame("branch" ,Vector3D(0.0,0.0,1.0), Rotation3D::null);
 
   CartesianFrame leaf1_on_branch;
   leaf1_on_branch.set_frame(
     "leaf1_on_branch",
     Vector3D(1.0,0.0,0.0),
-    Rotation3D(0.0, 0.0, 0.0)
+    Rotation3D::null
   );
 
   CartesianFrame leaf2_on_branch;
   leaf2_on_branch.set_frame(
     "leaf2_on_branch",
     Vector3D(0.0,1.0,0.0),
-    Rotation3D(0.0, 0.0, 0.0)
+    Rotation3D::null
   );
 
   //-----declare relationschips
@@ -217,7 +217,7 @@ TEST_F(CartesianFrameTest, root_of_world_on_complete_tree) {
 TEST_F(CartesianFrameTest, root_of_world_default) {
 
   CartesianFrame tree;
-  tree.set_frame("tree" ,Vector3D(0.0,0.0,0.0), Rotation3D(0.0, 0.0, 0.0));
+  tree.set_frame("tree" ,Vector3D::null, Rotation3D::null);
   EXPECT_EQ(&tree, tree.get_root_of_world());
 }
 //==============================================================================

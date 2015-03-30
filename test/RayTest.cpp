@@ -48,9 +48,9 @@ TEST_F(RayTest, position_on_ray) {
 }
 //------------------------------------------------------------------------------
 TEST_F(RayTest, closest_distance_to_point) {
-  Ray my_ray(Vector3D(0.0, 0.0, 0.0), Vector3D(0.0, 0.0, 1.0));
+  Ray my_ray(Vector3D::null, Vector3D(0.0, 0.0, 1.0));
 
-  EXPECT_EQ(0.0, my_ray.get_closest_distance_to_point(Vector3D(0.0, 0.0, 0.0)));
+  EXPECT_EQ(0.0, my_ray.get_closest_distance_to_point(Vector3D::null));
   EXPECT_EQ(1.0, my_ray.get_closest_distance_to_point(Vector3D(1.0, 0.0, 0.0)));
   EXPECT_EQ(1.0, my_ray.get_closest_distance_to_point(Vector3D(0.0, 1.0, 0.0)));
   EXPECT_EQ(0.0, my_ray.get_closest_distance_to_point(Vector3D(0.0, 0.0, 1.0)));

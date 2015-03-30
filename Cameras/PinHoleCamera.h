@@ -37,8 +37,8 @@ public:
 	
 private:
 	Vector3D principal_point;
-	Vector3D SensorDirectionU;
-	Vector3D SensorDirectionV;
+	Vector3D SensorDirectionHori;
+	Vector3D SensorDirectionVert;
 	double FieldOfView_in_Rad;
 	double dist_camera_support_to_principal_point;
 

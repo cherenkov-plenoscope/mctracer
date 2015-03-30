@@ -1,5 +1,7 @@
 #include "Rotation3D.h"
 //------------------------------------------------------------------------------
+const Rotation3D Rotation3D::null = Rotation3D(0.0, 0.0, 0.0);
+//------------------------------------------------------------------------------
 Rotation3D::Rotation3D() {
 }
 //------------------------------------------------------------------------------
@@ -15,12 +17,6 @@ void Rotation3D::set(double Phi, double The, double Psi) {
 	Rz = Psi;
 }
 //------------------------------------------------------------------------------
-void Rotation3D::set_null_rotation() {
- 	Rx = 0.0;
- 	Ry = 0.0;
-  	Rz = 0.0;
-}
- //------------------------------------------------------------------------------
 Rotation3D::Rotation3D(
 	const Vector3D new_rot_axis,
 	const double new_rot_angle_in_rad
@@ -38,30 +34,23 @@ void Rotation3D::set(
 }
 //------------------------------------------------------------------------------
 Vector3D Rotation3D::get_rot_axis()const {
-	if(flag_rot_angles_xyz == true) {
-		
-		std::cout<<"Warning in Rotation-> get_rot_axis() !"<<std::endl;
-		std::cout<<"rot_axis was not set!";
-		std::cout<<" Returning default ez."<<std::endl;
-		Vector3D temp_vec;
-		temp_vec.set_unit_vector_z();
-		return temp_vec;
-	}else{
+	if(flag_rot_angles_xyz == true)
+		throw TracerException(
+			"Rotation3D::get_rot_axis():\n"
+			"rot_axis was not set! Returning default ez.\n"
+		);
+	else
 		return rot_axis;
-	}
 }
 //------------------------------------------------------------------------------
 double Rotation3D::get_rot_angle_in_rad()const {
-	if(flag_rot_angles_xyz == true) {
-		std::cout<<"Warning in Rotation-> get_rot_angle_in_rad() !";
-		std::cout<<std::endl;
-		std::cout<<"rot_angle_in_rad was not set!";
-		std::cout<<" Returning default 0.0 [rad]."<<std::endl;
-		double temp_rot_angle_in_rad =0.0;
-		return temp_rot_angle_in_rad;
-	}else{
+	if(flag_rot_angles_xyz == true)
+		throw TracerException(
+			"Rotation3D::get_rot_angle_in_rad():\n"
+			"rot_angle_in_rad was not set!"
+		);
+	else
 		return rot_angle_in_rad;
-	}
 }
 //------------------------------------------------------------------------------
 bool Rotation3D::uses_xyz_angels()const {

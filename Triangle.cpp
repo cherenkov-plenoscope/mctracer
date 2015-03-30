@@ -79,7 +79,7 @@ bool Triangle::is_inside_triangle(const Vector3D &intersec_vec)const {
 #include "Ray.h"
 #include "Intersection.h"
 //------------------------------------------------------------------------------
-Intersection* Triangle::calculate_intersection_with(const Ray* ray)const {
+const Intersection* Triangle::calculate_intersection_with(const Ray* ray)const {
 
 	XyPlaneRayIntersectionEquation xyPlaneRayEquation(ray);
 

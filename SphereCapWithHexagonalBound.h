@@ -29,7 +29,7 @@ public:
 
 	std::string get_print()const;
 
-	Intersection* calculate_intersection_with(const Ray* ray)const;
+	const Intersection* calculate_intersection_with(const Ray* ray)const;
 private:
 	void restrict_outer_hex_radius_to_curvature_radius();
 

@@ -17,8 +17,8 @@ class RayAndFrameTest : public ::testing::Test {
   RayAndFrameTest() {
     frame_r_4p2m.set_frame(
       "frame_with_radius=4.2m", 
-      Vector3D(0.0,0.0,0.0),
-      Rotation3D(0.0,0.0,0.0)
+      Vector3D::null,
+      Rotation3D::null
     );
 
     frame_r_4p2m.set_sphere(radius_of_test_frame);
@@ -43,28 +43,25 @@ TEST_F(RayAndFrameTest, frame_has_bounding_sphere) {
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameTest, frontal_hit_bounding_sphere) {
   double z_below_bounding_sphere = -10.0;
-  Vector3D ez; ez.set_unit_vector_z();
 
   Ray my_ray(
-    Vector3D(0.0, 0.0, z_below_bounding_sphere), ez);
+    Vector3D(0.0, 0.0, z_below_bounding_sphere), Vector3D::unit_z);
 
   EXPECT_TRUE(my_ray.has_intersection_with_bounding_sphere_of(&frame_r_4p2m));
 }
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameTest, no_hit_with_bounding_sphere_behind_support) {
   double z_above_bounding_sphere = 10.0;
-  Vector3D ez; ez.set_unit_vector_z();
 
-  Ray my_ray(Vector3D(0.0, 0.0, z_above_bounding_sphere), ez);
+  Ray my_ray(Vector3D(0.0, 0.0, z_above_bounding_sphere), Vector3D::unit_z);
 
   EXPECT_FALSE(my_ray.has_intersection_with_bounding_sphere_of(&frame_r_4p2m));
 }
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameTest, inner_hit_bounding_sphere) {
   double z_inside_bounding_sphere = 0.0;
-  Vector3D ez; ez.set_unit_vector_z();
 
-  Ray my_ray(Vector3D(0.0, 0.0, z_inside_bounding_sphere), ez);
+  Ray my_ray(Vector3D(0.0, 0.0, z_inside_bounding_sphere), Vector3D::unit_z);
 
   EXPECT_TRUE(my_ray.has_intersection_with_bounding_sphere_of(&frame_r_4p2m));
 }
@@ -73,9 +70,8 @@ TEST_F(RayAndFrameTest, frontal_and_steep_hits) {
   for(uint i=0; i<1e3; i++) {
     double offset_in_y = i*1e-2;
     double z_below_bounding_sphere = -10.0;
-    Vector3D ez; ez.set_unit_vector_z();
 
-    Ray my_ray(Vector3D(0.0, offset_in_y, z_below_bounding_sphere), ez);
+    Ray my_ray(Vector3D(0.0, offset_in_y, z_below_bounding_sphere), Vector3D::unit_z);
 
     if(fabs(offset_in_y) > radius_of_test_frame ) {
       EXPECT_FALSE(
@@ -91,9 +87,8 @@ TEST_F(RayAndFrameTest, frontal_and_steep_hits) {
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameTest, support_inside_bounding_sphere) {
   double z_inside_bounding_sphere = 0.0;
-  Vector3D ez; ez.set_unit_vector_z();
 
-  Ray my_ray(Vector3D(0.0, 0.0, z_inside_bounding_sphere), ez);
+  Ray my_ray(Vector3D(0.0, 0.0, z_inside_bounding_sphere), Vector3D::unit_z);
 
   EXPECT_TRUE(
     my_ray.support_of_ray_is_inside_bounding_sphere_of(&frame_r_4p2m)
@@ -102,9 +97,8 @@ TEST_F(RayAndFrameTest, support_inside_bounding_sphere) {
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameTest, support_outside_bounding_sphere) {
   double z_outside_bounding_sphere = 10.0;
-  Vector3D ez; ez.set_unit_vector_z();
 
-  Ray my_ray(Vector3D(0.0, 0.0, z_outside_bounding_sphere), ez);
+  Ray my_ray(Vector3D(0.0, 0.0, z_outside_bounding_sphere), Vector3D::unit_z);
 
   EXPECT_FALSE(
     my_ray.support_of_ray_is_inside_bounding_sphere_of(&frame_r_4p2m)

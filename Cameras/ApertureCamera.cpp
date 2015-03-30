@@ -268,8 +268,8 @@ void ApertureCamera::acquire_image(
 		1.0/double(rays_per_pixel);
 	
 	CameraRay cam_ray;
-	ColourProperties average_pixel_color;
-	ColourProperties color_for_single_ray;
+	Color average_pixel_color;
+	Color color_for_single_ray;
 	uint pixel_iterator, row, col;
 	const uint initial_interaction_counter = 0;
 	

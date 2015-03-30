@@ -46,12 +46,12 @@ class BiConvexLensTest : public ::testing::Test {
 
     lens->set_frame(
       "little_lens",
-      Vector3D(0.0, 0.0, 0.0),
-      Rotation3D(0.0, 0.0, 0.0)
+      Vector3D::null,
+      Rotation3D::null
     );
 
-    ColourProperties* lens_color;
-    lens_color = new ColourProperties(255, 128, 128);
+    Color* lens_color;
+    lens_color = new Color(255, 128, 128);
 
     RefractiveIndex* lens_refractive_index;
     lens_refractive_index = new RefractiveIndex(1.3);
@@ -72,11 +72,11 @@ class BiConvexLensTest : public ::testing::Test {
     image_sensor->set_frame(
       "sensor_disc",
       Vector3D(0.0, 0.0, -2.0), 
-      Rotation3D(0.0, 0.0, 0.0)
+      Rotation3D::null
     );
 
-    ColourProperties* sensor_color;
-    sensor_color = new ColourProperties(128, 255, 128);
+    Color* sensor_color;
+    sensor_color = new Color(128, 255, 128);
 
     image_sensor->set_outer_color(sensor_color);
     image_sensor->set_inner_color(sensor_color);
@@ -91,8 +91,8 @@ class BiConvexLensTest : public ::testing::Test {
 
     test_bench->set_frame(
       "BiConvexLens_test_world",
-      Vector3D(0.0, 0.0, 0.0),
-      Rotation3D(0.0, 0.0, 0.0)
+      Vector3D::null,
+      Rotation3D::null
     );  
     return test_bench;
   }

@@ -25,9 +25,7 @@ protected:
 	bool _from_outside_to_inside;
 public:
 
-	static const SurfaceEntity* void_object;
-	
-	static const SurfaceEntity* source_object;
+	static const Intersection* void_intersection;
 
 	Intersection();
 
@@ -77,7 +75,7 @@ public:
 	bool boundary_layer_is_transparent()const;
 	bool from_outside_to_inside()const;
 
-	const ColourProperties get_facing_color()const;
+	const Color get_facing_color()const;
 
 	const HomoTrafo3D* world2object()const;
 	const HomoTrafo3D* object2world()const;

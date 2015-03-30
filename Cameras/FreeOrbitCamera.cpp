@@ -235,7 +235,7 @@ void FreeOrbitCamera::print_info_of_probing_ray_for_pixel_x_y(int x, int y){
 
 	Ray probing_ray = flying_camera->get_ray_for_pixel_in_row_and_col(y, x);
 
-	Intersection* intersec = probing_ray.get_first_intersection_in(world);
+	const Intersection* intersec = probing_ray.get_first_intersection_in(world);
 
 	UserInteraction::ClearScreen();
 	std::stringstream out;

@@ -29,7 +29,7 @@ public:
 
 	std::string get_sphere_print()const;
 
-	Intersection* calculate_intersection_with(const Ray* ray)const;
+	const Intersection* calculate_intersection_with(const Ray* ray)const;
 private:
 	bool facing_sphere_from_outside_given_p_m(
 		const double v_Plus,
@@ -41,7 +41,7 @@ private:
 		const double v_Minus
 	)const;
 
-	Intersection* sphere_intersection_for_ray_parameter(
+	const Intersection* sphere_intersection_for_ray_parameter(
 		const Ray* ray, 
 		const double ray_parameter
 	)const;

@@ -20,7 +20,7 @@ void RayForPropagation::init_propagation_history() {
 void RayForPropagation::push_back_production_of_ray() {
 
 	Intersection* production_intersection = new Intersection(
-		Intersection::source_object,
+		SurfaceEntity::source_object,
 		support,
 		direction, // set normal of production obj to direction of ray
 		0.0,
@@ -164,76 +164,5 @@ const Intersection* RayForPropagation::get_final_intersection()const {
 //------------------------------------------------------------------------------
 double RayForPropagation::get_time_of_flight()const {
 	return 0.0;
-}
-//------------------------------------------------------------------------------
-const ColourProperties* RayForPropagation::trajectory_col = new ColourProperties(255,128,128);
-const ColourProperties* RayForPropagation::absorption_in_void_col = new ColourProperties(128,128,255);
-const ColourProperties* RayForPropagation::interaction_col= new ColourProperties(128,255,128);
-CartesianFrame* RayForPropagation::get_trajectory_lines()const {
-
-	const double radius_of_trajectory = 0.01;
-
-	std::stringstream name;
-	name << "trajectory_of_ID_" << identifier_number;
-
-	CartesianFrame* trajectory = new CartesianFrame;
-	trajectory->set_frame(
-		name.str(),
-	 	Vector3D(0.0, 0.0, 0.0), 
-	 	Rotation3D(0.0, 0.0, 0.0)
-	 );
-
-	for(uint i=0; i < intersection_history->size(); i++) {
-
-		if(i < intersection_history->size()-1) {
-			std::stringstream name_trajectory;
-			name_trajectory << "ID_" << identifier_number << "_part_" << i+1;
-
-			Cylinder* ray_trajectory = new Cylinder;
-
-			ray_trajectory->set_frame(
-				name_trajectory.str(),	 	
-				Vector3D(0.0, 0.0, 0.0), 
-		 		Rotation3D(0.0, 0.0, 0.0)
-		 	);
-
-		 	ray_trajectory->set_cylinder(
-		 		radius_of_trajectory, 
-		 		intersection_history->at(i)->get_intersection_vector_in_world_system(),
-		 		intersection_history->at(i+1)->get_intersection_vector_in_world_system()
-		 	);
-
-		 	ray_trajectory->set_outer_color(trajectory_col);
-		 	ray_trajectory->set_inner_color(trajectory_col);
-
-		 	trajectory->set_mother_and_child(ray_trajectory);
-		 }	
-
-	 	Sphere* intersection_indicator = new Sphere;
-
-		std::stringstream name_intersection;
-		name_intersection << "ID_" << identifier_number;
-		name_intersection << "_" << get_type_print(interaction_type_history->at(i));
-
-		intersection_indicator->set_frame(
-			name_intersection.str(),
-			intersection_history->at(i)->get_intersection_vector_in_world_system(),
-			Rotation3D(0.0, 0.0, 0.0)
-		);
-
-		intersection_indicator->set_sphere(radius_of_trajectory*2.0);
-
-		if(interaction_type_history->at(i) == absorption_in_void)
-			intersection_indicator->set_outer_color(absorption_in_void_col);
-		else
-			intersection_indicator->set_outer_color(interaction_col);		
-
-		trajectory->set_mother_and_child(intersection_indicator);	
-	}
-
-	// post init
-	trajectory->setup_tree_based_on_mother_child_relations();
-
-	return trajectory;
 }
 //------------------------------------------------------------------------------

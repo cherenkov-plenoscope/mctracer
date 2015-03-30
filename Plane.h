@@ -33,7 +33,7 @@ public:
 
 	std::string get_print()const;
 
-	Intersection* calculate_intersection_with(const Ray* ray)const;
+	const Intersection* calculate_intersection_with(const Ray* ray)const;
 private:
 	std::string get_plane_print()const;
 

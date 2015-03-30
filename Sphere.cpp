@@ -76,7 +76,7 @@ QuadraticEquation Sphere::get_ray_parameter_equation_for_intersections_with_sphe
 	return quadratic_eq_in_v;
 }
 //------------------------------------------------------------------------------
-Intersection* Sphere::sphere_intersection_for_ray_parameter(
+const Intersection* Sphere::sphere_intersection_for_ray_parameter(
 	const Ray* ray, 
 	const double ray_parameter
 )const {
@@ -96,7 +96,7 @@ Intersection* Sphere::sphere_intersection_for_ray_parameter(
 	return intersec;
 }
 //------------------------------------------------------------------------------
-Intersection* Sphere::calculate_intersection_with(const Ray* ray)const {
+const Intersection* Sphere::calculate_intersection_with(const Ray* ray)const {
 
 	QuadraticEquation rayParamEqForIntersections = 
 		get_ray_parameter_equation_for_intersections_with_sphere(ray);

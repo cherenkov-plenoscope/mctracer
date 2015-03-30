@@ -1,12 +1,12 @@
 #include "FactTelescope.h"
 //==================================================================
 void FactTelescope::init_outer_mirror_surface() {
-	mirror_colour = new ColourProperties(255,255,255);
-	outer_mirror_reflection = new ReflectionProperties(1.0);
+	mirror_colour = new Color(255,255,255);
+	outer_mirror_reflection = new ReflectionProperties(0.8);
 }
 //==================================================================
 void FactTelescope::init_inner_mirror_surface() {
-	inner_mirror_colour = new ColourProperties(64,64,64);
+	inner_mirror_colour = new Color(64,64,64);
 }
 //==================================================================
 void FactTelescope::assert_alpha_geometry_parameter_is_valid(
@@ -227,7 +227,7 @@ FactTelescope::FactTelescope(double alpha){
 			
 			Vector3D focal_point_to_mirror_pos = focal_point - mirror_pos;
 				
-			Vector3D EZ; EZ.set_unit_vector_z();
+			Vector3D EZ = Vector3D::unit_z;
 			Vector3D vec_rotation_axis;
 			
 			vec_rotation_axis = 
@@ -270,7 +270,7 @@ FactTelescope::FactTelescope(double alpha){
 			// test rotation
 			//==================================================
 			/*
-			Vector3D test_vec; test_vec.set_unit_vector_z();
+			Vector3D test_vec = Vector3D::unit_z;
 			test_vec.disp();
 			
 			Vector3D none_translation; none_translation.set(0.0,0.0,0.0);

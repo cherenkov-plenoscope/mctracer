@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "ColourProperties.h"
+#include "Color.h"
 #include <chrono>
 #include "TracerException.h"
 #include <string>
@@ -30,13 +30,13 @@ private:
 		// very last interaction, i.e. the absorbtion of the Photon will be 
 		// stored in the history. 
 
-	ColourProperties default_colour;
+	Color default_colour;
 		// The default background colour in the raytracing images 
 
 	//--------------------------------------------------------------------------
 	// Multithread options
 
-	bool multithread = true;
+	bool multithread = false;
 		// When multithread is true tmcTracer will use all threads availabe to
 		// propagate the Ray,CameraRays,Photons.
 		//
@@ -68,7 +68,7 @@ public:
 	
 	void set_max_number_of_reflections(const int new_max_number_of_reflections);
 
-	ColourProperties get_default_colour()const;
+	Color get_default_colour()const;
 	
 	int get_max_number_of_reflections()const;
 	

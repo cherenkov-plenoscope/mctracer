@@ -24,7 +24,7 @@ public:
 private:
 	CameraDevice* camera;
 	bool verbosity = false;
-	Vector3D default_position = Vector3D(0.0,0.0,0.0);
+	Vector3D default_position = Vector3D::null;
 
 	void print_camera_moved_in_direction(const std::string dir)const;
 	double translation_increment()const;

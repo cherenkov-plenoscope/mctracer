@@ -12,7 +12,7 @@ class ZaxisCylinderRayIntersectionEquationTest : public ::testing::Test{
 //------------------------------------------------------------------------------
 TEST_F(ZaxisCylinderRayIntersectionEquationTest, start_inside_run_in_z_no_hit) {
 
-  Ray ray(Vector3D(0.0, 0.0, 0.0), Vector3D(0.0, 0.0, 0.0));
+  Ray ray(Vector3D::null, Vector3D::null);
 
   ZaxisCylinderRayIntersectionEquation eq(1.0, &ray);
 
@@ -22,7 +22,7 @@ TEST_F(ZaxisCylinderRayIntersectionEquationTest, start_inside_run_in_z_no_hit) {
 //------------------------------------------------------------------------------
 TEST_F(ZaxisCylinderRayIntersectionEquationTest, start_inside_and_hit) {
   
-  Ray ray(Vector3D(0.0, 0.0, 0.0), Vector3D(1.0, 0.0, 0.0));
+  Ray ray(Vector3D::null, Vector3D(1.0, 0.0, 0.0));
   ZaxisCylinderRayIntersectionEquation eq(1.0, &ray);
 
   EXPECT_TRUE(eq.has_solution());

@@ -294,20 +294,3 @@ double Function1D::get_integral_over_value()const{
 double Function1D::get_range_of_argument()const{
 	return (func.end()-1)->first - func.begin()->first;
 }
-//------------------------------------------------------------------------------
-/*double Function1D::get_min_value()const {
-	double min_value;
-
-	for(uint i=0; i < func.size()-1; i++) {
-		if( func.at(i).first == func.at(i+1).first ) {
-			std::stringstream info;
-        	info << "The argument " << func.at(i).first;
-        	info << " must not appear twice!";
-			throw XmlIoException(info.str(), this);	
-		}
-	}	
-}
-//------------------------------------------------------------------------------
-double Function1D::get_max_value()const {
-
-}*/

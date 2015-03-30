@@ -20,6 +20,10 @@ private:
 	double Y;
 	double Z;
 public:
+	static const Vector3D null;
+	static const Vector3D unit_x;
+	static const Vector3D unit_y;
+	static const Vector3D unit_z;
 //------------------------------------------------------------------------------
 // SET
 Vector3D();
@@ -36,10 +40,6 @@ double norm2() const;
 void normalize();
 Vector3D CrossProduct(const Vector3D v) const;
 void mirror(Vector3D* ray) const;
-void set_unit_vector_x();
-void set_unit_vector_y();
-void set_unit_vector_z();
-void set_null_vector();
 double get_angle_in_between_in_rad(const Vector3D& vec)const;
 //------------------------------------------------------------------------------
 // Operators

@@ -13,6 +13,7 @@ class GlobalSettings;
 #include "RayForPropagation.h"
 #include "Photon.h"
 #include <sstream>
+#include "TrajectoryFactory.h"
 #include "PropagationEnvironment.h"
 #include "PseudoRandomNumberGenerator.h"
 

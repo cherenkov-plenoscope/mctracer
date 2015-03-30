@@ -28,6 +28,7 @@
 #include "PropagationEnvironmentTest.cpp"
 #include "FresnelRefractionAndReflectionTest.cpp"
 #include "TrajectoryFactoryTest.cpp"
+#include "HexGridXyTest.cpp"
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

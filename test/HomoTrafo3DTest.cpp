@@ -49,7 +49,7 @@ TEST_F(HomoTrafo3DTest, unit_trafo_has_no_translation) {
     trafo.set_unity();
 
     // translation should be zero 
-    EXPECT_EQ(Vector3D(0.0, 0.0, 0.0), trafo.get_translation());
+    EXPECT_EQ(Vector3D::null, trafo.get_translation());
 }
 //------------------------------------------------------------------------------
 TEST_F(HomoTrafo3DTest, unit_trafo_has_no_rotation) {

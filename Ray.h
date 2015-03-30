@@ -56,7 +56,7 @@ public:
 
 	std::string get_ray_print()const;
 
-	bool operator() (Intersection* one, Intersection* two)const;
+	bool operator() (const Intersection* one, const Intersection* two)const;
 	
 	Ray get_ray_transformed_in_object_system_of(const CartesianFrame* frame)const;
 	
@@ -74,7 +74,7 @@ public:
 	//--------------------------------------------------------------------------
 	// Ray and Frame
 	
-	Intersection* get_first_intersection_in(const CartesianFrame* frame)const;
+	const Intersection* get_first_intersection_in(const CartesianFrame* frame)const;
 
 	void find_intersection_candidates_in_tree_of_frames(
 		const CartesianFrame* frame, 
@@ -94,17 +94,17 @@ protected:
 		const CartesianFrame* frame
 	)const;
 
-	std::vector<Intersection*> get_intersections_in_candidate_objects(
+	std::vector<const Intersection*> get_intersections_in_candidate_objects(
 		std::vector<const CartesianFrame*> *candidate_objects
 	)const;
 
-	Intersection* get_closest_intersection_and_delete_the_rest(	
-		std::vector<Intersection*> *intersections
+	const Intersection* get_closest_intersection_and_delete_the_rest(	
+		std::vector<const Intersection*> *intersections
 	)const;
 
 
-	Intersection* calculate_closest_intersection(
-			std::vector<Intersection*> *intersections
+	const Intersection* calculate_closest_intersection(
+			std::vector<const Intersection*> *intersections
 	)const;
 
 	bool support_equals_intersection_point(const Intersection* intersec)const;

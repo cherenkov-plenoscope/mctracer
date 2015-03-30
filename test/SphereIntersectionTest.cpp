@@ -14,7 +14,7 @@ class SphereIntersectionTest : public ::testing::Test {
 	GlobalSettings setup;
 	Vector3D    pos;
 	Rotation3D  rot; 
-	ColourProperties*      colo;
+	Color*      colo;
 	double radius;
 	Sphere MySphere;
 	CartesianFrame world;
@@ -35,7 +35,7 @@ class SphereIntersectionTest : public ::testing::Test {
 
 	world.set_frame("world",pos,rot);
 
-	colo = new ColourProperties(200,128,128);
+	colo = new Color(200,128,128);
 
 	//------------sphere----------------
 	radius = 1.0;
@@ -67,18 +67,17 @@ TEST_F(SphereIntersectionTest, frontal) {
 	Photon P(Support,direction,wavelength);
 	P.propagate_in(&sphere_test_environment);
 
-	ASSERT_EQ(1, P.get_number_of_interactions_so_far() ) << "There should be 2 "
-	"interaction stored in the history, expect it to intersect with the sphere "
-	" only once.";
+	ASSERT_EQ(2, P.get_number_of_interactions_so_far() ) << "There should be 2 "
+	"interaction stored in the history, 1 for creation of the photon and 1 for"
+	"the intersection with the sphere";
 
 	EXPECT_EQ(-radius-x_pos, P.get_accumulative_distance() ) << 
 	"The photon was shot from 5m away from the spheres center. The sphere has "
 	"radius 1m. So there are 5-1=4m to traverse. ";
 
-	Vector3D normal; normal.set_unit_vector_x(); normal = normal*-1.0;
 	EXPECT_EQ(
-		normal,
-		P.get_intersection_at(0)->get_surface_normal_in_object_system()
+		Vector3D::unit_x*(-1),
+		P.get_intersection_at(1)->get_surface_normal_in_object_system()
 	);
 }
 //------------------------------------------------------------------------------
@@ -112,14 +111,14 @@ TEST_F(SphereIntersectionTest, tangential_intersection) {
 	Photon P(Support,direction,wavelength);
 	P.propagate_in(&sphere_test_environment);
 
-	ASSERT_EQ(1, P.get_number_of_interactions_so_far() );
+	ASSERT_EQ(2, P.get_number_of_interactions_so_far() );
 
-	Vector3D normal; normal.set_unit_vector_z();
+	Vector3D normal = Vector3D::unit_z;
 
 	EXPECT_NEAR(
 		0.0,
 		normal.distance_to(
-			P.get_intersection_at(0)->get_surface_normal_in_object_system()
+			P.get_intersection_at(1)->get_surface_normal_in_object_system()
 		),
 		1e-12
 	);
@@ -131,7 +130,7 @@ TEST_F(SphereIntersectionTest, ray_frontal_intersection) {
 
   Ray ray_with_intersection(Vector3D(0.0,0.0,-2.0), Vector3D(0.0,0.0,1.0));
 
-  Intersection* intersec = 
+  const Intersection* intersec = 
   	MySphere.calculate_intersection_with(&ray_with_intersection);
 
   ASSERT_TRUE(intersec->does_intersect());
@@ -150,7 +149,7 @@ TEST_F(SphereIntersectionTest, ray_intersection_but_no_causal_intersection) {
 
   Ray ray_without_intersection(Vector3D(0.0,0.0,+2.0), Vector3D(0.0,0.0,1.0));
 
-  Intersection* empty_intersec = 
+  const Intersection* empty_intersec = 
     MySphere.calculate_intersection_with(&ray_without_intersection);
 
   EXPECT_FALSE(empty_intersec->does_intersect());
@@ -160,7 +159,7 @@ TEST_F(SphereIntersectionTest, ray_completely_outside_of_sphere) {
 
   Ray ray_outside(Vector3D(5.0,0.0,0.0), Vector3D(0.0,0.0,1.0));
 
-  Intersection* intersec = 
+  const Intersection* intersec = 
     MySphere.calculate_intersection_with(&ray_outside);
 
   EXPECT_FALSE(intersec->does_intersect());
@@ -168,9 +167,9 @@ TEST_F(SphereIntersectionTest, ray_completely_outside_of_sphere) {
 //------------------------------------------------------------------------------
 TEST_F(SphereIntersectionTest, ray_starts_inside_sphere) {
 
-  Ray ray_inside(Vector3D(0.0,0.0,0.0), Vector3D(0.0,0.0,1.0));
+  Ray ray_inside(Vector3D::null, Vector3D(0.0,0.0,1.0));
 
-  Intersection* intersec = 
+  const Intersection* intersec = 
     MySphere.calculate_intersection_with(&ray_inside);
 
   ASSERT_TRUE(intersec->does_intersect());
@@ -189,7 +188,7 @@ TEST_F(SphereIntersectionTest, ray_tangents_sphere) {
 
   Ray ray_inside(Vector3D(1.0, 0.0, -2.0), Vector3D(0.0, 0.0, 1.0));
 
-  Intersection* intersec = 
+  const Intersection* intersec = 
     MySphere.calculate_intersection_with(&ray_inside);
 
   ASSERT_TRUE(intersec->does_intersect());

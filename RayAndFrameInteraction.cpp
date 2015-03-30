@@ -1,11 +1,11 @@
 #include "Ray.h"
 //------------------------------------------------------------------------------
-Intersection* Ray::get_first_intersection_in(const CartesianFrame* frame)const {
+const Intersection* Ray::get_first_intersection_in(const CartesianFrame* frame)const {
 
 	std::vector<const CartesianFrame*> candidate_objects =
 		get_intersection_candidate_objects(frame);
 
-	std::vector<Intersection*> intersections = 
+	std::vector<const Intersection*> intersections = 
 		get_intersections_in_candidate_objects(&candidate_objects);		
 
 	return get_closest_intersection_and_delete_the_rest(&intersections);
@@ -38,26 +38,30 @@ void Ray::find_intersection_candidates_in_tree_of_frames(
 	}
 }
 //------------------------------------------------------------------------------
-std::vector<Intersection*> Ray::get_intersections_in_candidate_objects(
+std::vector<const Intersection*> Ray::get_intersections_in_candidate_objects(
 	std::vector<const CartesianFrame*> *candidate_objects
 )const{
 
-	std::vector<Intersection*> intersections;
+	std::vector<const Intersection*> intersections;
 
 	for(const CartesianFrame* object : *candidate_objects) {
 
 		Ray ray_in_object_system = 
 			get_ray_transformed_in_object_system_of(object);
 
-		Intersection* candidate_intersection = 
+		const Intersection* candidate_intersection = 
 			object->calculate_intersection_with(&ray_in_object_system);
 		
+		// to prevent a reflected ray to get stucked on the reflective surface
+		// again, the candidate intersection is neglected when the reflected 
+		// rays support equals the candidate intersectionpoint.
 		if(candidate_intersection->does_intersect()) {
 			if( !ray_in_object_system.
 					support_equals_intersection_point(candidate_intersection))
 				intersections.push_back(candidate_intersection);
-		}else
+		}else{
 			delete candidate_intersection;
+		}
 	}
 
 	return intersections;
@@ -67,24 +71,28 @@ bool Ray::support_equals_intersection_point(const Intersection* intersec)const {
 	return 	intersec->get_intersection_vector_in_object_system() == Support();
 }
 //------------------------------------------------------------------------------
-Intersection* Ray::calculate_closest_intersection(	
-		std::vector<Intersection*> *intersections
+const Intersection* Ray::calculate_closest_intersection(	
+		std::vector<const Intersection*> *intersections
 )const{
 
 	if(intersections->size() == 0) {
 
 		Intersection* void_intersection;
 		void_intersection = new Intersection(
-			Intersection::void_object,
+			//Intersection::void_object,
+			SurfaceEntity::void_object,
 			PositionOnRay(1e4),
 			direction,
 			1e4,
 			direction
 		);
 		return void_intersection;
+
+		//return Intersection::void_intersection;
+
 	}else{
 
-		std::vector<Intersection*>::iterator closest_intersection = min_element( 	
+		std::vector<const Intersection*>::iterator closest_intersection = min_element( 	
 			intersections->begin(),
 			intersections->end() ,
 			*this
@@ -94,13 +102,13 @@ Intersection* Ray::calculate_closest_intersection(
 	}
 }
 //------------------------------------------------------------------------------
-Intersection* Ray::get_closest_intersection_and_delete_the_rest(	
-	std::vector<Intersection*> *intersections
+const Intersection* Ray::get_closest_intersection_and_delete_the_rest(	
+	std::vector<const Intersection*> *intersections
 )const{
-	Intersection* closest_intersection = 
+	const Intersection* closest_intersection = 
 		calculate_closest_intersection(intersections);
 
-	for(Intersection* intersection : *intersections) 
+	for(const Intersection* intersection : *intersections) 
 		if(intersection != closest_intersection)
 			delete intersection;
 

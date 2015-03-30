@@ -35,7 +35,7 @@ std::string Plane::get_plane_print()const {
 #include "Ray.h"
 #include "Intersection.h"
 //------------------------------------------------------------------------------
-Intersection* Plane::calculate_intersection_with(const Ray* ray)const {
+const Intersection* Plane::calculate_intersection_with(const Ray* ray)const {
 
 	XyPlaneRayIntersectionEquation xyPlaneRayEquation(ray);
 

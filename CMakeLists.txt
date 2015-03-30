@@ -25,7 +25,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ListOfPropagations.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PropagationEnvironment.cpp	
-	#${CMAKE_CURRENT_SOURCE_DIR}/Interaction.cpp	
+	${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryFactory.cpp	
 
 	${CMAKE_CURRENT_SOURCE_DIR}/QuadraticEquation.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/XyPlaneRayIntersectionEquation.cpp
@@ -38,7 +38,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/ReflectionProperties.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/AbsorptionProperties.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/RefractiveIndex.cpp 
-	${CMAKE_CURRENT_SOURCE_DIR}/ColourProperties.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TracerException.cpp
 
 	${CMAKE_CURRENT_SOURCE_DIR}/GlobalSettings.cpp 
@@ -57,6 +57,9 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithHexagonalBound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TelescopeFrame.cpp
 
+	${CMAKE_CURRENT_SOURCE_DIR}/HexGridXy.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SegmetedReflectorGenerator.cpp
+	
 	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLens.cpp
 
 # python extension

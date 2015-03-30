@@ -9,13 +9,13 @@
 //=================================
 // included dependencies
 #include "Ray.h"
-#include "ColourProperties.h"
+#include "Color.h"
 //#include "InteractionSurfaceFinder.h"
 //------------------------------------------------------------------------------
 class CameraRay :public Ray{
 protected:
 	
-	ColourProperties colour;
+	Color colour;
 public:
 	CameraRay(){};
 
@@ -23,7 +23,7 @@ public:
 
 	std::string get_print()const;
 
-	ColourProperties trace(
+	Color trace(
 		const CartesianFrame* world,
 		uint refl_count,
 		const GlobalSettings *settings
@@ -34,12 +34,12 @@ public:
 		const CameraRay& camera_ray_to_be_displayed
 	);
 private:
-	ColourProperties absorption_on_the_outer_side(
+	Color absorption_on_the_outer_side(
 		const Intersection* intersection,
 		const GlobalSettings *settings
 	)const;
 
-	ColourProperties absorption_on_the_inner_side(
+	Color absorption_on_the_inner_side(
 		const Intersection* intersection,
 		const GlobalSettings *settings
 	)const;

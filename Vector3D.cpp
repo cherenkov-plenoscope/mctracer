@@ -1,5 +1,10 @@
 #include "Vector3D.h"
 //------------------------------------------------------------------------------
+const Vector3D Vector3D::null   = Vector3D(0.0, 0.0, 0.0);
+const Vector3D Vector3D::unit_x = Vector3D(1.0, 0.0, 0.0);
+const Vector3D Vector3D::unit_y = Vector3D(0.0, 1.0, 0.0);
+const Vector3D Vector3D::unit_z = Vector3D(0.0, 0.0, 1.0);
+//------------------------------------------------------------------------------
 Vector3D::Vector3D(){
 }
 //------------------------------------------------------------------------------
@@ -24,7 +29,6 @@ double Vector3D::norm2() const{
 }
 //------------------------------------------------------------------------------
 Vector3D Vector3D::CrossProduct(const Vector3D v) const{
-// crossproduct
 	Vector3D temp;
 	temp.X = Y*v.Z - Z*v.Y;
 	temp.Y = Z*v.X - X*v.Z;
@@ -148,30 +152,6 @@ double Vector3D::get_angle_in_between_in_rad(const Vector3D& vec)const {
 	Vector3D this_normalized = *this/this->norm2();
 	Vector3D that_normalized = vec/vec.norm2(); 
 	return acos(this_normalized*that_normalized);
-}
-//------------------------------------------------------------------------------
-void Vector3D::set_unit_vector_x(){
-	X = 1.0;
-	Y = 0.0;
-	Z = 0.0;
-}
-//------------------------------------------------------------------------------
-void Vector3D::set_unit_vector_y(){
-	X = 0.0;
-	Y = 1.0;
-	Z = 0.0;
-}
-//------------------------------------------------------------------------------
-void Vector3D::set_unit_vector_z(){
-	X = 0.0;
-	Y = 0.0;
-	Z = 1.0;
-}
-//------------------------------------------------------------------------------
-void Vector3D::set_null_vector(){
-	X = 0.0;
-	Y = 0.0;
-	Z = 0.0;
 }
 //------------------------------------------------------------------------------
 double Vector3D::x() const{

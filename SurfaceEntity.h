@@ -11,7 +11,7 @@ class RayForPropagation;
 #include "CartesianFrame.h"
 #include "RefractiveIndex.h"
 #include "ReflectionProperties.h"
-#include "ColourProperties.h"
+#include "Color.h"
 #include "AbsorptionProperties.h"
 
 //=================================
@@ -19,7 +19,8 @@ class SurfaceEntity :public CartesianFrame {
 
 	const CartesianFrame* allowed_frame_to_propagate_to = nullptr;
 public:	
-
+	static const SurfaceEntity* void_object;
+	static const SurfaceEntity* source_object;
 	bool has_restrictions_on_frames_to_propagate_to()const;
 	const CartesianFrame* get_allowed_frame_to_propagate_to()const;
 	void set_allowed_frames_to_propagate_to(const CartesianFrame* frame);
@@ -31,7 +32,7 @@ private:
 	static const ReflectionProperties* default_reflec;
 	static const RefractiveIndex* default_refrac;
 	static const AbsorptionProperties* default_absorp;
-	static const ColourProperties* default_color;
+	static const Color* default_color;
 
 	const ReflectionProperties* outer_reflec;
 	const ReflectionProperties* inner_reflec;
@@ -42,15 +43,14 @@ private:
 	const AbsorptionProperties* outer_absorption;
 	const AbsorptionProperties* inner_absorption;
 
-	const ColourProperties* outer_color;
-	const ColourProperties* inner_color;
+	const Color* outer_color;
+	const Color* inner_color;
 
 	bool _boundary_layer_is_transparent;
 public:
-
 	SurfaceEntity();
-	void set_outer_color(const ColourProperties* color);
-	void set_inner_color(const ColourProperties* color);
+	void set_outer_color(const Color* color);
+	void set_inner_color(const Color* color);
 	void set_outer_reflection(const ReflectionProperties* refl);
 	void set_inner_reflection(const ReflectionProperties* refl);
 	void set_outer_refraction(const RefractiveIndex* refrac);
@@ -58,8 +58,8 @@ public:
 	void set_outer_absorption(const AbsorptionProperties* absorp);
 	void set_inner_absorption(const AbsorptionProperties* absorp);
 
-	const ColourProperties* get_outer_color()const;
-	const ColourProperties* get_inner_color()const;
+	const Color* get_outer_color()const;
+	const Color* get_inner_color()const;
 	const ReflectionProperties* get_outer_reflection()const;
 	const ReflectionProperties* get_inner_reflection()const;
 	const RefractiveIndex* get_outer_refraction()const;

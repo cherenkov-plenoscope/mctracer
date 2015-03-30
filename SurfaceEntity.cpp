@@ -1,9 +1,12 @@
 #include "SurfaceEntity.h"
 //------------------------------------------------------------------------------
+const SurfaceEntity* SurfaceEntity::void_object = new SurfaceEntity();
+const SurfaceEntity* SurfaceEntity::source_object = new SurfaceEntity();
+//------------------------------------------------------------------------------
 const ReflectionProperties* SurfaceEntity::default_reflec = new ReflectionProperties(0.0);
 const RefractiveIndex* SurfaceEntity::default_refrac = new RefractiveIndex(1.0);
 const AbsorptionProperties* SurfaceEntity::default_absorp = new AbsorptionProperties(0.0);
-const ColourProperties* SurfaceEntity::default_color = new ColourProperties(25,25,25);
+const Color* SurfaceEntity::default_color = new Color(25,25,25);
 //------------------------------------------------------------------------------
 SurfaceEntity::SurfaceEntity() {
 
@@ -43,8 +46,8 @@ std::string SurfaceEntity::get_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-void SurfaceEntity::set_outer_color(const ColourProperties* color) {outer_color = color;}
-void SurfaceEntity::set_inner_color(const ColourProperties* color) {inner_color = color;}
+void SurfaceEntity::set_outer_color(const Color* color) {outer_color = color;}
+void SurfaceEntity::set_inner_color(const Color* color) {inner_color = color;}
 void SurfaceEntity::set_outer_reflection(const ReflectionProperties* refl) {outer_reflec = refl;}
 void SurfaceEntity::set_inner_reflection(const ReflectionProperties* refl) {inner_reflec = refl;}
 void SurfaceEntity::set_outer_refraction(const RefractiveIndex* refrac) {
@@ -60,8 +63,8 @@ void SurfaceEntity::set_inner_refraction(const RefractiveIndex* refrac) {
 void SurfaceEntity::set_outer_absorption(const AbsorptionProperties* absorp) {outer_absorption = absorp;}
 void SurfaceEntity::set_inner_absorption(const AbsorptionProperties* absorp) {inner_absorption = absorp;}
 //------------------------------------------------------------------------------
-const ColourProperties* SurfaceEntity::get_outer_color()const {return outer_color;}
-const ColourProperties* SurfaceEntity::get_inner_color()const {return inner_color;}
+const Color* SurfaceEntity::get_outer_color()const {return outer_color;}
+const Color* SurfaceEntity::get_inner_color()const {return inner_color;}
 const ReflectionProperties* SurfaceEntity::get_outer_reflection()const {return outer_reflec;}
 const ReflectionProperties* SurfaceEntity::get_inner_reflection()const {return inner_reflec;}
 const RefractiveIndex* SurfaceEntity::get_outer_refraction()const {return outer_refrac;}

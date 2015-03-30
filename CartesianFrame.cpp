@@ -1,5 +1,11 @@
 #include "CartesianFrame.h"
 //------------------------------------------------------------------------------
+CartesianFrame* CartesianFrame::void_frame = new CartesianFrame(
+	"void_frame",
+	Vector3D::null,
+	Rotation3D::null
+);
+//------------------------------------------------------------------------------
 CartesianFrame::CartesianFrame(
     const std::string new_name,
     const Vector3D    new_pos,
@@ -49,8 +55,7 @@ HomoTrafo3D CartesianFrame::calculate_frame2world()const {
 	// The starting point for the latter frame2world is this framse frame2motehr
 	HomoTrafo3D Trafo_on_our_way_towards_the_root = T_frame2mother;	
 
-	while(frame_on_our_way_towards_the_root != nullptr){
-
+	while(frame_on_our_way_towards_the_root != void_frame){
 		Trafo_on_our_way_towards_the_root = 
 		frame_on_our_way_towards_the_root -> 
 		T_frame2mother*Trafo_on_our_way_towards_the_root;
@@ -83,7 +88,7 @@ void CartesianFrame::set_frame(
 //------------------------------------------------------------------------------
 void CartesianFrame::reset_all_connections_to_children_and_mother() {
 	radius_of_sphere_enclosing_all_children = 0.0;	 
-	mother = nullptr;
+	mother = void_frame;
 	root_of_world = this;
 	children.clear();
 }
@@ -209,7 +214,7 @@ void CartesianFrame::update_sphere_enclosing_all_children(
 	// 
 	// Here we have to update the radius of the sphere enclosing all children.
 	//      
-	// Case: The new child is not enclosed by the previous sphere of this frame
+	// Case: The new child is enclosed by the previous sphere of this frame
 	//-------
 	//                    _______________
 	//               ____/               \____                                //
@@ -344,7 +349,7 @@ const CartesianFrame* CartesianFrame::get_frame_in_tree_by_path(
 		// there is no child on this frame which matches the name of the leading
 		// frame. This is: There is no such Frame in this Tree of frames as 
 		// described in path.
-		return nullptr;
+		return void_frame;
 	}
 }
 //------------------------------------------------------------------------------
@@ -355,7 +360,7 @@ const CartesianFrame* CartesianFrame::get_child_by_name(
 		if( StringTools::is_equal(child->name_of_frame, specific_name) )
 			return child;
 
-	return nullptr;
+	return void_frame;
 }
 //------------------------------------------------------------------------------
 std::string CartesianFrame::get_path_in_tree_of_frames()const {
@@ -379,11 +384,11 @@ std::string CartesianFrame::get_path_in_tree_of_frames()const {
 }
 //------------------------------------------------------------------------------
 bool CartesianFrame::has_child_with_name(const std::string name_of_child)const {
-	return get_child_by_name(name_of_child) != nullptr;
+	return get_child_by_name(name_of_child) != void_frame;
 }
 //------------------------------------------------------------------------------
 bool CartesianFrame::has_mother()const {
-	return mother != nullptr;
+	return mother != void_frame;
 }
 //------------------------------------------------------------------------------
 bool CartesianFrame::has_children()const {
@@ -393,14 +398,16 @@ bool CartesianFrame::has_children()const {
 #include "Ray.h"
 #include "Intersection.h"
 //------------------------------------------------------------------------------
-Intersection* CartesianFrame::calculate_intersection_with(const Ray* ray)const {
+const Intersection* CartesianFrame::calculate_intersection_with(const Ray* ray)const {
 	return empty_intersection();
+	//return Intersection::void_intersection;
 }
 //------------------------------------------------------------------------------
-Intersection* CartesianFrame::empty_intersection()const {
+const Intersection* CartesianFrame::empty_intersection()const {
 	Intersection* intersection;
 	intersection = new Intersection();
 	return intersection;
+	//return Intersection::void_intersection;
 }
 //------------------------------------------------------------------------------
 void CartesianFrame::find_intersection_candidates_for_all_children_and_ray(
@@ -410,4 +417,71 @@ void CartesianFrame::find_intersection_candidates_for_all_children_and_ray(
 
 	for(CartesianFrame *child : children)
 		ray->find_intersection_candidates_in_tree_of_frames(child, candidate_frames);
+}
+//------------------------------------------------------------------------------
+void CartesianFrame::cluster_using_helper_frames() {
+	if(get_number_of_children() > 8) {
+
+		std::vector<CartesianFrame*> oct_tree[8];
+
+		std::vector<CartesianFrame*> new_children;
+
+		for(CartesianFrame* child : children)
+			oct_tree[get_sector(child->pos_in_mother)].push_back(child);
+		
+		for(uint sector=0; sector<8; sector++) {
+			if(oct_tree[sector].size() > 0) {
+
+				std::stringstream name;
+				name << "helper_sector_" << sector;
+
+				Vector3D mean_pos_in_mother = get_mean_pos_in_mother(oct_tree[sector]);
+				CartesianFrame* helper_frame = new CartesianFrame(
+					name.str(),
+					mean_pos_in_mother,
+					Rotation3D::null
+				);
+
+				for(CartesianFrame* sector_child : oct_tree[sector]) {
+
+					sector_child->pos_in_mother = 
+						sector_child->pos_in_mother - mean_pos_in_mother;
+
+					sector_child->T_frame2mother.set_transformation(
+						sector_child->rot_in_mother, 
+						sector_child->pos_in_mother
+					);
+
+					helper_frame->set_mother_and_child(sector_child);
+				}
+
+				new_children.push_back(helper_frame);
+			}
+		}
+
+		children.clear();
+		for(CartesianFrame* new_helper_frame_child : new_children) {
+
+			new_helper_frame_child->cluster_using_helper_frames();
+
+			set_mother_and_child(new_helper_frame_child);
+		}
+	}
+}
+//------------------------------------------------------------------------------
+uint CartesianFrame::get_sector(const Vector3D pos)const {
+	const bool sx = pos.x() >= 0.0;
+	const bool sy = pos.y() >= 0.0;
+	const bool sz = pos.z() >= 0.0;
+	return 4*sx + 2*sy + 1*sz;
+}
+//------------------------------------------------------------------------------
+Vector3D CartesianFrame::get_mean_pos_in_mother(std::vector<CartesianFrame*> frames)const {
+	
+	Vector3D sum_pos = Vector3D::null;
+
+	for(CartesianFrame* frame : frames)
+		sum_pos = sum_pos + frame->pos_in_mother;
+
+	return sum_pos/frames.size();
 }

@@ -59,3 +59,34 @@ namespace UserInteraction {
 		return user_input_key == 27;
 	}
 }
+//------------------------------------------------------------------------------
+namespace AssertionTools {
+	void value_with_name_is_greater_zero_given_context(
+		const double value, 
+		const std::string name, 
+		const std::string context
+	) {
+		if(value < 0.0) {
+			std::stringstream out;
+			out << "Expected " << name << " > 0.0, but actual ";
+			out << name << " = " << value << ". " << context; 
+			throw TracerException(out.str());
+		}
+	}
+	//--------------------------------------------------------------------------
+	void value_with_name_is_in_min_max_given_context(
+		const double value, 
+		const std::string name,
+		const double min,
+		const double max, 
+		const std::string context
+	) {
+		if(value < min || value > max) {
+			std::stringstream out;
+			out << "Expected ";
+			out << min << " < " << name << " < " << max << ", but actual ";
+			out << name << " = " << value << ". " << context; 
+			throw TracerException(out.str());
+		}
+	}
+}

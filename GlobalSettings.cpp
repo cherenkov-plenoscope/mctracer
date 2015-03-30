@@ -30,10 +30,10 @@ void GlobalSettings::set_max_number_of_reflections(
 bool GlobalSettings::max_number_of_reflections_is_not_reached_yet(
 	const uint reflection_counter
 )const {
-	return reflection_counter < number_of_max_reflections;
+	return reflection_counter <= number_of_max_reflections;
 }
 //------------------------------------------------------------------------------
-ColourProperties GlobalSettings::get_default_colour()const {
+Color GlobalSettings::get_default_colour()const {
 	return default_colour;
 }
 //------------------------------------------------------------------------------

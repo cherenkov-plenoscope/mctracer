@@ -10,10 +10,10 @@ void PinHoleCamera::update_position_and_orientation(
 	update_principal_point_for_current_FoV();
 
 	// calculate sensor vectors
-	SensorDirectionU.set_unit_vector_x();
-	SensorDirectionV.set_unit_vector_y();
-	T_Camera2World.transform_orientation(&SensorDirectionU);
-	T_Camera2World.transform_orientation(&SensorDirectionV);
+	SensorDirectionHori = Vector3D::unit_y;
+	SensorDirectionVert = Vector3D::unit_x;
+	T_Camera2World.transform_orientation(&SensorDirectionHori);
+	T_Camera2World.transform_orientation(&SensorDirectionVert);
 }
 //------------------------------------------------------------------------------
 void PinHoleCamera::set_FoV_in_rad(const double FoV_in_rad) {
@@ -92,8 +92,8 @@ Vector3D PinHoleCamera::get_intersection_of_ray_on_image_sensor_for_pixel(
 	const int hori_position_on_image_sensor = col-image->get_number_of_cols()/2;
 
 	return principal_point + 
-		SensorDirectionU * vert_position_on_image_sensor + 
-		SensorDirectionV * hori_position_on_image_sensor;
+		SensorDirectionVert * vert_position_on_image_sensor + 
+		SensorDirectionHori * hori_position_on_image_sensor;
 }
 //------------------------------------------------------------------------------
 void PinHoleCamera::acquire_image(	
@@ -101,7 +101,7 @@ void PinHoleCamera::acquire_image(
 ){
 	uint i, row, col;
 	CameraRay cam_ray;
-	ColourProperties color;
+	Color color;
 
 	#pragma omp parallel shared(settings,world) private(i,cam_ray,color,row,col) 
 	{	

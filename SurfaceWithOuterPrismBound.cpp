@@ -1,6 +1,6 @@
 #include "SurfaceWithOuterPrismBound.h"
 //------------------------------------------------------------------------------
-Intersection* SurfaceWithOuterPrismBound::get_causeal_intersection(
+const Intersection* SurfaceWithOuterPrismBound::get_causeal_intersection(
 		const TwoSolutionSurfaceRayEquation* eq,
 		const PrismZ* outer_bound,
 		const Ray *ray

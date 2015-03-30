@@ -48,7 +48,7 @@ void CameraDevice::set_position_and_orientation(
 }
 //------------------------------------------------------------------------------
 void CameraDevice::update_optical_axis_and_orientation() {
-	CameraPointingDirection.set_unit_vector_z();
+	CameraPointingDirection = Vector3D::unit_z;
 	T_Camera2World.transform_orientation(&CameraPointingDirection);
 
 	OpticalAxis.SetSupport(CameraPositionInWorld);
@@ -80,8 +80,7 @@ void CameraDevice::set_pointing_direction(
 //------------------------------------------------------------------------------
 Vector3D CameraDevice::get_image_upwards_direction_in_world_frame()const{
 
-	Vector3D image_upwards_direction_in_world_frame;
-	image_upwards_direction_in_world_frame.set_unit_vector_y();
+	Vector3D image_upwards_direction_in_world_frame = Vector3D::unit_y;
 	
 	T_Camera2World.transform_orientation(
 		&image_upwards_direction_in_world_frame
@@ -156,8 +155,7 @@ Rotation3D CameraDevice::get_rotation_in_world()const{
 }
 //------------------------------------------------------------------------------
 Vector3D CameraDevice::direction_to_the_right_of_the_camera()const{
-	Vector3D ez; ez.set_unit_vector_z(); 
-	return ez.CrossProduct(get_normalized_pointing_direction());	
+	return Vector3D::unit_z.CrossProduct(get_normalized_pointing_direction());	
 }
 Ray CameraDevice::get_optical_axis_in_world()const{
 	return OpticalAxis;

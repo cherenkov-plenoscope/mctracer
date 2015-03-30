@@ -99,7 +99,7 @@ double Ray::get_closest_distance_to_point(const Vector3D &point)const {
 	);
 }
 //------------------------------------------------------------------------------
-bool Ray::operator() (Intersection* one, Intersection* two)const {
+bool Ray::operator() (const Intersection* one, const Intersection* two)const {
 	return 	one->get_intersection_distance() < two->get_intersection_distance();
 }
 //------------------------------------------------------------------------------

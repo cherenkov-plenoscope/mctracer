@@ -27,7 +27,7 @@ std::string Disc::get_Disc_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-Intersection* Disc::calculate_intersection_with(const Ray* ray)const {
+const Intersection* Disc::calculate_intersection_with(const Ray* ray)const {
 
 	XyPlaneRayIntersectionEquation xyPlaneRayEquation(ray);
 

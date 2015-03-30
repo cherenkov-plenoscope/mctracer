@@ -27,9 +27,9 @@ class FactTelescope :public CartesianFrame{
 	double MirrorRadius_m;
 	std::vector<SphereCapWithHexagonalBound*> list_of_mirrors;
 
-	ColourProperties* mirror_colour;
+	Color* mirror_colour;
 	ReflectionProperties* outer_mirror_reflection;
-	ColourProperties* inner_mirror_colour;
+	Color* inner_mirror_colour;
 public:
 
 	FactTelescope(double alpha);

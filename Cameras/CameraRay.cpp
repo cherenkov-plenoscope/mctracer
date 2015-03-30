@@ -10,15 +10,15 @@ std::string CameraRay::get_print()const{
 	return out.str();
 }
 //------------------------------------------------------------------------------
-ColourProperties CameraRay::trace(
+Color CameraRay::trace(
 	const CartesianFrame* world,
 	uint refl_count,
 	const GlobalSettings *settings
 )const {
 
-	ColourProperties color;
+	Color color;
 			
-	Intersection* intersection = get_first_intersection_in(world);
+	const Intersection* intersection = get_first_intersection_in(world);
 
 	if(intersection->does_intersect()) {
 
@@ -31,7 +31,7 @@ ColourProperties CameraRay::trace(
 				intersection->get_reflection_direction_in_world_system(Direction())
 			);
 
-			ColourProperties reflection_color = 
+			Color reflection_color = 
 				reflected_ray.trace(world, refl_count, settings);
 
 			color = intersection->get_facing_color();

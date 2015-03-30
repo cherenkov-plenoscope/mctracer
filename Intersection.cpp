@@ -1,10 +1,15 @@
 #include "Intersection.h"
 //------------------------------------------------------------------------------
-const SurfaceEntity* Intersection::void_object = new SurfaceEntity();
-const SurfaceEntity* Intersection::source_object = new SurfaceEntity();
+const Intersection* Intersection::void_intersection = new Intersection(
+	//SurfaceEntity::void_object,
+	//Vector3D::null,
+	//Vector3D(0.0,0.0,1.0),
+	//0,
+	//Vector3D(0.0,0.0,-1.0)
+);
 //------------------------------------------------------------------------------
 Intersection::Intersection() {
-	intersecting_object = void_object;
+	intersecting_object = SurfaceEntity::void_object;
 	intersection_point = Vector3D(
 		std::numeric_limits<double>::infinity(),
 		std::numeric_limits<double>::infinity(),
@@ -30,7 +35,7 @@ Intersection::Intersection(
 }
 //------------------------------------------------------------------------------
 bool Intersection::does_intersect()const {
-	return intersecting_object != void_object;
+	return intersecting_object != SurfaceEntity::void_object;
 }
 //------------------------------------------------------------------------------
 const SurfaceEntity * Intersection::get_intersecting_object()const {
@@ -138,7 +143,7 @@ bool Intersection::boundary_layer_is_transparent()const {
 	return intersecting_object->boundary_layer_is_transparent();
 }
 //------------------------------------------------------------------------------
-const ColourProperties Intersection::get_facing_color()const {
+const Color Intersection::get_facing_color()const {
 	return _from_outside_to_inside ? 
 		*intersecting_object->get_outer_color(): 
 		*intersecting_object->get_inner_color();

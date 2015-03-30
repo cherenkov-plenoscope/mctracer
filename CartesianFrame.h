@@ -53,6 +53,8 @@ private:
     static const char delimiter_for_frame_path = '/';
 public:
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    static CartesianFrame* void_frame;
+
     CartesianFrame(){};
     
     CartesianFrame(
@@ -167,10 +169,17 @@ protected:
     void assert_name_has_no_delimiter_symbol(
         const std::string name_to_check
     )const;
+
+    uint get_sector(const Vector3D pos)const;
+
+    Vector3D get_mean_pos_in_mother(std::vector<CartesianFrame*> frames)const;
+
 public:
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-    virtual Intersection* calculate_intersection_with(const Ray* ray)const;
+    void cluster_using_helper_frames();
 
-    Intersection* empty_intersection()const;
+    virtual const Intersection* calculate_intersection_with(const Ray* ray)const;
+
+    const Intersection* empty_intersection()const;
 };
 #endif // __CARTESIANFRAME_H_INCLUDED__

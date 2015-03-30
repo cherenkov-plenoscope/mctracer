@@ -53,7 +53,7 @@ uint CameraImage::get_number_of_rows()const {
 }
 //------------------------------------------------------------------------------
 void CameraImage::set_pixel_row_col_to_color(
-	const uint row, const uint col, const ColourProperties &color){
+	const uint row, const uint col, const Color &color){
 	cv::Vec3b intensity;
 
 	intensity.val[0] = color.get_B_as_uchar();

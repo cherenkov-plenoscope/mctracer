@@ -12,7 +12,7 @@ void BiConvexLens::set_curvature_radius_and_diameter(
 
 	front_cap = create_cap_with_pos_rot_name_focal_lengt_and_diameter(
 		Vector3D(0.0, 0.0, -offset),
-		Rotation3D(0.0, 0.0, 0.0),
+		Rotation3D::null,
 		name_of_mother_frame_plus("_front_cap"),
 		curvature_radius,
 		diameter

@@ -12,8 +12,8 @@ void HexagonalPrismZ::set_outer_radius(const double outer_radius) {
 
 	assert_outer_radius_positive(outer_radius);
 
-	ex.set_unit_vector_x();
-	ey.set_unit_vector_y();
+	ex = Vector3D::unit_x;
+	ey = Vector3D::unit_y;
 	
 	hexU = ey;
 	
