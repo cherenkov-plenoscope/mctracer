@@ -38,23 +38,34 @@ void SegmetedReflectorGenerator::set_facet_spacing(const double _facet_spacing) 
 	facet_spacing = _facet_spacing;
 }
 //------------------------------------------------------------------------------
-void SegmetedReflectorGenerator::set_max_outer_diameter(const double _max_diameter) {
+void SegmetedReflectorGenerator::set_max_outer_diameter(const double _max_outer_diameter) {
 	AssertionTools::value_with_name_is_greater_zero_given_context(
-		_max_diameter,
-		"max_diameter",
+		_max_outer_diameter,
+		"max_outer_diameter",
 		"SegmetedReflectorGenerator::set_max_outer_diameter()\n"
 		"Max outer reflector diameter."
 	);
-	max_diameter = _max_diameter;
+	max_outer_diameter = _max_outer_diameter;
+}
+//------------------------------------------------------------------------------
+void SegmetedReflectorGenerator::set_min_inner_diameter(const double _min_inner_diameter) {
+	AssertionTools::value_with_name_is_greater_zero_given_context(
+		_min_inner_diameter,
+		"min_inner_diameter",
+		"SegmetedReflectorGenerator::set_min_inner_diameter()\n"
+		"Min inner reflector diameter."
+	);
+	min_inner_diameter = _min_inner_diameter;
 }
 //------------------------------------------------------------------------------
 CartesianFrame* SegmetedReflectorGenerator::get_reflector() {
 	init_focal_point();
-	set_facet_xy_positions();
-	set_facet_z_positions();
+	init_facet_xy_positions();
+	init_facet_z_positions();
 	optimize_reflector_z_pos();
-	set_facet_orientations();
+	init_facet_orientations();
 	init_facet_surface();
+	init_facet_radius();
 	init_facets();
 	init_reflector();
 
@@ -65,8 +76,8 @@ std::string SegmetedReflectorGenerator::get_print()const {
 	std::stringstream out;
 	out << "SegmetedReflectorGenerator:\n";
 	out << "focal_length: " << focal_length << "m\n";
-	out << "number of mirrors: " << facet_positions.size() << "\n";
-	out << "max Aperture diameter: " << max_diameter << "\n";
+	out << "number of facets: " << facet_positions.size() << "\n";
+	out << "max Aperture diameter: " << max_outer_diameter << "\n";
 	out << "Hybrid: ";
 	out << DaviesCotton_to_parabolic_mixing_factor << " Davies Cotton + ";
 	out << 1.0 - DaviesCotton_to_parabolic_mixing_factor << " Parabolid\n";
@@ -80,16 +91,21 @@ std::string SegmetedReflectorGenerator::get_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-void SegmetedReflectorGenerator::set_facet_xy_positions() {
+void SegmetedReflectorGenerator::init_facet_xy_positions() {
 
-	const double max_reflector_radius = max_diameter/2.0;
+	const double max_reflector_radius = max_outer_diameter/2.0;
+	const double min_reflector_radius = min_inner_diameter/2.0;
 
-	HexGridXy hex_grid(max_reflector_radius, facet_spacing);
+	HexGridXy hex_grid(
+		max_reflector_radius, 
+		min_reflector_radius, 
+		facet_spacing
+	);
 
     facet_positions = hex_grid.get_grid();
 }
 //------------------------------------------------------------------------------
-void SegmetedReflectorGenerator::set_facet_z_positions() {
+void SegmetedReflectorGenerator::init_facet_z_positions() {
 
 	for(uint i=0; i<facet_positions.size(); i++) {
 
@@ -116,7 +132,7 @@ double SegmetedReflectorGenerator::get_z_pos_given_dist_to_optical_axis(
 		(1.0 - DaviesCotton_to_parabolic_mixing_factor)*z_parabolic;
 }
 //------------------------------------------------------------------------------
-void SegmetedReflectorGenerator::set_facet_orientations() {
+void SegmetedReflectorGenerator::init_facet_orientations() {
 
 	for(uint i=0; i<facet_positions.size(); i++) {
 
@@ -127,13 +143,10 @@ void SegmetedReflectorGenerator::set_facet_orientations() {
 				
 			Vector3D rotation_axis = 
 				focal_point_to_facet_pos.CrossProduct(Vector3D::unit_z);
-			
-			Vector3D direction_of_focal_point_to_mirror_pos =
-				focal_point_to_facet_pos/focal_point_to_facet_pos.norm2();
 
 			double angle_between_EZ_and_focal_point_to_mirror_pos =
-				acos(Vector3D::unit_z*direction_of_focal_point_to_mirror_pos);
-			
+				Vector3D::unit_z.get_angle_in_between_in_rad(focal_point_to_facet_pos);
+
 			double rot_angle = 0.5*angle_between_EZ_and_focal_point_to_mirror_pos;
 
 			facet_orientations.push_back(Rotation3D(rotation_axis, -rot_angle));
@@ -143,11 +156,8 @@ void SegmetedReflectorGenerator::set_facet_orientations() {
 	}
 }
 //------------------------------------------------------------------------------
-bool SegmetedReflectorGenerator::is_not_center_position(const Vector3D pos) {
-	if(pos.x() == 0.0 && pos.y() == 0.0)
-		return false;
-	else
-		return true;
+bool SegmetedReflectorGenerator::is_not_center_position(const Vector3D pos) {	
+	return pos.x() != 0.0 || pos.y() != 0.0;
 }
 //------------------------------------------------------------------------------
 void SegmetedReflectorGenerator::init_focal_point() {
@@ -158,24 +168,19 @@ void SegmetedReflectorGenerator::optimize_reflector_z_pos() {
 
 	uint iteration_conter = 0;
 	double deviation;
-	double average_image_distance_of_facets;
 
 	do{
-		iteration_conter++;
-		abort_if_too_many_iterations(iteration_conter);
+		abort_if_too_many_iterations(++iteration_conter);
 
-		average_image_distance_of_facets = 
-			get_average_image_distances_of_facets();
+		deviation = focal_length - get_average_image_distances_of_facets();
 
-		deviation = focal_length - average_image_distance_of_facets;
-		
 		move_all_facets_in_z(-deviation*0.5);
 	}while( fabs(deviation) > focal_length*1e-6);
 
 }
 //------------------------------------------------------------------------------
 void SegmetedReflectorGenerator::move_all_facets_in_z(const double movement) {
-	
+
 	for(uint i=0; i<facet_positions.size(); i++) {
 
 		facet_positions.at(i).set(
@@ -229,12 +234,17 @@ void SegmetedReflectorGenerator::init_facets() {
 		facet->set_outer_color(mirror_colour);
 		facet->set_inner_color(inner_mirror_colour);
 		facet->set_outer_reflection(outer_mirror_reflection);
-			
+
 		facet->set_focal_length_and_outer_hex_radius(
 			focal_length,
-			facet_spacing*2.0/sqrt(3.0)*0.5*0.98
+			facet_radius
 		);		
 	}	
+}
+//------------------------------------------------------------------------------
+void SegmetedReflectorGenerator::init_facet_radius() {
+	double facet_diameter_peak2peak = 2.0/sqrt(3.0)*facet_spacing;
+	facet_radius = 0.5*facet_diameter_peak2peak*facet_fill_factor;
 }
 //------------------------------------------------------------------------------
 void SegmetedReflectorGenerator::init_reflector() {

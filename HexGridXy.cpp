@@ -1,17 +1,33 @@
 #include "HexGridXy.h"
 //------------------------------------------------------------------------------
 HexGridXy::HexGridXy(const double outer_radius, const double spacing) {
+	init_grid(outer_radius, 0.0, spacing);
+}
+//------------------------------------------------------------------------------
+HexGridXy::HexGridXy(const double outer_radius, const double inner_radius ,const double spacing) {
+	init_grid(outer_radius, inner_radius, spacing);
+}
+//------------------------------------------------------------------------------
+void HexGridXy::init_grid(
+	const double outer_radius, 
+	const double inner_radius,
+	const double spacing
+) {
 	init_unit_vectors_hex_grid_with_length(spacing);
 
 	int sample_radius = 2.0*floor(outer_radius/spacing);
 
-	for(int a=-sample_radius; a<=sample_radius; a++)
+	for(int a=-sample_radius; a<=sample_radius; a++) {
 		for(int b=-sample_radius; b<=sample_radius; b++) {
 
 			Vector3D cell_ab = unit_hex_a*a + unit_hex_b*b;
-			if(cell_ab.norm2_is_less_equal_than(outer_radius))
+
+			const double cell_norm = cell_ab.norm2();
+
+			if(cell_norm <= outer_radius && cell_norm >= inner_radius)
 				grid.push_back(cell_ab);
 		}
+	}
 }
 //------------------------------------------------------------------------------
 std::vector<Vector3D> HexGridXy::get_grid()const {

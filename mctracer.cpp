@@ -55,6 +55,7 @@ int main(int argc, char* argv[]) {
 		reflector_generator.set_focal_length(4.889);
 		reflector_generator.set_facet_spacing(0.62);
 		reflector_generator.set_max_outer_diameter(3.5);
+		reflector_generator.set_min_inner_diameter(0.5);
 		reflector_generator.set_hybrid_geometry(0.5);
 		CartesianFrame* reflector = reflector_generator.get_reflector();
 		//std::cout << reflector_generator.get_print();

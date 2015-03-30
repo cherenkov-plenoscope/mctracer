@@ -24,6 +24,8 @@ TEST_F(HexGridXyTest, Cells_are_inside_boundary) {
 TEST_F(HexGridXyTest, Reflector_buid) {
   SegmetedReflectorGenerator dream_reflector;
 
+  const double max_outer_diameter = 4.0;
+
   dream_reflector.set_focal_length(5);
   dream_reflector.set_facet_spacing(0.62);
   dream_reflector.set_max_outer_diameter(4.0);
@@ -31,7 +33,10 @@ TEST_F(HexGridXyTest, Reflector_buid) {
 
   const CartesianFrame* refl = dream_reflector.get_reflector();
 
-  EXPECT_TRUE(4.0 > refl->get_radius_of_sphere_enclosing_all_children());
+  EXPECT_TRUE(
+    max_outer_diameter/2.0 >= 
+    refl->get_radius_of_sphere_enclosing_all_children()
+  );
   //std::cout << dream_reflector.get_print();
   //GlobalSettings settings;
   //FreeOrbitCamera free(refl, &settings);
