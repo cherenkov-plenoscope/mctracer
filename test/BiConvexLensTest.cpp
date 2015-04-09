@@ -8,7 +8,7 @@
 
 class BiConvexLensTest : public ::testing::Test {
  protected:
-  CartesianFrame* test_bench;
+  Frame* test_bench;
   GlobalSettings settings;
   PseudoRandomNumberGenerator dice;
   PropagationEnvironment lens_test_bench_environment;
@@ -36,7 +36,7 @@ class BiConvexLensTest : public ::testing::Test {
     test_bench->set_mother_and_child(lens);
     test_bench->set_mother_and_child(image_sensor);
 
-    test_bench->setup_tree_based_on_mother_child_relations();     
+    test_bench->init_tree_based_on_mother_child_relations();     
   }
   //------------------  
   BiConvexLens* get_preassambled_lens() {
@@ -44,7 +44,7 @@ class BiConvexLensTest : public ::testing::Test {
     BiConvexLens* lens;
     lens = new BiConvexLens;
 
-    lens->set_frame(
+    lens->set_name_pos_rot(
       "little_lens",
       Vector3D::null,
       Rotation3D::null
@@ -69,7 +69,7 @@ class BiConvexLensTest : public ::testing::Test {
     Disc* image_sensor;
     image_sensor = new Disc;
 
-    image_sensor->set_frame(
+    image_sensor->set_name_pos_rot(
       "sensor_disc",
       Vector3D(0.0, 0.0, -2.0), 
       Rotation3D::null
@@ -84,12 +84,12 @@ class BiConvexLensTest : public ::testing::Test {
     return image_sensor;   
   }
   //------------------
-  CartesianFrame* get_test_bench_frame() {
+  Frame* get_test_bench_frame() {
 
-    CartesianFrame* test_bench;
-    test_bench = new CartesianFrame;
+    Frame* test_bench;
+    test_bench = new Frame;
 
-    test_bench->set_frame(
+    test_bench->set_name_pos_rot(
       "BiConvexLens_test_world",
       Vector3D::null,
       Rotation3D::null

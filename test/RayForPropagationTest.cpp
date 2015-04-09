@@ -59,7 +59,7 @@ TEST_F(RayForPropagationTest, Constructor_using_ray_to_be_expanded) {
 TEST_F(RayForPropagationTest, direction_normalized) {
 
   RayForPropagation prop_ray(support, direction*42.0);
-  EXPECT_EQ(1.0, prop_ray.Direction().norm2());
+  EXPECT_EQ(1.0, prop_ray.Direction().norm());
 }
 //------------------------------------------------------------------------------
 TEST_F(RayForPropagationTest, distance_passed_after_creation) {

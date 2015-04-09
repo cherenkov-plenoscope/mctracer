@@ -15,13 +15,13 @@ class RayAndFrameTest : public ::testing::Test {
   const double radius_of_test_frame = 4.2;
 
   RayAndFrameTest() {
-    frame_r_4p2m.set_frame(
+    frame_r_4p2m.set_name_pos_rot(
       "frame_with_radius=4.2m", 
       Vector3D::null,
       Rotation3D::null
     );
 
-    frame_r_4p2m.set_sphere(radius_of_test_frame);
+    frame_r_4p2m.set_sphere_radius(radius_of_test_frame);
   }
 
   virtual ~RayAndFrameTest() {

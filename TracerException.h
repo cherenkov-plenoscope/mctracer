@@ -11,7 +11,9 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <cstring>
 #include <sstream>
+#include "Tools/StringTools.h"
 
 enum ExceptionType {
 	NOT_SPECIFIED,
@@ -41,6 +43,8 @@ public:
 	TracerException();
 	ExceptionType type()const;
 	const char * what () const throw();
+private:
+	std::string get_full_message_print()const;
 };
 
 class BadValue :public TracerException{

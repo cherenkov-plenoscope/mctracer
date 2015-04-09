@@ -40,7 +40,7 @@ class WorldFactoryTest : public ::testing::Test {
 TEST_F(WorldFactoryTest, DefaultWorld) {
 
   WorldFactory file2world;
-  CartesianFrame *Mworld = file2world.world();
+  Frame *Mworld = file2world.world();
 
   // name of default world
   EXPECT_EQ( Mworld->get_name_of_frame() , "world");
@@ -50,13 +50,13 @@ TEST_F(WorldFactoryTest, DefaultWorld) {
 
   // position of default world in mother frame is null vector
   EXPECT_EQ( 
-    *Mworld->get_position_of_frame_in_mother_frame(),
+    *Mworld->get_position_in_mother(),
     Vector3D::null
   );
 
   // rotation of default world in mother frame is null
   EXPECT_EQ( 
-    *Mworld->get_rotation_of_frame_in_mother_frame(),
+    *Mworld->get_rotation_in_mother(),
     Rotation3D::null
   );
 }
@@ -64,7 +64,7 @@ TEST_F(WorldFactoryTest, DefaultWorld) {
 TEST_F(WorldFactoryTest, ReadEmptyXML) {
 
   WorldFactory file2world;
-  CartesianFrame *Mworld = NULL;
+  Frame *Mworld = NULL;
 
   try{
 
@@ -92,7 +92,7 @@ TEST_F(WorldFactoryTest, ReadNotExistingFile) {
   try{
 
     file2world.load(xml_file);
-    CartesianFrame *Mworld = file2world.world();
+    Frame *Mworld = file2world.world();
 
     // the root of a file is always called world also the file does not 
     // exist
@@ -121,7 +121,7 @@ TEST_F(WorldFactoryTest, ReadFileWithUnknownObject) {
   try{
 
     file2world.load(xml_file);
-    CartesianFrame *Mworld = file2world.world();
+    Frame *Mworld = file2world.world();
 
     // the root of a file is always called world also the file does not 
     // exist
@@ -150,7 +150,7 @@ try{
 
   file2world.load(xml_file);
 
-  //CartesianFrame *Mworld = file2world.world();
+  //Frame *Mworld = file2world.world();
 
   }catch(std::exception& error){
     cout << error.what();

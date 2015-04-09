@@ -89,7 +89,7 @@ double Ray::get_distance_to_point_from_position_of_ray_at(
 	
 	// Calculate length of W. The lenght of W is the closest distance
 	// between ray and object
-	return W.norm2();  
+	return W.norm();  
 }
 //------------------------------------------------------------------------------
 double Ray::get_closest_distance_to_point(const Vector3D &point)const {
@@ -104,7 +104,7 @@ bool Ray::operator() (const Intersection* one, const Intersection* two)const {
 }
 //------------------------------------------------------------------------------
 Ray Ray::get_ray_transformed_in_object_system_of(
-	const CartesianFrame* frame
+	const Frame* frame
 )const {
 	Ray ray_in_object_system_of_frame = *this;
 	ray_in_object_system_of_frame.transform(frame->world2frame());

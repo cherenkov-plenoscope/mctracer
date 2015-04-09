@@ -77,14 +77,14 @@ void ApertureCamera::update_aperture_radius() {
 }
 //------------------------------------------------------------------------------
 void ApertureCamera::auto_focus(
-	const CartesianFrame* world,
+	const Frame* world,
 	const GlobalSettings* settings
 ){
 	set_focus_to(get_average_object_distance(world, settings));
 }
 //------------------------------------------------------------------------------
 double ApertureCamera::get_average_object_distance(
-	const CartesianFrame* world,
+	const Frame* world,
 	const GlobalSettings* settings
 ) {
 	double sum_of_valid_object_distances = 0.0;
@@ -261,7 +261,7 @@ Vector3D ApertureCamera::camera_ray_direction_vector_in_world_frame(
 }
 //------------------------------------------------------------------------------
 void ApertureCamera::acquire_image(
-	const CartesianFrame* world,
+	const Frame* world,
 	const GlobalSettings* settings
 ){
 	double color_weight_for_single_ray = 

@@ -5,7 +5,7 @@
 
 //=================================
 // forward declared dependencies
-class CartesianFrame;
+class Frame;
 class GlobalSettings;
 //=================================
 // included dependencies
@@ -25,7 +25,7 @@ public:
 	void print()const;
 
 	void acquire_image(	
-		const CartesianFrame* world, 
+		const Frame* world, 
 		const GlobalSettings* settings
 	);
 

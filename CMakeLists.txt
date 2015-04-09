@@ -14,7 +14,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Rotation3D.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/HomoTrafo3D.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Intersection.cpp 
-	${CMAKE_CURRENT_SOURCE_DIR}/CartesianFrame.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/Frame.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceEntity.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Ray.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/RayForPropagation.cpp 	
@@ -51,7 +51,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Disc.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Sphere.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Cylinder.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/FactTelescope.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceWithOuterPrismBound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithCylinderBound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithHexagonalBound.cpp

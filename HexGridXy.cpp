@@ -22,7 +22,7 @@ void HexGridXy::init_grid(
 
 			Vector3D cell_ab = unit_hex_a*a + unit_hex_b*b;
 
-			const double cell_norm = cell_ab.norm2();
+			const double cell_norm = cell_ab.norm();
 
 			if(cell_norm <= outer_radius && cell_norm >= inner_radius)
 				grid.push_back(cell_ab);

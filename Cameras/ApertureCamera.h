@@ -5,7 +5,7 @@
 
 //=================================
 // forward declared dependencies
-class CartesianFrame;
+class Frame;
 class GlobalSettings;
 //=================================
 // included dependencies
@@ -32,12 +32,12 @@ public:
 	CameraRay get_ray_for_pixel_in_row_and_col(const uint row, const uint col);
 
 	void acquire_image(
-		const CartesianFrame* world,
+		const Frame* world,
 		const GlobalSettings* settings
 	);
 
 	void auto_focus(
-		const CartesianFrame* world,
+		const Frame* world,
 		const GlobalSettings* settings
 	);
 
@@ -97,7 +97,7 @@ private:
 	uint get_random_col();
 
 	double get_average_object_distance(
-		const CartesianFrame* world,
+		const Frame* world,
 		const GlobalSettings* settings
 	);
 };

@@ -68,6 +68,6 @@ Vector3D SphericalCapRayIntersectionEquation::get_surface_normal_given_intersect
 		1.0
 	);
 
-	surface_normal = surface_normal/surface_normal.norm2();
+	surface_normal = surface_normal/surface_normal.norm();
 	return surface_normal;
 }

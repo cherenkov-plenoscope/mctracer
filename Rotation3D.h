@@ -30,9 +30,11 @@ public:
 	
 	Rotation3D();
 	Rotation3D(double Phi, double The, double Psi);
-	void set(double Phi,double The,double Psi);
 	Rotation3D(const Vector3D new_rot_axis, const double new_rot_angle_on_rad);
+	
+	void set(double Phi, double The, double Psi);
 	void set(const Vector3D new_rot_axis, const double new_rot_angle_on_rad);
+	
 	Vector3D get_rot_axis()const;
 	double get_rot_angle_in_rad()const;
 	bool uses_xyz_angels()const;

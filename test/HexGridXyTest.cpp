@@ -17,7 +17,7 @@ TEST_F(HexGridXyTest, Cells_are_inside_boundary) {
     std::vector<Vector3D> grid = my_grid.get_grid();
 
     for(Vector3D cell : grid)
-      EXPECT_TRUE(outer_radius > cell.norm2());
+      EXPECT_TRUE(outer_radius > cell.norm());
   }
 }
 //----------------------------------------------------------------------
@@ -31,10 +31,10 @@ TEST_F(HexGridXyTest, Reflector_buid) {
   dream_reflector.set_max_outer_diameter(4.0);
   dream_reflector.set_hybrid_geometry(0.5);
 
-  const CartesianFrame* refl = dream_reflector.get_reflector();
+  const Frame* refl = dream_reflector.get_reflector();
 
   EXPECT_TRUE(
-    max_outer_diameter/2.0 >= 
+    max_outer_diameter + 0.62/2.0 >= 
     refl->get_radius_of_sphere_enclosing_all_children()
   );
   //std::cout << dream_reflector.get_print();

@@ -12,13 +12,14 @@
 #include <iostream> 
 #include <string>
 #include <sstream>
-#include "CartesianFrame.h"
+#include "Frame.h"
 #include "Triangle.h"
 #include "Plane.h"
 #include "Sphere.h"
 #include "Cylinder.h"
 #include "Disc.h"
-#include "FactTelescope.h"
+//#include "FactTelescope.h"
+#include "SegmetedReflectorGenerator.h"
 #include "Vector3D.h"
 #include "Rotation3D.h"
 #include "ReflectionProperties.h"
@@ -29,64 +30,64 @@
 //------------------------------------------------------------------------------
 class WorldFactory : public XmlFileIo{
 	
-	CartesianFrame* root_of_World;
+	Frame* root_of_World;
 	std::string absolute_path ="";
 public:
 
 	WorldFactory();
 	void load(std::string path);
-	CartesianFrame* world();
+	Frame* world();
 private:
 
 	void load_file(
-		CartesianFrame* mother,
+		Frame* mother,
 		std::string path,
 		std::string filename
 	);
 
 	void extract_include_path(std::string &path,const pugi::xml_node node);
 
-	void include_file(CartesianFrame* mother,const pugi::xml_node node);
+	void include_file(Frame* mother,const pugi::xml_node node);
 
-	void fabricate_frame(CartesianFrame* mother,const pugi::xml_node frame_node);
+	void fabricate_frame(Frame* mother,const pugi::xml_node frame_node);
 
 	void go_on_with_children_of_node(
-		CartesianFrame* mother,
+		Frame* mother,
 		const pugi::xml_node node
 	);
 
-	CartesianFrame* produceCartesianFrame(
-		CartesianFrame* mother,
+	Frame* produceCartesianFrame(
+		Frame* mother,
 		const pugi::xml_node frame_node
 	);
 
-	CartesianFrame* producePlane(
-		CartesianFrame* mother,
+	Frame* producePlane(
+		Frame* mother,
 		const pugi::xml_node frame_node
 	);
 
-	CartesianFrame* produceSphere(
-		CartesianFrame* mother,
+	Frame* produceSphere(
+		Frame* mother,
 		const pugi::xml_node node
 	);
 
-	CartesianFrame* produceCylinder(
-		CartesianFrame* mother,
+	Frame* produceCylinder(
+		Frame* mother,
 		const pugi::xml_node node
 	);
 
-	CartesianFrame* produceFactReflector(
-		CartesianFrame* mother,
+	Frame* produceReflector(
+		Frame* mother,
 		const pugi::xml_node node
 	);
 
-	CartesianFrame* produceDisc(
-		CartesianFrame* mother,
+	Frame* produceDisc(
+		Frame* mother,
 		const pugi::xml_node node
 	);
 
-	CartesianFrame* produceTriangle(
-		CartesianFrame* mother,
+	Frame* produceTriangle(
+		Frame* mother,
 		const pugi::xml_node node
 	);
 
@@ -114,9 +115,7 @@ private:
 		const pugi::xml_node node
 	);
 
-	void extract_FACT_props(double &alpha,const pugi::xml_node node);
-
-	void extract_Disc_props(double &radius,const pugi::xml_node node);
+	void extract_Disc_props(double &radius, const pugi::xml_node node);
 
 	void extract_Triangle_props(
 		double &Ax, double &Ay, 
@@ -126,9 +125,13 @@ private:
 	);
 
 	void assert_name_of_child_frame_is_not_in_use_yet(
-		const CartesianFrame *mother,
+		const Frame *mother,
 		const std::string name_of_additional_child
 	)const;
+
+	double extract_reflector(
+		const std::string key, const pugi::xml_node node
+	);
 
 	bool file_can_be_opened(const char* file)const;
 };

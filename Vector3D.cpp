@@ -4,93 +4,68 @@ const Vector3D Vector3D::null   = Vector3D(0.0, 0.0, 0.0);
 const Vector3D Vector3D::unit_x = Vector3D(1.0, 0.0, 0.0);
 const Vector3D Vector3D::unit_y = Vector3D(0.0, 1.0, 0.0);
 const Vector3D Vector3D::unit_z = Vector3D(0.0, 0.0, 1.0);
+const double Vector3D::max_deviation_of_eq_vectors = 1e-7;
 //------------------------------------------------------------------------------
 Vector3D::Vector3D(){
 }
 //------------------------------------------------------------------------------
-Vector3D::Vector3D(const double nx,const double ny,const double nz){
+Vector3D::Vector3D(const double nx,const double ny,const double nz) {
 	X=nx; 
 	Y=ny; 
 	Z=nz;
 }
 //------------------------------------------------------------------------------
-void Vector3D::set(const double nx,const double ny,const double nz){
+void Vector3D::set(const double nx,const double ny,const double nz) {
 	X=nx; 
 	Y=ny; 
 	Z=nz;
 }
 //------------------------------------------------------------------------------
 void Vector3D::normalize() {
-	*this = *this/this->norm2();
+	*this = *this/this->norm();
 }
 //------------------------------------------------------------------------------
-double Vector3D::norm2() const{
+double Vector3D::norm()const {
 	return sqrt( X*X + Y*Y + Z*Z );
 }
 //------------------------------------------------------------------------------
-Vector3D Vector3D::CrossProduct(const Vector3D v) const{
-	Vector3D temp;
-	temp.X = Y*v.Z - Z*v.Y;
-	temp.Y = Z*v.X - X*v.Z;
-	temp.Z = X*v.Y - Y*v.X;
-	return temp;
+Vector3D Vector3D::cross(const Vector3D v)const {
+	return Vector3D(Y*v.Z-Z*v.Y, Z*v.X-X*v.Z, X*v.Y-Y*v.X);
 }
 //------------------------------------------------------------------------------
-double Vector3D::operator*(const Vector3D vec_two) const{
-	double scalarproduct;
-	scalarproduct = vec_two.X*X + vec_two.Y*Y + vec_two.Z*Z;
-	return scalarproduct;
+double Vector3D::operator*(const Vector3D vec_two)const {
+	return vec_two.X*X + vec_two.Y*Y + vec_two.Z*Z;
 }
 //------------------------------------------------------------------------------
-Vector3D Vector3D::operator*(const double scalar) const{
-	Vector3D  temp;
-	temp.X=X*scalar;
-	temp.Y=Y*scalar;
-	temp.Z=Z*scalar;
-	return temp;
+Vector3D Vector3D::operator*(const double scalar)const {
+	return Vector3D(X*scalar, Y*scalar, Z*scalar);
 }
 //------------------------------------------------------------------------------
-Vector3D Vector3D::operator-(const Vector3D vec_two) const{
-	Vector3D temp;
-	temp.X = X-vec_two.X;
-	temp.Y = Y-vec_two.Y;
-	temp.Z = Z-vec_two.Z;
-	return temp;
+Vector3D Vector3D::operator-(const Vector3D vec)const {
+	return Vector3D(X-vec.X, Y-vec.Y, Z-vec.Z);
 }
 //------------------------------------------------------------------------------
-Vector3D Vector3D::operator+(const Vector3D vec_two) const{
-	Vector3D temp;
-	temp.X = X+vec_two.X;
-	temp.Y = Y+vec_two.Y;
-	temp.Z = Z+vec_two.Z;
-	return temp;
+Vector3D Vector3D::operator+(const Vector3D vec)const {
+	return Vector3D(X+vec.X, Y+vec.Y, Z+vec.Z);
 }
 //------------------------------------------------------------------------------
-Vector3D Vector3D::operator/(const double scalar) const{
-	Vector3D temp;
-	temp.X = X/scalar;
-	temp.Y = Y/scalar;
-	temp.Z = Z/scalar;
-	return temp;
+Vector3D Vector3D::operator/(const double scalar)const {
+	return Vector3D(X/scalar, Y/scalar, Z/scalar);
 }
 //------------------------------------------------------------------------------
-void Vector3D::operator=(const Vector3D eq){
-	X =eq.X;
-	Y =eq.Y;
-	Z =eq.Z;
+void Vector3D::operator=(const Vector3D eq) {
+	X = eq.X;
+	Y = eq.Y;
+	Z = eq.Z;
 }
 //------------------------------------------------------------------------------
-void Vector3D::print() const{
-	std::cout << get_string();
-}
-//------------------------------------------------------------------------------
-std::string Vector3D::get_string() const{
+std::string Vector3D::get_print()const {
 	std::stringstream out; 
 	out << "(" << X << " " << Y << " " << Z << ")m";
 	return out.str();
 }
 //------------------------------------------------------------------------------
-void Vector3D::mirror(Vector3D* ray) const{
+void Vector3D::mirror(Vector3D* ray)const {
 	// mirror martix
 	//
 	// This is taken from 
@@ -148,9 +123,9 @@ void Vector3D::mirror(Vector3D* ray) const{
 	);
 }
 //------------------------------------------------------------------------------
-double Vector3D::get_angle_in_between_in_rad(const Vector3D& vec)const {
-	Vector3D this_normalized = *this/this->norm2();
-	Vector3D that_normalized = vec/vec.norm2(); 
+double Vector3D::get_angle_in_between_in_rad(const Vector3D& that)const {
+	Vector3D this_normalized = *this/this->norm();
+	Vector3D that_normalized = that/that.norm(); 
 	return acos(this_normalized*that_normalized);
 }
 //------------------------------------------------------------------------------
@@ -167,30 +142,31 @@ double Vector3D::z() const{
 }
 //------------------------------------------------------------------------------
 bool Vector3D::operator == (const Vector3D& eqVec) const{
-	return (distance_to(eqVec) < 1e-7) ? true : false;
+	return distance_to(eqVec) <= max_deviation_of_eq_vectors;
 }
+//------------------------------------------------------------------------------
 bool Vector3D::operator != (const Vector3D& eqVec) const{
-	return (distance_to(eqVec) < 1e-7) ? false : true;
+	return distance_to(eqVec) > max_deviation_of_eq_vectors;
 }
 //------------------------------------------------------------------------------
 double Vector3D::distance_to(const Vector3D &v)const{
-	return (*this-v).norm2();
+	return (*this-v).norm();
 }
 //------------------------------------------------------------------------------
 bool Vector3D::is_paralell_to_z_axis()const{
-	return ( X==0.0 && Y==0.0 && Z>0.0 ) ? true : false;
+	return X == 0.0 && Y == 0.0 && Z > 0.0;
 }
 //------------------------------------------------------------------------------
 bool Vector3D::is_parallel_to_x_y_plane()const{
-	return( Z==0 && ( X!=0.0 || Y!=0.0 ) ) ? true : false;
+	return Z == 0.0 && ( X != 0.0 || Y != 0.0 );
 }
 //------------------------------------------------------------------------------
-bool Vector3D::norm2_is_less_equal_than(const double length_to_compare)const {
+bool Vector3D::norm_is_less_equal_than(const double length_to_compare)const {
 	// avoid the sqrt for speed up
 	return (*this)*(*this) <= length_to_compare*length_to_compare;
 }
 //------------------------------------------------------------------------------
 std::ostream& operator<<(std::ostream& os, const Vector3D& vec){
-    os << vec.get_string();
+    os << vec.get_print();
     return os;
 }

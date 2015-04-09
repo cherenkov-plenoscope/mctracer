@@ -195,3 +195,62 @@ TEST_F(Tools, file_size_of_existing_file) {
     {FileTools::size_in_bytes("ToolTest.cpp");}
   );
 }
+//------------------------------------------------------------------------------
+TEST_F(Tools, assert_text_not_empty) {
+  EXPECT_NO_THROW(
+    AssertionTools::text_with_name_is_not_empty_given_context(
+      "a non empty text\n", "my_text", "testing"
+    )
+  );
+
+  EXPECT_THROW(
+    AssertionTools::text_with_name_is_not_empty_given_context(
+      "", "my_text", "testing"
+    ),
+    TracerException
+  );
+}
+//------------------------------------------------------------------------------
+TEST_F(Tools, assert_text_has_no_whitespaces) {
+  EXPECT_NO_THROW(
+    AssertionTools::text_with_name_has_no_whitespaces_given_context(
+      "no_whitespaces_in_here", "my_text", "testing"
+    )
+  );
+
+  EXPECT_THROW(
+    AssertionTools::text_with_name_has_no_whitespaces_given_context(
+      "this text has whitespaces", "my_text", "testing"
+    ),
+    TracerException
+  );
+
+  EXPECT_THROW(
+    AssertionTools::text_with_name_has_no_whitespaces_given_context(
+      "this\ntext\nhas\nwhitespaces", "my_text", "testing"
+    ),
+    TracerException
+  );
+
+  EXPECT_THROW(
+    AssertionTools::text_with_name_has_no_whitespaces_given_context(
+      "this\rtext\thas\nwhitespaces", "my_text", "testing"
+    ),
+    TracerException
+  );
+}
+//------------------------------------------------------------------------------
+TEST_F(Tools, assert_text_has_no_specific_char) {
+  EXPECT_NO_THROW(
+    AssertionTools::text_with_name_has_no_specific_char_given_context(
+      "no plus sign in here", "my_text", '+', "testing"
+    )
+  );
+
+  EXPECT_THROW(
+    AssertionTools::text_with_name_has_no_specific_char_given_context(
+      "a + sign in here", "my_text", '+', "testing"
+    ),
+    TracerException
+  );
+}

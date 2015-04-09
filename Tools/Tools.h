@@ -42,6 +42,25 @@ namespace AssertionTools {
 		const double max, 
 		const std::string context
 	);
+
+	void text_with_name_is_not_empty_given_context(
+		const std::string text_to_check,
+		const std::string name_of_text,
+		const std::string context
+	);
+
+	void text_with_name_has_no_whitespaces_given_context(
+		const std::string text_to_check,
+		const std::string name_of_text,
+		const std::string context
+	);
+
+	void text_with_name_has_no_specific_char_given_context(
+		const std::string text_to_check,
+		const std::string name_of_text,
+		const char specific_char,
+		const std::string context
+	);
 }
 
 #endif // __TOOLS_H_INCLUDED__

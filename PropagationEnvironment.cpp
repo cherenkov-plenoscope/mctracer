@@ -2,7 +2,7 @@
 //------------------------------------------------------------------------------
 void PropagationEnvironment::assert_completeness()const {
 	if(world_geometry == nullptr)
-		throw_missing_item("CartesianFrame world_geometry");
+		throw_missing_item("Frame world_geometry");
 
 	if(propagation_options == nullptr)
 		throw_missing_item("Propagation options");

@@ -1,23 +1,21 @@
 #include "Sphere.h"
 //------------------------------------------------------------------------------
 Sphere::Sphere(){
+	radius = 1.0;
 }
 //------------------------------------------------------------------------------
-void Sphere::set_sphere(double new_radius){
+void Sphere::set_sphere_radius(double new_radius){
 
-	if(new_radius <= 0.0){
-		std::stringstream info;
-		info << "Sphere::set_sphere\n";
-		info << "The radius of a sphere must be larger than 0.0m !\n";
-		info << "Expected: >0.0, but actual: " << new_radius << "\n";
-		throw TracerException(info.str());
-	}
+	AssertionTools::value_with_name_is_greater_zero_given_context(
+		new_radius, "radius", "A sphere must not have zero or negative radius."
+	);
 	
 	radius = new_radius;
 	radius_of_sphere_enclosing_all_children = new_radius;
 }
 //------------------------------------------------------------------------------
 std::string Sphere::get_print()const {
+
 	std::stringstream out;
 	out << get_frame_print();
 	out << get_surface_print();
@@ -26,6 +24,7 @@ std::string Sphere::get_print()const {
 }
 //------------------------------------------------------------------------------
 std::string Sphere::get_sphere_print()const {
+
 	std::stringstream out;
 	out << "sphere:\n";
 	out << "| radius: " << radius << "m\n";
@@ -63,10 +62,10 @@ QuadraticEquation Sphere::get_ray_parameter_equation_for_intersections_with_sphe
 	// 	   	0 = v^2 + v 2(bd/dd) + (bb/dd -r^2)
 	//		solve quadrativ eqaution in v
 
-	double sup_times_dir = ray->Support() * ray->Direction();
-	double dir_times_dir = ray->Direction() * ray->Direction();
-	double sup_times_sup = ray->Support() * ray->Support();
-	double radius_square = radius*radius;
+	const double sup_times_dir = ray->Support() * ray->Direction();
+	const double dir_times_dir = ray->Direction() * ray->Direction();
+	const double sup_times_sup = ray->Support() * ray->Support();
+	const double radius_square = radius*radius;
 
 	QuadraticEquation quadratic_eq_in_v(
 		2*( sup_times_dir / dir_times_dir ),
@@ -82,7 +81,7 @@ const Intersection* Sphere::sphere_intersection_for_ray_parameter(
 )const {
 
 	Vector3D intersection_point = ray->PositionOnRay(ray_parameter);
-	Vector3D surface_normal = intersection_point/intersection_point.norm2();
+	Vector3D surface_normal = intersection_point/intersection_point.norm();
 	
 	Intersection* intersec;
 	intersec = new Intersection(
@@ -103,8 +102,8 @@ const Intersection* Sphere::calculate_intersection_with(const Ray* ray)const {
 
 	if(rayParamEqForIntersections.has_valid_solutions()) {
 
-		double vP = rayParamEqForIntersections.plus_solution();
-		double vM = rayParamEqForIntersections.minus_solution();
+		const double vP = rayParamEqForIntersections.plus_solution();
+		const double vM = rayParamEqForIntersections.minus_solution();
 
 		if(facing_sphere_from_outside_given_p_m(vP, vM))
 			return sphere_intersection_for_ray_parameter(ray,vM);

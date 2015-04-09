@@ -28,7 +28,7 @@ public:
 		MmcsCorsikaSubBlock event_end
 	);
 
-	ListOfPropagations* use_once_more_and_get_mctracer_photons();
+	ListOfPropagations* use_once_more_and_get_photons();
 	bool can_be_reused_again()const;
 
 	std::string get_print()const;

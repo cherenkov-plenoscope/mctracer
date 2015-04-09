@@ -29,7 +29,7 @@ void Rotation3D::set(
 	const double new_rot_angle_in_rad
 ){
 	flag_rot_angles_xyz = false;
-	rot_axis = new_rot_axis/new_rot_axis.norm2();
+	rot_axis = new_rot_axis/new_rot_axis.norm();
 	rot_angle_in_rad = new_rot_angle_in_rad;
 }
 //------------------------------------------------------------------------------
@@ -85,10 +85,7 @@ double Rotation3D::sinRy() const {return sin(Ry);}
 double Rotation3D::sinRz() const {return sin(Rz);}
 //------------------------------------------------------------------------------
 bool Rotation3D::operator == (const Rotation3D& eqRot)const {	
-	if( Rx == eqRot.Rx && Ry == eqRot.Ry && Rz == eqRot.Rz)
-		return true;
-	else
-		return false;
+	return Rx == eqRot.Rx && Ry == eqRot.Ry && Rz == eqRot.Rz;
 }
 //------------------------------------------------------------------------------
 std::ostream& operator<<(std::ostream& os, const Rotation3D& rot) {

@@ -9,9 +9,9 @@ void Triangle::set_corners_in_xy_plane(
 	B = Vector3D(Bx, By, 0.0);
 	C = Vector3D(Cx, Cy, 0.0);
 	
-	assert_edge_length_is_non_zero((A-B).norm2(), "AB");
-	assert_edge_length_is_non_zero((C-A).norm2(), "AC");
-	assert_edge_length_is_non_zero((C-B).norm2(), "CB");
+	assert_edge_length_is_non_zero((A-B).norm(), "AB");
+	assert_edge_length_is_non_zero((C-A).norm(), "AC");
+	assert_edge_length_is_non_zero((C-B).norm(), "CB");
 
 	post_initialize_radius_of_enclosing_sphere();
 }
@@ -33,9 +33,9 @@ void Triangle::post_initialize_radius_of_enclosing_sphere() {
 
 	std::vector<double> dist_corner_to_base;
 	
-	dist_corner_to_base.push_back( A.norm2() );
-	dist_corner_to_base.push_back( B.norm2() );
-	dist_corner_to_base.push_back( C.norm2() );
+	dist_corner_to_base.push_back( A.norm() );
+	dist_corner_to_base.push_back( B.norm() );
+	dist_corner_to_base.push_back( C.norm() );
 
 	radius_of_sphere_enclosing_all_children = *max_element(	
 		dist_corner_to_base.begin(),

@@ -1,8 +1,8 @@
 #include "Ray.h"
 //------------------------------------------------------------------------------
-const Intersection* Ray::get_first_intersection_in(const CartesianFrame* frame)const {
+const Intersection* Ray::get_first_intersection_in(const Frame* frame)const {
 
-	std::vector<const CartesianFrame*> candidate_objects =
+	std::vector<const Frame*> candidate_objects =
 		get_intersection_candidate_objects(frame);
 
 	std::vector<const Intersection*> intersections = 
@@ -11,19 +11,19 @@ const Intersection* Ray::get_first_intersection_in(const CartesianFrame* frame)c
 	return get_closest_intersection_and_delete_the_rest(&intersections);
 }
 //------------------------------------------------------------------------------
-std::vector<const CartesianFrame*> Ray::get_intersection_candidate_objects(
-	const CartesianFrame* frame
+std::vector<const Frame*> Ray::get_intersection_candidate_objects(
+	const Frame* frame
 )const {
 
-	std::vector<const CartesianFrame*> candidate_objects;
+	std::vector<const Frame*> candidate_objects;
 	find_intersection_candidates_in_tree_of_frames(frame, &candidate_objects);
 
 	return candidate_objects;
 }
 //------------------------------------------------------------------------------
 void Ray::find_intersection_candidates_in_tree_of_frames(
-	const CartesianFrame* frame, 
-	std::vector<const CartesianFrame*> *candidate_frames
+	const Frame* frame, 
+	std::vector<const Frame*> *candidate_frames
 )const{
 	
 	if(has_intersection_with_bounding_sphere_of(frame)) {
@@ -39,12 +39,12 @@ void Ray::find_intersection_candidates_in_tree_of_frames(
 }
 //------------------------------------------------------------------------------
 std::vector<const Intersection*> Ray::get_intersections_in_candidate_objects(
-	std::vector<const CartesianFrame*> *candidate_objects
+	std::vector<const Frame*> *candidate_objects
 )const{
 
 	std::vector<const Intersection*> intersections;
 
-	for(const CartesianFrame* object : *candidate_objects) {
+	for(const Frame* object : *candidate_objects) {
 
 		Ray ray_in_object_system = 
 			get_ray_transformed_in_object_system_of(object);

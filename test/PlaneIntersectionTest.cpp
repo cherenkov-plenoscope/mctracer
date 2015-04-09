@@ -19,7 +19,7 @@ class PlaneIntersectionTest : public ::testing::Test {
 	double x_width = 2.5;
 	double y_width = 1.3;
 	Plane plane;
-	CartesianFrame world;
+	Frame world;
 	PseudoRandomNumberGenerator dice;
 	double wavelength = 433e-9;
 
@@ -34,13 +34,13 @@ class PlaneIntersectionTest : public ::testing::Test {
   	pos.set(0.0,0.0,0.0);
   	rot.set(0.0,0.0,0.0);
 
-	world.set_frame("world",pos,rot);
+	world.set_name_pos_rot("world",pos,rot);
 
 	refl = new ReflectionProperties(1.0);
 	colo = new Color(200,128,128);;
 
 	//------------Plane----------------
-	plane.set_frame("My_Plane", pos, rot);
+	plane.set_name_pos_rot("My_Plane", pos, rot);
 	plane.set_outer_color(colo);
 	plane.set_inner_color(colo);
 	plane.set_outer_reflection(refl);
@@ -51,7 +51,7 @@ class PlaneIntersectionTest : public ::testing::Test {
 	world.set_mother_and_child(&plane);
 
 	//---post initialize the world to calculate all bounding spheres---
-	world.setup_tree_based_on_mother_child_relations();
+	world.init_tree_based_on_mother_child_relations();
   }
 };
 //------------------------------------------------------------------------------
@@ -106,14 +106,14 @@ TEST_F(PlaneIntersectionTest, move_plane_up) {
  	pos.set(0.0,0.0,0.0);
   	rot.set(0.0,0.0,0.0);
 
-	world.set_frame("world",pos,rot);
+	world.set_name_pos_rot("world",pos,rot);
 
 	refl = new ReflectionProperties(1.0);
 	colo = new Color(200,128,128);;
 
 	//------------sphere----------------
 	pos.set(0.0,0.0,1.0);
-	plane.set_frame("MySphere", pos, rot);
+	plane.set_name_pos_rot("MySphere", pos, rot);
 	plane.set_outer_color(colo);
 	plane.set_inner_color(colo);
 	plane.set_outer_reflection(refl);
@@ -124,7 +124,7 @@ TEST_F(PlaneIntersectionTest, move_plane_up) {
 	world.set_mother_and_child(&plane);
 
 	//---post initialize the world to calculate all bounding spheres---
-	world.setup_tree_based_on_mother_child_relations();
+	world.init_tree_based_on_mother_child_relations();
 
 	Ray ray(Vector3D(0.0, 0.0, -1.0), Vector3D(0.0, 0.0, 1.0));
 	const Intersection* intersec = ray.get_first_intersection_in(&world);

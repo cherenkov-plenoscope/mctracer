@@ -15,7 +15,7 @@ TEST_F(TrajectoryFactoryTest, constructor_using_RayForPropagation) {
 
   TrajectoryFactory tra_fac(&ray);
 
-  CartesianFrame* tra_frame = tra_fac.get_trajectory();
+  Frame* tra_frame = tra_fac.get_trajectory();
 
   EXPECT_EQ(1, tra_frame->get_number_of_children());
 }

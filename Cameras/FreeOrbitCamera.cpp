@@ -1,7 +1,7 @@
 #include "FreeOrbitCamera.h"
 //==============================================================================
 FreeOrbitCamera::FreeOrbitCamera(
-	const CartesianFrame *world,
+	const Frame *world,
 	const GlobalSettings *settings
 ){	
 	this->world = world;

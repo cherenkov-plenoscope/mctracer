@@ -242,7 +242,7 @@ void OpticalMirrorEllipsoidHexagonal::hit(
 			(2.0*intersec_ellipsoid.y()/(B*B)),
 			1.0);
 	
-			surface_normal = surface_normal/surface_normal.norm2();
+			surface_normal = surface_normal/surface_normal.norm();
 
 			// the new intersection feature
 			intersection->set_intersection_flag(true);

@@ -5,7 +5,7 @@ CameraManForStereo3D::CameraManForStereo3D(CameraDevice* camera_to_work_with) {
 }
 
 void CameraManForStereo3D::aquire_stereo_image(
-	const CartesianFrame* world,
+	const Frame* world,
 	const GlobalSettings* settings
 ){
 	remember_initial_camera_config();
@@ -18,7 +18,7 @@ void CameraManForStereo3D::aquire_stereo_image(
 }
 
 void CameraManForStereo3D::calc_pos_and_rot_for_left_and_right_camera_config(
-	const CartesianFrame* world,
+	const Frame* world,
 	const GlobalSettings* settings
 ){
 	set_positions_for_left_and_right_stereo_config();
@@ -43,7 +43,7 @@ void CameraManForStereo3D::set_positions_for_left_and_right_stereo_config(){
 }
 
 void CameraManForStereo3D::take_left_image(
-	const CartesianFrame* world,
+	const Frame* world,
 	const GlobalSettings* settings
 ){
 	camera->acquire_image(world, settings);
@@ -51,7 +51,7 @@ void CameraManForStereo3D::take_left_image(
 }
 
 void CameraManForStereo3D::take_right_image(
-	const CartesianFrame* world,
+	const Frame* world,
 	const GlobalSettings* settings
 ){
 	camera->acquire_image(world, settings);
@@ -69,7 +69,7 @@ void CameraManForStereo3D::remmber_initial_camera_image_upward_direction(){
 }
 
 void CameraManForStereo3D::set_object_distance_to_focus_on(
-	const CartesianFrame* world,
+	const Frame* world,
 	const GlobalSettings* settings
 ){
 	Ray optical_axis = camera->get_optical_axis_in_world();

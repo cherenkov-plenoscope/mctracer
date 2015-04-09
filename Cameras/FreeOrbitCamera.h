@@ -29,7 +29,7 @@ class FreeOrbitCamera {
 // By using two spatial seperater cameras also 3D stereo images are possible
 public:
 	
-	FreeOrbitCamera(const CartesianFrame *world, const GlobalSettings *settings);
+	FreeOrbitCamera(const Frame *world, const GlobalSettings *settings);
 private:
 	const std::string free_orbit_display_name = 
 		"Monte Carlo Tracer -> Free Orbit";
@@ -43,7 +43,7 @@ private:
 
 	bool stereo3D = false;
 
-	const CartesianFrame *world;
+	const Frame *world;
 	const GlobalSettings *settings;
 
 	int snapshot_counter = 0;

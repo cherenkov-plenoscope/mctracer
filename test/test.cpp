@@ -4,7 +4,7 @@
 #include "testRotation3D.cpp"
 #include "testPhoton.cpp"
 #include "testWorldFactory.cpp"
-#include "testCartesianFrame.cpp"
+#include "FrameTest.cpp"
 #include "testReflectionProperties.cpp"
 #include "testFunction1D.cpp"
 #include "ToolTest.cpp"
@@ -31,6 +31,7 @@
 #include "HexGridXyTest.cpp"
 
 int main(int argc, char **argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+	UserInteraction::print_welcome_screen();
+  	::testing::InitGoogleTest(&argc, argv);
+  	return RUN_ALL_TESTS();
 }

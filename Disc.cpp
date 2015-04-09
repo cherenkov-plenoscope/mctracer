@@ -3,7 +3,6 @@
 void Disc::set_disc_radius(const double radius){
 
 	cylinder_bounds.set_radius(radius);
-	//set_Disc_radius(radius);
 	post_initialize_radius_of_enclosing_sphere();
 }
 //------------------------------------------------------------------------------

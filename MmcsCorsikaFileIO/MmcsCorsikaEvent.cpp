@@ -10,7 +10,7 @@ MmcsCorsikaEvent::MmcsCorsikaEvent(
 	this->event_end	= event_end;
 }
 //------------------------------------------------------------------------------
-ListOfPropagations* MmcsCorsikaEvent::use_once_more_and_get_mctracer_photons() {
+ListOfPropagations* MmcsCorsikaEvent::use_once_more_and_get_photons() {
 // CORSIKA Coordinate system
 // The coordinates in CORSIKA are defined with respect to a Cartesian coordinate
 // system with the positive x-axis pointing to the magnetic north, the positive

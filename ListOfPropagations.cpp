@@ -10,7 +10,7 @@ void ListOfPropagations::push_back(RayForPropagation* ray){
 }
 //------------------------------------------------------------------------------
 void ListOfPropagations::propagate_in_world_with_settings(	
-	const CartesianFrame* world, const GlobalSettings* settings
+	const Frame* world, const GlobalSettings* settings
 ) {
 	//std::cout << "Propagate list of " << propagations.size() << " rays...\n";
 
@@ -21,7 +21,7 @@ void ListOfPropagations::propagate_in_world_with_settings(
 }
 //------------------------------------------------------------------------------
 void ListOfPropagations::propagate_using_multi_thread(
-	const CartesianFrame* world, 
+	const Frame* world, 
 	const GlobalSettings* settings
 ) {
 	uint i, number_of_threads, thread_id, ray_counter;
@@ -56,7 +56,7 @@ void ListOfPropagations::propagate_using_multi_thread(
 }
 //------------------------------------------------------------------------------
 void ListOfPropagations::propagate_using_single_thread(
-	const CartesianFrame* world, 
+	const Frame* world, 
 	const GlobalSettings* settings
 ) {
 	PseudoRandomNumberGenerator dice;
@@ -96,7 +96,7 @@ uint ListOfPropagations::get_number_of_propagations()const {
 }
 //------------------------------------------------------------------------------
 uint ListOfPropagations::get_number_of_propagations_absorbed_in_object(
-	const CartesianFrame* obj
+	const Frame* obj
 )const {
 	uint counter = 0;
 
@@ -108,7 +108,7 @@ uint ListOfPropagations::get_number_of_propagations_absorbed_in_object(
 }
 //------------------------------------------------------------------------------
 std::string ListOfPropagations::get_csv_print_for_propagations_ending_in(
-	const CartesianFrame* frame
+	const Frame* frame
 )const {
 	
 	uint counter = 0;
@@ -144,11 +144,11 @@ std::string ListOfPropagations::get_csv_print_for_propagations_ending_in(
 	return out.str();
 }
 //------------------------------------------------------------------------------
-CartesianFrame* ListOfPropagations::get_trajectories()const {
+Frame* ListOfPropagations::get_trajectories()const {
 	
-	CartesianFrame* all_trajectories = new CartesianFrame;
+	Frame* all_trajectories = new Frame;
 	
-	all_trajectories->set_frame(
+	all_trajectories->set_name_pos_rot(
 		name,
 	 	Vector3D::null, 
 	 	Rotation3D::null
@@ -159,13 +159,13 @@ CartesianFrame* ListOfPropagations::get_trajectories()const {
 		all_trajectories->set_mother_and_child(factory.get_trajectory());
 	}
 
-	all_trajectories->setup_tree_based_on_mother_child_relations();
+	all_trajectories->init_tree_based_on_mother_child_relations();
 
 	return all_trajectories;
 }
 //------------------------------------------------------------------------------
-CartesianFrame* ListOfPropagations::get_mean_trajectoy_in_world_using_options(
-	const CartesianFrame* world, const GlobalSettings* settings
+Frame* ListOfPropagations::get_mean_trajectoy_in_world_using_options(
+	const Frame* world, const GlobalSettings* settings
 ) {
 
 	Vector3D mean_support = Vector3D(0.0, 0.0 ,0.0);
@@ -199,7 +199,7 @@ CartesianFrame* ListOfPropagations::get_mean_trajectoy_in_world_using_options(
 	return factory.get_trajectory();
 }
 //------------------------------------------------------------------------------
-CartesianFrame* ListOfPropagations::get_next_trajectoy() {
+Frame* ListOfPropagations::get_next_trajectoy() {
 
 	std::cout << *(propagations.at(number_of_trajectories_handed_out));
 

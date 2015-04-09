@@ -29,7 +29,7 @@ public:
 	~CameraDevice();
 
 	virtual void acquire_image(	
-		const CartesianFrame* world, 
+		const Frame* world, 
 		const GlobalSettings* settings
 	);
 

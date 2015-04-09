@@ -58,7 +58,7 @@ void SegmetedReflectorGenerator::set_min_inner_diameter(const double _min_inner_
 	min_inner_diameter = _min_inner_diameter;
 }
 //------------------------------------------------------------------------------
-CartesianFrame* SegmetedReflectorGenerator::get_reflector() {
+Frame* SegmetedReflectorGenerator::get_reflector() {
 	init_focal_point();
 	init_facet_xy_positions();
 	init_facet_z_positions();
@@ -82,10 +82,10 @@ std::string SegmetedReflectorGenerator::get_print()const {
 	out << DaviesCotton_to_parabolic_mixing_factor << " Davies Cotton + ";
 	out << 1.0 - DaviesCotton_to_parabolic_mixing_factor << " Parabolid\n";
 
-	for(CartesianFrame* facet : facets) {
+	for(Frame* facet : facets) {
 		out << "___" << facet->get_name_of_frame() << "___\n";
-		out << "  pos: " << *facet->get_position_of_frame_in_mother_frame() << "\n";
-		out << "  rot: " << *facet->get_rotation_of_frame_in_mother_frame() << "\n";
+		out << "  pos: " << *facet->get_position_in_mother() << "\n";
+		out << "  rot: " << *facet->get_rotation_in_mother() << "\n";
 		out << "  bounding radius: " << facet->get_radius_of_sphere_enclosing_all_children() << "\n";
 	}
 	return out.str();
@@ -112,7 +112,7 @@ void SegmetedReflectorGenerator::init_facet_z_positions() {
 		facet_positions.at(i).set(
 			facet_positions.at(i).x(),
 			facet_positions.at(i).y(),
-			get_z_pos_given_dist_to_optical_axis(facet_positions.at(i).norm2())
+			get_z_pos_given_dist_to_optical_axis(facet_positions.at(i).norm())
 		);
 	}
 }
@@ -134,30 +134,31 @@ double SegmetedReflectorGenerator::get_z_pos_given_dist_to_optical_axis(
 //------------------------------------------------------------------------------
 void SegmetedReflectorGenerator::init_facet_orientations() {
 
-	for(uint i=0; i<facet_positions.size(); i++) {
-
-		if(is_not_center_position(facet_positions.at(i))) {
-			
-			Vector3D focal_point_to_facet_pos = 
-				focal_point - facet_positions.at(i);
-				
-			Vector3D rotation_axis = 
-				focal_point_to_facet_pos.CrossProduct(Vector3D::unit_z);
-
-			double angle_between_EZ_and_focal_point_to_mirror_pos =
-				Vector3D::unit_z.get_angle_in_between_in_rad(focal_point_to_facet_pos);
-
-			double rot_angle = 0.5*angle_between_EZ_and_focal_point_to_mirror_pos;
-
-			facet_orientations.push_back(Rotation3D(rotation_axis, -rot_angle));
-		}else{
+	for(uint i=0; i<facet_positions.size(); i++)
+		if(is_center_position(facet_positions.at(i)))
 			facet_orientations.push_back(Rotation3D::null);
-		}
-	}
+		else
+			facet_orientations.push_back(get_rotation_of_facet(i));
 }
 //------------------------------------------------------------------------------
-bool SegmetedReflectorGenerator::is_not_center_position(const Vector3D pos) {	
-	return pos.x() != 0.0 || pos.y() != 0.0;
+Rotation3D SegmetedReflectorGenerator::get_rotation_of_facet(const uint i)const {
+	
+	Vector3D focal_point_to_facet_pos = 
+		focal_point - facet_positions.at(i);
+		
+	Vector3D rotation_axis = 
+		focal_point_to_facet_pos.cross(Vector3D::unit_z);
+
+	double angle_between_EZ_and_focal_point_to_mirror_pos =
+		Vector3D::unit_z.get_angle_in_between_in_rad(focal_point_to_facet_pos);
+
+	double rot_angle = 0.5*angle_between_EZ_and_focal_point_to_mirror_pos;
+
+	return Rotation3D(rotation_axis, -rot_angle);	
+}
+//------------------------------------------------------------------------------
+bool SegmetedReflectorGenerator::is_center_position(const Vector3D pos) {	
+	return pos.x() == 0.0 && pos.y() == 0.0;
 }
 //------------------------------------------------------------------------------
 void SegmetedReflectorGenerator::init_focal_point() {
@@ -191,8 +192,9 @@ void SegmetedReflectorGenerator::move_all_facets_in_z(const double movement) {
 	}	
 }
 //------------------------------------------------------------------------------
-void SegmetedReflectorGenerator::abort_if_too_many_iterations(const uint iteration_conter) {
-	
+void SegmetedReflectorGenerator::abort_if_too_many_iterations(
+	const uint iteration_conter
+) {
 	if(iteration_conter > 100) {
 		std::stringstream info;
 		info << "SegmetedReflectorGenerator::" << __func__ << "()\n";
@@ -209,7 +211,7 @@ double SegmetedReflectorGenerator::get_average_image_distances_of_facets() {
 	for(Vector3D facet_pos: facet_positions) {
 		number_of_facets++;
 		sum_of_image_distances = sum_of_image_distances + 
-			(facet_pos - focal_point).norm2();
+			(facet_pos - focal_point).norm();
 	}
 
 	return sum_of_image_distances/double(number_of_facets);
@@ -218,15 +220,12 @@ double SegmetedReflectorGenerator::get_average_image_distances_of_facets() {
 void SegmetedReflectorGenerator::init_facets() {
 
 	for(uint i=0; i<facet_positions.size(); i++) {
-	
-		std::stringstream facet_name;
-		facet_name << "mirrro_ID_" << i;
 
 		SphereCapWithHexagonalBound* facet = new SphereCapWithHexagonalBound;
 		facets.push_back(facet);
 		
-		facet->set_frame(
-			facet_name.str(),
+		facet->set_name_pos_rot(
+			get_name_of_facet(i),
 			facet_positions.at(i),
 			facet_orientations.at(i)
 		);
@@ -242,6 +241,12 @@ void SegmetedReflectorGenerator::init_facets() {
 	}	
 }
 //------------------------------------------------------------------------------
+std::string SegmetedReflectorGenerator::get_name_of_facet(const uint i)const {
+	std::stringstream facet_name;
+	facet_name << "mirrro_ID_" << i;
+	return facet_name.str();
+}
+//------------------------------------------------------------------------------
 void SegmetedReflectorGenerator::init_facet_radius() {
 	double facet_diameter_peak2peak = 2.0/sqrt(3.0)*facet_spacing;
 	facet_radius = 0.5*facet_diameter_peak2peak*facet_fill_factor;
@@ -249,13 +254,13 @@ void SegmetedReflectorGenerator::init_facet_radius() {
 //------------------------------------------------------------------------------
 void SegmetedReflectorGenerator::init_reflector() {
 
-	reflector = new CartesianFrame(
+	reflector = new Frame(
 		"Reflector", 
 		Vector3D::null, 
 		Rotation3D::null
 	);
 
-	for(CartesianFrame* facet : facets) {
+	for(Frame* facet : facets) {
 		reflector->set_mother_and_child(facet);
 	}
 

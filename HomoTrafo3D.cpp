@@ -43,18 +43,12 @@ void HomoTrafo3D::set_translation_component(const Vector3D &t) {
 	T[2][3] = t.z();
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::set_translation_component_to_zero() {
-	T[0][3] = 0.0;
-	T[1][3] = 0.0;
-	T[2][3] = 0.0;
-}
-//------------------------------------------------------------------------------
 void HomoTrafo3D::set_rotation_component_based_on_rot_axis(
 	const Rotation3D R
 ) {
 		// ensure rot_axis is a unit vector
 		Vector3D rot_axis = R.get_rot_axis();
-		rot_axis = rot_axis/rot_axis.norm2();
+		rot_axis = rot_axis/rot_axis.norm();
 		
 		const double rx = rot_axis.x();
 		const double ry = rot_axis.y();

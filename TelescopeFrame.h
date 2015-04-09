@@ -8,9 +8,9 @@
 
 //=================================
 // included dependencies
-#include "CartesianFrame.h"
+#include "Frame.h"
 
-class TelescopeFrame : public CartesianFrame {
+class TelescopeFrame : public Frame {
 
 	double Az_Rad;
 	double Zd_Rad;

@@ -8,22 +8,22 @@
 class RayForPropagation;
 //=================================
 // included dependencies
-#include "CartesianFrame.h"
+#include "Frame.h"
 #include "RefractiveIndex.h"
 #include "ReflectionProperties.h"
 #include "Color.h"
 #include "AbsorptionProperties.h"
 
 //=================================
-class SurfaceEntity :public CartesianFrame {
+class SurfaceEntity :public Frame {
 
-	const CartesianFrame* allowed_frame_to_propagate_to = nullptr;
+	const Frame* allowed_frame_to_propagate_to = nullptr;
 public:	
 	static const SurfaceEntity* void_object;
 	static const SurfaceEntity* source_object;
 	bool has_restrictions_on_frames_to_propagate_to()const;
-	const CartesianFrame* get_allowed_frame_to_propagate_to()const;
-	void set_allowed_frames_to_propagate_to(const CartesianFrame* frame);
+	const Frame* get_allowed_frame_to_propagate_to()const;
+	void set_allowed_frames_to_propagate_to(const Frame* frame);
 	std::string get_print()const;
 protected:
 	std::string get_surface_print()const;

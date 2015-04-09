@@ -12,13 +12,13 @@
 #include <string>
 #include <sstream>
 #include "TracerException.h"
-#include "CartesianFrame.h"
+#include "Frame.h"
 #include "GlobalSettings.h"
 #include "PseudoRandomNumberGenerator.h"
 
 class PropagationEnvironment {
 public:
-	const CartesianFrame* world_geometry = nullptr;
+	const Frame* world_geometry = nullptr;
 	const GlobalSettings* propagation_options = nullptr;
 	PseudoRandomNumberGenerator* random_engine = nullptr;
 

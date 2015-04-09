@@ -2,7 +2,7 @@
 //------------------------------------------------------------------------------
 WorldFactory::WorldFactory(){
 
-	root_of_World = new CartesianFrame(
+	root_of_World = new Frame(
 		"world",
 		Vector3D::null,
 		Rotation3D::null
@@ -14,11 +14,10 @@ void WorldFactory::load(std::string path){
 	// determine directory
 	int position_in_path = path.find_last_of("/\\");
 
-	if ( position_in_path == -1 )	{
+	if(position_in_path == -1)
 		absolute_path = "";
-	}else{
+	else
 		absolute_path = path.substr(0,position_in_path + 1); 
-	}
 
 	std::string filename = path.substr(position_in_path + 1); 
 
@@ -26,7 +25,7 @@ void WorldFactory::load(std::string path){
 }
 //------------------------------------------------------------------------------
 void WorldFactory::load_file(
-	CartesianFrame* mother,
+	Frame* mother,
 	std::string path,
 	std::string filename
 ){
@@ -45,13 +44,13 @@ void WorldFactory::load_file(
 		fabricate_frame(mother,doc);	
     }else{
     	std::stringstream info;
-		info << "WorldFactory::"<<__func__<<"()";
+		info << "WorldFactory::" << __func__ << "()";
 		throw XmlIoException(info.str(), this);
 	}
 }
 //------------------------------------------------------------------------------
 void WorldFactory::include_file(
-	CartesianFrame* mother, const pugi::xml_node node
+	Frame* mother, const pugi::xml_node node
 ){
 	std::string relative_path_to_xml_to_be_included;
 	extract_include_path(relative_path_to_xml_to_be_included, node);
@@ -59,7 +58,7 @@ void WorldFactory::include_file(
 	WorldFactory fab;
 	fab.load(absolute_path + relative_path_to_xml_to_be_included);
 
-	CartesianFrame *sub_world;
+	Frame *sub_world;
 	sub_world = fab.world();
 
 	mother->take_children_from(sub_world);
@@ -74,7 +73,7 @@ void WorldFactory::extract_include_path(
 }
 //------------------------------------------------------------------------------
 void WorldFactory::fabricate_frame(
-CartesianFrame* mother,const pugi::xml_node node){
+Frame* mother,const pugi::xml_node node){
 	
 	XmlNode = node;
 
@@ -96,15 +95,15 @@ CartesianFrame* mother,const pugi::xml_node node){
 	}else if(StringTools::is_equal(node.name(),"disc")){
 		mother = produceDisc(mother,node);	
 	
-	}else if(StringTools::is_equal(node.name(),"FACT_reflector")){
-		mother = produceFactReflector(mother,node);	
+	}else if(StringTools::is_equal(node.name(),"reflector")){
+		mother = produceReflector(mother,node);	
 
 	}else if(StringTools::is_equal(node.name(),"include")){
 		include_file(mother,node);		
 		
 	}else if( mother->has_mother() ){	
 		std::stringstream info;
-		info << "WorldFactory::"<<__func__<<"() found an unknown item.";
+		info << "WorldFactory::" << __func__ << "() found an unknown item.";
 		throw UnknownItem( info.str(), this ,node.name());
 	}
 	
@@ -112,7 +111,7 @@ CartesianFrame* mother,const pugi::xml_node node){
 }
 //------------------------------------------------------------------------------
 void WorldFactory::go_on_with_children_of_node(
-	CartesianFrame* mother,const pugi::xml_node node){
+	Frame* mother,const pugi::xml_node node){
 	
 	// go on with children of node
 	for(
@@ -143,20 +142,20 @@ void WorldFactory::go_on_with_children_of_node(
 		}else if(StringTools::is_equal(sub_node_name,"disc")){
 
 			fabricate_frame(mother,sub_node); 
-		}else if(StringTools::is_equal(sub_node_name,"FACT_reflector")){
+		}else if(StringTools::is_equal(sub_node_name,"reflector")){
 
 			fabricate_frame(mother,sub_node);
 		}else if(sub_node_name.find("set") == std::string::npos){
 
 			std::stringstream info;
-			info << "WorldFactory::"<<__func__<<"() found an unknown item.";
+			info << "WorldFactory::" << __func__ << "() found an unknown item.";
 			throw UnknownItem(info.str(), this, sub_node_name);
 		}	
 	}	
 }
 //------------------------------------------------------------------------------
-CartesianFrame* WorldFactory::produceCartesianFrame(
-	CartesianFrame* mother,
+Frame* WorldFactory::produceCartesianFrame(
+	Frame* mother,
 	const pugi::xml_node node
 ){
 	assert_child_exists(node, "set_frame");
@@ -167,15 +166,15 @@ CartesianFrame* WorldFactory::produceCartesianFrame(
 	
 	extract_Frame_props(name, position, rotation, node.child("set_frame") );
 		
-	CartesianFrame *frame;
-	frame = new CartesianFrame(name,position,rotation);
+	Frame *frame;
+	frame = new Frame(name,position,rotation);
 
 	mother->set_mother_and_child(frame);
 	return frame;
 }
 //------------------------------------------------------------------------------
-CartesianFrame* WorldFactory::producePlane(
-	CartesianFrame* mother,const pugi::xml_node node
+Frame* WorldFactory::producePlane(
+	Frame* mother,const pugi::xml_node node
 ){
 	assert_child_exists(node, "set_frame");
 	assert_child_exists(node, "set_surface");
@@ -198,7 +197,7 @@ CartesianFrame* WorldFactory::producePlane(
 	Plane *new_plane;
 	new_plane = new Plane;
 
-	new_plane->set_frame(name,position,rotation);
+	new_plane->set_name_pos_rot(name,position,rotation);
 	new_plane->set_inner_color(color);
 	new_plane->set_outer_color(color);
 	new_plane->set_outer_reflection(refl_prop);
@@ -210,8 +209,8 @@ CartesianFrame* WorldFactory::producePlane(
 	return new_plane;
 }
 //------------------------------------------------------------------------------
-CartesianFrame* WorldFactory::produceSphere(
-	CartesianFrame* mother,const pugi::xml_node node
+Frame* WorldFactory::produceSphere(
+	Frame* mother,const pugi::xml_node node
 ){
 	assert_child_exists(node, "set_frame");
 	assert_child_exists(node, "set_surface");
@@ -234,20 +233,20 @@ CartesianFrame* WorldFactory::produceSphere(
 	Sphere *new_sphere;
 	new_sphere = new Sphere;	
 
-	new_sphere->set_frame(name,position,rotation);
+	new_sphere->set_name_pos_rot(name,position,rotation);
 	new_sphere->set_inner_color(color);
 	new_sphere->set_outer_color(color);
 	new_sphere->set_outer_reflection(refl_prop);
 	new_sphere->set_inner_reflection(refl_prop);
 
-	new_sphere->set_sphere(radius);
+	new_sphere->set_sphere_radius(radius);
 	
 	mother->set_mother_and_child(new_sphere);
 	return new_sphere;
 }
 //------------------------------------------------------------------------------
-CartesianFrame* WorldFactory::produceCylinder(
-	CartesianFrame* mother,const pugi::xml_node node
+Frame* WorldFactory::produceCylinder(
+	Frame* mother,const pugi::xml_node node
 ){
 	assert_child_exists(node, "set_frame");
 	assert_child_exists(node, "set_surface");
@@ -270,7 +269,7 @@ CartesianFrame* WorldFactory::produceCylinder(
 
 	Cylinder *new_Cylinder;
 	new_Cylinder = new Cylinder;
-	new_Cylinder->set_frame(name,position, rotation);
+	new_Cylinder->set_name_pos_rot(name,position, rotation);
 	new_Cylinder->set_inner_color(color);
 	new_Cylinder->set_outer_color(color);
 	new_Cylinder->set_outer_reflection(refl_prop);
@@ -282,33 +281,43 @@ CartesianFrame* WorldFactory::produceCylinder(
 	return new_Cylinder;
 }
 //------------------------------------------------------------------------------
-CartesianFrame* WorldFactory::produceFactReflector(
-	CartesianFrame* mother,const pugi::xml_node node
+Frame* WorldFactory::produceReflector(
+	Frame* mother, const pugi::xml_node node
 ){
 	assert_child_exists(node, "set_frame");	
-	assert_child_exists(node, "set_FACT_reflector");
-	
+	assert_child_exists(node, "set_reflector");
+	const pugi::xml_node refl_node = node.child("set_reflector");
+
+
 	std::string 		name;
 	Vector3D 			position;
 	Rotation3D 			rotation;
-	double 				alpha;
 					
 	extract_Frame_props(name, position, rotation, node.child("set_frame"));
-	extract_FACT_props(alpha, node.child("set_FACT_reflector"));
-
 	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
 
-	FactTelescope *new_FactTelescope;
-	new_FactTelescope = new FactTelescope(alpha);
-	new_FactTelescope->set_frame(name,position,rotation);
-	new_FactTelescope->init();
+	SegmetedReflectorGenerator refl_gen;
+	refl_gen.set_focal_length(extract_reflector("focal_length", refl_node));
+	refl_gen.set_facet_spacing(extract_reflector("facet_spacing", refl_node));
+	refl_gen.set_max_outer_diameter(extract_reflector("max_outer_diameter", refl_node));
+	refl_gen.set_min_inner_diameter(extract_reflector("min_inner_diameter", refl_node));
+	refl_gen.set_hybrid_geometry(extract_reflector("alpha", refl_node));
+	Frame* reflector = refl_gen.get_reflector();
 
-	mother->set_mother_and_child(new_FactTelescope);
-	return new_FactTelescope;
+	mother->set_mother_and_child(reflector);
+	return reflector;
 }
 //------------------------------------------------------------------------------
-CartesianFrame* WorldFactory::produceDisc(
-	CartesianFrame* mother,const pugi::xml_node node
+double WorldFactory::extract_reflector(
+	const std::string key, 
+	const pugi::xml_node node
+) {
+	assert_attribute_exists(node, key.c_str());
+	return pedantic_strtod(node.attribute(key.c_str()).value());
+}
+//------------------------------------------------------------------------------
+Frame* WorldFactory::produceDisc(
+	Frame* mother,const pugi::xml_node node
 ){
 	assert_child_exists(node, "set_frame");	
 	assert_child_exists(node, "set_surface");
@@ -331,7 +340,7 @@ CartesianFrame* WorldFactory::produceDisc(
 	Disc *new_Disc;
 	new_Disc = new Disc;	
 	
-	new_Disc->set_frame(name, position, rotation);
+	new_Disc->set_name_pos_rot(name, position, rotation);
 	new_Disc->set_inner_color(color);
 	new_Disc->set_outer_color(color);
 	new_Disc->set_outer_reflection(refl_prop);
@@ -343,8 +352,8 @@ CartesianFrame* WorldFactory::produceDisc(
 	return new_Disc;
 }
 //------------------------------------------------------------------------------
-CartesianFrame* WorldFactory::produceTriangle(
-	CartesianFrame* mother,const pugi::xml_node node
+Frame* WorldFactory::produceTriangle(
+	Frame* mother,const pugi::xml_node node
 ){
 	assert_child_exists(node, "set_frame");
 	assert_child_exists(node, "set_surface");
@@ -366,7 +375,7 @@ CartesianFrame* WorldFactory::produceTriangle(
 
 	Triangle *new_Triangle;
 	new_Triangle = new Triangle;			
-	new_Triangle->set_frame(name,position,rotation);
+	new_Triangle->set_name_pos_rot(name,position,rotation);
 	new_Triangle->set_inner_color(color);
 	new_Triangle->set_outer_color(color);
 	new_Triangle->set_outer_reflection(refl_prop);
@@ -391,13 +400,10 @@ const ReflectionProperties* WorldFactory::extract_reflection(
 	// wavelength. 
 
 	ReflectionProperties* refl_prop;
-	if( StringTools::is_ending(refl_attribure, ".xml") ){
-		// set wavelength depending reflection coefficient
-		refl_prop = new ReflectionProperties( (absolute_path + refl_attribure) );
-	}else{
-		// set reflection coefficient independent of wavelength	
+	if( StringTools::is_ending(refl_attribure, ".xml") )
+		refl_prop = new ReflectionProperties((absolute_path + refl_attribure));
+	else
 		refl_prop = new ReflectionProperties(pedantic_strtod(refl_attribure));
-	}
 
 	return refl_prop;
 }
@@ -470,22 +476,6 @@ void WorldFactory::extract_Cylinder_props(
 	end.set(eX, eY, eZ);
 }
 //------------------------------------------------------------------------------
-void WorldFactory::extract_FACT_props(
-	double &alpha,const pugi::xml_node node
-){
-	if(node.attribute("alpha") == NULL){
-		
-		std::stringstream info;
-		info << "The set_FACT_reflector requires the 'alpha' statement! ";
-		info << "Alpha=0 is a Davies-Cotton Reflector, alpha=1 is ";
-		info << "a paraboloid reflector. Alpha in between 0 and 1 ";
-		info << "is a mixture of both.";
-		throw MissingItem(info.str(), this, "alpha" );
-	}
-	
-	alpha = pedantic_strtod(node.attribute("alpha").value());
-}
-//------------------------------------------------------------------------------
 void WorldFactory::extract_Disc_props(double &radius,const pugi::xml_node node){
 
 	assert_attribute_exists(node, "radius");
@@ -515,7 +505,7 @@ void WorldFactory::extract_Triangle_props(
 }
 //------------------------------------------------------------------------------
 void WorldFactory::assert_name_of_child_frame_is_not_in_use_yet(
-	const CartesianFrame *mother,
+	const Frame *mother,
 	const std::string name_of_additional_child
 )const{
 
@@ -523,15 +513,18 @@ void WorldFactory::assert_name_of_child_frame_is_not_in_use_yet(
 		// There is already a child in the mother frame wit this name.
 		// There must not be a second one!
 		std::stringstream info;
-		info << "WorldFactory::"<<__func__<<"()";
-		throw MultipleUseage(info.str(), this, 
-			mother->get_child_by_name(name_of_additional_child)->get_path_in_tree_of_frames()
+		info << "WorldFactory::" << __func__ << "()";
+		throw MultipleUseage(
+			info.str(), this, 
+			mother->
+				get_child_by_name(name_of_additional_child)->
+					get_path_in_tree_of_frames()
 		);
 	}
 }
 //------------------------------------------------------------------------------
-CartesianFrame* WorldFactory::world(){
-	root_of_World->setup_tree_based_on_mother_child_relations();
+Frame* WorldFactory::world(){
+	root_of_World->init_tree_based_on_mother_child_relations();
 	return root_of_World;
 }
 //------------------------------------------------------------------------------

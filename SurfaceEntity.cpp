@@ -26,7 +26,7 @@ SurfaceEntity::SurfaceEntity() {
 }
 //------------------------------------------------------------------------------
 void SurfaceEntity::set_allowed_frames_to_propagate_to(
-	const CartesianFrame* allowed_frame_to_propagate_to
+	const Frame* allowed_frame_to_propagate_to
 ) {	
 	this->allowed_frame_to_propagate_to = allowed_frame_to_propagate_to;
 }
@@ -35,7 +35,7 @@ bool SurfaceEntity::has_restrictions_on_frames_to_propagate_to()const {
 	return allowed_frame_to_propagate_to != nullptr;
 }
 //------------------------------------------------------------------------------
-const CartesianFrame* SurfaceEntity::get_allowed_frame_to_propagate_to()const {
+const Frame* SurfaceEntity::get_allowed_frame_to_propagate_to()const {
 	return allowed_frame_to_propagate_to;
 }
 //------------------------------------------------------------------------------

@@ -15,7 +15,7 @@
 #include <vector>
 #include <algorithm>
 #include "Vector3D.h"
-#include "CartesianFrame.h"
+#include "Frame.h"
 #include "SurfaceEntity.h"
 #include "Intersection.h"
 #include "GlobalSettings.h"
@@ -58,27 +58,27 @@ public:
 
 	bool operator() (const Intersection* one, const Intersection* two)const;
 	
-	Ray get_ray_transformed_in_object_system_of(const CartesianFrame* frame)const;
+	Ray get_ray_transformed_in_object_system_of(const Frame* frame)const;
 	
 	friend std::ostream& operator<<(std::ostream& os, const Ray& ray_to_be_displayed);
 	//--------------------------------------------------------------------------
 	// Ray and bounding sphere of Frame
 
 	bool support_of_ray_is_inside_bounding_sphere_of(
-		const CartesianFrame *frame
+		const Frame *frame
 	)const;
 
 	bool has_intersection_with_bounding_sphere_of(
-		const CartesianFrame* frame
+		const Frame* frame
 	)const;
 	//--------------------------------------------------------------------------
 	// Ray and Frame
 	
-	const Intersection* get_first_intersection_in(const CartesianFrame* frame)const;
+	const Intersection* get_first_intersection_in(const Frame* frame)const;
 
 	void find_intersection_candidates_in_tree_of_frames(
-		const CartesianFrame* frame, 
-		std::vector<const CartesianFrame*> *candidate_frames
+		const Frame* frame, 
+		std::vector<const Frame*> *candidate_frames
 	)const;
 
 	void calculate_reflected_ray(	
@@ -90,12 +90,12 @@ protected:
 
 	void SetRay(const Vector3D nsup,const Vector3D ndir);	
 
-	std::vector<const CartesianFrame*> get_intersection_candidate_objects(
-		const CartesianFrame* frame
+	std::vector<const Frame*> get_intersection_candidate_objects(
+		const Frame* frame
 	)const;
 
 	std::vector<const Intersection*> get_intersections_in_candidate_objects(
-		std::vector<const CartesianFrame*> *candidate_objects
+		std::vector<const Frame*> *candidate_objects
 	)const;
 
 	const Intersection* get_closest_intersection_and_delete_the_rest(	

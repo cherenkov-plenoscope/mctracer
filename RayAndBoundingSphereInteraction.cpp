@@ -1,12 +1,12 @@
 #include "Ray.h"
 //------------------------------------------------------------------------------
 bool Ray::support_of_ray_is_inside_bounding_sphere_of(
-	const CartesianFrame *frame
+	const Frame *frame
 )const {
 	double distance_between_support_and_frame = ( 
 			support*(-1.0) +
-			*frame->get_position_of_frame_in_world_frame()
-		).norm2();
+			*frame->get_position_in_world()
+		).norm();
 
 	return (
 		distance_between_support_and_frame
@@ -15,16 +15,16 @@ bool Ray::support_of_ray_is_inside_bounding_sphere_of(
 	);
 }
 //------------------------------------------------------------------------------
-bool Ray::has_intersection_with_bounding_sphere_of(const CartesianFrame* frame)const{
+bool Ray::has_intersection_with_bounding_sphere_of(const Frame* frame)const{
 
 	double ray_parameter_for_closest_distance_to_center_of_bounding_sphere = 
 		get_parameter_on_ray_for_closest_distance_to_point(
-			*frame->get_position_of_frame_in_world_frame()
+			*frame->get_position_in_world()
 		);
 
 	double distance_to_center_of_bounding_sphere = 
 		get_distance_to_point_from_position_of_ray_at(
-			*frame->get_position_of_frame_in_world_frame(),
+			*frame->get_position_in_world(),
 			ray_parameter_for_closest_distance_to_center_of_bounding_sphere
 		);
 

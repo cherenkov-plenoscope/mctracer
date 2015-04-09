@@ -48,7 +48,6 @@ private:
 	std::string get_single_row_print(const uint c)const;
 	void set_rotation_component_based_on_xyz_angles(const Rotation3D R);
 	void set_rotation_component_based_on_rot_axis(const Rotation3D R);
-	void set_translation_component_to_zero();
 	void set_translation_component(const Vector3D &t);
 	void set_rotation_component(const Rotation3D R);
 	void set_x_column_of_rotation_component(const Vector3D &R);

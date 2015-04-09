@@ -51,7 +51,7 @@ TEST_F(PhotonTest, creation_constructor) {
 
   EXPECT_EQ(ez, pho.Direction());
   EXPECT_EQ(origin, pho.Support());
-  EXPECT_EQ(1.0, pho.Direction().norm2());
+  EXPECT_EQ(1.0, pho.Direction().norm());
   EXPECT_EQ(wavelength, pho.get_wavelength());
   EXPECT_EQ(1, pho.get_number_of_interactions_so_far() ); //creation is an interaction
 }
@@ -67,9 +67,9 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
   Rotation3D  rot(0,0,0);
 
   // create a test setup with two mirrors bouncing the photon
-  CartesianFrame world("world",pos,rot);
+  Frame world("world",pos,rot);
 
-  CartesianFrame optical_table("optical_table",pos,rot);
+  Frame optical_table("optical_table",pos,rot);
   
   ReflectionProperties  refl(1.0); 
   Color      colo(200,128,128);
@@ -79,7 +79,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
   
   //------------mirror 1----------------
   Plane mirror1;
-  mirror1.set_frame("mirror_1",pos,rot);
+  mirror1.set_name_pos_rot("mirror_1",pos,rot);
   mirror1.set_outer_color(&colo);
   mirror1.set_inner_color(&colo);
   mirror1.set_outer_reflection(&refl);
@@ -90,7 +90,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
   pos.set(0.0,0.0,1.0);
   rot.set(0.0,0.0,0.0);
   Plane mirror2;
-  mirror2.set_frame("mirror_2",pos,rot);
+  mirror2.set_name_pos_rot("mirror_2",pos,rot);
   mirror2.set_outer_color(&colo);
   mirror2.set_inner_color(&colo);
   mirror2.set_outer_reflection(&refl);
@@ -104,7 +104,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
   world.set_mother_and_child(&optical_table);
 
   //---post initialize the world to calculate all bounding spheres---
-  world.setup_tree_based_on_mother_child_relations();
+  world.init_tree_based_on_mother_child_relations();
 
   //----------free orbit-----------------------
   
@@ -164,9 +164,9 @@ TEST_F(PhotonTest, Reflections){
   Rotation3D  rot(0,0,0);
 
   // create a test setup with two mirrors bouncing the photon
-  CartesianFrame world("world",pos,rot);
+  Frame world("world",pos,rot);
 
-  CartesianFrame optical_table("optical_table",pos,rot);
+  Frame optical_table("optical_table",pos,rot);
    
   pos.set(0.0,0.0,0.0);
   rot.set(0.0,0.0,0.0);
@@ -183,7 +183,7 @@ TEST_F(PhotonTest, Reflections){
   mirror_color.set_RGB_0to255(200,64,64);
 
   Plane mirror;
-  mirror.set_frame("mirror",pos,rot);
+  mirror.set_name_pos_rot("mirror",pos,rot);
   mirror.set_outer_color(&mirror_color);
   mirror.set_inner_color(&mirror_color);
   mirror.set_outer_reflection(&mirror_reflection);
@@ -200,7 +200,7 @@ TEST_F(PhotonTest, Reflections){
   absorber_color.set_RGB_0to255(50,50,50);
 
   Plane absorber;
-  absorber.set_frame("absorber",pos,rot);
+  absorber.set_name_pos_rot("absorber",pos,rot);
   absorber.set_outer_color(&absorber_color);
   absorber.set_inner_color(&absorber_color);
   absorber.set_plane_using_x_and_y_width(1.0, 1.0);
@@ -212,7 +212,7 @@ TEST_F(PhotonTest, Reflections){
   world.set_mother_and_child(&optical_table);
 
   //---post initialize the world to calculate all bounding spheres---
-  world.setup_tree_based_on_mother_child_relations();
+  world.init_tree_based_on_mother_child_relations();
 
   //----------free orbit-----------------------
   

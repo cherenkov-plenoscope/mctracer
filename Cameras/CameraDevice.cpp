@@ -66,7 +66,7 @@ void CameraDevice::set_pointing_direction(
 	Vector3D cam_z_axis_in_world = camera_pointing_direction_in_World;
 	Vector3D cam_y_axis_in_world = camera_image_upwards_image_dir_in_world;
 	Vector3D cam_x_axis_in_world = 
-		cam_y_axis_in_world.CrossProduct(cam_z_axis_in_world);
+		cam_y_axis_in_world.cross(cam_z_axis_in_world);
 	
 	T_Camera2World.set_transformation(
 		cam_x_axis_in_world,
@@ -108,7 +108,7 @@ std::string CameraDevice::get_camera_print()const{
 }
 //------------------------------------------------------------------------------
 Vector3D CameraDevice::get_normalized_pointing_direction()const{
-	return CameraPointingDirection/CameraPointingDirection.norm2();
+	return CameraPointingDirection/CameraPointingDirection.norm();
 }
 //------------------------------------------------------------------------------
 void CameraDevice::print()const{
@@ -155,14 +155,14 @@ Rotation3D CameraDevice::get_rotation_in_world()const{
 }
 //------------------------------------------------------------------------------
 Vector3D CameraDevice::direction_to_the_right_of_the_camera()const{
-	return Vector3D::unit_z.CrossProduct(get_normalized_pointing_direction());	
+	return Vector3D::unit_z.cross(get_normalized_pointing_direction());	
 }
 Ray CameraDevice::get_optical_axis_in_world()const{
 	return OpticalAxis;
 }
 //------------------------------------------------------------------------------
 void CameraDevice::acquire_image(
-	const CartesianFrame* world, const GlobalSettings* settings
+	const Frame* world, const GlobalSettings* settings
 ){
 	std::cout << "Calling " << __func__ << " in CameraDevice!\n";
 }

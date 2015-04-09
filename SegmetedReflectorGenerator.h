@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "HexGridXy.h"
-#include "CartesianFrame.h"
+#include "Frame.h"
 #include <iostream> 
 #include <string>
 #include <sstream>
@@ -22,10 +22,12 @@ class SegmetedReflectorGenerator{
 	
 	std::vector<Vector3D> facet_positions;
 	std::vector<Rotation3D> facet_orientations;
-	std::vector<CartesianFrame*> facets;
+	std::vector<Frame*> facets;
 
-	CartesianFrame* reflector;
+	Frame* reflector;
 	double DaviesCotton_to_parabolic_mixing_factor = 0.0;
+	double davies_cotton_weight;
+	double parabolic_weight;
 	double focal_length = 1.0;
 	Vector3D focal_point;
 	double facet_spacing = 1.0;
@@ -44,7 +46,7 @@ public:
 	void set_facet_spacing(const double _facet_spacing);
 	void set_max_outer_diameter(const double _max_outer_diameter);
 	void set_min_inner_diameter(const double _min_inner_diameter);
-	CartesianFrame* get_reflector();
+	Frame* get_reflector();
 	std::string get_print()const;
 private:
 	void init_facet_z_positions();
@@ -61,8 +63,10 @@ private:
 	void init_facet_radius();
 	void init_facets();
 	void init_reflector();
-	bool is_not_center_position(const Vector3D pos);
+	bool is_center_position(const Vector3D pos);
 	void abort_if_too_many_iterations(const uint iteration_conter);
 	void move_all_facets_in_z(const double movement);
+	std::string get_name_of_facet(const uint i)const;
+	Rotation3D get_rotation_of_facet(const uint i)const;
 };
 #endif // __SegmetedReflectorGenerator_H_INCLUDED__ 

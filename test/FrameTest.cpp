@@ -3,7 +3,7 @@
 #include <math.h>
 
 #include "gtest/gtest.h"
-#include "../CartesianFrame.h"
+#include "../Frame.h"
 #include "../Vector3D.h"
 #include "../Rotation3D.h"
 #include "../HomoTrafo3D.h"
@@ -47,11 +47,11 @@ TEST_F(CartesianFrameTest, find_specific_frame) {
   string xml_file = "./test_scenery/including_other_xml_files.xml";
   WorldFactory file2world;
   file2world.load(xml_file);
-  CartesianFrame *world = file2world.world();
+  Frame *world = file2world.world();
 
   // Now get the pointer to the frame we are looking for
   // In the case of "tree/pole" we know that it must be in the test xml file.
-  const CartesianFrame* SpecificFrameInWorldWeAreLookingFor = 
+  const Frame* SpecificFrameInWorldWeAreLookingFor = 
   world->get_frame_in_tree_by_path( "/tree/pole" );
 
   EXPECT_EQ("pole", SpecificFrameInWorldWeAreLookingFor->get_name_of_frame());
@@ -78,69 +78,39 @@ TEST_F(CartesianFrameTest, find_specific_frame) {
   SpecificFrameInWorldWeAreLookingFor = 
   world->get_frame_in_tree_by_path( "your/Mama" );
 
-  EXPECT_EQ( CartesianFrame::void_frame, SpecificFrameInWorldWeAreLookingFor );
+  EXPECT_EQ( Frame::void_frame, SpecificFrameInWorldWeAreLookingFor );
 }
 //----------------------------------------------------------------------
 TEST_F(CartesianFrameTest, assert_name_is_valid) {
 
-  Vector3D    pos(0.0,0.0,0.0);
-  Rotation3D  rot(0.0,0.0,0.0);
+  Vector3D    pos = Vector3D::null;
+  Rotation3D  rot = Rotation3D::null;
 
-  CartesianFrame Peter;
+  Frame Peter;
 //---------------------------------
-  bool error_detected = false;
-  try{
-    Peter.set_frame("A_nice_name",pos,rot);
-  }catch(std::exception &error){
-    cout << error.what();
-    error_detected = true;
-  }
-  EXPECT_FALSE(error_detected);
+  EXPECT_NO_THROW( Peter.set_name_pos_rot("A_nice_name",pos,rot));
 //---------------------------------
-  error_detected = false;
-  try{
-    Peter.set_frame("I feel like using whitespaces",pos,rot);
-  }catch(TracerException &error){
-    EXPECT_EQ(WHITE_SPACE_IN_NAME_OF_FRAME, error.type());
-    error_detected = true;
-  }
-  EXPECT_TRUE(error_detected);
+  EXPECT_THROW(
+    Peter.set_name_pos_rot("I feel like using whitespaces",pos,rot),
+    TracerException
+  );
 //---------------------------------
-  error_detected = false;
-  try{
-    Peter.set_frame("I\tfeel\rlike\tusing\nwhitespaces",pos,rot);
-  }catch(TracerException &error){
-    EXPECT_EQ(WHITE_SPACE_IN_NAME_OF_FRAME, error.type());
-    error_detected = true;
-  }
-  EXPECT_TRUE(error_detected);
+  EXPECT_THROW(
+    Peter.set_name_pos_rot("I\tfeel\rlike\tusing\nwhitespaces",pos,rot),
+    TracerException
+  );
 //---------------------------------
-  error_detected = false;
-  try{
-    Peter.set_frame("",pos,rot);
-  }catch(TracerException &error){
-    EXPECT_EQ(EMPTY_NAME_OF_FRAME, error.type());
-    error_detected = true;
-  }
-  EXPECT_TRUE(error_detected);  
+  EXPECT_THROW(Peter.set_name_pos_rot("",pos,rot), TracerException);
 //---------------------------------
-  error_detected = false;
-  try{
-    Peter.set_frame("I/feel/like/using/the/delimiter/symbol",pos,rot);
-  }catch(TracerException &error){
-    EXPECT_EQ(DELIMITER_SYMBOL_IN_NAME_OF_FRAME, error.type());
-    error_detected = true;
-  }
-  EXPECT_TRUE(error_detected); 
+  EXPECT_THROW(   
+    Peter.set_name_pos_rot("I/feel/like/using/the/delimiter/symbol",pos,rot),
+    TracerException
+  );
 //---------------------------------
-  error_detected = false;
-  try{
-    Peter.set_frame(" ",pos,rot);
-  }catch(TracerException &error){
-    EXPECT_EQ(WHITE_SPACE_IN_NAME_OF_FRAME, error.type());
-    error_detected = true;
-  }
-  EXPECT_TRUE(error_detected); 
+  EXPECT_THROW(
+    Peter.set_name_pos_rot(" ",pos,rot),
+    TracerException
+  );
 }
 //==============================================================================
 TEST_F(CartesianFrameTest, set_frame) {
@@ -148,15 +118,15 @@ TEST_F(CartesianFrameTest, set_frame) {
   Vector3D    pos(1.3,3.7,4.2);
   Rotation3D  rot(3.1,4.1,7.7);
 
-  CartesianFrame Peter;
-  Peter.set_frame("A_nice_name",pos,rot);
+  Frame Peter;
+  Peter.set_name_pos_rot("A_nice_name",pos,rot);
 
   EXPECT_FALSE(Peter.has_mother()) << "There must not be a mother after set";
   EXPECT_FALSE(Peter.has_children()) << "There must not be children after set";
   EXPECT_FALSE(Peter.has_child_with_name("any_child"));
 
-  EXPECT_EQ(pos, *Peter.get_position_of_frame_in_mother_frame());
-  EXPECT_EQ(rot, *Peter.get_rotation_of_frame_in_mother_frame());
+  EXPECT_EQ(pos, *Peter.get_position_in_mother());
+  EXPECT_EQ(rot, *Peter.get_rotation_in_mother());
 
   HomoTrafo3D T_frame2mother;
   T_frame2mother.set_transformation(rot, pos);
@@ -167,27 +137,27 @@ TEST_F(CartesianFrameTest, set_frame) {
 TEST_F(CartesianFrameTest, root_of_world_on_complete_tree) {
 
   //-----define frames
-  CartesianFrame tree;
-  tree.set_frame("tree" ,Vector3D::null, Rotation3D::null);
+  Frame tree;
+  tree.set_name_pos_rot("tree" ,Vector3D::null, Rotation3D::null);
 
-  CartesianFrame leaf1;
-  leaf1.set_frame("leaf1" ,Vector3D(1.0,0.0,0.0), Rotation3D::null);
+  Frame leaf1;
+  leaf1.set_name_pos_rot("leaf1" ,Vector3D(1.0,0.0,0.0), Rotation3D::null);
 
-  CartesianFrame leaf2;
-  leaf2.set_frame("leaf2" ,Vector3D(-1.0,0.0,0.0), Rotation3D::null);
+  Frame leaf2;
+  leaf2.set_name_pos_rot("leaf2" ,Vector3D(-1.0,0.0,0.0), Rotation3D::null);
 
-  CartesianFrame branch;
-  branch.set_frame("branch" ,Vector3D(0.0,0.0,1.0), Rotation3D::null);
+  Frame branch;
+  branch.set_name_pos_rot("branch" ,Vector3D(0.0,0.0,1.0), Rotation3D::null);
 
-  CartesianFrame leaf1_on_branch;
-  leaf1_on_branch.set_frame(
+  Frame leaf1_on_branch;
+  leaf1_on_branch.set_name_pos_rot(
     "leaf1_on_branch",
     Vector3D(1.0,0.0,0.0),
     Rotation3D::null
   );
 
-  CartesianFrame leaf2_on_branch;
-  leaf2_on_branch.set_frame(
+  Frame leaf2_on_branch;
+  leaf2_on_branch.set_name_pos_rot(
     "leaf2_on_branch",
     Vector3D(0.0,1.0,0.0),
     Rotation3D::null
@@ -203,7 +173,7 @@ TEST_F(CartesianFrameTest, root_of_world_on_complete_tree) {
   tree.set_mother_and_child(&branch);
 
   //-----post initialize 
-  tree.setup_tree_based_on_mother_child_relations();
+  tree.init_tree_based_on_mother_child_relations();
 
   //-----test
   EXPECT_EQ(&tree, tree.get_root_of_world());
@@ -216,8 +186,8 @@ TEST_F(CartesianFrameTest, root_of_world_on_complete_tree) {
 //==============================================================================
 TEST_F(CartesianFrameTest, root_of_world_default) {
 
-  CartesianFrame tree;
-  tree.set_frame("tree" ,Vector3D::null, Rotation3D::null);
+  Frame tree;
+  tree.set_name_pos_rot("tree" ,Vector3D::null, Rotation3D::null);
   EXPECT_EQ(&tree, tree.get_root_of_world());
 }
 //==============================================================================

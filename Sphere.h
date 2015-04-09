@@ -18,12 +18,13 @@
 //=================================
 class Sphere :public SurfaceEntity{
 protected:
+	
 	double radius;
 public:
 
 	Sphere();
 
-	void set_sphere(double nradius);
+	void set_sphere_radius(double nradius);
 
 	std::string get_print()const;
 
@@ -31,6 +32,7 @@ public:
 
 	const Intersection* calculate_intersection_with(const Ray* ray)const;
 private:
+
 	bool facing_sphere_from_outside_given_p_m(
 		const double v_Plus,
 		const double v_Minus

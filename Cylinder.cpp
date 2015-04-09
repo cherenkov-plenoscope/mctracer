@@ -23,7 +23,7 @@ void Cylinder::set_position_and_orientation(
 	Rotation3D rotation_in_mother = 
 	calculate_new_rotation_in_mother(rotsym_axis);
 
-	set_frame(name_of_frame, new_position_in_mother, rotation_in_mother);
+	set_name_pos_rot(name_of_frame, new_position_in_mother, rotation_in_mother);
 }
 //------------------------------------------------------------------------------
 Rotation3D Cylinder::calculate_new_rotation_in_mother(
@@ -38,10 +38,10 @@ Rotation3D Cylinder::calculate_new_rotation_in_mother(
 		rotation_in_mother.set(ez,0.0);
 	}else{
 
-		Vector3D rot_axis_in_mother = rotsym_axis.CrossProduct(ez);
+		Vector3D rot_axis_in_mother = rotsym_axis.cross(ez);
 		
 		double new_rot_angle_in_rad = -acos( 
-			(ez* rotsym_axis)/rotsym_axis.norm2()
+			(ez* rotsym_axis)/rotsym_axis.norm()
 		);
 
 		rotation_in_mother.set(rot_axis_in_mother, new_rot_angle_in_rad);
@@ -74,7 +74,7 @@ void Cylinder::set_cylinder_length(
 	const Vector3D end_pos
 ){
 	assert_start_and_end_point_are_distinct(start_pos, end_pos);
-	set_cylinder_length( (end_pos - start_pos).norm2());
+	set_cylinder_length( (end_pos - start_pos).norm());
 }
 //------------------------------------------------------------------------------
 void Cylinder::set_cylinder_length(const double Length){
@@ -163,5 +163,5 @@ bool Cylinder::is_in_cylinders_z_bounds(const Vector3D* vec)const {
 //------------------------------------------------------------------------------
 Vector3D Cylinder::get_surface_normal_for_intersection_vec(const Vector3D* vec)const {
 	Vector3D surface_normal(vec->x(), vec->y(), 0.0);
-	return surface_normal / surface_normal.norm2();
+	return surface_normal / surface_normal.norm();
 }

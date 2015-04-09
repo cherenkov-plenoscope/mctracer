@@ -17,7 +17,7 @@ class SphereIntersectionTest : public ::testing::Test {
 	Color*      colo;
 	double radius;
 	Sphere MySphere;
-	CartesianFrame world;
+	Frame world;
 	PseudoRandomNumberGenerator dice;
 	double wavelength = 433e-9;
 	PropagationEnvironment sphere_test_environment;
@@ -33,22 +33,22 @@ class SphereIntersectionTest : public ::testing::Test {
   	pos.set(0.0,0.0,0.0);
   	rot.set(0.0,0.0,0.0);
 
-	world.set_frame("world",pos,rot);
+	world.set_name_pos_rot("world",pos,rot);
 
 	colo = new Color(200,128,128);
 
 	//------------sphere----------------
 	radius = 1.0;
-	MySphere.set_frame("MySphere", pos, rot);
+	MySphere.set_name_pos_rot("MySphere", pos, rot);
 	MySphere.set_inner_color(colo);
 	MySphere.set_outer_color(colo);
-	MySphere.set_sphere(radius);
+	MySphere.set_sphere_radius(radius);
 
 	//----------declare relationships------------
 	world.set_mother_and_child(&MySphere);
 
 	//---post initialize the world to calculate all bounding spheres---
-	world.setup_tree_based_on_mother_child_relations();
+	world.init_tree_based_on_mother_child_relations();
 
 	sphere_test_environment.world_geometry = &world;
 	sphere_test_environment.propagation_options = &setup;

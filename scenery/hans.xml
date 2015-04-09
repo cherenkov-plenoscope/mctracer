@@ -99,10 +99,10 @@
 <frame>
 	<set_frame name="FACT" pos="[0,0,0]" rot="[0.0,0.0,0.0]"/>
 	
-	<FACT_reflector>
+	<reflector>
 		<set_frame name="reflector" pos="[0,0,0]" rot="[0,0,0]"/>
-		<set_FACT_reflector alpha="0.5"/>
-	</FACT_reflector>
+		<set_reflector focal_length="4.889" facet_spacing="0.062" max_outer_diameter="3.5" min_inner_diameter="0.5" alpha="0.5"/>
+	</reflector>
 	
 	<frame>
 		<set_frame name="GAPD_camera" pos="[0,0,4.8892]" rot="[0,0,0]"/>		

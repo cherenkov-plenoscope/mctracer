@@ -15,7 +15,7 @@ class CameraManForStereo3D {
 public:
 	CameraManForStereo3D(CameraDevice* camera_to_work_with);
 	void aquire_stereo_image(	
-		const CartesianFrame* world,
+		const Frame* world,
 		const GlobalSettings* settings
 	);
 	void increase_stereo_offset();
@@ -45,7 +45,7 @@ private:
 
 	double stereo_offset_in_m = 6e-2;
 	void calc_pos_and_rot_for_left_and_right_camera_config(	
-		const CartesianFrame* world,
+		const Frame* world,
 		const GlobalSettings* settings
 	);
 	void remember_initial_camera_config();
@@ -54,7 +54,7 @@ private:
 	void remmber_initial_camera_image_upward_direction();
 	void set_positions_for_left_and_right_stereo_config();
 	void set_object_distance_to_focus_on(
-		const CartesianFrame* world,
+		const Frame* world,
 		const GlobalSettings* settings
 	);
 	void set_intersec_point_for_left_and_right_optical_axis();
@@ -65,11 +65,11 @@ private:
 	void set_intersection_for_l_and_r_cameras_optical_axes();
 	void print_stereo_offset_manipulation(const std::string status)const;
 	void take_left_image(	
-		const CartesianFrame* world,
+		const Frame* world,
 		const GlobalSettings* settings
 	);
 	void take_right_image(	
-		const CartesianFrame* world,
+		const Frame* world,
 		const GlobalSettings* settings
 	);
 };

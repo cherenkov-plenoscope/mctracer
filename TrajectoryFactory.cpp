@@ -16,10 +16,10 @@ void TrajectoryFactory::set_trajectory_radius_in_m(const double radius) {
 	radius_of_trajectory_in_m = radius;
 }
 //------------------------------------------------------------------------------
-CartesianFrame* TrajectoryFactory::get_trajectory()const {
+Frame* TrajectoryFactory::get_trajectory()const {
 
 
-	CartesianFrame* trajectory = get_empty_trajectory_frame();
+	Frame* trajectory = get_empty_trajectory_frame();
 
 	for(uint i=0; i < ray->get_number_of_interactions_so_far(); i++) {
 
@@ -34,7 +34,7 @@ CartesianFrame* TrajectoryFactory::get_trajectory()const {
 	}
 
 	// post init
-	trajectory->setup_tree_based_on_mother_child_relations();
+	trajectory->init_tree_based_on_mother_child_relations();
 
 	return trajectory;
 }
@@ -51,11 +51,11 @@ std::string TrajectoryFactory::get_trajectory_frame_name()const {
 	return name.str();
 }
 //------------------------------------------------------------------------------
-CartesianFrame* TrajectoryFactory::get_empty_trajectory_frame()const {
+Frame* TrajectoryFactory::get_empty_trajectory_frame()const {
 	
-	CartesianFrame* trajectory = new CartesianFrame;
+	Frame* trajectory = new Frame;
 	
-	trajectory->set_frame(
+	trajectory->set_name_pos_rot(
 		get_trajectory_frame_name(),
 	 	Vector3D::null, 
 	 	Rotation3D::null
@@ -79,7 +79,7 @@ Cylinder* TrajectoryFactory::get_trajectory_line_of_part(
 
 	Cylinder* ray_trajectory = new Cylinder;
 
-	ray_trajectory->set_frame(
+	ray_trajectory->set_name_pos_rot(
 		get_trajectory_of_part_index(part_index),	 	
 		Vector3D::null, 
  		Rotation3D::null
@@ -114,14 +114,14 @@ Sphere* TrajectoryFactory::get_intersection_indicator_of_part(
 
 	Sphere* intersection_indicator = new Sphere;
 
-	intersection_indicator->set_frame(
+	intersection_indicator->set_name_pos_rot(
 		get_intersection_point_name_of_part(part_index),
 		ray->intersection_history->at(part_index)->
 			get_intersection_vector_in_world_system(),
 		Rotation3D::null
 	);
 
-	intersection_indicator->set_sphere(radius_of_trajectory_in_m*2.0);
+	intersection_indicator->set_sphere_radius(radius_of_trajectory_in_m*2.0);
 
 	if(ray->interaction_type_history->at(part_index) == absorption_in_void)
 		intersection_indicator->set_outer_color(absorption_in_void_col);

@@ -16,20 +16,20 @@ ZaxisCylinderRayIntersectionEquation::ZaxisCylinderRayIntersectionEquation(
 	//
 	// 0 = l^2 + l*2*(sxdx + sydy)/(dx^2 + dy^2) + (sx^2 +sy^2 -r^2)/(dx^2 + dy^2)
 
-	double dx2 = ray->Direction().x()*ray->Direction().x();
-	double dy2 = ray->Direction().y()*ray->Direction().y();
+	const double dx2 = ray->Direction().x()*ray->Direction().x();
+	const double dy2 = ray->Direction().y()*ray->Direction().y();
 
-	double sxdx = ray->Support().x()*ray->Direction().x();
-	double sydy = ray->Support().y()*ray->Direction().y();
+	const double sxdx = ray->Support().x()*ray->Direction().x();
+	const double sydy = ray->Support().y()*ray->Direction().y();
 
-	double sx2 = ray->Support().x()*ray->Support().x();
-	double sy2 = ray->Support().y()*ray->Support().y();
+	const double sx2 = ray->Support().x()*ray->Support().x();
+	const double sy2 = ray->Support().y()*ray->Support().y();
 
-	double r2 = radius*radius;
-	double dnom = dx2 + dy2;
+	const double r2 = radius*radius;
+	const double dnom = dx2 + dy2;
 
-	double p = 2.0*(sxdx + sydy) / dnom;
-	double q = (sx2 + sy2 -r2) / dnom;
+	const double p = 2.0*(sxdx + sydy) / dnom;
+	const double q = (sx2 + sy2 -r2) / dnom;
 
 	QuadraticEquation rayParamCylinderIntersecEquation(p, q);
 

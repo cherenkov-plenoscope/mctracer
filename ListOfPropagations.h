@@ -31,7 +31,7 @@ public:
 	void push_back(RayForPropagation* ray);
 	
 	void propagate_in_world_with_settings(
-		const CartesianFrame* world, 
+		const Frame* world, 
 		const GlobalSettings* settings
 	);
 
@@ -40,29 +40,29 @@ public:
 	uint get_number_of_propagations()const;
 
 	uint get_number_of_propagations_absorbed_in_object(
-		const CartesianFrame* obj
+		const Frame* obj
 	)const;
 
-	std::string get_csv_print_for_propagations_ending_in(const CartesianFrame* frame)const;
+	std::string get_csv_print_for_propagations_ending_in(const Frame* frame)const;
 
-	CartesianFrame* get_trajectories()const;
+	Frame* get_trajectories()const;
 
-	CartesianFrame* get_next_trajectoy();
+	Frame* get_next_trajectoy();
 
 	bool has_still_trajectoies_left()const;
 
-	CartesianFrame* get_mean_trajectoy_in_world_using_options(
-		const CartesianFrame* world, const GlobalSettings* settings
+	Frame* get_mean_trajectoy_in_world_using_options(
+		const Frame* world, const GlobalSettings* settings
 	);
 private:
 
 	void propagate_using_single_thread(
-		const CartesianFrame* world, 
+		const Frame* world, 
 		const GlobalSettings* settings
 	);
 
 	void propagate_using_multi_thread(
-		const CartesianFrame* world, 
+		const Frame* world, 
 		const GlobalSettings* settings
 	);
 

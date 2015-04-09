@@ -1,25 +1,25 @@
-#include "CartesianFrame.h"
+#include "Frame.h"
 //------------------------------------------------------------------------------
-CartesianFrame* CartesianFrame::void_frame = new CartesianFrame(
+Frame* Frame::void_frame = new Frame(
 	"void_frame",
 	Vector3D::null,
 	Rotation3D::null
 );
 //------------------------------------------------------------------------------
-CartesianFrame::CartesianFrame(
+Frame::Frame(
     const std::string new_name,
     const Vector3D    new_pos,
     const Rotation3D  new_rot
 ) { 
-    set_frame(new_name, new_pos, new_rot); 
+    set_name_pos_rot(new_name, new_pos, new_rot); 
 }
 //------------------------------------------------------------------------------
-uint CartesianFrame::get_number_of_children()const { 
+uint Frame::get_number_of_children()const { 
 	return children.size(); 
 }
 //------------------------------------------------------------------------------
-void CartesianFrame::post_initialize_transformations() {
-	// in the set_frame() function the transformation frame2mother has been set
+void Frame::post_init_transformations() {
+	// in the set_name_pos_rot() function the transformation frame2mother has been set
 	// using the new relative position to the mother and the new relative
 	// orientation/rotation with respect to the mother frame.
 	// All other transformations are calculated using this first frame2mother.
@@ -42,7 +42,7 @@ void CartesianFrame::post_initialize_transformations() {
 	pos_in_world = T_frame2world.get_translation();
 }
 //------------------------------------------------------------------------------
-HomoTrafo3D CartesianFrame::calculate_frame2world()const {
+HomoTrafo3D Frame::calculate_frame2world()const {
 	// All parent frames of this frame do already know their frame2mother 
 	// relation.
 	// To calculate the frame2world relation of this frame we have to 
@@ -50,7 +50,7 @@ HomoTrafo3D CartesianFrame::calculate_frame2world()const {
 	// root frame.
 
 	// The first step toward the root is the mother of this frame
-	CartesianFrame* frame_on_our_way_towards_the_root = mother;
+	Frame* frame_on_our_way_towards_the_root = mother;
 	
 	// The starting point for the latter frame2world is this framse frame2motehr
 	HomoTrafo3D Trafo_on_our_way_towards_the_root = T_frame2mother;	
@@ -67,7 +67,7 @@ HomoTrafo3D CartesianFrame::calculate_frame2world()const {
 	return Trafo_on_our_way_towards_the_root;
 }
 //------------------------------------------------------------------------------
-void CartesianFrame::set_frame(
+void Frame::set_name_pos_rot(
 	const std::string name_of_frame,
 	const Vector3D pos_in_mother,
 	const Rotation3D rot_in_mother
@@ -86,97 +86,67 @@ void CartesianFrame::set_frame(
 	reset_all_connections_to_children_and_mother();
 }
 //------------------------------------------------------------------------------
-void CartesianFrame::reset_all_connections_to_children_and_mother() {
+void Frame::reset_all_connections_to_children_and_mother() {
 	radius_of_sphere_enclosing_all_children = 0.0;	 
 	mother = void_frame;
 	root_of_world = this;
 	children.clear();
 }
 //------------------------------------------------------------------------------
-void CartesianFrame::assert_name_is_valid(const std::string name_to_check)const{
-	assert_name_is_not_empty(name_to_check);
-	assert_name_has_no_whitespaces(name_to_check);
-	assert_name_has_no_delimiter_symbol(name_to_check);
+void Frame::assert_name_is_valid(const std::string name_to_check)const {
+	AssertionTools::text_with_name_is_not_empty_given_context(
+		name_to_check, "name_of_frame", 
+		"A frame's name must not be empty"
+	);
+	AssertionTools::text_with_name_has_no_whitespaces_given_context(
+		name_to_check, "name_of_frame", 
+		"A frame's name must not contain whitespaces"
+	);
+	AssertionTools::text_with_name_has_no_specific_char_given_context(
+		name_to_check, "name_of_frame", delimiter_for_frame_path,
+		"The delimiter sign for the frame's tree structure must not be used in "
+		"a frame's name."
+	);
 }
 //------------------------------------------------------------------------------
-void CartesianFrame::assert_name_is_not_empty(
-	const std::string name_to_check)const
-{
-	// A name must not be empty!
-	if(name_to_check.empty()){
-		std::stringstream info;
-		info << "CartesianFrame::" << __func__ << "()\n";
-		info << "The name of a frame must not be empty!\n";
-		throw TracerException(info.str(), EMPTY_NAME_OF_FRAME);
-	}
-}
-//------------------------------------------------------------------------------
-void CartesianFrame::assert_name_has_no_whitespaces(
-	const std::string name_to_check)const
-{
-	// A name must not use whitespaces!
-	for(auto single_character : name_to_check){
-		if(isspace(single_character)){
-			std::stringstream info;
-			info << "CartesianFrame::" << __func__ << "()\n";
-			info << "The name of a frame must not contain blank characters! ";
-			info << "But the name is actual: '" << name_to_check << "'.\n";
-			throw TracerException(info.str(), WHITE_SPACE_IN_NAME_OF_FRAME);			
-		}
-	}
-}
-//------------------------------------------------------------------------------
-void CartesianFrame::assert_name_has_no_delimiter_symbol(
-	const std::string name_to_check)const
-{
-	// A name must not contain the delimiter sign
-	if(StringTools::string_contains_char(name_to_check, delimiter_for_frame_path)) {
-		std::stringstream info;
-		info << "CartesianFrame::" << __func__ << "()\n";
-		info << "The name of a frame must not contain the delimiter symbol: ";
-		info << "'" << delimiter_for_frame_path << "'. ";
-		info << "But the name is actual: '" << name_to_check << "'.\n";
-		throw TracerException(info.str(), DELIMITER_SYMBOL_IN_NAME_OF_FRAME);		
-	}
-}
-//------------------------------------------------------------------------------
-std::string CartesianFrame::get_print()const {
+std::string Frame::get_print()const {
 	return get_frame_print();
 }
 //------------------------------------------------------------------------------
-std::string CartesianFrame::get_frame_print()const {
+std::string Frame::get_frame_print()const {
 	std::stringstream out;
 	out << "frame: " << name_of_frame << "\n";
 	out << "| pos in mother: " << pos_in_mother << "\n";
 	out << "| rot in mother: " << rot_in_mother << "\n";
 	out << "| pos in world:  " << pos_in_world << "\n";
-	out << "| enclosing boundary radius: " << radius_of_sphere_enclosing_all_children << "m\n";	
+	out << "| enclosing boundary radius: ";
+	out << radius_of_sphere_enclosing_all_children << "m\n";	
 	return out.str();
 }
 //------------------------------------------------------------------------------
-std::string CartesianFrame::get_tree_print()const {
+std::string Frame::get_tree_print()const {
 	
 	std::stringstream out;
 	out << name_of_frame << ", " << get_number_of_children();
 	out << " children, " << radius_of_sphere_enclosing_all_children << "m\n";
 
-	for(CartesianFrame* child : children)
+	for(Frame* child : children)
 		out << "| " << child->get_tree_print();
 
 	return out.str();
 }
 //------------------------------------------------------------------------------
-void CartesianFrame::set_mother(CartesianFrame *const new_mother) {
+void Frame::set_mother(Frame *const new_mother) {
 	mother = new_mother;
 }
 //------------------------------------------------------------------------------
-void CartesianFrame::add_child(CartesianFrame * const new_child) {
+void Frame::add_child(Frame * const new_child) {
 	children.push_back(new_child);
 	update_sphere_enclosing_all_children(new_child);
 }
 //------------------------------------------------------------------------------
-void CartesianFrame::update_sphere_enclosing_all_children(
-	CartesianFrame *new_child
+void Frame::update_sphere_enclosing_all_children(
+	Frame *new_child
 ) {
 	// When a child frame is added to a frame we have to check if the sphere 
 	// enclosing all the frames previous children is also enclosing the new
@@ -240,7 +210,7 @@ void CartesianFrame::update_sphere_enclosing_all_children(
 	// new child.
 
 	double radius_needed_to_enclose_new_child = 
-	new_child->pos_in_mother.norm2() + 
+	new_child->pos_in_mother.norm() + 
 	new_child->radius_of_sphere_enclosing_all_children;
 
 	if(	radius_needed_to_enclose_new_child > 
@@ -250,67 +220,67 @@ void CartesianFrame::update_sphere_enclosing_all_children(
 		radius_needed_to_enclose_new_child;	
 }
 //------------------------------------------------------------------------------
-void CartesianFrame::set_mother_and_child(CartesianFrame *new_child) {
+void Frame::set_mother_and_child(Frame *new_child) {
 	this->add_child(new_child);
 	new_child->set_mother(this);
 }
 //------------------------------------------------------------------------------
-void CartesianFrame::setup_tree_based_on_mother_child_relations() {
-	post_initialize_me_and_all_my_children();
+void Frame::init_tree_based_on_mother_child_relations() {
+	post_init_me_and_all_my_children();
 	update_enclosing_sphere_for_all_children();
-	post_initialize_root_of_world();
+	post_init_root_of_world();
 }
 //------------------------------------------------------------------------------
-void CartesianFrame::post_initialize_me_and_all_my_children() {
+void Frame::post_init_me_and_all_my_children() {
 	// post initialize all frames in world tree of frames.
 	// This has to be done to ensure the relationships between each frame and
 	// the root frame are declared in each frame.
-	post_initialize_transformations();
+	post_init_transformations();
 
 	// and all children
-	for(CartesianFrame* child : children)
-		child->post_initialize_me_and_all_my_children();
+	for(Frame* child : children)
+		child->post_init_me_and_all_my_children();
 }
 //------------------------------------------------------------------------------
-void CartesianFrame::update_enclosing_sphere_for_all_children() {
+void Frame::update_enclosing_sphere_for_all_children() {
 	// when there is already a treee structure of frames and one is adding a
 	// new frame later on, makeing it the child of a previous frame, then one
 	// has to update the spheres enclosing the children of all mother frames
 	// of the frame where the new frame was added to.
 	// Here we do this in a recursive way.
 
-	for(CartesianFrame *child : children){
+	for(Frame *child : children){
 		child->update_enclosing_sphere_for_all_children();
 		update_sphere_enclosing_all_children(child);
 	}
 }
 //------------------------------------------------------------------------------
-void CartesianFrame::post_initialize_root_of_world() {
+void Frame::post_init_root_of_world() {
 
 	if(has_mother())
 		root_of_world = mother->get_root_of_world();
 	else
 		root_of_world = this;
 
-	for(CartesianFrame* child : children)
-		child->post_initialize_root_of_world();
+	for(Frame* child : children)
+		child->post_init_root_of_world();
 }
 //------------------------------------------------------------------------------
-const CartesianFrame* CartesianFrame::get_root_of_world()const {
+const Frame* Frame::get_root_of_world()const {
 	return root_of_world;
 }
 //------------------------------------------------------------------------------
-void  CartesianFrame::take_children_from(
-	CartesianFrame *frame_to_take_chidren_from
+void  Frame::take_children_from(
+	Frame *frame_to_take_chidren_from
 ) {
 	// take all children of the frame_to_take_chidren_from and 
 	// put them to this frame
 
-	for(CartesianFrame *child_to_take: frame_to_take_chidren_from->children)
+	for(Frame *child_to_take: frame_to_take_chidren_from->children)
 		set_mother_and_child( child_to_take);
 }
 //------------------------------------------------------------------------------
-const CartesianFrame* CartesianFrame::get_frame_in_tree_by_path( 
+const Frame* Frame::get_frame_in_tree_by_path( 
 	std::string path_to_frame 
 )const{
 	/// Input is a string called path. It is string of concatenated sub strings 
@@ -353,17 +323,17 @@ const CartesianFrame* CartesianFrame::get_frame_in_tree_by_path(
 	}
 }
 //------------------------------------------------------------------------------
-const CartesianFrame* CartesianFrame::get_child_by_name( 
+const Frame* Frame::get_child_by_name( 
 	std::string specific_name 
 )const{
-	for( CartesianFrame* child : children )
+	for( Frame* child : children )
 		if( StringTools::is_equal(child->name_of_frame, specific_name) )
 			return child;
 
 	return void_frame;
 }
 //------------------------------------------------------------------------------
-std::string CartesianFrame::get_path_in_tree_of_frames()const {
+std::string Frame::get_path_in_tree_of_frames()const {
 	/// The path of a frame is returned here. The root frame called world is not 
 	/// included in the path. The delimiter sign is '/' as for directorys on 
 	/// unix systems.
@@ -383,50 +353,55 @@ std::string CartesianFrame::get_path_in_tree_of_frames()const {
 	}
 }
 //------------------------------------------------------------------------------
-bool CartesianFrame::has_child_with_name(const std::string name_of_child)const {
+bool Frame::has_child_with_name(const std::string name_of_child)const {
 	return get_child_by_name(name_of_child) != void_frame;
 }
 //------------------------------------------------------------------------------
-bool CartesianFrame::has_mother()const {
+bool Frame::has_mother()const {
 	return mother != void_frame;
 }
 //------------------------------------------------------------------------------
-bool CartesianFrame::has_children()const {
+bool Frame::has_children()const {
 	return get_number_of_children() > 0; 
 }
 //------------------------------------------------------------------------------
 #include "Ray.h"
 #include "Intersection.h"
 //------------------------------------------------------------------------------
-const Intersection* CartesianFrame::calculate_intersection_with(const Ray* ray)const {
+const Intersection* Frame::calculate_intersection_with(
+	const Ray* ray
+)const {
 	return empty_intersection();
 	//return Intersection::void_intersection;
 }
 //------------------------------------------------------------------------------
-const Intersection* CartesianFrame::empty_intersection()const {
+const Intersection* Frame::empty_intersection()const {
 	Intersection* intersection;
 	intersection = new Intersection();
 	return intersection;
 	//return Intersection::void_intersection;
 }
 //------------------------------------------------------------------------------
-void CartesianFrame::find_intersection_candidates_for_all_children_and_ray(
+void Frame::find_intersection_candidates_for_all_children_and_ray(
 	const Ray* ray,
-	std::vector<const CartesianFrame*> *candidate_frames
+	std::vector<const Frame*> *candidate_frames
 )const {
 
-	for(CartesianFrame *child : children)
-		ray->find_intersection_candidates_in_tree_of_frames(child, candidate_frames);
+	for(Frame *child : children)
+		ray->find_intersection_candidates_in_tree_of_frames(
+			child, 
+			candidate_frames
+		);
 }
 //------------------------------------------------------------------------------
-void CartesianFrame::cluster_using_helper_frames() {
+void Frame::cluster_using_helper_frames() {
 	if(get_number_of_children() > 8) {
 
-		std::vector<CartesianFrame*> oct_tree[8];
+		std::vector<Frame*> oct_tree[8];
 
-		std::vector<CartesianFrame*> new_children;
+		std::vector<Frame*> new_children;
 
-		for(CartesianFrame* child : children)
+		for(Frame* child : children)
 			oct_tree[get_sector(child->pos_in_mother)].push_back(child);
 		
 		for(uint sector=0; sector<8; sector++) {
@@ -436,13 +411,13 @@ void CartesianFrame::cluster_using_helper_frames() {
 				name << "helper_sector_" << sector;
 
 				Vector3D mean_pos_in_mother = get_mean_pos_in_mother(oct_tree[sector]);
-				CartesianFrame* helper_frame = new CartesianFrame(
+				Frame* helper_frame = new Frame(
 					name.str(),
 					mean_pos_in_mother,
 					Rotation3D::null
 				);
 
-				for(CartesianFrame* sector_child : oct_tree[sector]) {
+				for(Frame* sector_child : oct_tree[sector]) {
 
 					sector_child->pos_in_mother = 
 						sector_child->pos_in_mother - mean_pos_in_mother;
@@ -460,7 +435,7 @@ void CartesianFrame::cluster_using_helper_frames() {
 		}
 
 		children.clear();
-		for(CartesianFrame* new_helper_frame_child : new_children) {
+		for(Frame* new_helper_frame_child : new_children) {
 
 			new_helper_frame_child->cluster_using_helper_frames();
 
@@ -469,19 +444,57 @@ void CartesianFrame::cluster_using_helper_frames() {
 	}
 }
 //------------------------------------------------------------------------------
-uint CartesianFrame::get_sector(const Vector3D pos)const {
+uint Frame::get_sector(const Vector3D pos)const {
 	const bool sx = pos.x() >= 0.0;
 	const bool sy = pos.y() >= 0.0;
 	const bool sz = pos.z() >= 0.0;
 	return 4*sx + 2*sy + 1*sz;
 }
 //------------------------------------------------------------------------------
-Vector3D CartesianFrame::get_mean_pos_in_mother(std::vector<CartesianFrame*> frames)const {
+Vector3D Frame::get_mean_pos_in_mother(
+	std::vector<Frame*> frames
+)const {
 	
 	Vector3D sum_pos = Vector3D::null;
 
-	for(CartesianFrame* frame : frames)
+	for(Frame* frame : frames)
 		sum_pos = sum_pos + frame->pos_in_mother;
 
 	return sum_pos/frames.size();
+}
+//------------------------------------------------------------------------------
+std::string Frame::get_name_of_frame()const{ 
+	return name_of_frame; 
+}
+//------------------------------------------------------------------------------
+const Vector3D* Frame::get_position_in_mother()const {
+    return &pos_in_mother;
+}
+//------------------------------------------------------------------------------
+const Rotation3D* Frame::get_rotation_in_mother()const {
+    return &rot_in_mother;
+}
+//------------------------------------------------------------------------------
+const Vector3D* Frame::get_position_in_world()const {
+    return &pos_in_world;
+}
+//------------------------------------------------------------------------------
+double Frame::get_radius_of_sphere_enclosing_all_children()const {
+    return radius_of_sphere_enclosing_all_children;
+}
+//------------------------------------------------------------------------------
+const HomoTrafo3D* Frame::frame2mother()const {
+    return &T_frame2mother;
+}
+//------------------------------------------------------------------------------
+const HomoTrafo3D* Frame::mother2frame()const {
+    return &T_mother2frame;
+}
+//------------------------------------------------------------------------------
+const HomoTrafo3D* Frame::world2frame()const {
+    return &T_world2frame;
+}
+//------------------------------------------------------------------------------
+const HomoTrafo3D* Frame::frame2world()const {
+    return &T_frame2world;
 }

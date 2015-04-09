@@ -24,7 +24,7 @@ public:
 	std::string get_print()const;
 
 	Color trace(
-		const CartesianFrame* world,
+		const Frame* world,
 		uint refl_count,
 		const GlobalSettings *settings
 	)const;

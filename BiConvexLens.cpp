@@ -54,7 +54,7 @@ SphereCapWithCylinderBound* BiConvexLens::create_cap_with_pos_rot_name_focal_len
 
 	SphereCapWithCylinderBound* cap;
 	cap = new SphereCapWithCylinderBound;
-	cap->set_frame(name, pos, rot);
+	cap->set_name_pos_rot(name, pos, rot);
 
 	cap->take_boundary_layer_properties_but_inside_out_from(this);
 

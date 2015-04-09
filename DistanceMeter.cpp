@@ -1,6 +1,6 @@
 #include "DistanceMeter.h"
 //------------------------------------------------------------------------------
-DistanceMeter::DistanceMeter(const Ray* ray, const CartesianFrame* world) {
+DistanceMeter::DistanceMeter(const Ray* ray, const Frame* world) {
 	const Intersection* closest_intersec = ray->get_first_intersection_in(world);
 
 	if(closest_intersec->does_intersect()) {
