@@ -10,5 +10,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/RayAndBoundingSphereInteraction.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/RayAndFrameInteraction.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/RayForPropagation.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/GlobalSettings.cpp
    	PARENT_SCOPE
 )

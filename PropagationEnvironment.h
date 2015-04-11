@@ -13,7 +13,7 @@
 #include <sstream>
 #include "TracerException.h"
 #include "Core/Frame.h"
-#include "GlobalSettings.h"
+#include "Core/GlobalSettings.h"
 #include "Core/PseudoRandomNumberGenerator.h"
 
 class PropagationEnvironment {

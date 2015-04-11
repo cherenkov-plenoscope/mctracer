@@ -30,8 +30,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TracerException.cpp
 
-	${CMAKE_CURRENT_SOURCE_DIR}/GlobalSettings.cpp 
-
 	${CMAKE_CURRENT_SOURCE_DIR}/WorldFactory.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Function1D.cpp
 
