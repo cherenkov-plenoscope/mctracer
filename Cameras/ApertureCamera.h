@@ -21,13 +21,11 @@ public:
 
 	void set_FoV_in_rad(const double FoV_in_rad);
 
-	void set_aperture_cam(	
+	void set_fStop_sesnorWidth_rayPerPixel(	
 		const double new_FStopNumber,
 		const double new_SensorSizeX,
 		const uint rays_per_pixel 
 	);
-	
-	void print()const;
 	
 	CameraRay get_ray_for_pixel_in_row_and_col(const uint row, const uint col);
 
@@ -41,6 +39,7 @@ public:
 		const GlobalSettings* settings
 	);
 
+	std::string get_print()const;
 private:
 	double FStopNumber;			
 	double ApertureRadius_in_m;	
@@ -56,17 +55,6 @@ private:
 	
 	PseudoRandomNumberGenerator dice;
 
-	void assert_object_distance_is_positive(
-		const double ObjectDistance_in_m
-	)const;
-
-	void assert_F_number_is_positive(const double new_FStopNumbe)const;
-	void assert_sensor_width_is_positive(const double sensor_width_in_m)const;
-
-	void assert_number_of_rays_per_pixel_is_positive(
-		const uint rays_per_pixel
-	)const;
-
 	void set_F_stop_number(const double new_FStopNumber);
 	void set_sensor_size_using_width(const double sensor_width_in_m);
 	void update_sensor_pixel_pitch();
@@ -80,11 +68,11 @@ private:
 	);
 
 	Vector3D camera_ray_support_vector_in_world_frame(
-		Vector3D &cam_ray_support_vec_in_cam_frame
+		const Vector3D &cam_ray_support_in_cam_frame
 	)const;
 
 	Vector3D camera_ray_direction_vector_in_world_frame(
-		Vector3D &cam_ray_direction_vec
+		const Vector3D &cam_ray_direction
 	)const;
 
 	double get_object_size_for_image_size(const double image_size_in_m)const;
@@ -100,5 +88,6 @@ private:
 		const Frame* world,
 		const GlobalSettings* settings
 	);
+	uint _5_permil_of_pixels()const;
 };
 #endif // __APERTURECAMERA_H_INCLUDED__

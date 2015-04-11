@@ -74,4 +74,27 @@ namespace StringTools {
 		return out.str();
 	}
 	//--------------------------------------------------------------------------
+	std::vector<std::string> tokenize_text_given_delimiter_char(
+		const std::string &text, 
+		const char delimiter
+	) {
+		std::vector<std::string> tokens;
+		std::stringstream text_stream(text);
+		std::string item;
+
+		while(std::getline(text_stream, item, delimiter))
+			tokens.push_back(item);
+	
+		return tokens;
+	}	
+	//--------------------------------------------------------------------------
+	std::string strip_whitespaces(std::string text) {
+		while(std::isspace(*text.begin()))
+		    text.erase(text.begin());
+
+		while(std::isspace(*text.rbegin()))
+		    text.erase(text.length()-1);
+
+		return text;
+	}
 }

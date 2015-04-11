@@ -154,7 +154,7 @@ TEST_F(Tools, StringTools_contains_char) {
   EXPECT_FALSE(StringTools::string_contains_char(text, '*'));
 }
 //------------------------------------------------------------------------------
-TEST_F(Tools, place_item_infront_of_each_line) {
+TEST_F(Tools, StringTools_place_infront_of_each_line) {
   std::stringstream out;
   out << "Dear Customer,\n";
   out << "\n";
@@ -173,6 +173,44 @@ TEST_F(Tools, place_item_infront_of_each_line) {
   expected_out << "->Kind regards, your customer service\n";
 
   EXPECT_TRUE(StringTools::is_equal(expected_out.str(), result));
+}
+//------------------------------------------------------------------------------
+TEST_F(Tools, strip_leading_and_tailing_whitespaces) {
+  std::string no_whitespaces = "no_whitespaces";
+
+  EXPECT_TRUE(
+    StringTools::is_equal(
+      no_whitespaces,
+      StringTools::strip_whitespaces(no_whitespaces)
+    )
+  );
+
+  std::string whitespaces_in_between = "whitespaces in between";
+
+  EXPECT_TRUE(
+    StringTools::is_equal(
+      whitespaces_in_between,
+      StringTools::strip_whitespaces(whitespaces_in_between)
+    )
+  );
+
+  std::string leading_whitespaces = "    leading_whitespaces";
+
+  EXPECT_TRUE(
+    StringTools::is_equal(
+      "leading_whitespaces",
+      StringTools::strip_whitespaces(leading_whitespaces)
+    )
+  );
+
+  std::string trailing_ws = "trailing_ws  ";
+
+  EXPECT_TRUE(
+    StringTools::is_equal(
+      "trailing_ws",
+      StringTools::strip_whitespaces(trailing_ws)
+    )
+  );
 }
 //------------------------------------------------------------------------------
 TEST_F(Tools, file_existance_on_not_existing_file) {

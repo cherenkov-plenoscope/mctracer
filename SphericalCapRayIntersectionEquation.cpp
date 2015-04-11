@@ -15,14 +15,14 @@ SphericalCapRayIntersectionEquation::SphericalCapRayIntersectionEquation(
 	// v^2*(d*d) + v*2(s*d -R*dz) +s*s -2*R*sz = 0
 	// v^2 + v 2(s*d - R*dz)/(d*d) + (s*s - 2*R*sz)/(d*d) = 0
 	
-	double dir_times_dir = ray->Direction() * ray->Direction();
-	double sup_times_sup = ray->Support() * ray->Support();
-	double sup_times_dir = ray->Support() * ray->Direction();
-	double R_times_dir_z = radius * ray->Direction().z();
-	double R_times_sup_z = radius * ray->Support().z();
+	const double dir_times_dir = ray->Direction() * ray->Direction();
+	const double sup_times_sup = ray->Support() * ray->Support();
+	const double sup_times_dir = ray->Support() * ray->Direction();
+	const double R_times_dir_z = radius * ray->Direction().z();
+	const double R_times_sup_z = radius * ray->Support().z();
 
-	double P = 2.0 * ( sup_times_dir - R_times_dir_z ) / dir_times_dir;
-	double Q = ( sup_times_sup - 2.0*R_times_sup_z ) / dir_times_dir;
+	const double P = 2.0 * ( sup_times_dir - R_times_dir_z ) / dir_times_dir;
+	const double Q = ( sup_times_sup - 2.0*R_times_sup_z ) / dir_times_dir;
 
 	QuadraticEquation RayParamForSphereCapIntersecEq(P, Q);
 

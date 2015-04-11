@@ -135,3 +135,25 @@ namespace AssertionTools {
 		}	
 	}
 }
+
+double pedantic_strtod(std::string text_to_parse) {
+
+	if(text_to_parse.compare("") == 0){
+		std::stringstream info;
+		info << "pedantic_strtod:\n";
+		info << "String is empty.";
+		throw TracerException(info.str());
+	}
+	
+	char * e;
+	double number_parsed_in = std::strtod(text_to_parse.c_str(), &e);
+
+	if (*e != 0){
+		std::stringstream info;
+		info << "pedantic_strtod:\n";
+		info << "Can not convert string to floating point number.";
+		throw TracerException(info.str());
+	}
+
+	return number_parsed_in;
+}

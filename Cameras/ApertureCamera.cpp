@@ -1,6 +1,6 @@
 #include "ApertureCamera.h"
 //------------------------------------------------------------------------------
-void ApertureCamera::set_aperture_cam(	
+void ApertureCamera::set_fStop_sesnorWidth_rayPerPixel(	
 	const double new_FStopNumber,
 	const double new_SensorSizeX,
 	const uint rays_per_pixel 
@@ -18,12 +18,18 @@ void ApertureCamera::set_aperture_cam(
 }
 //------------------------------------------------------------------------------
 void ApertureCamera::set_F_stop_number(const double new_FStopNumber){
-	assert_F_number_is_positive(new_FStopNumber);
+	AssertionTools::value_with_name_is_greater_zero_given_context(
+		new_FStopNumber, "F-Stop number of aerture", 
+		"The F-Stop number, i.e. the f over d ratio must be positiv non zero."
+	);
 	FStopNumber = new_FStopNumber;
 }
 //------------------------------------------------------------------------------
-void ApertureCamera::set_sensor_size_using_width(const double width_in_m){
-	assert_sensor_width_is_positive(width_in_m);
+void ApertureCamera::set_sensor_size_using_width(const double width_in_m) {
+	AssertionTools::value_with_name_is_greater_zero_given_context(
+		width_in_m, "image sensor width", 
+		"The image sensor width of the aperture camera must be positiv non zero"
+	);
 	sensor_width_in_m = width_in_m;
 	sensor_height_in_m = sensor_width_in_m / image->get_width_to_height_ratio();
 }
@@ -32,8 +38,11 @@ void ApertureCamera::update_sensor_pixel_pitch(){
 	PixelPitch_in_m = sensor_width_in_m/double(image->get_number_of_cols());
 }
 //------------------------------------------------------------------------------
-void ApertureCamera::set_number_of_rays_per_pixel(const uint rays_per_pixel){
-	assert_number_of_rays_per_pixel_is_positive(rays_per_pixel);
+void ApertureCamera::set_number_of_rays_per_pixel(const uint rays_per_pixel) {
+	AssertionTools::value_with_name_is_greater_zero_given_context(
+		rays_per_pixel, "number of rays emitted for each pixel",
+		"The number of rays emiited must be non zero and positiv."
+	);
 	this->rays_per_pixel = rays_per_pixel;	
 }
 //------------------------------------------------------------------------------
@@ -42,7 +51,11 @@ void ApertureCamera::set_default_object_distance(){
 }
 //------------------------------------------------------------------------------
 void ApertureCamera::set_object_distance(const double ObjectDistance_in_m){
-	assert_object_distance_is_positive(ObjectDistance_in_m);
+	AssertionTools::value_with_name_is_greater_zero_given_context(
+		ObjectDistance_in_m, "object_distance", 
+		"The object distance must be greater zero for objects to be seen by "
+		"the aperture camera."
+	);
 	this->ObjectDistance_in_m = ObjectDistance_in_m;
 }
 //------------------------------------------------------------------------------
@@ -61,6 +74,7 @@ void ApertureCamera::set_focus_to(const double ObjectDistance_in_m){
 //------------------------------------------------------------------------------
 void ApertureCamera::set_FoV_in_rad(const double FoV_in_rad) {
 	assert_FoV_is_valid(FoV_in_rad);
+
 	this -> FoV_in_rad = FoV_in_rad;
 	update_focal_length();
 }
@@ -83,15 +97,18 @@ void ApertureCamera::auto_focus(
 	set_focus_to(get_average_object_distance(world, settings));
 }
 //------------------------------------------------------------------------------
+uint ApertureCamera::_5_permil_of_pixels()const {
+	return image->get_resolution()*5e-4;
+}
+//------------------------------------------------------------------------------
 double ApertureCamera::get_average_object_distance(
 	const Frame* world,
 	const GlobalSettings* settings
 ) {
 	double sum_of_valid_object_distances = 0.0;
 	uint number_of_valid_distances = 0;
-	const uint fraction_of_image_pixels = image->get_resolution()*5e-4;
 
-	for(uint pixel_it=0; pixel_it < fraction_of_image_pixels; pixel_it++) {
+	for(uint pixel_it=0; pixel_it < _5_permil_of_pixels(); pixel_it++) {
 
 		CameraRay ray = get_ray_for_pixel_in_row_and_col(
 			get_random_row(),
@@ -102,16 +119,15 @@ double ApertureCamera::get_average_object_distance(
 
 		if(dist_meter.does_face_an_object()) {
 			number_of_valid_distances++;
-			sum_of_valid_object_distances += 
+			sum_of_valid_object_distances = sum_of_valid_object_distances + 
 				dist_meter.get_distance_to_closest_object();
 		}
 	}
 
-	if(number_of_valid_distances == 0){
+	if(number_of_valid_distances == 0)
 		return default_object_distance_in_m;
-	}else{
+	else
 		return sum_of_valid_object_distances/double(number_of_valid_distances);
-	}
 }
 //------------------------------------------------------------------------------
 uint ApertureCamera::get_random_row(){
@@ -120,57 +136,6 @@ uint ApertureCamera::get_random_row(){
 //------------------------------------------------------------------------------
 uint ApertureCamera::get_random_col(){
 	return uint(floor(dice.uniform()*image->get_number_of_cols()));
-}
-//------------------------------------------------------------------------------
-void ApertureCamera::assert_object_distance_is_positive(
-	const double ObjectDistance_in_m
-)const{
-	if(ObjectDistance_in_m <= 0.0) {
-		std::stringstream out;
-		out << "ApertureCamera::" << __func__ << "()\n";
-		out << "Object distance g must not be negative! ";
-		out << "Expected g > 0.0m, but actual: ";
-		out << ObjectDistance_in_m << "m\n";
-		throw TracerException(out.str());
-	}
-}
-//------------------------------------------------------------------------------
-void ApertureCamera::assert_number_of_rays_per_pixel_is_positive(
-	const uint rays_per_pixel
-)const{
-	if(rays_per_pixel <= 0){
-		std::stringstream out;
-		out << "ApertureCamera::" << __func__ << "()\n";
-		out << "The number N of rays emitted per pixel must not be negative!";
-		out << "Expected:N > 0, but actual: " << rays_per_pixel << std::endl;
-		throw TracerException(out.str());
-	}		
-}
-//------------------------------------------------------------------------------
-void ApertureCamera::assert_F_number_is_positive(
-	const double FStopNumber
-)const{
-	if(FStopNumber <= 0.0){
-		std::stringstream out;
-		out << "ApertureCamera::" << __func__ << "()\n";
-		out << "Focal ratio / F-stop number must not be negative!";
-		out << "Expected: F-stop > 0.0, but actual: ";
-		out << FStopNumber << std::endl;
-		throw TracerException(out.str());
-	}	
-}
-//------------------------------------------------------------------------------
-void ApertureCamera::assert_sensor_width_is_positive(
-	const double sensor_width_in_m
-)const{
-	if(sensor_width_in_m <= 0.0){
-		std::stringstream out;
-		out << "ApertureCamera::" << __func__ << "()\n";
-		out << "Sensor width must not be negative!";
-		out << "Expected: width > 0.0, but actual: ";
-		out << sensor_width_in_m << std::endl;
-		throw TracerException(out.str());
-	}		
 }
 //------------------------------------------------------------------------------
 std::string ApertureCamera::get_aperture_camera_print()const {
@@ -189,15 +154,16 @@ std::string ApertureCamera::get_aperture_camera_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-void ApertureCamera::print()const{
-	std::cout << get_camera_print();
-	std::cout << get_aperture_camera_print();
+std::string ApertureCamera::get_print()const {
+	std::stringstream out;
+	out << get_camera_print() << get_aperture_camera_print();
+	return out.str();
 }
 //------------------------------------------------------------------------------
 Vector3D ApertureCamera::get_random_point_on_bounded_aperture_plane() {
 
-	double polar_radius = dice.uniform()*ApertureRadius_in_m;
-	double polar_angel = dice.uniform()*2.0*M_PI;
+	const double polar_radius = dice.uniform()*ApertureRadius_in_m;
+	const double polar_angel = dice.uniform()*2.0*M_PI;
 
 	return Vector3D(
 		polar_radius*cos(polar_angel), 
@@ -231,13 +197,13 @@ double ApertureCamera::get_object_size_for_image_size(
 CameraRay ApertureCamera::get_ray_for_pixel_in_row_and_col(
 	const uint row, const uint col
 ){	
-	Vector3D support_vec_in_cam_frame = 
+	const Vector3D support_vec_in_cam_frame = 
 		get_random_point_on_bounded_aperture_plane();
 	
-	Vector3D obj_plane_intersec_in_cam_frame = 
+	const Vector3D obj_plane_intersec_in_cam_frame = 
 		get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(row, col);
 	
-	Vector3D direction_vec_in_cam_frame =
+	const Vector3D direction_vec_in_cam_frame =
 		obj_plane_intersec_in_cam_frame - support_vec_in_cam_frame;
 	
 	return CameraRay(
@@ -247,17 +213,17 @@ CameraRay ApertureCamera::get_ray_for_pixel_in_row_and_col(
 }
 //------------------------------------------------------------------------------
 Vector3D ApertureCamera::camera_ray_support_vector_in_world_frame(
-	Vector3D &cam_ray_support_vec_in_cam_frame
+	const Vector3D &cam_ray_support_in_cam_frame
 )const{
-	T_Camera2World.transform_orientation(&cam_ray_support_vec_in_cam_frame);
-	return CameraPositionInWorld + cam_ray_support_vec_in_cam_frame;
+	return CameraPositionInWorld + T_Camera2World.get_transformed_orientation(
+		cam_ray_support_in_cam_frame
+	);
 }
 //------------------------------------------------------------------------------
 Vector3D ApertureCamera::camera_ray_direction_vector_in_world_frame(
-	Vector3D &cam_ray_direction_vec
+	const Vector3D &cam_ray_direction
 )const{
-	T_Camera2World.transform_orientation(&cam_ray_direction_vec);
-	return cam_ray_direction_vec;
+	return T_Camera2World.get_transformed_orientation(cam_ray_direction);
 }
 //------------------------------------------------------------------------------
 void ApertureCamera::acquire_image(

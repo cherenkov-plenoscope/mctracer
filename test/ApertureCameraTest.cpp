@@ -39,17 +39,7 @@ class ApertureCameraTest : public ::testing::Test {
 //----------------------------------------------------------------------
 TEST_F(ApertureCameraTest, set_up) {
   ApertureCamera Mamiya645("Mamiya645", 640, 480);
-
-  double Mamiya_F_stop_number = 2.3;
-  double Mamiya_sensor_width_in_m = 6e-2;
-  uint   Mamiya_number_of_rays_emitted_per_pixel = 5;
-  
-  Mamiya645.set_aperture_cam(
-    Mamiya_F_stop_number,
-    Mamiya_sensor_width_in_m,
-    Mamiya_number_of_rays_emitted_per_pixel
-  );
-
+  Mamiya645.set_fStop_sesnorWidth_rayPerPixel(2.3, 6e-2, 5);
   Mamiya645.set_FoV_in_rad(Deg2Rad(45.0));
 
   Vector3D pos(0.0,0.0,-5.0);

@@ -167,16 +167,14 @@ void FreeOrbitCamera::move_right_and_shoot_video() {
 void FreeOrbitCamera::toggle_stereo3D(){
 	stereo3D = !stereo3D;
 	std::cout << get_prefix_print() << "Stereo 3D : ";
-	std::cout << ((stereo3D == true)? "On": "Off") << "\n";
+	std::cout << (stereo3D == true ? "On": "Off") << "\n";
 }
 //==============================================================================
 void FreeOrbitCamera::take_snapshot(){
 	
 	ApertureCamera Mamiya645 = get_Mamiya645_based_on_free_orbit_camera();
-
 	Mamiya645.auto_focus(world, settings);
-
-	Mamiya645.print();
+	std::cout << Mamiya645.get_print();
 
 	if(stereo3D){
 		std::cout << get_prefix_print() << "stereo snapshot:\n";
@@ -204,26 +202,13 @@ std::string FreeOrbitCamera::get_snapshot_filename(){
 //==============================================================================
 ApertureCamera FreeOrbitCamera::get_Mamiya645_based_on_free_orbit_camera()const{
 
-	ApertureCamera Mamiya645("Mamiya645", 1920, 1080);
-
-	// The real Mamiya Sekor has F=2.3 here it is "dreamlens" setup with F=0.95
-	double Mamiya_F_stop_number = 0.95;
-	double Mamiya_sensor_width_in_m = 0.06;
-	uint   Mamiya_number_of_rays_emitted_per_pixel = 3;
-	
-	Mamiya645.set_aperture_cam(
-		Mamiya_F_stop_number,
-		Mamiya_sensor_width_in_m,
-		Mamiya_number_of_rays_emitted_per_pixel
-	);
-
+	ApertureCamera Mamiya645("Mamiya645", 1920, 1080);	
+	Mamiya645.set_fStop_sesnorWidth_rayPerPixel(0.95, 0.06, 3);
 	Mamiya645.set_FoV_in_rad(flying_camera->get_FoV_in_rad());
-
 	Mamiya645.update_position_and_orientation(
 		flying_camera->get_position_in_world(),
 		flying_camera->get_rotation_in_world()
 	);
-
 	return Mamiya645;
 }
 //==============================================================================

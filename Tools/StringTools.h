@@ -40,6 +40,13 @@ namespace StringTools {
 		const std::string front,
 		std::string text
 	);
+
+	std::vector<std::string> tokenize_text_given_delimiter_char(
+		const std::string &text, 
+		const char delimiter
+	);
+
+	std::string strip_whitespaces(std::string text);
 }
 
 #endif // __STRINGTOOLS_H_INCLUDE__

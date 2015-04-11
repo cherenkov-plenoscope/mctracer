@@ -20,6 +20,8 @@
 double Deg2Rad(double angle_in_Deg);
 double Rad2Deg(double angle_in_Rad);
 
+double pedantic_strtod(std::string text_to_parse);
+
 namespace UserInteraction {
 	void print_welcome_screen();	
 	std::string input(const std::string request);

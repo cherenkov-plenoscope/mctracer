@@ -59,7 +59,7 @@ public:
 
 	std::string get_name()const;
 
-	virtual void print()const;
+	std::string get_print()const;
 
 	void save_image(const std::string image_path)const;
 

@@ -1,4 +1,4 @@
-#include "testVector3D.cpp"
+#include "Vector3DTest.cpp"
 #include "RayTest.cpp"
 #include "RayAndBoundingSphereOfFrameInteractionTest.cpp"
 #include "testRotation3D.cpp"
@@ -29,6 +29,7 @@
 #include "FresnelRefractionAndReflectionTest.cpp"
 #include "TrajectoryFactoryTest.cpp"
 #include "HexGridXyTest.cpp"
+#include "TableToolsTest.cpp"
 
 int main(int argc, char **argv) {
 	UserInteraction::print_welcome_screen();

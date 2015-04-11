@@ -111,8 +111,8 @@ Vector3D CameraDevice::get_normalized_pointing_direction()const{
 	return CameraPointingDirection/CameraPointingDirection.norm();
 }
 //------------------------------------------------------------------------------
-void CameraDevice::print()const{
-	std::cout << get_camera_print();
+std::string CameraDevice::get_print()const{
+	return get_camera_print();
 }
 //------------------------------------------------------------------------------
 void CameraDevice::set_FoV_in_rad(const double FoV_in_rad) {
