@@ -6,6 +6,8 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Intersection.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/Frame.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceEntity.cpp	
-	${CMAKE_CURRENT_SOURCE_DIR}/Ray.cpp	
+	${CMAKE_CURRENT_SOURCE_DIR}/Ray.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/RayAndBoundingSphereInteraction.cpp	
+	${CMAKE_CURRENT_SOURCE_DIR}/RayAndFrameInteraction.cpp	
    	PARENT_SCOPE
 )
