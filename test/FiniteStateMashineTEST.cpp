@@ -3,7 +3,7 @@
 #include <math.h>
 
 #include "gtest/gtest.h"
-#include "FiniteStateMashine.h"
+#include "Tools/FiniteStateMashine.h"
 
 using namespace std;
 

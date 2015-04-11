@@ -34,7 +34,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/RectangularPrismZ.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/CylinderPrismZ.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/HexagonalPrismZ.cpp	
-	${CMAKE_CURRENT_SOURCE_DIR}/FiniteStateMashine.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ReflectionProperties.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/AbsorptionProperties.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/RefractiveIndex.cpp 

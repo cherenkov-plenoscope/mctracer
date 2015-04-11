@@ -14,7 +14,7 @@
 #include "MmcsCorsikaEventHeader.h"
 #include "MmcsCorsikaPhotonData.h"
 #include "MmcsCorsikaEvent.h"
-#include "FiniteStateMashine.h"
+#include "Tools/FiniteStateMashine.h"
 #include "Tools/StringTools.h"
 
 namespace MMCS {
