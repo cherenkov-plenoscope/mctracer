@@ -12,7 +12,7 @@
 #include <string>
 #include <sstream>
 #include "TracerException.h"
-#include "Frame.h"
+#include "Core/Frame.h"
 #include "GlobalSettings.h"
 #include "PseudoRandomNumberGenerator.h"
 

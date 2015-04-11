@@ -1,4 +1,4 @@
-#include "Ray.h"
+#include "Core/Ray.h"
 //------------------------------------------------------------------------------
 bool Ray::support_of_ray_is_inside_bounding_sphere_of(
 	const Frame *frame

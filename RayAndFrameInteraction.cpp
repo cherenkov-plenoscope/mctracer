@@ -1,4 +1,4 @@
-#include "Ray.h"
+#include "Core/Ray.h"
 //------------------------------------------------------------------------------
 const Intersection* Ray::get_first_intersection_in(const Frame* frame)const {
 

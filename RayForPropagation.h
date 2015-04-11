@@ -8,10 +8,10 @@
 class PropagationEnvironment;
 //=================================
 // included dependencies
-#include "Ray.h"
-#include "Intersection.h"
+#include "Core/Ray.h"
+#include "Core/Intersection.h"
 #include "PropagationEnvironment.h"
-#include "SurfaceEntity.h"
+#include "Core/SurfaceEntity.h"
 
 enum InteractionType { 
 	production,

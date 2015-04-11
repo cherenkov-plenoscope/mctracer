@@ -12,7 +12,7 @@
 #include <iostream> 
 #include <string>
 #include <sstream>
-#include "Frame.h"
+#include "Core/Frame.h"
 #include "Triangle.h"
 #include "Plane.h"
 #include "Sphere.h"

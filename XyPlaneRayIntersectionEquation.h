@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "Ray.h"
+#include "Core/Ray.h"
 //=================================
 class XyPlaneRayIntersectionEquation {
 	double ray_parameter_v;

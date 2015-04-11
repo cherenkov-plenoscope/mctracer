@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "Frame.h"
+#include "Core/Frame.h"
 
 class TelescopeFrame : public Frame {
 

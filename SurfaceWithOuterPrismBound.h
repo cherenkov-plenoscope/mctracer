@@ -8,8 +8,8 @@
 
 //=================================
 // included dependencies
-#include "SurfaceEntity.h"
-#include "Intersection.h"
+#include "Core/SurfaceEntity.h"
+#include "Core/Intersection.h"
 #include "TwoSolutionSurfaceRayEquation.h"
 #include "PrismZ.h"
 

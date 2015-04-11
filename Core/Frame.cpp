@@ -365,8 +365,8 @@ bool Frame::has_children()const {
 	return get_number_of_children() > 0; 
 }
 //------------------------------------------------------------------------------
-#include "Ray.h"
-#include "Intersection.h"
+#include "Core/Ray.h"
+#include "Core/Intersection.h"
 //------------------------------------------------------------------------------
 const Intersection* Frame::calculate_intersection_with(
 	const Ray* ray

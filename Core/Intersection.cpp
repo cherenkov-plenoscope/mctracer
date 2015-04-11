@@ -92,7 +92,7 @@ Vector3D Intersection::get_reflection_direction_in_world_system(
 	return incomming_dir_in_world;
 }
 //------------------------------------------------------------------------------
-#include "Ray.h"
+#include "Core/Ray.h"
 //------------------------------------------------------------------------------
 double Intersection::get_facing_reflection_propability()const {
 	return _from_outside_to_inside ?

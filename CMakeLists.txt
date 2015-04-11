@@ -10,10 +10,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake-mod
 find_package( OpenCV REQUIRED )
 
 set(SOURCE
-	${CMAKE_CURRENT_SOURCE_DIR}/Intersection.cpp 
-	${CMAKE_CURRENT_SOURCE_DIR}/Frame.cpp 
-	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceEntity.cpp 
-	${CMAKE_CURRENT_SOURCE_DIR}/Ray.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/RayForPropagation.cpp 	
 	${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeter.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/RayAndBoundingSphereInteraction.cpp

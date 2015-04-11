@@ -3,7 +3,7 @@
 #include <math.h>
 
 #include "gtest/gtest.h"
-#include "Ray.h"
+#include "Core/Ray.h"
 #include "Sphere.h"
 
 using namespace std;

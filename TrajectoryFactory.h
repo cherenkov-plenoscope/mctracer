@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "RayForPropagation.h"
-#include "SurfaceEntity.h"
+#include "Core/SurfaceEntity.h"
 #include "Cylinder.h"
 #include "Sphere.h"
 

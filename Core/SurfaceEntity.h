@@ -8,7 +8,7 @@
 class RayForPropagation;
 //=================================
 // included dependencies
-#include "Frame.h"
+#include "Core/Frame.h"
 #include "RefractiveIndex.h"
 #include "ReflectionProperties.h"
 #include "Color.h"

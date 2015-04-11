@@ -76,8 +76,8 @@ bool Triangle::is_inside_triangle(const Vector3D &intersec_vec)const {
     return ((bA == bB) && (bB == bC));
 }
 //------------------------------------------------------------------------------
-#include "Ray.h"
-#include "Intersection.h"
+#include "Core/Ray.h"
+#include "Core/Intersection.h"
 //------------------------------------------------------------------------------
 const Intersection* Triangle::calculate_intersection_with(const Ray* ray)const {
 

@@ -12,7 +12,7 @@
 #include <iostream> 
 #include <string>
 #include <sstream>
-#include "Intersection.h"
+#include "Core/Intersection.h"
 #include "OpticalMirrorHexagonal.h"
 
 //=================================

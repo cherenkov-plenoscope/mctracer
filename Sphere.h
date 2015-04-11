@@ -11,8 +11,8 @@
 #include <iostream> 
 #include <string>
 #include <sstream>
-#include "SurfaceEntity.h"
-#include "Intersection.h"
+#include "Core/SurfaceEntity.h"
+#include "Core/Intersection.h"
 #include "QuadraticEquation.h"
 
 //=================================

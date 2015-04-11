@@ -15,9 +15,9 @@
 #include <vector>
 #include <algorithm>
 #include "Core/Vector3D.h"
-#include "Frame.h"
-#include "SurfaceEntity.h"
-#include "Intersection.h"
+#include "Core/Frame.h"
+#include "Core/SurfaceEntity.h"
+#include "Core/Intersection.h"
 #include "GlobalSettings.h"
 
 class Ray{

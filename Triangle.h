@@ -14,8 +14,8 @@
 #include <vector>
 #include <algorithm>
 #include <math.h>
-#include "SurfaceEntity.h"
-#include "Intersection.h"
+#include "Core/SurfaceEntity.h"
+#include "Core/Intersection.h"
 #include "XyPlaneRayIntersectionEquation.h"
 
 //=================================

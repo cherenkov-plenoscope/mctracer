@@ -7,7 +7,7 @@
 #include "Core/Rotation3D.h"
 #include "Tools/Tools.h"
 //====================
-#include "Ray.h"
+#include "Core/Ray.h"
 #include "Photon.h"
 //====================
 #include "ListOfPropagations.h"
@@ -17,7 +17,7 @@
 #include "TelescopeFrame.h"
 #include "SegmetedReflectorGenerator.h"
 
-#include "Intersection.h"
+#include "Core/Intersection.h"
 
 int main(int argc, char* argv[]) {
 	try{

@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 #include "../Photon.h"
-#include "../SurfaceEntity.h"
+#include "Core/SurfaceEntity.h"
 #include "../Plane.h"
 #include "Cameras/FreeOrbitCamera.h"
 #include "../PseudoRandomNumberGenerator.h"

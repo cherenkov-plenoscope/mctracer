@@ -13,7 +13,7 @@ class Ray;
 #include <sstream>
 #include <limits>
 #include "Core/Vector3D.h"
-#include "SurfaceEntity.h"
+#include "Core/SurfaceEntity.h"
 
 //=================================
 class Intersection {

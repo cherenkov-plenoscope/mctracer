@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "Ray.h"
+#include "Core/Ray.h"
 #include "Color.h"
 //#include "InteractionSurfaceFinder.h"
 //------------------------------------------------------------------------------

@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "HexGridXy.h"
-#include "Frame.h"
+#include "Core/Frame.h"
 #include <iostream> 
 #include <string>
 #include <sstream>

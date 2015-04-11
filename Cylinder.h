@@ -11,9 +11,9 @@
 #include <iostream> 
 #include <string>
 #include <sstream>
-#include "SurfaceEntity.h"
+#include "Core/SurfaceEntity.h"
 #include "Core/Vector3D.h"
-#include "Intersection.h"
+#include "Core/Intersection.h"
 #include "ZaxisCylinderRayIntersectionEquation.h"
 
 //=================================

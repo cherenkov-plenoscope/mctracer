@@ -32,8 +32,8 @@ std::string Sphere::get_sphere_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-#include "Ray.h"
-#include "Intersection.h"
+#include "Core/Ray.h"
+#include "Core/Intersection.h"
 //------------------------------------------------------------------------------
 bool Sphere::facing_sphere_from_outside_given_p_m(
 	const double v_Plus,
