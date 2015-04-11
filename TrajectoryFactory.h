@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "RayForPropagation.h"
+#include "Core/RayForPropagation.h"
 #include "Core/SurfaceEntity.h"
 #include "Cylinder.h"
 #include "Sphere.h"

@@ -10,7 +10,7 @@ class GlobalSettings;
 // included dependencies
 #include <iostream>
 #include <omp.h>
-#include "RayForPropagation.h"
+#include "Core/RayForPropagation.h"
 #include "Photon.h"
 #include <sstream>
 #include "TrajectoryFactory.h"

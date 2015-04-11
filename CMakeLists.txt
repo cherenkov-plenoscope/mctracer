@@ -9,8 +9,7 @@ project( mctracer )
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
 find_package( OpenCV REQUIRED )
 
-set(SOURCE
-	${CMAKE_CURRENT_SOURCE_DIR}/RayForPropagation.cpp 	
+set(SOURCE 	
 	${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeter.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Photon.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.cpp

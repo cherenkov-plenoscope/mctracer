@@ -3,7 +3,7 @@
 #include <math.h>
 
 #include "gtest/gtest.h"
-#include "RayForPropagation.h"
+#include "Core/RayForPropagation.h"
 
 using namespace std;
 
