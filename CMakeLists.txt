@@ -11,10 +11,7 @@ find_package( OpenCV REQUIRED )
 
 set(SOURCE 	
 	${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeter.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Photon.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ListOfPropagations.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/PropagationEnvironment.cpp	
+	${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryFactory.cpp	
 
 	${CMAKE_CURRENT_SOURCE_DIR}/QuadraticEquation.cpp

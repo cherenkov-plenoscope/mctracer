@@ -7,10 +7,9 @@
 #include "Core/Rotation3D.h"
 #include "Tools/Tools.h"
 //====================
-#include "Core/Ray.h"
-#include "Photon.h"
+#include "Core/Photon.h"
 //====================
-#include "ListOfPropagations.h"
+#include "Core/ListOfPropagations.h"
 #include "Cameras/FreeOrbitCamera.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaFullEventGetter.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaPhotonData.h"

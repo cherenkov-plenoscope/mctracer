@@ -3,7 +3,7 @@
 #include <math.h>
 
 #include "gtest/gtest.h"
-#include "PropagationEnvironment.h"
+#include "Core/PropagationEnvironment.h"
 
 using namespace std;
 

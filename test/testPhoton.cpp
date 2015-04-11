@@ -3,12 +3,12 @@
 #include <math.h>
 
 #include "gtest/gtest.h"
-#include "../Photon.h"
+#include "Core/Photon.h"
 #include "Core/SurfaceEntity.h"
 #include "../Plane.h"
 #include "Cameras/FreeOrbitCamera.h"
 #include "Core/PseudoRandomNumberGenerator.h"
-#include "../ListOfPropagations.h"
+#include "Core/ListOfPropagations.h"
 
 using namespace std;
 

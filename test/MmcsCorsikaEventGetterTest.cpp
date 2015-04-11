@@ -7,7 +7,7 @@
 #include "MmcsCorsikaFileIO/MmcsCorsikaSubBlockGetter.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaPhotonData.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaTools.h"
-#include "ListOfPropagations.h"
+#include "Core/ListOfPropagations.h"
 
 using namespace std;
 

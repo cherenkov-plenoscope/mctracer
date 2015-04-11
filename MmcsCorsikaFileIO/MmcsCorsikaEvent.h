@@ -11,8 +11,8 @@
 #include "MmcsCorsikaSubBlock.h"
 #include "MmcsCorsikaEventHeader.h"
 #include "MmcsCorsikaPhotonData.h"
-#include "ListOfPropagations.h"
-#include "Photon.h"
+#include "Core/ListOfPropagations.h"
+#include "Core/Photon.h"
 //=================================
 class MmcsCorsikaEvent {
 
