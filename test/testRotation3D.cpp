@@ -2,8 +2,7 @@
 #include <math.h>
 
 #include "gtest/gtest.h"
-#include "../Rotation3D.h"
-#include "../Vector3D.h"
+#include "Core/Rotation3D.h"
 
 using namespace std;
 

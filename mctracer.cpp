@@ -3,8 +3,8 @@
 #include <sstream>
 
 #include "WorldFactory.h"
-#include "Vector3D.h"
-#include "Rotation3D.h"
+#include "Core/Vector3D.h"
+#include "Core/Rotation3D.h"
 #include "Tools/Tools.h"
 //====================
 #include "Ray.h"

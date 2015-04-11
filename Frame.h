@@ -13,9 +13,9 @@ class Intersection;
 #include <string>
 #include <sstream>
 #include <vector>
-#include "Vector3D.h"
-#include "Rotation3D.h"
-#include "HomoTrafo3D.h"
+#include "Core/Vector3D.h"
+#include "Core/Rotation3D.h"
+#include "Core/HomoTrafo3D.h"
 #include "TracerException.h"
 #include "Tools/StringTools.h"
 #include "Tools/Tools.h"

@@ -3,7 +3,7 @@
 #include <math.h>
 
 #include "gtest/gtest.h"
-#include "Vector3D.h"
+#include "Core/Vector3D.h"
 
 using namespace std;
 

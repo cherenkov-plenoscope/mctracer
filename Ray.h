@@ -14,7 +14,7 @@
 #include <math.h>
 #include <vector>
 #include <algorithm>
-#include "Vector3D.h"
+#include "Core/Vector3D.h"
 #include "Frame.h"
 #include "SurfaceEntity.h"
 #include "Intersection.h"

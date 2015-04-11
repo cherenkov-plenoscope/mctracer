@@ -11,9 +11,9 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include "Rotation3D.h"
-#include "Vector3D.h"
-#include "HomoTrafo3D.h"
+#include "Core/Rotation3D.h"
+#include "Core/Vector3D.h"
+#include "Core/HomoTrafo3D.h"
 #include "CameraRay.h"
 #include "CameraImage.h"
 #include "TracerException.h"

@@ -12,7 +12,7 @@
 #include <string>
 #include <sstream>
 #include <math.h>
-#include "Vector3D.h"
+#include "Core/Vector3D.h"
 
 //=================================
 class PrismZ {

@@ -13,8 +13,8 @@
 #include <sstream>
 #include <math.h>
 #include <iomanip> 
-#include "Vector3D.h"
-#include "Rotation3D.h"
+#include "Core/Vector3D.h"
+#include "Core/Rotation3D.h"
 
 //=================================
 class HomoTrafo3D {

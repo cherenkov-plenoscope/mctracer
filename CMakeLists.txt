@@ -10,9 +10,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake-mod
 find_package( OpenCV REQUIRED )
 
 set(SOURCE
-	${CMAKE_CURRENT_SOURCE_DIR}/Vector3D.cpp 
-	${CMAKE_CURRENT_SOURCE_DIR}/Rotation3D.cpp 
-	${CMAKE_CURRENT_SOURCE_DIR}/HomoTrafo3D.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Intersection.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Frame.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceEntity.cpp 
@@ -67,6 +64,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/Tools")
 add_subdirectory("${PROJECT_SOURCE_DIR}/XmlIO")
 add_subdirectory("${PROJECT_SOURCE_DIR}/MmcsCorsikaFileIO")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Cameras")
+add_subdirectory("${PROJECT_SOURCE_DIR}/Core")
 
 add_executable( mctracer mctracer.cpp ${SOURCE} )
 

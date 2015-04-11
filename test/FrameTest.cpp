@@ -4,10 +4,9 @@
 
 #include "gtest/gtest.h"
 #include "../Frame.h"
-#include "../Vector3D.h"
-#include "../Rotation3D.h"
-#include "../HomoTrafo3D.h"
-//#include "../Photon.h"
+#include "Core/Vector3D.h"
+#include "Core/Rotation3D.h"
+#include "Core/HomoTrafo3D.h"
 
 using namespace std;
 

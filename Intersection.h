@@ -12,7 +12,7 @@ class Ray;
 #include <string>
 #include <sstream>
 #include <limits>
-#include "Vector3D.h"
+#include "Core/Vector3D.h"
 #include "SurfaceEntity.h"
 
 //=================================

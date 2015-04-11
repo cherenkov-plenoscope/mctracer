@@ -12,7 +12,7 @@
 #include <string>
 #include <sstream>
 #include "SurfaceEntity.h"
-#include "Vector3D.h"
+#include "Core/Vector3D.h"
 #include "Intersection.h"
 #include "ZaxisCylinderRayIntersectionEquation.h"
 
