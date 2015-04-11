@@ -7,7 +7,7 @@
 #include "Core/SurfaceEntity.h"
 #include "../Plane.h"
 #include "Cameras/FreeOrbitCamera.h"
-#include "../PseudoRandomNumberGenerator.h"
+#include "Core/PseudoRandomNumberGenerator.h"
 #include "../ListOfPropagations.h"
 
 using namespace std;

@@ -14,7 +14,7 @@
 #include "TracerException.h"
 #include "Core/Frame.h"
 #include "GlobalSettings.h"
-#include "PseudoRandomNumberGenerator.h"
+#include "Core/PseudoRandomNumberGenerator.h"
 
 class PropagationEnvironment {
 public:

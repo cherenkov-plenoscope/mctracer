@@ -11,7 +11,7 @@ class GlobalSettings;
 // included dependencies
 #include "DistanceMeter.h"
 #include "CameraDevice.h"
-#include "PseudoRandomNumberGenerator.h"
+#include "Core/PseudoRandomNumberGenerator.h"
 //=================================
 class ApertureCamera :public CameraDevice{
 public:

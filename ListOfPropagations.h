@@ -15,7 +15,7 @@ class GlobalSettings;
 #include <sstream>
 #include "TrajectoryFactory.h"
 #include "PropagationEnvironment.h"
-#include "PseudoRandomNumberGenerator.h"
+#include "Core/PseudoRandomNumberGenerator.h"
 
 //=================================
 class ListOfPropagations{
