@@ -17,6 +17,7 @@
 #include "SegmetedReflectorGenerator.h"
 
 #include "Core/Intersection.h"
+#include "EllipticalCapWithHexagonalBound.h"
 
 int main(int argc, char* argv[]) {
 	try{
@@ -70,6 +71,14 @@ int main(int argc, char* argv[]) {
  		Sensor.set_outer_color(sensor_color);
  		Sensor.set_inner_color(sensor_color);
 
+		EllipticalCapWithHexagonalBound gg;
+		gg.set_name_pos_rot("ellpis", Vector3D::unit_x*10.0, Rotation3D::null);
+		gg.set_focalLength_radiiRatio_hexAngel_hexRadius(
+			4.9, 1.5, 0.0, 0.31  
+		);
+		gg.set_outer_color(sensor_color);
+ 		gg.set_inner_color(sensor_color);
+
 		//sensor_housing_lower_cap
 		Disc sensor_housing_lower_cap;
 		sensor_housing_lower_cap.set_name_pos_rot("sensor_housing_lower_cap", Vector3D(0.0, 0.0, 4.890), Rotation3D::null);
@@ -85,6 +94,7 @@ int main(int argc, char* argv[]) {
 
 		world.set_mother_and_child(&FACT);
 		world.set_mother_and_child(&ground);
+		world.set_mother_and_child(&gg);
 		world.init_tree_based_on_mother_child_relations();
 		
 		// CORSIKA PHOTONS

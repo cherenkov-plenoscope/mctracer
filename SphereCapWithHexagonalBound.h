@@ -36,7 +36,5 @@ private:
 	std::string get_SphereCapWithHexagonalBound_print()const;
 
 	void post_initialize_radius_of_enclosing_sphere();
-
-	double get_frontal_projected_area()const;
 };
 #endif // __SphereCapWithHexagonalBound_H_INCLUDED__
