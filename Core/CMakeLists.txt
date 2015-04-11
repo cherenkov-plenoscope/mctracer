@@ -14,5 +14,10 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Photon.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ListOfPropagations.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PropagationEnvironment.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ReflectionProperties.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/AbsorptionProperties.cpp	
+	${CMAKE_CURRENT_SOURCE_DIR}/RefractiveIndex.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp
    	PARENT_SCOPE
 )

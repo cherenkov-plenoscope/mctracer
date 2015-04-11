@@ -3,7 +3,7 @@
 #include <math.h>
 
 #include "gtest/gtest.h"
-#include "../ReflectionProperties.h"
+#include "Core/ReflectionProperties.h"
 
 using namespace std;
 

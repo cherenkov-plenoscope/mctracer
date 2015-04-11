@@ -22,8 +22,8 @@
 #include "SegmetedReflectorGenerator.h"
 #include "Core/Vector3D.h"
 #include "Core/Rotation3D.h"
-#include "ReflectionProperties.h"
-#include "Color.h"
+#include "Core/ReflectionProperties.h"
+#include "Core/Color.h"
 #include "XmlIO/XmlFileIo.h"
 #include "TracerException.h"
 

@@ -11,7 +11,6 @@ find_package( OpenCV REQUIRED )
 
 set(SOURCE 	
 	${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeter.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryFactory.cpp	
 
 	${CMAKE_CURRENT_SOURCE_DIR}/QuadraticEquation.cpp
@@ -21,10 +20,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/RectangularPrismZ.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/CylinderPrismZ.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/HexagonalPrismZ.cpp	
-	${CMAKE_CURRENT_SOURCE_DIR}/ReflectionProperties.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/AbsorptionProperties.cpp	
-	${CMAKE_CURRENT_SOURCE_DIR}/RefractiveIndex.cpp 
-	${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TracerException.cpp
 
 	${CMAKE_CURRENT_SOURCE_DIR}/WorldFactory.cpp

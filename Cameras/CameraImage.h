@@ -12,7 +12,7 @@
 #include <highgui.h>
 #include <opencv2/opencv.hpp>
 #include "TracerException.h"
-#include "Color.h"
+#include "Core/Color.h"
 
 //=================================
 class CameraImage{
