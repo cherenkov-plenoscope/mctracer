@@ -41,9 +41,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/SegmetedReflectorGenerator.cpp
 	
 	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLens.cpp
-
-# python extension
-	${CMAKE_CURRENT_SOURCE_DIR}/mcPYtracer/testPyTracer.cpp
 )
 add_subdirectory("${PROJECT_SOURCE_DIR}/Tools")
 add_subdirectory("${PROJECT_SOURCE_DIR}/XmlIO")
@@ -87,28 +84,5 @@ else()
     message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 #-------------------------------------------------------------------------------
-# http://stackoverflow.com/questions/992068/building-a-python-shared-object-binding-with-cmake-which-depends-upon-external
-# http://www.swig.org/Doc1.3/Introduction.html#Introduction_build_system
-# This is a CMake example for Python
-
-FIND_PACKAGE(SWIG REQUIRED)
-INCLUDE(${SWIG_USE_FILE})
-
-FIND_PACKAGE(PythonLibs)
-INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
-
-SET(CMAKE_SWIG_FLAGS "")
-
-SET_SOURCE_FILES_PROPERTIES(../mctracer/mcPYtracer/testPyTracer.i PROPERTIES CPLUSPLUS ON)
-SET_SOURCE_FILES_PROPERTIES(../mctracer/mcPYtracer/testPyTracer.i PROPERTIES SWIG_FLAGS "-includeall")
-
-SWIG_ADD_MODULE(mctracer python 
-../mctracer/mcPYtracer/testPyTracer.i 
-../mctracer/mcPYtracer/testPyTracer.cpp
-)
-
-SWIG_LINK_LIBRARIES(mctracer ${PYTHON_LIBRARIES})
-SWIG_LINK_LIBRARIES(mctracer gtest gtest_main)
-SWIG_LINK_LIBRARIES(mctracer ${OpenCV_LIBS})
