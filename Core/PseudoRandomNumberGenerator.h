@@ -22,12 +22,12 @@ public:
 		set_seed_now_using_system_clock();
 	};
 	//--------------------------------------------------------------------------
-	void set_seed_now_using_system_clock(){
+	void set_seed_now_using_system_clock() {
 		Seed = std::chrono::system_clock::now().time_since_epoch().count();
 		pRNG_mt19937.seed(Seed);
 	};
 	//--------------------------------------------------------------------------
-	double uniform(){
+	double uniform() {
 		return double(pRNG_mt19937())/double(pRNG_mt19937.max());
 	};
 	//--------------------------------------------------------------------------

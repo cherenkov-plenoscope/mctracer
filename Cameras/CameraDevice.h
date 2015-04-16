@@ -30,7 +30,7 @@ public:
 
 	virtual void acquire_image(	
 		const Frame* world, 
-		const GlobalSettings* settings
+		const TracerSettings* settings
 	);
 
 	virtual void update_position(const Vector3D new_cam_pos_in_world);

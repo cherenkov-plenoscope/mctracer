@@ -11,7 +11,7 @@ using namespace std;
 class RayAndFrameInteractionTest : public ::testing::Test {
  protected:
 
-  GlobalSettings settings;    
+  TracerSettings settings;    
 
   RayAndFrameInteractionTest() {
     settings.set_max_number_of_reflections(5);

@@ -13,7 +13,7 @@ std::string CameraRay::get_print()const{
 Color CameraRay::trace(
 	const Frame* world,
 	uint refl_count,
-	const GlobalSettings *settings
+	const TracerSettings *settings
 )const {
 
 	Color color;

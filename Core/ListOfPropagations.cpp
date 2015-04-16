@@ -10,7 +10,7 @@ void ListOfPropagations::push_back(RayForPropagation* ray){
 }
 //------------------------------------------------------------------------------
 void ListOfPropagations::propagate_in_world_with_settings(	
-	const Frame* world, const GlobalSettings* settings
+	const Frame* world, const TracerSettings* settings
 ) {
 	//std::cout << "Propagate list of " << propagations.size() << " rays...\n";
 
@@ -22,7 +22,7 @@ void ListOfPropagations::propagate_in_world_with_settings(
 //------------------------------------------------------------------------------
 void ListOfPropagations::propagate_using_multi_thread(
 	const Frame* world, 
-	const GlobalSettings* settings
+	const TracerSettings* settings
 ) {
 	uint i, number_of_threads, thread_id, ray_counter;
 	std::stringstream out;
@@ -57,7 +57,7 @@ void ListOfPropagations::propagate_using_multi_thread(
 //------------------------------------------------------------------------------
 void ListOfPropagations::propagate_using_single_thread(
 	const Frame* world, 
-	const GlobalSettings* settings
+	const TracerSettings* settings
 ) {
 	PseudoRandomNumberGenerator dice;
 
@@ -165,7 +165,7 @@ Frame* ListOfPropagations::get_trajectories()const {
 }
 //------------------------------------------------------------------------------
 Frame* ListOfPropagations::get_mean_trajectoy_in_world_using_options(
-	const Frame* world, const GlobalSettings* settings
+	const Frame* world, const TracerSettings* settings
 ) {
 
 	Vector3D mean_support = Vector3D(0.0, 0.0 ,0.0);

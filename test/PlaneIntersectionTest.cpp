@@ -11,7 +11,7 @@ using namespace std;
 class PlaneIntersectionTest : public ::testing::Test {
  protected:
 
-	GlobalSettings setup;
+	TracerSettings setup;
 	Vector3D    pos;
 	Rotation3D  rot;
 	ReflectionProperties*  refl; 

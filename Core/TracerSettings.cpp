@@ -1,6 +1,6 @@
-#include "GlobalSettings.h"
+#include "TracerSettings.h"
 //------------------------------------------------------------------------------
-GlobalSettings::GlobalSettings() {
+TracerSettings::TracerSettings() {
 	default_colour.set_RGB_0to255(128,128,128);
 
 	initialize_random_rumber_generator_seed_mt19937();
@@ -10,7 +10,7 @@ GlobalSettings::GlobalSettings() {
 	number_of_max_reflections = 5;
 }
 //------------------------------------------------------------------------------
-void GlobalSettings::set_max_number_of_reflections(
+void TracerSettings::set_max_number_of_reflections(
 	const int new_max_number_of_reflections
 ) {
 	if( new_max_number_of_reflections>0 ){
@@ -19,7 +19,7 @@ void GlobalSettings::set_max_number_of_reflections(
 
 	}else{
 		std::stringstream out;
-		out << "GlobalSettings::set_max_number_of_reflections\n";
+		out << "TracerSettings::set_max_number_of_reflections\n";
 		out << "The number_of_max_reflections in the Settings ";
 		out << "must not be zero or negative!\n";
 		out << "Actual it is " << new_max_number_of_reflections << "\n";
@@ -27,21 +27,21 @@ void GlobalSettings::set_max_number_of_reflections(
 	}
 }
 //------------------------------------------------------------------------------
-bool GlobalSettings::max_number_of_reflections_is_not_reached_yet(
+bool TracerSettings::max_number_of_reflections_is_not_reached_yet(
 	const uint reflection_counter
 )const {
 	return reflection_counter <= number_of_max_reflections;
 }
 //------------------------------------------------------------------------------
-Color GlobalSettings::get_default_colour()const {
+Color TracerSettings::get_default_colour()const {
 	return default_colour;
 }
 //------------------------------------------------------------------------------
-int GlobalSettings::get_max_number_of_reflections()const {
+int TracerSettings::get_max_number_of_reflections()const {
 	return number_of_max_reflections;
 }
 //------------------------------------------------------------------------------
-void GlobalSettings::initialize_random_rumber_generator_seed_mt19937() {
+void TracerSettings::initialize_random_rumber_generator_seed_mt19937() {
 	// Mersenne Twister 1997 by Matsumoto and Nishimura
 	// obtain a seed from the system clock:
 
@@ -53,18 +53,18 @@ void GlobalSettings::initialize_random_rumber_generator_seed_mt19937() {
 	//pRNG_mt19937.seed(seed_for_random_number_generator_mt19937); 
 }
 //------------------------------------------------------------------------------
-unsigned GlobalSettings::get_seed_for_random_number_generator_mt19937()const {
+unsigned TracerSettings::get_seed_for_random_number_generator_mt19937()const {
 	return seed_for_random_number_generator_mt19937;
 }
 //------------------------------------------------------------------------------
-bool GlobalSettings::StoreOnlyLastIntersection()const {
+bool TracerSettings::StoreOnlyLastIntersection()const {
 	return flag_store_only_final_intersection;
 }
 //------------------------------------------------------------------------------
-void GlobalSettings::SetStoreOnlyLastIntersection(bool flag) {
+void TracerSettings::SetStoreOnlyLastIntersection(bool flag) {
 	flag_store_only_final_intersection = flag;
 }
 //------------------------------------------------------------------------------
-bool GlobalSettings::MultiThread()const { return multithread; }
+bool TracerSettings::MultiThread()const { return multithread; }
 //------------------------------------------------------------------------------
-void GlobalSettings::SetMultiThread( bool flag ) { multithread = flag; }
+void TracerSettings::SetMultiThread( bool flag ) { multithread = flag; }

@@ -254,15 +254,10 @@ void SegmetedReflectorGenerator::init_facet_radius() {
 //------------------------------------------------------------------------------
 void SegmetedReflectorGenerator::init_reflector() {
 
-	reflector = new Frame(
-		"Reflector", 
-		Vector3D::null, 
-		Rotation3D::null
-	);
+	reflector = new Frame("Reflector", Vector3D::null, Rotation3D::null);
 
-	for(Frame* facet : facets) {
+	for(Frame* facet : facets)
 		reflector->set_mother_and_child(facet);
-	}
 
 	reflector->cluster_using_helper_frames();
 }

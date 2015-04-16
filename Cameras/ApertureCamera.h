@@ -6,7 +6,7 @@
 //=================================
 // forward declared dependencies
 class Frame;
-class GlobalSettings;
+class TracerSettings;
 //=================================
 // included dependencies
 #include "DistanceMeter.h"
@@ -31,12 +31,12 @@ public:
 
 	void acquire_image(
 		const Frame* world,
-		const GlobalSettings* settings
+		const TracerSettings* settings
 	);
 
 	void auto_focus(
 		const Frame* world,
-		const GlobalSettings* settings
+		const TracerSettings* settings
 	);
 
 	std::string get_print()const;
@@ -86,7 +86,7 @@ private:
 
 	double get_average_object_distance(
 		const Frame* world,
-		const GlobalSettings* settings
+		const TracerSettings* settings
 	);
 	uint _5_permil_of_pixels()const;
 };

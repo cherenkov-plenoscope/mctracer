@@ -1,7 +1,7 @@
 //=================================
 // include guard
-#ifndef __GLOBALSETTINGS_H_INCLUDED__
-#define __GLOBALSETTINGS_H_INCLUDED__
+#ifndef __TracerSettings_H_INCLUDED__
+#define __TracerSettings_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
@@ -15,7 +15,7 @@
 #include <sstream>
 
 //=================================
-class GlobalSettings {
+class TracerSettings {
 private:
 	//--------------------------------------------------------------------------
 	// propagation options
@@ -56,31 +56,20 @@ private:
 		//std::mt19937 pRNG_mt19937;
 
 public:
-	GlobalSettings();
-	
+	TracerSettings();
 	bool StoreOnlyLastIntersection()const;
-
 	void SetStoreOnlyLastIntersection(bool flag);
-	
 	bool MultiThread()const;
-
-	void SetMultiThread( bool flag );
-	
+	void SetMultiThread( bool flag );	
 	void set_max_number_of_reflections(const int new_max_number_of_reflections);
-
 	Color get_default_colour()const;
-	
 	int get_max_number_of_reflections()const;
-	
 	unsigned get_decimal_precision_for_csv_output()const;
-	
 	void initialize_random_rumber_generator_seed_mt19937();
-	
 	unsigned get_seed_for_random_number_generator_mt19937()const;
-	
 	bool max_number_of_reflections_is_not_reached_yet(
 		const uint reflection_counter
 	)const;
 };
 
-#endif // __GLOBALSETTINGS_H_INCLUDED__ 
+#endif // __TracerSettings_H_INCLUDED__ 

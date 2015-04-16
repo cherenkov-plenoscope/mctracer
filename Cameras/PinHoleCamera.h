@@ -6,7 +6,7 @@
 //=================================
 // forward declared dependencies
 class Frame;
-class GlobalSettings;
+class TracerSettings;
 //=================================
 // included dependencies
 //#include <omp.h>
@@ -26,7 +26,7 @@ public:
 
 	void acquire_image(	
 		const Frame* world, 
-		const GlobalSettings* settings
+		const TracerSettings* settings
 	);
 
 	void set_FoV_in_rad(const double FoV_in_rad);

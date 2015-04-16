@@ -97,7 +97,7 @@ Vector3D PinHoleCamera::get_intersection_of_ray_on_image_sensor_for_pixel(
 }
 //------------------------------------------------------------------------------
 void PinHoleCamera::acquire_image(	
-	const Frame* world, const GlobalSettings* settings
+	const Frame* world, const TracerSettings* settings
 ){
 	uint i, row, col;
 	CameraRay cam_ray;

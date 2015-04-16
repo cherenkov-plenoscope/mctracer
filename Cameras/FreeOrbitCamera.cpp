@@ -2,7 +2,7 @@
 //==============================================================================
 FreeOrbitCamera::FreeOrbitCamera(
 	const Frame *world,
-	const GlobalSettings *settings
+	const TracerSettings *settings
 ){	
 	this->world = world;
 	this->settings = settings;

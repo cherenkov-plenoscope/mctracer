@@ -13,6 +13,7 @@
 #include <sstream>
 #include <math.h>
 #include "Core/Vector3D.h"
+#include "TracerException.h"
 
 //=================================
 class PrismZ {

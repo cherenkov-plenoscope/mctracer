@@ -38,7 +38,7 @@ TEST_F(HexGridXyTest, Reflector_buid) {
     refl->get_radius_of_sphere_enclosing_all_children()
   );
   //std::cout << dream_reflector.get_print();
-  //GlobalSettings settings;
+  //TracerSettings settings;
   //FreeOrbitCamera free(refl, &settings);
 
 }

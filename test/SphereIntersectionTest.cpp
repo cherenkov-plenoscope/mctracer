@@ -11,7 +11,7 @@ using namespace std;
 class SphereIntersectionTest : public ::testing::Test {
  protected:
 
-	GlobalSettings setup;
+	TracerSettings setup;
 	Vector3D    pos;
 	Rotation3D  rot; 
 	Color*      colo;

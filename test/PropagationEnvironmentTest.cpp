@@ -21,7 +21,7 @@ TEST_F(PropagationEnvironmentTest, assert_completeness) {
   PropagationEnvironment env;
 
   Frame world("my_world",Vector3D::null, Rotation3D::null);
-  GlobalSettings opt;
+  TracerSettings opt;
   PseudoRandomNumberGenerator dice;
 
   env.world_geometry = &world;

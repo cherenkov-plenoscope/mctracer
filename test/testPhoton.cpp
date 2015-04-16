@@ -58,7 +58,7 @@ TEST_F(PhotonTest, creation_constructor) {
 //------------------------------------------------------------------------------
 TEST_F(PhotonTest, PropagationSimpleGeometry){
 
-  GlobalSettings setup;
+  TracerSettings setup;
 
   int number_of_bounces = 42;
   setup.set_max_number_of_reflections(number_of_bounces);
@@ -158,7 +158,7 @@ TEST_F(PhotonTest, Reflections){
     \/ +Y
 
 */                              
-  GlobalSettings setup;
+  TracerSettings setup;
 
   Vector3D    pos(0,0,0);
   Rotation3D  rot(0,0,0);

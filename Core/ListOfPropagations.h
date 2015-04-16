@@ -5,7 +5,7 @@
 
 //=================================
 // forward declared dependencies
-class GlobalSettings;
+class TracerSettings;
 //=================================
 // included dependencies
 #include <iostream>
@@ -32,7 +32,7 @@ public:
 	
 	void propagate_in_world_with_settings(
 		const Frame* world, 
-		const GlobalSettings* settings
+		const TracerSettings* settings
 	);
 
 	std::string get_print()const;	
@@ -52,18 +52,18 @@ public:
 	bool has_still_trajectoies_left()const;
 
 	Frame* get_mean_trajectoy_in_world_using_options(
-		const Frame* world, const GlobalSettings* settings
+		const Frame* world, const TracerSettings* settings
 	);
 private:
 
 	void propagate_using_single_thread(
 		const Frame* world, 
-		const GlobalSettings* settings
+		const TracerSettings* settings
 	);
 
 	void propagate_using_multi_thread(
 		const Frame* world, 
-		const GlobalSettings* settings
+		const TracerSettings* settings
 	);
 
 	friend std::ostream& operator<<(

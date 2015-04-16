@@ -13,13 +13,13 @@
 #include <sstream>
 #include "TracerException.h"
 #include "Core/Frame.h"
-#include "Core/GlobalSettings.h"
+#include "Core/TracerSettings.h"
 #include "Core/PseudoRandomNumberGenerator.h"
 
 class PropagationEnvironment {
 public:
 	const Frame* world_geometry = nullptr;
-	const GlobalSettings* propagation_options = nullptr;
+	const TracerSettings* propagation_options = nullptr;
 	PseudoRandomNumberGenerator* random_engine = nullptr;
 
 	void assert_completeness()const;

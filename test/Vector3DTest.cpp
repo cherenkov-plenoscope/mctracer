@@ -4,8 +4,7 @@
 
 #include "gtest/gtest.h"
 #include "Core/Vector3D.h"
-
-using namespace std;
+#include "Tools/Tools.h"
 
 // The fixture for testing class Foo.
 class Vector3DTest : public ::testing::Test {
@@ -281,7 +280,7 @@ TEST_F(Vector3DTest, normalize) {
   EXPECT_NE( 1.0, a.norm());
 
   a.normalize();
-  EXPECT_TRUE( std::isnan(a.norm()) == 1 );
+  EXPECT_TRUE( isnan(a.norm()) == 1 );
 }
 //----------------------------------------------------------------------
 TEST_F(Vector3DTest, angle_in_between) {

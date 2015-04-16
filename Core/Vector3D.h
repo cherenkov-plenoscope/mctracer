@@ -11,7 +11,7 @@
 #include <iostream>
 #include <math.h>
 #include <sstream>
-#include "GlobalSettings.h"
+
 //=================================
 class Vector3D {
 private:

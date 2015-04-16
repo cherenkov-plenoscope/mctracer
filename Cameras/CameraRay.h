@@ -26,7 +26,7 @@ public:
 	Color trace(
 		const Frame* world,
 		uint refl_count,
-		const GlobalSettings *settings
+		const TracerSettings *settings
 	)const;
 
 	friend std::ostream& operator<<(
@@ -36,12 +36,12 @@ public:
 private:
 	Color absorption_on_the_outer_side(
 		const Intersection* intersection,
-		const GlobalSettings *settings
+		const TracerSettings *settings
 	)const;
 
 	Color absorption_on_the_inner_side(
 		const Intersection* intersection,
-		const GlobalSettings *settings
+		const TracerSettings *settings
 	)const;
 };
 #endif // __CAMERARAY_H_INCLUDED__ 

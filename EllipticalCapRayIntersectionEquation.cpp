@@ -36,10 +36,6 @@ EllipticalCapRayIntersectionEquation::EllipticalCapRayIntersectionEquation(
 //  A = 2*short_focal_length
 //  B = 2*long_focal_length
 //  c = (A+B)/2   just the mean of the two ... since I don't have any better idea.
- 
-
-	// I create some short cuts here ... they will all be optimized away
-	// by the compiler I guess ... so I don't care!
 
 	const double dx = ray->Direction().x();
 	const double dy = ray->Direction().y();
@@ -84,13 +80,9 @@ Vector3D EllipticalCapRayIntersectionEquation::get_surface_normal_given_intersec
 	// surface normal is given as  ( -dz/dx , -dz/dy , 1 )
 	// 
 	// z(x,y) = C*sqrt(1-x^2/A^2-y^2/B^2)+C
-	//
 	// dz/dx = C*1/2*(1-x^2/A^2-y^2/B^2)^(-1/2) * (-2*x/A^2)
-	//
 	// dz/dy = C*1/2*(1-x^2/A^2-y^2/B^2)^(-1/2) * (-2*y/A^2)
-	//
 	// normal = ( -dz/dx , -dz/dy , 1 )
-	//
 	// surface_normal_factor = C*1/2*(1-x^2/A^2-y^2/B^2)^(-1/2) 
 
 	const double ix = intersec->x();
@@ -105,6 +97,5 @@ Vector3D EllipticalCapRayIntersectionEquation::get_surface_normal_given_intersec
 		1.0
 	);
 
-	surface_normal = surface_normal/surface_normal.norm();
-	return surface_normal;
+	return surface_normal/surface_normal.norm();
 }

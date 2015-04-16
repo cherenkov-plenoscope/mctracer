@@ -9,7 +9,7 @@
 class BiConvexLensTest : public ::testing::Test {
  protected:
   Frame* test_bench;
-  GlobalSettings settings;
+  TracerSettings settings;
   PseudoRandomNumberGenerator dice;
   PropagationEnvironment lens_test_bench_environment;
 

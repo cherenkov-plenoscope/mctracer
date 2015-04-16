@@ -18,7 +18,7 @@
 #include "Core/Frame.h"
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
-#include "GlobalSettings.h"
+#include "TracerSettings.h"
 
 class Ray{
 

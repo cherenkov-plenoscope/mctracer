@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
 	try{
 		UserInteraction::print_welcome_screen();
 
-		GlobalSettings settings;		
+		TracerSettings settings;		
 		
 		std::string file_chosen_by_user = 
 			UserInteraction::input("Enter a world file to load: ");
