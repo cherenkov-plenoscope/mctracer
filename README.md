@@ -23,10 +23,6 @@ sudo make
 sudo mv libg* /usr/lib/
 ```
 
-
-* swig
-* python-dev
-
 ### compile:
 ```
 #!bash
@@ -45,3 +41,5 @@ cd mctracer/scenery
 ```
 
 ## run Unit Tests
+cd mctracer/test
+../../build/mctracerTest
