@@ -22,7 +22,7 @@
 		<plane>
 			<set_frame name="lower_wall" pos="[0,0,0.75]" rot="[0,1.57,0.0]"/>
 			<set_surface refl="0.0" colour="[180,180,180]"/>
-			<set_plane x_width="1.5" y_width="2.0" /> 
+			<set_plane x_width="-1.5" y_width="2.0" /> 
 		</plane>
 		<triangle>
 			<set_frame name="upper_wall" pos="[0,0,1.5]" rot="[-1.57,0.0,-1.57]"/>

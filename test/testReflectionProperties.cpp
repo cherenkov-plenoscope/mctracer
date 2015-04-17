@@ -42,35 +42,5 @@ TEST_F(ReflectionPropertiesTest, ConstructorAndGetter) {
   const double coef = 0.1337;
   ReflectionProperties refl(coef);
   EXPECT_EQ(coef, refl.ReflectionCoefficient() );
-
-/*
-  // check input values below 0
-  bool problem_detected = FALSE;
-  try{
-    refl.SetReflectionCoefficient(-42.1337);
-  }catch(BadValue &error){
-    problem_detected = TRUE;
-  }
-  EXPECT_EQ( TRUE , problem_detected );
-
-  // check input values above 1
-  problem_detected = FALSE;
-  try{
-    refl.SetReflectionCoefficient(1.337);
-  }catch(BadValue &error){
-    problem_detected = TRUE;
-  }
-  EXPECT_EQ( TRUE , problem_detected );
-
-  // check input values min and max
-  // the minimum of 0 is still valid as it the maximum of 1
-  problem_detected = FALSE;
-  try{
-    refl.SetReflectionCoefficient(1.0);
-    refl.SetReflectionCoefficient(0.0);
-  }catch(BadValue &error){
-    problem_detected = TRUE;
-  }
-  EXPECT_EQ( FALSE , problem_detected );*/
 }
 //------------------------------------------------------------------------------

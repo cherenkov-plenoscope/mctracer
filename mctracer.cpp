@@ -1,22 +1,12 @@
-#include <iostream> 
-#include <string>
-#include <sstream>
-
 #include "WorldFactory.h"
-#include "Core/Vector3D.h"
-#include "Core/Rotation3D.h"
 #include "Tools/Tools.h"
-//====================
 #include "Core/Photon.h"
-//====================
 #include "Core/ListOfPropagations.h"
 #include "Cameras/FreeOrbitCamera.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaFullEventGetter.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaPhotonData.h"
 #include "TelescopeFrame.h"
 #include "SegmetedReflectorGenerator.h"
-
-#include "Core/Intersection.h"
 #include "EllipticalCapWithHexagonalBound.h"
 
 int main(int argc, char* argv[]) {

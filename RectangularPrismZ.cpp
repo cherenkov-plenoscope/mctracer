@@ -28,7 +28,7 @@ void RectangularPrismZ::assert_width_is_positive(
 		info << "RectangularPrismZ::" << __func__ << "()\n";
 		info << "The " << dim << "_width must not be smaller or equal zero! ";
 		info << "Expected: " << dim << "_width > 0, but actual: " << dim;
-		info << "_width =" << width << "\n";
+		info << "_width = " << width << "\n";
 		throw TracerException(info.str());
 	}
 }

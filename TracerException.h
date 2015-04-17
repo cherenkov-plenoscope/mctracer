@@ -37,7 +37,7 @@ protected:
 	std::string message = "";
 	ExceptionType Type = NOT_SPECIFIED;
 public:
-
+	static const std::string compile_time;
 	TracerException(std::string message);
 	TracerException(std::string message, ExceptionType Type);
 	TracerException();
@@ -45,11 +45,6 @@ public:
 	const char * what () const throw();
 private:
 	std::string get_full_message_print()const;
+	static std::string get_compile_time();
 };
-
-class BadValue :public TracerException{
-public:
-	BadValue(std::string message);
-};
-
 #endif // __TRACEREXCEPTION_H_INCLUDED__

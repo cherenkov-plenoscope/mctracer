@@ -18,23 +18,19 @@ namespace UserInteraction {
 	}
     //--------------------------------------------------------------------------
 	void print_welcome_screen() {
-
-		std::stringstream compile_time;
-		compile_time << __DATE__ << ", " << __TIME__;
-
 		std::stringstream out;
 		//               1         2         3         4         5         6
 		//      123456789012345678901234567890123456789012345678901234567890
 		out << " ___________________________________________________________ \n";
-		out << "|                                                           |\n";
-		out << "|                 welcome to MCtracer                       |\n";
-		out << "|                                                           |\n";
-		out << "|      high performance raytracing tool to design and       |\n";
-		out << "|     investigate optical devices for particle physics      |\n";
-		out << "|                                                           |\n";
-		out << "|     Author: Sebastian Mueller              year 2013      |\n";
-		out << "|     compiled on: " << compile_time.str() << "\n";	
-		out << "|___________________________________________________________|\n";
+		out << "|                                                           \n";
+		out << "|                 welcome to MCtracer                       \n";
+		out << "|                                                           \n";
+		out << "|      high performance raytracing tool to design and       \n";
+		out << "|     investigate optical devices for particle physics      \n";
+		out << "|                                                           \n";
+		out << "|     Author: Sebastian Mueller              year 2013      \n";
+		out << "|     compiled on: " << TracerException::compile_time << "\n";	
+		out << "|___________________________________________________________\n";
 		std::cout << out.str();	
 	}
 	//--------------------------------------------------------------------------

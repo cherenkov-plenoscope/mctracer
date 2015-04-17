@@ -24,7 +24,7 @@ void ReflectionProperties::assert_in_range_0_to_1(const double refl)const {
 		info << "ReflectionProperties::" << __func__ << "\n";
 		info << "Expected 0.0 <= reflection_coeficient <= 1.0, but actual: ";
 		info << "reflection_coeficient = " << refl << "\n";
-		throw BadValue(info.str());
+		throw TracerException(info.str());
 	}	
 }
 //------------------------------------------------------------------------------

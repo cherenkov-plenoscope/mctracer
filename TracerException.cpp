@@ -1,5 +1,8 @@
 #include "TracerException.h"
 //------------------------------------------------------------------------------
+const std::string TracerException::compile_time = 
+	TracerException::get_compile_time();
+//------------------------------------------------------------------------------
 TracerException::TracerException(){
 	message = "Empty";
 }
@@ -27,17 +30,18 @@ const char* TracerException::what()const noexcept {
 //------------------------------------------------------------------------------
 std::string TracerException::get_full_message_print()const {
 	std::stringstream out;
-	out << " ___TracerException___\n" << 
-		StringTools::place_first_infront_of_each_new_line_of_second(
-			"| ",
-			message
-		);
-	//out << "\n";
+	out << " ___TracerException___\n";
+	out << "| compiled on: " << compile_time << "\n";
+	out << 	StringTools::place_first_infront_of_each_new_line_of_second(
+		   		"| ",
+				message
+			);
 	out << "|_____________________\n";
 	return out.str();
 }
 //------------------------------------------------------------------------------
-BadValue::BadValue(std::string message){
-	this->message = message;
+std::string TracerException::get_compile_time() {
+	std::stringstream timestamp;
+	timestamp << __DATE__ << ", " << __TIME__;
+	return timestamp.str();
 }
-//------------------------------------------------------------------------------

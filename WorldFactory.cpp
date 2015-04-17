@@ -21,7 +21,17 @@ void WorldFactory::load(std::string path){
 
 	std::string filename = path.substr(position_in_path + 1); 
 
-    load_file(root_of_World, absolute_path, filename);
+	try{
+    	load_file(root_of_World, absolute_path, filename);
+    }catch(TracerException &error) {
+        std::stringstream info;
+		info << "WorldFactory::" << __func__ << "()\n";
+		info << StringTools::place_first_infront_of_each_new_line_of_second(
+		   			"| ", 
+		   			error.what() 
+		   		);
+		throw XmlIoException(info.str(), this);	
+    }
 }
 //------------------------------------------------------------------------------
 void WorldFactory::load_file(
