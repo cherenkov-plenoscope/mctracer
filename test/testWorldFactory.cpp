@@ -123,8 +123,6 @@ TEST_F(WorldFactoryTest, ReadFileWithUnknownObject) {
     file2world.load(xml_file);
     Frame *Mworld = file2world.world();
 
-    // the root of a file is always called world also the file does not 
-    // exist
     EXPECT_EQ( Mworld->get_name_of_frame() , "world");
 
   }catch(UnknownItem& unknown){

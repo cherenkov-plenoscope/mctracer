@@ -19,5 +19,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/AbsorptionProperties.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/RefractiveIndex.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/PseudoRandomNumberGenerator.cpp	
    	PARENT_SCOPE
 )

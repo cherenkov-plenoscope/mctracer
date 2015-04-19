@@ -9,7 +9,6 @@
 //=================================
 // included dependencies
 #include "Color.h"
-#include <chrono>
 #include "TracerException.h"
 #include <string>
 #include <sstream>
@@ -65,8 +64,6 @@ public:
 	Color get_default_colour()const;
 	int get_max_number_of_reflections()const;
 	unsigned get_decimal_precision_for_csv_output()const;
-	void initialize_random_rumber_generator_seed_mt19937();
-	unsigned get_seed_for_random_number_generator_mt19937()const;
 	bool max_number_of_reflections_is_not_reached_yet(
 		const uint reflection_counter
 	)const;
