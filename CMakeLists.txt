@@ -21,6 +21,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/CylinderPrismZ.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/HexagonalPrismZ.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/TracerException.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ProgramOptions.cpp	
 
 	${CMAKE_CURRENT_SOURCE_DIR}/WorldFactory.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Function1D.cpp

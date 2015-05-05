@@ -22,8 +22,12 @@ std::string Disc::get_Disc_print()const {
 	std::stringstream out;
 	out << "disc:\n";
 	out << "| radius: " << cylinder_bounds.get_radius() << "m\n";
-	out << "| area:   " << cylinder_bounds.get_radius()*cylinder_bounds.get_radius()*M_PI << "m^2\n";
+	out << "| area:   " << get_area() << "m^2\n";
 	return out.str();
+}
+//------------------------------------------------------------------------------
+double Disc::get_area()const {
+	return cylinder_bounds.get_radius()*cylinder_bounds.get_radius()*M_PI;
 }
 //------------------------------------------------------------------------------
 const Intersection* Disc::calculate_intersection_with(const Ray* ray)const {

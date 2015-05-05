@@ -27,3 +27,19 @@ uint FileTools::size_in_bytes(const std::string name_of_file_to_get_size_of) {
 
 	return size_in_bytes;
 }
+//------------------------------------------------------------------------------
+void FileTools::write_text_to_file(
+	const std::string &text,
+	const std::string &path
+) {
+	std::ofstream text_file (path.c_str());
+	if(text_file.is_open()) {
+		text_file << text;
+		text_file.close();
+	}else{
+		std::stringstream info;
+		info << "FileTools: ";
+		info << "Unable to write text to file: '" << path << "'.";
+		throw TracerException(info.str());	  	
+	}	
+}

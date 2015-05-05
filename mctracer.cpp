@@ -8,10 +8,15 @@
 #include "TelescopeFrame.h"
 #include "SegmetedReflectorGenerator.h"
 #include "EllipticalCapWithHexagonalBound.h"
+#include "Histogramm.h"
+#include "ProgramOptions.h"
 
-int main(int argc, char* argv[]) {
+int main(const int argc, const char* argv[]) {
 	try{
 		UserInteraction::print_welcome_screen();
+
+		KeyValueMap options(argc, argv);
+		//std::cout << options;
 
 		TracerSettings settings;		
 		
@@ -89,9 +94,12 @@ int main(int argc, char* argv[]) {
 		
 		// CORSIKA PHOTONS
 		//string filename = UserInteraction::input("Enter Mmcs CORSIKA file: ");
-		std::string filename = "../../cer002600";
+		//std::string filename = "../../cer002600";
+		std::string filename = "../../cer000002";
 		MmcsCorsikaFullEventGetter event_getter(filename);
 
+
+		Histogramm hist(0, 1000e-9, 1000);
 		uint event_counter = 0;
 		while(event_getter.has_still_events_left()) {
 
@@ -106,11 +114,12 @@ int main(int argc, char* argv[]) {
 
 				ListOfPropagations *photons = 
 					event.use_once_more_and_get_photons();
-					
+					/*				
 				photons->propagate_in_world_with_settings(&world, &settings);
-
-				//std::cout << "event_counter: " << event_counter << "\n";
-				
+*/
+				std::cout << "event_counter: " << event_counter << "\n";
+				hist.fill_in(photons->get_wavelength_vector());
+				/*
 				//std::cout << event.get_print() << "\n";
 				//std::cout << FACT.get_pointing_print() << "\n";
 
@@ -121,10 +130,11 @@ int main(int argc, char* argv[]) {
 							"FACT/Sensor"
 						)
 					);
-
+					
 					uint count = 0;
-					while(photons->has_still_trajectoies_left() && count < 10) {
-						
+					
+					while(photons->has_still_trajectoies_left()) {
+
 						count++;
 						Frame SWorld = world;
 						SWorld.set_mother_and_child(photons->get_next_trajectoy());
@@ -132,9 +142,13 @@ int main(int argc, char* argv[]) {
 
 						FreeOrbitCamera free(&SWorld, &settings);
 					}
-				}
+					
+				}*/
+				delete photons;
 			}
 		}
+
+		FileTools::write_text_to_file(hist.get_print(), "wavelengths_watz.csv");
 
 	}catch(std::exception &error){
 		std::cerr << error.what(); 

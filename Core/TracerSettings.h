@@ -35,7 +35,7 @@ private:
 	//--------------------------------------------------------------------------
 	// Multithread options
 
-	bool multithread = false;
+	bool multithread = true;
 		// When multithread is true tmcTracer will use all threads availabe to
 		// propagate the Ray,CameraRays,Photons.
 		//

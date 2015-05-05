@@ -30,6 +30,7 @@
 #include "TrajectoryFactoryTest.cpp"
 #include "HexGridXyTest.cpp"
 #include "TableToolsTest.cpp"
+#include "ProgramOptionsTest.cpp"
 
 int main(int argc, char **argv) {
 	UserInteraction::print_welcome_screen();

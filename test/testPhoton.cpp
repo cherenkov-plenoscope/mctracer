@@ -160,8 +160,8 @@ TEST_F(PhotonTest, Reflections){
 */                              
   TracerSettings setup;
 
-  Vector3D    pos(0,0,0);
-  Rotation3D  rot(0,0,0);
+  Vector3D    pos = Vector3D::null;
+  Rotation3D  rot = Rotation3D::null;
 
   // create a test setup with two mirrors bouncing the photon
   Frame world("world",pos,rot);

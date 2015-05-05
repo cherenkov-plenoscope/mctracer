@@ -80,6 +80,8 @@ public:
 	const Intersection* get_final_intersection()const;
 
 	virtual double get_time_of_flight()const;
+	
+	void delete_history();
 protected:
 	std::string get_history_print()const;
 
@@ -89,7 +91,7 @@ protected:
 
 	void init_propagation_history();
 
-	void delete_propagation_history();
+
 
 	void carry_on_propagation_properties_of_ray(
 		const RayForPropagation* ray_to_be_carried_on

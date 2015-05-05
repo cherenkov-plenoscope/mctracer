@@ -27,6 +27,7 @@ class ListOfPropagations{
 public:
 	
 	ListOfPropagations(std::string new_name_for_list_of_propagations);
+	~ListOfPropagations();
 	
 	void push_back(RayForPropagation* ray);
 	
@@ -54,6 +55,9 @@ public:
 	Frame* get_mean_trajectoy_in_world_using_options(
 		const Frame* world, const TracerSettings* settings
 	);
+
+	std::vector<double> get_wavelength_vector()const;
+	double get_next_wavelength();
 private:
 
 	void propagate_using_single_thread(

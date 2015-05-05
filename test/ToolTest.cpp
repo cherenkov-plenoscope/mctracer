@@ -292,3 +292,27 @@ TEST_F(Tools, assert_text_has_no_specific_char) {
     TracerException
   );
 }
+//------------------------------------------------------------------------------
+#include "Core/Vector3D.h"
+#include "Core/ListOfPropagations.h"
+#include "Core/Photon.h"
+#include <memory>
+
+TEST_F(Tools, memory_test) {
+  
+  for(uint y=0; y<1e2; y++) {
+
+    ListOfPropagations photons("my_list");
+    //photons = new ListOfPropagations("my_list");
+
+    for(uint i=0; i<1e2; i++) {
+
+      Photon* hans = new Photon(Vector3D::unit_x, Vector3D::unit_z ,133.7);
+      photons.push_back(hans);
+      //hans->delete_history();
+      //delete hans;
+    }
+
+    //delete photons;
+  }
+}

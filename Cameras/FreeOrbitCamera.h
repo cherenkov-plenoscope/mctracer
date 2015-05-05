@@ -15,6 +15,7 @@
 #include "CameraManForTranslation.h"
 #include "CameraManForRotation.h"
 #include "CameraManForStereo3D.h"
+#include "Core/TimeStamp.h"
 
 //=================================
 class FreeOrbitCamera {
@@ -48,6 +49,7 @@ private:
 
 	int snapshot_counter = 0;
 	uint iteration_counter = 0;
+	TimeStamp time_stamp;
 
 	void toggle_stereo3D();
 	void create_CameraMen_to_safely_operate_the_flying_camera();

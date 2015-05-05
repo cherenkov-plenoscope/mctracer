@@ -1,6 +1,7 @@
 #include "RayForPropagation.h"
 //------------------------------------------------------------------------------
-RayForPropagation::RayForPropagation() {}
+RayForPropagation::RayForPropagation() {
+}
 //------------------------------------------------------------------------------
 RayForPropagation::RayForPropagation(
 	const Vector3D support,
@@ -48,12 +49,19 @@ void RayForPropagation::carry_on_propagation_properties_of_ray(
 }
 //------------------------------------------------------------------------------
 RayForPropagation::~RayForPropagation() {
-	//delete_propagation_history();
+	//std::cout << "ohh\n";
+	//delete intersection_history;
+	//delete interaction_type_history;
 }
 //------------------------------------------------------------------------------
-void RayForPropagation::delete_propagation_history() {
-	for(const Intersection* intersec: *intersection_history)
-		delete intersec;
+void RayForPropagation::delete_history() {
+
+	for(uint i=0; i<intersection_history->size(); i++)
+		delete intersection_history->at(i);
+	delete intersection_history;
+	
+	interaction_type_history->clear();
+	delete interaction_type_history;
 }
 //------------------------------------------------------------------------------
 void RayForPropagation::set_id(const uint identifier_number) {

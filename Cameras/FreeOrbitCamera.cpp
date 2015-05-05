@@ -13,6 +13,8 @@ FreeOrbitCamera::FreeOrbitCamera(
 
 	reset_camera();
 	start_free_orbit();
+
+	time_stamp.update_now();
 }
 //------------------------------------------------------------------------------
 void FreeOrbitCamera::create_CameraMen_to_safely_operate_the_flying_camera(){
@@ -142,13 +144,13 @@ void FreeOrbitCamera::update_free_orbit_display(){
 //==============================================================================
 void FreeOrbitCamera::left_mouse_button_event(
 	int event, int x, int y, int flags, void *param
-){
-		FreeOrbitCamera* p = (FreeOrbitCamera*)param;
-		
-		if( event != cv::EVENT_LBUTTONDOWN )
-			return;
+) {
+	FreeOrbitCamera* p = (FreeOrbitCamera*)param;
+	
+	if( event != cv::EVENT_LBUTTONDOWN )
+		return;
 
-		p->print_info_of_probing_ray_for_pixel_x_y( x, y );
+	p->print_info_of_probing_ray_for_pixel_x_y( x, y );
 }
 //==============================================================================
 void FreeOrbitCamera::move_right_and_shoot_video() {
@@ -164,10 +166,10 @@ void FreeOrbitCamera::move_right_and_shoot_video() {
 
 }
 //==============================================================================
-void FreeOrbitCamera::toggle_stereo3D(){
+void FreeOrbitCamera::toggle_stereo3D() {
 	stereo3D = !stereo3D;
 	std::cout << get_prefix_print() << "Stereo 3D : ";
-	std::cout << (stereo3D == true ? "On": "Off") << "\n";
+	std::cout << (stereo3D ? "On" : "Off") << "\n";
 }
 //==============================================================================
 void FreeOrbitCamera::take_snapshot(){
@@ -196,14 +198,16 @@ std::string FreeOrbitCamera::get_snapshot_filename(){
 	snapshot_counter++;
 
 	std::stringstream filename;  
-	filename << "snap_" << snapshot_counter << "_Mamiya645";
+	filename << time_stamp.yyyy() << time_stamp.mm() << time_stamp.dd() << "_";
+	filename << time_stamp.HH() << time_stamp.MM() << time_stamp.SS();
+	filename << "_" << snapshot_counter;
 	return filename.str();
 }
 //==============================================================================
 ApertureCamera FreeOrbitCamera::get_Mamiya645_based_on_free_orbit_camera()const{
 
 	ApertureCamera Mamiya645("Mamiya645", 1920, 1080);	
-	Mamiya645.set_fStop_sesnorWidth_rayPerPixel(0.95, 0.06, 3);
+	Mamiya645.set_fStop_sesnorWidth_rayPerPixel(1.2, 0.0537, 3);
 	Mamiya645.set_FoV_in_rad(flying_camera->get_FoV_in_rad());
 	Mamiya645.update_position_and_orientation(
 		flying_camera->get_position_in_world(),
@@ -293,7 +297,7 @@ void FreeOrbitCamera::print_free_orbit_help_text()const{
 	out << "_Mamiya645_medium_format_camera    help....................[ h ]\n";
 	out << " take snapshot...........[ g ]     exit....................[ESC]\n";
 	out << "\n";
-	out << "[ left click ] into the image to gain additional information.\n";
+	out << "[ left mouse ] click into the image for additional information.\n";
 	out << "\n";
 	std::cout << out.str();
 }

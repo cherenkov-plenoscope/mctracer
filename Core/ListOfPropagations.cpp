@@ -5,6 +5,23 @@ ListOfPropagations::ListOfPropagations(std::string name) {
 	this->name = name;
 }
 //------------------------------------------------------------------------------
+ListOfPropagations::~ListOfPropagations() {
+
+
+	//std::cout << "die photons!\n";
+
+	//propagations.clear();
+	
+	for(uint i=0; i<propagations.size(); i++) {
+		propagations.at(i)->delete_history();
+		delete propagations.at(i);
+	}
+
+	//for(uint i=0; i<propagations.size(); i++) {
+	//	delete propagations.at(i);
+	//}
+}
+//------------------------------------------------------------------------------
 void ListOfPropagations::push_back(RayForPropagation* ray){
 	propagations.push_back(ray);
 }
@@ -211,4 +228,13 @@ Frame* ListOfPropagations::get_next_trajectoy() {
 //------------------------------------------------------------------------------
 bool ListOfPropagations::has_still_trajectoies_left()const {
 	return number_of_trajectories_handed_out <= propagations.size();
+}
+//------------------------------------------------------------------------------
+std::vector<double> ListOfPropagations::get_wavelength_vector()const {
+
+	std::vector<double> vec;
+	for(RayForPropagation *ray : propagations)
+		vec.push_back(static_cast<Photon*>(ray)->get_wavelength());
+
+	return vec;
 }
