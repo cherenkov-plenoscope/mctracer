@@ -15,12 +15,17 @@
 #include <sstream>
 #include <vector>
 #include <fstream>
+#include <algorithm>
 #include "TracerException.h"
 
 double Deg2Rad(double angle_in_Deg);
 double Rad2Deg(double angle_in_Rad);
+bool is_odd(const int n);
+bool is_even(const int n);
 
-double pedantic_strtod(std::string text_to_parse);
+double StrToDouble(std::string text_to_parse);
+bool StrToBool(std::string text_to_parse);
+int StrToInt(std::string text_to_parse);
 
 namespace UserInteraction {
 	void print_welcome_screen();	

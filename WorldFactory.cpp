@@ -323,7 +323,7 @@ double WorldFactory::extract_reflector(
 	const pugi::xml_node node
 ) {
 	assert_attribute_exists(node, key.c_str());
-	return pedantic_strtod(node.attribute(key.c_str()).value());
+	return StrToDouble(node.attribute(key.c_str()).value());
 }
 //------------------------------------------------------------------------------
 Frame* WorldFactory::produceDisc(
@@ -413,7 +413,7 @@ const ReflectionProperties* WorldFactory::extract_reflection(
 	if( StringTools::is_ending(refl_attribure, ".xml") )
 		refl_prop = new ReflectionProperties((absolute_path + refl_attribure));
 	else
-		refl_prop = new ReflectionProperties(pedantic_strtod(refl_attribure));
+		refl_prop = new ReflectionProperties(StrToDouble(refl_attribure));
 
 	return refl_prop;
 }
@@ -453,8 +453,8 @@ void WorldFactory::extract_Plane_props(
 	assert_attribute_exists(node, "x_width");
 	assert_attribute_exists(node, "y_width");
 	
-	x_width = pedantic_strtod(node.attribute("x_width").value());
-	y_width = pedantic_strtod(node.attribute("y_width").value());
+	x_width = StrToDouble(node.attribute("x_width").value());
+	y_width = StrToDouble(node.attribute("y_width").value());
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_Sphere_props(
@@ -462,7 +462,7 @@ void WorldFactory::extract_Sphere_props(
 ){
 	assert_attribute_exists(node, "radius");	
 	
-	radius = pedantic_strtod(node.attribute("radius").value());
+	radius = StrToDouble(node.attribute("radius").value());
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_Cylinder_props(
@@ -475,7 +475,7 @@ void WorldFactory::extract_Cylinder_props(
 	assert_attribute_exists(node, "start_pos");
 	assert_attribute_exists(node, "end_pos");
 		
-	radius = pedantic_strtod(node.attribute("radius").value());
+	radius = StrToDouble(node.attribute("radius").value());
 	
 	double sX, sY, sZ;
 	strto3tuple(sX, sY, sZ, node.attribute("start_pos").value());
@@ -490,7 +490,7 @@ void WorldFactory::extract_Disc_props(double &radius,const pugi::xml_node node){
 
 	assert_attribute_exists(node, "radius");
 
-	radius = pedantic_strtod(node.attribute("radius").value());
+	radius = StrToDouble(node.attribute("radius").value());
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_Triangle_props(
@@ -506,12 +506,12 @@ void WorldFactory::extract_Triangle_props(
 	assert_attribute_exists(node, "Cx");
 	assert_attribute_exists(node, "Cy");
  	
- 	Ax = pedantic_strtod(node.attribute("Ax").value());
-  	Ay = pedantic_strtod(node.attribute("Ay").value());
-   	Bx = pedantic_strtod(node.attribute("Bx").value());
- 	By = pedantic_strtod(node.attribute("By").value());
-    Cx = pedantic_strtod(node.attribute("Cx").value());
- 	Cy = pedantic_strtod(node.attribute("Cy").value());
+ 	Ax = StrToDouble(node.attribute("Ax").value());
+  	Ay = StrToDouble(node.attribute("Ay").value());
+   	Bx = StrToDouble(node.attribute("Bx").value());
+ 	By = StrToDouble(node.attribute("By").value());
+    Cx = StrToDouble(node.attribute("Cx").value());
+ 	Cy = StrToDouble(node.attribute("Cy").value());
 }
 //------------------------------------------------------------------------------
 void WorldFactory::assert_name_of_child_frame_is_not_in_use_yet(

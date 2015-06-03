@@ -185,8 +185,8 @@ void Function1D::read_in_function_from_xml_file(){
 		    std::pair< double , double > *a_new_data_pair;
 		    a_new_data_pair = new std::pair< double , double >;
 
-		    a_new_data_pair->first  = pedantic_strtod(arg);
-		    a_new_data_pair->second = pedantic_strtod(val);
+		    a_new_data_pair->first  = StrToDouble(arg);
+		    a_new_data_pair->second = StrToDouble(val);
 
 		    func.push_back(*a_new_data_pair);
 		}

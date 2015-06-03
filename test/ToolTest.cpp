@@ -293,6 +293,95 @@ TEST_F(Tools, assert_text_has_no_specific_char) {
   );
 }
 //------------------------------------------------------------------------------
+TEST_F(Tools, odd_and_even) {
+  EXPECT_TRUE(is_even(0));
+  EXPECT_TRUE(is_even(2));
+  EXPECT_TRUE(is_even(-2));
+  EXPECT_TRUE(is_even(1214214));
+
+  EXPECT_TRUE(is_odd(-1));
+  EXPECT_TRUE(is_odd(-3));
+  EXPECT_TRUE(is_odd(-7));
+  EXPECT_TRUE(is_odd(-9));
+
+  EXPECT_FALSE(is_even(3));
+  EXPECT_FALSE(is_even(-1));
+  EXPECT_FALSE(is_even(1337));
+  EXPECT_FALSE(is_even(23));
+
+  EXPECT_FALSE(is_odd(2));
+  EXPECT_FALSE(is_odd(0));
+  EXPECT_FALSE(is_odd(42));
+  EXPECT_FALSE(is_odd(-46));
+}
+//------------------------------------------------------------------------------
+TEST_F(Tools, StrToDouble) {
+
+  EXPECT_NO_THROW(
+    EXPECT_EQ(42.1337,StrToDouble("42.1337"));
+    EXPECT_EQ(1337,StrToDouble("1337"));
+    EXPECT_EQ(1,StrToDouble("1"));
+    EXPECT_EQ(.1,StrToDouble(".1"));
+    EXPECT_EQ(.1442,StrToDouble(".1442"));  
+  );
+
+  EXPECT_THROW(
+    EXPECT_NE(42.1337,StrToDouble("42p1337"));
+    EXPECT_NE(1337,StrToDouble("1337 "));
+    EXPECT_NE(1,StrToDouble(""));
+    EXPECT_NE(1.337,StrToDouble(" 1.337"));
+    EXPECT_NE(.1,StrToDouble(" .1"));
+    EXPECT_NE(.1,StrToDouble(" .1"));
+    EXPECT_NE(.1442,StrToDouble(".1 442"));,
+    TracerException
+  );
+}
+//------------------------------------------------------------------------------
+TEST_F(Tools, StrToBool) {
+
+  EXPECT_NO_THROW(
+    EXPECT_EQ(true,StrToBool("true"));
+    EXPECT_EQ(true,StrToBool("TRUE"));
+    EXPECT_EQ(false,StrToBool("false"));
+    EXPECT_EQ(false,StrToBool("FALSE")); 
+  );
+
+  EXPECT_THROW(
+    EXPECT_NE(true,StrToBool(" true"));
+    EXPECT_NE(true,StrToBool("true "));
+    EXPECT_NE(true,StrToBool("wahr"));
+    EXPECT_NE(true,StrToBool("Troe"));
+    EXPECT_NE(true,StrToBool("yes"));
+    EXPECT_NE(true,StrToBool("no"));
+    EXPECT_NE(true,StrToBool("0"));
+    EXPECT_NE(true,StrToBool(""));,
+    TracerException
+  );
+}
+//------------------------------------------------------------------------------
+TEST_F(Tools, StrToInt) {
+
+  EXPECT_NO_THROW(
+    EXPECT_EQ(1,StrToInt("1"));
+    EXPECT_EQ(12,StrToInt("12"));
+    EXPECT_EQ(1337,StrToInt("1337"));
+    EXPECT_EQ(123456789,StrToInt("123456789")); 
+  );
+
+  EXPECT_THROW(
+    //EXPECT_NE(1,StrToInt(" 1"));
+    //EXPECT_NE(1,StrToInt("  1"));
+    EXPECT_NE(1,StrToInt("1 "));
+    EXPECT_NE(1,StrToInt(""));
+    EXPECT_NE(123456,StrToInt("123 456"));
+    EXPECT_NE(12.344,StrToInt("12.344"));
+    EXPECT_NE(1,StrToInt("no"));
+    EXPECT_NE(6.6,StrToInt("6p6"));,
+    TracerException
+  );
+}
+//------------------------------------------------------------------------------
+
 #include "Core/Vector3D.h"
 #include "Core/ListOfPropagations.h"
 #include "Core/Photon.h"

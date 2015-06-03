@@ -66,13 +66,13 @@ int main(const int argc, const char* argv[]) {
  		Sensor.set_outer_color(sensor_color);
  		Sensor.set_inner_color(sensor_color);
 
-		EllipticalCapWithHexagonalBound gg;
+		/*EllipticalCapWithHexagonalBound gg;
 		gg.set_name_pos_rot("ellpis", Vector3D::unit_x*10.0, Rotation3D::null);
 		gg.set_focalLength_radiiRatio_hexAngel_hexRadius(
 			4.9, 1.5, 0.0, 0.31  
 		);
 		gg.set_outer_color(sensor_color);
- 		gg.set_inner_color(sensor_color);
+ 		gg.set_inner_color(sensor_color);*/
 
 		//sensor_housing_lower_cap
 		Disc sensor_housing_lower_cap;
@@ -89,13 +89,13 @@ int main(const int argc, const char* argv[]) {
 
 		world.set_mother_and_child(&FACT);
 		world.set_mother_and_child(&ground);
-		world.set_mother_and_child(&gg);
+		//world.set_mother_and_child(&gg);
 		world.init_tree_based_on_mother_child_relations();
 		
 		// CORSIKA PHOTONS
 		//string filename = UserInteraction::input("Enter Mmcs CORSIKA file: ");
-		//std::string filename = "../../cer002600";
-		std::string filename = "../../cer000002";
+		std::string filename = "../../cer002600";
+		//std::string filename = "../../cer000002";
 		MmcsCorsikaFullEventGetter event_getter(filename);
 
 
@@ -114,36 +114,37 @@ int main(const int argc, const char* argv[]) {
 
 				ListOfPropagations *photons = 
 					event.use_once_more_and_get_photons();
-					/*				
+			
 				photons->propagate_in_world_with_settings(&world, &settings);
-*/
+
 				std::cout << "event_counter: " << event_counter << "\n";
 				hist.fill_in(photons->get_wavelength_vector());
-				/*
+				
 				//std::cout << event.get_print() << "\n";
 				//std::cout << FACT.get_pointing_print() << "\n";
 
-				if(event_counter == 444) {
+				if(event_counter == 1) {
 
-					std::cout << photons->get_csv_print_for_propagations_ending_in(
+					/*std::cout << photons->get_csv_print_for_propagations_ending_in(
 						world.get_frame_in_tree_by_path(
 							"FACT/Sensor"
 						)
-					);
+					);*/
 					
 					uint count = 0;
 					
-					while(photons->has_still_trajectoies_left()) {
+					while(photons->has_still_trajectoies_left() && count < 5) {
 
 						count++;
 						Frame SWorld = world;
 						SWorld.set_mother_and_child(photons->get_next_trajectoy());
 						SWorld.init_tree_based_on_mother_child_relations();
+						std::cout << SWorld.get_tree_print();
 
 						FreeOrbitCamera free(&SWorld, &settings);
 					}
 					
-				}*/
+				}
 				delete photons;
 			}
 		}

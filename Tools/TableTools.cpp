@@ -82,7 +82,7 @@ namespace TableTools {
 	) {
 		current_col++;
 		try{
-			numeric_row->push_back(pedantic_strtod(token));
+			numeric_row->push_back(StrToDouble(token));
 		}catch(TracerException &error) {
 			std::stringstream info;
 			info << "TableTools::Factory:\n";

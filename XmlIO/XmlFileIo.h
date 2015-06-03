@@ -29,7 +29,7 @@ protected:
 
 class XmlFileIo: public XmlIoFileInfo{
 public:
-	double pedantic_strtod(std::string text_to_parse)const;
+	double StrToDouble(std::string text_to_parse)const;
 
 	void strto3tuple(
 		double &x, 

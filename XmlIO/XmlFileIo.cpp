@@ -1,6 +1,6 @@
 #include "XmlFileIo.h"
 //------------------------------------------------------------------------------
-double XmlFileIo::pedantic_strtod(std::string text_to_parse)const{
+double XmlFileIo::StrToDouble(std::string text_to_parse)const{
 
 	if(text_to_parse.compare("") == 0){
 		std::stringstream info;
@@ -39,7 +39,7 @@ void XmlFileIo::strto3tuple(
 	
 	pos = TextToWorkOn.find(",");
 	if(pos != std::string::npos){
-		x = pedantic_strtod(TextToWorkOn.substr(0,pos));	
+		x = StrToDouble(TextToWorkOn.substr(0,pos));	
 		TextToWorkOn = TextToWorkOn.substr(pos+1);
 	}else{
 		std::stringstream info;
@@ -50,7 +50,7 @@ void XmlFileIo::strto3tuple(
 	
 	pos = TextToWorkOn.find(",");
 	if(pos != std::string::npos){
-		y = pedantic_strtod(TextToWorkOn.substr(0,pos));
+		y = StrToDouble(TextToWorkOn.substr(0,pos));
 		TextToWorkOn = TextToWorkOn.substr(pos+1);
 	}else{
 		std::stringstream info;
@@ -61,7 +61,7 @@ void XmlFileIo::strto3tuple(
 
 	pos = TextToWorkOn.find("]");
 	if(pos != std::string::npos){
-		z = pedantic_strtod(TextToWorkOn.substr(0,pos));
+		z = StrToDouble(TextToWorkOn.substr(0,pos));
 	}else{
 		std::stringstream info;
 		info << "Error parsing tuple: [float,float,float]";  
