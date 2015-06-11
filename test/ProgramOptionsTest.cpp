@@ -108,10 +108,32 @@ TEST_F(ProgramOptionsTest, value_to_bool) {
 }
 //------------------------------------------------------------------------------
 TEST_F(ProgramOptionsTest, save_and_load) {
-      
+        
+    const std::string filename = "./config_and_options_IO/robert.cfg";
+
     KeyValueMap options;
     options.insert_key_and_value("peter", "true");
     options.insert_key_and_value("hans", "1337");
     options.insert_key_and_value("gustav", "/path/to/file");
-    options.save("./config_and_options_IO/robert.cfg");
+    options.save(filename);
+
+    KeyValueMap loaded_options(filename);
+
+    ASSERT_TRUE(loaded_options.has_key("peter"));
+    EXPECT_EQ(  
+        options.get_value_for_key("peter"), 
+        loaded_options.get_value_for_key("peter")
+    );
+
+    ASSERT_TRUE(loaded_options.has_key("hans"));
+    EXPECT_EQ(  
+        options.get_value_for_key("hans"), 
+        loaded_options.get_value_for_key("hans")
+    );
+    
+    ASSERT_TRUE(loaded_options.has_key("gustav"));
+    EXPECT_EQ(  
+        options.get_value_for_key("gustav"), 
+        loaded_options.get_value_for_key("gustav")
+    );
 }

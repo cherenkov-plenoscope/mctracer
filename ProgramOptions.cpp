@@ -83,10 +83,6 @@ void KeyValueMap::assert_every_key_has_a_value(const int argc)const {
 		throw TracerException("argument count is even");
 }
 //------------------------------------------------------------------------------
-KeyValueMap::KeyValueMap() {
-
-}
-//------------------------------------------------------------------------------
 bool KeyValueMap::get_value_for_key_as_bool(const std::string key)const {
 	return StrToBool(get_value_for_key(key));
 }
@@ -103,11 +99,63 @@ void KeyValueMap::save(const std::string filename)const {
 	FileTools::write_text_to_file(get_file_print(), filename);
 }
 //------------------------------------------------------------------------------
-void KeyValueMap::load(const std::string filename)const {
+void KeyValueMap::load(const std::string filename) {
 
-	if(!FileTools::can_be_opened(filename)) {
+	std::string line;
+	std::ifstream myfile (filename.c_str());
+	
+	if(myfile.is_open()) {
+		while(getline (myfile,line))
+			parse_line(line);
+		myfile.close();
+	}else {
 		std::stringstream out;
 		out << "KeyValueMap: Can not open '" << filename << "'";
 		throw TracerException(out.str());
 	}
+}
+//------------------------------------------------------------------------------
+void KeyValueMap::parse_line(const std::string line) {
+
+	std::string key;
+	std::string value;
+	bool is_comment = false;
+	bool colon_was_found = false;
+
+	uint i=0;
+	while(i<line.length()) {
+		if(line[i] == '#') {
+			is_comment = true;
+			break;
+		}
+
+		if(line[i] == ':') {
+			colon_was_found = true;
+			if(i+1<line.length()) i++; else break;
+		}
+
+		if(colon_was_found)
+			value.push_back(line[i]);
+		else
+			key.push_back(line[i]);
+		i++;
+	}
+
+	if(!colon_was_found && !is_comment)
+		throw TracerException("Can not parse key value line.");
+
+
+	if(!is_comment) {
+		key = StringTools::strip_whitespaces(key);
+		value = StringTools::strip_whitespaces(value);	
+		insert_key_and_value(key, value);	
+	}
+}
+//------------------------------------------------------------------------------
+KeyValueMap::KeyValueMap(const std::string filename) {
+	load(filename);
+}
+//------------------------------------------------------------------------------
+KeyValueMap::KeyValueMap() {
+
 }

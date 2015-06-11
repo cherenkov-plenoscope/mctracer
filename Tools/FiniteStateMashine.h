@@ -13,6 +13,7 @@
 #include <TracerException.h>
 #include <string>
 #include <sstream>
+#include <regex>
 
 namespace fsm {
 	class State2StateOnEvent{
