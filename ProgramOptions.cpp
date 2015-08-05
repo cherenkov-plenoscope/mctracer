@@ -67,17 +67,6 @@ std::ostream& operator<<(std::ostream& os, const KeyValueMap& map) {
     return os;
 }
 //------------------------------------------------------------------------------
-KeyValueMap::KeyValueMap(const int argc, const char** argv) {
-
-	if(argc > 0)
-		insert_key_and_value("call", argv[0]);
-
-	assert_every_key_has_a_value(argc);
-
-    for (int i = 1; i<argc; i=i+2)
-    	insert_key_and_value(argv[i], argv[i+1]);
-}
-//------------------------------------------------------------------------------
 void KeyValueMap::assert_every_key_has_a_value(const int argc)const {
 	if(is_even(argc))
 		throw TracerException("argument count is even");

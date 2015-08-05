@@ -1,3 +1,9 @@
+<disc>
+	<set_frame name="ground" pos="[0,0,-1]" rot="[0,0,0]"/>		
+	<set_surface refl="0.0" colour="[0,128,0]"/>	
+	<set_disc radius="100"/>
+</disc>
+
 <frame>
 	<set_frame name="tree" pos="[5,5,0]" rot="[0,0,0]"/>	
 	
@@ -101,7 +107,7 @@
 	
 	<reflector>
 		<set_frame name="reflector" pos="[0,0,0]" rot="[0,0,0]"/>
-		<set_reflector focal_length="4.889" facet_spacing="0.062" max_outer_diameter="3.5" min_inner_diameter="0.5" alpha="0.5"/>
+		<set_reflector focal_length="4.889" facet_spacing="0.62" max_outer_diameter="3.5" min_inner_diameter="0.5" alpha="0.5"/>
 	</reflector>
 	
 	<frame>

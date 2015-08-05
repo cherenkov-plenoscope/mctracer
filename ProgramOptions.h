@@ -18,6 +18,7 @@
 #include "Tools/FileTools.h"
 #include "Core/TimeStamp.h"
 #include "Tools/FiniteStateMashine.h"
+#include "cmdline/cmdline.h"
 
 //=================================
 class KeyValueMap {
@@ -25,7 +26,6 @@ class KeyValueMap {
 public:
 	KeyValueMap();
 	KeyValueMap(const std::string filename);
-	KeyValueMap(const int argc, const char** argv);
 	void insert_key_and_value(const std::string key, const std::string value);
 	bool has_key(const std::string)const;
 	std::string get_value_for_key(const std::string key)const;
