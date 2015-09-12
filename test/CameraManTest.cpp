@@ -109,7 +109,7 @@ TEST_F(CameraManTest, default_rotation) {
 
 	cam->update_orientation(non_default_rotation);
 	CameraManForRotation rot_operator( cam );
-	rot_operator.set_default_rotation();
+	rot_operator.set_default_rotation(looking_in_pos_x_dir);
 
 	EXPECT_EQ(looking_in_pos_x_dir, cam->get_rotation_in_world());
 }
@@ -117,7 +117,7 @@ TEST_F(CameraManTest, default_rotation) {
 TEST_F(CameraManTest, look_up) {
 
 	CameraManForRotation rot_operator( cam );
-	rot_operator.set_default_rotation();
+	rot_operator.set_default_rotation(Rotation3D(0.0,Deg2Rad(-90.0),0.0));
 
 	for(int i=0; i<50; i++)
 		rot_operator.look_further_up_when_possible();
@@ -129,7 +129,7 @@ TEST_F(CameraManTest, look_up) {
 TEST_F(CameraManTest, look_down) {
 
 	CameraManForRotation rot_operator( cam );
-	rot_operator.set_default_rotation();
+	rot_operator.set_default_rotation(Rotation3D(0.0,Deg2Rad(-90.0),0.0));
 
 	for(int i=0; i<50; i++)
 		rot_operator.look_further_down_when_possible();

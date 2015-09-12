@@ -47,8 +47,6 @@ public:
 
 	RayForPropagation(const Vector3D support, const Vector3D direction);
 
-	~RayForPropagation();
-
 	void set_id(const uint nID);
 
 	uint get_id()const;

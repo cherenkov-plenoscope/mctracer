@@ -114,6 +114,8 @@ public:
 
     void cluster_using_helper_frames();
     virtual const Intersection* calculate_intersection_with(const Ray* ray)const;
+    virtual void move_to_Az_Zd(const double _Az_Rad, const double _Zd_Rad) {};
+    void move_all_telescopes_to_Az_Zd(const double Az_Rad, const double Zd_Rad);
     const Intersection* empty_intersection()const;
 };
 #endif // __CARTESIANFRAME_H_INCLUDED__

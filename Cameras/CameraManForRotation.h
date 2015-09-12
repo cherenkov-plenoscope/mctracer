@@ -14,7 +14,7 @@
 class CameraManForRotation: public CameraMan {
 public:
 	CameraManForRotation(CameraDevice* camera_to_work_with);
-	void set_default_rotation();
+	void set_default_rotation(const Rotation3D rot);
 	void look_further_up_when_possible();
 	void look_further_down_when_possible();
 	void look_left();

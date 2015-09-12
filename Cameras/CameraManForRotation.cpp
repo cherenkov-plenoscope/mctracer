@@ -4,9 +4,9 @@ CameraManForRotation::CameraManForRotation(CameraDevice* camera_to_work_with){
 	camera = camera_to_work_with;
 }
 
-void CameraManForRotation::set_default_rotation(){
-	RotWorld2CameraY_in_rad = -M_PI/2.0;
-	RotWorld2CameraZ_in_rad = 0.0;
+void CameraManForRotation::set_default_rotation(const Rotation3D rot){
+	RotWorld2CameraY_in_rad = rot.get_rot_y();
+	RotWorld2CameraZ_in_rad = rot.get_rot_z();
 	update_R_World2Camera();
 }
 

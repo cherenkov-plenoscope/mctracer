@@ -7,14 +7,13 @@ FreeOrbitCamera::FreeOrbitCamera(
 	this->world = world;
 	this->settings = settings;
 
-	flying_camera = new PinHoleCamera("Cam", 640, 480);
-
+	flying_camera = new PinHoleCamera("Cam", 640, 360);
+	
 	create_CameraMen_to_safely_operate_the_flying_camera();
-
 	reset_camera();
-	start_free_orbit();
-
 	time_stamp.update_now();
+	
+	start_free_orbit();
 }
 //------------------------------------------------------------------------------
 void FreeOrbitCamera::create_CameraMen_to_safely_operate_the_flying_camera(){
@@ -30,8 +29,8 @@ void FreeOrbitCamera::create_CameraMen_to_safely_operate_the_flying_camera(){
 }
 //==============================================================================
 void FreeOrbitCamera::reset_camera(){
-	Translation_operator->set_default_position(Vector3D(0.0, 0.0, 10.0));
-	Rotation_operator->set_default_rotation();
+	Translation_operator->set_default_position(Vector3D(0.0, 0.0, 0.0));
+	Rotation_operator->set_default_rotation(Rotation3D(0.0,Deg2Rad(-90.0),0.0));
 	FoV_operator->set_default_FoV();
 }
 //==============================================================================
@@ -135,6 +134,7 @@ void FreeOrbitCamera::update_free_orbit_display(){
 		); 
 	}else{
 		flying_camera->acquire_image(world, settings);
+		
 		cv::imshow(
 			free_orbit_display_name,
 			*(flying_camera->get_image()->Image)
@@ -301,3 +301,13 @@ void FreeOrbitCamera::print_free_orbit_help_text()const{
 	out << "\n";
 	std::cout << out.str();
 }
+//==============================================================================
+void FreeOrbitCamera::continue_with_new_scenery_and_settings(
+	const Frame *world, 
+	const TracerSettings *settings
+) {
+	this->world = world;
+	this->settings = settings;	
+	start_free_orbit();
+}
+//==============================================================================

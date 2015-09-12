@@ -48,12 +48,6 @@ void RayForPropagation::carry_on_propagation_properties_of_ray(
 	interaction_type_history = ray_to_be_carried_on->interaction_type_history;
 }
 //------------------------------------------------------------------------------
-RayForPropagation::~RayForPropagation() {
-	//std::cout << "ohh\n";
-	//delete intersection_history;
-	//delete interaction_type_history;
-}
-//------------------------------------------------------------------------------
 void RayForPropagation::delete_history() {
 
 	for(uint i=0; i<intersection_history->size(); i++)

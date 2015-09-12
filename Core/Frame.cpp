@@ -498,3 +498,14 @@ const HomoTrafo3D* Frame::world2frame()const {
 const HomoTrafo3D* Frame::frame2world()const {
     return &T_frame2world;
 }
+//------------------------------------------------------------------------------
+void Frame::move_all_telescopes_to_Az_Zd(
+	const double Az_Rad, 
+	const double Zd_Rad
+) {
+	move_to_Az_Zd(Az_Rad, Zd_Rad);
+
+	for(Frame* child : children)
+		child->move_all_telescopes_to_Az_Zd(Az_Rad, Zd_Rad);
+}
+//------------------------------------------------------------------------------

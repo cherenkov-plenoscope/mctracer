@@ -29,3 +29,12 @@ std::string TelescopeFrame::get_pointing_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
+TelescopeFrame::TelescopeFrame(
+    const std::string new_name,
+    const Vector3D    new_pos,
+    const Rotation3D  new_rot
+) { 
+    set_name_pos_rot(new_name, new_pos, new_rot);
+    Az_Rad = 0.0;
+    Zd_Rad = 0.0;
+}

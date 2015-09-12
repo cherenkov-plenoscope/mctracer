@@ -21,17 +21,7 @@ void WorldFactory::load(std::string path){
 
 	std::string filename = path.substr(position_in_path + 1); 
 
-	//try{
-    	load_file(root_of_World, absolute_path, filename);
-    /*}catch(TracerException &error) {
-        std::stringstream info;
-		info << "WorldFactory::" << __func__ << "()\n";
-		info << StringTools::place_first_infront_of_each_new_line_of_second(
-		   			"| ", 
-		   			error.what() 
-		   		);
-		throw XmlIoException(info.str(), this);	
-    }*/
+   	load_file(root_of_World, absolute_path, filename);
 }
 //------------------------------------------------------------------------------
 void WorldFactory::load_file(
@@ -88,7 +78,10 @@ Frame* mother,const pugi::xml_node node){
 	XmlNode = node;
 
 	if(		 StringTools::is_equal(node.name(),"frame")){
-		mother = produceCartesianFrame(mother,node);
+		mother = produceFrame(mother,node);
+
+	}else if(StringTools::is_equal(node.name(),"telescope")){
+		mother = produceTelescope(mother,node);
 
 	}else if(StringTools::is_equal(node.name(),"triangle")){
 		mother = produceTriangle(mother,node);
@@ -137,6 +130,9 @@ void WorldFactory::go_on_with_children_of_node(
 		}else if(StringTools::is_equal(sub_node_name,"frame")){
 
 			fabricate_frame(mother,sub_node);
+		}else if(StringTools::is_equal(sub_node_name,"telescope")){
+
+			fabricate_frame(mother,sub_node);
 		}else if(StringTools::is_equal(sub_node_name,"triangle")){
 
 			fabricate_frame(mother,sub_node);
@@ -164,7 +160,7 @@ void WorldFactory::go_on_with_children_of_node(
 	}	
 }
 //------------------------------------------------------------------------------
-Frame* WorldFactory::produceCartesianFrame(
+Frame* WorldFactory::produceFrame(
 	Frame* mother,
 	const pugi::xml_node node
 ){
@@ -181,6 +177,25 @@ Frame* WorldFactory::produceCartesianFrame(
 
 	mother->set_mother_and_child(frame);
 	return frame;
+}
+//------------------------------------------------------------------------------
+Frame* WorldFactory::produceTelescope(
+	Frame* mother,
+	const pugi::xml_node node
+){
+	assert_child_exists(node, "set_frame");
+
+	std::string 			name;
+	Vector3D 				position;
+	Rotation3D 				rotation;
+	
+	extract_Frame_props(name, position, rotation, node.child("set_frame") );
+		
+	TelescopeFrame *telescope;
+	telescope = new TelescopeFrame(name,position,rotation);
+
+	mother->set_mother_and_child(telescope);
+	return telescope;
 }
 //------------------------------------------------------------------------------
 Frame* WorldFactory::producePlane(

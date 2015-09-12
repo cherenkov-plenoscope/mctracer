@@ -59,44 +59,45 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 }
 //------------------------------------------------------------------------------
 void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
+	
+	// init propagation settings
 	TracerSettings settings;
 
+	// load the scenery
 	WorldFactory fab;
 	fab.load(get_geometry_file());
 	Frame *world = fab.world();
 
+	// load the photons
 	MmcsCorsikaFullEventGetter event_getter(get_photon_file());
+
+	// start interactive orbit, first without any photon trajectory
+	FreeOrbitCamera free_orb(world, &settings);
 
 	uint event_counter = 0;
 	while(event_getter.has_still_events_left()) {
 
 		MmcsCorsikaEvent event = event_getter.get_next_event();
-		
+
 		while(event.can_be_reused_again()) {
 
 			event_counter++;
-
-			//FACT.move_to_Az_Zd(event.get_Az(), event.get_Zd());
-
+			world->move_all_telescopes_to_Az_Zd(event.get_Az(), event.get_Zd());
 			ListOfPropagations *photons = event.use_once_more_and_get_photons();
-			
 			photons->propagate_in_world_with_settings(world, &settings);
-
 			std::cout << "event_counter: " << event_counter << "\n";
-					
+			
 			uint photon_counter = 0;
-				
-			while(photons->has_still_trajectoies_left() && photon_counter < 5) {
+	
+			while(photons->has_still_trajectoies_left() && photon_counter < 25) {
 
 				photon_counter++;
 				Frame SWorld = *world;
 				SWorld.set_mother_and_child(photons->get_next_trajectoy());
 				SWorld.init_tree_based_on_mother_child_relations();
 				std::cout << SWorld.get_tree_print();
-
-				FreeOrbitCamera free(&SWorld, &settings);
+				free_orb.continue_with_new_scenery_and_settings(&SWorld, &settings);
 			}
-					
 			delete photons;
 		}
 	}

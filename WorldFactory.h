@@ -18,6 +18,7 @@
 #include "Sphere.h"
 #include "Cylinder.h"
 #include "Disc.h"
+#include "TelescopeFrame.h"
 //#include "FactTelescope.h"
 #include "SegmetedReflectorGenerator.h"
 #include "Core/Vector3D.h"
@@ -56,7 +57,12 @@ private:
 		const pugi::xml_node node
 	);
 
-	Frame* produceCartesianFrame(
+	Frame* produceFrame(
+		Frame* mother,
+		const pugi::xml_node frame_node
+	);
+
+	Frame* produceTelescope(
 		Frame* mother,
 		const pugi::xml_node frame_node
 	);
