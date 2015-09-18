@@ -12,6 +12,8 @@
 #include <iostream> 
 #include <string>
 #include <sstream>
+#include <vector>
+#include <stdlib.h> 
 #include "Core/Frame.h"
 #include "Triangle.h"
 #include "Plane.h"
@@ -27,19 +29,25 @@
 #include "Core/Color.h"
 #include "XmlIO/XmlFileIo.h"
 #include "TracerException.h"
+#include "PhotonSensor.h"
 
 //------------------------------------------------------------------------------
 class WorldFactory : public XmlFileIo{
 	
 	Frame* root_of_World;
 	std::string absolute_path ="";
+
+	std::vector<PhotonSensor> __sensors;
 public:
 
 	WorldFactory();
 	void load(std::string path);
 	Frame* world();
+	std::vector<PhotonSensor> sensors_in_world()const;
 private:
 
+	void add_to_sensors_if_sensitive(const pugi::xml_node node, Frame* frame);
+	
 	void load_file(
 		Frame* mother,
 		std::string path,

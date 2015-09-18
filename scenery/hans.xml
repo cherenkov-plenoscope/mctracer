@@ -129,6 +129,7 @@
 			<set_frame name="GAPD_sensor_plane" pos="[0,0,0.0]" rot="[0,0,0]"/>		
 			<set_surface refl="0.0" colour="[0,255,128]"/>	
 			<set_disc radius="0.195"/>
+			<set_sensitive id="1337"/>
 		</disc>
 		
 		<cylinder>

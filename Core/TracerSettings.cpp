@@ -50,3 +50,7 @@ void TracerSettings::SetStoreOnlyLastIntersection(bool flag) {
 bool TracerSettings::MultiThread()const { return multithread; }
 //------------------------------------------------------------------------------
 void TracerSettings::SetMultiThread( bool flag ) { multithread = flag; }
+//------------------------------------------------------------------------------
+void TracerSettings::store_only_final_intersection() {
+	flag_store_only_final_intersection = true;
+}

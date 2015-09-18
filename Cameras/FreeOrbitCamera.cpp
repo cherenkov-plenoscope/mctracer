@@ -7,7 +7,7 @@ FreeOrbitCamera::FreeOrbitCamera(
 	this->world = world;
 	this->settings = settings;
 
-	flying_camera = new PinHoleCamera("Cam", 640, 360);
+	flying_camera = new PinHoleCamera("Cam", 320, 180);
 	
 	create_CameraMen_to_safely_operate_the_flying_camera();
 	reset_camera();

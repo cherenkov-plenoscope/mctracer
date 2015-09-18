@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <vector>
 #include "TracerException.h"
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"

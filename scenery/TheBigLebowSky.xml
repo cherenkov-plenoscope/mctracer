@@ -1,7 +1,7 @@
 <disc>
 	<set_frame name="ground" pos="[0,0,-2]" rot="[0,0,0]"/>		
 	<set_surface refl="0.0" colour="[0,50,0]"/>	
-	<set_disc radius="100"/>
+	<set_disc radius="1000"/>
 </disc>
 
 <frame>

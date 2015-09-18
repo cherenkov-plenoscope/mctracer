@@ -56,6 +56,53 @@ void ToDoScheduler::render_geometry()const {
 //------------------------------------------------------------------------------
 void ToDoScheduler::propagate_photons_through_geometry()const {
 
+
+	// settings
+	TracerSettings settings;	
+	settings.SetMultiThread(false);
+	settings.SetStoreOnlyLastIntersection(true);
+
+	// load scenery
+	WorldFactory fab;
+	fab.load(get_geometry_file());
+	Frame *world = fab.world();
+
+	// init sensors in scenery
+	std::vector<PhotonSensor> sensors = fab.sensors_in_world();
+	std::cout << sensors.size();
+
+	// load photons
+	MmcsCorsikaFullEventGetter event_getter(get_photon_file());
+
+	// propagate each event
+	uint event_counter = 0;
+
+	while(event_getter.has_still_events_left()) {
+
+		MmcsCorsikaEvent event = event_getter.get_next_event();
+		//std::cout << event.get_print();
+
+		while(event.can_be_reused_again()) {
+
+			event_counter++;
+
+			// point the telescope into shower direction
+			world->move_all_telescopes_to_Az_Zd(event.get_Az(), event.get_Zd());
+			
+			// get the cherenkov photons
+			ListOfPropagations *photons = event.use_once_more_and_get_photons();
+			
+			// propagate the cherenkov photons in the world
+			photons->propagate_in_world_with_settings(world, &settings);
+
+			// detect photons in sensors
+			for(PhotonSensor sensor: sensors)
+				std::cout << photons->get_csv_print_for_propagations_ending_in(sensor.get_frame());
+
+			// wipe out the cherenkov photons which have just been propagated
+			delete photons;
+		}
+	}
 }
 //------------------------------------------------------------------------------
 void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {

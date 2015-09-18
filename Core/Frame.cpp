@@ -280,6 +280,7 @@ void  Frame::take_children_from(
 		set_mother_and_child( child_to_take);
 }
 //------------------------------------------------------------------------------
+/*
 const Frame* Frame::get_frame_in_tree_by_path( 
 	std::string path_to_frame 
 )const{
@@ -321,7 +322,7 @@ const Frame* Frame::get_frame_in_tree_by_path(
 		// described in path.
 		return void_frame;
 	}
-}
+}*/
 //------------------------------------------------------------------------------
 const Frame* Frame::get_child_by_name( 
 	std::string specific_name 

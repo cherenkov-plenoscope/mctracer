@@ -40,7 +40,7 @@ class CartesianFrameTest : public ::testing::Test {
   // Objects declared here can be used by all tests in the test case for Foo.
 };
 //----------------------------------------------------------------------
-TEST_F(CartesianFrameTest, find_specific_frame) {
+/*TEST_F(CartesianFrameTest, find_specific_frame) {
   
   // load some world
   string xml_file = "./test_scenery/including_other_xml_files.xml";
@@ -78,7 +78,7 @@ TEST_F(CartesianFrameTest, find_specific_frame) {
   world->get_frame_in_tree_by_path( "your/Mama" );
 
   EXPECT_EQ( Frame::void_frame, SpecificFrameInWorldWeAreLookingFor );
-}
+}*/
 //----------------------------------------------------------------------
 TEST_F(CartesianFrameTest, assert_name_is_valid) {
 

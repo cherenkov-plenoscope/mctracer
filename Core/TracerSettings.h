@@ -67,6 +67,7 @@ public:
 	bool max_number_of_reflections_is_not_reached_yet(
 		const uint reflection_counter
 	)const;
+	void store_only_final_intersection();
 };
 
 #endif // __TracerSettings_H_INCLUDED__ 

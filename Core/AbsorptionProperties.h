@@ -13,14 +13,15 @@
 #include <sstream>
 #include <vector>
 #include <utility>
-#include "Function1D.h"
+#include "Tools/AsciiIo.h"
+#include "Func1D.h"
 #include "TracerException.h"
 
 //=======================================================================
 class AbsorptionProperties {
 private:	
 	double mean_half_way_depth;
-	Function1D* half_way_depth_function = nullptr;
+	Func1D* half_way_depth_func = nullptr;
 public:
 
 	AbsorptionProperties(const double mean_half_way_depth);
@@ -30,8 +31,6 @@ public:
 	double get_half_way_depth(const double wavelength)const;
 
 	std::string get_print() const;
-private:
-	void reset_function();
 friend 
 std::ostream& operator<<(std::ostream& os, const AbsorptionProperties& absorp);
 };

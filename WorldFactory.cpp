@@ -72,6 +72,19 @@ void WorldFactory::extract_include_path(
 	path = node.attribute("path").value();	
 }
 //------------------------------------------------------------------------------
+void WorldFactory::add_to_sensors_if_sensitive(const pugi::xml_node node, Frame* frame) {
+	std::string sensor_key = "set_sensitive";
+
+	if( node.child(sensor_key.c_str()) != nullptr ) {
+		const pugi::xml_node sensi = node.child(sensor_key.c_str());
+
+		assert_attribute_exists(sensi, "id");
+		uint id = std::atoi(node.attribute("id").value());
+		PhotonSensor sens(id, frame);
+		__sensors.push_back(sens);
+	}
+}
+//------------------------------------------------------------------------------
 void WorldFactory::fabricate_frame(
 Frame* mother,const pugi::xml_node node){
 	
@@ -110,6 +123,7 @@ Frame* mother,const pugi::xml_node node){
 		throw UnknownItem( info.str(), this ,node.name());
 	}
 	
+	add_to_sensors_if_sensitive(node, mother);
 	go_on_with_children_of_node(mother,node);
 }
 //------------------------------------------------------------------------------
@@ -535,7 +549,7 @@ void WorldFactory::assert_name_of_child_frame_is_not_in_use_yet(
 )const{
 
 	if( mother->has_child_with_name(name_of_additional_child) ){
-		// There is already a child in the mother frame wit this name.
+		// There is already a child in the mother frame with this name.
 		// There must not be a second one!
 		std::stringstream info;
 		info << "WorldFactory::" << __func__ << "()";
@@ -553,3 +567,6 @@ Frame* WorldFactory::world(){
 	return root_of_World;
 }
 //------------------------------------------------------------------------------
+std::vector<PhotonSensor> WorldFactory::sensors_in_world()const {
+	return __sensors;
+}
