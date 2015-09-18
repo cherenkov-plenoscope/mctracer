@@ -2,13 +2,42 @@
 # Author Sebastian Mueller
 #-------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 2.8)
-set (CMAKE_CXX_FLAGS "-std=gnu++11 -Wall -pedantic -O3 -Idir")
+set (CMAKE_CXX_FLAGS "-std=gnu++11 -Wall -pedantic -O2 -Idir")
 #-------------------------------------------------------------------------------
-project( mctracer )
+project(mctracer)
 #-------------------------------------------------------------------------------
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
-find_package( OpenCV REQUIRED )
+# C++ 11
+include(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+if(COMPILER_SUPPORTS_CXX11)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+elseif(COMPILER_SUPPORTS_CXX0X)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+else()
+    message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
+endif()
+#-------------------------------------------------------------------------------
+# External libraries
+# OpenMP
+find_package(OpenMP)
+if(OPENMP_FOUND)
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+endif()
 
+# OpenCV
+find_package(OpenCV REQUIRED)
+#-------------------------------------------------------------------------------
+# Cmake
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
+
+set(CMAKE_MODULE_PATH 
+	${CMAKE_MODULE_PATH} 
+	${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules
+)
+#-------------------------------------------------------------------------------
+# The Source
 set(SOURCE 	
 	${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeter.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryFactory.cpp	
@@ -26,6 +55,7 @@ set(SOURCE
 
 	${CMAKE_CURRENT_SOURCE_DIR}/WorldFactory.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Function1D.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Func1D.cpp
 
 	${CMAKE_CURRENT_SOURCE_DIR}/Triangle.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Plane.cpp 
@@ -49,42 +79,28 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/XmlIO")
 add_subdirectory("${PROJECT_SOURCE_DIR}/MmcsCorsikaFileIO")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Cameras")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Core")
+#-------------------------------------------------------------------------------
+# mctracer shared linked library
 
-add_executable( mctracer mctracer.cpp ${SOURCE} )
-
+add_library(mct SHARED ${SOURCE})
 include_directories(/usr/include)
 include_directories(/usr/local/include)
-target_link_libraries( mctracer ${OpenCV_LIBS} )
+target_link_libraries(mct ${OpenCV_LIBS})
 #-------------------------------------------------------------------------------
-find_package(OpenMP)
-if (OPENMP_FOUND)
-    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-endif()
+# mctracer executeable
+
+add_executable(mctracer mctracer.cpp)
+target_link_libraries(mctracer mct)
 #-------------------------------------------------------------------------------
-# GTest
+# GTest unit and integration tests
 
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
-enable_testing()
+#enable_testing()
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
-add_executable( mctracerTests ./test/test.cpp ${SOURCE})
+add_executable(mctracerTests ./test/test.cpp)
 
-target_link_libraries( mctracerTests gtest gtest_main)
-target_link_libraries( mctracerTests ${OpenCV_LIBS} )
-add_test( mctracerTests mctracerTests )
-#-------------------------------------------------------------------------------
-include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-if(COMPILER_SUPPORTS_CXX11)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-elseif(COMPILER_SUPPORTS_CXX0X)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-else()
-    message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
-endif()
-#-------------------------------------------------------------------------------
-
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(mctracerTests gtest gtest_main)
+target_link_libraries(mctracerTests mct)
+#add_test(mctracerTests mctracerTests)
