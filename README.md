@@ -1,13 +1,15 @@
 # mctraer
 
-mctracer is short for Monte Carlo Ray traceing.
+mctracer is short for Monte Carlo Ray Traceing.
 
-## installation on Ubuntu 14 LTS
+## installation on a fresh Ubuntu 14 LTS Desktop
+Installation tested on a fresh Ububtu 14.04 LTS VM on 19 Sep 2015.
 
-### dependencies:
-If on Ubuntu (14.04), you can install the dependencies using
-synaptic, just install these:
+### tools needed to get and build mctracer:
+* git
+* cmake
 
+### dependencies of mctracer:
 * libopencv-dev
 * libgtest-dev
 
@@ -23,23 +25,43 @@ sudo make
 sudo mv libg* /usr/lib/
 ```
 
+### set up directories and get mctracer:
+```
+#!bash
+mkdir yourDirectorieToPlayWithMctracer
+cd yourDirectorieToPlayWithMctracer
+git clone https://Relleums@bitbucket.org/Relleums/mctracer.git
+mkdir build
+```
+The /build directory is best located side by side to the /mctracer directory.
+
+|-> yourDirectorieToPlayWithMctracer
+	|-> mctracer
+	|-> build
+
 ### compile:
 ```
 #!bash
-mkdir build
 cd build
 cmake ../mctracer
 make
 
 ```
-## run mctracer
+
+## run mctracer:
 ```
 #!bash
 cd mctracer/scenery
-../../build/mctracer
+../../build/mctracer --geometry hans.xml --render
 
 ```
 
-## run Unit Tests
+## run Unit Tests:
+The unit tests are meant to run in the mctracer/test directorie because they are looking for files in there to do IO tests.
+
+```
+#!bash
 cd mctracer/test
 ../../build/mctracerTest
+
+```
