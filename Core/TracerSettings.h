@@ -63,7 +63,7 @@ public:
 	void set_max_number_of_reflections(const int new_max_number_of_reflections);
 	Color get_default_colour()const;
 	int get_max_number_of_reflections()const;
-	unsigned get_decimal_precision_for_csv_output()const;
+	//unsigned get_decimal_precision_for_csv_output()const;
 	bool max_number_of_reflections_is_not_reached_yet(
 		const uint reflection_counter
 	)const;
