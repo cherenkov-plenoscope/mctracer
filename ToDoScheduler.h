@@ -21,6 +21,7 @@
 #include "Cameras/FreeOrbitCamera.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaFullEventGetter.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaPhotonData.h"
+#include "TelescopeArrayControl.h"
 
 //=================================
 class ToDoScheduler {

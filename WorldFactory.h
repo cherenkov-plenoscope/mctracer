@@ -20,8 +20,6 @@
 #include "Sphere.h"
 #include "Cylinder.h"
 #include "Disc.h"
-#include "TelescopeFrame.h"
-//#include "FactTelescope.h"
 #include "SegmetedReflectorGenerator.h"
 #include "Core/Vector3D.h"
 #include "Core/Rotation3D.h"
@@ -30,6 +28,7 @@
 #include "XmlIO/XmlFileIo.h"
 #include "TracerException.h"
 #include "PhotonSensor.h"
+#include "TelescopeArrayControl.h"
 
 //------------------------------------------------------------------------------
 class WorldFactory : public XmlFileIo{
@@ -38,15 +37,20 @@ class WorldFactory : public XmlFileIo{
 	std::string absolute_path ="";
 
 	std::vector<PhotonSensor> __sensors;
+
+	TelescopeArrayControl* telescopes;
 public:
 
 	WorldFactory();
 	void load(std::string path);
 	Frame* world();
+	TelescopeArrayControl* get_telescope_array_control()const;
 	std::vector<PhotonSensor> sensors_in_world()const;
 private:
 
 	void add_to_sensors_if_sensitive(const pugi::xml_node node, Frame* frame);
+
+	void add_to_array_if_telescope(const pugi::xml_node node, Frame* frame);
 	
 	void load_file(
 		Frame* mother,
@@ -66,11 +70,6 @@ private:
 	);
 
 	Frame* produceFrame(
-		Frame* mother,
-		const pugi::xml_node frame_node
-	);
-
-	Frame* produceTelescope(
 		Frame* mother,
 		const pugi::xml_node frame_node
 	);

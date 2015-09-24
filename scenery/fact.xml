@@ -102,7 +102,8 @@
 	</frame>
 </frame>
 
-<telescope>
+<frame>
+	<set_telescope/>
 	<set_frame name="FACT" pos="[0,0,0]" rot="[0.0,0.0,0.0]"/>
 	
 	<reflector>
@@ -194,5 +195,5 @@
 			<set_cylinder radius="0.03" start_pos="[-1.5,1.0,0.0]" end_pos="[-0.2,0.2,4.9]"/>	
 		</cylinder>	
 	</frame>
-</telescope>
+</frame>
 

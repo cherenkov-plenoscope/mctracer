@@ -7,7 +7,9 @@ WorldFactory::WorldFactory(){
 		Vector3D::null,
 		Rotation3D::null
 	);
-}
+
+	telescopes = new TelescopeArrayControl();
+} 
 //------------------------------------------------------------------------------
 void WorldFactory::load(std::string path){
 
@@ -72,6 +74,17 @@ void WorldFactory::extract_include_path(
 	path = node.attribute("path").value();	
 }
 //------------------------------------------------------------------------------
+void WorldFactory::add_to_array_if_telescope(const pugi::xml_node node, Frame* frame) {
+	std::string telescope_key = "set_telescope";
+
+	if( node.child(telescope_key.c_str()) != nullptr ) {
+		//const pugi::xml_node telesc = node.child(telescope_key.c_str());
+		//assert_attribute_exists(telesc, "id");
+		//uint id = std::atoi(node.attribute("id").value());
+		telescopes->add_to_telescope_array(frame);
+	}
+}
+//------------------------------------------------------------------------------
 void WorldFactory::add_to_sensors_if_sensitive(const pugi::xml_node node, Frame* frame) {
 	std::string sensor_key = "set_sensitive";
 
@@ -92,9 +105,6 @@ Frame* mother,const pugi::xml_node node){
 
 	if(		 StringTools::is_equal(node.name(),"frame")){
 		mother = produceFrame(mother,node);
-
-	}else if(StringTools::is_equal(node.name(),"telescope")){
-		mother = produceTelescope(mother,node);
 
 	}else if(StringTools::is_equal(node.name(),"triangle")){
 		mother = produceTriangle(mother,node);
@@ -124,6 +134,7 @@ Frame* mother,const pugi::xml_node node){
 	}
 	
 	add_to_sensors_if_sensitive(node, mother);
+	add_to_array_if_telescope(node, mother);
 	go_on_with_children_of_node(mother,node);
 }
 //------------------------------------------------------------------------------
@@ -191,25 +202,6 @@ Frame* WorldFactory::produceFrame(
 
 	mother->set_mother_and_child(frame);
 	return frame;
-}
-//------------------------------------------------------------------------------
-Frame* WorldFactory::produceTelescope(
-	Frame* mother,
-	const pugi::xml_node node
-){
-	assert_child_exists(node, "set_frame");
-
-	std::string 			name;
-	Vector3D 				position;
-	Rotation3D 				rotation;
-	
-	extract_Frame_props(name, position, rotation, node.child("set_frame") );
-		
-	TelescopeFrame *telescope;
-	telescope = new TelescopeFrame(name,position,rotation);
-
-	mother->set_mother_and_child(telescope);
-	return telescope;
 }
 //------------------------------------------------------------------------------
 Frame* WorldFactory::producePlane(
@@ -570,3 +562,7 @@ Frame* WorldFactory::world(){
 std::vector<PhotonSensor> WorldFactory::sensors_in_world()const {
 	return __sensors;
 }
+//------------------------------------------------------------------------------
+TelescopeArrayControl* WorldFactory::get_telescope_array_control()const {
+	return telescopes;
+} 

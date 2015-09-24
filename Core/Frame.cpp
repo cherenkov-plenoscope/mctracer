@@ -57,11 +57,11 @@ HomoTrafo3D Frame::calculate_frame2world()const {
 
 	while(frame_on_our_way_towards_the_root != void_frame){
 		Trafo_on_our_way_towards_the_root = 
-		frame_on_our_way_towards_the_root -> 
-		T_frame2mother*Trafo_on_our_way_towards_the_root;
+			frame_on_our_way_towards_the_root -> 
+			T_frame2mother*Trafo_on_our_way_towards_the_root;
 
 		frame_on_our_way_towards_the_root = 
-		frame_on_our_way_towards_the_root->mother; 
+			frame_on_our_way_towards_the_root->mother; 
 	}
 
 	return Trafo_on_our_way_towards_the_root;
@@ -280,50 +280,6 @@ void  Frame::take_children_from(
 		set_mother_and_child( child_to_take);
 }
 //------------------------------------------------------------------------------
-/*
-const Frame* Frame::get_frame_in_tree_by_path( 
-	std::string path_to_frame 
-)const{
-	/// Input is a string called path. It is string of concatenated sub strings 
-	/// seperated by delimiter '/'. The sub strings are the names of the frames.
-	/// The delimiter represents the tree structure of mother and children 
-	/// frames.
-	/// All frame tree structure is meant to start with a root frame called 
-	/// world. This frame is not explicitly indicated in the paths. It is only
-	/// indicated by a leading delimiter symbol.
-	/// eg.      /house/roof/chimney/chimney_wall_2 insead of
-	///     world/house/roof/chimney/chimney_wall_2
-
-	StringTools::remove_char_from_text_if_leading(
-		delimiter_for_frame_path, path_to_frame
-	);
-
-	std::string name_of_leading_frame = 
-		StringTools::cut_leading_token_infront_of_delimiter(
-			path_to_frame,
-	 		delimiter_for_frame_path
-		);
-
-	if( has_child_with_name(name_of_leading_frame) ){
-
-		if( path_to_frame.empty() ){
-			// There is no path left, so this frame is actually the final child 
-			// we are looking for
-			return get_child_by_name(name_of_leading_frame);
-		}else{
-			// There is still path to check. We have not reached our final
-			// Frame yet so lets proceed with the child
-			return get_child_by_name(name_of_leading_frame)->
-			get_frame_in_tree_by_path(path_to_frame);
-		}
-	}else{
-		// there is no child on this frame which matches the name of the leading
-		// frame. This is: There is no such Frame in this Tree of frames as 
-		// described in path.
-		return void_frame;
-	}
-}*/
-//------------------------------------------------------------------------------
 const Frame* Frame::get_child_by_name( 
 	std::string specific_name 
 )const{
@@ -498,15 +454,5 @@ const HomoTrafo3D* Frame::world2frame()const {
 //------------------------------------------------------------------------------
 const HomoTrafo3D* Frame::frame2world()const {
     return &T_frame2world;
-}
-//------------------------------------------------------------------------------
-void Frame::move_all_telescopes_to_Az_Zd(
-	const double Az_Rad, 
-	const double Zd_Rad
-) {
-	move_to_Az_Zd(Az_Rad, Zd_Rad);
-
-	for(Frame* child : children)
-		child->move_all_telescopes_to_Az_Zd(Az_Rad, Zd_Rad);
 }
 //------------------------------------------------------------------------------

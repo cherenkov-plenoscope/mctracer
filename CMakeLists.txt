@@ -6,7 +6,7 @@ set (CMAKE_CXX_FLAGS "-std=gnu++11 -Wall -pedantic -O2 -Idir")
 #-------------------------------------------------------------------------------
 project(mctracer)
 #-------------------------------------------------------------------------------
-# C++ 11
+# Assert compieler supports C++ 11
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
@@ -22,8 +22,8 @@ endif()
 # OpenMP
 find_package(OpenMP)
 if(OPENMP_FOUND)
-    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 endif()
 
 # OpenCV
@@ -53,6 +53,8 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/ProgramOptions.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ToDoScheduler.cpp		
 
+	${CMAKE_CURRENT_SOURCE_DIR}/TelescopeArrayControl.cpp
+
 	${CMAKE_CURRENT_SOURCE_DIR}/WorldFactory.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Function1D.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Func1D.cpp
@@ -67,7 +69,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithHexagonalBound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/EllipticalCapWithHexagonalBound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/EllipticalCapRayIntersectionEquation.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/TelescopeFrame.cpp
 
 	${CMAKE_CURRENT_SOURCE_DIR}/HexGridXy.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SegmetedReflectorGenerator.cpp
@@ -100,7 +101,6 @@ include_directories(${GTEST_INCLUDE_DIRS})
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 add_executable(mctracerTests ./test/test.cpp)
-
 target_link_libraries(mctracerTests gtest gtest_main)
 target_link_libraries(mctracerTests mct)
 #add_test(mctracerTests mctracerTests)

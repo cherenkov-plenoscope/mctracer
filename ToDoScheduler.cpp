@@ -67,6 +67,9 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 	fab.load(get_geometry_file());
 	Frame *world = fab.world();
 
+	// init Telescope Array Control
+	TelescopeArrayControl* array_ctrl = fab.get_telescope_array_control();
+
 	// init sensors in scenery
 	std::vector<PhotonSensor> sensors = fab.sensors_in_world();
 	std::cout << sensors.size();
@@ -87,8 +90,8 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 			event_counter++;
 
 			// point the telescope into shower direction
-			world->move_all_telescopes_to_Az_Zd(event.get_Az(), event.get_Zd());
-			
+			array_ctrl->move_all_to_Az_Zd(event.get_Az(), event.get_Zd());
+
 			// get the cherenkov photons
 			ListOfPropagations *photons = event.use_once_more_and_get_photons();
 			
@@ -115,6 +118,10 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 	fab.load(get_geometry_file());
 	Frame *world = fab.world();
 
+	// init Telescope Array Control
+	TelescopeArrayControl* array_ctrl = fab.get_telescope_array_control();
+	std::cout << array_ctrl->get_print();
+
 	// load the photons
 	MmcsCorsikaFullEventGetter event_getter(get_photon_file());
 
@@ -129,7 +136,11 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 		while(event.can_be_reused_again()) {
 
 			event_counter++;
-			world->move_all_telescopes_to_Az_Zd(event.get_Az(), event.get_Zd());
+
+			// point the telescope into shower direction
+			array_ctrl->move_all_to_Az_Zd(event.get_Az(), event.get_Zd());
+			std::cout << array_ctrl->get_print();
+
 			ListOfPropagations *photons = event.use_once_more_and_get_photons();
 			photons->propagate_in_world_with_settings(world, &settings);
 			std::cout << "event_counter: " << event_counter << "\n";
