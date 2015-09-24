@@ -45,6 +45,7 @@ protected:
     HomoTrafo3D T_world2frame;
     HomoTrafo3D T_frame2world;
     
+    const uint max_number_of_children_in_frame = 16;
     std::vector<Frame*> children;
 	Frame *mother;
     const Frame *root_of_world;
@@ -109,7 +110,6 @@ protected:
     HomoTrafo3D calculate_frame2world()const;
     void update_sphere_enclosing_all_children(Frame *new_child);
     void assert_name_is_valid(const std::string name_to_check)const;
-    uint get_sector(const Vector3D pos)const;
     Vector3D get_mean_pos_in_mother(std::vector<Frame*> frames)const;
 public:
     void move_to_Az_Zd_relative_to_mother(const double Az_Rad, const double Zd_Rad);

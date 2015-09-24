@@ -352,14 +352,15 @@ void Frame::find_intersection_candidates_for_all_children_and_ray(
 }
 //------------------------------------------------------------------------------
 void Frame::cluster_using_helper_frames() {
-	if(get_number_of_children() > 8) {
+	
+	if(get_number_of_children() > max_number_of_children_in_frame) {
 
 		std::vector<Frame*> oct_tree[8];
 
 		std::vector<Frame*> new_children;
 
 		for(Frame* child : children)
-			oct_tree[get_sector(child->pos_in_mother)].push_back(child);
+			oct_tree[child->pos_in_mother.get_octant()].push_back(child);
 		
 		for(uint sector=0; sector<8; sector++) {
 			if(oct_tree[sector].size() > 0) {
@@ -399,13 +400,6 @@ void Frame::cluster_using_helper_frames() {
 			set_mother_and_child(new_helper_frame_child);
 		}
 	}
-}
-//------------------------------------------------------------------------------
-uint Frame::get_sector(const Vector3D pos)const {
-	const bool sx = pos.x() >= 0.0;
-	const bool sy = pos.y() >= 0.0;
-	const bool sz = pos.z() >= 0.0;
-	return 4*sx + 2*sy + 1*sz;
 }
 //------------------------------------------------------------------------------
 Vector3D Frame::get_mean_pos_in_mother(

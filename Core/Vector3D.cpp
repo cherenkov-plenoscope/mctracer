@@ -170,3 +170,21 @@ std::ostream& operator<<(std::ostream& os, const Vector3D& vec){
     os << vec.get_print();
     return os;
 }
+//------------------------------------------------------------------------------
+uint Vector3D::get_octant()const {
+	// encodes the octant sectors where the vector is pointing to
+	// x y z sector
+	// - - -   0
+	// - - +   1
+	// - + -   2
+	// - + +   3
+	// + - -   4
+	// + - +   5
+	// + + -   6
+	// + + +   7
+	const bool sx = X >= 0.0;
+	const bool sy = Y >= 0.0;
+	const bool sz = Z >= 0.0;
+	return 4*sx + 2*sy + 1*sz;
+}
+//------------------------------------------------------------------------------

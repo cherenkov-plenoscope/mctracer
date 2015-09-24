@@ -32,6 +32,7 @@ public:
 	double x()const;
 	double y()const;
 	double z()const;
+	uint get_octant()const;
 	double norm()const;
 	void normalize();
 	Vector3D cross(const Vector3D v)const;

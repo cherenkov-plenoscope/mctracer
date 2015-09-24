@@ -308,3 +308,59 @@ TEST_F(Vector3DTest, angle_in_between) {
 
   EXPECT_NEAR(Deg2Rad(45.0) , foo.get_angle_in_between_in_rad(bar), 1e-5);
 }
+//----------------------------------------------------------------------
+TEST_F(Vector3DTest, octant_encoding) {
+ 
+  // x y z sector
+  // - - -   0
+  // - - +   1
+  // - + -   2
+  // - + +   3
+  // + - -   4
+  // + - +   5
+  // + + -   6
+  // + + +   7
+  Vector3D a;
+
+  double p = +1.0;
+  double n = -1.0;
+
+  a.set( n, n, n);
+  EXPECT_EQ(0, a.get_octant());
+
+  a.set( n, n, p);
+  EXPECT_EQ(1, a.get_octant());
+
+  a.set( n, p, n);
+  EXPECT_EQ(2, a.get_octant());
+
+  a.set( n, p, p);
+  EXPECT_EQ(3, a.get_octant());
+
+  a.set( p, n, n);
+  EXPECT_EQ(4, a.get_octant());
+
+  a.set( p, n, p);
+  EXPECT_EQ(5, a.get_octant());
+
+  a.set( p, p, n);
+  EXPECT_EQ(6, a.get_octant());
+
+  a.set( p, p, p);
+  EXPECT_EQ(7, a.get_octant());
+
+  a.set( 0.0, 0.0, 0.0);
+  EXPECT_EQ(7, a.get_octant());
+  a.set( 0.0, 0.0, p);
+  EXPECT_EQ(7, a.get_octant());
+  a.set( 0.0, p, 0.0);
+  EXPECT_EQ(7, a.get_octant());
+  a.set( p, 0.0, 0.0);
+  EXPECT_EQ(7, a.get_octant());
+  a.set( 0.0, p, p);
+  EXPECT_EQ(7, a.get_octant()); 
+  a.set( p, p, 0.0);
+  EXPECT_EQ(7, a.get_octant());
+  a.set( p, 0.0, p);
+  EXPECT_EQ(7, a.get_octant());
+}
