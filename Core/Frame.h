@@ -5,7 +5,6 @@
 
 //=================================
 // forward declared dependencies
-class TelescopeArrayControl;
 class Ray;
 class Intersection;
 //=================================
@@ -22,7 +21,6 @@ class Intersection;
 #include "Tools/Tools.h"
 
 class Frame {
-    friend class TelescopeArrayControl;
     // The Frame is the fundamental geometry in this framework.
     // It defines a three dimensinal space where rays can be propagated in.
     //
@@ -100,8 +98,9 @@ protected:
     // post initialization
     void post_init_root_of_world();
     void update_enclosing_sphere_for_all_children();
+public:
     void post_init_me_and_all_my_children();
-
+protected:
     // initialize
     void reset_all_connections_to_children_and_mother();
     void set_mother(Frame *const new_mother);
@@ -113,7 +112,9 @@ protected:
     uint get_sector(const Vector3D pos)const;
     Vector3D get_mean_pos_in_mother(std::vector<Frame*> frames)const;
 public:
-
+    void move_to_Az_Zd_relative_to_mother(const double Az_Rad, const double Zd_Rad);
+    double get_Az_relative_to_mother()const;
+    double get_Zd_relative_to_mother()const;
     void cluster_using_helper_frames();
     virtual const Intersection* calculate_intersection_with(const Ray* ray)const;
     const Intersection* empty_intersection()const;

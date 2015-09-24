@@ -456,3 +456,27 @@ const HomoTrafo3D* Frame::frame2world()const {
     return &T_frame2world;
 }
 //------------------------------------------------------------------------------
+double Frame::get_Az_relative_to_mother()const {
+	return Deg2Rad(180.0) - rot_in_mother.get_rot_z();
+}
+//------------------------------------------------------------------------------
+double Frame::get_Zd_relative_to_mother()const {
+
+	Vector3D optical_axis_in_telescope_frame = Vector3D::unit_z;
+
+	Vector3D optical_axis_in_world = T_frame2world.
+		get_transformed_orientation(optical_axis_in_telescope_frame);
+
+	Vector3D Zaxis_in_world_frame = Vector3D::unit_z;
+
+	return Zaxis_in_world_frame.get_angle_in_between_in_rad(
+		optical_axis_in_world
+	);
+}
+//------------------------------------------------------------------------------
+void Frame::move_to_Az_Zd_relative_to_mother(const double Az_Rad, const double Zd_Rad) {
+
+	rot_in_mother.set(0.0, Zd_Rad, Deg2Rad(180.0) - Az_Rad);
+	T_frame2mother.set_transformation(rot_in_mother, pos_in_mother);
+	post_init_me_and_all_my_children();	
+}
