@@ -2,6 +2,7 @@
 	<set_frame name="ground" pos="[0,0,-2]" rot="[0,0,0]"/>		
 	<set_surface refl="0.0" colour="[0,50,0]"/>	
 	<set_disc radius="100"/>
+	<set_sensitive id="0"/>
 </disc>
 
 <frame>
@@ -108,7 +109,7 @@
 	
 	<reflector>
 		<set_frame name="reflector" pos="[0,0,0]" rot="[0,0,0]"/>
-		<set_reflector focal_length="4.889" facet_spacing="0.62" max_outer_diameter="3.5" min_inner_diameter="0.5" alpha="0.5"/>
+		<set_reflector focal_length="4.889" facet_spacing="0.62" max_outer_diameter="4.5" min_inner_diameter="0.5" alpha="0.5"/>
 	</reflector>
 	
 	<frame>
@@ -130,7 +131,7 @@
 			<set_frame name="GAPD_sensor_plane" pos="[0,0,0.0]" rot="[0,0,0]"/>		
 			<set_surface refl="0.0" colour="[0,255,128]"/>	
 			<set_disc radius="0.195"/>
-			<set_sensitive id="1337"/>
+			<set_sensitive id="1"/>
 		</disc>
 		
 		<cylinder>

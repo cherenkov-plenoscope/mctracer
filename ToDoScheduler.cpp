@@ -99,8 +99,17 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 			photons->propagate_in_world_with_settings(world, &settings);
 
 			// detect photons in sensors
-			for(PhotonSensor sensor: sensors)
-				std::cout << photons->get_csv_print_for_propagations_ending_in(sensor.get_frame());
+			uint s=0;
+			for(PhotonSensor sensor: sensors) {
+				std::stringstream outname;
+				outname << "e" << event_counter << "s" << s << ".txt";
+				s++;
+				FileTools::write_text_to_file(
+					photons->get_csv_print_for_propagations_ending_in(sensor.get_frame()),
+					outname.str()
+				);
+				std::cout << outname.str() << "\n";
+			}
 
 			// wipe out the cherenkov photons which have just been propagated
 			delete photons;

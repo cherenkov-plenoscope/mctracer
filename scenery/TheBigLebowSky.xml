@@ -2,6 +2,7 @@
 	<set_frame name="ground" pos="[0,0,-25]" rot="[0,0,0]"/>		
 	<set_surface refl="0.0" colour="[0,50,0]"/>	
 	<set_disc radius="1000"/>
+	<set_sensitive id="0"/>
 </disc>
 
 <frame>
@@ -130,7 +131,7 @@
 			<set_frame name="GAPD_sensor_plane" pos="[0,0,0.0]" rot="[0,0,0]"/>		
 			<set_surface refl="0.0" colour="[0,255,128]"/>	
 			<set_disc radius="3.975"/>
-			<set_sensitive id="0"/>
+			<set_sensitive id="1"/>
 		</disc>
 		
 		<cylinder>
