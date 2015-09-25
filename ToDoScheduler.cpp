@@ -162,7 +162,7 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 				Frame SWorld = *world;
 				SWorld.set_mother_and_child(photons->get_next_trajectoy());
 				SWorld.init_tree_based_on_mother_child_relations();
-				std::cout << SWorld.get_tree_print();
+				//std::cout << SWorld.get_tree_print();
 				free_orb.continue_with_new_scenery_and_settings(&SWorld, &settings);
 			}
 			delete photons;
