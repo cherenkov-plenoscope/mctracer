@@ -33,6 +33,7 @@
 #include "ProgramOptionsTest.cpp"
 #include "Func1DTest.cpp"
 #include "Func1DSpeedTest.cpp"
+#include "PhotonBunchTest.cpp"
 
 int main(int argc, char **argv) {
 	UserInteraction::print_welcome_screen();
