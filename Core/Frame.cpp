@@ -42,6 +42,17 @@ void Frame::post_init_transformations() {
 	pos_in_world = T_frame2world.get_translation();
 }
 //------------------------------------------------------------------------------
+void Frame::post_init_transformations_only_based_on_mother() {
+
+	T_mother2frame = T_frame2mother.inverse();
+
+	T_frame2world = calculate_frame2world_only_based_on_mother();
+	
+	T_world2frame = T_frame2world.inverse();
+
+	pos_in_world = T_frame2world.get_translation();
+}
+//------------------------------------------------------------------------------
 HomoTrafo3D Frame::calculate_frame2world()const {
 	// All parent frames of this frame do already know their frame2mother 
 	// relation.
@@ -65,6 +76,14 @@ HomoTrafo3D Frame::calculate_frame2world()const {
 	}
 
 	return Trafo_on_our_way_towards_the_root;
+}
+//------------------------------------------------------------------------------
+HomoTrafo3D Frame::calculate_frame2world_only_based_on_mother()const {
+
+	if(has_mother())
+		return mother->T_frame2world*T_frame2mother;
+	else
+		return T_frame2mother;
 }
 //------------------------------------------------------------------------------
 void Frame::set_name_pos_rot(
@@ -240,6 +259,14 @@ void Frame::post_init_me_and_all_my_children() {
 	// and all children
 	for(Frame* child : children)
 		child->post_init_me_and_all_my_children();
+}
+//------------------------------------------------------------------------------
+void Frame::post_init_me_and_all_my_children_only_based_on_mother() {
+	post_init_transformations_only_based_on_mother();
+
+	// and all children
+	for(Frame* child : children)
+		child->post_init_me_and_all_my_children_only_based_on_mother();
 }
 //------------------------------------------------------------------------------
 void Frame::update_enclosing_sphere_for_all_children() {
@@ -469,6 +496,13 @@ double Frame::get_Zd_relative_to_mother()const {
 }
 //------------------------------------------------------------------------------
 void Frame::move_to_Az_Zd_relative_to_mother(const double Az_Rad, const double Zd_Rad) {
+
+	rot_in_mother.set(0.0, Zd_Rad, Deg2Rad(180.0) - Az_Rad);
+	T_frame2mother.set_transformation(rot_in_mother, pos_in_mother);
+	post_init_me_and_all_my_children_only_based_on_mother();	
+}
+//------------------------------------------------------------------------------
+void Frame::move_to_Az_Zd_relative_to_mother_using_root(const double Az_Rad, const double Zd_Rad) {
 
 	rot_in_mother.set(0.0, Zd_Rad, Deg2Rad(180.0) - Az_Rad);
 	T_frame2mother.set_transformation(rot_in_mother, pos_in_mother);

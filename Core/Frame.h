@@ -53,7 +53,7 @@ private:
 
     static const char delimiter_for_frame_path = '/';
 public:
-//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+//------------------------------------------------------------------------------
     static Frame* void_frame;
 
     Frame(){};
@@ -95,27 +95,31 @@ public:
         std::vector<const Frame*> *candidate_frames
     )const;
 protected:
-
     // post initialization
     void post_init_root_of_world();
-    void update_enclosing_sphere_for_all_children();
-public:
+    // post initialization based on root
     void post_init_me_and_all_my_children();
-protected:
+    void post_init_transformations();
+    HomoTrafo3D calculate_frame2world()const;
+    // post initialization based on mother only
+    void post_init_me_and_all_my_children_only_based_on_mother();
+    void post_init_transformations_only_based_on_mother();
+    HomoTrafo3D calculate_frame2world_only_based_on_mother()const;
     // initialize
     void reset_all_connections_to_children_and_mother();
     void set_mother(Frame *const new_mother);
     void add_child(Frame * const new_child);
-    void post_init_transformations();
-    HomoTrafo3D calculate_frame2world()const;
     void update_sphere_enclosing_all_children(Frame *new_child);
+    void update_enclosing_sphere_for_all_children();
     void assert_name_is_valid(const std::string name_to_check)const;
     Vector3D get_mean_pos_in_mother(std::vector<Frame*> frames)const;
+    public: void cluster_using_helper_frames();
 public:
+    // moving/rotating the frame after construction
     void move_to_Az_Zd_relative_to_mother(const double Az_Rad, const double Zd_Rad);
+    void move_to_Az_Zd_relative_to_mother_using_root(const double Az_Rad, const double Zd_Rad);
     double get_Az_relative_to_mother()const;
     double get_Zd_relative_to_mother()const;
-    void cluster_using_helper_frames();
     virtual const Intersection* calculate_intersection_with(const Ray* ray)const;
     const Intersection* empty_intersection()const;
 };

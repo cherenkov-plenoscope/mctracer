@@ -1,0 +1,71 @@
+#include <iostream> 
+#include <string>
+#include <sstream>
+#include <math.h>
+#include "SegmetedReflectorGenerator.h"
+#include "FreeOrbitCamera.h"
+
+#include "gtest/gtest.h"
+
+// The fixture for testing class Foo.
+class PostInitFrameSpeed : public ::testing::Test {
+protected:
+    Frame world;
+    Frame* reflector;
+    TracerSettings settings;
+    double Zd_Rad = 45.0;
+    double Az_Rad = 75.0;
+    Rotation3D new_rot;
+
+    PostInitFrameSpeed() {
+
+        new_rot.set(0.0, Zd_Rad, Deg2Rad(180.0) - Az_Rad);
+
+        world.set_name_pos_rot("world", Vector3D::null, Rotation3D::null);
+
+        SegmetedReflectorGenerator gen;
+        gen.set_hybrid_geometry(0.0);
+        gen.set_focal_length(1e6);
+        gen.set_facet_spacing(0.0095);
+        gen.set_max_outer_diameter(0.1);
+        gen.set_min_inner_diameter(0.001);
+        reflector = gen.get_reflector();
+        world.set_mother_and_child(reflector);
+        world.init_tree_based_on_mother_child_relations();
+    }
+
+    virtual ~PostInitFrameSpeed() {
+      // You can do clean-up work that doesn't throw exceptions here.
+    }
+
+    // If the constructor and destructor are not enough for setting up
+    // and cleaning up each test, you can define the following methods:
+
+    virtual void SetUp() {
+        // Code here will be called immediately after the constructor (right
+        // before each test).
+    }
+
+    virtual void TearDown() {
+        // Code here will be called immediately after each test (right
+        // before the destructor).
+    }
+
+    // Objects declared here can be used by all tests in the test case for Foo.
+};
+//------------------------------------------------------------------------------
+TEST_F(PostInitFrameSpeed, post_init_based_on_mother) {
+
+    for(int i=0; i<1e3; i++) {
+        Zd_Rad = double(i)/1.0e6;
+        reflector->move_to_Az_Zd_relative_to_mother(Az_Rad, Zd_Rad);
+    }
+}
+//------------------------------------------------------------------------------
+TEST_F(PostInitFrameSpeed, post_init_based_on_root) {
+
+    for(int i=0; i<1e3; i++) {
+        Zd_Rad = double(i)/1.0e6;
+        reflector->move_to_Az_Zd_relative_to_mother_using_root(Az_Rad, Zd_Rad);
+    }
+}
