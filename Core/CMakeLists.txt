@@ -13,7 +13,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/TracerSettings.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Photon.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PhotonBunch.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ListOfPropagations.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PropagationEnvironment.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ReflectionProperties.cpp

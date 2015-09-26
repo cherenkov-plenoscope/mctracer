@@ -16,27 +16,57 @@
 //=================================
 class PhotonSensor {
 private:
+
 	uint ident;
 	Frame* sensor_frame;
 	std::vector<double> arrival_times_since_emission;
 	std::vector<double> x_intersect;
 	std::vector<double> y_intersect;
-
 public:
-	PhotonSensor(uint _ident, Frame* _sensor_frame) {
-		ident = _ident;
-		sensor_frame = _sensor_frame;
-	};
-	uint get_id() {return ident;};
-	virtual void add(const Photon* photon) {
-		if(photon->get_final_intersection()->get_intersecting_object() == sensor_frame) {
-			arrival_times_since_emission.push_back(photon->get_time_of_flight());
-			x_intersect.push_back(photon->get_final_intersection()->
-				get_intersection_vector_in_object_system().x());
-			y_intersect.push_back(photon->get_final_intersection()->
-				get_intersection_vector_in_object_system().y());
+
+	PhotonSensor(uint _ident, Frame* _sensor_frame);
+	uint get_id();
+	virtual void assign_photon_to_this_sensor(const Photon* photon);
+	const Frame* get_frame()const;
+	std::vector<std::vector<double>> get_arrival_table_x_y_t()const;
+	void reset();
+
+    struct SensorSensorPointerCompare {
+		bool operator()(const PhotonSensor* l, const PhotonSensor* r) {
+			return l->sensor_frame < r->sensor_frame;
 		}
-	}
-	Frame* get_frame()const {return sensor_frame;}
+    };
+
+    struct FrameSensorPointerCompare {
+		bool operator()(const Frame* f, const PhotonSensor* s) {
+			return f < s->sensor_frame;
+		}
+    };
 };
+
+namespace PhotonSensors {
+
+	void reset_all_sesnors(
+		std::vector<PhotonSensor*> *sensors
+	);
+	
+	void assign_photons_to_sensors(
+		const std::vector<Photon*> *photon_bunch, 
+		std::vector<PhotonSensor*> *sensors
+	);
+
+	void assign_photon_to_sensors(
+		const Photon* photon,
+		std::vector<PhotonSensor*> *sensors
+	);
+
+	void sort_photon_sensors_based_on_frames(
+		std::vector<PhotonSensor*> *sensors
+	);
+
+	std::vector<PhotonSensor*>::const_iterator get_upper_bound_for_final_frame_in_sensors(
+		const Frame* final_frame,
+		const std::vector<PhotonSensor*>* sensors
+	);
+}
 #endif // __PHOTONSENSOR_H_INCLUDED__ 

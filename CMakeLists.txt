@@ -54,6 +54,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/ToDoScheduler.cpp		
 
 	${CMAKE_CURRENT_SOURCE_DIR}/TelescopeArrayControl.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/PhotonSensor.cpp
 
 	${CMAKE_CURRENT_SOURCE_DIR}/WorldFactory.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Function1D.cpp
@@ -126,7 +127,7 @@ SET(CMAKE_SWIG_FLAGS "")
 SET_SOURCE_FILES_PROPERTIES("py_mct/mctracer.i" PROPERTIES CPLUSPLUS ON)
 SET_SOURCE_FILES_PROPERTIES("py_mct/mctracer.i" PROPERTIES SWIG_FLAGS "")
 
-SWIG_ADD_MODULE(mctracer python "py_mct/mctracer.i")
+#SWIG_ADD_MODULE(mctracer python "py_mct/mctracer.i")
 
-SWIG_LINK_LIBRARIES(mctracer ${PYTHON_LIBRARIES})
-SWIG_LINK_LIBRARIES(mctracer mct)
+#SWIG_LINK_LIBRARIES(mctracer ${PYTHON_LIBRARIES})
+#SWIG_LINK_LIBRARIES(mctracer mct)

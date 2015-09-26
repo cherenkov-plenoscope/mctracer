@@ -9,6 +9,7 @@ WorldFactory::WorldFactory(){
 	);
 
 	telescopes = new TelescopeArrayControl();
+	__sensors = new std::vector<PhotonSensor*>;
 } 
 //------------------------------------------------------------------------------
 void WorldFactory::load(std::string path){
@@ -93,8 +94,8 @@ void WorldFactory::add_to_sensors_if_sensitive(const pugi::xml_node node, Frame*
 
 		assert_attribute_exists(sensi, "id");
 		uint id = std::atoi(node.attribute("id").value());
-		PhotonSensor sens(id, frame);
-		__sensors.push_back(sens);
+		PhotonSensor* sens = new PhotonSensor(id, frame);
+		__sensors->push_back(sens);
 	}
 }
 //------------------------------------------------------------------------------
@@ -559,7 +560,8 @@ Frame* WorldFactory::world(){
 	return root_of_World;
 }
 //------------------------------------------------------------------------------
-std::vector<PhotonSensor> WorldFactory::sensors_in_world()const {
+std::vector<PhotonSensor*>* WorldFactory::sensors_in_world()const {
+	PhotonSensors::sort_photon_sensors_based_on_frames(__sensors);
 	return __sensors;
 }
 //------------------------------------------------------------------------------
