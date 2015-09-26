@@ -7,7 +7,6 @@
 #include "MmcsCorsikaFileIO/MmcsCorsikaSubBlockGetter.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaPhotonData.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaTools.h"
-#include "Core/ListOfPropagations.h"
 
 using namespace std;
 
@@ -161,8 +160,6 @@ TEST_F(MmcsCorsikaEventGetterTest, FullEventGetter) {
 		while(event_getter.has_still_events_left()) {
 			
 			MmcsCorsikaEvent event = event_getter.get_next_event();	
-			//ListOfPropagations *photons = event.transform_to_mcTracer_photons();
-			//photons->disp();
 		}
 
 	}catch(TracerException &e ){

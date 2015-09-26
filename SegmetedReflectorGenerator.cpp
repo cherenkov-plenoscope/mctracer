@@ -168,7 +168,7 @@ void SegmetedReflectorGenerator::init_focal_point() {
 void SegmetedReflectorGenerator::optimize_reflector_z_pos() {
 
 	uint iteration_conter = 0;
-	double deviation;
+	double deviation = 0.0;
 
 	do{
 		abort_if_too_many_iterations(++iteration_conter);

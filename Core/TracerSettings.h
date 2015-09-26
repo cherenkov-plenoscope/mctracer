@@ -46,14 +46,7 @@ private:
 		//	The results can not be reproduced, althugh using the same 
 		// 	seed for the random number generator. 
 
-	//--------------------------------------------------------------------------
-	// Randon number generator
-
-	unsigned seed_for_random_number_generator_mt19937;
-	
-		// mt19937 is a standard mersenne_twister_engine
-		//std::mt19937 pRNG_mt19937;
-
+	unsigned pseudo_random_number_seed;
 public:
 	TracerSettings();
 	bool StoreOnlyLastIntersection()const;
@@ -68,6 +61,7 @@ public:
 		const uint reflection_counter
 	)const;
 	void store_only_final_intersection();
+	unsigned get_pseudo_random_number_seed()const;
 };
 
 #endif // __TracerSettings_H_INCLUDED__ 

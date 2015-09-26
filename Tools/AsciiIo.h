@@ -26,7 +26,7 @@ namespace AsciiIo {
 	);
 
 	void write_table_to_file(
-		std::vector<std::vector<double>> &table,
+		std::vector<std::vector<double>> table,
 		const std::string &path
 	);
 

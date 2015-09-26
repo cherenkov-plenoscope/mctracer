@@ -6,6 +6,8 @@ TracerSettings::TracerSettings() {
 	flag_store_only_final_intersection = false;
 
 	number_of_max_reflections = 5;
+
+	pseudo_random_number_seed = 0;
 }
 //------------------------------------------------------------------------------
 void TracerSettings::set_max_number_of_reflections(
@@ -53,4 +55,8 @@ void TracerSettings::SetMultiThread( bool flag ) { multithread = flag; }
 //------------------------------------------------------------------------------
 void TracerSettings::store_only_final_intersection() {
 	flag_store_only_final_intersection = true;
+}
+//------------------------------------------------------------------------------
+unsigned TracerSettings::get_pseudo_random_number_seed()const {
+	return pseudo_random_number_seed;
 }
