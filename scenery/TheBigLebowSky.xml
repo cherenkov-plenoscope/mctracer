@@ -113,7 +113,7 @@
 	</reflector>
 	
 	<frame>
-		<set_frame name="LebowSky_camera" pos="[0,0,70.0]" rot="[0,0,0]"/>		
+		<set_frame name="LebowSky_camera" pos="[0,0,70.493]" rot="[0,0,0]"/>		
 		
 		<disc>
 			<set_frame name="camera_housing_lower_end_cap" pos="[0,0,0.01]" rot="[0,0,0]"/>		
@@ -133,7 +133,7 @@
 			<set_disc radius="3.975"/>
 			<set_sensitive id="1"/>
 		</disc>
-		
+
 		<cylinder>
 			<set_frame name="camera_housing_cylinder" pos="[0,0,4.3]" rot="[0,0,0]"/>
 			<set_surface refl="0.0" colour="[230,230,215]"/>

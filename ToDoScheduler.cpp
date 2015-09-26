@@ -1,4 +1,6 @@
 #include "ToDoScheduler.h"
+#include "PhotonBunch.h"
+#include "ProgramOptions.h"
 //------------------------------------------------------------------------------
 ToDoScheduler::ToDoScheduler(int argc, char** argv) {
 
@@ -13,6 +15,8 @@ void ToDoScheduler::execute() {
 		propagate_photons_through_geometry();
 	else if (comand_line_parser.exist(investigation_key))
 		investigate_single_photon_propagation_in_geometry();
+	else if (comand_line_parser.exist(pointsource_key))
+		point_spread_investigation_in_geometry();
 	else 
 		std::cout << "Nothing to do, quit.\n --help for options" << std::endl;
 }
@@ -28,10 +32,18 @@ void ToDoScheduler::define() {
 	);
 
 	comand_line_parser.add<std::string>(
-		"conf", 'c' ,"configuration file" , false, ""
+		config_key, 'c' ,"configuration file" , false, ""
+	);
+
+	comand_line_parser.add<std::string>(
+		output_key, 'o', "output file", false, ""
 	);
 
   	comand_line_parser.add(
+  		pointsource_key, '\0', "point source investigation"
+  	);	
+
+    comand_line_parser.add(
   		render_key, '\0', "render geometry"
   	);	
 
@@ -54,8 +66,75 @@ void ToDoScheduler::render_geometry()const {
 	FreeOrbitCamera free(geometry, &settings);
 }
 //------------------------------------------------------------------------------
-void ToDoScheduler::propagate_photons_through_geometry()const {
+void ToDoScheduler::point_spread_investigation_in_geometry()const {
 
+	// Bokeh settings
+	KeyValueMap bokeh_config(get_config_file_name());
+
+	// propagation settings
+	TracerSettings settings;	
+	settings.SetMultiThread(true);
+	settings.SetStoreOnlyLastIntersection(true);
+
+	// scenery
+	WorldFactory fab;
+	fab.load(get_geometry_file());
+	Frame *world = fab.world();
+
+	// sensors in scenery
+	std::vector<PhotonSensor*>* sensors = fab.sensors_in_world();
+
+	// photon production
+	std::vector<Photon*>* photon_bunch = 
+		PhotonBunch::Source::point_like_towards_z_opening_angle_num_photons(
+			Deg2Rad(bokeh_config.get_value_for_key_as_double("opening_angle_in_deg")),
+			bokeh_config.get_value_for_key_as_int("number_of_photons")
+		);
+
+	// move and reoirentate photons
+	const Rotation3D source_rot(
+		Deg2Rad(bokeh_config.get_value_for_key_as_double("source_rot_x_in_deg")),
+		Deg2Rad(bokeh_config.get_value_for_key_as_double("source_rot_y_in_deg")),
+		Deg2Rad(bokeh_config.get_value_for_key_as_double("source_rot_z_in_deg"))
+	);
+
+	const Vector3D source_pos(
+		bokeh_config.get_value_for_key_as_double("source_pos_x_in_m"),
+		bokeh_config.get_value_for_key_as_double("source_pos_y_in_m"),
+		bokeh_config.get_value_for_key_as_double("source_pos_z_in_m")
+	);
+
+	HomoTrafo3D Trafo;
+	Trafo.set_transformation(source_rot, source_pos);
+
+	PhotonBunch::transform_all_photons(Trafo, photon_bunch);
+			
+	// photon propagation
+	PhotonBunch::propagate_photons_in_world_with_settings(
+		photon_bunch, world, &settings
+	);
+
+	// detect photons in sensors
+	PhotonSensors::reset_all_sesnors(sensors);
+	PhotonSensors::assign_photons_to_sensors(photon_bunch, sensors);
+
+	// write each sensors to file
+	uint sensor_conuter = 0;
+	for(PhotonSensor* sensor: *sensors) {
+		
+		std::stringstream outname;
+		outname << get_output_file_name();
+		outname << "s" << sensor_conuter << ".txt";
+		sensor_conuter++;
+
+		AsciiIo::write_table_to_file(
+			sensor->get_arrival_table_x_y_t(),
+			outname.str()
+		);
+	}
+}
+//------------------------------------------------------------------------------
+void ToDoScheduler::propagate_photons_through_geometry()const {
 
 	// settings
 	TracerSettings settings;	
@@ -71,11 +150,10 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 	TelescopeArrayControl* array_ctrl = fab.get_telescope_array_control();
 
 	// init sensors in scenery
-	std::vector<PhotonSensor> sensors = fab.sensors_in_world();
-	std::cout << sensors.size();
+	std::vector<PhotonSensor*>* sensors = fab.sensors_in_world();
 
 	// load photons
-	MmcsCorsikaFullEventGetter event_getter(get_photon_file());
+	MmcsCorsikaFullEventGetter event_getter(get_photon_file_name());
 
 	// propagate each event
 	uint event_counter = 0;
@@ -93,26 +171,35 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 			array_ctrl->move_all_to_Az_Zd(event.get_Az(), event.get_Zd());
 
 			// get the cherenkov photons
-			ListOfPropagations *photons = event.use_once_more_and_get_photons();
-			
+			std::vector<Photon*> *photons = 
+				event.use_once_more_and_get_photon_bunch();
+
 			// propagate the cherenkov photons in the world
-			photons->propagate_in_world_with_settings(world, &settings);
+			PhotonBunch::propagate_photons_in_world_with_settings(
+				photons, world, &settings
+			);
 
 			// detect photons in sensors
-			uint s=0;
-			for(PhotonSensor sensor: sensors) {
+			PhotonSensors::reset_all_sesnors(sensors);
+			PhotonSensors::assign_photons_to_sensors(photons, sensors);
+			
+			uint sensor_conuter = 0;
+			for(PhotonSensor* sensor: *sensors) {
+				
 				std::stringstream outname;
-				outname << "e" << event_counter << "s" << s << ".txt";
-				s++;
-				FileTools::write_text_to_file(
-					photons->get_csv_print_for_propagations_ending_in(sensor.get_frame()),
+				outname << get_output_file_name();
+				outname << "e" << event_counter << "s" << sensor_conuter << ".txt";
+				sensor_conuter++;
+
+				AsciiIo::write_table_to_file(
+					sensor->get_arrival_table_x_y_t(),
 					outname.str()
 				);
-				std::cout << outname.str() << "\n";
 			}
 
 			// wipe out the cherenkov photons which have just been propagated
-			delete photons;
+			PhotonBunch::delete_photons_and_history(photons);
+			std::cout << event_counter << "\n";
 		}
 	}
 }
@@ -132,7 +219,7 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 	std::cout << array_ctrl->get_print();
 
 	// load the photons
-	MmcsCorsikaFullEventGetter event_getter(get_photon_file());
+	MmcsCorsikaFullEventGetter event_getter(get_photon_file_name());
 
 	// start interactive orbit, first without any photon trajectory
 	FreeOrbitCamera free_orb(world, &settings);
@@ -150,22 +237,31 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 			array_ctrl->move_all_to_Az_Zd(event.get_Az(), event.get_Zd());
 			std::cout << array_ctrl->get_print();
 
-			ListOfPropagations *photons = event.use_once_more_and_get_photons();
-			photons->propagate_in_world_with_settings(world, &settings);
+			// get the cherenkov photons
+			std::vector<Photon*> *photons = 
+				event.use_once_more_and_get_photon_bunch();
+
+			// propagate the cherenkov photons in the world
+			PhotonBunch::propagate_photons_in_world_with_settings(
+				photons, world, &settings
+			);
 			std::cout << "event_counter: " << event_counter << "\n";
 			
 			uint photon_counter = 0;
 	
-			while(photons->has_still_trajectoies_left() && photon_counter < 25) {
+			PhotonBunch::Trajectories trayect_fab(photons);
+
+			while(trayect_fab.has_still_trajectories_left() && photon_counter < 25) {
 
 				photon_counter++;
 				Frame SWorld = *world;
-				SWorld.set_mother_and_child(photons->get_next_trajectoy());
+				SWorld.set_mother_and_child(trayect_fab.get_next_trajectoy());
 				SWorld.init_tree_based_on_mother_child_relations();
 				//std::cout << SWorld.get_tree_print();
 				free_orb.continue_with_new_scenery_and_settings(&SWorld, &settings);
 			}
-			delete photons;
+			// wipe out the cherenkov photons which have just been propagated
+			PhotonBunch::delete_photons_and_history(photons);
 		}
 	}
 }
@@ -174,6 +270,14 @@ const std::string ToDoScheduler::get_geometry_file()const {
 	return comand_line_parser.get<std::string>(geometry_key);
 }
 //------------------------------------------------------------------------------
-const std::string ToDoScheduler::get_photon_file()const {
+const std::string ToDoScheduler::get_photon_file_name()const {
 	return comand_line_parser.get<std::string>(photons_key);
+}
+//------------------------------------------------------------------------------
+const std::string ToDoScheduler::get_output_file_name()const {
+	return comand_line_parser.get<std::string>(output_key);
+}
+//------------------------------------------------------------------------------
+const std::string ToDoScheduler::get_config_file_name()const {
+	return comand_line_parser.get<std::string>(config_key);
 }

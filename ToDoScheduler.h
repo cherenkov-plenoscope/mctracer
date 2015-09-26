@@ -28,10 +28,13 @@ class ToDoScheduler {
 	cmdline::parser comand_line_parser;	
 	
 	const std::string render_key = "render";
-	const std::string geometry_key = "geometry";
 	const std::string propagate_key = "propagate";
-	const std::string photons_key = "photons";
 	const std::string investigation_key = "investigate";
+	const std::string pointsource_key = "pointsource";
+	const std::string geometry_key = "geometry";
+	const std::string photons_key = "photons";
+	const std::string config_key = "config";
+	const std::string output_key = "output";
 public:
 
 	ToDoScheduler(int argc, char** argv);
@@ -42,7 +45,10 @@ private:
 	void render_geometry()const;
 	void propagate_photons_through_geometry()const; 
 	void investigate_single_photon_propagation_in_geometry()const;
+	void point_spread_investigation_in_geometry()const;
 	const std::string get_geometry_file()const;
-	const std::string get_photon_file()const;
+	const std::string get_photon_file_name()const;
+	const std::string get_output_file_name()const;
+	const std::string get_config_file_name()const;
 };
 #endif // __ToDoScheduler_H_INCLUDE__ 
