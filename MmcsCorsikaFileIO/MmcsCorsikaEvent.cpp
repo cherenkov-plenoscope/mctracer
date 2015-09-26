@@ -10,7 +10,7 @@ MmcsCorsikaEvent::MmcsCorsikaEvent(
 	this->event_end	= event_end;
 }
 //------------------------------------------------------------------------------
-ListOfPropagations* MmcsCorsikaEvent::use_once_more_and_get_photons() {
+std::vector<Photon*>* MmcsCorsikaEvent::use_once_more_and_get_photon_bunch() {
 // CORSIKA Coordinate system
 // The coordinates in CORSIKA are defined with respect to a Cartesian coordinate
 // system with the positive x-axis pointing to the magnetic north, the positive
@@ -23,20 +23,14 @@ ListOfPropagations* MmcsCorsikaEvent::use_once_more_and_get_photons() {
 // positive x-axis and the x-y-component of the particle momentum vector 
 // (i.e. with respect to north) proceeding counterclockwise.
 	
-
-	//std::cout << "reuse_counter " << reuse_counter << " max_uses" <<  event_header.x_coordinate_of_core_location_for_scattered_events_in_cm.size() << "\n";
-
-	std::stringstream name_of_event;
-	name_of_event << "MmcsEvent_reuse_" << reuse_counter+1;
-
-	ListOfPropagations *cherenkov_photons;
-	cherenkov_photons = new ListOfPropagations(name_of_event.str());
+	std::vector<Photon*> *photon_bunch = new std::vector<Photon*>;
+	photon_bunch->reserve(photon_data.number_of_photons());
 
 	for(uint i=0; i<photon_data.number_of_photons(); i++)
-		cherenkov_photons->push_back(get_mctracer_photons(i));
+		photon_bunch->push_back(get_mctracer_photons(i));
 
 	reuse_counter++;
-	return cherenkov_photons;
+	return photon_bunch;
 }
 //------------------------------------------------------------------------------
 bool MmcsCorsikaEvent::can_be_reused_again()const {

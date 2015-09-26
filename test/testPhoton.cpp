@@ -8,7 +8,7 @@
 #include "../Plane.h"
 #include "Cameras/FreeOrbitCamera.h"
 #include "Core/PseudoRandomNumberGenerator.h"
-#include "Core/ListOfPropagations.h"
+#include "Core/PhotonBunch.h"
 
 using namespace std;
 
@@ -227,7 +227,7 @@ TEST_F(PhotonTest, Reflections){
   
   PseudoRandomNumberGenerator dice;
 
-  ListOfPropagations LoP("my_test_propagation_list");
+  std::vector<Photon*>* photon_bunch = new std::vector<Photon*>;
 
   for(int i=1; i<=1e4; i++) {
     // wavelength form 1nm to 1000nm
@@ -236,16 +236,17 @@ TEST_F(PhotonTest, Reflections){
     Photon *P;
     P = new Photon(Support, direction, wavelength);
     P->set_id(i);
-    LoP.push_back(P);
+    photon_bunch->push_back(P);
   }
 
-  LoP.propagate_in_world_with_settings(&world, &setup);
+  PhotonBunch::propagate_photons_in_world_with_settings(
+    photon_bunch, &world, &setup
+  );
 
   EXPECT_NEAR(
     reflection_coefficient, 
-    double(LoP.get_number_of_propagations_absorbed_in_object(&absorber))/
-    double(LoP.get_number_of_propagations()),
+    double(PhotonBunch::get_number_of_photnons_absorbed_in_object(photon_bunch, &absorber))/
+    double(photon_bunch->size()),
     2e-2
   );
-  //std::cout << LoP.get_print();
 }

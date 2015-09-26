@@ -11,7 +11,6 @@
 #include "MmcsCorsikaSubBlock.h"
 #include "MmcsCorsikaEventHeader.h"
 #include "MmcsCorsikaPhotonData.h"
-#include "Core/ListOfPropagations.h"
 #include "Core/Photon.h"
 //=================================
 class MmcsCorsikaEvent {
@@ -28,7 +27,7 @@ public:
 		MmcsCorsikaSubBlock event_end
 	);
 
-	ListOfPropagations* use_once_more_and_get_photons();
+	std::vector<Photon*>* use_once_more_and_get_photon_bunch();
 	bool can_be_reused_again()const;
 
 	std::string get_print()const;
