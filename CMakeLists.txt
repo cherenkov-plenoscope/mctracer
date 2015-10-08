@@ -2,7 +2,7 @@
 # Author Sebastian Mueller
 #-------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 2.8)
-set (CMAKE_CXX_FLAGS "-std=gnu++11 -Wall -pedantic -O2 -Idir")
+set (CMAKE_CXX_FLAGS "-std=gnu++11 -Wall -pedantic -O3 -Idir -g")
 #-------------------------------------------------------------------------------
 project(mctracer)
 #-------------------------------------------------------------------------------
@@ -75,6 +75,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/SegmetedReflectorGenerator.cpp
 	
 	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLens.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLensHexBound.cpp
 )
 add_subdirectory("${PROJECT_SOURCE_DIR}/Tools")
 add_subdirectory("${PROJECT_SOURCE_DIR}/XmlIO")

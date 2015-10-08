@@ -4,6 +4,7 @@
 
 #include "gtest/gtest.h"
 #include "BiConvexLens.h"
+#include "BiConvexLensHexBound.h"
 #include "Cameras/FreeOrbitCamera.h"
 
 class BiConvexLensTest : public ::testing::Test {
@@ -106,6 +107,7 @@ TEST_F(BiConvexLensTest, send_photon_frontal_into_lens) {
 
   uint total_propagations = 1e4; 
   uint number_of_photons_reaching_sensor_disc = 0;
+  
   for(uint i=0; i<total_propagations; i++) {
 
     Photon blue_photon(Vector3D(0.0, 0.0, 1.0), Vector3D(0.0, 0.0, -1.0), 433e-9);
