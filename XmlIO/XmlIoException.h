@@ -79,7 +79,7 @@ public:
 		msg << get_UnknownItem_print();
 		msg << get_message_print();
 		msg << get_XmlIo_print();
-		return msg.str().c_str();
+		return str2chararray(msg.str());
 	}
 };
 //------------------------------------------------------------------------------
@@ -109,7 +109,7 @@ public:
 		msg << get_MissingItem_print();
 		msg << get_message_print();
 		msg << get_XmlIo_print();
-		return msg.str().c_str();
+		return str2chararray(msg.str());
 	}
 };
 //------------------------------------------------------------------------------
@@ -140,7 +140,7 @@ public:
 		msg << get_MultipleUseage_print();
 		msg << get_message_print();
 		msg << get_XmlIo_print();
-		return msg.str().c_str();
+		return str2chararray(msg.str());
 	}
 };
 //------------------------------------------------------------------------------
@@ -170,7 +170,7 @@ public:
 		msg << get_BadAttribute_print();
 		msg << get_message_print();
 		msg << get_XmlIo_print();
-		return msg.str().c_str();		
+		return str2chararray(msg.str());		
 	}
 };
 //------------------------------------------------------------------------------

@@ -44,6 +44,9 @@ public:
 	void assert_attribute_exists(
 		const pugi::xml_node &node, const std::string attribute_name);
 
+	bool has_attribute(
+		const pugi::xml_node &node, const std::string attribute_name);
+
 	void assert_node_name(
 		const pugi::xml_node &node, const std::string node_name);
 };

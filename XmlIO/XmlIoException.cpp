@@ -55,7 +55,7 @@ const char * XmlIoException::what () const throw (){
 	msg << " ____xml_IO_Exception____________________________\n|\n";
 	msg << get_message_print();
 	msg << get_XmlIo_print();
-	return msg.str().c_str();
+	return str2chararray(msg.str());
 }
 //------------------------------------------------------------------------------
 // Pugi XML can not give us the line number and the column in a xml file 

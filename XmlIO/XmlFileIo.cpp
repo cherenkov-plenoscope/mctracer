@@ -84,8 +84,8 @@ void XmlFileIo::assert_child_exists(
 }	
 //------------------------------------------------------------------------------
 void XmlFileIo::assert_attribute_exists(
-		const pugi::xml_node &node, const std::string attribute_name){
-
+	const pugi::xml_node &node, const std::string attribute_name
+){
 	XmlNode = node;
 
 	if( node.attribute(attribute_name.c_str()) == nullptr ){
@@ -94,6 +94,12 @@ void XmlFileIo::assert_attribute_exists(
 		info << "'...";
 		throw MissingItem( info.str(), this, attribute_name);
 	}	
+}
+//------------------------------------------------------------------------------
+bool XmlFileIo::has_attribute(
+	const pugi::xml_node &node, const std::string attribute_name
+) {
+	return node.attribute(attribute_name.c_str()) != nullptr;
 }
 //------------------------------------------------------------------------------
 void XmlFileIo::assert_node_name(
