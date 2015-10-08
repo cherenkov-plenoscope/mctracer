@@ -29,6 +29,8 @@
 #include "TracerException.h"
 #include "PhotonSensor.h"
 #include "TelescopeArrayControl.h"
+#include "SphereCapWithHexagonalBound.h"
+#include "SphereCapWithCylinderBound.h"
 
 //------------------------------------------------------------------------------
 class WorldFactory : public XmlFileIo{
@@ -79,6 +81,11 @@ private:
 		const pugi::xml_node frame_node
 	);
 
+	Frame* produce_sphere_cap_hexagonal(
+		Frame* mother,
+		const pugi::xml_node node
+	);
+
 	Frame* produceSphere(
 		Frame* mother,
 		const pugi::xml_node node
@@ -111,6 +118,12 @@ private:
 		const pugi::xml_node frame_node
 	);
 
+	void extract_rotation_props(
+		const Vector3D &position, 
+		Rotation3D &rotation, 
+		const pugi::xml_node node
+	);	
+
 	const Color* extract_color(const pugi::xml_node node);
 
 	const ReflectionProperties* extract_reflection(const pugi::xml_node node);
@@ -141,6 +154,10 @@ private:
 		const Frame *mother,
 		const std::string name_of_additional_child
 	)const;
+
+	void extract_sphere_cap_hexagonal(
+		double &focal_length, double &outer_radius, const pugi::xml_node node
+	);
 
 	double extract_reflector(
 		const std::string key, const pugi::xml_node node

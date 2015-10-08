@@ -169,3 +169,14 @@ try{
     cout << error.what();
   }
 }
+//------------------------------------------------------------------------------
+TEST_F(WorldFactoryTest, first_rot_z_then_new_pointing_for_z) {
+  WorldFactory fab;
+  fab.load("./test_scenery/rotation_based_on_z_pointing.xml");
+  Frame *geometry = fab.world();
+
+  std::cout << geometry->get_tree_print();
+
+  TracerSettings settings;  
+  //FreeOrbitCamera free(geometry, &settings);
+}

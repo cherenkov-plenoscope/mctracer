@@ -125,6 +125,9 @@ Frame* mother,const pugi::xml_node node){
 	}else if(StringTools::is_equal(node.name(),"reflector")){
 		mother = produceReflector(mother,node);	
 
+	}else if(StringTools::is_equal(node.name(),"sphere_cap_hexagonal")){
+		mother = produce_sphere_cap_hexagonal(mother,node);	
+
 	}else if(StringTools::is_equal(node.name(),"include")){
 		include_file(mother,node);		
 		
@@ -176,6 +179,9 @@ void WorldFactory::go_on_with_children_of_node(
 			fabricate_frame(mother,sub_node); 
 		}else if(StringTools::is_equal(sub_node_name,"reflector")){
 
+			fabricate_frame(mother,sub_node);
+		}else if(StringTools::is_equal(sub_node_name,"sphere_cap_hexagonal")){
+			
 			fabricate_frame(mother,sub_node);
 		}else if(sub_node_name.find("set") == std::string::npos){
 
@@ -419,6 +425,52 @@ Frame* WorldFactory::produceTriangle(
 	return new_Triangle;
 }
 //------------------------------------------------------------------------------
+Frame* WorldFactory::produce_sphere_cap_hexagonal(
+	Frame* mother, const pugi::xml_node node
+) {
+	assert_child_exists(node, "set_frame");
+	assert_child_exists(node, "set_surface");
+	assert_child_exists(node, "set_sphere_cap_hexagonal");
+
+	std::string 			name;
+	Vector3D 				position;
+	Rotation3D 				rotation;
+	const Color*		color;
+	const ReflectionProperties*	refl_prop;
+
+	extract_Frame_props(name, position, rotation, node.child("set_frame"));
+	color = extract_color(node.child("set_surface"));
+	refl_prop = extract_reflection(node.child("set_surface"));
+
+	SphereCapWithHexagonalBound* cap = new SphereCapWithHexagonalBound;
+	double focal_length, outer_radius;
+	
+	extract_sphere_cap_hexagonal(
+		focal_length, outer_radius, node.child("set_sphere_cap_hexagonal")
+	);
+
+	cap->set_name_pos_rot(name,position,rotation);
+	cap->set_inner_color(color);
+	cap->set_outer_color(color);
+	cap->set_outer_reflection(refl_prop);
+	cap->set_inner_reflection(refl_prop);
+	cap->set_focal_length_and_outer_hex_radius(focal_length, outer_radius);
+	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
+
+	mother->set_mother_and_child(cap);
+	return cap;
+}
+//------------------------------------------------------------------------------
+void WorldFactory::extract_sphere_cap_hexagonal(
+	double &focal_length, double &outer_radius, const pugi::xml_node node
+) {
+	assert_attribute_exists(node, "focal_length");
+	assert_attribute_exists(node, "outer_radius");
+
+	focal_length = StrToDouble(node.attribute("focal_length").value());
+	outer_radius = StrToDouble(node.attribute("outer_radius").value());
+}
+//------------------------------------------------------------------------------
 const ReflectionProperties* WorldFactory::extract_reflection(
 	const pugi::xml_node node
 ) {
@@ -455,18 +507,40 @@ void WorldFactory::extract_Frame_props(
 	const pugi::xml_node node
 ){	
 	assert_attribute_exists(node, "name");
-	assert_attribute_exists(node, "pos");
-	assert_attribute_exists(node, "rot");	
-
 	name = node.attribute("name").value();
 
+	assert_attribute_exists(node, "pos");
 	double pX, pY, pZ;
 	strto3tuple(pX, pY, pZ, node.attribute("pos").value());
 	position.set(pX, pY, pZ);
 
-	double rX, rY, rZ;
-	strto3tuple(rX, rY, rZ, node.attribute("rot").value());
-	rotation.set(rX, rY, rZ);
+	extract_rotation_props(position, rotation, node);
+}
+//------------------------------------------------------------------------------
+void WorldFactory::extract_rotation_props(
+	const Vector3D &position, Rotation3D &rotation, const pugi::xml_node node
+){	
+	if(has_attribute(node, "z_reflects_to")) {
+
+		double fx, fy, fz;
+		strto3tuple(fx, fy, fz, node.attribute("z_reflects_to").value());
+		
+		Vector3D focal_point(fx, fy, fz);
+		Vector3D focal_point_to_pos = focal_point - position;
+		Vector3D rotation_axis = focal_point_to_pos.cross(Vector3D::unit_z);
+
+		double rot_angle = -0.5 * Vector3D::unit_z.get_angle_in_between_in_rad(
+			focal_point_to_pos
+		);
+
+		rotation.set(rotation_axis, rot_angle);	
+	}else{
+
+		assert_attribute_exists(node, "rot");	
+		double rX, rY, rZ;
+		strto3tuple(rX, rY, rZ, node.attribute("rot").value());
+		rotation.set(rX, rY, rZ);		
+	}	
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_Plane_props(
