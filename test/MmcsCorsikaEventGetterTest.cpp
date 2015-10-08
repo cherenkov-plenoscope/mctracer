@@ -186,3 +186,7 @@ TEST_F(MmcsCorsikaEventGetterTest, photon_data) {
 		std::cout << e.what();
 	}
 }
+//----------------------------------------------------------------------
+//TEST_F(MmcsCorsikaEventGetterTest, reader_speed) {
+// 2015 Oct 01 read 2.3GByte 10k events: 58s
+// 2015 Oct 01 read 2.3GByte 10k events and converting all photons to tracer photons: 120s
