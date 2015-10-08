@@ -17,7 +17,7 @@
 #include "Core/Frame.h"
 #include "Triangle.h"
 #include "Plane.h"
-#include "Sphere.h"
+#include "Geometry/Sphere.h"
 #include "Cylinder.h"
 #include "Disc.h"
 #include "SegmetedReflectorGenerator.h"

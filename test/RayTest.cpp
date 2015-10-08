@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 #include "Core/Ray.h"
-#include "Sphere.h"
+#include "Geometry/Sphere.h"
 
 using namespace std;
 

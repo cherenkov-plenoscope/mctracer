@@ -1,12 +1,6 @@
 #include "Intersection.h"
 //------------------------------------------------------------------------------
-const Intersection* Intersection::void_intersection = new Intersection(
-	//SurfaceEntity::void_object,
-	//Vector3D::null,
-	//Vector3D(0.0,0.0,1.0),
-	//0,
-	//Vector3D(0.0,0.0,-1.0)
-);
+const Intersection* Intersection::void_intersection = new Intersection();
 //------------------------------------------------------------------------------
 Intersection::Intersection() {
 	intersecting_object = SurfaceEntity::void_object;

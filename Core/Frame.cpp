@@ -356,7 +356,6 @@ const Intersection* Frame::calculate_intersection_with(
 	const Ray* ray
 )const {
 	return empty_intersection();
-	//return Intersection::void_intersection;
 }
 //------------------------------------------------------------------------------
 const Intersection* Frame::empty_intersection()const {

@@ -2,7 +2,7 @@
 # Author Sebastian Mueller
 #-------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 2.8)
-set (CMAKE_CXX_FLAGS "-std=gnu++11 -Wall -pedantic -O3 -Idir -g")
+set (CMAKE_CXX_FLAGS "-std=gnu++11 -Wall -pedantic -O3 -I -g")
 #-------------------------------------------------------------------------------
 project(mctracer)
 #-------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Triangle.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Plane.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Disc.cpp 
-	${CMAKE_CURRENT_SOURCE_DIR}/Sphere.cpp
+	#${CMAKE_CURRENT_SOURCE_DIR}/Sphere.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Cylinder.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceWithOuterPrismBound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithCylinderBound.cpp
@@ -82,6 +82,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/XmlIO")
 add_subdirectory("${PROJECT_SOURCE_DIR}/MmcsCorsikaFileIO")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Cameras")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Core")
+add_subdirectory("${PROJECT_SOURCE_DIR}/Geometry")
 #-------------------------------------------------------------------------------
 # mctracer shared linked library
 

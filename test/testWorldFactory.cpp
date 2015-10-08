@@ -2,7 +2,6 @@
 #include <string>
 
 #include "gtest/gtest.h"
-#include "Sphere.h"
 #include "../WorldFactory.h"
 
 using namespace std;
