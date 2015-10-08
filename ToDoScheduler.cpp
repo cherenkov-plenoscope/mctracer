@@ -107,8 +107,8 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 	HomoTrafo3D Trafo;
 	Trafo.set_transformation(source_rot, source_pos);
 
-	PhotonBunch::transform_all_photons(Trafo, photon_bunch);
-			
+	PhotonBunch::transform_all_photons_multi_thread(Trafo, photon_bunch);
+
 	// photon propagation
 	PhotonBunch::propagate_photons_in_world_with_settings(
 		photon_bunch, world, &settings
@@ -161,7 +161,6 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 	while(event_getter.has_still_events_left()) {
 
 		MmcsCorsikaEvent event = event_getter.get_next_event();
-		//std::cout << event.get_print();
 
 		while(event.can_be_reused_again()) {
 
