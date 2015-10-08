@@ -80,6 +80,11 @@ namespace PhotonBunch {
 		std::vector<Photon*> *photon_bunch
 	);
 
+	void transform_all_photons_multi_thread(
+		const HomoTrafo3D Trafo, 
+		std::vector<Photon*> *photon_bunch
+	);
+
 	// delete all history
 	void delete_photons_and_history(std::vector<Photon*> *photon_bunch);
 }

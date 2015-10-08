@@ -185,16 +185,17 @@ namespace PhotonBunch {
 			const uint number_of_photons
 		) {
 			std::vector<Photon*>* photon_bunch = new std::vector<Photon*>;
+			photon_bunch->reserve(number_of_photons);
 
-			Vector3D support = Vector3D::null;
+			const Vector3D support = Vector3D::null;
 
 			PseudoRandomNumberGenerator prng(0);
 			for(uint i=0; i<number_of_photons; i++) {
 
-				double The = opening_angle*sqrt(prng.uniform());
-				double Phi = prng.uniform()*2.0*M_PI;
+				const double The = opening_angle*sqrt(prng.uniform());
+				const double Phi = prng.uniform()*2.0*M_PI;
 
-				Vector3D direction(
+				const Vector3D direction(
 					sin(The)*cos(Phi),
 					sin(The)*sin(Phi),
 					cos(The)
@@ -203,10 +204,11 @@ namespace PhotonBunch {
 				Photon* photon = new Photon(support, direction, 433e-9);
 				photon_bunch->push_back(photon);
 			}
-
 			return photon_bunch;
 		}
 	}
+	//--------------------------------------------------------------------------
+	// transformations, move and rotate photons
 	//--------------------------------------------------------------------------
 	void transform_all_photons(
 		const HomoTrafo3D Trafo, 
@@ -214,6 +216,21 @@ namespace PhotonBunch {
 	) {
 		for(Photon* photon : *photon_bunch)
 			photon->transform(&Trafo);
+	}
+	//--------------------------------------------------------------------------
+	void transform_all_photons_multi_thread(
+		const HomoTrafo3D Trafo, 
+		std::vector<Photon*> *photon_bunch
+	) {
+		uint i;
+		#pragma omp parallel shared(photon_bunch)
+		{	
+			#pragma omp for schedule(dynamic) private(i) 
+			for(i=0; i<photon_bunch->size(); i++)
+			{
+				photon_bunch->at(i)->transform(&Trafo);
+			}
+		}
 	}
 	//--------------------------------------------------------------------------
 	// delete all history
