@@ -21,11 +21,7 @@ ExceptionType TracerException::type()const{
 }
 //------------------------------------------------------------------------------
 const char* TracerException::what()const noexcept {
-
-	std::string out = get_full_message_print();
-	char* charrout = new char[out.length() + 1];
-	std::strcpy(charrout, out.c_str());
-	return charrout;
+	return str2chararray(get_full_message_print());
 }
 //------------------------------------------------------------------------------
 std::string TracerException::get_full_message_print()const {
@@ -44,4 +40,10 @@ std::string TracerException::get_compile_time() {
 	std::stringstream timestamp;
 	timestamp << __DATE__ << ", " << __TIME__;
 	return timestamp.str();
+}
+//------------------------------------------------------------------------------
+const char* TracerException::str2chararray(const std::string text)const {
+	char* charrout = new char[text.length() + 1];
+	std::strcpy(charrout, text.c_str());
+	return charrout;
 }

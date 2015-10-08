@@ -36,6 +36,7 @@ class TracerException :public std::exception{
 protected:
 	std::string message = "";
 	ExceptionType Type = NOT_SPECIFIED;
+	const char* str2chararray(const std::string text)const;
 public:
 	static const std::string compile_time;
 	TracerException(std::string message);
