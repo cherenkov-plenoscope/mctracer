@@ -31,13 +31,13 @@ private:
 	CameraDevice* camera;
 
 	const double max_FoV_in_rad = Deg2Rad(175.0);
-	const double min_FoV_in_rad = Deg2Rad(5.0);
+	const double min_FoV_in_rad = Deg2Rad(0.0001);
 	const double default_FoV_in_rad = Deg2Rad(65.0);
 
 	void increase_FoV();
 	void decrease_FoV();
 
-	double FoV_increment_in_rad()const;
+	double FoV_rate()const;
 
 	bool FoV_is_not_too_large_when_increased()const;
 	bool FoV_is_not_too_small_when_decreased()const;

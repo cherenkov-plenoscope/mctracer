@@ -10,40 +10,38 @@ void CameraManFoV::set_default_FoV() {
 }
 
 void CameraManFoV::increase_FoV_when_possible() {
-	if(FoV_is_not_too_large_when_increased()){
+	if(FoV_is_not_too_large_when_increased())
 		increase_FoV();
-	}else{
+	else
 		print_can_not_be_increased_when_verbose();
-	}
 }
 
 void CameraManFoV::decrease_FoV_when_possible() {
-	if(FoV_is_not_too_small_when_decreased()){
+	if(FoV_is_not_too_small_when_decreased())
 		decrease_FoV();
-	}else{
+	else
 		print_can_not_be_decreased_when_verbose();
-	}
 }
 
-double CameraManFoV::FoV_increment_in_rad()const {
-	return Deg2Rad(5.0);
+double CameraManFoV::FoV_rate()const {
+	return 1.1;
 }
 
 bool CameraManFoV::FoV_is_not_too_large_when_increased()const {
-	return camera->get_FoV_in_rad() + FoV_increment_in_rad() < max_FoV_in_rad;
+	return camera->get_FoV_in_rad()*FoV_rate() < max_FoV_in_rad;
 }
 
 bool CameraManFoV::FoV_is_not_too_small_when_decreased()const {
-	return camera->get_FoV_in_rad() - FoV_increment_in_rad() > min_FoV_in_rad;
+	return camera->get_FoV_in_rad()/FoV_rate() > min_FoV_in_rad;
 }
 
 void  CameraManFoV::increase_FoV() {
-	camera->set_FoV_in_rad( camera->get_FoV_in_rad() + FoV_increment_in_rad());
+	camera->set_FoV_in_rad( camera->get_FoV_in_rad()*FoV_rate());
 	print_FoV_manipulation_when_verbose();
 }
 
 void  CameraManFoV::decrease_FoV() {
-	camera->set_FoV_in_rad( camera->get_FoV_in_rad() - FoV_increment_in_rad());
+	camera->set_FoV_in_rad( camera->get_FoV_in_rad()/FoV_rate());
 	print_FoV_manipulation_when_verbose();
 }
 

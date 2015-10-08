@@ -47,10 +47,10 @@ TEST_F(CameraManTest, increase_FoV) {
 
 	CameraManFoV FoVCamMan( cam );
 
-	for(int i=0; i<25; i++)
+	for(int i=0; i<250; i++)
 		FoVCamMan.increase_FoV_when_possible();
 
-	EXPECT_TRUE(cam->get_FoV_in_rad() > Deg2Rad(170.0));
+	EXPECT_TRUE(cam->get_FoV_in_rad() > Deg2Rad(160.0));
 	EXPECT_TRUE(cam->get_FoV_in_rad() < Deg2Rad(180.0));
 }
 //------------------------------------------------------------------------------
@@ -58,11 +58,11 @@ TEST_F(CameraManTest, decrease_FoV) {
 
 	CameraManFoV FoVCamMan( cam );
 
-	for(int i=0; i<25; i++)
+	for(int i=0; i<250; i++)
 		FoVCamMan.decrease_FoV_when_possible();
 
 	EXPECT_TRUE(cam->get_FoV_in_rad() > Deg2Rad(0.0));
-	EXPECT_TRUE(cam->get_FoV_in_rad() < Deg2Rad(10.0));
+	EXPECT_TRUE(cam->get_FoV_in_rad() < Deg2Rad(0.003));
 }
 //------------------------------------------------------------------------------
 TEST_F(CameraManTest, default_FoV) {
@@ -84,23 +84,18 @@ TEST_F(CameraManTest, increase_and_decrease_FoV) {
 
 	FoVCamMan.set_verbosity(false);
 
-	for(int i=0; i<25; i++)
+	for(int i=0; i<250; i++)
 		FoVCamMan.decrease_FoV_when_possible();
 
 	EXPECT_TRUE(cam->get_FoV_in_rad() > Deg2Rad(0.0));
-	EXPECT_TRUE(cam->get_FoV_in_rad() < Deg2Rad(10.0));
+	EXPECT_TRUE(cam->get_FoV_in_rad() < Deg2Rad(0.003));
 
-	for(int i=0; i<50; i++)
+	for(int i=0; i<250; i++)
 		FoVCamMan.increase_FoV_when_possible();
 
-	EXPECT_TRUE(cam->get_FoV_in_rad() > Deg2Rad(170.0));
+	EXPECT_TRUE(cam->get_FoV_in_rad() > Deg2Rad(160.0));
 	EXPECT_TRUE(cam->get_FoV_in_rad() < Deg2Rad(180.0));
 }
-//------------------------------------------------------------------------------
-/*TEST_F(CameraManTest, StereoCameraMan) {
-
-	CameraManForStereo3D stereo_operator( cam );
-}*/
 //------------------------------------------------------------------------------
 TEST_F(CameraManTest, default_rotation) {
 
