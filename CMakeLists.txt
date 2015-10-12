@@ -63,7 +63,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Triangle.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Plane.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Disc.cpp 
-	#${CMAKE_CURRENT_SOURCE_DIR}/Sphere.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/LightSourceFromConfig.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Cylinder.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceWithOuterPrismBound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithCylinderBound.cpp
@@ -107,6 +107,13 @@ add_executable(mctracerTests ./test/test.cpp)
 target_link_libraries(mctracerTests gtest gtest_main)
 target_link_libraries(mctracerTests mct)
 #add_test(mctracerTests mctracerTests)
+
+#-------------------------------------------------------------------------------
+# GTest executeable examples
+
+add_executable(mctracerExamples ./Docu/examples/examples.cpp)
+target_link_libraries(mctracerExamples gtest gtest_main)
+target_link_libraries(mctracerExamples mct)
 
 #-------------------------------------------------------------------------------
 # http://stackoverflow.com/questions/992068/building-a-python-shared-object-binding-with-cmake-which-depends-upon-external

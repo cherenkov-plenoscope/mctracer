@@ -1,0 +1,49 @@
+
+
+I am answering a few months after your post, but the feature of lstlistings I describe below has been in that package for several years.
+
+The keyword to look for is the option linerange, as well as, for convenience, rangeprefix and rangesuffix.
+
+Here is a complete example.
+
+\documentclass{article}
+\usepackage{fullpage,times,listings}
+\lstloadlanguages{C++}
+
+\lstset{language=C++,keywordstyle=\bfseries,commentstyle=\itshape,
+  rangeprefix=//----------------,rangesuffix=----------------,
+  includerangemarker=false,columns=spaceflexible}
+
+\begin{document}
+We first show the main function.
+\lstinputlisting[linerange=main0-main1]{code.cpp}
+Then we show the implementation.
+\lstinputlisting[linerange=fact0-fact1]{code.cpp}
+\end{document}
+
+then save the following in code.cpp:
+
+#include <cassert>
+
+//----------------fact0----------------
+// A recursive implementation of factorial
+int factorial(int i)
+{
+    if(i)
+        return i * factorial(i-1);
+    else
+        return 1;
+}
+//----------------fact1----------------
+
+//----------------main0----------------
+// Test the implementation.
+int main()
+{
+    assert(factorial(5) == 120);
+}
+//----------------main1----------------
+
+This is a good solution because one inevitably edits the code, and then it becomes tedious to update the line numbers throughout one's TeX files. Using symbols solves this problem, but it also leaves a trace in the code itself that if the number of lines changes, or if the width changes too much, one needs to confirm that the typeset output still looks reasonable.
+
+Finally, after editing the code, you need to typeset the latex files again only if you inserted/deleted within the marked blocks.

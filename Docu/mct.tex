@@ -1,0 +1,153 @@
+\documentclass[review]{elsarticle}
+
+\usepackage{lineno,hyperref}
+\usepackage[nolist]{acronym}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+
+\lstdefinestyle{MctCpp}{%
+    language=C++,
+    keywordstyle=\bfseries,
+    commentstyle=\itshape,
+    rangeprefix=//--,rangesuffix=--,
+    includerangemarker=false,
+    columns=spaceflexible,
+    escapeinside={/*@}{@*/},
+    tabsize=4,
+    frame=leftline,
+    basicstyle=\ttfamily,
+    numbers=left
+}
+
+\modulolinenumbers[1]
+\journal{Journal of \LaTeX\ Templates}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%% Elsevier bibliography styles
+%%%%%%%%%%%%%%%%%%%%%%%
+%% To change the style, put a % in front of the second line of the current style and
+%% remove the % from the second line of the style you would like to use.
+%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Numbered
+%\bibliographystyle{model1-num-names}
+
+%% Numbered without titles
+%\bibliographystyle{model1a-num-names}
+
+%% Harvard
+%\bibliographystyle{model2-names.bst}\biboptions{authoryear}
+
+%% Vancouver numbered
+%\usepackage{numcompress}\bibliographystyle{model3-num-names}
+
+%% Vancouver name/year
+%\usepackage{numcompress}\bibliographystyle{model4-names}\biboptions{authoryear}
+
+%% APA style
+%\bibliographystyle{model5-names}\biboptions{authoryear}
+
+%% AMA style
+%\usepackage{numcompress}\bibliographystyle{model6-num-names}
+
+%% `Elsevier LaTeX' style
+\bibliographystyle{elsarticle-num}
+%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+%-------------------------------------------------------------------------------
+\newcommand{\CppFileStartEnd}[3]{%
+    \begin{footnotesize}
+        \lstinputlisting[linerange=#2-#3, style=MctCpp]{#1}%
+    \hfill\path{#1}\\
+    \end{footnotesize}
+}
+
+\makeatletter
+\lst@Key{matchrangestart}{f}{\lstKV@SetIf{#1}\lst@ifmatchrangestart}
+\def\lst@SkipToFirst{%
+    \lst@ifmatchrangestart\c@lstnumber=\numexpr-1+\lst@firstline\fi
+    \ifnum \lst@lineno<\lst@firstline
+        \def\lst@next{\lst@BeginDropInput\lst@Pmode
+        \lst@Let{13}\lst@MSkipToFirst
+        \lst@Let{10}\lst@MSkipToFirst}%
+        \expandafter\lst@next
+    \else
+        \expandafter\lst@BOLGobble
+    \fi}
+\makeatother
+%-------------------------------------------------------------------------------
+
+\begin{frontmatter}
+
+\title{%
+	The Monte Carlo Tracer%\tnoteref{mytitlenote}
+}
+%\tnotetext[mytitlenote]{%
+%	Fully documented templates are available in the elsarticle package on \href{http://www.ctan.org/tex-archive/macros/latex/contrib/elsarticle}{CTAN}.
+%}
+
+%% Group authors per affiliation:
+%\author{The FACT collaboration}%\fnref{myfootnote}}
+%\address{Radarweg 29, Amsterdam}
+%\fntext[myfootnote]{TU Dortmund, ETH Zuerich}
+
+%% or include affiliations in footnotes:
+\author[mymainaddress,mysecondaryaddress]{Sebastian Achim Mueller}
+%\ead[url]{www.fact-project.org}
+
+\cortext[mycorrespondingauthor]{Sebastian Achim Mueller}
+\ead{sebmuell@phys.ethz.ch}
+
+\address[mymainaddress]{Institute for Particle Physics, ETH, Otto-Stern-Weg 5, 8093 Zuerich, Switzerland}
+\address[mysecondaryaddress]{Experimental Physics 5b, TU Dortmund, Otto-Hahn-Strasse 4, 44227 Dortmund, Germany}
+%-------------------------------------------------------------------------------
+\begin{abstract}
+%
+In $\gamma$ ray and cosmic ray astronomy it needs dedicated simulations of detectors to develope and run the instruments which observe particle interactions far beyond any energy accessable in the lab.
+%
+The Monte Carlo Tracer exists since we do what we must, because we can.
+%
+\end{abstract}
+%-------------------------------------------------------------------------------
+\begin{keyword}
+ray tracing, photon propagation
+%
+\end{keyword}
+%-------------------------------------------------------------------------------
+\end{frontmatter}
+%\linenumbers
+%-------------------------------------------------------------------------------
+\section{The scenery tree}
+%-------------------------------------------------------------------------------
+\subsection{The root of the scenery tree}
+\label{SubSecRootFrame}
+The frame at the root of the tree structure represents the whole scenery.
+%
+Before ray tracing is performed on the scenery tree, all frames in the tree estimate threir position and orientation w.r.t. the root frame.
+%
+This way rays can easily and fast be transformed back and forth from the root tree to an individual object frame.
+%-------------------------------------------------------------------------------
+\section{How to set up a scenery in source code}
+%
+First we define the main frame of our scenery. This frame, often called world, will be the root of the scenery \ref{SubSecRootFrame}. 
+%
+\CppFileStartEnd{examples/set_up_scenery.cpp}{world}{tree}
+%
+Second we define frames that will hold individual structures like a tree which will be composed from several objects. The tree will be placed in $x=5\,$m w.r.t. its later mother frame, i.e. the wolrd. 
+%
+\CppFileStartEnd{examples/set_up_scenery.cpp}{tree}{leaf_ball}
+Also part of the tree is the wooden pole.
+\CppFileStartEnd{examples/set_up_scenery.cpp}{leaf_ball}{tree_pole}
+%-------------------------------------------------------------------------------
+\bibliography{mct}
+%-------------------------------------------------------------------------------
+\begin{acronym}
+    \acro{mct}[MCt]{Monte Carlo Tracer}
+\end{acronym}
+\end{document}
