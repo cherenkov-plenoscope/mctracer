@@ -20,7 +20,8 @@ class Color {
 	double green_0to255;
 	double blue_0to255;
 public:
-
+	static const Color syk_blue;
+	static const Color gray;
 	Color();
 	Color(const int r, const int g, const int b);
 	Color(const double r, const double g, const double b);

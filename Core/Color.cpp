@@ -1,4 +1,6 @@
 #include "Color.h"
+const Color Color::syk_blue = Color(127,188,255);
+const Color Color::gray = Color(128,128,128);
 //------------------------------------------------------------------------------
 Color::Color(){
 	set_to_default_color();
