@@ -69,6 +69,11 @@ namespace PhotonBunch {
 	// creation of photons
 	namespace Source {
 
+		std::vector<Photon*> *parallel_towards_z_from_xy_disc(
+			const double disc_radius,
+			const uint number_of_photons
+		);
+
 		std::vector<Photon*> *point_like_towards_z_opening_angle_num_photons(
 			const double opening_angle,
 			const uint number_of_photons 

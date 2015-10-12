@@ -1,8 +1,8 @@
 #include "TracerSettings.h"
 //------------------------------------------------------------------------------
 TracerSettings::TracerSettings() {
-	default_colour.set_RGB_0to255(128,128,128);
-
+	//default_colour.set_RGB_0to255(128,128,128);
+	default_colour = Color::syk_blue;
 	flag_store_only_final_intersection = false;
 
 	number_of_max_reflections = 5;

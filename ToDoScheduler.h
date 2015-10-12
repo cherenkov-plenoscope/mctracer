@@ -22,6 +22,7 @@
 #include "MmcsCorsikaFileIO/MmcsCorsikaFullEventGetter.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaPhotonData.h"
 #include "TelescopeArrayControl.h"
+#include "LightSourceFromConfig.h"
 
 //=================================
 class ToDoScheduler {
@@ -30,7 +31,7 @@ class ToDoScheduler {
 	const std::string render_key = "render";
 	const std::string propagate_key = "propagate";
 	const std::string investigation_key = "investigate";
-	const std::string pointsource_key = "pointsource";
+	const std::string pointsource_key = "lightsource";
 	const std::string geometry_key = "geometry";
 	const std::string photons_key = "photons";
 	const std::string config_key = "config";

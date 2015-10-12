@@ -69,7 +69,7 @@ void ToDoScheduler::render_geometry()const {
 void ToDoScheduler::point_spread_investigation_in_geometry()const {
 
 	// Bokeh settings
-	KeyValueMap bokeh_config(get_config_file_name());
+	KeyValueMap source_config(get_config_file_name());
 
 	// propagation settings
 	TracerSettings settings;	
@@ -84,30 +84,9 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 	// sensors in scenery
 	std::vector<PhotonSensor*>* sensors = fab.sensors_in_world();
 
-	// photon production
-	std::vector<Photon*>* photon_bunch = 
-		PhotonBunch::Source::point_like_towards_z_opening_angle_num_photons(
-			Deg2Rad(bokeh_config.get_value_for_key_as_double("opening_angle_in_deg")),
-			bokeh_config.get_value_for_key_as_int("number_of_photons")
-		);
-
-	// move and reoirentate photons
-	const Rotation3D source_rot(
-		Deg2Rad(bokeh_config.get_value_for_key_as_double("source_rot_x_in_deg")),
-		Deg2Rad(bokeh_config.get_value_for_key_as_double("source_rot_y_in_deg")),
-		Deg2Rad(bokeh_config.get_value_for_key_as_double("source_rot_z_in_deg"))
-	);
-
-	const Vector3D source_pos(
-		bokeh_config.get_value_for_key_as_double("source_pos_x_in_m"),
-		bokeh_config.get_value_for_key_as_double("source_pos_y_in_m"),
-		bokeh_config.get_value_for_key_as_double("source_pos_z_in_m")
-	);
-
-	HomoTrafo3D Trafo;
-	Trafo.set_transformation(source_rot, source_pos);
-
-	PhotonBunch::transform_all_photons_multi_thread(Trafo, photon_bunch);
+	// photon source
+	LightSourceFromConfig light_fab(source_config);
+	std::vector<Photon*>* photon_bunch = light_fab.get_photons();
 
 	// photon propagation
 	PhotonBunch::propagate_photons_in_world_with_settings(
@@ -123,8 +102,7 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 	for(PhotonSensor* sensor: *sensors) {
 		
 		std::stringstream outname;
-		outname << get_output_file_name();
-		outname << "s" << sensor_conuter << ".txt";
+		outname << get_output_file_name() << sensor_conuter;
 		sensor_conuter++;
 
 		AsciiIo::write_table_to_file(

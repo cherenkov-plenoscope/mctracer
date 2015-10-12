@@ -206,6 +206,34 @@ namespace PhotonBunch {
 			}
 			return photon_bunch;
 		}
+		//----------------------------------------------------------------------
+		std::vector<Photon*> *parallel_towards_z_from_xy_disc(
+			const double disc_radius,
+			const uint number_of_photons
+		) {
+			std::vector<Photon*>* photon_bunch = new std::vector<Photon*>;
+			photon_bunch->reserve(number_of_photons);
+
+			const Vector3D direction = Vector3D::unit_z;
+
+			PseudoRandomNumberGenerator prng(0);
+			for(uint i=0; i<number_of_photons; i++) {
+
+				const double r = sqrt(prng.uniform())*disc_radius;
+				const double phi = prng.uniform()*2.0*M_PI;
+
+				const Vector3D support(
+					r*cos(phi),
+					r*sin(phi),
+					0.0
+				);
+
+				Photon* photon = new Photon(support, direction, 433e-9);
+				photon_bunch->push_back(photon);
+			}
+
+			return photon_bunch;
+		}
 	}
 	//--------------------------------------------------------------------------
 	// transformations, move and rotate photons

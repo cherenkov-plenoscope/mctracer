@@ -133,7 +133,6 @@ void KeyValueMap::parse_line(const std::string line) {
 	if(!colon_was_found && !is_comment)
 		throw TracerException("Can not parse key value line.");
 
-
 	if(!is_comment) {
 		key = StringTools::strip_whitespaces(key);
 		value = StringTools::strip_whitespaces(value);	
