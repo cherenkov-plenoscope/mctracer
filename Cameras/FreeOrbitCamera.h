@@ -65,20 +65,22 @@ private:
 	void aquire_image();
 	void update_free_orbit_display();
 	void take_snapshot();
+	void take_snapshot_manual_focus_on_pixel_col_row(int x, int y);
 	void print_free_orbit_help_text()const;
 	void increase_stereo_offset();
 	void decrease_stereo_offset();
-	static void left_mouse_button_event(
+	static void mouse_button_event(
 		int event, 
 		int x, 
 		int y, 
 		int flags, 
 		void *param
 	);
-	void print_info_of_probing_ray_for_pixel_x_y(int x, int y);
+	void print_info_of_probing_ray_for_pixel_col_row(int x, int y);
 	void update_current_camera_position(Vector3D new_translation_World2Camera);
 	std::string get_prefix_print()const;
 	ApertureCamera get_Mamiya645_based_on_free_orbit_camera()const;
+	ApertureCamera get_Imax70mm_based_on_free_orbit_camera()const;
 	void create_free_orbit_display();
 	void destroy_free_orbit_display();
 	void reset_camera();
@@ -89,7 +91,7 @@ private:
 	void print_stereo_offset_manipulation(const std::string status)const;
 	std::string get_snapshot_filename();
 	bool it_is_time_again_to_show_the_help();
-
+	const CameraImage* acquire_image_with_camera(CameraDevice* cam);
 	void move_right_and_shoot_video();
 };
 #endif // __FREEORBITCAMERA_H_INCLUDED__

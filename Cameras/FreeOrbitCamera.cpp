@@ -116,7 +116,7 @@ void FreeOrbitCamera::create_free_orbit_display(){
 
 	cv::setMouseCallback( 
 		free_orbit_display_name.c_str(), 
-		left_mouse_button_event, 
+		mouse_button_event, 
 		(void *)p 
 	);
 }
@@ -126,31 +126,25 @@ void FreeOrbitCamera::destroy_free_orbit_display(){
 }
 //==============================================================================
 void FreeOrbitCamera::update_free_orbit_display(){
-	if(stereo3D){
-		Stereo_operator->aquire_stereo_image(world, settings);
-		cv::imshow(
-			free_orbit_display_name,
-			*(Stereo_operator->get_anaglyph_stereo3D_image()->Image)
-		); 
-	}else{
-		flying_camera->acquire_image(world, settings);
-		
-		cv::imshow(
-			free_orbit_display_name,
-			*(flying_camera->get_image()->Image)
-		); 
-	}
+	const CameraImage* img = acquire_image_with_camera(flying_camera);
+
+	cv::imshow(
+		free_orbit_display_name,
+		*(img->Image)
+	); 
 }
 //==============================================================================
-void FreeOrbitCamera::left_mouse_button_event(
+void FreeOrbitCamera::mouse_button_event(
 	int event, int x, int y, int flags, void *param
 ) {
 	FreeOrbitCamera* p = (FreeOrbitCamera*)param;
 	
-	if( event != cv::EVENT_LBUTTONDOWN )
+	if( event == cv::EVENT_LBUTTONDOWN )
+		p->print_info_of_probing_ray_for_pixel_col_row( x, y );
+	else if( event == cv::EVENT_RBUTTONDOWN )
+		p->take_snapshot_manual_focus_on_pixel_col_row( x, y );
+	else
 		return;
-
-	p->print_info_of_probing_ray_for_pixel_x_y( x, y );
 }
 //==============================================================================
 void FreeOrbitCamera::move_right_and_shoot_video() {
@@ -174,24 +168,12 @@ void FreeOrbitCamera::toggle_stereo3D() {
 //==============================================================================
 void FreeOrbitCamera::take_snapshot(){
 	
-	ApertureCamera Mamiya645 = get_Mamiya645_based_on_free_orbit_camera();
-	Mamiya645.auto_focus(world, settings);
-	std::cout << Mamiya645.get_print();
+	ApertureCamera apcam = get_Imax70mm_based_on_free_orbit_camera();
+	apcam.auto_focus(world, settings);
+	std::cout << apcam.get_print();
 
-	if(stereo3D){
-		std::cout << get_prefix_print() << "stereo snapshot:\n";
-
-		CameraManForStereo3D op(&Mamiya645);
-		op.use_same_stereo_offset_as(Stereo_operator);
-		op.aquire_stereo_image(world, settings);
-		op.get_anaglyph_stereo3D_image()->
-			save_image_to_file(get_snapshot_filename());
-	}else{
-		std::cout << get_prefix_print() << "snapshot:\n";
-
-		Mamiya645.acquire_image(world, settings);
-		Mamiya645.save_image(get_snapshot_filename());
-	}
+	const CameraImage* img = acquire_image_with_camera(&apcam);
+	img->save_image_to_file(get_snapshot_filename());
 }
 //==============================================================================
 std::string FreeOrbitCamera::get_snapshot_filename(){
@@ -216,11 +198,56 @@ ApertureCamera FreeOrbitCamera::get_Mamiya645_based_on_free_orbit_camera()const{
 	return Mamiya645;
 }
 //==============================================================================
+ApertureCamera FreeOrbitCamera::get_Imax70mm_based_on_free_orbit_camera()const{
+
+	ApertureCamera imax70mm("Imax70mm", 1920, 1080);	
+	imax70mm.set_fStop_sesnorWidth_rayPerPixel(0.95, 0.07, 3);
+	imax70mm.set_FoV_in_rad(flying_camera->get_FoV_in_rad());
+	imax70mm.update_position_and_orientation(
+		flying_camera->get_position_in_world(),
+		flying_camera->get_rotation_in_world()
+	);
+	return imax70mm;
+}
+//==============================================================================
 std::string FreeOrbitCamera::get_prefix_print()const{
 	return "free_orbit -> ";
 }
 //==============================================================================
-void FreeOrbitCamera::print_info_of_probing_ray_for_pixel_x_y(int x, int y){
+void FreeOrbitCamera::take_snapshot_manual_focus_on_pixel_col_row(int x, int y){
+
+	Ray probing_ray = flying_camera->get_ray_for_pixel_in_row_and_col(y, x);
+	
+	DistanceMeter dist_meter(&probing_ray, world);
+
+	if(dist_meter.does_face_an_object()) {
+
+		ApertureCamera apcam = get_Imax70mm_based_on_free_orbit_camera();
+		apcam.set_focus_to(dist_meter.get_distance_to_closest_object());
+		std::cout << apcam.get_print();
+
+		const CameraImage* img = acquire_image_with_camera(&apcam);
+		img->save_image_to_file(get_snapshot_filename());
+	}
+}
+//==============================================================================
+const CameraImage* FreeOrbitCamera::acquire_image_with_camera(CameraDevice* cam) {
+	if(stereo3D){
+		std::cout << get_prefix_print() << "stereo snapshot:\n";
+
+		CameraManForStereo3D op(cam);
+		op.use_same_stereo_offset_as(Stereo_operator);
+		op.aquire_stereo_image(world, settings);
+		return op.get_anaglyph_stereo3D_image();
+	}else{
+		std::cout << get_prefix_print() << "snapshot:\n";
+
+		cam->acquire_image(world, settings);
+		return cam->get_image();
+	}	
+}
+//==============================================================================
+void FreeOrbitCamera::print_info_of_probing_ray_for_pixel_col_row(int x, int y){
 
 	Ray probing_ray = flying_camera->get_ray_for_pixel_in_row_and_col(y, x);
 
