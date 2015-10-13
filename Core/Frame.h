@@ -45,7 +45,6 @@ protected:
     HomoTrafo3D T_world2frame;
     HomoTrafo3D T_frame2world;
     
-    const uint max_number_of_children_in_frame = 16;
     std::vector<Frame*> children;
 	Frame *mother;
     const Frame *root_of_world;
@@ -53,6 +52,7 @@ private:
 
     static const char delimiter_for_frame_path = '/';
 public:
+    static const uint max_number_of_children_in_frame = 16;
 //------------------------------------------------------------------------------
     static Frame* void_frame;
 

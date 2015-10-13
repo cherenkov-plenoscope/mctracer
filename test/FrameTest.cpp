@@ -39,7 +39,7 @@ class CartesianFrameTest : public ::testing::Test {
 
   // Objects declared here can be used by all tests in the test case for Foo.
 };
-//----------------------------------------------------------------------
+//------------------------------------------------------------------------------
 /*TEST_F(CartesianFrameTest, find_specific_frame) {
   
   // load some world
@@ -79,7 +79,7 @@ class CartesianFrameTest : public ::testing::Test {
 
   EXPECT_EQ( Frame::void_frame, SpecificFrameInWorldWeAreLookingFor );
 }*/
-//----------------------------------------------------------------------
+//------------------------------------------------------------------------------
 TEST_F(CartesianFrameTest, assert_name_is_valid) {
 
   Vector3D    pos = Vector3D::null;
@@ -111,7 +111,7 @@ TEST_F(CartesianFrameTest, assert_name_is_valid) {
     TracerException
   );
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 TEST_F(CartesianFrameTest, set_frame) {
 
   Vector3D    pos(1.3,3.7,4.2);
@@ -132,7 +132,7 @@ TEST_F(CartesianFrameTest, set_frame) {
 
   EXPECT_EQ(T_frame2mother, *Peter.frame2mother());
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 TEST_F(CartesianFrameTest, root_of_world_on_complete_tree) {
 
   //-----define frames
@@ -182,11 +182,47 @@ TEST_F(CartesianFrameTest, root_of_world_on_complete_tree) {
   EXPECT_EQ(&tree, leaf1_on_branch.get_root_of_world());
   EXPECT_EQ(&tree, leaf2_on_branch.get_root_of_world());
 }
-//==============================================================================
+//------------------------------------------------------------------------------
 TEST_F(CartesianFrameTest, root_of_world_default) {
 
   Frame tree;
   tree.set_name_pos_rot("tree" ,Vector3D::null, Rotation3D::null);
   EXPECT_EQ(&tree, tree.get_root_of_world());
 }
-//==============================================================================
+//------------------------------------------------------------------------------
+TEST_F(CartesianFrameTest, cluster_frames_during_tree_initializing) {
+
+    Frame tree;
+    tree.set_name_pos_rot("tree" ,Vector3D::null, Rotation3D::null);
+    EXPECT_EQ(&tree, tree.get_root_of_world());
+
+    double qube_edge = 10.0;
+
+    uint count = 0;
+    for(double x=0.0; x<qube_edge; x++) {
+        for(double y=0.0; y<qube_edge; y++) {
+            for(double z=0.0; z<qube_edge; z++) {
+                count++;
+
+                Vector3D pos(x,y,z);
+
+                std::stringstream name;
+                name << "sub_sphere_" << x << "_" << y << "_" << z;
+
+                Sphere* ball = new Sphere;
+                ball->set_name_pos_rot(name.str(), pos, Rotation3D::null);
+                ball->set_sphere_radius(0.5);
+
+                tree.set_mother_and_child(ball);
+            }
+        }
+    }
+
+    EXPECT_EQ(count, tree.get_number_of_children());
+
+    tree.init_tree_based_on_mother_child_relations();
+
+    EXPECT_TRUE(count > tree.get_number_of_children());
+    EXPECT_TRUE(Frame::max_number_of_children_in_frame >= tree.get_number_of_children());
+}
+//------------------------------------------------------------------------------
