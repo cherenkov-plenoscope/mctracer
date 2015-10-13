@@ -245,9 +245,19 @@ void Frame::set_mother_and_child(Frame *new_child) {
 }
 //------------------------------------------------------------------------------
 void Frame::init_tree_based_on_mother_child_relations() {
+	cluster_children_of_me_and_all_my_children();
 	post_init_me_and_all_my_children();
 	update_enclosing_sphere_for_all_children();
 	post_init_root_of_world();
+}
+//------------------------------------------------------------------------------
+void Frame::cluster_children_of_me_and_all_my_children() {
+
+	cluster_using_helper_frames();
+
+	// and all children
+	for(Frame* child : children)
+		child->cluster_children_of_me_and_all_my_children();
 }
 //------------------------------------------------------------------------------
 void Frame::post_init_me_and_all_my_children() {

@@ -100,6 +100,7 @@ protected:
     // post initialization based on root
     void post_init_me_and_all_my_children();
     void post_init_transformations();
+    void cluster_children_of_me_and_all_my_children();
     HomoTrafo3D calculate_frame2world()const;
     // post initialization based on mother only
     void post_init_me_and_all_my_children_only_based_on_mother();
