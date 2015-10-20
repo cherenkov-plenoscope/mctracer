@@ -101,7 +101,20 @@ MmcsCorsikaEventHeader::MmcsCorsikaEventHeader(
 	const MmcsCorsikaSubBlock &sub_block
 ) {
 	create_from_MMCS_sub_block(sub_block);
-}	
+}
+
+MmcsCorsikaEventHeader::MmcsCorsikaEventHeader(
+	const std::vector<float>& block
+	)
+{
+	MmcsCorsikaSubBlock dummy;
+	for (size_t i=0; i<block.size(); i++)
+		dummy[i] = block[i];
+
+	create_from_MMCS_sub_block(dummy);
+}
+
+
 //------------------------------------------------------------------------------
 void MmcsCorsikaEventHeader::assert_sub_block_is_event_header(
 	const MmcsCorsikaSubBlock &sub_block
