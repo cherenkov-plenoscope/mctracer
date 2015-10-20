@@ -1,4 +1,9 @@
 #include "WorldFactory.h"
+#include "Vector3DFactory.h"
+#include "Rotation3DFactory.h"
+#include "FrameFactory.h"
+#include "Core/Function/LinInterpolFunction.h"
+#include "Tools/AsciiIo.h"
 //------------------------------------------------------------------------------
 WorldFactory::WorldFactory(){
 
@@ -123,7 +128,10 @@ Frame* mother,const pugi::xml_node node){
 		mother = produceDisc(mother,node);	
 	
 	}else if(StringTools::is_equal(node.name(),"reflector")){
-		mother = produceReflector(mother,node);	
+		mother = produceReflector(mother,node);
+
+	}else if(StringTools::is_equal(node.name(),"bi_convex_lens_hex")){
+		mother = produceBiConvexLensHex(mother,node);	
 
 	}else if(StringTools::is_equal(node.name(),"sphere_cap_hexagonal")){
 		mother = produce_sphere_cap_hexagonal(mother,node);	
@@ -180,6 +188,9 @@ void WorldFactory::go_on_with_children_of_node(
 		}else if(StringTools::is_equal(sub_node_name,"reflector")){
 
 			fabricate_frame(mother,sub_node);
+		}else if(StringTools::is_equal(sub_node_name,"bi_convex_lens_hex")){
+
+			fabricate_frame(mother,sub_node);
 		}else if(StringTools::is_equal(sub_node_name,"sphere_cap_hexagonal")){
 			
 			fabricate_frame(mother,sub_node);
@@ -196,16 +207,14 @@ Frame* WorldFactory::produceFrame(
 	Frame* mother,
 	const pugi::xml_node node
 ){
-	assert_child_exists(node, "set_frame");
-
-	std::string 			name;
-	Vector3D 				position;
-	Rotation3D 				rotation;
+	FrameFactory frameFab(node);
 	
-	extract_Frame_props(name, position, rotation, node.child("set_frame") );
-		
 	Frame *frame;
-	frame = new Frame(name,position,rotation);
+	frame = new Frame(
+		frameFab.get_name(), 
+		frameFab.get_position(), 
+		frameFab.get_rotation()
+	);
 
 	mother->set_mother_and_child(frame);
 	return frame;
@@ -214,34 +223,34 @@ Frame* WorldFactory::produceFrame(
 Frame* WorldFactory::producePlane(
 	Frame* mother,const pugi::xml_node node
 ){
-	assert_child_exists(node, "set_frame");
+	FrameFactory frameFab(node);
 	assert_child_exists(node, "set_surface");
 	assert_child_exists(node, "set_plane");
 
-	std::string 			name;
-	Vector3D    			position;
-	Rotation3D  			rotation;
 	const Color*		color;
 	const ReflectionProperties*	refl_prop;
 	double 					x_width, y_width;
 	
-	extract_Frame_props(name, position, rotation, node.child("set_frame"));
 	color = extract_color(node.child("set_surface"));
 	refl_prop = extract_reflection(node.child("set_surface"));
 	extract_Plane_props(x_width, y_width, node.child("set_plane"));
 
-	assert_name_of_child_frame_is_not_in_use_yet(mother, name);	
+	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
 
 	Plane *new_plane;
 	new_plane = new Plane;
 
-	new_plane->set_name_pos_rot(name,position,rotation);
+	new_plane->set_name_pos_rot(
+		frameFab.get_name(), 
+		frameFab.get_position(), 
+		frameFab.get_rotation()
+	);
 	new_plane->set_inner_color(color);
 	new_plane->set_outer_color(color);
 	new_plane->set_outer_reflection(refl_prop);
 	new_plane->set_inner_reflection(refl_prop);
 	
-	new_plane->set_plane_using_x_and_y_width(x_width, y_width);
+	new_plane->set_x_y_width(x_width, y_width);
 	
 	mother->set_mother_and_child(new_plane);
 	return new_plane;
@@ -250,7 +259,7 @@ Frame* WorldFactory::producePlane(
 Frame* WorldFactory::produceSphere(
 	Frame* mother,const pugi::xml_node node
 ){
-	assert_child_exists(node, "set_frame");
+	FrameFactory frameFab(node);
 	assert_child_exists(node, "set_surface");
 	assert_child_exists(node, "set_sphere");
 
@@ -261,17 +270,20 @@ Frame* WorldFactory::produceSphere(
 	const ReflectionProperties*	refl_prop;
 	double 					radius;
 
-	extract_Frame_props(name, position, rotation, node.child("set_frame"));
 	color = extract_color(node.child("set_surface"));
 	refl_prop = extract_reflection(node.child("set_surface"));
 	extract_Sphere_props(radius,node.child("set_sphere"));
 
-	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
+	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
 
 	Sphere *new_sphere;
 	new_sphere = new Sphere;	
 
-	new_sphere->set_name_pos_rot(name,position,rotation);
+	new_sphere->set_name_pos_rot(
+		frameFab.get_name(), 
+		frameFab.get_position(), 
+		frameFab.get_rotation()
+	);
 	new_sphere->set_inner_color(color);
 	new_sphere->set_outer_color(color);
 	new_sphere->set_outer_reflection(refl_prop);
@@ -286,28 +298,31 @@ Frame* WorldFactory::produceSphere(
 Frame* WorldFactory::produceCylinder(
 	Frame* mother,const pugi::xml_node node
 ){
-	assert_child_exists(node, "set_frame");
+	FrameFactory frameFab(node);
 	assert_child_exists(node, "set_surface");
 	assert_child_exists(node, "set_cylinder");
 
 	std::string 			name;
 	Vector3D 				position;
 	Rotation3D 				rotation;
-	const Color*		color;
+	const Color*			color;
 	const ReflectionProperties*	refl_prop;
 	double 					radius;
 	Vector3D 				start, end;
 					
-	extract_Frame_props(name,position, rotation, node.child("set_frame"));
 	color = extract_color(node.child("set_surface"));
 	refl_prop = extract_reflection(node.child("set_surface"));
 	extract_Cylinder_props(radius, start, end, node.child("set_cylinder"));
 
-	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
+	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
 
 	Cylinder *new_Cylinder;
 	new_Cylinder = new Cylinder;
-	new_Cylinder->set_name_pos_rot(name,position, rotation);
+	new_Cylinder->set_name_pos_rot(
+		frameFab.get_name(), 
+		frameFab.get_position(), 
+		frameFab.get_rotation()
+	);
 	new_Cylinder->set_inner_color(color);
 	new_Cylinder->set_outer_color(color);
 	new_Cylinder->set_outer_reflection(refl_prop);
@@ -322,17 +337,15 @@ Frame* WorldFactory::produceCylinder(
 Frame* WorldFactory::produceReflector(
 	Frame* mother, const pugi::xml_node node
 ){
-	assert_child_exists(node, "set_frame");	
+	FrameFactory frameFab(node);
 	assert_child_exists(node, "set_reflector");
 	const pugi::xml_node refl_node = node.child("set_reflector");
-
 
 	std::string 		name;
 	Vector3D 			position;
 	Rotation3D 			rotation;
 					
-	extract_Frame_props(name, position, rotation, node.child("set_frame"));
-	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
+	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
 
 	SegmetedReflectorGenerator refl_gen;
 	refl_gen.set_focal_length(extract_reflector("focal_length", refl_node));
@@ -346,6 +359,67 @@ Frame* WorldFactory::produceReflector(
 	return reflector;
 }
 //------------------------------------------------------------------------------
+Frame* WorldFactory::produceBiConvexLensHex(
+	Frame* mother, const pugi::xml_node node
+) {
+	FrameFactory frameFab(node);	
+	assert_child_exists(node, "set_bi_convex_lens_hex");
+
+	std::string 		name;
+	Vector3D 			position;
+	Rotation3D 			rotation;
+	const Color*		color;
+	const ReflectionProperties*	refl_prop;
+	double curv_radius;
+	double outer_radius;
+	RefractiveIndex* lens_refractive_index;
+
+	color = extract_color(node.child("set_surface"));
+	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
+	extractBiConvexLensHex(curv_radius, outer_radius, node.child("set_bi_convex_lens_hex"));
+	lens_refractive_index = extract_medium(node.child("set_medium"));
+	refl_prop = extract_reflection(node.child("set_surface"));
+
+	BiConvexLensHexBound *lens;
+	lens = new BiConvexLensHexBound;
+	lens->set_name_pos_rot(
+		frameFab.get_name(), 
+		frameFab.get_position(), 
+		frameFab.get_rotation()
+	);
+	lens->set_inner_color(color);
+	lens->set_outer_color(color);
+	lens->set_outer_reflection(refl_prop);
+	lens->set_inner_refraction(lens_refractive_index);
+	lens->set_curvature_radius_and_outer_hex_radius(curv_radius, outer_radius);
+	
+	mother->set_mother_and_child(lens);
+	return lens;
+
+}
+//------------------------------------------------------------------------------
+RefractiveIndex* WorldFactory::extract_medium(
+	const pugi::xml_node node
+) {
+	assert_attribute_exists(node, "refractive_index");
+
+	RefractiveIndex* refrac;
+	double refr = StrToDouble(node.attribute("refractive_index").value());
+	refrac = new RefractiveIndex(refr);
+	return refrac;
+}
+//------------------------------------------------------------------------------
+void WorldFactory::extractBiConvexLensHex(
+	double &curv_radius, double &outer_radius, const pugi::xml_node node
+) {
+	assert_attribute_exists(node, "curvature_radius");
+	assert_attribute_exists(node, "outer_radius");
+
+
+	curv_radius = StrToDouble(node.attribute("curvature_radius").value());
+	outer_radius = StrToDouble(node.attribute("outer_radius").value());
+}
+//------------------------------------------------------------------------------
 double WorldFactory::extract_reflector(
 	const std::string key, 
 	const pugi::xml_node node
@@ -357,7 +431,7 @@ double WorldFactory::extract_reflector(
 Frame* WorldFactory::produceDisc(
 	Frame* mother,const pugi::xml_node node
 ){
-	assert_child_exists(node, "set_frame");	
+	FrameFactory frameFab(node);
 	assert_child_exists(node, "set_surface");
 	assert_child_exists(node, "set_disc");
 
@@ -368,17 +442,19 @@ Frame* WorldFactory::produceDisc(
 	const ReflectionProperties*	refl_prop;
 	double 					radius;
 
-	extract_Frame_props(name, position, rotation, node.child("set_frame"));
 	color = extract_color(node.child("set_surface"));
 	refl_prop = extract_reflection(node.child("set_surface"));
 	extract_Disc_props(radius, node.child("set_disc"));
-
-	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
+	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
 	
 	Disc *new_Disc;
 	new_Disc = new Disc;	
 	
-	new_Disc->set_name_pos_rot(name, position, rotation);
+	new_Disc->set_name_pos_rot(
+		frameFab.get_name(), 
+		frameFab.get_position(), 
+		frameFab.get_rotation()
+	);
 	new_Disc->set_inner_color(color);
 	new_Disc->set_outer_color(color);
 	new_Disc->set_outer_reflection(refl_prop);
@@ -393,7 +469,7 @@ Frame* WorldFactory::produceDisc(
 Frame* WorldFactory::produceTriangle(
 	Frame* mother,const pugi::xml_node node
 ){
-	assert_child_exists(node, "set_frame");
+	FrameFactory frameFab(node);
 	assert_child_exists(node, "set_surface");
 	assert_child_exists(node, "set_triangle");
 	
@@ -404,16 +480,18 @@ Frame* WorldFactory::produceTriangle(
 	const ReflectionProperties*	refl_prop;
 	double 					Ax, Ay, Bx, By, Cx, Cy;
 
-	extract_Frame_props(name, position, rotation, node.child("set_frame"));
 	color = extract_color(node.child("set_surface"));
 	refl_prop = extract_reflection(node.child("set_surface"));
 	extract_Triangle_props(Ax, Ay, Bx, By, Cx, Cy, node.child("set_triangle"));
-
-	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
+	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());
 
 	Triangle *new_Triangle;
 	new_Triangle = new Triangle;			
-	new_Triangle->set_name_pos_rot(name,position,rotation);
+	new_Triangle->set_name_pos_rot(
+		frameFab.get_name(), 
+		frameFab.get_position(), 
+		frameFab.get_rotation()
+	);
 	new_Triangle->set_inner_color(color);
 	new_Triangle->set_outer_color(color);
 	new_Triangle->set_outer_reflection(refl_prop);
@@ -428,7 +506,7 @@ Frame* WorldFactory::produceTriangle(
 Frame* WorldFactory::produce_sphere_cap_hexagonal(
 	Frame* mother, const pugi::xml_node node
 ) {
-	assert_child_exists(node, "set_frame");
+	FrameFactory frameFab(node);
 	assert_child_exists(node, "set_surface");
 	assert_child_exists(node, "set_sphere_cap_hexagonal");
 
@@ -438,7 +516,6 @@ Frame* WorldFactory::produce_sphere_cap_hexagonal(
 	const Color*		color;
 	const ReflectionProperties*	refl_prop;
 
-	extract_Frame_props(name, position, rotation, node.child("set_frame"));
 	color = extract_color(node.child("set_surface"));
 	refl_prop = extract_reflection(node.child("set_surface"));
 
@@ -448,13 +525,18 @@ Frame* WorldFactory::produce_sphere_cap_hexagonal(
 	extract_sphere_cap_hexagonal(
 		focal_length, outer_radius, node.child("set_sphere_cap_hexagonal")
 	);
+	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());
 
-	cap->set_name_pos_rot(name,position,rotation);
+	cap->set_name_pos_rot(
+		frameFab.get_name(), 
+		frameFab.get_position(), 
+		frameFab.get_rotation()
+	);
 	cap->set_inner_color(color);
 	cap->set_outer_color(color);
 	cap->set_outer_reflection(refl_prop);
 	cap->set_inner_reflection(refl_prop);
-	cap->set_focal_length_and_outer_hex_radius(focal_length, outer_radius);
+	cap->set_curvature_radius_and_outer_hex_radius(2.0*focal_length, outer_radius);
 	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
 
 	mother->set_mother_and_child(cap);
@@ -478,16 +560,17 @@ const ReflectionProperties* WorldFactory::extract_reflection(
 
 	std::string refl_attribure = node.attribute("refl").value();
 
-	// In case the reflection attribute string ends with '.xml', then the
-	// reflection coefficient is parsed in out of a xml file. 
-	// There the reflection coefficient can be defined as a function of the
-	// wavelength. 
-
 	ReflectionProperties* refl_prop;
-	if( StringTools::is_ending(refl_attribure, ".xml") )
-		refl_prop = new ReflectionProperties((absolute_path + refl_attribure));
-	else
+	if( StringTools::is_ending(refl_attribure, ".txt") ) {
+
+		Function::LinInterpol* refl = new Function::LinInterpol(
+			AsciiIo::gen_table_from_file((absolute_path + refl_attribure))
+		);
+
+		refl_prop = new ReflectionProperties(refl);
+	}else{
 		refl_prop = new ReflectionProperties(StrToDouble(refl_attribure));
+	}
 
 	return refl_prop;
 }
@@ -500,47 +583,6 @@ const Color* WorldFactory::extract_color(const pugi::xml_node node) {
 	
 	Color* colour = new Color(red, blu, gre);
 	return colour;
-}
-//------------------------------------------------------------------------------
-void WorldFactory::extract_Frame_props(
-	std::string &name, Vector3D &position, Rotation3D &rotation,
-	const pugi::xml_node node
-){	
-	assert_attribute_exists(node, "name");
-	name = node.attribute("name").value();
-
-	assert_attribute_exists(node, "pos");
-	double pX, pY, pZ;
-	strto3tuple(pX, pY, pZ, node.attribute("pos").value());
-	position.set(pX, pY, pZ);
-
-	extract_rotation_props(position, rotation, node);
-}
-//------------------------------------------------------------------------------
-void WorldFactory::extract_rotation_props(
-	const Vector3D &position, Rotation3D &rotation, const pugi::xml_node node
-){	
-	if(has_attribute(node, "z_reflects_to")) {
-
-		double fx, fy, fz;
-		strto3tuple(fx, fy, fz, node.attribute("z_reflects_to").value());
-		
-		Vector3D focal_point(fx, fy, fz);
-		Vector3D focal_point_to_pos = focal_point - position;
-		Vector3D rotation_axis = focal_point_to_pos.cross(Vector3D::unit_z);
-
-		double rot_angle = -0.5 * Vector3D::unit_z.get_angle_in_between_in_rad(
-			focal_point_to_pos
-		);
-
-		rotation.set(rotation_axis, rot_angle);	
-	}else{
-
-		assert_attribute_exists(node, "rot");	
-		double rX, rY, rZ;
-		strto3tuple(rX, rY, rZ, node.attribute("rot").value());
-		rotation.set(rX, rY, rZ);		
-	}	
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_Plane_props(

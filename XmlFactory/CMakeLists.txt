@@ -1,0 +1,16 @@
+set(SOURCE
+   	${SOURCE}
+   	${CMAKE_CURRENT_SOURCE_DIR}/WorldFactory.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Vector3DFactory.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Rotation3DFactory.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/FrameFactory.cpp
+   	PARENT_SCOPE
+)
+set(HEADERS
+	${HEADERS}
+   	${CMAKE_CURRENT_SOURCE_DIR}/WorldFactory.h
+	${CMAKE_CURRENT_SOURCE_DIR}/Vector3DFactory.h
+	${CMAKE_CURRENT_SOURCE_DIR}/Rotation3DFactory.h
+	${CMAKE_CURRENT_SOURCE_DIR}/FrameFactory.h
+	PARENT_SCOPE
+)
