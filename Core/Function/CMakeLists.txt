@@ -1,0 +1,20 @@
+set(SOURCE
+   	${SOURCE}
+   	${CMAKE_CURRENT_SOURCE_DIR}/FunctionLimits.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Func1DFunction.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ConcatFunction.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ConstantFunction.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/LinInterpolFunction.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Polynom3Function.cpp
+   	PARENT_SCOPE
+)
+set(HEADERS
+	${HEADERS}
+	${CMAKE_CURRENT_SOURCE_DIR}/FunctionLimits.h
+	${CMAKE_CURRENT_SOURCE_DIR}/Func1DFunction.h
+	${CMAKE_CURRENT_SOURCE_DIR}/ConcatFunction.h
+	${CMAKE_CURRENT_SOURCE_DIR}/ConstantFunction.h
+	${CMAKE_CURRENT_SOURCE_DIR}/LinInterpolFunction.h
+	${CMAKE_CURRENT_SOURCE_DIR}/Polynom3Function.h
+   	PARENT_SCOPE
+)
