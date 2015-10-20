@@ -31,7 +31,7 @@
 #include "HexGridXyTest.cpp"
 #include "AsciiIoTest.cpp"
 #include "ProgramOptionsTest.cpp"
-#include "Func1DTest.cpp"
+#include "FunctionLinInterpolTest.cpp"
 //#include "Func1DSpeedTest.cpp"
 #include "PhotonBunchTest.cpp"
 #include "PostInitFrameSpeed.cpp"
