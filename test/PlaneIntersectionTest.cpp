@@ -45,7 +45,7 @@ class PlaneIntersectionTest : public ::testing::Test {
 	plane.set_inner_color(colo);
 	plane.set_outer_reflection(refl);
 	plane.set_inner_reflection(refl);
-	plane.set_plane_using_x_and_y_width(x_width, y_width);
+	plane.set_x_y_width(x_width, y_width);
 
 	//----------declare relationships------------
 	world.set_mother_and_child(&plane);
@@ -118,7 +118,7 @@ TEST_F(PlaneIntersectionTest, move_plane_up) {
 	plane.set_inner_color(colo);
 	plane.set_outer_reflection(refl);
 	plane.set_inner_reflection(refl);
-	plane.set_plane_using_x_and_y_width(x_width, y_width);
+	plane.set_x_y_width(x_width, y_width);
 
 	//----------declare relationships------------
 	world.set_mother_and_child(&plane);
