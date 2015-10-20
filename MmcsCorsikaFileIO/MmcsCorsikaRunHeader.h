@@ -57,6 +57,8 @@ class MmcsCorsikaRunHeader {
     float NFLPI0_plus_100_times_NFLPIF;
     float NFLCHE_plus_100_times_NFRAGM;
 public:
+    MmcsCorsikaRunHeader();
+    MmcsCorsikaRunHeader(const std::vector<float>& block);
     void create_from_mmcs_sub_block(const MmcsCorsikaSubBlock &mmcs_sub_block);    
    	void print()const;
     std::string get_print()const;
