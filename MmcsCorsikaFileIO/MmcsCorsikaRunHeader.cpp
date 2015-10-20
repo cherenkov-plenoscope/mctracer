@@ -1,5 +1,19 @@
 #include "MmcsCorsikaRunHeader.h"
 //------------------------------------------------------------------------------
+MmcsCorsikaRunHeader::MmcsCorsikaRunHeader()
+{
+	// nothing;
+}
+    
+MmcsCorsikaRunHeader::MmcsCorsikaRunHeader(const std::vector<float>& block){
+	MmcsCorsikaSubBlock dummy;
+	for (size_t i=0; i<block.size(); i++)
+		dummy[i] = block[i];
+
+	create_from_mmcs_sub_block(dummy);
+}
+    
+
 void MmcsCorsikaRunHeader::create_from_mmcs_sub_block(
 	const MmcsCorsikaSubBlock &mmcs_sub_block
 ) {
