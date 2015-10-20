@@ -17,7 +17,6 @@
 #include "Tools/FileTools.h"
 #include "Core/TimeStamp.h"
 #include "cmdline/cmdline.h"
-#include "WorldFactory.h"
 #include "Cameras/FreeOrbitCamera.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaFullEventGetter.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaPhotonData.h"

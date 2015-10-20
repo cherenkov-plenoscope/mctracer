@@ -1,6 +1,7 @@
 #include "ToDoScheduler.h"
 #include "PhotonBunch.h"
 #include "ProgramOptions.h"
+#include "XmlFactory/WorldFactory.h"
 //------------------------------------------------------------------------------
 ToDoScheduler::ToDoScheduler(int argc, char** argv) {
 
