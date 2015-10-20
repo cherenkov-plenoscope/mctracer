@@ -2,7 +2,7 @@
 #include <string>
 
 #include "gtest/gtest.h"
-#include "../WorldFactory.h"
+#include "../XmlFactory/WorldFactory.h"
 
 using namespace std;
 
