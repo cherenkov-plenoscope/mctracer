@@ -1,6 +1,6 @@
  #include "Plane.h"
 //------------------------------------------------------------------------------
-void Plane::set_plane_using_x_and_y_width(
+void Plane::set_x_y_width(
 	const double x_width, 
 	const double y_width
 ){	

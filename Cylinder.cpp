@@ -62,7 +62,7 @@ void Cylinder::assert_start_and_end_point_are_distinct(
 	}
 }
 //------------------------------------------------------------------------------
-void Cylinder::set_cylinder(const double radius, const double length){
+void Cylinder::set_radius_and_length(const double radius, const double length){
 
 	set_cylinder_radius(radius);
 	set_cylinder_length(length);
