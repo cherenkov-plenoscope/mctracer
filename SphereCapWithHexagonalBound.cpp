@@ -1,11 +1,11 @@
 #include "SphereCapWithHexagonalBound.h"
 //------------------------------------------------------------------------------
-void SphereCapWithHexagonalBound::set_focal_length_and_outer_hex_radius(
-	const double focal_length,
+void SphereCapWithHexagonalBound::set_curvature_radius_and_outer_hex_radius(
+	const double curvature_radius,
 	const double outer_hex_radius
 ) {
-	curvature_radius = 2.0*focal_length;
-	this->focal_length = focal_length;
+	this->curvature_radius = curvature_radius;
+	focal_length = curvature_radius*0.5;
 	this->outer_hex_radius = outer_hex_radius;
 	restrict_outer_hex_radius_to_curvature_radius();
 	hexBounds.set_outer_radius(outer_hex_radius);
