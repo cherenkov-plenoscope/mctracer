@@ -1,4 +1,8 @@
 #include "TracerException.h"
+#include <string>
+#include <cstring>
+#include <sstream>
+#include "Tools/StringTools.h"
 //------------------------------------------------------------------------------
 const std::string TracerException::compile_time = 
 	TracerException::get_compile_time();

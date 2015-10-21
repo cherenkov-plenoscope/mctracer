@@ -1,4 +1,5 @@
 #include "AsciiIo.h"
+#include "Tools/StringTools.h"
 namespace AsciiIo {
 	//--------------------------------------------------------------------------
 	std::vector<std::vector<double>> gen_table_from_file(

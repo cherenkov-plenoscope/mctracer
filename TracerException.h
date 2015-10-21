@@ -10,10 +10,6 @@
 // included dependencies
 #include <iostream>
 #include <stdexcept>
-#include <string>
-#include <cstring>
-#include <sstream>
-#include "Tools/StringTools.h"
 
 //------------------------------------------------------------------------------
 class TracerException :public std::exception{
