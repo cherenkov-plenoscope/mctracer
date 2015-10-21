@@ -90,13 +90,13 @@ Vector3D Intersection::get_reflection_direction_in_world_system(
 //------------------------------------------------------------------------------
 double Intersection::get_facing_reflection_propability()const {
 	return _from_outside_to_inside ?
-	intersecting_object->get_outer_reflection()->ReflectionCoefficient():
-	intersecting_object->get_inner_reflection()->ReflectionCoefficient();
+	(*intersecting_object->get_outer_reflection())():
+	(*intersecting_object->get_inner_reflection())();
 }
 double Intersection::get_facing_reflection_propability(const double wavelength)const {
 	return _from_outside_to_inside ?
-	intersecting_object->get_outer_reflection()->ReflectionCoefficient(wavelength):
-	intersecting_object->get_inner_reflection()->ReflectionCoefficient(wavelength);
+	(*intersecting_object->get_outer_reflection())(wavelength):
+	(*intersecting_object->get_inner_reflection())(wavelength);
 }
 //------------------------------------------------------------------------------
 double Intersection::get_refractive_index_going_to()const {

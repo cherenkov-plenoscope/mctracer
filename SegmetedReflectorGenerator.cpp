@@ -234,8 +234,8 @@ void SegmetedReflectorGenerator::init_facets() {
 		facet->set_inner_color(inner_mirror_colour);
 		facet->set_outer_reflection(outer_mirror_reflection);
 
-		facet->set_focal_length_and_outer_hex_radius(
-			focal_length,
+		facet->set_curvature_radius_and_outer_hex_radius(
+			focal_length*2.0,
 			facet_radius
 		);		
 	}	

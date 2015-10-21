@@ -31,11 +31,12 @@
 #include "HexGridXyTest.cpp"
 #include "AsciiIoTest.cpp"
 #include "ProgramOptionsTest.cpp"
-#include "Func1DTest.cpp"
-#include "Func1DSpeedTest.cpp"
+#include "FunctionLinInterpolTest.cpp"
+//#include "Func1DSpeedTest.cpp"
 #include "PhotonBunchTest.cpp"
 #include "PostInitFrameSpeed.cpp"
 #include "EventIoTest.cpp"
+#include "FunctionTest.cpp"
 
 int main(int argc, char **argv) {
 	UserInteraction::print_welcome_screen();

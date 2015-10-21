@@ -26,38 +26,7 @@
 
 \modulolinenumbers[1]
 \journal{Journal of \LaTeX\ Templates}
-
-%%%%%%%%%%%%%%%%%%%%%%%
-%% Elsevier bibliography styles
-%%%%%%%%%%%%%%%%%%%%%%%
-%% To change the style, put a % in front of the second line of the current style and
-%% remove the % from the second line of the style you would like to use.
-%%%%%%%%%%%%%%%%%%%%%%%
-
-%% Numbered
-%\bibliographystyle{model1-num-names}
-
-%% Numbered without titles
-%\bibliographystyle{model1a-num-names}
-
-%% Harvard
-%\bibliographystyle{model2-names.bst}\biboptions{authoryear}
-
-%% Vancouver numbered
-%\usepackage{numcompress}\bibliographystyle{model3-num-names}
-
-%% Vancouver name/year
-%\usepackage{numcompress}\bibliographystyle{model4-names}\biboptions{authoryear}
-
-%% APA style
-%\bibliographystyle{model5-names}\biboptions{authoryear}
-
-%% AMA style
-%\usepackage{numcompress}\bibliographystyle{model6-num-names}
-
-%% `Elsevier LaTeX' style
 \bibliographystyle{elsarticle-num}
-%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 %-------------------------------------------------------------------------------
@@ -135,15 +104,22 @@ This way rays can easily and fast be transformed back and forth from the root tr
 %-------------------------------------------------------------------------------
 \section{How to set up a scenery in source code}
 %
-First we define the main frame of our scenery. This frame, often called world, will be the root of the scenery \ref{SubSecRootFrame}. 
+We will build a little scenery of a house with a roof and chimney as well as a simple tree. Further we add a small telescope with a reflective imaging mirror.
+%
+First we will define the geometry and their surfaces, second we will declare the relations between them. Third and finally we will update all frames relation w.r.t. the root frame to enable fast tracing (post initializing).
+% 
+%
+First we define the main frame of our scenery. The main frame, often called world, will be the root of the scenery tree \ref{SubSecRootFrame}. 
 %
 \CppFileStartEnd{examples/set_up_scenery.cpp}{world}{tree}
 %
-Second we define frames that will hold individual structures like a tree which will be composed from several objects. The tree will be placed in $x=5\,$m w.r.t. its later mother frame, i.e. the wolrd. 
+Second we define frames that hold individual structures like a tree which will be composed from several objects. The tree will be placed in $x=5\,$m w.r.t. its later mother frame, i.e. the wolrd. 
 %
-\CppFileStartEnd{examples/set_up_scenery.cpp}{tree}{leaf_ball}
+\CppFileStartEnd{examples/set_up_scenery.cpp}{tree}{house}
 Also part of the tree is the wooden pole.
 \CppFileStartEnd{examples/set_up_scenery.cpp}{leaf_ball}{tree_pole}
+and the rest of the source...
+\CppFileStartEnd{examples/set_up_scenery.cpp}{tree_pole}{end_set_up_scene_in_source}
 %-------------------------------------------------------------------------------
 \bibliography{mct}
 %-------------------------------------------------------------------------------

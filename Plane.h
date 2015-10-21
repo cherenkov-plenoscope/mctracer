@@ -26,7 +26,7 @@ protected:
 	const Vector3D plane_surface_normal = Vector3D(0.0,0.0,1.0);
 public:
 
-	void set_plane_using_x_and_y_width(
+	void set_x_y_width(
 		const double x_width,
 		const double y_width
 	);

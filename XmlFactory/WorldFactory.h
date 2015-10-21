@@ -31,6 +31,7 @@
 #include "TelescopeArrayControl.h"
 #include "SphereCapWithHexagonalBound.h"
 #include "SphereCapWithCylinderBound.h"
+#include "BiConvexLensHexBound.h"
 
 //------------------------------------------------------------------------------
 class WorldFactory : public XmlFileIo{
@@ -51,30 +52,22 @@ public:
 private:
 
 	void add_to_sensors_if_sensitive(const pugi::xml_node node, Frame* frame);
-
 	void add_to_array_if_telescope(const pugi::xml_node node, Frame* frame);
-	
-	void load_file(
-		Frame* mother,
-		std::string path,
-		std::string filename
-	);
-
+	void load_file(Frame* mother, std::string path, std::string filename);
 	void extract_include_path(std::string &path,const pugi::xml_node node);
-
 	void include_file(Frame* mother,const pugi::xml_node node);
-
 	void fabricate_frame(Frame* mother,const pugi::xml_node frame_node);
-
 	void go_on_with_children_of_node(
 		Frame* mother,
 		const pugi::xml_node node
 	);
 
-	Frame* produceFrame(
-		Frame* mother,
-		const pugi::xml_node frame_node
+	Vector3D extract_vector_with_name_in_node(
+		const std::string name,
+		const pugi::xml_node node
 	);
+
+	Frame* produceFrame(Frame* mother, const pugi::xml_node frame_node);
 
 	Frame* producePlane(
 		Frame* mother,
@@ -111,12 +104,19 @@ private:
 		const pugi::xml_node node
 	);
 
-	void extract_Frame_props(
-		std::string &name,
-		Vector3D &position,
-		Rotation3D &rotation,
-		const pugi::xml_node frame_node
+	Frame* produceBiConvexLensHex(
+		Frame* mother,
+		const pugi::xml_node node
 	);
+
+	RefractiveIndex* extract_medium(
+		const pugi::xml_node node
+	);
+
+	void extractBiConvexLensHex(
+		double &curv_radius, double &outer_radius, const pugi::xml_node node
+	);
+
 
 	void extract_rotation_props(
 		const Vector3D &position, 

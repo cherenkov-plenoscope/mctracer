@@ -1,14 +1,15 @@
 #include "AbsorptionProperties.h"
 //------------------------------------------------------------------------------
-AbsorptionProperties::AbsorptionProperties(const double mean_half_way_depth) {
-	this->mean_half_way_depth = mean_half_way_depth;
+AbsorptionProperties::AbsorptionProperties(const double _mean_half_way_depth) {
+	mean_half_way_depth = _mean_half_way_depth;
 }
 //------------------------------------------------------------------------------
 AbsorptionProperties::AbsorptionProperties(
 	const std::string path
 ) {
-	half_way_depth_func = new Func1D(AsciiIo::gen_table_from_file(path));
-	mean_half_way_depth = half_way_depth_func->get_weighted_mean_of_value();
+	half_way_depth_func = new Function::LinInterpol(
+		AsciiIo::gen_table_from_file(path)
+	);
 }
 //------------------------------------------------------------------------------
 double AbsorptionProperties::get_half_way_depth()const {
@@ -16,10 +17,7 @@ double AbsorptionProperties::get_half_way_depth()const {
 }
 //------------------------------------------------------------------------------
 double AbsorptionProperties::get_half_way_depth(const double wavelength)const {
-	if(half_way_depth_func == nullptr)
-		return mean_half_way_depth;
-	else
-		return half_way_depth_func->interploate_value_at_argument(wavelength);
+	return (*half_way_depth_func)(wavelength);
 }
 //------------------------------------------------------------------------------
 std::string AbsorptionProperties::get_print()const {

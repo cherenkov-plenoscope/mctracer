@@ -16,6 +16,20 @@ bool is_even(const int n) {
 	return !is_odd(n);
 }
 //------------------------------------------------------------------------------
+std::string get_print(const std::vector<std::vector<double>> &table) {
+
+	std::stringstream out;
+	out << "\n";
+	for(std::vector<double> row : table) {
+		for(double entry : row) {
+			out << entry << "\t";
+		}
+		out << "\n";
+	}
+	
+	return out.str();	
+}
+//------------------------------------------------------------------------------
 namespace UserInteraction {
 
 	std::string input(const std::string request) {

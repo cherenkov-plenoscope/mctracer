@@ -22,8 +22,8 @@ protected:
 	double outer_hex_radius;
 public:
 
-	void set_focal_length_and_outer_hex_radius(
-		const double focal_length,
+	void set_curvature_radius_and_outer_hex_radius(
+		const double curvature_radius,
 		const double outer_hex_radius
 	);
 

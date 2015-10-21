@@ -1,3 +1,4 @@
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/Function")
 set(SOURCE
    	${SOURCE}
 	${CMAKE_CURRENT_SOURCE_DIR}/Vector3D.cpp
@@ -20,6 +21,31 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/RefractiveIndex.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TimeStamp.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/PseudoRandomNumberGenerator.cpp	
+	${CMAKE_CURRENT_SOURCE_DIR}/PseudoRandomNumberGenerator.cpp
+   	PARENT_SCOPE
+)
+set(HEADERS
+	${HEADERS}
+	${CMAKE_CURRENT_SOURCE_DIR}/Vector3D.h
+	${CMAKE_CURRENT_SOURCE_DIR}/Rotation3D.h
+	${CMAKE_CURRENT_SOURCE_DIR}/HomoTrafo3D.h	
+	${CMAKE_CURRENT_SOURCE_DIR}/Intersection.h	
+	${CMAKE_CURRENT_SOURCE_DIR}/Frame.h	
+	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceEntity.h	
+	${CMAKE_CURRENT_SOURCE_DIR}/Ray.h
+	${CMAKE_CURRENT_SOURCE_DIR}/RayAndBoundingSphereInteraction.h	
+	${CMAKE_CURRENT_SOURCE_DIR}/RayAndFrameInteraction.h
+	${CMAKE_CURRENT_SOURCE_DIR}/RayForPropagation.h
+	${CMAKE_CURRENT_SOURCE_DIR}/TracerSettings.h
+	${CMAKE_CURRENT_SOURCE_DIR}/Photon.h
+	${CMAKE_CURRENT_SOURCE_DIR}/PhotonBunch.h
+	${CMAKE_CURRENT_SOURCE_DIR}/PropagationEnvironment.h
+	${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.h
+	${CMAKE_CURRENT_SOURCE_DIR}/ReflectionProperties.h
+	${CMAKE_CURRENT_SOURCE_DIR}/AbsorptionProperties.h	
+	${CMAKE_CURRENT_SOURCE_DIR}/RefractiveIndex.h 
+	${CMAKE_CURRENT_SOURCE_DIR}/Color.h
+	${CMAKE_CURRENT_SOURCE_DIR}/TimeStamp.h
+	${CMAKE_CURRENT_SOURCE_DIR}/PseudoRandomNumberGenerator.h
    	PARENT_SCOPE
 )

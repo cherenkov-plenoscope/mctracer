@@ -14,14 +14,14 @@
 #include <vector>
 #include <utility>
 #include "Tools/AsciiIo.h"
-#include "Func1D.h"
+#include "Core/Function/LinInterpolFunction.h"
 #include "TracerException.h"
 
 //=======================================================================
 class AbsorptionProperties {
 private:	
 	double mean_half_way_depth;
-	Func1D* half_way_depth_func = nullptr;
+	Function::Func1D* half_way_depth_func = nullptr;
 public:
 
 	AbsorptionProperties(const double mean_half_way_depth);

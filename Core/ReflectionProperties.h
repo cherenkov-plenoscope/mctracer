@@ -14,35 +14,26 @@
 #include <vector>
 #include <utility>
 #include "Function1D.h"
+#include "Core/Function/Func1DFunction.h"
 #include "TracerException.h"
 
 //=======================================================================
 class ReflectionProperties {
-
 private:	
 
-	bool  reflection_flag = false;
-	double simple_reflection_coefficient = 0.0;
-
-	bool reflection_function_was_set = false;
-	Function1D* reflection_function = nullptr;
+	const Function::Func1D* reflectivity_vs_wavelength;
 public:
+	
 	ReflectionProperties(const double refl_coef);
-	ReflectionProperties(const std::string path2xml);
+	ReflectionProperties(const Function::Func1D* _reflectivity_vs_wavelength);
 
-	double ReflectionCoefficient() const;
-	double ReflectionCoefficient(double wavelength) const;	
-
-	bool flag()const;
+	double operator()(const double wavelength)const;
+	double operator()()const;
 
 	std::string get_print() const;
 private:
-	void SetReflectionCoefficient(const double new_refl_coeff);
-	void SetReflectionCoefficient(const std::string path2xml);
 
-	void reset_reflection_function();
 	void assert_in_range_0_to_1(const double refl)const;
-friend 
-std::ostream& operator<<(std::ostream& os, const ReflectionProperties& ref);
+	friend std::ostream& operator<<(std::ostream& os, const ReflectionProperties& ref);
 };
 #endif // __REFLECTIONPROPERTIES_H_INCLUDED__ 

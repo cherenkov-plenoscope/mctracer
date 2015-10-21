@@ -84,7 +84,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
   mirror1.set_inner_color(&colo);
   mirror1.set_outer_reflection(&refl);
   mirror1.set_inner_reflection(&refl); 
-  mirror1.set_plane_using_x_and_y_width(1.0, 1.0);
+  mirror1.set_x_y_width(1.0, 1.0);
   
   //------------mirror 2----------------
   pos.set(0.0,0.0,1.0);
@@ -95,7 +95,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
   mirror2.set_inner_color(&colo);
   mirror2.set_outer_reflection(&refl);
   mirror2.set_inner_reflection(&refl);
-  mirror2.set_plane_using_x_and_y_width(1.0, 1.0);
+  mirror2.set_x_y_width(1.0, 1.0);
 
   //----------declare relationships------------
   optical_table.set_mother_and_child(&mirror1);
@@ -188,7 +188,7 @@ TEST_F(PhotonTest, Reflections){
   mirror.set_inner_color(&mirror_color);
   mirror.set_outer_reflection(&mirror_reflection);
   mirror.set_inner_reflection(&mirror_reflection); 
-  mirror.set_plane_using_x_and_y_width(1.0, 1.0);
+  mirror.set_x_y_width(1.0, 1.0);
   
   //------------absorber----------------
   ReflectionProperties  absorber_reflection(0.0);
@@ -203,7 +203,7 @@ TEST_F(PhotonTest, Reflections){
   absorber.set_name_pos_rot("absorber",pos,rot);
   absorber.set_outer_color(&absorber_color);
   absorber.set_inner_color(&absorber_color);
-  absorber.set_plane_using_x_and_y_width(1.0, 1.0);
+  absorber.set_x_y_width(1.0, 1.0);
 
   //----------declare relationships------------
   optical_table.set_mother_and_child(&mirror);
