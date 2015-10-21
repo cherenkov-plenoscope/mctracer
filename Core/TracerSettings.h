@@ -29,7 +29,7 @@ private:
 		// very last interaction, i.e. the absorbtion of the Photon will be 
 		// stored in the history. 
 
-	Color default_colour;
+	Color default_color;
 		// The default background colour in the raytracing images 
 
 	//--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ public:
 	bool MultiThread()const;
 	void SetMultiThread( bool flag );	
 	void set_max_number_of_reflections(const int new_max_number_of_reflections);
-	Color get_default_colour()const;
+	Color get_default_color()const;
 	int get_max_number_of_reflections()const;
 	//unsigned get_decimal_precision_for_csv_output()const;
 	bool max_number_of_reflections_is_not_reached_yet(

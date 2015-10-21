@@ -44,7 +44,7 @@ Color CameraRay::trace(
 			color = intersection->get_facing_color();
 		}
 	}else{
-		color = settings->get_default_colour();
+		color = settings->get_default_color();
 	}
 
 	delete intersection;
