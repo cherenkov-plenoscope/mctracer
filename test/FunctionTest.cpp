@@ -1,7 +1,3 @@
-#include <iostream> 
-#include <string>
-#include <math.h>
-
 #include "gtest/gtest.h"
 #include "Core/Function/Func1DFunction.h"
 #include "Core/Function/ConstantFunction.h"
@@ -9,37 +5,7 @@
 #include "Core/Function/LinInterpolFunction.h"
 #include "Core/Function/ConcatFunction.h"
 
-using namespace std;
-
-// The fixture for testing class Foo.
-class FunctionTest : public ::testing::Test {
-    protected:
-    // You can remove any or all of the following functions if its body
-    // is empty.
-	
-    FunctionTest() {
-        // You can do set-up work for each test here.
-    }
-
-    virtual ~FunctionTest() {
-      // You can do clean-up work that doesn't throw exceptions here.
-    }
-
-    // If the constructor and destructor are not enough for setting up
-    // and cleaning up each test, you can define the following methods:
-
-    virtual void SetUp() {
-        // Code here will be called immediately after the constructor (right
-        // before each test).
-    }
-
-    virtual void TearDown() {
-        // Code here will be called immediately after each test (right
-        // before the destructor).
-    }
-
-    // Objects declared here can be used by all tests in the test case for Foo.
-};
+class FunctionTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 // Limits
 //------------------------------------------------------------------------------
