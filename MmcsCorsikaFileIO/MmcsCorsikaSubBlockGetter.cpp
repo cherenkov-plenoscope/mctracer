@@ -1,5 +1,5 @@
 /*
-	This is a refactored version of the python MMCS reader by Dominik Neise.
+	This is a C++ version of the python MMCS reader by Dominik Neise.
 */
 #include "MmcsCorsikaSubBlockGetter.h"
 //------------------------------------------------------------------------------
