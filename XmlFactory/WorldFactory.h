@@ -32,16 +32,24 @@
 #include "SphereCapWithHexagonalBound.h"
 #include "SphereCapWithCylinderBound.h"
 #include "BiConvexLensHexBound.h"
+#include "Core/Function/Func1DFunction.h"
+#include <map>
 
 //------------------------------------------------------------------------------
 class WorldFactory : public XmlFileIo{
 	
+	// resources from xml file
 	Frame* root_of_World;
-	std::string absolute_path ="";
-
 	std::vector<PhotonSensor*> *__sensors;
-
 	TelescopeArrayControl* telescopes;
+
+	// variables
+	//std::map<std::string, Vector3D*> vectors;
+	//std::map<std::string, Color*> colors;
+	std::map<std::string, Function::Func1D*> functions;
+
+	// intternal
+	std::string absolute_path ="";
 public:
 
 	WorldFactory();

@@ -1,3 +1,19 @@
+<function name="my_funny_function">
+	<look_up file="my_source.txt"/>
+</function>
+
+<function name="constant_function">
+	<constant value="1.337"/>
+</function>
+
+<function name="polynom_function">
+	<polynom3 x3="1.0" x2="0.0" x1="1.2" x0="-1.7"/>
+</function>
+
+<function name="polynom_function">
+	<concat f0="my_funny_function" f1="constant_function" f3="polynom_function" />
+</function>
+
 <frame>
 	<set_frame name="tree" pos="[5,5,0]" rot="[0,0,0]"/>	
 	
