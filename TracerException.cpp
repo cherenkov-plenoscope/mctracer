@@ -11,15 +11,6 @@ TracerException::TracerException(std::string message){
 	this->message = message;
 }
 //------------------------------------------------------------------------------
-TracerException::TracerException(std::string message, ExceptionType Type){
-	this->message = message;
-	this->Type = Type;
-}
-//------------------------------------------------------------------------------
-ExceptionType TracerException::type()const{
-	return Type;
-}
-//------------------------------------------------------------------------------
 const char* TracerException::what()const noexcept {
 	return str2chararray(get_full_message_print());
 }

@@ -24,7 +24,7 @@ void MmcsCorsikaSubBlockGetter::handle_gzip_file()const {
 	std::stringstream info;
 	info << "Gzip files are not supported yet. Can not open MMCS file '";
 	info << filename << "'\n";
-	throw TracerException(info.str(), CAN_NOT_HANDLE_GZIP_FILE);
+	throw TracerException(info.str());
 }
 //------------------------------------------------------------------------------
 void MmcsCorsikaSubBlockGetter::remember_MMCS_file_size_in_bytes() {
@@ -52,7 +52,7 @@ void MmcsCorsikaSubBlockGetter::throw_can_not_open_Mmcs_file(const std::string d
 	std::stringstream info;
 	info << "Can not open MMCS file: '" << filename << "'\n";
 	info << details << "\n";
-	throw TracerException( info.str(), CAN_NOT_OPEN_MMCS_FILE);		
+	throw TracerException( info.str());		
 }
 //------------------------------------------------------------------------------
 MmcsCorsikaSubBlockGetter::~MmcsCorsikaSubBlockGetter() {
@@ -66,7 +66,7 @@ void MmcsCorsikaSubBlockGetter::assert_file_size_is_multiple_of_MMCS_block_size(
 		info << "' is not an exact multiple of the MMCS block size.\n";
 		info << "File size : " << file_size_in_bytes << "byte\n";
 		info << "Block size: " << block_size_in_bytes << "byte\n";
-		throw TracerException(info.str(), FILE_SIZE_IS_NOT_MULTIPLE_OF_MMCS_BLOCKSIZE);			
+		throw TracerException(info.str());			
 	}
 }
 //------------------------------------------------------------------------------

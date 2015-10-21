@@ -1,60 +1,10 @@
-#include <iostream> 
-#include <string>
-#include <math.h>
-
 #include "gtest/gtest.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaFullEventGetter.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaSubBlockGetter.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaPhotonData.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaTools.h"
 
-using namespace std;
-
-// The fixture for testing class Foo.
-class MmcsCorsikaEventGetterTest : public ::testing::Test {
- protected:
-  // You can remove any or all of the following functions if its body
-  // is empty.
-	
-  MmcsCorsikaEventGetterTest() {
-    // You can do set-up work for each test here.
-  }
-
-  virtual ~MmcsCorsikaEventGetterTest() {
-    // You can do clean-up work that doesn't throw exceptions here.
-  }
-
-  // If the constructor and destructor are not enough for setting up
-  // and cleaning up each test, you can define the following methods:
-
-  virtual void SetUp() {
-    // Code here will be called immediately after the constructor (right
-    // before each test).
-  }
-
-  virtual void TearDown() {
-    // Code here will be called immediately after each test (right
-    // before the destructor).
-  }
-
-  // Objects declared here can be used by all tests in the test case for Foo.
-  void EXPECT_EXCEPTION_OF_TYPE_FOR_FILE(
-  	const int problem_type,const std::string &file
-  )const {
- 	bool exception_detected = false;
- 	try{
-		MmcsCorsikaFullEventGetter event_getter(file);
-		while(event_getter.has_still_events_left())
-			MmcsCorsikaEvent event = event_getter.get_next_event();	
-	}catch(TracerException &e ) {
-		exception_detected = true;
-		EXPECT_EQ(problem_type, e.type());
-		if(problem_type != e.type())
-			throw e;
-	}
-	EXPECT_TRUE(exception_detected);	 	
-  }
-};
+class MmcsCorsikaEventGetterTest : public ::testing::Test {};
 //----------------------------------------------------------------------
 TEST_F(MmcsCorsikaEventGetterTest, word_size_is_too_large) {
   	EXPECT_THROW(
@@ -106,17 +56,23 @@ TEST_F(Tools, zero_word_2_float) {
 //----------------------------------------------------------------------
 TEST_F(MmcsCorsikaEventGetterTest, invalid_file_size) {
 
-	EXPECT_EXCEPTION_OF_TYPE_FOR_FILE(
-		FILE_SIZE_IS_NOT_MULTIPLE_OF_MMCS_BLOCKSIZE,
-		"./MMCS_files/not_a_valid_MMCS_file"
+	EXPECT_THROW(
+		MmcsCorsikaFullEventGetter event_getter("./MMCS_files/not_a_valid_MMCS_file");
+		while(event_getter.has_still_events_left())
+			MmcsCorsikaEvent event = event_getter.get_next_event();
+		,
+		TracerException
 	);
 }
 //----------------------------------------------------------------------
 TEST_F(MmcsCorsikaEventGetterTest, gzip_file) {
-
-	EXPECT_EXCEPTION_OF_TYPE_FOR_FILE(
-		CAN_NOT_HANDLE_GZIP_FILE,
-		"./MMCS_files/gzip_file_ending.tar.gz"
+	
+	EXPECT_THROW(
+		MmcsCorsikaFullEventGetter event_getter("./MMCS_files/gzip_file_ending.tar.gz");
+		while(event_getter.has_still_events_left())
+				MmcsCorsikaEvent event = event_getter.get_next_event();
+		,
+		TracerException
 	);
 }
 //----------------------------------------------------------------------
@@ -130,9 +86,12 @@ TEST_F(MmcsCorsikaEventGetterTest, not_existing_file) {
 //----------------------------------------------------------------------
 TEST_F(MmcsCorsikaEventGetterTest, not_existing_file_exception_type) {
 
-	EXPECT_EXCEPTION_OF_TYPE_FOR_FILE(
-		CAN_NOT_OPEN_MMCS_FILE,
-		"./no_such_path/no_such_file"
+	EXPECT_THROW(
+		MmcsCorsikaFullEventGetter event_getter("./no_such_path/no_such_file");
+		while(event_getter.has_still_events_left())
+				MmcsCorsikaEvent event = event_getter.get_next_event();
+		,
+		TracerException
 	);
 }
 //----------------------------------------------------------------------

@@ -126,9 +126,7 @@ void MmcsCorsikaEventHeader::assert_sub_block_is_event_header(
 		info << "Expected the SubBlock to start with the event header Word: ";
 		info << "'EVTH', but actually: '";
 		info << sub_block.get_4char_string_representation_at(0) << "'.";
-		throw TracerException(info.str(), 
-			CAN_NOT_PARSE_MMCS_EVENT_HEADER_FROM_NON_EVTH_SUB_BLOCK
-		);			
+		throw TracerException(info.str());			
 	}
 }
 //------------------------------------------------------------------------------

@@ -15,36 +15,20 @@
 #include <sstream>
 #include "Tools/StringTools.h"
 
-enum ExceptionType {
-	NOT_SPECIFIED,
-	EMPTY_NAME_OF_FRAME,
-	DELIMITER_SYMBOL_IN_NAME_OF_FRAME,
-	WHITE_SPACE_IN_NAME_OF_FRAME,
-	
-	CAN_NOT_OPEN_MMCS_FILE,
-	FILE_SIZE_IS_NOT_MULTIPLE_OF_MMCS_BLOCKSIZE,
-	CAN_NOT_HANDLE_GZIP_FILE,
-	CAN_NOT_PARSE_MMCS_EVENT_HEADER_FROM_NON_EVTH_SUB_BLOCK,
-
-	FINITE_STATE_MASHINE_HAS_DUPLICATE_STATE,
-	FINITE_STATE_MASHINE_UNKNOWN_STATE,
-	FINITE_STATE_MASHINE_DEFINE_STATE_AFTER_TRANSITION
-};
-
 //------------------------------------------------------------------------------
 class TracerException :public std::exception{
 protected:
+
 	std::string message = "";
-	ExceptionType Type = NOT_SPECIFIED;
 	const char* str2chararray(const std::string text)const;
-public:
-	static const std::string compile_time;
-	TracerException(std::string message);
-	TracerException(std::string message, ExceptionType Type);
 	TracerException();
-	ExceptionType type()const;
+public:
+
+	TracerException(std::string message);
 	const char * what () const throw();
+	static const std::string compile_time;
 private:
+
 	std::string get_full_message_print()const;
 	static std::string get_compile_time();
 };
