@@ -14,9 +14,7 @@ namespace Function {
 	void Concat::assert_limits_do_fit()const {
 
 		for(uint i=0; i<conc.size()-1; i++) {
-			if(	conc.at(i)->get_limits().get_upper() != 
-				conc.at(i+1)->get_limits().get_lower()
-			){
+			if(func_does_not_match_limit_of_next_func(i)) {
 				std::stringstream info;
 				info << "Concat of Function 1D in file " << __FILE__ << "\n";
 				info << "Expected limits to fit. ";
@@ -29,6 +27,11 @@ namespace Function {
 				throw TracerException(info.str());			
 			}
 		}
+	}
+	//--------------------------------------------------------------------------
+	bool Concat::func_does_not_match_limit_of_next_func(const uint i)const {
+		return conc.at(i)->get_limits().get_upper() != 
+			conc.at(i+1)->get_limits().get_lower();
 	}
 	//--------------------------------------------------------------------------
 	void Concat::adopt_new_limits() {

@@ -23,6 +23,7 @@ namespace Function {
 		void adopt_new_limits();
 		Func1D* get_sub_function_responsible_for(const double x)const;
 		static bool compare_upper_limit(const double x, const Func1D *f);
+		bool func_does_not_match_limit_of_next_func(const uint i)const;
 	};
 } // namespace Function
 #endif // __FUNCTIONCONCATENATE_H_INCLUDED__
