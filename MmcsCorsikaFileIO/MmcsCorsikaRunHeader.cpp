@@ -17,9 +17,11 @@ void MmcsCorsikaRunHeader::create_from_mmcs_sub_block(
 	const MmcsCorsikaSubBlock &mmcs_sub_block
 ) {
 	this->mmcs_sub_block = mmcs_sub_block;
-
 	assert_sub_block_has_Run_Header();
-	fill_basic_run_information();
+	
+	run_number = mmcs_sub_block[1];
+	date_of_begin_run = int(std::round(mmcs_sub_block[2]));
+	version_of_program = mmcs_sub_block[3];	
 	fill_observation_levels();
 	fill_from(slope_of_energy_spektrum, 15);
     fill_from_until(energy_range, 16, 18);
@@ -70,13 +72,6 @@ void MmcsCorsikaRunHeader::assert_sub_block_has_Run_Header()const {
 		info << "'\n";
 		throw TracerException(info.str());		
 	}
-}
-//------------------------------------------------------------------------------
-void MmcsCorsikaRunHeader::fill_basic_run_information() {
-
-	run_number = mmcs_sub_block[1];
-	date_of_begin_run = int(std::round(mmcs_sub_block[2]));
-	version_of_program = mmcs_sub_block[3];	
 }
 //------------------------------------------------------------------------------
 void MmcsCorsikaRunHeader::fill_observation_levels() {
