@@ -19,12 +19,12 @@ namespace StringTools {
 	bool is_equal(const std::string text_A,const std::string text_B);
 
 	std::string cut_leading_token_infront_of_delimiter( 
-		std::string& text_of_tokens, const char delimiter 
+		std::string &text_of_tokens, const char delimiter 
 	);
 
 	std::string repeat_multiple_times( 
-		std::string text_to_repeat, 
-		unsigned int times 
+		const std::string text_to_repeat, 
+		const unsigned int times 
 	);
 
 	bool is_ending(std::string text, std::string ending);
