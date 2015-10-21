@@ -21,9 +21,7 @@ namespace Function {
 	private:
 		void assert_limits_do_fit()const;
 		void adopt_new_limits();
-		std::vector<Func1D*>::const_iterator get_sub_function_for(
-			const double x
-		)const;
+		Func1D* get_sub_function_responsible_for(const double x)const;
 		static bool compare_upper_limit(const double x, const Func1D *f);
 	};
 } // namespace Function

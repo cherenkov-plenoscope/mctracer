@@ -40,19 +40,18 @@ namespace Function {
 	//--------------------------------------------------------------------------
 	double Concat::operator()(const double x)const {
 		limits.assert_contains(x);
-		std::vector<Func1D*>::const_iterator sub_func = get_sub_function_for(x);
-		return (*(*(sub_func)))(x);
+		Func1D* sub_f = get_sub_function_responsible_for(x);
+		return (*sub_f)(x);
 	}
 	//--------------------------------------------------------------------------
-	std::vector<Func1D*>::const_iterator Concat::get_sub_function_for(
-		const double x
-	)const {
-		return std::upper_bound(
-			conc.begin(),
-			conc.end(), 
-			x, 
-			compare_upper_limit
-		);
+	Func1D* Concat::get_sub_function_responsible_for(const double x)const {
+		return	(*	std::upper_bound(
+						conc.begin(),
+						conc.end(), 
+						x, 
+						compare_upper_limit
+					)
+				);	
 	}
 	//--------------------------------------------------------------------------
 	bool Concat::compare_upper_limit(const double x, const Func1D *f) {
