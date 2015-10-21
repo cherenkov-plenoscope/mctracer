@@ -1,4 +1,5 @@
 #include "Intersection.h"
+#include <limits>
 //------------------------------------------------------------------------------
 const Intersection* Intersection::void_intersection = new Intersection();
 //------------------------------------------------------------------------------
@@ -88,47 +89,28 @@ Vector3D Intersection::get_reflection_direction_in_world_system(
 //------------------------------------------------------------------------------
 #include "Core/Ray.h"
 //------------------------------------------------------------------------------
-double Intersection::get_facing_reflection_propability()const {
-	return _from_outside_to_inside ?
-	(*intersecting_object->get_outer_reflection())():
-	(*intersecting_object->get_inner_reflection())();
-}
 double Intersection::get_facing_reflection_propability(const double wavelength)const {
 	return _from_outside_to_inside ?
 	(*intersecting_object->get_outer_reflection())(wavelength):
 	(*intersecting_object->get_inner_reflection())(wavelength);
 }
 //------------------------------------------------------------------------------
-double Intersection::get_refractive_index_going_to()const {
-	return _from_outside_to_inside ?
-	intersecting_object->get_inner_refraction()->get_index():
-	intersecting_object->get_outer_refraction()->get_index();
-}
 double Intersection::get_refractive_index_going_to(const double wavelength)const {
 	return _from_outside_to_inside ?
 	intersecting_object->get_inner_refraction()->get_index(wavelength):
 	intersecting_object->get_outer_refraction()->get_index(wavelength);
 }
-double Intersection::get_refractive_index_coming_from()const {
-	return _from_outside_to_inside ?
-	intersecting_object->get_outer_refraction()->get_index():
-	intersecting_object->get_inner_refraction()->get_index();
-}
+//------------------------------------------------------------------------------
 double Intersection::get_refractive_index_coming_from(const double wavelength)const {
 	return _from_outside_to_inside ?
 	intersecting_object->get_outer_refraction()->get_index(wavelength):
 	intersecting_object->get_inner_refraction()->get_index(wavelength);
 }
 //------------------------------------------------------------------------------
-double Intersection::get_outer_half_way_depth()const {
-	return intersecting_object->get_outer_absorption()->get_half_way_depth();
-}
 double Intersection::get_outer_half_way_depth(const double wavelength)const {
 	return intersecting_object->get_outer_absorption()->get_half_way_depth(wavelength);
 }
-double Intersection::get_inner_half_way_depth()const {
-	return intersecting_object->get_inner_absorption()->get_half_way_depth();
-}
+//------------------------------------------------------------------------------
 double Intersection::get_inner_half_way_depth(const double wavelength)const {
 	return intersecting_object->get_inner_absorption()->get_half_way_depth(wavelength);
 }
