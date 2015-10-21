@@ -13,7 +13,6 @@
 #include <sstream>
 #include <vector>
 #include <utility>
-#include "Function1D.h"
 #include "Core/Function/Func1DFunction.h"
 #include "TracerException.h"
 

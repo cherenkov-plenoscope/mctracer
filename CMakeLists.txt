@@ -55,8 +55,6 @@ set(SOURCE
 
 	${CMAKE_CURRENT_SOURCE_DIR}/TelescopeArrayControl.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PhotonSensor.cpp
-	
-	${CMAKE_CURRENT_SOURCE_DIR}/Function1D.cpp
 
 	${CMAKE_CURRENT_SOURCE_DIR}/Triangle.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Plane.cpp 

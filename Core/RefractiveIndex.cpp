@@ -1,49 +1,32 @@
 #include "RefractiveIndex.h"
+#include "Core/Function/ConstantFunction.h"
 //------------------------------------------------------------------------------
-RefractiveIndex::RefractiveIndex(
-	const double simple_refractive_index_independent_of_wavelength
-) {
-	this->simple_refractive_index_independent_of_wavelength = 
-		simple_refractive_index_independent_of_wavelength;
+RefractiveIndex::RefractiveIndex(const double n) {
+	refraction_vs_wavelength = new Function::Constant(
+		n, Function::Limits(0.0, 900.0)
+	);
 }
 //------------------------------------------------------------------------------
-RefractiveIndex::RefractiveIndex(const std::string path_to_file) {
-
-	reset_refraction_function();
-
-	refraction_function = new Function1D(path_to_file);
-
-	simple_refractive_index_independent_of_wavelength = 
-		refraction_function->get_weighted_mean_of_value();
+RefractiveIndex::RefractiveIndex(const Function::Func1D* n_vs_lambda) {
+	refraction_vs_wavelength = n_vs_lambda;
 }
 //------------------------------------------------------------------------------
 double RefractiveIndex::get_index()const {
-	return simple_refractive_index_independent_of_wavelength;
+	return (*refraction_vs_wavelength)(533.0);
 }
 //------------------------------------------------------------------------------
 double RefractiveIndex::get_index(double wavelength)const {
-	return get_index();
+	return (*refraction_vs_wavelength)(wavelength);
 }
 //------------------------------------------------------------------------------
 std::string RefractiveIndex::get_print()const {
 	
 	std::stringstream out;
-	out << "mean index: " << simple_refractive_index_independent_of_wavelength;
-
-	if(refraction_function != nullptr)
-		out << ", file: " << refraction_function->get_XmlName();
-
+	out << "mean index: " << (*refraction_vs_wavelength)(533.0);
 	return out.str();	
 }
 //------------------------------------------------------------------------------
 std::ostream& operator<<(std::ostream& os, const RefractiveIndex& refraci_ndex){
     os << refraci_ndex.get_print();
     return os;	
-}
-//------------------------------------------------------------------------------
-void RefractiveIndex::reset_refraction_function() {
-	if(refraction_function != nullptr) {
-		delete refraction_function;
-		refraction_function = nullptr;
-	}	
 }

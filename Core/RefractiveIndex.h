@@ -13,23 +13,21 @@
 #include <sstream>
 #include <vector>
 #include <utility>
-#include "Function1D.h"
+#include "Core/Function/Func1DFunction.h"
 #include "TracerException.h"
 
 //=======================================================================
 class RefractiveIndex {
 	
-	double simple_refractive_index_independent_of_wavelength = 1.0;
-	Function1D* refraction_function = nullptr;
+	const Function::Func1D* refraction_vs_wavelength;
 public:
-	RefractiveIndex(const double simple_refractive_index_independent_of_wavelength);
-	RefractiveIndex(const std::string path_to_file);
+	RefractiveIndex(const double n);
+	RefractiveIndex(const Function::Func1D* n_vs_lambda);
 
 	double get_index()const;
 	double get_index(double wavelength)const;
 private:
 	std::string get_print()const;
-	void reset_refraction_function();
 friend 
 	std::ostream& operator<<(std::ostream& os, const RefractiveIndex& refraci_ndex);
 };
