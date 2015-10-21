@@ -35,6 +35,7 @@
 #include "Func1DSpeedTest.cpp"
 #include "PhotonBunchTest.cpp"
 #include "PostInitFrameSpeed.cpp"
+#include "EventIoTest.cpp"
 
 int main(int argc, char **argv) {
 	UserInteraction::print_welcome_screen();
