@@ -359,24 +359,3 @@ TEST_F(Tools, StrToInt) {
   );
 }
 //------------------------------------------------------------------------------
-#include "Core/Vector3D.h"
-#include "Core/Photon.h"
-#include <memory>
-
-TEST_F(Tools, memory_test) {
-  
-  for(uint y=0; y<1e2; y++) {
-
-    std::vector<Photon*> *photon_bunch = new std::vector<Photon*>;
-
-    for(uint i=0; i<1e2; i++) {
-
-      Photon* hans = new Photon(Vector3D::unit_x, Vector3D::unit_z ,133.7);
-      photon_bunch->push_back(hans);
-      //hans->delete_history();
-      //delete hans;
-    }
-
-    //delete photon_bunch;
-  }
-}
