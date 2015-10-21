@@ -29,11 +29,6 @@ namespace StringTools {
 
 	bool is_ending(std::string text, std::string ending);
 
-	void remove_char_from_text_if_leading(
-		const char character_to_remove,
-		std::string &text
-	);
-
 	bool string_contains_char(const std::string &text, const char ch);
 
 	std::string place_first_infront_of_each_new_line_of_second(

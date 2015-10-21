@@ -91,28 +91,6 @@ TEST_F(Tools, StringTools_is_equal) {
   EXPECT_TRUE ( StringTools::is_equal("\n","\n") );
   EXPECT_FALSE( StringTools::is_equal(" Auto","Auto") );
 }
-//----------------------------------------------------------------------
-TEST_F(Tools, StringTools_remove_if_leading) {
-  string Hans = "Hans";
-  StringTools::remove_char_from_text_if_leading('H', Hans); 
-  EXPECT_EQ("ans", Hans);
-
-  string Klaus = "Klaus";
-  StringTools::remove_char_from_text_if_leading('H', Klaus); 
-  EXPECT_EQ("Klaus", Klaus);
-
-  string Peter = "Peter";
-  StringTools::remove_char_from_text_if_leading('t', Peter); 
-  EXPECT_EQ("Peter", Peter); 
-
-  string Willi = " Willi";
-  StringTools::remove_char_from_text_if_leading('W', Willi); 
-  EXPECT_EQ(" Willi", Willi); 
-
-  string Dieter = " Dieter";
-  StringTools::remove_char_from_text_if_leading(' ', Dieter); 
-  EXPECT_EQ("Dieter", Dieter); 
-}
 //------------------------------------------------------------------------------
 TEST_F(Tools, StringTools_cut_leading_token) {
   string names = "Hans,Peter,Klaus";
