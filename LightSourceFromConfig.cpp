@@ -33,7 +33,8 @@ void LightSourceFromConfig::parallel_from_disc() {
 void LightSourceFromConfig::unknown_type() {
 
 	std::stringstream info;
-	info << "LightSourceFromConfig\n";
+	info << "LightSourceFromConfig " << __FILE__ << ", " << __LINE__ << "\n";
+	if(!config.get_filename().empty()) info << config.get_filename() << "\n";
 	info << "Do not know any light source type called: '";
 	info << config.get_value_for_key("type") << "'\n";
 	throw TracerException(info.str());
