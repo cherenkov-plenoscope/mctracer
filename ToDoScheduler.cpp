@@ -7,6 +7,7 @@ ToDoScheduler::ToDoScheduler(int argc, char** argv) {
 
 	define();
 	comand_line_parser.parse_check(argc, argv);
+	execute();
 }
 //------------------------------------------------------------------------------
 void ToDoScheduler::execute() {
