@@ -62,24 +62,20 @@ TEST_F(WorldFactoryTest, DefaultWorld) {
 //------------------------------------------------------------------------------
 TEST_F(WorldFactoryTest, ReadEmptyXML) {
 
-  WorldFactory file2world;
-  Frame *Mworld = NULL;
+    WorldFactory file2world;
+    Frame *Mworld = NULL;
 
-  try{
+    ASSERT_NO_THROW(
+        file2world.load("./test_scenery/empty.xml");
+        Mworld = file2world.world();
+    );
 
-    file2world.load("./test_scenery/empty.xml");
-    Mworld = file2world.world();
-
-  }catch(std::exception& error){
-    cout << error.what() << endl;
-  } 
-
-  // name of default world
-  EXPECT_EQ( Mworld->get_name_of_frame() , "world");
-  // no children in world
-  EXPECT_EQ( Mworld->get_number_of_children() , 0 );
-  // enclosing radius must be zero
-  EXPECT_EQ( 0.0, Mworld->get_radius_of_sphere_enclosing_all_children() );
+    // name of default world
+    EXPECT_EQ( Mworld->get_name_of_frame() , "world");
+    // no children in world
+    EXPECT_EQ( Mworld->get_number_of_children() , 0 );
+    // enclosing radius must be zero
+    EXPECT_EQ( 0.0, Mworld->get_radius_of_sphere_enclosing_all_children() );
 }
 //------------------------------------------------------------------------------
 TEST_F(WorldFactoryTest, ReadNotExistingFile) {
