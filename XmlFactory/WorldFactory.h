@@ -32,25 +32,20 @@
 #include "SphereCapWithHexagonalBound.h"
 #include "SphereCapWithCylinderBound.h"
 #include "BiConvexLensHexBound.h"
-#include "Core/Function/Func1DFunction.h"
-#include <map>
+#include "FunctionFactory.h"
 
 //------------------------------------------------------------------------------
 class WorldFactory : public XmlFileIo{
 	
 	// resources from xml file
 	Frame* root_of_World;
-	std::vector<PhotonSensor*> *__sensors;
+	std::vector<PhotonSensor*> *sensors;
 	TelescopeArrayControl* telescopes;
-
-	// variables
-	//std::map<std::string, Vector3D*> vectors;
-	//std::map<std::string, Color*> colors;
-	std::map<std::string, Function::Func1D*> functions;
-
+	
 	// intternal
 	std::string absolute_path ="";
 public:
+	FunctionFactory *functions;
 
 	WorldFactory();
 	void load(std::string path);
@@ -58,7 +53,7 @@ public:
 	TelescopeArrayControl* get_telescope_array_control()const;
 	std::vector<PhotonSensor*>* sensors_in_world()const;
 private:
-
+	void extract_function_from(const pugi::xml_node node);
 	void add_to_sensors_if_sensitive(const pugi::xml_node node, Frame* frame);
 	void add_to_array_if_telescope(const pugi::xml_node node, Frame* frame);
 	void load_file(Frame* mother, std::string path, std::string filename);

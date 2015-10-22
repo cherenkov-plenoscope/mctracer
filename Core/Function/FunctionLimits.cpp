@@ -44,7 +44,7 @@ namespace Function {
 			std::stringstream info;
 			info << "Numerical Function 1D in file " << __FILE__ << "\n";
 			info << "Expected function argument x ";
-			info << "to be in limits " << lower << "< x <";
+			info << "to be in limits " << lower << "<= x <";
 			info << upper << " but actual x=" << x << "\n";
 			throw TracerException(info.str());
 		}	

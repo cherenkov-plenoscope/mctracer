@@ -16,11 +16,13 @@ class XmlIoFileInfo{
 public:
 
 	std::string get_XmlName()const{return XmlName;};
+	std::string get_XmlRelativePath()const{return XmlRelativePath;};
 	pugi::xml_node get_XmlNode()const{return XmlNode;};
 	pugi::xml_parse_result get_XmlResult()const{return XmlResult;};
 protected:
 
 	std::string 			XmlName = "";
+	std::string XmlRelativePath;
 	pugi::xml_node 			XmlNode;
 	pugi::xml_parse_result 	XmlResult;
 };

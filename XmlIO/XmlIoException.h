@@ -128,8 +128,7 @@ public:
 
 	std::string get_MultipleUseage_print()const{
 		std::stringstream out;
-		out << "| multiple frame: '" << path_of_frame_multiple_in_use << "'\n";
-		out << "| A frame must not have children with the same names!\n";
+		out << "| multiple usage: '" << path_of_frame_multiple_in_use << "'\n";
 		out << "|\n";
 		return out.str();
 	}

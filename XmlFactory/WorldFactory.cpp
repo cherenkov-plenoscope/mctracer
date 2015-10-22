@@ -14,7 +14,8 @@ WorldFactory::WorldFactory(){
 	);
 
 	telescopes = new TelescopeArrayControl();
-	__sensors = new std::vector<PhotonSensor*>;
+	sensors = new std::vector<PhotonSensor*>;
+	functions = new FunctionFactory(this);
 } 
 //------------------------------------------------------------------------------
 void WorldFactory::load(std::string path){
@@ -27,8 +28,8 @@ void WorldFactory::load(std::string path){
 	else
 		absolute_path = path.substr(0,position_in_path + 1); 
 
-	std::string filename = path.substr(position_in_path + 1); 
-
+	std::string filename = path.substr(position_in_path + 1);
+	
    	load_file(root_of_World, absolute_path, filename);
 }
 //------------------------------------------------------------------------------
@@ -41,6 +42,7 @@ void WorldFactory::load_file(
 
 	//remember this file until the next is parsed
 	XmlName = path_of_file_to_load;
+	XmlRelativePath = path;
 
     pugi::xml_document doc;
     pugi::xml_parse_result result = doc.load_file(path_of_file_to_load.c_str());
@@ -100,16 +102,19 @@ void WorldFactory::add_to_sensors_if_sensitive(const pugi::xml_node node, Frame*
 		assert_attribute_exists(sensi, "id");
 		uint id = std::atoi(node.attribute("id").value());
 		PhotonSensor* sens = new PhotonSensor(id, frame);
-		__sensors->push_back(sens);
+		sensors->push_back(sens);
 	}
+}
+//------------------------------------------------------------------------------
+void WorldFactory::extract_function_from(const pugi::xml_node node) {
+	functions->extract_function_from(node);
 }
 //------------------------------------------------------------------------------
 void WorldFactory::fabricate_frame(
 Frame* mother,const pugi::xml_node node){
 	
 	XmlNode = node;
-
-	if(		 StringTools::is_equal(node.name(),"frame")){
+	if(StringTools::is_equal(node.name(),"frame")){
 		mother = produceFrame(mother,node);
 
 	}else if(StringTools::is_equal(node.name(),"triangle")){
@@ -137,7 +142,12 @@ Frame* mother,const pugi::xml_node node){
 		mother = produce_sphere_cap_hexagonal(mother,node);	
 
 	}else if(StringTools::is_equal(node.name(),"include")){
-		include_file(mother,node);		
+		include_file(mother,node);
+
+	}else if(StringTools::is_equal(node.name(),"function")){
+		extract_function_from(node);
+		
+		//std::cout << node.name() << "\n";
 		
 	}else if( mother->has_mother() ){	
 		std::stringstream info;
@@ -151,8 +161,8 @@ Frame* mother,const pugi::xml_node node){
 }
 //------------------------------------------------------------------------------
 void WorldFactory::go_on_with_children_of_node(
-	Frame* mother,const pugi::xml_node node){
-	
+	Frame* mother,const pugi::xml_node node
+) {
 	// go on with children of node
 	for(
 		pugi::xml_node sub_node = node.first_child(); 
@@ -163,6 +173,9 @@ void WorldFactory::go_on_with_children_of_node(
 
 		if 		(StringTools::is_equal(sub_node_name,"include")){
 
+			fabricate_frame(mother,sub_node);
+		}else if(StringTools::is_equal(sub_node_name,"function")){
+			//std::cout << sub_node_name << "\n";
 			fabricate_frame(mother,sub_node);
 		}else if(StringTools::is_equal(sub_node_name,"frame")){
 
@@ -194,12 +207,12 @@ void WorldFactory::go_on_with_children_of_node(
 		}else if(StringTools::is_equal(sub_node_name,"sphere_cap_hexagonal")){
 			
 			fabricate_frame(mother,sub_node);
-		}else if(sub_node_name.find("set") == std::string::npos){
+		}/*else if(sub_node_name.find("set") == std::string::npos){
 
 			std::stringstream info;
 			info << "WorldFactory::" << __func__ << "() found an unknown item.";
 			throw UnknownItem(info.str(), this, sub_node_name);
-		}	
+		}*/	
 	}	
 }
 //------------------------------------------------------------------------------
@@ -677,8 +690,8 @@ Frame* WorldFactory::world(){
 }
 //------------------------------------------------------------------------------
 std::vector<PhotonSensor*>* WorldFactory::sensors_in_world()const {
-	PhotonSensors::sort_photon_sensors_based_on_frames(__sensors);
-	return __sensors;
+	PhotonSensors::sort_photon_sensors_based_on_frames(sensors);
+	return sensors;
 }
 //------------------------------------------------------------------------------
 TelescopeArrayControl* WorldFactory::get_telescope_array_control()const {

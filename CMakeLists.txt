@@ -2,7 +2,7 @@
 # Author Sebastian Mueller
 #-------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 2.8)
-set (CMAKE_CXX_FLAGS "-std=gnu++11 -Wall -pedantic -O3 -I -g")
+set (CMAKE_CXX_FLAGS "-std=gnu++11 -Wall -pedantic -O3 -g -I")
 #-------------------------------------------------------------------------------
 project(mctracer)
 #-------------------------------------------------------------------------------
