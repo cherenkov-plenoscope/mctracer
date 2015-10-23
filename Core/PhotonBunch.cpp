@@ -60,16 +60,15 @@ namespace PhotonBunch {
 			env_for_this_thread_only.random_engine = &dice_for_this_thread_only;
 
 			#pragma omp for schedule(dynamic) private(i)
-			for(i = 0; i<photon_bunch->size(); i++ )
-			{
-				try
-				{
+			for(i = 0; i<photon_bunch->size(); i++ ) {
+				try {
 					ray_counter++;
 					photon_bunch->at(i)->propagate_in(&env_for_this_thread_only);
-				}
-				catch(std::exception &error) {
+				}catch(std::exception &error) {
 					HadCatch++;
 					std::cerr << error.what(); 
+				}catch(...)	{
+					HadCatch++;
 				}
 			}
 
@@ -270,13 +269,27 @@ namespace PhotonBunch {
 		std::vector<Photon*> *photon_bunch
 	) {
 		uint i;
-		#pragma omp parallel shared(photon_bunch)
+		int HadCatch = 0;
+		#pragma omp parallel shared(photon_bunch,HadCatch)
 		{	
 			#pragma omp for schedule(dynamic) private(i) 
-			for(i=0; i<photon_bunch->size(); i++)
-			{
-				photon_bunch->at(i)->transform(&Trafo);
+			for(i=0; i<photon_bunch->size(); i++) {
+				try{
+					photon_bunch->at(i)->transform(&Trafo);
+				}catch(std::exception &error) {
+					HadCatch++;
+					std::cerr << error.what(); 
+				}catch(...)	{
+					HadCatch++;
+				}
 			}
+		}
+
+		if(HadCatch) {
+			std::stringstream info;
+			info << "PhotonBunch::"<<__func__<<"() in "<<__FILE__<<", "<<__LINE__<<"\n";
+			info << "Cought exception during multithread transformation.\n";
+			throw(TracerException(info.str()));
 		}
 	}
 	//--------------------------------------------------------------------------

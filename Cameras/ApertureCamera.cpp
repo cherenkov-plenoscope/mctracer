@@ -238,33 +238,48 @@ void ApertureCamera::acquire_image(
 	Color color_for_single_ray;
 	uint pixel_iterator, row, col;
 	const uint initial_interaction_counter = 0;
+	int HadCatch = 0;
 	
-	#pragma omp parallel shared(settings,world) private(pixel_iterator,cam_ray,average_pixel_color,color_for_single_ray,row,col) 
+	#pragma omp parallel shared(settings,world,HadCatch) private(pixel_iterator,cam_ray,average_pixel_color,color_for_single_ray,row,col) 
 	{	
 		#pragma omp for schedule(dynamic) 
 		for (pixel_iterator = 0; pixel_iterator < image->get_resolution(); pixel_iterator++) 
 		{
-			row = pixel_iterator / image->get_number_of_cols();
-			col = pixel_iterator % image->get_number_of_cols();
-			average_pixel_color.set_RGB_0to255(0,0,0);
+			try {
+				row = pixel_iterator / image->get_number_of_cols();
+				col = pixel_iterator % image->get_number_of_cols();
+				average_pixel_color.set_RGB_0to255(0,0,0);
 
-			for(int j = 0; j < rays_per_pixel; j++ ){
+				for(int j = 0; j < rays_per_pixel; j++ ){
 
-				cam_ray = get_ray_for_pixel_in_row_and_col(row, col);
-			
-				color_for_single_ray = cam_ray.trace(
-					world,
-					initial_interaction_counter,
-					settings
-				);
+					cam_ray = get_ray_for_pixel_in_row_and_col(row, col);
 				
-				average_pixel_color.mixture(
-					&color_for_single_ray,
-					color_weight_for_single_ray
-				);
+					color_for_single_ray = cam_ray.trace(
+						world,
+						initial_interaction_counter,
+						settings
+					);
+					
+					average_pixel_color.mixture(
+						&color_for_single_ray,
+						color_weight_for_single_ray
+					);
+				}
+				image->set_pixel_row_col_to_color(row, col, average_pixel_color);
+			}catch(std::exception &error) {
+				HadCatch++;
+				std::cerr << error.what(); 
+			}catch(...) {
+				HadCatch++;
 			}
-			image->set_pixel_row_col_to_color(row, col, average_pixel_color);
 		}
-	}  
+	}
+
+	if(HadCatch) {
+		std::stringstream info;
+		info << "ApertureCamera::"<<__func__<<"() in "<<__FILE__<<", "<<__LINE__<<"\n";
+		info << "Cought exception during multithread ray tracing.\n";
+		throw(TracerException(info.str()));
+	} 
 }
 //------------------------------------------------------------------------------
