@@ -3,7 +3,8 @@
 #include "TracerException.h"
 
 namespace Function {
-
+	const Limits Limits::void_limits = Limits(0.0, 0.0);
+	//--------------------------------------------------------------------------
 	Limits::Limits(const double _lower, const double _upper) {
 		lower = _lower;
 		upper = _upper;

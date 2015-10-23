@@ -12,6 +12,7 @@
 
 <function name="concat_function">
 	<concatenation f0="my_funny_function" f1="constant_function" f2="polynom_function" />
+	<export samples="1000" file="concat_sample.txt"/>
 </function>
 
 <frame>

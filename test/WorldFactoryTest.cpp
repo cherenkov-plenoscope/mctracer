@@ -180,21 +180,21 @@ TEST_F(WorldFactoryTest, read_functions) {
     WorldFactory fab;
     fab.load("./test_scenery/functions_as_variables.xml");;
 
-    Function::Func1D* f_lin = fab.functions->get_function("my_funny_function");
+    const Function::Func1D* f_lin = fab.functions->get_function("my_funny_function");
     EXPECT_EQ(100e-9, f_lin->get_limits().get_lower());
     EXPECT_EQ(200e-9, f_lin->get_limits().get_upper());
     EXPECT_NEAR(0.1, (*f_lin)(105e-9), 1e-9);
     EXPECT_NEAR(0.9, (*f_lin)(125e-9), 1e-9);
     EXPECT_NEAR(0.1, (*f_lin)(190e-9), 1e-9);
 
-    Function::Func1D* f_con = fab.functions->get_function("constant_function");
+    const Function::Func1D* f_con = fab.functions->get_function("constant_function");
     EXPECT_EQ(200e-9, f_con->get_limits().get_lower());
     EXPECT_EQ(400e-9, f_con->get_limits().get_upper());
     EXPECT_EQ(1.337, (*f_con)(200e-9));
     EXPECT_EQ(1.337, (*f_con)(300e-9));
     EXPECT_EQ(1.337, (*f_con)(399e-9));
 
-    Function::Func1D* f_pol = fab.functions->get_function("polynom_function");
+    const Function::Func1D* f_pol = fab.functions->get_function("polynom_function");
     EXPECT_EQ( 400e-9, f_pol->get_limits().get_lower());
     EXPECT_EQ(1200e-9, f_pol->get_limits().get_upper());
     double x = 400e-9;
@@ -208,7 +208,7 @@ TEST_F(WorldFactoryTest, read_functions) {
     x = 700e-9;
     EXPECT_NEAR(x*x*x*1.0+x*x*0.0+x*1.2-1.7, (*f_pol)(x), 1e-9);
 
-    Function::Func1D* f_concat = fab.functions->get_function("concat_function");
+    const Function::Func1D* f_concat = fab.functions->get_function("concat_function");
     EXPECT_EQ(100e-9, f_concat->get_limits().get_lower());
     EXPECT_EQ(1200e-9, f_concat->get_limits().get_upper());
 

@@ -9,40 +9,60 @@
 //------------------------------------------------------------------------------
 FunctionFactory::FunctionFactory(const XmlFileIo* io_to_take_over) {
 	mother_factory = io_to_take_over;
-	/*XmlName = mother_factory->get_XmlName();
-	XmlNode = mother_factory->get_XmlNode();
-	XmlResult = mother_factory->get_XmlResult();
-	XmlRelativePath = mother_factory->get_XmlRelativePath();*/
 }
 //------------------------------------------------------------------------------
 void FunctionFactory::extract_function_from(const pugi::xml_node node) {
 	XmlNode = node;
 	std::string name = extract_name(node);
-	Function::Func1D* func;
+	const Function::Func1D* func = &Function::Constant::void_function;
 
 	for(
 		pugi::xml_node sub_node = node.first_child(); 
 		sub_node; 
 		sub_node = sub_node.next_sibling()
 	){	
-		std::string sub_node_name = sub_node.name();
-
-		if 		(StringTools::is_equal(sub_node_name,"linear_interpolation")){
+		if 		(StringTools::is_equal(sub_node.name(),"linear_interpolation")){
 			func = extract_linear_interpolation(sub_node);
-		}else if(StringTools::is_equal(sub_node_name,"constant")){
+		}else if(StringTools::is_equal(sub_node.name(),"constant")){
 			func = extract_constant(sub_node);
-		}else if(StringTools::is_equal(sub_node_name,"polynom3")){
+		}else if(StringTools::is_equal(sub_node.name(),"polynom3")){
 			func = extract_polynom3(sub_node);
-		}else if(StringTools::is_equal(sub_node_name,"concatenation")){
+		}else if(StringTools::is_equal(sub_node.name(),"concatenation")){
 			func = extract_concatenation(sub_node);
+		}else if(StringTools::is_equal(sub_node.name(),"export")){
+			// ignore
 		}else{
 			std::stringstream info;
 			info << "FunctionFactory " << __FILE__ << ", " << __LINE__;
-			throw UnknownItem(info.str(), mother_factory, sub_node_name);
+			throw UnknownItem(info.str(), mother_factory, sub_node.name());
 		}
 	}
 
-	functions.insert(std::pair<std::string, Function::Func1D*>(name, func));
+	functions.insert(std::pair<std::string, const Function::Func1D*>(name, func));
+	
+	for(
+		pugi::xml_node sub_node = node.first_child(); 
+		sub_node; 
+		sub_node = sub_node.next_sibling()
+	)
+		if (StringTools::is_equal(sub_node.name(),"export"))
+			export_function_based_on_node(func, sub_node);
+}
+//------------------------------------------------------------------------------
+void FunctionFactory::export_function_based_on_node(
+	const Function::Func1D* func,
+	const pugi::xml_node node
+) {
+	assert_attribute_exists(node, "file");
+	std::string export_file_name = node.attribute("file").value();
+
+	assert_attribute_exists(node, "samples");
+	const int n_samples = std::atoi(node.attribute("samples").value());
+
+	AsciiIo::write_table_to_file(
+		func->get_samples(n_samples),
+		mother_factory->get_XmlRelativePath() + export_file_name
+	);
 }
 //------------------------------------------------------------------------------
 std::string FunctionFactory::extract_name(const pugi::xml_node node) {
@@ -126,7 +146,7 @@ Function::Func1D* FunctionFactory::extract_concatenation(
 	const pugi::xml_node node
 ) {
 	std::string attribute = "f0";
-	std::vector<Function::Func1D*> funcs;
+	std::vector<const Function::Func1D*> funcs;
 	uint count = 0;
 
 	while (has_attribute(node, attribute)) {
@@ -155,7 +175,7 @@ Function::Limits FunctionFactory::extract_limits_from_attributes(
 	return Function::Limits(lower_limit, upper_limit);
 }
 //------------------------------------------------------------------------------
-Function::Func1D* FunctionFactory::get_function(const std::string name)const {
+const Function::Func1D* FunctionFactory::get_function(const std::string name)const {
 	assert_has_function(name);
 	return functions.find(name)->second;
 }

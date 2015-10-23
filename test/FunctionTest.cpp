@@ -194,7 +194,7 @@ TEST_F(FunctionTest, Concat_valid_limits) {
     Function::Limits l3(2.0, 3.0);
     Function::Constant f3(1.0, l3);
 
-    std::vector<Function::Func1D*> f = {&f1, &f2, &f3};
+    std::vector<const Function::Func1D*> f = {&f1, &f2, &f3};
 
     Function::Concat con(f);
 
@@ -210,7 +210,7 @@ TEST_F(FunctionTest, Concat_bad_limits) {
     Function::Limits l2(1.1, 2.0);
     Function::Constant f2(4.2, l2);
 
-    std::vector<Function::Func1D*> f = {&f1, &f2};
+    std::vector<const Function::Func1D*> f = {&f1, &f2};
 
     EXPECT_THROW(Function::Concat con(f), TracerException);
 }
@@ -223,7 +223,7 @@ TEST_F(FunctionTest, Concat_bad_access) {
     Function::Limits l2(1.0, 2.0);
     Function::Constant f2(4.2, l2);
 
-    std::vector<Function::Func1D*> f = {&f1, &f2};
+    std::vector<const Function::Func1D*> f = {&f1, &f2};
     Function::Concat con(f);
 
     EXPECT_THROW(con(-0.5), TracerException);
@@ -246,7 +246,7 @@ TEST_F(FunctionTest, Concat_y_in_different_sub_functions) {
     Function::Limits l3(2.0, 3.0);
     Function::Constant f3(3.141, l3);
 
-    std::vector<Function::Func1D*> f = {&f1, &f2, &f3};
+    std::vector<const Function::Func1D*> f = {&f1, &f2, &f3};
 
     Function::Concat con(f);
 

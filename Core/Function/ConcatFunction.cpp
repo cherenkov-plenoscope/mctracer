@@ -5,7 +5,7 @@
 
 namespace Function {
 
-	Concat::Concat(const std::vector<Func1D*> _conc) {
+	Concat::Concat(const std::vector<const Func1D*> _conc) {
 		conc = _conc;
 		assert_limits_do_fit();
 		adopt_new_limits();
@@ -43,11 +43,11 @@ namespace Function {
 	//--------------------------------------------------------------------------
 	double Concat::operator()(const double x)const {
 		limits.assert_contains(x);
-		Func1D* sub_f = get_sub_function_responsible_for(x);
+		const Func1D* sub_f = get_sub_function_responsible_for(x);
 		return (*sub_f)(x);
 	}
 	//--------------------------------------------------------------------------
-	Func1D* Concat::get_sub_function_responsible_for(const double x)const {
+	const Func1D* Concat::get_sub_function_responsible_for(const double x)const {
 		return	(*	std::upper_bound(
 						conc.begin(),
 						conc.end(), 

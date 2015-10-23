@@ -19,6 +19,7 @@ namespace Function {
 
 		Constant(const double val, const Limits &_limit);
 		double operator()(const double x)const;
+		static const Constant void_function;
 	};
 
 } // namespace Function
