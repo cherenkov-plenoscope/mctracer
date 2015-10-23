@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "Core/Function/Func1DFunction.h"
-#include "Core/Function/FunctionLimits.h"
+#include "Core/Function/LimitsFunction.h"
 #include "XmlIO/XmlFileIo.h"
 #include <map>
 //------------------------------------------------------------------------------

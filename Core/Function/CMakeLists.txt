@@ -1,6 +1,6 @@
 set(SOURCE
    	${SOURCE}
-   	${CMAKE_CURRENT_SOURCE_DIR}/FunctionLimits.cpp
+   	${CMAKE_CURRENT_SOURCE_DIR}/LimitsFunction.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Func1DFunction.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ConcatFunction.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ConstantFunction.cpp
@@ -10,7 +10,7 @@ set(SOURCE
 )
 set(HEADERS
 	${HEADERS}
-	${CMAKE_CURRENT_SOURCE_DIR}/FunctionLimits.h
+	${CMAKE_CURRENT_SOURCE_DIR}/LimitsFunction.h
 	${CMAKE_CURRENT_SOURCE_DIR}/Func1DFunction.h
 	${CMAKE_CURRENT_SOURCE_DIR}/ConcatFunction.h
 	${CMAKE_CURRENT_SOURCE_DIR}/ConstantFunction.h
