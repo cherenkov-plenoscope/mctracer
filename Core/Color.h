@@ -10,8 +10,6 @@
 // included dependencies
 #include <iostream>
 #include <string>
-#include <sstream>
-#include <math.h> 
 
 class Color {
 
