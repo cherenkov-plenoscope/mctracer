@@ -93,6 +93,5 @@ private:
 	std::string get_snapshot_filename();
 	bool it_is_time_again_to_show_the_help();
 	const CameraImage* acquire_image_with_camera(CameraDevice* cam);
-	void move_right_and_shoot_video();
 };
 #endif // __FREEORBITCAMERA_H_INCLUDED__

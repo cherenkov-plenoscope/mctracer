@@ -56,8 +56,6 @@ void FreeOrbitCamera::start_free_orbit(){
 		user_input_key = cvWaitKey(0);
 
 		switch(user_input_key){
-			case 'z': move_right_and_shoot_video();
-			break;
 			case 't': toggle_stereo3D();
 			break;
 			case 'w': Translation_operator->move_forward();
@@ -145,19 +143,6 @@ void FreeOrbitCamera::mouse_button_event(
 		p->take_snapshot_manual_focus_on_pixel_col_row( x, y );
 	else
 		return;
-}
-//==============================================================================
-void FreeOrbitCamera::move_right_and_shoot_video() {
-
-	double fps = 24;
-	double x_velocity_in_m_over_s = 0.1; 
-	double step = x_velocity_in_m_over_s/fps;
-
-	for(uint frame=0; frame<fps*10; frame++) {
-		take_snapshot();
-		Translation_operator->move_right(step);
-	}
-
 }
 //==============================================================================
 void FreeOrbitCamera::toggle_stereo3D() {
@@ -321,10 +306,11 @@ void FreeOrbitCamera::print_free_orbit_help_text()const{
 	out << " increase offset.........[ x ]     decreace FoV............[ m ]\n";
 	out << " decrease offset.........[ y ]\n";
 	out << "                                  _free_orbit___________________\n";
-	out << "_Mamiya645_medium_format_camera    help....................[ h ]\n";
-	out << " take snapshot...........[ g ]     exit....................[ESC]\n";
+	out << "_Aperture_camera_______________    help....................[ h ]\n";
+	out << " take snapshot auto focus[ g ]     exit....................[ESC]\n";
 	out << "\n";
-	out << "[ left mouse ] click into the image for additional information.\n";
+	out << "[ left mouse  ] click image for additional information.\n";
+	out << "[ right mouse ] click image for manual focus with snapshot.\n";
 	out << "\n";
 	std::cout << out.str();
 }
