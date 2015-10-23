@@ -16,8 +16,9 @@ namespace Function {
 		for(uint i=0; i<conc.size()-1; i++) {
 			if(func_does_not_match_limit_of_next_func(i)) {
 				std::stringstream info;
-				info << "Concat of Function 1D in file " << __FILE__ << "\n";
-				info << "Expected limits to fit. ";
+				info << "Function::Concat::" << __func__ << "()\n";
+				info << __FILE__ << ", " << __LINE__ << "\n";
+				info << "Expected limits of functions to be concatenated to fit. ";
 				info << "function[" << i << "].upper_limit == ";
 				info << "function[" << i+1 << "].lower_limit, but actual\n";
 				info << "f[" << i << "].upper_limit = ";
