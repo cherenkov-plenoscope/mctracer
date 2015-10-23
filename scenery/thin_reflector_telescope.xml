@@ -1,6 +1,10 @@
+<function name="zero">
+	<constant value="0.0" lower_limit="200e-9" upper_limit="1200e-9"/>
+</function>
+
 <disc>
 	<set_frame name="ground" pos="[0,0,-2]" rot="[0,0,0]"/>		
-	<set_surface refl="0.0" colour="[0,50,0]"/>	
+	<set_surface reflection_vs_wavelength="zero" colour="[0,50,0]"/>	
 	<set_disc radius="100"/>
 	<set_sensitive id="0"/>
 </disc>
@@ -19,26 +23,26 @@
 		
 		<disc>
 			<set_frame name="camera_housing_lower_end_cap" pos="[0,0,0.01]" rot="[0,0,0]"/>		
-			<set_surface refl="0.0" colour="[230,230,215]"/>	
+			<set_surface reflection_vs_wavelength="zero" colour="[230,230,215]"/>	
 			<set_disc radius="0.33"/>
 		</disc>
 
 		<disc>
 			<set_frame name="camera_housing_upper_end_cap" pos="[0,0,0.89]" rot="[0,0,0]"/>		
-			<set_surface refl="0.0" colour="[230,230,215]"/>	
+			<set_surface reflection_vs_wavelength="zero" colour="[230,230,215]"/>	
 			<set_disc radius="0.33"/>
 		</disc>
 
 		<disc>
 			<set_frame name="GAPD_sensor_plane" pos="[0,0,0.0]" rot="[0,0,0]"/>		
-			<set_surface refl="0.0" colour="[0,255,128]"/>	
+			<set_surface reflection_vs_wavelength="zero" colour="[0,255,128]"/>	
 			<set_disc radius="0.195"/>
 			<set_sensitive id="1"/>
 		</disc>
 		
 		<cylinder>
 			<set_frame name="camera_housing_cylinder" pos="[0,0,445]" rot="[0,0,0]"/>
-			<set_surface refl="0.0" colour="[230,230,215]"/>
+			<set_surface reflection_vs_wavelength="zero" colour="[230,230,215]"/>
 			<set_cylinder radius="0.33" start_pos="[0,0,0]" end_pos="[0,0,0.89]"/>	
 		</cylinder>			
 	</frame>
@@ -48,25 +52,25 @@
 		
 		<cylinder>
 			<set_frame name="support_tube_1_1" pos="[0,0,0]" rot="[0,0,0]"/>
-			<set_surface refl="0.0" colour="[75,75,75]"/>
+			<set_surface reflection_vs_wavelength="zero" colour="[75,75,75]"/>
 			<set_cylinder radius="0.015" start_pos="[-0.83,0.57,0.0]" end_pos="[+0.83,0.57,0.0]"/>	
 		</cylinder>	
 
 		<cylinder>
 			<set_frame name="support_tube_1_2" pos="[0,0,0]" rot="[0,0,0]"/>
-			<set_surface refl="0.0" colour="[75,75,75]"/>
+			<set_surface reflection_vs_wavelength="zero" colour="[75,75,75]"/>
 			<set_cylinder radius="0.015" start_pos="[-0.83,-0.57,0.0]" end_pos="[+0.83,-0.57,0.0]"/>	
 		</cylinder>		
 		
 		<cylinder>
 			<set_frame name="support_tube_1_3" pos="[0,0,0]" rot="[0,0,0]"/>
-			<set_surface refl="0.0" colour="[75,75,75]"/>
+			<set_surface reflection_vs_wavelength="zero" colour="[75,75,75]"/>
 			<set_cylinder radius="0.015" start_pos="[+0.83,+0.57,0.0]" end_pos="[+0.83,-0.57,0.0]"/>	
 		</cylinder>		
 		
 		<cylinder>
 			<set_frame name="support_tube_1_4" pos="[0,0,0]" rot="[0,0,0]"/>
-			<set_surface refl="0.0" colour="[75,75,75]"/>
+			<set_surface reflection_vs_wavelength="zero" colour="[75,75,75]"/>
 			<set_cylinder radius="0.015" start_pos="[-0.83,-0.57,0.0]" end_pos="[-0.83,+0.57,0.0]"/>	
 		</cylinder>			
 	</frame>
@@ -76,25 +80,25 @@
 		
 		<cylinder>
 			<set_frame name="support_tube_1" pos="[0,0,0]" rot="[0,0,0]"/>
-			<set_surface refl="0.0" colour="[75,75,75]"/>
+			<set_surface reflection_vs_wavelength="zero" colour="[75,75,75]"/>
 			<set_cylinder radius="0.03" start_pos="[1.5,1.0,0.0]" end_pos="[0.2,0.2,50.05]"/>	
 		</cylinder>	
 		
 		<cylinder>
 			<set_frame name="support_tube_2" pos="[0,0,0]" rot="[0,0,0]"/>
-			<set_surface refl="0.0" colour="[75,75,75]"/>
+			<set_surface reflection_vs_wavelength="zero" colour="[75,75,75]"/>
 			<set_cylinder radius="0.03" start_pos="[1.5,-1.0,0.0]" end_pos="[0.2,-0.2,50.05]"/>	
 		</cylinder>	
 		
 		<cylinder>
 			<set_frame name="support_tube_3" pos="[0,0,0]" rot="[0,0,0]"/>
-			<set_surface refl="0.0" colour="[75,75,75]"/>
+			<set_surface reflection_vs_wavelength="zero" colour="[75,75,75]"/>
 			<set_cylinder radius="0.03" start_pos="[-1.5,-1.0,0.0]" end_pos="[-0.2,-0.2,50.05]"/>	
 		</cylinder>	
 		
 		<cylinder>
 			<set_frame name="support_tube_4" pos="[0,0,0]" rot="[0,0,0]"/>
-			<set_surface refl="0.0" colour="[75,75,75]"/>
+			<set_surface reflection_vs_wavelength="zero" colour="[75,75,75]"/>
 			<set_cylinder radius="0.03" start_pos="[-1.5,1.0,0.0]" end_pos="[-0.2,0.2,50.05]"/>	
 		</cylinder>	
 	</frame>
