@@ -147,8 +147,6 @@ Frame* mother,const pugi::xml_node node){
 	}else if(StringTools::is_equal(node.name(),"function")){
 		extract_function_from(node);
 		
-		//std::cout << node.name() << "\n";
-		
 	}else if( mother->has_mother() ){	
 		std::stringstream info;
 		info << "WorldFactory::" << __func__ << "() found an unknown item.";
@@ -207,12 +205,7 @@ void WorldFactory::go_on_with_children_of_node(
 		}else if(StringTools::is_equal(sub_node_name,"sphere_cap_hexagonal")){
 			
 			fabricate_frame(mother,sub_node);
-		}/*else if(sub_node_name.find("set") == std::string::npos){
-
-			std::stringstream info;
-			info << "WorldFactory::" << __func__ << "() found an unknown item.";
-			throw UnknownItem(info.str(), this, sub_node_name);
-		}*/	
+		}
 	}	
 }
 //------------------------------------------------------------------------------
@@ -425,17 +418,6 @@ const Function::Func1D* WorldFactory::extract_refraction(
 	}
 }
 //------------------------------------------------------------------------------
-/*RefractiveIndex* WorldFactory::extract_refraction(
-	const pugi::xml_node node
-) {
-	assert_attribute_exists(node, "refractive_index");
-
-	RefractiveIndex* refrac;
-	double refr = StrToDouble(node.attribute("refractive_index").value());
-	refrac = new RefractiveIndex(refr);
-	return refrac;
-}*/
-//------------------------------------------------------------------------------
 void WorldFactory::extractBiConvexLensHex(
 	double &curv_radius, double &outer_radius, const pugi::xml_node node
 ) {
@@ -542,7 +524,7 @@ Frame* WorldFactory::produce_sphere_cap_hexagonal(
 	Rotation3D 				rotation;
 	const Color*		color;
 	const Function::Func1D* reflection_vs_wavelength;
-	
+
 	color = extract_color(node.child("set_surface"));
 	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 
@@ -592,27 +574,6 @@ const Function::Func1D* WorldFactory::extract_reflection(
 		throw MissingItem(info.str(), this, "reflection_vs_wavelength");
 	}
 }
-/*const ReflectionProperties* WorldFactory::extract_reflection(
-	const pugi::xml_node node
-) {
-	assert_attribute_exists(node, "refl");
-
-	std::string refl_attribure = node.attribute("refl").value();
-
-	ReflectionProperties* refl_prop;
-	if( StringTools::is_ending(refl_attribure, ".txt") ) {
-
-		Function::LinInterpol* refl = new Function::LinInterpol(
-			AsciiIo::gen_table_from_file((absolute_path + refl_attribure))
-		);
-
-		refl_prop = new ReflectionProperties(refl);
-	}else{
-		refl_prop = new ReflectionProperties(StrToDouble(refl_attribure));
-	}
-
-	return refl_prop;
-}*/
 //------------------------------------------------------------------------------
 const Color* WorldFactory::extract_color(const pugi::xml_node node) {
 	assert_attribute_exists(node, "colour");
