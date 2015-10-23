@@ -350,8 +350,10 @@ Frame* WorldFactory::produceReflector(
 	std::string 		name;
 	Vector3D 			position;
 	Rotation3D 			rotation;
+	const Function::Func1D* reflection_vs_wavelength;
 					
-	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
+	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());
+	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 
 	SegmetedReflectorGenerator refl_gen;
 	refl_gen.set_focal_length(extract_reflector("focal_length", refl_node));
@@ -359,6 +361,7 @@ Frame* WorldFactory::produceReflector(
 	refl_gen.set_max_outer_diameter(extract_reflector("max_outer_diameter", refl_node));
 	refl_gen.set_min_inner_diameter(extract_reflector("min_inner_diameter", refl_node));
 	refl_gen.set_hybrid_geometry(extract_reflector("alpha", refl_node));
+	refl_gen.set_mirror_reflection(reflection_vs_wavelength);
 	Frame* reflector = refl_gen.get_reflector();
 
 	mother->set_mother_and_child(reflector);

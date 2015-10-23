@@ -2,9 +2,15 @@
 #include "Core/Function/ConstantFunction.h"
 //------------------------------------------------------------------------------
 void SegmetedReflectorGenerator::init_facet_surface() {
-	mirror_colour = new Color(255,255,255);
-	outer_mirror_reflection = new Function::Constant(0.8, Function::Limits(200e-9, 1200e-9));
-	inner_mirror_colour = new Color(64,64,64);
+	mirror_colour = &Color::white;
+	inner_mirror_colour = &Color::dark_gray;
+	outer_mirror_reflection = &Function::Constant::void_function;
+}
+//------------------------------------------------------------------------------
+void SegmetedReflectorGenerator::set_mirror_reflection(
+	const Function::Func1D* refl_vs_wavl
+) {
+	outer_mirror_reflection = refl_vs_wavl;
 }
 //------------------------------------------------------------------------------
 void SegmetedReflectorGenerator::set_hybrid_geometry(const double alpha){

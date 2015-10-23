@@ -17,6 +17,7 @@ class Color {
 	double green_0to255;
 	double blue_0to255;
 public:
+	static const Color white;
 	static const Color syk_blue;
 	static const Color gray;
 	static const Color dark_gray;

@@ -2,6 +2,10 @@
 	<constant value="0.0" lower_limit="200e-9" upper_limit="1200e-9"/>
 </function>
 
+<function name="mirror_reflection">
+	<constant value="0.75" lower_limit="200e-9" upper_limit="1200e-9"/>
+</function>
+
 <disc>
 	<set_frame name="ground" pos="[0,0,-2]" rot="[0,0,0]"/>		
 	<set_surface reflection_vs_wavelength="zero" colour="[0,50,0]"/>	
@@ -15,6 +19,7 @@
 	
 	<reflector>
 		<set_frame name="reflector" pos="[0,0,0]" rot="[0,0,0]"/>
+		<set_surface reflection_vs_wavelength="mirror_reflection"/>
 		<set_reflector focal_length="50.0" facet_spacing="0.62" max_outer_diameter="3.5" min_inner_diameter="0.5" alpha="0.0"/>
 	</reflector>
 	
