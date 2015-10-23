@@ -1,5 +1,6 @@
 #include "ToDoScheduler.h"
 #include "PhotonBunch.h"
+#include "Tools/AsciiIo.h"
 #include "ProgramOptions.h"
 #include "XmlFactory/WorldFactory.h"
 //------------------------------------------------------------------------------

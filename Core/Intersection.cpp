@@ -91,28 +91,28 @@ Vector3D Intersection::get_reflection_direction_in_world_system(
 //------------------------------------------------------------------------------
 double Intersection::get_facing_reflection_propability(const double wavelength)const {
 	return _from_outside_to_inside ?
-	(*intersecting_object->get_outer_reflection())(wavelength):
-	(*intersecting_object->get_inner_reflection())(wavelength);
+	(*intersecting_object->get_outer_reflection_())(wavelength):
+	(*intersecting_object->get_inner_reflection_())(wavelength);
 }
 //------------------------------------------------------------------------------
 double Intersection::get_refractive_index_going_to(const double wavelength)const {
 	return _from_outside_to_inside ?
-	intersecting_object->get_inner_refraction()->get_index(wavelength):
-	intersecting_object->get_outer_refraction()->get_index(wavelength);
+	(*intersecting_object->get_inner_refraction_())(wavelength):
+	(*intersecting_object->get_outer_refraction_())(wavelength);
 }
 //------------------------------------------------------------------------------
 double Intersection::get_refractive_index_coming_from(const double wavelength)const {
 	return _from_outside_to_inside ?
-	intersecting_object->get_outer_refraction()->get_index(wavelength):
-	intersecting_object->get_inner_refraction()->get_index(wavelength);
+	(*intersecting_object->get_outer_refraction_())(wavelength):
+	(*intersecting_object->get_inner_refraction_())(wavelength);
 }
 //------------------------------------------------------------------------------
 double Intersection::get_outer_half_way_depth(const double wavelength)const {
-	return intersecting_object->get_outer_absorption()->get_half_way_depth(wavelength);
+	return (*intersecting_object->get_outer_absorption_())(wavelength);
 }
 //------------------------------------------------------------------------------
 double Intersection::get_inner_half_way_depth(const double wavelength)const {
-	return intersecting_object->get_inner_absorption()->get_half_way_depth(wavelength);
+	return (*intersecting_object->get_inner_absorption_())(wavelength);
 }
 //------------------------------------------------------------------------------
 bool Intersection::boundary_layer_is_transparent()const {

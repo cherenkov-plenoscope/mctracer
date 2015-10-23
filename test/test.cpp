@@ -7,7 +7,6 @@
 #include "PhotonTest.cpp"
 #include "WorldFactoryTest.cpp"
 #include "FrameTest.cpp"
-#include "ReflectionPropertiesTest.cpp"
 #include "ToolTest.cpp"
 #include "SphereTest.cpp"
 #include "DiscTest.cpp"

@@ -8,6 +8,7 @@
 
 //==============================================================================
 // included dependencies
+#include <string>
 
 namespace Function {
 
@@ -24,6 +25,7 @@ namespace Function {
 		double get_upper()const;
 		double get_range()const;
 		void assert_contains(const double x)const;
+		std::string get_print()const;
 	};
 } // namespace Function
 #endif // __FUNCTIONLIMITS_H_INCLUDED__

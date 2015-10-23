@@ -23,7 +23,6 @@
 #include "SegmetedReflectorGenerator.h"
 #include "Core/Vector3D.h"
 #include "Core/Rotation3D.h"
-#include "Core/ReflectionProperties.h"
 #include "Core/Color.h"
 #include "XmlIO/XmlFileIo.h"
 #include "TracerException.h"
@@ -112,9 +111,7 @@ private:
 		const pugi::xml_node node
 	);
 
-	RefractiveIndex* extract_medium(
-		const pugi::xml_node node
-	);
+	const Function::Func1D* extract_refraction(const pugi::xml_node node); 
 
 	void extractBiConvexLensHex(
 		double &curv_radius, double &outer_radius, const pugi::xml_node node
@@ -129,7 +126,7 @@ private:
 
 	const Color* extract_color(const pugi::xml_node node);
 
-	const ReflectionProperties* extract_reflection(const pugi::xml_node node);
+	const Function::Func1D* extract_reflection(const pugi::xml_node node); 
 
 	void extract_Plane_props(
 		double &x_width, double &y_width, const pugi::xml_node node 

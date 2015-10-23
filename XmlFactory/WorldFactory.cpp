@@ -241,11 +241,11 @@ Frame* WorldFactory::producePlane(
 	assert_child_exists(node, "set_plane");
 
 	const Color*		color;
-	const ReflectionProperties*	refl_prop;
+	const Function::Func1D* reflection_vs_wavelength;
 	double 					x_width, y_width;
 	
 	color = extract_color(node.child("set_surface"));
-	refl_prop = extract_reflection(node.child("set_surface"));
+	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 	extract_Plane_props(x_width, y_width, node.child("set_plane"));
 
 	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
@@ -260,8 +260,8 @@ Frame* WorldFactory::producePlane(
 	);
 	new_plane->set_inner_color(color);
 	new_plane->set_outer_color(color);
-	new_plane->set_outer_reflection(refl_prop);
-	new_plane->set_inner_reflection(refl_prop);
+	new_plane->set_outer_reflection(reflection_vs_wavelength);
+	new_plane->set_inner_reflection(reflection_vs_wavelength);
 	
 	new_plane->set_x_y_width(x_width, y_width);
 	
@@ -280,11 +280,11 @@ Frame* WorldFactory::produceSphere(
 	Vector3D 				position;
 	Rotation3D 				rotation;
 	const Color*		color;
-	const ReflectionProperties*	refl_prop;
+	const Function::Func1D* reflection_vs_wavelength;
 	double 					radius;
 
 	color = extract_color(node.child("set_surface"));
-	refl_prop = extract_reflection(node.child("set_surface"));
+	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 	extract_Sphere_props(radius,node.child("set_sphere"));
 
 	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
@@ -299,8 +299,8 @@ Frame* WorldFactory::produceSphere(
 	);
 	new_sphere->set_inner_color(color);
 	new_sphere->set_outer_color(color);
-	new_sphere->set_outer_reflection(refl_prop);
-	new_sphere->set_inner_reflection(refl_prop);
+	new_sphere->set_outer_reflection(reflection_vs_wavelength);
+	new_sphere->set_inner_reflection(reflection_vs_wavelength);
 
 	new_sphere->set_sphere_radius(radius);
 	
@@ -319,12 +319,12 @@ Frame* WorldFactory::produceCylinder(
 	Vector3D 				position;
 	Rotation3D 				rotation;
 	const Color*			color;
-	const ReflectionProperties*	refl_prop;
+	const Function::Func1D* reflection_vs_wavelength;
 	double 					radius;
 	Vector3D 				start, end;
 					
 	color = extract_color(node.child("set_surface"));
-	refl_prop = extract_reflection(node.child("set_surface"));
+	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 	extract_Cylinder_props(radius, start, end, node.child("set_cylinder"));
 
 	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
@@ -338,8 +338,8 @@ Frame* WorldFactory::produceCylinder(
 	);
 	new_Cylinder->set_inner_color(color);
 	new_Cylinder->set_outer_color(color);
-	new_Cylinder->set_outer_reflection(refl_prop);
-	new_Cylinder->set_inner_reflection(refl_prop);	
+	new_Cylinder->set_outer_reflection(reflection_vs_wavelength);
+	new_Cylinder->set_inner_reflection(reflection_vs_wavelength);	
 
 	new_Cylinder->set_cylinder(radius, start, end);
 	
@@ -382,16 +382,17 @@ Frame* WorldFactory::produceBiConvexLensHex(
 	Vector3D 			position;
 	Rotation3D 			rotation;
 	const Color*		color;
-	const ReflectionProperties*	refl_prop;
+	const Function::Func1D* reflection_vs_wavelength;
 	double curv_radius;
 	double outer_radius;
-	RefractiveIndex* lens_refractive_index;
+	const Function::Func1D* refraction;
+	//RefractiveIndex* lens_refractive_index;
 
 	color = extract_color(node.child("set_surface"));
 	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
 	extractBiConvexLensHex(curv_radius, outer_radius, node.child("set_bi_convex_lens_hex"));
-	lens_refractive_index = extract_medium(node.child("set_medium"));
-	refl_prop = extract_reflection(node.child("set_surface"));
+	refraction = extract_refraction(node.child("set_medium"));
+	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 
 	BiConvexLensHexBound *lens;
 	lens = new BiConvexLensHexBound;
@@ -402,8 +403,8 @@ Frame* WorldFactory::produceBiConvexLensHex(
 	);
 	lens->set_inner_color(color);
 	lens->set_outer_color(color);
-	lens->set_outer_reflection(refl_prop);
-	lens->set_inner_refraction(lens_refractive_index);
+	lens->set_outer_reflection(reflection_vs_wavelength);
+	lens->set_inner_refraction(refraction);
 	lens->set_curvature_radius_and_outer_hex_radius(curv_radius, outer_radius);
 	
 	mother->set_mother_and_child(lens);
@@ -411,7 +412,20 @@ Frame* WorldFactory::produceBiConvexLensHex(
 
 }
 //------------------------------------------------------------------------------
-RefractiveIndex* WorldFactory::extract_medium(
+const Function::Func1D* WorldFactory::extract_refraction(
+	const pugi::xml_node node
+) {
+	if(has_attribute(node, "refraction_vs_wavelength")) {
+		return functions->get_function(node.attribute("refraction_vs_wavelength").value());
+	}else{
+		std::stringstream info;
+		info << "WorldFactory::" <<__func__<< "() ";
+		info << "in " <<__FILE__<< ", " <<__LINE__<< "\n";
+		throw MissingItem(info.str(), this, "refraction_vs_wavelength");
+	}
+}
+//------------------------------------------------------------------------------
+/*RefractiveIndex* WorldFactory::extract_refraction(
 	const pugi::xml_node node
 ) {
 	assert_attribute_exists(node, "refractive_index");
@@ -420,7 +434,7 @@ RefractiveIndex* WorldFactory::extract_medium(
 	double refr = StrToDouble(node.attribute("refractive_index").value());
 	refrac = new RefractiveIndex(refr);
 	return refrac;
-}
+}*/
 //------------------------------------------------------------------------------
 void WorldFactory::extractBiConvexLensHex(
 	double &curv_radius, double &outer_radius, const pugi::xml_node node
@@ -452,11 +466,11 @@ Frame* WorldFactory::produceDisc(
 	Vector3D 				position;
 	Rotation3D 				rotation;
 	const Color*		color;
-	const ReflectionProperties*	refl_prop;
+	const Function::Func1D* reflection_vs_wavelength;
 	double 					radius;
 
 	color = extract_color(node.child("set_surface"));
-	refl_prop = extract_reflection(node.child("set_surface"));
+	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 	extract_Disc_props(radius, node.child("set_disc"));
 	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
 	
@@ -470,8 +484,8 @@ Frame* WorldFactory::produceDisc(
 	);
 	new_Disc->set_inner_color(color);
 	new_Disc->set_outer_color(color);
-	new_Disc->set_outer_reflection(refl_prop);
-	new_Disc->set_inner_reflection(refl_prop);	
+	new_Disc->set_outer_reflection(reflection_vs_wavelength);
+	new_Disc->set_inner_reflection(reflection_vs_wavelength);	
 
 	new_Disc->set_disc_radius(radius);
 	
@@ -490,11 +504,11 @@ Frame* WorldFactory::produceTriangle(
 	Vector3D 				position;
 	Rotation3D 				rotation;
 	const Color*		color;
-	const ReflectionProperties*	refl_prop;
+	const Function::Func1D* reflection_vs_wavelength;
 	double 					Ax, Ay, Bx, By, Cx, Cy;
 
 	color = extract_color(node.child("set_surface"));
-	refl_prop = extract_reflection(node.child("set_surface"));
+	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 	extract_Triangle_props(Ax, Ay, Bx, By, Cx, Cy, node.child("set_triangle"));
 	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());
 
@@ -507,8 +521,8 @@ Frame* WorldFactory::produceTriangle(
 	);
 	new_Triangle->set_inner_color(color);
 	new_Triangle->set_outer_color(color);
-	new_Triangle->set_outer_reflection(refl_prop);
-	new_Triangle->set_inner_reflection(refl_prop);
+	new_Triangle->set_outer_reflection(reflection_vs_wavelength);
+	new_Triangle->set_inner_reflection(reflection_vs_wavelength);
 
 	new_Triangle->set_corners_in_xy_plane(Ax, Ay, Bx, By, Cx, Cy);
 	
@@ -527,10 +541,10 @@ Frame* WorldFactory::produce_sphere_cap_hexagonal(
 	Vector3D 				position;
 	Rotation3D 				rotation;
 	const Color*		color;
-	const ReflectionProperties*	refl_prop;
-
+	const Function::Func1D* reflection_vs_wavelength;
+	
 	color = extract_color(node.child("set_surface"));
-	refl_prop = extract_reflection(node.child("set_surface"));
+	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 
 	SphereCapWithHexagonalBound* cap = new SphereCapWithHexagonalBound;
 	double focal_length, outer_radius;
@@ -547,8 +561,8 @@ Frame* WorldFactory::produce_sphere_cap_hexagonal(
 	);
 	cap->set_inner_color(color);
 	cap->set_outer_color(color);
-	cap->set_outer_reflection(refl_prop);
-	cap->set_inner_reflection(refl_prop);
+	cap->set_outer_reflection(reflection_vs_wavelength);
+	cap->set_inner_reflection(reflection_vs_wavelength);
 	cap->set_curvature_radius_and_outer_hex_radius(2.0*focal_length, outer_radius);
 	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
 
@@ -566,7 +580,19 @@ void WorldFactory::extract_sphere_cap_hexagonal(
 	outer_radius = StrToDouble(node.attribute("outer_radius").value());
 }
 //------------------------------------------------------------------------------
-const ReflectionProperties* WorldFactory::extract_reflection(
+const Function::Func1D* WorldFactory::extract_reflection(
+	const pugi::xml_node node
+) {
+	if(has_attribute(node, "reflection_vs_wavelength")) {
+		return functions->get_function(node.attribute("reflection_vs_wavelength").value());
+	}else{
+		std::stringstream info;
+		info << "WorldFactory::" <<__func__<< "() ";
+		info << "in " <<__FILE__<< ", " <<__LINE__<< "\n";
+		throw MissingItem(info.str(), this, "reflection_vs_wavelength");
+	}
+}
+/*const ReflectionProperties* WorldFactory::extract_reflection(
 	const pugi::xml_node node
 ) {
 	assert_attribute_exists(node, "refl");
@@ -586,7 +612,7 @@ const ReflectionProperties* WorldFactory::extract_reflection(
 	}
 
 	return refl_prop;
-}
+}*/
 //------------------------------------------------------------------------------
 const Color* WorldFactory::extract_color(const pugi::xml_node node) {
 	assert_attribute_exists(node, "colour");

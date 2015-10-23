@@ -9,6 +9,7 @@
 #include "Cameras/FreeOrbitCamera.h"
 #include "Core/PseudoRandomNumberGenerator.h"
 #include "Core/PhotonBunch.h"
+#include "Core/Function/ConstantFunction.h"
 
 using namespace std;
 
@@ -71,7 +72,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
 
   Frame optical_table("optical_table",pos,rot);
   
-  ReflectionProperties  refl(1.0); 
+  Function::Constant refl(1.0, Function::Limits(200e-9, 1200e-9)); 
   Color      colo(200,128,128);
 
   pos.set(0.0,0.0,0.0);
@@ -140,7 +141,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
 }
 //------------------------------------------------------------------------------
 TEST_F(PhotonTest, Reflections){
-/* This test is about the propagation process  
+    /* This test is about the propagation process  
                                  \ mirror pos(0,0,0)
     Light Source ->------>------>-\      
     pos(-2,0,0)                   |\
@@ -157,96 +158,101 @@ TEST_F(PhotonTest, Reflections){
     |
     \/ +Y
 
-*/                              
-  TracerSettings setup;
+    */                              
+    TracerSettings setup;
 
-  Vector3D    pos = Vector3D::null;
-  Rotation3D  rot = Rotation3D::null;
+    Vector3D    pos = Vector3D::null;
+    Rotation3D  rot = Rotation3D::null;
 
-  // create a test setup with two mirrors bouncing the photon
-  Frame world("world",pos,rot);
+    // create a test setup with two mirrors bouncing the photon
+    Frame world("world",pos,rot);
 
-  Frame optical_table("optical_table",pos,rot);
-   
-  pos.set(0.0,0.0,0.0);
-  rot.set(0.0,0.0,0.0);
+    Frame optical_table("optical_table",pos,rot);
+
+    pos.set(0.0,0.0,0.0);
+    rot.set(0.0,0.0,0.0);
+
+    //------------mirror----------------
+    const double reflection_coefficient = 0.42;
+
+    Function::Constant mirror_reflection(
+        reflection_coefficient,
+        Function::Limits(200e-9, 1200e-9)
+    );
+
+    pos.set(0.0,0.0,0.0);
+    //90Deg in Y and 45DEG in Z
+    rot.set(0.0,Deg2Rad(90.0),Deg2Rad(45.0));
+
+    Color mirror_color;
+    mirror_color.set_RGB_0to255(200,64,64);
+
+    Plane mirror;
+    mirror.set_name_pos_rot("mirror",pos,rot);
+    mirror.set_outer_color(&mirror_color);
+    mirror.set_inner_color(&mirror_color);
+    mirror.set_outer_reflection(&mirror_reflection);
+    mirror.set_inner_reflection(&mirror_reflection); 
+    mirror.set_x_y_width(1.0, 1.0);
   
-  //------------mirror----------------
-  const double reflection_coefficient = 0.42;
-  ReflectionProperties  mirror_reflection(reflection_coefficient);
+    //------------absorber----------------
+    pos.set(0.0,+2.0,0.0);
+    rot.set(Deg2Rad(90.0),0.0,0.0);
 
-  pos.set(0.0,0.0,0.0);
-  //90Deg in Y and 45DEG in Z
-  rot.set(0.0,Deg2Rad(90.0),Deg2Rad(45.0));
 
-  Color mirror_color;
-  mirror_color.set_RGB_0to255(200,64,64);
+    Color absorber_color;
+    absorber_color.set_RGB_0to255(50,50,50);
 
-  Plane mirror;
-  mirror.set_name_pos_rot("mirror",pos,rot);
-  mirror.set_outer_color(&mirror_color);
-  mirror.set_inner_color(&mirror_color);
-  mirror.set_outer_reflection(&mirror_reflection);
-  mirror.set_inner_reflection(&mirror_reflection); 
-  mirror.set_x_y_width(1.0, 1.0);
+    Plane absorber;
+    absorber.set_name_pos_rot("absorber",pos,rot);
+    absorber.set_outer_color(&absorber_color);
+    absorber.set_inner_color(&absorber_color);
+    absorber.set_x_y_width(1.0, 1.0);
+
+    //----------declare relationships------------
+    optical_table.set_mother_and_child(&mirror);
+    optical_table.set_mother_and_child(&absorber);
+
+    world.set_mother_and_child(&optical_table);
+
+    //---post initialize the world to calculate all bounding spheres---
+    world.init_tree_based_on_mother_child_relations();
+
+    //----------free orbit-----------------------
+
+    //FreeOrbitCamera free(&world,&setup);
+    //free.start_free_orbit();
+
+    //-----------send Photon----------------------
+    // the photon is starting in between the to mirrors
+    // traveling to the upper mirror
+    Vector3D Support(-2.0, 0.0, 0.0);
+    Vector3D direction = Vector3D::unit_x;
   
-  //------------absorber----------------
-  ReflectionProperties  absorber_reflection(0.0);
-  pos.set(0.0,+2.0,0.0);
-  rot.set(Deg2Rad(90.0),0.0,0.0);
+    PseudoRandomNumberGenerator dice;
 
-  
-  Color absorber_color;
-  absorber_color.set_RGB_0to255(50,50,50);
+    std::vector<Photon*>* photon_bunch = new std::vector<Photon*>;
 
-  Plane absorber;
-  absorber.set_name_pos_rot("absorber",pos,rot);
-  absorber.set_outer_color(&absorber_color);
-  absorber.set_inner_color(&absorber_color);
-  absorber.set_x_y_width(1.0, 1.0);
+    double num_phot = 1e4;
+    for(int i=1; i<=num_phot; i++) {
+        // wavelength form 1nm to 1000nm
+        
+        double wavelength = double(i)/num_phot*100e-9+250e-9;
 
-  //----------declare relationships------------
-  optical_table.set_mother_and_child(&mirror);
-  optical_table.set_mother_and_child(&absorber);
+        Photon *P;
+        P = new Photon(Support, direction, wavelength);
+        P->set_id(i);
+        photon_bunch->push_back(P);
+    }
 
-  world.set_mother_and_child(&optical_table);
+    PhotonBunch::propagate_photons_in_world_with_settings(
+        photon_bunch, &world, &setup
+    );
 
-  //---post initialize the world to calculate all bounding spheres---
-  world.init_tree_based_on_mother_child_relations();
-
-  //----------free orbit-----------------------
-  
-  //FreeOrbitCamera free(&world,&setup);
-  //free.start_free_orbit();
-  
-  //-----------send Photon----------------------
-  // the photon is starting in between the to mirrors
-  // traveling to the upper mirror
-  Vector3D Support(-2.0,0.0,0.0);
-  Vector3D direction(1.0,0.0,0.0);
-  
-  PseudoRandomNumberGenerator dice;
-
-  std::vector<Photon*>* photon_bunch = new std::vector<Photon*>;
-
-  for(int i=1; i<=1e4; i++) {
-    // wavelength form 1nm to 1000nm
-    double wavelength = double(i)*1e-2*1e-9;
-
-    Photon *P;
-    P = new Photon(Support, direction, wavelength);
-    P->set_id(i);
-    photon_bunch->push_back(P);
-  }
-
-  PhotonBunch::propagate_photons_in_world_with_settings(
-    photon_bunch, &world, &setup
-  );
-
-  EXPECT_NEAR(
-    reflection_coefficient, 
-    double(PhotonBunch::get_number_of_photnons_absorbed_in_object(photon_bunch, &absorber))/
-    double(photon_bunch->size()),
-    2e-2
-  );
+    EXPECT_NEAR(
+        reflection_coefficient, 
+        double(PhotonBunch::get_number_of_photnons_absorbed_in_object(photon_bunch, &absorber))/
+        double(photon_bunch->size()),
+        2e-2
+    );
 }

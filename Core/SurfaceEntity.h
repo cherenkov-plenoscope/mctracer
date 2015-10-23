@@ -10,12 +10,8 @@ class RayForPropagation;
 //=================================
 // included dependencies
 #include "Core/Frame.h"
-#include "RefractiveIndex.h"
-#include "ReflectionProperties.h"
 #include "Color.h"
-#include "AbsorptionProperties.h"
 #include "Core/Function/Func1DFunction.h"
-
 
 //=================================
 class SurfaceEntity :public Frame {
@@ -41,21 +37,13 @@ class SurfaceEntity :public Frame {
 
 	const Function::Func1D* outer_absorption_vs_wavelength;
 	const Function::Func1D* inner_absorption_vs_wavelength;
-	
 public:	
+
 	static const SurfaceEntity* void_object;
 	static const SurfaceEntity* source_object;
-	bool has_restrictions_on_frames_to_propagate_to()const;
-	const Frame* get_allowed_frame_to_propagate_to()const;
-	void set_allowed_frames_to_propagate_to(const Frame* frame);
-	std::string get_print()const;
-protected:
-	std::string get_surface_print()const;
-////////////////////////////////////////////////////////////////////////////////
-
-public:
 
 	SurfaceEntity();
+
 	void set_outer_color(const Color* color);
 	void set_inner_color(const Color* color);
 	void set_outer_reflection(const Function::Func1D* refl);
@@ -64,6 +52,9 @@ public:
 	void set_inner_refraction(const Function::Func1D* refrac);
 	void set_outer_absorption(const Function::Func1D* absorp);
 	void set_inner_absorption(const Function::Func1D* absorp);
+	void set_allowed_frames_to_propagate_to(const Frame* frame);
+	void take_boundary_layer_properties_from(const SurfaceEntity* proto);
+	void take_boundary_layer_properties_but_inside_out_from(const SurfaceEntity* proto);
 	const Color* get_outer_color()const;
 	const Color* get_inner_color()const;
 	const Function::Func1D* get_outer_reflection_()const;
@@ -72,36 +63,12 @@ public:
 	const Function::Func1D* get_inner_refraction_()const;
 	const Function::Func1D* get_outer_absorption_()const;
 	const Function::Func1D* get_inner_absorption_()const;
+	const Frame* get_allowed_frame_to_propagate_to()const;
 	bool boundary_layer_is_transparent()const;
-	void take_boundary_layer_properties_from(const SurfaceEntity* proto);
-	void take_boundary_layer_properties_but_inside_out_from(const SurfaceEntity* proto);
-	//---------------------------------
-private:
-	static const ReflectionProperties* default_reflec;
-	static const RefractiveIndex* default_refrac;
-	static const AbsorptionProperties* default_absorp;
+	bool has_restrictions_on_frames_to_propagate_to()const;
+	std::string get_print()const;
+protected:
 
-	const ReflectionProperties* outer_reflec;
-	const ReflectionProperties* inner_reflec;
-
-	const RefractiveIndex* outer_refrac;
-	const RefractiveIndex* inner_refrac;
-
-	const AbsorptionProperties* outer_absorption;
-	const AbsorptionProperties* inner_absorption;	
-public:
-
-	void set_outer_reflection(const ReflectionProperties* refl);
-	void set_inner_reflection(const ReflectionProperties* refl);
-	void set_outer_refraction(const RefractiveIndex* refrac);
-	void set_inner_refraction(const RefractiveIndex* refrac);
-	void set_outer_absorption(const AbsorptionProperties* absorp);
-	void set_inner_absorption(const AbsorptionProperties* absorp);
-	const ReflectionProperties* get_outer_reflection()const;
-	const ReflectionProperties* get_inner_reflection()const;
-	const RefractiveIndex* get_outer_refraction()const;
-	const RefractiveIndex* get_inner_refraction()const;
-	const AbsorptionProperties* get_outer_absorption()const;
-	const AbsorptionProperties* get_inner_absorption()const;
+	std::string get_surface_print()const;
 };
 #endif // __SURFACEENTITY_H_INCLUDED__ 

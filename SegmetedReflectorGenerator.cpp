@@ -1,8 +1,9 @@
 #include "SegmetedReflectorGenerator.h"
+#include "Core/Function/ConstantFunction.h"
 //------------------------------------------------------------------------------
 void SegmetedReflectorGenerator::init_facet_surface() {
 	mirror_colour = new Color(255,255,255);
-	outer_mirror_reflection = new ReflectionProperties(0.8);
+	outer_mirror_reflection = new Function::Constant(0.8, Function::Limits(200e-9, 1200e-9));
 	inner_mirror_colour = new Color(64,64,64);
 }
 //------------------------------------------------------------------------------

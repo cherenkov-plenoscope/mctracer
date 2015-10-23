@@ -11,6 +11,7 @@
 #include "FunctionLimits.h"
 #include <iostream>
 #include <vector>
+#include <string>
 
 namespace Function {
 
@@ -25,6 +26,7 @@ namespace Function {
 		std::vector<std::vector<double>> get_samples(const uint N)const;
 		virtual double operator()(const double x)const =0;	
 		Limits get_limits()const;
+		std::string get_print()const;
 	protected:
 		double increment_for_steps(const uint N)const;
 	};

@@ -10,6 +10,7 @@
 // included dependencies
 #include "HexGridXy.h"
 #include "Core/Frame.h"
+#include "Core/Function/Func1DFunction.h"
 #include <iostream> 
 #include <string>
 #include <sstream>
@@ -39,7 +40,7 @@ class SegmetedReflectorGenerator{
 
 	Color *mirror_colour;
 	Color *inner_mirror_colour;
-	ReflectionProperties *outer_mirror_reflection;
+	Function::Func1D* outer_mirror_reflection;
 public:
 	void set_hybrid_geometry(const double alpha);
 	void set_focal_length(const double _focal_length);

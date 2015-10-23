@@ -12,7 +12,6 @@
 #include <string>
 #include <sstream>
 #include <math.h> 
-#include "ReflectionProperties.h"
 
 class Color {
 

@@ -1,5 +1,9 @@
 <include path="tree.xml"/>
 
+<function name="zero">
+	<constant value="0.0" lower_limit="200e-9" upper_limit="1200e-9"/>
+</function>
+
 <frame>
 	<set_frame name="house" pos="[5,0,0]" rot="[0,0,0]"/>	
 
@@ -7,12 +11,12 @@
 		<set_frame name="big_wall_1" pos="[1,0,0]" rot="[0,0,0]"/>	
 		<plane>
 			<set_frame name="lower_wall" pos="[0,0,0.75]" rot="[0,1.57,0.0]"/>
-			<set_surface refl="0.0" colour="[180,180,180]"/>
+			<set_surface reflection_vs_wavelength="zero" colour="[180,180,180]"/>
 			<set_plane x_width="1.5" y_width="2.0" /> 
 		</plane>
 		<triangle>
 			<set_frame name="upper_wall" pos="[0,0,1.5]" rot="[-1.57,0.0,-1.57]"/>
-			<set_surface refl="0.0" colour="[180,180,180]"/>
+			<set_surface reflection_vs_wavelength="zero" colour="[180,180,180]"/>
 			<set_triangle Ax="-1" Ay="0.0" Bx="+1" By="0.0" Cx="0.0" Cy="1.0"/>		
 		</triangle>
 	</frame>
@@ -21,24 +25,24 @@
 		<set_frame name="big_wall_1" pos="[-1,0,0]" rot="[0,0,0]"/>	
 		<plane>
 			<set_frame name="lower_wall" pos="[0,0,0.75]" rot="[0,1.57,0.0]"/>
-			<set_surface refl="0.0" colour="[180,180,180]"/>
+			<set_surface reflection_vs_wavelength="zero" colour="[180,180,180]"/>
 			<set_plane x_width="1.5" y_width="2.0" /> 
 		</plane>
 		<triangle>
 			<set_frame name="upper_wall" pos="[0,0,1.5]" rot="[-1.57,0.0,-1.57]"/>
-			<set_surface refl="0.0" colour="[180,180,180]"/>
+			<set_surface reflection_vs_wavelength="zero" colour="[180,180,180]"/>
 			<set_triangle Ax="-1" Ay="0.0" Bx="+1" By="0.0" Cx="0.0" Cy="1.0"/>		
 		</triangle>
 	</frame>
 
 	<plane>
 		<set_frame name="wall_3" pos="[0,1,0.75]" rot="[0,1.57,1.57]"/>
-		<set_surface refl="0.0" colour="[180,180,180]"/>
+		<set_surface reflection_vs_wavelength="zero" colour="[180,180,180]"/>
 		<set_plane x_width="1.5" y_width="2.0" /> 
 	</plane>	
 	<plane>
 		<set_frame name="wall_4" pos="[0,-1,0.75]" rot="[0,1.57,1.57]"/>
-		<set_surface refl="0.0" colour="[180,180,180]"/>
+		<set_surface reflection_vs_wavelength="zero" colour="[180,180,180]"/>
 		<set_plane x_width="1.5" y_width="2.0" /> 
 	</plane>
 
@@ -46,12 +50,12 @@
 		<set_frame name="roof" pos="[0,0,1.1]" rot="[0,0,0]"/>
 		<plane>
 			<set_frame name="roof_1" pos="[0,0.707,0.707]" rot="[0,0.7853,1.57]"/>
-			<set_surface refl="0.0" colour="[230,20,120]"/>
+			<set_surface reflection_vs_wavelength="zero" colour="[230,20,120]"/>
 			<set_plane x_width="2.0" y_width="2.2" /> 
 		</plane>
 		<plane>
 			<set_frame name="roof_2" pos="[0,-0.707,0.707]" rot="[0,0.7853,-1.57]"/>
-			<set_surface refl="0.0" colour="[230,20,120]"/>
+			<set_surface reflection_vs_wavelength="zero" colour="[230,20,120]"/>
 			<set_plane x_width="2.0" y_width="2.2" /> 
 		</plane>
 	</frame>	
@@ -61,22 +65,22 @@
 		
 		<plane>
 			<set_frame name="chimney_wall_1" pos="[0.15,0,0]" rot="[0,1.57,0.0]"/>
-			<set_surface refl="0.0" colour="[180,180,180]"/>
+			<set_surface reflection_vs_wavelength="zero" colour="[180,180,180]"/>
 			<set_plane x_width="0.65" y_width="0.3" /> 
 		</plane>	
 		<plane>
 			<set_frame name="chimney_wall_2" pos="[-0.15,0,0]" rot="[0,1.57,0]"/>
-			<set_surface refl="0.0" colour="[180,180,180]"/>
+			<set_surface reflection_vs_wavelength="zero" colour="[180,180,180]"/>
 			<set_plane x_width="0.65" y_width="0.3" /> 
 		</plane>
 		<plane>
 			<set_frame name="chimney_wall_3" pos="[0,0.15,0]" rot="[0,1.57,1.57]"/>
-			<set_surface refl="0.0" colour="[180,180,180]"/>
+			<set_surface reflection_vs_wavelength="zero" colour="[180,180,180]"/>
 			<set_plane x_width="0.65" y_width="0.3" /> 
 		</plane>	
 		<plane>
 			<set_frame name="chimney_wall_4" pos="[0,-0.15,0]" rot="[0,1.57,1.57]"/>
-			<set_surface refl="0.0" colour="[180,180,180]"/>
+			<set_surface reflection_vs_wavelength="zero" colour="[180,180,180]"/>
 			<set_plane x_width="0.65" y_width="0.3" /> 
 		</plane>	
 	</frame>
