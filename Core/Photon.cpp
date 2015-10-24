@@ -23,7 +23,7 @@ double Photon::get_wavelength()const {
 //------------------------------------------------------------------------------
 std::string Photon::get_print()const {
 	std::stringstream out; 
-	out << get_ray_print() << ", wavelength: " << wavelength*1e9 << "nm, ";
+	out << get_ray_print() << ", wvl: " << wavelength*1e9 << "nm, ";
 	out << get_rayforpropagation_print();
 	return out.str();
 }

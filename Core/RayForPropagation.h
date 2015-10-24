@@ -82,6 +82,8 @@ public:
 	virtual double get_time_of_flight()const;
 	
 	void delete_history();
+
+	void transform(const HomoTrafo3D *T);
 protected:
 	std::string get_history_print()const;
 

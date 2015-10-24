@@ -15,6 +15,9 @@
 //=================================
 namespace PhotonBunch {
 
+	std::string get_print(
+		const std::vector<Photon*> *photon_bunch
+	);
 	// propagation
 	void propagate_photons_in_world_with_settings(
 		std::vector<Photon*> *photon_bunch,

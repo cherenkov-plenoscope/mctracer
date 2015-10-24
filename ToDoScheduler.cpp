@@ -116,6 +116,8 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 			outname.str()
 		);
 	}
+
+	PhotonBunch::delete_photons_and_history(photon_bunch);
 }
 //------------------------------------------------------------------------------
 void ToDoScheduler::propagate_photons_through_geometry()const {

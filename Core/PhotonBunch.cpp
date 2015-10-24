@@ -5,6 +5,16 @@
 
 namespace PhotonBunch {
 	//--------------------------------------------------------------------------
+	std::string get_print(
+		const std::vector<Photon*> *photon_bunch
+	) {
+		std::stringstream out;
+		out << "Photon bunble "<< photon_bunch->size() << "\n";
+		for(Photon* photon : *photon_bunch)
+			out << (*photon) << "\n";
+		return out.str();	
+	}	
+	//--------------------------------------------------------------------------
 	// propagation
 	//--------------------------------------------------------------------------
 	void propagate_photons_in_world_with_settings(
@@ -168,7 +178,7 @@ namespace PhotonBunch {
 	//--------------------------------------------------------------------------
 	bool Trajectories::has_still_trajectories_left()const {
 
-		return number_of_trajectories_handed_out_already<=photon_bunch->size();
+		return number_of_trajectories_handed_out_already<photon_bunch->size();
 	}	
 	//--------------------------------------------------------------------------
 	Frame* Trajectories::get_next_trajectoy() {
