@@ -105,8 +105,7 @@ TEST_F(SetUpScenery, function_limits) {
 TEST_F(SetUpScenery, function_constant) {
 
     //--func_const--
-    Limits l(0.0, 1.0);
-    Constant c(1.337, l);
+    Constant c(1.337, Limits(0.0, 1.0));
     //--func_const_call--
     EXPECT_EQ( 1.337, c(0.0) );
     EXPECT_EQ( 1.337, c(0.2) );
@@ -122,8 +121,7 @@ TEST_F(SetUpScenery, function_constant) {
 TEST_F(SetUpScenery, function_polynom_1) {
 
     //--func_poly3--
-    Limits l(0.0, 1.0);
-    Polynom3 p3(0.0, 0.0, 1.0, 0.0, l);
+    Polynom3 p3(0.0, 0.0, 1.0, 0.0, Limits(0.0, 1.0));
     //--func_poly3_call--
     EXPECT_EQ( 0.43657657, p3(0.43657657) );
     EXPECT_EQ( 0.78, p3(0.78) );
@@ -135,8 +133,7 @@ TEST_F(SetUpScenery, function_polynom_1) {
 TEST_F(SetUpScenery, function_polynom_2) {
 
     //--func_poly3_quad--
-    Limits l(0.0, 1.0);
-    Polynom3 p3(0.0, 1.0, 0.0, 0.0, l);
+    Polynom3 p3(0.0, 1.0, 0.0, 0.0, Limits(0.0, 1.0));
    
     EXPECT_NEAR( 0.0, p3(0.0) ,1e-9);
     EXPECT_NEAR( 0.25, p3(0.5) ,1e-9);
