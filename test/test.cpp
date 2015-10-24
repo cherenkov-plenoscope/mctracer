@@ -35,7 +35,7 @@
 #include "PostInitFrameSpeed.cpp"
 #include "EventIoTest.cpp"
 #include "FunctionTest.cpp"
-#include "../PlenopticTelescope/PlenopticTest.cpp"
+#include "../PlenopticTelescope/LensMakerTest.cpp"
 
 int main(int argc, char **argv) {
 	UserInteraction::print_welcome_screen();

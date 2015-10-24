@@ -2,11 +2,14 @@
 #include "LensMaker.h"
 #include "BiConvexLensHexBound.h"
 #include "Core/Color.h"
+#include <algorithm>
+
 class PlenopticTest : public ::testing::Test {};
 //----------------------------------------------------------------------
 TEST_F(PlenopticTest, check_sebastians_paper_and_pen_calculation) {
 
 	double expected_curvature_radius = 0.125;
+	double expected_thickness = 0.0445;
 	double refractive_index_pmma = 1.49;
 	double focal_length = 0.1335;
 	double outer_lens_radius = 0.071;
@@ -20,14 +23,23 @@ TEST_F(PlenopticTest, check_sebastians_paper_and_pen_calculation) {
 		),
 		expected_curvature_radius*3e-2
 	);
+
+	EXPECT_NEAR(
+		expected_thickness, 
+		LensMaker::get_lens_thickness_for_R_r(
+			expected_curvature_radius, 
+			outer_lens_radius
+		),
+		expected_thickness*3e-2
+	);
 }
 //----------------------------------------------------------------------
-TEST_F(PlenopticTest, check_lensmaker) {
+TEST_F(PlenopticTest, check_lensmaker_on_optical_table_with_lens) {
 
 	// Hello LensMaker,
 	// 
 	// we want a lens with
-	double focal_length = 0.1335;
+	double focal_length = 1.0;//0.1335;
 	// made out of pmma plastic with
 	double refractive_index_pmma = 1.49;
 	// and an outer aperture radius of 
@@ -40,8 +52,6 @@ TEST_F(PlenopticTest, check_lensmaker) {
 		refractive_index_pmma
 	);
 
-	std::cout <<"thickness: "<<LensMaker::get_lens_thickness_for_R_r(lens_curvature_radius, outer_lens_radius) << "\n";
-
 	// ok lets test it...
 	const Color* lens_col = &Color::gray;
 	const Color* sensor_disc_col = &Color::dark_gray;
@@ -52,13 +62,14 @@ TEST_F(PlenopticTest, check_lensmaker) {
     		Function::Limits(200e-9, 1200e-9)
     	);
 
-    uint j=0;
+    uint number_of_photons_per_run = 1000;
+    std::vector<double> sigma_psf_vs_image_sensor_distance;
+    std::vector<double> image_sensor_distances;
 	for(
 		double offset=-focal_length*0.3;
-		offset<focal_length*0.1;
+		offset<focal_length*0.3;
 		offset=offset+focal_length*0.01
 	) {
-		j++;
 		double image_sensor_disc_distance = focal_length + offset;
 
 	    // geometry
@@ -94,7 +105,7 @@ TEST_F(PlenopticTest, check_lensmaker) {
 	    std::vector<Photon*>* photons = 
 		    PhotonBunch::Source::parallel_towards_z_from_xy_disc(
 				outer_lens_radius*0.85, // 0.85 inner hex radius
-				250
+				number_of_photons_per_run
 			);
 
 		HomoTrafo3D Trafo;
@@ -119,11 +130,10 @@ TEST_F(PlenopticTest, check_lensmaker) {
 		PhotonSensors::reset_all_sesnors(&sensor_list);
 		PhotonSensors::assign_photons_to_sensors(photons, &sensor_list);
 
-		
 		std::vector<std::vector<double>> intersects = 
 			sensor.get_arrival_table_x_y_t();
 
-		// estimate psf
+		// mean position of photon spread
 		double xm=0.0;
 		double ym=0.0;
 		for(uint i=0; i<intersects.size(); i++){
@@ -132,6 +142,7 @@ TEST_F(PlenopticTest, check_lensmaker) {
 		}
 		xm = xm/intersects.size();
 		ym = ym/intersects.size();
+		// estimate psf sigma in x and y
 		double sx=0.0;
 		double sy=0.0;
 		for(uint i=0; i<intersects.size(); i++){
@@ -143,30 +154,32 @@ TEST_F(PlenopticTest, check_lensmaker) {
 		sx=sqrt(sx);
 		sy=sqrt(sy);
 
-		std::cout <<"sensor_dist "<<image_sensor_disc_distance*1e3 <<"mm N "<<250<<" n "<<intersects.size()<<" sx "<<sx*1e3<<"mm sx "<<sy*1e3<<"mm\n";
-		
-		//std::cout << PhotonBunch::get_print(photons);
-		/*
-		std::stringstream file;
-		file << j << ".txt";
-		AsciiIo::write_table_to_file(
-			sensor.get_arrival_table_x_y_t(),
-			file.str()
-		);*/
-
-		/*
-		FreeOrbitCamera free_orb(&optical_table, &settings);
-		PhotonBunch::Trajectories trayect_fab(photons);
-
-		while(trayect_fab.has_still_trajectories_left()) {
-
-			Frame SWorld = optical_table;
-			SWorld.set_mother_and_child(trayect_fab.get_next_trajectoy());
-			SWorld.init_tree_based_on_mother_child_relations();
-			free_orb.continue_with_new_scenery_and_settings(&SWorld, &settings);
-		}*/
+		sigma_psf_vs_image_sensor_distance.push_back(sqrt(sx*sx+sy*sy));
+		image_sensor_distances.push_back(image_sensor_disc_distance);
 
 		PhotonBunch::delete_photons_and_history(photons);
-		//
 	}
+
+	double min_sigma_psf = *std::min_element(
+		sigma_psf_vs_image_sensor_distance.begin(),
+		sigma_psf_vs_image_sensor_distance.end()
+	);
+
+	uint min_sigma_psf_pos = std::min_element(
+			sigma_psf_vs_image_sensor_distance.begin(),
+			sigma_psf_vs_image_sensor_distance.end()
+		)
+		-
+		sigma_psf_vs_image_sensor_distance.begin();
+
+	//sigma_psf_vs_image_sensor_distance
+	//image_sensor_distances
+	EXPECT_NEAR(0.0, min_sigma_psf, 1e-3);
+	EXPECT_NEAR(
+		focal_length, 
+		image_sensor_distances.at(min_sigma_psf_pos),
+		focal_length*1e-2
+	);
+	//std::cout << "smallest psf sigma of "<<min_sigma_psf*1e3<<"mm at d=";
+	//std::cout << image_sensor_distances.at(min_sigma_psf_pos)*1e3<<"mm\n";
 }
