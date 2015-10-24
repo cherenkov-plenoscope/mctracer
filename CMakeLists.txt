@@ -80,6 +80,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/MmcsCorsikaFileIO")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Cameras")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Core")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Geometry")
+add_subdirectory("${PROJECT_SOURCE_DIR}/PlenopticTelescope")
 #-------------------------------------------------------------------------------
 # mctracer shared linked library
 
