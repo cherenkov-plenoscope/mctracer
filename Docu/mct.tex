@@ -10,6 +10,7 @@
 \usepackage{color}
 \usepackage{hyperref}
 
+\definecolor{LightGray}{gray}{0.70}
 \lstdefinestyle{MctCpp}{%
     language=C++,
     keywordstyle=\bfseries,
@@ -20,8 +21,10 @@
     escapeinside={/*@}{@*/},
     tabsize=4,
     frame=leftline,
+    rulecolor=\color{LightGray},
     basicstyle=\ttfamily,
-    numbers=left
+    numbers=left,
+    numberstyle=\normalfont\tiny\color{LightGray}
 }
 
 \modulolinenumbers[1]
@@ -31,10 +34,22 @@
 \begin{document}
 %-------------------------------------------------------------------------------
 \newcommand{\CppFileStartEnd}[3]{%
-    \begin{footnotesize}
+    \begin{small}
         \lstinputlisting[linerange=#2-#3, style=MctCpp]{#1}%
-    \hfill\path{#1}\\
-    \end{footnotesize}
+    %\hfill\path{#1}\\
+    \end{small}
+}
+
+\newcommand{\ill}[1]{% In Line Listing
+    \begin{lstlisting}#1\end{lstlisting}    
+}
+
+\newcommand{\CenFig}[1]{
+    \begin{figure}[H]
+        \begin{center}
+            \includegraphics[width=1\textwidth]{#1}
+        \end{center}
+    \end{figure}
 }
 
 \makeatletter
@@ -120,6 +135,77 @@ Also part of the tree is the wooden pole.
 \CppFileStartEnd{examples/set_up_scenery.cpp}{leaf_ball}{tree_pole}
 and the rest of the source...
 \CppFileStartEnd{examples/set_up_scenery.cpp}{tree_pole}{end_set_up_scene_in_source}
+%-------------------------------------------------------------------------------
+\section{Numerical functions}
+\newcommand{\la}{\lambda}
+%
+The \lstinline{Function::Func1D} class provides $1$D mapping for floating numbers.
+%
+\begin{eqnarray}
+    y &=& f(x)\\
+    x &\in& X
+\end{eqnarray}
+%
+All functions have limits which need to be respected. 
+%
+Any call of a function $f(x)$ with $x \notin X$ will throw an exception. 
+%
+We are strict about this behaviour to enforce that no propagation passes silently where e.g. your mirror's reflective index is only defined up to $600\,$nm but you shoot $800\,$nm photons onto it. 
+%
+Functions live in their own namespace.
+\CppFileStartEnd{examples/set_up_scenery.cpp}{using_namespace}{using_namespace_end}
+%
+\subsection{Function limits}
+%
+First we define limits to our functions.
+%
+\CppFileStartEnd{examples/set_up_scenery.cpp}{func_limits}{func_limits_assert}
+%
+The limits here include the lower bound $0.0$ and exclude the upper one $1.0$.
+%
+Let's see the acceptance of our limits.
+%
+\CppFileStartEnd{examples/set_up_scenery.cpp}{func_limits_assert}{func_limits_constant}
+%
+When we create functions with our limits like
+%
+\CppFileStartEnd{examples/set_up_scenery.cpp}{func_limits_constant}{func_limits_const_call}
+%
+the function will also show the restrictive access:
+%
+\CppFileStartEnd{examples/set_up_scenery.cpp}{func_limits_const_call}{func_limits_call_end}
+%
+\subsection{Constant}
+\begin{eqnarray}
+    y &=& f(x) = c
+\end{eqnarray}
+%
+A constant function takes its single constant value e.g. $1.337$ and its limits.
+%
+\CppFileStartEnd{examples/set_up_scenery.cpp}{func_const}{func_const_call}
+%
+When called within the limits, it will always return its constant value.
+%
+\CppFileStartEnd{examples/set_up_scenery.cpp}{func_const_call}{func_const_call_end}
+\CenFig{figures/function_const.png}
+%
+\subsection{Polynom3}
+The versatile polynom of power 3 is defined by its four parameters $a,b,c$ and $d$.
+\begin{eqnarray}
+    y &=& f(x) = ax^3 + bx^2 + cx^1 + dx^0
+\end{eqnarray}
+%
+We initialize it using $a,b,c,d$ and the limits. Here we create a linear mapping.
+\CppFileStartEnd{examples/set_up_scenery.cpp}{func_poly3}{func_poly3_call}
+\CenFig{figures/function_polynom1.png}
+%
+We can do a quadratic mapping:
+\CppFileStartEnd{examples/set_up_scenery.cpp}{func_poly3_quad}{func_poly3_quad_end}
+\CenFig{figures/function_polynom2.png}
+%
+\subsection{Concatenation}
+\CppFileStartEnd{examples/set_up_scenery.cpp}{func_concat}{func_concat_end}
+\CenFig{figures/function_concat.png}
 %-------------------------------------------------------------------------------
 \bibliography{mct}
 %-------------------------------------------------------------------------------

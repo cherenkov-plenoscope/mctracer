@@ -9,6 +9,7 @@
 //==============================================================================
 // included dependencies
 #include <string>
+#include "TracerException.h"
 
 namespace Function {
 
@@ -26,6 +27,14 @@ namespace Function {
 		double get_range()const;
 		void assert_contains(const double x)const;
 		std::string get_print()const;
+	
+		class OutOfRange : public TracerException {
+			using TracerException::TracerException;
+		};
+
+		class NotCausal : public TracerException {
+			using TracerException::TracerException;
+		};
 	};
 } // namespace Function
 #endif // __FUNCTIONLIMITS_H_INCLUDED__

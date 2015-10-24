@@ -1,6 +1,5 @@
 #include "LimitsFunction.h"
 #include <sstream>
-#include "TracerException.h"
 
 namespace Function {
 	const Limits Limits::void_limits = Limits(0.0, 0.0);
@@ -24,7 +23,7 @@ namespace Function {
 			info << "Expected upper limit u to be ";
 			info << "equal or larger the lower limit l, but actual ";
 			info << "u=" << upper << " , l=" << lower << "\n";
-			throw TracerException(info.str());
+			throw NotCausal(info.str());
 		}
 	}
 	//--------------------------------------------------------------------------
@@ -47,7 +46,7 @@ namespace Function {
 			info << "Expected function argument x ";
 			info << "to be in limits " << lower << "<= x <";
 			info << upper << " but actual x=" << x << "\n";
-			throw TracerException(info.str());
+			throw OutOfRange(info.str());
 		}	
 	}
 	//--------------------------------------------------------------------------

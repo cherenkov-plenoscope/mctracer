@@ -1,6 +1,5 @@
 #include "Func1DFunction.h"
 #include <sstream>
-#include "TracerException.h"
 
 namespace Function {
 

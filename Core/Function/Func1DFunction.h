@@ -12,6 +12,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include "TracerException.h"
 
 namespace Function {
 
