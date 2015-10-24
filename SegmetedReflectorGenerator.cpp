@@ -96,8 +96,8 @@ void SegmetedReflectorGenerator::init_facet_xy_positions() {
 	const double min_reflector_radius = min_inner_diameter/2.0;
 
 	HexGridXy hex_grid(
-		max_reflector_radius,
-		min_reflector_radius, 
+		max_reflector_radius - facet_spacing/2.0,
+		min_reflector_radius + facet_spacing/2.0, 
 		facet_spacing
 	);
 
