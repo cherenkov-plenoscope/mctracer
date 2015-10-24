@@ -16,6 +16,7 @@
 #include <sstream>
 #include <vector>
 #include "SphereCapWithHexagonalBound.h"
+#include "Core/Function/ConstantFunction.h"
 //=================================
 class SegmetedReflectorGenerator{
 
@@ -38,9 +39,9 @@ class SegmetedReflectorGenerator{
 	double facet_radius;
 	double facet_fill_factor = 0.99;
 
-	const Color *mirror_colour;
-	const Color *inner_mirror_colour;
-	const Function::Func1D* outer_mirror_reflection;
+	const Color *mirror_colour = &Color::white;
+	const Color *inner_mirror_colour = &Color::dark_gray;
+	const Function::Func1D* outer_mirror_reflection = &Function::Constant::void_function;
 public:
 	void set_hybrid_geometry(const double alpha);
 	void set_focal_length(const double _focal_length);
@@ -61,7 +62,6 @@ private:
 	void init_focal_point();
 	double get_average_image_distances_of_facets();
 	void optimize_reflector_z_pos();
-	void init_facet_surface();
 	void init_facet_radius();
 	void init_facets();
 	void init_reflector();

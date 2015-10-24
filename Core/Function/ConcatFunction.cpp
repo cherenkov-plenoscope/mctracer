@@ -25,7 +25,7 @@ namespace Function {
 				info << conc.at(i)->get_limits().get_upper() << "\n";
 				info << "f[" << i+1 << "].lower_limit = ";
 				info << conc.at(i+1)->get_limits().get_lower() << "\n";
-				throw TracerException(info.str());			
+				throw Limits::NotCausal(info.str());			
 			}
 		}
 	}

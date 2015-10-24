@@ -1,11 +1,4 @@
 #include "SegmetedReflectorGenerator.h"
-#include "Core/Function/ConstantFunction.h"
-//------------------------------------------------------------------------------
-void SegmetedReflectorGenerator::init_facet_surface() {
-	mirror_colour = &Color::white;
-	inner_mirror_colour = &Color::dark_gray;
-	outer_mirror_reflection = &Function::Constant::void_function;
-}
 //------------------------------------------------------------------------------
 void SegmetedReflectorGenerator::set_mirror_reflection(
 	const Function::Func1D* refl_vs_wavl
@@ -71,7 +64,6 @@ Frame* SegmetedReflectorGenerator::get_reflector() {
 	init_facet_z_positions();
 	optimize_reflector_z_pos();
 	init_facet_orientations();
-	init_facet_surface();
 	init_facet_radius();
 	init_facets();
 	init_reflector();
@@ -104,7 +96,7 @@ void SegmetedReflectorGenerator::init_facet_xy_positions() {
 	const double min_reflector_radius = min_inner_diameter/2.0;
 
 	HexGridXy hex_grid(
-		max_reflector_radius, 
+		max_reflector_radius,
 		min_reflector_radius, 
 		facet_spacing
 	);
@@ -240,7 +232,6 @@ void SegmetedReflectorGenerator::init_facets() {
 		facet->set_outer_color(mirror_colour);
 		facet->set_inner_color(inner_mirror_colour);
 		facet->set_outer_reflection(outer_mirror_reflection);
-
 		facet->set_curvature_radius_and_outer_hex_radius(
 			focal_length*2.0,
 			facet_radius

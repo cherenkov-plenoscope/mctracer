@@ -66,6 +66,9 @@ void ToDoScheduler::render_geometry()const {
 	WorldFactory fab;
 	fab.load(get_geometry_file());
 	Frame *geometry = fab.world();
+
+	std::cout << geometry->get_tree_print();
+
 	FreeOrbitCamera free(geometry, &settings);
 }
 //------------------------------------------------------------------------------

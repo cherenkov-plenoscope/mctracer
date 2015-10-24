@@ -146,11 +146,14 @@ std::string Frame::get_frame_print()const {
 std::string Frame::get_tree_print()const {
 	
 	std::stringstream out;
-	out << name_of_frame << ", " << get_number_of_children();
-	out << " children, " << radius_of_sphere_enclosing_all_children << "m\n";
+	out << name_of_frame;
+	out << ", r "<< radius_of_sphere_enclosing_all_children << "m\n";
 
 	for(Frame* child : children)
-		out << "| " << child->get_tree_print();
+		out << StringTools::place_first_infront_of_each_new_line_of_second(
+			"| ",
+			child->get_tree_print()
+		);
 
 	return out.str();
 }
