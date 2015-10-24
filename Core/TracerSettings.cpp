@@ -1,7 +1,7 @@
 #include "TracerSettings.h"
+const TracerSettings TracerSettings::default_settings = TracerSettings();
 //------------------------------------------------------------------------------
 TracerSettings::TracerSettings() {
-	//default_color.set_RGB_0to255(128,128,128);
 	default_color = Color::syk_blue;
 	flag_store_only_final_intersection = false;
 
@@ -16,7 +16,6 @@ void TracerSettings::set_max_number_of_reflections(
 	if( new_max_number_of_reflections>0 ){
 
 		number_of_max_reflections = new_max_number_of_reflections;
-
 	}else{
 		std::stringstream out;
 		out << "TracerSettings::set_max_number_of_reflections\n";
@@ -45,13 +44,13 @@ bool TracerSettings::StoreOnlyLastIntersection()const {
 	return flag_store_only_final_intersection;
 }
 //------------------------------------------------------------------------------
-void TracerSettings::SetStoreOnlyLastIntersection(bool flag) {
+void TracerSettings::SetStoreOnlyLastIntersection(const bool flag) {
 	flag_store_only_final_intersection = flag;
 }
 //------------------------------------------------------------------------------
 bool TracerSettings::MultiThread()const { return multithread; }
 //------------------------------------------------------------------------------
-void TracerSettings::SetMultiThread( bool flag ) { multithread = flag; }
+void TracerSettings::SetMultiThread(const bool flag ) { multithread = flag; }
 //------------------------------------------------------------------------------
 void TracerSettings::store_only_final_intersection() {
 	flag_store_only_final_intersection = true;

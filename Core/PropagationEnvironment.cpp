@@ -1,13 +1,16 @@
 #include "PropagationEnvironment.h"
 //------------------------------------------------------------------------------
+PropagationEnvironment PropagationEnvironment::default_environment = 
+	PropagationEnvironment();
+//------------------------------------------------------------------------------
 void PropagationEnvironment::assert_completeness()const {
-	if(world_geometry == nullptr)
+	if(world_geometry == Frame::void_frame)
 		throw_missing_item("Frame world_geometry");
 
-	if(propagation_options == nullptr)
+	if(propagation_options == &TracerSettings::default_settings)
 		throw_missing_item("Propagation options");
 
-	if(random_engine == nullptr)
+	if(random_engine == &PseudoRandomNumberGenerator::void_generator)
 		throw_missing_item("Pseudo random number generator");
 }
 //------------------------------------------------------------------------------

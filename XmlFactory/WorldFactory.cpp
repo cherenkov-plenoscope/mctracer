@@ -85,18 +85,14 @@ void WorldFactory::extract_include_path(
 void WorldFactory::add_to_array_if_telescope(const pugi::xml_node node, Frame* frame) {
 	std::string telescope_key = "set_telescope";
 
-	if( node.child(telescope_key.c_str()) != nullptr ) {
-		//const pugi::xml_node telesc = node.child(telescope_key.c_str());
-		//assert_attribute_exists(telesc, "id");
-		//uint id = std::atoi(node.attribute("id").value());
+	if(has_child(node, telescope_key))
 		telescopes->add_to_telescope_array(frame);
-	}
 }
 //------------------------------------------------------------------------------
 void WorldFactory::add_to_sensors_if_sensitive(const pugi::xml_node node, Frame* frame) {
 	std::string sensor_key = "set_sensitive";
 
-	if( node.child(sensor_key.c_str()) != nullptr ) {
+	if(has_child(node, sensor_key)) {
 		const pugi::xml_node sensi = node.child(sensor_key.c_str());
 
 		assert_attribute_exists(sensi, "id");

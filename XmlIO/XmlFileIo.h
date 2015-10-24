@@ -40,6 +40,9 @@ public:
 		const std::string text
 	)const;
 
+	bool has_child(
+		const pugi::xml_node &node, const std::string child_name);
+
 	void assert_child_exists(
 		const pugi::xml_node &node, const std::string child_name);
 

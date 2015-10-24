@@ -96,7 +96,7 @@ void SurfaceEntity::set_allowed_frames_to_propagate_to(
 }
 //------------------------------------------------------------------------------
 bool SurfaceEntity::has_restrictions_on_frames_to_propagate_to()const {
-	return allowed_frame_to_propagate_to != nullptr;
+	return allowed_frame_to_propagate_to != Frame::void_frame;
 }
 //------------------------------------------------------------------------------
 const Frame* SurfaceEntity::get_allowed_frame_to_propagate_to()const {

@@ -48,15 +48,15 @@ private:
 
 	unsigned pseudo_random_number_seed;
 public:
+	static const TracerSettings default_settings;
 	TracerSettings();
 	bool StoreOnlyLastIntersection()const;
-	void SetStoreOnlyLastIntersection(bool flag);
+	void SetStoreOnlyLastIntersection(const bool flag);
 	bool MultiThread()const;
-	void SetMultiThread( bool flag );	
+	void SetMultiThread(const bool flag );	
 	void set_max_number_of_reflections(const int new_max_number_of_reflections);
 	Color get_default_color()const;
 	int get_max_number_of_reflections()const;
-	//unsigned get_decimal_precision_for_csv_output()const;
 	bool max_number_of_reflections_is_not_reached_yet(
 		const uint reflection_counter
 	)const;

@@ -16,7 +16,7 @@ class RayForPropagation;
 //=================================
 class SurfaceEntity :public Frame {
 	
-	const Frame* allowed_frame_to_propagate_to = nullptr;
+	const Frame* allowed_frame_to_propagate_to = Frame::void_frame;
 
 	static const Function::Limits default_wavelength_range;
 	static const Function::Func1D* default_refl;

@@ -70,12 +70,18 @@ void XmlFileIo::strto3tuple(
 	}	
 }
 //------------------------------------------------------------------------------
+bool XmlFileIo::has_child(
+	const pugi::xml_node &node, const std::string child_name
+) {
+	return node.child(child_name.c_str()) != nullptr;
+}
+//------------------------------------------------------------------------------
 void XmlFileIo::assert_child_exists(
 	const pugi::xml_node &node, const std::string child_name){
 
 	XmlNode = node;
 
-	if( node.child(child_name.c_str()) == nullptr ){
+	if(!has_child(node, child_name)) {
 		std::stringstream info;
 		info << "Assert existence of the node called: '" << child_name;
 		info << "'...";
