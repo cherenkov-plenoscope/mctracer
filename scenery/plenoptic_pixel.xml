@@ -117,7 +117,7 @@
 
 <frame>
 	<set_telescope/>
-	<set_frame name="Plenoptik_pixel" pos="[0,0,0]" rot="[0.0,0.35,0.0]"/>
+	<set_frame name="Plenoptik_pixel" pos="[0,0,0]" rot="[0.0,0.0,0.0]"/>
 	
 	<bi_convex_lens_hex>
 		<set_frame name="hex_lens" pos="[0,0,0.0]" rot="[0,0,0]"/>
@@ -127,7 +127,7 @@
 	</bi_convex_lens_hex>
 
 	<disc>
-		<set_frame name="screen" pos="[0,0,-0.1335]" rot="[0,0,0]"/>		
+		<set_frame name="screen" pos="[0,0,-0.09]" rot="[0,0,0]"/>		
 		<set_surface reflection_vs_wavelength="zero" colour="[255,0,128]"/>	
 		<set_disc radius="0.0555"/>
 		<set_sensitive id="1"/>

@@ -46,7 +46,7 @@ private:
 	void propagate_photons_through_geometry()const; 
 	void investigate_single_photon_propagation_in_geometry()const;
 	void point_spread_investigation_in_geometry()const;
-	const std::string get_geometry_file()const;
+	const std::string geometry_filename()const;
 	const std::string get_photon_file_name()const;
 	const std::string get_output_file_name()const;
 	const std::string get_config_file_name()const;

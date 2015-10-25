@@ -15,6 +15,7 @@
 //=================================
 class Vector3D {
 private:
+
 	// in meters
 	double X;
 	double Y;

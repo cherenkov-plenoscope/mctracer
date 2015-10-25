@@ -137,7 +137,9 @@ std::string Frame::get_frame_print()const {
 	out << "frame: " << name_of_frame << "\n";
 	out << "| pos in mother: " << pos_in_mother << "\n";
 	out << "| rot in mother: " << rot_in_mother << "\n";
-	out << "| pos in world:  " << pos_in_world << "\n";
+	out << "| pos in world:  ";
+	out << (has_mother() ? pos_in_world.get_print() : "no mother assigned yet");
+	out << "\n";
 	out << "| enclosing boundary radius: ";
 	out << radius_of_sphere_enclosing_all_children << "m\n";	
 	return out.str();
@@ -147,7 +149,8 @@ std::string Frame::get_tree_print()const {
 	
 	std::stringstream out;
 	out << name_of_frame;
-	out << ", r "<< radius_of_sphere_enclosing_all_children << "m\n";
+	out << ", pos " << pos_in_mother << ", r ";
+	out << radius_of_sphere_enclosing_all_children << "m\n";
 
 	for(Frame* child : children)
 		out << StringTools::place_first_infront_of_each_new_line_of_second(
@@ -248,19 +251,11 @@ void Frame::set_mother_and_child(Frame *new_child) {
 }
 //------------------------------------------------------------------------------
 void Frame::init_tree_based_on_mother_child_relations() {
-	cluster_children_of_me_and_all_my_children();
+	
+	cluster_using_helper_frames();
 	post_init_me_and_all_my_children();
 	update_enclosing_sphere_for_all_children();
 	post_init_root_of_world();
-}
-//------------------------------------------------------------------------------
-void Frame::cluster_children_of_me_and_all_my_children() {
-
-	cluster_using_helper_frames();
-
-	// and all children
-	for(Frame* child : children)
-		child->cluster_children_of_me_and_all_my_children();
 }
 //------------------------------------------------------------------------------
 void Frame::post_init_me_and_all_my_children() {
@@ -393,52 +388,76 @@ void Frame::find_intersection_candidates_for_all_children_and_ray(
 void Frame::cluster_using_helper_frames() {
 	
 	if(get_number_of_children() > max_number_of_children_in_frame) {
-
+		
 		std::vector<Frame*> oct_tree[8];
-
 		std::vector<Frame*> new_children;
 
+		// assign children to octtree
 		for(Frame* child : children)
 			oct_tree[child->pos_in_mother.get_octant()].push_back(child);
-		
+
 		for(uint sector=0; sector<8; sector++) {
-			if(oct_tree[sector].size() > 0) {
 
-				std::stringstream name;
-				name << "helper_sector_" << sector;
+			if(positions_in_mother_are_too_close_together(oct_tree[sector])) {
+				// this can not be clustered
+				for(Frame* child : oct_tree[sector]) {
+					if(child->get_radius_of_sphere_enclosing_all_children() > minimal_structure_size)
+						new_children.push_back(child);
+					else
+						warn_about_neglection_of(child);
+				}
+			}else{
+				// if chilfren assigned to this sector
+				if(oct_tree[sector].size() > 0) {
 
-				Vector3D mean_pos_in_mother = get_mean_pos_in_mother(oct_tree[sector]);
-				Frame* helper_frame = new Frame(
-					name.str(),
-					mean_pos_in_mother,
-					Rotation3D::null
-				);
-
-				for(Frame* sector_child : oct_tree[sector]) {
-
-					sector_child->pos_in_mother = 
-						sector_child->pos_in_mother - mean_pos_in_mother;
-
-					sector_child->T_frame2mother.set_transformation(
-						sector_child->rot_in_mother, 
-						sector_child->pos_in_mother
+					// create helper sector
+					std::stringstream name;
+					name << "helper_sector_" << sector;
+					Vector3D mean_pos_in_mother = get_mean_pos_in_mother(oct_tree[sector]);
+					Frame* helper_frame = new Frame(
+						name.str(),
+						mean_pos_in_mother,
+						Rotation3D::null
 					);
 
-					helper_frame->set_mother_and_child(sector_child);
-				}
+					// assign children to helper frame
+					for(Frame* sector_child : oct_tree[sector]) {
+						if(sector_child->get_radius_of_sphere_enclosing_all_children() > minimal_structure_size) {
 
-				new_children.push_back(helper_frame);
+							sector_child->pos_in_mother = 
+								sector_child->pos_in_mother - mean_pos_in_mother;
+
+							sector_child->T_frame2mother.set_transformation(
+								sector_child->rot_in_mother, 
+								sector_child->pos_in_mother
+							);
+
+							helper_frame->set_mother_and_child(sector_child);
+						}else
+							warn_about_neglection_of(sector_child);
+					}
+					// now cluster the helper frame itself
+					helper_frame->cluster_using_helper_frames();
+					// now add only helper frame to new children
+					new_children.push_back(helper_frame);
+				}
 			}
 		}
 
 		children.clear();
-		for(Frame* new_helper_frame_child : new_children) {
-
-			new_helper_frame_child->cluster_using_helper_frames();
-
+		for(Frame* new_helper_frame_child : new_children)
 			set_mother_and_child(new_helper_frame_child);
-		}
 	}
+}
+//------------------------------------------------------------------------------
+void Frame::warn_about_neglection_of(const Frame* frame)const {
+	std::stringstream out;
+	out << "___Warning___\n";
+	out << __FILE__ << " " << __func__ << "(frame) " << __LINE__ << "\n";
+	out << "Frame: " << frame->get_name_of_frame() << " is neglected. ";
+	out << "Encolsing radius is below " << minimal_structure_size << "m, i.e. ";
+	out << frame->get_radius_of_sphere_enclosing_all_children() << "m.\n";
+	std::cout << out.str();	
 }
 //------------------------------------------------------------------------------
 Vector3D Frame::get_mean_pos_in_mother(
@@ -451,6 +470,32 @@ Vector3D Frame::get_mean_pos_in_mother(
 		sum_pos = sum_pos + frame->pos_in_mother;
 
 	return sum_pos/frames.size();
+}
+//------------------------------------------------------------------------------
+bool Frame::positions_in_mother_are_too_close_together(
+	std::vector<Frame*> frames
+)const {
+
+		if(frames.size() < 2)
+			return false;
+
+		Vector3D mean_pos_in_mother = get_mean_pos_in_mother(frames);
+
+		Vector3D u = Vector3D::null;
+		for(Frame* frame : frames) {
+			Vector3D r =  frame->pos_in_mother - mean_pos_in_mother;
+			u = u + Vector3D(
+				r.x()*r.x(), 
+				r.y()*r.y(), 
+				r.z()*r.z()
+			);
+		}
+
+		u = u/frames.size();
+
+		double spread = sqrt(u.norm());
+
+		return spread < minimal_structure_size;
 }
 //------------------------------------------------------------------------------
 std::string Frame::get_name_of_frame()const{ 
@@ -507,14 +552,18 @@ double Frame::get_Zd_relative_to_mother()const {
 	);
 }
 //------------------------------------------------------------------------------
-void Frame::move_to_Az_Zd_relative_to_mother(const double Az_Rad, const double Zd_Rad) {
+void Frame::move_to_Az_Zd_relative_to_mother(
+	const double Az_Rad, const double Zd_Rad
+) {
 
 	rot_in_mother.set(0.0, Zd_Rad, Deg2Rad(180.0) - Az_Rad);
 	T_frame2mother.set_transformation(rot_in_mother, pos_in_mother);
 	post_init_me_and_all_my_children_only_based_on_mother();	
 }
 //------------------------------------------------------------------------------
-void Frame::move_to_Az_Zd_relative_to_mother_using_root(const double Az_Rad, const double Zd_Rad) {
+void Frame::move_to_Az_Zd_relative_to_mother_using_root(
+	const double Az_Rad, const double Zd_Rad
+) {
 
 	rot_in_mother.set(0.0, Zd_Rad, Deg2Rad(180.0) - Az_Rad);
 	T_frame2mother.set_transformation(rot_in_mother, pos_in_mother);

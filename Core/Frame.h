@@ -46,13 +46,14 @@ protected:
     HomoTrafo3D T_frame2world;
     
     std::vector<Frame*> children;
-	Frame *mother;
+	Frame *mother = void_frame;
     const Frame *root_of_world;
 private:
 
     static const char delimiter_for_frame_path = '/';
 public:
     static const uint max_number_of_children_in_frame = 16;
+    static constexpr double minimal_structure_size = 1e-6;
 //------------------------------------------------------------------------------
     static Frame* void_frame;
 
@@ -100,7 +101,7 @@ protected:
     // post initialization based on root
     void post_init_me_and_all_my_children();
     void post_init_transformations();
-    void cluster_children_of_me_and_all_my_children();
+    //void cluster_children_of_me_and_all_my_children();
     HomoTrafo3D calculate_frame2world()const;
     // post initialization based on mother only
     void post_init_me_and_all_my_children_only_based_on_mother();
@@ -115,6 +116,8 @@ protected:
     void assert_name_is_valid(const std::string name_to_check)const;
     Vector3D get_mean_pos_in_mother(std::vector<Frame*> frames)const;
     public: void cluster_using_helper_frames();
+    bool positions_in_mother_are_too_close_together(std::vector<Frame*> frames)const;
+    void warn_about_neglection_of(const Frame* frame)const;
 public:
     // moving/rotating the frame after construction
     void move_to_Az_Zd_relative_to_mother(const double Az_Rad, const double Zd_Rad);
