@@ -4,6 +4,7 @@
 #include "FrameFactory.h"
 #include "Core/Function/LinInterpolFunction.h"
 #include "Tools/AsciiIo.h"
+#include "Geometry/StlReader.h"
 //------------------------------------------------------------------------------
 WorldFactory::WorldFactory(){
 
@@ -135,7 +136,10 @@ Frame* mother,const pugi::xml_node node){
 		mother = produceBiConvexLensHex(mother,node);	
 
 	}else if(StringTools::is_equal(node.name(),"sphere_cap_hexagonal")){
-		mother = produce_sphere_cap_hexagonal(mother,node);	
+		mother = produce_sphere_cap_hexagonal(mother,node);
+
+	}else if(StringTools::is_equal(node.name(),"stl")){
+		mother = produce_stl_object(mother,node);		
 
 	}else if(StringTools::is_equal(node.name(),"include")){
 		include_file(mother,node);
@@ -200,6 +204,8 @@ void WorldFactory::go_on_with_children_of_node(
 			fabricate_frame(mother,sub_node);
 		}else if(StringTools::is_equal(sub_node_name,"sphere_cap_hexagonal")){
 			
+			fabricate_frame(mother,sub_node);
+		}else if(StringTools::is_equal(sub_node_name,"stl")){
 			fabricate_frame(mother,sub_node);
 		}
 	}	
@@ -401,7 +407,39 @@ Frame* WorldFactory::produceBiConvexLensHex(
 	
 	mother->set_mother_and_child(lens);
 	return lens;
+}
+//------------------------------------------------------------------------------
+Frame* WorldFactory::produce_stl_object(
+		Frame* mother, const pugi::xml_node node
+) {
+	FrameFactory frameFab(node);
+	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());
+	
+	assert_child_exists(node, "set_stl");
+	const pugi::xml_node set_stl_node = node.child("set_stl");
 
+	assert_attribute_exists(set_stl_node, "file");
+	std::string file = 
+		absolute_path + set_stl_node.attribute("file").value();
+
+	assert_attribute_exists(set_stl_node, "scale");
+	double scale = StrToDouble(set_stl_node.attribute("scale").value());
+
+	StlReader stl(file, scale);
+	Frame* object = stl.get_frame();
+
+	Frame* repositioned_object = new Frame(
+		frameFab.get_name(), 
+		frameFab.get_position(), 
+		frameFab.get_rotation()
+	);
+
+	repositioned_object->take_children_from(object);
+	
+	delete object;
+
+	mother->set_mother_and_child(repositioned_object);
+	return repositioned_object;
 }
 //------------------------------------------------------------------------------
 const Function::Func1D* WorldFactory::extract_refraction(

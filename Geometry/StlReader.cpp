@@ -16,29 +16,66 @@ StlReader::StlReader(const std::string _filename, const double _scaling_factor):
 //------------------------------------------------------------------------------
 void StlReader::start() {
 
+	object = new Frame("stl_file", Vector3D::null, Rotation3D::null);
+
 	stl_file.open(filename, std::ios::binary);
-	assert_file_is_open();
+		assert_file_is_open();
+		read_header();
+		read_total_number_of_triangles();
+		read_triangles();
+	stl_file.close();
 
-	stl_header = read_chars(header_size_in_chars);
-	number_of_triangles = read_single_uint32();
-
-	stl_object = new Frame("stl_file", Vector3D::null, Rotation3D::null);
-	read_triangles();
-
-	stl_object->init_tree_based_on_mother_child_relations();
+	object->init_tree_based_on_mother_child_relations();
+	report_bad_attribute_count();
 }
 //------------------------------------------------------------------------------
-StlReader::~StlReader() {
-	stl_file.close();
+void StlReader::read_header() {
+	stl_header = read_chars(header_size_in_chars);
+	assert_is_no_ascii_format();
+}
+//------------------------------------------------------------------------------
+void StlReader::read_total_number_of_triangles() {
+	total_number_of_triangles = read_single_uint32();
+} 
+//------------------------------------------------------------------------------
+void StlReader::report_bad_attribute_count()const {
+	if(triangles_with_bad_attribute_count.size()>0) {
+		
+		std::stringstream info;
+	    info << __FILE__ << " " << __LINE__ << "\n";
+		info << "StlReader: in file '" << filename << "'\n";
+		info << "The attribute_byte_count is not zero in ";
+		info << triangles_with_bad_attribute_count.size() << " of ";
+		info << total_number_of_triangles <<" triangles\n";
+		info << "I do not know what attribute_byte_count means but\n";
+		info << "the STL standart says it should be zero for each triangle.\n";
+		
+		std::cout << " __warning__\n";
+		std::cout << StringTools::place_first_infront_of_each_new_line_of_second(
+			"| ", info.str()
+		);
+		std::cout << "|___________\n";
+	}	
+}
+//------------------------------------------------------------------------------
+void StlReader::assert_is_no_ascii_format()const {
+
+	if(stl_header_implies_ascii_format()) {
+		std::stringstream info;
+	    info << __FILE__ << " " << __LINE__ << "\n";
+		info << "StlReader: Unable to read file: '" << filename << "'\n";
+		info << "Expected binary file, but actual header implies ascii format.\n";
+		throw CanNotReadAscii(info.str());
+	}	
 }
 //------------------------------------------------------------------------------
 void StlReader::assert_file_is_open()const {
 
 	if(!stl_file.is_open()) {
 		std::stringstream info;
-	    info << __FILE__ << " " << __func__ << " " << __LINE__ << "\n";
+	    info << __FILE__ << " " << __LINE__ << "\n";
 		info << "StlReader: Unable to open file: '" << filename << "'\n";
-		throw CanNotReadSTL(info.str());	 	
+		throw CanNotReadFile(info.str());	 	
 	}
 }
 //------------------------------------------------------------------------------
@@ -80,14 +117,14 @@ std::string StlReader::get_print()const {
     	"  ",
     	stl_header
     );
-    out << "number of triangles: " << number_of_triangles << "\n";
+    out << "number of triangles: " << total_number_of_triangles << "\n";
     return out.str();
 }
 //------------------------------------------------------------------------------
 void StlReader::read_triangles() {
 
-	for(uint32_t i=0; i<number_of_triangles; i++)
-		stl_object->set_mother_and_child(read_and_create_next_triangle());
+	for(uint32_t i=0; i<total_number_of_triangles; i++)
+		object->set_mother_and_child(read_and_create_next_triangle());
 }
 //------------------------------------------------------------------------------
 Frame* StlReader::read_and_create_next_triangle() {
@@ -100,7 +137,7 @@ Frame* StlReader::read_and_create_next_triangle() {
 
 	// 2byte short
 	uint16_t attribute_byte_count = read_single_uint16();
-	assert_attribute_byte_count_is_zero(attribute_byte_count);
+	check_attribute_byte_count_is_zero(attribute_byte_count);
 
 	Vector3D normal(
 		normal_and_3_vertexes[0],
@@ -139,19 +176,11 @@ Frame* StlReader::read_and_create_next_triangle() {
 	return tri;
 }
 //------------------------------------------------------------------------------
-void StlReader::assert_attribute_byte_count_is_zero(
+void StlReader::check_attribute_byte_count_is_zero(
 	const uint16_t attribute_byte_count
 ) {
-	if(attribute_byte_count != 0) {
-		std::stringstream info;
-	    info << __FILE__ << " " << __func__ << " " << __LINE__ << "\n";
-		info << "StlReader: in file '" << filename << "', ";
-		info << "triangle number " << current_triangle_number << " ";
-		info << "The attribute_byte_count is not zero.\n";
-		info << "I do not know what attribute_byte_count means, ";
-		info << "but the STL standart says it must be zero for each triangle.\n";
-		throw BadAttributeByteCount(info.str());	 	
-	}
+	if(attribute_byte_count != 0)
+		triangles_with_bad_attribute_count.push_back(current_triangle_number);
 }
 //------------------------------------------------------------------------------
 void StlReader::assert_normal_is_actually_normalized(const Vector3D normal) {
@@ -161,7 +190,7 @@ void StlReader::assert_normal_is_actually_normalized(const Vector3D normal) {
 
 	if(deviation > 1e-3) {
 		std::stringstream info;
-	    info << __FILE__ << " " << __func__ << " " << __LINE__ << "\n";
+	   	info << __FILE__ << " " << __LINE__ << "\n";
 		info << "StlReader: in file '" << filename << "', triangle number ";
 		info << current_triangle_number << " ";
 		info << "The normal vector " << normal << " is not exactly normalized.\n";
@@ -176,9 +205,13 @@ std::string StlReader::get_current_triangle_name() {
 }
 //------------------------------------------------------------------------------
 Frame* StlReader::get_frame()const {
-	return stl_object;
+	return object;
 }
 //------------------------------------------------------------------------------
 uint StlReader::get_number_of_triangles()const {
 	return current_triangle_number;
+}
+//------------------------------------------------------------------------------
+bool StlReader::stl_header_implies_ascii_format()const {
+	return StringTools::is_equal("solid", stl_header.substr(0,5));
 }

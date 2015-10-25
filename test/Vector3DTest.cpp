@@ -234,9 +234,7 @@ TEST_F(Vector3DTest, normalize) {
     Vector3D a(1.0,2.0,3.0);
     EXPECT_NE( 1.0, a.norm());
 
-    std::cout << a << "\n";
     a.normalize();
-    std::cout << a << "\n";
     EXPECT_EQ( 1.0, a.norm());
 
     a = a*2.0;

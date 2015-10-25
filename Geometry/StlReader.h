@@ -44,52 +44,54 @@ assumed to be little-endian, although this is not stated in documentation.
 class StlReader {
 
 	const std::string filename;
+	std::ifstream stl_file;
+	std::string stl_header;
+
 	const uint header_size_in_chars = 80;
 	const uint triangle_size_in_32bit_floats = 12;
-    std::ifstream stl_file;
+    
+	Frame* object;
 
-    /* 	
-    The STL file format has arbitrary units. Some files are stored in meters
-    others are in millimeters or inches. To correct for this, a scaling
-    factor can be used during construction.
-    */
+	uint current_triangle_number = 0;
+	uint32_t total_number_of_triangles;
+     	
+    // The STL file format has arbitrary units. Some files are stored in meters
+    // others are in millimeters or inches. To correct for this, a scaling
+    // factor can be used during construction.
     double scaling_factor = 1.0;
 
-    // internal
-    uint current_triangle_number = 0;
-    std::string stl_header;
-    uint32_t number_of_triangles;
-    Frame* stl_object;
+    // keep track of triangles with bad "attribute byte count"
+    std::vector<uint> triangles_with_bad_attribute_count;
 public:
 
     StlReader(const std::string filename);
     StlReader(const std::string filename, const double scaling_factor);
-    ~StlReader();
     Frame* get_frame()const;
     std::string get_print()const;
     uint get_number_of_triangles()const;
 private:
 
+	void read_header();
+	void read_total_number_of_triangles();
 	void start();
+	bool stl_header_implies_ascii_format()const;
+	void assert_is_no_ascii_format()const;
+	void assert_normal_is_actually_normalized(const Vector3D nomral);
 	void assert_file_is_open()const;
+	void report_bad_attribute_count()const; 
+	void read_triangles();
+	Frame* read_and_create_next_triangle();
+	std::string get_current_triangle_name();
 	std::vector<float> read_floats(const uint n);
 	std::string read_chars(const uint n);
 	uint32_t read_single_uint32();
 	uint16_t read_single_uint16();
-	void read_triangles();
-	Frame* read_and_create_next_triangle();
-	void assert_attribute_byte_count_is_zero(
+	void check_attribute_byte_count_is_zero(
 		const uint16_t attribute_byte_count
 	); 
-	void assert_normal_is_actually_normalized(const Vector3D nomral);
-	std::string get_current_triangle_name();
 public:
 
-	class CanNotReadSTL : public TracerException {
-		using TracerException::TracerException;
-	};
-
-	class BadAttributeByteCount : public TracerException {
+	class CanNotReadFile : public TracerException {
 		using TracerException::TracerException;
 	};
 
@@ -97,5 +99,8 @@ public:
 		using TracerException::TracerException;
 	};
 
+	class CanNotReadAscii : public TracerException {
+		using TracerException::TracerException;
+	};
 };
 #endif // __StlReader_H_INCLUDE__ 

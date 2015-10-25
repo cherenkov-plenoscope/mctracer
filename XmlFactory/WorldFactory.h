@@ -111,6 +111,11 @@ private:
 		const pugi::xml_node node
 	);
 
+	Frame* produce_stl_object(
+		Frame* mother, 
+		const pugi::xml_node node
+	);
+
 	const Function::Func1D* extract_refraction(const pugi::xml_node node); 
 
 	void extractBiConvexLensHex(

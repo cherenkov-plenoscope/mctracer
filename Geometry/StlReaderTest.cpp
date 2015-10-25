@@ -6,7 +6,15 @@ class StlReaderTest : public ::testing::Test {};
 //----------------------------------------------------------------------
 TEST_F(StlReaderTest, open_non_existing_file) {
 
-    EXPECT_THROW( StlReader hans("not_existing_file"), StlReader::CanNotReadSTL);
+    EXPECT_THROW( StlReader hans("not_existing_file"), StlReader::CanNotReadFile);
+}
+//----------------------------------------------------------------------
+TEST_F(StlReaderTest, ascii_format) {
+
+    EXPECT_THROW( 
+        StlReader stl("test_scenery/ascii_format.stl"),
+        StlReader::CanNotReadAscii
+    );
 }
 //----------------------------------------------------------------------
 TEST_F(StlReaderTest, open_valid_file) {

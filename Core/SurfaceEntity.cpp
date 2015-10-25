@@ -27,6 +27,9 @@ SurfaceEntity::SurfaceEntity() {
 	
 	_boundary_layer_is_transparent = false;
 
+	outer_color = default_color;
+	inner_color = default_color;
+
 	outer_reflection_vs_wavelength = default_refl;
 	inner_reflection_vs_wavelength = default_refl;
 

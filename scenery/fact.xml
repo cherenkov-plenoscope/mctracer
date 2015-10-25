@@ -17,6 +17,11 @@
 	<set_sensitive id="0"/>
 </disc>
 
+<stl>
+	<set_frame name="spider" pos="[0,-1,0.3]" rot="[0,0,0]"/>
+	<set_stl file="spider.stl" scale="0.05"/>
+</stl>
+
 <frame>
 	<set_frame name="tree" pos="[5,5,-2]" rot="[0,0,0]"/>	
 	

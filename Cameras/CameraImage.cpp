@@ -40,6 +40,31 @@ void CameraImage::save_image_to_file(std::string filename_of_image)const{
 	}
 }
 //------------------------------------------------------------------------------
+void CameraImage::load(const std::string filename) {
+
+	try{
+
+		*Image = cv::imread(filename, CV_LOAD_IMAGE_COLOR);
+	}catch (std::runtime_error& ex) {
+
+		std::stringstream info;
+		info << "CameraImage::" << __func__ << "()\n";
+		info << "mctracer trys to load an OpenCV image called: ";
+		info << filename << "\n";
+		info << ex.what() << "\n",
+		throw TracerException(info.str());
+	}
+
+	if(!Image->data) {
+
+		std::stringstream info;
+		info << "CameraImage::" << __func__ << "()\n";
+		info << "mctracer failed to load an OpenCV image called: ";
+		info << filename << "\n";
+		throw TracerException(info.str());
+	}
+}
+//------------------------------------------------------------------------------
 uint CameraImage::get_resolution()const {
 	return get_number_of_cols() * get_number_of_rows();
 }
@@ -61,6 +86,11 @@ void CameraImage::set_pixel_row_col_to_color(
 	intensity.val[2] = color.get_R_as_uchar();
 
 	Image->at<cv::Vec3b>(row,col) = intensity;
+}
+//------------------------------------------------------------------------------
+Color CameraImage::get_pixel_row_col(const uint row, const uint col) {
+	cv::Vec3b intensity = Image->at<cv::Vec3b>(row,col);
+	return Color(intensity.val[0], intensity.val[1], intensity.val[2]);
 }
 //------------------------------------------------------------------------------
 double CameraImage::get_width_to_height_ratio()const {
