@@ -1,20 +1,24 @@
-#include "StlReader.h"
+#include "StereoLitographyIo.h"
 #include "Triangle.h"
 //------------------------------------------------------------------------------
-StlReader::StlReader(const std::string _filename):
+namespace StereoLitographyIo {
+//------------------------------------------------------------------------------
+BinaryReader::BinaryReader(const std::string _filename):
 	filename(_filename)
 {
 	start();
 }
 //------------------------------------------------------------------------------
-StlReader::StlReader(const std::string _filename, const double _scaling_factor):
-	filename(_filename)
+BinaryReader::BinaryReader(
+	const std::string _filename, 
+	const double _scaling_factor
+):	filename(_filename)
 {
 	scaling_factor = _scaling_factor;
 	start();
 }
 //------------------------------------------------------------------------------
-void StlReader::start() {
+void BinaryReader::start() {
 
 	object = new Frame("stl_file", Vector3D::null, Rotation3D::null);
 
@@ -29,21 +33,21 @@ void StlReader::start() {
 	report_bad_attribute_count();
 }
 //------------------------------------------------------------------------------
-void StlReader::read_header() {
+void BinaryReader::read_header() {
 	stl_header = read_chars(header_size_in_chars);
 	assert_is_no_ascii_format();
 }
 //------------------------------------------------------------------------------
-void StlReader::read_total_number_of_triangles() {
+void BinaryReader::read_total_number_of_triangles() {
 	total_number_of_triangles = read_single_uint32();
 } 
 //------------------------------------------------------------------------------
-void StlReader::report_bad_attribute_count()const {
+void BinaryReader::report_bad_attribute_count()const {
 	if(triangles_with_bad_attribute_count.size()>0) {
 		
 		std::stringstream info;
 	    info << __FILE__ << " " << __LINE__ << "\n";
-		info << "StlReader: in file '" << filename << "'\n";
+		info << "BinaryReader: in file '" << filename << "'\n";
 		info << "The attribute_byte_count is not zero in ";
 		info << triangles_with_bad_attribute_count.size() << " of ";
 		info << total_number_of_triangles <<" triangles\n";
@@ -58,35 +62,35 @@ void StlReader::report_bad_attribute_count()const {
 	}	
 }
 //------------------------------------------------------------------------------
-void StlReader::assert_is_no_ascii_format()const {
+void BinaryReader::assert_is_no_ascii_format()const {
 
 	if(stl_header_implies_ascii_format()) {
 		std::stringstream info;
 	    info << __FILE__ << " " << __LINE__ << "\n";
-		info << "StlReader: Unable to read file: '" << filename << "'\n";
+		info << "BinaryReader: Unable to read file: '" << filename << "'\n";
 		info << "Expected binary file, but actual header implies ascii format.\n";
 		throw CanNotReadAscii(info.str());
 	}	
 }
 //------------------------------------------------------------------------------
-void StlReader::assert_file_is_open()const {
+void BinaryReader::assert_file_is_open()const {
 
 	if(!stl_file.is_open()) {
 		std::stringstream info;
 	    info << __FILE__ << " " << __LINE__ << "\n";
-		info << "StlReader: Unable to open file: '" << filename << "'\n";
+		info << "BinaryReader: Unable to open file: '" << filename << "'\n";
 		throw CanNotReadFile(info.str());	 	
 	}
 }
 //------------------------------------------------------------------------------
-std::vector<float> StlReader::read_floats(const uint n) {
+std::vector<float> BinaryReader::read_floats(const uint n) {
 
     std::vector<float> block(n);
     stl_file.read((char*)block.data(), block.size()*sizeof(float));
     return block;
 }
 //------------------------------------------------------------------------------
-std::string StlReader::read_chars(const uint n) {
+std::string BinaryReader::read_chars(const uint n) {
 
     std::vector<char> block(n);
     stl_file.read((char*)block.data(), block.size()*sizeof(char));
@@ -94,24 +98,24 @@ std::string StlReader::read_chars(const uint n) {
     return str;;
 }
 //------------------------------------------------------------------------------
-uint32_t StlReader::read_single_uint32() {
+uint32_t BinaryReader::read_single_uint32() {
 
     uint32_t number;
     stl_file.read((char*)&number, sizeof(uint32_t));
 	return number;
 }
 //------------------------------------------------------------------------------
-uint16_t StlReader::read_single_uint16() {
+uint16_t BinaryReader::read_single_uint16() {
 
     uint16_t number;
     stl_file.read((char*)&number, sizeof(uint16_t));
 	return number;
 }
 //------------------------------------------------------------------------------
-std::string StlReader::get_print()const {
+std::string BinaryReader::get_print()const {
 
 	std::stringstream out;
-    out << "StlReader(" << filename << ")\n";
+    out << "BinaryReader(" << filename << ")\n";
     out << "header:\n";
     out << StringTools::place_first_infront_of_each_new_line_of_second(
     	"  ",
@@ -121,13 +125,13 @@ std::string StlReader::get_print()const {
     return out.str();
 }
 //------------------------------------------------------------------------------
-void StlReader::read_triangles() {
+void BinaryReader::read_triangles() {
 
 	for(uint32_t i=0; i<total_number_of_triangles; i++)
 		object->set_mother_and_child(read_and_create_next_triangle());
 }
 //------------------------------------------------------------------------------
-Frame* StlReader::read_and_create_next_triangle() {
+Frame* BinaryReader::read_and_create_next_triangle() {
 	
 	current_triangle_number++;
 
@@ -176,14 +180,14 @@ Frame* StlReader::read_and_create_next_triangle() {
 	return tri;
 }
 //------------------------------------------------------------------------------
-void StlReader::check_attribute_byte_count_is_zero(
+void BinaryReader::check_attribute_byte_count_is_zero(
 	const uint16_t attribute_byte_count
 ) {
 	if(attribute_byte_count != 0)
 		triangles_with_bad_attribute_count.push_back(current_triangle_number);
 }
 //------------------------------------------------------------------------------
-void StlReader::assert_normal_is_actually_normalized(const Vector3D normal) {
+void BinaryReader::assert_normal_is_actually_normalized(const Vector3D normal) {
 	
 	double norm = normal.norm();
 	double deviation = fabs(norm - 1.0);
@@ -191,27 +195,37 @@ void StlReader::assert_normal_is_actually_normalized(const Vector3D normal) {
 	if(deviation > 1e-3) {
 		std::stringstream info;
 	   	info << __FILE__ << " " << __LINE__ << "\n";
-		info << "StlReader: in file '" << filename << "', triangle number ";
-		info << current_triangle_number << " ";
-		info << "The normal vector " << normal << " is not exactly normalized.\n";
+		info << "BinaryReader: in file '" << filename << "', triangle number ";
+		info << current_triangle_number << " of ";
+		info << total_number_of_triangles << "\n";
+		info << "The normal vector " << normal;
+		info << " is not exactly normalized.\n";
+		info << "STL header:\n";
+		info << stl_header << "\n";
 		throw BadNormal(info.str());	 	
 	}
 }
 //------------------------------------------------------------------------------
-std::string StlReader::get_current_triangle_name() {
+std::string BinaryReader::get_current_triangle_name() {
 	std::stringstream name;
 	name << "triangle_" << current_triangle_number;
 	return name.str();
 }
 //------------------------------------------------------------------------------
-Frame* StlReader::get_frame()const {
+Frame* BinaryReader::get_frame()const {
 	return object;
 }
 //------------------------------------------------------------------------------
-uint StlReader::get_number_of_triangles()const {
+uint BinaryReader::get_number_of_triangles()const {
 	return current_triangle_number;
 }
 //------------------------------------------------------------------------------
-bool StlReader::stl_header_implies_ascii_format()const {
+bool BinaryReader::stl_header_implies_ascii_format()const {
 	return StringTools::is_equal("solid", stl_header.substr(0,5));
 }
+//------------------------------------------------------------------------------
+std::string BinaryReader::get_header()const {
+	return stl_header;
+}
+//------------------------------------------------------------------------------
+} // StereoLitographyIo

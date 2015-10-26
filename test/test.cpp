@@ -36,7 +36,7 @@
 #include "EventIoTest.cpp"
 #include "FunctionTest.cpp"
 #include "../PlenopticTelescope/LensMakerTest.cpp"
-#include "../Geometry/StlReaderTest.cpp"
+#include "../Geometry/StereoLitographyIoTest.cpp"
 
 int main(int argc, char **argv) {
 	UserInteraction::print_welcome_screen();

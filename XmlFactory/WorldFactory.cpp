@@ -4,7 +4,7 @@
 #include "FrameFactory.h"
 #include "Core/Function/LinInterpolFunction.h"
 #include "Tools/AsciiIo.h"
-#include "Geometry/StlReader.h"
+#include "Geometry/StereoLitographyIo.h"
 //------------------------------------------------------------------------------
 WorldFactory::WorldFactory(){
 
@@ -425,7 +425,7 @@ Frame* WorldFactory::produce_stl_object(
 	assert_attribute_exists(set_stl_node, "scale");
 	double scale = StrToDouble(set_stl_node.attribute("scale").value());
 
-	StlReader stl(file, scale);
+	StereoLitographyIo::BinaryReader stl(file, scale);
 	Frame* object = stl.get_frame();
 
 	Frame* repositioned_object = new Frame(

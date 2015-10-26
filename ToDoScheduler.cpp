@@ -3,7 +3,7 @@
 #include "Tools/AsciiIo.h"
 #include "ProgramOptions.h"
 #include "XmlFactory/WorldFactory.h"
-#include "Geometry/StlReader.h"
+#include "Geometry/StereoLitographyIo.h"
 //------------------------------------------------------------------------------
 ToDoScheduler::ToDoScheduler(int argc, char** argv) {
 
@@ -67,7 +67,7 @@ void ToDoScheduler::render_geometry()const {
 		StringTools::is_ending(geometry_filename(),".stl") || 
 		StringTools::is_ending(geometry_filename(),".STL")
 	) {
-		StlReader stl(geometry_filename());
+		StereoLitographyIo::BinaryReader stl(geometry_filename());
 		geometry = stl.get_frame();
 	}else if(	StringTools::is_ending(geometry_filename(),".xml") ||
 				StringTools::is_ending(geometry_filename(),".XML")
