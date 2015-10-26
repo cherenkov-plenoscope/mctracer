@@ -82,6 +82,8 @@ void FreeOrbitCamera::start_free_orbit(){
 			break;
 			case 'y': Stereo_operator->decrease_stereo_offset();
 			break;
+			case 'p': std::cout << world->get_tree_print() << "\n";
+			break;
 			case 'g': {
 				take_snapshot();
 				key_stroke_requires_image_update = false;
@@ -217,15 +219,13 @@ void FreeOrbitCamera::take_snapshot_manual_focus_on_pixel_col_row(int x, int y){
 }
 //==============================================================================
 const CameraImage* FreeOrbitCamera::acquire_image_with_camera(CameraDevice* cam) {
-	if(stereo3D){
-		std::cout << get_prefix_print() << "stereo snapshot:\n";
+	if(stereo3D) {
 
 		CameraManForStereo3D op(cam);
 		op.use_same_stereo_offset_as(Stereo_operator);
 		op.aquire_stereo_image(world, settings);
 		return op.get_anaglyph_stereo3D_image();
 	}else{
-		std::cout << get_prefix_print() << "snapshot:\n";
 
 		cam->acquire_image(world, settings);
 		return cam->get_image();
@@ -295,19 +295,20 @@ void FreeOrbitCamera::print_free_orbit_help_text()const{
 
 	//      0        1         2         3         4         5         6         7         8
 	//      12345678901234567890123456789012345678901234567890123456789012345678901234567890
-	out << "_Camera_position_______________   _Camera_orientation____________\n";
+	out << "_Position______________________   _Orientation___________________\n";
 	out << " move forward............[ w ]     look up.................[ i ]\n";
 	out << " move backward...........[ s ]     look down...............[ k ]\n";
 	out << " move left...............[ a ]     look left...............[ j ]\n";
 	out << " move right..............[ d ]     look right..............[ l ]\n";
 	out << "\n";
-	out << "_Stereo3D_left:red_right:blue__   _camera_Field_of_View__________\n";
-	out << " toggle stereo 3D........[ t ]     increace FoV............[ n ]\n";
-	out << " increase offset.........[ x ]     decreace FoV............[ m ]\n";
-	out << " decrease offset.........[ y ]\n";
+	out << "_Stereo3D_left:red_right:blue__   _Field_of_View_________________\n";
+	out << " on/off..................[ t ]     increace................[ n ]\n";
+	out << " increase................[ x ]     decreace................[ m ]\n";
+	out << " decrease................[ y ]\n";
 	out << "                                  _free_orbit___________________\n";
-	out << "_Aperture_camera_______________    help....................[ h ]\n";
-	out << " take snapshot auto focus[ g ]     exit....................[ESC]\n";
+	out << "_Aperture_camera_______________    print help..............[ h ]\n";
+	out << " take snapshot auto focus[ g ]     print geometry tree.....[ p ]\n";
+	out << " manual focus..[ right mouse ]     exit....................[ESC]\n";
 	out << "\n";
 	out << "[ left mouse  ] click image for additional information.\n";
 	out << "[ right mouse ] click image for manual focus with snapshot.\n";

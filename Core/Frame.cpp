@@ -45,11 +45,8 @@ void Frame::post_init_transformations() {
 void Frame::post_init_transformations_only_based_on_mother() {
 
 	T_mother2frame = T_frame2mother.inverse();
-
 	T_frame2world = calculate_frame2world_only_based_on_mother();
-	
 	T_world2frame = T_frame2world.inverse();
-
 	pos_in_world = T_frame2world.get_translation();
 }
 //------------------------------------------------------------------------------
@@ -407,12 +404,12 @@ void Frame::cluster_using_helper_frames() {
 						warn_about_neglection_of(child);
 				}
 			}else{
-				// if chilfren assigned to this sector
+				// if children assigned to this sector
 				if(oct_tree[sector].size() > 0) {
 
 					// create helper sector
 					std::stringstream name;
-					name << "helper_sector_" << sector;
+					name << "octant_" << sector;
 					Vector3D mean_pos_in_mother = get_mean_pos_in_mother(oct_tree[sector]);
 					Frame* helper_frame = new Frame(
 						name.str(),

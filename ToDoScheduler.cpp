@@ -82,7 +82,6 @@ void ToDoScheduler::render_geometry()const {
 	}
 	
 	TracerSettings settings;	
-	//std::cout << geometry->get_tree_print();
 	FreeOrbitCamera free(geometry, &settings);
 }
 //------------------------------------------------------------------------------
