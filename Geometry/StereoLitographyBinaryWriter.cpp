@@ -13,6 +13,11 @@ void BinaryWriter::add_facet_normal_and_three_vertices(
 	facets.push_back(facet);
 }
 //------------------------------------------------------------------------------
+void BinaryWriter::add_facets(const std::vector<Facet> additional_facets) {
+	for(Facet additional_facet : additional_facets)
+		facets.push_back(additional_facet);
+}
+//------------------------------------------------------------------------------
 void BinaryWriter::assert_normal_is_actually_normalized(const Vector3D normal) {
 	
 	double norm = normal.norm();

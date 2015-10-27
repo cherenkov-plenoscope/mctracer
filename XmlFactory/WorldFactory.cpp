@@ -425,8 +425,8 @@ Frame* WorldFactory::produce_stl_object(
 	assert_attribute_exists(set_stl_node, "scale");
 	double scale = StrToDouble(set_stl_node.attribute("scale").value());
 
-	StereoLitographyIo::BinaryReader stl(file, scale);
-	Frame* object = stl.get_frame();
+	//StereoLitographyIo::BinaryReader stl(file, scale);
+	Frame* object = StereoLitographyIo::read(file, scale);
 
 	Frame* repositioned_object = new Frame(
 		frameFab.get_name(), 

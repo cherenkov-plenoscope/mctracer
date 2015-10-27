@@ -42,7 +42,23 @@ Floating-point numbers are represented as IEEE floating-point numbers and are
 assumed to be little-endian, although this is not stated in documentation.
 */
 namespace StereoLitographyIo {
-	
+
+	Frame* read(const std::string filename, const double scale = 1.0);
+	// The STL file format has arbitrary units. Some files are stored in meters
+	// others are in millimeters or inches. To correct for this, a scaling
+	// factor can be used during construction.
+
+//--------------------------------
+// AUXILUARY
+//--------------------------------
+
+	struct Facet {
+		Vector3D n;
+		Vector3D a;
+		Vector3D b;
+		Vector3D c;	
+	};
+
 	class Io {
 	public:
 
@@ -58,6 +74,16 @@ namespace StereoLitographyIo {
 			using TracerException::TracerException;
 		};
 	};
+
+//--------------------------------
+// Facet2mctracerTriangle
+//--------------------------------
+
+	Frame* facets_2_mctracer_triangles(
+		const std::vector<Facet> facets,
+		const double scale
+	);
+
 //--------------------------------
 // BINARY WRITER
 //--------------------------------
@@ -65,18 +91,11 @@ namespace StereoLitographyIo {
 	class BinaryWriter :public Io{
 
 		std::ofstream file;
-
 		std::string filename;
-
-		struct Facet {
-			Vector3D n;
-			Vector3D a;
-			Vector3D b;
-			Vector3D c;	
-		};
-
 		std::vector<Facet> facets;
 	public:
+
+		void add_facets(const std::vector<Facet> additional_facets);
 
 		void add_facet_normal_and_three_vertices(
 			const Vector3D n,
@@ -110,39 +129,33 @@ namespace StereoLitographyIo {
 		const uint header_size_in_chars = 80;
 		const uint triangle_size_in_32bit_floats = 12;
 	    
-		Frame* object;
+		//Frame* object;
+		std::vector<Facet> facets;
 
 		uint current_triangle_number = 0;
-		uint32_t total_number_of_triangles;
-	     	
-	    // The STL file format has arbitrary units. Some files are stored in meters
-	    // others are in millimeters or inches. To correct for this, a scaling
-	    // factor can be used during construction.
-	    double scaling_factor = 1.0;
+		uint32_t total_number_of_facets;
 
-	    // keep track of triangles with bad "attribute byte count"
-	    std::vector<uint> triangles_with_bad_attribute_count;
+	    // keep track of facets with bad "attribute byte count"
+	    std::vector<uint> facets_with_bad_attribute_count;
 	public:
 
 	    BinaryReader(const std::string filename);
-	    BinaryReader(const std::string filename, const double scaling_factor);
-	    Frame* get_frame()const;
+	    std::vector<Facet> get_facets()const;
 	    std::string get_print()const;
 	    std::string get_header()const;
-	    uint get_number_of_triangles()const;
+	    uint get_number_of_facets()const;
+	    std::string get_report()const;
 	private:
 
 		void read_header();
-		void read_total_number_of_triangles();
+		void read_total_number_of_facets();
 		void start();
+		Facet read_and_create_next_facet();
 		bool stl_header_implies_ascii_format()const;
 		void assert_is_no_ascii_format()const;
 		void assert_normal_is_actually_normalized(const Vector3D nomral);
 		void assert_file_is_open()const;
-		void report_bad_attribute_count()const; 
-		void read_triangles();
-		Frame* read_and_create_next_triangle();
-		std::string get_current_triangle_name();
+		void read_facets();
 		std::vector<float> read_floats(const uint n);
 		std::string read_chars(const uint n);
 		uint32_t read_single_uint32();

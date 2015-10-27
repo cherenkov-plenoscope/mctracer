@@ -67,8 +67,7 @@ void ToDoScheduler::render_geometry()const {
 		StringTools::is_ending(geometry_filename(),".stl") || 
 		StringTools::is_ending(geometry_filename(),".STL")
 	) {
-		StereoLitographyIo::BinaryReader stl(geometry_filename());
-		geometry = stl.get_frame();
+		geometry = StereoLitographyIo::read(geometry_filename(), 1.0);
 	}else if(	StringTools::is_ending(geometry_filename(),".xml") ||
 				StringTools::is_ending(geometry_filename(),".XML")
 	) {

@@ -9,28 +9,14 @@ BinaryReader::BinaryReader(const std::string _filename):
 	start();
 }
 //------------------------------------------------------------------------------
-BinaryReader::BinaryReader(
-	const std::string _filename, 
-	const double _scaling_factor
-):	filename(_filename)
-{
-	scaling_factor = _scaling_factor;
-	start();
-}
-//------------------------------------------------------------------------------
 void BinaryReader::start() {
-
-	object = new Frame("stl_file", Vector3D::null, Rotation3D::null);
 
 	stl_file.open(filename, std::ios::binary);
 		assert_file_is_open();
 		read_header();
-		read_total_number_of_triangles();
-		read_triangles();
+		read_total_number_of_facets();
+		read_facets();
 	stl_file.close();
-
-	object->init_tree_based_on_mother_child_relations();
-	report_bad_attribute_count();
 }
 //------------------------------------------------------------------------------
 void BinaryReader::read_header() {
@@ -38,27 +24,30 @@ void BinaryReader::read_header() {
 	assert_is_no_ascii_format();
 }
 //------------------------------------------------------------------------------
-void BinaryReader::read_total_number_of_triangles() {
-	total_number_of_triangles = read_single_uint32();
+void BinaryReader::read_total_number_of_facets() {
+	total_number_of_facets = read_single_uint32();
 } 
 //------------------------------------------------------------------------------
-void BinaryReader::report_bad_attribute_count()const {
-	if(triangles_with_bad_attribute_count.size()>0) {
+std::string BinaryReader::get_report()const {
+	
+	if(facets_with_bad_attribute_count.size()>0) {
 		
-		std::stringstream info;
+		std::stringstream info, out;
 	    info << __FILE__ << " " << __LINE__ << "\n";
 		info << "BinaryReader: in file '" << filename << "'\n";
 		info << "The attribute_byte_count is not zero in ";
-		info << triangles_with_bad_attribute_count.size() << " of ";
-		info << total_number_of_triangles <<" triangles\n";
+		info << facets_with_bad_attribute_count.size() << " of ";
+		info << total_number_of_facets <<" facets\n";
 		info << "I do not know what attribute_byte_count means but\n";
 		info << "the STL standart says it should be zero for each triangle.\n";
 		
-		std::cout << " __warning__\n";
-		std::cout << StringTools::place_first_infront_of_each_new_line_of_second(
+		out << " __warning__\n";
+		out << StringTools::place_first_infront_of_each_new_line_of_second(
 			"| ", info.str()
 		);
-		std::cout << "|___________\n";
+		out << "|___________\n";
+
+		return out.str();
 	}	
 }
 //------------------------------------------------------------------------------
@@ -121,17 +110,18 @@ std::string BinaryReader::get_print()const {
     	"  ",
     	stl_header
     );
-    out << "number of triangles: " << total_number_of_triangles << "\n";
+    out << "number of facets: " << total_number_of_facets << "\n";
     return out.str();
 }
 //------------------------------------------------------------------------------
-void BinaryReader::read_triangles() {
+void BinaryReader::read_facets() {
 
-	for(uint32_t i=0; i<total_number_of_triangles; i++)
-		object->set_mother_and_child(read_and_create_next_triangle());
+	for(uint32_t i=0; i<total_number_of_facets; i++)
+		facets.push_back(read_and_create_next_facet());
+		
 }
 //------------------------------------------------------------------------------
-Frame* BinaryReader::read_and_create_next_triangle() {
+Facet BinaryReader::read_and_create_next_facet() {
 	
 	current_triangle_number++;
 
@@ -150,41 +140,36 @@ Frame* BinaryReader::read_and_create_next_triangle() {
 	);
 
 	Vector3D A(
-		scaling_factor * normal_and_3_vertexes.at(3),
-		scaling_factor * normal_and_3_vertexes.at(4),
-		scaling_factor * normal_and_3_vertexes.at(5)
+		normal_and_3_vertexes.at(3),
+		normal_and_3_vertexes.at(4),
+		normal_and_3_vertexes.at(5)
 	);
 
 	Vector3D B(
-		scaling_factor * normal_and_3_vertexes.at(6),
-		scaling_factor * normal_and_3_vertexes.at(7),
-		scaling_factor * normal_and_3_vertexes.at(8)
+		normal_and_3_vertexes.at(6),
+		normal_and_3_vertexes.at(7),
+		normal_and_3_vertexes.at(8)
 	);
 
 	Vector3D C(
-		scaling_factor * normal_and_3_vertexes.at(9),
-		scaling_factor * normal_and_3_vertexes.at(10),
-		scaling_factor * normal_and_3_vertexes.at(11)
+		normal_and_3_vertexes.at(9),
+		normal_and_3_vertexes.at(10),
+		normal_and_3_vertexes.at(11)
 	);
 
-	assert_normal_is_actually_normalized(normal);
-
-	Triangle* tri = new Triangle;
-	tri->set_name_pos_rot(
-		get_current_triangle_name(), 
-		Vector3D::null, 
-		Rotation3D::null
-	);
-
-	tri->set_normal_and_3_vertecies(normal, A, B, C);
-	return tri;
+	Facet facet = {normal, A, B ,C};
+	return facet;
+}
+//------------------------------------------------------------------------------
+std::vector<Facet> BinaryReader::get_facets()const {
+	return facets;
 }
 //------------------------------------------------------------------------------
 void BinaryReader::check_attribute_byte_count_is_zero(
 	const uint16_t attribute_byte_count
 ) {
 	if(attribute_byte_count != 0)
-		triangles_with_bad_attribute_count.push_back(current_triangle_number);
+		facets_with_bad_attribute_count.push_back(current_triangle_number);
 }
 //------------------------------------------------------------------------------
 void BinaryReader::assert_normal_is_actually_normalized(const Vector3D normal) {
@@ -197,7 +182,7 @@ void BinaryReader::assert_normal_is_actually_normalized(const Vector3D normal) {
 	   	info << __FILE__ << " " << __LINE__ << "\n";
 		info << "BinaryReader: in file '" << filename << "', triangle number ";
 		info << current_triangle_number << " of ";
-		info << total_number_of_triangles << "\n";
+		info << total_number_of_facets << "\n";
 		info << "The normal vector " << normal;
 		info << " is not exactly normalized.\n";
 		info << "STL header:\n";
@@ -206,17 +191,7 @@ void BinaryReader::assert_normal_is_actually_normalized(const Vector3D normal) {
 	}
 }
 //------------------------------------------------------------------------------
-std::string BinaryReader::get_current_triangle_name() {
-	std::stringstream name;
-	name << "triangle_" << current_triangle_number;
-	return name.str();
-}
-//------------------------------------------------------------------------------
-Frame* BinaryReader::get_frame()const {
-	return object;
-}
-//------------------------------------------------------------------------------
-uint BinaryReader::get_number_of_triangles()const {
+uint BinaryReader::get_number_of_facets()const {
 	return current_triangle_number;
 }
 //------------------------------------------------------------------------------
