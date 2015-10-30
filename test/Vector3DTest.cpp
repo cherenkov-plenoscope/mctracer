@@ -331,3 +331,11 @@ TEST_F(Vector3DTest, octant_encoding) {
     a.set( p, 0.0, p);
     EXPECT_EQ(7, a.get_octant());
 }
+//------------------------------------------------------------------------------
+TEST_F(Vector3DTest, projection_on_basic_xyz_planes) {
+
+    Vector3D v(42.0, 13.37, 3.141);
+
+    EXPECT_EQ(Vector3D(42.0, 0.0, 3.141), v.get_projection_on_XZ_plane());
+    EXPECT_EQ(Vector3D(0.0, 13.37, 3.141), v.get_projection_on_YZ_plane());
+}

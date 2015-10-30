@@ -188,3 +188,10 @@ uint Vector3D::get_octant()const {
 	return 4*sx + 2*sy + 1*sz;
 }
 //------------------------------------------------------------------------------
+Vector3D Vector3D::get_projection_on_XZ_plane()const {
+	return Vector3D(X, 0.0, Z);
+}
+//------------------------------------------------------------------------------
+Vector3D Vector3D::get_projection_on_YZ_plane()const {
+	return Vector3D(0.0, Y, Z);
+}
