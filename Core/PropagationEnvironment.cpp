@@ -10,7 +10,7 @@ void PropagationEnvironment::assert_completeness()const {
 	if(propagation_options == &TracerSettings::default_settings)
 		throw_missing_item("Propagation options");
 
-	if(random_engine == &PseudoRandomNumberGenerator::void_generator)
+	if(random_engine == &Random::void_generator)
 		throw_missing_item("Pseudo random number generator");
 }
 //------------------------------------------------------------------------------

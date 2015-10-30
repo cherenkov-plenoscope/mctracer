@@ -18,7 +18,7 @@ class SphereIntersectionTest : public ::testing::Test {
 	double radius;
 	Sphere MySphere;
 	Frame world;
-	PseudoRandomNumberGenerator dice;
+	Random::Mt19937 dice;
 	double wavelength = 433e-9;
 	PropagationEnvironment sphere_test_environment;
 
@@ -30,6 +30,8 @@ class SphereIntersectionTest : public ::testing::Test {
     // You can do clean-up work that doesn't throw exceptions here.
   }
   virtual void SetUp() {
+
+  	dice.set_seed(Random::zero_seed);
   	pos.set(0.0,0.0,0.0);
   	rot.set(0.0,0.0,0.0);
 

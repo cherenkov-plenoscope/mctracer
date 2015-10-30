@@ -10,14 +10,13 @@ class PlaneIntersectionTest : public ::testing::Test {
 	TracerSettings setup;
 	Vector3D    pos;
 	Rotation3D  rot;
-	//ReflectionProperties*  refl;
 	Function::Constant* refl_vs_wavl;
 	Color*      colo;
 	double x_width = 2.5;
 	double y_width = 1.3;
 	Plane plane;
 	Frame world;
-	PseudoRandomNumberGenerator dice;
+	Random::Mt19937 dice;
 	double wavelength = 433e-9;
 
   PlaneIntersectionTest() {
@@ -28,6 +27,9 @@ class PlaneIntersectionTest : public ::testing::Test {
     // You can do clean-up work that doesn't throw exceptions here.
   }
   virtual void SetUp() {
+
+  	dice.set_seed(Random::zero_seed);
+  	
   	pos.set(0.0,0.0,0.0);
   	rot.set(0.0,0.0,0.0);
 

@@ -34,10 +34,11 @@
 #include "PhotonBunchTest.cpp"
 #include "PostInitFrameSpeed.cpp"
 #include "EventIoTest.cpp"
-#include "FunctionTest.cpp"
 #include "CorsikaPhotonFactoryTest.cpp"
+#include "FunctionTest.cpp"
 #include "../PlenopticTelescope/LensMakerTest.cpp"
 #include "../Geometry/StereoLitographyIoTest.cpp"
+#include "RandomGeneratorTest.cpp"
 
 int main(int argc, char **argv) {
 	UserInteraction::print_welcome_screen();

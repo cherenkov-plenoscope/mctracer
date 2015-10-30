@@ -3,19 +3,20 @@
 CorsikaPhotonFactory::CorsikaPhotonFactory(
 	const std::vector<float>& _corsika_photon, 
 	const uint _id,
-	PseudoRandomNumberGenerator *_prng
+	Random::Generator *_prng
 ) {
 	prng = _prng;
 	corsika_photon = _corsika_photon;
 	id = _id;
 
 	assert_corsika_photon_has_correct_length();
+	assert_photon_weight_is_between_zero_and_one();
 	check_once_if_passed_atmosphere();
 }
 //------------------------------------------------------------------------------
 void CorsikaPhotonFactory::check_once_if_passed_atmosphere() {
 	passed_through_atmosphere_flag = 
-		prng->uniform() < photon_survival_probability();
+		prng->uniform() <= photon_survival_probability();
 }
 //------------------------------------------------------------------------------
 bool CorsikaPhotonFactory::passed_atmosphere()const {
@@ -130,7 +131,7 @@ float CorsikaPhotonFactory::photon_survival_probability()const {
 	return corsika_photon.at(photon_weight_idx);
 }
 //------------------------------------------------------------------------------
-void CorsikaPhotonFactory::assert_corsika_photon_has_correct_length() {
+void CorsikaPhotonFactory::assert_corsika_photon_has_correct_length()const {
 
 	uint input_size = 8;
 	if(corsika_photon.size() != input_size) {
@@ -141,3 +142,15 @@ void CorsikaPhotonFactory::assert_corsika_photon_has_correct_length() {
 		throw BadCorsikaPhotonShape(info.str());
 	}
 }
+//------------------------------------------------------------------------------
+void CorsikaPhotonFactory::assert_photon_weight_is_between_zero_and_one()const {
+
+	if(photon_survival_probability() < 0.0 || photon_survival_probability() >= 1.0) {
+		std::stringstream info;
+		info << __FILE__ << " " << __LINE__ << "\n";
+		info << "Expected photon weight w: 0.0 >= w > 1.0, but actual ";
+		info << "it is: " << photon_survival_probability() << "\n";
+		throw BadPhotonWeight(info.str());
+	}
+}
+//------------------------------------------------------------------------------

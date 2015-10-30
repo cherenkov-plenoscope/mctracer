@@ -12,13 +12,15 @@ class BiConvexLensTest : public ::testing::Test {
  protected:
   Frame* test_bench;
   TracerSettings settings;
-  PseudoRandomNumberGenerator dice;
+  Random::Mt19937 dice;
   PropagationEnvironment lens_test_bench_environment;
 
   //------------------
   BiConvexLensTest() {
     set_up_settings();
     set_up_test_bench();
+
+    dice.set_seed(Random::zero_seed);
 
     lens_test_bench_environment.world_geometry = test_bench;
     lens_test_bench_environment.propagation_options = &settings;

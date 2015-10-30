@@ -1,41 +1,56 @@
 #include "PseudoRandomNumberGenerator.h"
+#include <chrono>
+using namespace Random;
 //------------------------------------------------------------------------------
-const uint PseudoRandomNumberGenerator::zero_seed = 0.0;
+Mt19937 void_generator = Mt19937(zero_seed);
 //------------------------------------------------------------------------------
-PseudoRandomNumberGenerator PseudoRandomNumberGenerator::void_generator = 
-	PseudoRandomNumberGenerator(0);
-//------------------------------------------------------------------------------
-PseudoRandomNumberGenerator::PseudoRandomNumberGenerator(
-	const unsigned new_Seed
-) {
-	init_inverse_maximum();
-	set_seed(new_Seed);
+unsigned Generator::get_seed()const{
+	return seed;
 }
 //------------------------------------------------------------------------------
-PseudoRandomNumberGenerator::PseudoRandomNumberGenerator() {
+void Generator::set_seed_now_using_system_clock() {
+	set_seed(
+		std::chrono::system_clock::now().time_since_epoch().count()
+	);
+}
+//------------------------------------------------------------------------------
+void Generator::set_seed(const unsigned _seed) {
+	seed = _seed;
+}
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+Mt19937::Mt19937(const unsigned _seed) {
+	init_inverse_maximum();
+	set_seed(_seed);
+}
+//------------------------------------------------------------------------------
+Mt19937::Mt19937() {
 	init_inverse_maximum();
 	set_seed_now_using_system_clock();
 }
 //------------------------------------------------------------------------------
-void PseudoRandomNumberGenerator::set_seed_now_using_system_clock() {
-	Seed = std::chrono::system_clock::now().time_since_epoch().count();
-	pRNG_mt19937.seed(Seed);
-}
-//------------------------------------------------------------------------------
-double PseudoRandomNumberGenerator::uniform() {
+double Mt19937::uniform() {
 	return double(pRNG_mt19937())*inv_max;
 }
 //------------------------------------------------------------------------------
-unsigned PseudoRandomNumberGenerator::seed()const{
-	return Seed;
+void Mt19937::set_seed(const unsigned _seed) {
+	seed = _seed;
+	pRNG_mt19937.seed(seed);
 }
 //------------------------------------------------------------------------------
-void PseudoRandomNumberGenerator::set_seed(const unsigned new_Seed) {
-	Seed = new_Seed;
-	pRNG_mt19937.seed(Seed);
-}
-//------------------------------------------------------------------------------
-void PseudoRandomNumberGenerator::init_inverse_maximum() {
+void Mt19937::init_inverse_maximum() {
 	inv_max = 1.0/double(pRNG_mt19937.max());
+}
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+FakeConstant::FakeConstant(const double _constant) {
+	constant = _constant;
+	seed = zero_seed;
+}
+//------------------------------------------------------------------------------
+double FakeConstant::uniform() {
+	return constant;
 }
 //------------------------------------------------------------------------------

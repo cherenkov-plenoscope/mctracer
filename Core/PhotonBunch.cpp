@@ -33,7 +33,7 @@ namespace PhotonBunch {
 		const Frame* world, 
 		const TracerSettings* settings
 	) {
-		PseudoRandomNumberGenerator dice(
+		Random::Mt19937 dice(
 			settings->get_pseudo_random_number_seed()
 		);
 
@@ -59,7 +59,7 @@ namespace PhotonBunch {
 
 		#pragma omp parallel shared(settings,world,HadCatch) private(number_of_threads, thread_id, out, ray_counter)
 		{	
-			PseudoRandomNumberGenerator dice_for_this_thread_only;
+			Random::Mt19937 dice_for_this_thread_only;
 			ray_counter = 0;
 			thread_id = omp_get_thread_num();
 			number_of_threads = omp_get_num_threads();
@@ -85,7 +85,7 @@ namespace PhotonBunch {
 			out << "Thread " << thread_id+1 << "/" << number_of_threads;
 			out << " is doing " << ray_counter << "/";
 			out << photon_bunch->size() << " photons. ";
-			out << "Seed: " << dice_for_this_thread_only.seed() << "\n";
+			out << "Seed: " << dice_for_this_thread_only.get_seed() << "\n";
 			//cout << out.str();
 		}
 
@@ -217,7 +217,7 @@ namespace PhotonBunch {
 
 			const Vector3D support = Vector3D::null;
 
-			PseudoRandomNumberGenerator prng(0);
+			Random::Mt19937 prng(0);
 			for(uint i=0; i<number_of_photons; i++) {
 
 				const double The = opening_angle*sqrt(prng.uniform());
@@ -244,7 +244,7 @@ namespace PhotonBunch {
 
 			const Vector3D direction = Vector3D::unit_z;
 
-			PseudoRandomNumberGenerator prng(0);
+			Random::Mt19937 prng(0);
 			for(uint i=0; i<number_of_photons; i++) {
 
 				const double r = sqrt(prng.uniform())*disc_radius;

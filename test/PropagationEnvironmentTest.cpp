@@ -22,7 +22,7 @@ TEST_F(PropagationEnvironmentTest, assert_completeness) {
 
   Frame world("my_world",Vector3D::null, Rotation3D::null);
   TracerSettings opt;
-  PseudoRandomNumberGenerator dice;
+  Random::Mt19937 dice(Random::zero_seed);
 
   env.world_geometry = &world;
   env.propagation_options = &opt;
@@ -40,5 +40,5 @@ TEST_F(PropagationEnvironmentTest, assert_completeness_on_incomplete_instance) {
 
   EXPECT_EQ(Frame::void_frame, env.world_geometry);
   EXPECT_EQ(&TracerSettings::default_settings, env.propagation_options);
-  EXPECT_EQ(&PseudoRandomNumberGenerator::void_generator, env.random_engine);
+  EXPECT_EQ(&Random::void_generator, env.random_engine);
 }

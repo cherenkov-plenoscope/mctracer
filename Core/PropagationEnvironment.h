@@ -23,8 +23,7 @@ public:
 	const TracerSettings* propagation_options = 
 		&TracerSettings::default_settings;
 
-	PseudoRandomNumberGenerator* random_engine = 
-		&PseudoRandomNumberGenerator::void_generator;
+	Random::Generator* random_engine = &Random::void_generator;
 
 	void assert_completeness()const;
 

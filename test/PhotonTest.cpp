@@ -119,7 +119,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
   Vector3D direction(0.0,0.0,1.0);
   double wavelength = 433e-9;
   
-  PseudoRandomNumberGenerator dice;
+  Random::Mt19937 dice(Random::zero_seed);
   PropagationEnvironment environment;
   environment.world_geometry = &world;
   environment.propagation_options = &setup;
@@ -229,7 +229,7 @@ TEST_F(PhotonTest, Reflections){
     Vector3D Support(-2.0, 0.0, 0.0);
     Vector3D direction = Vector3D::unit_x;
   
-    PseudoRandomNumberGenerator dice;
+    Random::Mt19937 dice(Random::zero_seed);
 
     std::vector<Photon*>* photon_bunch = new std::vector<Photon*>;
 

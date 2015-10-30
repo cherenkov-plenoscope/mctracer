@@ -24,21 +24,25 @@ class CorsikaPhotonFactory {
 	const uint photon_weight_idx = 6;
 	const uint wavelength_idx = 7;
 
-	PseudoRandomNumberGenerator *prng;
+	Random::Generator *prng;
 	bool passed_through_atmosphere_flag = false;
 
 	uint id;
 	std::vector<float> corsika_photon;
+public:
 
 	class BadCorsikaPhotonShape : public TracerException {
 		using TracerException::TracerException;
+	};
+
+	class BadPhotonWeight : public TracerException {
+		using TracerException::TracerException;
 	};	
-public:
 
 	CorsikaPhotonFactory(
 		const std::vector<float>& _corsika_photon, 
 		const uint id,
-		PseudoRandomNumberGenerator *prng
+		Random::Generator *prng
 	);
 	bool passed_atmosphere()const;
 	Photon* get_photon();
@@ -64,6 +68,7 @@ public:
 private:
 
 	void check_once_if_passed_atmosphere();
-	void assert_corsika_photon_has_correct_length();
+	void assert_corsika_photon_has_correct_length()const;
+	void assert_photon_weight_is_between_zero_and_one()const;
 };
 #endif // __CorsikaPhotonFactory_H_INCLUDED__ 

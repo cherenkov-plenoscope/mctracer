@@ -60,7 +60,7 @@ TEST_F(PhotonBunchTest, bunch2raw_matrix2bunch) {
 
     std::vector<Photon*>* photon_bunch = new std::vector<Photon*>;
 
-    PseudoRandomNumberGenerator prng(0);
+    Random::Mt19937 prng(Random::zero_seed);
     for(int n=0; n<number_of_photons; n++) {
 
         Vector3D sup(prng.uniform(), prng.uniform(), prng.uniform());
@@ -106,7 +106,7 @@ TEST_F(PhotonBunchTest, bunch2raw_matrix2file) {
 
     std::vector<Photon*>* photon_bunch1 = new std::vector<Photon*>;
 
-    PseudoRandomNumberGenerator prng(0);
+    Random::Mt19937 prng(Random::zero_seed);
     for(int n=0; n<number_of_photons; n++) {
 
         Vector3D sup(prng.uniform(), prng.uniform(), prng.uniform());
