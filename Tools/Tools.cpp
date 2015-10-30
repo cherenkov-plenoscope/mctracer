@@ -48,10 +48,13 @@ namespace UserInteraction {
 		out << "|                                                           \n";
 		out << "|                 welcome to MCtracer                       \n";
 		out << "|                                                           \n";
-		out << "|      high performance raytracing tool to design and       \n";
-		out << "|     investigate optical devices for particle physics      \n";
+		out << "|        high performance raytracing tool to design,        \n";
+		out << "|     investigate and produce Monte Carlo simulations       \n";
+		out << "|                 in particle physics                       \n";
 		out << "|                                                           \n";
-		out << "|     Author: Sebastian Achim Mueller        year 2013      \n";
+		out << "|     1st Author: Sebastian Achim Mueller                   \n";
+		out << "|     2nd Author: Dominik Neise                             \n";
+		out << "|                                                           \n";
 		out << "|     compiled on: " << TracerException::compile_time << "\n";	
 		out << "|___________________________________________________________\n";
 		std::cout << out.str();	
