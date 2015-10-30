@@ -36,6 +36,7 @@ public:
 	uint get_octant()const;
 	Vector3D get_projection_on_XZ_plane()const;
 	Vector3D get_projection_on_YZ_plane()const;
+	Vector3D get_projection_on_XY_plane()const;
 	double norm()const;
 	void normalize();
 	Vector3D cross(const Vector3D v)const;

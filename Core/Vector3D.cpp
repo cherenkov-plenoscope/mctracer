@@ -195,3 +195,7 @@ Vector3D Vector3D::get_projection_on_XZ_plane()const {
 Vector3D Vector3D::get_projection_on_YZ_plane()const {
 	return Vector3D(0.0, Y, Z);
 }
+//------------------------------------------------------------------------------
+Vector3D Vector3D::get_projection_on_XY_plane()const {
+	return Vector3D(X, Y, 0.0);
+}
