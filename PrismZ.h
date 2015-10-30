@@ -19,5 +19,6 @@
 class PrismZ {
 public:
 	virtual bool is_inside(const Vector3D* vec)const = 0;
+	virtual double get_area()const {return 0.0;};
 };
 #endif // __PRISMZ_H_INCLUDE__

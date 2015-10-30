@@ -18,6 +18,7 @@ public:
 	void set_radius(const double radius);
 	bool is_inside(const Vector3D* vec)const;
 	double get_radius()const;
+	double get_area()const;
 private:
 	void assert_radius_is_positiv(const double radius)const;
 };

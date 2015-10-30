@@ -59,6 +59,6 @@ void HexagonalPrismZ::assert_outer_radius_positive(const double outer_radius)con
 	}
 }
 //------------------------------------------------------------------------------
-double HexagonalPrismZ::get_projected_area_in_xy_plane()const{
+double HexagonalPrismZ::get_area()const{
 	return outer_radius*outer_radius * 3.0/2.0 * sqrt(3.0);
 }

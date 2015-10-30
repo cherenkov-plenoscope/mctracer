@@ -24,3 +24,7 @@ void CylinderPrismZ::assert_radius_is_positiv(const double radius)const {
 		throw TracerException(info.str());
 	}	
 }
+//------------------------------------------------------------------------------
+double CylinderPrismZ::get_area()const {
+	return radius*radius*M_PI;
+}
