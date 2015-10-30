@@ -11,7 +11,6 @@
 #include "Core/Color.h"
 #include "XmlIO/XmlFileIo.h"
 #include "TracerException.h"
-#include "PhotonSensor.h"
 #include "TelescopeArrayControl.h"
 #include "SphereCapWithHexagonalBound.h"
 #include "SphereCapWithCylinderBound.h"
@@ -21,6 +20,7 @@
 #include "Core/Function/Polynom3Function.h"
 #include "Core/Function/ConcatFunction.h"
 #include "Tools/AsciiIo.h"
+#include "PlenopticTelescope/PlenopticIactConfig.h"
 
 class SetUpScenery : public ::testing::Test {};
 //------------------------------------------------------------------------------
@@ -76,7 +76,7 @@ TEST_F(SetUpScenery, create_scenery) {
     /*@//free like up to $\infty$@*/
 
     TracerSettings propagation_settings;
-    FreeOrbitCamera cam(&world, &propagation_settings);
+    //FreeOrbitCamera cam(&world, &propagation_settings);
     //--end_set_up_scene_in_source--
 }
 //--using_namespace--
@@ -153,4 +153,13 @@ TEST_F(SetUpScenery, function_concat) {
     Concat concat(funcs);
     //--func_concat_end--
     AsciiIo::write_table_to_file(concat.get_samples(1000),"function_concat.func");
+}
+//------------------------------------------------------------------------------
+TEST_F(SetUpScenery, plenoptic_cfg) {
+
+    //PlenopticIactConfig cfg;
+    //std::cout << cfg.get_print();
+
+    SegmentedReflectorConfig rcfg;
+    std::cout << rcfg.get_print();
 }
