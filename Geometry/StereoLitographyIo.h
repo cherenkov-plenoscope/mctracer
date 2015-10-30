@@ -85,10 +85,21 @@ namespace StereoLitographyIo {
 	);
 
 //--------------------------------
+// BINARY IO
+//--------------------------------
+	class BinaryIo :public Io {
+	protected:
+			
+		const uint header_size_in_chars = 80;
+		const uint triangle_size_in_32bit_floats = 12;
+	public:
+
+	};
+//--------------------------------
 // BINARY WRITER
 //--------------------------------
 
-	class BinaryWriter :public Io{
+	class BinaryWriter :public BinaryIo{
 
 		std::ofstream file;
 		std::string filename;
@@ -120,16 +131,12 @@ namespace StereoLitographyIo {
 // BINARY READER
 //--------------------------------
 	
-	class BinaryReader :public Io{
+	class BinaryReader :public BinaryIo{
 
 		const std::string filename;
 		std::ifstream stl_file;
 		std::string stl_header;
 
-		const uint header_size_in_chars = 80;
-		const uint triangle_size_in_32bit_floats = 12;
-	    
-		//Frame* object;
 		std::vector<Facet> facets;
 
 		uint current_triangle_number = 0;

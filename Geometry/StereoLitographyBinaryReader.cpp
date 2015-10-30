@@ -30,25 +30,28 @@ void BinaryReader::read_total_number_of_facets() {
 //------------------------------------------------------------------------------
 std::string BinaryReader::get_report()const {
 	
+	std::stringstream info, out;
+	info << __FILE__ << " " << __LINE__ << "\n";
+	info << "BinaryReader: in file '" << filename << "'\n";
+
 	if(facets_with_bad_attribute_count.size()>0) {
 		
-		std::stringstream info, out;
-	    info << __FILE__ << " " << __LINE__ << "\n";
-		info << "BinaryReader: in file '" << filename << "'\n";
 		info << "The attribute_byte_count is not zero in ";
 		info << facets_with_bad_attribute_count.size() << " of ";
 		info << total_number_of_facets <<" facets\n";
 		info << "I do not know what attribute_byte_count means but\n";
 		info << "the STL standart says it should be zero for each triangle.\n";
-		
-		out << " __warning__\n";
-		out << StringTools::place_first_infront_of_each_new_line_of_second(
-			"| ", info.str()
-		);
-		out << "|___________\n";
+	}else{
+		info << "OK\n";
+	}
 
-		return out.str();
-	}	
+	out << " __STL_file_info__\n";
+	out << StringTools::place_first_infront_of_each_new_line_of_second(
+		"| ", info.str()
+	);
+	out << "|___________\n";
+	
+	return out.str();
 }
 //------------------------------------------------------------------------------
 void BinaryReader::assert_is_no_ascii_format()const {
