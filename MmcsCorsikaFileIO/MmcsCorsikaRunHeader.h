@@ -16,6 +16,7 @@
 class MmcsCorsikaRunHeader {
     MmcsCorsikaSubBlock mmcs_sub_block;
 
+public:
 	float run_number;
 	int date_of_begin_run;
 	float version_of_program;

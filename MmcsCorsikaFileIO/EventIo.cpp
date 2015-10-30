@@ -14,53 +14,56 @@ using std::vector;
 
 namespace EventIo{
 
-Header::Header(std::istream& f, bool top_level) {
-        FirstFour first_four;
-        if (top_level) {
-            f.read((char*)&first_four, sizeof(FirstFour) );
-            is_sync = check_if_sync(first_four.sync);
-        }
-        else{ 
-            // sub level headers do not have the 'sync' field.
-            // sub level headers are therefore always considered, synced.
-            f.read(
-                (char*)&(first_four.type), 
-                sizeof(FirstFour)-sizeof(int32_t) 
-                );
-            is_sync = true; 
-        }
-        
-        if (!is_sync) {
-            std::stringstream out;
-            out << "In File/Function/Line:" << __FILE__;
-            out << "/" << __func__ << "/" << __LINE__ << endl;
-            out << "Header 'sync' field not correct: " << std::hex;
-            out << first_four.sync << endl;
-            throw TracerException(out.str());
-        }
-        
-        id = first_four.id;
-        TypeInfo type_info(first_four.type);
-        LengthInfo length_info(first_four.length);
-        
-        type = type_info.type;
-        version = type_info.version;
-        user = type_info.user;
-        extended = type_info.extended;
-        only_sub_objects = length_info.only_sub_objects;
-
-        if (!type_info.extended)
-        {
-            length = length_info.length;
-        }
-        else
-        {
-            int32_t extended;
-            f.read((char*)&extended, sizeof(int32_t));
-            length = extend_length(extended, length_info);
-        }
-        
+Header::Header(std::istream& f, bool top_level) 
+{
+    size_t _start_pos = f.tellg();
+    FirstFour first_four;
+    if (top_level) {
+        f.read((char*)&first_four, sizeof(FirstFour) );
+        is_sync = check_if_sync(first_four.sync);
     }
+    else{ 
+        // sub level headers do not have the 'sync' field.
+        // sub level headers are therefore always considered, synced.
+        f.read(
+            (char*)&(first_four.type), 
+            sizeof(FirstFour)-sizeof(int32_t) 
+            );
+        is_sync = true; 
+    }
+    
+    if (!is_sync) {
+        std::stringstream out;
+        out << "In File/Function/Line:" << __FILE__;
+        out << " / " << __func__ << " / " << __LINE__ << endl;
+        out << "Header 'sync' field not correct: " << std::hex;
+        out << first_four.sync << endl;
+        out << "f.tell(): " << _start_pos << "\n";
+        f.seekg(_start_pos, f.beg);
+        throw NoSyncFoundException(out.str());
+    }
+    
+    id = first_four.id;
+    TypeInfo type_info(first_four.type);
+    LengthInfo length_info(first_four.length);
+    
+    type = type_info.type;
+    version = type_info.version;
+    user = type_info.user;
+    extended = type_info.extended;
+    only_sub_objects = length_info.only_sub_objects;
+
+    if (!type_info.extended)
+    {
+        length = length_info.length;
+    }
+    else
+    {
+        int32_t extended;
+        f.read((char*)&extended, sizeof(int32_t));
+        length = extend_length(extended, length_info);
+    }        
+}
 
 int64_t Header::extend_length(int32_t extended, const LengthInfo length_info){
     int64_t ext, len;
@@ -138,9 +141,7 @@ MmcsCorsikaRunHeader make_run_header_from_stream(
     return run_header;
 }
 
-MmcsCorsikaEventHeader make_event_header_form_stream(
-    std::istream& f, 
-    const Header& head) 
+MmcsCorsikaEventHeader make_event_header_form_stream(std::istream& f)
 {
     // read the first integer to get the size
     int32_t n;
@@ -163,12 +164,54 @@ MmcsCorsikaEventHeader make_event_header_form_stream(
     return run_header;
 }
 
+std::vector<float> make_event_end_form_stream(std::istream& f)
+{
+    // read the first integer to get the size
+    int32_t n;
+    f.read((char*)&n, sizeof(n));
+    if (n != 273){
+        std::stringstream out;
+        out << "In File:" << __FILE__ << endl;
+        out << "in function:" << __func__ << endl;
+        out << "Line:" << __LINE__ << endl;
+        out << "First integer was not 273 but n=" << n << endl;
+        throw TracerException(out.str());
+    }
+
+    // read the sub_block from file.
+    std::vector<float> block(273);
+    f.read((char*)block.data(), block.size()*sizeof(float));
+    
+    return block;
+}
+
+std::vector<float> make_run_end_from_stream(std::istream& f)
+{
+    // read the first integer to get the size
+    int32_t n;
+    f.read((char*)&n, sizeof(n));
+    if (n != 3){
+        std::stringstream out;
+        out << "In File:" << __FILE__ << endl;
+        out << "in function:" << __func__ << endl;
+        out << "Line:" << __LINE__ << endl;
+        out << "First integer was not 273 but n=" << n << endl;
+        throw TracerException(out.str());
+    }
+
+    // read the sub_block from file.
+    std::vector<float> block(273);
+    f.read((char*)block.data(), block.size()*sizeof(float));
+    
+    return block;
+}
+
+
 std::string make_input_card_from_stream(
     std::istream& f, 
     const Header& head)
 {
     char * input_card = new char[head.length+1];
-    cout << "head.length:" << head.length << "\n";
     f.read(input_card, head.length);
     input_card[head.length] = 0;
 
@@ -211,6 +254,18 @@ std::vector<TelPos> make_telescope_positions(
     return telescope_positions;
 }
 
+std::string TelOffset::get_print() const
+{
+    std::stringstream out;
+    out << "TelOffset\n";
+    out << "---------\n";
+    out << "toff " << toff << endl;
+    out << "xoff " << xoff << endl;
+    out << "yoff " << yoff << endl;
+    out << "weight " << weight << endl;
+    return out.str();
+}
+
 std::vector<TelOffset> make_telescope_offsets_from_stream(
     std::istream& f, 
     const Header& head)
@@ -224,7 +279,7 @@ std::vector<TelOffset> make_telescope_offsets_from_stream(
 
     vector<float> xoff(narray);
     vector<float> yoff(narray);
-    vector<float> weight(narray);
+    vector<float> weight(narray, 1.0); // we initialize
     vector<TelOffset> telescope_offsets(narray);
 
     f.read((char*)xoff.data(), xoff.size()*sizeof(float));
@@ -254,7 +309,7 @@ std::vector<TelOffset> make_telescope_offsets_from_stream(
     {
         tel_off->toff = toff;
         tel_off->xoff = xoff[i];
-        tel_off->yoff = xoff[i];
+        tel_off->yoff = yoff[i];
         tel_off->weight = weight[i];
     }            
     return telescope_offsets;
@@ -262,19 +317,17 @@ std::vector<TelOffset> make_telescope_offsets_from_stream(
 
 
 vector<vector<float> > make_photons_from_stream(
-    std::istream& f, 
-    const Header& head)
+    std::istream& f)
 {
-    if(!head.only_sub_objects)
-    {
-        std::stringstream out;
-        out << "In File:" << __FILE__ << endl;
-        out << "in function:" << __func__ << endl;
-        out << "Line:" << __LINE__ << endl;
-        out << "Type 1204 ususally has only sub objects, this one has not!!" << endl;
-        throw TracerException(out.str());
-    }
     Header subhead(f, false);
+    if (subhead.type != 1205)
+    {
+        int header_length = subhead.extended ? 4 : 3;
+        f.seekg(header_length*-4, f.cur);
+        //TODO: put useful text.
+        throw WrongTypeException();
+    }
+
     BunchHeader b_head;
     f.read((char*)&b_head, sizeof(BunchHeader));
 
@@ -318,7 +371,7 @@ vector<vector<float> > make_photons_from_stream(
             (*row)[2] /= 30000.;  
             (*row)[3] /= 30000.;  
             (*row)[4] *= 0.1;
-            (*row)[5] = pow(10, (*row)[5]) * 0.001;  
+            (*row)[5] = pow(10, (*row)[5] * 0.001);  
             (*row)[6] *= 0.01;    
             //(*row)[7] *= 1.;
         }
@@ -328,6 +381,142 @@ vector<vector<float> > make_photons_from_stream(
     
     return bunches;    
 }
-        
+
+bool EventIoFile::has_still_events_left(){
+    return !this->run_end_found;
+}
+
+EventIoFile::EventIoFile(std::string path):
+    run_end_found(false)
+{
+    this->path = path;
+    f.open(path);
+    if (!f.is_open())
+    {
+        throw TracerException("cannot open file");
+    }
+
+    this->__read_run_reader();
+
+    this->_current_photon_data = this->_next();
+}
+
+void EventIoFile::__read_run_reader()
+{
+    //auto header_1 = this->__get_header(1200);
+
+    this->__get_header(1200);
+    this->run_header.mmcs_runheader = make_run_header_from_stream(this->f);
+
+    auto header_2 = this->__get_header(1212);
+    this->run_header.input_card = make_input_card_from_stream(this->f, header_2);
+
+    auto header_3 = this->__get_header(1201);
+    this->run_header.tel_pos = make_telescope_positions(this->f, header_3);
+
+}
+
+void EventIoFile::__read_event_header()
+{
+    //auto header_1 = this->__get_header(1202);
+    this->__get_header(1202);
+    this->current_event_header.mmcs_event_header = make_event_header_form_stream(this->f);
+
+    auto header_2 = this->__get_header(1203);
+    this->current_event_header.telescope_offsets = make_telescope_offsets_from_stream(this->f, header_2);
+}
+
+void EventIoFile::__read_event_end()
+{
+    //auto header_1 = this->__get_header(1209);
+    this->__get_header(1209);
+    this->current_event_end = make_event_end_form_stream(this->f);
+}
+
+void EventIoFile::__read_run_end()
+{
+    //auto header_1 = this->__get_header(1210);
+    this->__get_header(1210);
+    this->run_end = make_run_end_from_stream(this->f);
+}
+
+
+Header EventIoFile::__get_header(int expect_type)
+{   
+    Header header(this->f);
+    if (header.type != expect_type)
+    {
+        int header_length = header.extended ? 5 : 4;
+        this->f.seekg(header_length*-4, this->f.cur);
+        //TODO: put useful text.
+        throw WrongTypeException();
+    }
+    return header;
+}
+
+vector<vector<float> > EventIoFile::next(){
+    vector< vector<float> > dummy = this->_current_photon_data;
+    this->_current_photon_data = this->_next();
+    return dummy;
+}
+
+
+vector<vector<float> > EventIoFile::_next()
+{
+    bool something_found = false;
+    while (!this->run_end_found)
+    {
+        something_found = false;
+        try
+        {
+            return make_photons_from_stream(this->f);
+            something_found = true;
+        }
+        catch (WrongTypeException& e) { /*nothing to do*/ }
+
+        try
+        {
+            this->__get_header(1204);
+            something_found = true;
+        }
+        catch (WrongTypeException& e) { /*nothing to do*/ }
+        catch (NoSyncFoundException& e) { /*nothing to do*/ }
+
+
+        try
+        {
+            this->__read_event_header();
+            something_found = true;
+        }
+        catch (WrongTypeException& e) { /*nothing to do*/ }
+        catch (NoSyncFoundException& e) { /*nothing to do*/ }
+
+        try
+        {
+            this->__read_event_end();
+            something_found = true;            
+        }
+        catch (WrongTypeException& e) { /*nothing to do*/ }
+        catch (NoSyncFoundException& e) { /*nothing to do*/ }
+
+        try
+        {
+            this->__read_run_end();
+            something_found = true;
+            this->run_end_found = true;
+        }
+        catch (WrongTypeException& e) { /*nothing to do*/ }
+        catch (NoSyncFoundException& e) { /*nothing to do*/ }
+
+        if (!something_found){
+            throw TracerException("Not a single valid structure found in file.");
+        }
+    }
+
+    vector<vector<float> > dummy;
+    return dummy;
+}
+
+
 
 } //namespace EventIo
