@@ -1,5 +1,8 @@
 #include "PseudoRandomNumberGenerator.h"
 //------------------------------------------------------------------------------
+PseudoRandomNumberGenerator PseudoRandomNumberGenerator::void_generator = 
+	PseudoRandomNumberGenerator(0);
+//------------------------------------------------------------------------------
 PseudoRandomNumberGenerator::PseudoRandomNumberGenerator(
 	const unsigned new_Seed
 ) {

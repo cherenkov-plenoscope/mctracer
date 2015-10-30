@@ -1,6 +1,5 @@
 #include "Func1DFunction.h"
 #include <sstream>
-#include "TracerException.h"
 
 namespace Function {
 
@@ -35,4 +34,18 @@ namespace Function {
 	Limits Func1D::get_limits()const {
 		return limits;
 	}
+	//--------------------------------------------------------------------------
+	std::string Func1D::get_print()const {
+		std::stringstream out;
+		out << limits.get_print() << " ";
+
+		std::vector<std::vector<double>> table = get_samples(3);
+
+		for(std::vector<double> xy : table) {
+			out << xy.at(1) << " ";
+		}
+
+		return out.str();
+	}
+	//--------------------------------------------------------------------------
 } // namespace Function

@@ -58,13 +58,14 @@ public:
     float NFLPI0_plus_100_times_NFLPIF;
     float NFLCHE_plus_100_times_NFRAGM;
 public:
+
     MmcsCorsikaRunHeader();
     MmcsCorsikaRunHeader(const std::vector<float>& block);
     void create_from_mmcs_sub_block(const MmcsCorsikaSubBlock &mmcs_sub_block);    
    	void print()const;
     std::string get_print()const;
 private:
-	void fill_basic_run_information();
+    
    	void fill_observation_levels();
 	void assert_sub_block_has_Run_Header()const;
     void assert_number_of_observation_levels_is_valid()const;

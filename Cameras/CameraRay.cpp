@@ -22,7 +22,7 @@ Color CameraRay::trace(
 
 	if(intersection->does_intersect()) {
 
-		double refl_coeff = intersection->get_facing_reflection_propability();
+		double refl_coeff = intersection->get_facing_reflection_propability(533e-9);
 		if(refl_coeff > 0.0) {
 			refl_count++;
 
@@ -44,7 +44,7 @@ Color CameraRay::trace(
 			color = intersection->get_facing_color();
 		}
 	}else{
-		color = settings->get_default_colour();
+		color = settings->get_default_color();
 	}
 
 	delete intersection;

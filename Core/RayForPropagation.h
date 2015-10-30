@@ -39,8 +39,10 @@ protected:
 
 	uint identifier_number;
 
-	PropagationEnvironment* environment = nullptr;
-	const Intersection* intersection = nullptr;
+	PropagationEnvironment* environment = 
+		&PropagationEnvironment::default_environment;
+
+	const Intersection* intersection = Intersection::void_intersection;
 
 public:
 	RayForPropagation(const RayForPropagation* ray_to_be_carried_on);
@@ -82,6 +84,8 @@ public:
 	virtual double get_time_of_flight()const;
 	
 	void delete_history();
+
+	void transform(const HomoTrafo3D *T);
 protected:
 	std::string get_history_print()const;
 

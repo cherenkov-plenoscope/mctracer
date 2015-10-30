@@ -1,44 +1,9 @@
-#include <iostream> 
-#include <string>
-#include <math.h>
-
 #include "gtest/gtest.h"
 #include "Tools/StringTools.h"
 #include "Tools/FileTools.h"
 #include "Tools/StringTools.h"
 
-using namespace std;
-
-// The fixture for testing class Foo.
-class Tools : public ::testing::Test {
- protected:
-  // You can remove any or all of the following functions if its body
-  // is empty.
-
-	
-  Tools() {
-    // You can do set-up work for each test here.
-  }
-
-  virtual ~Tools() {
-    // You can do clean-up work that doesn't throw exceptions here.
-  }
-
-  // If the constructor and destructor are not enough for setting up
-  // and cleaning up each test, you can define the following methods:
-
-  virtual void SetUp() {
-    // Code here will be called immediately after the constructor (right
-    // before each test).
-  }
-
-  virtual void TearDown() {
-    // Code here will be called immediately after each test (right
-    // before the destructor).
-  }
-
-  // Objects declared here can be used by all tests in the test case for Foo.
-};
+class Tools : public ::testing::Test {};
 //----------------------------------------------------------------------
 TEST_F(Tools, Deg2Rad_Rad2Deg) {
   for(int i=-721; i<721; i++){
@@ -90,28 +55,6 @@ TEST_F(Tools, StringTools_is_equal) {
   EXPECT_FALSE( StringTools::is_equal("Auto ","Auto") );
   EXPECT_TRUE ( StringTools::is_equal("\n","\n") );
   EXPECT_FALSE( StringTools::is_equal(" Auto","Auto") );
-}
-//----------------------------------------------------------------------
-TEST_F(Tools, StringTools_remove_if_leading) {
-  string Hans = "Hans";
-  StringTools::remove_char_from_text_if_leading('H', Hans); 
-  EXPECT_EQ("ans", Hans);
-
-  string Klaus = "Klaus";
-  StringTools::remove_char_from_text_if_leading('H', Klaus); 
-  EXPECT_EQ("Klaus", Klaus);
-
-  string Peter = "Peter";
-  StringTools::remove_char_from_text_if_leading('t', Peter); 
-  EXPECT_EQ("Peter", Peter); 
-
-  string Willi = " Willi";
-  StringTools::remove_char_from_text_if_leading('W', Willi); 
-  EXPECT_EQ(" Willi", Willi); 
-
-  string Dieter = " Dieter";
-  StringTools::remove_char_from_text_if_leading(' ', Dieter); 
-  EXPECT_EQ("Dieter", Dieter); 
 }
 //------------------------------------------------------------------------------
 TEST_F(Tools, StringTools_cut_leading_token) {
@@ -381,24 +324,3 @@ TEST_F(Tools, StrToInt) {
   );
 }
 //------------------------------------------------------------------------------
-#include "Core/Vector3D.h"
-#include "Core/Photon.h"
-#include <memory>
-
-TEST_F(Tools, memory_test) {
-  
-  for(uint y=0; y<1e2; y++) {
-
-    std::vector<Photon*> *photon_bunch = new std::vector<Photon*>;
-
-    for(uint i=0; i<1e2; i++) {
-
-      Photon* hans = new Photon(Vector3D::unit_x, Vector3D::unit_z ,133.7);
-      photon_bunch->push_back(hans);
-      //hans->delete_history();
-      //delete hans;
-    }
-
-    //delete photon_bunch;
-  }
-}

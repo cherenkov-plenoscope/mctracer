@@ -1,8 +1,4 @@
-
-#include <iostream> 
-#include <string>
-#include <math.h>
-
+#include "Core/Function/ConstantFunction.h"
 #include "gtest/gtest.h"
 #include "Core/Vector3D.h"
 
@@ -14,7 +10,8 @@ class PlaneIntersectionTest : public ::testing::Test {
 	TracerSettings setup;
 	Vector3D    pos;
 	Rotation3D  rot;
-	ReflectionProperties*  refl; 
+	//ReflectionProperties*  refl;
+	Function::Constant* refl_vs_wavl;
 	Color*      colo;
 	double x_width = 2.5;
 	double y_width = 1.3;
@@ -36,15 +33,15 @@ class PlaneIntersectionTest : public ::testing::Test {
 
 	world.set_name_pos_rot("world",pos,rot);
 
-	refl = new ReflectionProperties(1.0);
+	refl_vs_wavl = new Function::Constant(1.0, Function::Limits(200e-9, 1200e-9));
 	colo = new Color(200,128,128);;
 
 	//------------Plane----------------
 	plane.set_name_pos_rot("My_Plane", pos, rot);
 	plane.set_outer_color(colo);
 	plane.set_inner_color(colo);
-	plane.set_outer_reflection(refl);
-	plane.set_inner_reflection(refl);
+	plane.set_outer_reflection(refl_vs_wavl);
+	plane.set_inner_reflection(refl_vs_wavl);
 	plane.set_x_y_width(x_width, y_width);
 
 	//----------declare relationships------------
@@ -108,16 +105,15 @@ TEST_F(PlaneIntersectionTest, move_plane_up) {
 
 	world.set_name_pos_rot("world",pos,rot);
 
-	refl = new ReflectionProperties(1.0);
-	colo = new Color(200,128,128);;
+	colo = new Color(200,128,128);
 
 	//------------sphere----------------
 	pos.set(0.0,0.0,1.0);
 	plane.set_name_pos_rot("MySphere", pos, rot);
 	plane.set_outer_color(colo);
 	plane.set_inner_color(colo);
-	plane.set_outer_reflection(refl);
-	plane.set_inner_reflection(refl);
+	plane.set_outer_reflection(refl_vs_wavl);
+	plane.set_inner_reflection(refl_vs_wavl);
 	plane.set_x_y_width(x_width, y_width);
 
 	//----------declare relationships------------

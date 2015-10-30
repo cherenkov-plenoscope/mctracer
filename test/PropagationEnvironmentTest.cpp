@@ -38,8 +38,7 @@ TEST_F(PropagationEnvironmentTest, assert_completeness_on_incomplete_instance) {
 
   PropagationEnvironment env;
 
-  EXPECT_EQ(nullptr, env.world_geometry);
-  EXPECT_EQ(nullptr, env.propagation_options);
-  EXPECT_EQ(nullptr, env.random_engine);
-  ASSERT_THROW(env.assert_completeness(), TracerException);
+  EXPECT_EQ(Frame::void_frame, env.world_geometry);
+  EXPECT_EQ(&TracerSettings::default_settings, env.propagation_options);
+  EXPECT_EQ(&PseudoRandomNumberGenerator::void_generator, env.random_engine);
 }

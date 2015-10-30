@@ -10,11 +10,13 @@
 // included dependencies
 #include "HexGridXy.h"
 #include "Core/Frame.h"
+#include "Core/Function/Func1DFunction.h"
 #include <iostream> 
 #include <string>
 #include <sstream>
 #include <vector>
 #include "SphereCapWithHexagonalBound.h"
+#include "Core/Function/ConstantFunction.h"
 //=================================
 class SegmetedReflectorGenerator{
 
@@ -37,15 +39,16 @@ class SegmetedReflectorGenerator{
 	double facet_radius;
 	double facet_fill_factor = 0.99;
 
-	Color *mirror_colour;
-	Color *inner_mirror_colour;
-	ReflectionProperties *outer_mirror_reflection;
+	const Color *mirror_colour = &Color::white;
+	const Color *inner_mirror_colour = &Color::dark_gray;
+	const Function::Func1D* outer_mirror_reflection = &Function::Constant::void_function;
 public:
 	void set_hybrid_geometry(const double alpha);
 	void set_focal_length(const double _focal_length);
 	void set_facet_spacing(const double _facet_spacing);
 	void set_max_outer_diameter(const double _max_outer_diameter);
 	void set_min_inner_diameter(const double _min_inner_diameter);
+	void set_mirror_reflection(const Function::Func1D* refl_vs_wavl);
 	Frame* get_reflector();
 	std::string get_print()const;
 private:
@@ -59,7 +62,6 @@ private:
 	void init_focal_point();
 	double get_average_image_distances_of_facets();
 	void optimize_reflector_z_pos();
-	void init_facet_surface();
 	void init_facet_radius();
 	void init_facets();
 	void init_reflector();

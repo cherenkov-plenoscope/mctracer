@@ -1,11 +1,5 @@
-#include <iostream> 
-#include <string>
-#include <math.h>
-
 #include "gtest/gtest.h"
 #include "Tools/FiniteStateMashine.h"
-
-using namespace std;
 
 namespace frog {
 	enum frog_states {
@@ -24,33 +18,9 @@ namespace frog {
 		ws
 	};
 }
-// The fixture for testing class Foo.
+
 class FiniteStateMashineTEST : public ::testing::Test {
 protected:
-	// You can remove any or all of the following functions if its body
-	// is empty.
-	bool exception_detected = false;
-	FiniteStateMashineTEST() {
-	// You can do set-up work for each test here.
-	}
-
-	virtual ~FiniteStateMashineTEST() {
-	// You can do clean-up work that doesn't throw exceptions here.
-	}
-
-	// If the constructor and destructor are not enough for setting up
-	// and cleaning up each test, you can define the following methods:
-
-	virtual void SetUp() {
-	// Code here will be called immediately after the constructor (right
-	// before each test).
-		exception_detected = false;
-	}
-
-	virtual void TearDown() {
-	// Code here will be called immediately after each test (right
-	// before the destructor).
-	}
 
 	FiniteStateMashine frog_acceptor()const {
 		FiniteStateMashine fsm;
@@ -106,8 +76,6 @@ protected:
 
 		return fsm;		
 	}
-
-	// Objects declared here can be used by all tests in the test case for Foo.
 };
 //------------------------------------------------------------------------------
 TEST_F(FiniteStateMashineTEST, define_state) {
@@ -121,28 +89,24 @@ TEST_F(FiniteStateMashineTEST, define_state) {
 //------------------------------------------------------------------------------
 TEST_F(FiniteStateMashineTEST, add_duplicate_state) {
 
-	try{
+	EXPECT_THROW(
 		FiniteStateMashine fsm;
 		fsm.define_state(0);
 		fsm.define_state(0);
-	}catch(TracerException &e) {
-		exception_detected = true;
-		EXPECT_EQ(FINITE_STATE_MASHINE_HAS_DUPLICATE_STATE,e.type());
-	}
-	EXPECT_TRUE(exception_detected);
+		,
+		TracerException
+	);
 }
 //------------------------------------------------------------------------------
 TEST_F(FiniteStateMashineTEST, transition_state_must_be_defined) {
 
-	try{
+	EXPECT_THROW(
 		FiniteStateMashine fsm;
 		fsm.define_state(0);
 		fsm.define_state_to_state_when_event(0,1,1337);
-	}catch(TracerException &e) {
-		exception_detected = true;
-		EXPECT_EQ(FINITE_STATE_MASHINE_UNKNOWN_STATE,e.type());
-	}
-	EXPECT_TRUE(exception_detected);
+		,
+		TracerException
+	);
 }
 //------------------------------------------------------------------------------
 TEST_F(FiniteStateMashineTEST, define_valid_transitions) {
@@ -169,7 +133,7 @@ TEST_F(FiniteStateMashineTEST, no_transition_for_unknown_event) {
 //------------------------------------------------------------------------------
 TEST_F(FiniteStateMashineTEST, must_not_define_state_after_transition) {
 	
-	try{
+	EXPECT_THROW(
 		FiniteStateMashine fsm;
 		fsm.define_state(0);
 		fsm.define_state(1);
@@ -180,16 +144,14 @@ TEST_F(FiniteStateMashineTEST, must_not_define_state_after_transition) {
 		fsm.transition_given_event(1337);
 
 		fsm.define_state(3);
-	}catch(TracerException &e) {
-		exception_detected = true;
-		EXPECT_EQ(FINITE_STATE_MASHINE_DEFINE_STATE_AFTER_TRANSITION, e.type());
-	}
-	EXPECT_TRUE(exception_detected);
+		,
+		TracerException
+	);
 }
 //------------------------------------------------------------------------------
 TEST_F(FiniteStateMashineTEST, init_in_invalid_state) {
 	
-	try{
+	EXPECT_THROW(
 		FiniteStateMashine fsm;
 		fsm.define_state(0);
 		fsm.define_state(1);
@@ -200,11 +162,9 @@ TEST_F(FiniteStateMashineTEST, init_in_invalid_state) {
 		fsm.initialize_in_state(3);
 
 		fsm.transition_given_event(1337);
-	}catch(TracerException &e) {
-		EXPECT_EQ(FINITE_STATE_MASHINE_UNKNOWN_STATE, e.type());
-		exception_detected = true;
-	}
-	EXPECT_TRUE(exception_detected);
+		,
+		TracerException
+	);
 }
 //------------------------------------------------------------------------------
 TEST_F(FiniteStateMashineTEST, init_in_valid_state) {

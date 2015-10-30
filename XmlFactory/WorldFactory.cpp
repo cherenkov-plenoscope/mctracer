@@ -4,6 +4,7 @@
 #include "FrameFactory.h"
 #include "Core/Function/LinInterpolFunction.h"
 #include "Tools/AsciiIo.h"
+#include "Geometry/StereoLitographyIo.h"
 //------------------------------------------------------------------------------
 WorldFactory::WorldFactory(){
 
@@ -14,7 +15,8 @@ WorldFactory::WorldFactory(){
 	);
 
 	telescopes = new TelescopeArrayControl();
-	__sensors = new std::vector<PhotonSensor*>;
+	sensors = new std::vector<PhotonSensor*>;
+	functions = new FunctionFactory(this);
 } 
 //------------------------------------------------------------------------------
 void WorldFactory::load(std::string path){
@@ -27,8 +29,8 @@ void WorldFactory::load(std::string path){
 	else
 		absolute_path = path.substr(0,position_in_path + 1); 
 
-	std::string filename = path.substr(position_in_path + 1); 
-
+	std::string filename = path.substr(position_in_path + 1);
+	
    	load_file(root_of_World, absolute_path, filename);
 }
 //------------------------------------------------------------------------------
@@ -41,6 +43,7 @@ void WorldFactory::load_file(
 
 	//remember this file until the next is parsed
 	XmlName = path_of_file_to_load;
+	XmlRelativePath = path;
 
     pugi::xml_document doc;
     pugi::xml_parse_result result = doc.load_file(path_of_file_to_load.c_str());
@@ -83,33 +86,32 @@ void WorldFactory::extract_include_path(
 void WorldFactory::add_to_array_if_telescope(const pugi::xml_node node, Frame* frame) {
 	std::string telescope_key = "set_telescope";
 
-	if( node.child(telescope_key.c_str()) != nullptr ) {
-		//const pugi::xml_node telesc = node.child(telescope_key.c_str());
-		//assert_attribute_exists(telesc, "id");
-		//uint id = std::atoi(node.attribute("id").value());
+	if(has_child(node, telescope_key))
 		telescopes->add_to_telescope_array(frame);
-	}
 }
 //------------------------------------------------------------------------------
 void WorldFactory::add_to_sensors_if_sensitive(const pugi::xml_node node, Frame* frame) {
 	std::string sensor_key = "set_sensitive";
 
-	if( node.child(sensor_key.c_str()) != nullptr ) {
+	if(has_child(node, sensor_key)) {
 		const pugi::xml_node sensi = node.child(sensor_key.c_str());
 
 		assert_attribute_exists(sensi, "id");
 		uint id = std::atoi(node.attribute("id").value());
 		PhotonSensor* sens = new PhotonSensor(id, frame);
-		__sensors->push_back(sens);
+		sensors->push_back(sens);
 	}
+}
+//------------------------------------------------------------------------------
+void WorldFactory::extract_function_from(const pugi::xml_node node) {
+	functions->extract_function_from(node);
 }
 //------------------------------------------------------------------------------
 void WorldFactory::fabricate_frame(
 Frame* mother,const pugi::xml_node node){
 	
 	XmlNode = node;
-
-	if(		 StringTools::is_equal(node.name(),"frame")){
+	if(StringTools::is_equal(node.name(),"frame")){
 		mother = produceFrame(mother,node);
 
 	}else if(StringTools::is_equal(node.name(),"triangle")){
@@ -134,10 +136,16 @@ Frame* mother,const pugi::xml_node node){
 		mother = produceBiConvexLensHex(mother,node);	
 
 	}else if(StringTools::is_equal(node.name(),"sphere_cap_hexagonal")){
-		mother = produce_sphere_cap_hexagonal(mother,node);	
+		mother = produce_sphere_cap_hexagonal(mother,node);
+
+	}else if(StringTools::is_equal(node.name(),"stl")){
+		mother = produce_stl_object(mother,node);		
 
 	}else if(StringTools::is_equal(node.name(),"include")){
-		include_file(mother,node);		
+		include_file(mother,node);
+
+	}else if(StringTools::is_equal(node.name(),"function")){
+		extract_function_from(node);
 		
 	}else if( mother->has_mother() ){	
 		std::stringstream info;
@@ -151,8 +159,8 @@ Frame* mother,const pugi::xml_node node){
 }
 //------------------------------------------------------------------------------
 void WorldFactory::go_on_with_children_of_node(
-	Frame* mother,const pugi::xml_node node){
-	
+	Frame* mother,const pugi::xml_node node
+) {
 	// go on with children of node
 	for(
 		pugi::xml_node sub_node = node.first_child(); 
@@ -163,6 +171,9 @@ void WorldFactory::go_on_with_children_of_node(
 
 		if 		(StringTools::is_equal(sub_node_name,"include")){
 
+			fabricate_frame(mother,sub_node);
+		}else if(StringTools::is_equal(sub_node_name,"function")){
+			//std::cout << sub_node_name << "\n";
 			fabricate_frame(mother,sub_node);
 		}else if(StringTools::is_equal(sub_node_name,"frame")){
 
@@ -194,12 +205,9 @@ void WorldFactory::go_on_with_children_of_node(
 		}else if(StringTools::is_equal(sub_node_name,"sphere_cap_hexagonal")){
 			
 			fabricate_frame(mother,sub_node);
-		}else if(sub_node_name.find("set") == std::string::npos){
-
-			std::stringstream info;
-			info << "WorldFactory::" << __func__ << "() found an unknown item.";
-			throw UnknownItem(info.str(), this, sub_node_name);
-		}	
+		}else if(StringTools::is_equal(sub_node_name,"stl")){
+			fabricate_frame(mother,sub_node);
+		}
 	}	
 }
 //------------------------------------------------------------------------------
@@ -228,11 +236,11 @@ Frame* WorldFactory::producePlane(
 	assert_child_exists(node, "set_plane");
 
 	const Color*		color;
-	const ReflectionProperties*	refl_prop;
+	const Function::Func1D* reflection_vs_wavelength;
 	double 					x_width, y_width;
 	
 	color = extract_color(node.child("set_surface"));
-	refl_prop = extract_reflection(node.child("set_surface"));
+	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 	extract_Plane_props(x_width, y_width, node.child("set_plane"));
 
 	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
@@ -247,8 +255,8 @@ Frame* WorldFactory::producePlane(
 	);
 	new_plane->set_inner_color(color);
 	new_plane->set_outer_color(color);
-	new_plane->set_outer_reflection(refl_prop);
-	new_plane->set_inner_reflection(refl_prop);
+	new_plane->set_outer_reflection(reflection_vs_wavelength);
+	new_plane->set_inner_reflection(reflection_vs_wavelength);
 	
 	new_plane->set_x_y_width(x_width, y_width);
 	
@@ -267,11 +275,11 @@ Frame* WorldFactory::produceSphere(
 	Vector3D 				position;
 	Rotation3D 				rotation;
 	const Color*		color;
-	const ReflectionProperties*	refl_prop;
+	const Function::Func1D* reflection_vs_wavelength;
 	double 					radius;
 
 	color = extract_color(node.child("set_surface"));
-	refl_prop = extract_reflection(node.child("set_surface"));
+	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 	extract_Sphere_props(radius,node.child("set_sphere"));
 
 	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
@@ -286,8 +294,8 @@ Frame* WorldFactory::produceSphere(
 	);
 	new_sphere->set_inner_color(color);
 	new_sphere->set_outer_color(color);
-	new_sphere->set_outer_reflection(refl_prop);
-	new_sphere->set_inner_reflection(refl_prop);
+	new_sphere->set_outer_reflection(reflection_vs_wavelength);
+	new_sphere->set_inner_reflection(reflection_vs_wavelength);
 
 	new_sphere->set_sphere_radius(radius);
 	
@@ -306,12 +314,12 @@ Frame* WorldFactory::produceCylinder(
 	Vector3D 				position;
 	Rotation3D 				rotation;
 	const Color*			color;
-	const ReflectionProperties*	refl_prop;
+	const Function::Func1D* reflection_vs_wavelength;
 	double 					radius;
 	Vector3D 				start, end;
 					
 	color = extract_color(node.child("set_surface"));
-	refl_prop = extract_reflection(node.child("set_surface"));
+	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 	extract_Cylinder_props(radius, start, end, node.child("set_cylinder"));
 
 	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
@@ -325,8 +333,8 @@ Frame* WorldFactory::produceCylinder(
 	);
 	new_Cylinder->set_inner_color(color);
 	new_Cylinder->set_outer_color(color);
-	new_Cylinder->set_outer_reflection(refl_prop);
-	new_Cylinder->set_inner_reflection(refl_prop);	
+	new_Cylinder->set_outer_reflection(reflection_vs_wavelength);
+	new_Cylinder->set_inner_reflection(reflection_vs_wavelength);	
 
 	new_Cylinder->set_cylinder(radius, start, end);
 	
@@ -344,8 +352,10 @@ Frame* WorldFactory::produceReflector(
 	std::string 		name;
 	Vector3D 			position;
 	Rotation3D 			rotation;
+	const Function::Func1D* reflection_vs_wavelength;
 					
-	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
+	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());
+	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 
 	SegmetedReflectorGenerator refl_gen;
 	refl_gen.set_focal_length(extract_reflector("focal_length", refl_node));
@@ -353,6 +363,7 @@ Frame* WorldFactory::produceReflector(
 	refl_gen.set_max_outer_diameter(extract_reflector("max_outer_diameter", refl_node));
 	refl_gen.set_min_inner_diameter(extract_reflector("min_inner_diameter", refl_node));
 	refl_gen.set_hybrid_geometry(extract_reflector("alpha", refl_node));
+	refl_gen.set_mirror_reflection(reflection_vs_wavelength);
 	Frame* reflector = refl_gen.get_reflector();
 
 	mother->set_mother_and_child(reflector);
@@ -369,16 +380,17 @@ Frame* WorldFactory::produceBiConvexLensHex(
 	Vector3D 			position;
 	Rotation3D 			rotation;
 	const Color*		color;
-	const ReflectionProperties*	refl_prop;
+	const Function::Func1D* reflection_vs_wavelength;
 	double curv_radius;
 	double outer_radius;
-	RefractiveIndex* lens_refractive_index;
+	const Function::Func1D* refraction;
+	//RefractiveIndex* lens_refractive_index;
 
 	color = extract_color(node.child("set_surface"));
 	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
 	extractBiConvexLensHex(curv_radius, outer_radius, node.child("set_bi_convex_lens_hex"));
-	lens_refractive_index = extract_medium(node.child("set_medium"));
-	refl_prop = extract_reflection(node.child("set_surface"));
+	refraction = extract_refraction(node.child("set_medium"));
+	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 
 	BiConvexLensHexBound *lens;
 	lens = new BiConvexLensHexBound;
@@ -389,24 +401,58 @@ Frame* WorldFactory::produceBiConvexLensHex(
 	);
 	lens->set_inner_color(color);
 	lens->set_outer_color(color);
-	lens->set_outer_reflection(refl_prop);
-	lens->set_inner_refraction(lens_refractive_index);
+	lens->set_outer_reflection(reflection_vs_wavelength);
+	lens->set_inner_refraction(refraction);
 	lens->set_curvature_radius_and_outer_hex_radius(curv_radius, outer_radius);
 	
 	mother->set_mother_and_child(lens);
 	return lens;
-
 }
 //------------------------------------------------------------------------------
-RefractiveIndex* WorldFactory::extract_medium(
+Frame* WorldFactory::produce_stl_object(
+		Frame* mother, const pugi::xml_node node
+) {
+	FrameFactory frameFab(node);
+	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());
+	
+	assert_child_exists(node, "set_stl");
+	const pugi::xml_node set_stl_node = node.child("set_stl");
+
+	assert_attribute_exists(set_stl_node, "file");
+	std::string file = 
+		absolute_path + set_stl_node.attribute("file").value();
+
+	assert_attribute_exists(set_stl_node, "scale");
+	double scale = StrToDouble(set_stl_node.attribute("scale").value());
+
+	//StereoLitographyIo::BinaryReader stl(file, scale);
+	Frame* object = StereoLitographyIo::read(file, scale);
+
+	Frame* repositioned_object = new Frame(
+		frameFab.get_name(), 
+		frameFab.get_position(), 
+		frameFab.get_rotation()
+	);
+
+	repositioned_object->take_children_from(object);
+	
+	delete object;
+
+	mother->set_mother_and_child(repositioned_object);
+	return repositioned_object;
+}
+//------------------------------------------------------------------------------
+const Function::Func1D* WorldFactory::extract_refraction(
 	const pugi::xml_node node
 ) {
-	assert_attribute_exists(node, "refractive_index");
-
-	RefractiveIndex* refrac;
-	double refr = StrToDouble(node.attribute("refractive_index").value());
-	refrac = new RefractiveIndex(refr);
-	return refrac;
+	if(has_attribute(node, "refraction_vs_wavelength")) {
+		return functions->get_function(node.attribute("refraction_vs_wavelength").value());
+	}else{
+		std::stringstream info;
+		info << "WorldFactory::" <<__func__<< "() ";
+		info << "in " <<__FILE__<< ", " <<__LINE__<< "\n";
+		throw MissingItem(info.str(), this, "refraction_vs_wavelength");
+	}
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extractBiConvexLensHex(
@@ -439,11 +485,11 @@ Frame* WorldFactory::produceDisc(
 	Vector3D 				position;
 	Rotation3D 				rotation;
 	const Color*		color;
-	const ReflectionProperties*	refl_prop;
+	const Function::Func1D* reflection_vs_wavelength;
 	double 					radius;
 
 	color = extract_color(node.child("set_surface"));
-	refl_prop = extract_reflection(node.child("set_surface"));
+	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 	extract_Disc_props(radius, node.child("set_disc"));
 	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
 	
@@ -457,8 +503,8 @@ Frame* WorldFactory::produceDisc(
 	);
 	new_Disc->set_inner_color(color);
 	new_Disc->set_outer_color(color);
-	new_Disc->set_outer_reflection(refl_prop);
-	new_Disc->set_inner_reflection(refl_prop);	
+	new_Disc->set_outer_reflection(reflection_vs_wavelength);
+	new_Disc->set_inner_reflection(reflection_vs_wavelength);	
 
 	new_Disc->set_disc_radius(radius);
 	
@@ -477,11 +523,11 @@ Frame* WorldFactory::produceTriangle(
 	Vector3D 				position;
 	Rotation3D 				rotation;
 	const Color*		color;
-	const ReflectionProperties*	refl_prop;
+	const Function::Func1D* reflection_vs_wavelength;
 	double 					Ax, Ay, Bx, By, Cx, Cy;
 
 	color = extract_color(node.child("set_surface"));
-	refl_prop = extract_reflection(node.child("set_surface"));
+	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 	extract_Triangle_props(Ax, Ay, Bx, By, Cx, Cy, node.child("set_triangle"));
 	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());
 
@@ -494,8 +540,8 @@ Frame* WorldFactory::produceTriangle(
 	);
 	new_Triangle->set_inner_color(color);
 	new_Triangle->set_outer_color(color);
-	new_Triangle->set_outer_reflection(refl_prop);
-	new_Triangle->set_inner_reflection(refl_prop);
+	new_Triangle->set_outer_reflection(reflection_vs_wavelength);
+	new_Triangle->set_inner_reflection(reflection_vs_wavelength);
 
 	new_Triangle->set_corners_in_xy_plane(Ax, Ay, Bx, By, Cx, Cy);
 	
@@ -514,10 +560,10 @@ Frame* WorldFactory::produce_sphere_cap_hexagonal(
 	Vector3D 				position;
 	Rotation3D 				rotation;
 	const Color*		color;
-	const ReflectionProperties*	refl_prop;
+	const Function::Func1D* reflection_vs_wavelength;
 
 	color = extract_color(node.child("set_surface"));
-	refl_prop = extract_reflection(node.child("set_surface"));
+	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 
 	SphereCapWithHexagonalBound* cap = new SphereCapWithHexagonalBound;
 	double focal_length, outer_radius;
@@ -534,8 +580,8 @@ Frame* WorldFactory::produce_sphere_cap_hexagonal(
 	);
 	cap->set_inner_color(color);
 	cap->set_outer_color(color);
-	cap->set_outer_reflection(refl_prop);
-	cap->set_inner_reflection(refl_prop);
+	cap->set_outer_reflection(reflection_vs_wavelength);
+	cap->set_inner_reflection(reflection_vs_wavelength);
 	cap->set_curvature_radius_and_outer_hex_radius(2.0*focal_length, outer_radius);
 	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
 
@@ -553,26 +599,17 @@ void WorldFactory::extract_sphere_cap_hexagonal(
 	outer_radius = StrToDouble(node.attribute("outer_radius").value());
 }
 //------------------------------------------------------------------------------
-const ReflectionProperties* WorldFactory::extract_reflection(
+const Function::Func1D* WorldFactory::extract_reflection(
 	const pugi::xml_node node
 ) {
-	assert_attribute_exists(node, "refl");
-
-	std::string refl_attribure = node.attribute("refl").value();
-
-	ReflectionProperties* refl_prop;
-	if( StringTools::is_ending(refl_attribure, ".txt") ) {
-
-		Function::LinInterpol* refl = new Function::LinInterpol(
-			AsciiIo::gen_table_from_file((absolute_path + refl_attribure))
-		);
-
-		refl_prop = new ReflectionProperties(refl);
+	if(has_attribute(node, "reflection_vs_wavelength")) {
+		return functions->get_function(node.attribute("reflection_vs_wavelength").value());
 	}else{
-		refl_prop = new ReflectionProperties(StrToDouble(refl_attribure));
+		std::stringstream info;
+		info << "WorldFactory::" <<__func__<< "() ";
+		info << "in " <<__FILE__<< ", " <<__LINE__<< "\n";
+		throw MissingItem(info.str(), this, "reflection_vs_wavelength");
 	}
-
-	return refl_prop;
 }
 //------------------------------------------------------------------------------
 const Color* WorldFactory::extract_color(const pugi::xml_node node) {
@@ -677,8 +714,8 @@ Frame* WorldFactory::world(){
 }
 //------------------------------------------------------------------------------
 std::vector<PhotonSensor*>* WorldFactory::sensors_in_world()const {
-	PhotonSensors::sort_photon_sensors_based_on_frames(__sensors);
-	return __sensors;
+	PhotonSensors::sort_photon_sensors_based_on_frames(sensors);
+	return sensors;
 }
 //------------------------------------------------------------------------------
 TelescopeArrayControl* WorldFactory::get_telescope_array_control()const {

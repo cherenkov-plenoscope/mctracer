@@ -7,7 +7,7 @@ namespace StringTools {
 	}
 	//--------------------------------------------------------------------------
 	std::string cut_leading_token_infront_of_delimiter( 
-		std::string& text_of_tokens, 
+		std::string &text_of_tokens, 
 		const char delimiter 
 	) {
 		// find the first delimiter
@@ -28,8 +28,8 @@ namespace StringTools {
 	}
 	//--------------------------------------------------------------------------
 	std::string repeat_multiple_times(
-		std::string text_to_repeat, 
-		unsigned int times 
+		const std::string text_to_repeat, 
+		const unsigned int times 
 	) {
 		std::stringstream multiple_text;
 
@@ -48,14 +48,6 @@ namespace StringTools {
 			return ((found_last+1) == length_of_text);
 		else
 			return false;
-	}
-	//--------------------------------------------------------------------------
-	void remove_char_from_text_if_leading(
-		const char character_to_remove,
-		std::string &text
-	) {
-		if( text.find( character_to_remove ) == 0 )
-			text.erase(0,1);
 	}
 	//--------------------------------------------------------------------------
 	bool string_contains_char(const std::string &text, const char ch) {

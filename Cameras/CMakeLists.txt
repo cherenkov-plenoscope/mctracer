@@ -7,6 +7,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraManForTranslation.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraManForRotation.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraManForStereo3D.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CameraManForFieldOfView.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraMan.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraImage.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraRay.cpp
@@ -21,6 +22,7 @@ set(HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraManForTranslation.h
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraManForRotation.h
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraManForStereo3D.h
+	${CMAKE_CURRENT_SOURCE_DIR}/CameraManForFieldOfView.h
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraMan.h
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraImage.h
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraRay.h

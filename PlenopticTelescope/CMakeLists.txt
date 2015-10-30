@@ -1,0 +1,12 @@
+set(SOURCE
+   	${SOURCE}
+  	#${CMAKE_CURRENT_SOURCE_DIR}/LensMaker.cpp
+  	${CMAKE_CURRENT_SOURCE_DIR}/LensMaker.cpp
+   	PARENT_SCOPE
+)
+set(HEADERS
+	${HEADERS}
+  	#${CMAKE_CURRENT_SOURCE_DIR}/PlenopticHexPixelGenerator.h
+  	${CMAKE_CURRENT_SOURCE_DIR}/LensMaker.h
+	PARENT_SCOPE
+)

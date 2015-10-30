@@ -1,6 +1,10 @@
+<function name="zero">
+	<constant value="0.0" lower_limit="200e-9" upper_limit="1200e-9"/>
+</function>
+
 <disc>
 	<set_frame name="ground" pos="[0,0,0]" rot="[0,0,0]"/>		
-	<set_surface refl="0.0" colour="[0,50,0]"/>	
+	<set_surface reflection_vs_wavelength="zero" colour="[0,50,0]"/>	
 	<set_disc radius="100"/>
 	<set_sensitive id="0"/>
 </disc>

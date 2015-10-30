@@ -1,4 +1,5 @@
 #include "Tools.h"
+#include "Tools/StringTools.h"
 //------------------------------------------------------------------------------
 double Deg2Rad(double angle_in_Deg) {
 	return (M_PI*angle_in_Deg)/180.0;
@@ -50,7 +51,7 @@ namespace UserInteraction {
 		out << "|      high performance raytracing tool to design and       \n";
 		out << "|     investigate optical devices for particle physics      \n";
 		out << "|                                                           \n";
-		out << "|     Author: Sebastian Mueller              year 2013      \n";
+		out << "|     Author: Sebastian Achim Mueller        year 2013      \n";
 		out << "|     compiled on: " << TracerException::compile_time << "\n";	
 		out << "|___________________________________________________________\n";
 		std::cout << out.str();	

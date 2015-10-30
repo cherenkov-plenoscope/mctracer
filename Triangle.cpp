@@ -16,6 +16,49 @@ void Triangle::set_corners_in_xy_plane(
 	post_initialize_radius_of_enclosing_sphere();
 }
 //------------------------------------------------------------------------------
+void Triangle::set_normal_and_3_vertecies(
+	const Vector3D normal,
+	Vector3D a,
+	Vector3D b,
+	Vector3D c
+) {
+	// correct for offset
+	Vector3D pos = (a + b + c)/3.0;
+	a = a - pos;
+	b = b - pos;
+	c = c - pos;
+
+	Rotation3D rot;
+
+	if(normal != Vector3D::unit_z) {
+
+		// transformation to make surface normal match z-axis
+		Vector3D rot_axis = Vector3D::unit_z.cross(normal);
+		double rotation_angle = Vector3D::unit_z.get_angle_in_between_in_rad(normal);
+
+		rot = Rotation3D(rot_axis, rotation_angle);
+
+		HomoTrafo3D trafo;
+		trafo.set_transformation(rot, Vector3D::null);
+		
+		HomoTrafo3D trafo_inv = trafo.inverse();
+		// transform a b c
+		a = trafo_inv.get_transformed_orientation(a);
+		b = trafo_inv.get_transformed_orientation(b);
+		c = trafo_inv.get_transformed_orientation(c);
+	}else{
+		rot = Rotation3D::null;
+	}
+
+	set_name_pos_rot(name_of_frame, pos, rot);
+
+	set_corners_in_xy_plane(
+		a.x(), a.y(),
+		b.x(), b.y(),
+		c.x(), c.y()
+	);
+}
+//------------------------------------------------------------------------------
 void Triangle::assert_edge_length_is_non_zero(
 	const double edge_length, 
 	const std::string edge
@@ -44,6 +87,7 @@ void Triangle::post_initialize_radius_of_enclosing_sphere() {
 }
 //------------------------------------------------------------------------------
 std::string Triangle::get_print()const{
+
 	std::stringstream out;
 	out << get_frame_print();
 	out << get_surface_print();

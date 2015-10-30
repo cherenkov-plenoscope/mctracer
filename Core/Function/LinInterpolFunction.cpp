@@ -54,7 +54,7 @@ namespace Function {
 			info << "Expected vec of vec matrix of shape N x 2, but actual:\n";
 			info << "Row " << row << " has " << xy_table.at(row).size();
 			info << " cols.\n";
-			throw TracerException( info.str() );	
+			throw BadShape( info.str() );	
 		}
 	}
 	//--------------------------------------------------------------------------

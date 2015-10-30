@@ -1,4 +1,24 @@
 #include "ProgramOptions.h"
+#include <sstream>
+#include "TracerException.h"
+#include "Tools/Tools.h"
+#include "Tools/StringTools.h"
+#include "Tools/FileTools.h"
+#include "Core/TimeStamp.h"
+//------------------------------------------------------------------------------
+KeyValueMap::KeyValueMap() {}
+//------------------------------------------------------------------------------
+KeyValueMap::KeyValueMap(const std::string filename) {
+	KeyValueMapIO mapIO;
+	(*this) = mapIO.load(filename);
+}
+//------------------------------------------------------------------------------
+void KeyValueMap::save(const std::string filename)const {
+	KeyValueMapIO mapIO;
+	mapIO.save_map_to_file(*this, filename);
+}
+//------------------------------------------------------------------------------
+std::string KeyValueMap::get_filename()const {return filename;}
 //------------------------------------------------------------------------------
 void KeyValueMap::insert_key_and_value(
 	const std::string key, 
@@ -20,7 +40,9 @@ std::string KeyValueMap::get_value_for_key(const std::string key)const {
 void KeyValueMap::assert_has_key(const std::string key)const {
 	if(!has_key(key)) {
 		std::stringstream out;
-		out << "KeyValueMap has no key: '" << key << "'.";
+		out << "KeyValueMap " << __FILE__ << ", " << __LINE__ << "\n";
+		if(!filename.empty()) out << filename << "\n";
+		out << "KeyValueMap has no key: '" << key << "'. \n";
 		throw TracerException(out.str());
 	}
 }
@@ -28,8 +50,10 @@ void KeyValueMap::assert_has_key(const std::string key)const {
 void KeyValueMap::assert_key_is_unique(const std::string key)const {
 	if(has_key(key)) {
 		std::stringstream out;
-		out << "KeyValueMap has already a key: '" << key << "' with value: '";
-		out << get_value_for_key(key) << "'";
+		out << "KeyValueMap " << __FILE__ << ", " << __LINE__ << "\n";
+		if(!filename.empty()) out << filename << "\n";
+		out << "Has already a key: '" << key << "' with value: '";
+		out << get_value_for_key(key) << "'\n";
 		throw TracerException(out.str());
 	}
 }
@@ -37,28 +61,16 @@ void KeyValueMap::assert_key_is_unique(const std::string key)const {
 std::string KeyValueMap::get_print()const {
 
 	std::stringstream out;
-	int i = 0;
 	out << "KeyValueMap: " << options.size() << " entries\n";
-	for (auto& x: options) {
-		i++;
-		out << i << " key: '" << x.first << "', value: '" << x.second << "'\n";
-	}
+	out << get_file_print();
 	return out.str();
 }
 //------------------------------------------------------------------------------
 std::string KeyValueMap::get_file_print()const {
 
-	TimeStamp now;
-
 	std::stringstream out;
-	int i = 0;
-	out << "# written on: " << now.yyyy() << "." << now.mm() << "." << now.dd();
-	out << " " << now.HH() << ":" << now.MM() << ":" << now.SS();
-	out << " in yyyy.mm.dd HH:MM:SS UTC\n";
-	for (auto& x: options) {
-		i++;
+	for (auto& x: options)
 		out << x.first << ": " << x.second << "\n";
-	}
 	return out.str();
 }
 //------------------------------------------------------------------------------
@@ -69,7 +81,7 @@ std::ostream& operator<<(std::ostream& os, const KeyValueMap& map) {
 //------------------------------------------------------------------------------
 void KeyValueMap::assert_every_key_has_a_value(const int argc)const {
 	if(is_even(argc))
-		throw TracerException("argument count is even");
+		throw TracerException("KeyValueMap: argument count is even");
 }
 //------------------------------------------------------------------------------
 bool KeyValueMap::get_value_for_key_as_bool(const std::string key)const {
@@ -84,30 +96,48 @@ int KeyValueMap::get_value_for_key_as_int(const std::string key)const {
 	return StrToInt(get_value_for_key(key));
 }
 //------------------------------------------------------------------------------
-void KeyValueMap::save(const std::string filename)const {
-	FileTools::write_text_to_file(get_file_print(), filename);
+// IO
+//------------------------------------------------------------------------------
+void KeyValueMapIO::save_map_to_file(
+	const KeyValueMap map, const std::string filename
+) {
+	FileTools::write_text_to_file(map.get_file_print(), filename);	
 }
 //------------------------------------------------------------------------------
-void KeyValueMap::load(const std::string filename) {
+KeyValueMap KeyValueMapIO::load(const std::string filename) {
 
-	std::string line;
-	std::ifstream myfile (filename.c_str());
+	map.filename = filename;
+	std::ifstream myfile (map.filename.c_str());
 	
-	if(myfile.is_open()) {
-		while(getline (myfile,line))
-			parse_line(line);
-		myfile.close();
-	}else {
-		std::stringstream out;
-		out << "KeyValueMap: Can not open '" << filename << "'";
-		throw TracerException(out.str());
-	}
+	if(myfile.is_open())
+		parse_and_close(myfile);
+	else 
+		throw_can_not_open();
+
+	return map;
 }
 //------------------------------------------------------------------------------
-void KeyValueMap::parse_line(const std::string line) {
+void KeyValueMapIO::parse_and_close(std::ifstream &myfile) {
+	
+	line_number = 0;
+	std::string line;
+	while(getline (myfile,line))
+		parse_line(line);
+	myfile.close();
+}
+//------------------------------------------------------------------------------
+void KeyValueMapIO::throw_can_not_open()const {
+	std::stringstream out;
+	out << "KeyValueMapIO " << __FILE__ << ", " << __LINE__ << "\n";
+	out << "Can not open '" << map.filename << "'";
+	throw TracerException(out.str());
+}
+//------------------------------------------------------------------------------
+void KeyValueMapIO::parse_line(const std::string line) {
 
-	std::string key;
-	std::string value;
+	line_number++;
+	std::string key, value;
+
 	bool is_comment = false;
 	bool colon_was_found = false;
 
@@ -130,20 +160,19 @@ void KeyValueMap::parse_line(const std::string line) {
 		i++;
 	}
 
-	if(!colon_was_found && !is_comment)
-		throw TracerException("Can not parse key value line.");
+	if(!colon_was_found && !is_comment) {
+		
+		std::stringstream out;
+		out << "KeyValueMapIO " << __FILE__ << ", " << __LINE__ << "\n";
+		out << "Can not parse line " << line_number << " in file '";
+		out << map.filename << "'\n";
+		out << "line: '" << line << "\n";
+		throw TracerException(out.str());
+	}
 
 	if(!is_comment) {
 		key = StringTools::strip_whitespaces(key);
 		value = StringTools::strip_whitespaces(value);	
-		insert_key_and_value(key, value);	
+		map.insert_key_and_value(key, value);	
 	}
-}
-//------------------------------------------------------------------------------
-KeyValueMap::KeyValueMap(const std::string filename) {
-	load(filename);
-}
-//------------------------------------------------------------------------------
-KeyValueMap::KeyValueMap() {
-
 }

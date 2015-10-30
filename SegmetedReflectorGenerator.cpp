@@ -1,9 +1,9 @@
 #include "SegmetedReflectorGenerator.h"
 //------------------------------------------------------------------------------
-void SegmetedReflectorGenerator::init_facet_surface() {
-	mirror_colour = new Color(255,255,255);
-	outer_mirror_reflection = new ReflectionProperties(0.8);
-	inner_mirror_colour = new Color(64,64,64);
+void SegmetedReflectorGenerator::set_mirror_reflection(
+	const Function::Func1D* refl_vs_wavl
+) {
+	outer_mirror_reflection = refl_vs_wavl;
 }
 //------------------------------------------------------------------------------
 void SegmetedReflectorGenerator::set_hybrid_geometry(const double alpha){
@@ -64,7 +64,6 @@ Frame* SegmetedReflectorGenerator::get_reflector() {
 	init_facet_z_positions();
 	optimize_reflector_z_pos();
 	init_facet_orientations();
-	init_facet_surface();
 	init_facet_radius();
 	init_facets();
 	init_reflector();
@@ -97,8 +96,8 @@ void SegmetedReflectorGenerator::init_facet_xy_positions() {
 	const double min_reflector_radius = min_inner_diameter/2.0;
 
 	HexGridXy hex_grid(
-		max_reflector_radius, 
-		min_reflector_radius, 
+		max_reflector_radius - facet_spacing/2.0,
+		min_reflector_radius + facet_spacing/2.0, 
 		facet_spacing
 	);
 
@@ -233,7 +232,6 @@ void SegmetedReflectorGenerator::init_facets() {
 		facet->set_outer_color(mirror_colour);
 		facet->set_inner_color(inner_mirror_colour);
 		facet->set_outer_reflection(outer_mirror_reflection);
-
 		facet->set_curvature_radius_and_outer_hex_radius(
 			focal_length*2.0,
 			facet_radius

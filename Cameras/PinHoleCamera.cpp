@@ -102,19 +102,34 @@ void PinHoleCamera::acquire_image(
 	uint i, row, col;
 	CameraRay cam_ray;
 	Color color;
+	int HadCatch = 0;
 
-	#pragma omp parallel shared(settings,world) private(i,cam_ray,color,row,col) 
+	#pragma omp parallel shared(settings,world,HadCatch) private(i,cam_ray,color,row,col) 
 	{	
 		#pragma omp for schedule(dynamic) 
 		for (i = 0; i < image->get_resolution(); i++) {
-			
-			row = i / image->get_number_of_cols();
-			col = i % image->get_number_of_cols();
+			try{
 
-			cam_ray = get_ray_for_pixel_in_row_and_col(row, col);
-			color = cam_ray.trace(world, 0, settings);
+				row = i / image->get_number_of_cols();
+				col = i % image->get_number_of_cols();
 
-			image->set_pixel_row_col_to_color(row, col, color);
+				cam_ray = get_ray_for_pixel_in_row_and_col(row, col);
+				color = cam_ray.trace(world, 0, settings);
+
+				image->set_pixel_row_col_to_color(row, col, color);
+			}catch(std::exception &error) {
+				HadCatch++;
+				std::cerr << error.what(); 
+			}catch(...) {
+				HadCatch++;
+			}
 		}
+	}
+
+	if(HadCatch) {
+		std::stringstream info;
+		info << "PinHoleCamera::"<<__func__<<"() in "<<__FILE__<<", "<<__LINE__<<"\n";
+		info << "Cought exception during multithread ray tracing.\n";
+		throw(TracerException(info.str()));
 	}
 }

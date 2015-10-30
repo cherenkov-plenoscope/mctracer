@@ -18,11 +18,17 @@
 
 class PropagationEnvironment {
 public:
-	const Frame* world_geometry = nullptr;
-	const TracerSettings* propagation_options = nullptr;
-	PseudoRandomNumberGenerator* random_engine = nullptr;
+	const Frame* world_geometry = Frame::void_frame;
+
+	const TracerSettings* propagation_options = 
+		&TracerSettings::default_settings;
+
+	PseudoRandomNumberGenerator* random_engine = 
+		&PseudoRandomNumberGenerator::void_generator;
 
 	void assert_completeness()const;
+
+	static PropagationEnvironment default_environment;
 private:
 	void throw_missing_item(const std::string name_of_missing_item)const;
 };

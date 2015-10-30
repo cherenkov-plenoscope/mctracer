@@ -1,6 +1,12 @@
 #include "Color.h"
+#include "TracerException.h"
+#include <sstream>
+#include "math.h"
+//------------------------------------------------------------------------------
+const Color Color::white = Color(255,255,255);
 const Color Color::syk_blue = Color(127,188,255);
 const Color Color::gray = Color(128,128,128);
+const Color Color::dark_gray = Color(25,25,25);
 //------------------------------------------------------------------------------
 Color::Color(){
 	set_to_default_color();

@@ -10,9 +10,6 @@
 // included dependencies
 #include <iostream>
 #include <string>
-#include <sstream>
-#include <math.h> 
-#include "ReflectionProperties.h"
 
 class Color {
 
@@ -20,8 +17,10 @@ class Color {
 	double green_0to255;
 	double blue_0to255;
 public:
+	static const Color white;
 	static const Color syk_blue;
 	static const Color gray;
+	static const Color dark_gray;
 	Color();
 	Color(const int r, const int g, const int b);
 	Color(const double r, const double g, const double b);

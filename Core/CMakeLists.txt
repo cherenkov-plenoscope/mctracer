@@ -16,9 +16,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/PhotonBunch.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PropagationEnvironment.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ReflectionProperties.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/AbsorptionProperties.cpp	
-	${CMAKE_CURRENT_SOURCE_DIR}/RefractiveIndex.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TimeStamp.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PseudoRandomNumberGenerator.cpp
@@ -41,9 +38,6 @@ set(HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/PhotonBunch.h
 	${CMAKE_CURRENT_SOURCE_DIR}/PropagationEnvironment.h
 	${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.h
-	${CMAKE_CURRENT_SOURCE_DIR}/ReflectionProperties.h
-	${CMAKE_CURRENT_SOURCE_DIR}/AbsorptionProperties.h	
-	${CMAKE_CURRENT_SOURCE_DIR}/RefractiveIndex.h 
 	${CMAKE_CURRENT_SOURCE_DIR}/Color.h
 	${CMAKE_CURRENT_SOURCE_DIR}/TimeStamp.h
 	${CMAKE_CURRENT_SOURCE_DIR}/PseudoRandomNumberGenerator.h

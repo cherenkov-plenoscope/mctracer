@@ -23,7 +23,6 @@
 #include "SegmetedReflectorGenerator.h"
 #include "Core/Vector3D.h"
 #include "Core/Rotation3D.h"
-#include "Core/ReflectionProperties.h"
 #include "Core/Color.h"
 #include "XmlIO/XmlFileIo.h"
 #include "TracerException.h"
@@ -32,17 +31,20 @@
 #include "SphereCapWithHexagonalBound.h"
 #include "SphereCapWithCylinderBound.h"
 #include "BiConvexLensHexBound.h"
+#include "FunctionFactory.h"
 
 //------------------------------------------------------------------------------
 class WorldFactory : public XmlFileIo{
 	
+	// resources from xml file
 	Frame* root_of_World;
-	std::string absolute_path ="";
-
-	std::vector<PhotonSensor*> *__sensors;
-
+	std::vector<PhotonSensor*> *sensors;
 	TelescopeArrayControl* telescopes;
+	
+	// intternal
+	std::string absolute_path ="";
 public:
+	FunctionFactory *functions;
 
 	WorldFactory();
 	void load(std::string path);
@@ -50,7 +52,7 @@ public:
 	TelescopeArrayControl* get_telescope_array_control()const;
 	std::vector<PhotonSensor*>* sensors_in_world()const;
 private:
-
+	void extract_function_from(const pugi::xml_node node);
 	void add_to_sensors_if_sensitive(const pugi::xml_node node, Frame* frame);
 	void add_to_array_if_telescope(const pugi::xml_node node, Frame* frame);
 	void load_file(Frame* mother, std::string path, std::string filename);
@@ -109,9 +111,12 @@ private:
 		const pugi::xml_node node
 	);
 
-	RefractiveIndex* extract_medium(
+	Frame* produce_stl_object(
+		Frame* mother, 
 		const pugi::xml_node node
 	);
+
+	const Function::Func1D* extract_refraction(const pugi::xml_node node); 
 
 	void extractBiConvexLensHex(
 		double &curv_radius, double &outer_radius, const pugi::xml_node node
@@ -126,7 +131,7 @@ private:
 
 	const Color* extract_color(const pugi::xml_node node);
 
-	const ReflectionProperties* extract_reflection(const pugi::xml_node node);
+	const Function::Func1D* extract_reflection(const pugi::xml_node node); 
 
 	void extract_Plane_props(
 		double &x_width, double &y_width, const pugi::xml_node node 

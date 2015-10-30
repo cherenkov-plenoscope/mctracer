@@ -6,6 +6,7 @@
 #include "BiConvexLens.h"
 #include "BiConvexLensHexBound.h"
 #include "Cameras/FreeOrbitCamera.h"
+#include "Core/Function/ConstantFunction.h"
 
 class BiConvexLensTest : public ::testing::Test {
  protected:
@@ -54,13 +55,15 @@ class BiConvexLensTest : public ::testing::Test {
     Color* lens_color;
     lens_color = new Color(255, 128, 128);
 
-    RefractiveIndex* lens_refractive_index;
-    lens_refractive_index = new RefractiveIndex(1.3);
+    //RefractiveIndex* lens_refractive_index;
+    //lens_refractive_index = new RefractiveIndex(1.3);
+    Function::Limits limits(200e-9, 1200e-9);
+    Function::Constant* refraction_vs_wavelength = new Function::Constant(1.3, limits);
 
     //////////////////////////////////
     lens->set_outer_color(lens_color);
     lens->set_inner_color(lens_color);
-    lens->set_inner_refraction(lens_refractive_index);
+    lens->set_inner_refraction(refraction_vs_wavelength);
     lens->set_curvature_radius_and_diameter(0.7, 0.5);
     return lens;
   }
@@ -143,11 +146,10 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
       number_of_photons_reaching_center_of_sensor_disc++;
   }
 
-  EXPECT_NEAR(
-    0.97, 
-    number_of_photons_reaching_center_of_sensor_disc/double(total_propagations),
-    1.0e-2
-  );
+  double central_fration = 
+    number_of_photons_reaching_center_of_sensor_disc/double(total_propagations);
+  
+  EXPECT_NEAR(0.97, central_fration, 1.0e-2);
 
   /*FreeOrbitCamera free(
     lens_test_bench_environment.world_geometry, 

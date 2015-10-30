@@ -1,12 +1,15 @@
 #include "ToDoScheduler.h"
 #include "PhotonBunch.h"
+#include "Tools/AsciiIo.h"
 #include "ProgramOptions.h"
 #include "XmlFactory/WorldFactory.h"
+#include "Geometry/StereoLitographyIo.h"
 //------------------------------------------------------------------------------
 ToDoScheduler::ToDoScheduler(int argc, char** argv) {
 
 	define();
 	comand_line_parser.parse_check(argc, argv);
+	execute();
 }
 //------------------------------------------------------------------------------
 void ToDoScheduler::execute() {
@@ -59,11 +62,25 @@ void ToDoScheduler::define() {
 //------------------------------------------------------------------------------
 void ToDoScheduler::render_geometry()const {
 
+	Frame *geometry;
+	if(
+		StringTools::is_ending(geometry_filename(),".stl") || 
+		StringTools::is_ending(geometry_filename(),".STL")
+	) {
+		geometry = StereoLitographyIo::read(geometry_filename(), 1.0);
+	}else if(	StringTools::is_ending(geometry_filename(),".xml") ||
+				StringTools::is_ending(geometry_filename(),".XML")
+	) {
+		WorldFactory fab;
+		fab.load(geometry_filename());
+		geometry = fab.world();
+	}else{
+		geometry = Frame::void_frame;
+		std::cout << "Can only read stl or xml files.\n";
+		return;
+	}
+	
 	TracerSettings settings;	
-
-	WorldFactory fab;
-	fab.load(get_geometry_file());
-	Frame *geometry = fab.world();
 	FreeOrbitCamera free(geometry, &settings);
 }
 //------------------------------------------------------------------------------
@@ -79,7 +96,7 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 
 	// scenery
 	WorldFactory fab;
-	fab.load(get_geometry_file());
+	fab.load(geometry_filename());
 	Frame *world = fab.world();
 
 	// sensors in scenery
@@ -111,6 +128,8 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 			outname.str()
 		);
 	}
+
+	PhotonBunch::delete_photons_and_history(photon_bunch);
 }
 //------------------------------------------------------------------------------
 void ToDoScheduler::propagate_photons_through_geometry()const {
@@ -122,7 +141,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 
 	// load scenery
 	WorldFactory fab;
-	fab.load(get_geometry_file());
+	fab.load(geometry_filename());
 	Frame *world = fab.world();
 
 	// init Telescope Array Control
@@ -189,7 +208,7 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 
 	// load the scenery
 	WorldFactory fab;
-	fab.load(get_geometry_file());
+	fab.load(geometry_filename());
 	Frame *world = fab.world();
 
 	// init Telescope Array Control
@@ -244,7 +263,7 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 	}
 }
 //------------------------------------------------------------------------------
-const std::string ToDoScheduler::get_geometry_file()const {
+const std::string ToDoScheduler::geometry_filename()const {
 	return comand_line_parser.get<std::string>(geometry_key);
 }
 //------------------------------------------------------------------------------

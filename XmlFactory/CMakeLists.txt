@@ -4,6 +4,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Vector3DFactory.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Rotation3DFactory.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/FrameFactory.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/FunctionFactory.cpp
    	PARENT_SCOPE
 )
 set(HEADERS
@@ -12,5 +13,6 @@ set(HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/Vector3DFactory.h
 	${CMAKE_CURRENT_SOURCE_DIR}/Rotation3DFactory.h
 	${CMAKE_CURRENT_SOURCE_DIR}/FrameFactory.h
+	${CMAKE_CURRENT_SOURCE_DIR}/FunctionFactory.h
 	PARENT_SCOPE
 )

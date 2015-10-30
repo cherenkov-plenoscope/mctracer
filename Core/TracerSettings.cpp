@@ -1,8 +1,8 @@
 #include "TracerSettings.h"
+const TracerSettings TracerSettings::default_settings = TracerSettings();
 //------------------------------------------------------------------------------
 TracerSettings::TracerSettings() {
-	//default_colour.set_RGB_0to255(128,128,128);
-	default_colour = Color::syk_blue;
+	default_color = Color::syk_blue;
 	flag_store_only_final_intersection = false;
 
 	number_of_max_reflections = 5;
@@ -16,7 +16,6 @@ void TracerSettings::set_max_number_of_reflections(
 	if( new_max_number_of_reflections>0 ){
 
 		number_of_max_reflections = new_max_number_of_reflections;
-
 	}else{
 		std::stringstream out;
 		out << "TracerSettings::set_max_number_of_reflections\n";
@@ -33,8 +32,8 @@ bool TracerSettings::max_number_of_reflections_is_not_reached_yet(
 	return reflection_counter <= number_of_max_reflections;
 }
 //------------------------------------------------------------------------------
-Color TracerSettings::get_default_colour()const {
-	return default_colour;
+Color TracerSettings::get_default_color()const {
+	return default_color;
 }
 //------------------------------------------------------------------------------
 int TracerSettings::get_max_number_of_reflections()const {
@@ -45,13 +44,13 @@ bool TracerSettings::StoreOnlyLastIntersection()const {
 	return flag_store_only_final_intersection;
 }
 //------------------------------------------------------------------------------
-void TracerSettings::SetStoreOnlyLastIntersection(bool flag) {
+void TracerSettings::SetStoreOnlyLastIntersection(const bool flag) {
 	flag_store_only_final_intersection = flag;
 }
 //------------------------------------------------------------------------------
 bool TracerSettings::MultiThread()const { return multithread; }
 //------------------------------------------------------------------------------
-void TracerSettings::SetMultiThread( bool flag ) { multithread = flag; }
+void TracerSettings::SetMultiThread(const bool flag ) { multithread = flag; }
 //------------------------------------------------------------------------------
 void TracerSettings::store_only_final_intersection() {
 	flag_store_only_final_intersection = true;

@@ -31,6 +31,13 @@ public:
 		const double Cx, const double Cy
 	);
 
+	void set_normal_and_3_vertecies(
+		const Vector3D nomal,
+		Vector3D a,
+		Vector3D b,
+		Vector3D c
+	);
+
 	std::string get_print()const;
 
 	const Intersection* calculate_intersection_with(const Ray* ray)const;

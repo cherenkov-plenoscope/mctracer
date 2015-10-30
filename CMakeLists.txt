@@ -2,7 +2,7 @@
 # Author Sebastian Mueller
 #-------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 2.8)
-set (CMAKE_CXX_FLAGS "-std=gnu++11 -Wall -pedantic -O3 -I -g")
+set (CMAKE_CXX_FLAGS "-std=gnu++11 -Wall -pedantic -O2 -g -I")
 #-------------------------------------------------------------------------------
 project(mctracer)
 #-------------------------------------------------------------------------------
@@ -55,8 +55,6 @@ set(SOURCE
 
 	${CMAKE_CURRENT_SOURCE_DIR}/TelescopeArrayControl.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PhotonSensor.cpp
-	
-	${CMAKE_CURRENT_SOURCE_DIR}/Function1D.cpp
 
 	${CMAKE_CURRENT_SOURCE_DIR}/Triangle.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Plane.cpp 
@@ -82,6 +80,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/MmcsCorsikaFileIO")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Cameras")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Core")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Geometry")
+add_subdirectory("${PROJECT_SOURCE_DIR}/PlenopticTelescope")
 #-------------------------------------------------------------------------------
 # mctracer shared linked library
 
@@ -106,14 +105,12 @@ add_executable(mctracerTests ./test/test.cpp)
 target_link_libraries(mctracerTests gtest gtest_main)
 target_link_libraries(mctracerTests mct)
 #add_test(mctracerTests mctracerTests)
-
 #-------------------------------------------------------------------------------
 # GTest executeable examples
 
 add_executable(mctracerExamples ./Docu/examples/examples.cpp)
 target_link_libraries(mctracerExamples gtest gtest_main)
 target_link_libraries(mctracerExamples mct)
-
 #-------------------------------------------------------------------------------
 # http://stackoverflow.com/questions/992068/building-a-python-shared-object-binding-with-cmake-which-depends-upon-external
 # http://www.swig.org/Doc1.3/Introduction.html#Introduction_build_system

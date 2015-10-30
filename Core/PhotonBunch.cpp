@@ -5,6 +5,16 @@
 
 namespace PhotonBunch {
 	//--------------------------------------------------------------------------
+	std::string get_print(
+		const std::vector<Photon*> *photon_bunch
+	) {
+		std::stringstream out;
+		out << "Photon bunble "<< photon_bunch->size() << "\n";
+		for(Photon* photon : *photon_bunch)
+			out << (*photon) << "\n";
+		return out.str();	
+	}	
+	//--------------------------------------------------------------------------
 	// propagation
 	//--------------------------------------------------------------------------
 	void propagate_photons_in_world_with_settings(
@@ -45,8 +55,9 @@ namespace PhotonBunch {
 		uint number_of_threads;
 		uint thread_id, ray_counter;
 		std::stringstream out;
+		int HadCatch = 0;
 
-		#pragma omp parallel shared(settings,world) private(number_of_threads, thread_id, out, ray_counter)
+		#pragma omp parallel shared(settings,world,HadCatch) private(number_of_threads, thread_id, out, ray_counter)
 		{	
 			PseudoRandomNumberGenerator dice_for_this_thread_only;
 			ray_counter = 0;
@@ -58,21 +69,38 @@ namespace PhotonBunch {
 			env_for_this_thread_only.propagation_options = settings;
 			env_for_this_thread_only.random_engine = &dice_for_this_thread_only;
 
-			#pragma omp for schedule(dynamic) private(i) 
-			for(i = 0; i<photon_bunch->size(); i++ )
-			{
-				ray_counter++;
-				photon_bunch->at(i)->propagate_in(&env_for_this_thread_only);
+			#pragma omp for schedule(dynamic) private(i)
+			for(i = 0; i<photon_bunch->size(); i++ ) {
+				try {
+					ray_counter++;
+					photon_bunch->at(i)->propagate_in(&env_for_this_thread_only);
+				}catch(std::exception &error) {
+					HadCatch++;
+					std::cerr << error.what(); 
+				}catch(...)	{
+					HadCatch++;
+				}
 			}
 
-			
 			out << "Thread " << thread_id+1 << "/" << number_of_threads;
 			out << " is doing " << ray_counter << "/";
 			out << photon_bunch->size() << " photons. ";
 			out << "Seed: " << dice_for_this_thread_only.seed() << "\n";
 			//cout << out.str();
 		}
+
+		if(HadCatch) {
+			std::stringstream info;
+			info << "PhotonBunch::"<<__func__<<"() in "<<__FILE__<<", "<<__LINE__<<"\n";
+			info << "Cought exception during multithread propagation.\n";
+			throw(TracerException(info.str()));
+		}
 	}
+	/*
+	A throw executed inside a parallel region must cause execution to resume
+	within the same parallel region, and it must be caught by the same thread
+	that threw the exception
+	*/
 	//--------------------------------------------------------------------------
 	// In Out to raw matrix/table -> AsciiIO can read/write this to text files
 	//--------------------------------------------------------------------------
@@ -150,7 +178,7 @@ namespace PhotonBunch {
 	//--------------------------------------------------------------------------
 	bool Trajectories::has_still_trajectories_left()const {
 
-		return number_of_trajectories_handed_out_already<=photon_bunch->size();
+		return number_of_trajectories_handed_out_already<photon_bunch->size();
 	}	
 	//--------------------------------------------------------------------------
 	Frame* Trajectories::get_next_trajectoy() {
@@ -251,13 +279,27 @@ namespace PhotonBunch {
 		std::vector<Photon*> *photon_bunch
 	) {
 		uint i;
-		#pragma omp parallel shared(photon_bunch)
+		int HadCatch = 0;
+		#pragma omp parallel shared(photon_bunch,HadCatch)
 		{	
 			#pragma omp for schedule(dynamic) private(i) 
-			for(i=0; i<photon_bunch->size(); i++)
-			{
-				photon_bunch->at(i)->transform(&Trafo);
+			for(i=0; i<photon_bunch->size(); i++) {
+				try{
+					photon_bunch->at(i)->transform(&Trafo);
+				}catch(std::exception &error) {
+					HadCatch++;
+					std::cerr << error.what(); 
+				}catch(...)	{
+					HadCatch++;
+				}
 			}
+		}
+
+		if(HadCatch) {
+			std::stringstream info;
+			info << "PhotonBunch::"<<__func__<<"() in "<<__FILE__<<", "<<__LINE__<<"\n";
+			info << "Cought exception during multithread transformation.\n";
+			throw(TracerException(info.str()));
 		}
 	}
 	//--------------------------------------------------------------------------

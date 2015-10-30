@@ -30,11 +30,15 @@ public:
 	
 	uint get_number_of_rows()const;
 
-	void save_image_to_file(std::string str_image_name)const;
+	void save_image_to_file(std::string filename)const;
+
+	void load(const std::string filename);
 
 	void set_pixel_row_col_to_color(
 		const uint row, const uint col, const Color &color
 	);
+
+	Color get_pixel_row_col(const uint row, const uint col);
 
 	double get_width_to_height_ratio()const;
 
