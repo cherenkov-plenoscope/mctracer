@@ -1,0 +1,14 @@
+set(SOURCE
+   	${SOURCE}
+	${CMAKE_CURRENT_SOURCE_DIR}/PhotonSensor.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/PhotonSensors.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/X_Y_Time.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/X_Y_thetaX_thetaY_Time.cpp
+   	PARENT_SCOPE
+)
+
+set(HEADERS
+   	${SOURCE}
+	${CMAKE_CURRENT_SOURCE_DIR}/PhotonSensor.h
+   	PARENT_SCOPE
+)
