@@ -15,7 +15,7 @@ WorldFactory::WorldFactory(){
 	);
 
 	telescopes = new TelescopeArrayControl();
-	sensors = new std::vector<PhotonSensor*>;
+	sensors = new std::vector<PhotonSensor::Sensor*>;
 	functions = new FunctionFactory(this);
 } 
 //------------------------------------------------------------------------------
@@ -98,7 +98,7 @@ void WorldFactory::add_to_sensors_if_sensitive(const pugi::xml_node node, Frame*
 
 		assert_attribute_exists(sensi, "id");
 		uint id = std::atoi(node.attribute("id").value());
-		PhotonSensor* sens = new PhotonSensor(id, frame);
+		PhotonSensor::X_Y_thetaX_thetaY_Time* sens = new PhotonSensor::X_Y_thetaX_thetaY_Time(id, frame);
 		sensors->push_back(sens);
 	}
 }
@@ -425,7 +425,6 @@ Frame* WorldFactory::produce_stl_object(
 	assert_attribute_exists(set_stl_node, "scale");
 	double scale = StrToDouble(set_stl_node.attribute("scale").value());
 
-	//StereoLitographyIo::BinaryReader stl(file, scale);
 	Frame* object = StereoLitographyIo::read(file, scale);
 
 	Frame* repositioned_object = new Frame(
@@ -436,7 +435,7 @@ Frame* WorldFactory::produce_stl_object(
 
 	repositioned_object->take_children_from(object);
 	
-	delete object;
+	//delete object;
 
 	mother->set_mother_and_child(repositioned_object);
 	return repositioned_object;
@@ -713,8 +712,8 @@ Frame* WorldFactory::world(){
 	return root_of_World;
 }
 //------------------------------------------------------------------------------
-std::vector<PhotonSensor*>* WorldFactory::sensors_in_world()const {
-	PhotonSensors::sort_photon_sensors_based_on_frames(sensors);
+std::vector<PhotonSensor::Sensor*>* WorldFactory::sensors_in_world()const {
+	PhotonSensor::Sensors::sort_photon_sensors_based_on_frames(sensors);
 	return sensors;
 }
 //------------------------------------------------------------------------------

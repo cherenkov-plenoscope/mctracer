@@ -33,6 +33,7 @@ class SegmetedReflectorGenerator{
 	double focal_length = 1.0;
 	Vector3D focal_point;
 	double facet_spacing = 1.0;
+	double facet_inner_radius = 0.311;
 	double max_outer_diameter = 1.0;
 	double min_inner_diameter = 0.0;
 
@@ -43,14 +44,18 @@ class SegmetedReflectorGenerator{
 	const Color *inner_mirror_colour = &Color::dark_gray;
 	const Function::Func1D* outer_mirror_reflection = &Function::Constant::void_function;
 public:
+	static constexpr double outer_over_inner_hex_radius = 2.0/sqrt(3.0);
 	void set_hybrid_geometry(const double alpha);
 	void set_focal_length(const double _focal_length);
 	void set_facet_spacing(const double _facet_spacing);
+	void set_facet_inner_radius(const double _facet_inner_radius);
 	void set_max_outer_diameter(const double _max_outer_diameter);
 	void set_min_inner_diameter(const double _min_inner_diameter);
 	void set_mirror_reflection(const Function::Func1D* refl_vs_wavl);
 	Frame* get_reflector();
 	std::string get_print()const;
+	double get_facet_area()const;
+	double get_gap_width_between_facets()const;
 private:
 	void init_facet_z_positions();
 	void init_facet_xy_positions();

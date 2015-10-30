@@ -164,6 +164,31 @@ const Intersection* RayForPropagation::get_final_intersection()const {
 	return intersection_history->back();
 }
 //------------------------------------------------------------------------------
+Vector3D RayForPropagation::get_final_intersection_incident_vector_in_object_frame()const {
+	
+	if(intersection_history->size() == 1) {//only production
+
+		return Vector3D::null;
+	}else {
+
+		const uint last_i = intersection_history->size() - 1 ;
+		const uint second_last_i = last_i - 1;
+
+		Vector3D final = 
+			intersection_history->at(last_i)->
+				get_intersection_vector_in_world_system();
+		
+		Vector3D second_last = intersection_history->at(second_last_i)->
+				get_intersection_vector_in_world_system();
+
+		Vector3D incident_direction_in_world = (final - second_last);
+			incident_direction_in_world.normalize();
+		
+		return intersection_history->back()->world2object()->
+			get_transformed_orientation(incident_direction_in_world);
+	}
+}
+//------------------------------------------------------------------------------
 double RayForPropagation::get_time_of_flight()const {
 	return 0.0;
 }

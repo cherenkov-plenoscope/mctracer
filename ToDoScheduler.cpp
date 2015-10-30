@@ -4,6 +4,7 @@
 #include "ProgramOptions.h"
 #include "XmlFactory/WorldFactory.h"
 #include "Geometry/StereoLitographyIo.h"
+#include "PhotonSensor/PhotonSensor.h"
 //------------------------------------------------------------------------------
 ToDoScheduler::ToDoScheduler(int argc, char** argv) {
 
@@ -100,7 +101,7 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 	Frame *world = fab.world();
 
 	// sensors in scenery
-	std::vector<PhotonSensor*>* sensors = fab.sensors_in_world();
+	std::vector<PhotonSensor::Sensor*>* sensors = fab.sensors_in_world();
 
 	// photon source
 	LightSourceFromConfig light_fab(source_config);
@@ -112,19 +113,19 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 	);
 
 	// detect photons in sensors
-	PhotonSensors::reset_all_sesnors(sensors);
-	PhotonSensors::assign_photons_to_sensors(photon_bunch, sensors);
+	PhotonSensor::Sensors::reset_all_sesnors(sensors);
+	PhotonSensor::Sensors::assign_photons_to_sensors(photon_bunch, sensors);
 
 	// write each sensors to file
 	uint sensor_conuter = 0;
-	for(PhotonSensor* sensor: *sensors) {
+	for(PhotonSensor::Sensor* sensor: *sensors) {
 		
 		std::stringstream outname;
 		outname << get_output_file_name() << sensor_conuter;
 		sensor_conuter++;
 
 		AsciiIo::write_table_to_file(
-			sensor->get_arrival_table_x_y_t(),
+			sensor->get_arrival_table(),
 			outname.str()
 		);
 	}
@@ -148,7 +149,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 	TelescopeArrayControl* array_ctrl = fab.get_telescope_array_control();
 
 	// init sensors in scenery
-	std::vector<PhotonSensor*>* sensors = fab.sensors_in_world();
+	std::vector<PhotonSensor::Sensor*>* sensors = fab.sensors_in_world();
 
 	// load photons
 	MmcsCorsikaFullEventGetter event_getter(get_photon_file_name());
@@ -177,11 +178,11 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 			);
 
 			// detect photons in sensors
-			PhotonSensors::reset_all_sesnors(sensors);
-			PhotonSensors::assign_photons_to_sensors(photons, sensors);
+			PhotonSensor::Sensors::reset_all_sesnors(sensors);
+			PhotonSensor::Sensors::assign_photons_to_sensors(photons, sensors);
 			
 			uint sensor_conuter = 0;
-			for(PhotonSensor* sensor: *sensors) {
+			for(PhotonSensor::Sensor* sensor: *sensors) {
 				
 				std::stringstream outname;
 				outname << get_output_file_name();
@@ -189,7 +190,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 				sensor_conuter++;
 
 				AsciiIo::write_table_to_file(
-					sensor->get_arrival_table_x_y_t(),
+					sensor->get_arrival_table(),
 					outname.str()
 				);
 			}

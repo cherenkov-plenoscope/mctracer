@@ -26,7 +26,7 @@
 #include "Core/Color.h"
 #include "XmlIO/XmlFileIo.h"
 #include "TracerException.h"
-#include "PhotonSensor.h"
+#include "PhotonSensor/PhotonSensor.h"
 #include "TelescopeArrayControl.h"
 #include "SphereCapWithHexagonalBound.h"
 #include "SphereCapWithCylinderBound.h"
@@ -38,7 +38,7 @@ class WorldFactory : public XmlFileIo{
 	
 	// resources from xml file
 	Frame* root_of_World;
-	std::vector<PhotonSensor*> *sensors;
+	std::vector<PhotonSensor::Sensor*> *sensors;
 	TelescopeArrayControl* telescopes;
 	
 	// intternal
@@ -50,7 +50,7 @@ public:
 	void load(std::string path);
 	Frame* world();
 	TelescopeArrayControl* get_telescope_array_control()const;
-	std::vector<PhotonSensor*>* sensors_in_world()const;
+	std::vector<PhotonSensor::Sensor*>* sensors_in_world()const;
 private:
 	void extract_function_from(const pugi::xml_node node);
 	void add_to_sensors_if_sensitive(const pugi::xml_node node, Frame* frame);

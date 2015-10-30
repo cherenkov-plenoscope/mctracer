@@ -260,3 +260,12 @@ void SegmetedReflectorGenerator::init_reflector() {
 	reflector->cluster_using_helper_frames();
 }
 //------------------------------------------------------------------------------
+double SegmetedReflectorGenerator::get_facet_area()const {
+	HexagonalPrismZ prism;
+	prism.set_outer_radius(outer_over_inner_hex_radius*facet_inner_radius);
+	return prism.get_area();
+}
+//------------------------------------------------------------------------------
+double SegmetedReflectorGenerator::get_gap_width_between_facets()const {
+	return 0.0;
+}

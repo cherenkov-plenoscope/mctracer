@@ -44,7 +44,7 @@ std::string SphereCapWithHexagonalBound::get_SphereCapWithHexagonalBound_print()
 	out << "| outer hex radius: " << outer_hex_radius << "m\n";
 	out << "| f/D max: " << focal_length/(2.0*outer_hex_radius) << "\n";
 	out << "| frontal projected area: ";
-	out << hexBounds.get_projected_area_in_xy_plane() << "m^2\n"; 
+	out << hexBounds.get_area() << "m^2\n"; 
 	return out.str();
 }
 //------------------------------------------------------------------------------

@@ -86,6 +86,8 @@ public:
 	void delete_history();
 
 	void transform(const HomoTrafo3D *T);
+	
+	Vector3D get_final_intersection_incident_vector_in_object_frame()const;
 protected:
 	std::string get_history_print()const;
 

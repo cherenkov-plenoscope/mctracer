@@ -54,7 +54,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/ToDoScheduler.cpp		
 
 	${CMAKE_CURRENT_SOURCE_DIR}/TelescopeArrayControl.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/PhotonSensor.cpp
 
 	${CMAKE_CURRENT_SOURCE_DIR}/Triangle.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Plane.cpp 
@@ -74,6 +73,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLensHexBound.cpp
 )
 add_subdirectory("${PROJECT_SOURCE_DIR}/XmlFactory")
+add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonSensor")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Tools")
 add_subdirectory("${PROJECT_SOURCE_DIR}/XmlIO")
 add_subdirectory("${PROJECT_SOURCE_DIR}/MmcsCorsikaFileIO")

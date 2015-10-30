@@ -3,6 +3,7 @@
 #include "BiConvexLensHexBound.h"
 #include "Core/Color.h"
 #include <algorithm>
+#include "LensMaker.h"
 
 class PlenopticTest : public ::testing::Test {};
 //----------------------------------------------------------------------
@@ -94,8 +95,8 @@ TEST_F(PlenopticTest, check_lensmaker_on_optical_table_with_lens) {
 	    sensor_disc.set_outer_color(sensor_disc_col);
 	    sensor_disc.set_inner_color(sensor_disc_col);
 	    sensor_disc.set_disc_radius(outer_lens_radius*0.85);
-	    PhotonSensor sensor(0, &sensor_disc);
-	    std::vector<PhotonSensor*> sensor_list = {&sensor};
+	    PhotonSensor::X_Y_Time sensor(0, &sensor_disc);
+	    std::vector<PhotonSensor::Sensor*> sensor_list = {&sensor};
 
 	    optical_table.set_mother_and_child(&lens);
 	    optical_table.set_mother_and_child(&sensor_disc);
@@ -127,11 +128,11 @@ TEST_F(PlenopticTest, check_lensmaker_on_optical_table_with_lens) {
 		);
 
 		// detect photons in sensors
-		PhotonSensors::reset_all_sesnors(&sensor_list);
-		PhotonSensors::assign_photons_to_sensors(photons, &sensor_list);
+		PhotonSensor::Sensors::reset_all_sesnors(&sensor_list);
+		PhotonSensor::Sensors::assign_photons_to_sensors(photons, &sensor_list);
 
 		std::vector<std::vector<double>> intersects = 
-			sensor.get_arrival_table_x_y_t();
+			sensor.get_arrival_table();
 
 		// mean position of photon spread
 		double xm=0.0;

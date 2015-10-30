@@ -35,6 +35,7 @@
 #include "PostInitFrameSpeed.cpp"
 #include "EventIoTest.cpp"
 #include "FunctionTest.cpp"
+#include "CorsikaPhotonFactoryTest.cpp"
 #include "../PlenopticTelescope/LensMakerTest.cpp"
 #include "../Geometry/StereoLitographyIoTest.cpp"
 
