@@ -1,5 +1,7 @@
 #include "PseudoRandomNumberGenerator.h"
 //------------------------------------------------------------------------------
+const uint PseudoRandomNumberGenerator::zero_seed = 0.0;
+//------------------------------------------------------------------------------
 PseudoRandomNumberGenerator PseudoRandomNumberGenerator::void_generator = 
 	PseudoRandomNumberGenerator(0);
 //------------------------------------------------------------------------------

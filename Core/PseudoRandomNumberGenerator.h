@@ -20,6 +20,7 @@ class PseudoRandomNumberGenerator {
 	std::mt19937_64 pRNG_mt19937;
 	double inv_max;
 public:
+	static const uint zero_seed;
 	static PseudoRandomNumberGenerator void_generator;
 	PseudoRandomNumberGenerator(const unsigned new_Seed);
 	PseudoRandomNumberGenerator();
