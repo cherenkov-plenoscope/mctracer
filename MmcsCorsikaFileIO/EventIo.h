@@ -12,6 +12,44 @@ using std::string;
 using std::vector;
 
 namespace EventIo{
+    class WrongTypeException :public TracerException{
+    public:
+        WrongTypeException() : TracerException() {}
+        WrongTypeException(std::string message) : TracerException(message) {}
+    };
+    class NoSyncFoundException :public TracerException{
+    public:
+        NoSyncFoundException() : TracerException() {}
+        NoSyncFoundException(std::string message) : TracerException(message) {}
+    };
+    
+    struct TelPos{
+        float x,y,z,r;
+        std::string get_print() const;
+    };
+
+    struct TelOffset{
+        float toff;
+        float xoff;
+        float yoff;
+        float weight;
+        std::string get_print() const;
+    };
+
+
+    struct EventIoRunHeader
+    {
+        MmcsCorsikaRunHeader mmcs_runheader;
+        std::string input_card;
+        std::vector<TelPos> tel_pos;
+    };
+
+    struct EventIoEventHeader
+    {
+        MmcsCorsikaEventHeader mmcs_event_header;
+        std::vector<TelOffset> telescope_offsets;
+    };
+
 
     class Header{
 
@@ -53,18 +91,6 @@ namespace EventIo{
         int64_t extend_length(int32_t extended, const LengthInfo length_info);
     };
 
-    struct TelPos{
-        float x,y,z,r;
-        std::string get_print() const;
-    };
-
-    struct TelOffset{
-        float toff;
-        float xoff;
-        float yoff;
-        float weight;
-        std::string get_print() const;
-    };
 
     struct BunchHeader{
         int16_t array;
@@ -75,11 +101,8 @@ namespace EventIo{
     };
 
 
-    MmcsCorsikaRunHeader make_run_header_from_stream(std::istream& f); 
-
-    MmcsCorsikaEventHeader make_event_header_form_stream(
-        std::istream& f, 
-        const Header& head);
+    MmcsCorsikaRunHeader make_run_header_from_stream(std::istream& f);
+    MmcsCorsikaEventHeader make_event_header_form_stream(std::istream& f);
 
     std::string make_input_card_from_stream(
         std::istream& f, 
@@ -108,6 +131,35 @@ namespace EventIo{
     vector<vector<float> > make_photons_from_stream(
         std::istream& f, 
         const Header& head);
-            
+      
+
+    class EventIoFile{
+        std::ifstream f;
+        std::string path;
+        bool run_end_found;
+        std::vector<std::vector<float> > _current_photon_data;
+
+        Header __get_header(int expect_type);
+    
+        void __read_run_reader();
+        void __read_event_header();
+        void __read_event_end();
+        void __read_run_end();
+        std::vector<std::vector<float> > _next();
+
+    public:
+        bool has_still_events_left();
+        EventIoRunHeader run_header;
+        std::vector<float> current_event_end;
+        EventIoEventHeader current_event_header;
+        std::vector<float> run_end;
+
+        EventIoFile(const std::string path);
+        //EventIoFile(std::string path, std::istream& stream);
+        //void read_all_headers();
+        std::vector<std::vector<float> > next();
+
+    };
+
 
 } //namespace EventIo
