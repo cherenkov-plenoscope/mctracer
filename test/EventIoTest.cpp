@@ -205,12 +205,30 @@ float some_photon_bundles[5][8] = {
  }
 }
 
+#include "MmcsCorsikaFileIO/CorsikaPhotonFactory.h"
 
 TEST_F(EventIoTest, EventIoFile_telescope_dat__run_time____________________________________) {
     EventIoFile my_file("telescope.dat");
     while (my_file.has_still_events_left())
     {
-        my_file.next();
+        vector<vector<float>> corsika_photons = my_file.next();
+
+        Random::Mt19937 prng;
+
+        vector<Photon*> photons;
+        uint id = 0;
+        for(vector<float> corsika_photon : corsika_photons) {
+            
+            CorsikaPhotonFactory cpf(corsika_photon,id++,&prng);
+
+            if(cpf.passed_atmosphere()) {
+                photons.push_back(
+                    cpf.get_photon()
+                );
+            }
+            std::cout << photons.size() << "\n";
+            //std::cout << PhotonBunch::get_print(&photons) << "\n";
+        }
     }
 }
 

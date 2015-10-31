@@ -89,7 +89,7 @@ double CorsikaPhotonFactory::production_height_in_m()const {
 }
 //------------------------------------------------------------------------------
 double CorsikaPhotonFactory::wavelength_in_m()const {
-	return wavelength_in_nm()*1e-9;
+	return fabs(wavelength_in_nm()*1e-9);
 }
 //------------------------------------------------------------------------------
 bool CorsikaPhotonFactory::row_has_only_zeros()const {
@@ -145,7 +145,7 @@ void CorsikaPhotonFactory::assert_corsika_photon_has_correct_length()const {
 //------------------------------------------------------------------------------
 void CorsikaPhotonFactory::assert_photon_weight_is_between_zero_and_one()const {
 
-	if(photon_survival_probability() < 0.0 || photon_survival_probability() >= 1.0) {
+	if(photon_survival_probability() < 0.0 || photon_survival_probability() > 1.0) {
 		std::stringstream info;
 		info << __FILE__ << " " << __LINE__ << "\n";
 		info << "Expected photon weight w: 0.0 >= w > 1.0, but actual ";

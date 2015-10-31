@@ -7,7 +7,19 @@ Photon::Photon(
 ) {
 	SetRay(support, direction);
 	this->wavelength = wavelength;
+	assert_wavelength_is_positive();
 	init_propagation_history();	
+}
+//------------------------------------------------------------------------------
+void Photon::assert_wavelength_is_positive()const {
+	
+	if(wavelength <= 0.0 ) {
+		std::stringstream info;
+		info << __FILE__ << " " << __LINE__ << "\n";
+		info << "Expected photon wavelength lambda > 0.0nm, but actual ";
+		info << "it is: " << wavelength*1e9 << "nm\n";
+		throw BadWaveLength(info.str());
+	}
 }
 //------------------------------------------------------------------------------
 Photon::Photon(

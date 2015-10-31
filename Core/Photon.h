@@ -41,6 +41,9 @@ public:
 
 	double get_time_of_flight()const;
 
+	class BadWaveLength : public TracerException {
+		using TracerException::TracerException;
+	};		
 private:
 	Photon(const double new_wavelength);
 
@@ -70,5 +73,7 @@ private:
 		const double distance_in_medium,
 		const double refractive_index_in_medium
 	)const;
+
+	void assert_wavelength_is_positive()const;
 };
 #endif // __PHOTON_H_INCLUDED__ 

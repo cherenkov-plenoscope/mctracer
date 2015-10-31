@@ -84,16 +84,15 @@ TEST_F(CorsikaPhotonFactoryTest, mctracer_rejects_photon_weight_below_0) {
     ); 
 }
 //------------------------------------------------------------------------------
-TEST_F(CorsikaPhotonFactoryTest, mctracer_rejects_photon_weight_equal_1) {
+TEST_F(CorsikaPhotonFactoryTest, mctracer_accepts_photon_weight_equal_1) {
  
     const uint id = 1337;
     Random::Mt19937 prng(Random::zero_seed);
     const std::vector<float> corsika_photon = 
     	{1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 1.0, 433};
     
-    EXPECT_THROW(
-    	CorsikaPhotonFactory cpf(corsika_photon, id, &prng), 
-    	CorsikaPhotonFactory::BadPhotonWeight
+    EXPECT_NO_THROW(
+    	CorsikaPhotonFactory cpf(corsika_photon, id, &prng)
     ); 
 }
 //------------------------------------------------------------------------------
@@ -134,7 +133,7 @@ TEST_F(CorsikaPhotonFactoryTest, mctracer_accepts_photon_weight_btw_0_and_1) {
     ); 
 }
 //------------------------------------------------------------------------------
-TEST_F(CorsikaPhotonFactoryTest, zero_weight_is_accepted) {
+TEST_F(CorsikaPhotonFactoryTest, zero_weight_is_passed_on_zero_from_prng) {
  
     const std::vector<float> corsika_photon = 
     {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.0, 433};
