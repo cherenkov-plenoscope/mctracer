@@ -5,6 +5,9 @@ class CorsikaPhotonFactoryTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(CorsikaPhotonFactoryTest, intersection_point_on_ground) {
 
+    // compare the input ground intersection point with the actual intersection
+    // point of the mctracer photons when they are absorbed on the ground.
+
     for(float x=-1e4; x<1e4; x=x+1495.0) {
         for(float y=-1e4; y<1e4; y=y+1495.0) {
             for(float cx=-0.5; cx<0.5; cx=cx+0.11) {
@@ -44,12 +47,12 @@ TEST_F(CorsikaPhotonFactoryTest, intersection_point_on_ground) {
                     settings.SetMultiThread(false);
                     settings.SetStoreOnlyLastIntersection(false);
 
-                    // photon propagation
+                    // photon propagation down to the ground
                     PhotonBunch::propagate_photons_in_world_with_settings(
                         &photons, &world, &settings
                     );
 
-                    // detect photons in sensors
+                    // detect photons in ground sensor
                     PhotonSensor::Sensors::reset_all_sesnors(&sensor_list);
                     PhotonSensor::Sensors::assign_photons_to_sensors(&photons, &sensor_list);
 
@@ -320,7 +323,9 @@ TEST_F(CorsikaPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         for(uint row=0; row<id_time.size(); row++)
             id_time.at(row).at(4) = id_time.at(row).at(4) + mean_time_of_corsika_photons;
 
-
+        // for each photon we compare the relative arrival
+        // time written in the in the eventio file with the actual arrival time
+        // of the mctracer photon which ran down to the ground.  
         for(uint i=0;i<id_time.size();i++) {
 
             uint id = id_time.at(i).at(5);
