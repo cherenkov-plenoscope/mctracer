@@ -50,7 +50,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/CylinderPrismZ.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/HexagonalPrismZ.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/TracerException.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ProgramOptions.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/KeyValueMap.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ToDoScheduler.cpp		
 
 	${CMAKE_CURRENT_SOURCE_DIR}/TelescopeArrayControl.cpp

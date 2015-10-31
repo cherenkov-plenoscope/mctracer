@@ -4,23 +4,23 @@
 
 #include "gtest/gtest.h"
 #include "Tools/StringTools.h"
-#include "ProgramOptions.h"
+#include "KeyValueMap.h"
 
-class ProgramOptionsTest : public ::testing::Test {
+class KeyValueMapTest : public ::testing::Test {
 };
 //------------------------------------------------------------------------------
-TEST_F(ProgramOptionsTest, has_not_existing_key) {
+TEST_F(KeyValueMapTest, has_not_existing_key) {
     KeyValueMap options;
     EXPECT_FALSE(options.has_key("peter"));
 }
 //------------------------------------------------------------------------------
-TEST_F(ProgramOptionsTest, has_existing_key) {
+TEST_F(KeyValueMapTest, has_existing_key) {
     KeyValueMap options;
     options.insert_key_and_value("peter", "41");
     EXPECT_TRUE(options.has_key("peter"));
 }
 //------------------------------------------------------------------------------
-TEST_F(ProgramOptionsTest, map) {
+TEST_F(KeyValueMapTest, map) {
     KeyValueMap options;
 
     options.insert_key_and_value("hans", "41");
@@ -32,7 +32,7 @@ TEST_F(ProgramOptionsTest, map) {
     EXPECT_TRUE(StringTools::is_equal(options.get_value_for_key("hans"), "41"));
 }
 //------------------------------------------------------------------------------
-TEST_F(ProgramOptionsTest, assert_key_is_unique) {
+TEST_F(KeyValueMapTest, assert_key_is_unique) {
     KeyValueMap options;
 
     options.insert_key_and_value("hans", "41");
@@ -44,7 +44,7 @@ TEST_F(ProgramOptionsTest, assert_key_is_unique) {
     );
 }
 //------------------------------------------------------------------------------
-/*TEST_F(ProgramOptionsTest, parse_program_options) {
+/*TEST_F(KeyValueMapTest, parse_program_options) {
     
     int argc = 7;
     char opt1[] = "../build/mctracer";
@@ -73,7 +73,7 @@ TEST_F(ProgramOptionsTest, assert_key_is_unique) {
     EXPECT_FALSE(options.has_key("non_existing_key"));
 }*/
 //------------------------------------------------------------------------------
-/*TEST_F(ProgramOptionsTest, missing_value_for_key) {
+/*TEST_F(KeyValueMapTest, missing_value_for_key) {
     
     int argc = 2;
     char opt1[] = "../build/mctracer";
@@ -86,28 +86,28 @@ TEST_F(ProgramOptionsTest, assert_key_is_unique) {
     );
 }*/
 //------------------------------------------------------------------------------
-TEST_F(ProgramOptionsTest, value_to_double) {
+TEST_F(KeyValueMapTest, value_to_double) {
       
     KeyValueMap options;
     options.insert_key_and_value("peter", "41.1337");
     EXPECT_EQ(41.1337, options.get_value_for_key_as_double("peter"));
 }
 //------------------------------------------------------------------------------
-TEST_F(ProgramOptionsTest, value_to_integer) {
+TEST_F(KeyValueMapTest, value_to_integer) {
       
     KeyValueMap options;
     options.insert_key_and_value("peter", "1337");
     EXPECT_EQ(1337, options.get_value_for_key_as_int("peter"));
 }
 //------------------------------------------------------------------------------
-TEST_F(ProgramOptionsTest, value_to_bool) {
+TEST_F(KeyValueMapTest, value_to_bool) {
       
     KeyValueMap options;
     options.insert_key_and_value("peter", "true");
     EXPECT_EQ(true, options.get_value_for_key_as_bool("peter"));
 }
 //------------------------------------------------------------------------------
-TEST_F(ProgramOptionsTest, save_and_load) {
+TEST_F(KeyValueMapTest, save_and_load) {
         
     const std::string filename = "./config_and_options_IO/robert.cfg";
 

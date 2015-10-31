@@ -29,7 +29,7 @@
 #include "TrajectoryFactoryTest.cpp"
 #include "HexGridXyTest.cpp"
 #include "AsciiIoTest.cpp"
-#include "ProgramOptionsTest.cpp"
+#include "KeyValueMapTest.cpp"
 #include "FunctionLinInterpolTest.cpp"
 #include "PhotonBunchTest.cpp"
 #include "PostInitFrameSpeed.cpp"

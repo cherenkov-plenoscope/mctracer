@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "Core/PhotonBunch.h"
-#include "ProgramOptions.h"
+#include "KeyValueMap.h"
 //=================================
 class LightSourceFromConfig{
 

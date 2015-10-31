@@ -1,7 +1,7 @@
 #include "ToDoScheduler.h"
 #include "PhotonBunch.h"
 #include "Tools/AsciiIo.h"
-#include "ProgramOptions.h"
+#include "KeyValueMap.h"
 #include "XmlFactory/WorldFactory.h"
 #include "Geometry/StereoLitographyIo.h"
 #include "PhotonSensor/PhotonSensor.h"
