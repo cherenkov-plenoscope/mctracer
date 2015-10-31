@@ -150,7 +150,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 	Frame *world = fab.world();
 
 	// init Telescope Array Control
-	TelescopeArrayControl* array_ctrl = fab.get_telescope_array_control();
+	//TelescopeArrayControl* array_ctrl = fab.get_telescope_array_control();
 
 	// init sensors in scenery
 	std::vector<PhotonSensor::Sensor*>* sensors = fab.sensors_in_world();

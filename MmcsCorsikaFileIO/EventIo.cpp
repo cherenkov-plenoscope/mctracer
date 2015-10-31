@@ -391,9 +391,11 @@ EventIoFile::EventIoFile(std::string path):
 {
     this->path = path;
     f.open(path);
-    if (!f.is_open())
-    {
-        throw TracerException("cannot open file");
+    if (!f.is_open()) {
+        std::stringstream info;
+        info << __FILE__ " " << __LINE__ << "\n";
+        info << "Can not open file: " << path << "\n";
+        throw TracerException(info.str());
     }
 
     this->__read_run_reader();
