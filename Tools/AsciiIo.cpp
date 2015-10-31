@@ -9,6 +9,19 @@ namespace AsciiIo {
 		return reader.get_table();
 	}
 	//--------------------------------------------------------------------------
+	void write_table_to_file_with_header(
+		std::vector<std::vector<double>> table,
+		const std::string &path,
+		const std::string &header
+	) {
+		std::stringstream out;
+		out << StringTools::place_first_infront_of_each_new_line_of_second(
+				"# ", header
+		);
+		out << get_table_print(table);
+		FileTools::write_text_to_file(out.str(), path);		
+	}
+	//--------------------------------------------------------------------------
 	void write_table_to_file(
 		std::vector<std::vector<double>> table,
 		const std::string &path

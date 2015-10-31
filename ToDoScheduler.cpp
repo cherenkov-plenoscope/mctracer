@@ -123,12 +123,20 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 	for(PhotonSensor::Sensor* sensor: *sensors) {
 		
 		std::stringstream outname;
-		outname << get_output_file_name() << sensor_conuter;
+		outname << get_output_file_name() << sensor->get_id();
 		sensor_conuter++;
 
-		AsciiIo::write_table_to_file(
+		std::stringstream header;
+		header << "geometry: " << geometry_filename() << "\n";
+		header << "lightsource: " << get_config_file_name() << "\n";
+		header << "sensor id: " << sensor->get_id() << "\n";
+		header << "sensor name: " << sensor->get_frame()->get_path_in_tree_of_frames() << "\n";
+		header << source_config.get_print();
+
+		AsciiIo::write_table_to_file_with_header(
 			sensor->get_arrival_table(),
-			outname.str()
+			outname.str(),
+			header.str()
 		);
 	}
 
@@ -179,10 +187,8 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
         }
 
        	// point the telescope into shower direction
-
        	double az = corsika_file.current_event_header.mmcs_event_header.azimuth_angle_Phi_in_radian;
        	double zd = corsika_file.current_event_header.mmcs_event_header.zenith_angle_Theta_in_radian;
-       	std::cout << corsika_file.current_event_header.mmcs_event_header.get_print() << "\n";
 		array_ctrl->move_all_to_Az_Zd(az, zd);
 
 		// propagate the cherenkov photons in the world
@@ -199,18 +205,26 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 			
 			std::stringstream outname;
 			outname << get_output_file_name();
-			outname << "e" << event_counter << "s" << sensor_conuter << ".txt";
+			outname << "e" << event_counter << "s" << sensor->get_id() << ".txt";
 			sensor_conuter++;
 
-			AsciiIo::write_table_to_file(
+			std::stringstream header;
+			header << "geometry: " << geometry_filename() << "\n";
+			header << "photon file: " << get_photon_file_name() << "\n";
+			header << "sensor id: " << sensor->get_id() << "\n";
+			header << "sensor name: " << sensor->get_frame()->get_path_in_tree_of_frames() << "\n";
+			header << "-------------\n";
+			header << corsika_file.current_event_header.mmcs_event_header.get_print() << "\n";
+
+			AsciiIo::write_table_to_file_with_header(
 				sensor->get_arrival_table(),
-				outname.str()
+				outname.str(),
+				header.str()
 			);
 		}
 
 		// wipe out the cherenkov photons which have just been propagated
 		PhotonBunch::delete_photons_and_history(&photons);
-		std::cout << "event counter: " << event_counter << "\n";
 	}
 }
 //------------------------------------------------------------------------------

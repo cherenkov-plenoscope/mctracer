@@ -29,6 +29,13 @@ namespace AsciiIo {
 		std::vector<std::vector<double>> table,
 		const std::string &path
 	);
+	
+	void write_table_to_file_with_header(
+		std::vector<std::vector<double>> table,
+		const std::string &path,
+		const std::string &header
+	);
+
 
 	const char delimiter = '\t';
 	const char comment_escape = '#';

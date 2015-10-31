@@ -97,7 +97,7 @@ void WorldFactory::add_to_sensors_if_sensitive(const pugi::xml_node node, Frame*
 		const pugi::xml_node sensi = node.child(sensor_key.c_str());
 
 		assert_attribute_exists(sensi, "id");
-		uint id = std::atoi(node.attribute("id").value());
+		uint id = uint(StrToDouble(sensi.attribute("id").value())); 
 		PhotonSensor::X_Y_thetaX_thetaY_Time* sens = new PhotonSensor::X_Y_thetaX_thetaY_Time(id, frame);
 		sensors->push_back(sens);
 	}

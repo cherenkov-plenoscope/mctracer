@@ -61,7 +61,6 @@ void KeyValueMap::assert_key_is_unique(const std::string key)const {
 std::string KeyValueMap::get_print()const {
 
 	std::stringstream out;
-	out << "KeyValueMap: " << options.size() << " entries\n";
 	out << get_file_print();
 	return out.str();
 }
