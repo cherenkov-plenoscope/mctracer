@@ -31,15 +31,20 @@ std::string get_print(const std::vector<std::vector<double>> &table) {
 	return out.str();	
 }
 //------------------------------------------------------------------------------
-namespace UserInteraction {
+double get_mean_along_column(const std::vector<std::vector<double>> &table, const uint column) {
 
-	std::string input(const std::string request) {
-		std::cout << request;
-		std::string user_input;
-		std::cin  >> user_input;	
-		return user_input;
-	}
-    //--------------------------------------------------------------------------
+	double sum = 0.0;
+
+	for(std::vector<double> row : table)
+		sum = sum + row.at(column);	
+
+	double mean = sum/double(table.size());
+
+	return mean;	
+}
+//------------------------------------------------------------------------------
+namespace UserInteraction {
+    
 	void print_welcome_screen() {
 		std::stringstream out;
 		//               1         2         3         4         5         6
@@ -62,19 +67,6 @@ namespace UserInteraction {
 	//--------------------------------------------------------------------------
 	void ClearScreen() {
 		std::cout << std::string( 5, '\n' );
-	}
-	//--------------------------------------------------------------------------
-	std::string parse_config_file_path(int number_of_arguments, char* arguments[]) {
-
-		if(number_of_arguments != 2) {
-			std::stringstream info;
-			info << "Wrong number of input arguments, expected 1, but actual: ";
-			info << number_of_arguments-1 << ".\n";
-			throw TracerException(info.str());
-		}
-
-		std::string config_path(arguments[1]);
-	    return config_path;
 	}
 	//--------------------------------------------------------------------------
 	bool is_Escape_key(const int user_input_key) {

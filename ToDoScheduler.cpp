@@ -5,6 +5,8 @@
 #include "XmlFactory/WorldFactory.h"
 #include "Geometry/StereoLitographyIo.h"
 #include "PhotonSensor/PhotonSensor.h"
+#include "MmcsCorsikaFileIO/EventIo.h"
+#include "MmcsCorsikaFileIO/CorsikaPhotonFactory.h"
 //------------------------------------------------------------------------------
 ToDoScheduler::ToDoScheduler(int argc, char** argv) {
 
@@ -135,6 +137,82 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 //------------------------------------------------------------------------------
 void ToDoScheduler::propagate_photons_through_geometry()const {
 
+	Random::Mt19937 prng(Random::zero_seed);
+
+	// settings
+	TracerSettings settings;	
+	settings.SetMultiThread(false);
+	settings.SetStoreOnlyLastIntersection(true);
+
+	// load scenery
+	WorldFactory fab;
+	fab.load(geometry_filename());
+	Frame *world = fab.world();
+
+	// init Telescope Array Control
+	TelescopeArrayControl* array_ctrl = fab.get_telescope_array_control();
+
+	// init sensors in scenery
+	std::vector<PhotonSensor::Sensor*>* sensors = fab.sensors_in_world();
+
+	// load photons
+	EventIo::EventIoFile corsika_file(get_photon_file_name());
+
+	// propagate each event
+	uint event_counter = 0;
+
+	while(corsika_file.has_still_events_left()) {
+
+		event_counter++;
+
+		// point the telescope into shower direction
+		//array_ctrl->move_all_to_Az_Zd(event.get_Az(), event.get_Zd());
+
+		// get the cherenkov photons
+		vector<vector<float>> corsika_photons = corsika_file.next();
+
+		vector<Photon*> photons;
+        uint id = 0;
+        for(vector<float> corsika_photon : corsika_photons) {
+            
+            CorsikaPhotonFactory cpf(corsika_photon, id++, &prng);
+
+            if(cpf.passed_atmosphere())
+                photons.push_back(cpf.get_photon());
+        }
+
+		// propagate the cherenkov photons in the world
+		PhotonBunch::propagate_photons_in_world_with_settings(
+			&photons, world, &settings
+		);
+
+		// detect photons in sensors
+		PhotonSensor::Sensors::reset_all_sesnors(sensors);
+		PhotonSensor::Sensors::assign_photons_to_sensors(&photons, sensors);
+		
+		uint sensor_conuter = 0;
+		for(PhotonSensor::Sensor* sensor: *sensors) {
+			
+			std::stringstream outname;
+			outname << get_output_file_name();
+			outname << "e" << event_counter << "s" << sensor_conuter << ".txt";
+			sensor_conuter++;
+
+			AsciiIo::write_table_to_file(
+				sensor->get_arrival_table(),
+				outname.str()
+			);
+		}
+
+		// wipe out the cherenkov photons which have just been propagated
+		PhotonBunch::delete_photons_and_history(&photons);
+		std::cout << "event counter: " << event_counter << "\n";
+	}
+}
+//------------------------------------------------------------------------------
+/*
+void ToDoScheduler::propagate_photons_through_geometry()const {
+
 	// settings
 	TracerSettings settings;	
 	settings.SetMultiThread(false);
@@ -200,7 +278,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 			std::cout << event_counter << "\n";
 		}
 	}
-}
+}*/
 //------------------------------------------------------------------------------
 void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 	

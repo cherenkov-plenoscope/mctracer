@@ -51,18 +51,20 @@ public:
 
 	Vector3D causal_direction()const;
 	Vector3D intersection_with_xy_floor_plane()const;
+	double ray_parameter_for_production_point()const;
 	double x_pos_on_xy_plane_in_m()const;
 	double y_pos_on_xy_plane_in_m()const;
 	double production_height_in_m()const;
 	double wavelength_in_m()const;
+	double production_distance_offset()const;
+	double relative_arrival_time_on_ground()const;
 	bool row_has_only_zeros()const;
-	int parent_code()const;
 	float x_pos_on_world_x_y_plane_in_cm()const;
 	float y_pos_on_world_x_y_plane_in_cm()const;
 	float cosine_between_dir_and_world_x_axis()const;
 	float cosine_between_dir_and_world_y_axis()const;
 	float wavelength_in_nm()const;
-	float production_time_in_ns()const;
+	float relative_arrival_time_on_ground_in_ns()const;
 	float production_height_in_cm()const;
 	float photon_survival_probability()const;
 private:

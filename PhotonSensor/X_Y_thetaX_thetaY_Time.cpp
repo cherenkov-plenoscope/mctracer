@@ -22,6 +22,7 @@ namespace PhotonSensor {
 			double cos_theta_y = final_intersection_incident.y();
 
 			XYtXtyT hit = {
+				photon->get_id(),
 				photon->get_time_of_flight(),
 				photon->get_final_intersection()->
 					get_intersection_vector_in_object_system().x(),
@@ -42,12 +43,13 @@ namespace PhotonSensor {
 		for(XYtXtyT ph : arrival_table) {
 
 			std::vector<double> output_row;
-
+			
 			output_row.push_back(ph.x_intersect);
 			output_row.push_back(ph.y_intersect);
 			output_row.push_back(ph.theta_x);
 			output_row.push_back(ph.theta_y);
 			output_row.push_back(ph.arrival_times_since_emission);
+			output_row.push_back(ph.id);
 	
 			output_table.push_back(output_row);
 		}

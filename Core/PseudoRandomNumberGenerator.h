@@ -55,5 +55,5 @@ namespace Random {
 
 	static const uint zero_seed = 0;
 	static Mt19937 void_generator;	
-};
+}
 #endif // __PSERANNUMGEN_H_INCLUDED__

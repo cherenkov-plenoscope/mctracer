@@ -3,6 +3,68 @@
 
 class CorsikaPhotonFactoryTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
+TEST_F(CorsikaPhotonFactoryTest, intersection_point_on_ground) {
+
+    for(float x=-1e4; x<1e4; x=x+1495.0) {
+        for(float y=-1e4; y<1e4; y=y+1495.0) {
+            for(float cx=-0.5; cx<0.5; cx=cx+0.11) {
+                for(float cy=-0.5; cy<0.5; cy=cy+0.11) {
+
+                    const std::vector<float> corsika_photon = 
+                    {    x,   y,   cx,  cy,  0.0,  1e5, 1.0,   433};
+                    //   x    y    xcos ycos time  zem  weight lambda
+                    //   cm   cm   1    1    ns    cm   1      nm   
+                    const uint id = 1337;
+                    Random::FakeConstant prng(0.0);
+
+                    CorsikaPhotonFactory cpf(corsika_photon, id, &prng);
+
+                    vector<Photon*> photons;
+                    photons.push_back(cpf.get_photon());
+
+                    // propagate mctracer photons down to ground
+                    Frame world("world", Vector3D::null, Rotation3D::null);
+
+                    Disc ground;
+                    ground.set_name_pos_rot("ground", Vector3D::null, Rotation3D::null);
+                    const Color* ground_color = &Color::gray;
+                    const uint ground_sensor_id = 0;
+                    ground.set_outer_color(ground_color);
+                    ground.set_inner_color(ground_color);
+                    ground.set_disc_radius(1e3);
+
+                    PhotonSensor::X_Y_Time sensor(ground_sensor_id, &ground);
+                    std::vector<PhotonSensor::Sensor*> sensor_list = {&sensor};
+
+                    world.set_mother_and_child(&ground);
+                    world.init_tree_based_on_mother_child_relations();
+
+                    // propagation settings
+                    TracerSettings settings;    
+                    settings.SetMultiThread(false);
+                    settings.SetStoreOnlyLastIntersection(false);
+
+                    // photon propagation
+                    PhotonBunch::propagate_photons_in_world_with_settings(
+                        &photons, &world, &settings
+                    );
+
+                    // detect photons in sensors
+                    PhotonSensor::Sensors::reset_all_sesnors(&sensor_list);
+                    PhotonSensor::Sensors::assign_photons_to_sensors(&photons, &sensor_list);
+
+                    std::vector<std::vector<double>> xyt = sensor.get_arrival_table();
+
+                    ASSERT_EQ(1.0, xyt.size());
+
+                    EXPECT_NEAR(x*1e-2, xyt.at(0).at(0), 1e-6);
+                    EXPECT_NEAR(y*1e-2, xyt.at(0).at(1), 1e-6);            
+                }
+            }
+        }
+    }
+}
+//------------------------------------------------------------------------------
 TEST_F(CorsikaPhotonFactoryTest, convert_photons) {
       
     const std::vector<float> corsika_photon = 
@@ -159,17 +221,127 @@ TEST_F(CorsikaPhotonFactoryTest, bad_shape) {
     );   
 }
 //------------------------------------------------------------------------------
-TEST_F(CorsikaPhotonFactoryTest, z_emission_height) {
- 
+TEST_F(CorsikaPhotonFactoryTest, relative_arrival_time_on_ground) {
+    
+    float arrival_time_on_dround_in_ns = 1.0;
     const std::vector<float> corsika_photon = 
-    {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.4455, 433};
+    {1.2, 3.4, 0.0, 0.0, arrival_time_on_dround_in_ns, 1e5, 0.4455, 433};
     
     const uint id = 1337;
     Random::FakeConstant prng(0.0);
-	
-	CorsikaPhotonFactory cpf(corsika_photon, id, &prng);
+    
+    CorsikaPhotonFactory cpf(corsika_photon, id, &prng);
 
-    ASSERT_TRUE(cpf.passed_atmosphere());
-    EXPECT_EQ(1e3, cpf.get_photon()->Support().z());
+    EXPECT_EQ(
+        arrival_time_on_dround_in_ns*1e-9, 
+        cpf.relative_arrival_time_on_ground()
+    );
+}
+#include <numeric>
+//------------------------------------------------------------------------------
+TEST_F(CorsikaPhotonFactoryTest, correct_relative_time_when_intersecting_ground) {
+   
+    EventIo::EventIoFile corsika_file("telescope.dat");
+
+    while (corsika_file.has_still_events_left()) {
+
+        /*
+        read in a corsika eventio event. we remember the relative arrival
+        times in the eventio file 'relative_arrival_times_in_corsika_file' and
+        compare these to the actual arrival times of the mctracer 
+        photons on ground.
+        */
+        vector<vector<float>> corsika_photons = corsika_file.next();
+
+        vector<float> relative_arrival_times_in_corsika_file;
+
+        vector<Photon*> photons;
+
+        Random::Mt19937 prng(Random::zero_seed);
+
+        for (uint id=0; id<corsika_photons.size(); id++) {
+
+            CorsikaPhotonFactory factory(
+                corsika_photons.at(id),
+                id,
+                &prng
+            );
+            
+            relative_arrival_times_in_corsika_file.push_back(
+                factory.relative_arrival_time_on_ground()
+            );
+
+            photons.push_back(factory.get_photon());
+        }
+
+        // propagate mctracer photons down to ground
+        Frame world("world", Vector3D::null, Rotation3D::null);
+        
+        Disc ground;
+        ground.set_name_pos_rot("ground", Vector3D::null, Rotation3D::null);
+        const Color* ground_color = &Color::gray;
+        const uint ground_sensor_id = 0;
+        ground.set_outer_color(ground_color);
+        ground.set_inner_color(ground_color);
+        ground.set_disc_radius(1e7);
+
+        PhotonSensor::X_Y_thetaX_thetaY_Time sensor(ground_sensor_id, &ground);
+        std::vector<PhotonSensor::Sensor*> sensor_list = {&sensor};
+
+        world.set_mother_and_child(&ground);
+        world.init_tree_based_on_mother_child_relations();
+
+        // propagation settings
+        TracerSettings settings;    
+        settings.SetMultiThread(false);
+        settings.SetStoreOnlyLastIntersection(false);
+
+        // photon propagation
+        PhotonBunch::propagate_photons_in_world_with_settings(
+            &photons, &world, &settings
+        );
+
+        // detect photons in sensors
+        PhotonSensor::Sensors::reset_all_sesnors(&sensor_list);
+        PhotonSensor::Sensors::assign_photons_to_sensors(&photons, &sensor_list);
+
+        std::vector<std::vector<double>> id_time = sensor.get_arrival_table();
+        double mean_arrival_time = get_mean_along_column(id_time,4);
+
+        for(uint row=0; row<id_time.size(); row++)
+            id_time.at(row).at(4) = id_time.at(row).at(4) - mean_arrival_time;
+
+        double mean_time_of_corsika_photons = std::accumulate(
+            relative_arrival_times_in_corsika_file.begin(),
+            relative_arrival_times_in_corsika_file.end(),
+            0.0
+        )/double(relative_arrival_times_in_corsika_file.size());
+
+        for(uint row=0; row<id_time.size(); row++)
+            id_time.at(row).at(4) = id_time.at(row).at(4) + mean_time_of_corsika_photons;
+
+
+        for(uint i=0;i<id_time.size();i++) {
+
+            uint id = id_time.at(i).at(5);
+
+            EXPECT_NEAR(
+                relative_arrival_times_in_corsika_file.at(id),
+                id_time.at(i).at(4),
+                1e-11
+            );
+        }
+
+        /*
+        // relative_arrival_times_in_corsika_file
+        std::cout << "corsika times: " << relative_arrival_times_in_corsika_file.size() << ", avg " << mean_time_of_corsika_photons << "s \n";
+        for(int i=0;i<10;i++) {
+            std::cout << "id " << i << ", " << relative_arrival_times_in_corsika_file.at(i) << "\n";
+        }
+        std::cout << "mctracer times: " << id_time.size() << ", avg " << get_mean_along_column(id_time,4) << "s\n";
+        for(int i=0;i<10;i++) {
+            std::cout << "id " << id_time.at(i).at(5) << ", " << float(id_time.at(i).at(4)) << "\n";
+        }*/
+    }
 }
 //------------------------------------------------------------------------------

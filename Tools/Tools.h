@@ -26,13 +26,12 @@ bool is_even(const int n);
 double StrToDouble(std::string text_to_parse);
 bool StrToBool(std::string text_to_parse);
 int StrToInt(std::string text_to_parse);
+double get_mean_along_column(const std::vector<std::vector<double>> &table, const uint column);
 std::string get_print(const std::vector<std::vector<double>> &table);
 
 namespace UserInteraction {
 	void print_welcome_screen();	
-	std::string input(const std::string request);
 	void ClearScreen();
-	std::string parse_config_file_path(int number_of_arguments, char* arguments[]);
 	bool is_Escape_key(const int user_input_key);
 }
 

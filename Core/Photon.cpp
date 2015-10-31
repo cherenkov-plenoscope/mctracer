@@ -1,4 +1,5 @@
 #include "Photon.h"
+#include "PhysicalConstants.h"
 //------------------------------------------------------------------------------
 Photon::Photon(
 	const Vector3D support,
@@ -171,7 +172,7 @@ double Photon::get_time_to_pass_distance_in_refractive_index(
 	const double refractive_index_in_medium
 )const {
 	return refractive_index_in_medium * 
-		distance_in_medium / PhysicalConstantsSI::speed_of_light_in_vacuum;
+		distance_in_medium / PhysicalConstants::speed_of_light_in_vacuum;
 }
 //------------------------------------------------------------------------------
 double Photon::get_time_of_flight()const {

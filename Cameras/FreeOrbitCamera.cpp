@@ -36,6 +36,7 @@ void FreeOrbitCamera::reset_camera(){
 //==============================================================================
 void FreeOrbitCamera::start_free_orbit(){
 
+	UserInteraction::print_welcome_screen();
 	print_free_orbit_help_text();
 	create_free_orbit_display();
 

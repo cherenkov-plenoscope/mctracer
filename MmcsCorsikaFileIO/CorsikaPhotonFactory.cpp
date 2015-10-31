@@ -1,4 +1,5 @@
 #include "CorsikaPhotonFactory.h"
+#include "PhysicalConstants.h"
 //------------------------------------------------------------------------------
 CorsikaPhotonFactory::CorsikaPhotonFactory(
 	const std::vector<float>& _corsika_photon, 
@@ -32,13 +33,9 @@ Photon* CorsikaPhotonFactory::get_photon() {
 		causal_dir*(-1)
 	);
 
-	double ray_parameter_for_production_height = (
-		production_height_in_m() - intersection_with_xy_floor_plane().z()
-		)/-causal_dir.z();
-
 	Vector3D causal_support = 
 		ray_running_upwards_from_ground_to_pos_of_production.
-		PositionOnRay(ray_parameter_for_production_height);
+		PositionOnRay(ray_parameter_for_production_point());
 
 	Photon* cherenkov_photon = 
 		new Photon(causal_support, causal_dir, wavelength_in_m());	
@@ -76,6 +73,19 @@ Vector3D CorsikaPhotonFactory::intersection_with_xy_floor_plane()const {
 	);
 }
 //------------------------------------------------------------------------------
+double CorsikaPhotonFactory::production_distance_offset()const {
+	// an arbitrary offset distance for the photons to travel until they
+	// reach the ground. If set to zero 0.0, the distance for a mctracer photon 
+	// to travel is only defined by the relative_arrival_time_on_ground().
+	// Ensure this offset is at least as big as your telescope system on ground.
+	return 1e3;
+}
+//------------------------------------------------------------------------------
+double CorsikaPhotonFactory::ray_parameter_for_production_point()const {
+	return relative_arrival_time_on_ground()*
+		PhysicalConstants::speed_of_light_in_vacuum + production_distance_offset();
+}
+//------------------------------------------------------------------------------
 double CorsikaPhotonFactory::x_pos_on_xy_plane_in_m()const {
 	return x_pos_on_world_x_y_plane_in_cm()*1e-2;
 }
@@ -90,6 +100,10 @@ double CorsikaPhotonFactory::production_height_in_m()const {
 //------------------------------------------------------------------------------
 double CorsikaPhotonFactory::wavelength_in_m()const {
 	return fabs(wavelength_in_nm()*1e-9);
+}
+//------------------------------------------------------------------------------
+double CorsikaPhotonFactory::relative_arrival_time_on_ground()const {
+	return relative_arrival_time_on_ground_in_ns()*1e-9;
 }
 //------------------------------------------------------------------------------
 bool CorsikaPhotonFactory::row_has_only_zeros()const {
@@ -119,7 +133,7 @@ float CorsikaPhotonFactory::wavelength_in_nm()const {
 	return corsika_photon.at(wavelength_idx);
 }
 //------------------------------------------------------------------------------
-float CorsikaPhotonFactory::production_time_in_ns()const {
+float CorsikaPhotonFactory::relative_arrival_time_on_ground_in_ns()const {
 	return corsika_photon.at(time_idx);
 }
 //------------------------------------------------------------------------------
@@ -148,7 +162,7 @@ void CorsikaPhotonFactory::assert_photon_weight_is_between_zero_and_one()const {
 	if(photon_survival_probability() < 0.0 || photon_survival_probability() > 1.0) {
 		std::stringstream info;
 		info << __FILE__ << " " << __LINE__ << "\n";
-		info << "Expected photon weight w: 0.0 >= w > 1.0, but actual ";
+		info << "Expected photon weight w: 0.0 >= w >= 1.0, but actual ";
 		info << "it is: " << photon_survival_probability() << "\n";
 		throw BadPhotonWeight(info.str());
 	}

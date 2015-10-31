@@ -43,6 +43,23 @@ namespace PhotonSensor {
 	    };
 	};
 	//--------------------------------------------------------------------------
+	class ArrivalTimeSinceEmission : public Sensor{
+	private:
+
+		struct IdTime {
+			uint id;
+			double arrival_time_since_emission;
+		};
+
+		std::vector<IdTime> id_time_table;
+	public:
+		
+		using Sensor::Sensor;
+		void assign_photon_to_this_sensor(const Photon* photon);
+		void reset();
+		std::vector<std::vector<double>> get_arrival_table()const;
+	};
+	//--------------------------------------------------------------------------
 	class X_Y_Time : public Sensor{
 	private:
 
@@ -61,6 +78,7 @@ namespace PhotonSensor {
 	private:
 
 		struct XYtXtyT {
+			uint id;
 			double arrival_times_since_emission;
 			double x_intersect;
 			double y_intersect;

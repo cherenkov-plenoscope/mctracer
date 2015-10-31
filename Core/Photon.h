@@ -10,7 +10,6 @@
 // included dependencies
 #include "Core/RayForPropagation.h"
 #include "FresnelRefractionAndReflection.h"
-#include "PhysicalConstantsSI.h"
 
 //=================================
 class Photon :public RayForPropagation{
