@@ -1,5 +1,6 @@
-\documentclass[review]{elsarticle}
+\documentclass[11pt,a4paper,oneside,titlepage]{book}
 
+\usepackage[english]{babel}
 \usepackage{lineno,hyperref}
 \usepackage[nolist]{acronym}
 \usepackage[onehalfspacing]{setspace}
@@ -9,6 +10,8 @@
 \usepackage{listings}
 \usepackage{color}
 \usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{blindtext}
 
 \definecolor{LightGray}{gray}{0.70}
 \lstdefinestyle{MctCpp}{%
@@ -24,30 +27,70 @@
     rulecolor=\color{LightGray},
     basicstyle=\ttfamily,
     numbers=left,
-    numberstyle=\normalfont\tiny\color{LightGray}
+    numberstyle=\normalfont\tiny\color{LightGray},
+    xleftmargin=0.75cm,
 }
 
-\modulolinenumbers[1]
-\journal{Journal of \LaTeX\ Templates}
-\bibliographystyle{elsarticle-num}
+\lstdefinestyle{MctTxt}{%
+    language={},
+    keywordstyle=\bfseries,
+    commentstyle=\itshape,
+    rangeprefix=//--,rangesuffix=--,
+    includerangemarker=false,
+    columns=spaceflexible,
+    escapeinside={/*@}{@*/},
+    tabsize=4,
+    frame=leftline,
+    rulecolor=\color{LightGray},
+    basicstyle=\ttfamily,
+    numbers=left,
+    numberstyle=\normalfont\tiny\color{LightGray},
+    xleftmargin=0.75cm,
+}
+
+
+%\oddsidemargin = 31pt
+%\topmargin = 20pt
+%\headheight = 12pt
+%\headsep = 25pt
+\textheight = 25cm
+\textwidth = 15cm
+%\marginparsep = 10pt
+%\marginparwidth = 35pt
+%\footskip = 30pt
+
+%\marginparpush = 7pt (not shown)
+\hoffset = -1cm
+\voffset = -2cm
+%\paperwidth = 597pt
+%\paperheight = 845pt
+
+
+%\modulolinenumbers[1]
 
 \begin{document}
-%-------------------------------------------------------------------------------
+%------------------------------------------------------------------------------
 \newcommand{\CppFileStartEnd}[3]{%
-    \begin{small}
+    \begin{footnotesize}
         \lstinputlisting[linerange=#2-#3, style=MctCpp]{#1}%
     %\hfill\path{#1}\\
-    \end{small}
+    \end{footnotesize}
+}
+
+\newcommand{\TxtFile}[1]{%
+    \begin{footnotesize}
+        \lstinputlisting[style=MctTxt]{#1}%
+    \end{footnotesize}
 }
 
 \newcommand{\ill}[1]{% In Line Listing
     \begin{lstlisting}#1\end{lstlisting}    
 }
 
-\newcommand{\CenFig}[1]{
+\newcommand{\CenFig}[2]{
     \begin{figure}[H]
         \begin{center}
-            \includegraphics[width=1\textwidth]{#1}
+            \includegraphics[width=#2\textwidth]{#1}
         \end{center}
     \end{figure}
 }
@@ -65,51 +108,73 @@
         \expandafter\lst@BOLGobble
     \fi}
 \makeatother
-%-------------------------------------------------------------------------------
+%------------------------------------------------------------------------------
+\newcommand{\thetitle}{Mooneyes}
+%
+\thispagestyle{empty}
+\begin{center}
+\Huge\textbf{\thetitle}
+%
+\vfill
+%
+\Large
+PhD \\
+\vspace{20pt}
+\normalsize
+submitted by \\[5pt]
+{\Large Sebastian Achim M\"uller } \\[5pt]
+born in Dortmund Germany, April 5, 1988\\[5pt]
+%
+{\normalsize sebastian8.mueller@tu-dortmund.de}\\
+%
+\vspace{20pt}
+Institute for Particle Physics
+\par\smallskip\noindent
+Chair Experimental Physics 5\\Astro Particle Physics\\
+\par\smallskip\noindent
+ETH Zurich\\2015-2017
+\end{center}
+%-------------------------------------------------------------
+\newpage
+\thispagestyle{empty}
+%
+\newlength{\vertspace}
+\setlength{\vertspace}{5pt}
+%
+\begin{tabular}{p{1.5in} p{2in}}
+    1st Examiner & Prof. Dr. Felicitas Pauss\\[\vertspace]
+    2nd Examiner & Prof. Dr. Adrian Biland\\[\vertspace]
+    Submission date & \dotfill\\ 
+\end{tabular}
 
-\begin{frontmatter}
-
-\title{%
-	The Monte Carlo Tracer%\tnoteref{mytitlenote}
-}
-%\tnotetext[mytitlenote]{%
-%	Fully documented templates are available in the elsarticle package on \href{http://www.ctan.org/tex-archive/macros/latex/contrib/elsarticle}{CTAN}.
-%}
-
-%% Group authors per affiliation:
-%\author{The FACT collaboration}%\fnref{myfootnote}}
-%\address{Radarweg 29, Amsterdam}
-%\fntext[myfootnote]{TU Dortmund, ETH Zuerich}
-
-%% or include affiliations in footnotes:
-\author[mymainaddress,mysecondaryaddress]{Sebastian Achim Mueller}
-%\ead[url]{www.fact-project.org}
-
-\cortext[mycorrespondingauthor]{Sebastian Achim Mueller}
-\ead{sebmuell@phys.ethz.ch}
-
-\address[mymainaddress]{Institute for Particle Physics, ETH, Otto-Stern-Weg 5, 8093 Zuerich, Switzerland}
-\address[mysecondaryaddress]{Experimental Physics 5b, TU Dortmund, Otto-Hahn-Strasse 4, 44227 Dortmund, Germany}
-%-------------------------------------------------------------------------------
-\begin{abstract}
+\newpage
+%-------------------------------------------------------------
+\pagenumbering{Roman}
+\addcontentsline{toc}{chapter}{Contents}
+\tableofcontents
+%\newpage
+%\addcontentsline{toc}{chapter}{Figures}
+%\listoffigures
+%\newpage
+%\addcontentsline{toc}{chapter}{Tables}
+%\listoftables
+%-------------------------------------------------------------
+\cleardoublepage
+%
+\setcounter{page}{0}
+\pagenumbering{arabic}
+%
+\chapter{abstract}
 %
 In $\gamma$ ray and cosmic ray astronomy it needs dedicated simulations of detectors to develope and run the instruments which observe particle interactions far beyond any energy accessable in the lab.
 %
 The Monte Carlo Tracer exists since we do what we must, because we can.
-%
-\end{abstract}
-%-------------------------------------------------------------------------------
-\begin{keyword}
-ray tracing, photon propagation
-%
-\end{keyword}
-%-------------------------------------------------------------------------------
-\end{frontmatter}
 %\linenumbers
 %-------------------------------------------------------------------------------
-\section{The scenery tree}
+\chapter{The scenery tree}
+\blindtext[2]
 %-------------------------------------------------------------------------------
-\subsection{The root of the scenery tree}
+\section{The root of the scenery tree}
 \label{SubSecRootFrame}
 The frame at the root of the tree structure represents the whole scenery.
 %
@@ -117,7 +182,7 @@ Before ray tracing is performed on the scenery tree, all frames in the tree esti
 %
 This way rays can easily and fast be transformed back and forth from the root tree to an individual object frame.
 %-------------------------------------------------------------------------------
-\section{How to set up a scenery in source code}
+\chapter{How to set up a scenery in source code}
 %
 We will build a little scenery of a house with a roof and chimney as well as a simple tree. Further we add a small telescope with a reflective imaging mirror.
 %
@@ -135,81 +200,16 @@ Also part of the tree is the wooden pole.
 \CppFileStartEnd{examples/set_up_scenery.cpp}{leaf_ball}{tree_pole}
 and the rest of the source...
 \CppFileStartEnd{examples/set_up_scenery.cpp}{tree_pole}{end_set_up_scene_in_source}
-%-------------------------------------------------------------------------------
-\section{Numerical functions}
-\newcommand{\la}{\lambda}
-%
-The \lstinline{Function::Func1D} class provides $1$D mapping for floating numbers.
-%
-\begin{eqnarray}
-    y &=& f(x)\\
-    x &\in& X
-\end{eqnarray}
-%
-All functions have limits which need to be respected. 
-%
-Any call of a function $f(x)$ with $x \notin X$ will throw an exception. 
-%
-We are strict about this behaviour to enforce that no propagation passes silently where e.g. your mirror's reflective index is only defined up to $600\,$nm but you shoot $800\,$nm photons onto it. 
-%
-Functions live in their own namespace.
-\CppFileStartEnd{examples/set_up_scenery.cpp}{using_namespace}{using_namespace_end}
-%
-\subsection{Function limits}
-%
-First we define limits to our functions.
-%
-\CppFileStartEnd{examples/set_up_scenery.cpp}{func_limits}{func_limits_assert}
-%
-The limits here include the lower bound $0.0$ and exclude the upper one $1.0$.
-%
-Let's see the acceptance of our limits.
-%
-\CppFileStartEnd{examples/set_up_scenery.cpp}{func_limits_assert}{func_limits_constant}
-%
-When we create functions with our limits like
-%
-\CppFileStartEnd{examples/set_up_scenery.cpp}{func_limits_constant}{func_limits_const_call}
-%
-the function will also show the restrictive access:
-%
-\CppFileStartEnd{examples/set_up_scenery.cpp}{func_limits_const_call}{func_limits_call_end}
-%
-\subsection{Constant}
-\begin{eqnarray}
-    y &=& f(x) = c
-\end{eqnarray}
-%
-A constant function takes its single constant value e.g. $1.337$ and its limits.
-%
-\CppFileStartEnd{examples/set_up_scenery.cpp}{func_const}{func_const_call}
-%
-When called within the limits, it will always return its constant value.
-%
-\CppFileStartEnd{examples/set_up_scenery.cpp}{func_const_call}{func_const_call_end}
-\CenFig{figures/function_const.png}
-%
-\subsection{Polynom3}
-The versatile polynom of power 3 is defined by its four parameters $a,b,c$ and $d$.
-\begin{eqnarray}
-    y &=& f(x) = ax^3 + bx^2 + cx^1 + dx^0
-\end{eqnarray}
-%
-We initialize it using $a,b,c,d$ and the limits. Here we create a linear mapping.
-\CppFileStartEnd{examples/set_up_scenery.cpp}{func_poly3}{func_poly3_call}
-\CenFig{figures/function_polynom1.png}
-%
-We can do a quadratic mapping:
-\CppFileStartEnd{examples/set_up_scenery.cpp}{func_poly3_quad}{func_poly3_quad_end}
-\CenFig{figures/function_polynom2.png}
-%
-\subsection{Concatenation}
-\CppFileStartEnd{examples/set_up_scenery.cpp}{func_concat}{func_concat_end}
-\CenFig{figures/function_concat.png}
-%-------------------------------------------------------------------------------
+\input{chapters/function.tex}
+%------------------------------------------------------------------------------
+%--references--
+\renewcommand{\bibname}{References}
 \bibliography{mct}
-%-------------------------------------------------------------------------------
+\bibliographystyle{plain}  
+\addcontentsline{toc}{chapter}{\bibname}
+%
 \begin{acronym}
     \acro{mct}[MCt]{Monte Carlo Tracer}
 \end{acronym}
+%--Appendix--
 \end{document}
