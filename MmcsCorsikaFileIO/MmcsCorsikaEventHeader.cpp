@@ -143,5 +143,9 @@ std::string MmcsCorsikaEventHeader::get_print()const {
 	out << " Telescope pointing Az: ";
 	out << Rad2Deg(azimuth_angle_Phi_in_radian) << "deg, Zd: ";
 	out << Rad2Deg(zenith_angle_Theta_in_radian) << "deg\n";
+	out << " particle id: " << particle_id << "\n";
+	out << " E : " << total_energy_in_GeV << "GeV\n";
+	out << " start altitude : " << starting_altitude_in_g_per_cm2 << "g/cm^2\n";
+	out << " first interaction z: " << z_coordinate_aka_height_of_first_interaction_in_cm*1e-2 << "m\n";
 	return out.str();
 }

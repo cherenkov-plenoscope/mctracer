@@ -150,7 +150,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 	Frame *world = fab.world();
 
 	// init Telescope Array Control
-	//TelescopeArrayControl* array_ctrl = fab.get_telescope_array_control();
+	TelescopeArrayControl* array_ctrl = fab.get_telescope_array_control();
 
 	// init sensors in scenery
 	std::vector<PhotonSensor::Sensor*>* sensors = fab.sensors_in_world();
@@ -165,9 +165,6 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 
 		event_counter++;
 
-		// point the telescope into shower direction
-		//array_ctrl->move_all_to_Az_Zd(event.get_Az(), event.get_Zd());
-
 		// get the cherenkov photons
 		vector<vector<float>> corsika_photons = corsika_file.next();
 
@@ -180,6 +177,13 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
             if(cpf.passed_atmosphere())
                 photons.push_back(cpf.get_photon());
         }
+
+       	// point the telescope into shower direction
+
+       	double az = corsika_file.current_event_header.mmcs_event_header.azimuth_angle_Phi_in_radian;
+       	double zd = corsika_file.current_event_header.mmcs_event_header.zenith_angle_Theta_in_radian;
+       	std::cout << corsika_file.current_event_header.mmcs_event_header.get_print() << "\n";
+		array_ctrl->move_all_to_Az_Zd(az, zd);
 
 		// propagate the cherenkov photons in the world
 		PhotonBunch::propagate_photons_in_world_with_settings(
