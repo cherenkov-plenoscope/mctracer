@@ -149,12 +149,6 @@
 			<set_frame name="GAPD_sensor_plane" pos="[0,0,0.0]" rot="[0,0,0]"/>		
 			<set_surface reflection_vs_wavelength="zero" colour="[0,255,128]"/>	
 			<set_disc radius="0.195"/>
-		</disc>
-
-		<disc>
-			<set_frame name="Bokeh_screen" pos="[0,0,-0.10]" rot="[0,0,0]"/>		
-			<set_surface reflection_vs_wavelength="zero" colour="[255,0,128]"/>	
-			<set_disc radius="0.25"/>
 			<set_sensitive id="1"/>
 		</disc>
 		
