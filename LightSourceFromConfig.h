@@ -14,9 +14,9 @@
 class LightSourceFromConfig{
 
 	std::vector<Photon*>* photon_bunch;
-	KeyValueMap config;
+	KeyValueMap::Map config;
 public:
-	LightSourceFromConfig(KeyValueMap config);
+	LightSourceFromConfig(KeyValueMap::Map config);
 	std::vector<Photon*>* get_photons();
 private:
 	void transform_photons();

@@ -1,6 +1,6 @@
 #include "LightSourceFromConfig.h"
 //------------------------------------------------------------------------------
-LightSourceFromConfig::LightSourceFromConfig(const KeyValueMap _config) {
+LightSourceFromConfig::LightSourceFromConfig(const KeyValueMap::Map _config) {
 	config = _config;
 	std::string type = config.get_value_for_key("type");
 

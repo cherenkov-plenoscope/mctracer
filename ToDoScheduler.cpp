@@ -90,7 +90,7 @@ void ToDoScheduler::render_geometry()const {
 void ToDoScheduler::point_spread_investigation_in_geometry()const {
 
 	// Bokeh settings
-	KeyValueMap source_config(get_config_file_name());
+	KeyValueMap::Map source_config(get_config_file_name());
 
 	// propagation settings
 	TracerSettings settings;	
