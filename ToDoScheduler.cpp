@@ -67,15 +67,15 @@ void ToDoScheduler::render_geometry()const {
 
 	Frame *geometry;
 	if(
-		StringTools::is_ending(geometry_filename(),".stl") || 
-		StringTools::is_ending(geometry_filename(),".STL")
+		StringTools::is_ending(geometry_path(),".stl") || 
+		StringTools::is_ending(geometry_path(),".STL")
 	) {
-		geometry = StereoLitographyIo::read(geometry_filename(), 1.0);
-	}else if(	StringTools::is_ending(geometry_filename(),".xml") ||
-				StringTools::is_ending(geometry_filename(),".XML")
+		geometry = StereoLitographyIo::read(geometry_path(), 1.0);
+	}else if(	StringTools::is_ending(geometry_path(),".xml") ||
+				StringTools::is_ending(geometry_path(),".XML")
 	) {
 		WorldFactory fab;
-		fab.load(geometry_filename());
+		fab.load(geometry_path());
 		geometry = fab.world();
 	}else{
 		geometry = Frame::void_frame;
@@ -90,7 +90,7 @@ void ToDoScheduler::render_geometry()const {
 void ToDoScheduler::point_spread_investigation_in_geometry()const {
 
 	// Bokeh settings
-	KeyValueMap::Map source_config(get_config_file_name());
+	KeyValueMap::Map source_config(config_path());
 
 	// propagation settings
 	TracerSettings settings;	
@@ -99,7 +99,7 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 
 	// scenery
 	WorldFactory fab;
-	fab.load(geometry_filename());
+	fab.load(geometry_path());
 	Frame *world = fab.world();
 
 	// sensors in scenery
@@ -123,12 +123,12 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 	for(PhotonSensor::Sensor* sensor: *sensors) {
 		
 		std::stringstream outname;
-		outname << get_output_file_name() << sensor->get_id();
+		outname << output_path() << sensor->get_id();
 		sensor_conuter++;
 
 		std::stringstream header;
-		header << "geometry: " << geometry_filename() << "\n";
-		header << "lightsource: " << get_config_file_name() << "\n";
+		header << "geometry: " << geometry_path() << "\n";
+		header << "lightsource: " << config_path() << "\n";
 		header << "sensor id: " << sensor->get_id() << "\n";
 		header << "sensor name: " << sensor->get_frame()->get_path_in_tree_of_frames() << "\n";
 		header << source_config.get_print();
@@ -154,7 +154,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 
 	// load scenery
 	WorldFactory fab;
-	fab.load(geometry_filename());
+	fab.load(geometry_path());
 	Frame *world = fab.world();
 
 	// init Telescope Array Control
@@ -164,20 +164,17 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 	std::vector<PhotonSensor::Sensor*>* sensors = fab.sensors_in_world();
 
 	// load photons
-	EventIo::EventIoFile corsika_file(get_photon_file_name());
+	EventIo::EventIoFile corsika_run(photon_path());
 
 	// propagate each event
 	uint event_counter = 0;
 
-	while(corsika_file.has_still_events_left()) {
+	while(corsika_run.has_still_events_left()) {
 
 		event_counter++;
 
 		// read next evenr
-		EventIo::Event event = corsika_file.next_event();
-
-		// get the cherenkov photons
-		//vector<vector<float>> corsika_photons = corsika_file.next();
+		EventIo::Event event = corsika_run.next_event();
 
 		vector<Photon*> photons;
         uint id = 0;
@@ -207,13 +204,13 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 		for(PhotonSensor::Sensor* sensor: *sensors) {
 			
 			std::stringstream outname;
-			outname << get_output_file_name();
+			outname << output_path();
 			outname << "e" << event_counter << "s" << sensor->get_id() << ".txt";
 			sensor_conuter++;
 
 			std::stringstream header;
-			header << "geometry: " << geometry_filename() << "\n";
-			header << "photon file: " << get_photon_file_name() << "\n";
+			header << "geometry: " << geometry_path() << "\n";
+			header << "photons: " << photon_path() << ", event: " << event_counter << "\n";
 			header << "sensor id: " << sensor->get_id() << "\n";
 			header << "sensor name: " << sensor->get_frame()->get_path_in_tree_of_frames() << "\n";
 			header << "-------------\n";
@@ -241,7 +238,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 
 	// load scenery
 	WorldFactory fab;
-	fab.load(geometry_filename());
+	fab.load(geometry_path());
 	Frame *world = fab.world();
 
 	// init Telescope Array Control
@@ -251,7 +248,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 	std::vector<PhotonSensor::Sensor*>* sensors = fab.sensors_in_world();
 
 	// load photons
-	MmcsCorsikaFullEventGetter event_getter(get_photon_file_name());
+	MmcsCorsikaFullEventGetter event_getter(photon_path());
 
 	// propagate each event
 	uint event_counter = 0;
@@ -284,7 +281,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 			for(PhotonSensor::Sensor* sensor: *sensors) {
 				
 				std::stringstream outname;
-				outname << get_output_file_name();
+				outname << output_path();
 				outname << "e" << event_counter << "s" << sensor_conuter << ".txt";
 				sensor_conuter++;
 
@@ -308,7 +305,7 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 
 	// load the scenery
 	WorldFactory fab;
-	fab.load(geometry_filename());
+	fab.load(geometry_path());
 	Frame *world = fab.world();
 
 	// init Telescope Array Control
@@ -316,7 +313,7 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 	std::cout << array_ctrl->get_print();
 
 	// load the photons
-	MmcsCorsikaFullEventGetter event_getter(get_photon_file_name());
+	MmcsCorsikaFullEventGetter event_getter(photon_path());
 
 	// start interactive orbit, first without any photon trajectory
 	FreeOrbitCamera free_orb(world, &settings);
@@ -363,18 +360,18 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 	}
 }
 //------------------------------------------------------------------------------
-const std::string ToDoScheduler::geometry_filename()const {
+const std::string ToDoScheduler::geometry_path()const {
 	return comand_line_parser.get<std::string>(geometry_key);
 }
 //------------------------------------------------------------------------------
-const std::string ToDoScheduler::get_photon_file_name()const {
+const std::string ToDoScheduler::photon_path()const {
 	return comand_line_parser.get<std::string>(photons_key);
 }
 //------------------------------------------------------------------------------
-const std::string ToDoScheduler::get_output_file_name()const {
+const std::string ToDoScheduler::output_path()const {
 	return comand_line_parser.get<std::string>(output_key);
 }
 //------------------------------------------------------------------------------
-const std::string ToDoScheduler::get_config_file_name()const {
+const std::string ToDoScheduler::config_path()const {
 	return comand_line_parser.get<std::string>(config_key);
 }
