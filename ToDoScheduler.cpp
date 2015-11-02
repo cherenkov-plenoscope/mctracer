@@ -173,12 +173,15 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 
 		event_counter++;
 
+		// read next evenr
+		EventIo::Event event = corsika_file.next_event();
+
 		// get the cherenkov photons
-		vector<vector<float>> corsika_photons = corsika_file.next();
+		//vector<vector<float>> corsika_photons = corsika_file.next();
 
 		vector<Photon*> photons;
         uint id = 0;
-        for(vector<float> corsika_photon : corsika_photons) {
+        for(vector<float> corsika_photon : event.photons) {
             
             CorsikaPhotonFactory cpf(corsika_photon, id++, &prng);
 
@@ -187,8 +190,8 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
         }
 
        	// point the telescope into shower direction
-       	double az = corsika_file.current_event_header.mmcs_event_header.azimuth_angle_Phi_in_radian;
-       	double zd = corsika_file.current_event_header.mmcs_event_header.zenith_angle_Theta_in_radian;
+       	double az = event.header.mmcs_event_header.azimuth_angle_Phi_in_radian;
+       	double zd = event.header.mmcs_event_header.zenith_angle_Theta_in_radian;
 		array_ctrl->move_all_to_Az_Zd(az, zd);
 
 		// propagate the cherenkov photons in the world
@@ -214,7 +217,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 			header << "sensor id: " << sensor->get_id() << "\n";
 			header << "sensor name: " << sensor->get_frame()->get_path_in_tree_of_frames() << "\n";
 			header << "-------------\n";
-			header << corsika_file.current_event_header.mmcs_event_header.get_print() << "\n";
+			header << event.header.mmcs_event_header.get_print() << "\n";
 
 			AsciiIo::write_table_to_file_with_header(
 				sensor->get_arrival_table(),

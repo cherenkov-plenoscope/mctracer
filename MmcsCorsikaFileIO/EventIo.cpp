@@ -325,7 +325,9 @@ vector<vector<float> > make_photons_from_stream(
         int header_length = subhead.extended ? 4 : 3;
         f.seekg(header_length*-4, f.cur);
         //TODO: put useful text.
-        throw WrongTypeException();
+        std::stringstream info;
+        info << __FILE__ << " " << __LINE__ <<"\n";
+        throw WrongTypeException(info.str());
     }
 
     BunchHeader b_head;
@@ -451,17 +453,28 @@ Header EventIoFile::__get_header(int expect_type)
         int header_length = header.extended ? 5 : 4;
         this->f.seekg(header_length*-4, this->f.cur);
         //TODO: put useful text.
-        throw WrongTypeException();
+        std::stringstream info;
+        info << __FILE__ << " " << __LINE__ <<"\n";
+        info << __func__ << "()\n";
+        info << "while reading file: " << path << "\n";
+        info << "Expected header type: " << expect_type;
+        info << " but actual it is " << header.type << "\n";
+        throw WrongTypeException(info.str());
     }
     return header;
 }
 
-vector<vector<float> > EventIoFile::next(){
-    vector< vector<float> > dummy = this->_current_photon_data;
-    this->_current_photon_data = this->_next();
-    return dummy;
-}
+Event EventIoFile::next_event() {
+    
+    Event event;
 
+    event.header = this->current_event_header;
+    event.photons = this->_current_photon_data;
+    
+    this->_current_photon_data = this->_next();
+
+    return event;
+}
 
 vector<vector<float> > EventIoFile::_next()
 {

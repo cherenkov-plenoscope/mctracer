@@ -254,18 +254,18 @@ TEST_F(CorsikaPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         compare these to the actual arrival times of the mctracer 
         photons on ground.
         */
-        vector<vector<float>> corsika_photons = corsika_file.next();
-
+        EventIo::Event event = corsika_file.next_event();
+        
         vector<float> relative_arrival_times_in_corsika_file;
 
         vector<Photon*> photons;
 
         Random::Mt19937 prng(Random::zero_seed);
 
-        for (uint id=0; id<corsika_photons.size(); id++) {
+        for (uint id=0; id<event.photons.size(); id++) {
 
             CorsikaPhotonFactory factory(
-                corsika_photons.at(id),
+                event.photons.at(id),
                 id,
                 &prng
             );

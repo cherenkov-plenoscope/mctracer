@@ -50,6 +50,10 @@ namespace EventIo{
         std::vector<TelOffset> telescope_offsets;
     };
 
+    struct Event {
+        EventIoEventHeader header;
+        std::vector<std::vector<float>> photons;
+    };
 
     class Header{
 
@@ -134,6 +138,7 @@ namespace EventIo{
       
 
     class EventIoFile{
+
         std::ifstream f;
         std::string path;
         bool run_end_found;
@@ -146,8 +151,8 @@ namespace EventIo{
         void __read_event_end();
         void __read_run_end();
         std::vector<std::vector<float> > _next();
-
     public:
+
         bool has_still_events_left();
         EventIoRunHeader run_header;
         std::vector<float> current_event_end;
@@ -157,9 +162,7 @@ namespace EventIo{
         EventIoFile(const std::string path);
         //EventIoFile(std::string path, std::istream& stream);
         //void read_all_headers();
-        std::vector<std::vector<float> > next();
 
+        Event next_event();
     };
-
-
 } //namespace EventIo
