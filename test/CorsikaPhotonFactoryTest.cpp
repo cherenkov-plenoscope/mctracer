@@ -53,8 +53,8 @@ TEST_F(CorsikaPhotonFactoryTest, intersection_point_on_ground) {
                     );
 
                     // detect photons in ground sensor
-                    PhotonSensor::Sensors::reset_all_sesnors(&sensor_list);
-                    PhotonSensor::Sensors::assign_photons_to_sensors(&photons, &sensor_list);
+                    PhotonSensors::reset_all_sesnors(&sensor_list);
+                    PhotonSensors::assign_photons_to_sensors(&photons, &sensor_list);
 
                     std::vector<std::vector<double>> xyt = sensor.get_arrival_table();
 
@@ -305,8 +305,8 @@ TEST_F(CorsikaPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         );
 
         // detect photons in sensors
-        PhotonSensor::Sensors::reset_all_sesnors(&sensor_list);
-        PhotonSensor::Sensors::assign_photons_to_sensors(&photons, &sensor_list);
+        PhotonSensors::reset_all_sesnors(&sensor_list);
+        PhotonSensors::assign_photons_to_sensors(&photons, &sensor_list);
 
         std::vector<std::vector<double>> id_time = sensor.get_arrival_table();
         double mean_arrival_time = get_mean_along_column(id_time,4);

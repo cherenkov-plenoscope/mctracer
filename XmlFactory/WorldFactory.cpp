@@ -713,7 +713,7 @@ Frame* WorldFactory::world(){
 }
 //------------------------------------------------------------------------------
 std::vector<PhotonSensor::Sensor*>* WorldFactory::sensors_in_world()const {
-	PhotonSensor::Sensors::sort_photon_sensors_based_on_frames(sensors);
+	PhotonSensors::sort_photon_sensors_based_on_frames(sensors);
 	return sensors;
 }
 //------------------------------------------------------------------------------

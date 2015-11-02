@@ -128,8 +128,8 @@ TEST_F(PlenopticTest, check_lensmaker_on_optical_table_with_lens) {
 		);
 
 		// detect photons in sensors
-		PhotonSensor::Sensors::reset_all_sesnors(&sensor_list);
-		PhotonSensor::Sensors::assign_photons_to_sensors(photons, &sensor_list);
+		PhotonSensors::reset_all_sesnors(&sensor_list);
+		PhotonSensors::assign_photons_to_sensors(photons, &sensor_list);
 
 		std::vector<std::vector<double>> intersects = 
 			sensor.get_arrival_table();

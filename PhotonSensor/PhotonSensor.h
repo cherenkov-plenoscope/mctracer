@@ -95,32 +95,33 @@ namespace PhotonSensor {
 		std::vector<std::vector<double>> get_arrival_table()const;
 	};
 	//--------------------------------------------------------------------------
-	namespace Sensors {
-
-		void reset_all_sesnors(
-			std::vector<Sensor*> *sensors
-		);
-		
-		void assign_photons_to_sensors(
-			const std::vector<Photon*> *photon_bunch, 
-			std::vector<Sensor*> *sensors
-		);
-
-		void assign_photon_to_sensors(
-			const Photon* photon,
-			std::vector<Sensor*> *sensors
-		);
-
-		void sort_photon_sensors_based_on_frames(
-			std::vector<Sensor*> *sensors
-		);
-
-		std::vector<Sensor*>::const_iterator 
-			get_upper_bound_for_final_frame_in_sensors(
-			const Frame* final_frame,
-			const std::vector<Sensor*>* sensors
-		);
-	} // PhotonSensors
-	//--------------------------------------------------------------------------
 } // PhotonSensor
+//------------------------------------------------------------------------------
+namespace PhotonSensors {
+
+	void reset_all_sesnors(
+		std::vector<PhotonSensor::Sensor*> *sensors
+	);
+	
+	void assign_photons_to_sensors(
+		const std::vector<Photon*> *photon_bunch, 
+		std::vector<PhotonSensor::Sensor*> *sensors
+	);
+
+	void assign_photon_to_sensors(
+		const Photon* photon,
+		std::vector<PhotonSensor::Sensor*> *sensors
+	);
+
+	void sort_photon_sensors_based_on_frames(
+		std::vector<PhotonSensor::Sensor*> *sensors
+	);
+
+	std::vector<PhotonSensor::Sensor*>::const_iterator 
+		get_upper_bound_for_final_frame_in_sensors(
+		const Frame* final_frame,
+		const std::vector<PhotonSensor::Sensor*>* sensors
+	);
+} // PhotonSensors
+//------------------------------------------------------------------------------
 #endif // __PHOTONSENSOR_H_INCLUDED__ 

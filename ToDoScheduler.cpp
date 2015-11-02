@@ -115,8 +115,8 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 	);
 
 	// detect photons in sensors
-	PhotonSensor::Sensors::reset_all_sesnors(sensors);
-	PhotonSensor::Sensors::assign_photons_to_sensors(photon_bunch, sensors);
+	PhotonSensors::reset_all_sesnors(sensors);
+	PhotonSensors::assign_photons_to_sensors(photon_bunch, sensors);
 
 	// write each sensors to file
 	uint sensor_conuter = 0;
@@ -197,8 +197,8 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 		);
 
 		// detect photons in sensors
-		PhotonSensor::Sensors::reset_all_sesnors(sensors);
-		PhotonSensor::Sensors::assign_photons_to_sensors(&photons, sensors);
+		PhotonSensors::reset_all_sesnors(sensors);
+		PhotonSensors::assign_photons_to_sensors(&photons, sensors);
 		
 		uint sensor_conuter = 0;
 		for(PhotonSensor::Sensor* sensor: *sensors) {
