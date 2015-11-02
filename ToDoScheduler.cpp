@@ -1,5 +1,5 @@
 #include "ToDoScheduler.h"
-#include "PhotonBunch.h"
+#include "Photons.h"
 #include "Tools/AsciiIo.h"
 #include "KeyValueMap.h"
 #include "XmlFactory/WorldFactory.h"
@@ -110,7 +110,7 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 	std::vector<Photon*>* photon_bunch = light_fab.get_photons();
 
 	// photon propagation
-	PhotonBunch::propagate_photons_in_world_with_settings(
+	Photons::propagate_photons_in_world_with_settings(
 		photon_bunch, world, &settings
 	);
 
@@ -140,7 +140,7 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 		);
 	}
 
-	PhotonBunch::delete_photons_and_history(photon_bunch);
+	Photons::delete_photons_and_history(photon_bunch);
 }
 //------------------------------------------------------------------------------
 void ToDoScheduler::propagate_photons_through_geometry()const {
@@ -192,7 +192,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 		array_ctrl->move_all_to_Az_Zd(az, zd);
 
 		// propagate the cherenkov photons in the world
-		PhotonBunch::propagate_photons_in_world_with_settings(
+		Photons::propagate_photons_in_world_with_settings(
 			&photons, world, &settings
 		);
 
@@ -224,7 +224,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 		}
 
 		// wipe out the cherenkov photons which have just been propagated
-		PhotonBunch::delete_photons_and_history(&photons);
+		Photons::delete_photons_and_history(&photons);
 	}
 }
 //------------------------------------------------------------------------------
@@ -269,7 +269,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 				event.use_once_more_and_get_photon_bunch();
 
 			// propagate the cherenkov photons in the world
-			PhotonBunch::propagate_photons_in_world_with_settings(
+			Photons::propagate_photons_in_world_with_settings(
 				photons, world, &settings
 			);
 
@@ -292,7 +292,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 			}
 
 			// wipe out the cherenkov photons which have just been propagated
-			PhotonBunch::delete_photons_and_history(photons);
+			Photons::delete_photons_and_history(photons);
 			std::cout << event_counter << "\n";
 		}
 	}
@@ -336,14 +336,14 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 				event.use_once_more_and_get_photon_bunch();
 
 			// propagate the cherenkov photons in the world
-			PhotonBunch::propagate_photons_in_world_with_settings(
+			Photons::propagate_photons_in_world_with_settings(
 				photons, world, &settings
 			);
 			std::cout << "event_counter: " << event_counter << "\n";
 			
 			uint photon_counter = 0;
 	
-			PhotonBunch::Trajectories trayect_fab(photons);
+			Photons::Trajectories trayect_fab(photons);
 
 			while(trayect_fab.has_still_trajectories_left() && photon_counter < 25) {
 
@@ -355,7 +355,7 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 				free_orb.continue_with_new_scenery_and_settings(&SWorld, &settings);
 			}
 			// wipe out the cherenkov photons which have just been propagated
-			PhotonBunch::delete_photons_and_history(photons);
+			Photons::delete_photons_and_history(photons);
 		}
 	}
 }

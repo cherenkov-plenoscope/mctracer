@@ -16,7 +16,7 @@ LightSourceFromConfig::LightSourceFromConfig(const KeyValueMap::Map _config) {
 //------------------------------------------------------------------------------
 void LightSourceFromConfig::point_like_source() {
 	photon_bunch = 
-		PhotonBunch::Source::point_like_towards_z_opening_angle_num_photons(
+		Photons::Source::point_like_towards_z_opening_angle_num_photons(
 			Deg2Rad(config.get_value_for_key_as_double("opening_angle_in_deg")),
 			config.get_value_for_key_as_int("number_of_photons")
 		);
@@ -24,7 +24,7 @@ void LightSourceFromConfig::point_like_source() {
 //------------------------------------------------------------------------------
 void LightSourceFromConfig::parallel_from_disc() {
 	photon_bunch = 
-		PhotonBunch::Source::parallel_towards_z_from_xy_disc(
+		Photons::Source::parallel_towards_z_from_xy_disc(
 			config.get_value_for_key_as_double("disc_radius_in_m"),
 			config.get_value_for_key_as_int("number_of_photons")
 		);
@@ -57,7 +57,7 @@ void LightSourceFromConfig::transform_photons() {
 	HomoTrafo3D Trafo;
 	Trafo.set_transformation(source_rot, source_pos);
 
-	PhotonBunch::transform_all_photons_multi_thread(Trafo, photon_bunch);
+	Photons::transform_all_photons_multi_thread(Trafo, photon_bunch);
 }
 //------------------------------------------------------------------------------
 std::vector<Photon*>* LightSourceFromConfig::get_photons() {

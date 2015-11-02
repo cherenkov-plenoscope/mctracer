@@ -13,7 +13,7 @@
 #include <vector>
 
 //=================================
-namespace PhotonBunch {
+namespace Photons {
 
 	std::string get_print(
 		const std::vector<Photon*> *photon_bunch

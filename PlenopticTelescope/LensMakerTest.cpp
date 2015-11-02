@@ -104,7 +104,7 @@ TEST_F(PlenopticTest, check_lensmaker_on_optical_table_with_lens) {
 
 	    // light source
 	    std::vector<Photon*>* photons = 
-		    PhotonBunch::Source::parallel_towards_z_from_xy_disc(
+		    Photons::Source::parallel_towards_z_from_xy_disc(
 				outer_lens_radius*0.85, // 0.85 inner hex radius
 				number_of_photons_per_run
 			);
@@ -115,7 +115,7 @@ TEST_F(PlenopticTest, check_lensmaker_on_optical_table_with_lens) {
 			Vector3D(0.0, 0.0 ,2.0)
 		);
 
-		PhotonBunch::transform_all_photons(Trafo, photons);
+		Photons::transform_all_photons(Trafo, photons);
 
 		// propagation settings
 		TracerSettings settings;	
@@ -123,7 +123,7 @@ TEST_F(PlenopticTest, check_lensmaker_on_optical_table_with_lens) {
 		settings.SetStoreOnlyLastIntersection(false);
 
 		// photon propagation
-		PhotonBunch::propagate_photons_in_world_with_settings(
+		Photons::propagate_photons_in_world_with_settings(
 			photons, &optical_table, &settings
 		);
 
@@ -158,7 +158,7 @@ TEST_F(PlenopticTest, check_lensmaker_on_optical_table_with_lens) {
 		sigma_psf_vs_image_sensor_distance.push_back(sqrt(sx*sx+sy*sy));
 		image_sensor_distances.push_back(image_sensor_disc_distance);
 
-		PhotonBunch::delete_photons_and_history(photons);
+		Photons::delete_photons_and_history(photons);
 	}
 
 	double min_sigma_psf = *std::min_element(

@@ -4,11 +4,11 @@
 #include "Tools/AsciiIo.h"
 
 #include "gtest/gtest.h"
-#include "Core/PhotonBunch.h"
+#include "Core/Photons.h"
 
-class PhotonBunchTest : public ::testing::Test {};
+class PhotonsTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
-TEST_F(PhotonBunchTest, raw_row2photon) {
+TEST_F(PhotonsTest, raw_row2photon) {
 
     Vector3D dir(66.6, 57.8, 99.9);
     dir.normalize();
@@ -18,7 +18,7 @@ TEST_F(PhotonBunchTest, raw_row2photon) {
         0.0, 13.0, 37.0, 42.0, dir.x(), dir.y(), dir.z(), 433.5
     };
     
-    Photon* ph = PhotonBunch::raw_row2photon(raw_row);
+    Photon* ph = Photons::raw_row2photon(raw_row);
 
     EXPECT_EQ(ph->get_id(), raw_row[0]);
     EXPECT_EQ(ph->Support().x(), raw_row[1]);
@@ -30,7 +30,7 @@ TEST_F(PhotonBunchTest, raw_row2photon) {
     EXPECT_EQ(ph->get_wavelength(), raw_row[7]);
 }
 //------------------------------------------------------------------------------
-TEST_F(PhotonBunchTest, photon2raw_row) {
+TEST_F(PhotonsTest, photon2raw_row) {
 
     Vector3D sup(13.0, 37.0, 42.0);
     Vector3D dir(66.6, 57.8, 99.9);
@@ -40,7 +40,7 @@ TEST_F(PhotonBunchTest, photon2raw_row) {
     Photon* ph = new Photon(sup, dir, wavelength);
     ph->set_id(id);
     
-    std::vector<double> raw_row = PhotonBunch::photon2raw_row(ph);
+    std::vector<double> raw_row = Photons::photon2raw_row(ph);
 
     ASSERT_EQ(8, raw_row.size());
 
@@ -54,7 +54,7 @@ TEST_F(PhotonBunchTest, photon2raw_row) {
     EXPECT_EQ(ph->get_wavelength(), raw_row[7]);
 }
 //------------------------------------------------------------------------------
-TEST_F(PhotonBunchTest, bunch2raw_matrix2bunch) {
+TEST_F(PhotonsTest, bunch2raw_matrix2bunch) {
 
     int number_of_photons = 1e3;
 
@@ -75,12 +75,12 @@ TEST_F(PhotonBunchTest, bunch2raw_matrix2bunch) {
     }
 
     std::vector<std::vector<double>> raw_matrix = 
-        PhotonBunch::photons2raw_matrix(photon_bunch);
+        Photons::photons2raw_matrix(photon_bunch);
 
     ASSERT_EQ(number_of_photons, raw_matrix.size());
 
     std::vector<Photon*> *photon_bunch2 = 
-        PhotonBunch::raw_matrix2photons(raw_matrix);
+        Photons::raw_matrix2photons(raw_matrix);
 
     ASSERT_EQ(number_of_photons, photon_bunch2->size());
 
@@ -100,7 +100,7 @@ TEST_F(PhotonBunchTest, bunch2raw_matrix2bunch) {
     }
 }
 //------------------------------------------------------------------------------
-TEST_F(PhotonBunchTest, bunch2raw_matrix2file) {
+TEST_F(PhotonsTest, bunch2raw_matrix2file) {
 
     int number_of_photons = 1e3;
 
@@ -122,12 +122,12 @@ TEST_F(PhotonBunchTest, bunch2raw_matrix2file) {
 
     // write to text file
     AsciiIo::write_table_to_file(
-        PhotonBunch::photons2raw_matrix(photon_bunch1),
+        Photons::photons2raw_matrix(photon_bunch1),
         "numeric_table_IO/my_big_photon_list.txt"
     );
 
     // read back again from text file
-    std::vector<Photon*> *photon_bunch2 = PhotonBunch::raw_matrix2photons(
+    std::vector<Photon*> *photon_bunch2 = Photons::raw_matrix2photons(
         AsciiIo::gen_table_from_file("numeric_table_IO/my_big_photon_list.txt")
     );  
 

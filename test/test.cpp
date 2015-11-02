@@ -31,7 +31,7 @@
 #include "AsciiIoTest.cpp"
 #include "KeyValueMapTest.cpp"
 #include "FunctionLinInterpolTest.cpp"
-#include "PhotonBunchTest.cpp"
+#include "PhotonsTest.cpp"
 #include "PostInitFrameSpeed.cpp"
 #include "EventIoTest.cpp"
 #include "CorsikaPhotonFactoryTest.cpp"

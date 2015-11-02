@@ -13,7 +13,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/RayForPropagation.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TracerSettings.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Photon.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/PhotonBunch.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Photons.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PropagationEnvironment.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp
@@ -35,7 +35,7 @@ set(HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/RayForPropagation.h
 	${CMAKE_CURRENT_SOURCE_DIR}/TracerSettings.h
 	${CMAKE_CURRENT_SOURCE_DIR}/Photon.h
-	${CMAKE_CURRENT_SOURCE_DIR}/PhotonBunch.h
+	${CMAKE_CURRENT_SOURCE_DIR}/Photons.h
 	${CMAKE_CURRENT_SOURCE_DIR}/PropagationEnvironment.h
 	${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.h
 	${CMAKE_CURRENT_SOURCE_DIR}/Color.h

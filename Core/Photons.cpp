@@ -1,9 +1,9 @@
-#include "PhotonBunch.h"
+#include "Photons.h"
 #include <omp.h>
 #include <sstream>
 #include "TrajectoryFactory.h"
 
-namespace PhotonBunch {
+namespace Photons {
 	//--------------------------------------------------------------------------
 	std::string get_print(
 		const std::vector<Photon*> *photon_bunch

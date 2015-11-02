@@ -48,7 +48,7 @@ TEST_F(CorsikaPhotonFactoryTest, intersection_point_on_ground) {
                     settings.SetStoreOnlyLastIntersection(false);
 
                     // photon propagation down to the ground
-                    PhotonBunch::propagate_photons_in_world_with_settings(
+                    Photons::propagate_photons_in_world_with_settings(
                         &photons, &world, &settings
                     );
 
@@ -300,7 +300,7 @@ TEST_F(CorsikaPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         settings.SetStoreOnlyLastIntersection(false);
 
         // photon propagation
-        PhotonBunch::propagate_photons_in_world_with_settings(
+        Photons::propagate_photons_in_world_with_settings(
             &photons, &world, &settings
         );
 

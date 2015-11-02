@@ -8,7 +8,7 @@
 #include "../Plane.h"
 #include "Cameras/FreeOrbitCamera.h"
 #include "Core/PseudoRandomNumberGenerator.h"
-#include "Core/PhotonBunch.h"
+#include "Core/Photons.h"
 #include "Core/Function/ConstantFunction.h"
 
 using namespace std;
@@ -259,13 +259,13 @@ TEST_F(PhotonTest, Reflections){
                 photon_bunch->push_back(P);
         }
 
-        PhotonBunch::propagate_photons_in_world_with_settings(
+        Photons::propagate_photons_in_world_with_settings(
                 photon_bunch, &world, &setup
         );
 
         EXPECT_NEAR(
                 reflection_coefficient, 
-                double(PhotonBunch::get_number_of_photnons_absorbed_in_object(photon_bunch, &absorber))/
+                double(Photons::get_number_of_photnons_absorbed_in_object(photon_bunch, &absorber))/
                 double(photon_bunch->size()),
                 2e-2
         );
