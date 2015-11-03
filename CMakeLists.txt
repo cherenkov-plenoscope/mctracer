@@ -27,13 +27,7 @@ if(OPENMP_FOUND)
 endif()
 
 # OpenCV
-find_package(OpenCV REQUIRED)
-if(NOT OpenCV_FOUND)
-	message(STATUS "OpenCV not found")
-	return()
-else()
-	message(STATUS "OpenCV was found")
-endif()
+find_package(OpenCV 2.4.8 REQUIRED)
 #-------------------------------------------------------------------------------
 # Cmake
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
