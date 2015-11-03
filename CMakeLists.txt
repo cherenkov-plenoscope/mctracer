@@ -28,6 +28,10 @@ endif()
 
 # OpenCV
 find_package(OpenCV REQUIRED)
+if(NOT OpenCV_FOUND)
+	message(STATUS "OpenCV not found")
+	return()
+endif()
 #-------------------------------------------------------------------------------
 # Cmake
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
