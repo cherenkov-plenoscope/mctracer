@@ -14,7 +14,7 @@
 #include "TelescopeArrayControl.h"
 #include "SphereCapWithHexagonalBound.h"
 #include "SphereCapWithCylinderBound.h"
-#include "FreeOrbitCamera.h"
+#include "Cameras/FreeOrbitCamera.h"
 #include "Core/Function/Func1DFunction.h"
 #include "Core/Function/ConstantFunction.h"
 #include "Core/Function/Polynom3Function.h"

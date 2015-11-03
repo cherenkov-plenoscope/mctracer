@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "Rotation3D.h"
+#include "Core/Rotation3D.h"
 #include "XmlIO/XmlFileIo.h"
 
 //------------------------------------------------------------------------------

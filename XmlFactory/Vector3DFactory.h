@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "Vector3D.h"
+#include "Core/Vector3D.h"
 #include "XmlIO/XmlFileIo.h"
 
 //------------------------------------------------------------------------------

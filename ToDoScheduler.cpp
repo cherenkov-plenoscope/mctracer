@@ -1,5 +1,5 @@
 #include "ToDoScheduler.h"
-#include "Photons.h"
+#include "Core/Photons.h"
 #include "Tools/AsciiIo.h"
 #include "KeyValueMap.h"
 #include "XmlFactory/WorldFactory.h"

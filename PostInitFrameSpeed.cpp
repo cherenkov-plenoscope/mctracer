@@ -3,7 +3,7 @@
 #include <sstream>
 #include <math.h>
 #include "SegmetedReflectorGenerator.h"
-#include "FreeOrbitCamera.h"
+#include "Cameras/FreeOrbitCamera.h"
 
 #include "gtest/gtest.h"
 
