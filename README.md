@@ -7,6 +7,7 @@ Installation tested on a fresh Ububtu 14.04 LTS VM on 19 Sep 2015.
 
 ### tools needed to get and build mctracer:
 * git
+* g++ >= 4.8
 * cmake
 
 ### dependencies of mctracer:
