@@ -132,6 +132,8 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 		header << "sensor id: " << sensor->get_id() << "\n";
 		header << "sensor name: " << sensor->get_frame()->get_path_in_tree_of_frames() << "\n";
 		header << source_config.get_print();
+		header << "-------------\n";
+		header << sensor->get_arrival_table_header();
 
 		AsciiIo::write_table_to_file_with_header(
 			sensor->get_arrival_table(),
@@ -215,6 +217,8 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 			header << "sensor name: " << sensor->get_frame()->get_path_in_tree_of_frames() << "\n";
 			header << "-------------\n";
 			header << event.header.mmcs_event_header.get_print() << "\n";
+			header << "-------------\n";
+			header << sensor->get_arrival_table_header();
 
 			AsciiIo::write_table_to_file_with_header(
 				sensor->get_arrival_table(),

@@ -28,4 +28,8 @@ namespace PhotonSensor {
 		return empty;
 	}
 	//--------------------------------------------------------------------------
+	std::string Sensor::get_arrival_table_header()const {
+		return "";
+	}
+	//--------------------------------------------------------------------------
 } // PhotonSensor
