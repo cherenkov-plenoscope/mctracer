@@ -34,6 +34,7 @@ Last thing is to export $OpenCV_DIR to the CMAKE_INSTALL_PREFIX, if it is not /u
 ```
 export OpenCV_DIR=<CMAKE_INSTALL_PREFIX>
 ```
+This ensures that CMakeLists.cmake finds the correct version of OpenCV.
 
 
 gtest is a header only library, but in order to use it
