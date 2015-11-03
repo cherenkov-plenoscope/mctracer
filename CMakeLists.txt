@@ -1,4 +1,4 @@
-# mctracer scientific raytracing
+# mctracer scientific ray tracing
 # Author Sebastian Mueller
 #-------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 2.8)
@@ -6,7 +6,7 @@ set (CMAKE_CXX_FLAGS "-std=c++11 -Wall -pedantic -O2 -g -I")
 #-------------------------------------------------------------------------------
 project(mctracer)
 #-------------------------------------------------------------------------------
-# Assert compieler supports C++ 11
+# Assert compiler supports C++ 11
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
@@ -28,6 +28,8 @@ endif()
 
 # OpenCV
 find_package(OpenCV 2.4.8 REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
+link_directories(${OpenCV_LIB_DIR})
 #-------------------------------------------------------------------------------
 # Cmake
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
@@ -89,7 +91,7 @@ include_directories(/usr/include)
 include_directories(/usr/local/include)
 target_link_libraries(mct ${OpenCV_LIBS})
 #-------------------------------------------------------------------------------
-# mctracer executeable
+# mctracer executable
 
 add_executable(mctracer mctracer.cpp)
 target_link_libraries(mctracer mct)
@@ -106,7 +108,7 @@ target_link_libraries(mctracerTests gtest gtest_main)
 target_link_libraries(mctracerTests mct)
 #add_test(mctracerTests mctracerTests)
 #-------------------------------------------------------------------------------
-# GTest executeable examples
+# GTest executable examples
 
 add_executable(mctracerExamples ./Docu/examples/examples.cpp)
 target_link_libraries(mctracerExamples gtest gtest_main)
