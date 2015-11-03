@@ -31,6 +31,8 @@ find_package(OpenCV REQUIRED)
 if(NOT OpenCV_FOUND)
 	message(STATUS "OpenCV not found")
 	return()
+else()
+	message(STATUS "OpenCV was found")
 endif()
 #-------------------------------------------------------------------------------
 # Cmake
