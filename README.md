@@ -10,7 +10,7 @@ Installation tested on a fresh Ububtu 14.04 LTS VM on 19 Sep 2015.
 * cmake
 
 ### dependencies of mctracer:
-* libopencv-dev
+* libopencv-dev >= 2.4.0
 * libgtest-dev
 
 gtest is a header only library, but in order to use it
