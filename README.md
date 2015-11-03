@@ -14,6 +14,23 @@ Installation tested on a fresh Ububtu 14.04 LTS VM on 19 Sep 2015.
 * libopencv-dev >= 2.4.0
 * libgtest-dev
 
+opencv can be installed with apt-get when running Ubuntu >= 14. Otherwise one has to install it locally by hand. This is easiest done by getting it from the git repo:
+
+'''
+https://github.com/itseez/opencv
+'''
+
+then, for instance
+'''
+#!bash
+cd ~/opencv
+mkdir release
+cd release
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
+make
+'''
+
+
 gtest is a header only library, but in order to use it
 one needs to build it first. See this thread on askubuntu
 for details:
