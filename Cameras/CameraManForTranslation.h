@@ -13,6 +13,7 @@
 //=================================
 class CameraManForTranslation {
 public:
+
 	CameraManForTranslation(CameraDevice* camera_to_work_with);
 	void set_default_position();
 	void set_default_position(const Vector3D default_pos);
@@ -24,6 +25,7 @@ public:
 	void move_up();
 	void move_down();
 private:
+
 	CameraDevice* camera;
 	bool verbosity = false;
 	Vector3D default_position = Vector3D::null;
