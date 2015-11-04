@@ -36,7 +36,7 @@
 #include "EventIoTest.cpp"
 #include "CorsikaPhotonFactoryTest.cpp"
 #include "FunctionTest.cpp"
-#include "../PlenopticTelescope/LensMakerTest.cpp"
+#include "LensMakerTest.cpp"
 #include "../Geometry/StereoLitographyIoTest.cpp"
 #include "RandomGeneratorTest.cpp"
 

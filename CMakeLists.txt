@@ -67,6 +67,7 @@ set(SOURCE
 
 	${CMAKE_CURRENT_SOURCE_DIR}/HexGridXy.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SegmetedReflectorGenerator.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/LensMaker.cpp
 	
 	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLens.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLensHexBound.cpp

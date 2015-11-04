@@ -1,12 +1,10 @@
 set(SOURCE
    	${SOURCE}
   	${CMAKE_CURRENT_SOURCE_DIR}/PlenopticIactConfig.cpp
-  	${CMAKE_CURRENT_SOURCE_DIR}/LensMaker.cpp
    	PARENT_SCOPE
 )
 set(HEADERS
 	${HEADERS}
   	${CMAKE_CURRENT_SOURCE_DIR}/PlenopticIactConfig.h
-  	${CMAKE_CURRENT_SOURCE_DIR}/LensMaker.h
 	PARENT_SCOPE
 )
