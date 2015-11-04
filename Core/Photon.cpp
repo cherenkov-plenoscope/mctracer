@@ -12,6 +12,19 @@ Photon::Photon(
 	init_propagation_history();	
 }
 //------------------------------------------------------------------------------
+Photon::Photon(
+	const Vector3D support,
+	const Vector3D direction,
+	const double wavelength,
+	const PhotonMcTruth* mc_truth
+) {
+	SetRay(support, direction);
+	this->wavelength = wavelength;
+	this->mc_truth = mc_truth;
+	assert_wavelength_is_positive();
+	init_propagation_history();	
+}
+//------------------------------------------------------------------------------
 void Photon::assert_wavelength_is_positive()const {
 	
 	if(wavelength <= 0.0 ) {
@@ -32,6 +45,10 @@ Photon::Photon(
 //------------------------------------------------------------------------------
 double Photon::get_wavelength()const {
 	return wavelength;
+}
+//------------------------------------------------------------------------------
+const PhotonMcTruth* Photon::get_mc_truth()const{
+	return mc_truth;
 }
 //------------------------------------------------------------------------------
 std::string Photon::get_print()const {
@@ -194,5 +211,19 @@ double Photon::get_time_of_flight()const {
 	}
 	
 	return time_of_flight;
+}
+//------------------------------------------------------------------------------
+void Photon::delete_history() {
+	
+	if( mc_truth != &PhotonMcTruth::void_truth ){
+		delete mc_truth;
+	}
+
+	for(uint i=0; i<intersection_history->size(); i++)
+		delete intersection_history->at(i);
+	delete intersection_history;
+	
+	interaction_type_history->clear();
+	delete interaction_type_history;
 }
 //------------------------------------------------------------------------------

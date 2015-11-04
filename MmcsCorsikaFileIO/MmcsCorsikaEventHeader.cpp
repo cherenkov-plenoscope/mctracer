@@ -146,5 +146,7 @@ std::string MmcsCorsikaEventHeader::get_print()const {
 	out << " E.................... " << total_energy_in_GeV << "GeV\n";
 	out << " start altitude....... " << starting_altitude_in_g_per_cm2 << "g/cm^2\n";
 	out << " first interaction z.. " << z_coordinate_aka_height_of_first_interaction_in_cm*1e-2 << "m\n";
+	out << " n. obs. levels....... " << number_of_observation_levels << "\n";
+	//out << " obs. height a.s.l.... " << height_of_level_in_cm.at(0)*1e-2 << "m\n";
 	return out.str();
 }

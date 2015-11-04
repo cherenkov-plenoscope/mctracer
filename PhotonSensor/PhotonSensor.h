@@ -84,7 +84,8 @@ namespace PhotonSensor {
 			double x_intersect;
 			double y_intersect;
 			double theta_x;
-			double theta_y;		
+			double theta_y;
+			double production_height_over_sea_level;		
 		};
 
 		std::vector<XYtXtyT> arrival_table;

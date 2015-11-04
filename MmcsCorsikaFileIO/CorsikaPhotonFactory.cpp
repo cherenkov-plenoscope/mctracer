@@ -1,5 +1,6 @@
 #include "CorsikaPhotonFactory.h"
 #include "Core/PhysicalConstants.h"
+#include "Core/PhotonMcTruth.h"
 //------------------------------------------------------------------------------
 CorsikaPhotonFactory::CorsikaPhotonFactory(
 	const std::vector<float>& _corsika_photon, 
@@ -37,8 +38,11 @@ Photon* CorsikaPhotonFactory::get_photon() {
 		ray_running_upwards_from_ground_to_pos_of_production.
 		PositionOnRay(ray_parameter_for_production_point());
 
+	PhotonMcTruth* mc_truth = new PhotonMcTruth();
+	mc_truth->production_height_over_sea_level = production_height_in_m();
+
 	Photon* cherenkov_photon = 
-		new Photon(causal_support, causal_dir, wavelength_in_m());	
+		new Photon(causal_support, causal_dir, wavelength_in_m(), mc_truth);	
 
 	cherenkov_photon->set_id(id);
 

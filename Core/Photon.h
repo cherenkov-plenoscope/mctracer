@@ -9,6 +9,7 @@
 //=================================
 // included dependencies
 #include "Core/RayForPropagation.h"
+#include "Core/PhotonMcTruth.h"
 #include "FresnelRefractionAndReflection.h"
 
 //=================================
@@ -16,8 +17,8 @@ class Photon :public RayForPropagation{
 protected:
 
 	double wavelength;
-	//polarisation?
-	//phase?
+	const PhotonMcTruth* mc_truth = &PhotonMcTruth::void_truth;
+
 public:
 	Photon(
 		const Vector3D support,
@@ -25,11 +26,19 @@ public:
 		const double wavelength
 	);
 
+	Photon(
+		const Vector3D support,
+		const Vector3D direction,
+		const double wavelength,
+		const PhotonMcTruth* mc_truth
+	);
+
 	Photon(const Photon* photon_to_be_carried_on);
 
 	void propagate_in(PropagationEnvironment* environment);
 
 	double get_wavelength()const;
+	const PhotonMcTruth* get_mc_truth()const;
 
 	std::string get_print()const;
 
@@ -43,6 +52,8 @@ public:
 	class BadWaveLength : public TracerException {
 		using TracerException::TracerException;
 	};		
+
+	void delete_history();
 private:
 	Photon(const double new_wavelength);
 

@@ -83,7 +83,7 @@ public:
 
 	virtual double get_time_of_flight()const;
 	
-	void delete_history();
+	virtual void delete_history();
 
 	void transform(const HomoTrafo3D *T);
 	
