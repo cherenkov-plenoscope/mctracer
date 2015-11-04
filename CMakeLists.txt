@@ -1,8 +1,8 @@
 # mctracer scientific ray tracing
-# Author Sebastian Mueller
+# Author: Sebastian Mueller
 #-------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 2.8)
-set (CMAKE_CXX_FLAGS "-std=c++11 -Wall -pedantic -O2 -g -I")
+set (CMAKE_CXX_FLAGS "-std=c++11 -Wall -pedantic -O3 -g -I")
 #-------------------------------------------------------------------------------
 project(mctracer)
 #-------------------------------------------------------------------------------
@@ -94,16 +94,11 @@ add_executable(mctracer mctracer.cpp)
 target_link_libraries(mctracer mct)
 #-------------------------------------------------------------------------------
 # GTest unit and integration tests
-
-find_package(GTest REQUIRED)
-include_directories(${GTEST_INCLUDE_DIRS})
-#enable_testing()
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+include_directories("${PROJECT_SOURCE_DIR}/gtest-1.7.0")
 
 add_executable(mctracerTests ./test/test.cpp)
 target_link_libraries(mctracerTests gtest gtest_main)
 target_link_libraries(mctracerTests mct)
-#add_test(mctracerTests mctracerTests)
 #-------------------------------------------------------------------------------
 # GTest executable examples
 
