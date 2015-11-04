@@ -2,11 +2,11 @@
 
 namespace PhotonSensor {
 	//--------------------------------------------------------------------------
-	void X_Y_thetaX_thetaY_Time::reset() {
+	void PerfectSensor::reset() {
 		arrival_table.clear();
 	}
 	//--------------------------------------------------------------------------
-	void X_Y_thetaX_thetaY_Time::assign_photon_to_this_sensor(const Photon* photon) {
+	void PerfectSensor::assign_photon_to_this_sensor(const Photon* photon) {
 		
 		if(	
 			photon->get_final_intersection()->get_intersecting_object() == 
@@ -37,7 +37,7 @@ namespace PhotonSensor {
 		}
 	}
 	//--------------------------------------------------------------------------
-	std::vector<std::vector<double>> X_Y_thetaX_thetaY_Time::get_arrival_table()const {
+	std::vector<std::vector<double>> PerfectSensor::get_arrival_table()const {
 		
 		std::vector<std::vector<double>> output_table;
 
@@ -59,7 +59,7 @@ namespace PhotonSensor {
 		return output_table;
 	}
 	//--------------------------------------------------------------------------
-	std::string X_Y_thetaX_thetaY_Time::get_arrival_table_header()const {
+	std::string PerfectSensor::get_arrival_table_header()const {
 		std::stringstream header;
 		header << "x: [m], intersection on principal aperture plane\n";
 		header << "y: [m], intersection on principal aperture plane\n";

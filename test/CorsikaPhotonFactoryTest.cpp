@@ -36,7 +36,7 @@ TEST_F(CorsikaPhotonFactoryTest, intersection_point_on_ground) {
                     ground.set_inner_color(ground_color);
                     ground.set_disc_radius(1e3);
 
-                    PhotonSensor::X_Y_Time sensor(ground_sensor_id, &ground);
+                    PhotonSensor::PerfectSensor sensor(ground_sensor_id, &ground);
                     std::vector<PhotonSensor::Sensor*> sensor_list = {&sensor};
 
                     world.set_mother_and_child(&ground);
@@ -288,7 +288,7 @@ TEST_F(CorsikaPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         ground.set_inner_color(ground_color);
         ground.set_disc_radius(1e7);
 
-        PhotonSensor::X_Y_thetaX_thetaY_Time sensor(ground_sensor_id, &ground);
+        PhotonSensor::PerfectSensor sensor(ground_sensor_id, &ground);
         std::vector<PhotonSensor::Sensor*> sensor_list = {&sensor};
 
         world.set_mother_and_child(&ground);

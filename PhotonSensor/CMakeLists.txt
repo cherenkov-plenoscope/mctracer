@@ -2,9 +2,7 @@ set(SOURCE
    	${SOURCE}
 	${CMAKE_CURRENT_SOURCE_DIR}/PhotonSensor.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PhotonSensors.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/X_Y_Time.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ArrivalTimeSinceEmission.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/X_Y_thetaX_thetaY_Time.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/PerfectSensor.cpp
    	PARENT_SCOPE
 )
 
