@@ -12,7 +12,6 @@ Installation tested on a fresh Ububtu 14.04 LTS VM on 19 Sep 2015.
 
 ### dependencies of mctracer:
 * libopencv-dev >= 2.4.0
-* libgtest-dev
 
 opencv can be installed with apt-get when running Ubuntu >= 14. Otherwise one has to install it locally by hand. This is easiest done by getting it from the git repo:
 
@@ -36,19 +35,6 @@ export OpenCV_DIR=<CMAKE_INSTALL_PREFIX>
 ```
 This ensures that CMakeLists.txt finds the correct version of OpenCV.
 
-
-gtest is a header only library, but in order to use it
-one needs to build it first. See this thread on askubuntu
-for details:
-http://askubuntu.com/questions/145887/why-no-library-files-installed-for-google-test
-```
-#!bash
-cd /usr/src/gtest
-sudo cmake .
-sudo make
-sudo mv libg* /usr/lib/
-```
-
 ### set up directories and get mctracer:
 ```
 #!bash
@@ -59,9 +45,9 @@ mkdir build
 ```
 The /build directory is best located side by side to the /mctracer directory.
 
-|-> yourDirectorieToPlayWithMctracer
-	|-> mctracer
-	|-> build
+- yourDirectorieToPlayWithMctracer
+	- mctracer
+	- build
 
 ### compile:
 ```
