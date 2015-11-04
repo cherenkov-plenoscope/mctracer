@@ -60,6 +60,7 @@ private:
 	uint iteration_counter = 0;
 	TimeStamp time_stamp;
 
+	int wait_for_user_key_stroke();
 	void toggle_stereo3D();
 	void create_CameraMen_to_safely_operate_the_flying_camera();
 	void start_free_orbit();

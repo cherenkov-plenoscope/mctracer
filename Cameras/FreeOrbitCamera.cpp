@@ -54,7 +54,7 @@ void FreeOrbitCamera::start_free_orbit(){
 			update_free_orbit_display();
 		
 		key_stroke_requires_image_update = true;
-		user_input_key = cvWaitKey(0);
+		user_input_key = wait_for_user_key_stroke();
 
 		switch(user_input_key){
 			case 't': toggle_stereo3D();
@@ -103,6 +103,10 @@ void FreeOrbitCamera::start_free_orbit(){
 		}
 	}
 	destroy_free_orbit_display();
+}
+//==============================================================================
+int FreeOrbitCamera::wait_for_user_key_stroke() {
+	return cvWaitKey(0);
 }
 //==============================================================================
 bool FreeOrbitCamera::it_is_time_again_to_show_the_help() {
