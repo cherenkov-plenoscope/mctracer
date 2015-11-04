@@ -20,7 +20,6 @@
 #include "Core/Function/Polynom3Function.h"
 #include "Core/Function/ConcatFunction.h"
 #include "Tools/AsciiIo.h"
-#include "PlenopticTelescope/PlenopticIactConfig.h"
 
 class SetUpScenery : public ::testing::Test {};
 //------------------------------------------------------------------------------
@@ -83,11 +82,3 @@ TEST_F(SetUpScenery, create_scenery) {
 using namespace Function;
 //--using_namespace_end--
 //------------------------------------------------------------------------------
-TEST_F(SetUpScenery, plenoptic_cfg) {
-
-    //PlenopticIactConfig cfg;
-    //std::cout << cfg.get_print();
-
-    SegmentedReflectorConfig rcfg;
-    std::cout << rcfg.get_print();
-}
