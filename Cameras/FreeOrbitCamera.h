@@ -27,8 +27,8 @@ class FreeOrbitCamera {
 // view can be modified by the user during run time.
 // The image is displayed in a additional window and not written to the
 // harddisk.
-// Above this one can take snapshots using a aperture camera set to the Mamiya 645
-// By using two spatial seperater cameras also 3D stereo images are possible
+// Above this one can take snapshots using a aperture camera.
+// Also 3D stereo images are possible
 public:
 	
 	FreeOrbitCamera(
