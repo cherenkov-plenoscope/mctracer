@@ -62,7 +62,7 @@ make
 ```
 #!bash
 cd mctracer/scenery
-../../build/mctracer --geometry hans.xml --render
+../../build/mctracer --geometry fact.xml --render
 
 ```
 
