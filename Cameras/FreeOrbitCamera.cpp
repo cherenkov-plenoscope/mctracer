@@ -67,6 +67,10 @@ void FreeOrbitCamera::start_free_orbit(){
 			break;
 			case 'd': Translation_operator->move_right();
 			break;
+			case 'q': Translation_operator->move_up();
+			break;
+			case 'e': Translation_operator->move_down();
+			break;
 			case 'n': FoV_operator->increase_FoV_when_possible();
 			break;
 			case 'm': FoV_operator->decrease_FoV_when_possible();
@@ -301,6 +305,8 @@ void FreeOrbitCamera::print_free_orbit_help_text()const{
 	out << " move backward...........[ s ]     look down...............[ k ]\n";
 	out << " move left...............[ a ]     look left...............[ j ]\n";
 	out << " move right..............[ d ]     look right..............[ l ]\n";
+	out << " move up.................[ q ]\n";
+	out << " move down...............[ e ]\n";
 	out << "\n";
 	out << "_Stereo3D_left:red_right:blue__   _Field_of_View_________________\n";
 	out << " on/off..................[ t ]     increace................[ n ]\n";

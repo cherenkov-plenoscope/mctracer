@@ -63,3 +63,19 @@ void CameraManForTranslation::move_right(const double step_in_m){
 	);
 	print_camera_moved_in_direction("right");
 }
+
+void CameraManForTranslation::move_up() {
+	camera->update_position(
+		camera->get_position_in_world() + 
+		Vector3D::unit_z*translation_increment() 
+	);
+	print_camera_moved_in_direction("up");	
+}
+
+void CameraManForTranslation::move_down() {
+	camera->update_position(
+		camera->get_position_in_world() - 
+		Vector3D::unit_z*translation_increment() 
+	);
+	print_camera_moved_in_direction("up");
+}

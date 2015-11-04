@@ -21,6 +21,8 @@ public:
 	void move_left();
 	void move_right();
 	void move_right(const double step_in_m);
+	void move_up();
+	void move_down();
 private:
 	CameraDevice* camera;
 	bool verbosity = false;
