@@ -13,20 +13,20 @@ void CameraManForTranslation::set_default_position(const Vector3D default_pos) {
 	camera->update_position(default_position);
 }
 
-void CameraManForTranslation::move_forward(){
+void CameraManForTranslation::move_for(){
 	camera->update_position(
 		camera->get_position_in_world() +
 		camera->get_normalized_pointing_direction()*translation_increment() 
 	);
-	print_camera_moved_in_direction("forward");
+	print_camera_moved_in_direction("for");
 }
 
-void CameraManForTranslation::move_backward(){
+void CameraManForTranslation::move_back(){
 	camera->update_position(
 		camera->get_position_in_world() -
 		camera->get_normalized_pointing_direction()*translation_increment() 
 	);
-	print_camera_moved_in_direction("backward");
+	print_camera_moved_in_direction("back");
 }
 
 void CameraManForTranslation::move_left(){

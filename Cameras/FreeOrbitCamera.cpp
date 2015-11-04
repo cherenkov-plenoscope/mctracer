@@ -59,9 +59,9 @@ void FreeOrbitCamera::start_free_orbit(){
 		switch(user_input_key){
 			case 't': toggle_stereo3D();
 			break;
-			case 'w': Translation_operator->move_forward();
+			case 'w': Translation_operator->move_for();
 			break;
-			case 's': Translation_operator->move_backward();
+			case 's': Translation_operator->move_back();
 			break;
 			case 'a': Translation_operator->move_left();
 			break;

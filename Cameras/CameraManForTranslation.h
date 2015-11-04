@@ -16,8 +16,8 @@ public:
 	CameraManForTranslation(CameraDevice* camera_to_work_with);
 	void set_default_position();
 	void set_default_position(const Vector3D default_pos);
-	void move_forward();
-	void move_backward();
+	void move_for();
+	void move_back();
 	void move_left();
 	void move_right();
 	void move_right(const double step_in_m);
