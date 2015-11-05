@@ -30,14 +30,8 @@ void SphereCapWithCylinderBound::restrict_cap_radius_to_curvature_radius() {
 //------------------------------------------------------------------------------
 std::string SphereCapWithCylinderBound::get_print()const {
 	std::stringstream out;
-	out << get_frame_print();
-	out << get_surface_print();
-	out << get_SphereCapCylinderBound_print();
-	return out.str();
-}
-//------------------------------------------------------------------------------
-std::string SphereCapWithCylinderBound::get_SphereCapCylinderBound_print()const {
-	std::stringstream out;
+	out << SurfaceEntity::get_print();
+
 	out << "SphereCapWithCylinderBound:\n";
 	out << "| focal length: " << focal_length << "m\n";
 	out << "| curvature radius: " << curvature_radius << "m\n";

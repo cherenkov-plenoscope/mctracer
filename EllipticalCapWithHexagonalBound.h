@@ -45,8 +45,6 @@ public:
 private:
 	void restrict_outer_hex_radius_to_curvature_radius();
 
-	std::string get_EllipticalCapWithHexagonalBound_print()const;
-
 	void post_initialize_radius_of_enclosing_sphere();
 };
 #endif // __EllipticalCapWithHexagonalBound_H_INCLUDED__

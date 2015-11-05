@@ -33,8 +33,6 @@ public:
 private:
 	void restrict_cap_radius_to_curvature_radius();
 
-	std::string get_SphereCapCylinderBound_print()const;
-
 	void post_initialize_radius_of_enclosing_sphere();
 };
 #endif // __SPHERECAPWITHCYLINDERBOUND_H_INCLUDED__

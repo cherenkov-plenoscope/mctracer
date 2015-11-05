@@ -28,8 +28,6 @@ public:
 
 	std::string get_print()const;
 
-	std::string get_sphere_print()const;
-
 	const Intersection* calculate_intersection_with(const Ray* ray)const;
 private:
 

@@ -17,15 +17,8 @@ void Sphere::set_sphere_radius(double new_radius){
 std::string Sphere::get_print()const {
 
 	std::stringstream out;
-	out << get_frame_print();
-	out << get_surface_print();
-	out << get_sphere_print();
-	return out.str();
-}
-//------------------------------------------------------------------------------
-std::string Sphere::get_sphere_print()const {
+	out << SurfaceEntity::get_print();
 
-	std::stringstream out;
 	out << "sphere:\n";
 	out << "| radius: " << radius << "m\n";
 	out << "| area:   " << 4.0*M_PI*radius*radius << "m^2\n";	

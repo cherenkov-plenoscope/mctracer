@@ -106,13 +106,6 @@ const Frame* SurfaceEntity::get_allowed_frame_to_propagate_to()const {
 	return allowed_frame_to_propagate_to;
 }
 //------------------------------------------------------------------------------
-std::string SurfaceEntity::get_print()const {
-	std::stringstream out;
-	out << get_frame_print();
-	out << get_surface_print();
-	return out.str();
-}
-//------------------------------------------------------------------------------
 void SurfaceEntity::set_outer_color(const Color* color) {
 	outer_color = color;
 }
@@ -159,9 +152,10 @@ void SurfaceEntity::take_boundary_layer_properties_but_inside_out_from(
 	set_inner_absorption(proto->get_outer_absorption_());
 }
 //------------------------------------------------------------------------------
-std::string SurfaceEntity::get_surface_print()const {
-	
+std::string SurfaceEntity::get_print()const {
 	std::stringstream out;
+	out << Frame::get_print();
+
 	out << " inner surface:\n";
 	out << "| color : " << *inner_color << "\n";
 	out << "| reflec: " << inner_reflection_vs_wavelength->get_print() << "\n";

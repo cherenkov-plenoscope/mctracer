@@ -24,7 +24,6 @@ public:
 
 	void set_disc_radius(const double radius);
 	std::string get_print()const;
-	std::string get_Disc_print()const;
 	const Intersection* calculate_intersection_with(const Ray* ray)const;
 private:
 	double get_area()const;

@@ -31,7 +31,6 @@ public:
 	);
 	void set_radius_and_length(const double radius, const double length);
 	std::string get_print()const;
-	std::string get_cylinder_print()const;
 	const Intersection* calculate_intersection_with(const Ray* ray)const;
 private:
 

@@ -12,14 +12,8 @@ void Disc::post_initialize_radius_of_enclosing_sphere(){
 //------------------------------------------------------------------------------
 std::string Disc::get_print()const {
 	std::stringstream out;
-	out << get_frame_print();
-	out << get_surface_print();
-	out << get_Disc_print();
-	return out.str();
-}
-//------------------------------------------------------------------------------
-std::string Disc::get_Disc_print()const {
-	std::stringstream out;
+	out << SurfaceEntity::get_print();
+
 	out << "disc:\n";
 	out << "| radius: " << cylinder_bounds.get_radius() << "m\n";
 	out << "| area:   " << get_area() << "m^2\n";

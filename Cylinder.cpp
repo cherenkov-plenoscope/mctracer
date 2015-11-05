@@ -115,15 +115,8 @@ void Cylinder::post_initialize_radius_of_enclosing_sphere(){
 //------------------------------------------------------------------------------
 std::string Cylinder::get_print()const {
 	std::stringstream out;
-	out << get_frame_print();
-	out << get_surface_print();
-	out << get_cylinder_print();
-	return out.str();
-}
-//------------------------------------------------------------------------------
-std::string Cylinder::get_cylinder_print()const {
+	out << SurfaceEntity::get_print();
 
-	std::stringstream out;
 	out << "cylinder:\n";
 	out << "| radius: " << Radius << "m\n";
 	out << "| length: " << Length << "m\n";

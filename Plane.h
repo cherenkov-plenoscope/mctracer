@@ -35,8 +35,6 @@ public:
 
 	const Intersection* calculate_intersection_with(const Ray* ray)const;
 private:
-	std::string get_plane_print()const;
-
 	void post_initialize_radius_of_enclosing_sphere();
 };
 #endif // __PLANE_H_INCLUDED__

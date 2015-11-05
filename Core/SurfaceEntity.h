@@ -67,8 +67,5 @@ public:
 	bool boundary_layer_is_transparent()const;
 	bool has_restrictions_on_frames_to_propagate_to()const;
 	std::string get_print()const;
-protected:
-
-	std::string get_surface_print()const;
 };
 #endif // __SURFACEENTITY_H_INCLUDED__ 

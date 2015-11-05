@@ -55,7 +55,5 @@ private:
 	)const;
 
 	bool is_inside_triangle(const Vector3D &intersec_vec)const;
-
-	std::string get_Triangle_print()const;
 }; 
 #endif // __TRIANGLE_H_INCLUDED__ 
