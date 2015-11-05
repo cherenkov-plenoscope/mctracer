@@ -1,7 +1,9 @@
 #include "TracerSettings.h"
 const TracerSettings TracerSettings::default_settings = TracerSettings();
+const SkyDome TracerSettings::sky_dome = SkyDome("../scenery/uhd_img_1322-cc.tif");
 //------------------------------------------------------------------------------
 TracerSettings::TracerSettings() {
+
 	default_color = Color::syk_blue;
 	flag_store_only_final_intersection = false;
 

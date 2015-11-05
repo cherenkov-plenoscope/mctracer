@@ -10,6 +10,7 @@
 // included dependencies
 #include "Color.h"
 #include "TracerException.h"
+#include "Cameras/SkyDome.h"
 #include <string>
 #include <sstream>
 
@@ -30,6 +31,7 @@ private:
 		// stored in the history. 
 
 	Color default_color;
+	
 		// The default background colour in the raytracing images 
 
 	//--------------------------------------------------------------------------
@@ -48,6 +50,8 @@ private:
 
 	unsigned pseudo_random_number_seed;
 public:
+	static const SkyDome sky_dome;
+
 	static const TracerSettings default_settings;
 	TracerSettings();
 	bool StoreOnlyLastIntersection()const;

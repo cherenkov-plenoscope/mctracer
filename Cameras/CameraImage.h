@@ -21,7 +21,8 @@ public:
 
 	CameraImage(const uint cols, const uint rows);
 	CameraImage(const CameraImage* image_to_copy_from);
-	
+	CameraImage(const std::string filename_of_image);
+
 	~CameraImage();
 	
 	uint get_resolution()const;
@@ -38,7 +39,7 @@ public:
 		const uint row, const uint col, const Color &color
 	);
 
-	Color get_pixel_row_col(const uint row, const uint col);
+	Color get_pixel_row_col(const uint row, const uint col)const;
 
 	double get_width_to_height_ratio()const;
 

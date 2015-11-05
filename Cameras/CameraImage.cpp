@@ -9,6 +9,11 @@ CameraImage::CameraImage(const CameraImage* image_to_copy_from){
 	*Image = image_to_copy_from->Image->clone();
 }
 //------------------------------------------------------------------------------
+CameraImage::CameraImage(const std::string filename_of_image){
+	Image = new cv::Mat();
+	load(filename_of_image);
+}
+//------------------------------------------------------------------------------
 CameraImage::~CameraImage(){
 	delete Image;
 }
@@ -88,7 +93,7 @@ void CameraImage::set_pixel_row_col_to_color(
 	Image->at<cv::Vec3b>(row,col) = intensity;
 }
 //------------------------------------------------------------------------------
-Color CameraImage::get_pixel_row_col(const uint row, const uint col) {
+Color CameraImage::get_pixel_row_col(const uint row, const uint col)const{
 	cv::Vec3b intensity = Image->at<cv::Vec3b>(row,col);
 	return Color(intensity.val[0], intensity.val[1], intensity.val[2]);
 }

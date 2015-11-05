@@ -25,6 +25,11 @@ public:
 
 	SkyDome(const std::string _filename);
 	Color get_color_for_direction(const Vector3D dir)const;
+
+	Color sky_dome_color_for(const Vector3D dir)const;
+	double get_zenith_distance_of(const Vector3D dir)const;
+	double get_azimuth_angle_of(const Vector3D dir)const;
+
 	std::string get_print()const;
 private:
 
