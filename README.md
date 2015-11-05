@@ -45,7 +45,7 @@ mkdir build
 ```
 The /build directory is best located side by side to the /mctracer directory.
 
-- yourDirectorieToPlayWithMctracer
+- yourDirectoryToPlayWithMctracer
 	- mctracer
 	- build
 
