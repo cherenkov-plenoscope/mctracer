@@ -1,6 +1,6 @@
 # mctraer
 
-mctracer is short for Monte Carlo Ray Traceing.
+mctracer is short for Monte Carlo Ray Tracing.
 
 ## installation on a fresh Ubuntu 14 LTS Desktop
 Installation tested on a fresh Ububtu 14.04 LTS VM on 19 Sep 2015.
@@ -25,7 +25,7 @@ then, for instance
 cd ~/opencv
 mkdir release
 cd release
-cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/your/favourite/path ..
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/your/favorite/path ..
 make && make install
 
 ```
@@ -67,7 +67,7 @@ cd mctracer/scenery
 ```
 
 ## run Unit Tests:
-The unit tests are meant to run in the mctracer/test directorie because they are looking for files in there to do IO tests.
+The unit tests are meant to run in the mctracer/test directory because they are looking for files in there to do IO tests.
 
 ```
 #!bash
