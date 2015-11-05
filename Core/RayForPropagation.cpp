@@ -114,14 +114,6 @@ double RayForPropagation::get_accumulative_distance()const {
     return accumulative_distance;	
 }
 //------------------------------------------------------------------------------
-std::ostream& operator<<(
-	std::ostream& os, 
-	const RayForPropagation& ray_to_be_displayed
-) {
-    os << ray_to_be_displayed.get_print();
-    return os;	
-}
-//------------------------------------------------------------------------------
 void RayForPropagation::propagate_in(PropagationEnvironment* env) {
 	throw TracerException("Prototype RayForPropagation must not be propagated itself, only its children such as the photon are meant to be propagated.");
 }

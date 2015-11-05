@@ -29,10 +29,6 @@ public:
 		const TracerSettings *settings
 	)const;
 
-	friend std::ostream& operator<<(
-		std::ostream& os, 
-		const CameraRay& camera_ray_to_be_displayed
-	);
 private:
 	Color absorption_on_the_outer_side(
 		const Intersection* intersection,

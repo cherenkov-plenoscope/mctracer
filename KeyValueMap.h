@@ -11,14 +11,14 @@
 #include <iostream>
 #include <string>
 #include <map>
-
+#include "Core/Printable.h"
 
 //=================================
-namespace KeyValueMap {
+namespace KeyValueMap{
 
 	class Io;
 	
-	class Map {
+	class Map  : public Printable{
 
 		std::map<std::string, std::string> options;
 		std::string filename = "";
@@ -40,7 +40,6 @@ namespace KeyValueMap {
 
 		void assert_key_is_unique(const std::string key)const;
 		void assert_has_key(const std::string key)const;
-		friend std::ostream& operator<<(std::ostream& os, const Map& map);
 		void assert_every_key_has_a_value(const int argc)const;
 		friend KeyValueMap::Io;
 	};	

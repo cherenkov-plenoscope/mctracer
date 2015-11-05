@@ -166,11 +166,6 @@ bool Vector3D::norm_is_less_equal_than(const double length_to_compare)const {
 	return (*this)*(*this) <= length_to_compare*length_to_compare;
 }
 //------------------------------------------------------------------------------
-std::ostream& operator<<(std::ostream& os, const Vector3D& vec){
-    os << vec.get_print();
-    return os;
-}
-//------------------------------------------------------------------------------
 uint Vector3D::get_octant()const {
 	// encodes the octant sectors where the vector is pointing to
 	// x y z sector

@@ -74,11 +74,6 @@ std::string Map::get_file_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-std::ostream& operator<<(std::ostream& os, const Map& map) {
-    os << map.get_print();
-    return os;
-}
-//------------------------------------------------------------------------------
 void Map::assert_every_key_has_a_value(const int argc)const {
 	if(is_even(argc))
 		throw TracerException("Map: argument count is even");

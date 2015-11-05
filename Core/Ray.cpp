@@ -93,8 +93,3 @@ Ray Ray::get_ray_transformed_in_object_system_of(
 	ray_in_object_system_of_frame.transform(frame->world2frame());
 	return ray_in_object_system_of_frame;
 }
-//------------------------------------------------------------------------------
-std::ostream& operator<<(std::ostream& os, const Ray& ray_to_be_displayed) {
-    os << ray_to_be_displayed.get_print();
-    return os;
-}
