@@ -4,11 +4,12 @@
 
 #include "gtest/gtest.h"
 #include "Core/Ray.h"
+#include "Core/Intersection.h"
 #include "Geometry/Sphere.h"
 
 using namespace std;
 
-class RayAndFrameInteractionTest : public ::testing::Test {
+class RayAndFrameInteractionTest : public ::testing::Test{
  protected:
 
   TracerSettings settings;    
@@ -85,4 +86,38 @@ TEST_F(RayAndFrameInteractionTest, frame_has_bounding_sphere) {
       EXPECT_EQ(1440, frames_with_intersection_in_bounding_sphere.size());
     }
     //FreeOrbitCamera free(spheres_in_a_row, &settings);
+}
+
+TEST_F(RayAndFrameInteractionTest, ray_finds_first_interaction) {
+
+    Ray ray(Vector3D::null,Vector3D(1.0,0.0,0.0));
+
+    Intersection i0(
+      SurfaceEntity::void_object,
+      Vector3D(0.,0.,0.),        // intersection in world
+      Vector3D::unit_z,
+      1.,                        // <-- distance, !! the only thing we need for this test
+      Vector3D::null
+      );
+
+    Intersection i1(
+      SurfaceEntity::void_object,
+      Vector3D(0.,0.,0.), // intersection in world
+      Vector3D::unit_z,
+      2.,   // <-- distance, !! the only thing we need for this test
+      Vector3D::null
+      );
+    Intersection i2(
+      SurfaceEntity::void_object,
+      Vector3D(0.,0.,0.), // intersection in world
+      Vector3D::unit_z,
+      3.,   // <-- distance, !! the only thing we need for this test
+      Vector3D::null
+      );
+
+    vector<const Intersection*> intersections = {&i0, &i1, &i2};
+
+    const Intersection* maybe_closest_i = ray.calculate_closest_intersection(&intersections);
+
+    EXPECT_EQ(&i0, maybe_closest_i);
 }

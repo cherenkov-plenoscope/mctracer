@@ -68,7 +68,10 @@ uint RayForPropagation::get_id()const {
 //------------------------------------------------------------------------------
 std::string RayForPropagation::get_print()const {
 	std::stringstream out;
-	out << get_ray_print() << ", " << get_rayforpropagation_print();
+	out << Ray::get_print() << ", ";
+	out << "ID: " << identifier_number << ", Interactions: " ;
+	out << get_number_of_interactions_so_far() << "\n";
+	out << get_history_print();
 	return out.str();
 }
 //------------------------------------------------------------------------------
@@ -91,14 +94,6 @@ std::string RayForPropagation::get_history_print()const {
 		out << "\n";
 	}
 	return out.str();
-}
-//------------------------------------------------------------------------------
-std::string RayForPropagation::get_rayforpropagation_print()const {
-	std::stringstream out;
-	out << "ID: " << identifier_number << ", Interactions: " ;
-	out << get_number_of_interactions_so_far() << "\n";
-	out << get_history_print();
-	return out.str();	
 }
 //------------------------------------------------------------------------------
 void RayForPropagation::push_back_intersection_and_type_to_propagation_history(

@@ -91,7 +91,7 @@ const Intersection* Ray::calculate_closest_intersection(
 		std::vector<const Intersection*>::iterator closest_intersection = min_element( 	
 			intersections->begin(),
 			intersections->end() ,
-			*this
+			Intersection::compare
 		);
 
 		return 	*closest_intersection;

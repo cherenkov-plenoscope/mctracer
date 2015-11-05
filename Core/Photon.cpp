@@ -53,8 +53,8 @@ const PhotonMcTruth* Photon::get_mc_truth()const{
 //------------------------------------------------------------------------------
 std::string Photon::get_print()const {
 	std::stringstream out; 
-	out << get_ray_print() << ", wvl: " << wavelength*1e9 << "nm, ";
-	out << get_rayforpropagation_print();
+	out << RayForPropagation::get_print();
+	out << ", wvl: " << wavelength*1e9 << "nm, ";
 	return out.str();
 }
 //------------------------------------------------------------------------------

@@ -19,6 +19,7 @@
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
 #include "TracerSettings.h"
+#include <gtest/gtest_prod.h>
 
 class Ray{
 
@@ -53,14 +54,11 @@ public:
 	double get_closest_distance_to_point(const Vector3D &point)const;
 
 	virtual std::string get_print()const;
-
-	std::string get_ray_print()const;
-
-	bool operator() (const Intersection* one, const Intersection* two)const;
 	
 	Ray get_ray_transformed_in_object_system_of(const Frame* frame)const;
 	
 	friend std::ostream& operator<<(std::ostream& os, const Ray& ray_to_be_displayed);
+	FRIEND_TEST(RayAndFrameInteractionTest, ray_finds_first_interaction); 
 	//--------------------------------------------------------------------------
 	// Ray and bounding sphere of Frame
 

@@ -151,3 +151,11 @@ const HomoTrafo3D* Intersection::object2world()const{
 	return intersecting_object->frame2world();
 }
 //------------------------------------------------------------------------------
+bool Intersection::operator<(const Intersection& other) const
+{
+	return this->get_intersection_distance() < other.get_intersection_distance();
+}
+//------------------------------------------------------------------------------
+bool Intersection::compare(const Intersection* one, const Intersection* two){
+	return 	one->get_intersection_distance() < two->get_intersection_distance();
+}

@@ -6,7 +6,7 @@ CameraRay::CameraRay(const Vector3D support, const Vector3D direction){
 //------------------------------------------------------------------------------
 std::string CameraRay::get_print()const{
 	std::stringstream out; 
-	out << get_ray_print() << ", colour: " << colour;
+	out << Ray::get_print() << ", colour: " << colour;
 	return out.str();
 }
 //------------------------------------------------------------------------------

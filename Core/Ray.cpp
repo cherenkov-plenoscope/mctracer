@@ -27,10 +27,6 @@ void Ray::normalize_direction(){
 }
 //------------------------------------------------------------------------------
 std::string Ray::get_print()const {
-	return get_ray_print();
-}
-//------------------------------------------------------------------------------
-std::string Ray::get_ray_print()const {
 	std::stringstream out;
 	out << "support: " << support << ", direction: " << direction;
 	return out.str();
@@ -97,10 +93,6 @@ double Ray::get_closest_distance_to_point(const Vector3D &point)const {
 		point, 
 		get_parameter_on_ray_for_closest_distance_to_point(point)
 	);
-}
-//------------------------------------------------------------------------------
-bool Ray::operator() (const Intersection* one, const Intersection* two)const {
-	return 	one->get_intersection_distance() < two->get_intersection_distance();
 }
 //------------------------------------------------------------------------------
 Ray Ray::get_ray_transformed_in_object_system_of(

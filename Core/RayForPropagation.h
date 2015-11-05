@@ -91,8 +91,6 @@ public:
 protected:
 	std::string get_history_print()const;
 
-	std::string get_rayforpropagation_print()const;
-
 	RayForPropagation();
 
 	void init_propagation_history();
