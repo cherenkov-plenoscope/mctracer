@@ -45,8 +45,6 @@ public:
 
 	void transform(const HomoTrafo3D *T);
 
-	void homo_transformation_of_ray(Ray* ray,const HomoTrafo3D *T)const;
-
 	double get_parameter_on_ray_for_closest_distance_to_point(
 		const Vector3D &point
 	)const;
@@ -79,10 +77,6 @@ public:
 		std::vector<const Frame*> *candidate_frames
 	)const;
 
-	void calculate_reflected_ray(	
-		const Intersection * intersec,
-		Ray *ray_reflection_on_object
-	)const; 
 protected:
 	Ray();
 
@@ -106,7 +100,5 @@ protected:
 	)const;
 
 	bool support_equals_intersection_point(const Intersection* intersec)const;
-
-	void normalize_direction();
 };
 #endif // __RAY_H_INCLUDED__ 

@@ -110,27 +110,3 @@ const Intersection* Ray::get_closest_intersection_and_delete_the_rest(
 
 	return closest_intersection;
 }
-//------------------------------------------------------------------------------
-void Ray::calculate_reflected_ray(	
-	const Intersection * intersec,
-	Ray *ray_reflection_on_object
-)const{
-
-	Ray ray_in_object_system = get_ray_transformed_in_object_system_of(
-		intersec->get_intersecting_object()
-	);
-	
-	Vector3D refl_dir = ray_in_object_system.direction;
-	// mirror
-	intersec->get_reflection_direction_in_object_system(&refl_dir);
-
-	Vector3D refl_sup = intersec->get_intersection_vector_in_object_system();
-
-	ray_reflection_on_object->SetRay(refl_sup,refl_dir);
-
-	// calculate reflection ray in world system
-	homo_transformation_of_ray(
-		ray_reflection_on_object,
-		intersec->get_intersecting_object()->frame2world()
-	);	
-}

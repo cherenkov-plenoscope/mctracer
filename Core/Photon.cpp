@@ -104,8 +104,6 @@ void Photon::reflect_on_surface_and_propagate_on(const InteractionType type) {
 		intersection->get_reflection_direction_in_world_system(Direction())
 	);
 
-	//calculate_reflected_ray(intersection, &reflected_photon);
-
 	push_back_intersection_and_type_to_propagation_history(
 		intersection, 
 		type

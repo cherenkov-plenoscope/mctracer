@@ -10,7 +10,7 @@ Ray::Ray(const Vector3D support, const Vector3D direction){
 void Ray::SetRay(const Vector3D nsup, const Vector3D ndir){
 	support = nsup;
 	direction  = ndir;
-	normalize_direction();
+	direction.normalize();
 }
 //------------------------------------------------------------------------------
 void Ray::SetSupport(const Vector3D nsup){
@@ -19,10 +19,6 @@ void Ray::SetSupport(const Vector3D nsup){
 //------------------------------------------------------------------------------
 void Ray::SetDirection(const Vector3D ndir){
 	direction = ndir;
-	normalize_direction();
-}
-//------------------------------------------------------------------------------
-void Ray::normalize_direction(){
 	direction.normalize();
 }
 //------------------------------------------------------------------------------
@@ -42,11 +38,6 @@ Vector3D Ray::Support()const{
 //------------------------------------------------------------------------------
 Vector3D Ray::Direction()const{
 	return direction;
-}
-//------------------------------------------------------------------------------
-void Ray::homo_transformation_of_ray(Ray* ray,const HomoTrafo3D *T)const{
-	T->transform_position(&ray->support);
-	T->transform_orientation(&ray->direction);
 }
 //------------------------------------------------------------------------------
 void Ray::transform(const HomoTrafo3D *T) {
