@@ -42,11 +42,6 @@ public:
 
 	std::string get_print()const;
 
-	friend std::ostream& operator<<(
-		std::ostream& os, 
-		const Photon& photon_to_be_displayed
-	);
-
 	double get_time_of_flight()const;
 
 	class BadWaveLength : public TracerException {

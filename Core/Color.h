@@ -10,8 +10,9 @@
 // included dependencies
 #include <iostream>
 #include <string>
+#include "Core/Printable.h"
 
-class Color {
+class Color : public Printable{
 
 	double red_0to255;
 	double green_0to255;
@@ -56,8 +57,6 @@ public:
 		const Color *coulour_to_mix_with,
 		const double mixture_coefficient
 	);
-
-	friend std::ostream& operator<<(std::ostream& os, const Color& col);
 private:
 	void set_to_default_color();
 	void assert_is_in_valid_8Bit_range(const int channel)const;

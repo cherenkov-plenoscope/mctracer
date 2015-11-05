@@ -111,8 +111,3 @@ void Color::assert_is_in_valid_8Bit_range(const double channel)const {
 		throw TracerException(info.str());	
 	}
 }
-//------------------------------------------------------------------------------
-std::ostream& operator<<(std::ostream& os, const Color& col){
-    os << col.get_print();
-    return os;
-}

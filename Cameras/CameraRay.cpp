@@ -50,9 +50,3 @@ Color CameraRay::trace(
 	delete intersection;
 	return color;
 }
-//------------------------------------------------------------------------------
-std::ostream& operator<<(std::ostream& os, 
-const CameraRay& camera_ray_to_be_displayed){
-    os << camera_ray_to_be_displayed.get_print();
-    return os;
-}

@@ -19,8 +19,9 @@ class Intersection;
 #include "TracerException.h"
 #include "Tools/StringTools.h"
 #include "Tools/Tools.h"
+#include "Core/Printable.h"
 
-class Frame {
+class Frame : public Printable{
     // The Frame is the fundamental geometry in this framework.
     // It defines a three dimensinal space where rays can be propagated in.
     //

@@ -64,11 +64,6 @@ public:
 
 	double get_accumulative_distance()const;
   	
-	friend std::ostream& operator<<(
-		std::ostream& os,
-		const Ray& ray_to_be_displayed
-	);
-
 	virtual void propagate_in(PropagationEnvironment* env);
 
 	uint get_number_of_interactions_so_far()const;

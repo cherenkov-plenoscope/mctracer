@@ -11,9 +11,10 @@
 #include <iostream>
 #include <math.h>
 #include <sstream>
+#include "Core/Printable.h"
 
 //=================================
-class Vector3D {
+class Vector3D : public Printable {
 private:
 
 	// in meters
@@ -55,6 +56,5 @@ public:
 	bool is_parallel_to_x_y_plane()const;
 	bool norm_is_less_equal_than(const double length_to_compare)const;
 	std::string get_print()const;
-	friend std::ostream& operator<<(std::ostream& os, const Vector3D& vec);
 };
 #endif // __VECTOR3D_H_INCLUDED__ 

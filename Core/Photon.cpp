@@ -58,11 +58,6 @@ std::string Photon::get_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-std::ostream& operator<<(std::ostream& os,const Photon& photon_to_be_displayed){
-    os << photon_to_be_displayed.get_print();
-    return os;
-}
-//------------------------------------------------------------------------------
 void Photon::propagate_in(PropagationEnvironment* environment) {
 	this->environment = environment;
 
