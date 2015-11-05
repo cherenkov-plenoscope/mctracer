@@ -24,7 +24,7 @@ class RayAndFrameTest : public ::testing::Test {
 		frame_r_4p2m.set_sphere_radius(radius_of_test_frame);
 
 		// call this, to make the tests magically pass!
-		frame_r_4p2m.get_print();
+		//frame_r_4p2m.get_print();
 	}
 
 	virtual ~RayAndFrameTest() {
