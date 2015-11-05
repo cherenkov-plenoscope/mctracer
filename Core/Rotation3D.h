@@ -13,9 +13,10 @@
 #include <sstream>
 #include "Core/Vector3D.h"
 #include "TracerException.h"
+#include "Core/Printable.h"
 //=================================
 
-class Rotation3D {
+class Rotation3D : public Printable{
 
 	bool flag_rot_angles_xyz;
 
@@ -38,8 +39,7 @@ public:
 	Vector3D get_rot_axis()const;
 	double get_rot_angle_in_rad()const;
 	bool uses_xyz_angels()const;
-	void disp()const;
-	std::string get_string()const;
+	std::string get_print()const;
 	double get_rot_x()const;
 	double get_rot_y()const;
 	double get_rot_z()const;
@@ -50,6 +50,5 @@ public:
 	double sinRy()const;
 	double sinRz()const;
 	bool operator == (const Rotation3D& eqRot)const;
-	friend std::ostream& operator<<(std::ostream& os, const Rotation3D& rot);
 };
 #endif // __ROTATION3D_H_INCLUDED__ 
