@@ -60,14 +60,6 @@ void Map::assert_key_is_unique(const std::string key)const {
 }
 //------------------------------------------------------------------------------
 std::string Map::get_print()const {
-
-	std::stringstream out;
-	out << get_file_print();
-	return out.str();
-}
-//------------------------------------------------------------------------------
-std::string Map::get_file_print()const {
-
 	std::stringstream out;
 	for (auto& x: options)
 		out << x.first << ": " << x.second << "\n";
@@ -96,7 +88,7 @@ int Map::get_value_for_key_as_int(const std::string key)const {
 void Io::save_map_to_file(
 	const Map map, const std::string filename
 ) {
-	FileTools::write_text_to_file(map.get_file_print(), filename);	
+	FileTools::write_text_to_file(map.get_print(), filename);	
 }
 //------------------------------------------------------------------------------
 Map Io::load(const std::string filename) {

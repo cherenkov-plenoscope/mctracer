@@ -33,7 +33,6 @@ namespace KeyValueMap{
 		double get_value_for_key_as_double(const std::string key)const;
 		int get_value_for_key_as_int(const std::string key)const;
 		std::string get_print()const;
-		std::string get_file_print()const;
 		void save(const std::string _filename)const;
 		std::string get_filename()const;
 	private:
