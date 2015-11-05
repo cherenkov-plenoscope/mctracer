@@ -33,7 +33,7 @@ class Frame : public Printable{
     // The root of this tree is often called 'world' or 'world frame' here.
 protected:
 
-    // Evey frame has a human readable name e.g. Tree, House, Mirror
+    // a frame has a human readable name e.g. Tree, House, Mirror
     std::string name_of_frame;
 
     Vector3D 	pos_in_mother; 
@@ -88,7 +88,6 @@ public:
     std::string get_path_in_tree_of_frames()const;
     uint get_number_of_children()const;
     virtual std::string get_print()const;
-    std::string get_frame_print()const;
     std::string get_tree_print()const;
     bool has_mother()const;
     bool has_children()const;

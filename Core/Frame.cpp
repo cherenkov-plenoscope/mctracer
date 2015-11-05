@@ -126,10 +126,6 @@ void Frame::assert_name_is_valid(const std::string name_to_check)const {
 }
 //------------------------------------------------------------------------------
 std::string Frame::get_print()const {
-	return get_frame_print();
-}
-//------------------------------------------------------------------------------
-std::string Frame::get_frame_print()const {
 	std::stringstream out;
 	out << "frame: " << name_of_frame << "\n";
 	out << "| pos in mother: " << pos_in_mother << "\n";
