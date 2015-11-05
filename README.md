@@ -11,7 +11,7 @@ Installation tested on a fresh Ububtu 14.04 LTS VM on 19 Sep 2015.
 * cmake
 
 ### dependencies of mctracer:
-* libopencv-dev >= 2.4.0
+* libopencv-dev >= 2.4.8
 
 opencv can be installed with apt-get when running Ubuntu >= 14. Otherwise one has to install it locally by hand. This is easiest done by getting it from the git repo:
 
