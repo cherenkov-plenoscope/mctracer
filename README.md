@@ -1,4 +1,4 @@
-# mctraer
+# mctracer
 
 mctracer is short for Monte Carlo Ray Tracing.
 
