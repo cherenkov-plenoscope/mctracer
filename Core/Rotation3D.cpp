@@ -57,11 +57,7 @@ bool Rotation3D::uses_xyz_angels()const {
 	return flag_rot_angles_xyz;
 }
 //------------------------------------------------------------------------------
-void Rotation3D::disp()const {
-	std::cout << get_string();
-}
-//------------------------------------------------------------------------------
-std::string Rotation3D::get_string()const {
+std::string Rotation3D::get_print()const {
 	std::stringstream out; 
 
 	if(flag_rot_angles_xyz == true)
@@ -86,9 +82,4 @@ double Rotation3D::sinRz() const {return sin(Rz);}
 //------------------------------------------------------------------------------
 bool Rotation3D::operator == (const Rotation3D& eqRot)const {	
 	return Rx == eqRot.Rx && Ry == eqRot.Ry && Rz == eqRot.Rz;
-}
-//------------------------------------------------------------------------------
-std::ostream& operator<<(std::ostream& os, const Rotation3D& rot) {
-    os << rot.get_string();
-	return os;	
 }
