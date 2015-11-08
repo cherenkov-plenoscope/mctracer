@@ -138,7 +138,6 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
     environment.world_geometry = &world;
     environment.propagation_options = &setup;
     environment.random_engine = &dice;
-    environment.assert_completeness();
 
     const uint num_of_total_interactions = number_of_bounces + 1; //creation is 1
 
@@ -147,7 +146,6 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
         Photon P(Support, direction, wavelength);
 
         P.propagate_in(&environment);
-        //std::cout << P;
 
         EXPECT_EQ(number_of_bounces*1.0-0.5, P.get_accumulative_distance() );
         EXPECT_EQ(num_of_total_interactions, P.get_number_of_interactions_so_far() );

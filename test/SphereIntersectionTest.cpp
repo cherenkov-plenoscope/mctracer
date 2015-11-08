@@ -9,7 +9,7 @@
 using namespace std;
 
 class SphereIntersectionTest : public ::testing::Test {
- protected:
+protected:
 
 	TracerSettings setup;
 	Vector3D    pos;
@@ -55,7 +55,6 @@ class SphereIntersectionTest : public ::testing::Test {
 	sphere_test_environment.world_geometry = &world;
 	sphere_test_environment.propagation_options = &setup;
 	sphere_test_environment.random_engine = &dice;
-	sphere_test_environment.assert_completeness();
   }
 };
 //------------------------------------------------------------------------------

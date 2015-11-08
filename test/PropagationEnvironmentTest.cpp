@@ -8,37 +8,19 @@
 using namespace std;
 
 class PropagationEnvironmentTest : public ::testing::Test {
- protected:
+protected:
 
-  PropagationEnvironmentTest() {}
-  virtual ~PropagationEnvironmentTest() {}
-  virtual void SetUp() {}
-  virtual void TearDown() {}
+    PropagationEnvironmentTest() {}
+    virtual ~PropagationEnvironmentTest() {}
+    virtual void SetUp() {}
+    virtual void TearDown() {}
 };
 //------------------------------------------------------------------------------
-TEST_F(PropagationEnvironmentTest, assert_completeness) {
+TEST_F(PropagationEnvironmentTest, default_instance) {
 
-  PropagationEnvironment env;
+    PropagationEnvironment env;
 
-  Frame world("my_world",Vector3D::null, Rotation3D::null);
-  TracerSettings opt;
-  Random::Mt19937 dice(Random::zero_seed);
-
-  env.world_geometry = &world;
-  env.propagation_options = &opt;
-  env.random_engine = &dice;
-
-  EXPECT_EQ(&world, env.world_geometry);
-  EXPECT_EQ(&opt, env.propagation_options);
-  EXPECT_EQ(&dice, env.random_engine);
-  EXPECT_NO_THROW(env.assert_completeness());
-}
-//------------------------------------------------------------------------------
-TEST_F(PropagationEnvironmentTest, assert_completeness_on_incomplete_instance) {
-
-  PropagationEnvironment env;
-
-  EXPECT_EQ(Frame::void_frame, env.world_geometry);
-  EXPECT_EQ(&TracerSettings::default_settings, env.propagation_options);
-  EXPECT_EQ(&Random::void_generator, env.random_engine);
+    EXPECT_EQ(Frame::void_frame, env.world_geometry);
+    EXPECT_EQ(&TracerSettings::default_settings, env.propagation_options);
+    EXPECT_EQ(&Random::void_generator, env.random_engine);
 }
