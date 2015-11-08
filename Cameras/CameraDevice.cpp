@@ -103,7 +103,7 @@ std::string CameraDevice::get_camera_print()const{
 	out << "| resolution: cols x rows : ";
 	out << image->get_number_of_cols() << "x";
 	out << image->get_number_of_rows() <<" pixels";
-	out << " / " << image->get_resolution()/1e6 << " M pixels\n";
+	out << " / " << image->get_number_of_pixels()/1e6 << " M pixels\n";
 	return out.str();
 }
 //------------------------------------------------------------------------------
@@ -143,7 +143,7 @@ const CameraImage* CameraDevice::get_image()const {
 }
 //------------------------------------------------------------------------------
 void CameraDevice::save_image(const std::string image_path)const {
-	image->save_image_to_file(image_path);
+	image->save(image_path);
 }
 //------------------------------------------------------------------------------
 Vector3D CameraDevice::get_position_in_world()const{

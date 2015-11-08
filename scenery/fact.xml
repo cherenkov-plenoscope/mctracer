@@ -7,7 +7,7 @@
 </function>
 
 <function name="mirror_reflection">
-	<constant value="0.75" lower_limit="200e-9" upper_limit="1200e-9"/>
+	<constant value="0.95" lower_limit="200e-9" upper_limit="1200e-9"/>
 </function>
 
 <disc>

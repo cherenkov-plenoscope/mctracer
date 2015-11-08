@@ -44,7 +44,7 @@ Color CameraRay::trace(
 			color = intersection->get_facing_color();
 		}
 	}else{
-		color = settings->sky_dome.get_color_for_direction(direction);
+		color = settings->get_sky_dome()->get_color_for_direction(direction);
 	}
 
 	delete intersection;

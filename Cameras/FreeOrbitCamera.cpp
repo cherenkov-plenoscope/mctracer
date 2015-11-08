@@ -169,7 +169,7 @@ void FreeOrbitCamera::take_snapshot(){
 	std::cout << apcam.get_print();
 
 	const CameraImage* img = acquire_image_with_camera(&apcam);
-	img->save_image_to_file(get_snapshot_filename());
+	img->save(get_snapshot_filename());
 }
 //------------------------------------------------------------------------------
 std::string FreeOrbitCamera::get_snapshot_filename(){
@@ -223,7 +223,7 @@ void FreeOrbitCamera::take_snapshot_manual_focus_on_pixel_col_row(int x, int y){
 		std::cout << apcam.get_print();
 
 		const CameraImage* img = acquire_image_with_camera(&apcam);
-		img->save_image_to_file(get_snapshot_filename());
+		img->save(get_snapshot_filename());
 	}
 }
 //------------------------------------------------------------------------------

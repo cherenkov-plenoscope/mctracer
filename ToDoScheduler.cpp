@@ -46,6 +46,10 @@ void ToDoScheduler::define() {
 		output_key, 'o', "output file", false, ""
 	);
 
+	comand_line_parser.add<std::string>(
+		skydome_key, 's', "sky dome image", false, ""
+	);
+
   	comand_line_parser.add(
   		pointsource_key, '\0', "point source investigation"
   	);	
@@ -83,8 +87,15 @@ void ToDoScheduler::render_geometry()const {
 		return;
 	}
 	
-	TracerSettings settings;	
-	FreeOrbitCamera free(geometry, &settings);
+	TracerSettings settings;
+
+	if(!skydome_path().empty()) {
+		SkyDome::Texture sky(skydome_path());
+		settings.set_sky_dome(&sky);
+		FreeOrbitCamera free(geometry, &settings);
+	}else{
+		FreeOrbitCamera free(geometry, &settings);
+	}
 }
 //------------------------------------------------------------------------------
 void ToDoScheduler::point_spread_investigation_in_geometry()const {
@@ -95,7 +106,7 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 	// propagation settings
 	TracerSettings settings;	
 	settings.SetMultiThread(true);
-	settings.SetStoreOnlyLastIntersection(true);
+	settings.store_only_last_intersection(true);
 
 	// scenery
 	WorldFactory fab;
@@ -152,7 +163,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 	// settings
 	TracerSettings settings;	
 	settings.SetMultiThread(false);
-	settings.SetStoreOnlyLastIntersection(true);
+	settings.store_only_last_intersection(true);
 
 	// load scenery
 	WorldFactory fab;
@@ -238,7 +249,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 	// settings
 	TracerSettings settings;	
 	settings.SetMultiThread(false);
-	settings.SetStoreOnlyLastIntersection(true);
+	settings.store_only_last_intersection(true);
 
 	// load scenery
 	WorldFactory fab;
@@ -378,4 +389,8 @@ const std::string ToDoScheduler::output_path()const {
 //------------------------------------------------------------------------------
 const std::string ToDoScheduler::config_path()const {
 	return comand_line_parser.get<std::string>(config_key);
+}
+//------------------------------------------------------------------------------
+const std::string ToDoScheduler::skydome_path()const {
+	return comand_line_parser.get<std::string>(skydome_key);
 }

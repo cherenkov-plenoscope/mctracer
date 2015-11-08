@@ -1,31 +1,28 @@
 #include "TracerSettings.h"
+#include "Tools/Tools.h"
+
 const TracerSettings TracerSettings::default_settings = TracerSettings();
-const SkyDome TracerSettings::sky_dome = SkyDome("../scenery/uhd_img_1322-cc.tif");
 //------------------------------------------------------------------------------
 TracerSettings::TracerSettings() {
 
-	default_color = Color::syk_blue;
+	default_color = Color::sky_blue;
 	flag_store_only_final_intersection = false;
-
 	number_of_max_reflections = 5;
-
 	pseudo_random_number_seed = 0;
+	sky_dome = &SkyDome::blue_sky;
 }
 //------------------------------------------------------------------------------
 void TracerSettings::set_max_number_of_reflections(
 	const int new_max_number_of_reflections
 ) {
-	if( new_max_number_of_reflections>0 ){
-
-		number_of_max_reflections = new_max_number_of_reflections;
-	}else{
-		std::stringstream out;
-		out << "TracerSettings::set_max_number_of_reflections\n";
-		out << "The number_of_max_reflections in the Settings ";
-		out << "must not be zero or negative!\n";
-		out << "Actual it is " << new_max_number_of_reflections << "\n";
-		throw TracerException(out.str());
-	}
+	AssertionTools::value_with_name_is_greater_zero_given_context(
+		new_max_number_of_reflections, "max number of reflections",
+		"TracerSettings::set_max_number_of_reflections\n"
+		"The number_of_max_reflections in the Settings "
+		"must not be zero or negative!"
+	);
+	
+	number_of_max_reflections = new_max_number_of_reflections;
 }
 //------------------------------------------------------------------------------
 bool TracerSettings::max_number_of_reflections_is_not_reached_yet(
@@ -42,22 +39,30 @@ int TracerSettings::get_max_number_of_reflections()const {
 	return number_of_max_reflections;
 }
 //------------------------------------------------------------------------------
-bool TracerSettings::StoreOnlyLastIntersection()const {
+bool TracerSettings::stores_only_last_intersection()const {
 	return flag_store_only_final_intersection;
 }
 //------------------------------------------------------------------------------
-void TracerSettings::SetStoreOnlyLastIntersection(const bool flag) {
+void TracerSettings::store_only_last_intersection(const bool flag) {
 	flag_store_only_final_intersection = flag;
 }
 //------------------------------------------------------------------------------
-bool TracerSettings::MultiThread()const { return multithread; }
+bool TracerSettings::MultiThread()const { 
+	return multithread; 
+}
 //------------------------------------------------------------------------------
-void TracerSettings::SetMultiThread(const bool flag ) { multithread = flag; }
-//------------------------------------------------------------------------------
-void TracerSettings::store_only_final_intersection() {
-	flag_store_only_final_intersection = true;
+void TracerSettings::SetMultiThread(const bool flag ) {
+	multithread = flag; 
 }
 //------------------------------------------------------------------------------
 unsigned TracerSettings::get_pseudo_random_number_seed()const {
 	return pseudo_random_number_seed;
+}
+//------------------------------------------------------------------------------
+const SkyDome::Dome* TracerSettings::get_sky_dome()const {
+	return sky_dome;
+}
+//------------------------------------------------------------------------------
+void TracerSettings::set_sky_dome(const SkyDome::Dome* dome) {
+	sky_dome = dome;
 }

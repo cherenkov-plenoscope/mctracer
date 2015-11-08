@@ -107,7 +107,7 @@ void PinHoleCamera::acquire_image(
 	#pragma omp parallel shared(settings,world,HadCatch) private(i,cam_ray,color,row,col) 
 	{	
 		#pragma omp for schedule(dynamic) 
-		for (i = 0; i < image->get_resolution(); i++) {
+		for (i = 0; i < image->get_number_of_pixels(); i++) {
 			try{
 
 				row = i / image->get_number_of_cols();

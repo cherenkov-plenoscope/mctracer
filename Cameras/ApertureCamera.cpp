@@ -98,7 +98,7 @@ void ApertureCamera::auto_focus(
 }
 //------------------------------------------------------------------------------
 uint ApertureCamera::_5_permil_of_pixels()const {
-	return image->get_resolution()*5e-4;
+	return image->get_number_of_pixels()*5e-4;
 }
 //------------------------------------------------------------------------------
 double ApertureCamera::get_average_object_distance(
@@ -150,7 +150,7 @@ std::string ApertureCamera::get_aperture_camera_print()const {
 	out << "| Sensor distance  : " << SensorDistance_in_m*1e3 << " mm\n";
 	out << "| Rays per pixel   : " << rays_per_pixel << "\n";
 	out << "| Rays per image   : " << 
-	double(rays_per_pixel *	image->get_resolution()/1e6) << " M rays\n";
+	double(rays_per_pixel *	image->get_number_of_pixels()/1e6) << " M rays\n";
 	return out.str();
 }
 //------------------------------------------------------------------------------
@@ -243,7 +243,7 @@ void ApertureCamera::acquire_image(
 	#pragma omp parallel shared(settings,world,HadCatch) private(pixel_iterator,cam_ray,average_pixel_color,color_for_single_ray,row,col) 
 	{	
 		#pragma omp for schedule(dynamic) 
-		for (pixel_iterator = 0; pixel_iterator < image->get_resolution(); pixel_iterator++) 
+		for (pixel_iterator = 0; pixel_iterator < image->get_number_of_pixels(); pixel_iterator++) 
 		{
 			try {
 				row = pixel_iterator / image->get_number_of_cols();

@@ -35,6 +35,7 @@ class ToDoScheduler {
 	const std::string photons_key = "photons";
 	const std::string config_key = "config";
 	const std::string output_key = "output";
+	const std::string skydome_key = "skydome";
 public:
 
 	ToDoScheduler(int argc, char** argv);
@@ -50,5 +51,6 @@ private:
 	const std::string photon_path()const;
 	const std::string output_path()const;
 	const std::string config_path()const;
+	const std::string skydome_path()const;
 };
 #endif // __ToDoScheduler_H_INCLUDE__ 

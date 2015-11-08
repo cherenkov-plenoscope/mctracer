@@ -17,11 +17,8 @@
 //=================================
 class TracerSettings {
 private:
-	//--------------------------------------------------------------------------
-	// propagation options
-
 	uint number_of_max_reflections;
-		// A Ray, CameraRay or a Photon will only be traced until the max 
+		// A Ray will only be traced until the max 
 		// number of reflections is reached.
 
 	bool flag_store_only_final_intersection;
@@ -31,11 +28,7 @@ private:
 		// stored in the history. 
 
 	Color default_color;
-	
 		// The default background colour in the raytracing images 
-
-	//--------------------------------------------------------------------------
-	// Multithread options
 
 	bool multithread = true;
 		// When multithread is true tmcTracer will use all threads availabe to
@@ -49,23 +42,29 @@ private:
 		// 	seed for the random number generator. 
 
 	unsigned pseudo_random_number_seed;
+
+	const SkyDome::Dome* sky_dome;
 public:
-	static const SkyDome sky_dome;
 
 	static const TracerSettings default_settings;
 	TracerSettings();
-	bool StoreOnlyLastIntersection()const;
-	void SetStoreOnlyLastIntersection(const bool flag);
+	bool stores_only_last_intersection()const;
+	void store_only_last_intersection(const bool flag);
+	
 	bool MultiThread()const;
 	void SetMultiThread(const bool flag );	
+	
 	void set_max_number_of_reflections(const int new_max_number_of_reflections);
-	Color get_default_color()const;
 	int get_max_number_of_reflections()const;
 	bool max_number_of_reflections_is_not_reached_yet(
 		const uint reflection_counter
 	)const;
-	void store_only_final_intersection();
+
 	unsigned get_pseudo_random_number_seed()const;
+	Color get_default_color()const;
+
+	void set_sky_dome(const SkyDome::Dome* dome);
+	const SkyDome::Dome* get_sky_dome()const;
 };
 
 #endif // __TracerSettings_H_INCLUDED__ 

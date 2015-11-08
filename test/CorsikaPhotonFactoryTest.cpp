@@ -45,7 +45,7 @@ TEST_F(CorsikaPhotonFactoryTest, intersection_point_on_ground) {
                     // propagation settings
                     TracerSettings settings;    
                     settings.SetMultiThread(false);
-                    settings.SetStoreOnlyLastIntersection(false);
+                    settings.store_only_last_intersection(false);
 
                     // photon propagation down to the ground
                     Photons::propagate_photons_in_world_with_settings(
@@ -297,7 +297,7 @@ TEST_F(CorsikaPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         // propagation settings
         TracerSettings settings;    
         settings.SetMultiThread(false);
-        settings.SetStoreOnlyLastIntersection(false);
+        settings.store_only_last_intersection(false);
 
         // photon propagation
         Photons::propagate_photons_in_world_with_settings(

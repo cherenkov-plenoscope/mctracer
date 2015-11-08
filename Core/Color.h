@@ -18,10 +18,12 @@ class Color : public Printable{
 	double green_0to255;
 	double blue_0to255;
 public:
+	
 	static const Color white;
-	static const Color syk_blue;
+	static const Color sky_blue;
 	static const Color gray;
 	static const Color dark_gray;
+	static const Color black;
 	Color();
 	Color(const int r, const int g, const int b);
 	Color(const double r, const double g, const double b);

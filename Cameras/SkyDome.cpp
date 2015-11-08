@@ -1,8 +1,24 @@
 #include "Cameras/SkyDome.h"
 #include <sstream>
 #include "math.h"
+
+using namespace SkyDome;
+
+//const Monochrom blue_sky = Monochrom(Color::sky_blue);
 //------------------------------------------------------------------------------
-SkyDome::SkyDome(const std::string _filename):sky(CameraImage(_filename)){
+double Dome::get_zenith_distance_of(const Vector3D dir)const {
+	return Vector3D::unit_z.get_angle_in_between_in_rad(dir);
+}
+//------------------------------------------------------------------------------
+double Dome::get_azimuth_angle_of(const Vector3D dir)const {
+	return atan2(dir.y(),dir.x());
+}
+//------------------------------------------------------------------------------
+
+
+
+//------------------------------------------------------------------------------
+Texture::Texture(const std::string _filename):sky(CameraImage(_filename)){
 	filename = _filename;
 
 	central_row = sky.get_number_of_rows()/2;
@@ -11,17 +27,15 @@ SkyDome::SkyDome(const std::string _filename):sky(CameraImage(_filename)){
 		central_row<central_col ? central_row : central_col;
 }
 //------------------------------------------------------------------------------
-Color SkyDome::get_color_for_direction(Vector3D dir)const {
-	
-	dir.normalize();
+Color Texture::get_color_for_direction(Vector3D dir)const {
 
 	if(dir.z() < 0.0)
-		return Color::gray;
+		return Color::black;
 	else
 		return sky_dome_color_for(dir);
 }
 //------------------------------------------------------------------------------
-Color SkyDome::sky_dome_color_for(const Vector3D dir)const {
+Color Texture::sky_dome_color_for(const Vector3D dir)const {
 	const double zd = get_zenith_distance_of(dir);
 	const double az = get_azimuth_angle_of(dir);
 
@@ -38,20 +52,30 @@ Color SkyDome::sky_dome_color_for(const Vector3D dir)const {
 	return sky.get_pixel_row_col(row, col);
 }
 //------------------------------------------------------------------------------
-std::string SkyDome::get_print()const {
+std::string Texture::get_print()const {
 	std::stringstream out;
 	out << "SkyDome " << sky.get_number_of_cols() << "x" << sky.get_number_of_rows();
-	out << " " << filename << "\n";
+	out << " " << filename << ", ";
 	out << "central pixel (" << central_col << "," ;
-	out << central_row <<"), radius " << zenith_to_horizon_radius << "\n";
+	out << central_row <<"), radius " << zenith_to_horizon_radius;
 	return out.str();
 }
 //------------------------------------------------------------------------------
-double SkyDome::get_zenith_distance_of(const Vector3D dir)const {
-	return Vector3D::unit_z.get_angle_in_between_in_rad(dir);
+
+
+
+//------------------------------------------------------------------------------
+Monochrom::Monochrom(const Color _dome_color) {
+	dome_color = _dome_color;
 }
 //------------------------------------------------------------------------------
-double SkyDome::get_azimuth_angle_of(const Vector3D dir)const {
-	return atan2(dir.y(),dir.x());
+Color Monochrom::get_color_for_direction(const Vector3D dir)const {
+	return Color::sky_blue;
+}
+//------------------------------------------------------------------------------
+std::string Monochrom::get_print()const {
+	std::stringstream out;
+	out << "SkyDome Monochrome " << dome_color;
+	return out.str();
 }
 //------------------------------------------------------------------------------

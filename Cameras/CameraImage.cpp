@@ -18,11 +18,7 @@ CameraImage::~CameraImage(){
 	delete Image;
 }
 //------------------------------------------------------------------------------
-cv::Mat CameraImage::get_image()const{
-	return *Image;
-}
-//------------------------------------------------------------------------------
-void CameraImage::save_image_to_file(std::string filename_of_image)const{
+void CameraImage::save(std::string filename_of_image)const{
 	
 	filename_of_image += ".png";
 	
@@ -70,7 +66,7 @@ void CameraImage::load(const std::string filename) {
 	}
 }
 //------------------------------------------------------------------------------
-uint CameraImage::get_resolution()const {
+uint CameraImage::get_number_of_pixels()const {
 	return get_number_of_cols() * get_number_of_rows();
 }
 //------------------------------------------------------------------------------
