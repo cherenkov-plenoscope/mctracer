@@ -72,6 +72,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLens.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLensHexBound.cpp
 )
+add_subdirectory("${PROJECT_SOURCE_DIR}/gtest-1.7.0")
 add_subdirectory("${PROJECT_SOURCE_DIR}/XmlFactory")
 add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonSensor")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Tools")
