@@ -94,7 +94,7 @@ add_executable(mctracer mctracer.cpp)
 target_link_libraries(mctracer mct)
 #-------------------------------------------------------------------------------
 # GTest unit and integration tests
-include_directories("${PROJECT_SOURCE_DIR}/gtest-1.7.0")
+include_directories("${PROJECT_SOURCE_DIR}/gtest-1.7.0/include")
 
 add_executable(mctracerTests ./test/test.cpp)
 target_link_libraries(mctracerTests gtest gtest_main)
