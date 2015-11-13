@@ -5,7 +5,7 @@ const TracerSettings TracerSettings::default_settings = TracerSettings();
 //------------------------------------------------------------------------------
 TracerSettings::TracerSettings() {
 
-	default_color = Color::sky_blue;
+	//default_color = Color::sky_blue;
 	flag_store_only_final_intersection = false;
 	number_of_max_reflections = 5;
 	pseudo_random_number_seed = 0;
@@ -29,10 +29,6 @@ bool TracerSettings::max_number_of_reflections_is_not_reached_yet(
 	const uint reflection_counter
 )const {
 	return reflection_counter <= number_of_max_reflections;
-}
-//------------------------------------------------------------------------------
-Color TracerSettings::get_default_color()const {
-	return default_color;
 }
 //------------------------------------------------------------------------------
 int TracerSettings::get_max_number_of_reflections()const {

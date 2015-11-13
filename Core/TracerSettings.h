@@ -27,9 +27,6 @@ private:
 		// very last interaction, i.e. the absorbtion of the Photon will be 
 		// stored in the history. 
 
-	Color default_color;
-		// The default background colour in the raytracing images 
-
 	bool multithread = true;
 		// When multithread is true tmcTracer will use all threads availabe to
 		// propagate the Ray,CameraRays,Photons.
@@ -61,7 +58,7 @@ public:
 	)const;
 
 	unsigned get_pseudo_random_number_seed()const;
-	Color get_default_color()const;
+	//Color get_default_color()const;
 
 	void set_sky_dome(const SkyDome::Dome* dome);
 	const SkyDome::Dome* get_sky_dome()const;
