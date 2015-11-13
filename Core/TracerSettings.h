@@ -40,8 +40,23 @@ private:
 
 	unsigned pseudo_random_number_seed;
 
+	// rendering
 	const SkyDome::Dome* sky_dome;
 public:
+	struct Preview {
+		uint cols;
+		uint rows;
+	} preview;
+
+	struct Snapshot {
+		uint cols;
+		uint rows;
+		uint rays_per_pixel;
+	} snapshot;
+
+	struct AperturCameraSettings {
+		
+	};
 
 	static const TracerSettings default_settings;
 	TracerSettings();

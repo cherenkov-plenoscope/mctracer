@@ -66,7 +66,6 @@ private:
 	void start_free_orbit();
 	void aquire_image();
 	void update_free_orbit_display();
-	void take_snapshot();
 	void take_snapshot_manual_focus_on_pixel_col_row(int x, int y);
 	void print_free_orbit_help_text()const;
 	void increase_stereo_offset();
@@ -81,8 +80,7 @@ private:
 	void print_info_of_probing_ray_for_pixel_col_row(int x, int y);
 	void update_current_camera_position(Vector3D new_translation_World2Camera);
 	std::string get_prefix_print()const;
-	ApertureCamera get_Mamiya645_based_on_free_orbit_camera()const;
-	ApertureCamera get_Imax70mm_based_on_free_orbit_camera()const;
+	ApertureCamera get_ApertureCamera_based_on_free_orbit_camera()const;
 	void create_free_orbit_display();
 	void destroy_free_orbit_display();
 	void reset_camera();

@@ -7,7 +7,10 @@ FreeOrbitCamera::FreeOrbitCamera(
 	this->world = world;
 	this->settings = settings;
 
-	flying_camera = new PinHoleCamera("Cam", 320, 180);
+	flying_camera = new PinHoleCamera("Cam", 
+		settings->preview.cols, 
+		settings->preview.rows
+	);
 	
 	create_CameraMen_to_safely_operate_the_flying_camera();
 	reset_camera();
@@ -89,11 +92,6 @@ void FreeOrbitCamera::start_free_orbit(){
 			break;
 			case 'p': std::cout << world->get_tree_print() << "\n";
 			break;
-			case 'g': {
-				take_snapshot();
-				key_stroke_requires_image_update = false;
-			};
-			break;
 			case 'h': {
 				print_free_orbit_help_text();
 				key_stroke_requires_image_update = false;
@@ -162,16 +160,6 @@ void FreeOrbitCamera::toggle_stereo3D() {
 	std::cout << (stereo3D ? "On" : "Off") << "\n";
 }
 //------------------------------------------------------------------------------
-void FreeOrbitCamera::take_snapshot(){
-	
-	ApertureCamera apcam = get_Imax70mm_based_on_free_orbit_camera();
-	apcam.auto_focus(world, settings);
-	std::cout << apcam.get_print();
-
-	const CameraImage* img = acquire_image_with_camera(&apcam);
-	img->save(get_snapshot_filename());
-}
-//------------------------------------------------------------------------------
 std::string FreeOrbitCamera::get_snapshot_filename(){
 	snapshot_counter++;
 
@@ -182,28 +170,25 @@ std::string FreeOrbitCamera::get_snapshot_filename(){
 	return filename.str();
 }
 //------------------------------------------------------------------------------
-ApertureCamera FreeOrbitCamera::get_Mamiya645_based_on_free_orbit_camera()const{
+ApertureCamera FreeOrbitCamera::get_ApertureCamera_based_on_free_orbit_camera()const{
 
-	ApertureCamera Mamiya645("Mamiya645", 1920, 1080);	
-	Mamiya645.set_fStop_sesnorWidth_rayPerPixel(1.2, 0.0537, 3);
-	Mamiya645.set_FoV_in_rad(flying_camera->get_FoV_in_rad());
-	Mamiya645.update_position_and_orientation(
+	ApertureCamera apcam("Imax70mm", 
+		settings->snapshot.cols, 
+		settings->snapshot.rows
+	);
+
+	apcam.set_fStop_sesnorWidth_rayPerPixel(
+		0.95, 
+		0.07, 
+		settings->snapshot.rays_per_pixel
+	);
+
+	apcam.set_FoV_in_rad(flying_camera->get_FoV_in_rad());
+	apcam.update_position_and_orientation(
 		flying_camera->get_position_in_world(),
 		flying_camera->get_rotation_in_world()
 	);
-	return Mamiya645;
-}
-//------------------------------------------------------------------------------
-ApertureCamera FreeOrbitCamera::get_Imax70mm_based_on_free_orbit_camera()const{
-
-	ApertureCamera imax70mm("Imax70mm", 1920, 1080);	
-	imax70mm.set_fStop_sesnorWidth_rayPerPixel(0.95, 0.07, 3);
-	imax70mm.set_FoV_in_rad(flying_camera->get_FoV_in_rad());
-	imax70mm.update_position_and_orientation(
-		flying_camera->get_position_in_world(),
-		flying_camera->get_rotation_in_world()
-	);
-	return imax70mm;
+	return apcam;
 }
 //------------------------------------------------------------------------------
 std::string FreeOrbitCamera::get_prefix_print()const{
@@ -216,15 +201,19 @@ void FreeOrbitCamera::take_snapshot_manual_focus_on_pixel_col_row(int x, int y){
 	
 	DistanceMeter dist_meter(&probing_ray, world);
 
-	if(dist_meter.does_face_an_object()) {
+	double object_distance_to_focus_on;
 
-		ApertureCamera apcam = get_Imax70mm_based_on_free_orbit_camera();
-		apcam.set_focus_to(dist_meter.get_distance_to_closest_object());
-		std::cout << apcam.get_print();
+	if(dist_meter.does_face_an_object())
+		object_distance_to_focus_on = dist_meter.get_distance_to_closest_object();
+	else
+		object_distance_to_focus_on = 9e99; // a very large distance
+	
+	ApertureCamera apcam = get_ApertureCamera_based_on_free_orbit_camera();
+	apcam.set_focus_to(object_distance_to_focus_on);
+	std::cout << apcam.get_print();
 
-		const CameraImage* img = acquire_image_with_camera(&apcam);
-		img->save(get_snapshot_filename());
-	}
+	const CameraImage* img = acquire_image_with_camera(&apcam);
+	img->save(get_snapshot_filename());
 }
 //------------------------------------------------------------------------------
 const CameraImage* FreeOrbitCamera::acquire_image_with_camera(CameraDevice* cam) {
@@ -318,8 +307,8 @@ void FreeOrbitCamera::print_free_orbit_help_text()const{
 	out << " decrease................[ y ]\n";
 	out << "                                  _free_orbit___________________\n";
 	out << "_Aperture_camera_______________    print help..............[ h ]\n";
-	out << " take snapshot auto focus[ g ]     print geometry tree.....[ p ]\n";
-	out << " manual focus..[ right mouse ]     exit....................[ESC]\n";
+	out << " manual focus..[ right mouse ]     print geometry tree.....[ p ]\n";
+	out << "                                   exit....................[ESC]\n";
 	out << "\n";
 	out << "[ left mouse  ] click image for additional information.\n";
 	out << "[ right mouse ] click image for manual focus with snapshot.\n";
@@ -335,4 +324,4 @@ void FreeOrbitCamera::continue_with_new_scenery_and_settings(
 	this->settings = settings;	
 	start_free_orbit();
 }
-//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------ 

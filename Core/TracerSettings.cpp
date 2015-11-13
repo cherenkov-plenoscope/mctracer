@@ -5,11 +5,17 @@ const TracerSettings TracerSettings::default_settings = TracerSettings();
 //------------------------------------------------------------------------------
 TracerSettings::TracerSettings() {
 
-	//default_color = Color::sky_blue;
 	flag_store_only_final_intersection = false;
 	number_of_max_reflections = 5;
 	pseudo_random_number_seed = 0;
 	sky_dome = &SkyDome::blue_sky;
+
+	preview.cols = 320;
+	preview.rows = 180;
+
+	snapshot.cols = preview.cols*6;
+	snapshot.rows = preview.rows*6;
+	snapshot.rays_per_pixel = 3;
 }
 //------------------------------------------------------------------------------
 void TracerSettings::set_max_number_of_reflections(
