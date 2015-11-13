@@ -25,6 +25,7 @@ class RayAndFrameTest : public ::testing::Test {
 
 		// call this, to make the tests magically pass!
 		//frame_r_4p2m.get_print();
+		frame_r_4p2m.init_tree_based_on_mother_child_relations();
 	}
 
 	virtual ~RayAndFrameTest() {
