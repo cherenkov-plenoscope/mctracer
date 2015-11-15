@@ -11,6 +11,7 @@
 #include "Color.h"
 #include "TracerException.h"
 #include "Cameras/SkyDome.h"
+#include "Vector3D.h"
 #include <string>
 #include <sstream>
 
@@ -57,6 +58,9 @@ public:
 	struct AperturCameraSettings {
 		
 	};
+
+	bool sky_light_source;
+	Vector3D global_light_direction;
 
 	static const TracerSettings default_settings;
 	TracerSettings();

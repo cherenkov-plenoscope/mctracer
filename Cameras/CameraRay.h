@@ -28,7 +28,6 @@ public:
 		uint refl_count,
 		const TracerSettings *settings
 	)const;
-
 private:
 	Color absorption_on_the_outer_side(
 		const Intersection* intersection,
@@ -38,6 +37,22 @@ private:
 	Color absorption_on_the_inner_side(
 		const Intersection* intersection,
 		const TracerSettings *settings
+	)const;
+
+	Color shadow_of_sky_light(
+		const Frame* world,
+		const TracerSettings *settings,
+		const Intersection *intersection
+	)const;
+
+	bool is_iluminated_by_sky_light_source(
+		const Frame* world,
+		const TracerSettings *settings,
+		const Intersection *intersection
+	)const;
+
+	bool surface_normal_is_facing_camera(
+		const Intersection *intersection
 	)const;
 };
 #endif // __CAMERARAY_H_INCLUDED__ 

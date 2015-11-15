@@ -16,6 +16,10 @@ TracerSettings::TracerSettings() {
 	snapshot.cols = preview.cols*6;
 	snapshot.rows = preview.rows*6;
 	snapshot.rays_per_pixel = 3;
+
+	sky_light_source = true;
+	global_light_direction = Vector3D(1.0,0.2,1.0);
+	global_light_direction.normalize();
 }
 //------------------------------------------------------------------------------
 void TracerSettings::set_max_number_of_reflections(
