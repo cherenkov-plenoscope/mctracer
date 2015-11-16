@@ -13,6 +13,8 @@ public:
     	os << to_be_displayed.get_print();
     	return os;
 	};
+
+	virtual ~Printable() {};
 };
 
 #endif //__PRINTABLE__
