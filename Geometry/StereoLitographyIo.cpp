@@ -40,6 +40,9 @@ namespace StereoLitographyIo {
 				facet.c*scale
 			);	
 
+			tri->set_outer_color(&Color::gray);
+			tri->set_inner_color(&Color::dark_gray);
+			
 			mesh->set_mother_and_child(tri);
 		}
 

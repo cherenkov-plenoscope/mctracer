@@ -11,6 +11,7 @@
 #include "Color.h"
 #include "TracerException.h"
 #include "Cameras/SkyDome.h"
+#include "Vector3D.h"
 #include <string>
 #include <sstream>
 
@@ -27,9 +28,6 @@ private:
 		// very last interaction, i.e. the absorbtion of the Photon will be 
 		// stored in the history. 
 
-	Color default_color;
-		// The default background colour in the raytracing images 
-
 	bool multithread = true;
 		// When multithread is true tmcTracer will use all threads availabe to
 		// propagate the Ray,CameraRays,Photons.
@@ -43,8 +41,26 @@ private:
 
 	unsigned pseudo_random_number_seed;
 
+	// rendering
 	const SkyDome::Dome* sky_dome;
 public:
+	struct Preview {
+		uint cols;
+		uint rows;
+	} preview;
+
+	struct Snapshot {
+		uint cols;
+		uint rows;
+		uint rays_per_pixel;
+	} snapshot;
+
+	struct AperturCameraSettings {
+		
+	};
+
+	bool sky_light_source;
+	Vector3D global_light_direction;
 
 	static const TracerSettings default_settings;
 	TracerSettings();
@@ -61,7 +77,7 @@ public:
 	)const;
 
 	unsigned get_pseudo_random_number_seed()const;
-	Color get_default_color()const;
+	//Color get_default_color()const;
 
 	void set_sky_dome(const SkyDome::Dome* dome);
 	const SkyDome::Dome* get_sky_dome()const;

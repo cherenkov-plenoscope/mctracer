@@ -283,12 +283,11 @@ TEST_F(Tools, StrToDouble) {
 TEST_F(Tools, StrToBool) {
 
   EXPECT_NO_THROW(
-    EXPECT_EQ(true,StrToBool("true"));
-    EXPECT_EQ(true,StrToBool("TRUE"));
-    EXPECT_EQ(false,StrToBool("false"));
-    EXPECT_EQ(false,StrToBool("FALSE")); 
+    EXPECT_TRUE(StrToBool("true"));
+    EXPECT_TRUE(StrToBool("TRUE"));
+    EXPECT_FALSE(StrToBool("false"));
+    EXPECT_FALSE(StrToBool("FALSE"));   
   );
-
   EXPECT_THROW(
     EXPECT_NE(true,StrToBool(" true"));
     EXPECT_NE(true,StrToBool("true "));
