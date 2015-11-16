@@ -17,12 +17,18 @@
 
 //=================================
 class Sphere :public SurfaceEntity{
+
 protected:
 	
 	double radius;
 public:
 
 	Sphere();
+	Sphere(
+		const std::string new_name,
+        const Vector3D    new_pos,
+        const Rotation3D  new_rot)
+		: SurfaceEntity(new_name, new_pos, new_rot) {};
 
 	void set_sphere_radius(double nradius);
 
