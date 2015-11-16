@@ -39,6 +39,29 @@ SurfaceEntity::SurfaceEntity() {
 	outer_absorption_vs_wavelength = default_abso;
 	inner_absorption_vs_wavelength = default_abso;
 }
+
+SurfaceEntity::SurfaceEntity(
+	const std::string new_name,
+    const Vector3D    new_pos,
+    const Rotation3D  new_rot)
+	: 	Frame(new_name, new_pos, new_rot)	
+{
+	_boundary_layer_is_transparent = false;
+
+	outer_color = default_color;
+	inner_color = default_color;
+
+	outer_reflection_vs_wavelength = default_refl;
+	inner_reflection_vs_wavelength = default_refl;
+
+	outer_refraction_vs_wavelength = default_refr;
+	inner_refraction_vs_wavelength = default_refr;
+
+	outer_absorption_vs_wavelength = default_abso;
+	inner_absorption_vs_wavelength = default_abso;
+	
+}
+
 //------------------------------------------------------------------------------
 const Func1D* SurfaceEntity::get_outer_reflection_()const {
 	return outer_reflection_vs_wavelength;

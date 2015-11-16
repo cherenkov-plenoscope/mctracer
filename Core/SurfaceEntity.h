@@ -15,7 +15,7 @@ class RayForPropagation;
 
 //=================================
 class SurfaceEntity :public Frame {
-	
+
 	const Frame* allowed_frame_to_propagate_to = Frame::void_frame;
 
 	static const Function::Limits default_wavelength_range;
@@ -43,11 +43,15 @@ public:
 	static const SurfaceEntity* source_object;
 
 	SurfaceEntity();
+	SurfaceEntity(
+		const std::string new_name,
+        const Vector3D    new_pos,
+        const Rotation3D  new_rot);
 
 	void set_outer_color(const Color* color);
 	void set_inner_color(const Color* color);
 	void set_outer_reflection(const Function::Func1D* refl);
-	void set_inner_reflection(const Function::Func1D* refl);
+	void set_inner_reflection(const Function::Func1D* refl);	
 	void set_outer_refraction(const Function::Func1D* refrac);
 	void set_inner_refraction(const Function::Func1D* refrac);
 	void set_outer_absorption(const Function::Func1D* absorp);
