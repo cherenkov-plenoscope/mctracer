@@ -3,13 +3,15 @@
 
 const TracerSettings TracerSettings::default_settings = TracerSettings();
 //------------------------------------------------------------------------------
-TracerSettings::TracerSettings() {
+TracerSettings::TracerSettings()
+{
+
 
 	default_color = Color::sky_blue;
 	flag_store_only_final_intersection = false;
 	number_of_max_reflections = 5;
 	pseudo_random_number_seed = 0;
-	sky_dome = &SkyDome::blue_sky;
+	sky_dome = new SkyDome::Monochrom();
 }
 //------------------------------------------------------------------------------
 void TracerSettings::set_max_number_of_reflections(
@@ -64,5 +66,6 @@ const SkyDome::Dome* TracerSettings::get_sky_dome()const {
 }
 //------------------------------------------------------------------------------
 void TracerSettings::set_sky_dome(const SkyDome::Dome* dome) {
+	delete sky_dome;
 	sky_dome = dome;
 }

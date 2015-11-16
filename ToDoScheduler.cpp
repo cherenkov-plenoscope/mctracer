@@ -90,8 +90,8 @@ void ToDoScheduler::render_geometry()const {
 	TracerSettings settings;
 
 	if(!skydome_path().empty()) {
-		SkyDome::Texture sky(skydome_path());
-		settings.set_sky_dome(&sky);
+		SkyDome::Texture *sky = new SkyDome::Texture(skydome_path());
+		settings.set_sky_dome(sky);
 		FreeOrbitCamera free(geometry, &settings);
 	}else{
 		FreeOrbitCamera free(geometry, &settings);
