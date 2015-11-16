@@ -5,7 +5,7 @@
 
 //=================================
 // forward declared dependencies
-class Color;
+//class Color;
 //=================================
 // included dependencies
 #include <string>
@@ -19,7 +19,7 @@ namespace SkyDome {
 	public:
 
 		virtual Color get_color_for_direction(const Vector3D dir)const = 0;
-		//virtual ~Dome();
+		virtual ~Dome() {};
 		
 	protected:
 
@@ -32,7 +32,7 @@ namespace SkyDome {
 
 		Color dome_color;
 	public:
-
+		Monochrom();
 		Monochrom(const Color dome_color);
 		//~Monochrom();
 		Color get_color_for_direction(const Vector3D dir)const;
@@ -58,6 +58,6 @@ namespace SkyDome {
 		Color sky_dome_color_for(const Vector3D dir)const;	
 	};	
 
-	static const Monochrom blue_sky(Color::sky_blue);
+	//static const Monochrom blue_sky;
 } // SkyDome
 #endif // __SKYDOME_H_INCLUDED__ 

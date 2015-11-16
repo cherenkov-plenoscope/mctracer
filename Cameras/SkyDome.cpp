@@ -69,6 +69,9 @@ Monochrom::Monochrom(const Color _dome_color) {
 	dome_color = _dome_color;
 }
 //------------------------------------------------------------------------------
+Monochrom::Monochrom() :
+	dome_color(Color::sky_blue){}
+//------------------------------------------------------------------------------
 Color Monochrom::get_color_for_direction(const Vector3D dir)const {
 	return Color::sky_blue;
 }
@@ -79,3 +82,4 @@ std::string Monochrom::get_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
+//const SkyDome::Monochrom blue_sky = SkyDome::Monochrom(Color::sky_blue);
