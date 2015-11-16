@@ -1,4 +1,7 @@
 #include "Frame.h"
+
+
+const uint Frame::max_number_of_children_in_frame = 16;
 //------------------------------------------------------------------------------
 Frame* Frame::void_frame = new Frame(
 	"void_frame",
