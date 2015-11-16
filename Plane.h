@@ -25,6 +25,13 @@ protected:
 
 	const Vector3D plane_surface_normal = Vector3D(0.0,0.0,1.0);
 public:
+	Plane() {};
+	Plane(
+		const std::string new_name,
+        const Vector3D    new_pos,
+        const Rotation3D  new_rot)
+		: SurfaceEntity(new_name, new_pos, new_rot) {};
+
 
 	void set_x_y_width(
 		const double x_width,

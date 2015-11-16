@@ -209,8 +209,7 @@ TEST_F(CartesianFrameTest, cluster_frames_during_tree_initializing) {
                 std::stringstream name;
                 name << "sub_sphere_" << x << "_" << y << "_" << z;
 
-                Sphere* ball = new Sphere;
-                ball->set_name_pos_rot(name.str(), pos, Rotation3D::null);
+                Sphere* ball = new Sphere(name.str(), pos, Rotation3D::null);
                 ball->set_sphere_radius(0.5);
 
                 tree.set_mother_and_child(ball);

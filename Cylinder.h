@@ -24,6 +24,13 @@ protected:
 	double Length;
 public:
 
+	Cylinder() {};
+	Cylinder(
+		const std::string new_name,
+        const Vector3D    new_pos,
+        const Rotation3D  new_rot)
+		: SurfaceEntity(new_name, new_pos, new_rot) {};
+
 	void set_cylinder(
 		const double radius, 
 		const Vector3D start_pos, 
