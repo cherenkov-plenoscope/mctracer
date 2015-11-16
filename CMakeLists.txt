@@ -2,7 +2,7 @@
 # Author: Sebastian Mueller
 #-------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 2.8)
-set (CMAKE_CXX_FLAGS "-std=c++11 -Wall -pedantic -O2 -g -I")
+set (CMAKE_CXX_FLAGS "-std=c++11 -Wall -pedantic -O3 -g -I")
 #-------------------------------------------------------------------------------
 project(mctracer)
 #-------------------------------------------------------------------------------
@@ -81,6 +81,8 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/MmcsCorsikaFileIO")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Cameras")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Core")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Geometry")
+
+#MESSAGE( STATUS "SOURCE_VARIABLE:" ${SOURCE} )
 #-------------------------------------------------------------------------------
 # mctracer shared linked library
 
@@ -111,23 +113,23 @@ target_link_libraries(mctracerExamples mct)
 # http://www.swig.org/Doc1.3/Introduction.html#Introduction_build_system
 # This is a CMake example for Python
 
-#FIND_PACKAGE(SWIG REQUIRED)
-#INCLUDE(${SWIG_USE_FILE})
+FIND_PACKAGE(SWIG REQUIRED)
+INCLUDE(${SWIG_USE_FILE})
 
-#FIND_PACKAGE(PythonLibs)
-#INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
+FIND_PACKAGE(PythonLibs)
+INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
 
-#INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
-#INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/Core)
-#INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/Cameras)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/Core)
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/Cameras)
 
 
-#SET(CMAKE_SWIG_FLAGS "")
+SET(CMAKE_SWIG_FLAGS "")
 
-#SET_SOURCE_FILES_PROPERTIES("py_mct/mctracer.i" PROPERTIES CPLUSPLUS ON)
-#SET_SOURCE_FILES_PROPERTIES("py_mct/mctracer.i" PROPERTIES SWIG_FLAGS "")
+SET_SOURCE_FILES_PROPERTIES("mctracer.i" PROPERTIES CPLUSPLUS ON)
+SET_SOURCE_FILES_PROPERTIES("mctracer.i" PROPERTIES SWIG_FLAGS "")
 
-#SWIG_ADD_MODULE(mctracer python "py_mct/mctracer.i")
+SWIG_ADD_MODULE(mctracer python "mctracer.i")
 
-#SWIG_LINK_LIBRARIES(mctracer ${PYTHON_LIBRARIES})
-#SWIG_LINK_LIBRARIES(mctracer mct)
+SWIG_LINK_LIBRARIES(mctracer ${PYTHON_LIBRARIES})
+SWIG_LINK_LIBRARIES(mctracer mct)
