@@ -1,55 +1,143 @@
- /* example.i */
- %module mctracer
- %{
- /* Put header files here or function declarations like below */
- #include "Core/Printable.h"
- #include "Vector3D.h"
- #include "Rotation3D.h"
- #include "HomoTrafo3D.h"
- #include "Frame.h"
- #include "XmlFactory/WorldFactory.h"
- #include "TracerSettings.h"
- #include "FreeOrbitCamera.h"
- #include "Core/SurfaceEntity.h"
- #include "Disc.h"
- #include "Cylinder.h"
- #include "Plane.h"
- #include "Color.h"
- #include "Cameras/SkyDome.h"
+%module mctracer
+%apply int { size_t };
+%apply unsigned int { uint };
 
- 
- #include "SegmetedReflectorGenerator.h"
- #include "SphereCapWithHexagonalBound.h"
- #include "Photon.h"
- #include "PropagationEnvironment.h"
+%include <std_string.i>
+%include <std_vector.i>
 
- #include "Geometry/Sphere.h"
+%{
+	#include "Core/Printable.h"
+	#include "Core/Vector3D.h"
+	#include "Core/HomoTrafo3D.h"
+	#include "Core/Ray.h"
+	#include "Core/RayForPropagation.h"
+	#include "Core/Color.h"
+	#include "Core/Frame.h"
+	#include "Core/FresnelRefractionAndReflection.h"
+	#include "Core/Intersection.h"
+	#include "Core/Photon.h"
+	#include "Core/PhotonMcTruth.h"
+	#include "Core/Photons.h"
+	#include "Core/PhysicalConstants.h"
+	#include "Core/PropagationEnvironment.h"
+	#include "Core/PseudoRandomNumberGenerator.h"
+	#include "Core/Rotation3D.h"
+	#include "Core/SurfaceEntity.h"
+	#include "Core/TimeStamp.h"
+	#include "Core/TracerSettings.h"
+
+	#include "Core/Function/LimitsFunction.h"
+	#include "Core/Function/Func1DFunction.h"
+	#include "Core/Function/ConstantFunction.h"
+	#include "Core/Function/ConcatFunction.h"
+	#include "Core/Function/LinInterpolFunction.h"
+	#include "Core/Function/Polynom3Function.h"
+
+	#include "PrismZ.h"
+	#include "BiConvexLens.h"
+	#include "BiConvexLensHexBound.h"
+	#include "Cylinder.h"
+	#include "CylinderPrismZ.h"
+	#include "SurfaceWithOuterPrismBound.h"
+	#include "Disc.h"
+	#include "EllipticalCapWithHexagonalBound.h"
+	#include "HexagonalPrismZ.h"
+	#include "Plane.h"
+	#include "RectangularPrismZ.h"
+	#include "SphereCapWithCylinderBound.h"
+	#include "SphereCapWithHexagonalBound.h"
+	#include "Geometry/Sphere.h"
+	#include "Geometry/StereoLitographyIo.h"
+	#include "Triangle.h"
+
+	#include "Cameras/CameraDevice.h"
+	#include "Cameras/ApertureCamera.h"
+	#include "Cameras/CameraImage.h"
+	#include "Cameras/CameraManForFieldOfView.h"
+	#include "Cameras/CameraManForRotation.h"
+	#include "Cameras/CameraManForStereo3D.h"
+	#include "Cameras/CameraManForTranslation.h"
+	#include "Cameras/CameraMan.h"
+	#include "Cameras/CameraRay.h"
+	#include "Cameras/FreeOrbitCamera.h"
+	#include "Cameras/PinHoleCamera.h"
+	#include "Cameras/SkyDome.h"
+
+	#include "XmlFactory/WorldFactory.h"
+	//#include "MmcsCorsikaFileIO/EventIo.h"
+	#include "TelescopeArrayControl.h"
+	#include "PhotonSensor/PhotonSensor.h"
+
  %}
 
- %apply int { size_t };
- %apply unsigned int { uint };
+namespace std {
+    %template(VectorDouble) vector<double>;
+    %template(VecVecdouble) vector< vector<double> >;
+    %template(VectorPhoton) vector<Photon*>;
+    %template(VectorSensor) vector<PhotonSensor::Sensor*>;
+};
 
- 
- %include <std_string.i>
- %include "Core/Printable.h"
- %include "Vector3D.h"
- %include "Rotation3D.h"
- %include "HomoTrafo3D.h"
- %include "Frame.h"
- %include "XmlFactory/WorldFactory.h"
- %include "TracerSettings.h"
- %include "FreeOrbitCamera.h"
- %include "Core/SurfaceEntity.h"
- %include "Disc.h"
- %include "Cylinder.h"
- %include "Plane.h"
- %include "Color.h"
- %include "Cameras/SkyDome.h"
- %include "SegmetedReflectorGenerator.h"
- %include "SphereCapWithHexagonalBound.h"
- %include "Photon.h"
- %include "PropagationEnvironment.h"
 
- %include "Geometry/Sphere.h"
+%feature("autodoc", "1");
 
- 
+%include "Core/Printable.h"
+%include "Core/Vector3D.h"
+%include "Core/HomoTrafo3D.h"
+%include "Core/Ray.h"
+%include "Core/RayForPropagation.h"
+%include "Core/Color.h"
+%include "Core/Frame.h"
+%include "Core/FresnelRefractionAndReflection.h"
+%include "Core/Intersection.h"
+%include "Core/Photon.h"
+%include "Core/PhotonMcTruth.h"
+%include "Core/Photons.h"
+%include "Core/PhysicalConstants.h"
+%include "Core/PropagationEnvironment.h"
+%include "Core/PseudoRandomNumberGenerator.h"
+%include "Core/Rotation3D.h"
+%include "Core/SurfaceEntity.h"
+%include "Core/TimeStamp.h"
+%include "Core/TracerSettings.h"
+
+%include "Core/Function/LimitsFunction.h"
+%include "Core/Function/Func1DFunction.h"
+%include "Core/Function/ConstantFunction.h"
+%include "Core/Function/ConcatFunction.h"
+%include "Core/Function/LinInterpolFunction.h"
+%include "Core/Function/Polynom3Function.h"
+
+%include "BiConvexLens.h"
+%include "BiConvexLensHexBound.h"
+%include "Cylinder.h"
+%include "PrismZ.h"
+%include "CylinderPrismZ.h"
+%include "SurfaceWithOuterPrismBound.h"
+%include "Disc.h"
+%include "EllipticalCapWithHexagonalBound.h"
+%include "HexagonalPrismZ.h"
+%include "Plane.h"
+%include "RectangularPrismZ.h"
+%include "SphereCapWithCylinderBound.h"
+%include "SphereCapWithHexagonalBound.h"
+%include "Geometry/Sphere.h"
+%include "Geometry/StereoLitographyIo.h"
+%include "Triangle.h"
+
+%include "Cameras/CameraDevice.h"
+%include "Cameras/ApertureCamera.h"
+%include "Cameras/CameraImage.h"
+%include "Cameras/CameraManForFieldOfView.h"
+%include "Cameras/CameraManForRotation.h"
+%include "Cameras/CameraManForStereo3D.h"
+%include "Cameras/CameraManForTranslation.h"
+%include "Cameras/CameraMan.h"
+%include "Cameras/CameraRay.h"
+%include "Cameras/FreeOrbitCamera.h"
+%include "Cameras/PinHoleCamera.h"
+%include "Cameras/SkyDome.h"
+
+%include "XmlFactory/WorldFactory.h"
+//%include "MmcsCorsikaFileIO/EventIo.h"
+%include "TelescopeArrayControl.h"
+%include "PhotonSensor/PhotonSensor.h"
