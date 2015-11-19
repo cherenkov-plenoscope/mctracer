@@ -75,3 +75,44 @@ cd mctracer/test
 ../../build/mctracerTest
 
 ```
+
+----
+
+
+# Upcoming: Python support #
+
+## Install ##
+
+```
+#!bash
+git clone <URL>
+cd mctracer
+mkdir build && cd build
+cmake .. && make
+cd ..
+source this_pytracer.sh
+```
+
+The last line simply sets your PYTHONPATH correctly, if you want this to be persistent, edit your `.bashrc` accordingly.
+
+## Try it out ##
+
+### Trace some *corsika* photons through an XML scenery.
+
+```
+#!bash
+python pytracer/propagate.py ./scenery/fact.xml ./test/telescope.dat
+```
+outputs just a PNG. Have a look at the bottom of `propagate.py` in order to learn how to do more with the output.
+
+### Fly through a scene, written in Python
+
+```
+#!bash
+python pytracer/fact_scene.py
+```
+**note:** there's a bug, click on any black surface and seg-fault!
+
+### Trace *corsika* photons through a Python scene.
+
+!Missing!
