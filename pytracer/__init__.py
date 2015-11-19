@@ -1,3 +1,4 @@
+from __future__ import print_function
 import inspect
 import mctracer
 
@@ -11,7 +12,10 @@ global_sensors = []
 def print_get_print(self):
     return self.get_print()
 
-cls_list = [x[1] for x in inspect.getmembers(mctracer, inspect.isclass) if not x[0][0] == '_']
+inpspect_out = [x for x in inspect.getmembers(mctracer) if not 'cvar' in x[0]]
+only_classes = [x for x in inpspect_out if inspect.isclass(x[1])]
+
+cls_list = [x[1] for x in only_classes if not x[0][0] == '_']
 for cls in cls_list:
     cls.__str__ = print_get_print
     #cls.__repr__ = print_get_print
@@ -186,11 +190,11 @@ def print_frame_dict(frame_dict):
         if isinstance(value, dict):
             print_frame_dict(value)
         else:
-            print repr(name), value.get_name_of_frame()
+            print( repr(name), value.get_name_of_frame() )
 
 
 def set_names_frame_dict(frame_dict, parent_name=None):
-    for name, value in frame_dict.iteritems():
+    for name, value in frame_dict.items():
         if isinstance(value, dict):
             set_names_frame_dict(value, parent_name=name)
         else:
@@ -204,16 +208,16 @@ def set_names_frame_dict(frame_dict, parent_name=None):
 def set_mother_and_child_frame_dict(frame_dict):
     # each frame_dict must have one_key, which is the T.Frame.
     parent_frame = frame_dict['']
-    for name, value in frame_dict.iteritems():
+    for name, value in frame_dict.items():
         if not name:
             continue
         elif isinstance(value, dict):
 
             sub_parent = set_mother_and_child_frame_dict(value)
-            print "setting ", sub_parent.get_name_of_frame(), "as child of", parent_frame.get_name_of_frame()
+            print( "setting ", sub_parent.get_name_of_frame(), "as child of", parent_frame.get_name_of_frame())
             parent_frame.set_mother_and_child(sub_parent)
         else:
-            print "setting ", value.get_name_of_frame(), "as child of", parent_frame.get_name_of_frame()
+            print( "setting ", value.get_name_of_frame(), "as child of", parent_frame.get_name_of_frame())
             parent_frame.set_mother_and_child(value)
     return parent_frame
 
