@@ -17,6 +17,27 @@
 #include "Core/Rotation3D.h"
 
 //=================================
+// The concept of Homogeneous Transformations is taken from the text book 
+//
+// "Robotics -- Modelling, Planning and Control" 
+// by Bruno Siciliano, Lorenzo Sciavicco, Luigi Villani and Guiseppe Oriolo.
+//
+// The chapter on kinematics serves an excellent introduction into 3D concepts
+// and is highly recomended for all questions on:
+//
+// - Pose of a rigid body
+// - Rotation Matrix
+//   - Elementary Rotations
+//   - Representation of a Vector
+//   - Rotation of a Vector
+// - Composition of Rotation Matrices
+// - Euler Angles
+// - ZYZ Angles
+// - RPY Angles
+// - Angle and Axis
+// - Unit Quaternion
+// - Homogeneous Transformation
+
 class HomoTrafo3D {
 
 	double T[4][4];
