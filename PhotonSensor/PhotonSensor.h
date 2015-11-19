@@ -59,8 +59,7 @@ namespace PhotonSensor {
 
 		std::vector<XYtXtyT> arrival_table;
 	public:
-		
-		using Sensor::Sensor;
+		PerfectSensor(uint _id, Frame* _sensor_frame);
 		void assign_photon_to_this_sensor(const Photon* photon);
 		void reset();
 		std::vector<std::vector<double>> get_arrival_table()const;

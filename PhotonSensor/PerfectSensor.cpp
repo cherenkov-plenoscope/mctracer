@@ -1,6 +1,9 @@
 #include "PhotonSensor.h"
 
 namespace PhotonSensor {
+	PerfectSensor::PerfectSensor(uint _id, Frame* _sensor_frame)
+	: Sensor(_id, _sensor_frame)
+	{	}
 	//--------------------------------------------------------------------------
 	void PerfectSensor::reset() {
 		arrival_table.clear();
