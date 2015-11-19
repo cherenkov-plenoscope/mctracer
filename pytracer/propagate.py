@@ -6,9 +6,10 @@ Usage:
 Options:
   -h --help      Show this screen.
   --version      Show version.
-  --output_path  output_path [default=.]
 
 """
+from __future__ import print_function
+
 
 from docopt import docopt
 import pytracer as T
@@ -18,7 +19,6 @@ from math import sqrt
 import matplotlib.pyplot as plt
 
 arguments = docopt(__doc__, version='propagate 0.1')
-print(arguments)
 
 prng = T.Mt19937(T.zero_seed)
 speed_of_light = 299792458
@@ -97,10 +97,8 @@ for event_id, event in enumerate(corsika_run):
 
     # absorb photons
     random_numbers = np.array([prng.uniform() for x in range(len(event.bunches))])
-    print "before absorption: ", len(event.bunches)
     event.bunches = event.bunches[random_numbers <= event.bunches['photons']]
-    print "after absorption: ", len(event.bunches)
-
+    
     causal_directions = calc_causal_directions(event.bunches)
     causal_supports = calc_causal_supports(event.bunches, causal_directions)
 
