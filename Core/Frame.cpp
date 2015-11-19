@@ -2,6 +2,7 @@
 
 
 const uint Frame::max_number_of_children_in_frame = 16;
+const double Frame::minimal_structure_size = 1e-6;
 //------------------------------------------------------------------------------
 Frame* Frame::void_frame = new Frame(
 	"void_frame",

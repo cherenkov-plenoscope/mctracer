@@ -40,10 +40,10 @@ namespace Photons {
 	// In Out to raw matrix vec<vec<d>>
 	// Can be given to AsciiIO to write/read to/from text file
 	std::vector<Photon*> *raw_matrix2photons(
-		std::vector<std::vector<double>> raw_matrix
+		std::vector<std::vector<double> > raw_matrix
 	);
 
-	std::vector<std::vector<double>> photons2raw_matrix(
+	std::vector<std::vector<double> > photons2raw_matrix(
 		std::vector<Photon*> *photon_bunch
 	);
 

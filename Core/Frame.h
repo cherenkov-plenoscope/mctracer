@@ -54,7 +54,7 @@ private:
     static const char delimiter_for_frame_path = '/';
 public:
     static const uint max_number_of_children_in_frame;
-    static constexpr double minimal_structure_size = 1e-6;
+    static const double minimal_structure_size;
 //------------------------------------------------------------------------------
     static Frame* void_frame;
 

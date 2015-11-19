@@ -26,13 +26,13 @@ namespace Function {
 	public:
 
 		LinInterpol(
-			const std::vector<std::vector<double>> two_column_xy
+			const std::vector<std::vector<double> > two_column_xy
 		);
 		double operator()(const double x)const;
 	private:
 
 		void assert_table_two_columns(
-			const std::vector<std::vector<double>> &xy_table, 
+			const std::vector<std::vector<double> > &xy_table, 
 			const uint row
 		)const;
 		void assert_upper_bound_and_argument_in_range(
@@ -40,7 +40,7 @@ namespace Function {
 			const double arg
 		)const;
 		double slope_in_table_in_row(
-			const std::vector<std::vector<double>> &xy,
+			const std::vector<std::vector<double> > &xy,
 			const uint row
 		)const;
 		std::string exception_header()const;

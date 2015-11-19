@@ -27,7 +27,7 @@ namespace PhotonSensor {
 		uint get_id();
 		virtual void assign_photon_to_this_sensor(const Photon* photon);
 		virtual void reset();
-		virtual std::vector<std::vector<double>> get_arrival_table()const;
+		virtual std::vector<std::vector<double> > get_arrival_table()const;
 		virtual std::string get_arrival_table_header()const;
 		const Frame* get_frame()const;
 
@@ -62,7 +62,7 @@ namespace PhotonSensor {
 		PerfectSensor(uint _id, Frame* _sensor_frame);
 		void assign_photon_to_this_sensor(const Photon* photon);
 		void reset();
-		std::vector<std::vector<double>> get_arrival_table()const;
+		std::vector<std::vector<double> > get_arrival_table()const;
 		std::string get_arrival_table_header()const;
 	};
 	//--------------------------------------------------------------------------
