@@ -69,6 +69,9 @@ public:
         const Vector3D pos_in_mother,
         const Rotation3D rot_in_mother
     );
+    void set_name(
+        const std::string name_of_frame
+    );
     void set_mother_and_child(Frame *new_child);
     void init_tree_based_on_mother_child_relations();
     void take_children_from(Frame *frame_to_take_chidren_from);

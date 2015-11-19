@@ -91,8 +91,7 @@ void Frame::set_name_pos_rot(
 	const Vector3D pos_in_mother,
 	const Rotation3D rot_in_mother
 ){
-	assert_name_is_valid(name_of_frame);
-	this->name_of_frame = name_of_frame;
+	this->set_name(name_of_frame);
 	
 	this->pos_in_mother = pos_in_mother;
 	this->rot_in_mother = rot_in_mother;
@@ -103,6 +102,13 @@ void Frame::set_name_pos_rot(
 	T_frame2mother.set_transformation(rot_in_mother, pos_in_mother);
 
 	reset_all_connections_to_children_and_mother();
+}
+//------------------------------------------------------------------------------
+void Frame::set_name(
+	const std::string name_of_frame
+){
+	assert_name_is_valid(name_of_frame);
+	this->name_of_frame = name_of_frame;
 }
 //------------------------------------------------------------------------------
 void Frame::reset_all_connections_to_children_and_mother() {
