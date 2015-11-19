@@ -59,7 +59,8 @@ def make_color(c):
     else:
         if len(c) == 3:
             c = tuple(c)
-            global_colors[c] = mctracer.Color(*c)    
+            if not c in global_colors:
+                global_colors[c] = mctracer.Color(*c)
             return global_colors[c]
         else:
             raise ValueError("Cannot make Color from:"+repr(c))
