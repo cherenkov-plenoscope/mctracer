@@ -1,4 +1,4 @@
-import mctracer as T
+import pytracer as T
 import math
 import numpy as np
 from functools import partial
@@ -67,134 +67,109 @@ def calc_facet_zpos(dist, focal_length, hybrid_factor):
     return h * z_Davies_Cotton + (1-h) * z_parabolic
 
 
+def optimize_reflector_z_pos(facet_positions, focal_length, focal_point):
+    deviation = 0.0
+    iteration_conter = 0
+    f = focal_length
+    while True:
+        deviation = f - average_facet_distance(facet_positions, focal_point)
+        iteration_conter += 1
 
-class SegmetedReflectorGenerator(object):
+        facet_positions[:,2] -= deviation/2.
+        
+        if abs(deviation) <= f*1e-6:
+            break
 
-    def __init__(self,
+        if iteration_conter > 100:
+            raise Exception("Exceeded max number of 100 iterations. \n"
+                        "Can not reach best reflector z position. ")            
+
+
+def average_facet_distance(facet_positions, focal_point):
+    return np.mean(
+                    np.linalg.norm(
+                        facet_positions - focal_point, axis=1
+                        )
+                    )
+
+def init_facet_orientations(facet_positions, focal_point):
+    focal_point_to_facet_pos = focal_point -  facet_positions
+    rotation_axis = np.cross(focal_point_to_facet_pos, unit_z)
+
+    c = dot(unit_z, focal_point_to_facet_pos.T)/norm(focal_point_to_facet_pos, axis=1) 
+    angle = arccos(clip(c, -1, 1))
+    rot_angle = -0.5 * angle
+
+    return rotation_axis, rot_angle
+
+def init_facet_radius(facet_spacing, facet_fill_factor):
+    facet_diameter_peak2peak = 2./math.sqrt(3.) * facet_spacing
+    return  0.5*facet_diameter_peak2peak * facet_fill_factor
+
+def SegmentedReflector(name, reflection,
+                pos=(0,0,0),
+                rot=(0,0,0),
                 focal_length=5.,
                 facet_spacing=0.6,
                 outer_diameter=5.,
                 inner_diameter=0.3,
-                hybrid_factor=1.):
-    
-        self.focal_length = focal_length
-        self.facet_spacing = facet_spacing
-        self.outer_diameter = outer_diameter
-        self.inner_diameter = inner_diameter
-        self.hybrid_factor = hybrid_factor
+                hybrid_factor=1.,
+                mirror_color=(128, 128, 128),
+                inner_mirror_color=(20, 20, 20),
+                ):
 
-        self.optical_axis = unit_z
-        self.facet_fill_factor = 0.99
-        self.mirror_colour = T.Color(128, 128, 128)
-        self.inner_mirror_colour = T.Color(20, 20, 20)
-
-        limits = T.Limits(0., 1000.)
-        con = T.Constant(0.5, limits)
-
-        self.outer_mirror_reflection = con
+        optical_axis = unit_z
+        facet_fill_factor = 0.99
+        mirror_color = T.make_color(mirror_color)
+        inner_mirror_color = T.make_color(inner_mirror_color)
 
 
 
-        self.focal_point = self.optical_axis * self.focal_length
-        self.facet_positions = make_hexgrid(
-            outer_radius=self.outer_diameter/2. - self.facet_spacing/2.0,
-            inner_radius=self.inner_diameter/2. + self.facet_spacing/2.0, 
-            spacing=self.facet_spacing
+        focal_point = optical_axis * focal_length
+        facet_positions = make_hexgrid(
+            outer_radius=outer_diameter/2. - facet_spacing/2.0,
+            inner_radius=inner_diameter/2. + facet_spacing/2.0, 
+            spacing=facet_spacing
         )
-        self.facet_positions[:,2] = calc_facet_zpos(
-            dist=np.linalg.norm(self.facet_positions, axis=1),
-            focal_length=self.focal_length,
-            hybrid_factor=self.hybrid_factor )
-        #self.facet_positions = make_Vector3D(facet_positions)
-        self.optimize_reflector_z_pos()
-        self.rotation_axis, self.rot_angle = self.init_facet_orientations()
-        self.facet_radius = self.init_facet_radius()
 
-        self.init_facets()
-        self.init_reflector()
+        facet_positions[:,2] = calc_facet_zpos(
+            dist=np.linalg.norm(facet_positions, axis=1),
+            focal_length=focal_length,
+            hybrid_factor=hybrid_factor )
 
-
-    def __str__(self):
-        buf = "SegmetedReflectorGenerator:\n"
-        buf += "focal_length: " + self.focal_length + " m\n"
-        buf += "number of facets: " + self.facet_positions + "\n"
-        buf += "max Aperture diameter: " + self.outer_diameter + "\n"
-        buf += "Hybrid: "
-        buf += self.hybrid_factor + " Davies Cotton + "
-        buf += 1.0 - self.hybrid_factor + " Parabolid\n"
-
-        return buf
-        
-    def optimize_reflector_z_pos(self):
-        deviation = 0.0
-        iteration_conter = 0
-        while True:
-            deviation = self.focal_length - self.average_facet_distance()
-            iteration_conter += 1
-
-            self.facet_positions[:,2] -= deviation/2.
+        optimize_reflector_z_pos(
+            facet_positions, 
+            focal_length, 
+            focal_point)
             
-            if abs(deviation) <= self.focal_length*1e-6:
-                break
+        rotation_axis, rot_angle = init_facet_orientations(facet_positions, focal_point)
+        facet_radius = init_facet_radius(facet_spacing, facet_fill_factor)
 
-            if iteration_conter > 100:
-                raise Exception("Exceeded max number of 100 iterations. \n"
-                            "Can not reach best reflector z position. ")            
-
-    def average_facet_distance(self):
-        return np.mean(
-                        np.linalg.norm(
-                            self.facet_positions - self.focal_point, axis=1
-                            )
-                        )
-
-    def init_facet_orientations(self):
-        focal_point_to_facet_pos = self.focal_point -  self.facet_positions
-        rotation_axis = np.cross(focal_point_to_facet_pos, unit_z)
-
-        c = dot(unit_z, focal_point_to_facet_pos.T)/norm(focal_point_to_facet_pos, axis=1) 
-        angle = arccos(clip(c, -1, 1))
-        rot_angle = -0.5 * angle
-
-        return rotation_axis, rot_angle
-
-    def init_facet_radius(self):
-        facet_diameter_peak2peak = 2./math.sqrt(3.) * self.facet_spacing
-        return  0.5*facet_diameter_peak2peak * self.facet_fill_factor
-
-
-    def init_facets(self):
-
-        self.facets = []
-
+        reflector = T.Frame(name, T.Vector3D(*pos), T.Rotation3D(*rot))
+        facets = []
         for i, (f_pos, f_rot_ax, f_rot_angle) in enumerate(zip(
-                self.facet_positions, 
-                self.rotation_axis, 
-                self.rot_angle)):
-
-            facet = T.SphereCapWithHexagonalBound()
-            pos_vector = T.Vector3D(*f_pos)
-            rot_vector = T.Vector3D(*f_rot_ax)
-            rot_object = T.Rotation3D(rot_vector, f_rot_angle)
-            facet.set_name_pos_rot("mirror_ID_"+str(i), pos_vector, rot_object)
+                                                facet_positions, 
+                                                rotation_axis, 
+                                                rot_angle)):
             
-            facet.set_outer_color(self.mirror_colour);
-            facet.set_inner_color(self.inner_mirror_colour);
-            facet.set_outer_reflection(self.outer_mirror_reflection);
-            facet.set_curvature_radius_and_outer_hex_radius(
-                self.focal_length*2.0,
-                self.facet_radius)
+            facet = T.SphereCapWithHexagonalBound(
+                name="mirror_ID_"+str(i),
+                pos=f_pos,
+                rot=(f_rot_ax, f_rot_angle),
+                color=(inner_mirror_color, mirror_color),
+                outer_reflection=reflection,
+                curvature_radius=focal_length*2.0,
+                outer_hex_radius=facet_radius
+                )
+            
+            facets.append( facet )
+            reflector.set_mother_and_child(facet)
+        
+        reflector.cluster_using_helper_frames()
+        reflector.___facets_ownership_list = facets
 
-            self.facets.append(facet)
-
-
-    def init_reflector(self):
-        self.reflector = T.Frame("Reflector", T.Vector3D(5, 0, -0.5), T.Rotation3D.null)
-        for facet in self.facets:
-            self.reflector.set_mother_and_child(facet)
-
-        self.reflector.cluster_using_helper_frames()
-
+        return reflector
+        
 
 
 if __name__ == '__main__':
@@ -207,21 +182,23 @@ if __name__ == '__main__':
     floor.set_x_y_width(1e6, 1e6)
     world.set_mother_and_child(floor)
 
-    ref_gen = SegmetedReflectorGenerator(
+    mirror_reflection = T.Constant(0.95, T.Limits(200e-9, 1200e-9))
+
+    reflector = SegmentedReflector("reflector", mirror_reflection,
                 focal_length=5.,
                 facet_spacing=0.6,
                 outer_diameter=3.5,
                 inner_diameter=0.,
                 hybrid_factor=1.)
 
-    ref = ref_gen.reflector
-    world.set_mother_and_child(ref)
-
-
+    
+    world.set_mother_and_child(reflector)
     world.init_tree_based_on_mother_child_relations()
 
     def start():
+        texture = T.Texture('./scenery/chile_night_sky.tif')
         propagation_settings = T.TracerSettings()
+        propagation_settings.set_sky_dome(texture)
         cam = T.FreeOrbitCamera(world, propagation_settings)
 
 
