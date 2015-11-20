@@ -28,9 +28,15 @@ void Rotation3D::set(
 	const Vector3D new_rot_axis,
 	const double new_rot_angle_in_rad
 ){
-	flag_rot_angles_xyz = false;
-	rot_axis = new_rot_axis/new_rot_axis.norm();
-	rot_angle_in_rad = new_rot_angle_in_rad;
+	if(new_rot_angle_in_rad == 0.0) {
+
+		set(0.0, 0.0, 0.0);
+	}else{
+
+		flag_rot_angles_xyz = false;
+		rot_axis = new_rot_axis/new_rot_axis.norm();
+		rot_angle_in_rad = new_rot_angle_in_rad;	
+	}
 }
 //------------------------------------------------------------------------------
 Vector3D Rotation3D::get_rot_axis()const {

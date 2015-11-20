@@ -7,38 +7,8 @@
 using namespace std;
 
 // The fixture for testing class Foo.
-class Rotation3DTest : public ::testing::Test {
-  protected:
-  // You can remove any or all of the following functions if its body
-  // is empty.
-
-
-	
-  Rotation3DTest() {
-    // You can do set-up work for each test here.
-  }
-
-  virtual ~Rotation3DTest() {
-    // You can do clean-up work that doesn't throw exceptions here.
-  }
-
-  // If the constructor and destructor are not enough for setting up
-  // and cleaning up each test, you can define the following methods:
-
-  virtual void SetUp() {
-    // Code here will be called immediately after the constructor (right
-    // before each test).
-
-  }
-
-  virtual void TearDown() {
-    // Code here will be called immediately after each test (right
-    // before the destructor).
-  }
-
-  // Objects declared here can be used by all tests in the test case for Foo.
-};
-//----------------------------------------------------------------------
+class Rotation3DTest : public ::testing::Test {};
+//------------------------------------------------------------------------------
 TEST_F(Rotation3DTest, ConstructorAndGetter) {
   // xyz mode
   const double x = -3.141;
@@ -61,7 +31,7 @@ TEST_F(Rotation3DTest, ConstructorAndGetter) {
   EXPECT_EQ(v.z(), (p.get_rot_axis()).z());
   EXPECT_FALSE(p.uses_xyz_angels());
 }
-//----------------------------------------------------------------------
+//------------------------------------------------------------------------------
 TEST_F(Rotation3DTest, SetterAndGetter) {
   const double x = -3.141;
   const double y = -2.0;
@@ -83,7 +53,7 @@ TEST_F(Rotation3DTest, SetterAndGetter) {
   EXPECT_EQ(v.z(), (p.get_rot_axis()).z());
   EXPECT_FALSE(p.uses_xyz_angels());
 }
-//----------------------------------------------------------------------
+//------------------------------------------------------------------------------
 TEST_F(Rotation3DTest, SineAndCosineWhenSetXYZ) {
   const double x = -3.141;
   const double y = -2.0;
@@ -97,22 +67,15 @@ TEST_F(Rotation3DTest, SineAndCosineWhenSetXYZ) {
   EXPECT_EQ(cos(y), r.cosRy()); 
   EXPECT_EQ(cos(z), r.cosRz()); 
 }
-//----------------------------------------------------------------------
-/*
-TEST_F(Rotation3DTest, SineAndCosineWhenSetVecAnglge) {
-  // axis mode
-  const double x = -3.141;
-  const double y = -2.0;
-  const double z = 1.0000;
-  Vector3D v(0.0,0.0,1.0);
-  double  angle = 1.52;
-  Rotation3D p(v,angle); 
+//------------------------------------------------------------------------------
+TEST_F(Rotation3DTest, zoro_rot_angle) {
 
-  EXPECT_EQ(sin(x), p.sinRx()); 
-  EXPECT_EQ(sin(y), p.sinRy()); 
-  EXPECT_EQ(sin(z), p.sinRz()); 
-  EXPECT_EQ(cos(x), p.cosRx()); 
-  EXPECT_EQ(cos(y), p.cosRy()); 
-  EXPECT_EQ(cos(z), p.cosRz()); 
+  Rotation3D r(Vector3D::null, 0.0); 
+  EXPECT_EQ(Rotation3D::null ,r); 
+
+  Rotation3D s(Vector3D::unit_z, 0.0); 
+  EXPECT_EQ(Rotation3D::null ,s); 
+
+  Rotation3D t(Vector3D::unit_y, 0.0); 
+  EXPECT_EQ(Rotation3D::null ,t); 
 }
-*/
