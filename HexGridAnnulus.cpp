@@ -1,14 +1,14 @@
-#include "HexGridXy.h"
+#include "HexGridAnnulus.h"
 //------------------------------------------------------------------------------
-HexGridXy::HexGridXy(const double outer_radius, const double spacing) {
+HexGridAnnulus::HexGridAnnulus(const double outer_radius, const double spacing) {
 	init_grid(outer_radius, 0.0, spacing);
 }
 //------------------------------------------------------------------------------
-HexGridXy::HexGridXy(const double outer_radius, const double inner_radius ,const double spacing) {
+HexGridAnnulus::HexGridAnnulus(const double outer_radius, const double inner_radius ,const double spacing) {
 	init_grid(outer_radius, inner_radius, spacing);
 }
 //------------------------------------------------------------------------------
-void HexGridXy::init_grid(
+void HexGridAnnulus::init_grid(
 	const double outer_radius, 
 	const double inner_radius,
 	const double spacing
@@ -30,16 +30,16 @@ void HexGridXy::init_grid(
 	}
 }
 //------------------------------------------------------------------------------
-std::vector<Vector3D> HexGridXy::get_grid()const {
+std::vector<Vector3D> HexGridAnnulus::get_grid()const {
 	return grid;
 }
 //------------------------------------------------------------------------------
-void HexGridXy::init_unit_vectors_hex_grid_with_length(const double spacing) { 
+void HexGridAnnulus::init_unit_vectors_hex_grid_with_length(const double spacing) { 
 	unit_hex_b = Vector3D::unit_y*spacing;
 	unit_hex_a = (Vector3D::unit_y*0.5+Vector3D::unit_x*sqrt(3.0)/2.0)*spacing;
 }
 //------------------------------------------------------------------------------
-std::string HexGridXy::get_print()const {
+std::string HexGridAnnulus::get_print()const {
 	std::stringstream out;
 
 	uint number = 1;

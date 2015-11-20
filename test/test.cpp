@@ -27,7 +27,7 @@
 #include "PropagationEnvironmentTest.cpp"
 #include "FresnelRefractionAndReflectionTest.cpp"
 #include "TrajectoryFactoryTest.cpp"
-#include "HexGridXyTest.cpp"
+#include "HexGridAnnulusTest.cpp"
 #include "AsciiIoTest.cpp"
 #include "KeyValueMapTest.cpp"
 #include "FunctionLinInterpolTest.cpp"

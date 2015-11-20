@@ -1,7 +1,7 @@
 //=================================
 // include guard
-#ifndef __HexGridXy_H_INCLUDED__
-#define __HexGridXy_H_INCLUDED__
+#ifndef __HexGridAnnulus_H_INCLUDED__
+#define __HexGridAnnulus_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
@@ -15,15 +15,15 @@
 #include <vector>
 
 //=================================
-class HexGridXy{
+class HexGridAnnulus{
 
 	Vector3D unit_hex_a;
 	Vector3D unit_hex_b;
 
 	std::vector<Vector3D> grid;
 public:
-	HexGridXy(const double outer_radius, const double spacing);
-	HexGridXy(const double outer_radius, const double inner_radius ,const double spacing);
+	HexGridAnnulus(const double outer_radius, const double spacing);
+	HexGridAnnulus(const double outer_radius, const double inner_radius ,const double spacing);
 	std::vector<Vector3D> get_grid()const; 
 	std::string get_print()const;
 private:
@@ -34,4 +34,4 @@ private:
 		const double spacing
 	);
 };
-#endif // __HexGridXy_H_INCLUDED__ 
+#endif // __HexGridAnnulus_H_INCLUDED__ 
