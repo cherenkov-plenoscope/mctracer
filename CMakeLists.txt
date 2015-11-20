@@ -71,6 +71,8 @@ set(SOURCE
 	
 	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLens.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLensHexBound.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SegmentedReflectorInputCard.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SegmentedReflectorGeometry.cpp
 )
 add_subdirectory("${PROJECT_SOURCE_DIR}/gtest-1.7.0")
 add_subdirectory("${PROJECT_SOURCE_DIR}/XmlFactory")
