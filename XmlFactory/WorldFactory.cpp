@@ -129,7 +129,7 @@ Frame* mother,const pugi::xml_node node){
 	}else if(StringTools::is_equal(node.name(),"disc")){
 		mother = produceDisc(mother,node);	
 	
-	}else if(StringTools::is_equal(node.name(),"reflector")){
+	}else if(StringTools::is_equal(node.name(),"segmented_reflector")){
 		mother = produceReflector(mother,node);
 
 	}else if(StringTools::is_equal(node.name(),"bi_convex_lens_hex")){
@@ -196,7 +196,7 @@ void WorldFactory::go_on_with_children_of_node(
 		}else if(StringTools::is_equal(sub_node_name,"disc")){
 
 			fabricate_frame(mother,sub_node); 
-		}else if(StringTools::is_equal(sub_node_name,"reflector")){
+		}else if(StringTools::is_equal(sub_node_name,"segmented_reflector")){
 
 			fabricate_frame(mother,sub_node);
 		}else if(StringTools::is_equal(sub_node_name,"bi_convex_lens_hex")){
@@ -346,8 +346,8 @@ Frame* WorldFactory::produceReflector(
 	Frame* mother, const pugi::xml_node node
 ){
 	FrameFactory frameFab(node);
-	assert_child_exists(node, "set_reflector");
-	const pugi::xml_node refl_node = node.child("set_reflector");
+	assert_child_exists(node, "set_segmented_reflector");
+	const pugi::xml_node refl_node = node.child("set_segmented_reflector");
 
 	std::string 		name;
 	Vector3D 			position;
@@ -357,14 +357,30 @@ Frame* WorldFactory::produceReflector(
 	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());
 	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 
-	SegmetedReflectorGenerator refl_gen;
-	refl_gen.set_focal_length(extract_reflector("focal_length", refl_node));
-	refl_gen.set_facet_spacing(extract_reflector("facet_spacing", refl_node));
-	refl_gen.set_max_outer_diameter(extract_reflector("max_outer_diameter", refl_node));
-	refl_gen.set_min_inner_diameter(extract_reflector("min_inner_diameter", refl_node));
-	refl_gen.set_hybrid_geometry(extract_reflector("alpha", refl_node));
-	refl_gen.set_mirror_reflection(reflection_vs_wavelength);
-	Frame* reflector = refl_gen.get_reflector();
+	SegmentedReflector::GeometryCard geom_card;
+	geom_card.focal_length = 
+		extract_reflector("focal_length", refl_node);
+
+	geom_card.DaviesCotton_over_parabolic_mixing_factor = 
+		extract_reflector("DaviesCotton_over_parabolic_mixing_factor", refl_node);
+
+	geom_card.max_outer_aperture_radius = 
+		extract_reflector("max_outer_aperture_radius", refl_node);
+
+	geom_card.min_inner_aperture_radius = 
+		extract_reflector("min_inner_aperture_radius", refl_node);
+
+	geom_card.facet_inner_hex_radius = 
+		extract_reflector("facet_inner_hex_radius", refl_node);
+
+	geom_card.gap_between_facets = 
+		extract_reflector("gap_between_facets", refl_node);
+
+	SegmentedReflector::SurfaceCard surf_card;
+	surf_card.outer_mirror_reflection = reflection_vs_wavelength;
+
+	SegmentedReflector::Factory refl_fab(geom_card, surf_card);
+	Frame* reflector = refl_fab.get_reflector();
 
 	mother->set_mother_and_child(reflector);
 	return reflector;

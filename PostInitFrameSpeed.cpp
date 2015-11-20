@@ -2,7 +2,7 @@
 #include <string>
 #include <sstream>
 #include <math.h>
-#include "SegmetedReflectorGenerator.h"
+#include "Geometry/SegmentedReflector/SegmentedReflector.h"
 #include "Cameras/FreeOrbitCamera.h"
 
 #include "gtest/gtest.h"
@@ -23,13 +23,19 @@ protected:
 
         world.set_name_pos_rot("world", Vector3D::null, Rotation3D::null);
 
-        SegmetedReflectorGenerator gen;
-        gen.set_hybrid_geometry(0.0);
-        gen.set_focal_length(1e6);
-        gen.set_facet_spacing(0.0095);
-        gen.set_max_outer_diameter(0.1);
-        gen.set_min_inner_diameter(0.001);
-        reflector = gen.get_reflector();
+        SegmentedReflector::GeometryCard geom_card;
+        geom_card.focal_length = 1e6;
+        geom_card.DaviesCotton_over_parabolic_mixing_factor = 0.0;
+        geom_card.gap_between_facets = 0.00001;
+        geom_card.max_outer_aperture_radius = 0.1;
+        geom_card.min_inner_aperture_radius = 0.0;
+        geom_card.facet_inner_hex_radius = 0.01;
+
+        SegmentedReflector::SurfaceCard surf_card;
+
+        SegmentedReflector::Factory factory(geom_card, surf_card);
+
+        reflector = factory.get_reflector();
         world.set_mother_and_child(reflector);
         world.init_tree_based_on_mother_child_relations();
     }

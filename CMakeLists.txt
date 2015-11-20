@@ -65,14 +65,11 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/EllipticalCapWithHexagonalBound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/EllipticalCapRayIntersectionEquation.cpp
 
-	${CMAKE_CURRENT_SOURCE_DIR}/HexGridXy.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/SegmetedReflectorGenerator.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/HexGridAnnulus.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/LensMaker.cpp
 	
 	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLens.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLensHexBound.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/SegmentedReflectorInputCard.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/SegmentedReflectorGeometry.cpp
 )
 add_subdirectory("${PROJECT_SOURCE_DIR}/gtest-1.7.0")
 add_subdirectory("${PROJECT_SOURCE_DIR}/XmlFactory")

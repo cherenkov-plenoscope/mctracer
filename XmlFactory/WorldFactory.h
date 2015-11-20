@@ -20,7 +20,7 @@
 #include "Geometry/Sphere.h"
 #include "Cylinder.h"
 #include "Disc.h"
-#include "SegmetedReflectorGenerator.h"
+#include "Geometry/SegmentedReflector/SegmentedReflector.h"
 #include "Core/Vector3D.h"
 #include "Core/Rotation3D.h"
 #include "Core/Color.h"

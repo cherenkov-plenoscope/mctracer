@@ -10,11 +10,11 @@
 // included dependencies
 #include "Tools/Tools.h"
 #include "Core/SurfaceEntity.h"
-#include "HexGridXy.h"
+#include "HexGridAnnulus.h"
 
 namespace SegmentedReflector {
 
-	struct InputCard {
+	struct GeometryCard {
 
 		double focal_length;
 		double DaviesCotton_over_parabolic_mixing_factor;
@@ -23,12 +23,21 @@ namespace SegmentedReflector {
 		double facet_inner_hex_radius;
 		double gap_between_facets;	
 
-		InputCard();
+		GeometryCard();
+	};
+
+	struct SurfaceCard {
+
+		const Color *mirror_color;
+		const Color *inner_mirror_color;
+		const Function::Func1D* outer_mirror_reflection;
+
+		SurfaceCard();
 	};
 
 	class Geometry :public Printable {
 
-		const InputCard cfg;
+		const GeometryCard cfg;
 		double _davies_cotton_weight;
 		double _parabolic_weight;
 		double _z_offset_makeing_avg_facet_dist_to_f_point_match_f;
@@ -37,12 +46,13 @@ namespace SegmentedReflector {
 		Vector3D _focal_point;
 	public:	
 
-		Geometry(const InputCard config);
+		Geometry(const GeometryCard config);
 		double focal_length()const;
 		double DaviesCotton_over_parabolic_mixing_factor()const;
 		double max_outer_aperture_radius()const;
 		double min_inner_aperture_radius()const;
 		double facet_inner_hex_radius()const;
+		double facet_outer_hex_radius()const;
 		double gap_between_facets()const;
 		double z_pos_given_dist_to_optical_axis(const double dist)const;
 		double z_Davies_Cotton_given_dist_to_optical_axis(double dist)const;
@@ -72,14 +82,24 @@ namespace SegmentedReflector {
 		void make_average_facet_distance_to_focal_point_match_focal_length();
 		void abort_if_too_many_iterations(const uint iteration_conter);
 		void move_all_facets_in_z(const double movement);
-
 	};
 
 	class Factory {
 
+		const Geometry geometry;
+		const SurfaceCard surface;
+		std::vector<Frame*> facets;
+		Frame* reflector;
 	public:
-		Factory(const InputCard card);
+
+		Factory(const GeometryCard geom, const SurfaceCard surf);
 		Frame* get_reflector();
+	private:
+
+		void init_facets();
+		void init_reflector();
+		std::string get_name_of_facet(const uint i)const;
 	};
 } // SegmentedReflector
+
 #endif // __SegmentedReflectorConfig_H_INCLUDED__ 

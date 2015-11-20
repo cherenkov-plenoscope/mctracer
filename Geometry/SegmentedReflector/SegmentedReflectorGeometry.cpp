@@ -2,7 +2,7 @@
 
 namespace SegmentedReflector {
 
-	Geometry::Geometry(const InputCard config): cfg(config) {
+	Geometry::Geometry(const GeometryCard config): cfg(config) {
 		init_focal_point();
 		init_facet_xy_positions();
 		init_facet_z_positions();
@@ -16,7 +16,7 @@ namespace SegmentedReflector {
 
 	void Geometry::init_facet_xy_positions() {
 
-		HexGridXy hex_grid(
+		HexGridAnnulus hex_grid(
 			max_outer_aperture_radius() - facet_spacing()/2.0,
 			min_inner_aperture_radius() + facet_spacing()/2.0,
 			facet_spacing()
@@ -136,6 +136,10 @@ namespace SegmentedReflector {
 	
 	double Geometry::facet_inner_hex_radius()const {
 		return cfg.facet_inner_hex_radius;
+	}
+
+	double Geometry::facet_outer_hex_radius()const {
+		return facet_inner_hex_radius()*2.0/sqrt(3.0);
 	}
 	
 	double Geometry::gap_between_facets()const {
