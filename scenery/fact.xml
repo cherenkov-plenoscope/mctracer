@@ -39,6 +39,34 @@
 </frame>
 
 <frame>
+	<set_frame name="fountain" pos="[3,6,-2]" rot="[0,0,0]"/>	
+	
+	<annulus>
+		<set_frame name="top" pos="[0,0,1.0]" rot="[0,0,0]"/>		
+		<set_surface reflection_vs_wavelength="zero" colour="[110,110,110]"/>	
+		<set_annulus outer_radius="0.6" inner_radius="0.5"/>
+	</annulus>
+
+	<cylinder>
+		<set_frame name="outer_wall" pos="[0,0,0]" rot="[0,0,0]"/>
+		<set_surface reflection_vs_wavelength="zero" colour="[110,110,110]"/>
+		<set_cylinder radius="0.6" start_pos="[0,0,0]" end_pos="[0,0,1.0]"/>	
+	</cylinder>
+
+	<cylinder>
+		<set_frame name="inner_wall" pos="[0,0,0]" rot="[0,0,0]"/>
+		<set_surface reflection_vs_wavelength="zero" colour="[110,110,110]"/>
+		<set_cylinder radius="0.5" start_pos="[0,0,0]" end_pos="[0,0,1.0]"/>	
+	</cylinder>
+
+	<disc>
+		<set_frame name="water" pos="[0,0,0.75]" rot="[0,0,0]"/>		
+		<set_surface reflection_vs_wavelength="leaf_reflection" colour="[22,22,200]"/>	
+		<set_disc radius="0.5"/>
+	</disc>
+</frame>
+
+<frame>
 	<set_frame name="house" pos="[5,0,-2]" rot="[0,0,0]"/>	
 
 	<frame>

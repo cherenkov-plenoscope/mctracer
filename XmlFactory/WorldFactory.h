@@ -20,6 +20,7 @@
 #include "Geometry/Sphere.h"
 #include "Cylinder.h"
 #include "Disc.h"
+#include "Annulus.h"
 #include "Geometry/SegmentedReflector/SegmentedReflector.h"
 #include "Core/Vector3D.h"
 #include "Core/Rotation3D.h"
@@ -101,6 +102,11 @@ private:
 		const pugi::xml_node node
 	);
 
+	Frame* produceAnnulus(
+		Frame* mother,
+		const pugi::xml_node node
+	);
+
 	Frame* produceTriangle(
 		Frame* mother,
 		const pugi::xml_node node
@@ -147,6 +153,10 @@ private:
 	);
 
 	void extract_Disc_props(double &radius, const pugi::xml_node node);
+
+	void extract_Annulus_props(
+		double &outer_radius, double &inner_radius, const pugi::xml_node node
+	);
 
 	void extract_Triangle_props(
 		double &Ax, double &Ay, 

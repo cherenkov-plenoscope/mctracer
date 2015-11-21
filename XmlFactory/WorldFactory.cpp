@@ -129,6 +129,9 @@ Frame* mother,const pugi::xml_node node){
 	}else if(StringTools::is_equal(node.name(),"disc")){
 		mother = produceDisc(mother,node);	
 	
+	}else if(StringTools::is_equal(node.name(),"annulus")){
+		mother = produceAnnulus(mother,node);	
+
 	}else if(StringTools::is_equal(node.name(),"segmented_reflector")){
 		mother = produceReflector(mother,node);
 
@@ -194,6 +197,9 @@ void WorldFactory::go_on_with_children_of_node(
 
 			fabricate_frame(mother,sub_node);
 		}else if(StringTools::is_equal(sub_node_name,"disc")){
+
+			fabricate_frame(mother,sub_node);
+		}else if(StringTools::is_equal(sub_node_name,"annulus")){
 
 			fabricate_frame(mother,sub_node); 
 		}else if(StringTools::is_equal(sub_node_name,"segmented_reflector")){
@@ -357,7 +363,7 @@ Frame* WorldFactory::produceReflector(
 	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());
 	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 
-	SegmentedReflector::GeometryCard geom_card;
+	SegmentedReflector::GeometryConfig geom_card;
 	geom_card.focal_length = 
 		extract_reflector("focal_length", refl_node);
 
@@ -376,7 +382,7 @@ Frame* WorldFactory::produceReflector(
 	geom_card.gap_between_facets = 
 		extract_reflector("gap_between_facets", refl_node);
 
-	SegmentedReflector::SurfaceCard surf_card;
+	SegmentedReflector::SurfaceConfig surf_card;
 	surf_card.outer_mirror_reflection = reflection_vs_wavelength;
 
 	SegmentedReflector::Factory refl_fab(geom_card, surf_card);
@@ -496,9 +502,6 @@ Frame* WorldFactory::produceDisc(
 	assert_child_exists(node, "set_surface");
 	assert_child_exists(node, "set_disc");
 
-	std::string 			name;
-	Vector3D 				position;
-	Rotation3D 				rotation;
 	const Color*		color;
 	const Function::Func1D* reflection_vs_wavelength;
 	double 					radius;
@@ -525,6 +528,40 @@ Frame* WorldFactory::produceDisc(
 	
 	mother->set_mother_and_child(new_Disc);
 	return new_Disc;
+}
+//------------------------------------------------------------------------------
+Frame* WorldFactory::produceAnnulus(
+	Frame* mother,const pugi::xml_node node
+){
+	FrameFactory frameFab(node);
+	assert_child_exists(node, "set_surface");
+	assert_child_exists(node, "set_annulus");
+
+	const Color* color;
+	const Function::Func1D* reflection_vs_wavelength;
+	double outer_radius, inner_radius;
+
+	color = extract_color(node.child("set_surface"));
+	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
+	extract_Annulus_props(outer_radius, inner_radius, node.child("set_annulus"));
+	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
+	
+	Annulus *annulus;
+	annulus = new Annulus;	
+	
+	annulus->set_name_pos_rot(
+		frameFab.get_name(), 
+		frameFab.get_position(), 
+		frameFab.get_rotation()
+	);
+	annulus->set_inner_color(color);
+	annulus->set_outer_color(color);
+	annulus->set_outer_reflection(reflection_vs_wavelength);
+	annulus->set_inner_reflection(reflection_vs_wavelength);	
+	annulus->set_outer_inner_radius(outer_radius, inner_radius);
+	
+	mother->set_mother_and_child(annulus);
+	return annulus;
 }
 //------------------------------------------------------------------------------
 Frame* WorldFactory::produceTriangle(
@@ -679,8 +716,16 @@ void WorldFactory::extract_Cylinder_props(
 void WorldFactory::extract_Disc_props(double &radius,const pugi::xml_node node){
 
 	assert_attribute_exists(node, "radius");
-
 	radius = StrToDouble(node.attribute("radius").value());
+}
+//------------------------------------------------------------------------------
+void WorldFactory::extract_Annulus_props(
+	double &outer_radius, double &inner_radius, const pugi::xml_node node
+){
+	assert_attribute_exists(node, "outer_radius");
+	assert_attribute_exists(node, "inner_radius");
+	outer_radius = StrToDouble(node.attribute("outer_radius").value());
+	inner_radius = StrToDouble(node.attribute("inner_radius").value());
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_Triangle_props(
