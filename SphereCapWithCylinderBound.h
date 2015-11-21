@@ -27,6 +27,11 @@ public:
 		const double cap_radius
 	);
 
+	void set_curvature_radius_and_outer_radius(
+		const double curvature_radius,
+		const double cap_radius
+	);
+
 	std::string get_print()const;
 
 	const Intersection* calculate_intersection_with(const Ray* ray)const;

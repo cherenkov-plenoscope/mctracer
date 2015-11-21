@@ -12,6 +12,18 @@ void SphereCapWithCylinderBound::set_focal_length_and_cap_radius(
 	post_initialize_radius_of_enclosing_sphere();
 }
 //------------------------------------------------------------------------------
+void SphereCapWithCylinderBound::set_curvature_radius_and_outer_radius(
+		const double _curvature_radius,
+		const double cap_radius
+) {
+	curvature_radius =_curvature_radius;
+	this->focal_length = curvature_radius*0.5;
+	this->cap_radius = cap_radius;
+	restrict_cap_radius_to_curvature_radius();
+	CylBounds.set_radius(cap_radius);
+	post_initialize_radius_of_enclosing_sphere();	
+}
+//------------------------------------------------------------------------------
 void SphereCapWithCylinderBound::post_initialize_radius_of_enclosing_sphere() {
 	
 	double sphere_center_to_edge_in_z = 

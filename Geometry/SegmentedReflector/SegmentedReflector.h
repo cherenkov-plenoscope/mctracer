@@ -30,7 +30,7 @@ namespace SegmentedReflector {
 
 		const Color *mirror_color;
 		const Color *inner_mirror_color;
-		const Function::Func1D* outer_mirror_reflection;
+		const Function::Func1D* reflectivity;
 
 		SurfaceConfig();
 	};

@@ -6,7 +6,10 @@
 #include "BiConvexLens.h"
 #include "BiConvexLensHexBound.h"
 #include "Cameras/FreeOrbitCamera.h"
+#include "PhotonSensor/PhotonSensor.h"
+#include "Core/Photons.h"
 #include "Core/Function/ConstantFunction.h"
+#include "LensMaker.h"
 
 class BiConvexLensTest : public ::testing::Test {
 protected:
@@ -15,6 +18,8 @@ protected:
 	TracerSettings settings;
 	Random::Mt19937 dice;
 	PropagationEnvironment lens_test_bench_environment;
+	std::vector<PhotonSensor::Sensor*> sensor_list;
+	PhotonSensor::Xy *sensor;
 
 	//------------------
 	BiConvexLensTest() {
@@ -44,6 +49,10 @@ protected:
 	}
 	//------------------  
 	BiConvexLens* get_preassambled_lens() {
+		LensMaker::Config cfg;
+		cfg.focal_length = 1.0;
+		cfg.aperture_radius = 0.125;
+		cfg.refractive_index = 1.49;
 
 		BiConvexLens* lens;
 		lens = new BiConvexLens;
@@ -57,17 +66,19 @@ protected:
 		Color* lens_color;
 		lens_color = new Color(255, 128, 128);
 
-		//RefractiveIndex* lens_refractive_index;
-		//lens_refractive_index = new RefractiveIndex(1.3);
 		Function::Limits limits(200e-9, 1200e-9);
 		Function::Constant* refraction_vs_wavelength = 
-			new Function::Constant(1.3, limits);
+			new Function::Constant(1.49, limits);
 
 		//////////////////////////////////
 		lens->set_outer_color(lens_color);
 		lens->set_inner_color(lens_color);
 		lens->set_inner_refraction(refraction_vs_wavelength);
-		lens->set_curvature_radius_and_diameter(0.7, 0.5);
+		lens->set_curvature_radius_and_aperture_radius(
+			LensMaker::Approximation::get_curvature_radius(cfg),
+			//lensmaker.get_curvature_radius_for_bi_konvex_lens(),
+			0.125
+		);
 		return lens;
 	}
 	//------------------
@@ -78,7 +89,7 @@ protected:
 
 		image_sensor->set_name_pos_rot(
 			"sensor_disc",
-			Vector3D(0.0, 0.0, -2.0), 
+			Vector3D(0.0, 0.0, -1.0), 
 			Rotation3D::null
 		);
 
@@ -87,7 +98,11 @@ protected:
 
 		image_sensor->set_outer_color(sensor_color);
 		image_sensor->set_inner_color(sensor_color);
-		image_sensor->set_disc_radius(0.05); 
+		image_sensor->set_disc_radius(0.25); 
+
+		sensor = new PhotonSensor::Xy(0, image_sensor);
+		sensor_list.push_back(sensor);
+
 		return image_sensor;   
 	}
 	//------------------
@@ -101,6 +116,8 @@ protected:
 			Vector3D::null,
 			Rotation3D::null
 		);  
+
+		
 		return test_bench;
 	}
 	//------------------
@@ -119,7 +136,7 @@ TEST_F(BiConvexLensTest, send_photon_frontal_into_lens) {
 		Photon blue_photon(Vector3D(0.0, 0.0, 1.0), Vector3D(0.0, 0.0, -1.0), 433e-9);
 		blue_photon.propagate_in(&lens_test_bench_environment);
 
-		if(3.0 == blue_photon.get_accumulative_distance())
+		if(2.0 == blue_photon.get_accumulative_distance())
 			number_of_photons_reaching_sensor_disc++;
 	}
 
@@ -132,27 +149,32 @@ TEST_F(BiConvexLensTest, send_photon_frontal_into_lens) {
 //----------------------------------------------------------------------
 TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 
-	uint total_propagations = 1e4; 
-	double number_of_photons_reaching_center_of_sensor_disc = 0.0;
+	// light source
+    std::vector<Photon*>* photons = 
+	    Photons::Source::parallel_towards_z_from_xy_disc(0.25, 1e4);
 
-	for(uint i=0; i<total_propagations; i++) {
-		double x_support = (i-0.5*total_propagations)/total_propagations*0.5;
+	HomoTrafo3D Trafo;
+	Trafo.set_transformation(
+		Rotation3D(0.0,-Deg2Rad(180.0),0.0), 
+		Vector3D(0.0, 0.0 ,1.0)
+	);
 
-		Photon phot(Vector3D(x_support, 0.0, 1.0), Vector3D(0.0, 0.0, -1.0), 433e-9);
-		phot.propagate_in(&lens_test_bench_environment);
+	Photons::transform_all_photons(Trafo, photons);
 
-		double x_on_sensor_disc = phot.get_intersection_at(
-			phot.get_number_of_interactions_so_far()-1
-			)->get_intersection_vector_in_object_system().x();
-			
-		if(fabs(x_on_sensor_disc) < 3e-2)
-			number_of_photons_reaching_center_of_sensor_disc++;
-	}
+	// photon propagation
+	Photons::propagate_photons_in_world_with_settings(
+		photons, 
+		lens_test_bench_environment.world_geometry, 
+		lens_test_bench_environment.propagation_options
+	);	
 
-	double central_fration = 
-		number_of_photons_reaching_center_of_sensor_disc/double(total_propagations);
-	
-	EXPECT_NEAR(0.97, central_fration, 1.0e-2);
+	// detect photons in sensors
+	PhotonSensors::reset_all_sesnors(&sensor_list);
+	PhotonSensors::assign_photons_to_sensors(photons, &sensor_list);
+
+	Photons::delete_photons_and_history(photons);
+
+	EXPECT_NEAR(0.02, sensor->point_spread_std_dev(), 1e-2);
 
 	/*FreeOrbitCamera free(
 		lens_test_bench_environment.world_geometry, 

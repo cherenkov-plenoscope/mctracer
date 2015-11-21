@@ -383,7 +383,7 @@ Frame* WorldFactory::produceReflector(
 		extract_reflector("gap_between_facets", refl_node);
 
 	SegmentedReflector::SurfaceConfig surf_card;
-	surf_card.outer_mirror_reflection = reflection_vs_wavelength;
+	surf_card.reflectivity = reflection_vs_wavelength;
 
 	SegmentedReflector::Factory refl_fab(geom_card, surf_card);
 	Frame* reflector = refl_fab.get_reflector();

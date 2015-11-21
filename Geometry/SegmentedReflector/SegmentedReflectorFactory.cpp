@@ -43,7 +43,7 @@ namespace SegmentedReflector {
 			
 			facet->set_outer_color(surface.mirror_color);
 			facet->set_inner_color(surface.inner_mirror_color);
-			facet->set_outer_reflection(surface.outer_mirror_reflection);
+			facet->set_outer_reflection(surface.reflectivity);
 			facet->set_curvature_radius_and_outer_hex_radius(
 				geometry.focal_length()*2.0,
 				geometry.facet_outer_hex_radius()

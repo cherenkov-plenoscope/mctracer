@@ -5,53 +5,76 @@
 #include <algorithm>
 #include "LensMaker.h"
 
-class PlenopticTest : public ::testing::Test {};
+class LensMakerTest : public ::testing::Test {};
 //----------------------------------------------------------------------
-TEST_F(PlenopticTest, check_sebastians_paper_and_pen_calculation) {
+TEST_F(LensMakerTest, check_sebastians_paper_and_pen_calculation) {
 
-	double expected_curvature_radius = 0.125;
-	double expected_thickness = 0.0445;
-	double refractive_index_pmma = 1.49;
-	double focal_length = 0.1335;
-	double outer_lens_radius = 0.071;
+	double expected_curvature_radius = 0.125;;
+
+	LensMaker::Config cfg;
+	cfg.focal_length = 0.1335;
+	cfg.aperture_radius = 0.071;
+	cfg.refractive_index = 1.49;
 
 	EXPECT_NEAR(
 		expected_curvature_radius, 
-		LensMaker::get_curvature_radius_given_f_r_n(
-			focal_length, 
-			outer_lens_radius, 
-			refractive_index_pmma
-		),
+		LensMaker::Approximation::get_curvature_radius(cfg),
 		expected_curvature_radius*3e-2
 	);
+}
+//----------------------------------------------------------------------
+TEST_F(LensMakerTest, lens_thicknes) {
+
+	double expected_curvature_radius = 0.125;
+	double expected_thickness = 0.0445;
+
+	LensMaker::Config cfg;
+	cfg.focal_length = 0.1335;
+	cfg.aperture_radius = 0.071;
+	cfg.refractive_index = 1.49;
 
 	EXPECT_NEAR(
 		expected_thickness, 
-		LensMaker::get_lens_thickness_for_R_r(
+		LensMaker::Approximation::get_lens_thickness_for_R_r(
 			expected_curvature_radius, 
-			outer_lens_radius
+			cfg.aperture_radius
 		),
 		expected_thickness*3e-2
 	);
 }
 //----------------------------------------------------------------------
-TEST_F(PlenopticTest, check_lensmaker_on_optical_table_with_lens) {
+TEST_F(LensMakerTest, experimental_solution) {
+
+	double expected_curvature_radius = 0.125;
+
+	LensMaker::Config cfg;
+	cfg.focal_length = 0.1335;
+	cfg.aperture_radius = 0.071;
+	cfg.refractive_index = 1.49;
+
+	LensMaker::Itterative maker(cfg);
+
+	EXPECT_NEAR(
+		expected_curvature_radius, 
+		maker.get_curvature_radius_for_bi_konvex_lens(),
+		expected_curvature_radius*5e-2
+	);
+}
+//----------------------------------------------------------------------
+TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 
 	// Hello LensMaker,
-	// 
+	LensMaker::Config cfg;
 	// we want a lens with
-	double focal_length = 1.0;//0.1335;
+	cfg.focal_length = 1.0;//0.1335;
 	// made out of pmma plastic with
-	double refractive_index_pmma = 1.49;
+	cfg.refractive_index = 1.49;
 	// and an outer aperture radius of 
-	double outer_lens_radius = 0.071;
+	cfg.aperture_radius = 0.071;
 	// please tell us the needed curvature radius.
 
-	double lens_curvature_radius = LensMaker::get_curvature_radius_given_f_r_n(
-		focal_length, 
-		outer_lens_radius, 
-		refractive_index_pmma
-	);
+	double lens_curvature_radius = 
+		LensMaker::Approximation::get_curvature_radius(cfg);
 
 	// ok lets test it...
 	const Color* lens_col = &Color::gray;
@@ -59,7 +82,7 @@ TEST_F(PlenopticTest, check_lensmaker_on_optical_table_with_lens) {
 
     const Function::Constant* refraction_vs_wavelength = 
     	new Function::Constant(
-    		refractive_index_pmma, 
+    		cfg.refractive_index, 
     		Function::Limits(200e-9, 1200e-9)
     	);
 
@@ -67,11 +90,11 @@ TEST_F(PlenopticTest, check_lensmaker_on_optical_table_with_lens) {
     std::vector<double> sigma_psf_vs_image_sensor_distance;
     std::vector<double> image_sensor_distances;
 	for(
-		double offset=-focal_length*0.3;
-		offset<focal_length*0.3;
-		offset=offset+focal_length*0.01
+		double offset=-cfg.focal_length*0.3;
+		offset<cfg.focal_length*0.3;
+		offset=offset+cfg.focal_length*0.01
 	) {
-		double image_sensor_disc_distance = focal_length + offset;
+		double image_sensor_disc_distance = cfg.focal_length + offset;
 
 	    // geometry
 		Frame optical_table("table", Vector3D::null, Rotation3D::null);
@@ -83,7 +106,7 @@ TEST_F(PlenopticTest, check_lensmaker_on_optical_table_with_lens) {
 	    lens.set_inner_refraction(refraction_vs_wavelength);
 	    lens.set_curvature_radius_and_outer_hex_radius(
 	    	lens_curvature_radius, 
-	    	outer_lens_radius
+	    	cfg.aperture_radius
 	    );
 
 	    Disc sensor_disc;
@@ -94,8 +117,8 @@ TEST_F(PlenopticTest, check_lensmaker_on_optical_table_with_lens) {
 	    );
 	    sensor_disc.set_outer_color(sensor_disc_col);
 	    sensor_disc.set_inner_color(sensor_disc_col);
-	    sensor_disc.set_disc_radius(outer_lens_radius*0.85);
-	    PhotonSensor::PerfectSensor sensor(0, &sensor_disc);
+	    sensor_disc.set_disc_radius(cfg.aperture_radius*0.85);
+	    PhotonSensor::Xy sensor(0, &sensor_disc);
 	    std::vector<PhotonSensor::Sensor*> sensor_list = {&sensor};
 
 	    optical_table.set_mother_and_child(&lens);
@@ -105,7 +128,7 @@ TEST_F(PlenopticTest, check_lensmaker_on_optical_table_with_lens) {
 	    // light source
 	    std::vector<Photon*>* photons = 
 		    Photons::Source::parallel_towards_z_from_xy_disc(
-				outer_lens_radius*0.85, // 0.85 inner hex radius
+				cfg.aperture_radius*0.85, // 0.85 inner hex radius
 				number_of_photons_per_run
 			);
 
@@ -131,34 +154,12 @@ TEST_F(PlenopticTest, check_lensmaker_on_optical_table_with_lens) {
 		PhotonSensors::reset_all_sesnors(&sensor_list);
 		PhotonSensors::assign_photons_to_sensors(photons, &sensor_list);
 
-		std::vector<std::vector<double>> intersects = 
-			sensor.get_arrival_table();
-
-		// mean position of photon spread
-		double xm=0.0;
-		double ym=0.0;
-		for(uint i=0; i<intersects.size(); i++){
-			xm = xm + intersects[i][0];
-			ym = ym + intersects[i][1];
-		}
-		xm = xm/intersects.size();
-		ym = ym/intersects.size();
-		// estimate psf sigma in x and y
-		double sx=0.0;
-		double sy=0.0;
-		for(uint i=0; i<intersects.size(); i++){
-			sx = sx + (intersects[i][0] - xm)*(intersects[i][0] - xm);
-			sy = sy + (intersects[i][1] - ym)*(intersects[i][1] - ym);
-		}
-		sx = sx/intersects.size();
-		sy = sy/intersects.size();
-		sx=sqrt(sx);
-		sy=sqrt(sy);
-
-		sigma_psf_vs_image_sensor_distance.push_back(sqrt(sx*sx+sy*sy));
+		sigma_psf_vs_image_sensor_distance.push_back(sensor.point_spread_std_dev());
 		image_sensor_distances.push_back(image_sensor_disc_distance);
 
 		Photons::delete_photons_and_history(photons);
+
+		//FreeOrbitCamera free(&optical_table, &settings);
 	}
 
 	double min_sigma_psf = *std::min_element(
@@ -177,9 +178,9 @@ TEST_F(PlenopticTest, check_lensmaker_on_optical_table_with_lens) {
 	//image_sensor_distances
 	EXPECT_NEAR(0.0, min_sigma_psf, 1e-3);
 	EXPECT_NEAR(
-		focal_length, 
+		cfg.focal_length, 
 		image_sensor_distances.at(min_sigma_psf_pos),
-		focal_length*1e-2
+		cfg.focal_length*1e-2
 	);
 	//std::cout << "smallest psf sigma of "<<min_sigma_psf*1e3<<"mm at d=";
 	//std::cout << image_sensor_distances.at(min_sigma_psf_pos)*1e3<<"mm\n";
