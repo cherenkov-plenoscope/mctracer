@@ -3,12 +3,23 @@
 
 namespace SegmentedReflector {
 
-	Factory::Factory(const GeometryCard geom, const SurfaceCard surf): 
-		geometry(geom),
+	Factory::Factory(const GeometryConfig geom, const SurfaceConfig surf): 
+		geometry(geom), 
 		surface(surf)
 	{
+		init();
+	}
+
+	Factory::Factory(const Config cfg):
+		geometry(cfg.geometry), 
+		surface(cfg.surface) 
+	{
+		init();
+	}
+
+	void Factory::init() {
 		init_facets();
-		init_reflector();
+		init_reflector();	
 	}
 
 	Frame* Factory::get_reflector() {

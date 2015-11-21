@@ -2,7 +2,7 @@
 
 namespace SegmentedReflector {
 
-	Geometry::Geometry(const GeometryCard config): cfg(config) {
+	Geometry::Geometry(const GeometryConfig config): cfg(config) {
 		init_focal_point();
 		init_facet_xy_positions();
 		init_facet_z_positions();
@@ -183,7 +183,7 @@ namespace SegmentedReflector {
 		return facet_inner_hex_radius()*2.0 + gap_between_facets();
 	}
 
-	double Geometry::naive_Fnumber()const {
+	double Geometry::naive_F_number()const {
 		return focal_length()/(2.0*max_outer_aperture_radius());
 	}
 
@@ -222,7 +222,7 @@ namespace SegmentedReflector {
 		out << " focal point.................... " << focal_point() << "\n";
 		out << " max outer aperture diameter.... " << 2.0*max_outer_aperture_radius() << "m\n";
 		out << " min inner aperture diameter.... " << 2.0*min_inner_aperture_radius() << "m\n";
-		out << " naive f over D................. " << naive_Fnumber() << "\n";
+		out << " naive f over D................. " << naive_F_number() << "\n";
 		out << " naive area..................... " << naive_area() << "m^2\n";
 		out << " thickness of dish.............. " << z_pos_given_dist_to_optical_axis(max_outer_aperture_radius()) << "m\n";
 		out << " z offset for optimal focus..... " << z_offset_makeing_avg_facet_dist_to_f_point_match_f() << "m\n";

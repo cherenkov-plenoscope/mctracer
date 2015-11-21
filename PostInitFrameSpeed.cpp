@@ -23,7 +23,7 @@ protected:
 
         world.set_name_pos_rot("world", Vector3D::null, Rotation3D::null);
 
-        SegmentedReflector::GeometryCard geom_card;
+        SegmentedReflector::GeometryConfig geom_card;
         geom_card.focal_length = 1e6;
         geom_card.DaviesCotton_over_parabolic_mixing_factor = 0.0;
         geom_card.gap_between_facets = 0.00001;
@@ -31,7 +31,7 @@ protected:
         geom_card.min_inner_aperture_radius = 0.0;
         geom_card.facet_inner_hex_radius = 0.01;
 
-        SegmentedReflector::SurfaceCard surf_card;
+        SegmentedReflector::SurfaceConfig surf_card;
 
         SegmentedReflector::Factory factory(geom_card, surf_card);
 

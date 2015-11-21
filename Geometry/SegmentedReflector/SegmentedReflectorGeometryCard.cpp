@@ -2,7 +2,7 @@
 
 namespace SegmentedReflector {
 
-	GeometryCard::GeometryCard(): 
+	GeometryConfig::GeometryConfig(): 
 		// Default is HEGRA CT3 aka FACT
 		focal_length(4.889),
 		DaviesCotton_over_parabolic_mixing_factor(0.5),
