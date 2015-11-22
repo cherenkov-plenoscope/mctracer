@@ -2,7 +2,7 @@
 
 namespace SegmentedReflector {
 
-	Geometry::Geometry(const GeometryConfig config): cfg(config) {
+	Geometry::Geometry(const Config config): cfg(config) {
 		init_focal_point();
 		init_facet_xy_positions();
 		init_facet_z_positions();
@@ -217,25 +217,33 @@ namespace SegmentedReflector {
 
 		std::stringstream out;
 		out << std::setprecision(4);
-		out << "__Segmented_Reflector_Geometry__\n";
-		out << " focal length................... " << focal_length() << "m\n";
-		out << " focal point.................... " << focal_point() << "\n";
-		out << " max outer aperture diameter.... " << 2.0*max_outer_aperture_radius() << "m\n";
-		out << " min inner aperture diameter.... " << 2.0*min_inner_aperture_radius() << "m\n";
-		out << " naive f over D................. " << naive_F_number() << "\n";
-		out << " naive area..................... " << naive_area() << "m^2\n";
-		out << " thickness of dish.............. " << z_pos_given_dist_to_optical_axis(max_outer_aperture_radius()) << "m\n";
-		out << " z offset for optimal focus..... " << z_offset_makeing_avg_facet_dist_to_f_point_match_f() << "m\n";
-		out << " effective F-Number............. " << f_over_D() << "\n";
-		out << " effective area................. " << effective_area() << "m^2\n";
-		out << " effective diameter............. " << 2.0*effective_radius() << "m\n";
-		out << " number of facets............... " << number_of_facets() << "\n";
-		out << " facet area..................... " << facet_area() << "m^2\n";
-		out << " facet inner radius............. " << facet_inner_hex_radius() << "m\n";
-		out << " facet spacing.................. " << facet_spacing() << "m\n";
-		out << " gap between facets............. " << gap_between_facets()*1e3 << "mm\n";
-		out << " Davies Cotton weight........... " << DaviesCotton_weight() << "\n";
-		out << " Parabolic weight............... " << Parabolic_weight() << "\n";
+		out << "Segmented_Reflector__\n";
+
+		std::stringstream tab;
+		tab << "focal length................... " << focal_length() << "m\n";
+		tab << "focal point.................... " << focal_point() << "\n";
+		tab << "max outer aperture diameter.... " << 2.0*max_outer_aperture_radius() << "m\n";
+		tab << "min inner aperture diameter.... " << 2.0*min_inner_aperture_radius() << "m\n";
+		tab << "naive f over D................. " << naive_F_number() << "\n";
+		tab << "naive area..................... " << naive_area() << "m^2\n";
+		tab << "thickness of dish.............. " << z_pos_given_dist_to_optical_axis(max_outer_aperture_radius()) << "m\n";
+		tab << "z offset for optimal focus..... " << z_offset_makeing_avg_facet_dist_to_f_point_match_f() << "m\n";
+		tab << "effective F-Number............. " << f_over_D() << "\n";
+		tab << "effective area................. " << effective_area() << "m^2\n";
+		tab << "effective diameter............. " << 2.0*effective_radius() << "m\n";
+		tab << "number of facets............... " << number_of_facets() << "\n";
+		tab << "facet area..................... " << facet_area() << "m^2\n";
+		tab << "facet inner radius............. " << facet_inner_hex_radius() << "m\n";
+		tab << "facet spacing.................. " << facet_spacing() << "m\n";
+		tab << "gap between facets............. " << gap_between_facets()*1e3 << "mm\n";
+		tab << "Davies Cotton weight........... " << DaviesCotton_weight() << "\n";
+		tab << "Parabolic weight............... " << Parabolic_weight() << "\n";
+			
+		out << StringTools::place_first_infront_of_each_new_line_of_second(
+			"  ", 
+			tab.str()
+		);
+
 		return out.str();		
 	}
 } // SegmentedReflector

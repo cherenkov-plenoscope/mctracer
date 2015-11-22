@@ -3,21 +3,10 @@
 
 namespace SegmentedReflector {
 
-	Factory::Factory(const GeometryConfig geom, const SurfaceConfig surf): 
-		geometry(geom), 
-		surface(surf)
+	Factory::Factory(const Config ncfg): 
+		cfg(ncfg),
+		geometry(ncfg)
 	{
-		init();
-	}
-
-	Factory::Factory(const Config cfg):
-		geometry(cfg.geometry), 
-		surface(cfg.surface) 
-	{
-		init();
-	}
-
-	void Factory::init() {
 		init_facets();
 		init_reflector();	
 	}
@@ -41,9 +30,9 @@ namespace SegmentedReflector {
 				geometry.get_rotation_for_facet_position(facet_positions.at(i))
 			);
 			
-			facet->set_outer_color(surface.mirror_color);
-			facet->set_inner_color(surface.inner_mirror_color);
-			facet->set_outer_reflection(surface.reflectivity);
+			facet->set_outer_color(cfg.mirror_color);
+			facet->set_inner_color(cfg.inner_mirror_color);
+			facet->set_outer_reflection(cfg.reflectivity);
 			facet->set_curvature_radius_and_outer_hex_radius(
 				geometry.focal_length()*2.0,
 				geometry.facet_outer_hex_radius()

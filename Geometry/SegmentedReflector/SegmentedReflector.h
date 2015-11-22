@@ -14,7 +14,7 @@
 
 namespace SegmentedReflector {
 
-	struct GeometryConfig {
+	struct Config {
 
 		double focal_length;
 		double DaviesCotton_over_parabolic_mixing_factor;
@@ -23,26 +23,16 @@ namespace SegmentedReflector {
 		double facet_inner_hex_radius;
 		double gap_between_facets;	
 
-		GeometryConfig();
-	};
-
-	struct SurfaceConfig {
-
 		const Color *mirror_color;
 		const Color *inner_mirror_color;
 		const Function::Func1D* reflectivity;
 
-		SurfaceConfig();
-	};
-
-	struct Config {
-		GeometryConfig geometry;
-		SurfaceConfig surface;
+		Config();
 	};
 
 	class Geometry :public Printable {
 
-		const GeometryConfig cfg;
+		const Config cfg;
 		double _davies_cotton_weight;
 		double _parabolic_weight;
 		double _z_offset_makeing_avg_facet_dist_to_f_point_match_f;
@@ -51,7 +41,7 @@ namespace SegmentedReflector {
 		Vector3D _focal_point;
 	public:	
 
-		Geometry(const GeometryConfig config);
+		Geometry(const Config config);
 		double focal_length()const;
 		double DaviesCotton_over_parabolic_mixing_factor()const;
 		double max_outer_aperture_radius()const;
@@ -91,18 +81,16 @@ namespace SegmentedReflector {
 
 	class Factory {
 
-		const Geometry geometry;
-		const SurfaceConfig surface;
+		const Config cfg;
+		Geometry geometry;
 		std::vector<Frame*> facets;
 		Frame* reflector;
 	public:
 
-		Factory(const GeometryConfig geom, const SurfaceConfig surf);
-		Factory(const Config cfg);
+		Factory(const Config ncfg);
 		Frame* get_reflector();
 	private:
 
-		void init();
 		void init_facets();
 		void init_reflector();
 		std::string get_name_of_facet(const uint i)const;
