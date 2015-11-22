@@ -24,6 +24,10 @@ public:
 	static const Color gray;
 	static const Color dark_gray;
 	static const Color black;
+	static const Color red;
+	static const Color green;
+	static const Color blue;
+
 	Color();
 	Color(const int r, const int g, const int b);
 	Color(const double r, const double g, const double b);

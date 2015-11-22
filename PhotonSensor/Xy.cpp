@@ -38,33 +38,57 @@ namespace PhotonSensor {
 		return header.str();
 	}
 	//--------------------------------------------------------------------------
-	double Xy::point_spread_std_dev()const {
-		// mean position of photon spread
-		double xm=0.0;
-		double ym=0.0;
+	double Xy::x_mean()const {
 
-		for(uint i=0; i<xy_arrival_table.size(); i++){
+		double xm = 0.0;
+
+		for(uint i=0; i<xy_arrival_table.size(); i++)
 			xm = xm + xy_arrival_table[i][0];
+
+		return xm/xy_arrival_table.size();
+	}
+	//--------------------------------------------------------------------------
+	double Xy::y_mean()const {
+
+		double ym = 0.0;
+
+		for(uint i=0; i<xy_arrival_table.size(); i++)
 			ym = ym + xy_arrival_table[i][1];
-		}
 
-		xm = xm/xy_arrival_table.size();
-		ym = ym/xy_arrival_table.size();
-		
-		// estimate psf sigma in x and y
-		double sx=0.0;
-		double sy=0.0;
+		return ym/xy_arrival_table.size();
+	}
+	//--------------------------------------------------------------------------
+	double Xy::x_std_dev()const {
 
-		for(uint i=0; i<xy_arrival_table.size(); i++){
+		double xm = x_mean();
+		double sx = 0.0;
+
+		for(uint i=0; i<xy_arrival_table.size(); i++)
 			sx = sx + (xy_arrival_table[i][0] - xm)*(xy_arrival_table[i][0] - xm);
+
+		return sqrt(sx/xy_arrival_table.size());
+	}
+	//--------------------------------------------------------------------------
+	double Xy::y_std_dev()const {
+
+		double ym = y_mean();
+		double sy = 0.0;
+
+		for(uint i=0; i<xy_arrival_table.size(); i++)
 			sy = sy + (xy_arrival_table[i][1] - ym)*(xy_arrival_table[i][1] - ym);
-		}
 
-		sx = sx/xy_arrival_table.size();
-		sy = sy/xy_arrival_table.size();
-		sx=sqrt(sx);
-		sy=sqrt(sy);
+		return sqrt(sy/xy_arrival_table.size());
+	}
+	//--------------------------------------------------------------------------
+	double Xy::point_spread_std_dev()const {
 
-		return hypot(sx*sx, sy*sy);		
+		double sx = x_std_dev();
+		double sy = y_std_dev();
+
+		return hypot(sx, sy);		
+	}
+	//--------------------------------------------------------------------------
+	double Xy::number_photons()const {
+		return xy_arrival_table.size();
 	}
 } // PhotonSensor

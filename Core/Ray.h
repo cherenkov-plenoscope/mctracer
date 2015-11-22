@@ -18,7 +18,6 @@
 #include "Core/Frame.h"
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
-#include "TracerSettings.h"
 #include <gtest/gtest_prod.h>
 #include "Core/Printable.h"
 

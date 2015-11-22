@@ -7,7 +7,7 @@ world.set_name_pos_rot("world", Vector3D.null, Rotation3D.null)
 
 ground = Disc()
 ground.set_name_pos_rot("ground", Vector3D(0.0, 0.0, -2.0), Rotation3D.null)
-ground.set_disc_radius(1e3)
+ground.set_radius(1e3)
 
 ground_color = Color(0,55,0)
 ground.set_outer_color(ground_color)
@@ -30,7 +30,7 @@ Sensor = Disc()
 Sensor.set_name_pos_rot("Sensor", Vector3D(0.0, 0.0, 4.889), Rotation3D.null)
  		
 sensor_color = Color(255,0,0)
-Sensor.set_disc_radius(0.32)
+Sensor.set_radius(0.32)
 Sensor.set_outer_color(sensor_color)
 Sensor.set_inner_color(sensor_color)
 
@@ -40,7 +40,7 @@ sensor_housing_lower_cap.set_name_pos_rot(
 	"sensor_housing_lower_cap", 
 	Vector3D(0.0, 0.0, 4.890), 
 	Rotation3D.null)
-sensor_housing_lower_cap.set_disc_radius(0.32)
+sensor_housing_lower_cap.set_radius(0.32)
 
 sensor_housing_color = Color(200,255,200)
 sensor_housing_lower_cap.set_outer_color(sensor_housing_color)

@@ -1,6 +1,6 @@
 #include "Disc.h"
 //------------------------------------------------------------------------------
-void Disc::set_disc_radius(const double radius){
+void Disc::set_radius(const double radius){
 
 	cylinder_bounds.set_radius(radius);
 	post_initialize_radius_of_enclosing_sphere();

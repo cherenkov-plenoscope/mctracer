@@ -43,24 +43,6 @@ TEST_F(LensMakerTest, lens_thicknes) {
 	);
 }
 //----------------------------------------------------------------------
-TEST_F(LensMakerTest, experimental_solution) {
-
-	double expected_curvature_radius = 0.125;
-
-	LensMaker::Config cfg;
-	cfg.focal_length = 0.1335;
-	cfg.aperture_radius = 0.071;
-	cfg.refractive_index = 1.49;
-
-	LensMaker::Itterative maker(cfg);
-
-	EXPECT_NEAR(
-		expected_curvature_radius, 
-		maker.get_curvature_radius_for_bi_konvex_lens(),
-		expected_curvature_radius*5e-2
-	);
-}
-//----------------------------------------------------------------------
 TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 
 	// Hello LensMaker,
@@ -117,7 +99,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 	    );
 	    sensor_disc.set_outer_color(sensor_disc_col);
 	    sensor_disc.set_inner_color(sensor_disc_col);
-	    sensor_disc.set_disc_radius(cfg.aperture_radius*0.85);
+	    sensor_disc.set_radius(cfg.aperture_radius*0.85);
 	    PhotonSensor::Xy sensor(0, &sensor_disc);
 	    std::vector<PhotonSensor::Sensor*> sensor_list = {&sensor};
 
@@ -180,7 +162,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 	EXPECT_NEAR(
 		cfg.focal_length, 
 		image_sensor_distances.at(min_sigma_psf_pos),
-		cfg.focal_length*1e-2
+		cfg.focal_length*1e-6
 	);
 	//std::cout << "smallest psf sigma of "<<min_sigma_psf*1e3<<"mm at d=";
 	//std::cout << image_sensor_distances.at(min_sigma_psf_pos)*1e3<<"mm\n";

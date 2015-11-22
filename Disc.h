@@ -22,7 +22,7 @@ protected:
 	CylinderPrismZ cylinder_bounds;
 public:
 
-	void set_disc_radius(const double radius);
+	void set_radius(const double radius);
 	std::string get_print()const;
 	const Intersection* calculate_intersection_with(const Ray* ray)const;
 private:

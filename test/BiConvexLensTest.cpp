@@ -10,6 +10,7 @@
 #include "Core/Photons.h"
 #include "Core/Function/ConstantFunction.h"
 #include "LensMaker.h"
+#include "Tools/AsciiIo.h"
 
 class BiConvexLensTest : public ::testing::Test {
 protected:
@@ -20,6 +21,7 @@ protected:
 	PropagationEnvironment lens_test_bench_environment;
 	std::vector<PhotonSensor::Sensor*> sensor_list;
 	PhotonSensor::Xy *sensor;
+	LensMaker::Config cfg;
 
 	//------------------
 	BiConvexLensTest() {
@@ -49,7 +51,7 @@ protected:
 	}
 	//------------------  
 	BiConvexLens* get_preassambled_lens() {
-		LensMaker::Config cfg;
+		
 		cfg.focal_length = 1.0;
 		cfg.aperture_radius = 0.125;
 		cfg.refractive_index = 1.49;
@@ -77,7 +79,7 @@ protected:
 		lens->set_curvature_radius_and_aperture_radius(
 			LensMaker::Approximation::get_curvature_radius(cfg),
 			//lensmaker.get_curvature_radius_for_bi_konvex_lens(),
-			0.125
+			cfg.aperture_radius
 		);
 		return lens;
 	}
@@ -98,7 +100,7 @@ protected:
 
 		image_sensor->set_outer_color(sensor_color);
 		image_sensor->set_inner_color(sensor_color);
-		image_sensor->set_disc_radius(0.25); 
+		image_sensor->set_radius(cfg.aperture_radius); 
 
 		sensor = new PhotonSensor::Xy(0, image_sensor);
 		sensor_list.push_back(sensor);
@@ -151,7 +153,7 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 
 	// light source
     std::vector<Photon*>* photons = 
-	    Photons::Source::parallel_towards_z_from_xy_disc(0.25, 1e4);
+	    Photons::Source::parallel_towards_z_from_xy_disc(0.125, 1e4);
 
 	HomoTrafo3D Trafo;
 	Trafo.set_transformation(
@@ -174,7 +176,7 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 
 	Photons::delete_photons_and_history(photons);
 
-	EXPECT_NEAR(0.02, sensor->point_spread_std_dev(), 1e-2);
+	EXPECT_NEAR(1.5e-3, sensor->point_spread_std_dev(), 1e-3);
 
 	/*FreeOrbitCamera free(
 		lens_test_bench_environment.world_geometry, 

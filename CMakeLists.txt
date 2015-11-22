@@ -56,6 +56,7 @@ set(SOURCE
 
 	${CMAKE_CURRENT_SOURCE_DIR}/Triangle.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Plane.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/HexPlane.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Disc.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Annulus.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/LightSourceFromConfig.cpp

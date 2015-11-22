@@ -27,6 +27,17 @@ namespace Function {
 		return table;
 	}
 	//--------------------------------------------------------------------------
+	double Func1D::get_mean(const uint N)const {
+
+		std::vector<std::vector<double>> x_vs_y	= get_samples(N);
+		double y_mean = 0.0;
+
+		for(std::vector<double> point : x_vs_y)
+			y_mean = y_mean + point.at(1);
+
+		return y_mean/x_vs_y.size();
+	}
+	//--------------------------------------------------------------------------
 	double Func1D::increment_for_steps(const uint N)const {
 		return limits.get_range()/double(N);
 	}

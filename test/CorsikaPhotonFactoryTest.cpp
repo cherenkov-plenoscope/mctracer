@@ -34,7 +34,7 @@ TEST_F(CorsikaPhotonFactoryTest, intersection_point_on_ground) {
                     const uint ground_sensor_id = 0;
                     ground.set_outer_color(ground_color);
                     ground.set_inner_color(ground_color);
-                    ground.set_disc_radius(1e3);
+                    ground.set_radius(1e3);
 
                     PhotonSensor::PerfectSensor sensor(ground_sensor_id, &ground);
                     std::vector<PhotonSensor::Sensor*> sensor_list = {&sensor};
@@ -286,7 +286,7 @@ TEST_F(CorsikaPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         const uint ground_sensor_id = 0;
         ground.set_outer_color(ground_color);
         ground.set_inner_color(ground_color);
-        ground.set_disc_radius(1e7);
+        ground.set_radius(1e7);
 
         PhotonSensor::PerfectSensor sensor(ground_sensor_id, &ground);
         std::vector<PhotonSensor::Sensor*> sensor_list = {&sensor};

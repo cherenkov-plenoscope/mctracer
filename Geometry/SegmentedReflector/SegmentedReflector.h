@@ -59,8 +59,8 @@ namespace SegmentedReflector {
 		double DaviesCotton_weight()const;
 		double Parabolic_weight()const;
 		double facet_spacing()const;
-		double naive_F_number()const;
-		double f_over_D()const;
+		double naive_f_over_D()const;
+		double effective_f_over_D()const;
 		double naive_area()const;
 		double effective_area()const;
 		double effective_radius()const;

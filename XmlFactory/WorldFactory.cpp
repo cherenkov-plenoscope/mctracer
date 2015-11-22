@@ -571,7 +571,7 @@ Frame* WorldFactory::produceDisc(
 	new_Disc->set_outer_reflection(reflection_vs_wavelength);
 	new_Disc->set_inner_reflection(reflection_vs_wavelength);	
 
-	new_Disc->set_disc_radius(radius);
+	new_Disc->set_radius(radius);
 	
 	mother->set_mother_and_child(new_Disc);
 	return new_Disc;

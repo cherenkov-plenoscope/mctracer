@@ -136,7 +136,7 @@ def __new_Disc__init__(self, *k, **kw):
     super(mctracer.Disc, self).__init__(*k, **kw)
 
     radius = kw.get('radius', 1.)
-    self.set_disc_radius(radius)
+    self.set_radius(radius)
     
 mctracer.Disc.__init__ = __new_Disc__init__
 

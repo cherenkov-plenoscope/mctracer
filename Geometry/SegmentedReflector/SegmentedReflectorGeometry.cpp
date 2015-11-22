@@ -183,11 +183,11 @@ namespace SegmentedReflector {
 		return facet_inner_hex_radius()*2.0 + gap_between_facets();
 	}
 
-	double Geometry::naive_F_number()const {
+	double Geometry::naive_f_over_D()const {
 		return focal_length()/(2.0*max_outer_aperture_radius());
 	}
 
-	double Geometry::f_over_D()const {
+	double Geometry::effective_f_over_D()const {
 		return focal_length()/(effective_radius()*2.0);
 	}
 
@@ -224,11 +224,11 @@ namespace SegmentedReflector {
 		tab << "focal point.................... " << focal_point() << "\n";
 		tab << "max outer aperture diameter.... " << 2.0*max_outer_aperture_radius() << "m\n";
 		tab << "min inner aperture diameter.... " << 2.0*min_inner_aperture_radius() << "m\n";
-		tab << "naive f over D................. " << naive_F_number() << "\n";
+		tab << "naive f over D................. " << naive_f_over_D() << "\n";
 		tab << "naive area..................... " << naive_area() << "m^2\n";
 		tab << "thickness of dish.............. " << z_pos_given_dist_to_optical_axis(max_outer_aperture_radius()) << "m\n";
 		tab << "z offset for optimal focus..... " << z_offset_makeing_avg_facet_dist_to_f_point_match_f() << "m\n";
-		tab << "effective F-Number............. " << f_over_D() << "\n";
+		tab << "effective F-Number............. " << effective_f_over_D() << "\n";
 		tab << "effective area................. " << effective_area() << "m^2\n";
 		tab << "effective diameter............. " << 2.0*effective_radius() << "m\n";
 		tab << "number of facets............... " << number_of_facets() << "\n";
