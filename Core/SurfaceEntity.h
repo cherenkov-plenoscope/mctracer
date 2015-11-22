@@ -11,7 +11,7 @@ class RayForPropagation;
 // included dependencies
 #include "Core/Frame.h"
 #include "Color.h"
-#include "Core/Function/Func1DFunction.h"
+#include "Core/Function/Function.h"
 
 //=================================
 class SurfaceEntity :public Frame {

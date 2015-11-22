@@ -3,9 +3,9 @@
 
 namespace Function {
 
-	Func1D::Func1D(const Limits &_limits): limits(_limits){
-		
-	}
+	Func1D::Func1D(const Limits &_limits): limits(_limits){}
+	//--------------------------------------------------------------------------
+	Func1D::~Func1D() {}
 	//--------------------------------------------------------------------------
  	std::vector<std::vector<double>>Func1D::get_samples(const uint N)const {
 		

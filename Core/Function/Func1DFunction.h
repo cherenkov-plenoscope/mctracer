@@ -24,11 +24,13 @@ namespace Function {
 
 		Func1D() {};
 		Func1D(const Limits &_limits);
+		virtual ~Func1D();
 		std::vector<std::vector<double> > get_samples(const uint N)const;
 		virtual double operator()(const double x)const =0;	
 		Limits get_limits()const;
 		std::string get_print()const;
 	protected:
+
 		double increment_for_steps(const uint N)const;
 	};
 } // namespace Function
