@@ -64,6 +64,13 @@
 		<set_surface reflection_vs_wavelength="leaf_reflection" colour="[22,22,200]"/>	
 		<set_disc radius="0.5"/>
 	</disc>
+
+	<hex_plane>
+		<set_frame name="hex_roof" pos="[0,0,2.5]" rot="[0,0,0]"/>	
+		<set_surface reflection_vs_wavelength="zero" colour="[22,200,22]"/>	
+		<set_hex_plane outer_hex_radius="0.5"/>
+	</hex_plane>
+
 </frame>
 
 <frame>

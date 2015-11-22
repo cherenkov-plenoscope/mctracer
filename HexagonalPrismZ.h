@@ -27,6 +27,7 @@ public:
 	void set_outer_radius(const double outer_radius);
 	bool is_inside(const Vector3D* vec)const;
 	double get_area()const;
+	double get_outer_radius()const;
 private:
 	void assert_outer_radius_positive(const double outer_radius)const;
 };

@@ -77,6 +77,11 @@ private:
 		const pugi::xml_node frame_node
 	);
 
+	Frame* produceHexPlane(
+		Frame* mother,
+		const pugi::xml_node frame_node
+	);
+
 	Frame* produce_sphere_cap_hexagonal(
 		Frame* mother,
 		const pugi::xml_node node
@@ -142,6 +147,8 @@ private:
 	void extract_Plane_props(
 		double &x_width, double &y_width, const pugi::xml_node node 
 	);
+
+	double extract_HexPlane_props(const pugi::xml_node node);
 
 	void extract_Sphere_props(double &radius,const pugi::xml_node node);
 

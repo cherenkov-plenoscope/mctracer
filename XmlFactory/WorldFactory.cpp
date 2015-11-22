@@ -5,6 +5,7 @@
 #include "Core/Function/LinInterpolFunction.h"
 #include "Tools/AsciiIo.h"
 #include "Geometry/StereoLitographyIo.h"
+#include "HexPlane.h"
 //------------------------------------------------------------------------------
 WorldFactory::WorldFactory(){
 
@@ -119,6 +120,9 @@ Frame* mother,const pugi::xml_node node){
 		
 	}else if(StringTools::is_equal(node.name(),"plane")){
 		mother = producePlane(mother,node);
+
+	}else if(StringTools::is_equal(node.name(),"hex_plane")){
+		mother = produceHexPlane(mother,node);
 		
 	}else if(StringTools::is_equal(node.name(),"sphere")){
 		mother = produceSphere(mother,node);	
@@ -188,6 +192,9 @@ void WorldFactory::go_on_with_children_of_node(
 
 			fabricate_frame(mother,sub_node);
 		}else if(StringTools::is_equal(sub_node_name,"plane")){
+
+			fabricate_frame(mother,sub_node);
+		}else if(StringTools::is_equal(sub_node_name,"hex_plane")){
 
 			fabricate_frame(mother,sub_node);
 		}else if(StringTools::is_equal(sub_node_name,"sphere")){
@@ -268,6 +275,47 @@ Frame* WorldFactory::producePlane(
 	
 	mother->set_mother_and_child(new_plane);
 	return new_plane;
+}
+//------------------------------------------------------------------------------
+Frame* WorldFactory::produceHexPlane(
+	Frame* mother, const pugi::xml_node node
+) {
+	FrameFactory frameFab(node);
+	assert_child_exists(node, "set_surface");
+	assert_child_exists(node, "set_hex_plane");
+
+	const Color* color;
+	const Function::Func1D* reflection_vs_wavelength;
+	double outer_radius;
+	
+	color = extract_color(node.child("set_surface"));
+	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
+	outer_radius = extract_HexPlane_props(node.child("set_hex_plane"));
+
+	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
+
+	HexPlane *hxpl;
+	hxpl = new HexPlane;
+
+	hxpl->set_name_pos_rot(
+		frameFab.get_name(), 
+		frameFab.get_position(), 
+		frameFab.get_rotation()
+	);
+	hxpl->set_inner_color(color);
+	hxpl->set_outer_color(color);
+	hxpl->set_outer_reflection(reflection_vs_wavelength);
+	hxpl->set_inner_reflection(reflection_vs_wavelength);
+	hxpl->set_outer_hex_radius(outer_radius);
+	
+	mother->set_mother_and_child(hxpl);
+	return hxpl;	
+}
+//------------------------------------------------------------------------------
+double WorldFactory::extract_HexPlane_props(const pugi::xml_node node) {
+
+	assert_attribute_exists(node, "outer_hex_radius");
+	return StrToDouble(node.attribute("outer_hex_radius").value());	
 }
 //------------------------------------------------------------------------------
 Frame* WorldFactory::produceSphere(
