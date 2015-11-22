@@ -363,29 +363,28 @@ Frame* WorldFactory::produceReflector(
 	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());
 	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 
-	SegmentedReflector::GeometryConfig geom_card;
-	geom_card.focal_length = 
+	SegmentedReflector::Config cfg;
+	cfg.focal_length = 
 		extract_reflector("focal_length", refl_node);
 
-	geom_card.DaviesCotton_over_parabolic_mixing_factor = 
+	cfg.DaviesCotton_over_parabolic_mixing_factor = 
 		extract_reflector("DaviesCotton_over_parabolic_mixing_factor", refl_node);
 
-	geom_card.max_outer_aperture_radius = 
+	cfg.max_outer_aperture_radius = 
 		extract_reflector("max_outer_aperture_radius", refl_node);
 
-	geom_card.min_inner_aperture_radius = 
+	cfg.min_inner_aperture_radius = 
 		extract_reflector("min_inner_aperture_radius", refl_node);
 
-	geom_card.facet_inner_hex_radius = 
+	cfg.facet_inner_hex_radius = 
 		extract_reflector("facet_inner_hex_radius", refl_node);
 
-	geom_card.gap_between_facets = 
+	cfg.gap_between_facets = 
 		extract_reflector("gap_between_facets", refl_node);
 
-	SegmentedReflector::SurfaceConfig surf_card;
-	surf_card.reflectivity = reflection_vs_wavelength;
+	cfg.reflectivity = reflection_vs_wavelength;
 
-	SegmentedReflector::Factory refl_fab(geom_card, surf_card);
+	SegmentedReflector::Factory refl_fab(cfg);
 	Frame* reflector = refl_fab.get_reflector();
 
 	mother->set_mother_and_child(reflector);

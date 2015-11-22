@@ -1,10 +1,7 @@
 #include "FunctionFactory.h"
 #include "Tools/StringTools.h"
 #include "Tools/AsciiIo.h"
-#include "Core/Function/LinInterpolFunction.h"
-#include "Core/Function/ConstantFunction.h"
-#include "Core/Function/Polynom3Function.h"
-#include "Core/Function/ConcatFunction.h"
+#include "Core/Function/Function.h"
 
 //------------------------------------------------------------------------------
 FunctionFactory::FunctionFactory(const XmlFileIo* io_to_take_over) {
