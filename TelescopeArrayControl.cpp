@@ -1,9 +1,12 @@
 #include "TelescopeArrayControl.h"
+#include "ZdAzMount.h"
 //------------------------------------------------------------------------------
 void TelescopeArrayControl::move_all_to_Az_Zd(const double Az_Rad, const double Zd_Rad) {
 
+	Rotation3D rot = ZdAzMount::get_rot_Az_Zd(Az_Rad, Zd_Rad);
+
 	for(Frame* telescope : telescopes_in_world)
-		telescope->move_to_Az_Zd_relative_to_mother(Az_Rad, Zd_Rad);
+		telescope->update_rotation(rot);
 }
 //------------------------------------------------------------------------------
 std::string TelescopeArrayControl::get_print()const {
@@ -15,8 +18,8 @@ std::string TelescopeArrayControl::get_print()const {
 	uint i=0;
 	for(Frame* telescope : telescopes_in_world) {
 		out << i << " " << telescope->get_name_of_frame() << "\t";
-		out << "Az: " << Rad2Deg(telescope->get_Az_relative_to_mother()) << ",\t";
-		out << "Zd: " << Rad2Deg(telescope->get_Zd_relative_to_mother()) << " deg";
+		out << "Az: " << Rad2Deg(ZdAzMount::get_az_of_frame(telescope)) << ",\t";
+		out << "Zd: " << Rad2Deg(ZdAzMount::get_zd_of_frame(telescope)) << " deg";
 		out << "\n";
 	}
 
@@ -25,5 +28,17 @@ std::string TelescopeArrayControl::get_print()const {
 //------------------------------------------------------------------------------
 void TelescopeArrayControl::add_to_telescope_array(Frame *telescope) {
 	telescopes_in_world.push_back(telescope);
+}
+//------------------------------------------------------------------------------
+double TelescopeArrayControl::get_zenith_distance_of_frame(const Frame* frame)const {
+
+	Vector3D optical_axis_in_world = frame->frame2world()->
+		get_transformed_orientation(Vector3D::unit_z);
+
+	return Vector3D::unit_z.get_angle_in_between_in_rad(optical_axis_in_world);	
+}
+//------------------------------------------------------------------------------
+double TelescopeArrayControl::get_azimuth_of_frame(const Frame* frame)const {
+	return Deg2Rad(180.0) - frame->get_rotation_in_mother()->get_rot_z();
 }
 //------------------------------------------------------------------------------

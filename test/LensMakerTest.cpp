@@ -162,7 +162,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 	EXPECT_NEAR(
 		cfg.focal_length, 
 		image_sensor_distances.at(min_sigma_psf_pos),
-		cfg.focal_length*1e-6
+		cfg.focal_length*1e-4
 	);
 	//std::cout << "smallest psf sigma of "<<min_sigma_psf*1e3<<"mm at d=";
 	//std::cout << image_sensor_distances.at(min_sigma_psf_pos)*1e3<<"mm\n";

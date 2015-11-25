@@ -84,7 +84,6 @@ public:
     const HomoTrafo3D* mother2frame()const;
     const HomoTrafo3D* world2frame()const;
     const HomoTrafo3D* frame2world()const;
-    //const Frame* get_frame_in_tree_by_path(std::string path)const;
     bool has_child_with_name(const std::string name_of_child)const;
     const Frame* get_child_by_name(std::string specific_name)const;
     const Frame* get_root_of_world()const;
@@ -104,7 +103,6 @@ protected:
     // post initialization based on root
     void post_init_me_and_all_my_children();
     void post_init_transformations();
-    //void cluster_children_of_me_and_all_my_children();
     HomoTrafo3D calculate_frame2world()const;
     // post initialization based on mother only
     void post_init_me_and_all_my_children_only_based_on_mother();
@@ -123,10 +121,7 @@ protected:
     void warn_about_neglection_of(const Frame* frame)const;
 public:
     // moving/rotating the frame after construction
-    void move_to_Az_Zd_relative_to_mother(const double Az_Rad, const double Zd_Rad);
-    void move_to_Az_Zd_relative_to_mother_using_root(const double Az_Rad, const double Zd_Rad);
-    double get_Az_relative_to_mother()const;
-    double get_Zd_relative_to_mother()const;
+    void update_rotation(const Rotation3D rot);
     virtual const Intersection* calculate_intersection_with(const Ray* ray)const;
     const Intersection* empty_intersection()const;
 };

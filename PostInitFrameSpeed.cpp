@@ -1,13 +1,6 @@
-#include <iostream> 
-#include <string>
-#include <sstream>
-#include <math.h>
 #include "Geometry/SegmentedReflector/SegmentedReflector.h"
 #include "Cameras/FreeOrbitCamera.h"
 
-#include "gtest/gtest.h"
-
-// The fixture for testing class Foo.
 class PostInitFrameSpeed : public ::testing::Test {
 protected:
     Frame world;
@@ -37,39 +30,12 @@ protected:
         world.set_mother_and_child(reflector);
         world.init_tree_based_on_mother_child_relations();
     }
-
-    virtual ~PostInitFrameSpeed() {
-      // You can do clean-up work that doesn't throw exceptions here.
-    }
-
-    // If the constructor and destructor are not enough for setting up
-    // and cleaning up each test, you can define the following methods:
-
-    virtual void SetUp() {
-        // Code here will be called immediately after the constructor (right
-        // before each test).
-    }
-
-    virtual void TearDown() {
-        // Code here will be called immediately after each test (right
-        // before the destructor).
-    }
-
-    // Objects declared here can be used by all tests in the test case for Foo.
 };
 //------------------------------------------------------------------------------
 TEST_F(PostInitFrameSpeed, post_init_based_on_mother) {
 
     for(int i=0; i<1e3; i++) {
-        Zd_Rad = double(i)/1.0e6;
-        reflector->move_to_Az_Zd_relative_to_mother(Az_Rad, Zd_Rad);
-    }
-}
-//------------------------------------------------------------------------------
-TEST_F(PostInitFrameSpeed, post_init_based_on_root) {
-
-    for(int i=0; i<1e3; i++) {
-        Zd_Rad = double(i)/1.0e6;
-        reflector->move_to_Az_Zd_relative_to_mother_using_root(Az_Rad, Zd_Rad);
+        Rotation3D rot(0.0, 0.0, double(i)/1.0e6);
+        reflector->update_rotation(rot);
     }
 }
