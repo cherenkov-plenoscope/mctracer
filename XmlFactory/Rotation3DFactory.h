@@ -19,7 +19,7 @@ public:
 	Rotation3D get_rot()const;
 private:
 
-	Rotation3D extract_frmae_rotation_xyz_angles(
+	Rotation3D extract_frame_rotation_xyz_angles(
 		const std::string name, const pugi::xml_node node
 	);
 };

@@ -95,6 +95,8 @@ namespace SegmentedReflector {
 		void init_reflector();
 		std::string get_name_of_facet(const uint i)const;
 	};
+
+	static const Function::Constant perfect_reflectivity(1.0, Function::Limits(200e-9, 1200e-9));
 } // SegmentedReflector
 
 #endif // __SegmentedReflectorConfig_H_INCLUDED__ 

@@ -13,6 +13,6 @@ namespace SegmentedReflector {
 
 		mirror_color(&Color::white),
 		inner_mirror_color(&Color::dark_gray),
-		reflectivity(&Function::Constant::void_function)
+		reflectivity(&perfect_reflectivity)
 	{}
 } // SegmentedReflector

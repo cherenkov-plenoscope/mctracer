@@ -136,6 +136,9 @@ Frame* mother,const pugi::xml_node node){
 	}else if(StringTools::is_equal(node.name(),"annulus")){
 		mother = produceAnnulus(mother,node);	
 
+	}else if(StringTools::is_equal(node.name(),"light_field_telescope")){
+		mother = produceLightFieldTelescope(mother,node);	
+
 	}else if(StringTools::is_equal(node.name(),"segmented_reflector")){
 		mother = produceReflector(mother,node);
 
@@ -207,6 +210,9 @@ void WorldFactory::go_on_with_children_of_node(
 
 			fabricate_frame(mother,sub_node);
 		}else if(StringTools::is_equal(sub_node_name,"annulus")){
+
+			fabricate_frame(mother,sub_node);
+		}else if(StringTools::is_equal(sub_node_name,"light_field_telescope")){
 
 			fabricate_frame(mother,sub_node); 
 		}else if(StringTools::is_equal(sub_node_name,"segmented_reflector")){
@@ -611,6 +617,70 @@ Frame* WorldFactory::produceAnnulus(
 	return annulus;
 }
 //------------------------------------------------------------------------------
+Frame* WorldFactory::produceLightFieldTelescope(
+	Frame* mother,const pugi::xml_node node
+){
+	assert_child_exists(node, "set_segmented_reflector");
+	const pugi::xml_node refl_node = node.child("set_segmented_reflector");
+
+	FrameFactory frameFab(node);
+
+	LightFieldTelescope::Config lftConfig;
+
+	lftConfig.reflector.DaviesCotton_over_parabolic_mixing_factor = 
+		extract_reflector("DaviesCotton_over_parabolic_mixing_factor", refl_node);
+
+	lftConfig.reflector.max_outer_aperture_radius = 
+		extract_reflector("max_outer_aperture_radius", refl_node);
+
+	lftConfig.reflector.min_inner_aperture_radius = 
+		extract_reflector("min_inner_aperture_radius", refl_node);
+
+	lftConfig.reflector.facet_inner_hex_radius = 
+		extract_reflector("facet_inner_hex_radius", refl_node);
+
+	lftConfig.reflector.gap_between_facets = 
+		extract_reflector("gap_between_facets", refl_node);
+
+	lftConfig.reflector.focal_length = 
+		extract_reflector("focal_length", refl_node);
+
+	assert_attribute_exists(refl_node, "reflection_vs_wavelength");
+	lftConfig.reflector.reflectivity = 
+		functions->get_function(refl_node.attribute("reflection_vs_wavelength").value());
+
+	assert_child_exists(node, "set_camera");
+	const pugi::xml_node cam_node = node.child("set_camera");
+	LightFieldTelescopeFactory xmlLftFab(cam_node); //xml fab
+
+	lftConfig.pixel_FoV_hex_flat2flat = 
+		xmlLftFab.get_hex_pixel_FoV_flat2flat();
+
+	lftConfig.max_FoV_diameter = 
+		xmlLftFab.get_max_FoV_diameter();
+
+	lftConfig.housing_overhead = 
+		xmlLftFab.get_housing_overhead();
+
+	lftConfig.sub_pixel_per_pixel = 
+		xmlLftFab.get_sub_pixel_per_pixel();
+
+	lftConfig.lens_refraction=
+		functions->get_function(xmlLftFab.get_refraction_vs_wavelength()); 
+
+	Frame *telescope = new Frame;
+	telescope->set_name_pos_rot(
+		frameFab.get_name(), 
+		frameFab.get_position(), 
+		frameFab.get_rotation()
+	);
+
+	LightFieldTelescope::Factory lftFab(lftConfig); //real fab
+	lftFab.add_telescope_to_frame(telescope);
+	mother->set_mother_and_child(telescope);
+	return telescope;
+}
+//------------------------------------------------------------------------------
 Frame* WorldFactory::produceTriangle(
 	Frame* mother,const pugi::xml_node node
 ){
@@ -774,6 +844,7 @@ void WorldFactory::extract_Annulus_props(
 	outer_radius = StrToDouble(node.attribute("outer_radius").value());
 	inner_radius = StrToDouble(node.attribute("inner_radius").value());
 }
+
 //------------------------------------------------------------------------------
 void WorldFactory::extract_Triangle_props(
 	double &Ax, double &Ay, 

@@ -21,6 +21,7 @@
 #include "Cylinder.h"
 #include "Disc.h"
 #include "Annulus.h"
+#include "LightFieldTelescope/LightFieldTelescope.h"
 #include "Geometry/SegmentedReflector/SegmentedReflector.h"
 #include "Core/Vector3D.h"
 #include "Core/Rotation3D.h"
@@ -33,6 +34,7 @@
 #include "SphereCapWithCylinderBound.h"
 #include "BiConvexLensHexBound.h"
 #include "FunctionFactory.h"
+#include "LightFieldTelescopeFactory.h"
 
 //------------------------------------------------------------------------------
 class WorldFactory : public XmlFileIo{
@@ -108,6 +110,11 @@ private:
 	);
 
 	Frame* produceAnnulus(
+		Frame* mother,
+		const pugi::xml_node node
+	);
+
+	Frame* produceLightFieldTelescope(
 		Frame* mother,
 		const pugi::xml_node node
 	);

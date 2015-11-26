@@ -5,6 +5,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Rotation3DFactory.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/FrameFactory.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/FunctionFactory.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/LightFieldTelescopeFactory.cpp
    	PARENT_SCOPE
 )
 set(HEADERS
@@ -14,5 +15,6 @@ set(HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/Rotation3DFactory.h
 	${CMAKE_CURRENT_SOURCE_DIR}/FrameFactory.h
 	${CMAKE_CURRENT_SOURCE_DIR}/FunctionFactory.h
+	${CMAKE_CURRENT_SOURCE_DIR}/LightFieldTelescopeFactory.h
 	PARENT_SCOPE
 )

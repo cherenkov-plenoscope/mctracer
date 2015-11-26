@@ -10,20 +10,20 @@ FrameFactory::FrameFactory(const pugi::xml_node node) {
 //------------------------------------------------------------------------------
 void FrameFactory::extract_frame(const pugi::xml_node node) {
 
-	name = extract_frmae_name(node);
-	position = extract_frmae_position(node);
-	rotation = extract_frmae_rotation(node);
+	name = extract_frame_name(node);
+	position = extract_frame_position(node);
+	rotation = extract_frame_rotation(node);
 }
 //------------------------------------------------------------------------------
-Rotation3D FrameFactory::extract_frmae_rotation(const pugi::xml_node node) {	
+Rotation3D FrameFactory::extract_frame_rotation(const pugi::xml_node node) {	
 	
 	if(has_attribute(node, "z_reflects_to"))
-		return extract_frmae_rotation_based_on_z_reflects(node);
+		return extract_frame_rotation_based_on_z_reflects(node);
 	else
-		return extract_frmae_rotation_xyz_angles(node);
+		return extract_frame_rotation_xyz_angles(node);
 }
 //------------------------------------------------------------------------------
-Rotation3D FrameFactory::extract_frmae_rotation_based_on_z_reflects(
+Rotation3D FrameFactory::extract_frame_rotation_based_on_z_reflects(
 	const pugi::xml_node node
 ) {
 
@@ -40,20 +40,20 @@ Rotation3D FrameFactory::extract_frmae_rotation_based_on_z_reflects(
 	return Rotation3D(rotation_axis, rot_angle);
 }
 //------------------------------------------------------------------------------
-Rotation3D FrameFactory::extract_frmae_rotation_xyz_angles(
+Rotation3D FrameFactory::extract_frame_rotation_xyz_angles(
 	const pugi::xml_node node
 ) {
 	Rotation3DFactory rot_fab("rot", node);
 	return rot_fab.get_rot();	
 }
 //------------------------------------------------------------------------------
-Vector3D FrameFactory::extract_frmae_position(const pugi::xml_node node) {	
+Vector3D FrameFactory::extract_frame_position(const pugi::xml_node node) {	
 	
 	Vector3DFactory vecFab("pos", node);
 	return vecFab.get_vec();		
 }
 //------------------------------------------------------------------------------
-std::string FrameFactory::extract_frmae_name(const pugi::xml_node node) {	
+std::string FrameFactory::extract_frame_name(const pugi::xml_node node) {	
 	
 	assert_attribute_exists(node, "name");
 	return node.attribute("name").value();		
