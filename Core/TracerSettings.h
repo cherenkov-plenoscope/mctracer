@@ -62,6 +62,8 @@ public:
 	bool sky_light_source;
 	Vector3D global_light_direction;
 
+	double trajectory_radius;
+
 	static const TracerSettings default_settings;
 	TracerSettings();
 	bool stores_only_last_intersection()const;

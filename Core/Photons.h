@@ -57,8 +57,12 @@ namespace Photons {
 	class Trajectories {
 		uint number_of_trajectories_handed_out_already;
 		std::vector<Photon*> *photon_bunch;
+		const TracerSettings *settings;
 	public:
-		Trajectories(std::vector<Photon*> *_photon_bunch);
+		Trajectories(
+			std::vector<Photon*> *_photon_bunch, 
+			const TracerSettings *settings
+		);
 		bool has_still_trajectories_left()const;
 		Frame* get_next_trajectoy();
 	};

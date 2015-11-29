@@ -22,6 +22,7 @@ TracerSettings::TracerSettings()
 	sky_light_source = true;
 	global_light_direction = Vector3D(1.0,0.2,1.0);
 	global_light_direction.normalize();
+	trajectory_radius = 0.025;
 }
 //------------------------------------------------------------------------------
 void TracerSettings::set_max_number_of_reflections(

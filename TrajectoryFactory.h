@@ -26,7 +26,7 @@ public:
 	static const Color* interaction_col;	
 	TrajectoryFactory(const RayForPropagation* ray);
 	Frame* get_trajectory()const;
-	void set_trajectory_radius_in_m(const double radius);
+	void set_trajectory_radius(const double radius);
 private:
 
 	Frame* get_empty_trajectory_frame()const;

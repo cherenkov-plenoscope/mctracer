@@ -12,7 +12,7 @@ TrajectoryFactory::TrajectoryFactory(const RayForPropagation* _ray) {
 	radius_of_trajectory_in_m = 0.01;
 }
 //------------------------------------------------------------------------------
-void TrajectoryFactory::set_trajectory_radius_in_m(const double radius) {
+void TrajectoryFactory::set_trajectory_radius(const double radius) {
 	radius_of_trajectory_in_m = radius;
 }
 //------------------------------------------------------------------------------

@@ -54,6 +54,45 @@ Color CameraRay::trace(
 	return color;
 }
 //------------------------------------------------------------------------------
+/*Color CameraRay::shadow_of_sky_light(
+	const Frame* world,
+	const TracerSettings *settings,
+	const Intersection *intersection
+)const {
+
+	const double max_darkening = 0.750;
+	const double diffuse = 0.1;
+
+	if(is_iluminated_by_sky_light_source(world, settings, intersection)) {
+
+		Vector3D specular_dir = intersection->
+		get_reflection_direction_in_world_system(
+			settings->global_light_direction
+		);
+
+		double specular = acos(specular_dir*direction*-1.0); //0 to Pi
+		specular =  specular/M_PI; //0 to 1
+
+		Color color = intersection->get_facing_color();
+
+		if(specular > 0.5) {
+
+
+			color.reflection_mix(&Color::white, specular);	
+		}else{
+			color.reflection_mix(&Color::black, 1.0 -specular);	
+		}
+
+		return color;
+	}else{
+
+		Color color;
+		color = intersection->get_facing_color();
+		color.reflection_mix(&Color::black, max_darkening + diffuse);	
+		return color;		
+	}
+}*/
+//------------------------------------------------------------------------------
 Color CameraRay::shadow_of_sky_light(
 	const Frame* world,
 	const TracerSettings *settings,
@@ -75,7 +114,7 @@ Color CameraRay::shadow_of_sky_light(
 	Color color;
 	color = intersection->get_facing_color();
 
-	if(is_iluminated_by_sky_light_source(world, settings, intersection))
+	if(!is_iluminated_by_sky_light_source(world, settings, intersection))
 		darkening = darkening*0.25;
 
 	color.reflection_mix(&Color::black, max_darkening - darkening);	
@@ -106,7 +145,7 @@ bool CameraRay::is_iluminated_by_sky_light_source(
 	bool does_intersect = intersec_light_source->does_intersect();
 	delete intersec_light_source;
 
-	return does_intersect || p < 0.0;
+	return !(does_intersect || p < 0.0);
 }
 //------------------------------------------------------------------------------
 bool CameraRay::surface_normal_is_facing_camera(

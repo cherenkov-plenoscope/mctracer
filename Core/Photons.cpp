@@ -170,8 +170,11 @@ namespace Photons {
 	//--------------------------------------------------------------------------
 	// Trajectories
 	//--------------------------------------------------------------------------
-	Trajectories::Trajectories(std::vector<Photon*> *_photon_bunch) {
-
+	Trajectories::Trajectories(
+		std::vector<Photon*> *_photon_bunch,
+		const TracerSettings *settings
+	) {
+		this->settings = settings;
 		photon_bunch = _photon_bunch;
 		number_of_trajectories_handed_out_already = 0;
 	}
@@ -186,6 +189,8 @@ namespace Photons {
 		TrajectoryFactory factory(
 			photon_bunch->at(number_of_trajectories_handed_out_already++)
 		);
+		factory.set_trajectory_radius(settings->trajectory_radius);
+
 		return factory.get_trajectory();
 	}
 	//--------------------------------------------------------------------------
