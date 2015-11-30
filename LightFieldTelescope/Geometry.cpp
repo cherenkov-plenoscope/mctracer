@@ -1,4 +1,4 @@
-#include "LightFieldTelescope.h"
+#include "LightFieldTelescope/Geometry.h"
 #include "HexGridAnnulus.h"
 #include "LensMaker.h"
 

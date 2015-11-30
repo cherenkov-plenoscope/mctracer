@@ -6,6 +6,7 @@
 #include "Tools/AsciiIo.h"
 #include "Geometry/StereoLitographyIo.h"
 #include "HexPlane.h"
+#include "XmlFactory/LightFieldTelescopeFactory.h"
 //------------------------------------------------------------------------------
 WorldFactory::WorldFactory(){
 

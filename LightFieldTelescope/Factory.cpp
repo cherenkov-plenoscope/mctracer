@@ -1,4 +1,4 @@
-#include "LightFieldTelescope.h"
+#include "LightFieldTelescope/Factory.h"
 #include "HexGridAnnulus.h"
 #include "HexPlane.h"
 #include "Annulus.h"

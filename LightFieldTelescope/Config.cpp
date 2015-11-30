@@ -1,7 +1,7 @@
-#include "LightFieldTelescope.h"
+#include "LightFieldTelescope/Config.h"
 
 namespace LightFieldTelescope {
-	//--------------------------------------------------------------------------
+
 	Config::Config() {
 
 		max_FoV_diameter = Deg2Rad(6.5);

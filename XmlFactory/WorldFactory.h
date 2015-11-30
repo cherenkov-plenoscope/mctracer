@@ -21,7 +21,6 @@
 #include "Cylinder.h"
 #include "Disc.h"
 #include "Annulus.h"
-#include "LightFieldTelescope/LightFieldTelescope.h"
 #include "Geometry/SegmentedReflector/SegmentedReflector.h"
 #include "Core/Vector3D.h"
 #include "Core/Rotation3D.h"
@@ -34,7 +33,7 @@
 #include "SphereCapWithCylinderBound.h"
 #include "BiConvexLensHexBound.h"
 #include "FunctionFactory.h"
-#include "LightFieldTelescopeFactory.h"
+#include "LightFieldTelescope/Telescope.h"
 
 //------------------------------------------------------------------------------
 class WorldFactory : public XmlFileIo{

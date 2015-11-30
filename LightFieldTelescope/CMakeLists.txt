@@ -1,12 +1,14 @@
 set(SOURCE
    	${SOURCE}
-  	${CMAKE_CURRENT_SOURCE_DIR}/LightFieldTelescopeGeometry.cpp
-  	${CMAKE_CURRENT_SOURCE_DIR}/LightFieldTelescopeConfig.cpp
-  	${CMAKE_CURRENT_SOURCE_DIR}/LightFieldTelescopeFactory.cpp
+   	${CMAKE_CURRENT_SOURCE_DIR}/Config.cpp
+  	${CMAKE_CURRENT_SOURCE_DIR}/Geometry.cpp
+  	${CMAKE_CURRENT_SOURCE_DIR}/Factory.cpp
    	PARENT_SCOPE
 )
 set(HEADERS
 	${HEADERS}
-  	${CMAKE_CURRENT_SOURCE_DIR}/LightFieldTelescope.h
+  	${CMAKE_CURRENT_SOURCE_DIR}/Config.h
+  	${CMAKE_CURRENT_SOURCE_DIR}/Geometry.h
+  	${CMAKE_CURRENT_SOURCE_DIR}/Factory.h
 	PARENT_SCOPE
 )
