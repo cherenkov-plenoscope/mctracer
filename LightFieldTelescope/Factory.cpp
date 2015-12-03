@@ -133,6 +133,7 @@ Frame* Factory::get_sub_pixel_sensor_plane() {
 		sub_pixel_sensors->push_back(sub_pixel_sensor);
 	}
 
+	PhotonSensors::sort_photon_sensors_based_on_frames(sub_pixel_sensors);
 	sub_pixel_array->cluster_using_helper_frames();
 	return sub_pixel_array;
 }
