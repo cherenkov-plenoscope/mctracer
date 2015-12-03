@@ -55,10 +55,14 @@ std::vector<const Intersection*> Ray::get_intersections_in_candidate_objects(
 		// to prevent a reflected ray to get stucked on the reflective surface
 		// again, the candidate intersection is neglected when the reflected 
 		// rays support equals the candidate intersectionpoint.
-		if(candidate_intersection->does_intersect()) {
-			if( !ray_in_object_system.
-					support_equals_intersection_point(candidate_intersection))
-				intersections.push_back(candidate_intersection);
+		if(
+			candidate_intersection->does_intersect()
+			&&
+			!ray_in_object_system.support_equals_intersection_point(
+				candidate_intersection
+			)
+		) {
+			intersections.push_back(candidate_intersection);
 		}else{
 			delete candidate_intersection;
 		}
