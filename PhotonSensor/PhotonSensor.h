@@ -114,6 +114,19 @@ namespace PhotonSensors {
 		const Frame* final_frame,
 		const std::vector<PhotonSensor::Sensor*>* sensors
 	);
+
+	class FindSensor {
+
+		bool photon_is_absorbed_by_known_sensor;
+		PhotonSensor::Sensor* closest_sensor;
+	public:
+		FindSensor(
+			const Photon* photon,
+			std::vector<PhotonSensor::Sensor*> *sensors
+		);
+		bool is_absorbed_by_known_sensor()const;
+		PhotonSensor::Sensor* get_sensor()const;
+	};
 } // PhotonSensors
 //------------------------------------------------------------------------------
 #endif // __PHOTONSENSOR_H_INCLUDED__ 

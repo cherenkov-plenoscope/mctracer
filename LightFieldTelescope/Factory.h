@@ -17,7 +17,7 @@ namespace LightFieldTelescope {
 
 		Geometry geometry;
 		Config cfg;
-		std::vector<PhotonSensor::Sensor*> sub_pixel_sensors;
+		std::vector<PhotonSensor::Sensor*> *sub_pixel_sensors;
 	public:
 
 		Factory(Config);
@@ -28,7 +28,7 @@ namespace LightFieldTelescope {
 		Frame* get_sub_pixel_sensor_plane();
 		Frame* get_sub_pixel_with_name_pos(const std::string name, const Vector3D pos);
 		Frame* get_image_sensor_housing()const;
-		std::vector<PhotonSensor::Sensor*> get_sensors()const;
+		std::vector<PhotonSensor::Sensor*>* get_sub_pixels()const;
 	};
 
 }

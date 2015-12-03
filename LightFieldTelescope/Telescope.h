@@ -11,5 +11,6 @@
 #include "LightFieldTelescope/Config.h"
 #include "LightFieldTelescope/Geometry.h"
 #include "LightFieldTelescope/Factory.h"
+#include "LightFieldTelescope/Calibration.h"
 
 #endif // __PlenopticIactConfig_H_INCLUDED__ 

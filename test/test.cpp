@@ -39,6 +39,7 @@
 #include "LensMakerTest.cpp"
 #include "../Geometry/StereoLitographyIoTest.cpp"
 #include "RandomGeneratorTest.cpp"
+//#include "LightFieldTelescopeTest.cpp"
 
 int main(int argc, char **argv) {
 	UserInteraction::print_welcome_screen();

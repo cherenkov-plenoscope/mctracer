@@ -53,6 +53,7 @@ namespace SegmentedReflector {
 		double z_Davies_Cotton_given_dist_to_optical_axis(double dist)const;
 		double z_Parabola_given_dist_to_optical_axis(double dist)const;
 		double z_offset_makeing_avg_facet_dist_to_f_point_match_f()const;
+		double thickness_of_dish()const;
 		Vector3D focal_point()const;
 		std::vector<Vector3D> facet_positions()const;
 		Rotation3D get_rotation_for_facet_position(const Vector3D facet_position)const;

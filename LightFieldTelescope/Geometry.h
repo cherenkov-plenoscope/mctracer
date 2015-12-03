@@ -46,6 +46,7 @@ namespace LightFieldTelescope {
 			double sub_pixel_inner_radius()const;
 			double sub_pixel_spacing()const;
 			std::vector<Vector3D> sub_pixel_positions()const;
+			uint total_number_of_sub_pixels()const;
 		};
 }
 #endif // __LightFieldTelescopeGeometry_H_INCLUDED__ 

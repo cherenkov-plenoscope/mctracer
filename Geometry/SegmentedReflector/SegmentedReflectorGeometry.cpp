@@ -213,6 +213,10 @@ namespace SegmentedReflector {
 		return _facet_positions.size();
 	}
 
+	double Geometry::thickness_of_dish()const {
+		return z_pos_given_dist_to_optical_axis(max_outer_aperture_radius());
+	}
+
 	std::string Geometry::get_print()const {
 
 		std::stringstream out;
@@ -226,7 +230,7 @@ namespace SegmentedReflector {
 		tab << "min inner aperture diameter.... " << 2.0*min_inner_aperture_radius() << "m\n";
 		tab << "naive f over D................. " << naive_f_over_D() << "\n";
 		tab << "naive area..................... " << naive_area() << "m^2\n";
-		tab << "thickness of dish.............. " << z_pos_given_dist_to_optical_axis(max_outer_aperture_radius()) << "m\n";
+		tab << "thickness of dish.............. " << thickness_of_dish() << "m\n";
 		tab << "z offset for optimal focus..... " << z_offset_makeing_avg_facet_dist_to_f_point_match_f() << "m\n";
 		tab << "effective F-Number............. " << effective_f_over_D() << "\n";
 		tab << "effective area................. " << effective_area() << "m^2\n";

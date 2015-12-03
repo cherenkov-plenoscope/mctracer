@@ -23,24 +23,10 @@ void assign_photon_to_sensors(
 	const Photon* photon,
 	std::vector<Sensor*> *sensors
 ) {
-	const Frame* final_frame = photon->
-		get_final_intersection()->get_intersecting_object();
+	FindSensor sens_finder(photon, sensors);
 
-	std::vector<Sensor*>::const_iterator it =
-		get_upper_bound_for_final_frame_in_sensors(final_frame, sensors);
-
-	Sensor* closest_sensor = (*(it-1));
-
-	if(it == sensors->begin())
-		return;
-
-	if(it == sensors->end() && closest_sensor->get_frame() != final_frame)
-		return;
-
-	if(closest_sensor->get_frame() != final_frame)
-		return; 
-
-	closest_sensor->assign_photon_to_this_sensor(photon);
+	if(sens_finder.is_absorbed_by_known_sensor())
+		sens_finder.get_sensor()->assign_photon_to_this_sensor(photon);
 }
 //------------------------------------------------------------------------------
 void sort_photon_sensors_based_on_frames(
@@ -63,6 +49,44 @@ std::vector<Sensor*>::const_iterator get_upper_bound_for_final_frame_in_sensors(
 		final_frame, 
 		Sensor::FrameSensorPointerCompare()
 	);	
+}
+//------------------------------------------------------------------------------
+FindSensor::FindSensor(
+	const Photon* photon,
+	std::vector<Sensor*> *sensors
+) {
+	const Frame* final_frame = photon->
+		get_final_intersection()->get_intersecting_object();
+
+	std::vector<Sensor*>::const_iterator it =
+		get_upper_bound_for_final_frame_in_sensors(final_frame, sensors);
+
+	photon_is_absorbed_by_known_sensor = true;
+
+	if(it == sensors->begin()) {
+		photon_is_absorbed_by_known_sensor = false;
+		return;
+	}
+
+	if(it == sensors->end() && (*(it-1))->get_frame() != final_frame) {
+		photon_is_absorbed_by_known_sensor = false;
+		return;
+	}
+
+	if((*(it-1))->get_frame() != final_frame) {
+		photon_is_absorbed_by_known_sensor = false; 
+		return;
+	}
+
+	closest_sensor = (*(it-1));
+}
+//------------------------------------------------------------------------------
+bool FindSensor::is_absorbed_by_known_sensor()const {
+	return photon_is_absorbed_by_known_sensor;
+}
+//------------------------------------------------------------------------------
+Sensor* FindSensor::get_sensor()const {
+	return closest_sensor;
 }
 //------------------------------------------------------------------------------
 } // PhotonSensors

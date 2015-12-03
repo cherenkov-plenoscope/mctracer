@@ -113,6 +113,9 @@ Frame* Factory::get_sub_pixel_sensor_plane() {
 		Rotation3D::null
 	);
 
+	sub_pixel_sensors = new std::vector<PhotonSensor::Sensor*>;
+
+
 	std::vector<Vector3D> sub_pixel_positions = geometry.sub_pixel_positions();
 	 
 	for(uint i=0; i<sub_pixel_positions.size(); i++) {
@@ -127,7 +130,7 @@ Frame* Factory::get_sub_pixel_sensor_plane() {
 		PhotonSensor::PerfectSensor* sub_pixel_sensor = 
 			new PhotonSensor::PerfectSensor(i, subpix);
 
-		sub_pixel_sensors.push_back(sub_pixel_sensor);
+		sub_pixel_sensors->push_back(sub_pixel_sensor);
 	}
 
 	sub_pixel_array->cluster_using_helper_frames();
@@ -215,7 +218,7 @@ void Factory::add_telescope_to_frame(Frame *frame) {
 	frame->init_tree_based_on_mother_child_relations();
 }
 //------------------------------------------------------------------------------
-std::vector<PhotonSensor::Sensor*> Factory::get_sensors()const {
+std::vector<PhotonSensor::Sensor*>* Factory::get_sub_pixels()const {
 	return sub_pixel_sensors;
 }
 

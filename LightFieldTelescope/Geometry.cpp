@@ -163,4 +163,8 @@ double Geometry::sub_pixel_spacing()const {
 	return sub_pixel_inner_radius()*2.0;
 }
 //------------------------------------------------------------------------------
+uint Geometry::total_number_of_sub_pixels()const {
+	return sub_pixel_grid.size();
+}
+//------------------------------------------------------------------------------
 } //lightfield
