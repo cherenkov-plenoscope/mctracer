@@ -223,15 +223,12 @@ namespace Photons {
 			const Vector3D support = Vector3D::null;
 
 			Random::Mt19937 prng(0);
+
+			Vector3D direction;
 			for(uint i=0; i<number_of_photons; i++) {
 
-				const double The = opening_angle*sqrt(prng.uniform());
-				const double Phi = prng.uniform()*2.0*M_PI;
-
-				const Vector3D direction(
-					sin(The)*cos(Phi),
-					sin(The)*sin(Phi),
-					cos(The)
+				direction = prng.get_point_on_unitsphere_within_polar_distance(
+					opening_angle
 				);
 
 				Photon* photon = new Photon(support, direction, 433e-9);
@@ -250,17 +247,11 @@ namespace Photons {
 			const Vector3D direction = Vector3D::unit_z;
 
 			Random::Mt19937 prng(0);
+
+			Vector3D support;
 			for(uint i=0; i<number_of_photons; i++) {
 
-				const double r = sqrt(prng.uniform())*disc_radius;
-				const double phi = prng.uniform()*2.0*M_PI;
-
-				const Vector3D support(
-					r*cos(phi),
-					r*sin(phi),
-					0.0
-				);
-
+				support = prng.get_point_on_xy_disc_within_radius(disc_radius);
 				Photon* photon = new Photon(support, direction, 433e-9);
 				photon_bunch->push_back(photon);
 			}
