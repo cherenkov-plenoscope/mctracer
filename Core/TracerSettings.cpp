@@ -25,6 +25,10 @@ TracerSettings::TracerSettings()
 	trajectory_radius = 0.025;
 }
 //------------------------------------------------------------------------------
+TracerSettings::~TracerSettings() {
+	delete sky_dome;
+}
+//------------------------------------------------------------------------------
 void TracerSettings::set_max_number_of_reflections(
 	const int new_max_number_of_reflections
 ) {

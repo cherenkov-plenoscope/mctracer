@@ -66,6 +66,7 @@ public:
 
 	static const TracerSettings default_settings;
 	TracerSettings();
+	~TracerSettings();
 	bool stores_only_last_intersection()const;
 	void store_only_last_intersection(const bool flag);
 	
