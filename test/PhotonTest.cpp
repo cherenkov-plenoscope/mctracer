@@ -149,6 +149,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
         
         EXPECT_EQ(number_of_bounces*1.0-0.5, P.get_accumulative_distance() );
         EXPECT_EQ(num_of_total_interactions, P.get_number_of_interactions_so_far() );
+        P.delete_history();
     }
 }
 //------------------------------------------------------------------------------
