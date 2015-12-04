@@ -131,6 +131,6 @@
 <light_field_telescope>
 	<set_telescope/>
 	<set_frame name="lebowsku" pos="[0,0,0]" rot="[0,0,0]"/>
-	<set_segmented_reflector focal_length="70" max_outer_aperture_radius="25" min_inner_aperture_radius="0.5" DaviesCotton_over_parabolic_mixing_factor="0.0" facet_inner_hex_radius="0.6" gap_between_facets="0.01" reflection_vs_wavelength="mirror_reflection"/>
-	<set_camera max_FoV_diameter_deg="6.5" hex_pixel_FoV_flat2flat_deg="0.1" housing_overhead="1.2" sub_pixel_per_pixel="1" refraction_vs_wavelength="lens_refraction"/>
+	<set_segmented_reflector focal_length="75" max_outer_aperture_radius="25" min_inner_aperture_radius="0.5" DaviesCotton_over_parabolic_mixing_factor="0.0" facet_inner_hex_radius="0.6" gap_between_facets="0.01" reflection_vs_wavelength="mirror_reflection"/>
+	<set_camera max_FoV_diameter_deg="6.5" hex_pixel_FoV_flat2flat_deg="0.1" housing_overhead="1.2" sub_pixel_per_pixel="79" refraction_vs_wavelength="lens_refraction"/>
 </light_field_telescope>
