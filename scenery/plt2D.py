@@ -10,7 +10,7 @@ def main():
 	photons = np.loadtxt(filter(lambda row: row[0]!='#', csv_file))
 	csv_file.close()
 
-	num_of_bins = 10*np.sqrt(photons.shape[0])
+	num_of_bins = np.sqrt(photons.shape[0])
 	print("num_of_bins: ", num_of_bins)
 	print("x ", photons[:,0], " y ", photons[:,1])
 	print("mean x ", np.mean(photons[:,0]), " y ", np.mean(photons[:,1]))
