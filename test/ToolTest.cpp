@@ -118,6 +118,27 @@ TEST_F(Tools, StringTools_place_infront_of_each_line) {
   EXPECT_TRUE(StringTools::is_equal(expected_out.str(), result));
 }
 //------------------------------------------------------------------------------
+TEST_F(Tools, StringTools_fill_with_whitespaces_until_column) {
+
+  std::string hi = "hallo world";
+  std::string ho = 
+    StringTools::fill_up_text_with_whitespaces_until_column(hi, 80);
+
+  EXPECT_EQ(80, ho.length());
+
+  std::string empty = "";
+  std::string empty_but_whitespaces = 
+    StringTools::fill_up_text_with_whitespaces_until_column(empty, 1337);
+
+  EXPECT_EQ(1337, empty_but_whitespaces.length());
+
+  std::string str42 = "0123456789012345678901234567890123456789012";
+  std::string strfull = 
+    StringTools::fill_up_text_with_whitespaces_until_column(str42, 19);
+
+  EXPECT_EQ((19*3), strfull.length());
+}
+//------------------------------------------------------------------------------
 TEST_F(Tools, strip_leading_and_tailing_whitespaces) {
   std::string no_whitespaces = "no_whitespaces";
 

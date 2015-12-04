@@ -42,6 +42,10 @@ namespace StringTools {
 	);
 
 	std::string strip_whitespaces(std::string text);
+
+	std::string fill_up_text_with_whitespaces_until_column(
+		const std::string &text, const uint column
+	);
 }
 
 #endif // __STRINGTOOLS_H_INCLUDE__

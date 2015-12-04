@@ -89,4 +89,18 @@ namespace StringTools {
 
 		return text;
 	}
+	//--------------------------------------------------------------------------
+	std::string fill_up_text_with_whitespaces_until_column(
+		const std::string &text, const uint column
+	) {
+		const uint spaces_to_be_filled = column - text.length() % column;
+
+		std::string spaces(spaces_to_be_filled, ' ');
+
+		std::string aligned_text; 
+		aligned_text += text;
+		aligned_text += spaces;
+
+		return aligned_text;
+	}
 }
