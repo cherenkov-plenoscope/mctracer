@@ -113,11 +113,11 @@ Frame* Factory::get_sub_pixel_sensor_plane() {
 		Rotation3D::null
 	);
 
-	sub_pixel_sensors = new std::vector<PhotonSensor::Sensor*>;
-
-
 	std::vector<Vector3D> sub_pixel_positions = geometry.sub_pixel_positions();
-	 
+
+	sub_pixel_sensors = new std::vector<PhotonSensor::Sensor*>;
+	sub_pixel_sensors->reserve(sub_pixel_positions.size());
+
 	for(uint i=0; i<sub_pixel_positions.size(); i++) {
 
 		Frame* subpix = get_sub_pixel_with_name_pos(

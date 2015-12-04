@@ -109,11 +109,11 @@ double Geometry::pixel_lens_outer_aperture_radius()const {
 }
 //------------------------------------------------------------------------------
 double Geometry::pixel_lens_focal_length()const {
-	return pixel_lens_f_over_D()*2.0*pixel_lens_outer_aperture_radius();
+	return reflector.naive_f_over_D()*2.0*pixel_lens_inner_aperture_radius();
 }
 //------------------------------------------------------------------------------
 double Geometry::pixel_lens_f_over_D()const {
-	return reflector.naive_f_over_D();
+	return pixel_lens_focal_length()/(2.0*pixel_lens_outer_aperture_radius());
 }
 //------------------------------------------------------------------------------
 double Geometry::pixel_lens_curvature_radius()const {

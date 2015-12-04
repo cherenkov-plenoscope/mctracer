@@ -89,63 +89,88 @@ Photon* Calibration::get_photon_given_pos_and_angle_on_principal_aperture(
 void Calibration::fill_calibration_block_to_table() {
 	
 	uint i;
-	//int HadCatch = 0;
+	int HadCatch = 0;
 
-	#pragma omp parallel
+	#pragma omp parallel shared(HadCatch)
 	{
-		#pragma omp for schedule(dynamic) private(i)
+		#pragma omp for schedule(dynamic) private(i) 
 		for(i=0; i<number_of_photons_per_block; i++) {
 
-			// create photon
-			Vector3D pos_on_principal_aperture = 
-				prng.get_point_on_xy_disc_within_radius(
-					max_principal_aperture_radius_to_trow_photons_on
+			try{
+				// create photon
+				Vector3D pos_on_principal_aperture = 
+					prng.get_point_on_xy_disc_within_radius(
+						max_principal_aperture_radius_to_trow_photons_on
+					);
+
+				Vector3D direction_on_principal_aperture = 
+					prng.get_point_on_unitsphere_within_polar_distance(
+						max_tilt_vs_optical_axis_to_throw_photons_in
+					);
+
+				Photon* ph = get_photon_given_pos_and_angle_on_principal_aperture(
+					pos_on_principal_aperture,
+					direction_on_principal_aperture
 				);
 
-			Vector3D direction_on_principal_aperture = 
-				prng.get_point_on_unitsphere_within_polar_distance(
-					max_tilt_vs_optical_axis_to_throw_photons_in
-				);
+				// propagate photon
+				ph->propagate_in(&telescope_environment);
+				PhotonSensors::FindSensor sensor_finder(ph, sub_pixels);
 
-			Photon* ph = get_photon_given_pos_and_angle_on_principal_aperture(
-				pos_on_principal_aperture,
-				direction_on_principal_aperture
-			);
+				if(sensor_finder.is_absorbed_by_known_sensor()) {
 
-			// propagate photon
-			ph->propagate_in(&telescope_environment);
-			PhotonSensors::FindSensor sensor_finder(ph, sub_pixels);
+					// remember photon
+					CalibRow row;
+					row.reached_sensor = true;
+					row.sub_pixel_id = sensor_finder.get_sensor()->get_id();
+					row.x_pos_on_principal_aperture = pos_on_principal_aperture.x();
+					row.y_pos_on_principal_aperture = pos_on_principal_aperture.y();
+					row.x_tilt_vs_optical_axis = direction_on_principal_aperture.x();
+					row.y_tilt_vs_optical_axis = direction_on_principal_aperture.y();
+					row.relative_time_of_flight = ph->get_time_of_flight();
 
-			if(sensor_finder.is_absorbed_by_known_sensor()) {
+					table[i] = row;
+				}else{
 
-				// remember photon
-				CalibRow row;
-				row.sub_pixel_id = sensor_finder.get_sensor()->get_id();
-				row.x_pos_on_principal_aperture = pos_on_principal_aperture.x();
-				row.y_pos_on_principal_aperture = pos_on_principal_aperture.y();
-				row.x_tilt_vs_optical_axis = direction_on_principal_aperture.x();
-				row.y_tilt_vs_optical_axis = direction_on_principal_aperture.y();
-				row.relative_time_of_flight = ph->get_time_of_flight();
+					CalibRow row;
+					row.reached_sensor = false;
+					table[i] = row;
+				}
 
-				table.push_back(row);
+				// delete photon
+				ph->delete_history();
+				delete ph;
+			}catch(std::exception &error) {
+
+				HadCatch++;
+				std::cerr << error.what(); 
+			}catch(...)	{
+
+				HadCatch++;
 			}
-
-			// delete photon
-			ph->delete_history();
-			delete ph;
 		}
+	}
+
+	if(HadCatch) {
+		std::stringstream info;
+		info <<__FILE__<<", "<<__LINE__<<"\n";
+		info << "Cought exception during multithread ";
+		info << "Light Field Telescope Calibration.\n";
+		throw(TracerException(info.str()));
 	}
 }
 //------------------------------------------------------------------------------
 void Calibration::run_calibration() {
 
+	std::cout << telescope_geometry.get_print() << "\n";
+
 	std::cout << "start light field calibration" << "\n";
+	
+	table.resize(number_of_photons_per_block);
 
 	for(uint j=0; j<number_of_blocks; j++) {
-		std::cout << j+1 << " of " << number_of_blocks << "\n";
-
-		table.clear();
-		table.reserve(number_of_photons_per_block);
+		
+		std::cout << j+1 << " of " << number_of_blocks << "\n";		
 		
 		fill_calibration_block_to_table();
 

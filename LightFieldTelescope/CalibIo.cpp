@@ -4,13 +4,20 @@ namespace LightFieldTelescope {
 //------------------------------------------------------------------------------
 CalibIo::CalibIo(const std::string npath): path(npath){}
 //------------------------------------------------------------------------------
+void CalibIo::append_header(const Config telescope_config) {
+
+	//std::stringstream header;
+	//header << StringTools::fill_up_text_with_whitespaces_until_column("Light Field Telescope Calibration", 80);
+}
+//------------------------------------------------------------------------------
 void CalibIo::append(const std::vector<CalibRow> &table) {
 
 	file.open(path, std::ios::app | std::ios::binary);
 	assert_file_is_open();
 
 	for(CalibRow row : table)
-		write_row(row);
+		if(row.reached_sensor)
+			write_row(row);
 
 	file.close();
 }

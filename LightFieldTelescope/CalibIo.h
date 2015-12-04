@@ -20,6 +20,7 @@ namespace LightFieldTelescope {
 
 		CalibIo(const std::string path);
 		void append(const std::vector<CalibRow> &table);
+		void append_header(const Config telescope_config);
 	private:
 
 		void write_row(const CalibRow &row);
