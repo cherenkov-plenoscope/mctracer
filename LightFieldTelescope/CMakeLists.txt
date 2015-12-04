@@ -4,6 +4,7 @@ set(SOURCE
   	${CMAKE_CURRENT_SOURCE_DIR}/Geometry.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/Factory.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/Calibration.cpp
+  	${CMAKE_CURRENT_SOURCE_DIR}/LensCalibration.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/CalibIo.cpp
    	PARENT_SCOPE
 )
@@ -13,6 +14,7 @@ set(HEADERS
   	${CMAKE_CURRENT_SOURCE_DIR}/Geometry.h
   	${CMAKE_CURRENT_SOURCE_DIR}/Factory.h
   	${CMAKE_CURRENT_SOURCE_DIR}/Calibration.h
+   	${CMAKE_CURRENT_SOURCE_DIR}/LensCalibration.h
   	${CMAKE_CURRENT_SOURCE_DIR}/CalibIo.h
 	PARENT_SCOPE
 )
