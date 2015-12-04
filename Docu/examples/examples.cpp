@@ -1,5 +1,7 @@
-#include "set_up_scenery.cpp"
-#include "Func1DExample.cpp"
+//#include "set_up_scenery.cpp"
+//#include "Func1DExample.cpp"
+//#include "test/memory_leak_during_propagation.cpp"
+#include "test/LightFieldTelescopeTest.cpp"
 
 int main(int argc, char **argv) {
 	UserInteraction::print_welcome_screen();

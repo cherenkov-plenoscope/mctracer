@@ -68,6 +68,7 @@ std::string Geometry::get_image_sensor_print()const{
 	tab << "pixel lens f over D........... " << pixel_lens_f_over_D() << "\n";
 	tab << "pixel lens focal length....... " << pixel_lens_focal_length() << "m\n";
 	tab << "pixel lens curvature radius... " << pixel_lens_curvature_radius() << "m\n";
+	tab << "pixel lens to sub pixel dist.. " << pixel_lens_sub_pixel_distance() << "m\n";
 	tab << "pixel lens refraction mean.... " << pixel_lens_mean_refraction() << "\n";
 	tab << "sub pixel sensor radius....... " << sub_pixel_sensor_radius() << "m\n";
 	tab << "sub pixel per pixel........... " << sub_pixel_per_pixel() << "\n";
@@ -110,6 +111,12 @@ double Geometry::pixel_lens_outer_aperture_radius()const {
 //------------------------------------------------------------------------------
 double Geometry::pixel_lens_focal_length()const {
 	return reflector.naive_f_over_D()*2.0*pixel_lens_inner_aperture_radius();
+}
+//------------------------------------------------------------------------------
+double Geometry::pixel_lens_sub_pixel_distance()const {
+	
+	double lens_maker_correction = 0.825;
+	return lens_maker_correction*pixel_lens_focal_length();
 }
 //------------------------------------------------------------------------------
 double Geometry::pixel_lens_f_over_D()const {

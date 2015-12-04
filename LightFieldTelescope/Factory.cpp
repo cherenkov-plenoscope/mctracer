@@ -109,7 +109,7 @@ Frame* Factory::get_sub_pixel_sensor_plane() {
 
 	Frame* sub_pixel_array = new Frame(
 		"sub_pixel_array", 
-		Vector3D(0.0, 0.0, geometry.pixel_lens_focal_length()), 
+		Vector3D(0.0, 0.0, geometry.pixel_lens_sub_pixel_distance()), 
 		Rotation3D::null
 	);
 

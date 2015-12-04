@@ -37,6 +37,7 @@ namespace LightFieldTelescope {
 			double pixel_lens_curvature_radius()const;
 			double pixel_lens_mean_refraction()const;
 			double pixel_FoV_hex_flat2flat()const;
+			double pixel_lens_sub_pixel_distance()const;
 			uint number_of_pixels()const;
 			double outer_sensor_housing_radius()const;
 			std::vector<Vector3D> pixel_positions()const;

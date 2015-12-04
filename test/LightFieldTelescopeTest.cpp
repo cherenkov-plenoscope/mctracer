@@ -21,6 +21,7 @@ TEST_F(LightFieldTelescopeTest, calibration) {
     telescope_config.sub_pixel_per_pixel = 79;
 
     LightFieldTelescope::Calibration calib(telescope_config);
+    //LightFieldTelescope::LensCalibration lenscalib(telescope_config);
 
-    std::cout << calib << "\n";
+    //std::cout << calib << "\n";
 }
