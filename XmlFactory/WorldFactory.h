@@ -33,7 +33,7 @@
 #include "SphereCapWithCylinderBound.h"
 #include "BiConvexLensHexBound.h"
 #include "FunctionFactory.h"
-#include "LightFieldTelescope/Telescope.h"
+#include "LightFieldTelescope/LightFieldTelescope.h"
 
 //------------------------------------------------------------------------------
 class WorldFactory : public XmlFileIo{

@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "LightFieldTelescope/Telescope.h"
+#include "LightFieldTelescope/LightFieldTelescope.h"
 #include "Core/PseudoRandomNumberGenerator.h"
 #include "Disc.h"
 #include "BiConvexLensHexBound.h"

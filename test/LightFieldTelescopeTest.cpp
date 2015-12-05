@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "LightFieldTelescope/Telescope.h"
+#include "LightFieldTelescope/LightFieldTelescope.h"
 
 class LightFieldTelescopeTest : public ::testing::Test {};
 //----------------------------------------------------------------------
