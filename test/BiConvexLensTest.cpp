@@ -9,7 +9,7 @@
 #include "PhotonSensor/PhotonSensor.h"
 #include "Core/Photons.h"
 #include "Core/Function/ConstantFunction.h"
-#include "LensMaker.h"
+#include "LensMaker/LensMaker.h"
 #include "Tools/AsciiIo.h"
 
 class BiConvexLensTest : public ::testing::Test {

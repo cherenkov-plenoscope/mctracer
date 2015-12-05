@@ -1,0 +1,15 @@
+set(SOURCE
+    ${SOURCE}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Config.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Approximation.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MonteCarloOptimization.cpp
+    PARENT_SCOPE
+)
+set(HEADERS
+    ${HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/LensMaker.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Config.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Approximation.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/MonteCarloOptimization.h
+    PARENT_SCOPE
+)

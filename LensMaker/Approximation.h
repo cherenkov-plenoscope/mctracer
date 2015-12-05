@@ -1,7 +1,7 @@
 //=================================
 // include guard
-#ifndef __LensMaker_H_INCLUDED__
-#define __LensMaker_H_INCLUDED__
+#ifndef __LensMakerApproximation_H_INCLUDED__
+#define __LensMakerApproximation_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
@@ -9,19 +9,10 @@
 //=================================
 // included dependencies
 #include "TracerException.h"
-
+#include "LensMaker.h"
 //=================================
 
 namespace LensMaker {
-
-	struct Config {
-
-		double focal_length;
-		double aperture_radius;
-		double refractive_index;
-		Config();
-	};
-
 	namespace Approximation {
 
 		double get_curvature_radius(const Config &cfg);
@@ -40,4 +31,4 @@ namespace LensMaker {
 		using TracerException::TracerException;
 	};
 }
-#endif // __LensMaker_H_INCLUDED__ 
+#endif // __LensMakerApproximation_H_INCLUDED__ 

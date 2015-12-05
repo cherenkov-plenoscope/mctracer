@@ -69,7 +69,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/EllipticalCapRayIntersectionEquation.cpp
 
 	${CMAKE_CURRENT_SOURCE_DIR}/HexGridAnnulus.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/LensMaker.cpp
 	
 	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLens.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLensHexBound.cpp
@@ -83,6 +82,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/MmcsCorsikaFileIO")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Cameras")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Core")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Geometry")
+add_subdirectory("${PROJECT_SOURCE_DIR}/LensMaker")
 add_subdirectory("${PROJECT_SOURCE_DIR}/LightFieldTelescope")
 
 #MESSAGE( STATUS "SOURCE_VARIABLE:" ${SOURCE} )

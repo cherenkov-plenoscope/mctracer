@@ -1,6 +1,6 @@
 #include "LightFieldTelescope/Geometry.h"
 #include "HexGridAnnulus.h"
-#include "LensMaker.h"
+#include "LensMaker/LensMaker.h"
 
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------
