@@ -2,16 +2,15 @@
 //------------------------------------------------------------------------------
 void CylinderPrismZ::set_radius(const double radius) {
 	assert_radius_is_positiv(radius);
-	this->radius = radius;
+	radius_square = radius*radius;
 }
 //------------------------------------------------------------------------------
 bool CylinderPrismZ::is_inside(const Vector3D* vec)const {
-	double distance_vec_to_z_axis = hypot(vec->x(), vec->y());
-	return distance_vec_to_z_axis < radius;
+	return vec->x()*vec->x() + vec->y()*vec->y() < radius_square;
 }
 //------------------------------------------------------------------------------
 double CylinderPrismZ::get_radius()const {
-	return radius;
+	return sqrt(radius_square);
 }
 //------------------------------------------------------------------------------
 void CylinderPrismZ::assert_radius_is_positiv(const double radius)const {
@@ -26,5 +25,5 @@ void CylinderPrismZ::assert_radius_is_positiv(const double radius)const {
 }
 //------------------------------------------------------------------------------
 double CylinderPrismZ::get_area()const {
-	return radius*radius*M_PI;
+	return radius_square*M_PI;
 }
