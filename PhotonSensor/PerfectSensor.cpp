@@ -1,4 +1,4 @@
-#include "PhotonSensor.h"
+#include "PhotonSensor/PerfectSensor.h"
 
 namespace PhotonSensor {
 	PerfectSensor::PerfectSensor(uint _id, Frame* _sensor_frame)

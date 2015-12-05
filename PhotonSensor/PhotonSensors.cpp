@@ -1,4 +1,4 @@
-#include "PhotonSensor.h"
+#include "PhotonSensors.h"
 #include <algorithm>
 //------------------------------------------------------------------------------
 namespace PhotonSensors {

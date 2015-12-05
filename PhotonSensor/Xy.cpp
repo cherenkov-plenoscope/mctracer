@@ -1,4 +1,4 @@
-#include "PhotonSensor.h"
+#include "PhotonSensor/Xy.h"
 
 namespace PhotonSensor {
 	Xy::Xy(uint _id, Frame* _sensor_frame)

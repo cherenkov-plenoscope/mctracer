@@ -1,8 +1,8 @@
 set(SOURCE
    	${SOURCE}
-	${CMAKE_CURRENT_SOURCE_DIR}/PhotonSensor.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/PhotonSensors.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Sensor.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PerfectSensor.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/PhotonSensors.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Xy.cpp
    	PARENT_SCOPE
 )
@@ -10,5 +10,8 @@ set(SOURCE
 set(HEADERS
    	${SOURCE}
 	${CMAKE_CURRENT_SOURCE_DIR}/PhotonSensor.h
+	${CMAKE_CURRENT_SOURCE_DIR}/Sensor.h
+	${CMAKE_CURRENT_SOURCE_DIR}/PerfectSensor.h
+	${CMAKE_CURRENT_SOURCE_DIR}/PhotonSensors.h
    	PARENT_SCOPE
 )
