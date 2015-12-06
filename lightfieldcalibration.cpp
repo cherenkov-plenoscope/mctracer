@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
     telescope_config.reflector.min_inner_aperture_radius = 0.5;
     telescope_config.reflector.facet_inner_hex_radius = 0.6;
     telescope_config.reflector.gap_between_facets = 0.01;
-    telescope_config.reflector.reflectivity = &SegmentedReflector::typical_reflectivity;
+    telescope_config.reflector.reflectivity = &SegmentedReflector::perfect_reflectivity;
     telescope_config.max_FoV_diameter = Deg2Rad(6.5);
     telescope_config.pixel_FoV_hex_flat2flat = Deg2Rad(0.1);
     telescope_config.housing_overhead = 1.2;
