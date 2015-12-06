@@ -1,5 +1,6 @@
 #include "LightFieldTelescope/Geometry.h"
 #include "HexGridAnnulus.h"
+#include "Tools/AsciiIo.h"
 #include "HexGridFlower.h"
 #include "LensMaker/LensMaker.h"
 
@@ -176,6 +177,30 @@ double Geometry::bin_hight()const {
 	return pixel_lens_sub_pixel_distance()*0.25;
 }
 //------------------------------------------------------------------------------
+void Geometry::write_sub_pixel_positions(const std::string path)const {
+
+	std::vector<std::vector<double>> sub_pixels_x_y;
+
+	for(Vector3D pos : sub_pixel_grid) {
+		std::vector<double> sub_pixel_xy = {pos.x(), pos.y()};
+		sub_pixels_x_y.push_back(sub_pixel_xy);
+	}
+
+	std::stringstream header;
+	header << "number_of_sub_pixels = " << sub_pixel_grid.size() << "\n";
+	header << "number_of_sub_pixels_per_pixel = " << sub_pixel_per_pixel() << "\n";
+	header << "sub_pixel_z_orientation = " << sub_pixel_z_orientation() << "\n";
+	header << "sub_pixel_inner_radius = " << sub_pixel_inner_radius() << "\n";
+	header << "sub_pixel_outer_radius = " << sub_pixel_outer_radius() << "\n";
+	header << "x[m]\ty[m]\n";
+
+	AsciiIo::write_table_to_file_with_header(
+		sub_pixels_x_y,
+		path,
+		header.str()
+	);
+}
+//------------------------------------------------------------------------------
 std::string Geometry::get_print()const{
 	
 	std::stringstream out;
@@ -206,6 +231,11 @@ std::string Geometry::get_print()const{
 	);
 	out << "\n";
 
+	out << StringTools::place_first_infront_of_each_new_line_of_second(
+		"  ", 
+		get_concentrator_bin_print()
+	);
+	
 	return out.str();		
 }
 //------------------------------------------------------------------------------
@@ -263,6 +293,23 @@ std::string Geometry::get_sub_pixel_print()const{
 	tab << "outer radius........ " << sub_pixel_outer_radius() << "m\n";
 	tab << "inner radius........ " << sub_pixel_inner_radius() << "m\n";
 	tab << "spacing............. " << sub_pixel_spacing() << "m\n";
+
+	out << StringTools::place_first_infront_of_each_new_line_of_second(
+		"  ", 
+		tab.str()
+	);
+
+	return out.str();
+}
+//------------------------------------------------------------------------------
+std::string Geometry::get_concentrator_bin_print()const{
+
+	std::stringstream out;
+	out << "Concentrator_Bin__\n";
+
+	std::stringstream tab;
+	tab << "bin_hight........... " << bin_hight() << "m\n";
+	tab << "reflectivity........ same as reflector mirrors\n";
 
 	out << StringTools::place_first_infront_of_each_new_line_of_second(
 		"  ", 

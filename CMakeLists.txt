@@ -100,6 +100,11 @@ target_link_libraries(mct ${OpenCV_LIBS})
 add_executable(mctracer mctracer.cpp)
 target_link_libraries(mctracer mct)
 #-------------------------------------------------------------------------------
+# light field calibration
+
+add_executable(lightfieldcalibration lightfieldcalibration.cpp)
+target_link_libraries(lightfieldcalibration mct)
+#-------------------------------------------------------------------------------
 # GTest unit and integration tests
 include_directories("${PROJECT_SOURCE_DIR}/gtest-1.7.0/include")
 

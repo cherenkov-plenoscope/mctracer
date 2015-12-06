@@ -30,7 +30,7 @@ void Calibration::set_up_photon_properties() {
 //------------------------------------------------------------------------------
 void Calibration::set_up_principal_aperture_range() {
 
-	max_principal_aperture_radius_to_trow_photons_on = 1.01*(
+	max_principal_aperture_radius_to_trow_photons_on = 1.05*(
 		telescope_geometry.reflector.max_outer_aperture_radius() + 
 		telescope_geometry.reflector.thickness_of_dish()*tan(
 			telescope_geometry.max_FoV_radius()

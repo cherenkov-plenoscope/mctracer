@@ -59,7 +59,7 @@ LensCalibration::LensCalibration(const Config cfg):
 	head += header.str();
 	head += read_out->get_arrival_table_header();
 
-	FreeOrbitCamera cam(&test_bench, &settings);
+	//FreeOrbitCamera cam(&test_bench, &settings);
 
 	AsciiIo::write_table_to_file_with_header(
 		read_out->get_arrival_table(),

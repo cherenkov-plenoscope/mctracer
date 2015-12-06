@@ -17,9 +17,6 @@ namespace LightFieldTelescope {
 
 	class LensCalibration: public Printable {
 
-		const Config telescope_config;
-		const Geometry telescope_geometry;
-
 		Frame test_bench;
 		BiConvexLensHexBound lens;
 		Frame face_plate;
@@ -32,6 +29,9 @@ namespace LightFieldTelescope {
 		Random::Mt19937 prng;
 	public:
 
+		const Config telescope_config;
+		const Geometry telescope_geometry;
+		
 		LensCalibration(const Config cfg);
 		~LensCalibration();
 		std::string get_print()const;

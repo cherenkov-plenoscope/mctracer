@@ -1,7 +1,7 @@
 //=================================
 // include guard
 #ifndef __FILETOOLS_H_INCLUDED__
-#define __FUNCTIONS_H_INCLUDED__
+#define __FILETOOLS_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
@@ -25,4 +25,4 @@ namespace FileTools {
 	);
 }
 
-#endif // __FUNCTIONS_H_INCLUDED__
+#endif // __FILETOOLS_H_INCLUDED__

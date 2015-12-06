@@ -53,7 +53,7 @@ namespace LightFieldTelescope {
 			std::vector<Vector3D> sub_pixel_positions()const;
 			std::vector<Vector3D> sub_pixel_flower_positions()const;
 			uint total_number_of_sub_pixels()const;
-
+			void write_sub_pixel_positions(const std::string path)const;
 			double bin_hight()const;
 		private:
 			void set_up_pixel_grid();
@@ -64,6 +64,7 @@ namespace LightFieldTelescope {
 			std::string get_image_sensor_print()const;
 			std::string get_pixel_lens_print()const;
 			std::string get_sub_pixel_print()const;
+			std::string get_concentrator_bin_print()const;
 		};
 }
 #endif // __LightFieldTelescopeGeometry_H_INCLUDED__ 
