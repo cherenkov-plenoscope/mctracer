@@ -17,6 +17,7 @@
 #include <fstream>
 #include <algorithm>
 #include "TracerException.h"
+#include "Core/Color.h"
 
 double Deg2Rad(double angle_in_Deg);
 double Rad2Deg(double angle_in_Rad);
@@ -33,6 +34,10 @@ namespace UserInteraction {
 	void print_welcome_screen();	
 	void ClearScreen();
 	bool is_Escape_key(const int user_input_key);
+	std::string bg_color(const std::string &text, const Color col);
+	std::string get_progress_print(const double fraction);
+	std::string overwrite_last_line_with(const std::string &text);
+	std::string green_font(const std::string &text);
 }
 
 namespace AssertionTools {
