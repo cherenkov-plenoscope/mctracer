@@ -69,6 +69,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/EllipticalCapRayIntersectionEquation.cpp
 
 	${CMAKE_CURRENT_SOURCE_DIR}/HexGridAnnulus.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/HexGridFlower.cpp
 	
 	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLens.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLensHexBound.cpp

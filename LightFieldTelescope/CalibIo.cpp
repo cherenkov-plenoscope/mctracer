@@ -1,14 +1,20 @@
 #include "LightFieldTelescope/CalibIo.h"
 
+
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------
 CalibIo::CalibIo(const std::string npath): path(npath){}
 //------------------------------------------------------------------------------
-void CalibIo::append_header(const Config telescope_config) {
+/*void CalibIo::append_header(const Config telescope_config) {
 
-	//std::stringstream header;
-	//header << StringTools::fill_up_text_with_whitespaces_until_column("Light Field Telescope Calibration", 80);
-}
+	#define col80(text) StringTools::fill_up_text_with_whitespaces_until_column(text, 80)
+
+	std::stringstream header;
+	header << col80("Light Field Telescope Calibration");
+	header << col80("Light Field Telescope Calibration");
+
+	#undef col80
+}*/
 //------------------------------------------------------------------------------
 void CalibIo::append(const std::vector<CalibRow> &table) {
 

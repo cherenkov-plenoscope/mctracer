@@ -19,7 +19,7 @@ namespace LightFieldTelescope {
 		double max_FoV_diameter;
 		double pixel_FoV_hex_flat2flat;	
 		double housing_overhead;
-		double sub_pixel_per_pixel;
+		uint sub_pixel_on_pixel_diagonal;
 
 		const Function::Func1D* lens_refraction; 
 		Config();

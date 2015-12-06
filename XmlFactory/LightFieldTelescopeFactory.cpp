@@ -22,9 +22,9 @@ double LightFieldTelescopeFactory::get_housing_overhead(){
 	return StrToDouble(node.attribute("housing_overhead").value());
 }
 //------------------------------------------------------------------------------
-double LightFieldTelescopeFactory::get_sub_pixel_per_pixel(){
-	assert_attribute_exists(node, "sub_pixel_per_pixel");
-	return StrToDouble(node.attribute("sub_pixel_per_pixel").value());
+double LightFieldTelescopeFactory::get_sub_pixel_on_pixel_diagonal(){
+	assert_attribute_exists(node, "sub_pixel_on_pixel_diagonal");
+	return StrToDouble(node.attribute("sub_pixel_on_pixel_diagonal").value());
 }
 //------------------------------------------------------------------------------
 std::string LightFieldTelescopeFactory::get_refraction_vs_wavelength(){

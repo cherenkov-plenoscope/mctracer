@@ -3,6 +3,7 @@
 #include "HexPlane.h"
 #include "Annulus.h"
 #include "Disc.h"
+#include "Plane.h"
 #include "Cylinder.h"
 #include "BiConvexLensHexBound.h"
 
@@ -52,6 +53,69 @@ Frame* Factory::get_lens_array() {
 
 	lens_array->cluster_using_helper_frames();
 	return lens_array;
+}
+//------------------------------------------------------------------------------
+Frame* Factory::get_pixel_bin_array() {
+	
+	Frame* bin_array = new Frame(
+		"bin_array",
+		Vector3D(0.0, 0.0, geometry.pixel_lens_sub_pixel_distance()),
+		Rotation3D::null
+	);
+
+	std::vector<Vector3D> flower_positions = 
+		geometry.sub_pixel_flower_positions();
+
+	for(uint i=0; i<flower_positions.size(); i++) {
+
+		Frame* lens = get_pixel_bin_with_name_at_pos(
+			"bin_" + std::to_string(i),
+			flower_positions.at(i)
+		);
+
+		bin_array->set_mother_and_child(lens);
+	}
+
+	bin_array->cluster_using_helper_frames();
+	return bin_array;
+}
+//------------------------------------------------------------------------------
+Frame* Factory::get_pixel_bin_with_name_at_pos(
+	const std::string name, 
+	const Vector3D pos
+) {
+	Frame* bin = new Frame(
+		name,
+		pos,
+		Rotation3D::null
+	);
+
+	double R = geometry.pixel_lens_inner_aperture_radius();
+	double hight = geometry.bin_hight();
+
+	for(uint i=0; i<6; i++) {
+
+		double phi = double(i)*1.0/3.0*M_PI;
+		
+		Plane* binwall = new Plane(
+			name + "_" + std::to_string(i),
+			Vector3D(R*sin(phi), R*cos(phi), -0.5*hight),
+			Rotation3D(M_PI*0.5, 0.0, phi)
+		);
+
+		binwall->set_x_y_width(
+			geometry.pixel_lens_outer_aperture_radius(),
+			hight
+		);
+
+		binwall->set_outer_color(&Color::green);
+		binwall->set_inner_color(&Color::green);
+		binwall->set_outer_reflection(geometry.reflector.cfg.reflectivity);
+	
+		bin->set_mother_and_child(binwall);
+	}
+
+	return bin;
 }
 //------------------------------------------------------------------------------
 Frame* Factory::get_image_sensor_faceplate() {
@@ -144,7 +208,11 @@ Frame* Factory::get_sub_pixel_with_name_pos(
 ) {
 
 	HexPlane* subpix = new HexPlane;
-	subpix->set_name_pos_rot(name, pos, Rotation3D::null);
+	subpix->set_name_pos_rot(
+		name, 
+		pos, 
+		Rotation3D(0.0, 0.0, geometry.sub_pixel_z_orientation())
+	);
 	subpix->set_outer_color(&Color::red);
 	subpix->set_inner_color(&Color::red);
 	subpix->set_outer_hex_radius(geometry.sub_pixel_outer_radius());
@@ -209,6 +277,7 @@ void Factory::add_telescope_to_frame(Frame *frame) {
 	image_sensor_front->set_mother_and_child(get_image_sensor_faceplate());
 
 	image_sensor->set_mother_and_child(get_image_sensor_housing());
+	image_sensor->set_mother_and_child(get_pixel_bin_array());
 	image_sensor->set_mother_and_child(get_sub_pixel_sensor_plane());
 	image_sensor->set_mother_and_child(image_sensor_front);
 

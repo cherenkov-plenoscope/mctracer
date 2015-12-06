@@ -1,5 +1,6 @@
 #include "LightFieldTelescope/Geometry.h"
 #include "HexGridAnnulus.h"
+#include "HexGridFlower.h"
 #include "LensMaker/LensMaker.h"
 
 namespace LightFieldTelescope {
@@ -8,20 +9,60 @@ Geometry::Geometry(const Config ncfg):
 	cfg(ncfg),
 	reflector(ncfg.reflector)
 {
+	set_up_pixel_grid();
+	set_up_flower_grid();
+	set_up_sub_pixel_flower_template_grid();
+	set_up_sub_pixel_grid();
+	set_up_lens_geometry();
+}
+//------------------------------------------------------------------------------
+void Geometry::set_up_pixel_grid() {
+
 	HexGridAnnulus pixgrid(
 		max_outer_sensor_radius() - pixel_lens_outer_aperture_radius(), 
 		pixel_spacing()
 	);
 
-	pixel_grid =  pixgrid.get_grid();
-	
-	HexGridAnnulus subpixgrid(
-		sub_pixel_sensor_radius(),
-		sub_pixel_spacing()
+	pixel_grid =  pixgrid.get_grid();	
+}
+//------------------------------------------------------------------------------
+void Geometry::set_up_sub_pixel_flower_template_grid() {
+
+	HexGridFlower subpixflowergrid(
+		pixel_lens_outer_aperture_radius(),
+		cfg.sub_pixel_on_pixel_diagonal
 	);
 
-	sub_pixel_grid = subpixgrid.get_grid();
+	sub_pixel_flat2flat = subpixflowergrid.get_facet_spacing();
+	sub_pixel_flower_template_grid = subpixflowergrid.get_grid();
+}
+//------------------------------------------------------------------------------
+void Geometry::set_up_flower_grid() {
 
+	sub_pixel_flower_grid.reserve(pixel_grid.size());
+
+	const double r = 1.0 + pixel_lens_sub_pixel_distance()/image_sensor_distance();
+
+	for(Vector3D pixel_pos : pixel_grid)
+		sub_pixel_flower_grid.push_back(
+			pixel_pos*r
+		);
+}
+//------------------------------------------------------------------------------
+void Geometry::set_up_sub_pixel_grid() {
+
+	sub_pixel_grid.reserve(
+		sub_pixel_flower_grid.size()*
+		sub_pixel_flower_template_grid.size()
+	);
+
+	for(Vector3D flower_pos : sub_pixel_flower_grid)
+		for(Vector3D sub_pixel_pos : sub_pixel_flower_template_grid)
+			sub_pixel_grid.push_back(flower_pos + sub_pixel_pos);
+}
+//------------------------------------------------------------------------------
+void Geometry::set_up_lens_geometry() {
+	
 	pixel_lens_mean_refrac = cfg.lens_refraction->get_mean(137);
 
 	LensMaker::Config lmcfg;
@@ -29,64 +70,18 @@ Geometry::Geometry(const Config ncfg):
 	lmcfg.aperture_radius = pixel_lens_outer_aperture_radius();
 	lmcfg.refractive_index = pixel_lens_mean_refrac;
 
-	pixel_lens_curv_radius = 
+	double lens_maker_correction = 1.20;
+
+	pixel_lens_curv_radius = lens_maker_correction*
 		LensMaker::Approximation::get_curvature_radius(lmcfg);
-}
-//------------------------------------------------------------------------------
-std::string Geometry::get_print()const{
-	std::stringstream out;
-	out << "Light_Field_Telescope__\n";
-	out << "\n";
-
-	out << StringTools::place_first_infront_of_each_new_line_of_second(
-		"  ", 
-		reflector.get_print()
-	);
-	out << "\n";
-
-	out << StringTools::place_first_infront_of_each_new_line_of_second(
-		"  ", 
-		get_image_sensor_print()
-	);
-
-	return out.str();		
-}
-//------------------------------------------------------------------------------
-std::string Geometry::get_image_sensor_print()const{
-
-	std::stringstream out;
-	out << "Image_Sensor__\n";
-
-	std::stringstream tab;
-	tab << "Field of View................. " << Rad2Deg(cfg.max_FoV_diameter) << "deg\n";
-	tab << "max sensor radius............. " << max_outer_sensor_radius() << "m\n";
-	tab << "number of pixels.............. " << number_of_pixels() << "\n";
-	tab << "pixel FoV hex flat2flat....... " << Rad2Deg(pixel_FoV_hex_flat2flat()) << "deg\n";
-	tab << "pixel spacing................. " << pixel_spacing() << "m\n";
-	tab << "pixel inner aperture radius... " << pixel_lens_inner_aperture_radius() << "m\n";
-	tab << "pixel outer aperture radius... " << pixel_lens_outer_aperture_radius() << "m\n";
-	tab << "pixel lens f over D........... " << pixel_lens_f_over_D() << "\n";
-	tab << "pixel lens focal length....... " << pixel_lens_focal_length() << "m\n";
-	tab << "pixel lens curvature radius... " << pixel_lens_curvature_radius() << "m\n";
-	tab << "pixel lens to sub pixel dist.. " << pixel_lens_sub_pixel_distance() << "m\n";
-	tab << "pixel lens refraction mean.... " << pixel_lens_mean_refraction() << "\n";
-	tab << "sub pixel sensor radius....... " << sub_pixel_sensor_radius() << "m\n";
-	tab << "sub pixel per pixel........... " << sub_pixel_per_pixel() << "\n";
-	tab << "sub pixel total number........ " << sub_pixel_grid.size() << "\n";
-	tab << "sub pixel outer radius........ " << sub_pixel_outer_radius() << "m\n";
-	tab << "sub pixel inner radius........ " << sub_pixel_inner_radius() << "m\n";
-	tab << "sub pixel spacing............. " << sub_pixel_spacing() << "m\n";
-
-	out << StringTools::place_first_infront_of_each_new_line_of_second(
-		"  ", 
-		tab.str()
-	);
-
-	return out.str();
 }
 //------------------------------------------------------------------------------
 double Geometry::max_outer_sensor_radius()const {
 	return reflector.focal_length()*tan(max_FoV_radius());
+}
+//------------------------------------------------------------------------------
+double Geometry::image_sensor_distance()const {
+	return reflector.focal_length();
 }
 //------------------------------------------------------------------------------
 double Geometry::max_FoV_radius()const {
@@ -109,14 +104,16 @@ double Geometry::pixel_lens_outer_aperture_radius()const {
 	return pixel_lens_inner_aperture_radius()*2.0/sqrt(3.0);
 }
 //------------------------------------------------------------------------------
+double Geometry::aperture_image_radius_on_sub_pixel_sensor()const {
+	return pixel_lens_inner_aperture_radius() - 0.5*sub_pixel_inner_radius();
+}
+//------------------------------------------------------------------------------
 double Geometry::pixel_lens_focal_length()const {
-	return reflector.naive_f_over_D()*2.0*pixel_lens_inner_aperture_radius();
+	return reflector.naive_f_over_D()*2.0*aperture_image_radius_on_sub_pixel_sensor();
 }
 //------------------------------------------------------------------------------
 double Geometry::pixel_lens_sub_pixel_distance()const {
-	
-	double lens_maker_correction = 0.825;
-	return lens_maker_correction*pixel_lens_focal_length();
+	return pixel_lens_focal_length();
 }
 //------------------------------------------------------------------------------
 double Geometry::pixel_lens_f_over_D()const {
@@ -147,31 +144,132 @@ std::vector<Vector3D> Geometry::sub_pixel_positions()const {
 	return sub_pixel_grid;
 }
 //------------------------------------------------------------------------------
-double Geometry::sub_pixel_per_pixel()const {
-	return cfg.sub_pixel_per_pixel;
+std::vector<Vector3D> Geometry::sub_pixel_flower_positions()const {
+	return sub_pixel_flower_grid;
 }
 //------------------------------------------------------------------------------
-double Geometry::sub_pixel_sensor_radius()const {
-
-	return max_outer_sensor_radius() + 
-		pixel_lens_focal_length()/reflector.focal_length() *
-		(reflector.max_outer_aperture_radius() + max_outer_sensor_radius());
+double Geometry::sub_pixel_z_orientation()const {
+	return 1.0/6.0*M_PI;
+}
+//------------------------------------------------------------------------------
+double Geometry::sub_pixel_per_pixel()const {
+	return sub_pixel_flower_template_grid.size();
 }
 //------------------------------------------------------------------------------
 double Geometry::sub_pixel_outer_radius()const {
-	return pixel_lens_outer_aperture_radius()/sqrt(sub_pixel_per_pixel());
+	return sub_pixel_inner_radius()*2.0/sqrt(3.0);
 }
 //------------------------------------------------------------------------------
 double Geometry::sub_pixel_inner_radius()const {
-	return sub_pixel_outer_radius()*sqrt(3.0)/2.0;
+	return 0.5*sub_pixel_spacing();
 }
 //------------------------------------------------------------------------------
 double Geometry::sub_pixel_spacing()const {
-	return sub_pixel_inner_radius()*2.0;
+	return sub_pixel_flat2flat;
 }
 //------------------------------------------------------------------------------
 uint Geometry::total_number_of_sub_pixels()const {
 	return sub_pixel_grid.size();
+}
+//------------------------------------------------------------------------------
+double Geometry::bin_hight()const {
+	return pixel_lens_sub_pixel_distance()*0.25;
+}
+//------------------------------------------------------------------------------
+std::string Geometry::get_print()const{
+	
+	std::stringstream out;
+	out << "Light_Field_Telescope__\n";
+	out << "\n";
+
+	out << StringTools::place_first_infront_of_each_new_line_of_second(
+		"  ", 
+		reflector.get_print()
+	);
+	out << "\n";
+
+	out << StringTools::place_first_infront_of_each_new_line_of_second(
+		"  ", 
+		get_image_sensor_print()
+	);
+	out << "\n";
+
+	out << StringTools::place_first_infront_of_each_new_line_of_second(
+		"  ", 
+		get_pixel_lens_print()
+	);
+	out << "\n";
+
+	out << StringTools::place_first_infront_of_each_new_line_of_second(
+		"  ", 
+		get_sub_pixel_print()
+	);
+	out << "\n";
+
+	return out.str();		
+}
+//------------------------------------------------------------------------------
+std::string Geometry::get_image_sensor_print()const{
+
+	std::stringstream out;
+	out << "Image_Sensor__\n";
+
+	std::stringstream tab;
+	tab << "Field of View................. " << Rad2Deg(cfg.max_FoV_diameter) << "deg\n";
+	tab << "max sensor radius............. " << max_outer_sensor_radius() << "m\n";
+	tab << "number of pixels.............. " << number_of_pixels() << "\n";
+
+	out << StringTools::place_first_infront_of_each_new_line_of_second(
+		"  ", 
+		tab.str()
+	);
+
+	return out.str();
+}
+//------------------------------------------------------------------------------
+std::string Geometry::get_pixel_lens_print()const{
+
+	std::stringstream out;
+	out << "Pixel_Lens__\n";
+
+	std::stringstream tab;
+	tab << "FoV hex flat2flat....... " << Rad2Deg(pixel_FoV_hex_flat2flat()) << "deg\n";
+	tab << "spacing................. " << pixel_spacing() << "m\n";
+	tab << "inner aperture radius... " << pixel_lens_inner_aperture_radius() << "m\n";
+	tab << "outer aperture radius... " << pixel_lens_outer_aperture_radius() << "m\n";
+	tab << "lens f over D........... " << pixel_lens_f_over_D() << "\n";
+	tab << "lens focal length....... " << pixel_lens_focal_length() << "m\n";
+	tab << "lens curvature radius... " << pixel_lens_curvature_radius() << "m\n";
+	tab << "lens to sub pixel dist.. " << pixel_lens_sub_pixel_distance() << "m\n";
+	tab << "lens refraction mean.... " << pixel_lens_mean_refraction() << "\n";
+	tab << "aperture image radius... " << aperture_image_radius_on_sub_pixel_sensor() << "m\n";
+	
+	out << StringTools::place_first_infront_of_each_new_line_of_second(
+		"  ", 
+		tab.str()
+	);
+
+	return out.str();
+}
+//------------------------------------------------------------------------------
+std::string Geometry::get_sub_pixel_print()const{
+
+	std::stringstream out;
+	out << "Sub_Pixel__\n";
+
+	std::stringstream tab;
+	tab << "per pixel........... " << sub_pixel_per_pixel() << "\n";
+	tab << "total number........ " << sub_pixel_grid.size() << "\n";
+	tab << "outer radius........ " << sub_pixel_outer_radius() << "m\n";
+	tab << "inner radius........ " << sub_pixel_inner_radius() << "m\n";
+	tab << "spacing............. " << sub_pixel_spacing() << "m\n";
+
+	out << StringTools::place_first_infront_of_each_new_line_of_second(
+		"  ", 
+		tab.str()
+	);
+
+	return out.str();
 }
 //------------------------------------------------------------------------------
 } //lightfield

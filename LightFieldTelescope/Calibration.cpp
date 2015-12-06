@@ -30,7 +30,7 @@ void Calibration::set_up_photon_properties() {
 //------------------------------------------------------------------------------
 void Calibration::set_up_principal_aperture_range() {
 
-	max_principal_aperture_radius_to_trow_photons_on = 1.05*(
+	max_principal_aperture_radius_to_trow_photons_on = 1.01*(
 		telescope_geometry.reflector.max_outer_aperture_radius() + 
 		telescope_geometry.reflector.thickness_of_dish()*tan(
 			telescope_geometry.max_FoV_radius()
@@ -164,13 +164,19 @@ void Calibration::run_calibration() {
 
 	std::cout << telescope_geometry.get_print() << "\n";
 
-	std::cout << "start light field calibration" << "\n";
+	std::cout << "Start Light Field Calibration, propagating ";
+	std::cout << double(number_of_photons)/1.0e6 << "M photons\n";
+	std::cout << "\n";
 	
 	table.resize(number_of_photons_per_block);
 
 	for(uint j=0; j<number_of_blocks; j++) {
 		
-		std::cout << j+1 << " of " << number_of_blocks << "\n";		
+		std::cout << UserInteraction::overwrite_last_line_with(
+			UserInteraction::get_progress_print(
+				double(j+1)/double(number_of_blocks)
+			)
+		);		
 		
 		fill_calibration_block_to_table();
 

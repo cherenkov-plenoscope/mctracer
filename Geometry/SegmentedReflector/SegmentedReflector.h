@@ -32,7 +32,7 @@ namespace SegmentedReflector {
 
 	class Geometry :public Printable {
 
-		const Config cfg;
+		
 		double _davies_cotton_weight;
 		double _parabolic_weight;
 		double _z_offset_makeing_avg_facet_dist_to_f_point_match_f;
@@ -40,7 +40,7 @@ namespace SegmentedReflector {
 		std::vector<Rotation3D> _facet_orientations;
 		Vector3D _focal_point;
 	public:	
-
+		const Config cfg;
 		Geometry(const Config config);
 		double focal_length()const;
 		double DaviesCotton_over_parabolic_mixing_factor()const;
@@ -97,6 +97,7 @@ namespace SegmentedReflector {
 		std::string get_name_of_facet(const uint i)const;
 	};
 
+	static const Function::Constant typical_reflectivity(0.8, Function::Limits(200e-9, 1200e-9));
 	static const Function::Constant perfect_reflectivity(1.0, Function::Limits(200e-9, 1200e-9));
 } // SegmentedReflector
 

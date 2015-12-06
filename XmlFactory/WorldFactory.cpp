@@ -663,8 +663,8 @@ Frame* WorldFactory::produceLightFieldTelescope(
 	lftConfig.housing_overhead = 
 		xmlLftFab.get_housing_overhead();
 
-	lftConfig.sub_pixel_per_pixel = 
-		xmlLftFab.get_sub_pixel_per_pixel();
+	lftConfig.sub_pixel_on_pixel_diagonal = 
+		xmlLftFab.get_sub_pixel_on_pixel_diagonal();
 
 	lftConfig.lens_refraction=
 		functions->get_function(xmlLftFab.get_refraction_vs_wavelength()); 

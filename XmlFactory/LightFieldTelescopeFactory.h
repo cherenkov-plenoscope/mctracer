@@ -20,7 +20,7 @@ public:
 	double get_max_FoV_diameter();
 	double get_hex_pixel_FoV_flat2flat();
 	double get_housing_overhead();
-	double get_sub_pixel_per_pixel();
+	double get_sub_pixel_on_pixel_diagonal();
 	std::string get_refraction_vs_wavelength();
 
 };
