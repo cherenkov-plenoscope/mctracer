@@ -6,6 +6,7 @@ set(SOURCE
   	${CMAKE_CURRENT_SOURCE_DIR}/Calibration.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/LensCalibration.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/CalibIo.cpp
+  	${CMAKE_CURRENT_SOURCE_DIR}/VisualInspection.cpp
    	PARENT_SCOPE
 )
 set(HEADERS
@@ -16,5 +17,6 @@ set(HEADERS
   	${CMAKE_CURRENT_SOURCE_DIR}/Calibration.h
    	${CMAKE_CURRENT_SOURCE_DIR}/LensCalibration.h
   	${CMAKE_CURRENT_SOURCE_DIR}/CalibIo.h
+  	${CMAKE_CURRENT_SOURCE_DIR}/VisualInspection.h
 	PARENT_SCOPE
 )

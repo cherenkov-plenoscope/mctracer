@@ -2,6 +2,7 @@
 #include "Tools/AsciiIo.h"
 #include "Cameras/FreeOrbitCamera.h"
 #include "HexPlane.h"
+#include "HexGridAnnulus.h"
 
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------
