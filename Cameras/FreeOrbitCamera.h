@@ -16,7 +16,7 @@
 #include "CameraManForRotation.h"
 #include "CameraManForStereo3D.h"
 #include "CameraManForFieldOfView.h"
-#include "Core/TimeStamp.h"
+#include "Tools/TimeStamp.h"
 #include "Tools/UserInteraction.h"
 
 //=================================

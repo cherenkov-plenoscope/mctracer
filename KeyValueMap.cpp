@@ -4,7 +4,8 @@
 #include "Tools/Tools.h"
 #include "Tools/StringTools.h"
 #include "Tools/FileTools.h"
-#include "Core/TimeStamp.h"
+#include "Tools/TimeStamp.h"
+
 namespace KeyValueMap {
 //------------------------------------------------------------------------------
 Map::Map() {}

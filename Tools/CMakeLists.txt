@@ -6,6 +6,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/FiniteStateMashine.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Tools.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/UserInteraction.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/TimeStamp.cpp
    	PARENT_SCOPE
 )
 set(HEADERS
@@ -16,5 +17,6 @@ set(HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/FiniteStateMashine.h
 	${CMAKE_CURRENT_SOURCE_DIR}/Tools.h
 	${CMAKE_CURRENT_SOURCE_DIR}/UserInteraction.h
+	${CMAKE_CURRENT_SOURCE_DIR}/TimeStamp.h
 	PARENT_SCOPE
 )

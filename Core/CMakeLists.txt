@@ -18,7 +18,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/PropagationEnvironment.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/TimeStamp.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PseudoRandomNumberGenerator.cpp
    	PARENT_SCOPE
 )
@@ -41,7 +40,6 @@ set(HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/PropagationEnvironment.h
 	${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.h
 	${CMAKE_CURRENT_SOURCE_DIR}/Color.h
-	${CMAKE_CURRENT_SOURCE_DIR}/TimeStamp.h
 	${CMAKE_CURRENT_SOURCE_DIR}/PseudoRandomNumberGenerator.h
    	PARENT_SCOPE
 )
