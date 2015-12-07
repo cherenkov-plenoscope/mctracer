@@ -15,7 +15,6 @@
 #include "TracerException.h"
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"
-//#include "Tools/TimeStamp.h"
 #include "cmdline/cmdline.h"
 #include "Cameras/FreeOrbitCamera.h"
 #include "MmcsCorsikaFileIO/MmcsCorsikaFullEventGetter.h"
