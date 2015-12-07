@@ -27,6 +27,7 @@ public:
 	static const Color red;
 	static const Color green;
 	static const Color blue;
+	static const Color grass_green;
 
 	Color();
 	Color(const int r, const int g, const int b);
