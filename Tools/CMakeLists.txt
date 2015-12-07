@@ -5,6 +5,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/AsciiIo.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/FiniteStateMashine.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Tools.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/UserInteraction.cpp
    	PARENT_SCOPE
 )
 set(HEADERS
@@ -14,5 +15,6 @@ set(HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/AsciiIo.h
 	${CMAKE_CURRENT_SOURCE_DIR}/FiniteStateMashine.h
 	${CMAKE_CURRENT_SOURCE_DIR}/Tools.h
+	${CMAKE_CURRENT_SOURCE_DIR}/UserInteraction.h
 	PARENT_SCOPE
 )

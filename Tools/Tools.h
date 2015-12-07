@@ -16,8 +16,6 @@
 #include <vector>
 #include <fstream>
 #include <algorithm>
-#include "TracerException.h"
-#include "Core/Color.h"
 
 double Deg2Rad(double angle_in_Deg);
 double Rad2Deg(double angle_in_Rad);
@@ -29,20 +27,6 @@ bool StrToBool(std::string text_to_parse);
 int StrToInt(std::string text_to_parse);
 double get_mean_along_column(const std::vector<std::vector<double>> &table, const uint column);
 std::string get_print(const std::vector<std::vector<double>> &table);
-
-namespace UserInteraction {
-	void print_welcome_screen();	
-	void ClearScreen();
-	bool is_Escape_key(const int user_input_key);
-	std::string bg_color(const std::string &text, const Color col);
-	std::string get_progress_print(const double fraction);
-	std::string overwrite_last_line_with(const std::string &text);
-	std::string green_font(const std::string &text);
-	namespace Screen {
-		uint cols();
-		uint rows();
-	}
-}
 
 namespace AssertionTools {
 	void value_with_name_is_greater_zero_given_context(

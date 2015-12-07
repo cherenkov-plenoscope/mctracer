@@ -1,5 +1,6 @@
 #include "LightFieldTelescope/Calibration.h"
 #include "LightFieldTelescope/CalibIo.h"
+#include "Tools/UserInteraction.h"
 
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------

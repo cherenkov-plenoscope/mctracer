@@ -17,6 +17,7 @@
 #include "CameraManForStereo3D.h"
 #include "CameraManForFieldOfView.h"
 #include "Core/TimeStamp.h"
+#include "Tools/UserInteraction.h"
 
 //=================================
 class FreeOrbitCamera {
