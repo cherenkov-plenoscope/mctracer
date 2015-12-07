@@ -93,7 +93,7 @@ namespace UserInteraction {
 	//--------------------------------------------------------------------------
 	std::string get_progress_print(const double fraction) {
 			
-		uint cols = 78;
+		uint cols = Screen::cols() - 2;
 
 		std::stringstream perc;
 		perc.precision(4);
@@ -141,6 +141,26 @@ namespace UserInteraction {
 		std::stringstream out;
 		out << "\33[0;32m" << text << "\33[0m";
 		return out.str();
+	}
+	#include <sys/ioctl.h>
+	#include <stdio.h>
+	#include <unistd.h>
+	namespace Screen {
+		//----------------------------------------------------------------------
+		uint cols() {
+
+			struct winsize w;
+		    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+			return w.ws_col;
+		}
+		//----------------------------------------------------------------------
+		uint rows() {
+
+			struct winsize w;
+		    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+			return w.ws_row;
+		}
+		//----------------------------------------------------------------------
 	}
 }
 //------------------------------------------------------------------------------

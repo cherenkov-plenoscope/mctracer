@@ -38,6 +38,10 @@ namespace UserInteraction {
 	std::string get_progress_print(const double fraction);
 	std::string overwrite_last_line_with(const std::string &text);
 	std::string green_font(const std::string &text);
+	namespace Screen {
+		uint cols();
+		uint rows();
+	}
 }
 
 namespace AssertionTools {
