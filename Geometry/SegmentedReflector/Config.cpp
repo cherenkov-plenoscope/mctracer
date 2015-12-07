@@ -1,4 +1,4 @@
-#include "SegmentedReflector.h"
+#include "Geometry/SegmentedReflector/Config.h"
 
 namespace SegmentedReflector {
 

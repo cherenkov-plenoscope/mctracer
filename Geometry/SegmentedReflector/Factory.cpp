@@ -1,4 +1,4 @@
-#include "SegmentedReflector.h"
+#include "Geometry/SegmentedReflector/Factory.h"
 #include "SphereCapWithHexagonalBound.h"
 
 namespace SegmentedReflector {

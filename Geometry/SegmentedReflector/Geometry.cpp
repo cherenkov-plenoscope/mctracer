@@ -1,4 +1,7 @@
-#include "SegmentedReflector.h"
+#include "Geometry/SegmentedReflector/Geometry.h"
+#include "HexGridAnnulus.h"
+#include <iomanip>
+#include "Tools/StringTools.h"
 
 namespace SegmentedReflector {
 

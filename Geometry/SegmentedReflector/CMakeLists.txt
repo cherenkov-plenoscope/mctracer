@@ -1,13 +1,16 @@
 set(SOURCE
    	${SOURCE}
-	${CMAKE_CURRENT_SOURCE_DIR}/SegmentedReflectorConfig.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/SegmentedReflectorGeometry.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/SegmentedReflectorFactory.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Config.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Geometry.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Factory.cpp
    	PARENT_SCOPE
 )
 
 set(HEADERS
    	${SOURCE}
 	${CMAKE_CURRENT_SOURCE_DIR}/SegmentedReflector.h
+	${CMAKE_CURRENT_SOURCE_DIR}/Config.h
+	${CMAKE_CURRENT_SOURCE_DIR}/Geometry.h
+	${CMAKE_CURRENT_SOURCE_DIR}/Factory.h
    	PARENT_SCOPE
 )
