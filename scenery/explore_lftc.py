@@ -29,7 +29,13 @@ class LightFieldTelescopeExplorer(object):
 		print("mean x ", np.mean(subpix['x'])," y ", np.mean(subpix['y']))
 		print("stddev x ", np.std(subpix['x'])," y ", np.std(subpix['y']))
 		plt.figure()
-		plt.hist2d(subpix['x'], subpix['y'], range=self.aperture_range, bins=100, cmap='hot')
+		plt.hist2d(
+			subpix['x'], 
+			subpix['y'], 
+			range=self.aperture_range, 
+			bins=100, 
+			cmap='hot'
+		)
 		plt.xlabel("x [m]")
 		plt.ylabel("y [m]")
 		plt.show()
@@ -42,7 +48,13 @@ class LightFieldTelescopeExplorer(object):
 		print("stddev x ", np.std( np.rad2deg( np.arcsin(subpix['cx']) ) )," y ", np.std( np.rad2deg( np.arcsin(subpix['cy']) ) ) )
 
 		plt.figure()
-		plt.hist2d(np.rad2deg(np.arcsin(subpix['cx'])), np.rad2deg(np.arcsin(subpix['cy'])), range=self.direction_range, bins=1000, cmap='hot')
+		plt.hist2d(
+			np.rad2deg(np.arcsin(subpix['cx'])),
+			np.rad2deg(np.arcsin(subpix['cy'])), 
+			range=self.direction_range,
+			bins=1000,
+			cmap='hot'
+		)
 		plt.xlabel("x direction [deg]")
 		plt.ylabel("y direction [deg]")
 		plt.show()
@@ -53,6 +65,8 @@ class LightFieldTelescopeExplorer(object):
 
 		if subpix.shape[0]==0:
 			return
+
+		print("time std dev ", np.std(subpix['t']))
 
 		my_bin_count = np.sqrt(subpix['t'].shape[0])
 		plt.figure()
