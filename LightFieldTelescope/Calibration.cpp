@@ -173,11 +173,7 @@ void Calibration::run_calibration() {
 
 	for(uint j=0; j<number_of_blocks; j++) {
 		
-		std::cout << UserInteraction::overwrite_last_line_with(
-			UserInteraction::get_progress_print(
-				double(j+1)/double(number_of_blocks)
-			)
-		);		
+		std::cout << j+1 << " of " << number_of_blocks << "\n";	
 		
 		fill_calibration_block_to_table();
 
