@@ -59,7 +59,4 @@ namespace KeyValueMap{
 	};
 }
 
-
-
-
 #endif // __PROGRAMOPTIONS_H_INCLUDED__ 

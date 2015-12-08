@@ -1,4 +1,5 @@
 #include "ApertureCamera.h"
+#include "Tools/AssertionTools.h"
 //------------------------------------------------------------------------------
 void ApertureCamera::set_fStop_sesnorWidth_rayPerPixel(	
 	const double new_FStopNumber,

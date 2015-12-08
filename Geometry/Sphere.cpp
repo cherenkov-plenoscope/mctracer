@@ -1,4 +1,5 @@
 #include "Sphere.h"
+#include "Tools/AssertionTools.h"
 //------------------------------------------------------------------------------
 Sphere::Sphere(){
 	radius = 1.0;

@@ -42,6 +42,7 @@ public:
 		const TracerSettings *settings
 	);
 private:
+	
 	const std::string free_orbit_display_name = 
 		"Monte Carlo Tracer -> Free Orbit";
 

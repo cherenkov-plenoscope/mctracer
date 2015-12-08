@@ -2,6 +2,7 @@
 #include "Tools/StringTools.h"
 #include "Tools/FileTools.h"
 #include "Tools/StringTools.h"
+#include "Tools/AssertionTools.h"
 
 class Tools : public ::testing::Test {};
 //----------------------------------------------------------------------

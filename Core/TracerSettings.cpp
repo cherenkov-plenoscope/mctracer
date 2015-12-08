@@ -1,5 +1,6 @@
 #include "TracerSettings.h"
 #include "Tools/Tools.h"
+#include "Tools/AssertionTools.h"
 
 const TracerSettings TracerSettings::default_settings = TracerSettings();
 //------------------------------------------------------------------------------
