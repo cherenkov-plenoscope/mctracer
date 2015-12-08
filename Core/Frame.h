@@ -33,7 +33,6 @@ class Frame : public Printable{
     // The root of this tree is often called 'world' or 'world frame' here.
 protected:
 
-    // a frame has a human readable name e.g. Tree, House, Mirror
     std::string name_of_frame;
 
     Vector3D 	pos_in_mother; 
@@ -48,7 +47,6 @@ protected:
     
     std::vector<Frame*> children;
 	Frame *mother = void_frame;
-    const Frame *root_of_world;
 private:
 
     static const char delimiter_for_frame_path = '/';
@@ -86,7 +84,6 @@ public:
     const HomoTrafo3D* frame2world()const;
     bool has_child_with_name(const std::string name_of_child)const;
     const Frame* get_child_by_name(std::string specific_name)const;
-    const Frame* get_root_of_world()const;
     std::string get_path_in_tree_of_frames()const;
     uint get_number_of_children()const;
     virtual std::string get_print()const;
@@ -98,17 +95,13 @@ public:
         std::vector<const Frame*> *candidate_frames
     )const;
 protected:
-    // post initialization
-    void post_init_root_of_world();
-    // post initialization based on root
+
     void post_init_me_and_all_my_children();
     void post_init_transformations();
     HomoTrafo3D calculate_frame2world()const;
-    // post initialization based on mother only
     void post_init_me_and_all_my_children_only_based_on_mother();
     void post_init_transformations_only_based_on_mother();
     HomoTrafo3D calculate_frame2world_only_based_on_mother()const;
-    // initialize
     void reset_all_connections_to_children_and_mother();
     void set_mother(Frame *const new_mother);
     void add_child(Frame * const new_child);
@@ -120,7 +113,6 @@ protected:
     bool positions_in_mother_are_too_close_together(std::vector<Frame*> frames)const;
     void warn_about_neglection_of(const Frame* frame)const;
 public:
-    // moving/rotating the frame after construction
     void update_rotation(const Rotation3D rot);
     virtual const Intersection* calculate_intersection_with(const Ray* ray)const;
     const Intersection* empty_intersection()const;

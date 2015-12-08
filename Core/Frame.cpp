@@ -115,7 +115,6 @@ void Frame::set_name(
 void Frame::reset_all_connections_to_children_and_mother() {
 	radius_of_sphere_enclosing_all_children = 0.0;	 
 	mother = void_frame;
-	root_of_world = this;
 	children.clear();
 }
 //------------------------------------------------------------------------------
@@ -258,7 +257,6 @@ void Frame::init_tree_based_on_mother_child_relations() {
 	cluster_using_helper_frames();
 	post_init_me_and_all_my_children();
 	update_enclosing_sphere_for_all_children();
-	post_init_root_of_world();
 }
 //------------------------------------------------------------------------------
 void Frame::post_init_me_and_all_my_children() {
@@ -291,21 +289,6 @@ void Frame::update_enclosing_sphere_for_all_children() {
 		child->update_enclosing_sphere_for_all_children();
 		update_sphere_enclosing_all_children(child);
 	}
-}
-//------------------------------------------------------------------------------
-void Frame::post_init_root_of_world() {
-
-	if(has_mother())
-		root_of_world = mother->get_root_of_world();
-	else
-		root_of_world = this;
-
-	for(Frame* child : children)
-		child->post_init_root_of_world();
-}
-//------------------------------------------------------------------------------
-const Frame* Frame::get_root_of_world()const {
-	return root_of_world;
 }
 //------------------------------------------------------------------------------
 void  Frame::take_children_from(
