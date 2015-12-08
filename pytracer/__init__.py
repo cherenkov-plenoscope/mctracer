@@ -191,7 +191,7 @@ def print_frame_dict(frame_dict):
         if isinstance(value, dict):
             print_frame_dict(value)
         else:
-            print( repr(name), value.get_name_of_frame() )
+            print( repr(name), value.get_name() )
 
 
 def set_names_frame_dict(frame_dict, parent_name=None):
@@ -215,10 +215,10 @@ def set_mother_and_child_frame_dict(frame_dict):
         elif isinstance(value, dict):
 
             sub_parent = set_mother_and_child_frame_dict(value)
-            print( "setting ", sub_parent.get_name_of_frame(), "as child of", parent_frame.get_name_of_frame())
+            print( "setting ", sub_parent.get_name(), "as child of", parent_frame.get_name())
             parent_frame.set_mother_and_child(sub_parent)
         else:
-            print( "setting ", value.get_name_of_frame(), "as child of", parent_frame.get_name_of_frame())
+            print( "setting ", value.get_name(), "as child of", parent_frame.get_name())
             parent_frame.set_mother_and_child(value)
     return parent_frame
 

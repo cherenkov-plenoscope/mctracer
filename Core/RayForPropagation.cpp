@@ -81,7 +81,7 @@ std::string RayForPropagation::get_history_print()const {
 	for(InteractionType type : *interaction_type_history) {
 		out << ++index << ") " << get_type_print(type) << " in ";
 		out << intersection_history->at(index-1)->
-			get_intersecting_object()->get_name_of_frame();
+			get_intersecting_object()->get_name();
 		out << " " << intersection_history->at(index-1)->	
 			get_intersection_vector_in_world_system() << ", dist to prev.:";
 

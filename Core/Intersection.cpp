@@ -63,7 +63,7 @@ std::string Intersection::get_print()const {
 
 	std::stringstream out; 
 	if(does_intersect()) {
-		out << intersecting_object->get_name_of_frame() << " in ";
+		out << intersecting_object->get_name() << " in ";
 		out << get_intersection_vector_in_world_system() << " after ";
 		out << get_intersection_distance() << "m";
 	}else

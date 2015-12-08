@@ -356,7 +356,6 @@ const Intersection* Frame::empty_intersection()const {
 	Intersection* intersection;
 	intersection = new Intersection();
 	return intersection;
-	//return Intersection::void_intersection;
 }
 //------------------------------------------------------------------------------
 void Frame::find_intersection_candidates_for_all_children_and_ray(
@@ -397,11 +396,15 @@ void Frame::cluster_using_helper_frames() {
 				if(oct_tree[sector].size() > 0) {
 
 					// create helper sector
-					std::stringstream name;
-					name << "octant_" << sector;
-					Vector3D mean_pos_in_mother = get_mean_pos_in_mother(oct_tree[sector]);
+					std::stringstream sector_name;
+					sector_name << "octant_" << sector;
+					
+					Vector3D mean_pos_in_mother = get_mean_pos_in_mother(
+						oct_tree[sector]
+					);
+
 					Frame* helper_frame = new Frame(
-						name.str(),
+						sector_name.str(),
 						mean_pos_in_mother,
 						Rotation3D::null
 					);
@@ -440,7 +443,7 @@ void Frame::warn_about_neglection_of(const Frame* frame)const {
 	std::stringstream out;
 	out << "___Warning___\n";
 	out << __FILE__ << " " << __func__ << "(frame) " << __LINE__ << "\n";
-	out << "Frame: " << frame->get_name_of_frame() << " is neglected. ";
+	out << "Frame: " << frame->get_name() << " is neglected. ";
 	out << "Encolsing radius is below " << minimal_structure_size << "m, i.e. ";
 	out << frame->get_radius_of_sphere_enclosing_all_children() << "m.\n";
 	std::cout << out.str();	
@@ -484,7 +487,7 @@ bool Frame::positions_in_mother_are_too_close_together(
 		return spread < minimal_structure_size;
 }
 //------------------------------------------------------------------------------
-std::string Frame::get_name_of_frame()const{ 
+std::string Frame::get_name()const{ 
 	return name_of_frame; 
 }
 //------------------------------------------------------------------------------

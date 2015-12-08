@@ -54,7 +54,7 @@ LensCalibration::LensCalibration(const Config cfg):
 	header << "number of emitted photons: " << number_of_photons << "\n";
 	header << "focal length: " << telescope_geometry.pixel_lens_focal_length() << "m\n";
 	header << "curvature radius: " << telescope_geometry.pixel_lens_curvature_radius() << "m\n";
-	header << "sensor frame name: " << read_out->get_frame()->get_name_of_frame() << "\n";
+	header << "sensor frame name: " << read_out->get_frame()->get_name() << "\n";
 
 	std::string head;
 	head += header.str();

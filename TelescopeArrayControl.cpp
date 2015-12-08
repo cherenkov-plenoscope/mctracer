@@ -17,7 +17,7 @@ std::string TelescopeArrayControl::get_print()const {
 
 	uint i=0;
 	for(Frame* telescope : telescopes_in_world) {
-		out << i << " " << telescope->get_name_of_frame() << "\t";
+		out << i << " " << telescope->get_name() << "\t";
 		out << "Az: " << Rad2Deg(ZdAzMount::get_az_of_frame(telescope)) << ",\t";
 		out << "Zd: " << Rad2Deg(ZdAzMount::get_zd_of_frame(telescope)) << " deg";
 		out << "\n";

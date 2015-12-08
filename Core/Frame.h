@@ -73,7 +73,7 @@ public:
     void set_mother_and_child(Frame *new_child);
     void init_tree_based_on_mother_child_relations();
     void take_children_from(Frame *frame_to_take_chidren_from);
-    std::string get_name_of_frame()const;
+    std::string get_name()const;
     const Vector3D* get_position_in_mother()const;
     const Rotation3D* get_rotation_in_mother()const;
     const Vector3D* get_position_in_world()const;

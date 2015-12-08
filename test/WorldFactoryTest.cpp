@@ -9,7 +9,7 @@ TEST_F(WorldFactoryTest, DefaultWorld) {
     Frame *Mworld = file2world.world();
 
     // name of default world
-    EXPECT_EQ( Mworld->get_name_of_frame() , "world");
+    EXPECT_EQ( Mworld->get_name() , "world");
 
     // default world has no children
     EXPECT_EQ( Mworld->get_number_of_children() , 0 );
@@ -38,7 +38,7 @@ TEST_F(WorldFactoryTest, ReadEmptyXML) {
     );
 
     // name of default world
-    EXPECT_EQ( Mworld->get_name_of_frame() , "world");
+    EXPECT_EQ( Mworld->get_name() , "world");
     // no children in world
     EXPECT_EQ( Mworld->get_number_of_children() , 0 );
     // enclosing radius must be zero
@@ -58,7 +58,7 @@ TEST_F(WorldFactoryTest, ReadNotExistingFile) {
 
         // the root of a file is always called world also the file does not 
         // exist
-        EXPECT_EQ( Mworld->get_name_of_frame() , "world");
+        EXPECT_EQ( Mworld->get_name() , "world");
     }catch(XmlIoException& error){
 
         //check whether the exception knows the bad file path or not
@@ -83,7 +83,7 @@ TEST_F(WorldFactoryTest, ReadFileWithUnknownObject) {
         file2world.load(xml_file);
         Frame *Mworld = file2world.world();
 
-        EXPECT_EQ( Mworld->get_name_of_frame() , "world");
+        EXPECT_EQ( Mworld->get_name() , "world");
     }catch(UnknownItem& unknown){
 
         //error.ReportException();
