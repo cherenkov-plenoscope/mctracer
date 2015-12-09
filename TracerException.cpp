@@ -26,7 +26,7 @@ std::string TracerException::get_full_message_print()const {
 	out << "| compiled on: " << compile_time << "\n";
 	out << 	StringTools::place_first_infront_of_each_new_line_of_second(
 		   		"| ",
-				get_message()
+				message
 			);
 	out << "|_____________________\n";
 	out << "\n";
@@ -44,8 +44,3 @@ const char* TracerException::str2chararray(const std::string text)const {
 	std::strcpy(charrout, text.c_str());
 	return charrout;
 }
-//------------------------------------------------------------------------------
-std::string TracerException::get_message()const {
-	return message;
-}
-//------------------------------------------------------------------------------

@@ -40,17 +40,14 @@ namespace Fits {
 
 		class KeyWordTooLarge : public TracerException {
 			using TracerException::TracerException;
-			std::string get_message()const;
 		};
 
 		class ValueTooLarge : public TracerException {
 			using TracerException::TracerException;
-			std::string get_message()const;
 		};
 		
 		class CommentTooLarge : public TracerException {
 			using TracerException::TracerException;
-			std::string get_message()const;
 		};			
 	}
 }

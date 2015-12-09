@@ -22,7 +22,6 @@ public:
 
 	TracerException(std::string message);
 	const char * what () const throw();
-	virtual std::string get_message()const;
 	static const std::string compile_time;
 private:
 

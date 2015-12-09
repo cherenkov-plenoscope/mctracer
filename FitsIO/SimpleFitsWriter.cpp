@@ -20,69 +20,54 @@ namespace KeyWordRecord {
 
 		return keyword += equal_sign += value += comment_sign += comment;
 	}
-	//--------------------------------------------------------------------------
+
 	std::string keyword_fits_style(std::string keyword) {
 
 		// should be ASCII 48-57 and 65 to 90 -> 0 to 9 decimal and upper case A-Z
 		std::transform(keyword.begin(), keyword.end(), keyword.begin(), ::toupper);
 
-		if(keyword.length() > max_keyword_lenght)
-			throw KeyWordTooLarge(keyword);
+		if(keyword.length() > max_keyword_lenght) {
+		std::stringstream info;
+			info << "Fits::KeyWordRecord::KeyWordTooLarge\n";
+			info << "The keyword " << keyword << " is too large, max lenght is "; 
+			info << std::to_string(max_keyword_lenght) << " chars.";			
+			throw KeyWordTooLarge(info.str());
+		}
 
 		return keyword += StringTools::repeat_multiple_times(
 			" ", max_keyword_lenght - keyword.length()
 		);
 	}
-	//--------------------------------------------------------------------------
+
 	std::string value_fits_style(std::string value) {
 
-		if(value.length() > max_value_lenght)
-			throw ValueTooLarge(value);
+		if(value.length() > max_value_lenght) {
+			std::stringstream info;
+			info << "Fits::KeyWordRecord::ValueTooLarge\n";
+			info << "The Value " << value << " is too large, max lenght is "; 
+			info << std::to_string(max_value_lenght) << " chars.";
+			throw ValueTooLarge(info.str());
+		}
 			
 		return value += StringTools::repeat_multiple_times(
 			" ", max_value_lenght - value.length()
 		);
 	}
-	//--------------------------------------------------------------------------
+
 	std::string comment_fits_style(std::string comment) {
 
-		if(comment.length() > max_keyword_comment_lenght)
-			throw CommentTooLarge(
-				"The Comment " + comment + " is too large, max lenght is " 
-				+ std::to_string(max_keyword_comment_lenght) + " chars."
-			);
+		if(comment.length() > max_keyword_comment_lenght) {
+			std::stringstream info;
+			info << "Fits::KeyWordRecord::CommentTooLarge\n";
+			info << "The Comment " << comment << " is too large, max lenght is "; 
+			info << std::to_string(max_keyword_comment_lenght) << " chars.";
+			throw CommentTooLarge(info.str());
+		}
 			
 		return comment += StringTools::repeat_multiple_times(
 			" ", max_keyword_comment_lenght - comment.length()
 		);
 	}
+}//   
 
-	std::string KeyWordTooLarge::get_message()const {
-
-		std::stringstream out;
-		out << "Fits::KeyWordRecord::KeyWordTooLarge\n";
-		out << "The keyword " << message << " is too large, max lenght is "; 
-		out << std::to_string(max_keyword_lenght) << " chars.";
-		return out.str();
-	}
-
-	std::string ValueTooLarge::get_message()const {
-
-		std::stringstream out;
-		out << "Fits::KeyWordRecord::ValueTooLarge\n";
-		out << "The Value " << message << " is too large, max lenght is "; 
-		out << std::to_string(max_value_lenght) << " chars.";
-		return out.str();
-	}
-
-	std::string CommentTooLarge::get_message()const {
-
-		std::stringstream out;
-		out << "Fits::KeyWordRecord::CommentTooLarge\n";
-		out << "The Comment " << message << " is too large, max lenght is "; 
-		out << std::to_string(max_keyword_comment_lenght) << " chars.";
-		return out.str();
-	}
-}   
-//------------------------------------------------------------------------------
-}    
+}//  
