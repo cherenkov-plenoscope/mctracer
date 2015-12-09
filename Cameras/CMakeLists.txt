@@ -1,3 +1,4 @@
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/SkyDome")
 set(SOURCE
    	${SOURCE}
    	${CMAKE_CURRENT_SOURCE_DIR}/CameraDevice.cpp 
@@ -11,7 +12,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraMan.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraImage.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraRay.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/SkyDome.cpp
    	PARENT_SCOPE
 )
 set(HEADERS
@@ -27,6 +27,5 @@ set(HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraMan.h
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraImage.h
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraRay.h
-	${CMAKE_CURRENT_SOURCE_DIR}/SkyDome.h
 	PARENT_SCOPE
 )

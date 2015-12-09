@@ -10,7 +10,7 @@
 // included dependencies
 #include "Color.h"
 #include "TracerException.h"
-#include "Cameras/SkyDome.h"
+#include "Cameras/SkyDome/SkyDome.h"
 #include "Vector3D.h"
 #include <string>
 #include <sstream>
