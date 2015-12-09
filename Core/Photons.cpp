@@ -194,21 +194,6 @@ namespace Photons {
 		return factory.get_trajectory();
 	}
 	//--------------------------------------------------------------------------
-	// testing and probing
-	//--------------------------------------------------------------------------
-	uint get_number_of_photnons_absorbed_in_object(
-		const std::vector<Photon*> *photon_bunch, 
-		const Frame* frame
-	) {
-		uint counter=0;
-
-		for(Photon* photon : *photon_bunch)
-			if(photon->get_final_intersection()->get_intersecting_object()==frame)
-				counter++;
-
-		return counter;
-	}
-	//--------------------------------------------------------------------------
 	// light source
 	//--------------------------------------------------------------------------
 	namespace Source {

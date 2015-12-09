@@ -67,12 +67,6 @@ namespace Photons {
 		Frame* get_next_trajectoy();
 	};
 
-	// probing and testing
-	uint get_number_of_photnons_absorbed_in_object(
-		const std::vector<Photon*> *photon_bunch, 
-		const Frame* frame
-	);
-
 	// creation of photons
 	namespace Source {
 

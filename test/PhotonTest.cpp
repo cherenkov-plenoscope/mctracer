@@ -10,6 +10,7 @@
 #include "Core/PseudoRandomNumberGenerator.h"
 #include "Core/Photons.h"
 #include "Core/Function/ConstantFunction.h"
+#include "PhotonSensor/PhotonSensor.h" 
 
 using namespace std;
 
@@ -212,15 +213,16 @@ TEST_F(PhotonTest, Reflections){
     pos.set(0.0,+2.0,0.0);
     rot.set(Deg2Rad(90.0),0.0,0.0);
 
-
-    Color absorber_color;
-    absorber_color = Color(50,50,50);
+    Color absorber_color(50,50,50);
 
     Plane absorber;
     absorber.set_name_pos_rot("absorber",pos,rot);
     absorber.set_outer_color(&absorber_color);
     absorber.set_inner_color(&absorber_color);
     absorber.set_x_y_width(1.0, 1.0);
+    PhotonSensor::PerfectSensor absorber_sensor(0, &absorber);
+    std::vector<PhotonSensor::Sensor*> sensors = {&absorber_sensor};
+    PhotonSensors::sort_photon_sensors_based_on_frames(&sensors);
 
     //----------declare relationships------------
     optical_table.set_mother_and_child(&mirror);
@@ -232,7 +234,6 @@ TEST_F(PhotonTest, Reflections){
     world.init_tree_based_on_mother_child_relations();
 
     //----------free orbit-----------------------
-
     //FreeOrbitCamera free(&world,&setup);
     //free.start_free_orbit();
 
@@ -248,25 +249,26 @@ TEST_F(PhotonTest, Reflections){
 
     double num_phot = 1e4;
     for(int i=1; i<=num_phot; i++) {
-            // wavelength form 1nm to 1000nm
-            
-            double wavelength = double(i)/num_phot*100e-9+250e-9;
+        // wavelength form 1nm to 1000nm
+        
+        double wavelength = double(i)/num_phot*100e-9+250e-9;
 
-            Photon *P;
-            P = new Photon(Support, direction, wavelength);
-            P->set_id(i);
-            photon_bunch->push_back(P);
+        Photon *P;
+        P = new Photon(Support, direction, wavelength);
+        P->set_id(i);
+        photon_bunch->push_back(P);
     }
 
     Photons::propagate_photons_in_world_with_settings(
-            photon_bunch, &world, &setup
+        photon_bunch, &world, &setup
     );
 
+    PhotonSensors::assign_photons_to_sensors(photon_bunch, &sensors);
+
     EXPECT_NEAR(
-            reflection_coefficient, 
-            double(Photons::get_number_of_photnons_absorbed_in_object(photon_bunch, &absorber))/
-            double(photon_bunch->size()),
-            2e-2
+        reflection_coefficient, 
+        double(absorber_sensor.get_arrival_table().size())/double(photon_bunch->size()),
+        2e-2
     );
 
     Photons::delete_photons_and_history(photon_bunch);
