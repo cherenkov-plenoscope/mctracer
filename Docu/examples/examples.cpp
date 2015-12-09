@@ -1,6 +1,5 @@
 #include "set_up_scenery.cpp"
 #include "Func1DExample.cpp"
-#include "test/memory_leak_during_propagation.cpp"
 
 int main(int argc, char **argv) {
 
