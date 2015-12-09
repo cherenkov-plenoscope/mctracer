@@ -10,7 +10,6 @@
 // included dependencies
 #include <iostream>
 #include <string>
-#include "Core/Color.h"
 
 namespace UserInteraction {
 	
