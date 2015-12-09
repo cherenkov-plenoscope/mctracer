@@ -82,9 +82,9 @@ void CameraImage::set_pixel_row_col_to_color(
 	const uint row, const uint col, const Color &color){
 	cv::Vec3b intensity;
 
-	intensity.val[0] = color.get_B_as_uchar();
-	intensity.val[1] = color.get_G_as_uchar();
-	intensity.val[2] = color.get_R_as_uchar();
+	intensity.val[0] = color.get_blue();
+	intensity.val[1] = color.get_green();
+	intensity.val[2] = color.get_red();
 
 	Image->at<cv::Vec3b>(row,col) = intensity;
 }

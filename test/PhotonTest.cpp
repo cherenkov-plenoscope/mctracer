@@ -198,7 +198,7 @@ TEST_F(PhotonTest, Reflections){
     rot.set(0.0,Deg2Rad(90.0),Deg2Rad(45.0));
 
     Color mirror_color;
-    mirror_color.set_RGB_0to255(200,64,64);
+    mirror_color = Color(200,64,64);
 
     Plane mirror;
     mirror.set_name_pos_rot("mirror",pos,rot);
@@ -214,7 +214,7 @@ TEST_F(PhotonTest, Reflections){
 
 
     Color absorber_color;
-    absorber_color.set_RGB_0to255(50,50,50);
+    absorber_color = Color(50,50,50);
 
     Plane absorber;
     absorber.set_name_pos_rot("absorber",pos,rot);

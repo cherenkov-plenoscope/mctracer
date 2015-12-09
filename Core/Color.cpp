@@ -14,98 +14,51 @@ const Color Color::blue = Color(0,0,255);
 const Color Color::grass_green = Color(22,91,49);
 //------------------------------------------------------------------------------
 Color::Color(){
-	set_to_default_color();
+	*this = Color(128, 128, 128);
 }
 //------------------------------------------------------------------------------
 Color::Color(const int r, const int g, const int b) {
-	set_RGB_0to255(r, g, b);
-}
-//------------------------------------------------------------------------------
-Color::Color(const double r, const double g, const double b) {
-	set_RGB_0to255(r, g, b);
-}
-//------------------------------------------------------------------------------
-void Color::set_RGB_0to255(
-	const int red,
-	const int green,
-	const int blue
-) {
-	assert_is_in_valid_8Bit_range(red);
-	assert_is_in_valid_8Bit_range(green);
-	assert_is_in_valid_8Bit_range(blue);	
+	assert_is_in_valid_8Bit_range(r);
+	assert_is_in_valid_8Bit_range(g);
+	assert_is_in_valid_8Bit_range(b);	
 
-	red_0to255 = (double)red;
-	green_0to255 = (double)green;
-	blue_0to255 = (double)blue;
+	c_red = r;
+	c_green = g;
+	c_blue = b; 
 }
 //------------------------------------------------------------------------------
-void Color::set_RGB_0to255(
-	const double red,
-	const double green,
-	const double blue
-) {
-	set_RGB_0to255(
-		int(round(red)),
-		int(round(green)),
-		int(round(blue))
-	);
-}
-//------------------------------------------------------------------------------
-unsigned char Color::get_R_as_uchar()const {
-	return (unsigned char)(red_0to255);
+unsigned char Color::get_red()const {
+	return c_red;
 }	
 //------------------------------------------------------------------------------
-unsigned char Color::get_G_as_uchar()const {
-	return (unsigned char)(green_0to255);
+unsigned char Color::get_green()const {
+	return c_green;
 }
 //------------------------------------------------------------------------------
-unsigned char Color::get_B_as_uchar()const {
-	return (unsigned char)(blue_0to255);
+unsigned char Color::get_blue()const {
+	return c_blue;
 }
-//------------------------------------------------------------------------------
-double Color::get_R_as_double()const {return red_0to255;}
-double Color::get_G_as_double()const {return green_0to255;}
-double Color::get_B_as_double()const {return blue_0to255;}
 //------------------------------------------------------------------------------
 std::string Color::get_print()const {
 	std::stringstream out;
-	out << "(" << red_0to255 << " " << green_0to255 << " " << blue_0to255 << ")";
+	out << "(" << c_red << " " << c_green << " " << c_blue << ")";
 	out << "8 Bit RGB";
 	return out.str();
 }
 //------------------------------------------------------------------------------
-void Color::reflection_mix(
-	const Color *c,
-	const double refl_coeff
-) {
-	red_0to255 = (1.0 - refl_coeff)*red_0to255 + refl_coeff*c->red_0to255;
-	green_0to255 = (1.0 - refl_coeff)*green_0to255 + refl_coeff*c->green_0to255;
-	blue_0to255 = (1.0 - refl_coeff)*blue_0to255 + refl_coeff*c->blue_0to255;
+void Color::reflection_mix(const Color &c, const double refl) {
+	c_red = (unsigned char)( (1.0 - refl)*double(c_red) + refl*double(c.c_red) );
+	c_green = (unsigned char)( (1.0 - refl)*double(c_green) + refl*double(c.c_green) );
+	c_blue = (unsigned char)( (1.0 - refl)*double(c_blue) + refl*double(c.c_blue) );
 }
 //------------------------------------------------------------------------------
-void Color::mixture(
-	const Color *coulour_to_mix_with,
-	const double mixture_coefficient
-) {
-	red_0to255 = 
-		red_0to255 + mixture_coefficient*coulour_to_mix_with->red_0to255;
-
-	green_0to255 = 
-		green_0to255 + mixture_coefficient*coulour_to_mix_with->green_0to255;
-
-	blue_0to255 = 
-		blue_0to255 + mixture_coefficient*coulour_to_mix_with->blue_0to255;
-}
-//------------------------------------------------------------------------------
-void Color::set_to_default_color() {
-	set_RGB_0to255(128, 128, 128);
+void Color::mixture(const Color &cmix, const double mixcoeff) {
+	c_red = c_red + (unsigned char)( mixcoeff*double(cmix.c_red) );
+	c_green = c_green + (unsigned char)( mixcoeff*double(cmix.c_green) );
+	c_blue = c_blue + (unsigned char)( mixcoeff*double(cmix.c_blue) );
 }
 //------------------------------------------------------------------------------
 void Color::assert_is_in_valid_8Bit_range(const int channel)const {
-	assert_is_in_valid_8Bit_range(double(channel));
-}
-//------------------------------------------------------------------------------
-void Color::assert_is_in_valid_8Bit_range(const double channel)const {
 	
 	if( channel < 0.0 || channel > 255.0 ) {
 		std::stringstream info;

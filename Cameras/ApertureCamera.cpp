@@ -249,7 +249,7 @@ void ApertureCamera::acquire_image(
 			try {
 				row = pixel_iterator / image->get_number_of_cols();
 				col = pixel_iterator % image->get_number_of_cols();
-				average_pixel_color.set_RGB_0to255(0,0,0);
+				average_pixel_color = Color(0,0,0);
 
 				for(int j = 0; j < rays_per_pixel; j++ ){
 
@@ -262,7 +262,7 @@ void ApertureCamera::acquire_image(
 					);
 					
 					average_pixel_color.mixture(
-						&color_for_single_ray,
+						color_for_single_ray,
 						color_weight_for_single_ray
 					);
 				}

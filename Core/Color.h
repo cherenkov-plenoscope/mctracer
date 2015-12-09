@@ -14,9 +14,9 @@
 
 class Color : public Printable{
 
-	double red_0to255;
-	double green_0to255;
-	double blue_0to255;
+	unsigned char c_red;
+	unsigned char c_green;
+	unsigned char c_blue; 
 public:
 	
 	static const Color white;
@@ -31,42 +31,14 @@ public:
 
 	Color();
 	Color(const int r, const int g, const int b);
-	Color(const double r, const double g, const double b);
-
-	void set_RGB_0to255(
-		const int red,
-		const int green,
-		const int blue
-	);
-
-	void set_RGB_0to255(
-		const double red,
-		const double green,
-		const double blue
-	);
-
-	unsigned char get_R_as_uchar()const;
-	unsigned char get_G_as_uchar()const;
-	unsigned char get_B_as_uchar()const;
-	
-	double get_R_as_double()const;
-	double get_G_as_double()const;
-	double get_B_as_double()const;
-
+	unsigned char get_red()const;
+	unsigned char get_green()const;
+	unsigned char get_blue()const;
 	std::string get_print()const;
-
-	void reflection_mix(
-		const Color *c,
-		const double refl_coeff
-	);
-
-	void mixture(
-		const Color *coulour_to_mix_with,
-		const double mixture_coefficient
-	);
+	void reflection_mix(const Color &c,	const double refl);
+	void mixture(const Color &cmix, const double mixcoeff);
 private:
-	void set_to_default_color();
+
 	void assert_is_in_valid_8Bit_range(const int channel)const;
-	void assert_is_in_valid_8Bit_range(const double channel)const;
 };
 #endif // __Color_H_INCLUDED__ 

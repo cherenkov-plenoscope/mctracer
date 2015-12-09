@@ -36,7 +36,7 @@ Color CameraRay::trace(
 
 			color = intersection->get_facing_color();
 			color.reflection_mix(
-				&reflection_color,
+				reflection_color,
 				refl_coeff
 			);
 		}else{
@@ -78,9 +78,9 @@ Color CameraRay::trace(
 		if(specular > 0.5) {
 
 
-			color.reflection_mix(&Color::white, specular);	
+			color.reflection_mix(Color::white, specular);	
 		}else{
-			color.reflection_mix(&Color::black, 1.0 -specular);	
+			color.reflection_mix(Color::black, 1.0 -specular);	
 		}
 
 		return color;
@@ -88,7 +88,7 @@ Color CameraRay::trace(
 
 		Color color;
 		color = intersection->get_facing_color();
-		color.reflection_mix(&Color::black, max_darkening + diffuse);	
+		color.reflection_mix(Color::black, max_darkening + diffuse);	
 		return color;		
 	}
 }*/
@@ -117,7 +117,7 @@ Color CameraRay::shadow_of_sky_light(
 	if(!is_iluminated_by_sky_light_source(world, settings, intersection))
 		darkening = darkening*0.25;
 
-	color.reflection_mix(&Color::black, max_darkening - darkening);	
+	color.reflection_mix(Color::black, max_darkening - darkening);	
 	
 	return color;
 }
