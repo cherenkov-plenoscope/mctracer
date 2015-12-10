@@ -10,6 +10,7 @@
 // included dependencies
 #include <iostream>
 #include <string>
+#include <vector>
 #include "Core/Printable.h"
 
 class Color : public Printable{
@@ -31,12 +32,12 @@ public:
 
 	Color();
 	Color(const int r, const int g, const int b);
+	Color(const std::vector<Color> &mean);
 	unsigned char get_red()const;
 	unsigned char get_green()const;
 	unsigned char get_blue()const;
 	std::string get_print()const;
 	void reflection_mix(const Color &c,	const double refl);
-	void mixture(const Color &cmix, const double mixcoeff);
 private:
 
 	void assert_is_in_valid_8Bit_range(const int channel)const;

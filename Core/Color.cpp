@@ -27,6 +27,23 @@ Color::Color(const int r, const int g, const int b) {
 	c_blue = b; 
 }
 //------------------------------------------------------------------------------
+Color::Color(const std::vector<Color> &colors) {
+	double r = 0.0;
+	double g = 0.0;
+	double b = 0.0;
+
+	for(Color c: colors) {
+		r = r + c.get_red();
+		g = g + c.get_green();
+		b = b + c.get_blue();
+	}
+	double weight = 1.0/colors.size();
+
+	c_red = (unsigned char)round(r*weight);
+	c_green = (unsigned char)round(g*weight);
+	c_blue = (unsigned char)round(b*weight); 
+}
+//------------------------------------------------------------------------------
 unsigned char Color::get_red()const {
 	return c_red;
 }	
@@ -41,7 +58,7 @@ unsigned char Color::get_blue()const {
 //------------------------------------------------------------------------------
 std::string Color::get_print()const {
 	std::stringstream out;
-	out << "(" << c_red << " " << c_green << " " << c_blue << ")";
+	out << "(" << (int)(c_red) << " " << (int)(c_green) << " " << (int)(c_blue) << ")";
 	out << "8 Bit RGB";
 	return out.str();
 }
@@ -50,12 +67,6 @@ void Color::reflection_mix(const Color &c, const double refl) {
 	c_red = (unsigned char)( (1.0 - refl)*double(c_red) + refl*double(c.c_red) );
 	c_green = (unsigned char)( (1.0 - refl)*double(c_green) + refl*double(c.c_green) );
 	c_blue = (unsigned char)( (1.0 - refl)*double(c_blue) + refl*double(c.c_blue) );
-}
-//------------------------------------------------------------------------------
-void Color::mixture(const Color &cmix, const double mixcoeff) {
-	c_red = c_red + (unsigned char)( mixcoeff*double(cmix.c_red) );
-	c_green = c_green + (unsigned char)( mixcoeff*double(cmix.c_green) );
-	c_blue = c_blue + (unsigned char)( mixcoeff*double(cmix.c_blue) );
 }
 //------------------------------------------------------------------------------
 void Color::assert_is_in_valid_8Bit_range(const int channel)const {

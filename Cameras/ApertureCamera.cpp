@@ -163,14 +163,8 @@ std::string ApertureCamera::get_print()const {
 //------------------------------------------------------------------------------
 Vector3D ApertureCamera::get_random_point_on_bounded_aperture_plane() {
 
-	const double polar_radius = dice.uniform()*ApertureRadius_in_m;
-	const double polar_angel = dice.uniform()*2.0*M_PI;
-
-	return Vector3D(
-		polar_radius*cos(polar_angel), 
-		polar_radius*sin(polar_angel), 
-		SensorDistance_in_m
-	);	
+	Vector3D ap = dice.get_point_on_xy_disc_within_radius(ApertureRadius_in_m);
+	return Vector3D(ap.x(), ap.y(), SensorDistance_in_m);
 }
 //------------------------------------------------------------------------------
 Vector3D ApertureCamera::get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(
@@ -230,43 +224,36 @@ Vector3D ApertureCamera::camera_ray_direction_vector_in_world_frame(
 void ApertureCamera::acquire_image(
 	const Frame* world,
 	const TracerSettings* settings
-){
-	double color_weight_for_single_ray = 
-		1.0/double(rays_per_pixel);
-	
+){	
 	CameraRay cam_ray;
-	Color average_pixel_color;
-	Color color_for_single_ray;
-	uint pixel_iterator, row, col;
+	uint pix, row, col;
 	const uint initial_interaction_counter = 0;
 	int HadCatch = 0;
 	
-	#pragma omp parallel shared(settings,world,HadCatch) private(pixel_iterator,cam_ray,average_pixel_color,color_for_single_ray,row,col) 
+	#pragma omp parallel shared(settings,world,HadCatch) private(pix,cam_ray,row,col) 
 	{	
 		#pragma omp for schedule(dynamic) 
-		for (pixel_iterator = 0; pixel_iterator < image->get_number_of_pixels(); pixel_iterator++) 
+		for (pix = 0; pix < image->get_number_of_pixels(); pix++) 
 		{
 			try {
-				row = pixel_iterator / image->get_number_of_cols();
-				col = pixel_iterator % image->get_number_of_cols();
-				average_pixel_color = Color(0,0,0);
+				row = pix / image->get_number_of_cols();
+				col = pix % image->get_number_of_cols();
+				std::vector<Color> colors_of_pixel; 
+				colors_of_pixel.reserve(rays_per_pixel);
 
 				for(int j = 0; j < rays_per_pixel; j++ ){
 
 					cam_ray = get_ray_for_pixel_in_row_and_col(row, col);
 				
-					color_for_single_ray = cam_ray.trace(
-						world,
-						initial_interaction_counter,
-						settings
-					);
-					
-					average_pixel_color.mixture(
-						color_for_single_ray,
-						color_weight_for_single_ray
+					colors_of_pixel.push_back(
+						cam_ray.trace(
+							world,
+							initial_interaction_counter,
+							settings
+						)
 					);
 				}
-				image->set_pixel_row_col_to_color(row, col, average_pixel_color);
+				image->set_pixel_row_col_to_color(row, col, Color(colors_of_pixel));
 			}catch(std::exception &error) {
 				HadCatch++;
 				std::cerr << error.what(); 
