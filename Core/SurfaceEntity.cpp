@@ -97,22 +97,22 @@ void SurfaceEntity::set_inner_reflection(const Func1D* reflec) {
 //------------------------------------------------------------------------------
 void SurfaceEntity::set_outer_refraction(const Func1D* refrac) {
 	outer_refraction_vs_wavelength = refrac;
-}
-//------------------------------------------------------------------------------
-void SurfaceEntity::set_inner_refraction(const Func1D* refrac) {
-	inner_refraction_vs_wavelength = refrac;
-}
-//------------------------------------------------------------------------------
-void SurfaceEntity::set_outer_absorption(const Func1D* absorp) {
-	outer_absorption_vs_wavelength = absorp;
 	if(outer_refraction_vs_wavelength != default_refr)
 		_boundary_layer_is_transparent = true;
 }
 //------------------------------------------------------------------------------
-void SurfaceEntity::set_inner_absorption(const Func1D* absorp) {
-	inner_absorption_vs_wavelength = absorp;
+void SurfaceEntity::set_inner_refraction(const Func1D* refrac) {
+	inner_refraction_vs_wavelength = refrac;
 	if(inner_refraction_vs_wavelength != default_refr)
 		_boundary_layer_is_transparent = true;	
+}
+//------------------------------------------------------------------------------
+void SurfaceEntity::set_outer_absorption(const Func1D* absorp) {
+	outer_absorption_vs_wavelength = absorp;
+}
+//------------------------------------------------------------------------------
+void SurfaceEntity::set_inner_absorption(const Func1D* absorp) {
+	inner_absorption_vs_wavelength = absorp;
 }
 //------------------------------------------------------------------------------
 void SurfaceEntity::set_allowed_frames_to_propagate_to(
