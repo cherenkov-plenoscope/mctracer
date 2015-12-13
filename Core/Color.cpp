@@ -58,7 +58,9 @@ unsigned char Color::get_blue()const {
 //------------------------------------------------------------------------------
 std::string Color::get_print()const {
 	std::stringstream out;
-	out << "(" << (int)(c_red) << " " << (int)(c_green) << " " << (int)(c_blue) << ")";
+	out << "(" << (int)(c_red);
+	out << " " << (int)(c_green);
+	out << " " << (int)(c_blue) << ")";
 	out << "8 Bit RGB";
 	return out.str();
 }
