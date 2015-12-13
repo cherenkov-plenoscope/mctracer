@@ -3,9 +3,23 @@
 #include <string>
 
 namespace Fits {
+namespace Header {
+
+std::string get_header(std::string header) {
+	
+	std::string out;
+	out += header;
+	out += end_key;
+
+	uint blocks = out.length()/block_length + 1;
+	uint fill = blocks*block_length - out.length();
+	out += StringTools::repeat_multiple_times(" ", fill);;
+	return out;	
+}
+
 namespace KeyWordRecord {
 
-	std::string get_keyword_record_for_key_value_and_comment(
+	std::string key_value_and_comment(
 		std::string keyword,
 		std::string value,
 		std::string comment
@@ -48,10 +62,12 @@ namespace KeyWordRecord {
 			info << std::to_string(max_value_lenght) << " chars.";
 			throw ValueTooLarge(info.str());
 		}
-			
-		return value += StringTools::repeat_multiple_times(
+		
+		std::string value_str = StringTools::repeat_multiple_times(
 			" ", max_value_lenght - value.length()
 		);
+
+		return value_str += value;
 	}
 
 	std::string comment_fits_style(std::string comment) {
@@ -70,4 +86,27 @@ namespace KeyWordRecord {
 	}
 }//   
 
-}//  
+
+namespace CommentRecord {
+
+	std::string get_comment_record(std::string comment) {
+		
+		uint line_breaks = comment.length()/payload_line_width;
+		uint lines = line_breaks+1;
+		uint fill = lines*payload_line_width - comment.length();
+
+		std::string out;
+		for(uint line=0; line<lines; line++) {
+			out += comment_key;
+			out += comment.substr(
+				line*payload_line_width,
+				payload_line_width
+			);
+		}
+		out += StringTools::repeat_multiple_times(" ", fill);;
+
+		return out;
+	}
+}
+}// HEADER
+}// FITS  
