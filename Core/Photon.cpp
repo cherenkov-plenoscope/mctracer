@@ -75,10 +75,6 @@ void Photon::work_on_first_causal_intersection() {
 		get_absorbed_in_void_space();
 }
 //------------------------------------------------------------------------------
-/*void Photon::get_absorbed_on_way_or_interact_with_object() {
-	if(intersection)
-}*/
-//------------------------------------------------------------------------------
 void Photon::interact_with_object() {
 
 	if(	intersection->get_facing_reflection_propability(wavelength) >= 
@@ -191,8 +187,6 @@ double Photon::get_time_of_flight()const {
 
 	uint i =0;
 	for(const Intersection* intersec : *intersection_history){
-
-		//std::cout << *this << "\ni: " << i <<"\n"<<intersec->get_print()<<"\n";
 
 		if(i!=0)
 			time_of_flight += get_time_to_pass_distance_in_refractive_index(
