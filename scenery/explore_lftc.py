@@ -59,7 +59,7 @@ class LightFieldTelescopeExplorer(object):
 		plt.ylabel("y direction [deg]")
 		plt.show()
 
-	def time(self, subpix_id, subpix=0):
+	def time(self, subpix_id, subpix=0, my_bin_count=None):
 		if subpix==0:
 			subpix = self.data[self.data['id']==subpix_id]
 
@@ -68,7 +68,9 @@ class LightFieldTelescopeExplorer(object):
 
 		print("time std dev ", np.std(subpix['t']))
 
-		my_bin_count = np.sqrt(subpix['t'].shape[0])
+		if my_bin_count is None:
+			my_bin_count = 2.0*np.sqrt(subpix['t'].shape[0])
+			
 		plt.figure()
 		plt.hist(subpix['t'], bins=my_bin_count, histtype='step')
 		plt.xlabel("t [s]")
