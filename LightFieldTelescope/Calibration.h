@@ -32,6 +32,7 @@ namespace LightFieldTelescope {
 		const Config telescope_config;
 		const Geometry telescope_geometry;
 		uint number_of_photons;
+		uint number_of_photons_per_sub_pixel;
 		uint number_of_photons_per_block;
 		uint number_of_blocks;
 		double max_principal_aperture_radius_to_trow_photons_on;

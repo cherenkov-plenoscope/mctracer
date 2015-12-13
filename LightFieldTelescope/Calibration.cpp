@@ -8,8 +8,12 @@ Calibration::Calibration(const Config cfg):
 	telescope_config(cfg), 
 	telescope_geometry(cfg) 
 {
-	number_of_photons = telescope_geometry.total_number_of_sub_pixels()*1e3;
+	number_of_photons_per_sub_pixel = 250;
 	number_of_photons_per_block = 1e6;
+
+	number_of_photons = telescope_geometry.total_number_of_sub_pixels()*
+		number_of_photons_per_sub_pixel;
+
 	number_of_blocks = ceil(
 		double(number_of_photons)/double(number_of_photons_per_block)
 	);
