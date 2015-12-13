@@ -10,75 +10,7 @@
 
 using namespace std;
 
-// The fixture for testing class Foo.
-class CartesianFrameTest : public ::testing::Test {
- protected:
-  // You can remove any or all of the following functions if its body
-  // is empty.
-	
-  CartesianFrameTest() {
-    // You can do set-up work for each test here.
-  }
-
-  virtual ~CartesianFrameTest() {
-    // You can do clean-up work that doesn't throw exceptions here.
-  }
-
-  // If the constructor and destructor are not enough for setting up
-  // and cleaning up each test, you can define the following methods:
-
-  virtual void SetUp() {
-    // Code here will be called immediately after the constructor (right
-    // before each test).
-  }
-
-  virtual void TearDown() {
-    // Code here will be called immediately after each test (right
-    // before the destructor).
-  }
-
-  // Objects declared here can be used by all tests in the test case for Foo.
-};
-//------------------------------------------------------------------------------
-/*TEST_F(CartesianFrameTest, find_specific_frame) {
-  
-  // load some world
-  string xml_file = "./test_scenery/including_other_xml_files.xml";
-  WorldFactory file2world;
-  file2world.load(xml_file);
-  Frame *world = file2world.world();
-
-  // Now get the pointer to the frame we are looking for
-  // In the case of "tree/pole" we know that it must be in the test xml file.
-  const Frame* SpecificFrameInWorldWeAreLookingFor = 
-  world->get_frame_in_tree_by_path( "/tree/pole" );
-
-  EXPECT_EQ("pole", SpecificFrameInWorldWeAreLookingFor->get_name_of_frame());
-
-  // Lets do a second test with one additional layer
-  SpecificFrameInWorldWeAreLookingFor = world->
-  get_frame_in_tree_by_path( "/house/chimney/chimney_wall_4" );
-
-  if(SpecificFrameInWorldWeAreLookingFor == NULL)
-    std::cout << "OMG the Pointer is NULL!!!\n";
-
-  EXPECT_EQ(
-    "chimney_wall_4", 
-    SpecificFrameInWorldWeAreLookingFor->get_name_of_frame()
-  );
-  // In addition we test if the path is restored correctly by the frame
-  std::string RestoredPath = 
-  SpecificFrameInWorldWeAreLookingFor->get_path_in_tree_of_frames();
-
-  EXPECT_EQ( "/house/chimney/chimney_wall_4" , RestoredPath );
-
-  // Now lets look something up which is not in our test xml file.
-  // In this case the void_frame is returned
-  SpecificFrameInWorldWeAreLookingFor = 
-  world->get_frame_in_tree_by_path( "your/Mama" );
-
-  EXPECT_EQ( Frame::void_frame, SpecificFrameInWorldWeAreLookingFor );
-}*/
+class CartesianFrameTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(CartesianFrameTest, assert_name_is_valid) {
 
