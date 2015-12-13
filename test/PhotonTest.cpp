@@ -11,6 +11,7 @@
 #include "Core/Photons.h"
 #include "Core/Function/ConstantFunction.h"
 #include "PhotonSensor/PhotonSensor.h" 
+#include "Core/PhysicalConstants.h"
 
 using namespace std;
 
@@ -273,4 +274,112 @@ TEST_F(PhotonTest, Reflections){
 
     Photons::delete_photons_and_history(photon_bunch);
     delete photon_bunch;    
+}
+//------------------------------------------------------------------------------
+TEST_F(PhotonTest, Refraction){
+                           
+    TracerSettings setup;
+
+    // create a test setup with two planes and high refractive index in between
+    Frame world("world", Vector3D::null, Rotation3D::null);
+
+    Function::Constant water_refraction(
+            1.33,
+            Function::Limits(200e-9, 1200e-9)
+    );
+
+    //------------entrance surface---------------
+    Color entrance_surface_color(200,64,64);
+
+    Plane entrance_surface;
+    entrance_surface.set_name_pos_rot(
+        "entrance_surface", 
+        Vector3D(0.0, 0.0, 1.0), 
+        Rotation3D(0.0, M_PI, 0.0)
+    );
+    entrance_surface.set_outer_color(&entrance_surface_color);
+    entrance_surface.set_inner_color(&entrance_surface_color);
+    entrance_surface.set_inner_refraction(&water_refraction); 
+    entrance_surface.set_x_y_width(1.0, 1.0);
+
+    //------------exit surface---------------
+    Color exit_surface_color(200,64,64);
+
+    Plane exit_surface;
+    exit_surface.set_name_pos_rot(
+        "exit_surface", 
+        Vector3D(0.0, 0.0, 2.0),
+        Rotation3D::null
+    );
+    exit_surface.set_outer_color(&exit_surface_color);
+    exit_surface.set_inner_color(&exit_surface_color);
+    exit_surface.set_inner_refraction(&water_refraction); 
+    exit_surface.set_x_y_width(1.0, 1.0);
+
+    //------------absorber----------------
+    Color absorber_color(50,50,50);
+
+    Plane absorber;
+    absorber.set_name_pos_rot(
+        "absorber", 
+        Vector3D(0.0, 0.0, 3.0),
+        Rotation3D::null
+    );
+    absorber.set_outer_color(&absorber_color);
+    absorber.set_inner_color(&absorber_color);
+    absorber.set_x_y_width(1.0, 1.0);
+    uint sensor_id = 0;
+    PhotonSensor::PerfectSensor absorber_sensor(sensor_id, &absorber);
+    std::vector<PhotonSensor::Sensor*> sensors = {&absorber_sensor};
+    PhotonSensors::sort_photon_sensors_based_on_frames(&sensors);
+
+    //----------declare relationships------------
+    world.set_mother_and_child(&entrance_surface);
+    world.set_mother_and_child(&exit_surface);
+    world.set_mother_and_child(&absorber);
+
+    //---post initialize the world to calculate all bounding spheres---
+    world.init_tree_based_on_mother_child_relations();
+
+    //----------free orbit-----------------------
+    FreeOrbitCamera free(&world, &setup);
+
+    //-----------send Photon----------------------
+    double wavelength = 433.0e-9;
+
+    Random::Mt19937 dice(Random::zero_seed);
+    std::vector<Photon*>* photon_bunch = new std::vector<Photon*>;
+
+    double num_phot = 1e4;
+    for(int i=1; i<=num_phot; i++) {
+        
+        Photon *P;
+        P = new Photon(Vector3D::null, Vector3D::unit_z, wavelength);
+        P->set_id(i);
+        photon_bunch->push_back(P);
+    }
+
+    Photons::propagate_photons_in_world_with_settings(
+        photon_bunch, &world, &setup
+    );
+
+    PhotonSensors::assign_photons_to_sensors(photon_bunch, &sensors);
+
+    // 5% fresnell reflection
+    EXPECT_NEAR(
+        0.95, 
+        double(absorber_sensor.get_arrival_table().size())/double(num_phot),
+        2e-2
+    );
+
+    double travel_time = (2.0 + 1.33*1.0)/PhysicalConstants::speed_of_light_in_vacuum;
+
+    EXPECT_NEAR(
+        travel_time, 
+        get_mean_along_column(absorber_sensor.get_arrival_table(), 4),
+        1e-10
+    );
+
+    Photons::delete_photons_and_history(photon_bunch);
+    delete photon_bunch;
 }
