@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 
+#include "Vector2DTest.cpp"
 #include "Vector3DTest.cpp"
 #include "RayTest.cpp"
 #include "RayAndBoundingSphereOfFrameInteractionTest.cpp"
@@ -18,6 +19,7 @@
 #include "FiniteStateMashineTEST.cpp"
 #include "RayAndFrameInteractionTest.cpp"
 #include "XyPlaneRayEquationTest.cpp"
+#include "DualSphericalPrismZTest.cpp"
 #include "PlaneIntersectionTest.cpp"
 #include "ZaxisCylinderRayIntersectionEquationTest.cpp"
 #include "HexagonalPrismZTest.cpp"

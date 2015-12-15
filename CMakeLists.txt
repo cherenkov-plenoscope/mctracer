@@ -47,7 +47,8 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/SphericalCapRayIntersectionEquation.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/RectangularPrismZ.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/CylinderPrismZ.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/HexagonalPrismZ.cpp	
+	${CMAKE_CURRENT_SOURCE_DIR}/HexagonalPrismZ.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/DualSphericalPrismZ.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TracerException.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/KeyValueMap.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ToDoScheduler.cpp		
@@ -58,6 +59,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Triangle.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Plane.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/HexPlane.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/PlaneDualSphericalBound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Disc.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Annulus.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/LightSourceFromConfig.cpp
