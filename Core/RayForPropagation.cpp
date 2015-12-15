@@ -81,7 +81,7 @@ std::string RayForPropagation::get_history_print()const {
 	for(InteractionType type : *interaction_type_history) {
 		out << ++index << ") " << get_type_print(type) << " in ";
 		out << intersection_history->at(index-1)->
-			get_intersecting_object()->get_name();
+			get_object()->get_name();
 		out << " " << intersection_history->at(index-1)->	
 			get_intersection_vector_in_world_system() << ", dist to prev.:";
 
@@ -89,7 +89,7 @@ std::string RayForPropagation::get_history_print()const {
 			out << intersection_history->at(index-1)->get_intersection_vector_in_world_system().distance_to(
 			   		intersection_history->at(index-2)->get_intersection_vector_in_world_system()
 				)*1e9 << "nm";
-			}
+		}
 
 		out << "\n";
 	}
@@ -114,7 +114,7 @@ double RayForPropagation::get_accumulative_distance()const {
     return accumulative_distance;	
 }
 //------------------------------------------------------------------------------
-void RayForPropagation::propagate_in(PropagationEnvironment* env) {
+void RayForPropagation::propagate_in(PropagationEnvironment env) {
 	throw TracerException("Prototype RayForPropagation must not be propagated itself, only its children such as the photon are meant to be propagated.");
 }
 //------------------------------------------------------------------------------

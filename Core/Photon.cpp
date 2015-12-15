@@ -54,11 +54,11 @@ const PhotonMcTruth* Photon::get_mc_truth()const{
 std::string Photon::get_print()const {
 	std::stringstream out; 
 	out << RayForPropagation::get_print();
-	out << ", wvl: " << wavelength*1e9 << "nm, ";
+	out << "wavelength " << wavelength*1e9 << "nm\n";
 	return out.str();
 }
 //------------------------------------------------------------------------------
-void Photon::propagate_in(PropagationEnvironment* environment) {
+void Photon::propagate_in(PropagationEnvironment environment) {
 	this->environment = environment;
 
 	if(limit_of_interactions_is_not_reached_yet()) 
@@ -67,7 +67,7 @@ void Photon::propagate_in(PropagationEnvironment* environment) {
 //------------------------------------------------------------------------------
 void Photon::work_on_first_causal_intersection() {
 	
-	intersection = get_first_intersection_in(environment->world_geometry);
+	intersection = get_first_intersection_in(environment.world_geometry);
 
 	if(intersection->does_intersect())
 		interact_with_object();
@@ -78,7 +78,7 @@ void Photon::work_on_first_causal_intersection() {
 void Photon::interact_with_object() {
 
 	if(	intersection->get_facing_reflection_propability(wavelength) >= 
-		environment->random_engine->uniform() 
+		environment.random_engine->uniform() 
 	) {
 		reflect_on_surface_and_propagate_on(reflection_on_surface);
 	}else{
@@ -120,7 +120,7 @@ void Photon::fresnel_refraction_and_reflection() {
 		intersection->get_refractive_index_going_to(wavelength)
 	);
 
-	if(fresnel.reflection_propability() > environment->random_engine->uniform())
+	if(fresnel.reflection_propability() > environment.random_engine->uniform())
 		reflect_on_surface_and_propagate_on(fresnel_reflection_on_surface); 
 	else
 		pass_the_boundary_layer(fresnel);
@@ -134,12 +134,30 @@ void Photon::pass_the_boundary_layer(
 		push_back_intersection_and_type_to_propagation_history(
 			intersection, 
 			refraction_to_inside
-		);	
+		);
 	else
 		push_back_intersection_and_type_to_propagation_history(
 			intersection, 
 			refraction_to_outside
 		);			
+
+	propagate_on_after_boundary_layer(fresnel);
+} 
+//------------------------------------------------------------------------------
+void Photon::propagate_on_after_boundary_layer(
+	const FresnelRefractionAndReflection &fresnel
+) {
+
+	PropagationEnvironment next_environment = environment;
+	
+	if(	intersection->get_object()->has_restrictions_on_frames_to_propagate_to() && 
+		!intersection->going_to_default_refractive_index()
+	)
+		next_environment.world_geometry = 
+			intersection->get_object()->get_allowed_frame_to_propagate_to();
+	else
+		next_environment.world_geometry = 
+			intersection->get_object()->get_root_of_world();
 
 	Photon refracted_photon(this);
 
@@ -149,9 +167,9 @@ void Photon::pass_the_boundary_layer(
 			fresnel.get_refrac_dir_in_object_system()
 		)
 	);
-	
-	refracted_photon.propagate_in(environment);
-} 
+
+	refracted_photon.propagate_in(next_environment);	
+}
 //------------------------------------------------------------------------------
 void Photon::get_absorbed_on_surface() {
 	push_back_intersection_and_type_to_propagation_history(
@@ -168,7 +186,7 @@ void Photon::get_absorbed_in_void_space() {
 }
 //------------------------------------------------------------------------------
 bool Photon::limit_of_interactions_is_not_reached_yet()const {
-	return environment->propagation_options->
+	return environment.propagation_options->
 		max_number_of_reflections_is_not_reached_yet(
 			get_number_of_interactions_so_far());
 }

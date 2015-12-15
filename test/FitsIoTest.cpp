@@ -113,5 +113,5 @@ TEST_F(FitsIoTest, create_header) {
         header.str()
     );
 
-    std::cout << packed_header;
+    //std::cout << packed_header;
 }

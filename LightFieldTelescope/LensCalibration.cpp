@@ -42,7 +42,7 @@ LensCalibration::LensCalibration(const Config cfg):
 			433e-9
 		);
 
-		ph->propagate_in(&test_bench_environment);
+		ph->propagate_in(test_bench_environment);
 		PhotonSensors::assign_photon_to_sensors(ph, &read_out_list);
 
 		ph->delete_history();

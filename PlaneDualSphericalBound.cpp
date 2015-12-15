@@ -16,7 +16,7 @@ void PlaneDualSphericalBound::post_initialize_radius_of_enclosing_sphere() {
 std::string PlaneDualSphericalBound::get_print()const {
 	std::stringstream out;
 	out << SurfaceEntity::get_print();
-	out << "plane dual sphere bound:\n";
+	out << "plane dual circle bound:\n";
 	out << "| hight: " << dual_sphere_bounds.get_hight() << "m\n";
 	out << "| width: " << dual_sphere_bounds.get_width() << "m\n";
 	out << "| circle radius: " << dual_sphere_bounds.get_circle_radius() << "m\n";

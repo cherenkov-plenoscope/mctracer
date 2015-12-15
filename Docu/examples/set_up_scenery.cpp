@@ -27,22 +27,18 @@ TEST_F(SetUpScenery, create_scenery) {
     /*@Declare the geometry@*/
 
     //--world--
-    Frame world;
-    world.set_name_pos_rot("World", Vector3D::null, Rotation3D::null);
+    Frame world("World", Vector3D::null, Rotation3D::null);
     //--tree--
     Vector3D tree_pos(5.0, 0.0, 0.0);
-    Frame tree;
-    tree.set_name_pos_rot("My_Tree", tree_pos, Rotation3D::null);
+    Frame tree("My_Tree", tree_pos, Rotation3D::null);
 
     Color leaf_green(0, 128, 0);
-    Sphere leaf_ball;
-    leaf_ball.set_name_pos_rot("leaf_ball", Vector3D(0.0, 0.0, 2.0), Rotation3D::null);
+    Sphere leaf_ball("leaf_ball", Vector3D(0.0, 0.0, 2.0), Rotation3D::null);
     leaf_ball.set_outer_color(&leaf_green);
     leaf_ball.set_sphere_radius(0.5);
 
     Color wood_brown(64, 64, 0);
-    Cylinder tree_pole;
-    tree_pole.set_name_pos_rot("tree_pole", Vector3D(0.0, 0.0, 0.5), Rotation3D::null);
+    Cylinder tree_pole("tree_pole", Vector3D(0.0, 0.0, 0.5), Rotation3D::null);
     tree_pole.set_outer_color(&wood_brown);
     tree_pole.set_radius_and_length(0.1, 1.0);
 
@@ -50,21 +46,18 @@ TEST_F(SetUpScenery, create_scenery) {
     tree.set_mother_and_child(&tree_pole); 
     //--house--
     Vector3D house_pos(0.0, -5.0, 0.0);
-    Frame house;
-    house.set_name_pos_rot("house", house_pos, Rotation3D::null);
+    Frame house("house", house_pos, Rotation3D::null);
 
     Color wall_white(225, 225, 225);
     Color roof_red(225, 64, 64);
     Color foundation_gray(32, 32, 32);
 
-    Plane foundation;
-    foundation.set_name_pos_rot("foundation", Vector3D(0.0, 0.0, 0.01), Rotation3D::null);
+    Plane foundation("foundation", Vector3D(0.0, 0.0, 0.01), Rotation3D::null);
     foundation.set_outer_color(&foundation_gray);
     foundation.set_inner_color(&foundation_gray);
     foundation.set_x_y_width(4.5, 4.5);
 
-    Plane front_wall;
-    front_wall.set_name_pos_rot("wall1", Vector3D(0.0, 0.0, 0.0), Rotation3D::null);
+    Plane front_wall("wall1", Vector3D(0.0, 0.0, 0.0), Rotation3D::null);
 
     world.set_mother_and_child(&tree);
 

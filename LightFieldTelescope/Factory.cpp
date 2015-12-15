@@ -6,6 +6,7 @@
 #include "Plane.h"
 #include "Cylinder.h"
 #include "BiConvexLensHexBound.h"
+#include "PlaneDualSphericalBound.h"
 
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------
@@ -240,8 +241,7 @@ Frame* Factory::get_image_sensor_housing()const {
 	sensor_housing_top->set_inner_color(&Color::gray);
 	sensor_housing_top->set_radius(geometry.outer_sensor_housing_radius());
 
-	Cylinder* sensor_housing_cylinder = new Cylinder;
-	sensor_housing_cylinder->set_name_pos_rot(
+	Cylinder* sensor_housing_cylinder = new Cylinder(
 		"sensor_housing_cylinder",
 		Vector3D::null,
 		Rotation3D::null

@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
     telescope_config.housing_overhead = 1.2;
     telescope_config.lens_refraction = &LightFieldTelescope::pmma_refraction;
     telescope_config.sub_pixel_on_pixel_diagonal = 11;
-
+    
     // RUN HIGH INCIDENT ANGLE CALIBRATION ON LENS
     LightFieldTelescope::LensCalibration lenscalib(telescope_config);
 
@@ -37,7 +37,6 @@ int main(int argc, char* argv[]) {
     LightFieldTelescope::Calibration calib(telescope_config);
 
     // EXPLORE TELESCOPE
-    /*
     Frame telescope("telescope", Vector3D::null, Rotation3D::null);
 
     LightFieldTelescope::Factory fab(telescope_config);
@@ -46,9 +45,9 @@ int main(int argc, char* argv[]) {
     std::cout << fab.geometry << "\n";
 
     TracerSettings settings;
-    settings.global_light_direction = Vector3D::unit_z;
+    settings.global_light_direction = Vector3D(1.0, 1.0, 1.0);
     FreeOrbitCamera free(&telescope, &settings);
-    */    
+       
     }catch(std::exception &error) {
         std::cerr << error.what(); 
     }

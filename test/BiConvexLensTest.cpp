@@ -136,7 +136,7 @@ TEST_F(BiConvexLensTest, send_photon_frontal_into_lens) {
 	for(uint i=0; i<total_propagations; i++) {
 
 		Photon blue_photon(Vector3D(0.0, 0.0, 1.0), Vector3D(0.0, 0.0, -1.0), 433e-9);
-		blue_photon.propagate_in(&lens_test_bench_environment);
+		blue_photon.propagate_in(lens_test_bench_environment);
 
 		if(2.0 == blue_photon.get_accumulative_distance())
 			number_of_photons_reaching_sensor_disc++;
@@ -152,8 +152,9 @@ TEST_F(BiConvexLensTest, send_photon_frontal_into_lens) {
 TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 
 	// light source
+	uint number_of_photons_emitted = 1e4;
     std::vector<Photon*>* photons = 
-	    Photons::Source::parallel_towards_z_from_xy_disc(0.125, 1e4);
+	    Photons::Source::parallel_towards_z_from_xy_disc(0.125, number_of_photons_emitted);
 
 	HomoTrafo3D Trafo;
 	Trafo.set_transformation(
@@ -177,6 +178,13 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 	Photons::delete_photons_and_history(photons);
 
 	EXPECT_NEAR(1.5e-3, sensor->point_spread_std_dev(), 1e-3);
+
+	EXPECT_NEAR(
+		1.0, 
+		double(sensor->get_arrival_table().size())/double(number_of_photons_emitted), 
+		10e-2
+	);
+
 
 	/*FreeOrbitCamera free(
 		lens_test_bench_environment.world_geometry, 

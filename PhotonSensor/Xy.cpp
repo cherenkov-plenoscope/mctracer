@@ -12,7 +12,7 @@ namespace PhotonSensor {
 	void Xy::assign_photon_to_this_sensor(const Photon* photon) {
 		
 		if(	
-			photon->get_final_intersection()->get_intersecting_object() == 
+			photon->get_final_intersection()->get_object() == 
 			sensor_frame
 		) {
 

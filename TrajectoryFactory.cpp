@@ -53,9 +53,7 @@ std::string TrajectoryFactory::get_trajectory_frame_name()const {
 //------------------------------------------------------------------------------
 Frame* TrajectoryFactory::get_empty_trajectory_frame()const {
 	
-	Frame* trajectory = new Frame;
-	
-	trajectory->set_name_pos_rot(
+	Frame* trajectory = new Frame(
 		get_trajectory_frame_name(),
 	 	Vector3D::null, 
 	 	Rotation3D::null
@@ -77,9 +75,7 @@ Cylinder* TrajectoryFactory::get_trajectory_line_of_part(
 	const uint part_index
 )const {
 
-	Cylinder* ray_trajectory = new Cylinder;
-
-	ray_trajectory->set_name_pos_rot(
+	Cylinder* ray_trajectory = new Cylinder(
 		get_trajectory_of_part_index(part_index),	 	
 		Vector3D::null, 
  		Rotation3D::null

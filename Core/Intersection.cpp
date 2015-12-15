@@ -4,7 +4,7 @@
 const Intersection* Intersection::void_intersection = new Intersection();
 //------------------------------------------------------------------------------
 Intersection::Intersection() {
-	intersecting_object = SurfaceEntity::void_object;
+	object = SurfaceEntity::void_object;
 	intersection_point = Vector3D(
 		std::numeric_limits<double>::infinity(),
 		std::numeric_limits<double>::infinity(),
@@ -21,7 +21,7 @@ Intersection::Intersection(
 	const double distance_of_ray_support_to_intersection,
 	const Vector3D incident_in_obj_sys
 ) {
-	this->intersecting_object = intersectiong_object;
+	this->object = intersectiong_object;
 	intersection_point = intersection_vector;
 	this->surfacenormal_in_intersection_point = surfacenormal_in_intersection_point;
 	distance_of_ray_in_m = distance_of_ray_support_to_intersection;
@@ -30,11 +30,11 @@ Intersection::Intersection(
 }
 //------------------------------------------------------------------------------
 bool Intersection::does_intersect()const {
-	return intersecting_object != SurfaceEntity::void_object;
+	return object != SurfaceEntity::void_object;
 }
 //------------------------------------------------------------------------------
-const SurfaceEntity * Intersection::get_intersecting_object()const {
-	return intersecting_object;
+const SurfaceEntity * Intersection::get_object()const {
+	return object;
 }
 //------------------------------------------------------------------------------
 Vector3D Intersection::get_intersection_vector_in_object_system()const {
@@ -42,7 +42,7 @@ Vector3D Intersection::get_intersection_vector_in_object_system()const {
 }
 //------------------------------------------------------------------------------
 Vector3D Intersection::get_intersection_vector_in_world_system()const {
-	return intersecting_object->
+	return object->
 		frame2world()->get_transformed_position(intersection_point);
 }
 //------------------------------------------------------------------------------
@@ -51,8 +51,8 @@ Vector3D Intersection::get_surface_normal_in_object_system()const {
 }
 //------------------------------------------------------------------------------
 Vector3D Intersection::get_surface_normal_in_world_system()const {
-	return intersecting_object->
-		frame2world()->get_transformed_orientation(surfacenormal_in_intersection_point);	
+	return object->frame2world()->
+		get_transformed_orientation(surfacenormal_in_intersection_point);	
 }
 //------------------------------------------------------------------------------
 double Intersection::get_intersection_distance()const {
@@ -63,7 +63,7 @@ std::string Intersection::get_print()const {
 
 	std::stringstream out; 
 	if(does_intersect()) {
-		out << intersecting_object->get_name() << " in ";
+		out << object->get_name() << " in ";
 		out << get_intersection_vector_in_world_system() << " after ";
 		out << get_intersection_distance() << "m";
 	}else
@@ -81,9 +81,9 @@ void Intersection::get_reflection_direction_in_object_system(
 Vector3D Intersection::get_reflection_direction_in_world_system(
 	Vector3D incomming_dir_in_world
 )const {
-	intersecting_object->world2frame()->transform_orientation(&incomming_dir_in_world);
+	object->world2frame()->transform_orientation(&incomming_dir_in_world);
 	surfacenormal_in_intersection_point.mirror(&incomming_dir_in_world);
-	intersecting_object->frame2world()->transform_orientation(&incomming_dir_in_world);
+	object->frame2world()->transform_orientation(&incomming_dir_in_world);
 	return incomming_dir_in_world;
 }
 //------------------------------------------------------------------------------
@@ -91,38 +91,44 @@ Vector3D Intersection::get_reflection_direction_in_world_system(
 //------------------------------------------------------------------------------
 double Intersection::get_facing_reflection_propability(const double wavelength)const {
 	return _from_outside_to_inside ?
-	(*intersecting_object->get_outer_reflection_())(wavelength):
-	(*intersecting_object->get_inner_reflection_())(wavelength);
+	(*object->get_outer_reflection_())(wavelength):
+	(*object->get_inner_reflection_())(wavelength);
 }
 //------------------------------------------------------------------------------
 double Intersection::get_refractive_index_going_to(const double wavelength)const {
 	return _from_outside_to_inside ?
-	(*intersecting_object->get_inner_refraction_())(wavelength):
-	(*intersecting_object->get_outer_refraction_())(wavelength);
+	(*object->get_inner_refraction_())(wavelength):
+	(*object->get_outer_refraction_())(wavelength);
+}
+//------------------------------------------------------------------------------
+bool Intersection::going_to_default_refractive_index()const {
+	return _from_outside_to_inside ?
+	object->get_inner_refraction_() == SurfaceEntity::default_refr:
+	object->get_outer_refraction_() == SurfaceEntity::default_refr;
 }
 //------------------------------------------------------------------------------
 double Intersection::get_refractive_index_coming_from(const double wavelength)const {
 	return _from_outside_to_inside ?
-	(*intersecting_object->get_outer_refraction_())(wavelength):
-	(*intersecting_object->get_inner_refraction_())(wavelength);
+	(*object->get_outer_refraction_())(wavelength):
+	(*object->get_inner_refraction_())(wavelength);
 }
 //------------------------------------------------------------------------------
 double Intersection::get_outer_half_way_depth(const double wavelength)const {
-	return (*intersecting_object->get_outer_absorption_())(wavelength);
+	return (*object->get_outer_absorption_())(wavelength);
 }
 //------------------------------------------------------------------------------
 double Intersection::get_inner_half_way_depth(const double wavelength)const {
-	return (*intersecting_object->get_inner_absorption_())(wavelength);
+	return (*object->get_inner_absorption_())(wavelength);
 }
 //------------------------------------------------------------------------------
 bool Intersection::boundary_layer_is_transparent()const {
-	return intersecting_object->boundary_layer_is_transparent();
+	return object->boundary_layer_is_transparent();
 }
 //------------------------------------------------------------------------------
 const Color Intersection::get_facing_color()const {
 	return _from_outside_to_inside ? 
-		*intersecting_object->get_outer_color(): 
-		*intersecting_object->get_inner_color();
+		*object->get_outer_color(): 
+		*object->get_inner_color();
 }
 //------------------------------------------------------------------------------
 bool Intersection::ray_is_running_from_outside_to_inside(
@@ -145,14 +151,14 @@ Vector3D Intersection::get_normal_in_faceing_surface_system()const {
 }
 //------------------------------------------------------------------------------
 const HomoTrafo3D* Intersection::world2object()const{
-	return intersecting_object->world2frame();
-}
-const HomoTrafo3D* Intersection::object2world()const{
-	return intersecting_object->frame2world();
+	return object->world2frame();
 }
 //------------------------------------------------------------------------------
-bool Intersection::operator<(const Intersection& other) const
-{
+const HomoTrafo3D* Intersection::object2world()const{
+	return object->frame2world();
+}
+//------------------------------------------------------------------------------
+bool Intersection::operator<(const Intersection& other)const {
 	return this->get_intersection_distance() < other.get_intersection_distance();
 }
 //------------------------------------------------------------------------------

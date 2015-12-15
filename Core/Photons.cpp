@@ -43,7 +43,7 @@ namespace Photons {
 		env.random_engine = &dice;
 
 		for(uint i = 0; i<photon_bunch->size(); i++ )
-			photon_bunch->at(i)->propagate_in(&env);;
+			photon_bunch->at(i)->propagate_in(env);;
 	}
 	//--------------------------------------------------------------------------
 	void propagate_photons_using_multi_thread(
@@ -73,7 +73,7 @@ namespace Photons {
 			for(i = 0; i<photon_bunch->size(); i++ ) {
 				try {
 					ray_counter++;
-					photon_bunch->at(i)->propagate_in(&env_for_this_thread_only);
+					photon_bunch->at(i)->propagate_in(env_for_this_thread_only);
 				}catch(std::exception &error) {
 					HadCatch++;
 					std::cerr << error.what(); 

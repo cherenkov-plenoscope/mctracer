@@ -21,17 +21,17 @@
 //=================================
 class Plane :public SurfaceEntity{
 protected:	
-	RectangularPrismZ RectBounds;
 
-	const Vector3D plane_surface_normal = Vector3D(0.0,0.0,1.0);
+	RectangularPrismZ RectBounds;
 public:
+
 	Plane() {};
+	
 	Plane(
 		const std::string new_name,
         const Vector3D    new_pos,
         const Rotation3D  new_rot)
 		: SurfaceEntity(new_name, new_pos, new_rot) {};
-
 
 	void set_x_y_width(
 		const double x_width,
@@ -42,6 +42,7 @@ public:
 
 	const Intersection* calculate_intersection_with(const Ray* ray)const;
 private:
+	
 	void post_initialize_radius_of_enclosing_sphere();
 };
 #endif // __PLANE_H_INCLUDED__

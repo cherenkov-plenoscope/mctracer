@@ -20,7 +20,7 @@ protected:
 	const Vector3D plane_surface_normal = Vector3D::unit_z;
 public:
 
-	HexPlane() {};
+	using SurfaceEntity::SurfaceEntity;
 	void set_outer_hex_radius(const double outer_hex_radius);
 	std::string get_print()const;
 	const Intersection* calculate_intersection_with(const Ray* ray)const;

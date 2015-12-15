@@ -39,7 +39,7 @@ SurfaceEntity::SurfaceEntity() {
 	outer_absorption_vs_wavelength = default_abso;
 	inner_absorption_vs_wavelength = default_abso;
 }
-
+//------------------------------------------------------------------------------
 SurfaceEntity::SurfaceEntity(
 	const std::string new_name,
     const Vector3D    new_pos,

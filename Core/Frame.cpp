@@ -10,6 +10,10 @@ Frame* Frame::void_frame = new Frame(
 	Rotation3D::null
 );
 //------------------------------------------------------------------------------
+Frame::Frame() {
+ 
+}
+//------------------------------------------------------------------------------
 Frame::Frame(
     const std::string new_name,
     const Vector3D    new_pos,

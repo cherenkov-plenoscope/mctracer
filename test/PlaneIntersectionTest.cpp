@@ -61,7 +61,7 @@ TEST_F(PlaneIntersectionTest, frontal) {
 	const Intersection* intersec = ray.get_first_intersection_in(&world);
 
 	ASSERT_TRUE(intersec->does_intersect());
-	EXPECT_EQ(&plane, intersec->get_intersecting_object());
+	EXPECT_EQ(&plane, intersec->get_object());
 	EXPECT_EQ(Vector3D::null, intersec->get_intersection_vector_in_object_system());
 	EXPECT_EQ(Vector3D(0.0, 0.0, 1.0), intersec->get_surface_normal_in_object_system());
 }
@@ -79,7 +79,7 @@ TEST_F(PlaneIntersectionTest, frontal_lateral_offset_alwas_intersection) {
 			const Intersection* intersec = ray.get_first_intersection_in(&world);
 
 			ASSERT_TRUE(intersec->does_intersect());
-			EXPECT_EQ(&plane, intersec->get_intersecting_object());
+			EXPECT_EQ(&plane, intersec->get_object());
 			EXPECT_EQ(Vector3D(x_support, y_support, 0.0), intersec->get_intersection_vector_in_object_system());
 			EXPECT_EQ(Vector3D(0.0, 0.0, 1.0), intersec->get_surface_normal_in_object_system());
 		}

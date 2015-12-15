@@ -66,7 +66,7 @@ TEST_F(SphereIntersectionTest, frontal) {
 	Vector3D direction(1.0,0.0,0.0);
 
 	Photon P(Support,direction,wavelength);
-	P.propagate_in(&sphere_test_environment);
+	P.propagate_in(sphere_test_environment);
 
 	ASSERT_EQ(2, P.get_number_of_interactions_so_far() ) << "There should be 2 "
 	"interaction stored in the history, 1 for creation of the photon and 1 for"
@@ -88,7 +88,7 @@ TEST_F(SphereIntersectionTest, emmitting_close_above_surface_tangential) {
 	Vector3D direction(1.0,0.0,0.0);
 
 	Photon P(Support,direction,wavelength);
-	P.propagate_in(&sphere_test_environment);
+	P.propagate_in(sphere_test_environment);
 
 	ASSERT_EQ(absorption_in_void, P.get_final_interaction_type() );
 }
@@ -99,7 +99,7 @@ TEST_F(SphereIntersectionTest, emmitting_close_above_surface_straigtht_away) {
 	Vector3D direction(0.0,0.0,1.0);
 
 	Photon P(Support,direction,wavelength);
-	P.propagate_in(&sphere_test_environment);
+	P.propagate_in(sphere_test_environment);
 
 	ASSERT_EQ(absorption_in_void, P.get_final_interaction_type() );
 }
@@ -110,7 +110,7 @@ TEST_F(SphereIntersectionTest, tangential_intersection) {
 	Vector3D direction(1.0,0.0,0.0);
 
 	Photon P(Support,direction,wavelength);
-	P.propagate_in(&sphere_test_environment);
+	P.propagate_in(sphere_test_environment);
 
 	ASSERT_EQ(2, P.get_number_of_interactions_so_far() );
 
@@ -135,7 +135,7 @@ TEST_F(SphereIntersectionTest, ray_frontal_intersection) {
   	MySphere.calculate_intersection_with(&ray_with_intersection);
 
   ASSERT_TRUE(intersec->does_intersect());
-  EXPECT_EQ(intersec->get_intersecting_object(), &MySphere);
+  EXPECT_EQ(intersec->get_object(), &MySphere);
   EXPECT_EQ(
   	Vector3D(0.0,0.0,-1.0),
   	intersec->get_intersection_vector_in_object_system()
@@ -174,7 +174,7 @@ TEST_F(SphereIntersectionTest, ray_starts_inside_sphere) {
     MySphere.calculate_intersection_with(&ray_inside);
 
   ASSERT_TRUE(intersec->does_intersect());
-  EXPECT_EQ(intersec->get_intersecting_object(), &MySphere);
+  EXPECT_EQ(intersec->get_object(), &MySphere);
   EXPECT_EQ(
   	Vector3D(0.0,0.0,+1.0),
   	intersec->get_intersection_vector_in_object_system()
@@ -193,7 +193,7 @@ TEST_F(SphereIntersectionTest, ray_tangents_sphere) {
     MySphere.calculate_intersection_with(&ray_inside);
 
   ASSERT_TRUE(intersec->does_intersect());
-  EXPECT_EQ(intersec->get_intersecting_object(), &MySphere);
+  EXPECT_EQ(intersec->get_object(), &MySphere);
   EXPECT_EQ(
   	Vector3D(1.0, 0.0, 0.0),
   	intersec->get_intersection_vector_in_object_system())

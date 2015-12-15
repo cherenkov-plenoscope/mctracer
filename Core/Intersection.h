@@ -18,7 +18,7 @@ class Ray;
 class Intersection {
 protected:
 
-	const SurfaceEntity* intersecting_object;
+	const SurfaceEntity* object;
 	Vector3D intersection_point;
 	Vector3D surfacenormal_in_intersection_point;
 	double distance_of_ray_in_m;
@@ -35,7 +35,7 @@ public:
 		const Vector3D incident_in_obj_sys
 	);
 	bool does_intersect()const;
-	const SurfaceEntity * get_intersecting_object()const;
+	const SurfaceEntity * get_object()const;
 	Vector3D get_intersection_vector_in_object_system()const;
 	Vector3D get_intersection_vector_in_world_system()const;
 	Vector3D get_surface_normal_in_object_system()const;
@@ -57,7 +57,7 @@ public:
 	const HomoTrafo3D* world2object()const;
 	const HomoTrafo3D* object2world()const;
 	Vector3D get_normal_in_faceing_surface_system()const;
-
+	bool going_to_default_refractive_index()const;
 	bool operator<(const Intersection& other) const;
 	static bool compare(const Intersection* one, const Intersection* two);
 protected:

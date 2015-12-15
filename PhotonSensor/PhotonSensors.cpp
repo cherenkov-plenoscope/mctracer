@@ -56,7 +56,7 @@ FindSensor::FindSensor(
 	std::vector<Sensor*> *sensors
 ) {
 	const Frame* final_frame = photon->
-		get_final_intersection()->get_intersecting_object();
+		get_final_intersection()->get_object();
 
 	std::vector<Sensor*>::const_iterator it =
 		get_upper_bound_for_final_frame_in_sensors(final_frame, sensors);

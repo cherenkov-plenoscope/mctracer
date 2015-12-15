@@ -85,7 +85,6 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
 
     // create a test setup with two mirrors bouncing the photon
     Frame world("world",pos,rot);
-
     Frame optical_table("optical_table",pos,rot);
     
     Function::Constant refl(1.0, Function::Limits(200e-9, 1200e-9)); 
@@ -95,8 +94,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
     rot.set(0.0,0.0,0.0);
     
     //------------mirror 1----------------
-    Plane mirror1;
-    mirror1.set_name_pos_rot("mirror_1",pos,rot);
+    Plane mirror1("mirror_1",pos,rot);
     mirror1.set_outer_color(&colo);
     mirror1.set_inner_color(&colo);
     mirror1.set_outer_reflection(&refl);
@@ -106,8 +104,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
     //------------mirror 2----------------
     pos.set(0.0,0.0,1.0);
     rot.set(0.0,0.0,0.0);
-    Plane mirror2;
-    mirror2.set_name_pos_rot("mirror_2",pos,rot);
+    Plane mirror2("mirror_2",pos,rot);
     mirror2.set_outer_color(&colo);
     mirror2.set_inner_color(&colo);
     mirror2.set_outer_reflection(&refl);
@@ -147,7 +144,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
     {
         Photon P(Support, direction, wavelength);
 
-        P.propagate_in(&environment);
+        P.propagate_in(environment);
         
         EXPECT_EQ(number_of_bounces*1.0-0.5, P.get_accumulative_distance() );
         EXPECT_EQ(num_of_total_interactions, P.get_number_of_interactions_so_far() );
@@ -202,8 +199,7 @@ TEST_F(PhotonTest, Reflections){
     Color mirror_color;
     mirror_color = Color(200,64,64);
 
-    Plane mirror;
-    mirror.set_name_pos_rot("mirror",pos,rot);
+    Plane mirror("mirror",pos,rot);
     mirror.set_outer_color(&mirror_color);
     mirror.set_inner_color(&mirror_color);
     mirror.set_outer_reflection(&mirror_reflection);
@@ -216,8 +212,7 @@ TEST_F(PhotonTest, Reflections){
 
     Color absorber_color(50,50,50);
 
-    Plane absorber;
-    absorber.set_name_pos_rot("absorber",pos,rot);
+    Plane absorber("absorber",pos,rot);
     absorber.set_outer_color(&absorber_color);
     absorber.set_inner_color(&absorber_color);
     absorber.set_x_y_width(1.0, 1.0);
@@ -291,8 +286,7 @@ TEST_F(PhotonTest, Refraction){
     //------------entrance surface---------------
     Color entrance_surface_color(200,64,64);
 
-    Plane entrance_surface;
-    entrance_surface.set_name_pos_rot(
+    Plane entrance_surface(
         "entrance_surface", 
         Vector3D(0.0, 0.0, 1.0), 
         Rotation3D(0.0, M_PI, 0.0)
@@ -305,8 +299,7 @@ TEST_F(PhotonTest, Refraction){
     //------------exit surface---------------
     Color exit_surface_color(200,64,64);
 
-    Plane exit_surface;
-    exit_surface.set_name_pos_rot(
+    Plane exit_surface(
         "exit_surface", 
         Vector3D(0.0, 0.0, 2.0),
         Rotation3D::null
@@ -319,8 +312,7 @@ TEST_F(PhotonTest, Refraction){
     //------------absorber----------------
     Color absorber_color(50,50,50);
 
-    Plane absorber;
-    absorber.set_name_pos_rot(
+    Plane absorber(
         "absorber", 
         Vector3D(0.0, 0.0, 3.0),
         Rotation3D::null
@@ -342,7 +334,7 @@ TEST_F(PhotonTest, Refraction){
     world.init_tree_based_on_mother_child_relations();
 
     //----------free orbit-----------------------
-    FreeOrbitCamera free(&world, &setup);
+    //FreeOrbitCamera free(&world, &setup);
 
     //-----------send Photon----------------------
     double wavelength = 433.0e-9;

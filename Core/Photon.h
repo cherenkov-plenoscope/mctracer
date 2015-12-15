@@ -35,7 +35,7 @@ public:
 
 	Photon(const Photon* photon_to_be_carried_on);
 
-	void propagate_in(PropagationEnvironment* environment);
+	void propagate_in(PropagationEnvironment environment);
 
 	double get_wavelength()const;
 	const PhotonMcTruth* get_mc_truth()const;
@@ -71,6 +71,10 @@ private:
 	void fresnel_refraction_and_reflection();
 
 	void pass_the_boundary_layer(
+		const FresnelRefractionAndReflection &fresnel
+	);
+
+	void propagate_on_after_boundary_layer(
 		const FresnelRefractionAndReflection &fresnel
 	);
 

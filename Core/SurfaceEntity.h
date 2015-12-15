@@ -18,12 +18,6 @@ class SurfaceEntity :public Frame {
 
 	const Frame* allowed_frame_to_propagate_to = Frame::void_frame;
 
-	static const Function::Limits default_wavelength_range;
-	static const Function::Func1D* default_refl;
-	static const Function::Func1D* default_refr;
-	static const Function::Func1D* default_abso;
-	static const Color* default_color;
-
 	bool _boundary_layer_is_transparent;
 	
 	const Color* outer_color;
@@ -46,8 +40,8 @@ public:
 	SurfaceEntity(
 		const std::string new_name,
         const Vector3D    new_pos,
-        const Rotation3D  new_rot);
-
+        const Rotation3D  new_rot
+    );
 	void set_outer_color(const Color* color);
 	void set_inner_color(const Color* color);
 	void set_outer_reflection(const Function::Func1D* refl);
@@ -58,7 +52,9 @@ public:
 	void set_inner_absorption(const Function::Func1D* absorp);
 	void set_allowed_frames_to_propagate_to(const Frame* frame);
 	void take_boundary_layer_properties_from(const SurfaceEntity* proto);
-	void take_boundary_layer_properties_but_inside_out_from(const SurfaceEntity* proto);
+	void take_boundary_layer_properties_but_inside_out_from(
+		const SurfaceEntity* proto
+	);
 	const Color* get_outer_color()const;
 	const Color* get_inner_color()const;
 	const Function::Func1D* get_outer_reflection_()const;
@@ -71,5 +67,11 @@ public:
 	bool boundary_layer_is_transparent()const;
 	bool has_restrictions_on_frames_to_propagate_to()const;
 	std::string get_print()const;
+
+	static const Function::Limits default_wavelength_range;
+	static const Function::Func1D* default_refl;
+	static const Function::Func1D* default_refr;
+	static const Function::Func1D* default_abso;
+	static const Color* default_color;
 };
 #endif // __SURFACEENTITY_H_INCLUDED__ 

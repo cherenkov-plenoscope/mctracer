@@ -24,7 +24,7 @@ protected:
 	double Length;
 public:
 
-	Cylinder() {};
+	//Cylinder() {};
 	Cylinder(
 		const std::string new_name,
         const Vector3D    new_pos,

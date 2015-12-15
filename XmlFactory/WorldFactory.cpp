@@ -266,9 +266,7 @@ Frame* WorldFactory::producePlane(
 	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
 
 	Plane *new_plane;
-	new_plane = new Plane;
-
-	new_plane->set_name_pos_rot(
+	new_plane = new Plane(
 		frameFab.get_name(), 
 		frameFab.get_position(), 
 		frameFab.get_rotation()
@@ -302,9 +300,7 @@ Frame* WorldFactory::produceHexPlane(
 	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
 
 	HexPlane *hxpl;
-	hxpl = new HexPlane;
-
-	hxpl->set_name_pos_rot(
+	hxpl = new HexPlane(
 		frameFab.get_name(), 
 		frameFab.get_position(), 
 		frameFab.get_rotation()
@@ -386,8 +382,7 @@ Frame* WorldFactory::produceCylinder(
 	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
 
 	Cylinder *new_Cylinder;
-	new_Cylinder = new Cylinder;
-	new_Cylinder->set_name_pos_rot(
+	new_Cylinder = new Cylinder(
 		frameFab.get_name(), 
 		frameFab.get_position(), 
 		frameFab.get_rotation()
@@ -669,8 +664,7 @@ Frame* WorldFactory::produceLightFieldTelescope(
 	lftConfig.lens_refraction=
 		functions->get_function(xmlLftFab.get_refraction_vs_wavelength()); 
 
-	Frame *telescope = new Frame;
-	telescope->set_name_pos_rot(
+	Frame *telescope = new Frame(
 		frameFab.get_name(), 
 		frameFab.get_position(), 
 		frameFab.get_rotation()

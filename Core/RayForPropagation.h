@@ -39,8 +39,8 @@ protected:
 
 	uint identifier_number;
 
-	PropagationEnvironment* environment = 
-		&PropagationEnvironment::default_environment;
+	PropagationEnvironment environment = 
+		PropagationEnvironment::default_environment;
 
 	const Intersection* intersection = Intersection::void_intersection;
 
@@ -64,7 +64,7 @@ public:
 
 	double get_accumulative_distance()const;
   	
-	virtual void propagate_in(PropagationEnvironment* env);
+	virtual void propagate_in(PropagationEnvironment env);
 
 	uint get_number_of_interactions_so_far()const;
 

@@ -58,7 +58,7 @@ public:
 //------------------------------------------------------------------------------
     static Frame* void_frame;
 
-    Frame(){};
+    Frame();
     Frame(
         const std::string new_name,
         const Vector3D    new_pos,

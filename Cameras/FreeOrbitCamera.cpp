@@ -90,7 +90,10 @@ void FreeOrbitCamera::start_free_orbit(){
 			break;
 			case 'y': Stereo_operator->decrease_stereo_offset();
 			break;
-			case 'p': std::cout << world->get_tree_print() << "\n";
+			case 'p': {
+				std::cout << world->get_tree_print() << "\n";
+				key_stroke_requires_image_update = false;
+			}
 			break;
 			case 'h': {
 				print_free_orbit_help_text();
@@ -249,7 +252,7 @@ void FreeOrbitCamera::print_info_of_probing_ray_for_pixel_col_row(int x, int y){
 	out << "|\n";
 	if( intersec->does_intersect() ){
 	out << "| Object: " << intersec->
-					get_intersecting_object()->
+					get_object()->
 					get_path_in_tree_of_frames() << "\n";
 	out << "| Distance to first intersection: ";
 	out << intersec->get_intersection_distance() << "m\n";
@@ -275,7 +278,7 @@ void FreeOrbitCamera::print_info_of_probing_ray_for_pixel_col_row(int x, int y){
 	out << "|\n";		
 	out << StringTools::place_first_infront_of_each_new_line_of_second(
 		"| ",
-		intersec->get_intersecting_object()->get_print()
+		intersec->get_object()->get_print()
 	);
 
 	}else{

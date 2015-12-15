@@ -119,7 +119,7 @@ void Calibration::fill_calibration_block_to_table() {
 				);
 
 				// propagate photon
-				ph->propagate_in(&telescope_environment);
+				ph->propagate_in(telescope_environment);
 				PhotonSensors::FindSensor sensor_finder(ph, sub_pixels);
 
 				if(sensor_finder.is_absorbed_by_known_sensor()) {
