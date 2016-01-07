@@ -19,7 +19,7 @@ protected:
 	TracerSettings settings;
 	Random::Mt19937 dice;
 	PropagationEnvironment lens_test_bench_environment;
-	std::vector<PhotonSensor::Sensor*> sensor_list;
+	PhotonSensors::Sensors sensor_list;
 	PhotonSensor::Xy *sensor;
 	LensMaker::Config cfg;
 
@@ -78,7 +78,6 @@ protected:
 		lens->set_inner_refraction(refraction_vs_wavelength);
 		lens->set_curvature_radius_and_aperture_radius(
 			LensMaker::Approximation::get_curvature_radius(cfg),
-			//lensmaker.get_curvature_radius_for_bi_konvex_lens(),
 			cfg.aperture_radius
 		);
 		return lens;
@@ -103,7 +102,8 @@ protected:
 		image_sensor->set_radius(cfg.aperture_radius); 
 
 		sensor = new PhotonSensor::Xy(0, image_sensor);
-		sensor_list.push_back(sensor);
+		std::vector<PhotonSensor::Sensor*> sensors_vector = {sensor};
+		sensor_list.init(sensors_vector);
 
 		return image_sensor;   
 	}
@@ -172,8 +172,8 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 	);	
 
 	// detect photons in sensors
-	PhotonSensors::reset_all_sesnors(&sensor_list);
-	PhotonSensors::assign_photons_to_sensors(photons, &sensor_list);
+	sensor_list.clear_history();
+	sensor_list.assign_photons(photons);
 
 	Photons::delete_photons_and_history(photons);
 
@@ -184,7 +184,6 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 		double(sensor->get_arrival_table().size())/double(number_of_photons_emitted), 
 		10e-2
 	);
-
 
 	/*FreeOrbitCamera free(
 		lens_test_bench_environment.world_geometry, 

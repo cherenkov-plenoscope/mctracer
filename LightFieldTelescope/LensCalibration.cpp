@@ -11,7 +11,7 @@ LensCalibration::LensCalibration(const Config cfg):
 	telescope_geometry(cfg) 
 {
 	set_up_test_bench();
-	PhotonSensors::reset_all_sesnors(&read_out_list);
+	read_out_l.clear_history();
 
 	Vector3D incident_direction(
 		telescope_geometry.reflector.max_outer_aperture_radius() + telescope_geometry.max_outer_sensor_radius(),
@@ -43,7 +43,7 @@ LensCalibration::LensCalibration(const Config cfg):
 		);
 
 		ph->propagate_in(test_bench_environment);
-		PhotonSensors::assign_photon_to_sensors(ph, &read_out_list);
+		read_out_l.assign_photon(ph);
 
 		ph->delete_history();
 		delete ph;		
@@ -75,6 +75,7 @@ LensCalibration::~LensCalibration() {
 //------------------------------------------------------------------------------
 void LensCalibration::set_up_test_bench() {
 
+	
 	test_bench.set_name_pos_rot("test_bench", Vector3D::null, Rotation3D::null);
 
 	lens.set_name_pos_rot("lens", Vector3D::null, Rotation3D::null);
@@ -106,7 +107,8 @@ void LensCalibration::set_up_test_bench() {
 		);
 		face->set_outer_color(&Color::gray);
 		face->set_inner_color(&Color::gray);
-		face->set_outer_hex_radius(telescope_geometry.pixel_lens_outer_aperture_radius());
+		face->set_outer_hex_radius(telescope_geometry.
+			pixel_lens_outer_aperture_radius());
 		face_plate.set_mother_and_child(face);
 	}
 
@@ -144,8 +146,8 @@ void LensCalibration::set_up_test_bench() {
 	uint id = 0;
 	read_out = new PhotonSensor::PerfectSensor(id, &image_sensor);
 
-	read_out_list.push_back(read_out);
-	PhotonSensors::sort_photon_sensors_based_on_frames(&read_out_list);
+	std::vector<PhotonSensor::Sensor*> read_out_list = {read_out};
+	read_out_l.init(read_out_list);
 
 	test_bench_environment.world_geometry = &test_bench;
 	test_bench_environment.propagation_options = &settings;

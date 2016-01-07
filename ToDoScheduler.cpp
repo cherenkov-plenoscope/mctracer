@@ -112,48 +112,45 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 	WorldFactory fab;
 	fab.load(geometry_path());
 	Frame *world = fab.world();
-
 	// sensors in scenery
-	std::vector<PhotonSensor::Sensor*>* sensors = fab.sensors_in_world();
+	PhotonSensors::Sensors sensors = fab.get_sensors();
 
 	// photon source
 	LightSourceFromConfig light_fab(source_config);
-	std::vector<Photon*>* photon_bunch = light_fab.get_photons();
+	std::vector<Photon*>* photons = light_fab.get_photons();
 
 	// photon propagation
 	Photons::propagate_photons_in_world_with_settings(
-		photon_bunch, world, &settings
+		photons, world, &settings
 	);
 
 	// detect photons in sensors
-	PhotonSensors::reset_all_sesnors(sensors);
-	PhotonSensors::assign_photons_to_sensors(photon_bunch, sensors);
+	sensors.clear_history();
+	sensors.assign_photons(photons);
 
 	// write each sensors to file
-	uint sensor_conuter = 0;
-	for(PhotonSensor::Sensor* sensor: *sensors) {
-		
+	for(uint i=0; i<sensors.size(); i++) {
+
 		std::stringstream outname;
-		outname << output_path() << sensor->get_id();
-		sensor_conuter++;
+		outname << output_path() << i;
 
 		std::stringstream header;
 		header << "geometry: " << geometry_path() << "\n";
 		header << "lightsource: " << config_path() << "\n";
-		header << "sensor id: " << sensor->get_id() << "\n";
-		header << "sensor name: " << sensor->get_frame()->get_path_in_tree_of_frames() << "\n";
+		header << "sensor id: " << i << "\n";
+		header << "sensor name: " << sensors.at(i)->get_frame()->get_path_in_tree_of_frames() << "\n";
 		header << source_config.get_print();
 		header << "-------------\n";
-		header << sensor->get_arrival_table_header();
+		header << sensors.at(i)->get_arrival_table_header();
 
 		AsciiIo::write_table_to_file_with_header(
-			sensor->get_arrival_table(),
+			sensors.at(i)->get_arrival_table(),
 			outname.str(),
 			header.str()
 		);
 	}
 
-	Photons::delete_photons_and_history(photon_bunch);
+	Photons::delete_photons_and_history(photons);
 }
 //------------------------------------------------------------------------------
 void ToDoScheduler::propagate_photons_through_geometry()const {
@@ -169,12 +166,10 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 	WorldFactory fab;
 	fab.load(geometry_path());
 	Frame *world = fab.world();
+	PhotonSensors::Sensors sensors = fab.get_sensors();
 
 	// init Telescope Array Control
 	TelescopeArrayControl* array_ctrl = fab.get_telescope_array_control();
-
-	// init sensors in scenery
-	std::vector<PhotonSensor::Sensor*>* sensors = fab.sensors_in_world();
 
 	// load photons
 	EventIo::EventIoFile corsika_run(photon_path());
@@ -210,29 +205,27 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 		);
 
 		// detect photons in sensors
-		PhotonSensors::reset_all_sesnors(sensors);
-		PhotonSensors::assign_photons_to_sensors(&photons, sensors);
-		
-		uint sensor_conuter = 0;
-		for(PhotonSensor::Sensor* sensor: *sensors) {
+		sensors.clear_history();
+		sensors.assign_photons(&photons);
+
+		for(uint i=0; i<sensors.size(); i++) {
 			
 			std::stringstream outname;
 			outname << output_path();
-			outname << "e" << event_counter << "s" << sensor->get_id() << ".txt";
-			sensor_conuter++;
+			outname << "e" << event_counter << "s" << sensors.at(i)->get_id() << ".txt";
 
 			std::stringstream header;
 			header << "geometry: " << geometry_path() << "\n";
 			header << "photons: " << photon_path() << ", event: " << event_counter << "\n";
-			header << "sensor id: " << sensor->get_id() << "\n";
-			header << "sensor name: " << sensor->get_frame()->get_path_in_tree_of_frames() << "\n";
+			header << "sensor id: " << i << "\n";
+			header << "sensor name: " << sensors.at(i)->get_frame()->get_path_in_tree_of_frames() << "\n";
 			header << "-------------\n";
 			header << event.header.mmcs_event_header.get_print() << "\n";
 			header << "-------------\n";
-			header << sensor->get_arrival_table_header();
+			header << sensors.at(i)->get_arrival_table_header();
 
 			AsciiIo::write_table_to_file_with_header(
-				sensor->get_arrival_table(),
+				sensors.at(i)->get_arrival_table(),
 				outname.str(),
 				header.str()
 			);

@@ -886,11 +886,10 @@ Frame* WorldFactory::world(){
 	return root_of_World;
 }
 //------------------------------------------------------------------------------
-std::vector<PhotonSensor::Sensor*>* WorldFactory::sensors_in_world()const {
-	PhotonSensors::sort_photon_sensors_based_on_frames(sensors);
-	return sensors;
-}
-//------------------------------------------------------------------------------
 TelescopeArrayControl* WorldFactory::get_telescope_array_control()const {
 	return telescopes;
-} 
+}
+//------------------------------------------------------------------------------
+PhotonSensors::Sensors WorldFactory::get_sensors()const {
+	return PhotonSensors::Sensors(*sensors);
+}

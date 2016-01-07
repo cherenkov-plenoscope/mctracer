@@ -217,8 +217,8 @@ TEST_F(PhotonTest, Reflections){
     absorber.set_inner_color(&absorber_color);
     absorber.set_x_y_width(1.0, 1.0);
     PhotonSensor::PerfectSensor absorber_sensor(0, &absorber);
-    std::vector<PhotonSensor::Sensor*> sensors = {&absorber_sensor};
-    PhotonSensors::sort_photon_sensors_based_on_frames(&sensors);
+    std::vector<PhotonSensor::Sensor*> sensors_vector = {&absorber_sensor};
+    PhotonSensors::Sensors sensors(sensors_vector);
 
     //----------declare relationships------------
     optical_table.set_mother_and_child(&mirror);
@@ -259,7 +259,7 @@ TEST_F(PhotonTest, Reflections){
         photon_bunch, &world, &setup
     );
 
-    PhotonSensors::assign_photons_to_sensors(photon_bunch, &sensors);
+    sensors.assign_photons(photon_bunch);
 
     EXPECT_NEAR(
         reflection_coefficient, 
@@ -322,8 +322,8 @@ TEST_F(PhotonTest, Refraction){
     absorber.set_x_y_width(1.0, 1.0);
     uint sensor_id = 0;
     PhotonSensor::PerfectSensor absorber_sensor(sensor_id, &absorber);
-    std::vector<PhotonSensor::Sensor*> sensors = {&absorber_sensor};
-    PhotonSensors::sort_photon_sensors_based_on_frames(&sensors);
+    std::vector<PhotonSensor::Sensor*> sensors_vector = {&absorber_sensor};
+    PhotonSensors::Sensors sensors(sensors_vector);
 
     //----------declare relationships------------
     world.set_mother_and_child(&entrance_surface);
@@ -355,7 +355,7 @@ TEST_F(PhotonTest, Refraction){
         photon_bunch, &world, &setup
     );
 
-    PhotonSensors::assign_photons_to_sensors(photon_bunch, &sensors);
+    sensors.assign_photons(photon_bunch);
 
     // 5% fresnell reflection
     EXPECT_NEAR(

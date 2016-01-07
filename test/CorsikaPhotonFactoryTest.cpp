@@ -37,7 +37,8 @@ TEST_F(CorsikaPhotonFactoryTest, intersection_point_on_ground) {
                     ground.set_radius(1e3);
 
                     PhotonSensor::PerfectSensor sensor(ground_sensor_id, &ground);
-                    std::vector<PhotonSensor::Sensor*> sensor_list = {&sensor};
+                    std::vector<PhotonSensor::Sensor*> sensor_vec = {&sensor};
+                    PhotonSensors::Sensors sensor_list(sensor_vec);
 
                     world.set_mother_and_child(&ground);
                     world.init_tree_based_on_mother_child_relations();
@@ -53,8 +54,10 @@ TEST_F(CorsikaPhotonFactoryTest, intersection_point_on_ground) {
                     );
 
                     // detect photons in ground sensor
-                    PhotonSensors::reset_all_sesnors(&sensor_list);
-                    PhotonSensors::assign_photons_to_sensors(&photons, &sensor_list);
+                    sensor_list.clear_history();
+                    //PhotonSensors::reset_all_sesnors(&sensor_list);
+                    sensor_list.assign_photons(&photons);
+                    //PhotonSensors::assign_photons_to_sensors(&photons, &sensor_list);
 
                     std::vector<std::vector<double>> xyt = sensor.get_arrival_table();
 
@@ -289,7 +292,8 @@ TEST_F(CorsikaPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         ground.set_radius(1e7);
 
         PhotonSensor::PerfectSensor sensor(ground_sensor_id, &ground);
-        std::vector<PhotonSensor::Sensor*> sensor_list = {&sensor};
+        std::vector<PhotonSensor::Sensor*> sensor_vec = {&sensor};
+        PhotonSensors::Sensors sensor_list(sensor_vec);
 
         world.set_mother_and_child(&ground);
         world.init_tree_based_on_mother_child_relations();
@@ -305,8 +309,10 @@ TEST_F(CorsikaPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         );
 
         // detect photons in sensors
-        PhotonSensors::reset_all_sesnors(&sensor_list);
-        PhotonSensors::assign_photons_to_sensors(&photons, &sensor_list);
+        sensor_list.clear_history();
+        //PhotonSensors::reset_all_sesnors(&sensor_list);
+        sensor_list.assign_photons(&photons);
+        //PhotonSensors::assign_photons_to_sensors(&photons, &sensor_list);
 
         std::vector<std::vector<double>> id_time = sensor.get_arrival_table();
         double mean_arrival_time = get_mean_along_column(id_time,4);

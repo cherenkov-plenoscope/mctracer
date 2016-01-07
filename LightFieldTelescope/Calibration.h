@@ -41,7 +41,7 @@ namespace LightFieldTelescope {
 		double callibration_photon_wavelenght;
 
 		Frame* telescope;
-		std::vector<PhotonSensor::Sensor*>* sub_pixels;
+		PhotonSensors::Sensors *sub_pixels;
 
 		TracerSettings settings;
 		PropagationEnvironment telescope_environment;

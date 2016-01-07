@@ -8,7 +8,7 @@ Calibration::Calibration(const Config cfg):
 	telescope_config(cfg), 
 	telescope_geometry(cfg) 
 {
-	number_of_photons_per_sub_pixel = 250;
+	number_of_photons_per_sub_pixel = 25;
 	number_of_photons_per_block = 1e6;
 
 	number_of_photons = telescope_geometry.total_number_of_sub_pixels()*
@@ -57,7 +57,7 @@ void Calibration::set_up_telescope() {
 	fab.add_telescope_to_frame(telescope);
 
 	sub_pixels = fab.get_sub_pixels();
-	PhotonSensors::reset_all_sesnors(sub_pixels);
+	sub_pixels->clear_history();
 }
 //------------------------------------------------------------------------------
 void Calibration::set_up_telescope_environment() {
@@ -120,9 +120,13 @@ void Calibration::fill_calibration_block_to_table() {
 
 				// propagate photon
 				ph->propagate_in(telescope_environment);
-				PhotonSensors::FindSensor sensor_finder(ph, sub_pixels);
+				
+				PhotonSensors::FindSensorByFrame sensor_finder(
+					ph->get_final_intersection()->get_object(),
+					&sub_pixels->by_frame
+				);
 
-				if(sensor_finder.is_absorbed_by_known_sensor()) {
+				if(sensor_finder.frame_is_in_sensors()) {
 
 					// remember photon
 					CalibRow row;

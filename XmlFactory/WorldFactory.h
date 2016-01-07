@@ -43,8 +43,8 @@ class WorldFactory : public XmlFileIo{
 	std::vector<PhotonSensor::Sensor*> *sensors;
 	TelescopeArrayControl* telescopes;
 	
-	// intternal
-	std::string absolute_path ="";
+	// internal
+	std::string absolute_path = "";
 public:
 	FunctionFactory *functions;
 
@@ -52,7 +52,7 @@ public:
 	void load(std::string path);
 	Frame* world();
 	TelescopeArrayControl* get_telescope_array_control()const;
-	std::vector<PhotonSensor::Sensor*>* sensors_in_world()const;
+	PhotonSensors::Sensors get_sensors()const;
 private:
 	void extract_function_from(const pugi::xml_node node);
 	void add_to_sensors_if_sensitive(const pugi::xml_node node, Frame* frame);

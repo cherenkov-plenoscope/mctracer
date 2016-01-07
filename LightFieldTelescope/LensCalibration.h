@@ -22,7 +22,7 @@ namespace LightFieldTelescope {
 		Frame face_plate;
 		Disc image_sensor;
 		PhotonSensor::PerfectSensor* read_out;
-		std::vector<PhotonSensor::Sensor*> read_out_list;
+		PhotonSensors::Sensors read_out_l;
 
 		TracerSettings settings;
 		PropagationEnvironment test_bench_environment;

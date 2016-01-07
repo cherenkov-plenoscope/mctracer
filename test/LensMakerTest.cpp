@@ -100,7 +100,8 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 	    sensor_disc.set_inner_color(sensor_disc_col);
 	    sensor_disc.set_radius(cfg.aperture_radius*0.85);
 	    PhotonSensor::Xy sensor(0, &sensor_disc);
-	    std::vector<PhotonSensor::Sensor*> sensor_list = {&sensor};
+	    std::vector<PhotonSensor::Sensor*> sensor_vec = {&sensor};
+	    PhotonSensors::Sensors sensor_list(sensor_vec);
 
 	    optical_table.set_mother_and_child(&lens);
 	    optical_table.set_mother_and_child(&sensor_disc);
@@ -132,8 +133,8 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 		);
 
 		// detect photons in sensors
-		PhotonSensors::reset_all_sesnors(&sensor_list);
-		PhotonSensors::assign_photons_to_sensors(photons, &sensor_list);
+		sensor_list.clear_history();
+		sensor_list.assign_photons(photons);
 
 		sigma_psf_vs_image_sensor_distance.push_back(sensor.point_spread_std_dev());
 		image_sensor_distances.push_back(image_sensor_disc_distance);

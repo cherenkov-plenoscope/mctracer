@@ -9,28 +9,43 @@
 //=================================
 // included dependencies
 #include "PhotonSensor/PhotonSensor.h"
-
 //=================================
 
 namespace PhotonSensors {
 
-	void reset_all_sesnors(
-		std::vector<PhotonSensor::Sensor*> *sensors
-	);
-	
-	void assign_photons_to_sensors(
-		const std::vector<Photon*> *photon_bunch, 
-		std::vector<PhotonSensor::Sensor*> *sensors
-	);
+	class Sensors {
 
-	void assign_photon_to_sensors(
-		const Photon* photon,
-		std::vector<PhotonSensor::Sensor*> *sensors
-	);
+	public:
+		std::vector<PhotonSensor::Sensor*> by_occurence;
+		std::vector<PhotonSensor::Sensor*> by_frame;
+		std::vector<uint> occurence2frame_indices;
+		
+		Sensors();
+		Sensors(std::vector<PhotonSensor::Sensor*> &sensors);
+		void init(std::vector<PhotonSensor::Sensor*> &sensors);
+		uint size()const;
+		PhotonSensor::Sensor* at(const uint pos);
+		PhotonSensor::Sensor* at_frame(const Frame* frame);
+		uint get_pos_at_frame(const Frame* frame)const;
+		void assign_photon(const Photon* photon);
+		void assign_photons(const std::vector<Photon*> *photons);
+		void clear_history();
+	private:
 
-	void sort_photon_sensors_based_on_frames(
-		std::vector<PhotonSensor::Sensor*> *sensors
-	);
+		void init_indices_occurence2frame();
+		void init_sensors_by_frames();
+		void assert_no_two_sensors_have_same_frame()const;
+		uint occurence_index_given_frame_index(const uint frame_idx)const;
+	public:
+
+		class NoSuchFrame : public TracerException {
+			using TracerException::TracerException;
+		};
+
+		class DuplicateFrame : public TracerException {
+			using TracerException::TracerException;
+		};
+	};
 
 	std::vector<PhotonSensor::Sensor*>::const_iterator 
 		get_upper_bound_for_final_frame_in_sensors(
@@ -38,16 +53,18 @@ namespace PhotonSensors {
 		const std::vector<PhotonSensor::Sensor*>* sensors
 	);
 
-	class FindSensor {
+	class FindSensorByFrame {
 
 		bool photon_is_absorbed_by_known_sensor;
 		PhotonSensor::Sensor* closest_sensor;
+		uint index;
 	public:
-		FindSensor(
-			const Photon* photon,
-			std::vector<PhotonSensor::Sensor*> *sensors
+		FindSensorByFrame(
+			const Frame* final_frame,
+			const std::vector<PhotonSensor::Sensor*> *sensors
 		);
-		bool is_absorbed_by_known_sensor()const;
+		uint get_index()const;
+		bool frame_is_in_sensors()const;
 		PhotonSensor::Sensor* get_sensor()const;
 	};
 } // PhotonSensors
