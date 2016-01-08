@@ -7,7 +7,7 @@
 #include "Core/SurfaceEntity.h"
 #include "../Plane.h"
 #include "Cameras/FreeOrbitCamera.h"
-#include "Core/PseudoRandomNumberGenerator.h"
+#include "Core/Random/Random.h"
 #include "Core/Photons.h"
 #include "Core/Function/ConstantFunction.h"
 #include "PhotonSensor/PhotonSensor.h" 

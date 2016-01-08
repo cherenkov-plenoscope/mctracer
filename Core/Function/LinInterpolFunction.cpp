@@ -172,4 +172,16 @@ namespace Function {
 		return (func.end()-1)->x - func.begin()->x;
 	}
 	//--------------------------------------------------------------------------
+	double LinInterpol::get_max_value()const {
+		double max_y = func.front().y;
+		for(Point p: func) if(p.y > max_y) max_y = p.y;
+		return max_y;
+	}
+	//--------------------------------------------------------------------------
+	double LinInterpol::get_min_value()const {
+		double min_y = func.front().y;
+		for(Point p: func) if(p.y < min_y) min_y = p.y;
+		return min_y;
+	}
+	//--------------------------------------------------------------------------
 } // namespace Function

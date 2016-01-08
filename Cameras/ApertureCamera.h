@@ -11,7 +11,7 @@ class TracerSettings;
 // included dependencies
 #include "DistanceMeter.h"
 #include "CameraDevice.h"
-#include "Core/PseudoRandomNumberGenerator.h"
+#include "Core/Random/Random.h"
 //=================================
 class ApertureCamera :public CameraDevice{
 public:

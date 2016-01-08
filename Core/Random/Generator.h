@@ -1,7 +1,7 @@
 //==============================================================================
 // include guard
-#ifndef __PSERANNUMGEN_H_INCLUDED__
-#define __PSERANNUMGEN_H_INCLUDED__
+#ifndef __PRNG_Generator_H_INCLUDED__
+#define __PRNG_Generator_H_INCLUDED__
 
 //==============================================================================
 // forward declared dependencies
@@ -31,34 +31,5 @@ namespace Random {
 			const double max_dist
 		);
 	};
-
-	// mt19937 is a standard mersenne_twister_engine
-	class Mt19937 : public Generator{
-		
-		std::mt19937_64 pRNG_mt19937;
-		double inv_max;
-	public:
-
-		Mt19937(const uint _seed);
-		Mt19937();
-		double uniform();
-		void set_seed(const uint _seed);
-	private:
-
-		void init_inverse_maximum();
-	};
-
-	// fake prng retruning alway a specific value
-	class FakeConstant : public Generator{
-		
-		double constant;
-	public:
-
-		FakeConstant(const double _constant);
-		double uniform();
-	};	
-
-	static const uint zero_seed = 0;
-	static Mt19937 void_generator;	
 }
-#endif // __PSERANNUMGEN_H_INCLUDED__
+#endif // __PRNG_Generator_H_INCLUDED__

@@ -6,6 +6,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/ConstantFunction.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/LinInterpolFunction.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Polynom3Function.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Tools.cpp
    	PARENT_SCOPE
 )
 set(HEADERS
@@ -16,5 +17,6 @@ set(HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/ConstantFunction.h
 	${CMAKE_CURRENT_SOURCE_DIR}/LinInterpolFunction.h
 	${CMAKE_CURRENT_SOURCE_DIR}/Polynom3Function.h
+	${CMAKE_CURRENT_SOURCE_DIR}/Tools.h
    	PARENT_SCOPE
 )

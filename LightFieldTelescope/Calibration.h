@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "LightFieldTelescope/LightFieldTelescope.h"
-#include "Core/PseudoRandomNumberGenerator.h"
+#include "Core/Random/Random.h"
 
 namespace LightFieldTelescope {
 

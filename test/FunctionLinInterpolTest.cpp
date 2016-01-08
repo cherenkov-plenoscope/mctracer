@@ -131,3 +131,20 @@ TEST_F(LinInterpolTest, empty_table_for_LinInterpol) {
     // zero.
 }
 //------------------------------------------------------------------------------
+TEST_F(LinInterpolTest, max_value) {
+
+    for(double amp=0.0; amp<1.337*4.2; amp=amp+1e-2) {
+    
+        std::vector<std::vector<double>> table;
+
+        for(double x=0; x<1.0; x=x+1e-2) {
+            double y = amp*sin(x*2.0*M_PI);
+            table.push_back({x, y});
+        }
+
+        Function::LinInterpol f(table);
+        EXPECT_NEAR(amp, f.get_max_value(), 1e-6);
+        EXPECT_NEAR(-amp, f.get_min_value(), 1e-6);
+    }
+}
+//------------------------------------------------------------------------------

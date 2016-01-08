@@ -29,6 +29,8 @@ namespace Function {
 			const std::vector<std::vector<double> > two_column_xy
 		);
 		double operator()(const double x)const;
+		double get_max_value()const;
+		double get_min_value()const;
 	private:
 
 		void assert_table_two_columns(

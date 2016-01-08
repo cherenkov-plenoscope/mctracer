@@ -43,6 +43,7 @@
 #include "RandomGeneratorTest.cpp"
 #include "FitsIoTest.cpp"
 #include "SensorStorageTest.cpp"
+#include "Histogram1DTest.cpp"
 
 int main(int argc, char **argv) {
 	UserInteraction::print_welcome_screen();

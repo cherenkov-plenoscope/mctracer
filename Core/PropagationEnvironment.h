@@ -10,7 +10,7 @@
 // included dependencies
 #include "Core/Frame.h"
 #include "Core/TracerSettings.h"
-#include "Core/PseudoRandomNumberGenerator.h"
+#include "Core/Random/Random.h"
 
 class PropagationEnvironment {
 public:

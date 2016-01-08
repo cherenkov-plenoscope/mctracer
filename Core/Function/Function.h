@@ -4,3 +4,4 @@
 #include "Polynom3Function.h"
 #include "ConstantFunction.h"
 #include "ConcatFunction.h"
+#include "Tools.h"

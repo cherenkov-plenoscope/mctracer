@@ -1,4 +1,5 @@
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/Function")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/Random")
 set(SOURCE
    	${SOURCE}
    	${CMAKE_CURRENT_SOURCE_DIR}/Vector2D.cpp
@@ -19,7 +20,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/PropagationEnvironment.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/PseudoRandomNumberGenerator.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Histogram1D.cpp
    	PARENT_SCOPE
 )
 set(HEADERS
@@ -42,6 +43,6 @@ set(HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/PropagationEnvironment.h
 	${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.h
 	${CMAKE_CURRENT_SOURCE_DIR}/Color.h
-	${CMAKE_CURRENT_SOURCE_DIR}/PseudoRandomNumberGenerator.h
+	${CMAKE_CURRENT_SOURCE_DIR}/Histogram1D.h
    	PARENT_SCOPE
 )
