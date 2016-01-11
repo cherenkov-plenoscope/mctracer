@@ -96,27 +96,70 @@ TEST_F(RandomGeneratorTest, generator_point_on_disc) {
 //------------------------------------------------------------------------------
 TEST_F(RandomGeneratorTest, draw_from_distribution) {
 
-    Random::Mt19937 prng(0);
+    //--------------------
+    // create distributions
 
-    // f(x) = x^2 [0, 1)
     Function::Polynom3 f(0.0, 1.0, 0.0, 0.0, Function::Limits(0.0, 1.0));
 
-    Random::SamplesFromDistribution sfd(&f, &prng);
+    //--------------------
+    // sample from distribution
 
+    Random::Mt19937 prng(0);
+    Random::SamplesFromDistribution sfd(&f);
+
+    uint n_samples = 1e6;
     std::vector<double> samples;
-    for(uint i=0; i<1337*1337; i++)
-        samples.push_back(sfd.draw());
 
-    std::vector<double> bins = numeric::linspace(
+    for(uint i=0; i<n_samples; i++)
+        samples.push_back(sfd.draw(prng.uniform()));
+
+    //--------------------
+    // fill samples drawn from distribution into histogram
+
+    uint bin_count = uint(pow(double(n_samples), 1.0/3.0));
+    std::vector<double> bin_edges = numeric::linspace(
         f.get_limits().get_lower(),
         f.get_limits().get_upper(), 
-        50
+        bin_count
     );
 
-    Histogram1D histo(samples, bins);
+    Histogram1D histo(samples, bin_edges);
 
-    std::vector<double> drawn_f;
+    //--------------------
+    // normalize histogram
+    uint drawn_f_integral = 0;
+    double f_integral = 0;
+    for(uint i=0; i<histo.hist.size(); i++) {
+        drawn_f_integral = drawn_f_integral + histo.hist[i];
+        f_integral = f_integral + f(bin_edges[i]);
+    }
+
+    std::vector<double> drawn_f_normalized;
     for(uint i=0; i<histo.hist.size(); i++)
-        drawn_f.push_back( double(histo.hist[i])/histo.sample_size);
+        drawn_f_normalized.push_back( 
+            double(histo.hist[i])/double(drawn_f_integral)
+        );
+
+    //--------------------
+    // compare initial distribution and samples drawn from distribution
+
+    std::vector<double> ys = numeric::linspace(
+        f.get_limits().get_lower(),
+        f.get_limits().get_upper(), 
+        sqrt(n_samples)
+    );
+
+    double max_f = ys.front();
+    for(uint i=0; i<ys.size()-1; i++)
+        if(max_f < ys[i])
+            max_f = ys[i];
+    //std::cout << "max_f: " << max_f << "\n";
+    
+    for(uint i=0; i<bin_edges.size()-1; i++)
+        EXPECT_NEAR(
+            f(bin_edges[i])/f_integral, 
+            drawn_f_normalized[i], 
+            max_f*1e-2
+        );
 }
 //------------------------------------------------------------------------------

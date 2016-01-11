@@ -55,6 +55,8 @@ namespace LightFieldTelescope {
 			uint total_number_of_sub_pixels()const;
 			void write_sub_pixel_positions(const std::string path)const;
 			double bin_hight()const;
+			double principal_aperture_radius_to_throw_photons_in()const;
+			double field_of_view_solid_angle()const;
 		private:
 			void set_up_pixel_grid();
 			void set_up_sub_pixel_grid();

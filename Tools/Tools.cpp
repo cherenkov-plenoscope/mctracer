@@ -31,8 +31,10 @@ std::string get_print(const std::vector<std::vector<double>> &table) {
 	return out.str();	
 }
 //------------------------------------------------------------------------------
-double get_mean_along_column(const std::vector<std::vector<double>> &table, const uint column) {
-
+double get_mean_along_column(
+	const std::vector<std::vector<double>> &table, 
+	const uint column
+) {
 	double sum = 0.0;
 
 	for(std::vector<double> row : table)
@@ -137,4 +139,30 @@ std::vector<double> numeric::linspace(double begin, double end, uint steps) {
 		lin.push_back(begin + step*i);
 
 	return lin;
+}
+//------------------------------------------------------------------------------
+double get_solid_angle_for_opening_angle(const double theta) {
+	//-------                    
+	//         _ _        _______________    
+	//       h _|_   ____/__/__/_|/__/__/\____ <---cap area we are looking for//
+	//            __/     \ theta|            \__                             // 
+	//           /         \     |               \                            //
+	//          |           \    |                |                           //
+    //         |             \   |                |
+    //         |        r=1.0 \  |                 |            
+    //        |                \ |                  |            
+	//        |                 \|                  |          
+    //        |                  x                  |
+    //        |             unit sphere             |          
+    //        |                                    |                 
+    //         |                                   |                 
+    //         |                                   |                  
+	//          |                                 |                   
+	//           \__                           __/                    
+	//              \___                  ____/                       
+	//                  \________________/                            
+	//                                                              
+	//                             
+	double h = (1.0 - cos(theta));
+	return 2.0*M_PI*h;
 }

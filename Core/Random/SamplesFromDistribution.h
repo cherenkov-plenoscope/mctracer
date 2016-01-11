@@ -18,18 +18,17 @@ namespace Random {
 	class SamplesFromDistribution {
 
 		const Function::Func1D* distribution;
-		Generator* prng;
 
 		double total_integral_of_distribution;
 		Function::LinInterpol* cumulative_distribution_function;
 	public:
 
 		SamplesFromDistribution(
-			const Function::Func1D* _distribution, 
-			Generator* prng
+			const Function::Func1D* _distribution
 		);
 		~SamplesFromDistribution();
-		double draw();
+		double draw(const double uniform_0_to_1);
+		double get_total_integral_of_distribution()const;
 	};
 
 } // Random

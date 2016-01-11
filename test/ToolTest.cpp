@@ -345,3 +345,9 @@ TEST_F(Tools, StrToInt) {
   );
 }
 //------------------------------------------------------------------------------
+TEST_F(Tools, get_solid_angle_for_opening_angle) {
+
+  EXPECT_NEAR(0.0, get_solid_angle_for_opening_angle(0.0), 1e-9);
+  EXPECT_NEAR(2*M_PI, get_solid_angle_for_opening_angle(M_PI/2.0), 1e-9);
+  EXPECT_NEAR(4*M_PI, get_solid_angle_for_opening_angle(M_PI), 1e-9);
+}

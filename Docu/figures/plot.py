@@ -25,9 +25,12 @@ for file in glob.glob("*.func"):
 	ax.ticklabel_format(useOffset=False)
 	ax.spines['right'].set_visible(False)
 	ax.spines['top'].set_visible(False)
-	plt.plot(func[:,0], func[:,1], 'k-')
-	plt.scatter(func[0,0], func[0,1], facecolors='k', edgecolors='k')
-	plt.scatter(func[-1,0], func[-1,1], facecolors='white', edgecolors='k')
+
+	for i in range(func.shape[1]-1):
+		plt.plot(func[:,0], func[:,i+1], 'k-')
+		plt.scatter(func[0,0], func[0,i+1], facecolors='k', edgecolors='k')
+		plt.scatter(func[-1,0], func[-1,i+1], facecolors='white', edgecolors='k')
+		
 	fig.savefig(os.path.splitext(file)[0]+'.png', dpi=my_dpi, bbox_inches='tight', pad_inches=0)
 	plt.close()
  

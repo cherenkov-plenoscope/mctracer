@@ -3,9 +3,8 @@
 namespace Random {
 //------------------------------------------------------------------------------
 SamplesFromDistribution::SamplesFromDistribution(
-	const Function::Func1D* _distribution, 
-	Generator* _prng
-): distribution(_distribution), prng(_prng) {
+	const Function::Func1D* _distribution
+): distribution(_distribution) {
 
 	Function::LinInterpol integral_of_distribution = 
 		Function::get_integral(*distribution);
@@ -22,10 +21,14 @@ SamplesFromDistribution::~SamplesFromDistribution() {
 	delete cumulative_distribution_function;
 }
 //------------------------------------------------------------------------------
-double SamplesFromDistribution::draw() {
+double SamplesFromDistribution::draw(const double uniform_0_to_1) {
 
-	double y = prng->uniform()*total_integral_of_distribution;
+	double y = uniform_0_to_1*total_integral_of_distribution;
 	return (*cumulative_distribution_function)(y);
+}
+//------------------------------------------------------------------------------
+double SamplesFromDistribution::get_total_integral_of_distribution()const {
+	return total_integral_of_distribution;
 }
 //------------------------------------------------------------------------------
 } // Random

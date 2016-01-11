@@ -246,6 +246,7 @@ std::string Geometry::get_image_sensor_print()const{
 
 	std::stringstream tab;
 	tab << "Field of View................. " << Rad2Deg(cfg.max_FoV_diameter) << "deg\n";
+	tab << "Field of View solid angle..... " << field_of_view_solid_angle() << " radians\n";
 	tab << "max sensor radius............. " << max_outer_sensor_radius() << "m\n";
 	tab << "number of pixels.............. " << number_of_pixels() << "\n";
 
@@ -317,6 +318,19 @@ std::string Geometry::get_concentrator_bin_print()const{
 	);
 
 	return out.str();
+}
+//------------------------------------------------------------------------------
+double Geometry::principal_aperture_radius_to_throw_photons_in()const {
+	return 1.05*(
+		reflector.max_outer_aperture_radius() + 
+		reflector.thickness_of_dish()*tan(
+			max_FoV_radius()
+		)
+	);
+}
+//------------------------------------------------------------------------------
+double Geometry::field_of_view_solid_angle()const {
+	return get_solid_angle_for_opening_angle(max_FoV_radius());
 }
 //------------------------------------------------------------------------------
 } //lightfield

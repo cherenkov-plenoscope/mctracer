@@ -1,4 +1,5 @@
 #include "Tools.h"
+#include <math.h> 
 //------------------------------------------------------------------------------
 namespace Function {
 
@@ -19,7 +20,8 @@ namespace Function {
 		}
 
 		double x_end = f.get_limits().get_upper();
-		std::vector<double> F_end = {x_end, f(x_end-1e-9)*step + F.back()[1]};
+		double x_end_in_f = nextafter(x_end, f.get_limits().get_lower());
+		std::vector<double> F_end = {x_end, f(x_end_in_f)*step + F.back()[1]};
 		F.push_back(F_end);
 
 		return LinInterpol(F);
@@ -46,7 +48,8 @@ namespace Function {
 		}
 
 		double x_end = f.get_limits().get_upper();
-		std::vector<double> f_inv_end = {f(x_end-1e-9), x_end};
+		double x_end_in_f = nextafter(x_end, f.get_limits().get_lower());
+		std::vector<double> f_inv_end = {f(x_end_in_f), x_end};
 		fvec_inv.push_back(f_inv_end);
 
 		return LinInterpol(fvec_inv);
@@ -66,7 +69,8 @@ namespace Function {
 		}
 
 		double x_end = f.get_limits().get_upper();
-		double y_end = (f(x_end-1e-9) - f(x_end-1e-9-step))/step;
+		double x_end_margin = step*1e-9;
+		double y_end = (f(x_end-x_end_margin) - f(x_end-x_end_margin-step))/step;
 		std::vector<double> f_inv_end = {x_end, y_end};
 		fvec_deriv.push_back(f_inv_end);
 

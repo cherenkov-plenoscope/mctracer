@@ -5,6 +5,23 @@
 
 class Histogram1DTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
+TEST_F(Histogram1DTest, empty_bin_edges) {
+
+    std::vector<double> bins_edges;
+    EXPECT_EQ(0, bins_edges.size());
+
+    Random::Mt19937 prng(0);
+    std::vector<double> samples;
+
+    for(uint i=0; i<42*1337; i++)
+        samples.push_back(prng.uniform());
+
+    Histogram1D histo(samples, bins_edges);
+
+    EXPECT_EQ(0, histo.hist.size());
+    EXPECT_EQ(42*1337, histo.overflow_bin);
+}
+//------------------------------------------------------------------------------
 TEST_F(Histogram1DTest, init) {
 
     std::vector<double> bins = numeric::linspace(0.0, 1.0, 50);
@@ -78,4 +95,64 @@ TEST_F(Histogram1DTest, overflow_bin_below_expect_empty) {
     Histogram1D histo(samples, bins);
     EXPECT_EQ(0, histo.underflow_bin);
     EXPECT_EQ(0, histo.overflow_bin);
+}
+//------------------------------------------------------------------------------
+TEST_F(Histogram1DTest, all_in_one_bin_middle) {
+
+    // bins    |   0   |   1     |     2    | 
+    // edges  0.0   0.3333   0.666666      1.0
+    std::vector<double> bins_edges =  numeric::linspace(0.0, 1.0, 4);
+
+    std::vector<double> samples;
+    for(uint i=0; i<42*1337; i++)
+        samples.push_back(0.5);
+
+    Histogram1D histo(samples, bins_edges);
+    
+    EXPECT_EQ(0, histo.underflow_bin);
+    EXPECT_EQ(0, histo.overflow_bin);
+    ASSERT_EQ(3, histo.hist.size());
+    EXPECT_EQ(0, histo.hist[0]);
+    EXPECT_EQ(42*1337, histo.hist[1]);
+    EXPECT_EQ(0, histo.hist[2]);
+}
+//------------------------------------------------------------------------------
+TEST_F(Histogram1DTest, all_in_one_bin_front) {
+
+    // bins    |   0   |   1     |     2    | 
+    // edges  0.0   0.3333   0.666666      1.0
+    std::vector<double> bins_edges =  numeric::linspace(0.0, 1.0, 4);
+
+    std::vector<double> samples;
+    for(uint i=0; i<42*1337; i++)
+        samples.push_back(0.15);
+
+    Histogram1D histo(samples, bins_edges);
+    
+    EXPECT_EQ(0, histo.underflow_bin);
+    EXPECT_EQ(0, histo.overflow_bin);
+    ASSERT_EQ(3, histo.hist.size());
+    EXPECT_EQ(42*1337, histo.hist[0]);
+    EXPECT_EQ(0, histo.hist[1]);
+    EXPECT_EQ(0, histo.hist[2]);
+}
+//------------------------------------------------------------------------------
+TEST_F(Histogram1DTest, all_in_one_bin_back) {
+
+    // bins    |   0   |   1     |     2    | 
+    // edges  0.0   0.3333   0.666666      1.0
+    std::vector<double> bins_edges =  numeric::linspace(0.0, 1.0, 4);
+
+    std::vector<double> samples;
+    for(uint i=0; i<42*1337; i++)
+        samples.push_back(0.75);
+
+    Histogram1D histo(samples, bins_edges);
+    
+    EXPECT_EQ(0, histo.underflow_bin);
+    EXPECT_EQ(0, histo.overflow_bin);
+    ASSERT_EQ(3, histo.hist.size());
+    EXPECT_EQ(0, histo.hist[0]);
+    EXPECT_EQ(0, histo.hist[1]);
+    EXPECT_EQ(42*1337, histo.hist[2]);
 }
