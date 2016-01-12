@@ -10,7 +10,7 @@ MmcsCorsikaEvent::MmcsCorsikaEvent(
 	this->event_end	= event_end;
 }
 //------------------------------------------------------------------------------
-std::vector<Photon*>* MmcsCorsikaEvent::use_once_more_and_get_photon_bunch() {
+std::vector<Photon*>* MmcsCorsikaEvent::use_once_more_and_get_photons() {
 // CORSIKA Coordinate system
 // The coordinates in CORSIKA are defined with respect to a Cartesian coordinate
 // system with the positive x-axis pointing to the magnetic north, the positive
@@ -27,7 +27,7 @@ std::vector<Photon*>* MmcsCorsikaEvent::use_once_more_and_get_photon_bunch() {
 	photon_bunch->reserve(photon_data.number_of_photons());
 
 	for(uint i=0; i<photon_data.number_of_photons(); i++)
-		photon_bunch->push_back(get_mctracer_photons(i));
+		photon_bunch->push_back(get_mctracer_photon(i));
 
 	reuse_counter++;
 	return photon_bunch;
@@ -38,7 +38,7 @@ bool MmcsCorsikaEvent::can_be_reused_again()const {
 		event_header.x_coordinate_of_core_location_for_scattered_events_in_cm.size();
 }
 //------------------------------------------------------------------------------
-Photon* MmcsCorsikaEvent::get_mctracer_photons(const uint i)const {
+Photon* MmcsCorsikaEvent::get_mctracer_photon(const uint i)const {
 
 	Vector3D causal_dir = causal_direction(i);
 

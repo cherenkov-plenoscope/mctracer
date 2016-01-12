@@ -6,11 +6,11 @@
 namespace Photons {
 	//--------------------------------------------------------------------------
 	std::string get_print(
-		const std::vector<Photon*> *photon_bunch
+		const std::vector<Photon*> *photons
 	) {
 		std::stringstream out;
-		out << "Photon bunble "<< photon_bunch->size() << "\n";
-		for(Photon* photon : *photon_bunch)
+		out << "Photon bunble "<< photons->size() << "\n";
+		for(Photon* photon : *photons)
 			out << (*photon) << "\n";
 		return out.str();	
 	}	
@@ -18,18 +18,18 @@ namespace Photons {
 	// propagation
 	//--------------------------------------------------------------------------
 	void propagate_photons_in_world_with_settings(
-		std::vector<Photon*> *photon_bunch,
+		std::vector<Photon*> *photons,
 		const Frame* world, 
 		const TracerSettings* settings
 	) {
 		if(settings->MultiThread())
-			propagate_photons_using_multi_thread(photon_bunch, world, settings);
+			propagate_photons_using_multi_thread(photons, world, settings);
 		else
-			propagate_photons_using_single_thread(photon_bunch, world, settings);
+			propagate_photons_using_single_thread(photons, world, settings);
 	}	
 	//--------------------------------------------------------------------------
 	void propagate_photons_using_single_thread(
-		std::vector<Photon*> *photon_bunch,
+		std::vector<Photon*> *photons,
 		const Frame* world, 
 		const TracerSettings* settings
 	) {
@@ -42,12 +42,12 @@ namespace Photons {
 		env.propagation_options = settings;
 		env.random_engine = &dice;
 
-		for(uint i = 0; i<photon_bunch->size(); i++ )
-			photon_bunch->at(i)->propagate_in(env);;
+		for(uint i = 0; i<photons->size(); i++ )
+			photons->at(i)->propagate_in(env);;
 	}
 	//--------------------------------------------------------------------------
 	void propagate_photons_using_multi_thread(
-		std::vector<Photon*> *photon_bunch,
+		std::vector<Photon*> *photons,
 		const Frame* world, 
 		const TracerSettings* settings
 	) {
@@ -70,10 +70,10 @@ namespace Photons {
 			env_for_this_thread_only.random_engine = &dice_for_this_thread_only;
 
 			#pragma omp for schedule(dynamic) private(i)
-			for(i = 0; i<photon_bunch->size(); i++ ) {
+			for(i = 0; i<photons->size(); i++ ) {
 				try {
 					ray_counter++;
-					photon_bunch->at(i)->propagate_in(env_for_this_thread_only);
+					photons->at(i)->propagate_in(env_for_this_thread_only);
 				}catch(std::exception &error) {
 					HadCatch++;
 					std::cerr << error.what(); 
@@ -84,7 +84,7 @@ namespace Photons {
 
 			out << "Thread " << thread_id+1 << "/" << number_of_threads;
 			out << " is doing " << ray_counter << "/";
-			out << photon_bunch->size() << " photons. ";
+			out << photons->size() << " photons. ";
 			out << "Seed: " << dice_for_this_thread_only.get_seed() << "\n";
 			//cout << out.str();
 		}
@@ -107,20 +107,20 @@ namespace Photons {
 	std::vector<Photon*>* raw_matrix2photons(
 		std::vector<std::vector<double>> raw_matrix
 	) {
-		std::vector<Photon*> *photon_bunch = new std::vector<Photon*>;
+		std::vector<Photon*> *photons = new std::vector<Photon*>;
 
 		for(std::vector<double> raw_row : raw_matrix)
-			photon_bunch->push_back(raw_row2photon(raw_row));
+			photons->push_back(raw_row2photon(raw_row));
 
-		return photon_bunch;
+		return photons;
 	}
 	//--------------------------------------------------------------------------
 	std::vector<std::vector<double>> photons2raw_matrix(
-		std::vector<Photon*> *photon_bunch
+		std::vector<Photon*> *photons
 	) {
 		std::vector<std::vector<double>> raw_matrix;
 
-		for(Photon* ph : *photon_bunch)
+		for(Photon* ph : *photons)
 			raw_matrix.push_back(photon2raw_row(ph));
 
 		return raw_matrix;		
@@ -171,23 +171,23 @@ namespace Photons {
 	// Trajectories
 	//--------------------------------------------------------------------------
 	Trajectories::Trajectories(
-		std::vector<Photon*> *_photon_bunch,
+		std::vector<Photon*> *_photons,
 		const TracerSettings *settings
 	) {
 		this->settings = settings;
-		photon_bunch = _photon_bunch;
+		photons = _photons;
 		number_of_trajectories_handed_out_already = 0;
 	}
 	//--------------------------------------------------------------------------
 	bool Trajectories::has_still_trajectories_left()const {
 
-		return number_of_trajectories_handed_out_already<photon_bunch->size();
+		return number_of_trajectories_handed_out_already<photons->size();
 	}	
 	//--------------------------------------------------------------------------
 	Frame* Trajectories::get_next_trajectoy() {
 
 		TrajectoryFactory factory(
-			photon_bunch->at(number_of_trajectories_handed_out_already++)
+			photons->at(number_of_trajectories_handed_out_already++)
 		);
 		factory.set_trajectory_radius(settings->trajectory_radius);
 
@@ -202,8 +202,8 @@ namespace Photons {
 			const double opening_angle,
 			const uint number_of_photons
 		) {
-			std::vector<Photon*>* photon_bunch = new std::vector<Photon*>;
-			photon_bunch->reserve(number_of_photons);
+			std::vector<Photon*>* photons = new std::vector<Photon*>;
+			photons->reserve(number_of_photons);
 
 			const Vector3D support = Vector3D::null;
 
@@ -217,17 +217,17 @@ namespace Photons {
 				);
 
 				Photon* photon = new Photon(support, direction, 433e-9);
-				photon_bunch->push_back(photon);
+				photons->push_back(photon);
 			}
-			return photon_bunch;
+			return photons;
 		}
 		//----------------------------------------------------------------------
 		std::vector<Photon*> *parallel_towards_z_from_xy_disc(
 			const double disc_radius,
 			const uint number_of_photons
 		) {
-			std::vector<Photon*>* photon_bunch = new std::vector<Photon*>;
-			photon_bunch->reserve(number_of_photons);
+			std::vector<Photon*>* photons = new std::vector<Photon*>;
+			photons->reserve(number_of_photons);
 
 			const Vector3D direction = Vector3D::unit_z;
 
@@ -238,10 +238,10 @@ namespace Photons {
 
 				support = prng.get_point_on_xy_disc_within_radius(disc_radius);
 				Photon* photon = new Photon(support, direction, 433e-9);
-				photon_bunch->push_back(photon);
+				photons->push_back(photon);
 			}
 
-			return photon_bunch;
+			return photons;
 		}
 	}
 	//--------------------------------------------------------------------------
@@ -249,24 +249,24 @@ namespace Photons {
 	//--------------------------------------------------------------------------
 	void transform_all_photons(
 		const HomoTrafo3D Trafo, 
-		std::vector<Photon*> *photon_bunch
+		std::vector<Photon*> *photons
 	) {
-		for(Photon* photon : *photon_bunch)
+		for(Photon* photon : *photons)
 			photon->transform(&Trafo);
 	}
 	//--------------------------------------------------------------------------
 	void transform_all_photons_multi_thread(
 		const HomoTrafo3D Trafo, 
-		std::vector<Photon*> *photon_bunch
+		std::vector<Photon*> *photons
 	) {
 		uint i;
 		int HadCatch = 0;
-		#pragma omp parallel shared(photon_bunch,HadCatch)
+		#pragma omp parallel shared(photons,HadCatch)
 		{	
 			#pragma omp for schedule(dynamic) private(i) 
-			for(i=0; i<photon_bunch->size(); i++) {
+			for(i=0; i<photons->size(); i++) {
 				try{
-					photon_bunch->at(i)->transform(&Trafo);
+					photons->at(i)->transform(&Trafo);
 				}catch(std::exception &error) {
 					HadCatch++;
 					std::cerr << error.what(); 
@@ -286,10 +286,10 @@ namespace Photons {
 	//--------------------------------------------------------------------------
 	// delete all history
 	//--------------------------------------------------------------------------
-	void delete_photons_and_history(std::vector<Photon*> *photon_bunch) {
-		for(uint i=0; i<photon_bunch->size(); i++) {
-			photon_bunch->at(i)->delete_history();
-			delete photon_bunch->at(i);
+	void delete_photons_and_history(std::vector<Photon*> *photons) {
+		for(uint i=0; i<photons->size(); i++) {
+			photons->at(i)->delete_history();
+			delete photons->at(i);
 		}		
 	}
 }

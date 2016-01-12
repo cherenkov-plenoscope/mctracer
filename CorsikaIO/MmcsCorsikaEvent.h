@@ -27,7 +27,7 @@ public:
 		MmcsCorsikaSubBlock event_end
 	);
 
-	std::vector<Photon*>* use_once_more_and_get_photon_bunch();
+	std::vector<Photon*>* use_once_more_and_get_photons();
 	bool can_be_reused_again()const;
 
 	std::string get_print()const;
@@ -42,7 +42,7 @@ private:
 	double wavelength_in_m(const uint i)const;
 	double production_height_in_m(const uint i)const;
 	Vector3D intersection_with_xy_floor_plane(const uint i)const;
-	Photon* get_mctracer_photons(const uint i)const;
+	Photon* get_mctracer_photon(const uint i)const;
 	Vector3D causal_direction(const uint i)const;
 };
 
