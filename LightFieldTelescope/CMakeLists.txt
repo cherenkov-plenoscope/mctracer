@@ -8,6 +8,7 @@ set(SOURCE
   	${CMAKE_CURRENT_SOURCE_DIR}/CalibIo.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/VisualInspection.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/NightSkyBackgroundLight.cpp
+  	${CMAKE_CURRENT_SOURCE_DIR}/Propagation.cpp
    	PARENT_SCOPE
 )
 set(HEADERS
@@ -20,5 +21,6 @@ set(HEADERS
   	${CMAKE_CURRENT_SOURCE_DIR}/CalibIo.h
   	${CMAKE_CURRENT_SOURCE_DIR}/VisualInspection.h
   	${CMAKE_CURRENT_SOURCE_DIR}/NightSkyBackgroundLight.h
+  	${CMAKE_CURRENT_SOURCE_DIR}/Propagation.h
 	PARENT_SCOPE
 )

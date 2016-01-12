@@ -1,4 +1,3 @@
-#include "gtest/gtest.h"
 #include "Cameras/FreeOrbitCamera.h"
 #include "Tools/FileTools.h"
 #include "LightFieldTelescope/LightFieldTelescope.h"
