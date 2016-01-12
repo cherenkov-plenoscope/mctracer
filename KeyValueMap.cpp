@@ -67,11 +67,6 @@ std::string Map::get_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-void Map::assert_every_key_has_a_value(const int argc)const {
-	if(is_even(argc))
-		throw TracerException("Map: argument count is even");
-}
-//------------------------------------------------------------------------------
 bool Map::get_value_for_key_as_bool(const std::string key)const {
 	return StrToBool(get_value_for_key(key));
 }
