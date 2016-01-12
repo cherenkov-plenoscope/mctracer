@@ -33,6 +33,9 @@ namespace LightFieldTelescope {
 	private:
 		
 		void define_comand_line_keys();
+		std::string output_path()const;
+		std::string input_path()const;
+		std::string config_path()const;
 	};
 }// LightFieldTelescope
 #endif // __LightFieldTelescopePropagation_H_INCLUDE__ 

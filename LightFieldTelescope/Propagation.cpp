@@ -1,4 +1,7 @@
 #include "Propagation.h"
+#include "Core/Photons.h"
+#include "CorsikaIO/EventIo/EventIo.h"
+#include "CorsikaIO/EventIo/PhotonFactory.h"
 
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------
@@ -25,7 +28,53 @@ void Propagation::define_comand_line_keys() {
 }
 //------------------------------------------------------------------------------
 void Propagation::execute() {
+
+	std::cout << "out  '" << output_path() << "'\n";
+	std::cout << "in   '" << input_path() << "'\n";
+	std::cout << "conf '" << config_path() << "'\n";
 	std::cout << "coming soon :)\n";
+	
+	Random::Mt19937 prng(Random::zero_seed);
+
+	// load photons
+	EventIo::EventIoFile corsika_run(input_path());
+
+	// propagate each event
+	uint event_counter = 0;
+	while(corsika_run.has_still_events_left()) {
+
+		event_counter++;
+
+		// read next evenr
+		EventIo::Event event = corsika_run.next_event();
+
+		vector<Photon*> photons;
+        uint id = 0;
+        for(vector<float> corsika_photon: event.photons) {
+            
+            EventIo::PhotonFactory cpf(corsika_photon, id++, &prng);
+
+            if(cpf.passed_atmosphere())
+                photons.push_back(cpf.get_photon());
+        }
+
+        // wipe out the cherenkov photons which have just been propagated
+		Photons::delete_photons_and_history(&photons);
+
+		std::cout << "event " << event_counter << ", photons " << id << "\n";
+	} 
+}
+//------------------------------------------------------------------------------
+std::string Propagation::output_path()const {
+	return comand_line_parser.get<std::string>(outputK);
+}
+//------------------------------------------------------------------------------
+std::string Propagation::input_path()const {
+	return comand_line_parser.get<std::string>(inputK);
+}
+//------------------------------------------------------------------------------
+std::string Propagation::config_path()const {
+	return comand_line_parser.get<std::string>(configK);
 }
 //------------------------------------------------------------------------------
 }// LightFieldTelescope

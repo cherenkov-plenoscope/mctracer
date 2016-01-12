@@ -17,8 +17,8 @@
 #include "Tools/FileTools.h"
 #include "cmdline/cmdline.h"
 #include "Cameras/FreeOrbitCamera.h"
-#include "MmcsCorsikaFileIO/MmcsCorsikaFullEventGetter.h"
-#include "MmcsCorsikaFileIO/MmcsCorsikaPhotonData.h"
+#include "CorsikaIO/MmcsCorsikaFullEventGetter.h"
+#include "CorsikaIO/MmcsCorsikaPhotonData.h"
 #include "TelescopeArrayControl.h"
 #include "LightSourceFromConfig.h"
 

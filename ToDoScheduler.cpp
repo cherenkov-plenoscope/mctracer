@@ -5,8 +5,8 @@
 #include "XmlFactory/WorldFactory.h"
 #include "Geometry/StereoLitographyIo.h"
 #include "PhotonSensor/PhotonSensor.h"
-#include "MmcsCorsikaFileIO/EventIo.h"
-#include "MmcsCorsikaFileIO/CorsikaPhotonFactory.h"
+#include "CorsikaIO/EventIo/EventIo.h"
+#include "CorsikaIO/EventIo/PhotonFactory.h"
 //------------------------------------------------------------------------------
 ToDoScheduler::ToDoScheduler(int argc, char** argv) {
 
@@ -188,7 +188,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
         uint id = 0;
         for(vector<float> corsika_photon : event.photons) {
             
-            CorsikaPhotonFactory cpf(corsika_photon, id++, &prng);
+            EventIo::PhotonFactory cpf(corsika_photon, id++, &prng);
 
             if(cpf.passed_atmosphere())
                 photons.push_back(cpf.get_photon());
@@ -344,7 +344,7 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
         uint id = 0;
         for(vector<float> corsika_photon : event.photons) {
             
-            CorsikaPhotonFactory cpf(corsika_photon, id++, &prng);
+            EventIo::PhotonFactory cpf(corsika_photon, id++, &prng);
 
             if(cpf.passed_atmosphere())
                 photons.push_back(cpf.get_photon());

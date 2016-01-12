@@ -4,8 +4,6 @@
 #include <sstream>
 #include <cmath>
 
-#include "MmcsCorsikaRunHeader.h"
-#include "MmcsCorsikaEventHeader.h"
 #include "EventIo.h"
 using std::cout;
 using std::endl;

@@ -7,39 +7,11 @@
 #include <sstream>
 
 #include "gtest/gtest.h"
-#include "MmcsCorsikaFileIO/EventIo.h"
+#include "CorsikaIO/EventIo/EventIo.h"
 
 using namespace EventIo;
 
-// The fixture for testing class Foo.
-class EventIoTest : public ::testing::Test {
-protected:
-    // You can remove any or all of the following functions if its body
-    // is empty.
-    
-    EventIoTest() {
-        // You can do set-up work for each test here.
-    }
-
-    virtual ~EventIoTest() {
-        // You can do clean-up work that doesn't throw exceptions here.
-    }
-
-    // If the constructor and destructor are not enough for setting up
-    // and cleaning up each test, you can define the following methods:
-
-    virtual void SetUp() {
-        // Code here will be called immediately after the constructor (right
-        // before each test).
-    }
-
-    virtual void TearDown() {
-        // Code here will be called immediately after each test (right
-        // before the destructor).
-    }
-
-    // Objects declared here can be used by all tests in the test case for Foo.
-};
+class EventIoTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(EventIoTest, EventIoHeader_works) {
     
@@ -194,7 +166,7 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__photon_bundle_values) {
     }
 }
 //------------------------------------------------------------------------------
-#include "MmcsCorsikaFileIO/CorsikaPhotonFactory.h"
+#include "CorsikaIO/EventIo/PhotonFactory.h"
 
 TEST_F(EventIoTest, EventIoFile_telescope_dat__run_time____________________________________) {
     EventIoFile my_file("telescope.dat");
@@ -209,7 +181,7 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__run_time_________________________
         uint id = 0;
         for(vector<float> corsika_photon : event.photons) {
             
-            CorsikaPhotonFactory cpf(corsika_photon,id++,&prng);
+            PhotonFactory cpf(corsika_photon,id++,&prng);
 
             if(cpf.passed_atmosphere()) {
                 photons.push_back(

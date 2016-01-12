@@ -2,9 +2,8 @@
 #include <iostream>
 #include <fstream>
 
-
-#include "MmcsCorsikaFileIO/MmcsCorsikaRunHeader.h"
-#include "MmcsCorsikaFileIO/MmcsCorsikaEventHeader.h"
+#include "CorsikaIO/MmcsCorsikaRunHeader.h"
+#include "CorsikaIO/MmcsCorsikaEventHeader.h"
 
 using std::cout;
 using std::endl;
@@ -12,15 +11,13 @@ using std::string;
 using std::vector;
 
 namespace EventIo{
+
     class WrongTypeException :public TracerException{
-    public:
-        WrongTypeException() : TracerException() {}
-        WrongTypeException(std::string message) : TracerException(message) {}
+        using TracerException::TracerException;
     };
+
     class NoSyncFoundException :public TracerException{
-    public:
-        NoSyncFoundException() : TracerException() {}
-        NoSyncFoundException(std::string message) : TracerException(message) {}
+        using TracerException::TracerException;
     };
     
     struct TelPos{
