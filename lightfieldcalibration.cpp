@@ -10,7 +10,7 @@ int main(int argc, char* argv[]) {
     LightFieldTelescope::Config telescope_config;
 
     telescope_config.reflector.focal_length = 75.0;
-    telescope_config.reflector.DaviesCotton_over_parabolic_mixing_factor = 0.0;
+    telescope_config.reflector.DaviesCotton_over_parabolic_mixing_factor = 1.0;
     telescope_config.reflector.max_outer_aperture_radius = 25.0;
     telescope_config.reflector.min_inner_aperture_radius = 0.5;
     telescope_config.reflector.facet_inner_hex_radius = 0.6;
@@ -22,24 +22,23 @@ int main(int argc, char* argv[]) {
     telescope_config.lens_refraction = &LightFieldTelescope::pmma_refraction;
     telescope_config.sub_pixel_on_pixel_diagonal = 11;
     
-    // RUN HIGH INCIDENT ANGLE CALIBRATION ON LENS
-    LightFieldTelescope::LensCalibration lenscalib(telescope_config);
-
-    // EXPORT SUB_PIXEL POSITIONS
-    lenscalib.telescope_geometry.write_sub_pixel_positions("sub_pixel_positions.csv");
-    
-    // EXPORT TELESCOPE OVERVIEW
+    // INIT GEOMETRY
+    LightFieldTelescope::Geometry telescope_geometry(telescope_config);
+    telescope_geometry.write_sub_pixel_positions("sub_pixel_positions.csv");
     FileTools::write_text_to_file(
-        lenscalib.telescope_geometry.get_print(),"overview.txt"
+        telescope_geometry.get_print(),"overview.txt"
     );
 
+    // RUN HIGH INCIDENT ANGLE CALIBRATION ON LENS
+    LightFieldTelescope::LensCalibration lenscalib(telescope_geometry);
+
     // RUN LIGHT FIELD CALIBRATION
-    LightFieldTelescope::Calibration calib(telescope_config);
+    LightFieldTelescope::Calibration calib(telescope_geometry);
+    calib.export_sub_pixel_statistics("sub_pixel_statistics.txt");
 
     // EXPLORE TELESCOPE
+    LightFieldTelescope::Factory fab(telescope_geometry);
     Frame telescope("telescope", Vector3D::null, Rotation3D::null);
-
-    LightFieldTelescope::Factory fab(telescope_config);
     fab.add_telescope_to_frame(&telescope);
 
     std::cout << fab.geometry << "\n";
@@ -47,7 +46,7 @@ int main(int argc, char* argv[]) {
     TracerSettings settings;
     settings.global_light_direction = Vector3D(1.0, 1.0, 1.0);
     FreeOrbitCamera free(&telescope, &settings);
-       
+    
     }catch(std::exception &error) {
         std::cerr << error.what(); 
     }

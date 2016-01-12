@@ -20,6 +20,10 @@ void Sensors::init(std::vector<PhotonSensor::Sensor*> &sensors) {
     occurence2frame_indices.clear();
 
     by_occurence = std::move(sensors);
+
+    for(uint i=0; i<by_occurence.size(); i++)
+    	by_occurence[i]->id = i;
+
     init_indices_occurence2frame();
     init_sensors_by_frames();
 

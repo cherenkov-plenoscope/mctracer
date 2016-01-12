@@ -124,20 +124,22 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
     );
 
     Histogram1D histo(samples, bin_edges);
+    //std::cout << histo;
 
     //--------------------
     // normalize histogram
+    
     uint drawn_f_integral = 0;
     double f_integral = 0;
-    for(uint i=0; i<histo.hist.size(); i++) {
-        drawn_f_integral = drawn_f_integral + histo.hist[i];
+    for(uint i=0; i<histo.bins.size(); i++) {
+        drawn_f_integral = drawn_f_integral + histo.bins[i];
         f_integral = f_integral + f(bin_edges[i]);
     }
 
     std::vector<double> drawn_f_normalized;
-    for(uint i=0; i<histo.hist.size(); i++)
+    for(uint i=0; i<histo.bins.size(); i++)
         drawn_f_normalized.push_back( 
-            double(histo.hist[i])/double(drawn_f_integral)
+            double(histo.bins[i])/double(drawn_f_integral)
         );
 
     //--------------------
@@ -153,7 +155,6 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
     for(uint i=0; i<ys.size()-1; i++)
         if(max_f < ys[i])
             max_f = ys[i];
-    //std::cout << "max_f: " << max_f << "\n";
     
     for(uint i=0; i<bin_edges.size()-1; i++)
         EXPECT_NEAR(

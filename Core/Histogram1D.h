@@ -11,12 +11,13 @@
 #include <vector>
 #include <stdint.h>
 #include <iostream>
+#include "Core/Printable.h"
 //==============================================================================
-class Histogram1D {
+class Histogram1D: public Printable{
 
 	std::vector<double> bin_edges;
 public:
-	std::vector<uint> hist;
+	std::vector<uint> bins;
 	uint number_of_samples = 0;
 	uint underflow_bin = 0;
 	uint overflow_bin = 0;
@@ -25,6 +26,7 @@ public:
 		const std::vector<double> &samples, 
 		const std::vector<double> &_bin_edges
 	);
+	std::string get_print()const;
 private:
 
 	std::vector<double>::const_iterator get_upper_bound_bin_edge(

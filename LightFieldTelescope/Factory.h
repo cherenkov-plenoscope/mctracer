@@ -14,12 +14,11 @@
 namespace LightFieldTelescope {
 
 	class Factory {
+
 		PhotonSensors::Sensors *sub_pixel_sensors;
 	public:
-
-		const Geometry geometry;
-		const Config cfg;
-		Factory(Config);
+		const Geometry &geometry;
+		Factory(const Geometry &geo);
 		void add_telescope_to_frame(Frame *frame);
 
 		Frame* get_lens_array();

@@ -48,12 +48,13 @@ namespace Function {
 	//--------------------------------------------------------------------------
 	std::string Func1D::get_print()const {
 		std::stringstream out;
+		out.precision(2);
 		out << limits.get_print() << " ";
 
 		std::vector<std::vector<double>> table = get_samples(3);
 
 		for(std::vector<double> xy : table) {
-			out << xy.at(1) << " ";
+			out << "f(" << xy.at(0) << ")=" << xy.at(1) <<", ";
 		}
 
 		return out.str();

@@ -18,7 +18,7 @@ TEST_F(Histogram1DTest, empty_bin_edges) {
 
     Histogram1D histo(samples, bins_edges);
 
-    EXPECT_EQ(0, histo.hist.size());
+    EXPECT_EQ(0, histo.bins.size());
     EXPECT_EQ(42*1337, histo.overflow_bin);
 }
 //------------------------------------------------------------------------------
@@ -111,10 +111,10 @@ TEST_F(Histogram1DTest, all_in_one_bin_middle) {
     
     EXPECT_EQ(0, histo.underflow_bin);
     EXPECT_EQ(0, histo.overflow_bin);
-    ASSERT_EQ(3, histo.hist.size());
-    EXPECT_EQ(0, histo.hist[0]);
-    EXPECT_EQ(42*1337, histo.hist[1]);
-    EXPECT_EQ(0, histo.hist[2]);
+    ASSERT_EQ(3, histo.bins.size());
+    EXPECT_EQ(0, histo.bins[0]);
+    EXPECT_EQ(42*1337, histo.bins[1]);
+    EXPECT_EQ(0, histo.bins[2]);
 }
 //------------------------------------------------------------------------------
 TEST_F(Histogram1DTest, all_in_one_bin_front) {
@@ -131,10 +131,10 @@ TEST_F(Histogram1DTest, all_in_one_bin_front) {
     
     EXPECT_EQ(0, histo.underflow_bin);
     EXPECT_EQ(0, histo.overflow_bin);
-    ASSERT_EQ(3, histo.hist.size());
-    EXPECT_EQ(42*1337, histo.hist[0]);
-    EXPECT_EQ(0, histo.hist[1]);
-    EXPECT_EQ(0, histo.hist[2]);
+    ASSERT_EQ(3, histo.bins.size());
+    EXPECT_EQ(42*1337, histo.bins[0]);
+    EXPECT_EQ(0, histo.bins[1]);
+    EXPECT_EQ(0, histo.bins[2]);
 }
 //------------------------------------------------------------------------------
 TEST_F(Histogram1DTest, all_in_one_bin_back) {
@@ -151,8 +151,8 @@ TEST_F(Histogram1DTest, all_in_one_bin_back) {
     
     EXPECT_EQ(0, histo.underflow_bin);
     EXPECT_EQ(0, histo.overflow_bin);
-    ASSERT_EQ(3, histo.hist.size());
-    EXPECT_EQ(0, histo.hist[0]);
-    EXPECT_EQ(0, histo.hist[1]);
-    EXPECT_EQ(42*1337, histo.hist[2]);
+    ASSERT_EQ(3, histo.bins.size());
+    EXPECT_EQ(0, histo.bins[0]);
+    EXPECT_EQ(0, histo.bins[1]);
+    EXPECT_EQ(42*1337, histo.bins[2]);
 }

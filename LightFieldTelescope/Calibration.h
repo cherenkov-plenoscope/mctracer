@@ -27,10 +27,27 @@ namespace LightFieldTelescope {
 		};
 	};
 
+	struct SubPixelStatistics {
+		double geometric_efficiency;
+		double mean_cx;
+		double mean_cy;
+		double mean_x;
+		double mean_y;
+		double mean_time;
+
+		SubPixelStatistics() {
+			geometric_efficiency = 0.0;
+			mean_cx = 0.0;
+			mean_cy = 0.0;
+			mean_x = 0.0;
+			mean_y = 0.0;
+			mean_time = 0.0;			
+		}
+	};
+
 	class Calibration: public Printable {
 
-		const Config telescope_config;
-		const Geometry telescope_geometry;
+		const Geometry &telescope_geometry;
 		uint number_of_photons;
 		uint number_of_photons_per_sub_pixel;
 		uint number_of_photons_per_block;
@@ -48,9 +65,17 @@ namespace LightFieldTelescope {
 		Random::Mt19937 prng;
 
 		std::vector<CalibRow> table;
-	public:
 
-		Calibration(const Config cfg);
+		// statistics
+		std::vector<SubPixelStatistics> statistics;
+
+		void init_statistics();
+		void fill_statistics_from_table();
+		void normalize_statistics();
+	public:
+		void export_sub_pixel_statistics(const std::string path)const;
+
+		Calibration(const Geometry &geometry);
 		void set_up_photon_properties();
 		void set_up_principal_aperture_range();
 		void set_up_field_of_view_range();

@@ -27,7 +27,7 @@ namespace Random {
 			const Function::Func1D* _distribution
 		);
 		~SamplesFromDistribution();
-		double draw(const double uniform_0_to_1);
+		double draw(const double uniform_0_to_1)const;
 		double get_total_integral_of_distribution()const;
 	};
 

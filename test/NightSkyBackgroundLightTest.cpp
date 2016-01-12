@@ -38,8 +38,8 @@ TEST_F(NightSkyBackgroundLightTest, fake_constant) {
     std::cout << nsb << "\n";
     Random::Mt19937 prng(0);
 
-    std::vector<Photon*>* nsb_photons = 
-    	nsb.get_photons_in_duration(0.0, 1e-9, &prng);
+    //std::vector<Photon*>* nsb_photons = 
+    //	nsb.get_photons_in_duration(0.0, 1e-9, &prng);
 
     //std::cout << Photons::get_print(nsb_photons);
 }

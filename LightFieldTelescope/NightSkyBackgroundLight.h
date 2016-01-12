@@ -42,11 +42,9 @@ namespace LightFieldTelescope {
 			const double duration,
 			Random::Generator* prng
 		);
-		Photon* get_photon_given_pos_incident_dir_wvl_and_time_on_principal_aperture(
-			Vector3D pos_on_principal_aperture,
-			Vector3D direction_on_principal_aperture,
-			double wavelength,
-			double moment
+		Photon* get_photon_on_principal_aperture(
+			double time_until_reaching_principal_aperture,
+			Random::Generator* prng
 		)const;
 	};
 }

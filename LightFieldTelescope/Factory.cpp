@@ -10,7 +10,7 @@
 
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------
-Factory::Factory(const Config ncfg): geometry(ncfg), cfg(ncfg) {
+Factory::Factory(const Geometry &geo): geometry(geo) {
 
 }
 //------------------------------------------------------------------------------
@@ -23,7 +23,7 @@ Frame* Factory::get_lens_with_name_at_pos(
 	lens->set_name_pos_rot(name, pos, Rotation3D::null);
 	lens->set_outer_color(&Color::white);
 	lens->set_inner_color(&Color::white);
-	lens->set_inner_refraction(cfg.lens_refraction);
+	lens->set_inner_refraction(geometry.config.lens_refraction);
 	lens->set_curvature_radius_and_outer_hex_radius(
 		geometry.pixel_lens_curvature_radius(),
 		geometry.pixel_lens_outer_aperture_radius()
@@ -282,7 +282,7 @@ void Factory::add_telescope_to_frame(Frame *frame) {
 	image_sensor->set_mother_and_child(get_sub_pixel_sensor_plane());
 	image_sensor->set_mother_and_child(image_sensor_front);
 
-	SegmentedReflector::Factory refl_factory(cfg.reflector);
+	SegmentedReflector::Factory refl_factory(geometry.config.reflector);
 
 	frame->set_mother_and_child(image_sensor);
 	frame->set_mother_and_child(refl_factory.get_reflector());

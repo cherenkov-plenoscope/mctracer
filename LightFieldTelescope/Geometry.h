@@ -14,7 +14,7 @@ namespace LightFieldTelescope {
 
 	class Geometry : public Printable {
 
-			const Config cfg;
+			
 		
 			std::vector<Vector3D> pixel_grid;
 			std::vector<Vector3D> sub_pixel_flower_template_grid;
@@ -25,6 +25,7 @@ namespace LightFieldTelescope {
 			double pixel_lens_curv_radius;
 			double pixel_lens_mean_refrac;
 		public:
+			const Config config;
 			const SegmentedReflector::Geometry reflector;
 
 			Geometry(const Config ncfg);

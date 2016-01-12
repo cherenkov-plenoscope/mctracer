@@ -6,9 +6,8 @@
 
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------
-LensCalibration::LensCalibration(const Config cfg): 
-	telescope_config(cfg), 
-	telescope_geometry(cfg) 
+LensCalibration::LensCalibration(const Geometry &geo):  
+	telescope_geometry(geo) 
 {
 	set_up_test_bench();
 	read_out_l.clear_history();
@@ -81,7 +80,7 @@ void LensCalibration::set_up_test_bench() {
 	lens.set_name_pos_rot("lens", Vector3D::null, Rotation3D::null);
 	lens.set_outer_color(&Color::white);
 	lens.set_inner_color(&Color::white);
-	lens.set_inner_refraction(telescope_config.lens_refraction);
+	lens.set_inner_refraction(telescope_geometry.config.lens_refraction);
 	lens.set_curvature_radius_and_outer_hex_radius(
 		telescope_geometry.pixel_lens_curvature_radius(),
 		telescope_geometry.pixel_lens_outer_aperture_radius()
@@ -119,7 +118,7 @@ void LensCalibration::set_up_test_bench() {
 	);
 
 	// bin
-	Factory fab(telescope_config);
+	Factory fab(telescope_geometry);
 	Frame* bin = fab.get_pixel_bin_with_name_at_pos(
 		"single_bin", 
 		Vector3D(

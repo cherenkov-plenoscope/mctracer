@@ -7,7 +7,7 @@
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------
 Geometry::Geometry(const Config ncfg): 
-	cfg(ncfg),
+	config(ncfg),
 	reflector(ncfg.reflector)
 {
 	set_up_pixel_grid();
@@ -31,7 +31,7 @@ void Geometry::set_up_sub_pixel_flower_template_grid() {
 
 	HexGridFlower subpixflowergrid(
 		pixel_lens_outer_aperture_radius(),
-		cfg.sub_pixel_on_pixel_diagonal
+		config.sub_pixel_on_pixel_diagonal
 	);
 
 	sub_pixel_flat2flat = subpixflowergrid.get_facet_spacing();
@@ -64,7 +64,7 @@ void Geometry::set_up_sub_pixel_grid() {
 //------------------------------------------------------------------------------
 void Geometry::set_up_lens_geometry() {
 	
-	pixel_lens_mean_refrac = cfg.lens_refraction->get_mean(137);
+	pixel_lens_mean_refrac = config.lens_refraction->get_mean(137);
 
 	LensMaker::Config lmcfg;
 	lmcfg.focal_length = pixel_lens_focal_length();
@@ -86,7 +86,7 @@ double Geometry::image_sensor_distance()const {
 }
 //------------------------------------------------------------------------------
 double Geometry::max_FoV_radius()const {
-	return cfg.max_FoV_diameter/2.0;
+	return config.max_FoV_diameter/2.0;
 }
 //------------------------------------------------------------------------------
 uint Geometry::number_of_pixels()const {
@@ -98,7 +98,7 @@ double Geometry::pixel_spacing()const {
 }
 //------------------------------------------------------------------------------
 double Geometry::pixel_lens_inner_aperture_radius()const {
-	return reflector.focal_length()*tan(cfg.pixel_FoV_hex_flat2flat/2.0);
+	return reflector.focal_length()*tan(config.pixel_FoV_hex_flat2flat/2.0);
 }
 //------------------------------------------------------------------------------
 double Geometry::pixel_lens_outer_aperture_radius()const {
@@ -130,11 +130,11 @@ double Geometry::pixel_lens_mean_refraction()const {
 }
 //------------------------------------------------------------------------------
 double Geometry::pixel_FoV_hex_flat2flat()const {
-	return cfg.pixel_FoV_hex_flat2flat;
+	return config.pixel_FoV_hex_flat2flat;
 }
 //------------------------------------------------------------------------------
 double Geometry::outer_sensor_housing_radius()const {
-	return max_outer_sensor_radius()*cfg.housing_overhead;
+	return max_outer_sensor_radius()*config.housing_overhead;
 }
 //------------------------------------------------------------------------------
 std::vector<Vector3D> Geometry::pixel_positions()const {
@@ -245,7 +245,7 @@ std::string Geometry::get_image_sensor_print()const{
 	out << "Image_Sensor__\n";
 
 	std::stringstream tab;
-	tab << "Field of View................. " << Rad2Deg(cfg.max_FoV_diameter) << "deg\n";
+	tab << "Field of View................. " << Rad2Deg(config.max_FoV_diameter) << "deg\n";
 	tab << "Field of View solid angle..... " << field_of_view_solid_angle() << " radians\n";
 	tab << "max sensor radius............. " << max_outer_sensor_radius() << "m\n";
 	tab << "number of pixels.............. " << number_of_pixels() << "\n";

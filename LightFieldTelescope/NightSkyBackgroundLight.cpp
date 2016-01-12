@@ -38,29 +38,10 @@ std::vector<Photon*>* NightSkyBackgroundLight::get_photons_in_duration(
 	std::vector<Photon*>* photons = new std::vector<Photon*>;
 	photons->reserve(relative_arrival_times.size());
 
-	for(double relative_time: relative_arrival_times) {
-		
-		double wavelength = nsb_cdf.draw(prng->uniform());
-		
-		Vector3D pos_on_principal_aperture = 
-			prng->get_point_on_xy_disc_within_radius(
-				max_principal_aperture_radius_to_trow_photons_in
-			);
-
-		Vector3D incident_direction_on_principal_aperture = 
-			prng->get_point_on_unitsphere_within_polar_distance(
-				max_tilt_vs_optical_axis_to_throw_photons_in
-			);
-
+	for(double relative_time: relative_arrival_times)
 		photons->push_back(
-			get_photon_given_pos_incident_dir_wvl_and_time_on_principal_aperture(
-				pos_on_principal_aperture,
-				incident_direction_on_principal_aperture,
-				wavelength,
-				delay + relative_time
-			)
+			get_photon_on_principal_aperture(delay + relative_time,	prng)
 		);
-	}
 
 	return photons;
 }
@@ -75,30 +56,29 @@ void NightSkyBackgroundLight::init_relative_arrival_times(
 
 	while(relative_arrival_times_sum < duration) {
 
-		double next_time = -log(prng->uniform())/overall_nsb_rate;
+		double time_until_next_photon = -log(prng->uniform())/overall_nsb_rate;
+
 		relative_arrival_times.push_back(relative_arrival_times_sum);
-		relative_arrival_times_sum += next_time;
+		relative_arrival_times_sum += time_until_next_photon;
 	};
 }
 //------------------------------------------------------------------------------
-std::string NightSkyBackgroundLight::get_print()const {
-	std::stringstream out;
-	out << "NightSkyBackround\n";
-	out << "  rate................. " << overall_nsb_rate << " Hz\n";
-	out << "  FoV solid angle...... " << solid_angle << "\n";
-	out << "  FoV radius........... " << Rad2Deg(max_tilt_vs_optical_axis_to_throw_photons_in) << " deg\n";
-	out << "  area................. " << area << " m^2\n";
-	out << "  area radius.......... " << max_principal_aperture_radius_to_trow_photons_in << " m\n";
-	out << "  wavelength integral.. " << nsb_cdf.get_total_integral_of_distribution() << " 1/(s sr m^2)\n";
-	return out.str();
-}
-//------------------------------------------------------------------------------
-Photon* NightSkyBackgroundLight::get_photon_given_pos_incident_dir_wvl_and_time_on_principal_aperture(
-	Vector3D pos_on_principal_aperture,
-	Vector3D incident_direction_on_principal_aperture,
-	double wavelength,
-	double time_until_reaching_principal_aperture
+Photon* NightSkyBackgroundLight::get_photon_on_principal_aperture(
+	double time_until_reaching_principal_aperture,
+	Random::Generator* prng
 )const {
+
+	double wavelength = nsb_cdf.draw(prng->uniform());
+		
+	Vector3D pos_on_principal_aperture = 
+		prng->get_point_on_xy_disc_within_radius(
+			max_principal_aperture_radius_to_trow_photons_in
+		);
+
+	Vector3D incident_direction_on_principal_aperture = 
+		prng->get_point_on_unitsphere_within_polar_distance(
+			max_tilt_vs_optical_axis_to_throw_photons_in
+		);
 
 	Ray back_running_ray(
 		pos_on_principal_aperture, 
@@ -120,6 +100,23 @@ Photon* NightSkyBackgroundLight::get_photon_given_pos_incident_dir_wvl_and_time_
 	);
 
 	return ph;
+}
+//------------------------------------------------------------------------------
+std::string NightSkyBackgroundLight::get_print()const {
+
+	std::stringstream out;
+	out << "NightSkyBackround\n";
+	out << "  rate................. " << overall_nsb_rate << " Hz\n";
+	out << "  FoV solid angle...... " << solid_angle << " sr\n";
+	out << "  FoV radius........... " << 
+		Rad2Deg(max_tilt_vs_optical_axis_to_throw_photons_in) << " deg\n";
+	out << "  area................. " << area << " m^2\n";
+	out << "  area radius.......... " << 
+		max_principal_aperture_radius_to_trow_photons_in << " m\n";
+	out << "  wavelength integral.. " << 
+		nsb_cdf.get_total_integral_of_distribution() << " 1/(s sr m^2)\n";
+	out << "  flux vs wavelength... " << *nsb_flux_vs_wavelength;
+	return out.str();
 }
 //------------------------------------------------------------------------------
 }

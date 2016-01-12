@@ -29,6 +29,9 @@ namespace SegmentedReflector {
 		Config();
 	};
 
+	Config load_config_from_file(const std::string path);
+	void save_config_to_file(Config config, const std::string path);
+
 	static const Function::Constant typical_reflectivity(
 		0.8, 
 		Function::Limits(200e-9, 1200e-9)

@@ -21,7 +21,7 @@ SamplesFromDistribution::~SamplesFromDistribution() {
 	delete cumulative_distribution_function;
 }
 //------------------------------------------------------------------------------
-double SamplesFromDistribution::draw(const double uniform_0_to_1) {
+double SamplesFromDistribution::draw(const double uniform_0_to_1)const {
 
 	double y = uniform_0_to_1*total_integral_of_distribution;
 	return (*cumulative_distribution_function)(y);

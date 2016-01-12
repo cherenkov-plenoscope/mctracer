@@ -1,4 +1,5 @@
 #include "LightFieldTelescope/Config.h"
+#include <functional>
 
 namespace LightFieldTelescope {
 

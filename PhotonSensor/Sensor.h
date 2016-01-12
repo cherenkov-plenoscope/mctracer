@@ -19,10 +19,10 @@ namespace PhotonSensor {
 	class Sensor {
 	protected:
 
-		uint id;
+		
 		const Frame* sensor_frame;
 	public:
-
+		uint id;
 		Sensor(uint _id, Frame* _sensor_frame);
 		uint get_id();
 		virtual ~Sensor();
