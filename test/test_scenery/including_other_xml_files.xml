@@ -22,7 +22,7 @@
 	</frame>
 
 	<frame>
-		<set_frame name="big_wall_1" pos="[-1,0,0]" rot="[0,0,0]"/>	
+		<set_frame name="big_wall_2" pos="[-1,0,0]" rot="[0,0,0]"/>	
 		<plane>
 			<set_frame name="lower_wall" pos="[0,0,0.75]" rot="[0,1.57,0.0]"/>
 			<set_surface reflection_vs_wavelength="zero" colour="[180,180,180]"/>

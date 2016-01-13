@@ -2,7 +2,7 @@
 
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------
-VisualInspection::VisualInspection(const Factory& factory): fab(factory) {
+VisualInspection::VisualInspection(const Factory *factory): fab(factory) {
 	
 }
 //------------------------------------------------------------------------------
@@ -11,11 +11,11 @@ void VisualInspection::set_up_world_basics() {
 
 	ground.set_name_pos_rot(
 		"ground", 
-		Vector3D(0.0, 0.0, -fab.geometry.reflector.max_outer_aperture_radius()), 
+		Vector3D(0.0, 0.0, -fab->geometry->reflector.max_outer_aperture_radius()), 
 		Rotation3D::null
 	);
 
-	ground.set_radius(fab.geometry.reflector.max_outer_aperture_radius()*100.0);
+	ground.set_radius(fab->geometry->reflector.max_outer_aperture_radius()*100.0);
 	ground.set_outer_color(&Color::grass_green);
 	ground.set_inner_color(&Color::grass_green);
 

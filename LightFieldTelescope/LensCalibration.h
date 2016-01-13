@@ -29,8 +29,8 @@ namespace LightFieldTelescope {
 		Random::Mt19937 prng;
 	public:
 
-		const Geometry &telescope_geometry;
-		LensCalibration(const Geometry &geo);
+		const Geometry *telescope_geometry;
+		LensCalibration(const Geometry *geo);
 		~LensCalibration();
 		std::string get_print()const;
 	private:

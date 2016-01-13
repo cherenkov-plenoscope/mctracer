@@ -10,9 +10,9 @@
 
 using namespace std;
 
-class CartesianFrameTest : public ::testing::Test {};
+class FrameTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
-TEST_F(CartesianFrameTest, assert_name_is_valid) {
+TEST_F(FrameTest, assert_name_is_valid) {
 
   Vector3D    pos = Vector3D::null;
   Rotation3D  rot = Rotation3D::null;
@@ -44,7 +44,23 @@ TEST_F(CartesianFrameTest, assert_name_is_valid) {
   );
 }
 //------------------------------------------------------------------------------
-TEST_F(CartesianFrameTest, set_frame) {
+TEST_F(FrameTest, duplicate_name_of_children_frames) {
+
+  Frame Peter("peter", Vector3D::null, Rotation3D::null);
+  Frame Klaus1("klaus", Vector3D::null, Rotation3D::null);
+  Frame Klaus2("klaus", Vector3D::null, Rotation3D::null);
+
+  Peter.set_mother_and_child(&Klaus1);
+  Peter.set_mother_and_child(&Klaus2);
+
+  EXPECT_THROW(
+    Peter.assert_no_children_duplicate_names()
+    ,
+    Frame::DuplicateChildName
+  );
+}
+//------------------------------------------------------------------------------
+TEST_F(FrameTest, set_frame) {
 
   Vector3D    pos(1.3,3.7,4.2);
   Rotation3D  rot(3.1,4.1,7.7);
@@ -65,7 +81,7 @@ TEST_F(CartesianFrameTest, set_frame) {
   EXPECT_EQ(T_frame2mother, *Peter.frame2mother());
 }
 //------------------------------------------------------------------------------
-TEST_F(CartesianFrameTest, root_of_world_on_complete_tree) {
+TEST_F(FrameTest, root_of_world_on_complete_tree) {
 
   //-----define frames
   Frame tree;
@@ -115,14 +131,14 @@ TEST_F(CartesianFrameTest, root_of_world_on_complete_tree) {
   EXPECT_EQ(&tree, leaf2_on_branch.get_root_of_world());
 }
 //------------------------------------------------------------------------------
-TEST_F(CartesianFrameTest, root_of_world_default) {
+TEST_F(FrameTest, root_of_world_default) {
 
   Frame tree;
   tree.set_name_pos_rot("tree" ,Vector3D::null, Rotation3D::null);
   EXPECT_EQ(&tree, tree.get_root_of_world());
 }
 //------------------------------------------------------------------------------
-TEST_F(CartesianFrameTest, cluster_frames_during_tree_initializing) {
+TEST_F(FrameTest, cluster_frames_during_tree_initializing) {
 
     Frame tree;
     tree.set_name_pos_rot("tree" ,Vector3D::null, Rotation3D::null);

@@ -47,7 +47,7 @@ namespace LightFieldTelescope {
 
 	class Calibration: public Printable {
 
-		const Geometry &telescope_geometry;
+		const Geometry *telescope_geometry;
 		uint number_of_photons;
 		uint number_of_photons_per_sub_pixel;
 		uint number_of_photons_per_block;
@@ -68,14 +68,13 @@ namespace LightFieldTelescope {
 
 		// statistics
 		std::vector<SubPixelStatistics> statistics;
-
-		void init_statistics();
-		void fill_statistics_from_table();
-		void normalize_statistics();
 	public:
-		void export_sub_pixel_statistics(const std::string path)const;
 
-		Calibration(const Geometry &geometry);
+		Calibration(const Geometry *geometry);
+		void export_sub_pixel_statistics(const std::string path)const;
+		std::string get_print()const;
+	private:
+
 		void set_up_photon_properties();
 		void set_up_principal_aperture_range();
 		void set_up_field_of_view_range();
@@ -87,7 +86,9 @@ namespace LightFieldTelescope {
 			Vector3D pos_on_principal_aperture,
 			Vector3D direction_on_principal_aperture
 		)const;
-		std::string get_print()const;
+		void init_statistics();
+		void fill_statistics_from_table();
+		void normalize_statistics();
 	};
 }
 #endif // __LightFieldTelescopeCalibration_H_INCLUDED__ 

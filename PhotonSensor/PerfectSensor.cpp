@@ -5,7 +5,7 @@ namespace PhotonSensor {
 	: Sensor(_id, _sensor_frame)
 	{	}
 	//--------------------------------------------------------------------------
-	void PerfectSensor::reset() {
+	void PerfectSensor::clear_history() {
 		arrival_table.clear();
 	}
 	//--------------------------------------------------------------------------
@@ -75,4 +75,9 @@ namespace PhotonSensor {
 		header << "x\ty\tcos_x\tcos_y\tt\tid\th\n";
 		return header.str();
 	}
+	//--------------------------------------------------------------------------
+	uint PerfectSensor::get_number_of_photons()const {
+		return arrival_table.size();
+	}
+	//--------------------------------------------------------------------------
 } // PhotonSensor

@@ -178,11 +178,6 @@ private:
 		const pugi::xml_node node
 	);
 
-	void assert_name_of_child_frame_is_not_in_use_yet(
-		const Frame *mother,
-		const std::string name_of_additional_child
-	)const;
-
 	void extract_sphere_cap_hexagonal(
 		double &focal_length, double &outer_radius, const pugi::xml_node node
 	);

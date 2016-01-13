@@ -97,6 +97,7 @@ public:
         const Ray* ray,
         std::vector<const Frame*> *candidate_frames
     )const;
+    void assert_no_children_duplicate_names()const;
 protected:
     // post initialization
     void post_init_root_of_world();
@@ -124,5 +125,9 @@ public:
     void update_rotation(const Rotation3D rot);
     virtual const Intersection* calculate_intersection_with(const Ray* ray)const;
     const Intersection* empty_intersection()const;
+
+    class DuplicateChildName :public TracerException{
+        using TracerException::TracerException;
+    };
 };
 #endif // __CARTESIANFRAME_H_INCLUDED__

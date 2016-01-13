@@ -17,8 +17,8 @@ namespace LightFieldTelescope {
 
 		PhotonSensors::Sensors *sub_pixel_sensors;
 	public:
-		const Geometry &geometry;
-		Factory(const Geometry &geo);
+		const Geometry *geometry;
+		Factory(const Geometry *geo);
 		void add_telescope_to_frame(Frame *frame);
 
 		Frame* get_lens_array();

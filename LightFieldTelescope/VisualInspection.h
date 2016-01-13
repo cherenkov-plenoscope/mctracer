@@ -18,8 +18,8 @@ namespace LightFieldTelescope {
 		Frame world;
 		Disc ground;
 	public:
-		const Factory fab;
-		VisualInspection(const Factory& factory);
+		const Factory *fab;
+		VisualInspection(const Factory *factory);
 	private:
 
 		void set_up_world_basics();

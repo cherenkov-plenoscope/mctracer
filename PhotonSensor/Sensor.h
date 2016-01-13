@@ -30,6 +30,7 @@ namespace PhotonSensor {
 		virtual void clear_history();
 		virtual std::vector<std::vector<double> > get_arrival_table()const;
 		virtual std::string get_arrival_table_header()const;
+		virtual uint get_number_of_photons()const;
 		const Frame* get_frame()const;
 
 	    struct SensorSensorByIdCompare {

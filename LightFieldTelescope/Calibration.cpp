@@ -6,13 +6,13 @@
 
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------
-Calibration::Calibration(const Geometry &geometry):  
+Calibration::Calibration(const Geometry *geometry):  
 	telescope_geometry(geometry) 
 {
 	number_of_photons_per_sub_pixel = 25;
 	number_of_photons_per_block = 1e6;
 
-	number_of_photons = telescope_geometry.total_number_of_sub_pixels()*
+	number_of_photons = telescope_geometry->total_number_of_sub_pixels()*
 		number_of_photons_per_sub_pixel;
 
 	number_of_blocks = ceil(
@@ -37,13 +37,13 @@ void Calibration::set_up_photon_properties() {
 void Calibration::set_up_principal_aperture_range() {
 
 	max_principal_aperture_radius_to_trow_photons_on = 
-		telescope_geometry.principal_aperture_radius_to_throw_photons_in();
+		telescope_geometry->principal_aperture_radius_to_throw_photons_in();
 }
 //------------------------------------------------------------------------------
 void Calibration::set_up_field_of_view_range() {
 
 	max_tilt_vs_optical_axis_to_throw_photons_in = 
-		telescope_geometry.max_FoV_radius()*1.05;
+		telescope_geometry->max_FoV_radius()*1.05;
 }
 //------------------------------------------------------------------------------
 void Calibration::set_up_telescope() {
@@ -170,7 +170,7 @@ void Calibration::run_calibration() {
 
 	init_statistics();
 
-	std::cout << telescope_geometry.get_print() << "\n";
+	std::cout << telescope_geometry->get_print() << "\n";
 
 	std::cout << "Start Light Field Calibration, propagating ";
 	std::cout << double(number_of_blocks*number_of_photons_per_block)/1.0e6;

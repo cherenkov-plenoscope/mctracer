@@ -7,6 +7,8 @@
 #include "Geometry/StereoLitographyIo.h"
 #include "HexPlane.h"
 #include "XmlFactory/LightFieldTelescopeFactory.h"
+
+using StringTools::is_equal;
 //------------------------------------------------------------------------------
 WorldFactory::WorldFactory(){
 
@@ -85,14 +87,20 @@ void WorldFactory::extract_include_path(
 	path = node.attribute("path").value();	
 }
 //------------------------------------------------------------------------------
-void WorldFactory::add_to_array_if_telescope(const pugi::xml_node node, Frame* frame) {
+void WorldFactory::add_to_array_if_telescope(
+	const pugi::xml_node node, 
+	Frame* frame
+) {
 	std::string telescope_key = "set_telescope";
 
 	if(has_child(node, telescope_key))
 		telescopes->add_to_telescope_array(frame);
 }
 //------------------------------------------------------------------------------
-void WorldFactory::add_to_sensors_if_sensitive(const pugi::xml_node node, Frame* frame) {
+void WorldFactory::add_to_sensors_if_sensitive(
+	const pugi::xml_node node, 
+	Frame* frame
+) {
 	std::string sensor_key = "set_sensitive";
 
 	if(has_child(node, sensor_key)) {
@@ -100,7 +108,8 @@ void WorldFactory::add_to_sensors_if_sensitive(const pugi::xml_node node, Frame*
 
 		assert_attribute_exists(sensi, "id");
 		uint id = uint(StrToDouble(sensi.attribute("id").value())); 
-		PhotonSensor::PerfectSensor* sens = new PhotonSensor::PerfectSensor(id, frame);
+		PhotonSensor::PerfectSensor* sens = 
+			new PhotonSensor::PerfectSensor(id, frame);
 		sensors->push_back(sens);
 	}
 }
@@ -113,49 +122,49 @@ void WorldFactory::fabricate_frame(
 Frame* mother,const pugi::xml_node node){
 	
 	XmlNode = node;
-	if(StringTools::is_equal(node.name(),"frame")){
+	if(is_equal(node.name(),"frame")){
 		mother = produceFrame(mother,node);
 
-	}else if(StringTools::is_equal(node.name(),"triangle")){
+	}else if(is_equal(node.name(),"triangle")){
 		mother = produceTriangle(mother,node);
 		
-	}else if(StringTools::is_equal(node.name(),"plane")){
+	}else if(is_equal(node.name(),"plane")){
 		mother = producePlane(mother,node);
 
-	}else if(StringTools::is_equal(node.name(),"hex_plane")){
+	}else if(is_equal(node.name(),"hex_plane")){
 		mother = produceHexPlane(mother,node);
 		
-	}else if(StringTools::is_equal(node.name(),"sphere")){
+	}else if(is_equal(node.name(),"sphere")){
 		mother = produceSphere(mother,node);	
 
-	}else if(StringTools::is_equal(node.name(),"cylinder")){
+	}else if(is_equal(node.name(),"cylinder")){
 		mother = produceCylinder(mother,node);	
 
-	}else if(StringTools::is_equal(node.name(),"disc")){
+	}else if(is_equal(node.name(),"disc")){
 		mother = produceDisc(mother,node);	
 	
-	}else if(StringTools::is_equal(node.name(),"annulus")){
+	}else if(is_equal(node.name(),"annulus")){
 		mother = produceAnnulus(mother,node);	
 
-	}else if(StringTools::is_equal(node.name(),"light_field_telescope")){
+	}else if(is_equal(node.name(),"light_field_telescope")){
 		mother = produceLightFieldTelescope(mother,node);	
 
-	}else if(StringTools::is_equal(node.name(),"segmented_reflector")){
+	}else if(is_equal(node.name(),"segmented_reflector")){
 		mother = produceReflector(mother,node);
 
-	}else if(StringTools::is_equal(node.name(),"bi_convex_lens_hex")){
+	}else if(is_equal(node.name(),"bi_convex_lens_hex")){
 		mother = produceBiConvexLensHex(mother,node);	
 
-	}else if(StringTools::is_equal(node.name(),"sphere_cap_hexagonal")){
+	}else if(is_equal(node.name(),"sphere_cap_hexagonal")){
 		mother = produce_sphere_cap_hexagonal(mother,node);
 
-	}else if(StringTools::is_equal(node.name(),"stl")){
+	}else if(is_equal(node.name(),"stl")){
 		mother = produce_stl_object(mother,node);		
 
-	}else if(StringTools::is_equal(node.name(),"include")){
+	}else if(is_equal(node.name(),"include")){
 		include_file(mother,node);
 
-	}else if(StringTools::is_equal(node.name(),"function")){
+	}else if(is_equal(node.name(),"function")){
 		extract_function_from(node);
 		
 	}else if( mother->has_mother() ){	
@@ -172,62 +181,35 @@ Frame* mother,const pugi::xml_node node){
 void WorldFactory::go_on_with_children_of_node(
 	Frame* mother,const pugi::xml_node node
 ) {
-	// go on with children of node
-	for(
-		pugi::xml_node sub_node = node.first_child(); 
+	std::vector<std::string> known_keys = {
+		"include",
+		"function",
+		"frame",
+		"telescope",
+		"triangle",
+		"plane",
+		"hex_plane",
+		"sphere",
+		"cylinder",
+		"disc",
+		"annulus",
+		"light_field_telescope",
+		"segmented_reflector",
+		"bi_convex_lens_hex",
+		"sphere_cap_hexagonal",
+		"stl"
+	};
+
+	for(pugi::xml_node sub_node = node.first_child(); 
 		sub_node; 
 		sub_node = sub_node.next_sibling()
-	){	
-		std::string sub_node_name = sub_node.name();
-
-		if 		(StringTools::is_equal(sub_node_name,"include")){
-
+	) {	
+		if(	std::find(
+				std::begin(known_keys), 
+				std::end(known_keys),
+				sub_node.name()
+			) != std::end(known_keys))
 			fabricate_frame(mother,sub_node);
-		}else if(StringTools::is_equal(sub_node_name,"function")){
-			//std::cout << sub_node_name << "\n";
-			fabricate_frame(mother,sub_node);
-		}else if(StringTools::is_equal(sub_node_name,"frame")){
-
-			fabricate_frame(mother,sub_node);
-		}else if(StringTools::is_equal(sub_node_name,"telescope")){
-
-			fabricate_frame(mother,sub_node);
-		}else if(StringTools::is_equal(sub_node_name,"triangle")){
-
-			fabricate_frame(mother,sub_node);
-		}else if(StringTools::is_equal(sub_node_name,"plane")){
-
-			fabricate_frame(mother,sub_node);
-		}else if(StringTools::is_equal(sub_node_name,"hex_plane")){
-
-			fabricate_frame(mother,sub_node);
-		}else if(StringTools::is_equal(sub_node_name,"sphere")){
-
-			fabricate_frame(mother,sub_node);
-		}else if(StringTools::is_equal(sub_node_name,"cylinder")){
-
-			fabricate_frame(mother,sub_node);
-		}else if(StringTools::is_equal(sub_node_name,"disc")){
-
-			fabricate_frame(mother,sub_node);
-		}else if(StringTools::is_equal(sub_node_name,"annulus")){
-
-			fabricate_frame(mother,sub_node);
-		}else if(StringTools::is_equal(sub_node_name,"light_field_telescope")){
-
-			fabricate_frame(mother,sub_node); 
-		}else if(StringTools::is_equal(sub_node_name,"segmented_reflector")){
-
-			fabricate_frame(mother,sub_node);
-		}else if(StringTools::is_equal(sub_node_name,"bi_convex_lens_hex")){
-
-			fabricate_frame(mother,sub_node);
-		}else if(StringTools::is_equal(sub_node_name,"sphere_cap_hexagonal")){
-			
-			fabricate_frame(mother,sub_node);
-		}else if(StringTools::is_equal(sub_node_name,"stl")){
-			fabricate_frame(mother,sub_node);
-		}
 	}	
 }
 //------------------------------------------------------------------------------
@@ -263,8 +245,6 @@ Frame* WorldFactory::producePlane(
 	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 	extract_Plane_props(x_width, y_width, node.child("set_plane"));
 
-	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
-
 	Plane *new_plane;
 	new_plane = new Plane(
 		frameFab.get_name(), 
@@ -296,8 +276,6 @@ Frame* WorldFactory::produceHexPlane(
 	color = extract_color(node.child("set_surface"));
 	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 	outer_radius = extract_HexPlane_props(node.child("set_hex_plane"));
-
-	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
 
 	HexPlane *hxpl;
 	hxpl = new HexPlane(
@@ -339,8 +317,6 @@ Frame* WorldFactory::produceSphere(
 	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 	extract_Sphere_props(radius,node.child("set_sphere"));
 
-	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
-
 	Sphere *new_sphere;
 	new_sphere = new Sphere;	
 
@@ -379,8 +355,6 @@ Frame* WorldFactory::produceCylinder(
 	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 	extract_Cylinder_props(radius, start, end, node.child("set_cylinder"));
 
-	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
-
 	Cylinder *new_Cylinder;
 	new_Cylinder = new Cylinder(
 		frameFab.get_name(), 
@@ -410,7 +384,6 @@ Frame* WorldFactory::produceReflector(
 	Rotation3D 			rotation;
 	const Function::Func1D* reflection_vs_wavelength;
 					
-	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());
 	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 
 	SegmentedReflector::Config cfg;
@@ -458,7 +431,6 @@ Frame* WorldFactory::produceBiConvexLensHex(
 	//RefractiveIndex* lens_refractive_index;
 
 	color = extract_color(node.child("set_surface"));
-	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
 	extractBiConvexLensHex(curv_radius, outer_radius, node.child("set_bi_convex_lens_hex"));
 	refraction = extract_refraction(node.child("set_medium"));
 	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
@@ -484,8 +456,7 @@ Frame* WorldFactory::produce_stl_object(
 		Frame* mother, const pugi::xml_node node
 ) {
 	FrameFactory frameFab(node);
-	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());
-	
+
 	assert_child_exists(node, "set_stl");
 	const pugi::xml_node set_stl_node = node.child("set_stl");
 
@@ -531,7 +502,6 @@ void WorldFactory::extractBiConvexLensHex(
 	assert_attribute_exists(node, "curvature_radius");
 	assert_attribute_exists(node, "outer_radius");
 
-
 	curv_radius = StrToDouble(node.attribute("curvature_radius").value());
 	outer_radius = StrToDouble(node.attribute("outer_radius").value());
 }
@@ -558,8 +528,7 @@ Frame* WorldFactory::produceDisc(
 	color = extract_color(node.child("set_surface"));
 	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 	extract_Disc_props(radius, node.child("set_disc"));
-	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
-	
+
 	Disc *new_Disc;
 	new_Disc = new Disc;	
 	
@@ -593,8 +562,7 @@ Frame* WorldFactory::produceAnnulus(
 	color = extract_color(node.child("set_surface"));
 	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 	extract_Annulus_props(outer_radius, inner_radius, node.child("set_annulus"));
-	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());	
-	
+
 	Annulus *annulus;
 	annulus = new Annulus;	
 	
@@ -669,10 +637,12 @@ Frame* WorldFactory::produceLightFieldTelescope(
 		frameFab.get_position(), 
 		frameFab.get_rotation()
 	);
-
-	LightFieldTelescope::Factory lftFab(lftConfig); //real fab
+	
+	LightFieldTelescope::Geometry geometry(lftConfig);
+	LightFieldTelescope::Factory lftFab(&geometry); //real fab
 	lftFab.add_telescope_to_frame(telescope);
 	mother->set_mother_and_child(telescope);
+
 	return telescope;
 }
 //------------------------------------------------------------------------------
@@ -693,7 +663,6 @@ Frame* WorldFactory::produceTriangle(
 	color = extract_color(node.child("set_surface"));
 	reflection_vs_wavelength = extract_reflection(node.child("set_surface"));
 	extract_Triangle_props(Ax, Ay, Bx, By, Cx, Cy, node.child("set_triangle"));
-	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());
 
 	Triangle *new_Triangle;
 	new_Triangle = new Triangle;			
@@ -735,7 +704,6 @@ Frame* WorldFactory::produce_sphere_cap_hexagonal(
 	extract_sphere_cap_hexagonal(
 		focal_length, outer_radius, node.child("set_sphere_cap_hexagonal")
 	);
-	assert_name_of_child_frame_is_not_in_use_yet(mother, frameFab.get_name());
 
 	cap->set_name_pos_rot(
 		frameFab.get_name(), 
@@ -747,7 +715,6 @@ Frame* WorldFactory::produce_sphere_cap_hexagonal(
 	cap->set_outer_reflection(reflection_vs_wavelength);
 	cap->set_inner_reflection(reflection_vs_wavelength);
 	cap->set_curvature_radius_and_outer_hex_radius(2.0*focal_length, outer_radius);
-	assert_name_of_child_frame_is_not_in_use_yet(mother, name);
 
 	mother->set_mother_and_child(cap);
 	return cap;
@@ -860,25 +827,6 @@ void WorldFactory::extract_Triangle_props(
  	By = StrToDouble(node.attribute("By").value());
     Cx = StrToDouble(node.attribute("Cx").value());
  	Cy = StrToDouble(node.attribute("Cy").value());
-}
-//------------------------------------------------------------------------------
-void WorldFactory::assert_name_of_child_frame_is_not_in_use_yet(
-	const Frame *mother,
-	const std::string name_of_additional_child
-)const{
-
-	if( mother->has_child_with_name(name_of_additional_child) ){
-		// There is already a child in the mother frame with this name.
-		// There must not be a second one!
-		std::stringstream info;
-		info << "WorldFactory::" << __func__ << "()";
-		throw MultipleUseage(
-			info.str(), this, 
-			mother->
-				get_child_by_name(name_of_additional_child)->
-					get_path_in_tree_of_frames()
-		);
-	}
 }
 //------------------------------------------------------------------------------
 Frame* WorldFactory::world(){

@@ -1,5 +1,6 @@
 #include "Frame.h"
 #include "Tools/AssertionTools.h"
+#include <set>
 
 const uint Frame::max_number_of_children_in_frame = 16;
 const double Frame::minimal_structure_size = 1e-6;
@@ -253,6 +254,7 @@ void Frame::update_sphere_enclosing_all_children(
 }
 //------------------------------------------------------------------------------
 void Frame::set_mother_and_child(Frame *new_child) {
+
 	this->add_child(new_child);
 	new_child->set_mother(this);
 }
@@ -548,5 +550,26 @@ void Frame::update_rotation(const Rotation3D rot) {
 	rot_in_mother = rot;
 	T_frame2mother.set_transformation(rot_in_mother, pos_in_mother);
 	post_init_me_and_all_my_children_only_based_on_mother();	
+}
+//------------------------------------------------------------------------------
+void Frame::assert_no_children_duplicate_names()const {
+	// this also checks for duplicate frames
+	std::set<std::string> unique_set;
+
+	for(Frame* child: children) {
+		auto ret = unique_set.insert(child->get_name());
+		if(ret.second == false) {
+			std::stringstream info;
+			info << __FILE__ << ", " << __LINE__ << "\n";
+			info << "The frame '" << get_name();
+			info << "' has a duplicate child name '";
+			info << child->get_name();
+			info << "', maybe even the child is a duplicate itself.";
+			throw DuplicateChildName(info.str());
+		}
+	}
+
+	for(Frame* child: children)
+		child->assert_no_children_duplicate_names();
 }
 //------------------------------------------------------------------------------

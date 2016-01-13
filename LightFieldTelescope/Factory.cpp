@@ -10,7 +10,7 @@
 
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------
-Factory::Factory(const Geometry &geo): geometry(geo) {
+Factory::Factory(const Geometry *geo): geometry(geo) {
 
 }
 //------------------------------------------------------------------------------
@@ -23,10 +23,10 @@ Frame* Factory::get_lens_with_name_at_pos(
 	lens->set_name_pos_rot(name, pos, Rotation3D::null);
 	lens->set_outer_color(&Color::white);
 	lens->set_inner_color(&Color::white);
-	lens->set_inner_refraction(geometry.config.lens_refraction);
+	lens->set_inner_refraction(geometry->config.lens_refraction);
 	lens->set_curvature_radius_and_outer_hex_radius(
-		geometry.pixel_lens_curvature_radius(),
-		geometry.pixel_lens_outer_aperture_radius()
+		geometry->pixel_lens_curvature_radius(),
+		geometry->pixel_lens_outer_aperture_radius()
 	);
 
 	return lens;
@@ -40,7 +40,7 @@ Frame* Factory::get_lens_array() {
 		Rotation3D::null
 	);
 
-	std::vector<Vector3D> pixel_positions = geometry.pixel_positions();
+	std::vector<Vector3D> pixel_positions = geometry->pixel_positions();
 	 
 	for(uint i=0; i<pixel_positions.size(); i++) {
 
@@ -60,12 +60,12 @@ Frame* Factory::get_pixel_bin_array() {
 	
 	Frame* bin_array = new Frame(
 		"bin_array",
-		Vector3D(0.0, 0.0, geometry.pixel_lens_sub_pixel_distance()),
+		Vector3D(0.0, 0.0, geometry->pixel_lens_sub_pixel_distance()),
 		Rotation3D::null
 	);
 
 	std::vector<Vector3D> flower_positions = 
-		geometry.sub_pixel_flower_positions();
+		geometry->sub_pixel_flower_positions();
 
 	for(uint i=0; i<flower_positions.size(); i++) {
 
@@ -91,8 +91,8 @@ Frame* Factory::get_pixel_bin_with_name_at_pos(
 		Rotation3D::null
 	);
 
-	double R = geometry.pixel_lens_inner_aperture_radius();
-	double hight = geometry.bin_hight();
+	double R = geometry->pixel_lens_inner_aperture_radius();
+	double hight = geometry->bin_hight();
 
 	for(uint i=0; i<6; i++) {
 
@@ -105,13 +105,13 @@ Frame* Factory::get_pixel_bin_with_name_at_pos(
 		);
 
 		binwall->set_x_y_width(
-			geometry.pixel_lens_outer_aperture_radius(),
+			geometry->pixel_lens_outer_aperture_radius(),
 			hight
 		);
 
 		binwall->set_outer_color(&Color::green);
 		binwall->set_inner_color(&Color::green);
-		binwall->set_outer_reflection(geometry.reflector.cfg.reflectivity);
+		binwall->set_outer_reflection(geometry->reflector.cfg.reflectivity);
 	
 		bin->set_mother_and_child(binwall);
 	}
@@ -122,11 +122,11 @@ Frame* Factory::get_pixel_bin_with_name_at_pos(
 Frame* Factory::get_image_sensor_faceplate() {
 
 	HexGridAnnulus face_plate_grid(
-		geometry.max_outer_sensor_radius() + 
-		geometry.pixel_spacing(),
-		geometry.max_outer_sensor_radius() - 
-		geometry.pixel_lens_outer_aperture_radius(),
-		geometry.pixel_spacing()
+		geometry->max_outer_sensor_radius() + 
+		geometry->pixel_spacing(),
+		geometry->max_outer_sensor_radius() - 
+		geometry->pixel_lens_outer_aperture_radius(),
+		geometry->pixel_spacing()
 	);
 
 	std::vector<Vector3D> face_plate_positions = face_plate_grid.get_grid();
@@ -147,7 +147,7 @@ Frame* Factory::get_image_sensor_faceplate() {
 		);
 		face->set_outer_color(&Color::gray);
 		face->set_inner_color(&Color::gray);
-		face->set_outer_hex_radius(geometry.pixel_lens_outer_aperture_radius());
+		face->set_outer_hex_radius(geometry->pixel_lens_outer_aperture_radius());
 
 		face_plate->set_mother_and_child(face);
 	}
@@ -161,8 +161,8 @@ Frame* Factory::get_image_sensor_faceplate() {
 	outer_front_ring->set_outer_color(&Color::gray);
 	outer_front_ring->set_inner_color(&Color::gray);
 	outer_front_ring->set_outer_inner_radius(
-		geometry.outer_sensor_housing_radius(),
-		geometry.max_outer_sensor_radius()
+		geometry->outer_sensor_housing_radius(),
+		geometry->max_outer_sensor_radius()
 	);
 	face_plate->set_mother_and_child(outer_front_ring);
 
@@ -174,11 +174,11 @@ Frame* Factory::get_sub_pixel_sensor_plane() {
 
 	Frame* sub_pixel_array = new Frame(
 		"sub_pixel_array", 
-		Vector3D(0.0, 0.0, geometry.pixel_lens_sub_pixel_distance()), 
+		Vector3D(0.0, 0.0, geometry->pixel_lens_sub_pixel_distance()), 
 		Rotation3D::null
 	);
 
-	std::vector<Vector3D> sub_pixel_positions = geometry.sub_pixel_positions();
+	std::vector<Vector3D> sub_pixel_positions = geometry->sub_pixel_positions();
 
 	std::vector<PhotonSensor::Sensor*> sub_pixels;
 	sub_pixels.reserve(sub_pixel_positions.size());
@@ -213,18 +213,18 @@ Frame* Factory::get_sub_pixel_with_name_pos(
 	subpix->set_name_pos_rot(
 		name, 
 		pos, 
-		Rotation3D(0.0, 0.0, geometry.sub_pixel_z_orientation())
+		Rotation3D(0.0, 0.0, geometry->sub_pixel_z_orientation())
 	);
 	subpix->set_outer_color(&Color::red);
 	subpix->set_inner_color(&Color::red);
-	subpix->set_outer_hex_radius(geometry.sub_pixel_outer_radius());
+	subpix->set_outer_hex_radius(geometry->sub_pixel_outer_radius());
 
 	return subpix;
 }
 //------------------------------------------------------------------------------
 Frame* Factory::get_image_sensor_housing()const {
 
-	double housing_height =  2.0*geometry.outer_sensor_housing_radius();
+	double housing_height =  2.0*geometry->outer_sensor_housing_radius();
 
 	Frame* sensor_housing = new Frame(
 		"sensor_housing", 
@@ -240,7 +240,7 @@ Frame* Factory::get_image_sensor_housing()const {
 	);
 	sensor_housing_top->set_outer_color(&Color::gray);
 	sensor_housing_top->set_inner_color(&Color::gray);
-	sensor_housing_top->set_radius(geometry.outer_sensor_housing_radius());
+	sensor_housing_top->set_radius(geometry->outer_sensor_housing_radius());
 
 	Cylinder* sensor_housing_cylinder = new Cylinder(
 		"sensor_housing_cylinder",
@@ -250,7 +250,7 @@ Frame* Factory::get_image_sensor_housing()const {
 	sensor_housing_cylinder->set_outer_color(&Color::gray);
 	sensor_housing_cylinder->set_inner_color(&Color::gray);
 	sensor_housing_cylinder->set_cylinder(
-		geometry.outer_sensor_housing_radius(),
+		geometry->outer_sensor_housing_radius(),
 		Vector3D(0.0, 0.0, 0.0), 
 		Vector3D(0.0, 0.0, housing_height)
 	);
@@ -270,7 +270,7 @@ void Factory::add_telescope_to_frame(Frame *frame) {
 
 	Frame* image_sensor = new Frame(
 		"image_sensor",
-		geometry.reflector.focal_point(), 
+		geometry->reflector.focal_point(), 
 		Rotation3D::null
 	);
 
@@ -282,7 +282,7 @@ void Factory::add_telescope_to_frame(Frame *frame) {
 	image_sensor->set_mother_and_child(get_sub_pixel_sensor_plane());
 	image_sensor->set_mother_and_child(image_sensor_front);
 
-	SegmentedReflector::Factory refl_factory(geometry.config.reflector);
+	SegmentedReflector::Factory refl_factory(geometry->config.reflector);
 
 	frame->set_mother_and_child(image_sensor);
 	frame->set_mother_and_child(refl_factory.get_reflector());

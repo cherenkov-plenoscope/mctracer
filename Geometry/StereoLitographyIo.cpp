@@ -23,7 +23,7 @@ namespace StereoLitographyIo {
 		for(Facet facet : facets) {
 
 			std::stringstream name;
-			name << "triangle_" << facet_count;
+			name << "triangle_" << facet_count++;
 
 			Triangle* tri = new Triangle;
 

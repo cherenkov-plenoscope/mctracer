@@ -29,14 +29,14 @@ int main(int argc, char* argv[]) {
     );
 
     // RUN HIGH INCIDENT ANGLE CALIBRATION ON LENS
-    LightFieldTelescope::LensCalibration lenscalib(telescope_geometry);
+    LightFieldTelescope::LensCalibration lenscalib(&telescope_geometry);
 
     // RUN LIGHT FIELD CALIBRATION
-    LightFieldTelescope::Calibration calib(telescope_geometry);
+    LightFieldTelescope::Calibration calib(&telescope_geometry);
     calib.export_sub_pixel_statistics("sub_pixel_statistics.txt");
 
     // EXPLORE TELESCOPE
-    LightFieldTelescope::Factory fab(telescope_geometry);
+    LightFieldTelescope::Factory fab(&telescope_geometry);
     Frame telescope("telescope", Vector3D::null, Rotation3D::null);
     fab.add_telescope_to_frame(&telescope);
 

@@ -6,16 +6,16 @@
 
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------
-LensCalibration::LensCalibration(const Geometry &geo):  
+LensCalibration::LensCalibration(const Geometry *geo):  
 	telescope_geometry(geo) 
 {
 	set_up_test_bench();
 	read_out_l.clear_history();
 
 	Vector3D incident_direction(
-		telescope_geometry.reflector.max_outer_aperture_radius() + telescope_geometry.max_outer_sensor_radius(),
+		telescope_geometry->reflector.max_outer_aperture_radius() + telescope_geometry->max_outer_sensor_radius(),
 	 	0.0,
-	 	telescope_geometry.reflector.focal_length()
+	 	telescope_geometry->reflector.focal_length()
 	 );
 	uint number_of_photons = 1e5;
 
@@ -23,7 +23,7 @@ LensCalibration::LensCalibration(const Geometry &geo):
 
 		Vector3D pos_on_lens_aperture = 
 			prng.get_point_on_xy_disc_within_radius(
-				telescope_geometry.pixel_lens_outer_aperture_radius()
+				telescope_geometry->pixel_lens_outer_aperture_radius()
 			);
 
 		Ray back_running_ray(
@@ -32,7 +32,7 @@ LensCalibration::LensCalibration(const Geometry &geo):
 		);
 
 		Vector3D support_of_photon = back_running_ray.PositionOnRay(
-			telescope_geometry.pixel_lens_outer_aperture_radius()*100.0
+			telescope_geometry->pixel_lens_outer_aperture_radius()*100.0
 		);
 
 		Photon* ph = new Photon(
@@ -51,8 +51,8 @@ LensCalibration::LensCalibration(const Geometry &geo):
 	std::stringstream header;
 	header << "Lens frontal PSF\n";
 	header << "number of emitted photons: " << number_of_photons << "\n";
-	header << "focal length: " << telescope_geometry.pixel_lens_focal_length() << "m\n";
-	header << "curvature radius: " << telescope_geometry.pixel_lens_curvature_radius() << "m\n";
+	header << "focal length: " << telescope_geometry->pixel_lens_focal_length() << "m\n";
+	header << "curvature radius: " << telescope_geometry->pixel_lens_curvature_radius() << "m\n";
 	header << "sensor frame name: " << read_out->get_frame()->get_name() << "\n";
 
 	std::string head;
@@ -80,17 +80,17 @@ void LensCalibration::set_up_test_bench() {
 	lens.set_name_pos_rot("lens", Vector3D::null, Rotation3D::null);
 	lens.set_outer_color(&Color::white);
 	lens.set_inner_color(&Color::white);
-	lens.set_inner_refraction(telescope_geometry.config.lens_refraction);
+	lens.set_inner_refraction(telescope_geometry->config.lens_refraction);
 	lens.set_curvature_radius_and_outer_hex_radius(
-		telescope_geometry.pixel_lens_curvature_radius(),
-		telescope_geometry.pixel_lens_outer_aperture_radius()
+		telescope_geometry->pixel_lens_curvature_radius(),
+		telescope_geometry->pixel_lens_outer_aperture_radius()
 	);
 
 	// face plate 
 	HexGridAnnulus face_plate_grid(
-		10.0*telescope_geometry.pixel_lens_outer_aperture_radius(),
-		0.5*telescope_geometry.pixel_lens_outer_aperture_radius(),
-		telescope_geometry.pixel_spacing()
+		10.0*telescope_geometry->pixel_lens_outer_aperture_radius(),
+		0.5*telescope_geometry->pixel_lens_outer_aperture_radius(),
+		telescope_geometry->pixel_spacing()
 	);
 	std::vector<Vector3D> face_plate_positions = face_plate_grid.get_grid();
 
@@ -106,7 +106,7 @@ void LensCalibration::set_up_test_bench() {
 		);
 		face->set_outer_color(&Color::gray);
 		face->set_inner_color(&Color::gray);
-		face->set_outer_hex_radius(telescope_geometry.
+		face->set_outer_hex_radius(telescope_geometry->
 			pixel_lens_outer_aperture_radius());
 		face_plate.set_mother_and_child(face);
 	}
@@ -114,7 +114,7 @@ void LensCalibration::set_up_test_bench() {
 	Vector3D sensor_position = Vector3D(
 		0.0,
 		0.0,
-		-telescope_geometry.pixel_lens_sub_pixel_distance()
+		-telescope_geometry->pixel_lens_sub_pixel_distance()
 	);
 
 	// bin
@@ -124,8 +124,8 @@ void LensCalibration::set_up_test_bench() {
 		Vector3D(
 			0.0,
 			0.0, 
-			-telescope_geometry.pixel_lens_sub_pixel_distance()+
-			telescope_geometry.bin_hight()
+			-telescope_geometry->pixel_lens_sub_pixel_distance()+
+			telescope_geometry->bin_hight()
 		)
 	);
 
@@ -133,7 +133,7 @@ void LensCalibration::set_up_test_bench() {
 	image_sensor.set_outer_color(&Color::red);
 	image_sensor.set_inner_color(&Color::red);
 	image_sensor.set_radius(
-		5.0*telescope_geometry.pixel_lens_outer_aperture_radius()
+		5.0*telescope_geometry->pixel_lens_outer_aperture_radius()
 	);
 
 	test_bench.set_mother_and_child(&lens);
