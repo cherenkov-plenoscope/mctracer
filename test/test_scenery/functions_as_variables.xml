@@ -20,13 +20,13 @@
 	
 	<sphere>
 		<set_frame name="leaf_ball" pos="[0,0,3]" rot="[0,0,0]"/>
-		<set_surface reflection_vs_wavelength="concat_function" colour="[25,200,0]"/>
+		<set_surface reflection_vs_wavelength="concat_function" color="[25,200,0]"/>
 		<set_sphere radius="1.5"/>
 	</sphere>	
 
 	<cylinder>
 		<set_frame name="pole" pos="[0,0,0]" rot="[0,0,0]"/>
-		<set_surface reflection_vs_wavelength="concat_function" colour="[200,200,0]"/>
+		<set_surface reflection_vs_wavelength="concat_function" color="[200,200,0]"/>
 		<set_cylinder radius="0.25" start_pos="[0,0,0]" end_pos="[0,0,1.5]"/>	
 	</cylinder>		
 </frame>

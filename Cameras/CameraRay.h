@@ -15,7 +15,7 @@
 class CameraRay :public Ray{
 protected:
 	
-	Color colour;
+	Color color;
 public:
 	CameraRay(){};
 

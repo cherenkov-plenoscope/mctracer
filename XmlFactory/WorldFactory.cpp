@@ -744,13 +744,13 @@ const Function::Func1D* WorldFactory::extract_reflection(
 }
 //------------------------------------------------------------------------------
 const Color* WorldFactory::extract_color(const pugi::xml_node node) {
-	assert_attribute_exists(node, "colour");
+	assert_attribute_exists(node, "color");
 
 	double red, blu, gre;
-	strto3tuple(red, blu, gre, node.attribute("colour").value());
+	strto3tuple(red, blu, gre, node.attribute("color").value());
 	
-	Color* colour = new Color(red, blu, gre);
-	return colour;
+	Color* color = new Color(red, blu, gre);
+	return color;
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_Plane_props(
