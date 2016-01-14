@@ -8,13 +8,3 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/LightFieldTelescopeFactory.cpp
    	PARENT_SCOPE
 )
-set(HEADERS
-	${HEADERS}
-   	${CMAKE_CURRENT_SOURCE_DIR}/WorldFactory.h
-	${CMAKE_CURRENT_SOURCE_DIR}/Vector3DFactory.h
-	${CMAKE_CURRENT_SOURCE_DIR}/Rotation3DFactory.h
-	${CMAKE_CURRENT_SOURCE_DIR}/FrameFactory.h
-	${CMAKE_CURRENT_SOURCE_DIR}/FunctionFactory.h
-	${CMAKE_CURRENT_SOURCE_DIR}/LightFieldTelescopeFactory.h
-	PARENT_SCOPE
-)

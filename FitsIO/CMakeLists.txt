@@ -3,8 +3,3 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/SimpleFitsWriter.cpp
     PARENT_SCOPE
 )
-set(HEADERS
-    ${HEADERS}
-    ${CMAKE_CURRENT_SOURCE_DIR}/SimpleFitsWriter.h
-    PARENT_SCOPE
-)

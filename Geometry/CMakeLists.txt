@@ -31,10 +31,3 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/ZaxisCylinderRayIntersectionEquation.cpp
    	PARENT_SCOPE
 )
-
-set(HEADERS
-   	${SOURCE}
-	${CMAKE_CURRENT_SOURCE_DIR}/Sphere.h
-	${CMAKE_CURRENT_SOURCE_DIR}/StereoLitographyIo.h
-   	PARENT_SCOPE
-)

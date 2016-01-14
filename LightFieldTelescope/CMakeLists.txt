@@ -11,16 +11,3 @@ set(SOURCE
   	${CMAKE_CURRENT_SOURCE_DIR}/Propagation.cpp
    	PARENT_SCOPE
 )
-set(HEADERS
-	${HEADERS}
-  	${CMAKE_CURRENT_SOURCE_DIR}/Config.h
-  	${CMAKE_CURRENT_SOURCE_DIR}/Geometry.h
-  	${CMAKE_CURRENT_SOURCE_DIR}/Factory.h
-  	${CMAKE_CURRENT_SOURCE_DIR}/Calibration.h
-   	${CMAKE_CURRENT_SOURCE_DIR}/LensCalibration.h
-  	${CMAKE_CURRENT_SOURCE_DIR}/CalibIo.h
-  	${CMAKE_CURRENT_SOURCE_DIR}/VisualInspection.h
-  	${CMAKE_CURRENT_SOURCE_DIR}/NightSkyBackgroundLight.h
-  	${CMAKE_CURRENT_SOURCE_DIR}/Propagation.h
-	PARENT_SCOPE
-)

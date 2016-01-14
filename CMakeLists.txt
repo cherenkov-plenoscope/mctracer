@@ -39,26 +39,26 @@ set(CMAKE_MODULE_PATH
 # The Source
 set(SOURCE 	
 	${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeter.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryFactory.cpp	
-	${CMAKE_CURRENT_SOURCE_DIR}/TracerException.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/KeyValueMap.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ToDoScheduler.cpp		
-	${CMAKE_CURRENT_SOURCE_DIR}/TelescopeArrayControl.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ZdAzMount.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/LightSourceFromConfig.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/TelescopeArrayControl.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ToDoScheduler.cpp		
+	${CMAKE_CURRENT_SOURCE_DIR}/TracerException.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryFactory.cpp	
+	${CMAKE_CURRENT_SOURCE_DIR}/ZdAzMount.cpp
 )
-add_subdirectory("${PROJECT_SOURCE_DIR}/gtest-1.7.0")
-add_subdirectory("${PROJECT_SOURCE_DIR}/XmlFactory")
-add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonSensor")
-add_subdirectory("${PROJECT_SOURCE_DIR}/Tools")
-add_subdirectory("${PROJECT_SOURCE_DIR}/XmlIO")
-add_subdirectory("${PROJECT_SOURCE_DIR}/CorsikaIO")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Cameras")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Core")
+add_subdirectory("${PROJECT_SOURCE_DIR}/CorsikaIO")
 add_subdirectory("${PROJECT_SOURCE_DIR}/FitsIO")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Geometry")
+add_subdirectory("${PROJECT_SOURCE_DIR}/gtest-1.7.0")
 add_subdirectory("${PROJECT_SOURCE_DIR}/LensMaker")
 add_subdirectory("${PROJECT_SOURCE_DIR}/LightFieldTelescope")
+add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonSensor")
+add_subdirectory("${PROJECT_SOURCE_DIR}/Tools")
+add_subdirectory("${PROJECT_SOURCE_DIR}/XmlFactory")
+add_subdirectory("${PROJECT_SOURCE_DIR}/XmlIO")
 
 #MESSAGE( STATUS "SOURCE_VARIABLE:" ${SOURCE} )
 #-------------------------------------------------------------------------------
