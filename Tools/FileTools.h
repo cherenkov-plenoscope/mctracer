@@ -23,7 +23,6 @@ namespace FileTools {
 		const std::string &text,
 		const std::string &path
 	);
-	bool can_write_to_directory(const std::string path);
 }
 
 #endif // __FILETOOLS_H_INCLUDED__

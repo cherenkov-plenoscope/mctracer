@@ -43,3 +43,4 @@ void FileTools::write_text_to_file(
 		throw TracerException(info.str());	  	
 	}	
 }
+//------------------------------------------------------------------------------
