@@ -4,6 +4,7 @@
 
 #include "gtest/gtest.h"
 #include "Cameras/CameraMan/CameraMan.h"
+#include "Cameras/PinHoleCamera.h"
 
 using namespace std;
 

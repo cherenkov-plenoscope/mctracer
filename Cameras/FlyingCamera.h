@@ -1,7 +1,7 @@
 //=================================
 // include guard
-#ifndef __FREEORBITCAMERA_H_INCLUDED__
-#define __FREEORBITCAMERA_H_INCLUDED__
+#ifndef __FlyingCamera_H_INCLUDED__
+#define __FlyingCamera_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
@@ -16,9 +16,9 @@
 #include "Tools/UserInteraction.h"
 
 //=================================
-class FreeOrbitCamera {
+class FlyingCamera {
 // Fly through the scene like you want!
-// This FreeOrbitCamera class allows the user to interact with the 
+// This FlyingCamera class allows the user to interact with the 
 // pin_hole_camera during run time. 
 // A pin_hole_cam is created. Its position, orientation and field of
 // view can be modified by the user during run time.
@@ -28,7 +28,7 @@ class FreeOrbitCamera {
 // Also 3D stereo images are possible
 public:
 	
-	FreeOrbitCamera(
+	FlyingCamera(
 		const Frame *world, 
 		const TracerSettings *settings
 	);
@@ -91,4 +91,4 @@ private:
 	bool it_is_time_again_to_show_the_help();
 	const CameraImage* acquire_image_with_camera(CameraDevice* cam);
 };
-#endif // __FREEORBITCAMERA_H_INCLUDED__
+#endif // __FlyingCamera_H_INCLUDED__

@@ -4,7 +4,7 @@
 #include <math.h>
 #include <string>
 
-#include "Cameras/FreeOrbitCamera.h"
+//#include "Cameras/FlyingCamera.h"
 #include "Core/Function/ConstantFunction.h"
 #include "Core/Photons.h"
 #include "Geometry/BiConvexLens.h"
@@ -186,7 +186,7 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 		10e-2
 	);
 
-	/*FreeOrbitCamera free(
+	/*FlyingCamera free(
 		lens_test_bench_environment.world_geometry, 
 		lens_test_bench_environment.propagation_options
 	);*/

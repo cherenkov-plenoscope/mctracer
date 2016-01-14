@@ -1,4 +1,4 @@
-#include "Cameras/FreeOrbitCamera.h"
+#include "Cameras/FlyingCamera.h"
 #include "Core/Color.h"
 #include "Core/Function/ConcatFunction.h"
 #include "Core/Function/ConstantFunction.h"
@@ -66,7 +66,7 @@ TEST_F(SetUpScenery, create_scenery) {
     /*@//free like up to $\infty$@*/
 
     TracerSettings propagation_settings;
-    //FreeOrbitCamera cam(&world, &propagation_settings);
+    //FlyingCamera cam(&world, &propagation_settings);
     //--end_set_up_scene_in_source--
 }
 //--using_namespace--

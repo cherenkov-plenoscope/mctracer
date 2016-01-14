@@ -46,6 +46,7 @@
 #include "Histogram1DTest.cpp"
 #include "NightSkyBackgroundLightTest.cpp"
 
+#include "Tools/UserInteraction.h"
 int main(int argc, char **argv) {
 	UserInteraction::print_welcome_screen();
   	::testing::InitGoogleTest(&argc, argv);

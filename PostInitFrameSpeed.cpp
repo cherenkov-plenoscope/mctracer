@@ -1,5 +1,4 @@
 #include "Geometry/SegmentedReflector/SegmentedReflector.h"
-#include "Cameras/FreeOrbitCamera.h"
 
 class PostInitFrameSpeed : public ::testing::Test {
 protected:

@@ -5,7 +5,7 @@ set(SOURCE
    	${CMAKE_CURRENT_SOURCE_DIR}/CameraDevice.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/PinHoleCamera.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/ApertureCamera.cpp 
-	${CMAKE_CURRENT_SOURCE_DIR}/FreeOrbitCamera.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/FlyingCamera.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraImage.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraRay.cpp
    	PARENT_SCOPE

@@ -92,9 +92,9 @@ void ToDoScheduler::render_geometry()const {
 	if(!skydome_path().empty()) {
 		SkyDome::Texture *sky = new SkyDome::Texture(skydome_path());
 		settings.set_sky_dome(sky);
-		FreeOrbitCamera free(geometry, &settings);
+		FlyingCamera free(geometry, &settings);
 	}else{
-		FreeOrbitCamera free(geometry, &settings);
+		FlyingCamera free(geometry, &settings);
 	}
 }
 //------------------------------------------------------------------------------
@@ -331,7 +331,7 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 	// propagate each event
 	uint event_counter = 0;
 
-	FreeOrbitCamera free_orb(world, &settings);
+	FlyingCamera free_orb(world, &settings);
 
 	while(corsika_run.has_still_events_left()) {
 

@@ -1,4 +1,4 @@
-#include "Cameras/FreeOrbitCamera.h"
+//#include "Cameras/FlyingCamera.h"
 #include "Core/Function/ConstantFunction.h"
 #include "Core/Photon.h"
 #include "Core/Photons.h"
@@ -121,7 +121,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
 
     //----------free orbit-----------------------
     
-    //FreeOrbitCamera free(&world,&setup);
+    //FlyingCamera free(&world,&setup);
     //free.start_free_orbit();
 
     //-----------send Photon----------------------
@@ -229,7 +229,7 @@ TEST_F(PhotonTest, Reflections){
     world.init_tree_based_on_mother_child_relations();
 
     //----------free orbit-----------------------
-    //FreeOrbitCamera free(&world,&setup);
+    //FlyingCamera free(&world,&setup);
     //free.start_free_orbit();
 
     //-----------send Photon----------------------
@@ -333,7 +333,7 @@ TEST_F(PhotonTest, Refraction){
     world.init_tree_based_on_mother_child_relations();
 
     //----------free orbit-----------------------
-    //FreeOrbitCamera free(&world, &setup);
+    //FlyingCamera free(&world, &setup);
 
     //-----------send Photon----------------------
     double wavelength = 433.0e-9;

@@ -1,4 +1,4 @@
-#include "Cameras/FreeOrbitCamera.h"
+#include "Cameras/FlyingCamera.h"
 #include "Tools/FileTools.h"
 #include "LightFieldTelescope/LightFieldTelescope.h"
 
@@ -44,7 +44,7 @@ int main(int argc, char* argv[]) {
 
     TracerSettings settings;
     settings.global_light_direction = Vector3D(1.0, 1.0, 1.0);
-    FreeOrbitCamera free(&telescope, &settings);
+    FlyingCamera free(&telescope, &settings);
     
     }catch(std::exception &error) {
         std::cerr << error.what(); 

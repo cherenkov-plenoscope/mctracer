@@ -1,6 +1,6 @@
-#include "FreeOrbitCamera.h"
+#include "FlyingCamera.h"
 //------------------------------------------------------------------------------
-FreeOrbitCamera::FreeOrbitCamera(
+FlyingCamera::FlyingCamera(
 	const Frame *world,
 	const TracerSettings *settings
 ){	
@@ -19,7 +19,7 @@ FreeOrbitCamera::FreeOrbitCamera(
 	start_free_orbit();
 }
 //------------------------------------------------------------------------------
-void FreeOrbitCamera::create_CameraMen_to_safely_operate_the_flying_camera(){
+void FlyingCamera::create_CameraMen_to_safely_operate_the_flying_camera(){
 	FoV_operator = new CameraManFoV(flying_camera);
 	FoV_operator->set_verbosity(true);
 
@@ -33,13 +33,13 @@ void FreeOrbitCamera::create_CameraMen_to_safely_operate_the_flying_camera(){
 	Stereo_operator->set_verbosity(true);
 }
 //------------------------------------------------------------------------------
-void FreeOrbitCamera::reset_camera(){
+void FlyingCamera::reset_camera(){
 	Translation_operator->set_default_position(Vector3D(0.0, 0.0, 0.0));
 	Rotation_operator->set_default_rotation(Rotation3D(0.0,Deg2Rad(-90.0),0.0));
 	FoV_operator->set_default_FoV();
 }
 //------------------------------------------------------------------------------
-void FreeOrbitCamera::start_free_orbit(){
+void FlyingCamera::start_free_orbit(){
 
 	UserInteraction::print_welcome_screen();
 	print_free_orbit_help_text();
@@ -108,11 +108,11 @@ void FreeOrbitCamera::start_free_orbit(){
 	destroy_free_orbit_display();
 }
 //------------------------------------------------------------------------------
-int FreeOrbitCamera::wait_for_user_key_stroke() {
+int FlyingCamera::wait_for_user_key_stroke() {
 	return cvWaitKey(0);
 }
 //------------------------------------------------------------------------------
-bool FreeOrbitCamera::it_is_time_again_to_show_the_help() {
+bool FlyingCamera::it_is_time_again_to_show_the_help() {
 	if(iteration_counter > 15) {
 		iteration_counter = 0;
 		return true;
@@ -121,10 +121,10 @@ bool FreeOrbitCamera::it_is_time_again_to_show_the_help() {
 	}
 }
 //------------------------------------------------------------------------------
-void FreeOrbitCamera::create_free_orbit_display(){
+void FlyingCamera::create_free_orbit_display(){
 	cv::namedWindow( free_orbit_display_name, CV_WINDOW_AUTOSIZE );
 
-	FreeOrbitCamera* p = this;
+	FlyingCamera* p = this;
 
 	cv::setMouseCallback( 
 		free_orbit_display_name.c_str(), 
@@ -133,11 +133,11 @@ void FreeOrbitCamera::create_free_orbit_display(){
 	);
 }
 //------------------------------------------------------------------------------
-void FreeOrbitCamera::destroy_free_orbit_display(){
+void FlyingCamera::destroy_free_orbit_display(){
 	cv::destroyWindow(free_orbit_display_name);	
 }
 //------------------------------------------------------------------------------
-void FreeOrbitCamera::update_free_orbit_display(){
+void FlyingCamera::update_free_orbit_display(){
 	const CameraImage* img = acquire_image_with_camera(flying_camera);
 
 	cv::imshow(
@@ -146,10 +146,10 @@ void FreeOrbitCamera::update_free_orbit_display(){
 	); 
 }
 //------------------------------------------------------------------------------
-void FreeOrbitCamera::mouse_button_event(
+void FlyingCamera::mouse_button_event(
 	int event, int x, int y, int flags, void *param
 ) {
-	FreeOrbitCamera* p = (FreeOrbitCamera*)param;
+	FlyingCamera* p = (FlyingCamera*)param;
 	
 	if( event == cv::EVENT_LBUTTONDOWN )
 		p->print_info_of_probing_ray_for_pixel_col_row( x, y );
@@ -159,13 +159,13 @@ void FreeOrbitCamera::mouse_button_event(
 		return;
 }
 //------------------------------------------------------------------------------
-void FreeOrbitCamera::toggle_stereo3D() {
+void FlyingCamera::toggle_stereo3D() {
 	stereo3D = !stereo3D;
 	std::cout << get_prefix_print() << "Stereo 3D : ";
 	std::cout << (stereo3D ? "On" : "Off") << "\n";
 }
 //------------------------------------------------------------------------------
-std::string FreeOrbitCamera::get_snapshot_filename(){
+std::string FlyingCamera::get_snapshot_filename(){
 	snapshot_counter++;
 
 	std::stringstream filename;  
@@ -175,7 +175,7 @@ std::string FreeOrbitCamera::get_snapshot_filename(){
 	return filename.str();
 }
 //------------------------------------------------------------------------------
-ApertureCamera FreeOrbitCamera::get_ApertureCamera_based_on_free_orbit_camera()const{
+ApertureCamera FlyingCamera::get_ApertureCamera_based_on_free_orbit_camera()const{
 
 	ApertureCamera apcam("Imax70mm", 
 		settings->snapshot.cols, 
@@ -196,11 +196,11 @@ ApertureCamera FreeOrbitCamera::get_ApertureCamera_based_on_free_orbit_camera()c
 	return apcam;
 }
 //------------------------------------------------------------------------------
-std::string FreeOrbitCamera::get_prefix_print()const{
+std::string FlyingCamera::get_prefix_print()const{
 	return "free_orbit -> ";
 }
 //------------------------------------------------------------------------------
-void FreeOrbitCamera::take_snapshot_manual_focus_on_pixel_col_row(int x, int y){
+void FlyingCamera::take_snapshot_manual_focus_on_pixel_col_row(int x, int y){
 
 	Ray probing_ray = flying_camera->get_ray_for_pixel_in_row_and_col(y, x);
 	
@@ -221,7 +221,7 @@ void FreeOrbitCamera::take_snapshot_manual_focus_on_pixel_col_row(int x, int y){
 	img->save(get_snapshot_filename());
 }
 //------------------------------------------------------------------------------
-const CameraImage* FreeOrbitCamera::acquire_image_with_camera(CameraDevice* cam) {
+const CameraImage* FlyingCamera::acquire_image_with_camera(CameraDevice* cam) {
 	if(stereo3D) {
 
 		CameraManForStereo3D op(cam);
@@ -235,7 +235,7 @@ const CameraImage* FreeOrbitCamera::acquire_image_with_camera(CameraDevice* cam)
 	}	
 }
 //------------------------------------------------------------------------------
-void FreeOrbitCamera::print_info_of_probing_ray_for_pixel_col_row(int x, int y){
+void FlyingCamera::print_info_of_probing_ray_for_pixel_col_row(int x, int y){
 
 	Ray probing_ray = flying_camera->get_ray_for_pixel_in_row_and_col(y, x);
 
@@ -291,7 +291,7 @@ void FreeOrbitCamera::print_info_of_probing_ray_for_pixel_col_row(int x, int y){
 	std::cout << out.str();
 }
 //------------------------------------------------------------------------------
-void FreeOrbitCamera::print_free_orbit_help_text()const{
+void FlyingCamera::print_free_orbit_help_text()const{
 
 	UserInteraction::ClearScreen();
 	std::stringstream out;
@@ -321,7 +321,7 @@ void FreeOrbitCamera::print_free_orbit_help_text()const{
 	std::cout << out.str();
 }
 //------------------------------------------------------------------------------
-void FreeOrbitCamera::continue_with_new_scenery_and_settings(
+void FlyingCamera::continue_with_new_scenery_and_settings(
 	const Frame *world, 
 	const TracerSettings *settings
 ) {
