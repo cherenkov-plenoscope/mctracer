@@ -10,8 +10,6 @@ FresnelRefractionAndReflection::FresnelRefractionAndReflection(
 	n_from(_n_from),
 	n_to(_n_to)
 {
-	//std::cout << "i: " << incident_obj_sys << ", n: "<< normal_obj_sys << "from: "<<_n_from << " to: "<<n_to <<std::endl;
-
 	cosI = normal_obj_sys*incident_obj_sys*(-1.0);
 	n_from_over_n_to = n_from/n_to;
 	sinT2 = n_from_over_n_to*n_from_over_n_to*(1.0 - cosI*cosI);
