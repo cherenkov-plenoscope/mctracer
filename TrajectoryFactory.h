@@ -14,7 +14,19 @@
 #include "Geometry/Sphere.h"
 
 //=================================
+// Spectate the propagation history of a photon.
+// A set of geometry is created from the photons propagation history.
+// Cylinders are placed along the straight parts of flight and balls in the 
+// interaction points.
+//
+// Input:
+//    Single Photon* (Ray for Propagation)
+//
+// Output:
+//    A Frame* representing the photons path of flight 
+// 
 class TrajectoryFactory {
+
 	const RayForPropagation* ray;
 	double radius_of_trajectory_in_m;
 	uint intersection_index;
