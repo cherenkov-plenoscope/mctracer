@@ -20,6 +20,7 @@ int main(int argc, char* argv[]) {
     telescope_config.housing_overhead = 1.2;
     telescope_config.lens_refraction = &LightFieldTelescope::pmma_refraction;
     telescope_config.sub_pixel_on_pixel_diagonal = 7;
+    telescope_config.object_distance_to_focus_on = 5.0e3;
     
     // INIT GEOMETRY
     LightFieldTelescope::Geometry telescope_geometry(telescope_config);

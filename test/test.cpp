@@ -43,6 +43,7 @@
 #include "RandomGeneratorTest.cpp"
 #include "FitsIoTest.cpp"
 #include "SensorStorageTest.cpp"
+#include "ThinLensEquationTest.cpp"
 #include "Histogram1DTest.cpp"
 #include "NightSkyBackgroundLightTest.cpp"
 

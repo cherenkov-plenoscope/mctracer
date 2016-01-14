@@ -9,6 +9,7 @@
 //=================================
 // included dependencies
 #include "LightFieldTelescope/Config.h"
+#include "ThinLensEquation.h"
 
 namespace LightFieldTelescope {
 

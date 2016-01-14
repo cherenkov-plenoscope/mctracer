@@ -82,7 +82,10 @@ double Geometry::max_outer_sensor_radius()const {
 }
 //------------------------------------------------------------------------------
 double Geometry::image_sensor_distance()const {
-	return reflector.focal_length();
+	return ThinLensEquation::get_image_dist_given_focal_and_object_dist(
+		reflector.focal_length(),
+		config.object_distance_to_focus_on
+	);
 }
 //------------------------------------------------------------------------------
 double Geometry::max_FoV_radius()const {
@@ -249,6 +252,8 @@ std::string Geometry::get_image_sensor_print()const{
 	tab << "Field of View solid angle..... " << field_of_view_solid_angle() << " radians\n";
 	tab << "max sensor radius............. " << max_outer_sensor_radius() << "m\n";
 	tab << "number of pixels.............. " << number_of_pixels() << "\n";
+	tab << "object distance to focus on... " << config.object_distance_to_focus_on << "m\n";
+	tab << "image sensor distance......... " << image_sensor_distance() << "m\n";
 
 	out << StringTools::place_first_infront_of_each_new_line_of_second(
 		"  ", 
