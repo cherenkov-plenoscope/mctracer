@@ -5,7 +5,7 @@ namespace PhotonSensor {
 	: Sensor(_id, _sensor_frame)
 	{	}
 	//--------------------------------------------------------------------------
-	void Xy::reset() {
+	void Xy::clear_history() {
 		xy_arrival_table.clear();
 	}
 	//--------------------------------------------------------------------------

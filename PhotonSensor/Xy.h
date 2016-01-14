@@ -21,7 +21,7 @@ namespace PhotonSensor {
 
 		Xy(uint _id, Frame* _sensor_frame);
 		void assign_photon_to_this_sensor(const Photon* photon);
-		void reset();
+		void clear_history();
 		std::vector<std::vector<double> > get_arrival_table()const;
 		std::string get_arrival_table_header()const;
 		double point_spread_std_dev()const;
