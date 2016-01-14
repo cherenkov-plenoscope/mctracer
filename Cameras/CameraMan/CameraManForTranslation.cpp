@@ -18,7 +18,7 @@ void CameraManForTranslation::move_for(){
 		camera->get_position_in_world() +
 		camera->get_normalized_pointing_direction()*translation_increment() 
 	);
-	print_camera_moved_in_direction("for");
+	if(verbose) print_camera_moved_in_direction("forward");
 }
 //------------------------------------------------------------------------------
 void CameraManForTranslation::move_back(){
@@ -26,7 +26,7 @@ void CameraManForTranslation::move_back(){
 		camera->get_position_in_world() -
 		camera->get_normalized_pointing_direction()*translation_increment() 
 	);
-	print_camera_moved_in_direction("back");
+	if(verbose) print_camera_moved_in_direction("back");
 }
 //------------------------------------------------------------------------------
 void CameraManForTranslation::move_left(){
@@ -34,7 +34,7 @@ void CameraManForTranslation::move_left(){
 		camera->get_position_in_world() -
 		camera->direction_to_the_right_of_the_camera()*translation_increment() 
 	);
-	print_camera_moved_in_direction("left");
+	if(verbose) print_camera_moved_in_direction("left");
 }
 //------------------------------------------------------------------------------
 void CameraManForTranslation::move_right(){
@@ -42,7 +42,7 @@ void CameraManForTranslation::move_right(){
 		camera->get_position_in_world() +
 		camera->direction_to_the_right_of_the_camera()*translation_increment() 
 	);
-	print_camera_moved_in_direction("right");
+	if(verbose) print_camera_moved_in_direction("right");
 }
 //------------------------------------------------------------------------------
 double CameraManForTranslation::translation_increment()const{
@@ -61,7 +61,7 @@ void CameraManForTranslation::move_right(const double step_in_m){
 		camera->get_position_in_world() +
 		camera->direction_to_the_right_of_the_camera()*step_in_m 
 	);
-	print_camera_moved_in_direction("right");
+	if(verbose) print_camera_moved_in_direction("right");
 }
 //------------------------------------------------------------------------------
 void CameraManForTranslation::move_up() {
@@ -69,7 +69,7 @@ void CameraManForTranslation::move_up() {
 		camera->get_position_in_world() + 
 		Vector3D::unit_z*translation_increment() 
 	);
-	print_camera_moved_in_direction("up");	
+	if(verbose) print_camera_moved_in_direction("up");	
 }
 //------------------------------------------------------------------------------
 void CameraManForTranslation::move_down() {
@@ -77,6 +77,6 @@ void CameraManForTranslation::move_down() {
 		camera->get_position_in_world() - 
 		Vector3D::unit_z*translation_increment() 
 	);
-	print_camera_moved_in_direction("up");
+	if(verbose) print_camera_moved_in_direction("up");
 }
 //------------------------------------------------------------------------------

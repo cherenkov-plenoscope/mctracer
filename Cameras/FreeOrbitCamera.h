@@ -11,11 +11,7 @@
 #include "ApertureCamera.h"
 #include "PinHoleCamera.h"
 #include "Tools/Tools.h"
-#include "CameraMan.h"
-#include "CameraManForTranslation.h"
-#include "CameraManForRotation.h"
-#include "CameraManForStereo3D.h"
-#include "CameraManForFieldOfView.h"
+#include "Cameras/CameraMan/CameraMan.h"
 #include "Tools/TimeStamp.h"
 #include "Tools/UserInteraction.h"
 

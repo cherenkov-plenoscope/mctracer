@@ -123,12 +123,12 @@ void CameraManForStereo3D::set_up_camera_back_to_initial_config(){
 
 void CameraManForStereo3D::increase_stereo_offset(){
 	stereo_offset_in_m = stereo_offset_in_m * 1.05;
-	print_stereo_offset_manipulation("increased to");
+	if(verbose) print_stereo_offset_manipulation("increased to");
 }
 
 void CameraManForStereo3D::decrease_stereo_offset(){
 	stereo_offset_in_m = stereo_offset_in_m / 1.05;
-	print_stereo_offset_manipulation("decreased to");
+	if(verbose) print_stereo_offset_manipulation("decreased to");
 }
 
 void CameraManForStereo3D::print_stereo_offset_manipulation(

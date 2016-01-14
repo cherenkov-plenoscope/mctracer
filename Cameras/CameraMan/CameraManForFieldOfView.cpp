@@ -50,14 +50,14 @@ double CameraManFoV::get_default_FoV_in_rad()const {
 }
 //------------------------------------------------------------------------------
 void CameraManFoV::print_FoV_manipulation_when_verbose()const {
-	if(verbosity){
+	if(verbose){
 		print_prefix();
 		std::cout << Rad2Deg(camera->get_FoV_in_rad()) << " DEG\n";	
 	}
 }
 //------------------------------------------------------------------------------
 void CameraManFoV::print_can_not_be_decreased_when_verbose()const {
-	if(verbosity){
+	if(verbose){
 		print_prefix();
 		std::cout << "Can not decrease FoV any further. Min Fov: ";
 		std::cout << Rad2Deg(min_FoV_in_rad) << " DEG\n";
@@ -65,7 +65,7 @@ void CameraManFoV::print_can_not_be_decreased_when_verbose()const {
 }
 //------------------------------------------------------------------------------
 void CameraManFoV::print_can_not_be_increased_when_verbose()const {
-	if(verbosity){
+	if(verbose){
 		print_prefix();
 		std::cout << "Can not increase FoV any further. Max Fov: ";
 		std::cout << Rad2Deg(max_FoV_in_rad) << " DEG\n";

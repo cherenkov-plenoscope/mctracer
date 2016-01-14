@@ -8,10 +8,10 @@
 
 //=================================
 // included dependencies
-#include "CameraMan.h"
-#include "CameraDevice.h"
+#include "CameraManVerbosity.h"
+#include "Cameras/CameraDevice.h"
 //=================================
-class CameraManForRotation: public CameraMan {
+class CameraManForRotation: public CameraManVerbosity {
 public:
 	CameraManForRotation(CameraDevice* camera_to_work_with);
 	void set_default_rotation(const Rotation3D rot);

@@ -24,11 +24,13 @@ void FreeOrbitCamera::create_CameraMen_to_safely_operate_the_flying_camera(){
 	FoV_operator->set_verbosity(true);
 
 	Translation_operator = new CameraManForTranslation(flying_camera);
+	Translation_operator->set_verbosity(true);
 
 	Rotation_operator = new CameraManForRotation(flying_camera);
 	Rotation_operator->set_verbosity(true);
 
 	Stereo_operator = new CameraManForStereo3D(flying_camera);
+	Stereo_operator->set_verbosity(true);
 }
 //------------------------------------------------------------------------------
 void FreeOrbitCamera::reset_camera(){

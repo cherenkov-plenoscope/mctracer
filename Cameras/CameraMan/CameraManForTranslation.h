@@ -8,10 +8,11 @@
 
 //=================================
 // included dependencies
-#include "CameraDevice.h"
+#include "CameraManVerbosity.h"
+#include "Cameras/CameraDevice.h"
 
 //=================================
-class CameraManForTranslation {
+class CameraManForTranslation: public CameraManVerbosity {
 public:
 
 	CameraManForTranslation(CameraDevice* camera_to_work_with);

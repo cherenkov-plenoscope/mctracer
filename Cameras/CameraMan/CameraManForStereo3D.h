@@ -9,10 +9,12 @@
 //=================================
 // included dependencies
 #include "DistanceMeter.h"
-#include "CameraDevice.h"
+#include "Cameras/CameraDevice.h"
+#include "CameraManVerbosity.h"
 //=================================
-class CameraManForStereo3D {
+class CameraManForStereo3D: public CameraManVerbosity {
 public:
+	
 	CameraManForStereo3D(CameraDevice* camera_to_work_with);
 	void aquire_stereo_image(	
 		const Frame* world,
@@ -23,6 +25,7 @@ public:
 	const CameraImage* get_anaglyph_stereo3D_image();
 	void use_same_stereo_offset_as(const CameraManForStereo3D *college);
 private:
+
 	CameraDevice* camera;
 
 	CameraImage *left_image;
