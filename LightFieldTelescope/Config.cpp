@@ -10,5 +10,6 @@ namespace LightFieldTelescope {
 		housing_overhead = 1.2;
 		lens_refraction = &pmma_refraction;
 		sub_pixel_on_pixel_diagonal = 10;
+		object_distance_to_focus_on = 10.0e3;
 	}
 }

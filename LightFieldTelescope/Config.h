@@ -21,6 +21,8 @@ namespace LightFieldTelescope {
 		double housing_overhead;
 		uint sub_pixel_on_pixel_diagonal;
 
+		double object_distance_to_focus_on;
+
 		const Function::Func1D* lens_refraction; 
 		Config();
 	};
