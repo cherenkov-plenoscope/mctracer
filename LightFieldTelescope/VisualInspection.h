@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "LightFieldTelescope/LightFieldTelescope.h"
-#include "Disc.h"
+#include "Geometry/Disc.h"
 
 namespace LightFieldTelescope {
 

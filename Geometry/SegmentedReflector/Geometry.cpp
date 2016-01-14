@@ -1,5 +1,5 @@
 #include "Geometry/SegmentedReflector/Geometry.h"
-#include "HexGridAnnulus.h"
+#include "Geometry/HexGridAnnulus.h"
 #include <iomanip>
 #include "Tools/StringTools.h"
 

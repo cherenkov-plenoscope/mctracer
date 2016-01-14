@@ -1,17 +1,16 @@
-#include <iostream> 
-#include <string>
-#include <math.h>
-
-#include "gtest/gtest.h"
-#include "Core/Photon.h"
-#include "Core/SurfaceEntity.h"
-#include "../Plane.h"
 #include "Cameras/FreeOrbitCamera.h"
-#include "Core/Random/Random.h"
-#include "Core/Photons.h"
 #include "Core/Function/ConstantFunction.h"
-#include "PhotonSensor/PhotonSensor.h" 
+#include "Core/Photon.h"
+#include "Core/Photons.h"
 #include "Core/PhysicalConstants.h"
+#include "Core/Random/Random.h"
+#include "Core/SurfaceEntity.h"
+#include "Geometry/Plane.h"
+#include "gtest/gtest.h"
+#include "PhotonSensor/PhotonSensor.h" 
+#include <iostream> 
+#include <math.h>
+#include <string>
 
 using namespace std;
 

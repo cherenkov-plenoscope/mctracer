@@ -10,8 +10,8 @@
 // included dependencies
 #include "LightFieldTelescope/LightFieldTelescope.h"
 #include "Core/Random/Random.h"
-#include "Disc.h"
-#include "BiConvexLensHexBound.h"
+#include "Geometry/Disc.h"
+#include "Geometry/BiConvexLensHexBound.h"
 
 namespace LightFieldTelescope {
 

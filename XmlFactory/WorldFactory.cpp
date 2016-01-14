@@ -5,7 +5,7 @@
 #include "Core/Function/LinInterpolFunction.h"
 #include "Tools/AsciiIo.h"
 #include "Geometry/StereoLitographyIo.h"
-#include "HexPlane.h"
+#include "Geometry/HexPlane.h"
 #include "XmlFactory/LightFieldTelescopeFactory.h"
 
 using StringTools::is_equal;

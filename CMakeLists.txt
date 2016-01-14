@@ -40,41 +40,12 @@ set(CMAKE_MODULE_PATH
 set(SOURCE 	
 	${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeter.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryFactory.cpp	
-
-	${CMAKE_CURRENT_SOURCE_DIR}/QuadraticEquation.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/XyPlaneRayIntersectionEquation.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ZaxisCylinderRayIntersectionEquation.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/SphericalCapRayIntersectionEquation.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/RectangularPrismZ.cpp	
-	${CMAKE_CURRENT_SOURCE_DIR}/CylinderPrismZ.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/HexagonalPrismZ.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/DualSphericalPrismZ.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TracerException.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/KeyValueMap.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ToDoScheduler.cpp		
-
 	${CMAKE_CURRENT_SOURCE_DIR}/TelescopeArrayControl.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ZdAzMount.cpp
-
-	${CMAKE_CURRENT_SOURCE_DIR}/Triangle.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Plane.cpp 
-	${CMAKE_CURRENT_SOURCE_DIR}/HexPlane.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/PlaneDualSphericalBound.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Disc.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Annulus.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/LightSourceFromConfig.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Cylinder.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceWithOuterPrismBound.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithCylinderBound.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithHexagonalBound.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/EllipticalCapWithHexagonalBound.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/EllipticalCapRayIntersectionEquation.cpp
-
-	${CMAKE_CURRENT_SOURCE_DIR}/HexGridAnnulus.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/HexGridFlower.cpp
-	
-	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLens.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLensHexBound.cpp
 )
 add_subdirectory("${PROJECT_SOURCE_DIR}/gtest-1.7.0")
 add_subdirectory("${PROJECT_SOURCE_DIR}/XmlFactory")

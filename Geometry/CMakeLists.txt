@@ -1,10 +1,34 @@
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/SegmentedReflector")
 set(SOURCE
-   	${SOURCE}
+   	${SOURCE}	
+	${CMAKE_CURRENT_SOURCE_DIR}/Annulus.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLens.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLensHexBound.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Cylinder.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/CylinderPrismZ.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Disc.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/DualSphericalPrismZ.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/EllipticalCapRayIntersectionEquation.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/EllipticalCapWithHexagonalBound.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/HexagonalPrismZ.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/HexGridAnnulus.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/HexGridFlower.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/HexPlane.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Plane.cpp 
+	${CMAKE_CURRENT_SOURCE_DIR}/PlaneDualSphericalBound.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/QuadraticEquation.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/RectangularPrismZ.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/Sphere.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/StereoLitographyIo.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithCylinderBound.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithHexagonalBound.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SphericalCapRayIntersectionEquation.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/StereoLitographyBinaryReader.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/StereoLitographyBinaryWriter.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/StereoLitographyIo.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceWithOuterPrismBound.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Triangle.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/XyPlaneRayIntersectionEquation.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ZaxisCylinderRayIntersectionEquation.cpp
    	PARENT_SCOPE
 )
 

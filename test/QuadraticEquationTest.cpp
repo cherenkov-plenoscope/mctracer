@@ -3,7 +3,7 @@
 #include <math.h>
 
 #include "gtest/gtest.h"
-#include "QuadraticEquation.h"
+#include "Geometry/QuadraticEquation.h"
 
 using namespace std;
 

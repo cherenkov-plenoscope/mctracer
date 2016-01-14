@@ -1,8 +1,8 @@
 #include "LightFieldTelescope/LensCalibration.h"
 #include "Tools/AsciiIo.h"
 #include "Cameras/FreeOrbitCamera.h"
-#include "HexPlane.h"
-#include "HexGridAnnulus.h"
+#include "Geometry/HexPlane.h"
+#include "Geometry/HexGridAnnulus.h"
 
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------

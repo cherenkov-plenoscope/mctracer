@@ -36,7 +36,7 @@
 	#include "PrismZ.h"
 	#include "BiConvexLens.h"
 	#include "BiConvexLensHexBound.h"
-	#include "Cylinder.h"
+	#include "Geometry/Cylinder.h"
 	#include "CylinderPrismZ.h"
 	#include "SurfaceWithOuterPrismBound.h"
 	#include "Disc.h"
@@ -48,7 +48,7 @@
 	#include "SphereCapWithHexagonalBound.h"
 	#include "Geometry/Sphere.h"
 	#include "Geometry/StereoLitographyIo.h"
-	#include "Triangle.h"
+	#include "Geometry/Triangle.h"
 
 	#include "Cameras/CameraDevice.h"
 	#include "Cameras/ApertureCamera.h"
@@ -109,7 +109,7 @@ namespace std {
 
 %include "BiConvexLens.h"
 %include "BiConvexLensHexBound.h"
-%include "Cylinder.h"
+%include "Geometry/Cylinder.h"
 %include "PrismZ.h"
 %include "CylinderPrismZ.h"
 %include "SurfaceWithOuterPrismBound.h"
@@ -122,7 +122,7 @@ namespace std {
 %include "SphereCapWithHexagonalBound.h"
 %include "Geometry/Sphere.h"
 %include "Geometry/StereoLitographyIo.h"
-%include "Triangle.h"
+%include "Geometry/Triangle.h"
 
 %include "Cameras/CameraDevice.h"
 %include "Cameras/ApertureCamera.h"

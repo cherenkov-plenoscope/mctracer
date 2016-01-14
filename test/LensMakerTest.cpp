@@ -1,7 +1,9 @@
 #include "gtest/gtest.h"
-#include "BiConvexLensHexBound.h"
-#include "Core/Color.h"
+
 #include <algorithm>
+
+#include "Core/Color.h"
+#include "Geometry/BiConvexLensHexBound.h"
 #include "LensMaker/LensMaker.h"
 
 class LensMakerTest : public ::testing::Test {};

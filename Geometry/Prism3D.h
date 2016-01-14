@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "Core/SurfaceEntity.h"
-#include "Triangle.h"
+#include "Geometry/Triangle.h"
 #include "Plane.h"
 //=================================
 class Prism3D :public SurfaceEntity{

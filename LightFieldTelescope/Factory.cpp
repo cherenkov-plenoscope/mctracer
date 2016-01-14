@@ -1,12 +1,12 @@
 #include "LightFieldTelescope/Factory.h"
-#include "HexGridAnnulus.h"
-#include "HexPlane.h"
-#include "Annulus.h"
-#include "Disc.h"
-#include "Plane.h"
-#include "Cylinder.h"
-#include "BiConvexLensHexBound.h"
-#include "PlaneDualSphericalBound.h"
+#include "Geometry/HexGridAnnulus.h"
+#include "Geometry/HexPlane.h"
+#include "Geometry/Annulus.h"
+#include "Geometry/Disc.h"
+#include "Geometry/Plane.h"
+#include "Geometry/Cylinder.h"
+#include "Geometry/BiConvexLensHexBound.h"
+#include "Geometry/PlaneDualSphericalBound.h"
 
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------

@@ -35,7 +35,8 @@ void Propagation::execute() {
 	std::cout << "out  '" << output_path() << "'\n";
 	std::cout << "in   '" << input_path() << "'\n";
 	std::cout << "conf '" << config_path() << "'\n";
-	std::cout << "coming soon :)\n";
+	
+	// check output write access
 
 	// settings
 	TracerSettings settings;	
@@ -77,9 +78,6 @@ void Propagation::execute() {
 	uint event_counter = 0;
 	while(corsika_run.has_still_events_left()) {
 
-		event_counter++;
-
-		// read next evenr
 		EventIo::Event event = corsika_run.next_event();
 
 		vector<Photon*> photons;
@@ -92,13 +90,10 @@ void Propagation::execute() {
                 photons.push_back(cpf.get_photon());
         }
 
-
-        // propagate the cherenkov photons in the telescope
 		Photons::propagate_photons_in_world_with_settings(
 			&photons, &telescope, &settings
 		);
 
-		// detect photons in sensors
 		sensors->clear_history();
 		sensors->assign_photons(&photons);
 
@@ -107,13 +102,16 @@ void Propagation::execute() {
 			photon_count[i] = sensors->by_occurence[i]->get_number_of_photons();
 		photon_counts.push_back(photon_count);
 
-        std::cout << "event " << event_counter << ", E " << event.header.mmcs_event_header.total_energy_in_GeV << " GeV, photons " << id << "\n";
+        std::cout << "event " << event_counter << ", E ";
+        std::cout << event.header.mmcs_event_header.total_energy_in_GeV;
+        std::cout << " GeV, photons " << photons.size() << "\n";
 
-        // wipe out the cherenkov photons which have just been propagated
 		Photons::delete_photons_and_history(&photons);
+
+		event_counter++;
 	}
 
-	AsciiIo::write_table_to_file(photon_counts, "my_first_output.txt");
+	AsciiIo::write_table_to_file(photon_counts, output_path());
 }
 //------------------------------------------------------------------------------
 std::string Propagation::output_path()const {

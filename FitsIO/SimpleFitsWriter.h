@@ -11,10 +11,8 @@
 #include <iostream> 
 #include <string>
 #include <sstream>
-#include "Core/SurfaceEntity.h"
-#include "Core/Intersection.h"
-#include "XyPlaneRayIntersectionEquation.h"
-#include "CylinderPrismZ.h"
+#include "TracerException.h"
+#include "Tools/StringTools.h"
 //=================================
 
 namespace Fits {

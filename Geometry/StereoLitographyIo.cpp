@@ -1,5 +1,5 @@
 #include "StereoLitographyIo.h"
-#include "Triangle.h"
+#include "Geometry/Triangle.h"
 //------------------------------------------------------------------------------
 namespace StereoLitographyIo {
 	Frame* read(const std::string filename, const double scale) {

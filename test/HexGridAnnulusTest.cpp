@@ -3,7 +3,7 @@
 #include <math.h>
 
 #include "gtest/gtest.h"
-#include "HexGridAnnulus.h"
+#include "Geometry/HexGridAnnulus.h"
 
 class HexGridAnnulusTest : public ::testing::Test {
 };

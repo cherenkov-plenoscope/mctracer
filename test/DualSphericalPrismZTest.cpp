@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "DualSphericalPrismZ.h"
+#include "Geometry/DualSphericalPrismZ.h"
 
 class DualSphericalPrismZTest : public ::testing::Test {};
 //----------------------------------------------------------------------

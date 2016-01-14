@@ -1,4 +1,4 @@
-#include "Triangle.h"
+#include "Geometry/Triangle.h"
 //------------------------------------------------------------------------------
 void Triangle::set_corners_in_xy_plane(
 	const double Ax, const double Ay,

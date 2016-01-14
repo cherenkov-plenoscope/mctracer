@@ -1,15 +1,16 @@
-#include <iostream> 
-#include <string>
-#include <math.h>
-
 #include "gtest/gtest.h"
-#include "BiConvexLens.h"
-#include "BiConvexLensHexBound.h"
+
+#include <iostream> 
+#include <math.h>
+#include <string>
+
 #include "Cameras/FreeOrbitCamera.h"
-#include "PhotonSensor/PhotonSensor.h"
-#include "Core/Photons.h"
 #include "Core/Function/ConstantFunction.h"
+#include "Core/Photons.h"
+#include "Geometry/BiConvexLens.h"
+#include "Geometry/BiConvexLensHexBound.h"
 #include "LensMaker/LensMaker.h"
+#include "PhotonSensor/PhotonSensor.h"
 #include "Tools/AsciiIo.h"
 
 class BiConvexLensTest : public ::testing::Test {

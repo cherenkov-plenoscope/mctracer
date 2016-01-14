@@ -3,7 +3,7 @@
 #include <math.h>
 
 #include "gtest/gtest.h"
-#include "HexagonalPrismZ.h"
+#include "Geometry/HexagonalPrismZ.h"
 
 using namespace std;
 

@@ -10,7 +10,7 @@
 // included dependencies
 #include "Core/RayForPropagation.h"
 #include "Core/SurfaceEntity.h"
-#include "Cylinder.h"
+#include "Geometry/Cylinder.h"
 #include "Geometry/Sphere.h"
 
 //=================================
