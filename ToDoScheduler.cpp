@@ -3,7 +3,7 @@
 #include "Tools/AsciiIo.h"
 #include "KeyValueMap.h"
 #include "XmlFactory/WorldFactory.h"
-#include "Geometry/StereoLitographyIo.h"
+#include "Geometry/StereoLitographyIo/StereoLitographyIo.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "CorsikaIO/EventIo/EventIo.h"
 #include "CorsikaIO/EventIo/PhotonFactory.h"

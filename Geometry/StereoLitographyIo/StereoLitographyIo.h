@@ -59,7 +59,23 @@ namespace StereoLitographyIo {
 		Vector3D c;	
 	};
 
-	class Io {
+//--------------------------------
+// Facet2mctracerTriangle
+//--------------------------------
+
+	Frame* facets_2_mctracer_triangles(
+		const std::vector<Facet> facets,
+		const double scale
+	);
+
+//--------------------------------
+// BINARY IO
+//--------------------------------
+	class BinaryIo {
+	protected:
+			
+		const uint header_size_in_chars = 80;
+		const uint triangle_size_in_32bit_floats = 12;
 	public:
 
 		class CanNotReadFile : public TracerException {
@@ -73,27 +89,6 @@ namespace StereoLitographyIo {
 		class CanNotReadAscii : public TracerException {
 			using TracerException::TracerException;
 		};
-	};
-
-//--------------------------------
-// Facet2mctracerTriangle
-//--------------------------------
-
-	Frame* facets_2_mctracer_triangles(
-		const std::vector<Facet> facets,
-		const double scale
-	);
-
-//--------------------------------
-// BINARY IO
-//--------------------------------
-	class BinaryIo :public Io {
-	protected:
-			
-		const uint header_size_in_chars = 80;
-		const uint triangle_size_in_32bit_floats = 12;
-	public:
-
 	};
 //--------------------------------
 // BINARY WRITER

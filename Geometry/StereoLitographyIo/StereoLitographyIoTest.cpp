@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "Core/Vector3D.h"
-#include "Geometry/StereoLitographyIo.h"
+#include "StereoLitographyIo.h"
 
 using namespace StereoLitographyIo;
 

@@ -4,7 +4,7 @@
 #include "FrameFactory.h"
 #include "Core/Function/LinInterpolFunction.h"
 #include "Tools/AsciiIo.h"
-#include "Geometry/StereoLitographyIo.h"
+#include "Geometry/StereoLitographyIo/StereoLitographyIo.h"
 #include "Geometry/HexPlane.h"
 #include "XmlFactory/LightFieldTelescopeFactory.h"
 

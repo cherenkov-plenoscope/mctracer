@@ -39,7 +39,7 @@
 #include "EventIoPhotonFactoryTest.cpp"
 #include "FunctionTest.cpp"
 #include "LensMakerTest.cpp"
-#include "../Geometry/StereoLitographyIoTest.cpp"
+#include "Geometry/StereoLitographyIo/StereoLitographyIoTest.cpp"
 #include "RandomGeneratorTest.cpp"
 #include "FitsIoTest.cpp"
 #include "SensorStorageTest.cpp"

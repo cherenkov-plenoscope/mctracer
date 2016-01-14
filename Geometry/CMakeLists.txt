@@ -1,4 +1,5 @@
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/SegmentedReflector")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/StereoLitographyIo")
 set(SOURCE
    	${SOURCE}	
 	${CMAKE_CURRENT_SOURCE_DIR}/Annulus.cpp 
@@ -22,9 +23,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithCylinderBound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithHexagonalBound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SphericalCapRayIntersectionEquation.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/StereoLitographyBinaryReader.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/StereoLitographyBinaryWriter.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/StereoLitographyIo.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceWithOuterPrismBound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Triangle.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/XyPlaneRayIntersectionEquation.cpp
