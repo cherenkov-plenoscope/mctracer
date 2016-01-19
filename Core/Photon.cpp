@@ -69,10 +69,21 @@ void Photon::work_on_first_causal_intersection() {
 	
 	intersection = get_first_intersection_in(environment.world_geometry);
 
-	if(intersection->does_intersect())
+	if(intersection->does_intersect() && !absorbed_in_medium_before_reaching_surface())
 		interact_with_object();
 	else
 		get_absorbed_in_void_space();
+}
+//------------------------------------------------------------------------------
+bool Photon::absorbed_in_medium_before_reaching_surface() {
+
+	double one_over_e_way = 
+		intersection->get_half_way_depth_coming_from(wavelength);
+
+	double survival_prob = 
+		exp(-intersection->get_intersection_distance()/one_over_e_way);
+
+	return environment.random_engine->uniform() > survival_prob;
 }
 //------------------------------------------------------------------------------
 void Photon::interact_with_object() {

@@ -84,5 +84,7 @@ private:
 	)const;
 
 	void assert_wavelength_is_positive()const;
+
+	bool absorbed_in_medium_before_reaching_surface();
 };
 #endif // __PHOTON_H_INCLUDED__ 

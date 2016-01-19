@@ -11,33 +11,25 @@ const SurfaceEntity* SurfaceEntity::source_object = new SurfaceEntity();
 
 const Color* SurfaceEntity::default_color = &Color::dark_gray;
 
-const Limits SurfaceEntity::default_wavelength_range = 
-	Limits(200e-9, 1200e-9);
+const Limits SurfaceEntity::default_wavelength_range = Limits(200e-9, 1200e-9);
 
-const Func1D* SurfaceEntity::default_refl = 
-	new Constant(0.0, default_wavelength_range);
+const Func1D* SurfaceEntity::default_refl = new Constant(
+	0.0, 
+	default_wavelength_range
+);
 
-const Func1D* SurfaceEntity::default_refr = 
-	new Constant(1.0, default_wavelength_range);
+const Func1D* SurfaceEntity::default_refr = new Constant(
+	1.0, 
+	default_wavelength_range
+);
 
-const Func1D* SurfaceEntity::default_abso = 
-	new Constant(0.0, default_wavelength_range);
+const Func1D* SurfaceEntity::default_abso = new Constant(
+	std::numeric_limits<double>::infinity(), 
+	default_wavelength_range
+);
 //------------------------------------------------------------------------------
 SurfaceEntity::SurfaceEntity() {
-	
-	_boundary_layer_is_transparent = false;
-
-	outer_color = default_color;
-	inner_color = default_color;
-
-	outer_reflection_vs_wavelength = default_refl;
-	inner_reflection_vs_wavelength = default_refl;
-
-	outer_refraction_vs_wavelength = default_refr;
-	inner_refraction_vs_wavelength = default_refr;
-
-	outer_absorption_vs_wavelength = default_abso;
-	inner_absorption_vs_wavelength = default_abso;
+	init_surface_defaults();
 }
 //------------------------------------------------------------------------------
 SurfaceEntity::SurfaceEntity(
@@ -46,6 +38,11 @@ SurfaceEntity::SurfaceEntity(
     const Rotation3D  new_rot)
 	: 	Frame(new_name, new_pos, new_rot)	
 {
+	init_surface_defaults();
+}
+//------------------------------------------------------------------------------
+void SurfaceEntity::init_surface_defaults() {
+
 	_boundary_layer_is_transparent = false;
 
 	outer_color = default_color;
@@ -59,9 +56,7 @@ SurfaceEntity::SurfaceEntity(
 
 	outer_absorption_vs_wavelength = default_abso;
 	inner_absorption_vs_wavelength = default_abso;
-	
 }
-
 //------------------------------------------------------------------------------
 const Func1D* SurfaceEntity::get_outer_reflection_()const {
 	return outer_reflection_vs_wavelength;

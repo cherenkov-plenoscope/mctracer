@@ -27,5 +27,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Triangle.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/XyPlaneRayIntersectionEquation.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ZaxisCylinderRayIntersectionEquation.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/RectangularBox.cpp
    	PARENT_SCOPE
 )

@@ -113,12 +113,16 @@ double Intersection::get_refractive_index_coming_from(const double wavelength)co
 	(*object->get_inner_refraction_())(wavelength);
 }
 //------------------------------------------------------------------------------
-double Intersection::get_outer_half_way_depth(const double wavelength)const {
-	return (*object->get_outer_absorption_())(wavelength);
+double Intersection::get_half_way_depth_coming_from(const double wavelength)const {
+	return _from_outside_to_inside ?
+	(*object->get_outer_absorption_())(wavelength):
+	(*object->get_inner_absorption_())(wavelength);
 }
 //------------------------------------------------------------------------------
-double Intersection::get_inner_half_way_depth(const double wavelength)const {
-	return (*object->get_inner_absorption_())(wavelength);
+double Intersection::get_half_way_depth_going_to(const double wavelength)const {
+	return _from_outside_to_inside ?
+	(*object->get_inner_absorption_())(wavelength):
+	(*object->get_outer_absorption_())(wavelength);
 }
 //------------------------------------------------------------------------------
 bool Intersection::boundary_layer_is_transparent()const {

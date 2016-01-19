@@ -164,3 +164,15 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
         );
 }
 //------------------------------------------------------------------------------
+TEST_F(RandomGeneratorTest, draw_from_poisson_distribution) {
+
+    Random::Mt19937 prng(0);
+    double sum = 0.0;
+    const double rate = 1e6;
+
+    for(uint i=0; i<uint(rate); i++)
+        sum += prng.expovariate(rate);
+
+    EXPECT_NEAR(1.0, sum, 1e-3);
+}
+//------------------------------------------------------------------------------

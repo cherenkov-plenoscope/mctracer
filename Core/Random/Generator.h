@@ -30,6 +30,7 @@ namespace Random {
 		Vector3D get_point_on_unitsphere_within_polar_distance(
 			const double max_dist
 		);
+		double expovariate(const double rate);
 	};
 }
 #endif // __PRNG_Generator_H_INCLUDED__

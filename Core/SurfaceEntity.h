@@ -73,5 +73,7 @@ public:
 	static const Function::Func1D* default_refr;
 	static const Function::Func1D* default_abso;
 	static const Color* default_color;
+private:
+	void init_surface_defaults();
 };
 #endif // __SURFACEENTITY_H_INCLUDED__ 

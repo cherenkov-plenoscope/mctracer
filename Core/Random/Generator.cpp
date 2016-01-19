@@ -38,3 +38,7 @@ Vector3D Generator::get_point_on_unitsphere_within_polar_distance(
 	);
 }
 //------------------------------------------------------------------------------
+double Generator::expovariate(const double rate) {
+	// sampling from a poisson distribution
+	return -log(uniform())/rate;
+}

@@ -1,4 +1,4 @@
-//#include "Cameras/FlyingCamera.h"
+//<#include "Cameras/FlyingCamera.h"
 #include "Core/Function/ConstantFunction.h"
 #include "Core/Photon.h"
 #include "Core/Photons.h"
@@ -6,6 +6,7 @@
 #include "Core/Random/Random.h"
 #include "Core/SurfaceEntity.h"
 #include "Geometry/Plane.h"
+#include "Geometry/RectangularBox.h"
 #include "gtest/gtest.h"
 #include "PhotonSensor/PhotonSensor.h" 
 #include <iostream> 
@@ -14,46 +15,15 @@
 
 using namespace std;
 
-// The fixture for testing class Foo.
-class PhotonTest : public ::testing::Test {
- protected:
-
-    Vector3D origin;
-    Vector3D ez;
-    double wavelength;
-
-    PhotonTest() {
-        origin.set(0.0, 0.0, 0.0);
-        ez.set(0.0, 0.0, 1.0);
-        wavelength = 433.0e-9;
-    }
-
-    virtual ~PhotonTest() {
-        // You can do clean-up work that doesn't throw exceptions here.
-    }
-
-    // If the constructor and destructor are not enough for setting up
-    // and cleaning up each test, you can define the following methods:
-
-    virtual void SetUp() {
-        // Code here will be called immediately after the constructor (right
-        // before each test).
-    }
-
-    virtual void TearDown() {
-        // Code here will be called immediately after each test (right
-        // before the destructor).
-    }
-
-    // Objects declared here can be used by all tests in the test case for Foo.
-};
+class PhotonTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(PhotonTest, creation_constructor) {
     
-    Photon pho(origin, ez*1.337, wavelength);
+    double wavelength = 433e-9;
+    Photon pho(Vector3D::null, Vector3D::unit_z*1.337, wavelength);
 
-    EXPECT_EQ(ez, pho.Direction());
-    EXPECT_EQ(origin, pho.Support());
+    EXPECT_EQ(Vector3D::unit_z, pho.Direction());
+    EXPECT_EQ(Vector3D::null, pho.Support());
     EXPECT_EQ(1.0, pho.Direction().norm());
     EXPECT_EQ(wavelength, pho.get_wavelength());
     EXPECT_EQ(1, pho.get_number_of_interactions_so_far() ); //creation is an interaction
@@ -153,14 +123,14 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
 //------------------------------------------------------------------------------
 TEST_F(PhotonTest, Reflections){
     /* This test is about the propagation process  
-                                                             \ mirror pos(0,0,0)
+                                 \ mirror pos(0,0,0)
     Light Source ->------>------>-\      
     pos(-2,0,0)                   |\
     dir(+1,0,0)                   |
-                                                                |
-                                                                |
-                                                                |
-                                                     _____\/_____
+                                  |
+                                  |
+                                  |
+                             _____\/_____
     o-------------> +X       absorber pos(0,2,0)
     | coordinate frame
     |
@@ -240,7 +210,7 @@ TEST_F(PhotonTest, Reflections){
 
     Random::Mt19937 dice(Random::zero_seed);
 
-    std::vector<Photon*>* photon_bunch = new std::vector<Photon*>;
+    std::vector<Photon*> photons;
 
     double num_phot = 1e4;
     for(int i=1; i<=num_phot; i++) {
@@ -251,23 +221,22 @@ TEST_F(PhotonTest, Reflections){
         Photon *P;
         P = new Photon(Support, direction, wavelength);
         P->set_id(i);
-        photon_bunch->push_back(P);
+        photons.push_back(P);
     }
 
     Photons::propagate_photons_in_world_with_settings(
-        photon_bunch, &world, &setup
+        &photons, &world, &setup
     );
 
-    sensors.assign_photons(photon_bunch);
+    sensors.assign_photons(&photons);
 
     EXPECT_NEAR(
         reflection_coefficient, 
-        double(absorber_sensor.get_arrival_table().size())/double(photon_bunch->size()),
+        double(absorber_sensor.get_arrival_table().size())/double(photons.size()),
         2e-2
     );
 
-    Photons::delete_photons_and_history(photon_bunch);
-    delete photon_bunch;    
+    Photons::delete_photons_and_history(&photons); 
 }
 //------------------------------------------------------------------------------
 TEST_F(PhotonTest, Refraction){
@@ -339,7 +308,7 @@ TEST_F(PhotonTest, Refraction){
     double wavelength = 433.0e-9;
 
     Random::Mt19937 dice(Random::zero_seed);
-    std::vector<Photon*>* photon_bunch = new std::vector<Photon*>;
+    std::vector<Photon*> photons;
 
     double num_phot = 1e4;
     for(int i=1; i<=num_phot; i++) {
@@ -347,14 +316,14 @@ TEST_F(PhotonTest, Refraction){
         Photon *P;
         P = new Photon(Vector3D::null, Vector3D::unit_z, wavelength);
         P->set_id(i);
-        photon_bunch->push_back(P);
+        photons.push_back(P);
     }
 
     Photons::propagate_photons_in_world_with_settings(
-        photon_bunch, &world, &setup
+        &photons, &world, &setup
     );
 
-    sensors.assign_photons(photon_bunch);
+    sensors.assign_photons(&photons);
 
     // 5% fresnell reflection
     EXPECT_NEAR(
@@ -371,6 +340,92 @@ TEST_F(PhotonTest, Refraction){
         1e-10
     );
 
-    Photons::delete_photons_and_history(photon_bunch);
-    delete photon_bunch;
+    Photons::delete_photons_and_history(&photons);
+}
+//------------------------------------------------------------------------------
+TEST_F(PhotonTest, absorbtion_in_medium){
+                           
+    TracerSettings setup;
+
+    // create a test setup with two planes and high refractive index in between
+    Frame world("world", Vector3D::null, Rotation3D::null);
+
+    Function::Constant free_half_path(
+        1.0,
+        Function::Limits(200e-9, 1200e-9)
+    );
+
+    Function::Constant water_refraction(
+        1.33,
+        Function::Limits(200e-9, 1200e-9)
+    );
+
+    //------------ box ---------------
+    Color entrance_surface_color(200,64,64);
+
+    RectangularBox box;
+    box.set_name_pos_rot(
+        "box", 
+        Vector3D(0.0, 0.0, 1.0), 
+        Rotation3D(0.0, 0.0, 0.0)
+    );
+    box.set_outer_color(&entrance_surface_color);
+    box.set_inner_color(&entrance_surface_color);
+    box.set_inner_absorption(&free_half_path); 
+    box.set_inner_refraction(&water_refraction);
+    box.set_xyz_width(1.0, 1.0, 1.0);
+
+    //------------collector----------------
+    Color absorber_color(50,50,50);
+
+    Plane collector(
+        "collector", 
+        Vector3D(0.0, 0.0, 3.0),
+        Rotation3D::null
+    );
+    collector.set_outer_color(&absorber_color);
+    collector.set_inner_color(&absorber_color);
+    collector.set_x_y_width(1.0, 1.0);
+    uint sensor_id = 0;
+    PhotonSensor::PerfectSensor collector_sensor(sensor_id, &collector);
+    std::vector<PhotonSensor::Sensor*> sensors_vector = {&collector_sensor};
+    PhotonSensors::Sensors sensors(sensors_vector);
+
+    //----------declare relationships------------
+    world.set_mother_and_child(&box);
+    world.set_mother_and_child(&collector);
+
+    //---post initialize the world to calculate all bounding spheres---
+    world.init_tree_based_on_mother_child_relations();
+
+    //----------free orbit-----------------------
+    //FlyingCamera free(&world, &setup);
+
+    //-----------send Photons----------------------
+    double wavelength = 433.0e-9;
+    Random::Mt19937 dice(Random::zero_seed);
+    std::vector<Photon*> photons;
+
+    double num_phot = 1e4;
+    for(int i=1; i<=num_phot; i++) {
+        
+        Photon *P;
+        P = new Photon(Vector3D::null, Vector3D::unit_z, wavelength);
+        P->set_id(i);
+        photons.push_back(P);
+    }
+
+    Photons::propagate_photons_in_world_with_settings(
+        &photons, &world, &setup
+    );
+
+    sensors.assign_photons(&photons);
+
+    EXPECT_NEAR(
+        0.367, 
+        double(collector_sensor.get_arrival_table().size())/double(num_phot),
+        2e-2
+    );
+
+    Photons::delete_photons_and_history(&photons);
 }

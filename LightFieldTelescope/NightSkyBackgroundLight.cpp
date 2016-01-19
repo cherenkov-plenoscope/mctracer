@@ -56,7 +56,7 @@ void NightSkyBackgroundLight::init_relative_arrival_times(
 
 	while(relative_arrival_times_sum < duration) {
 
-		double time_until_next_photon = -log(prng->uniform())/overall_nsb_rate;
+		double time_until_next_photon = prng->expovariate(overall_nsb_rate);
 
 		relative_arrival_times.push_back(relative_arrival_times_sum);
 		relative_arrival_times_sum += time_until_next_photon;

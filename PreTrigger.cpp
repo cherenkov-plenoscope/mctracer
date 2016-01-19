@@ -38,7 +38,7 @@ namespace PreTrigger {
 				j = 1;
 
 				while(growing_delay < config.time_window && j<arrival_moments->size()-i-1) {
-					std::cout << "i: " << i << ", j: " << j << "\n";	
+					
 					if(j >= config.threshold)
 						return true;
 					
