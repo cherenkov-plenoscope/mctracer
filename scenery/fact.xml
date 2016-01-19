@@ -162,7 +162,7 @@
 	<segmented_reflector>
 		<set_frame name="reflector" pos="[0,0,0]" rot="[0,0,0]"/>
 		<set_surface reflection_vs_wavelength="mirror_reflection"/>
-		<set_segmented_reflector focal_length="4.889" max_outer_aperture_radius="2.1" min_inner_aperture_radius="0.25" DaviesCotton_over_parabolic_mixing_factor="0.0" facet_inner_hex_radius="0.3" gap_between_facets="0.01"/>
+		<set_segmented_reflector focal_length="4.889" max_outer_aperture_radius="2.1" min_inner_aperture_radius="0.25" DaviesCotton_over_parabolic_mixing_factor="1.0" facet_inner_hex_radius="0.3" gap_between_facets="0.01"/>
 	</segmented_reflector>
 	
 	<frame>
