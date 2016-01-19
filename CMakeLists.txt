@@ -47,6 +47,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/TracerException.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryFactory.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/ZdAzMount.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/PreTrigger.cpp
 )
 add_subdirectory("${PROJECT_SOURCE_DIR}/Cameras")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Core")

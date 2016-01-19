@@ -1,22 +1,25 @@
-#include "LightFieldTelescope/Calibration.h"
-#include "LightFieldTelescope/CalibIo.h"
+#include "Calibration.h"
+#include "CalibIo.h"
 #include "Tools/UserInteraction.h"
 #include <iomanip> 
 #include "Tools/FileTools.h"
 
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------
-Calibration::Calibration(const Geometry *geometry):  
-	telescope_geometry(geometry) 
+Calibration::Calibration(
+	const Geometry *geometry,  
+	const CalibrationConfig *_calib_config
+):  
+	calib_config(_calib_config),
+	telescope_geometry(geometry),
+	stats(geometry, _calib_config)
 {
-	number_of_photons_per_sub_pixel = 25;
-	number_of_photons_per_block = 1e6;
-
 	number_of_photons = telescope_geometry->total_number_of_sub_pixels()*
-		number_of_photons_per_sub_pixel;
+		calib_config->photons_per_sub_pixel;
 
 	number_of_blocks = ceil(
-		double(number_of_photons)/double(number_of_photons_per_block)
+		double(number_of_photons)/
+		double(calib_config->photons_per_block)
 	);
 
 	set_up_photon_properties();
@@ -96,7 +99,7 @@ void Calibration::fill_calibration_block_to_table() {
 	#pragma omp parallel shared(HadCatch)
 	{
 		#pragma omp for schedule(dynamic) private(i) 
-		for(i=0; i<number_of_photons_per_block; i++) {
+		for(i=0; i<calib_config->photons_per_block; i++) {
 
 			try{
 				// create photon
@@ -126,21 +129,21 @@ void Calibration::fill_calibration_block_to_table() {
 				if(sensor_finder.frame_is_in_sensors()) {
 
 					// remember photon
-					CalibRow row;
-					row.reached_sensor = true;
-					row.sub_pixel_id = sensor_finder.get_sensor()->get_id();
-					row.x_pos_on_principal_aperture = pos_on_principal_aperture.x();
-					row.y_pos_on_principal_aperture = pos_on_principal_aperture.y();
-					row.x_tilt_vs_optical_axis = direction_on_principal_aperture.x();
-					row.y_tilt_vs_optical_axis = direction_on_principal_aperture.y();
-					row.relative_time_of_flight = ph->get_time_of_flight();
+					CalibrationPhotonResult result;
+					result.reached_sensor = true;
+					result.sub_pixel_id = sensor_finder.get_sensor()->get_id();
+					result.x_pos_on_principal_aperture = pos_on_principal_aperture.x();
+					result.y_pos_on_principal_aperture = pos_on_principal_aperture.y();
+					result.x_tilt_vs_optical_axis = direction_on_principal_aperture.x();
+					result.y_tilt_vs_optical_axis = direction_on_principal_aperture.y();
+					result.relative_time_of_flight = ph->get_time_of_flight();
 
-					table[i] = row;
+					photon_results[i] = result;
 				}else{
 
-					CalibRow row;
-					row.reached_sensor = false;
-					table[i] = row;
+					CalibrationPhotonResult result;
+					result.reached_sensor = false;
+					photon_results[i] = result;
 				}
 
 				// delete photon
@@ -168,29 +171,29 @@ void Calibration::fill_calibration_block_to_table() {
 //------------------------------------------------------------------------------
 void Calibration::run_calibration() {
 
-	init_statistics();
-
 	std::cout << telescope_geometry->get_print() << "\n";
 
 	std::cout << "Start Light Field Calibration, propagating ";
-	std::cout << double(number_of_blocks*number_of_photons_per_block)/1.0e6;
+	std::cout << double(
+					number_of_blocks * calib_config->photons_per_block
+				)/1.0e6;
 	std::cout << "M photons\n";
 	std::cout << "\n";
 	
-	table.resize(number_of_photons_per_block);
+	photon_results.resize(calib_config->photons_per_block);
 
 	for(uint j=0; j<number_of_blocks; j++) {
 		
 		std::cout << j+1 << " of " << number_of_blocks << "\n";	
 		
 		fill_calibration_block_to_table();
-		fill_statistics_from_table();
+		stats.fill_in_block(photon_results);
 
 		CalibIo appender("the_big_lebowsky.lftc");
-		appender.append(table);	
+		appender.append(photon_results);	
 	}
 
-	normalize_statistics();
+	stats.save("sub_pixel_statistics.txt");
 }
 //------------------------------------------------------------------------------
 std::string Calibration::get_print()const {
@@ -211,66 +214,6 @@ std::string Calibration::get_print()const {
 	);
 
 	return out.str();
-}
-//------------------------------------------------------------------------------
-void Calibration::init_statistics() {
-	statistics.resize(sub_pixels->size());
-}
-//------------------------------------------------------------------------------
-void Calibration::fill_statistics_from_table() {
-
-	for(CalibRow row: table) {
-		if(row.reached_sensor == true) {
-			statistics[row.sub_pixel_id].geometric_efficiency += 1.0;
-			statistics[row.sub_pixel_id].mean_cx += row.x_tilt_vs_optical_axis;
-			statistics[row.sub_pixel_id].mean_cy += row.y_tilt_vs_optical_axis;
-			statistics[row.sub_pixel_id].mean_x += row.x_pos_on_principal_aperture;
-			statistics[row.sub_pixel_id].mean_y += row.y_pos_on_principal_aperture;
-			statistics[row.sub_pixel_id].mean_time += row.relative_time_of_flight;
-		}
-	}
-}
-//------------------------------------------------------------------------------
-void Calibration::normalize_statistics() {
-	
-	double min_time = statistics.front().mean_time;
-	for(uint i=0; i<statistics.size(); i++) {
-
-		statistics[i].mean_cx /= statistics[i].geometric_efficiency;
-		statistics[i].mean_cy /= statistics[i].geometric_efficiency;
-		statistics[i].mean_x /= statistics[i].geometric_efficiency;
-		statistics[i].mean_y /= statistics[i].geometric_efficiency;
-		statistics[i].mean_time /= statistics[i].geometric_efficiency;
-		statistics[i].geometric_efficiency /= number_of_photons_per_sub_pixel;
-	
-		if(	statistics[i].mean_time < min_time)
-			min_time = statistics[i].mean_time;
-	}
-
-	for(uint i=0; i<statistics.size(); i++)
-		statistics[i].mean_time -= min_time;
-}
-//------------------------------------------------------------------------------
-void Calibration::export_sub_pixel_statistics(const std::string path)const {
-	
-	std::stringstream out;
-	out << "# sub pixel statistics:\n";
-	out << "# number_of_photons_per_sub_pixel: ";
-	out << number_of_photons_per_sub_pixel << "\n";
-	out << "# geometrical_efficiency[1]\tcx[rad]\tcy[rad]\tx[m]\ty[m]\tt[s]\n";
-	out.precision(4);
-	
-	for(SubPixelStatistics pix: statistics) {
-
-		out << std::setw(8) << pix.geometric_efficiency << " ";
-		out << std::setw(8) << pix.mean_cx << " ";
-		out << std::setw(8) << pix.mean_cy << " ";
-		out << std::setw(8) << pix.mean_x << " ";
-		out << std::setw(8) << pix.mean_y << " ";
-		out << std::setw(8) << pix.mean_time << "\n";
-	}
-
-	FileTools::write_text_to_file(out.str(), path);
 }
 //------------------------------------------------------------------------------
 } // namespace LightFieldTelescope

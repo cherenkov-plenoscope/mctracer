@@ -28,7 +28,8 @@ namespace PhotonSensor {
 		virtual ~Sensor();
 		virtual void assign_photon_to_this_sensor(const Photon* photon);
 		virtual void clear_history();
-		virtual std::vector<std::vector<double> > get_arrival_table()const;
+		virtual std::vector<std::vector<double>> get_arrival_table()const;
+		virtual std::vector<double> get_arrival_times()const;
 		virtual std::string get_arrival_table_header()const;
 		virtual uint get_number_of_photons()const;
 		const Frame* get_frame()const;

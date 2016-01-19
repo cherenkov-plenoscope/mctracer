@@ -8,49 +8,20 @@
 
 //=================================
 // included dependencies
-#include "LightFieldTelescope/LightFieldTelescope.h"
+#include "LightFieldTelescope/Geometry.h"
+#include "LightFieldTelescope/Factory.h"
+#include "LightFieldTelescope/Calibration/Config.h"
+#include "LightFieldTelescope/Calibration/CalibrationPhotonResult.h"
+#include "LightFieldTelescope/Calibration/SubPixelStatistics.h"
 #include "Core/Random/Random.h"
 
 namespace LightFieldTelescope {
 
-	struct CalibRow {
-		bool reached_sensor;
-		uint32_t sub_pixel_id;
-		float x_pos_on_principal_aperture;
-		float y_pos_on_principal_aperture;
-		float x_tilt_vs_optical_axis;
-		float y_tilt_vs_optical_axis;
-		float relative_time_of_flight;
-
-		CalibRow() {
-			reached_sensor = false;
-		};
-	};
-
-	struct SubPixelStatistics {
-		double geometric_efficiency;
-		double mean_cx;
-		double mean_cy;
-		double mean_x;
-		double mean_y;
-		double mean_time;
-
-		SubPixelStatistics() {
-			geometric_efficiency = 0.0;
-			mean_cx = 0.0;
-			mean_cy = 0.0;
-			mean_x = 0.0;
-			mean_y = 0.0;
-			mean_time = 0.0;			
-		}
-	};
-
 	class Calibration: public Printable {
 
+		const CalibrationConfig *calib_config;
 		const Geometry *telescope_geometry;
 		uint number_of_photons;
-		uint number_of_photons_per_sub_pixel;
-		uint number_of_photons_per_block;
 		uint number_of_blocks;
 		double max_principal_aperture_radius_to_trow_photons_on;
 		double max_tilt_vs_optical_axis_to_throw_photons_in;
@@ -64,13 +35,12 @@ namespace LightFieldTelescope {
 		PropagationEnvironment telescope_environment;
 		Random::Mt19937 prng;
 
-		std::vector<CalibRow> table;
+		std::vector<CalibrationPhotonResult> photon_results;
 
-		// statistics
-		std::vector<SubPixelStatistics> statistics;
+		SubPixelStatistics stats;
 	public:
 
-		Calibration(const Geometry *geometry);
+		Calibration(const Geometry *geometry, const CalibrationConfig *config);
 		void export_sub_pixel_statistics(const std::string path)const;
 		std::string get_print()const;
 	private:
@@ -86,9 +56,6 @@ namespace LightFieldTelescope {
 			Vector3D pos_on_principal_aperture,
 			Vector3D direction_on_principal_aperture
 		)const;
-		void init_statistics();
-		void fill_statistics_from_table();
-		void normalize_statistics();
 	};
 }
 #endif // __LightFieldTelescopeCalibration_H_INCLUDED__ 

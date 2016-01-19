@@ -5,6 +5,7 @@
 #include "Core/Histogram1D.h"
 #include "LightFieldTelescope/LightFieldTelescope.h"
 #include "Tools/AsciiIo.h"
+#include "Tools/FileTools.h"
 
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------
@@ -57,7 +58,7 @@ void Propagation::execute() {
     telescope_config.housing_overhead = 1.2;
     telescope_config.lens_refraction = &LightFieldTelescope::pmma_refraction;
     telescope_config.sub_pixel_on_pixel_diagonal = 7;
-    telescope_config.object_distance_to_focus_on = 5.0e3;
+    telescope_config.object_distance_to_focus_on = 10.0e3;
 	
     // INIT GEOMETRY
     LightFieldTelescope::Geometry telescope_geometry(telescope_config);
@@ -98,10 +99,37 @@ void Propagation::execute() {
 		sensors->clear_history();
 		sensors->assign_photons(&photons);
 
+		// photon count
 		std::vector<double> photon_count(sensors->size());
 		for(uint i=0; i<sensors->size(); i++)
 			photon_count[i] = sensors->by_occurence[i]->get_number_of_photons();
 		photon_counts.push_back(photon_count);
+
+		// arrival times
+		std::vector<std::vector<double>> photon_arrival;
+		for(uint i=0; i<sensors->size(); i++) {
+			std::vector<double> times = sensors->by_occurence[i]->get_arrival_times();
+			photon_arrival.push_back(times);
+		}
+
+		std::stringstream out;
+		out << std::setprecision(9);
+		//std::vector<double>::iterator min_time;
+		for(uint i=0; i<photon_arrival.size(); i++) {
+			if(photon_arrival[i].size() > 0) {
+				//min_time = std::min_element(std::begin(photon_arrival[i]), std::end(photon_arrival[i]));
+				out << i <<"\t";
+				for(uint j=0; j<photon_arrival[i].size(); j++){
+					out << photon_arrival[i][j];// - *min_time;
+					if(j != photon_arrival[i].size()-1) out << "\t";
+				}
+				out << "\n";
+			}
+		}
+
+		FileTools::write_text_to_file(out.str(), output_path()+"evt_"+std::to_string(event_counter));
+
+		//AsciiIo::write_table_to_file(photon_arrival, output_path()+"evt_"+std::to_string(event_counter));
 
         std::cout << "event " << event_counter << ", E ";
         std::cout << event.header.mmcs_event_header.total_energy_in_GeV;

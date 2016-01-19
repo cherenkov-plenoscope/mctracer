@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "LightFieldTelescope/Calibration.h"
+#include "LightFieldTelescope/Calibration/Calibration.h"
 
 namespace LightFieldTelescope {
 
@@ -19,11 +19,10 @@ namespace LightFieldTelescope {
 	public:
 
 		CalibIo(const std::string path);
-		void append(const std::vector<CalibRow> &table);
-		//void append_header(const Config telescope_config);
+		void append(const std::vector<CalibrationPhotonResult> &table);
 	private:
 
-		void write_row(const CalibRow &row);
+		void write_row(const CalibrationPhotonResult &row);
 		void assert_file_is_open();
 		class CanNotReadFile : public TracerException {
 			using TracerException::TracerException;

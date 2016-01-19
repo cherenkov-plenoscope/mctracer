@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
     telescope_config.housing_overhead = 1.2;
     telescope_config.lens_refraction = &LightFieldTelescope::pmma_refraction;
     telescope_config.sub_pixel_on_pixel_diagonal = 7;
-    telescope_config.object_distance_to_focus_on = 5.0e3;
+    telescope_config.object_distance_to_focus_on = 10.0e3;
     
     // INIT GEOMETRY
     LightFieldTelescope::Geometry telescope_geometry(telescope_config);
@@ -33,8 +33,12 @@ int main(int argc, char* argv[]) {
     LightFieldTelescope::LensCalibration lenscalib(&telescope_geometry);
 
     // RUN LIGHT FIELD CALIBRATION
-    LightFieldTelescope::Calibration calib(&telescope_geometry);
-    calib.export_sub_pixel_statistics("sub_pixel_statistics.txt");
+    LightFieldTelescope::CalibrationConfig calib_config;
+    calib_config.photons_per_sub_pixel = 25;
+    calib_config.photons_per_block = 1e6;
+
+    LightFieldTelescope::Calibration calib(&telescope_geometry, &calib_config);
+    //calib.export_sub_pixel_statistics("sub_pixel_statistics.txt");
 
     // EXPLORE TELESCOPE
     LightFieldTelescope::Factory fab(&telescope_geometry);

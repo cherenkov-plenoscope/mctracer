@@ -33,6 +33,7 @@ namespace PhotonSensor {
 		void assign_photon_to_this_sensor(const Photon* photon);
 		void clear_history();
 		std::vector<std::vector<double> > get_arrival_table()const;
+		std::vector<double> get_arrival_times()const;
 		std::string get_arrival_table_header()const;
 		uint get_number_of_photons()const;
 	};

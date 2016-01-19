@@ -1,11 +1,10 @@
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/Calibration")
 set(SOURCE
    	${SOURCE}
    	${CMAKE_CURRENT_SOURCE_DIR}/Config.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/Geometry.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/Factory.cpp
-  	${CMAKE_CURRENT_SOURCE_DIR}/Calibration.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/LensCalibration.cpp
-  	${CMAKE_CURRENT_SOURCE_DIR}/CalibIo.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/VisualInspection.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/NightSkyBackgroundLight.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/Propagation.cpp

@@ -3,7 +3,7 @@
 
 class NightSkyBackgroundLightTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
-TEST_F(NightSkyBackgroundLightTest, fake_constant) {
+TEST_F(NightSkyBackgroundLightTest, init) {
 
     // SET UP TELESCOPE
     LightFieldTelescope::Config telescope_config;

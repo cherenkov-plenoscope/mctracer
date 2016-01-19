@@ -46,6 +46,7 @@
 #include "ThinLensEquationTest.cpp"
 #include "Histogram1DTest.cpp"
 #include "NightSkyBackgroundLightTest.cpp"
+#include "PreTriggerTest.cpp"
 
 #include "Tools/UserInteraction.h"
 int main(int argc, char **argv) {

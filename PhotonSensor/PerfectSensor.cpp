@@ -62,6 +62,16 @@ namespace PhotonSensor {
 		return output_table;
 	}
 	//--------------------------------------------------------------------------
+	std::vector<double> PerfectSensor::get_arrival_times()const {
+		std::vector<double> times(arrival_table.size());
+
+		for(uint i=0; i<arrival_table.size(); i++) {
+			times[i] = arrival_table[i].arrival_times_since_emission;
+		}
+
+		return times;
+	}
+	//--------------------------------------------------------------------------
 	std::string PerfectSensor::get_arrival_table_header()const {
 		std::stringstream header;
 		header << "x: [m], intersection on principal aperture plane\n";

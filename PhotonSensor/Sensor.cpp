@@ -25,6 +25,11 @@ namespace PhotonSensor {
 
 	}
 	//--------------------------------------------------------------------------
+	std::vector<double> Sensor::get_arrival_times()const {
+		std::vector<double> empty;
+		return empty;
+	}
+	//--------------------------------------------------------------------------
 	std::vector<std::vector<double>> Sensor::get_arrival_table()const {
 		std::vector<std::vector<double>> empty;
 		return empty;
