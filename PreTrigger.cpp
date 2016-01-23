@@ -37,12 +37,14 @@ namespace PreTrigger {
 				growing_delay = 0.0;
 				j = 1;
 
-				while(growing_delay < config.time_window && j<arrival_moments->size()-i-1) {
-					
+				while(	growing_delay < config.time_window && 
+						j<arrival_moments->size()-i-1
+				) {
 					if(j >= config.threshold)
 						return true;
 					
-					growing_delay += arrival_moments->at(i+1+j) - arrival_moments->at(i+j);
+					growing_delay += 
+						arrival_moments->at(i+1+j) - arrival_moments->at(i+j);
 					j++;
 				}
 			}

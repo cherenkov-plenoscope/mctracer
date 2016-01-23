@@ -38,8 +38,23 @@ TEST_F(PreTriggerTest, even_distributed) {
 	conf.time_window = 0.9;
 	conf.threshold = 2;
 	EXPECT_FALSE(PreTrigger::might_trigger(&arrival_moments, conf));
-
-	std::cout << "overlap\n";	
+	
 	conf.time_window = 1.01;
+	EXPECT_TRUE(PreTrigger::might_trigger(&arrival_moments, conf));
+}
+//----------------------------------------------------------------------
+TEST_F(PreTriggerTest, dense_center_distributed) {
+
+	std::vector<double> arrival_moments = {
+		0.0, 1.0, 2.0, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.0, 4.0, 5.0
+	};
+
+	PreTrigger::Config conf;
+	conf.time_window = 1.0;
+	conf.threshold = 12;
+	EXPECT_FALSE(PreTrigger::might_trigger(&arrival_moments, conf));
+	
+	conf.time_window = 0.5;
+	conf.threshold = 4;
 	EXPECT_TRUE(PreTrigger::might_trigger(&arrival_moments, conf));
 }
