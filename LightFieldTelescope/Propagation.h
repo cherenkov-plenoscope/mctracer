@@ -26,6 +26,8 @@ namespace LightFieldTelescope {
 		const std::string configK = "config";
 		const std::string outputK = "output";
 		const std::string inputK = "input";
+		const std::string nsbK = "nsb";
+		const std::string pdeK = "pde";
 	public:
 
 		Propagation(int argc, char** argv);
@@ -36,6 +38,8 @@ namespace LightFieldTelescope {
 		std::string output_path()const;
 		std::string input_path()const;
 		std::string config_path()const;
+		std::string nsb_vs_wavelength_path()const;
+		std::string pde_vs_wavelength_path()const;
 	};
 }// LightFieldTelescope
 #endif // __LightFieldTelescopePropagation_H_INCLUDE__ 

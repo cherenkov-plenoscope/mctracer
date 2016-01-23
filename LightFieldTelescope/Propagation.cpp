@@ -6,6 +6,12 @@
 #include "LightFieldTelescope/LightFieldTelescope.h"
 #include "Tools/AsciiIo.h"
 #include "Tools/FileTools.h"
+#include "Tools/Tools.h"
+//experimental
+#include "PipelinePhoton.h"
+#include "LightFieldTelescope/NightSkyBackgroundLightInjector.h"
+#include "PhotoElectricConverter.h"
+#include "PreTrigger.h"
 
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------
@@ -29,6 +35,14 @@ void Propagation::define_comand_line_keys() {
 	comand_line_parser.add<std::string>(
 		inputK, 'i', "input path for CORSIKA Cherenkov photons", false, ""
 	);
+
+	comand_line_parser.add<std::string>(
+		nsbK, 'n', "night sky background flux vs wavelength", false, ""
+	);
+
+	comand_line_parser.add<std::string>(
+		pdeK, 'q', "SIPM quantum efficiency vs wavelength path", false, ""
+	);
 }
 //------------------------------------------------------------------------------
 void Propagation::execute() {
@@ -36,8 +50,8 @@ void Propagation::execute() {
 	std::cout << "out  '" << output_path() << "'\n";
 	std::cout << "in   '" << input_path() << "'\n";
 	std::cout << "conf '" << config_path() << "'\n";
-	
-	// check output write access
+	std::cout << "nsb  '" << nsb_vs_wavelength_path() << "'\n";
+	std::cout << "pde  '" << pde_vs_wavelength_path() << "'\n";
 
 	// settings
 	TracerSettings settings;	
@@ -69,12 +83,61 @@ void Propagation::execute() {
     fab.add_telescope_to_frame(&telescope);
     PhotonSensors::Sensors* sensors = fab.get_sub_pixels();
 
+    // load light field calibration result
+    std::vector<std::vector<double>> light_field_calibration_result = 
+    	AsciiIo::gen_table_from_file(config_path());
+    	
+    	// assert number os sub_pixel matches simulated telescope
+    	if(fab.get_sub_pixels()->size() != light_field_calibration_result.size()) {
+    		std::stringstream info;
+    		info << "The light field calibration results, read from file '";
+    		info << config_path();
+    		info << "', do no not match the telescope simulated here.\n";
+    		info << "Expected sub pixel size: " << fab.get_sub_pixels()->size();
+    		info << ", but actual: " << light_field_calibration_result.size();
+    		info << "\n";
+    		throw TracerException(info.str());
+    	}
+
+    // INIT PRNG 
 	Random::Mt19937 prng(Random::zero_seed);
+
+	// INIT NIGHT SKY BACKGROUND
+	const Function::LinInterpol nsb_flux_vs_wavelength(
+		AsciiIo::gen_table_from_file(nsb_vs_wavelength_path())
+	);
+
+	NightSkyBackgroundLight nsb(&telescope_geometry, &nsb_flux_vs_wavelength);
+
+	// SET UP PhotoElectricConverter
+	const Function::LinInterpol pde_vs_wavelength(
+		AsciiIo::gen_table_from_file(pde_vs_wavelength_path())
+	);
+	PhotoElectricConverter::Config converter_config;
+	converter_config.dark_rate = 1e6;
+	converter_config.probability_for_second_puls = 0.1;
+	converter_config.quantum_efficiency_vs_wavelength = &pde_vs_wavelength;
+
+	PhotoElectricConverter::Converter sipm_converter(&converter_config);
+
+	// EXPOSURE TIME
+	const double exposure_time = 300e-9;
+
+	// PRE TRIGGER
+	PreTrigger::Config pre_trigger_config;
+	pre_trigger_config.time_window = 0.5e-9;
+	pre_trigger_config.threshold = 5;
+
+	// Electric time line sampler
+	PhotoElectricConverter::SamplerConfig sampler_config;
+	sampler_config.exposure_time = exposure_time;
+	sampler_config.sampling_frequency = 2e9;
+	sampler_config.std_dev_noise = 0.2;
+
+	PhotoElectricConverter::Sampler time_line_sampler(&sampler_config);
 
 	// open cherenkov photon file
 	EventIo::EventIoFile corsika_run(input_path());
-
-	std::vector<std::vector<double>> photon_counts;
 
 	// propagate each event
 	uint event_counter = 0;
@@ -99,39 +162,45 @@ void Propagation::execute() {
 		sensors->clear_history();
 		sensors->assign_photons(&photons);
 
-		// photon count
-		std::vector<double> photon_count(sensors->size());
-		for(uint i=0; i<sensors->size(); i++)
-			photon_count[i] = sensors->by_occurence[i]->arrival_table.size();
-		photon_counts.push_back(photon_count);
+		std::vector<std::vector<PipelinePhoton>> photon_pipelines = 
+			get_photon_pipelines(sensors);
 
-		std::stringstream out;
-		out << std::setprecision(9);
-		// arrival times
-		/*std::vector<std::vector<double>> photon_arrival;
-		for(uint i=0; i<sensors->size(); i++) {
-			std::vector<double> times = sensors->by_occurence[i]->arrival_table[j].arrival_time;
-			photon_arrival.push_back(times);
+		LightFieldTelescope::inject_nsb_into_photon_pipeline(
+			&photon_pipelines,
+			exposure_time,
+			&light_field_calibration_result,
+			&nsb,
+			&prng
+		);
+
+		std::vector<std::vector<double>> electric_pipelines;
+
+		for(std::vector<PipelinePhoton> ph_pipe: photon_pipelines) {
+			electric_pipelines.push_back(
+				sipm_converter.get_pulse_pipeline_for_photon_pipeline( //bug
+					ph_pipe,
+					exposure_time,
+					&prng
+				)
+			);
 		}
 
-		std::stringstream out;
-		out << std::setprecision(9);
-		//std::vector<double>::iterator min_time;
-		for(uint i=0; i<photon_arrival.size(); i++) {
-			if(photon_arrival[i].size() > 0) {
-				//min_time = std::min_element(std::begin(photon_arrival[i]), std::end(photon_arrival[i]));
-				out << i <<"\t";
-				for(uint j=0; j<photon_arrival[i].size(); j++){
-					out << photon_arrival[i][j];// - *min_time;
-					if(j != photon_arrival[i].size()-1) out << "\t";
-				}
-				out << "\n";
+		std::vector<uint> might_trigger;
+		for(uint i=0; i<electric_pipelines.size(); i++) {
+			if(PreTrigger::might_trigger(&electric_pipelines[i], pre_trigger_config)){
+				might_trigger.push_back(i);
+				std::vector<double> time_line;
+				time_line = time_line_sampler.time_line(&electric_pipelines[i], &prng);
+				//std::cout << time_line_sampler.get_number_of_samples() << ", " << time_line.size() << "\n";
 			}
-		}*/
+		}
 
-		FileTools::write_text_to_file(out.str(), output_path()+"evt_"+std::to_string(event_counter));
+		//std::cout << get_print(electric_pipelines);
 
-		//AsciiIo::write_table_to_file(photon_arrival, output_path()+"evt_"+std::to_string(event_counter));
+		std::cout << "mtc " << might_trigger.size() << " of " << electric_pipelines.size() <<
+		", " << double(might_trigger.size())/double(electric_pipelines.size())<< "\n";
+
+
 
         std::cout << "event " << event_counter << ", E ";
         std::cout << event.header.mmcs_event_header.total_energy_in_GeV;
@@ -141,8 +210,6 @@ void Propagation::execute() {
 
 		event_counter++;
 	}
-
-	AsciiIo::write_table_to_file(photon_counts, output_path());
 }
 //------------------------------------------------------------------------------
 std::string Propagation::output_path()const {
@@ -157,4 +224,11 @@ std::string Propagation::config_path()const {
 	return comand_line_parser.get<std::string>(configK);
 }
 //------------------------------------------------------------------------------
+std::string Propagation::nsb_vs_wavelength_path()const {
+	return comand_line_parser.get<std::string>(nsbK);
+}
+//------------------------------------------------------------------------------
+std::string Propagation::pde_vs_wavelength_path()const {
+	return comand_line_parser.get<std::string>(pdeK);
+}
 }// LightFieldTelescope

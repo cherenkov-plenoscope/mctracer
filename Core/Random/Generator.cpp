@@ -42,3 +42,4 @@ double Generator::expovariate(const double rate) {
 	// sampling from a poisson distribution
 	return -log(uniform())/rate;
 }
+//------------------------------------------------------------------------------

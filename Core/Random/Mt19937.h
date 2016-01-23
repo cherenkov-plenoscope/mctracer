@@ -22,6 +22,7 @@ namespace Random {
 		Mt19937(const uint _seed);
 		Mt19937();
 		double uniform();
+		double normal(const double mean, const double std_dev);
 		void set_seed(const uint _seed);
 	private:
 

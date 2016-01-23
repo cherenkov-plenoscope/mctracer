@@ -193,17 +193,4 @@ uint FindSensorByFrame::get_index()const {
     return index;
 }
 //------------------------------------------------------------------------------
-/*std::vector<std::vector<PipelinePhoton>> get_photon_pipelines(
-	const Sensors* sensors
-) {
-	std::vector<std::vector<PipelinePhoton>> photon_pipelines;
-
-	for(uint i=0; i<sensors->by_occurence.size(); i++) {
-
-		std::vector<PipelinePhoton> photon_pipeline;
-
-
-	}
-}*/
-//------------------------------------------------------------------------------
 } // PhotonSensors

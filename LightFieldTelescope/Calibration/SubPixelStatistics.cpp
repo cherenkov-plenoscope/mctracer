@@ -60,12 +60,12 @@ void SubPixelStatistics::save(const std::string path) {
 	
 	for(SubPixelStatistic pix: subpix_stats) {
 
-		out << std::setw(8) << pix.geometric_efficiency << " ";
-		out << std::setw(8) << pix.mean_cx << " ";
-		out << std::setw(8) << pix.mean_cy << " ";
-		out << std::setw(8) << pix.mean_x << " ";
-		out << std::setw(8) << pix.mean_y << " ";
-		out << std::setw(8) << pix.mean_time << "\n";
+		out << pix.geometric_efficiency << "\t";
+		out << pix.mean_cx << "\t";
+		out << pix.mean_cy << "\t";
+		out << pix.mean_x << "\t";
+		out << pix.mean_y << "\t";
+		out << pix.mean_time << "\n";
 	}
 
 	FileTools::write_text_to_file(out.str(), path);

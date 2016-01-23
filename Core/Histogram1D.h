@@ -27,6 +27,8 @@ public:
 		const std::vector<double> &_bin_edges
 	);
 	std::string get_print()const;
+	double mode()const;
+	double idx_of_max_bin()const;
 private:
 
 	std::vector<double>::const_iterator get_upper_bound_bin_edge(

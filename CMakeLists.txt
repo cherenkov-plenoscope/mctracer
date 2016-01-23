@@ -48,6 +48,8 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryFactory.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/ZdAzMount.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PreTrigger.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/PipelinePhoton.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/PhotoElectricConverter.cpp
 )
 add_subdirectory("${PROJECT_SOURCE_DIR}/Cameras")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Core")

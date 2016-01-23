@@ -85,3 +85,22 @@ std::string Histogram1D::get_print()const {
 
 	return out.str();	
 }
+//------------------------------------------------------------------------------
+double Histogram1D::mode()const {
+	uint idx_max_bin = idx_of_max_bin();
+	return 0.5*(bin_edges[idx_max_bin+1] + bin_edges[idx_max_bin]);
+}
+//------------------------------------------------------------------------------
+double Histogram1D::idx_of_max_bin()const {
+	
+	uint idx_max_bin = 0;
+	uint max_bin_count = 0;
+
+	for(uint i=0; i<bins.size(); i++)
+		if(bins[i] > max_bin_count) {
+			idx_max_bin = i;
+			max_bin_count = bins[i];
+		}
+
+	return idx_max_bin;
+}

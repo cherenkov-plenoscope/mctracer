@@ -9,7 +9,6 @@
 //=================================
 // included dependencies
 #include "PhotonSensor/PhotonSensor.h"
-#include "PipelinePhoton.h"
 //=================================
 
 namespace PhotonSensors {
@@ -68,8 +67,6 @@ namespace PhotonSensors {
 		bool frame_is_in_sensors()const;
 		PhotonSensor::Sensor* get_sensor()const;
 	};
-
-	//std::vector<std::vector<PipelinePhoton>> get_photon_pipelines(const Sensors* sensors);
 } // PhotonSensors
 //------------------------------------------------------------------------------
 #endif // __PHOTONSENSORS_H_INCLUDED__ 

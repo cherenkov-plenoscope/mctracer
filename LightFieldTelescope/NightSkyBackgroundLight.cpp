@@ -119,4 +119,8 @@ std::string NightSkyBackgroundLight::get_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
+double NightSkyBackgroundLight::draw_wavelength(Random::Generator* prng)const {
+	return nsb_cdf.draw(prng->uniform());
+}
+//------------------------------------------------------------------------------
 }

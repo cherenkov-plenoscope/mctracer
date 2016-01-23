@@ -23,4 +23,9 @@ void Mt19937::set_seed(const unsigned _seed) {
 void Mt19937::init_inverse_maximum() {
 	inv_max = 1.0/double(pRNG_mt19937.max());
 }
+//------------------------------------------------------------------------------
+double Mt19937::normal(const double mean, const double std_dev) {
+	std::normal_distribution<double> dist(mean, std_dev);
+	return dist(pRNG_mt19937);
+}
 }// Random

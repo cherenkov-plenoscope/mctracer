@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
     Frame telescope("telescope", Vector3D::null, Rotation3D::null);
     fab.add_telescope_to_frame(&telescope);
 
-    std::cout << fab.geometry << "\n";
+    std::cout << fab.geometry->get_print() << "\n";
 
     TracerSettings settings;
     settings.global_light_direction = Vector3D(1.0, 1.0, 1.0);

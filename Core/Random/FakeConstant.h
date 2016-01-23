@@ -20,6 +20,7 @@ namespace Random {
 
 		FakeConstant(const double _constant);
 		double uniform();
+		double normal(const double mean, const double std_dev);
 	};
 }
 #endif // __PRNG_FakeConstant_INCLUDED__

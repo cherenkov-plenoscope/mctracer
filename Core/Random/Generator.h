@@ -31,6 +31,7 @@ namespace Random {
 			const double max_dist
 		);
 		double expovariate(const double rate);
+		virtual double normal(const double mean, const double std_dev) = 0;
 	};
 }
 #endif // __PRNG_Generator_H_INCLUDED__

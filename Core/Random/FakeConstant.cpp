@@ -10,4 +10,9 @@ FakeConstant::FakeConstant(const double _constant) {
 double FakeConstant::uniform() {
 	return constant;
 }
+//------------------------------------------------------------------------------
+double FakeConstant::normal(const double mean, const double std_dev) {
+	return constant;
+}
+//------------------------------------------------------------------------------
 }// Random
