@@ -101,7 +101,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 	    sensor_disc.set_outer_color(sensor_disc_col);
 	    sensor_disc.set_inner_color(sensor_disc_col);
 	    sensor_disc.set_radius(cfg.aperture_radius*0.85);
-	    PhotonSensor::Xy sensor(0, &sensor_disc);
+	    PhotonSensor::Sensor sensor(0, &sensor_disc);
 	    std::vector<PhotonSensor::Sensor*> sensor_vec = {&sensor};
 	    PhotonSensors::Sensors sensor_list(sensor_vec);
 

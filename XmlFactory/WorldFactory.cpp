@@ -108,8 +108,8 @@ void WorldFactory::add_to_sensors_if_sensitive(
 
 		assert_attribute_exists(sensi, "id");
 		uint id = uint(StrToDouble(sensi.attribute("id").value())); 
-		PhotonSensor::PerfectSensor* sens = 
-			new PhotonSensor::PerfectSensor(id, frame);
+		PhotonSensor::Sensor* sens = 
+			new PhotonSensor::Sensor(id, frame);
 		sensors->push_back(sens);
 	}
 }

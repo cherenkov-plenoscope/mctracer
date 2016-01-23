@@ -23,7 +23,8 @@ namespace LightFieldTelescope {
 
 		double object_distance_to_focus_on;
 
-		const Function::Func1D* lens_refraction; 
+		const Function::Func1D* lens_refraction;
+		const Function::Func1D* lens_absorbtion; 
 		Config();
 	};
 

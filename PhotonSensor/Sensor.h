@@ -16,23 +16,41 @@
 //=================================
 namespace PhotonSensor {
 
+	struct photon_info {
+		uint id;
+		double wavelength;
+		double arrival_time;
+		double x_intersect;
+		double y_intersect;
+		double theta_x;
+		double theta_y;
+		double production_height_over_sea_level;		
+	};
+
 	class Sensor {
 	protected:
-
 		
 		const Frame* sensor_frame;
 	public:
+		std::vector<photon_info> arrival_table;
+
 		uint id;
-		Sensor(uint _id, Frame* _sensor_frame);
-		uint get_id();
-		virtual ~Sensor();
-		virtual void assign_photon_to_this_sensor(const Photon* photon);
-		virtual void clear_history();
-		virtual std::vector<std::vector<double>> get_arrival_table()const;
-		virtual std::vector<double> get_arrival_times()const;
-		virtual std::string get_arrival_table_header()const;
-		virtual uint get_number_of_photons()const;
+		Sensor(uint _id, const Frame* _sensor_frame);
+		uint get_id()const;
+		void assign_photon_to_this_sensor(const Photon* photon);
+		void clear_history();
 		const Frame* get_frame()const;
+
+		double x_mean()const;
+		double y_mean()const;
+		double x_std_dev()const;
+		double y_std_dev()const;
+		double point_spread_std_dev()const;
+
+		double arrival_time_mean()const;
+
+		std::vector<std::vector<double>> get_arrival_table()const;
+		std::string get_arrival_table_header()const;
 
 	    struct SensorSensorByIdCompare {
 			bool operator()(const Sensor* l, const Sensor* r) {
@@ -57,6 +75,6 @@ namespace PhotonSensor {
 				return f < s->sensor_frame;
 			}
 	    };
-	};	
+	};
 } // PhotonSensor
 #endif // __PHOTONSENSOR_SENSOR_H_INCLUDED__ 

@@ -17,7 +17,7 @@ using namespace std;
 
 class PhotonTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
-TEST_F(PhotonTest, creation_constructor) {
+TEST_F(PhotonTest, creation) {
     
     double wavelength = 433e-9;
     Photon pho(Vector3D::null, Vector3D::unit_z*1.337, wavelength);
@@ -26,7 +26,8 @@ TEST_F(PhotonTest, creation_constructor) {
     EXPECT_EQ(Vector3D::null, pho.Support());
     EXPECT_EQ(1.0, pho.Direction().norm());
     EXPECT_EQ(wavelength, pho.get_wavelength());
-    EXPECT_EQ(1, pho.get_number_of_interactions_so_far() ); //creation is an interaction
+    //creation is an interaction
+    EXPECT_EQ(1, pho.get_number_of_interactions_so_far()); 
 }
 //------------------------------------------------------------------------------
 TEST_F(PhotonTest, reject_negative_wavelength) {
@@ -107,7 +108,8 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
     environment.propagation_options = &setup;
     environment.random_engine = &dice;
 
-    const uint num_of_total_interactions = number_of_bounces + 1; //creation is 1
+    //creation is 1 interaction itself
+    const uint num_of_total_interactions = number_of_bounces + 1; 
 
     for(int i=0; i<1; i++)
     {
@@ -115,8 +117,16 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
 
         P.propagate_in(environment);
         
-        EXPECT_EQ(number_of_bounces*1.0-0.5, P.get_accumulative_distance() );
-        EXPECT_EQ(num_of_total_interactions, P.get_number_of_interactions_so_far() );
+        EXPECT_EQ(
+            number_of_bounces*1.0-0.5, 
+            P.get_accumulative_distance() 
+        );
+
+        EXPECT_EQ(
+            num_of_total_interactions, 
+            P.get_number_of_interactions_so_far()
+        );
+
         P.delete_history();
     }
 }
@@ -185,7 +195,7 @@ TEST_F(PhotonTest, Reflections){
     absorber.set_outer_color(&absorber_color);
     absorber.set_inner_color(&absorber_color);
     absorber.set_x_y_width(1.0, 1.0);
-    PhotonSensor::PerfectSensor absorber_sensor(0, &absorber);
+    PhotonSensor::Sensor absorber_sensor(0, &absorber);
     std::vector<PhotonSensor::Sensor*> sensors_vector = {&absorber_sensor};
     PhotonSensors::Sensors sensors(sensors_vector);
 
@@ -230,9 +240,12 @@ TEST_F(PhotonTest, Reflections){
 
     sensors.assign_photons(&photons);
 
+    double ph_reached_sensor = absorber_sensor.get_arrival_table().size();
+    double ph_emitted = photons.size();
+
     EXPECT_NEAR(
         reflection_coefficient, 
-        double(absorber_sensor.get_arrival_table().size())/double(photons.size()),
+        ph_reached_sensor/ph_emitted,
         2e-2
     );
 
@@ -251,31 +264,19 @@ TEST_F(PhotonTest, Refraction){
             Function::Limits(200e-9, 1200e-9)
     );
 
-    //------------entrance surface---------------
+    //------------ box ---------------
     Color entrance_surface_color(200,64,64);
 
-    Plane entrance_surface(
-        "entrance_surface", 
+    RectangularBox box;
+    box.set_name_pos_rot(
+        "box", 
         Vector3D(0.0, 0.0, 1.0), 
-        Rotation3D(0.0, M_PI, 0.0)
+        Rotation3D(0.0, 0.0, 0.0)
     );
-    entrance_surface.set_outer_color(&entrance_surface_color);
-    entrance_surface.set_inner_color(&entrance_surface_color);
-    entrance_surface.set_inner_refraction(&water_refraction); 
-    entrance_surface.set_x_y_width(1.0, 1.0);
-
-    //------------exit surface---------------
-    Color exit_surface_color(200,64,64);
-
-    Plane exit_surface(
-        "exit_surface", 
-        Vector3D(0.0, 0.0, 2.0),
-        Rotation3D::null
-    );
-    exit_surface.set_outer_color(&exit_surface_color);
-    exit_surface.set_inner_color(&exit_surface_color);
-    exit_surface.set_inner_refraction(&water_refraction); 
-    exit_surface.set_x_y_width(1.0, 1.0);
+    box.set_outer_color(&entrance_surface_color);
+    box.set_inner_color(&entrance_surface_color);
+    box.set_inner_refraction(&water_refraction);
+    box.set_xyz_width(1.0, 1.0, 1.0);
 
     //------------absorber----------------
     Color absorber_color(50,50,50);
@@ -289,13 +290,12 @@ TEST_F(PhotonTest, Refraction){
     absorber.set_inner_color(&absorber_color);
     absorber.set_x_y_width(1.0, 1.0);
     uint sensor_id = 0;
-    PhotonSensor::PerfectSensor absorber_sensor(sensor_id, &absorber);
+    PhotonSensor::Sensor absorber_sensor(sensor_id, &absorber);
     std::vector<PhotonSensor::Sensor*> sensors_vector = {&absorber_sensor};
     PhotonSensors::Sensors sensors(sensors_vector);
 
     //----------declare relationships------------
-    world.set_mother_and_child(&entrance_surface);
-    world.set_mother_and_child(&exit_surface);
+    world.set_mother_and_child(&box);
     world.set_mother_and_child(&absorber);
 
     //---post initialize the world to calculate all bounding spheres---
@@ -332,11 +332,12 @@ TEST_F(PhotonTest, Refraction){
         2e-2
     );
 
-    double travel_time = (2.0 + 1.33*1.0)/PhysicalConstants::speed_of_light_in_vacuum;
+    double travel_time = (2.0 + 1.33*1.0)/
+        PhysicalConstants::speed_of_light_in_vacuum;
 
     EXPECT_NEAR(
         travel_time, 
-        get_mean_along_column(absorber_sensor.get_arrival_table(), 4),
+        absorber_sensor.arrival_time_mean(),
         1e-10
     );
 
@@ -387,7 +388,7 @@ TEST_F(PhotonTest, absorbtion_in_medium){
     collector.set_inner_color(&absorber_color);
     collector.set_x_y_width(1.0, 1.0);
     uint sensor_id = 0;
-    PhotonSensor::PerfectSensor collector_sensor(sensor_id, &collector);
+    PhotonSensor::Sensor collector_sensor(sensor_id, &collector);
     std::vector<PhotonSensor::Sensor*> sensors_vector = {&collector_sensor};
     PhotonSensors::Sensors sensors(sensors_vector);
 

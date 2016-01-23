@@ -21,7 +21,7 @@ protected:
 	Random::Mt19937 dice;
 	PropagationEnvironment lens_test_bench_environment;
 	PhotonSensors::Sensors sensor_list;
-	PhotonSensor::Xy *sensor;
+	PhotonSensor::Sensor *sensor;
 	LensMaker::Config cfg;
 
 	//------------------
@@ -102,7 +102,7 @@ protected:
 		image_sensor->set_inner_color(sensor_color);
 		image_sensor->set_radius(cfg.aperture_radius); 
 
-		sensor = new PhotonSensor::Xy(0, image_sensor);
+		sensor = new PhotonSensor::Sensor(0, image_sensor);
 		std::vector<PhotonSensor::Sensor*> sensors_vector = {sensor};
 		sensor_list.init(sensors_vector);
 

@@ -143,7 +143,7 @@ void LensCalibration::set_up_test_bench() {
 
 	test_bench.init_tree_based_on_mother_child_relations();
 	uint id = 0;
-	read_out = new PhotonSensor::PerfectSensor(id, &image_sensor);
+	read_out = new PhotonSensor::Sensor(id, &image_sensor);
 
 	std::vector<PhotonSensor::Sensor*> read_out_list = {read_out};
 	read_out_l.init(read_out_list);

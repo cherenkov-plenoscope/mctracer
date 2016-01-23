@@ -9,8 +9,6 @@
 //=================================
 // included dependencies
 #include "PhotonSensor/Sensor.h"
-#include "PhotonSensor/PerfectSensor.h"
-#include "PhotonSensor/Xy.h"
 #include "PhotonSensor/PhotonSensors.h"
 //=================================
 #endif // __PHOTONSENSOR_H_INCLUDED__ 

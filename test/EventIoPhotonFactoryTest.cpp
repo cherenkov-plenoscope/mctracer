@@ -36,7 +36,7 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
                     ground.set_inner_color(ground_color);
                     ground.set_radius(1e3);
 
-                    PhotonSensor::PerfectSensor sensor(ground_sensor_id, &ground);
+                    PhotonSensor::Sensor sensor(ground_sensor_id, &ground);
                     std::vector<PhotonSensor::Sensor*> sensor_vec = {&sensor};
                     PhotonSensors::Sensors sensor_list(sensor_vec);
 
@@ -55,16 +55,12 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
 
                     // detect photons in ground sensor
                     sensor_list.clear_history();
-                    //PhotonSensors::reset_all_sesnors(&sensor_list);
                     sensor_list.assign_photons(&photons);
-                    //PhotonSensors::assign_photons_to_sensors(&photons, &sensor_list);
 
-                    std::vector<std::vector<double>> xyt = sensor.get_arrival_table();
+                    ASSERT_EQ(1, sensor.arrival_table.size());
 
-                    ASSERT_EQ(1.0, xyt.size());
-
-                    EXPECT_NEAR(x*1e-2, xyt.at(0).at(0), 1e-6);
-                    EXPECT_NEAR(y*1e-2, xyt.at(0).at(1), 1e-6);            
+                    EXPECT_NEAR(x*1e-2, sensor.arrival_table[0].x_intersect, 1e-6);
+                    EXPECT_NEAR(y*1e-2, sensor.arrival_table[0].y_intersect, 1e-6);         
                 }
             }
         }
@@ -291,7 +287,7 @@ TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         ground.set_inner_color(ground_color);
         ground.set_radius(1e7);
 
-        PhotonSensor::PerfectSensor sensor(ground_sensor_id, &ground);
+        PhotonSensor::Sensor sensor(ground_sensor_id, &ground);
         std::vector<PhotonSensor::Sensor*> sensor_vec = {&sensor};
         PhotonSensors::Sensors sensor_list(sensor_vec);
 
@@ -310,15 +306,12 @@ TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
 
         // detect photons in sensors
         sensor_list.clear_history();
-        //PhotonSensors::reset_all_sesnors(&sensor_list);
         sensor_list.assign_photons(&photons);
-        //PhotonSensors::assign_photons_to_sensors(&photons, &sensor_list);
 
-        std::vector<std::vector<double>> id_time = sensor.get_arrival_table();
-        double mean_arrival_time = get_mean_along_column(id_time,4);
+        double mean_arrival_time = sensor.arrival_time_mean();
 
-        for(uint row=0; row<id_time.size(); row++)
-            id_time.at(row).at(4) = id_time.at(row).at(4) - mean_arrival_time;
+        for(uint row=0; row<sensor.arrival_table.size(); row++)
+            sensor.arrival_table[row].arrival_time -= mean_arrival_time;
 
         double mean_time_of_corsika_photons = std::accumulate(
             relative_arrival_times_in_corsika_file.begin(),
@@ -326,19 +319,19 @@ TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
             0.0
         )/double(relative_arrival_times_in_corsika_file.size());
 
-        for(uint row=0; row<id_time.size(); row++)
-            id_time.at(row).at(4) = id_time.at(row).at(4) + mean_time_of_corsika_photons;
+        for(uint row=0; row<sensor.arrival_table.size(); row++)
+            sensor.arrival_table[row].arrival_time += mean_time_of_corsika_photons;
 
         // for each photon we compare the relative arrival
         // time written in the in the eventio file with the actual arrival time
         // of the mctracer photon which ran down to the ground.  
-        for(uint i=0;i<id_time.size();i++) {
+        for(uint i=0; i<sensor.arrival_table.size(); i++) {
 
-            uint id = id_time.at(i).at(5);
+            uint id = sensor.arrival_table[i].id;
 
             EXPECT_NEAR(
                 relative_arrival_times_in_corsika_file.at(id),
-                id_time.at(i).at(4),
+                sensor.arrival_table[i].arrival_time,
                 1e-11
             );
         }

@@ -192,8 +192,8 @@ Frame* Factory::get_sub_pixel_sensor_plane() {
 
 		sub_pixel_array->set_mother_and_child(subpix);
 
-		PhotonSensor::PerfectSensor* sub_pixel_sensor = 
-			new PhotonSensor::PerfectSensor(i, subpix);
+		PhotonSensor::Sensor* sub_pixel_sensor = 
+			new PhotonSensor::Sensor(i, subpix);
 
 		sub_pixels.push_back(sub_pixel_sensor);
 	}

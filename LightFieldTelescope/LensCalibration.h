@@ -21,7 +21,7 @@ namespace LightFieldTelescope {
 		BiConvexLensHexBound lens;
 		Frame face_plate;
 		Disc image_sensor;
-		PhotonSensor::PerfectSensor* read_out;
+		PhotonSensor::Sensor* read_out;
 		PhotonSensors::Sensors read_out_l;
 
 		TracerSettings settings;

@@ -71,7 +71,7 @@ void Propagation::execute() {
 
 	Random::Mt19937 prng(Random::zero_seed);
 
-	// load photons
+	// open cherenkov photon file
 	EventIo::EventIoFile corsika_run(input_path());
 
 	std::vector<std::vector<double>> photon_counts;
@@ -102,13 +102,15 @@ void Propagation::execute() {
 		// photon count
 		std::vector<double> photon_count(sensors->size());
 		for(uint i=0; i<sensors->size(); i++)
-			photon_count[i] = sensors->by_occurence[i]->get_number_of_photons();
+			photon_count[i] = sensors->by_occurence[i]->arrival_table.size();
 		photon_counts.push_back(photon_count);
 
+		std::stringstream out;
+		out << std::setprecision(9);
 		// arrival times
-		std::vector<std::vector<double>> photon_arrival;
+		/*std::vector<std::vector<double>> photon_arrival;
 		for(uint i=0; i<sensors->size(); i++) {
-			std::vector<double> times = sensors->by_occurence[i]->get_arrival_times();
+			std::vector<double> times = sensors->by_occurence[i]->arrival_table[j].arrival_time;
 			photon_arrival.push_back(times);
 		}
 
@@ -125,7 +127,7 @@ void Propagation::execute() {
 				}
 				out << "\n";
 			}
-		}
+		}*/
 
 		FileTools::write_text_to_file(out.str(), output_path()+"evt_"+std::to_string(event_counter));
 
