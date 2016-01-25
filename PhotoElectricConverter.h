@@ -72,20 +72,18 @@ namespace PhotoElectricConverter {
 
 	class Sampler {
 
-		uint number_of_samples;
+		uint number_of_slices;
 		const SamplerConfig* config;
-
-		//std::normal_distribution<double> *noise_distribution;
 	public:
 
 		Sampler(const SamplerConfig* config);
-		//~Sampler();
 		std::vector<double> time_line(
-			const std::vector<double> *electric_pipeline, 
+			const std::vector<double> *electric_pipeline,
+			const Function::DiscretSampling::LookUpTable* puls_look_up_table,
 			Random::Generator* prng
 		);
 
-		uint get_number_of_samples()const;
+		uint get_number_of_slices()const;
 	};
 
 }// PhotoElectricConverter

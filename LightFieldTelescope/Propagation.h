@@ -28,6 +28,8 @@ namespace LightFieldTelescope {
 		const std::string inputK = "input";
 		const std::string nsbK = "nsb";
 		const std::string pdeK = "pde";
+		const std::string sipm_pulseK = "sipm";
+
 	public:
 
 		Propagation(int argc, char** argv);
@@ -40,6 +42,7 @@ namespace LightFieldTelescope {
 		std::string config_path()const;
 		std::string nsb_vs_wavelength_path()const;
 		std::string pde_vs_wavelength_path()const;
+		std::string sipm_pulse_template_path()const;
 	};
 }// LightFieldTelescope
 #endif // __LightFieldTelescopePropagation_H_INCLUDE__ 

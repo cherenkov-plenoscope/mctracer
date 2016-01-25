@@ -6,7 +6,7 @@ namespace LightFieldTelescope {
 
 	void inject_nsb_into_photon_pipeline(
 		std::vector<std::vector<PipelinePhoton>> *photon_pipelines,
-		const double exposure_time,
+		const double nsb_exposure_time,
 		const std::vector<std::vector<double>> *lft_calib_result,
 		const NightSkyBackgroundLight *telescope_nsb,
 		Random::Generator* prng
@@ -19,23 +19,23 @@ namespace LightFieldTelescope {
 		const double number_subpix = 
 			telescope_nsb->telescope_geometry->total_number_of_sub_pixels();
 
-		//---------------------------
-		// FIND MIN MAX ARRIVAL TIMES
+		//------------------------------------------------
+		// FIND MIN MAX ARRIVAL TIMES OF CHERENKOV PHOTONS
 
 		uint number_cherenkov_photons = 0;
 		std::vector<double> arrival_times;
-		double min_arrival_time = std::numeric_limits<double>::max();
-		double max_arrival_time = std::numeric_limits<double>::min();
+		double min_crk_arrival_time = std::numeric_limits<double>::max();
+		double max_crk_arrival_time = std::numeric_limits<double>::min();
 
 		// for each sub_pixel
 		for(uint i=0; i<photon_pipelines->size(); i++) {
 				
 			if(photon_pipelines->at(i).size() > 0) {
-				if(photon_pipelines->at(i).front().arrival_time < min_arrival_time)
-					min_arrival_time = photon_pipelines->at(i).front().arrival_time;
+				if(photon_pipelines->at(i).front().arrival_time < min_crk_arrival_time)
+					min_crk_arrival_time = photon_pipelines->at(i).front().arrival_time;
 			
-				if(photon_pipelines->at(i).back().arrival_time > max_arrival_time)
-					max_arrival_time = photon_pipelines->at(i).back().arrival_time;
+				if(photon_pipelines->at(i).back().arrival_time > max_crk_arrival_time)
+					max_crk_arrival_time = photon_pipelines->at(i).back().arrival_time;
 
 				number_cherenkov_photons += photon_pipelines->at(i).size();
 			}
@@ -44,8 +44,8 @@ namespace LightFieldTelescope {
 				arrival_times.push_back(ph.arrival_time);
 		}
 
-		//---------------------------
-		// FIND MODE IN ARRIVAL TIMES
+		//--------------------------------------------
+		// FIND MODE OF CHERENKOV PHOTON ARRIVAL TIMES
 
 		double mode_of_cherenkov_arrival_times;
 
@@ -57,8 +57,8 @@ namespace LightFieldTelescope {
 			const uint bin_count = sqrt(number_cherenkov_photons);
 
 			std::vector<double> arrival_time_bin_edges = numeric::linspace(
-				min_arrival_time, 
-				max_arrival_time, 
+				min_crk_arrival_time, 
+				max_crk_arrival_time, 
 				bin_count
 			);
 
@@ -67,12 +67,13 @@ namespace LightFieldTelescope {
 			mode_of_cherenkov_arrival_times = arrival_time_histo.mode();
 		}
 
-		//std::cout << "min: " << min_arrival_time << ", max: " << max_arrival_time  << ", duration: " << max_arrival_time - min_arrival_time << ", mode " << mode_of_cherenkov_arrival_times << "\n";
+		std::cout << "min: " << min_crk_arrival_time << ", max: " << max_crk_arrival_time  << ", duration: " << max_crk_arrival_time - min_crk_arrival_time << ", mode " << mode_of_cherenkov_arrival_times << "\n";
 
 		//--------------------------------
 		// INIT START TIME OF NSB EXPOSURE
 
-		double start_time = mode_of_cherenkov_arrival_times - 0.5*exposure_time;
+		double nsb_exposure_start_time = 
+			mode_of_cherenkov_arrival_times - 0.5*nsb_exposure_time;
 
 		// for each sub_pixel
 		for(uint i=0; i<photon_pipelines->size(); i++) {
@@ -85,11 +86,13 @@ namespace LightFieldTelescope {
 			// arrival times of nsb
 			std::vector<double> nsb_arrival_times;
 			double relative_arrival_times_sum = prng->expovariate(subpix_nsb_rate);
-			while(relative_arrival_times_sum < exposure_time) {
+			while(relative_arrival_times_sum < nsb_exposure_time) {
 
 				double time_until_next_photon = prng->expovariate(subpix_nsb_rate);
 
-				nsb_arrival_times.push_back(start_time + relative_arrival_times_sum);
+				nsb_arrival_times.push_back(
+					nsb_exposure_start_time + relative_arrival_times_sum
+				);
 				relative_arrival_times_sum += time_until_next_photon;
 			};
 
@@ -104,17 +107,17 @@ namespace LightFieldTelescope {
 			sort_photon_pipelines_arrival_time(&photon_pipelines->at(i));
 		}
 
-		// substract global time offset
-		if(number_cherenkov_photons > 0) {
+		//----------------------------------------------------------------------
+		// substract nsb_exposure_start_time 
 
-			// for each sub_pixel
-			for(uint i=0; i<photon_pipelines->size(); i++) {
+		// for each sub_pixel
+		for(uint i=0; i<photon_pipelines->size(); i++) {
 
-				// for each photon
-				for(uint p=0; p<photon_pipelines->at(i).size(); p++) {
+			// for each photon
+			for(uint p=0; p<photon_pipelines->at(i).size(); p++) {
 
-					photon_pipelines->at(i).at(p).arrival_time -= min_arrival_time;
-				}
+				photon_pipelines->at(i).at(p).arrival_time -= 
+					nsb_exposure_start_time;
 			}
 		}
 	}

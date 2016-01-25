@@ -122,33 +122,44 @@ Sampler::Sampler(const SamplerConfig* config) {
 		throw TracerException(info.str());
 	}
 
-	number_of_samples = uint(ceil(
+	number_of_slices = uint(ceil(
 		config->exposure_time*config->sampling_frequency
 	));
-
-	//noise_distribution = 
-	//	new std::normal_distribution<double>(0.0, config->std_dev_noise);
 }
 //------------------------------------------------------------------------------
-/*Sampler::~Sampler() {
-	delete noise_distribution;
-}*/
-//------------------------------------------------------------------------------
 std::vector<double> Sampler::time_line(
-	const std::vector<double> *electric_pipeline, 
+	const std::vector<double> *electric_pipeline,
+	const Function::DiscretSampling::LookUpTable* puls_look_up_table,
 	Random::Generator* prng
 ) {	
 	std::vector<double> time_line;
-	time_line.reserve(number_of_samples);
+	time_line.reserve(number_of_slices);
 
-	for(uint i=0; i<number_of_samples; i++)
+	// add noise
+	for(uint i=0; i<number_of_slices; i++)
 		time_line.push_back(prng->normal(0.0, config->std_dev_noise));
+
+	// add pulses
+	for(uint p=0; p<electric_pipeline->size(); p++) {
+
+		const double start_pos_in_slices = 
+			electric_pipeline->at(p)*config->sampling_frequency;
+
+		const uint start_slice = floor(start_pos_in_slices);
+		
+		const double start_offset_in_slices = fmod(start_pos_in_slices, 1);
+
+		const std::vector<double> *pulse = 
+			puls_look_up_table->at(start_offset_in_slices);
+
+		add_second_to_first_at(&time_line, pulse, start_slice);
+	}
 
 	return time_line;
 }
 //------------------------------------------------------------------------------
-uint Sampler::get_number_of_samples()const {
-	return number_of_samples;
+uint Sampler::get_number_of_slices()const {
+	return number_of_slices;
 }
 //------------------------------------------------------------------------------
 }// PhotoElectricConverter

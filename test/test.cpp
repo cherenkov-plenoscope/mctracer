@@ -38,6 +38,7 @@
 #include "EventIoTest.cpp"
 #include "EventIoPhotonFactoryTest.cpp"
 #include "FunctionTest.cpp"
+#include "FunctionDiscretSamplingTest.cpp"
 #include "LensMakerTest.cpp"
 #include "Geometry/StereoLitographyIo/StereoLitographyIoTest.cpp"
 #include "RandomGeneratorTest.cpp"
@@ -47,6 +48,8 @@
 #include "Histogram1DTest.cpp"
 #include "NightSkyBackgroundLightTest.cpp"
 #include "PreTriggerTest.cpp"
+#include "TimeLineAddition.cpp"
+#include "GridNeighborhoodTopoligyTest.cpp"
 
 #include "Tools/UserInteraction.h"
 int main(int argc, char **argv) {

@@ -28,5 +28,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/XyPlaneRayIntersectionEquation.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ZaxisCylinderRayIntersectionEquation.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/RectangularBox.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/GridNeighborhoodTopoligy.cpp
    	PARENT_SCOPE
 )

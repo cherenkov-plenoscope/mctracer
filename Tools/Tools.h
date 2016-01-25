@@ -33,5 +33,10 @@ namespace numeric {
 double get_solid_angle_for_opening_angle(const double theta);
 double get_mean_along_column(const std::vector<std::vector<double>> &table, const uint column);
 std::string get_print(const std::vector<std::vector<double>> &table);
+void add_second_to_first_at(
+	std::vector<double> *first, 
+	const std::vector<double> *second, 
+	int i
+);
 
 #endif // __TOOLS_H_INCLUDED__
