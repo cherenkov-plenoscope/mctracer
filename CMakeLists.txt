@@ -63,6 +63,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonSensor")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Tools")
 add_subdirectory("${PROJECT_SOURCE_DIR}/XmlFactory")
 add_subdirectory("${PROJECT_SOURCE_DIR}/XmlIO")
+add_subdirectory("${PROJECT_SOURCE_DIR}/Xml")
 
 #MESSAGE( STATUS "SOURCE_VARIABLE:" ${SOURCE} )
 #-------------------------------------------------------------------------------

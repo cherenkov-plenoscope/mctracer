@@ -50,6 +50,7 @@
 #include "PreTriggerTest.cpp"
 #include "TimeLineAddition.cpp"
 #include "GridNeighborhoodTopoligyTest.cpp"
+#include "XmlTest.cpp"
 
 #include "Tools/UserInteraction.h"
 int main(int argc, char **argv) {

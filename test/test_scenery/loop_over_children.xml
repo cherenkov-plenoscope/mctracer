@@ -1,0 +1,11 @@
+<function name="zero">
+	<constant value="0.0" lower_limit="200e-9" upper_limit="1200e-9"/>
+</function>
+
+<function name="leaf_reflection">
+	<constant value="0.5" lower_limit="200e-9" upper_limit="1200e-9"/>
+</function>
+
+<function name="mirror_reflection">
+	<constant value="0.95" lower_limit="200e-9" upper_limit="1200e-9"/>
+</function>
