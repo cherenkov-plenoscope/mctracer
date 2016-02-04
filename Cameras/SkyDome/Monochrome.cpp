@@ -11,7 +11,7 @@ Monochrom::Monochrom() :
 	dome_color(Color::sky_blue){}
 
 Color Monochrom::get_color_for_direction(const Vector3D dir)const {
-	return Color::sky_blue;
+	return dome_color;
 }
 
 std::string Monochrom::get_print()const {
