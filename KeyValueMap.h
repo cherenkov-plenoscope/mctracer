@@ -1,7 +1,7 @@
 //=================================
 // include guard
-#ifndef __PROGRAMOPTIONS_H_INCLUDED__
-#define __PROGRAMOPTIONS_H_INCLUDED__
+#ifndef __KeyValueMap_H_INCLUDED__
+#define __KeyValueMap_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
@@ -58,4 +58,4 @@ namespace KeyValueMap{
 	};
 }
 
-#endif // __PROGRAMOPTIONS_H_INCLUDED__ 
+#endif // __KeyValueMap_H_INCLUDED__ 
