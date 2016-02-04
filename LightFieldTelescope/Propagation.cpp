@@ -131,7 +131,7 @@ void Propagation::execute() {
 
 	//--------------------------------------------------------------------------
 	// EXPOSURE TIME
-	const double exposure_time = 300e-9;
+	const double nsb_exposure_time = 50e-9;
 
 	//--------------------------------------------------------------------------
 	// PRE TRIGGER
@@ -142,7 +142,7 @@ void Propagation::execute() {
 	//--------------------------------------------------------------------------
 	// Electric time line sampler
 	PhotoElectricConverter::SamplerConfig sampler_config;
-	sampler_config.exposure_time = exposure_time;
+	sampler_config.exposure_time = nsb_exposure_time;
 	sampler_config.sampling_frequency = 2e9;
 	sampler_config.std_dev_noise = 0.2;
 
@@ -166,6 +166,8 @@ void Propagation::execute() {
 	//--------------------------------------------------------------------------
 	// open cherenkov photon file
 	EventIo::EventIoFile corsika_run(input_path());
+
+	std::vector<std::vector<double>> number_of_pulses_in_events;
 
 	//--------------------------------------------------------------------------
 	// propagate each event
@@ -191,12 +193,14 @@ void Propagation::execute() {
 		sensors->clear_history();
 		sensors->assign_photons(&photons);
 
+		Photons::delete_photons_and_history(&photons);
+
 		std::vector<std::vector<PipelinePhoton>> photon_pipelines = 
 			get_photon_pipelines(sensors);
 
 		LightFieldTelescope::inject_nsb_into_photon_pipeline(
 			&photon_pipelines,
-			exposure_time,
+			nsb_exposure_time,
 			&light_field_calibration_result,
 			&nsb,
 			&prng
@@ -209,12 +213,19 @@ void Propagation::execute() {
 			electric_pipelines.push_back(
 				sipm_converter.get_pulse_pipeline_for_photon_pipeline( //bug
 					ph_pipe,
-					exposure_time,
+					nsb_exposure_time,
 					&prng
 				)
 			);
 		}
 
+		std::vector<double> number_of_pulses;
+
+		for(std::vector<double> puls_pipeline_of_sub_pixel: electric_pipelines)
+			number_of_pulses.push_back(double(puls_pipeline_of_sub_pixel.size()));
+
+		number_of_pulses_in_events.push_back(number_of_pulses);
+		/*
 		std::vector<uint> might_trigger;
 		std::vector<uint> trigger;
 
@@ -244,18 +255,18 @@ void Propagation::execute() {
 
 		AsciiIo::write_table_to_file(time_lines, output_path()+std::to_string(event_counter));
 		//std::cout << get_print(electric_pipelines);
-
+	
 		std::cout << "mt " << might_trigger.size() << " of " << electric_pipelines.size() <<
 		", " << double(might_trigger.size())/double(electric_pipelines.size())<< ", actual t " << trigger.size()<< "\n";
-
+		*/
         std::cout << "event " << event_counter << ", E ";
         std::cout << event.header.mmcs_event_header.total_energy_in_GeV;
         std::cout << " GeV, photons " << photons.size() << "\n";
 
-		Photons::delete_photons_and_history(&photons);
-
 		event_counter++;
 	}
+
+	AsciiIo::write_table_to_file(number_of_pulses_in_events, output_path());
 }
 //------------------------------------------------------------------------------
 std::string Propagation::output_path()const {
