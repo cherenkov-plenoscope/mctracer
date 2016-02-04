@@ -78,7 +78,7 @@ namespace StringTools {
 			tokens.push_back(item);
 	
 		return tokens;
-	}	
+	}
 	//--------------------------------------------------------------------------
 	std::string strip_whitespaces(std::string text) {
 		while(std::isspace(*text.begin()))
