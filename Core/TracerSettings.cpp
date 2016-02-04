@@ -11,7 +11,7 @@ TracerSettings::TracerSettings()
 	flag_store_only_final_intersection = false;
 	number_of_max_reflections = 5;
 	pseudo_random_number_seed = 0;
-	sky_dome = new SkyDome::Monochrom();
+	sky_dome = new SkyDome::Monochrom(Color::sky_blue);
 
 	preview.cols = 320;
 	preview.rows = 180;
