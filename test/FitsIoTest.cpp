@@ -109,7 +109,7 @@ TEST_F(FitsIoTest, create_header) {
     );
 
 
-    std::string packed_header = Fits::Header::get_header(
+    std::string packed_header = Fits::Header::header_fits_style(
         header.str()
     );
 
