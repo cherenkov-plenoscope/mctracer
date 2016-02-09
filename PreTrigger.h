@@ -26,16 +26,5 @@ namespace PreTrigger {
 		const std::vector<double> *arrival_moments,
 		const Config &config
 	);
-
-	class PT {
-
-		PT(
-			const std::vector<double> *arrival_moments,
-			const Config &config
-		);
-
-		bool might_trigger();
-		uint trigger_index();
-	};
 }
 #endif // __PreSumTrigger_H_INCLUDED__
