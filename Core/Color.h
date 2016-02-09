@@ -38,6 +38,8 @@ public:
 	unsigned char get_blue()const;
 	std::string get_print()const;
 	void reflection_mix(const Color &c,	const double refl);
+    bool operator == (const Color& eq)const;
+    bool operator != (const Color& eq)const;
 private:
 
 	void assert_is_in_valid_8Bit_range(const int channel)const;

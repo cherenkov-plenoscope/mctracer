@@ -82,3 +82,11 @@ void Color::assert_is_in_valid_8Bit_range(const int channel)const {
 		throw TracerException(info.str());	
 	}
 }
+//------------------------------------------------------------------------------
+bool Color::operator == (const Color& eq)const{
+    return c_red == eq.c_red && c_green == eq.c_green && c_blue == eq.c_blue;
+}
+//------------------------------------------------------------------------------
+bool Color::operator != (const Color& eq)const {
+    return c_red != eq.c_red || c_green != eq.c_green || c_blue != eq.c_blue;
+}
