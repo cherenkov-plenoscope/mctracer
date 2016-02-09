@@ -68,15 +68,15 @@ std::string Map::get_print()const {
 }
 //------------------------------------------------------------------------------
 bool Map::get_value_for_key_as_bool(const std::string key)const {
-	return StrToBool(get_value_for_key(key));
+	return StringTools::to_bool(get_value_for_key(key));
 }
 //------------------------------------------------------------------------------
 double Map::get_value_for_key_as_double(const std::string key)const {
-	return StrToDouble(get_value_for_key(key));
+	return StringTools::to_double(get_value_for_key(key));
 }
 //------------------------------------------------------------------------------
 int Map::get_value_for_key_as_int(const std::string key)const {
-	return StrToInt(get_value_for_key(key));
+	return StringTools::to_int(get_value_for_key(key));
 }
 //------------------------------------------------------------------------------
 // IO

@@ -26,7 +26,6 @@ std::string Node::get_name()const {
 
 std::string Node::get_attribute(const std::string att)const {
 	assert_attribute_exists(att);
-	std::cout << att << ", >" << node.attribute(att.c_str()).value() << "<\n";
 	return node.attribute(att.c_str()).value();
 }
 
@@ -60,7 +59,8 @@ void Node::assert_child_exists(const std::string child)const {
 		std::stringstream info;
 		info << __FILE__ << ", " << __LINE__ << "\n\n";
 		info << "In xml file: '" << problem.get_path() << "', ";
-		info << "line " << problem.get_line() << ", " << problem.get_column() << "\n";
+		info << "line " << problem.get_line() << ", ";
+		info << problem.get_column() << "\n";
 		info << "The Xml Node '" << get_name() << "' has no child called ";
 		info << "'" << child << "'.\n\n";
 		info << problem.get_problem_section_from_original_file();
@@ -70,14 +70,15 @@ void Node::assert_child_exists(const std::string child)const {
 
 void Node::assert_attribute_exists(const std::string attribute)const {
 
-	if(has_attribute(attribute)){
+	if(!has_attribute(attribute)){
 
 		Problem problem(file, node.offset_debug(), path);
 
 		std::stringstream info;
 		info << __FILE__ << ", " << __LINE__ << "\n\n";
 		info << "In xml file: '" << problem.get_path() << "', ";
-		info << "line " << problem.get_line() << ", " << problem.get_column() << "\n";
+		info << "line " << problem.get_line() << ", ";
+		info << problem.get_column() << "\n";
 		info << "The Xml Node '" << get_name() << "' has no attribute called ";
 		info << "'" << attribute << "'.\n\n";
 		info << problem.get_problem_section_from_original_file();

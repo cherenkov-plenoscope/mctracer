@@ -22,9 +22,6 @@ double Rad2Deg(double angle_in_Rad);
 bool is_odd(const int n);
 bool is_even(const int n);
 
-double StrToDouble(std::string text_to_parse);
-bool StrToBool(std::string text_to_parse);
-int StrToInt(std::string text_to_parse);
 namespace numeric {
 	double mean(const std::vector<double> &vec);
 	double stddev(const std::vector<double> &vec);

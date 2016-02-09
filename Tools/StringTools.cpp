@@ -1,4 +1,5 @@
 #include "StringTools.h"
+#include <algorithm>
 //------------------------------------------------------------------------------
 namespace StringTools {
 
@@ -102,5 +103,138 @@ namespace StringTools {
 		aligned_text += spaces;
 
 		return aligned_text;
+	}
+	//--------------------------------------------------------------------------
+	double to_double(std::string text_to_parse) {
+
+		if(text_to_parse.compare("") == 0){
+			std::stringstream info;
+			info << __FILE__ << ", " << __LINE__ << "\n";
+			info << "StringTools::to_double: String is empty.";
+			throw CanNotParseDouble(info.str());
+		}
+		
+		char *e;
+		double number_parsed_in = std::strtod(text_to_parse.c_str(), &e);
+
+		if (*e != 0){
+			std::stringstream info;
+			info << __FILE__ << ", " << __LINE__ << "\n";
+			info << "StringTools::to_double: ";
+			info << "Can not parse '" << text_to_parse << "' to double.";
+			throw CanNotParseDouble(info.str());
+		}
+
+		return number_parsed_in;
+	}
+	//--------------------------------------------------------------------------
+	bool to_bool(std::string text_to_parse) {
+
+		if(text_to_parse.compare("") == 0){
+			std::stringstream info;
+			info << __FILE__ << ", " << __LINE__ << "\n";
+			info << "StringTools::to_bool: String is empty.";
+			throw CanNotParseBool(info.str());
+		}
+		
+		std::transform(
+			text_to_parse.begin(), 
+			text_to_parse.end(), 
+			text_to_parse.begin(), 
+			::tolower
+		);
+
+		if(StringTools::is_equal(text_to_parse,"true"))
+			return true;
+		else if(StringTools::is_equal(text_to_parse,"false"))
+			return false;
+		else {
+			std::stringstream info;
+			info << __FILE__ << ", " << __LINE__ << "\n";
+			info << "StringTools::to_bool: Can not parse: ";
+			info << "'" << text_to_parse << " to bool";
+			throw CanNotParseBool(info.str());
+		}
+	}
+	//--------------------------------------------------------------------------
+	int to_int(std::string text_to_parse) {
+
+		if(text_to_parse.compare("") == 0){
+			std::stringstream info;
+			info << __FILE__ << ", " << __LINE__ << "\n";
+			info << "StringTools::to_int: String is empty.";
+			throw CanNotParseInt(info.str());
+		}
+		
+		const int dezimal_base = 10;
+		char *e;
+
+		int number_parsed_in = std::strtol(
+			text_to_parse.c_str(), 
+			&e, dezimal_base
+		);
+
+		if (*e != 0){
+			std::stringstream info;
+			info << __FILE__ << ", " << __LINE__ << "\n";
+			info << "StringTools::to_int: ";
+			info << "Can not parse '" << text_to_parse << "' to int.";
+			throw CanNotParseInt(info.str());
+		}
+
+		return number_parsed_in;
+	}
+	//--------------------------------------------------------------------------
+	Tuple3 to_Tuple3(const std::string original_text) {
+
+		Tuple3 t3;
+
+		std::stringstream info;
+		info << __FILE__ << ", " << __LINE__ << "\n";
+		info << "Expected Tuple3 '[float,float,float]', but actual it is ";
+		info << "'" << original_text << "'.\n";
+
+		
+		std::string text = original_text;
+		std::size_t pos = text.find("[");
+
+		if(pos != std::string::npos)
+			text = text.substr(pos+1);	
+		else
+			throw CanNotParseTuple3(info.str());
+			
+		pos = text.find(",");
+
+		try{
+			if(pos != std::string::npos)
+				t3.x = to_double(strip_whitespaces(text.substr(0,pos)));	
+			else
+				throw CanNotParseTuple3(info.str());
+
+			text = text.substr(pos+1);
+			pos = text.find(",");
+
+			if(pos != std::string::npos)
+				t3.y = to_double(strip_whitespaces(text.substr(0,pos)));
+			else
+				throw CanNotParseTuple3(info.str());
+			
+			text = text.substr(pos+1);
+			pos = text.find("]");
+
+			if(pos != std::string::npos)
+				t3.z = to_double(strip_whitespaces(text.substr(0,pos)));
+			else
+				throw CanNotParseTuple3(info.str());
+		}catch(std::exception &error) {
+
+	        info << "\n" << error.what() << "\n";
+            throw CanNotParseTuple3(info.str());		
+		}catch(...) {
+
+            throw CanNotParseTuple3(info.str());           
+        }
+
+		return t3; 
 	}
 }

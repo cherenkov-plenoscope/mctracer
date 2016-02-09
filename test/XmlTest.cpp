@@ -13,9 +13,48 @@ TEST_F(XmlTest, path_name) {
 	const std::string path = "test_scenery/loop_over_children.xml";
 
 	Xml::Document doc(path);
-
 	Xml::Node tree = doc.get_tree();
 
-	for(Xml::Node child = tree.get_first_child(); child; child = child.get_next_child())
-		std::cout << attribute_as_double(child, "name") << "\n";
+	for(
+		Xml::Node child = tree.get_first_child(); 
+		child; 
+		child = child.get_next_child()
+	)
+		std::cout << child.get_name() << "\n";
+}
+//------------------------------------------------------------------------------
+TEST_F(XmlTest, minimal_node) {
+	
+	const std::string path = "xml/minimal_node_name_attribute.xml";	
+
+	Xml::Document doc(path);
+	Xml::Node tree = doc.get_tree();
+
+	Xml::Node function = tree.get_child("function");
+
+	EXPECT_EQ("function", function.get_name());
+	EXPECT_EQ("zero", function.get_attribute("name"));
+}
+//------------------------------------------------------------------------------
+TEST_F(XmlTest, valid_attributes) {
+	
+	const std::string path = "xml/valid_attributes.xml";	
+
+	Xml::Document doc(path);
+	Xml::Node tree = doc.get_tree();
+
+	Xml::Node simon = tree.get_child("simon");
+
+	// <simon 
+	// 	name="zero" 
+	// 	number="1.337e42" 
+	// 	color="[128,255,128]" 
+	// 	pos="[0.0, 1.0, 2.0]" 
+	// 	rot="[0.1, 2.3, 4.5]"
+	// />
+	EXPECT_EQ("simon", simon.get_name());
+	EXPECT_EQ(1.337e42, Xml::attribute_to_double(simon, "number"));
+	EXPECT_EQ(Vector3D(0.0, 1.0, 2.0), Xml::attribute_to_Vector3D(simon, "pos"));
+	EXPECT_EQ(Rotation3D(0.1, 2.3, 4.5), Xml::attribute_to_Rotation3D(simon, "rot"));
+	EXPECT_EQ(Color(128,255,128), Xml::attribute_to_Color(simon, "color"));
 }

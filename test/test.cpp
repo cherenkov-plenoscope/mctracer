@@ -9,6 +9,7 @@
 #include "WorldFactoryTest.cpp"
 #include "FrameTest.cpp"
 #include "ToolTest.cpp"
+#include "StringToolsTest.cpp"
 #include "SphereTest.cpp"
 #include "DiscTest.cpp"
 #include "SphereIntersectionTest.cpp"

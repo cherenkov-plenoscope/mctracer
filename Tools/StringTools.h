@@ -14,6 +14,7 @@
 #include <sstream>
 #include <vector>
 #include "TracerException.h"
+#include "Tuple3.h"
 
 namespace StringTools {
 	bool is_equal(const std::string text_A,const std::string text_B);
@@ -46,6 +47,30 @@ namespace StringTools {
 	std::string fill_up_text_with_whitespaces_until_column(
 		const std::string &text, const uint column
 	);
+
+	class CanNotParseDouble : public TracerException {
+    	using TracerException::TracerException;
+	};
+
+	double to_double(std::string text_to_parse );
+
+	class CanNotParseBool : public TracerException {
+    	using TracerException::TracerException;
+	};
+
+	bool to_bool(std::string text_to_parse );
+
+	class CanNotParseInt : public TracerException {
+    	using TracerException::TracerException;
+	};
+
+	int to_int(std::string text_to_parse );
+
+	class CanNotParseTuple3 : public TracerException {
+	    using TracerException::TracerException;
+	};
+
+	Tuple3 to_Tuple3(const std::string original_text);
 }
 
 #endif // __STRINGTOOLS_H_INCLUDE__
