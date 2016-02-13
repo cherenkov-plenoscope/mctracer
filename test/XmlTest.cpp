@@ -64,3 +64,38 @@ TEST_F(XmlTest, valid_attributes) {
 	EXPECT_EQ(Rotation3D(0.1, 2.3, 4.5), Xml::attribute_to_Rotation3D(simon, "rot"));
 	EXPECT_EQ(Color(128,255,128), Xml::attribute_to_Color(simon, "color"));
 }
+//------------------------------------------------------------------------------
+TEST_F(XmlTest, invalid_attribute_double) {
+	
+	const std::string path = "xml/invalid_attribute_double.xml";	
+	Xml::Document doc(path);
+	Xml::Node tree = doc.get_tree();
+	Xml::Node simon = tree.get_child("simon");
+	EXPECT_THROW(
+		Xml::attribute_to_double(simon, "number"), 
+		Xml::AttributeIsNoDouble
+	);
+}
+//------------------------------------------------------------------------------
+TEST_F(XmlTest, invalid_attribute_Tuple3) {
+	
+	const std::string path = "xml/invalid_attribute_Tuple3.xml";	
+	Xml::Document doc(path);
+	Xml::Node tree = doc.get_tree();
+	Xml::Node my_node = tree.get_child("MyNode");
+	
+	EXPECT_THROW(
+		Xml::attribute_to_Vector3D(my_node, "myTuple3"), 
+		Xml::AttributeIsNoVector3D
+	);
+
+	EXPECT_THROW(
+		Xml::attribute_to_Rotation3D(my_node, "myTuple3"), 
+		Xml::AttributeIsNoRotation3D
+	);
+
+	EXPECT_THROW(
+		Xml::attribute_to_Color(my_node, "myTuple3"), 
+		Xml::AttributeIsNoColor
+	);
+}

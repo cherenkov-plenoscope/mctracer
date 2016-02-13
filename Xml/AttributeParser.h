@@ -87,7 +87,7 @@ namespace Xml {
 
     Vector3D attribute_to_Vector3D(Node node, std::string attribute_name) {
 
-         try{
+        try{
 
             Tuple3 t3 = attribute_to_Tuple3(node, attribute_name);
             return Vector3D(t3.x, t3.y, t3.z);
@@ -96,7 +96,7 @@ namespace Xml {
             std::stringstream info;
             info << "Can not parse to Vector3D.\n";
             info << "\n\n" << error.what() << "\n";
-            throw AttributeIsNoTuple3(info.str());
+            throw AttributeIsNoVector3D(info.str());
         }
     }
     //--------------------------------------------------------------------------
@@ -106,7 +106,7 @@ namespace Xml {
 
     Rotation3D attribute_to_Rotation3D(Node node, std::string attribute_name) {
 
-         try{
+        try{
 
             Tuple3 t3 = attribute_to_Tuple3(node, attribute_name);
             return Rotation3D(t3.x, t3.y, t3.z);
@@ -125,7 +125,7 @@ namespace Xml {
 
     Color attribute_to_Color(Node node, std::string attribute_name) {
 
-         try{
+        try{
 
             Tuple3 t3 = attribute_to_Tuple3(node, attribute_name);
             return Color(t3.x, t3.y, t3.z);
