@@ -109,7 +109,8 @@
     \fi}
 \makeatother
 %------------------------------------------------------------------------------
-\newcommand{\thetitle}{mctracer\\flexible Cherenkov Astronomy Simulation}
+\newcommand{\tool}{mctracer}
+\newcommand{\thetitle}{\tool\\photon propagation\\ in complex geometries}
 %
 \thispagestyle{empty}
 \begin{center}
@@ -146,11 +147,36 @@ ETH Zurich\\2015-2017
 \setcounter{page}{0}
 \pagenumbering{arabic}
 %
-\chapter{abstract}
+\chapter{Abstract}
 %
-In $\gamma$ ray and cosmic ray astronomy it needs dedicated simulations of detectors to develope and run the instruments which observe particle interactions far beyond any energy accessable in the lab.
+The \tool{} is a simulation for geometrical optics. 
 %
-The Monte Carlo Tracer exists since we do what we must, because we can.
+It can propagate photons in a complex 3D environment.
+%
+The \tool{} simulates reflection, refraction and absorbtion.
+%
+It does not cover diffraction.
+%
+For the investigation of optical devices or phenomena, \tool{} records the full photon's trajectory starting with the production, through all the photon's interactions until its final absorbtion.
+%
+A small set of primitiv surfaces is provided in \tool{} to form simple optical devices, such as lenses, imaging mirrors, light concentrators and aperture stops.
+%
+Further, complex objects can be simulated using triangular meshes.
+%
+To produce photons, \tool{} comes with a set of light sources to illuminate your scenery.
+%
+For more complex light sources, photons can be read from external files.
+%
+\tool{} can handle very complex geometry while beeing fast and accurate on a scientific level.
+%
+You can feed your geometry into \tool{} using common CAD files for triangular meshes and a custom \tool{} file which describes the primitives provided by \tool{} itself.
+%
+When the provided tools do not cover your demand you have the chance to implement the features yourself.   
+%
+The \tool{} was originally created for simulations in Astro Particle Physics.
+%
+Imaging Atmospheric Cherenkov Telescopes like FACT and the CTA MST made use of \tool{} to investigate and improve their performance.
+%
 %\linenumbers
 %-------------------------------------------------------------------------------
 \chapter{The scenery tree}
