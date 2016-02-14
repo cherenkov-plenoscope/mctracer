@@ -6,37 +6,37 @@ VisualConfig get_VisualConfig_from_node(Xml::Node node) {
 
 	VisualConfig vc;
 
-	Xml::Node preview = node.get_child("preview");
-	vc.preview.cols = Xml::attribute_to_int(preview, "cols");
-	vc.preview.rows = Xml::attribute_to_int(preview, "rows");
-	vc.preview.scale = Xml::attribute_to_int(preview, "scale");
+	Xml::Node preview = node.child("preview");
+	vc.preview.cols = Xml::att2int(preview, "cols");
+	vc.preview.rows = Xml::att2int(preview, "rows");
+	vc.preview.scale = Xml::att2int(preview, "scale");
 
-	Xml::Node snapshot = node.get_child("snapshot");
-	vc.snapshot.cols = Xml::attribute_to_int(snapshot, "cols");
-	vc.snapshot.rows = Xml::attribute_to_int(snapshot, "rows");
-	vc.snapshot.rays_per_pixel = Xml::attribute_to_int(snapshot, "rays_per_pixel");
-	vc.snapshot.focal_length_over_aperture_diameter = Xml::attribute_to_double(snapshot, "focal_length_over_aperture_diameter");
-	vc.snapshot.image_sensor_size_along_a_row = Xml::attribute_to_double(snapshot, "image_sensor_size_along_a_row");
+	Xml::Node snapshot = node.child("snapshot");
+	vc.snapshot.cols = Xml::att2int(snapshot, "cols");
+	vc.snapshot.rows = Xml::att2int(snapshot, "rows");
+	vc.snapshot.rays_per_pixel = Xml::att2int(snapshot, "rays_per_pixel");
+	vc.snapshot.focal_length_over_aperture_diameter = Xml::att2double(snapshot, "focal_length_over_aperture_diameter");
+	vc.snapshot.image_sensor_size_along_a_row = Xml::att2double(snapshot, "image_sensor_size_along_a_row");
 
-	Xml::Node global_illumination = node.get_child("global_illumination");
-	vc.global_illumination.on = Xml::attribute_to_bool(global_illumination, "on");
-	vc.global_illumination.incoming_direction = Xml::attribute_to_Vector3D(global_illumination, "incoming_direction");
+	Xml::Node global_illumination = node.child("global_illumination");
+	vc.global_illumination.on = Xml::att2bool(global_illumination, "on");
+	vc.global_illumination.incoming_direction = Xml::att2Vector3D(global_illumination, "incoming_direction");
 
-	Xml::Node photon_trajectories = node.get_child("photon_trajectories");
-	vc.photon_trajectories.radius = Xml::attribute_to_double(photon_trajectories, "radius");
+	Xml::Node photon_trajectories = node.child("photon_trajectories");
+	vc.photon_trajectories.radius = Xml::att2double(photon_trajectories, "radius");
 
-	Xml::Node sky_dome_node = node.get_child("sky_dome");
-	std::string image_path = sky_dome_node.get_attribute("image_path");
+	Xml::Node sky_dome_node = node.child("sky_dome");
+	std::string image_path = sky_dome_node.attribute("image_path");
 	
 
 	if(image_path.empty()) {
 
-		vc.sky_dome = SkyDome(Xml::attribute_to_Color(sky_dome_node, "color"));
+		vc.sky_dome = SkyDome(Xml::att2Color(sky_dome_node, "color"));
 	}else{
 
 		vc.sky_dome = SkyDome(image_path);
 		vc.sky_dome.set_background_color(
-			Xml::attribute_to_Color(sky_dome_node, "color")
+			Xml::att2Color(sky_dome_node, "color")
 		);
 	}
 

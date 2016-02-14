@@ -20,25 +20,25 @@ Node::Node(
 
 }
 
-std::string Node::get_name()const {
+std::string Node::name()const {
 	return node.name();
 }
 
-std::string Node::get_attribute(const std::string att)const {
+std::string Node::attribute(const std::string att)const {
 	assert_attribute_exists(att);
 	return node.attribute(att.c_str()).value();
 }
 
-Node Node::get_child(const std::string child)const {
+Node Node::child(const std::string child)const {
 	assert_child_exists(child);
 	return Node(node.child(child.c_str()), file, path);
 }
 
-Node Node::get_first_child()const {
+Node Node::first_child()const {
 	return Node(node.first_child(), file, path);
 }
 
-Node Node::get_next_child() {
+Node Node::next_child() {
 	return Node(node.next_sibling(), file, path);
 }
 
@@ -61,7 +61,7 @@ void Node::assert_child_exists(const std::string child)const {
 		info << "In xml file: '" << problem.get_path() << "', ";
 		info << "line " << problem.get_line() << ", ";
 		info << problem.get_column() << "\n";
-		info << "The Xml Node '" << get_name() << "' has no child called ";
+		info << "The Xml Node '" << name() << "' has no child called ";
 		info << "'" << child << "'.\n\n";
 		info << problem.get_problem_section_from_original_file();
 		throw NoSuchChild(info.str());
@@ -79,14 +79,14 @@ void Node::assert_attribute_exists(const std::string attribute)const {
 		info << "In xml file: '" << problem.get_path() << "', ";
 		info << "line " << problem.get_line() << ", ";
 		info << problem.get_column() << "\n";
-		info << "The Xml Node '" << get_name() << "' has no attribute called ";
+		info << "The Xml Node '" << name() << "' has no attribute called ";
 		info << "'" << attribute << "'.\n\n";
 		info << problem.get_problem_section_from_original_file();
 		throw NoSuchAttribute(info.str());
 	}	
 }
 
-std::string Node::get_xml_path()const {
+std::string Node::xml_path()const {
 	return path;
 }
 //------------------------------------------------------------------------------

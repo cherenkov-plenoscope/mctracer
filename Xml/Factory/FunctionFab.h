@@ -20,8 +20,8 @@ class FunctionFab {
 	std::map<std::string, const Function::Func1D*> functions;
 public:
 
-	void add_function_from(const Xml::Node &node);
-	const Function::Func1D* get_function_by_name(const std::string name)const;
+	void add(const Xml::Node &node);
+	const Function::Func1D* by_name(const std::string name)const;
 private:
 	bool is_function_node(const Xml::Node &node)const;
 	std::string extract_name(const Xml::Node &node);

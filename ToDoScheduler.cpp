@@ -93,7 +93,7 @@ void ToDoScheduler::render_geometry()const {
 	if(!config_path().empty()) {
 		Xml::Document doc(config_path());
 		Xml::Node node = doc.get_tree();
-		Xml::Node vc_node = node.get_child("visual");
+		Xml::Node vc_node = node.child("visual");
 		settings.visual = Xml::Configs::get_VisualConfig_from_node(vc_node);
 	}
 
@@ -253,7 +253,7 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 	if(!config_path().empty()) {
 		Xml::Document doc(config_path());
 		Xml::Node node = doc.get_tree();
-		Xml::Node vc_node = node.get_child("visual");
+		Xml::Node vc_node = node.child("visual");
 		settings.visual = Xml::Configs::get_VisualConfig_from_node(vc_node);
 	}
 	

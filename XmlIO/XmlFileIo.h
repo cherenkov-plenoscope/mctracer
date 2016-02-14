@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "XmlIO/pugixml.hpp"
+#include "Xml/pugi/pugixml.hpp"
 #include "TracerException.h"
 #include "Tools/Tools.h"
 //------------------------------------------------------------------------------

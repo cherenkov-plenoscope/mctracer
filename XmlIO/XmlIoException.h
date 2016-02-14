@@ -13,7 +13,7 @@
 #include <sstream>
 #include <vector>
 #include "TracerException.h"
-#include "XmlIO/pugixml.hpp"
+#include "Xml/pugi/pugixml.hpp"
 #include "XmlFileIo.h"
 //------------------------------------------------------------------------------
 class XmlIoException :public TracerException{

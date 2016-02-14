@@ -24,9 +24,9 @@ std::string to_string(const bool b) {
     return (b? "true" : "false");
 }
 //------------------------------------------------------------------------------
-int attribute_to_int(Node node, std::string attribute_name) {
+int att2int(Node node, std::string attribute_name) {
 
-    std::string attribute = node.get_attribute(attribute_name);
+    std::string attribute = node.attribute(attribute_name);
     int number;
     
     try{
@@ -41,7 +41,7 @@ int attribute_to_int(Node node, std::string attribute_name) {
         info << "In Xml file: '" << problem.get_path() << ", ";
         info << "line " << problem.get_line() << ", ";
         info << "column " << problem.get_column() << "\n";
-        info << "In node '" << node.get_name() << "' ";
+        info << "In node '" << node.name() << "' ";
         info << "can not parse attribute '" << attribute_name << "' ";
         info << "to int.\n\n";
         info << problem.get_problem_section_from_original_file() << "\n\n";
@@ -52,9 +52,9 @@ int attribute_to_int(Node node, std::string attribute_name) {
     return number;
 }
 //------------------------------------------------------------------------------
-double attribute_to_double(Node node, std::string attribute_name) {
+double att2double(Node node, std::string attribute_name) {
 
-    std::string attribute = node.get_attribute(attribute_name);
+    std::string attribute = node.attribute(attribute_name);
     double number;
     
     try{
@@ -69,7 +69,7 @@ double attribute_to_double(Node node, std::string attribute_name) {
         info << "In Xml file: '" << problem.get_path() << ", ";
         info << "line " << problem.get_line() << ", ";
         info << "column " << problem.get_column() << "\n";
-        info << "In node '" << node.get_name() << "' ";
+        info << "In node '" << node.name() << "' ";
         info << "can not parse attribute '" << attribute_name << "' ";
         info << "to double.\n\n";
         info << problem.get_problem_section_from_original_file() << "\n\n";
@@ -80,9 +80,9 @@ double attribute_to_double(Node node, std::string attribute_name) {
     return number;
 }
 //------------------------------------------------------------------------------
-double attribute_to_bool(Node node, std::string attribute_name) {
+double att2bool(Node node, std::string attribute_name) {
 
-    std::string attribute = node.get_attribute(attribute_name);
+    std::string attribute = node.attribute(attribute_name);
     bool boolean;
     
     try{
@@ -97,7 +97,7 @@ double attribute_to_bool(Node node, std::string attribute_name) {
         info << "In Xml file: '" << problem.get_path() << ", ";
         info << "line " << problem.get_line() << ", ";
         info << "column " << problem.get_column() << "\n";
-        info << "In node '" << node.get_name() << "' ";
+        info << "In node '" << node.name() << "' ";
         info << "can not parse attribute '" << attribute_name << "' ";
         info << "to bool.\n\n";
         info << problem.get_problem_section_from_original_file() << "\n\n";
@@ -108,9 +108,9 @@ double attribute_to_bool(Node node, std::string attribute_name) {
     return boolean;
 }
 //------------------------------------------------------------------------------
-Tuple3 attribute_to_Tuple3(Node node, std::string attribute_name) {
+Tuple3 att2Tuple3(Node node, std::string attribute_name) {
 
-    std::string attribute = node.get_attribute(attribute_name);
+    std::string attribute = node.attribute(attribute_name);
     Tuple3 t3;
     
     try{
@@ -125,7 +125,7 @@ Tuple3 attribute_to_Tuple3(Node node, std::string attribute_name) {
         info << "In Xml file: '" << problem.get_path() << ", ";
         info << "line " << problem.get_line() << ", ";
         info << "column " << problem.get_column() << "\n";
-        info << "In node '" << node.get_name() << "' ";
+        info << "In node '" << node.name() << "' ";
         info << "can not parse attribute '" << attribute_name << "' ";
         info << "to Tuple3.\n\n";
         info << problem.get_problem_section_from_original_file() << "\n\n";
@@ -136,11 +136,11 @@ Tuple3 attribute_to_Tuple3(Node node, std::string attribute_name) {
     return t3;
 }
 //------------------------------------------------------------------------------
-Vector3D attribute_to_Vector3D(Node node, std::string attribute_name) {
+Vector3D att2Vector3D(Node node, std::string attribute_name) {
 
     try{
 
-        Tuple3 t3 = attribute_to_Tuple3(node, attribute_name);
+        Tuple3 t3 = att2Tuple3(node, attribute_name);
         return Vector3D(t3.x, t3.y, t3.z);
     }catch(std::exception &error) {
 
@@ -151,11 +151,11 @@ Vector3D attribute_to_Vector3D(Node node, std::string attribute_name) {
     }
 }
 //------------------------------------------------------------------------------
-Rotation3D attribute_to_Rotation3D(Node node, std::string attribute_name) {
+Rotation3D att2Rotation3D(Node node, std::string attribute_name) {
 
     try{
 
-        Tuple3 t3 = attribute_to_Tuple3(node, attribute_name);
+        Tuple3 t3 = att2Tuple3(node, attribute_name);
         return Rotation3D(t3.x, t3.y, t3.z);
     }catch(std::exception &error) {
 
@@ -166,11 +166,11 @@ Rotation3D attribute_to_Rotation3D(Node node, std::string attribute_name) {
     }
 }
 //------------------------------------------------------------------------------
-Color attribute_to_Color(Node node, std::string attribute_name) {
+Color att2Color(Node node, std::string attribute_name) {
 
     try{
 
-        Tuple3 t3 = attribute_to_Tuple3(node, attribute_name);
+        Tuple3 t3 = att2Tuple3(node, attribute_name);
         return Color(t3.x, t3.y, t3.z);
     }catch(std::exception &error) {
 

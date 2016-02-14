@@ -20,13 +20,8 @@ TEST_F(XmlTest, loop_over_children) {
 	};
 
 	int i=0;
-	for(
-		Xml::Node child = tree.get_first_child(); 
-		child; 
-		child = child.get_next_child()
-	){
-		EXPECT_EQ(children_names.at(i++), child.get_name());
-	}
+	for(Xml::Node child=tree.first_child(); child; child=child.next_child())
+		EXPECT_EQ(children_names.at(i++), child.name());
 }
 //------------------------------------------------------------------------------
 TEST_F(XmlTest, minimal_node) {
@@ -36,10 +31,10 @@ TEST_F(XmlTest, minimal_node) {
 	Xml::Document doc(path);
 	Xml::Node tree = doc.get_tree();
 
-	Xml::Node function = tree.get_child("function");
+	Xml::Node function = tree.child("function");
 
-	EXPECT_EQ("function", function.get_name());
-	EXPECT_EQ("zero", function.get_attribute("name"));
+	EXPECT_EQ("function", function.name());
+	EXPECT_EQ("zero", function.attribute("name"));
 }
 //------------------------------------------------------------------------------
 TEST_F(XmlTest, valid_attributes) {
@@ -49,7 +44,7 @@ TEST_F(XmlTest, valid_attributes) {
 	Xml::Document doc(path);
 	Xml::Node tree = doc.get_tree();
 
-	Xml::Node simon = tree.get_child("simon");
+	Xml::Node simon = tree.child("simon");
 
 	// <simon 
 	// 	name="zero" 
@@ -58,11 +53,11 @@ TEST_F(XmlTest, valid_attributes) {
 	// 	pos="[0.0, 1.0, 2.0]" 
 	// 	rot="[0.1, 2.3, 4.5]"
 	// />
-	EXPECT_EQ("simon", simon.get_name());
-	EXPECT_EQ(1.337e42, Xml::attribute_to_double(simon, "number"));
-	EXPECT_EQ(Vector3D(0.0, 1.0, 2.0), Xml::attribute_to_Vector3D(simon, "pos"));
-	EXPECT_EQ(Rotation3D(0.1, 2.3, 4.5), Xml::attribute_to_Rotation3D(simon, "rot"));
-	EXPECT_EQ(Color(128,255,128), Xml::attribute_to_Color(simon, "color"));
+	EXPECT_EQ("simon", simon.name());
+	EXPECT_EQ(1.337e42, Xml::att2double(simon, "number"));
+	EXPECT_EQ(Vector3D(0.0, 1.0, 2.0), Xml::att2Vector3D(simon, "pos"));
+	EXPECT_EQ(Rotation3D(0.1, 2.3, 4.5), Xml::att2Rotation3D(simon, "rot"));
+	EXPECT_EQ(Color(128,255,128), Xml::att2Color(simon, "color"));
 }
 //------------------------------------------------------------------------------
 TEST_F(XmlTest, invalid_attribute_double) {
@@ -70,10 +65,9 @@ TEST_F(XmlTest, invalid_attribute_double) {
 	const std::string path = "xml/invalid_attribute_double.xml";	
 	Xml::Document doc(path);
 	Xml::Node tree = doc.get_tree();
-	Xml::Node simon = tree.get_child("simon");
+	Xml::Node simon = tree.child("simon");
 	EXPECT_THROW(
-		Xml::attribute_to_double(simon, "number"), 
-		Xml::AttributeIsNoDouble
+		Xml::att2double(simon, "number"), Xml::AttributeIsNoDouble
 	);
 }
 //------------------------------------------------------------------------------
@@ -82,22 +76,17 @@ TEST_F(XmlTest, invalid_attribute_Tuple3) {
 	const std::string path = "xml/invalid_attribute_Tuple3.xml";	
 	Xml::Document doc(path);
 	Xml::Node tree = doc.get_tree();
-	Xml::Node my_node = tree.get_child("MyNode");
+	Xml::Node my_node = tree.child("MyNode");
 	
 	EXPECT_THROW(
-		Xml::attribute_to_Vector3D(my_node, "myTuple3"), 
-		Xml::AttributeIsNoVector3D
+		Xml::att2Vector3D(my_node, "myTuple3"), Xml::AttributeIsNoVector3D
 	);
 
 	EXPECT_THROW(
-		Xml::attribute_to_Rotation3D(my_node, "myTuple3"), 
-		Xml::AttributeIsNoRotation3D
+		Xml::att2Rotation3D(my_node, "myTuple3"), Xml::AttributeIsNoRotation3D
 	);
 
-	EXPECT_THROW(
-		Xml::attribute_to_Color(my_node, "myTuple3"), 
-		Xml::AttributeIsNoColor
-	);
+	EXPECT_THROW(Xml::att2Color(my_node, "myTuple3"), Xml::AttributeIsNoColor);
 }
 //------------------------------------------------------------------------------
 #include "Xml/Factory/VisualConfigFab.h"
@@ -125,7 +114,7 @@ TEST_F(XmlTest, visual_config) {
 
 	Xml::Document doc(path);
 	Xml::Node node = doc.get_tree();
-	Xml::Node vc_node = node.get_child("visual");
+	Xml::Node vc_node = node.child("visual");
 	VisualConfig in = Xml::Configs::get_VisualConfig_from_node(vc_node);
 
 	EXPECT_EQ(out.preview.cols, in.preview.cols);
@@ -158,27 +147,27 @@ TEST_F(XmlTest, functions) {
 	Xml::Document doc(path);
 	Xml::Node tree = doc.get_tree();
 	
-	Xml::Node child = tree.get_first_child(); 
+	Xml::Node child = tree.first_child(); 
 	ASSERT_TRUE(child);
-	EXPECT_EQ("function", child.get_name());
-	fab.add_function_from(child);
+	EXPECT_EQ("function", child.name());
+	fab.add(child);
 
-	child = child.get_next_child();
+	child = child.next_child();
 	ASSERT_TRUE(child);
-	EXPECT_EQ("function", child.get_name());
-	fab.add_function_from(child);
+	EXPECT_EQ("function", child.name());
+	fab.add(child);
 
-	child = child.get_next_child();
+	child = child.next_child();
 	ASSERT_TRUE(child);
-	EXPECT_EQ("function", child.get_name());
-	fab.add_function_from(child);
+	EXPECT_EQ("function", child.name());
+	fab.add(child);
 
-	child = child.get_next_child();
+	child = child.next_child();
 	ASSERT_TRUE(child);
-	EXPECT_EQ("function", child.get_name());
-	fab.add_function_from(child);
+	EXPECT_EQ("function", child.name());
+	fab.add(child);
 
-	child = child.get_next_child();
+	child = child.next_child();
 	EXPECT_FALSE(child);
 
 	/*
@@ -208,23 +197,23 @@ TEST_F(XmlTest, functions) {
 	*/
 
 	const Function::Func1D* func;
-	func = fab.get_function_by_name("my_funny_function");
+	func = fab.by_name("my_funny_function");
 	EXPECT_EQ(100e-9, func->get_limits().get_lower());
 	EXPECT_EQ(200e-9, func->get_limits().get_upper());
 	EXPECT_NEAR(0.9, (*func)(160e-9), 1e-6);
 
-	func = fab.get_function_by_name("constant_function");
+	func = fab.by_name("constant_function");
 	EXPECT_EQ(200e-9, func->get_limits().get_lower());
 	EXPECT_EQ(400e-9, func->get_limits().get_upper());
 	EXPECT_NEAR(1.337, (*func)(300e-9), 1e-6);
 
-	func = fab.get_function_by_name("polynom_function");
+	func = fab.by_name("polynom_function");
 	EXPECT_EQ(400e-9, func->get_limits().get_lower());
 	EXPECT_EQ(1200e-9, func->get_limits().get_upper());
 	double x = 600e-9;
 	EXPECT_NEAR(1.0*x*x*x + 0.0*x*x + 1.2*x - 1.7, (*func)(x), 1e-6);
 
-	func = fab.get_function_by_name("concat_function");
+	func = fab.by_name("concat_function");
 	EXPECT_EQ(100e-9, func->get_limits().get_lower());
 	EXPECT_EQ(1200e-9, func->get_limits().get_upper());
 }

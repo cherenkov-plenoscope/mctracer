@@ -1,7 +1,5 @@
 set(SOURCE
    	${SOURCE}
-	${CMAKE_CURRENT_SOURCE_DIR}/pugixml.hpp
-	${CMAKE_CURRENT_SOURCE_DIR}/pugixml.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/XmlIoException.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/XmlFileIo.cpp
    	PARENT_SCOPE

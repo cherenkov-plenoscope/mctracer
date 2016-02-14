@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "XmlIO/pugixml.hpp"
+#include "pugi/pugixml.hpp"
 #include <string>
 #include <memory>
 
@@ -29,18 +29,18 @@ namespace Xml {
 			const std::shared_ptr<std::string> _file,
 			const std::string _path
 		);
-		std::string get_name()const;
-		std::string get_attribute(const std::string attribute)const;
-		Node get_child(const std::string child)const;
-		Node get_first_child()const;
-		Node get_next_child();
+		std::string name()const;
+		std::string attribute(const std::string attribute)const;
+		Node child(const std::string child)const;
+		Node first_child()const;
+		Node next_child();
 		operator bool()const { 
 		    return node ? true: false; 
 		}
 	
 		bool has_child(const std::string child)const;
 		bool has_attribute(const std::string attribute)const;
-		std::string get_xml_path()const;
+		std::string xml_path()const;
 	private:
 
 		void assert_child_exists(const std::string child)const;
