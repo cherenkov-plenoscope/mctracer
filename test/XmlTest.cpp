@@ -145,3 +145,84 @@ TEST_F(XmlTest, visual_config) {
 		out.global_illumination.incoming_direction, 
 		in.global_illumination.incoming_direction);
 }
+//------------------------------------------------------------------------------
+#include "Xml/Factory/FunctionFab.h"
+TEST_F(XmlTest, functions) {
+
+	const std::string path = "xml/functions.xml";
+
+	FunctionFab fab;
+
+	Xml::Document doc(path);
+	Xml::Node tree = doc.get_tree();
+	
+	Xml::Node child = tree.get_first_child(); 
+	ASSERT_TRUE(child);
+	EXPECT_EQ("function", child.get_name());
+	fab.add_function_from(child);
+
+	child = child.get_next_child();
+	ASSERT_TRUE(child);
+	EXPECT_EQ("function", child.get_name());
+	fab.add_function_from(child);
+
+	child = child.get_next_child();
+	ASSERT_TRUE(child);
+	EXPECT_EQ("function", child.get_name());
+	fab.add_function_from(child);
+
+	child = child.get_next_child();
+	ASSERT_TRUE(child);
+	EXPECT_EQ("function", child.get_name());
+	fab.add_function_from(child);
+
+	child = child.get_next_child();
+	EXPECT_FALSE(child);
+
+	/*
+	<function name="my_funny_function">
+		<linear_interpolation file="leaf_reflection_vs_wavelength.txt"/>
+	</function>
+
+	100e-9	0.1
+	110e-9	0.1
+	120e-9	0.9
+	160e-9	0.9
+	180e-9	0.1
+	200e-9	0.1
+
+	<function name="constant_function">
+		<constant value="1.337" upper_limit="400e-9" lower_limit="200e-9"/>
+	</function>
+
+	<function name="polynom_function">
+		<polynom3 x3="1.0" x2="0.0" x1="1.2" x0="-1.7" upper_limit="1200e-9" lower_limit="400e-9"/>
+	</function>
+
+	<function name="concat_function">
+		<concatenation f0="my_funny_function" f1="constant_function" f2="polynom_function" />
+		<export samples="1000" file="concat_sample.txt"/>
+	</function>
+	*/
+
+	const Function::Func1D* func;
+	func = fab.get_function_by_name("my_funny_function");
+	EXPECT_EQ(100e-9, func->get_limits().get_lower());
+	EXPECT_EQ(200e-9, func->get_limits().get_upper());
+	EXPECT_NEAR(0.9, (*func)(160e-9), 1e-6);
+
+	func = fab.get_function_by_name("constant_function");
+	EXPECT_EQ(200e-9, func->get_limits().get_lower());
+	EXPECT_EQ(400e-9, func->get_limits().get_upper());
+	EXPECT_NEAR(1.337, (*func)(300e-9), 1e-6);
+
+	func = fab.get_function_by_name("polynom_function");
+	EXPECT_EQ(400e-9, func->get_limits().get_lower());
+	EXPECT_EQ(1200e-9, func->get_limits().get_upper());
+	double x = 600e-9;
+	EXPECT_NEAR(1.0*x*x*x + 0.0*x*x + 1.2*x - 1.7, (*func)(x), 1e-6);
+
+	func = fab.get_function_by_name("concat_function");
+	EXPECT_EQ(100e-9, func->get_limits().get_lower());
+	EXPECT_EQ(1200e-9, func->get_limits().get_upper());
+}

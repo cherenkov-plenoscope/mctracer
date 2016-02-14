@@ -303,6 +303,7 @@ void FlyingCamera::print_free_orbit_help_text()const{
 	out << " move right..............[ d ]     look right..............[ l ]\n";
 	out << " move up.................[ q ]\n";
 	out << " move down...............[ e ]\n";
+	out << " move to custom pos......[ g ]\n";
 	out << "\n";
 	out << "_Stereo3D_left:red_right:blue__   _Field_of_View_________________\n";
 	out << " on/off..................[ t ]     increace................[ n ]\n";

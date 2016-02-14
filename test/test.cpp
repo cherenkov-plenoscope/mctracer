@@ -52,8 +52,10 @@
 #include "TimeLineAddition.cpp"
 #include "GridNeighborhoodTopoligyTest.cpp"
 #include "XmlTest.cpp"
+#include "PathToolsTest.cpp"
 
 #include "Tools/UserInteraction.h"
+
 int main(int argc, char **argv) {
 	UserInteraction::print_welcome_screen();
   	::testing::InitGoogleTest(&argc, argv);

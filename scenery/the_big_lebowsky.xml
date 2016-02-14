@@ -1,3 +1,5 @@
+<color name="grass_green" rgb="[0,0,0]"/>
+
 <function name="zero">
 	<constant value="0.0" lower_limit="200e-9" upper_limit="1200e-9"/>
 </function>

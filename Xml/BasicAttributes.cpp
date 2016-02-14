@@ -24,6 +24,34 @@ std::string to_string(const bool b) {
     return (b? "true" : "false");
 }
 //------------------------------------------------------------------------------
+int attribute_to_int(Node node, std::string attribute_name) {
+
+    std::string attribute = node.get_attribute(attribute_name);
+    int number;
+    
+    try{
+        
+        number = StringTools::to_int(attribute);
+    }catch(std::exception &error) {
+
+        Problem problem(node);
+
+        std::stringstream info;
+        info << __FILE__ << ", " << __LINE__ << "\n\n";
+        info << "In Xml file: '" << problem.get_path() << ", ";
+        info << "line " << problem.get_line() << ", ";
+        info << "column " << problem.get_column() << "\n";
+        info << "In node '" << node.get_name() << "' ";
+        info << "can not parse attribute '" << attribute_name << "' ";
+        info << "to int.\n\n";
+        info << problem.get_problem_section_from_original_file() << "\n\n";
+        info << error.what() << "\n";
+        throw AttributeIsNoInt(info.str());
+    }
+
+    return number;
+}
+//------------------------------------------------------------------------------
 double attribute_to_double(Node node, std::string attribute_name) {
 
     std::string attribute = node.get_attribute(attribute_name);

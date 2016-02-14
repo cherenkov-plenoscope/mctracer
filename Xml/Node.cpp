@@ -85,5 +85,9 @@ void Node::assert_attribute_exists(const std::string attribute)const {
 		throw NoSuchAttribute(info.str());
 	}	
 }
+
+std::string Node::get_xml_path()const {
+	return path;
+}
 //------------------------------------------------------------------------------
 }//Xml

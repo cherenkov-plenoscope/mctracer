@@ -23,6 +23,11 @@ namespace Xml {
     std::string to_string(const Vector3D &vec);
     std::string to_string(const bool b);
 
+    class AttributeIsNoInt : public TracerException {
+        using TracerException::TracerException;
+    }; 
+    int attribute_to_int(Node node, std::string attribute_name);
+
     class AttributeIsNoDouble : public TracerException {
         using TracerException::TracerException;
     }; 

@@ -46,6 +46,7 @@ TEST_F(PhotonTest, reject_negative_wavelength) {
 TEST_F(PhotonTest, PropagationSimpleGeometry){
 
     TracerSettings setup;
+    setup.use_multithread_when_possible = false;
 
     int number_of_bounces = 42;
     setup.max_number_of_interactions_per_photon = number_of_bounces;
@@ -151,6 +152,7 @@ TEST_F(PhotonTest, Reflections){
 
     */                              
     TracerSettings setup;
+    setup.use_multithread_when_possible = false;
 
     Vector3D    pos = Vector3D::null;
     Rotation3D  rot = Rotation3D::null;
@@ -255,6 +257,7 @@ TEST_F(PhotonTest, Reflections){
 TEST_F(PhotonTest, Refraction){
                            
     TracerSettings setup;
+    setup.use_multithread_when_possible = false;
 
     // create a test setup with two planes and high refractive index in between
     Frame world("world", Vector3D::null, Rotation3D::null);
@@ -347,6 +350,7 @@ TEST_F(PhotonTest, Refraction){
 TEST_F(PhotonTest, absorbtion_in_medium){
                            
     TracerSettings setup;
+    setup.use_multithread_when_possible = false;
 
     // create a test setup with two planes and high refractive index in between
     Frame world("world", Vector3D::null, Rotation3D::null);

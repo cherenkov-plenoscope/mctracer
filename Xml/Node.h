@@ -37,10 +37,12 @@ namespace Xml {
 		operator bool()const { 
 		    return node ? true: false; 
 		}
-	private:
-
+	
 		bool has_child(const std::string child)const;
 		bool has_attribute(const std::string attribute)const;
+		std::string get_xml_path()const;
+	private:
+
 		void assert_child_exists(const std::string child)const;
 		void assert_attribute_exists(const std::string attribute)const;
 	};	
