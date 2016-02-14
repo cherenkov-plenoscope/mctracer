@@ -61,8 +61,8 @@ void Propagation::execute() {
 	//--------------------------------------------------------------------------
 	// settings
 	TracerSettings settings;	
-	settings.SetMultiThread(false);
-	settings.store_only_last_intersection(true);
+	settings.use_multithread_when_possible = false;
+	settings.store_only_final_intersection = true;
 
 	//--------------------------------------------------------------------------
     // SET UP TELESCOPE

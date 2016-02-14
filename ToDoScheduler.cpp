@@ -67,6 +67,7 @@ void ToDoScheduler::define() {
   	);
 }
 //------------------------------------------------------------------------------
+#include "XmlFactory/VisualConfig.h"
 void ToDoScheduler::render_geometry()const {
 
 	Frame *geometry;
@@ -89,13 +90,14 @@ void ToDoScheduler::render_geometry()const {
 	
 	TracerSettings settings;
 
-	if(!skydome_path().empty()) {
-		SkyDome::Texture *sky = new SkyDome::Texture(skydome_path());
-		settings.set_sky_dome(sky);
-		FlyingCamera free(geometry, &settings);
-	}else{
-		FlyingCamera free(geometry, &settings);
+	if(!config_path().empty()) {
+		Xml::Document doc(config_path());
+		Xml::Node node = doc.get_tree();
+		Xml::Node vc_node = node.get_child("visual");
+		settings.visual = Xml::Configs::get_VisualConfig_from_node(vc_node);
 	}
+
+	FlyingCamera free(geometry, &settings);
 }
 //------------------------------------------------------------------------------
 void ToDoScheduler::point_spread_investigation_in_geometry()const {
@@ -105,8 +107,8 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 
 	// propagation settings
 	TracerSettings settings;	
-	settings.SetMultiThread(true);
-	settings.store_only_last_intersection(true);
+	settings.use_multithread_when_possible = true;
+	settings.store_only_final_intersection = true;
 
 	// scenery
 	WorldFactory fab;
@@ -159,8 +161,8 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 
 	// settings
 	TracerSettings settings;	
-	settings.SetMultiThread(false);
-	settings.store_only_last_intersection(true);
+	settings.use_multithread_when_possible = false;
+	settings.store_only_final_intersection = true;
 
 	// load scenery
 	WorldFactory fab;
@@ -313,9 +315,9 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 
 	// settings
 	TracerSettings settings;	
-	settings.SetMultiThread(false);
-	settings.store_only_last_intersection(true);
-	settings.trajectory_radius = 2.0;
+	settings.use_multithread_when_possible = false;
+	settings.store_only_final_intersection = true;
+	settings.visual.photon_trajectories.radius = 2.0;
 
 	// load scenery
 	WorldFactory fab;

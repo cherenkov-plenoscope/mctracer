@@ -41,13 +41,13 @@ Color CameraRay::trace(
 			);
 		}else{
 
-			if(settings->sky_light_source)
+			if(settings->visual.global_illumination.on)
 				color = shadow_of_sky_light(world, settings, intersection);
 			else
 				color = intersection->get_facing_color();
 		}
 	}else{
-		color = settings->get_sky_dome()->get_color_for_direction(direction);
+		color = settings->visual.sky_dome.get_color_for_direction(direction);
 	}
 
 	delete intersection;
@@ -103,7 +103,7 @@ Color CameraRay::shadow_of_sky_light(
 
 	Vector3D specular_dir = intersection->
 	get_reflection_direction_in_world_system(
-		settings->global_light_direction
+		settings->visual.global_illumination.incoming_direction
 	);
 
 	double darkening = specular_dir*direction;
@@ -130,14 +130,14 @@ bool CameraRay::is_iluminated_by_sky_light_source(
 
 	Ray ray_to_source(
 		intersection->get_intersection_vector_in_world_system(),
-		settings->global_light_direction
+		settings->visual.global_illumination.incoming_direction
 	);
 
 	const Intersection* intersec_light_source = 
 		ray_to_source.get_first_intersection_in(world);
 
 	double p = intersection->get_surface_normal_in_world_system()*
-		settings->global_light_direction;
+		settings->visual.global_illumination.incoming_direction;
 
 	if(surface_normal_is_facing_camera(intersection))
 		p = p*-1.0;	

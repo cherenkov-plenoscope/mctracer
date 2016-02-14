@@ -22,7 +22,7 @@ namespace Photons {
 		const Frame* world, 
 		const TracerSettings* settings
 	) {
-		if(settings->MultiThread())
+		if(settings->use_multithread_when_possible)
 			propagate_photons_using_multi_thread(photons, world, settings);
 		else
 			propagate_photons_using_single_thread(photons, world, settings);
@@ -34,7 +34,7 @@ namespace Photons {
 		const TracerSettings* settings
 	) {
 		Random::Mt19937 dice(
-			settings->get_pseudo_random_number_seed()
+			settings->pseudo_random_number_seed
 		);
 
 		PropagationEnvironment env;
@@ -189,7 +189,7 @@ namespace Photons {
 		TrajectoryFactory factory(
 			photons->at(number_of_trajectories_handed_out_already++)
 		);
-		factory.set_trajectory_radius(settings->trajectory_radius);
+		factory.set_trajectory_radius(settings->visual.photon_trajectories.radius);
 
 		return factory.get_trajectory();
 	}

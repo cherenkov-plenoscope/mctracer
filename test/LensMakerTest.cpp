@@ -126,8 +126,8 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 
 		// propagation settings
 		TracerSettings settings;	
-		settings.SetMultiThread(true);
-		settings.store_only_last_intersection(false);
+		settings.use_multithread_when_possible = true;
+		settings.store_only_final_intersection = false;
 
 		// photon propagation
 		Photons::propagate_photons_in_world_with_settings(

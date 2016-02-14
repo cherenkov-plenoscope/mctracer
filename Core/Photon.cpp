@@ -197,9 +197,9 @@ void Photon::get_absorbed_in_void_space() {
 }
 //------------------------------------------------------------------------------
 bool Photon::limit_of_interactions_is_not_reached_yet()const {
-	return environment.propagation_options->
-		max_number_of_reflections_is_not_reached_yet(
-			get_number_of_interactions_so_far());
+	return get_number_of_interactions_so_far() <= 
+		environment.propagation_options->
+			max_number_of_interactions_per_photon;
 }
 //------------------------------------------------------------------------------
 double Photon::get_time_to_pass_distance_in_refractive_index(

@@ -48,7 +48,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
     TracerSettings setup;
 
     int number_of_bounces = 42;
-    setup.set_max_number_of_reflections(number_of_bounces);
+    setup.max_number_of_interactions_per_photon = number_of_bounces;
 
     Vector3D    pos(0,0,0);
     Rotation3D  rot(0,0,0);

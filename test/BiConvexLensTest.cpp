@@ -37,7 +37,7 @@ protected:
 	}
 	//------------------
 	void set_up_settings() {
-		settings.set_max_number_of_reflections(5);   
+		settings.max_number_of_interactions_per_photon = 5;   
 	}
 	//------------------
 	void set_up_test_bench() {

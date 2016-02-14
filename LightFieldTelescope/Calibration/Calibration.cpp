@@ -62,7 +62,7 @@ void Calibration::set_up_telescope() {
 //------------------------------------------------------------------------------
 void Calibration::set_up_telescope_environment() {
 
-	settings.stores_only_last_intersection();
+	settings.store_only_final_intersection = true;
 	telescope_environment.world_geometry = telescope;
 	telescope_environment.propagation_options = &settings;
 	telescope_environment.random_engine = &prng;		

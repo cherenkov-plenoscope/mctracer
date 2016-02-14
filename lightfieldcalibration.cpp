@@ -48,7 +48,7 @@ int main(int argc, char* argv[]) {
     std::cout << fab.geometry->get_print() << "\n";
 
     TracerSettings settings;
-    settings.global_light_direction = Vector3D(1.0, 1.0, 1.0);
+    settings.visual.global_illumination.incoming_direction = Vector3D(1.0, 1.0, 1.0);
     FlyingCamera free(&telescope, &settings);
     
     }catch(std::exception &error) {
