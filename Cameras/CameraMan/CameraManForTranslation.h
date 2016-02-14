@@ -25,6 +25,7 @@ public:
 	void move_right(const double step_in_m);
 	void move_up();
 	void move_down();
+	void move_to(const Vector3D pos);
 private:
 
 	CameraDevice* camera;

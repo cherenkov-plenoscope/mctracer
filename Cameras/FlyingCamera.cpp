@@ -92,6 +92,8 @@ void FlyingCamera::start_free_orbit(){
 			break;
 			case 'y': Stereo_operator->decrease_stereo_offset();
 			break;
+			case 'g': Translation_operator->move_to(UserInteraction::get_Vector3D());
+			break;
 			case 'p': {
 				std::cout << world->get_tree_print() << "\n";
 				key_stroke_requires_image_update = false;
@@ -325,4 +327,4 @@ void FlyingCamera::continue_with_new_scenery_and_settings(
 	this->settings = settings;	
 	start_free_orbit();
 }
-//------------------------------------------------------------------------------ 
+//------------------------------------------------------------------------------

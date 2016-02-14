@@ -80,3 +80,12 @@ void CameraManForTranslation::move_down() {
 	if(verbose) print_camera_moved_in_direction("up");
 }
 //------------------------------------------------------------------------------
+void CameraManForTranslation::move_to(const Vector3D pos) {
+	camera->update_position(pos);
+
+	if(verbose) {
+		std::cout << camera->get_name() << " move to: ";
+		std::cout << camera->get_position_in_world() << "\n";
+	}	
+}
+//------------------------------------------------------------------------------

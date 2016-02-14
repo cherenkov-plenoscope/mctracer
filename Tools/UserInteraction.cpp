@@ -1,9 +1,11 @@
 #include "Tools/UserInteraction.h"
+#include "Tools/StringTools.h"
 #include <sys/ioctl.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <sstream>
 #include "TracerException.h"
+#include "Xml/BasicAttributes.h"
 
 namespace UserInteraction {
     
@@ -35,5 +37,26 @@ namespace UserInteraction {
 	bool is_Escape_key(const int user_input_key) {
 
 		return user_input_key == 27;
+	}
+
+	Vector3D get_Vector3D() {
+
+		Tuple3 vec;
+		std::string input;
+		
+		while (true) {
+
+			std::cout << "Enter 3D vector: '[x,y,z]'\n>";
+			getline(std::cin, input);
+
+			try{
+				vec = StringTools::to_Tuple3(input);
+				break;
+			}catch(...) {
+
+			}
+		}
+
+		return Vector3D(vec.x, vec.y, vec.z);
 	}
 }
