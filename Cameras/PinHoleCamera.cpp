@@ -51,11 +51,11 @@ void PinHoleCamera::update_principal_point_for_current_FoV(){
 	*/	
 	//distance
 	dist_camera_support_to_principal_point =
-	((image->get_number_of_cols()/2.0)/tan(FoV_in_rad/2.0));
+		((image->get_number_of_cols()/2.0)/tan(FoV_in_rad/2.0));
 
 	// principal point
 	principal_point = 
-	CameraPointingDirection*dist_camera_support_to_principal_point;		
+		CameraPointingDirection*dist_camera_support_to_principal_point;		
 }
 //------------------------------------------------------------------------------
 std::string PinHoleCamera::get_pin_hole_cam_print()const {
@@ -81,8 +81,7 @@ CameraRay PinHoleCamera::get_ray_for_pixel_in_row_and_col(
 Vector3D PinHoleCamera::get_direction_of_ray_for_pixel(
 	const int row, const int col
 )const {
-	return get_intersection_of_ray_on_image_sensor_for_pixel(row,col) - 
-		CameraPositionInWorld;
+	return get_intersection_of_ray_on_image_sensor_for_pixel(row,col);
 }
 //------------------------------------------------------------------------------
 Vector3D PinHoleCamera::get_intersection_of_ray_on_image_sensor_for_pixel(
