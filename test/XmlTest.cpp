@@ -99,3 +99,49 @@ TEST_F(XmlTest, invalid_attribute_Tuple3) {
 		Xml::AttributeIsNoColor
 	);
 }
+//------------------------------------------------------------------------------
+#include "XmlFactory/VisualConfig.h"
+TEST_F(XmlTest, visual_config) {
+
+	const std::string path = "xml/visual_config.xml";
+	VisualConfig out;
+
+	out.preview.rows = 1337;
+	out.preview.cols = 42;
+
+	out.snapshot.rows = 137;
+	out.snapshot.cols = 42;
+	out.snapshot.rays_per_pixel = 55;
+	out.snapshot.focal_length_over_aperture_diameter = 2.8;
+	out.snapshot.image_sensor_size_along_a_row = 0.060;
+
+	out.global_illumination.on = false;
+	out.global_illumination.incoming_direction = Vector3D(4.2, 1.3, 3.7);
+
+	out.photon_trajectories.radius = 99.9;
+
+	FileTools::write_text_to_file(Xml::Configs::to_node(out), path);
+
+	Xml::Document doc(path);
+	Xml::Node node = doc.get_tree();
+	Xml::Node vc_node = node.get_child("visual");
+	VisualConfig in = Xml::Configs::get_VisualConfig_from_node(vc_node);
+
+	EXPECT_EQ(out.preview.cols, in.preview.cols);
+	EXPECT_EQ(out.preview.rows, in.preview.rows);
+	
+	EXPECT_EQ(out.snapshot.cols, in.snapshot.cols);
+	EXPECT_EQ(out.snapshot.rows, in.snapshot.rows);
+	EXPECT_EQ(out.snapshot.rays_per_pixel, in.snapshot.rays_per_pixel);
+	EXPECT_EQ(
+		out.snapshot.focal_length_over_aperture_diameter, 
+		in.snapshot.focal_length_over_aperture_diameter);
+	EXPECT_EQ(
+		out.snapshot.image_sensor_size_along_a_row, 
+		in.snapshot.image_sensor_size_along_a_row);
+
+	EXPECT_EQ(out.global_illumination.on, in.global_illumination.on);
+	EXPECT_EQ(
+		out.global_illumination.incoming_direction, 
+		in.global_illumination.incoming_direction);
+}

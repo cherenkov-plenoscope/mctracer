@@ -1,0 +1,10 @@
+<visual>
+    <!-- Image size of the interactive preview window. Large images take more time. A single ray is propagated for each of the (rows x cols) pixels. -->
+	<preview cols="42" rows="1337"/>
+    <!-- Snaphot images are taken with a cineatic camera with depth of field. Several rays are emitted per pixel (rows x cols x rays_per_pixel). The more rays per pixel are emitted, the less noisy the image's depth of field will be, but the longer it takes to be calculated. For a strong depth of field, choose a small focal_length_over_aperture_diameter, e.g. 0.95, and a large sensor size e.g. 70mm. For a moderate human like depth of field, choose focal_length_over_aperture_diameter=2.8 and image_sensor_size_along_a_row=25mm. -->
+	<snapshot cols="42" rows="137" rays_per_pixel="55" focal_length_over_aperture_diameter="2.800000" image_sensor_size_along_a_row="0.060000"/>
+	<global_illumination on="false" incoming_direction="[4.2,1.3,3.7]"/>
+	<photon_trajectories radius="99.900000"/>
+    <!-- A sky dome is the background to be seen in a scenery. A textured sky dome image helps the 3D expirience. Best choose a sky dome image taken with a circular fisheye optics. If the image_path is empty, the sky dome will be monochrome with the color defined here. If the sky dome is taken from a file, the color is used below the horizon. -->
+	<sky_dome image_path="" color="[255,255,255]"/>
+</visual>

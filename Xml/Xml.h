@@ -12,6 +12,6 @@
 #include "Node.h"
 #include "Exceptions.h"
 #include "Problem.h"
-#include "AttributeParser.h"
+#include "BasicAttributes.h"
 
 #endif // __Xml_H_INCLUDED__
