@@ -17,13 +17,13 @@
 //=================================
 class CameraImage{
 public:
+	
+	cv::Mat Image;
 
-	cv::Mat *Image;
-
+	CameraImage();
 	CameraImage(const uint cols, const uint rows);
 	CameraImage(const CameraImage* image_to_copy_from);
 	CameraImage(const std::string filename_of_image);
-	~CameraImage();
 	uint get_number_of_pixels()const;
 	uint get_number_of_cols()const;
 	uint get_number_of_rows()const;

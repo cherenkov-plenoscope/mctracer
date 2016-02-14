@@ -8,8 +8,8 @@ FlyingCamera::FlyingCamera(
 	this->settings = settings;
 
 	flying_camera = new PinHoleCamera("Cam", 
-		settings->preview.cols, 
-		settings->preview.rows
+		settings->visual.preview.cols, 
+		settings->visual.preview.rows
 	);
 	
 	create_CameraMen_to_safely_operate_the_flying_camera();
@@ -139,11 +139,7 @@ void FlyingCamera::destroy_free_orbit_display(){
 //------------------------------------------------------------------------------
 void FlyingCamera::update_free_orbit_display(){
 	const CameraImage* img = acquire_image_with_camera(flying_camera);
-
-	cv::imshow(
-		free_orbit_display_name,
-		*(img->Image)
-	); 
+	cv::imshow(free_orbit_display_name, img->Image); 
 }
 //------------------------------------------------------------------------------
 void FlyingCamera::mouse_button_event(
@@ -178,14 +174,14 @@ std::string FlyingCamera::get_snapshot_filename(){
 ApertureCamera FlyingCamera::get_ApertureCamera_based_on_free_orbit_camera()const{
 
 	ApertureCamera apcam("Imax70mm", 
-		settings->snapshot.cols, 
-		settings->snapshot.rows
+		settings->visual.snapshot.cols, 
+		settings->visual.snapshot.rows
 	);
 
 	apcam.set_fStop_sesnorWidth_rayPerPixel(
-		0.95, 
-		0.07, 
-		settings->snapshot.rays_per_pixel
+		settings->visual.snapshot.focal_length_over_aperture_diameter, 
+		settings->visual.snapshot.image_sensor_size_along_a_row, 
+		settings->visual.snapshot.rays_per_pixel
 	);
 
 	apcam.set_FoV_in_rad(flying_camera->get_FoV_in_rad());

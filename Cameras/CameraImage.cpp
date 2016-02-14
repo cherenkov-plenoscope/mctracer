@@ -1,21 +1,17 @@
 #include "CameraImage.h"
 //------------------------------------------------------------------------------
+CameraImage::CameraImage() {}
+//------------------------------------------------------------------------------
 CameraImage::CameraImage(const uint cols,const uint rows){
-	Image =new cv::Mat (rows, cols,	CV_8UC3);
+	Image = cv::Mat (rows, cols, CV_8UC3);
 }
 //------------------------------------------------------------------------------
 CameraImage::CameraImage(const CameraImage* image_to_copy_from){
-	Image = new cv::Mat();
-	*Image = image_to_copy_from->Image->clone();
+	Image = image_to_copy_from->Image.clone();
 }
 //------------------------------------------------------------------------------
 CameraImage::CameraImage(const std::string filename_of_image){
-	Image = new cv::Mat();
 	load(filename_of_image);
-}
-//------------------------------------------------------------------------------
-CameraImage::~CameraImage(){
-	delete Image;
 }
 //------------------------------------------------------------------------------
 void CameraImage::save(std::string filename_of_image)const{
@@ -27,7 +23,7 @@ void CameraImage::save(std::string filename_of_image)const{
 	compression_params.push_back(1);			
 	
 	try {
-		cv::imwrite(filename_of_image, *Image, compression_params);
+		cv::imwrite(filename_of_image, Image, compression_params);
 	}
 	catch (std::runtime_error& ex) {
 
@@ -43,9 +39,8 @@ void CameraImage::save(std::string filename_of_image)const{
 //------------------------------------------------------------------------------
 void CameraImage::load(const std::string filename) {
 
-	try{
-
-		*Image = cv::imread(filename, CV_LOAD_IMAGE_COLOR);
+	try{;
+		Image = cv::imread(filename, CV_LOAD_IMAGE_COLOR);
 	}catch (std::runtime_error& ex) {
 
 		std::stringstream info;
@@ -56,7 +51,7 @@ void CameraImage::load(const std::string filename) {
 		throw TracerException(info.str());
 	}
 
-	if(!Image->data) {
+	if(!Image.data) {
 
 		std::stringstream info;
 		info << "CameraImage::" << __func__ << "()\n";
@@ -71,11 +66,11 @@ uint CameraImage::get_number_of_pixels()const {
 }
 //------------------------------------------------------------------------------
 uint CameraImage::get_number_of_cols()const {
- 	return Image->cols; 
+ 	return Image.cols; 
 }
 //------------------------------------------------------------------------------
 uint CameraImage::get_number_of_rows()const {
- 	return Image->rows; 
+ 	return Image.rows;
 }
 //------------------------------------------------------------------------------
 void CameraImage::set_pixel_row_col_to_color(
@@ -86,11 +81,11 @@ void CameraImage::set_pixel_row_col_to_color(
 	intensity.val[1] = color.get_green();
 	intensity.val[2] = color.get_red();
 
-	Image->at<cv::Vec3b>(row,col) = intensity;
+	Image.at<cv::Vec3b>(row,col) = intensity;
 }
 //------------------------------------------------------------------------------
 Color CameraImage::get_pixel_row_col(const uint row, const uint col)const{
-	cv::Vec3b intensity = Image->at<cv::Vec3b>(row,col);
+	cv::Vec3b intensity = Image.at<cv::Vec3b>(row,col);
 	return Color(intensity.val[0], intensity.val[1], intensity.val[2]);
 }
 //------------------------------------------------------------------------------
@@ -105,20 +100,20 @@ void CameraImage::merge_left_and_right_image_to_anaglyph_3DStereo(
 	right_image->convert_to_grayscale();
 
 	std::vector<cv::Mat> single_channels_left(3);
-	cv::split(*left_image->Image, single_channels_left);
-	
+	cv::split(left_image->Image, single_channels_left);
+
 	std::vector<cv::Mat> single_channels_right(3);
-	cv::split(*right_image->Image, single_channels_right);
-	
+	cv::split(right_image->Image, single_channels_right);
+
 	std::vector<cv::Mat> anaglyph_image_channels;		
 	anaglyph_image_channels.push_back(single_channels_right.at(0)); //Blue
 	anaglyph_image_channels.push_back(single_channels_right.at(1)); //Green
 	anaglyph_image_channels.push_back(single_channels_left.at(2) ); //Red
 	
-	cv::merge(anaglyph_image_channels, *Image);
+	cv::merge(anaglyph_image_channels, Image);
 }
 //------------------------------------------------------------------------------
 void CameraImage::convert_to_grayscale() {
-	cv::cvtColor(*Image, *Image, CV_RGB2GRAY);
-	cv::cvtColor(*Image, *Image, CV_GRAY2RGB);
+	cv::cvtColor(Image, Image, CV_RGB2GRAY);
+	cv::cvtColor(Image, Image, CV_GRAY2RGB);
 }
