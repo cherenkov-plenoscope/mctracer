@@ -117,3 +117,8 @@ void CameraImage::convert_to_grayscale() {
 	cv::cvtColor(Image, Image, CV_RGB2GRAY);
 	cv::cvtColor(Image, Image, CV_GRAY2RGB);
 }
+//------------------------------------------------------------------------------
+void CameraImage::scale(const uint scale) {
+	cv::Size dst_size(Image.cols*scale, Image.rows*scale);
+	cv::resize(Image, Image, dst_size);
+}

@@ -6,6 +6,5 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/FrameFactory.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/FunctionFactory.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/LightFieldTelescopeFactory.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/VisualConfig.cpp
    	PARENT_SCOPE
 )

@@ -1,4 +1,4 @@
-#include "VisualConfig.h"
+#include "VisualConfigFab.h"
 namespace Xml {
 	namespace Configs {
 //------------------------------------------------------------------------------
@@ -7,13 +7,14 @@ VisualConfig get_VisualConfig_from_node(Xml::Node node) {
 	VisualConfig vc;
 
 	Xml::Node preview = node.get_child("preview");
-	vc.preview.cols = Xml::attribute_to_double(preview, "cols");
-	vc.preview.rows = Xml::attribute_to_double(preview, "rows");
+	vc.preview.cols = Xml::attribute_to_int(preview, "cols");
+	vc.preview.rows = Xml::attribute_to_int(preview, "rows");
+	vc.preview.scale = Xml::attribute_to_int(preview, "scale");
 
 	Xml::Node snapshot = node.get_child("snapshot");
-	vc.snapshot.cols = Xml::attribute_to_double(snapshot, "cols");
-	vc.snapshot.rows = Xml::attribute_to_double(snapshot, "rows");
-	vc.snapshot.rays_per_pixel = Xml::attribute_to_double(snapshot, "rays_per_pixel");
+	vc.snapshot.cols = Xml::attribute_to_int(snapshot, "cols");
+	vc.snapshot.rows = Xml::attribute_to_int(snapshot, "rows");
+	vc.snapshot.rays_per_pixel = Xml::attribute_to_int(snapshot, "rays_per_pixel");
 	vc.snapshot.focal_length_over_aperture_diameter = Xml::attribute_to_double(snapshot, "focal_length_over_aperture_diameter");
 	vc.snapshot.image_sensor_size_along_a_row = Xml::attribute_to_double(snapshot, "image_sensor_size_along_a_row");
 
@@ -48,11 +49,11 @@ std::string to_node(const VisualConfig &vc) {
 	out << "<visual>\n";
 
 	out << "    " << comment(
-	"Image size of the interactive preview window. "
-	"Large images take more time. "
-	"A single ray is propagated for each of the (rows x cols) pixels.") << "\n";
+	"Image size of the interactive preview window (cols*scale x rows*scale). "
+	"For fast preview, the initial image is only (cols x rows) and on demand a full resolution image (cols*scale x rows*scale) is created.") << "\n";
 	out << "	<preview " << av("cols", std::to_string(vc.preview.cols)) << " ";
-	out                    << av("rows", std::to_string(vc.preview.rows)) << "/>\n";
+	out                    << av("rows", std::to_string(vc.preview.rows)) << " ";
+	out                    << av("scale", std::to_string(vc.preview.scale)) << "/>\n";
 
 	out << "    " << comment(
 	"Snaphot images are taken with a cineatic camera with depth of field. "

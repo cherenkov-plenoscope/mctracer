@@ -1,6 +1,6 @@
 <visual>
-    <!-- Image size of the interactive preview window. Large images take more time. A single ray is propagated for each of the (rows x cols) pixels. -->
-	<preview cols="320" rows="180"/>
+    <!-- Image size of the interactive preview window (cols*scale x rows*scale). For fast preview, the initial image is only (cols x rows) and on demand a full resolution image (cols*scale x rows*scale) is created. -->
+	<preview cols="128" rows="72" scale="10"/>
     <!-- Snaphot images are taken with a cineatic camera with depth of field. Several rays are emitted per pixel (rows x cols x rays_per_pixel). The more rays per pixel are emitted, the less noisy the image's depth of field will be, but the longer it takes to be calculated. For a strong depth of field, choose a small focal_length_over_aperture_diameter, e.g. 0.95, and a large sensor size e.g. 70mm. For a moderate human like depth of field, choose focal_length_over_aperture_diameter=2.8 and image_sensor_size_along_a_row=25mm. -->
 	<snapshot cols="1920" rows="1080" rays_per_pixel="3" focal_length_over_aperture_diameter="0.95" image_sensor_size_along_a_row="0.07"/>
 	<global_illumination on="true" incoming_direction="[0.2, 0.3, 1.0]"/>

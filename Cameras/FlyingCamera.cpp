@@ -7,11 +7,16 @@ FlyingCamera::FlyingCamera(
 	this->world = world;
 	this->settings = settings;
 
-	flying_camera = new PinHoleCamera("Cam", 
+	flying_camera = new PinHoleCamera("LowResCam", 
 		settings->visual.preview.cols, 
 		settings->visual.preview.rows
 	);
 	
+	flying_camera_full_resolution = new PinHoleCamera("HiResCam", 
+		settings->visual.preview.cols*settings->visual.preview.scale, 
+		settings->visual.preview.rows*settings->visual.preview.scale
+	);
+
 	create_CameraMen_to_safely_operate_the_flying_camera();
 	reset_camera();
 	time_stamp.update_now();
@@ -20,16 +25,16 @@ FlyingCamera::FlyingCamera(
 }
 //------------------------------------------------------------------------------
 void FlyingCamera::create_CameraMen_to_safely_operate_the_flying_camera(){
-	FoV_operator = new CameraManFoV(flying_camera);
+	FoV_operator = new CameraManFoV(flying_camera_full_resolution);
 	FoV_operator->set_verbosity(true);
 
-	Translation_operator = new CameraManForTranslation(flying_camera);
+	Translation_operator = new CameraManForTranslation(flying_camera_full_resolution);
 	Translation_operator->set_verbosity(true);
 
-	Rotation_operator = new CameraManForRotation(flying_camera);
+	Rotation_operator = new CameraManForRotation(flying_camera_full_resolution);
 	Rotation_operator->set_verbosity(true);
 
-	Stereo_operator = new CameraManForStereo3D(flying_camera);
+	Stereo_operator = new CameraManForStereo3D(flying_camera_full_resolution);
 	Stereo_operator->set_verbosity(true);
 }
 //------------------------------------------------------------------------------
@@ -94,6 +99,11 @@ void FlyingCamera::start_free_orbit(){
 			break;
 			case 'g': Translation_operator->move_to(UserInteraction::get_Vector3D());
 			break;
+			case 32: {
+				update_free_orbit_display_full_resolution();
+				key_stroke_requires_image_update = false;
+			}
+			break;
 			case 'p': {
 				std::cout << world->get_tree_print() << "\n";
 				key_stroke_requires_image_update = false;
@@ -139,8 +149,26 @@ void FlyingCamera::destroy_free_orbit_display(){
 	cv::destroyWindow(free_orbit_display_name);	
 }
 //------------------------------------------------------------------------------
+void FlyingCamera::update_free_orbit_display_full_resolution(){
+	const CameraImage* img = acquire_scaled_image_with_camera(
+		false,
+		flying_camera_full_resolution
+	);
+
+	cv::imshow(free_orbit_display_name, img->Image); 
+}
+//------------------------------------------------------------------------------
 void FlyingCamera::update_free_orbit_display(){
-	const CameraImage* img = acquire_image_with_camera(flying_camera);
+	flying_camera->set_FoV_in_rad(
+		flying_camera_full_resolution->get_FoV_in_rad()
+	);
+
+	flying_camera->update_position_and_orientation(
+		flying_camera_full_resolution->get_position_in_world(),
+		flying_camera_full_resolution->get_rotation_in_world()
+	);
+
+	const CameraImage* img = acquire_scaled_image_with_camera(true, flying_camera);
 	cv::imshow(free_orbit_display_name, img->Image); 
 }
 //------------------------------------------------------------------------------
@@ -186,10 +214,10 @@ ApertureCamera FlyingCamera::get_ApertureCamera_based_on_free_orbit_camera()cons
 		settings->visual.snapshot.rays_per_pixel
 	);
 
-	apcam.set_FoV_in_rad(flying_camera->get_FoV_in_rad());
+	apcam.set_FoV_in_rad(flying_camera_full_resolution->get_FoV_in_rad());
 	apcam.update_position_and_orientation(
-		flying_camera->get_position_in_world(),
-		flying_camera->get_rotation_in_world()
+		flying_camera_full_resolution->get_position_in_world(),
+		flying_camera_full_resolution->get_rotation_in_world()
 	);
 	return apcam;
 }
@@ -200,7 +228,8 @@ std::string FlyingCamera::get_prefix_print()const{
 //------------------------------------------------------------------------------
 void FlyingCamera::take_snapshot_manual_focus_on_pixel_col_row(int x, int y){
 
-	Ray probing_ray = flying_camera->get_ray_for_pixel_in_row_and_col(y, x);
+	Ray probing_ray = 
+		flying_camera_full_resolution->get_ray_for_pixel_in_row_and_col(y, x);
 	
 	DistanceMeter dist_meter(&probing_ray, world);
 
@@ -215,27 +244,50 @@ void FlyingCamera::take_snapshot_manual_focus_on_pixel_col_row(int x, int y){
 	apcam.set_focus_to(object_distance_to_focus_on);
 	std::cout << apcam.get_print();
 
-	const CameraImage* img = acquire_image_with_camera(&apcam);
+	const CameraImage* img = acquire_scaled_image_with_camera(false ,&apcam);
 	img->save(get_snapshot_filename());
 }
 //------------------------------------------------------------------------------
-const CameraImage* FlyingCamera::acquire_image_with_camera(CameraDevice* cam) {
-	if(stereo3D) {
+const CameraImage* FlyingCamera::acquire_scaled_image_with_camera(
+	const bool scale, CameraDevice* cam
+) {	
+	if(scale){
+		
+		if(stereo3D) {
 
-		CameraManForStereo3D op(cam);
-		op.use_same_stereo_offset_as(Stereo_operator);
-		op.aquire_stereo_image(world, settings);
-		return op.get_anaglyph_stereo3D_image();
+			CameraManForStereo3D op(cam);
+			op.use_same_stereo_offset_as(Stereo_operator);
+			op.aquire_stereo_image(world, settings);
+			image = *op.get_anaglyph_stereo3D_image();
+			image.scale(settings->visual.preview.scale);
+			return &image;
+		}else{
+
+			cam->acquire_image(world, settings);
+			image = *cam->get_image();
+			image.scale(settings->visual.preview.scale);
+			return &image;
+		}	
 	}else{
 
-		cam->acquire_image(world, settings);
-		return cam->get_image();
-	}	
+		if(stereo3D) {
+
+			CameraManForStereo3D op(cam);
+			op.use_same_stereo_offset_as(Stereo_operator);
+			op.aquire_stereo_image(world, settings);
+			return op.get_anaglyph_stereo3D_image();
+		}else{
+
+			cam->acquire_image(world, settings);
+			return cam->get_image();
+		}	
+	}
 }
 //------------------------------------------------------------------------------
 void FlyingCamera::print_info_of_probing_ray_for_pixel_col_row(int x, int y){
 
-	Ray probing_ray = flying_camera->get_ray_for_pixel_in_row_and_col(y, x);
+	Ray probing_ray = 
+		flying_camera_full_resolution->get_ray_for_pixel_in_row_and_col(y, x);
 
 	const Intersection* intersec = probing_ray.get_first_intersection_in(world);
 
@@ -314,6 +366,7 @@ void FlyingCamera::print_free_orbit_help_text()const{
 	out << " manual focus..[ right mouse ]     print geometry tree.....[ p ]\n";
 	out << "                                   exit....................[ESC]\n";
 	out << "\n";
+	out << "[  space key  ] full resolution.\n";
 	out << "[ left mouse  ] click image for additional information.\n";
 	out << "[ right mouse ] click image for manual focus with snapshot.\n";
 	out << "\n";

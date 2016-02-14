@@ -20,6 +20,7 @@ struct VisualConfig {
 	struct Preview {
 		uint cols;
 		uint rows;
+		uint scale;
 	} preview;
 
 	struct Snapshot {

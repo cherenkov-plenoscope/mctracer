@@ -2,8 +2,9 @@
 //------------------------------------------------------------------------------
 VisualConfig::VisualConfig():sky_dome(Color::sky_blue) {
 
-	preview.cols = 320;
-	preview.rows = 180;
+	preview.cols = 128;
+	preview.rows = 72;
+	preview.scale = 10;
 
 	snapshot.cols = 1920;
 	snapshot.rows = 1080;

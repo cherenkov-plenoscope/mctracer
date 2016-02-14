@@ -37,6 +37,7 @@ public:
 	void merge_left_and_right_image_to_anaglyph_3DStereo(
 		CameraImage* left_image, CameraImage* right_image
 	);
+	void scale(const uint scale);
 private:
 
 	void convert_to_grayscale();

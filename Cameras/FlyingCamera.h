@@ -43,6 +43,9 @@ private:
 		"Monte Carlo Tracer -> Free Orbit";
 
 	PinHoleCamera *flying_camera;
+	PinHoleCamera *flying_camera_full_resolution;
+
+	CameraImage image;
 
 	CameraManFoV 				*FoV_operator;
 	CameraManForTranslation 	*Translation_operator;
@@ -64,6 +67,7 @@ private:
 	void start_free_orbit();
 	void aquire_image();
 	void update_free_orbit_display();
+	void update_free_orbit_display_full_resolution();
 	void take_snapshot_manual_focus_on_pixel_col_row(int x, int y);
 	void print_free_orbit_help_text()const;
 	void increase_stereo_offset();
@@ -89,6 +93,8 @@ private:
 	void print_stereo_offset_manipulation(const std::string status)const;
 	std::string get_snapshot_filename();
 	bool it_is_time_again_to_show_the_help();
-	const CameraImage* acquire_image_with_camera(CameraDevice* cam);
+	const CameraImage* acquire_scaled_image_with_camera(
+		const bool scale, CameraDevice* cam
+	);
 };
 #endif // __FlyingCamera_H_INCLUDED__

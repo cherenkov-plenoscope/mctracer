@@ -7,6 +7,7 @@
 #include "PhotonSensor/PhotonSensor.h"
 #include "CorsikaIO/EventIo/EventIo.h"
 #include "CorsikaIO/EventIo/PhotonFactory.h"
+#include "Xml/Factory/VisualConfigFab.h"
 //------------------------------------------------------------------------------
 ToDoScheduler::ToDoScheduler(int argc, char** argv) {
 
@@ -67,7 +68,6 @@ void ToDoScheduler::define() {
   	);
 }
 //------------------------------------------------------------------------------
-#include "XmlFactory/VisualConfig.h"
 void ToDoScheduler::render_geometry()const {
 
 	Frame *geometry;
