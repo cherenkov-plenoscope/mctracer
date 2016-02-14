@@ -7,12 +7,12 @@ FlyingCamera::FlyingCamera(
 	this->world = world;
 	this->settings = settings;
 
-	flying_camera = new PinHoleCamera("LowResCam", 
+	flying_camera = new PinHoleCamera("Cam", 
 		settings->visual.preview.cols, 
 		settings->visual.preview.rows
 	);
 	
-	flying_camera_full_resolution = new PinHoleCamera("HiResCam", 
+	flying_camera_full_resolution = new PinHoleCamera("Cam", 
 		settings->visual.preview.cols*settings->visual.preview.scale, 
 		settings->visual.preview.rows*settings->visual.preview.scale
 	);
@@ -99,7 +99,7 @@ void FlyingCamera::start_free_orbit(){
 			break;
 			case 'g': Translation_operator->move_to(UserInteraction::get_Vector3D());
 			break;
-			case 32: {
+			case UserInteraction::space_key: {
 				update_free_orbit_display_full_resolution();
 				key_stroke_requires_image_update = false;
 			}
@@ -133,7 +133,7 @@ bool FlyingCamera::it_is_time_again_to_show_the_help() {
 	}
 }
 //------------------------------------------------------------------------------
-void FlyingCamera::create_free_orbit_display(){
+void FlyingCamera::create_free_orbit_display() {
 	cv::namedWindow( free_orbit_display_name, CV_WINDOW_AUTOSIZE );
 
 	FlyingCamera* p = this;
@@ -145,11 +145,19 @@ void FlyingCamera::create_free_orbit_display(){
 	);
 }
 //------------------------------------------------------------------------------
-void FlyingCamera::destroy_free_orbit_display(){
+void FlyingCamera::destroy_free_orbit_display() {
 	cv::destroyWindow(free_orbit_display_name);	
 }
 //------------------------------------------------------------------------------
-void FlyingCamera::update_free_orbit_display_full_resolution(){
+void FlyingCamera::update_free_orbit_display_full_resolution() {
+
+	std::cout << get_prefix_print() << "Full resolution image "
+	<< flying_camera_full_resolution->get_number_of_sensor_cols() <<"x"
+	<< flying_camera_full_resolution->get_number_of_sensor_rows() <<", "
+	<< flying_camera_full_resolution->get_number_of_sensor_cols()*
+	flying_camera_full_resolution->get_number_of_sensor_rows()/1e6 
+	<< " MPixel\n";
+
 	const CameraImage* img = acquire_scaled_image_with_camera(
 		false,
 		flying_camera_full_resolution
@@ -158,7 +166,7 @@ void FlyingCamera::update_free_orbit_display_full_resolution(){
 	cv::imshow(free_orbit_display_name, img->Image); 
 }
 //------------------------------------------------------------------------------
-void FlyingCamera::update_free_orbit_display(){
+void FlyingCamera::update_free_orbit_display() {
 	flying_camera->set_FoV_in_rad(
 		flying_camera_full_resolution->get_FoV_in_rad()
 	);
@@ -191,7 +199,7 @@ void FlyingCamera::toggle_stereo3D() {
 	std::cout << (stereo3D ? "On" : "Off") << "\n";
 }
 //------------------------------------------------------------------------------
-std::string FlyingCamera::get_snapshot_filename(){
+std::string FlyingCamera::get_snapshot_filename() {
 	snapshot_counter++;
 
 	std::stringstream filename;  
@@ -222,11 +230,11 @@ ApertureCamera FlyingCamera::get_ApertureCamera_based_on_free_orbit_camera()cons
 	return apcam;
 }
 //------------------------------------------------------------------------------
-std::string FlyingCamera::get_prefix_print()const{
+std::string FlyingCamera::get_prefix_print()const {
 	return "free_orbit -> ";
 }
 //------------------------------------------------------------------------------
-void FlyingCamera::take_snapshot_manual_focus_on_pixel_col_row(int x, int y){
+void FlyingCamera::take_snapshot_manual_focus_on_pixel_col_row(int x, int y) {
 
 	Ray probing_ray = 
 		flying_camera_full_resolution->get_ray_for_pixel_in_row_and_col(y, x);
@@ -284,7 +292,7 @@ const CameraImage* FlyingCamera::acquire_scaled_image_with_camera(
 	}
 }
 //------------------------------------------------------------------------------
-void FlyingCamera::print_info_of_probing_ray_for_pixel_col_row(int x, int y){
+void FlyingCamera::print_info_of_probing_ray_for_pixel_col_row(int x, int y) {
 
 	Ray probing_ray = 
 		flying_camera_full_resolution->get_ray_for_pixel_in_row_and_col(y, x);
@@ -341,7 +349,7 @@ void FlyingCamera::print_info_of_probing_ray_for_pixel_col_row(int x, int y){
 	std::cout << out.str();
 }
 //------------------------------------------------------------------------------
-void FlyingCamera::print_free_orbit_help_text()const{
+void FlyingCamera::print_free_orbit_help_text()const {
 
 	UserInteraction::ClearScreen();
 	std::stringstream out;

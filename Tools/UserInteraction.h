@@ -18,5 +18,6 @@ namespace UserInteraction {
 	void ClearScreen();
 	bool is_Escape_key(const int user_input_key);
 	Vector3D get_Vector3D();
+	static const uint space_key = 32;
 }
 #endif // __UserInteraction_H_INCLUDED__
