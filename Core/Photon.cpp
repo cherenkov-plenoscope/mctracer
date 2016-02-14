@@ -9,7 +9,7 @@ Photon::Photon(
 	SetRay(support, direction);
 	this->wavelength = wavelength;
 	assert_wavelength_is_positive();
-	init_propagation_history();	
+	init_propagation_history();
 }
 //------------------------------------------------------------------------------
 Photon::Photon(
@@ -88,7 +88,7 @@ bool Photon::absorbed_in_medium_before_reaching_surface() {
 //------------------------------------------------------------------------------
 void Photon::interact_with_object() {
 
-	if(	intersection->get_facing_reflection_propability(wavelength) >= 
+	if(	intersection->get_facing_reflection_propability(wavelength) >=
 		environment.random_engine->uniform() 
 	) {
 		reflect_on_surface_and_propagate_on(reflection_on_surface);

@@ -69,6 +69,8 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
     		Function::Limits(200e-9, 1200e-9)
     	);
 
+    Random::Mt19937 prng(Random::zero_seed);
+
     uint number_of_photons_per_run = 1000;
     std::vector<double> sigma_psf_vs_image_sensor_distance;
     std::vector<double> image_sensor_distances;
@@ -131,7 +133,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 
 		// photon propagation
 		Photons::propagate_photons_in_world_with_settings(
-			photons, &optical_table, &settings
+			photons, &optical_table, &settings, &prng
 		);
 
 		// detect photons in sensors

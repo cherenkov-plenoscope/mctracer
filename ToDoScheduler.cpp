@@ -110,6 +110,9 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 	settings.use_multithread_when_possible = true;
 	settings.store_only_final_intersection = true;
 
+	// Random
+	Random::Mt19937 prng(settings.pseudo_random_number_seed);
+
 	// scenery
 	WorldFactory fab;
 	fab.load(geometry_path());
@@ -123,7 +126,7 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 
 	// photon propagation
 	Photons::propagate_photons_in_world_with_settings(
-		photons, world, &settings
+		photons, world, &settings, &prng
 	);
 
 	// detect photons in sensors
@@ -157,12 +160,13 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 //------------------------------------------------------------------------------
 void ToDoScheduler::propagate_photons_through_geometry()const {
 
-	Random::Mt19937 prng(Random::zero_seed);
-
 	// settings
 	TracerSettings settings;	
 	settings.use_multithread_when_possible = false;
 	settings.store_only_final_intersection = true;
+
+	// Random
+	Random::Mt19937 prng(settings.pseudo_random_number_seed);
 
 	// load scenery
 	WorldFactory fab;
@@ -203,7 +207,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 
 		// propagate the cherenkov photons in the world
 		Photons::propagate_photons_in_world_with_settings(
-			&photons, world, &settings
+			&photons, world, &settings, &prng
 		);
 
 		// detect photons in sensors
@@ -238,86 +242,23 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 	}
 }
 //------------------------------------------------------------------------------
-/*
-void ToDoScheduler::propagate_photons_through_geometry()const {
-
-	// settings
-	TracerSettings settings;	
-	settings.SetMultiThread(false);
-	settings.store_only_last_intersection(true);
-
-	// load scenery
-	WorldFactory fab;
-	fab.load(geometry_path());
-	Frame *world = fab.world();
-
-	// init Telescope Array Control
-	TelescopeArrayControl* array_ctrl = fab.get_telescope_array_control();
-
-	// init sensors in scenery
-	std::vector<PhotonSensor::Sensor*>* sensors = fab.sensors_in_world();
-
-	// load photons
-	MmcsCorsikaFullEventGetter event_getter(photon_path());
-
-	// propagate each event
-	uint event_counter = 0;
-
-	while(event_getter.has_still_events_left()) {
-
-		MmcsCorsikaEvent event = event_getter.get_next_event();
-
-		while(event.can_be_reused_again()) {
-
-			event_counter++;
-
-			// point the telescope into shower direction
-			array_ctrl->move_all_to_Az_Zd(event.get_Az(), event.get_Zd());
-
-			// get the cherenkov photons
-			std::vector<Photon*> *photons = 
-				event.use_once_more_and_get_photon_bunch();
-
-			// propagate the cherenkov photons in the world
-			Photons::propagate_photons_in_world_with_settings(
-				photons, world, &settings
-			);
-
-			// detect photons in sensors
-			PhotonSensor::Sensors::reset_all_sesnors(sensors);
-			PhotonSensor::Sensors::assign_photons_to_sensors(photons, sensors);
-			
-			uint sensor_conuter = 0;
-			for(PhotonSensor::Sensor* sensor: *sensors) {
-				
-				std::stringstream outname;
-				outname << output_path();
-				outname << "e" << event_counter << "s" << sensor_conuter << ".txt";
-				sensor_conuter++;
-
-				AsciiIo::write_table_to_file(
-					sensor->get_arrival_table(),
-					outname.str()
-				);
-			}
-
-			// wipe out the cherenkov photons which have just been propagated
-			Photons::delete_photons_and_history(photons);
-			std::cout << event_counter << "\n";
-		}
-	}
-}*/
-//------------------------------------------------------------------------------
 void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 
-
-	Random::Mt19937 prng(Random::zero_seed);
-
 	// settings
-	TracerSettings settings;	
+	TracerSettings settings;
 	settings.use_multithread_when_possible = false;
-	settings.store_only_final_intersection = true;
+	settings.store_only_final_intersection = false;
 	settings.visual.photon_trajectories.radius = 2.0;
+
+	if(!config_path().empty()) {
+		Xml::Document doc(config_path());
+		Xml::Node node = doc.get_tree();
+		Xml::Node vc_node = node.get_child("visual");
+		settings.visual = Xml::Configs::get_VisualConfig_from_node(vc_node);
+	}
+	
+	// Random
+	Random::Mt19937 prng(settings.pseudo_random_number_seed);
 
 	// load scenery
 	WorldFactory fab;
@@ -339,41 +280,42 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 
 		event_counter++;
 
-		// read next evenr
+		// read next event
 		EventIo::Event event = corsika_run.next_event();
-
-		vector<Photon*> photons;
-        uint id = 0;
-        for(vector<float> corsika_photon : event.photons) {
-            
-            EventIo::PhotonFactory cpf(corsika_photon, id++, &prng);
-
-            if(cpf.passed_atmosphere())
-                photons.push_back(cpf.get_photon());
-        }
 
        	// point the telescope into shower direction
        	double az = event.header.mmcs_event_header.azimuth_angle_Phi_in_radian;
        	double zd = event.header.mmcs_event_header.zenith_angle_Theta_in_radian;
 		array_ctrl->move_all_to_Az_Zd(az, zd);
+		
+        uint id = 0;
+        for(vector<float> corsika_photon : event.photons) {
+            
+            vector<Photon*> photons;
+            EventIo::PhotonFactory cpf(corsika_photon, id++, &prng);
 
-		// propagate the cherenkov photons in the world
-		Photons::propagate_photons_in_world_with_settings(
-			&photons, world, &settings
-		);
+            if(cpf.passed_atmosphere()) {
+                photons.push_back(cpf.get_photon());
+            
+				// propagate the cherenkov photons in the world
+				Photons::propagate_photons_in_world_with_settings(
+					&photons, world, &settings, &prng
+				);
 
-		Photons::Trajectories trayect_fab(&photons, &settings);
+				Photons::Trajectories trayect_fab(&photons, &settings);
 
-		while(trayect_fab.has_still_trajectories_left()) {
+				while(trayect_fab.has_still_trajectories_left()) {
 
-			Frame SWorld = *world;
-			SWorld.set_mother_and_child(trayect_fab.get_next_trajectoy());
-			SWorld.init_tree_based_on_mother_child_relations();
-			//std::cout << SWorld.get_tree_print();
-			free_orb.continue_with_new_scenery_and_settings(&SWorld, &settings);
+					Frame SWorld = *world;
+					SWorld.set_mother_and_child(trayect_fab.get_next_trajectoy());
+					SWorld.init_tree_based_on_mother_child_relations();
+					//std::cout << SWorld.get_tree_print();
+					free_orb.continue_with_new_scenery_and_settings(&SWorld, &settings);
+				}
+
+				Photons::delete_photons_and_history(&photons);
+			}
 		}
-
-		Photons::delete_photons_and_history(&photons);
 	}
 }
 //------------------------------------------------------------------------------

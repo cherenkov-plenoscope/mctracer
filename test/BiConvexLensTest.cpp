@@ -18,7 +18,7 @@ protected:
 
 	Frame* test_bench;
 	TracerSettings settings;
-	Random::Mt19937 dice;
+	Random::Mt19937 prng;
 	PropagationEnvironment lens_test_bench_environment;
 	PhotonSensors::Sensors sensor_list;
 	PhotonSensor::Sensor *sensor;
@@ -29,11 +29,11 @@ protected:
 		set_up_settings();
 		set_up_test_bench();
 
-		dice.set_seed(Random::zero_seed);
+		prng.set_seed(Random::zero_seed);
 
 		lens_test_bench_environment.world_geometry = test_bench;
 		lens_test_bench_environment.propagation_options = &settings;
-		lens_test_bench_environment.random_engine = &dice;
+		lens_test_bench_environment.random_engine = &prng;
 	}
 	//------------------
 	void set_up_settings() {
@@ -169,7 +169,8 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 	Photons::propagate_photons_in_world_with_settings(
 		photons, 
 		lens_test_bench_environment.world_geometry, 
-		lens_test_bench_environment.propagation_options
+		lens_test_bench_environment.propagation_options,
+		&prng
 	);	
 
 	// detect photons in sensors

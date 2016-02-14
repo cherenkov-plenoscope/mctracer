@@ -18,7 +18,6 @@ void TrajectoryFactory::set_trajectory_radius(const double radius) {
 //------------------------------------------------------------------------------
 Frame* TrajectoryFactory::get_trajectory()const {
 
-
 	Frame* trajectory = get_empty_trajectory_frame();
 
 	for(uint i=0; i < ray->get_number_of_interactions_so_far(); i++) {

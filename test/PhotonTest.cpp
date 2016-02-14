@@ -218,7 +218,7 @@ TEST_F(PhotonTest, Reflections){
     Vector3D Support(-2.0, 0.0, 0.0);
     Vector3D direction = Vector3D::unit_x;
 
-    Random::Mt19937 dice(Random::zero_seed);
+    Random::Mt19937 prng(Random::zero_seed);
 
     std::vector<Photon*> photons;
 
@@ -235,7 +235,7 @@ TEST_F(PhotonTest, Reflections){
     }
 
     Photons::propagate_photons_in_world_with_settings(
-        &photons, &world, &setup
+        &photons, &world, &setup, &prng
     );
 
     sensors.assign_photons(&photons);
@@ -307,7 +307,7 @@ TEST_F(PhotonTest, Refraction){
     //-----------send Photon----------------------
     double wavelength = 433.0e-9;
 
-    Random::Mt19937 dice(Random::zero_seed);
+    Random::Mt19937 prng(Random::zero_seed);
     std::vector<Photon*> photons;
 
     double num_phot = 1e4;
@@ -320,7 +320,7 @@ TEST_F(PhotonTest, Refraction){
     }
 
     Photons::propagate_photons_in_world_with_settings(
-        &photons, &world, &setup
+        &photons, &world, &setup, &prng
     );
 
     sensors.assign_photons(&photons);
@@ -404,7 +404,7 @@ TEST_F(PhotonTest, absorbtion_in_medium){
 
     //-----------send Photons----------------------
     double wavelength = 433.0e-9;
-    Random::Mt19937 dice(Random::zero_seed);
+    Random::Mt19937 prng(Random::zero_seed);
     std::vector<Photon*> photons;
 
     double num_phot = 1e4;
@@ -417,7 +417,7 @@ TEST_F(PhotonTest, absorbtion_in_medium){
     }
 
     Photons::propagate_photons_in_world_with_settings(
-        &photons, &world, &setup
+        &photons, &world, &setup, &prng
     );
 
     sensors.assign_photons(&photons);

@@ -8,6 +8,8 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
     // compare the input ground intersection point with the actual intersection
     // point of the mctracer photons when they are absorbed on the ground.
 
+    Random::Mt19937 prng(0);
+
     for(float x=-1e4; x<1e4; x=x+1495.0) {
         for(float y=-1e4; y<1e4; y=y+1495.0) {
             for(float cx=-0.5; cx<0.5; cx=cx+0.11) {
@@ -18,9 +20,9 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
                     //   x    y    xcos ycos time  zem  weight lambda
                     //   cm   cm   1    1    ns    cm   1      nm   
                     const uint id = 1337;
-                    Random::FakeConstant prng(0.0);
+                    Random::FakeConstant fake_prng(0.0);
 
-                    EventIo::PhotonFactory cpf(corsika_photon, id, &prng);
+                    EventIo::PhotonFactory cpf(corsika_photon, id, &fake_prng);
 
                     vector<Photon*> photons;
                     photons.push_back(cpf.get_photon());
@@ -50,7 +52,7 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
 
                     // photon propagation down to the ground
                     Photons::propagate_photons_in_world_with_settings(
-                        &photons, &world, &settings
+                        &photons, &world, &settings, &prng
                     );
 
                     // detect photons in ground sensor
@@ -301,7 +303,7 @@ TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
 
         // photon propagation
         Photons::propagate_photons_in_world_with_settings(
-            &photons, &world, &settings
+            &photons, &world, &settings, &prng
         );
 
         // detect photons in sensors

@@ -22,13 +22,15 @@ namespace Photons {
 	void propagate_photons_in_world_with_settings(
 		std::vector<Photon*> *photons,
 		const Frame *world, 
-		const TracerSettings *settings
+		const TracerSettings *settings,
+		Random::Generator* prng
 	);	
 
 	void propagate_photons_using_single_thread(
 		std::vector<Photon*> *photons,
 		const Frame* world, 
-		const TracerSettings* settings
+		const TracerSettings* settings,
+		Random::Generator* prng
 	);
 
 	void propagate_photons_using_multi_thread(

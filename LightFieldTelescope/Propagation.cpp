@@ -187,7 +187,7 @@ void Propagation::execute() {
         }
 
 		Photons::propagate_photons_in_world_with_settings(
-			&photons, &telescope, &settings
+			&photons, &telescope, &settings, &prng
 		);
 
 		sensors->clear_history();

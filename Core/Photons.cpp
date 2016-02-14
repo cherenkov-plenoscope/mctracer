@@ -20,27 +20,25 @@ namespace Photons {
 	void propagate_photons_in_world_with_settings(
 		std::vector<Photon*> *photons,
 		const Frame* world, 
-		const TracerSettings* settings
+		const TracerSettings* settings,
+		Random::Generator* prng
 	) {
 		if(settings->use_multithread_when_possible)
 			propagate_photons_using_multi_thread(photons, world, settings);
 		else
-			propagate_photons_using_single_thread(photons, world, settings);
+			propagate_photons_using_single_thread(photons, world, settings, prng);
 	}	
 	//--------------------------------------------------------------------------
 	void propagate_photons_using_single_thread(
 		std::vector<Photon*> *photons,
 		const Frame* world, 
-		const TracerSettings* settings
+		const TracerSettings* settings,
+		Random::Generator* prng
 	) {
-		Random::Mt19937 dice(
-			settings->pseudo_random_number_seed
-		);
-
 		PropagationEnvironment env;
 		env.world_geometry = world;
 		env.propagation_options = settings;
-		env.random_engine = &dice;
+		env.random_engine = prng;
 
 		for(uint i = 0; i<photons->size(); i++ )
 			photons->at(i)->propagate_in(env);;

@@ -7,7 +7,7 @@
 </function>
 
 <function name="mirror_reflection">
-	<constant value="0.80" lower_limit="200e-9" upper_limit="1200e-9"/>
+	<constant value="0.8" lower_limit="200e-9" upper_limit="1200e-9"/>
 </function>
 
 <function name="lens_refraction">
@@ -17,7 +17,7 @@
 <disc>
 	<set_frame name="ground" pos="[0,0,-2]" rot="[0,0,0]"/>		
 	<set_surface reflection_vs_wavelength="zero" color="[22,91,49]"/>	
-	<set_disc radius="100"/>
+	<set_disc radius="1000"/>
 	<set_sensitive id="0"/>
 </disc>
 
