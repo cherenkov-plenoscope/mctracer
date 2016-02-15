@@ -15,7 +15,7 @@
 #include "TracerException.h"
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"
-#include "cmdline/cmdline.h"
+#include "CommandLine/cmdline/cmdline.h"
 #include "Cameras/FlyingCamera.h"
 #include "CorsikaIO/MmcsCorsikaFullEventGetter.h"
 #include "CorsikaIO/MmcsCorsikaPhotonData.h"
