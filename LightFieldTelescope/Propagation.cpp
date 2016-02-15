@@ -12,6 +12,7 @@
 #include "LightFieldTelescope/NightSkyBackgroundLightInjector.h"
 #include "PhotoElectricConverter.h"
 #include "PreTrigger.h"
+using std::vector;
 
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------
@@ -34,12 +35,12 @@ void Propagation::define_comand_line_keys() {
 //------------------------------------------------------------------------------
 void Propagation::execute() {
 
-	std::cout << "out  '" << output_path() << "'\n";
-	std::cout << "in   '" << input_path() << "'\n";
-	std::cout << "conf '" << config_path() << "'\n";
-	std::cout << "nsb  '" << nsb_vs_wavelength_path() << "'\n";
-	std::cout << "pde  '" << pde_vs_wavelength_path() << "'\n";
-	std::cout << "sipm '" << sipm_pulse_template_path() << "'\n";
+	cout << "out  '" << output_path() << "'\n";
+	cout << "in   '" << input_path() << "'\n";
+	cout << "conf '" << config_path() << "'\n";
+	cout << "nsb  '" << nsb_vs_wavelength_path() << "'\n";
+	cout << "pde  '" << pde_vs_wavelength_path() << "'\n";
+	cout << "sipm '" << sipm_pulse_template_path() << "'\n";
 
 	//--------------------------------------------------------------------------
 	// settings
@@ -73,7 +74,7 @@ void Propagation::execute() {
 
     //--------------------------------------------------------------------------
     // load light field calibration result
-    std::vector<std::vector<double>> light_field_calibration_result = 
+    vector<vector<double>> light_field_calibration_result = 
     	AsciiIo::gen_table_from_file(config_path());
     	
     	// assert number os sub_pixel matches simulated telescope
@@ -150,7 +151,7 @@ void Propagation::execute() {
 	// open cherenkov photon file
 	EventIo::EventIoFile corsika_run(input_path());
 
-	std::vector<std::vector<double>> number_of_pulses_in_events;
+	vector<vector<double>> number_of_pulses_in_events;
 
 	//--------------------------------------------------------------------------
 	// propagate each event
@@ -178,7 +179,7 @@ void Propagation::execute() {
 
 		Photons::delete_photons_and_history(&photons);
 
-		std::vector<std::vector<PipelinePhoton>> photon_pipelines = 
+		vector<vector<PipelinePhoton>> photon_pipelines = 
 			get_photon_pipelines(sensors);
 
 		LightFieldTelescope::inject_nsb_into_photon_pipeline(
@@ -189,9 +190,9 @@ void Propagation::execute() {
 			&prng
 		);
 
-		std::vector<std::vector<double>> electric_pipelines;
+		vector<vector<double>> electric_pipelines;
 
-		for(std::vector<PipelinePhoton> ph_pipe: photon_pipelines) {
+		for(vector<PipelinePhoton> ph_pipe: photon_pipelines) {
 
 			electric_pipelines.push_back(
 				sipm_converter.get_pulse_pipeline_for_photon_pipeline( //bug
@@ -202,22 +203,22 @@ void Propagation::execute() {
 			);
 		}
 
-		std::vector<double> number_of_pulses;
+		vector<double> number_of_pulses;
 
-		for(std::vector<double> puls_pipeline_of_sub_pixel: electric_pipelines)
+		for(vector<double> puls_pipeline_of_sub_pixel: electric_pipelines)
 			number_of_pulses.push_back(double(puls_pipeline_of_sub_pixel.size()));
 
 		number_of_pulses_in_events.push_back(number_of_pulses);
 		/*
-		std::vector<uint> might_trigger;
-		std::vector<uint> trigger;
+		vector<uint> might_trigger;
+		vector<uint> trigger;
 
-		std::vector<std::vector<double>> time_lines;
+		vector<vector<double>> time_lines;
 		for(uint i=0; i<electric_pipelines.size(); i++) {
 			
 			if(PreTrigger::might_trigger(&electric_pipelines[i], pre_trigger_config)){
 				might_trigger.push_back(i);
-				std::vector<double> time_line;
+				vector<double> time_line;
 				
 				time_line = time_line_sampler.time_line(
 					&electric_pipelines[i],
@@ -232,19 +233,19 @@ void Propagation::execute() {
 						trigger.push_back(i);
 				}
 
-				//std::cout << time_line_sampler.get_number_of_samples() << ", " << time_line.size() << "\n";
+				//cout << time_line_sampler.get_number_of_samples() << ", " << time_line.size() << "\n";
 			}
 		}
 
 		AsciiIo::write_table_to_file(time_lines, output_path()+std::to_string(event_counter));
-		//std::cout << get_print(electric_pipelines);
+		//cout << get_print(electric_pipelines);
 	
-		std::cout << "mt " << might_trigger.size() << " of " << electric_pipelines.size() <<
+		cout << "mt " << might_trigger.size() << " of " << electric_pipelines.size() <<
 		", " << double(might_trigger.size())/double(electric_pipelines.size())<< ", actual t " << trigger.size()<< "\n";
 		*/
-        std::cout << "event " << event_counter << ", E ";
-        std::cout << event.header.mmcs_event_header.total_energy_in_GeV;
-        std::cout << " GeV, photons " << photons.size() << "\n";
+        cout << "event " << event_counter << ", E ";
+        cout << event.header.mmcs_event_header.total_energy_in_GeV;
+        cout << " GeV, photons " << photons.size() << "\n";
 
 		event_counter++;
 	}
@@ -252,27 +253,27 @@ void Propagation::execute() {
 	AsciiIo::write_table_to_file(number_of_pulses_in_events, output_path());
 }
 //------------------------------------------------------------------------------
-std::string Propagation::output_path()const {
+string Propagation::output_path()const {
 	return cmd.get(outputK);
 }
 //------------------------------------------------------------------------------
-std::string Propagation::input_path()const {
+string Propagation::input_path()const {
 	return cmd.get(inputK);
 }
 //------------------------------------------------------------------------------
-std::string Propagation::config_path()const {
+string Propagation::config_path()const {
 	return cmd.get(configK);
 }
 //------------------------------------------------------------------------------
-std::string Propagation::nsb_vs_wavelength_path()const {
+string Propagation::nsb_vs_wavelength_path()const {
 	return cmd.get(nsbK);
 }
 //------------------------------------------------------------------------------
-std::string Propagation::pde_vs_wavelength_path()const {
+string Propagation::pde_vs_wavelength_path()const {
 	return cmd.get(pdeK);
 }
 //------------------------------------------------------------------------------
-std::string Propagation::sipm_pulse_template_path()const {
+string Propagation::sipm_pulse_template_path()const {
 	return cmd.get(sipm_pulseK);
 }
 }// LightFieldTelescope

@@ -3,13 +3,15 @@
 #include <sstream>
 #include <iomanip>
 #include "math.h"
+using std::string;
+
 //------------------------------------------------------------------------------
 namespace Xml  {
 //------------------------------------------------------------------------------
 Problem::Problem(
-    const std::shared_ptr<std::string> _file, 
+    const std::shared_ptr<string> _file, 
     const int _offset,
-    const std::string _path
+    const string _path
 ):
     file(_file), 
     offset(_offset),
@@ -39,7 +41,7 @@ uint Problem::get_column()const {
     return column;
 }
 //------------------------------------------------------------------------------
-std::string Problem::get_path()const {
+string Problem::get_path()const {
     return path;
 }
 //------------------------------------------------------------------------------
@@ -63,11 +65,11 @@ void Problem::locate_problem_column_and_line_using_new_lines() {
     column = index == 0 ? offset + 1 : offset - new_lines[index - 1];
 }
 //------------------------------------------------------------------------------
-std::string Problem::get_problem_section_from_original_file()const {
+string Problem::get_problem_section_from_original_file()const {
     
     std::stringstream problem_section;
     std::istringstream ifile(*file);
-    std::string line_of_text;
+    string line_of_text;
 
     const uint line_radius = 5;
     const uint max_digits_for_row_number = ceil(log10(line+line_radius));

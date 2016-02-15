@@ -15,7 +15,8 @@
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"
 #include "CommandLine/CommandLine.h"
-
+using std::string;
+using std::cout;
 //=================================
 
 namespace LightFieldTelescope {
@@ -23,12 +24,12 @@ namespace LightFieldTelescope {
 	class Propagation {
 		CommandLine cmd;	
 		
-		const std::string configK = "config";
-		const std::string outputK = "output";
-		const std::string inputK = "input";
-		const std::string nsbK = "nsb";
-		const std::string pdeK = "pde";
-		const std::string sipm_pulseK = "sipm";
+		const string configK = "config";
+		const string outputK = "output";
+		const string inputK = "input";
+		const string nsbK = "nsb";
+		const string pdeK = "pde";
+		const string sipm_pulseK = "sipm";
 
 	public:
 
@@ -37,12 +38,12 @@ namespace LightFieldTelescope {
 	private:
 		
 		void define_comand_line_keys();
-		std::string output_path()const;
-		std::string input_path()const;
-		std::string config_path()const;
-		std::string nsb_vs_wavelength_path()const;
-		std::string pde_vs_wavelength_path()const;
-		std::string sipm_pulse_template_path()const;
+		string output_path()const;
+		string input_path()const;
+		string config_path()const;
+		string nsb_vs_wavelength_path()const;
+		string pde_vs_wavelength_path()const;
+		string sipm_pulse_template_path()const;
 	};
 }// LightFieldTelescope
 #endif // __LightFieldTelescopePropagation_H_INCLUDE__ 

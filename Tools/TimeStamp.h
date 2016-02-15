@@ -13,6 +13,7 @@
 #include <string>
 #include <sstream>
 #include <iomanip>
+using std::string;
 //=================================
 class TimeStamp {
 
@@ -22,15 +23,15 @@ public:
 
 	TimeStamp();
 	void update_now();
-	std::string get_print()const;
-	std::string yyyy()const;
-	std::string mm()const;
-	std::string dd()const;
-	std::string HH()const;
-	std::string MM()const;
-	std::string SS()const;
+	string get_print()const;
+	string yyyy()const;
+	string mm()const;
+	string dd()const;
+	string HH()const;
+	string MM()const;
+	string SS()const;
 private:
-	std::string fill_zeros_to_value_for_width(
+	string fill_zeros_to_value_for_width(
 		const uint value, 
 		const uint width
 	)const;

@@ -26,7 +26,7 @@ void ToDoScheduler::execute() {
 	else if (cmd.exist(pointsource_key))
 		point_spread_investigation_in_geometry();
 	else 
-		std::cout << "Nothing to do, quit.\n --help for options" << std::endl;
+		cout << "Nothing to do, quit.\n --help for options\n";
 }
 //------------------------------------------------------------------------------
 void ToDoScheduler::define() {
@@ -44,7 +44,7 @@ void ToDoScheduler::define() {
 //------------------------------------------------------------------------------
 void ToDoScheduler::render_geometry()const {
 
-	std::string geom_path = cmd.get(geometry_key);
+	string geom_path = cmd.get(geometry_key);
 
 	Frame *geometry;
 	if(
@@ -60,7 +60,7 @@ void ToDoScheduler::render_geometry()const {
 		geometry = fab.world();
 	}else{
 		geometry = Frame::void_frame;
-		std::cout << "Can only read stl or xml files.\n";
+		cout << "Can only read stl or xml files.\n";
 		return;
 	}
 	
@@ -285,7 +285,7 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 					Frame SWorld = *world;
 					SWorld.set_mother_and_child(trayect_fab.get_next_trajectoy());
 					SWorld.init_tree_based_on_mother_child_relations();
-					//std::cout << SWorld.get_tree_print();
+					//cout << SWorld.get_tree_print();
 					free_orb.continue_with_new_scenery_and_settings(&SWorld, &settings);
 				}
 
@@ -295,22 +295,22 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 	}
 }
 //------------------------------------------------------------------------------
-const std::string ToDoScheduler::geometry_path()const {
+const string ToDoScheduler::geometry_path()const {
 	return cmd.get(geometry_key);
 }
 //------------------------------------------------------------------------------
-const std::string ToDoScheduler::photon_path()const {
+const string ToDoScheduler::photon_path()const {
 	return cmd.get(photons_key);
 }
 //------------------------------------------------------------------------------
-const std::string ToDoScheduler::output_path()const {
+const string ToDoScheduler::output_path()const {
 	return cmd.get(output_key);
 }
 //------------------------------------------------------------------------------
-const std::string ToDoScheduler::config_path()const {
+const string ToDoScheduler::config_path()const {
 	return cmd.get(config_key);
 }
 //------------------------------------------------------------------------------
-const std::string ToDoScheduler::skydome_path()const {
+const string ToDoScheduler::skydome_path()const {
 	return cmd.get(skydome_key);
 }

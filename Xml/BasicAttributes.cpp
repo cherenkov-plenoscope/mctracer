@@ -1,32 +1,33 @@
 #include "BasicAttributes.h"
+using std::string;
 
 namespace Xml {
 //------------------------------------------------------------------------------
-std::string av(const std::string &att, const std::string &val) {
+string av(const string &att, const string &val) {
     std::stringstream out;
     out << att << "=\"" << val << "\"";
     return out.str();
 }
 //------------------------------------------------------------------------------
-std::string comment(const std::string &text) {
+string comment(const string &text) {
     std::stringstream out;
     out << "<!-- " << text << " -->";
     return out.str();
 }
 //------------------------------------------------------------------------------
-std::string to_string(const Vector3D &vec) {
+string to_string(const Vector3D &vec) {
     std::stringstream out;
     out << "[" << vec.x() << "," << vec.y() << "," <<  vec.z() << "]";
     return out.str();
 }
 //------------------------------------------------------------------------------
-std::string to_string(const bool b) {
+string to_string(const bool b) {
     return (b? "true" : "false");
 }
 //------------------------------------------------------------------------------
-int att2int(Node node, std::string attribute_name) {
+int att2int(Node node, string attribute_name) {
 
-    std::string attribute = node.attribute(attribute_name);
+    string attribute = node.attribute(attribute_name);
     int number;
     
     try{
@@ -52,9 +53,9 @@ int att2int(Node node, std::string attribute_name) {
     return number;
 }
 //------------------------------------------------------------------------------
-double att2double(Node node, std::string attribute_name) {
+double att2double(Node node, string attribute_name) {
 
-    std::string attribute = node.attribute(attribute_name);
+    string attribute = node.attribute(attribute_name);
     double number;
     
     try{
@@ -80,9 +81,9 @@ double att2double(Node node, std::string attribute_name) {
     return number;
 }
 //------------------------------------------------------------------------------
-double att2bool(Node node, std::string attribute_name) {
+double att2bool(Node node, string attribute_name) {
 
-    std::string attribute = node.attribute(attribute_name);
+    string attribute = node.attribute(attribute_name);
     bool boolean;
     
     try{
@@ -108,9 +109,9 @@ double att2bool(Node node, std::string attribute_name) {
     return boolean;
 }
 //------------------------------------------------------------------------------
-Tuple3 att2Tuple3(Node node, std::string attribute_name) {
+Tuple3 att2Tuple3(Node node, string attribute_name) {
 
-    std::string attribute = node.attribute(attribute_name);
+    string attribute = node.attribute(attribute_name);
     Tuple3 t3;
     
     try{
@@ -136,7 +137,7 @@ Tuple3 att2Tuple3(Node node, std::string attribute_name) {
     return t3;
 }
 //------------------------------------------------------------------------------
-Vector3D att2Vector3D(Node node, std::string attribute_name) {
+Vector3D att2Vector3D(Node node, string attribute_name) {
 
     try{
 
@@ -151,7 +152,7 @@ Vector3D att2Vector3D(Node node, std::string attribute_name) {
     }
 }
 //------------------------------------------------------------------------------
-Rotation3D att2Rotation3D(Node node, std::string attribute_name) {
+Rotation3D att2Rotation3D(Node node, string attribute_name) {
 
     try{
 
@@ -166,7 +167,7 @@ Rotation3D att2Rotation3D(Node node, std::string attribute_name) {
     }
 }
 //------------------------------------------------------------------------------
-Color att2Color(Node node, std::string attribute_name) {
+Color att2Color(Node node, string attribute_name) {
 
     try{
 

@@ -13,15 +13,15 @@
 #include <memory>
 #include <vector>
 #include <string>
-
+using std::string;
 //------------------------------------------------------------------------------
 namespace Xml {
 
 	class Problem {
 
-		const std::shared_ptr<std::string> file;
+		const std::shared_ptr<string> file;
 		const int offset;
-		const std::string path;
+		const string path;
 
 		std::vector<ptrdiff_t> new_lines;
 		uint column;
@@ -29,15 +29,15 @@ namespace Xml {
 	public:
 
 		Problem(
-			const std::shared_ptr<std::string> _file, 
+			const std::shared_ptr<string> _file, 
 			const int _offset,
-			const std::string _path
+			const string _path
 		);
 		Problem(Node node);
-		std::string get_problem_section_from_original_file()const;
+		string get_problem_section_from_original_file()const;
 		uint get_line()const;
 		uint get_column()const;
-		std::string get_path()const;
+		string get_path()const;
 	private:
 
 		void init();

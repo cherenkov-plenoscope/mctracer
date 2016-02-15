@@ -7,6 +7,7 @@
 #include "Geometry/StereoLitographyIo/StereoLitographyIo.h"
 #include "Geometry/HexPlane.h"
 #include "XmlFactory/LightFieldTelescopeFactory.h"
+using std::string;
 
 using StringTools::is_equal;
 //------------------------------------------------------------------------------
@@ -23,7 +24,7 @@ WorldFactory::WorldFactory(){
 	functions = new FunctionFactory(this);
 } 
 //------------------------------------------------------------------------------
-void WorldFactory::load(std::string path){
+void WorldFactory::load(string path){
 
 	// determine directory
 	int position_in_path = path.find_last_of("/\\");
@@ -33,17 +34,17 @@ void WorldFactory::load(std::string path){
 	else
 		absolute_path = path.substr(0,position_in_path + 1); 
 
-	std::string filename = path.substr(position_in_path + 1);
+	string filename = path.substr(position_in_path + 1);
 	
    	load_file(root_of_World, absolute_path, filename);
 }
 //------------------------------------------------------------------------------
 void WorldFactory::load_file(
 	Frame* mother,
-	std::string path,
-	std::string filename
+	string path,
+	string filename
 ){
-	std::string path_of_file_to_load = path  + filename;
+	string path_of_file_to_load = path  + filename;
 
 	//remember this file until the next is parsed
 	XmlName = path_of_file_to_load;
@@ -67,7 +68,7 @@ void WorldFactory::load_file(
 void WorldFactory::include_file(
 	Frame* mother, const pugi::xml_node node
 ){
-	std::string relative_path_to_xml_to_be_included;
+	string relative_path_to_xml_to_be_included;
 	extract_include_path(relative_path_to_xml_to_be_included, node);
 
 	WorldFactory fab;
@@ -80,7 +81,7 @@ void WorldFactory::include_file(
 }
 //------------------------------------------------------------------------------
 void WorldFactory::extract_include_path(
-	std::string &path,const pugi::xml_node node
+	string &path,const pugi::xml_node node
 ){
 	assert_attribute_exists(node, "path");
 
@@ -91,7 +92,7 @@ void WorldFactory::add_to_array_if_telescope(
 	const pugi::xml_node node, 
 	Frame* frame
 ) {
-	std::string telescope_key = "set_telescope";
+	string telescope_key = "set_telescope";
 
 	if(has_child(node, telescope_key))
 		telescopes->add_to_telescope_array(frame);
@@ -101,7 +102,7 @@ void WorldFactory::add_to_sensors_if_sensitive(
 	const pugi::xml_node node, 
 	Frame* frame
 ) {
-	std::string sensor_key = "set_sensitive";
+	string sensor_key = "set_sensitive";
 
 	if(has_child(node, sensor_key)) {
 		const pugi::xml_node sensi = node.child(sensor_key.c_str());
@@ -181,7 +182,7 @@ Frame* mother,const pugi::xml_node node){
 void WorldFactory::go_on_with_children_of_node(
 	Frame* mother,const pugi::xml_node node
 ) {
-	std::vector<std::string> known_keys = {
+	std::vector<string> known_keys = {
 		"include",
 		"function",
 		"frame",
@@ -306,7 +307,7 @@ Frame* WorldFactory::produceSphere(
 	assert_child_exists(node, "set_surface");
 	assert_child_exists(node, "set_sphere");
 
-	std::string 			name;
+	string 			name;
 	Vector3D 				position;
 	Rotation3D 				rotation;
 	const Color*		color;
@@ -343,7 +344,7 @@ Frame* WorldFactory::produceCylinder(
 	assert_child_exists(node, "set_surface");
 	assert_child_exists(node, "set_cylinder");
 
-	std::string 			name;
+	string 			name;
 	Vector3D 				position;
 	Rotation3D 				rotation;
 	const Color*			color;
@@ -379,7 +380,7 @@ Frame* WorldFactory::produceReflector(
 	assert_child_exists(node, "set_segmented_reflector");
 	const pugi::xml_node refl_node = node.child("set_segmented_reflector");
 
-	std::string 		name;
+	string 		name;
 	Vector3D 			position;
 	Rotation3D 			rotation;
 	const Function::Func1D* reflection_vs_wavelength;
@@ -420,7 +421,7 @@ Frame* WorldFactory::produceBiConvexLensHex(
 	FrameFactory frameFab(node);	
 	assert_child_exists(node, "set_bi_convex_lens_hex");
 
-	std::string 		name;
+	string 		name;
 	Vector3D 			position;
 	Rotation3D 			rotation;
 	const Color*		color;
@@ -461,7 +462,7 @@ Frame* WorldFactory::produce_stl_object(
 	const pugi::xml_node set_stl_node = node.child("set_stl");
 
 	assert_attribute_exists(set_stl_node, "file");
-	std::string file = 
+	string file = 
 		absolute_path + set_stl_node.attribute("file").value();
 
 	assert_attribute_exists(set_stl_node, "scale");
@@ -507,7 +508,7 @@ void WorldFactory::extractBiConvexLensHex(
 }
 //------------------------------------------------------------------------------
 double WorldFactory::extract_reflector(
-	const std::string key, 
+	const string key, 
 	const pugi::xml_node node
 ) {
 	assert_attribute_exists(node, key.c_str());
@@ -653,7 +654,7 @@ Frame* WorldFactory::produceTriangle(
 	assert_child_exists(node, "set_surface");
 	assert_child_exists(node, "set_triangle");
 	
-	std::string 			name;
+	string 			name;
 	Vector3D 				position;
 	Rotation3D 				rotation;
 	const Color*		color;
@@ -689,7 +690,7 @@ Frame* WorldFactory::produce_sphere_cap_hexagonal(
 	assert_child_exists(node, "set_surface");
 	assert_child_exists(node, "set_sphere_cap_hexagonal");
 
-	std::string 			name;
+	string 			name;
 	Vector3D 				position;
 	Rotation3D 				rotation;
 	const Color*		color;

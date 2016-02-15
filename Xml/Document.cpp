@@ -3,10 +3,11 @@
 #include "Problem.h"
 #include <fstream>
 #include <sstream>
+using std::string;
 //------------------------------------------------------------------------------
 namespace Xml  {
 //------------------------------------------------------------------------------    
-Document::Document(const std::string path) {
+Document::Document(const string path) {
 
     this->path = path;
     read_in_documnet();
@@ -19,7 +20,7 @@ Node Document::get_tree()const {
 //------------------------------------------------------------------------------
 void Document::read_in_documnet() {
 
-    std::shared_ptr<std::string> xmlfile (new std::string);
+    std::shared_ptr<string> xmlfile (new string);
     file = xmlfile;
     std::ifstream t(path.c_str());
 
@@ -83,7 +84,7 @@ void Document::assert_xml_file_is_valid() {
     }
 }
 //------------------------------------------------------------------------------
-std::string Document::pugi_status_msg(int encoding)const{
+string Document::pugi_status_msg(int encoding)const{
     // The pugi xml error encodings with detailed informaion
     // http://pugixml.googlecode.com/svn/tags/latest/docs/manual/loading.html
     switch(encoding){

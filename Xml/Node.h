@@ -11,7 +11,7 @@
 #include "pugi/pugixml.hpp"
 #include <string>
 #include <memory>
-
+using std::string;
 //------------------------------------------------------------------------------
 namespace Xml {
 
@@ -19,32 +19,32 @@ namespace Xml {
 		friend class Problem;
 
 		pugi::xml_node node;
-		const std::shared_ptr<std::string> file;
-		const std::string path;
+		const std::shared_ptr<string> file;
+		const string path;
 	public:
 
 		void operator=(const Node eq);
 		Node(
 			const pugi::xml_node _node, 
-			const std::shared_ptr<std::string> _file,
-			const std::string _path
+			const std::shared_ptr<string> _file,
+			const string _path
 		);
-		std::string name()const;
-		std::string attribute(const std::string attribute)const;
-		Node child(const std::string child)const;
+		string name()const;
+		string attribute(const string attribute)const;
+		Node child(const string child)const;
 		Node first_child()const;
 		Node next_child();
 		operator bool()const { 
 		    return node ? true: false; 
 		}
 	
-		bool has_child(const std::string child)const;
-		bool has_attribute(const std::string attribute)const;
-		std::string xml_path()const;
+		bool has_child(const string child)const;
+		bool has_attribute(const string attribute)const;
+		string xml_path()const;
 	private:
 
-		void assert_child_exists(const std::string child)const;
-		void assert_attribute_exists(const std::string attribute)const;
+		void assert_child_exists(const string child)const;
+		void assert_attribute_exists(const string attribute)const;
 	};	
 }//Xml
 #endif // __XmlNode_H_INCLUDED__ 
