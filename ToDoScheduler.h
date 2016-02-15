@@ -15,7 +15,7 @@
 #include "TracerException.h"
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"
-#include "CommandLine/cmdline/cmdline.h"
+#include "CommandLine/CommandLine.h"
 #include "Cameras/FlyingCamera.h"
 #include "CorsikaIO/MmcsCorsikaFullEventGetter.h"
 #include "CorsikaIO/MmcsCorsikaPhotonData.h"
@@ -24,7 +24,7 @@
 
 //=================================
 class ToDoScheduler {
-	cmdline::parser comand_line_parser;	
+	CommandLine cmd;	
 	
 	const std::string render_key = "render";
 	const std::string propagate_key = "propagate";

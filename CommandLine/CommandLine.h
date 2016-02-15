@@ -19,10 +19,10 @@ class CommandLine {
 	cmdline::parser cp;	
 public:
 
-	void define_name_short_description(
-		const string name, const char short_name, const string desc
-	);
+	void add_value(const string name, const char short_name, const string desc);
+	void add_flag(const string name, const string desc);
 	void parse(int argc, char *argv[]);
 	string get(const string key)const;
+	bool exist(const string key)const;
 };
 #endif // __CommandLine_H_INCLUDED__ 

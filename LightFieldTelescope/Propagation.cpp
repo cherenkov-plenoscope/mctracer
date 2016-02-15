@@ -18,35 +18,18 @@ namespace LightFieldTelescope {
 Propagation::Propagation(int argc, char** argv) {
 
 	define_comand_line_keys();
-	comand_line_parser.parse_check(argc, argv);
+	cmd.parse(argc, argv);
 	execute();
 }
 //------------------------------------------------------------------------------
 void Propagation::define_comand_line_keys() {
 
-	comand_line_parser.add<std::string>(
-		configK, 'c' ,"configuration file controling the simulation" , false, ""
-	);
-
-	comand_line_parser.add<std::string>(
-		outputK, 'o', "output path", false, ""
-	);
-
-	comand_line_parser.add<std::string>(
-		inputK, 'i', "input path for CORSIKA Cherenkov photons", false, ""
-	);
-
-	comand_line_parser.add<std::string>(
-		nsbK, 'n', "night sky background flux vs wavelength", false, ""
-	);
-
-	comand_line_parser.add<std::string>(
-		pdeK, 'q', "SIPM quantum efficiency vs wavelength path", false, ""
-	);
-
-	comand_line_parser.add<std::string>(
-		sipm_pulseK, 's', "SIPM pulse template path", false, ""
-	);
+	cmd.add_value(configK, 'c' ,"configuration file controling the simulation");
+	cmd.add_value(outputK, 'o', "output path");
+	cmd.add_value(inputK, 'i', "input path for CORSIKA Cherenkov photons");
+	cmd.add_value(nsbK, 'n', "night sky background flux vs wavelength");
+	cmd.add_value(pdeK, 'q', "SIPM quantum efficiency vs wavelength path");
+	cmd.add_value(sipm_pulseK, 's', "SIPM pulse template path");
 }
 //------------------------------------------------------------------------------
 void Propagation::execute() {
@@ -270,26 +253,26 @@ void Propagation::execute() {
 }
 //------------------------------------------------------------------------------
 std::string Propagation::output_path()const {
-	return comand_line_parser.get<std::string>(outputK);
+	return cmd.get(outputK);
 }
 //------------------------------------------------------------------------------
 std::string Propagation::input_path()const {
-	return comand_line_parser.get<std::string>(inputK);
+	return cmd.get(inputK);
 }
 //------------------------------------------------------------------------------
 std::string Propagation::config_path()const {
-	return comand_line_parser.get<std::string>(configK);
+	return cmd.get(configK);
 }
 //------------------------------------------------------------------------------
 std::string Propagation::nsb_vs_wavelength_path()const {
-	return comand_line_parser.get<std::string>(nsbK);
+	return cmd.get(nsbK);
 }
 //------------------------------------------------------------------------------
 std::string Propagation::pde_vs_wavelength_path()const {
-	return comand_line_parser.get<std::string>(pdeK);
+	return cmd.get(pdeK);
 }
 //------------------------------------------------------------------------------
 std::string Propagation::sipm_pulse_template_path()const {
-	return comand_line_parser.get<std::string>(sipm_pulseK);
+	return cmd.get(sipm_pulseK);
 }
 }// LightFieldTelescope

@@ -12,18 +12,18 @@
 ToDoScheduler::ToDoScheduler(int argc, char** argv) {
 
 	define();
-	comand_line_parser.parse_check(argc, argv);
+	cmd.parse(argc, argv);
 	execute();
 }
 //------------------------------------------------------------------------------
 void ToDoScheduler::execute() {
-	if (comand_line_parser.exist(render_key))
+	if (cmd.exist(render_key))
 		render_geometry();
-	else if (comand_line_parser.exist(propagate_key))
+	else if (cmd.exist(propagate_key))
 		propagate_photons_through_geometry();
-	else if (comand_line_parser.exist(investigation_key))
+	else if (cmd.exist(investigation_key))
 		investigate_single_photon_propagation_in_geometry();
-	else if (comand_line_parser.exist(pointsource_key))
+	else if (cmd.exist(pointsource_key))
 		point_spread_investigation_in_geometry();
 	else 
 		std::cout << "Nothing to do, quit.\n --help for options" << std::endl;
@@ -31,56 +31,32 @@ void ToDoScheduler::execute() {
 //------------------------------------------------------------------------------
 void ToDoScheduler::define() {
 
-	comand_line_parser.add<std::string>(
-		geometry_key, 'g', "geometry input file", false, ""
-	);
-
-	comand_line_parser.add<std::string>(
-		photons_key, 'p', "photon input file",  false, ""
-	);
-
-	comand_line_parser.add<std::string>(
-		config_key, 'c' ,"configuration file" , false, ""
-	);
-
-	comand_line_parser.add<std::string>(
-		output_key, 'o', "output file", false, ""
-	);
-
-	comand_line_parser.add<std::string>(
-		skydome_key, 's', "sky dome image", false, ""
-	);
-
-  	comand_line_parser.add(
-  		pointsource_key, '\0', "point source investigation"
-  	);	
-
-    comand_line_parser.add(
-  		render_key, '\0', "render geometry"
-  	);	
-
-    comand_line_parser.add(
-  		propagate_key, '\0', "propagate photons through geometry"
-  	);
-
-    comand_line_parser.add(
-  		investigation_key, '\0', "investigate single photon propagation in geometry"
-  	);
+	cmd.add_value(geometry_key, 'g', "geometry input file");
+	cmd.add_value(photons_key, 'p', "photon input file");
+	cmd.add_value(config_key, 'c' ,"configuration file");
+	cmd.add_value(output_key, 'o', "output file");
+	cmd.add_value(skydome_key, 's', "sky dome image");
+  	cmd.add_flag(pointsource_key, "point source investigation");	
+    cmd.add_flag(render_key, "render geometry");	
+    cmd.add_flag(propagate_key, "propagate photons through geometry");
+    cmd.add_flag(investigation_key, "investigate single photon propagation in geometry");
 }
 //------------------------------------------------------------------------------
 void ToDoScheduler::render_geometry()const {
 
+	std::string geom_path = cmd.get(geometry_key);
+
 	Frame *geometry;
 	if(
-		StringTools::is_ending(geometry_path(),".stl") || 
-		StringTools::is_ending(geometry_path(),".STL")
+		StringTools::is_ending(geom_path,".stl") || 
+		StringTools::is_ending(geom_path,".STL")
 	) {
-		geometry = StereoLitographyIo::read(geometry_path(), 1.0);
-	}else if(	StringTools::is_ending(geometry_path(),".xml") ||
-				StringTools::is_ending(geometry_path(),".XML")
+		geometry = StereoLitographyIo::read(geom_path, 1.0);
+	}else if(	StringTools::is_ending(geom_path,".xml") ||
+				StringTools::is_ending(geom_path,".XML")
 	) {
 		WorldFactory fab;
-		fab.load(geometry_path());
+		fab.load(geom_path);
 		geometry = fab.world();
 	}else{
 		geometry = Frame::void_frame;
@@ -115,7 +91,7 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 
 	// scenery
 	WorldFactory fab;
-	fab.load(geometry_path());
+	fab.load(cmd.get(geometry_key));
 	Frame *world = fab.world();
 	// sensors in scenery
 	PhotonSensors::Sensors sensors = fab.get_sensors();
@@ -140,7 +116,7 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 		outname << output_path() << i;
 
 		std::stringstream header;
-		header << "geometry: " << geometry_path() << "\n";
+		header << "geometry: " << cmd.get(geometry_key) << "\n";
 		header << "lightsource: " << config_path() << "\n";
 		header << "sensor id: " << i << "\n";
 		header << "sensor name: " << sensors.at(i)->get_frame()->get_path_in_tree_of_frames() << "\n";
@@ -170,7 +146,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 
 	// load scenery
 	WorldFactory fab;
-	fab.load(geometry_path());
+	fab.load(cmd.get(geometry_key));
 	Frame *world = fab.world();
 	PhotonSensors::Sensors sensors = fab.get_sensors();
 
@@ -221,7 +197,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 			outname << "e" << event_counter << "s" << sensors.at(i)->get_id() << ".txt";
 
 			std::stringstream header;
-			header << "geometry: " << geometry_path() << "\n";
+			header << "geometry: " << cmd.get(geometry_key) << "\n";
 			header << "photons: " << photon_path() << ", event: " << event_counter << "\n";
 			header << "sensor id: " << i << "\n";
 			header << "sensor name: " << sensors.at(i)->get_frame()->get_path_in_tree_of_frames() << "\n";
@@ -262,7 +238,7 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 
 	// load scenery
 	WorldFactory fab;
-	fab.load(geometry_path());
+	fab.load(cmd.get(geometry_key));
 	Frame *world = fab.world();
 
 	// init Telescope Array Control
@@ -320,21 +296,21 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 }
 //------------------------------------------------------------------------------
 const std::string ToDoScheduler::geometry_path()const {
-	return comand_line_parser.get<std::string>(geometry_key);
+	return cmd.get(geometry_key);
 }
 //------------------------------------------------------------------------------
 const std::string ToDoScheduler::photon_path()const {
-	return comand_line_parser.get<std::string>(photons_key);
+	return cmd.get(photons_key);
 }
 //------------------------------------------------------------------------------
 const std::string ToDoScheduler::output_path()const {
-	return comand_line_parser.get<std::string>(output_key);
+	return cmd.get(output_key);
 }
 //------------------------------------------------------------------------------
 const std::string ToDoScheduler::config_path()const {
-	return comand_line_parser.get<std::string>(config_key);
+	return cmd.get(config_key);
 }
 //------------------------------------------------------------------------------
 const std::string ToDoScheduler::skydome_path()const {
-	return comand_line_parser.get<std::string>(skydome_key);
+	return cmd.get(skydome_key);
 }

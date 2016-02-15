@@ -14,14 +14,14 @@
 #include "TracerException.h"
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"
-#include "CommandLine/cmdline/cmdline.h"
+#include "CommandLine/CommandLine.h"
 
 //=================================
 
 namespace LightFieldTelescope {
 	
 	class Propagation {
-		cmdline::parser comand_line_parser;	
+		CommandLine cmd;	
 		
 		const std::string configK = "config";
 		const std::string outputK = "output";
