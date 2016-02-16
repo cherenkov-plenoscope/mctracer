@@ -40,7 +40,7 @@
 
 class HomoTrafo3D {
 
-	double T[4][4];
+	double T[3][4];
 public:
 
 	HomoTrafo3D();
