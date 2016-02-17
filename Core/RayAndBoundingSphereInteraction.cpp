@@ -1,18 +1,8 @@
 #include "Core/Ray.h"
 //------------------------------------------------------------------------------
-bool Ray::support_of_ray_is_inside_bounding_sphere_of(
-	const Frame *frame
-)const {
-	double distance_between_support_and_frame = ( 
-			support*(-1.0) +
-			*frame->get_position_in_world()
-		).norm();
-
-	return (
-		distance_between_support_and_frame
-		< 
-		frame->get_radius_of_sphere_enclosing_all_children() 
-	);
+bool Ray::support_of_ray_is_inside_bounding_sphere_of(const Frame *frame)const {
+	return (*frame->get_position_in_world() - support).norm_is_less_equal_than(
+		frame->get_radius_of_sphere_enclosing_all_children());
 }
 //------------------------------------------------------------------------------
 bool Ray::has_intersection_with_bounding_sphere_of(const Frame* frame)const{
