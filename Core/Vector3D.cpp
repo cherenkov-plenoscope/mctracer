@@ -9,11 +9,9 @@ const double Vector3D::max_deviation_of_eq_vectors = 1e-7;
 Vector3D::Vector3D(){
 }
 //------------------------------------------------------------------------------
-Vector3D::Vector3D(const double nx,const double ny,const double nz) {
-	X=nx; 
-	Y=ny; 
-	Z=nz;
-}
+Vector3D::Vector3D(const double nx,const double ny,const double nz):
+	X(nx), Y(ny), Z(nz)
+{}
 //------------------------------------------------------------------------------
 void Vector3D::set(const double nx,const double ny,const double nz) {
 	X=nx; 
