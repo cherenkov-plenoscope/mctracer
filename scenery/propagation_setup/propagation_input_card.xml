@@ -1,0 +1,24 @@
+<propagation>
+    <!--  -->
+    <Plenoscpe 
+        path="the_big_lebowsky.xml"
+    />
+    <optics_calibration_result 
+        path="optical_calibration_result.txt"
+    />
+    <night_sky_background_ligth 
+        path_flux_vs_wavelength="nsb_flux_vs_wavelength_la_palma.txt" 
+        exposure_time="50e-9"
+    />
+    <photo_electric_converter 
+        path_pde_vs_wavelength="hamamatsu_sipm_pde_vs_wavelength_75um.txt" 
+        dark_rate="1.0e6" 
+        probability_for_second_puls="0.1"
+    />
+    <settings
+        pseudo_random_number_seed="0"
+        max_number_of_interactions_per_photon="10"
+        store_only_final_intersection="true"
+        use_multithread_when_possible="false"
+    />
+</propagation>

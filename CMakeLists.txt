@@ -50,6 +50,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/PreTrigger.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PipelinePhoton.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PhotoElectricConverter.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/SimpleTDCQDC.cpp
 )
 add_subdirectory("${PROJECT_SOURCE_DIR}/Cameras")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Core")

@@ -67,7 +67,7 @@ namespace LightFieldTelescope {
 			mode_of_cherenkov_arrival_times = arrival_time_histo.mode();
 		}
 
-		std::cout << "min: " << min_crk_arrival_time << ", max: " << max_crk_arrival_time  << ", duration: " << max_crk_arrival_time - min_crk_arrival_time << ", mode " << mode_of_cherenkov_arrival_times << "\n";
+		//std::cout << "min: " << min_crk_arrival_time << ", max: " << max_crk_arrival_time  << ", duration: " << max_crk_arrival_time - min_crk_arrival_time << ", mode " << mode_of_cherenkov_arrival_times << "\n";
 
 		//--------------------------------
 		// INIT START TIME OF NSB EXPOSURE

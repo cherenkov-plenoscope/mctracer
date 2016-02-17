@@ -41,9 +41,6 @@ namespace LightFieldTelescope {
 		string output_path()const;
 		string input_path()const;
 		string config_path()const;
-		string nsb_vs_wavelength_path()const;
-		string pde_vs_wavelength_path()const;
-		string sipm_pulse_template_path()const;
 	};
 }// LightFieldTelescope
 #endif // __LightFieldTelescopePropagation_H_INCLUDE__ 

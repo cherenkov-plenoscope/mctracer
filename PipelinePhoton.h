@@ -10,6 +10,7 @@
 // included dependencies
 #include <iostream>
 #include "PhotonSensor/PhotonSensor.h"
+using std::vector;
 
 struct PipelinePhoton {
 	double arrival_time;

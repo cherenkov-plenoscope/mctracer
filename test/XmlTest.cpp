@@ -217,3 +217,26 @@ TEST_F(XmlTest, functions) {
 	EXPECT_EQ(100e-9, func->get_limits().get_lower());
 	EXPECT_EQ(1200e-9, func->get_limits().get_upper());
 }
+#include "Xml/Factory/TracerSettingsFab.h"
+TEST_F(XmlTest, TracerSettings) {
+
+	const std::string path = "xml/tracer_settings.xml";
+
+	TracerSettings out;
+
+	out.max_number_of_interactions_per_photon = 1337;
+	out.pseudo_random_number_seed = 42;
+	out.use_multithread_when_possible = false;
+	out.store_only_final_intersection = true;
+
+	FileTools::write_text_to_file(Xml::Configs::to_node(out), path);
+
+	Xml::Document doc(path);
+	Xml::Node node = doc.get_tree();
+	TracerSettings in = Xml::Configs::get_TracerSettings_from_node(node.child("settings"));
+
+	EXPECT_EQ(in.max_number_of_interactions_per_photon, out.max_number_of_interactions_per_photon);
+	EXPECT_EQ(in.pseudo_random_number_seed, out.pseudo_random_number_seed);
+	EXPECT_EQ(in.use_multithread_when_possible, out.use_multithread_when_possible);
+	EXPECT_EQ(in.store_only_final_intersection, out.store_only_final_intersection);
+}
