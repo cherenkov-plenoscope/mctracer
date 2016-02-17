@@ -51,7 +51,6 @@ public:
 		const Vector3D rot_z,
 		const Vector3D pos
 	);
-	void set_unity();
 	Vector3D get_transformed_orientation(const Vector3D& ori)const;
 	void transform_orientation(Vector3D* vector)const;
 	Vector3D get_transformed_position(const Vector3D& pos)const;

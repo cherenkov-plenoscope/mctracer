@@ -14,8 +14,14 @@
 //          [ 0      0      0      1    ]
 //
 //------------------------------------------------------------------------------
-HomoTrafo3D::HomoTrafo3D() {
-    set_unity();
+HomoTrafo3D::HomoTrafo3D():
+    T{{1,0,0,0},{0,1,0,0},{0,0,1,0}}
+{
+    //default init is unit matrix
+    // [1 0 0 0]
+    // [0 1 0 0]
+    // [0 0 1 0]
+    // [0 0 0 1] //last row is always the same
 }
 //------------------------------------------------------------------------------
 void HomoTrafo3D::set_transformation(const Rotation3D R, const Vector3D pos) {
@@ -74,18 +80,25 @@ void HomoTrafo3D::set_rotation_component_based_on_rot_axis(
 void HomoTrafo3D::set_rotation_component_based_on_xyz_angles(
     const Rotation3D R
 ) {
+
+    const double cosRx = R.cosRx();
+    const double cosRy = R.cosRy();
+    const double cosRz = R.cosRz();
+    const double sinRx = R.sinRx();
+    const double sinRy = R.sinRy();
+    const double sinRz = R.sinRz();
     // first row
-    T[0][0] = R.cosRy()*R.cosRz();
-    T[0][1] = R.cosRx()*R.sinRz() + R.sinRx()*R.sinRy()*R.cosRz();
-    T[0][2] = R.sinRx()*R.sinRz() - R.cosRx()*R.sinRy()*R.cosRz();
+    T[0][0] = cosRy*cosRz;
+    T[0][1] = cosRx*sinRz + sinRx*sinRy*cosRz;
+    T[0][2] = sinRx*sinRz - cosRx*sinRy*cosRz;
     // second row
-    T[1][0] =-R.cosRy()*R.sinRz();
-    T[1][1] = R.cosRx()*R.cosRz() - R.sinRx()*R.sinRy()*R.sinRz();
-    T[1][2] = R.sinRx()*R.cosRz() + R.cosRx()*R.sinRy()*R.sinRz();
+    T[1][0] =-cosRy*sinRz;
+    T[1][1] = cosRx*cosRz - sinRx*sinRy*sinRz;
+    T[1][2] = sinRx*cosRz + cosRx*sinRy*sinRz;
     // third row
-    T[2][0] = R.sinRy();
-    T[2][1] =-R.sinRx()*R.cosRy();
-    T[2][2] = R.cosRx()*R.cosRy();
+    T[2][0] = sinRy;
+    T[2][1] =-sinRx*cosRy;
+    T[2][2] = cosRx*cosRy;
 }
 //------------------------------------------------------------------------------
 void HomoTrafo3D::set_transformation(
@@ -94,9 +107,9 @@ void HomoTrafo3D::set_transformation(
     Vector3D rot_z,
     const Vector3D pos
 ) { 
-    rot_x.normalize();
-    rot_y.normalize();
-    rot_z.normalize();
+    rot_x = rot_x/rot_x.norm();
+    rot_y = rot_y/rot_y.norm();
+    rot_z = rot_z/rot_z.norm();
         
     HomoTrafo3D TrafRotation;
     TrafRotation.set_x_column_of_rotation_component(rot_x);
@@ -276,23 +289,6 @@ void HomoTrafo3D::copy_inverse_translation_component_from(const HomoTrafo3D *M){
     T[0][3] = -M->T[0][3];
     T[1][3] = -M->T[1][3];
     T[2][3] = -M->T[2][3];  
-}
-//------------------------------------------------------------------------------
-void HomoTrafo3D::set_unity() {
-    T[0][0] = 1.0;
-    T[0][1] = 0.0;
-    T[0][2] = 0.0;
-    T[0][3] = 0.0;
-
-    T[1][0] = 0.0;
-    T[1][1] = 1.0;
-    T[1][2] = 0.0;
-    T[1][3] = 0.0;
-
-    T[2][0] = 0.0;
-    T[2][1] = 0.0;
-    T[2][2] = 1.0;
-    T[2][3] = 0.0;
 }
 //------------------------------------------------------------------------------
 bool HomoTrafo3D::operator== (HomoTrafo3D G)const {
