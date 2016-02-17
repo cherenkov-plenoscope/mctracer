@@ -11,14 +11,17 @@ TEST_F(HomoTrafo3DTest, default_is_unit_trafo) {
     HomoTrafo3D trafo;
 
     HomoTrafo3D unit_frafo;
-    unit_frafo.set_unity();
+    unit_frafo.set_transformation(
+        Vector3D(1,0,0), 
+        Vector3D(0,1,0), 
+        Vector3D(0,0,1), Vector3D(0,0,0)
+    );
 
     EXPECT_EQ(unit_frafo, trafo);
 }
 //------------------------------------------------------------------------------
 TEST_F(HomoTrafo3DTest, unit_trafo_has_no_translation) {
     HomoTrafo3D trafo;
-    trafo.set_unity();
 
     // translation should be zero 
     EXPECT_EQ(Vector3D::null, trafo.get_translation());
@@ -26,7 +29,6 @@ TEST_F(HomoTrafo3DTest, unit_trafo_has_no_translation) {
 //------------------------------------------------------------------------------
 TEST_F(HomoTrafo3DTest, unit_trafo_has_no_rotation) {
     HomoTrafo3D trafo;
-    trafo.set_unity();
 
     // and rotation should be unity as well
     Vector3D unit_x(1.0, 0.0, 0.0);
@@ -41,7 +43,6 @@ TEST_F(HomoTrafo3DTest, unit_trafo_has_no_rotation) {
 //------------------------------------------------------------------------------
 TEST_F(HomoTrafo3DTest, unit_trafo_is_its_own_inverse) {
     HomoTrafo3D trafo;
-    trafo.set_unity();
 
     HomoTrafo3D inverse_trafo = trafo;
     inverse_trafo.inverse();
