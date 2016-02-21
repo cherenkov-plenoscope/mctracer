@@ -115,3 +115,16 @@ TEST_F(FitsIoTest, create_header) {
 
     //std::cout << packed_header;
 }
+//------------------------------------------------------------------------------
+TEST_F(FitsIoTest, write_fits) {
+    
+    const string path = "fits/simple_file.fits";
+
+    Fits::HEADER head;
+
+    head << Fits::KEYWORDRECORD("SIMPLE","T","file does conform to FITS standard");
+    head << Fits::KEYWORDRECORD("nono","Woot","gnarf _L");
+
+    Fits::Writer f(path);
+    f << head;
+}
