@@ -42,17 +42,14 @@ string Propagation::input_path()const {
 	return cmd.get(inputK);
 }
 //------------------------------------------------------------------------------
-string Propagation::config_path()const {
-	return cmd.get(configK);
-}
-//------------------------------------------------------------------------------
 void Propagation::execute() {
 
-	cout << "out  '" << output_path() << "'\n";
-	cout << "in   '" << input_path() << "'\n";
-	cout << "conf '" << config_path() << "'\n";
+	PathTools::FullPath config_path = PathTools::split_path_and_filename(cmd.get(configK));
+	string working_directory = config_path.path;
 
-	PathTools::FullPath full_config_path = PathTools::split_path_and_filename(config_path());
+	cout << "in     '" << input_path() << "'\n";
+	cout << "out    '" << output_path() << "'\n";
+	cout << "config '" << config_path.path << config_path.filename << "'\n";
 
 	//--------------------------------------------------------------------------
 	//  111
@@ -63,7 +60,7 @@ void Propagation::execute() {
  	//   11  
 	// 111111 11
 	//--------------------------------------------------------------------------
-	Xml::Document doc(config_path());
+	Xml::Document doc(config_path.path + config_path.filename);
 	Xml::Node config_node = doc.get_tree().child("propagation");
 
     //--------------------------------------------------------------------------
@@ -103,7 +100,7 @@ void Propagation::execute() {
     //--------------------------------------------------------------------------
     // load light field calibration result
 	string optics_path = 
-		full_config_path.path + config_node.child("optics_calibration_result").attribute("path");
+		working_directory + config_node.child("optics_calibration_result").attribute("path");
 
     vector<vector<double>> optics_calibration_result = AsciiIo::gen_table_from_file(
     	optics_path
@@ -125,7 +122,7 @@ void Propagation::execute() {
 	Xml::Node nsb_node = config_node.child("night_sky_background_ligth");
 	const Function::LinInterpol nsb_flux_vs_wavelength(
 		AsciiIo::gen_table_from_file(
-			full_config_path.path + nsb_node.attribute("path_flux_vs_wavelength")
+			working_directory + nsb_node.attribute("path_flux_vs_wavelength")
 		)
 	);
 	NightSkyBackgroundLight nsb(&telescope_geometry, &nsb_flux_vs_wavelength);
@@ -137,7 +134,7 @@ void Propagation::execute() {
 
 	const Function::LinInterpol pde_vs_wavelength(
 		AsciiIo::gen_table_from_file(
-			full_config_path.path + pec.attribute("path_pde_vs_wavelength")
+			working_directory + pec.attribute("path_pde_vs_wavelength")
 		)
 	);
 
@@ -223,7 +220,7 @@ void Propagation::execute() {
 
 		//--------
 		// Tdc Qdc
-		for(vector<double> electric_pipe: electric_pipelines) {
+		for(const vector<double> electric_pipe: electric_pipelines) {
 			DigitalTDCQDC::TimeAndCount tc = DigitalTDCQDC::find(
 				tdc_qdc_config, electric_pipe
 			);
