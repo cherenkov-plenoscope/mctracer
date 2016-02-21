@@ -150,7 +150,7 @@ void FlyingCamera::destroy_display() {
 }
 //------------------------------------------------------------------------------
 void FlyingCamera::update_display_full_resolution() {
-	cout << get_prefix_print() << "Full resolution image "
+	cout << "Full resolution image "
 	<< flying_camera_full_resolution->get_number_of_sensor_cols() <<"x"
 	<< flying_camera_full_resolution->get_number_of_sensor_rows() <<", "
 	<< flying_camera_full_resolution->get_number_of_sensor_cols()*
@@ -194,7 +194,6 @@ void FlyingCamera::mouse_button_event(
 //------------------------------------------------------------------------------
 void FlyingCamera::toggle_stereo3D() {
 	stereo3D = !stereo3D;
-	cout << get_prefix_print();
 	cout << "Stereo 3D : " << (stereo3D ? "On" : "Off") << "\n";
 }
 //------------------------------------------------------------------------------
@@ -227,10 +226,6 @@ ApertureCamera FlyingCamera::get_ApertureCamera_based_on_display_camera()const{
 		flying_camera_full_resolution->get_rotation_in_world()
 	);
 	return apcam;
-}
-//------------------------------------------------------------------------------
-string FlyingCamera::get_prefix_print()const {
-	return "-> ";
 }
 //------------------------------------------------------------------------------
 void FlyingCamera::take_snapshot_manual_focus_on_pixel_col_row(int col, int row) {
@@ -313,7 +308,6 @@ void FlyingCamera::print_info_of_probing_ray_for_pixel_col_row(int col, int row)
 	else
 		out << "| No intersection with any object.\n";	
 	out << "|___________________________________________________________\n";
-	
 	cout << out.str();
 }
 //------------------------------------------------------------------------------
