@@ -1,9 +1,9 @@
 #include "FlyingCamera.h"
+using std::cout;
+using std::stringstream;
+using std::string;
 //------------------------------------------------------------------------------
-FlyingCamera::FlyingCamera(
-	const Frame *world,
-	const TracerSettings *settings
-){	
+FlyingCamera::FlyingCamera(const Frame *world, const TracerSettings *settings) {	
 	this->world = world;
 	this->settings = settings;
 
@@ -21,10 +21,15 @@ FlyingCamera::FlyingCamera(
 	reset_camera();
 	time_stamp.update_now();
 	
-	start_free_orbit();
+	create_display();
+	enter_interactive_display();
 }
 //------------------------------------------------------------------------------
-void FlyingCamera::create_CameraMen_to_safely_operate_the_flying_camera(){
+FlyingCamera::~FlyingCamera() {
+	destroy_display();
+}
+//------------------------------------------------------------------------------
+void FlyingCamera::create_CameraMen_to_safely_operate_the_flying_camera() {
 	FoV_operator = new CameraManFoV(flying_camera_full_resolution);
 	FoV_operator->set_verbosity(true);
 
@@ -38,30 +43,28 @@ void FlyingCamera::create_CameraMen_to_safely_operate_the_flying_camera(){
 	Stereo_operator->set_verbosity(true);
 }
 //------------------------------------------------------------------------------
-void FlyingCamera::reset_camera(){
+void FlyingCamera::reset_camera() {
 	Translation_operator->set_default_position(Vector3D(0.0, 0.0, 0.0));
 	Rotation_operator->set_default_rotation(Rotation3D(0.0,Deg2Rad(-90.0),0.0));
 	FoV_operator->set_default_FoV();
 }
 //------------------------------------------------------------------------------
-void FlyingCamera::start_free_orbit(){
-
+void FlyingCamera::enter_interactive_display() {
 	UserInteraction::print_welcome_screen();
-	print_free_orbit_help_text();
-	create_free_orbit_display();
+	print_display_help_text();
 
 	int user_input_key = 0;
 	bool key_stroke_requires_image_update = true;
 
 	while(!UserInteraction::is_Escape_key(user_input_key)) {
 
-		iteration_counter++;
+		user_input_counter++;
 
 		if(it_is_time_again_to_show_the_help())
-			print_free_orbit_help_text();
+			print_display_help_text();
 
 		if(key_stroke_requires_image_update)
-			update_free_orbit_display();
+			update_display();
 		
 		key_stroke_requires_image_update = true;
 		user_input_key = wait_for_user_key_stroke();
@@ -100,24 +103,23 @@ void FlyingCamera::start_free_orbit(){
 			case 'g': Translation_operator->move_to(UserInteraction::get_Vector3D());
 			break;
 			case UserInteraction::space_key: {
-				update_free_orbit_display_full_resolution();
+				update_display_full_resolution();
 				key_stroke_requires_image_update = false;
 			}
 			break;
 			case 'p': {
-				std::cout << world->get_tree_print() << "\n";
+				cout << world->get_tree_print() << "\n";
 				key_stroke_requires_image_update = false;
 			}
 			break;
 			case 'h': {
-				print_free_orbit_help_text();
+				print_display_help_text();
 				key_stroke_requires_image_update = false;
 			};
 			break;
 			default: key_stroke_requires_image_update = false;
 		}
 	}
-	destroy_free_orbit_display();
 }
 //------------------------------------------------------------------------------
 int FlyingCamera::wait_for_user_key_stroke() {
@@ -125,33 +127,30 @@ int FlyingCamera::wait_for_user_key_stroke() {
 }
 //------------------------------------------------------------------------------
 bool FlyingCamera::it_is_time_again_to_show_the_help() {
-	if(iteration_counter > 15) {
-		iteration_counter = 0;
+	if(user_input_counter > 15) {
+		user_input_counter = 0;
 		return true;
 	}else{
 		return false;
 	}
 }
 //------------------------------------------------------------------------------
-void FlyingCamera::create_free_orbit_display() {
-	cv::namedWindow( free_orbit_display_name, CV_WINDOW_AUTOSIZE );
-
+void FlyingCamera::create_display() {
+	cv::namedWindow( display_name, CV_WINDOW_AUTOSIZE );
 	FlyingCamera* p = this;
-
 	cv::setMouseCallback( 
-		free_orbit_display_name.c_str(), 
+		display_name.c_str(), 
 		mouse_button_event, 
 		(void *)p 
 	);
 }
 //------------------------------------------------------------------------------
-void FlyingCamera::destroy_free_orbit_display() {
-	cv::destroyWindow(free_orbit_display_name);	
+void FlyingCamera::destroy_display() {
+	cv::destroyWindow(display_name);	
 }
 //------------------------------------------------------------------------------
-void FlyingCamera::update_free_orbit_display_full_resolution() {
-
-	std::cout << get_prefix_print() << "Full resolution image "
+void FlyingCamera::update_display_full_resolution() {
+	cout << get_prefix_print() << "Full resolution image "
 	<< flying_camera_full_resolution->get_number_of_sensor_cols() <<"x"
 	<< flying_camera_full_resolution->get_number_of_sensor_rows() <<", "
 	<< flying_camera_full_resolution->get_number_of_sensor_cols()*
@@ -163,10 +162,10 @@ void FlyingCamera::update_free_orbit_display_full_resolution() {
 		flying_camera_full_resolution
 	);
 
-	cv::imshow(free_orbit_display_name, img->Image); 
+	cv::imshow(display_name, img->Image); 
 }
 //------------------------------------------------------------------------------
-void FlyingCamera::update_free_orbit_display() {
+void FlyingCamera::update_display() {
 	flying_camera->set_FoV_in_rad(
 		flying_camera_full_resolution->get_FoV_in_rad()
 	);
@@ -177,39 +176,39 @@ void FlyingCamera::update_free_orbit_display() {
 	);
 
 	const CameraImage* img = acquire_scaled_image_with_camera(true, flying_camera);
-	cv::imshow(free_orbit_display_name, img->Image); 
+	cv::imshow(display_name, img->Image); 
 }
 //------------------------------------------------------------------------------
 void FlyingCamera::mouse_button_event(
-	int event, int x, int y, int flags, void *param
+	int event, int col, int row, int flags, void *param
 ) {
 	FlyingCamera* p = (FlyingCamera*)param;
 	
 	if( event == cv::EVENT_LBUTTONDOWN )
-		p->print_info_of_probing_ray_for_pixel_col_row( x, y );
+		p->print_info_of_probing_ray_for_pixel_col_row( col, row );
 	else if( event == cv::EVENT_RBUTTONDOWN )
-		p->take_snapshot_manual_focus_on_pixel_col_row( x, y );
+		p->take_snapshot_manual_focus_on_pixel_col_row( col, row );
 	else
 		return;
 }
 //------------------------------------------------------------------------------
 void FlyingCamera::toggle_stereo3D() {
 	stereo3D = !stereo3D;
-	std::cout << get_prefix_print() << "Stereo 3D : ";
-	std::cout << (stereo3D ? "On" : "Off") << "\n";
+	cout << get_prefix_print();
+	cout << "Stereo 3D : " << (stereo3D ? "On" : "Off") << "\n";
 }
 //------------------------------------------------------------------------------
-std::string FlyingCamera::get_snapshot_filename() {
+string FlyingCamera::get_snapshot_filename() {
 	snapshot_counter++;
 
-	std::stringstream filename;  
+	stringstream filename;  
 	filename << time_stamp.yyyy() << time_stamp.mm() << time_stamp.dd() << "_";
 	filename << time_stamp.HH() << time_stamp.MM() << time_stamp.SS();
 	filename << "_" << snapshot_counter;
 	return filename.str();
 }
 //------------------------------------------------------------------------------
-ApertureCamera FlyingCamera::get_ApertureCamera_based_on_free_orbit_camera()const{
+ApertureCamera FlyingCamera::get_ApertureCamera_based_on_display_camera()const{
 
 	ApertureCamera apcam("Imax70mm", 
 		settings->visual.snapshot.cols, 
@@ -230,14 +229,14 @@ ApertureCamera FlyingCamera::get_ApertureCamera_based_on_free_orbit_camera()cons
 	return apcam;
 }
 //------------------------------------------------------------------------------
-std::string FlyingCamera::get_prefix_print()const {
-	return "free_orbit -> ";
+string FlyingCamera::get_prefix_print()const {
+	return "-> ";
 }
 //------------------------------------------------------------------------------
-void FlyingCamera::take_snapshot_manual_focus_on_pixel_col_row(int x, int y) {
+void FlyingCamera::take_snapshot_manual_focus_on_pixel_col_row(int col, int row) {
 
 	Ray probing_ray = 
-		flying_camera_full_resolution->get_ray_for_pixel_in_row_and_col(y, x);
+		flying_camera_full_resolution->get_ray_for_pixel_in_row_and_col(row, col);
 	
 	DistanceMeter dist_meter(&probing_ray, world);
 
@@ -248,9 +247,9 @@ void FlyingCamera::take_snapshot_manual_focus_on_pixel_col_row(int x, int y) {
 	else
 		object_distance_to_focus_on = 9e99; // a very large distance
 	
-	ApertureCamera apcam = get_ApertureCamera_based_on_free_orbit_camera();
+	ApertureCamera apcam = get_ApertureCamera_based_on_display_camera();
 	apcam.set_focus_to(object_distance_to_focus_on);
-	std::cout << apcam.get_print();
+	cout << apcam.get_print();
 
 	const CameraImage* img = acquire_scaled_image_with_camera(false ,&apcam);
 	img->save(get_snapshot_filename());
@@ -292,93 +291,84 @@ const CameraImage* FlyingCamera::acquire_scaled_image_with_camera(
 	}
 }
 //------------------------------------------------------------------------------
-void FlyingCamera::print_info_of_probing_ray_for_pixel_col_row(int x, int y) {
+void FlyingCamera::print_info_of_probing_ray_for_pixel_col_row(int col, int row) {
 
-	Ray probing_ray = 
-		flying_camera_full_resolution->get_ray_for_pixel_in_row_and_col(y, x);
+	Ray probing_ray = flying_camera_full_resolution->get_ray_for_pixel_in_row_and_col(row, col);
 
 	const Intersection* intersec = probing_ray.get_first_intersection_in(world);
 
 	UserInteraction::ClearScreen();
-	std::stringstream out;
+	stringstream out;
 
 	//      0        1         2         3         4         5         6
 	//      123456789012345678901234567890123456789012345678901234567890
 
-	out << " _Info_for_Pixel_(_" << x << "_|_" << y << "_)__________________\n";
+	out << " _Info_for_Pixel_(_" << col << "_|_" << row << "_)__________________\n";
 	out << "|\n";
 	out << "| Ray emitted by camera:\n";
 	out << "| " << probing_ray << "\n";
 	out << "|\n";
-	if( intersec->does_intersect() ){
-	out << "| Object: " << intersec->
-					get_object()->
-					get_path_in_tree_of_frames() << "\n";
-	out << "| Distance to first intersection: ";
-	out << intersec->get_intersection_distance() << "m\n";
+	if(intersec->does_intersect())
+		out << get_intersection_info_print(intersec);
+	else
+		out << "| No intersection with any object.\n";	
+	out << "|___________________________________________________________\n";
+	
+	cout << out.str();
+}
+//------------------------------------------------------------------------------
+string FlyingCamera::get_intersection_info_print(const Intersection* intersec)const {
+	
+	stringstream out;
+	out << "| Object: " << intersec->get_object()->get_path_in_tree_of_frames() << "\n";
+	out << "| Distance to first intersection: " << intersec->get_intersection_distance() << "m\n";
 	out << "|\n";
 	out << "| In frame of intersecting object\n";
-	out << "| | intesection point: ";
-	 	out << intersec->get_intersection_vector_in_object_system() << "\n";
-	out << "| | surface normal   : ";
-	 	out << intersec->get_surface_normal_in_object_system() << "\n";
-	out << "| | facing surface   : ";
-		if(intersec->from_outside_to_inside())
-			out << "outside";
-		else
-			out << "inside";
-	out << "\n";
+	out << "| | intesection point: " << intersec->get_intersection_vector_in_object_system() << "\n";
+	out << "| | surface normal   : " << intersec->get_surface_normal_in_object_system() << "\n";
+	out << "| | facing surface   : " << (intersec->from_outside_to_inside() ? "outside" : "inside") << "\n";
 	out << "|\n";
 	out << "| In world frame\n";
-	out << "| | intesection point: ";
-		out << intersec->get_intersection_vector_in_world_system() << "\n";
-	out << "| | surface normal   : ";
-	 	out << intersec->get_surface_normal_in_world_system() << "\n";
-	
+	out << "| | intesection point: " << intersec->get_intersection_vector_in_world_system() << "\n";
+	out << "| | surface normal   : " << intersec->get_surface_normal_in_world_system() << "\n";
 	out << "|\n";		
 	out << StringTools::place_first_infront_of_each_new_line_of_second(
 		"| ",
 		intersec->get_object()->get_print()
 	);
-
-	}else{
-	out << "| No intersection with any object.\n";	
-	}
-	out << "|___________________________________________________________\n";
-	
-	std::cout << out.str();
+	return out.str();	
 }
 //------------------------------------------------------------------------------
-void FlyingCamera::print_free_orbit_help_text()const {
+void FlyingCamera::print_display_help_text()const {
 
 	UserInteraction::ClearScreen();
-	std::stringstream out;
+	stringstream out;
 
-	//      0        1         2         3         4         5         6         7         8
-	//      12345678901234567890123456789012345678901234567890123456789012345678901234567890
-	out << "_Position______________________   _Orientation___________________\n";
-	out << " move forward............[ w ]     look up.................[ i ]\n";
-	out << " move backward...........[ s ]     look down...............[ k ]\n";
-	out << " move left...............[ a ]     look left...............[ j ]\n";
-	out << " move right..............[ d ]     look right..............[ l ]\n";
-	out << " move up.................[ q ]\n";
-	out << " move down...............[ e ]\n";
-	out << " move to custom pos......[ g ]\n";
-	out << "\n";
-	out << "_Stereo3D_left:red_right:blue__   _Field_of_View_________________\n";
-	out << " on/off..................[ t ]     increace................[ n ]\n";
-	out << " increase................[ x ]     decreace................[ m ]\n";
-	out << " decrease................[ y ]\n";
-	out << "                                  _free_orbit___________________\n";
-	out << "_Aperture_camera_______________    print help..............[ h ]\n";
-	out << " manual focus..[ right mouse ]     print geometry tree.....[ p ]\n";
-	out << "                                   exit....................[ESC]\n";
-	out << "\n";
-	out << "[  space key  ] full resolution.\n";
-	out << "[ left mouse  ] click image for additional information.\n";
-	out << "[ right mouse ] click image for manual focus with snapshot.\n";
-	out << "\n";
-	std::cout << out.str();
+//  0         1         2         3         4         5         6         7         8
+//   12345678901234567890123456789012345678901234567890123456789012345678901234567890
+	out << 
+	"_Position______________________   _Orientation___________________\n"
+	" move forward............[ w ]     look up.................[ i ]\n"
+	" move backward...........[ s ]     look down...............[ k ]\n"
+	" move left...............[ a ]     look left...............[ j ]\n"
+	" move right..............[ d ]     look right..............[ l ]\n"
+	" move up.................[ q ]\n"
+	" move down...............[ e ]\n"
+	" move to custom pos......[ g ]\n"
+	"\n"
+	"_Stereo3D_left:red_right:blue__   _Field_of_View_________________\n"
+	" on/off..................[ t ]     increace................[ n ]\n"
+	" increase................[ x ]     decreace................[ m ]\n"
+	" decrease................[ y ]\n"
+	"                                  _interaction__________________\n"
+	"_Aperture_camera_______________    print help..............[ h ]\n"
+	" manual focus..[ right mouse ]     print geometry tree.....[ p ]\n"
+	"                                   exit/next photon........[ESC]\n"
+	"\n"
+	"[  space key  ] full resolution.\n"
+	"[ left mouse  ] click image for additional information.\n"
+	"[ right mouse ] click image for manual focus with snapshot.\n\n";
+	cout << out.str();
 }
 //------------------------------------------------------------------------------
 void FlyingCamera::continue_with_new_scenery_and_settings(
@@ -387,6 +377,6 @@ void FlyingCamera::continue_with_new_scenery_and_settings(
 ) {
 	this->world = world;
 	this->settings = settings;	
-	start_free_orbit();
+	enter_interactive_display();
 }
 //------------------------------------------------------------------------------
