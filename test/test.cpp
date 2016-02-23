@@ -49,6 +49,7 @@
 #include "Histogram1DTest.cpp"
 #include "NightSkyBackgroundLightTest.cpp"
 #include "PreTriggerTest.cpp"
+#include "SimpleTdcQdcTest.cpp"
 #include "TimeLineAddition.cpp"
 #include "GridNeighborhoodTopoligyTest.cpp"
 #include "XmlTest.cpp"

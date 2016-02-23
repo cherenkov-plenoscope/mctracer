@@ -1,4 +1,8 @@
 #include "PreTrigger.h"
+#include "SimpleTDCQDC.h"
+using std::vector;
+using std::cout;
+
 
 class PreTriggerTest : public ::testing::Test {};
 //----------------------------------------------------------------------

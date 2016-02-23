@@ -1,7 +1,7 @@
 //=================================
 // include guard
-#ifndef __SimpleTDCQDC_H_INCLUDED__
-#define __SimpleTDCQDC_H_INCLUDED__
+#ifndef __SimpleTdcQdc_H_INCLUDED__
+#define __SimpleTdcQdc_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
@@ -12,17 +12,27 @@
 #include <vector>
 using std::vector;
 
-namespace DigitalTDCQDC{
-
-    struct Config {
-        double integration_time;
-    };
+namespace SimpleTdcQdc{
 
     struct TimeAndCount {
         double time;
-        double count;
+        uint count;
     };
 
-    TimeAndCount find(const Config config, const vector<double> &arrival_pipeline);
+    vector<uint> convolution_of_arrival_times_and_integration_window(
+    	const vector<double> &arrival_moments,
+        const double integration_time_window
+    );
+
+    uint arrival_count_in_ith_integration_window(
+    	const uint i, 
+    	const double integration_time, 
+    	const vector<double> &arrival_pipeline
+    );
+
+    TimeAndCount get_arrival_time_and_count_given_arrival_moments_and_integration_time_window(
+        const vector<double> &arrival_moments,
+        const double integration_time_window
+    );
 }//TdC QdC
-#endif // __SimpleTDCQDC_H_INCLUDED__
+#endif // __SimpleTdcQdc_H_INCLUDED__

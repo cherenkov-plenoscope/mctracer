@@ -148,8 +148,7 @@ void Propagation::execute() {
 
 	//--------------------------------------------------------------------------
 	// SET UP TDC QDC
-	DigitalTDCQDC::Config tdc_qdc_config;
-	tdc_qdc_config.integration_time = 10.0e-9;
+	const double integration_time_window = 10e-9;
 
 	//--------------------------------------------------------------------------
 	//  2222
@@ -220,11 +219,23 @@ void Propagation::execute() {
 
 		//--------
 		// Tdc Qdc
+		vector<SimpleTdcQdc::TimeAndCount> tacs;
 		for(const vector<double> electric_pipe: electric_pipelines) {
-			DigitalTDCQDC::TimeAndCount tc = DigitalTDCQDC::find(
-				tdc_qdc_config, electric_pipe
+			tacs.push_back(
+				SimpleTdcQdc::get_arrival_time_and_count_given_arrival_moments_and_integration_time_window(
+					electric_pipe,
+					integration_time_window
+				)
 			);
 		}
+
+		vector<vector<double>> dtacs;
+		for(SimpleTdcQdc::TimeAndCount tac: tacs) {
+			vector<double> dtac = {tac.time, double(tac.count)};
+			dtacs.push_back(dtac);
+		}
+
+		AsciiIo::write_table_to_file(dtacs, output_path() + std::to_string(event_counter) + ".txt");
 
         cout << "event " << event_counter << ", E ";
         cout << event.header.mmcs_event_header.total_energy_in_GeV << " GeV\n";
