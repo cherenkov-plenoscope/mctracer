@@ -113,6 +113,28 @@ void CameraImage::merge_left_and_right_image_to_anaglyph_3DStereo(
 	cv::merge(anaglyph_image_channels, Image);
 }
 //------------------------------------------------------------------------------
+void CameraImage::get_component(const Color color) {
+	const double red_comp = double(color.get_red())/255.0;
+	const double blu_comp = double(color.get_blue())/255.0;
+	const double gre_comp = double(color.get_green())/255.0;
+
+	CameraImage comp(get_number_of_cols(), get_number_of_rows());
+
+	for(uint row=0; row<get_number_of_rows(); row++) {
+		for(uint col=0; col<get_number_of_cols(); col++) {
+
+			const Color pix_color = get_pixel_row_col(row, col);
+			const Color comp_pix_color(
+				uint(double(pix_color.get_red())*red_comp),
+				uint(double(pix_color.get_green())*gre_comp),
+				uint(double(pix_color.get_blue())*blu_comp)
+			);
+
+			comp.set_pixel_row_col_to_color(row, col, comp_pix_color);
+		}
+	}
+}
+//------------------------------------------------------------------------------
 void CameraImage::convert_to_grayscale() {
 	cv::cvtColor(Image, Image, CV_RGB2GRAY);
 	cv::cvtColor(Image, Image, CV_GRAY2RGB);
