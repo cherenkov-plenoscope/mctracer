@@ -38,9 +38,9 @@ namespace StringTools {
 		string text
 	);
 
-	std::vector<string> tokenize_text_given_delimiter_char(
+	std::vector<string> tokenize_text_using_either_one_of_delimiters(
 		const string &text, 
-		const char delimiter
+		const string delimiters
 	);
 
 	string strip_whitespaces(string text);

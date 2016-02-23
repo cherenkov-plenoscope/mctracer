@@ -1,5 +1,8 @@
 #include "StringTools.h"
 #include <algorithm>
+using std::string;
+using std::stringstream;
+using std::vector;
 //------------------------------------------------------------------------------
 namespace StringTools {
 
@@ -32,7 +35,7 @@ namespace StringTools {
 		const string text_to_repeat, 
 		const unsigned int times 
 	) {
-		std::stringstream multiple_text;
+		stringstream multiple_text;
 
 		for(unsigned int i=0; i<times; i++)
 			multiple_text << text_to_repeat;
@@ -59,7 +62,7 @@ namespace StringTools {
 		const string front,
 		string text
 	) {
-		std::stringstream out;
+		stringstream out;
 		while(!text.empty()) {
 			out << front << cut_leading_token_infront_of_delimiter(text, '\n');
 			out << '\n';
@@ -67,17 +70,22 @@ namespace StringTools {
 		return out.str();
 	}
 	//--------------------------------------------------------------------------
-	std::vector<string> tokenize_text_given_delimiter_char(
+	vector<string> tokenize_text_using_either_one_of_delimiters(
 		const string &text, 
-		const char delimiter
+		const string delimiters
 	) {
-		std::vector<string> tokens;
-		std::stringstream text_stream(text);
-		string item;
+		vector<string> tokens;
 
-		while(std::getline(text_stream, item, delimiter))
-			tokens.push_back(item);
-	
+	    std::size_t prev = 0;
+	    std::size_t pos;
+	    while((pos = text.find_first_of(delimiters, prev)) != std::string::npos) {
+	        if (pos > prev)
+	            tokens.push_back(text.substr(prev, pos-prev));
+	        prev = pos+1;
+	    }
+	    if (prev < text.length())
+	        tokens.push_back(text.substr(prev, std::string::npos));
+
 		return tokens;
 	}
 	//--------------------------------------------------------------------------
@@ -108,7 +116,7 @@ namespace StringTools {
 	double to_double(string text_to_parse) {
 
 		if(text_to_parse.compare("") == 0){
-			std::stringstream info;
+			stringstream info;
 			info << __FILE__ << ", " << __LINE__ << "\n";
 			info << "StringTools::to_double: String is empty.";
 			throw CanNotParseDouble(info.str());
@@ -118,7 +126,7 @@ namespace StringTools {
 		double number_parsed_in = std::strtod(text_to_parse.c_str(), &e);
 
 		if (*e != 0){
-			std::stringstream info;
+			stringstream info;
 			info << __FILE__ << ", " << __LINE__ << "\n";
 			info << "StringTools::to_double: ";
 			info << "Can not parse '" << text_to_parse << "' to double.";
@@ -131,7 +139,7 @@ namespace StringTools {
 	bool to_bool(string text_to_parse) {
 
 		if(text_to_parse.compare("") == 0){
-			std::stringstream info;
+			stringstream info;
 			info << __FILE__ << ", " << __LINE__ << "\n";
 			info << "StringTools::to_bool: String is empty.";
 			throw CanNotParseBool(info.str());
@@ -149,7 +157,7 @@ namespace StringTools {
 		else if(StringTools::is_equal(text_to_parse,"false"))
 			return false;
 		else {
-			std::stringstream info;
+			stringstream info;
 			info << __FILE__ << ", " << __LINE__ << "\n";
 			info << "StringTools::to_bool: Can not parse: ";
 			info << "'" << text_to_parse << " to bool";
@@ -160,7 +168,7 @@ namespace StringTools {
 	int to_int(string text_to_parse) {
 
 		if(text_to_parse.compare("") == 0){
-			std::stringstream info;
+			stringstream info;
 			info << __FILE__ << ", " << __LINE__ << "\n";
 			info << "StringTools::to_int: String is empty.";
 			throw CanNotParseInt(info.str());
@@ -175,7 +183,7 @@ namespace StringTools {
 		);
 
 		if (*e != 0){
-			std::stringstream info;
+			stringstream info;
 			info << __FILE__ << ", " << __LINE__ << "\n";
 			info << "StringTools::to_int: ";
 			info << "Can not parse '" << text_to_parse << "' to int.";
@@ -189,7 +197,7 @@ namespace StringTools {
 
 		Tuple3 t3;
 
-		std::stringstream info;
+		stringstream info;
 		info << __FILE__ << ", " << __LINE__ << "\n";
 		info << "Expected Tuple3 '[float,float,float]', but actual it is ";
 		info << "'" << original_text << "'.\n";

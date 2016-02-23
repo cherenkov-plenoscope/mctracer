@@ -82,7 +82,10 @@ namespace AsciiIo {
 		const std::string &row
 	) {
 		const std::vector<std::string> tokens_in_row = 
-			StringTools::tokenize_text_given_delimiter_char(row, delimiter);
+			StringTools::tokenize_text_using_either_one_of_delimiters(
+				row, 
+				delimiters_for_reading
+			);
 
 		std::vector<double> numeric_row;
 

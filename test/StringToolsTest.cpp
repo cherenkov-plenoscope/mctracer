@@ -1,7 +1,80 @@
 #include "Tools/StringTools.h"
 
 class StringToolsTest : public ::testing::Test {};
-//----------------------------------------------------------------------
+//------------------------------------------------------------------------------
+TEST_F(StringToolsTest, tokenize_text_several_delimiters) {
+
+    string text = "hans klaus\tpeter";
+
+    vector<string> tokens = 
+        StringTools::tokenize_text_using_either_one_of_delimiters(text," \t");
+
+    ASSERT_EQ(3, tokens.size());
+    EXPECT_EQ("hans", tokens.at(0));
+    EXPECT_EQ("klaus", tokens.at(1));
+    EXPECT_EQ("peter", tokens.at(2));
+
+    tokens = 
+        StringTools::tokenize_text_using_either_one_of_delimiters(text," ");
+
+    ASSERT_EQ(2, tokens.size());
+    EXPECT_EQ("hans", tokens.at(0));
+    EXPECT_EQ("klaus\tpeter", tokens.at(1));
+
+    tokens = 
+        StringTools::tokenize_text_using_either_one_of_delimiters(text,"\t");
+
+    ASSERT_EQ(2, tokens.size());
+    EXPECT_EQ("hans klaus", tokens.at(0));
+    EXPECT_EQ("peter", tokens.at(1));
+}
+//------------------------------------------------------------------------------
+TEST_F(StringToolsTest, tokenize_epmty_text) {
+
+    string text = "";
+
+    vector<string> tokens = 
+        StringTools::tokenize_text_using_either_one_of_delimiters(text," \t");
+
+    EXPECT_EQ(0, tokens.size());
+}
+//------------------------------------------------------------------------------
+TEST_F(StringToolsTest, tokenize_text_delimiter_in_the_end) {
+
+    string text = "hans peter ";
+
+    vector<string> tokens = 
+        StringTools::tokenize_text_using_either_one_of_delimiters(text," \t");
+
+    ASSERT_EQ(2, tokens.size());
+    EXPECT_EQ("hans", tokens.at(0));
+    EXPECT_EQ("peter", tokens.at(1));
+}
+//------------------------------------------------------------------------------
+TEST_F(StringToolsTest, tokenize_text_several_same_delimiters) {
+
+    string text = "hans   peter";
+
+    vector<string> tokens = 
+        StringTools::tokenize_text_using_either_one_of_delimiters(text," \t");
+
+    ASSERT_EQ(2, tokens.size());
+    EXPECT_EQ("hans", tokens.at(0));
+    EXPECT_EQ("peter", tokens.at(1));
+}
+//------------------------------------------------------------------------------
+TEST_F(StringToolsTest, tokenize_text_several_different_delimiters) {
+
+    string text = "hans \t peter";
+
+    vector<string> tokens = 
+        StringTools::tokenize_text_using_either_one_of_delimiters(text," \t");
+
+    ASSERT_EQ(2, tokens.size());
+    EXPECT_EQ("hans", tokens.at(0));
+    EXPECT_EQ("peter", tokens.at(1));
+}
+//------------------------------------------------------------------------------
 TEST_F(StringToolsTest, is_ending) {
     
     EXPECT_TRUE ( StringTools::is_ending("hans.xml",".xml") );

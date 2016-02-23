@@ -38,6 +38,7 @@ namespace AsciiIo {
 
 
 	const char delimiter = '\t';
+	const std::string delimiters_for_reading = "\t" " ";
 	const char comment_escape = '#';
 	const int precision = 10;
 
