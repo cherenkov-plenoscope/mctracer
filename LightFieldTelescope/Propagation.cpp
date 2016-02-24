@@ -147,8 +147,11 @@ void Propagation::execute() {
 	PhotoElectricConverter::Converter sipm_converter(&converter_config);
 
 	//--------------------------------------------------------------------------
-	// SET UP TDC QDC
-	const double integration_time_window = 10e-9;
+	// SET UP PULSE EXTRACTOR
+	Xml::Node pue = config_node.child("pulse_extractor");
+	const double integration_time_window = Xml::att2double(
+		pue, "integration_time_window"
+	);
 
 	//--------------------------------------------------------------------------
 	//  2222
@@ -168,7 +171,7 @@ void Propagation::execute() {
 	uint event_counter = 1;
 	while(corsika_run.has_still_events_left()) {
 
-		//----------------------------
+		//------------------
 		// Cherenkov photons
 		EventIo::Event event = corsika_run.next_event();
 
@@ -217,8 +220,8 @@ void Propagation::execute() {
 			);
 		}
 
-		//--------
-		// Tdc Qdc
+		//-------------------------
+		// Pulse extraction Tdc Qdc
 		vector<SimpleTdcQdc::TimeAndCount> tacs;
 		for(const vector<double> electric_pipe: electric_pipelines) {
 			tacs.push_back(
@@ -229,20 +232,21 @@ void Propagation::execute() {
 			);
 		}
 
+		//-------------
+		// export event
 		vector<vector<double>> dtacs;
 		for(SimpleTdcQdc::TimeAndCount tac: tacs) {
 			vector<double> dtac = {tac.time, double(tac.count)};
 			dtacs.push_back(dtac);
 		}
-
-		AsciiIo::write_table_to_file(dtacs, output_path() + std::to_string(event_counter) + ".txt");
+		AsciiIo::write_table_to_file(
+			dtacs, output_path() + std::to_string(event_counter) + ".txt"
+		);
 
         cout << "event " << event_counter << ", E ";
         cout << event.header.mmcs_event_header.total_energy_in_GeV << " GeV\n";
 		event_counter++;
 	}
-
-	//AsciiIo::write_table_to_file(number_of_pulses_in_events, output_path());
 }
 //------------------------------------------------------------------------------
 }// LightFieldTelescope

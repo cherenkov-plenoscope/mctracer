@@ -15,6 +15,9 @@
         dark_rate="1.0e6" 
         probability_for_second_puls="0.1"
     />
+    <pulse_extractor
+        integration_time_window="5e-9"
+    />
     <settings
         pseudo_random_number_seed="0"
         max_number_of_interactions_per_photon="10"
