@@ -27,9 +27,6 @@ namespace LightFieldTelescope {
 		const string configK = "config";
 		const string outputK = "output";
 		const string inputK = "input";
-		const string nsbK = "nsb";
-		const string pdeK = "pde";
-		const string sipm_pulseK = "sipm";
 
 	public:
 
