@@ -17,12 +17,12 @@
 class Vector3D : public Printable {
 private:
 
-	// in meters
 	double X;
 	double Y;
 	double Z;
 	static const double max_deviation_of_eq_vectors;
 public:
+	
 	static const Vector3D null;
 	static const Vector3D unit_x;
 	static const Vector3D unit_y;
