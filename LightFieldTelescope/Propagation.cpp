@@ -29,9 +29,9 @@ Propagation::Propagation(int argc, char** argv) {
 //------------------------------------------------------------------------------
 void Propagation::define_comand_line_keys() {
 
-	cmd.add_value(configK, 'c' ,"configuration file controling the simulation");
-	cmd.add_value(outputK, 'o', "output path");
-	cmd.add_value(inputK, 'i', "input path for CORSIKA Cherenkov photons");
+	cmd.define_key_val_by_key_short_desc(configK, 'c' ,"configuration file controling the simulation");
+	cmd.define_key_val_by_key_short_desc(outputK, 'o', "output path");
+	cmd.define_key_val_by_key_short_desc(inputK, 'i', "input path for CORSIKA Cherenkov photons");
 }
 //------------------------------------------------------------------------------
 string Propagation::output_path()const {

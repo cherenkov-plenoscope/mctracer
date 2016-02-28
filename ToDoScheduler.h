@@ -24,34 +24,35 @@ using std::string;
 using std::cout;
 //=================================
 class ToDoScheduler {
-	CommandLine cmd;	
-	
-	const string render_key = "render";
-	const string propagate_key = "propagate";
-	const string investigation_key = "investigate";
-	const string pointsource_key = "lightsource";
-	const string geometry_key = "geometry";
-	const string photons_key = "photons";
-	const string config_key = "config";
-	const string output_key = "output";
-	const string input_key = "input";
-	const string skydome_key = "skydome";
+
+	CommandLine::Parser cmd;	
 public:
+	const string kscenery = "scenery";
 
 	ToDoScheduler(int argc, char** argv);
 	void execute();
 private:
 	
-	void define();
-	void render_geometry()const;
-	void propagate_photons_through_geometry()const; 
-	void investigate_single_photon_propagation_in_geometry()const;
-	void point_spread_investigation_in_geometry()const;
-	const string geometry_path()const;
+	void define_commands();
+	void propagate_photons_through_scenery()const; 
+	
+	const string scenery_path()const;
 	const string photon_path()const;
 	const string output_path()const;
-	const string input_path()const;
 	const string config_path()const;
-	const string skydome_path()const;
+	string help()const;
+
+	string help_show_scenery()const;
+	bool command_is_complete_show_scenery()const;
+	void show_scenery()const;
+
+	string help_propagate()const;
+	bool command_is_complete_propagate()const;
+	void propagate()const;
+
+
+	string help_investigate_events()const;
+	bool command_is_complete_investigate_events()const;
+	void investigate_events()const;
 };
 #endif // __ToDoScheduler_H_INCLUDE__ 

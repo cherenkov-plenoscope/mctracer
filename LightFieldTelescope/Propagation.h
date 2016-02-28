@@ -22,7 +22,7 @@ using std::cout;
 namespace LightFieldTelescope {
 	
 	class Propagation {
-		CommandLine cmd;	
+		CommandLine::Parser cmd;	
 		
 		const string configK = "config";
 		const string outputK = "output";

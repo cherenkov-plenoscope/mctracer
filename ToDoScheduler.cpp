@@ -13,56 +13,88 @@
 //------------------------------------------------------------------------------
 ToDoScheduler::ToDoScheduler(int argc, char** argv) {
 
-	define();
+	define_commands();
 	cmd.parse(argc, argv);
 	execute();
 }
 //------------------------------------------------------------------------------
 void ToDoScheduler::execute() {
-	if (cmd.exist(render_key))
-		render_geometry();
-	else if (cmd.exist(propagate_key))
-		propagate_photons_through_geometry();
-	else if (cmd.exist(investigation_key))
-		investigate_single_photon_propagation_in_geometry();
-	else if (cmd.exist(pointsource_key))
-		point_spread_investigation_in_geometry();
+
+	if (cmd.exist("show"))
+		show_scenery();
+	else if (cmd.exist("propagate"))
+		propagate();
+	else if (cmd.exist("investigate"))
+		investigate_events();
 	else 
-		cout << "Nothing to do, quit.\n --help for options\n";
+		cout << "No command found, quit\n\n" << help();
 }
 //------------------------------------------------------------------------------
-void ToDoScheduler::define() {
-
-	cmd.add_value(geometry_key, 'g', "geometry input file");
-	cmd.add_value(photons_key, 'p', "photon input file");
-	cmd.add_value(config_key, 'c' ,"configuration file");
-	cmd.add_value(output_key, 'o', "output path");
-	cmd.add_value(input_key, 'i', "input path");
-	cmd.add_value(skydome_key, 's', "sky dome image");
-  	cmd.add_flag(pointsource_key, "point source investigation");	
-    cmd.add_flag(render_key, "render geometry");	
-    cmd.add_flag(propagate_key, "propagate photons through geometry");
-    cmd.add_flag(investigation_key, "investigate single photon propagation in geometry");
+string ToDoScheduler::help()const {
+	std::stringstream out; 
+	out << help_show_scenery() << "\n";
+	out << help_propagate() << "\n";
+	out << help_investigate_events() << "\n";
+	return out.str();
 }
 //------------------------------------------------------------------------------
-void ToDoScheduler::render_geometry()const {
+void ToDoScheduler::define_commands() {
 
-	string geom_path = cmd.get(geometry_key);
+	cmd.define_key_val_by_key_short_desc("scenery", 's', "scenery path");
+	cmd.define_key_val_by_key_short_desc("photons", 'p', "photon path");
+	cmd.define_key_val_by_key_short_desc("config", 'c' ,"configuration path");
+	cmd.define_key_val_by_key_short_desc("output", 'o', "output path");
+    cmd.define_command("show", "show scenery");	
+    cmd.define_command("propagate", "propagate photons through scenery");
+    cmd.define_command("investigate", "investigate single photon propagation in scenery");
+}
+//------------------------------------------------------------------------------
+const string ToDoScheduler::scenery_path()const {
+	return cmd.get("scenery");
+}
+//------------------------------------------------------------------------------
+const string ToDoScheduler::photon_path()const {
+	return cmd.get("photons");
+}
+//------------------------------------------------------------------------------
+const string ToDoScheduler::output_path()const {
+	return cmd.get("output");
+}
+//------------------------------------------------------------------------------
+const string ToDoScheduler::config_path()const {
+	return cmd.get("config");
+}
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+bool ToDoScheduler::command_is_complete_show_scenery()const {
+	if(!cmd.exist("scenery")) {
+		cout << help_show_scenery();
+		return false;
+	}else
+		return true;
+}
+//------------------------------------------------------------------------------
+void ToDoScheduler::show_scenery()const {
 
-	Frame *geometry;
+	if(!command_is_complete_show_scenery())
+		return;
+
+	Frame *scenery;
 	if(
-		StringTools::is_ending(geom_path,".stl") || 
-		StringTools::is_ending(geom_path,".STL")
+		StringTools::is_ending(scenery_path(),".stl") || 
+		StringTools::is_ending(scenery_path(),".STL")
 	) {
-		geometry = StereoLitographyIo::read(geom_path, 1.0);
-	}else if(	StringTools::is_ending(geom_path,".xml") ||
-				StringTools::is_ending(geom_path,".XML")
+		scenery = StereoLitographyIo::read(scenery_path(), 1.0);
+	}else if(	
+		StringTools::is_ending(scenery_path(),".xml") ||
+		StringTools::is_ending(scenery_path(),".XML")
 	) {
 		WorldFactory fab;
-		fab.load(geom_path);
-		geometry = fab.world();
+		fab.load(scenery_path());
+		scenery = fab.world();
 	}else{
-		geometry = Frame::void_frame;
+		scenery = Frame::void_frame;
 		cout << "Can only read stl or xml files.\n";
 		return;
 	}
@@ -76,10 +108,37 @@ void ToDoScheduler::render_geometry()const {
 		settings.visual = Xml::Configs::get_VisualConfig_from_node(vc_node);
 	}
 
-	FlyingCamera free(geometry, &settings);
+	FlyingCamera free(scenery, &settings);
 }
 //------------------------------------------------------------------------------
-void ToDoScheduler::point_spread_investigation_in_geometry()const {
+string ToDoScheduler::help_show_scenery()const {
+	std::stringstream out; 
+	out << "--show\n";
+	out << "  Explore a scenery in 1st person view\n";
+	out << "  --scenery, -s  path of scenery\n";
+	out << "  --config,  -c  [optional]\n";
+	return out.str();	
+}
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+bool ToDoScheduler::command_is_complete_propagate()const {
+	if(
+		!cmd.exist("scenery") ||
+		!cmd.exist("photons") ||
+		!cmd.exist("config") ||
+		!cmd.exist("output")
+	) {
+		cout << help_propagate();
+		return false;
+	}else
+		return true;
+}
+//------------------------------------------------------------------------------
+void ToDoScheduler::propagate()const {
+
+	if(!command_is_complete_propagate())
+		return;
 
 	// Bokeh settings
 	Xml::Document doc(config_path());
@@ -96,7 +155,7 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 	//--------------------------------------------------------------------------
 	// scenery
 	WorldFactory fab;
-	fab.load(geometry_path());
+	fab.load(scenery_path());
 	Frame *world = fab.world();
 	
 	//--------------------------------------------------------------------------
@@ -105,7 +164,7 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 	
 	//--------------------------------------------------------------------------
 	// photon source
-	PhotonsReader photon_file(input_path());
+	PhotonsReader photon_file(photon_path());
 	std::vector<Photon*>* photons;
 
 	uint event_counter = 1;
@@ -130,9 +189,9 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 			outname << output_path() << event_counter << "_" << i;
 
 			std::stringstream header;
-			header << "geometry: " << geometry_path() << "\n";
+			header << "scenery: " << scenery_path() << "\n";
 			header << "sensor:  " << sensors.at(i)->get_frame()->get_path_in_tree_of_frames() << ", ID: " << i << "\n";
-			header << "photons: " << input_path() << "\n";
+			header << "photons: " << photon_path() << "\n";
 			header << "-------------\n";
 			header << sensors.at(i)->get_arrival_table_header();
 
@@ -149,7 +208,21 @@ void ToDoScheduler::point_spread_investigation_in_geometry()const {
 	}
 }
 //------------------------------------------------------------------------------
-void ToDoScheduler::propagate_photons_through_geometry()const {
+string ToDoScheduler::help_propagate()const {
+	std::stringstream out; 
+	out << "--propagate\n";
+	out << "  Propagate photons in scenery.\n";
+	out << "  --scenery, -s  path of scenery\n";
+	out << "  --photons, -p  path of photons\n";
+	out << "  --config,  -c  path of mctracer configuration\n";
+	out << "  --output,  -o  path to write \n";
+	return out.str();
+}
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+//------------------------------------------------------------------------------
+/*void ToDoScheduler::propagate_photons_through_scenery()const {
 
 	// settings
 	TracerSettings settings;	
@@ -161,7 +234,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 
 	// load scenery
 	WorldFactory fab;
-	fab.load(geometry_path());
+	fab.load(scenery_path());
 	Frame *world = fab.world();
 	PhotonSensors::Sensors sensors = fab.get_sensors();
 
@@ -212,7 +285,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 			outname << "e" << event_counter << "s" << sensors.at(i)->get_id() << ".txt";
 
 			std::stringstream header;
-			header << "geometry: " << geometry_path() << "\n";
+			header << "scenery: " << scenery_path() << "\n";
 			header << "photons: " << photon_path() << ", event: " << event_counter << "\n";
 			header << "sensor id: " << i << "\n";
 			header << "sensor name: " << sensors.at(i)->get_frame()->get_path_in_tree_of_frames() << "\n";
@@ -231,9 +304,26 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 		// wipe out the cherenkov photons which have just been propagated
 		Photons::delete_photons_and_history(&photons);
 	}
+}*/
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+bool ToDoScheduler::command_is_complete_investigate_events()const {
+	if(
+		!cmd.exist("scenery") ||
+		!cmd.exist("photons") ||
+		!cmd.exist("config")
+	) {
+		cout << help_investigate_events();
+		return false;
+	}else
+		return true;
 }
 //------------------------------------------------------------------------------
-void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
+void ToDoScheduler::investigate_events()const {
+
+	if(!command_is_complete_investigate_events())
+		return;
 
 	// settings
 	TracerSettings settings;
@@ -253,7 +343,7 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 
 	// load scenery
 	WorldFactory fab;
-	fab.load(cmd.get(geometry_key));
+	fab.load(scenery_path());
 	Frame *world = fab.world();
 
 	// init Telescope Array Control
@@ -310,26 +400,17 @@ void ToDoScheduler::investigate_single_photon_propagation_in_geometry()const {
 	}
 }
 //------------------------------------------------------------------------------
-const string ToDoScheduler::geometry_path()const {
-	return cmd.get(geometry_key);
+string ToDoScheduler::help_investigate_events()const {
+	std::stringstream out; 
+	out << "--investigate\n";
+	out << "  Explore air shower event photons in a scenery in 1st person.\n";
+	out << "  Objects, declared telescopes in the scenery, will be pointed\n";
+	out << "  towards the source of the air shower event\n";
+	out << "  --scenery, -s  path of scenery\n";
+	out << "  --photons, -p  path of photons\n";
+	out << "  --config,  -c  path of mctracer configuration\n";
+	return out.str();
 }
-//------------------------------------------------------------------------------
-const string ToDoScheduler::photon_path()const {
-	return cmd.get(photons_key);
-}
-//------------------------------------------------------------------------------
-const string ToDoScheduler::output_path()const {
-	return cmd.get(output_key);
-}
-//------------------------------------------------------------------------------
-const string ToDoScheduler::input_path()const {
-	return cmd.get(input_key);
-}
-//------------------------------------------------------------------------------
-const string ToDoScheduler::config_path()const {
-	return cmd.get(config_key);
-}
-//------------------------------------------------------------------------------
-const string ToDoScheduler::skydome_path()const {
-	return cmd.get(skydome_key);
-}
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
