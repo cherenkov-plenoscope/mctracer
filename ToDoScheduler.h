@@ -35,6 +35,7 @@ class ToDoScheduler {
 	const string photons_key = "photons";
 	const string config_key = "config";
 	const string output_key = "output";
+	const string input_key = "input";
 	const string skydome_key = "skydome";
 public:
 
@@ -50,6 +51,7 @@ private:
 	const string geometry_path()const;
 	const string photon_path()const;
 	const string output_path()const;
+	const string input_path()const;
 	const string config_path()const;
 	const string skydome_path()const;
 };

@@ -8,6 +8,8 @@
 #include "CorsikaIO/EventIo/EventIo.h"
 #include "CorsikaIO/EventIo/PhotonFactory.h"
 #include "Xml/Factory/VisualConfigFab.h"
+#include "Xml/Factory/TracerSettingsFab.h"
+#include "PhotonsReader/PhotonsReader.h"
 //------------------------------------------------------------------------------
 ToDoScheduler::ToDoScheduler(int argc, char** argv) {
 
@@ -34,7 +36,8 @@ void ToDoScheduler::define() {
 	cmd.add_value(geometry_key, 'g', "geometry input file");
 	cmd.add_value(photons_key, 'p', "photon input file");
 	cmd.add_value(config_key, 'c' ,"configuration file");
-	cmd.add_value(output_key, 'o', "output file");
+	cmd.add_value(output_key, 'o', "output path");
+	cmd.add_value(input_key, 'i', "input path");
 	cmd.add_value(skydome_key, 's', "sky dome image");
   	cmd.add_flag(pointsource_key, "point source investigation");	
     cmd.add_flag(render_key, "render geometry");	
@@ -79,59 +82,71 @@ void ToDoScheduler::render_geometry()const {
 void ToDoScheduler::point_spread_investigation_in_geometry()const {
 
 	// Bokeh settings
-	KeyValueMap::Map source_config(config_path());
-
-	// propagation settings
-	TracerSettings settings;	
-	settings.use_multithread_when_possible = true;
-	settings.store_only_final_intersection = true;
-
+	Xml::Document doc(config_path());
+	Xml::Node se = doc.get_tree().child("settings");
+   
+    //--------------------------------------------------------------------------
+    // BASIC SETTINGS
+	TracerSettings settings = Xml::Configs::get_TracerSettings_from_node(se);
+	
+	//--------------------------------------------------------------------------
 	// Random
 	Random::Mt19937 prng(settings.pseudo_random_number_seed);
-
+	
+	//--------------------------------------------------------------------------
 	// scenery
 	WorldFactory fab;
-	fab.load(cmd.get(geometry_key));
+	fab.load(geometry_path());
 	Frame *world = fab.world();
+	
+	//--------------------------------------------------------------------------
 	// sensors in scenery
 	PhotonSensors::Sensors sensors = fab.get_sensors();
-
+	
+	//--------------------------------------------------------------------------
 	// photon source
-	LightSourceFromConfig light_fab(source_config);
-	std::vector<Photon*>* photons = light_fab.get_photons();
+	PhotonsReader photon_file(input_path());
+	std::vector<Photon*>* photons;
 
-	// photon propagation
-	Photons::propagate_photons_in_world_with_settings(
-		photons, world, &settings, &prng
-	);
+	uint event_counter = 1;
+	while(photon_file.has_still_photons_left()) {
+		photons = photon_file.next(&prng);
 
-	// detect photons in sensors
-	sensors.clear_history();
-	sensors.assign_photons(photons);
-
-	// write each sensors to file
-	for(uint i=0; i<sensors.size(); i++) {
-
-		std::stringstream outname;
-		outname << output_path() << i;
-
-		std::stringstream header;
-		header << "geometry: " << cmd.get(geometry_key) << "\n";
-		header << "lightsource: " << config_path() << "\n";
-		header << "sensor id: " << i << "\n";
-		header << "sensor name: " << sensors.at(i)->get_frame()->get_path_in_tree_of_frames() << "\n";
-		header << source_config.get_print();
-		header << "-------------\n";
-		header << sensors.at(i)->get_arrival_table_header();
-
-		AsciiIo::write_table_to_file_with_header(
-			sensors.at(i)->get_arrival_table(),
-			outname.str(),
-			header.str()
+		//----------------------------------------------------------------------
+		// photon propagation
+		Photons::propagate_photons_in_world_with_settings(
+			photons, world, &settings, &prng
 		);
-	}
 
-	Photons::delete_photons_and_history(photons);
+		//----------------------------------------------------------------------
+		// detect photons in sensors
+		sensors.clear_history();
+		sensors.assign_photons(photons);
+		//----------------------------------------------------------------------
+		// write each sensors to file
+		for(uint i=0; i<sensors.size(); i++) {
+
+			std::stringstream outname;
+			outname << output_path() << event_counter << "_" << i;
+
+			std::stringstream header;
+			header << "geometry: " << geometry_path() << "\n";
+			header << "sensor:  " << sensors.at(i)->get_frame()->get_path_in_tree_of_frames() << ", ID: " << i << "\n";
+			header << "photons: " << input_path() << "\n";
+			header << "-------------\n";
+			header << sensors.at(i)->get_arrival_table_header();
+
+			AsciiIo::write_table_to_file_with_header(
+				sensors.at(i)->get_arrival_table(),
+				outname.str(),
+				header.str()
+			);
+		}
+		//----------------------------------------------------------------------
+		Photons::delete_photons_and_history(photons);
+		delete photons;
+		event_counter++;
+	}
 }
 //------------------------------------------------------------------------------
 void ToDoScheduler::propagate_photons_through_geometry()const {
@@ -146,7 +161,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 
 	// load scenery
 	WorldFactory fab;
-	fab.load(cmd.get(geometry_key));
+	fab.load(geometry_path());
 	Frame *world = fab.world();
 	PhotonSensors::Sensors sensors = fab.get_sensors();
 
@@ -197,7 +212,7 @@ void ToDoScheduler::propagate_photons_through_geometry()const {
 			outname << "e" << event_counter << "s" << sensors.at(i)->get_id() << ".txt";
 
 			std::stringstream header;
-			header << "geometry: " << cmd.get(geometry_key) << "\n";
+			header << "geometry: " << geometry_path() << "\n";
 			header << "photons: " << photon_path() << ", event: " << event_counter << "\n";
 			header << "sensor id: " << i << "\n";
 			header << "sensor name: " << sensors.at(i)->get_frame()->get_path_in_tree_of_frames() << "\n";
@@ -305,6 +320,10 @@ const string ToDoScheduler::photon_path()const {
 //------------------------------------------------------------------------------
 const string ToDoScheduler::output_path()const {
 	return cmd.get(output_key);
+}
+//------------------------------------------------------------------------------
+const string ToDoScheduler::input_path()const {
+	return cmd.get(input_key);
 }
 //------------------------------------------------------------------------------
 const string ToDoScheduler::config_path()const {
