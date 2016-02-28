@@ -21,6 +21,8 @@ class MmcsCorsikaEvent {
 
 	uint reuse_counter = 0;
 public:
+	MmcsCorsikaEvent() {};
+
 	MmcsCorsikaEvent(
 		MmcsCorsikaEventHeader event_header,
 		MmcsCorsikaPhotonData photon_data,
