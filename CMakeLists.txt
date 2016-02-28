@@ -66,6 +66,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/XmlFactory")
 add_subdirectory("${PROJECT_SOURCE_DIR}/XmlIO")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Xml")
 add_subdirectory("${PROJECT_SOURCE_DIR}/CommandLine")
+add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonsReader")
 
 #MESSAGE( STATUS "SOURCE_VARIABLE:" ${SOURCE} )
 #-------------------------------------------------------------------------------
