@@ -2,6 +2,12 @@
 
 class XmlTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
+TEST_F(XmlTest, empty_xml_path) {
+	
+	const std::string path = "";	
+	EXPECT_THROW(Xml::Document doc(path), Xml::IoError);
+}
+//------------------------------------------------------------------------------
 TEST_F(XmlTest, open_not_existing_file) {
 	
 	const std::string path = "xml/nein_nein.xml";	
