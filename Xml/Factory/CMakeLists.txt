@@ -4,5 +4,6 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/VisualConfigFab.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FrameFab.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TracerSettingsFab.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/InternalPhotonSource.cpp
     PARENT_SCOPE
 )
