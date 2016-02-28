@@ -20,7 +20,6 @@
 #include "CorsikaIO/MmcsCorsikaFullEventGetter.h"
 #include "CorsikaIO/MmcsCorsikaPhotonData.h"
 #include "TelescopeArrayControl.h"
-#include "LightSourceFromConfig.h"
 using std::string;
 using std::cout;
 //=================================

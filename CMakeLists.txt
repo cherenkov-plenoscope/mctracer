@@ -40,7 +40,6 @@ set(CMAKE_MODULE_PATH
 set(SOURCE 	
 	${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeter.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/KeyValueMap.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/LightSourceFromConfig.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TelescopeArrayControl.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ThinLensEquation.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ToDoScheduler.cpp		
