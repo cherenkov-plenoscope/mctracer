@@ -1,0 +1,8 @@
+<lightsource>
+    <point_source
+        opening_angle_in_deg="2.5"
+        number_of_photons="1e5"
+        rot_in_deg="[0.0, 180.0, 0.0]"
+        pos="[0.0, 0.0, 0.0]"
+    />
+</lightsource>
