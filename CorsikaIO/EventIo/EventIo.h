@@ -1,3 +1,8 @@
+//=================================
+// include guard
+#ifndef __CorsikaEventIo_H_INCLUDED__
+#define __CorsikaEventIo_H_INCLUDED__
+
 #include <vector>
 #include <iostream>
 #include <fstream>
@@ -150,7 +155,7 @@ namespace EventIo{
         std::vector<std::vector<float> > _next();
     public:
 
-        bool has_still_events_left();
+        bool has_still_events_left()const;
         EventIoRunHeader run_header;
         std::vector<float> current_event_end;
         EventIoEventHeader current_event_header;
@@ -163,3 +168,5 @@ namespace EventIo{
         Event next_event();
     };
 } //namespace EventIo
+
+#endif // __CorsikaEventIo_H_INCLUDED__ 

@@ -382,7 +382,7 @@ vector<vector<float> > make_photons_from_stream(
     return bunches;    
 }
 
-bool EventIoFile::has_still_events_left(){
+bool EventIoFile::has_still_events_left()const {
     return !this->run_end_found;
 }
 
