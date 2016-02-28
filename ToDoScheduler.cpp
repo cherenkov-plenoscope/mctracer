@@ -103,7 +103,7 @@ void ToDoScheduler::show_scenery()const {
 
 	if(!config_path().empty()) {
 		Xml::Document doc(config_path());
-		Xml::Node node = doc.get_tree();
+		Xml::Node node = doc.node();
 		Xml::Node vc_node = node.child("visual");
 		settings.visual = Xml::Configs::get_VisualConfig_from_node(vc_node);
 	}
@@ -142,7 +142,7 @@ void ToDoScheduler::propagate()const {
 
 	// Bokeh settings
 	Xml::Document doc(config_path());
-	Xml::Node se = doc.get_tree().child("settings");
+	Xml::Node se = doc.node().child("settings");
    
     //--------------------------------------------------------------------------
     // BASIC SETTINGS
@@ -333,7 +333,7 @@ void ToDoScheduler::investigate_events()const {
 
 	if(!config_path().empty()) {
 		Xml::Document doc(config_path());
-		Xml::Node node = doc.get_tree();
+		Xml::Node node = doc.node();
 		Xml::Node vc_node = node.child("visual");
 		settings.visual = Xml::Configs::get_VisualConfig_from_node(vc_node);
 	}

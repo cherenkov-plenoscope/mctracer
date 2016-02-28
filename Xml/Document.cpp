@@ -14,7 +14,7 @@ Document::Document(const string path) {
     assert_xml_file_is_valid();
 }
 //------------------------------------------------------------------------------
-Node Document::get_tree()const {
+Node Document::node()const {
     return Node(pugi_doc, file, path);
 }
 //------------------------------------------------------------------------------

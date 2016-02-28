@@ -24,7 +24,7 @@ struct Fab {
     Fab(const std::string path) {
 
         Xml::Document doc(path);
-        node = doc.get_tree();
+        node = doc.node();
     };
 
 	Frame* fab_Frame(Frame* mother,	const Xml::Node &node) {

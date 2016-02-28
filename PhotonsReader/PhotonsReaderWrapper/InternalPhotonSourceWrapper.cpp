@@ -7,7 +7,7 @@ InternalPhotonSourceWrapper::InternalPhotonSourceWrapper(const string _path):
 	the_single_event_was_already_read = false;
 
 	Xml::Document doc(path);
-	Xml::Node doc_node = doc.get_tree();
+	Xml::Node doc_node = doc.node();
 	Xml::Node light_source_node = doc_node.child("lightsource");
 	photons = Xml::InternalPhotonSource::node2photons(light_source_node);
 }

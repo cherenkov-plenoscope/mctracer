@@ -26,7 +26,7 @@ namespace Xml {
 	public:
 
 		Document(const std::string path);
-		Node get_tree()const;
+		Node node()const;
 		std::string get_info_print(Node node);
 	private:
 

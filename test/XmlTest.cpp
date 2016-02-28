@@ -19,7 +19,7 @@ TEST_F(XmlTest, loop_over_children) {
 	const std::string path = "xml/loop_over_children.xml";
 
 	Xml::Document doc(path);
-	Xml::Node tree = doc.get_tree();
+	Xml::Node tree = doc.node();
 
 	std::vector<std::string> children_names = {
 		"child1", "child2", "child3", "dude"
@@ -35,7 +35,7 @@ TEST_F(XmlTest, minimal_node) {
 	const std::string path = "xml/minimal_node_name_attribute.xml";	
 
 	Xml::Document doc(path);
-	Xml::Node tree = doc.get_tree();
+	Xml::Node tree = doc.node();
 
 	Xml::Node function = tree.child("function");
 
@@ -48,7 +48,7 @@ TEST_F(XmlTest, valid_attributes) {
 	const std::string path = "xml/valid_attributes.xml";	
 
 	Xml::Document doc(path);
-	Xml::Node tree = doc.get_tree();
+	Xml::Node tree = doc.node();
 
 	Xml::Node simon = tree.child("simon");
 
@@ -70,7 +70,7 @@ TEST_F(XmlTest, invalid_attribute_double) {
 	
 	const std::string path = "xml/invalid_attribute_double.xml";	
 	Xml::Document doc(path);
-	Xml::Node tree = doc.get_tree();
+	Xml::Node tree = doc.node();
 	Xml::Node simon = tree.child("simon");
 	EXPECT_THROW(
 		Xml::att2double(simon, "number"), Xml::AttributeIsNoDouble
@@ -81,7 +81,7 @@ TEST_F(XmlTest, invalid_attribute_Tuple3) {
 	
 	const std::string path = "xml/invalid_attribute_Tuple3.xml";	
 	Xml::Document doc(path);
-	Xml::Node tree = doc.get_tree();
+	Xml::Node tree = doc.node();
 	Xml::Node my_node = tree.child("MyNode");
 	
 	EXPECT_THROW(
@@ -119,7 +119,7 @@ TEST_F(XmlTest, visual_config) {
 	FileTools::write_text_to_file(Xml::Configs::to_node(out), path);
 
 	Xml::Document doc(path);
-	Xml::Node node = doc.get_tree();
+	Xml::Node node = doc.node();
 	Xml::Node vc_node = node.child("visual");
 	VisualConfig in = Xml::Configs::get_VisualConfig_from_node(vc_node);
 
@@ -151,7 +151,7 @@ TEST_F(XmlTest, functions) {
 	FunctionFab fab;
 
 	Xml::Document doc(path);
-	Xml::Node tree = doc.get_tree();
+	Xml::Node tree = doc.node();
 	
 	Xml::Node child = tree.first_child(); 
 	ASSERT_TRUE(child);
@@ -238,7 +238,7 @@ TEST_F(XmlTest, TracerSettings) {
 	FileTools::write_text_to_file(Xml::Configs::to_node(out), path);
 
 	Xml::Document doc(path);
-	Xml::Node node = doc.get_tree();
+	Xml::Node node = doc.node();
 	TracerSettings in = Xml::Configs::get_TracerSettings_from_node(node.child("settings"));
 
 	EXPECT_EQ(in.max_number_of_interactions_per_photon, out.max_number_of_interactions_per_photon);

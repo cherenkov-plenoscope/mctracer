@@ -61,7 +61,7 @@ void Propagation::execute() {
 	// 111111 11
 	//--------------------------------------------------------------------------
 	Xml::Document doc(config_path.path + config_path.filename);
-	Xml::Node config_node = doc.get_tree().child("propagation");
+	Xml::Node config_node = doc.node().child("propagation");
 
     //--------------------------------------------------------------------------
     // BASIC SETTINGS
