@@ -1,11 +1,10 @@
 # mctracer scientific ray tracing
 # Author: Sebastian Mueller
-#-------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 2.8)
 set (CMAKE_CXX_FLAGS "-std=c++11 -Wall -pedantic -O2 -g -I")
-#-------------------------------------------------------------------------------
 project(mctracer)
-#-------------------------------------------------------------------------------
+
+#--------------------------------
 # Assert compiler supports C++ 11
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
@@ -14,28 +13,24 @@ if(COMPILER_SUPPORTS_CXX11)
 else()
     message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
-#-------------------------------------------------------------------------------
+#-------------------
 # External libraries
-# OpenMP
+# 	OpenMP
 find_package(OpenMP)
 if(OPENMP_FOUND)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 endif()
 
-# OpenCV
+# 	OpenCV
 find_package(OpenCV 2.4.8 REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 link_directories(${OpenCV_LIB_DIR})
 #-------------------------------------------------------------------------------
 # Cmake
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
-
-set(CMAKE_MODULE_PATH 
-	${CMAKE_MODULE_PATH} 
-	${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules
-)
-#-------------------------------------------------------------------------------
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
+#-----------
 # The Source
 set(SOURCE 	
 	${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeter.cpp
@@ -67,38 +62,54 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/Xml")
 add_subdirectory("${PROJECT_SOURCE_DIR}/CommandLine")
 add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonsReader")
 
-#MESSAGE( STATUS "SOURCE_VARIABLE:" ${SOURCE} )
-#-------------------------------------------------------------------------------
+#-------------------------------
 # mctracer shared linked library
 
 add_library(mct SHARED ${SOURCE})
 include_directories(/usr/include)
 include_directories(/usr/local/include)
 target_link_libraries(mct ${OpenCV_LIBS})
-#-------------------------------------------------------------------------------
-# mctracer executable
+#---------
+# Show exe
+#if(OPENCV_FOUND)
+add_executable(mctShow Main/Show.cpp)
+target_link_libraries(mctShow mct)
+#target_link_libraries(mctShow ${OpenCV_LIBS})
+#endif()
+#---------------
+# Propagate exe
+add_executable(mctPropagate Main/Propagate.cpp)
+target_link_libraries(mctPropagate mct)
 
-add_executable(mctracer mctracer.cpp)
-target_link_libraries(mctracer mct)
-#-------------------------------------------------------------------------------
+#----------------
+# ShowPhotons exe
+add_executable(mctShowPhotons Main/ShowPhotons.cpp)
+target_link_libraries(mctShowPhotons mct)
+
+#--------------------
+# mctracer executable
+#add_executable(mctracer mctracer.cpp)
+#target_link_libraries(mctracer mct)
+#------------------------
 # light field calibration
 
 add_executable(lightfieldcalibration lightfieldcalibration.cpp)
 target_link_libraries(lightfieldcalibration mct)
-#-------------------------------------------------------------------------------
+#------------------------
 # light field propagation
 
 add_executable(lightfieldpropagation lightfieldpropagation.cpp)
 target_link_libraries(lightfieldpropagation mct)
-#-------------------------------------------------------------------------------
-# GTest unit and integration tests
+#---------------------------------
+# unit test exe
 include_directories("${PROJECT_SOURCE_DIR}/gtest-1.7.0/include")
+add_subdirectory("${PROJECT_SOURCE_DIR}/test")
 
 add_executable(mctracerTests ./test/test.cpp)
 target_link_libraries(mctracerTests gtest gtest_main)
 target_link_libraries(mctracerTests mct)
-#-------------------------------------------------------------------------------
-# GTest executable examples
+#--------------------------
+# examples exe
 
 add_executable(mctracerExamples ./Docu/examples/examples.cpp)
 target_link_libraries(mctracerExamples gtest gtest_main)
@@ -129,3 +140,27 @@ target_link_libraries(mctracerExamples mct)
 #SWIG_LINK_LIBRARIES(mctracer ${PYTHON_LIBRARIES})
 #SWIG_LINK_LIBRARIES(mctracer mct)
 #
+
+
+
+
+#You could do it like following.
+#
+ #   CMakeLists.txt in your MainProject directory:
+#
+ #   project(MainProject)
+#
+#    add_subdirectory(LibProject/src)
+#    add_subdirectory(MainProject/src)
+#
+ #   CMakeLists.txt in your LibProject/src directory:
+#
+ #   include_directories(${PROJECT_SRC_DIR}/LibProject/inc/)
+  #  add_library(LibProject test.cpp)
+#
+ #   CMakeLists.txt in your MainProject/src directory:
+#
+ #   include_directories(${PROJECT_SRC_DIR}/MainProject/inc/)
+  #  add_executable(MainProject main.cpp)
+   # target_link_libraries(MainProject LibProject)
+
