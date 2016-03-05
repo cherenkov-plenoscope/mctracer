@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "Core/Random/Random.h"
 #include "Core/Histogram1D.h"
+#include "Tools/Tools.h"
 
 class RandomGeneratorTest : public ::testing::Test {};
 //------------------------------------------------------------------------------

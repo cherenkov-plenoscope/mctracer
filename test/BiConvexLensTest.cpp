@@ -8,6 +8,7 @@
 #include "Core/Function/ConstantFunction.h"
 #include "Core/Photons.h"
 #include "Geometry/BiConvexLens.h"
+#include "Geometry/Disc.h"
 #include "Geometry/BiConvexLensHexBound.h"
 #include "LensMaker/LensMaker.h"
 #include "PhotonSensor/PhotonSensor.h"

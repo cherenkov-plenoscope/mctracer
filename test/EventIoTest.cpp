@@ -40,9 +40,9 @@ TEST_F(EventIoTest, EventIoHeader_works) {
 TEST_F(EventIoTest,  EventIoHeader_fails_wrong_sync_marker) {
 
     std::ifstream fin("telescope.dat");
-    stringstream sout;
+    std::stringstream sout;
 
-    std::copy_n(istreambuf_iterator<char>(fin), 100,  ostreambuf_iterator<char>(sout));
+    std::copy_n(std::istreambuf_iterator<char>(fin), 100, std::ostreambuf_iterator<char>(sout));
 
     // Here  destroy something in the sync word.
     sout.seekp(2);
@@ -60,13 +60,13 @@ TEST_F(EventIoTest, EventIoHeader_fails_empty_file) {
 //------------------------------------------------------------------------------
 TEST_F(EventIoTest, make_runheader) {
 
-    ifstream fin("telescope.dat");
-    stringstream sout;
+    std::ifstream fin("telescope.dat");
+    std::stringstream sout;
 
-    auto foo = istreambuf_iterator<char>(fin);
+    auto foo = std::istreambuf_iterator<char>(fin);
     for (size_t i=0; i<16; i++) foo++;
 
-    std::copy_n(foo, 100,  ostreambuf_iterator<char>(sout));
+    std::copy_n(foo, 100, std::ostreambuf_iterator<char>(sout));
     
     MmcsCorsikaRunHeader my_run_header = EventIo::make_run_header_from_stream(sout);
 }

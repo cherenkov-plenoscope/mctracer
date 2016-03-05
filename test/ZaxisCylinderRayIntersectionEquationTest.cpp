@@ -1,9 +1,5 @@
-#include <iostream> 
-#include <string>
-#include <math.h>
-
 #include "gtest/gtest.h"
-#include "Core/Vector3D.h"
+#include "Geometry/ZaxisCylinderRayIntersectionEquation.h"
 
 using namespace std;
 

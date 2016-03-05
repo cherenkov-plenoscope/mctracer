@@ -1,5 +1,7 @@
 #include "gtest/gtest.h"
-#include "../XmlFactory/WorldFactory.h"
+#include "XmlFactory/WorldFactory.h"
+using std::cout;
+using std::string;
 
 class WorldFactoryTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
@@ -66,7 +68,7 @@ TEST_F(WorldFactoryTest, ReadNotExistingFile) {
     }catch(std::exception& error){
 
         // only XmlIoException exceptions are acceptable
-        cout << error.what() << endl;
+        cout << error.what() << "\n";
         EXPECT_EQ( true , false );
     }
 }

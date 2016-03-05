@@ -20,7 +20,7 @@ TEST_F(MmcsCorsikaEventGetterTest, word_size_is_zero) {
 	);
 }
 //------------------------------------------------------------------------------
-TEST_F(Tools, word_2_float) {
+TEST_F(MmcsCorsikaEventGetterTest, word_2_float) {
 
   string h = "hans";
 
@@ -30,7 +30,7 @@ TEST_F(Tools, word_2_float) {
   EXPECT_EQ(h, r);
 }
 //------------------------------------------------------------------------------
-TEST_F(Tools, float_2_word) {
+TEST_F(MmcsCorsikaEventGetterTest, float_2_word) {
 
   float leet = 1.337;
 
@@ -40,14 +40,14 @@ TEST_F(Tools, float_2_word) {
   EXPECT_EQ(leet, r_leet);
 }
 //------------------------------------------------------------------------------
-TEST_F(Tools, zero_float_2_word) {
+TEST_F(MmcsCorsikaEventGetterTest, zero_float_2_word) {
 
   float n = 0.0;
   string emp = MmcsCorsikaTools::float2str_4byte_bin_map(n);
   EXPECT_EQ(string(4, '\0'), emp);
 }
 //------------------------------------------------------------------------------
-TEST_F(Tools, zero_word_2_float) {
+TEST_F(MmcsCorsikaEventGetterTest, zero_word_2_float) {
 
   string emp(4, '\0');
   float n = MmcsCorsikaTools::str2float_4byte_bin_map(emp);

@@ -1,11 +1,8 @@
-#include <iostream> 
-#include <string>
-#include <math.h>
-
 #include "gtest/gtest.h"
 #include "Core/Ray.h"
 #include "Core/Intersection.h"
 #include "Geometry/Sphere.h"
+#include "Core/TracerSettings.h"
 
 using namespace std;
 

@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "LightFieldTelescope/NightSkyBackgroundLight.h"
-
+#include "Tools/AsciiIo.h"
 class NightSkyBackgroundLightTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(NightSkyBackgroundLightTest, init) {

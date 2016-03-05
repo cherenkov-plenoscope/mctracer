@@ -1,10 +1,7 @@
-#include <iostream> 
-#include <string>
-#include <math.h>
-
 #include "gtest/gtest.h"
 #include "Geometry/HexagonalPrismZ.h"
-
+#include "Geometry/XyPlaneRayIntersectionEquation.h"
+#include "Core/Ray.h"
 using namespace std;
 
 class XyPlaneRayEquationTest : public ::testing::Test {

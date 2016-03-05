@@ -1,10 +1,6 @@
 #include "gtest/gtest.h"
-#include "Core/Function/Func1DFunction.h"
-#include "Core/Function/ConstantFunction.h"
-#include "Core/Function/Polynom3Function.h"
-#include "Core/Function/LinInterpolFunction.h"
-#include "Core/Function/ConcatFunction.h"
-
+#include "Core/Function/Function.h"
+#include <math.h>
 class FunctionTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 // Limits

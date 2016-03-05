@@ -1,3 +1,4 @@
+#include "gtest/gtest.h"
 #include "PreTrigger.h"
 #include "SimpleTDCQDC.h"
 using std::vector;

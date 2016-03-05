@@ -1,3 +1,4 @@
+#include "gtest/gtest.h"
 #include "Geometry/HexGridAnnulus.h"
 #include "Geometry/GridNeighborhoodTopoligy.h"
 

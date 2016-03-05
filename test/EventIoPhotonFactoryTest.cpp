@@ -1,5 +1,10 @@
 #include "gtest/gtest.h"
 #include "CorsikaIO/EventIo/PhotonFactory.h"
+#include "CorsikaIO/EventIo/EventIo.h"
+#include "Geometry/Disc.h"
+#include "PhotonSensor/PhotonSensor.h"
+#include "Core/Photons.h"
+using std::vector;
 
 class EventIoPhotonFactoryTest : public ::testing::Test {};
 //------------------------------------------------------------------------------

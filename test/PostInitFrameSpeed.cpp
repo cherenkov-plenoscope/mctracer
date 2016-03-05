@@ -1,4 +1,6 @@
+#include "gtest/gtest.h"
 #include "Geometry/SegmentedReflector/SegmentedReflector.h"
+#include "Core/TracerSettings.h"
 
 class PostInitFrameSpeed : public ::testing::Test {
 protected:

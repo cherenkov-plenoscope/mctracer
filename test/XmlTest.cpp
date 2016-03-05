@@ -1,4 +1,6 @@
+#include "gtest/gtest.h"
 #include "Xml/Xml.h"
+#include "Tools/FileTools.h"
 
 class XmlTest : public ::testing::Test {};
 //------------------------------------------------------------------------------

@@ -1,3 +1,4 @@
+#include "gtest/gtest.h"
 #include "Tools/Tools.h"
 
 class TimeLineAddition : public ::testing::Test {};

@@ -1,3 +1,4 @@
+#include "gtest/gtest.h"
 #include "Core/Function/Function.h"
 
 class FunctionDiscretSamplingTest : public ::testing::Test {};

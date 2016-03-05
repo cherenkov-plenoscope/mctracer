@@ -1,5 +1,4 @@
-set(SOURCE
-    ${SOURCE}
+set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/ApertureCameraTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PhotonsTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/AsciiIoTest.cpp

@@ -1,4 +1,7 @@
+#include "gtest/gtest.h"
 #include "Tools/StringTools.h"
+using std::string;
+using std::vector;
 
 class StringToolsTest : public ::testing::Test {};
 //------------------------------------------------------------------------------

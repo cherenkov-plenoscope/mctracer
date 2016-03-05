@@ -1,11 +1,12 @@
-
-#include <iostream> 
-#include <string>
-#include <math.h>
-
 #include "gtest/gtest.h"
 #include "Core/Vector3D.h"
-
+#include "Core/TracerSettings.h"
+#include "Geometry/Sphere.h"
+#include "Core/Rotation3D.h"
+#include "Core/Random/Random.h"
+#include "Core/PropagationEnvironment.h"
+#include "Core/Photon.h"
+#include "Core/Photons.h"
 using namespace std;
 
 class SphereIntersectionTest : public ::testing::Test {

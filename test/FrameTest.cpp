@@ -1,12 +1,9 @@
-#include <iostream> 
-#include <string>
-#include <math.h>
-
 #include "gtest/gtest.h"
 #include "Core/Frame.h"
 #include "Core/Vector3D.h"
 #include "Core/Rotation3D.h"
 #include "Core/HomoTrafo3D.h"
+#include "Geometry/Sphere.h"
 
 using namespace std;
 

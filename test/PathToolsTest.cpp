@@ -1,3 +1,4 @@
+#include "gtest/gtest.h"
 #include "Tools/PathTools.h"
 
 class PathToolsTest : public ::testing::Test {};

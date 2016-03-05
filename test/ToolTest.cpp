@@ -1,4 +1,5 @@
 #include "gtest/gtest.h"
+#include "Tools/Tools.h"
 #include "Tools/FileTools.h"
 #include "Tools/AssertionTools.h"
 
