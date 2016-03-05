@@ -94,11 +94,6 @@ add_executable(mctTest ./test/test.cpp ${TEST_SOURCE})
 target_link_libraries(mctTest gtest gtest_main)
 target_link_libraries(mctTest mct)
 
-#--------------------------
-# examples exe
-add_executable(mctracerExamples ./Docu/examples/examples.cpp)
-target_link_libraries(mctracerExamples gtest gtest_main)
-target_link_libraries(mctracerExamples mct)
 #-------------------------------------------------------------------------------
 # http://stackoverflow.com/questions/992068/building-a-python-shared-object-binding-with-cmake-which-depends-upon-external
 # http://www.swig.org/Doc1.3/Introduction.html#Introduction_build_system
