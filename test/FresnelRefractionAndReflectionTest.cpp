@@ -1,6 +1,3 @@
-#include <iostream> 
-#include <math.h>
-
 #include "gtest/gtest.h"
 #include "Core/FresnelRefractionAndReflection.h"
 

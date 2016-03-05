@@ -1,10 +1,10 @@
+#include "gtest/gtest.h"
 #include "Core/Function/ConstantFunction.h"
 #include "Core/TracerSettings.h"
 #include "Core/Rotation3D.h"
 #include "Core/Frame.h"
 #include "Core/Random/Random.h"
 #include "Geometry/Plane.h"
-#include "gtest/gtest.h"
 #include "Core/Vector3D.h"
 
 using namespace std;

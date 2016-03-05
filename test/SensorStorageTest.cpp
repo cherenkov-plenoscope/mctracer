@@ -1,8 +1,8 @@
 #include "gtest/gtest.h"
 #include "PhotonSensor/PhotonSensors.h"
-
 using namespace PhotonSensors;
 using namespace PhotonSensor;
+
 class SensorStorageTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 // DEFAULT CONSTRUCTOR

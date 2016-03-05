@@ -1,9 +1,4 @@
 #include "gtest/gtest.h"
-
-#include <iostream> 
-#include <math.h>
-#include <string>
-
 //#include "Cameras/FlyingCamera.h"
 #include "Core/Function/ConstantFunction.h"
 #include "Core/Photons.h"

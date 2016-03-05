@@ -1,14 +1,5 @@
-#include <iostream> 
-#include <string>
-#include <math.h>
-#include <algorithm> 
-#include <iterator>
-#include <fstream>
-#include <sstream>
-
 #include "gtest/gtest.h"
 #include "CorsikaIO/EventIo/EventIo.h"
-
 using namespace EventIo;
 
 class EventIoTest : public ::testing::Test {};

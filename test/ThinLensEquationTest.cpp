@@ -1,8 +1,4 @@
 #include "gtest/gtest.h"
-
-#include <iostream> 
-#include <math.h>
-
 #include "ThinLensEquation.h"
 
 class ThinLensEquationTest : public ::testing::Test {};

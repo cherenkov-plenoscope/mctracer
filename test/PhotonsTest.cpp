@@ -1,9 +1,5 @@
-#include <iostream> 
-#include <string>
-#include <math.h>
-#include "Tools/AsciiIo.h"
-
 #include "gtest/gtest.h"
+#include "Tools/AsciiIo.h"
 #include "Core/Photons.h"
 
 class PhotonsTest : public ::testing::Test {};

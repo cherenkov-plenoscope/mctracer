@@ -1,7 +1,3 @@
-#include <iostream> 
-#include <string>
-#include <math.h>
-
 #include "gtest/gtest.h"
 #include "Core/Vector2D.h"
 #include "Tools/Tools.h"

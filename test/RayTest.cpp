@@ -1,7 +1,3 @@
-#include <iostream> 
-#include <string>
-#include <math.h>
-
 #include "gtest/gtest.h"
 #include "Core/Ray.h"
 #include "Geometry/Sphere.h"
