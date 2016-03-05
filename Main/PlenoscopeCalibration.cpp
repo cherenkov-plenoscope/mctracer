@@ -1,9 +1,28 @@
+#include "CommandLine/CommandLine.h"
 #include "Cameras/FlyingCamera.h"
 #include "Tools/FileTools.h"
 #include "LightFieldTelescope/LightFieldTelescope.h"
+using std::string;
+using std::cout;
+
+string help_text() {
+    std::stringstream out; 
+    out << "  Plenoscope calibration\n";
+    out << "  --config, -c      config path steering the calibration and the plenoscope\n";
+    return out.str();   
+}
 
 int main(int argc, char* argv[]) {
     try{
+
+    CommandLine::Parser cmd;
+    cmd.define_key_val_by_key_short_desc("config", 'c' ,"config path steering the calibration and the plenoscope");
+    cmd.parse(argc, argv);
+
+    if(!cmd.exist("config")) {
+        cout << help_text();
+        return 0;
+    }
 
     // SET UP TELESCOPE
     LightFieldTelescope::Config telescope_config;

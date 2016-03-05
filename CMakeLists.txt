@@ -76,13 +76,13 @@ target_link_libraries(mctShowPhotons mct)
 
 #------------------------
 # light field calibration
-add_executable(lightfieldcalibration lightfieldcalibration.cpp)
-target_link_libraries(lightfieldcalibration mct)
+add_executable(mctPlenoscopeCalibration Main/PlenoscopeCalibration.cpp)
+target_link_libraries(mctPlenoscopeCalibration mct)
 
 #------------------------
 # light field propagation
-add_executable(lightfieldpropagation lightfieldpropagation.cpp)
-target_link_libraries(lightfieldpropagation mct)
+add_executable(mctPlenoscopePropagation Main/PlenoscopePropagation.cpp)
+target_link_libraries(mctPlenoscopePropagation mct)
 
 #---------------------------------
 # unit test exe
