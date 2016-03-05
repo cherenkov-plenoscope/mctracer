@@ -16,7 +16,7 @@
 #include "Core/HomoTrafo3D.h"
 #include "CameraRay.h"
 #include "CameraImage.h"
-#include "TracerException.h"
+#include "Core/TracerException.h"
 
 class CameraDevice{
 public: 

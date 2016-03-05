@@ -1,5 +1,5 @@
 #include "Color.h"
-#include "TracerException.h"
+#include "Core/TracerException.h"
 #include <sstream>
 #include "math.h"
 //------------------------------------------------------------------------------

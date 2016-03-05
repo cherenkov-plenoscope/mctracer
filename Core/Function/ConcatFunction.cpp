@@ -1,6 +1,6 @@
 #include "ConcatFunction.h"
 #include <sstream>
-#include "TracerException.h"
+#include "Core/TracerException.h"
 #include <algorithm>    // std::lower_bound, std::upper_bound, std::sort
 
 namespace Function {

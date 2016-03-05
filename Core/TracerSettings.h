@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "Color.h"
-#include "TracerException.h"
+#include "Core/TracerException.h"
 #include "Cameras/VisualConfig.h"
 #include "Vector3D.h"
 #include <string>

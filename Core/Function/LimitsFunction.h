@@ -9,7 +9,7 @@
 //==============================================================================
 // included dependencies
 #include <string>
-#include "TracerException.h"
+#include "Core/TracerException.h"
 
 namespace Function {
 

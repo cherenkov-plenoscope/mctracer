@@ -26,7 +26,7 @@
 #include "Core/Rotation3D.h"
 #include "Core/Color.h"
 #include "XmlIO/XmlFileIo.h"
-#include "TracerException.h"
+#include "Core/TracerException.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "TelescopeArrayControl.h"
 #include "Geometry/SphereCapWithHexagonalBound.h"

@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "TracerException.h"
+#include "Core/TracerException.h"
 #include "LensMaker.h"
 //=================================
 

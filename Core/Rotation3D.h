@@ -12,7 +12,7 @@
 #include <math.h>
 #include <sstream>
 #include "Core/Vector3D.h"
-#include "TracerException.h"
+#include "Core/TracerException.h"
 #include "Core/Printable.h"
 //=================================
 

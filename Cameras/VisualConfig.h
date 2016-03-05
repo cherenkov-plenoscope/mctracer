@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "Core/Color.h"
-#include "TracerException.h"
+#include "Core/TracerException.h"
 #include "SkyDome.h"
 #include "Core/Vector3D.h"
 

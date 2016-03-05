@@ -34,7 +34,6 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake-mod
 # The Source
 set(SOURCE 	
 	${CMAKE_CURRENT_SOURCE_DIR}/TelescopeArrayControl.cpp		
-	${CMAKE_CURRENT_SOURCE_DIR}/TracerException.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ZdAzMount.cpp
 )
 add_subdirectory("${PROJECT_SOURCE_DIR}/Cameras")

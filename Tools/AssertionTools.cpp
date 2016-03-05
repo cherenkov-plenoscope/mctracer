@@ -1,6 +1,6 @@
 #include "Tools/AssertionTools.h"
 #include <sstream>
-#include "TracerException.h"
+#include "Core/TracerException.h"
 #include "Tools/StringTools.h"
 
 namespace AssertionTools {

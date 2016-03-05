@@ -12,7 +12,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "TracerException.h"
+#include "Core/TracerException.h"
 #include "Core/Printable.h"
 
 namespace Function {

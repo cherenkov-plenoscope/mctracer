@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sstream>
-#include "TracerException.h"
+#include "Core/TracerException.h"
 #include "Xml/BasicAttributes.h"
 
 namespace UserInteraction {

@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "Xml/pugi/pugixml.hpp"
-#include "TracerException.h"
+#include "Core/TracerException.h"
 #include "Tools/Tools.h"
 //------------------------------------------------------------------------------
 class XmlIoFileInfo{

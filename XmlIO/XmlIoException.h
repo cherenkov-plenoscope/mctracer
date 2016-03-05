@@ -12,7 +12,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include "TracerException.h"
+#include "Core/TracerException.h"
 #include "Xml/pugi/pugixml.hpp"
 #include "XmlFileIo.h"
 //------------------------------------------------------------------------------

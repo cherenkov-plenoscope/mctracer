@@ -13,7 +13,7 @@
 #include <string.h>
 #include <sstream>
 #include <vector>
-#include "TracerException.h"
+#include "Core/TracerException.h"
 #include "Tuple3.h"
 using std::string;
 

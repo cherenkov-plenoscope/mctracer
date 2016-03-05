@@ -16,7 +16,7 @@ class Intersection;
 #include "Core/Vector3D.h"
 #include "Core/Rotation3D.h"
 #include "Core/HomoTrafo3D.h"
-#include "TracerException.h"
+#include "Core/TracerException.h"
 #include "Tools/StringTools.h"
 #include "Tools/Tools.h"
 #include "Core/Printable.h"

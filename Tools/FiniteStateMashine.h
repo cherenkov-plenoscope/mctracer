@@ -9,11 +9,7 @@
 //=================================
 // included dependencies
 #include "Tools/StringTools.h"
-#include <iostream>
-#include <TracerException.h>
-#include <string>
-#include <sstream>
-#include <regex>
+#include "Core/TracerException.h"
 
 namespace fsm {
 	class State2StateOnEvent{

@@ -3,7 +3,7 @@
 #include <sstream>
 #include <algorithm>    // std::lower_bound, std::upper_bound, std::sort
 #include <utility>
-#include "TracerException.h"
+#include "Core/TracerException.h"
 #include "Tools/StringTools.h"
 
 namespace Function {
