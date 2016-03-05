@@ -11,7 +11,7 @@
 #include "LightFieldTelescope/LightFieldTelescope.h"
 #include "Core/Random/Random.h"
 #include "Core/Function/Function.h"
-#include "PipelinePhoton.h"
+#include "SignalProcessing/PipelinePhoton.h"
 
 namespace LightFieldTelescope {
 

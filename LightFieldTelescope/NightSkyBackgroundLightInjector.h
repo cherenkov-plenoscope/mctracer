@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "LightFieldTelescope/LightFieldTelescope.h"
-#include "PipelinePhoton.h"
+#include "SignalProcessing/PipelinePhoton.h"
 
 namespace LightFieldTelescope {
 

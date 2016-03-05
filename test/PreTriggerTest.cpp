@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
-#include "PreTrigger.h"
-#include "SimpleTDCQDC.h"
+#include "SignalProcessing/PreTrigger.h"
+#include "SignalProcessing/SimpleTDCQDC.h"
 using std::vector;
 using std::cout;
 

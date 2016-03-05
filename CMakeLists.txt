@@ -40,10 +40,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/TracerException.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryFactory.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/ZdAzMount.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/PreTrigger.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/PipelinePhoton.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/PhotoElectricConverter.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/SimpleTDCQDC.cpp
 )
 add_subdirectory("${PROJECT_SOURCE_DIR}/Cameras")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Core")
@@ -59,7 +55,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/XmlIO")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Xml")
 add_subdirectory("${PROJECT_SOURCE_DIR}/CommandLine")
 add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonsReader")
-
+add_subdirectory("${PROJECT_SOURCE_DIR}/SignalProcessing")
 #-------------------------------
 # mctracer library
 add_library(mct SHARED ${SOURCE})

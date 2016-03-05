@@ -8,13 +8,13 @@
 #include "Tools/FileTools.h"
 #include "Tools/Tools.h"
 //experimental
-#include "PipelinePhoton.h"
+#include "SignalProcessing/PipelinePhoton.h"
 #include "LightFieldTelescope/NightSkyBackgroundLightInjector.h"
-#include "PhotoElectricConverter.h"
+#include "SignalProcessing/PhotoElectricConverter.h"
 //#include "PreTrigger.h"
 #include "Xml/Xml.h"
 #include "Xml/Factory/TracerSettingsFab.h"
-#include "SimpleTDCQDC.h"
+#include "SignalProcessing/SimpleTDCQDC.h"
 #include "Tools/PathTools.h"
 using std::vector;
 
