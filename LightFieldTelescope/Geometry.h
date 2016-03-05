@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "LightFieldTelescope/Config.h"
-#include "ThinLensEquation.h"
+#include "Geometry/ThinLensEquation.h"
 using std::vector;
 using std::string;
 using std::stringstream;

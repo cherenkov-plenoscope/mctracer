@@ -33,8 +33,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake-mod
 #-----------
 # The Source
 set(SOURCE 	
-	${CMAKE_CURRENT_SOURCE_DIR}/TelescopeArrayControl.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ThinLensEquation.cpp		
+	${CMAKE_CURRENT_SOURCE_DIR}/TelescopeArrayControl.cpp		
 	${CMAKE_CURRENT_SOURCE_DIR}/TracerException.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryFactory.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/ZdAzMount.cpp

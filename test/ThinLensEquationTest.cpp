@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "ThinLensEquation.h"
+#include "Geometry/ThinLensEquation.h"
 
 class ThinLensEquationTest : public ::testing::Test {};
 //----------------------------------------------------------------------
