@@ -21,5 +21,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Histogram1D.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeter.cpp
    	PARENT_SCOPE
 )

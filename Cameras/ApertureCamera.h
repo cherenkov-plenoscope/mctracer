@@ -9,7 +9,7 @@ class Frame;
 class TracerSettings;
 //=================================
 // included dependencies
-#include "DistanceMeter.h"
+#include "Core/DistanceMeter.h"
 #include "CameraDevice.h"
 #include "Core/Random/Random.h"
 //=================================

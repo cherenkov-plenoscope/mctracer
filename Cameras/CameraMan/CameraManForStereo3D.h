@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "DistanceMeter.h"
+#include "Core/DistanceMeter.h"
 #include "Cameras/CameraDevice.h"
 #include "CameraManVerbosity.h"
 //=================================
