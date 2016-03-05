@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "TrajectoryFactory.h"
+#include "Geometry/TrajectoryFactory.h"
 
 using namespace std;
 

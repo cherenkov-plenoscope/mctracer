@@ -1,7 +1,7 @@
 #include "Photons.h"
 #include <omp.h>
 #include <sstream>
-#include "TrajectoryFactory.h"
+#include "Geometry/TrajectoryFactory.h"
 
 namespace Photons {
 	//--------------------------------------------------------------------------

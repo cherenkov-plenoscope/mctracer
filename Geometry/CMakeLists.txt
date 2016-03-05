@@ -30,5 +30,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/RectangularBox.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/GridNeighborhoodTopoligy.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ThinLensEquation.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryFactory.cpp
    	PARENT_SCOPE
 )
