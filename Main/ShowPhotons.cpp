@@ -17,7 +17,7 @@ string help_text() {
 	out << "  towards the source of the air shower event\n";
 	out << "  --scenery, -s  path of scenery\n";
 	out << "  --photons, -p  path of photons\n";
-	out << "  --config,  -c  path of mctracer configuration\n";
+	out << "  --visual_config, -v  [optional]\n";
 	return out.str();
 }
 
@@ -27,12 +27,12 @@ int main(int argc, char* argv[]) {
 	CommandLine::Parser cmd;
 	cmd.define_key_val_by_key_short_desc("scenery", 's', "scenery path");
 	cmd.define_key_val_by_key_short_desc("photons", 'p', "photon path");
-	cmd.define_key_val_by_key_short_desc("config", 'c' ,"configuration path");
+	cmd.define_key_val_by_key_short_desc("visual_config", 'v', "visual config path");
 	cmd.parse(argc, argv);
 
 	if(
 		!cmd.exist("scenery") || !cmd.exist("photons") ||
-		!cmd.exist("config")
+		!cmd.exist("visual_config")
 	) {
 		cout << help_text();
 		return 0;
@@ -44,8 +44,8 @@ int main(int argc, char* argv[]) {
 	settings.store_only_final_intersection = false;
 	settings.visual.photon_trajectories.radius = 2.0;
 
-	if(!cmd.get("config").empty()) {
-		Xml::Document doc(cmd.get("config"));
+	if(!cmd.get("visual_config").empty()) {
+		Xml::Document doc(cmd.get("visual_config"));
 		Xml::Node node = doc.node();
 		Xml::Node vc_node = node.child("visual");
 		settings.visual = Xml::Configs::get_VisualConfig_from_node(vc_node);

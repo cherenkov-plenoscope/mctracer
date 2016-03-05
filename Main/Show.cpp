@@ -11,8 +11,8 @@ using std::cout;
 string help_text() {
 	std::stringstream out; 
 	out << "  Explore a scenery in 1st person view\n";
-	out << "  --scenery, -s  path of scenery\n";
-	out << "  --config,  -c  [optional]\n";
+	out << "  --scenery, -s        path of scenery\n";
+	out << "  --visual_config, -v  [optional]\n";
 	return out.str();	
 }
 
@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
 		
 	CommandLine::Parser cmd;
 	cmd.define_key_val_by_key_short_desc("scenery", 's', "scenery path");
-	cmd.define_key_val_by_key_short_desc("config", 'c' ,"configuration path");
+	cmd.define_key_val_by_key_short_desc("visual_config", 'v' ,"visual config path");
 	cmd.parse(argc, argv);
 
 	if(!cmd.exist("scenery")) {
@@ -50,8 +50,8 @@ int main(int argc, char* argv[]) {
 	
 	TracerSettings settings;
 
-	if(!cmd.get("config").empty()) {
-		Xml::Document doc(cmd.get("config"));
+	if(!cmd.get("visual_config").empty()) {
+		Xml::Document doc(cmd.get("visual_config"));
 		Xml::Node node = doc.node();
 		Xml::Node vc_node = node.child("visual");
 		settings.visual = Xml::Configs::get_VisualConfig_from_node(vc_node);
