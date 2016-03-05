@@ -8,6 +8,5 @@ set(SOURCE
   	${CMAKE_CURRENT_SOURCE_DIR}/VisualInspection.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/NightSkyBackgroundLight.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/NightSkyBackgroundLightInjector.cpp
-  	${CMAKE_CURRENT_SOURCE_DIR}/Propagation.cpp
    	PARENT_SCOPE
 )
