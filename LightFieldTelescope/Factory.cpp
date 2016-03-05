@@ -270,7 +270,7 @@ void Factory::add_telescope_to_frame(Frame *frame) {
 
 	Frame* image_sensor = new Frame(
 		"image_sensor",
-		Vector3D(0.0, 0.0, geometry->image_sensor_distance()), 
+		Vector3D(0.0, 0.0, geometry->lightfield_sensor_distance()), 
 		Rotation3D::null
 	);
 

@@ -10,15 +10,22 @@
 // included dependencies
 #include "LightFieldTelescope/Config.h"
 #include "ThinLensEquation.h"
+using std::vector;
+using std::string;
+using std::stringstream;
 
 namespace LightFieldTelescope {
 
 	class Geometry : public Printable {
 
-		std::vector<Vector3D> pixel_grid;
-		std::vector<Vector3D> sub_pixel_flower_template_grid;
-		std::vector<Vector3D> sub_pixel_flower_grid;
-		std::vector<Vector3D> sub_pixel_grid;
+		vector<Vector3D> pixel_grid;
+		vector<vector<uint>> pixel_neighborhood;
+
+		vector<Vector3D> sub_pixel_flower_template_grid;
+		vector<vector<uint>> sub_pixel_neighborhood;
+
+		vector<Vector3D> sub_pixel_flower_grid;
+		vector<Vector3D> sub_pixel_grid;
 
 		double sub_pixel_flat2flat;
 		double pixel_lens_curv_radius;
@@ -28,8 +35,8 @@ namespace LightFieldTelescope {
 		const SegmentedReflector::Geometry reflector;
 
 		Geometry(const Config ncfg);
-		std::string get_print()const;
-		double image_sensor_distance()const;
+		string get_print()const;
+		double lightfield_sensor_distance()const;
 		double max_outer_sensor_radius()const;
 		double max_FoV_radius()const;
 		double pixel_spacing()const;
@@ -44,16 +51,18 @@ namespace LightFieldTelescope {
 		double aperture_image_radius_on_sub_pixel_sensor()const;
 		uint number_of_pixels()const;
 		double outer_sensor_housing_radius()const;
-		std::vector<Vector3D> pixel_positions()const;
+		vector<Vector3D> pixel_positions()const;
+		vector<vector<uint>>  pixel_neighbor_relations()const;
 		double sub_pixel_per_pixel()const;
 		double sub_pixel_outer_radius()const;
 		double sub_pixel_inner_radius()const;
 		double sub_pixel_spacing()const;
 		double sub_pixel_z_orientation()const;
-		std::vector<Vector3D> sub_pixel_positions()const;
-		std::vector<Vector3D> sub_pixel_flower_positions()const;
+		vector<Vector3D> sub_pixel_positions()const;
+		vector<vector<uint>>  sub_pixel_neighbor_relations()const;
+		vector<Vector3D> sub_pixel_flower_positions()const;
 		uint total_number_of_sub_pixels()const;
-		void write_sub_pixel_positions(const std::string path)const;
+		void write_sub_pixel_positions(const string path)const;
 		double bin_hight()const;
 		double principal_aperture_radius_to_throw_photons_in()const;
 		double field_of_view_solid_angle()const;
@@ -63,10 +72,10 @@ namespace LightFieldTelescope {
 		void set_up_lens_geometry();
 		void set_up_flower_grid();
 		void set_up_sub_pixel_flower_template_grid();
-		std::string get_image_sensor_print()const;
-		std::string get_pixel_lens_print()const;
-		std::string get_sub_pixel_print()const;
-		std::string get_concentrator_bin_print()const;
+		string get_image_sensor_print()const;
+		string get_pixel_lens_print()const;
+		string get_sub_pixel_print()const;
+		string get_concentrator_bin_print()const;
 	};
 }
 #endif // __LightFieldTelescopeGeometry_H_INCLUDED__ 

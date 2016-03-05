@@ -1,5 +1,6 @@
 #include "LightFieldTelescope/Geometry.h"
 #include "Geometry/HexGridAnnulus.h"
+#include "Geometry/GridNeighborhoodTopoligy.h"
 #include "Tools/AsciiIo.h"
 #include "Geometry/HexGridFlower.h"
 #include "LensMaker/LensMaker.h"
@@ -24,7 +25,13 @@ void Geometry::set_up_pixel_grid() {
 		pixel_spacing()
 	);
 
-	pixel_grid =  pixgrid.get_grid();	
+	pixel_grid = pixgrid.get_grid();
+
+	GridNeighborhoodTopoligy topology(
+		&pixel_grid, 
+		1.1*pixel_spacing()
+	);
+	pixel_neighborhood = topology.get_neighbor_relations();
 }
 //------------------------------------------------------------------------------
 void Geometry::set_up_sub_pixel_flower_template_grid() {
@@ -36,13 +43,19 @@ void Geometry::set_up_sub_pixel_flower_template_grid() {
 
 	sub_pixel_flat2flat = subpixflowergrid.get_facet_spacing();
 	sub_pixel_flower_template_grid = subpixflowergrid.get_grid();
+
+	GridNeighborhoodTopoligy topology(
+		&sub_pixel_flower_template_grid, 
+		1.1*sub_pixel_flat2flat
+	);
+	sub_pixel_neighborhood = topology.get_neighbor_relations();
 }
 //------------------------------------------------------------------------------
 void Geometry::set_up_flower_grid() {
 
 	sub_pixel_flower_grid.reserve(pixel_grid.size());
 
-	const double r = 1.0 + pixel_lens_sub_pixel_distance()/image_sensor_distance();
+	const double r = 1.0 + pixel_lens_sub_pixel_distance()/lightfield_sensor_distance();
 
 	for(Vector3D pixel_pos : pixel_grid)
 		sub_pixel_flower_grid.push_back(
@@ -81,7 +94,7 @@ double Geometry::max_outer_sensor_radius()const {
 	return reflector.focal_length()*tan(max_FoV_radius());
 }
 //------------------------------------------------------------------------------
-double Geometry::image_sensor_distance()const {
+double Geometry::lightfield_sensor_distance()const {
 	return ThinLensEquation::get_image_dist_given_focal_and_object_dist(
 		reflector.focal_length(),
 		config.object_distance_to_focus_on
@@ -144,8 +157,16 @@ std::vector<Vector3D> Geometry::pixel_positions()const {
 	return pixel_grid;
 }
 //------------------------------------------------------------------------------
+vector<vector<uint>> Geometry::pixel_neighbor_relations()const {
+	return pixel_neighborhood;
+}
+//------------------------------------------------------------------------------
 std::vector<Vector3D> Geometry::sub_pixel_positions()const {
 	return sub_pixel_grid;
+}
+//------------------------------------------------------------------------------
+vector<vector<uint>> Geometry::sub_pixel_neighbor_relations()const {
+	return sub_pixel_neighborhood;
 }
 //------------------------------------------------------------------------------
 std::vector<Vector3D> Geometry::sub_pixel_flower_positions()const {
@@ -180,7 +201,7 @@ double Geometry::bin_hight()const {
 	return pixel_lens_sub_pixel_distance()*0.25;
 }
 //------------------------------------------------------------------------------
-void Geometry::write_sub_pixel_positions(const std::string path)const {
+void Geometry::write_sub_pixel_positions(const string path)const {
 
 	std::vector<std::vector<double>> sub_pixels_x_y;
 
@@ -189,7 +210,7 @@ void Geometry::write_sub_pixel_positions(const std::string path)const {
 		sub_pixels_x_y.push_back(sub_pixel_xy);
 	}
 
-	std::stringstream header;
+	stringstream header;
 	header << "number_of_sub_pixels = " << sub_pixel_grid.size() << "\n";
 	header << "number_of_sub_pixels_per_pixel = " << sub_pixel_per_pixel() << "\n";
 	header << "sub_pixel_z_orientation = " << sub_pixel_z_orientation() << "\n";
@@ -204,9 +225,9 @@ void Geometry::write_sub_pixel_positions(const std::string path)const {
 	);
 }
 //------------------------------------------------------------------------------
-std::string Geometry::get_print()const{
+string Geometry::get_print()const{
 	
-	std::stringstream out;
+	stringstream out;
 	out << "Light_Field_Telescope__\n";
 	out << "\n";
 
@@ -242,18 +263,18 @@ std::string Geometry::get_print()const{
 	return out.str();		
 }
 //------------------------------------------------------------------------------
-std::string Geometry::get_image_sensor_print()const{
+string Geometry::get_image_sensor_print()const{
 
-	std::stringstream out;
+	stringstream out;
 	out << "Image_Sensor__\n";
 
-	std::stringstream tab;
+	stringstream tab;
 	tab << "Field of View................. " << Rad2Deg(config.max_FoV_diameter) << "deg\n";
 	tab << "Field of View solid angle..... " << field_of_view_solid_angle() << " radians\n";
 	tab << "max sensor radius............. " << max_outer_sensor_radius() << "m\n";
 	tab << "number of pixels.............. " << number_of_pixels() << "\n";
 	tab << "object distance to focus on... " << config.object_distance_to_focus_on << "m\n";
-	tab << "image sensor distance......... " << image_sensor_distance() << "m\n";
+	tab << "image sensor distance......... " << lightfield_sensor_distance() << "m\n";
 
 	out << StringTools::place_first_infront_of_each_new_line_of_second(
 		"  ", 
@@ -263,12 +284,12 @@ std::string Geometry::get_image_sensor_print()const{
 	return out.str();
 }
 //------------------------------------------------------------------------------
-std::string Geometry::get_pixel_lens_print()const{
+string Geometry::get_pixel_lens_print()const{
 
-	std::stringstream out;
+	stringstream out;
 	out << "Pixel_Lens__\n";
 
-	std::stringstream tab;
+	stringstream tab;
 	tab << "FoV hex flat2flat....... " << Rad2Deg(pixel_FoV_hex_flat2flat()) << "deg\n";
 	tab << "spacing................. " << pixel_spacing() << "m\n";
 	tab << "inner aperture radius... " << pixel_lens_inner_aperture_radius() << "m\n";
@@ -288,12 +309,12 @@ std::string Geometry::get_pixel_lens_print()const{
 	return out.str();
 }
 //------------------------------------------------------------------------------
-std::string Geometry::get_sub_pixel_print()const{
+string Geometry::get_sub_pixel_print()const{
 
-	std::stringstream out;
+	stringstream out;
 	out << "Sub_Pixel__\n";
 
-	std::stringstream tab;
+	stringstream tab;
 	tab << "per pixel........... " << sub_pixel_per_pixel() << "\n";
 	tab << "total number........ " << sub_pixel_grid.size() << "\n";
 	tab << "outer radius........ " << sub_pixel_outer_radius() << "m\n";
@@ -308,12 +329,12 @@ std::string Geometry::get_sub_pixel_print()const{
 	return out.str();
 }
 //------------------------------------------------------------------------------
-std::string Geometry::get_concentrator_bin_print()const{
+string Geometry::get_concentrator_bin_print()const{
 
-	std::stringstream out;
+	stringstream out;
 	out << "Concentrator_Bin__\n";
 
-	std::stringstream tab;
+	stringstream tab;
 	tab << "bin_hight........... " << bin_hight() << "m\n";
 	tab << "reflectivity........ same as reflector mirrors\n";
 
