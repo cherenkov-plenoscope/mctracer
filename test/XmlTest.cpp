@@ -62,10 +62,10 @@ TEST_F(XmlTest, valid_attributes) {
 	// 	rot="[0.1, 2.3, 4.5]"
 	// />
 	EXPECT_EQ("simon", simon.name());
-	EXPECT_EQ(1.337e42, Xml::att2double(simon, "number"));
-	EXPECT_EQ(Vector3D(0.0, 1.0, 2.0), Xml::att2Vector3D(simon, "pos"));
-	EXPECT_EQ(Rotation3D(0.1, 2.3, 4.5), Xml::att2Rotation3D(simon, "rot"));
-	EXPECT_EQ(Color(128,255,128), Xml::att2Color(simon, "color"));
+	EXPECT_EQ(1.337e42, simon.attribute2double("number"));
+	EXPECT_EQ(Vector3D(0.0, 1.0, 2.0), simon.attribute2Vector3D("pos"));
+	EXPECT_EQ(Rotation3D(0.1, 2.3, 4.5), simon.attribute2Rotation3D("rot"));
+	EXPECT_EQ(Color(128,255,128), simon.attribute2Color("color"));
 }
 //------------------------------------------------------------------------------
 TEST_F(XmlTest, invalid_attribute_double) {
@@ -75,7 +75,7 @@ TEST_F(XmlTest, invalid_attribute_double) {
 	Xml::Node tree = doc.node();
 	Xml::Node simon = tree.child("simon");
 	EXPECT_THROW(
-		Xml::att2double(simon, "number"), Xml::AttributeIsNoDouble
+		simon.attribute2double("number"), Xml::Node::AttributeIsNoDouble
 	);
 }
 //------------------------------------------------------------------------------
@@ -87,14 +87,16 @@ TEST_F(XmlTest, invalid_attribute_Tuple3) {
 	Xml::Node my_node = tree.child("MyNode");
 	
 	EXPECT_THROW(
-		Xml::att2Vector3D(my_node, "myTuple3"), Xml::AttributeIsNoVector3D
+		my_node.attribute2Vector3D("myTuple3"), Xml::Node::AttributeIsNoVector3D
 	);
 
 	EXPECT_THROW(
-		Xml::att2Rotation3D(my_node, "myTuple3"), Xml::AttributeIsNoRotation3D
+		my_node.attribute2Rotation3D("myTuple3"), Xml::Node::AttributeIsNoRotation3D
 	);
 
-	EXPECT_THROW(Xml::att2Color(my_node, "myTuple3"), Xml::AttributeIsNoColor);
+	EXPECT_THROW(
+		my_node.attribute2Color("myTuple3"), Xml::Node::AttributeIsNoColor
+	);
 }
 //------------------------------------------------------------------------------
 #include "Xml/Factory/VisualConfigFab.h"

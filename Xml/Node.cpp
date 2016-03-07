@@ -5,6 +5,8 @@
 #include <fstream>
 #include <iostream>
 #include "Exceptions.h"
+#include "Tools/StringTools.h"
+using std::stringstream;
 //------------------------------------------------------------------------------
 namespace Xml  {
 //------------------------------------------------------------------------------
@@ -56,7 +58,7 @@ void Node::assert_child_exists(const string child)const {
 
 		Problem problem(file, node.offset_debug(), path);
 
-		std::stringstream info;
+		stringstream info;
 		info << __FILE__ << ", " << __LINE__ << "\n\n";
 		info << "In xml file: '" << problem.get_path() << "', ";
 		info << "line " << problem.get_line() << ", ";
@@ -68,19 +70,19 @@ void Node::assert_child_exists(const string child)const {
 	}
 }	
 
-void Node::assert_attribute_exists(const string attribute)const {
+void Node::assert_attribute_exists(const string attribute_name)const {
 
-	if(!has_attribute(attribute)){
+	if(!has_attribute(attribute_name)){
 
 		Problem problem(file, node.offset_debug(), path);
 
-		std::stringstream info;
+		stringstream info;
 		info << __FILE__ << ", " << __LINE__ << "\n\n";
 		info << "In xml file: '" << problem.get_path() << "', ";
 		info << "line " << problem.get_line() << ", ";
 		info << problem.get_column() << "\n";
 		info << "The Xml Node '" << name() << "' has no attribute called ";
-		info << "'" << attribute << "'.\n\n";
+		info << "'" << attribute_name << "'.\n\n";
 		info << problem.get_problem_section_from_original_file();
 		throw NoSuchAttribute(info.str());
 	}	
@@ -89,5 +91,163 @@ void Node::assert_attribute_exists(const string attribute)const {
 string Node::xml_path()const {
 	return path;
 }
+
+int Node::attribute2int(const string attribute_name)const {
+
+    string att = attribute(attribute_name);
+    int number;
+    
+    try{
+        
+        number = StringTools::to_int(att);
+    }catch(std::exception &error) {
+
+        Problem problem(file, node.offset_debug(), path);
+
+        stringstream info;
+        info << __FILE__ << ", " << __LINE__ << "\n\n";
+        info << "In Xml file: '" << problem.get_path() << ", ";
+        info << "line " << problem.get_line() << ", ";
+        info << "column " << problem.get_column() << "\n";
+        info << "In node '" << node.name() << "' ";
+        info << "can not parse attribute '" << attribute_name << "' ";
+        info << "to int.\n\n";
+        info << problem.get_problem_section_from_original_file() << "\n\n";
+        info << error.what() << "\n";
+        throw AttributeIsNoInt(info.str());
+    }
+
+    return number;
+}
+
+double Node::attribute2double(const string attribute_name)const {
+
+    string att = attribute(attribute_name);
+    double number;
+    
+    try{
+        
+        number = StringTools::to_double(att);
+    }catch(std::exception &error) {
+
+        Problem problem(file, node.offset_debug(), path);
+
+        stringstream info;
+        info << __FILE__ << ", " << __LINE__ << "\n\n";
+        info << "In Xml file: '" << problem.get_path() << ", ";
+        info << "line " << problem.get_line() << ", ";
+        info << "column " << problem.get_column() << "\n";
+        info << "In node '" << node.name() << "' ";
+        info << "can not parse attribute '" << attribute_name << "' ";
+        info << "to double.\n\n";
+        info << problem.get_problem_section_from_original_file() << "\n\n";
+        info << error.what() << "\n";
+        throw AttributeIsNoDouble(info.str());
+    }
+
+    return number;
+}
+
+bool Node::attribute2bool(const string attribute_name)const {
+
+    string att = attribute(attribute_name);
+    bool boolean;
+    
+    try{
+        
+        boolean = StringTools::to_bool(att);
+    }catch(std::exception &error) {
+
+        Problem problem(file, node.offset_debug(), path);
+
+        stringstream info;
+        info << __FILE__ << ", " << __LINE__ << "\n\n";
+        info << "In Xml file: '" << problem.get_path() << ", ";
+        info << "line " << problem.get_line() << ", ";
+        info << "column " << problem.get_column() << "\n";
+        info << "In node '" << node.name() << "' ";
+        info << "can not parse attribute '" << attribute_name << "' ";
+        info << "to bool.\n\n";
+        info << problem.get_problem_section_from_original_file() << "\n\n";
+        info << error.what() << "\n";
+        throw AttributeIsNoBool(info.str());
+    }
+
+    return boolean;
+}
+
+Tuple3 Node::attribute2Tuple3(const string attribute_name)const {
+
+    string att = attribute(attribute_name);
+    Tuple3 t3;
+    
+    try{
+        
+        t3 = StringTools::to_Tuple3(att);
+    }catch(std::exception &error) {
+
+        Problem problem(file, node.offset_debug(), path);
+
+        stringstream info;
+        info << __FILE__ << ", " << __LINE__ << "\n\n";
+        info << "In Xml file: '" << problem.get_path() << ", ";
+        info << "line " << problem.get_line() << ", ";
+        info << "column " << problem.get_column() << "\n";
+        info << "In node '" << node.name() << "' ";
+        info << "can not parse attribute '" << attribute_name << "' ";
+        info << "to Tuple3.\n\n";
+        info << problem.get_problem_section_from_original_file() << "\n\n";
+        info << error.what() << "\n";
+        throw AttributeIsNoTuple3(info.str());
+    }
+
+    return t3;
+}
+
+Vector3D Node::attribute2Vector3D(const string attribute_name)const {
+
+    try{
+
+        Tuple3 t3 = attribute2Tuple3(attribute_name);
+        return Vector3D(t3.x, t3.y, t3.z);
+    }catch(std::exception &error) {
+
+        stringstream info;
+        info << "Can not parse to Vector3D.\n";
+        info << "\n\n" << error.what() << "\n";
+        throw AttributeIsNoVector3D(info.str());
+    }
+}
+
+Rotation3D Node::attribute2Rotation3D(const string attribute_name)const {
+
+    try{
+
+        Tuple3 t3 = attribute2Tuple3(attribute_name);
+        return Rotation3D(t3.x, t3.y, t3.z);
+    }catch(std::exception &error) {
+
+        stringstream info;
+        info << "Can not parse to Rotation3D.\n";
+        info << "\n\n" << error.what() << "\n";
+        throw AttributeIsNoRotation3D(info.str());
+    }
+}
+
+Color Node::attribute2Color(const string attribute_name)const {
+
+    try{
+
+        Tuple3 t3 = attribute2Tuple3(attribute_name);
+        return Color(t3.x, t3.y, t3.z);
+    }catch(std::exception &error) {
+
+        stringstream info;
+        info << "Can not parse to Color.\n";
+        info << "\n\n" << error.what() << "\n";
+        throw AttributeIsNoColor(info.str());
+    }
+}
+
 //------------------------------------------------------------------------------
 }//Xml

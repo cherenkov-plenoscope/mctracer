@@ -11,6 +11,10 @@
 #include "pugi/pugixml.hpp"
 #include <string>
 #include <memory>
+#include "Tools/Tuple3.h"
+#include "Core/Vector3D.h"
+#include "Core/Rotation3D.h"
+#include "Core/Color.h"
 using std::string;
 //------------------------------------------------------------------------------
 namespace Xml {
@@ -41,6 +45,42 @@ namespace Xml {
 		bool has_child(const string child)const;
 		bool has_attribute(const string attribute)const;
 		string xml_path()const;
+
+		int attribute2int(const string attribute_name)const;
+		double attribute2double(const string attribute_name)const;
+		bool attribute2bool(const string attribute_name)const;
+		Tuple3 attribute2Tuple3(const string attribute_name)const;
+		Vector3D attribute2Vector3D(const string attribute_name)const;
+		Rotation3D attribute2Rotation3D(const string attribute_name)const;
+		Color attribute2Color(const string attribute_name)const;
+
+	    class AttributeIsNoInt : public TracerException {
+	        using TracerException::TracerException;
+	    }; 
+
+	    class AttributeIsNoDouble : public TracerException {
+	        using TracerException::TracerException;
+	    }; 
+
+	    class AttributeIsNoBool : public TracerException {
+	        using TracerException::TracerException;
+	    }; 
+
+	    class AttributeIsNoTuple3 : public TracerException {
+	        using TracerException::TracerException;
+	    }; 
+
+	    class AttributeIsNoVector3D : public TracerException {
+	        using TracerException::TracerException;
+	    }; 
+	    
+	    class AttributeIsNoRotation3D : public TracerException {
+	        using TracerException::TracerException;
+	    }; 
+	    
+	    class AttributeIsNoColor : public TracerException {
+	        using TracerException::TracerException;
+	    }; 
 	private:
 
 		void assert_child_exists(const string child)const;

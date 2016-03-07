@@ -124,7 +124,7 @@ int main(int argc, char* argv[]) {
         )
     );
     LightFieldTelescope::NightSkyBackgroundLight nsb(&telescope_geometry, &nsb_flux_vs_wavelength);
-    const double nsb_exposure_time = Xml::att2double(nsb_node,"exposure_time");
+    const double nsb_exposure_time = nsb_node.attribute2double("exposure_time");
 
     //--------------------------------------------------------------------------
     // SET UP PhotoElectricConverter
@@ -137,9 +137,8 @@ int main(int argc, char* argv[]) {
     );
 
     PhotoElectricConverter::Config converter_config;
-    converter_config.dark_rate = Xml::att2double(pec, "dark_rate");
-    converter_config.probability_for_second_puls = 
-        Xml::att2double(pec, "probability_for_second_puls");
+    converter_config.dark_rate = pec.attribute2double("dark_rate");
+    converter_config.probability_for_second_puls = pec.attribute2double("probability_for_second_puls");
     converter_config.quantum_efficiency_vs_wavelength = &pde_vs_wavelength;
 
     PhotoElectricConverter::Converter sipm_converter(&converter_config);
@@ -147,9 +146,7 @@ int main(int argc, char* argv[]) {
     //--------------------------------------------------------------------------
     // SET UP PULSE EXTRACTOR
     Xml::Node pue = config_node.child("pulse_extractor");
-    const double integration_time_window = Xml::att2double(
-        pue, "integration_time_window"
-    );
+    const double integration_time_window = pue.attribute2double("integration_time_window");
 
     //--------------------------------------------------------------------------
     //  2222

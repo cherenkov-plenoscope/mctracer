@@ -7,23 +7,23 @@ VisualConfig get_VisualConfig_from_node(Xml::Node node) {
 	VisualConfig vc;
 
 	Xml::Node preview = node.child("preview");
-	vc.preview.cols = Xml::att2int(preview, "cols");
-	vc.preview.rows = Xml::att2int(preview, "rows");
-	vc.preview.scale = Xml::att2int(preview, "scale");
+	vc.preview.cols = preview.attribute2int("cols");
+	vc.preview.rows = preview.attribute2int("rows");
+	vc.preview.scale = preview.attribute2int("scale");
 
 	Xml::Node snapshot = node.child("snapshot");
-	vc.snapshot.cols = Xml::att2int(snapshot, "cols");
-	vc.snapshot.rows = Xml::att2int(snapshot, "rows");
-	vc.snapshot.rays_per_pixel = Xml::att2int(snapshot, "rays_per_pixel");
-	vc.snapshot.focal_length_over_aperture_diameter = Xml::att2double(snapshot, "focal_length_over_aperture_diameter");
-	vc.snapshot.image_sensor_size_along_a_row = Xml::att2double(snapshot, "image_sensor_size_along_a_row");
+	vc.snapshot.cols = snapshot.attribute2int("cols");
+	vc.snapshot.rows = snapshot.attribute2int("rows");
+	vc.snapshot.rays_per_pixel = snapshot.attribute2int("rays_per_pixel");
+	vc.snapshot.focal_length_over_aperture_diameter = snapshot.attribute2double("focal_length_over_aperture_diameter");
+	vc.snapshot.image_sensor_size_along_a_row = snapshot.attribute2double("image_sensor_size_along_a_row");
 
 	Xml::Node global_illumination = node.child("global_illumination");
-	vc.global_illumination.on = Xml::att2bool(global_illumination, "on");
-	vc.global_illumination.incoming_direction = Xml::att2Vector3D(global_illumination, "incoming_direction");
+	vc.global_illumination.on = global_illumination.attribute2bool("on");
+	vc.global_illumination.incoming_direction = global_illumination.attribute2Vector3D("incoming_direction");
 
 	Xml::Node photon_trajectories = node.child("photon_trajectories");
-	vc.photon_trajectories.radius = Xml::att2double(photon_trajectories, "radius");
+	vc.photon_trajectories.radius = photon_trajectories.attribute2double("radius");
 
 	Xml::Node sky_dome_node = node.child("sky_dome");
 	std::string image_path = sky_dome_node.attribute("image_path");
@@ -31,12 +31,12 @@ VisualConfig get_VisualConfig_from_node(Xml::Node node) {
 
 	if(image_path.empty()) {
 
-		vc.sky_dome = SkyDome(Xml::att2Color(sky_dome_node, "color"));
+		vc.sky_dome = SkyDome(sky_dome_node.attribute2Color("color"));
 	}else{
 
 		vc.sky_dome = SkyDome(image_path);
 		vc.sky_dome.set_background_color(
-			Xml::att2Color(sky_dome_node, "color")
+			sky_dome_node.attribute2Color("color")
 		);
 	}
 

@@ -51,7 +51,7 @@ void FunctionFab::export_function_based_on_node(
 	const Xml::Node &node
 ) {
 	AsciiIo::write_table_to_file(
-		func->get_samples(Xml::att2int(node, "samples")),
+		func->get_samples(node.attribute2int("samples")),
 		full_path_of_original_xml_file.path + node.attribute("file")
 	);
 }
@@ -92,17 +92,17 @@ Function::Func1D* FunctionFab::extract_linear_interpolation(const Xml::Node &nod
 //------------------------------------------------------------------------------
 Function::Func1D* FunctionFab::extract_constant(const Xml::Node &node) {
 	return new Function::Constant(
-		Xml::att2double(node, "value"),
+		node.attribute2double("value"),
 		extract_limits_from_attributes(node)
 	);
 }
 //------------------------------------------------------------------------------
 Function::Func1D* FunctionFab::extract_polynom3(const Xml::Node &node) {
 	return new Function::Polynom3(
-		Xml::att2double(node, "x3"),
-		Xml::att2double(node, "x2"),
-		Xml::att2double(node, "x1"),
-		Xml::att2double(node, "x0"),
+		node.attribute2double("x3"),
+		node.attribute2double("x2"),
+		node.attribute2double("x1"),
+		node.attribute2double("x0"),
 		extract_limits_from_attributes(node)
 	);
 }
@@ -125,8 +125,8 @@ Function::Func1D* FunctionFab::extract_concatenation(const Xml::Node &node) {
 //------------------------------------------------------------------------------
 Function::Limits FunctionFab::extract_limits_from_attributes(const Xml::Node &node) {
 	return Function::Limits(
-		Xml::att2double(node, "lower_limit"), 
-		Xml::att2double(node, "upper_limit")
+		node.attribute2double("lower_limit"), 
+		node.attribute2double("upper_limit")
 	);
 }
 //------------------------------------------------------------------------------

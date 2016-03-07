@@ -5,10 +5,10 @@ namespace Xml {
 TracerSettings get_TracerSettings_from_node(Xml::Node node) {
 
 	TracerSettings vc;
-	vc.pseudo_random_number_seed = Xml::att2int(node, "pseudo_random_number_seed");
-	vc.max_number_of_interactions_per_photon = Xml::att2int(node, "max_number_of_interactions_per_photon");
-	vc.store_only_final_intersection = Xml::att2bool(node, "store_only_final_intersection");
-	vc.use_multithread_when_possible = Xml::att2bool(node, "use_multithread_when_possible");
+	vc.pseudo_random_number_seed = node.attribute2int("pseudo_random_number_seed");
+	vc.max_number_of_interactions_per_photon = node.attribute2int("max_number_of_interactions_per_photon");
+	vc.store_only_final_intersection = node.attribute2bool("store_only_final_intersection");
+	vc.use_multithread_when_possible = node.attribute2bool("use_multithread_when_possible");
 	return vc;
 }
 //------------------------------------------------------------------------------
