@@ -36,6 +36,7 @@ namespace LightFieldTelescope {
 
 		const CalibrationConfig *calib_config;
 		const Geometry *telescope_geometry;
+		const double photons_per_sub_pixel;
 
 		std::vector<SubPixelStatistic> subpix_stats;
 	public:

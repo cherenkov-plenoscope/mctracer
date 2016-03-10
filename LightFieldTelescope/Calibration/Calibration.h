@@ -19,10 +19,9 @@ namespace LightFieldTelescope {
 
 	class Calibration: public Printable {
 
-		const CalibrationConfig *calib_config;
+		const CalibrationConfig *config;
 		const Geometry *telescope_geometry;
 		uint number_of_photons;
-		uint number_of_blocks;
 		double max_principal_aperture_radius_to_trow_photons_on;
 		double max_tilt_vs_optical_axis_to_throw_photons_in;
 		double distance_to_travel_before_intersecting_principal_aperture;

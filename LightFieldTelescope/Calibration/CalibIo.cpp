@@ -2,7 +2,9 @@
 
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------
-CalibIo::CalibIo(const std::string npath): path(npath){}
+CalibIo::CalibIo(const std::string npath): path(npath) {
+    clear_file();
+}
 //------------------------------------------------------------------------------
 void CalibIo::append(const std::vector<CalibrationPhotonResult> &table) {
 
@@ -44,6 +46,13 @@ void CalibIo::assert_file_is_open() {
         info << path << "'\n";
         throw CanNotReadFile(info.str());       
     }   
+}
+//------------------------------------------------------------------------------
+void CalibIo::clear_file() {
+
+    file.open(path, std::ios_base::trunc | std::ios::binary);
+    assert_file_is_open();
+    file.close();     
 }
 //------------------------------------------------------------------------------
 }// namespace LightFieldTelescope

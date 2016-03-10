@@ -1,7 +1,7 @@
 # mctracer scientific ray tracing
 # Author: Sebastian Achim Mueller
 cmake_minimum_required(VERSION 2.8)
-set (CMAKE_CXX_FLAGS "-std=c++11 -Wall -pedantic -O2 -g -I")
+set (CMAKE_CXX_FLAGS "-std=c++11 -Wall -pedantic -O3 -g -I")
 project(mctracer)
 
 #--------------------------------

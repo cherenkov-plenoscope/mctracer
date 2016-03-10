@@ -8,7 +8,11 @@ SubPixelStatistics::SubPixelStatistics(
 	const CalibrationConfig *_calib_config
 ):
 	calib_config(_calib_config),
-	telescope_geometry(geometry)
+	telescope_geometry(geometry),
+	photons_per_sub_pixel(
+		double(_calib_config->number_of_blocks) * double(_calib_config->photons_per_block) /
+		double(geometry->total_number_of_sub_pixels())
+	)
  {
 	subpix_stats.resize(telescope_geometry->total_number_of_sub_pixels());
 }
@@ -37,7 +41,7 @@ void SubPixelStatistics::normalize() {
 		subpix_stats[i].mean_x /= subpix_stats[i].geometric_efficiency;
 		subpix_stats[i].mean_y /= subpix_stats[i].geometric_efficiency;
 		subpix_stats[i].mean_time /= subpix_stats[i].geometric_efficiency;
-		subpix_stats[i].geometric_efficiency /= calib_config->photons_per_sub_pixel;
+		subpix_stats[i].geometric_efficiency /= photons_per_sub_pixel;
 	
 		if(	subpix_stats[i].mean_time < min_time)
 			min_time = subpix_stats[i].mean_time;
@@ -53,8 +57,8 @@ void SubPixelStatistics::save(const std::string path) {
 		
 	std::stringstream out;
 	out << "# sub pixel subpix_stats:\n";
-	out << "# number_of_photons_per_sub_pixel: ";
-	out << calib_config->photons_per_sub_pixel << "\n";
+	out << "# photons_emitted_per_sub_pixel: ";
+	out << photons_per_sub_pixel << "\n";
 	out << "# geometrical_efficiency[1]\tcx[rad]\tcy[rad]\tx[m]\ty[m]\tt[s]\n";
 	out.precision(4);
 	
@@ -71,4 +75,4 @@ void SubPixelStatistics::save(const std::string path) {
 	FileTools::write_text_to_file(out.str(), path);
 }
 //------------------------------------------------------------------------------
-} // namespace LightFieldTelescope
+}//LightFieldTelescope

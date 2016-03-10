@@ -22,6 +22,7 @@ namespace LightFieldTelescope {
 		void append(const std::vector<CalibrationPhotonResult> &table);
 	private:
 
+		void clear_file();
 		void write_row(const CalibrationPhotonResult &row);
 		void assert_file_is_open();
 		class CanNotReadFile : public TracerException {

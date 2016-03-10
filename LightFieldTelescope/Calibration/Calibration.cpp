@@ -3,6 +3,7 @@
 #include "Tools/UserInteraction.h"
 #include <iomanip> 
 #include "Tools/FileTools.h"
+using std::cout;
 
 namespace LightFieldTelescope {
 //------------------------------------------------------------------------------
@@ -10,17 +11,11 @@ Calibration::Calibration(
 	const Geometry *geometry,  
 	const CalibrationConfig *_calib_config
 ):  
-	calib_config(_calib_config),
+	config(_calib_config),
 	telescope_geometry(geometry),
 	stats(geometry, _calib_config)
 {
-	number_of_photons = telescope_geometry->total_number_of_sub_pixels()*
-		calib_config->photons_per_sub_pixel;
-
-	number_of_blocks = ceil(
-		double(number_of_photons)/
-		double(calib_config->photons_per_block)
-	);
+	number_of_photons = config->photons_per_block*config->number_of_blocks;
 
 	set_up_photon_properties();
 	set_up_principal_aperture_range();
@@ -99,7 +94,7 @@ void Calibration::fill_calibration_block_to_table() {
 	#pragma omp parallel shared(HadCatch)
 	{
 		#pragma omp for schedule(dynamic) private(i) 
-		for(i=0; i<calib_config->photons_per_block; i++) {
+		for(i=0; i<config->photons_per_block; i++) {
 
 			try{
 				// create photon
@@ -171,29 +166,21 @@ void Calibration::fill_calibration_block_to_table() {
 //------------------------------------------------------------------------------
 void Calibration::run_calibration() {
 
-	std::cout << telescope_geometry->get_print() << "\n";
-
-	std::cout << "Start Light Field Calibration, propagating ";
-	std::cout << double(
-					number_of_blocks * calib_config->photons_per_block
-				)/1.0e6;
-	std::cout << "M photons\n";
-	std::cout << "\n";
+	cout << "Plenoscope Calibration: propagating ";
+	cout << double(config->number_of_blocks * config->photons_per_block)/1.0e6 << "M photons\n";
 	
-	photon_results.resize(calib_config->photons_per_block);
+	photon_results.resize(config->photons_per_block);
+	CalibIo appender(config->raw_calibration_output_path);
 
-	for(uint j=0; j<number_of_blocks; j++) {
+	for(uint j=0; j<config->number_of_blocks; j++) {
 		
-		std::cout << j+1 << " of " << number_of_blocks << "\n";	
-		
+		cout << j+1 << " of " << config->number_of_blocks << "\n";	
 		fill_calibration_block_to_table();
 		stats.fill_in_block(photon_results);
-
-		CalibIo appender("the_big_lebowsky.lftc");
 		appender.append(photon_results);	
 	}
 
-	stats.save("sub_pixel_statistics.txt");
+	stats.save(config->condensed_calibration_output_path);
 }
 //------------------------------------------------------------------------------
 std::string Calibration::get_print()const {

@@ -1,0 +1,7 @@
+<plenoscpe 
+    path="the_big_lebowsky.xml"
+/>
+<calibration 
+    number_of_blocks="8"
+    photons_per_block="1e6"
+/>

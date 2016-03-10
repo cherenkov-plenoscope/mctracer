@@ -9,12 +9,17 @@
 //=================================
 // included dependencies
 #include <stdint.h>
+#include <string>
+using std::string;
 
 namespace LightFieldTelescope {
 
 	struct CalibrationConfig {
-		uint32_t photons_per_sub_pixel;
+		//uint32_t photons_per_sub_pixel;
+		uint32_t number_of_blocks;
 		uint32_t photons_per_block;
+		string raw_calibration_output_path;
+		string condensed_calibration_output_path;
 
 		CalibrationConfig();
 	};
