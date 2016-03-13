@@ -56,9 +56,10 @@ void SubPixelStatistics::save(const std::string path) {
 	normalize();
 		
 	std::stringstream out;
-	out << "# sub pixel subpix_stats:\n";
-	out << "# photons_emitted_per_sub_pixel: ";
-	out << photons_per_sub_pixel << "\n";
+	out << "# __Plenoscope Bin Statistics__\n";
+	out << "# number_of_direction_bins: " << telescope_geometry->number_of_pixels() << "\n";
+	out << "# number_of_principal_aperture_bins: " << telescope_geometry->sub_pixel_per_pixel() << "\n";
+	out << "# photons_emitted_per_sub_pixel: " << photons_per_sub_pixel << "\n";
 	out << "# geometrical_efficiency[1]\tcx[rad]\tcy[rad]\tx[m]\ty[m]\tt[s]\n";
 	out.precision(4);
 	
