@@ -42,7 +42,7 @@ def main():
 	plt.ylabel('y [m]')
 	X, Y = np.meshgrid(xedges, yedges)
 	ax = fig.gca()
-	ax.pcolor(Y, X, np.sqrt(H.T), cmap='gray_r')
+	ax.pcolor(X, Y, H.T, cmap='gray_r')
 	ax.set_aspect('equal')
 	#plt.show()
 	fig.savefig(
