@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
     cout << "config '" << config_path.path << config_path.filename << "'\n";
 
     Xml::Document doc(config_path.path + config_path.filename);
-    Xml::Node plenoscope_node = doc.node().child("plenoscpe");
+    Xml::Node plenoscope_input_node = doc.node().child("plenoscpe");
     Xml::Node calibration_node = doc.node().child("calibration");
 
     // SET UP TELESCOPE
@@ -50,20 +50,20 @@ int main(int argc, char* argv[]) {
     telescope_config.pixel_FoV_hex_flat2flat = Deg2Rad(0.0667);
     telescope_config.housing_overhead = 1.2;
     telescope_config.lens_refraction = &LightFieldTelescope::pmma_refraction;
-    telescope_config.sub_pixel_on_pixel_diagonal = 7;
+    telescope_config.sub_pixel_on_pixel_diagonal = 13;
     telescope_config.object_distance_to_focus_on = 10.0e3;
     
     // INIT GEOMETRY
     LightFieldTelescope::Geometry telescope_geometry(telescope_config);
-    telescope_geometry.write_sub_pixel_positions("sub_pixel_positions.txt");
-    FileTools::write_text_to_file(telescope_geometry.get_print(), "overview.txt");
+    telescope_geometry.write_sub_pixel_positions(cmd.get("output")+"/"+"sub_pixel_positions.txt");
+    FileTools::write_text_to_file(telescope_geometry.get_print(), cmd.get("output")+"/"+"overview.txt");
 
     // RUN LIGHT FIELD CALIBRATION
     LightFieldTelescope::CalibrationConfig calib_config;
     calib_config.number_of_blocks = calibration_node.attribute2int("number_of_blocks");
     calib_config.photons_per_block = int(calibration_node.attribute2double("photons_per_block"));
-    calib_config.raw_calibration_output_path = "the_big_lebowsky.lftc";
-    calib_config.condensed_calibration_output_path = "sub_pixel_statistics.txt";
+    calib_config.raw_calibration_output_path = cmd.get("output")+"/"+"the_big_lebowsky.lftc";
+    calib_config.condensed_calibration_output_path = cmd.get("output")+"/"+"sub_pixel_statistics.txt";
 
     LightFieldTelescope::Calibration calib(&telescope_geometry, &calib_config);
 
