@@ -1,0 +1,28 @@
+<function name="mirror_reflection">
+    <constant value="0.8" lower_limit="200e-9" upper_limit="1200e-9"/>
+</function>
+
+<function name="lens_refraction">
+    <constant value="1.49" lower_limit="200e-9" upper_limit="1200e-9"/>
+</function>
+
+<plenoscope>
+    <set_frame name="the_big_lebowsky" pos="[0,0,0]" rot="[0,0,0]"/>
+    <set_segmented_reflector 
+        focal_length="75" 
+        max_outer_aperture_radius="25" 
+        min_inner_aperture_radius="0.5" 
+        DaviesCotton_over_parabolic_mixing_factor="0.0" 
+        facet_inner_hex_radius="0.6" 
+        gap_between_facets="0.01" 
+        reflection_vs_wavelength="mirror_reflection"
+    />
+    <set_lightfield_sensor 
+        max_FoV_diameter_deg="6.5" 
+        hex_pixel_FoV_flat2flat_deg="0.0667" 
+        housing_overhead="1.2" 
+        sub_pixel_on_pixel_diagonal="13"
+        refraction_vs_wavelength="lens_refraction"
+        object_distance_to_focus_on="10e3"
+    />
+</plenoscope>
