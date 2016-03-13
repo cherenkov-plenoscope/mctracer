@@ -2,6 +2,6 @@
     path="the_big_lebowsky.xml"
 />
 <calibration 
-    number_of_blocks="8"
+    number_of_blocks="200"
     photons_per_block="1e6"
 />

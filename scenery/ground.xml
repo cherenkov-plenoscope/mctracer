@@ -5,6 +5,6 @@
 <disc>
 	<set_frame name="ground" pos="[0,0,0]" rot="[0,0,0]"/>		
 	<set_surface reflection_vs_wavelength="zero" color="[0,50,0]"/>	
-	<set_disc radius="100"/>
+	<set_disc radius="25"/>
 	<set_sensitive id="0"/>
 </disc>
