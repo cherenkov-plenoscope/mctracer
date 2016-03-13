@@ -1,0 +1,6 @@
+<settings
+    pseudo_random_number_seed="0"
+    max_number_of_interactions_per_photon="1337"
+    store_only_final_intersection="True"
+    use_multithread_when_possible="True"
+/>
