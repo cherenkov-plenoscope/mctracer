@@ -85,7 +85,7 @@ int main(int argc, char* argv[]) {
     telescope_config.pixel_FoV_hex_flat2flat = Deg2Rad(0.0667);
     telescope_config.housing_overhead = 1.2;
     telescope_config.lens_refraction = &LightFieldTelescope::pmma_refraction;
-    telescope_config.sub_pixel_on_pixel_diagonal = 7;
+    telescope_config.sub_pixel_on_pixel_diagonal = 13;
     telescope_config.object_distance_to_focus_on = 10.0e3;
     
     LightFieldTelescope::Geometry telescope_geometry(telescope_config);
@@ -200,6 +200,7 @@ int main(int argc, char* argv[]) {
             &nsb,
             &prng
         );
+        
 
         //--------------------------
         // Photo Electric conversion
@@ -234,12 +235,21 @@ int main(int argc, char* argv[]) {
             vector<double> dtac = {tac.time, double(tac.count)};
             dtacs.push_back(dtac);
         }
-        AsciiIo::write_table_to_file(
-            dtacs, cmd.get("output") + std::to_string(event_counter) + ".txt"
+
+        stringstream evt_header;
+        evt_header << corsika_run.run_header.mmcs_runheader.get_print();
+        evt_header << event.header.mmcs_event_header.get_print();
+        evt_header << "\n";
+        evt_header << "arrival_time[s]\tnumber_photons[1]\n";
+
+        AsciiIo::write_table_to_file_with_header(
+            dtacs, cmd.get("output") + std::to_string(event_counter) + ".txt",
+            evt_header.str()
         );
 
-        cout << "event " << event_counter << ", E ";
-        cout << event.header.mmcs_event_header.total_energy_in_GeV << " GeV\n";
+        cout << "event " << event_counter << ", ";
+        cout << "PRMPAR " << event.header.mmcs_event_header.particle_id << ", ";
+        cout << "E " << event.header.mmcs_event_header.total_energy_in_GeV << " GeV\n";
         event_counter++;
     }
 
