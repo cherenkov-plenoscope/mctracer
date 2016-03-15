@@ -4,8 +4,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 from matplotlib.patches import RegularPolygon
+from matplotlib.patches import Circle
 from matplotlib.collections import PatchCollection
 from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+import mpl_toolkits.mplot3d.art3d as art3d
+
 
 def add_to_ax(ax, I, px, py):
 
@@ -46,43 +50,43 @@ class PlenoscopeLightFieldCalibration():
         for i in range(100):
             line = f.readline()
             if line[0:28] == '# number_of_direction_bins: ':
-                self.n_dir_bins = int(line[28:])
+                self.n_pixel = int(line[28:])
 
             if line[0:37] == '# number_of_principal_aperture_bins: ':
-                self.n_pap_bins = int(line[37:])
+                self.n_paxel = int(line[37:])
 
         self.__post_init()
 
     def __post_init(self):
-        self.n_bins = self.n_pap_bins*self.n_dir_bins
-        self.pap_bin_positions = self.__estimate_principal_aperture_bin_positions()
-        self.dir_bin_positions = self.__estimate_fov_direction_bin_positions()
+        self.n_cells = self.n_paxel*self.n_pixel
+        self.paxel_pos = self.__estimate_principal_aperture_bin_positions()
+        self.pixel_pos = self.__estimate_fov_direction_bin_positions()
 
     def __estimate_principal_aperture_bin_positions(self):
-        pap_bin_positions = np.zeros(shape=(2, self.n_pap_bins))
-        for PA_bin in range(self.n_pap_bins):
-            pap_bin_positions[0, PA_bin] += np.nanmean(self.raw['x_mean'][PA_bin::self.n_pap_bins])
-            pap_bin_positions[1, PA_bin] += np.nanmean(self.raw['y_mean'][PA_bin::self.n_pap_bins])
+        paxel_pos = np.zeros(shape=(2, self.n_paxel))
+        for PA_bin in range(self.n_paxel):
+            paxel_pos[0, PA_bin] += np.nanmean(self.raw['x_mean'][PA_bin::self.n_paxel])
+            paxel_pos[1, PA_bin] += np.nanmean(self.raw['y_mean'][PA_bin::self.n_paxel])
 
-        return np.rec.fromarrays((pap_bin_positions[0,:], pap_bin_positions[1,:]), 
+        return np.rec.fromarrays((paxel_pos[0,:], paxel_pos[1,:]), 
             dtype=[('x', 'f8'),('y', 'f8')]
         )
 
     def __estimate_fov_direction_bin_positions(self):
-        dir_bin_positions = np.zeros(shape=(2, self.n_dir_bins))
-        for dir_bin in range(self.n_dir_bins):
-            dir_bin_positions[0, dir_bin] = np.nanmean(self.raw['cx_mean'][self.n_pap_bins*dir_bin:self.n_pap_bins*(dir_bin+1)])
-            dir_bin_positions[1, dir_bin] = np.nanmean(self.raw['cy_mean'][self.n_pap_bins*dir_bin:self.n_pap_bins*(dir_bin+1)])
+        pixel_pos = np.zeros(shape=(2, self.n_pixel))
+        for dir_bin in range(self.n_pixel):
+            pixel_pos[0, dir_bin] = np.nanmean(self.raw['cx_mean'][self.n_paxel*dir_bin:self.n_paxel*(dir_bin+1)])
+            pixel_pos[1, dir_bin] = np.nanmean(self.raw['cy_mean'][self.n_paxel*dir_bin:self.n_paxel*(dir_bin+1)])
 
-        return np.rec.fromarrays((dir_bin_positions[0,:], dir_bin_positions[1,:]), 
-            dtype=[('cx', 'f8'),('cy', 'f8')]
+        return np.rec.fromarrays((pixel_pos[0,:], pixel_pos[1,:]), 
+            dtype=[('x', 'f8'),('y', 'f8')]
         )
 
     def bin2pap_bin(self, abin):
-        return abin%n_pap_bins
+        return abin%n_paxel
 
     def bin2dir_bin(self, abin):
-        return int(abin/n_pap_bins)
+        return int(abin/n_paxel)
 
 class PlenoscopeLightField():
 
@@ -96,7 +100,7 @@ class PlenoscopeLightField():
             ]
         )
 
-        self.n_bins = self.raw.shape[0]
+        self.n_cells = self.raw.shape[0]
 
 class LightField():
     
@@ -107,84 +111,85 @@ class LightField():
         # INTENSITY
         where_sensitive = plfc.raw['geometrical_efficiency'] != 0.
 
-        intensity = np.zeros(shape=plfc.n_bins)
+        intensity = np.zeros(shape=plfc.n_cells)
         intensity[where_sensitive] = plf.raw['number_photons_raw'][where_sensitive]/plfc.raw['geometrical_efficiency'][where_sensitive]
         intensity[np.invert(where_sensitive)] = 0
 
-        mean_sensitivity = plfc.raw['geometrical_efficiency'].sum()/plfc.n_bins
+        mean_sensitivity = plfc.raw['geometrical_efficiency'].sum()/plfc.n_cells
         intensity *= mean_sensitivity
 
         #ARRIVAL TIMES
-        arrival_times = np.zeros(shape=plf.n_bins)
+        arrival_times = np.zeros(shape=plf.n_cells)
         arrival_times[where_sensitive] = plf.raw['sub_pixel_arrival_time'][where_sensitive] - plfc.raw['time_delay_from_principal_apertur_to_sub_pixel'][where_sensitive]
         arrival_times -= arrival_times.min()
         
         #reshape
-        self.I = np.reshape(plf.raw['number_photons_raw'], newshape=(plfc.n_dir_bins, plfc.n_pap_bins))
-        #self.I = np.reshape(intensity, newshape=(plfc.n_dir_bins, plfc.n_pap_bins))
-        self.t = np.reshape(arrival_times, newshape=(plfc.n_dir_bins, plfc.n_pap_bins))
+        self.I = np.reshape(plf.raw['number_photons_raw'], newshape=(plfc.n_pixel, plfc.n_paxel))
+        #self.I = np.reshape(intensity, newshape=(plfc.n_pixel, plfc.n_paxel))
+        self.t = np.reshape(arrival_times, newshape=(plfc.n_pixel, plfc.n_paxel))
 
-        self.n_bins = plfc.n_bins
-        self.n_pap_bins = plfc.n_pap_bins
-        self.n_dir_bins = plfc.n_dir_bins
+        self.n_cells = plfc.n_cells
+        self.n_paxel = plfc.n_paxel
+        self.n_pixel = plfc.n_pixel
 
-        self.dir_bin_positions = plfc.dir_bin_positions
-        self.pap_bin_positions = plfc.pap_bin_positions
-
-plfc = PlenoscopeLightFieldCalibration()
-plfc.load_plenoscope_calibration_epoch_160310('../light_field_calibration/sub_pixel_statistics.txt')
-
-plf = PlenoscopeLightField()
-#plf.load_epoch_160310('He/1.txt')
-
-#lf = LightField(plfc, plf)
-
-
-from mpl_toolkits.mplot3d import Axes3D
-import matplotlib.pyplot as plt
+        self.pixel_pos = plfc.pixel_pos
+        self.paxel_pos = plfc.paxel_pos
 
 def plot_3D(lf, thr=25):
 
-    fig = plt.figure()
+    fig = plt.figure(figsize=(16, 9), dpi=120)
     ax = fig.gca(projection='3d')
 
     min_t = lf.t[lf.I>thr].min()
+    dur_t = lf.t[lf.I>thr].max() - min_t
     max_I = lf.I[lf.I>thr].max()
+    print('t min', min_t, 'dur', dur_t)
 
-    for pap_bin in range(lf.n_pap_bins):
-        for dir_bin in range(lf.n_dir_bins):
-            if lf.I[dir_bin, pap_bin] > thr:
+    for pax in range(lf.n_paxel):
+        for pix in range(lf.n_pixel):
+            if lf.I[pix, pax] > thr:
 
-                d = (lf.t[dir_bin, pap_bin]-min_t)*3e8
+                d = (lf.t[pix, pax]-min_t)
 
-                x_off = lf.dir_bin_positions['cx'][dir_bin]
-                y_off = lf.dir_bin_positions['cy'][dir_bin]
+                xpix = lf.pixel_pos['x'][pix]
+                ypix = lf.pixel_pos['y'][pix]
 
                 incident = np.array([
-                    x_off,
-                    y_off,
-                    np.sqrt(1. -x_off*x_off - y_off*y_off)
+                    xpix,
+                    ypix,
+                    np.sqrt(1. -xpix*xpix - ypix*ypix)
                 ])
 
                 x = np.array([
-                    lf.pap_bin_positions['x'][pap_bin], 
-                    lf.pap_bin_positions['x'][pap_bin] + d*incident[0]
+                    lf.paxel_pos['x'][pax], 
+                    lf.paxel_pos['x'][pax] + d*incident[0]
                 ])
                 y = np.array([
-                    lf.pap_bin_positions['y'][pap_bin], 
-                    lf.pap_bin_positions['y'][pap_bin] + d*incident[1]
+                    lf.paxel_pos['y'][pax], 
+                    lf.paxel_pos['y'][pax] + d*incident[1]
                 ])
                 z = np.array([
                     0., 
                     d*incident[2]
                 ])
                 #ax.plot(x, y, z, 'b')
-                I = lf.I[dir_bin, pap_bin]/max_I*5.0
-                ax.scatter(x[1], y[1], z[1], s=I**3.0)
+                I = lf.I[pix, pax]/max_I
+                ax.scatter(x[1], y[1], z[1], lw=0, s=75., alpha=I**2)
+
+    p = Circle((0, 0), 25, edgecolor='k', facecolor='none', lw=1.)
+    ax.add_patch(p)
+    art3d.pathpatch_2d_to_3d(p, z=0, zdir="z")
 
     ax.set_xlim(-25, 25)
     ax.set_ylim(-25, 25)
-    ax.set_zlim(0, 5)
+    ax.set_zlim(0, dur_t)
+    ax.set_xlabel('X/m')
+    ax.set_ylabel('Y/m')
+    ax.set_zlabel('t/s')
+
+    for ii in xrange(0,360,2):
+        ax.view_init(elev=5., azim=ii)
+        plt.savefig(str(ii).zfill(3)+".png")
 
 def plot_sum_event(path, thresh=0):
     plt.ion()
@@ -194,8 +199,55 @@ def plot_sum_event(path, thresh=0):
     I = lf.I
     I[I<thresh]=0
     fig, (ax_dir, ax_pap) = plt.subplots(1,2)
-    add_to_ax(ax_dir, np.sum(lf.I, axis=1), lf.dir_bin_positions['cx'], lf.dir_bin_positions['cy'])
-    add_to_ax(ax_pap, np.sum(lf.I, axis=0), lf.pap_bin_positions['x'],  lf.pap_bin_positions['y'])
+    add_to_ax(ax_dir, np.sum(I, axis=1), lf.pixel_pos['x'], lf.pixel_pos['y'])
+    add_to_ax(ax_pap, np.sum(I, axis=0), lf.paxel_pos['x'], lf.paxel_pos['y'])
 
-    plot_3D(lf, thresh)
+def get_intensity_weights_for_direction(cos_x, cos_y):
+    weights = np.zeros(number_of_pixels)
 
+    dist_x = (cos_x - cx) 
+    dist_y = (cos_y - cy)
+    dists = np.hypot(dist_x, dist_y)
+    weights = 1.0/dists**2.0
+
+    return weights/np.sum(weights)
+
+def refocus(lf, alpha):
+    refocused_image = np.zeros(lf.n_pixel)
+    focal_length = 75.0
+
+    for pix in range(lf.n_pixel):
+
+        dx = np.tan(lf.pixel_pos['x'][pix])*focal_length
+        dy = np.tan(lf.pixel_pos['y'][pix])*focal_length     
+
+        I_pix = 0.0
+        for pax in range(lf.n_paxel):
+
+            px = lf.paxel_pos['x'][pax]
+            py = lf.paxel_pos['y'][pax]
+
+            dx_tick = px + (dx-px)/alpha
+            dy_tick = py + (dy-py)/alpha
+
+            dx_des = np.arctan(dx_tick/focal_length)
+            dy_des = np.arctan(dy_tick/focal_length)
+
+            sub_img = lf.I[:,pax]
+
+            weights = get_intensity_weights_for_direction(dx_des, dy_des)
+            I_pix += np.dot(weights, sub_img)
+
+        refocused_image[pix] = I_pix
+        count += 1
+        print('refocus '+str(count)+' of '+str(lf.n_pixel))
+
+    return refocused_image
+
+plfc = PlenoscopeLightFieldCalibration()
+plfc.load_plenoscope_calibration_epoch_160310('/home/sebastian/Desktop/mctout/light_field_calibration/sub_pixel_statistics.txt')
+
+plf = PlenoscopeLightField()
+plf.load_epoch_160310('He/1.txt')
+
+lf = LightField(plfc, plf)
