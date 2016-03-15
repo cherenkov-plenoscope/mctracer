@@ -9,7 +9,9 @@ from matplotlib.collections import PatchCollection
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import mpl_toolkits.mplot3d.art3d as art3d
-
+import scipy
+import scipy.spatial
+from tqdm import tqdm
 
 def add_to_ax(ax, I, px, py):
 
@@ -135,6 +137,10 @@ class LightField():
         self.pixel_pos = plfc.pixel_pos
         self.paxel_pos = plfc.paxel_pos
 
+        self.pixel_pos_tree = scipy.spatial.cKDTree(np.array([self.pixel_pos["x"], self.pixel_pos["y"]]).T)
+        self.paxel_pos_tree = scipy.spatial.cKDTree(np.array([self.paxel_pos["x"], self.paxel_pos["y"]]).T)
+
+
 def plot_3D(lf, thr=25):
 
     fig = plt.figure(figsize=(16, 9), dpi=120)
@@ -202,52 +208,48 @@ def plot_sum_event(path, thresh=0):
     add_to_ax(ax_dir, np.sum(I, axis=1), lf.pixel_pos['x'], lf.pixel_pos['y'])
     add_to_ax(ax_pap, np.sum(I, axis=0), lf.paxel_pos['x'], lf.paxel_pos['y'])
 
-def get_intensity_weights_for_direction(cos_x, cos_y):
-    weights = np.zeros(number_of_pixels)
-
-    dist_x = (cos_x - cx) 
-    dist_y = (cos_y - cy)
-    dists = np.hypot(dist_x, dist_y)
-    weights = 1.0/dists**2.0
-
-    return weights/np.sum(weights)
-
-def refocus(lf, alpha):
+def refocus(lf, wanted_object_distance):
+    alpha = get_alpha(wanted_object_distance)
     refocused_image = np.zeros(lf.n_pixel)
     focal_length = 75.0
 
-    for pix in range(lf.n_pixel):
+    dx = np.tan(lf.pixel_pos['x'])*focal_length
+    dy = np.tan(lf.pixel_pos['y'])*focal_length
 
-        dx = np.tan(lf.pixel_pos['x'][pix])*focal_length
-        dy = np.tan(lf.pixel_pos['y'][pix])*focal_length     
+    px = lf.paxel_pos['x']
+    py = lf.paxel_pos['y']
 
-        I_pix = 0.0
-        for pax in range(lf.n_paxel):
+    dx_tick = px[:, np.newaxis] + (dx[np.newaxis, :] - px[:, np.newaxis])/alpha  # (127, 8400)
+    dy_tick = py[:, np.newaxis] + (dy[np.newaxis, :] - py[:, np.newaxis])/alpha
 
-            px = lf.paxel_pos['x'][pax]
-            py = lf.paxel_pos['y'][pax]
+    dx_des = np.arctan(dx_tick/focal_length)
+    dy_des = np.arctan(dy_tick/focal_length)
 
-            dx_tick = px + (dx-px)/alpha
-            dy_tick = py + (dy-py)/alpha
+    # (127*8400, 2)
+    desired_x_and_y = np.zeros((np.prod(dx_des.shape), 2))
+    desired_x_and_y[:, 0] = dx_des.flatten()
+    desired_x_and_y[:, 1] = dy_des.flatten()
 
-            dx_des = np.arctan(dx_tick/focal_length)
-            dy_des = np.arctan(dy_tick/focal_length)
+    nearest_pixel_distances, nearest_pixel_indices = lf.pixel_pos_tree.query(desired_x_and_y)
 
-            sub_img = lf.I[:,pax]
-
-            weights = get_intensity_weights_for_direction(dx_des, dy_des)
-            I_pix += np.dot(weights, sub_img)
-
-        refocused_image[pix] = I_pix
-        count += 1
-        print('refocus '+str(count)+' of '+str(lf.n_pixel))
+    summanden = lf.I[nearest_pixel_indices, np.arange(lf.n_paxel).repeat(lf.n_pixel)]
+    summanden = summanden.reshape(lf.n_paxel, lf.n_pixel)
+    refocused_image = summanden.sum(axis=0)
 
     return refocused_image
 
+def get_alpha(wanted_object_distance):
+    focal_length = 75.0
+    initial_object_distance = 10e3
+    initial_image_distance = 1/(1/focal_length - 1/initial_object_distance)
+    alpha = 1/initial_image_distance * 1/((1/focal_length) - (1/wanted_object_distance))
+    return alpha
+
+
 plfc = PlenoscopeLightFieldCalibration()
-plfc.load_plenoscope_calibration_epoch_160310('/home/sebastian/Desktop/mctout/light_field_calibration/sub_pixel_statistics.txt')
+plfc.load_plenoscope_calibration_epoch_160310('/home/dneise/mct/light_field_calibration/sub_pixel_statistics.txt')
 
 plf = PlenoscopeLightField()
-plf.load_epoch_160310('He/1.txt')
+plf.load_epoch_160310('/home/dneise/mct/He/1.txt')
 
 lf = LightField(plfc, plf)
