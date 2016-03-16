@@ -171,7 +171,7 @@ def get_n_highest(I, n):
     flat_mask[flat_idxs] = True
     return flat_mask.reshape(I.shape)
 
-def save_principal_aperture_arrival_stack(lf, steps=6, n_channels=137):
+def save_principal_aperture_arrival_stack(lf, steps=6, n_channels=137, outprefix='aperture3D'):
 
     plt.rcParams.update({'font.size': 12})
     plt.rc('text', usetex=True)
@@ -233,8 +233,7 @@ def save_principal_aperture_arrival_stack(lf, steps=6, n_channels=137):
     for i, azimuth in enumerate(azimuths):
         ax.view_init(elev=5., azim=azimuth)
         plt.subplots_adjust(left=0.01, right=0.99, top=0.99, bottom=0.01)
-        
-        plt.savefig(str(i).zfill(ndigits)+".png",  dpi=fsz.dpi)
+        plt.savefig(outprefix+'_'+str(i).zfill(ndigits)+".png", dpi=fsz.dpi)
 
     plt.close()
 
@@ -358,7 +357,6 @@ def save_refocus_stack(lf, obj_dist_min, obj_dist_max, steps, outprefix='refocus
 
         plt.close()
 
-
 class Path():
     def __init__(self, fullpath):
         self.full = fullpath
@@ -369,7 +367,7 @@ class Path():
 
 import subprocess
 import os
-def save_refocus_gif(evt_path):
+def save_refocus_gif(evt_path, steps=10):
 
     evt_path = Path(evt_path)
 
@@ -382,7 +380,7 @@ def save_refocus_gif(evt_path):
     if mkdir_ret != 0:
         return
 
-    save_refocus_stack(lf, 0.75e3, 15e3, 10, outprefix=work_dir+'/'+'refocus')
+    save_refocus_stack(lf, 0.75e3, 15e3, steps, outprefix=work_dir+'/'+'refocus')
     subprocess.call(
         ['convert', 
         work_dir+'/'+'refocus_*.png', 
@@ -393,7 +391,34 @@ def save_refocus_gif(evt_path):
         '-loop', '0',
         evt_path.path+'/'+evt_path.name_wo_ext+'_refocus.gif'
         ])
-    # convert gamma/23_refocus_temp/refocus_*.png -set delay 10 -reverse gamma/23_refocus_temp/refocus_*.png -set delay 10 -loop 0 gamma/animation.gif
+    subprocess.call(['rm', '-r', '-f', work_dir])
+
+
+def save_aperture_photons_gif(evt_path, steps=72):
+
+    T=20 #seconds
+    spf = T/steps
+    s100pf = int(spf*100.0)
+
+    evt_path = Path(evt_path)
+
+    plf = PlenoscopeLightField()
+    plf.load_epoch_160310(evt_path.full)
+    lf = LightField(plfc,plf)
+
+    work_dir = evt_path.path+'/'+evt_path.name_wo_ext+'_aperture3D_temp'
+    mkdir_ret = subprocess.call(['mkdir', work_dir])
+    if mkdir_ret != 0:
+        return
+
+    save_principal_aperture_arrival_stack(lf, steps=steps, n_channels=1024, outprefix=work_dir+'/'+'aperture3D')
+    subprocess.call(
+        ['convert', 
+        work_dir+'/'+'aperture3D_*.png', 
+        '-set' ,'delay', str(s100pf),
+        '-loop', '0',
+        evt_path.path+'/'+evt_path.name_wo_ext+'_aperture3D.gif'
+        ])
     subprocess.call(['rm', '-r', '-f', work_dir])
 
 
