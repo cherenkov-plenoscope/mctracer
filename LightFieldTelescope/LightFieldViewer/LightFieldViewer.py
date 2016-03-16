@@ -8,26 +8,42 @@ from matplotlib.patches import Circle
 from matplotlib.collections import PatchCollection
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
+from matplotlib import gridspec
 import mpl_toolkits.mplot3d.art3d as art3d
 import scipy
 import scipy.spatial
 from tqdm import tqdm
 
-def add_to_ax(ax, I, px, py):
+def add_to_ax(ax, I, px, py, colormap='viridis', hexrotation=30):
+    fov = np.abs(px).max() * 1.05
+    Area = fov * fov
+    bin_radius = 1.15 * np.sqrt((Area/I.shape[0]))
 
-    fov = np.abs(px).max()*1.05 
-    Area = fov*fov
-    bin_radius = np.sqrt((Area/I.shape[0]))
-
-    nfov = fov+bin_radius
+    nfov = fov + bin_radius
     ax.set_xlim([-nfov, nfov])
     ax.set_ylim([-nfov, nfov])
-    I/=I.max()
+    ax.set_aspect("equal")
+    
+    orientation=np.deg2rad(hexrotation)
 
+    patches = []
     for d in range(I.shape[0]):
-        circle1=plt.Circle( (px[d], py[d]), bin_radius, color=str(I[d]) )
-        ax.add_artist(circle1)
-    ax.set_aspect('equal')        
+        patches.append(
+            RegularPolygon(
+                (px[d], py[d]),
+                numVertices=6,
+                radius=bin_radius,
+                orientation=orientation
+            )
+        )
+
+    p = PatchCollection(patches, cmap="viridis", alpha=1, edgecolor='none')
+
+    p.set_array(I/I.max()) # this is assigning a color, crazy hu?
+    ax.add_collection(p)
+    ax.set_aspect('equal')
+
+    return p 
 
 class PlenoscopeLightFieldCalibration():
 
@@ -140,21 +156,40 @@ class LightField():
         self.pixel_pos_tree = scipy.spatial.cKDTree(np.array([self.pixel_pos["x"], self.pixel_pos["y"]]).T)
         self.paxel_pos_tree = scipy.spatial.cKDTree(np.array([self.paxel_pos["x"], self.paxel_pos["y"]]).T)
 
+class FigureSize():
 
-def plot_3D(lf, thr=25):
+    def __init__(self, cols, rows, dpi):
+        self.cols = cols
+        self.rows = rows
+        self.dpi = dpi
+        self.hight = self.rows/self.dpi
+        self.width = self.cols/self.dpi
 
-    fig = plt.figure(figsize=(16, 9), dpi=120)
+def get_n_highest(I, n):
+    flat_idxs = np.argsort(I.flatten())[-n:]
+    flat_mask = np.zeros(shape=I.shape[0]*I.shape[1], dtype=bool)
+    flat_mask[flat_idxs] = True
+    return flat_mask.reshape(I.shape)
+
+def save_principal_aperture_arrival_stack(lf, steps=6, n_channels=137):
+
+    plt.rcParams.update({'font.size': 12})
+    plt.rc('text', usetex=True)
+    plt.rc('font', family='serif')
+
+    fsz = FigureSize(1920, 1080, dpi=240)
+    fig = plt.figure(figsize=(fsz.width, fsz.hight))
     ax = fig.gca(projection='3d')
 
-    min_t = lf.t[lf.I>thr].min()
-    dur_t = lf.t[lf.I>thr].max() - min_t
-    max_I = lf.I[lf.I>thr].max()
-    print('t min', min_t, 'dur', dur_t)
+    above_threshold = get_n_highest(lf.I, n_channels)
+
+    min_t = lf.t[above_threshold].min()
+    dur_t = lf.t[above_threshold].max() - min_t
+    max_I = lf.I[above_threshold].max()
 
     for pax in range(lf.n_paxel):
         for pix in range(lf.n_pixel):
-            if lf.I[pix, pax] > thr:
-
+            if above_threshold[pix, pax]:
                 d = (lf.t[pix, pax]-min_t)
 
                 xpix = lf.pixel_pos['x'][pix]
@@ -180,7 +215,7 @@ def plot_3D(lf, thr=25):
                 ])
                 #ax.plot(x, y, z, 'b')
                 I = lf.I[pix, pax]/max_I
-                ax.scatter(x[1], y[1], z[1], lw=0, s=75., alpha=I**2)
+                ax.scatter(x[1], y[1], z[1], lw=0, s=35., alpha=I**2)
 
     p = Circle((0, 0), 25, edgecolor='k', facecolor='none', lw=1.)
     ax.add_patch(p)
@@ -193,9 +228,15 @@ def plot_3D(lf, thr=25):
     ax.set_ylabel('Y/m')
     ax.set_zlabel('t/s')
 
-    for ii in xrange(0,360,2):
-        ax.view_init(elev=5., azim=ii)
-        plt.savefig(str(ii).zfill(3)+".png")
+    ndigits = int(np.ceil(np.log10(steps)))
+    azimuths = np.linspace(0., 360., steps, endpoint=False)
+    for i, azimuth in enumerate(azimuths):
+        ax.view_init(elev=5., azim=azimuth)
+        plt.subplots_adjust(left=0.01, right=0.99, top=0.99, bottom=0.01)
+        
+        plt.savefig(str(i).zfill(ndigits)+".png",  dpi=fsz.dpi)
+
+    plt.close()
 
 def plot_sum_event(path, thresh=0):
     plt.ion()
@@ -245,11 +286,121 @@ def get_alpha(wanted_object_distance):
     alpha = 1/initial_image_distance * 1/((1/focal_length) - (1/wanted_object_distance))
     return alpha
 
+def save_sum_projections(lf, outpath, thresh=0):
+    I = lf.I
+    I[I<thresh]=0
+
+    plt.rcParams.update({'font.size': 20})
+    plt.rc('text', usetex=True)
+    plt.rc('font', family='serif')
+
+    fig, (ax_dir, ax_pap) = plt.subplots(1, 2, figsize=(16,9))
+
+    ax_dir.set_xlabel('x/deg')
+    ax_dir.set_ylabel('y/deg')   
+    ax_dir.spines['right'].set_visible(False)
+    ax_dir.spines['top'].set_visible(False)
+    add_to_ax(ax_dir, np.sum(I, axis=1), np.rad2deg(lf.pixel_pos['x']), np.rad2deg(lf.pixel_pos['y']))
+
+    ax_pap.set_xlabel('x/m')
+    ax_pap.set_ylabel('y/m')   
+    ax_pap.spines['right'].set_visible(False)
+    ax_pap.spines['top'].set_visible(False)
+    add_to_ax(ax_pap, np.sum(I, axis=0), lf.paxel_pos['x'], lf.paxel_pos['y'], hexrotation=0.0)
+
+    plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
+    plt.savefig(outpath+".png", dpi=120)
+    plt.close()
+
+def save_refocus_stack(lf, obj_dist_min, obj_dist_max, steps, outprefix='refocus'):
+
+    plt.rcParams.update({'font.size': 12})
+    plt.rc('text', usetex=True)
+    plt.rc('font', family='serif')
+
+    object_distances = np.logspace(
+        np.log10(obj_dist_min),
+        np.log10(obj_dist_max),
+        steps
+    )
+
+    for i, object_distance in enumerate(object_distances):
+
+        fig = plt.figure(figsize=(7, 6)) 
+        gs = gridspec.GridSpec(1, 2, width_ratios=[1, 6]) 
+        ax0 = plt.subplot(gs[0])
+        ax0.set_xlim([0, 1])
+        ax0.set_ylim([0, obj_dist_max/1e3])
+        ax0.yaxis.tick_left()
+        ax0.set_ylabel('object distance/km')
+        ax0.spines['right'].set_visible(False)
+        ax0.spines['top'].set_visible(False)
+        ax0.spines['bottom'].set_visible(False)
+        ax0.xaxis.set_visible(False)
+        
+        ax1 = plt.subplot(gs[1])
+        ax1.set_xlabel('x/deg')
+        ax1.set_ylabel('y/deg')
+        ax1.spines['right'].set_visible(False)
+        ax1.spines['top'].set_visible(False)
+        ax1.set_aspect('equal')  
+        ax0.plot([0, .5], [object_distance/1e3, object_distance/1e3], linewidth=5.0)
+        ax0.text(0.0, -1.0, format(object_distance/1e3, '.2f')+r'\,km')
+
+        add_to_ax(
+            ax1, 
+            refocus(lf, object_distance), 
+            np.rad2deg(lf.pixel_pos['x']), 
+            np.rad2deg(lf.pixel_pos['y'])
+        )
+        ndigits = int(np.ceil(np.log10(steps)))
+        plt.savefig(outprefix+'_'+str(i).zfill(ndigits)+".png", dpi=180)
+
+        plt.close()
+
+
+class Path():
+    def __init__(self, fullpath):
+        self.full = fullpath
+        self.path = os.path.split(fullpath)[0]
+        self.name = os.path.split(fullpath)[1]
+        self.name_wo_ext = os.path.splitext(self.name)[0]
+        self.ext = os.path.splitext(fullpath)[1]
+
+import subprocess
+import os
+def save_refocus_gif(evt_path):
+
+    evt_path = Path(evt_path)
+
+    plf = PlenoscopeLightField()
+    plf.load_epoch_160310(evt_path.full)
+    lf = LightField(plfc,plf)
+
+    work_dir = evt_path.path+'/'+evt_path.name_wo_ext+'_refocus_temp'
+    mkdir_ret = subprocess.call(['mkdir', work_dir])
+    if mkdir_ret != 0:
+        return
+
+    save_refocus_stack(lf, 0.75e3, 15e3, 10, outprefix=work_dir+'/'+'refocus')
+    subprocess.call(
+        ['convert', 
+        work_dir+'/'+'refocus_*.png', 
+        '-set' ,'delay', '20', 
+        '-reverse',
+        work_dir+'/'+'refocus_*.png',
+        '-set' ,'delay', '20', 
+        '-loop', '0',
+        evt_path.path+'/'+evt_path.name_wo_ext+'_refocus.gif'
+        ])
+    # convert gamma/23_refocus_temp/refocus_*.png -set delay 10 -reverse gamma/23_refocus_temp/refocus_*.png -set delay 10 -loop 0 gamma/animation.gif
+    subprocess.call(['rm', '-r', '-f', work_dir])
+
 
 plfc = PlenoscopeLightFieldCalibration()
-plfc.load_plenoscope_calibration_epoch_160310('/home/dneise/mct/light_field_calibration/sub_pixel_statistics.txt')
+plfc.load_plenoscope_calibration_epoch_160310('/home/sebastian/Desktop/mctout/light_field_calibration/sub_pixel_statistics.txt')
 
 plf = PlenoscopeLightField()
-plf.load_epoch_160310('/home/dneise/mct/He/1.txt')
+plf.load_epoch_160310('He/1.txt')
 
-lf = LightField(plfc, plf)
+lf = LightField(plfc,plf)
