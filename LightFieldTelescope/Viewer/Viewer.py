@@ -79,6 +79,7 @@ class PlenoscopeLightFieldCalibration():
         self.n_cells = self.n_paxel*self.n_pixel
         self.paxel_pos = self.__estimate_principal_aperture_bin_positions()
         self.pixel_pos = self.__estimate_fov_direction_bin_positions()
+        self.paxel_efficiency_along_all_pixel = np.nanmean(np.reshape(self.raw['geometrical_efficiency'], newshape=(self.n_pixel, self.n_paxel)), axis=0)
 
     def __estimate_principal_aperture_bin_positions(self):
         paxel_pos = np.zeros(shape=(2, self.n_paxel))
@@ -124,8 +125,6 @@ class LightField():
     
     def __init__(self, plfc, plf):
 
-        self.__plc = plfc
-
         # INTENSITY
         where_sensitive = plfc.raw['geometrical_efficiency'] != 0.
 
@@ -142,6 +141,7 @@ class LightField():
         arrival_times -= arrival_times.min()
         
         #reshape
+        self.eff = np.reshape(plfc.raw['geometrical_efficiency'], newshape=(plfc.n_pixel, plfc.n_paxel))
         self.I = np.reshape(plf.raw['number_photons_raw'], newshape=(plfc.n_pixel, plfc.n_paxel))
         #self.I = np.reshape(intensity, newshape=(plfc.n_pixel, plfc.n_paxel))
         self.t = np.reshape(arrival_times, newshape=(plfc.n_pixel, plfc.n_paxel))
@@ -155,6 +155,10 @@ class LightField():
 
         self.pixel_pos_tree = scipy.spatial.cKDTree(np.array([self.pixel_pos["x"], self.pixel_pos["y"]]).T)
         self.paxel_pos_tree = scipy.spatial.cKDTree(np.array([self.paxel_pos["x"], self.paxel_pos["y"]]).T)
+        
+        #efficiency
+        self.paxel_eff = plfc.paxel_efficiency_along_all_pixel
+
 
 class FigureSize():
 
@@ -301,11 +305,12 @@ def save_sum_projections(lf, outpath, thresh=0):
     ax_dir.spines['top'].set_visible(False)
     add_to_ax(ax_dir, np.sum(I, axis=1), np.rad2deg(lf.pixel_pos['x']), np.rad2deg(lf.pixel_pos['y']))
 
+    gp = lf.paxel_eff>0.4
     ax_pap.set_xlabel('x/m')
     ax_pap.set_ylabel('y/m')   
     ax_pap.spines['right'].set_visible(False)
     ax_pap.spines['top'].set_visible(False)
-    add_to_ax(ax_pap, np.sum(I, axis=0), lf.paxel_pos['x'], lf.paxel_pos['y'], hexrotation=0.0)
+    add_to_ax(ax_pap, np.sum(I[:,gp], axis=0), lf.paxel_pos['x'][gp], lf.paxel_pos['y'][gp], hexrotation=0.0)
 
     plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
     plt.savefig(outpath+".png", dpi=120)
@@ -367,6 +372,14 @@ class Path():
 
 import subprocess
 import os
+from glob import glob
+
+def save_sum(evt_path):
+    evt_path = Path(evt_path)
+    plf.load_epoch_160310(evt_path.full)
+    lf = LightField(plfc, plf)   
+    save_sum_projections(lf, evt_path.path+'/'+evt_path.name_wo_ext+'_sum_projection')
+
 def save_refocus_gif(evt_path, steps=10):
 
     evt_path = Path(evt_path)
@@ -384,10 +397,10 @@ def save_refocus_gif(evt_path, steps=10):
     subprocess.call(
         ['convert', 
         work_dir+'/'+'refocus_*.png', 
-        '-set' ,'delay', '20', 
+        '-set' ,'delay', '10', 
         '-reverse',
         work_dir+'/'+'refocus_*.png',
-        '-set' ,'delay', '20', 
+        '-set' ,'delay', '10', 
         '-loop', '0',
         evt_path.path+'/'+evt_path.name_wo_ext+'_refocus.gif'
         ])
@@ -411,7 +424,7 @@ def save_aperture_photons_gif(evt_path, steps=72):
     if mkdir_ret != 0:
         return
 
-    save_principal_aperture_arrival_stack(lf, steps=steps, n_channels=1024, outprefix=work_dir+'/'+'aperture3D')
+    save_principal_aperture_arrival_stack(lf, steps=steps, n_channels=512, outprefix=work_dir+'/'+'aperture3D')
     subprocess.call(
         ['convert', 
         work_dir+'/'+'aperture3D_*.png', 
