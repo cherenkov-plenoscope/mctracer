@@ -1,4 +1,5 @@
 #include "VisualConfigFab.h"
+#include "Tools/PathTools.h"
 namespace Xml {
 	namespace Configs {
 //------------------------------------------------------------------------------
@@ -33,8 +34,9 @@ VisualConfig get_VisualConfig_from_node(Xml::Node node) {
 
 		vc.sky_dome = SkyDome(sky_dome_node.attribute2Color("color"));
 	}else{
+		PathTools::FullPath xmlpath = PathTools::split_path_and_filename(node.xml_path());
 
-		vc.sky_dome = SkyDome(image_path);
+		vc.sky_dome = SkyDome(xmlpath.path+"/"+image_path);
 		vc.sky_dome.set_background_color(
 			sky_dome_node.attribute2Color("color")
 		);
