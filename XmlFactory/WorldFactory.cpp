@@ -119,8 +119,7 @@ void WorldFactory::extract_function_from(const pugi::xml_node node) {
 	functions->extract_function_from(node);
 }
 //------------------------------------------------------------------------------
-void WorldFactory::fabricate_frame(
-Frame* mother,const pugi::xml_node node){
+void WorldFactory::fabricate_frame(Frame* mother, const pugi::xml_node node) {
 	
 	XmlNode = node;
 	if(is_equal(node.name(),"frame")){

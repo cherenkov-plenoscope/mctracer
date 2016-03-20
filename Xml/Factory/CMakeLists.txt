@@ -5,5 +5,6 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/FrameFab.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TracerSettingsFab.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/InternalPhotonSource.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SceneryFactory.cpp
     PARENT_SCOPE
 )
