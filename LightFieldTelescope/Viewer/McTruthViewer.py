@@ -43,7 +43,7 @@ def production_positions(evt):
         np.sqrt(1. -evt['cx']*evt['cx'] - evt['cy']*evt['cy'])
     ])
 
-    a = (evt['prod_z'])/incident[2,:]
+    a = (evt['prod_z'] - evt['z'])/incident[2,:]
 
     print(a[0:5]*incident[0,0:5])
     prod_x = evt['x'] - a*incident[0,:]
