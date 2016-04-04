@@ -2,23 +2,24 @@
 #include <omp.h>
 #include <sstream>
 #include "Geometry/TrajectoryFactory.h"
+using std::string;
+using std::stringstream;
+using std::vector;
 
 namespace Photons {
 	//--------------------------------------------------------------------------
-	std::string get_print(
-		const std::vector<Photon*> *photons
-	) {
-		std::stringstream out;
+	string get_print(const vector<Photon*> *photons) {
+		stringstream out;
 		out << "Photon bunble "<< photons->size() << "\n";
 		for(Photon* photon : *photons)
-			out << (*photon) << "\n";
+			out << photon->get_print() << "\n";
 		return out.str();	
 	}	
 	//--------------------------------------------------------------------------
 	// propagation
 	//--------------------------------------------------------------------------
 	void propagate_photons_in_world_with_settings(
-		std::vector<Photon*> *photons,
+		vector<Photon*> *photons,
 		const Frame* world, 
 		const TracerSettings* settings,
 		Random::Generator* prng
@@ -30,7 +31,7 @@ namespace Photons {
 	}	
 	//--------------------------------------------------------------------------
 	void propagate_photons_using_single_thread(
-		std::vector<Photon*> *photons,
+		vector<Photon*> *photons,
 		const Frame* world, 
 		const TracerSettings* settings,
 		Random::Generator* prng
@@ -45,14 +46,14 @@ namespace Photons {
 	}
 	//--------------------------------------------------------------------------
 	void propagate_photons_using_multi_thread(
-		std::vector<Photon*> *photons,
+		vector<Photon*> *photons,
 		const Frame* world, 
 		const TracerSettings* settings
 	) {
 		uint i;
 		uint number_of_threads;
 		uint thread_id, ray_counter;
-		std::stringstream out;
+		stringstream out;
 		int HadCatch = 0;
 
 		#pragma omp parallel shared(settings,world,HadCatch) private(number_of_threads, thread_id, out, ray_counter)
@@ -88,7 +89,7 @@ namespace Photons {
 		}
 
 		if(HadCatch) {
-			std::stringstream info;
+			stringstream info;
 			info << "PhotonBunch::"<<__func__<<"() in "<<__FILE__<<", "<<__LINE__<<"\n";
 			info << "Cought exception during multithread propagation.\n";
 			throw(TracerException(info.str()));
@@ -102,21 +103,17 @@ namespace Photons {
 	//--------------------------------------------------------------------------
 	// In Out to raw matrix/table -> AsciiIO can read/write this to text files
 	//--------------------------------------------------------------------------
-	std::vector<Photon*>* raw_matrix2photons(
-		std::vector<std::vector<double>> raw_matrix
-	) {
-		std::vector<Photon*> *photons = new std::vector<Photon*>;
+	vector<Photon*>* raw_matrix2photons(vector<vector<double>> raw_matrix) {
+		vector<Photon*> *photons = new vector<Photon*>;
 
-		for(std::vector<double> raw_row : raw_matrix)
+		for(vector<double> raw_row : raw_matrix)
 			photons->push_back(raw_row2photon(raw_row));
 
 		return photons;
 	}
 	//--------------------------------------------------------------------------
-	std::vector<std::vector<double>> photons2raw_matrix(
-		std::vector<Photon*> *photons
-	) {
-		std::vector<std::vector<double>> raw_matrix;
+	vector<vector<double>> photons2raw_matrix(vector<Photon*> *photons) {
+		vector<vector<double>> raw_matrix;
 
 		for(Photon* ph : *photons)
 			raw_matrix.push_back(photon2raw_row(ph));
@@ -124,8 +121,8 @@ namespace Photons {
 		return raw_matrix;		
 	}
 	//--------------------------------------------------------------------------
-	std::vector<double> photon2raw_row(Photon* ph) {
-		std::vector<double> raw_row;
+	vector<double> photon2raw_row(Photon* ph) {
+		vector<double> raw_row;
 		raw_row.reserve(8);
 
 		raw_row.push_back(double(ph->get_id()));
@@ -143,7 +140,7 @@ namespace Photons {
 		return raw_row;
 	}
 	//--------------------------------------------------------------------------
-	Photon* raw_row2photon(std::vector<double> &raw_row) {
+	Photon* raw_row2photon(vector<double> &raw_row) {
 
 		assert_raw_row_size_matches_photon(raw_row);
 		const double id = raw_row[0];
@@ -156,9 +153,9 @@ namespace Photons {
 		return ph;
 	}
 	//--------------------------------------------------------------------------
-	void assert_raw_row_size_matches_photon(std::vector<double> &raw_row) {
+	void assert_raw_row_size_matches_photon(vector<double> &raw_row) {
 		if(raw_row.size() != 8) {
-			std::stringstream out;
+			stringstream out;
 			out << "PhotonBunch, raw row of doubles to photon.\n";
 			out << "Expected row to have exactly 8 columns, but actual it has ";
 			out << raw_row.size() << " columns.\n";
@@ -169,7 +166,7 @@ namespace Photons {
 	// Trajectories
 	//--------------------------------------------------------------------------
 	Trajectories::Trajectories(
-		std::vector<Photon*> *_photons,
+		vector<Photon*> *_photons,
 		const TracerSettings *settings
 	) {
 		this->settings = settings;
@@ -196,11 +193,11 @@ namespace Photons {
 	//--------------------------------------------------------------------------
 	namespace Source {
 
-		std::vector<Photon*> *point_like_towards_z_opening_angle_num_photons(
+		vector<Photon*> *point_like_towards_z_opening_angle_num_photons(
 			const double opening_angle,
 			const uint number_of_photons
 		) {
-			std::vector<Photon*>* photons = new std::vector<Photon*>;
+			vector<Photon*>* photons = new vector<Photon*>;
 			photons->reserve(number_of_photons);
 
 			const Vector3D support = Vector3D::null;
@@ -220,11 +217,11 @@ namespace Photons {
 			return photons;
 		}
 		//----------------------------------------------------------------------
-		std::vector<Photon*> *parallel_towards_z_from_xy_disc(
+		vector<Photon*> *parallel_towards_z_from_xy_disc(
 			const double disc_radius,
 			const uint number_of_photons
 		) {
-			std::vector<Photon*>* photons = new std::vector<Photon*>;
+			vector<Photon*>* photons = new vector<Photon*>;
 			photons->reserve(number_of_photons);
 
 			const Vector3D direction = Vector3D::unit_z;
@@ -247,7 +244,7 @@ namespace Photons {
 	//--------------------------------------------------------------------------
 	void transform_all_photons(
 		const HomoTrafo3D Trafo, 
-		std::vector<Photon*> *photons
+		vector<Photon*> *photons
 	) {
 		for(Photon* photon : *photons)
 			photon->transform(&Trafo);
@@ -255,7 +252,7 @@ namespace Photons {
 	//--------------------------------------------------------------------------
 	void transform_all_photons_multi_thread(
 		const HomoTrafo3D Trafo, 
-		std::vector<Photon*> *photons
+		vector<Photon*> *photons
 	) {
 		uint i;
 		int HadCatch = 0;
@@ -275,7 +272,7 @@ namespace Photons {
 		}
 
 		if(HadCatch) {
-			std::stringstream info;
+			stringstream info;
 			info << "PhotonBunch::"<<__func__<<"() in "<<__FILE__<<", "<<__LINE__<<"\n";
 			info << "Cought exception during multithread transformation.\n";
 			throw(TracerException(info.str()));
@@ -284,7 +281,7 @@ namespace Photons {
 	//--------------------------------------------------------------------------
 	// delete all history
 	//--------------------------------------------------------------------------
-	void delete_photons_and_history(std::vector<Photon*> *photons) {
+	void delete_photons_and_history(vector<Photon*> *photons) {
 		for(uint i=0; i<photons->size(); i++) {
 			photons->at(i)->delete_history();
 			delete photons->at(i);
