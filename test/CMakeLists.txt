@@ -45,7 +45,6 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/Vector2DTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaEventGetterTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Vector3DTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/WorldFactoryTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/NightSkyBackgroundLightTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/XmlTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/XyPlaneRayEquationTest.cpp
