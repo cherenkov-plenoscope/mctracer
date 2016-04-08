@@ -1,5 +1,5 @@
 #include "Core/Photons.h"
-#include "XmlFactory/WorldFactory.h"
+#include "Xml/Factory/SceneryFactory.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "CorsikaIO/EventIo/EventIo.h"
 #include "CorsikaIO/EventIo/PhotonFactory.h"
@@ -55,12 +55,11 @@ int main(int argc, char* argv[]) {
 	Random::Mt19937 prng(settings.pseudo_random_number_seed);
 
 	// load scenery
-	WorldFactory fab;
-	fab.load(cmd.get("scenery"));
-	Frame *world = fab.world();
+	Xml::SceneryFactory fab(cmd.get("scenery"));
+	Frame *world = fab.scenery;
 
 	// init Telescope Array Control
-	TelescopeArrayControl* array_ctrl = fab.get_telescope_array_control();
+	TelescopeArrayControl* array_ctrl = fab.telescopes;
 
 	// load photons
 	EventIo::EventIoFile corsika_run(cmd.get("photons"));
