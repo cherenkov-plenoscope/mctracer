@@ -36,6 +36,7 @@ namespace Xml {
         Document xml_doc;
 
         SceneryFactory(const string path);
+        PhotonSensors::Sensors sensors()const;
     private:
 
         void make_geometry(Frame* mother, const Node node);
@@ -57,7 +58,6 @@ namespace Xml {
         const Function::Func1D* surface_refl(const Node node)const;
         void add_to_sensors_if_sensitive(Frame* frame, const Node node);
         void add_to_array_if_telescope(Frame* frame, const Node node);
-        PhotonSensors::Sensors sensors()const;
     };
 }//Xml
 #endif // __SceneryFactory_H_INCLUDED__ 

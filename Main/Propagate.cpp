@@ -1,6 +1,6 @@
 #include "Core/Photons.h"
 #include "Tools/AsciiIo.h"
-#include "XmlFactory/WorldFactory.h"
+#include "Xml/Factory/SceneryFactory.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "Xml/Factory/TracerSettingsFab.h"
 #include "PhotonsReader/PhotonsReader.h"
@@ -51,13 +51,12 @@ int main(int argc, char* argv[]) {
 	
 	//--------------------------------------------------------------------------
 	// scenery
-	WorldFactory fab;
-	fab.load(cmd.get("scenery"));
-	Frame *world = fab.world();
+	Xml::SceneryFactory fab(cmd.get("scenery"));
+	Frame *world = fab.scenery;
 	
 	//--------------------------------------------------------------------------
 	// sensors in scenery
-	PhotonSensors::Sensors sensors = fab.get_sensors();
+	PhotonSensors::Sensors sensors = fab.sensors();
 	
 	//--------------------------------------------------------------------------
 	// photon source
