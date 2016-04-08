@@ -66,6 +66,8 @@ void SceneryFactory::make_geometry(Frame* mother, const Node node) {
             make_geometry(add_Triangle(mother, child), child);
         else if(is_equal(child.name(), "light_field_telescope"))
             make_geometry(add_Plenoscope(mother, child), child);
+        else if(is_equal(child.name(), "stl"))
+            make_geometry(add_STL(mother, child), child);
     }
 }
 //------------------------------------------------------------------------------
