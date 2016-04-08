@@ -24,7 +24,8 @@ namespace Xml {
     public:
 
         Frame* scenery;
-        vector<PhotonSensor::Sensor*>* sensors;
+
+        vector<PhotonSensor::Sensor*>* raw_sensors;
         FunctionFab functions;
         TelescopeArrayControl* telescopes;
 
@@ -36,12 +37,27 @@ namespace Xml {
 
         SceneryFactory(const string path);
     private:
-        void throw_unkonown_key(const Node node);
+
         void make_geometry(Frame* mother, const Node node);
-        Color* color(const Node node)const;
         Frame* add_Frame(Frame* mother, const Node node);
         Frame* add_Disc(Frame* mother, const Node node);
         Frame* add_Sphere(Frame* mother, const Node node);
+        Frame* add_Plane(Frame* mother, const Node node);
+        Frame* add_HexPlane(Frame* mother, const Node node);
+        Frame* add_Cylinder(Frame* mother, const Node node);
+        Frame* add_Annulus(Frame* mother, const Node node);
+        Frame* add_BiConvexLensHex(Frame* mother, const Node node);
+        Frame* add_SphereCapWithHexagonalBound(Frame* mother, const Node node);
+        Frame* add_Triangle(Frame* mother, const Node node);
+        Frame* add_SegmentedReflector(Frame* mother, const Node node);
+        Frame* add_STL(Frame* mother, const Node node);
+        Frame* add_Plenoscope(Frame* mother, const Node node);
+
+        Color* surface_color(const Node node)const;
+        const Function::Func1D* surface_refl(const Node node)const;
+        void add_to_sensors_if_sensitive(Frame* frame, const Node node);
+        void add_to_array_if_telescope(Frame* frame, const Node node);
+        PhotonSensors::Sensors sensors()const;
     };
 }//Xml
 #endif // __SceneryFactory_H_INCLUDED__ 
