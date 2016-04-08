@@ -42,8 +42,6 @@ void SceneryFactory::make_geometry(Frame* mother, const Node node) {
     add_to_array_if_telescope(mother, node);
 
     for(Node child=node.first_child(); child; child=child.next_child()) {
-
-        std::cout << child.name() << "\n";
         if(is_equal(child.name(), "function"))
             functions.add(child);
         else if(is_equal(child.name(), "frame"))
@@ -66,6 +64,8 @@ void SceneryFactory::make_geometry(Frame* mother, const Node node) {
             make_geometry(add_SphereCapWithHexagonalBound(mother, child), child); 
         else if(is_equal(child.name(), "triangle"))
             make_geometry(add_Triangle(mother, child), child);
+        else if(is_equal(child.name(), "light_field_telescope"))
+            make_geometry(add_Plenoscope(mother, child), child);
     }
 }
 //------------------------------------------------------------------------------
@@ -307,8 +307,8 @@ Frame* SceneryFactory::add_Plenoscope(Frame* mother, const Node node) {
 
     const Node sens = node.child("set_camera");
 
-    cfg.pixel_FoV_hex_flat2flat = sens.attribute2double("max_FoV_diameter_deg");
-    cfg.max_FoV_diameter = sens.attribute2double("max_FoV_diameter_deg");
+    cfg.pixel_FoV_hex_flat2flat = Deg2Rad(sens.attribute2double("hex_pixel_FoV_flat2flat_deg"));
+    cfg.max_FoV_diameter = Deg2Rad(sens.attribute2double("max_FoV_diameter_deg"));
     cfg.housing_overhead = sens.attribute2double("housing_overhead");
     cfg.sub_pixel_on_pixel_diagonal = sens.attribute2double("sub_pixel_on_pixel_diagonal"); 
     cfg.lens_refraction = functions.by_name(sens.attribute("refraction_vs_wavelength"));
