@@ -2,7 +2,7 @@
 #include "Tools/AssertionTools.h"
 #include <set>
 
-const uint Frame::max_number_of_children_in_frame = 16;
+const uint Frame::max_number_of_children = 16;
 const double Frame::minimal_structure_size = 1e-6;
 //------------------------------------------------------------------------------
 Frame* Frame::void_frame = new Frame(
@@ -11,14 +11,12 @@ Frame* Frame::void_frame = new Frame(
 	Rotation3D::null
 );
 //------------------------------------------------------------------------------
-Frame::Frame() {
- 
-}
+Frame::Frame() {}
 //------------------------------------------------------------------------------
 Frame::Frame(
-    const std::string new_name,
-    const Vector3D    new_pos,
-    const Rotation3D  new_rot
+    const string new_name,
+    const Vector3D new_pos,
+    const Rotation3D new_rot
 ) { 
     set_name_pos_rot(new_name, new_pos, new_rot); 
 }
@@ -52,7 +50,6 @@ void Frame::post_init_transformations() {
 }
 //------------------------------------------------------------------------------
 void Frame::post_init_transformations_only_based_on_mother() {
-
 	T_mother2frame = T_frame2mother.inverse();
 	T_frame2world = calculate_frame2world_only_based_on_mother();
 	T_world2frame = T_frame2world.inverse();
@@ -85,7 +82,6 @@ HomoTrafo3D Frame::calculate_frame2world()const {
 }
 //------------------------------------------------------------------------------
 HomoTrafo3D Frame::calculate_frame2world_only_based_on_mother()const {
-
 	if(has_mother())
 		return mother->T_frame2world*T_frame2mother;
 	else
@@ -93,11 +89,11 @@ HomoTrafo3D Frame::calculate_frame2world_only_based_on_mother()const {
 }
 //------------------------------------------------------------------------------
 void Frame::set_name_pos_rot(
-	const std::string name_of_frame,
+	const string name,
 	const Vector3D pos_in_mother,
 	const Rotation3D rot_in_mother
 ){
-	this->set_name(name_of_frame);
+	this->set_name(name);
 	
 	this->pos_in_mother = pos_in_mother;
 	this->rot_in_mother = rot_in_mother;
@@ -110,39 +106,37 @@ void Frame::set_name_pos_rot(
 	reset_all_connections_to_children_and_mother();
 }
 //------------------------------------------------------------------------------
-void Frame::set_name(
-	const std::string name_of_frame
-){
-	assert_name_is_valid(name_of_frame);
-	this->name_of_frame = name_of_frame;
+void Frame::set_name(const string name) {
+	assert_name_is_valid(name);
+	this->name = name;
 }
 //------------------------------------------------------------------------------
 void Frame::reset_all_connections_to_children_and_mother() {
 	radius_of_sphere_enclosing_all_children = 0.0;	 
 	mother = void_frame;
-	root_of_world = this;
+	root_frame = this;
 	children.clear();
 }
 //------------------------------------------------------------------------------
-void Frame::assert_name_is_valid(const std::string name_to_check)const {
+void Frame::assert_name_is_valid(const string name_to_check)const {
 	AssertionTools::text_with_name_is_not_empty_given_context(
-		name_to_check, "name_of_frame", 
+		name_to_check, "name", 
 		"A frame's name must not be empty"
 	);
 	AssertionTools::text_with_name_has_no_whitespaces_given_context(
-		name_to_check, "name_of_frame", 
+		name_to_check, "name", 
 		"A frame's name must not contain whitespaces"
 	);
 	AssertionTools::text_with_name_has_no_specific_char_given_context(
-		name_to_check, "name_of_frame", delimiter_for_frame_path,
+		name_to_check, "name", path_delimiter,
 		"The delimiter sign for the frame's tree structure must not be used in "
 		"a frame's name."
 	);
 }
 //------------------------------------------------------------------------------
-std::string Frame::get_print()const {
-	std::stringstream out;
-	out << "frame: " << name_of_frame << "\n";
+string Frame::get_print()const {
+	stringstream out;
+	out << "frame: " << name << "\n";
 	out << "| pos in mother: " << pos_in_mother << "\n";
 	out << "| rot in mother: " << rot_in_mother << "\n";
 	out << "| pos in world:  ";
@@ -153,10 +147,10 @@ std::string Frame::get_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-std::string Frame::get_tree_print()const {
+string Frame::get_tree_print()const {
 	
-	std::stringstream out;
-	out << name_of_frame;
+	stringstream out;
+	out << name;
 	out << ", pos " << pos_in_mother << ", r ";
 	out << radius_of_sphere_enclosing_all_children << "m\n";
 
@@ -178,9 +172,7 @@ void Frame::add_child(Frame * const new_child) {
 	update_sphere_enclosing_all_children(new_child);
 }
 //------------------------------------------------------------------------------
-void Frame::update_sphere_enclosing_all_children(
-	Frame *new_child
-) {
+void Frame::update_sphere_enclosing_all_children(Frame *new_child) {
 	// When a child frame is added to a frame we have to check if the sphere 
 	// enclosing all the frames previous children is also enclosing the new
 	// child. In case the old sphere is to small we have to increase its radius
@@ -254,13 +246,11 @@ void Frame::update_sphere_enclosing_all_children(
 }
 //------------------------------------------------------------------------------
 void Frame::set_mother_and_child(Frame *new_child) {
-
 	this->add_child(new_child);
 	new_child->set_mother(this);
 }
 //------------------------------------------------------------------------------
 void Frame::init_tree_based_on_mother_child_relations() {
-	
 	cluster_using_helper_frames();
 	post_init_me_and_all_my_children();
 	update_enclosing_sphere_for_all_children();
@@ -302,21 +292,19 @@ void Frame::update_enclosing_sphere_for_all_children() {
 void Frame::post_init_root_of_world() {
 
 	if(has_mother())
-		root_of_world = mother->get_root_of_world();
+		root_frame = mother->get_root_of_world();
 	else
-		root_of_world = this;
+		root_frame = this;
 
 	for(Frame* child : children)
 		child->post_init_root_of_world();
 }
 //------------------------------------------------------------------------------
 const Frame* Frame::get_root_of_world()const {
-	return root_of_world;
+	return root_frame;
 }
 //------------------------------------------------------------------------------
-void  Frame::take_children_from(
-	Frame *frame_to_take_chidren_from
-) {
+void  Frame::take_children_from(Frame *frame_to_take_chidren_from) {
 	// take all children of the frame_to_take_chidren_from and 
 	// put them to this frame
 
@@ -324,17 +312,15 @@ void  Frame::take_children_from(
 		set_mother_and_child( child_to_take);
 }
 //------------------------------------------------------------------------------
-const Frame* Frame::get_child_by_name( 
-	std::string specific_name 
-)const{
+const Frame* Frame::get_child_by_name(string specific_name)const {
 	for( Frame* child : children )
-		if( StringTools::is_equal(child->name_of_frame, specific_name) )
+		if( StringTools::is_equal(child->name, specific_name) )
 			return child;
 
 	return void_frame;
 }
 //------------------------------------------------------------------------------
-std::string Frame::get_path_in_tree_of_frames()const {
+string Frame::get_path_in_tree_of_frames()const {
 	/// The path of a frame is returned here. The root frame called world is not 
 	/// included in the path. The delimiter sign is '/' as for directorys on 
 	/// unix systems.
@@ -345,8 +331,7 @@ std::string Frame::get_path_in_tree_of_frames()const {
 		// This frame has a mother. Therefore it is not the root frame. 
 		// Here we add at least the delimiter to the path and ,at least there 
 		// is one, the path of its mother
-		return mother->get_path_in_tree_of_frames() + 
-			delimiter_for_frame_path + name_of_frame;
+		return mother->get_path_in_tree_of_frames() + path_delimiter + name;
 	}else{
 		// This frame has not a mother. So this is the root frame. Here is 
 		// nothing added to the string
@@ -354,7 +339,7 @@ std::string Frame::get_path_in_tree_of_frames()const {
 	}
 }
 //------------------------------------------------------------------------------
-bool Frame::has_child_with_name(const std::string name_of_child)const {
+bool Frame::has_child_with_name(const string name_of_child)const {
 	return get_child_by_name(name_of_child) != void_frame;
 }
 //------------------------------------------------------------------------------
@@ -369,9 +354,7 @@ bool Frame::has_children()const {
 #include "Core/Ray.h"
 #include "Core/Intersection.h"
 //------------------------------------------------------------------------------
-const Intersection* Frame::calculate_intersection_with(
-	const Ray* ray
-)const {
+const Intersection* Frame::calculate_intersection_with(const Ray* ray)const {
 	return empty_intersection();
 }
 //------------------------------------------------------------------------------
@@ -383,7 +366,7 @@ const Intersection* Frame::empty_intersection()const {
 //------------------------------------------------------------------------------
 void Frame::find_intersection_candidates_for_all_children_and_ray(
 	const Ray* ray,
-	std::vector<const Frame*> *candidate_frames
+	vector<const Frame*> *candidate_frames
 )const {
 
 	for(Frame *child : children)
@@ -394,11 +377,10 @@ void Frame::find_intersection_candidates_for_all_children_and_ray(
 }
 //------------------------------------------------------------------------------
 void Frame::cluster_using_helper_frames() {
-	
-	if(get_number_of_children() > max_number_of_children_in_frame) {
+	if(get_number_of_children() > max_number_of_children) {
 		
-		std::vector<Frame*> oct_tree[8];
-		std::vector<Frame*> new_children;
+		vector<Frame*> oct_tree[8];
+		vector<Frame*> new_children;
 
 		// assign children to octtree
 		for(Frame* child : children)
@@ -419,7 +401,7 @@ void Frame::cluster_using_helper_frames() {
 				if(oct_tree[sector].size() > 0) {
 
 					// create helper sector
-					std::stringstream sector_name;
+					stringstream sector_name;
 					sector_name << "octant_" << sector;
 					
 					Vector3D mean_pos_in_mother = get_mean_pos_in_mother(
@@ -463,7 +445,7 @@ void Frame::cluster_using_helper_frames() {
 }
 //------------------------------------------------------------------------------
 void Frame::warn_about_neglection_of(const Frame* frame)const {
-	std::stringstream out;
+	stringstream out;
 	out << "___Warning___\n";
 	out << __FILE__ << " " << __func__ << "(frame) " << __LINE__ << "\n";
 	out << "Frame: " << frame->get_name() << " is neglected. ";
@@ -472,10 +454,7 @@ void Frame::warn_about_neglection_of(const Frame* frame)const {
 	std::cout << out.str();	
 }
 //------------------------------------------------------------------------------
-Vector3D Frame::get_mean_pos_in_mother(
-	std::vector<Frame*> frames
-)const {
-	
+Vector3D Frame::get_mean_pos_in_mother(vector<Frame*> frames)const {
 	Vector3D sum_pos = Vector3D::null;
 
 	for(Frame* frame : frames)
@@ -484,9 +463,7 @@ Vector3D Frame::get_mean_pos_in_mother(
 	return sum_pos/frames.size();
 }
 //------------------------------------------------------------------------------
-bool Frame::positions_in_mother_are_too_close_together(
-	std::vector<Frame*> frames
-)const {
+bool Frame::positions_in_mother_are_too_close_together(vector<Frame*> frames)const {
 
 		if(frames.size() < 2)
 			return false;
@@ -510,8 +487,8 @@ bool Frame::positions_in_mother_are_too_close_together(
 		return spread < minimal_structure_size;
 }
 //------------------------------------------------------------------------------
-std::string Frame::get_name()const{ 
-	return name_of_frame; 
+string Frame::get_name()const { 
+	return name; 
 }
 //------------------------------------------------------------------------------
 const Vector3D* Frame::get_position_in_mother()const {
@@ -554,12 +531,12 @@ void Frame::update_rotation(const Rotation3D rot) {
 //------------------------------------------------------------------------------
 void Frame::assert_no_children_duplicate_names()const {
 	// this also checks for duplicate frames
-	std::set<std::string> unique_set;
+	std::set<string> unique_set;
 
 	for(Frame* child: children) {
 		auto ret = unique_set.insert(child->get_name());
 		if(ret.second == false) {
-			std::stringstream info;
+			stringstream info;
 			info << __FILE__ << ", " << __LINE__ << "\n";
 			info << "The frame '" << get_name();
 			info << "' has a duplicate child name '";

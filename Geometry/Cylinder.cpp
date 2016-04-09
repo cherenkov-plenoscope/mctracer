@@ -23,7 +23,7 @@ void Cylinder::set_position_and_orientation(
 	Rotation3D rotation_in_mother = 
 	calculate_new_rotation_in_mother(rotsym_axis);
 
-	set_name_pos_rot(name_of_frame, new_position_in_mother, rotation_in_mother);
+	set_name_pos_rot(name, new_position_in_mother, rotation_in_mother);
 }
 //------------------------------------------------------------------------------
 Rotation3D Cylinder::calculate_new_rotation_in_mother(

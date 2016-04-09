@@ -50,7 +50,7 @@ void Triangle::set_normal_and_3_vertecies(
 		rot = Rotation3D::null;
 	}
 
-	set_name_pos_rot(name_of_frame, pos, rot);
+	set_name_pos_rot(name, pos, rot);
 
 	set_corners_in_xy_plane(
 		a.x(), a.y(),

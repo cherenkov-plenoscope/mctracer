@@ -20,12 +20,15 @@ class Intersection;
 #include "Tools/StringTools.h"
 #include "Tools/Tools.h"
 #include "Core/Printable.h"
+using std::string;
+using std::stringstream;
+using std::vector;
 
 class Frame : public Printable{
     // The Frame is the fundamental geometry in this framework.
     // It defines a three dimensinal space where rays can be propagated in.
     //
-    // The basic frame can not ińtersect with a ray because it has no surface
+    // The basic frame can not intersect with a ray because it has no surface
     // but the surface entity which inherets from Frame does.
     //
     // A frame defines the geometric relation to its mother frame and its 
@@ -34,7 +37,7 @@ class Frame : public Printable{
 protected:
 
     // a frame has a human readable name e.g. Tree, House, Mirror
-    std::string name_of_frame;
+    string name;
 
     Vector3D 	pos_in_mother; 
     Rotation3D 	rot_in_mother;
@@ -46,36 +49,34 @@ protected:
     HomoTrafo3D T_world2frame;
     HomoTrafo3D T_frame2world;
     
-    std::vector<Frame*> children;
+    vector<Frame*> children;
 	Frame *mother = void_frame;
-    const Frame *root_of_world;
+    const Frame *root_frame;
 private:
 
-    static const char delimiter_for_frame_path = '/';
+    static const char path_delimiter = '/';
 public:
-    static const uint max_number_of_children_in_frame;
+    static const uint max_number_of_children;
     static const double minimal_structure_size;
 //------------------------------------------------------------------------------
     static Frame* void_frame;
 
     Frame();
     Frame(
-        const std::string new_name,
+        const string new_name,
         const Vector3D    new_pos,
         const Rotation3D  new_rot
     );
     void set_name_pos_rot(
-        const std::string name_of_frame,
+        const string name,
         const Vector3D pos_in_mother,
         const Rotation3D rot_in_mother
     );
-    void set_name(
-        const std::string name_of_frame
-    );
+    void set_name(const string name);
     void set_mother_and_child(Frame *new_child);
     void init_tree_based_on_mother_child_relations();
     void take_children_from(Frame *frame_to_take_chidren_from);
-    std::string get_name()const;
+    string get_name()const;
     const Vector3D* get_position_in_mother()const;
     const Rotation3D* get_rotation_in_mother()const;
     const Vector3D* get_position_in_world()const;
@@ -84,18 +85,18 @@ public:
     const HomoTrafo3D* mother2frame()const;
     const HomoTrafo3D* world2frame()const;
     const HomoTrafo3D* frame2world()const;
-    bool has_child_with_name(const std::string name_of_child)const;
-    const Frame* get_child_by_name(std::string specific_name)const;
+    bool has_child_with_name(const string name_of_child)const;
+    const Frame* get_child_by_name(string specific_name)const;
     const Frame* get_root_of_world()const;
-    std::string get_path_in_tree_of_frames()const;
+    string get_path_in_tree_of_frames()const;
     uint get_number_of_children()const;
-    virtual std::string get_print()const;
-    std::string get_tree_print()const;
+    virtual string get_print()const;
+    string get_tree_print()const;
     bool has_mother()const;
     bool has_children()const;
     void find_intersection_candidates_for_all_children_and_ray(
         const Ray* ray,
-        std::vector<const Frame*> *candidate_frames
+        vector<const Frame*> *candidate_frames
     )const;
     void assert_no_children_duplicate_names()const;
 protected:
@@ -115,10 +116,10 @@ protected:
     void add_child(Frame * const new_child);
     void update_sphere_enclosing_all_children(Frame *new_child);
     void update_enclosing_sphere_for_all_children();
-    void assert_name_is_valid(const std::string name_to_check)const;
-    Vector3D get_mean_pos_in_mother(std::vector<Frame*> frames)const;
+    void assert_name_is_valid(const string name_to_check)const;
+    Vector3D get_mean_pos_in_mother(vector<Frame*> frames)const;
     public: void cluster_using_helper_frames();
-    bool positions_in_mother_are_too_close_together(std::vector<Frame*> frames)const;
+    bool positions_in_mother_are_too_close_together(vector<Frame*> frames)const;
     void warn_about_neglection_of(const Frame* frame)const;
 public:
     // moving/rotating the frame after construction

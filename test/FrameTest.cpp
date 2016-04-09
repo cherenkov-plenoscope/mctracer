@@ -167,6 +167,6 @@ TEST_F(FrameTest, cluster_frames_during_tree_initializing) {
     tree.init_tree_based_on_mother_child_relations();
 
     EXPECT_TRUE(count > tree.get_number_of_children());
-    EXPECT_TRUE(Frame::max_number_of_children_in_frame >= tree.get_number_of_children());
+    EXPECT_TRUE(Frame::max_number_of_children >= tree.get_number_of_children());
 }
 //------------------------------------------------------------------------------
