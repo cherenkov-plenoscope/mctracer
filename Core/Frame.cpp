@@ -11,14 +11,10 @@ Frame* Frame::void_frame = new Frame(
 	Rotation3D::null
 );
 //------------------------------------------------------------------------------
-Frame::Frame() {}
+Frame::Frame():radius_of_sphere_enclosing_all_children(0.0), root_frame(this) {}
 //------------------------------------------------------------------------------
-Frame::Frame(
-    const string new_name,
-    const Vector3D new_pos,
-    const Rotation3D new_rot
-) { 
-    set_name_pos_rot(new_name, new_pos, new_rot); 
+Frame::Frame(const string name, const Vector3D pos, const Rotation3D rot): Frame() { 
+    set_name_pos_rot(name, pos, rot); 
 }
 //------------------------------------------------------------------------------
 uint Frame::get_number_of_children()const { 
@@ -88,22 +84,15 @@ HomoTrafo3D Frame::calculate_frame2world_only_based_on_mother()const {
 		return T_frame2mother;
 }
 //------------------------------------------------------------------------------
-void Frame::set_name_pos_rot(
-	const string name,
-	const Vector3D pos_in_mother,
-	const Rotation3D rot_in_mother
-){
+void Frame::set_name_pos_rot(const string name,	const Vector3D pos,	const Rotation3D rot) {
 	this->set_name(name);
-	
-	this->pos_in_mother = pos_in_mother;
-	this->rot_in_mother = rot_in_mother;
+	this->pos_in_mother = pos;
+	this->rot_in_mother = rot;
 
 	// The only transformation set yet is the frame2mother. The others are set
 	// when the construction of the world tree has finished and the post 
 	// initialization is performed.
 	T_frame2mother.set_transformation(rot_in_mother, pos_in_mother);
-
-	reset_all_connections_to_children_and_mother();
 }
 //------------------------------------------------------------------------------
 void Frame::set_name(const string name) {
@@ -111,27 +100,35 @@ void Frame::set_name(const string name) {
 	this->name = name;
 }
 //------------------------------------------------------------------------------
-void Frame::reset_all_connections_to_children_and_mother() {
-	radius_of_sphere_enclosing_all_children = 0.0;	 
-	mother = void_frame;
-	root_frame = this;
-	children.clear();
-}
-//------------------------------------------------------------------------------
 void Frame::assert_name_is_valid(const string name_to_check)const {
-	AssertionTools::text_with_name_is_not_empty_given_context(
-		name_to_check, "name", 
-		"A frame's name must not be empty"
-	);
-	AssertionTools::text_with_name_has_no_whitespaces_given_context(
-		name_to_check, "name", 
-		"A frame's name must not contain whitespaces"
-	);
-	AssertionTools::text_with_name_has_no_specific_char_given_context(
-		name_to_check, "name", path_delimiter,
-		"The delimiter sign for the frame's tree structure must not be used in "
-		"a frame's name."
-	);
+	
+	if(name_to_check.empty()) {
+		stringstream info;
+		info << "Expected name of frame not to be empty, ";
+		info << "but actually it is empty.";
+		throw BadName(info.str());
+	}	
+
+	uint char_pos = 0;
+	for(auto single_character : name_to_check) {
+		if(isspace(single_character)) {
+			stringstream info;
+			info << "Expected name of frame '" << name_to_check << "'' ";
+			info << "to have no whitespaces, but actual the char at pos ";
+			info << char_pos << " is a whitespace: '";
+			info << name_to_check << "'.";
+			throw BadName(info.str());			
+		}
+		char_pos++;
+	}
+
+	if(StringTools::string_contains_char(name_to_check, path_delimiter)) {
+		std::stringstream info;
+		info << "Expected name of frame '" << name_to_check << "' ";
+		info << "to not contain any char of '" << path_delimiter << "', ";
+		info << "but actual it does.";
+		throw BadName(info.str());		
+	}
 }
 //------------------------------------------------------------------------------
 string Frame::get_print()const {

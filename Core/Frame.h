@@ -56,27 +56,19 @@ private:
 
     static const char path_delimiter = '/';
 public:
+
     static const uint max_number_of_children;
     static const double minimal_structure_size;
-//------------------------------------------------------------------------------
     static Frame* void_frame;
 
+    //SET
     Frame();
-    Frame(
-        const string new_name,
-        const Vector3D    new_pos,
-        const Rotation3D  new_rot
-    );
-    void set_name_pos_rot(
-        const string name,
-        const Vector3D pos_in_mother,
-        const Rotation3D rot_in_mother
-    );
+    Frame(const string name, const Vector3D pos, const Rotation3D rot);
+    void set_name_pos_rot(const string name, const Vector3D pos, const Rotation3D rot);
     void set_name(const string name);
-    void set_mother_and_child(Frame *new_child);
-    void init_tree_based_on_mother_child_relations();
-    void take_children_from(Frame *frame_to_take_chidren_from);
+    //GET
     string get_name()const;
+    string get_path_in_tree_of_frames()const;
     const Vector3D* get_position_in_mother()const;
     const Rotation3D* get_rotation_in_mother()const;
     const Vector3D* get_position_in_world()const;
@@ -88,18 +80,26 @@ public:
     bool has_child_with_name(const string name_of_child)const;
     const Frame* get_child_by_name(string specific_name)const;
     const Frame* get_root_of_world()const;
-    string get_path_in_tree_of_frames()const;
     uint get_number_of_children()const;
-    virtual string get_print()const;
-    string get_tree_print()const;
     bool has_mother()const;
     bool has_children()const;
+    void assert_no_children_duplicate_names()const;
+    virtual string get_print()const;
+    string get_tree_print()const;
+
+    //DO
+    void init_tree_based_on_mother_child_relations();
+    void take_children_from(Frame *frame_to_take_chidren_from);
+    void set_mother_and_child(Frame *new_child);
     void find_intersection_candidates_for_all_children_and_ray(
         const Ray* ray,
         vector<const Frame*> *candidate_frames
     )const;
-    void assert_no_children_duplicate_names()const;
+    void update_rotation(const Rotation3D rot);
+    virtual const Intersection* calculate_intersection_with(const Ray* ray)const;
+    const Intersection* empty_intersection()const;
 protected:
+
     // post initialization
     void post_init_root_of_world();
     // post initialization based on root
@@ -111,7 +111,6 @@ protected:
     void post_init_transformations_only_based_on_mother();
     HomoTrafo3D calculate_frame2world_only_based_on_mother()const;
     // initialize
-    void reset_all_connections_to_children_and_mother();
     void set_mother(Frame *const new_mother);
     void add_child(Frame * const new_child);
     void update_sphere_enclosing_all_children(Frame *new_child);
@@ -122,12 +121,12 @@ protected:
     bool positions_in_mother_are_too_close_together(vector<Frame*> frames)const;
     void warn_about_neglection_of(const Frame* frame)const;
 public:
-    // moving/rotating the frame after construction
-    void update_rotation(const Rotation3D rot);
-    virtual const Intersection* calculate_intersection_with(const Ray* ray)const;
-    const Intersection* empty_intersection()const;
 
     class DuplicateChildName :public TracerException{
+        using TracerException::TracerException;
+    };
+
+    class BadName :public TracerException{
         using TracerException::TracerException;
     };
 };
