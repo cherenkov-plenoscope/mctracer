@@ -14,8 +14,10 @@
 #include "Core/Frame.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "TelescopeArrayControl.h"
+#include <map>
 using std::string;
 using std::vector;
+using std::map;
 
 //------------------------------------------------------------------------------
 namespace Xml {

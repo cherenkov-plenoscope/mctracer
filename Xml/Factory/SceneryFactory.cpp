@@ -32,8 +32,6 @@ SceneryFactory::SceneryFactory(const string path): xml_path(path), xml_doc(path)
     scenery = new Frame("scenery", Vector3D::null, Rotation3D::null);
     make_geometry(scenery, root_node);
     scenery->init_tree_based_on_mother_child_relations();
-
-
 }
 //------------------------------------------------------------------------------
 void SceneryFactory::make_geometry(Frame* mother, const Node node) {
@@ -316,13 +314,14 @@ Frame* SceneryFactory::add_Plenoscope(Frame* mother, const Node node) {
     cfg.lens_refraction = functions.by_name(sens.attribute("refraction_vs_wavelength"));
 
     FrameFab fab(node);
-    Frame* plenoscope = new Frame(fab.name, fab.pos, fab.rot);
+    Frame* pleno_frame = new Frame(fab.name, fab.pos, fab.rot);
     
     LightFieldTelescope::Geometry geometry(cfg);
-    LightFieldTelescope::Factory lftFab(&geometry);
-    lftFab.add_telescope_to_frame(plenoscope);
-    mother->set_mother_and_child(plenoscope);
-    return plenoscope;
+    LightFieldTelescope::Factory factory(&geometry);
+
+    factory.add_telescope_to_frame(pleno_frame);
+    mother->set_mother_and_child(pleno_frame);
+    return pleno_frame;
 }
 //------------------------------------------------------------------------------
 const Function::Func1D* SceneryFactory::surface_refl(const Node node)const {
