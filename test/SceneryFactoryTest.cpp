@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "Xml/Factory/SceneryFactory.h"
-#include "Cameras/FlyingCamera.h"
+//#include "Cameras/FlyingCamera.h"
 using std::cout;
 using std::string;
 
@@ -11,8 +11,8 @@ TEST_F(SceneryFactoryTest, call_SceneryFactory) {
     Xml::SceneryFactory xml2frame("test_scenery/tree_epoch_20160320.xml");
     EXPECT_EQ(xml2frame.scenery->get_name(), "scenery");
 
-    TracerSettings settings;
-    FlyingCamera free(xml2frame.scenery, &settings);
+    //TracerSettings settings;
+    //FlyingCamera free(xml2frame.scenery, &settings);
 }
 //------------------------------------------------------------------------------
 TEST_F(SceneryFactoryTest, author_and_comment) {
