@@ -1,0 +1,21 @@
+<scenery author="Sebastian" comment="First novel xml format.">
+	<function name="zero">
+		<constant value="0.0" lower_limit="200e-9" upper_limit="1200e-9"/>
+	</function>
+
+	<frame>
+		<set_frame name="tree" pos="[0,0,0]" rot="[0,0,0]"/>	
+		
+		<sphere>
+			<set_frame name="ball" pos="[0,0,1]" rot="[0,0,0]"/>
+			<set_surface reflection_vs_wavelength="zero" color="[25,200,0]"/>
+			<set_sphere radius="0.5"/>
+		</sphere>	
+
+		<disc>
+			<set_frame name="ground" pos="[0,0,0]" rot="[0,0,0]"/>
+			<set_surface reflection_vs_wavelength="zero" color="[200,200,0]"/>
+			<set_disc radius="10.25"/>	
+		</disc>		
+	</frame>
+</scenery>

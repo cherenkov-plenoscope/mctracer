@@ -4,6 +4,7 @@ set(SOURCE
    	${CMAKE_CURRENT_SOURCE_DIR}/Config.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/Geometry.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/Factory.cpp
+  	${CMAKE_CURRENT_SOURCE_DIR}/Plenoscope.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/LensCalibration.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/VisualInspection.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/NightSkyBackgroundLight.cpp

@@ -1,8 +1,8 @@
 #include "Core/Photons.h"
-#include "XmlFactory/WorldFactory.h"
 #include "Geometry/StereoLitographyIo/StereoLitographyIo.h"
 #include "Xml/Factory/VisualConfigFab.h"
 #include "Xml/Factory/TracerSettingsFab.h"
+#include "Xml/Factory/SceneryFactory.h"
 #include "CommandLine/CommandLine.h"
 #include "Cameras/FlyingCamera.h"
 using std::string;
@@ -39,9 +39,8 @@ int main(int argc, char* argv[]) {
 		StringTools::is_ending(cmd.get("scenery"),".xml") ||
 		StringTools::is_ending(cmd.get("scenery"),".XML")
 	) {
-		WorldFactory fab;
-		fab.load(cmd.get("scenery"));
-		scenery = fab.world();
+		Xml::SceneryFactory fab(cmd.get("scenery"));
+		scenery = fab.scenery;
 	}else{
 		scenery = Frame::void_frame;
 		cout << "Can only read stl or xml files.\n";

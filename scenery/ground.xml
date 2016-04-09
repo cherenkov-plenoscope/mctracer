@@ -1,10 +1,12 @@
-<function name="zero">
-	<constant value="0.0" lower_limit="200e-9" upper_limit="1200e-9"/>
-</function>
+<scenery author="Sebastian" comment="Just a big 50m disc as ground">
+    <function name="zero">
+        <constant value="0.0" lower_limit="200e-9" upper_limit="1200e-9"/>
+    </function>
 
-<disc>
-	<set_frame name="ground" pos="[0,0,0]" rot="[0,0,0]"/>		
-	<set_surface reflection_vs_wavelength="zero" color="[0,50,0]"/>	
-	<set_disc radius="25"/>
-	<set_sensitive id="0"/>
-</disc>
+    <disc>
+        <set_frame name="ground" pos="[0,0,0]" rot="[0,0,0]"/>      
+        <set_surface reflection_vs_wavelength="zero" color="[0,50,0]"/> 
+        <set_disc radius="25"/>
+        <set_sensitive id="0"/>
+    </disc>
+</scenery>

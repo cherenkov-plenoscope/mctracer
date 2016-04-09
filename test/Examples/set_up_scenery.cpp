@@ -17,7 +17,6 @@
 #include "TelescopeArrayControl.h"
 #include "Tools/AsciiIo.h"
 #include "Core/TracerException.h"
-#include "XmlIO/XmlFileIo.h"
 
 class SetUpScenery : public ::testing::Test {};
 //------------------------------------------------------------------------------
