@@ -34,8 +34,7 @@ int main(int argc, char* argv[]) {
     cout << "config '" << config_path.path << config_path.filename << "'\n";
 
     Xml::Document doc(config_path.path + config_path.filename);
-    Xml::Node plenoscope_input_node = doc.node().child("plenoscpe");
-    Xml::Node calibration_node = doc.node().child("calibration");
+    Xml::Node block_node = doc.node().child("photon_blocks");
 
     // SET UP TELESCOPE
     LightFieldTelescope::Config telescope_config;
@@ -60,8 +59,8 @@ int main(int argc, char* argv[]) {
 
     // RUN LIGHT FIELD CALIBRATION
     LightFieldTelescope::CalibrationConfig calib_config;
-    calib_config.number_of_blocks = calibration_node.attribute2int("number_of_blocks");
-    calib_config.photons_per_block = int(calibration_node.attribute2double("photons_per_block"));
+    calib_config.number_of_blocks = block_node.attribute2int("number_of_blocks");
+    calib_config.photons_per_block = int(block_node.attribute2double("photons_per_block"));
     calib_config.raw_calibration_output_path = cmd.get("output")+"/"+"the_big_lebowsky.lftc";
     calib_config.condensed_calibration_output_path = cmd.get("output")+"/"+"sub_pixel_statistics.txt";
 

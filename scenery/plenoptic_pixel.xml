@@ -1,27 +1,28 @@
-<function name="zero">
-	<constant value="0.0" lower_limit="200e-9" upper_limit="1200e-9"/>
-</function>
+<scenery author="Sebastian" comment="A single pixel of the LeBowSky Plenoscope">
+    <function name="zero">
+        <constant value="0.0" lower_limit="200e-9" upper_limit="1200e-9"/>
+    </function>
 
-<function name="pmma_refraction">
-	<constant value="1.49" lower_limit="200e-9" upper_limit="1200e-9"/>
-</function>
+    <function name="pmma_refraction">
+        <constant value="1.49" lower_limit="200e-9" upper_limit="1200e-9"/>
+    </function>
 
-<frame>
-	<set_telescope/>
-	<set_frame name="Plenoptik_pixel" pos="[0,0,0]" rot="[0.0,0.0,0.0]"/>
-	
-	<bi_convex_lens_hex>
-		<set_frame name="hex_lens" pos="[0,0,0.0]" rot="[0,0,0]"/>
-		<set_surface reflection_vs_wavelength="zero" color="[180,180,220]"/>
-		<set_medium refraction_vs_wavelength="pmma_refraction"/>
-		<set_bi_convex_lens_hex curvature_radius="0.125" outer_radius="0.071"/>
-	</bi_convex_lens_hex>
+    <frame>
+        <set_telescope/>
+        <set_frame name="Plenoptik_pixel" pos="[0,0,0]" rot="[0.0,0.0,0.0]"/>
+        
+        <bi_convex_lens_hex>
+            <set_frame name="hex_lens" pos="[0,0,0.0]" rot="[0,0,0]"/>
+            <set_surface reflection_vs_wavelength="zero" color="[180,180,220]"/>
+            <set_medium refraction_vs_wavelength="pmma_refraction"/>
+            <set_bi_convex_lens_hex curvature_radius="0.125" outer_radius="0.071"/>
+        </bi_convex_lens_hex>
 
-	<disc>
-		<set_frame name="screen" pos="[0,0,-0.09]" rot="[0,0,0]"/>		
-		<set_surface reflection_vs_wavelength="zero" color="[255,0,128]"/>	
-		<set_disc radius="0.0555"/>
-		<set_sensitive id="1"/>
-	</disc>		
-</frame>
-
+        <disc>
+            <set_frame name="screen" pos="[0,0,-0.09]" rot="[0,0,0]"/>      
+            <set_surface reflection_vs_wavelength="zero" color="[255,0,128]"/>  
+            <set_disc radius="0.0555"/>
+            <set_sensitive id="1"/>
+        </disc>     
+    </frame>
+</scenery>
