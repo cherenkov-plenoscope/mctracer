@@ -89,5 +89,22 @@ private:
 		const TracerSettings* settings
 	);
 	uint _5_permil_of_pixels()const;
+public:
+
+	class BadFStopNumber :public TracerException{
+        using TracerException::TracerException;
+    };
+
+	class BadImageSensorWidth :public TracerException{
+        using TracerException::TracerException;
+    };
+
+	class BadNumberRaysPerPixel :public TracerException{
+        using TracerException::TracerException;
+    };
+
+	class BadObjectDistance :public TracerException{
+        using TracerException::TracerException;
+    };
 };
 #endif // __APERTURECAMERA_H_INCLUDED__

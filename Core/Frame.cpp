@@ -1,5 +1,4 @@
 #include "Frame.h"
-#include "Tools/AssertionTools.h"
 #include <set>
 
 const uint Frame::max_number_of_children = 16;

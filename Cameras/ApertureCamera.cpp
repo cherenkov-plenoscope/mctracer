@@ -1,5 +1,4 @@
 #include "ApertureCamera.h"
-#include "Tools/AssertionTools.h"
 //------------------------------------------------------------------------------
 void ApertureCamera::set_fStop_sesnorWidth_rayPerPixel(	
 	const double new_FStopNumber,
@@ -19,18 +18,24 @@ void ApertureCamera::set_fStop_sesnorWidth_rayPerPixel(
 }
 //------------------------------------------------------------------------------
 void ApertureCamera::set_F_stop_number(const double new_FStopNumber){
-	AssertionTools::value_with_name_is_greater_zero_given_context(
-		new_FStopNumber, "F-Stop number of aerture", 
-		"The F-Stop number, i.e. the f over d ratio must be positiv non zero."
-	);
+
+	if(new_FStopNumber <= 0.0) {
+		stringstream info;
+		info << "Expected F-Stop number to be greater zero, but actual it is ";
+		info << new_FStopNumber << ".";
+		throw BadFStopNumber(info.str());
+	}
 	FStopNumber = new_FStopNumber;
 }
 //------------------------------------------------------------------------------
 void ApertureCamera::set_sensor_size_using_width(const double width_in_m) {
-	AssertionTools::value_with_name_is_greater_zero_given_context(
-		width_in_m, "image sensor width", 
-		"The image sensor width of the aperture camera must be positiv non zero"
-	);
+
+	if(width_in_m <= 0.0) {
+		stringstream info;
+		info << "Expected image sensor width to be greater zero, but actual it is ";
+		info << width_in_m << ".";
+		throw BadImageSensorWidth(info.str());
+	}
 	sensor_width_in_m = width_in_m;
 	sensor_height_in_m = sensor_width_in_m / image->get_width_to_height_ratio();
 }
@@ -40,10 +45,14 @@ void ApertureCamera::update_sensor_pixel_pitch(){
 }
 //------------------------------------------------------------------------------
 void ApertureCamera::set_number_of_rays_per_pixel(const uint rays_per_pixel) {
-	AssertionTools::value_with_name_is_greater_zero_given_context(
-		rays_per_pixel, "number of rays emitted for each pixel",
-		"The number of rays emiited must be non zero and positiv."
-	);
+	
+	if(rays_per_pixel <= 0.0) {
+		stringstream info;
+		info << "Expected number of rays emitted per pixel to be ";
+		info << "greater zero, but actual it is ";
+		info << rays_per_pixel << ".";
+		throw BadNumberRaysPerPixel(info.str());
+	}
 	this->rays_per_pixel = rays_per_pixel;	
 }
 //------------------------------------------------------------------------------
@@ -52,11 +61,14 @@ void ApertureCamera::set_default_object_distance(){
 }
 //------------------------------------------------------------------------------
 void ApertureCamera::set_object_distance(const double ObjectDistance_in_m){
-	AssertionTools::value_with_name_is_greater_zero_given_context(
-		ObjectDistance_in_m, "object_distance", 
-		"The object distance must be greater zero for objects to be seen by "
-		"the aperture camera."
-	);
+	
+	if(ObjectDistance_in_m <= 0.0) {
+		stringstream info;
+		info << "Expected object distance to focus on to be ";
+		info << "greater zero, but actual it is ";
+		info << ObjectDistance_in_m << ".";
+		throw BadObjectDistance(info.str());
+	}
 	this->ObjectDistance_in_m = ObjectDistance_in_m;
 }
 //------------------------------------------------------------------------------

@@ -7,7 +7,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Tools.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/UserInteraction.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TimeStamp.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/AssertionTools.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PathTools.cpp
    	PARENT_SCOPE
 )
