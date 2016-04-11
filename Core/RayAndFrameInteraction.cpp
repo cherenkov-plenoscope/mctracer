@@ -2,20 +2,20 @@
 //------------------------------------------------------------------------------
 const Intersection* Ray::get_first_intersection_in(const Frame* frame)const {
 
-	std::vector<const Frame*> candidate_objects =
+	vector<const Frame*> candidate_objects =
 		get_intersection_candidate_objects(frame);
 
-	std::vector<const Intersection*> intersections = 
+	vector<const Intersection*> intersections = 
 		get_intersections_in_candidate_objects(&candidate_objects);		
 
 	return get_closest_intersection_and_delete_the_rest(&intersections);
 }
 //------------------------------------------------------------------------------
-std::vector<const Frame*> Ray::get_intersection_candidate_objects(
+vector<const Frame*> Ray::get_intersection_candidate_objects(
 	const Frame* frame
 )const {
 
-	std::vector<const Frame*> candidate_objects;
+	vector<const Frame*> candidate_objects;
 	find_intersection_candidates_in_tree_of_frames(frame, &candidate_objects);
 
 	return candidate_objects;
@@ -23,7 +23,7 @@ std::vector<const Frame*> Ray::get_intersection_candidate_objects(
 //------------------------------------------------------------------------------
 void Ray::find_intersection_candidates_in_tree_of_frames(
 	const Frame* frame, 
-	std::vector<const Frame*> *candidate_frames
+	vector<const Frame*> *candidate_frames
 )const{
 	
 	if(has_intersection_with_bounding_sphere_of(frame)) {
@@ -38,11 +38,11 @@ void Ray::find_intersection_candidates_in_tree_of_frames(
 	}
 }
 //------------------------------------------------------------------------------
-std::vector<const Intersection*> Ray::get_intersections_in_candidate_objects(
-	std::vector<const Frame*> *candidate_objects
+vector<const Intersection*> Ray::get_intersections_in_candidate_objects(
+	vector<const Frame*> *candidate_objects
 )const{
 
-	std::vector<const Intersection*> intersections;
+	vector<const Intersection*> intersections;
 
 	for(const Frame* object : *candidate_objects) {
 
@@ -76,7 +76,7 @@ bool Ray::support_equals_intersection_point(const Intersection* intersec)const {
 }
 //------------------------------------------------------------------------------
 const Intersection* Ray::calculate_closest_intersection(	
-		std::vector<const Intersection*> *intersections
+		vector<const Intersection*> *intersections
 )const{
 
 	if(intersections->size() == 0) {
@@ -92,7 +92,7 @@ const Intersection* Ray::calculate_closest_intersection(
 		return void_intersection;
 	}else{
 
-		std::vector<const Intersection*>::iterator closest_intersection = min_element( 	
+		vector<const Intersection*>::iterator closest_intersection = min_element( 	
 			intersections->begin(),
 			intersections->end() ,
 			Intersection::compare
@@ -103,7 +103,7 @@ const Intersection* Ray::calculate_closest_intersection(
 }
 //------------------------------------------------------------------------------
 const Intersection* Ray::get_closest_intersection_and_delete_the_rest(	
-	std::vector<const Intersection*> *intersections
+	vector<const Intersection*> *intersections
 )const{
 	const Intersection* closest_intersection = 
 		calculate_closest_intersection(intersections);

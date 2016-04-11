@@ -17,17 +17,16 @@ Intersection::Intersection() {
 Intersection::Intersection(
 	const SurfaceEntity* intersectiong_object,
 	const Vector3D intersection_vector,
-	const Vector3D surfacenormal_in_intersection_point,
+	const Vector3D surfacenormal,
 	const double distance_of_ray_support_to_intersection,
 	const Vector3D incident_in_obj_sys
-) {
-	this->object = intersectiong_object;
-	intersection_point = intersection_vector;
-	this->surfacenormal_in_intersection_point = surfacenormal_in_intersection_point;
-	distance_of_ray_in_m = distance_of_ray_support_to_intersection;
-	this->_from_outside_to_inside = 
-		ray_is_running_from_outside_to_inside(incident_in_obj_sys);
-}
+):
+	object(intersectiong_object),
+	intersection_point(intersection_vector),
+	surfacenormal_in_intersection_point(surfacenormal),
+	distance_of_ray_in_m(distance_of_ray_support_to_intersection),
+	_from_outside_to_inside(ray_is_running_from_outside_to_inside(incident_in_obj_sys))
+{}
 //------------------------------------------------------------------------------
 bool Intersection::does_intersect()const {
 	return object != SurfaceEntity::void_object;

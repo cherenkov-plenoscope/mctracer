@@ -7,18 +7,15 @@ bool Ray::support_of_ray_is_inside_bounding_sphere_of(const Frame *frame)const {
 //------------------------------------------------------------------------------
 bool Ray::has_intersection_with_bounding_sphere_of(const Frame* frame)const{
 
-	double ray_parameter_for_closest_distance_to_center_of_bounding_sphere = 
-		get_parameter_on_ray_for_closest_distance_to_point(
-			*frame->get_position_in_world()
-		);
+	const double alpha = get_parameter_on_ray_for_closest_distance_to_point(
+		*frame->get_position_in_world()
+	);
 
-	double distance_to_center_of_bounding_sphere = 
-		get_distance_to_point_from_position_of_ray_at(
-			*frame->get_position_in_world(),
-			ray_parameter_for_closest_distance_to_center_of_bounding_sphere
-		);
+	const Vector3D q = PositionOnRay(alpha);
+	const Vector3D shortest_connection = *frame->get_position_in_world() - q;
+	const double dist_square = shortest_connection*shortest_connection;
 
-	if(distance_to_center_of_bounding_sphere > frame->contour_radius()) {
+	if(dist_square > frame->contour_radius()*frame->contour_radius()) {
 		//
 		// -------------+-----\--------> ray
 		//              |     |
@@ -32,7 +29,7 @@ bool Ray::has_intersection_with_bounding_sphere_of(const Frame* frame)const{
 		// The ray does not intersect the frame's boundary sphere.
 		return false;
 	}else{
-		if(ray_parameter_for_closest_distance_to_center_of_bounding_sphere < 0.0){
+		if(alpha < 0.0){
 			// The frame support is behind the source of this ray.
 			// We test whether the source of this ray is still inside of the
 			// frame, i.e. inside the boundary sphere, or completley behind it.
