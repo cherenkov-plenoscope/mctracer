@@ -17,7 +17,7 @@ class RayAndFrameTest : public ::testing::Test {
 			Rotation3D::null
 		);
 
-		frame_r_4p2m.set_sphere_radius(radius_of_test_frame);
+		frame_r_4p2m.set_radius(radius_of_test_frame);
 
 		// call this, to make the tests magically pass!
 		//frame_r_4p2m.get_print();

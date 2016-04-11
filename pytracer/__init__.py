@@ -146,7 +146,7 @@ def __new_Sphere__init__(self, *k, **kw):
     __old_Sphere__init__(self)
     super(mctracer.Sphere, self).__init__(*k, **kw)
     radius = kw.get('radius', 1.)
-    self.set_sphere_radius(radius)
+    self.set_radius(radius)
 mctracer.Sphere.__init__ = __new_Sphere__init__
 
 

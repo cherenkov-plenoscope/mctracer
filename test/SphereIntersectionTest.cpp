@@ -45,7 +45,7 @@ protected:
 	MySphere.set_name_pos_rot("MySphere", pos, rot);
 	MySphere.set_inner_color(colo);
 	MySphere.set_outer_color(colo);
-	MySphere.set_sphere_radius(radius);
+	MySphere.set_radius(radius);
 
 	//----------declare relationships------------
 	world.set_mother_and_child(&MySphere);

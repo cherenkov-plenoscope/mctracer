@@ -150,7 +150,7 @@ TEST_F(FrameTest, cluster_frames_during_tree_initializing) {
                 stringstream name;
                 name << "sub_sphere_" << x << "_" << y << "_" << z;
                 Sphere* sphere = new Sphere(name.str(), pos, Rotation3D::null);
-                sphere->set_sphere_radius(0.5);
+                sphere->set_radius(0.5);
                 tree.set_mother_and_child(sphere);
                 count++;
             }

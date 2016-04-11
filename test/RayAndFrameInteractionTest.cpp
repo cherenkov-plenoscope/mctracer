@@ -43,7 +43,7 @@ protected:
         Rotation3D::null
         );
 
-        sphere->set_sphere_radius(1.0);
+        sphere->set_radius(1.0);
         sphere->set_outer_color(color);
         sphere->set_inner_color(color);  
         spheres_in_a_row_along_x_r1m->set_mother_and_child(sphere);

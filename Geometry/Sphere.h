@@ -10,7 +10,6 @@
 // included dependencies
 #include <iostream> 
 #include <string>
-#include <sstream>
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
 #include "QuadraticEquation.h"
@@ -19,41 +18,39 @@
 class Sphere :public SurfaceEntity{
 
 protected:
-	
-	double radius;
+    
+    double radius;
 public:
 
-	Sphere();
-	Sphere(
-		const std::string new_name,
-        const Vector3D    new_pos,
-        const Rotation3D  new_rot)
-		: SurfaceEntity(new_name, new_pos, new_rot) {};
-
-	void set_sphere_radius(double nradius);
-
-	std::string get_print()const;
-
-	const Intersection* calculate_intersection_with(const Ray* ray)const;
+    Sphere();
+    Sphere(const string name, const Vector3D pos, const Rotation3D rot);
+    void set_radius(double nradius);
+    string get_print()const;
+    const Intersection* calculate_intersection_with(const Ray* ray)const;
 private:
 
-	bool facing_sphere_from_outside_given_p_m(
-		const double v_Plus,
-		const double v_Minus
-	)const;
+    bool facing_sphere_from_outside_given_p_m(
+        const double v_Plus,
+        const double v_Minus
+    )const;
 
-	bool facing_away_from_outside_given_p_m(
-		const double v_Plus,
-		const double v_Minus
-	)const;
+    bool facing_away_from_outside_given_p_m(
+        const double v_Plus,
+        const double v_Minus
+    )const;
 
-	const Intersection* sphere_intersection_for_ray_parameter(
-		const Ray* ray, 
-		const double ray_parameter
-	)const;
+    const Intersection* sphere_intersection_for_ray_parameter(
+        const Ray* ray, 
+        const double ray_parameter
+    )const;
 
-	QuadraticEquation get_ray_parameter_equation_for_intersections_with_sphere(
-		const Ray* ray
-	)const;
+    QuadraticEquation get_ray_parameter_equation_for_intersections_with_sphere(
+        const Ray* ray
+    )const;
+public:
+
+    class BadRadius :public TracerException{
+        using TracerException::TracerException;
+    };
 };
 #endif // __SPHERE_H_INCLUDED__

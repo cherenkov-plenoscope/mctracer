@@ -17,7 +17,7 @@ tree= Frame("My_Tree", Vector3D(5.0, 0.0, 0.0), Rotation3D.null)
 
 leaf_ball = Sphere("leaf_ball", Vector3D(0.0, 0.0, 2.0), Rotation3D.null)
 leaf_ball.set_outer_color(Color(0, 128, 0))
-leaf_ball.set_sphere_radius(0.5)
+leaf_ball.set_radius(0.5)
 
 
 tree_pole = Cylinder("tree_pole", Vector3D(0.0, 0.0, 0.5), Rotation3D.null)

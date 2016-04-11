@@ -117,7 +117,7 @@ Frame* SceneryFactory::add_Sphere(Frame* mother, const Node node) {
     sphere->set_outer_color(surface_color(node));
     sphere->set_outer_reflection(surface_refl(node));
     sphere->set_inner_reflection(surface_refl(node));   
-    sphere->set_sphere_radius(
+    sphere->set_radius(
         node.child("set_sphere").attribute2double("radius"));
     mother->set_mother_and_child(sphere);
     return sphere;

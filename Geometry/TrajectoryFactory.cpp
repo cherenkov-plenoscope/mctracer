@@ -116,7 +116,7 @@ Sphere* TrajectoryFactory::get_intersection_indicator_of_part(
 		Rotation3D::null
 	);
 
-	intersection_indicator->set_sphere_radius(radius_of_trajectory_in_m*2.0);
+	intersection_indicator->set_radius(radius_of_trajectory_in_m*2.0);
 
 	if(ray->interaction_type_history->at(part_index) == absorption_in_void)
 		intersection_indicator->set_outer_color(absorption_in_void_col);

@@ -1,23 +1,26 @@
 #include "Sphere.h"
-#include "Tools/AssertionTools.h"
+#include <sstream>
 //------------------------------------------------------------------------------
-Sphere::Sphere(){
-	radius = 1.0;
-}
+Sphere::Sphere(){}
 //------------------------------------------------------------------------------
-void Sphere::set_sphere_radius(double new_radius){
+Sphere::Sphere(const string name, const Vector3D pos, const Rotation3D rot): 
+	SurfaceEntity(name, pos, rot) {}
+//------------------------------------------------------------------------------
+void Sphere::set_radius(double new_radius) {
 
-	AssertionTools::value_with_name_is_greater_zero_given_context(
-		new_radius, "radius", "A sphere must not have zero or negative radius."
-	);
-	
+	if(new_radius <= 0.0) {
+		stringstream info;
+		info << "Expected sphere radius to be greater 0.0, but actual ";
+		info << "r = " << new_radius << "m.";
+		throw BadRadius(info.str());
+	}
+
 	radius = new_radius;
 	radius_of_sphere_enclosing_all_children = new_radius;
 }
 //------------------------------------------------------------------------------
-std::string Sphere::get_print()const {
-
-	std::stringstream out;
+string Sphere::get_print()const {
+	stringstream out;
 	out << SurfaceEntity::get_print();
 
 	out << "sphere:\n";

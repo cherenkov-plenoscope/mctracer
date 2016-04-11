@@ -33,7 +33,7 @@ TEST_F(SetUpScenery, create_scenery) {
     Color leaf_green(0, 128, 0);
     Sphere leaf_ball("leaf_ball", Vector3D(0.0, 0.0, 2.0), Rotation3D::null);
     leaf_ball.set_outer_color(&leaf_green);
-    leaf_ball.set_sphere_radius(0.5);
+    leaf_ball.set_radius(0.5);
 
     Color wood_brown(64, 64, 0);
     Cylinder tree_pole("tree_pole", Vector3D(0.0, 0.0, 0.5), Rotation3D::null);
