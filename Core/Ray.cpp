@@ -1,23 +1,23 @@
 #include "Ray.h"
 //------------------------------------------------------------------------------
-Ray::Ray(){
+Ray::Ray() {
 }
 //------------------------------------------------------------------------------
-Ray::Ray(const Vector3D support, const Vector3D direction){
+Ray::Ray(const Vector3D support, const Vector3D direction) {
 	SetRay(support, direction);
 }
 //------------------------------------------------------------------------------
-void Ray::SetRay(const Vector3D nsup, const Vector3D ndir){
+void Ray::SetRay(const Vector3D nsup, const Vector3D ndir) {
 	support = nsup;
 	direction  = ndir;
 	direction.normalize();
 }
 //------------------------------------------------------------------------------
-void Ray::SetSupport(const Vector3D nsup){
+void Ray::SetSupport(const Vector3D nsup) {
 	support = nsup;
 }
 //------------------------------------------------------------------------------
-void Ray::SetDirection(const Vector3D ndir){
+void Ray::SetDirection(const Vector3D ndir) {
 	direction = ndir;
 	direction.normalize();
 }
@@ -28,15 +28,15 @@ std::string Ray::get_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-Vector3D Ray::PositionOnRay(const double scalar)const{
+Vector3D Ray::PositionOnRay(const double scalar)const {
 	return support + direction*scalar;
 }
 //------------------------------------------------------------------------------
-Vector3D Ray::Support()const{
+Vector3D Ray::Support()const {
 	return support;
 }
 //------------------------------------------------------------------------------
-Vector3D Ray::Direction()const{
+Vector3D Ray::Direction()const {
 	return direction;
 }
 //------------------------------------------------------------------------------
@@ -86,9 +86,7 @@ double Ray::get_closest_distance_to_point(const Vector3D &point)const {
 	);
 }
 //------------------------------------------------------------------------------
-Ray Ray::get_ray_transformed_in_object_system_of(
-	const Frame* frame
-)const {
+Ray Ray::get_ray_transformed_in_object_system_of(const Frame* frame)const {
 	Ray ray_in_object_system_of_frame = *this;
 	ray_in_object_system_of_frame.transform(frame->world2frame());
 	return ray_in_object_system_of_frame;

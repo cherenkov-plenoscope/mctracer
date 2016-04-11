@@ -22,34 +22,30 @@
 #include "Core/Printable.h"
 
 class Ray : public Printable{
-
 protected:
+
 	Vector3D support;	
 	Vector3D direction;
 public:
+
 	Ray(const Vector3D support, const Vector3D direction);
-
-	virtual std::string get_print()const;
-
 	void SetDirection(const Vector3D ndir);
-
 	void SetSupport(const Vector3D nsup);
-
 	Vector3D Support()const;
-	
 	Vector3D Direction()const;
-	
 	Vector3D PositionOnRay(const double scalar)const;
-	
+	void transform(const HomoTrafo3D *T);
 	double get_distance_to_point_from_position_of_ray_at(
 		const Vector3D &point, const double ray_parameter_for_position_on_ray
 	)const;
 
-	void transform(const HomoTrafo3D *T);
+	
 
 	double get_parameter_on_ray_for_closest_distance_to_point(
 		const Vector3D &point
 	)const;
+
+	virtual std::string get_print()const;
 
 	double get_closest_distance_to_point(const Vector3D &point)const;
 	
@@ -59,13 +55,8 @@ public:
 	//--------------------------------------------------------------------------
 	// Ray and bounding sphere of Frame
 
-	bool support_of_ray_is_inside_bounding_sphere_of(
-		const Frame *frame
-	)const;
-
-	bool has_intersection_with_bounding_sphere_of(
-		const Frame* frame
-	)const;
+	bool support_of_ray_is_inside_bounding_sphere_of(const Frame *frame)const;
+	bool has_intersection_with_bounding_sphere_of(const Frame* frame)const;
 	//--------------------------------------------------------------------------
 	// Ray and Frame
 	
@@ -75,7 +66,6 @@ public:
 		const Frame* frame, 
 		std::vector<const Frame*> *candidate_frames
 	)const;
-
 protected:
 	Ray();
 
