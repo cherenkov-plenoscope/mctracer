@@ -1,11 +1,19 @@
 #include "Geometry/Cylinder.h"
+#include <sstream>
+//------------------------------------------------------------------------------
+Cylinder::Cylinder() {}
+//------------------------------------------------------------------------------
+Cylinder::Cylinder(
+	const string name,
+    const Vector3D pos,
+    const Rotation3D rot
+): SurfaceEntity(name, pos, rot) {}
 //------------------------------------------------------------------------------
 void Cylinder::set_cylinder(
 	const double radius,
 	const Vector3D start_pos, 
 	const Vector3D end_pos
 ){
-
 	set_cylinder_radius(radius);
 	set_cylinder_length(start_pos, end_pos);
 	set_position_and_orientation(start_pos, end_pos);
@@ -54,11 +62,11 @@ void Cylinder::assert_start_and_end_point_are_distinct(
 )const{
 
 	if( start_pos == end_pos ){
-		std::stringstream info;
+		stringstream info;
 		info << "Cylinder::" << __func__ << "()\n";
 		info << "The start and end point of a cylinder must not be the same!\n";
 		info << "Start: " << start_pos << " and end: " << end_pos << ".\n";
-		throw TracerException(info.str());
+		throw BadStartEndPoints(info.str());
 	}
 }
 //------------------------------------------------------------------------------
@@ -82,24 +90,24 @@ void Cylinder::set_cylinder_length(const double Length){
 	if(Length > 0.0){
 		this->Length = Length;
 	}else{
-		std::stringstream info;
+		stringstream info;
 		info << "Cylinder::set_cylinder\n";
 		info << "The length of a cylinder must be larger than 0.0m !\n";
 		info << "Expected: >0.0, but actual: " << Length << "\n";
-		throw TracerException(info.str());
+		throw BadLength(info.str());
 	}
 }
 //------------------------------------------------------------------------------
 void Cylinder::set_cylinder_radius(const double Radius){
 
-	if(Radius > 0.0){
+	if(Radius > 0.0) {
 		this->Radius = Radius;
 	}else{
-		std::stringstream info;
+		stringstream info;
 		info << "Cylinder::" << __func__ << "()\n";
 		info << "The radius of a cylinder must be larger than 0.0m !\n";
 		info << "Expected: >0.0, but actual: " << Radius << "\n";
-		throw TracerException(info.str());
+		throw BadRadius(info.str());
 	}
 }
 //------------------------------------------------------------------------------
@@ -113,8 +121,8 @@ void Cylinder::post_initialize_radius_of_enclosing_sphere(){
 	);
 }
 //------------------------------------------------------------------------------
-std::string Cylinder::get_print()const {
-	std::stringstream out;
+string Cylinder::get_print()const {
+	stringstream out;
 	out << SurfaceEntity::get_print();
 
 	out << "cylinder:\n";

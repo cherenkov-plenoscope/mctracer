@@ -160,7 +160,8 @@ Frame* SceneryFactory::add_HexPlane(Frame* mother, const Node node) {
 Frame* SceneryFactory::add_Cylinder(Frame* mother, const Node node) {
 
     FrameFab framefab(node);
-    Cylinder* cyl = new Cylinder(framefab.name, framefab.pos, framefab.rot);
+    Cylinder* cyl = new Cylinder;
+    cyl->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
 
     cyl->set_inner_color(surface_color(node));
     cyl->set_outer_color(surface_color(node));

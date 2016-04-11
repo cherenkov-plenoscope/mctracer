@@ -8,9 +8,6 @@
 
 //=================================
 // included dependencies
-#include <iostream> 
-#include <string>
-#include <sstream>
 #include "Core/SurfaceEntity.h"
 #include "Core/Vector3D.h"
 #include "Core/Intersection.h"
@@ -24,20 +21,15 @@ protected:
 	double Length;
 public:
 
-	//Cylinder() {};
-	Cylinder(
-		const std::string new_name,
-        const Vector3D    new_pos,
-        const Rotation3D  new_rot)
-		: SurfaceEntity(new_name, new_pos, new_rot) {};
-
+	Cylinder();
+	Cylinder(const string name, const Vector3D pos, const Rotation3D rot);
 	void set_cylinder(
 		const double radius, 
 		const Vector3D start_pos, 
 		const Vector3D end_pos
 	);
 	void set_radius_and_length(const double radius, const double length);
-	std::string get_print()const;
+	string get_print()const;
 	const Intersection* calculate_intersection_with(const Ray* ray)const;
 private:
 
@@ -55,5 +47,18 @@ private:
 	bool is_in_cylinders_z_bounds(const Vector3D* vec)const;
 	Vector3D get_surface_normal_for_intersection_vec(const Vector3D* vec)const;
 	Rotation3D calculate_new_rotation_in_mother(const Vector3D rotsym_axis)const;
+public:
+
+    class BadRadius :public TracerException{
+        using TracerException::TracerException;
+    };
+
+    class BadStartEndPoints :public TracerException{
+        using TracerException::TracerException;
+    };
+
+    class BadLength :public TracerException{
+        using TracerException::TracerException;
+    };
 };
 #endif // __CYLINDER_H_INCLUDED__
