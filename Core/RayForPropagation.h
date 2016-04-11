@@ -12,6 +12,8 @@ class PropagationEnvironment;
 #include "Core/Intersection.h"
 #include "PropagationEnvironment.h"
 #include "Core/SurfaceEntity.h"
+using std::vector;
+using std::string;
 
 enum InteractionType { 
 	production,
@@ -34,8 +36,8 @@ class RayForPropagation :public Ray{
 	friend class TrajectoryFactory;
 protected:
 
-	std::vector<const Intersection*>* intersection_history;
-	std::vector<InteractionType>* interaction_type_history;
+	vector<const Intersection*>* intersection_history;
+	vector<InteractionType>* interaction_type_history;
 
 	uint identifier_number;
 
@@ -60,7 +62,7 @@ public:
 		const InteractionType type
 	);
 
-	std::string get_print()const;
+	string get_print()const;
 
 	double get_accumulative_distance()const;
   	
@@ -84,13 +86,11 @@ public:
 	
 	Vector3D get_final_intersection_incident_vector_in_object_frame()const;
 protected:
-	std::string get_history_print()const;
+	string get_history_print()const;
 
 	RayForPropagation();
 
 	void init_propagation_history();
-
-
 
 	void carry_on_propagation_properties_of_ray(
 		const RayForPropagation* ray_to_be_carried_on

@@ -12,8 +12,8 @@ RayForPropagation::RayForPropagation(
 }
 //------------------------------------------------------------------------------
 void RayForPropagation::init_propagation_history() {
-	intersection_history = new std::vector<const Intersection*>;	
-	interaction_type_history = new std::vector<InteractionType>;
+	intersection_history = new vector<const Intersection*>;	
+	interaction_type_history = new vector<InteractionType>;
 
 	push_back_production_of_ray();
 }
@@ -66,8 +66,8 @@ uint RayForPropagation::get_id()const {
 	return identifier_number;
 }
 //------------------------------------------------------------------------------
-std::string RayForPropagation::get_print()const {
-	std::stringstream out;
+string RayForPropagation::get_print()const {
+	stringstream out;
 	out << Ray::get_print() << ", ";
 	out << "ID: " << identifier_number << ", Interactions: " ;
 	out << get_number_of_interactions_so_far() << "\n";
@@ -75,8 +75,8 @@ std::string RayForPropagation::get_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-std::string RayForPropagation::get_history_print()const {
-	std::stringstream out;
+string RayForPropagation::get_history_print()const {
+	stringstream out;
 	int index = 0;
 	for(InteractionType type : *interaction_type_history) {
 		out << ++index << ") " << get_type_print(type) << " in ";
@@ -128,7 +128,7 @@ const Intersection* RayForPropagation::get_intersection_at(
 	return intersection_history->at(index);
 }
 //------------------------------------------------------------------------------
-std::string RayForPropagation::get_type_print(const InteractionType type)const {
+string RayForPropagation::get_type_print(const InteractionType type)const {
 	switch(type) {
 		case production: return "production"; break;
 		case absorption_in_void: return "absorption_in_void"; break;
