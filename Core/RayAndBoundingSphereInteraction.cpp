@@ -2,7 +2,7 @@
 //------------------------------------------------------------------------------
 bool Ray::support_of_ray_is_inside_bounding_sphere_of(const Frame *frame)const {
 	return (*frame->get_position_in_world() - support).norm_is_less_equal_than(
-		frame->get_radius_of_sphere_enclosing_all_children());
+		frame->contour_radius());
 }
 //------------------------------------------------------------------------------
 bool Ray::has_intersection_with_bounding_sphere_of(const Frame* frame)const{
@@ -18,9 +18,7 @@ bool Ray::has_intersection_with_bounding_sphere_of(const Frame* frame)const{
 			ray_parameter_for_closest_distance_to_center_of_bounding_sphere
 		);
 
-	if(distance_to_center_of_bounding_sphere > 
-		frame->get_radius_of_sphere_enclosing_all_children()
-	) {
+	if(distance_to_center_of_bounding_sphere > frame->contour_radius()) {
 		//
 		// -------------+-----\--------> ray
 		//              |     |

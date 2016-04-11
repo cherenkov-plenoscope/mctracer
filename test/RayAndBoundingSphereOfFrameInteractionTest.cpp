@@ -35,10 +35,7 @@ class RayAndFrameTest : public ::testing::Test {
 };
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameTest, frame_has_bounding_sphere) {
-	EXPECT_EQ(
-		radius_of_test_frame, 
-		frame_r_4p2m.get_radius_of_sphere_enclosing_all_children()
-	);
+	EXPECT_EQ(radius_of_test_frame, frame_r_4p2m.contour_radius());
 }
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameTest, frontal_hit_bounding_sphere) {

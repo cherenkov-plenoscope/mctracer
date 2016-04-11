@@ -13,7 +13,7 @@ TEST_F(DiscTest, set_Disc) {
 
     Disc D;
     D.set_radius(42.0);
-    EXPECT_EQ(42.0, D.get_radius_of_sphere_enclosing_all_children());
+    EXPECT_EQ(42.0, D.contour_radius());
   }catch(...){
     error_detected = true;
   }

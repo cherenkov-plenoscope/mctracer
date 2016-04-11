@@ -72,7 +72,7 @@ public:
     const Vector3D* get_position_in_mother()const;
     const Rotation3D* get_rotation_in_mother()const;
     const Vector3D* get_position_in_world()const;
-    double get_radius_of_sphere_enclosing_all_children()const;
+    double contour_radius()const;
     const HomoTrafo3D* frame2mother()const;
     const HomoTrafo3D* mother2frame()const;
     const HomoTrafo3D* world2frame()const;

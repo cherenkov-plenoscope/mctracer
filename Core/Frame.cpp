@@ -388,7 +388,7 @@ void Frame::cluster_using_helper_frames() {
 			if(positions_in_mother_are_too_close_together(oct_tree[sector])) {
 				// this can not be clustered
 				for(Frame* child : oct_tree[sector]) {
-					if(child->get_radius_of_sphere_enclosing_all_children() > minimal_structure_size)
+					if(child->contour_radius() > minimal_structure_size)
 						new_children.push_back(child);
 					else
 						warn_about_neglection_of(child);
@@ -413,7 +413,7 @@ void Frame::cluster_using_helper_frames() {
 
 					// assign children to helper frame
 					for(Frame* sector_child : oct_tree[sector]) {
-						if(sector_child->get_radius_of_sphere_enclosing_all_children() > minimal_structure_size) {
+						if(sector_child->contour_radius() > minimal_structure_size) {
 
 							sector_child->pos_in_mother = 
 								sector_child->pos_in_mother - mean_pos_in_mother;
@@ -446,8 +446,8 @@ void Frame::warn_about_neglection_of(const Frame* frame)const {
 	out << "___Warning___\n";
 	out << __FILE__ << " " << __func__ << "(frame) " << __LINE__ << "\n";
 	out << "Frame: " << frame->get_name() << " is neglected. ";
-	out << "Encolsing radius is below " << minimal_structure_size << "m, i.e. ";
-	out << frame->get_radius_of_sphere_enclosing_all_children() << "m.\n";
+	out << "Contour radius is below " << minimal_structure_size << "m, i.e. ";
+	out << frame->contour_radius() << "m.\n";
 	std::cout << out.str();	
 }
 //------------------------------------------------------------------------------
@@ -500,7 +500,7 @@ const Vector3D* Frame::get_position_in_world()const {
     return &pos_in_world;
 }
 //------------------------------------------------------------------------------
-double Frame::get_radius_of_sphere_enclosing_all_children()const {
+double Frame::contour_radius()const {
     return radius_of_sphere_enclosing_all_children;
 }
 //------------------------------------------------------------------------------
