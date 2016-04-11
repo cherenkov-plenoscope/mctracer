@@ -55,12 +55,13 @@ double Ray::get_parameter_on_ray_for_closest_distance_to_point(
 	// We set the normal vector n of the plane to the ray's direction vector:
 	//  a=direction.x b=direction.y c=direction.z
 	//
-	// Now we insert the support vevtor of the frame into the plane eqaution:
+	// Now we insert the support vector of the frame into the plane eqaution:
 	//  d = point.x*dirx + point.y*diry + point.z*dirz
-	double d = direction * point;
+	double d = direction*point;
 	
-	// Insert the ray into plane equation and solve for the ray parameter
-	return (d - support * direction) / (direction * direction);
+	// Insert the ray into plane equation and solve for the ray parameter.
+	// The ray's direction is normalized, therefore: (direction * direction)=1
+	return d - support*direction;
 }
 //------------------------------------------------------------------------------
 double Ray::get_distance_to_point_from_position_of_ray_at(
