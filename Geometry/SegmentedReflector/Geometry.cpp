@@ -2,6 +2,9 @@
 #include "Geometry/HexGridAnnulus.h"
 #include <iomanip>
 #include "Tools/StringTools.h"
+#include "Core/HomTra3.h"
+#include <iomanip>
+using std::stringstream;
 
 namespace SegmentedReflector {
 
@@ -63,7 +66,7 @@ namespace SegmentedReflector {
 	void Geometry::abort_if_too_many_iterations(const uint iteration_conter) {
 		
 		if(iteration_conter > 100) {
-			std::stringstream info;
+			stringstream info;
 			info << __FILE__ << ", " << __LINE__<< "\n";
 			info << "Exceeded max number of 100 iterations. ";
 			info << "Can not reach best reflector z position. ";
@@ -170,7 +173,7 @@ namespace SegmentedReflector {
 		return _focal_point;
 	}
 
-	std::vector<Vec3> Geometry::facet_positions()const {
+	vector<Vec3> Geometry::facet_positions()const {
 		return _facet_positions;
 	}
 
@@ -220,13 +223,13 @@ namespace SegmentedReflector {
 		return z_pos_given_dist_to_optical_axis(max_outer_aperture_radius());
 	}
 
-	std::string Geometry::get_print()const {
+	string Geometry::get_print()const {
 
-		std::stringstream out;
+		stringstream out;
 		out << std::setprecision(4);
 		out << "Segmented_Reflector__\n";
 
-		std::stringstream tab;
+		stringstream tab;
 		tab << "focal length................... " << focal_length() << "m\n";
 		tab << "focal point.................... " << focal_point() << "\n";
 		tab << "max outer aperture diameter.... " << 2.0*max_outer_aperture_radius() << "m\n";
@@ -252,5 +255,29 @@ namespace SegmentedReflector {
 		);
 
 		return out.str();		
+	}
+
+	string Geometry::facet_positions_and_normals_to_text()const {
+		stringstream out;
+		out << "x[m] " << "y[m] " << "z[m] " << "nx[1] " << "ny[1] " << "nz[1]\n"; 
+		for(uint i=0; i<_facet_positions.size(); i++) {
+
+			HomTra3 trafo;
+			trafo.set_transformation(_facet_orientations[i], Vec3::null);
+
+			Vec3 pos = _facet_positions[i];
+			Vec3 normal = trafo.get_transformed_orientation(Vec3::unit_z);
+
+			out << std::fixed << std::setprecision(4);
+			out << pos.x() << " ";
+			out << pos.y() << " ";
+			out << pos.z() << " ";
+
+			out << std::fixed << std::setprecision(9);
+			out << normal.x() << " ";
+			out << normal.y() << " ";
+			out << normal.z() << "\n";
+		}
+		return out.str();
 	}
 } // SegmentedReflector

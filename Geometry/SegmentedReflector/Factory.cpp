@@ -8,7 +8,7 @@ namespace SegmentedReflector {
 		geometry(ncfg)
 	{
 		init_facets();
-		init_reflector();	
+		init_reflector();
 	}
 
 	Frame* Factory::get_reflector() {
@@ -53,7 +53,7 @@ namespace SegmentedReflector {
 	std::string Factory::get_name_of_facet(const uint i)const {
 
 		std::stringstream facet_name;
-		facet_name << "mirrro_ID_" << i;
+		facet_name << "Mirror_ID_" << i;
 		return facet_name.str();
 	}
 } // SegmentedReflector
