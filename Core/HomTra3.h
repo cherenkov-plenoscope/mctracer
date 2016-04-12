@@ -1,7 +1,7 @@
 //=================================
 // include guard
-#ifndef __HOMOTRAFO3D_H_INCLUDED__
-#define __HOMOTRAFO3D_H_INCLUDED__
+#ifndef __HomTra3_H_INCLUDED__
+#define __HomTra3_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
@@ -38,12 +38,12 @@
 // - Unit Quaternion
 // - Homogeneous Transformation
 
-class HomoTrafo3D {
+class HomTra3 {
 
 	double T[3][4];
 public:
 
-	HomoTrafo3D();
+	HomTra3();
 	void set_transformation(const Rot3 R, const Vec3 pos);
 	void set_transformation(
 		const Vec3 rot_x,
@@ -57,14 +57,14 @@ public:
 	void transform_position(Vec3* position_to_transform)const;
 	Vec3 get_translation()const;
 	std::string get_print()const;
-	void operator= (HomoTrafo3D G);
-	HomoTrafo3D operator* (const HomoTrafo3D G)const;
-	HomoTrafo3D inverse()const;
-	bool operator== (HomoTrafo3D G)const;
+	void operator= (HomTra3 G);
+	HomTra3 operator* (const HomTra3 G)const;
+	HomTra3 inverse()const;
+	bool operator== (HomTra3 G)const;
 private:
 
-	void copy_inverse_translation_component_from(const HomoTrafo3D *M);
-	void copy_inverse_rotation_component_from(const HomoTrafo3D *M);
+	void copy_inverse_translation_component_from(const HomTra3 *M);
+	void copy_inverse_rotation_component_from(const HomTra3 *M);
 	std::string get_single_row_print(const uint c)const;
 	void set_rotation_component_based_on_xyz_angles(const Rot3 R);
 	void set_rotation_component_based_on_rot_axis(const Rot3 R);
@@ -74,4 +74,4 @@ private:
 	void set_y_column_of_rotation_component(const Vec3 &R);
 	void set_z_column_of_rotation_component(const Vec3 &R);
 };
-#endif // __HOMOTRAFO3D_H_INCLUDED__ 
+#endif // __HomTra3_H_INCLUDED__ 

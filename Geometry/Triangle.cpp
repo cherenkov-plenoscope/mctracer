@@ -38,10 +38,10 @@ void Triangle::set_normal_and_3_vertecies(
 
 		rot = Rot3(rot_axis, rotation_angle);
 
-		HomoTrafo3D trafo;
+		HomTra3 trafo;
 		trafo.set_transformation(rot, Vec3::null);
 		
-		HomoTrafo3D trafo_inv = trafo.inverse();
+		HomTra3 trafo_inv = trafo.inverse();
 		// transform a b c
 		a = trafo_inv.get_transformed_orientation(a);
 		b = trafo_inv.get_transformed_orientation(b);

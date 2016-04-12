@@ -1,4 +1,4 @@
-#include "Core/HomoTrafo3D.h"
+#include "Core/HomTra3.h"
 // homogenous Transformation, component adresses:
 // [ 0,0    0,1     0,2     0,3 ]
 // [ 1,0    1,1     1,2     1,3 ]
@@ -14,7 +14,7 @@
 //          [ 0      0      0      1    ]
 //
 //------------------------------------------------------------------------------
-HomoTrafo3D::HomoTrafo3D():
+HomTra3::HomTra3():
     T{{1,0,0,0},{0,1,0,0},{0,0,1,0}}
 {
     //default init is unit matrix
@@ -24,32 +24,32 @@ HomoTrafo3D::HomoTrafo3D():
     // [0 0 0 1] //last row is always the same
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::set_transformation(const Rot3 R, const Vec3 pos) {
+void HomTra3::set_transformation(const Rot3 R, const Vec3 pos) {
 
-    HomoTrafo3D TrafRotation;
+    HomTra3 TrafRotation;
     TrafRotation.set_rotation_component(R);
 
-    HomoTrafo3D TrafTranslation;
+    HomTra3 TrafTranslation;
     TrafTranslation.set_translation_component(pos);
 
     // composition  
     *this = TrafTranslation*TrafRotation;
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::set_rotation_component(const Rot3 R) {
+void HomTra3::set_rotation_component(const Rot3 R) {
     if(R.uses_xyz_angels())
         set_rotation_component_based_on_xyz_angles(R);
     else
         set_rotation_component_based_on_rot_axis(R);
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::set_translation_component(const Vec3 &t) {
+void HomTra3::set_translation_component(const Vec3 &t) {
     T[0][3] = t.x();
     T[1][3] = t.y();
     T[2][3] = t.z();
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::set_rotation_component_based_on_rot_axis(
+void HomTra3::set_rotation_component_based_on_rot_axis(
     const Rot3 R
 ) {
         // ensure rot_axis is a unit vector
@@ -77,7 +77,7 @@ void HomoTrafo3D::set_rotation_component_based_on_rot_axis(
         T[2][2] = cosR +  rz*rz*(1.0-cosR);
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::set_rotation_component_based_on_xyz_angles(
+void HomTra3::set_rotation_component_based_on_xyz_angles(
     const Rot3 R
 ) {
 
@@ -101,7 +101,7 @@ void HomoTrafo3D::set_rotation_component_based_on_xyz_angles(
     T[2][2] = cosRx*cosRy;
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::set_transformation(
+void HomTra3::set_transformation(
     Vec3 rot_x,
     Vec3 rot_y,
     Vec3 rot_z,
@@ -111,37 +111,37 @@ void HomoTrafo3D::set_transformation(
     rot_y = rot_y/rot_y.norm();
     rot_z = rot_z/rot_z.norm();
         
-    HomoTrafo3D TrafRotation;
+    HomTra3 TrafRotation;
     TrafRotation.set_x_column_of_rotation_component(rot_x);
     TrafRotation.set_y_column_of_rotation_component(rot_y);
     TrafRotation.set_z_column_of_rotation_component(rot_z);     
         
-    HomoTrafo3D TrafTranslation;    
+    HomTra3 TrafTranslation;    
     TrafTranslation.set_translation_component(pos);
 
     // composition
     *this = TrafTranslation*TrafRotation;
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::set_x_column_of_rotation_component(const Vec3 &R) {
+void HomTra3::set_x_column_of_rotation_component(const Vec3 &R) {
     T[0][0] = R.x();
     T[1][0] = R.y();
     T[2][0] = R.z();
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::set_y_column_of_rotation_component(const Vec3 &R) {
+void HomTra3::set_y_column_of_rotation_component(const Vec3 &R) {
     T[0][1] = R.x();
     T[1][1] = R.y();
     T[2][1] = R.z();    
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::set_z_column_of_rotation_component(const Vec3 &R) {
+void HomTra3::set_z_column_of_rotation_component(const Vec3 &R) {
     T[0][2] = R.x();
     T[1][2] = R.y();
     T[2][2] = R.z();    
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::transform_orientation(Vec3* vector)const{
+void HomTra3::transform_orientation(Vec3* vector)const{
     vector->set(
         //x
         vector->x()*T[0][0] + 
@@ -158,13 +158,13 @@ void HomoTrafo3D::transform_orientation(Vec3* vector)const{
     );
 }
 //------------------------------------------------------------------------------
-Vec3 HomoTrafo3D::get_transformed_orientation(const Vec3& orientation)const {
+Vec3 HomTra3::get_transformed_orientation(const Vec3& orientation)const {
     Vec3 transformed_orientation = orientation;
     transform_orientation(&transformed_orientation);
     return transformed_orientation; 
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::transform_position(Vec3* vector)const {
+void HomTra3::transform_position(Vec3* vector)const {
     vector->set(
         //x
         vector->x()*T[0][0] + 
@@ -181,13 +181,13 @@ void HomoTrafo3D::transform_position(Vec3* vector)const {
     );
 }
 //------------------------------------------------------------------------------
-Vec3 HomoTrafo3D::get_transformed_position(const Vec3& pos)const {
+Vec3 HomTra3::get_transformed_position(const Vec3& pos)const {
     Vec3 transformed_position = pos;
     transform_position(&transformed_position);
     return transformed_position;
 }
 //------------------------------------------------------------------------------
-Vec3 HomoTrafo3D::get_translation()const {
+Vec3 HomTra3::get_translation()const {
     Vec3 translation_component;
 
     translation_component.set(
@@ -199,7 +199,7 @@ Vec3 HomoTrafo3D::get_translation()const {
     return translation_component;
 }
 //------------------------------------------------------------------------------
-std::string HomoTrafo3D::get_print()const {
+std::string HomTra3::get_print()const {
     std::stringstream out; 
     out << std::setprecision(3);
     out << get_single_row_print(0);
@@ -209,7 +209,7 @@ std::string HomoTrafo3D::get_print()const {
     return  out.str();
 }
 //------------------------------------------------------------------------------
-std::string HomoTrafo3D::get_single_row_print(const uint r)const {
+std::string HomTra3::get_single_row_print(const uint r)const {
     std::stringstream out; 
     out << std::setprecision(3) << "[  ";
     out << T[r][0] << " \t" << T[r][1] << " \t" << T[r][2] << " \t" << T[r][3];
@@ -217,15 +217,15 @@ std::string HomoTrafo3D::get_single_row_print(const uint r)const {
     return out.str();
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::operator= (const HomoTrafo3D G){
+void HomTra3::operator= (const HomTra3 G){
     for(uint row=0; row<3; row++)
         for(uint col=0; col<4; col++)
             T[row][col] = G.T[row][col];
 }
 //------------------------------------------------------------------------------
-HomoTrafo3D HomoTrafo3D::operator* (const HomoTrafo3D G)const {
+HomTra3 HomTra3::operator* (const HomTra3 G)const {
     // Matrix multiplication 
-    HomoTrafo3D  M;
+    HomTra3  M;
 
     // [ 0,0    0,1     0,2     0,3 ]
     // [ 1,0    1,1     1,2     1,3 ]
@@ -255,18 +255,18 @@ HomoTrafo3D HomoTrafo3D::operator* (const HomoTrafo3D G)const {
     return M;
 }
 //------------------------------------------------------------------------------
-HomoTrafo3D HomoTrafo3D::inverse()const {
-    HomoTrafo3D I_Rot;
+HomTra3 HomTra3::inverse()const {
+    HomTra3 I_Rot;
     I_Rot.copy_inverse_rotation_component_from(this);
 
-    HomoTrafo3D I_tra;
+    HomTra3 I_tra;
     I_tra.copy_inverse_translation_component_from(this);
 
     // composition
     return I_Rot*I_tra;
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::copy_inverse_rotation_component_from(const HomoTrafo3D *M) {
+void HomTra3::copy_inverse_rotation_component_from(const HomTra3 *M) {
     // Transpose rot matrix because rot maticies are orthogonal
     // and therefore rot^(-1) = rot^T
     // first row of Rot matrix
@@ -283,7 +283,7 @@ void HomoTrafo3D::copy_inverse_rotation_component_from(const HomoTrafo3D *M) {
     T[2][2] = M->T[2][2];
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::copy_inverse_translation_component_from(const HomoTrafo3D *M){
+void HomTra3::copy_inverse_translation_component_from(const HomTra3 *M){
     // flip sign of translation vector to inverse the effect of the 
     // translation component
     T[0][3] = -M->T[0][3];
@@ -291,7 +291,7 @@ void HomoTrafo3D::copy_inverse_translation_component_from(const HomoTrafo3D *M){
     T[2][3] = -M->T[2][3];  
 }
 //------------------------------------------------------------------------------
-bool HomoTrafo3D::operator== (HomoTrafo3D G)const {
+bool HomTra3::operator== (HomTra3 G)const {
     for(uint row=0; row<4; row++)
         for(uint col=0; col<3; col++)
             if(T[col][row] != G.T[col][row])

@@ -82,7 +82,7 @@ public:
 	
 	virtual void delete_history();
 
-	void transform(const HomoTrafo3D *T);
+	void transform(const HomTra3 *T);
 	
 	Vec3 get_final_intersection_incident_vector_in_object_frame()const;
 protected:

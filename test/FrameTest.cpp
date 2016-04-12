@@ -2,7 +2,7 @@
 #include "Core/Frame.h"
 #include "Core/Vec3.h"
 #include "Core/Rot3.h"
-#include "Core/HomoTrafo3D.h"
+#include "Core/HomTra3.h"
 #include "Geometry/Sphere.h"
 
 using namespace std;
@@ -66,7 +66,7 @@ TEST_F(FrameTest, set_frame) {
     EXPECT_EQ(pos, *Peter.get_position_in_mother());
     EXPECT_EQ(rot, *Peter.get_rotation_in_mother());
 
-    HomoTrafo3D T_frame2mother;
+    HomTra3 T_frame2mother;
     T_frame2mother.set_transformation(rot, pos);
 
     EXPECT_EQ(T_frame2mother, *Peter.frame2mother());

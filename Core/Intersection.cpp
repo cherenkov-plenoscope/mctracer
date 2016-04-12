@@ -153,11 +153,11 @@ Vec3 Intersection::get_normal_in_faceing_surface_system()const {
 	surfacenormal_in_intersection_point*-1.0;
 }
 //------------------------------------------------------------------------------
-const HomoTrafo3D* Intersection::world2object()const{
+const HomTra3* Intersection::world2object()const{
 	return object->world2frame();
 }
 //------------------------------------------------------------------------------
-const HomoTrafo3D* Intersection::object2world()const{
+const HomTra3* Intersection::object2world()const{
 	return object->frame2world();
 }
 //------------------------------------------------------------------------------

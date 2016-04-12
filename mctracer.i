@@ -8,7 +8,7 @@
 %{
 	#include "Core/Printable.h"
 	#include "Core/Vec3.h"
-	#include "Core/HomoTrafo3D.h"
+	#include "Core/HomTra3.h"
 	#include "Core/Ray.h"
 	#include "Core/RayForPropagation.h"
 	#include "Core/Color.h"
@@ -82,7 +82,7 @@ namespace std {
 
 %include "Core/Printable.h"
 %include "Core/Vec3.h"
-%include "Core/HomoTrafo3D.h"
+%include "Core/HomTra3.h"
 %include "Core/Ray.h"
 %include "Core/RayForPropagation.h"
 %include "Core/Color.h"

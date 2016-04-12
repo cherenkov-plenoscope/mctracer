@@ -39,7 +39,7 @@ Vec3 Ray::Direction()const {
 	return direction;
 }
 //------------------------------------------------------------------------------
-void Ray::transform(const HomoTrafo3D *T) {
+void Ray::transform(const HomTra3 *T) {
 	T->transform_position(&support);
 	T->transform_orientation(&direction);	
 }

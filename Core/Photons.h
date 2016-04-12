@@ -75,9 +75,9 @@ namespace Photons {
 		);
 	}
 
-	void transform_all_photons(const HomoTrafo3D Trafo, vector<Photon*> *photons);
+	void transform_all_photons(const HomTra3 Trafo, vector<Photon*> *photons);
 	void transform_all_photons_multi_thread(
-		const HomoTrafo3D Trafo, 
+		const HomTra3 Trafo, 
 		vector<Photon*> *photons
 	);
 

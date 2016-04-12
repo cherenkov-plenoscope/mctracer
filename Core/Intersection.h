@@ -54,8 +54,8 @@ public:
 	bool boundary_layer_is_transparent()const;
 	bool from_outside_to_inside()const;
 	const Color get_facing_color()const;
-	const HomoTrafo3D* world2object()const;
-	const HomoTrafo3D* object2world()const;
+	const HomTra3* world2object()const;
+	const HomTra3* object2world()const;
 	Vec3 get_normal_in_faceing_surface_system()const;
 	bool going_to_default_refractive_index()const;
 	bool operator<(const Intersection& other) const;

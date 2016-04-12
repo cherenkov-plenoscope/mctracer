@@ -15,7 +15,7 @@ class Intersection;
 #include <vector>
 #include "Core/Vec3.h"
 #include "Core/Rot3.h"
-#include "Core/HomoTrafo3D.h"
+#include "Core/HomTra3.h"
 #include "Core/TracerException.h"
 #include "Tools/StringTools.h"
 #include "Tools/Tools.h"
@@ -44,10 +44,10 @@ protected:
     double 	    radius_of_sphere_enclosing_all_children; 
     Vec3 	pos_in_world;
     
-    HomoTrafo3D T_frame2mother;
-    HomoTrafo3D T_mother2frame;
-    HomoTrafo3D T_world2frame;
-    HomoTrafo3D T_frame2world;
+    HomTra3 T_frame2mother;
+    HomTra3 T_mother2frame;
+    HomTra3 T_world2frame;
+    HomTra3 T_frame2world;
     
     vector<Frame*> children;
 	Frame *mother = void_frame;
@@ -73,10 +73,10 @@ public:
     const Rot3* get_rotation_in_mother()const;
     const Vec3* get_position_in_world()const;
     double contour_radius()const;
-    const HomoTrafo3D* frame2mother()const;
-    const HomoTrafo3D* mother2frame()const;
-    const HomoTrafo3D* world2frame()const;
-    const HomoTrafo3D* frame2world()const;
+    const HomTra3* frame2mother()const;
+    const HomTra3* mother2frame()const;
+    const HomTra3* world2frame()const;
+    const HomTra3* frame2world()const;
     bool has_child_with_name(const string name_of_child)const;
     const Frame* get_child_by_name(string specific_name)const;
     const Frame* get_root_of_world()const;
@@ -105,11 +105,11 @@ protected:
     // post initialization based on root
     void post_init_me_and_all_my_children();
     void post_init_transformations();
-    HomoTrafo3D calculate_frame2world()const;
+    HomTra3 calculate_frame2world()const;
     // post initialization based on mother only
     void post_init_me_and_all_my_children_only_based_on_mother();
     void post_init_transformations_only_based_on_mother();
-    HomoTrafo3D calculate_frame2world_only_based_on_mother()const;
+    HomTra3 calculate_frame2world_only_based_on_mother()const;
     // initialize
     void set_mother(Frame *const new_mother);
     void add_child(Frame * const new_child);

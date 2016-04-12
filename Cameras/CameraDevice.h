@@ -13,7 +13,7 @@
 #include <sstream>
 #include "Core/Rot3.h"
 #include "Core/Vec3.h"
-#include "Core/HomoTrafo3D.h"
+#include "Core/HomTra3.h"
 #include "CameraRay.h"
 #include "CameraImage.h"
 #include "Core/TracerException.h"
@@ -83,8 +83,8 @@ protected:
 
 	CameraImage *image;
 
-	HomoTrafo3D T_Camera2World;
-	HomoTrafo3D T_World2Camera;
+	HomTra3 T_Camera2World;
+	HomTra3 T_World2Camera;
 	Vec3 CameraPositionInWorld;
 	Rot3 CameraOrientationInWorld;
 	Vec3 CameraPointingDirection;

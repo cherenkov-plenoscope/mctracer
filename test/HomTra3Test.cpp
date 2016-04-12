@@ -1,12 +1,12 @@
 #include "gtest/gtest.h"
-#include "Core/HomoTrafo3D.h"
+#include "Core/HomTra3.h"
 
-class HomoTrafo3DTest : public ::testing::Test {};
+class HomTra3Test : public ::testing::Test {};
 //------------------------------------------------------------------------------
-TEST_F(HomoTrafo3DTest, default_is_unit_trafo) {
-    HomoTrafo3D trafo;
+TEST_F(HomTra3Test, default_is_unit_trafo) {
+    HomTra3 trafo;
 
-    HomoTrafo3D unit_frafo;
+    HomTra3 unit_frafo;
     unit_frafo.set_transformation(
         Vec3(1,0,0), 
         Vec3(0,1,0), 
@@ -16,15 +16,15 @@ TEST_F(HomoTrafo3DTest, default_is_unit_trafo) {
     EXPECT_EQ(unit_frafo, trafo);
 }
 //------------------------------------------------------------------------------
-TEST_F(HomoTrafo3DTest, unit_trafo_has_no_translation) {
-    HomoTrafo3D trafo;
+TEST_F(HomTra3Test, unit_trafo_has_no_translation) {
+    HomTra3 trafo;
 
     // translation should be zero 
     EXPECT_EQ(Vec3::null, trafo.get_translation());
 }
 //------------------------------------------------------------------------------
-TEST_F(HomoTrafo3DTest, unit_trafo_has_no_rotation) {
-    HomoTrafo3D trafo;
+TEST_F(HomTra3Test, unit_trafo_has_no_rotation) {
+    HomTra3 trafo;
 
     // and rotation should be unity as well
     Vec3 unit_x(1.0, 0.0, 0.0);
@@ -37,20 +37,20 @@ TEST_F(HomoTrafo3DTest, unit_trafo_has_no_rotation) {
     EXPECT_EQ(unit_z, trafo.get_transformed_orientation(unit_z));
 }
 //------------------------------------------------------------------------------
-TEST_F(HomoTrafo3DTest, unit_trafo_is_its_own_inverse) {
-    HomoTrafo3D trafo;
+TEST_F(HomTra3Test, unit_trafo_is_its_own_inverse) {
+    HomTra3 trafo;
 
-    HomoTrafo3D inverse_trafo = trafo;
+    HomTra3 inverse_trafo = trafo;
     inverse_trafo.inverse();
 
     EXPECT_EQ(inverse_trafo, trafo);
 }
 //------------------------------------------------------------------------------
-TEST_F(HomoTrafo3DTest, translation_without_rotation) {
+TEST_F(HomTra3Test, translation_without_rotation) {
     Vec3 translation(0.0, 0.0, 133.7);
     Rot3 rotation(0.0, 0.0, 0.0);
 
-    HomoTrafo3D frame1_to_frame2;
+    HomTra3 frame1_to_frame2;
     frame1_to_frame2.set_transformation(rotation, translation);
 
     Vec3 my_vector_in_frame1(3.141, 4.2, 0.0);
@@ -62,7 +62,7 @@ TEST_F(HomoTrafo3DTest, translation_without_rotation) {
     );
 
     // and also the other/inverse way round
-    HomoTrafo3D frame2_to_frame1 = frame1_to_frame2.inverse();
+    HomTra3 frame2_to_frame1 = frame1_to_frame2.inverse();
 
     EXPECT_EQ(
         my_vector_in_frame1, 

@@ -180,7 +180,7 @@ double RayForPropagation::get_time_of_flight()const {
 	return 0.0;
 }
 //------------------------------------------------------------------------------
-void RayForPropagation::transform(const HomoTrafo3D *T) {
+void RayForPropagation::transform(const HomTra3 *T) {
 	T->transform_position(&support);
 	T->transform_orientation(&direction);
 

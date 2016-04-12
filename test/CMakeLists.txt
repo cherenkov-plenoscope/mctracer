@@ -38,7 +38,7 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/ThinLensEquationTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Histogram1DTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TimeLineAddition.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/HomoTrafo3DTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/HomTra3Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ToolTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryFactoryTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/LensMakerTest.cpp

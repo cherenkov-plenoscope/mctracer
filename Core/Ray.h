@@ -36,7 +36,7 @@ public:
 	Vec3 Support()const;
 	Vec3 Direction()const;
 	Vec3 PositionOnRay(const double scalar)const;
-	void transform(const HomoTrafo3D *T);
+	void transform(const HomTra3 *T);
 	virtual string get_print()const;
 	double get_parameter_on_ray_for_closest_distance_to_point(
 		const Vec3 &point

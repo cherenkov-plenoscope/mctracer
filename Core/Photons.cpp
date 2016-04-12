@@ -243,7 +243,7 @@ namespace Photons {
 	// transformations, move and rotate photons
 	//--------------------------------------------------------------------------
 	void transform_all_photons(
-		const HomoTrafo3D Trafo, 
+		const HomTra3 Trafo, 
 		vector<Photon*> *photons
 	) {
 		for(Photon* photon : *photons)
@@ -251,7 +251,7 @@ namespace Photons {
 	}
 	//--------------------------------------------------------------------------
 	void transform_all_photons_multi_thread(
-		const HomoTrafo3D Trafo, 
+		const HomTra3 Trafo, 
 		vector<Photon*> *photons
 	) {
 		uint i;

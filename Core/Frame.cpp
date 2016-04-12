@@ -51,7 +51,7 @@ void Frame::post_init_transformations_only_based_on_mother() {
 	pos_in_world = T_frame2world.get_translation();
 }
 //------------------------------------------------------------------------------
-HomoTrafo3D Frame::calculate_frame2world()const {
+HomTra3 Frame::calculate_frame2world()const {
 	// All parent frames of this frame do already know their frame2mother 
 	// relation.
 	// To calculate the frame2world relation of this frame we have to 
@@ -62,7 +62,7 @@ HomoTrafo3D Frame::calculate_frame2world()const {
 	Frame* frame_on_our_way_towards_the_root = mother;
 	
 	// The starting point for the latter frame2world is this framse frame2motehr
-	HomoTrafo3D Trafo_on_our_way_towards_the_root = T_frame2mother;	
+	HomTra3 Trafo_on_our_way_towards_the_root = T_frame2mother;	
 
 	while(frame_on_our_way_towards_the_root != void_frame){
 		Trafo_on_our_way_towards_the_root = 
@@ -76,7 +76,7 @@ HomoTrafo3D Frame::calculate_frame2world()const {
 	return Trafo_on_our_way_towards_the_root;
 }
 //------------------------------------------------------------------------------
-HomoTrafo3D Frame::calculate_frame2world_only_based_on_mother()const {
+HomTra3 Frame::calculate_frame2world_only_based_on_mother()const {
 	if(has_mother())
 		return mother->T_frame2world*T_frame2mother;
 	else
@@ -503,19 +503,19 @@ double Frame::contour_radius()const {
     return radius_of_sphere_enclosing_all_children;
 }
 //------------------------------------------------------------------------------
-const HomoTrafo3D* Frame::frame2mother()const {
+const HomTra3* Frame::frame2mother()const {
     return &T_frame2mother;
 }
 //------------------------------------------------------------------------------
-const HomoTrafo3D* Frame::mother2frame()const {
+const HomTra3* Frame::mother2frame()const {
     return &T_mother2frame;
 }
 //------------------------------------------------------------------------------
-const HomoTrafo3D* Frame::world2frame()const {
+const HomTra3* Frame::world2frame()const {
     return &T_world2frame;
 }
 //------------------------------------------------------------------------------
-const HomoTrafo3D* Frame::frame2world()const {
+const HomTra3* Frame::frame2world()const {
     return &T_frame2world;
 }
 //------------------------------------------------------------------------------

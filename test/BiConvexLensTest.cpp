@@ -153,7 +153,7 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
     std::vector<Photon*>* photons = 
 	    Photons::Source::parallel_towards_z_from_xy_disc(0.125, number_of_photons_emitted);
 
-	HomoTrafo3D Trafo;
+	HomTra3 Trafo;
 	Trafo.set_transformation(
 		Rot3(0.0,-Deg2Rad(180.0),0.0), 
 		Vec3(0.0, 0.0 ,1.0)
