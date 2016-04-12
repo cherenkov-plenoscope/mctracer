@@ -42,7 +42,7 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/ToolTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryFactoryTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/LensMakerTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Vector2DTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Vec2Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaEventGetterTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Vec3Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/NightSkyBackgroundLightTest.cpp

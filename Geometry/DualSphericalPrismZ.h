@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "PrismZ.h"
-#include "Core/Vector2D.h"
+#include "Core/Vec2.h"
 //=================================
 class DualSphericalPrismZ :public PrismZ {
 private:
@@ -19,8 +19,8 @@ private:
 	double hight;
 	double width;
 
-	Vector2D circ1;
-	Vector2D circ2;
+	Vec2 circ1;
+	Vec2 circ2;
 public:
 
 	void set_x_hight_and_y_width(

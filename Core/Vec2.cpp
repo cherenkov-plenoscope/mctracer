@@ -1,93 +1,93 @@
-#include "Vector2D.h"
+#include "Vec2.h"
 //------------------------------------------------------------------------------
-const Vector2D Vector2D::null   = Vector2D(0.0, 0.0);
-const Vector2D Vector2D::unit_x = Vector2D(1.0, 0.0);
-const Vector2D Vector2D::unit_y = Vector2D(0.0, 1.0);
-const double Vector2D::max_deviation_of_eq_vectors = 1e-7;
+const Vec2 Vec2::null   = Vec2(0.0, 0.0);
+const Vec2 Vec2::unit_x = Vec2(1.0, 0.0);
+const Vec2 Vec2::unit_y = Vec2(0.0, 1.0);
+const double Vec2::max_deviation_of_eq_vectors = 1e-7;
 //------------------------------------------------------------------------------
-Vector2D::Vector2D(){
+Vec2::Vec2(){
 }
 //------------------------------------------------------------------------------
-Vector2D::Vector2D(const double nx,const double ny) {
+Vec2::Vec2(const double nx,const double ny) {
 	set(nx, ny);
 }
 //------------------------------------------------------------------------------
-void Vector2D::set(const double nx,const double ny) {
+void Vec2::set(const double nx,const double ny) {
 	X=nx; 
 	Y=ny; 
 }
 //------------------------------------------------------------------------------
-void Vector2D::normalize() {
+void Vec2::normalize() {
 	*this = *this/this->norm();
 }
 //------------------------------------------------------------------------------
-double Vector2D::norm()const {
+double Vec2::norm()const {
 	return sqrt( X*X + Y*Y );
 }
 //------------------------------------------------------------------------------
-double Vector2D::operator*(const Vector2D vec)const {
+double Vec2::operator*(const Vec2 vec)const {
 	return vec.X*X + vec.Y*Y;
 }
 //------------------------------------------------------------------------------
-Vector2D Vector2D::operator*(const double scalar)const {
-	return Vector2D(X*scalar, Y*scalar);
+Vec2 Vec2::operator*(const double scalar)const {
+	return Vec2(X*scalar, Y*scalar);
 }
 //------------------------------------------------------------------------------
-Vector2D Vector2D::operator-(const Vector2D vec)const {
-	return Vector2D(X-vec.X, Y-vec.Y);
+Vec2 Vec2::operator-(const Vec2 vec)const {
+	return Vec2(X-vec.X, Y-vec.Y);
 }
 //------------------------------------------------------------------------------
-Vector2D Vector2D::operator+(const Vector2D vec)const {
-	return Vector2D(X+vec.X, Y+vec.Y);
+Vec2 Vec2::operator+(const Vec2 vec)const {
+	return Vec2(X+vec.X, Y+vec.Y);
 }
 //------------------------------------------------------------------------------
-Vector2D Vector2D::operator/(const double scalar)const {
-	return Vector2D(X/scalar, Y/scalar);
+Vec2 Vec2::operator/(const double scalar)const {
+	return Vec2(X/scalar, Y/scalar);
 }
 //------------------------------------------------------------------------------
-void Vector2D::operator=(const Vector2D eq) {
+void Vec2::operator=(const Vec2 eq) {
 	X = eq.X;
 	Y = eq.Y;
 }
 //------------------------------------------------------------------------------
-std::string Vector2D::get_print()const {
+std::string Vec2::get_print()const {
 	std::stringstream out; 
 	out << "(" << X << " " << Y << ")m";
 	return out.str();
 }
 //------------------------------------------------------------------------------
-double Vector2D::get_angle_in_between_in_rad(const Vector2D& that)const {
-	Vector2D this_normalized = *this/this->norm();
-	Vector2D that_normalized = that/that.norm(); 
+double Vec2::get_angle_in_between_in_rad(const Vec2& that)const {
+	Vec2 this_normalized = *this/this->norm();
+	Vec2 that_normalized = that/that.norm(); 
 	return acos(this_normalized*that_normalized);
 }
 //------------------------------------------------------------------------------
-double Vector2D::x() const{
+double Vec2::x() const{
 	return X;
 }
 //------------------------------------------------------------------------------
-double Vector2D::y() const{
+double Vec2::y() const{
 	return Y;
 }
 //------------------------------------------------------------------------------
-bool Vector2D::operator == (const Vector2D& eqVec) const{
+bool Vec2::operator == (const Vec2& eqVec) const{
 	return distance_to(eqVec) <= max_deviation_of_eq_vectors;
 }
 //------------------------------------------------------------------------------
-bool Vector2D::operator != (const Vector2D& eqVec) const{
+bool Vec2::operator != (const Vec2& eqVec) const{
 	return distance_to(eqVec) > max_deviation_of_eq_vectors;
 }
 //------------------------------------------------------------------------------
-double Vector2D::distance_to(const Vector2D &v)const{
+double Vec2::distance_to(const Vec2 &v)const{
 	return (*this-v).norm();
 }
 //------------------------------------------------------------------------------
-bool Vector2D::norm_is_less_equal_than(const double length_to_compare)const {
+bool Vec2::norm_is_less_equal_than(const double length_to_compare)const {
 	// avoid the sqrt for speed up
 	return (*this)*(*this) <= length_to_compare*length_to_compare;
 }
 //------------------------------------------------------------------------------
-uint Vector2D::get_quadrant()const {
+uint Vec2::get_quadrant()const {
 	// encodes the octant sectors where the vector is pointing to
 	// x y sector
 	// - -   0

@@ -2,7 +2,7 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/Function")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/Random")
 set(SOURCE
    	${SOURCE}
-   	${CMAKE_CURRENT_SOURCE_DIR}/Vector2D.cpp
+   	${CMAKE_CURRENT_SOURCE_DIR}/Vec2.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Vec3.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Rotation3D.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/HomoTrafo3D.cpp	

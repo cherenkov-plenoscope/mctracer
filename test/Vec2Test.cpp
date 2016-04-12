@@ -1,51 +1,51 @@
 #include "gtest/gtest.h"
-#include "Core/Vector2D.h"
+#include "Core/Vec2.h"
 #include "Tools/Tools.h"
 
-class Vector2DTest : public ::testing::Test {};
+class Vec2Test : public ::testing::Test {};
 //----------------------------------------------------------------------
-TEST_F(Vector2DTest, NullVector) {
-    Vector2D a = Vector2D::null;
+TEST_F(Vec2Test, NullVector) {
+    Vec2 a = Vec2::null;
 
     EXPECT_EQ(0.0, a.x());
     EXPECT_EQ(0.0, a.y());
     EXPECT_EQ(0.0, a.norm());
 }
 //----------------------------------------------------------------------
-TEST_F(Vector2DTest, UnitVectors) {
-    Vector2D a;
+TEST_F(Vec2Test, UnitVectors) {
+    Vec2 a;
 
-    a = Vector2D::unit_x;
+    a = Vec2::unit_x;
     EXPECT_EQ(1.0, a.x());
     EXPECT_EQ(0.0, a.y());
     EXPECT_EQ(1.0, a.norm());
 
-    a = Vector2D::unit_y; 
+    a = Vec2::unit_y; 
     EXPECT_EQ(0.0, a.x());
     EXPECT_EQ(1.0, a.y());
     EXPECT_EQ(1.0, a.norm());
 }
 //----------------------------------------------------------------------
-TEST_F(Vector2DTest, ConstructorAndGetter) {
+TEST_F(Vec2Test, ConstructorAndGetter) {
     
     double x, y;
     for(x=-2.0; x>2.0; x=x+.25) {
         for(y=-2.0; y>2.0; y=y+.25) {
 
-            Vector2D v(x,y); 
+            Vec2 v(x,y); 
             EXPECT_EQ(x, v.x());
             EXPECT_EQ(y, v.y());
         }
     }
 }
 //----------------------------------------------------------------------
-TEST_F(Vector2DTest, SetterAndGetter) {
+TEST_F(Vec2Test, SetterAndGetter) {
  
     double x, y;   
     for(x=-2.0; x>2.0; x=x+.25) {
         for(y=-2.0; y>2.0; y=y+.25) {
 
-            Vector2D v; 
+            Vec2 v; 
             v.set(x,y);
             EXPECT_EQ(x, v.x());
             EXPECT_EQ(y, v.y());
@@ -53,18 +53,18 @@ TEST_F(Vector2DTest, SetterAndGetter) {
     }
 }
 //----------------------------------------------------------------------
-TEST_F(Vector2DTest, EuclideanNorm) {
+TEST_F(Vec2Test, EuclideanNorm) {
 
     double x, y;
     for(x=-2.0; x>2.0; x=x+.25) {
         for(y=-2.0; y>2.0; y=y+.25) {
             
-            Vector2D v(x,y);
+            Vec2 v(x,y);
             EXPECT_EQ(sqrt(x*x+y*y), v.norm());
         }
     }
 
-    Vector2D v;
+    Vec2 v;
     v.set(1.0, 0.0);
     EXPECT_EQ(1.0, v.norm()); 
 
@@ -72,15 +72,15 @@ TEST_F(Vector2DTest, EuclideanNorm) {
     EXPECT_EQ(1.0, v.norm());   
 }
 //----------------------------------------------------------------------
-TEST_F(Vector2DTest, Scalar_Product_unit_vectors) {
+TEST_F(Vec2Test, Scalar_Product_unit_vectors) {
 
-    const Vector2D x = Vector2D::unit_x;
-    const Vector2D y = Vector2D::unit_y;
+    const Vec2 x = Vec2::unit_x;
+    const Vec2 y = Vec2::unit_y;
     EXPECT_EQ(0.0, x*y);
     EXPECT_EQ(1.0, x*x);
 }
 //----------------------------------------------------------------------
-TEST_F(Vector2DTest, Scalar_Product) {
+TEST_F(Vec2Test, Scalar_Product) {
 
     double x1, x2, y1, y2;
     for(x1=-2.0; x1>2.0; x1=x1+.25) {
@@ -88,8 +88,8 @@ TEST_F(Vector2DTest, Scalar_Product) {
             for(x2=-2.0; x2>2.0; x2=x2+.25) {
                 for(y2=-2.0; y2>2.0; y2=y2+.25) {
 
-                    const Vector2D v1(x1, y1);
-                    const Vector2D v2(x2, y2); 
+                    const Vec2 v1(x1, y1);
+                    const Vec2 v2(x2, y2); 
 
                     EXPECT_EQ( x1*x2 + y1*y2, v1*v2);   
                 }
@@ -98,13 +98,13 @@ TEST_F(Vector2DTest, Scalar_Product) {
     }
 }
 //----------------------------------------------------------------------
-TEST_F(Vector2DTest, ScalarMultiplication) {
+TEST_F(Vec2Test, ScalarMultiplication) {
 
     double x, y, f;
     for(x=-2.0; x>2.0; x=x+.25) {
         for(y=-2.0; y>2.0; y=y+.25) {
 
-            Vector2D a(x,y); 
+            Vec2 a(x,y); 
             for(f=-2.0; f>2.0; f=f+.25) {
                 EXPECT_EQ(x*f, (a*f).x());
                 EXPECT_EQ(y*f, (a*f).y());
@@ -113,13 +113,13 @@ TEST_F(Vector2DTest, ScalarMultiplication) {
     }
 }
 //----------------------------------------------------------------------
-TEST_F(Vector2DTest, ScalarDiviation) {
+TEST_F(Vec2Test, ScalarDiviation) {
 
     double x, y, f;
     for(x=-2.0; x>2.0; x=x+.25) {
         for(y=-2.0; y>2.0; y=y+.25) {
 
-            Vector2D a(x,y); 
+            Vec2 a(x,y); 
             for(f=-2.0; f>2.0; f=f+.25) {
                 EXPECT_EQ(x/f, (a/f).x());
                 EXPECT_EQ(y/f, (a/f).y());
@@ -128,43 +128,43 @@ TEST_F(Vector2DTest, ScalarDiviation) {
     }
 }
 //----------------------------------------------------------------------
-TEST_F(Vector2DTest, distance_unit_x_to_unit_y) {
+TEST_F(Vec2Test, distance_unit_x_to_unit_y) {
 
-    Vector2D a = Vector2D::unit_x;
-    Vector2D b = Vector2D::unit_y;
+    Vec2 a = Vec2::unit_x;
+    Vec2 b = Vec2::unit_y;
 
     EXPECT_EQ( sqrt(2.0), a.distance_to(b) );
 }
 //----------------------------------------------------------------------
-TEST_F(Vector2DTest, distance_to_itself) {
+TEST_F(Vec2Test, distance_to_itself) {
   
-    Vector2D a(1.3, 3.7); 
+    Vec2 a(1.3, 3.7); 
     EXPECT_EQ(0.0, a.distance_to(a) );
 }
 //----------------------------------------------------------------------
-TEST_F(Vector2DTest, Operator_equals_expect_true) {
+TEST_F(Vec2Test, Operator_equals_expect_true) {
   
-    Vector2D a(1.3, 4.2); 
-    Vector2D b(1.3, 4.2+1e-20); 
+    Vec2 a(1.3, 4.2); 
+    Vec2 b(1.3, 4.2+1e-20); 
 
     EXPECT_EQ(a, b);
     EXPECT_TRUE(a == b);
     EXPECT_FALSE(a != b);
 }
 //----------------------------------------------------------------------
-TEST_F(Vector2DTest, Operator_equals_expect_false) {
+TEST_F(Vec2Test, Operator_equals_expect_false) {
   
-    Vector2D a(1.3, 4.2); 
-    Vector2D b(1.3, 4.2 + 2e-7); 
+    Vec2 a(1.3, 4.2); 
+    Vec2 b(1.3, 4.2 + 2e-7); 
 
     EXPECT_NE(a, b);
     EXPECT_TRUE(a != b);
     EXPECT_FALSE(a == b);
 }
 //----------------------------------------------------------------------
-TEST_F(Vector2DTest, normalize) {
+TEST_F(Vec2Test, normalize) {
   
-    Vector2D a(1.0,2.0);
+    Vec2 a(1.0,2.0);
     EXPECT_NE( 1.0, a.norm());
 
     a.normalize();
@@ -176,47 +176,47 @@ TEST_F(Vector2DTest, normalize) {
     a.normalize();
     EXPECT_EQ(1.0, a.norm());
 
-    a = Vector2D::null;
+    a = Vec2::null;
     EXPECT_NE(1.0, a.norm());
 
     a.normalize();
     EXPECT_TRUE( isnan(a.norm()) == 1 );
 }
 //----------------------------------------------------------------------
-TEST_F(Vector2DTest, angle_in_between) {
+TEST_F(Vec2Test, angle_in_between) {
   
-    Vector2D a = Vector2D::unit_x;
-    Vector2D b = Vector2D::unit_x;
+    Vec2 a = Vec2::unit_x;
+    Vec2 b = Vec2::unit_x;
 
     EXPECT_EQ(0.0, a.get_angle_in_between_in_rad(b));
     EXPECT_EQ(b.get_angle_in_between_in_rad(a), a.get_angle_in_between_in_rad(b));
 
-    Vector2D c = Vector2D::unit_x*5.0;
+    Vec2 c = Vec2::unit_x*5.0;
     EXPECT_NE( 1.0, c.norm());
 
-    Vector2D d = Vector2D::unit_x*5.0;
+    Vec2 d = Vec2::unit_x*5.0;
     EXPECT_NE( 1.0, d.norm());
 
     EXPECT_EQ(0.0, d.get_angle_in_between_in_rad(c));  
     EXPECT_EQ(c.get_angle_in_between_in_rad(d), d.get_angle_in_between_in_rad(c));
 
-    Vector2D foo = Vector2D::unit_x*5.0 + Vector2D::unit_y*5.0;
+    Vec2 foo = Vec2::unit_x*5.0 + Vec2::unit_y*5.0;
     EXPECT_NE( 1.0, c.norm());
 
-    Vector2D bar = Vector2D::unit_x*5.0;
+    Vec2 bar = Vec2::unit_x*5.0;
     EXPECT_NE( 1.0, d.norm());
 
     EXPECT_NEAR(Deg2Rad(45.0) , foo.get_angle_in_between_in_rad(bar), 1e-5);
 }
 //----------------------------------------------------------------------
-TEST_F(Vector2DTest, quadrant_encoding) {
+TEST_F(Vec2Test, quadrant_encoding) {
  
     // x y sector
     // - -   0
     // - +   1
     // + -   2
     // + +   3
-    Vector2D a;
+    Vec2 a;
 
     double p = +1.0;
     double n = -1.0;

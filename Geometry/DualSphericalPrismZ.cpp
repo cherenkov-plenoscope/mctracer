@@ -10,13 +10,13 @@ void DualSphericalPrismZ::set_x_hight_and_y_width(
 	circle_distance = (width*width - hight*hight)/(2.0*hight);
 	circle_radius = circle_distance/2.0 + hight/2.0;
 
-	circ1 = Vector2D(+circle_distance/2.0, 0.0);
-	circ2 = Vector2D(-circle_distance/2.0, 0.0);
+	circ1 = Vec2(+circle_distance/2.0, 0.0);
+	circ2 = Vec2(-circle_distance/2.0, 0.0);
 }
 //------------------------------------------------------------------------------
 bool DualSphericalPrismZ::is_inside(const Vec3* vec)const {
-	Vector2D v2c1 = circ1 - Vector2D(vec->x(), vec->y());
-	Vector2D v2c2 = circ2 - Vector2D(vec->x(), vec->y());
+	Vec2 v2c1 = circ1 - Vec2(vec->x(), vec->y());
+	Vec2 v2c2 = circ2 - Vec2(vec->x(), vec->y());
 
 	return 	v2c1.norm_is_less_equal_than(circle_radius) &&
 			v2c2.norm_is_less_equal_than(circle_radius);
