@@ -1,4 +1,8 @@
 #include "Core/HomTra3.h"
+#include <sstream>
+#include <math.h>
+#include <iomanip>
+#include <iostream>
 // homogenous Transformation, component adresses:
 // [ 0,0    0,1     0,2     0,3 ]
 // [ 1,0    1,1     1,2     1,3 ]
@@ -49,9 +53,7 @@ void HomTra3::set_translation_component(const Vec3 &t) {
     T[2][3] = t.z();
 }
 //------------------------------------------------------------------------------
-void HomTra3::set_rotation_component_based_on_rot_axis(
-    const Rot3 R
-) {
+void HomTra3::set_rotation_component_based_on_rot_axis(const Rot3 R) {
         // ensure rot_axis is a unit vector
         Vec3 rot_axis = R.get_rot_axis();
         rot_axis = rot_axis/rot_axis.norm();
@@ -77,9 +79,7 @@ void HomTra3::set_rotation_component_based_on_rot_axis(
         T[2][2] = cosR +  rz*rz*(1.0-cosR);
 }
 //------------------------------------------------------------------------------
-void HomTra3::set_rotation_component_based_on_xyz_angles(
-    const Rot3 R
-) {
+void HomTra3::set_rotation_component_based_on_xyz_angles(const Rot3 R) {
 
     const double cosRx = R.cosRx();
     const double cosRy = R.cosRy();
@@ -101,20 +101,15 @@ void HomTra3::set_rotation_component_based_on_xyz_angles(
     T[2][2] = cosRx*cosRy;
 }
 //------------------------------------------------------------------------------
-void HomTra3::set_transformation(
-    Vec3 rot_x,
-    Vec3 rot_y,
-    Vec3 rot_z,
-    const Vec3 pos
-) { 
-    rot_x = rot_x/rot_x.norm();
-    rot_y = rot_y/rot_y.norm();
-    rot_z = rot_z/rot_z.norm();
+void HomTra3::set_transformation(Vec3 rotx, Vec3 roty, Vec3 rotz, const Vec3 pos) { 
+    rotx = rotx/rotx.norm();
+    roty = roty/roty.norm();
+    rotz = rotz/rotz.norm();
         
     HomTra3 TrafRotation;
-    TrafRotation.set_x_column_of_rotation_component(rot_x);
-    TrafRotation.set_y_column_of_rotation_component(rot_y);
-    TrafRotation.set_z_column_of_rotation_component(rot_z);     
+    TrafRotation.set_x_column_of_rotation_component(rotx);
+    TrafRotation.set_y_column_of_rotation_component(roty);
+    TrafRotation.set_z_column_of_rotation_component(rotz);     
         
     HomTra3 TrafTranslation;    
     TrafTranslation.set_translation_component(pos);
@@ -217,7 +212,7 @@ std::string HomTra3::get_single_row_print(const uint r)const {
     return out.str();
 }
 //------------------------------------------------------------------------------
-void HomTra3::operator= (const HomTra3 G){
+void HomTra3::operator= (const HomTra3 G) {
     for(uint row=0; row<3; row++)
         for(uint col=0; col<4; col++)
             T[row][col] = G.T[row][col];
@@ -283,7 +278,7 @@ void HomTra3::copy_inverse_rotation_component_from(const HomTra3 *M) {
     T[2][2] = M->T[2][2];
 }
 //------------------------------------------------------------------------------
-void HomTra3::copy_inverse_translation_component_from(const HomTra3 *M){
+void HomTra3::copy_inverse_translation_component_from(const HomTra3 *M) {
     // flip sign of translation vector to inverse the effect of the 
     // translation component
     T[0][3] = -M->T[0][3];

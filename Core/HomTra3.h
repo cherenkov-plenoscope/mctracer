@@ -8,11 +8,7 @@
 
 //=================================
 // included dependencies
-#include <iostream>
 #include <string>
-#include <sstream>
-#include <math.h>
-#include <iomanip> 
 #include "Core/Vec3.h"
 #include "Core/Rot3.h"
 
@@ -45,12 +41,7 @@ public:
 
 	HomTra3();
 	void set_transformation(const Rot3 R, const Vec3 pos);
-	void set_transformation(
-		const Vec3 rot_x,
-		const Vec3 rot_y,
-		const Vec3 rot_z,
-		const Vec3 pos
-	);
+	void set_transformation(Vec3 rotx, Vec3 roty, Vec3 rotz, const Vec3 pos);
 	Vec3 get_transformed_orientation(const Vec3& ori)const;
 	void transform_orientation(Vec3* vector)const;
 	Vec3 get_transformed_position(const Vec3& pos)const;
