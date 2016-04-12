@@ -47,8 +47,8 @@ double SphericalCapRayIntersectionEquation::get_plus_solution()const{
 	return plus_solution;
 }
 //------------------------------------------------------------------------------
-Vector3D SphericalCapRayIntersectionEquation::get_surface_normal_given_intersection_vector(
-	const Vector3D* intersec
+Vec3 SphericalCapRayIntersectionEquation::get_surface_normal_given_intersection_vector(
+	const Vec3* intersec
 )const {
 	// surface normal on a sphere
 	// z(x,y)= R -( R^2 -x^2 -y^2 )^1/2
@@ -62,7 +62,7 @@ Vector3D SphericalCapRayIntersectionEquation::get_surface_normal_given_intersect
 		-0.5
 	);
 	
-	Vector3D surface_normal(
+	Vec3 surface_normal(
 		intersec->x()*surf_norm_factor,
 		intersec->y()*surf_norm_factor,
 		1.0

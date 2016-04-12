@@ -27,7 +27,7 @@ void SkyDome::set_background_color(const Color background_color) {
 	this->background_color = background_color;
 }
 
-Color SkyDome::get_color_for_direction(Vector3D dir)const {
+Color SkyDome::get_color_for_direction(Vec3 dir)const {
 	if(has_texture) {
 
 		if(dir.z() < 0.0)
@@ -39,7 +39,7 @@ Color SkyDome::get_color_for_direction(Vector3D dir)const {
 	}
 }
 
-Color SkyDome::sky_dome_color_for(const Vector3D dir)const {
+Color SkyDome::sky_dome_color_for(const Vec3 dir)const {
 	const double zd = get_zenith_distance_of(dir);
 	const double az = get_azimuth_angle_of(dir);
 
@@ -71,10 +71,10 @@ std::string SkyDome::get_print()const {
 	return out.str();
 }
 
-double SkyDome::get_zenith_distance_of(const Vector3D dir)const {
-	return Vector3D::unit_z.get_angle_in_between_in_rad(dir);
+double SkyDome::get_zenith_distance_of(const Vec3 dir)const {
+	return Vec3::unit_z.get_angle_in_between_in_rad(dir);
 }
 
-double SkyDome::get_azimuth_angle_of(const Vector3D dir)const {
+double SkyDome::get_azimuth_angle_of(const Vec3 dir)const {
 	return atan2(dir.y(),dir.x());
 }

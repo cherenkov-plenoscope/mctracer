@@ -11,7 +11,7 @@ TEST_F(GridNeighborhoodTopoligyTest, init) {
 
     HexGridAnnulus grid_gen(outer_R, spacing);
 
-    std::vector<Vector3D> grid = grid_gen.get_grid();
+    std::vector<Vec3> grid = grid_gen.get_grid();
 
     GridNeighborhoodTopoligy topo(&grid, spacing*1.1);
 

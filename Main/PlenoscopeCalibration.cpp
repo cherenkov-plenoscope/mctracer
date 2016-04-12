@@ -71,13 +71,13 @@ int main(int argc, char* argv[]) {
 
     // EXPLORE TELESCOPE
     //LightFieldTelescope::Factory fab(&telescope_geometry);
-    //Frame telescope("telescope", Vector3D::null, Rotation3D::null);
+    //Frame telescope("telescope", Vec3::null, Rotation3D::null);
     //fab.add_telescope_to_frame(&telescope);
 
     //std::cout << fab.geometry->get_print() << "\n";
 
     //TracerSettings settings;
-    //settings.visual.global_illumination.incoming_direction = Vector3D(1.0, 1.0, 1.0);
+    //settings.visual.global_illumination.incoming_direction = Vec3(1.0, 1.0, 1.0);
     //FlyingCamera free(&telescope, &settings);
     
     }catch(std::exception &error) {

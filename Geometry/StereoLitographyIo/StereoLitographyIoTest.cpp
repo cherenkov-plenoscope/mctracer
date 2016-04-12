@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "Core/Vector3D.h"
+#include "Core/Vec3.h"
 #include "StereoLitographyIo.h"
 
 using namespace StereoLitographyIo;
@@ -49,10 +49,10 @@ TEST_F(StereoLitographyIoTest, write_and_read_1000_triangle) {
         double offset = double(i)/double(number_of_triangles);
 
         Facet facet = {
-            Vector3D(0.0, 0.0, 1.0),
-            Vector3D(0.0, 0.0, 0.0),
-            Vector3D(offset+1.0, 0.0, 0.0),
-            Vector3D(0.0, offset+1.0, offset+1.0)
+            Vec3(0.0, 0.0, 1.0),
+            Vec3(0.0, 0.0, 0.0),
+            Vec3(offset+1.0, 0.0, 0.0),
+            Vec3(0.0, offset+1.0, offset+1.0)
         };
 
         facets.push_back(facet);
@@ -97,10 +97,10 @@ TEST_F(StereoLitographyIoTest, write_and_read_simple_stl) {
 
     BinaryWriter stlwr;
 
-    Vector3D n(0.0, 0.0, 1.0);
-    Vector3D a(0.0, 0.0, 0.0);
-    Vector3D b(1.0, 0.0, 0.0);
-    Vector3D c(0.0, 1.0, 1.0);   
+    Vec3 n(0.0, 0.0, 1.0);
+    Vec3 a(0.0, 0.0, 0.0);
+    Vec3 b(1.0, 0.0, 0.0);
+    Vec3 c(0.0, 1.0, 1.0);   
 
     stlwr.add_facet_normal_and_three_vertices(n, a, b, c);
     stlwr.write_to_file(filename);

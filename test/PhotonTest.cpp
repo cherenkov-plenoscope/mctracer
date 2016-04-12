@@ -20,10 +20,10 @@ class PhotonTest : public ::testing::Test {};
 TEST_F(PhotonTest, creation) {
     
     double wavelength = 433e-9;
-    Photon pho(Vector3D::null, Vector3D::unit_z*1.337, wavelength);
+    Photon pho(Vec3::null, Vec3::unit_z*1.337, wavelength);
 
-    EXPECT_EQ(Vector3D::unit_z, pho.Direction());
-    EXPECT_EQ(Vector3D::null, pho.Support());
+    EXPECT_EQ(Vec3::unit_z, pho.Direction());
+    EXPECT_EQ(Vec3::null, pho.Support());
     EXPECT_EQ(1.0, pho.Direction().norm());
     EXPECT_EQ(wavelength, pho.get_wavelength());
     //creation is an interaction
@@ -33,12 +33,12 @@ TEST_F(PhotonTest, creation) {
 TEST_F(PhotonTest, reject_negative_wavelength) {
 
     EXPECT_THROW(
-        Photon pho(Vector3D::null, Vector3D::unit_x, 0.0),
+        Photon pho(Vec3::null, Vec3::unit_x, 0.0),
         Photon::BadWaveLength
     ); 
 
     EXPECT_THROW(
-        Photon pho(Vector3D::null, Vector3D::unit_x, -1.0),
+        Photon pho(Vec3::null, Vec3::unit_x, -1.0),
         Photon::BadWaveLength
     );   
 }
@@ -51,7 +51,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
     int number_of_bounces = 42;
     setup.max_number_of_interactions_per_photon = number_of_bounces;
 
-    Vector3D    pos(0,0,0);
+    Vec3    pos(0,0,0);
     Rotation3D  rot(0,0,0);
 
     // create a test setup with two mirrors bouncing the photon
@@ -99,8 +99,8 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
     //-----------send Photon----------------------
     // the photon is starting in between the to mirrors
     // traveling to the upper mirror
-    Vector3D Support(0.0,0.0,0.5);
-    Vector3D direction(0.0,0.0,1.0);
+    Vec3 Support(0.0,0.0,0.5);
+    Vec3 direction(0.0,0.0,1.0);
     double wavelength = 433e-9;
     
     Random::Mt19937 dice(Random::zero_seed);
@@ -154,7 +154,7 @@ TEST_F(PhotonTest, Reflections){
     TracerSettings setup;
     setup.use_multithread_when_possible = false;
 
-    Vector3D    pos = Vector3D::null;
+    Vec3    pos = Vec3::null;
     Rotation3D  rot = Rotation3D::null;
 
     // create a test setup with two mirrors bouncing the photon
@@ -217,8 +217,8 @@ TEST_F(PhotonTest, Reflections){
     //-----------send Photon----------------------
     // the photon is starting in between the to mirrors
     // traveling to the upper mirror
-    Vector3D Support(-2.0, 0.0, 0.0);
-    Vector3D direction = Vector3D::unit_x;
+    Vec3 Support(-2.0, 0.0, 0.0);
+    Vec3 direction = Vec3::unit_x;
 
     Random::Mt19937 prng(Random::zero_seed);
 
@@ -260,7 +260,7 @@ TEST_F(PhotonTest, Refraction){
     setup.use_multithread_when_possible = false;
 
     // create a test setup with two planes and high refractive index in between
-    Frame world("world", Vector3D::null, Rotation3D::null);
+    Frame world("world", Vec3::null, Rotation3D::null);
 
     Function::Constant water_refraction(
             1.33,
@@ -273,7 +273,7 @@ TEST_F(PhotonTest, Refraction){
     RectangularBox box;
     box.set_name_pos_rot(
         "box", 
-        Vector3D(0.0, 0.0, 1.0), 
+        Vec3(0.0, 0.0, 1.0), 
         Rotation3D(0.0, 0.0, 0.0)
     );
     box.set_outer_color(&entrance_surface_color);
@@ -286,7 +286,7 @@ TEST_F(PhotonTest, Refraction){
 
     Plane absorber(
         "absorber", 
-        Vector3D(0.0, 0.0, 3.0),
+        Vec3(0.0, 0.0, 3.0),
         Rotation3D::null
     );
     absorber.set_outer_color(&absorber_color);
@@ -317,7 +317,7 @@ TEST_F(PhotonTest, Refraction){
     for(int i=1; i<=num_phot; i++) {
         
         Photon *P;
-        P = new Photon(Vector3D::null, Vector3D::unit_z, wavelength);
+        P = new Photon(Vec3::null, Vec3::unit_z, wavelength);
         P->set_id(i);
         photons.push_back(P);
     }
@@ -353,7 +353,7 @@ TEST_F(PhotonTest, absorbtion_in_medium){
     setup.use_multithread_when_possible = false;
 
     // create a test setup with two planes and high refractive index in between
-    Frame world("world", Vector3D::null, Rotation3D::null);
+    Frame world("world", Vec3::null, Rotation3D::null);
 
     Function::Constant free_half_path(
         1.0,
@@ -371,7 +371,7 @@ TEST_F(PhotonTest, absorbtion_in_medium){
     RectangularBox box;
     box.set_name_pos_rot(
         "box", 
-        Vector3D(0.0, 0.0, 1.0), 
+        Vec3(0.0, 0.0, 1.0), 
         Rotation3D(0.0, 0.0, 0.0)
     );
     box.set_outer_color(&entrance_surface_color);
@@ -385,7 +385,7 @@ TEST_F(PhotonTest, absorbtion_in_medium){
 
     Plane collector(
         "collector", 
-        Vector3D(0.0, 0.0, 3.0),
+        Vec3(0.0, 0.0, 3.0),
         Rotation3D::null
     );
     collector.set_outer_color(&absorber_color);
@@ -415,7 +415,7 @@ TEST_F(PhotonTest, absorbtion_in_medium){
     for(int i=1; i<=num_phot; i++) {
         
         Photon *P;
-        P = new Photon(Vector3D::null, Vector3D::unit_z, wavelength);
+        P = new Photon(Vec3::null, Vec3::unit_z, wavelength);
         P->set_id(i);
         photons.push_back(P);
     }

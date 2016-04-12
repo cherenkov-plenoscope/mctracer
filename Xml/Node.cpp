@@ -204,18 +204,18 @@ Tuple3 Node::attribute2Tuple3(const string attribute_name)const {
     return t3;
 }
 
-Vector3D Node::attribute2Vector3D(const string attribute_name)const {
+Vec3 Node::attribute2Vec3(const string attribute_name)const {
 
     try{
 
         Tuple3 t3 = attribute2Tuple3(attribute_name);
-        return Vector3D(t3.x, t3.y, t3.z);
+        return Vec3(t3.x, t3.y, t3.z);
     }catch(std::exception &error) {
 
         stringstream info;
-        info << "Can not parse to Vector3D.\n";
+        info << "Can not parse to Vec3.\n";
         info << "\n\n" << error.what() << "\n";
-        throw AttributeIsNoVector3D(info.str());
+        throw AttributeIsNoVec3(info.str());
     }
 }
 

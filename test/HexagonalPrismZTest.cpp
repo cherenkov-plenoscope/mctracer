@@ -24,7 +24,7 @@ TEST_F(HexagonalPrismZTest, is_inside) {
 	HexagonalPrismZ hexBound;
 	hexBound.set_outer_radius(1.0);
 
-	Vector3D vec(0.0, 0.0, 0.0);
+	Vec3 vec(0.0, 0.0, 0.0);
 	EXPECT_TRUE(hexBound.is_inside(&vec));
 
 	vec.set(0.0, inner_radius-0.01, 0.0);

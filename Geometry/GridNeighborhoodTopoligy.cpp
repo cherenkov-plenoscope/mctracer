@@ -2,7 +2,7 @@
 #include <algorithm>
 //------------------------------------------------------------------------------
 GridNeighborhoodTopoligy::GridNeighborhoodTopoligy(
-	const std::vector<Vector3D> *grid,
+	const std::vector<Vec3> *grid,
 	const double neighborhood_radius
 ) {
 	this->grid = grid;

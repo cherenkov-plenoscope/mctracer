@@ -12,7 +12,7 @@ CameraDevice::~CameraDevice() {
 	delete image;
 }
 //------------------------------------------------------------------------------
-void CameraDevice::update_position(const Vector3D new_cam_pos_in_world) {
+void CameraDevice::update_position(const Vec3 new_cam_pos_in_world) {
 	update_position_and_orientation(
 		new_cam_pos_in_world, 
 		CameraOrientationInWorld
@@ -27,7 +27,7 @@ void CameraDevice::update_orientation(const Rotation3D new_cam_rot_in_world) {
 }
 //------------------------------------------------------------------------------
 void CameraDevice::update_position_and_orientation(		
-	const Vector3D new_cam_pos_in_world,
+	const Vec3 new_cam_pos_in_world,
 	const Rotation3D new_cam_rot_in_world
 ){
 	set_position_and_orientation(new_cam_pos_in_world, new_cam_rot_in_world);
@@ -35,7 +35,7 @@ void CameraDevice::update_position_and_orientation(
 }
 //------------------------------------------------------------------------------
 void CameraDevice::set_position_and_orientation(	
-	const Vector3D cam_pos_in_world,
+	const Vec3 cam_pos_in_world,
 	const Rotation3D cam_rot_in_world
 ){
 	this->CameraPositionInWorld = cam_pos_in_world;
@@ -48,7 +48,7 @@ void CameraDevice::set_position_and_orientation(
 }
 //------------------------------------------------------------------------------
 void CameraDevice::update_optical_axis_and_orientation() {
-	CameraPointingDirection = Vector3D::unit_z;
+	CameraPointingDirection = Vec3::unit_z;
 	T_Camera2World.transform_orientation(&CameraPointingDirection);
 
 	OpticalAxis.SetSupport(CameraPositionInWorld);
@@ -56,16 +56,16 @@ void CameraDevice::update_optical_axis_and_orientation() {
 }
 //------------------------------------------------------------------------------
 void CameraDevice::set_pointing_direction(	
-	Vector3D camera_pointing_direction_in_World,
-	Vector3D camera_image_upwards_image_dir_in_world
+	Vec3 camera_pointing_direction_in_World,
+	Vec3 camera_image_upwards_image_dir_in_world
 ){
 	camera_pointing_direction_in_World.normalize();
 	
 	// image orientation is defined by x,y.
 	// camera y is supposed to point "upwards" in world system
-	Vector3D cam_z_axis_in_world = camera_pointing_direction_in_World;
-	Vector3D cam_y_axis_in_world = camera_image_upwards_image_dir_in_world;
-	Vector3D cam_x_axis_in_world = 
+	Vec3 cam_z_axis_in_world = camera_pointing_direction_in_World;
+	Vec3 cam_y_axis_in_world = camera_image_upwards_image_dir_in_world;
+	Vec3 cam_x_axis_in_world = 
 		cam_y_axis_in_world.cross(cam_z_axis_in_world);
 	
 	T_Camera2World.set_transformation(
@@ -78,9 +78,9 @@ void CameraDevice::set_pointing_direction(
 	update_optical_axis_and_orientation();
 }
 //------------------------------------------------------------------------------
-Vector3D CameraDevice::get_image_upwards_direction_in_world_frame()const{
+Vec3 CameraDevice::get_image_upwards_direction_in_world_frame()const{
 
-	Vector3D image_upwards_direction_in_world_frame = Vector3D::unit_y;
+	Vec3 image_upwards_direction_in_world_frame = Vec3::unit_y;
 	
 	T_Camera2World.transform_orientation(
 		&image_upwards_direction_in_world_frame
@@ -107,7 +107,7 @@ std::string CameraDevice::get_camera_print()const{
 	return out.str();
 }
 //------------------------------------------------------------------------------
-Vector3D CameraDevice::get_normalized_pointing_direction()const{
+Vec3 CameraDevice::get_normalized_pointing_direction()const{
 	return CameraPointingDirection/CameraPointingDirection.norm();
 }
 //------------------------------------------------------------------------------
@@ -146,7 +146,7 @@ void CameraDevice::save_image(const std::string image_path)const {
 	image->save(image_path);
 }
 //------------------------------------------------------------------------------
-Vector3D CameraDevice::get_position_in_world()const{
+Vec3 CameraDevice::get_position_in_world()const{
 	return CameraPositionInWorld;
 }
 //------------------------------------------------------------------------------
@@ -154,8 +154,8 @@ Rotation3D CameraDevice::get_rotation_in_world()const{
 	return CameraOrientationInWorld;
 }
 //------------------------------------------------------------------------------
-Vector3D CameraDevice::direction_to_the_right_of_the_camera()const{
-	return Vector3D::unit_z.cross(get_normalized_pointing_direction());	
+Vec3 CameraDevice::direction_to_the_right_of_the_camera()const{
+	return Vec3::unit_z.cross(get_normalized_pointing_direction());	
 }
 Ray CameraDevice::get_optical_axis_in_world()const{
 	return OpticalAxis;

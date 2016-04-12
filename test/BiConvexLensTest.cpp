@@ -58,7 +58,7 @@ protected:
 
 		lens->set_name_pos_rot(
 			"little_lens",
-			Vector3D::null,
+			Vec3::null,
 			Rotation3D::null
 		);
 
@@ -87,7 +87,7 @@ protected:
 
 		image_sensor->set_name_pos_rot(
 			"sensor_disc",
-			Vector3D(0.0, 0.0, -1.0), 
+			Vec3(0.0, 0.0, -1.0), 
 			Rotation3D::null
 		);
 
@@ -112,7 +112,7 @@ protected:
 
 		test_bench->set_name_pos_rot(
 			"BiConvexLens_test_world",
-			Vector3D::null,
+			Vec3::null,
 			Rotation3D::null
 		);  
 
@@ -132,7 +132,7 @@ TEST_F(BiConvexLensTest, send_photon_frontal_into_lens) {
 	
 	for(uint i=0; i<total_propagations; i++) {
 
-		Photon blue_photon(Vector3D(0.0, 0.0, 1.0), Vector3D(0.0, 0.0, -1.0), 433e-9);
+		Photon blue_photon(Vec3(0.0, 0.0, 1.0), Vec3(0.0, 0.0, -1.0), 433e-9);
 		blue_photon.propagate_in(lens_test_bench_environment);
 
 		if(2.0 == blue_photon.get_accumulative_distance())
@@ -156,7 +156,7 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 	HomoTrafo3D Trafo;
 	Trafo.set_transformation(
 		Rotation3D(0.0,-Deg2Rad(180.0),0.0), 
-		Vector3D(0.0, 0.0 ,1.0)
+		Vec3(0.0, 0.0 ,1.0)
 	);
 
 	Photons::transform_all_photons(Trafo, photons);

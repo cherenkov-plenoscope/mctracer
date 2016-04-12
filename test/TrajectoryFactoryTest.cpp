@@ -7,7 +7,7 @@ class TrajectoryFactoryTest : public ::testing::Test {
 };
 //------------------------------------------------------------------------------
 TEST_F(TrajectoryFactoryTest, constructor_using_RayForPropagation) {
-  RayForPropagation ray(Vector3D::null, Vector3D(0.0, 0.0, 1.0));
+  RayForPropagation ray(Vec3::null, Vec3(0.0, 0.0, 1.0));
 
   TrajectoryFactory tra_fac(&ray);
 

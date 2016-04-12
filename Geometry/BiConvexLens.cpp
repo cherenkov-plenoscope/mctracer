@@ -11,7 +11,7 @@ void BiConvexLens::set_curvature_radius_and_aperture_radius(
 
 	front_cap.set_name_pos_rot(
 		name + "_front_cap",
-		Vector3D(0.0, 0.0, -cap_hight),
+		Vec3(0.0, 0.0, -cap_hight),
 		Rotation3D::null
 	);
 	front_cap.take_boundary_layer_properties_but_inside_out_from(this);
@@ -20,7 +20,7 @@ void BiConvexLens::set_curvature_radius_and_aperture_radius(
 
 	rear_cap.set_name_pos_rot(
 		name + "_rear_cap",
-		Vector3D(0.0, 0.0, cap_hight),
+		Vec3(0.0, 0.0, cap_hight),
 		Rotation3D(M_PI, 0.0, 0.0)
 	);
 	rear_cap.take_boundary_layer_properties_but_inside_out_from(this);

@@ -34,7 +34,7 @@ SurfaceEntity::SurfaceEntity() {
 //------------------------------------------------------------------------------
 SurfaceEntity::SurfaceEntity(
 	const std::string new_name,
-    const Vector3D    new_pos,
+    const Vec3    new_pos,
     const Rotation3D  new_rot)
 	: 	Frame(new_name, new_pos, new_rot)	
 {

@@ -58,7 +58,7 @@ void CameraManForStereo3D::take_right_image(
 	right_image = new CameraImage(camera->get_image());
 }
 
-Vector3D CameraManForStereo3D::offset_to_the_right()const {
+Vec3 CameraManForStereo3D::offset_to_the_right()const {
 	return 	camera->direction_to_the_right_of_the_camera()*
 		stereo_offset_in_m/2.0;
 }

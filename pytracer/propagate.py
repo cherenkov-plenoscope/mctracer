@@ -58,8 +58,8 @@ def make_photons(event_bunches, causal_supports, causal_directions):
     wavelength = (np.abs(b['lambda'])*1e-9).astype(np.float64)
     for i in range(N):
         cherenkov_photon = T.Photon(
-            T.Vector3D(*causal_supports[i]),
-            T.Vector3D(*(-causal_directions[i])),
+            T.Vec3(*causal_supports[i]),
+            T.Vec3(*(-causal_directions[i])),
             wavelength[i])
         cherenkov_photon.set_id(i)
         photons.append(cherenkov_photon)

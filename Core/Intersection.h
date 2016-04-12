@@ -11,7 +11,7 @@ class Ray;
 #include <iostream>
 #include <string>
 #include <sstream>
-#include "Core/Vector3D.h"
+#include "Core/Vec3.h"
 #include "Core/SurfaceEntity.h"
 
 //=================================
@@ -19,8 +19,8 @@ class Intersection {
 protected:
 
 	const SurfaceEntity* object;
-	Vector3D intersection_point;
-	Vector3D surfacenormal_in_intersection_point;
+	Vec3 intersection_point;
+	Vec3 surfacenormal_in_intersection_point;
 	double distance_of_ray_in_m;
 	bool _from_outside_to_inside;
 public:
@@ -29,22 +29,22 @@ public:
 	Intersection();
 	Intersection(
 		const SurfaceEntity* intersectiong_object,
-		const Vector3D intersection_vector,
-		const Vector3D surfacenormal_in_intersection_point,
+		const Vec3 intersection_vector,
+		const Vec3 surfacenormal_in_intersection_point,
 		const double distance_of_ray_support_to_intersection,
-		const Vector3D incident_in_obj_sys
+		const Vec3 incident_in_obj_sys
 	);
 	bool does_intersect()const;
 	const SurfaceEntity * get_object()const;
-	Vector3D get_intersection_vector_in_object_system()const;
-	Vector3D get_intersection_vector_in_world_system()const;
-	Vector3D get_surface_normal_in_object_system()const;
-	Vector3D get_surface_normal_in_world_system()const;
+	Vec3 get_intersection_vector_in_object_system()const;
+	Vec3 get_intersection_vector_in_world_system()const;
+	Vec3 get_surface_normal_in_object_system()const;
+	Vec3 get_surface_normal_in_world_system()const;
 	double get_intersection_distance()const;
 	std::string get_print()const;
-	void get_reflection_direction_in_object_system(Vector3D* vec)const;
-	Vector3D get_reflection_direction_in_world_system(
-		Vector3D incomming_dir_in_world
+	void get_reflection_direction_in_object_system(Vec3* vec)const;
+	Vec3 get_reflection_direction_in_world_system(
+		Vec3 incomming_dir_in_world
 	)const;
 	double get_facing_reflection_propability(const double wavelength)const;
 	double get_refractive_index_going_to(const double wavelength)const;
@@ -56,14 +56,14 @@ public:
 	const Color get_facing_color()const;
 	const HomoTrafo3D* world2object()const;
 	const HomoTrafo3D* object2world()const;
-	Vector3D get_normal_in_faceing_surface_system()const;
+	Vec3 get_normal_in_faceing_surface_system()const;
 	bool going_to_default_refractive_index()const;
 	bool operator<(const Intersection& other) const;
 	static bool compare(const Intersection* one, const Intersection* two);
 protected:
 
 	bool ray_is_running_from_outside_to_inside(
-		const Vector3D incident_in_obj_sys
+		const Vec3 incident_in_obj_sys
 	)const;
 };
 #endif // __INTERSECTION_H_INCLUDED__ 

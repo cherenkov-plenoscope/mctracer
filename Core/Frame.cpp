@@ -6,13 +6,13 @@ const double Frame::minimal_structure_size = 1e-6;
 //------------------------------------------------------------------------------
 Frame* Frame::void_frame = new Frame(
 	"void_frame",
-	Vector3D::null,
+	Vec3::null,
 	Rotation3D::null
 );
 //------------------------------------------------------------------------------
 Frame::Frame():radius_of_sphere_enclosing_all_children(0.0), root_frame(this) {}
 //------------------------------------------------------------------------------
-Frame::Frame(const string name, const Vector3D pos, const Rotation3D rot): Frame() { 
+Frame::Frame(const string name, const Vec3 pos, const Rotation3D rot): Frame() { 
     set_name_pos_rot(name, pos, rot); 
 }
 //------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ HomoTrafo3D Frame::calculate_frame2world_only_based_on_mother()const {
 		return T_frame2mother;
 }
 //------------------------------------------------------------------------------
-void Frame::set_name_pos_rot(const string name,	const Vector3D pos,	const Rotation3D rot) {
+void Frame::set_name_pos_rot(const string name,	const Vec3 pos,	const Rotation3D rot) {
 	this->set_name(name);
 	this->pos_in_mother = pos;
 	this->rot_in_mother = rot;
@@ -400,7 +400,7 @@ void Frame::cluster_using_helper_frames() {
 					stringstream sector_name;
 					sector_name << "octant_" << sector;
 					
-					Vector3D mean_pos_in_mother = get_mean_pos_in_mother(
+					Vec3 mean_pos_in_mother = get_mean_pos_in_mother(
 						oct_tree[sector]
 					);
 
@@ -450,8 +450,8 @@ void Frame::warn_about_neglection_of(const Frame* frame)const {
 	std::cout << out.str();	
 }
 //------------------------------------------------------------------------------
-Vector3D Frame::get_mean_pos_in_mother(vector<Frame*> frames)const {
-	Vector3D sum_pos = Vector3D::null;
+Vec3 Frame::get_mean_pos_in_mother(vector<Frame*> frames)const {
+	Vec3 sum_pos = Vec3::null;
 
 	for(Frame* frame : frames)
 		sum_pos = sum_pos + frame->pos_in_mother;
@@ -464,12 +464,12 @@ bool Frame::positions_in_mother_are_too_close_together(vector<Frame*> frames)con
 		if(frames.size() < 2)
 			return false;
 
-		Vector3D mean_pos_in_mother = get_mean_pos_in_mother(frames);
+		Vec3 mean_pos_in_mother = get_mean_pos_in_mother(frames);
 
-		Vector3D u = Vector3D::null;
+		Vec3 u = Vec3::null;
 		for(Frame* frame : frames) {
-			Vector3D r =  frame->pos_in_mother - mean_pos_in_mother;
-			u = u + Vector3D(
+			Vec3 r =  frame->pos_in_mother - mean_pos_in_mother;
+			u = u + Vec3(
 				r.x()*r.x(), 
 				r.y()*r.y(), 
 				r.z()*r.z()
@@ -487,7 +487,7 @@ string Frame::get_name()const {
 	return name; 
 }
 //------------------------------------------------------------------------------
-const Vector3D* Frame::get_position_in_mother()const {
+const Vec3* Frame::get_position_in_mother()const {
     return &pos_in_mother;
 }
 //------------------------------------------------------------------------------
@@ -495,7 +495,7 @@ const Rotation3D* Frame::get_rotation_in_mother()const {
     return &rot_in_mother;
 }
 //------------------------------------------------------------------------------
-const Vector3D* Frame::get_position_in_world()const {
+const Vec3* Frame::get_position_in_world()const {
     return &pos_in_world;
 }
 //------------------------------------------------------------------------------

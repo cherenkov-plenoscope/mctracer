@@ -18,7 +18,7 @@ public:
 	using CameraDevice::CameraDevice;
 
 	void update_position_and_orientation(		
-		const Vector3D cam_pos_in_world,
+		const Vec3 cam_pos_in_world,
 		const Rotation3D cam_rot_in_world
 	);
 
@@ -36,19 +36,19 @@ public:
 	)const;
 	
 private:
-	Vector3D principal_point;
-	Vector3D SensorDirectionHori;
-	Vector3D SensorDirectionVert;
+	Vec3 principal_point;
+	Vec3 SensorDirectionHori;
+	Vec3 SensorDirectionVert;
 	double FieldOfView_in_Rad;
 	double dist_camera_support_to_principal_point;
 
 	void update_principal_point_for_current_FoV();
 
-	Vector3D get_intersection_of_ray_on_image_sensor_for_pixel(
+	Vec3 get_intersection_of_ray_on_image_sensor_for_pixel(
 		const int row, const int col
 	)const;
 
-	Vector3D get_direction_of_ray_for_pixel(
+	Vec3 get_direction_of_ray_for_pixel(
 		const int row, const int col
 	)const;
 

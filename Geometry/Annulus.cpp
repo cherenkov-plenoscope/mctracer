@@ -39,7 +39,7 @@ const Intersection* Annulus::calculate_intersection_with(const Ray* ray)const {
 	if( xyPlaneRayEquation.has_causal_solution() ){
 		
 		double v = xyPlaneRayEquation.get_ray_parameter_for_intersection();
-		Vector3D intersection_vector = ray->PositionOnRay(v);		
+		Vec3 intersection_vector = ray->PositionOnRay(v);		
 
 		if(	outer_bound.is_inside(&intersection_vector) && 
 			!inner_bound.is_inside(&intersection_vector)

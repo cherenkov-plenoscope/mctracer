@@ -43,9 +43,9 @@ private:
 	double y_pos_on_xy_plane_in_m(const uint i)const;
 	double wavelength_in_m(const uint i)const;
 	double production_height_in_m(const uint i)const;
-	Vector3D intersection_with_xy_floor_plane(const uint i)const;
+	Vec3 intersection_with_xy_floor_plane(const uint i)const;
 	Photon* get_mctracer_photon(const uint i)const;
-	Vector3D causal_direction(const uint i)const;
+	Vec3 causal_direction(const uint i)const;
 };
 
 #endif // __MMCSCORSIKAEVENT_H_INCLUDE__ 

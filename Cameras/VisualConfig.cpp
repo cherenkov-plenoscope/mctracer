@@ -13,7 +13,7 @@ VisualConfig::VisualConfig():sky_dome(Color::sky_blue) {
 	snapshot.image_sensor_size_along_a_row = 0.07; //IMAX 70mm format
 
 	global_illumination.on = true;
-	global_illumination.incoming_direction = Vector3D(0.6, 0.2 ,1.0);
+	global_illumination.incoming_direction = Vec3(0.6, 0.2 ,1.0);
 
 	photon_trajectories.radius = 0.025;
 }

@@ -20,7 +20,7 @@ void HexGridAnnulus::init_grid(
 	for(int a=-sample_radius; a<=sample_radius; a++) {
 		for(int b=-sample_radius; b<=sample_radius; b++) {
 
-			Vector3D cell_ab = unit_hex_a*a + unit_hex_b*b;
+			Vec3 cell_ab = unit_hex_a*a + unit_hex_b*b;
 
 			const double cell_norm = cell_ab.norm();
 
@@ -30,20 +30,20 @@ void HexGridAnnulus::init_grid(
 	}
 }
 //------------------------------------------------------------------------------
-std::vector<Vector3D> HexGridAnnulus::get_grid()const {
+std::vector<Vec3> HexGridAnnulus::get_grid()const {
 	return grid;
 }
 //------------------------------------------------------------------------------
 void HexGridAnnulus::init_unit_vectors_hex_grid_with_length(const double spacing) { 
-	unit_hex_b = Vector3D::unit_y*spacing;
-	unit_hex_a = (Vector3D::unit_y*0.5+Vector3D::unit_x*sqrt(3.0)/2.0)*spacing;
+	unit_hex_b = Vec3::unit_y*spacing;
+	unit_hex_a = (Vec3::unit_y*0.5+Vec3::unit_x*sqrt(3.0)/2.0)*spacing;
 }
 //------------------------------------------------------------------------------
 std::string HexGridAnnulus::get_print()const {
 	std::stringstream out;
 
 	uint number = 1;
-	for(Vector3D vec : grid)
+	for(Vec3 vec : grid)
 		out << number++ << " " << vec << "\n";
 
 	return out.str();

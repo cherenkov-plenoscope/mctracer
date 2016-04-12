@@ -13,7 +13,7 @@
 #include <math.h>
 #include <vector>
 #include <algorithm>
-#include "Core/Vector3D.h"
+#include "Core/Vec3.h"
 #include "Core/Frame.h"
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
@@ -26,25 +26,25 @@ using std::vector;
 class Ray : public Printable{
 protected:
 
-	Vector3D support;	
-	Vector3D direction;
+	Vec3 support;	
+	Vec3 direction;
 public:
 
-	Ray(const Vector3D support, const Vector3D direction);
-	void SetDirection(const Vector3D ndir);
-	void SetSupport(const Vector3D nsup);
-	Vector3D Support()const;
-	Vector3D Direction()const;
-	Vector3D PositionOnRay(const double scalar)const;
+	Ray(const Vec3 support, const Vec3 direction);
+	void SetDirection(const Vec3 ndir);
+	void SetSupport(const Vec3 nsup);
+	Vec3 Support()const;
+	Vec3 Direction()const;
+	Vec3 PositionOnRay(const double scalar)const;
 	void transform(const HomoTrafo3D *T);
 	virtual string get_print()const;
 	double get_parameter_on_ray_for_closest_distance_to_point(
-		const Vector3D &point
+		const Vec3 &point
 	)const;
 
 	
 
-	double get_closest_distance_to_point(const Vector3D &point)const;
+	double get_closest_distance_to_point(const Vec3 &point)const;
 	
 	Ray get_ray_transformed_in_object_system_of(const Frame* frame)const;
 	
@@ -66,7 +66,7 @@ public:
 protected:
 	Ray();
 
-	void SetRay(const Vector3D nsup,const Vector3D ndir);	
+	void SetRay(const Vec3 nsup,const Vec3 ndir);	
 
 	vector<const Frame*> get_intersection_candidate_objects(
 		const Frame* frame

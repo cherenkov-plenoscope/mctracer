@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "Core/SurfaceEntity.h"
-#include "Core/Vector3D.h"
+#include "Core/Vec3.h"
 #include "Core/Intersection.h"
 #include "ZaxisCylinderRayIntersectionEquation.h"
 
@@ -22,11 +22,11 @@ protected:
 public:
 
 	Cylinder();
-	Cylinder(const string name, const Vector3D pos, const Rotation3D rot);
+	Cylinder(const string name, const Vec3 pos, const Rotation3D rot);
 	void set_cylinder(
 		const double radius, 
-		const Vector3D start_pos, 
-		const Vector3D end_pos
+		const Vec3 start_pos, 
+		const Vec3 end_pos
 	);
 	void set_radius_and_length(const double radius, const double length);
 	string get_print()const;
@@ -34,19 +34,19 @@ public:
 private:
 
 	void set_cylinder_length(const double Length);
-	void set_cylinder_length(const Vector3D start_pos, const Vector3D end_pos);
+	void set_cylinder_length(const Vec3 start_pos, const Vec3 end_pos);
 	void set_cylinder_radius(const double new_cylinder_radius);
 	void post_initialize_radius_of_enclosing_sphere();
 	void assert_start_and_end_point_are_distinct(
-		const Vector3D start_pos, const Vector3D end_pos
+		const Vec3 start_pos, const Vec3 end_pos
 	)const;
 	void set_position_and_orientation(
-		const Vector3D start_pos,
-		const Vector3D end_pos
+		const Vec3 start_pos,
+		const Vec3 end_pos
 	);
-	bool is_in_cylinders_z_bounds(const Vector3D* vec)const;
-	Vector3D get_surface_normal_for_intersection_vec(const Vector3D* vec)const;
-	Rotation3D calculate_new_rotation_in_mother(const Vector3D rotsym_axis)const;
+	bool is_in_cylinders_z_bounds(const Vec3* vec)const;
+	Vec3 get_surface_normal_for_intersection_vec(const Vec3* vec)const;
+	Rotation3D calculate_new_rotation_in_mother(const Vec3 rotsym_axis)const;
 public:
 
     class BadRadius :public TracerException{

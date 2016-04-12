@@ -40,7 +40,7 @@ bool MmcsCorsikaEvent::can_be_reused_again()const {
 //------------------------------------------------------------------------------
 Photon* MmcsCorsikaEvent::get_mctracer_photon(const uint i)const {
 
-	Vector3D causal_dir = causal_direction(i);
+	Vec3 causal_dir = causal_direction(i);
 
 	Ray ray_running_upwards_from_ground_to_pos_of_production(
 		intersection_with_xy_floor_plane(i),
@@ -51,7 +51,7 @@ Photon* MmcsCorsikaEvent::get_mctracer_photon(const uint i)const {
 		production_height_in_m(i) - intersection_with_xy_floor_plane(i).z()
 		)/-causal_dir.z();
 
-	Vector3D causal_support = 
+	Vec3 causal_support = 
 		ray_running_upwards_from_ground_to_pos_of_production.
 		PositionOnRay(ray_parameter_for_production_height);
 
@@ -63,7 +63,7 @@ Photon* MmcsCorsikaEvent::get_mctracer_photon(const uint i)const {
 	return cherenkov_photon;
 }
 //------------------------------------------------------------------------------
-Vector3D MmcsCorsikaEvent::causal_direction(const uint i)const {
+Vec3 MmcsCorsikaEvent::causal_direction(const uint i)const {
 
 	const double z = sqrt(
 		1.0 -
@@ -73,7 +73,7 @@ Vector3D MmcsCorsikaEvent::causal_direction(const uint i)const {
 		photon_data.get_cosine_between_dir_and_world_y_axis(i)
 	);
 
-	Vector3D causal_dir(
+	Vec3 causal_dir(
 		double(photon_data.get_cosine_between_dir_and_world_x_axis(i)),
 		double(photon_data.get_cosine_between_dir_and_world_y_axis(i)),
 		z
@@ -82,9 +82,9 @@ Vector3D MmcsCorsikaEvent::causal_direction(const uint i)const {
 	return causal_dir*-1.0;
 }
 //------------------------------------------------------------------------------
-Vector3D MmcsCorsikaEvent::intersection_with_xy_floor_plane(const uint i)const {
+Vec3 MmcsCorsikaEvent::intersection_with_xy_floor_plane(const uint i)const {
 	
-	return Vector3D(
+	return Vec3(
 		x_pos_on_xy_plane_in_m(i) - x_core_position_in_m(), 
 		y_pos_on_xy_plane_in_m(i) - y_core_position_in_m(), 
 		0.0

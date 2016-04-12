@@ -29,7 +29,7 @@ SceneryFactory::SceneryFactory(const string path): xml_path(path), xml_doc(path)
     telescopes = new TelescopeArrayControl();
     raw_sensors = new std::vector<PhotonSensor::Sensor*>;
 
-    scenery = new Frame("scenery", Vector3D::null, Rotation3D::null);
+    scenery = new Frame("scenery", Vec3::null, Rotation3D::null);
     make_geometry(scenery, root_node);
     scenery->init_tree_based_on_mother_child_relations();
 }
@@ -169,8 +169,8 @@ Frame* SceneryFactory::add_Cylinder(Frame* mother, const Node node) {
     cyl->set_inner_reflection(surface_refl(node));
     cyl->set_cylinder(
         node.child("set_cylinder").attribute2double("radius"),
-        node.child("set_cylinder").attribute2Vector3D("start_pos"),
-        node.child("set_cylinder").attribute2Vector3D("end_pos")
+        node.child("set_cylinder").attribute2Vec3("start_pos"),
+        node.child("set_cylinder").attribute2Vec3("end_pos")
     );
     mother->set_mother_and_child(cyl);
     return cyl;

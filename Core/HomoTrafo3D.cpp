@@ -24,7 +24,7 @@ HomoTrafo3D::HomoTrafo3D():
     // [0 0 0 1] //last row is always the same
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::set_transformation(const Rotation3D R, const Vector3D pos) {
+void HomoTrafo3D::set_transformation(const Rotation3D R, const Vec3 pos) {
 
     HomoTrafo3D TrafRotation;
     TrafRotation.set_rotation_component(R);
@@ -43,7 +43,7 @@ void HomoTrafo3D::set_rotation_component(const Rotation3D R) {
         set_rotation_component_based_on_rot_axis(R);
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::set_translation_component(const Vector3D &t) {
+void HomoTrafo3D::set_translation_component(const Vec3 &t) {
     T[0][3] = t.x();
     T[1][3] = t.y();
     T[2][3] = t.z();
@@ -53,7 +53,7 @@ void HomoTrafo3D::set_rotation_component_based_on_rot_axis(
     const Rotation3D R
 ) {
         // ensure rot_axis is a unit vector
-        Vector3D rot_axis = R.get_rot_axis();
+        Vec3 rot_axis = R.get_rot_axis();
         rot_axis = rot_axis/rot_axis.norm();
         
         const double rx = rot_axis.x();
@@ -102,10 +102,10 @@ void HomoTrafo3D::set_rotation_component_based_on_xyz_angles(
 }
 //------------------------------------------------------------------------------
 void HomoTrafo3D::set_transformation(
-    Vector3D rot_x,
-    Vector3D rot_y,
-    Vector3D rot_z,
-    const Vector3D pos
+    Vec3 rot_x,
+    Vec3 rot_y,
+    Vec3 rot_z,
+    const Vec3 pos
 ) { 
     rot_x = rot_x/rot_x.norm();
     rot_y = rot_y/rot_y.norm();
@@ -123,25 +123,25 @@ void HomoTrafo3D::set_transformation(
     *this = TrafTranslation*TrafRotation;
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::set_x_column_of_rotation_component(const Vector3D &R) {
+void HomoTrafo3D::set_x_column_of_rotation_component(const Vec3 &R) {
     T[0][0] = R.x();
     T[1][0] = R.y();
     T[2][0] = R.z();
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::set_y_column_of_rotation_component(const Vector3D &R) {
+void HomoTrafo3D::set_y_column_of_rotation_component(const Vec3 &R) {
     T[0][1] = R.x();
     T[1][1] = R.y();
     T[2][1] = R.z();    
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::set_z_column_of_rotation_component(const Vector3D &R) {
+void HomoTrafo3D::set_z_column_of_rotation_component(const Vec3 &R) {
     T[0][2] = R.x();
     T[1][2] = R.y();
     T[2][2] = R.z();    
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::transform_orientation(Vector3D* vector)const{
+void HomoTrafo3D::transform_orientation(Vec3* vector)const{
     vector->set(
         //x
         vector->x()*T[0][0] + 
@@ -158,13 +158,13 @@ void HomoTrafo3D::transform_orientation(Vector3D* vector)const{
     );
 }
 //------------------------------------------------------------------------------
-Vector3D HomoTrafo3D::get_transformed_orientation(const Vector3D& orientation)const {
-    Vector3D transformed_orientation = orientation;
+Vec3 HomoTrafo3D::get_transformed_orientation(const Vec3& orientation)const {
+    Vec3 transformed_orientation = orientation;
     transform_orientation(&transformed_orientation);
     return transformed_orientation; 
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::transform_position(Vector3D* vector)const {
+void HomoTrafo3D::transform_position(Vec3* vector)const {
     vector->set(
         //x
         vector->x()*T[0][0] + 
@@ -181,14 +181,14 @@ void HomoTrafo3D::transform_position(Vector3D* vector)const {
     );
 }
 //------------------------------------------------------------------------------
-Vector3D HomoTrafo3D::get_transformed_position(const Vector3D& pos)const {
-    Vector3D transformed_position = pos;
+Vec3 HomoTrafo3D::get_transformed_position(const Vec3& pos)const {
+    Vec3 transformed_position = pos;
     transform_position(&transformed_position);
     return transformed_position;
 }
 //------------------------------------------------------------------------------
-Vector3D HomoTrafo3D::get_translation()const {
-    Vector3D translation_component;
+Vec3 HomoTrafo3D::get_translation()const {
+    Vec3 translation_component;
 
     translation_component.set(
         T[0][3], 

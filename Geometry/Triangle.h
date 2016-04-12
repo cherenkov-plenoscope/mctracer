@@ -21,9 +21,9 @@
 //=================================
 class Triangle  :public SurfaceEntity{	
 
-	Vector3D A;
-	Vector3D B;	
-	Vector3D C;
+	Vec3 A;
+	Vec3 B;	
+	Vec3 C;
 public:
 	void set_corners_in_xy_plane(
 		const double Ax, const double Ay,
@@ -32,10 +32,10 @@ public:
 	);
 
 	void set_normal_and_3_vertecies(
-		const Vector3D nomal,
-		Vector3D a,
-		Vector3D b,
-		Vector3D c
+		const Vec3 nomal,
+		Vec3 a,
+		Vec3 b,
+		Vec3 c
 	);
 
 	std::string get_print()const;
@@ -51,9 +51,9 @@ private:
 
 
 	double sign(
-		const Vector3D &P1, const Vector3D &P2, const Vector3D &P3
+		const Vec3 &P1, const Vec3 &P2, const Vec3 &P3
 	)const;
 
-	bool is_inside_triangle(const Vector3D &intersec_vec)const;
+	bool is_inside_triangle(const Vec3 &intersec_vec)const;
 }; 
 #endif // __TRIANGLE_H_INCLUDED__ 

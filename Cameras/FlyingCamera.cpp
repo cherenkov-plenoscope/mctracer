@@ -44,7 +44,7 @@ void FlyingCamera::create_CameraMen_to_safely_operate_the_flying_camera() {
 }
 //------------------------------------------------------------------------------
 void FlyingCamera::reset_camera() {
-	Translation_operator->set_default_position(Vector3D(0.0, 0.0, 0.0));
+	Translation_operator->set_default_position(Vec3(0.0, 0.0, 0.0));
 	Rotation_operator->set_default_rotation(Rotation3D(0.0,Deg2Rad(-90.0),0.0));
 	FoV_operator->set_default_FoV();
 }
@@ -100,7 +100,7 @@ void FlyingCamera::enter_interactive_display() {
 			break;
 			case 'y': Stereo_operator->decrease_stereo_offset();
 			break;
-			case 'g': Translation_operator->move_to(UserInteraction::get_Vector3D());
+			case 'g': Translation_operator->move_to(UserInteraction::get_Vec3());
 			break;
 			case UserInteraction::space_key: {
 				update_display_full_resolution();

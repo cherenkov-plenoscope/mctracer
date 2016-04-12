@@ -21,8 +21,8 @@ public:
 	bool has_solutions()const;
 	double get_minus_solution()const;
 	double get_plus_solution()const;
-	Vector3D get_surface_normal_given_intersection_vector(
-		const Vector3D* intersec
+	Vec3 get_surface_normal_given_intersection_vector(
+		const Vec3* intersec
 	)const;
 };
 #endif // __SPHERICALCAPRAYINTERSECTIONEQUATION_H_INCLUDED__

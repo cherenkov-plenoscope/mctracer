@@ -10,7 +10,7 @@
 // included dependencies
 #include <iostream>
 #include <random>
-#include "Core/Vector3D.h"
+#include "Core/Vec3.h"
 //==============================================================================
 
 // the Pseudo random generators
@@ -26,8 +26,8 @@ namespace Random {
 		virtual double uniform() = 0;
 		virtual void set_seed(const uint _seed);
 		void set_seed_now_using_system_clock();
-		Vector3D get_point_on_xy_disc_within_radius(const double radius);
-		Vector3D get_point_on_unitsphere_within_polar_distance(
+		Vec3 get_point_on_xy_disc_within_radius(const double radius);
+		Vec3 get_point_on_unitsphere_within_polar_distance(
 			const double max_dist
 		);
 		double expovariate(const double rate);

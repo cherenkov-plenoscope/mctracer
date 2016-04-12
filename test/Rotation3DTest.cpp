@@ -18,7 +18,7 @@ TEST_F(Rotation3DTest, ConstructorAndGetter) {
   EXPECT_TRUE(r.uses_xyz_angels());
 
   // axis mode
-  Vector3D v(0.0,0.0,1.0);
+  Vec3 v(0.0,0.0,1.0);
   double  angle = 1.52;
 
   Rotation3D p(v,angle);
@@ -40,7 +40,7 @@ TEST_F(Rotation3DTest, SetterAndGetter) {
   EXPECT_TRUE(r.uses_xyz_angels());
 
   // axis mode
-  Vector3D v(0.0,0.0,1.0);
+  Vec3 v(0.0,0.0,1.0);
   double  angle = 1.52;
 
   Rotation3D p; p.set(v,angle);
@@ -67,12 +67,12 @@ TEST_F(Rotation3DTest, SineAndCosineWhenSetXYZ) {
 //------------------------------------------------------------------------------
 TEST_F(Rotation3DTest, zoro_rot_angle) {
 
-  Rotation3D r(Vector3D::null, 0.0); 
+  Rotation3D r(Vec3::null, 0.0); 
   EXPECT_EQ(Rotation3D::null ,r); 
 
-  Rotation3D s(Vector3D::unit_z, 0.0); 
+  Rotation3D s(Vec3::unit_z, 0.0); 
   EXPECT_EQ(Rotation3D::null ,s); 
 
-  Rotation3D t(Vector3D::unit_y, 0.0); 
+  Rotation3D t(Vec3::unit_y, 0.0); 
   EXPECT_EQ(Rotation3D::null ,t); 
 }

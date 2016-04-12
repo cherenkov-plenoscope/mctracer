@@ -11,7 +11,7 @@
 #include "Color.h"
 #include "Core/TracerException.h"
 #include "Cameras/VisualConfig.h"
-#include "Vector3D.h"
+#include "Vec3.h"
 #include <string>
 #include <sstream>
 

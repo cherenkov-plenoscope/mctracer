@@ -8,7 +8,7 @@ void CameraManForTranslation::set_default_position(){
 	camera->update_position(default_position);
 }
 //------------------------------------------------------------------------------
-void CameraManForTranslation::set_default_position(const Vector3D default_pos) {
+void CameraManForTranslation::set_default_position(const Vec3 default_pos) {
 	default_position = default_pos;
 	camera->update_position(default_position);
 }
@@ -67,7 +67,7 @@ void CameraManForTranslation::move_right(const double step_in_m){
 void CameraManForTranslation::move_up() {
 	camera->update_position(
 		camera->get_position_in_world() + 
-		Vector3D::unit_z*translation_increment() 
+		Vec3::unit_z*translation_increment() 
 	);
 	if(verbose) print_camera_moved_in_direction("up");	
 }
@@ -75,12 +75,12 @@ void CameraManForTranslation::move_up() {
 void CameraManForTranslation::move_down() {
 	camera->update_position(
 		camera->get_position_in_world() - 
-		Vector3D::unit_z*translation_increment() 
+		Vec3::unit_z*translation_increment() 
 	);
 	if(verbose) print_camera_moved_in_direction("up");
 }
 //------------------------------------------------------------------------------
-void CameraManForTranslation::move_to(const Vector3D pos) {
+void CameraManForTranslation::move_to(const Vec3 pos) {
 	camera->update_position(pos);
 
 	if(verbose) {

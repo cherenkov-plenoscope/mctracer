@@ -57,7 +57,7 @@ void Geometry::set_up_flower_grid() {
 
 	const double r = 1.0 + pixel_lens_sub_pixel_distance()/lightfield_sensor_distance();
 
-	for(Vector3D pixel_pos : pixel_grid)
+	for(Vec3 pixel_pos : pixel_grid)
 		sub_pixel_flower_grid.push_back(
 			pixel_pos*r
 		);
@@ -70,8 +70,8 @@ void Geometry::set_up_sub_pixel_grid() {
 		sub_pixel_flower_template_grid.size()
 	);
 
-	for(Vector3D flower_pos : sub_pixel_flower_grid)
-		for(Vector3D sub_pixel_pos : sub_pixel_flower_template_grid)
+	for(Vec3 flower_pos : sub_pixel_flower_grid)
+		for(Vec3 sub_pixel_pos : sub_pixel_flower_template_grid)
 			sub_pixel_grid.push_back(flower_pos + sub_pixel_pos);
 }
 //------------------------------------------------------------------------------
@@ -153,7 +153,7 @@ double Geometry::outer_sensor_housing_radius()const {
 	return max_outer_sensor_radius()*config.housing_overhead;
 }
 //------------------------------------------------------------------------------
-std::vector<Vector3D> Geometry::pixel_positions()const {
+std::vector<Vec3> Geometry::pixel_positions()const {
 	return pixel_grid;
 }
 //------------------------------------------------------------------------------
@@ -161,7 +161,7 @@ vector<vector<uint>> Geometry::pixel_neighbor_relations()const {
 	return pixel_neighborhood;
 }
 //------------------------------------------------------------------------------
-std::vector<Vector3D> Geometry::sub_pixel_positions()const {
+std::vector<Vec3> Geometry::sub_pixel_positions()const {
 	return sub_pixel_grid;
 }
 //------------------------------------------------------------------------------
@@ -169,7 +169,7 @@ vector<vector<uint>> Geometry::sub_pixel_neighbor_relations()const {
 	return sub_pixel_neighborhood;
 }
 //------------------------------------------------------------------------------
-std::vector<Vector3D> Geometry::sub_pixel_flower_positions()const {
+std::vector<Vec3> Geometry::sub_pixel_flower_positions()const {
 	return sub_pixel_flower_grid;
 }
 //------------------------------------------------------------------------------
@@ -205,7 +205,7 @@ void Geometry::write_sub_pixel_positions(const string path)const {
 
 	std::vector<std::vector<double>> sub_pixels_x_y;
 
-	for(Vector3D pos : sub_pixel_grid) {
+	for(Vec3 pos : sub_pixel_grid) {
 		std::vector<double> sub_pixel_xy = {pos.x(), pos.y()};
 		sub_pixels_x_y.push_back(sub_pixel_xy);
 	}

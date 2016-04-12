@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "Core/Vector3D.h"
+#include "Core/Vec3.h"
 #include "HexagonalPrismZ.h"
 #include <iostream> 
 #include <string>
@@ -18,7 +18,7 @@
 //=================================
 class GridNeighborhoodTopoligy{
 
-	const std::vector<Vector3D> *grid;
+	const std::vector<Vec3> *grid;
 	double neighborhood_radius;
 
 	std::vector<uint> idx_x;
@@ -27,7 +27,7 @@ class GridNeighborhoodTopoligy{
 public:
 
 	GridNeighborhoodTopoligy(
-		const std::vector<Vector3D> *grid,
+		const std::vector<Vec3> *grid,
 		const double neighborhood_radius
 	);
 

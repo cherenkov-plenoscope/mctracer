@@ -11,8 +11,8 @@ bool Ray::has_intersection_with_bounding_sphere_of(const Frame* frame)const{
 		*frame->get_position_in_world()
 	);
 
-	const Vector3D q = PositionOnRay(alpha);
-	const Vector3D shortest_connection = *frame->get_position_in_world() - q;
+	const Vec3 q = PositionOnRay(alpha);
+	const Vec3 shortest_connection = *frame->get_position_in_world() - q;
 	const double dist_square = shortest_connection*shortest_connection;
 
 	if(dist_square > frame->contour_radius()*frame->contour_radius()) {

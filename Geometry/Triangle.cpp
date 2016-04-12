@@ -5,9 +5,9 @@ void Triangle::set_corners_in_xy_plane(
 	const double Bx, const double By,  
 	const double Cx, const double Cy
 ) {
-	A = Vector3D(Ax, Ay, 0.0);
-	B = Vector3D(Bx, By, 0.0);
-	C = Vector3D(Cx, Cy, 0.0);
+	A = Vec3(Ax, Ay, 0.0);
+	B = Vec3(Bx, By, 0.0);
+	C = Vec3(Cx, Cy, 0.0);
 	
 	assert_edge_length_is_non_zero((A-B).norm(), "AB");
 	assert_edge_length_is_non_zero((C-A).norm(), "AC");
@@ -17,29 +17,29 @@ void Triangle::set_corners_in_xy_plane(
 }
 //------------------------------------------------------------------------------
 void Triangle::set_normal_and_3_vertecies(
-	const Vector3D normal,
-	Vector3D a,
-	Vector3D b,
-	Vector3D c
+	const Vec3 normal,
+	Vec3 a,
+	Vec3 b,
+	Vec3 c
 ) {
 	// correct for offset
-	Vector3D pos = (a + b + c)/3.0;
+	Vec3 pos = (a + b + c)/3.0;
 	a = a - pos;
 	b = b - pos;
 	c = c - pos;
 
 	Rotation3D rot;
 
-	if(normal != Vector3D::unit_z) {
+	if(normal != Vec3::unit_z) {
 
 		// transformation to make surface normal match z-axis
-		Vector3D rot_axis = Vector3D::unit_z.cross(normal);
-		double rotation_angle = Vector3D::unit_z.get_angle_in_between_in_rad(normal);
+		Vec3 rot_axis = Vec3::unit_z.cross(normal);
+		double rotation_angle = Vec3::unit_z.get_angle_in_between_in_rad(normal);
 
 		rot = Rotation3D(rot_axis, rotation_angle);
 
 		HomoTrafo3D trafo;
-		trafo.set_transformation(rot, Vector3D::null);
+		trafo.set_transformation(rot, Vec3::null);
 		
 		HomoTrafo3D trafo_inv = trafo.inverse();
 		// transform a b c
@@ -99,12 +99,12 @@ std::string Triangle::get_print()const{
 }
 //------------------------------------------------------------------------------
 double Triangle::sign(
-	const Vector3D &P1, const Vector3D &P2, const Vector3D &P3
+	const Vec3 &P1, const Vec3 &P2, const Vec3 &P3
 )const {
     return (P1.x()-P3.x()) * (P2.y()-P3.y())-(P2.x()-P3.x()) * (P1.y()-P3.y());
 }
 //------------------------------------------------------------------------------
-bool Triangle::is_inside_triangle(const Vector3D &intersec_vec)const {
+bool Triangle::is_inside_triangle(const Vec3 &intersec_vec)const {
     bool bA, bB, bC;
 
     bA = sign(intersec_vec, A, B) < 0.0;
@@ -124,7 +124,7 @@ const Intersection* Triangle::calculate_intersection_with(const Ray* ray)const {
 	if( xyPlaneRayEquation.has_causal_solution() ){
 		
 		double v = xyPlaneRayEquation.get_ray_parameter_for_intersection();
-		Vector3D intersection_vector = ray->PositionOnRay(v);		
+		Vec3 intersection_vector = ray->PositionOnRay(v);		
 
 		if(	is_inside_triangle(intersection_vector) ) {
 

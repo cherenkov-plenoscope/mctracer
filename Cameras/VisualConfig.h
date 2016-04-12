@@ -11,7 +11,7 @@
 #include "Core/Color.h"
 #include "Core/TracerException.h"
 #include "SkyDome.h"
-#include "Core/Vector3D.h"
+#include "Core/Vec3.h"
 
 //=================================
 
@@ -33,7 +33,7 @@ struct VisualConfig {
 
 	struct GlobalIllumination {
 		bool on;
-		Vector3D incoming_direction;
+		Vec3 incoming_direction;
 	} global_illumination;
 
 	struct PhotonTrajectories{

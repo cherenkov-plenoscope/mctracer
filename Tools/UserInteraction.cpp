@@ -41,7 +41,7 @@ namespace UserInteraction {
         return user_input_key == 27;
     }
 
-    Vector3D get_Vector3D() {
+    Vec3 get_Vec3() {
 
         Tuple3 vec;
         std::string input;
@@ -59,6 +59,6 @@ namespace UserInteraction {
             }
         }
 
-        return Vector3D(vec.x, vec.y, vec.z);
+        return Vec3(vec.x, vec.y, vec.z);
     }
 }

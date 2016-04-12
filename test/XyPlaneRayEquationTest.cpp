@@ -12,7 +12,7 @@ TEST_F(XyPlaneRayEquationTest, frontal_hit) {
   for(uint i=-100; i<100; i++) {
     
     double sup_z = double(i)*1.337;
-    Ray ray(Vector3D(0.0, 0.0, sup_z),Vector3D(0.0, 0.0, 1.0));
+    Ray ray(Vec3(0.0, 0.0, sup_z),Vec3(0.0, 0.0, 1.0));
 
     XyPlaneRayIntersectionEquation eq(&ray);
 
@@ -24,7 +24,7 @@ TEST_F(XyPlaneRayEquationTest, frontal_hit) {
 //------------------------------------------------------------------------------
 TEST_F(XyPlaneRayEquationTest, no_hit_at_all) {
 
-  Ray ray(Vector3D(0.0, 0.0, 1.0), Vector3D(1.0, 0.0, 0.0));
+  Ray ray(Vec3(0.0, 0.0, 1.0), Vec3(1.0, 0.0, 0.0));
 
   XyPlaneRayIntersectionEquation eq(&ray);
 
@@ -33,8 +33,8 @@ TEST_F(XyPlaneRayEquationTest, no_hit_at_all) {
 //------------------------------------------------------------------------------
 TEST_F(XyPlaneRayEquationTest, always_ez_normal_vector) {
   
-  Ray ray(Vector3D(0.0, 0.0, 1.0), Vector3D(1.0, 0.0, 0.0));
+  Ray ray(Vec3(0.0, 0.0, 1.0), Vec3(1.0, 0.0, 0.0));
   XyPlaneRayIntersectionEquation eq(&ray);
 
-  EXPECT_EQ(Vector3D::unit_z, eq.get_plane_normal_vector());
+  EXPECT_EQ(Vec3::unit_z, eq.get_plane_normal_vector());
 }

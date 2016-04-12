@@ -17,7 +17,7 @@ protected:
 
     Frame* spheres_r1m_in_a_row(
         const uint number_of_spheres,
-        Vector3D start,
+        Vec3 start,
         const double distance_in_between_spheres_in_m
     ) {
 
@@ -26,7 +26,7 @@ protected:
 
     spheres_in_a_row_along_x_r1m->set_name_pos_rot(
         "ten_in_a_row", 
-        Vector3D::null,
+        Vec3::null,
         Rotation3D::null
     );
 
@@ -39,7 +39,7 @@ protected:
         stringstream name; name << "sphere_number_" << i+1;
         sphere->set_name_pos_rot(
         name.str(),
-        start + Vector3D(distance_in_between_spheres_in_m*i,0.0,0.0),
+        start + Vec3(distance_in_between_spheres_in_m*i,0.0,0.0),
         Rotation3D::null
         );
 
@@ -66,8 +66,8 @@ protected:
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameInteractionTest, frame_has_bounding_sphere) {
     
-    Frame* spheres_in_a_row = spheres_r1m_in_a_row(1440, Vector3D::null,2.5);
-    Ray ray(Vector3D::null,Vector3D(1.0,0.0,0.0));
+    Frame* spheres_in_a_row = spheres_r1m_in_a_row(1440, Vec3::null,2.5);
+    Ray ray(Vec3::null,Vec3(1.0,0.0,0.0));
 
     for(uint i=0; i<1e3; i++) {
 
@@ -85,30 +85,30 @@ TEST_F(RayAndFrameInteractionTest, frame_has_bounding_sphere) {
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameInteractionTest, ray_finds_first_interaction) {
 
-    Ray ray(Vector3D::null,Vector3D(1.0,0.0,0.0));
+    Ray ray(Vec3::null,Vec3(1.0,0.0,0.0));
 
     Intersection i0(
         SurfaceEntity::void_object,
-        Vector3D(0.,0.,0.),        // intersection in world
-        Vector3D::unit_z,
+        Vec3(0.,0.,0.),        // intersection in world
+        Vec3::unit_z,
         1.,                        // <-- distance, !! the only thing we need for this test
-        Vector3D::null
+        Vec3::null
     );
 
     Intersection i1(
         SurfaceEntity::void_object,
-        Vector3D(0.,0.,0.), // intersection in world
-        Vector3D::unit_z,
+        Vec3(0.,0.,0.), // intersection in world
+        Vec3::unit_z,
         2.,   // <-- distance, !! the only thing we need for this test
-        Vector3D::null
+        Vec3::null
     );
     
     Intersection i2(
         SurfaceEntity::void_object,
-        Vector3D(0.,0.,0.), // intersection in world
-        Vector3D::unit_z,
+        Vec3(0.,0.,0.), // intersection in world
+        Vec3::unit_z,
         3.,   // <-- distance, !! the only thing we need for this test
-        Vector3D::null
+        Vec3::null
     );
 
     vector<const Intersection*> intersections = {&i0, &i1, &i2};

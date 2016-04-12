@@ -19,7 +19,7 @@ protected:
 public:
 	CameraRay(){};
 
-	CameraRay(const Vector3D support, const Vector3D direction);
+	CameraRay(const Vec3 support, const Vec3 direction);
 
 	std::string get_print()const;
 

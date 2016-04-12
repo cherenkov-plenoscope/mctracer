@@ -15,7 +15,7 @@ string comment(const string &text) {
     return out.str();
 }
 //------------------------------------------------------------------------------
-string to_string(const Vector3D &vec) {
+string to_string(const Vec3 &vec) {
     std::stringstream out;
     out << "[" << vec.x() << "," << vec.y() << "," <<  vec.z() << "]";
     return out.str();

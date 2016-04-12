@@ -70,12 +70,12 @@ Photon* NightSkyBackgroundLight::get_photon_on_principal_aperture(
 
 	double wavelength = nsb_cdf.draw(prng->uniform());
 		
-	Vector3D pos_on_principal_aperture = 
+	Vec3 pos_on_principal_aperture = 
 		prng->get_point_on_xy_disc_within_radius(
 			max_principal_aperture_radius_to_trow_photons_in
 		);
 
-	Vector3D incident_direction_on_principal_aperture = 
+	Vec3 incident_direction_on_principal_aperture = 
 		prng->get_point_on_unitsphere_within_polar_distance(
 			max_tilt_vs_optical_axis_to_throw_photons_in
 		);
@@ -89,7 +89,7 @@ Photon* NightSkyBackgroundLight::get_photon_on_principal_aperture(
 		time_until_reaching_principal_aperture*
 		PhysicalConstants::speed_of_light_in_vacuum;
 
-	Vector3D support_of_photon = back_running_ray.PositionOnRay(
+	Vec3 support_of_photon = back_running_ray.PositionOnRay(
 		distance_to_travel_before_intersecting_principal_aperture
 	);
 

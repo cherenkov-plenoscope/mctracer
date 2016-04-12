@@ -14,7 +14,7 @@ namespace SegmentedReflector {
 	}
 
 	void Geometry::init_focal_point() {
-		_focal_point = Vector3D(0.0, 0.0, focal_length());
+		_focal_point = Vec3(0.0, 0.0, focal_length());
 	}
 
 	void Geometry::init_facet_xy_positions() {
@@ -75,7 +75,7 @@ namespace SegmentedReflector {
 
 		double sum_of_image_distances = 0.0;
 
-		for(Vector3D facet_pos: _facet_positions)
+		for(Vec3 facet_pos: _facet_positions)
 			sum_of_image_distances = sum_of_image_distances + 
 				(facet_pos - focal_point()).norm();
 
@@ -96,21 +96,21 @@ namespace SegmentedReflector {
 
 	void Geometry::init_facet_orientations() {
 
-		for(Vector3D facet_pos :_facet_positions)
+		for(Vec3 facet_pos :_facet_positions)
 			_facet_orientations.push_back(
 				get_rotation_for_facet_position(facet_pos)
 			);		
 	}
 
-	Rotation3D Geometry::get_rotation_for_facet_position(const Vector3D facet_position)const {
+	Rotation3D Geometry::get_rotation_for_facet_position(const Vec3 facet_position)const {
 		
-		Vector3D focal_point_to_facet_pos = _focal_point - facet_position;
+		Vec3 focal_point_to_facet_pos = _focal_point - facet_position;
 			
-		Vector3D rotation_axis = 
-			focal_point_to_facet_pos.cross(Vector3D::unit_z);
+		Vec3 rotation_axis = 
+			focal_point_to_facet_pos.cross(Vec3::unit_z);
 
 		double angle_between_unit_z_and_focal_point_to_mirror_pos =
-			Vector3D::unit_z.get_angle_in_between_in_rad(focal_point_to_facet_pos);
+			Vec3::unit_z.get_angle_in_between_in_rad(focal_point_to_facet_pos);
 
 		double rot_angle = 0.5*angle_between_unit_z_and_focal_point_to_mirror_pos;
 
@@ -166,11 +166,11 @@ namespace SegmentedReflector {
 		return 1.0/(4.0*focal_length())*dist*dist;
 	}
 
-	Vector3D Geometry::focal_point()const {
+	Vec3 Geometry::focal_point()const {
 		return _focal_point;
 	}
 
-	std::vector<Vector3D> Geometry::facet_positions()const {
+	std::vector<Vec3> Geometry::facet_positions()const {
 		return _facet_positions;
 	}
 

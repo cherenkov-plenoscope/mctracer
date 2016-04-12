@@ -49,7 +49,7 @@ protected:
 public:
 	RayForPropagation(const RayForPropagation* ray_to_be_carried_on);
 
-	RayForPropagation(const Vector3D support, const Vector3D direction);
+	RayForPropagation(const Vec3 support, const Vec3 direction);
 
 	virtual ~RayForPropagation(){};
 
@@ -84,7 +84,7 @@ public:
 
 	void transform(const HomoTrafo3D *T);
 	
-	Vector3D get_final_intersection_incident_vector_in_object_frame()const;
+	Vec3 get_final_intersection_incident_vector_in_object_frame()const;
 protected:
 	string get_history_print()const;
 

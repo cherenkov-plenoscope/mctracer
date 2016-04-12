@@ -18,6 +18,6 @@ public:
 	bool has_solution()const;
 	bool has_causal_solution()const;
 	double get_ray_parameter_for_intersection()const;
-	Vector3D get_plane_normal_vector()const;
+	Vec3 get_plane_normal_vector()const;
 };
 #endif // __XYPLANEANDRAYINTERSECTIONEQUATION_H_INCLUDED__

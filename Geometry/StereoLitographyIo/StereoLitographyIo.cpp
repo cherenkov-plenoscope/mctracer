@@ -16,7 +16,7 @@ namespace StereoLitographyIo {
 		const double scale
 	) {
 		
-		Frame* mesh = new Frame("stl_mesh", Vector3D::null, Rotation3D::null);
+		Frame* mesh = new Frame("stl_mesh", Vec3::null, Rotation3D::null);
 
 		uint facet_count = 0;
 
@@ -29,7 +29,7 @@ namespace StereoLitographyIo {
 
 			tri->set_name_pos_rot(
 				name.str(),
-				Vector3D::null, 
+				Vec3::null, 
 				Rotation3D::null
 			);
 

@@ -4,8 +4,8 @@ RayForPropagation::RayForPropagation() {
 }
 //------------------------------------------------------------------------------
 RayForPropagation::RayForPropagation(
-	const Vector3D support,
-	const Vector3D direction
+	const Vec3 support,
+	const Vec3 direction
 ) {
 	SetRay(support, direction);
 	init_propagation_history();
@@ -151,24 +151,24 @@ const Intersection* RayForPropagation::get_final_intersection()const {
 	return intersection_history->back();
 }
 //------------------------------------------------------------------------------
-Vector3D RayForPropagation::get_final_intersection_incident_vector_in_object_frame()const {
+Vec3 RayForPropagation::get_final_intersection_incident_vector_in_object_frame()const {
 	
 	if(intersection_history->size() == 1) {//only production
 
-		return Vector3D::null;
+		return Vec3::null;
 	}else {
 
 		const uint last_i = intersection_history->size() - 1 ;
 		const uint second_last_i = last_i - 1;
 
-		Vector3D final = 
+		Vec3 final = 
 			intersection_history->at(last_i)->
 				get_intersection_vector_in_world_system();
 		
-		Vector3D second_last = intersection_history->at(second_last_i)->
+		Vec3 second_last = intersection_history->at(second_last_i)->
 				get_intersection_vector_in_world_system();
 
-		Vector3D incident_direction_in_world = (final - second_last);
+		Vec3 incident_direction_in_world = (final - second_last);
 			incident_direction_in_world.normalize();
 		
 		return intersection_history->back()->world2object()->

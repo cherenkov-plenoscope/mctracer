@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 Sphere::Sphere(){}
 //------------------------------------------------------------------------------
-Sphere::Sphere(const string name, const Vector3D pos, const Rotation3D rot): 
+Sphere::Sphere(const string name, const Vec3 pos, const Rotation3D rot): 
 	SurfaceEntity(name, pos, rot) {}
 //------------------------------------------------------------------------------
 void Sphere::set_radius(double new_radius) {
@@ -77,8 +77,8 @@ const Intersection* Sphere::sphere_intersection_for_ray_parameter(
 	const double ray_parameter
 )const {
 
-	Vector3D intersection_point = ray->PositionOnRay(ray_parameter);
-	Vector3D surface_normal = intersection_point/intersection_point.norm();
+	Vec3 intersection_point = ray->PositionOnRay(ray_parameter);
+	Vec3 surface_normal = intersection_point/intersection_point.norm();
 	
 	Intersection* intersec;
 	intersec = new Intersection(

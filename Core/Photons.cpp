@@ -144,8 +144,8 @@ namespace Photons {
 
 		assert_raw_row_size_matches_photon(raw_row);
 		const double id = raw_row[0];
-		const Vector3D support(raw_row[1], raw_row[2], raw_row[3]);
-		const Vector3D direction(raw_row[4], raw_row[5], raw_row[6]);
+		const Vec3 support(raw_row[1], raw_row[2], raw_row[3]);
+		const Vec3 direction(raw_row[4], raw_row[5], raw_row[6]);
 		const double wavelength = raw_row[7];
 
 		Photon* ph = new Photon(support, direction, wavelength);
@@ -200,11 +200,11 @@ namespace Photons {
 			vector<Photon*>* photons = new vector<Photon*>;
 			photons->reserve(number_of_photons);
 
-			const Vector3D support = Vector3D::null;
+			const Vec3 support = Vec3::null;
 
 			Random::Mt19937 prng(0);
 
-			Vector3D direction;
+			Vec3 direction;
 			for(uint i=0; i<number_of_photons; i++) {
 
 				direction = prng.get_point_on_unitsphere_within_polar_distance(
@@ -224,11 +224,11 @@ namespace Photons {
 			vector<Photon*>* photons = new vector<Photon*>;
 			photons->reserve(number_of_photons);
 
-			const Vector3D direction = Vector3D::unit_z;
+			const Vec3 direction = Vec3::unit_z;
 
 			Random::Mt19937 prng(0);
 
-			Vector3D support;
+			Vec3 support;
 			for(uint i=0; i<number_of_photons; i++) {
 
 				support = prng.get_point_on_xy_disc_within_radius(disc_radius);

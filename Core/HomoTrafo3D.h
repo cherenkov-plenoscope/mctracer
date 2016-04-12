@@ -13,7 +13,7 @@
 #include <sstream>
 #include <math.h>
 #include <iomanip> 
-#include "Core/Vector3D.h"
+#include "Core/Vec3.h"
 #include "Core/Rotation3D.h"
 
 //=================================
@@ -44,18 +44,18 @@ class HomoTrafo3D {
 public:
 
 	HomoTrafo3D();
-	void set_transformation(const Rotation3D R, const Vector3D pos);
+	void set_transformation(const Rotation3D R, const Vec3 pos);
 	void set_transformation(
-		const Vector3D rot_x,
-		const Vector3D rot_y,
-		const Vector3D rot_z,
-		const Vector3D pos
+		const Vec3 rot_x,
+		const Vec3 rot_y,
+		const Vec3 rot_z,
+		const Vec3 pos
 	);
-	Vector3D get_transformed_orientation(const Vector3D& ori)const;
-	void transform_orientation(Vector3D* vector)const;
-	Vector3D get_transformed_position(const Vector3D& pos)const;
-	void transform_position(Vector3D* position_to_transform)const;
-	Vector3D get_translation()const;
+	Vec3 get_transformed_orientation(const Vec3& ori)const;
+	void transform_orientation(Vec3* vector)const;
+	Vec3 get_transformed_position(const Vec3& pos)const;
+	void transform_position(Vec3* position_to_transform)const;
+	Vec3 get_translation()const;
 	std::string get_print()const;
 	void operator= (HomoTrafo3D G);
 	HomoTrafo3D operator* (const HomoTrafo3D G)const;
@@ -68,10 +68,10 @@ private:
 	std::string get_single_row_print(const uint c)const;
 	void set_rotation_component_based_on_xyz_angles(const Rotation3D R);
 	void set_rotation_component_based_on_rot_axis(const Rotation3D R);
-	void set_translation_component(const Vector3D &t);
+	void set_translation_component(const Vec3 &t);
 	void set_rotation_component(const Rotation3D R);
-	void set_x_column_of_rotation_component(const Vector3D &R);
-	void set_y_column_of_rotation_component(const Vector3D &R);
-	void set_z_column_of_rotation_component(const Vector3D &R);
+	void set_x_column_of_rotation_component(const Vec3 &R);
+	void set_y_column_of_rotation_component(const Vec3 &R);
+	void set_z_column_of_rotation_component(const Vec3 &R);
 };
 #endif // __HOMOTRAFO3D_H_INCLUDED__ 

@@ -18,14 +18,14 @@ namespace LightFieldTelescope {
 
 	class Geometry : public Printable {
 
-		vector<Vector3D> pixel_grid;
+		vector<Vec3> pixel_grid;
 		vector<vector<uint>> pixel_neighborhood;
 
-		vector<Vector3D> sub_pixel_flower_template_grid;
+		vector<Vec3> sub_pixel_flower_template_grid;
 		vector<vector<uint>> sub_pixel_neighborhood;
 
-		vector<Vector3D> sub_pixel_flower_grid;
-		vector<Vector3D> sub_pixel_grid;
+		vector<Vec3> sub_pixel_flower_grid;
+		vector<Vec3> sub_pixel_grid;
 
 		double sub_pixel_flat2flat;
 		double pixel_lens_curv_radius;
@@ -51,16 +51,16 @@ namespace LightFieldTelescope {
 		double aperture_image_radius_on_sub_pixel_sensor()const;
 		uint number_of_pixels()const;
 		double outer_sensor_housing_radius()const;
-		vector<Vector3D> pixel_positions()const;
+		vector<Vec3> pixel_positions()const;
 		vector<vector<uint>>  pixel_neighbor_relations()const;
 		double sub_pixel_per_pixel()const;
 		double sub_pixel_outer_radius()const;
 		double sub_pixel_inner_radius()const;
 		double sub_pixel_spacing()const;
 		double sub_pixel_z_orientation()const;
-		vector<Vector3D> sub_pixel_positions()const;
+		vector<Vec3> sub_pixel_positions()const;
 		vector<vector<uint>>  sub_pixel_neighbor_relations()const;
-		vector<Vector3D> sub_pixel_flower_positions()const;
+		vector<Vec3> sub_pixel_flower_positions()const;
 		uint total_number_of_sub_pixels()const;
 		void write_sub_pixel_positions(const string path)const;
 		double bin_hight()const;

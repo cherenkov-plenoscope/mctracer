@@ -11,7 +11,7 @@ void BiConvexLensHexBound::set_curvature_radius_and_outer_hex_radius(
 
     front_cap.set_name_pos_rot(
         name + "_front_cap",
-        Vector3D(0.0, 0.0, -cap_hight),
+        Vec3(0.0, 0.0, -cap_hight),
         Rotation3D::null
     );
     front_cap.take_boundary_layer_properties_but_inside_out_from(this);
@@ -22,7 +22,7 @@ void BiConvexLensHexBound::set_curvature_radius_and_outer_hex_radius(
 
     rear_cap.set_name_pos_rot(
         name + "_rear_cap",
-        Vector3D(0.0, 0.0, cap_hight),
+        Vec3(0.0, 0.0, cap_hight),
         Rotation3D(M_PI, 0.0, 0.0)
     );
     rear_cap.take_boundary_layer_properties_but_inside_out_from(this);
@@ -62,7 +62,7 @@ void BiConvexLensHexBound::add_edge_faces(
         
         walls[i].set_name_pos_rot(
             "wall_" + std::to_string(i),
-            Vector3D(
+            Vec3(
                 inner_aperture_radius*sin(phi), 
                 inner_aperture_radius*cos(phi), 
                 0.0),

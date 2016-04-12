@@ -28,14 +28,14 @@ bool PhotonFactory::passed_atmosphere()const {
 //------------------------------------------------------------------------------
 Photon* PhotonFactory::get_photon() {
 
-	Vector3D causal_dir = causal_direction();
+	Vec3 causal_dir = causal_direction();
 
 	Ray ray_running_upwards_from_ground_to_pos_of_production(
 		intersection_with_xy_floor_plane(),
 		causal_dir*(-1)
 	);
 
-	Vector3D causal_support = 
+	Vec3 causal_support = 
 		ray_running_upwards_from_ground_to_pos_of_production.
 		PositionOnRay(ray_parameter_for_production_point());
 
@@ -50,7 +50,7 @@ Photon* PhotonFactory::get_photon() {
 	return cherenkov_photon;
 }
 //------------------------------------------------------------------------------
-Vector3D PhotonFactory::causal_direction()const {
+Vec3 PhotonFactory::causal_direction()const {
 
 	const double z = sqrt(
 		1.0 -
@@ -60,7 +60,7 @@ Vector3D PhotonFactory::causal_direction()const {
 		cosine_between_dir_and_world_y_axis()
 	);
 
-	Vector3D causal_dir(
+	Vec3 causal_dir(
 		double(cosine_between_dir_and_world_x_axis()),
 		double(cosine_between_dir_and_world_y_axis()),
 		z
@@ -69,9 +69,9 @@ Vector3D PhotonFactory::causal_direction()const {
 	return causal_dir*-1.0;
 }
 //------------------------------------------------------------------------------
-Vector3D PhotonFactory::intersection_with_xy_floor_plane()const {
+Vec3 PhotonFactory::intersection_with_xy_floor_plane()const {
 	
-	return Vector3D(
+	return Vec3(
 		x_pos_on_xy_plane_in_m() - x_core_position_in_m, 
 		y_pos_on_xy_plane_in_m() - y_core_position_in_m, 
 		0.0

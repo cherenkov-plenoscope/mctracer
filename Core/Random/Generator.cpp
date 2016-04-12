@@ -17,21 +17,21 @@ void Generator::set_seed(const unsigned _seed) {
 	seed = _seed;
 }
 //------------------------------------------------------------------------------
-Vector3D Generator::get_point_on_xy_disc_within_radius(
+Vec3 Generator::get_point_on_xy_disc_within_radius(
 	const double disc_radius
 ) {
 	const double r = sqrt(uniform())*disc_radius;
 	const double phi = uniform()*2.0*M_PI;
-	return Vector3D(r*cos(phi), r*sin(phi),	0.0);
+	return Vec3(r*cos(phi), r*sin(phi),	0.0);
 }
 //------------------------------------------------------------------------------
-Vector3D Generator::get_point_on_unitsphere_within_polar_distance(
+Vec3 Generator::get_point_on_unitsphere_within_polar_distance(
 	const double max_dist
 ) {
 	const double The = max_dist*sqrt(uniform());
 	const double Phi = uniform()*2.0*M_PI;
 
-	return Vector3D(
+	return Vec3(
 		sin(The)*cos(Phi),
 		sin(The)*sin(Phi),
 		cos(The)

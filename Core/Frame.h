@@ -13,7 +13,7 @@ class Intersection;
 #include <string>
 #include <sstream>
 #include <vector>
-#include "Core/Vector3D.h"
+#include "Core/Vec3.h"
 #include "Core/Rotation3D.h"
 #include "Core/HomoTrafo3D.h"
 #include "Core/TracerException.h"
@@ -39,10 +39,10 @@ protected:
     // a frame has a human readable name e.g. Tree, House, Mirror
     string name;
 
-    Vector3D 	pos_in_mother; 
+    Vec3 	pos_in_mother; 
     Rotation3D 	rot_in_mother;
     double 	    radius_of_sphere_enclosing_all_children; 
-    Vector3D 	pos_in_world;
+    Vec3 	pos_in_world;
     
     HomoTrafo3D T_frame2mother;
     HomoTrafo3D T_mother2frame;
@@ -63,15 +63,15 @@ public:
 
     //SET
     Frame();
-    Frame(const string name, const Vector3D pos, const Rotation3D rot);
-    void set_name_pos_rot(const string name, const Vector3D pos, const Rotation3D rot);
+    Frame(const string name, const Vec3 pos, const Rotation3D rot);
+    void set_name_pos_rot(const string name, const Vec3 pos, const Rotation3D rot);
     void set_name(const string name);
     //GET
     string get_name()const;
     string get_path_in_tree_of_frames()const;
-    const Vector3D* get_position_in_mother()const;
+    const Vec3* get_position_in_mother()const;
     const Rotation3D* get_rotation_in_mother()const;
-    const Vector3D* get_position_in_world()const;
+    const Vec3* get_position_in_world()const;
     double contour_radius()const;
     const HomoTrafo3D* frame2mother()const;
     const HomoTrafo3D* mother2frame()const;
@@ -116,7 +116,7 @@ protected:
     void update_sphere_enclosing_all_children(Frame *new_child);
     void update_enclosing_sphere_for_all_children();
     void assert_name_is_valid(const string name_to_check)const;
-    Vector3D get_mean_pos_in_mother(vector<Frame*> frames)const;
+    Vec3 get_mean_pos_in_mother(vector<Frame*> frames)const;
     public: void cluster_using_helper_frames();
     bool positions_in_mother_are_too_close_together(vector<Frame*> frames)const;
     void warn_about_neglection_of(const Frame* frame)const;

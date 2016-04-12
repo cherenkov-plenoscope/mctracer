@@ -12,7 +12,7 @@ LensCalibration::LensCalibration(const Geometry *geo):
 	set_up_test_bench();
 	read_out_l.clear_history();
 
-	Vector3D incident_direction(
+	Vec3 incident_direction(
 		telescope_geometry->reflector.max_outer_aperture_radius() + telescope_geometry->max_outer_sensor_radius(),
 	 	0.0,
 	 	telescope_geometry->reflector.focal_length()
@@ -21,7 +21,7 @@ LensCalibration::LensCalibration(const Geometry *geo):
 
 	for(uint i=0; i<number_of_photons; i++) {
 
-		Vector3D pos_on_lens_aperture = 
+		Vec3 pos_on_lens_aperture = 
 			prng.get_point_on_xy_disc_within_radius(
 				telescope_geometry->pixel_lens_outer_aperture_radius()
 			);
@@ -31,7 +31,7 @@ LensCalibration::LensCalibration(const Geometry *geo):
 			incident_direction
 		);
 
-		Vector3D support_of_photon = back_running_ray.PositionOnRay(
+		Vec3 support_of_photon = back_running_ray.PositionOnRay(
 			telescope_geometry->pixel_lens_outer_aperture_radius()*100.0
 		);
 
@@ -75,9 +75,9 @@ LensCalibration::~LensCalibration() {
 void LensCalibration::set_up_test_bench() {
 
 	
-	test_bench.set_name_pos_rot("test_bench", Vector3D::null, Rotation3D::null);
+	test_bench.set_name_pos_rot("test_bench", Vec3::null, Rotation3D::null);
 
-	lens.set_name_pos_rot("lens", Vector3D::null, Rotation3D::null);
+	lens.set_name_pos_rot("lens", Vec3::null, Rotation3D::null);
 	lens.set_outer_color(&Color::white);
 	lens.set_inner_color(&Color::white);
 	lens.set_inner_refraction(telescope_geometry->config.lens_refraction);
@@ -92,9 +92,9 @@ void LensCalibration::set_up_test_bench() {
 		0.5*telescope_geometry->pixel_lens_outer_aperture_radius(),
 		telescope_geometry->pixel_spacing()
 	);
-	std::vector<Vector3D> face_plate_positions = face_plate_grid.get_grid();
+	std::vector<Vec3> face_plate_positions = face_plate_grid.get_grid();
 
-	face_plate.set_name_pos_rot("face_plate", Vector3D::null, Rotation3D::null);	
+	face_plate.set_name_pos_rot("face_plate", Vec3::null, Rotation3D::null);	
 
 	for(uint i=0; i<face_plate_positions.size(); i++) {
 
@@ -111,7 +111,7 @@ void LensCalibration::set_up_test_bench() {
 		face_plate.set_mother_and_child(face);
 	}
 
-	Vector3D sensor_position = Vector3D(
+	Vec3 sensor_position = Vec3(
 		0.0,
 		0.0,
 		-telescope_geometry->pixel_lens_sub_pixel_distance()
@@ -121,7 +121,7 @@ void LensCalibration::set_up_test_bench() {
 	Factory fab(telescope_geometry);
 	Frame* bin = fab.get_pixel_bin_with_name_at_pos(
 		"single_bin", 
-		Vector3D(
+		Vec3(
 			0.0,
 			0.0, 
 			-telescope_geometry->pixel_lens_sub_pixel_distance()+

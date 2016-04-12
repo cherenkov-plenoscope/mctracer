@@ -16,7 +16,7 @@ protected:
 	virtual void SetUp() {
 		// Code here will be called immediately after the constructor (right
 		// before each test).
-		Vector3D pos(0.0,0.0,0.0);
+		Vec3 pos(0.0,0.0,0.0);
 		Rotation3D rot(0.0,0.0,0.0);
 		initial_FoV_in_rad = Deg2Rad(120.0);
 

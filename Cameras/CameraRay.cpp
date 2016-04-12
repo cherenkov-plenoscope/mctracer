@@ -1,6 +1,6 @@
 #include "CameraRay.h"
 //------------------------------------------------------------------------------
-CameraRay::CameraRay(const Vector3D support, const Vector3D direction){
+CameraRay::CameraRay(const Vec3 support, const Vec3 direction){
 	SetRay(support, direction);
 }
 //------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ Color CameraRay::trace(
 
 	if(is_iluminated_by_sky_light_source(world, settings, intersection)) {
 
-		Vector3D specular_dir = intersection->
+		Vec3 specular_dir = intersection->
 		get_reflection_direction_in_world_system(
 			settings->global_light_direction
 		);
@@ -101,7 +101,7 @@ Color CameraRay::shadow_of_sky_light(
 
 	const double max_darkening = 0.750;
 
-	Vector3D specular_dir = intersection->
+	Vec3 specular_dir = intersection->
 	get_reflection_direction_in_world_system(
 		settings->visual.global_illumination.incoming_direction
 	);

@@ -33,7 +33,7 @@ bool XyPlaneRayIntersectionEquation::has_causal_solution()const {
 	return ray_parameter_v > 0.0 && has_valid_intersection;
 }
 //------------------------------------------------------------------------------
-Vector3D XyPlaneRayIntersectionEquation::get_plane_normal_vector()const {
-	return Vector3D(0.0, 0.0, 1.0);
+Vec3 XyPlaneRayIntersectionEquation::get_plane_normal_vector()const {
+	return Vec3(0.0, 0.0, 1.0);
 }
 //------------------------------------------------------------------------------

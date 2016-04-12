@@ -18,7 +18,7 @@ namespace PhotonSensor {
 			sensor_frame
 		) {
 
-			Vector3D final_intersection_incident = 
+			Vec3 final_intersection_incident = 
 				photon->get_final_intersection_incident_vector_in_object_frame();
 
 			final_intersection_incident = final_intersection_incident*-1.0;

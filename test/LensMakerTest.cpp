@@ -83,10 +83,10 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 		double image_sensor_disc_distance = cfg.focal_length + offset;
 
 	    // geometry
-		Frame optical_table("table", Vector3D::null, Rotation3D::null);
+		Frame optical_table("table", Vec3::null, Rotation3D::null);
 
 		BiConvexLensHexBound lens;
-		lens.set_name_pos_rot("lens", Vector3D::null, Rotation3D::null);
+		lens.set_name_pos_rot("lens", Vec3::null, Rotation3D::null);
 	    lens.set_outer_color(lens_col);
 	    lens.set_inner_color(lens_col);
 	    lens.set_inner_refraction(refraction_vs_wavelength);
@@ -98,7 +98,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 	    Disc sensor_disc;
 	    sensor_disc.set_name_pos_rot(
 	    	"sensor_disc", 
-	    	Vector3D(0.0, 0.0, -image_sensor_disc_distance), 
+	    	Vec3(0.0, 0.0, -image_sensor_disc_distance), 
 	    	Rotation3D::null
 	    );
 	    sensor_disc.set_outer_color(sensor_disc_col);
@@ -122,7 +122,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 		HomoTrafo3D Trafo;
 		Trafo.set_transformation(
 			Rotation3D(0.0,-Deg2Rad(180.0),0.0), 
-			Vector3D(0.0, 0.0 ,2.0)
+			Vec3(0.0, 0.0 ,2.0)
 		);
 
 		Photons::transform_all_photons(Trafo, photons);

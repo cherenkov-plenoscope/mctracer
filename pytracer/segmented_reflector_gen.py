@@ -11,8 +11,8 @@ unit_x = np.array([1., 0., 0.])
 unit_y = np.array([0., 1., 0.])
 unit_z = np.array([0., 0., 1.])
 
-def Vector3D_to_numpy(input):
-    """ input can be a single Vector3D or a list of them.
+def Vec3_to_numpy(input):
+    """ input can be a single Vec3 or a list of them.
     """
     if isinstance(input, collections.Iterable):
         N = len(input)
@@ -29,9 +29,9 @@ def Vector3D_to_numpy(input):
         out[2] = vec.z()
     return out
 
-def make_Vector3D(a):
+def make_Vec3(a):
     a = np.atleast_2d(a)
-    return [T.Vector3D(*x) for x in a]
+    return [T.Vec3(*x) for x in a]
 
 def make_hexgrid(outer_radius, spacing, inner_radius=0.):
 
@@ -55,8 +55,8 @@ def make_hexgrid(outer_radius, spacing, inner_radius=0.):
 
     return inside_cells
 
-def make_hexgrid_Vector3D(outer_radius, spacing, inner_radius=0.):
-    return make_Vector3D(make_hexgrid(outer_radius, spacing, inner_radius))
+def make_hexgrid_Vec3(outer_radius, spacing, inner_radius=0.):
+    return make_Vec3(make_hexgrid(outer_radius, spacing, inner_radius))
 
 def calc_facet_zpos(dist, focal_length, hybrid_factor):
     f = focal_length
@@ -145,7 +145,7 @@ def SegmentedReflector(name, reflection,
         rotation_axis, rot_angle = init_facet_orientations(facet_positions, focal_point)
         facet_radius = init_facet_radius(facet_spacing, facet_fill_factor)
 
-        reflector = T.Frame(name, T.Vector3D(*pos), T.Rotation3D(*rot))
+        reflector = T.Frame(name, T.Vec3(*pos), T.Rotation3D(*rot))
         facets = []
         for i, (f_pos, f_rot_ax, f_rot_angle) in enumerate(zip(
                                                 facet_positions, 
@@ -173,10 +173,10 @@ def SegmentedReflector(name, reflection,
 
 
 if __name__ == '__main__':
-    world = T.Frame("World", T.Vector3D.null, T.Rotation3D.null)
+    world = T.Frame("World", T.Vec3.null, T.Rotation3D.null)
 
     green = T.Color(0, 108, 30)
-    floor = T.Plane('floor', T.Vector3D(0, 0, -2.5), T.Rotation3D.null)
+    floor = T.Plane('floor', T.Vec3(0, 0, -2.5), T.Rotation3D.null)
     floor.set_inner_color(green)
     floor.set_outer_color(green)
     floor.set_x_y_width(1e6, 1e6)

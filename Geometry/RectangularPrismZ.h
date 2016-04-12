@@ -22,7 +22,7 @@ public:
 		const double x_width,
 		const double y_width
 	);
-	bool is_inside(const Vector3D* vec)const;
+	bool is_inside(const Vec3* vec)const;
 	double get_half_x_width()const;
 	double get_half_y_width()const;
 private:

@@ -11,7 +11,7 @@
 #include <iostream>
 #include <math.h>
 #include <sstream>
-#include "Core/Vector3D.h"
+#include "Core/Vec3.h"
 #include "Core/TracerException.h"
 #include "Core/Printable.h"
 //=================================
@@ -24,19 +24,19 @@ class Rotation3D : public Printable{
 	double Ry;
 	double Rz;
 
-	Vector3D rot_axis;
+	Vec3 rot_axis;
 	double rot_angle_in_rad;
 public:
 	static const Rotation3D null;
 	
 	Rotation3D();
 	Rotation3D(double Phi, double The, double Psi);
-	Rotation3D(const Vector3D new_rot_axis, const double new_rot_angle_on_rad);
+	Rotation3D(const Vec3 new_rot_axis, const double new_rot_angle_on_rad);
 	
 	void set(double Phi, double The, double Psi);
-	void set(const Vector3D new_rot_axis, const double new_rot_angle_on_rad);
+	void set(const Vec3 new_rot_axis, const double new_rot_angle_on_rad);
 	
-	Vector3D get_rot_axis()const;
+	Vec3 get_rot_axis()const;
 	double get_rot_angle_in_rad()const;
 	bool uses_xyz_angels()const;
 	std::string get_print()const;

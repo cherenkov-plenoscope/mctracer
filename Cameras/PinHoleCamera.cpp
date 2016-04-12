@@ -1,7 +1,7 @@
 #include "PinHoleCamera.h"
 //------------------------------------------------------------------------------
 void PinHoleCamera::update_position_and_orientation(		
-	const Vector3D cam_pos_in_world,
+	const Vec3 cam_pos_in_world,
 	const Rotation3D cam_rot_in_world
 ){
 	set_position_and_orientation(cam_pos_in_world, cam_rot_in_world);
@@ -10,8 +10,8 @@ void PinHoleCamera::update_position_and_orientation(
 	update_principal_point_for_current_FoV();
 
 	// calculate sensor vectors
-	SensorDirectionHori = Vector3D::unit_y;
-	SensorDirectionVert = Vector3D::unit_x;
+	SensorDirectionHori = Vec3::unit_y;
+	SensorDirectionVert = Vec3::unit_x;
 	T_Camera2World.transform_orientation(&SensorDirectionHori);
 	T_Camera2World.transform_orientation(&SensorDirectionVert);
 }
@@ -78,13 +78,13 @@ CameraRay PinHoleCamera::get_ray_for_pixel_in_row_and_col(
 	);
 }
 //------------------------------------------------------------------------------
-Vector3D PinHoleCamera::get_direction_of_ray_for_pixel(
+Vec3 PinHoleCamera::get_direction_of_ray_for_pixel(
 	const int row, const int col
 )const {
 	return get_intersection_of_ray_on_image_sensor_for_pixel(row,col);
 }
 //------------------------------------------------------------------------------
-Vector3D PinHoleCamera::get_intersection_of_ray_on_image_sensor_for_pixel(
+Vec3 PinHoleCamera::get_intersection_of_ray_on_image_sensor_for_pixel(
 	const int row, const int col
 )const{
 	const int vert_position_on_image_sensor = row-image->get_number_of_rows()/2;

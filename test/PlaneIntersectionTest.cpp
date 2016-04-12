@@ -5,7 +5,7 @@
 #include "Core/Frame.h"
 #include "Core/Random/Random.h"
 #include "Geometry/Plane.h"
-#include "Core/Vector3D.h"
+#include "Core/Vec3.h"
 
 using namespace std;
 
@@ -13,7 +13,7 @@ class PlaneIntersectionTest : public ::testing::Test {
  protected:
 
 	TracerSettings setup;
-	Vector3D    pos;
+	Vec3    pos;
 	Rotation3D  rot;
 	Function::Constant* refl_vs_wavl;
 	Color*      colo;
@@ -61,14 +61,14 @@ class PlaneIntersectionTest : public ::testing::Test {
 //------------------------------------------------------------------------------
 TEST_F(PlaneIntersectionTest, frontal) {
 
-	Ray ray(Vector3D(0.0, 0.0, -1.0), Vector3D(0.0, 0.0, 1.0));
+	Ray ray(Vec3(0.0, 0.0, -1.0), Vec3(0.0, 0.0, 1.0));
 
 	const Intersection* intersec = ray.get_first_intersection_in(&world);
 
 	ASSERT_TRUE(intersec->does_intersect());
 	EXPECT_EQ(&plane, intersec->get_object());
-	EXPECT_EQ(Vector3D::null, intersec->get_intersection_vector_in_object_system());
-	EXPECT_EQ(Vector3D(0.0, 0.0, 1.0), intersec->get_surface_normal_in_object_system());
+	EXPECT_EQ(Vec3::null, intersec->get_intersection_vector_in_object_system());
+	EXPECT_EQ(Vec3(0.0, 0.0, 1.0), intersec->get_surface_normal_in_object_system());
 }
 //------------------------------------------------------------------------------
 TEST_F(PlaneIntersectionTest, frontal_lateral_offset_alwas_intersection) {
@@ -79,28 +79,28 @@ TEST_F(PlaneIntersectionTest, frontal_lateral_offset_alwas_intersection) {
 			double y_support = double(y_offset)*0.01;
 
 
-			Ray ray(Vector3D(x_support, y_support, -1.0), Vector3D(0.0, 0.0, 1.0));
+			Ray ray(Vec3(x_support, y_support, -1.0), Vec3(0.0, 0.0, 1.0));
 
 			const Intersection* intersec = ray.get_first_intersection_in(&world);
 
 			ASSERT_TRUE(intersec->does_intersect());
 			EXPECT_EQ(&plane, intersec->get_object());
-			EXPECT_EQ(Vector3D(x_support, y_support, 0.0), intersec->get_intersection_vector_in_object_system());
-			EXPECT_EQ(Vector3D(0.0, 0.0, 1.0), intersec->get_surface_normal_in_object_system());
+			EXPECT_EQ(Vec3(x_support, y_support, 0.0), intersec->get_intersection_vector_in_object_system());
+			EXPECT_EQ(Vec3(0.0, 0.0, 1.0), intersec->get_surface_normal_in_object_system());
 		}
 	}
 }
 //------------------------------------------------------------------------------
 TEST_F(PlaneIntersectionTest, close_miss_x) {
 
-	Ray ray(Vector3D(x_width/2.0+0.01, 0.0, -1.0), Vector3D(0.0, 0.0, 1.0));
+	Ray ray(Vec3(x_width/2.0+0.01, 0.0, -1.0), Vec3(0.0, 0.0, 1.0));
 	const Intersection* intersec = ray.get_first_intersection_in(&world);
 	EXPECT_FALSE(intersec->does_intersect());
 }
 //------------------------------------------------------------------------------
 TEST_F(PlaneIntersectionTest, close_miss_y) {
 
-	Ray ray(Vector3D(0.0, y_width/2.0+0.01, -1.0), Vector3D(0.0, 0.0, 1.0));
+	Ray ray(Vec3(0.0, y_width/2.0+0.01, -1.0), Vec3(0.0, 0.0, 1.0));
 	const Intersection* intersec = ray.get_first_intersection_in(&world);
 	EXPECT_FALSE(intersec->does_intersect());
 }
@@ -129,7 +129,7 @@ TEST_F(PlaneIntersectionTest, move_plane_up) {
 	//---post initialize the world to calculate all bounding spheres---
 	world.init_tree_based_on_mother_child_relations();
 
-	Ray ray(Vector3D(0.0, 0.0, -1.0), Vector3D(0.0, 0.0, 1.0));
+	Ray ray(Vec3(0.0, 0.0, -1.0), Vec3(0.0, 0.0, 1.0));
 	const Intersection* intersec = ray.get_first_intersection_in(&world);
 	EXPECT_TRUE(intersec->does_intersect());
 }

@@ -12,7 +12,7 @@
 #include <string>
 #include <sstream>
 #include "Core/Rotation3D.h"
-#include "Core/Vector3D.h"
+#include "Core/Vec3.h"
 #include "Core/HomoTrafo3D.h"
 #include "CameraRay.h"
 #include "CameraImage.h"
@@ -33,27 +33,27 @@ public:
 		const TracerSettings* settings
 	);
 
-	virtual void update_position(const Vector3D new_cam_pos_in_world);
+	virtual void update_position(const Vec3 new_cam_pos_in_world);
 
 	virtual void update_orientation(const Rotation3D new_cam_rot_in_world);
 
 	virtual void update_position_and_orientation(		
-		const Vector3D new_cam_pos_in_world,
+		const Vec3 new_cam_pos_in_world,
 		const Rotation3D new_cam_rot_in_world
 	);
 
 	void set_pointing_direction(	
-		Vector3D camera_pointing_direction_in_World,
-		Vector3D camera_image_upwards_image_dir_in_world
+		Vec3 camera_pointing_direction_in_World,
+		Vec3 camera_image_upwards_image_dir_in_world
 	);
 
 	virtual void set_FoV_in_rad(const double FoV_in_rad);
 
 	double get_FoV_in_rad()const;
 
-	Vector3D get_normalized_pointing_direction()const;
+	Vec3 get_normalized_pointing_direction()const;
 
-	Vector3D direction_to_the_right_of_the_camera()const;
+	Vec3 direction_to_the_right_of_the_camera()const;
 
 	Ray get_optical_axis_in_world()const;
 
@@ -65,11 +65,11 @@ public:
 
 	virtual const CameraImage* get_image()const;
 
-	Vector3D get_position_in_world()const;
+	Vec3 get_position_in_world()const;
 
 	Rotation3D get_rotation_in_world()const;
 
-	Vector3D get_image_upwards_direction_in_world_frame()const;
+	Vec3 get_image_upwards_direction_in_world_frame()const;
 
 	uint get_number_of_sensor_cols()const {
 		return image->get_number_of_cols();
@@ -85,15 +85,15 @@ protected:
 
 	HomoTrafo3D T_Camera2World;
 	HomoTrafo3D T_World2Camera;
-	Vector3D CameraPositionInWorld;
+	Vec3 CameraPositionInWorld;
 	Rotation3D CameraOrientationInWorld;
-	Vector3D CameraPointingDirection;
+	Vec3 CameraPointingDirection;
 	CameraRay OpticalAxis;
 
 	double FoV_in_rad;	
 
 	void set_position_and_orientation(	
-		const Vector3D cam_pos_in_world,
+		const Vec3 cam_pos_in_world,
 		const Rotation3D cam_rot_in_world
 	);
 

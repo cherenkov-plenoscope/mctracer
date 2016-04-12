@@ -18,7 +18,7 @@ protected:
 public:
 
 	void set_radius(const double radius);
-	bool is_inside(const Vector3D* vec)const;
+	bool is_inside(const Vec3* vec)const;
 	double get_radius()const;
 	double get_area()const;
 private:

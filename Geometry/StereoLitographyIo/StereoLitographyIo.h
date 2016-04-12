@@ -53,10 +53,10 @@ namespace StereoLitographyIo {
 //--------------------------------
 
 	struct Facet {
-		Vector3D n;
-		Vector3D a;
-		Vector3D b;
-		Vector3D c;	
+		Vec3 n;
+		Vec3 a;
+		Vec3 b;
+		Vec3 c;	
 	};
 
 //--------------------------------
@@ -104,21 +104,21 @@ namespace StereoLitographyIo {
 		void add_facets(const std::vector<Facet> additional_facets);
 
 		void add_facet_normal_and_three_vertices(
-			const Vector3D n,
-			const Vector3D a,
-			const Vector3D b,
-			const Vector3D c
+			const Vec3 n,
+			const Vec3 a,
+			const Vec3 b,
+			const Vec3 c
 		);
 
 		void write_to_file(const std::string filename);
 	private:
 
 		void assert_file_is_open()const;
-		void assert_normal_is_actually_normalized(const Vector3D normal);
+		void assert_normal_is_actually_normalized(const Vec3 normal);
 		void write_stl_header();
 		void write_number_of_facets(const uint32_t i);
 		void write_attribute_count(const uint16_t i);
-		void write_vector(const Vector3D &vec);
+		void write_vector(const Vec3 &vec);
 		void write_facets();
 		void write_facet(const Facet &facet);
 	};
@@ -155,7 +155,7 @@ namespace StereoLitographyIo {
 		Facet read_and_create_next_facet();
 		bool stl_header_implies_ascii_format()const;
 		void assert_is_no_ascii_format()const;
-		void assert_normal_is_actually_normalized(const Vector3D nomral);
+		void assert_normal_is_actually_normalized(const Vec3 nomral);
 		void assert_file_is_open()const;
 		void read_facets();
 		std::vector<float> read_floats(const uint n);

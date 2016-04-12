@@ -17,7 +17,7 @@ namespace SegmentedReflector {
 
 	void Factory::init_facets() {
 
-		std::vector<Vector3D> facet_positions = geometry.facet_positions();
+		std::vector<Vec3> facet_positions = geometry.facet_positions();
 
 		for(uint i=0; i<facet_positions.size(); i++) {
 
@@ -42,7 +42,7 @@ namespace SegmentedReflector {
 
 	void Factory::init_reflector() {
 
-		reflector = new Frame("Reflector", Vector3D::null, Rotation3D::null);
+		reflector = new Frame("Reflector", Vec3::null, Rotation3D::null);
 
 		for(Frame* facet : facets)
 			reflector->set_mother_and_child(facet);

@@ -63,7 +63,7 @@ TEST_F(XmlTest, valid_attributes) {
 	// />
 	EXPECT_EQ("simon", simon.name());
 	EXPECT_EQ(1.337e42, simon.attribute2double("number"));
-	EXPECT_EQ(Vector3D(0.0, 1.0, 2.0), simon.attribute2Vector3D("pos"));
+	EXPECT_EQ(Vec3(0.0, 1.0, 2.0), simon.attribute2Vec3("pos"));
 	EXPECT_EQ(Rotation3D(0.1, 2.3, 4.5), simon.attribute2Rotation3D("rot"));
 	EXPECT_EQ(Color(128,255,128), simon.attribute2Color("color"));
 }
@@ -87,7 +87,7 @@ TEST_F(XmlTest, invalid_attribute_Tuple3) {
 	Xml::Node my_node = tree.child("MyNode");
 	
 	EXPECT_THROW(
-		my_node.attribute2Vector3D("myTuple3"), Xml::Node::AttributeIsNoVector3D
+		my_node.attribute2Vec3("myTuple3"), Xml::Node::AttributeIsNoVec3
 	);
 
 	EXPECT_THROW(
@@ -116,7 +116,7 @@ TEST_F(XmlTest, visual_config) {
 	out.snapshot.image_sensor_size_along_a_row = 0.060;
 
 	out.global_illumination.on = false;
-	out.global_illumination.incoming_direction = Vector3D(4.2, 1.3, 3.7);
+	out.global_illumination.incoming_direction = Vec3(4.2, 1.3, 3.7);
 
 	out.photon_trajectories.radius = 99.9;
 

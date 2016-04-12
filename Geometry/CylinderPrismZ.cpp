@@ -5,7 +5,7 @@ void CylinderPrismZ::set_radius(const double radius) {
 	radius_square = radius*radius;
 }
 //------------------------------------------------------------------------------
-bool CylinderPrismZ::is_inside(const Vector3D* vec)const {
+bool CylinderPrismZ::is_inside(const Vec3* vec)const {
 	return vec->x()*vec->x() + vec->y()*vec->y() < radius_square;
 }
 //------------------------------------------------------------------------------

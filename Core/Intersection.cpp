@@ -5,21 +5,21 @@ const Intersection* Intersection::void_intersection = new Intersection();
 //------------------------------------------------------------------------------
 Intersection::Intersection() {
 	object = SurfaceEntity::void_object;
-	intersection_point = Vector3D(
+	intersection_point = Vec3(
 		std::numeric_limits<double>::infinity(),
 		std::numeric_limits<double>::infinity(),
 		std::numeric_limits<double>::infinity()
 	);
-	surfacenormal_in_intersection_point = Vector3D(0.0,0.0,1.0);
+	surfacenormal_in_intersection_point = Vec3(0.0,0.0,1.0);
 	distance_of_ray_in_m = std::numeric_limits<double>::infinity();
 }
 //------------------------------------------------------------------------------
 Intersection::Intersection(
 	const SurfaceEntity* intersectiong_object,
-	const Vector3D intersection_vector,
-	const Vector3D surfacenormal,
+	const Vec3 intersection_vector,
+	const Vec3 surfacenormal,
 	const double distance_of_ray_support_to_intersection,
-	const Vector3D incident_in_obj_sys
+	const Vec3 incident_in_obj_sys
 ):
 	object(intersectiong_object),
 	intersection_point(intersection_vector),
@@ -36,20 +36,20 @@ const SurfaceEntity * Intersection::get_object()const {
 	return object;
 }
 //------------------------------------------------------------------------------
-Vector3D Intersection::get_intersection_vector_in_object_system()const {
+Vec3 Intersection::get_intersection_vector_in_object_system()const {
 	return intersection_point;
 }
 //------------------------------------------------------------------------------
-Vector3D Intersection::get_intersection_vector_in_world_system()const {
+Vec3 Intersection::get_intersection_vector_in_world_system()const {
 	return object->
 		frame2world()->get_transformed_position(intersection_point);
 }
 //------------------------------------------------------------------------------
-Vector3D Intersection::get_surface_normal_in_object_system()const {
+Vec3 Intersection::get_surface_normal_in_object_system()const {
 	return surfacenormal_in_intersection_point;
 }
 //------------------------------------------------------------------------------
-Vector3D Intersection::get_surface_normal_in_world_system()const {
+Vec3 Intersection::get_surface_normal_in_world_system()const {
 	return object->frame2world()->
 		get_transformed_orientation(surfacenormal_in_intersection_point);	
 }
@@ -72,13 +72,13 @@ std::string Intersection::get_print()const {
 }
 //------------------------------------------------------------------------------
 void Intersection::get_reflection_direction_in_object_system(
-	Vector3D* vec
+	Vec3* vec
 )const {
 	surfacenormal_in_intersection_point.mirror(vec);
 }
 //------------------------------------------------------------------------------
-Vector3D Intersection::get_reflection_direction_in_world_system(
-	Vector3D incomming_dir_in_world
+Vec3 Intersection::get_reflection_direction_in_world_system(
+	Vec3 incomming_dir_in_world
 )const {
 	object->world2frame()->transform_orientation(&incomming_dir_in_world);
 	surfacenormal_in_intersection_point.mirror(&incomming_dir_in_world);
@@ -135,7 +135,7 @@ const Color Intersection::get_facing_color()const {
 }
 //------------------------------------------------------------------------------
 bool Intersection::ray_is_running_from_outside_to_inside(
-	const Vector3D incident_in_obj_sys
+	const Vec3 incident_in_obj_sys
 )const {
 	double projection_of_incident_onto_normal =
 		get_surface_normal_in_object_system()*incident_in_obj_sys;
@@ -147,7 +147,7 @@ bool Intersection::from_outside_to_inside()const {
 	return _from_outside_to_inside;
 }
 //------------------------------------------------------------------------------
-Vector3D Intersection::get_normal_in_faceing_surface_system()const {
+Vec3 Intersection::get_normal_in_faceing_surface_system()const {
 	return _from_outside_to_inside ?
 	surfacenormal_in_intersection_point:
 	surfacenormal_in_intersection_point*-1.0;

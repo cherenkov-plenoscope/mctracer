@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "Core/Vector3D.h"
+#include "Core/Vec3.h"
 #include "Core/TracerSettings.h"
 #include "Geometry/Sphere.h"
 #include "Core/Rotation3D.h"
@@ -13,7 +13,7 @@ class SphereIntersectionTest : public ::testing::Test {
 protected:
 
 	TracerSettings setup;
-	Vector3D    pos;
+	Vec3    pos;
 	Rotation3D  rot; 
 	Color*      colo;
 	double radius;
@@ -63,8 +63,8 @@ TEST_F(SphereIntersectionTest, frontal) {
  
 	double x_pos = -5.0;
 
-	Vector3D Support(x_pos,0.0,0.0);
-	Vector3D direction(1.0,0.0,0.0);
+	Vec3 Support(x_pos,0.0,0.0);
+	Vec3 direction(1.0,0.0,0.0);
 
 	Photon P(Support,direction,wavelength);
 	P.propagate_in(sphere_test_environment);
@@ -78,15 +78,15 @@ TEST_F(SphereIntersectionTest, frontal) {
 	"radius 1m. So there are 5-1=4m to traverse. ";
 
 	EXPECT_EQ(
-		Vector3D::unit_x*(-1),
+		Vec3::unit_x*(-1),
 		P.get_intersection_at(1)->get_surface_normal_in_object_system()
 	);
 }
 //------------------------------------------------------------------------------
 TEST_F(SphereIntersectionTest, emmitting_close_above_surface_tangential) {
 
-	Vector3D Support(0.0,0.0,1.0+1e-9);
-	Vector3D direction(1.0,0.0,0.0);
+	Vec3 Support(0.0,0.0,1.0+1e-9);
+	Vec3 direction(1.0,0.0,0.0);
 
 	Photon P(Support,direction,wavelength);
 	P.propagate_in(sphere_test_environment);
@@ -96,8 +96,8 @@ TEST_F(SphereIntersectionTest, emmitting_close_above_surface_tangential) {
 //------------------------------------------------------------------------------
 TEST_F(SphereIntersectionTest, emmitting_close_above_surface_straigtht_away) {
 
-	Vector3D Support(0.0,0.0,1.0+1e-9);
-	Vector3D direction(0.0,0.0,1.0);
+	Vec3 Support(0.0,0.0,1.0+1e-9);
+	Vec3 direction(0.0,0.0,1.0);
 
 	Photon P(Support,direction,wavelength);
 	P.propagate_in(sphere_test_environment);
@@ -107,15 +107,15 @@ TEST_F(SphereIntersectionTest, emmitting_close_above_surface_straigtht_away) {
 //------------------------------------------------------------------------------
 TEST_F(SphereIntersectionTest, tangential_intersection) {
 
-	Vector3D Support(-5.0,0.0,1.0);
-	Vector3D direction(1.0,0.0,0.0);
+	Vec3 Support(-5.0,0.0,1.0);
+	Vec3 direction(1.0,0.0,0.0);
 
 	Photon P(Support,direction,wavelength);
 	P.propagate_in(sphere_test_environment);
 
 	ASSERT_EQ(2, P.get_number_of_interactions_so_far() );
 
-	Vector3D normal = Vector3D::unit_z;
+	Vec3 normal = Vec3::unit_z;
 
 	EXPECT_NEAR(
 		0.0,
@@ -130,7 +130,7 @@ TEST_F(SphereIntersectionTest, tangential_intersection) {
 //------------------------------------------------------------------------------
 TEST_F(SphereIntersectionTest, ray_frontal_intersection) {
 
-  Ray ray_with_intersection(Vector3D(0.0,0.0,-2.0), Vector3D(0.0,0.0,1.0));
+  Ray ray_with_intersection(Vec3(0.0,0.0,-2.0), Vec3(0.0,0.0,1.0));
 
   const Intersection* intersec = 
   	MySphere.calculate_intersection_with(&ray_with_intersection);
@@ -138,18 +138,18 @@ TEST_F(SphereIntersectionTest, ray_frontal_intersection) {
   ASSERT_TRUE(intersec->does_intersect());
   EXPECT_EQ(intersec->get_object(), &MySphere);
   EXPECT_EQ(
-  	Vector3D(0.0,0.0,-1.0),
+  	Vec3(0.0,0.0,-1.0),
   	intersec->get_intersection_vector_in_object_system()
   );
   EXPECT_EQ(
-  	Vector3D(0.0,0.0,-1.0),
+  	Vec3(0.0,0.0,-1.0),
   	intersec->get_surface_normal_in_object_system()
   );
 }
 //------------------------------------------------------------------------------
 TEST_F(SphereIntersectionTest, ray_intersection_but_no_causal_intersection) {
 
-  Ray ray_without_intersection(Vector3D(0.0,0.0,+2.0), Vector3D(0.0,0.0,1.0));
+  Ray ray_without_intersection(Vec3(0.0,0.0,+2.0), Vec3(0.0,0.0,1.0));
 
   const Intersection* empty_intersec = 
     MySphere.calculate_intersection_with(&ray_without_intersection);
@@ -159,7 +159,7 @@ TEST_F(SphereIntersectionTest, ray_intersection_but_no_causal_intersection) {
 //------------------------------------------------------------------------------
 TEST_F(SphereIntersectionTest, ray_completely_outside_of_sphere) {
 
-  Ray ray_outside(Vector3D(5.0,0.0,0.0), Vector3D(0.0,0.0,1.0));
+  Ray ray_outside(Vec3(5.0,0.0,0.0), Vec3(0.0,0.0,1.0));
 
   const Intersection* intersec = 
     MySphere.calculate_intersection_with(&ray_outside);
@@ -169,7 +169,7 @@ TEST_F(SphereIntersectionTest, ray_completely_outside_of_sphere) {
 //------------------------------------------------------------------------------
 TEST_F(SphereIntersectionTest, ray_starts_inside_sphere) {
 
-  Ray ray_inside(Vector3D::null, Vector3D(0.0,0.0,1.0));
+  Ray ray_inside(Vec3::null, Vec3(0.0,0.0,1.0));
 
   const Intersection* intersec = 
     MySphere.calculate_intersection_with(&ray_inside);
@@ -177,18 +177,18 @@ TEST_F(SphereIntersectionTest, ray_starts_inside_sphere) {
   ASSERT_TRUE(intersec->does_intersect());
   EXPECT_EQ(intersec->get_object(), &MySphere);
   EXPECT_EQ(
-  	Vector3D(0.0,0.0,+1.0),
+  	Vec3(0.0,0.0,+1.0),
   	intersec->get_intersection_vector_in_object_system()
   );
   EXPECT_EQ(
-  	Vector3D(0.0,0.0,+1.0),
+  	Vec3(0.0,0.0,+1.0),
   	intersec->get_surface_normal_in_object_system()
   );
 }
 //------------------------------------------------------------------------------
 TEST_F(SphereIntersectionTest, ray_tangents_sphere) {
 
-  Ray ray_inside(Vector3D(1.0, 0.0, -2.0), Vector3D(0.0, 0.0, 1.0));
+  Ray ray_inside(Vec3(1.0, 0.0, -2.0), Vec3(0.0, 0.0, 1.0));
 
   const Intersection* intersec = 
     MySphere.calculate_intersection_with(&ray_inside);
@@ -196,11 +196,11 @@ TEST_F(SphereIntersectionTest, ray_tangents_sphere) {
   ASSERT_TRUE(intersec->does_intersect());
   EXPECT_EQ(intersec->get_object(), &MySphere);
   EXPECT_EQ(
-  	Vector3D(1.0, 0.0, 0.0),
+  	Vec3(1.0, 0.0, 0.0),
   	intersec->get_intersection_vector_in_object_system())
   ;
   EXPECT_EQ(
-  	Vector3D(1.0, 0.0, 0.0),
+  	Vec3(1.0, 0.0, 0.0),
   	intersec->get_surface_normal_in_object_system()
   );
 }

@@ -30,16 +30,16 @@ def __new_Frame__init__(self, *k, **kw):
     name = kw.get('name', self.__class__.__name__)
 
     if 'pos' in kw:
-        pos = mctracer.Vector3D(*kw['pos'])
+        pos = mctracer.Vec3(*kw['pos'])
     else:
-        pos = mctracer.Vector3D.null
+        pos = mctracer.Vec3.null
 
     if 'rot' in kw:
         if len(kw['rot']) == 3:
             rot = mctracer.Rotation3D(*kw['rot'])
         elif len(kw['rot']) == 2:
             axis, angle = kw['rot']
-            rot_axis = mctracer.Vector3D(*axis)
+            rot_axis = mctracer.Vec3(*axis)
             rot = mctracer.Rotation3D(rot_axis, angle)
         else:
             raise ValueError("Cannot make Rotation3D from:"+repr(kw['rot']))
@@ -158,7 +158,7 @@ def __new_Cylinder__init__(self, *k, **kw):
     radius = kw.get('radius', 1.)
     start = kw.get('start', (0,0,0))
     stop = kw.get('stop', (0,0,1))
-    self.set_cylinder(radius, mctracer.Vector3D(*start), mctracer.Vector3D(*stop))
+    self.set_cylinder(radius, mctracer.Vec3(*start), mctracer.Vec3(*stop))
 mctracer.Cylinder.__init__ = __new_Cylinder__init__
 
 

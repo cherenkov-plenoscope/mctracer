@@ -9,7 +9,7 @@ void Prism3D::set_triangle_edge(const double edge_length) {
 
 	front_cap.set_name_pos_rot(
 		name_of_frame + "_front_cap",
-		Vector3D(0.0, 0.0, -cap_hight),
+		Vec3(0.0, 0.0, -cap_hight),
 		Rotation3D::null
 	);
 	front_cap.take_boundary_layer_properties_but_inside_out_from(this);
@@ -18,7 +18,7 @@ void Prism3D::set_triangle_edge(const double edge_length) {
 
 	rear_cap.set_name_pos_rot(
 		name_of_frame + "_rear_cap",
-		Vector3D(0.0, 0.0, cap_hight),
+		Vec3(0.0, 0.0, cap_hight),
 		Rotation3D(M_PI, 0.0, 0.0)
 	);
 	rear_cap.take_boundary_layer_properties_but_inside_out_from(this);

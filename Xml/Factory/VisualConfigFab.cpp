@@ -21,7 +21,7 @@ VisualConfig get_VisualConfig_from_node(Xml::Node node) {
 
 	Xml::Node global_illumination = node.child("global_illumination");
 	vc.global_illumination.on = global_illumination.attribute2bool("on");
-	vc.global_illumination.incoming_direction = global_illumination.attribute2Vector3D("incoming_direction");
+	vc.global_illumination.incoming_direction = global_illumination.attribute2Vec3("incoming_direction");
 
 	Xml::Node photon_trajectories = node.child("photon_trajectories");
 	vc.photon_trajectories.radius = photon_trajectories.attribute2double("radius");

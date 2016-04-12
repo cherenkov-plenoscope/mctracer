@@ -6,7 +6,7 @@ class PhotonsTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(PhotonsTest, raw_row2photon) {
 
-    Vector3D dir(66.6, 57.8, 99.9);
+    Vec3 dir(66.6, 57.8, 99.9);
     dir.normalize();
     
     std::vector<double> raw_row = {
@@ -28,8 +28,8 @@ TEST_F(PhotonsTest, raw_row2photon) {
 //------------------------------------------------------------------------------
 TEST_F(PhotonsTest, photon2raw_row) {
 
-    Vector3D sup(13.0, 37.0, 42.0);
-    Vector3D dir(66.6, 57.8, 99.9);
+    Vec3 sup(13.0, 37.0, 42.0);
+    Vec3 dir(66.6, 57.8, 99.9);
     uint id = 1337;
     double wavelength = 433.5;
 
@@ -59,8 +59,8 @@ TEST_F(PhotonsTest, bunch2raw_matrix2bunch) {
     Random::Mt19937 prng(Random::zero_seed);
     for(int n=0; n<number_of_photons; n++) {
 
-        Vector3D sup(prng.uniform(), prng.uniform(), prng.uniform());
-        Vector3D dir(prng.uniform(), prng.uniform(), prng.uniform());
+        Vec3 sup(prng.uniform(), prng.uniform(), prng.uniform());
+        Vec3 dir(prng.uniform(), prng.uniform(), prng.uniform());
         uint id = int(prng.uniform());
         double wavelength = prng.uniform();
 
@@ -105,8 +105,8 @@ TEST_F(PhotonsTest, bunch2raw_matrix2file) {
     Random::Mt19937 prng(Random::zero_seed);
     for(int n=0; n<number_of_photons; n++) {
 
-        Vector3D sup(prng.uniform(), prng.uniform(), prng.uniform());
-        Vector3D dir(prng.uniform(), prng.uniform(), prng.uniform());
+        Vec3 sup(prng.uniform(), prng.uniform(), prng.uniform());
+        Vec3 dir(prng.uniform(), prng.uniform(), prng.uniform());
         uint id = int(prng.uniform()*number_of_photons);
         double wavelength = prng.uniform();
 

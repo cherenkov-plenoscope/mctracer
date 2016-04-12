@@ -7,7 +7,7 @@
 
 %{
 	#include "Core/Printable.h"
-	#include "Core/Vector3D.h"
+	#include "Core/Vec3.h"
 	#include "Core/HomoTrafo3D.h"
 	#include "Core/Ray.h"
 	#include "Core/RayForPropagation.h"
@@ -81,7 +81,7 @@ namespace std {
 %feature("autodoc", "1");
 
 %include "Core/Printable.h"
-%include "Core/Vector3D.h"
+%include "Core/Vec3.h"
 %include "Core/HomoTrafo3D.h"
 %include "Core/Ray.h"
 %include "Core/RayForPropagation.h"

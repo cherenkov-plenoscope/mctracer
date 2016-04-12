@@ -61,18 +61,18 @@ private:
 	void update_sensor_distance_given_focal_and_object_distance();
 	void set_object_distance(const double ObjectDistance_in_m);
 	void set_number_of_rays_per_pixel(const uint rays_per_pixel);
-	Vector3D get_random_point_on_bounded_aperture_plane();
+	Vec3 get_random_point_on_bounded_aperture_plane();
 
-	Vector3D get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(
+	Vec3 get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(
 		const uint row, const uint col
 	);
 
-	Vector3D camera_ray_support_vector_in_world_frame(
-		const Vector3D &cam_ray_support_in_cam_frame
+	Vec3 camera_ray_support_vector_in_world_frame(
+		const Vec3 &cam_ray_support_in_cam_frame
 	)const;
 
-	Vector3D camera_ray_direction_vector_in_world_frame(
-		const Vector3D &cam_ray_direction
+	Vec3 camera_ray_direction_vector_in_world_frame(
+		const Vec3 &cam_ray_direction
 	)const;
 
 	double get_object_size_for_image_size(const double image_size_in_m)const;

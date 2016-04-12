@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "Cameras/CameraImage.h"
-#include "Core/Vector3D.h"
+#include "Core/Vec3.h"
 
 class SkyDome {
 
@@ -26,12 +26,12 @@ public:
 	SkyDome(const Color color);
 	SkyDome(const std::string _filename);
 	void set_background_color(const Color background_color);
-	Color get_color_for_direction(const Vector3D dir)const;
+	Color get_color_for_direction(const Vec3 dir)const;
 	std::string get_print()const;
 private:
 
-	Color sky_dome_color_for(const Vector3D dir)const;
-	double get_zenith_distance_of(const Vector3D dir)const;
-	double get_azimuth_angle_of(const Vector3D dir)const;
+	Color sky_dome_color_for(const Vec3 dir)const;
+	double get_zenith_distance_of(const Vec3 dir)const;
+	double get_azimuth_angle_of(const Vec3 dir)const;
 };	
 #endif // __SkyDome_H_INCLUDED__ 

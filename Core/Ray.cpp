@@ -3,20 +3,20 @@
 //------------------------------------------------------------------------------
 Ray::Ray() {}
 //------------------------------------------------------------------------------
-Ray::Ray(const Vector3D support, const Vector3D direction) {
+Ray::Ray(const Vec3 support, const Vec3 direction) {
 	SetRay(support, direction);
 }
 //------------------------------------------------------------------------------
-void Ray::SetRay(const Vector3D support, const Vector3D direction) {
+void Ray::SetRay(const Vec3 support, const Vec3 direction) {
 	SetSupport(support);
 	SetDirection(direction);
 }
 //------------------------------------------------------------------------------
-void Ray::SetSupport(const Vector3D sup) {
+void Ray::SetSupport(const Vec3 sup) {
 	support = sup;
 }
 //------------------------------------------------------------------------------
-void Ray::SetDirection(const Vector3D dir) {
+void Ray::SetDirection(const Vec3 dir) {
 	direction = dir;
 	direction.normalize();
 }
@@ -27,15 +27,15 @@ string Ray::get_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-Vector3D Ray::PositionOnRay(const double scalar)const {
+Vec3 Ray::PositionOnRay(const double scalar)const {
 	return support + direction*scalar;
 }
 //------------------------------------------------------------------------------
-Vector3D Ray::Support()const {
+Vec3 Ray::Support()const {
 	return support;
 }
 //------------------------------------------------------------------------------
-Vector3D Ray::Direction()const {
+Vec3 Ray::Direction()const {
 	return direction;
 }
 //------------------------------------------------------------------------------
@@ -45,7 +45,7 @@ void Ray::transform(const HomoTrafo3D *T) {
 }
 //------------------------------------------------------------------------------
 double Ray::get_parameter_on_ray_for_closest_distance_to_point(
-	const Vector3D &point
+	const Vec3 &point
 )const {
 	// We create a plane orthogonal to this ray and containing the point
 	// plane equation:
@@ -63,10 +63,10 @@ double Ray::get_parameter_on_ray_for_closest_distance_to_point(
 	return d - support*direction;
 }
 //------------------------------------------------------------------------------
-double Ray::get_closest_distance_to_point(const Vector3D &point)const {
+double Ray::get_closest_distance_to_point(const Vec3 &point)const {
 	const double a = get_parameter_on_ray_for_closest_distance_to_point(point);
-	const Vector3D q = PositionOnRay(a);
-	const Vector3D shortest_connection = point - q;
+	const Vec3 q = PositionOnRay(a);
+	const Vec3 shortest_connection = point - q;
 	return shortest_connection.norm();
 }
 //------------------------------------------------------------------------------

@@ -6,8 +6,8 @@ using namespace std;
 class RayForPropagationTest : public ::testing::Test {
  protected:
 
-  Vector3D support;
-  Vector3D direction;
+  Vec3 support;
+  Vec3 direction;
 
   RayForPropagationTest() {
     support.set(0.0,0.0,1.0);

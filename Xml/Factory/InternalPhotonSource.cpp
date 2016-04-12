@@ -56,7 +56,7 @@ vector<Photon*>* parallel_disc(const Xml::Node &node) {
 //------------------------------------------------------------------------------
 void transform(const Xml::Node &node, vector<Photon*>* photons) {
 	
-	Vector3D pos = node.attribute2Vector3D("pos");
+	Vec3 pos = node.attribute2Vec3("pos");
 	Tuple3 rot_deg = node.attribute2Tuple3("rot_in_deg");
 	Rotation3D rot(Deg2Rad(rot_deg.x), Deg2Rad(rot_deg.y), Deg2Rad(rot_deg.z));
 

@@ -30,17 +30,17 @@ namespace LightFieldTelescope {
 
 		Frame* get_lens_with_name_at_pos(
 			const std::string name,
-			const Vector3D pos
+			const Vec3 pos
 		);
 		
 		Frame* get_sub_pixel_with_name_pos(
 			const std::string name, 
-			const Vector3D pos
+			const Vec3 pos
 		);
 		
 		Frame* get_pixel_bin_with_name_at_pos(
 			const std::string name, 
-			const Vector3D pos
+			const Vec3 pos
 		);
 	};
 }

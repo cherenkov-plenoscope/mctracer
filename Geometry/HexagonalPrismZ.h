@@ -15,17 +15,17 @@ class HexagonalPrismZ :public PrismZ {
 private:	
 	double outer_radius;
 
-	Vector3D ex; 
-	Vector3D ey; 
-	Vector3D hexU;
-	Vector3D hexV;
-	Vector3D hexW;
+	Vec3 ex; 
+	Vec3 ey; 
+	Vec3 hexU;
+	Vec3 hexV;
+	Vec3 hexW;
 
 	double inner_radius;
 	double edge2edge;
 public:
 	void set_outer_radius(const double outer_radius);
-	bool is_inside(const Vector3D* vec)const;
+	bool is_inside(const Vec3* vec)const;
 	double get_area()const;
 	double get_outer_radius()const;
 private:

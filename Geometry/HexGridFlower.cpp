@@ -36,7 +36,7 @@ void HexGridFlower::init_grid() {
 	for(int a=-sample_radius; a<=sample_radius; a++) {
 		for(int b=-sample_radius; b<=sample_radius; b++) {
 
-			Vector3D cell_ab = unit_hex_a*a + unit_hex_b*b;
+			Vec3 cell_ab = unit_hex_a*a + unit_hex_b*b;
 
 			if(hex_prism.is_inside(&cell_ab))
 				grid.push_back(cell_ab);
@@ -44,15 +44,15 @@ void HexGridFlower::init_grid() {
 	}
 }
 //------------------------------------------------------------------------------
-std::vector<Vector3D> HexGridFlower::get_grid()const {
+std::vector<Vec3> HexGridFlower::get_grid()const {
 	return grid;
 }
 //------------------------------------------------------------------------------
 void HexGridFlower::init_unit_vectors_hex_grid_with_length() {
 
-	unit_hex_b = Vector3D::unit_x*facet_spacing;
+	unit_hex_b = Vec3::unit_x*facet_spacing;
 	unit_hex_a = (
-		Vector3D::unit_x*0.5+Vector3D::unit_y*sqrt(3.0)/2.0
+		Vec3::unit_x*0.5+Vec3::unit_y*sqrt(3.0)/2.0
 	)*facet_spacing;
 }
 //------------------------------------------------------------------------------

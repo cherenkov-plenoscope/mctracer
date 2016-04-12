@@ -17,7 +17,7 @@ class HexPlane :public SurfaceEntity{
 protected:	
 
 	HexagonalPrismZ hex_bounds;
-	const Vector3D plane_surface_normal = Vector3D::unit_z;
+	const Vec3 plane_surface_normal = Vec3::unit_z;
 public:
 
 	using SurfaceEntity::SurfaceEntity;

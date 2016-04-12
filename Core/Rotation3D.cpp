@@ -18,14 +18,14 @@ void Rotation3D::set(double Phi, double The, double Psi) {
 }
 //------------------------------------------------------------------------------
 Rotation3D::Rotation3D(
-	const Vector3D new_rot_axis,
+	const Vec3 new_rot_axis,
 	const double new_rot_angle_in_rad
 ){
 	set(new_rot_axis,new_rot_angle_in_rad);
 }
 //------------------------------------------------------------------------------
 void Rotation3D::set(
-	const Vector3D new_rot_axis,
+	const Vec3 new_rot_axis,
 	const double new_rot_angle_in_rad
 ){
 	if(new_rot_angle_in_rad == 0.0) {
@@ -39,7 +39,7 @@ void Rotation3D::set(
 	}
 }
 //------------------------------------------------------------------------------
-Vector3D Rotation3D::get_rot_axis()const {
+Vec3 Rotation3D::get_rot_axis()const {
 	if(flag_rot_angles_xyz == true)
 		throw TracerException(
 			"Rotation3D::get_rot_axis():\n"

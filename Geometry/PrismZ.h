@@ -12,13 +12,13 @@
 #include <string>
 #include <sstream>
 #include <math.h>
-#include "Core/Vector3D.h"
+#include "Core/Vec3.h"
 #include "Core/TracerException.h"
 
 //=================================
 class PrismZ {
 public:
-	virtual bool is_inside(const Vector3D* vec)const = 0;
+	virtual bool is_inside(const Vec3* vec)const = 0;
 	virtual double get_area()const {return 0.0;};
 };
 #endif // __PRISMZ_H_INCLUDE__

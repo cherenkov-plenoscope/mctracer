@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "Core/Vector3D.h"
+#include "Core/Vec3.h"
 #include "HexagonalPrismZ.h"
 #include <iostream> 
 #include <string>
@@ -18,9 +18,9 @@
 //=================================
 class HexGridFlower{
 
-	Vector3D unit_hex_a;
-	Vector3D unit_hex_b;
-	std::vector<Vector3D> grid;
+	Vec3 unit_hex_a;
+	Vec3 unit_hex_b;
+	std::vector<Vec3> grid;
 	HexagonalPrismZ hex_prism;
 	double facet_spacing;
 public:
@@ -30,7 +30,7 @@ public:
 		uint facet_count_on_outer_diameter
 	);
 	double get_facet_spacing()const;
-	std::vector<Vector3D> get_grid()const; 
+	std::vector<Vec3> get_grid()const; 
 private:
 
 	void init_unit_vectors_hex_grid_with_length();

@@ -136,25 +136,25 @@ Facet BinaryReader::read_and_create_next_facet() {
 	uint16_t attribute_byte_count = read_single_uint16();
 	check_attribute_byte_count_is_zero(attribute_byte_count);
 
-	Vector3D normal(
+	Vec3 normal(
 		normal_and_3_vertexes[0],
 		normal_and_3_vertexes[1],
 		normal_and_3_vertexes[2]
 	);
 
-	Vector3D A(
+	Vec3 A(
 		normal_and_3_vertexes.at(3),
 		normal_and_3_vertexes.at(4),
 		normal_and_3_vertexes.at(5)
 	);
 
-	Vector3D B(
+	Vec3 B(
 		normal_and_3_vertexes.at(6),
 		normal_and_3_vertexes.at(7),
 		normal_and_3_vertexes.at(8)
 	);
 
-	Vector3D C(
+	Vec3 C(
 		normal_and_3_vertexes.at(9),
 		normal_and_3_vertexes.at(10),
 		normal_and_3_vertexes.at(11)
@@ -175,7 +175,7 @@ void BinaryReader::check_attribute_byte_count_is_zero(
 		facets_with_bad_attribute_count.push_back(current_triangle_number);
 }
 //------------------------------------------------------------------------------
-void BinaryReader::assert_normal_is_actually_normalized(const Vector3D normal) {
+void BinaryReader::assert_normal_is_actually_normalized(const Vec3 normal) {
 	
 	double norm = normal.norm();
 	double deviation = fabs(norm - 1.0);

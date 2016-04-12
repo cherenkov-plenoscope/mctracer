@@ -15,7 +15,7 @@ protected:
 
         new_rot.set(0.0, Zd_Rad, Deg2Rad(180.0) - Az_Rad);
 
-        world.set_name_pos_rot("world", Vector3D::null, Rotation3D::null);
+        world.set_name_pos_rot("world", Vec3::null, Rotation3D::null);
 
         SegmentedReflector::Config cfg;
         cfg.focal_length = 1e6;

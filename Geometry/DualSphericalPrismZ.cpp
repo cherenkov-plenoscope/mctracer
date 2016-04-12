@@ -14,7 +14,7 @@ void DualSphericalPrismZ::set_x_hight_and_y_width(
 	circ2 = Vector2D(-circle_distance/2.0, 0.0);
 }
 //------------------------------------------------------------------------------
-bool DualSphericalPrismZ::is_inside(const Vector3D* vec)const {
+bool DualSphericalPrismZ::is_inside(const Vec3* vec)const {
 	Vector2D v2c1 = circ1 - Vector2D(vec->x(), vec->y());
 	Vector2D v2c2 = circ2 - Vector2D(vec->x(), vec->y());
 

@@ -1,8 +1,8 @@
 #include "FresnelRefractionAndReflection.h"
 //------------------------------------------------------------------------------
 FresnelRefractionAndReflection::FresnelRefractionAndReflection(
-	const Vector3D &_incident_obj_sys,
-	const Vector3D &_normal_obj_sys,
+	const Vec3 &_incident_obj_sys,
+	const Vec3 &_normal_obj_sys,
 	const double _n_from,
 	const double _n_to
 ) : incident_obj_sys(_incident_obj_sys),
@@ -16,11 +16,11 @@ FresnelRefractionAndReflection::FresnelRefractionAndReflection(
 	cosT = sqrt(1.0 - sinT2);
 }
 //------------------------------------------------------------------------------
-Vector3D FresnelRefractionAndReflection::get_reflec_dir_in_object_system()const {
+Vec3 FresnelRefractionAndReflection::get_reflec_dir_in_object_system()const {
 	return incident_obj_sys + normal_obj_sys*cosI*2.0;
 }
 //------------------------------------------------------------------------------
-Vector3D FresnelRefractionAndReflection::get_refrac_dir_in_object_system()const {
+Vec3 FresnelRefractionAndReflection::get_refrac_dir_in_object_system()const {
 	return incident_obj_sys*n_from_over_n_to +
 	 	normal_obj_sys*(n_from_over_n_to*cosI - cosT);
 }

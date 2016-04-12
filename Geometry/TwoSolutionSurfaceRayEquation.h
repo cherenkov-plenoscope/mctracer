@@ -17,8 +17,8 @@ public:
 	virtual bool has_solutions()const = 0;
 	virtual double get_minus_solution()const = 0;
 	virtual double get_plus_solution()const = 0;
-	virtual Vector3D get_surface_normal_given_intersection_vector(
-		const Vector3D* intersec
+	virtual Vec3 get_surface_normal_given_intersection_vector(
+		const Vec3* intersec
 	)const = 0;
 };
 #endif // __TwoSolutionSurfaceRayEquation_H_INCLUDED__

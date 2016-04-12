@@ -49,17 +49,17 @@ TEST_F(RandomGeneratorTest, generator_point_on_disc) {
 
     uint n_points = 1e6;
     double disc_radius = 1.337;
-    std::vector<Vector3D> points;
+    std::vector<Vec3> points;
 
     for(uint i=0; i<n_points; i++)
         points.push_back(prng.get_point_on_xy_disc_within_radius(disc_radius));
 
     // mean position
-    Vector3D sum = Vector3D::null;
-    for(Vector3D p: points)
+    Vec3 sum = Vec3::null;
+    for(Vec3 p: points)
         sum = sum + p;
 
-    Vector3D mean = sum*(1.0/double(points.size()));
+    Vec3 mean = sum*(1.0/double(points.size()));
 
     EXPECT_NEAR(0.0, mean.x(), 1e-2);
     EXPECT_NEAR(0.0, mean.y(), 1e-2);
@@ -78,9 +78,9 @@ TEST_F(RandomGeneratorTest, generator_point_on_disc) {
         for(double phi=0; phi<2.0*M_PI; phi=phi+M_PI/3.0) {
 
             double counts_in_evaluation_bin = 0;
-            Vector3D eval_disc_pos(r*cos(phi), r*sin(phi), 0.0);
+            Vec3 eval_disc_pos(r*cos(phi), r*sin(phi), 0.0);
             
-            for(Vector3D p: points)
+            for(Vec3 p: points)
                 if(eval_disc_pos.distance_to(p) <= evaluation_disc_radius)
                     counts_in_evaluation_bin++;
 

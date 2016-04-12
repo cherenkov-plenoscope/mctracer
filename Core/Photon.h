@@ -21,14 +21,14 @@ protected:
 
 public:
 	Photon(
-		const Vector3D support,
-		const Vector3D direction,
+		const Vec3 support,
+		const Vec3 direction,
 		const double wavelength
 	);
 
 	Photon(
-		const Vector3D support,
-		const Vector3D direction,
+		const Vec3 support,
+		const Vec3 direction,
 		const double wavelength,
 		const PhotonMcTruth* mc_truth
 	);

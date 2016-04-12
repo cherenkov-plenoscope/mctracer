@@ -12,7 +12,7 @@
 #include <string>
 #include <memory>
 #include "Tools/Tuple3.h"
-#include "Core/Vector3D.h"
+#include "Core/Vec3.h"
 #include "Core/Rotation3D.h"
 #include "Core/Color.h"
 using std::string;
@@ -50,7 +50,7 @@ namespace Xml {
 		double attribute2double(const string attribute_name)const;
 		bool attribute2bool(const string attribute_name)const;
 		Tuple3 attribute2Tuple3(const string attribute_name)const;
-		Vector3D attribute2Vector3D(const string attribute_name)const;
+		Vec3 attribute2Vec3(const string attribute_name)const;
 		Rotation3D attribute2Rotation3D(const string attribute_name)const;
 		Color attribute2Color(const string attribute_name)const;
 
@@ -70,7 +70,7 @@ namespace Xml {
 	        using TracerException::TracerException;
 	    }; 
 
-	    class AttributeIsNoVector3D : public TracerException {
+	    class AttributeIsNoVec3 : public TracerException {
 	        using TracerException::TracerException;
 	    }; 
 	    

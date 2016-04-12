@@ -74,8 +74,8 @@ double EllipticalCapRayIntersectionEquation::get_plus_solution()const{
 	return plus_solution;
 }
 //------------------------------------------------------------------------------
-Vector3D EllipticalCapRayIntersectionEquation::get_surface_normal_given_intersection_vector(
-	const Vector3D* intersec
+Vec3 EllipticalCapRayIntersectionEquation::get_surface_normal_given_intersection_vector(
+	const Vec3* intersec
 )const {
 	// surface normal is given as  ( -dz/dx , -dz/dy , 1 )
 	// 
@@ -91,7 +91,7 @@ Vector3D EllipticalCapRayIntersectionEquation::get_surface_normal_given_intersec
 	const double surface_normal_factor = 
 		C * 0.5 * sqrt(1.0 - (ix*ix)*iAA - (iy*iy)*iBB );
 			
-	Vector3D surface_normal(
+	Vec3 surface_normal(
 		surface_normal_factor*(-2.0*ix*iAA),
 	    surface_normal_factor*(-2.0*iy*iAA),
 		1.0

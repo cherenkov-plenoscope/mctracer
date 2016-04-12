@@ -3,10 +3,10 @@
 namespace StereoLitographyIo {
 //------------------------------------------------------------------------------
 void BinaryWriter::add_facet_normal_and_three_vertices(
-	const Vector3D n,
-	const Vector3D a,
-	const Vector3D b,
-	const Vector3D c
+	const Vec3 n,
+	const Vec3 a,
+	const Vec3 b,
+	const Vec3 c
 ) {
 	assert_normal_is_actually_normalized(n);
 	Facet facet = {n,a,b,c};
@@ -18,7 +18,7 @@ void BinaryWriter::add_facets(const std::vector<Facet> additional_facets) {
 		facets.push_back(additional_facet);
 }
 //------------------------------------------------------------------------------
-void BinaryWriter::assert_normal_is_actually_normalized(const Vector3D normal) {
+void BinaryWriter::assert_normal_is_actually_normalized(const Vec3 normal) {
 	
 	double norm = normal.norm();
 	double deviation = fabs(norm - 1.0);
@@ -59,7 +59,7 @@ void BinaryWriter::write_facet(const Facet &facet) {
 	write_attribute_count(0);
 }
 //------------------------------------------------------------------------------
-void BinaryWriter::write_vector(const Vector3D &vec) {
+void BinaryWriter::write_vector(const Vec3 &vec) {
 
 	float v[3] = {float(vec.x()), float(vec.y()), float(vec.z())};
 	file.write( (char*)&v, 3*sizeof(float));

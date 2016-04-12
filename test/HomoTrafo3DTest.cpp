@@ -8,9 +8,9 @@ TEST_F(HomoTrafo3DTest, default_is_unit_trafo) {
 
     HomoTrafo3D unit_frafo;
     unit_frafo.set_transformation(
-        Vector3D(1,0,0), 
-        Vector3D(0,1,0), 
-        Vector3D(0,0,1), Vector3D(0,0,0)
+        Vec3(1,0,0), 
+        Vec3(0,1,0), 
+        Vec3(0,0,1), Vec3(0,0,0)
     );
 
     EXPECT_EQ(unit_frafo, trafo);
@@ -20,20 +20,20 @@ TEST_F(HomoTrafo3DTest, unit_trafo_has_no_translation) {
     HomoTrafo3D trafo;
 
     // translation should be zero 
-    EXPECT_EQ(Vector3D::null, trafo.get_translation());
+    EXPECT_EQ(Vec3::null, trafo.get_translation());
 }
 //------------------------------------------------------------------------------
 TEST_F(HomoTrafo3DTest, unit_trafo_has_no_rotation) {
     HomoTrafo3D trafo;
 
     // and rotation should be unity as well
-    Vector3D unit_x(1.0, 0.0, 0.0);
+    Vec3 unit_x(1.0, 0.0, 0.0);
     EXPECT_EQ(unit_x, trafo.get_transformed_orientation(unit_x));
 
-    Vector3D unit_y(0.0, 1.0, 0.0);
+    Vec3 unit_y(0.0, 1.0, 0.0);
     EXPECT_EQ(unit_y, trafo.get_transformed_orientation(unit_y));
 
-    Vector3D unit_z(0.0, 0.0, 1.0);
+    Vec3 unit_z(0.0, 0.0, 1.0);
     EXPECT_EQ(unit_z, trafo.get_transformed_orientation(unit_z));
 }
 //------------------------------------------------------------------------------
@@ -47,14 +47,14 @@ TEST_F(HomoTrafo3DTest, unit_trafo_is_its_own_inverse) {
 }
 //------------------------------------------------------------------------------
 TEST_F(HomoTrafo3DTest, translation_without_rotation) {
-    Vector3D translation(0.0, 0.0, 133.7);
+    Vec3 translation(0.0, 0.0, 133.7);
     Rotation3D rotation(0.0, 0.0, 0.0);
 
     HomoTrafo3D frame1_to_frame2;
     frame1_to_frame2.set_transformation(rotation, translation);
 
-    Vector3D my_vector_in_frame1(3.141, 4.2, 0.0);
-    Vector3D my_vector_in_frame2(3.141, 4.2, 133.7);
+    Vec3 my_vector_in_frame1(3.141, 4.2, 0.0);
+    Vec3 my_vector_in_frame2(3.141, 4.2, 133.7);
 
     EXPECT_EQ(
         my_vector_in_frame2, 

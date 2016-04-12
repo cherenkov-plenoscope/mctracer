@@ -7,8 +7,8 @@ using namespace std;
 class RayTest : public ::testing::Test {
  protected:
 
-  Vector3D support;
-  Vector3D direction;
+  Vec3 support;
+  Vec3 direction;
 
   RayTest() {
     support.set(0.0,0.0,1.0);
@@ -38,22 +38,22 @@ TEST_F(RayTest, position_on_ray) {
   Ray my_ray(support, direction);
 
   double ray_parameter = 5.0;
-  Vector3D pos_on_ray = support + direction*ray_parameter;
+  Vec3 pos_on_ray = support + direction*ray_parameter;
     
   EXPECT_EQ(pos_on_ray, my_ray.PositionOnRay(ray_parameter));
 }
 //------------------------------------------------------------------------------
 TEST_F(RayTest, closest_distance_to_point) {
-  Ray my_ray(Vector3D::null, Vector3D(0.0, 0.0, 1.0));
+  Ray my_ray(Vec3::null, Vec3(0.0, 0.0, 1.0));
 
-  EXPECT_EQ(0.0, my_ray.get_closest_distance_to_point(Vector3D::null));
-  EXPECT_EQ(1.0, my_ray.get_closest_distance_to_point(Vector3D(1.0, 0.0, 0.0)));
-  EXPECT_EQ(1.0, my_ray.get_closest_distance_to_point(Vector3D(0.0, 1.0, 0.0)));
-  EXPECT_EQ(0.0, my_ray.get_closest_distance_to_point(Vector3D(0.0, 0.0, 1.0)));
+  EXPECT_EQ(0.0, my_ray.get_closest_distance_to_point(Vec3::null));
+  EXPECT_EQ(1.0, my_ray.get_closest_distance_to_point(Vec3(1.0, 0.0, 0.0)));
+  EXPECT_EQ(1.0, my_ray.get_closest_distance_to_point(Vec3(0.0, 1.0, 0.0)));
+  EXPECT_EQ(0.0, my_ray.get_closest_distance_to_point(Vec3(0.0, 0.0, 1.0)));
 }
 //------------------------------------------------------------------------------
 TEST_F(RayTest, set_direction) {
   Ray my_ray(support, direction*42.0);
-  my_ray.SetDirection(Vector3D(1.2, 3.4, 5.6));
+  my_ray.SetDirection(Vec3(1.2, 3.4, 5.6));
   EXPECT_EQ(1.0, my_ray.Direction().norm());
 }

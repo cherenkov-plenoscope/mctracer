@@ -16,7 +16,7 @@ Factory::Factory(const Geometry *geo): geometry(geo) {
 //------------------------------------------------------------------------------
 Frame* Factory::get_lens_with_name_at_pos(
 	const std::string name, 
-	const Vector3D pos
+	const Vec3 pos
 ) {
 
 	BiConvexLensHexBound* lens = new BiConvexLensHexBound;
@@ -36,11 +36,11 @@ Frame* Factory::get_lens_array() {
 
 	Frame* lens_array = new Frame(
 		"lens_array",
-		Vector3D::null,
+		Vec3::null,
 		Rotation3D::null
 	);
 
-	std::vector<Vector3D> pixel_positions = geometry->pixel_positions();
+	std::vector<Vec3> pixel_positions = geometry->pixel_positions();
 	 
 	for(uint i=0; i<pixel_positions.size(); i++) {
 
@@ -60,11 +60,11 @@ Frame* Factory::get_pixel_bin_array() {
 	
 	Frame* bin_array = new Frame(
 		"bin_array",
-		Vector3D(0.0, 0.0, geometry->pixel_lens_sub_pixel_distance()),
+		Vec3(0.0, 0.0, geometry->pixel_lens_sub_pixel_distance()),
 		Rotation3D::null
 	);
 
-	std::vector<Vector3D> flower_positions = 
+	std::vector<Vec3> flower_positions = 
 		geometry->sub_pixel_flower_positions();
 
 	for(uint i=0; i<flower_positions.size(); i++) {
@@ -83,7 +83,7 @@ Frame* Factory::get_pixel_bin_array() {
 //------------------------------------------------------------------------------
 Frame* Factory::get_pixel_bin_with_name_at_pos(
 	const std::string name, 
-	const Vector3D pos
+	const Vec3 pos
 ) {
 	Frame* bin = new Frame(
 		name,
@@ -100,7 +100,7 @@ Frame* Factory::get_pixel_bin_with_name_at_pos(
 		
 		Plane* binwall = new Plane(
 			name + "_" + std::to_string(i),
-			Vector3D(R*sin(phi), R*cos(phi), -0.5*hight),
+			Vec3(R*sin(phi), R*cos(phi), -0.5*hight),
 			Rotation3D(M_PI*0.5, 0.0, phi)
 		);
 
@@ -129,11 +129,11 @@ Frame* Factory::get_image_sensor_faceplate() {
 		geometry->pixel_spacing()
 	);
 
-	std::vector<Vector3D> face_plate_positions = face_plate_grid.get_grid();
+	std::vector<Vec3> face_plate_positions = face_plate_grid.get_grid();
 
 	Frame* face_plate = new Frame(
 		"face_plate", 
-		Vector3D::null, 
+		Vec3::null, 
 		Rotation3D::null
 	);
 
@@ -155,7 +155,7 @@ Frame* Factory::get_image_sensor_faceplate() {
 	Annulus* outer_front_ring = new Annulus;
 	outer_front_ring->set_name_pos_rot(
 		"outer_front_ring",
-		Vector3D::null, 
+		Vec3::null, 
 		Rotation3D::null
 	);
 	outer_front_ring->set_outer_color(&Color::gray);
@@ -174,11 +174,11 @@ Frame* Factory::get_sub_pixel_sensor_plane() {
 
 	Frame* sub_pixel_array = new Frame(
 		"sub_pixel_array", 
-		Vector3D(0.0, 0.0, geometry->pixel_lens_sub_pixel_distance()), 
+		Vec3(0.0, 0.0, geometry->pixel_lens_sub_pixel_distance()), 
 		Rotation3D::null
 	);
 
-	std::vector<Vector3D> sub_pixel_positions = geometry->sub_pixel_positions();
+	std::vector<Vec3> sub_pixel_positions = geometry->sub_pixel_positions();
 
 	std::vector<PhotonSensor::Sensor*> sub_pixels;
 	sub_pixels.reserve(sub_pixel_positions.size());
@@ -206,7 +206,7 @@ Frame* Factory::get_sub_pixel_sensor_plane() {
 //------------------------------------------------------------------------------
 Frame* Factory::get_sub_pixel_with_name_pos(
 	const std::string name, 
-	const Vector3D pos
+	const Vec3 pos
 ) {
 
 	HexPlane* subpix = new HexPlane;
@@ -228,14 +228,14 @@ Frame* Factory::get_image_sensor_housing()const {
 
 	Frame* sensor_housing = new Frame(
 		"sensor_housing", 
-		Vector3D(0.0, 0.0, 0.0), 
+		Vec3(0.0, 0.0, 0.0), 
 		Rotation3D::null
 	);
 
 	Disc* sensor_housing_top = new Disc;
 	sensor_housing_top->set_name_pos_rot(
 		"sensor_housing_top",
-		Vector3D(0.0, 0.0, housing_height),
+		Vec3(0.0, 0.0, housing_height),
 		Rotation3D::null
 	);
 	sensor_housing_top->set_outer_color(&Color::gray);
@@ -244,15 +244,15 @@ Frame* Factory::get_image_sensor_housing()const {
 
 	Cylinder* sensor_housing_cylinder = new Cylinder(
 		"sensor_housing_cylinder",
-		Vector3D::null,
+		Vec3::null,
 		Rotation3D::null
 	);
 	sensor_housing_cylinder->set_outer_color(&Color::gray);
 	sensor_housing_cylinder->set_inner_color(&Color::gray);
 	sensor_housing_cylinder->set_cylinder(
 		geometry->outer_sensor_housing_radius(),
-		Vector3D(0.0, 0.0, 0.0), 
-		Vector3D(0.0, 0.0, housing_height)
+		Vec3(0.0, 0.0, 0.0), 
+		Vec3(0.0, 0.0, housing_height)
 	);
 
 	sensor_housing->set_mother_and_child(sensor_housing_cylinder);
@@ -264,13 +264,13 @@ void Factory::add_telescope_to_frame(Frame *frame) {
 
 	Frame* image_sensor_front = new Frame(
 		"image_sensor_front",
-		Vector3D::null, 
+		Vec3::null, 
 		Rotation3D::null
 	);
 
 	Frame* image_sensor = new Frame(
 		"image_sensor",
-		Vector3D(0.0, 0.0, geometry->lightfield_sensor_distance()), 
+		Vec3(0.0, 0.0, geometry->lightfield_sensor_distance()), 
 		Rotation3D::null
 	);
 

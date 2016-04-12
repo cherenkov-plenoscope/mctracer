@@ -46,7 +46,7 @@ void Calibration::set_up_field_of_view_range() {
 //------------------------------------------------------------------------------
 void Calibration::set_up_telescope() {
 
-	telescope = new Frame("telescope", Vector3D::null, Rotation3D::null);
+	telescope = new Frame("telescope", Vec3::null, Rotation3D::null);
 	
 	Factory fab(telescope_geometry);
 	fab.add_telescope_to_frame(telescope);
@@ -64,8 +64,8 @@ void Calibration::set_up_telescope_environment() {
 }
 //------------------------------------------------------------------------------
 Photon* Calibration::get_photon_given_pos_and_angle_on_principal_aperture(
-	Vector3D pos_on_principal_aperture,
-	Vector3D direction_on_principal_aperture
+	Vec3 pos_on_principal_aperture,
+	Vec3 direction_on_principal_aperture
 )const {
 
 	Ray back_running_ray(
@@ -73,7 +73,7 @@ Photon* Calibration::get_photon_given_pos_and_angle_on_principal_aperture(
 		direction_on_principal_aperture
 	);
 
-	Vector3D support_of_photon = back_running_ray.PositionOnRay(
+	Vec3 support_of_photon = back_running_ray.PositionOnRay(
 		distance_to_travel_before_intersecting_principal_aperture
 	);
 
@@ -98,12 +98,12 @@ void Calibration::fill_calibration_block_to_table() {
 
 			try{
 				// create photon
-				Vector3D pos_on_principal_aperture = 
+				Vec3 pos_on_principal_aperture = 
 					prng.get_point_on_xy_disc_within_radius(
 						max_principal_aperture_radius_to_trow_photons_on
 					);
 
-				Vector3D direction_on_principal_aperture = 
+				Vec3 direction_on_principal_aperture = 
 					prng.get_point_on_unitsphere_within_polar_distance(
 						max_tilt_vs_optical_axis_to_throw_photons_in
 					);

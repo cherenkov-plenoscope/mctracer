@@ -51,8 +51,8 @@ namespace EventIo {
 		double x_core_position_in_m = 0.0;
 		double y_core_position_in_m = 0.0;
 
-		Vector3D causal_direction()const;
-		Vector3D intersection_with_xy_floor_plane()const;
+		Vec3 causal_direction()const;
+		Vec3 intersection_with_xy_floor_plane()const;
 		double ray_parameter_for_production_point()const;
 		double x_pos_on_xy_plane_in_m()const;
 		double y_pos_on_xy_plane_in_m()const;

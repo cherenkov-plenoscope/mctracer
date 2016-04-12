@@ -11,7 +11,7 @@
 #include "Node.h"
 #include "Problem.h"
 #include "Tools/Tuple3.h"
-#include "Core/Vector3D.h"
+#include "Core/Vec3.h"
 #include "Core/Rotation3D.h"
 #include "Core/Color.h"
 #include "Tools/StringTools.h"
@@ -21,7 +21,7 @@ namespace Xml {
 
     string av(const string &att, const string &val);
     string comment(const string &text);
-    string to_string(const Vector3D &vec);
+    string to_string(const Vec3 &vec);
     string to_string(const bool b);
 }//Xml
 #endif // __Xml_AttributeParser_H_INCLUDED__

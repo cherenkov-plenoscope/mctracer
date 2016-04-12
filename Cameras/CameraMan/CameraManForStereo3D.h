@@ -31,20 +31,20 @@ private:
 	CameraImage *left_image;
 	CameraImage *right_image;
 
-	Vector3D initial_camera_pos;
+	Vec3 initial_camera_pos;
 	Rotation3D initial_camera_rotation;
-	Vector3D initial_camera_image_upward_direction;
+	Vec3 initial_camera_image_upward_direction;
 
-	Vector3D left_camera_pos;
+	Vec3 left_camera_pos;
 	Rotation3D left_camera_rotation;
-	Vector3D left_camera_direction_optical_axis;
+	Vec3 left_camera_direction_optical_axis;
 
-	Vector3D right_camera_pos;
+	Vec3 right_camera_pos;
 	Rotation3D right_camera_rotation;
-	Vector3D right_camera_direction_optical_axis;
+	Vec3 right_camera_direction_optical_axis;
 
 	double distance_to_object;
-	Vector3D intersection_point_for_l_and_r_optical_axes;
+	Vec3 intersection_point_for_l_and_r_optical_axes;
 
 	double stereo_offset_in_m = 6e-2;
 	void calc_pos_and_rot_for_left_and_right_camera_config(	
@@ -64,7 +64,7 @@ private:
 	void set_pointing_dir_for_left_and_right_stereo_config();
 	void set_up_camera_in_left_stereo_config();
 	void set_up_camera_in_right_stereo_config();
-	Vector3D offset_to_the_right()const;
+	Vec3 offset_to_the_right()const;
 	void set_intersection_for_l_and_r_cameras_optical_axes();
 	void print_stereo_offset_manipulation(const std::string status)const;
 	void take_left_image(	

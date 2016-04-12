@@ -173,13 +173,13 @@ std::string ApertureCamera::get_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-Vector3D ApertureCamera::get_random_point_on_bounded_aperture_plane() {
+Vec3 ApertureCamera::get_random_point_on_bounded_aperture_plane() {
 
-	Vector3D ap = dice.get_point_on_xy_disc_within_radius(ApertureRadius_in_m);
-	return Vector3D(ap.x(), ap.y(), SensorDistance_in_m);
+	Vec3 ap = dice.get_point_on_xy_disc_within_radius(ApertureRadius_in_m);
+	return Vec3(ap.x(), ap.y(), SensorDistance_in_m);
 }
 //------------------------------------------------------------------------------
-Vector3D ApertureCamera::get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(
+Vec3 ApertureCamera::get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(
 	const uint row, const uint col
 ){
 	const int x_pos_on_sensor_in_pixel =  row - image->get_number_of_rows()/2;
@@ -188,7 +188,7 @@ Vector3D ApertureCamera::get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(
  	const double image_size_x = x_pos_on_sensor_in_pixel * PixelPitch_in_m;
 	const double image_size_y = y_pos_on_sensor_in_pixel * PixelPitch_in_m;
 
-	return Vector3D(
+	return Vec3(
 		get_object_size_for_image_size(image_size_x),
 		get_object_size_for_image_size(image_size_y), 
 		ObjectDistance_in_m
@@ -204,13 +204,13 @@ double ApertureCamera::get_object_size_for_image_size(
 CameraRay ApertureCamera::get_ray_for_pixel_in_row_and_col(
 	const uint row, const uint col
 ){	
-	const Vector3D support_vec_in_cam_frame = 
+	const Vec3 support_vec_in_cam_frame = 
 		get_random_point_on_bounded_aperture_plane();
 	
-	const Vector3D obj_plane_intersec_in_cam_frame = 
+	const Vec3 obj_plane_intersec_in_cam_frame = 
 		get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(row, col);
 	
-	const Vector3D direction_vec_in_cam_frame =
+	const Vec3 direction_vec_in_cam_frame =
 		obj_plane_intersec_in_cam_frame - support_vec_in_cam_frame;
 	
 	return CameraRay(
@@ -219,16 +219,16 @@ CameraRay ApertureCamera::get_ray_for_pixel_in_row_and_col(
 	);
 }
 //------------------------------------------------------------------------------
-Vector3D ApertureCamera::camera_ray_support_vector_in_world_frame(
-	const Vector3D &cam_ray_support_in_cam_frame
+Vec3 ApertureCamera::camera_ray_support_vector_in_world_frame(
+	const Vec3 &cam_ray_support_in_cam_frame
 )const{
 	return CameraPositionInWorld + T_Camera2World.get_transformed_orientation(
 		cam_ray_support_in_cam_frame
 	);
 }
 //------------------------------------------------------------------------------
-Vector3D ApertureCamera::camera_ray_direction_vector_in_world_frame(
-	const Vector3D &cam_ray_direction
+Vec3 ApertureCamera::camera_ray_direction_vector_in_world_frame(
+	const Vec3 &cam_ray_direction
 )const{
 	return T_Camera2World.get_transformed_orientation(cam_ray_direction);
 }

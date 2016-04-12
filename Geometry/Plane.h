@@ -29,7 +29,7 @@ public:
 	
 	Plane(
 		const std::string new_name,
-        const Vector3D    new_pos,
+        const Vec3    new_pos,
         const Rotation3D  new_rot)
 		: SurfaceEntity(new_name, new_pos, new_rot) {};
 

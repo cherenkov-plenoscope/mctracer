@@ -32,6 +32,6 @@ public:
 	double get_enclosing_radius()const;
 	double get_circle_radius()const;
 	double get_area()const;
-	bool is_inside(const Vector3D* vec)const;
+	bool is_inside(const Vec3* vec)const;
 };
 #endif // __DualSphericalPrismZ_H_INCLUDE__

@@ -12,8 +12,8 @@ void HexagonalPrismZ::set_outer_radius(const double outer_radius) {
 
 	assert_outer_radius_positive(outer_radius);
 
-	ex = Vector3D::unit_x;
-	ey = Vector3D::unit_y;
+	ex = Vec3::unit_x;
+	ey = Vec3::unit_y;
 	
 	hexU = ey;
 	
@@ -26,7 +26,7 @@ void HexagonalPrismZ::set_outer_radius(const double outer_radius) {
 	this->outer_radius = outer_radius;
 }
 //------------------------------------------------------------------------------
-bool HexagonalPrismZ::is_inside(const Vector3D* vec)const {
+bool HexagonalPrismZ::is_inside(const Vec3* vec)const {
 
 	double projection_onto_hexU = hexU * *vec;
 	double projection_onto_hexV = hexV * *vec;
