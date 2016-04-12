@@ -14,7 +14,7 @@ class Intersection;
 #include <sstream>
 #include <vector>
 #include "Core/Vec3.h"
-#include "Core/Rotation3D.h"
+#include "Core/Rot3.h"
 #include "Core/HomoTrafo3D.h"
 #include "Core/TracerException.h"
 #include "Tools/StringTools.h"
@@ -40,7 +40,7 @@ protected:
     string name;
 
     Vec3 	pos_in_mother; 
-    Rotation3D 	rot_in_mother;
+    Rot3 	rot_in_mother;
     double 	    radius_of_sphere_enclosing_all_children; 
     Vec3 	pos_in_world;
     
@@ -63,14 +63,14 @@ public:
 
     //SET
     Frame();
-    Frame(const string name, const Vec3 pos, const Rotation3D rot);
-    void set_name_pos_rot(const string name, const Vec3 pos, const Rotation3D rot);
+    Frame(const string name, const Vec3 pos, const Rot3 rot);
+    void set_name_pos_rot(const string name, const Vec3 pos, const Rot3 rot);
     void set_name(const string name);
     //GET
     string get_name()const;
     string get_path_in_tree_of_frames()const;
     const Vec3* get_position_in_mother()const;
-    const Rotation3D* get_rotation_in_mother()const;
+    const Rot3* get_rotation_in_mother()const;
     const Vec3* get_position_in_world()const;
     double contour_radius()const;
     const HomoTrafo3D* frame2mother()const;
@@ -95,7 +95,7 @@ public:
         const Ray* ray,
         vector<const Frame*> *candidate_frames
     )const;
-    void update_rotation(const Rotation3D rot);
+    void update_rotation(const Rot3 rot);
     virtual const Intersection* calculate_intersection_with(const Ray* ray)const;
     const Intersection* empty_intersection()const;
 protected:

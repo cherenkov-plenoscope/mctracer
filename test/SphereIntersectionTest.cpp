@@ -2,7 +2,7 @@
 #include "Core/Vec3.h"
 #include "Core/TracerSettings.h"
 #include "Geometry/Sphere.h"
-#include "Core/Rotation3D.h"
+#include "Core/Rot3.h"
 #include "Core/Random/Random.h"
 #include "Core/PropagationEnvironment.h"
 #include "Core/Photon.h"
@@ -14,7 +14,7 @@ protected:
 
 	TracerSettings setup;
 	Vec3    pos;
-	Rotation3D  rot; 
+	Rot3  rot; 
 	Color*      colo;
 	double radius;
 	Sphere MySphere;

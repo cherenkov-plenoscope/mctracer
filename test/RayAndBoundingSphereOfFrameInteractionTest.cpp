@@ -14,7 +14,7 @@ class RayAndFrameTest : public ::testing::Test {
 		frame_r_4p2m.set_name_pos_rot(
 			"frame_with_radius=4.2m", 
 			Vec3::null,
-			Rotation3D::null
+			Rot3::null
 		);
 
 		frame_r_4p2m.set_radius(radius_of_test_frame);

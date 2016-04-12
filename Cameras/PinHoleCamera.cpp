@@ -2,7 +2,7 @@
 //------------------------------------------------------------------------------
 void PinHoleCamera::update_position_and_orientation(		
 	const Vec3 cam_pos_in_world,
-	const Rotation3D cam_rot_in_world
+	const Rot3 cam_rot_in_world
 ){
 	set_position_and_orientation(cam_pos_in_world, cam_rot_in_world);
 	update_optical_axis_and_orientation();

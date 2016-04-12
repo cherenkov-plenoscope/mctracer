@@ -64,7 +64,7 @@ TEST_F(XmlTest, valid_attributes) {
 	EXPECT_EQ("simon", simon.name());
 	EXPECT_EQ(1.337e42, simon.attribute2double("number"));
 	EXPECT_EQ(Vec3(0.0, 1.0, 2.0), simon.attribute2Vec3("pos"));
-	EXPECT_EQ(Rotation3D(0.1, 2.3, 4.5), simon.attribute2Rotation3D("rot"));
+	EXPECT_EQ(Rot3(0.1, 2.3, 4.5), simon.attribute2Rot3("rot"));
 	EXPECT_EQ(Color(128,255,128), simon.attribute2Color("color"));
 }
 //------------------------------------------------------------------------------
@@ -91,7 +91,7 @@ TEST_F(XmlTest, invalid_attribute_Tuple3) {
 	);
 
 	EXPECT_THROW(
-		my_node.attribute2Rotation3D("myTuple3"), Xml::Node::AttributeIsNoRotation3D
+		my_node.attribute2Rot3("myTuple3"), Xml::Node::AttributeIsNoRot3
 	);
 
 	EXPECT_THROW(

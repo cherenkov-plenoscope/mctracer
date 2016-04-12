@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 Sphere::Sphere(){}
 //------------------------------------------------------------------------------
-Sphere::Sphere(const string name, const Vec3 pos, const Rotation3D rot): 
+Sphere::Sphere(const string name, const Vec3 pos, const Rot3 rot): 
 	SurfaceEntity(name, pos, rot) {}
 //------------------------------------------------------------------------------
 void Sphere::set_radius(double new_radius) {

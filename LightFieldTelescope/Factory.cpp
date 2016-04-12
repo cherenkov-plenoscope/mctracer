@@ -20,7 +20,7 @@ Frame* Factory::get_lens_with_name_at_pos(
 ) {
 
 	BiConvexLensHexBound* lens = new BiConvexLensHexBound;
-	lens->set_name_pos_rot(name, pos, Rotation3D::null);
+	lens->set_name_pos_rot(name, pos, Rot3::null);
 	lens->set_outer_color(&Color::white);
 	lens->set_inner_color(&Color::white);
 	lens->set_inner_refraction(geometry->config.lens_refraction);
@@ -37,7 +37,7 @@ Frame* Factory::get_lens_array() {
 	Frame* lens_array = new Frame(
 		"lens_array",
 		Vec3::null,
-		Rotation3D::null
+		Rot3::null
 	);
 
 	std::vector<Vec3> pixel_positions = geometry->pixel_positions();
@@ -61,7 +61,7 @@ Frame* Factory::get_pixel_bin_array() {
 	Frame* bin_array = new Frame(
 		"bin_array",
 		Vec3(0.0, 0.0, geometry->pixel_lens_sub_pixel_distance()),
-		Rotation3D::null
+		Rot3::null
 	);
 
 	std::vector<Vec3> flower_positions = 
@@ -88,7 +88,7 @@ Frame* Factory::get_pixel_bin_with_name_at_pos(
 	Frame* bin = new Frame(
 		name,
 		pos,
-		Rotation3D::null
+		Rot3::null
 	);
 
 	double R = geometry->pixel_lens_inner_aperture_radius();
@@ -101,7 +101,7 @@ Frame* Factory::get_pixel_bin_with_name_at_pos(
 		Plane* binwall = new Plane(
 			name + "_" + std::to_string(i),
 			Vec3(R*sin(phi), R*cos(phi), -0.5*hight),
-			Rotation3D(M_PI*0.5, 0.0, phi)
+			Rot3(M_PI*0.5, 0.0, phi)
 		);
 
 		binwall->set_x_y_width(
@@ -134,7 +134,7 @@ Frame* Factory::get_image_sensor_faceplate() {
 	Frame* face_plate = new Frame(
 		"face_plate", 
 		Vec3::null, 
-		Rotation3D::null
+		Rot3::null
 	);
 
 	for(uint i=0; i<face_plate_positions.size(); i++) {
@@ -143,7 +143,7 @@ Frame* Factory::get_image_sensor_faceplate() {
 		face->set_name_pos_rot(
 			"face_"+std::to_string(i),
 			face_plate_positions.at(i),
-			Rotation3D::null
+			Rot3::null
 		);
 		face->set_outer_color(&Color::gray);
 		face->set_inner_color(&Color::gray);
@@ -156,7 +156,7 @@ Frame* Factory::get_image_sensor_faceplate() {
 	outer_front_ring->set_name_pos_rot(
 		"outer_front_ring",
 		Vec3::null, 
-		Rotation3D::null
+		Rot3::null
 	);
 	outer_front_ring->set_outer_color(&Color::gray);
 	outer_front_ring->set_inner_color(&Color::gray);
@@ -175,7 +175,7 @@ Frame* Factory::get_sub_pixel_sensor_plane() {
 	Frame* sub_pixel_array = new Frame(
 		"sub_pixel_array", 
 		Vec3(0.0, 0.0, geometry->pixel_lens_sub_pixel_distance()), 
-		Rotation3D::null
+		Rot3::null
 	);
 
 	std::vector<Vec3> sub_pixel_positions = geometry->sub_pixel_positions();
@@ -213,7 +213,7 @@ Frame* Factory::get_sub_pixel_with_name_pos(
 	subpix->set_name_pos_rot(
 		name, 
 		pos, 
-		Rotation3D(0.0, 0.0, geometry->sub_pixel_z_orientation())
+		Rot3(0.0, 0.0, geometry->sub_pixel_z_orientation())
 	);
 	subpix->set_outer_color(&Color::red);
 	subpix->set_inner_color(&Color::red);
@@ -229,14 +229,14 @@ Frame* Factory::get_image_sensor_housing()const {
 	Frame* sensor_housing = new Frame(
 		"sensor_housing", 
 		Vec3(0.0, 0.0, 0.0), 
-		Rotation3D::null
+		Rot3::null
 	);
 
 	Disc* sensor_housing_top = new Disc;
 	sensor_housing_top->set_name_pos_rot(
 		"sensor_housing_top",
 		Vec3(0.0, 0.0, housing_height),
-		Rotation3D::null
+		Rot3::null
 	);
 	sensor_housing_top->set_outer_color(&Color::gray);
 	sensor_housing_top->set_inner_color(&Color::gray);
@@ -245,7 +245,7 @@ Frame* Factory::get_image_sensor_housing()const {
 	Cylinder* sensor_housing_cylinder = new Cylinder(
 		"sensor_housing_cylinder",
 		Vec3::null,
-		Rotation3D::null
+		Rot3::null
 	);
 	sensor_housing_cylinder->set_outer_color(&Color::gray);
 	sensor_housing_cylinder->set_inner_color(&Color::gray);
@@ -265,13 +265,13 @@ void Factory::add_telescope_to_frame(Frame *frame) {
 	Frame* image_sensor_front = new Frame(
 		"image_sensor_front",
 		Vec3::null, 
-		Rotation3D::null
+		Rot3::null
 	);
 
 	Frame* image_sensor = new Frame(
 		"image_sensor",
 		Vec3(0.0, 0.0, geometry->lightfield_sensor_distance()), 
-		Rotation3D::null
+		Rot3::null
 	);
 
 	image_sensor_front->set_mother_and_child(get_lens_array());

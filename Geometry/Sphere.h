@@ -23,7 +23,7 @@ protected:
 public:
 
     Sphere();
-    Sphere(const string name, const Vec3 pos, const Rotation3D rot);
+    Sphere(const string name, const Vec3 pos, const Rot3 rot);
     void set_radius(double nradius);
     string get_print()const;
     const Intersection* calculate_intersection_with(const Ray* ray)const;

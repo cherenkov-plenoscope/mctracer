@@ -7,12 +7,12 @@ const double Frame::minimal_structure_size = 1e-6;
 Frame* Frame::void_frame = new Frame(
 	"void_frame",
 	Vec3::null,
-	Rotation3D::null
+	Rot3::null
 );
 //------------------------------------------------------------------------------
 Frame::Frame():radius_of_sphere_enclosing_all_children(0.0), root_frame(this) {}
 //------------------------------------------------------------------------------
-Frame::Frame(const string name, const Vec3 pos, const Rotation3D rot): Frame() { 
+Frame::Frame(const string name, const Vec3 pos, const Rot3 rot): Frame() { 
     set_name_pos_rot(name, pos, rot); 
 }
 //------------------------------------------------------------------------------
@@ -83,7 +83,7 @@ HomoTrafo3D Frame::calculate_frame2world_only_based_on_mother()const {
 		return T_frame2mother;
 }
 //------------------------------------------------------------------------------
-void Frame::set_name_pos_rot(const string name,	const Vec3 pos,	const Rotation3D rot) {
+void Frame::set_name_pos_rot(const string name,	const Vec3 pos,	const Rot3 rot) {
 	this->set_name(name);
 	this->pos_in_mother = pos;
 	this->rot_in_mother = rot;
@@ -407,7 +407,7 @@ void Frame::cluster_using_helper_frames() {
 					Frame* helper_frame = new Frame(
 						sector_name.str(),
 						mean_pos_in_mother,
-						Rotation3D::null
+						Rot3::null
 					);
 
 					// assign children to helper frame
@@ -491,7 +491,7 @@ const Vec3* Frame::get_position_in_mother()const {
     return &pos_in_mother;
 }
 //------------------------------------------------------------------------------
-const Rotation3D* Frame::get_rotation_in_mother()const {
+const Rot3* Frame::get_rotation_in_mother()const {
     return &rot_in_mother;
 }
 //------------------------------------------------------------------------------
@@ -519,7 +519,7 @@ const HomoTrafo3D* Frame::frame2world()const {
     return &T_frame2world;
 }
 //------------------------------------------------------------------------------
-void Frame::update_rotation(const Rotation3D rot) {
+void Frame::update_rotation(const Rot3 rot) {
 	rot_in_mother = rot;
 	T_frame2mother.set_transformation(rot_in_mother, pos_in_mother);
 	post_init_me_and_all_my_children_only_based_on_mother();	

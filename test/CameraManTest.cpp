@@ -17,7 +17,7 @@ protected:
 		// Code here will be called immediately after the constructor (right
 		// before each test).
 		Vec3 pos(0.0,0.0,0.0);
-		Rotation3D rot(0.0,0.0,0.0);
+		Rot3 rot(0.0,0.0,0.0);
 		initial_FoV_in_rad = Deg2Rad(120.0);
 
 		cam = new PinHoleCamera("my_cam",640, 480);
@@ -94,8 +94,8 @@ TEST_F(CameraManTest, increase_and_decrease_FoV) {
 //------------------------------------------------------------------------------
 TEST_F(CameraManTest, default_rotation) {
 
-	Rotation3D non_default_rotation(1.2,3.4,5.6);
-	Rotation3D looking_in_pos_x_dir(0.0,Deg2Rad(-90.0),0.0);
+	Rot3 non_default_rotation(1.2,3.4,5.6);
+	Rot3 looking_in_pos_x_dir(0.0,Deg2Rad(-90.0),0.0);
 
 	cam->update_orientation(non_default_rotation);
 	CameraManForRotation rot_operator( cam );
@@ -107,7 +107,7 @@ TEST_F(CameraManTest, default_rotation) {
 TEST_F(CameraManTest, look_up) {
 
 	CameraManForRotation rot_operator( cam );
-	rot_operator.set_default_rotation(Rotation3D(0.0,Deg2Rad(-90.0),0.0));
+	rot_operator.set_default_rotation(Rot3(0.0,Deg2Rad(-90.0),0.0));
 
 	for(int i=0; i<50; i++)
 		rot_operator.look_further_up_when_possible();
@@ -119,7 +119,7 @@ TEST_F(CameraManTest, look_up) {
 TEST_F(CameraManTest, look_down) {
 
 	CameraManForRotation rot_operator( cam );
-	rot_operator.set_default_rotation(Rotation3D(0.0,Deg2Rad(-90.0),0.0));
+	rot_operator.set_default_rotation(Rot3(0.0,Deg2Rad(-90.0),0.0));
 
 	for(int i=0; i<50; i++)
 		rot_operator.look_further_down_when_possible();

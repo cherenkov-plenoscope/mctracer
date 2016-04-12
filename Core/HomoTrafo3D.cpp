@@ -24,7 +24,7 @@ HomoTrafo3D::HomoTrafo3D():
     // [0 0 0 1] //last row is always the same
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::set_transformation(const Rotation3D R, const Vec3 pos) {
+void HomoTrafo3D::set_transformation(const Rot3 R, const Vec3 pos) {
 
     HomoTrafo3D TrafRotation;
     TrafRotation.set_rotation_component(R);
@@ -36,7 +36,7 @@ void HomoTrafo3D::set_transformation(const Rotation3D R, const Vec3 pos) {
     *this = TrafTranslation*TrafRotation;
 }
 //------------------------------------------------------------------------------
-void HomoTrafo3D::set_rotation_component(const Rotation3D R) {
+void HomoTrafo3D::set_rotation_component(const Rot3 R) {
     if(R.uses_xyz_angels())
         set_rotation_component_based_on_xyz_angles(R);
     else
@@ -50,7 +50,7 @@ void HomoTrafo3D::set_translation_component(const Vec3 &t) {
 }
 //------------------------------------------------------------------------------
 void HomoTrafo3D::set_rotation_component_based_on_rot_axis(
-    const Rotation3D R
+    const Rot3 R
 ) {
         // ensure rot_axis is a unit vector
         Vec3 rot_axis = R.get_rot_axis();
@@ -78,7 +78,7 @@ void HomoTrafo3D::set_rotation_component_based_on_rot_axis(
 }
 //------------------------------------------------------------------------------
 void HomoTrafo3D::set_rotation_component_based_on_xyz_angles(
-    const Rotation3D R
+    const Rot3 R
 ) {
 
     const double cosRx = R.cosRx();

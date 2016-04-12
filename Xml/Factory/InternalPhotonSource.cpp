@@ -58,7 +58,7 @@ void transform(const Xml::Node &node, vector<Photon*>* photons) {
 	
 	Vec3 pos = node.attribute2Vec3("pos");
 	Tuple3 rot_deg = node.attribute2Tuple3("rot_in_deg");
-	Rotation3D rot(Deg2Rad(rot_deg.x), Deg2Rad(rot_deg.y), Deg2Rad(rot_deg.z));
+	Rot3 rot(Deg2Rad(rot_deg.x), Deg2Rad(rot_deg.y), Deg2Rad(rot_deg.z));
 
 	HomoTrafo3D Trafo;
 	Trafo.set_transformation(rot, pos);

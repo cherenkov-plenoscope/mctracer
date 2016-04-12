@@ -28,7 +28,7 @@ void Triangle::set_normal_and_3_vertecies(
 	b = b - pos;
 	c = c - pos;
 
-	Rotation3D rot;
+	Rot3 rot;
 
 	if(normal != Vec3::unit_z) {
 
@@ -36,7 +36,7 @@ void Triangle::set_normal_and_3_vertecies(
 		Vec3 rot_axis = Vec3::unit_z.cross(normal);
 		double rotation_angle = Vec3::unit_z.get_angle_in_between_in_rad(normal);
 
-		rot = Rotation3D(rot_axis, rotation_angle);
+		rot = Rot3(rot_axis, rotation_angle);
 
 		HomoTrafo3D trafo;
 		trafo.set_transformation(rot, Vec3::null);
@@ -47,7 +47,7 @@ void Triangle::set_normal_and_3_vertecies(
 		b = trafo_inv.get_transformed_orientation(b);
 		c = trafo_inv.get_transformed_orientation(c);
 	}else{
-		rot = Rotation3D::null;
+		rot = Rot3::null;
 	}
 
 	set_name_pos_rot(name, pos, rot);

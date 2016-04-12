@@ -11,7 +11,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include "Core/Rotation3D.h"
+#include "Core/Rot3.h"
 #include "Core/Vec3.h"
 #include "Core/HomoTrafo3D.h"
 #include "CameraRay.h"
@@ -35,11 +35,11 @@ public:
 
 	virtual void update_position(const Vec3 new_cam_pos_in_world);
 
-	virtual void update_orientation(const Rotation3D new_cam_rot_in_world);
+	virtual void update_orientation(const Rot3 new_cam_rot_in_world);
 
 	virtual void update_position_and_orientation(		
 		const Vec3 new_cam_pos_in_world,
-		const Rotation3D new_cam_rot_in_world
+		const Rot3 new_cam_rot_in_world
 	);
 
 	void set_pointing_direction(	
@@ -67,7 +67,7 @@ public:
 
 	Vec3 get_position_in_world()const;
 
-	Rotation3D get_rotation_in_world()const;
+	Rot3 get_rotation_in_world()const;
 
 	Vec3 get_image_upwards_direction_in_world_frame()const;
 
@@ -86,7 +86,7 @@ protected:
 	HomoTrafo3D T_Camera2World;
 	HomoTrafo3D T_World2Camera;
 	Vec3 CameraPositionInWorld;
-	Rotation3D CameraOrientationInWorld;
+	Rot3 CameraOrientationInWorld;
 	Vec3 CameraPointingDirection;
 	CameraRay OpticalAxis;
 
@@ -94,7 +94,7 @@ protected:
 
 	void set_position_and_orientation(	
 		const Vec3 cam_pos_in_world,
-		const Rotation3D cam_rot_in_world
+		const Rot3 cam_rot_in_world
 	);
 
 	std::string get_camera_print()const;

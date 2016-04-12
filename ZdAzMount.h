@@ -12,7 +12,7 @@
 
 namespace ZdAzMount {
 
-	Rotation3D get_rot_Az_Zd(const double az, const double zd);
+	Rot3 get_rot_Az_Zd(const double az, const double zd);
 	double get_zd_of_frame(const Frame* frame);
 	double get_az_of_frame(const Frame* frame);
 } // AltitudeAzimuthMount

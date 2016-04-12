@@ -91,7 +91,7 @@ int main(int argc, char* argv[]) {
     LightFieldTelescope::Geometry telescope_geometry(telescope_config);
     LightFieldTelescope::Factory fab(&telescope_geometry);
     
-    Frame telescope("telescope", Vec3::null, Rotation3D::null);
+    Frame telescope("telescope", Vec3::null, Rot3::null);
     fab.add_telescope_to_frame(&telescope);
     PhotonSensors::Sensors* sensors = fab.get_sub_pixels();
 

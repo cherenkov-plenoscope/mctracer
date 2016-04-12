@@ -30,7 +30,7 @@ public:
 	Plane(
 		const std::string new_name,
         const Vec3    new_pos,
-        const Rotation3D  new_rot)
+        const Rot3  new_rot)
 		: SurfaceEntity(new_name, new_pos, new_rot) {};
 
 	void set_x_y_width(

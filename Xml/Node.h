@@ -13,7 +13,7 @@
 #include <memory>
 #include "Tools/Tuple3.h"
 #include "Core/Vec3.h"
-#include "Core/Rotation3D.h"
+#include "Core/Rot3.h"
 #include "Core/Color.h"
 using std::string;
 //------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ namespace Xml {
 		bool attribute2bool(const string attribute_name)const;
 		Tuple3 attribute2Tuple3(const string attribute_name)const;
 		Vec3 attribute2Vec3(const string attribute_name)const;
-		Rotation3D attribute2Rotation3D(const string attribute_name)const;
+		Rot3 attribute2Rot3(const string attribute_name)const;
 		Color attribute2Color(const string attribute_name)const;
 
 	    class AttributeIsNoInt : public TracerException {
@@ -74,7 +74,7 @@ namespace Xml {
 	        using TracerException::TracerException;
 	    }; 
 	    
-	    class AttributeIsNoRotation3D : public TracerException {
+	    class AttributeIsNoRot3 : public TracerException {
 	        using TracerException::TracerException;
 	    }; 
 	    

@@ -6,7 +6,7 @@ Cylinder::Cylinder() {}
 Cylinder::Cylinder(
 	const string name,
     const Vec3 pos,
-    const Rotation3D rot
+    const Rot3 rot
 ): SurfaceEntity(name, pos, rot) {}
 //------------------------------------------------------------------------------
 void Cylinder::set_cylinder(
@@ -28,17 +28,17 @@ void Cylinder::set_position_and_orientation(
 	Vec3 rotsym_axis = end_pos - start_pos;
 	Vec3 new_position_in_mother = start_pos + rotsym_axis/2.0;
 	
-	Rotation3D rotation_in_mother = 
+	Rot3 rotation_in_mother = 
 	calculate_new_rotation_in_mother(rotsym_axis);
 
 	set_name_pos_rot(name, new_position_in_mother, rotation_in_mother);
 }
 //------------------------------------------------------------------------------
-Rotation3D Cylinder::calculate_new_rotation_in_mother(
+Rot3 Cylinder::calculate_new_rotation_in_mother(
 	const Vec3 rotsym_axis
 )const{
 
-	Rotation3D rotation_in_mother;
+	Rot3 rotation_in_mother;
 	Vec3 ez = Vec3::unit_z;
 	
 	if( rotsym_axis.is_paralell_to_z_axis() ){

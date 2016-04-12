@@ -52,7 +52,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
     setup.max_number_of_interactions_per_photon = number_of_bounces;
 
     Vec3    pos(0,0,0);
-    Rotation3D  rot(0,0,0);
+    Rot3  rot(0,0,0);
 
     // create a test setup with two mirrors bouncing the photon
     Frame world("world",pos,rot);
@@ -155,7 +155,7 @@ TEST_F(PhotonTest, Reflections){
     setup.use_multithread_when_possible = false;
 
     Vec3    pos = Vec3::null;
-    Rotation3D  rot = Rotation3D::null;
+    Rot3  rot = Rot3::null;
 
     // create a test setup with two mirrors bouncing the photon
     Frame world("world",pos,rot);
@@ -260,7 +260,7 @@ TEST_F(PhotonTest, Refraction){
     setup.use_multithread_when_possible = false;
 
     // create a test setup with two planes and high refractive index in between
-    Frame world("world", Vec3::null, Rotation3D::null);
+    Frame world("world", Vec3::null, Rot3::null);
 
     Function::Constant water_refraction(
             1.33,
@@ -274,7 +274,7 @@ TEST_F(PhotonTest, Refraction){
     box.set_name_pos_rot(
         "box", 
         Vec3(0.0, 0.0, 1.0), 
-        Rotation3D(0.0, 0.0, 0.0)
+        Rot3(0.0, 0.0, 0.0)
     );
     box.set_outer_color(&entrance_surface_color);
     box.set_inner_color(&entrance_surface_color);
@@ -287,7 +287,7 @@ TEST_F(PhotonTest, Refraction){
     Plane absorber(
         "absorber", 
         Vec3(0.0, 0.0, 3.0),
-        Rotation3D::null
+        Rot3::null
     );
     absorber.set_outer_color(&absorber_color);
     absorber.set_inner_color(&absorber_color);
@@ -353,7 +353,7 @@ TEST_F(PhotonTest, absorbtion_in_medium){
     setup.use_multithread_when_possible = false;
 
     // create a test setup with two planes and high refractive index in between
-    Frame world("world", Vec3::null, Rotation3D::null);
+    Frame world("world", Vec3::null, Rot3::null);
 
     Function::Constant free_half_path(
         1.0,
@@ -372,7 +372,7 @@ TEST_F(PhotonTest, absorbtion_in_medium){
     box.set_name_pos_rot(
         "box", 
         Vec3(0.0, 0.0, 1.0), 
-        Rotation3D(0.0, 0.0, 0.0)
+        Rot3(0.0, 0.0, 0.0)
     );
     box.set_outer_color(&entrance_surface_color);
     box.set_inner_color(&entrance_surface_color);
@@ -386,7 +386,7 @@ TEST_F(PhotonTest, absorbtion_in_medium){
     Plane collector(
         "collector", 
         Vec3(0.0, 0.0, 3.0),
-        Rotation3D::null
+        Rot3::null
     );
     collector.set_outer_color(&absorber_color);
     collector.set_inner_color(&absorber_color);

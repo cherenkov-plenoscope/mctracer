@@ -20,7 +20,7 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/RayForPropagationTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FiniteStateMashineTEST.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/RayTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Rotation3DTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Rot3Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FitsIoTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SensorStorageTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FrameTest.cpp

@@ -42,7 +42,7 @@ namespace SegmentedReflector {
 
 	void Factory::init_reflector() {
 
-		reflector = new Frame("Reflector", Vec3::null, Rotation3D::null);
+		reflector = new Frame("Reflector", Vec3::null, Rot3::null);
 
 		for(Frame* facet : facets)
 			reflector->set_mother_and_child(facet);

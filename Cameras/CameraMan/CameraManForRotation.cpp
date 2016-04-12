@@ -4,7 +4,7 @@ CameraManForRotation::CameraManForRotation(CameraDevice* camera_to_work_with){
 	camera = camera_to_work_with;
 }
 
-void CameraManForRotation::set_default_rotation(const Rotation3D rot){
+void CameraManForRotation::set_default_rotation(const Rot3 rot){
 	RotWorld2CameraY_in_rad = rot.get_rot_y();
 	RotWorld2CameraZ_in_rad = rot.get_rot_z();
 	update_R_World2Camera();
@@ -124,6 +124,6 @@ double CameraManForRotation::rotation_increment()const{
 	return camera->get_FoV_in_rad()/25.0;
 }
 
-Rotation3D CameraManForRotation::get_R_World2Camera()const {
+Rot3 CameraManForRotation::get_R_World2Camera()const {
 	return R_World2Camera;
 }

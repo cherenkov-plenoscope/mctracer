@@ -29,7 +29,7 @@ SceneryFactory::SceneryFactory(const string path): xml_path(path), xml_doc(path)
     telescopes = new TelescopeArrayControl();
     raw_sensors = new std::vector<PhotonSensor::Sensor*>;
 
-    scenery = new Frame("scenery", Vec3::null, Rotation3D::null);
+    scenery = new Frame("scenery", Vec3::null, Rot3::null);
     make_geometry(scenery, root_node);
     scenery->init_tree_based_on_mother_child_relations();
 }

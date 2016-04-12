@@ -32,15 +32,15 @@ private:
 	CameraImage *right_image;
 
 	Vec3 initial_camera_pos;
-	Rotation3D initial_camera_rotation;
+	Rot3 initial_camera_rotation;
 	Vec3 initial_camera_image_upward_direction;
 
 	Vec3 left_camera_pos;
-	Rotation3D left_camera_rotation;
+	Rot3 left_camera_rotation;
 	Vec3 left_camera_direction_optical_axis;
 
 	Vec3 right_camera_pos;
-	Rotation3D right_camera_rotation;
+	Rot3 right_camera_rotation;
 	Vec3 right_camera_direction_optical_axis;
 
 	double distance_to_object;

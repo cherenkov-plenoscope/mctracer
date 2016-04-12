@@ -14,7 +14,7 @@
 #include <math.h>
 #include <iomanip> 
 #include "Core/Vec3.h"
-#include "Core/Rotation3D.h"
+#include "Core/Rot3.h"
 
 //=================================
 // The concept of Homogeneous Transformations is taken from the text book 
@@ -44,7 +44,7 @@ class HomoTrafo3D {
 public:
 
 	HomoTrafo3D();
-	void set_transformation(const Rotation3D R, const Vec3 pos);
+	void set_transformation(const Rot3 R, const Vec3 pos);
 	void set_transformation(
 		const Vec3 rot_x,
 		const Vec3 rot_y,
@@ -66,10 +66,10 @@ private:
 	void copy_inverse_translation_component_from(const HomoTrafo3D *M);
 	void copy_inverse_rotation_component_from(const HomoTrafo3D *M);
 	std::string get_single_row_print(const uint c)const;
-	void set_rotation_component_based_on_xyz_angles(const Rotation3D R);
-	void set_rotation_component_based_on_rot_axis(const Rotation3D R);
+	void set_rotation_component_based_on_xyz_angles(const Rot3 R);
+	void set_rotation_component_based_on_rot_axis(const Rot3 R);
 	void set_translation_component(const Vec3 &t);
-	void set_rotation_component(const Rotation3D R);
+	void set_rotation_component(const Rot3 R);
 	void set_x_column_of_rotation_component(const Vec3 &R);
 	void set_y_column_of_rotation_component(const Vec3 &R);
 	void set_z_column_of_rotation_component(const Vec3 &R);

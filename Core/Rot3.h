@@ -1,7 +1,7 @@
 //=================================
 // include guard
-#ifndef __ROTATION3D_H_INCLUDED__
-#define __ROTATION3D_H_INCLUDED__
+#ifndef __Rot3_H_INCLUDED__
+#define __Rot3_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
@@ -16,7 +16,7 @@
 #include "Core/Printable.h"
 //=================================
 
-class Rotation3D : public Printable{
+class Rot3 : public Printable{
 
 	bool flag_rot_angles_xyz;
 
@@ -27,11 +27,11 @@ class Rotation3D : public Printable{
 	Vec3 rot_axis;
 	double rot_angle_in_rad;
 public:
-	static const Rotation3D null;
+	static const Rot3 null;
 	
-	Rotation3D();
-	Rotation3D(double Phi, double The, double Psi);
-	Rotation3D(const Vec3 new_rot_axis, const double new_rot_angle_on_rad);
+	Rot3();
+	Rot3(double Phi, double The, double Psi);
+	Rot3(const Vec3 new_rot_axis, const double new_rot_angle_on_rad);
 	
 	void set(double Phi, double The, double Psi);
 	void set(const Vec3 new_rot_axis, const double new_rot_angle_on_rad);
@@ -49,6 +49,6 @@ public:
 	double sinRx()const;
 	double sinRy()const;
 	double sinRz()const;
-	bool operator == (const Rotation3D& eqRot)const;
+	bool operator == (const Rot3& eqRot)const;
 };
-#endif // __ROTATION3D_H_INCLUDED__ 
+#endif // __Rot3_H_INCLUDED__ 

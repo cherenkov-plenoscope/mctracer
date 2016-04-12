@@ -55,7 +55,7 @@ Frame* TrajectoryFactory::get_empty_trajectory_frame()const {
 	Frame* trajectory = new Frame(
 		get_trajectory_frame_name(),
 	 	Vec3::null, 
-	 	Rotation3D::null
+	 	Rot3::null
 	);	
 	
 	return trajectory;
@@ -77,7 +77,7 @@ Cylinder* TrajectoryFactory::get_trajectory_line_of_part(
 	Cylinder* ray_trajectory = new Cylinder(
 		get_trajectory_of_part_index(part_index),	 	
 		Vec3::null, 
- 		Rotation3D::null
+ 		Rot3::null
  	);
 
  	ray_trajectory->set_cylinder(
@@ -113,7 +113,7 @@ Sphere* TrajectoryFactory::get_intersection_indicator_of_part(
 		get_intersection_point_name_of_part(part_index),
 		ray->intersection_history->at(part_index)->
 			get_intersection_vector_in_world_system(),
-		Rotation3D::null
+		Rot3::null
 	);
 
 	intersection_indicator->set_radius(radius_of_trajectory_in_m*2.0);

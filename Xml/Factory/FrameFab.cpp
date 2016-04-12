@@ -11,21 +11,21 @@ void FrameFab::fab_frame(const Xml::Node &node) {
 	rot = fab_rotation(node);
 }
 
-Rotation3D FrameFab::fab_rotation(const Xml::Node &node) {	
+Rot3 FrameFab::fab_rotation(const Xml::Node &node) {	
 	if(node.has_attribute("z_reflects_to"))
 		return fab_rotation_based_on_z_reflects(node);
 	else
-		return node.attribute2Rotation3D("rot");
+		return node.attribute2Rot3("rot");
 }
 
-Rotation3D FrameFab::fab_rotation_based_on_z_reflects(const Xml::Node &node) {
+Rot3 FrameFab::fab_rotation_based_on_z_reflects(const Xml::Node &node) {
 	Vec3 focal_point = node.attribute2Vec3("z_reflects_to");
 	Vec3 focal_point_to_pos = focal_point - pos;
 	Vec3 rotation_axis = focal_point_to_pos.cross(Vec3::unit_z);
 	double rot_angle = -0.5 * Vec3::unit_z.get_angle_in_between_in_rad(
 		focal_point_to_pos
 	);
-	return Rotation3D(rotation_axis, rot_angle);
+	return Rot3(rotation_axis, rot_angle);
 }
 
 Vec3 FrameFab::fab_position(const Xml::Node &node) {	

@@ -46,7 +46,7 @@ void Calibration::set_up_field_of_view_range() {
 //------------------------------------------------------------------------------
 void Calibration::set_up_telescope() {
 
-	telescope = new Frame("telescope", Vec3::null, Rotation3D::null);
+	telescope = new Frame("telescope", Vec3::null, Rot3::null);
 	
 	Factory fab(telescope_geometry);
 	fab.add_telescope_to_frame(telescope);

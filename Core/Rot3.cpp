@@ -1,15 +1,15 @@
-#include "Rotation3D.h"
+#include "Rot3.h"
 //------------------------------------------------------------------------------
-const Rotation3D Rotation3D::null = Rotation3D(0.0, 0.0, 0.0);
+const Rot3 Rot3::null = Rot3(0.0, 0.0, 0.0);
 //------------------------------------------------------------------------------
-Rotation3D::Rotation3D() {
+Rot3::Rot3() {
 }
 //------------------------------------------------------------------------------
-Rotation3D::Rotation3D(double Phi, double The, double Psi) {
+Rot3::Rot3(double Phi, double The, double Psi) {
 	set(Phi,The,Psi);
 }
 //------------------------------------------------------------------------------
-void Rotation3D::set(double Phi, double The, double Psi) {
+void Rot3::set(double Phi, double The, double Psi) {
 	flag_rot_angles_xyz = true;
 	
 	Rx = Phi;
@@ -17,14 +17,14 @@ void Rotation3D::set(double Phi, double The, double Psi) {
 	Rz = Psi;
 }
 //------------------------------------------------------------------------------
-Rotation3D::Rotation3D(
+Rot3::Rot3(
 	const Vec3 new_rot_axis,
 	const double new_rot_angle_in_rad
 ){
 	set(new_rot_axis,new_rot_angle_in_rad);
 }
 //------------------------------------------------------------------------------
-void Rotation3D::set(
+void Rot3::set(
 	const Vec3 new_rot_axis,
 	const double new_rot_angle_in_rad
 ){
@@ -39,31 +39,31 @@ void Rotation3D::set(
 	}
 }
 //------------------------------------------------------------------------------
-Vec3 Rotation3D::get_rot_axis()const {
+Vec3 Rot3::get_rot_axis()const {
 	if(flag_rot_angles_xyz == true)
 		throw TracerException(
-			"Rotation3D::get_rot_axis():\n"
+			"Rot3::get_rot_axis():\n"
 			"rot_axis was not set! Returning default ez.\n"
 		);
 	else
 		return rot_axis;
 }
 //------------------------------------------------------------------------------
-double Rotation3D::get_rot_angle_in_rad()const {
+double Rot3::get_rot_angle_in_rad()const {
 	if(flag_rot_angles_xyz == true)
 		throw TracerException(
-			"Rotation3D::get_rot_angle_in_rad():\n"
+			"Rot3::get_rot_angle_in_rad():\n"
 			"rot_angle_in_rad was not set!"
 		);
 	else
 		return rot_angle_in_rad;
 }
 //------------------------------------------------------------------------------
-bool Rotation3D::uses_xyz_angels()const {
+bool Rot3::uses_xyz_angels()const {
 	return flag_rot_angles_xyz;
 }
 //------------------------------------------------------------------------------
-std::string Rotation3D::get_print()const {
+std::string Rot3::get_print()const {
 	std::stringstream out; 
 
 	if(flag_rot_angles_xyz == true)
@@ -75,17 +75,17 @@ std::string Rotation3D::get_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-double Rotation3D::get_rot_x()const {return Rx;}
-double Rotation3D::get_rot_y()const {return Ry;}
-double Rotation3D::get_rot_z()const {return Rz;}
+double Rot3::get_rot_x()const {return Rx;}
+double Rot3::get_rot_y()const {return Ry;}
+double Rot3::get_rot_z()const {return Rz;}
 //------------------------------------------------------------------------------
-double Rotation3D::cosRx() const {return cos(Rx);}
-double Rotation3D::cosRy() const {return cos(Ry);}
-double Rotation3D::cosRz() const {return cos(Rz);}
-double Rotation3D::sinRx() const {return sin(Rx);}
-double Rotation3D::sinRy() const {return sin(Ry);}
-double Rotation3D::sinRz() const {return sin(Rz);}
+double Rot3::cosRx() const {return cos(Rx);}
+double Rot3::cosRy() const {return cos(Ry);}
+double Rot3::cosRz() const {return cos(Rz);}
+double Rot3::sinRx() const {return sin(Rx);}
+double Rot3::sinRy() const {return sin(Ry);}
+double Rot3::sinRz() const {return sin(Rz);}
 //------------------------------------------------------------------------------
-bool Rotation3D::operator == (const Rotation3D& eqRot)const {	
+bool Rot3::operator == (const Rot3& eqRot)const {	
 	return Rx == eqRot.Rx && Ry == eqRot.Ry && Rz == eqRot.Rz;
 }

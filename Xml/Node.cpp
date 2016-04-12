@@ -219,18 +219,18 @@ Vec3 Node::attribute2Vec3(const string attribute_name)const {
     }
 }
 
-Rotation3D Node::attribute2Rotation3D(const string attribute_name)const {
+Rot3 Node::attribute2Rot3(const string attribute_name)const {
 
     try{
 
         Tuple3 t3 = attribute2Tuple3(attribute_name);
-        return Rotation3D(t3.x, t3.y, t3.z);
+        return Rot3(t3.x, t3.y, t3.z);
     }catch(std::exception &error) {
 
         stringstream info;
-        info << "Can not parse to Rotation3D.\n";
+        info << "Can not parse to Rot3.\n";
         info << "\n\n" << error.what() << "\n";
-        throw AttributeIsNoRotation3D(info.str());
+        throw AttributeIsNoRot3(info.str());
     }
 }
 

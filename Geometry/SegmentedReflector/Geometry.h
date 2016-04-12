@@ -10,7 +10,7 @@
 // included dependencies
 #include "Geometry/SegmentedReflector/Config.h"
 #include "Core/Vec3.h"
-#include "Core/Rotation3D.h"
+#include "Core/Rot3.h"
 
 namespace SegmentedReflector {
 
@@ -20,7 +20,7 @@ namespace SegmentedReflector {
 		double _parabolic_weight;
 		double _z_offset_makeing_avg_facet_dist_to_f_point_match_f;
 		std::vector<Vec3> _facet_positions;
-		std::vector<Rotation3D> _facet_orientations;
+		std::vector<Rot3> _facet_orientations;
 		Vec3 _focal_point;
 	public:	
 
@@ -40,7 +40,7 @@ namespace SegmentedReflector {
 		double thickness_of_dish()const;
 		Vec3 focal_point()const;
 		std::vector<Vec3> facet_positions()const;
-		Rotation3D get_rotation_for_facet_position(const Vec3 facet_position)const;
+		Rot3 get_rotation_for_facet_position(const Vec3 facet_position)const;
 		double DaviesCotton_weight()const;
 		double Parabolic_weight()const;
 		double facet_spacing()const;

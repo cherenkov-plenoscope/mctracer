@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
 
     // EXPLORE TELESCOPE
     //LightFieldTelescope::Factory fab(&telescope_geometry);
-    //Frame telescope("telescope", Vec3::null, Rotation3D::null);
+    //Frame telescope("telescope", Vec3::null, Rot3::null);
     //fab.add_telescope_to_frame(&telescope);
 
     //std::cout << fab.geometry->get_print() << "\n";

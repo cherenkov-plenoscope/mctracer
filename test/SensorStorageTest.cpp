@@ -19,7 +19,7 @@ TEST_F(SensorStorageTest, default_constructor_and_access_not_existing_frame) {
 	EXPECT_EQ(0, sens.size());
 
 	// a frame which is not assigned to a sensor
-	Frame dog("dog", Vec3::null, Rotation3D::null);
+	Frame dog("dog", Vec3::null, Rot3::null);
 
 	// access invalid frame
 	EXPECT_THROW(
@@ -44,7 +44,7 @@ TEST_F(SensorStorageTest, empty_Sensors_access_invalid_frame) {
 
 	// Creation
 	// a frame which is not assigned to a sensor
-	Frame dog("dog", Vec3::null, Rotation3D::null);
+	Frame dog("dog", Vec3::null, Rot3::null);
 
 	// Collecting
 	std::vector<Sensor*> my_sensors;
@@ -64,13 +64,13 @@ TEST_F(SensorStorageTest, empty_Sensors_access_invalid_frame) {
 TEST_F(SensorStorageTest, take_over_sensors_from_vector) {
 
 	// Creation
-	Frame tree("tree", Vec3::null, Rotation3D::null);
+	Frame tree("tree", Vec3::null, Rot3::null);
 	Sensor on_tree(0, &tree);
 
-	Frame house("house", Vec3::null, Rotation3D::null);
+	Frame house("house", Vec3::null, Rot3::null);
 	Sensor on_house(1, &house);
 
-	Frame car("car", Vec3::null, Rotation3D::null);
+	Frame car("car", Vec3::null, Rot3::null);
 	Sensor on_car(2, &car);
 	
 	// Collecting
@@ -91,13 +91,13 @@ TEST_F(SensorStorageTest, take_over_sensors_from_vector) {
 TEST_F(SensorStorageTest, access_sensors_by_frame) {
 
 	// Creation
-	Frame tree("tree", Vec3::null, Rotation3D::null);
+	Frame tree("tree", Vec3::null, Rot3::null);
 	Sensor on_tree(0, &tree);
 
-	Frame house("house", Vec3::null, Rotation3D::null);
+	Frame house("house", Vec3::null, Rot3::null);
 	Sensor on_house(1, &house);
 
-	Frame car("car", Vec3::null, Rotation3D::null);
+	Frame car("car", Vec3::null, Rot3::null);
 	Sensor on_car(2, &car);
 	
 	// Collecting
@@ -121,7 +121,7 @@ TEST_F(SensorStorageTest, assert_no_duplicate_frames) {
 
 	// Creation
 	// 1st sensor
-	Frame tree("tree", Vec3::null, Rotation3D::null);
+	Frame tree("tree", Vec3::null, Rot3::null);
 	Sensor on_tree(0, &tree);
 
 	// 2nd sensor points also to the frame of sensor 1 
@@ -143,17 +143,17 @@ TEST_F(SensorStorageTest, assert_no_duplicate_frames) {
 TEST_F(SensorStorageTest, access_non_existing_frame) {
 
 	// Creation
-	Frame tree("tree", Vec3::null, Rotation3D::null);
+	Frame tree("tree", Vec3::null, Rot3::null);
 	Sensor on_tree(0, &tree);
 
-	Frame house("house", Vec3::null, Rotation3D::null);
+	Frame house("house", Vec3::null, Rot3::null);
 	Sensor on_house(1, &house);
 
-	Frame car("car", Vec3::null, Rotation3D::null);
+	Frame car("car", Vec3::null, Rot3::null);
 	Sensor on_car(2, &car);
 
 	// a frame which is not assigned to a sensor
-	Frame dog("dog", Vec3::null, Rotation3D::null);
+	Frame dog("dog", Vec3::null, Rot3::null);
 	
 	// Collecting
 	std::vector<Sensor*> my_sensors;

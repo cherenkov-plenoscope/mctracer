@@ -59,7 +59,7 @@ protected:
 		lens->set_name_pos_rot(
 			"little_lens",
 			Vec3::null,
-			Rotation3D::null
+			Rot3::null
 		);
 
 		Color* lens_color;
@@ -88,7 +88,7 @@ protected:
 		image_sensor->set_name_pos_rot(
 			"sensor_disc",
 			Vec3(0.0, 0.0, -1.0), 
-			Rotation3D::null
+			Rot3::null
 		);
 
 		Color* sensor_color;
@@ -113,7 +113,7 @@ protected:
 		test_bench->set_name_pos_rot(
 			"BiConvexLens_test_world",
 			Vec3::null,
-			Rotation3D::null
+			Rot3::null
 		);  
 
 		
@@ -155,7 +155,7 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 
 	HomoTrafo3D Trafo;
 	Trafo.set_transformation(
-		Rotation3D(0.0,-Deg2Rad(180.0),0.0), 
+		Rot3(0.0,-Deg2Rad(180.0),0.0), 
 		Vec3(0.0, 0.0 ,1.0)
 	);
 

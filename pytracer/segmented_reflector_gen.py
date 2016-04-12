@@ -145,7 +145,7 @@ def SegmentedReflector(name, reflection,
         rotation_axis, rot_angle = init_facet_orientations(facet_positions, focal_point)
         facet_radius = init_facet_radius(facet_spacing, facet_fill_factor)
 
-        reflector = T.Frame(name, T.Vec3(*pos), T.Rotation3D(*rot))
+        reflector = T.Frame(name, T.Vec3(*pos), T.Rot3(*rot))
         facets = []
         for i, (f_pos, f_rot_ax, f_rot_angle) in enumerate(zip(
                                                 facet_positions, 
@@ -173,10 +173,10 @@ def SegmentedReflector(name, reflection,
 
 
 if __name__ == '__main__':
-    world = T.Frame("World", T.Vec3.null, T.Rotation3D.null)
+    world = T.Frame("World", T.Vec3.null, T.Rot3.null)
 
     green = T.Color(0, 108, 30)
-    floor = T.Plane('floor', T.Vec3(0, 0, -2.5), T.Rotation3D.null)
+    floor = T.Plane('floor', T.Vec3(0, 0, -2.5), T.Rot3.null)
     floor.set_inner_color(green)
     floor.set_outer_color(green)
     floor.set_x_y_width(1e6, 1e6)

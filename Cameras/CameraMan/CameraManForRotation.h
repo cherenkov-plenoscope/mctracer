@@ -14,18 +14,18 @@
 class CameraManForRotation: public CameraManVerbosity {
 public:
 	CameraManForRotation(CameraDevice* camera_to_work_with);
-	void set_default_rotation(const Rotation3D rot);
+	void set_default_rotation(const Rot3 rot);
 	void look_further_up_when_possible();
 	void look_further_down_when_possible();
 	void look_left();
 	void look_right();
-	Rotation3D get_R_World2Camera()const;
+	Rot3 get_R_World2Camera()const;
 private:
 
 	CameraDevice* camera;
 	double RotWorld2CameraY_in_rad;
 	double RotWorld2CameraZ_in_rad;
-	Rotation3D R_World2Camera;	
+	Rot3 R_World2Camera;	
 
 	bool is_not_falling_backwards_over_when_looking_up()const;
 	void look_further_up();

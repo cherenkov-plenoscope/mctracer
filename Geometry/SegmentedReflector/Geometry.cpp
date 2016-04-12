@@ -102,7 +102,7 @@ namespace SegmentedReflector {
 			);		
 	}
 
-	Rotation3D Geometry::get_rotation_for_facet_position(const Vec3 facet_position)const {
+	Rot3 Geometry::get_rotation_for_facet_position(const Vec3 facet_position)const {
 		
 		Vec3 focal_point_to_facet_pos = _focal_point - facet_position;
 			
@@ -114,7 +114,7 @@ namespace SegmentedReflector {
 
 		double rot_angle = 0.5*angle_between_unit_z_and_focal_point_to_mirror_pos;
 
-		return Rotation3D(rotation_axis, -rot_angle);	
+		return Rot3(rotation_axis, -rot_angle);	
 	}
 
 	double Geometry::z_offset_makeing_avg_facet_dist_to_f_point_match_f()const {

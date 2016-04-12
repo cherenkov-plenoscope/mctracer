@@ -12,7 +12,7 @@
 #include "Problem.h"
 #include "Tools/Tuple3.h"
 #include "Core/Vec3.h"
-#include "Core/Rotation3D.h"
+#include "Core/Rot3.h"
 #include "Core/Color.h"
 #include "Tools/StringTools.h"
 using std::string;

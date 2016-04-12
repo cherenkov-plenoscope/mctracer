@@ -35,7 +35,7 @@ SurfaceEntity::SurfaceEntity() {
 SurfaceEntity::SurfaceEntity(
 	const std::string new_name,
     const Vec3    new_pos,
-    const Rotation3D  new_rot)
+    const Rot3  new_rot)
 	: 	Frame(new_name, new_pos, new_rot)	
 {
 	init_surface_defaults();

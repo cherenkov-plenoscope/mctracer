@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "Core/Frame.h"
 #include "Core/Vec3.h"
-#include "Core/Rotation3D.h"
+#include "Core/Rot3.h"
 #include "Core/HomoTrafo3D.h"
 #include "Geometry/Sphere.h"
 
@@ -12,7 +12,7 @@ class FrameTest : public ::testing::Test {};
 TEST_F(FrameTest, assert_name_is_valid) {
 
     Vec3    pos = Vec3::null;
-    Rotation3D  rot = Rotation3D::null;
+    Rot3  rot = Rot3::null;
 
     Frame Peter;
     EXPECT_NO_THROW(Peter.set_name_pos_rot("A_nice_name",pos,rot));
@@ -42,9 +42,9 @@ TEST_F(FrameTest, assert_name_is_valid) {
 //------------------------------------------------------------------------------
 TEST_F(FrameTest, duplicate_name_of_children_frames) {
 
-    Frame Peter("peter", Vec3::null, Rotation3D::null);
-    Frame Klaus1("klaus", Vec3::null, Rotation3D::null);
-    Frame Klaus2("klaus", Vec3::null, Rotation3D::null);
+    Frame Peter("peter", Vec3::null, Rot3::null);
+    Frame Klaus1("klaus", Vec3::null, Rot3::null);
+    Frame Klaus2("klaus", Vec3::null, Rot3::null);
 
     Peter.set_mother_and_child(&Klaus1);
     Peter.set_mother_and_child(&Klaus2);
@@ -58,7 +58,7 @@ TEST_F(FrameTest, duplicate_name_of_children_frames) {
 TEST_F(FrameTest, set_frame) {
 
     Vec3 pos(1.3,3.7,4.2);
-    Rotation3D rot(3.1,4.1,7.7);
+    Rot3 rot(3.1,4.1,7.7);
 
     Frame Peter;
     Peter.set_name_pos_rot("A_nice_name", pos, rot);
@@ -75,39 +75,39 @@ TEST_F(FrameTest, set_frame) {
 TEST_F(FrameTest, re_set_frame) {
 
     Vec3 pos(1.3,3.7,4.2);
-    Rotation3D rot(3.1,4.1,7.7);
+    Rot3 rot(3.1,4.1,7.7);
 
     Frame peter("a_name", pos, rot);
-    Frame hans("child_of_peter", Vec3(1.0, 2.0, 3.0), Rotation3D::null);
+    Frame hans("child_of_peter", Vec3(1.0, 2.0, 3.0), Rot3::null);
     peter.set_mother_and_child(&hans);
 
     EXPECT_EQ(1, peter.get_number_of_children());
     EXPECT_EQ(pos, *peter.get_position_in_mother());
     EXPECT_EQ(rot, *peter.get_rotation_in_mother());
 
-    peter.set_name_pos_rot("another_name", Vec3(1.0, 2.0, 3.0), Rotation3D(0.1, 0.2, 0.3));
+    peter.set_name_pos_rot("another_name", Vec3(1.0, 2.0, 3.0), Rot3(0.1, 0.2, 0.3));
     
     EXPECT_EQ(1, peter.get_number_of_children());
     EXPECT_EQ(Vec3(1.0, 2.0, 3.0), *peter.get_position_in_mother());
-    EXPECT_EQ(Rotation3D(0.1, 0.2, 0.3), *peter.get_rotation_in_mother());
+    EXPECT_EQ(Rot3(0.1, 0.2, 0.3), *peter.get_rotation_in_mother());
 }
 //------------------------------------------------------------------------------
 TEST_F(FrameTest, root_of_world_on_complete_tree) {
 
     //-----define frames
-    Frame tree("tree" ,Vec3::null, Rotation3D::null);
-    Frame leaf1("leaf1" ,Vec3(1.0,0.0,0.0), Rotation3D::null);
-    Frame leaf2("leaf2" ,Vec3(-1.0,0.0,0.0), Rotation3D::null);
-    Frame branch("branch" ,Vec3(0.0,0.0,1.0), Rotation3D::null);
+    Frame tree("tree" ,Vec3::null, Rot3::null);
+    Frame leaf1("leaf1" ,Vec3(1.0,0.0,0.0), Rot3::null);
+    Frame leaf2("leaf2" ,Vec3(-1.0,0.0,0.0), Rot3::null);
+    Frame branch("branch" ,Vec3(0.0,0.0,1.0), Rot3::null);
     Frame leaf1_on_branch(
         "leaf1_on_branch",
         Vec3(1.0,0.0,0.0),
-        Rotation3D::null
+        Rot3::null
     );
     Frame leaf2_on_branch(
         "leaf2_on_branch",
         Vec3(0.0,1.0,0.0),
-        Rotation3D::null
+        Rot3::null
     );
 
     //-----declare relationschips
@@ -132,14 +132,14 @@ TEST_F(FrameTest, root_of_world_on_complete_tree) {
 TEST_F(FrameTest, root_frame_default) {
 
     //A single frame with no relations set (post initialized) is its own root. 
-    Frame tree("tree" ,Vec3::null, Rotation3D::null);
+    Frame tree("tree" ,Vec3::null, Rot3::null);
     EXPECT_EQ(&tree, tree.get_root_of_world());
 }
 //------------------------------------------------------------------------------
 TEST_F(FrameTest, cluster_frames_during_tree_initializing) {
 
     Frame tree;
-    tree.set_name_pos_rot("tree" ,Vec3::null, Rotation3D::null);
+    tree.set_name_pos_rot("tree" ,Vec3::null, Rot3::null);
     double qube_edge = 10.0;
 
     uint count = 0;
@@ -149,7 +149,7 @@ TEST_F(FrameTest, cluster_frames_during_tree_initializing) {
                 Vec3 pos(x,y,z);
                 stringstream name;
                 name << "sub_sphere_" << x << "_" << y << "_" << z;
-                Sphere* sphere = new Sphere(name.str(), pos, Rotation3D::null);
+                Sphere* sphere = new Sphere(name.str(), pos, Rot3::null);
                 sphere->set_radius(0.5);
                 tree.set_mother_and_child(sphere);
                 count++;

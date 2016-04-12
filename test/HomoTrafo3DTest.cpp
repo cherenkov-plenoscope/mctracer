@@ -48,7 +48,7 @@ TEST_F(HomoTrafo3DTest, unit_trafo_is_its_own_inverse) {
 //------------------------------------------------------------------------------
 TEST_F(HomoTrafo3DTest, translation_without_rotation) {
     Vec3 translation(0.0, 0.0, 133.7);
-    Rotation3D rotation(0.0, 0.0, 0.0);
+    Rot3 rotation(0.0, 0.0, 0.0);
 
     HomoTrafo3D frame1_to_frame2;
     frame1_to_frame2.set_transformation(rotation, translation);

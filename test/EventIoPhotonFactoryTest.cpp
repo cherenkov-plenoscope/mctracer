@@ -33,10 +33,10 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
                     photons.push_back(cpf.get_photon());
 
                     // propagate mctracer photons down to ground
-                    Frame world("world", Vec3::null, Rotation3D::null);
+                    Frame world("world", Vec3::null, Rot3::null);
 
                     Disc ground;
-                    ground.set_name_pos_rot("ground", Vec3::null, Rotation3D::null);
+                    ground.set_name_pos_rot("ground", Vec3::null, Rot3::null);
                     const Color* ground_color = &Color::gray;
                     const uint ground_sensor_id = 0;
                     ground.set_outer_color(ground_color);
@@ -284,10 +284,10 @@ TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         }
 
         // propagate mctracer photons down to ground
-        Frame world("world", Vec3::null, Rotation3D::null);
+        Frame world("world", Vec3::null, Rot3::null);
         
         Disc ground;
-        ground.set_name_pos_rot("ground", Vec3::null, Rotation3D::null);
+        ground.set_name_pos_rot("ground", Vec3::null, Rot3::null);
         const Color* ground_color = &Color::gray;
         const uint ground_sensor_id = 0;
         ground.set_outer_color(ground_color);

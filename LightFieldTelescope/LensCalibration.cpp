@@ -75,9 +75,9 @@ LensCalibration::~LensCalibration() {
 void LensCalibration::set_up_test_bench() {
 
 	
-	test_bench.set_name_pos_rot("test_bench", Vec3::null, Rotation3D::null);
+	test_bench.set_name_pos_rot("test_bench", Vec3::null, Rot3::null);
 
-	lens.set_name_pos_rot("lens", Vec3::null, Rotation3D::null);
+	lens.set_name_pos_rot("lens", Vec3::null, Rot3::null);
 	lens.set_outer_color(&Color::white);
 	lens.set_inner_color(&Color::white);
 	lens.set_inner_refraction(telescope_geometry->config.lens_refraction);
@@ -94,7 +94,7 @@ void LensCalibration::set_up_test_bench() {
 	);
 	std::vector<Vec3> face_plate_positions = face_plate_grid.get_grid();
 
-	face_plate.set_name_pos_rot("face_plate", Vec3::null, Rotation3D::null);	
+	face_plate.set_name_pos_rot("face_plate", Vec3::null, Rot3::null);	
 
 	for(uint i=0; i<face_plate_positions.size(); i++) {
 
@@ -102,7 +102,7 @@ void LensCalibration::set_up_test_bench() {
 		face->set_name_pos_rot(
 			"face_"+std::to_string(i),
 			face_plate_positions.at(i),
-			Rotation3D::null
+			Rot3::null
 		);
 		face->set_outer_color(&Color::gray);
 		face->set_inner_color(&Color::gray);
@@ -129,7 +129,7 @@ void LensCalibration::set_up_test_bench() {
 		)
 	);
 
-	image_sensor.set_name_pos_rot("image_sensor", sensor_position, Rotation3D::null);
+	image_sensor.set_name_pos_rot("image_sensor", sensor_position, Rot3::null);
 	image_sensor.set_outer_color(&Color::red);
 	image_sensor.set_inner_color(&Color::red);
 	image_sensor.set_radius(

@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "Core/Function/ConstantFunction.h"
 #include "Core/TracerSettings.h"
-#include "Core/Rotation3D.h"
+#include "Core/Rot3.h"
 #include "Core/Frame.h"
 #include "Core/Random/Random.h"
 #include "Geometry/Plane.h"
@@ -14,7 +14,7 @@ class PlaneIntersectionTest : public ::testing::Test {
 
 	TracerSettings setup;
 	Vec3    pos;
-	Rotation3D  rot;
+	Rot3  rot;
 	Function::Constant* refl_vs_wavl;
 	Color*      colo;
 	double x_width = 2.5;

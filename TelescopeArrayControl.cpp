@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 void TelescopeArrayControl::move_all_to_Az_Zd(const double Az_Rad, const double Zd_Rad) {
 
-	Rotation3D rot = ZdAzMount::get_rot_Az_Zd(Az_Rad, Zd_Rad);
+	Rot3 rot = ZdAzMount::get_rot_Az_Zd(Az_Rad, Zd_Rad);
 
 	for(Frame* telescope : telescopes_in_world)
 		telescope->update_rotation(rot);

@@ -19,7 +19,7 @@ void CameraDevice::update_position(const Vec3 new_cam_pos_in_world) {
 	);
 }
 //------------------------------------------------------------------------------
-void CameraDevice::update_orientation(const Rotation3D new_cam_rot_in_world) {
+void CameraDevice::update_orientation(const Rot3 new_cam_rot_in_world) {
 	update_position_and_orientation(
 		CameraPositionInWorld, 
 		new_cam_rot_in_world
@@ -28,7 +28,7 @@ void CameraDevice::update_orientation(const Rotation3D new_cam_rot_in_world) {
 //------------------------------------------------------------------------------
 void CameraDevice::update_position_and_orientation(		
 	const Vec3 new_cam_pos_in_world,
-	const Rotation3D new_cam_rot_in_world
+	const Rot3 new_cam_rot_in_world
 ){
 	set_position_and_orientation(new_cam_pos_in_world, new_cam_rot_in_world);
 	update_optical_axis_and_orientation();
@@ -36,7 +36,7 @@ void CameraDevice::update_position_and_orientation(
 //------------------------------------------------------------------------------
 void CameraDevice::set_position_and_orientation(	
 	const Vec3 cam_pos_in_world,
-	const Rotation3D cam_rot_in_world
+	const Rot3 cam_rot_in_world
 ){
 	this->CameraPositionInWorld = cam_pos_in_world;
 	this->CameraOrientationInWorld = cam_rot_in_world;
@@ -150,7 +150,7 @@ Vec3 CameraDevice::get_position_in_world()const{
 	return CameraPositionInWorld;
 }
 //------------------------------------------------------------------------------
-Rotation3D CameraDevice::get_rotation_in_world()const{
+Rot3 CameraDevice::get_rotation_in_world()const{
 	return CameraOrientationInWorld;
 }
 //------------------------------------------------------------------------------

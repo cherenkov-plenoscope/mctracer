@@ -22,7 +22,7 @@ protected:
 public:
 
 	Cylinder();
-	Cylinder(const string name, const Vec3 pos, const Rotation3D rot);
+	Cylinder(const string name, const Vec3 pos, const Rot3 rot);
 	void set_cylinder(
 		const double radius, 
 		const Vec3 start_pos, 
@@ -46,7 +46,7 @@ private:
 	);
 	bool is_in_cylinders_z_bounds(const Vec3* vec)const;
 	Vec3 get_surface_normal_for_intersection_vec(const Vec3* vec)const;
-	Rotation3D calculate_new_rotation_in_mother(const Vec3 rotsym_axis)const;
+	Rot3 calculate_new_rotation_in_mother(const Vec3 rotsym_axis)const;
 public:
 
     class BadRadius :public TracerException{

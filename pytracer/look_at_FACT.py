@@ -3,17 +3,17 @@ from mctracer import *
 settings = TracerSettings()
 
 world = Frame()
-world.set_name_pos_rot("world", Vec3.null, Rotation3D.null)
+world.set_name_pos_rot("world", Vec3.null, Rot3.null)
 
 ground = Disc()
-ground.set_name_pos_rot("ground", Vec3(0.0, 0.0, -2.0), Rotation3D.null)
+ground.set_name_pos_rot("ground", Vec3(0.0, 0.0, -2.0), Rot3.null)
 ground.set_radius(1e3)
 
 ground_color = Color(0,55,0)
 ground.set_outer_color(ground_color)
 ground.set_inner_color(ground_color)
 
-FACT = TelescopeFrame("FACT", Vec3.null, Rotation3D.null)
+FACT = TelescopeFrame("FACT", Vec3.null, Rot3.null)
 
 		
 reflector_generator = SegmetedReflectorGenerator()
@@ -27,7 +27,7 @@ reflector = reflector_generator.get_reflector()
 
 
 Sensor = Disc()
-Sensor.set_name_pos_rot("Sensor", Vec3(0.0, 0.0, 4.889), Rotation3D.null)
+Sensor.set_name_pos_rot("Sensor", Vec3(0.0, 0.0, 4.889), Rot3.null)
  		
 sensor_color = Color(255,0,0)
 Sensor.set_radius(0.32)
@@ -39,7 +39,7 @@ sensor_housing_lower_cap = Disc()
 sensor_housing_lower_cap.set_name_pos_rot(
 	"sensor_housing_lower_cap", 
 	Vec3(0.0, 0.0, 4.890), 
-	Rotation3D.null)
+	Rot3.null)
 sensor_housing_lower_cap.set_radius(0.32)
 
 sensor_housing_color = Color(200,255,200)

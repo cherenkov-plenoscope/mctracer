@@ -1,17 +1,17 @@
 #include "gtest/gtest.h"
-#include "Core/Rotation3D.h"
+#include "Core/Rot3.h"
 
 using namespace std;
 
 // The fixture for testing class Foo.
-class Rotation3DTest : public ::testing::Test {};
+class Rot3Test : public ::testing::Test {};
 //------------------------------------------------------------------------------
-TEST_F(Rotation3DTest, ConstructorAndGetter) {
+TEST_F(Rot3Test, ConstructorAndGetter) {
   // xyz mode
   const double x = -3.141;
   const double y = 2.0;
   const double z = 1.0;
-  Rotation3D r(x,y,z); 
+  Rot3 r(x,y,z); 
   EXPECT_EQ(x, r.get_rot_x());
   EXPECT_EQ(y, r.get_rot_y());
   EXPECT_EQ(z, r.get_rot_z());
@@ -21,7 +21,7 @@ TEST_F(Rotation3DTest, ConstructorAndGetter) {
   Vec3 v(0.0,0.0,1.0);
   double  angle = 1.52;
 
-  Rotation3D p(v,angle);
+  Rot3 p(v,angle);
   EXPECT_EQ(angle, p.get_rot_angle_in_rad());
   EXPECT_EQ(v.x(), (p.get_rot_axis()).x());
   EXPECT_EQ(v.y(), (p.get_rot_axis()).y());
@@ -29,11 +29,11 @@ TEST_F(Rotation3DTest, ConstructorAndGetter) {
   EXPECT_FALSE(p.uses_xyz_angels());
 }
 //------------------------------------------------------------------------------
-TEST_F(Rotation3DTest, SetterAndGetter) {
+TEST_F(Rot3Test, SetterAndGetter) {
   const double x = -3.141;
   const double y = -2.0;
   const double z = 1.0000;
-  Rotation3D r;   r.set(x,y,z); 
+  Rot3 r;   r.set(x,y,z); 
   EXPECT_EQ(x, r.get_rot_x());
   EXPECT_EQ(y, r.get_rot_y());
   EXPECT_EQ(z, r.get_rot_z());
@@ -43,7 +43,7 @@ TEST_F(Rotation3DTest, SetterAndGetter) {
   Vec3 v(0.0,0.0,1.0);
   double  angle = 1.52;
 
-  Rotation3D p; p.set(v,angle);
+  Rot3 p; p.set(v,angle);
   EXPECT_EQ(angle, p.get_rot_angle_in_rad());
   EXPECT_EQ(v.x(), (p.get_rot_axis()).x());
   EXPECT_EQ(v.y(), (p.get_rot_axis()).y());
@@ -51,11 +51,11 @@ TEST_F(Rotation3DTest, SetterAndGetter) {
   EXPECT_FALSE(p.uses_xyz_angels());
 }
 //------------------------------------------------------------------------------
-TEST_F(Rotation3DTest, SineAndCosineWhenSetXYZ) {
+TEST_F(Rot3Test, SineAndCosineWhenSetXYZ) {
   const double x = -3.141;
   const double y = -2.0;
   const double z = 1.0000;
-  Rotation3D r(x,y,z); 
+  Rot3 r(x,y,z); 
 
   EXPECT_EQ(sin(x), r.sinRx()); 
   EXPECT_EQ(sin(y), r.sinRy()); 
@@ -65,14 +65,14 @@ TEST_F(Rotation3DTest, SineAndCosineWhenSetXYZ) {
   EXPECT_EQ(cos(z), r.cosRz()); 
 }
 //------------------------------------------------------------------------------
-TEST_F(Rotation3DTest, zoro_rot_angle) {
+TEST_F(Rot3Test, zoro_rot_angle) {
 
-  Rotation3D r(Vec3::null, 0.0); 
-  EXPECT_EQ(Rotation3D::null ,r); 
+  Rot3 r(Vec3::null, 0.0); 
+  EXPECT_EQ(Rot3::null ,r); 
 
-  Rotation3D s(Vec3::unit_z, 0.0); 
-  EXPECT_EQ(Rotation3D::null ,s); 
+  Rot3 s(Vec3::unit_z, 0.0); 
+  EXPECT_EQ(Rot3::null ,s); 
 
-  Rotation3D t(Vec3::unit_y, 0.0); 
-  EXPECT_EQ(Rotation3D::null ,t); 
+  Rot3 t(Vec3::unit_y, 0.0); 
+  EXPECT_EQ(Rot3::null ,t); 
 }

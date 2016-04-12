@@ -27,7 +27,7 @@ protected:
     spheres_in_a_row_along_x_r1m->set_name_pos_rot(
         "ten_in_a_row", 
         Vec3::null,
-        Rotation3D::null
+        Rot3::null
     );
 
     Color* color; 
@@ -40,7 +40,7 @@ protected:
         sphere->set_name_pos_rot(
         name.str(),
         start + Vec3(distance_in_between_spheres_in_m*i,0.0,0.0),
-        Rotation3D::null
+        Rot3::null
         );
 
         sphere->set_radius(1.0);

@@ -40,7 +40,7 @@ public:
 	SurfaceEntity(
 		const std::string new_name,
         const Vec3    new_pos,
-        const Rotation3D  new_rot
+        const Rot3  new_rot
     );
 	void set_outer_color(const Color* color);
 	void set_inner_color(const Color* color);

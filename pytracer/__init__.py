@@ -36,15 +36,15 @@ def __new_Frame__init__(self, *k, **kw):
 
     if 'rot' in kw:
         if len(kw['rot']) == 3:
-            rot = mctracer.Rotation3D(*kw['rot'])
+            rot = mctracer.Rot3(*kw['rot'])
         elif len(kw['rot']) == 2:
             axis, angle = kw['rot']
             rot_axis = mctracer.Vec3(*axis)
-            rot = mctracer.Rotation3D(rot_axis, angle)
+            rot = mctracer.Rot3(rot_axis, angle)
         else:
-            raise ValueError("Cannot make Rotation3D from:"+repr(kw['rot']))
+            raise ValueError("Cannot make Rot3 from:"+repr(kw['rot']))
     else:
-        rot = mctracer.Rotation3D.null
+        rot = mctracer.Rot3.null
 
     self.set_name_pos_rot(name, pos, rot)
 mctracer.Frame.__init__ = __new_Frame__init__
