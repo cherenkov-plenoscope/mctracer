@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "Core/Vec2.h"
 #include "Tools/Tools.h"
+#include <cmath>
 
 class Vec2Test : public ::testing::Test {};
 //----------------------------------------------------------------------
@@ -180,7 +181,7 @@ TEST_F(Vec2Test, normalize) {
     EXPECT_NE(1.0, a.norm());
 
     a.normalize();
-    EXPECT_TRUE( isnan(a.norm()) == 1 );
+    EXPECT_TRUE( std::isnan(a.norm()) == 1 );
 }
 //----------------------------------------------------------------------
 TEST_F(Vec2Test, angle_in_between) {
