@@ -34,7 +34,8 @@ int main(int argc, char* argv[]) {
     cout << "config '" << config_path.path << config_path.filename << "'\n";
 
     Xml::Document doc(config_path.path + config_path.filename);
-    Xml::Node block_node = doc.node().child("photon_blocks");
+    Xml::Node calibration = doc.node().child("calibration");
+    Xml::Node block_node = calibration.child("photon_blocks");
 
     // SET UP TELESCOPE
     LightFieldTelescope::Config telescope_config;
