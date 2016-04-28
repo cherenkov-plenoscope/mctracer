@@ -183,15 +183,7 @@ Vec3 HomTra3::get_transformed_position(const Vec3& pos)const {
 }
 //------------------------------------------------------------------------------
 Vec3 HomTra3::get_translation()const {
-    Vec3 translation_component;
-
-    translation_component.set(
-        T[0][3], 
-        T[1][3], 
-        T[2][3]
-    );
-
-    return translation_component;
+    return Vec3(T[0][3], T[1][3], T[2][3]);
 }
 //------------------------------------------------------------------------------
 std::string HomTra3::get_print()const {
