@@ -13,9 +13,7 @@ const Color Color::green = Color(0,255,0);
 const Color Color::blue = Color(0,0,255);
 const Color Color::grass_green = Color(22,91,49);
 //------------------------------------------------------------------------------
-Color::Color(){
-	*this = Color(128, 128, 128);
-}
+Color::Color(): c_red(128), c_green(128), c_blue(128) {}
 //------------------------------------------------------------------------------
 Color::Color(const int r, const int g, const int b) {
 	assert_is_in_valid_8Bit_range(r);
@@ -37,7 +35,7 @@ Color::Color(const std::vector<Color> &colors) {
 		g = g + c.get_green();
 		b = b + c.get_blue();
 	}
-	double weight = 1.0/colors.size();
+	const double weight = 1.0/colors.size();
 
 	c_red = (unsigned char)round(r*weight);
 	c_green = (unsigned char)round(g*weight);
