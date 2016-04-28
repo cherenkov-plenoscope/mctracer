@@ -89,7 +89,7 @@ Photon* NightSkyBackgroundLight::get_photon_on_principal_aperture(
 		time_until_reaching_principal_aperture*
 		PhysicalConstants::speed_of_light_in_vacuum;
 
-	Vec3 support_of_photon = back_running_ray.PositionOnRay(
+	Vec3 support_of_photon = back_running_ray.get_pos_at(
 		distance_to_travel_before_intersecting_principal_aperture
 	);
 

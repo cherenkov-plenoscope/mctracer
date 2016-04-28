@@ -34,7 +34,7 @@ const Intersection* PlaneDualSphericalBound::calculate_intersection_with(const R
 	if( xyPlaneRayEquation.has_causal_solution() ){
 		
 		double v = xyPlaneRayEquation.get_ray_parameter_for_intersection();
-		Vec3 intersection_vector = ray->PositionOnRay(v);		
+		Vec3 intersection_vector = ray->get_pos_at(v);		
 
 		if(dual_sphere_bounds.is_inside(&intersection_vector) ) {
 
@@ -44,7 +44,7 @@ const Intersection* PlaneDualSphericalBound::calculate_intersection_with(const R
 				intersection_vector,
 				xyPlaneRayEquation.get_plane_normal_vector(),
 				v,
-				ray->Direction()
+				ray->get_direction()
 			);
 
 			return intersec;

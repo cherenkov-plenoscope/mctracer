@@ -4,19 +4,19 @@
 Ray::Ray() {}
 //------------------------------------------------------------------------------
 Ray::Ray(const Vec3 support, const Vec3 direction) {
-	SetRay(support, direction);
+	set_support_and_direction(support, direction);
 }
 //------------------------------------------------------------------------------
-void Ray::SetRay(const Vec3 support, const Vec3 direction) {
-	SetSupport(support);
-	SetDirection(direction);
+void Ray::set_support_and_direction(const Vec3 support, const Vec3 direction) {
+	set_support(support);
+	set_direction(direction);
 }
 //------------------------------------------------------------------------------
-void Ray::SetSupport(const Vec3 sup) {
+void Ray::set_support(const Vec3 sup) {
 	support = sup;
 }
 //------------------------------------------------------------------------------
-void Ray::SetDirection(const Vec3 dir) {
+void Ray::set_direction(const Vec3 dir) {
 	direction = dir;
 	direction.normalize();
 }
@@ -27,15 +27,15 @@ string Ray::get_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-Vec3 Ray::PositionOnRay(const double scalar)const {
+Vec3 Ray::get_pos_at(const double scalar)const {
 	return support + direction*scalar;
 }
 //------------------------------------------------------------------------------
-Vec3 Ray::Support()const {
+Vec3 Ray::get_support()const {
 	return support;
 }
 //------------------------------------------------------------------------------
-Vec3 Ray::Direction()const {
+Vec3 Ray::get_direction()const {
 	return direction;
 }
 //------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ double Ray::get_parameter_on_ray_for_closest_distance_to_point(
 //------------------------------------------------------------------------------
 double Ray::get_closest_distance_to_point(const Vec3 &point)const {
 	const double a = get_parameter_on_ray_for_closest_distance_to_point(point);
-	const Vec3 q = PositionOnRay(a);
+	const Vec3 q = get_pos_at(a);
 	const Vec3 shortest_connection = point - q;
 	return shortest_connection.norm();
 }

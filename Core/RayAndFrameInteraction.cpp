@@ -72,7 +72,7 @@ vector<const Intersection*> Ray::get_intersections_in_candidate_objects(
 }
 //------------------------------------------------------------------------------
 bool Ray::support_equals_intersection_point(const Intersection* intersec)const {
-	return 	intersec->get_intersection_vector_in_object_system() == Support();
+	return 	intersec->get_intersection_vector_in_object_system() == get_support();
 }
 //------------------------------------------------------------------------------
 const Intersection* Ray::calculate_closest_intersection(	
@@ -84,7 +84,7 @@ const Intersection* Ray::calculate_closest_intersection(
 		Intersection* void_intersection;
 		void_intersection = new Intersection(
 			SurfaceEntity::void_object,
-			PositionOnRay(1e4),
+			get_pos_at(1e4),
 			direction,
 			1e4,
 			direction

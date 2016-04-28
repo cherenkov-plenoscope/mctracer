@@ -16,7 +16,7 @@ void CameraManForTranslation::set_default_position(const Vec3 default_pos) {
 void CameraManForTranslation::move_for(){
 	camera->update_position(
 		camera->get_position_in_world() +
-		camera->get_normalized_pointing_direction()*translation_increment() 
+		camera->get_normalized_pointing_get_direction()*translation_increment() 
 	);
 	if(verbose) print_camera_moved_in_direction("forward");
 }
@@ -24,7 +24,7 @@ void CameraManForTranslation::move_for(){
 void CameraManForTranslation::move_back(){
 	camera->update_position(
 		camera->get_position_in_world() -
-		camera->get_normalized_pointing_direction()*translation_increment() 
+		camera->get_normalized_pointing_get_direction()*translation_increment() 
 	);
 	if(verbose) print_camera_moved_in_direction("back");
 }

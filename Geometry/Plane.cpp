@@ -36,7 +36,7 @@ const Intersection* Plane::calculate_intersection_with(const Ray* ray)const {
 	if( xyPlaneRayEquation.has_causal_solution() ){
 		
 		double v = xyPlaneRayEquation.get_ray_parameter_for_intersection();
-		Vec3 intersection_vector = ray->PositionOnRay(v);		
+		Vec3 intersection_vector = ray->get_pos_at(v);		
 
 		if(	RectBounds.is_inside(&intersection_vector) ) {
 
@@ -46,7 +46,7 @@ const Intersection* Plane::calculate_intersection_with(const Ray* ray)const {
 				intersection_vector,
 				xyPlaneRayEquation.get_plane_normal_vector(),
 				v,
-				ray->Direction()
+				ray->get_direction()
 			);
 
 			return intersec;

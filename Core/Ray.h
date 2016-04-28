@@ -31,11 +31,11 @@ protected:
 public:
 
 	Ray(const Vec3 support, const Vec3 direction);
-	void SetDirection(const Vec3 ndir);
-	void SetSupport(const Vec3 nsup);
-	Vec3 Support()const;
-	Vec3 Direction()const;
-	Vec3 PositionOnRay(const double scalar)const;
+	void set_direction(const Vec3 ndir);
+	void set_support(const Vec3 nsup);
+	Vec3 get_support()const;
+	Vec3 get_direction()const;
+	Vec3 get_pos_at(const double scalar)const;
 	void transform(const HomTra3 *T);
 	virtual string get_print()const;
 	double get_parameter_on_ray_for_closest_distance_to_point(
@@ -66,7 +66,7 @@ public:
 protected:
 	Ray();
 
-	void SetRay(const Vec3 nsup,const Vec3 ndir);	
+	void set_support_and_direction(const Vec3 nsup,const Vec3 ndir);	
 
 	vector<const Frame*> get_intersection_candidate_objects(
 		const Frame* frame

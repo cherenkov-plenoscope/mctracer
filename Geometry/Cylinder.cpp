@@ -138,7 +138,7 @@ const Intersection* Cylinder::calculate_intersection_with(const Ray* ray)const {
 	if(cylRayEquation.has_causal_solution()) {
 
 		double v = cylRayEquation.get_ray_parameter_for_intersection();
-		Vec3 intersection_vector = ray->PositionOnRay(v);
+		Vec3 intersection_vector = ray->get_pos_at(v);
 
 		if(is_in_cylinders_z_bounds(&intersection_vector)) {
 
@@ -148,7 +148,7 @@ const Intersection* Cylinder::calculate_intersection_with(const Ray* ray)const {
 				intersection_vector,
 				get_surface_normal_for_intersection_vec(&intersection_vector),
 				v,
-				ray->Direction()
+				ray->get_direction()
 			);
 
 			return intersec;			

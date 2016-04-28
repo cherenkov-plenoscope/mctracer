@@ -11,7 +11,7 @@ bool Ray::has_intersection_with_bounding_sphere_of(const Frame* frame)const{
 		*frame->get_position_in_world()
 	);
 
-	const Vec3 q = PositionOnRay(alpha);
+	const Vec3 q = get_pos_at(alpha);
 	const Vec3 shortest_connection = *frame->get_position_in_world() - q;
 	const double dist_square = shortest_connection*shortest_connection;
 

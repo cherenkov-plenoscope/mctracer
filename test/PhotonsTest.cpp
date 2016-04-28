@@ -17,12 +17,12 @@ TEST_F(PhotonsTest, raw_row2photon) {
     Photon* ph = Photons::raw_row2photon(raw_row);
 
     EXPECT_EQ(ph->get_id(), raw_row[0]);
-    EXPECT_EQ(ph->Support().x(), raw_row[1]);
-    EXPECT_EQ(ph->Support().y(), raw_row[2]);
-    EXPECT_EQ(ph->Support().z(), raw_row[3]);
-    EXPECT_NEAR(ph->Direction().x(), raw_row[4], 1e-9);
-    EXPECT_NEAR(ph->Direction().y(), raw_row[5], 1e-9);
-    EXPECT_NEAR(ph->Direction().z(), raw_row[6], 1e-9);
+    EXPECT_EQ(ph->get_support().x(), raw_row[1]);
+    EXPECT_EQ(ph->get_support().y(), raw_row[2]);
+    EXPECT_EQ(ph->get_support().z(), raw_row[3]);
+    EXPECT_NEAR(ph->get_direction().x(), raw_row[4], 1e-9);
+    EXPECT_NEAR(ph->get_direction().y(), raw_row[5], 1e-9);
+    EXPECT_NEAR(ph->get_direction().z(), raw_row[6], 1e-9);
     EXPECT_EQ(ph->get_wavelength(), raw_row[7]);
 }
 //------------------------------------------------------------------------------
@@ -41,12 +41,12 @@ TEST_F(PhotonsTest, photon2raw_row) {
     ASSERT_EQ(8, raw_row.size());
 
     EXPECT_EQ(ph->get_id(), raw_row[0]);
-    EXPECT_EQ(ph->Support().x(), raw_row[1]);
-    EXPECT_EQ(ph->Support().y(), raw_row[2]);
-    EXPECT_EQ(ph->Support().z(), raw_row[3]);
-    EXPECT_NEAR(ph->Direction().x(), raw_row[4], 1e-9);
-    EXPECT_NEAR(ph->Direction().y(), raw_row[5], 1e-9);
-    EXPECT_NEAR(ph->Direction().z(), raw_row[6], 1e-9);
+    EXPECT_EQ(ph->get_support().x(), raw_row[1]);
+    EXPECT_EQ(ph->get_support().y(), raw_row[2]);
+    EXPECT_EQ(ph->get_support().z(), raw_row[3]);
+    EXPECT_NEAR(ph->get_direction().x(), raw_row[4], 1e-9);
+    EXPECT_NEAR(ph->get_direction().y(), raw_row[5], 1e-9);
+    EXPECT_NEAR(ph->get_direction().z(), raw_row[6], 1e-9);
     EXPECT_EQ(ph->get_wavelength(), raw_row[7]);
 }
 //------------------------------------------------------------------------------
@@ -86,12 +86,12 @@ TEST_F(PhotonsTest, bunch2raw_matrix2bunch) {
         Photon* ph2 = photon_bunch2->at(n);
 
         EXPECT_EQ(ph2->get_id(), ph1->get_id());
-        EXPECT_EQ(ph2->Support().x(), ph1->Support().x());
-        EXPECT_EQ(ph2->Support().y(), ph1->Support().y());
-        EXPECT_EQ(ph2->Support().z(), ph1->Support().z());
-        EXPECT_NEAR(ph2->Direction().x(), ph1->Direction().x(), 1e-9);
-        EXPECT_NEAR(ph2->Direction().y(), ph1->Direction().y(), 1e-9);
-        EXPECT_NEAR(ph2->Direction().z(), ph1->Direction().z(), 1e-9);
+        EXPECT_EQ(ph2->get_support().x(), ph1->get_support().x());
+        EXPECT_EQ(ph2->get_support().y(), ph1->get_support().y());
+        EXPECT_EQ(ph2->get_support().z(), ph1->get_support().z());
+        EXPECT_NEAR(ph2->get_direction().x(), ph1->get_direction().x(), 1e-9);
+        EXPECT_NEAR(ph2->get_direction().y(), ph1->get_direction().y(), 1e-9);
+        EXPECT_NEAR(ph2->get_direction().z(), ph1->get_direction().z(), 1e-9);
         EXPECT_EQ(ph2->get_wavelength(), ph1->get_wavelength());
     }
 }
@@ -135,12 +135,12 @@ TEST_F(PhotonsTest, bunch2raw_matrix2file) {
         Photon* ph2 = photon_bunch2->at(n);
 
         EXPECT_EQ(ph2->get_id(), ph1->get_id());
-        EXPECT_NEAR(ph2->Support().x(), ph1->Support().x(), 1e-9);
-        EXPECT_NEAR(ph2->Support().y(), ph1->Support().y(), 1e-9);
-        EXPECT_NEAR(ph2->Support().z(), ph1->Support().z(), 1e-9);
-        EXPECT_NEAR(ph2->Direction().x(), ph1->Direction().x(), 1e-9);
-        EXPECT_NEAR(ph2->Direction().y(), ph1->Direction().y(), 1e-9);
-        EXPECT_NEAR(ph2->Direction().z(), ph1->Direction().z(), 1e-9);
+        EXPECT_NEAR(ph2->get_support().x(), ph1->get_support().x(), 1e-9);
+        EXPECT_NEAR(ph2->get_support().y(), ph1->get_support().y(), 1e-9);
+        EXPECT_NEAR(ph2->get_support().z(), ph1->get_support().z(), 1e-9);
+        EXPECT_NEAR(ph2->get_direction().x(), ph1->get_direction().x(), 1e-9);
+        EXPECT_NEAR(ph2->get_direction().y(), ph1->get_direction().y(), 1e-9);
+        EXPECT_NEAR(ph2->get_direction().z(), ph1->get_direction().z(), 1e-9);
         EXPECT_NEAR(ph2->get_wavelength(), ph1->get_wavelength(), 1e-9);
     }
 }

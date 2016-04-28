@@ -51,8 +51,8 @@ void CameraDevice::update_optical_axis_and_orientation() {
 	CameraPointingDirection = Vec3::unit_z;
 	T_Camera2World.transform_orientation(&CameraPointingDirection);
 
-	OpticalAxis.SetSupport(CameraPositionInWorld);
-	OpticalAxis.SetDirection(CameraPointingDirection);	
+	OpticalAxis.set_support(CameraPositionInWorld);
+	OpticalAxis.set_direction(CameraPointingDirection);	
 }
 //------------------------------------------------------------------------------
 void CameraDevice::set_pointing_direction(	
@@ -107,7 +107,7 @@ std::string CameraDevice::get_camera_print()const{
 	return out.str();
 }
 //------------------------------------------------------------------------------
-Vec3 CameraDevice::get_normalized_pointing_direction()const{
+Vec3 CameraDevice::get_normalized_pointing_get_direction()const{
 	return CameraPointingDirection/CameraPointingDirection.norm();
 }
 //------------------------------------------------------------------------------
@@ -155,7 +155,7 @@ Rot3 CameraDevice::get_rotation_in_world()const{
 }
 //------------------------------------------------------------------------------
 Vec3 CameraDevice::direction_to_the_right_of_the_camera()const{
-	return Vec3::unit_z.cross(get_normalized_pointing_direction());	
+	return Vec3::unit_z.cross(get_normalized_pointing_get_direction());	
 }
 Ray CameraDevice::get_optical_axis_in_world()const{
 	return OpticalAxis;

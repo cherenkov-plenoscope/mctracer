@@ -127,13 +127,13 @@ namespace Photons {
 
 		raw_row.push_back(double(ph->get_id()));
 
-		raw_row.push_back(ph->Support().x());
-		raw_row.push_back(ph->Support().y());
-		raw_row.push_back(ph->Support().z());
+		raw_row.push_back(ph->get_support().x());
+		raw_row.push_back(ph->get_support().y());
+		raw_row.push_back(ph->get_support().z());
 
-		raw_row.push_back(ph->Direction().x());
-		raw_row.push_back(ph->Direction().y());
-		raw_row.push_back(ph->Direction().z());
+		raw_row.push_back(ph->get_direction().x());
+		raw_row.push_back(ph->get_direction().y());
+		raw_row.push_back(ph->get_direction().z());
 
 		raw_row.push_back(ph->get_wavelength());
 

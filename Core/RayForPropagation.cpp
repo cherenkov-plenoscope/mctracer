@@ -7,7 +7,7 @@ RayForPropagation::RayForPropagation(
 	const Vec3 support,
 	const Vec3 direction
 ) {
-	SetRay(support, direction);
+	set_support_and_direction(support, direction);
 	init_propagation_history();
 }
 //------------------------------------------------------------------------------

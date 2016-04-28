@@ -22,9 +22,9 @@ TEST_F(PhotonTest, creation) {
     double wavelength = 433e-9;
     Photon pho(Vec3::null, Vec3::unit_z*1.337, wavelength);
 
-    EXPECT_EQ(Vec3::unit_z, pho.Direction());
-    EXPECT_EQ(Vec3::null, pho.Support());
-    EXPECT_EQ(1.0, pho.Direction().norm());
+    EXPECT_EQ(Vec3::unit_z, pho.get_direction());
+    EXPECT_EQ(Vec3::null, pho.get_support());
+    EXPECT_EQ(1.0, pho.get_direction().norm());
     EXPECT_EQ(wavelength, pho.get_wavelength());
     //creation is an interaction
     EXPECT_EQ(1, pho.get_number_of_interactions_so_far()); 

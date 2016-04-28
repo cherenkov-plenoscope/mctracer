@@ -37,12 +37,12 @@ EllipticalCapRayIntersectionEquation::EllipticalCapRayIntersectionEquation(
 //  B = 2*long_focal_length
 //  c = (A+B)/2   just the mean of the two ... since I don't have any better idea.
 
-	const double dx = ray->Direction().x();
-	const double dy = ray->Direction().y();
-	const double dz = ray->Direction().z();
-	const double bx = ray->Support().x();
-	const double by = ray->Support().y();
-	const double bz = ray->Support().z();
+	const double dx = ray->get_direction().x();
+	const double dy = ray->get_direction().y();
+	const double dz = ray->get_direction().z();
+	const double bx = ray->get_support().x();
+	const double by = ray->get_support().y();
+	const double bz = ray->get_support().z();
 	
 	const double a = (dx*dx)*iAA + (dy*dy)*iBB +  (dz*dz)*iCC;
 	const double b = 2.0*( (bx*dx)*iAA + (by*dy)*iBB + dz*(bz-C)*iCC );

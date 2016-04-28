@@ -28,7 +28,7 @@ bool PhotonFactory::passed_atmosphere()const {
 //------------------------------------------------------------------------------
 Photon* PhotonFactory::get_photon() {
 
-	Vec3 causal_dir = causal_direction();
+	Vec3 causal_dir = causal_get_direction();
 
 	Ray ray_running_upwards_from_ground_to_pos_of_production(
 		intersection_with_xy_floor_plane(),
@@ -37,7 +37,7 @@ Photon* PhotonFactory::get_photon() {
 
 	Vec3 causal_support = 
 		ray_running_upwards_from_ground_to_pos_of_production.
-		PositionOnRay(ray_parameter_for_production_point());
+		get_pos_at(ray_parameter_for_production_point());
 
 	PhotonMcTruth* mc_truth = new PhotonMcTruth();
 	mc_truth->production_height_over_sea_level = production_height_in_m();
@@ -50,7 +50,7 @@ Photon* PhotonFactory::get_photon() {
 	return cherenkov_photon;
 }
 //------------------------------------------------------------------------------
-Vec3 PhotonFactory::causal_direction()const {
+Vec3 PhotonFactory::causal_get_direction()const {
 
 	const double z = sqrt(
 		1.0 -

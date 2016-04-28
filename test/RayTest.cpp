@@ -29,9 +29,9 @@ TEST_F(RayTest, Constructor_using_vectors) {
 
   Ray my_ray(support, direction);
 
-  EXPECT_EQ(support, my_ray.Support());
-  EXPECT_EQ(direction/direction.norm(), my_ray.Direction()); 
-  EXPECT_EQ(1.0, my_ray.Direction().norm());
+  EXPECT_EQ(support, my_ray.get_support());
+  EXPECT_EQ(direction/direction.norm(), my_ray.get_direction()); 
+  EXPECT_EQ(1.0, my_ray.get_direction().norm());
 }
 //------------------------------------------------------------------------------
 TEST_F(RayTest, position_on_ray) {
@@ -40,7 +40,7 @@ TEST_F(RayTest, position_on_ray) {
   double ray_parameter = 5.0;
   Vec3 pos_on_ray = support + direction*ray_parameter;
     
-  EXPECT_EQ(pos_on_ray, my_ray.PositionOnRay(ray_parameter));
+  EXPECT_EQ(pos_on_ray, my_ray.get_pos_at(ray_parameter));
 }
 //------------------------------------------------------------------------------
 TEST_F(RayTest, closest_distance_to_point) {
@@ -54,6 +54,6 @@ TEST_F(RayTest, closest_distance_to_point) {
 //------------------------------------------------------------------------------
 TEST_F(RayTest, set_direction) {
   Ray my_ray(support, direction*42.0);
-  my_ray.SetDirection(Vec3(1.2, 3.4, 5.6));
-  EXPECT_EQ(1.0, my_ray.Direction().norm());
+  my_ray.set_direction(Vec3(1.2, 3.4, 5.6));
+  EXPECT_EQ(1.0, my_ray.get_direction().norm());
 }

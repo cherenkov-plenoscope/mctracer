@@ -29,7 +29,7 @@ void CameraManForStereo3D::calc_pos_and_rot_for_left_and_right_camera_config(
 
 void CameraManForStereo3D::remember_initial_camera_config(){
 	remember_initial_camera_position_and_rotation();
-	remmber_initial_camera_image_upward_direction();
+	remmber_initial_camera_image_upward_get_direction();
 }
 
 void CameraManForStereo3D::remember_initial_camera_position_and_rotation(){
@@ -63,7 +63,7 @@ Vec3 CameraManForStereo3D::offset_to_the_right()const {
 		stereo_offset_in_m/2.0;
 }
 
-void CameraManForStereo3D::remmber_initial_camera_image_upward_direction(){
+void CameraManForStereo3D::remmber_initial_camera_image_upward_get_direction(){
 	initial_camera_image_upward_direction = 
 		camera->get_image_upwards_direction_in_world_frame();
 }
@@ -84,7 +84,7 @@ void CameraManForStereo3D::set_object_distance_to_focus_on(
 
 void CameraManForStereo3D::set_intersec_point_for_left_and_right_optical_axis(){
 	intersection_point_for_l_and_r_optical_axes = 
-		camera->get_optical_axis_in_world().PositionOnRay(distance_to_object);
+		camera->get_optical_axis_in_world().get_pos_at(distance_to_object);
 }
 
 void CameraManForStereo3D::set_pointing_dir_for_left_and_right_stereo_config(){

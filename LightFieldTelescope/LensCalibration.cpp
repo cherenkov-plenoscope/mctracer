@@ -31,13 +31,13 @@ LensCalibration::LensCalibration(const Geometry *geo):
 			incident_direction
 		);
 
-		Vec3 support_of_photon = back_running_ray.PositionOnRay(
+		Vec3 support_of_photon = back_running_ray.get_pos_at(
 			telescope_geometry->pixel_lens_outer_aperture_radius()*100.0
 		);
 
 		Photon* ph = new Photon(
 			support_of_photon,
-			back_running_ray.Direction()*-1.0,
+			back_running_ray.get_direction()*-1.0,
 			433e-9
 		);
 

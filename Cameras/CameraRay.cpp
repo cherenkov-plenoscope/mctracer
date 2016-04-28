@@ -1,7 +1,7 @@
 #include "CameraRay.h"
 //------------------------------------------------------------------------------
 CameraRay::CameraRay(const Vec3 support, const Vec3 direction){
-	SetRay(support, direction);
+	set_support_and_direction(support, direction);
 }
 //------------------------------------------------------------------------------
 std::string CameraRay::get_print()const{
@@ -28,7 +28,7 @@ Color CameraRay::trace(
 
 			CameraRay reflected_ray(
 				intersection->get_intersection_vector_in_world_system(),
-				intersection->get_reflection_direction_in_world_system(Direction())
+				intersection->get_reflection_direction_in_world_system(get_direction())
 			);
 
 			Color reflection_color = 
@@ -151,5 +151,5 @@ bool CameraRay::is_iluminated_by_sky_light_source(
 bool CameraRay::surface_normal_is_facing_camera(
 	const Intersection *intersection
 )const {
-	return intersection->get_surface_normal_in_world_system()*Direction() > 0.0;
+	return intersection->get_surface_normal_in_world_system()*get_direction() > 0.0;
 }

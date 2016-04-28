@@ -51,7 +51,7 @@ public:
 
 	double get_FoV_in_rad()const;
 
-	Vec3 get_normalized_pointing_direction()const;
+	Vec3 get_normalized_pointing_get_direction()const;
 
 	Vec3 direction_to_the_right_of_the_camera()const;
 

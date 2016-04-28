@@ -54,7 +54,7 @@ private:
 	void remember_initial_camera_config();
 	void set_up_camera_back_to_initial_config();
 	void remember_initial_camera_position_and_rotation();
-	void remmber_initial_camera_image_upward_direction();
+	void remmber_initial_camera_image_upward_get_direction();
 	void set_positions_for_left_and_right_stereo_config();
 	void set_object_distance_to_focus_on(
 		const Frame* world,

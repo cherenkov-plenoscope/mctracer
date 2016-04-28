@@ -6,7 +6,7 @@ Photon::Photon(
 	const Vec3 direction,
 	const double wavelength
 ) {
-	SetRay(support, direction);
+	set_support_and_direction(support, direction);
 	this->wavelength = wavelength;
 	assert_wavelength_is_positive();
 	init_propagation_history();
@@ -18,7 +18,7 @@ Photon::Photon(
 	const double wavelength,
 	const PhotonMcTruth* mc_truth
 ) {
-	SetRay(support, direction);
+	set_support_and_direction(support, direction);
 	this->wavelength = wavelength;
 	this->mc_truth = mc_truth;
 	assert_wavelength_is_positive();
@@ -101,9 +101,9 @@ void Photon::reflect_on_surface_and_propagate_on(const InteractionType type) {
 
 	Photon reflected_photon(this);
 
-	reflected_photon.SetRay(
+	reflected_photon.set_support_and_direction(
 		intersection->get_intersection_vector_in_world_system(),
-		intersection->get_reflection_direction_in_world_system(Direction())
+		intersection->get_reflection_direction_in_world_system(get_direction())
 	);
 
 	push_back_intersection_and_type_to_propagation_history(
@@ -125,7 +125,7 @@ void Photon::reach_boundary_layer() {
 void Photon::fresnel_refraction_and_reflection() {
 
 	FresnelRefractionAndReflection fresnel(
-		intersection->world2object()->get_transformed_orientation(Direction()),
+		intersection->world2object()->get_transformed_orientation(get_direction()),
 		intersection->get_normal_in_faceing_surface_system(),
 		intersection->get_refractive_index_coming_from(wavelength),
 		intersection->get_refractive_index_going_to(wavelength)
@@ -172,7 +172,7 @@ void Photon::propagate_on_after_boundary_layer(
 
 	Photon refracted_photon(this);
 
-	refracted_photon.SetRay(
+	refracted_photon.set_support_and_direction(
 		intersection->get_intersection_vector_in_world_system(),
 		intersection->object2world()->get_transformed_orientation(
 			fresnel.get_refrac_dir_in_object_system()
