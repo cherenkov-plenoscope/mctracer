@@ -56,7 +56,7 @@ double Ray::get_parameter_on_ray_for_closest_distance_to_point(
 	//
 	// Now we insert the support vector of the frame into the plane eqaution:
 	//  d = point.x*dirx + point.y*diry + point.z*dirz
-	double d = direction*point;
+	const double d = direction*point;
 	
 	// Insert the ray into plane equation and solve for the ray parameter.
 	// The ray's direction is normalized, therefore: (direction * direction)=1
