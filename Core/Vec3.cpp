@@ -4,7 +4,7 @@ const Vec3 Vec3::null   = Vec3(0.0, 0.0, 0.0);
 const Vec3 Vec3::unit_x = Vec3(1.0, 0.0, 0.0);
 const Vec3 Vec3::unit_y = Vec3(0.0, 1.0, 0.0);
 const Vec3 Vec3::unit_z = Vec3(0.0, 0.0, 1.0);
-const double Vec3::max_deviation_of_eq_vectors = 1e-7;
+const double Vec3::squared_max_deviation_of_eq_vectors = 1e-14;// 1e-7;
 //------------------------------------------------------------------------------
 Vec3::Vec3(){
 }
@@ -140,11 +140,16 @@ double Vec3::z() const{
 }
 //------------------------------------------------------------------------------
 bool Vec3::operator == (const Vec3& eqVec) const{
-	return distance_to(eqVec) <= max_deviation_of_eq_vectors;
+	return squared_distance_to(eqVec) <= squared_max_deviation_of_eq_vectors;
 }
 //------------------------------------------------------------------------------
 bool Vec3::operator != (const Vec3& eqVec) const{
-	return distance_to(eqVec) > max_deviation_of_eq_vectors;
+	return squared_distance_to(eqVec) > squared_max_deviation_of_eq_vectors;
+}
+//------------------------------------------------------------------------------
+double Vec3::squared_distance_to(const Vec3 &v)const{
+	const Vec3 diff = (*this-v);
+	return diff*diff;
 }
 //------------------------------------------------------------------------------
 double Vec3::distance_to(const Vec3 &v)const{

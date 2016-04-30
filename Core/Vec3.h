@@ -20,7 +20,7 @@ private:
 	double X;
 	double Y;
 	double Z;
-	static const double max_deviation_of_eq_vectors;
+	static const double squared_max_deviation_of_eq_vectors;
 public:
 	
 	static const Vec3 null;
@@ -52,6 +52,7 @@ public:
 	bool operator == (const Vec3& eqVec)const;
 	bool operator != (const Vec3& eqVec)const;
 	double distance_to(const Vec3 &v)const;
+	double squared_distance_to(const Vec3 &v)const;
 	bool is_paralell_to_z_axis()const;
 	bool is_parallel_to_x_y_plane()const;
 	bool norm_is_less_equal_than(const double length_to_compare)const;
