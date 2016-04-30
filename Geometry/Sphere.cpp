@@ -72,27 +72,32 @@ QuadraticEquation Sphere::get_ray_parameter_equation_for_intersections_with_sphe
 	return quadratic_eq_in_v;
 }
 //------------------------------------------------------------------------------
-const Intersection* Sphere::sphere_intersection_for_ray_parameter(
+void Sphere::add_sphere_intersection_for_ray_parameter(
 	const Ray* ray, 
-	const double ray_parameter
+	const double ray_parameter,
+	vector<const Intersection*> *intersections
 )const {
 
 	Vec3 intersection_point = ray->get_pos_at(ray_parameter);
 	Vec3 surface_normal = intersection_point/intersection_point.norm();
 	
-	Intersection* intersec;
-	intersec = new Intersection(
-		this,
-		intersection_point,
-		surface_normal,
-		ray_parameter,
-		ray->get_direction()
-	);
+	if(ray->get_support() != intersection_point) {
+		Intersection* intersec = new Intersection(
+			this,
+			intersection_point,
+			surface_normal,
+			ray_parameter,
+			ray->get_direction()
+		);
 
-	return intersec;
+		intersections->push_back(intersec);
+	}
 }
 //------------------------------------------------------------------------------
-const Intersection* Sphere::calculate_intersection_with(const Ray* ray)const {
+void Sphere::calculate_intersection_with(
+    const Ray* ray, 
+    vector<const Intersection*> *intersections
+)const{
 
 	QuadraticEquation rayParamEqForIntersections = 
 		get_ray_parameter_equation_for_intersections_with_sphere(ray);
@@ -103,10 +108,8 @@ const Intersection* Sphere::calculate_intersection_with(const Ray* ray)const {
 		const double vM = rayParamEqForIntersections.minus_solution();
 
 		if(facing_sphere_from_outside_given_p_m(vP, vM))
-			return sphere_intersection_for_ray_parameter(ray,vM);
+			add_sphere_intersection_for_ray_parameter(ray, vM, intersections);
 		else if(!facing_away_from_outside_given_p_m(vP, vM))
-			return sphere_intersection_for_ray_parameter(ray, vP);
+			add_sphere_intersection_for_ray_parameter(ray, vP, intersections);
 	}
-
-	return empty_intersection();
 }

@@ -32,7 +32,10 @@ double Annulus::get_area()const {
 	);
 }
 //------------------------------------------------------------------------------
-const Intersection* Annulus::calculate_intersection_with(const Ray* ray)const {
+void Annulus::calculate_intersection_with(
+    const Ray* ray, 
+    vector<const Intersection*> *intersections
+)const {
 
 	XyPlaneRayIntersectionEquation xyPlaneRayEquation(ray);
 
@@ -45,17 +48,17 @@ const Intersection* Annulus::calculate_intersection_with(const Ray* ray)const {
 			!inner_bound.is_inside(&intersection_vector)
 		) {
 
-			Intersection* intersec;
-			intersec = new Intersection(
-				this,
-				intersection_vector,
-				xyPlaneRayEquation.get_plane_normal_vector(),
-				v,
-				ray->get_direction()
-			);
+			if(ray->get_support() != intersection_vector) {
+				Intersection* intersec = new Intersection(
+					this,
+					intersection_vector,
+					xyPlaneRayEquation.get_plane_normal_vector(),
+					v,
+					ray->get_direction()
+				);
 
-			return intersec;
+				intersections->push_back(intersec);
+			}
 		}
 	}
-	return empty_intersection();	
 }

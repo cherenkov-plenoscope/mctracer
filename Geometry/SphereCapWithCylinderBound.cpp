@@ -52,19 +52,20 @@ std::string SphereCapWithCylinderBound::get_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-const Intersection* SphereCapWithCylinderBound::calculate_intersection_with(
-	const Ray* ray
+void SphereCapWithCylinderBound::calculate_intersection_with(
+    const Ray* ray, 
+    vector<const Intersection*> *intersections
 )const {
+
 	SphericalCapRayIntersectionEquation sphereCapRayEq(curvature_radius, ray);
 
 	if(sphereCapRayEq.has_solutions()) {
 		
-		return get_causeal_intersection(
+		add_causeal_intersection(
 			&sphereCapRayEq,
 			&CylBounds,
-			ray
+			ray,
+			intersections
 		);
 	}
-
-	return empty_intersection();
 }

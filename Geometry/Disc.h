@@ -24,7 +24,10 @@ public:
 
 	void set_radius(const double radius);
 	std::string get_print()const;
-	const Intersection* calculate_intersection_with(const Ray* ray)const;
+	void calculate_intersection_with(
+        const Ray* ray, 
+        vector<const Intersection*> *intersections
+    )const;
 private:
 	double get_area()const;
 	void post_initialize_radius_of_enclosing_sphere();

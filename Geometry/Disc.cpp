@@ -24,7 +24,10 @@ double Disc::get_area()const {
 	return cylinder_bounds.get_radius()*cylinder_bounds.get_radius()*M_PI;
 }
 //------------------------------------------------------------------------------
-const Intersection* Disc::calculate_intersection_with(const Ray* ray)const {
+void Disc::calculate_intersection_with(
+    const Ray* ray, 
+    vector<const Intersection*> *intersections
+)const {
 
 	XyPlaneRayIntersectionEquation xyPlaneRayEquation(ray);
 
@@ -33,19 +36,19 @@ const Intersection* Disc::calculate_intersection_with(const Ray* ray)const {
 		double v = xyPlaneRayEquation.get_ray_parameter_for_intersection();
 		Vec3 intersection_vector = ray->get_pos_at(v);		
 
-		if(	cylinder_bounds.is_inside(&intersection_vector) ) {
+		if(cylinder_bounds.is_inside(&intersection_vector) ) {
 
-			Intersection* intersec;
-			intersec = new Intersection(
-				this,
-				intersection_vector,
-				xyPlaneRayEquation.get_plane_normal_vector(),
-				v,
-				ray->get_direction()
-			);
-
-			return intersec;
+			if(ray->get_support() != intersection_vector) {
+				Intersection* intersec = new Intersection(
+					this,
+					intersection_vector,
+					xyPlaneRayEquation.get_plane_normal_vector(),
+					v,
+					ray->get_direction()
+				);
+				
+				intersections->push_back(intersec);
+			}
 		}
-	}
-	return empty_intersection();	
+	}	
 }

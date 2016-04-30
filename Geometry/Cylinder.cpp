@@ -132,7 +132,11 @@ string Cylinder::get_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-const Intersection* Cylinder::calculate_intersection_with(const Ray* ray)const {
+void Cylinder::calculate_intersection_with(
+    const Ray* ray, 
+    vector<const Intersection*> *intersections
+)const{
+
 	ZaxisCylinderRayIntersectionEquation cylRayEquation(Radius, ray);
 
 	if(cylRayEquation.has_causal_solution()) {
@@ -142,20 +146,20 @@ const Intersection* Cylinder::calculate_intersection_with(const Ray* ray)const {
 
 		if(is_in_cylinders_z_bounds(&intersection_vector)) {
 
-			Intersection* intersec;
-			intersec = new Intersection(
-				this,
-				intersection_vector,
-				get_surface_normal_for_intersection_vec(&intersection_vector),
-				v,
-				ray->get_direction()
-			);
+			if(ray->get_support() != intersection_vector) {
+				
+				Intersection* intersec = new Intersection(
+					this,
+					intersection_vector,
+					get_surface_normal_for_intersection_vec(&intersection_vector),
+					v,
+					ray->get_direction()
+				);
 
-			return intersec;			
+				intersections->push_back(intersec);
+			}			
 		}
-
 	}
-	return empty_intersection();
 }
 //------------------------------------------------------------------------------
 bool Cylinder::is_in_cylinders_z_bounds(const Vec3* vec)const {

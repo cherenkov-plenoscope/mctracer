@@ -27,7 +27,10 @@ std::string PlaneDualSphericalBound::get_print()const {
 #include "Core/Ray.h"
 #include "Core/Intersection.h"
 //------------------------------------------------------------------------------
-const Intersection* PlaneDualSphericalBound::calculate_intersection_with(const Ray* ray)const {
+void PlaneDualSphericalBound::calculate_intersection_with(
+    const Ray* ray, 
+    vector<const Intersection*> *intersections
+)const{
 
 	XyPlaneRayIntersectionEquation xyPlaneRayEquation(ray);
 
@@ -38,17 +41,17 @@ const Intersection* PlaneDualSphericalBound::calculate_intersection_with(const R
 
 		if(dual_sphere_bounds.is_inside(&intersection_vector) ) {
 
-			Intersection* intersec;
-			intersec = new Intersection(
-				this,
-				intersection_vector,
-				xyPlaneRayEquation.get_plane_normal_vector(),
-				v,
-				ray->get_direction()
-			);
+			if(ray->get_support() != intersection_vector) {
+				Intersection* intersec = new Intersection(
+					this,
+					intersection_vector,
+					xyPlaneRayEquation.get_plane_normal_vector(),
+					v,
+					ray->get_direction()
+				);
 
-			return intersec;
+				intersections->push_back(intersec);
+			}	
 		}
-	}
-	return empty_intersection();	
+	}	
 }

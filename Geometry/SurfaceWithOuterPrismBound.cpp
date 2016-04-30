@@ -1,9 +1,10 @@
 #include "SurfaceWithOuterPrismBound.h"
 //------------------------------------------------------------------------------
-const Intersection* SurfaceWithOuterPrismBound::get_causeal_intersection(
+void SurfaceWithOuterPrismBound::add_causeal_intersection(
 		const TwoSolutionSurfaceRayEquation* eq,
 		const PrismZ* outer_bound,
-		const Ray *ray
+		const Ray *ray,
+		vector<const Intersection*> *intersections
 )const {
 
 	const Vec3 plus_intersec = ray->get_pos_at(eq->get_plus_solution());
@@ -58,17 +59,16 @@ const Intersection* SurfaceWithOuterPrismBound::get_causeal_intersection(
 
 		Vec3 causal_intersec = ray->get_pos_at(causal_solution);
 
-		Intersection* intersec;
-		intersec = new Intersection(
-			this,
-			causal_intersec,
-			eq->get_surface_normal_given_intersection_vector(&causal_intersec),
-			causal_solution,
-			ray->get_direction()
-		);
+		if(ray->get_support() != causal_intersec) {
+			Intersection* intersec = new Intersection(
+				this,
+				causal_intersec,
+				eq->get_surface_normal_given_intersection_vector(&causal_intersec),
+				causal_solution,
+				ray->get_direction()
+			);
 
-		return intersec;	
+			intersections->push_back(intersec);
+		}
 	}
-
-	return empty_intersection();
 }

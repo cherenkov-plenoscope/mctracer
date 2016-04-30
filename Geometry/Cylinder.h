@@ -30,7 +30,10 @@ public:
 	);
 	void set_radius_and_length(const double radius, const double length);
 	string get_print()const;
-	const Intersection* calculate_intersection_with(const Ray* ray)const;
+	void calculate_intersection_with(
+        const Ray* ray, 
+        vector<const Intersection*> *intersections
+    )const;
 private:
 
 	void set_cylinder_length(const double Length);

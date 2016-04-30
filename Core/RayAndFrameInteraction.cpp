@@ -49,13 +49,15 @@ vector<const Intersection*> Ray::get_intersections_in_candidate_objects(
 		Ray ray_in_object_system = 
 			get_ray_transformed_in_object_system_of(object);
 
-		const Intersection* candidate_intersection = 
-			object->calculate_intersection_with(&ray_in_object_system);
+		object->calculate_intersection_with(
+			&ray_in_object_system, 
+			&intersections
+		);
 		
 		// to prevent a reflected ray to get stucked on the reflective surface
 		// again, the candidate intersection is neglected when the reflected 
 		// rays support equals the candidate intersectionpoint.
-		if(
+		/*if(
 			candidate_intersection->does_intersect()
 			&&
 			!ray_in_object_system.support_equals_intersection_point(
@@ -65,7 +67,7 @@ vector<const Intersection*> Ray::get_intersections_in_candidate_objects(
 			intersections.push_back(candidate_intersection);
 		}else{
 			delete candidate_intersection;
-		}
+		}*/
 	}
 
 	return intersections;

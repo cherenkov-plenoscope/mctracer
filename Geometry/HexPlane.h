@@ -23,7 +23,10 @@ public:
 	using SurfaceEntity::SurfaceEntity;
 	void set_outer_hex_radius(const double outer_hex_radius);
 	std::string get_print()const;
-	const Intersection* calculate_intersection_with(const Ray* ray)const;
+	void calculate_intersection_with(
+        const Ray* ray, 
+        vector<const Intersection*> *intersections
+    )const;
 private:
 
 	void post_initialize_radius_of_enclosing_sphere();

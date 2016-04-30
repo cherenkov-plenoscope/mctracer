@@ -96,8 +96,10 @@ public:
         vector<const Frame*> *candidate_frames
     )const;
     void update_rotation(const Rot3 rot);
-    virtual const Intersection* calculate_intersection_with(const Ray* ray)const;
-    const Intersection* empty_intersection()const;
+    virtual void calculate_intersection_with(
+        const Ray* ray, 
+        vector<const Intersection*> *intersections
+    )const;
 protected:
 
     // post initialization

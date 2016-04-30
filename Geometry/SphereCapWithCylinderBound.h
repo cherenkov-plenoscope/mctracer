@@ -26,18 +26,18 @@ public:
 		const double focal_length,
 		const double cap_radius
 	);
-
 	void set_curvature_radius_and_outer_radius(
 		const double curvature_radius,
 		const double cap_radius
 	);
-
 	std::string get_print()const;
-
-	const Intersection* calculate_intersection_with(const Ray* ray)const;
+	void calculate_intersection_with(
+        const Ray* ray, 
+        vector<const Intersection*> *intersections
+    )const;
 private:
-	void restrict_cap_radius_to_curvature_radius();
 
+	void restrict_cap_radius_to_curvature_radius();
 	void post_initialize_radius_of_enclosing_sphere();
 };
 #endif // __SPHERECAPWITHCYLINDERBOUND_H_INCLUDED__

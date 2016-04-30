@@ -56,9 +56,11 @@ std::string EllipticalCapWithHexagonalBound::get_print()const {
 	return out.str();		
 }
 //------------------------------------------------------------------------------
-const Intersection* EllipticalCapWithHexagonalBound::calculate_intersection_with(
-	const Ray* ray
+void EllipticalCapWithHexagonalBound::calculate_intersection_with(
+    const Ray* ray, 
+    vector<const Intersection*> *intersections
 )const {
+
 	EllipticalCapRayIntersectionEquation ellipCapRayEq(
 		X_curvature_radius, Y_curvature_radius, Z_curvature_radius,
 		iXX, iYY, iZZ,
@@ -67,12 +69,11 @@ const Intersection* EllipticalCapWithHexagonalBound::calculate_intersection_with
 
 	if(ellipCapRayEq.has_solutions()) {
 		
-		return get_causeal_intersection(
+		return add_causeal_intersection(
 			&ellipCapRayEq,
 			&hexBounds,
-			ray
+			ray,
+			intersections
 		);
 	}
-
-	return empty_intersection();
 }

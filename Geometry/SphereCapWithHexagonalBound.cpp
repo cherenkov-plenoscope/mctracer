@@ -42,19 +42,20 @@ std::string SphereCapWithHexagonalBound::get_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-const Intersection* SphereCapWithHexagonalBound::calculate_intersection_with(
-	const Ray* ray
-)const {
+void SphereCapWithHexagonalBound::calculate_intersection_with(
+    const Ray* ray, 
+    vector<const Intersection*> *intersections
+)const{
+
 	SphericalCapRayIntersectionEquation sphereCapRayEq(curvature_radius, ray);
 
 	if(sphereCapRayEq.has_solutions()) {
 		
-		return get_causeal_intersection(
+		add_causeal_intersection(
 			&sphereCapRayEq,
 			&hexBounds,
-			ray
+			ray,
+			intersections
 		);
 	}
-
-	return empty_intersection();
 }

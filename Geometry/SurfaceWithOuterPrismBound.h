@@ -17,10 +17,11 @@
 class SurfaceWithOuterPrismBound :public SurfaceEntity{
 protected:
 
-	const Intersection* get_causeal_intersection(
+	void add_causeal_intersection(
 		const TwoSolutionSurfaceRayEquation* eq,
 		const PrismZ* outer_bound,
-		const Ray *ray
-	)const;
+		const Ray *ray,
+		vector<const Intersection*> *intersections
+	)const;	
 };
 #endif // __SurfaceWithOuterPrismBound_H_INCLUDED__

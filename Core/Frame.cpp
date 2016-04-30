@@ -350,15 +350,10 @@ bool Frame::has_children()const {
 #include "Core/Ray.h"
 #include "Core/Intersection.h"
 //------------------------------------------------------------------------------
-const Intersection* Frame::calculate_intersection_with(const Ray* ray)const {
-	return empty_intersection();
-}
-//------------------------------------------------------------------------------
-const Intersection* Frame::empty_intersection()const {
-	Intersection* intersection;
-	intersection = new Intersection();
-	return intersection;
-}
+void Frame::calculate_intersection_with(
+	const Ray* ray, 
+    vector<const Intersection*> *intersections
+)const {}
 //------------------------------------------------------------------------------
 void Frame::find_intersection_candidates_for_all_children_and_ray(
 	const Ray* ray,

@@ -41,7 +41,10 @@ public:
 
 	std::string get_print()const;
 
-	const Intersection* calculate_intersection_with(const Ray* ray)const;
+	void calculate_intersection_with(
+        const Ray* ray, 
+        vector<const Intersection*> *intersections
+    )const;
 private:
 	void restrict_outer_hex_radius_to_curvature_radius();
 

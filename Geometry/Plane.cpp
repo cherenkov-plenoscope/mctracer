@@ -29,28 +29,32 @@ std::string Plane::get_print()const {
 #include "Core/Ray.h"
 #include "Core/Intersection.h"
 //------------------------------------------------------------------------------
-const Intersection* Plane::calculate_intersection_with(const Ray* ray)const {
+void Plane::calculate_intersection_with(
+    const Ray* ray, 
+    vector<const Intersection*> *intersections
+)const{
 
 	XyPlaneRayIntersectionEquation xyPlaneRayEquation(ray);
 
-	if( xyPlaneRayEquation.has_causal_solution() ){
+	if(xyPlaneRayEquation.has_causal_solution()) {
 		
 		double v = xyPlaneRayEquation.get_ray_parameter_for_intersection();
 		Vec3 intersection_vector = ray->get_pos_at(v);		
 
-		if(	RectBounds.is_inside(&intersection_vector) ) {
+		if(RectBounds.is_inside(&intersection_vector)) {
 
-			Intersection* intersec;
-			intersec = new Intersection(
-				this,
-				intersection_vector,
-				xyPlaneRayEquation.get_plane_normal_vector(),
-				v,
-				ray->get_direction()
-			);
+			if(ray->get_support() != intersection_vector) {
+				Intersection* intersec;
+				intersec = new Intersection(
+					this,
+					intersection_vector,
+					xyPlaneRayEquation.get_plane_normal_vector(),
+					v,
+					ray->get_direction()
+				);
 
-			return intersec;
+				intersections->push_back(intersec);
+			}
 		}
-	}
-	return empty_intersection();	
+	}	
 }

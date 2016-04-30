@@ -132,18 +132,18 @@ TEST_F(SphereIntersectionTest, ray_frontal_intersection) {
 
   Ray ray_with_intersection(Vec3(0.0,0.0,-2.0), Vec3(0.0,0.0,1.0));
 
-  const Intersection* intersec = 
-  	MySphere.calculate_intersection_with(&ray_with_intersection);
+  vector<const Intersection*> intersections;
+  MySphere.calculate_intersection_with(&ray_with_intersection, &intersections);
 
-  ASSERT_TRUE(intersec->does_intersect());
-  EXPECT_EQ(intersec->get_object(), &MySphere);
+  ASSERT_FALSE(intersections.empty());
+  EXPECT_EQ(intersections.front()->get_object(), &MySphere);
   EXPECT_EQ(
   	Vec3(0.0,0.0,-1.0),
-  	intersec->get_intersection_vector_in_object_system()
+  	intersections.front()->get_intersection_vector_in_object_system()
   );
   EXPECT_EQ(
   	Vec3(0.0,0.0,-1.0),
-  	intersec->get_surface_normal_in_object_system()
+  	intersections.front()->get_surface_normal_in_object_system()
   );
 }
 //------------------------------------------------------------------------------
@@ -151,38 +151,38 @@ TEST_F(SphereIntersectionTest, ray_intersection_but_no_causal_intersection) {
 
   Ray ray_without_intersection(Vec3(0.0,0.0,+2.0), Vec3(0.0,0.0,1.0));
 
-  const Intersection* empty_intersec = 
-    MySphere.calculate_intersection_with(&ray_without_intersection);
+  vector<const Intersection*> intersections;
+  MySphere.calculate_intersection_with(&ray_without_intersection, &intersections);
 
-  EXPECT_FALSE(empty_intersec->does_intersect());
+  EXPECT_TRUE(intersections.empty());
 }
 //------------------------------------------------------------------------------
 TEST_F(SphereIntersectionTest, ray_completely_outside_of_sphere) {
 
   Ray ray_outside(Vec3(5.0,0.0,0.0), Vec3(0.0,0.0,1.0));
 
-  const Intersection* intersec = 
-    MySphere.calculate_intersection_with(&ray_outside);
+  vector<const Intersection*> intersections;
+  MySphere.calculate_intersection_with(&ray_outside, &intersections);
 
-  EXPECT_FALSE(intersec->does_intersect());
+  EXPECT_TRUE(intersections.empty());
 }
 //------------------------------------------------------------------------------
 TEST_F(SphereIntersectionTest, ray_starts_inside_sphere) {
 
   Ray ray_inside(Vec3::null, Vec3(0.0,0.0,1.0));
 
-  const Intersection* intersec = 
-    MySphere.calculate_intersection_with(&ray_inside);
+  vector<const Intersection*> intersections;
+  MySphere.calculate_intersection_with(&ray_inside, &intersections);
 
-  ASSERT_TRUE(intersec->does_intersect());
-  EXPECT_EQ(intersec->get_object(), &MySphere);
+  ASSERT_FALSE(intersections.empty());
+  EXPECT_EQ(intersections.front()->get_object(), &MySphere);
   EXPECT_EQ(
   	Vec3(0.0,0.0,+1.0),
-  	intersec->get_intersection_vector_in_object_system()
+  	intersections.front()->get_intersection_vector_in_object_system()
   );
   EXPECT_EQ(
   	Vec3(0.0,0.0,+1.0),
-  	intersec->get_surface_normal_in_object_system()
+  	intersections.front()->get_surface_normal_in_object_system()
   );
 }
 //------------------------------------------------------------------------------
@@ -190,18 +190,18 @@ TEST_F(SphereIntersectionTest, ray_tangents_sphere) {
 
   Ray ray_inside(Vec3(1.0, 0.0, -2.0), Vec3(0.0, 0.0, 1.0));
 
-  const Intersection* intersec = 
-    MySphere.calculate_intersection_with(&ray_inside);
+  vector<const Intersection*> intersections;
+  MySphere.calculate_intersection_with(&ray_inside, &intersections);
 
-  ASSERT_TRUE(intersec->does_intersect());
-  EXPECT_EQ(intersec->get_object(), &MySphere);
+  ASSERT_FALSE(intersections.empty());
+  EXPECT_EQ(intersections.front()->get_object(), &MySphere);
   EXPECT_EQ(
   	Vec3(1.0, 0.0, 0.0),
-  	intersec->get_intersection_vector_in_object_system())
+  	intersections.front()->get_intersection_vector_in_object_system())
   ;
   EXPECT_EQ(
   	Vec3(1.0, 0.0, 0.0),
-  	intersec->get_surface_normal_in_object_system()
+  	intersections.front()->get_surface_normal_in_object_system()
   );
 }
 //------------------------------------------------------------------------------

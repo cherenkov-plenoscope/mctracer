@@ -26,7 +26,10 @@ public:
     Sphere(const string name, const Vec3 pos, const Rot3 rot);
     void set_radius(double nradius);
     string get_print()const;
-    const Intersection* calculate_intersection_with(const Ray* ray)const;
+    void calculate_intersection_with(
+        const Ray* ray, 
+        vector<const Intersection*> *intersections
+    )const;
 private:
 
     bool facing_sphere_from_outside_given_p_m(
@@ -39,9 +42,10 @@ private:
         const double v_Minus
     )const;
 
-    const Intersection* sphere_intersection_for_ray_parameter(
+    void add_sphere_intersection_for_ray_parameter(
         const Ray* ray, 
-        const double ray_parameter
+        const double ray_parameter,
+        vector<const Intersection*> *intersections
     )const;
 
     QuadraticEquation get_ray_parameter_equation_for_intersections_with_sphere(
