@@ -71,7 +71,7 @@ public:
     string get_path_in_tree_of_frames()const;
     Vec3 get_position_in_mother()const;
     Rot3 get_rotation_in_mother()const;
-    const Vec3* get_position_in_world()const;
+    Vec3 get_position_in_world()const;
     double contour_radius()const;
     const HomTra3* frame2mother()const;
     const HomTra3* mother2frame()const;

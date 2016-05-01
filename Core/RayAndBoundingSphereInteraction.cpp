@@ -1,18 +1,18 @@
 #include "Core/Ray.h"
 //------------------------------------------------------------------------------
 bool Ray::support_of_ray_is_inside_bounding_sphere_of(const Frame *frame)const {
-	return (*frame->get_position_in_world() - support).norm_is_less_equal_than(
+	return (frame->get_position_in_world() - support).norm_is_less_equal_than(
 		frame->contour_radius());
 }
 //------------------------------------------------------------------------------
 bool Ray::has_intersection_with_bounding_sphere_of(const Frame* frame)const{
 
 	const double alpha = get_parameter_on_ray_for_closest_distance_to_point(
-		*frame->get_position_in_world()
+		frame->get_position_in_world()
 	);
 
 	const Vec3 q = get_pos_at(alpha);
-	const Vec3 shortest_connection = *frame->get_position_in_world() - q;
+	const Vec3 shortest_connection = frame->get_position_in_world() - q;
 	const double dist_square = shortest_connection*shortest_connection;
 
 	if(dist_square > frame->contour_radius()*frame->contour_radius()) {

@@ -486,8 +486,8 @@ Rot3 Frame::get_rotation_in_mother()const {
     return rot_in_mother;
 }
 //------------------------------------------------------------------------------
-const Vec3* Frame::get_position_in_world()const {
-    return &pos_in_world;
+Vec3 Frame::get_position_in_world()const {
+    return pos_in_world;
 }
 //------------------------------------------------------------------------------
 double Frame::contour_radius()const {
