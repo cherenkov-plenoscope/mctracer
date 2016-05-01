@@ -43,15 +43,13 @@ public:
 	void set_transformation(const Rot3 R, const Vec3 pos);
 	void set_transformation(Vec3 rotx, Vec3 roty, Vec3 rotz, const Vec3 pos);
 	Vec3 get_transformed_orientation(const Vec3& ori)const;
-	void transform_orientation(Vec3* vector)const;
 	Vec3 get_transformed_position(const Vec3& pos)const;
-	void transform_position(Vec3* position_to_transform)const;
 	Vec3 get_translation()const;
-	std::string get_print()const;
 	void operator= (HomTra3 G);
 	HomTra3 operator* (const HomTra3 G)const;
 	HomTra3 inverse()const;
 	bool operator== (HomTra3 G)const;
+	std::string get_print()const;
 private:
 
 	void copy_inverse_translation_component_from(const HomTra3 *M);

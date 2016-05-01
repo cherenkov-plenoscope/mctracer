@@ -42,9 +42,8 @@ void CameraDevice::set_position_and_orientation(
 }
 //------------------------------------------------------------------------------
 void CameraDevice::update_optical_axis_and_orientation() {
-	CameraPointingDirection = Vec3::unit_z;
-	T_Camera2World.transform_orientation(&CameraPointingDirection);
-
+	CameraPointingDirection = 
+		T_Camera2World.get_transformed_orientation(Vec3::unit_z);
 	OpticalAxis.set_support(CameraPositionInWorld);
 	OpticalAxis.set_direction(CameraPointingDirection);	
 }
@@ -72,15 +71,8 @@ void CameraDevice::set_pointing_direction(
 	update_optical_axis_and_orientation();
 }
 //------------------------------------------------------------------------------
-Vec3 CameraDevice::get_image_upwards_direction_in_world_frame()const{
-
-	Vec3 image_upwards_direction_in_world_frame = Vec3::unit_y;
-	
-	T_Camera2World.transform_orientation(
-		&image_upwards_direction_in_world_frame
-	);
-	
-	return image_upwards_direction_in_world_frame;
+Vec3 CameraDevice::get_image_upwards_direction_in_world_frame()const {
+	return T_Camera2World.get_transformed_orientation(Vec3::unit_y);
 }
 //------------------------------------------------------------------------------
 std::string CameraDevice::get_camera_print()const{

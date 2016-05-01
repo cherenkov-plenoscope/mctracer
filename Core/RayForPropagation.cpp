@@ -181,8 +181,8 @@ double RayForPropagation::get_time_of_flight()const {
 }
 //------------------------------------------------------------------------------
 void RayForPropagation::transform(const HomTra3 *T) {
-	T->transform_position(&support);
-	T->transform_orientation(&direction);
+	support = T->get_transformed_position(support);
+	direction = T->get_transformed_orientation(direction);	
 
 	delete_history();	
 	init_propagation_history();

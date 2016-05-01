@@ -136,12 +136,11 @@ void HomTra3::set_z_column_of_rotation_component(const Vec3 &R) {
     T[2][2] = R.z();    
 }
 //------------------------------------------------------------------------------
-void HomTra3::transform_orientation(Vec3* vector)const{
-
-    const double x = vector->x();
-    const double y = vector->y();
-    const double z = vector->z();
-    vector->set(
+Vec3 HomTra3::get_transformed_orientation(const Vec3& ori)const {
+    const double x = ori.x();
+    const double y = ori.y();
+    const double z = ori.z();
+    return Vec3(
         //x
         x*T[0][0] + 
         y*T[0][1] +
@@ -157,18 +156,11 @@ void HomTra3::transform_orientation(Vec3* vector)const{
     );
 }
 //------------------------------------------------------------------------------
-Vec3 HomTra3::get_transformed_orientation(const Vec3& orientation)const {
-    Vec3 transformed_orientation = orientation;
-    transform_orientation(&transformed_orientation);
-    return transformed_orientation; 
-}
-//------------------------------------------------------------------------------
-void HomTra3::transform_position(Vec3* vector)const {
-    
-    const double x = vector->x();
-    const double y = vector->y();
-    const double z = vector->z();
-    vector->set(
+Vec3 HomTra3::get_transformed_position(const Vec3& pos)const {
+    const double x = pos.x();
+    const double y = pos.y();
+    const double z = pos.z();
+    return Vec3(
         //x
         x*T[0][0] + 
         y*T[0][1] + 
@@ -182,12 +174,6 @@ void HomTra3::transform_position(Vec3* vector)const {
         y*T[2][1] + 
         z*T[2][2] + T[2][3]
     );
-}
-//------------------------------------------------------------------------------
-Vec3 HomTra3::get_transformed_position(const Vec3& pos)const {
-    Vec3 transformed_position = pos;
-    transform_position(&transformed_position);
-    return transformed_position;
 }
 //------------------------------------------------------------------------------
 Vec3 HomTra3::get_translation()const {

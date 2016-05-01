@@ -77,13 +77,10 @@ void Intersection::get_reflection_direction_in_object_system(
 	surfacenormal_in_intersection_point.mirror(vec);
 }
 //------------------------------------------------------------------------------
-Vec3 Intersection::get_reflection_direction_in_world_system(
-	Vec3 incomming_dir_in_world
-)const {
-	object->world2frame()->transform_orientation(&incomming_dir_in_world);
-	surfacenormal_in_intersection_point.mirror(&incomming_dir_in_world);
-	object->frame2world()->transform_orientation(&incomming_dir_in_world);
-	return incomming_dir_in_world;
+Vec3 Intersection::get_reflection_direction_in_world_system(Vec3 in_dir_world)const {
+	Vec3 in_dir_obj = object->world2frame()->get_transformed_orientation(in_dir_world);
+	surfacenormal_in_intersection_point.mirror(&in_dir_obj);
+	return object->frame2world()->get_transformed_orientation(in_dir_obj);
 }
 //------------------------------------------------------------------------------
 #include "Core/Ray.h"

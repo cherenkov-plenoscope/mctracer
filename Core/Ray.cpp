@@ -40,8 +40,8 @@ Vec3 Ray::get_direction()const {
 }
 //------------------------------------------------------------------------------
 void Ray::transform(const HomTra3 *T) {
-	T->transform_position(&support);
-	T->transform_orientation(&direction);	
+	support = T->get_transformed_position(support);
+	direction = T->get_transformed_orientation(direction);	
 }
 //------------------------------------------------------------------------------
 double Ray::get_parameter_on_ray_for_closest_distance_to_point(
