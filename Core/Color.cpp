@@ -1,5 +1,4 @@
 #include "Color.h"
-#include "Core/TracerException.h"
 #include <sstream>
 #include "math.h"
 //------------------------------------------------------------------------------
@@ -13,16 +12,16 @@ const Color Color::green = Color(0,255,0);
 const Color Color::blue = Color(0,0,255);
 const Color Color::grass_green = Color(22,91,49);
 //------------------------------------------------------------------------------
-Color::Color(): c_red(128), c_green(128), c_blue(128) {}
+Color::Color(): re(128), gr(128), bl(128) {}
 //------------------------------------------------------------------------------
 Color::Color(const int r, const int g, const int b) {
 	assert_is_in_valid_8Bit_range(r);
 	assert_is_in_valid_8Bit_range(g);
 	assert_is_in_valid_8Bit_range(b);	
 
-	c_red = r;
-	c_green = g;
-	c_blue = b; 
+	re = r;
+	gr = g;
+	bl = b; 
 }
 //------------------------------------------------------------------------------
 Color::Color(const std::vector<Color> &colors) {
@@ -37,36 +36,36 @@ Color::Color(const std::vector<Color> &colors) {
 	}
 	const double weight = 1.0/colors.size();
 
-	c_red = (unsigned char)round(r*weight);
-	c_green = (unsigned char)round(g*weight);
-	c_blue = (unsigned char)round(b*weight); 
+	re = (unsigned char)round(r*weight);
+	gr = (unsigned char)round(g*weight);
+	bl = (unsigned char)round(b*weight); 
 }
 //------------------------------------------------------------------------------
 unsigned char Color::get_red()const {
-	return c_red;
+	return re;
 }	
 //------------------------------------------------------------------------------
 unsigned char Color::get_green()const {
-	return c_green;
+	return gr;
 }
 //------------------------------------------------------------------------------
 unsigned char Color::get_blue()const {
-	return c_blue;
+	return bl;
 }
 //------------------------------------------------------------------------------
 std::string Color::get_print()const {
 	std::stringstream out;
-	out << "(" << (int)(c_red);
-	out << " " << (int)(c_green);
-	out << " " << (int)(c_blue) << ")";
+	out << "(" << (int)(re);
+	out << " " << (int)(gr);
+	out << " " << (int)(bl) << ")";
 	out << "8 Bit RGB";
 	return out.str();
 }
 //------------------------------------------------------------------------------
 void Color::reflection_mix(const Color &c, const double refl) {
-	c_red = (unsigned char)( (1.0 - refl)*double(c_red) + refl*double(c.c_red) );
-	c_green = (unsigned char)( (1.0 - refl)*double(c_green) + refl*double(c.c_green) );
-	c_blue = (unsigned char)( (1.0 - refl)*double(c_blue) + refl*double(c.c_blue) );
+	re = (unsigned char)( (1.0 - refl)*double(re) + refl*double(c.re) );
+	gr = (unsigned char)( (1.0 - refl)*double(gr) + refl*double(c.gr) );
+	bl = (unsigned char)( (1.0 - refl)*double(bl) + refl*double(c.bl) );
 }
 //------------------------------------------------------------------------------
 void Color::assert_is_in_valid_8Bit_range(const int channel)const {
@@ -77,14 +76,14 @@ void Color::assert_is_in_valid_8Bit_range(const int channel)const {
 		info << "Each RGB color channel must be within the valid 8 Bit range\n";
 		info << "Expected channels to be: 0 <= channel <= 255, but actual: ";
 		info << get_print() << "\n";
-		throw TracerException(info.str());	
+		throw NotIn8bitRange(info.str());	
 	}
 }
 //------------------------------------------------------------------------------
 bool Color::operator == (const Color& eq)const{
-    return c_red == eq.c_red && c_green == eq.c_green && c_blue == eq.c_blue;
+    return re == eq.re && gr == eq.gr && bl == eq.bl;
 }
 //------------------------------------------------------------------------------
 bool Color::operator != (const Color& eq)const {
-    return c_red != eq.c_red || c_green != eq.c_green || c_blue != eq.c_blue;
+    return re != eq.re || gr != eq.gr || bl != eq.bl;
 }
