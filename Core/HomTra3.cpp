@@ -137,42 +137,36 @@ void HomTra3::set_z_column_of_rotation_component(const Vec3 &R) {
 }
 //------------------------------------------------------------------------------
 Vec3 HomTra3::get_transformed_orientation(const Vec3& ori)const {
-    const double x = ori.x();
-    const double y = ori.y();
-    const double z = ori.z();
     return Vec3(
         //x
-        x*T[0][0] + 
-        y*T[0][1] +
-        z*T[0][2],
+        ori.x()*T[0][0] + 
+        ori.y()*T[0][1] +
+        ori.z()*T[0][2],
         //y
-        x*T[1][0] + 
-        y*T[1][1] + 
-        z*T[1][2],
+        ori.x()*T[1][0] + 
+        ori.y()*T[1][1] + 
+        ori.z()*T[1][2],
         //z
-        x*T[2][0] + 
-        y*T[2][1] + 
-        z*T[2][2]
+        ori.x()*T[2][0] + 
+        ori.y()*T[2][1] + 
+        ori.z()*T[2][2]
     );
 }
 //------------------------------------------------------------------------------
 Vec3 HomTra3::get_transformed_position(const Vec3& pos)const {
-    const double x = pos.x();
-    const double y = pos.y();
-    const double z = pos.z();
     return Vec3(
         //x
-        x*T[0][0] + 
-        y*T[0][1] + 
-        z*T[0][2] + T[0][3],
+        pos.x()*T[0][0] + 
+        pos.y()*T[0][1] + 
+        pos.z()*T[0][2] + T[0][3],
         //y
-        x*T[1][0] + 
-        y*T[1][1] + 
-        z*T[1][2] + T[1][3],
+        pos.x()*T[1][0] + 
+        pos.y()*T[1][1] + 
+        pos.z()*T[1][2] + T[1][3],
         //z
-        x*T[2][0] + 
-        y*T[2][1] + 
-        z*T[2][2] + T[2][3]
+        pos.x()*T[2][0] + 
+        pos.y()*T[2][1] + 
+        pos.z()*T[2][2] + T[2][3]
     );
 }
 //------------------------------------------------------------------------------
