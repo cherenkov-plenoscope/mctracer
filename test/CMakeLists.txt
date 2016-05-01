@@ -1,4 +1,5 @@
 set(TEST_SOURCE
+	${CMAKE_CURRENT_SOURCE_DIR}/ColorTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ApertureCameraTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PhotonsTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/AsciiIoTest.cpp
@@ -54,5 +55,6 @@ set(TEST_SOURCE
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Examples/Func1DExample.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Examples/set_up_scenery.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PrintSizeOfTest.cpp
     PARENT_SCOPE
 )
