@@ -16,16 +16,13 @@
 #include "Core/Printable.h"
 //=================================
 
-class Rot3 : public Printable{
-
-	bool flag_rot_angles_xyz;
-
+class Rot3 {
 	double Rx;
 	double Ry;
 	double Rz;
-
-	Vec3 rot_axis;
 	double rot_angle_in_rad;
+	Vec3 rot_axis;
+	bool flag_rot_angles_xyz;
 public:
 	static const Rot3 null;
 	
@@ -50,5 +47,9 @@ public:
 	double sinRy()const;
 	double sinRz()const;
 	bool operator == (const Rot3& eqRot)const;
+    friend std::ostream& operator<<(std::ostream& os, const Rot3& to_be_displayed) {
+        os << to_be_displayed.get_print();
+        return os;
+    };
 };
 #endif // __Rot3_H_INCLUDED__ 
