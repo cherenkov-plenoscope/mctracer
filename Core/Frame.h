@@ -69,8 +69,8 @@ public:
     //GET
     string get_name()const;
     string get_path_in_tree_of_frames()const;
-    const Vec3* get_position_in_mother()const;
-    const Rot3* get_rotation_in_mother()const;
+    Vec3 get_position_in_mother()const;
+    Rot3 get_rotation_in_mother()const;
     const Vec3* get_position_in_world()const;
     double contour_radius()const;
     const HomTra3* frame2mother()const;

@@ -39,6 +39,6 @@ double TelescopeArrayControl::get_zenith_distance_of_frame(const Frame* frame)co
 }
 //------------------------------------------------------------------------------
 double TelescopeArrayControl::get_azimuth_of_frame(const Frame* frame)const {
-	return Deg2Rad(180.0) - frame->get_rotation_in_mother()->get_rot_z();
+	return Deg2Rad(180.0) - frame->get_rotation_in_mother().get_rot_z();
 }
 //------------------------------------------------------------------------------

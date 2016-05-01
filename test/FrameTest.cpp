@@ -63,8 +63,8 @@ TEST_F(FrameTest, set_frame) {
     Frame Peter;
     Peter.set_name_pos_rot("A_nice_name", pos, rot);
 
-    EXPECT_EQ(pos, *Peter.get_position_in_mother());
-    EXPECT_EQ(rot, *Peter.get_rotation_in_mother());
+    EXPECT_TRUE(pos == Peter.get_position_in_mother());
+    EXPECT_TRUE(rot == Peter.get_rotation_in_mother());
 
     HomTra3 T_frame2mother;
     T_frame2mother.set_transformation(rot, pos);
@@ -82,14 +82,14 @@ TEST_F(FrameTest, re_set_frame) {
     peter.set_mother_and_child(&hans);
 
     EXPECT_EQ(1, peter.get_number_of_children());
-    EXPECT_EQ(pos, *peter.get_position_in_mother());
-    EXPECT_EQ(rot, *peter.get_rotation_in_mother());
+    EXPECT_TRUE(pos == peter.get_position_in_mother());
+    EXPECT_TRUE(rot == peter.get_rotation_in_mother());
 
     peter.set_name_pos_rot("another_name", Vec3(1.0, 2.0, 3.0), Rot3(0.1, 0.2, 0.3));
     
     EXPECT_EQ(1, peter.get_number_of_children());
-    EXPECT_EQ(Vec3(1.0, 2.0, 3.0), *peter.get_position_in_mother());
-    EXPECT_EQ(Rot3(0.1, 0.2, 0.3), *peter.get_rotation_in_mother());
+    EXPECT_TRUE(Vec3(1.0, 2.0, 3.0) == peter.get_position_in_mother());
+    EXPECT_TRUE(Rot3(0.1, 0.2, 0.3) == peter.get_rotation_in_mother());
 }
 //------------------------------------------------------------------------------
 TEST_F(FrameTest, root_of_world_on_complete_tree) {

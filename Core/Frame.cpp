@@ -4,11 +4,7 @@
 const uint Frame::max_number_of_children = 16;
 const double Frame::minimal_structure_size = 1e-6;
 //------------------------------------------------------------------------------
-Frame* Frame::void_frame = new Frame(
-	"void_frame",
-	Vec3::null,
-	Rot3::null
-);
+Frame* Frame::void_frame = new Frame("void_frame", Vec3::null, Rot3::null);
 //------------------------------------------------------------------------------
 Frame::Frame():radius_of_sphere_enclosing_all_children(0.0), root_frame(this) {}
 //------------------------------------------------------------------------------
@@ -482,12 +478,12 @@ string Frame::get_name()const {
 	return name; 
 }
 //------------------------------------------------------------------------------
-const Vec3* Frame::get_position_in_mother()const {
-    return &pos_in_mother;
+Vec3 Frame::get_position_in_mother()const {
+    return pos_in_mother;
 }
 //------------------------------------------------------------------------------
-const Rot3* Frame::get_rotation_in_mother()const {
-    return &rot_in_mother;
+Rot3 Frame::get_rotation_in_mother()const {
+    return rot_in_mother;
 }
 //------------------------------------------------------------------------------
 const Vec3* Frame::get_position_in_world()const {

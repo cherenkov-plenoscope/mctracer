@@ -15,7 +15,7 @@ namespace ZdAzMount {
 	}
 	//--------------------------------------------------------------------------
 	double get_az_of_frame(const Frame* frame) {
-		return Deg2Rad(180.0) - frame->get_rotation_in_mother()->get_rot_z();
+		return Deg2Rad(180.0) - frame->get_rotation_in_mother().get_rot_z();
 	}
 	//--------------------------------------------------------------------------
 } // AltitudeAzimuthMount
