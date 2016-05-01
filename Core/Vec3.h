@@ -11,8 +11,6 @@
 #include <iostream>
 #include <math.h>
 #include <sstream>
-#include "Core/Printable.h"
-
 //=================================
 class Vec3 {
 private:
@@ -58,9 +56,8 @@ public:
     bool norm_is_less_equal_than(const double length_to_compare)const;
     std::string get_print()const;
 
-    friend std::ostream& operator<<(std::ostream& os, const Vec3& to_be_displayed)
-    {
-        os << to_be_displayed.get_print();
+    friend std::ostream& operator<<(std::ostream& os, const Vec3& vec) {
+        os << vec.get_print();
         return os;
     };
 };

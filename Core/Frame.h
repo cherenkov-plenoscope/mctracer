@@ -19,12 +19,11 @@ class Intersection;
 #include "Core/TracerException.h"
 #include "Tools/StringTools.h"
 #include "Tools/Tools.h"
-#include "Core/Printable.h"
 using std::string;
 using std::stringstream;
 using std::vector;
 
-class Frame : public Printable{
+class Frame {
     // The Frame is the fundamental geometry in this framework.
     // It defines a three dimensinal space where rays can be propagated in.
     //
@@ -129,6 +128,11 @@ public:
 
     class BadName :public TracerException{
         using TracerException::TracerException;
+    };
+
+    friend std::ostream& operator<<(std::ostream& os, const Frame& frame) {
+        os << frame.get_print();
+        return os;
     };
 };
 #endif // __CARTESIANFRAME_H_INCLUDED__

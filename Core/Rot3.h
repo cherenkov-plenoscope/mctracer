@@ -13,9 +13,7 @@
 #include <sstream>
 #include "Core/Vec3.h"
 #include "Core/TracerException.h"
-#include "Core/Printable.h"
 //=================================
-
 class Rot3 {
 	double Rx;
 	double Ry;
@@ -47,8 +45,8 @@ public:
 	double sinRy()const;
 	double sinRz()const;
 	bool operator == (const Rot3& eqRot)const;
-    friend std::ostream& operator<<(std::ostream& os, const Rot3& to_be_displayed) {
-        os << to_be_displayed.get_print();
+    friend std::ostream& operator<<(std::ostream& os, const Rot3& rot) {
+        os << rot.get_print();
         return os;
     };
 };
