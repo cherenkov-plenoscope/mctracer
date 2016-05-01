@@ -93,6 +93,7 @@ void Frame::set_name_pos_rot(const string name,	const Vec3 pos,	const Rot3 rot) 
 void Frame::set_name(const string name) {
 	assert_name_is_valid(name);
 	this->name = name;
+	this->name.shrink_to_fit();
 }
 //------------------------------------------------------------------------------
 void Frame::assert_name_is_valid(const string name_to_check)const {
@@ -243,6 +244,7 @@ void Frame::set_mother_and_child(Frame *new_child) {
 }
 //------------------------------------------------------------------------------
 void Frame::init_tree_based_on_mother_child_relations() {
+	children.shrink_to_fit();
 	cluster_using_helper_frames();
 	post_init_me_and_all_my_children();
 	update_enclosing_sphere_for_all_children();

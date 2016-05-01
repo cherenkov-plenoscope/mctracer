@@ -36,13 +36,12 @@ class Frame : public Printable{
     // The root of this tree is often called 'world' or 'world frame' here.
 protected:
 
-    // a frame has a human readable name e.g. Tree, House, Mirror
     string name;
 
-    Vec3 	pos_in_mother; 
-    Rot3 	rot_in_mother;
-    double 	    radius_of_sphere_enclosing_all_children; 
-    Vec3 	pos_in_world;
+    Vec3 pos_in_mother; 
+    Rot3 rot_in_mother;
+    double radius_of_sphere_enclosing_all_children; 
+    Vec3 pos_in_world;
     
     HomTra3 T_frame2mother;
     HomTra3 T_mother2frame;
