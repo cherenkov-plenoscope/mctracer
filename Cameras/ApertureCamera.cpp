@@ -37,11 +37,11 @@ void ApertureCamera::set_sensor_size_using_width(const double width_in_m) {
 		throw BadImageSensorWidth(info.str());
 	}
 	sensor_width_in_m = width_in_m;
-	sensor_height_in_m = sensor_width_in_m / image->get_width_to_height_ratio();
+	sensor_height_in_m = sensor_width_in_m / image.get_width_to_height_ratio();
 }
 //------------------------------------------------------------------------------
 void ApertureCamera::update_sensor_pixel_pitch(){
-	PixelPitch_in_m = sensor_width_in_m/double(image->get_number_of_cols());
+	PixelPitch_in_m = sensor_width_in_m/double(image.get_number_of_cols());
 }
 //------------------------------------------------------------------------------
 void ApertureCamera::set_number_of_rays_per_pixel(const uint rays_per_pixel) {
@@ -111,7 +111,7 @@ void ApertureCamera::auto_focus(
 }
 //------------------------------------------------------------------------------
 uint ApertureCamera::_5_permil_of_pixels()const {
-	return image->get_number_of_pixels()*5e-4;
+	return image.get_number_of_pixels()*5e-4;
 }
 //------------------------------------------------------------------------------
 double ApertureCamera::get_average_object_distance(
@@ -144,11 +144,11 @@ double ApertureCamera::get_average_object_distance(
 }
 //------------------------------------------------------------------------------
 uint ApertureCamera::get_random_row(){
-	return uint(floor(dice.uniform()*image->get_number_of_rows()));
+	return uint(floor(dice.uniform()*image.get_number_of_rows()));
 }
 //------------------------------------------------------------------------------
 uint ApertureCamera::get_random_col(){
-	return uint(floor(dice.uniform()*image->get_number_of_cols()));
+	return uint(floor(dice.uniform()*image.get_number_of_cols()));
 }
 //------------------------------------------------------------------------------
 std::string ApertureCamera::get_aperture_camera_print()const {
@@ -163,7 +163,7 @@ std::string ApertureCamera::get_aperture_camera_print()const {
 	out << "| Sensor distance  : " << SensorDistance_in_m*1e3 << " mm\n";
 	out << "| Rays per pixel   : " << rays_per_pixel << "\n";
 	out << "| Rays per image   : " << 
-	double(rays_per_pixel *	image->get_number_of_pixels()/1e6) << " M rays\n";
+	double(rays_per_pixel *	image.get_number_of_pixels()/1e6) << " M rays\n";
 	return out.str();
 }
 //------------------------------------------------------------------------------
@@ -182,8 +182,8 @@ Vec3 ApertureCamera::get_random_point_on_bounded_aperture_plane() {
 Vec3 ApertureCamera::get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(
 	const uint row, const uint col
 ){
-	const int x_pos_on_sensor_in_pixel =  row - image->get_number_of_rows()/2;
-	const int y_pos_on_sensor_in_pixel =  col - image->get_number_of_cols()/2;
+	const int x_pos_on_sensor_in_pixel =  row - image.get_number_of_rows()/2;
+	const int y_pos_on_sensor_in_pixel =  col - image.get_number_of_cols()/2;
  
  	const double image_size_x = x_pos_on_sensor_in_pixel * PixelPitch_in_m;
 	const double image_size_y = y_pos_on_sensor_in_pixel * PixelPitch_in_m;
@@ -245,11 +245,11 @@ void ApertureCamera::acquire_image(
 	#pragma omp parallel shared(settings,world,HadCatch) private(pix,cam_ray,row,col) 
 	{	
 		#pragma omp for schedule(dynamic) 
-		for (pix = 0; pix < image->get_number_of_pixels(); pix++) 
+		for (pix = 0; pix < image.get_number_of_pixels(); pix++) 
 		{
 			try {
-				row = pix / image->get_number_of_cols();
-				col = pix % image->get_number_of_cols();
+				row = pix / image.get_number_of_cols();
+				col = pix % image.get_number_of_cols();
 				std::vector<Color> colors_of_pixel; 
 				colors_of_pixel.reserve(rays_per_pixel);
 
@@ -265,7 +265,7 @@ void ApertureCamera::acquire_image(
 						)
 					);
 				}
-				image->set_pixel_row_col_to_color(row, col, Color(colors_of_pixel));
+				image.set_pixel_row_col_to_color(row, col, Color(colors_of_pixel));
 			}catch(std::exception &error) {
 				HadCatch++;
 				std::cerr << error.what(); 

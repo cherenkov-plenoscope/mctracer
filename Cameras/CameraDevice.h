@@ -26,8 +26,6 @@ public:
 		const uint sensor_rows
 	);
 
-	~CameraDevice();
-
 	virtual void acquire_image(	
 		const Frame* world, 
 		const TracerSettings* settings
@@ -72,16 +70,16 @@ public:
 	Vec3 get_image_upwards_direction_in_world_frame()const;
 
 	uint get_number_of_sensor_cols()const {
-		return image->get_number_of_cols();
+		return image.get_number_of_cols();
 	}
 
 	uint get_number_of_sensor_rows()const {
-		return image->get_number_of_rows();
+		return image.get_number_of_rows();
 	}
 protected:
 	const std::string CameraName;
 
-	CameraImage *image;
+	CameraImage image;
 
 	HomTra3 T_Camera2World;
 	HomTra3 T_World2Camera;

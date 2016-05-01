@@ -4,13 +4,7 @@ CameraDevice::CameraDevice(
 	const std::string camera_name, 
 	const uint sensor_cols, 
 	const uint sensor_rows
-): CameraName(camera_name){
-	image = new CameraImage(sensor_cols, sensor_rows);
-}
-//------------------------------------------------------------------------------
-CameraDevice::~CameraDevice() {
-	delete image;
-}
+): CameraName(camera_name), image(sensor_cols, sensor_rows) {}
 //------------------------------------------------------------------------------
 void CameraDevice::update_position(const Vec3 new_cam_pos_in_world) {
 	update_position_and_orientation(
@@ -101,9 +95,9 @@ std::string CameraDevice::get_camera_print()const{
 	out << "| direction of optical axis: " << CameraPointingDirection << "\n";
 	out << "| field of view: " << Rad2Deg(FoV_in_rad) <<" deg\n";
 	out << "| resolution: cols x rows : ";
-	out << image->get_number_of_cols() << "x";
-	out << image->get_number_of_rows() <<" pixels";
-	out << " / " << image->get_number_of_pixels()/1e6 << " M pixels\n";
+	out << image.get_number_of_cols() << "x";
+	out << image.get_number_of_rows() <<" pixels";
+	out << " / " << image.get_number_of_pixels()/1e6 << " M pixels\n";
 	return out.str();
 }
 //------------------------------------------------------------------------------
@@ -139,11 +133,11 @@ std::string CameraDevice::get_name()const {
 }
 //------------------------------------------------------------------------------
 const CameraImage* CameraDevice::get_image()const {
-	return image;
+	return &image;
 }
 //------------------------------------------------------------------------------
 void CameraDevice::save_image(const std::string image_path)const {
-	image->save(image_path);
+	image.save(image_path);
 }
 //------------------------------------------------------------------------------
 Vec3 CameraDevice::get_position_in_world()const{

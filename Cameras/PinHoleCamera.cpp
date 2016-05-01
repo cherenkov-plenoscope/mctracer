@@ -51,7 +51,7 @@ void PinHoleCamera::update_principal_point_for_current_FoV(){
 	*/	
 	//distance
 	dist_camera_support_to_principal_point =
-		((image->get_number_of_cols()/2.0)/tan(FoV_in_rad/2.0));
+		((image.get_number_of_cols()/2.0)/tan(FoV_in_rad/2.0));
 
 	// principal point
 	principal_point = 
@@ -87,8 +87,8 @@ Vec3 PinHoleCamera::get_direction_of_ray_for_pixel(
 Vec3 PinHoleCamera::get_intersection_of_ray_on_image_sensor_for_pixel(
 	const int row, const int col
 )const{
-	const int vert_position_on_image_sensor = row-image->get_number_of_rows()/2;
-	const int hori_position_on_image_sensor = col-image->get_number_of_cols()/2;
+	const int vert_position_on_image_sensor = row-image.get_number_of_rows()/2;
+	const int hori_position_on_image_sensor = col-image.get_number_of_cols()/2;
 
 	return principal_point + 
 		SensorDirectionVert * vert_position_on_image_sensor + 
@@ -106,16 +106,16 @@ void PinHoleCamera::acquire_image(
 	#pragma omp parallel shared(settings,world,HadCatch) private(i,cam_ray,color,row,col) 
 	{	
 		#pragma omp for schedule(dynamic) 
-		for (i = 0; i < image->get_number_of_pixels(); i++) {
+		for (i = 0; i < image.get_number_of_pixels(); i++) {
 			try{
 
-				row = i / image->get_number_of_cols();
-				col = i % image->get_number_of_cols();
+				row = i / image.get_number_of_cols();
+				col = i % image.get_number_of_cols();
 
 				cam_ray = get_ray_for_pixel_in_row_and_col(row, col);
 				color = cam_ray.trace(world, 0, settings);
 
-				image->set_pixel_row_col_to_color(row, col, color);
+				image.set_pixel_row_col_to_color(row, col, color);
 			}catch(std::exception &error) {
 				HadCatch++;
 				std::cerr << error.what(); 
