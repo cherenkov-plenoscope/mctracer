@@ -83,11 +83,11 @@ target_link_libraries(mctPlenoscopePropagation mct)
 
 #---------------------------------
 # unit test exe
-add_subdirectory("${PROJECT_SOURCE_DIR}/test/gtest-1.7.0")
-include_directories("${PROJECT_SOURCE_DIR}/test/gtest-1.7.0/include")
-add_subdirectory("${PROJECT_SOURCE_DIR}/test")
+add_subdirectory("${PROJECT_SOURCE_DIR}/Tests/gtest-1.7.0")
+include_directories("${PROJECT_SOURCE_DIR}/Tests/gtest-1.7.0/include")
+add_subdirectory("${PROJECT_SOURCE_DIR}/Tests")
 
-add_executable(mctTest ./test/test.cpp ${TEST_SOURCE})
+add_executable(mctTest ./Tests/test.cpp ${TEST_SOURCE})
 target_link_libraries(mctTest gtest gtest_main)
 target_link_libraries(mctTest mct)
 
