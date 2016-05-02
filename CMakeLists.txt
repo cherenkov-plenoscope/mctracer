@@ -91,6 +91,14 @@ add_executable(mctTest ./Tests/test.cpp ${TEST_SOURCE})
 target_link_libraries(mctTest gtest gtest_main)
 target_link_libraries(mctTest mct)
 
+#---------------------------------
+# Benchmark
+add_subdirectory("${PROJECT_SOURCE_DIR}/Benchmarks")
+
+add_executable(mctBenchMark ./Benchmarks/benchmark.cpp ${TEST_BENCHMARK})
+target_link_libraries(mctBenchMark gtest gtest_main)
+target_link_libraries(mctBenchMark mct)
+
 #-------------------------------------------------------------------------------
 # http://stackoverflow.com/questions/992068/building-a-python-shared-object-binding-with-cmake-which-depends-upon-external
 # http://www.swig.org/Doc1.3/Introduction.html#Introduction_build_system
