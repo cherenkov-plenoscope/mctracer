@@ -13,8 +13,15 @@ import mpl_toolkits.mplot3d.art3d as art3d
 import scipy
 import scipy.spatial
 from tqdm import tqdm
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-def add_to_ax(ax, I, px, py, colormap='viridis', hexrotation=30):
+
+def add_to_ax(ax, I, px, py, colormap='viridis', hexrotation=30, vmin=None, vmax=None):
+
+    if vmin is None:
+        vmin = I.min()
+    if vmax is None:
+        vmax = I.max()
     fov = np.abs(px).max() * 1.05
     Area = fov * fov
     bin_radius = 1.15 * np.sqrt((Area/I.shape[0]))
@@ -37,9 +44,16 @@ def add_to_ax(ax, I, px, py, colormap='viridis', hexrotation=30):
             )
         )
 
-    p = PatchCollection(patches, cmap="viridis", alpha=1, edgecolor='none')
+    p = PatchCollection(patches, cmap=colormap, alpha=1, edgecolor='none')
 
-    p.set_array(I/I.max()) # this is assigning a color, crazy hu?
+    p.set_array(I)
+    p.set_clim([vmin, vmax])
+
+    divider = make_axes_locatable(ax)
+    cax = divider.append_axes("right", size="5%", pad=0.05)
+    plt.colorbar(p, cax=cax)
+
+
     ax.add_collection(p)
     ax.set_aspect('equal')
 
@@ -316,7 +330,7 @@ def save_sum_projections(lf, outpath, thresh=0):
     plt.savefig(outpath+".png", dpi=120)
     plt.close()
 
-def save_refocus_stack(lf, obj_dist_min, obj_dist_max, steps, outprefix='refocus'):
+def save_refocus_stack(lf, obj_dist_min, obj_dist_max, steps, outprefix='refocus', use_absolute_scale=True):
 
     plt.rcParams.update({'font.size': 12})
     plt.rc('text', usetex=True)
@@ -328,7 +342,16 @@ def save_refocus_stack(lf, obj_dist_min, obj_dist_max, steps, outprefix='refocus
         steps
     )
 
-    for i, object_distance in enumerate(object_distances):
+    images = [refocus(lf, object_distance) for object_distance in object_distances]
+    if use_absolute_scale:
+        vmin=np.array(images).min()
+        vmax=np.array(images).max()
+    else:
+        vmin, vmax = None, None
+
+    for i in range(len(images)):
+        image = images[i]
+        object_distance = object_distances[i]
 
         fig = plt.figure(figsize=(7, 6)) 
         gs = gridspec.GridSpec(1, 2, width_ratios=[1, 6]) 
@@ -341,7 +364,7 @@ def save_refocus_stack(lf, obj_dist_min, obj_dist_max, steps, outprefix='refocus
         ax0.spines['top'].set_visible(False)
         ax0.spines['bottom'].set_visible(False)
         ax0.xaxis.set_visible(False)
-        
+
         ax1 = plt.subplot(gs[1])
         ax1.set_xlabel('x/deg')
         ax1.set_ylabel('y/deg')
@@ -353,9 +376,11 @@ def save_refocus_stack(lf, obj_dist_min, obj_dist_max, steps, outprefix='refocus
 
         add_to_ax(
             ax1, 
-            refocus(lf, object_distance), 
-            np.rad2deg(lf.pixel_pos['x']), 
-            np.rad2deg(lf.pixel_pos['y'])
+            image,
+            np.rad2deg(lf.pixel_pos['x']),
+            np.rad2deg(lf.pixel_pos['y']),
+            vmin=vmin,
+            vmax=vmax
         )
         ndigits = int(np.ceil(np.log10(steps)))
         plt.savefig(outprefix+'_'+str(i).zfill(ndigits)+".png", dpi=180)
@@ -380,7 +405,7 @@ def save_sum(evt_path):
     lf = LightField(plfc, plf)   
     save_sum_projections(lf, evt_path.path+'/'+evt_path.name_wo_ext+'_sum_projection')
 
-def save_refocus_gif(evt_path, steps=10):
+def save_refocus_gif(evt_path, steps=10, use_absolute_scale=True):
 
     evt_path = Path(evt_path)
 
@@ -393,7 +418,13 @@ def save_refocus_gif(evt_path, steps=10):
     if mkdir_ret != 0:
         return
 
-    save_refocus_stack(lf, 0.75e3, 15e3, steps, outprefix=work_dir+'/'+'refocus')
+    save_refocus_stack(
+        lf,
+        0.75e3,
+        15e3,
+        steps,
+        outprefix=work_dir+'/'+'refocus',
+        use_absolute_scale=use_absolute_scale)
     subprocess.call(
         ['convert', 
         work_dir+'/'+'refocus_*.png', 
@@ -436,9 +467,10 @@ def save_aperture_photons_gif(evt_path, steps=72):
 
 
 plfc = PlenoscopeLightFieldCalibration()
-plfc.load_plenoscope_calibration_epoch_160310('/home/sebastian/Desktop/mctout/light_field_calibration/sub_pixel_statistics.txt')
+plfc.load_plenoscope_calibration_epoch_160310('/home/dneise/ACP/mctracer/light_field_calibration/sub_pixel_statistics.txt')
 
 plf = PlenoscopeLightField()
-plf.load_epoch_160310('He/1.txt')
+plf.load_epoch_160310('/home/dneise/ACP/mctracer/gamma/89.txt')
 
 lf = LightField(plfc,plf)
+
