@@ -42,12 +42,12 @@ int main(int argc, char* argv[]) {
         return 0;
     }
         
-    PathTools::FullPath config_path = PathTools::split_path_and_filename(cmd.get("config"));
+    PathTools::Path config_path = PathTools::Path(cmd.get("config"));
     string working_directory = config_path.path;
 
     cout << "in     '" << cmd.get("input") << "'\n";
     cout << "out    '" << cmd.get("output") << "'\n";
-    cout << "config '" << config_path.path << config_path.filename << "'\n";
+    cout << "config '" << config_path.path << "'\n";
 
     //--------------------------------------------------------------------------
     //  111
@@ -58,7 +58,7 @@ int main(int argc, char* argv[]) {
     //   11  
     // 111111 11
     //--------------------------------------------------------------------------
-    Xml::Document doc(config_path.path + config_path.filename);
+    Xml::Document doc(config_path.path);
     Xml::Node config_node = doc.node().child("propagation");
 
     //--------------------------------------------------------------------------
@@ -97,8 +97,10 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // load light field calibration result
-    string optics_path = 
-        working_directory + config_node.child("optics_calibration_result").attribute("path");
+    string optics_path = PathTools::join(
+        config_path.dirname, 
+        config_node.child("optics_calibration_result").attribute("path")
+    );
 
     vector<vector<double>> optics_calibration_result = AsciiIo::gen_table_from_file(
         optics_path
@@ -120,7 +122,10 @@ int main(int argc, char* argv[]) {
     Xml::Node nsb_node = config_node.child("night_sky_background_ligth");
     const Function::LinInterpol nsb_flux_vs_wavelength(
         AsciiIo::gen_table_from_file(
-            working_directory + nsb_node.attribute("path_flux_vs_wavelength")
+            PathTools::join(
+                config_path.dirname, 
+                nsb_node.attribute("path_flux_vs_wavelength")
+            )
         )
     );
     LightFieldTelescope::NightSkyBackgroundLight nsb(&telescope_geometry, &nsb_flux_vs_wavelength);
@@ -132,7 +137,10 @@ int main(int argc, char* argv[]) {
 
     const Function::LinInterpol pde_vs_wavelength(
         AsciiIo::gen_table_from_file(
-            working_directory + pec.attribute("path_pde_vs_wavelength")
+            PathTools::join(
+                config_path.dirname, 
+                pec.attribute("path_pde_vs_wavelength")
+            )
         )
     );
 

@@ -27,13 +27,12 @@ int main(int argc, char* argv[]) {
         return 0;
     }
 
-    PathTools::FullPath config_path = PathTools::split_path_and_filename(cmd.get("config"));
-    string working_directory = config_path.path;
+    PathTools::Path config_path = PathTools::Path(cmd.get("config"));
 
     cout << "out    '" << cmd.get("output") << "'\n";
-    cout << "config '" << config_path.path << config_path.filename << "'\n";
+    cout << "config '" << config_path.path << "'\n";
 
-    Xml::Document doc(config_path.path + config_path.filename);
+    Xml::Document doc(config_path.path);
     Xml::Node calibration = doc.node().child("calibration");
     Xml::Node block_node = calibration.child("photon_blocks");
 

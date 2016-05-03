@@ -257,7 +257,7 @@ Frame* SceneryFactory::add_Triangle(Frame* mother, const Node node) {
 //------------------------------------------------------------------------------
 Frame* SceneryFactory::add_STL(Frame* mother, const Node node) {
 
-    const string file = xml_path.path+"/"+node.child("set_stl").attribute("file");
+    const string file = xml_path.dirname+"/"+node.child("set_stl").attribute("file");
     const double scale = node.child("set_stl").attribute2double("scale");
 
     Frame* object = StereoLitographyIo::read(file, scale);

@@ -16,7 +16,7 @@
 //------------------------------------------------------------------------------
 class FunctionFab {
 
-	PathTools::FullPath full_path_of_original_xml_file;
+	PathTools::Path full_path_of_original_xml_file;
 	std::map<std::string, const Function::Func1D*> functions;
 public:
 

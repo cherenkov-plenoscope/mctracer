@@ -8,7 +8,7 @@ using StringTools::is_equal;
 void FunctionFab::add(const Xml::Node &node) {
 
 	full_path_of_original_xml_file = 
-		PathTools::split_path_and_filename(node.xml_path());
+		PathTools::Path(node.xml_path());
 
 	const Function::Func1D* func = &Function::Constant::void_function;
 	bool export_function = false;
@@ -52,7 +52,10 @@ void FunctionFab::export_function_based_on_node(
 ) {
 	AsciiIo::write_table_to_file(
 		func->get_samples(node.attribute2int("samples")),
-		full_path_of_original_xml_file.path + node.attribute("file")
+		PathTools::join(
+			full_path_of_original_xml_file.dirname, 
+			node.attribute("file")
+		)
 	);
 }
 //------------------------------------------------------------------------------
@@ -85,7 +88,10 @@ bool FunctionFab::is_function_node(const Xml::Node &node)const {
 //------------------------------------------------------------------------------
 Function::Func1D* FunctionFab::extract_linear_interpolation(const Xml::Node &node) {
 	std::vector<std::vector<double>> table = AsciiIo::gen_table_from_file(
-		full_path_of_original_xml_file.path + node.attribute("file")
+		PathTools::join(
+			full_path_of_original_xml_file.dirname, 
+			node.attribute("file")
+		)
 	);
 	return new Function::LinInterpol(table);
 }

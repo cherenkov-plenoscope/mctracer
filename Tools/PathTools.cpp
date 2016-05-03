@@ -1,25 +1,27 @@
 #include "PathTools.h"
+#include <sstream>
 
 namespace PathTools {
     
-    FullPath split_path_and_filename(std::string path) {
+    string join(string path1, string path2) {
 
-        FullPath fp;
-        int last_delimiter_in_path = path.find_last_of("/\\");
+        std::stringstream out;
+        if(StringTools::is_ending(path1, "/"))
+            out << path1;
+        else 
+            out << path1 << "/";
 
-        if(last_delimiter_in_path == -1)
-            fp.path = "";
+        if(path2.find_last_of("/") == 0)
+            out << path2.substr(1, path2.length());
         else
-            fp.path = path.substr(0, last_delimiter_in_path + 1); 
+            out << path2;
 
-        fp.filename = path.substr(last_delimiter_in_path + 1);
-        
-        return fp;      
+        return out.str();
     }
 
     Path::Path(const string full_path) {
 
-        full = full_path;
+        path = full_path;
         int last_dot_in_path = full_path.find_last_of(".");
         int last_delimiter_in_path = full_path.find_last_of("/\\");
 
@@ -27,13 +29,23 @@ namespace PathTools {
             extension = full_path.substr(last_dot_in_path + 1, full_path.length());
 
         if(last_delimiter_in_path != -1)
-            path = full_path.substr(0, last_delimiter_in_path);
+            dirname = full_path.substr(0, last_delimiter_in_path);
 
         const int point_length = (extension.length()>0?  1: 0);
-        const int delimiter_length = (path.length()>0? 1: 0);  
-        filename = full_path.substr(
-            path.length()+delimiter_length, 
-            full_path.length()-path.length()-delimiter_length-extension.length()-point_length
+        const int delimiter_length = (dirname.length()>0? 1: 0);  
+        basename_wo_extension = full_path.substr(
+            dirname.length()+delimiter_length, 
+            full_path.length()-dirname.length()-delimiter_length-extension.length()-point_length
         );
+
+        if(extension.empty())
+            basename = basename_wo_extension;
+        else
+            basename = basename_wo_extension +"."+ extension;
     }
+
+    Path::Path() {
+        *this = Path("");
+    }
+
 }//PathTools

@@ -11,22 +11,19 @@
 #include "StringTools.h"
 using std::string;
 
+// We try to use the same wording as in python's os.path
 namespace PathTools {
-	
-	struct FullPath {
-		std::string path;
-		std::string filename;
-	};
 
-	FullPath split_path_and_filename(std::string path);
+	string join(string path1, string path2);
 
 	struct Path {
-
-		string full;
-		string extension;
-		string filename;
 		string path;
+		string dirname;
+		string basename;
+		string basename_wo_extension;
+		string extension;
 		Path(const string full_path);
+		Path();
 	};
 }
 
