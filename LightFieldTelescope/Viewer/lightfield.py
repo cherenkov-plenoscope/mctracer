@@ -12,11 +12,10 @@ class PlenoscopeLightFieldCalibration:
 
     def load_plenoscope_calibration_epoch_160310(self, plenoscope_calib_path):
 
-        raw = np.genfromtxt(plenoscope_calib_path)
+        raw = np.genfromtxt(plenoscope_calib_path, unpack=True)
 
         # geometrical_efficiency[1] cx[rad] cy[rad] x[m]    y[m]    t[s]
-        self.raw = np.rec.fromarrays(
-            (raw[:, 0], raw[:, 1], raw[:, 2], raw[:, 3], raw[:, 4], raw[:, 5]),
+        self.raw = np.rec.fromarrays(raw,
             dtype=[
                 ('geometrical_efficiency', 'f8'),
                 ('cx_mean', 'f8'),
