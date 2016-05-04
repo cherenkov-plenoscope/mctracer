@@ -120,7 +120,6 @@ class LightField:
 
     def refocus(self, wanted_object_distance):
         alpha = self.get_alpha(wanted_object_distance)
-        refocused_image = np.zeros(self.n_pixel)
         
         dx = np.tan(self.pixel_pos.x)*self.focal_length
         dy = np.tan(self.pixel_pos.y)*self.focal_length

@@ -256,7 +256,7 @@ def save_refocus_stack(lf, obj_dist_min, obj_dist_max, steps, outprefix='refocus
         ax1.set_aspect('equal')  
 
         lf.pixel_projection = image
-        plot_pixel(lf, ax1)
+        plot_pixel(lf, ax1, vmin=vmin, vmax=vmax)
 
         ndigits = int(np.ceil(np.log10(steps)))
         plt.savefig(outprefix+'_'+str(i).zfill(ndigits)+".png", dpi=180)
@@ -305,10 +305,10 @@ def save_aperture_photons_gif(lf, steps=72):
             ])
 
 def main():
-    plfc = PlenoscopeLightFieldCalibration('sub_pixel_statistics.txt')
-    #plfc = pickle.load(open("calibration", "rb"))    
+    #plfc = PlenoscopeLightFieldCalibration('sub_pixel_statistics.txt')
+    plfc = pickle.load(open("calibration", "rb"))    
     lf = LightField('1.txt', plfc)
-    #save_refocus_gif(lf)
+    save_refocus_gif(lf)
     return lf
 
 if __name__ == "__main__":
