@@ -10,8 +10,6 @@ from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
 import mpl_toolkits.mplot3d.art3d as art3d
-import scipy
-import scipy.spatial
 from tqdm import tqdm
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 

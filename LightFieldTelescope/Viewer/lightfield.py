@@ -1,3 +1,4 @@
+import scipy.spatial
 import numpy as np
 
 class PlenoscopeLightFieldCalibration:
@@ -69,7 +70,14 @@ class PlenoscopeLightFieldCalibration:
     def bin2dir_bin(self, abin):
         return int(abin/n_paxel)
 
-class PlenoscopeLightField():
+class PlenoscopeLightField:
+
+    def __init__(self, path):
+        # currently there is only one epoch. 
+        # In the future, there might be more
+        # this constructor, can hopefully *guess*, what epoch
+        # a calibration file refers to.
+        self.load_epoch_160310(path)
 
     def load_epoch_160310(self, path):
         raw = np.genfromtxt(path)
@@ -124,3 +132,24 @@ class LightField():
 
 if __name__ == "__main__":
     plfc = PlenoscopeLightFieldCalibration("sub_pixel_statistics.txt")
+    plf = PlenoscopeLightField("1.txt")
+    lf = LightField(plfc, plf)
+
+    # testing - stupid
+    assert int(lf.I.sum()) == 389954
+    assert lf.I.shape == (8431, 127)
+
+    assert lf.eff.shape == (8431, 127)
+
+    assert lf.n_cells == 1070737
+    assert lf.n_paxel == 127
+    assert lf.n_pixel == 8431
+
+    assert lf.paxel_eff.shape == (127,)
+    assert lf.paxel_pos.shape == (127,)
+    assert lf.paxel_pos_tree.n == 127
+    
+    assert lf.pixel_pos.shape == (8431,)
+    assert lf.pixel_pos_tree.n == 8431
+
+    assert lf.t.shape == (8431, 127)
