@@ -189,6 +189,9 @@ def plot_sum_event(lf, thresh=0):
     lf.paxel_projection = np.sum(I, axis=0)
 
     fig, (ax_dir, ax_pap) = plt.subplots(1,2)
+    plt.suptitle("Energy: "+lf.header["Primary particle"]["E"]+"\n"
+        +"impact parameter:"+str(lf.header["core positions: "])
+        )
     plot_pixel(lf, ax_dir)
     plot_paxel(lf, ax_pap)
     
@@ -239,6 +242,10 @@ def save_refocus_stack(lf, obj_dist_min, obj_dist_max, steps, outprefix='refocus
         object_distance = object_distances[i]
 
         fig = plt.figure(figsize=(7, 6)) 
+        fig, (ax_dir, ax_pap) = plt.subplots(1,2)
+        plt.suptitle("Energy: "+lf.header["Primary particle"]["E"]+"\n"
+            +"impact parameter:"+str(lf.header["core positions: "])
+            )
         gs = gridspec.GridSpec(1, 2, width_ratios=[1, 6]) 
         ax0 = plt.subplot(gs[0])
         ax0.set_xlim([0, 1])
