@@ -39,6 +39,9 @@ class PlenoscopeLightFieldCalibration:
             ], 
             dtype=[('x', 'f8'), ('y', 'f8')])
 
+        self.pixel_pos_tree = scipy.spatial.cKDTree(np.array([self.pixel_pos.x, self.pixel_pos.y]).T)
+        self.paxel_pos_tree = scipy.spatial.cKDTree(np.array([self.paxel_pos.x, self.paxel_pos.y]).T)
+
         self.paxel_efficiency_along_all_pixel = np.nanmean(self.geometrical_efficiency, axis=0)
 
     def _find_npixel_npaxel(self, path):
@@ -104,8 +107,8 @@ class LightField:
         self.pixel_pos = plfc.pixel_pos
         self.paxel_pos = plfc.paxel_pos
 
-        self.pixel_pos_tree = scipy.spatial.cKDTree(np.array([self.pixel_pos.x, self.pixel_pos.y]).T)
-        self.paxel_pos_tree = scipy.spatial.cKDTree(np.array([self.paxel_pos.x, self.paxel_pos.y]).T)
+        self.pixel_pos_tree = plfc.pixel_pos_tree
+        self.paxel_pos_tree = plfc.paxel_pos_tree
 
         # efficiency
         self.paxel_eff = plfc.paxel_efficiency_along_all_pixel

@@ -20,6 +20,7 @@ from glob import glob
 from lightfield import PlenoscopeLightFieldCalibration
 from lightfield import LightField
 import tempfile
+import pickle
 
 def add_to_ax(ax, I, px, py, colormap='viridis', hexrotation=30, vmin=None, vmax=None):
 
@@ -62,6 +63,40 @@ def add_to_ax(ax, I, px, py, colormap='viridis', hexrotation=30, vmin=None, vmax
     ax.set_aspect('equal')
 
     return p 
+
+def plot_pixel(lf, ax, colormap="viridis", vmin=None, vmax=None):
+    ax.set_xlabel('x/deg')
+    ax.set_ylabel('y/deg')
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+
+    add_to_ax(
+        ax=ax,
+        I=lf.pixel_projection,
+        px=np.rad2deg(lf.pixel_pos.x),
+        py=np.rad2deg(lf.pixel_pos.y),
+        colormap=colormap,
+        hexrotation=30,
+        vmin=vmin,
+        vmax=vmax,
+    )
+
+def plot_paxel(lf, ax, colormap="viridis", vmin=None, vmax=None):
+    ax.set_xlabel('x/m')
+    ax.set_ylabel('y/m')
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+
+    add_to_ax(
+        ax=ax,
+        I=lf.paxel_projection,
+        px=lf.paxel_pos.x,
+        py=lf.paxel_pos.y,
+        colormap=colormap,
+        hexrotation=0,
+        vmin=vmin,
+        vmax=vmax,
+    )
 
 class FigureSize():
 
@@ -150,10 +185,13 @@ def plot_sum_event(lf, thresh=0):
 
     I = lf.I
     I[I<thresh]=0
-    fig, (ax_dir, ax_pap) = plt.subplots(1,2)
-    add_to_ax(ax_dir, np.sum(I, axis=1), lf.pixel_pos['x'], lf.pixel_pos['y'])
-    add_to_ax(ax_pap, np.sum(I, axis=0), lf.paxel_pos['x'], lf.paxel_pos['y'])
+    lf.pixel_projection = np.sum(I, axis=1)
+    lf.paxel_projection = np.sum(I, axis=0)
 
+    fig, (ax_dir, ax_pap) = plt.subplots(1,2)
+    plot_pixel(lf, ax_dir)
+    plot_paxel(lf, ax_pap)
+    
 def save_sum_projections(lf, outpath=None, thresh=0):
     if outpath is None:
         outpath = lf.path.path_wo_ext+'_sum_projection'
@@ -166,18 +204,12 @@ def save_sum_projections(lf, outpath=None, thresh=0):
 
     fig, (ax_dir, ax_pap) = plt.subplots(1, 2, figsize=(16,9))
 
-    ax_dir.set_xlabel('x/deg')
-    ax_dir.set_ylabel('y/deg')   
-    ax_dir.spines['right'].set_visible(False)
-    ax_dir.spines['top'].set_visible(False)
-    add_to_ax(ax_dir, np.sum(I, axis=1), np.rad2deg(lf.pixel_pos['x']), np.rad2deg(lf.pixel_pos['y']))
+    lf.pixel_projection = np.sum(I, axis=1)
+    plot_pixel(lf, ax_dir)
 
     gp = lf.paxel_eff>0.4
-    ax_pap.set_xlabel('x/m')
-    ax_pap.set_ylabel('y/m')   
-    ax_pap.spines['right'].set_visible(False)
-    ax_pap.spines['top'].set_visible(False)
-    add_to_ax(ax_pap, np.sum(I[:,gp], axis=0), lf.paxel_pos['x'][gp], lf.paxel_pos['y'][gp], hexrotation=0.0)
+    lf.paxel_projection = np.sum(I[:,gp], axis=0)
+    plot_paxel(lf, ax_pap)
 
     plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
     plt.savefig(outpath+".png", dpi=120)
@@ -217,24 +249,15 @@ def save_refocus_stack(lf, obj_dist_min, obj_dist_max, steps, outprefix='refocus
         ax0.spines['top'].set_visible(False)
         ax0.spines['bottom'].set_visible(False)
         ax0.xaxis.set_visible(False)
-
-        ax1 = plt.subplot(gs[1])
-        ax1.set_xlabel('x/deg')
-        ax1.set_ylabel('y/deg')
-        ax1.spines['right'].set_visible(False)
-        ax1.spines['top'].set_visible(False)
-        ax1.set_aspect('equal')  
         ax0.plot([0, .5], [object_distance/1e3, object_distance/1e3], linewidth=5.0)
         ax0.text(0.0, -1.0, format(object_distance/1e3, '.2f')+r'\,km')
 
-        add_to_ax(
-            ax1, 
-            image,
-            np.rad2deg(lf.pixel_pos['x']),
-            np.rad2deg(lf.pixel_pos['y']),
-            vmin=vmin,
-            vmax=vmax
-        )
+        ax1 = plt.subplot(gs[1])
+        ax1.set_aspect('equal')  
+
+        lf.pixel_projection = image
+        plot_pixel(lf, ax1)
+
         ndigits = int(np.ceil(np.log10(steps)))
         plt.savefig(outprefix+'_'+str(i).zfill(ndigits)+".png", dpi=180)
 
@@ -242,7 +265,6 @@ def save_refocus_stack(lf, obj_dist_min, obj_dist_max, steps, outprefix='refocus
 
 def save_refocus_gif(lf, steps=10, use_absolute_scale=True):
     with tempfile.TemporaryDirectory() as work_dir:
-        print(work_dir)
         save_refocus_stack(
             lf,
             0.75e3,
@@ -261,7 +283,6 @@ def save_refocus_gif(lf, steps=10, use_absolute_scale=True):
             '-loop', '0',
             lf.path.path_wo_ext+'_refocus.gif'
             ])
-
 
 def save_aperture_photons_gif(lf, steps=72):
 
@@ -285,9 +306,11 @@ def save_aperture_photons_gif(lf, steps=72):
 
 def main():
     plfc = PlenoscopeLightFieldCalibration('sub_pixel_statistics.txt')
+    #plfc = pickle.load(open("calibration", "rb"))    
     lf = LightField('1.txt', plfc)
     #save_refocus_gif(lf)
     return lf
 
 if __name__ == "__main__":
     lf = main()
+    plot_sum_event(lf)
