@@ -1,9 +1,12 @@
 import scipy.spatial
 import numpy as np
 
+from viewer_path import Path
+
 class PlenoscopeLightFieldCalibration:
 
     def __init__(self, path):
+        self.path = Path(path)
         # currently there is only one epoch.
         # In the future, there might be more
         # this constructor, can hopefully *guess*, what epoch
@@ -53,6 +56,7 @@ class PlenoscopeLightFieldCalibration:
 class LightField:
 
     def __init__(self, path, calibration=None):
+        self.path = Path(path)
         # currently there is only one epoch.
         # In the future, there might be more
         # this constructor, can hopefully *guess*, what epoch

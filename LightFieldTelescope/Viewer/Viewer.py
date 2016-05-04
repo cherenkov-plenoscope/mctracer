@@ -58,7 +58,6 @@ def add_to_ax(ax, I, px, py, colormap='viridis', hexrotation=30, vmin=None, vmax
     cax = divider.append_axes("right", size="5%", pad=0.05)
     plt.colorbar(p, cax=cax)
 
-
     ax.add_collection(p)
     ax.set_aspect('equal')
 
@@ -73,7 +72,8 @@ class FigureSize():
         self.hight = self.rows/self.dpi
         self.width = self.cols/self.dpi
 
-def get_n_highest(I, n):
+def get_n_highest(lf, n):
+    I = lf.I
     flat_idxs = np.argsort(I.flatten())[-n:]
     flat_mask = np.zeros(shape=I.shape[0]*I.shape[1], dtype=bool)
     flat_mask[flat_idxs] = True
@@ -89,7 +89,7 @@ def save_principal_aperture_arrival_stack(lf, steps=6, n_channels=137, outprefix
     fig = plt.figure(figsize=(fsz.width, fsz.hight))
     ax = fig.gca(projection='3d')
 
-    above_threshold = get_n_highest(lf.I, n_channels)
+    above_threshold = get_n_highest(lf, n_channels)
 
     min_t = lf.t[above_threshold].min()
     dur_t = lf.t[above_threshold].max() - min_t
@@ -145,9 +145,8 @@ def save_principal_aperture_arrival_stack(lf, steps=6, n_channels=137, outprefix
 
     plt.close()
 
-def plot_sum_event(path, thresh=0):
+def plot_sum_event(lf, thresh=0):
     plt.ion()
-    lf = LightField(path, plfc)
 
     I = lf.I
     I[I<thresh]=0
@@ -239,24 +238,10 @@ def save_refocus_stack(lf, obj_dist_min, obj_dist_max, steps, outprefix='refocus
 
         plt.close()
 
-class Path():
-    def __init__(self, fullpath):
-        self.full = fullpath
-        self.path = os.path.split(fullpath)[0]
-        self.name = os.path.split(fullpath)[1]
-        self.name_wo_ext = os.path.splitext(self.name)[0]
-        self.ext = os.path.splitext(fullpath)[1]
+def save_sum(lf):
+    save_sum_projections(lf, lf.path.path_wo_ext+'_sum_projection')
 
-
-def save_sum(evt_path):
-    evt_path = Path(evt_path)
-    plf.load_epoch_160310(evt_path.full)
-    lf = LightField(plfc, plf)   
-    save_sum_projections(lf, evt_path.path+'/'+evt_path.name_wo_ext+'_sum_projection')
-
-def save_refocus_gif(evt_path, steps=10, use_absolute_scale=True):
-    evt_path = Path(evt_path)
-    lf = LightField(evt_path.full, plfc)
+def save_refocus_gif(lf, steps=10, use_absolute_scale=True):
     with tempfile.TemporaryDirectory() as work_dir:
         print(work_dir)
         save_refocus_stack(
@@ -275,18 +260,15 @@ def save_refocus_gif(evt_path, steps=10, use_absolute_scale=True):
             work_dir+'/'+'refocus_*.png',
             '-set' ,'delay', '10',
             '-loop', '0',
-            evt_path.path+'/'+evt_path.name_wo_ext+'_refocus.gif'
+            lf.path.path_wo_ext+'_refocus.gif'
             ])
 
 
-def save_aperture_photons_gif(evt_path, steps=72):
+def save_aperture_photons_gif(lf, steps=72):
 
     T=20 #seconds
     spf = T/steps
     s100pf = int(spf*100.0)
-
-    evt_path = Path(evt_path)
-    lf = LightField(evt_path.full, plfc)
 
     with tempfile.TemporaryDirectory() as work_dir:
         save_principal_aperture_arrival_stack(
@@ -299,10 +281,10 @@ def save_aperture_photons_gif(evt_path, steps=72):
             work_dir+'/'+'aperture3D_*.png',
             '-set' ,'delay', str(s100pf),
             '-loop', '0',
-            evt_path.path+'/'+evt_path.name_wo_ext+'_aperture3D.gif'
+            lf.path.path_wo_ext+'_aperture3D.gif'
             ])
 
 
 plfc = PlenoscopeLightFieldCalibration('sub_pixel_statistics.txt')
 lf = LightField('1.txt', plfc)
-save_refocus_gif("./1.txt")
+save_refocus_gif(lf)
