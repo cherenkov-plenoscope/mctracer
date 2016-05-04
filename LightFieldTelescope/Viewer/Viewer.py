@@ -154,7 +154,9 @@ def plot_sum_event(lf, thresh=0):
     add_to_ax(ax_dir, np.sum(I, axis=1), lf.pixel_pos['x'], lf.pixel_pos['y'])
     add_to_ax(ax_pap, np.sum(I, axis=0), lf.paxel_pos['x'], lf.paxel_pos['y'])
 
-def save_sum_projections(lf, outpath, thresh=0):
+def save_sum_projections(lf, outpath=None, thresh=0):
+    if outpath is None:
+        outpath = lf.path.path_wo_ext+'_sum_projection'
     I = lf.I
     I[I<thresh]=0
 
@@ -238,9 +240,6 @@ def save_refocus_stack(lf, obj_dist_min, obj_dist_max, steps, outprefix='refocus
 
         plt.close()
 
-def save_sum(lf):
-    save_sum_projections(lf, lf.path.path_wo_ext+'_sum_projection')
-
 def save_refocus_gif(lf, steps=10, use_absolute_scale=True):
     with tempfile.TemporaryDirectory() as work_dir:
         print(work_dir)
@@ -284,7 +283,11 @@ def save_aperture_photons_gif(lf, steps=72):
             lf.path.path_wo_ext+'_aperture3D.gif'
             ])
 
+def main():
+    plfc = PlenoscopeLightFieldCalibration('sub_pixel_statistics.txt')
+    lf = LightField('1.txt', plfc)
+    #save_refocus_gif(lf)
+    return lf
 
-plfc = PlenoscopeLightFieldCalibration('sub_pixel_statistics.txt')
-lf = LightField('1.txt', plfc)
-save_refocus_gif(lf)
+if __name__ == "__main__":
+    lf = main()
