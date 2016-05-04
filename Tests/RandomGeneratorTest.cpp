@@ -177,3 +177,23 @@ TEST_F(RandomGeneratorTest, draw_from_poisson_distribution) {
     EXPECT_NEAR(1.0, sum, 1e-3);
 }
 //------------------------------------------------------------------------------
+TEST_F(RandomGeneratorTest, conventional_disc_1M_draws) {
+
+    const double r = 2.23;
+    Random::Mt19937 prng(0);
+    for(uint i=0; i<uint(1e5); i++) {
+        Vec3 p = prng.get_point_on_xy_disc_within_radius_slow(r);
+        EXPECT_TRUE(r*r >= p*p);
+    }
+}
+//------------------------------------------------------------------------------
+TEST_F(RandomGeneratorTest, rejection_sampling_disc_1M_draws) {
+
+    const double r = 2.23;
+    Random::Mt19937 prng(0);
+    for(uint i=0; i<uint(1e5); i++) {
+        Vec3 p = prng.get_point_on_xy_disc_within_radius(r);
+        EXPECT_TRUE(r*r >= p*p);
+    }
+}
+//------------------------------------------------------------------------------

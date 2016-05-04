@@ -26,7 +26,8 @@ namespace Random {
 		virtual double uniform() = 0;
 		virtual void set_seed(const uint _seed);
 		void set_seed_now_using_system_clock();
-		Vec3 get_point_on_xy_disc_within_radius(const double radius);
+		Vec3 get_point_on_xy_disc_within_radius(const double r);
+		Vec3 get_point_on_xy_disc_within_radius_slow(const double r);
 		Vec3 get_point_on_unitsphere_within_polar_distance(
 			const double max_dist
 		);
