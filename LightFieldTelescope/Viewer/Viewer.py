@@ -13,6 +13,10 @@ import mpl_toolkits.mplot3d.art3d as art3d
 from tqdm import tqdm
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
+import subprocess
+import os
+from glob import glob
+
 from lightfield import PlenoscopeLightFieldCalibration
 from lightfield import LightField
 
@@ -143,51 +147,13 @@ def save_principal_aperture_arrival_stack(lf, steps=6, n_channels=137, outprefix
 
 def plot_sum_event(path, thresh=0):
     plt.ion()
-    plf.load_epoch_160310(path)
-    lf = LightField(plfc, plf)
+    lf = LightField(path, plfc)
 
     I = lf.I
     I[I<thresh]=0
     fig, (ax_dir, ax_pap) = plt.subplots(1,2)
     add_to_ax(ax_dir, np.sum(I, axis=1), lf.pixel_pos['x'], lf.pixel_pos['y'])
     add_to_ax(ax_pap, np.sum(I, axis=0), lf.paxel_pos['x'], lf.paxel_pos['y'])
-
-def refocus(lf, wanted_object_distance):
-    alpha = get_alpha(wanted_object_distance)
-    refocused_image = np.zeros(lf.n_pixel)
-    focal_length = 75.0
-
-    dx = np.tan(lf.pixel_pos['x'])*focal_length
-    dy = np.tan(lf.pixel_pos['y'])*focal_length
-
-    px = lf.paxel_pos['x']
-    py = lf.paxel_pos['y']
-
-    dx_tick = px[:, np.newaxis] + (dx[np.newaxis, :] - px[:, np.newaxis])/alpha  # (127, 8400)
-    dy_tick = py[:, np.newaxis] + (dy[np.newaxis, :] - py[:, np.newaxis])/alpha
-
-    dx_des = np.arctan(dx_tick/focal_length)
-    dy_des = np.arctan(dy_tick/focal_length)
-
-    # (127*8400, 2)
-    desired_x_and_y = np.zeros((np.prod(dx_des.shape), 2))
-    desired_x_and_y[:, 0] = dx_des.flatten()
-    desired_x_and_y[:, 1] = dy_des.flatten()
-
-    nearest_pixel_distances, nearest_pixel_indices = lf.pixel_pos_tree.query(desired_x_and_y)
-
-    summanden = lf.I[nearest_pixel_indices, np.arange(lf.n_paxel).repeat(lf.n_pixel)]
-    summanden = summanden.reshape(lf.n_paxel, lf.n_pixel)
-    refocused_image = summanden.sum(axis=0)
-
-    return refocused_image
-
-def get_alpha(wanted_object_distance):
-    focal_length = 75.0
-    initial_object_distance = 10e3
-    initial_image_distance = 1/(1/focal_length - 1/initial_object_distance)
-    alpha = 1/initial_image_distance * 1/((1/focal_length) - (1/wanted_object_distance))
-    return alpha
 
 def save_sum_projections(lf, outpath, thresh=0):
     I = lf.I
@@ -228,7 +194,7 @@ def save_refocus_stack(lf, obj_dist_min, obj_dist_max, steps, outprefix='refocus
         steps
     )
 
-    images = [refocus(lf, object_distance) for object_distance in object_distances]
+    images = [lf.refocus(object_distance) for object_distance in object_distances]
     if use_absolute_scale:
         vmin=np.array(images).min()
         vmax=np.array(images).max()
@@ -281,9 +247,6 @@ class Path():
         self.name_wo_ext = os.path.splitext(self.name)[0]
         self.ext = os.path.splitext(fullpath)[1]
 
-import subprocess
-import os
-from glob import glob
 
 def save_sum(evt_path):
     evt_path = Path(evt_path)

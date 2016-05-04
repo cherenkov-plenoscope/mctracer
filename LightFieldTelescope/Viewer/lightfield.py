@@ -63,6 +63,10 @@ class LightField:
             self.calibrate(calibration)
 
     def load_epoch_160310(self, path):
+        # I assume these numbers are somehow fixed for epoch 160310
+        self.focal_length = 75.0
+        self.initial_object_distance = 10e3
+
         self._raw = np.genfromtxt(path, unpack=True)
 
 
@@ -102,6 +106,39 @@ class LightField:
         # efficiency
         self.paxel_eff = plfc.paxel_efficiency_along_all_pixel
 
+    def get_alpha(self, wanted_object_distance):
+        initial_image_distance = 1/(1/self.focal_length - 1/self.initial_object_distance)
+        alpha = 1/initial_image_distance * 1/((1/self.focal_length) - (1/wanted_object_distance))
+        return alpha
+
+    def refocus(self, wanted_object_distance):
+        alpha = self.get_alpha(wanted_object_distance)
+        refocused_image = np.zeros(self.n_pixel)
+        
+        dx = np.tan(self.pixel_pos.x)*self.focal_length
+        dy = np.tan(self.pixel_pos.y)*self.focal_length
+
+        px = self.paxel_pos.x
+        py = self.paxel_pos.y
+
+        dx_tick = px[:, np.newaxis] + (dx[np.newaxis, :] - px[:, np.newaxis])/alpha  # (127, 8400)
+        dy_tick = py[:, np.newaxis] + (dy[np.newaxis, :] - py[:, np.newaxis])/alpha
+
+        dx_des = np.arctan(dx_tick/self.focal_length)
+        dy_des = np.arctan(dy_tick/self.focal_length)
+
+        # (127*8400, 2)
+        desired_x_and_y = np.zeros((np.prod(dx_des.shape), 2))
+        desired_x_and_y[:, 0] = dx_des.flatten()
+        desired_x_and_y[:, 1] = dy_des.flatten()
+
+        nearest_pixel_distances, nearest_pixel_indices = self.pixel_pos_tree.query(desired_x_and_y)
+
+        summanden = self.I[nearest_pixel_indices, np.arange(self.n_paxel).repeat(self.n_pixel)]
+        summanden = summanden.reshape(self.n_paxel, self.n_pixel)
+        refocused_image = summanden.sum(axis=0)
+
+        return refocused_image
 
 if __name__ == "__main__":
     plfc = PlenoscopeLightFieldCalibration("sub_pixel_statistics.txt")
