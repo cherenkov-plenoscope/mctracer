@@ -1,4 +1,13 @@
-class PlenoscopeLightFieldCalibration():
+import numpy as np
+
+class PlenoscopeLightFieldCalibration:
+
+    def __init__(self, path):
+        # currently there is only one epoch. 
+        # In the future, there might be more
+        # this constructor, can hopefully *guess*, what epoch
+        # a calibration file refers to.
+        self.load_plenoscope_calibration_epoch_160310(path)
 
     def load_plenoscope_calibration_epoch_160310(self, plenoscope_calib_path):
         
@@ -113,3 +122,5 @@ class LightField():
         self.paxel_eff = plfc.paxel_efficiency_along_all_pixel
 
 
+if __name__ == "__main__":
+    plfc = PlenoscopeLightFieldCalibration("sub_pixel_statistics.txt")
