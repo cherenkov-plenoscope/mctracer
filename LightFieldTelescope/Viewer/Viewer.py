@@ -293,12 +293,9 @@ def save_sum(evt_path):
     save_sum_projections(lf, evt_path.path+'/'+evt_path.name_wo_ext+'_sum_projection')
 
 def save_refocus_gif(evt_path, steps=10, use_absolute_scale=True):
-
     evt_path = Path(evt_path)
-
-    plf = PlenoscopeLightField()
-    plf.load_epoch_160310(evt_path.full)
-    lf = LightField(plfc,plf)
+    plf = PlenoscopeLightField(evt_path.full)
+    lf = LightField(plfc, plf)
 
     work_dir = evt_path.path+'/'+evt_path.name_wo_ext+'_refocus_temp'
     mkdir_ret = subprocess.call(['mkdir', work_dir])
@@ -353,11 +350,7 @@ def save_aperture_photons_gif(evt_path, steps=72):
     subprocess.call(['rm', '-r', '-f', work_dir])
 
 
-plfc = PlenoscopeLightFieldCalibration()
-plfc.load_plenoscope_calibration_epoch_160310('/home/dneise/ACP/mctracer/light_field_calibration/sub_pixel_statistics.txt')
-
-plf = PlenoscopeLightField()
-plf.load_epoch_160310('/home/dneise/ACP/mctracer/gamma/89.txt')
-
-lf = LightField(plfc,plf)
+plfc = PlenoscopeLightFieldCalibration('sub_pixel_statistics.txt')
+plf = PlenoscopeLightField('1.txt')
+lf = LightField(plfc, plf)
 
