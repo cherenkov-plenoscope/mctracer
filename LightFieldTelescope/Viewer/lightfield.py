@@ -75,7 +75,59 @@ class LightField:
         self.initial_object_distance = 10e3
 
         self._raw = np.genfromtxt(path, unpack=True)
+        self.parse_event_header(path)
 
+    def __repr__(self):
+        return str(self.header)
+
+    def parse_event_header(self, path):
+
+        # Example header
+        """
+        # Event_Header
+        # core positions: 
+        #  x.................... -506.972 cm
+        #  y.................... -3876.45 cm
+        # Telescope pointing
+        #  Az................... 0deg
+        #  Zd................... 0deg
+        # Primary particle
+        #  Corsika ID........... 1
+        #  E.................... 225.569GeV
+        #  start altitude....... 0g/cm^2
+        #  first interaction z.. -36345.3m
+        #  n. obs. levels....... 0
+        # 
+        # arrival_time[s]   number_photons[1]
+        """
+        header = {}
+        current_chapter = None
+
+        with open(path) as f:
+            for i, line in enumerate(f):
+                if i > 100:
+                    raise Exception("Header not found")
+                if "Event_Header" in line:
+                    break
+            for i, line in enumerate(f):
+                if i > 100:
+                    raise Exception("end of header not found")
+                if "arrival_time[s]" in line:
+                    self.header = header
+                    return
+
+                if line[2] == " ":
+                    # field
+                    field = line[3:-1]
+                    name, value = field.split(maxsplit=1)
+                    name = name.replace('.','').replace(" ",'')
+                    header[current_chapter][name] = value
+                elif line[1] == " ":
+                    # chapter
+                    current_chapter = line[2:-1]
+                    header[current_chapter] = {}
+                else:
+                    continue
 
     def calibrate(self, plfc):
         self.plfc = plfc
