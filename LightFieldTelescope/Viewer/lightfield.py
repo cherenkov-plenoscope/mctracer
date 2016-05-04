@@ -3,6 +3,22 @@ import numpy as np
 
 from viewer_path import Path
 
+class Image:
+    """
+    LightFields return images, when one asks for:
+
+        * refocuse
+        * pixel_sum
+        * paxel_sum
+    """
+    def __init__(self, intensity, positions):
+        self.intensity = intensity
+        self.pixel_pos = positions
+
+    def plot(self, ax):
+        pass
+
+
 class PlenoscopeLightFieldCalibration:
 
     def __init__(self, path):
@@ -194,9 +210,16 @@ class LightField:
 
         summanden = self.I[nearest_pixel_indices, np.arange(self.n_paxel).repeat(self.n_pixel)]
         summanden = summanden.reshape(self.n_paxel, self.n_pixel)
-        refocused_image = summanden.sum(axis=0)
+        
+        return Image(summanden.sum(axis=0), self.pixel_pos)
 
-        return refocused_image
+
+    def pixel_sum(self, mask=None):
+        return Image(np.sum(self.I, axis=1), self.pixel_pos)
+
+    def paxel_sum(self, mask=None):
+        return Image(np.sum(self.I, axis=0), self.paxel_pos)
+
 
 if __name__ == "__main__":
     plfc = PlenoscopeLightFieldCalibration("sub_pixel_statistics.txt")

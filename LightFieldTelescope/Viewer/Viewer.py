@@ -21,6 +21,8 @@ from lightfield import PlenoscopeLightFieldCalibration
 from lightfield import LightField
 import tempfile
 import pickle
+from copy import deepcopy
+
 
 def add_to_ax(ax, I, px, py, colormap='viridis', hexrotation=30, vmin=None, vmax=None):
 
@@ -64,7 +66,7 @@ def add_to_ax(ax, I, px, py, colormap='viridis', hexrotation=30, vmin=None, vmax
 
     return p 
 
-def plot_pixel(lf, ax, colormap="viridis", vmin=None, vmax=None):
+def plot_pixel(img, ax, colormap="viridis", vmin=None, vmax=None):
     ax.set_xlabel('x/deg')
     ax.set_ylabel('y/deg')
     ax.spines['right'].set_visible(False)
@@ -72,16 +74,16 @@ def plot_pixel(lf, ax, colormap="viridis", vmin=None, vmax=None):
 
     add_to_ax(
         ax=ax,
-        I=lf.pixel_projection,
-        px=np.rad2deg(lf.pixel_pos.x),
-        py=np.rad2deg(lf.pixel_pos.y),
+        I=img.intensity,
+        px=np.rad2deg(img.pixel_pos.x),
+        py=np.rad2deg(img.pixel_pos.y),
         colormap=colormap,
         hexrotation=30,
         vmin=vmin,
         vmax=vmax,
     )
 
-def plot_paxel(lf, ax, colormap="viridis", vmin=None, vmax=None):
+def plot_paxel(img, ax, colormap="viridis", vmin=None, vmax=None):
     ax.set_xlabel('x/m')
     ax.set_ylabel('y/m')
     ax.spines['right'].set_visible(False)
@@ -89,9 +91,9 @@ def plot_paxel(lf, ax, colormap="viridis", vmin=None, vmax=None):
 
     add_to_ax(
         ax=ax,
-        I=lf.paxel_projection,
-        px=lf.paxel_pos.x,
-        py=lf.paxel_pos.y,
+        I=img.intensity,
+        px=img.pixel_pos.x,
+        py=img.pixel_pos.y,
         colormap=colormap,
         hexrotation=0,
         vmin=vmin,
@@ -183,36 +185,34 @@ def save_principal_aperture_arrival_stack(lf, steps=6, n_channels=137, outprefix
 def plot_sum_event(lf, thresh=0):
     plt.ion()
 
-    I = lf.I
-    I[I<thresh]=0
-    lf.pixel_projection = np.sum(I, axis=1)
-    lf.paxel_projection = np.sum(I, axis=0)
-
+    # avoid side effects
+    lf = deepcopy(lf)
+    lf.I[lf.I < thresh] = 0
+    
     fig, (ax_dir, ax_pap) = plt.subplots(1,2)
     plt.suptitle("Energy: "+lf.header["Primary particle"]["E"]+"\n"
         +"impact parameter:"+str(lf.header["core positions: "])
         )
-    plot_pixel(lf, ax_dir)
-    plot_paxel(lf, ax_pap)
+    plot_pixel(lf.pixel_sum(), ax_dir)
+    plot_paxel(lf.paxel_sum(), ax_pap)
     
 def save_sum_projections(lf, outpath=None, thresh=0):
     if outpath is None:
         outpath = lf.path.path_wo_ext+'_sum_projection'
-    I = lf.I
-    I[I<thresh]=0
+
+    # avoid side effects
+    lf = deepcopy(lf)    
+    lf.I[lf.I < thresh] = 0
 
     plt.rcParams.update({'font.size': 20})
     plt.rc('text', usetex=True)
     plt.rc('font', family='serif')
-
     fig, (ax_dir, ax_pap) = plt.subplots(1, 2, figsize=(16,9))
+    
+    plot_pixel(lf.pixel_sum(), ax_dir)
 
-    lf.pixel_projection = np.sum(I, axis=1)
-    plot_pixel(lf, ax_dir)
-
-    gp = lf.paxel_eff>0.4
-    lf.paxel_projection = np.sum(I[:,gp], axis=0)
-    plot_paxel(lf, ax_pap)
+    lf.I[:, lf.paxel_eff<=0.4] = 0
+    plot_paxel(lf.paxel_sum(), ax_pap)
 
     plt.subplots_adjust(left=0.05, right=0.95, top=0.95, bottom=0.05)
     plt.savefig(outpath+".png", dpi=120)
@@ -231,9 +231,10 @@ def save_refocus_stack(lf, obj_dist_min, obj_dist_max, steps, outprefix='refocus
     )
 
     images = [lf.refocus(object_distance) for object_distance in object_distances]
+    intensities = [i.intensity for i in images]
     if use_absolute_scale:
-        vmin=np.array(images).min()
-        vmax=np.array(images).max()
+        vmin=np.array(intensities).min()
+        vmax=np.array(intensities).max()
     else:
         vmin, vmax = None, None
 
@@ -262,8 +263,7 @@ def save_refocus_stack(lf, obj_dist_min, obj_dist_max, steps, outprefix='refocus
         ax1 = plt.subplot(gs[1])
         ax1.set_aspect('equal')  
 
-        lf.pixel_projection = image
-        plot_pixel(lf, ax1, vmin=vmin, vmax=vmax)
+        plot_pixel(image, ax1, vmin=vmin, vmax=vmax)
 
         ndigits = int(np.ceil(np.log10(steps)))
         plt.savefig(outprefix+'_'+str(i).zfill(ndigits)+".png", dpi=180)
