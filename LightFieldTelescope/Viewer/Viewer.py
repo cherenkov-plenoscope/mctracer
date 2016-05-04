@@ -14,7 +14,6 @@ from tqdm import tqdm
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 from lightfield import PlenoscopeLightFieldCalibration
-from lightfield import PlenoscopeLightField
 from lightfield import LightField
 
 
@@ -294,8 +293,7 @@ def save_sum(evt_path):
 
 def save_refocus_gif(evt_path, steps=10, use_absolute_scale=True):
     evt_path = Path(evt_path)
-    plf = PlenoscopeLightField(evt_path.full)
-    lf = LightField(plfc, plf)
+    lf = LightField(evt_path.full, plfc)
 
     work_dir = evt_path.path+'/'+evt_path.name_wo_ext+'_refocus_temp'
     mkdir_ret = subprocess.call(['mkdir', work_dir])
@@ -329,10 +327,7 @@ def save_aperture_photons_gif(evt_path, steps=72):
     s100pf = int(spf*100.0)
 
     evt_path = Path(evt_path)
-
-    plf = PlenoscopeLightField()
-    plf.load_epoch_160310(evt_path.full)
-    lf = LightField(plfc,plf)
+    lf = LightField(evt_path.full, plfc)
 
     work_dir = evt_path.path+'/'+evt_path.name_wo_ext+'_aperture3D_temp'
     mkdir_ret = subprocess.call(['mkdir', work_dir])
@@ -351,6 +346,5 @@ def save_aperture_photons_gif(evt_path, steps=72):
 
 
 plfc = PlenoscopeLightFieldCalibration('sub_pixel_statistics.txt')
-plf = PlenoscopeLightField('1.txt')
-lf = LightField(plfc, plf)
+lf = LightField('1.txt', plfc)
 save_refocus_gif("./1.txt")
