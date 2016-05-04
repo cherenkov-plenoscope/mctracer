@@ -353,4 +353,4 @@ def save_aperture_photons_gif(evt_path, steps=72):
 plfc = PlenoscopeLightFieldCalibration('sub_pixel_statistics.txt')
 plf = PlenoscopeLightField('1.txt')
 lf = LightField(plfc, plf)
-
+save_refocus_gif("./1.txt")
