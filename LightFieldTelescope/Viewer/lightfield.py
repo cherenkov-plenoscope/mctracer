@@ -10,23 +10,12 @@ class PlenoscopeLightFieldCalibration:
         # a calibration file refers to.
         self.load_plenoscope_calibration_epoch_160310(path)
 
-    def load_plenoscope_calibration_epoch_160310(self, plenoscope_calib_path):
+    def load_plenoscope_calibration_epoch_160310(self, path):
 
-        raw = np.genfromtxt(plenoscope_calib_path, unpack=True)
+        self.n_pixel, self.n_paxel = self._find_npixel_npaxel(path)
+        self.n_cells = self.n_paxel * self.n_pixel
 
-        # geometrical_efficiency[1] cx[rad] cy[rad] x[m]    y[m]    t[s]
-        self.raw = np.rec.fromarrays(raw,
-            dtype=[
-                ('geometrical_efficiency', 'f8'),
-                ('cx_mean', 'f8'),
-                ('cy_mean', 'f8'),
-                ('x_mean', 'f8'),
-                ('y_mean', 'f8'),
-                ('time_delay_from_principal_apertur_to_sub_pixel', 'f8'),
-            ]
-        )
-
-        f = open(plenoscope_calib_path)
+        f = open(path)
         for i in range(100):
             line = f.readline()
             if line[0:28] == '# number_of_direction_bins: ':
@@ -34,39 +23,43 @@ class PlenoscopeLightFieldCalibration:
 
             if line[0:37] == '# number_of_principal_aperture_bins: ':
                 self.n_paxel = int(line[37:])
-
-        self.__post_init()
-
-    def __post_init(self):
         self.n_cells = self.n_paxel * self.n_pixel
-        self.paxel_pos = self.__estimate_principal_aperture_bin_positions()
-        self.pixel_pos = self.__estimate_fov_direction_bin_positions()
-        self.paxel_efficiency_along_all_pixel = np.nanmean(np.reshape(
-            self.raw['geometrical_efficiency'], newshape=(self.n_pixel, self.n_paxel)), axis=0)
 
-    def __estimate_principal_aperture_bin_positions(self):
-        paxel_pos = np.zeros(shape=(2, self.n_paxel))
-        for PA_bin in range(self.n_paxel):
-            paxel_pos[
-                0, PA_bin] += np.nanmean(self.raw['x_mean'][PA_bin::self.n_paxel])
-            paxel_pos[
-                1, PA_bin] += np.nanmean(self.raw['y_mean'][PA_bin::self.n_paxel])
+        raw = np.genfromtxt(path, unpack=True)
+        for i, attribute_name in enumerate([
+                'geometrical_efficiency',
+                'cx_mean',
+                'cy_mean',
+                'x_mean',
+                'y_mean',
+                'time_delay_from_principal_apertur_to_sub_pixel',
+                ]):
+            setattr(self, attribute_name, raw[i].reshape(self.n_pixel, self.n_paxel))
 
-        return np.rec.fromarrays((paxel_pos[0, :], paxel_pos[1, :]),
-                                 dtype=[('x', 'f8'), ('y', 'f8')]
-                                 )
+        self.paxel_pos = np.rec.array([
+                np.nanmean(self.x_mean, axis=0), 
+                np.nanmean(self.y_mean, axis=0),
+            ], 
+            dtype=[('x', 'f8'), ('y', 'f8')])
 
-    def __estimate_fov_direction_bin_positions(self):
-        pixel_pos = np.zeros(shape=(2, self.n_pixel))
-        for dir_bin in range(self.n_pixel):
-            pixel_pos[0, dir_bin] = np.nanmean(
-                self.raw['cx_mean'][self.n_paxel * dir_bin:self.n_paxel * (dir_bin + 1)])
-            pixel_pos[1, dir_bin] = np.nanmean(
-                self.raw['cy_mean'][self.n_paxel * dir_bin:self.n_paxel * (dir_bin + 1)])
+        self.pixel_pos = np.rec.array([
+                np.nanmean(self.cx_mean, axis=1), 
+                np.nanmean(self.cy_mean, axis=1),
+            ], 
+            dtype=[('x', 'f8'), ('y', 'f8')])
 
-        return np.rec.fromarrays((pixel_pos[0, :], pixel_pos[1, :]),
-                                 dtype=[('x', 'f8'), ('y', 'f8')]
-                                 )
+        self.paxel_efficiency_along_all_pixel = np.nanmean(self.geometrical_efficiency, axis=0)
+
+    def _find_npixel_npaxel(self, path):
+        f = open(path)
+        for i in range(100):
+            line = f.readline()
+            if line[0:28] == '# number_of_direction_bins: ':
+                n_pixel = int(line[28:])
+
+            if line[0:37] == '# number_of_principal_aperture_bins: ':
+                n_paxel = int(line[37:])
+        return n_pixel, n_paxel
 
     def bin2pap_bin(self, abin):
         return abin % n_paxel
@@ -102,26 +95,24 @@ class LightField():
     def __init__(self, plfc, plf):
 
         # INTENSITY
-        where_sensitive = plfc.raw['geometrical_efficiency'] != 0.
+        where_sensitive = plfc.geometrical_efficiency.flatten() != 0.
+        where_sensitive_2d = plfc.geometrical_efficiency != 0.
 
         intensity = np.zeros(shape=plfc.n_cells)
         intensity[where_sensitive] = plf.raw['number_photons_raw'][
-            where_sensitive] / plfc.raw['geometrical_efficiency'][where_sensitive]
+            where_sensitive] / plfc.geometrical_efficiency[where_sensitive_2d]
         intensity[np.invert(where_sensitive)] = 0
 
-        mean_sensitivity = plfc.raw[
-            'geometrical_efficiency'].sum() / plfc.n_cells
+        mean_sensitivity = plfc.geometrical_efficiency.sum() / plfc.n_cells
         intensity *= mean_sensitivity
 
         # ARRIVAL TIMES
         arrival_times = np.zeros(shape=plf.n_cells)
-        arrival_times[where_sensitive] = plf.raw['sub_pixel_arrival_time'][
-            where_sensitive] - plfc.raw['time_delay_from_principal_apertur_to_sub_pixel'][where_sensitive]
+        arrival_times[where_sensitive] = plf.raw['sub_pixel_arrival_time'][where_sensitive] - plfc.time_delay_from_principal_apertur_to_sub_pixel[where_sensitive_2d].flatten()
         arrival_times -= arrival_times.min()
 
         # reshape
-        self.eff = np.reshape(
-            plfc.raw['geometrical_efficiency'], newshape=(plfc.n_pixel, plfc.n_paxel))
+        self.eff = plfc.geometrical_efficiency
         self.I = np.reshape(plf.raw['number_photons_raw'], newshape=(
             plfc.n_pixel, plfc.n_paxel))
         #self.I = np.reshape(intensity, newshape=(plfc.n_pixel, plfc.n_paxel))
