@@ -19,7 +19,7 @@ from glob import glob
 
 from lightfield import PlenoscopeLightFieldCalibration
 from lightfield import LightField
-
+import tempfile
 
 def add_to_ax(ax, I, px, py, colormap='viridis', hexrotation=30, vmin=None, vmax=None):
 
@@ -257,30 +257,26 @@ def save_sum(evt_path):
 def save_refocus_gif(evt_path, steps=10, use_absolute_scale=True):
     evt_path = Path(evt_path)
     lf = LightField(evt_path.full, plfc)
+    with tempfile.TemporaryDirectory() as work_dir:
+        print(work_dir)
+        save_refocus_stack(
+            lf,
+            0.75e3,
+            15e3,
+            steps,
+            outprefix=work_dir+'/'+'refocus',
+            use_absolute_scale=use_absolute_scale)
 
-    work_dir = evt_path.path+'/'+evt_path.name_wo_ext+'_refocus_temp'
-    mkdir_ret = subprocess.call(['mkdir', work_dir])
-    if mkdir_ret != 0:
-        return
-
-    save_refocus_stack(
-        lf,
-        0.75e3,
-        15e3,
-        steps,
-        outprefix=work_dir+'/'+'refocus',
-        use_absolute_scale=use_absolute_scale)
-    subprocess.call(
-        ['convert', 
-        work_dir+'/'+'refocus_*.png', 
-        '-set' ,'delay', '10', 
-        '-reverse',
-        work_dir+'/'+'refocus_*.png',
-        '-set' ,'delay', '10', 
-        '-loop', '0',
-        evt_path.path+'/'+evt_path.name_wo_ext+'_refocus.gif'
-        ])
-    subprocess.call(['rm', '-r', '-f', work_dir])
+        subprocess.call(
+            ['convert',
+            work_dir+'/'+'refocus_*.png',
+            '-set' ,'delay', '10',
+            '-reverse',
+            work_dir+'/'+'refocus_*.png',
+            '-set' ,'delay', '10',
+            '-loop', '0',
+            evt_path.path+'/'+evt_path.name_wo_ext+'_refocus.gif'
+            ])
 
 
 def save_aperture_photons_gif(evt_path, steps=72):
@@ -292,20 +288,19 @@ def save_aperture_photons_gif(evt_path, steps=72):
     evt_path = Path(evt_path)
     lf = LightField(evt_path.full, plfc)
 
-    work_dir = evt_path.path+'/'+evt_path.name_wo_ext+'_aperture3D_temp'
-    mkdir_ret = subprocess.call(['mkdir', work_dir])
-    if mkdir_ret != 0:
-        return
-
-    save_principal_aperture_arrival_stack(lf, steps=steps, n_channels=512, outprefix=work_dir+'/'+'aperture3D')
-    subprocess.call(
-        ['convert', 
-        work_dir+'/'+'aperture3D_*.png', 
-        '-set' ,'delay', str(s100pf),
-        '-loop', '0',
-        evt_path.path+'/'+evt_path.name_wo_ext+'_aperture3D.gif'
-        ])
-    subprocess.call(['rm', '-r', '-f', work_dir])
+    with tempfile.TemporaryDirectory() as work_dir:
+        save_principal_aperture_arrival_stack(
+            lf,
+            steps=steps,
+            n_channels=512,
+            outprefix=work_dir+'/'+'aperture3D')
+        subprocess.call(
+            ['convert',
+            work_dir+'/'+'aperture3D_*.png',
+            '-set' ,'delay', str(s100pf),
+            '-loop', '0',
+            evt_path.path+'/'+evt_path.name_wo_ext+'_aperture3D.gif'
+            ])
 
 
 plfc = PlenoscopeLightFieldCalibration('sub_pixel_statistics.txt')
