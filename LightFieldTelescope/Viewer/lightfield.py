@@ -15,16 +15,6 @@ class PlenoscopeLightFieldCalibration:
         self.n_pixel, self.n_paxel = self._find_npixel_npaxel(path)
         self.n_cells = self.n_paxel * self.n_pixel
 
-        f = open(path)
-        for i in range(100):
-            line = f.readline()
-            if line[0:28] == '# number_of_direction_bins: ':
-                self.n_pixel = int(line[28:])
-
-            if line[0:37] == '# number_of_principal_aperture_bins: ':
-                self.n_paxel = int(line[37:])
-        self.n_cells = self.n_paxel * self.n_pixel
-
         raw = np.genfromtxt(path, unpack=True)
         for i, attribute_name in enumerate([
                 'geometrical_efficiency',
@@ -60,12 +50,6 @@ class PlenoscopeLightFieldCalibration:
             if line[0:37] == '# number_of_principal_aperture_bins: ':
                 n_paxel = int(line[37:])
         return n_pixel, n_paxel
-
-    def bin2pap_bin(self, abin):
-        return abin % n_paxel
-
-    def bin2dir_bin(self, abin):
-        return int(abin / n_paxel)
 
 
 class PlenoscopeLightField:
