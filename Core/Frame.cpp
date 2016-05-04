@@ -12,10 +12,6 @@ Frame::Frame(const string name, const Vec3 pos, const Rot3 rot): Frame() {
     set_name_pos_rot(name, pos, rot); 
 }
 //------------------------------------------------------------------------------
-uint Frame::get_number_of_children()const { 
-	return children.size(); 
-}
-//------------------------------------------------------------------------------
 void Frame::post_init_transformations() {
 	// in the set_name_pos_rot() function the transformation frame2mother has been set
 	// using the new relative position to the mother and the new relative
@@ -342,7 +338,7 @@ bool Frame::has_mother()const {
 }
 //------------------------------------------------------------------------------
 bool Frame::has_children()const {
-	return get_number_of_children() > 0; 
+	return children.size() > 0; 
 }
 //------------------------------------------------------------------------------
 #include "Core/Ray.h"
@@ -353,20 +349,8 @@ void Frame::calculate_intersection_with(
     vector<const Intersection*> *intersections
 )const {}
 //------------------------------------------------------------------------------
-void Frame::find_intersection_candidates_for_all_children_and_ray(
-	const Ray* ray,
-	vector<const Frame*> *candidate_frames
-)const {
-
-	for(Frame *child : children)
-		ray->find_intersection_candidates_in_tree_of_frames(
-			child, 
-			candidate_frames
-		);
-}
-//------------------------------------------------------------------------------
 void Frame::cluster_using_helper_frames() {
-	if(get_number_of_children() > max_number_of_children) {
+	if(children.size() > max_number_of_children) {
 		
 		vector<Frame*> oct_tree[8];
 		vector<Frame*> new_children;
@@ -510,6 +494,9 @@ const HomTra3* Frame::world2frame()const {
 //------------------------------------------------------------------------------
 const HomTra3* Frame::frame2world()const {
     return &T_frame2world;
+}
+const vector<Frame*>* Frame::get_children()const {
+	return &children;
 }
 //------------------------------------------------------------------------------
 void Frame::update_rotation(const Rot3 rot) {

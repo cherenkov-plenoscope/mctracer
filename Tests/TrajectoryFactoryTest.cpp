@@ -13,6 +13,6 @@ TEST_F(TrajectoryFactoryTest, constructor_using_RayForPropagation) {
 
   Frame* tra_frame = tra_fac.get_trajectory();
 
-  EXPECT_EQ(1, tra_frame->get_number_of_children());
+  EXPECT_EQ(1, tra_frame->get_children()->size());
 }
 //------------------------------------------------------------------------------

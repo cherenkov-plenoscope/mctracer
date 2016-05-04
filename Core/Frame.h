@@ -75,10 +75,10 @@ public:
     const HomTra3* mother2frame()const;
     const HomTra3* world2frame()const;
     const HomTra3* frame2world()const;
+    const vector<Frame*>* get_children()const;
     bool has_child_with_name(const string name_of_child)const;
     const Frame* get_child_by_name(string specific_name)const;
     const Frame* get_root_of_world()const;
-    uint get_number_of_children()const;
     bool has_mother()const;
     bool has_children()const;
     void assert_no_children_duplicate_names()const;
@@ -89,10 +89,6 @@ public:
     void init_tree_based_on_mother_child_relations();
     void take_children_from(Frame *frame_to_take_chidren_from);
     void set_mother_and_child(Frame *new_child);
-    void find_intersection_candidates_for_all_children_and_ray(
-        const Ray* ray,
-        vector<const Frame*> *candidate_frames
-    )const;
     void update_rotation(const Rot3 rot);
     virtual void calculate_intersection_with(
         const Ray* ray, 

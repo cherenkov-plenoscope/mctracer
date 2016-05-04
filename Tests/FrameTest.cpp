@@ -81,13 +81,13 @@ TEST_F(FrameTest, re_set_frame) {
     Frame hans("child_of_peter", Vec3(1.0, 2.0, 3.0), Rot3::null);
     peter.set_mother_and_child(&hans);
 
-    EXPECT_EQ(1, peter.get_number_of_children());
+    EXPECT_EQ(1, peter.get_children()->size());
     EXPECT_TRUE(pos == peter.get_position_in_mother());
     EXPECT_TRUE(rot == peter.get_rotation_in_mother());
 
     peter.set_name_pos_rot("another_name", Vec3(1.0, 2.0, 3.0), Rot3(0.1, 0.2, 0.3));
     
-    EXPECT_EQ(1, peter.get_number_of_children());
+    EXPECT_EQ(1, peter.get_children()->size());
     EXPECT_TRUE(Vec3(1.0, 2.0, 3.0) == peter.get_position_in_mother());
     EXPECT_TRUE(Rot3(0.1, 0.2, 0.3) == peter.get_rotation_in_mother());
 }
@@ -157,10 +157,10 @@ TEST_F(FrameTest, cluster_frames_during_tree_initializing) {
         }
     }
 
-    EXPECT_EQ(count, tree.get_number_of_children());
+    EXPECT_EQ(count, tree.get_children()->size());
     tree.init_tree_based_on_mother_child_relations();
 
-    EXPECT_TRUE(count > tree.get_number_of_children());
-    EXPECT_TRUE(Frame::max_number_of_children >= tree.get_number_of_children());
+    EXPECT_TRUE(count > tree.get_children()->size());
+    EXPECT_TRUE(Frame::max_number_of_children >= tree.get_children()->size());
 }
 //------------------------------------------------------------------------------
