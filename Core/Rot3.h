@@ -14,6 +14,7 @@
 #include "Core/Vec3.h"
 #include "Core/TracerException.h"
 //=================================
+// Tait–Bryan angles with an extrinsic coordinate frame fasion
 class Rot3 {
 	double Rx;
 	double Ry;
