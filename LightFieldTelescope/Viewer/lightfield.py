@@ -59,6 +59,7 @@ class PlenoscopeLightFieldCalibration:
         self.paxel_pos_tree = scipy.spatial.cKDTree(np.array([self.paxel_pos.x, self.paxel_pos.y]).T)
 
         self.paxel_efficiency_along_all_pixel = np.nanmean(self.geometrical_efficiency, axis=0)
+        self.neighbors = self._find_neighbors()
 
     def _find_npixel_npaxel(self, path):
         f = open(path)
@@ -71,6 +72,19 @@ class PlenoscopeLightFieldCalibration:
                 n_paxel = int(line[37:])
         return n_pixel, n_paxel
 
+    def _find_neighbors(self):
+        pp = self.pixel_pos
+        neighbors = {}
+
+        def distance(p, pp):
+            return np.sqrt((pp.x - p.x)**2 + (pp.y - p.y)**2)
+
+        for i, p in enumerate(pp):
+            d = distance(p, pp)
+            d[i] = np.nan
+            w = np.where(d < 0.0015)[0]
+            neighbors[i] = w
+        return neighbors
 
 class LightField:
 
