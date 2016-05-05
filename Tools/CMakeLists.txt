@@ -8,5 +8,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/UserInteraction.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TimeStamp.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PathTools.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/StopWatch.cpp
    	PARENT_SCOPE
 )
