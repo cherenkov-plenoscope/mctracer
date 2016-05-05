@@ -1,13 +1,14 @@
 #include "NightSkyBackgroundLightInjector.h"
 #include "Tools/Tools.h"
 #include "Core/Histogram1D.h"
+using std::vector;
 
 namespace LightFieldTelescope {
 
 	void inject_nsb_into_photon_pipeline(
-		std::vector<std::vector<PipelinePhoton>> *photon_pipelines,
+		vector<vector<PipelinePhoton>> *photon_pipelines,
 		const double nsb_exposure_time,
-		const std::vector<std::vector<double>> *lft_calib_result,
+		const vector<vector<double>> *lft_calib_result,
 		const NightSkyBackgroundLight *telescope_nsb,
 		Random::Generator* prng
 	) {	
@@ -23,7 +24,7 @@ namespace LightFieldTelescope {
 		// FIND MIN MAX ARRIVAL TIMES OF CHERENKOV PHOTONS
 
 		uint number_cherenkov_photons = 0;
-		std::vector<double> arrival_times;
+		vector<double> arrival_times;
 		double min_crk_arrival_time = std::numeric_limits<double>::max();
 		double max_crk_arrival_time = std::numeric_limits<double>::min();
 
@@ -56,7 +57,7 @@ namespace LightFieldTelescope {
 
 			const uint bin_count = sqrt(number_cherenkov_photons);
 
-			std::vector<double> arrival_time_bin_edges = numeric::linspace(
+			vector<double> arrival_time_bin_edges = numeric::linspace(
 				min_crk_arrival_time, 
 				max_crk_arrival_time, 
 				bin_count
@@ -84,7 +85,7 @@ namespace LightFieldTelescope {
 				telescope_nsb->get_overall_rate()*subpix_efficincy/number_subpix;
 
 			// arrival times of nsb
-			std::vector<double> nsb_arrival_times;
+			vector<double> nsb_arrival_times;
 			double relative_arrival_times_sum = prng->expovariate(subpix_nsb_rate);
 			while(relative_arrival_times_sum < nsb_exposure_time) {
 
