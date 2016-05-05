@@ -1,20 +1,20 @@
 #include "AsciiIo.h"
 #include "Tools/StringTools.h"
+using std::stringstream;
+
 namespace AsciiIo {
 	//--------------------------------------------------------------------------
-	std::vector<std::vector<double>> gen_table_from_file(
-		const std::string &path
-	) {
+	vector<vector<double>> gen_table_from_file(const string &path) {
 		TableReader reader(path);
 		return reader.get_table();
 	}
 	//--------------------------------------------------------------------------
 	void write_table_to_file_with_header(
-		std::vector<std::vector<double>> table,
-		const std::string &path,
-		const std::string &header
+		vector<vector<double>> table,
+		const string &path,
+		const string &header
 	) {
-		std::stringstream out;
+		stringstream out;
 		out << StringTools::place_first_infront_of_each_new_line_of_second(
 				"# ", header
 		);
@@ -23,14 +23,14 @@ namespace AsciiIo {
 	}
 	//--------------------------------------------------------------------------
 	void write_table_to_file(
-		std::vector<std::vector<double>> table,
-		const std::string &path
+		vector<vector<double>> table,
+		const string &path
 	) {
 		FileTools::write_text_to_file(get_table_print(table), path);		
 	}
 	//--------------------------------------------------------------------------
-	std::string get_table_print(std::vector<std::vector<double>> &table) {
-		std::stringstream out;
+	string get_table_print(vector<vector<double>> &table) {
+		stringstream out;
 		out.precision(precision);
 
 		for(uint row=0; row<table.size(); row++) {
@@ -45,14 +45,14 @@ namespace AsciiIo {
 		return out.str();		
 	}
 	//--------------------------------------------------------------------------
-	TableReader::TableReader(const std::string &_path) {
+	TableReader::TableReader(const string &_path) {
 		path = _path;
 		open_text_file();
 		fill_matrix_from_textfile();
 		close_text_file();
 	}
 	//--------------------------------------------------------------------------
-	std::vector<std::vector<double>> TableReader::get_table()const {
+	vector<vector<double>> TableReader::get_table()const {
 		return table;
 	}
 	//--------------------------------------------------------------------------
@@ -60,7 +60,7 @@ namespace AsciiIo {
 		textfile.open(path.c_str());
 
 		if(!textfile.is_open()) {
-			std::stringstream info;
+			stringstream info;
 			info << "TableReader::open_text_file\n";
 			info << "Can not open file '" << path << "'.";
 			throw TracerException(info.str());
@@ -68,7 +68,7 @@ namespace AsciiIo {
 	}
 	//--------------------------------------------------------------------------
 	void TableReader::fill_matrix_from_textfile() {
-		std::string row;
+		string row;
 		while(std::getline(textfile, row)) {
 			row = StringTools::strip_whitespaces(row);
 			current_row++;
@@ -78,33 +78,31 @@ namespace AsciiIo {
 		}
 	}
 	//--------------------------------------------------------------------------
-	std::vector<double> TableReader::text_row_2_numeric_row(
-		const std::string &row
-	) {
-		const std::vector<std::string> tokens_in_row = 
+	vector<double> TableReader::text_row_2_numeric_row(const string &row) {
+		const vector<string> tokens_in_row = 
 			StringTools::tokenize_text_using_either_one_of_delimiters(
 				row, 
 				delimiters_for_reading
 			);
 
-		std::vector<double> numeric_row;
+		vector<double> numeric_row;
 
 		current_col = 0;
-		for(std::string token : tokens_in_row)
+		for(string token : tokens_in_row)
 			push_back_token_to_numeric_row(token, &numeric_row);
 
 		return numeric_row;
 	}
 	//--------------------------------------------------------------------------
 	void TableReader::push_back_token_to_numeric_row(
-		const std::string token,
-		std::vector<double> *numeric_row
+		const string token,
+		vector<double> *numeric_row
 	) {
 		current_col++;
 		try{
 			numeric_row->push_back(StringTools::to_double(token));
 		}catch(TracerException &error) {
-			std::stringstream info;
+			stringstream info;
 			info << "TableReader::push_back_token_to_numeric_row:\n";
 			info << "Can not convert item '" << token << "' into a ";
 			info << "floating point number. File '" << path << "' in row ";
