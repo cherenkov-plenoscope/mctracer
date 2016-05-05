@@ -49,13 +49,9 @@ void Converter::add_time_to_electric_pipeline(
 	std::vector<double> *electric_pipeline, 
 	Random::Generator* prng
 )const {
-
-	if(config->probability_for_second_puls >= prng->uniform()) {
-		electric_pipeline->push_back(arrival_time);
+	electric_pipeline->push_back(arrival_time);
+	if(config->probability_for_second_puls >= prng->uniform())
 		add_time_to_electric_pipeline(arrival_time, electric_pipeline, prng);
-	}else{
-		electric_pipeline->push_back(arrival_time);
-	}
 }
 //------------------------------------------------------------------------------
 void Converter::add_dark_rate(
