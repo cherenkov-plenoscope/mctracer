@@ -123,7 +123,7 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__photon_bundle_size) {
 
     for (size_t i=0; i<event.photons.size(); i++)
     {
-        std::vector<float> photon_bunch = event.photons[i];
+        std::array<float, 8> photon_bunch = event.photons[i];
         EXPECT_EQ(8, photon_bunch.size());    
     }
 }
@@ -144,7 +144,7 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__photon_bundle_values) {
 
     for (int j=2; j<5; j++) {
 
-        std::vector<float> photon_bunch = event.photons[j];
+        std::array<float, 8> photon_bunch = event.photons[j];
 
         EXPECT_FLOAT_EQ(some_photon_bundles[j][0], photon_bunch[0]);
         EXPECT_FLOAT_EQ(some_photon_bundles[j][1], photon_bunch[1]);
@@ -170,7 +170,7 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__run_time_________________________
 
         vector<Photon*> photons;
         uint id = 0;
-        for(vector<float> corsika_photon : event.photons) {
+        for(array<float, 8> corsika_photon : event.photons) {
             
             PhotonFactory cpf(corsika_photon,id++,&prng);
 

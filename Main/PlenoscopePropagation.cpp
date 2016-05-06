@@ -180,7 +180,7 @@ int main(int argc, char* argv[]) {
 
         vector<Photon*> photons;
         uint photon_id = 0;
-        for(vector<float> corsika_photon: event.photons) {
+        for(array<float, 8> corsika_photon: event.photons) {
             
             EventIo::PhotonFactory cpf(corsika_photon, photon_id++, &prng);
 

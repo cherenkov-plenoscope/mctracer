@@ -82,7 +82,7 @@ int main(int argc, char* argv[]) {
 		array_ctrl->move_all_to_Az_Zd(az, zd);
 		
         uint id = 0;
-        for(vector<float> corsika_photon : event.photons) {
+        for(array<float, 8> corsika_photon : event.photons) {
             
             vector<Photon*> photons;
             EventIo::PhotonFactory cpf(corsika_photon, id++, &prng);
