@@ -234,7 +234,7 @@ class LightField:
     def paxel_sum(self, mask=None):
         return Image(np.sum(self.I, axis=0), self.paxel_pos)
 
-
+"""
 if __name__ == "__main__":
     plfc = PlenoscopeLightFieldCalibration("sub_pixel_statistics.txt")
     lf = LightField("1.txt", plfc)
@@ -256,3 +256,4 @@ if __name__ == "__main__":
     assert lf.pixel_pos_tree.n == 8431
 
     assert lf.t.shape == (8431, 127)
+"""
