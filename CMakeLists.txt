@@ -81,6 +81,11 @@ target_link_libraries(mctPlenoscopeCalibration mct)
 add_executable(mctPlenoscopePropagation Main/PlenoscopePropagation.cpp)
 target_link_libraries(mctPlenoscopePropagation mct)
 
+#------------------------
+# light field propagation
+add_executable(mctPlenoscopeNsbPropagation Main/PlenoscopeNsbPropagation.cpp)
+target_link_libraries(mctPlenoscopeNsbPropagation mct)
+
 #---------------------------------
 # unit test exe
 add_subdirectory("${PROJECT_SOURCE_DIR}/Tests/gtest-1.7.0")
