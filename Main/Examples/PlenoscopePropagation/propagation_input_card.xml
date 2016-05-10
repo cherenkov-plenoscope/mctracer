@@ -4,7 +4,7 @@
         path="the_big_lebowsky.xml"
     />
     <optics_calibration_result 
-        path="optical_calibration_result.txt"
+        path="sub_pixel_statistics.txt"
     />
     <night_sky_background_ligth 
         path_flux_vs_wavelength="nsb_flux_vs_wavelength_la_palma.txt" 
