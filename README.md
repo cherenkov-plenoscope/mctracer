@@ -116,3 +116,21 @@ python pytracer/fact_scene.py
 ### Trace *corsika* photons through a Python scene.
 
 !Missing!
+
+# Epoch 160310: making calibration files #
+
+./build/mctPlenoscopeCalibration --config Main/Examples/PlenoscopeCalibration/lightfield_calibration_input_card.xml --output Main/Examples/PlenoscopePropagation/
+
+The results are 4:
+
+ * sub_pixel_positions.txt (~26M)
+ * overview.txt (~2k)
+ * the_big_lebowsky.lftc (huge)
+ * sub_pixel_statistics.txt (50MB)  <-- this is needed and checked in.
+
+# Plenoscope: Making NSB events #
+
+mkdir out
+./build/mctPlenoscopeNsbPropagation -c Main/Examples/PlenoscopePropagation/propagation_input_card.xml -o ./out/
+
+enjoy
