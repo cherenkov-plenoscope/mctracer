@@ -17,17 +17,18 @@ namespace LightFieldTelescope {
 
 		PhotonSensors::Sensors *sub_pixel_sensors;
 	public:
+
 		const Geometry *geometry;
 		Factory(const Geometry *geo);
 		void add_telescope_to_frame(Frame *frame);
-
+		void add_light_field_sensor_to_frame(Frame *frame);
+		PhotonSensors::Sensors* get_sub_pixels()const;
 		Frame* get_lens_array();
 		Frame* get_pixel_bin_array();
-		Frame* get_image_sensor_faceplate();
+		Frame* get_light_field_sensor_frontplate();
 		Frame* get_sub_pixel_sensor_plane();
 		Frame* get_image_sensor_housing()const;
-		PhotonSensors::Sensors* get_sub_pixels()const;
-
+		
 		Frame* get_lens_with_name_at_pos(
 			const std::string name,
 			const Vec3 pos
