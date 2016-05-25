@@ -279,30 +279,14 @@ void Factory::add_light_field_sensor_to_frame(Frame *frame) {
 //------------------------------------------------------------------------------
 void Factory::add_telescope_to_frame(Frame *frame) {
 
-	/*Frame* image_sensor_front = new Frame(
-		"image_sensor_front",
-		Vec3::null, 
-		Rot3::null
-	);*/
-
 	Frame* light_field_sensor = new Frame(
 		"light_field_sensor",
 		Vec3(0.0, 0.0, geometry->lightfield_sensor_distance()), 
 		Rot3::null
 	);
-
 	add_light_field_sensor_to_frame(light_field_sensor);
-/*
-	image_sensor_front->set_mother_and_child(get_lens_array());
-	image_sensor_front->set_mother_and_child(get_light_field_sensor_frontplate());
-
-	image_sensor->set_mother_and_child(get_image_sensor_housing());
-	image_sensor->set_mother_and_child(get_pixel_bin_array());
-	image_sensor->set_mother_and_child(get_sub_pixel_sensor_plane());
-	image_sensor->set_mother_and_child(image_sensor_front);
-*/
+	
 	SegmentedReflector::Factory refl_factory(geometry->config.reflector);
-
 	frame->set_mother_and_child(light_field_sensor);
 	frame->set_mother_and_child(refl_factory.get_reflector());
 	frame->init_tree_based_on_mother_child_relations();
