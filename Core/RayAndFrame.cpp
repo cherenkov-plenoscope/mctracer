@@ -1,17 +1,18 @@
-#include "Core/Ray.h"
+#include "Core/RayAndFrame.h"
+namespace RayAndFrame {
 //------------------------------------------------------------------------------
-bool Ray::support_of_ray_is_inside_bounding_sphere_of(const Frame *frame)const {
-	return (frame->get_position_in_world() - support).norm_is_less_equal_than(
-		frame->contour_radius());
+bool ray_support_inside_frames_bounding_sphere(const Ray* ray, const Frame *frame) {
+	return (frame->get_position_in_world() - ray->get_support()).
+		norm_is_less_equal_than(frame->contour_radius());
 }
 //------------------------------------------------------------------------------
-bool Ray::has_intersection_with_bounding_sphere_of(const Frame* frame)const{
+bool ray_has_intersection_with_bounding_sphere_of(const Ray* ray, const Frame *frame) {
 
-	const double alpha = get_parameter_on_ray_for_closest_distance_to_point(
+	const double alpha = ray->get_parameter_on_ray_for_closest_distance_to_point(
 		frame->get_position_in_world()
 	);
 
-	const Vec3 q = get_pos_at(alpha);
+	const Vec3 q = ray->get_pos_at(alpha);
 	const Vec3 shortest_connection = frame->get_position_in_world() - q;
 	const double dist_square = shortest_connection*shortest_connection;
 
@@ -33,7 +34,7 @@ bool Ray::has_intersection_with_bounding_sphere_of(const Frame* frame)const{
 			// The frame support is behind the source of this ray.
 			// We test whether the source of this ray is still inside of the
 			// frame, i.e. inside the boundary sphere, or completley behind it.
-			if(support_of_ray_is_inside_bounding_sphere_of(frame)) {
+			if(ray_support_inside_frames_bounding_sphere(ray, frame)) {
 				// The support of the ray is inside the frame's boundary sphere
 				// 
 				//               _________
@@ -93,3 +94,5 @@ bool Ray::has_intersection_with_bounding_sphere_of(const Frame* frame)const{
 		}
 	}
 }
+//------------------------------------------------------------------------------
+} //RayAndFrame

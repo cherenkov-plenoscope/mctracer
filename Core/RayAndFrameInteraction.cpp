@@ -1,4 +1,5 @@
 #include "Core/Ray.h"
+#include "Core/RayAndFrame.h"
 //------------------------------------------------------------------------------
 const Intersection* Ray::get_first_intersection_in(const Frame* frame)const {
 
@@ -26,7 +27,7 @@ void Ray::find_intersection_candidates_in_tree_of_frames(
 	vector<const Frame*> *candidate_frames
 )const{
 	
-	if(has_intersection_with_bounding_sphere_of(frame)) {
+	if(RayAndFrame::ray_has_intersection_with_bounding_sphere_of(this ,frame)) {
 
 		if(frame->has_children()) {
 

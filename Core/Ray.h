@@ -42,14 +42,8 @@ public:
     )const;
     double get_closest_distance_to_point(const Vec3 &point)const;
     Ray get_ray_transformed_in_object_system_of(const Frame* frame)const;
-    //--------------------------------------------------------------------------
-    // Ray and bounding sphere of Frame
-
-    bool support_of_ray_is_inside_bounding_sphere_of(const Frame *frame)const;
-    bool has_intersection_with_bounding_sphere_of(const Frame* frame)const;
-    //--------------------------------------------------------------------------
-    // Ray and Frame
     
+    // Ray and Frame
     const Intersection* get_first_intersection_in(const Frame* frame)const;
     void find_intersection_candidates_in_tree_of_frames(
         const Frame* frame, 

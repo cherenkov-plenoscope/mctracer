@@ -14,13 +14,13 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/DiscTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/RandomGeneratorTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/DualSphericalPrismZTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/RayAndBoundingSphereOfFrameInteractionTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/EventIoPhotonFactoryTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/RayAndFrameInteractionTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/EventIoTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/RayForPropagationTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FiniteStateMashineTEST.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/RayTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/RayAndFrameTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Rot3Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FitsIoTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SensorStorageTest.cpp
