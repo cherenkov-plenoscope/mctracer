@@ -42,17 +42,17 @@ public:
     )const;
     double get_closest_distance_to_point(const Vec3 &point)const;
     Ray get_ray_transformed_in_object_system_of(const Frame* frame)const;
-    
+    friend std::ostream& operator<<(std::ostream& os, const Ray& ray) {
+        os << ray.get_print();
+        return os;
+    };
+
     // Ray and Frame
     const Intersection* get_first_intersection_in(const Frame* frame)const;
     void find_intersection_candidates_in_tree_of_frames(
         const Frame* frame, 
         vector<const Frame*> *candidate_frames
     )const;
-    friend std::ostream& operator<<(std::ostream& os, const Ray& to_be_displayed) {
-        os << to_be_displayed.get_print();
-        return os;
-    };
     vector<const Frame*> get_intersection_candidate_objects(
         const Frame* frame
     )const;
