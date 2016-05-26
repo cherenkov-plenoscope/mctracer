@@ -49,7 +49,6 @@ TEST_F(RayAndFrameBoundingSphereTest, support_outside_bounding_sphere) {
     EXPECT_FALSE(ray_support_inside_frames_bounding_sphere(&ray, &sphere));
 }
 //------------------------------------------------------------------------------
-//------------------------------------------------------------------------------
 TEST_F(RayAndFrameBoundingSphereTest, frontal_hit) {
     /*
     //                 __-----__
