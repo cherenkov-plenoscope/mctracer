@@ -41,7 +41,6 @@ public:
         const Vec3 &point
     )const;
     double get_closest_distance_to_point(const Vec3 &point)const;
-    Ray get_ray_transformed_in_object_system_of(const Frame* frame)const;
     friend std::ostream& operator<<(std::ostream& os, const Ray& ray) {
         os << ray.get_print();
         return os;

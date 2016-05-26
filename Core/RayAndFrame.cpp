@@ -95,4 +95,13 @@ bool ray_has_intersection_with_bounding_sphere_of(const Ray* ray, const Frame *f
 	}
 }
 //------------------------------------------------------------------------------
+Ray get_ray_transformed_in_object_system_of_frame(
+	const Ray* ray, 
+	const Frame* frame
+) {
+	Ray ray_in_object_system_of_frame = *ray;
+	ray_in_object_system_of_frame.transform(frame->world2frame());
+	return ray_in_object_system_of_frame;
+}
+//------------------------------------------------------------------------------
 } //RayAndFrame

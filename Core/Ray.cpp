@@ -69,9 +69,3 @@ double Ray::get_closest_distance_to_point(const Vec3 &point)const {
 	const Vec3 shortest_connection = point - q;
 	return shortest_connection.norm();
 }
-//------------------------------------------------------------------------------
-Ray Ray::get_ray_transformed_in_object_system_of(const Frame* frame)const {
-	Ray ray_in_object_system_of_frame = *this;
-	ray_in_object_system_of_frame.transform(frame->world2frame());
-	return ray_in_object_system_of_frame;
-}
