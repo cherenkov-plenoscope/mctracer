@@ -8,6 +8,7 @@
 
 //=================================
 // included dependencies
+#include "Tools/Tools.h"
 #include "CameraManVerbosity.h"
 
 class CameraManFoV: public CameraManVerbosity {

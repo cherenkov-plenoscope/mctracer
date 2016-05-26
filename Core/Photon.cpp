@@ -1,5 +1,6 @@
 #include "Photon.h"
 #include "PhysicalConstants.h"
+#include "Core/RayAndFrame.h"
 //------------------------------------------------------------------------------
 Photon::Photon(
 	const Vec3 support,
@@ -66,8 +67,9 @@ void Photon::propagate_in(PropagationEnvironment environment) {
 }
 //------------------------------------------------------------------------------
 void Photon::work_on_first_causal_intersection() {
-	
-	intersection = get_first_intersection_in(environment.world_geometry);
+
+	RayAndFrame::CausalIntersection causal_intersection(this, environment.world_geometry);
+	intersection = causal_intersection.closest_intersection;
 
 	if(intersection->does_intersect() && !absorbed_in_medium_before_reaching_surface())
 		interact_with_object();

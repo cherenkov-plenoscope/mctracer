@@ -1,4 +1,6 @@
 #include "CameraRay.h"
+#include "Core/RayAndFrame.h"
+#include "Core/Intersection.h"
 //------------------------------------------------------------------------------
 CameraRay::CameraRay(const Vec3 support, const Vec3 direction){
 	set_support_and_direction(support, direction);
@@ -17,8 +19,9 @@ Color CameraRay::trace(
 )const {
 
 	Color color;
-			
-	const Intersection* intersection = get_first_intersection_in(world);
+	
+	RayAndFrame::CausalIntersection causal_intersection(this, world);
+	const Intersection* intersection = causal_intersection.closest_intersection;
 
 	if(intersection->does_intersect()) {
 
@@ -133,8 +136,8 @@ bool CameraRay::is_iluminated_by_sky_light_source(
 		settings->visual.global_illumination.incoming_direction
 	);
 
-	const Intersection* intersec_light_source = 
-		ray_to_source.get_first_intersection_in(world);
+	RayAndFrame::CausalIntersection causal_intersection(this, world);
+	const Intersection* intersec_light_source = causal_intersection.closest_intersection;
 
 	double p = intersection->get_surface_normal_in_world_system()*
 		settings->visual.global_illumination.incoming_direction;

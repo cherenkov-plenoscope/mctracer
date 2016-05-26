@@ -1,5 +1,5 @@
 #include "CameraManForRotation.h"
-
+#include "Tools/Tools.h"
 CameraManForRotation::CameraManForRotation(CameraDevice* camera_to_work_with){
 	camera = camera_to_work_with;
 }

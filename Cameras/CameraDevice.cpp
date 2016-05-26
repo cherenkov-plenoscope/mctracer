@@ -1,4 +1,6 @@
 #include "CameraDevice.h"
+#include "Tools/Tools.h"
+#include "Tools/StringTools.h"
 //------------------------------------------------------------------------------
 CameraDevice::CameraDevice(
 	const std::string camera_name, 

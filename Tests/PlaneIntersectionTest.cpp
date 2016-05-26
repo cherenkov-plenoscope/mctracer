@@ -3,6 +3,7 @@
 #include "Core/TracerSettings.h"
 #include "Core/Rot3.h"
 #include "Core/Frame.h"
+#include "Core/RayAndFrame.h"
 #include "Core/Random/Random.h"
 #include "Geometry/Plane.h"
 #include "Core/Vec3.h"
@@ -63,7 +64,8 @@ TEST_F(PlaneIntersectionTest, frontal) {
 
 	Ray ray(Vec3(0.0, 0.0, -1.0), Vec3(0.0, 0.0, 1.0));
 
-	const Intersection* intersec = ray.get_first_intersection_in(&world);
+	RayAndFrame::CausalIntersection causal_intersection(&ray, &world);
+	const Intersection* intersec = causal_intersection.closest_intersection;
 
 	ASSERT_TRUE(intersec->does_intersect());
 	EXPECT_EQ(&plane, intersec->get_object());
@@ -81,7 +83,8 @@ TEST_F(PlaneIntersectionTest, frontal_lateral_offset_alwas_intersection) {
 
 			Ray ray(Vec3(x_support, y_support, -1.0), Vec3(0.0, 0.0, 1.0));
 
-			const Intersection* intersec = ray.get_first_intersection_in(&world);
+			RayAndFrame::CausalIntersection causal_intersection(&ray, &world);
+			const Intersection* intersec = causal_intersection.closest_intersection;
 
 			ASSERT_TRUE(intersec->does_intersect());
 			EXPECT_EQ(&plane, intersec->get_object());
@@ -94,14 +97,16 @@ TEST_F(PlaneIntersectionTest, frontal_lateral_offset_alwas_intersection) {
 TEST_F(PlaneIntersectionTest, close_miss_x) {
 
 	Ray ray(Vec3(x_width/2.0+0.01, 0.0, -1.0), Vec3(0.0, 0.0, 1.0));
-	const Intersection* intersec = ray.get_first_intersection_in(&world);
+	RayAndFrame::CausalIntersection causal_intersection(&ray, &world);
+	const Intersection* intersec = causal_intersection.closest_intersection;
 	EXPECT_FALSE(intersec->does_intersect());
 }
 //------------------------------------------------------------------------------
 TEST_F(PlaneIntersectionTest, close_miss_y) {
 
 	Ray ray(Vec3(0.0, y_width/2.0+0.01, -1.0), Vec3(0.0, 0.0, 1.0));
-	const Intersection* intersec = ray.get_first_intersection_in(&world);
+	RayAndFrame::CausalIntersection causal_intersection(&ray, &world);
+	const Intersection* intersec = causal_intersection.closest_intersection;
 	EXPECT_FALSE(intersec->does_intersect());
 }
 //------------------------------------------------------------------------------
@@ -130,6 +135,7 @@ TEST_F(PlaneIntersectionTest, move_plane_up) {
 	world.init_tree_based_on_mother_child_relations();
 
 	Ray ray(Vec3(0.0, 0.0, -1.0), Vec3(0.0, 0.0, 1.0));
-	const Intersection* intersec = ray.get_first_intersection_in(&world);
+	RayAndFrame::CausalIntersection causal_intersection(&ray, &world);
+	const Intersection* intersec = causal_intersection.closest_intersection;
 	EXPECT_TRUE(intersec->does_intersect());
 }

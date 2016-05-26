@@ -14,9 +14,7 @@
 #include <vector>
 #include <algorithm>
 #include "Core/Vec3.h"
-#include "Core/Frame.h"
-#include "Core/SurfaceEntity.h"
-#include "Core/Intersection.h"
+#include "Core/HomTra3.h"
 using std::string;
 using std::stringstream;
 using std::vector;
@@ -45,25 +43,6 @@ public:
         os << ray.get_print();
         return os;
     };
-
-    // Ray and Frame
-    const Intersection* get_first_intersection_in(const Frame* frame)const;
-    void find_intersection_candidates_in_tree_of_frames(
-        const Frame* frame, 
-        vector<const Frame*> *candidate_frames
-    )const;
-    vector<const Frame*> get_intersection_candidate_objects(
-        const Frame* frame
-    )const;
-    vector<const Intersection*> get_intersections_in_candidate_objects(
-        vector<const Frame*> *candidate_objects
-    )const;
-    const Intersection* get_closest_intersection_and_delete_the_rest(   
-        vector<const Intersection*> *intersections
-    )const;
-    const Intersection* calculate_closest_intersection(
-        vector<const Intersection*> *intersections
-    )const;
 protected:
 
     Ray();

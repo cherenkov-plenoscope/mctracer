@@ -5,7 +5,8 @@
 
 //=================================
 // forward declared dependencies
-
+class Frame;
+class Intersection;
 //=================================
 // included dependencies
 #include "Core/Ray.h"

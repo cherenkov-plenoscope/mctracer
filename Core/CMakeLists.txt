@@ -11,7 +11,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/SurfaceEntity.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/Ray.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/RayAndFrame.cpp	
-	${CMAKE_CURRENT_SOURCE_DIR}/RayAndFrameInteraction.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/RayForPropagation.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TracerSettings.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Photon.cpp

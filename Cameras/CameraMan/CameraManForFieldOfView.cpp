@@ -1,4 +1,5 @@
 #include "CameraManForFieldOfView.h"
+#include "Tools/Tools.h"
 //------------------------------------------------------------------------------
 CameraManFoV::CameraManFoV(CameraDevice* camera_to_work_with) {
 	camera = camera_to_work_with;

@@ -1,7 +1,9 @@
 #include "DistanceMeter.h"
+#include "Core/RayAndFrame.h"
 //------------------------------------------------------------------------------
 DistanceMeter::DistanceMeter(const Ray* ray, const Frame* world) {
-	const Intersection* closest_intersec = ray->get_first_intersection_in(world);
+	RayAndFrame::CausalIntersection causal_intersection(ray, world);
+	const Intersection* closest_intersec = causal_intersection.closest_intersection;
 
 	if(closest_intersec->does_intersect()) {
 		does_DistanceMeter_face_an_object = true;

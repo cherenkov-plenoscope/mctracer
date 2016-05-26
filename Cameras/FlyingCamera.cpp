@@ -1,4 +1,6 @@
 #include "FlyingCamera.h"
+#include "Core/RayAndFrame.h"
+#include "Core/Intersection.h"
 using std::cout;
 using std::stringstream;
 using std::string;
@@ -290,7 +292,8 @@ void FlyingCamera::print_info_of_probing_ray_for_pixel_col_row(int col, int row)
 
 	Ray probing_ray = flying_camera_full_resolution->get_ray_for_pixel_in_row_and_col(row, col);
 
-	const Intersection* intersec = probing_ray.get_first_intersection_in(world);
+	RayAndFrame::CausalIntersection causal_intersection(&probing_ray, world);
+	const Intersection* intersec = causal_intersection.closest_intersection;
 
 	UserInteraction::ClearScreen();
 	stringstream out;

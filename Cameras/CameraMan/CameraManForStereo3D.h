@@ -5,7 +5,7 @@
 
 //=================================
 // forward declared dependencies
-
+class Frame;
 //=================================
 // included dependencies
 #include "Core/DistanceMeter.h"

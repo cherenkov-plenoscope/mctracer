@@ -9,6 +9,7 @@
 //=================================
 // included dependencies
 #include "Core/Ray.h"
+#include "Core/Frame.h"
 #include <limits.h>
 
 class DistanceMeter {
