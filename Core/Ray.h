@@ -65,7 +65,6 @@ public:
     const Intersection* calculate_closest_intersection(
         vector<const Intersection*> *intersections
     )const;
-    bool support_equals_intersection_point(const Intersection* intersec)const;
 protected:
 
     Ray();

@@ -63,10 +63,6 @@ vector<const Intersection*> Ray::get_intersections_in_candidate_objects(
 	return intersections;
 }
 //------------------------------------------------------------------------------
-bool Ray::support_equals_intersection_point(const Intersection* intersec)const {
-	return 	intersec->get_intersection_vector_in_object_system() == get_support();
-}
-//------------------------------------------------------------------------------
 const Intersection* Ray::calculate_closest_intersection(	
 		vector<const Intersection*> *intersections
 )const{
