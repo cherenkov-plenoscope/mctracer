@@ -135,3 +135,68 @@ TEST_F(RayAndFrameBoundingSphereTest, frontal_hits) {
     }
 }
 //------------------------------------------------------------------------------
+class RayAndFrameTest : public ::testing::Test {};
+//------------------------------------------------------------------------------
+TEST_F(RayAndFrameTest, transform_into_unit_frame) {
+
+    Frame frame("frame", Vec3::null, Rot3::null);
+    frame.init_tree_based_on_mother_child_relations();
+
+    Ray ray(Vec3::null, Vec3::unit_z);
+
+    Ray ray_t = RayAndFrame::get_ray_transformed_in_object_system_of_frame(
+        &ray, 
+        &frame
+    );
+
+    EXPECT_EQ(ray_t.get_support(), Vec3::null);
+    EXPECT_EQ(ray_t.get_direction(), Vec3::unit_z);
+}
+//------------------------------------------------------------------------------
+TEST_F(RayAndFrameTest, transform_into_translated_frame) {
+
+    Frame frame("frame", Vec3(0.0, 0.0, 13.37), Rot3::null);
+    frame.init_tree_based_on_mother_child_relations();
+
+    Ray ray(Vec3(0.0, 4.2, 0.0), Vec3::unit_z);
+
+    Ray ray_t = RayAndFrame::get_ray_transformed_in_object_system_of_frame(
+        &ray, 
+        &frame
+    );
+
+    EXPECT_EQ(ray_t.get_support(), Vec3(0.0, 4.2, -13.37));
+    EXPECT_EQ(ray_t.get_direction(), Vec3::unit_z);
+}
+//------------------------------------------------------------------------------
+TEST_F(RayAndFrameTest, transform_ray_in_z_into_frame_rotated_in_z) {
+
+    Frame frame("frame", Vec3::null, Rot3(0.0, 0.0, 0.5*M_PI));
+    frame.init_tree_based_on_mother_child_relations();
+
+    Ray ray(Vec3::null, Vec3::unit_z);
+
+    Ray ray_t = RayAndFrame::get_ray_transformed_in_object_system_of_frame(
+        &ray, 
+        &frame
+    );
+
+    EXPECT_EQ(ray_t.get_support(), Vec3::null);
+    EXPECT_EQ(ray_t.get_direction(), Vec3::unit_z);
+}
+//------------------------------------------------------------------------------
+TEST_F(RayAndFrameTest, transform_ray_into_rotated_frame) {
+
+    Frame frame("frame", Vec3::null, Rot3(0.0, 0.0, 0.5*M_PI));
+    frame.init_tree_based_on_mother_child_relations();
+
+    Ray ray(Vec3::null, Vec3::unit_x);
+
+    Ray ray_t = RayAndFrame::get_ray_transformed_in_object_system_of_frame(
+        &ray, 
+        &frame
+    );
+
+    EXPECT_EQ(ray_t.get_support(), Vec3::null);
+    EXPECT_EQ(ray_t.get_direction(), Vec3::unit_y);
+}
