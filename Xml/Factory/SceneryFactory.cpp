@@ -11,7 +11,7 @@
 #include "Geometry/Triangle.h"
 #include "Geometry/StereoLitographyIo/StereoLitographyIo.h"
 #include "Geometry/SegmentedReflector/SegmentedReflector.h"
-#include "LightFieldTelescope/LightFieldTelescope.h"
+#include "Plenoscope/Plenoscope.h"
 using StringTools::is_equal;
 using std::stringstream;
 
@@ -297,7 +297,7 @@ Frame* SceneryFactory::add_Plenoscope(Frame* mother, const Node node) {
 
     const Node refl = node.child("set_segmented_reflector");
 
-    LightFieldTelescope::Config cfg;
+    Plenoscope::Config cfg;
     cfg.reflector.DaviesCotton_over_parabolic_mixing_factor = refl.attribute2double("DaviesCotton_over_parabolic_mixing_factor");
     cfg.reflector.max_outer_aperture_radius = refl.attribute2double("max_outer_aperture_radius");
     cfg.reflector.min_inner_aperture_radius = refl.attribute2double("min_inner_aperture_radius");
@@ -317,8 +317,8 @@ Frame* SceneryFactory::add_Plenoscope(Frame* mother, const Node node) {
     FrameFab fab(node);
     Frame* pleno_frame = new Frame(fab.name, fab.pos, fab.rot);
     
-    LightFieldTelescope::Geometry geometry(cfg);
-    LightFieldTelescope::Factory factory(&geometry);
+    Plenoscope::Geometry geometry(cfg);
+    Plenoscope::Factory factory(&geometry);
 
     factory.add_telescope_to_frame(pleno_frame);
     mother->set_mother_and_child(pleno_frame);

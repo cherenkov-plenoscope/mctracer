@@ -6,13 +6,13 @@
 #include "CorsikaIO/EventIo/EventIo.h"
 #include "CorsikaIO/EventIo/PhotonFactory.h"
 #include "Core/Histogram1D.h"
-#include "LightFieldTelescope/LightFieldTelescope.h"
+#include "Plenoscope/Plenoscope.h"
 #include "Tools/AsciiIo.h"
 #include "Tools/FileTools.h"
 #include "Tools/Tools.h"
 #include "SignalProcessing/PipelinePhoton.h"
-#include "LightFieldTelescope/NightSkyBackgroundLight.h"
-#include "LightFieldTelescope/NightSkyBackgroundLightInjector.h"
+#include "Plenoscope/NightSkyBackgroundLight.h"
+#include "Plenoscope/NightSkyBackgroundLightInjector.h"
 #include "SignalProcessing/PhotoElectricConverter.h"
 #include "Xml/Xml.h"
 #include "Xml/Factory/TracerSettingsFab.h"
@@ -73,7 +73,7 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // SET UP TELESCOPE
-    LightFieldTelescope::Config telescope_config;
+    Plenoscope::Config telescope_config;
     telescope_config.reflector.focal_length = 75.0;
     telescope_config.reflector.DaviesCotton_over_parabolic_mixing_factor = 0.0;
     telescope_config.reflector.max_outer_aperture_radius = 25.0;
@@ -84,12 +84,12 @@ int main(int argc, char* argv[]) {
     telescope_config.max_FoV_diameter = Deg2Rad(6.5);
     telescope_config.pixel_FoV_hex_flat2flat = Deg2Rad(0.0667);
     telescope_config.housing_overhead = 1.2;
-    telescope_config.lens_refraction = &LightFieldTelescope::pmma_refraction;
+    telescope_config.lens_refraction = &Plenoscope::pmma_refraction;
     telescope_config.sub_pixel_on_pixel_diagonal = 13;
     telescope_config.object_distance_to_focus_on = 10.0e3;
     
-    LightFieldTelescope::Geometry telescope_geometry(telescope_config);
-    LightFieldTelescope::Factory fab(&telescope_geometry);
+    Plenoscope::Geometry telescope_geometry(telescope_config);
+    Plenoscope::Factory fab(&telescope_geometry);
     
     Frame telescope("telescope", Vec3::null, Rot3::null);
     fab.add_telescope_to_frame(&telescope);
@@ -128,7 +128,7 @@ int main(int argc, char* argv[]) {
             )
         )
     );
-    LightFieldTelescope::NightSkyBackgroundLight nsb(&telescope_geometry, &nsb_flux_vs_wavelength);
+    Plenoscope::NightSkyBackgroundLight nsb(&telescope_geometry, &nsb_flux_vs_wavelength);
     const double nsb_exposure_time = nsb_node.attribute2double("exposure_time");
 
     //--------------------------------------------------------------------------
@@ -201,7 +201,7 @@ int main(int argc, char* argv[]) {
 
         //-----------------------------
         // Night Sky Background photons
-        LightFieldTelescope::inject_nsb_into_photon_pipeline(
+        Plenoscope::inject_nsb_into_photon_pipeline(
             &photon_pipelines,
             nsb_exposure_time,
             &optics_calibration_result,

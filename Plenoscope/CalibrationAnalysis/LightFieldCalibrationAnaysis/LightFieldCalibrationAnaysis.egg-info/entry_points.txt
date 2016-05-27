@@ -1,0 +1,3 @@
+[console_scripts]
+mctLightFieldCalibrationAnaysis = LightFieldCalibrationAnaysis.__init__:main
+

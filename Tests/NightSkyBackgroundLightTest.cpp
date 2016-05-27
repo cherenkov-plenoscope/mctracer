@@ -1,12 +1,12 @@
 #include "gtest/gtest.h"
-#include "LightFieldTelescope/NightSkyBackgroundLight.h"
+#include "Plenoscope/NightSkyBackgroundLight.h"
 #include "Tools/AsciiIo.h"
 class NightSkyBackgroundLightTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(NightSkyBackgroundLightTest, init) {
 
     // SET UP TELESCOPE
-    LightFieldTelescope::Config telescope_config;
+    Plenoscope::Config telescope_config;
 
     telescope_config.reflector.focal_length = 75.0;
     telescope_config.reflector.DaviesCotton_over_parabolic_mixing_factor = 0.0;
@@ -18,11 +18,11 @@ TEST_F(NightSkyBackgroundLightTest, init) {
     telescope_config.max_FoV_diameter = Deg2Rad(6.5);
     telescope_config.pixel_FoV_hex_flat2flat = Deg2Rad(0.1);
     telescope_config.housing_overhead = 1.2;
-    telescope_config.lens_refraction = &LightFieldTelescope::pmma_refraction;
+    telescope_config.lens_refraction = &Plenoscope::pmma_refraction;
     telescope_config.sub_pixel_on_pixel_diagonal = 11;	
 
 
-    LightFieldTelescope::Geometry telescope_geometry(telescope_config);
+    Plenoscope::Geometry telescope_geometry(telescope_config);
 
     Function::LinInterpol nsb_flux_vs_wavelength(
     	AsciiIo::gen_table_from_file(
@@ -30,7 +30,7 @@ TEST_F(NightSkyBackgroundLightTest, init) {
     	)
     );
 
-    LightFieldTelescope::NightSkyBackgroundLight nsb(
+    Plenoscope::NightSkyBackgroundLight nsb(
     	&telescope_geometry,
     	&nsb_flux_vs_wavelength
     );
