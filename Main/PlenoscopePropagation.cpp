@@ -194,7 +194,7 @@ int main(int argc, char* argv[]) {
 
         sensors->clear_history();
         sensors->assign_photons(&photons);
-        Photons::delete_photons_and_history(&photons);
+        Photons::delete_photons(&photons);
 
         vector<vector<PipelinePhoton>> photon_pipelines = 
             get_photon_pipelines(sensors);

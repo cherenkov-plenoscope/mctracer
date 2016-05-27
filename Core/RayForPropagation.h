@@ -36,21 +36,13 @@ class RayForPropagation :public Ray{
 	friend class TrajectoryFactory;
 protected:
 
-	vector<Intersection>* intersection_history;
-	vector<InteractionType>* interaction_type_history;
-
-	uint identifier_number;
-
-	PropagationEnvironment environment = 
-		PropagationEnvironment::default_environment;
-
-	Intersection intersection = *Intersection::void_intersection;
-
+	vector<Intersection> intersection_history;
+	vector<InteractionType> interaction_type_history;
+	uint identifier;
 public:
 	
-	RayForPropagation(const RayForPropagation* ray_to_be_carried_on);
 	RayForPropagation(const Vec3 support, const Vec3 direction);
-	virtual ~RayForPropagation(){};
+	virtual ~RayForPropagation();
 	void set_id(const uint nID);
 	uint get_id()const;
 	void push_back_intersection_and_type_to_propagation_history(
@@ -62,25 +54,14 @@ public:
 	virtual void propagate_in(PropagationEnvironment env);
 	uint get_number_of_interactions_so_far()const;
 	const Intersection& get_intersection_at(const uint index)const;
-	InteractionType get_final_interaction_type()const {
-		return interaction_type_history->back();
-	};
+	InteractionType get_final_interaction_type()const;
 	const Intersection& get_final_intersection()const;
 	virtual double get_time_of_flight()const;
-	virtual void delete_history();
-	void transform(const HomTra3 *T);
 	Vec3 get_final_intersection_incident_vector_in_object_frame()const;
 protected:
 
-	string get_history_print()const;
-	RayForPropagation();
-	void init_propagation_history();
-	void carry_on_propagation_properties_of_ray(
-		const RayForPropagation* ray_to_be_carried_on
-	);
-	string get_type_print(const InteractionType type)const;
-private:
-
 	void push_back_production_of_ray();
+	string get_history_print()const;
+	string get_type_print(const InteractionType type)const;
 };
 #endif // __RayForPropagation_H_INCLUDED__ 

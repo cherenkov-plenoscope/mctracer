@@ -144,7 +144,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 		sigma_psf_vs_image_sensor_distance.push_back(sensor.point_spread_std_dev());
 		image_sensor_distances.push_back(image_sensor_disc_distance);
 
-		Photons::delete_photons_and_history(photons);
+		Photons::delete_photons(photons);
 
 		//FreeOrbitCamera free(&optical_table, &settings);
 	}

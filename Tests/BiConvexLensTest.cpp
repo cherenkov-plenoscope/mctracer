@@ -173,7 +173,7 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 	sensor_list.clear_history();
 	sensor_list.assign_photons(photons);
 
-	Photons::delete_photons_and_history(photons);
+	Photons::delete_photons(photons);
 
 	EXPECT_NEAR(1.5e-3, sensor->point_spread_std_dev(), 1e-3);
 

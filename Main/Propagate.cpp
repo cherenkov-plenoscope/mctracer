@@ -98,7 +98,7 @@ int main(int argc, char* argv[]) {
 			);
 		}
 		//----------------------------------------------------------------------
-		Photons::delete_photons_and_history(photons);
+		Photons::delete_photons(photons);
 		delete photons;
 		event_counter++;
 	}

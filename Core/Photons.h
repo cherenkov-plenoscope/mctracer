@@ -82,7 +82,7 @@ namespace Photons {
 	);
 
 	// delete all history
-	void delete_photons_and_history(vector<Photon*> *photons);
+	void delete_photons(vector<Photon*> *photons);
 }
 
 #endif // __PHOTONBUNCH_H_INCLUDED__

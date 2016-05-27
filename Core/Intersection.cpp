@@ -1,7 +1,7 @@
 #include "Intersection.h"
 #include <limits>
 //------------------------------------------------------------------------------
-const Intersection* Intersection::void_intersection = new Intersection();
+const Intersection Intersection::void_intersection = Intersection();
 //------------------------------------------------------------------------------
 Intersection::Intersection() {
 	object = SurfaceEntity::void_object;
@@ -11,7 +11,7 @@ Intersection::Intersection() {
 		std::numeric_limits<double>::infinity()
 	);
 	surfacenormal_in_intersection_point = Vec3(0.0,0.0,1.0);
-	distance_of_ray_in_m = std::numeric_limits<double>::infinity();
+	distance_of_ray = std::numeric_limits<double>::infinity();
 }
 //------------------------------------------------------------------------------
 Intersection::Intersection(
@@ -21,10 +21,10 @@ Intersection::Intersection(
 	const double distance_of_ray_support_to_intersection,
 	const Vec3 incident_in_obj_sys
 ):
-	object(intersectiong_object),
 	intersection_point(intersection_vector),
 	surfacenormal_in_intersection_point(surfacenormal),
-	distance_of_ray_in_m(distance_of_ray_support_to_intersection),
+	object(intersectiong_object),
+	distance_of_ray(distance_of_ray_support_to_intersection),
 	_from_outside_to_inside(ray_is_running_from_outside_to_inside(incident_in_obj_sys))
 {}
 //------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ Vec3 Intersection::get_surface_normal_in_world_system()const {
 }
 //------------------------------------------------------------------------------
 double Intersection::get_intersection_distance()const {
-	return distance_of_ray_in_m;
+	return distance_of_ray;
 }
 //------------------------------------------------------------------------------
 std::string Intersection::get_print()const {

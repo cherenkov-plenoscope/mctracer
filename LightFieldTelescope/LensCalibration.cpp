@@ -44,7 +44,6 @@ LensCalibration::LensCalibration(const Geometry *geo):
 		ph->propagate_in(test_bench_environment);
 		read_out_l.assign_photon(ph);
 
-		ph->delete_history();
 		delete ph;		
 	}
 

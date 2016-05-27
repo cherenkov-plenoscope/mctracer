@@ -142,7 +142,6 @@ void Calibration::fill_calibration_block_to_table() {
 				}
 
 				// delete photon
-				ph->delete_history();
 				delete ph;
 			}catch(std::exception &error) {
 

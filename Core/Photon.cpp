@@ -5,25 +5,25 @@
 Photon::Photon(
 	const Vec3 support,
 	const Vec3 direction,
-	const double wavelength
-) {
-	set_support_and_direction(support, direction);
-	this->wavelength = wavelength;
+	const double _wavelength
+): 	
+	RayForPropagation(support, direction), 
+	wavelength(_wavelength) 
+{
 	assert_wavelength_is_positive();
-	init_propagation_history();
 }
 //------------------------------------------------------------------------------
 Photon::Photon(
 	const Vec3 support,
 	const Vec3 direction,
-	const double wavelength,
-	const PhotonMcTruth* mc_truth
-) {
-	set_support_and_direction(support, direction);
-	this->wavelength = wavelength;
-	this->mc_truth = mc_truth;
-	assert_wavelength_is_positive();
-	init_propagation_history();	
+	const double _wavelength,
+	const PhotonMcTruth* _mc_truth
+): 
+	RayForPropagation(support, direction), 
+	wavelength(_wavelength), 
+	mc_truth(_mc_truth) 
+{
+	assert_wavelength_is_positive();	
 }
 //------------------------------------------------------------------------------
 void Photon::assert_wavelength_is_positive()const {
@@ -35,13 +35,6 @@ void Photon::assert_wavelength_is_positive()const {
 		info << "it is: " << wavelength*1e9 << "nm\n";
 		throw BadWaveLength(info.str());
 	}
-}
-//------------------------------------------------------------------------------
-Photon::Photon(
-	const Photon* photon_to_be_carried_on
-) {
-	carry_on_propagation_properties_of_ray(photon_to_be_carried_on);
-	wavelength = photon_to_be_carried_on->wavelength;
 }
 //------------------------------------------------------------------------------
 double Photon::get_wavelength()const {
@@ -101,9 +94,7 @@ void Photon::interact_with_object() {
 //------------------------------------------------------------------------------
 void Photon::reflect_on_surface_and_propagate_on(const InteractionType type) {
 
-	Photon reflected_photon(this);
-
-	reflected_photon.set_support_and_direction(
+	set_support_and_direction(
 		intersection.get_intersection_vector_in_world_system(),
 		intersection.get_reflection_direction_in_world_system(get_direction())
 	);
@@ -113,7 +104,7 @@ void Photon::reflect_on_surface_and_propagate_on(const InteractionType type) {
 		type
 	);
 
-	reflected_photon.propagate_in(environment);
+	propagate_in(environment);
 }
 //------------------------------------------------------------------------------
 void Photon::reach_boundary_layer() {
@@ -172,16 +163,14 @@ void Photon::propagate_on_after_boundary_layer(
 		next_environment.world_geometry = 
 			intersection.get_object()->get_root_of_world();
 
-	Photon refracted_photon(this);
-
-	refracted_photon.set_support_and_direction(
+	set_support_and_direction(
 		intersection.get_intersection_vector_in_world_system(),
 		intersection.object2world()->get_transformed_orientation(
 			fresnel.get_refrac_dir_in_object_system()
 		)
 	);
 
-	refracted_photon.propagate_in(next_environment);	
+	propagate_in(next_environment);	
 }
 //------------------------------------------------------------------------------
 void Photon::get_absorbed_on_surface() {
@@ -217,7 +206,7 @@ double Photon::get_time_of_flight()const {
 	double time_of_flight = 0.0;
 
 	uint i =0;
-	for(const Intersection &intersec : *intersection_history){
+	for(const Intersection &intersec : intersection_history){
 
 		if(i!=0)
 			time_of_flight += get_time_to_pass_distance_in_refractive_index(
@@ -231,16 +220,8 @@ double Photon::get_time_of_flight()const {
 	return time_of_flight;
 }
 //------------------------------------------------------------------------------
-void Photon::delete_history() {
-	
-	if( mc_truth != &PhotonMcTruth::void_truth ){
+Photon::~Photon() {
+	if(mc_truth != &PhotonMcTruth::void_truth)
 		delete mc_truth;
-	}
-
-	intersection_history->clear();
-	delete intersection_history;
-	
-	interaction_type_history->clear();
-	delete interaction_type_history;
 }
 //------------------------------------------------------------------------------

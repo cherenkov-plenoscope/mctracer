@@ -281,10 +281,8 @@ namespace Photons {
 	//--------------------------------------------------------------------------
 	// delete all history
 	//--------------------------------------------------------------------------
-	void delete_photons_and_history(vector<Photon*> *photons) {
-		for(uint i=0; i<photons->size(); i++) {
-			photons->at(i)->delete_history();
+	void delete_photons(vector<Photon*> *photons) {
+		for(uint i=0; i<photons->size(); i++)
 			delete photons->at(i);
-		}		
 	}
 }

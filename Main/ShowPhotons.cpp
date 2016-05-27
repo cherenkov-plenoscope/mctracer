@@ -106,7 +106,7 @@ int main(int argc, char* argv[]) {
 					free_orb.continue_with_new_scenery_and_settings(&SWorld, &settings);
 				}
 
-				Photons::delete_photons_and_history(&photons);
+				Photons::delete_photons(&photons);
 			}
 		}
 	}

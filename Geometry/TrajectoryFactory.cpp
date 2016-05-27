@@ -46,7 +46,7 @@ bool TrajectoryFactory::is_not_the_last_intersection(
 //------------------------------------------------------------------------------
 std::string TrajectoryFactory::get_trajectory_frame_name()const {
 	std::stringstream name;
-	name << "trajectory_of_ID_" << ray->identifier_number;
+	name << "trajectory_of_ID_" << ray->identifier;
 	return name.str();
 }
 //------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ std::string TrajectoryFactory::get_trajectory_of_part_index(
 	const uint part_index
 )const {
 	std::stringstream name_trajectory;
-	name_trajectory << "ID_" << ray->identifier_number;
+	name_trajectory << "ID_" << ray->identifier;
 	name_trajectory << "_part_" << part_index+1;
 	return name_trajectory.str();
 }
@@ -82,9 +82,9 @@ Cylinder* TrajectoryFactory::get_trajectory_line_of_part(
 
  	ray_trajectory->set_cylinder(
  		radius_of_trajectory_in_m, 
- 		ray->intersection_history->at(part_index).
+ 		ray->intersection_history.at(part_index).
  			get_intersection_vector_in_world_system(),
- 		ray->intersection_history->at(part_index+1).
+ 		ray->intersection_history.at(part_index+1).
  			get_intersection_vector_in_world_system()
  	);
 
@@ -98,8 +98,8 @@ std::string TrajectoryFactory::get_intersection_point_name_of_part(
 	const uint part_index
 )const {
 	std::stringstream name;
-	name << "ID_" << ray->identifier_number << "_";
-	name << ray->get_type_print(ray->interaction_type_history->at(part_index));
+	name << "ID_" << ray->identifier << "_";
+	name << ray->get_type_print(ray->interaction_type_history.at(part_index));
 	return name.str();
 }
 //------------------------------------------------------------------------------
@@ -111,14 +111,14 @@ Sphere* TrajectoryFactory::get_intersection_indicator_of_part(
 
 	intersection_indicator->set_name_pos_rot(
 		get_intersection_point_name_of_part(part_index),
-		ray->intersection_history->at(part_index).
+		ray->intersection_history.at(part_index).
 			get_intersection_vector_in_world_system(),
 		Rot3::null
 	);
 
 	intersection_indicator->set_radius(radius_of_trajectory_in_m*2.0);
 
-	if(ray->interaction_type_history->at(part_index) == absorption_in_void)
+	if(ray->interaction_type_history.at(part_index) == absorption_in_void)
 		intersection_indicator->set_outer_color(absorption_in_void_col);
 	else
 		intersection_indicator->set_outer_color(interaction_col);	

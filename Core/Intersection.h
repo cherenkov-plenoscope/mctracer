@@ -18,14 +18,14 @@ class Ray;
 class Intersection {
 protected:
 
-	const SurfaceEntity* object;
 	Vec3 intersection_point;
 	Vec3 surfacenormal_in_intersection_point;
-	double distance_of_ray_in_m;
+	const SurfaceEntity* object;
+	double distance_of_ray;
 	bool _from_outside_to_inside;
 public:
 
-	static const Intersection* void_intersection;
+	static const Intersection void_intersection;
 	Intersection();
 	Intersection(
 		const SurfaceEntity* intersectiong_object,

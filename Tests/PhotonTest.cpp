@@ -127,8 +127,6 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
             num_of_total_interactions, 
             P.get_number_of_interactions_so_far()
         );
-
-        P.delete_history();
     }
 }
 //------------------------------------------------------------------------------
@@ -251,7 +249,7 @@ TEST_F(PhotonTest, Reflections){
         2e-2
     );
 
-    Photons::delete_photons_and_history(&photons); 
+    Photons::delete_photons(&photons); 
 }
 //------------------------------------------------------------------------------
 TEST_F(PhotonTest, Refraction){
@@ -344,7 +342,7 @@ TEST_F(PhotonTest, Refraction){
         1e-10
     );
 
-    Photons::delete_photons_and_history(&photons);
+    Photons::delete_photons(&photons);
 }
 //------------------------------------------------------------------------------
 TEST_F(PhotonTest, absorbtion_in_medium){
@@ -432,5 +430,5 @@ TEST_F(PhotonTest, absorbtion_in_medium){
         2e-2
     );
 
-    Photons::delete_photons_and_history(&photons);
+    Photons::delete_photons(&photons);
 }
