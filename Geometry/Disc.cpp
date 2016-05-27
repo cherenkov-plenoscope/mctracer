@@ -26,7 +26,7 @@ double Disc::get_area()const {
 //------------------------------------------------------------------------------
 void Disc::calculate_intersection_with(
     const Ray* ray, 
-    vector<const Intersection*> *intersections
+    vector<Intersection> *intersections
 )const {
 
 	XyPlaneRayIntersectionEquation xyPlaneRayEquation(ray);
@@ -39,15 +39,15 @@ void Disc::calculate_intersection_with(
 		if(cylinder_bounds.is_inside(&intersection_vector) ) {
 
 			if(ray->get_support() != intersection_vector) {
-				Intersection* intersec = new Intersection(
-					this,
-					intersection_vector,
-					xyPlaneRayEquation.get_plane_normal_vector(),
-					v,
-					ray->get_direction()
+				intersections->push_back(
+					Intersection(
+						this,
+						intersection_vector,
+						xyPlaneRayEquation.get_plane_normal_vector(),
+						v,
+						ray->get_direction()
+					)
 				);
-				
-				intersections->push_back(intersec);
 			}
 		}
 	}	

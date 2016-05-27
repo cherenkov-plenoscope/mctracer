@@ -293,7 +293,7 @@ void FlyingCamera::print_info_of_probing_ray_for_pixel_col_row(int col, int row)
 	Ray probing_ray = flying_camera_full_resolution->get_ray_for_pixel_in_row_and_col(row, col);
 
 	RayAndFrame::CausalIntersection causal_intersection(&probing_ray, world);
-	const Intersection* intersec = causal_intersection.closest_intersection;
+	Intersection intersec = causal_intersection.closest_intersection;
 
 	UserInteraction::ClearScreen();
 	stringstream out;
@@ -306,7 +306,7 @@ void FlyingCamera::print_info_of_probing_ray_for_pixel_col_row(int col, int row)
 	out << "| Ray emitted by camera:\n";
 	out << "| " << probing_ray << "\n";
 	out << "|\n";
-	if(intersec->does_intersect())
+	if(intersec.does_intersect())
 		out << get_intersection_info_print(intersec);
 	else
 		out << "| No intersection with any object.\n";	
@@ -314,24 +314,24 @@ void FlyingCamera::print_info_of_probing_ray_for_pixel_col_row(int col, int row)
 	cout << out.str();
 }
 //------------------------------------------------------------------------------
-string FlyingCamera::get_intersection_info_print(const Intersection* intersec)const {
+string FlyingCamera::get_intersection_info_print(const Intersection intersec)const {
 	
 	stringstream out;
-	out << "| Object: " << intersec->get_object()->get_path_in_tree_of_frames() << "\n";
-	out << "| Distance to first intersection: " << intersec->get_intersection_distance() << "m\n";
+	out << "| Object: " << intersec.get_object()->get_path_in_tree_of_frames() << "\n";
+	out << "| Distance to first intersection: " << intersec.get_intersection_distance() << "m\n";
 	out << "|\n";
 	out << "| In frame of intersecting object\n";
-	out << "| | intesection point: " << intersec->get_intersection_vector_in_object_system() << "\n";
-	out << "| | surface normal   : " << intersec->get_surface_normal_in_object_system() << "\n";
-	out << "| | facing surface   : " << (intersec->from_outside_to_inside() ? "outside" : "inside") << "\n";
+	out << "| | intesection point: " << intersec.get_intersection_vector_in_object_system() << "\n";
+	out << "| | surface normal   : " << intersec.get_surface_normal_in_object_system() << "\n";
+	out << "| | facing surface   : " << (intersec.from_outside_to_inside() ? "outside" : "inside") << "\n";
 	out << "|\n";
 	out << "| In world frame\n";
-	out << "| | intesection point: " << intersec->get_intersection_vector_in_world_system() << "\n";
-	out << "| | surface normal   : " << intersec->get_surface_normal_in_world_system() << "\n";
+	out << "| | intesection point: " << intersec.get_intersection_vector_in_world_system() << "\n";
+	out << "| | surface normal   : " << intersec.get_surface_normal_in_world_system() << "\n";
 	out << "|\n";		
 	out << StringTools::place_first_infront_of_each_new_line_of_second(
 		"| ",
-		intersec->get_object()->get_print()
+		intersec.get_object()->get_print()
 	);
 	return out.str();	
 }

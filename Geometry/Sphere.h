@@ -28,7 +28,7 @@ public:
     string get_print()const;
     void calculate_intersection_with(
         const Ray* ray, 
-        vector<const Intersection*> *intersections
+        vector<Intersection> *intersections
     )const;
 private:
 
@@ -45,7 +45,7 @@ private:
     void add_sphere_intersection_for_ray_parameter(
         const Ray* ray, 
         const double ray_parameter,
-        vector<const Intersection*> *intersections
+        vector<Intersection> *intersections
     )const;
 
     QuadraticEquation get_ray_parameter_equation_for_intersections_with_sphere(

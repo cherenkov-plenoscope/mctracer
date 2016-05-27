@@ -58,7 +58,7 @@ std::string EllipticalCapWithHexagonalBound::get_print()const {
 //------------------------------------------------------------------------------
 void EllipticalCapWithHexagonalBound::calculate_intersection_with(
     const Ray* ray, 
-    vector<const Intersection*> *intersections
+    vector<Intersection> *intersections
 )const {
 
 	EllipticalCapRayIntersectionEquation ellipCapRayEq(

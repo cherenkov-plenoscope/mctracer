@@ -54,7 +54,7 @@ std::string SphereCapWithCylinderBound::get_print()const {
 //------------------------------------------------------------------------------
 void SphereCapWithCylinderBound::calculate_intersection_with(
     const Ray* ray, 
-    vector<const Intersection*> *intersections
+    vector<Intersection> *intersections
 )const {
 
 	SphericalCapRayIntersectionEquation sphereCapRayEq(curvature_radius, ray);

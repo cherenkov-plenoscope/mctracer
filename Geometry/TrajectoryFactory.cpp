@@ -82,9 +82,9 @@ Cylinder* TrajectoryFactory::get_trajectory_line_of_part(
 
  	ray_trajectory->set_cylinder(
  		radius_of_trajectory_in_m, 
- 		ray->intersection_history->at(part_index)->
+ 		ray->intersection_history->at(part_index).
  			get_intersection_vector_in_world_system(),
- 		ray->intersection_history->at(part_index+1)->
+ 		ray->intersection_history->at(part_index+1).
  			get_intersection_vector_in_world_system()
  	);
 
@@ -111,7 +111,7 @@ Sphere* TrajectoryFactory::get_intersection_indicator_of_part(
 
 	intersection_indicator->set_name_pos_rot(
 		get_intersection_point_name_of_part(part_index),
-		ray->intersection_history->at(part_index)->
+		ray->intersection_history->at(part_index).
 			get_intersection_vector_in_world_system(),
 		Rot3::null
 	);

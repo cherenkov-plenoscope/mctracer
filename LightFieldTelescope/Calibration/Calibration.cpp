@@ -117,7 +117,7 @@ void Calibration::fill_calibration_block_to_table() {
 				ph->propagate_in(telescope_environment);
 				
 				PhotonSensors::FindSensorByFrame sensor_finder(
-					ph->get_final_intersection()->get_object(),
+					ph->get_final_intersection().get_object(),
 					&sub_pixels->by_frame
 				);
 

@@ -71,7 +71,7 @@ void Photon::work_on_first_causal_intersection() {
 	RayAndFrame::CausalIntersection causal_intersection(this, environment.world_geometry);
 	intersection = causal_intersection.closest_intersection;
 
-	if(intersection->does_intersect() && !absorbed_in_medium_before_reaching_surface())
+	if(intersection.does_intersect() && !absorbed_in_medium_before_reaching_surface())
 		interact_with_object();
 	else
 		get_absorbed_in_void_space();
@@ -80,17 +80,17 @@ void Photon::work_on_first_causal_intersection() {
 bool Photon::absorbed_in_medium_before_reaching_surface() {
 
 	double one_over_e_way = 
-		intersection->get_half_way_depth_coming_from(wavelength);
+		intersection.get_half_way_depth_coming_from(wavelength);
 
 	double survival_prob = 
-		exp(-intersection->get_intersection_distance()/one_over_e_way);
+		exp(-intersection.get_intersection_distance()/one_over_e_way);
 
 	return environment.random_engine->uniform() > survival_prob;
 }
 //------------------------------------------------------------------------------
 void Photon::interact_with_object() {
 
-	if(	intersection->get_facing_reflection_propability(wavelength) >=
+	if(	intersection.get_facing_reflection_propability(wavelength) >=
 		environment.random_engine->uniform() 
 	) {
 		reflect_on_surface_and_propagate_on(reflection_on_surface);
@@ -104,8 +104,8 @@ void Photon::reflect_on_surface_and_propagate_on(const InteractionType type) {
 	Photon reflected_photon(this);
 
 	reflected_photon.set_support_and_direction(
-		intersection->get_intersection_vector_in_world_system(),
-		intersection->get_reflection_direction_in_world_system(get_direction())
+		intersection.get_intersection_vector_in_world_system(),
+		intersection.get_reflection_direction_in_world_system(get_direction())
 	);
 
 	push_back_intersection_and_type_to_propagation_history(
@@ -118,7 +118,7 @@ void Photon::reflect_on_surface_and_propagate_on(const InteractionType type) {
 //------------------------------------------------------------------------------
 void Photon::reach_boundary_layer() {
 
-	if(intersection->boundary_layer_is_transparent())
+	if(intersection.boundary_layer_is_transparent())
 		fresnel_refraction_and_reflection();
 	else
 		get_absorbed_on_surface();
@@ -127,10 +127,10 @@ void Photon::reach_boundary_layer() {
 void Photon::fresnel_refraction_and_reflection() {
 
 	FresnelRefractionAndReflection fresnel(
-		intersection->world2object()->get_transformed_orientation(get_direction()),
-		intersection->get_normal_in_faceing_surface_system(),
-		intersection->get_refractive_index_coming_from(wavelength),
-		intersection->get_refractive_index_going_to(wavelength)
+		intersection.world2object()->get_transformed_orientation(get_direction()),
+		intersection.get_normal_in_faceing_surface_system(),
+		intersection.get_refractive_index_coming_from(wavelength),
+		intersection.get_refractive_index_going_to(wavelength)
 	);
 
 	if(fresnel.reflection_propability() > environment.random_engine->uniform())
@@ -143,7 +143,7 @@ void Photon::pass_the_boundary_layer(
 	const FresnelRefractionAndReflection &fresnel 
 ) {
 	
-	if(intersection->from_outside_to_inside())
+	if(intersection.from_outside_to_inside())
 		push_back_intersection_and_type_to_propagation_history(
 			intersection, 
 			refraction_to_inside
@@ -163,20 +163,20 @@ void Photon::propagate_on_after_boundary_layer(
 
 	PropagationEnvironment next_environment = environment;
 	
-	if(	intersection->get_object()->has_restrictions_on_frames_to_propagate_to() && 
-		!intersection->going_to_default_refractive_index()
+	if(	intersection.get_object()->has_restrictions_on_frames_to_propagate_to() && 
+		!intersection.going_to_default_refractive_index()
 	)
 		next_environment.world_geometry = 
-			intersection->get_object()->get_allowed_frame_to_propagate_to();
+			intersection.get_object()->get_allowed_frame_to_propagate_to();
 	else
 		next_environment.world_geometry = 
-			intersection->get_object()->get_root_of_world();
+			intersection.get_object()->get_root_of_world();
 
 	Photon refracted_photon(this);
 
 	refracted_photon.set_support_and_direction(
-		intersection->get_intersection_vector_in_world_system(),
-		intersection->object2world()->get_transformed_orientation(
+		intersection.get_intersection_vector_in_world_system(),
+		intersection.object2world()->get_transformed_orientation(
 			fresnel.get_refrac_dir_in_object_system()
 		)
 	);
@@ -217,12 +217,12 @@ double Photon::get_time_of_flight()const {
 	double time_of_flight = 0.0;
 
 	uint i =0;
-	for(const Intersection* intersec : *intersection_history){
+	for(const Intersection &intersec : *intersection_history){
 
 		if(i!=0)
 			time_of_flight += get_time_to_pass_distance_in_refractive_index(
-				intersec->get_intersection_distance(),
-				intersec->get_refractive_index_coming_from(wavelength)
+				intersec.get_intersection_distance(),
+				intersec.get_refractive_index_coming_from(wavelength)
 			);
 
 		i++;
@@ -237,8 +237,7 @@ void Photon::delete_history() {
 		delete mc_truth;
 	}
 
-	for(uint i=0; i<intersection_history->size(); i++)
-		delete intersection_history->at(i);
+	intersection_history->clear();
 	delete intersection_history;
 	
 	interaction_type_history->clear();

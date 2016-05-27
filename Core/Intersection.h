@@ -59,7 +59,7 @@ public:
 	Vec3 get_normal_in_faceing_surface_system()const;
 	bool going_to_default_refractive_index()const;
 	bool operator<(const Intersection& other) const;
-	static bool compare(const Intersection* one, const Intersection* two);
+	static bool compare(const Intersection &one, const Intersection &two);
 protected:
 
 	bool ray_is_running_from_outside_to_inside(

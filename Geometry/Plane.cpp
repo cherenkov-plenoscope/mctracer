@@ -31,7 +31,7 @@ std::string Plane::get_print()const {
 //------------------------------------------------------------------------------
 void Plane::calculate_intersection_with(
     const Ray* ray, 
-    vector<const Intersection*> *intersections
+    vector<Intersection> *intersections
 )const{
 
 	XyPlaneRayIntersectionEquation xyPlaneRayEquation(ray);
@@ -44,16 +44,16 @@ void Plane::calculate_intersection_with(
 		if(RectBounds.is_inside(&intersection_vector)) {
 
 			if(ray->get_support() != intersection_vector) {
-				Intersection* intersec;
-				intersec = new Intersection(
-					this,
-					intersection_vector,
-					xyPlaneRayEquation.get_plane_normal_vector(),
-					v,
-					ray->get_direction()
-				);
 
-				intersections->push_back(intersec);
+				intersections->push_back(
+					Intersection(
+						this,
+						intersection_vector,
+						xyPlaneRayEquation.get_plane_normal_vector(),
+						v,
+						ray->get_direction()
+					)
+				);
 			}
 		}
 	}	

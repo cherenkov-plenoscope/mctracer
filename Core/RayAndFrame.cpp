@@ -112,7 +112,6 @@ CausalIntersection::CausalIntersection(
     find_intersection_candidates_in_tree_of_frames(frame);
     find_intersections_in_candidate_objects();
     calculate_closest_intersection();   
-    delete_remaining_intersections();
 }
 
 void CausalIntersection::find_intersection_candidates_in_tree_of_frames(
@@ -139,14 +138,14 @@ void CausalIntersection::find_intersections_in_candidate_objects() {
 
         object->calculate_intersection_with(
             &ray_in_object_system, 
-            &intersections
+            &candidate_intersections
         );
     }
 }
 
 void CausalIntersection::calculate_closest_intersection() {
-    if(intersections.size() == 0)
-        closest_intersection = new Intersection(
+    if(candidate_intersections.size() == 0)
+        closest_intersection = Intersection(
             SurfaceEntity::void_object,
             ray->get_pos_at(1e4),
             ray->get_direction(),
@@ -155,16 +154,10 @@ void CausalIntersection::calculate_closest_intersection() {
         );
     else
         closest_intersection = *min_element(    
-            intersections.begin(),
-            intersections.end() ,
+            candidate_intersections.begin(),
+            candidate_intersections.end(),
             Intersection::compare
         );
-}
-
-void CausalIntersection::delete_remaining_intersections() {
-    for(const Intersection* intersection : intersections) 
-        if(intersection != closest_intersection)
-            delete intersection;
 }
 //------------------------------------------------------------------------------
 } //RayAndFrame

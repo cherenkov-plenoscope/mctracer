@@ -33,7 +33,7 @@ public:
 	std::string get_print()const;
 	void calculate_intersection_with(
         const Ray* ray, 
-        vector<const Intersection*> *intersections
+        vector<Intersection> *intersections
     )const;
 private:
 

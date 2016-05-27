@@ -4,7 +4,7 @@ void SurfaceWithOuterPrismBound::add_causeal_intersection(
 		const TwoSolutionSurfaceRayEquation* eq,
 		const PrismZ* outer_bound,
 		const Ray *ray,
-		vector<const Intersection*> *intersections
+		vector<Intersection> *intersections
 )const {
 
 	const Vec3 plus_intersec = ray->get_pos_at(eq->get_plus_solution());
@@ -60,15 +60,16 @@ void SurfaceWithOuterPrismBound::add_causeal_intersection(
 		Vec3 causal_intersec = ray->get_pos_at(causal_solution);
 
 		if(ray->get_support() != causal_intersec) {
-			Intersection* intersec = new Intersection(
-				this,
-				causal_intersec,
-				eq->get_surface_normal_given_intersection_vector(&causal_intersec),
-				causal_solution,
-				ray->get_direction()
+			
+			intersections->push_back(
+				Intersection(
+					this,
+					causal_intersec,
+					eq->get_surface_normal_given_intersection_vector(&causal_intersec),
+					causal_solution,
+					ray->get_direction()
+				)
 			);
-
-			intersections->push_back(intersec);
 		}
 	}
 }

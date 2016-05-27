@@ -36,7 +36,7 @@ class RayForPropagation :public Ray{
 	friend class TrajectoryFactory;
 protected:
 
-	vector<const Intersection*>* intersection_history;
+	vector<Intersection>* intersection_history;
 	vector<InteractionType>* interaction_type_history;
 
 	uint identifier_number;
@@ -44,7 +44,7 @@ protected:
 	PropagationEnvironment environment = 
 		PropagationEnvironment::default_environment;
 
-	const Intersection* intersection = Intersection::void_intersection;
+	Intersection intersection = *Intersection::void_intersection;
 
 public:
 	
@@ -54,18 +54,18 @@ public:
 	void set_id(const uint nID);
 	uint get_id()const;
 	void push_back_intersection_and_type_to_propagation_history(
-		const Intersection* interact, 
+		const Intersection& interact, 
 		const InteractionType type
 	);
 	string get_print()const;
 	double get_accumulative_distance()const;
 	virtual void propagate_in(PropagationEnvironment env);
 	uint get_number_of_interactions_so_far()const;
-	const Intersection* get_intersection_at(const uint index)const;
+	const Intersection& get_intersection_at(const uint index)const;
 	InteractionType get_final_interaction_type()const {
 		return interaction_type_history->back();
 	};
-	const Intersection* get_final_intersection()const;
+	const Intersection& get_final_intersection()const;
 	virtual double get_time_of_flight()const;
 	virtual void delete_history();
 	void transform(const HomTra3 *T);
@@ -78,7 +78,7 @@ protected:
 	void carry_on_propagation_properties_of_ray(
 		const RayForPropagation* ray_to_be_carried_on
 	);
-	std::string get_type_print(const InteractionType type)const;
+	string get_type_print(const InteractionType type)const;
 private:
 
 	void push_back_production_of_ray();

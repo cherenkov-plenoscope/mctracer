@@ -21,7 +21,7 @@ protected:
 		const TwoSolutionSurfaceRayEquation* eq,
 		const PrismZ* outer_bound,
 		const Ray *ray,
-		vector<const Intersection*> *intersections
+		vector<Intersection> *intersections
 	)const;	
 };
 #endif // __SurfaceWithOuterPrismBound_H_INCLUDED__

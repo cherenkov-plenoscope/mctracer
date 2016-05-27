@@ -92,7 +92,7 @@ public:
     void update_rotation(const Rot3 rot);
     virtual void calculate_intersection_with(
         const Ray* ray, 
-        vector<const Intersection*> *intersections
+        vector<Intersection> *intersections
     )const;
 protected:
 

@@ -12,7 +12,7 @@ RayForPropagation::RayForPropagation(
 }
 //------------------------------------------------------------------------------
 void RayForPropagation::init_propagation_history() {
-	intersection_history = new vector<const Intersection*>;	
+	intersection_history = new vector<Intersection>;	
 	interaction_type_history = new vector<InteractionType>;
 
 	push_back_production_of_ray();
@@ -20,7 +20,7 @@ void RayForPropagation::init_propagation_history() {
 //------------------------------------------------------------------------------
 void RayForPropagation::push_back_production_of_ray() {
 
-	Intersection* production_intersection = new Intersection(
+	Intersection production_intersection = Intersection(
 		SurfaceEntity::source_object,
 		support,
 		direction, // set normal of production obj to direction of ray
@@ -50,8 +50,7 @@ void RayForPropagation::carry_on_propagation_properties_of_ray(
 //------------------------------------------------------------------------------
 void RayForPropagation::delete_history() {
 
-	for(uint i=0; i<intersection_history->size(); i++)
-		delete intersection_history->at(i);
+	intersection_history->clear();
 	delete intersection_history;
 	
 	interaction_type_history->clear();
@@ -80,14 +79,13 @@ string RayForPropagation::get_history_print()const {
 	int index = 0;
 	for(InteractionType type : *interaction_type_history) {
 		out << ++index << ") " << get_type_print(type) << " in ";
-		out << intersection_history->at(index-1)->
-			get_object()->get_name();
-		out << " " << intersection_history->at(index-1)->	
+		out << intersection_history->at(index-1).get_object()->get_name();
+		out << " " << intersection_history->at(index-1).	
 			get_intersection_vector_in_world_system() << ", dist to prev.:";
 
 		if(index>1) {
-			out << intersection_history->at(index-1)->get_intersection_vector_in_world_system().distance_to(
-			   		intersection_history->at(index-2)->get_intersection_vector_in_world_system()
+			out << intersection_history->at(index-1).get_intersection_vector_in_world_system().distance_to(
+			   		intersection_history->at(index-2).get_intersection_vector_in_world_system()
 				)*1e9 << "nm";
 		}
 
@@ -97,7 +95,7 @@ string RayForPropagation::get_history_print()const {
 }
 //------------------------------------------------------------------------------
 void RayForPropagation::push_back_intersection_and_type_to_propagation_history(
-	const Intersection* interact, 
+	const Intersection &interact, 
 	const InteractionType type
 ) {
 	intersection_history->push_back(interact);
@@ -108,8 +106,8 @@ double RayForPropagation::get_accumulative_distance()const {
   	
   	double accumulative_distance = 0.0;
 	
-	for(const Intersection* intersection : *intersection_history) 
-      	accumulative_distance += intersection->get_intersection_distance();
+	for(const Intersection &intersection : *intersection_history) 
+      	accumulative_distance += intersection.get_intersection_distance();
 
     return accumulative_distance;	
 }
@@ -122,7 +120,7 @@ uint RayForPropagation::get_number_of_interactions_so_far()const {
 	return uint(intersection_history->size());
 }
 //------------------------------------------------------------------------------
-const Intersection* RayForPropagation::get_intersection_at(
+const Intersection& RayForPropagation::get_intersection_at(
 	const uint index
 )const{
 	return intersection_history->at(index);
@@ -147,7 +145,7 @@ string RayForPropagation::get_type_print(const InteractionType type)const {
 	}
 }
 //------------------------------------------------------------------------------
-const Intersection* RayForPropagation::get_final_intersection()const {
+const Intersection& RayForPropagation::get_final_intersection()const {
 	return intersection_history->back();
 }
 //------------------------------------------------------------------------------
@@ -162,16 +160,16 @@ Vec3 RayForPropagation::get_final_intersection_incident_vector_in_object_frame()
 		const uint second_last_i = last_i - 1;
 
 		Vec3 final = 
-			intersection_history->at(last_i)->
+			intersection_history->at(last_i).
 				get_intersection_vector_in_world_system();
 		
-		Vec3 second_last = intersection_history->at(second_last_i)->
+		Vec3 second_last = intersection_history->at(second_last_i).
 				get_intersection_vector_in_world_system();
 
 		Vec3 incident_direction_in_world = (final - second_last);
 			incident_direction_in_world.normalize();
 		
-		return intersection_history->back()->world2object()->
+		return intersection_history->back().world2object()->
 			get_transformed_orientation(incident_direction_in_world);
 	}
 }

@@ -14,7 +14,7 @@ namespace PhotonSensor {
 	void Sensor::assign_photon_to_this_sensor(const Photon* photon) {
 		
 		if(	
-			photon->get_final_intersection()->get_object() == 
+			photon->get_final_intersection().get_object() == 
 			sensor_frame
 		) {
 
@@ -30,9 +30,9 @@ namespace PhotonSensor {
 			info.id = photon->get_id();
 			info.wavelength = photon->get_wavelength();
 			info.arrival_time = photon->get_time_of_flight();
-			info.x_intersect = photon->get_final_intersection()->
+			info.x_intersect = photon->get_final_intersection().
 					get_intersection_vector_in_object_system().x();
-			info.y_intersect = photon->get_final_intersection()->
+			info.y_intersect = photon->get_final_intersection().
 					get_intersection_vector_in_object_system().y();
 			info.theta_x = cos_theta_x;
 			info.theta_y = cos_theta_y;

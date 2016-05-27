@@ -346,7 +346,7 @@ bool Frame::has_children()const {
 //------------------------------------------------------------------------------
 void Frame::calculate_intersection_with(
 	const Ray* ray, 
-    vector<const Intersection*> *intersections
+    vector<Intersection> *intersections
 )const {}
 //------------------------------------------------------------------------------
 void Frame::cluster_using_helper_frames() {

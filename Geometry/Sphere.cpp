@@ -75,28 +75,29 @@ QuadraticEquation Sphere::get_ray_parameter_equation_for_intersections_with_sphe
 void Sphere::add_sphere_intersection_for_ray_parameter(
 	const Ray* ray, 
 	const double ray_parameter,
-	vector<const Intersection*> *intersections
+	vector<Intersection> *intersections
 )const {
 
 	Vec3 intersection_point = ray->get_pos_at(ray_parameter);
 	Vec3 surface_normal = intersection_point/intersection_point.norm();
 	
 	if(ray->get_support() != intersection_point) {
-		Intersection* intersec = new Intersection(
-			this,
-			intersection_point,
-			surface_normal,
-			ray_parameter,
-			ray->get_direction()
+		
+		intersections->push_back(
+			Intersection(
+				this,
+				intersection_point,
+				surface_normal,
+				ray_parameter,
+				ray->get_direction()
+			)
 		);
-
-		intersections->push_back(intersec);
 	}
 }
 //------------------------------------------------------------------------------
 void Sphere::calculate_intersection_with(
     const Ray* ray, 
-    vector<const Intersection*> *intersections
+    vector<Intersection> *intersections
 )const{
 
 	QuadraticEquation rayParamEqForIntersections = 

@@ -33,16 +33,15 @@ namespace RayAndFrame {
         const Ray* ray;
         const Frame* frame;
         
-        const Intersection* closest_intersection;
+        Intersection closest_intersection;
         vector<const Frame*> candidate_objects;
-        vector<const Intersection*> intersections;
+        vector<Intersection> candidate_intersections;
 
         CausalIntersection(const Ray* _ray, const Frame* _frame);
     private:
         void find_intersection_candidates_in_tree_of_frames(const Frame* frame);
         void find_intersections_in_candidate_objects();
         void calculate_closest_intersection();
-        void delete_remaining_intersections();
     };
 }
 #endif // __RAYANDFRAME_H_INCLUDED__ 

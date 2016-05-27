@@ -78,7 +78,7 @@ private:
 		void *param
 	);
 	void print_info_of_probing_ray_for_pixel_col_row(int x, int y);
-	string get_intersection_info_print(const Intersection* intersec)const;
+	string get_intersection_info_print(const Intersection intersec)const;
 	void update_current_camera_position(Vec3 new_translation_World2Camera);
 	ApertureCamera get_ApertureCamera_based_on_display_camera()const;
 	void create_display();

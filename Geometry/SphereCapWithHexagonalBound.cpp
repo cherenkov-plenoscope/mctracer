@@ -44,7 +44,7 @@ std::string SphereCapWithHexagonalBound::get_print()const {
 //------------------------------------------------------------------------------
 void SphereCapWithHexagonalBound::calculate_intersection_with(
     const Ray* ray, 
-    vector<const Intersection*> *intersections
+    vector<Intersection> *intersections
 )const{
 
 	SphericalCapRayIntersectionEquation sphereCapRayEq(curvature_radius, ray);

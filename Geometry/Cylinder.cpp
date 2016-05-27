@@ -134,7 +134,7 @@ string Cylinder::get_print()const {
 //------------------------------------------------------------------------------
 void Cylinder::calculate_intersection_with(
     const Ray* ray, 
-    vector<const Intersection*> *intersections
+    vector<Intersection> *intersections
 )const{
 
 	ZaxisCylinderRayIntersectionEquation cylRayEquation(Radius, ray);
@@ -148,15 +148,15 @@ void Cylinder::calculate_intersection_with(
 
 			if(ray->get_support() != intersection_vector) {
 				
-				Intersection* intersec = new Intersection(
-					this,
-					intersection_vector,
-					get_surface_normal_for_intersection_vec(&intersection_vector),
-					v,
-					ray->get_direction()
+				intersections->push_back(
+					Intersection(
+						this,
+						intersection_vector,
+						get_surface_normal_for_intersection_vec(&intersection_vector),
+						v,
+						ray->get_direction()
+					)
 				);
-
-				intersections->push_back(intersec);
 			}			
 		}
 	}

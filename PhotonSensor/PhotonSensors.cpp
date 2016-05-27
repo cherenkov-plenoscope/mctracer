@@ -58,7 +58,7 @@ Sensor* Sensors::at_frame(const Frame* frame) {
 void Sensors::assign_photon(const Photon* photon) {
 	
     FindSensorByFrame finder(
-        photon->get_final_intersection()->get_object(),
+        photon->get_final_intersection().get_object(),
         &by_frame
     );
 

@@ -3,15 +3,13 @@
 //------------------------------------------------------------------------------
 DistanceMeter::DistanceMeter(const Ray* ray, const Frame* world) {
 	RayAndFrame::CausalIntersection causal_intersection(ray, world);
-	const Intersection* closest_intersec = causal_intersection.closest_intersection;
+	const Intersection closest_intersec = causal_intersection.closest_intersection;
 
-	if(closest_intersec->does_intersect()) {
+	if(closest_intersec.does_intersect()) {
 		does_DistanceMeter_face_an_object = true;
 		distance_to_closest_object = 
-			closest_intersec->get_intersection_distance();
+			closest_intersec.get_intersection_distance();
 	}
-
-	delete closest_intersec;
 }
 //------------------------------------------------------------------------------
 bool DistanceMeter::does_face_an_object()const {

@@ -65,12 +65,12 @@ TEST_F(PlaneIntersectionTest, frontal) {
 	Ray ray(Vec3(0.0, 0.0, -1.0), Vec3(0.0, 0.0, 1.0));
 
 	RayAndFrame::CausalIntersection causal_intersection(&ray, &world);
-	const Intersection* intersec = causal_intersection.closest_intersection;
+	const Intersection intersec = causal_intersection.closest_intersection;
 
-	ASSERT_TRUE(intersec->does_intersect());
-	EXPECT_EQ(&plane, intersec->get_object());
-	EXPECT_EQ(Vec3::null, intersec->get_intersection_vector_in_object_system());
-	EXPECT_EQ(Vec3(0.0, 0.0, 1.0), intersec->get_surface_normal_in_object_system());
+	ASSERT_TRUE(intersec.does_intersect());
+	EXPECT_EQ(&plane, intersec.get_object());
+	EXPECT_EQ(Vec3::null, intersec.get_intersection_vector_in_object_system());
+	EXPECT_EQ(Vec3(0.0, 0.0, 1.0), intersec.get_surface_normal_in_object_system());
 }
 //------------------------------------------------------------------------------
 TEST_F(PlaneIntersectionTest, frontal_lateral_offset_alwas_intersection) {
@@ -84,12 +84,12 @@ TEST_F(PlaneIntersectionTest, frontal_lateral_offset_alwas_intersection) {
 			Ray ray(Vec3(x_support, y_support, -1.0), Vec3(0.0, 0.0, 1.0));
 
 			RayAndFrame::CausalIntersection causal_intersection(&ray, &world);
-			const Intersection* intersec = causal_intersection.closest_intersection;
+			const Intersection intersec = causal_intersection.closest_intersection;
 
-			ASSERT_TRUE(intersec->does_intersect());
-			EXPECT_EQ(&plane, intersec->get_object());
-			EXPECT_EQ(Vec3(x_support, y_support, 0.0), intersec->get_intersection_vector_in_object_system());
-			EXPECT_EQ(Vec3(0.0, 0.0, 1.0), intersec->get_surface_normal_in_object_system());
+			ASSERT_TRUE(intersec.does_intersect());
+			EXPECT_EQ(&plane, intersec.get_object());
+			EXPECT_EQ(Vec3(x_support, y_support, 0.0), intersec.get_intersection_vector_in_object_system());
+			EXPECT_EQ(Vec3(0.0, 0.0, 1.0), intersec.get_surface_normal_in_object_system());
 		}
 	}
 }
@@ -98,16 +98,16 @@ TEST_F(PlaneIntersectionTest, close_miss_x) {
 
 	Ray ray(Vec3(x_width/2.0+0.01, 0.0, -1.0), Vec3(0.0, 0.0, 1.0));
 	RayAndFrame::CausalIntersection causal_intersection(&ray, &world);
-	const Intersection* intersec = causal_intersection.closest_intersection;
-	EXPECT_FALSE(intersec->does_intersect());
+	const Intersection intersec = causal_intersection.closest_intersection;
+	EXPECT_FALSE(intersec.does_intersect());
 }
 //------------------------------------------------------------------------------
 TEST_F(PlaneIntersectionTest, close_miss_y) {
 
 	Ray ray(Vec3(0.0, y_width/2.0+0.01, -1.0), Vec3(0.0, 0.0, 1.0));
 	RayAndFrame::CausalIntersection causal_intersection(&ray, &world);
-	const Intersection* intersec = causal_intersection.closest_intersection;
-	EXPECT_FALSE(intersec->does_intersect());
+	const Intersection intersec = causal_intersection.closest_intersection;
+	EXPECT_FALSE(intersec.does_intersect());
 }
 //------------------------------------------------------------------------------
 TEST_F(PlaneIntersectionTest, move_plane_up) {
@@ -136,6 +136,6 @@ TEST_F(PlaneIntersectionTest, move_plane_up) {
 
 	Ray ray(Vec3(0.0, 0.0, -1.0), Vec3(0.0, 0.0, 1.0));
 	RayAndFrame::CausalIntersection causal_intersection(&ray, &world);
-	const Intersection* intersec = causal_intersection.closest_intersection;
-	EXPECT_TRUE(intersec->does_intersect());
+	const Intersection intersec = causal_intersection.closest_intersection;
+	EXPECT_TRUE(intersec.does_intersect());
 }
