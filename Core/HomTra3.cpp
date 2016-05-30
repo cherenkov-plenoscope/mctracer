@@ -3,23 +3,25 @@
 #include <math.h>
 #include <iomanip>
 #include <iostream>
+using std::stringstream;
+
 // homogenous Transformation, component adresses:
 // [ 0,0    0,1     0,2     0,3 ]
 // [ 1,0    1,1     1,2     1,3 ]
 // [ 2,0    2,1     2,2     2,3 ]
 // [ 3,0    3,1     3,2     3,3 ]
 //
-// -Rotatin component: Matrix R[3x3]
-// -Translation component: Vector T[1x3]
+// -Rotatin component: Matrix r[3x3]
+// -Translation component: Vector t[1x3]
 //
-// homoT =  [ R(0,0) R(0,1) R(0,2) T(1) ]
-//          [ R(1,0) R(1,1) R(1,2) T(2) ]
-//          [ R(2,0) R(2,1) R(2,2) T(3) ]
+// homoT =  [ r(0,0) r(0,1) r(0,2) t(1) ]
+//          [ r(1,0) r(1,1) r(1,2) t(2) ]
+//          [ r(2,0) r(2,1) r(2,2) t(3) ]
 //          [ 0      0      0      1    ]
 //
 //------------------------------------------------------------------------------
 HomTra3::HomTra3():
-    T{{1,0,0,0},{0,1,0,0},{0,0,1,0}}
+    T{{1,0,0,0}, {0,1,0,0}, {0,0,1,0}}
 {
     //default init is unit matrix
     // [1 0 0 0]
@@ -27,6 +29,14 @@ HomTra3::HomTra3():
     // [0 0 1 0]
     // [0 0 0 1] //last row is always the same
 }
+//------------------------------------------------------------------------------
+HomTra3::HomTra3(
+    const double r00, const double r10, const double r20, const double t30,
+    const double r01, const double r11, const double r21, const double t31,
+    const double r02, const double r12, const double r22, const double t32
+): 
+    T{{r00, r10, r20, t30}, {r01, r11, r21, t31}, {r02, r12, r22, t32}} 
+{}
 //------------------------------------------------------------------------------
 void HomTra3::set_transformation(const Rot3 R, const Vec3 pos) {
 
@@ -54,29 +64,29 @@ void HomTra3::set_translation_component(const Vec3 &t) {
 }
 //------------------------------------------------------------------------------
 void HomTra3::set_rotation_component_based_on_rot_axis(const Rot3 R) {
-        // ensure rot_axis is a unit vector
-        Vec3 rot_axis = R.get_rot_axis();
-        rot_axis = rot_axis/rot_axis.norm();
-        
-        const double rx = rot_axis.x();
-        const double ry = rot_axis.y();
-        const double rz = rot_axis.z();     
-        
-        const double sinR = sin( R.get_rot_angle_in_rad() );
-        const double cosR = cos( R.get_rot_angle_in_rad() );
+    // ensure rot_axis is a unit vector
+    Vec3 rot_axis = R.get_rot_axis();
+    rot_axis = rot_axis/rot_axis.norm();
+    
+    const double rx = rot_axis.x();
+    const double ry = rot_axis.y();
+    const double rz = rot_axis.z();     
+    
+    const double sinR = sin( R.get_rot_angle_in_rad() );
+    const double cosR = cos( R.get_rot_angle_in_rad() );
 
-        // first row
-        T[0][0] = cosR +  rx*rx*(1.0-cosR);
-        T[0][1] = rx*ry*(1.0-cosR)-rz*sinR;
-        T[0][2] = rx*rz*(1.0-cosR)+ry*sinR;
-        // second row
-        T[1][0] = ry*rx*(1.0-cosR)+rz*sinR;
-        T[1][1] = cosR +  ry*ry*(1.0-cosR);
-        T[1][2] = ry*rz*(1.0-cosR)-rx*sinR;
-        // third row
-        T[2][0] = rz*rx*(1.0-cosR)-ry*sinR;
-        T[2][1] = rz*ry*(1.0-cosR)+rx*sinR;
-        T[2][2] = cosR +  rz*rz*(1.0-cosR);
+    // first row
+    T[0][0] = cosR +  rx*rx*(1.0-cosR);
+    T[0][1] = rx*ry*(1.0-cosR)-rz*sinR;
+    T[0][2] = rx*rz*(1.0-cosR)+ry*sinR;
+    // second row
+    T[1][0] = ry*rx*(1.0-cosR)+rz*sinR;
+    T[1][1] = cosR +  ry*ry*(1.0-cosR);
+    T[1][2] = ry*rz*(1.0-cosR)-rx*sinR;
+    // third row
+    T[2][0] = rz*rx*(1.0-cosR)-ry*sinR;
+    T[2][1] = rz*ry*(1.0-cosR)+rx*sinR;
+    T[2][2] = cosR +  rz*rz*(1.0-cosR);
 }
 //------------------------------------------------------------------------------
 void HomTra3::set_rotation_component_based_on_xyz_angles(const Rot3 R) {
@@ -153,6 +163,23 @@ Vec3 HomTra3::get_transformed_orientation(const Vec3& ori)const {
     );
 }
 //------------------------------------------------------------------------------
+Vec3 HomTra3::get_transformed_orientation_inverse(const Vec3& ori)const {
+    return Vec3(
+        //x
+        ori.x()*T[0][0] + 
+        ori.y()*T[1][0] +
+        ori.z()*T[2][0],
+        //y
+        ori.x()*T[0][1] + 
+        ori.y()*T[1][1] + 
+        ori.z()*T[2][1],
+        //z
+        ori.x()*T[0][2] + 
+        ori.y()*T[1][2] + 
+        ori.z()*T[2][2]
+    );    
+}
+//------------------------------------------------------------------------------
 Vec3 HomTra3::get_transformed_position(const Vec3& pos)const {
     return Vec3(
         //x
@@ -170,12 +197,29 @@ Vec3 HomTra3::get_transformed_position(const Vec3& pos)const {
     );
 }
 //------------------------------------------------------------------------------
+Vec3 HomTra3::get_transformed_position_inverse(const Vec3& pos)const {
+    return Vec3(
+        //x
+        pos.x()*T[0][0] + 
+        pos.y()*T[1][0] + 
+        pos.z()*T[2][0] - (T[0][0]*T[0][3] + T[1][0]*T[1][3] + T[2][0]*T[2][3]),
+        //y
+        pos.x()*T[0][1] + 
+        pos.y()*T[1][1] + 
+        pos.z()*T[2][1] - (T[0][1]*T[0][3] + T[1][1]*T[1][3] + T[2][1]*T[2][3]),
+        //z
+        pos.x()*T[0][2] + 
+        pos.y()*T[1][2] + 
+        pos.z()*T[2][2] - (T[0][2]*T[0][3] + T[1][2]*T[1][3] + T[2][2]*T[2][3])
+    );
+}
+//------------------------------------------------------------------------------
 Vec3 HomTra3::get_translation()const {
     return Vec3(T[0][3], T[1][3], T[2][3]);
 }
 //------------------------------------------------------------------------------
-std::string HomTra3::get_print()const {
-    std::stringstream out; 
+string HomTra3::get_print()const {
+    stringstream out; 
     out << std::setprecision(3);
     out << get_single_row_print(0);
     out << get_single_row_print(1);
@@ -184,8 +228,8 @@ std::string HomTra3::get_print()const {
     return  out.str();
 }
 //------------------------------------------------------------------------------
-std::string HomTra3::get_single_row_print(const uint r)const {
-    std::stringstream out; 
+string HomTra3::get_single_row_print(const uint r)const {
+    stringstream out; 
     out << std::setprecision(3) << "[  ";
     out << T[r][0] << " \t" << T[r][1] << " \t" << T[r][2] << " \t" << T[r][3];
     out <<"  ]\n";
@@ -200,70 +244,57 @@ void HomTra3::operator= (const HomTra3 G) {
 //------------------------------------------------------------------------------
 HomTra3 HomTra3::operator* (const HomTra3 G)const {
     // Matrix multiplication 
-    HomTra3  M;
 
-    // [ 0,0    0,1     0,2     0,3 ]
-    // [ 1,0    1,1     1,2     1,3 ]
-    // [ 2,0    2,1     2,2     2,3 ]
-    // [ 3,0    3,1     3,2     3,3 ] = always [ 0.0   0.0   0.0   1.0 ]
+    return HomTra3(
+        T[0][0]*G.T[0][0] + T[0][1]*G.T[1][0] + T[0][2]*G.T[2][0],// + T[0][3]*      0.0
+        T[0][0]*G.T[0][1] + T[0][1]*G.T[1][1] + T[0][2]*G.T[2][1],// + T[0][3]*      0.0
+        T[0][0]*G.T[0][2] + T[0][1]*G.T[1][2] + T[0][2]*G.T[2][2],// + T[0][3]*      0.0
+        T[0][0]*G.T[0][3] + T[0][1]*G.T[1][3] + T[0][2]*G.T[2][3] + T[0][3],//*      1.0   
 
-    M.T[0][0] = T[0][0]*G.T[0][0] + T[0][1]*G.T[1][0] + T[0][2]*G.T[2][0];// + T[0][3]*      0.0
-    M.T[0][1] = T[0][0]*G.T[0][1] + T[0][1]*G.T[1][1] + T[0][2]*G.T[2][1];// + T[0][3]*      0.0
-    M.T[0][2] = T[0][0]*G.T[0][2] + T[0][1]*G.T[1][2] + T[0][2]*G.T[2][2];// + T[0][3]*      0.0
-    M.T[0][3] = T[0][0]*G.T[0][3] + T[0][1]*G.T[1][3] + T[0][2]*G.T[2][3] + T[0][3];//*      1.0   
+        T[1][0]*G.T[0][0] + T[1][1]*G.T[1][0] + T[1][2]*G.T[2][0],// + T[1][3]*      0.0
+        T[1][0]*G.T[0][1] + T[1][1]*G.T[1][1] + T[1][2]*G.T[2][1],// + T[1][3]*      0.0
+        T[1][0]*G.T[0][2] + T[1][1]*G.T[1][2] + T[1][2]*G.T[2][2],// + T[1][3]*      0.0
+        T[1][0]*G.T[0][3] + T[1][1]*G.T[1][3] + T[1][2]*G.T[2][3] + T[1][3],//*      1.0
 
-    M.T[1][0] = T[1][0]*G.T[0][0] + T[1][1]*G.T[1][0] + T[1][2]*G.T[2][0];// + T[1][3]*      0.0
-    M.T[1][1] = T[1][0]*G.T[0][1] + T[1][1]*G.T[1][1] + T[1][2]*G.T[2][1];// + T[1][3]*      0.0
-    M.T[1][2] = T[1][0]*G.T[0][2] + T[1][1]*G.T[1][2] + T[1][2]*G.T[2][2];// + T[1][3]*      0.0
-    M.T[1][3] = T[1][0]*G.T[0][3] + T[1][1]*G.T[1][3] + T[1][2]*G.T[2][3] + T[1][3];//*      1.0
+        T[2][0]*G.T[0][0] + T[2][1]*G.T[1][0] + T[2][2]*G.T[2][0],// + T[2][3]*      0.0
+        T[2][0]*G.T[0][1] + T[2][1]*G.T[1][1] + T[2][2]*G.T[2][1],// + T[2][3]*      0.0
+        T[2][0]*G.T[0][2] + T[2][1]*G.T[1][2] + T[2][2]*G.T[2][2],// + T[2][3]*      0.0
+        T[2][0]*G.T[0][3] + T[2][1]*G.T[1][3] + T[2][2]*G.T[2][3] + T[2][3] //*      1.0
 
-    M.T[2][0] = T[2][0]*G.T[0][0] + T[2][1]*G.T[1][0] + T[2][2]*G.T[2][0];// + T[2][3]*      0.0
-    M.T[2][1] = T[2][0]*G.T[0][1] + T[2][1]*G.T[1][1] + T[2][2]*G.T[2][1];// + T[2][3]*      0.0
-    M.T[2][2] = T[2][0]*G.T[0][2] + T[2][1]*G.T[1][2] + T[2][2]*G.T[2][2];// + T[2][3]*      0.0
-    M.T[2][3] = T[2][0]*G.T[0][3] + T[2][1]*G.T[1][3] + T[2][2]*G.T[2][3] + T[2][3];//*      1.0
-
-  //M.T[3][0] = T[3][0]*G.T[0][0] + T[3][1]*G.T[1][0] + T[3][2]*G.T[2][0] + T[3][3]*G.T[3][0];
-  //M.T[3][1] = T[3][0]*G.T[0][1] + T[3][1]*G.T[1][1] + T[3][2]*G.T[2][1] + T[3][3]*G.T[3][1];
-  //M.T[3][2] = T[3][0]*G.T[0][2] + T[3][1]*G.T[1][2] + T[3][2]*G.T[2][2] + T[3][3]*G.T[3][2];
-  //M.T[3][3] = T[3][0]*G.T[0][3] + T[3][1]*G.T[1][3] + T[3][2]*G.T[2][3] + T[3][3]*G.T[3][3];
-
-    return M;
+      //T[3][0]*G.T[0][0] + T[3][1]*G.T[1][0] + T[3][2]*G.T[2][0] + T[3][3]*G.T[3][0];
+      //T[3][0]*G.T[0][1] + T[3][1]*G.T[1][1] + T[3][2]*G.T[2][1] + T[3][3]*G.T[3][1];
+      //T[3][0]*G.T[0][2] + T[3][1]*G.T[1][2] + T[3][2]*G.T[2][2] + T[3][3]*G.T[3][2];
+      //T[3][0]*G.T[0][3] + T[3][1]*G.T[1][3] + T[3][2]*G.T[2][3] + T[3][3]*G.T[3][3];        
+    );
 }
 //------------------------------------------------------------------------------
 HomTra3 HomTra3::inverse()const {
-    HomTra3 I_Rot;
-    I_Rot.copy_inverse_rotation_component_from(this);
-
-    HomTra3 I_tra;
-    I_tra.copy_inverse_translation_component_from(this);
-
-    // composition
-    return I_Rot*I_tra;
-}
-//------------------------------------------------------------------------------
-void HomTra3::copy_inverse_rotation_component_from(const HomTra3 *M) {
-    // Transpose rot matrix because rot maticies are orthogonal
-    // and therefore rot^(-1) = rot^T
-    // first row of Rot matrix
-    T[0][0] = M->T[0][0];
-    T[0][1] = M->T[1][0];
-    T[0][2] = M->T[2][0];
-    // second row of Rot matrix
-    T[1][0] = M->T[0][1];
-    T[1][1] = M->T[1][1];
-    T[1][2] = M->T[2][1];
-    // third row of Rot matrix
-    T[2][0] = M->T[0][2];
-    T[2][1] = M->T[1][2];
-    T[2][2] = M->T[2][2];
-}
-//------------------------------------------------------------------------------
-void HomTra3::copy_inverse_translation_component_from(const HomTra3 *M) {
-    // flip sign of translation vector to inverse the effect of the 
-    // translation component
-    T[0][3] = -M->T[0][3];
-    T[1][3] = -M->T[1][3];
-    T[2][3] = -M->T[2][3];  
+    // The inverse Homogenous Transformation is a composition of two components:
+    //
+    // 1)
+    //   inverse_HomTra3_rot =           | 0   The inverse rotation matrix R^-1
+    //                             R^-1  | 0   is the same as R^T since rotation
+    //                                   | 0   matrices are orthogonal.
+    //                          ---------+---  The translation component is (0,0,0).
+    //                           0  0  0 | 1
+    //
+    // 2)
+    //   inverse_HomTra3_trans = 1  0  0 | -tx  The rotation part is unity. 
+    //                           0  1  0 | -ty  The translation part is the 
+    //                           0  0  1 | -tz  negative translation component
+    //                          ---------+---   of the original
+    //                           0  0  0 | 1
+    //
+    // Now these two components are multiplied to compose the inverse HomTra3:
+    //
+    // inverse_HomTra3 = inverse_HomTra3_rot * inverse_HomTra3_trans
+    //
+    // The composition done by hand:
+    return HomTra3(
+        T[0][0], T[1][0], T[2][0], -(T[0][0]*T[0][3] + T[1][0]*T[1][3] + T[2][0]*T[2][3]),
+        T[0][1], T[1][1], T[2][1], -(T[0][1]*T[0][3] + T[1][1]*T[1][3] + T[2][1]*T[2][3]),
+        T[0][2], T[1][2], T[2][2], -(T[0][2]*T[0][3] + T[1][2]*T[1][3] + T[2][2]*T[2][3])
+    );
 }
 //------------------------------------------------------------------------------
 bool HomTra3::operator== (HomTra3 G)const {
