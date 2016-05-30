@@ -118,7 +118,7 @@ void Photon::reach_boundary_layer() {
 void Photon::fresnel_refraction_and_reflection() {
 
 	FresnelRefractionAndReflection fresnel(
-		intersection.world2object()->get_transformed_orientation(get_direction()),
+		intersection.object2world()->get_transformed_orientation_inverse(get_direction()),
 		intersection.get_normal_in_faceing_surface_system(),
 		intersection.get_refractive_index_coming_from(wavelength),
 		intersection.get_refractive_index_going_to(wavelength)

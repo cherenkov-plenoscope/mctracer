@@ -136,8 +136,8 @@ Vec3 RayForPropagation::get_final_intersection_incident_vector_in_object_frame()
 		Vec3 incident_direction_in_world = (final - second_last);
 			incident_direction_in_world.normalize();
 		
-		return intersection_history.back().world2object()->
-			get_transformed_orientation(incident_direction_in_world);
+		return intersection_history.back().object2world()->
+			get_transformed_orientation_inverse(incident_direction_in_world);
 	}
 }
 //------------------------------------------------------------------------------

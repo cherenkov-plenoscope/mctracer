@@ -100,7 +100,7 @@ Ray get_ray_transformed_in_object_system_of_frame(
     const Frame* frame
 ) {
     Ray ray_in_object_system_of_frame = *ray;
-    ray_in_object_system_of_frame.transform(frame->world2frame());
+    ray_in_object_system_of_frame.transform_inverse(frame->frame2world());
     return ray_in_object_system_of_frame;
 }
 //------------------------------------------------------------------------------

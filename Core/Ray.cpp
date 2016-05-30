@@ -44,6 +44,11 @@ void Ray::transform(const HomTra3 *T) {
 	direction = T->get_transformed_orientation(direction);	
 }
 //------------------------------------------------------------------------------
+void Ray::transform_inverse(const HomTra3 *T) {
+	support = T->get_transformed_position_inverse(support);
+	direction = T->get_transformed_orientation_inverse(direction);		
+}
+//------------------------------------------------------------------------------
 double Ray::get_parameter_on_ray_for_closest_distance_to_point(
 	const Vec3 &point
 )const {

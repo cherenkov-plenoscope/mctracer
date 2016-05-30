@@ -34,6 +34,7 @@ public:
     Vec3 get_direction()const;
     Vec3 get_pos_at(const double scalar)const;
     void transform(const HomTra3 *T);
+    void transform_inverse(const HomTra3 *T);
     string get_print()const;
     double get_parameter_on_ray_for_closest_distance_to_point(
         const Vec3 &point

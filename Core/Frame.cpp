@@ -18,16 +18,10 @@ void Frame::post_init_transformations() {
 	// orientation/rotation with respect to the mother frame.
 	// All other transformations are calculated using this first frame2mother.
 
-	// The mother2frame is just the inverse of the given frame2mother
-	T_mother2frame = T_frame2mother.inverse();
-
 	// For the transformations with respect to the root/world frame we have to 
 	// recalculate the current frame2mother transformation by concatination of 
 	// all the frame2mother transformations of this frame up to the root frame
 	T_frame2world = calculate_frame2world();
-
-	// And again world2frame is just the inverse of the frame2world
-	T_world2frame = T_frame2world.inverse();	
 	
 	// Now we set pos_in_world after all transformations took place
 	// This is needed for the bounding spheres later on. Since we use spheres 
@@ -37,9 +31,7 @@ void Frame::post_init_transformations() {
 }
 //------------------------------------------------------------------------------
 void Frame::post_init_transformations_only_based_on_mother() {
-	T_mother2frame = T_frame2mother.inverse();
 	T_frame2world = calculate_frame2world_only_based_on_mother();
-	T_world2frame = T_frame2world.inverse();
 	pos_in_world = T_frame2world.get_translation();
 }
 //------------------------------------------------------------------------------
@@ -482,14 +474,6 @@ double Frame::contour_radius()const {
 //------------------------------------------------------------------------------
 const HomTra3* Frame::frame2mother()const {
     return &T_frame2mother;
-}
-//------------------------------------------------------------------------------
-const HomTra3* Frame::mother2frame()const {
-    return &T_mother2frame;
-}
-//------------------------------------------------------------------------------
-const HomTra3* Frame::world2frame()const {
-    return &T_world2frame;
 }
 //------------------------------------------------------------------------------
 const HomTra3* Frame::frame2world()const {

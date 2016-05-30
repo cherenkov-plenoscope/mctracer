@@ -78,7 +78,7 @@ void Intersection::get_reflection_direction_in_object_system(
 }
 //------------------------------------------------------------------------------
 Vec3 Intersection::get_reflection_direction_in_world_system(Vec3 in_dir_world)const {
-	Vec3 in_dir_obj = object->world2frame()->get_transformed_orientation(in_dir_world);
+	Vec3 in_dir_obj = object->frame2world()->get_transformed_orientation_inverse(in_dir_world);
 	surfacenormal_in_intersection_point.mirror(&in_dir_obj);
 	return object->frame2world()->get_transformed_orientation(in_dir_obj);
 }
@@ -148,10 +148,6 @@ Vec3 Intersection::get_normal_in_faceing_surface_system()const {
 	return _from_outside_to_inside ?
 	surfacenormal_in_intersection_point:
 	surfacenormal_in_intersection_point*-1.0;
-}
-//------------------------------------------------------------------------------
-const HomTra3* Intersection::world2object()const{
-	return object->world2frame();
 }
 //------------------------------------------------------------------------------
 const HomTra3* Intersection::object2world()const{

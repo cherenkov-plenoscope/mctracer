@@ -43,8 +43,6 @@ protected:
     Vec3 pos_in_world;
     
     HomTra3 T_frame2mother;
-    HomTra3 T_mother2frame;
-    HomTra3 T_world2frame;
     HomTra3 T_frame2world;
     
     vector<Frame*> children;
@@ -72,8 +70,6 @@ public:
     Vec3 get_position_in_world()const;
     double contour_radius()const;
     const HomTra3* frame2mother()const;
-    const HomTra3* mother2frame()const;
-    const HomTra3* world2frame()const;
     const HomTra3* frame2world()const;
     const vector<Frame*>* get_children()const;
     bool has_child_with_name(const string name_of_child)const;
