@@ -40,7 +40,6 @@ protected:
     Vec3 pos_in_mother; 
     Rot3 rot_in_mother;
     double radius_of_sphere_enclosing_all_children; 
-    Vec3 pos_in_world;
     
     HomTra3 T_frame2mother;
     HomTra3 T_frame2world;

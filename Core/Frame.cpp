@@ -22,17 +22,10 @@ void Frame::post_init_transformations() {
 	// recalculate the current frame2mother transformation by concatination of 
 	// all the frame2mother transformations of this frame up to the root frame
 	T_frame2world = calculate_frame2world();
-	
-	// Now we set pos_in_world after all transformations took place
-	// This is needed for the bounding spheres later on. Since we use spheres 
-	// for the pre intersection tests we do not need the relative rotation of 
-	// this frame relative to the root frame to be stored in this frame. 
-	pos_in_world = T_frame2world.get_translation();
 }
 //------------------------------------------------------------------------------
 void Frame::post_init_transformations_only_based_on_mother() {
 	T_frame2world = calculate_frame2world_only_based_on_mother();
-	pos_in_world = T_frame2world.get_translation();
 }
 //------------------------------------------------------------------------------
 HomTra3 Frame::calculate_frame2world()const {
@@ -121,7 +114,7 @@ string Frame::get_print()const {
 	out << "| pos in mother: " << pos_in_mother << "\n";
 	out << "| rot in mother: " << rot_in_mother << "\n";
 	out << "| pos in world:  ";
-	out << (has_mother() ? pos_in_world.get_print() : "no mother assigned yet");
+	out << (has_mother() ? T_frame2world.get_translation().get_print() : "no mother assigned yet");
 	out << "\n";
 	out << "| enclosing boundary radius: ";
 	out << radius_of_sphere_enclosing_all_children << "m\n";	
@@ -465,7 +458,7 @@ Rot3 Frame::get_rotation_in_mother()const {
 }
 //------------------------------------------------------------------------------
 Vec3 Frame::get_position_in_world()const {
-    return pos_in_world;
+    return T_frame2world.get_translation();
 }
 //------------------------------------------------------------------------------
 double Frame::contour_radius()const {
