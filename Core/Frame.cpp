@@ -13,47 +13,10 @@ Frame::Frame(const string name, const Vec3 pos, const Rot3 rot): Frame() {
 }
 //------------------------------------------------------------------------------
 void Frame::post_init_transformations() {
-	// in the set_name_pos_rot() function the transformation frame2mother has been set
-	// using the new relative position to the mother and the new relative
-	// orientation/rotation with respect to the mother frame.
-	// All other transformations are calculated using this first frame2mother.
-
-	// For the transformations with respect to the root/world frame we have to 
-	// recalculate the current frame2mother transformation by concatination of 
-	// all the frame2mother transformations of this frame up to the root frame
 	T_frame2world = calculate_frame2world();
 }
 //------------------------------------------------------------------------------
-void Frame::post_init_transformations_only_based_on_mother() {
-	T_frame2world = calculate_frame2world_only_based_on_mother();
-}
-//------------------------------------------------------------------------------
 HomTra3 Frame::calculate_frame2world()const {
-	// All parent frames of this frame do already know their frame2mother 
-	// relation.
-	// To calculate the frame2world relation of this frame we have to 
-	// conacatenate all the frame2mother transformations from this frame to the
-	// root frame.
-
-	// The first step toward the root is the mother of this frame
-	Frame* frame_on_our_way_towards_the_root = mother;
-	
-	// The starting point for the latter frame2world is this framse frame2motehr
-	HomTra3 Trafo_on_our_way_towards_the_root = T_frame2mother;	
-
-	while(frame_on_our_way_towards_the_root != void_frame){
-		Trafo_on_our_way_towards_the_root = 
-			frame_on_our_way_towards_the_root -> 
-			T_frame2mother*Trafo_on_our_way_towards_the_root;
-
-		frame_on_our_way_towards_the_root = 
-			frame_on_our_way_towards_the_root->mother; 
-	}
-
-	return Trafo_on_our_way_towards_the_root;
-}
-//------------------------------------------------------------------------------
-HomTra3 Frame::calculate_frame2world_only_based_on_mother()const {
 	if(has_mother())
 		return mother->T_frame2world*T_frame2mother;
 	else
@@ -241,14 +204,6 @@ void Frame::post_init_me_and_all_my_children() {
 	// and all children
 	for(Frame* child : children)
 		child->post_init_me_and_all_my_children();
-}
-//------------------------------------------------------------------------------
-void Frame::post_init_me_and_all_my_children_only_based_on_mother() {
-	post_init_transformations_only_based_on_mother();
-
-	// and all children
-	for(Frame* child : children)
-		child->post_init_me_and_all_my_children_only_based_on_mother();
 }
 //------------------------------------------------------------------------------
 void Frame::update_enclosing_sphere_for_all_children() {
@@ -479,7 +434,7 @@ const vector<Frame*>* Frame::get_children()const {
 void Frame::update_rotation(const Rot3 rot) {
 	rot_in_mother = rot;
 	T_frame2mother.set_transformation(rot_in_mother, pos_in_mother);
-	post_init_me_and_all_my_children_only_based_on_mother();	
+	post_init_me_and_all_my_children();	
 }
 //------------------------------------------------------------------------------
 void Frame::assert_no_children_duplicate_names()const {

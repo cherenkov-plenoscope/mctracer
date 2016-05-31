@@ -24,12 +24,6 @@ using std::stringstream;
 using std::vector;
 
 class Frame {
-    // The Frame is the fundamental geometry in this framework.
-    // It defines a three dimensinal space where rays can be propagated in.
-    //
-    // The basic frame can not intersect with a ray because it has no surface
-    // but the surface entity which inherets from Frame does.
-    //
     // A frame defines the geometric relation to its mother frame and its 
     // children frames. This way a tree structure of the scenery is created.
     // The root of this tree is often called 'world' or 'world frame' here.
@@ -97,10 +91,6 @@ protected:
     void post_init_me_and_all_my_children();
     void post_init_transformations();
     HomTra3 calculate_frame2world()const;
-    // post initialization based on mother only
-    void post_init_me_and_all_my_children_only_based_on_mother();
-    void post_init_transformations_only_based_on_mother();
-    HomTra3 calculate_frame2world_only_based_on_mother()const;
     // initialize
     void set_mother(Frame *const new_mother);
     void add_child(Frame * const new_child);
