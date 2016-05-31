@@ -242,14 +242,6 @@ void  Frame::take_children_from(Frame *frame_to_take_chidren_from) {
 		set_mother_and_child( child_to_take);
 }
 //------------------------------------------------------------------------------
-const Frame* Frame::get_child_by_name(string specific_name)const {
-	for( Frame* child : children )
-		if( StringTools::is_equal(child->name, specific_name) )
-			return child;
-
-	return void_frame;
-}
-//------------------------------------------------------------------------------
 string Frame::get_path_in_tree_of_frames()const {
 	/// The path of a frame is returned here. The root frame called world is not 
 	/// included in the path. The delimiter sign is '/' as for directorys on 
@@ -267,10 +259,6 @@ string Frame::get_path_in_tree_of_frames()const {
 		// nothing added to the string
 		return "";
 	}
-}
-//------------------------------------------------------------------------------
-bool Frame::has_child_with_name(const string name_of_child)const {
-	return get_child_by_name(name_of_child) != void_frame;
 }
 //------------------------------------------------------------------------------
 bool Frame::has_mother()const {

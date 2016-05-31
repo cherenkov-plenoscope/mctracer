@@ -65,8 +65,6 @@ public:
     const HomTra3* frame2mother()const;
     const HomTra3* frame2world()const;
     const vector<Frame*>* get_children()const;
-    bool has_child_with_name(const string name_of_child)const;
-    const Frame* get_child_by_name(string specific_name)const;
     const Frame* get_root_of_world()const;
     bool has_mother()const;
     bool has_children()const;
