@@ -77,7 +77,7 @@ string Frame::get_print()const {
 	out << "| pos in mother: " << pos_in_mother << "\n";
 	out << "| rot in mother: " << rot_in_mother << "\n";
 	out << "| pos in world:  ";
-	out << (has_mother() ? T_frame2world.get_translation().get_print() : "no mother assigned yet");
+	out << (has_mother() ? get_position_in_world().get_print() : "no mother assigned yet");
 	out << "\n";
 	out << "| enclosing boundary radius: ";
 	out << radius_of_sphere_enclosing_all_children << "m\n";	
@@ -302,15 +302,12 @@ void Frame::cluster_using_helper_frames() {
 				if(oct_tree[sector].size() > 0) {
 
 					// create helper sector
-					stringstream sector_name;
-					sector_name << "octant_" << sector;
-					
 					Vec3 mean_pos_in_mother = get_mean_pos_in_mother(
 						oct_tree[sector]
 					);
 
 					Frame* helper_frame = new Frame(
-						sector_name.str(),
+						"octant_"+std::to_string(sector),
 						mean_pos_in_mother,
 						Rot3::null
 					);
@@ -369,11 +366,11 @@ bool Frame::positions_in_mother_are_too_close_together(vector<Frame*> frames)con
 		if(frames.size() < 2)
 			return false;
 
-		Vec3 mean_pos_in_mother = get_mean_pos_in_mother(frames);
+		const Vec3 mean_pos_in_mother = get_mean_pos_in_mother(frames);
 
 		Vec3 u = Vec3::null;
 		for(Frame* frame : frames) {
-			Vec3 r =  frame->pos_in_mother - mean_pos_in_mother;
+			const Vec3 r =  frame->pos_in_mother - mean_pos_in_mother;
 			u = u + Vec3(
 				r.x()*r.x(), 
 				r.y()*r.y(), 
@@ -382,9 +379,7 @@ bool Frame::positions_in_mother_are_too_close_together(vector<Frame*> frames)con
 		}
 
 		u = u/frames.size();
-
-		double spread = sqrt(u.norm());
-
+		const double spread = sqrt(u.norm());
 		return spread < minimal_structure_size;
 }
 //------------------------------------------------------------------------------
@@ -415,6 +410,7 @@ const HomTra3* Frame::frame2mother()const {
 const HomTra3* Frame::frame2world()const {
     return &T_frame2world;
 }
+//------------------------------------------------------------------------------
 const vector<Frame*>* Frame::get_children()const {
 	return &children;
 }
