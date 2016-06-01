@@ -79,9 +79,9 @@ double RayForPropagation::get_accumulative_distance()const {
     return accumulative_distance;	
 }
 //------------------------------------------------------------------------------
-void RayForPropagation::propagate_in(PropagationEnvironment env) {
+/*void RayForPropagation::propagate_in(PropagationEnvironment &env) {
 	throw TracerException("Prototype RayForPropagation must not be propagated itself, only its children such as the photon are meant to be propagated.");
-}
+}*/
 //------------------------------------------------------------------------------
 uint RayForPropagation::get_number_of_interactions_so_far()const {
 	return uint(intersection_history.size());

@@ -13,6 +13,12 @@ if(COMPILER_SUPPORTS_CXX11)
 else()
     message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
+
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5)
+    message(FATAL_ERROR "Insufficient gcc version, need at least gcc 5")
+  endif()
+endif()
 #-------------------
 # External libraries
 # 	OpenMP

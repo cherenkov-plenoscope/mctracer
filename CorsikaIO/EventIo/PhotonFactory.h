@@ -11,6 +11,7 @@
 #include <iostream>
 #include <sstream>
 #include "Core/Photon.h"
+#include "Core/Random/Random.h"
 #include <array>
 using std::string;
 using std::stringstream;

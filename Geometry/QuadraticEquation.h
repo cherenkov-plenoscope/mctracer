@@ -25,12 +25,9 @@ class QuadraticEquation{
 	double q;
 
 	double inner_part_of_squareroot;
-	double squareroot = 0.0;
-
-	void try_to_solve_equation();
-	void calculate_squareroot_if_possible();
+	double squareroot;
 public:
-    QuadraticEquation(double p, double q);
+    QuadraticEquation(const double _p, const double _q);
 	bool has_valid_solutions();
 	double minus_solution();
 	double plus_solution();

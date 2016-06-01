@@ -9,7 +9,8 @@
 //=================================
 // included dependencies
 #include <iostream>
-#include "Photon.h"
+#include "Core/Photon.h"
+#include "Core/PropagationEnvironment.h"
 #include <vector>
 using std::string;
 using std::stringstream;

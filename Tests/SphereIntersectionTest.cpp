@@ -6,6 +6,7 @@
 #include "Core/Random/Random.h"
 #include "Core/PropagationEnvironment.h"
 #include "Core/Photon.h"
+#include "Core/PhotonAndFrame.h"
 #include "Core/Photons.h"
 using namespace std;
 
@@ -67,7 +68,8 @@ TEST_F(SphereIntersectionTest, frontal) {
 	Vec3 direction(1.0,0.0,0.0);
 
 	Photon P(Support,direction,wavelength);
-	P.propagate_in(sphere_test_environment);
+	PhotonAndFrame::Propagator(&P, sphere_test_environment);
+	//P.propagate_in(sphere_test_environment);
 
 	ASSERT_EQ(2, P.get_number_of_interactions_so_far() ) << "There should be 2 "
 	"interaction stored in the history, 1 for creation of the photon and 1 for"
@@ -89,7 +91,8 @@ TEST_F(SphereIntersectionTest, emmitting_close_above_surface_tangential) {
 	Vec3 direction(1.0,0.0,0.0);
 
 	Photon P(Support,direction,wavelength);
-	P.propagate_in(sphere_test_environment);
+	PhotonAndFrame::Propagator(&P, sphere_test_environment);
+	//P.propagate_in(sphere_test_environment);
 
 	ASSERT_EQ(absorption_in_void, P.get_final_interaction_type() );
 }
@@ -100,7 +103,8 @@ TEST_F(SphereIntersectionTest, emmitting_close_above_surface_straigtht_away) {
 	Vec3 direction(0.0,0.0,1.0);
 
 	Photon P(Support,direction,wavelength);
-	P.propagate_in(sphere_test_environment);
+	PhotonAndFrame::Propagator(&P, sphere_test_environment);
+	//P.propagate_in(sphere_test_environment);
 
 	ASSERT_EQ(absorption_in_void, P.get_final_interaction_type() );
 }
@@ -111,7 +115,8 @@ TEST_F(SphereIntersectionTest, tangential_intersection) {
 	Vec3 direction(1.0,0.0,0.0);
 
 	Photon P(Support,direction,wavelength);
-	P.propagate_in(sphere_test_environment);
+	PhotonAndFrame::Propagator(&P, sphere_test_environment);
+	//P.propagate_in(sphere_test_environment);
 
 	ASSERT_EQ(2, P.get_number_of_interactions_so_far() );
 

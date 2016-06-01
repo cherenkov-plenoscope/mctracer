@@ -1,4 +1,5 @@
 #include "Core/RayAndFrame.h"
+#include <thread>
 namespace RayAndFrame {
 //------------------------------------------------------------------------------
 bool ray_support_inside_frames_bounding_sphere(const Ray* ray, const Frame *frame) {
@@ -108,7 +109,8 @@ CausalIntersection::CausalIntersection(
     const Ray* _ray,
     const Frame* _frame
 ): ray(_ray), frame(_frame) {
-
+    candidate_objects.clear();
+    candidate_intersections.clear();
     find_intersection_candidates_in_tree_of_frames(frame);
     find_intersections_in_candidate_objects();
     calculate_closest_intersection();   
@@ -136,6 +138,10 @@ void CausalIntersection::find_intersections_in_candidate_objects() {
                 object
             );
 
+        // this call makes up about 90% of the overall propagation time
+        // 11.3s without this call
+        // 95.7s with
+        // for 1M photon in very complex geometry with >1M objects.
         object->calculate_intersection_with(
             &ray_in_object_system, 
             &candidate_intersections

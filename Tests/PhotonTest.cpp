@@ -1,6 +1,7 @@
 //<#include "Cameras/FlyingCamera.h"
 #include "Core/Function/ConstantFunction.h"
 #include "Core/Photon.h"
+#include "Core/PhotonAndFrame.h"
 #include "Core/Photons.h"
 #include "Core/PhysicalConstants.h"
 #include "Core/Random/Random.h"
@@ -116,7 +117,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
     {
         Photon P(Support, direction, wavelength);
 
-        P.propagate_in(environment);
+        PhotonAndFrame::Propagator(&P, environment);
         
         EXPECT_EQ(
             number_of_bounces*1.0-0.5, 
