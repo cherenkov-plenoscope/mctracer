@@ -17,11 +17,9 @@ Color CameraRay::trace(
 	uint refl_count,
 	const TracerSettings *settings
 )const {
-
 	Color color;
-	
-	RayAndFrame::CausalIntersection causal_intersection(this, world);
-	const Intersection intersection = causal_intersection.closest_intersection;
+	const Intersection intersection = 
+		RayAndFrame::first_intersection(this, world);
 
 	if(intersection.does_intersect()) {
 
@@ -95,8 +93,8 @@ bool CameraRay::is_iluminated_by_sky_light_source(
 		settings->visual.global_illumination.incoming_direction
 	);
 
-	RayAndFrame::CausalIntersection causal_intersection(this, world);
-	const Intersection intersec_light_source = causal_intersection.closest_intersection;
+	const Intersection intersec_light_source = 
+		RayAndFrame::first_intersection(this, world);
 
 	double p = intersection.get_surface_normal_in_world_system()*
 		settings->visual.global_illumination.incoming_direction;

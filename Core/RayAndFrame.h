@@ -29,12 +29,17 @@ namespace RayAndFrame {
         const Frame* frame
     );
 
-    static thread_local vector<const Frame*> candidate_objects;
-    static thread_local vector<Intersection> candidate_intersections;
+    Intersection first_intersection(
+        const Ray* ray, 
+        const Frame* frame
+    );
 
     struct CausalIntersection {
         const Ray* ray;
         const Frame* frame;
+
+        static thread_local vector<const Frame*> candidate_objects;
+        static thread_local vector<Intersection> candidate_intersections;
         
         Intersection closest_intersection;
         CausalIntersection(const Ray* _ray, const Frame* _frame);

@@ -105,6 +105,14 @@ Ray get_ray_transformed_in_object_system_of_frame(
     return ray_in_object_system_of_frame;
 }
 //------------------------------------------------------------------------------
+thread_local vector<const Frame*> CausalIntersection::candidate_objects;
+thread_local vector<Intersection> CausalIntersection::candidate_intersections;
+//------------------------------------------------------------------------------
+Intersection first_intersection(const Ray* ray, const Frame* frame) {
+    CausalIntersection intersect_calculator(ray, frame);
+    return intersect_calculator.closest_intersection;
+}
+//------------------------------------------------------------------------------
 CausalIntersection::CausalIntersection(
     const Ray* _ray,
     const Frame* _frame
@@ -138,10 +146,6 @@ void CausalIntersection::find_intersections_in_candidate_objects() {
                 object
             );
 
-        // this call makes up about 90% of the overall propagation time
-        // 11.3s without this call
-        // 95.7s with
-        // for 1M photon in very complex geometry with >1M objects.
         object->calculate_intersection_with(
             &ray_in_object_system, 
             &candidate_intersections

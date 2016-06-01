@@ -290,10 +290,10 @@ const CameraImage* FlyingCamera::acquire_scaled_image_with_camera(
 //------------------------------------------------------------------------------
 void FlyingCamera::print_info_of_probing_ray_for_pixel_col_row(int col, int row) {
 
-	Ray probing_ray = flying_camera_full_resolution->get_ray_for_pixel_in_row_and_col(row, col);
+	Ray probing_ray = flying_camera_full_resolution->
+		get_ray_for_pixel_in_row_and_col(row, col);
 
-	RayAndFrame::CausalIntersection causal_intersection(&probing_ray, world);
-	Intersection intersec = causal_intersection.closest_intersection;
+	Intersection intersec = RayAndFrame::first_intersection(&probing_ray, world);
 
 	UserInteraction::ClearScreen();
 	stringstream out;
