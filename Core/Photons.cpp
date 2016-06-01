@@ -2,6 +2,7 @@
 #include <omp.h>
 #include <sstream>
 #include "Geometry/TrajectoryFactory.h"
+#include "Core/PhotonAndFrame.h"
 using std::string;
 using std::stringstream;
 using std::vector;
@@ -42,7 +43,7 @@ namespace Photons {
 		env.random_engine = prng;
 
 		for(uint i = 0; i<photons->size(); i++ )
-			photons->at(i)->propagate_in(env);;
+			PhotonAndFrame::Propagator(photons->at(i), env);
 	}
 	//--------------------------------------------------------------------------
 	void propagate_photons_using_multi_thread(
@@ -72,7 +73,10 @@ namespace Photons {
 			for(i = 0; i<photons->size(); i++ ) {
 				try {
 					ray_counter++;
-					photons->at(i)->propagate_in(env_for_this_thread_only);
+					PhotonAndFrame::Propagator(
+						photons->at(i), 
+						env_for_this_thread_only
+					);
 				}catch(std::exception &error) {
 					HadCatch++;
 					std::cerr << error.what(); 

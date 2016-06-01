@@ -3,6 +3,7 @@
 //#include "Cameras/FreeOrbitCamera.h"
 #include "Geometry/HexPlane.h"
 #include "Geometry/HexGridAnnulus.h"
+#include "Core/PhotonAndFrame.h"
 
 namespace Plenoscope {
 //------------------------------------------------------------------------------
@@ -41,7 +42,7 @@ LensCalibration::LensCalibration(const Geometry *geo):
 			433e-9
 		);
 
-		ph->propagate_in(test_bench_environment);
+		PhotonAndFrame::Propagator(ph, test_bench_environment);
 		read_out_l.assign_photon(ph);
 
 		delete ph;		

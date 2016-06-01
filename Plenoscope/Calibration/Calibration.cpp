@@ -3,6 +3,7 @@
 #include "Tools/UserInteraction.h"
 #include <iomanip> 
 #include "Tools/FileTools.h"
+#include "Core/PhotonAndFrame.h"
 using std::cout;
 
 namespace Plenoscope {
@@ -114,8 +115,8 @@ void Calibration::fill_calibration_block_to_table() {
 				);
 
 				// propagate photon
-				ph->propagate_in(telescope_environment);
-				
+				PhotonAndFrame::Propagator(ph, telescope_environment);
+
 				PhotonSensors::FindSensorByFrame sensor_finder(
 					ph->get_final_intersection().get_object(),
 					&sub_pixels->by_frame

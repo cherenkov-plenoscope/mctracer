@@ -5,12 +5,11 @@
 
 //=================================
 // forward declared dependencies
-class PropagationEnvironment;
+
 //=================================
 // included dependencies
 #include "Core/Ray.h"
 #include "Core/Intersection.h"
-#include "PropagationEnvironment.h"
 #include "Core/SurfaceEntity.h"
 using std::vector;
 using std::string;
@@ -51,7 +50,6 @@ public:
 	);
 	string get_print()const;
 	double get_accumulative_distance()const;
-	virtual void propagate_in(PropagationEnvironment env);
 	uint get_number_of_interactions_so_far()const;
 	const Intersection& get_intersection_at(const uint index)const;
 	InteractionType get_final_interaction_type()const;
