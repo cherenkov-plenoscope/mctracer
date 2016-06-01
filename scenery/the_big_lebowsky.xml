@@ -35,7 +35,13 @@
         <segmented_reflector>
             <set_frame name="reflector" pos="[0,0,0]" rot="[0,0,0]"/>
             <set_surface reflection_vs_wavelength="mirror_reflection"/>
-            <set_segmented_reflector focal_length="4.889" max_outer_aperture_radius="2.1" min_inner_aperture_radius="0.25" DaviesCotton_over_parabolic_mixing_factor="1.0" facet_inner_hex_radius="0.3" gap_between_facets="0.01"/>
+            <set_segmented_reflector 
+                focal_length="4.889" 
+                max_outer_aperture_radius="2.1" 
+                min_inner_aperture_radius="0.25" 
+                DaviesCotton_over_parabolic_mixing_factor="1.0" 
+                facet_inner_hex_radius="0.3" 
+                gap_between_facets="0.01"/>
         </segmented_reflector>
         
         <frame>
@@ -119,7 +125,7 @@
             <cylinder>
                 <set_frame name="support_tube_4" pos="[0,0,0]" rot="[0,0,0]"/>
                 <set_surface reflection_vs_wavelength="zero" color="[75,75,75]"/>
-                <set_cylinder radius="0.03" start_pos="[-1.5,1.0,0.0]" end_pos="[-0.2,0.2,4.9]"/>   
+                <set_cylinder radius="0.03" start_pos="[-1.5,1.0,0.0]" end_pos="[-0.2,0.2,4.9]"/>
             </cylinder> 
         </frame>
     </frame>
@@ -141,4 +147,33 @@
             sub_pixel_on_pixel_diagonal="11" 
             refraction_vs_wavelength="lens_refraction"/>
     </light_field_telescope>
+
+    <plenoscope>
+        <segmented_reflector>
+            <set_frame 
+                name="reflector" 
+                pos="[0,0,0]" 
+                rot="[0,0,0]"/>
+            <set_surface reflection_vs_wavelength="mirror_reflection"/>
+            <set_segmented_reflector 
+                focal_length="75.0" 
+                max_outer_aperture_radius="25.0" 
+                min_inner_aperture_radius="2.5" 
+                DaviesCotton_over_parabolic_mixing_factor="0.0" 
+                facet_inner_hex_radius="0.6" 
+                gap_between_facets="0.02"/>
+        </segmented_reflector>
+        <light_field_sensor>
+            <set_frame 
+                name="light_field_sensor" 
+                pos="[0,0,75.0]" 
+                rot="[0,0,0]"/>
+            <set_light_field_sensor
+                max_FoV_diameter_deg="6.5" 
+                hex_pixel_FoV_flat2flat_deg="0.0667" 
+                housing_overhead="1.2" 
+                sub_pixel_on_pixel_diagonal="13" 
+                refraction_vs_wavelength="lens_refraction"/>
+        </light_field_sensor>        
+    </plenoscope>
 </scenery>

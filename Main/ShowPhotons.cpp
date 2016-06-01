@@ -41,7 +41,6 @@ int main(int argc, char* argv[]) {
 	// settings
 	TracerSettings settings;
 	settings.use_multithread_when_possible = false;
-	settings.store_only_final_intersection = false;
 	settings.visual.photon_trajectories.radius = 2.0;
 
 	if(!cmd.get("visual_config").empty()) {

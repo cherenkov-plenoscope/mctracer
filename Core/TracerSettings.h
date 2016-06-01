@@ -19,7 +19,6 @@
 struct TracerSettings {
 
 	uint max_number_of_interactions_per_photon;
-	bool store_only_final_intersection;
 	bool use_multithread_when_possible;
 	uint pseudo_random_number_seed;
 

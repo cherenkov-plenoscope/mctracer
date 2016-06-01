@@ -53,7 +53,6 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
                     // propagation settings
                     TracerSettings settings;    
                     settings.use_multithread_when_possible = false;
-                    settings.store_only_final_intersection = false;
 
                     // photon propagation down to the ground
                     Photons::propagate_photons_in_world_with_settings(
@@ -291,7 +290,6 @@ TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         // propagation settings
         TracerSettings settings;    
         settings.use_multithread_when_possible = false;
-        settings.store_only_final_intersection = false;
 
         // photon propagation
         Photons::propagate_photons_in_world_with_settings(

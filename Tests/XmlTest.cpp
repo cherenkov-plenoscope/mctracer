@@ -237,7 +237,6 @@ TEST_F(XmlTest, TracerSettings) {
 	out.max_number_of_interactions_per_photon = 1337;
 	out.pseudo_random_number_seed = 42;
 	out.use_multithread_when_possible = false;
-	out.store_only_final_intersection = true;
 
 	FileTools::write_text_to_file(Xml::Configs::to_node(out), path);
 
@@ -248,5 +247,4 @@ TEST_F(XmlTest, TracerSettings) {
 	EXPECT_EQ(in.max_number_of_interactions_per_photon, out.max_number_of_interactions_per_photon);
 	EXPECT_EQ(in.pseudo_random_number_seed, out.pseudo_random_number_seed);
 	EXPECT_EQ(in.use_multithread_when_possible, out.use_multithread_when_possible);
-	EXPECT_EQ(in.store_only_final_intersection, out.store_only_final_intersection);
 }

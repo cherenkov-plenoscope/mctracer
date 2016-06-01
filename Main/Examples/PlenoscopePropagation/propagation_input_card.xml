@@ -21,7 +21,6 @@
     <settings
         pseudo_random_number_seed="0"
         max_number_of_interactions_per_photon="10"
-        store_only_final_intersection="true"
         use_multithread_when_possible="false"
     />
 </propagation>
