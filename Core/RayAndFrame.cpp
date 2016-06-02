@@ -1,5 +1,4 @@
 #include "Core/RayAndFrame.h"
-#include <thread>
 namespace RayAndFrame {
 //------------------------------------------------------------------------------
 bool ray_support_inside_frames_bounding_sphere(const Ray* ray, const Frame *frame) {
@@ -113,10 +112,9 @@ Intersection first_intersection(const Ray* ray, const Frame* frame) {
     return intersect_calculator.closest_intersection;
 }
 //------------------------------------------------------------------------------
-CausalIntersection::CausalIntersection(
-    const Ray* _ray,
-    const Frame* _frame
-): ray(_ray), frame(_frame) {
+CausalIntersection::CausalIntersection(const Ray* _ray, const Frame* frame): 
+    ray(_ray) 
+{
     candidate_objects.clear();
     candidate_intersections.clear();
     find_intersection_candidates_in_tree_of_frames(frame);

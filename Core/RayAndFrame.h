@@ -36,13 +36,11 @@ namespace RayAndFrame {
 
     struct CausalIntersection {
         const Ray* ray;
-        const Frame* frame;
-
         static thread_local vector<const Frame*> candidate_objects;
         static thread_local vector<Intersection> candidate_intersections;
         
         Intersection closest_intersection;
-        CausalIntersection(const Ray* _ray, const Frame* _frame);
+        CausalIntersection(const Ray* _ray, const Frame* frame);
     private:
         void find_intersection_candidates_in_tree_of_frames(const Frame* frame);
         void find_intersections_in_candidate_objects();
