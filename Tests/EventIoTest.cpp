@@ -23,9 +23,8 @@ TEST_F(EventIoTest, EventIoHeader_works) {
     EXPECT_FALSE(my_header.user);
     EXPECT_FALSE(my_header.extended);
     EXPECT_FALSE(my_header.only_sub_objects);
-    EXPECT_EQ(1096, my_header.length);
+    EXPECT_EQ(1096u, my_header.length);
     EXPECT_EQ(7, my_header.id);
-    EXPECT_EQ(3, 3.);
 }
 //------------------------------------------------------------------------------
 TEST_F(EventIoTest,  EventIoHeader_fails_wrong_sync_marker) {
@@ -65,7 +64,7 @@ TEST_F(EventIoTest, make_runheader) {
 TEST_F(EventIoTest, EventIoFile_telescope_dat__check_tel_pos) {
 
     EventIoFile my_file("telescope.dat");
-    EXPECT_EQ(1, my_file.run_header.tel_pos.size());
+    EXPECT_EQ(1u, my_file.run_header.tel_pos.size());
     EXPECT_EQ(0., my_file.run_header.tel_pos[0].x);
     EXPECT_EQ(0., my_file.run_header.tel_pos[0].y);
     EXPECT_EQ(500., my_file.run_header.tel_pos[0].z);
@@ -83,11 +82,11 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__mmcs_run_header) {
     EventIoFile my_file("telescope.dat");
     EXPECT_NEAR(7., my_file.run_header.mmcs_runheader.run_number, 1e-6);
     EXPECT_NEAR(-2.7, my_file.run_header.mmcs_runheader.slope_of_energy_spektrum, 1e-6);
-    EXPECT_EQ(2, my_file.run_header.mmcs_runheader.energy_range.size());
+    EXPECT_EQ(2u, my_file.run_header.mmcs_runheader.energy_range.size());
     EXPECT_NEAR(1000., my_file.run_header.mmcs_runheader.energy_range[0], 1e-6);
     EXPECT_NEAR(50000., my_file.run_header.mmcs_runheader.energy_range[1], 1e-6);
 
-    EXPECT_EQ(1, my_file.run_header.mmcs_runheader.observation_levels.size());
+    EXPECT_EQ(1u, my_file.run_header.mmcs_runheader.observation_levels.size());
     EXPECT_NEAR(220000., my_file.run_header.mmcs_runheader.observation_levels[0], 1e-6 );  
 }
 //------------------------------------------------------------------------------
@@ -102,7 +101,7 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__event_header) {
     EventIoFile my_file("telescope.dat");
     Event event = my_file.next_event();
 
-    EXPECT_EQ(1, event.header.telescope_offsets.size());
+    EXPECT_EQ(1u, event.header.telescope_offsets.size());
     EXPECT_NEAR(379489.3125, event.header.telescope_offsets[0].toff, 1e-6);
     //std::cout << my_file.current_event_header.telescope_offsets[0].get_print() << std::endl;
     EXPECT_NEAR(-0., event.header.telescope_offsets[0].xoff, 1e-6);
@@ -119,12 +118,12 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__photon_bundle_size) {
 
     EventIoFile my_file("telescope.dat");
     Event event = my_file.next_event();
-    EXPECT_EQ(42629, event.photons.size());
+    EXPECT_EQ(42629u, event.photons.size());
 
     for (size_t i=0; i<event.photons.size(); i++)
     {
         std::array<float, 8> photon_bunch = event.photons[i];
-        EXPECT_EQ(8, photon_bunch.size());    
+        EXPECT_EQ(8u, photon_bunch.size());    
     }
 }
 //------------------------------------------------------------------------------
@@ -132,7 +131,7 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__photon_bundle_values) {
 
     EventIoFile my_file("telescope.dat");
     Event event = my_file.next_event();
-    EXPECT_EQ(42629, event.photons.size());
+    EXPECT_EQ(42629u, event.photons.size());
 
     float some_photon_bundles[5][8] = {
         {161.90000915527344, 236.8000030517578, 0.23186667263507843, 0.01769999973475933, -11.800000190734863, 1462178.625, 1.0, -692.0},

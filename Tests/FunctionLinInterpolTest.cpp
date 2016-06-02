@@ -49,8 +49,8 @@ TEST_F(LinInterpolTest, check_setup) {
     ASSERT_EQ(table_size, table_with_duplicate_argument.size());
 
     for(uint i=0; i<table_size; i++) {
-        ASSERT_EQ(2, table.at(i).size());
-        ASSERT_EQ(2, table_with_duplicate_argument.at(i).size());
+        ASSERT_EQ(2u, table.at(i).size());
+        ASSERT_EQ(2u, table_with_duplicate_argument.at(i).size());
     }
 }
 //------------------------------------------------------------------------------
@@ -125,7 +125,7 @@ TEST_F(LinInterpolTest, empty_table_for_LinInterpol) {
 
     std::vector<std::vector<double>> empty_table;
 
-    EXPECT_EQ(0, empty_table.size());
+    EXPECT_EQ(0u, empty_table.size());
     EXPECT_THROW(Function::LinInterpol f(empty_table), TracerException);
     // It must throw anyhow when it is first used because its limit's range is
     // zero.

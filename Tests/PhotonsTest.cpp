@@ -38,7 +38,7 @@ TEST_F(PhotonsTest, photon2raw_row) {
     
     std::vector<double> raw_row = Photons::photon2raw_row(ph);
 
-    ASSERT_EQ(8, raw_row.size());
+    ASSERT_EQ(8u, raw_row.size());
 
     EXPECT_EQ(ph->get_id(), raw_row[0]);
     EXPECT_EQ(ph->get_support().x(), raw_row[1]);
@@ -52,12 +52,12 @@ TEST_F(PhotonsTest, photon2raw_row) {
 //------------------------------------------------------------------------------
 TEST_F(PhotonsTest, bunch2raw_matrix2bunch) {
 
-    int number_of_photons = 1e3;
+    const uint number_of_photons = 1e3;
 
     std::vector<Photon*>* photon_bunch = new std::vector<Photon*>;
 
     Random::Mt19937 prng(Random::zero_seed);
-    for(int n=0; n<number_of_photons; n++) {
+    for(uint n=0; n<number_of_photons; n++) {
 
         Vec3 sup(prng.uniform(), prng.uniform(), prng.uniform());
         Vec3 dir(prng.uniform(), prng.uniform(), prng.uniform());
@@ -80,7 +80,7 @@ TEST_F(PhotonsTest, bunch2raw_matrix2bunch) {
 
     ASSERT_EQ(number_of_photons, photon_bunch2->size());
 
-    for(int n=0; n<number_of_photons; n++) {
+    for(uint n=0; n<number_of_photons; n++) {
 
         Photon* ph1 = photon_bunch->at(n);
         Photon* ph2 = photon_bunch2->at(n);
@@ -98,12 +98,12 @@ TEST_F(PhotonsTest, bunch2raw_matrix2bunch) {
 //------------------------------------------------------------------------------
 TEST_F(PhotonsTest, bunch2raw_matrix2file) {
 
-    int number_of_photons = 1e3;
+    const uint number_of_photons = 1e3;
 
     std::vector<Photon*>* photon_bunch1 = new std::vector<Photon*>;
 
     Random::Mt19937 prng(Random::zero_seed);
-    for(int n=0; n<number_of_photons; n++) {
+    for(uint n=0; n<number_of_photons; n++) {
 
         Vec3 sup(prng.uniform(), prng.uniform(), prng.uniform());
         Vec3 dir(prng.uniform(), prng.uniform(), prng.uniform());
@@ -129,7 +129,7 @@ TEST_F(PhotonsTest, bunch2raw_matrix2file) {
 
     ASSERT_EQ(number_of_photons, photon_bunch2->size());
 
-    for(int n=0; n<number_of_photons; n++) {
+    for(uint n=0; n<number_of_photons; n++) {
 
         Photon* ph1 = photon_bunch1->at(n);
         Photon* ph2 = photon_bunch2->at(n);

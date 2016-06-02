@@ -11,7 +11,7 @@ TEST_F(PreTriggerTest, empty_time_line) {
 
 	std::vector<double> arrival_moments;
 
-	EXPECT_EQ(0, arrival_moments.size());
+	EXPECT_EQ(0u, arrival_moments.size());
 
 	PreTrigger::Config conf;
 	conf.time_window = 1e-9;

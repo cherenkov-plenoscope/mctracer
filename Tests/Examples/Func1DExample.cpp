@@ -116,7 +116,7 @@ TEST_F(FunctionExample, access) {
     value2 = value1;
     //--func_access_sampling--
     std::vector<std::vector<double>> table = p3.get_samples(1000);
-    EXPECT_EQ(1000, table.size());
+    EXPECT_EQ(1000u, table.size());
     //--func_access_sampling_end--
     //--func_access_sampling_export--
     AsciiIo::write_table_to_file(p3.get_samples(7), "Examples/Out/my_p3.txt");

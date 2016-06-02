@@ -17,7 +17,7 @@ TEST_F(AsciiIoTest, read_empty_file) {
     std::vector<std::vector<double>> table = 
         AsciiIo::gen_table_from_file("numeric_table_IO/empty.csv");
 
-    EXPECT_EQ(0, table.size());
+    EXPECT_EQ(0u, table.size());
 }
 //------------------------------------------------------------------------------
 TEST_F(AsciiIoTest, read_valid_file_table_only) {
@@ -30,10 +30,10 @@ TEST_F(AsciiIoTest, read_valid_file_table_only) {
     //234.5, 101.0, 0.04, 13.37
     //666.6, 88.8, 0.056, 1.337
 
-    ASSERT_EQ(3, table.size());
-    ASSERT_EQ(4, table[0].size());
-    ASSERT_EQ(4, table[1].size());
-    ASSERT_EQ(4, table[2].size());
+    ASSERT_EQ(3u, table.size());
+    ASSERT_EQ(4u, table[0].size());
+    ASSERT_EQ(4u, table[1].size());
+    ASSERT_EQ(4u, table[2].size());
 
     // 1st row
     EXPECT_EQ(123.4, table[0][0]);

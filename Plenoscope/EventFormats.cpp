@@ -21,7 +21,8 @@ void save_event_to_file_epoch_2016May27(
     const uint float_count = 2;
     for(SimpleTdcQdc::TimeAndCount tac: tacs) {
         const float ct = float(tac.count);
-        float v[float_count] = {tac.time, ct};
+        const float tm = float(tac.time);
+        float v[float_count] = {tm, ct};
         file.write( (char*)&v, float_count*sizeof(float));  
     }
 

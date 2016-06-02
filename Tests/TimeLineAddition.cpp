@@ -8,8 +8,8 @@ TEST_F(TimeLineAddition, all_empty) {
 	std::vector<double> first;
 	std::vector<double> second;
 
-	EXPECT_EQ(0, first.size());
-	EXPECT_EQ(0, second.size());
+	EXPECT_EQ(0u, first.size());
+	EXPECT_EQ(0u, second.size());
 
 	std::vector<double> first_before_adding = first; 
 
@@ -23,8 +23,8 @@ TEST_F(TimeLineAddition, empty_summand) {
 	std::vector<double> first = numeric::linspace(0.0, 1.0, 100);
 	std::vector<double> second;
 
-	EXPECT_EQ(100, first.size());
-	EXPECT_EQ(0, second.size());
+	EXPECT_EQ(100u, first.size());
+	EXPECT_EQ(0u, second.size());
 
 	std::vector<double> first_before_adding = first; 
 
@@ -40,8 +40,8 @@ TEST_F(TimeLineAddition, empty_base_summand) {
 	std::vector<double> first;
 	std::vector<double> second = numeric::linspace(0.0, 1.0, 100);
 
-	EXPECT_EQ(0, first.size());
-	EXPECT_EQ(100, second.size());
+	EXPECT_EQ(0u, first.size());
+	EXPECT_EQ(100u, second.size());
 
 	std::vector<double> first_before_adding = first; 
 

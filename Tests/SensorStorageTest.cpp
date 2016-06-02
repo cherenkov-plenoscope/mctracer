@@ -10,13 +10,13 @@ class SensorStorageTest : public ::testing::Test {};
 TEST_F(SensorStorageTest, default_constructor_yields_empty_Sensors) {
 
 	Sensors sens;
-	EXPECT_EQ(0, sens.size());
+	EXPECT_EQ(0u, sens.size());
 }
 //------------------------------------------------------------------------------
 TEST_F(SensorStorageTest, default_constructor_and_access_not_existing_frame) {
 
 	Sensors sens;
-	EXPECT_EQ(0, sens.size());
+	EXPECT_EQ(0u, sens.size());
 
 	// a frame which is not assigned to a sensor
 	Frame dog("dog", Vec3::null, Rot3::null);
@@ -34,10 +34,10 @@ TEST_F(SensorStorageTest, empty_vector_of_sensors_must_yield_empty_Sensors) {
 
 	// Collecting
 	std::vector<Sensor*> my_sensors;
-	EXPECT_EQ(0, my_sensors.size());
+	EXPECT_EQ(0u, my_sensors.size());
 
 	Sensors sens(my_sensors);
-	EXPECT_EQ(0, sens.size());
+	EXPECT_EQ(0u, sens.size());
 }
 //------------------------------------------------------------------------------
 TEST_F(SensorStorageTest, empty_Sensors_access_invalid_frame) {
@@ -48,11 +48,11 @@ TEST_F(SensorStorageTest, empty_Sensors_access_invalid_frame) {
 
 	// Collecting
 	std::vector<Sensor*> my_sensors;
-	EXPECT_EQ(0, my_sensors.size());
+	EXPECT_EQ(0u, my_sensors.size());
 
 	//Preparing for access
 	Sensors sens(my_sensors);
-	EXPECT_EQ(0, sens.size());
+	EXPECT_EQ(0u, sens.size());
 	
 	// access invalid frame
 	EXPECT_THROW(
@@ -65,24 +65,24 @@ TEST_F(SensorStorageTest, take_over_sensors_from_vector) {
 
 	// Creation
 	Frame tree("tree", Vec3::null, Rot3::null);
-	Sensor on_tree(0, &tree);
+	Sensor on_tree(0u, &tree);
 
 	Frame house("house", Vec3::null, Rot3::null);
-	Sensor on_house(1, &house);
+	Sensor on_house(1u, &house);
 
 	Frame car("car", Vec3::null, Rot3::null);
-	Sensor on_car(2, &car);
+	Sensor on_car(2u, &car);
 	
 	// Collecting
 	std::vector<Sensor*> my_sensors;
 	my_sensors.push_back(&on_tree);
 	my_sensors.push_back(&on_house);
 	my_sensors.push_back(&on_car);
-	EXPECT_EQ(3, my_sensors.size());
+	EXPECT_EQ(3u, my_sensors.size());
 
 	// Taking over the sensors
 	Sensors sens(my_sensors);
-	EXPECT_EQ(3, sens.size());
+	EXPECT_EQ(3u, sens.size());
 	EXPECT_TRUE(my_sensors.empty());
 }
 //------------------------------------------------------------------------------
@@ -92,24 +92,24 @@ TEST_F(SensorStorageTest, access_sensors_by_frame) {
 
 	// Creation
 	Frame tree("tree", Vec3::null, Rot3::null);
-	Sensor on_tree(0, &tree);
+	Sensor on_tree(0u, &tree);
 
 	Frame house("house", Vec3::null, Rot3::null);
-	Sensor on_house(1, &house);
+	Sensor on_house(1u, &house);
 
 	Frame car("car", Vec3::null, Rot3::null);
-	Sensor on_car(2, &car);
+	Sensor on_car(2u, &car);
 	
 	// Collecting
 	std::vector<Sensor*> my_sensors;
 	my_sensors.push_back(&on_tree);
 	my_sensors.push_back(&on_house);
 	my_sensors.push_back(&on_car);
-	EXPECT_EQ(3, my_sensors.size());
+	EXPECT_EQ(3u, my_sensors.size());
 
 	//Preparing for access
 	Sensors sens(my_sensors);
-	EXPECT_EQ(3, sens.size());
+	EXPECT_EQ(3u, sens.size());
 	
 	// access
 	EXPECT_EQ(&on_tree, sens.at_frame(&tree));
@@ -122,16 +122,16 @@ TEST_F(SensorStorageTest, assert_no_duplicate_frames) {
 	// Creation
 	// 1st sensor
 	Frame tree("tree", Vec3::null, Rot3::null);
-	Sensor on_tree(0, &tree);
+	Sensor on_tree(0u, &tree);
 
 	// 2nd sensor points also to the frame of sensor 1 
-	Sensor on_tree2(1, &tree);
+	Sensor on_tree2(1u, &tree);
 	
 	// Collecting
 	std::vector<Sensor*> my_sensors;
 	my_sensors.push_back(&on_tree);
 	my_sensors.push_back(&on_tree2);
-	EXPECT_EQ(2, my_sensors.size());
+	EXPECT_EQ(2u, my_sensors.size());
 
 	//Preparing for access
 	EXPECT_THROW(
@@ -144,13 +144,13 @@ TEST_F(SensorStorageTest, access_non_existing_frame) {
 
 	// Creation
 	Frame tree("tree", Vec3::null, Rot3::null);
-	Sensor on_tree(0, &tree);
+	Sensor on_tree(0u, &tree);
 
 	Frame house("house", Vec3::null, Rot3::null);
-	Sensor on_house(1, &house);
+	Sensor on_house(1u, &house);
 
 	Frame car("car", Vec3::null, Rot3::null);
-	Sensor on_car(2, &car);
+	Sensor on_car(2u, &car);
 
 	// a frame which is not assigned to a sensor
 	Frame dog("dog", Vec3::null, Rot3::null);
@@ -160,11 +160,11 @@ TEST_F(SensorStorageTest, access_non_existing_frame) {
 	my_sensors.push_back(&on_tree);
 	my_sensors.push_back(&on_house);
 	my_sensors.push_back(&on_car);
-	EXPECT_EQ(3, my_sensors.size());
+	EXPECT_EQ(3u, my_sensors.size());
 
 	//Preparing for access
 	Sensors sens(my_sensors);
-	EXPECT_EQ(3, sens.size());
+	EXPECT_EQ(3u, sens.size());
 	
 	// access valid frames
 	EXPECT_EQ(&on_tree, sens.at_frame(&tree));

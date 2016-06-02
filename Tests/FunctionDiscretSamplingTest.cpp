@@ -94,7 +94,7 @@ TEST_F(FunctionDiscretSamplingTest, bad_offset_get_discrete_samples) {
 	);
 
 	discrete_samples = table.at(0.5);
-	EXPECT_EQ(20, discrete_samples->size());
+	EXPECT_EQ(20u, discrete_samples->size());
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionDiscretSamplingTest, get_discrete_samples) {
@@ -107,13 +107,13 @@ TEST_F(FunctionDiscretSamplingTest, get_discrete_samples) {
 
 	
 	Function::DiscretSampling::LookUpTable table(&poly3, config);
-	EXPECT_EQ(200, table.size());
+	EXPECT_EQ(200u, table.size());
 
 	const std::vector<double>* discrete_samples;
 
 	for(double s=0.0; s<1.0; s+=1e-4) {
 		discrete_samples = table.at(s);
 
-		EXPECT_EQ(200, discrete_samples->size());
+		EXPECT_EQ(200u, discrete_samples->size());
 	}
 }

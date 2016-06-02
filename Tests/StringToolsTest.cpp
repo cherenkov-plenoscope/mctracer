@@ -12,7 +12,7 @@ TEST_F(StringToolsTest, tokenize_text_several_delimiters) {
     vector<string> tokens = 
         StringTools::tokenize_text_using_either_one_of_delimiters(text," \t");
 
-    ASSERT_EQ(3, tokens.size());
+    ASSERT_EQ(3u, tokens.size());
     EXPECT_EQ("hans", tokens.at(0));
     EXPECT_EQ("klaus", tokens.at(1));
     EXPECT_EQ("peter", tokens.at(2));
@@ -20,14 +20,14 @@ TEST_F(StringToolsTest, tokenize_text_several_delimiters) {
     tokens = 
         StringTools::tokenize_text_using_either_one_of_delimiters(text," ");
 
-    ASSERT_EQ(2, tokens.size());
+    ASSERT_EQ(2u, tokens.size());
     EXPECT_EQ("hans", tokens.at(0));
     EXPECT_EQ("klaus\tpeter", tokens.at(1));
 
     tokens = 
         StringTools::tokenize_text_using_either_one_of_delimiters(text,"\t");
 
-    ASSERT_EQ(2, tokens.size());
+    ASSERT_EQ(2u, tokens.size());
     EXPECT_EQ("hans klaus", tokens.at(0));
     EXPECT_EQ("peter", tokens.at(1));
 }
@@ -39,7 +39,7 @@ TEST_F(StringToolsTest, tokenize_epmty_text) {
     vector<string> tokens = 
         StringTools::tokenize_text_using_either_one_of_delimiters(text," \t");
 
-    EXPECT_EQ(0, tokens.size());
+    EXPECT_EQ(0u, tokens.size());
 }
 //------------------------------------------------------------------------------
 TEST_F(StringToolsTest, tokenize_text_delimiter_in_the_end) {
@@ -49,7 +49,7 @@ TEST_F(StringToolsTest, tokenize_text_delimiter_in_the_end) {
     vector<string> tokens = 
         StringTools::tokenize_text_using_either_one_of_delimiters(text," \t");
 
-    ASSERT_EQ(2, tokens.size());
+    ASSERT_EQ(2u, tokens.size());
     EXPECT_EQ("hans", tokens.at(0));
     EXPECT_EQ("peter", tokens.at(1));
 }
@@ -61,7 +61,7 @@ TEST_F(StringToolsTest, tokenize_text_several_same_delimiters) {
     vector<string> tokens = 
         StringTools::tokenize_text_using_either_one_of_delimiters(text," \t");
 
-    ASSERT_EQ(2, tokens.size());
+    ASSERT_EQ(2u, tokens.size());
     EXPECT_EQ("hans", tokens.at(0));
     EXPECT_EQ("peter", tokens.at(1));
 }
@@ -73,7 +73,7 @@ TEST_F(StringToolsTest, tokenize_text_several_different_delimiters) {
     vector<string> tokens = 
         StringTools::tokenize_text_using_either_one_of_delimiters(text," \t");
 
-    ASSERT_EQ(2, tokens.size());
+    ASSERT_EQ(2u, tokens.size());
     EXPECT_EQ("hans", tokens.at(0));
     EXPECT_EQ("peter", tokens.at(1));
 }
@@ -177,19 +177,19 @@ TEST_F(StringToolsTest, fill_with_whitespaces_until_column) {
     std::string ho = 
     StringTools::fill_up_text_with_whitespaces_until_column(hi, 80);
 
-    EXPECT_EQ(80, ho.length());
+    EXPECT_EQ(80u, ho.length());
 
     std::string empty = "";
     std::string empty_but_whitespaces = 
     StringTools::fill_up_text_with_whitespaces_until_column(empty, 1337);
 
-    EXPECT_EQ(1337, empty_but_whitespaces.length());
+    EXPECT_EQ(1337u, empty_but_whitespaces.length());
 
     std::string str42 = "0123456789012345678901234567890123456789012";
     std::string strfull = 
     StringTools::fill_up_text_with_whitespaces_until_column(str42, 19);
 
-    EXPECT_EQ((19*3), strfull.length());
+    EXPECT_EQ((19u*3u), strfull.length());
 }
 //------------------------------------------------------------------------------
 TEST_F(StringToolsTest, strip_leading_and_tailing_whitespaces) {
@@ -235,7 +235,7 @@ TEST_F(StringToolsTest, to_double) {
     EXPECT_NO_THROW(
     EXPECT_EQ(42.1337,StringTools::to_double("42.1337"));
     EXPECT_EQ(1337,StringTools::to_double("1337"));
-    EXPECT_EQ(1,StringTools::to_double("1"));
+    EXPECT_EQ(1u,StringTools::to_double("1"));
     EXPECT_EQ(.1,StringTools::to_double(".1"));
     EXPECT_EQ(.1442,StringTools::to_double(".1442"));
     EXPECT_EQ(1.337,StringTools::to_double(" 1.337"));
@@ -255,7 +255,7 @@ TEST_F(StringToolsTest, to_double) {
     );
 
     EXPECT_THROW(
-    EXPECT_NE(1,StringTools::to_double(""));,
+    EXPECT_NE(1u,StringTools::to_double(""));,
     StringTools::CanNotParseDouble
     );
 

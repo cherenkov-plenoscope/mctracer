@@ -81,13 +81,13 @@ TEST_F(FrameTest, re_set_frame) {
     Frame hans("child_of_peter", Vec3(1.0, 2.0, 3.0), Rot3::null);
     peter.set_mother_and_child(&hans);
 
-    EXPECT_EQ(1, peter.get_children()->size());
+    EXPECT_EQ(1u, peter.get_children()->size());
     EXPECT_TRUE(pos == peter.get_position_in_mother());
     EXPECT_TRUE(rot == peter.get_rotation_in_mother());
 
     peter.set_name_pos_rot("another_name", Vec3(1.0, 2.0, 3.0), Rot3(0.1, 0.2, 0.3));
     
-    EXPECT_EQ(1, peter.get_children()->size());
+    EXPECT_EQ(1u, peter.get_children()->size());
     EXPECT_TRUE(Vec3(1.0, 2.0, 3.0) == peter.get_position_in_mother());
     EXPECT_TRUE(Rot3(0.1, 0.2, 0.3) == peter.get_rotation_in_mother());
 }

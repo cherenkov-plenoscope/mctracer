@@ -1,8 +1,7 @@
 #include "gtest/gtest.h"
 #include "Geometry/HexGridAnnulus.h"
 
-class HexGridAnnulusTest : public ::testing::Test {
-};
+class HexGridAnnulusTest : public ::testing::Test {};
 //----------------------------------------------------------------------
 TEST_F(HexGridAnnulusTest, Cells_are_inside_boundary) {
 

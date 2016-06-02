@@ -71,7 +71,7 @@ TEST_F(SphereIntersectionTest, frontal) {
 	PhotonAndFrame::Propagator(&P, sphere_test_environment);
 	//P.propagate_in(sphere_test_environment);
 
-	ASSERT_EQ(2, P.get_number_of_interactions_so_far() ) << "There should be 2 "
+	ASSERT_EQ(2u, P.get_number_of_interactions_so_far() ) << "There should be 2 "
 	"interaction stored in the history, 1 for creation of the photon and 1 for"
 	"the intersection with the sphere";
 
@@ -118,7 +118,7 @@ TEST_F(SphereIntersectionTest, tangential_intersection) {
 	PhotonAndFrame::Propagator(&P, sphere_test_environment);
 	//P.propagate_in(sphere_test_environment);
 
-	ASSERT_EQ(2, P.get_number_of_interactions_so_far() );
+	ASSERT_EQ(2u, P.get_number_of_interactions_so_far() );
 
 	Vec3 normal = Vec3::unit_z;
 

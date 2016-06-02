@@ -32,7 +32,7 @@ TEST_F(FitsIoTest, create_key_word_record) {
         Fits::Header::KeyWordRecord::CommentTooLarge
     );
 
-    EXPECT_EQ(Fits::Header::line_width, 80);
+    EXPECT_EQ(Fits::Header::line_width, 80u);
 
     EXPECT_EQ(
         Fits::Header::KeyWordRecord::key_value_and_comment(

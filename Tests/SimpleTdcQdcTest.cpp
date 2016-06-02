@@ -43,5 +43,5 @@ TEST_F(SimpleTdcQdcTest, tdcqdc_empty) {
 			integration_time_window
 		);
 
-	EXPECT_EQ(0, enclosure.size());
+	EXPECT_EQ(0u, enclosure.size());
 }

@@ -63,7 +63,7 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
                     sensor_list.clear_history();
                     sensor_list.assign_photons(&photons);
 
-                    ASSERT_EQ(1, sensor.arrival_table.size());
+                    ASSERT_EQ(1u, sensor.arrival_table.size());
 
                     EXPECT_NEAR(x*1e-2, sensor.arrival_table[0].x_intersect, 1e-6);
                     EXPECT_NEAR(y*1e-2, sensor.arrival_table[0].y_intersect, 1e-6);         

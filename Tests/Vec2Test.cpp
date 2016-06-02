@@ -223,23 +223,23 @@ TEST_F(Vec2Test, quadrant_encoding) {
     double n = -1.0;
 
     a.set(n, n);
-    EXPECT_EQ(0, a.get_quadrant());
+    EXPECT_EQ(0u, a.get_quadrant());
 
     a.set(n, p);
-    EXPECT_EQ(1, a.get_quadrant());
+    EXPECT_EQ(1u, a.get_quadrant());
 
     a.set(p, n);
-    EXPECT_EQ(2, a.get_quadrant());
+    EXPECT_EQ(2u, a.get_quadrant());
 
     a.set(p, p);
-    EXPECT_EQ(3, a.get_quadrant());
+    EXPECT_EQ(3u, a.get_quadrant());
 
     a.set(0.0, 0.0);
-    EXPECT_EQ(0, a.get_quadrant());
+    EXPECT_EQ(0u, a.get_quadrant());
     a.set(0.0, p);
-    EXPECT_EQ(1, a.get_quadrant()); 
+    EXPECT_EQ(1u, a.get_quadrant()); 
     a.set(p, 0.0);
-    EXPECT_EQ(2, a.get_quadrant());
+    EXPECT_EQ(2u, a.get_quadrant());
     a.set(p, p);
-    EXPECT_EQ(3, a.get_quadrant());
+    EXPECT_EQ(3u, a.get_quadrant());
 }

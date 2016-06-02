@@ -28,7 +28,7 @@ TEST_F(PhotonTest, creation) {
     EXPECT_EQ(1.0, pho.get_direction().norm());
     EXPECT_EQ(wavelength, pho.get_wavelength());
     //creation is an interaction
-    EXPECT_EQ(1, pho.get_number_of_interactions_so_far()); 
+    EXPECT_EQ(1u, pho.get_number_of_interactions_so_far()); 
 }
 //------------------------------------------------------------------------------
 TEST_F(PhotonTest, reject_negative_wavelength) {

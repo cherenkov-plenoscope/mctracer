@@ -131,9 +131,9 @@ TEST_F(FunctionTest, sampling_table_size) {
     Function::Polynom3 f(0.0, 0.0, 1.0, 0.0, l); // f(x) = x
     std::vector<std::vector<double>> sample_xy = f.get_samples(1000);
 
-    ASSERT_EQ(1000, sample_xy.size());
+    ASSERT_EQ(1000u, sample_xy.size());
     for(uint i=0; i<sample_xy.size(); i++)
-        ASSERT_EQ(2, sample_xy.at(i).size());
+        ASSERT_EQ(2u, sample_xy.at(i).size());
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, sampling_table_x_values) {
@@ -149,7 +149,7 @@ TEST_F(FunctionTest, sampling_table_x_values) {
     ASSERT_EQ(samples, sample_xy.size());
     for(uint i=0; i<sample_xy.size(); i++) {
 
-        ASSERT_EQ(2, sample_xy.at(i).size());
+        ASSERT_EQ(2u, sample_xy.at(i).size());
         double x = -4.2 + double(i)*(1.337+4.2)/double(samples);
 
         EXPECT_NEAR(x, sample_xy[i][0], 1e-9);
@@ -169,7 +169,7 @@ TEST_F(FunctionTest, sampling_table_y_values) {
     ASSERT_EQ(samples, sample_xy.size());
     for(uint i=0; i<sample_xy.size(); i++) {
 
-        ASSERT_EQ(2, sample_xy.at(i).size());
+        ASSERT_EQ(2u, sample_xy.at(i).size());
         double x = sample_xy[i][0];
 
         EXPECT_NEAR(x*x, f(x), 1e-9);
