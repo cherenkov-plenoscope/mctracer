@@ -1,6 +1,6 @@
-#include "StereoLitographyIo.h"
+#include "StereoLitography.h"
 //------------------------------------------------------------------------------
-namespace StereoLitographyIo {
+namespace StereoLitography {
 //------------------------------------------------------------------------------
 void BinaryWriter::add_facet_normal_and_three_vertices(
 	const Vec3 n,
@@ -92,4 +92,4 @@ void BinaryWriter::assert_file_is_open()const {
 	}
 }
 //------------------------------------------------------------------------------
-} // StereoLitographyIo
+} // StereoLitography

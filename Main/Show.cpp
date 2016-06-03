@@ -1,5 +1,5 @@
 #include "Core/Photons.h"
-#include "Geometry/StereoLitographyIo/StereoLitographyIo.h"
+#include "Geometry/StereoLitography/StereoLitography.h"
 #include "Xml/Factory/VisualConfigFab.h"
 #include "Xml/Factory/TracerSettingsFab.h"
 #include "Xml/Factory/SceneryFactory.h"
@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
 		StringTools::is_ending(cmd.get("scenery"),".STL")
 	) {
 		const double scale = 1.0;
-		StereoLitographyIo::add_stl_to_frame(cmd.get("scenery"), scenery, scale);
+		StereoLitography::add_stl_to_frame(cmd.get("scenery"), scenery, scale);
 	}else if(	
 		StringTools::is_ending(cmd.get("scenery"),".xml") ||
 		StringTools::is_ending(cmd.get("scenery"),".XML")

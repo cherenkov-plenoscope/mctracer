@@ -1,7 +1,7 @@
-#include "StereoLitographyIo.h"
+#include "StereoLitography.h"
 #include "Geometry/Triangle.h"
 //------------------------------------------------------------------------------
-namespace StereoLitographyIo {
+namespace StereoLitography {
 //------------------------------------------------------------------------------
 void add_stl_to_and_inherit_surface_from_surfac_entity(
     const string path, 
@@ -56,4 +56,4 @@ void add_stl_to_frame(const string path, Frame* proto, const double scale) {
     proto->cluster_using_helper_frames();
 }
 //------------------------------------------------------------------------------
-} // StereoLitographyIo
+} // StereoLitography

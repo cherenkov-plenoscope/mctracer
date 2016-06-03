@@ -1,12 +1,12 @@
 #include "gtest/gtest.h"
 #include "Core/Vec3.h"
-#include "StereoLitographyIo.h"
+#include "Geometry/StereoLitography/StereoLitography.h"
 
-using namespace StereoLitographyIo;
+using namespace StereoLitography;
 
-class StereoLitographyIoTest : public ::testing::Test {};
+class StereoLitographyTest : public ::testing::Test {};
 //----------------------------------------------------------------------
-TEST_F(StereoLitographyIoTest, open_non_existing_file) {
+TEST_F(StereoLitographyTest, open_non_existing_file) {
 
     EXPECT_THROW( 
         BinaryReader hans("not_existing_file"),
@@ -14,7 +14,7 @@ TEST_F(StereoLitographyIoTest, open_non_existing_file) {
     );
 }
 //----------------------------------------------------------------------
-TEST_F(StereoLitographyIoTest, ascii_format) {
+TEST_F(StereoLitographyTest, ascii_format) {
 
     EXPECT_THROW( 
         BinaryReader stl("test_scenery/ascii_format.stl"),
@@ -22,13 +22,13 @@ TEST_F(StereoLitographyIoTest, ascii_format) {
     );
 }
 //----------------------------------------------------------------------
-TEST_F(StereoLitographyIoTest, open_valid_file) {
+TEST_F(StereoLitographyTest, open_valid_file) {
 
     BinaryReader stl("test_scenery/LCCone-simple_parab.stl");
-    EXPECT_EQ(3692, stl.get_facets().size());
+    EXPECT_EQ(3692u, stl.get_facets().size());
 }
 //----------------------------------------------------------------------
-TEST_F(StereoLitographyIoTest, write_and_read_stl_with_zero_triangles) {
+TEST_F(StereoLitographyTest, write_and_read_stl_with_zero_triangles) {
 
     std::string filename = "test_scenery/single_triangle.stl";
 
@@ -36,10 +36,10 @@ TEST_F(StereoLitographyIoTest, write_and_read_stl_with_zero_triangles) {
     stlwr.write_to_file(filename);
 
     BinaryReader stl(filename);
-    EXPECT_EQ(0,  stl.get_facets().size());
+    EXPECT_EQ(0u,  stl.get_facets().size());
 }
 //----------------------------------------------------------------------
-TEST_F(StereoLitographyIoTest, write_and_read_1000_triangle) {
+TEST_F(StereoLitographyTest, write_and_read_1000_triangle) {
 
     uint number_of_triangles = 1000;
     std::vector<Facet> facets;
@@ -78,20 +78,23 @@ TEST_F(StereoLitographyIoTest, write_and_read_1000_triangle) {
     }
 }
 //----------------------------------------------------------------------
-TEST_F(StereoLitographyIoTest, scaling) {
+TEST_F(StereoLitographyTest, scaling) {
 
-    double scaleing = 42.1337;
+    const double scaleing = 42.1337;
 
-    Frame* obj_normal = read("test_scenery/LCCone-simple_parab.stl");
-    Frame* obj_scaled = read("test_scenery/LCCone-simple_parab.stl", scaleing);
+    Frame obj_normal("normal", Vec3::null, Rot3::null);
+    add_stl_to_frame("test_scenery/LCCone-simple_parab.stl", &obj_normal);
+
+    Frame obj_scaled("scaled", Vec3::null, Rot3::null);
+    add_stl_to_frame("test_scenery/LCCone-simple_parab.stl", &obj_scaled, scaleing);
 
     EXPECT_EQ(
-        scaleing*obj_normal->contour_radius(),
-        obj_scaled->contour_radius()
+        scaleing*obj_normal.contour_radius(),
+        obj_scaled.contour_radius()
     );
 }
 //----------------------------------------------------------------------
-TEST_F(StereoLitographyIoTest, write_and_read_simple_stl) {
+TEST_F(StereoLitographyTest, write_and_read_simple_stl) {
 
     std::string filename = "test_scenery/single_triangle.stl";
 
@@ -106,5 +109,5 @@ TEST_F(StereoLitographyIoTest, write_and_read_simple_stl) {
     stlwr.write_to_file(filename);
 
     BinaryReader stl(filename);
-    EXPECT_EQ(1, stl.get_facets().size());
+    EXPECT_EQ(1u, stl.get_facets().size());
 }

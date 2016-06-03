@@ -1,7 +1,7 @@
 //=================================
 // include guard
-#ifndef __StereoLitographyIo_H_INCLUDE__
-#define __StereoLitographyIo_H_INCLUDE__
+#ifndef __StereoLitography_H_INCLUDE__
+#define __StereoLitography_H_INCLUDE__
 
 //=================================
 // forward declared dependencies
@@ -44,7 +44,7 @@ should be zero because most software does not understand anything else.[6]
 Floating-point numbers are represented as IEEE floating-point numbers and are 
 assumed to be little-endian, although this is not stated in documentation.
 */
-namespace StereoLitographyIo {
+namespace StereoLitography {
 
     void add_stl_to_and_inherit_surface_from_surfac_entity(
         const string path, 
@@ -170,5 +170,5 @@ namespace StereoLitographyIo {
             const uint16_t attribute_byte_count
         ); 
     };
-} // StereoLitographyIo
-#endif // __StereoLitographyIo_H_INCLUDE__ 
+} // StereoLitography
+#endif // __StereoLitography_H_INCLUDE__ 

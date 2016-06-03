@@ -47,7 +47,7 @@
 	#include "SphereCapWithCylinderBound.h"
 	#include "SphereCapWithHexagonalBound.h"
 	#include "Geometry/Sphere.h"
-	#include "Geometry/StereoLitographyIo.h"
+	#include "Geometry/StereoLitography.h"
 	#include "Geometry/Triangle.h"
 
 	#include "Cameras/CameraDevice.h"
@@ -121,7 +121,7 @@ namespace std {
 %include "SphereCapWithCylinderBound.h"
 %include "SphereCapWithHexagonalBound.h"
 %include "Geometry/Sphere.h"
-%include "Geometry/StereoLitographyIo.h"
+%include "Geometry/StereoLitography.h"
 %include "Geometry/Triangle.h"
 
 %include "Cameras/CameraDevice.h"

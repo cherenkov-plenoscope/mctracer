@@ -9,7 +9,7 @@
 #include "Geometry/BiConvexLensHexBound.h"
 #include "Geometry/SphereCapWithHexagonalBound.h"
 #include "Geometry/Triangle.h"
-#include "Geometry/StereoLitographyIo/StereoLitographyIo.h"
+#include "Geometry/StereoLitography/StereoLitography.h"
 #include "Geometry/SegmentedReflector/SegmentedReflector.h"
 #include "Plenoscope/Plenoscope.h"
 using StringTools::is_equal;
@@ -267,7 +267,7 @@ Frame* SceneryFactory::add_STL(Frame* mother, const Node node) {
     object->set_outer_color(surface_color(node));
     object->set_outer_reflection(surface_refl(node));
     object->set_inner_reflection(surface_refl(node));
-    StereoLitographyIo::add_stl_to_and_inherit_surface_from_surfac_entity(
+    StereoLitography::add_stl_to_and_inherit_surface_from_surfac_entity(
         file, object, scale
     );
 

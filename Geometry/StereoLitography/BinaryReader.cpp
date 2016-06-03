@@ -1,7 +1,7 @@
-#include "StereoLitographyIo.h"
+#include "StereoLitography.h"
 #include "Geometry/Triangle.h"
 //------------------------------------------------------------------------------
-namespace StereoLitographyIo {
+namespace StereoLitography {
 //------------------------------------------------------------------------------
 BinaryReader::BinaryReader(const string _filename):
 	filename(_filename)
@@ -206,4 +206,4 @@ string BinaryReader::get_header()const {
 	return stl_header;
 }
 //------------------------------------------------------------------------------
-} // StereoLitographyIo
+} // StereoLitography

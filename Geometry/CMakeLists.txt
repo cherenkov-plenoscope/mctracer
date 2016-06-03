@@ -1,5 +1,5 @@
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/SegmentedReflector")
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/StereoLitographyIo")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/StereoLitography")
 set(SOURCE
    	${SOURCE}	
 	${CMAKE_CURRENT_SOURCE_DIR}/Annulus.cpp 
