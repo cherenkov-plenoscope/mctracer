@@ -5,9 +5,9 @@ void Triangle::set_corners_in_xy_plane(
 	const double Bx, const double By,  
 	const double Cx, const double Cy
 ) {
-	A = Vec3(Ax, Ay, 0.0);
-	B = Vec3(Bx, By, 0.0);
-	C = Vec3(Cx, Cy, 0.0);
+	A = Vec2(Ax, Ay);
+	B = Vec2(Bx, By);
+	C = Vec2(Cx, Cy);
 	
 	assert_edge_length_is_non_zero((A-B).norm(), "AB");
 	assert_edge_length_is_non_zero((C-A).norm(), "AC");
@@ -99,7 +99,7 @@ std::string Triangle::get_print()const{
 }
 //------------------------------------------------------------------------------
 double Triangle::sign(
-	const Vec3 &P1, const Vec3 &P2, const Vec3 &P3
+	const Vec3 &P1, const Vec2 &P2, const Vec2 &P3
 )const {
     return (P1.x()-P3.x()) * (P2.y()-P3.y())-(P2.x()-P3.x()) * (P1.y()-P3.y());
 }

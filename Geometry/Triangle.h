@@ -16,14 +16,15 @@
 #include <math.h>
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
+#include "Core/Vec2.h"
 #include "XyPlaneRayIntersectionEquation.h"
 
 //=================================
 class Triangle  :public SurfaceEntity{	
 
-	Vec3 A;
-	Vec3 B;	
-	Vec3 C;
+	Vec2 A;
+	Vec2 B;	
+	Vec2 C;
 public:
 
 	void set_corners_in_xy_plane(
@@ -50,7 +51,7 @@ private:
 	)const;
 	void post_initialize_radius_of_enclosing_sphere();
 	double sign(
-		const Vec3 &P1, const Vec3 &P2, const Vec3 &P3
+		const Vec3 &P1, const Vec2 &P2, const Vec2 &P3
 	)const;
 	bool is_inside_triangle(const Vec3 &intersec_vec)const;
 }; 
