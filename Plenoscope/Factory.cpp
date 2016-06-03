@@ -298,7 +298,6 @@ void Factory::add_telescope_to_frame(Frame *frame) {
 
 	frame->set_mother_and_child(light_field_sensor);
 	frame->set_mother_and_child(imaging_reflector);
-	frame->init_tree_based_on_mother_child_relations();
 }
 //------------------------------------------------------------------------------
 PhotonSensors::Sensors* Factory::get_sub_pixels()const {

@@ -8,8 +8,11 @@ class SceneryFactoryTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(SceneryFactoryTest, call_SceneryFactory) {
 
+    Frame frame("root", Vec3::null, Rot3::null);
     Xml::SceneryFactory xml2frame("test_scenery/tree_epoch_20160320.xml");
-    EXPECT_EQ(xml2frame.scenery->get_name(), "scenery");
+    xml2frame.add_scenery_to_frame(&frame);
+
+    EXPECT_EQ(frame.get_name(), "root");
 
     //TracerSettings settings;
     //FlyingCamera free(xml2frame.scenery, &settings);

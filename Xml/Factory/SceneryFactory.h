@@ -14,19 +14,14 @@
 #include "Core/Frame.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "TelescopeArrayControl.h"
-#include <map>
 using std::string;
 using std::vector;
-using std::map;
 
 //------------------------------------------------------------------------------
 namespace Xml {
 
     class SceneryFactory {
     public:
-
-        Frame* scenery;
-
         vector<PhotonSensor::Sensor*>* raw_sensors;
         FunctionFab functions;
         TelescopeArrayControl* telescopes;
@@ -39,6 +34,7 @@ namespace Xml {
 
         SceneryFactory(const string path);
         PhotonSensors::Sensors sensors()const;
+        void add_scenery_to_frame(Frame* frame);
     private:
 
         void make_geometry(Frame* mother, const Node node);

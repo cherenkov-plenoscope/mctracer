@@ -20,18 +20,18 @@ namespace Xml {
 SceneryFactory::SceneryFactory(const string path): xml_path(path), xml_doc(path) {
 
     const Node root_node = xml_doc.node().first_child();
-    
     if(root_node.has_attribute("author"))
         author = root_node.attribute("author");
     if(root_node.has_attribute("comment"))
         comment = root_node.attribute("comment");
 
     telescopes = new TelescopeArrayControl();
-    raw_sensors = new std::vector<PhotonSensor::Sensor*>;
-
-    scenery = new Frame("scenery", Vec3::null, Rot3::null);
-    make_geometry(scenery, root_node);
-    scenery->init_tree_based_on_mother_child_relations();
+    raw_sensors = new vector<PhotonSensor::Sensor*>;
+}
+//------------------------------------------------------------------------------
+void SceneryFactory::add_scenery_to_frame(Frame* frame) {
+    const Node root_node = xml_doc.node().first_child();
+    make_geometry(frame, root_node);
 }
 //------------------------------------------------------------------------------
 void SceneryFactory::make_geometry(Frame* mother, const Node node) {

@@ -93,6 +93,8 @@ int main(int argc, char* argv[]) {
     
     Frame telescope("telescope", Vec3::null, Rot3::null);
     fab.add_telescope_to_frame(&telescope);
+    telescope.init_tree_based_on_mother_child_relations();
+
     PhotonSensors::Sensors* sensors = fab.get_sub_pixels();
 
     //--------------------------------------------------------------------------

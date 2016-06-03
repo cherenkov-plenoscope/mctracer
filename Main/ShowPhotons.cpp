@@ -54,9 +54,10 @@ int main(int argc, char* argv[]) {
 	Random::Mt19937 prng(settings.pseudo_random_number_seed);
 
 	// load scenery
+	Frame* world = new Frame("root", Vec3::null, Rot3::null);
 	Xml::SceneryFactory fab(cmd.get("scenery"));
-	Frame *world = fab.scenery;
-
+	fab.add_scenery_to_frame(world);
+	world->init_tree_based_on_mother_child_relations();
 	// init Telescope Array Control
 	TelescopeArrayControl* array_ctrl = fab.telescopes;
 

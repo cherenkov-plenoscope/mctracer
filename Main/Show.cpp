@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
 		StringTools::is_ending(cmd.get("scenery"),".XML")
 	) {
 		Xml::SceneryFactory fab(cmd.get("scenery"));
-		scenery = fab.scenery;
+		fab.add_scenery_to_frame(scenery);
 	}else{
 		scenery = Frame::void_frame;
 		cout << "Can only read stl or xml files.\n";
@@ -57,6 +57,7 @@ int main(int argc, char* argv[]) {
 		settings.visual = Xml::Configs::get_VisualConfig_from_node(vc_node);
 	}
 
+	scenery->init_tree_based_on_mother_child_relations();
 	FlyingCamera free(scenery, &settings);
 
 	}catch(std::exception &error) {
