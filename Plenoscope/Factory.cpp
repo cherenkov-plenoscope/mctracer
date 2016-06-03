@@ -286,9 +286,18 @@ void Factory::add_telescope_to_frame(Frame *frame) {
 	);
 	add_light_field_sensor_to_frame(light_field_sensor);
 	
+
+	Frame* imaging_reflector = new Frame(
+		"imaging_reflector",
+		Vec3(0.0, 0.0, 0.0), 
+		Rot3::null
+	);
+
 	SegmentedReflector::Factory refl_factory(geometry->config.reflector);
+	refl_factory.add_reflector_mirror_facets_to_frame(imaging_reflector);
+
 	frame->set_mother_and_child(light_field_sensor);
-	frame->set_mother_and_child(refl_factory.get_reflector());
+	frame->set_mother_and_child(imaging_reflector);
 	frame->init_tree_based_on_mother_child_relations();
 }
 //------------------------------------------------------------------------------

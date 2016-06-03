@@ -288,7 +288,7 @@ Frame* SceneryFactory::add_SegmentedReflector(Frame* mother, const Node node) {
 
     FrameFab fab(node);
     Frame* reflector = new Frame(fab.name, fab.pos, fab.rot);
-    reflector = refl_fab.get_reflector();
+    refl_fab.add_reflector_mirror_facets_to_frame(reflector);
     mother->set_mother_and_child(reflector);
     return reflector;
 }

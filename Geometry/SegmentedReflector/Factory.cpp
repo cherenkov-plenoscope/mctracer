@@ -6,13 +6,14 @@ namespace SegmentedReflector {
 	Factory::Factory(const Config ncfg): 
 		cfg(ncfg),
 		geometry(ncfg)
-	{
-		init_facets();
-		init_reflector();
-	}
+	{}
 
-	Frame* Factory::get_reflector() {
-		return reflector;
+	void Factory::add_reflector_mirror_facets_to_frame(Frame* reflector) {
+		init_facets();
+		for(Frame* facet : facets)
+			reflector->set_mother_and_child(facet);
+
+		reflector->cluster_using_helper_frames();		
 	}
 
 	void Factory::init_facets() {
@@ -38,16 +39,6 @@ namespace SegmentedReflector {
 				geometry.facet_outer_hex_radius()
 			);		
 		}	
-	}
-
-	void Factory::init_reflector() {
-
-		reflector = new Frame("Reflector", Vec3::null, Rot3::null);
-
-		for(Frame* facet : facets)
-			reflector->set_mother_and_child(facet);
-
-		reflector->cluster_using_helper_frames();
 	}
 
 	std::string Factory::get_name_of_facet(const uint i)const {

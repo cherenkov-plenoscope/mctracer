@@ -149,11 +149,9 @@
     </light_field_telescope>
 
     <plenoscope>
-        <segmented_reflector>
-            <set_frame 
-                name="reflector" 
-                pos="[0,0,0]" 
-                rot="[0,0,0]"/>
+        <set_frame name="Portal" pos="[0,0,0]" rot="[0,0,0]"/>
+        <imaging_reflector>
+            <set_frame name="reflector" pos="[0,0,0]" rot="[0,0,0]"/>
             <set_surface reflection_vs_wavelength="mirror_reflection"/>
             <set_segmented_reflector 
                 focal_length="75.0" 
@@ -161,19 +159,21 @@
                 min_inner_aperture_radius="2.5" 
                 DaviesCotton_over_parabolic_mixing_factor="0.0" 
                 facet_inner_hex_radius="0.6" 
-                gap_between_facets="0.02"/>
-        </segmented_reflector>
+                gap_between_facets="0.02"
+                reflection_vs_wavelength="mirror_reflection"
+            />
+        </imaging_reflector>
         <light_field_sensor>
-            <set_frame 
-                name="light_field_sensor" 
-                pos="[0,0,75.0]" 
-                rot="[0,0,0]"/>
+            <set_frame name="light_field_sensor" pos="[0,0,75.0]" rot="[0,0,0]"/>
             <set_light_field_sensor
                 max_FoV_diameter_deg="6.5" 
                 hex_pixel_FoV_flat2flat_deg="0.0667" 
                 housing_overhead="1.2" 
                 sub_pixel_on_pixel_diagonal="13" 
-                refraction_vs_wavelength="lens_refraction"/>
+                lens_refraction_vs_wavelength="lens_refraction"
+                lens_absorbtiom_vs_wavelength="lens_refraction"
+                bin_reflection_vs_wavelength="mirror_reflection"
+            />
         </light_field_sensor>        
     </plenoscope>
 </scenery>

@@ -18,15 +18,13 @@ namespace SegmentedReflector {
 		const Config cfg;
 		Geometry geometry;
 		std::vector<Frame*> facets;
-		Frame* reflector;
 	public:
 
 		Factory(const Config ncfg);
-		Frame* get_reflector();
+		void add_reflector_mirror_facets_to_frame(Frame* reflector);
 	private:
 
 		void init_facets();
-		void init_reflector();
 		std::string get_name_of_facet(const uint i)const;
 	};
 } // SegmentedReflector

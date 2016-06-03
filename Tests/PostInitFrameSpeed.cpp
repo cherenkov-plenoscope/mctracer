@@ -5,7 +5,7 @@
 class PostInitFrameSpeed : public ::testing::Test {
 protected:
     Frame world;
-    Frame* reflector;
+    Frame reflector = Frame("reflector", Vec3::null, Rot3::null);
     TracerSettings settings;
     double Zd_Rad = 45.0;
     double Az_Rad = 75.0;
@@ -26,9 +26,8 @@ protected:
         cfg.facet_inner_hex_radius = 0.01;
 
         SegmentedReflector::Factory factory(cfg);
-
-        reflector = factory.get_reflector();
-        world.set_mother_and_child(reflector);
+        factory.add_reflector_mirror_facets_to_frame(&reflector);
+        world.set_mother_and_child(&reflector);
         world.init_tree_based_on_mother_child_relations();
     }
 };
@@ -37,6 +36,6 @@ TEST_F(PostInitFrameSpeed, post_init_based_on_mother) {
 
     for(int i=0; i<1e3; i++) {
         Rot3 rot(0.0, 0.0, double(i)/1.0e6);
-        reflector->update_rotation(rot);
+        reflector.update_rotation(rot);
     }
 }
