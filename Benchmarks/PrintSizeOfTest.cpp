@@ -14,81 +14,92 @@
 using std::cout;
 using StringTools::fill_up_text_with_whitespaces_until_column;
 
+template<typename T>
+void print_size(const string &name, T s) {
+    cout << fill_up_text_with_whitespaces_until_column(name, 36) << sizeof(s) << '\n';
+}
+
 class SizeOfTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(SizeOfTest, sizes_of_mct) {
 
     cout << "Size in bytes\n";
+    cout << "--------------------------------------------" << "\n";
 
-    const uint c = 36;
+    Color col(123, 65, 12); 
+    print_size("Color", col);
 
-    Vec3 v;
-    cout << fill_up_text_with_whitespaces_until_column("Vec3", c) << sizeof(v) << "\n";
+    Vec2 v2; 
+    print_size("Vec2", v2);
 
-    Rot3 r;
-    cout << fill_up_text_with_whitespaces_until_column("Rot3", c) << sizeof(r) << "\n";
+    Vec3 v3; 
+    print_size("Vec3", v3);
 
-    HomTra3 h;
-    cout << fill_up_text_with_whitespaces_until_column("HomTra3", c) << sizeof(h) << "\n";
+    Rot3 r;  
+    print_size("Rot3", r);
 
-    Ray ray(Vec3::null, Vec3::unit_z);
-    cout << fill_up_text_with_whitespaces_until_column("Ray", c) << sizeof(ray) << "\n";
+    HomTra3 h; 
+    print_size("HomTra3", h);
+    cout << "--------------------------------------------" << "\n";
 
-    CameraRay camray(Vec3::null, Vec3::unit_z);
-    cout << fill_up_text_with_whitespaces_until_column("CameraRay", c) << sizeof(camray) << "\n";
+    Ray ray(Vec3::null, Vec3::unit_z); 
+    print_size("Ray", ray);
 
-    RayForPropagation rayfp(Vec3::null, Vec3::unit_z);
-    cout << fill_up_text_with_whitespaces_until_column("RayForPropagation", c) << sizeof(rayfp) << "\n";
+    CameraRay camray(Vec3::null, Vec3::unit_z); 
+    print_size("CameraRay", camray);
 
-    Photon ph(Vec3::null, Vec3::unit_z, 433e-9);
-    cout << fill_up_text_with_whitespaces_until_column("Photon", c) << sizeof(ph) << "\n";
+    RayForPropagation rayfp(Vec3::null, Vec3::unit_z); 
+    print_size("RayForPropagation", rayfp);
 
-    Intersection is = Intersection::void_intersection;
-    cout << fill_up_text_with_whitespaces_until_column("Intersection", c) << sizeof(is) << "\n";
+    Photon ph(Vec3::null, Vec3::unit_z, 433e-9); 
+    print_size("Photon", ph);
+    cout << "--------------------------------------------" << "\n";
 
-    Frame tree("0123456789", Vec3::null, Rot3::null);
-    cout << fill_up_text_with_whitespaces_until_column("Frame", c) << sizeof(tree) << "\n";
+    Intersection is = Intersection::void_intersection; 
+    print_size("Intersection", is);
 
-    SurfaceEntity surf("0123456789", Vec3::null, Rot3::null);
-    cout << fill_up_text_with_whitespaces_until_column("SurfaceEntity", c) << sizeof(surf) << "\n";
+    PropagationEnvironment environment = PropagationEnvironment::default_environment; 
+    print_size("PropagationEnvironment", environment);
+    cout << "--------------------------------------------" << "\n";
 
-    Annulus annulus;
-    cout << fill_up_text_with_whitespaces_until_column("Annulus", c) << sizeof(annulus) << "\n";
+    Frame tree("0123456789", Vec3::null, Rot3::null); 
+    print_size("Frame", tree);
 
-    BiConvexLens biConvexLens;
-    cout << fill_up_text_with_whitespaces_until_column("BiConvexLens", c) << sizeof(biConvexLens) << "\n";
+    SurfaceEntity surf("0123456789", Vec3::null, Rot3::null); 
+    print_size("SurfaceEntity", surf);
 
-    BiConvexLensHexBound biConvexLensHexBound;
-    cout << fill_up_text_with_whitespaces_until_column("BiConvexLensHexBound", c) << sizeof(biConvexLensHexBound) << "\n";
+    Annulus annulus; 
+    print_size("Annulus", annulus);
 
-    Cylinder cylinder;
-    cout << fill_up_text_with_whitespaces_until_column("Cylinder", c) << sizeof(cylinder) << "\n";
+    BiConvexLens biConvexLens; 
+    print_size("BiConvexLens", biConvexLens);
 
-    Disc disc;
-    cout << fill_up_text_with_whitespaces_until_column("Disc", c) << sizeof(disc) << "\n";
+    BiConvexLensHexBound biConvexLensHexBound; 
+    print_size("BiConvexLensHexBound", biConvexLensHexBound);
 
-    EllipticalCapWithHexagonalBound ellipticalCapWithHexagonalBound;
-    cout << fill_up_text_with_whitespaces_until_column("EllipticalCapWithHexagonalBound   ", c) << sizeof(ellipticalCapWithHexagonalBound) << "\n";
+    Cylinder cylinder; 
+    print_size("Cylinder", cylinder);
 
-    HexPlane hexPlane;
-    cout << fill_up_text_with_whitespaces_until_column("HexPlane", c) << sizeof(hexPlane) << "\n";
+    Disc disc; 
+    print_size("Disc", disc);
 
-    Plane plane;
-    cout << fill_up_text_with_whitespaces_until_column("Plane", c) << sizeof(plane) << "\n";
+    EllipticalCapWithHexagonalBound ellipticalCapWithHexagonalBound; 
+    print_size("EllipticalCapWithHexagonalBound", ellipticalCapWithHexagonalBound);
 
-    Sphere sphere;
-    cout << fill_up_text_with_whitespaces_until_column("Sphere", c) << sizeof(sphere) << "\n";
+    HexPlane hexPlane; 
+    print_size("HexPlane", hexPlane);
 
-    SphereCapWithHexagonalBound sphereCapWithHexagonalBound;
-    cout << fill_up_text_with_whitespaces_until_column("SphereCapWithHexagonalBound", c) << sizeof(sphereCapWithHexagonalBound) << "\n";
+    Plane plane; 
+    print_size("Plane", plane);
 
-    Triangle triangle;
-    cout << fill_up_text_with_whitespaces_until_column("Triangle", c) << sizeof(triangle) << "\n";
+    Sphere sphere; 
+    print_size("Sphere", sphere);
 
-    PropagationEnvironment environment = PropagationEnvironment::default_environment;
-    cout << fill_up_text_with_whitespaces_until_column("PropagationEnvironment", c) << sizeof(environment) << "\n";
+    SphereCapWithHexagonalBound sphereCapWithHexagonalBound; 
+    print_size("SphereCapWithHexagonalBound", sphereCapWithHexagonalBound);
 
-    Color col(123, 65, 12);
-    cout << fill_up_text_with_whitespaces_until_column("Color", c) << sizeof(col) << "\n";     
+    Triangle triangle; 
+    print_size("Triangle", triangle);
+    cout << "--------------------------------------------" << "\n";
 }
 //------------------------------------------------------------------------------
