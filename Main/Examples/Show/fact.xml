@@ -21,6 +21,7 @@
 	<stl>
 		<set_frame name="spider" pos="[-5,3,-1.5]" rot="[0,0,0]"/>
 		<set_stl file="spider.stl" scale="0.15"/>
+		<set_surface reflection_vs_wavelength="zero" color="[255,91,49]"/>
 	</stl>
 
 	<frame>

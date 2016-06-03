@@ -2,53 +2,58 @@
 #include "Geometry/Triangle.h"
 //------------------------------------------------------------------------------
 namespace StereoLitographyIo {
-	Frame* read(const std::string filename, const double scale) {
+//------------------------------------------------------------------------------
+void add_stl_to_and_inherit_surface_from_surfac_entity(
+    const string path, 
+    SurfaceEntity* proto,
+    const double scale
+) {
+    BinaryReader reader(path);
+    vector<Facet> facets = reader.get_facets();
 
-		BinaryReader reader(filename);
+    uint facet_count = 0;
+    for(Facet facet: facets) {
+        Triangle* tri = new Triangle;
+        tri->set_name_pos_rot(
+            "triangle_"+std::to_string(facet_count++),
+            Vec3::null, 
+            Rot3::null
+        );
+        tri->set_normal_and_3_vertecies(
+            facet.n,
+            facet.a*scale,
+            facet.b*scale,
+            facet.c*scale
+        );  
+        tri->take_boundary_layer_properties_from(proto);        
+        proto->set_mother_and_child(tri);
+    }
+    proto->cluster_using_helper_frames();
+}
+//------------------------------------------------------------------------------
+void add_stl_to_frame(const string path, Frame* proto, const double scale) {
+    BinaryReader reader(path);
+    vector<Facet> facets = reader.get_facets();
 
-		std::vector<Facet> facets = reader.get_facets();
-
-		return facets_2_mctracer_triangles(facets, scale);
-	}
-	//--------------------------------------------------------------------------
-	Frame* facets_2_mctracer_triangles(
-		const std::vector<Facet> facets, 
-		const double scale
-	) {
-		
-		Frame* mesh = new Frame("stl_mesh", Vec3::null, Rot3::null);
-
-		uint facet_count = 0;
-
-		for(Facet facet : facets) {
-
-			std::stringstream name;
-			name << "triangle_" << facet_count++;
-
-			Triangle* tri = new Triangle;
-
-			tri->set_name_pos_rot(
-				name.str(),
-				Vec3::null, 
-				Rot3::null
-			);
-
-			tri->set_normal_and_3_vertecies(
-				facet.n,
-				facet.a*scale,
-				facet.b*scale,
-				facet.c*scale
-			);	
-
-			tri->set_outer_color(&Color::gray);
-			tri->set_inner_color(&Color::dark_gray);
-			
-			mesh->set_mother_and_child(tri);
-		}
-
-		mesh->init_tree_based_on_mother_child_relations();
-
-		return mesh;
-	}
-	//--------------------------------------------------------------------------
+    uint facet_count = 0;
+    for(Facet facet: facets) {
+        Triangle* tri = new Triangle;
+        tri->set_name_pos_rot(
+            "triangle_"+std::to_string(facet_count++),
+            Vec3::null, 
+            Rot3::null
+        );
+        tri->set_normal_and_3_vertecies(
+            facet.n,
+            facet.a*scale,
+            facet.b*scale,
+            facet.c*scale
+        );  
+        tri->set_outer_color(&Color::gray);
+        tri->set_inner_color(&Color::dark_gray);       
+        proto->set_mother_and_child(tri);
+    }
+    proto->cluster_using_helper_frames();
+}
+//------------------------------------------------------------------------------
 } // StereoLitographyIo

@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 namespace StereoLitographyIo {
 //------------------------------------------------------------------------------
-BinaryReader::BinaryReader(const std::string _filename):
+BinaryReader::BinaryReader(const string _filename):
 	filename(_filename)
 {
 	start();
@@ -28,7 +28,7 @@ void BinaryReader::read_total_number_of_facets() {
 	total_number_of_facets = read_single_uint32();
 } 
 //------------------------------------------------------------------------------
-std::string BinaryReader::get_report()const {
+string BinaryReader::get_report()const {
 	
 	std::stringstream info, out;
 	info << __FILE__ << " " << __LINE__ << "\n";
@@ -75,18 +75,18 @@ void BinaryReader::assert_file_is_open()const {
 	}
 }
 //------------------------------------------------------------------------------
-std::vector<float> BinaryReader::read_floats(const uint n) {
+vector<float> BinaryReader::read_floats(const uint n) {
 
-    std::vector<float> block(n);
+    vector<float> block(n);
     stl_file.read((char*)block.data(), block.size()*sizeof(float));
     return block;
 }
 //------------------------------------------------------------------------------
-std::string BinaryReader::read_chars(const uint n) {
+string BinaryReader::read_chars(const uint n) {
 
-    std::vector<char> block(n);
+    vector<char> block(n);
     stl_file.read((char*)block.data(), block.size()*sizeof(char));
-	std::string str(block.begin(),block.end());
+	string str(block.begin(),block.end());
     return str;;
 }
 //------------------------------------------------------------------------------
@@ -104,7 +104,7 @@ uint16_t BinaryReader::read_single_uint16() {
 	return number;
 }
 //------------------------------------------------------------------------------
-std::string BinaryReader::get_print()const {
+string BinaryReader::get_print()const {
 
 	std::stringstream out;
     out << "BinaryReader(" << filename << ")\n";
@@ -129,7 +129,7 @@ Facet BinaryReader::read_and_create_next_facet() {
 	current_triangle_number++;
 
 	// 12 floats
-	std::vector<float> normal_and_3_vertexes = 
+	vector<float> normal_and_3_vertexes = 
 		read_floats(triangle_size_in_32bit_floats);
 
 	// 2byte short
@@ -164,7 +164,7 @@ Facet BinaryReader::read_and_create_next_facet() {
 	return facet;
 }
 //------------------------------------------------------------------------------
-std::vector<Facet> BinaryReader::get_facets()const {
+vector<Facet> BinaryReader::get_facets()const {
 	return facets;
 }
 //------------------------------------------------------------------------------
@@ -202,7 +202,7 @@ bool BinaryReader::stl_header_implies_ascii_format()const {
 	return StringTools::is_equal("solid", stl_header.substr(0,5));
 }
 //------------------------------------------------------------------------------
-std::string BinaryReader::get_header()const {
+string BinaryReader::get_header()const {
 	return stl_header;
 }
 //------------------------------------------------------------------------------

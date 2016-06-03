@@ -13,7 +13,7 @@ void BinaryWriter::add_facet_normal_and_three_vertices(
 	facets.push_back(facet);
 }
 //------------------------------------------------------------------------------
-void BinaryWriter::add_facets(const std::vector<Facet> additional_facets) {
+void BinaryWriter::add_facets(const vector<Facet> additional_facets) {
 	for(Facet additional_facet : additional_facets)
 		facets.push_back(additional_facet);
 }
@@ -33,7 +33,7 @@ void BinaryWriter::assert_normal_is_actually_normalized(const Vec3 normal) {
 	}
 }
 //------------------------------------------------------------------------------
-void BinaryWriter::write_to_file(const std::string _filename) {
+void BinaryWriter::write_to_file(const string _filename) {
 	
 	filename = _filename;
 

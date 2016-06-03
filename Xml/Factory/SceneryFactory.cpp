@@ -260,16 +260,19 @@ Frame* SceneryFactory::add_STL(Frame* mother, const Node node) {
     const string file = xml_path.dirname+"/"+node.child("set_stl").attribute("file");
     const double scale = node.child("set_stl").attribute2double("scale");
 
-    Frame* object = StereoLitographyIo::read(file, scale);
-
     FrameFab framefab(node);
-    Frame* repositioned_object = new Frame(framefab.name, framefab.pos, framefab.rot);
-    repositioned_object->take_children_from(object);
-    
-    //delete object;
+    SurfaceEntity* object = new SurfaceEntity;
+    object->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
+    object->set_inner_color(surface_color(node));
+    object->set_outer_color(surface_color(node));
+    object->set_outer_reflection(surface_refl(node));
+    object->set_inner_reflection(surface_refl(node));
+    StereoLitographyIo::add_stl_to_and_inherit_surface_from_surfac_entity(
+        file, object, scale
+    );
 
-    mother->set_mother_and_child(repositioned_object);
-    return repositioned_object;
+    mother->set_mother_and_child(object);
+    return object;
 }
 //------------------------------------------------------------------------------
 Frame* SceneryFactory::add_SegmentedReflector(Frame* mother, const Node node) {
@@ -324,6 +327,25 @@ Frame* SceneryFactory::add_Plenoscope(Frame* mother, const Node node) {
     mother->set_mother_and_child(pleno_frame);
     return pleno_frame;
 }
+//------------------------------------------------------------------------------
+/*Frame* SceneryFactory::add_Plenoscope_N(Frame* mother, const Node node) {
+
+    FrameFab ffab(node);
+    Frame* plenoscope = new Frame(ffab.name, ffab.pos, ffab.rot);
+
+    const Node refl_node = node.child("imaging_reflector");
+    FrameFab rfab(refl_node);
+    Frame* reflector = new Frame(rfab.name, rfab.pos, rfab.rot);
+
+    const Node lf_sens_node = node.child("light_field_sensor");
+    FrameFab sfab(lf_sens_node);
+    Frame* light_field_sensor = new Frame(sfab.name, sfab.pos, sfab.rot);
+
+    plenoscope->set_mother_and_child(light_field_sensor);
+    plenoscope->set_mother_and_child(reflector);
+    mother->set_mother_and_child(plenoscope);
+    return plenoscope;    
+}*/
 //------------------------------------------------------------------------------
 const Function::Func1D* SceneryFactory::surface_refl(const Node node)const {
     return functions.by_name(node.child("set_surface").attribute("reflection_vs_wavelength"));

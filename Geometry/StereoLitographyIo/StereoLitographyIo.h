@@ -18,6 +18,9 @@
 #include <stdio.h>
 #include <string.h>
 #include "Core/Frame.h"
+#include "Core/SurfaceEntity.h"
+using std::string;
+using std::vector;
 
 //=================================
 /* 
@@ -43,128 +46,129 @@ assumed to be little-endian, although this is not stated in documentation.
 */
 namespace StereoLitographyIo {
 
-	Frame* read(const std::string filename, const double scale = 1.0);
-	// The STL file format has arbitrary units. Some files are stored in meters
-	// others are in millimeters or inches. To correct for this, a scaling
-	// factor can be used during construction.
+    void add_stl_to_and_inherit_surface_from_surfac_entity(
+        const string path, 
+        SurfaceEntity* proto,
+        const double scale = 1.0
+    );
+
+    void add_stl_to_frame(
+        const string path, 
+        Frame* proto,
+        const double scale = 1.0
+    );
+    // The STL file format has arbitrary units. Some files are stored in meters
+    // others are in millimeters or inches. To correct for this, a scaling
+    // factor can be used during construction.
 
 //--------------------------------
 // AUXILUARY
 //--------------------------------
 
-	struct Facet {
-		Vec3 n;
-		Vec3 a;
-		Vec3 b;
-		Vec3 c;	
-	};
-
-//--------------------------------
-// Facet2mctracerTriangle
-//--------------------------------
-
-	Frame* facets_2_mctracer_triangles(
-		const std::vector<Facet> facets,
-		const double scale
-	);
+    struct Facet {
+        Vec3 n;
+        Vec3 a;
+        Vec3 b;
+        Vec3 c; 
+    };
 
 //--------------------------------
 // BINARY IO
 //--------------------------------
-	class BinaryIo {
-	protected:
-			
-		const uint header_size_in_chars = 80;
-		const uint triangle_size_in_32bit_floats = 12;
-	public:
+    class BinaryIo {
+    protected:
+            
+        const uint header_size_in_chars = 80;
+        const uint triangle_size_in_32bit_floats = 12;
+    public:
 
-		class CanNotReadFile : public TracerException {
-			using TracerException::TracerException;
-		};
+        class CanNotReadFile : public TracerException {
+            using TracerException::TracerException;
+        };
 
-		class BadNormal : public TracerException {
-			using TracerException::TracerException;
-		};
+        class BadNormal : public TracerException {
+            using TracerException::TracerException;
+        };
 
-		class CanNotReadAscii : public TracerException {
-			using TracerException::TracerException;
-		};
-	};
+        class CanNotReadAscii : public TracerException {
+            using TracerException::TracerException;
+        };
+    };
 //--------------------------------
 // BINARY WRITER
 //--------------------------------
 
-	class BinaryWriter :public BinaryIo{
+    class BinaryWriter :public BinaryIo{
 
-		std::ofstream file;
-		std::string filename;
-		std::vector<Facet> facets;
-	public:
+        std::ofstream file;
+        string filename;
+        vector<Facet> facets;
+    public:
 
-		void add_facets(const std::vector<Facet> additional_facets);
+        void add_facets(const vector<Facet> additional_facets);
 
-		void add_facet_normal_and_three_vertices(
-			const Vec3 n,
-			const Vec3 a,
-			const Vec3 b,
-			const Vec3 c
-		);
+        void add_facet_normal_and_three_vertices(
+            const Vec3 n,
+            const Vec3 a,
+            const Vec3 b,
+            const Vec3 c
+        );
 
-		void write_to_file(const std::string filename);
-	private:
+        void write_to_file(const string filename);
+    private:
 
-		void assert_file_is_open()const;
-		void assert_normal_is_actually_normalized(const Vec3 normal);
-		void write_stl_header();
-		void write_number_of_facets(const uint32_t i);
-		void write_attribute_count(const uint16_t i);
-		void write_vector(const Vec3 &vec);
-		void write_facets();
-		void write_facet(const Facet &facet);
-	};
+        void assert_file_is_open()const;
+        void assert_normal_is_actually_normalized(const Vec3 normal);
+        void write_stl_header();
+        void write_number_of_facets(const uint32_t i);
+        void write_attribute_count(const uint16_t i);
+        void write_vector(const Vec3 &vec);
+        void write_facets();
+        void write_facet(const Facet &facet);
+    };
 //--------------------------------
 // BINARY READER
 //--------------------------------
-	
-	class BinaryReader :public BinaryIo{
+    
+    class BinaryReader :public BinaryIo{
 
-		const std::string filename;
-		std::ifstream stl_file;
-		std::string stl_header;
+        const string filename;
+        std::ifstream stl_file;
+        string stl_header;
 
-		std::vector<Facet> facets;
+        vector<Facet> facets;
 
-		uint current_triangle_number = 0;
-		uint32_t total_number_of_facets;
+        uint current_triangle_number = 0;
+        uint32_t total_number_of_facets;
 
-	    // keep track of facets with bad "attribute byte count"
-	    std::vector<uint> facets_with_bad_attribute_count;
-	public:
+        // keep track of facets with bad "attribute byte count"
+        std::vector<uint> facets_with_bad_attribute_count;
+    public:
 
-	    BinaryReader(const std::string filename);
-	    std::vector<Facet> get_facets()const;
-	    std::string get_print()const;
-	    std::string get_header()const;
-	    uint get_number_of_facets()const;
-	    std::string get_report()const;
-	private:
+        BinaryReader(const string filename);
+        vector<Facet> get_facets()const;
+        string get_print()const;
+        string get_header()const;
+        uint get_number_of_facets()const;
+        string get_report()const;
+    private:
 
-		void read_header();
-		void read_total_number_of_facets();
-		void start();
-		Facet read_and_create_next_facet();
-		bool stl_header_implies_ascii_format()const;
-		void assert_is_no_ascii_format()const;
-		void assert_normal_is_actually_normalized(const Vec3 nomral);
-		void assert_file_is_open()const;
-		void read_facets();
-		std::vector<float> read_floats(const uint n);
-		std::string read_chars(const uint n);
-		uint32_t read_single_uint32();
-		uint16_t read_single_uint16();
-		void check_attribute_byte_count_is_zero(
-			const uint16_t attribute_byte_count
-		); 
-	};
+        void read_header();
+        void read_total_number_of_facets();
+        void start();
+        Facet read_and_create_next_facet();
+        bool stl_header_implies_ascii_format()const;
+        void assert_is_no_ascii_format()const;
+        void assert_normal_is_actually_normalized(const Vec3 nomral);
+        void assert_file_is_open()const;
+        void read_facets();
+        vector<float> read_floats(const uint n);
+        string read_chars(const uint n);
+        uint32_t read_single_uint32();
+        uint16_t read_single_uint16();
+        void check_attribute_byte_count_is_zero(
+            const uint16_t attribute_byte_count
+        ); 
+    };
 } // StereoLitographyIo
 #endif // __StereoLitographyIo_H_INCLUDE__ 

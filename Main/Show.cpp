@@ -29,12 +29,13 @@ int main(int argc, char* argv[]) {
 		return 0;
 	}
 
-	Frame *scenery;
+	Frame *scenery = new Frame("root", Vec3::null, Rot3::null);
 	if(
 		StringTools::is_ending(cmd.get("scenery"),".stl") || 
 		StringTools::is_ending(cmd.get("scenery"),".STL")
 	) {
-		scenery = StereoLitographyIo::read(cmd.get("scenery"), 1.0);
+		const double scale = 1.0;
+		StereoLitographyIo::add_stl_to_frame(cmd.get("scenery"), scenery, scale);
 	}else if(	
 		StringTools::is_ending(cmd.get("scenery"),".xml") ||
 		StringTools::is_ending(cmd.get("scenery"),".XML")
