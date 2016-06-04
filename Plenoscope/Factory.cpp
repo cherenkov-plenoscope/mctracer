@@ -234,7 +234,7 @@ Frame* Factory::get_image_sensor_housing()const {
 
 	Disc* sensor_housing_top = new Disc;
 	sensor_housing_top->set_name_pos_rot(
-		"sensor_housing_top",
+		"top",
 		Vec3(0.0, 0.0, housing_height),
 		Rot3::null
 	);
@@ -243,7 +243,7 @@ Frame* Factory::get_image_sensor_housing()const {
 	sensor_housing_top->set_radius(geometry->outer_sensor_housing_radius());
 
 	Cylinder* sensor_housing_cylinder = new Cylinder(
-		"sensor_housing_cylinder",
+		"cylinder",
 		Vec3::null,
 		Rot3::null
 	);
@@ -263,7 +263,7 @@ Frame* Factory::get_image_sensor_housing()const {
 void Factory::add_light_field_sensor_to_frame(Frame *frame) {
 	
 	Frame* light_field_sensor_front = new Frame(
-		"light_field_sensor_front",
+		"front",
 		Vec3::null, 
 		Rot3::null
 	);

@@ -51,6 +51,7 @@ void Calibration::set_up_telescope() {
 	
 	Factory fab(telescope_geometry);
 	fab.add_telescope_to_frame(telescope);
+	telescope->cluster_using_helper_frames();
 	telescope->init_tree_based_on_mother_child_relations();
 	
 	sub_pixels = fab.get_sub_pixels();

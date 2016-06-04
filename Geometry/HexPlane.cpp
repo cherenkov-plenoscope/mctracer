@@ -1,4 +1,5 @@
  #include "HexPlane.h"
+const Vec3 HexPlane::plane_surface_normal = Vec3::unit_z;
 //------------------------------------------------------------------------------
 void HexPlane::set_outer_hex_radius(const double outer_hex_radius) {
 	hex_bounds.set_outer_radius(outer_hex_radius);

@@ -26,15 +26,15 @@ public:
 		const double curvature_radius,
 		const double outer_hex_radius
 	);
-
 	std::string get_print()const;
 	void calculate_intersection_with(
         const Ray* ray, 
         vector<Intersection> *intersections
     )const;
+    double get_focal_length()const;
 private:
-	void restrict_outer_hex_radius_to_curvature_radius();
 
+	void restrict_outer_hex_radius_to_curvature_radius();
 	void post_initialize_radius_of_enclosing_sphere();
 };
 #endif // __SphereCapWithHexagonalBound_H_INCLUDED__

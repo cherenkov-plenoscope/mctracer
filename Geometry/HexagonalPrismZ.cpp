@@ -1,36 +1,29 @@
 #include "HexagonalPrismZ.h"
+const Vec3 HexagonalPrismZ::hexU = Vec3::unit_y;
+const Vec3 HexagonalPrismZ::hexV = Vec3(1.0, 0.0, 0.0)*+sin(2.0/3.0*M_PI) + 
+									Vec3(0.0, 1.0, 0.0)*cos(2.0/3.0*M_PI);
+const Vec3 HexagonalPrismZ::hexW = Vec3(1.0, 0.0, 0.0)*-sin(2.0/3.0*M_PI) + 
+									Vec3(0.0, 1.0, 0.0)*cos(2.0/3.0*M_PI);
+//------------------------------------------------------------------------------
+//            /|\ Y-axis                                                  //
+//             |                                                          //
+//          ___|___                                                       //
+//  X-axis /   |   \                                                      //
+//  /_____/____|    \                                                     //
+//  \     \         /                                                     //
+//         \_______/                                                      //
 //------------------------------------------------------------------------------
 void HexagonalPrismZ::set_outer_radius(const double outer_radius) {
-
-	//            /|\ Y-axis                                                  //
-	//             |                                                          //
-	//          ___|___                                                       //
-	//  X-axis /   |   \                                                      //
-	//  /_____/____|    \                                                     //
-	//  \     \         /                                                     //
-	//         \_______/                                                      //
-
 	assert_outer_radius_positive(outer_radius);
-
-	ex = Vec3::unit_x;
-	ey = Vec3::unit_y;
-	
-	hexU = ey;
-	
-	double Pi_times_2over3 = 2.0/3.0*M_PI;
-
-	hexV = ex*+sin( Pi_times_2over3 ) + ey*cos( Pi_times_2over3 );
-	hexW = ex*-sin( Pi_times_2over3 ) + ey*cos( Pi_times_2over3 );
-	
-	inner_radius = outer_radius * cos( M_PI/6.0 );
+	inner_radius = outer_radius * cos(M_PI/6.0);
 	this->outer_radius = outer_radius;
 }
 //------------------------------------------------------------------------------
 bool HexagonalPrismZ::is_inside(const Vec3* vec)const {
 
-	double projection_onto_hexU = hexU * *vec;
-	double projection_onto_hexV = hexV * *vec;
-	double projection_onto_hexW = hexW * *vec;
+	const double projection_onto_hexU = hexU * *vec;
+	const double projection_onto_hexV = hexV * *vec;
+	const double projection_onto_hexW = hexW * *vec;
 
 	return (
 		projection_onto_hexU < inner_radius

@@ -13,16 +13,12 @@
 //=================================
 class HexagonalPrismZ :public PrismZ {
 private:	
+	static const Vec3 hexU;
+	static const Vec3 hexV;
+	static const Vec3 hexW;
+
 	double outer_radius;
-
-	Vec3 ex; 
-	Vec3 ey; 
-	Vec3 hexU;
-	Vec3 hexV;
-	Vec3 hexW;
-
 	double inner_radius;
-	double edge2edge;
 public:
 	void set_outer_radius(const double outer_radius);
 	bool is_inside(const Vec3* vec)const;

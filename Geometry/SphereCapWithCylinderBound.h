@@ -17,15 +17,10 @@ class SphereCapWithCylinderBound :public SurfaceWithOuterPrismBound {
 protected:	
 	CylinderPrismZ CylBounds;
 
-	double focal_length;
 	double curvature_radius;
 	double cap_radius;
 public:
 
-	void set_focal_length_and_cap_radius(
-		const double focal_length,
-		const double cap_radius
-	);
 	void set_curvature_radius_and_outer_radius(
 		const double curvature_radius,
 		const double cap_radius
@@ -35,6 +30,7 @@ public:
         const Ray* ray, 
         vector<Intersection> *intersections
     )const;
+    double get_focal_length()const;
 private:
 
 	void restrict_cap_radius_to_curvature_radius();

@@ -92,8 +92,14 @@ TEST_F(SizeOfTest, sizes_of_mct) {
     Plane plane; 
     print_size("Plane", plane);
 
+    PlaneDualSphericalBound planeDualSphericalBound;
+    print_size("PlaneDualSphericalBound", planeDualSphericalBound);
+
     Sphere sphere; 
     print_size("Sphere", sphere);
+
+    SphereCapWithCylinderBound sphereCapWithCylinderBound;
+    print_size("SphereCapWithCylinderBound", sphereCapWithCylinderBound);
 
     SphereCapWithHexagonalBound sphereCapWithHexagonalBound; 
     print_size("SphereCapWithHexagonalBound", sphereCapWithHexagonalBound);

@@ -32,6 +32,7 @@ SceneryFactory::SceneryFactory(const string path): xml_path(path), xml_doc(path)
 void SceneryFactory::add_scenery_to_frame(Frame* frame) {
     const Node root_node = xml_doc.node().first_child();
     make_geometry(frame, root_node);
+    frame->cluster_using_helper_frames();
 }
 //------------------------------------------------------------------------------
 void SceneryFactory::make_geometry(Frame* mother, const Node node) {
