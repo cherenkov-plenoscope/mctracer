@@ -1,21 +1,22 @@
 //=================================
 // include guard
-#ifndef __LightFieldTelescopeNightSkyBackgroundLight_H_INCLUDED__
-#define __LightFieldTelescopeNightSkyBackgroundLight_H_INCLUDED__
+#ifndef __PlenoscopeNightSkyBackgroundPhotons_H_INCLUDED__
+#define __PlenoscopeNightSkyBackgroundPhotons_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
 
 //=================================
 // included dependencies
-#include "Plenoscope/Plenoscope.h"
+#include "Plenoscope/LightFieldSensor/Geometry.h"
 #include "Core/Random/Random.h"
 #include "Core/Function/Function.h"
-#include "SignalProcessing/PipelinePhoton.h"
+#include "Core/Photon.h"
 
 namespace Plenoscope {
+	namespace NightSkyBackground {
 
-	class NightSkyBackgroundLight: public Printable {
+	class Light: public Printable {
 	
 		const Function::Func1D* nsb_flux_vs_wavelength;
 		Random::SamplesFromDistribution nsb_cdf;
@@ -26,10 +27,10 @@ namespace Plenoscope {
 		double max_tilt_vs_optical_axis_to_throw_photons_in;
 		std::vector<double> relative_arrival_times;
 	public:
-		const Geometry *telescope_geometry;
+		const LightFieldSensor::Geometry *sensor_geometry;
 
-		NightSkyBackgroundLight(
-			const Geometry *_telescope_geometry, 
+		Light(
+			const LightFieldSensor::Geometry *_sensor_geometry, 
 			const Function::Func1D* nsb_flux_vs_wavelength
 		);
 
@@ -54,5 +55,7 @@ namespace Plenoscope {
 			Random::Generator* prng
 		)const;
 	};
-}
-#endif // __LightFieldTelescopeNightSkyBackgroundLight_H_INCLUDED__ 
+	
+	}// NightSkyBackground
+}// Plenoscope
+#endif // __PlenoscopeNightSkyBackgroundPhotons_H_INCLUDED__ 

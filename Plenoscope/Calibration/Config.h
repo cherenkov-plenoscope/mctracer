@@ -13,14 +13,17 @@
 using std::string;
 
 namespace Plenoscope {
+    namespace Calibration {
 
-	struct CalibrationConfig {
-		uint32_t number_of_blocks;
-		uint32_t photons_per_block;
-		string raw_calibration_output_path;
-		string condensed_calibration_output_path;
+    struct Config {
+        uint32_t number_of_blocks;
+        uint32_t photons_per_block;
+        string raw_calibration_output_path;
+        string condensed_calibration_output_path;
 
-		CalibrationConfig();
-	};
-} //Plenoscope
+        Config();
+    };
+
+    }//Calibration
+}//Plenoscope
 #endif // __LightFieldTelescopeCalibrationConfig_H_INCLUDED__ 

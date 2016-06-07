@@ -1,7 +1,7 @@
 set(SOURCE
    	${SOURCE}
   	${CMAKE_CURRENT_SOURCE_DIR}/Calibration.cpp
-  	${CMAKE_CURRENT_SOURCE_DIR}/CalibIo.cpp
+  	${CMAKE_CURRENT_SOURCE_DIR}/Writer.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/Config.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/CalibrationPhotonResult.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/SubPixelStatistics.cpp

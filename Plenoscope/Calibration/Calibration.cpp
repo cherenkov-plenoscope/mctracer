@@ -1,71 +1,61 @@
 #include "Calibration.h"
-#include "CalibIo.h"
+#include "Plenoscope/Calibration/Writer.h"
 #include "Tools/UserInteraction.h"
 #include <iomanip> 
 #include "Tools/FileTools.h"
 #include "Core/PhotonAndFrame.h"
+//#include "Cameras/FlyingCamera.h"
 using std::cout;
 
 namespace Plenoscope {
+	namespace Calibration {
 //------------------------------------------------------------------------------
-Calibration::Calibration(
-	const Geometry *geometry,  
-	const CalibrationConfig *_calib_config
+Calibrator::Calibrator(
+	const Config _calib_config,
+	PlenoscopeInScenery *_plenoscope, 
+	const Frame* _scenery
 ):  
 	config(_calib_config),
-	telescope_geometry(geometry),
-	stats(geometry, _calib_config)
+	scenery(_scenery),
+	plenoscope(_plenoscope),
+	stats(&plenoscope->light_field_sensor_geometry, &_calib_config)
 {
-	number_of_photons = config->photons_per_block*config->number_of_blocks;
+	number_of_photons = config.photons_per_block*config.number_of_blocks;
 
 	set_up_photon_properties();
 	set_up_principal_aperture_range();
 	set_up_field_of_view_range();
-	set_up_telescope();
-	set_up_telescope_environment();
-
+	set_up_plenoscope_environment();
 	run_calibration();
 }
 //------------------------------------------------------------------------------
-void Calibration::set_up_photon_properties() {
+void Calibrator::set_up_photon_properties() {
 
 	distance_to_travel_before_intersecting_principal_aperture = 1e4;
 	callibration_photon_wavelenght = 433e-9;
 }
 //------------------------------------------------------------------------------
-void Calibration::set_up_principal_aperture_range() {
+void Calibrator::set_up_principal_aperture_range() {
 
-	max_principal_aperture_radius_to_trow_photons_on = 
-		telescope_geometry->principal_aperture_radius_to_throw_photons_in();
+	max_principal_aperture_radius_to_trow_photons_on = 1.05*
+		plenoscope->light_field_sensor_geometry.
+			expected_imaging_system_max_aperture_radius();
 }
 //------------------------------------------------------------------------------
-void Calibration::set_up_field_of_view_range() {
+void Calibrator::set_up_field_of_view_range() {
 
-	max_tilt_vs_optical_axis_to_throw_photons_in = 
-		telescope_geometry->max_FoV_radius()*1.05;
+	max_tilt_vs_optical_axis_to_throw_photons_in = 1.05*
+		plenoscope->light_field_sensor_geometry.max_FoV_radius();
 }
 //------------------------------------------------------------------------------
-void Calibration::set_up_telescope() {
+void Calibrator::set_up_plenoscope_environment() {
 
-	telescope = new Frame("telescope", Vec3::null, Rot3::null);
-	
-	Factory fab(telescope_geometry);
-	fab.add_telescope_to_frame(telescope);
-	telescope->cluster_using_helper_frames();
-	telescope->init_tree_based_on_mother_child_relations();
-	
-	sub_pixels = fab.get_sub_pixels();
-	sub_pixels->clear_history();
+	plenoscope_environment.world_geometry = scenery;
+	plenoscope_environment.propagation_options = &settings;
+	plenoscope_environment.random_engine = &prng;		
 }
 //------------------------------------------------------------------------------
-void Calibration::set_up_telescope_environment() {
-
-	telescope_environment.world_geometry = telescope;
-	telescope_environment.propagation_options = &settings;
-	telescope_environment.random_engine = &prng;		
-}
-//------------------------------------------------------------------------------
-Photon* Calibration::get_photon_given_pos_and_angle_on_principal_aperture(
+Photon* Calibrator::get_photon_given_pos_and_angle_on_principal_aperture(
 	Vec3 pos_on_principal_aperture,
 	Vec3 direction_on_principal_aperture
 )const {
@@ -88,7 +78,7 @@ Photon* Calibration::get_photon_given_pos_and_angle_on_principal_aperture(
 	return ph;
 }
 //------------------------------------------------------------------------------
-void Calibration::fill_calibration_block_to_table() {
+void Calibrator::fill_calibration_block_to_table() {
 	
 	uint i;
 	int HadCatch = 0;
@@ -96,7 +86,7 @@ void Calibration::fill_calibration_block_to_table() {
 	#pragma omp parallel shared(HadCatch)
 	{
 		#pragma omp for schedule(dynamic) private(i) 
-		for(i=0; i<config->photons_per_block; i++) {
+		for(i=0; i<config.photons_per_block; i++) {
 
 			try{
 				// create photon
@@ -116,11 +106,11 @@ void Calibration::fill_calibration_block_to_table() {
 				);
 
 				// propagate photon
-				PhotonAndFrame::Propagator(ph, telescope_environment);
+				PhotonAndFrame::Propagator(ph, plenoscope_environment);
 
 				PhotonSensors::FindSensorByFrame sensor_finder(
 					ph->get_final_intersection().get_object(),
-					&sub_pixels->by_frame
+					&plenoscope->light_field_channels->by_frame
 				);
 
 				if(sensor_finder.frame_is_in_sensors()) {
@@ -165,26 +155,30 @@ void Calibration::fill_calibration_block_to_table() {
 	}
 }
 //------------------------------------------------------------------------------
-void Calibration::run_calibration() {
+void Calibrator::run_calibration() {
 
-	cout << "Plenoscope Calibration: propagating ";
-	cout << double(config->number_of_blocks * config->photons_per_block)/1.0e6 << "M photons\n";
+	/*FlyingCamera foc(
+		plenoscope_environment.world_geometry, 
+		plenoscope_environment.propagation_options
+	);*/
+	cout << "Plenoscope Calibrator: propagating ";
+	cout << double(number_of_photons)/1.0e6 << "M photons\n";
 	
-	photon_results.resize(config->photons_per_block);
-	CalibIo appender(config->raw_calibration_output_path);
+	photon_results.resize(config.photons_per_block);
+	Writer writer(config.raw_calibration_output_path);
 
-	for(uint j=0; j<config->number_of_blocks; j++) {
+	for(uint j=0; j<config.number_of_blocks; j++) {
 		
-		cout << j+1 << " of " << config->number_of_blocks << "\n";	
+		cout << j+1 << " of " << config.number_of_blocks << "\n";	
 		fill_calibration_block_to_table();
 		stats.fill_in_block(photon_results);
-		appender.append(photon_results);	
+		writer.append(photon_results);	
 	}
 
-	stats.save(config->condensed_calibration_output_path);
+	stats.save(config.condensed_calibration_output_path);
 }
 //------------------------------------------------------------------------------
-std::string Calibration::get_print()const {
+std::string Calibrator::get_print()const {
 
 	std::stringstream out;
 	out << "Light_Field_Calibration__\n";
@@ -204,4 +198,5 @@ std::string Calibration::get_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-} // namespace Plenoscope
+	}//Calibration
+}//Plenoscope

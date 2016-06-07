@@ -1,24 +1,23 @@
-#include "NightSkyBackgroundLightInjector.h"
+#include "Plenoscope/NightSkyBackground/Injector.h"
 #include "Tools/Tools.h"
 #include "Core/Histogram1D.h"
 using std::vector;
 
 namespace Plenoscope {
+namespace NightSkyBackground {
 
 	void inject_nsb_into_photon_pipeline(
 		vector<vector<PipelinePhoton>> *photon_pipelines,
 		const double nsb_exposure_time,
 		const vector<vector<double>> *lft_calib_result,
-		const NightSkyBackgroundLight *telescope_nsb,
+		const Light *nsb,
 		Random::Generator* prng
 	) {	
-		//std::cout << __LINE__ << "\n";
-
 		if(photon_pipelines->size() == 0)
 			return;
 
 		const double number_subpix = 
-			telescope_nsb->telescope_geometry->total_number_of_sub_pixels();
+			nsb->sensor_geometry->total_number_of_sub_pixels();
 
 		//------------------------------------------------
 		// FIND MIN MAX ARRIVAL TIMES OF CHERENKOV PHOTONS
@@ -82,7 +81,7 @@ namespace Plenoscope {
 			double subpix_efficincy = lft_calib_result->at(i).at(0);
 
 			double subpix_nsb_rate = 
-				telescope_nsb->get_overall_rate()*subpix_efficincy/number_subpix;
+				nsb->get_overall_rate()*subpix_efficincy/number_subpix;
 
 			// arrival times of nsb
 			vector<double> nsb_arrival_times;
@@ -100,7 +99,7 @@ namespace Plenoscope {
 			for(double nsb_arrival_time: nsb_arrival_times) {
 				PipelinePhoton nsb_ph;
 				nsb_ph.arrival_time = nsb_arrival_time;
-				nsb_ph.wavelength = telescope_nsb->draw_wavelength(prng);
+				nsb_ph.wavelength = nsb->draw_wavelength(prng);
 
 				photon_pipelines->at(i).push_back(nsb_ph);
 			}
@@ -121,6 +120,7 @@ namespace Plenoscope {
 					nsb_exposure_start_time;
 			}
 		}
-	}
-}
+	}	
+}// NightSkyBackground
+}// Plenoscope
 

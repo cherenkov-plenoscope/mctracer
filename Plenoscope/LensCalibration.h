@@ -10,6 +10,8 @@
 // included dependencies
 #include "Plenoscope/Plenoscope.h"
 #include "Core/Random/Random.h"
+#include "Core/TracerSettings.h"
+#include "Core/PropagationEnvironment.h"
 #include "Geometry/Disc.h"
 #include "Geometry/BiConvexLensHexBound.h"
 

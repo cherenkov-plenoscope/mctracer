@@ -1,28 +1,25 @@
 #include "gtest/gtest.h"
-#include "Plenoscope/NightSkyBackgroundLight.h"
+#include "Plenoscope/LightFieldSensor/Config.h"
+#include "Plenoscope/NightSkyBackground/Light.h"
+#include "Plenoscope/NightSkyBackground/Injector.h"
 #include "Tools/AsciiIo.h"
 class NightSkyBackgroundLightTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(NightSkyBackgroundLightTest, init) {
 
     // SET UP TELESCOPE
-    Plenoscope::Config telescope_config;
 
-    telescope_config.reflector.focal_length = 75.0;
-    telescope_config.reflector.DaviesCotton_over_parabolic_mixing_factor = 0.0;
-    telescope_config.reflector.max_outer_aperture_radius = 25.0;
-    telescope_config.reflector.min_inner_aperture_radius = 0.5;
-    telescope_config.reflector.facet_inner_hex_radius = 0.6;
-    telescope_config.reflector.gap_between_facets = 0.01;
-    telescope_config.reflector.reflectivity = &SegmentedReflector::perfect_reflectivity;
-    telescope_config.max_FoV_diameter = Deg2Rad(6.5);
-    telescope_config.pixel_FoV_hex_flat2flat = Deg2Rad(0.1);
-    telescope_config.housing_overhead = 1.2;
-    telescope_config.lens_refraction = &Plenoscope::pmma_refraction;
-    telescope_config.sub_pixel_on_pixel_diagonal = 11;	
+    Plenoscope::LightFieldSensor::Config config;
 
+    config.expected_imaging_system_focal_length = 75.0;
+    config.expected_imaging_system_max_aperture_radius = 25.0;
+    config.max_FoV_diameter = Deg2Rad(6.5);
+    config.pixel_FoV_hex_flat2flat = Deg2Rad(0.1);
+    config.sub_pixel_on_pixel_diagonal = 13;
+    config.housing_overhead = 1.2;
+    config.lens_refraction = &Plenoscope::LightFieldSensor::pmma_refraction;
 
-    Plenoscope::Geometry telescope_geometry(telescope_config);
+    Plenoscope::LightFieldSensor::Geometry geometry(config);
 
     Function::LinInterpol nsb_flux_vs_wavelength(
     	AsciiIo::gen_table_from_file(
@@ -30,8 +27,8 @@ TEST_F(NightSkyBackgroundLightTest, init) {
     	)
     );
 
-    Plenoscope::NightSkyBackgroundLight nsb(
-    	&telescope_geometry,
+    Plenoscope::NightSkyBackground::Light nsb(
+    	&geometry,
     	&nsb_flux_vs_wavelength
     );
 

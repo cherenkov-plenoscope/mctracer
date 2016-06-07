@@ -1,4 +1,3 @@
-#include "Core/TracerException.h"
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"
 #include "CommandLine/CommandLine.h"
@@ -6,15 +5,15 @@
 #include "CorsikaIO/EventIo/EventIo.h"
 #include "CorsikaIO/EventIo/PhotonFactory.h"
 #include "Core/Histogram1D.h"
-#include "Plenoscope/Plenoscope.h"
 #include "Tools/AsciiIo.h"
 #include "Tools/FileTools.h"
 #include "Tools/Tools.h"
 #include "SignalProcessing/PipelinePhoton.h"
-#include "Plenoscope/NightSkyBackgroundLight.h"
-#include "Plenoscope/NightSkyBackgroundLightInjector.h"
+#include "Plenoscope/NightSkyBackground/Light.h"
+#include "Plenoscope/NightSkyBackground/Injector.h"
 #include "SignalProcessing/PhotoElectricConverter.h"
 #include "Xml/Xml.h"
+#include "Xml/Factory/SceneryFactory.h"
 #include "Xml/Factory/TracerSettingsFab.h"
 #include "SignalProcessing/SimpleTDCQDC.h"
 #include "Tools/PathTools.h"
@@ -22,6 +21,7 @@
 string help_text() {
     std::stringstream out; 
     out << "  Plenoscope simulation\n";
+    out << "  --scenery, -s     scenery with at least one plenoscope in it\n";
     out << "  --config, -c      config path steering the simulation and the plenoscope\n";
     out << "  --input, -i       input path of CORSIKA run\n";
     out << "  --output, -o      output path of plenoscope lightfields\n";
@@ -32,12 +32,14 @@ int main(int argc, char* argv[]) {
     try{
 
     CommandLine::Parser cmd;
+    cmd.define_key_val_by_key_short_desc("scenery", 's', "scenery with at least one plenoscope in it");
     cmd.define_key_val_by_key_short_desc("config", 'c' ,"config path steering the simulation and plenoscope");
     cmd.define_key_val_by_key_short_desc("output", 'o', "output path of plenoscope lightfields");
     cmd.define_key_val_by_key_short_desc("input", 'i', "input path of CORSIKA run");
     cmd.parse(argc, argv);
 
-    if(!cmd.exist("config") || !cmd.exist("input") || !cmd.exist("output")) {
+    if(!cmd.exist("config") || !cmd.exist("input") || 
+       !cmd.exist("output") || !cmd.exist("scenery") ) {
         cout << help_text();
         return 0;
     }
@@ -72,30 +74,18 @@ int main(int argc, char* argv[]) {
     Random::Mt19937 prng(settings.pseudo_random_number_seed);
 
     //--------------------------------------------------------------------------
-    // SET UP TELESCOPE
-    Plenoscope::Config telescope_config;
-    telescope_config.reflector.focal_length = 75.0;
-    telescope_config.reflector.DaviesCotton_over_parabolic_mixing_factor = 0.0;
-    telescope_config.reflector.max_outer_aperture_radius = 25.0;
-    telescope_config.reflector.min_inner_aperture_radius = 0.5;
-    telescope_config.reflector.facet_inner_hex_radius = 0.6;
-    telescope_config.reflector.gap_between_facets = 0.01;
-    telescope_config.reflector.reflectivity = &SegmentedReflector::perfect_reflectivity;
-    telescope_config.max_FoV_diameter = Deg2Rad(6.5);
-    telescope_config.pixel_FoV_hex_flat2flat = Deg2Rad(0.0667);
-    telescope_config.housing_overhead = 1.2;
-    telescope_config.lens_refraction = &Plenoscope::pmma_refraction;
-    telescope_config.sub_pixel_on_pixel_diagonal = 13;
-    telescope_config.object_distance_to_focus_on = 10.0e3;
-    
-    Plenoscope::Geometry telescope_geometry(telescope_config);
-    Plenoscope::Factory fab(&telescope_geometry);
-    
-    Frame telescope("telescope", Vec3::null, Rot3::null);
-    fab.add_telescope_to_frame(&telescope);
-    telescope.init_tree_based_on_mother_child_relations();
+    // SET UP SCENERY
+    Xml::SceneryFactory scenery_factory(cmd.get("scenery"));
+    Frame scenery("root", Vec3::null, Rot3::null);
+    scenery_factory.add_scenery_to_frame(&scenery);
+    scenery.init_tree_based_on_mother_child_relations();
+    if(scenery_factory.plenoscopes.size() == 0)
+        throw TracerException("There is no plenoscope in the scenery");
+    else if(scenery_factory.plenoscopes.size() > 1)
+        throw TracerException("There is more then one plenoscope in the scenery");
+    Plenoscope::PlenoscopeInScenery* pis = &scenery_factory.plenoscopes.at(0);
 
-    PhotonSensors::Sensors* sensors = fab.get_sub_pixels();
+    PhotonSensors::Sensors* light_field_channels = pis->light_field_channels;
 
     //--------------------------------------------------------------------------
     // load light field calibration result
@@ -107,13 +97,13 @@ int main(int argc, char* argv[]) {
     vector<vector<double>> optics_calibration_result = AsciiIo::gen_table_from_file(
         optics_path
     );
-    // assert number os sub_pixel matches simulated telescope
-    if(fab.get_sub_pixels()->size() != optics_calibration_result.size()) {
+    // assert number os sub_pixel matches simulated plenoscope
+    if(light_field_channels->size() != optics_calibration_result.size()) {
         std::stringstream info;
         info << "The light field calibration results, read from file '";
         info << optics_path;
-        info << "', do no not match the telescope simulated here.\n";
-        info << "Expected sub pixel size: " << fab.get_sub_pixels()->size();
+        info << "', do no not match the plenoscope simulated here.\n";
+        info << "Expected sub pixel size: " << light_field_channels->size();
         info << ", but actual: " << optics_calibration_result.size();
         info << "\n";
         throw TracerException(info.str());
@@ -130,7 +120,7 @@ int main(int argc, char* argv[]) {
             )
         )
     );
-    Plenoscope::NightSkyBackgroundLight nsb(&telescope_geometry, &nsb_flux_vs_wavelength);
+    Plenoscope::NightSkyBackground::Light nsb(&pis->light_field_sensor_geometry, &nsb_flux_vs_wavelength);
     const double nsb_exposure_time = nsb_node.attribute2double("exposure_time");
 
     //--------------------------------------------------------------------------
@@ -191,26 +181,25 @@ int main(int argc, char* argv[]) {
         }
 
         Photons::propagate_photons_in_world_with_settings(
-            &photons, &telescope, &settings, &prng
+            &photons, &scenery, &settings, &prng
         );
 
-        sensors->clear_history();
-        sensors->assign_photons(&photons);
+        light_field_channels->clear_history();
+        light_field_channels->assign_photons(&photons);
         Photons::delete_photons(&photons);
 
         vector<vector<PipelinePhoton>> photon_pipelines = 
-            get_photon_pipelines(sensors);
+            get_photon_pipelines(light_field_channels);
 
         //-----------------------------
         // Night Sky Background photons
-        Plenoscope::inject_nsb_into_photon_pipeline(
+        Plenoscope::NightSkyBackground::inject_nsb_into_photon_pipeline(
             &photon_pipelines,
             nsb_exposure_time,
             &optics_calibration_result,
             &nsb,
             &prng
         );
-        
 
         //--------------------------
         // Photo Electric conversion

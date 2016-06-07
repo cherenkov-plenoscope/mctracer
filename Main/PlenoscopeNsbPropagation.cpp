@@ -1,4 +1,3 @@
-#include "Core/TracerException.h"
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"
 #include "CommandLine/CommandLine.h"
@@ -6,15 +5,15 @@
 #include "CorsikaIO/EventIo/EventIo.h"
 #include "CorsikaIO/EventIo/PhotonFactory.h"
 #include "Core/Histogram1D.h"
-#include "Plenoscope/Plenoscope.h"
 #include "Tools/AsciiIo.h"
 #include "Tools/FileTools.h"
 #include "Tools/Tools.h"
 #include "SignalProcessing/PipelinePhoton.h"
-#include "Plenoscope/NightSkyBackgroundLight.h"
-#include "Plenoscope/NightSkyBackgroundLightInjector.h"
+#include "Plenoscope/NightSkyBackground/Light.h"
+#include "Plenoscope/NightSkyBackground/Injector.h"
 #include "SignalProcessing/PhotoElectricConverter.h"
 #include "Xml/Xml.h"
+#include "Xml/Factory/SceneryFactory.h"
 #include "Xml/Factory/TracerSettingsFab.h"
 #include "SignalProcessing/SimpleTDCQDC.h"
 #include "Tools/PathTools.h"
@@ -71,24 +70,17 @@ int main(int argc, char* argv[]) {
     Random::Mt19937 prng(settings.pseudo_random_number_seed);
 
     //--------------------------------------------------------------------------
-    // SET UP TELESCOPE
-    Plenoscope::Config telescope_config;
-    telescope_config.reflector.focal_length = 75.0;
-    telescope_config.reflector.DaviesCotton_over_parabolic_mixing_factor = 0.0;
-    telescope_config.reflector.max_outer_aperture_radius = 25.0;
-    telescope_config.reflector.min_inner_aperture_radius = 0.5;
-    telescope_config.reflector.facet_inner_hex_radius = 0.6;
-    telescope_config.reflector.gap_between_facets = 0.01;
-    telescope_config.reflector.reflectivity = &SegmentedReflector::perfect_reflectivity;
-    telescope_config.max_FoV_diameter = Deg2Rad(6.5);
-    telescope_config.pixel_FoV_hex_flat2flat = Deg2Rad(0.0667);
-    telescope_config.housing_overhead = 1.2;
-    telescope_config.lens_refraction = &Plenoscope::pmma_refraction;
-    telescope_config.sub_pixel_on_pixel_diagonal = 13;
-    telescope_config.object_distance_to_focus_on = 10.0e3;
-    
-    Plenoscope::Geometry telescope_geometry(telescope_config);
-    Plenoscope::Factory fab(&telescope_geometry);
+    // SET UP SCENERY
+    Xml::SceneryFactory scenery_factory(cmd.get("scenery"));
+    Frame *scenery = new Frame("root", Vec3::null, Rot3::null);
+    scenery_factory.add_scenery_to_frame(scenery);
+
+    if(scenery_factory.plenoscopes.size() == 0)
+        throw TracerException("There is no plenoscope in the scenery");
+    else if(scenery_factory.plenoscopes.size() > 1)
+        throw TracerException("There is more then one plenoscope in the scenery");
+
+
     
     Frame telescope("telescope", Vec3::null, Rot3::null);
     fab.add_telescope_to_frame(&telescope);

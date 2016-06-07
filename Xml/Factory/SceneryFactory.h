@@ -14,6 +14,7 @@
 #include "Core/Frame.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "TelescopeArrayControl.h"
+#include "Plenoscope/PlenoscopeInScenery.h"
 using std::string;
 using std::vector;
 
@@ -25,6 +26,7 @@ namespace Xml {
         vector<PhotonSensor::Sensor*>* raw_sensors;
         FunctionFab functions;
         TelescopeArrayControl* telescopes;
+        vector<Plenoscope::PlenoscopeInScenery> plenoscopes;
 
         string author;
         string comment;
@@ -50,7 +52,7 @@ namespace Xml {
         Frame* add_Triangle(Frame* mother, const Node node);
         Frame* add_SegmentedReflector(Frame* mother, const Node node);
         Frame* add_STL(Frame* mother, const Node node);
-        Frame* add_Plenoscope(Frame* mother, const Node node);
+        Frame* add_light_field_sensor(Frame* mother, const Node node);
 
         Color* surface_color(const Node node)const;
         const Function::Func1D* surface_refl(const Node node)const;

@@ -1,12 +1,13 @@
-#include "Plenoscope/Calibration/CalibIo.h"
+#include "Plenoscope/Calibration/Writer.h"
 
 namespace Plenoscope {
+    namespace Calibration {
 //------------------------------------------------------------------------------
-CalibIo::CalibIo(const std::string npath): path(npath) {
+Writer::Writer(const std::string npath): path(npath) {
     clear_file();
 }
 //------------------------------------------------------------------------------
-void CalibIo::append(const std::vector<CalibrationPhotonResult> &table) {
+void Writer::append(const std::vector<CalibrationPhotonResult> &table) {
 
     file.open(path, std::ios::app | std::ios::binary);
     assert_file_is_open();
@@ -18,7 +19,7 @@ void CalibIo::append(const std::vector<CalibrationPhotonResult> &table) {
     file.close();
 }
 //------------------------------------------------------------------------------
-void CalibIo::write_row(const CalibrationPhotonResult &row) {
+void Writer::write_row(const CalibrationPhotonResult &row) {
     
     // write ID integer
     file.write( (char*)&row.sub_pixel_id, sizeof(uint32_t));
@@ -37,7 +38,7 @@ void CalibIo::write_row(const CalibrationPhotonResult &row) {
     file.write( (char*)&v, float_count*sizeof(float));
 }
 //------------------------------------------------------------------------------
-void CalibIo::assert_file_is_open() {
+void Writer::assert_file_is_open() {
     
     if(!file.is_open()) {
         std::stringstream info;
@@ -48,11 +49,12 @@ void CalibIo::assert_file_is_open() {
     }   
 }
 //------------------------------------------------------------------------------
-void CalibIo::clear_file() {
+void Writer::clear_file() {
 
     file.open(path, std::ios_base::trunc | std::ios::binary);
     assert_file_is_open();
     file.close();     
 }
 //------------------------------------------------------------------------------
-}// namespace Plenoscope
+    }//Calibration
+}//Plenoscope

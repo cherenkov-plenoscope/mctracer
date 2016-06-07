@@ -1,7 +1,7 @@
 //=================================
 // include guard
-#ifndef __LightFieldTelescopeCalibIo_H_INCLUDED__
-#define __LightFieldTelescopeCalibIo_H_INCLUDED__
+#ifndef __PlenoscopeCalibrationWriter_H_INCLUDED__
+#define __PlenoscopeCalibrationWriter_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
@@ -11,14 +11,15 @@
 #include "Plenoscope/Calibration/Calibration.h"
 
 namespace Plenoscope {
+namespace Calibration {
 
-	class CalibIo {
+	class Writer {
 
 		const std::string path;
 		std::ofstream file;
 	public:
 
-		CalibIo(const std::string path);
+		Writer(const std::string path);
 		void append(const std::vector<CalibrationPhotonResult> &table);
 	private:
 
@@ -29,5 +30,6 @@ namespace Plenoscope {
 			using TracerException::TracerException;
 		};		
 	};
-}
-#endif // __LightFieldTelescopeCalibIo_H_INCLUDED__ 
+}//Calibration
+}//Plenoscope
+#endif // __PlenoscopeCalibrationWriter_H_INCLUDED__ 

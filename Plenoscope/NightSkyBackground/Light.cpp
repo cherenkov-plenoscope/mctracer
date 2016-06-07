@@ -1,23 +1,24 @@
-#include "Plenoscope/Plenoscope.h"
+#include "Plenoscope/NightSkyBackground/Light.h"
 #include "Core/PhysicalConstants.h"
 
 namespace Plenoscope {
+namespace NightSkyBackground {
 //------------------------------------------------------------------------------
-NightSkyBackgroundLight::NightSkyBackgroundLight(
-	const Geometry *_telescope_geometry, 
+Light::Light(
+	const LightFieldSensor::Geometry *_sensor_geometry, 
 	const Function::Func1D* _nsb_flux_vs_wavelength
-):nsb_cdf(_nsb_flux_vs_wavelength) {
-
-	telescope_geometry = _telescope_geometry;
-	nsb_flux_vs_wavelength = _nsb_flux_vs_wavelength;
-
+):
+	nsb_flux_vs_wavelength(_nsb_flux_vs_wavelength),
+	nsb_cdf(_nsb_flux_vs_wavelength),
+	sensor_geometry(_sensor_geometry)
+{
 	max_tilt_vs_optical_axis_to_throw_photons_in = 
-		telescope_geometry->max_FoV_radius();
+		sensor_geometry->max_FoV_radius();
 
-	solid_angle = telescope_geometry->field_of_view_solid_angle();
+	solid_angle = sensor_geometry->field_of_view_solid_angle();
 
-	max_principal_aperture_radius_to_trow_photons_in = 
-		telescope_geometry->principal_aperture_radius_to_throw_photons_in();
+	max_principal_aperture_radius_to_trow_photons_in = 1.05*
+		sensor_geometry->expected_imaging_system_max_aperture_radius();
 
 	area = max_principal_aperture_radius_to_trow_photons_in*
 	 	max_principal_aperture_radius_to_trow_photons_in*
@@ -27,7 +28,7 @@ NightSkyBackgroundLight::NightSkyBackgroundLight(
 		nsb_cdf.get_total_integral_of_distribution()*area*solid_angle;
 }	
 //------------------------------------------------------------------------------
-std::vector<Photon*>* NightSkyBackgroundLight::get_photons_in_duration(
+std::vector<Photon*>* Light::get_photons_in_duration(
 	const double delay,
 	const double duration,
 	Random::Generator* prng
@@ -46,7 +47,7 @@ std::vector<Photon*>* NightSkyBackgroundLight::get_photons_in_duration(
 	return photons;
 }
 //------------------------------------------------------------------------------
-void NightSkyBackgroundLight::init_relative_arrival_times(
+void Light::init_relative_arrival_times(
 	const double duration,
 	Random::Generator* prng
 ) {
@@ -63,7 +64,7 @@ void NightSkyBackgroundLight::init_relative_arrival_times(
 	};
 }
 //------------------------------------------------------------------------------
-Photon* NightSkyBackgroundLight::get_photon_on_principal_aperture(
+Photon* Light::get_photon_on_principal_aperture(
 	double time_until_reaching_principal_aperture,
 	Random::Generator* prng
 )const {
@@ -102,10 +103,10 @@ Photon* NightSkyBackgroundLight::get_photon_on_principal_aperture(
 	return ph;
 }
 //------------------------------------------------------------------------------
-std::string NightSkyBackgroundLight::get_print()const {
+std::string Light::get_print()const {
 
 	std::stringstream out;
-	out << "NightSkyBackround\n";
+	out << "NightSkyBackground\n";
 	out << "  rate................. " << overall_nsb_rate << " Hz\n";
 	out << "  FoV solid angle...... " << solid_angle << " sr\n";
 	out << "  FoV radius........... " << 
@@ -119,8 +120,9 @@ std::string NightSkyBackgroundLight::get_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-double NightSkyBackgroundLight::draw_wavelength(Random::Generator* prng)const {
+double Light::draw_wavelength(Random::Generator* prng)const {
 	return nsb_cdf.draw(prng->uniform());
 }
 //------------------------------------------------------------------------------
-}
+}// NightSkyBackground
+}// Plenoscope

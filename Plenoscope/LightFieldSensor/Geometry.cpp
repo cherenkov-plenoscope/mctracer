@@ -1,16 +1,17 @@
-#include "Plenoscope/Geometry.h"
+#include "Plenoscope/LightFieldSensor/Geometry.h"
 #include "Geometry/HexGridAnnulus.h"
 #include "Geometry/GridNeighborhoodTopoligy.h"
 #include "Tools/AsciiIo.h"
+#include "Tools/StringTools.h"
 #include "Geometry/HexGridFlower.h"
 #include "LensMaker/LensMaker.h"
 
 namespace Plenoscope {
+namespace LightFieldSensor {
 //------------------------------------------------------------------------------
 Geometry::Geometry(const Config ncfg): 
-	config(ncfg),
-	reflector(ncfg.reflector)
-{
+	config(ncfg)
+{	
 	set_up_pixel_grid();
 	set_up_flower_grid();
 	set_up_sub_pixel_flower_template_grid();
@@ -55,7 +56,8 @@ void Geometry::set_up_flower_grid() {
 
 	sub_pixel_flower_grid.reserve(pixel_grid.size());
 
-	const double r = 1.0 + pixel_lens_sub_pixel_distance()/lightfield_sensor_distance();
+	const double r = 1.0 + pixel_lens_sub_pixel_distance()/
+		config.expected_imaging_system_focal_length;
 
 	for(Vec3 pixel_pos : pixel_grid)
 		sub_pixel_flower_grid.push_back(
@@ -91,14 +93,8 @@ void Geometry::set_up_lens_geometry() {
 }
 //------------------------------------------------------------------------------
 double Geometry::max_outer_sensor_radius()const {
-	return reflector.focal_length()*tan(max_FoV_radius());
-}
-//------------------------------------------------------------------------------
-double Geometry::lightfield_sensor_distance()const {
-	return ThinLensEquation::get_image_dist_given_focal_and_object_dist(
-		reflector.focal_length(),
-		config.object_distance_to_focus_on
-	);
+	return config.expected_imaging_system_focal_length*tan(max_FoV_radius());
+	//return reflector.focal_length()*tan(max_FoV_radius());
 }
 //------------------------------------------------------------------------------
 double Geometry::max_FoV_radius()const {
@@ -114,7 +110,7 @@ double Geometry::pixel_spacing()const {
 }
 //------------------------------------------------------------------------------
 double Geometry::pixel_lens_inner_aperture_radius()const {
-	return reflector.focal_length()*tan(config.pixel_FoV_hex_flat2flat/2.0);
+	return config.expected_imaging_system_focal_length*tan(config.pixel_FoV_hex_flat2flat/2.0);
 }
 //------------------------------------------------------------------------------
 double Geometry::pixel_lens_outer_aperture_radius()const {
@@ -126,7 +122,11 @@ double Geometry::aperture_image_radius_on_sub_pixel_sensor()const {
 }
 //------------------------------------------------------------------------------
 double Geometry::pixel_lens_focal_length()const {
-	return reflector.naive_f_over_D()*2.0*aperture_image_radius_on_sub_pixel_sensor();
+	const double expected_imaging_system_naive_f_over_D = 
+		config.expected_imaging_system_focal_length/
+			(2.0*config.expected_imaging_system_max_aperture_radius);
+
+	return expected_imaging_system_naive_f_over_D*2.0*aperture_image_radius_on_sub_pixel_sensor();
 }
 //------------------------------------------------------------------------------
 double Geometry::pixel_lens_sub_pixel_distance()const {
@@ -161,7 +161,7 @@ vector<vector<uint>> Geometry::pixel_neighbor_relations()const {
 	return pixel_neighborhood;
 }
 //------------------------------------------------------------------------------
-std::vector<Vec3> Geometry::sub_pixel_positions()const {
+const std::vector<Vec3>& Geometry::sub_pixel_positions()const {
 	return sub_pixel_grid;
 }
 //------------------------------------------------------------------------------
@@ -201,6 +201,14 @@ double Geometry::bin_hight()const {
 	return pixel_lens_sub_pixel_distance()*0.25;
 }
 //------------------------------------------------------------------------------
+double Geometry::expected_imaging_system_focal_length()const {
+	return config.expected_imaging_system_focal_length;
+}
+//------------------------------------------------------------------------------
+double Geometry::expected_imaging_system_max_aperture_radius()const{
+	return config.expected_imaging_system_max_aperture_radius;
+}
+//------------------------------------------------------------------------------
 void Geometry::write_sub_pixel_positions(const string path)const {
 
 	std::vector<std::vector<double>> sub_pixels_x_y;
@@ -228,15 +236,8 @@ void Geometry::write_sub_pixel_positions(const string path)const {
 string Geometry::get_print()const{
 	
 	stringstream out;
-	out << "Light_Field_Telescope__\n";
+	out << "LightFieldSensor__\n";
 	out << "\n";
-
-	out << StringTools::place_first_infront_of_each_new_line_of_second(
-		"  ", 
-		reflector.get_print()
-	);
-	out << "\n";
-
 	out << StringTools::place_first_infront_of_each_new_line_of_second(
 		"  ", 
 		get_image_sensor_print()
@@ -273,8 +274,6 @@ string Geometry::get_image_sensor_print()const{
 	tab << "Field of View solid angle..... " << field_of_view_solid_angle() << " radians\n";
 	tab << "max sensor radius............. " << max_outer_sensor_radius() << "m\n";
 	tab << "number of pixels.............. " << number_of_pixels() << "\n";
-	tab << "object distance to focus on... " << config.object_distance_to_focus_on << "m\n";
-	tab << "image sensor distance......... " << lightfield_sensor_distance() << "m\n";
 
 	out << StringTools::place_first_infront_of_each_new_line_of_second(
 		"  ", 
@@ -346,17 +345,16 @@ string Geometry::get_concentrator_bin_print()const{
 	return out.str();
 }
 //------------------------------------------------------------------------------
-double Geometry::principal_aperture_radius_to_throw_photons_in()const {
+/*double Geometry::principal_aperture_radius_to_throw_photons_in()const {
 	return 1.05*(
-		reflector.max_outer_aperture_radius() + 
-		reflector.thickness_of_dish()*tan(
-			max_FoV_radius()
-		)
+		config.expected_imaging_system_max_aperture_radius + 
+		config.expected_imaging_system_thickness*tan(max_FoV_radius())
 	);
-}
+}*/
 //------------------------------------------------------------------------------
 double Geometry::field_of_view_solid_angle()const {
 	return get_solid_angle_for_opening_angle(max_FoV_radius());
 }
 //------------------------------------------------------------------------------
-} //lightfield
+}//LightFieldSensor
+}//Plenoscope

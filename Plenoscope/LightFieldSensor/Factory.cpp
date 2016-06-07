@@ -1,4 +1,4 @@
-#include "Plenoscope/Factory.h"
+#include "Plenoscope/LightFieldSensor/Factory.h"
 #include "Geometry/HexGridAnnulus.h"
 #include "Geometry/HexPlane.h"
 #include "Geometry/Annulus.h"
@@ -9,16 +9,14 @@
 #include "Geometry/PlaneDualSphericalBound.h"
 
 namespace Plenoscope {
+namespace LightFieldSensor {
 //------------------------------------------------------------------------------
-Factory::Factory(const Geometry *geo): geometry(geo) {
-
-}
+Factory::Factory(const Geometry* geo): geometry(geo) {}
 //------------------------------------------------------------------------------
 Frame* Factory::get_lens_with_name_at_pos(
 	const std::string name, 
 	const Vec3 pos
 ) {
-
 	BiConvexLensHexBound* lens = new BiConvexLensHexBound;
 	lens->set_name_pos_rot(name, pos, Rot3::null);
 	lens->set_outer_color(&Color::white);
@@ -111,7 +109,7 @@ Frame* Factory::get_pixel_bin_with_name_at_pos(
 
 		binwall->set_outer_color(&Color::green);
 		binwall->set_inner_color(&Color::green);
-		binwall->set_outer_reflection(geometry->reflector.cfg.reflectivity);
+		binwall->set_outer_reflection(geometry->config.bin_relection);
 	
 		bin->set_mother_and_child(binwall);
 	}
@@ -178,7 +176,7 @@ Frame* Factory::get_sub_pixel_sensor_plane() {
 		Rot3::null
 	);
 
-	std::vector<Vec3> sub_pixel_positions = geometry->sub_pixel_positions();
+	const std::vector<Vec3> &sub_pixel_positions = geometry->sub_pixel_positions();
 
 	std::vector<PhotonSensor::Sensor*> sub_pixels;
 	sub_pixels.reserve(sub_pixel_positions.size());
@@ -277,31 +275,9 @@ void Factory::add_light_field_sensor_to_frame(Frame *frame) {
 	frame->set_mother_and_child(light_field_sensor_front);
 }
 //------------------------------------------------------------------------------
-void Factory::add_telescope_to_frame(Frame *frame) {
-
-	Frame* light_field_sensor = new Frame(
-		"light_field_sensor",
-		Vec3(0.0, 0.0, geometry->lightfield_sensor_distance()), 
-		Rot3::null
-	);
-	add_light_field_sensor_to_frame(light_field_sensor);
-	
-
-	Frame* imaging_reflector = new Frame(
-		"imaging_reflector",
-		Vec3(0.0, 0.0, 0.0), 
-		Rot3::null
-	);
-
-	SegmentedReflector::Factory refl_factory(geometry->config.reflector);
-	refl_factory.add_reflector_mirror_facets_to_frame(imaging_reflector);
-
-	frame->set_mother_and_child(light_field_sensor);
-	frame->set_mother_and_child(imaging_reflector);
-}
-//------------------------------------------------------------------------------
 PhotonSensors::Sensors* Factory::get_sub_pixels()const {
 	return sub_pixel_sensors;
 }
-
-} //lightfield
+//------------------------------------------------------------------------------
+}//LightFieldSensor
+}//Plenoscope

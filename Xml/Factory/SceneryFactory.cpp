@@ -11,7 +11,6 @@
 #include "Geometry/Triangle.h"
 #include "Geometry/StereoLitography/StereoLitography.h"
 #include "Geometry/SegmentedReflector/SegmentedReflector.h"
-#include "Plenoscope/Plenoscope.h"
 using StringTools::is_equal;
 using std::stringstream;
 
@@ -63,8 +62,8 @@ void SceneryFactory::make_geometry(Frame* mother, const Node node) {
             make_geometry(add_SphereCapWithHexagonalBound(mother, child), child); 
         else if(is_equal(child.name(), "triangle"))
             make_geometry(add_Triangle(mother, child), child);
-        else if(is_equal(child.name(), "light_field_telescope"))
-            make_geometry(add_Plenoscope(mother, child), child);
+        else if(is_equal(child.name(), "light_field_sensor"))
+            make_geometry(add_light_field_sensor(mother, child), child);
         else if(is_equal(child.name(), "stl"))
             make_geometry(add_STL(mother, child), child);
     }
@@ -297,56 +296,35 @@ Frame* SceneryFactory::add_SegmentedReflector(Frame* mother, const Node node) {
     return reflector;
 }
 //------------------------------------------------------------------------------
-Frame* SceneryFactory::add_Plenoscope(Frame* mother, const Node node) {
-
-    const Node refl = node.child("set_segmented_reflector");
-
-    Plenoscope::Config cfg;
-    cfg.reflector.DaviesCotton_over_parabolic_mixing_factor = refl.attribute2double("DaviesCotton_over_parabolic_mixing_factor");
-    cfg.reflector.max_outer_aperture_radius = refl.attribute2double("max_outer_aperture_radius");
-    cfg.reflector.min_inner_aperture_radius = refl.attribute2double("min_inner_aperture_radius");
-    cfg.reflector.facet_inner_hex_radius = refl.attribute2double("facet_inner_hex_radius");
-    cfg.reflector.gap_between_facets = refl.attribute2double("gap_between_facets");
-    cfg.reflector.focal_length = refl.attribute2double("focal_length");
-    cfg.reflector.reflectivity = functions.by_name(refl.attribute("reflection_vs_wavelength"));
-
-    const Node sens = node.child("set_camera");
-
-    cfg.pixel_FoV_hex_flat2flat = Deg2Rad(sens.attribute2double("hex_pixel_FoV_flat2flat_deg"));
-    cfg.max_FoV_diameter = Deg2Rad(sens.attribute2double("max_FoV_diameter_deg"));
-    cfg.housing_overhead = sens.attribute2double("housing_overhead");
-    cfg.sub_pixel_on_pixel_diagonal = sens.attribute2double("sub_pixel_on_pixel_diagonal"); 
-    cfg.lens_refraction = functions.by_name(sens.attribute("refraction_vs_wavelength"));
-
-    FrameFab fab(node);
-    Frame* pleno_frame = new Frame(fab.name, fab.pos, fab.rot);
-    
-    Plenoscope::Geometry geometry(cfg);
-    Plenoscope::Factory factory(&geometry);
-
-    factory.add_telescope_to_frame(pleno_frame);
-    mother->set_mother_and_child(pleno_frame);
-    return pleno_frame;
-}
-//------------------------------------------------------------------------------
-/*Frame* SceneryFactory::add_Plenoscope_N(Frame* mother, const Node node) {
+Frame* SceneryFactory::add_light_field_sensor(Frame* mother, const Node node) {
 
     FrameFab ffab(node);
-    Frame* plenoscope = new Frame(ffab.name, ffab.pos, ffab.rot);
+    Frame* light_field_sensor = new Frame(ffab.name, ffab.pos, ffab.rot);
 
-    const Node refl_node = node.child("imaging_reflector");
-    FrameFab rfab(refl_node);
-    Frame* reflector = new Frame(rfab.name, rfab.pos, rfab.rot);
+    const Node lfs = node.child("set_light_field_sensor");
 
-    const Node lf_sens_node = node.child("light_field_sensor");
-    FrameFab sfab(lf_sens_node);
-    Frame* light_field_sensor = new Frame(sfab.name, sfab.pos, sfab.rot);
+    Plenoscope::LightFieldSensor::Config config;
+    config.expected_imaging_system_focal_length = lfs.attribute2double("expected_imaging_system_focal_length");
+    config.expected_imaging_system_max_aperture_radius = lfs.attribute2double("expected_imaging_system_aperture_radius");
+    config.max_FoV_diameter = Deg2Rad(lfs.attribute2double("max_FoV_diameter_deg"));
+    config.pixel_FoV_hex_flat2flat = Deg2Rad(lfs.attribute2double("hex_pixel_FoV_flat2flat_deg")); 
+    config.sub_pixel_on_pixel_diagonal = lfs.attribute2int("sub_pixel_on_pixel_diagonal");
+    config.housing_overhead = lfs.attribute2double("housing_overhead");
+    config.lens_refraction = functions.by_name(lfs.attribute("lens_refraction_vs_wavelength"));
+    //config.lens_absorbtion = &perfect_transparency;
+    config.bin_relection = functions.by_name(lfs.attribute("bin_reflection_vs_wavelength"));
 
-    plenoscope->set_mother_and_child(light_field_sensor);
-    plenoscope->set_mother_and_child(reflector);
-    mother->set_mother_and_child(plenoscope);
-    return plenoscope;    
-}*/
+
+    Plenoscope::PlenoscopeInScenery pis(config);
+    Plenoscope::LightFieldSensor::Factory lfs_factory(&pis.light_field_sensor_geometry);
+    lfs_factory.add_light_field_sensor_to_frame(light_field_sensor);    
+    pis.frame = light_field_sensor;    
+    pis.light_field_channels = lfs_factory.get_sub_pixels();
+    plenoscopes.push_back(pis);
+
+    mother->set_mother_and_child(light_field_sensor);
+    return light_field_sensor;    
+}
 //------------------------------------------------------------------------------
 const Function::Func1D* SceneryFactory::surface_refl(const Node node)const {
     return functions.by_name(node.child("set_surface").attribute("reflection_vs_wavelength"));

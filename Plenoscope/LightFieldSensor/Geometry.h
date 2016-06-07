@@ -1,20 +1,21 @@
 //=================================
 // include guard
-#ifndef __LightFieldTelescopeGeometry_H_INCLUDED__
-#define __LightFieldTelescopeGeometry_H_INCLUDED__
+#ifndef __PlenoscopeLightFieldSensorGeometry_H_INCLUDED__
+#define __PlenoscopeLightFieldSensorGeometry_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
 
 //=================================
 // included dependencies
-#include "Plenoscope/Config.h"
-#include "Geometry/ThinLensEquation.h"
+#include "Plenoscope/LightFieldSensor/Config.h"
+#include "Core/Vec3.h"
 using std::vector;
 using std::string;
 using std::stringstream;
 
 namespace Plenoscope {
+namespace LightFieldSensor {
 
 	class Geometry : public Printable {
 
@@ -32,11 +33,9 @@ namespace Plenoscope {
 		double pixel_lens_mean_refrac;
 	public:
 		const Config config;
-		const SegmentedReflector::Geometry reflector;
 
 		Geometry(const Config ncfg);
 		string get_print()const;
-		double lightfield_sensor_distance()const;
 		double max_outer_sensor_radius()const;
 		double max_FoV_radius()const;
 		double pixel_spacing()const;
@@ -58,14 +57,15 @@ namespace Plenoscope {
 		double sub_pixel_inner_radius()const;
 		double sub_pixel_spacing()const;
 		double sub_pixel_z_orientation()const;
-		vector<Vec3> sub_pixel_positions()const;
+		const vector<Vec3>& sub_pixel_positions()const;
 		vector<vector<uint>>  sub_pixel_neighbor_relations()const;
 		vector<Vec3> sub_pixel_flower_positions()const;
 		uint total_number_of_sub_pixels()const;
 		void write_sub_pixel_positions(const string path)const;
 		double bin_hight()const;
-		double principal_aperture_radius_to_throw_photons_in()const;
 		double field_of_view_solid_angle()const;
+		double expected_imaging_system_focal_length()const;
+		double expected_imaging_system_max_aperture_radius()const;
 	private:
 		void set_up_pixel_grid();
 		void set_up_sub_pixel_grid();
@@ -77,5 +77,6 @@ namespace Plenoscope {
 		string get_sub_pixel_print()const;
 		string get_concentrator_bin_print()const;
 	};
-}
-#endif // __LightFieldTelescopeGeometry_H_INCLUDED__ 
+}//LightFieldSensor
+}//Plenoscope
+#endif // __PlenoscopeLightFieldSensorGeometry_H_INCLUDED__ 
