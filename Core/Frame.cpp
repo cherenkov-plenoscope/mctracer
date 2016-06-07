@@ -234,14 +234,6 @@ const Frame* Frame::get_root_of_world()const {
 	return root_frame;
 }
 //------------------------------------------------------------------------------
-void  Frame::take_children_from(Frame *frame_to_take_chidren_from) {
-	// take all children of the frame_to_take_chidren_from and 
-	// put them to this frame
-
-	for(Frame *child_to_take: frame_to_take_chidren_from->children)
-		set_mother_and_child( child_to_take);
-}
-//------------------------------------------------------------------------------
 string Frame::get_path_in_tree_of_frames()const {
 	/// The path of a frame is returned here. The root frame called world is not 
 	/// included in the path. The delimiter sign is '/' as for directorys on 

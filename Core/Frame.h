@@ -74,7 +74,6 @@ public:
 
     //DO
     void init_tree_based_on_mother_child_relations();
-    void take_children_from(Frame *frame_to_take_chidren_from);
     void set_mother_and_child(Frame *new_child);
     void update_rotation(const Rot3 rot);
     virtual void calculate_intersection_with(
