@@ -51,10 +51,10 @@ int main(int argc, char* argv[]) {
 	
 	//--------------------------------------------------------------------------
 	// scenery
-	Frame *world = new Frame("root", Vec3::null, Rot3::null);
+	Frame *scenery = new Frame("root", Vec3::null, Rot3::null);
 	Xml::SceneryFactory fab(cmd.get("scenery"));
-	fab.add_scenery_to_frame(world);
-	world->init_tree_based_on_mother_child_relations();
+	fab.add_scenery_to_frame(scenery);
+	scenery->init_tree_based_on_mother_child_relations();
 	//--------------------------------------------------------------------------
 	// sensors in scenery
 	PhotonSensors::Sensors sensors = fab.sensors();
@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
 		//----------------------------------------------------------------------
 		// photon propagation
 		Photons::propagate_photons_in_world_with_settings(
-			photons, world, &settings, &prng
+			photons, scenery, &settings, &prng
 		);
 
 		//----------------------------------------------------------------------
