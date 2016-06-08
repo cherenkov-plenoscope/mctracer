@@ -28,17 +28,14 @@ namespace LightFieldSensor {
 		Frame* get_light_field_sensor_frontplate();
 		Frame* get_sub_pixel_sensor_plane();
 		Frame* get_image_sensor_housing()const;
-		
 		Frame* get_lens_with_name_at_pos(
 			const std::string name,
 			const Vec3 pos
 		);
-		
 		Frame* get_sub_pixel_with_name_pos(
 			const std::string name, 
 			const Vec3 pos
 		);
-		
 		Frame* get_pixel_bin_with_name_at_pos(
 			const std::string name, 
 			const Vec3 pos
