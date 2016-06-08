@@ -67,12 +67,12 @@ Frame* Factory::get_pixel_bin_array() {
 
 	for(uint i=0; i<flower_positions.size(); i++) {
 
-		Frame* lens = get_pixel_bin_with_name_at_pos(
+		Frame* bin = get_pixel_bin_with_name_at_pos(
 			"bin_" + std::to_string(i),
 			flower_positions.at(i)
 		);
 
-		bin_array->set_mother_and_child(lens);
+		bin_array->set_mother_and_child(bin);
 	}
 
 	bin_array->cluster_using_helper_frames();
@@ -89,12 +89,12 @@ Frame* Factory::get_pixel_bin_with_name_at_pos(
 		Rot3::null
 	);
 
-	double R = geometry->pixel_lens_inner_aperture_radius();
-	double hight = geometry->bin_hight();
+	const double R = geometry->pixel_lens_inner_aperture_radius();
+	const double hight = geometry->bin_hight();
 
 	for(uint i=0; i<6; i++) {
 
-		double phi = double(i)*1.0/3.0*M_PI;
+		const double phi = double(i)*1.0/3.0*M_PI;
 		
 		Plane* binwall = new Plane(
 			name + "_" + std::to_string(i),

@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "Plenoscope/Calibration/Calibration.h"
+#include "Plenoscope/Calibration/Calibrator.h"
 
 namespace Plenoscope {
 namespace Calibration {

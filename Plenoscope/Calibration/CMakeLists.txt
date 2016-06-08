@@ -1,6 +1,6 @@
 set(SOURCE
    	${SOURCE}
-  	${CMAKE_CURRENT_SOURCE_DIR}/Calibration.cpp
+  	${CMAKE_CURRENT_SOURCE_DIR}/Calibrator.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/Writer.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/Config.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/CalibrationPhotonResult.cpp

@@ -3,7 +3,7 @@
 #include "Tools/PathTools.h"
 #include "Xml/Xml.h"
 #include "Xml/Factory/SceneryFactory.h"
-#include "Plenoscope/Calibration/Calibration.h"
+#include "Plenoscope/Calibration/Calibrator.h"
 using std::string;
 using std::cout;
 
