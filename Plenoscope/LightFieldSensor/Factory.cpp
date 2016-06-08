@@ -58,12 +58,12 @@ Frame* Factory::get_pixel_bin_array() {
 	
 	Frame* bin_array = new Frame(
 		"bin_array",
-		Vec3(0.0, 0.0, geometry->pixel_lens_sub_pixel_distance()),
+		Vec3(0.0, 0.0, geometry->pixel_plane_to_paxel_plane_distance()),
 		Rot3::null
 	);
 
 	std::vector<Vec3> flower_positions = 
-		geometry->sub_pixel_flower_positions();
+		geometry->paxel_grid_center_positions();
 
 	for(uint i=0; i<flower_positions.size(); i++) {
 
@@ -110,7 +110,6 @@ Frame* Factory::get_pixel_bin_with_name_at_pos(
 		binwall->set_outer_color(&Color::green);
 		binwall->set_inner_color(&Color::green);
 		binwall->set_outer_reflection(geometry->config.bin_relection);
-	
 		bin->set_mother_and_child(binwall);
 	}
 
@@ -172,20 +171,20 @@ Frame* Factory::get_sub_pixel_sensor_plane() {
 
 	Frame* sub_pixel_array = new Frame(
 		"sub_pixel_array", 
-		Vec3(0.0, 0.0, geometry->pixel_lens_sub_pixel_distance()), 
+		Vec3(0.0, 0.0, geometry->pixel_plane_to_paxel_plane_distance()), 
 		Rot3::null
 	);
 
-	const std::vector<Vec3> &sub_pixel_positions = geometry->sub_pixel_positions();
+	const std::vector<Vec3> &lixel_positions = geometry->lixel_positions();
 
 	std::vector<PhotonSensor::Sensor*> sub_pixels;
-	sub_pixels.reserve(sub_pixel_positions.size());
+	sub_pixels.reserve(lixel_positions.size());
 
-	for(uint i=0; i<sub_pixel_positions.size(); i++) {
+	for(uint i=0; i<lixel_positions.size(); i++) {
 
 		Frame* subpix = get_sub_pixel_with_name_pos(
 			"subpix_" + std::to_string(i),
-			sub_pixel_positions.at(i)
+			lixel_positions.at(i)
 		);
 
 		sub_pixel_array->set_mother_and_child(subpix);
@@ -211,11 +210,11 @@ Frame* Factory::get_sub_pixel_with_name_pos(
 	subpix->set_name_pos_rot(
 		name, 
 		pos, 
-		Rot3(0.0, 0.0, geometry->sub_pixel_z_orientation())
+		Rot3(0.0, 0.0, geometry->lixel_z_orientation())
 	);
 	subpix->set_outer_color(&Color::red);
 	subpix->set_inner_color(&Color::red);
-	subpix->set_outer_hex_radius(geometry->sub_pixel_outer_radius());
+	subpix->set_outer_hex_radius(geometry->lixel_outer_radius());
 
 	return subpix;
 }

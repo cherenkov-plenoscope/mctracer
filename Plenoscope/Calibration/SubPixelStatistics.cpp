@@ -12,10 +12,10 @@ SubPixelStatistics::SubPixelStatistics(
 	sensor_geometry(geometry),
 	photons_per_sub_pixel(
 		double(_calib_config->number_of_blocks) * double(_calib_config->photons_per_block) /
-		double(geometry->total_number_of_sub_pixels())
+		double(geometry->number_of_lixel())
 	)
  {
-	subpix_stats.resize(sensor_geometry->total_number_of_sub_pixels());
+	subpix_stats.resize(sensor_geometry->number_of_lixel());
 }
 //------------------------------------------------------------------------------
 void SubPixelStatistics::fill_in_block(std::vector<CalibrationPhotonResult> &calib_block) {
@@ -59,7 +59,7 @@ void SubPixelStatistics::save(const std::string path) {
 	std::stringstream out;
 	out << "# __Plenoscope Bin Statistics__\n";
 	out << "# number_of_direction_bins: " << sensor_geometry->number_of_pixels() << "\n";
-	out << "# number_of_principal_aperture_bins: " << sensor_geometry->sub_pixel_per_pixel() << "\n";
+	out << "# number_of_principal_aperture_bins: " << sensor_geometry->number_of_paxel_per_pixel() << "\n";
 	out << "# photons_emitted_per_sub_pixel: " << photons_per_sub_pixel << "\n";
 	out << "# geometrical_efficiency[1]\tcx[rad]\tcy[rad]\tx[m]\ty[m]\tt[s]\n";
 	out.precision(4);

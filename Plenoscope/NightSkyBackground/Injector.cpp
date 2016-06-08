@@ -17,7 +17,7 @@ namespace NightSkyBackground {
 			return;
 
 		const double number_subpix = 
-			nsb->sensor_geometry->total_number_of_sub_pixels();
+			nsb->sensor_geometry->number_of_lixel();
 
 		//------------------------------------------------
 		// FIND MIN MAX ARRIVAL TIMES OF CHERENKOV PHOTONS

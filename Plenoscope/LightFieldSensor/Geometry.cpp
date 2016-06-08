@@ -13,10 +13,11 @@ Geometry::Geometry(const Config ncfg):
 	config(ncfg)
 {	
 	set_up_pixel_grid();
-	set_up_flower_grid();
-	set_up_sub_pixel_flower_template_grid();
-	set_up_sub_pixel_grid();
-	set_up_lens_geometry();
+	set_up_paxel_grid_centers_of_pixels();
+	set_up_paxel_per_pixel_template_grid();
+	set_up_lixel_grid();
+	set_up_pixel_lens_geometry();
+	std::cout << get_print();
 }
 //------------------------------------------------------------------------------
 void Geometry::set_up_pixel_grid() {
@@ -35,49 +36,49 @@ void Geometry::set_up_pixel_grid() {
 	pixel_neighborhood = topology.get_neighbor_relations();
 }
 //------------------------------------------------------------------------------
-void Geometry::set_up_sub_pixel_flower_template_grid() {
+void Geometry::set_up_paxel_per_pixel_template_grid() {
 
-	HexGridFlower subpixflowergrid(
+	HexGridFlower paxel_template_grid_generator(
 		pixel_lens_outer_aperture_radius(),
 		config.number_of_paxel_on_pixel_diagonal
 	);
 
-	sub_pixel_flat2flat = subpixflowergrid.get_facet_spacing();
-	sub_pixel_flower_template_grid = subpixflowergrid.get_grid();
+	lixel_hex_flat2flat_diameter = paxel_template_grid_generator.get_facet_spacing();
+	paxel_per_pixel_template_grid = paxel_template_grid_generator.get_grid();
 
 	GridNeighborhoodTopoligy topology(
-		&sub_pixel_flower_template_grid, 
-		1.1*sub_pixel_flat2flat
+		&paxel_per_pixel_template_grid, 
+		1.1*lixel_hex_flat2flat_diameter
 	);
-	sub_pixel_neighborhood = topology.get_neighbor_relations();
+	paxel_neighborhood = topology.get_neighbor_relations();
 }
 //------------------------------------------------------------------------------
-void Geometry::set_up_flower_grid() {
+void Geometry::set_up_paxel_grid_centers_of_pixels() {
 
-	sub_pixel_flower_grid.reserve(pixel_grid.size());
+	paxel_grid_centers_of_pixels.reserve(pixel_grid.size());
 
-	const double r = 1.0 + pixel_lens_sub_pixel_distance()/
+	const double r = 1.0 + pixel_plane_to_paxel_plane_distance()/
 		config.expected_imaging_system_focal_length;
 
 	for(Vec3 pixel_pos : pixel_grid)
-		sub_pixel_flower_grid.push_back(
+		paxel_grid_centers_of_pixels.push_back(
 			pixel_pos*r
 		);
 }
 //------------------------------------------------------------------------------
-void Geometry::set_up_sub_pixel_grid() {
+void Geometry::set_up_lixel_grid() {
 
-	sub_pixel_grid.reserve(
-		sub_pixel_flower_grid.size()*
-		sub_pixel_flower_template_grid.size()
+	lixel_grid.reserve(
+		paxel_grid_centers_of_pixels.size()*
+		paxel_per_pixel_template_grid.size()
 	);
 
-	for(Vec3 flower_pos : sub_pixel_flower_grid)
-		for(Vec3 sub_pixel_pos : sub_pixel_flower_template_grid)
-			sub_pixel_grid.push_back(flower_pos + sub_pixel_pos);
+	for(Vec3 flower_pos : paxel_grid_centers_of_pixels)
+		for(Vec3 paxel_pos : paxel_per_pixel_template_grid)
+			lixel_grid.push_back(flower_pos + paxel_pos);
 }
 //------------------------------------------------------------------------------
-void Geometry::set_up_lens_geometry() {
+void Geometry::set_up_pixel_lens_geometry() {
 	
 	pixel_lens_mean_refrac = config.lens_refraction->get_mean(137);
 
@@ -94,7 +95,6 @@ void Geometry::set_up_lens_geometry() {
 //------------------------------------------------------------------------------
 double Geometry::max_outer_sensor_radius()const {
 	return config.expected_imaging_system_focal_length*tan(max_FoV_radius());
-	//return reflector.focal_length()*tan(max_FoV_radius());
 }
 //------------------------------------------------------------------------------
 double Geometry::max_FoV_radius()const {
@@ -117,8 +117,8 @@ double Geometry::pixel_lens_outer_aperture_radius()const {
 	return pixel_lens_inner_aperture_radius()*2.0/sqrt(3.0);
 }
 //------------------------------------------------------------------------------
-double Geometry::aperture_image_radius_on_sub_pixel_sensor()const {
-	return pixel_lens_inner_aperture_radius() - 0.5*sub_pixel_inner_radius();
+double Geometry::aperture_image_radius_on_paxel_plane()const {
+	return pixel_lens_inner_aperture_radius() - 0.5*lixel_inner_radius();
 }
 //------------------------------------------------------------------------------
 double Geometry::pixel_lens_focal_length()const {
@@ -126,10 +126,10 @@ double Geometry::pixel_lens_focal_length()const {
 		config.expected_imaging_system_focal_length/
 			(2.0*config.expected_imaging_system_max_aperture_radius);
 
-	return expected_imaging_system_naive_f_over_D*2.0*aperture_image_radius_on_sub_pixel_sensor();
+	return expected_imaging_system_naive_f_over_D*2.0*aperture_image_radius_on_paxel_plane();
 }
 //------------------------------------------------------------------------------
-double Geometry::pixel_lens_sub_pixel_distance()const {
+double Geometry::pixel_plane_to_paxel_plane_distance()const {
 	return pixel_lens_focal_length();
 }
 //------------------------------------------------------------------------------
@@ -161,44 +161,44 @@ vector<vector<uint>> Geometry::pixel_neighbor_relations()const {
 	return pixel_neighborhood;
 }
 //------------------------------------------------------------------------------
-const std::vector<Vec3>& Geometry::sub_pixel_positions()const {
-	return sub_pixel_grid;
+const std::vector<Vec3>& Geometry::lixel_positions()const {
+	return lixel_grid;
 }
 //------------------------------------------------------------------------------
-vector<vector<uint>> Geometry::sub_pixel_neighbor_relations()const {
-	return sub_pixel_neighborhood;
+vector<vector<uint>> Geometry::paxel_neighbor_relations()const {
+	return paxel_neighborhood;
 }
 //------------------------------------------------------------------------------
-std::vector<Vec3> Geometry::sub_pixel_flower_positions()const {
-	return sub_pixel_flower_grid;
+std::vector<Vec3> Geometry::paxel_grid_center_positions()const {
+	return paxel_grid_centers_of_pixels;
 }
 //------------------------------------------------------------------------------
-double Geometry::sub_pixel_z_orientation()const {
+double Geometry::lixel_z_orientation()const {
 	return 1.0/6.0*M_PI;
 }
 //------------------------------------------------------------------------------
-double Geometry::sub_pixel_per_pixel()const {
-	return sub_pixel_flower_template_grid.size();
+double Geometry::number_of_paxel_per_pixel()const {
+	return paxel_per_pixel_template_grid.size();
 }
 //------------------------------------------------------------------------------
-double Geometry::sub_pixel_outer_radius()const {
-	return sub_pixel_inner_radius()*2.0/sqrt(3.0);
+double Geometry::lixel_outer_radius()const {
+	return lixel_inner_radius()*2.0/sqrt(3.0);
 }
 //------------------------------------------------------------------------------
-double Geometry::sub_pixel_inner_radius()const {
-	return 0.5*sub_pixel_spacing();
+double Geometry::lixel_inner_radius()const {
+	return 0.5*lixel_spacing();
 }
 //------------------------------------------------------------------------------
-double Geometry::sub_pixel_spacing()const {
-	return sub_pixel_flat2flat;
+double Geometry::lixel_spacing()const {
+	return lixel_hex_flat2flat_diameter;
 }
 //------------------------------------------------------------------------------
-uint Geometry::total_number_of_sub_pixels()const {
-	return sub_pixel_grid.size();
+uint Geometry::number_of_lixel()const {
+	return lixel_grid.size();
 }
 //------------------------------------------------------------------------------
 double Geometry::bin_hight()const {
-	return pixel_lens_sub_pixel_distance()*0.25;
+	return pixel_plane_to_paxel_plane_distance()*0.25;
 }
 //------------------------------------------------------------------------------
 double Geometry::expected_imaging_system_focal_length()const {
@@ -209,25 +209,25 @@ double Geometry::expected_imaging_system_max_aperture_radius()const{
 	return config.expected_imaging_system_max_aperture_radius;
 }
 //------------------------------------------------------------------------------
-void Geometry::write_sub_pixel_positions(const string path)const {
+void Geometry::write_lixel_positions(const string path)const {
 
-	std::vector<std::vector<double>> sub_pixels_x_y;
+	vector<vector<double>> all_lixel_xy;
 
-	for(Vec3 pos : sub_pixel_grid) {
-		std::vector<double> sub_pixel_xy = {pos.x(), pos.y()};
-		sub_pixels_x_y.push_back(sub_pixel_xy);
+	for(Vec3 pos : lixel_grid) {
+		vector<double> lixel_xy = {pos.x(), pos.y()};
+		all_lixel_xy.push_back(lixel_xy);
 	}
 
 	stringstream header;
-	header << "number_of_sub_pixels = " << sub_pixel_grid.size() << "\n";
-	header << "number_of_sub_pixels_per_pixel = " << sub_pixel_per_pixel() << "\n";
-	header << "sub_pixel_z_orientation = " << sub_pixel_z_orientation() << "\n";
-	header << "sub_pixel_inner_radius = " << sub_pixel_inner_radius() << "\n";
-	header << "sub_pixel_outer_radius = " << sub_pixel_outer_radius() << "\n";
+	header << "number_of_lixels = " << lixel_grid.size() << "\n";
+	header << "number_of_paxel_per_pixel = " << number_of_paxel_per_pixel() << "\n";
+	header << "lixel_z_orientation = " << lixel_z_orientation() << "\n";
+	header << "lixel_inner_radius = " << lixel_inner_radius() << "\n";
+	header << "lixel_outer_radius = " << lixel_outer_radius() << "\n";
 	header << "x[m]\ty[m]\n";
 
 	AsciiIo::write_table_to_file_with_header(
-		sub_pixels_x_y,
+		all_lixel_xy,
 		path,
 		header.str()
 	);
@@ -235,126 +235,41 @@ void Geometry::write_sub_pixel_positions(const string path)const {
 //------------------------------------------------------------------------------
 string Geometry::get_print()const{
 	
-	stringstream out;
-	out << "LightFieldSensor__\n";
-	out << "\n";
-	out << StringTools::place_first_infront_of_each_new_line_of_second(
-		"  ", 
-		get_image_sensor_print()
-	);
-	out << "\n";
-
-	out << StringTools::place_first_infront_of_each_new_line_of_second(
-		"  ", 
-		get_pixel_lens_print()
-	);
-	out << "\n";
-
-	out << StringTools::place_first_infront_of_each_new_line_of_second(
-		"  ", 
-		get_sub_pixel_print()
-	);
-	out << "\n";
-
-	out << StringTools::place_first_infront_of_each_new_line_of_second(
-		"  ", 
-		get_concentrator_bin_print()
-	);
-	
-	return out.str();		
-}
-//------------------------------------------------------------------------------
-string Geometry::get_image_sensor_print()const{
-
-	stringstream out;
-	out << "Image_Sensor__\n";
-
 	stringstream tab;
-	tab << "Field of View................. " << Rad2Deg(config.max_FoV_diameter) << "deg\n";
-	tab << "Field of View solid angle..... " << field_of_view_solid_angle() << " radians\n";
-	tab << "max sensor radius............. " << max_outer_sensor_radius() << "m\n";
-	tab << "number of pixels.............. " << number_of_pixels() << "\n";
-
-	out << StringTools::place_first_infront_of_each_new_line_of_second(
-		"  ", 
-		tab.str()
-	);
-
-	return out.str();
+	tab << "__Light_Field_Sensor__\n";
+	tab << " Field of View................. " << Rad2Deg(config.max_FoV_diameter) << "deg\n";
+	tab << " Field of View solid angle..... " << field_of_view_solid_angle() << "sr\n";
+	tab << " Max sensor radius............. " << max_outer_sensor_radius() << "m\n";
+	tab << " Number of pixels.............. " << number_of_pixels() << "\n";
+	tab << " Number of paxels in pixel..... " << number_of_paxel_per_pixel() << "\n";
+	tab << " Number of lixel............... " << lixel_grid.size() << "\n";
+	tab << "\n";
+	tab << "__Pixel_Lens__\n";
+	tab << " FoV hex flat2flat....... " << Rad2Deg(pixel_FoV_hex_flat2flat()) << "deg\n";
+	tab << " Spacing................. " << pixel_spacing() << "m\n";
+	tab << " Inner aperture radius... " << pixel_lens_inner_aperture_radius() << "m\n";
+	tab << " Outer aperture radius... " << pixel_lens_outer_aperture_radius() << "m\n";
+	tab << " Lens f over D........... " << pixel_lens_f_over_D() << "\n";
+	tab << " Lens focal length....... " << pixel_lens_focal_length() << "m\n";
+	tab << " Lens curvature radius... " << pixel_lens_curvature_radius() << "m\n";
+	tab << " Lens to paxel plane dist " << pixel_plane_to_paxel_plane_distance() << "m\n";
+	tab << " Lens refraction mean.... " << pixel_lens_mean_refraction() << "\n";
+	tab << " Expected aperture image radius... " << aperture_image_radius_on_paxel_plane() << "m\n";
+	tab << "\n";
+	tab << "__Lixel__\n";
+	tab << " Outer radius........ " << lixel_outer_radius() << "m\n";
+	tab << " Inner radius........ " << lixel_inner_radius() << "m\n";
+	tab << " Spacing............. " << lixel_spacing() << "m\n";
+	tab << "\n";
+	tab << "__Concentrator_Bin__\n";
+	tab << " Bin_hight........... " << bin_hight() << "m\n";
+	tab << " Reflectivity........ " << config.bin_relection->get_mean(137) << "\n";
+	return tab.str();		
 }
-//------------------------------------------------------------------------------
-string Geometry::get_pixel_lens_print()const{
-
-	stringstream out;
-	out << "Pixel_Lens__\n";
-
-	stringstream tab;
-	tab << "FoV hex flat2flat....... " << Rad2Deg(pixel_FoV_hex_flat2flat()) << "deg\n";
-	tab << "spacing................. " << pixel_spacing() << "m\n";
-	tab << "inner aperture radius... " << pixel_lens_inner_aperture_radius() << "m\n";
-	tab << "outer aperture radius... " << pixel_lens_outer_aperture_radius() << "m\n";
-	tab << "lens f over D........... " << pixel_lens_f_over_D() << "\n";
-	tab << "lens focal length....... " << pixel_lens_focal_length() << "m\n";
-	tab << "lens curvature radius... " << pixel_lens_curvature_radius() << "m\n";
-	tab << "lens to sub pixel dist.. " << pixel_lens_sub_pixel_distance() << "m\n";
-	tab << "lens refraction mean.... " << pixel_lens_mean_refraction() << "\n";
-	tab << "aperture image radius... " << aperture_image_radius_on_sub_pixel_sensor() << "m\n";
-	
-	out << StringTools::place_first_infront_of_each_new_line_of_second(
-		"  ", 
-		tab.str()
-	);
-
-	return out.str();
-}
-//------------------------------------------------------------------------------
-string Geometry::get_sub_pixel_print()const{
-
-	stringstream out;
-	out << "Sub_Pixel__\n";
-
-	stringstream tab;
-	tab << "per pixel........... " << sub_pixel_per_pixel() << "\n";
-	tab << "total number........ " << sub_pixel_grid.size() << "\n";
-	tab << "outer radius........ " << sub_pixel_outer_radius() << "m\n";
-	tab << "inner radius........ " << sub_pixel_inner_radius() << "m\n";
-	tab << "spacing............. " << sub_pixel_spacing() << "m\n";
-
-	out << StringTools::place_first_infront_of_each_new_line_of_second(
-		"  ", 
-		tab.str()
-	);
-
-	return out.str();
-}
-//------------------------------------------------------------------------------
-string Geometry::get_concentrator_bin_print()const{
-
-	stringstream out;
-	out << "Concentrator_Bin__\n";
-
-	stringstream tab;
-	tab << "bin_hight........... " << bin_hight() << "m\n";
-	tab << "reflectivity........ same as reflector mirrors\n";
-
-	out << StringTools::place_first_infront_of_each_new_line_of_second(
-		"  ", 
-		tab.str()
-	);
-
-	return out.str();
-}
-//------------------------------------------------------------------------------
-/*double Geometry::principal_aperture_radius_to_throw_photons_in()const {
-	return 1.05*(
-		config.expected_imaging_system_max_aperture_radius + 
-		config.expected_imaging_system_thickness*tan(max_FoV_radius())
-	);
-}*/
 //------------------------------------------------------------------------------
 double Geometry::field_of_view_solid_angle()const {
 	return get_solid_angle_for_opening_angle(max_FoV_radius());
 }
 //------------------------------------------------------------------------------
-}//LightFieldSensor
+	}//LightFieldSensor
 }//Plenoscope

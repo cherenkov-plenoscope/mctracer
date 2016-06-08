@@ -15,7 +15,7 @@ class CalibrationCondensate(object):
         sub_pix_pos_file = os.path.join(calbration_dirname, 'paxel_sensor_positions.txt')
         pd_photon_file = os.path.join(calbration_dirname, 'statistics.h5')
 
-        self.__read_sub_pixel_positions_and_outer_radius(sub_pix_pos_file)
+        self.__read_lixel_positions_and_outer_radius(sub_pix_pos_file)
             
         self.__set_up_sub_pixel_vertices()
 
@@ -33,7 +33,7 @@ class CalibrationCondensate(object):
         verts *= self.paxel_sensor_outer_radius
         self.sub_pixel_vertices = [pos + verts for pos in self.paxel_sensor_positions]
 
-    def __read_sub_pixel_positions_and_outer_radius(self, path):
+    def __read_lixel_positions_and_outer_radius(self, path):
         self.paxel_sensor_positions = np.genfromtxt(path)
         paxel_sensor_outer_radius = 0.0
         sub_pixel_orientation = 0.0

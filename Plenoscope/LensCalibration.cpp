@@ -114,7 +114,7 @@ void LensCalibration::set_up_test_bench() {
 	Vec3 sensor_position = Vec3(
 		0.0,
 		0.0,
-		-telescope_geometry->pixel_lens_sub_pixel_distance()
+		-telescope_geometry->pixel_plane_to_paxel_plane_distance()
 	);
 
 	// bin
@@ -124,7 +124,7 @@ void LensCalibration::set_up_test_bench() {
 		Vec3(
 			0.0,
 			0.0, 
-			-telescope_geometry->pixel_lens_sub_pixel_distance()+
+			-telescope_geometry->pixel_plane_to_paxel_plane_distance()+
 			telescope_geometry->bin_hight()
 		)
 	);

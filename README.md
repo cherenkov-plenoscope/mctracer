@@ -123,7 +123,7 @@ python pytracer/fact_scene.py
 
 The results are 4:
 
- * sub_pixel_positions.txt (~26M)
+ * lixel_positions.txt (~26M)
  * overview.txt (~2k)
  * the_big_lebowsky.lftc (huge)
  * sub_pixel_statistics.txt (50MB)  <-- this is needed and checked in.

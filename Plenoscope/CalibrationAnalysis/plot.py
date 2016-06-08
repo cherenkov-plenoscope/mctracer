@@ -37,7 +37,7 @@ def get_subpixel_outer_radius_from_overview_file(path):
 
 
 def get_offsets():
-    return np.genfromtxt('sub_pixel_positions.csv')
+    return np.genfromtxt('lixel_positions.csv')
 
 global_offsets = get_offsets()
 
