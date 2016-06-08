@@ -4,6 +4,6 @@ set(SOURCE
   	${CMAKE_CURRENT_SOURCE_DIR}/Writer.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/Config.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/CalibrationPhotonResult.cpp
-  	${CMAKE_CURRENT_SOURCE_DIR}/SubPixelStatistics.cpp
+  	${CMAKE_CURRENT_SOURCE_DIR}/LixelStatistics.cpp
    	PARENT_SCOPE
 )

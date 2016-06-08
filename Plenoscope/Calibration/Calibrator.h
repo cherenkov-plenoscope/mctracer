@@ -11,7 +11,7 @@
 #include "Plenoscope/PlenoscopeInScenery.h"
 #include "Plenoscope/Calibration/Config.h"
 #include "Plenoscope/Calibration/CalibrationPhotonResult.h"
-#include "Plenoscope/Calibration/SubPixelStatistics.h"
+#include "Plenoscope/Calibration/LixelStatistics.h"
 #include "Core/Random/Random.h"
 #include "Core/PropagationEnvironment.h"
 
@@ -35,7 +35,7 @@ namespace Plenoscope {
 		Random::Mt19937 prng;
 
 		std::vector<CalibrationPhotonResult> photon_results;
-		SubPixelStatistics stats;
+		LixelStatistics stats;
 	public:
 
 		Calibrator(
