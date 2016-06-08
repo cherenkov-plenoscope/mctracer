@@ -143,6 +143,13 @@
                 facet_inner_hex_radius="0.3" 
                 gap_between_facets="0.01"/>
         </segmented_reflector>
+
+        <sphere_cap_rectangular>
+            <set_frame name="facet_rect" pos="[0,0,10]" rot="[0,0,0]"/>
+            <set_surface reflection_vs_wavelength="mirror_reflection" color="[75,75,75]"/>
+            <set_sphere_cap_rectangular curvature_radius="17" x_width="1.0" y_width="1.0"/>
+        </sphere_cap_rectangular>
+
         <light_field_sensor>
             <set_frame name="light_field_sensor" pos="[0,0,4.889]" rot="[0,0,0]"/>
             <set_light_field_sensor

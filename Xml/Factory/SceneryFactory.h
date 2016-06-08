@@ -49,6 +49,7 @@ namespace Xml {
         Frame* add_Annulus(Frame* mother, const Node node);
         Frame* add_BiConvexLensHex(Frame* mother, const Node node);
         Frame* add_SphereCapWithHexagonalBound(Frame* mother, const Node node);
+        Frame* add_SphereCapWithRectangularBound(Frame* mother, const Node node);
         Frame* add_Triangle(Frame* mother, const Node node);
         Frame* add_SegmentedReflector(Frame* mother, const Node node);
         Frame* add_STL(Frame* mother, const Node node);

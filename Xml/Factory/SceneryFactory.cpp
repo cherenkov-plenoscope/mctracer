@@ -8,6 +8,7 @@
 #include "Geometry/Annulus.h"
 #include "Geometry/BiConvexLensHexBound.h"
 #include "Geometry/SphereCapWithHexagonalBound.h"
+#include "Geometry/SphereCapWithRectangularBound.h"
 #include "Geometry/Triangle.h"
 #include "Geometry/StereoLitography/StereoLitography.h"
 #include "Geometry/SegmentedReflector/SegmentedReflector.h"
@@ -60,6 +61,8 @@ void SceneryFactory::make_geometry(Frame* mother, const Node node) {
             make_geometry(add_SegmentedReflector(mother, child), child);
         else if(is_equal(child.name(), "sphere_cap_hexagonal"))
             make_geometry(add_SphereCapWithHexagonalBound(mother, child), child); 
+        else if(is_equal(child.name(), "sphere_cap_rectangular"))
+            make_geometry(add_SphereCapWithRectangularBound(mother, child), child); 
         else if(is_equal(child.name(), "triangle"))
             make_geometry(add_Triangle(mother, child), child);
         else if(is_equal(child.name(), "light_field_sensor"))
@@ -228,6 +231,25 @@ Frame* SceneryFactory::add_SphereCapWithHexagonalBound(Frame* mother, const Node
     cap->set_curvature_radius_and_outer_hex_radius(
         2.0*node.child("set_sphere_cap_hexagonal").attribute2double("focal_length"),
         node.child("set_sphere_cap_hexagonal").attribute2double("outer_radius")
+    );
+    mother->set_mother_and_child(cap);
+    return cap;
+}
+//------------------------------------------------------------------------------
+Frame* SceneryFactory::add_SphereCapWithRectangularBound(Frame* mother, const Node node) {
+
+    FrameFab framefab(node);
+    SphereCapWithRectangularBound* cap = new SphereCapWithRectangularBound;
+    cap->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
+
+    cap->set_inner_color(surface_color(node));
+    cap->set_outer_color(surface_color(node));
+    cap->set_outer_reflection(surface_refl(node));
+    cap->set_inner_reflection(surface_refl(node));
+    cap->set_curvature_radius_and_x_y_width(
+        node.child("set_sphere_cap_rectangular").attribute2double("curvature_radius"),
+        node.child("set_sphere_cap_rectangular").attribute2double("x_width"),
+        node.child("set_sphere_cap_rectangular").attribute2double("y_width")
     );
     mother->set_mother_and_child(cap);
     return cap;
