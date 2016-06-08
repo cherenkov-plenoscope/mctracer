@@ -1,8 +1,8 @@
 #include "SphereCapWithCylinderBound.h"
 //------------------------------------------------------------------------------
 void SphereCapWithCylinderBound::set_curvature_radius_and_outer_radius(
-		const double _curvature_radius,
-		const double cap_radius
+	const double _curvature_radius,
+	const double cap_radius
 ) {
 	curvature_radius =_curvature_radius;
 	this->cap_radius = cap_radius;
