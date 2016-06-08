@@ -91,7 +91,7 @@ int main(int argc, char* argv[]) {
                 photons.push_back(cpf.get_photon());
             
 				// propagate the cherenkov photons in the world
-				Photons::propagate_photons_in_world_with_settings(
+				Photons::propagate_photons_in_scenery_with_settings(
 					&photons, world, &settings, &prng
 				);
 

@@ -132,7 +132,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 		settings.use_multithread_when_possible = false;
 
 		// photon propagation
-		Photons::propagate_photons_in_world_with_settings(
+		Photons::propagate_photons_in_scenery_with_settings(
 			photons, &optical_table, &settings, &prng
 		);
 

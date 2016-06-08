@@ -164,7 +164,7 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 	Photons::transform_all_photons(Trafo, photons);
 
 	// photon propagation
-	Photons::propagate_photons_in_world_with_settings(
+	Photons::propagate_photons_in_scenery_with_settings(
 		photons, 
 		lens_test_bench_environment.world_geometry, 
 		lens_test_bench_environment.propagation_options,

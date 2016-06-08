@@ -55,7 +55,7 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
                     settings.use_multithread_when_possible = false;
 
                     // photon propagation down to the ground
-                    Photons::propagate_photons_in_world_with_settings(
+                    Photons::propagate_photons_in_scenery_with_settings(
                         &photons, &world, &settings, &prng
                     );
 
@@ -292,7 +292,7 @@ TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         settings.use_multithread_when_possible = false;
 
         // photon propagation
-        Photons::propagate_photons_in_world_with_settings(
+        Photons::propagate_photons_in_scenery_with_settings(
             &photons, &world, &settings, &prng
         );
 

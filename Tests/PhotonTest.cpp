@@ -235,7 +235,7 @@ TEST_F(PhotonTest, Reflections){
         photons.push_back(P);
     }
 
-    Photons::propagate_photons_in_world_with_settings(
+    Photons::propagate_photons_in_scenery_with_settings(
         &photons, &world, &setup, &prng
     );
 
@@ -321,7 +321,7 @@ TEST_F(PhotonTest, Refraction){
         photons.push_back(P);
     }
 
-    Photons::propagate_photons_in_world_with_settings(
+    Photons::propagate_photons_in_scenery_with_settings(
         &photons, &world, &setup, &prng
     );
 
@@ -419,7 +419,7 @@ TEST_F(PhotonTest, absorbtion_in_medium){
         photons.push_back(P);
     }
 
-    Photons::propagate_photons_in_world_with_settings(
+    Photons::propagate_photons_in_scenery_with_settings(
         &photons, &world, &setup, &prng
     );
 

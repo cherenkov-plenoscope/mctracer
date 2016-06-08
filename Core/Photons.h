@@ -21,7 +21,7 @@ namespace Photons {
 
 	string get_print(const vector<Photon*> *photons);
 	// propagation
-	void propagate_photons_in_world_with_settings(
+	void propagate_photons_in_scenery_with_settings(
 		vector<Photon*> *photons,
 		const Frame *world, 
 		const TracerSettings *settings,
