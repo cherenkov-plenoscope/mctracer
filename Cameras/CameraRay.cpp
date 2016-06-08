@@ -94,7 +94,7 @@ bool CameraRay::is_iluminated_by_sky_light_source(
 	);
 
 	const Intersection intersec_light_source = 
-		RayAndFrame::first_intersection(this, world);
+		RayAndFrame::first_intersection(&ray_to_source, world);
 
 	double p = intersection.get_surface_normal_in_world_system()*
 		settings->visual.global_illumination.incoming_direction;
