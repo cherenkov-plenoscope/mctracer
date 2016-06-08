@@ -30,7 +30,7 @@ namespace Plenoscope {
 			double max_FoV_diameter;
 			double pixel_FoV_hex_flat2flat;	
 			double housing_overhead;
-			unsigned int sub_pixel_on_pixel_diagonal;
+			unsigned int number_of_paxel_on_pixel_diagonal;
 			const Function::Func1D* lens_refraction;
 			const Function::Func1D* lens_absorbtion;
 			const Function::Func1D* bin_relection;

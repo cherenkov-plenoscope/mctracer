@@ -308,7 +308,7 @@ Frame* SceneryFactory::add_light_field_sensor(Frame* mother, const Node node) {
     config.expected_imaging_system_max_aperture_radius = lfs.attribute2double("expected_imaging_system_aperture_radius");
     config.max_FoV_diameter = Deg2Rad(lfs.attribute2double("max_FoV_diameter_deg"));
     config.pixel_FoV_hex_flat2flat = Deg2Rad(lfs.attribute2double("hex_pixel_FoV_flat2flat_deg")); 
-    config.sub_pixel_on_pixel_diagonal = lfs.attribute2int("sub_pixel_on_pixel_diagonal");
+    config.number_of_paxel_on_pixel_diagonal = lfs.attribute2int("number_of_paxel_on_pixel_diagonal");
     config.housing_overhead = lfs.attribute2double("housing_overhead");
     config.lens_refraction = functions.by_name(lfs.attribute("lens_refraction_vs_wavelength"));
     //config.lens_absorbtion = &perfect_transparency;

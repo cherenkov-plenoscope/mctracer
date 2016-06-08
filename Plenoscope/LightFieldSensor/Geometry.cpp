@@ -39,7 +39,7 @@ void Geometry::set_up_sub_pixel_flower_template_grid() {
 
 	HexGridFlower subpixflowergrid(
 		pixel_lens_outer_aperture_radius(),
-		config.sub_pixel_on_pixel_diagonal
+		config.number_of_paxel_on_pixel_diagonal
 	);
 
 	sub_pixel_flat2flat = subpixflowergrid.get_facet_spacing();

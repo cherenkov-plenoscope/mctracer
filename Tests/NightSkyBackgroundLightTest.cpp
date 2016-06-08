@@ -15,7 +15,7 @@ TEST_F(NightSkyBackgroundLightTest, init) {
     config.expected_imaging_system_max_aperture_radius = 25.0;
     config.max_FoV_diameter = Deg2Rad(6.5);
     config.pixel_FoV_hex_flat2flat = Deg2Rad(0.1);
-    config.sub_pixel_on_pixel_diagonal = 13;
+    config.number_of_paxel_on_pixel_diagonal = 13;
     config.housing_overhead = 1.2;
     config.lens_refraction = &Plenoscope::LightFieldSensor::pmma_refraction;
 

@@ -151,7 +151,7 @@
                 max_FoV_diameter_deg="6.5" 
                 hex_pixel_FoV_flat2flat_deg="0.0667" 
                 housing_overhead="1.2" 
-                sub_pixel_on_pixel_diagonal="13" 
+                number_of_paxel_on_pixel_diagonal="13" 
                 lens_refraction_vs_wavelength="lens_refraction"
                 bin_reflection_vs_wavelength="mirror_reflection"
             />
