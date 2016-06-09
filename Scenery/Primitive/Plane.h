@@ -8,12 +8,7 @@
 
 //=================================
 // included dependencies
-#include <iostream>
 #include <string>
-#include <sstream>
-#include <vector>
-#include <algorithm>
-#include <math.h>
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
 #include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"

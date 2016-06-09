@@ -8,7 +8,6 @@
 
 //=================================
 // included dependencies
-#include <iostream> 
 #include <string>
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"

@@ -9,7 +9,6 @@
 //=================================
 // included dependencies
 #include "Core/SurfaceEntity.h"
-#include "Core/Vec3.h"
 #include "Core/Intersection.h"
 #include "Scenery/Geometry/ZaxisCylinderRayIntersectionEquation.h"
 

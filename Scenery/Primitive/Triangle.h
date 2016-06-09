@@ -8,12 +8,8 @@
 
 //=================================
 // included dependencies
-#include <iostream>
 #include <string>
 #include <sstream>
-#include <vector>
-#include <algorithm>
-#include <math.h>
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
 #include "Core/Vec2.h"
