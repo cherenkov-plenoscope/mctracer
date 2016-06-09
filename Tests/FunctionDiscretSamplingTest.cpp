@@ -39,8 +39,10 @@ TEST_F(FunctionDiscretSamplingTest, zero_function_range) {
 	);
 }
 //------------------------------------------------------------------------------
-TEST_F(FunctionDiscretSamplingTest, to_many_samples) {
-
+/*TEST_F(FunctionDiscretSamplingTest, too_many_samples) {
+	
+	// Not all machines will throw a malloc exception at the same time 
+	// or in the same way.
 	Function::DiscretSampling::Config config;
 	config.slice_width = 1e-9;
 	config.samples_per_slice = 1e9;
@@ -51,7 +53,7 @@ TEST_F(FunctionDiscretSamplingTest, to_many_samples) {
 		Function::DiscretSampling::LookUpTable table(&poly3, config), 
 		Function::DiscretSampling::LookUpTable::MemoryProblemMaybeTooManySamples
 	);
-}
+}*/
 //------------------------------------------------------------------------------
 TEST_F(FunctionDiscretSamplingTest, bad_offset_get_discrete_samples) {
 
