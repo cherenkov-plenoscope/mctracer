@@ -33,9 +33,9 @@ class TrajectoryFactory {
 	uint num_of_interactions;
 public:
 
-	static const Color* trajectory_col;
-	static const Color* absorption_in_void_col;
-	static const Color* interaction_col;	
+	static const Color trajectory_col;
+	static const Color absorption_in_void_col;
+	static const Color interaction_col;	
 	TrajectoryFactory(const RayForPropagation* ray);
 	Frame* get_trajectory()const;
 	void set_trajectory_radius(const double radius);
