@@ -16,11 +16,14 @@
 #include "EllipticalCapWithHexagonalBound.h"
 #include "HexPlane.h"
 #include "Plane.h"
+#include "PlaneDualSphericalBound.h"
+#include "Prism3D.h"
+#include "RectangularBox.h"
 #include "Sphere.h"
+#include "SphereCapWithCylinderBound.h"
 #include "SphereCapWithHexagonalBound.h"
 #include "SphereCapWithRectangularBound.h"
 #include "Triangle.h"
-#include "RectangularBox.h"
 
 //=================================
 #endif // __PRIMITIVE_H_INCLUDED__
