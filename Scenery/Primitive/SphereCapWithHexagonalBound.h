@@ -8,9 +8,9 @@
 
 //=================================
 // included dependencies
-#include "SphericalCapRayIntersectionEquation.h"
-#include "HexagonalPrismZ.h"
-#include "SurfaceWithOuterPrismBound.h"
+#include "Scenery/Geometry/SphericalCapRayIntersectionEquation.h"
+#include "Scenery/Geometry/HexagonalPrismZ.h"
+#include "Scenery/Geometry/SurfaceWithOuterPrismBound.h"
 
 //=================================
 class SphereCapWithHexagonalBound :public SurfaceWithOuterPrismBound {

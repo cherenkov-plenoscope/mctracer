@@ -1,8 +1,8 @@
 #include "gtest/gtest.h"
 #include <algorithm>
 #include "Core/Color.h"
-#include "Scenery/BiConvexLensHexBound.h"
-#include "Scenery/Disc.h"
+#include "Scenery/Primitive/BiConvexLensHexBound.h"
+#include "Scenery/Primitive/Disc.h"
 #include "LensMaker/LensMaker.h"
 #include "Core/Random/Random.h"
 #include "PhotonSensor/PhotonSensor.h"

@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "Scenery/Disc.h"
+#include "Scenery/Primitive/Disc.h"
 
 using namespace std;
 

@@ -1,5 +1,5 @@
 #include "Scenery/SegmentedReflector/Factory.h"
-#include "Scenery/SphereCapWithHexagonalBound.h"
+#include "Scenery/Primitive/SphereCapWithHexagonalBound.h"
 
 namespace SegmentedReflector {
 

@@ -8,9 +8,9 @@
 
 //=================================
 // included dependencies
-#include "EllipticalCapRayIntersectionEquation.h"
-#include "HexagonalPrismZ.h"
-#include "SurfaceWithOuterPrismBound.h"
+#include "Scenery/Geometry/EllipticalCapRayIntersectionEquation.h"
+#include "Scenery/Geometry/HexagonalPrismZ.h"
+#include "Scenery/Geometry/SurfaceWithOuterPrismBound.h"
 
 //=================================
 class EllipticalCapWithHexagonalBound :public SurfaceWithOuterPrismBound {

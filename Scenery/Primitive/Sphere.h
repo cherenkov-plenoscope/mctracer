@@ -12,7 +12,7 @@
 #include <string>
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
-#include "QuadraticEquation.h"
+#include "Scenery/Geometry/QuadraticEquation.h"
 
 //=================================
 class Sphere :public SurfaceEntity{

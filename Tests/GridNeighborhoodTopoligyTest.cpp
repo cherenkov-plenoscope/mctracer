@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
-#include "Scenery/HexGridAnnulus.h"
-#include "Scenery/GridNeighborhoodTopoligy.h"
+#include "Scenery/Geometry/HexGridAnnulus.h"
+#include "Scenery/Geometry/GridNeighborhoodTopoligy.h"
 
 class GridNeighborhoodTopoligyTest : public ::testing::Test {};
 //------------------------------------------------------------------------------

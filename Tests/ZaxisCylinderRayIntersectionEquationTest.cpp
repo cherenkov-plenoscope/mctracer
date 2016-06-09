@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "Scenery/ZaxisCylinderRayIntersectionEquation.h"
+#include "Scenery/Geometry/ZaxisCylinderRayIntersectionEquation.h"
 using namespace std;
 
 class ZaxisCylinderRayIntersectionEquationTest : public ::testing::Test{

@@ -8,8 +8,8 @@
 
 //=================================
 // included dependencies
-#include "SphereCapWithHexagonalBound.h"
-#include "PlaneDualSphericalBound.h"
+#include "Scenery/Primitive/SphereCapWithHexagonalBound.h"
+#include "Scenery/Primitive/PlaneDualSphericalBound.h"
 //=================================
 class BiConvexLensHexBound :public SurfaceEntity{
 

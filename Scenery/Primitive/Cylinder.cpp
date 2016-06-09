@@ -1,4 +1,4 @@
-#include "Scenery/Cylinder.h"
+#include "Scenery/Primitive/Cylinder.h"
 #include <sstream>
 //------------------------------------------------------------------------------
 Cylinder::Cylinder() {}

@@ -1,4 +1,4 @@
-#include "ZaxisCylinderRayIntersectionEquation.h"
+#include "Scenery/Geometry/ZaxisCylinderRayIntersectionEquation.h"
 //------------------------------------------------------------------------------
 ZaxisCylinderRayIntersectionEquation::ZaxisCylinderRayIntersectionEquation(
 	const double radius, 

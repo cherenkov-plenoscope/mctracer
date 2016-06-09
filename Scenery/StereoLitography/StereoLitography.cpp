@@ -1,5 +1,5 @@
 #include "StereoLitography.h"
-#include "Scenery/Triangle.h"
+#include "Scenery/Primitive/Triangle.h"
 //------------------------------------------------------------------------------
 namespace StereoLitography {
 //------------------------------------------------------------------------------

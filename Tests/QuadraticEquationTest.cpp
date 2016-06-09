@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "Scenery/QuadraticEquation.h"
+#include "Scenery/Geometry/QuadraticEquation.h"
 
 using namespace std;
 

@@ -6,8 +6,8 @@
 #include "Core/PhysicalConstants.h"
 #include "Core/Random/Random.h"
 #include "Core/SurfaceEntity.h"
-#include "Scenery/Plane.h"
-#include "Scenery/RectangularBox.h"
+#include "Scenery/Primitive/Plane.h"
+#include "Scenery/Primitive/RectangularBox.h"
 #include "gtest/gtest.h"
 #include "PhotonSensor/PhotonSensor.h" 
 #include <iostream> 

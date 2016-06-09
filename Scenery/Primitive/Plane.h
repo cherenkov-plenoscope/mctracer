@@ -16,8 +16,8 @@
 #include <math.h>
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
-#include "XyPlaneRayIntersectionEquation.h"
-#include "RectangularPrismZ.h"
+#include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
+#include "Scenery/Geometry/RectangularPrismZ.h"
 //=================================
 class Plane :public SurfaceEntity{
 protected:	

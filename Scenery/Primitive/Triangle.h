@@ -17,7 +17,7 @@
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
 #include "Core/Vec2.h"
-#include "XyPlaneRayIntersectionEquation.h"
+#include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
 
 //=================================
 class Triangle  :public SurfaceEntity{	

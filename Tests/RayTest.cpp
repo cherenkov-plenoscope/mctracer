@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "Core/Ray.h"
-#include "Scenery/Sphere.h"
+#include "Scenery/Primitive/Sphere.h"
 
 class RayTest : public ::testing::Test {};
 //------------------------------------------------------------------------------

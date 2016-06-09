@@ -1,7 +1,7 @@
 //=================================
 // include guard
-#ifndef __Annulus_H_INCLUDED__
-#define __Annulus_H_INCLUDED__
+#ifndef __DISC_H_INCLUDED__
+#define __DISC_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
@@ -13,28 +13,23 @@
 #include <sstream>
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
-#include "XyPlaneRayIntersectionEquation.h"
-#include "CylinderPrismZ.h"
+#include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
+#include "Scenery/Geometry/CylinderPrismZ.h"
 //=================================
-class Annulus :public SurfaceEntity{
+class Disc :public SurfaceEntity{
 protected:
 
-	CylinderPrismZ outer_bound;
-	CylinderPrismZ inner_bound;
+	CylinderPrismZ cylinder_bounds;
 public:
 
-	void set_outer_inner_radius(
-		const double outer_radius, 
-		const double inner_radius
-	);
+	void set_radius(const double radius);
 	std::string get_print()const;
 	void calculate_intersection_with(
         const Ray* ray, 
         vector<Intersection> *intersections
     )const;
 private:
-
 	double get_area()const;
 	void post_initialize_radius_of_enclosing_sphere();
 };
-#endif // __Annulus_H_INCLUDED__
+#endif // __DISC_H_INCLUDED__

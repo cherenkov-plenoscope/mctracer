@@ -36,7 +36,7 @@
 	#include "PrismZ.h"
 	#include "BiConvexLens.h"
 	#include "BiConvexLensHexBound.h"
-	#include "Scenery/Cylinder.h"
+	#include "Scenery/Primitive/Cylinder.h"
 	#include "CylinderPrismZ.h"
 	#include "SurfaceWithOuterPrismBound.h"
 	#include "Disc.h"
@@ -109,7 +109,7 @@ namespace std {
 
 %include "BiConvexLens.h"
 %include "BiConvexLensHexBound.h"
-%include "Scenery/Cylinder.h"
+%include "Scenery/Primitive/Cylinder.h"
 %include "PrismZ.h"
 %include "CylinderPrismZ.h"
 %include "SurfaceWithOuterPrismBound.h"

@@ -1,34 +1,37 @@
 //=================================
 // include guard
-#ifndef __HEXPLANE_H_INCLUDED__
-#define __HEXPLANE_H_INCLUDED__
+#ifndef __PlaneDualSphericalBound_H_INCLUDED__
+#define __PlaneDualSphericalBound_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
 
 //=================================
 // included dependencies
+#include <iostream> 
 #include "Core/SurfaceEntity.h"
-#include "XyPlaneRayIntersectionEquation.h"
-#include "HexagonalPrismZ.h"
-
+#include "Core/Intersection.h"
+#include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
+#include "Scenery/Geometry/DualSphericalPrismZ.h"
 //=================================
-class HexPlane :public SurfaceEntity{
+class PlaneDualSphericalBound :public SurfaceEntity{
 protected:	
 
-	HexagonalPrismZ hex_bounds;
-	static const Vec3 plane_surface_normal;
+	DualSphericalPrismZ dual_sphere_bounds;
 public:
 
-	using SurfaceEntity::SurfaceEntity;
-	void set_outer_hex_radius(const double outer_hex_radius);
+	void set_x_hight_and_y_width(
+		const double x_width,
+		const double y_width
+	);
+
 	std::string get_print()const;
 	void calculate_intersection_with(
         const Ray* ray, 
         vector<Intersection> *intersections
     )const;
 private:
-
+	
 	void post_initialize_radius_of_enclosing_sphere();
 };
-#endif // __HEXPLANE_H_INCLUDED__
+#endif // __PlaneDualSphericalBound_H_INCLUDED__

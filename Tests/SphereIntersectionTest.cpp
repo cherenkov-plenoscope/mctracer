@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "Core/Vec3.h"
 #include "Core/TracerSettings.h"
-#include "Scenery/Sphere.h"
+#include "Scenery/Primitive/Sphere.h"
 #include "Core/Rot3.h"
 #include "Core/Random/Random.h"
 #include "Core/PropagationEnvironment.h"

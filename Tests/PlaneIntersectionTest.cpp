@@ -5,7 +5,7 @@
 #include "Core/Frame.h"
 #include "Core/RayAndFrame.h"
 #include "Core/Random/Random.h"
-#include "Scenery/Plane.h"
+#include "Scenery/Primitive/Plane.h"
 #include "Core/Vec3.h"
 
 using namespace std;
