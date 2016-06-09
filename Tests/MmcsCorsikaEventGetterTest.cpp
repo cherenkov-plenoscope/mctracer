@@ -1,8 +1,8 @@
 #include "gtest/gtest.h"
-#include "CorsikaIO/MmcsCorsikaFullEventGetter.h"
-#include "CorsikaIO/MmcsCorsikaSubBlockGetter.h"
-#include "CorsikaIO/MmcsCorsikaPhotonData.h"
-#include "CorsikaIO/MmcsCorsikaTools.h"
+#include "Corsika/MmcsCorsikaFullEventGetter.h"
+#include "Corsika/MmcsCorsikaSubBlockGetter.h"
+#include "Corsika/MmcsCorsikaPhotonData.h"
+#include "Corsika/MmcsCorsikaTools.h"
 
 class MmcsCorsikaEventGetterTest : public ::testing::Test {};
 //----------------------------------------------------------------------

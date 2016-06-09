@@ -64,7 +64,7 @@
 	#include "Cameras/SkyDome.h"
 
 	#include "XmlFactory/WorldFactory.h"
-	//#include "CorsikaIO/EventIo.h"
+	//#include "Corsika/EventIo.h"
 	#include "TelescopeArrayControl.h"
 	#include "PhotonSensor/PhotonSensor.h"
 
@@ -138,6 +138,6 @@ namespace std {
 %include "Cameras/SkyDome.h"
 
 %include "XmlFactory/WorldFactory.h"
-//%include "CorsikaIO/EventIo.h"
+//%include "Corsika/EventIo.h"
 %include "TelescopeArrayControl.h"
 %include "PhotonSensor/PhotonSensor.h"

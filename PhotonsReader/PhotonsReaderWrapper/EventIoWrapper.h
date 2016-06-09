@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "BasicWrapper.h"
-#include "CorsikaIO/EventIo/EventIo.h"
+#include "Corsika/EventIo/EventIo.h"
 using std::string;
 using std::vector;
 

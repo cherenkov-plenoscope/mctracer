@@ -12,7 +12,7 @@
 #include <string>
 #include <sstream>
 #include "SignalProcessing/SimpleTDCQDC.h"
-#include "CorsikaIO/EventIo/EventIo.h"
+#include "Corsika/EventIo/EventIo.h"
 using std::vector;
 using std::string;
 using std::stringstream;

@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
-#include "CorsikaIO/EventIo/PhotonFactory.h"
-#include "CorsikaIO/EventIo/EventIo.h"
+#include "Corsika/EventIo/PhotonFactory.h"
+#include "Corsika/EventIo/EventIo.h"
 #include "Scenery/Primitive/Disc.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "Core/Photons.h"

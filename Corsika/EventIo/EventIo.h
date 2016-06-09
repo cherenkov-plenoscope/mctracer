@@ -8,8 +8,8 @@
 #include <iostream>
 #include <fstream>
 
-#include "CorsikaIO/MmcsCorsikaRunHeader.h"
-#include "CorsikaIO/MmcsCorsikaEventHeader.h"
+#include "Corsika/MmcsCorsikaRunHeader.h"
+#include "Corsika/MmcsCorsikaEventHeader.h"
 
 using std::cout;
 using std::endl;

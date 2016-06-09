@@ -8,8 +8,8 @@
 
 //=================================
 // included dependencies  
-#include "CorsikaIO/EventIo.h"
-#include "CorsikaIO/CorsikaPhotonFactory.h"
+#include "Corsika/EventIo.h"
+#include "Corsika/CorsikaPhotonFactory.h"
 
 class CorsikaReader: public printable {
 

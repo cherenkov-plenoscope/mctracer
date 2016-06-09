@@ -1,4 +1,4 @@
-#include "CorsikaIO/CorsikaReader.h"
+#include "Corsika/CorsikaReader.h"
 
 //------------------------------------------------------------------------------
 CorsikaReader::CorsikaReader(const std::string path) {

@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "CorsikaIO/Tools.h"
+#include "Corsika/Tools.h"
 #include "Core/Random/Random.h"
 
 class Corsika_io : public ::testing::Test {};

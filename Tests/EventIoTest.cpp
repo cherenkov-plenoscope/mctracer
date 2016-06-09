@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "CorsikaIO/EventIo/EventIo.h"
+#include "Corsika/EventIo/EventIo.h"
 using namespace EventIo;
 
 class EventIoTest : public ::testing::Test {};
@@ -156,7 +156,7 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__photon_bundle_values) {
     }
 }
 //------------------------------------------------------------------------------
-#include "CorsikaIO/EventIo/PhotonFactory.h"
+#include "Corsika/EventIo/PhotonFactory.h"
 
 TEST_F(EventIoTest, EventIoFile_telescope_dat__run_time____________________________________) {
     EventIoFile my_file("telescope.dat");
