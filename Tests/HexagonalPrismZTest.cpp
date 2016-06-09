@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "Geometry/HexagonalPrismZ.h"
+#include "Scenery/HexagonalPrismZ.h"
 
 using namespace std;
 

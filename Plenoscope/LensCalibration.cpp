@@ -1,8 +1,8 @@
 #include "Plenoscope/LensCalibration.h"
 #include "Tools/AsciiIo.h"
 //#include "Cameras/FreeOrbitCamera.h"
-#include "Geometry/HexPlane.h"
-#include "Geometry/HexGridAnnulus.h"
+#include "Scenery/HexPlane.h"
+#include "Scenery/HexGridAnnulus.h"
 #include "Core/PhotonAndFrame.h"
 
 namespace Plenoscope {

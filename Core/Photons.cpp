@@ -1,7 +1,7 @@
 #include "Photons.h"
 #include <omp.h>
 #include <sstream>
-#include "Geometry/TrajectoryFactory.h"
+#include "Scenery/TrajectoryFactory.h"
 #include "Core/PhotonAndFrame.h"
 using std::string;
 using std::stringstream;

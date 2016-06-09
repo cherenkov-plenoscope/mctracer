@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "Geometry/Sphere.h"
+#include "Scenery/Sphere.h"
 using namespace std;
 
 class SphereTest : public ::testing::Test {

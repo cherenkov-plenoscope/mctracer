@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
-#include "Geometry/HexagonalPrismZ.h"
-#include "Geometry/XyPlaneRayIntersectionEquation.h"
+#include "Scenery/HexagonalPrismZ.h"
+#include "Scenery/XyPlaneRayIntersectionEquation.h"
 #include "Core/Ray.h"
 using namespace std;
 

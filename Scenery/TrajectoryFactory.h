@@ -10,8 +10,8 @@
 // included dependencies
 #include "Core/RayForPropagation.h"
 #include "Core/SurfaceEntity.h"
-#include "Geometry/Cylinder.h"
-#include "Geometry/Sphere.h"
+#include "Scenery/Cylinder.h"
+#include "Scenery/Sphere.h"
 
 //=================================
 // Spectate the propagation history of a photon.

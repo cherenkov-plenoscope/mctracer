@@ -1,9 +1,9 @@
 #include "Plenoscope/LightFieldSensor/Geometry.h"
-#include "Geometry/HexGridAnnulus.h"
-#include "Geometry/GridNeighborhoodTopoligy.h"
+#include "Scenery/HexGridAnnulus.h"
+#include "Scenery/GridNeighborhoodTopoligy.h"
 #include "Tools/AsciiIo.h"
 #include "Tools/StringTools.h"
-#include "Geometry/HexGridFlower.h"
+#include "Scenery/HexGridFlower.h"
 #include "LensMaker/LensMaker.h"
 
 namespace Plenoscope {

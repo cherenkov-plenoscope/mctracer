@@ -3,7 +3,7 @@
 #include "Core/Vec3.h"
 #include "Core/Rot3.h"
 #include "Core/HomTra3.h"
-#include "Geometry/Sphere.h"
+#include "Scenery/Sphere.h"
 
 using namespace std;
 

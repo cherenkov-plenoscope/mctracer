@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "Geometry/SegmentedReflector/Config.h"
+#include "Scenery/SegmentedReflector/Config.h"
 #include "Core/Vec3.h"
 #include "Core/Rot3.h"
 using std::vector;

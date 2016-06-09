@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "Core/Vec3.h"
-#include "Geometry/StereoLitography/StereoLitography.h"
+#include "Scenery/StereoLitography/StereoLitography.h"
 
 using namespace StereoLitography;
 

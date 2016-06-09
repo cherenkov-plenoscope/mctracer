@@ -1,12 +1,12 @@
 #include "Plenoscope/LightFieldSensor/Factory.h"
-#include "Geometry/HexGridAnnulus.h"
-#include "Geometry/HexPlane.h"
-#include "Geometry/Annulus.h"
-#include "Geometry/Disc.h"
-#include "Geometry/Plane.h"
-#include "Geometry/Cylinder.h"
-#include "Geometry/BiConvexLensHexBound.h"
-#include "Geometry/PlaneDualSphericalBound.h"
+#include "Scenery/HexGridAnnulus.h"
+#include "Scenery/HexPlane.h"
+#include "Scenery/Annulus.h"
+#include "Scenery/Disc.h"
+#include "Scenery/Plane.h"
+#include "Scenery/Cylinder.h"
+#include "Scenery/BiConvexLensHexBound.h"
+#include "Scenery/PlaneDualSphericalBound.h"
 
 namespace Plenoscope {
 namespace LightFieldSensor {

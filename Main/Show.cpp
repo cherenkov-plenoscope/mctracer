@@ -1,5 +1,5 @@
 #include "Core/Photons.h"
-#include "Geometry/StereoLitography/StereoLitography.h"
+#include "Scenery/StereoLitography/StereoLitography.h"
 #include "Xml/Factory/VisualConfigFab.h"
 #include "Xml/Factory/TracerSettingsFab.h"
 #include "Xml/Factory/SceneryFactory.h"

@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "Geometry/SegmentedReflector/Geometry.h"
+#include "Scenery/SegmentedReflector/Geometry.h"
 #include "Core/Frame.h"
 
 namespace SegmentedReflector {

@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "Geometry/HexGridAnnulus.h"
+#include "Scenery/HexGridAnnulus.h"
 
 class HexGridAnnulusTest : public ::testing::Test {};
 //----------------------------------------------------------------------

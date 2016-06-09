@@ -1,4 +1,4 @@
-#include "Geometry/SegmentedReflector/Config.h"
+#include "Scenery/SegmentedReflector/Config.h"
 #include "Tools/AsciiIo.h"
 
 namespace SegmentedReflector {

@@ -8,7 +8,7 @@
 #include "Core/Color.h"
 #include "Core/HomTra3.h"
 #include "Core/SurfaceEntity.h"
-#include "Geometry/Geometry.h"
+#include "Scenery/Geometry.h"
 #include "Core/PropagationEnvironment.h"
 #include "Tools/StringTools.h"
 using std::cout;

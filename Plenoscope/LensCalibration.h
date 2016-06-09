@@ -12,8 +12,8 @@
 #include "Core/Random/Random.h"
 #include "Core/TracerSettings.h"
 #include "Core/PropagationEnvironment.h"
-#include "Geometry/Disc.h"
-#include "Geometry/BiConvexLensHexBound.h"
+#include "Scenery/Disc.h"
+#include "Scenery/BiConvexLensHexBound.h"
 
 namespace Plenoscope {
 
