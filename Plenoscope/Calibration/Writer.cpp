@@ -22,7 +22,7 @@ void Writer::append(const std::vector<CalibrationPhotonResult> &table) {
 void Writer::write_row(const CalibrationPhotonResult &row) {
     
     // write ID integer
-    file.write( (char*)&row.sub_pixel_id, sizeof(uint32_t));
+    file.write( (char*)&row.lixel_id, sizeof(uint32_t));
 
     // write pos dir and time floats
     const uint float_count = 5;

@@ -10,68 +10,76 @@ LixelStatistics::LixelStatistics(
 ):
 	calib_config(_calib_config),
 	sensor_geometry(geometry),
-	photons_per_sub_pixel(
+	photons_emitted_per_lixel(
 		double(_calib_config->number_of_blocks) * double(_calib_config->photons_per_block) /
 		double(geometry->number_of_lixel())
 	)
  {
-	subpix_stats.resize(sensor_geometry->number_of_lixel());
+	lixel_stats.resize(sensor_geometry->number_of_lixel());
 }
 //------------------------------------------------------------------------------
-void LixelStatistics::fill_in_block(std::vector<CalibrationPhotonResult> &calib_block) {
+void LixelStatistics::fill_in_block(vector<CalibrationPhotonResult> &calib_block) {
 
 	for(CalibrationPhotonResult result: calib_block) {
 		if(result.reached_sensor == true) {
-			subpix_stats[result.sub_pixel_id].geometric_efficiency += 1.0;
-			subpix_stats[result.sub_pixel_id].mean_cx += result.x_tilt_vs_optical_axis;
-			subpix_stats[result.sub_pixel_id].mean_cy += result.y_tilt_vs_optical_axis;
-			subpix_stats[result.sub_pixel_id].mean_x += result.x_pos_on_principal_aperture;
-			subpix_stats[result.sub_pixel_id].mean_y += result.y_pos_on_principal_aperture;
-			subpix_stats[result.sub_pixel_id].mean_time += result.relative_time_of_flight;
+			lixel_stats[result.lixel_id].count++;
+			lixel_stats[result.lixel_id].cx.add(result.x_tilt_vs_optical_axis);
+			lixel_stats[result.lixel_id].cy.add(result.y_tilt_vs_optical_axis);
+			lixel_stats[result.lixel_id].x.add(result.x_pos_on_principal_aperture);
+			lixel_stats[result.lixel_id].y.add(result.y_pos_on_principal_aperture);
+			lixel_stats[result.lixel_id].time.add(result.relative_time_of_flight);
 		}
 	}
 }
 //------------------------------------------------------------------------------
-void LixelStatistics::normalize() {
-	
-	double min_time = subpix_stats.front().mean_time;
-	for(uint i=0; i<subpix_stats.size(); i++) {
+double LixelStatistics::min_arrival_time_mean()const {
 
-		subpix_stats[i].mean_cx /= subpix_stats[i].geometric_efficiency;
-		subpix_stats[i].mean_cy /= subpix_stats[i].geometric_efficiency;
-		subpix_stats[i].mean_x /= subpix_stats[i].geometric_efficiency;
-		subpix_stats[i].mean_y /= subpix_stats[i].geometric_efficiency;
-		subpix_stats[i].mean_time /= subpix_stats[i].geometric_efficiency;
-		subpix_stats[i].geometric_efficiency /= photons_per_sub_pixel;
-	
-		if(	subpix_stats[i].mean_time < min_time)
-			min_time = subpix_stats[i].mean_time;
+	double minimal_time_mean = 0.0;
+	if(lixel_stats.size() > 0)
+		minimal_time_mean = lixel_stats.at(0).time.mean();
+
+	for(LixelStatistic lixel: lixel_stats) {
+		double this_pix_time = lixel.time.mean();
+		if(this_pix_time < minimal_time_mean)
+			minimal_time_mean = this_pix_time;
 	}
-
-	for(uint i=0; i<subpix_stats.size(); i++)
-		subpix_stats[i].mean_time -= min_time;
+	return minimal_time_mean;
 }
 //------------------------------------------------------------------------------
 void LixelStatistics::save(const std::string path) {
 		
-	normalize();
-		
+	const double minimal_arrival_time = min_arrival_time_mean();
+
 	std::stringstream out;
 	out << "# __Plenoscope Bin Statistics__\n";
-	out << "# number_of_direction_bins: " << sensor_geometry->number_of_pixels() << "\n";
-	out << "# number_of_principal_aperture_bins: " << sensor_geometry->number_of_paxel_per_pixel() << "\n";
-	out << "# photons_emitted_per_sub_pixel: " << photons_per_sub_pixel << "\n";
-	out << "# geometrical_efficiency[1]\tcx[rad]\tcy[rad]\tx[m]\ty[m]\tt[s]\n";
+	out << "# pixel: " << sensor_geometry->number_of_pixels() << "\n";
+	out << "# paxel: " << sensor_geometry->number_of_paxel_per_pixel() << "\n";
+	out << "# photons_emitted_per_lixel: " << photons_emitted_per_lixel << "\n";
+	out << "# geometrical_efficiency[1]\t";
+	out << "cx[rad]\t";
+	out << "cx_std[rad]\t";
+	out << "cy[rad]\t";
+	out << "cy_std[rad]\t";
+	out << "x[m]\t";
+	out << "x_std[m]\t";
+	out << "y[m]\t";
+	out << "y_std[m]\t";
+	out << "t[s]\t";
+	out << "t_std[s]\n";
 	out.precision(4);
 	
-	for(LixelStatistic pix: subpix_stats) {
-
-		out << pix.geometric_efficiency << "\t";
-		out << pix.mean_cx << "\t";
-		out << pix.mean_cy << "\t";
-		out << pix.mean_x << "\t";
-		out << pix.mean_y << "\t";
-		out << pix.mean_time << "\n";
+	for(LixelStatistic lixel: lixel_stats) {
+		out << lixel.count/photons_emitted_per_lixel << "\t";
+		out << lixel.cx.mean() << "\t";
+		out << lixel.cx.stddev() << "\t";
+		out << lixel.cy.mean() << "\t";
+		out << lixel.cy.stddev() << "\t";
+		out << lixel.x.mean() << "\t";
+		out << lixel.x.stddev() << "\t";
+		out << lixel.y.mean() << "\t";
+		out << lixel.y.stddev() << "\t";
+		out << lixel.time.mean() - minimal_arrival_time << "\t";
+		out << lixel.time.stddev() << "\n";
 	}
 
 	FileTools::write_text_to_file(out.str(), path);

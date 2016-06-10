@@ -14,7 +14,7 @@ namespace Plenoscope {
 
 	struct CalibrationPhotonResult {
 		bool reached_sensor;
-		uint32_t sub_pixel_id;
+		uint32_t lixel_id;
 		float x_pos_on_principal_aperture;
 		float y_pos_on_principal_aperture;
 		float x_tilt_vs_optical_axis;

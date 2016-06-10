@@ -11,44 +11,40 @@
 #include "Plenoscope/Calibration/CalibrationPhotonResult.h"
 #include "Plenoscope/Calibration/Config.h"
 #include "Plenoscope/LightFieldSensor/Geometry.h"
+#include "Tools/OnlineStatistics.h"
 
 namespace Plenoscope {
     namespace Calibration {
    
     struct LixelStatistic {
-        double geometric_efficiency;
-        double mean_cx;
-        double mean_cy;
-        double mean_x;
-        double mean_y;
-        double mean_time;
+        uint count;
+        OnlineStatistics cx;
+        OnlineStatistics cy;
+        OnlineStatistics x;
+        OnlineStatistics y;
+        OnlineStatistics time;
 
-        LixelStatistic() {
-            geometric_efficiency = 0.0;
-            mean_cx = 0.0;
-            mean_cy = 0.0;
-            mean_x = 0.0;
-            mean_y = 0.0;
-            mean_time = 0.0;            
-        }
+        LixelStatistic(): count(0) {};
     };
 
     class LixelStatistics {
 
         const Config *calib_config;
         const LightFieldSensor::Geometry *sensor_geometry;
-        const double photons_per_sub_pixel;
+        const double photons_emitted_per_lixel;
 
-        std::vector<LixelStatistic> subpix_stats;
+        vector<LixelStatistic> lixel_stats;
     public:
 
         LixelStatistics(
             const LightFieldSensor::Geometry *sensor_geometry, 
             const Config *config
         );
-        void save(const std::string path);
-        void fill_in_block(std::vector<CalibrationPhotonResult> &calib_block);
+        void save(const string path);
+        void fill_in_block(vector<CalibrationPhotonResult> &calib_block);
     private:
+
+        double min_arrival_time_mean()const;
         void normalize();
     };
 

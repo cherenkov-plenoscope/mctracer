@@ -31,6 +31,7 @@ int main(int argc, char* argv[]) {
     }
 
     PathTools::Path config_path = PathTools::Path(cmd.get("config"));
+    PathTools::Path out_path = PathTools::Path(cmd.get("output"));
 
     cout << "scenery '" << cmd.get("scenery") << "'\n";
     cout << "out     '" << cmd.get("output") << "'\n";
@@ -52,13 +53,17 @@ int main(int argc, char* argv[]) {
         throw TracerException("There is more then one plenoscope in the scenery");
     Plenoscope::PlenoscopeInScenery* pis = &scenery_factory.plenoscopes.at(0);
 
+    pis->light_field_sensor_geometry.write_lixel_positions(
+        PathTools::join(out_path.path, "lixel_positions.csv")
+    );
+
     // CALIBRATION CONFIG
     Plenoscope::Calibration::Config calib_config;
     calib_config.number_of_blocks = block_node.attribute2int("number_of_blocks");
     calib_config.photons_per_block = int(block_node.attribute2double("photons_per_block"));
-    calib_config.raw_calibration_output_path = cmd.get("output")+"/"+"the_big_lebowsky.lftc";
-    calib_config.condensed_calibration_output_path = cmd.get("output")+"/"+"sub_pixel_statistics.txt";
-    
+    calib_config.raw_calibration_output_path = PathTools::join(cmd.get("output"), "lixel_statistic_raw.bin");
+    calib_config.condensed_calibration_output_path = PathTools::join(cmd.get("output"), "lixel_statistic_condensate.txt");
+
     // RUN PLENOSCOPE CALIBRATION   
     Plenoscope::Calibration::Calibrator calibrator(
         calib_config, 
