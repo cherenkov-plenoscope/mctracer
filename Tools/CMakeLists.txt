@@ -9,5 +9,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/TimeStamp.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PathTools.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/StopWatch.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/OnlineStatistics.cpp
    	PARENT_SCOPE
 )
