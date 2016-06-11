@@ -44,12 +44,14 @@ namespace EventIo {
     };
 
     struct EventIoRunHeader {
+        array<float, 273> raw;
         MmcsCorsikaRunHeader mmcs_runheader;
         string input_card;
         vector<TelPos> tel_pos;
     };
 
     struct EventIoEventHeader {
+        array<float, 273> raw;
         MmcsCorsikaEventHeader mmcs_event_header;
         vector<TelOffset> telescope_offsets;
     };
@@ -138,7 +140,7 @@ namespace EventIo {
 
         Header __get_header(int expect_type);
     
-        void __read_run_reader();
+        void __read_run_header();
         void __read_event_header();
         void __read_event_end();
         void __read_run_end();

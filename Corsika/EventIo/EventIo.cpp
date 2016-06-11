@@ -419,12 +419,12 @@ EventIoFile::EventIoFile(string path):
         throw TracerException(info.str());
     }
 
-    this->__read_run_reader();
+    this->__read_run_header();
 
     this->_current_photon_data = this->_next();
 }
 
-void EventIoFile::__read_run_reader() {
+void EventIoFile::__read_run_header() {
     //auto header_1 = this->__get_header(1200);
 
     this->__get_header(1200);
