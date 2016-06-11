@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "Corsika/MmcsCorsikaFullEventGetter.h"
+#include "Corsika/MagicMonteCarloSimulation/MmcsCorsikaFullEventGetter.h"
 #include "BasicWrapper.h"
 using std::string;
 using std::vector;

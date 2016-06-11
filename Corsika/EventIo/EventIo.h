@@ -7,9 +7,7 @@
 #include <array>
 #include <iostream>
 #include <fstream>
-
-#include "Corsika/MmcsCorsikaRunHeader.h"
-#include "Corsika/MmcsCorsikaEventHeader.h"
+#include "Core/TracerException.h"
 
 using std::cout;
 using std::endl;
@@ -45,14 +43,12 @@ namespace EventIo {
 
     struct EventIoRunHeader {
         array<float, 273> raw;
-        MmcsCorsikaRunHeader mmcs_runheader;
         string input_card;
         vector<TelPos> tel_pos;
     };
 
     struct EventIoEventHeader {
         array<float, 273> raw;
-        MmcsCorsikaEventHeader mmcs_event_header;
         vector<TelOffset> telescope_offsets;
     };
 
@@ -101,7 +97,6 @@ namespace EventIo {
         int64_t extend_length(int32_t extended, const LengthInfo length_info);
     };
 
-
     struct BunchHeader {
         int16_t array;
         int16_t tel;
@@ -110,9 +105,7 @@ namespace EventIo {
         string get_print() const;
     };
 
-
-    MmcsCorsikaRunHeader make_run_header_from_stream(istream& f);
-    MmcsCorsikaEventHeader make_event_header_form_stream(istream& f);
+    array<float, 273> make_corsika_273float_sub_block_form_stream(istream& f);
     string make_input_card_from_stream(istream& f, const Header& head);
     vector<TelPos> make_telescope_positions(istream& f, const Header& head);
     vector<TelOffset> make_telescope_offsets_from_stream(istream& f, const Header& head);
@@ -139,24 +132,19 @@ namespace EventIo {
         vector<array<float, 8>> _current_photon_data;
 
         Header __get_header(int expect_type);
-    
         void __read_run_header();
         void __read_event_header();
         void __read_event_end();
         void __read_run_end();
         vector<array<float, 8>> _next();
+        array<float, 273> current_event_end;
+        EventIoEventHeader current_event_header;
     public:
 
         bool has_still_events_left()const;
         EventIoRunHeader run_header;
-        vector<float> current_event_end;
-        EventIoEventHeader current_event_header;
-        vector<float> run_end;
-
+        array<float, 273> run_end;
         EventIoFile(const string path);
-        //EventIoFile(string path, istream& stream);
-        //void read_all_headers();
-
         Event next_event();
     };
 } //namespace EventIo

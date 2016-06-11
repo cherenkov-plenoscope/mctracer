@@ -2,6 +2,7 @@
 #include "Xml/Factory/SceneryFactory.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "Corsika/EventIo/EventIo.h"
+#include "Corsika/Tools.h"
 #include "Corsika/EventIo/PhotonFactory.h"
 #include "Xml/Factory/VisualConfigFab.h"
 #include "Xml/Factory/TracerSettingsFab.h"
@@ -77,8 +78,8 @@ int main(int argc, char* argv[]) {
 		EventIo::Event event = corsika_run.next_event();
 
        	// point the telescope into shower direction
-       	double az = event.header.mmcs_event_header.azimuth_angle_Phi_in_radian;
-       	double zd = event.header.mmcs_event_header.zenith_angle_Theta_in_radian;
+       	double az = Corsika::EventHeader::azimuth(event.header.raw);
+       	double zd = Corsika::EventHeader::zenith(event.header.raw);
 		array_ctrl->move_all_to_Az_Zd(az, zd);
 		
         uint id = 0;

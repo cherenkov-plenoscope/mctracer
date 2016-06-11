@@ -3,6 +3,7 @@
 #include "CommandLine/CommandLine.h"
 #include "Core/Photons.h"
 #include "Corsika/EventIo/EventIo.h"
+#include "Corsika/Tools.h"
 #include "Corsika/EventIo/PhotonFactory.h"
 #include "Core/Histogram1D.h"
 #include "Tools/AsciiIo.h"
@@ -222,8 +223,8 @@ int main(int argc, char* argv[]) {
         }
 
         stringstream evt_header;
-        evt_header << corsika_run.run_header.mmcs_runheader.get_print();
-        evt_header << event.header.mmcs_event_header.get_print();
+        evt_header << Corsika::RunHeader::get_print(corsika_run.run_header.raw);
+        evt_header << Corsika::EventHeader::get_print(event.header.raw);
         evt_header << "\n";
         evt_header << "arrival_time[s]\tnumber_photons[1]\n";
 
@@ -233,8 +234,8 @@ int main(int argc, char* argv[]) {
         );
 
         cout << "event " << event_counter << ", ";
-        cout << "PRMPAR " << event.header.mmcs_event_header.particle_id << ", ";
-        cout << "E " << event.header.mmcs_event_header.total_energy_in_GeV << " GeV\n";
+        cout << "PRMPAR " << Corsika::EventHeader::particle_id(event.header.raw) << ", ";
+        cout << "E " << Corsika::EventHeader::total_energy_in_GeV(event.header.raw) << " GeV\n";
         event_counter++;
     }
 

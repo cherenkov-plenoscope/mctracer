@@ -2,14 +2,6 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/EventIo")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/MagicMonteCarloSimulation")
 set(SOURCE
    	${SOURCE}
-  	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaSubBlock.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaSubBlockGetter.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaFullEventGetter.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaRunHeader.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaEventHeader.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaPhotonData.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaEvent.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaTools.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Tools.cpp
    	PARENT_SCOPE
 )

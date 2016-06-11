@@ -1,5 +1,6 @@
 #include "EventFormats.h"
 #include <fstream> 
+#include "Corsika/Tools.h"
 #include "Core/TracerException.h"
 #include "Tools/AsciiIo.h"
 
@@ -44,8 +45,8 @@ void save_event_to_file_epoch_2016Mar10(
     }
 
     stringstream evt_header;
-    evt_header << corsika_run.run_header.mmcs_runheader.get_print();
-    evt_header << event.header.mmcs_event_header.get_print();
+    evt_header << Corsika::RunHeader::get_print(corsika_run.run_header.raw);
+    evt_header << Corsika::EventHeader::get_print(event.header.raw);
     evt_header << "\n";
     evt_header << "arrival_time[s]\tnumber_photons[1]\n";
 

@@ -1,5 +1,7 @@
 #include "gtest/gtest.h"
 #include "Corsika/EventIo/EventIo.h"
+#include "Corsika/Tools.h"
+#include <algorithm>
 using namespace EventIo;
 
 class EventIoTest : public ::testing::Test {};
@@ -57,8 +59,7 @@ TEST_F(EventIoTest, make_runheader) {
     for (size_t i=0; i<16; i++) foo++;
 
     std::copy_n(foo, 100, std::ostreambuf_iterator<char>(sout));
-    
-    MmcsCorsikaRunHeader my_run_header = EventIo::make_run_header_from_stream(sout);
+    array<float, 273> my_run_header = EventIo::make_corsika_273float_sub_block_form_stream(sout);
 }
 //------------------------------------------------------------------------------
 TEST_F(EventIoTest, EventIoFile_telescope_dat__check_tel_pos) {
@@ -78,16 +79,14 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__check_input_card) {
 }
 //------------------------------------------------------------------------------
 TEST_F(EventIoTest, EventIoFile_telescope_dat__mmcs_run_header) {
-
     EventIoFile my_file("telescope.dat");
-    EXPECT_NEAR(7., my_file.run_header.mmcs_runheader.run_number, 1e-6);
-    EXPECT_NEAR(-2.7, my_file.run_header.mmcs_runheader.slope_of_energy_spektrum, 1e-6);
-    EXPECT_EQ(2u, my_file.run_header.mmcs_runheader.energy_range.size());
-    EXPECT_NEAR(1000., my_file.run_header.mmcs_runheader.energy_range[0], 1e-6);
-    EXPECT_NEAR(50000., my_file.run_header.mmcs_runheader.energy_range[1], 1e-6);
+    EXPECT_NEAR(7., Corsika::RunHeader::run_number(my_file.run_header.raw), 1e-6);
+    EXPECT_NEAR(-2.7, Corsika::RunHeader::slope_of_energy_spektrum(my_file.run_header.raw), 1e-6);
+    EXPECT_NEAR(1000., Corsika::RunHeader::energy_range_start(my_file.run_header.raw), 1e-6);
+    EXPECT_NEAR(50000., Corsika::RunHeader::energy_range_end(my_file.run_header.raw), 1e-6);
 
-    EXPECT_EQ(1u, my_file.run_header.mmcs_runheader.observation_levels.size());
-    EXPECT_NEAR(220000., my_file.run_header.mmcs_runheader.observation_levels[0], 1e-6 );  
+    EXPECT_EQ(1u, Corsika::RunHeader::number_of_observation_levels(my_file.run_header.raw));
+    EXPECT_NEAR(220000., Corsika::RunHeader::observation_level_at(my_file.run_header.raw, 0), 1e-6);  
 }
 //------------------------------------------------------------------------------
 TEST_F(EventIoTest, EventIoFile_telescope_dat__next_call) {
@@ -107,11 +106,10 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__event_header) {
     EXPECT_NEAR(-0., event.header.telescope_offsets[0].xoff, 1e-6);
     EXPECT_NEAR(-6589.96044922, event.header.telescope_offsets[0].yoff, 1e-6);
 
-    MmcsCorsikaEventHeader h = event.header.mmcs_event_header;
-    EXPECT_NEAR(1. ,h.event_number, 1e-6);
-    EXPECT_NEAR(1. ,h.particle_id, 1e-6);
-    EXPECT_NEAR(1. ,h.particle_id, 1e-6);
-    EXPECT_NEAR(2745.3125 ,h.total_energy_in_GeV, 1e-6);
+    array<float, 273> h = event.header.raw;
+    EXPECT_NEAR(1., Corsika::EventHeader::event_number(h), 1e-6);
+    EXPECT_NEAR(1., Corsika::EventHeader::particle_id(h), 1e-6);
+    EXPECT_NEAR(2745.3125, Corsika::EventHeader::total_energy_in_GeV(h), 1e-6);
 }
 //------------------------------------------------------------------------------
 TEST_F(EventIoTest, EventIoFile_telescope_dat__photon_bundle_size) {
