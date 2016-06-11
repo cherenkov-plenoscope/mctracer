@@ -87,12 +87,17 @@ bool FunctionFab::is_function_node(const Xml::Node &node)const {
 }
 //------------------------------------------------------------------------------
 Function::Func1D* FunctionFab::extract_linear_interpolation(const Xml::Node &node) {
-	vector<vector<double>> table = AsciiIo::gen_table_from_file(
-		PathTools::join(
-			full_path_of_original_xml_file.dirname, 
-			node.attribute("file")
-		)
-	);
+
+	vector<vector<double>> table;
+	for(Xml::Node child=node.first_child();	child; child=child.next_child()) {
+		if(child.name(), "xy") {
+			vector<double> row = {
+				child.attribute2double("x"),
+				child.attribute2double("y")
+			};
+			table.push_back(row);
+		}
+	}
 	return new Function::LinInterpol(table);
 }
 //------------------------------------------------------------------------------

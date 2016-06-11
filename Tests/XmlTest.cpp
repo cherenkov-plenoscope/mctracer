@@ -180,37 +180,11 @@ TEST_F(XmlTest, functions) {
 	child = child.next_child();
 	EXPECT_FALSE(child);
 
-	/*
-	<function name="my_funny_function">
-		<linear_interpolation file="leaf_reflection_vs_wavelength.txt"/>
-	</function>
-
-	100e-9	0.1
-	110e-9	0.1
-	120e-9	0.9
-	160e-9	0.9
-	180e-9	0.1
-	200e-9	0.1
-
-	<function name="constant_function">
-		<constant value="1.337" upper_limit="400e-9" lower_limit="200e-9"/>
-	</function>
-
-	<function name="polynom_function">
-		<polynom3 x3="1.0" x2="0.0" x1="1.2" x0="-1.7" upper_limit="1200e-9" lower_limit="400e-9"/>
-	</function>
-
-	<function name="concat_function">
-		<concatenation f0="my_funny_function" f1="constant_function" f2="polynom_function" />
-		<export samples="1000" file="concat_sample.txt"/>
-	</function>
-	*/
-
 	const Function::Func1D* func;
 	func = fab.by_name("my_funny_function");
 	EXPECT_EQ(100e-9, func->get_limits().get_lower());
 	EXPECT_EQ(200e-9, func->get_limits().get_upper());
-	EXPECT_NEAR(0.9, (*func)(160e-9), 1e-6);
+	EXPECT_NEAR(0.8, (*func)(160e-9), 1e-6);
 
 	func = fab.by_name("constant_function");
 	EXPECT_EQ(200e-9, func->get_limits().get_lower());
@@ -227,6 +201,7 @@ TEST_F(XmlTest, functions) {
 	EXPECT_EQ(100e-9, func->get_limits().get_lower());
 	EXPECT_EQ(1200e-9, func->get_limits().get_upper());
 }
+//------------------------------------------------------------------------------
 #include "Xml/Factory/TracerSettingsFab.h"
 TEST_F(XmlTest, TracerSettings) {
 

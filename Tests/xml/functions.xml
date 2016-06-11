@@ -1,5 +1,12 @@
 <function name="my_funny_function">
-	<linear_interpolation file="leaf_reflection_vs_wavelength.txt"/>
+	<linear_interpolation>
+        <xy x="100e-9" y="0.1"/>
+        <xy x="110e-9" y="0.2"/>    
+        <xy x="120e-9" y="0.9"/>
+        <xy x="160e-9" y="0.8"/>
+        <xy x="180e-9" y="0.25"/>    
+        <xy x="200e-9" y="0.15"/>  
+    </linear_interpolation>
 </function>
 
 <function name="constant_function">
