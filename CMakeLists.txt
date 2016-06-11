@@ -110,6 +110,11 @@ add_executable(mctBenchMark ./Benchmarks/benchmark.cpp ${TEST_BENCHMARK})
 target_link_libraries(mctBenchMark gtest gtest_main)
 target_link_libraries(mctBenchMark mct)
 
+#---------------------------------
+# HDF5
+#add_executable(mctH5Test Hdf5/examples/create.cpp)
+#target_link_libraries(mctH5Test mct)
+
 #-------------------------------------------------------------------------------
 # http://stackoverflow.com/questions/992068/building-a-python-shared-object-binding-with-cmake-which-depends-upon-external
 # http://www.swig.org/Doc1.3/Introduction.html#Introduction_build_system
