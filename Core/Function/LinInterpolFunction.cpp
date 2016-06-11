@@ -8,9 +8,7 @@
 
 namespace Function {
 	//--------------------------------------------------------------------------
-	LinInterpol::LinInterpol(
-		const std::vector<std::vector<double>> xy
-	) {
+	LinInterpol::LinInterpol(const vector<vector<double>> xy) {
 		func.reserve(xy.size());
 
 		for(uint i=0; i<xy.size(); i++) {
@@ -34,7 +32,7 @@ namespace Function {
 	}
 	//--------------------------------------------------------------------------
 	double LinInterpol::slope_in_table_in_row(
-		const std::vector<std::vector<double>> &xy,
+		const vector<vector<double>> &xy,
 		const uint row
 	)const {
 			if(row != xy.size()-1)
@@ -44,7 +42,7 @@ namespace Function {
 	} 
 	//--------------------------------------------------------------------------
 	void LinInterpol::assert_table_two_columns(
-		const std::vector<std::vector<double>> &xy_table,
+		const vector<vector<double>> &xy_table,
 		const uint row
 	)const {
 
@@ -63,19 +61,19 @@ namespace Function {
 		return boundary_mode_strict(x);
 	}
 	//--------------------------------------------------------------------------
-	std::vector<LinInterpol::Point>::const_iterator LinInterpol::get_upper_bound(double arg)const {
+	vector<LinInterpol::Point>::const_iterator LinInterpol::get_upper_bound(double arg)const {
 		return std::upper_bound(func.begin(),func.end(), arg, comp_upp);	
 	}
 	//--------------------------------------------------------------------------
 	double LinInterpol::boundary_mode_strict(const double arg)const {
 
-		std::vector<LinInterpol::Point>::const_iterator upper = get_upper_bound(arg);
+		vector<LinInterpol::Point>::const_iterator upper = get_upper_bound(arg);
 		assert_upper_bound_and_argument_in_range(upper, arg);
 		return interpolate_linear(*(upper-1), arg);
 	}
 	//--------------------------------------------------------------------------
 	void LinInterpol::assert_upper_bound_and_argument_in_range(
-		const std::vector<LinInterpol::Point>::const_iterator it,
+		const vector<LinInterpol::Point>::const_iterator it,
 		const double arg
 	)const {
 		
@@ -130,7 +128,7 @@ namespace Function {
 		return P.x > x;
 	}
 	//--------------------------------------------------------------------------
-	std::string LinInterpol::exception_header()const {
+	string LinInterpol::exception_header()const {
 		return "LinInterpol:\n";
 	}
 	//--------------------------------------------------------------------------
@@ -160,7 +158,7 @@ namespace Function {
 	double LinInterpol::get_integral()const {
 
 		double integral_over_value = 0.0;
-		std::vector<LinInterpol::Point>::const_iterator it;
+		vector<LinInterpol::Point>::const_iterator it;
 
 		for(it=func.begin(); it<(func.end()-1); it++)
 			integral_over_value += 0.5*((it+1)->x - it->x)*(it->y + (it+1)->y);
