@@ -1,20 +1,48 @@
 <propagation>
     <!--  -->
-    <Plenoscpe 
-        path="the_big_lebowsky.xml"
-    />
-    <optics_calibration_result 
-        path="sub_pixel_statistics.txt"
-    />
-    <night_sky_background_ligth 
-        path_flux_vs_wavelength="nsb_flux_vs_wavelength_la_palma.txt" 
-        exposure_time="50e-9"
-    />
-    <photo_electric_converter 
-        path_pde_vs_wavelength="hamamatsu_sipm_pde_vs_wavelength_75um.txt" 
-        dark_rate="1.0e6" 
-        probability_for_second_puls="0.1"
-    />
+    <night_sky_background_ligth exposure_time="50e-9">
+        <function name="nsb_flux_vs_wavelength" comment="Night Sky Background flux La Palma, by Werner Hoffmann et al. In Photons/(sr s m^2 m), last 'm' is for the wavelength wavelength[m] flux[1/(s m^2 sr m)">
+            <linear_interpolation>
+                <xy x="362.5e-9" y="3.8e18"/>
+                <xy x="410.0e-9" y="4.3e18"/>    
+                <xy x="440.0e-9" y="5.2e18"/>
+                <xy x="450.0e-9" y="5.5e18"/>
+                <xy x="500.0e-9" y="6.5e18"/>    
+                <xy x="550.0e-9" y="7.3e18"/>  
+            </linear_interpolation>
+        </function> 
+    <night_sky_background_ligth/>
+
+    <photo_electric_converter dark_rate="1.0e6" probability_for_second_puls="0.1">
+        <function name="pde_vs_wavelength" comment="
+            Hamamatsu Multi-Pixel Photon Counter
+            Photon detection efficiency vs. wavelength (typical example)
+            Pixel pitch: 75 μm
+            Temp: 25C
+            S13360-**75CS
+            wavelength[m] pde[1]">
+            <linear_interpolation>
+                <xy x="266e-9"  y="0.03"/>
+                <xy x="277e-9"  y="0.1"/>
+                <xy x="283e-9"  y="0.2"/>
+                <xy x="300e-9"  y="0.254"/>
+                <xy x="313e-9"  y="0.3"/>
+                <xy x="339e-9"  y="0.352"/>
+                <xy x="353e-9"  y="0.352"/>
+                <xy x="373e-9"  y="0.4"/>
+                <xy x="400e-9"  y="0.443"/>
+                <xy x="420e-9"  y="0.477"/>
+                <xy x="452e-9"  y="0.5"/>
+                <xy x="500e-9"  y="0.486"/>
+                <xy x="552e-9"  y="0.4"/>/>
+                <xy x="600e-9"  y="0.33"/>
+                <xy x="620e-9"  y="0.3"/>
+                <xy x="689e-9"  y="0.2"/>
+                <xy x="800e-9"  y="0.1"/>
+                <xy x="900e-9"  y="0.043"/>
+            </linear_interpolation>
+        </function>  
+    <photo_electric_converter/>
     <pulse_extractor
         integration_time_window="5e-9"
     />

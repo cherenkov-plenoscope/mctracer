@@ -1,9 +1,0 @@
-# Night Sky Background flux La Palma, by Werner Hoffmann et al.
-# in Photons/(sr s m^2 m), last 'm' is for the wavelength 
-# wavelength[m]	flux[1/(s m^2 sr m)
-362.5e-9	3.8e18
-410.0e-9	4.3e18
-440.0e-9	5.2e18
-450.0e-9	5.5e18
-500.0e-9	6.5e18
-550.0e-9	7.3e18
