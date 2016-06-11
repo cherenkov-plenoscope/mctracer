@@ -17,7 +17,6 @@ Geometry::Geometry(const Config ncfg):
 	set_up_paxel_per_pixel_template_grid();
 	set_up_lixel_grid();
 	set_up_pixel_lens_geometry();
-	std::cout << get_print();
 }
 //------------------------------------------------------------------------------
 void Geometry::set_up_pixel_grid() {
