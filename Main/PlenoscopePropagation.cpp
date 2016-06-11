@@ -110,9 +110,6 @@ int main(int argc, char* argv[]) {
     //--------------------------------------------------------------------------
     // INIT NIGHT SKY BACKGROUND
     Xml::Node nsb_node = config_node.child("night_sky_background_ligth");
-    std::cout << nsb_node.name() << "\n";
-    std::cout << nsb_node.child("function").name() << "\n";
-    std::cout << nsb_node.child("function").child("linear_interpolation").name() << "\n";
     const Function::LinInterpol nsb_flux_vs_wavelength = 
         Xml::get_LinInterpol_from(nsb_node.child("function").child("linear_interpolation"));
 
@@ -122,10 +119,6 @@ int main(int argc, char* argv[]) {
     //--------------------------------------------------------------------------
     // SET UP PhotoElectricConverter
     Xml::Node pec = config_node.child("photo_electric_converter");
-
-    std::cout << pec.name() << "\n";
-    std::cout << pec.child("function").name() << "\n";
-    std::cout << pec.child("function").child("linear_interpolation").name() << "\n";
     const Function::LinInterpol pde_vs_wavelength = 
         Xml::get_LinInterpol_from(pec.child("function").child("linear_interpolation"));
 
