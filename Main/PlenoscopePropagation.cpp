@@ -13,6 +13,7 @@
 #include "Plenoscope/NightSkyBackground/Injector.h"
 #include "SignalProcessing/PhotoElectricConverter.h"
 #include "Xml/Xml.h"
+#include "Xml/Factory/FunctionFromXml.h"
 #include "Xml/Factory/SceneryFactory.h"
 #include "Xml/Factory/TracerSettingsFab.h"
 #include "SignalProcessing/SimpleTDCQDC.h"
@@ -22,6 +23,7 @@ string help_text() {
     std::stringstream out; 
     out << "  Plenoscope simulation\n";
     out << "  --scenery, -s     scenery with at least one plenoscope in it\n";
+    out << "  --lixel_calib, -l light field cell calibration of the plenoscope\n";
     out << "  --config, -c      config path steering the simulation and the plenoscope\n";
     out << "  --input, -i       input path of CORSIKA run\n";
     out << "  --output, -o      output path of plenoscope lightfields\n";
@@ -33,13 +35,14 @@ int main(int argc, char* argv[]) {
 
     CommandLine::Parser cmd;
     cmd.define_key_val_by_key_short_desc("scenery", 's', "scenery with at least one plenoscope in it");
+    cmd.define_key_val_by_key_short_desc("lixel_calib", 'l' ,"light field cell calibration of the plenoscope");
     cmd.define_key_val_by_key_short_desc("config", 'c' ,"config path steering the simulation and plenoscope");
     cmd.define_key_val_by_key_short_desc("output", 'o', "output path of plenoscope lightfields");
     cmd.define_key_val_by_key_short_desc("input", 'i', "input path of CORSIKA run");
     cmd.parse(argc, argv);
 
     if(!cmd.exist("config") || !cmd.exist("input") || 
-       !cmd.exist("output") || !cmd.exist("scenery") ) {
+       !cmd.exist("output") || !cmd.exist("scenery") || !cmd.exist("lixel_calib")) {
         cout << help_text();
         return 0;
     }
@@ -89,19 +92,14 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // load light field calibration result
-    string optics_path = PathTools::join(
-        config_path.dirname, 
-        config_node.child("optics_calibration_result").attribute("path")
-    );
-
     vector<vector<double>> optics_calibration_result = AsciiIo::gen_table_from_file(
-        optics_path
+        cmd.get("lixel_calib")
     );
     // assert number os sub_pixel matches simulated plenoscope
     if(light_field_channels->size() != optics_calibration_result.size()) {
         std::stringstream info;
         info << "The light field calibration results, read from file '";
-        info << optics_path;
+        info << cmd.get("lixel_calib");
         info << "', do no not match the plenoscope simulated here.\n";
         info << "Expected sub pixel size: " << light_field_channels->size();
         info << ", but actual: " << optics_calibration_result.size();
@@ -112,14 +110,12 @@ int main(int argc, char* argv[]) {
     //--------------------------------------------------------------------------
     // INIT NIGHT SKY BACKGROUND
     Xml::Node nsb_node = config_node.child("night_sky_background_ligth");
-    const Function::LinInterpol nsb_flux_vs_wavelength(
-        AsciiIo::gen_table_from_file(
-            PathTools::join(
-                config_path.dirname, 
-                nsb_node.attribute("path_flux_vs_wavelength")
-            )
-        )
-    );
+    std::cout << nsb_node.name() << "\n";
+    std::cout << nsb_node.child("function").name() << "\n";
+    std::cout << nsb_node.child("function").child("linear_interpolation").name() << "\n";
+    const Function::LinInterpol nsb_flux_vs_wavelength = 
+        Xml::get_LinInterpol_from(nsb_node.child("function").child("linear_interpolation"));
+
     Plenoscope::NightSkyBackground::Light nsb(&pis->light_field_sensor_geometry, &nsb_flux_vs_wavelength);
     const double nsb_exposure_time = nsb_node.attribute2double("exposure_time");
 
@@ -127,14 +123,11 @@ int main(int argc, char* argv[]) {
     // SET UP PhotoElectricConverter
     Xml::Node pec = config_node.child("photo_electric_converter");
 
-    const Function::LinInterpol pde_vs_wavelength(
-        AsciiIo::gen_table_from_file(
-            PathTools::join(
-                config_path.dirname, 
-                pec.attribute("path_pde_vs_wavelength")
-            )
-        )
-    );
+    std::cout << pec.name() << "\n";
+    std::cout << pec.child("function").name() << "\n";
+    std::cout << pec.child("function").child("linear_interpolation").name() << "\n";
+    const Function::LinInterpol pde_vs_wavelength = 
+        Xml::get_LinInterpol_from(pec.child("function").child("linear_interpolation"));
 
     PhotoElectricConverter::Config converter_config;
     converter_config.dark_rate = pec.attribute2double("dark_rate");

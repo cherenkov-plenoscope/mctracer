@@ -11,7 +11,7 @@
                 <xy x="550.0e-9" y="7.3e18"/>  
             </linear_interpolation>
         </function> 
-    <night_sky_background_ligth/>
+    </night_sky_background_ligth>
 
     <photo_electric_converter dark_rate="1.0e6" probability_for_second_puls="0.1">
         <function name="pde_vs_wavelength" comment="
@@ -42,7 +42,7 @@
                 <xy x="900e-9"  y="0.043"/>
             </linear_interpolation>
         </function>  
-    <photo_electric_converter/>
+    </photo_electric_converter>
     <pulse_extractor
         integration_time_window="5e-9"
     />

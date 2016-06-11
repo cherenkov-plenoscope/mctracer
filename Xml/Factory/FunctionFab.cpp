@@ -2,6 +2,7 @@
 #include "Tools/StringTools.h"
 #include "Tools/AsciiIo.h"
 #include "Core/Function/Function.h"
+#include "Xml/Factory/FunctionFromXml.h"
 using std::stringstream;
 
 using StringTools::is_equal;
@@ -88,17 +89,9 @@ bool FunctionFab::is_function_node(const Xml::Node &node)const {
 //------------------------------------------------------------------------------
 Function::Func1D* FunctionFab::extract_linear_interpolation(const Xml::Node &node) {
 
-	vector<vector<double>> table;
-	for(Xml::Node child=node.first_child();	child; child=child.next_child()) {
-		if(child.name(), "xy") {
-			vector<double> row = {
-				child.attribute2double("x"),
-				child.attribute2double("y")
-			};
-			table.push_back(row);
-		}
-	}
-	return new Function::LinInterpol(table);
+    Function::LinInterpol function = Xml::get_LinInterpol_from(node);
+	Function::Func1D* func = new Function::LinInterpol(function);
+	return func;
 }
 //------------------------------------------------------------------------------
 Function::Func1D* FunctionFab::extract_constant(const Xml::Node &node) {
