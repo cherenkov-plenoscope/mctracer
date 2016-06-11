@@ -2,6 +2,7 @@
 #include "Tools/StringTools.h"
 #include "Tools/AsciiIo.h"
 #include "Core/Function/Function.h"
+using std::stringstream;
 
 using StringTools::is_equal;
 //------------------------------------------------------------------------------
@@ -26,7 +27,7 @@ void FunctionFab::add(const Xml::Node &node) {
 		}else if(is_equal(child.name(),"export")){
 			export_function = true;
 		}else{
-			std::stringstream info;
+			stringstream info;
 			info << "FunctionFab " << __FILE__ << ", " << __LINE__;
 			info << "Unknown xml child in '" << child.name() << "' in node ";
 			info << "'" << node.name() << "'";
@@ -37,13 +38,12 @@ void FunctionFab::add(const Xml::Node &node) {
 	assert_name_not_in_use_yet(node.attribute("name"));
 
 	functions.insert(
-		std::pair<std::string, const Function::Func1D*>
+		std::pair<string, const Function::Func1D*>
 			(node.attribute("name"), func)
 	);
 
 	if(export_function)
 		export_function_based_on_node(func, node.child("export"));
-
 }
 //------------------------------------------------------------------------------
 void FunctionFab::export_function_based_on_node(
@@ -59,13 +59,13 @@ void FunctionFab::export_function_based_on_node(
 	);
 }
 //------------------------------------------------------------------------------
-bool FunctionFab::has_function(const std::string key)const {
+bool FunctionFab::has_function(const string key)const {
 	return functions.find(key) != functions.end();
 }
 //------------------------------------------------------------------------------
-void FunctionFab::assert_name_not_in_use_yet(const std::string key)const {
+void FunctionFab::assert_name_not_in_use_yet(const string key)const {
 	if(has_function(key)) {
-		std::stringstream info;
+		stringstream info;
 		info << "FunctionFab " << __FILE__ << ", " << __LINE__ << "\n";
 		info << "| redecleration of function " << key <<"\n";
 		throw TracerException(info.str());
@@ -74,7 +74,7 @@ void FunctionFab::assert_name_not_in_use_yet(const std::string key)const {
 //------------------------------------------------------------------------------
 void FunctionFab::assert_is_function_node(const Xml::Node &node)const {
 	if(!is_function_node(node)) {
-		std::stringstream info;
+		stringstream info;
 		info << "FunctionFab " << __FILE__ << ", " << __LINE__ << "\n";
 		info << "Expected node name to be: function, but actually: ";
 		info << node.name() <<"\n";
@@ -87,7 +87,7 @@ bool FunctionFab::is_function_node(const Xml::Node &node)const {
 }
 //------------------------------------------------------------------------------
 Function::Func1D* FunctionFab::extract_linear_interpolation(const Xml::Node &node) {
-	std::vector<std::vector<double>> table = AsciiIo::gen_table_from_file(
+	vector<vector<double>> table = AsciiIo::gen_table_from_file(
 		PathTools::join(
 			full_path_of_original_xml_file.dirname, 
 			node.attribute("file")
@@ -114,7 +114,7 @@ Function::Func1D* FunctionFab::extract_polynom3(const Xml::Node &node) {
 }
 //------------------------------------------------------------------------------
 Function::Func1D* FunctionFab::extract_concatenation(const Xml::Node &node) {
-	std::string attribute = "f0";
+	string attribute = "f0";
 	std::vector<const Function::Func1D*> funcs;
 	uint count = 0;
 
@@ -122,7 +122,7 @@ Function::Func1D* FunctionFab::extract_concatenation(const Xml::Node &node) {
 
 		funcs.push_back(by_name(node.attribute(attribute)));
 		count++;
-		std::stringstream satt; satt << "f" << count;
+		stringstream satt; satt << "f" << count;
 		attribute = satt.str();
 	};
 
@@ -136,14 +136,14 @@ Function::Limits FunctionFab::extract_limits_from_attributes(const Xml::Node &no
 	);
 }
 //------------------------------------------------------------------------------
-const Function::Func1D* FunctionFab::by_name(const std::string name)const {
+const Function::Func1D* FunctionFab::by_name(const string name)const {
 	assert_has_function(name);
 	return functions.find(name)->second;
 }
 //------------------------------------------------------------------------------
-void FunctionFab::assert_has_function(const std::string name)const {
+void FunctionFab::assert_has_function(const string name)const {
 	if(!has_function(name)) {
-		std::stringstream info;
+		stringstream info;
 		info << "FunctionFab " << __FILE__ << ", " << __LINE__ << "\n";
 		info << "There is no function called '" << name << "'. \n";
 		throw TracerException(info.str());

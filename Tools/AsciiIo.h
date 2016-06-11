@@ -23,21 +23,17 @@ using std::vector;
 //=================================
 namespace AsciiIo {
 	
-	vector<vector<double>> gen_table_from_file(
-		const string &path
-	);
-
+	vector<vector<double>> gen_table_from_file(const string &path);
+	vector<vector<double>> gen_table_from_string(const string &text);
 	void write_table_to_file(
 		vector<vector<double>> table,
 		const string &path
 	);
-	
 	void write_table_to_file_with_header(
 		vector<vector<double>> table,
 		const string &path,
 		const string &header
 	);
-
 
 	const char delimiter = '\t';
 	const string delimiters_for_reading = "\t" " ";
@@ -49,16 +45,13 @@ namespace AsciiIo {
 	class TableReader {
 		uint current_row = 0;
 		uint current_col = 0;
-		string path;
-		std::ifstream textfile;
+		std::istringstream text;
 		vector<vector<double>> table;
 	public:
-		TableReader(const string &path);
+		TableReader(const string &text);
 		vector<vector<double>> get_table()const;
 	private:
-		void open_text_file();
-		void fill_matrix_from_textfile();
-		void close_text_file();
+		void fill_matrix_from_text();
 		vector<double> text_row_2_numeric_row(
 			const string &row
 		);

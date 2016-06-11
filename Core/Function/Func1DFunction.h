@@ -33,12 +33,6 @@ namespace Function {
 		virtual double operator()(const double x)const =0;	
 		Limits get_limits()const;
 		virtual string get_print()const;
-		string name;
-		string comment;
-		string x_name;
-		string y_name;
-		string x_unit;
-		string y_unit;
 	protected:
 
 		double increment_for_steps(const uint N)const;

@@ -5,8 +5,34 @@ using std::stringstream;
 namespace AsciiIo {
 	//--------------------------------------------------------------------------
 	vector<vector<double>> gen_table_from_file(const string &path) {
-		TableReader reader(path);
+		std::ifstream textfile;
+		textfile.open(path.c_str());
+
+		if(!textfile.is_open()) {
+			stringstream info;
+			info << "AsciiIo::gen_table_from_file\n";
+			info << "Can not open file '" << path << "'.";
+			throw TracerException(info.str());
+		}
+
+		string text_in_file;
+		textfile.seekg(0, std::ios::end); 
+    	text_in_file.reserve(textfile.tellg());
+    	textfile.seekg(0, std::ios::beg);
+
+        text_in_file.assign(
+        	(std::istreambuf_iterator<char>(textfile)),
+        	std::istreambuf_iterator<char>()
+    	);	
+    	textfile.close();
+
+		TableReader reader(text_in_file);
 		return reader.get_table();
+	}
+	//--------------------------------------------------------------------------
+	vector<vector<double>> gen_table_from_string(const string &text) {
+		TableReader reader(text);
+		return reader.get_table();	
 	}
 	//--------------------------------------------------------------------------
 	void write_table_to_file_with_header(
@@ -45,31 +71,17 @@ namespace AsciiIo {
 		return out.str();		
 	}
 	//--------------------------------------------------------------------------
-	TableReader::TableReader(const string &_path) {
-		path = _path;
-		open_text_file();
-		fill_matrix_from_textfile();
-		close_text_file();
+	TableReader::TableReader(const string &_text):text(_text) {
+		fill_matrix_from_text();
 	}
 	//--------------------------------------------------------------------------
 	vector<vector<double>> TableReader::get_table()const {
 		return table;
 	}
 	//--------------------------------------------------------------------------
-	void TableReader::open_text_file() {
-		textfile.open(path.c_str());
-
-		if(!textfile.is_open()) {
-			stringstream info;
-			info << "TableReader::open_text_file\n";
-			info << "Can not open file '" << path << "'.";
-			throw TracerException(info.str());
-		}
-	}
-	//--------------------------------------------------------------------------
-	void TableReader::fill_matrix_from_textfile() {
+	void TableReader::fill_matrix_from_text() {
 		string row;
-		while(std::getline(textfile, row)) {
+		while(std::getline(text, row)) {
 			row = StringTools::strip_whitespaces(row);
 			current_row++;
 			if(row.length()!=0)
@@ -105,14 +117,10 @@ namespace AsciiIo {
 			stringstream info;
 			info << "TableReader::push_back_token_to_numeric_row:\n";
 			info << "Can not convert item '" << token << "' into a ";
-			info << "floating point number. File '" << path << "' in row ";
+			info << "floating point number in row ";
 			info << current_row << " and column " << current_col << ".\n";
 			info << error.what();
 			throw TracerException(info.str());
 		}	
-	}
-	//--------------------------------------------------------------------------
-	void TableReader::close_text_file() {
-		textfile.close();
 	}
 }

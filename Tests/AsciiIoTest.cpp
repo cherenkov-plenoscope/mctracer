@@ -91,3 +91,59 @@ TEST_F(AsciiIoTest, write_table) {
         }
     }
 }
+//------------------------------------------------------------------------------
+TEST_F(AsciiIoTest, table_from_string_extra_new_line_in_the_end) {
+
+    string text =   "266e-9\t0.03\n"
+                    "277e-9\t0.1\n"
+                    "283e-9\t0.2\n"
+                    "300e-9\t0.254\n";
+
+    vector<vector<double>> table = AsciiIo::gen_table_from_string(text);
+
+    ASSERT_EQ(table.size(), 4u);
+    ASSERT_EQ(table.at(0).size(), 2u);
+    ASSERT_EQ(table.at(1).size(), 2u);
+    ASSERT_EQ(table.at(2).size(), 2u);
+    ASSERT_EQ(table.at(3).size(), 2u);
+
+    EXPECT_EQ(table.at(0).at(0), 266e-9);
+    EXPECT_EQ(table.at(0).at(1), 0.03);
+
+    EXPECT_EQ(table.at(1).at(0), 277e-9);
+    EXPECT_EQ(table.at(1).at(1), 0.1);
+
+    EXPECT_EQ(table.at(2).at(0), 283e-9);
+    EXPECT_EQ(table.at(2).at(1), 0.2);
+
+    EXPECT_EQ(table.at(3).at(0), 300e-9);
+    EXPECT_EQ(table.at(3).at(1), 0.254);
+}
+//------------------------------------------------------------------------------
+TEST_F(AsciiIoTest, table_from_string_) {
+
+    string text =   "266e-9\t0.03\n"
+                    " 277e-9 0.1\n"
+                    "  283e-9  0.2\n"
+                    "  \t 300e-9 \t 0.254 ";
+
+    vector<vector<double>> table = AsciiIo::gen_table_from_string(text);
+
+    ASSERT_EQ(table.size(), 4u);
+    ASSERT_EQ(table.at(0).size(), 2u);
+    ASSERT_EQ(table.at(1).size(), 2u);
+    ASSERT_EQ(table.at(2).size(), 2u);
+    ASSERT_EQ(table.at(3).size(), 2u);
+
+    EXPECT_EQ(table.at(0).at(0), 266e-9);
+    EXPECT_EQ(table.at(0).at(1), 0.03);
+
+    EXPECT_EQ(table.at(1).at(0), 277e-9);
+    EXPECT_EQ(table.at(1).at(1), 0.1);
+
+    EXPECT_EQ(table.at(2).at(0), 283e-9);
+    EXPECT_EQ(table.at(2).at(1), 0.2);
+
+    EXPECT_EQ(table.at(3).at(0), 300e-9);
+    EXPECT_EQ(table.at(3).at(1), 0.254);
+}
