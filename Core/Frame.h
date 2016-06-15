@@ -98,6 +98,7 @@ protected:
     public: void cluster_using_helper_frames();
     bool positions_in_mother_are_too_close_together(vector<Frame*> frames)const;
     void warn_about_neglection_of(const Frame* frame)const;
+    void warn_about_close_frames()const;
 public:
 
     class DuplicateChildName :public TracerException{

@@ -283,6 +283,7 @@ void Frame::cluster_using_helper_frames() {
 
 			if(positions_in_mother_are_too_close_together(oct_tree[sector])) {
 				// this can not be clustered
+				warn_about_close_frames();
 				for(Frame* child : oct_tree[sector]) {
 					if(child->contour_radius() > minimal_structure_size)
 						new_children.push_back(child);
@@ -332,6 +333,16 @@ void Frame::cluster_using_helper_frames() {
 		for(Frame* new_helper_frame_child : new_children)
 			set_mother_and_child(new_helper_frame_child);
 	}
+}
+//------------------------------------------------------------------------------
+void Frame::warn_about_close_frames()const {
+	stringstream out;
+	out << "___Warning___\n";
+	out << __FILE__ << " " << __func__ << "(frame) " << __LINE__ << "\n";
+	out << "The children of the frame '" << name << "' are stucked very close together.\n";
+	out << "No tree structure can be used to accelerate the photon propagation in such a scenery.\n";
+	out << "Procesing continues, but poor performance is expected.\n";
+	std::cout << out.str();	
 }
 //------------------------------------------------------------------------------
 void Frame::warn_about_neglection_of(const Frame* frame)const {

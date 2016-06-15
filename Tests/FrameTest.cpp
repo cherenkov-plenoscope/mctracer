@@ -4,6 +4,8 @@
 #include "Core/Rot3.h"
 #include "Core/HomTra3.h"
 #include "Scenery/Primitive/Sphere.h"
+#include "Scenery/Primitive/SphereCapWithRectangularBound.h"
+#include <array>
 
 using namespace std;
 
@@ -164,3 +166,21 @@ TEST_F(FrameTest, cluster_frames_during_tree_initializing) {
     EXPECT_TRUE(Frame::max_number_of_children >= tree.get_children()->size());
 }
 //------------------------------------------------------------------------------
+TEST_F(FrameTest, clustering_frames_which_are_stucked_close_together) {
+
+    Frame tree("tree" ,Vec3::null, Rot3::null);
+    std::vector<SphereCapWithRectangularBound> facets(100, SphereCapWithRectangularBound());
+
+    for(uint i=0; i<facets.size(); i++) {
+        facets.at(i).set_name_pos_rot("facet"+std::to_string(i), Vec3::null, Rot3::null);
+        facets.at(i).set_curvature_radius_and_x_y_width(34.0, 1.0, 1.0);
+        tree.set_mother_and_child(&facets.at(i));
+    }
+
+    EXPECT_EQ(facets.size(), tree.get_children()->size());
+    tree.init_tree_based_on_mother_child_relations();
+
+    //The clustering will not help (reduce the number of children) 
+    //because all the geometry is stucked on top of each other.
+    EXPECT_EQ(facets.size(), tree.get_children()->size());
+}
