@@ -3,8 +3,47 @@
 #include "Corsika/Tools.h"
 #include "Core/TracerException.h"
 #include "Tools/AsciiIo.h"
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem;
+
 
 namespace Plenoscope {
+
+    struct Event {
+        array<float, 273> corsika_event_header;
+    };
+
+    namespace Run {
+        //
+        //  Run
+        //  |-  Readme
+        //  |   |-  Readme.txt
+        //  |   |-  Formats.txt
+        //  |-  Input
+        //  |   |-  Scenery.xml
+        //  |   |-  Lixel_calibration.bin
+        //  |   |-  Configuration.xml
+        //  |   |-  Corsika_Run_Header.bin
+        //  |-  Event_1
+        //  |   |-  Corsika_Event_Header.bin
+        //  |   |-  Plenoscope_Response.bin
+        //  |-  Event_2
+        //  |   |-  Corsika_Event_Header.bin
+        //  |   |-  Plenoscope_Response.bin
+        //  |-  Event_3
+        //      .
+        //      .
+        //      .
+        struct Run {
+            string path;
+            uint run_number;
+
+            string scenery;
+            string lixel_calibration;
+            string configuration;
+            void append_event();
+        };
+    }
 //------------------------------------------------------------------------------
 void save_event_to_file_epoch_2016May27(
     const vector<SimpleTdcQdc::TimeAndCount> &tacs,

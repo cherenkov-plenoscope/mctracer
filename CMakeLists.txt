@@ -1,7 +1,7 @@
 # mctracer scientific ray tracing
 # Author: Sebastian Achim Mueller
 cmake_minimum_required(VERSION 2.8)
-set (CMAKE_CXX_FLAGS "-std=c++11 -Wall -pedantic -O3 -g -I")
+set (CMAKE_CXX_FLAGS "-std=c++1z -Wall -pedantic -O3 -g -I")
 project(mctracer)
 
 #--------------------------------
@@ -86,11 +86,8 @@ target_link_libraries(mctPlenoscopeCalibration mct)
 # light field propagation
 add_executable(mctPlenoscopePropagation Main/PlenoscopePropagation.cpp)
 target_link_libraries(mctPlenoscopePropagation mct)
+target_link_libraries(mctPlenoscopePropagation stdc++fs)
 
-#------------------------
-# light field propagation
-#add_executable(mctPlenoscopeNsbPropagation Main/PlenoscopeNsbPropagation.cpp)
-#target_link_libraries(mctPlenoscopeNsbPropagation mct)
 
 #---------------------------------
 # unit test exe
