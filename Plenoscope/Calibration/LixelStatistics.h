@@ -15,39 +15,54 @@
 
 namespace Plenoscope {
     namespace Calibration {
-   
+    //--------------------------------------------------------------------------
     struct LixelStatistic {
+        float efficiency;
+        float cx_mean, cx_std;
+        float cy_mean, cy_std;
+        float x_mean, x_std;
+        float y_mean, y_std;
+        float time_mean, time_std;
+        LixelStatistic();
+    };
+
+    void write(const vector<LixelStatistic> &lixel_statistics, const string &path);
+    vector<LixelStatistic> read(const string &path);
+
+    class CanNotOpenLixelStatisticsFile : public TracerException {
+        using TracerException::TracerException;
+    };
+    //--------------------------------------------------------------------------
+    struct OnlineLixelStatistic {
         uint count;
         OnlineStatistics cx;
         OnlineStatistics cy;
         OnlineStatistics x;
         OnlineStatistics y;
         OnlineStatistics time;
-
-        LixelStatistic(): count(0) {};
+        OnlineLixelStatistic();
     };
-
-    class LixelStatistics {
+    //--------------------------------------------------------------------------
+    class LixelStatisticsFiller {
 
         const Config *calib_config;
         const LightFieldSensor::Geometry *sensor_geometry;
         const double photons_emitted_per_lixel;
 
-        vector<LixelStatistic> lixel_stats;
+        vector<OnlineLixelStatistic> lixel_stats;
     public:
 
-        LixelStatistics(
+        LixelStatisticsFiller(
             const LightFieldSensor::Geometry *sensor_geometry, 
             const Config *config
         );
-        void save(const string path);
+        vector<LixelStatistic> get_lixel_statistics()const;
         void fill_in_block(vector<CalibrationPhotonResult> &calib_block);
     private:
 
         double min_arrival_time_mean()const;
-        void normalize();
     };
-
+    //--------------------------------------------------------------------------
     }//Calibration
 }//Plenoscope
 #endif // __LightFieldTelescopeLixelStatistics_H_INCLUDED__ 

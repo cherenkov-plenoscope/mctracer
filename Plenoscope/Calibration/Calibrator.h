@@ -35,7 +35,7 @@ namespace Plenoscope {
 		Random::Mt19937 prng;
 
 		std::vector<CalibrationPhotonResult> photon_results;
-		LixelStatistics stats;
+		LixelStatisticsFiller lixel_statistics_filler;
 	public:
 
 		Calibrator(

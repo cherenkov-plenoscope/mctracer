@@ -18,7 +18,7 @@ Calibrator::Calibrator(
 	config(_calib_config),
 	scenery(_scenery),
 	plenoscope(_plenoscope),
-	stats(&plenoscope->light_field_sensor_geometry, &_calib_config)
+	lixel_statistics_filler(&plenoscope->light_field_sensor_geometry, &_calib_config)
 {
 	number_of_photons = config.photons_per_block*config.number_of_blocks;
 
@@ -171,11 +171,14 @@ void Calibrator::run_calibration() {
 		
 		cout << j+1 << " of " << config.number_of_blocks << "\n";	
 		fill_calibration_block_to_table();
-		stats.fill_in_block(photon_results);
+		lixel_statistics_filler.fill_in_block(photon_results);
 		writer.append(photon_results);	
 	}
 
-	stats.save(config.condensed_calibration_output_path);
+	vector<LixelStatistic> lixel_statistics =
+		lixel_statistics_filler.get_lixel_statistics();
+
+	write(lixel_statistics, config.condensed_calibration_output_path);
 }
 //------------------------------------------------------------------------------
 std::string Calibrator::get_print()const {

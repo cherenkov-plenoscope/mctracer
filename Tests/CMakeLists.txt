@@ -56,5 +56,6 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/Examples/set_up_scenery.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/CorsikaIoTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/OnlineStatisticsTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PlenoscopeLixelStatisticsTest.cpp
     PARENT_SCOPE
 )
