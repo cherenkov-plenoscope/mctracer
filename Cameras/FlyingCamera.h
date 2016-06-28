@@ -12,7 +12,7 @@
 #include "PinHoleCamera.h"
 #include "Tools/Tools.h"
 #include "Cameras/CameraMan/CameraMan.h"
-#include "Tools/TimeStamp.h"
+#include "Tools/Time.h"
 #include "Tools/UserInteraction.h"
 
 //=================================
@@ -57,7 +57,7 @@ private:
 
 	int snapshot_counter = 0;
 	uint user_input_counter = 0;
-	TimeStamp time_stamp;
+	Time::Stamp time_stamp;
 
 	int wait_for_user_key_stroke();
 	void toggle_stereo3D();

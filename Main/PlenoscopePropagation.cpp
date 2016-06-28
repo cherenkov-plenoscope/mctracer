@@ -11,6 +11,7 @@
 #include "Tools/Tools.h"
 #include "SignalProcessing/PipelinePhoton.h"
 #include "Plenoscope/NightSkyBackground/Light.h"
+#include "Plenoscope/EventFormats.h"
 #include "Plenoscope/NightSkyBackground/Injector.h"
 #include "SignalProcessing/PhotoElectricConverter.h"
 #include "Xml/Xml.h"
@@ -19,6 +20,9 @@
 #include "Xml/Factory/TracerSettingsFab.h"
 #include "SignalProcessing/SimpleTDCQDC.h"
 #include "Tools/PathTools.h"
+#include "Tools/Time.h"
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem;
 
 string help_text() {
     std::stringstream out; 
@@ -48,6 +52,8 @@ int main(int argc, char* argv[]) {
         return 0;
     }
         
+    //fs::create_directory(PathTools::join(cmd.get("output"),"sandbox"));
+
     PathTools::Path config_path = PathTools::Path(cmd.get("config"));
     string working_directory = config_path.path;
 
@@ -155,29 +161,38 @@ int main(int argc, char* argv[]) {
 
         //------------------
         // Cherenkov photons
+        Time::StopWatch read_event("read_event");
         EventIo::Event event = corsika_run.next_event();
+        read_event.stop();
 
+        Time::StopWatch c2mct("corsika 2 mct photons");
         vector<Photon*> photons;
         uint photon_id = 0;
-        for(array<float, 8> corsika_photon: event.photons) {
+        for(const array<float, 8> &corsika_photon: event.photons) {
             
             EventIo::PhotonFactory cpf(corsika_photon, photon_id++, &prng);
 
             if(cpf.passed_atmosphere())
                 photons.push_back(cpf.get_photon());
         }
+        c2mct.stop();
 
+        Time::StopWatch prop("propagate photons");
         Photons::propagate_photons_in_scenery_with_settings(
             &photons, &scenery, &settings, &prng
         );
+        prop.stop();
 
+        Time::StopWatch assign("assign photons to sensors");
         light_field_channels->clear_history();
         light_field_channels->assign_photons(&photons);
         Photons::delete_photons(&photons);
 
         vector<vector<PipelinePhoton>> photon_pipelines = 
             get_photon_pipelines(light_field_channels);
+        assign.stop();
 
+        Time::StopWatch nsbsw("night sky background");
         //-----------------------------
         // Night Sky Background photons
         Plenoscope::NightSkyBackground::inject_nsb_into_photon_pipeline(
@@ -187,10 +202,13 @@ int main(int argc, char* argv[]) {
             &nsb,
             &prng
         );
+        nsbsw.stop();
 
+        Time::StopWatch pecs("photo electric conversion");
         //--------------------------
         // Photo Electric conversion
         vector<vector<double>> electric_pipelines;
+        electric_pipelines.reserve(photon_pipelines.size());
         for(vector<PipelinePhoton> ph_pipe: photon_pipelines) {
 
             electric_pipelines.push_back(
@@ -205,6 +223,7 @@ int main(int argc, char* argv[]) {
         //-------------------------
         // Pulse extraction Tdc Qdc
         vector<SimpleTdcQdc::TimeAndCount> tacs;
+        tacs.reserve(electric_pipelines.size());
         for(const vector<double> electric_pipe: electric_pipelines) {
             tacs.push_back(
                 SimpleTdcQdc::get_arrival_time_and_count_given_arrival_moments_and_integration_time_window(
@@ -213,25 +232,16 @@ int main(int argc, char* argv[]) {
                 )
             );
         }
+        pecs.stop();
 
         //-------------
         // export event
-        vector<vector<double>> dtacs;
-        for(SimpleTdcQdc::TimeAndCount tac: tacs) {
-            vector<double> dtac = {tac.time, double(tac.count)};
-            dtacs.push_back(dtac);
-        }
-
-        stringstream evt_header;
-        evt_header << Corsika::RunHeader::get_print(corsika_run.run_header.raw);
-        evt_header << Corsika::EventHeader::get_print(event.header.raw);
-        evt_header << "\n";
-        evt_header << "arrival_time[s]\tnumber_photons[1]\n";
-
-        AsciiIo::write_table_to_file_with_header(
-            dtacs, cmd.get("output") + std::to_string(event_counter) + ".txt",
-            evt_header.str()
+        Time::StopWatch write_event("write event");
+        Plenoscope::save_event_to_file_epoch_2016May27(
+            tacs,
+            cmd.get("output") + std::to_string(event_counter) + ".txt"
         );
+        write_event.stop();
 
         cout << "event " << event_counter << ", ";
         cout << "PRMPAR " << Corsika::EventHeader::particle_id(event.header.raw) << ", ";
