@@ -15,11 +15,15 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 import os
 
 class LixelStatistics(object):
-    def __init__(self, path2lixel_statistics_condensate):
-        self.__path2lixel_statistics_condensate = os.path.abspath(path2lixel_statistics_condensate)
-        self.__path2lixel_positions = os.path.join(os.path.dirname(self.__path2lixel_statistics_condensate), 'lixel_positions.csv')
-       
-        lixel_statistics = np.genfromtxt(self.__path2lixel_statistics_condensate)      
+    def __init__(self, calibration_path):
+        calibration_path = os.path.abspath(calibration_path)
+        self.__path2lixel_statistics = os.path.join(calibration_path, 'lixel_statistics.bin')
+        self.__path2lixel_statistics_header = os.path.join(calibration_path, 'lixel_statistics.header.bin')
+        self.__path2lixel_positions = os.path.join(calibration_path, 'lixel_positions.txt')
+        
+        lixel_statistics = np.fromfile(self.__path2lixel_statistics, dtype=np.float32) 
+        lixel_statistics = lixel_statistics.reshape([lixel_statistics.shape[0]/11 ,11])
+
         self.geometric_efficiency = lixel_statistics[:,0]
         self.geometric_efficiency[np.isnan(self.geometric_efficiency)] = 0.0
 
@@ -38,53 +42,24 @@ class LixelStatistics(object):
         self.time_mean = lixel_statistics[:,9]
         self.time_std = lixel_statistics[:,10]
 
-        self.__read_lixel_positions_and_outer_radius(self.__path2lixel_positions)
-        self.__read_pixel_and_paxel_number(self.__path2lixel_statistics_condensate)
+        self.__read_lixel_statistics_header()
+        self.__read_lixel_positions_and_outer_radius()
         self.__init_lixel_polygons()
-    def __read_pixel_and_paxel_number(self, path):
-        self.number_pixel = 0
-        self.number_paxel = 0
-        self.photons_emitted_per_lixel = 0.0
 
-        # pixel: 8431
-        # paxel: 127
-        # photons_emitted_per_lixel: 23.3484
-        with open(path) as f:
-            for i, line in enumerate(f):
-                if "pixel" in line:
-                    self.number_pixel = float(line[9:].strip('\n'))
+    def __read_lixel_statistics_header(self):
+        lixel_statistics_header = np.fromfile(self.__path2lixel_statistics_header, dtype=np.float32)
+        self.number_lixel = lixel_statistics_header[0]
+        self.number_pixel = lixel_statistics_header[1]
+        self.number_paxel = lixel_statistics_header[2]
+        self.lixel_outer_radius = lixel_statistics_header[3]
+        self.lixel_z_orientation = lixel_statistics_header[4]
+        self.photons_emitted_per_lixel = lixel_statistics_header[5]
 
-                if "paxel" in line:
-                    self.number_paxel = float(line[9:].strip('\n'))
-
-                if "photons_emitted_per_lixel" in line:
-                    self.photons_emitted_per_lixel = float(line[29:].strip('\n'))
-
-                if i > 100:
-                    break
-
-        self.number_lixel = self.number_paxel*self.number_pixel
-    def __read_lixel_positions_and_outer_radius(self, path):
-        lixel_positions = np.genfromtxt(path)
+    def __read_lixel_positions_and_outer_radius(self):
+        lixel_positions = np.genfromtxt(self.__path2lixel_positions)
         self.lixel_positions_x = lixel_positions[:,0]
         self.lixel_positions_y = lixel_positions[:,1]
-        self.lixel_outer_radius = 0.0
-        self.lixel_z_orientation = 0.0
-        self.photons_emitted_per_lixel = 0.0
 
-        with open(path) as f:
-            for i, line in enumerate(f):
-                if "lixel_outer_radius" in line:
-                    self.lixel_outer_radius = float(line[23:].strip('\n'))
-
-                if "lixel_z_orientation" in line:
-                    self.lixel_z_orientation = float(line[24:].strip('\n'))
-
-                if "photons_emitted_per_lixel" in line:
-                    self.photons_emitted_per_lixel = float(line[29:].strip('\n'))
-
-                if i > 100:
-                    break
     def __init_lixel_polygons(self):
         s32 = np.sqrt(3)/2.
 
@@ -243,100 +218,101 @@ class PlotLixelStatistics(object):
         ax = fig.gca()
         self.__style(ax)
         return fig, ax
+    def __save_fig(self, fig, filename):
+        fig.savefig(os.path.join(self.path, filename), bbox_inches='tight', dpi=self.dpi)
     def save_cx_mean(self):
         fig, ax = self.fig_ax()
         add_to_ax_cx_mean_hist(self.lss, ax)
         ax.semilogy()
-        fig.savefig(os.path.join(self.path,'cx_mean.png'), bbox_inches='tight', dpi=self.dpi)
+        self.__save_fig(fig, 'cx_mean.png')
         plt.close(fig)
     def save_cy_mean(self):
         fig, ax = self.fig_ax()
         add_to_ax_cy_mean_hist(self.lss, ax)
         ax.semilogy()
-        fig.savefig(os.path.join(self.path,'cy_mean.png'), bbox_inches='tight', dpi=self.dpi)
+        self.__save_fig(fig, 'cy_mean.png')
         plt.close(fig)
     def save_x_mean(self):
         fig, ax = self.fig_ax()
         add_to_ax_x_mean_hist(self.lss, ax)
         ax.semilogy()
-        fig.savefig(os.path.join(self.path,'x_mean.png'), bbox_inches='tight', dpi=self.dpi)
+        self.__save_fig(fig, 'x_mean.png')
         plt.close(fig)
     def save_y_mean(self):
         fig, ax = self.fig_ax()
         add_to_ax_y_mean_hist(self.lss, ax)
         ax.semilogy()
-        fig.savefig(os.path.join(self.path,'y_mean.png'), bbox_inches='tight', dpi=self.dpi)
+        self.__save_fig(fig, 'y_mean.png')
         plt.close(fig)
     def save_cx_stddev(self):
         fig, ax = self.fig_ax()
         add_to_ax_cx_std_hist(self.lss, ax)
         ax.semilogy()
-        fig.savefig(os.path.join(self.path,'cx_stddev.png'), bbox_inches='tight', dpi=self.dpi)
+        self.__save_fig(fig, 'cx_stddev.png')
         plt.close(fig)
     def save_cy_stddev(self):
         fig, ax = self.fig_ax()
         add_to_ax_cy_std_hist(self.lss, ax)
         ax.semilogy()
-        fig.savefig(os.path.join(self.path,'cx_stddev.png'), bbox_inches='tight', dpi=self.dpi)
+        self.__save_fig(fig, 'cy_stddev.png')
         plt.close(fig)
     def save_time_mean(self):
         fig, ax = self.fig_ax()
         add_to_ax_time_mean_hist(self.lss, ax)
         ax.semilogy()
-        fig.savefig(os.path.join(self.path,'time_mean.png'), bbox_inches='tight', dpi=self.dpi)
+        self.__save_fig(fig, 'time_mean.png')
         plt.close(fig)
     def save_time_stddev(self):
         fig, ax = self.fig_ax()
         add_to_ax_time_std_hist(self.lss, ax)
         ax.semilogy()
-        fig.savefig(os.path.join(self.path,'time_stddev.png'), bbox_inches='tight', dpi=self.dpi)
+        self.__save_fig(fig, 'time_stddev.png')
         plt.close(fig)
     def save_geometrical_efficiency(self):
         fig, ax = self.fig_ax()
-        add_to_ax_time_std_hist(self.lss, ax)
+        add_to_ax_geometric_efficieny_hist(self.lss, ax)
         ax.semilogy()
-        add_to_ax_geometric_efficieny_hist(lss, ax)
-        fig.savefig(os.path.join(self.path,'geometric_efficiency.png'), bbox_inches='tight', dpi=self.dpi)
+        self.__save_fig(fig, 'geometric_efficiency.png')
         plt.close(fig)
     def save_c_mean_vs_c_std(self):
         fig, ax = self.fig_ax()
-        add_to_ax_c_vs_c_std(lss, ax)
-        fig.savefig(os.path.join(self.path,'c_mean_vs_c_std.png'), bbox_inches='tight', dpi=self.dpi)
+        add_to_ax_c_vs_c_std(self.lss, ax)
+        self.__save_fig(fig, 'c_mean_vs_c_std.png')
         plt.close(fig)
     def save_x_y_hist2d(self):
         fig, ax = self.fig_ax()
-        add_to_ax_x_y_hist2d(lss, ax)
-        fig.savefig(os.path.join(self.path,'x_y_mean_hist2d.png'), bbox_inches='tight', dpi=self.dpi)
+        add_to_ax_x_y_hist2d(self.lss, ax)
+        self.__save_fig(fig, 'x_y_mean_hist2d.png')
         plt.close(fig)
     def save_cx_cy_hist2d(self):
         fig, ax = self.fig_ax()
-        add_to_ax_cx_cy_hist2d(lss, ax)
-        fig.savefig(os.path.join(self.path,'cx_cy_mean_hist2d.png'), bbox_inches='tight', dpi=self.dpi)
+        add_to_ax_cx_cy_hist2d(self.lss, ax)
+        self.__save_fig(fig, 'cx_cy_mean_hist2d.png')
         plt.close(fig)
     def save_sensor_plane_overview(self, I, name='unknown', unit='unknown'):
         fig, ax = self.fig_ax()
-        coll = add_to_ax_colored_lixels(lss, I, ax)
+        coll = add_to_ax_colored_lixels(self.lss, I, ax)
         ax.set_ylabel('sensor plane y/m')
         ax.set_xlabel('sensor plane x/m')
         fig.colorbar(coll, label='principal aperture '+name+'/'+unit)
-        fig.savefig(os.path.join(self.path,'overview_'+name+'.png'), bbox_inches='tight', dpi=self.dpi)
+        self.__save_fig(fig, 'overview_'+name+'.png')
         # zoom center
         outer_radius = 1.0/np.sqrt(2.0)*np.hypot(
-            lss.lixel_positions_x.max(), 
-            lss.lixel_positions_y.max()
+            self.lss.lixel_positions_x.max(), 
+            self.lss.lixel_positions_y.max()
         )
         zoom_radius = 1.0/10.0*outer_radius
         ax.set_ylim([-zoom_radius, zoom_radius])
         ax.set_xlim([-zoom_radius, zoom_radius])
-        fig.savefig(os.path.join(self.path,'overview_'+name+'_zoom_center.png'), bbox_inches='tight', dpi=self.dpi)
+        self.__save_fig(fig, 'overview_'+name+'_zoom_center.png')
         # zoom pos x
         ax.set_ylim([-zoom_radius, zoom_radius])
         ax.set_xlim([0.95*outer_radius-zoom_radius, 0.95*outer_radius+zoom_radius])
-        fig.savefig(os.path.join(self.path,'overview_'+name+'_zoom_pos_x.png'), bbox_inches='tight', dpi=self.dpi)
+        self.__save_fig(fig, 'overview_'+name+'_zoom_pos_x.png')
         # zoom pos y
         ax.set_ylim([0.95*outer_radius-zoom_radius, 0.95*outer_radius+zoom_radius])
         ax.set_xlim([-zoom_radius, zoom_radius])
-        fig.savefig(os.path.join(self.path,'overview_'+name+'_zoom_pos_y.png'), bbox_inches='tight', dpi=self.dpi)
+        self.__save_fig(fig, 'overview_'+name+'_zoom_pos_y.png')
         plt.close(fig)
     def save(self):
         self.save_cx_mean()
@@ -351,12 +327,12 @@ class PlotLixelStatistics(object):
         self.save_c_mean_vs_c_std()
         self.save_x_y_hist2d()
         self.save_cx_cy_hist2d()
-        self.save_sensor_plane_overview(lss.geometric_efficiency, 'efficiency', '1')
-        self.save_sensor_plane_overview(lss.x_mean, 'x_mean', 'm')
-        self.save_sensor_plane_overview(lss.x_std, 'x_stddev', 'm')
-        self.save_sensor_plane_overview(lss.y_mean, 'y_mean', 'm')
-        self.save_sensor_plane_overview(lss.y_std, 'y_stddev', 'm')
-        self.save_sensor_plane_overview(np.rad2deg(lss.cx_mean), 'cx_mean', 'deg')
-        self.save_sensor_plane_overview(np.rad2deg(lss.cx_std), 'cx_stddev', 'deg')
-        self.save_sensor_plane_overview(np.rad2deg(lss.cy_mean), 'cy_mean', 'deg')
-        self.save_sensor_plane_overview(np.rad2deg(lss.cy_std), 'cy_stddev', 'deg')
+        self.save_sensor_plane_overview(self.lss.geometric_efficiency, 'efficiency', '1')
+        self.save_sensor_plane_overview(self.lss.x_mean, 'x_mean', 'm')
+        self.save_sensor_plane_overview(self.lss.x_std, 'x_stddev', 'm')
+        self.save_sensor_plane_overview(self.lss.y_mean, 'y_mean', 'm')
+        self.save_sensor_plane_overview(self.lss.y_std, 'y_stddev', 'm')
+        self.save_sensor_plane_overview(np.rad2deg(self.lss.cx_mean), 'cx_mean', 'deg')
+        self.save_sensor_plane_overview(np.rad2deg(self.lss.cx_std), 'cx_stddev', 'deg')
+        self.save_sensor_plane_overview(np.rad2deg(self.lss.cy_mean), 'cy_mean', 'deg')
+        self.save_sensor_plane_overview(np.rad2deg(self.lss.cy_std), 'cy_stddev', 'deg')

@@ -4,6 +4,8 @@
 #include "Xml/Xml.h"
 #include "Xml/Factory/SceneryFactory.h"
 #include "Plenoscope/Calibration/Calibrator.h"
+#include <experimental/filesystem>
+namespace fs = std::experimental::filesystem;
 using std::string;
 using std::cout;
 
@@ -32,17 +34,25 @@ int main(int argc, char* argv[]) {
 
     PathTools::Path config_path = PathTools::Path(cmd.get("config"));
     PathTools::Path out_path = PathTools::Path(cmd.get("output"));
+    PathTools::Path scenery_path = PathTools::Path(cmd.get("scenery"));
 
-    cout << "scenery '" << cmd.get("scenery") << "'\n";
-    cout << "out     '" << cmd.get("output") << "'\n";
-    cout << "config  '" << config_path.path << "'\n";
+    // 1) create output directory
+    fs::create_directory(out_path.path);
+    // 2) copy input into output directory
+    PathTools::Path input_copy_path = PathTools::join(out_path.path, "input");
+    fs::create_directory(input_copy_path.path);
+    fs::copy(config_path.path, PathTools::join(input_copy_path.path, "calibration_config.xml"));
+    fs::copy(scenery_path.path, PathTools::join(input_copy_path.path, "scenery.xml"));
+    // 3) use the copied input files
+    config_path = PathTools::join(input_copy_path.path, "calibration_config.xml");
+    scenery_path = PathTools::join(input_copy_path.path, "scenery.xml");
 
     Xml::Document doc(config_path.path);
     Xml::Node calibration = doc.node().child("calibration");
     Xml::Node block_node = calibration.child("photon_blocks");
 
     // SET UP SCENERY
-    Xml::SceneryFactory scenery_factory(cmd.get("scenery"));
+    Xml::SceneryFactory scenery_factory(scenery_path.path);
     Frame scenery("root", Vec3::null, Rot3::null);
     scenery_factory.add_scenery_to_frame(&scenery);
     scenery.init_tree_based_on_mother_child_relations();
@@ -54,15 +64,13 @@ int main(int argc, char* argv[]) {
     Plenoscope::PlenoscopeInScenery* pis = &scenery_factory.plenoscopes.at(0);
 
     pis->light_field_sensor_geometry.write_lixel_positions(
-        PathTools::join(out_path.path, "lixel_positions.csv")
+        PathTools::join(out_path.path, "lixel_positions.txt")
     );
 
     // CALIBRATION CONFIG
     Plenoscope::Calibration::Config calib_config;
     calib_config.number_of_blocks = block_node.attribute2int("number_of_blocks");
     calib_config.photons_per_block = int(block_node.attribute2double("photons_per_block"));
-    calib_config.raw_calibration_output_path = PathTools::join(cmd.get("output"), "lixel_statistic_raw.bin");
-    calib_config.condensed_calibration_output_path = PathTools::join(cmd.get("output"), "lixel_statistic_condensate.txt");
 
     // RUN PLENOSCOPE CALIBRATION   
     Plenoscope::Calibration::Calibrator calibrator(
@@ -70,7 +78,9 @@ int main(int argc, char* argv[]) {
         pis,
         &scenery
     );
-    
+    calibrator.write_lixel_statistics(PathTools::join(cmd.get("output"), "lixel_statistics.bin"));
+    calibrator.write_lixel_statistics_header(PathTools::join(cmd.get("output"), "lixel_statistics.header.bin"));
+
     }catch(std::exception &error) {
         std::cerr << error.what(); 
     }

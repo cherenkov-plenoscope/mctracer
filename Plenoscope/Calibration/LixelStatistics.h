@@ -47,11 +47,10 @@ namespace Plenoscope {
 
         const Config *calib_config;
         const LightFieldSensor::Geometry *sensor_geometry;
-        const double photons_emitted_per_lixel;
-
         vector<OnlineLixelStatistic> lixel_stats;
     public:
 
+        const double photons_emitted_per_lixel;
         LixelStatisticsFiller(
             const LightFieldSensor::Geometry *sensor_geometry, 
             const Config *config

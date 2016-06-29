@@ -23,6 +23,6 @@ namespace Plenoscope {
 		const Light *nsb,
 		Random::Generator* prng
 	);
-}// NightSkyBackground
+	}// NightSkyBackground
 }// Plenoscope
 #endif // __PlenoscopeNightSkyBackgroundInjector_H_INCLUDED__ 

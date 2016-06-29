@@ -18,6 +18,15 @@
 namespace Plenoscope {
     namespace Calibration {
 
+    static const struct HeaderIndices {
+    	uint number_of_lixel = 0;
+    	uint number_of_pixel = 1;
+    	uint number_of_paxel = 2;
+    	uint lixel_outer_radius = 3;
+    	uint lixel_z_orientation = 4;
+    	uint photons_emitted_per_lixel = 5;
+    } Header; 
+
 	class Calibrator: public Printable {
 
 		const Config config;
@@ -34,7 +43,7 @@ namespace Plenoscope {
 		PropagationEnvironment plenoscope_environment;
 		Random::Mt19937 prng;
 
-		std::vector<CalibrationPhotonResult> photon_results;
+		vector<CalibrationPhotonResult> photon_results;
 		LixelStatisticsFiller lixel_statistics_filler;
 	public:
 
@@ -43,8 +52,10 @@ namespace Plenoscope {
 			PlenoscopeInScenery *plenoscope, 
 			const Frame* _scenery
 		);
-		void export_sub_pixel_statistics(const std::string path)const;
-		std::string get_print()const;
+		void export_sub_pixel_statistics(const string path)const;
+		void write_lixel_statistics(const string &path)const;
+		void write_lixel_statistics_header(const string &path)const;
+		string get_print()const;
 	private:
 
 		void set_up_photon_properties();

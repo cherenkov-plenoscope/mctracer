@@ -4,6 +4,7 @@
 #include <iomanip> 
 #include "Tools/FileTools.h"
 #include "Core/PhotonAndFrame.h"
+#include "Tools/HeaderBlock.h"
 //#include "Cameras/FlyingCamera.h"
 using std::cout;
 
@@ -157,28 +158,39 @@ void Calibrator::fill_calibration_block_to_table() {
 //------------------------------------------------------------------------------
 void Calibrator::run_calibration() {
 
-	/*FlyingCamera foc(
-		plenoscope_environment.world_geometry, 
-		plenoscope_environment.propagation_options
-	);*/
 	cout << "Plenoscope Calibrator: propagating ";
 	cout << double(number_of_photons)/1.0e6 << "M photons\n";
 	
 	photon_results.resize(config.photons_per_block);
-	Writer writer(config.raw_calibration_output_path);
 
 	for(uint j=0; j<config.number_of_blocks; j++) {
 		
 		cout << j+1 << " of " << config.number_of_blocks << "\n";	
 		fill_calibration_block_to_table();
 		lixel_statistics_filler.fill_in_block(photon_results);
-		writer.append(photon_results);	
 	}
-
+}
+//------------------------------------------------------------------------------
+void Calibrator::write_lixel_statistics(const string &path)const {
 	vector<LixelStatistic> lixel_statistics =
 		lixel_statistics_filler.get_lixel_statistics();
 
-	write(lixel_statistics, config.condensed_calibration_output_path);
+	write(lixel_statistics, path);	
+}
+//------------------------------------------------------------------------------
+void Calibrator::write_lixel_statistics_header(const string &path)const {
+
+	std::array<float, 273> header;
+	for(uint i=0; i<273; i++) header.at(i) = 0.0;
+
+	header.at(Header.number_of_lixel) = plenoscope->light_field_sensor_geometry.number_of_lixel();
+	header.at(Header.number_of_pixel) = plenoscope->light_field_sensor_geometry.number_of_pixels();
+	header.at(Header.number_of_paxel) = plenoscope->light_field_sensor_geometry.number_of_paxel_per_pixel();
+	header.at(Header.lixel_outer_radius) = plenoscope->light_field_sensor_geometry.lixel_outer_radius();
+	header.at(Header.lixel_z_orientation) = plenoscope->light_field_sensor_geometry.lixel_z_orientation();
+	header.at(Header.photons_emitted_per_lixel) = lixel_statistics_filler.photons_emitted_per_lixel;
+
+	HeaderBlock::write(header, path);
 }
 //------------------------------------------------------------------------------
 std::string Calibrator::get_print()const {

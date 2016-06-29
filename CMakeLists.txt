@@ -81,6 +81,8 @@ target_link_libraries(mctShowPhotons mct)
 # light field calibration
 add_executable(mctPlenoscopeCalibration Main/PlenoscopeCalibration.cpp)
 target_link_libraries(mctPlenoscopeCalibration mct)
+target_link_libraries(mctPlenoscopeCalibration stdc++fs)
+
 
 #------------------------
 # light field propagation

@@ -20,6 +20,7 @@
 #include "Xml/Factory/TracerSettingsFab.h"
 #include "SignalProcessing/SimpleTDCQDC.h"
 #include "Tools/PathTools.h"
+#include "Tools/HeaderBlock.h"
 #include "Tools/Time.h"
 #include <experimental/filesystem>
 namespace fs = std::experimental::filesystem;
@@ -27,7 +28,6 @@ namespace fs = std::experimental::filesystem;
 string help_text() {
     std::stringstream out; 
     out << "  Plenoscope simulation\n";
-    out << "  --scenery, -s     scenery with at least one plenoscope in it\n";
     out << "  --lixel_calib, -l light field cell calibration of the plenoscope\n";
     out << "  --config, -c      config path steering the simulation and the plenoscope\n";
     out << "  --input, -i       input path of CORSIKA run\n";
@@ -39,7 +39,6 @@ int main(int argc, char* argv[]) {
     try{
 
     CommandLine::Parser cmd;
-    cmd.define_key_val_by_key_short_desc("scenery", 's', "scenery with at least one plenoscope in it");
     cmd.define_key_val_by_key_short_desc("lixel_calib", 'l' ,"light field cell calibration of the plenoscope");
     cmd.define_key_val_by_key_short_desc("config", 'c' ,"config path steering the simulation and plenoscope");
     cmd.define_key_val_by_key_short_desc("output", 'o', "output path of plenoscope lightfields");
@@ -47,19 +46,30 @@ int main(int argc, char* argv[]) {
     cmd.parse(argc, argv);
 
     if(!cmd.exist("config") || !cmd.exist("input") || 
-       !cmd.exist("output") || !cmd.exist("scenery") || !cmd.exist("lixel_calib")) {
+       !cmd.exist("output") || !cmd.exist("lixel_calib")) {
         cout << help_text();
         return 0;
     }
         
-    //fs::create_directory(PathTools::join(cmd.get("output"),"sandbox"));
-
     PathTools::Path config_path = PathTools::Path(cmd.get("config"));
-    string working_directory = config_path.path;
+    PathTools::Path out_path = PathTools::Path(cmd.get("output"));
+    PathTools::Path lixel_calib_path = PathTools::Path(cmd.get("lixel_calib"));
+    PathTools::Path input_path = PathTools::Path(cmd.get("input"));
 
-    cout << "in     '" << cmd.get("input") << "'\n";
-    cout << "out    '" << cmd.get("output") << "'\n";
-    cout << "config '" << config_path.path << "'\n";
+    // 1) create output directory
+    fs::create_directory(out_path.path);
+    // 2) copy input into output directory
+    PathTools::Path input_copy_path = PathTools::join(out_path.path, "input");
+    fs::create_directory(input_copy_path.path);
+    fs::copy(config_path.path, PathTools::join(input_copy_path.path, "propagation_config.xml"));
+    fs::create_hard_link(input_path.path,  PathTools::join(input_copy_path.path, input_path.basename));
+    fs::copy(lixel_calib_path.path, PathTools::join(input_copy_path.path, "plenoscope"), fs::copy_options::recursive);            
+
+    config_path = PathTools::join(input_copy_path.path, "propagation_config.xml");
+    out_path = PathTools::Path(cmd.get("output"));
+    lixel_calib_path = PathTools::join(PathTools::join(input_copy_path.path, "plenoscope"),"lixel_statistics.bin");
+    input_path = PathTools::join(input_copy_path.path, input_path.basename);
+    PathTools::Path scenery_path =  PathTools::join(PathTools::join(input_copy_path.path, "plenoscope"),"input/scenery.xml");
 
     //--------------------------------------------------------------------------
     //  111
@@ -85,7 +95,7 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // SET UP SCENERY
-    Xml::SceneryFactory scenery_factory(cmd.get("scenery"));
+    Xml::SceneryFactory scenery_factory(scenery_path.path);
     Frame scenery("root", Vec3::null, Rot3::null);
     scenery_factory.add_scenery_to_frame(&scenery);
     scenery.init_tree_based_on_mother_child_relations();
@@ -100,7 +110,7 @@ int main(int argc, char* argv[]) {
     //--------------------------------------------------------------------------
     // load light field calibration result
     vector<Plenoscope::Calibration::LixelStatistic> optics_calibration_result = 
-        Plenoscope::Calibration::read(cmd.get("lixel_calib"));
+        Plenoscope::Calibration::read(lixel_calib_path.path);
 
     // assert number os sub_pixel matches simulated plenoscope
     if(light_field_channels->size() != optics_calibration_result.size()) {
@@ -151,7 +161,7 @@ int main(int argc, char* argv[]) {
     // 222222 22
     //--------------------------------------------------------------------------
     // open cherenkov photon file
-    EventIo::EventIoFile corsika_run(cmd.get("input"));
+    EventIo::EventIoFile corsika_run(input_path.path);
     vector<vector<double>> number_of_pulses_in_events;
 
     //--------------------------------------------------------------------------
@@ -161,11 +171,11 @@ int main(int argc, char* argv[]) {
 
         //------------------
         // Cherenkov photons
-        Time::StopWatch read_event("read_event");
+        //Time::StopWatch read_event("read_event");
         EventIo::Event event = corsika_run.next_event();
-        read_event.stop();
+        //read_event.stop();
 
-        Time::StopWatch c2mct("corsika 2 mct photons");
+        //Time::StopWatch c2mct("corsika 2 mct photons");
         vector<Photon*> photons;
         uint photon_id = 0;
         for(const array<float, 8> &corsika_photon: event.photons) {
@@ -175,24 +185,24 @@ int main(int argc, char* argv[]) {
             if(cpf.passed_atmosphere())
                 photons.push_back(cpf.get_photon());
         }
-        c2mct.stop();
+        //c2mct.stop();
 
-        Time::StopWatch prop("propagate photons");
+        //Time::StopWatch prop("propagate photons");
         Photons::propagate_photons_in_scenery_with_settings(
             &photons, &scenery, &settings, &prng
         );
-        prop.stop();
+        //prop.stop();
 
-        Time::StopWatch assign("assign photons to sensors");
+        //Time::StopWatch assign("assign photons to sensors");
         light_field_channels->clear_history();
         light_field_channels->assign_photons(&photons);
         Photons::delete_photons(&photons);
 
         vector<vector<PipelinePhoton>> photon_pipelines = 
             get_photon_pipelines(light_field_channels);
-        assign.stop();
+        //assign.stop();
 
-        Time::StopWatch nsbsw("night sky background");
+        //Time::StopWatch nsbsw("night sky background");
         //-----------------------------
         // Night Sky Background photons
         Plenoscope::NightSkyBackground::inject_nsb_into_photon_pipeline(
@@ -202,9 +212,9 @@ int main(int argc, char* argv[]) {
             &nsb,
             &prng
         );
-        nsbsw.stop();
+        //nsbsw.stop();
 
-        Time::StopWatch pecs("photo electric conversion");
+        //Time::StopWatch pecs("photo electric conversion");
         //--------------------------
         // Photo Electric conversion
         vector<vector<double>> electric_pipelines;
@@ -232,16 +242,24 @@ int main(int argc, char* argv[]) {
                 )
             );
         }
-        pecs.stop();
+        //pecs.stop();
 
         //-------------
         // export event
-        Time::StopWatch write_event("write event");
+        //Time::StopWatch write_event("write event");
+
+        PathTools::Path event_output_path = PathTools::join(out_path.path, std::to_string(event_counter));
+        fs::create_directory(event_output_path.path);
+
         Plenoscope::save_event_to_file_epoch_2016May27(
             tacs,
-            cmd.get("output") + std::to_string(event_counter) + ".txt"
+            PathTools::join(event_output_path.path, "raw_plenoscope_response.bin")
         );
-        write_event.stop();
+
+        HeaderBlock::write(corsika_run.run_header.raw, PathTools::join(event_output_path.path, "corsika_run.header.bin"));
+        HeaderBlock::write(event.header.raw, PathTools::join(event_output_path.path, "corsika_event.header.bin"));
+
+        //write_event.stop();
 
         cout << "event " << event_counter << ", ";
         cout << "PRMPAR " << Corsika::EventHeader::particle_id(event.header.raw) << ", ";

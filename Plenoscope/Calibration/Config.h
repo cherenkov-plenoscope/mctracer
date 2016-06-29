@@ -18,9 +18,6 @@ namespace Plenoscope {
     struct Config {
         uint32_t number_of_blocks;
         uint32_t photons_per_block;
-        string raw_calibration_output_path;
-        string condensed_calibration_output_path;
-
         Config();
     };
 
