@@ -73,7 +73,7 @@ void save_event_to_file_epoch_2016Mar10(
     const vector<SimpleTdcQdc::TimeAndCount> &tacs,
     const string path,
     const EventIo::Event &event,
-    const EventIo::EventIoFile &corsika_run
+    const EventIo::Run &corsika_run
 ) {
     vector<vector<double>> dtacs;
     for(SimpleTdcQdc::TimeAndCount tac: tacs) {
@@ -84,7 +84,7 @@ void save_event_to_file_epoch_2016Mar10(
     }
 
     stringstream evt_header;
-    evt_header << Corsika::RunHeader::get_print(corsika_run.run_header.raw);
+    evt_header << Corsika::RunHeader::get_print(corsika_run.header.raw);
     evt_header << Corsika::EventHeader::get_print(event.header.raw);
     evt_header << "\n";
     evt_header << "arrival_time[s]\tnumber_photons[1]\n";

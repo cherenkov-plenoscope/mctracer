@@ -61,6 +61,9 @@ class PlenoscopeLightFieldCalibration:
         self.paxel_efficiency_along_all_pixel = np.nanmean(self.geometrical_efficiency, axis=0)
         self.neighbors = self._find_neighbors()
 
+    def load_plenoscope_calibration_epoch_160614(self, path):
+        
+
     def _find_npixel_npaxel(self, path):
         f = open(path)
         for i in range(100):

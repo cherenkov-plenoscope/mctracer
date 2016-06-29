@@ -28,7 +28,7 @@ namespace Plenoscope {
         const vector<SimpleTdcQdc::TimeAndCount> &tacs,
         const string path,
         const EventIo::Event &event,
-        const EventIo::EventIoFile &corsika_run
+        const EventIo::Run &corsika_run
     );
 }
 #endif // __LightFieldTelescopeEventFormats_H_INCLUDED__ 

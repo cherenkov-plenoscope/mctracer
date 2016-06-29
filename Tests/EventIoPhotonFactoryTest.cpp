@@ -236,7 +236,7 @@ TEST_F(EventIoPhotonFactoryTest, relative_arrival_time_on_ground) {
 //------------------------------------------------------------------------------
 TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground) {
    
-    EventIo::EventIoFile corsika_file("telescope.dat");
+    EventIo::Run corsika_file("telescope.dat");
 
     while (corsika_file.has_still_events_left()) {
 

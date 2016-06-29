@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
 	TelescopeArrayControl* array_ctrl = fab.telescopes;
 
 	// load photons
-	EventIo::EventIoFile corsika_run(cmd.get("photons"));
+	EventIo::Run corsika_run(cmd.get("photons"));
 
 	// propagate each event
 	uint event_counter = 0;

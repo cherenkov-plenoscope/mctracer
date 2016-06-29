@@ -161,7 +161,7 @@ int main(int argc, char* argv[]) {
     // 222222 22
     //--------------------------------------------------------------------------
     // open cherenkov photon file
-    EventIo::EventIoFile corsika_run(input_path.path);
+    EventIo::Run corsika_run(input_path.path);
     vector<vector<double>> number_of_pulses_in_events;
 
     //--------------------------------------------------------------------------
@@ -256,7 +256,7 @@ int main(int argc, char* argv[]) {
             PathTools::join(event_output_path.path, "raw_plenoscope_response.bin")
         );
 
-        HeaderBlock::write(corsika_run.run_header.raw, PathTools::join(event_output_path.path, "corsika_run.header.bin"));
+        HeaderBlock::write(corsika_run.header.raw, PathTools::join(event_output_path.path, "corsika_run.header.bin"));
         HeaderBlock::write(event.header.raw, PathTools::join(event_output_path.path, "corsika_event.header.bin"));
 
         //write_event.stop();

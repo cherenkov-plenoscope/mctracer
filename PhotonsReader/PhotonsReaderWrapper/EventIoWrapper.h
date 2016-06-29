@@ -16,7 +16,7 @@ using std::vector;
 //=================================
 class EventIoWrapper: public BasicWrapper {
 
-	EventIo::EventIoFile corsika_run;
+	EventIo::Run corsika_run;
 public:
 
 	EventIoWrapper(const string path);

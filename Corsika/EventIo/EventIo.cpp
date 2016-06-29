@@ -281,11 +281,11 @@ vector<array<float, 8>> make_photons_from_stream(istream& f) {
     return bunches;    
 }
 //------------------------------------------------------------------------------
-bool EventIoFile::has_still_events_left()const {
+bool Run::has_still_events_left()const {
     return !this->run_end_found;
 }
 //------------------------------------------------------------------------------
-EventIoFile::EventIoFile(string path):
+Run::Run(string path):
     run_end_found(false)
 {
     this->path = path;
@@ -302,18 +302,18 @@ EventIoFile::EventIoFile(string path):
     this->_current_photon_data = this->_next();
 }
 //------------------------------------------------------------------------------
-void EventIoFile::__read_run_header() {
+void Run::__read_run_header() {
     this->__get_header(1200);
-    this->run_header.raw = make_corsika_273float_sub_block_form_stream(this->f);
+    this->header.raw = make_corsika_273float_sub_block_form_stream(this->f);
 
     auto header_2 = this->__get_header(1212);
-    this->run_header.input_card = make_input_card_from_stream(this->f, header_2);
+    this->header.input_card = make_input_card_from_stream(this->f, header_2);
 
     auto header_3 = this->__get_header(1201);
-    this->run_header.tel_pos = make_telescope_positions(this->f, header_3);
+    this->header.tel_pos = make_telescope_positions(this->f, header_3);
 }
 //------------------------------------------------------------------------------
-void EventIoFile::__read_event_header() {
+void Run::__read_event_header() {
     this->__get_header(1202);
     this->current_event_header.raw = make_corsika_273float_sub_block_form_stream(this->f);
 
@@ -321,17 +321,17 @@ void EventIoFile::__read_event_header() {
     this->current_event_header.telescope_offsets = make_telescope_offsets_from_stream(this->f, header_2);
 }
 //------------------------------------------------------------------------------
-void EventIoFile::__read_event_end() {
+void Run::__read_event_end() {
     this->__get_header(1209);
     this->current_event_end = make_corsika_273float_sub_block_form_stream(this->f);
 }
 //------------------------------------------------------------------------------
-void EventIoFile::__read_run_end() {
+void Run::__read_run_end() {
     this->__get_header(1210);
-    this->run_end = make_run_end_from_stream(this->f);
+    this->end = make_run_end_from_stream(this->f);
 }
 //------------------------------------------------------------------------------
-Header EventIoFile::__get_header(int expect_type) {   
+Header Run::__get_header(int expect_type) {   
     Header header(this->f);
     if(header.type != expect_type) {
         int header_length = header.extended ? 5 : 4;
@@ -348,7 +348,7 @@ Header EventIoFile::__get_header(int expect_type) {
     return header;
 }
 //------------------------------------------------------------------------------
-Event EventIoFile::next_event() {
+Event Run::next_event() {
     Event event;
 
     event.header = this->current_event_header;
@@ -359,7 +359,7 @@ Event EventIoFile::next_event() {
     return event;
 }
 //------------------------------------------------------------------------------
-vector<array<float, 8>> EventIoFile::_next() {
+vector<array<float, 8>> Run::_next() {
     bool something_found = false;
     while(!this->run_end_found) {
         something_found = false;

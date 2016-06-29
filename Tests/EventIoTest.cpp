@@ -2,21 +2,13 @@
 #include "Corsika/EventIo/EventIo.h"
 #include "Corsika/Tools.h"
 #include <algorithm>
-using namespace EventIo;
 
 class EventIoTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(EventIoTest, EventIoHeader_works) {
     
-    //std::stringstream fake_file;
     std::ifstream fake_file;
     fake_file.open("telescope.dat");
-    /*
-    for (size_t i=0; i != telescope_dat.size(); i++){
-        fake_file << telescope_dat[i];
-    }
-    */
-
     EventIo::Header my_header(fake_file);
     
     EXPECT_TRUE(my_header.is_sync);
@@ -40,7 +32,6 @@ TEST_F(EventIoTest,  EventIoHeader_fails_wrong_sync_marker) {
     sout.seekp(2);
     sout.put(0x00);
     sout.seekp(0);
-
     
     EXPECT_THROW(EventIo::Header my_header(sout), TracerException);
 }
@@ -64,45 +55,45 @@ TEST_F(EventIoTest, make_runheader) {
 //------------------------------------------------------------------------------
 TEST_F(EventIoTest, EventIoFile_telescope_dat__check_tel_pos) {
 
-    EventIoFile my_file("telescope.dat");
-    EXPECT_EQ(1u, my_file.run_header.tel_pos.size());
-    EXPECT_EQ(0., my_file.run_header.tel_pos[0].x);
-    EXPECT_EQ(0., my_file.run_header.tel_pos[0].y);
-    EXPECT_EQ(500., my_file.run_header.tel_pos[0].z);
-    EXPECT_EQ(500., my_file.run_header.tel_pos[0].r);
+    EventIo::Run my_run("telescope.dat");
+    EXPECT_EQ(1u, my_run.header.tel_pos.size());
+    EXPECT_EQ(0., my_run.header.tel_pos[0].x);
+    EXPECT_EQ(0., my_run.header.tel_pos[0].y);
+    EXPECT_EQ(500., my_run.header.tel_pos[0].z);
+    EXPECT_EQ(500., my_run.header.tel_pos[0].r);
 }
 //------------------------------------------------------------------------------
 TEST_F(EventIoTest, EventIoFile_telescope_dat__check_input_card) {
 
-    EventIoFile my_file("telescope.dat");
-    EXPECT_EQ(' ', my_file.run_header.input_card[100]);
+    EventIo::Run my_run("telescope.dat");
+    EXPECT_EQ(' ', my_run.header.input_card[100]);
 }
 //------------------------------------------------------------------------------
 TEST_F(EventIoTest, EventIoFile_telescope_dat__mmcs_run_header) {
-    EventIoFile my_file("telescope.dat");
-    EXPECT_NEAR(7., Corsika::RunHeader::run_number(my_file.run_header.raw), 1e-6);
-    EXPECT_NEAR(-2.7, Corsika::RunHeader::slope_of_energy_spektrum(my_file.run_header.raw), 1e-6);
-    EXPECT_NEAR(1000., Corsika::RunHeader::energy_range_start(my_file.run_header.raw), 1e-6);
-    EXPECT_NEAR(50000., Corsika::RunHeader::energy_range_end(my_file.run_header.raw), 1e-6);
+    EventIo::Run my_run("telescope.dat");
+    EXPECT_NEAR(7., Corsika::RunHeader::run_number(my_run.header.raw), 1e-6);
+    EXPECT_NEAR(-2.7, Corsika::RunHeader::slope_of_energy_spektrum(my_run.header.raw), 1e-6);
+    EXPECT_NEAR(1000., Corsika::RunHeader::energy_range_start(my_run.header.raw), 1e-6);
+    EXPECT_NEAR(50000., Corsika::RunHeader::energy_range_end(my_run.header.raw), 1e-6);
 
-    EXPECT_EQ(1u, Corsika::RunHeader::number_of_observation_levels(my_file.run_header.raw));
-    EXPECT_NEAR(220000., Corsika::RunHeader::observation_level_at(my_file.run_header.raw, 0), 1e-6);  
+    EXPECT_EQ(1u, Corsika::RunHeader::number_of_observation_levels(my_run.header.raw));
+    EXPECT_NEAR(220000., Corsika::RunHeader::observation_level_at(my_run.header.raw, 0), 1e-6);  
 }
 //------------------------------------------------------------------------------
 TEST_F(EventIoTest, EventIoFile_telescope_dat__next_call) {
 
-    EventIoFile my_file("telescope.dat");
-    Event event = my_file.next_event();
+    EventIo::Run my_run("telescope.dat");
+    EventIo::Event event = my_run.next_event();
 }
 //------------------------------------------------------------------------------
 TEST_F(EventIoTest, EventIoFile_telescope_dat__event_header) {
 
-    EventIoFile my_file("telescope.dat");
-    Event event = my_file.next_event();
+    EventIo::Run my_run("telescope.dat");
+    EventIo::Event event = my_run.next_event();
 
     EXPECT_EQ(1u, event.header.telescope_offsets.size());
     EXPECT_NEAR(379489.3125, event.header.telescope_offsets[0].toff, 1e-6);
-    //std::cout << my_file.current_event_header.telescope_offsets[0].get_print() << std::endl;
+    //std::cout << my_run.current_event_header.telescope_offsets[0].get_print() << std::endl;
     EXPECT_NEAR(-0., event.header.telescope_offsets[0].xoff, 1e-6);
     EXPECT_NEAR(-6589.96044922, event.header.telescope_offsets[0].yoff, 1e-6);
 
@@ -114,8 +105,8 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__event_header) {
 //------------------------------------------------------------------------------
 TEST_F(EventIoTest, EventIoFile_telescope_dat__photon_bundle_size) {
 
-    EventIoFile my_file("telescope.dat");
-    Event event = my_file.next_event();
+    EventIo::Run my_run("telescope.dat");
+    EventIo::Event event = my_run.next_event();
     EXPECT_EQ(42629u, event.photons.size());
 
     for (size_t i=0; i<event.photons.size(); i++)
@@ -127,8 +118,8 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__photon_bundle_size) {
 //------------------------------------------------------------------------------
 TEST_F(EventIoTest, EventIoFile_telescope_dat__photon_bundle_values) {
 
-    EventIoFile my_file("telescope.dat");
-    Event event = my_file.next_event();
+    EventIo::Run my_run("telescope.dat");
+    EventIo::Event event = my_run.next_event();
     EXPECT_EQ(42629u, event.photons.size());
 
     float some_photon_bundles[5][8] = {
@@ -156,12 +147,12 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__photon_bundle_values) {
 //------------------------------------------------------------------------------
 #include "Corsika/EventIo/PhotonFactory.h"
 
-TEST_F(EventIoTest, EventIoFile_telescope_dat__run_time____________________________________) {
-    EventIoFile my_file("telescope.dat");
+TEST_F(EventIoTest, EventIoFile_telescope_dat_run_time) {
+    EventIo::Run my_run("telescope.dat");
     
-    while (my_file.has_still_events_left()) {
+    while (my_run.has_still_events_left()) {
 
-        Event event = my_file.next_event();
+        EventIo::Event event = my_run.next_event();
 
         Random::Mt19937 prng;
 
@@ -169,7 +160,7 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__run_time_________________________
         uint id = 0;
         for(array<float, 8> corsika_photon : event.photons) {
             
-            PhotonFactory cpf(corsika_photon,id++,&prng);
+            EventIo::PhotonFactory cpf(corsika_photon,id++,&prng);
 
             if(cpf.passed_atmosphere()) {
                 photons.push_back(

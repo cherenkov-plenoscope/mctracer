@@ -124,7 +124,7 @@ namespace EventIo {
      */
     vector<array<float, 8>> make_photons_from_stream(istream& f, const Header& head);
 
-    class EventIoFile {
+    class Run {
 
         ifstream f;
         string path;
@@ -142,9 +142,9 @@ namespace EventIo {
     public:
 
         bool has_still_events_left()const;
-        EventIoRunHeader run_header;
-        array<float, 273> run_end;
-        EventIoFile(const string path);
+        EventIoRunHeader header;
+        array<float, 273> end;
+        Run(const string path);
         Event next_event();
     };
 } //namespace EventIo
