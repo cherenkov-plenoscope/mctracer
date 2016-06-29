@@ -1,7 +1,6 @@
 #include "Plenoscope/NightSkyBackground/Injector.h"
 #include "Tools/Tools.h"
 #include "Core/Histogram1D.h"
-using std::vector;
 
 namespace Plenoscope {
 namespace NightSkyBackground {
@@ -9,15 +8,12 @@ namespace NightSkyBackground {
 	void inject_nsb_into_photon_pipeline(
 		vector<vector<PipelinePhoton>> *photon_pipelines,
 		const double nsb_exposure_time,
-		const vector<vector<double>> *lft_calib_result,
+		const vector<Plenoscope::Calibration::LixelStatistic> *lixel_statistics,
 		const Light *nsb,
 		Random::Generator* prng
 	) {	
 		if(photon_pipelines->size() == 0)
 			return;
-
-		const double number_subpix = 
-			nsb->sensor_geometry->number_of_lixel();
 
 		//------------------------------------------------
 		// FIND MIN MAX ARRIVAL TIMES OF CHERENKOV PHOTONS
@@ -72,23 +68,23 @@ namespace NightSkyBackground {
 		//--------------------------------
 		// INIT START TIME OF NSB EXPOSURE
 
-		double nsb_exposure_start_time = 
+		const double nsb_exposure_start_time = 
 			mode_of_cherenkov_arrival_times - 0.5*nsb_exposure_time;
 
 		// for each sub_pixel
 		for(uint i=0; i<photon_pipelines->size(); i++) {
 
-			double subpix_efficincy = lft_calib_result->at(i).at(0);
-
-			double subpix_nsb_rate = 
-				nsb->get_overall_rate()*subpix_efficincy/number_subpix;
+			const double lixel_nsb_rate = 
+				nsb->get_overall_rate()*
+				lixel_statistics->at(i).efficiency/
+				nsb->sensor_geometry->number_of_lixel();
 
 			// arrival times of nsb
 			vector<double> nsb_arrival_times;
-			double relative_arrival_times_sum = prng->expovariate(subpix_nsb_rate);
+			double relative_arrival_times_sum = prng->expovariate(lixel_nsb_rate);
 			while(relative_arrival_times_sum < nsb_exposure_time) {
 
-				double time_until_next_photon = prng->expovariate(subpix_nsb_rate);
+				const double time_until_next_photon = prng->expovariate(lixel_nsb_rate);
 
 				nsb_arrival_times.push_back(
 					nsb_exposure_start_time + relative_arrival_times_sum
@@ -110,12 +106,10 @@ namespace NightSkyBackground {
 		//----------------------------------------------------------------------
 		// substract nsb_exposure_start_time 
 
-		// for each sub_pixel
+		// for each read out channel
 		for(uint i=0; i<photon_pipelines->size(); i++) {
-
 			// for each photon
 			for(uint p=0; p<photon_pipelines->at(i).size(); p++) {
-
 				photon_pipelines->at(i).at(p).arrival_time -= 
 					nsb_exposure_start_time;
 			}

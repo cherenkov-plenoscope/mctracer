@@ -99,9 +99,9 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // load light field calibration result
-    vector<vector<double>> optics_calibration_result = AsciiIo::gen_table_from_file(
-        cmd.get("lixel_calib")
-    );
+    vector<Plenoscope::Calibration::LixelStatistic> optics_calibration_result = 
+        Plenoscope::Calibration::read(cmd.get("lixel_calib"));
+
     // assert number os sub_pixel matches simulated plenoscope
     if(light_field_channels->size() != optics_calibration_result.size()) {
         std::stringstream info;

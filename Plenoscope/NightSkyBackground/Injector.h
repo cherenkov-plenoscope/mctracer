@@ -10,14 +10,16 @@
 // included dependencies
 #include "Plenoscope/NightSkyBackground/Light.h"
 #include "SignalProcessing/PipelinePhoton.h"
+#include "Plenoscope/Calibration/LixelStatistics.h"
+using std::vector;
 
 namespace Plenoscope {
 	namespace NightSkyBackground {
 
 	void inject_nsb_into_photon_pipeline(
-		std::vector<std::vector<PipelinePhoton>> *photon_pipelines,
+		vector<vector<PipelinePhoton>> *photon_pipelines,
 		const double exposure_time,
-		const std::vector<std::vector<double>> *lft_calib_result,
+		const vector<Plenoscope::Calibration::LixelStatistic> *lixel_statistics,
 		const Light *nsb,
 		Random::Generator* prng
 	);
