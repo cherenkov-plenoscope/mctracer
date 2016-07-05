@@ -163,11 +163,12 @@ void Frame::update_sphere_enclosing_all_children(Frame *new_child) {
 	// In this case the old radius remains because it is already enclosing the 
 	// new child.
 
-	double radius_needed_to_enclose_new_child = 
-	new_child->pos_in_mother.norm() + 
-	new_child->radius_of_sphere_enclosing_all_children;
+	const double radius_needed_to_enclose_new_child = 
+		new_child->pos_in_mother.norm() + 
+		new_child->radius_of_sphere_enclosing_all_children;
 
-	if(	radius_needed_to_enclose_new_child > 
+	if(	
+		radius_needed_to_enclose_new_child > 
 		radius_of_sphere_enclosing_all_children
 	)
 		radius_of_sphere_enclosing_all_children = 
@@ -175,7 +176,6 @@ void Frame::update_sphere_enclosing_all_children(Frame *new_child) {
 }
 //------------------------------------------------------------------------------
 void Frame::init_tree_based_on_mother_child_relations() {
-	//children.shrink_to_fit();
 	update_enclosing_sphere_for_all_children();
 	cluster_using_helper_frames();
 	post_init_root_of_world();
