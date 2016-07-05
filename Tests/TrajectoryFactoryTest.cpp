@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "Scenery/TrajectoryFactory.h"
+/*#include "Scenery/TrajectoryFactory.h"
 
 using namespace std;
 
@@ -15,3 +15,4 @@ TEST_F(TrajectoryFactoryTest, constructor_using_RayForPropagation) {
   EXPECT_EQ(1u, tra_frame->get_children()->size());
 }
 //------------------------------------------------------------------------------
+*/

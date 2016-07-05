@@ -23,23 +23,16 @@ namespace LightFieldSensor {
 		Factory(const Geometry* geo);
 		void add_light_field_sensor_to_frame(Frame *frame);
 		PhotonSensors::Sensors* get_sub_pixels()const;
-		Frame* get_lens_array();
-		Frame* get_pixel_bin_array();
-		Frame* get_light_field_sensor_frontplate();
-		Frame* get_sub_pixel_sensor_plane();
-		Frame* get_image_sensor_housing()const;
-		Frame* get_lens_with_name_at_pos(
-			const std::string name,
-			const Vec3 pos
-		);
-		Frame* get_sub_pixel_with_name_pos(
+		void add_lens_array(Frame* frame);
+		void add_light_field_sensor_frontplate(Frame* frame);
+		void add_image_sensor_housing(Frame* frame);
+		void add_pixel_bin_array(Frame* frame);
+		void add_pixel_bin_with_name_at_pos(
+			Frame* frame,
 			const std::string name, 
 			const Vec3 pos
 		);
-		Frame* get_pixel_bin_with_name_at_pos(
-			const std::string name, 
-			const Vec3 pos
-		);
+		void add_lixel_sensor_plane(Frame* frame);
 	};
 }//LightFieldSensor
 }//Plenoscope

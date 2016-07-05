@@ -85,31 +85,29 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 	    // geometry
 		Frame optical_table("table", Vec3::null, Rot3::null);
 
-		BiConvexLensHexBound lens;
-		lens.set_name_pos_rot("lens", Vec3::null, Rot3::null);
-	    lens.set_outer_color(lens_col);
-	    lens.set_inner_color(lens_col);
-	    lens.set_inner_refraction(refraction_vs_wavelength);
-	    lens.set_curvature_radius_and_outer_hex_radius(
+		BiConvexLensHexBound* lens = optical_table.append<BiConvexLensHexBound>();
+		lens->set_name_pos_rot("lens", Vec3::null, Rot3::null);
+	    lens->set_outer_color(lens_col);
+	    lens->set_inner_color(lens_col);
+	    lens->set_inner_refraction(refraction_vs_wavelength);
+	    lens->set_curvature_radius_and_outer_hex_radius(
 	    	lens_curvature_radius, 
 	    	cfg.aperture_radius
 	    );
 
-	    Disc sensor_disc;
-	    sensor_disc.set_name_pos_rot(
+	    Disc* sensor_disc = optical_table.append<Disc>();
+	    sensor_disc->set_name_pos_rot(
 	    	"sensor_disc", 
 	    	Vec3(0.0, 0.0, -image_sensor_disc_distance), 
 	    	Rot3::null
 	    );
-	    sensor_disc.set_outer_color(sensor_disc_col);
-	    sensor_disc.set_inner_color(sensor_disc_col);
-	    sensor_disc.set_radius(cfg.aperture_radius*0.85);
-	    PhotonSensor::Sensor sensor(0, &sensor_disc);
+	    sensor_disc->set_outer_color(sensor_disc_col);
+	    sensor_disc->set_inner_color(sensor_disc_col);
+	    sensor_disc->set_radius(cfg.aperture_radius*0.85);
+	    PhotonSensor::Sensor sensor(0, sensor_disc);
 	    std::vector<PhotonSensor::Sensor*> sensor_vec = {&sensor};
 	    PhotonSensors::Sensors sensor_list(sensor_vec);
 
-	    optical_table.set_mother_and_child(&lens);
-	    optical_table.set_mother_and_child(&sensor_disc);
 	    optical_table.init_tree_based_on_mother_child_relations();
 
 	    // light source

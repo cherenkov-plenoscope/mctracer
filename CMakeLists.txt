@@ -74,8 +74,8 @@ target_link_libraries(mctPropagate mct)
 
 #----------------
 # ShowPhotons exe
-add_executable(mctShowPhotons Main/ShowPhotons.cpp)
-target_link_libraries(mctShowPhotons mct)
+#add_executable(mctShowPhotons Main/ShowPhotons.cpp)
+#target_link_libraries(mctShowPhotons mct)
 
 #------------------------
 # light field calibration

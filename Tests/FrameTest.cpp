@@ -45,11 +45,12 @@ TEST_F(FrameTest, assert_name_is_valid) {
 TEST_F(FrameTest, duplicate_name_of_children_frames) {
 
     Frame Peter("peter", Vec3::null, Rot3::null);
-    Frame Klaus1("klaus", Vec3::null, Rot3::null);
-    Frame Klaus2("klaus", Vec3::null, Rot3::null);
 
-    Peter.set_mother_and_child(&Klaus1);
-    Peter.set_mother_and_child(&Klaus2);
+    Frame* Klaus1 = Peter.append<Frame>();
+    Klaus1->set_name_pos_rot("klaus", Vec3::null, Rot3::null);
+
+    Frame* Klaus2 = Peter.append<Frame>();
+    Klaus2->set_name_pos_rot("klaus", Vec3::null, Rot3::null);
 
     EXPECT_THROW(
         Peter.assert_no_children_duplicate_names(),
@@ -80,8 +81,8 @@ TEST_F(FrameTest, re_set_frame) {
     Rot3 rot(3.1,4.1,7.7);
 
     Frame peter("a_name", pos, rot);
-    Frame hans("child_of_peter", Vec3(1.0, 2.0, 3.0), Rot3::null);
-    peter.set_mother_and_child(&hans);
+    Frame* hans = peter.append<Frame>();
+    hans->set_name_pos_rot("child_of_peter", Vec3(1.0, 2.0, 3.0), Rot3::null);
 
     EXPECT_EQ(1u, peter.get_children()->size());
     EXPECT_TRUE(pos == peter.get_position_in_mother());
@@ -98,37 +99,39 @@ TEST_F(FrameTest, root_of_world_on_complete_tree) {
 
     //-----define frames
     Frame tree("tree" ,Vec3::null, Rot3::null);
-    Frame leaf1("leaf1" ,Vec3(1.0,0.0,0.0), Rot3::null);
-    Frame leaf2("leaf2" ,Vec3(-1.0,0.0,0.0), Rot3::null);
-    Frame branch("branch" ,Vec3(0.0,0.0,1.0), Rot3::null);
-    Frame leaf1_on_branch(
+
+    Frame* leaf1 = tree.append<Frame>();
+    leaf1->set_name_pos_rot("leaf1" ,Vec3(1.0,0.0,0.0), Rot3::null);
+
+    Frame* leaf2 = tree.append<Frame>();
+    leaf2->set_name_pos_rot("leaf2" ,Vec3(-1.0,0.0,0.0), Rot3::null);
+
+    Frame* branch = tree.append<Frame>();
+    branch->set_name_pos_rot("branch" ,Vec3(0.0,0.0,1.0), Rot3::null);
+
+    Frame* leaf1_on_branch = branch->append<Frame>();
+    leaf1_on_branch->set_name_pos_rot(
         "leaf1_on_branch",
         Vec3(1.0,0.0,0.0),
         Rot3::null
     );
-    Frame leaf2_on_branch(
+    Frame* leaf2_on_branch = branch->append<Frame>();
+    leaf2_on_branch->set_name_pos_rot(
         "leaf2_on_branch",
         Vec3(0.0,1.0,0.0),
         Rot3::null
     );
-
-    //-----declare relationschips
-    branch.set_mother_and_child(&leaf1_on_branch);
-    branch.set_mother_and_child(&leaf2_on_branch);
-    tree.set_mother_and_child(&leaf1);
-    tree.set_mother_and_child(&leaf2);
-    tree.set_mother_and_child(&branch);
 
     //-----post initialize 
     tree.init_tree_based_on_mother_child_relations();
 
     //-----test
     EXPECT_EQ(&tree, tree.get_root_of_world());
-    EXPECT_EQ(&tree, leaf1.get_root_of_world());
-    EXPECT_EQ(&tree, leaf2.get_root_of_world());
-    EXPECT_EQ(&tree, branch.get_root_of_world());
-    EXPECT_EQ(&tree, leaf1_on_branch.get_root_of_world());
-    EXPECT_EQ(&tree, leaf2_on_branch.get_root_of_world());
+    EXPECT_EQ(&tree, leaf1->get_root_of_world());
+    EXPECT_EQ(&tree, leaf2->get_root_of_world());
+    EXPECT_EQ(&tree, branch->get_root_of_world());
+    EXPECT_EQ(&tree, leaf1_on_branch->get_root_of_world());
+    EXPECT_EQ(&tree, leaf2_on_branch->get_root_of_world());
 }
 //------------------------------------------------------------------------------
 TEST_F(FrameTest, root_frame_default) {
@@ -151,9 +154,9 @@ TEST_F(FrameTest, cluster_frames_during_tree_initializing) {
                 Vec3 pos(x,y,z);
                 stringstream name;
                 name << "sub_sphere_" << x << "_" << y << "_" << z;
-                Sphere* sphere = new Sphere(name.str(), pos, Rot3::null);
+                Sphere* sphere = tree.append<Sphere>();
+                sphere->set_name_pos_rot(name.str(), pos, Rot3::null);
                 sphere->set_radius(0.5);
-                tree.set_mother_and_child(sphere);
                 count++;
             }
         }
@@ -169,18 +172,18 @@ TEST_F(FrameTest, cluster_frames_during_tree_initializing) {
 TEST_F(FrameTest, clustering_frames_which_are_stucked_close_together) {
 
     Frame tree("tree" ,Vec3::null, Rot3::null);
-    std::vector<SphereCapWithRectangularBound> facets(100, SphereCapWithRectangularBound());
+    const uint number_facets = 100;
 
-    for(uint i=0; i<facets.size(); i++) {
-        facets.at(i).set_name_pos_rot("facet"+std::to_string(i), Vec3::null, Rot3::null);
-        facets.at(i).set_curvature_radius_and_x_y_width(34.0, 1.0, 1.0);
-        tree.set_mother_and_child(&facets.at(i));
+    for(uint i=0; i<number_facets; i++) {
+        SphereCapWithRectangularBound* facet = tree.append<SphereCapWithRectangularBound>();
+        facet->set_name_pos_rot("facet"+std::to_string(i), Vec3::null, Rot3::null);
+        facet->set_curvature_radius_and_x_y_width(34.0, 1.0, 1.0);
     }
 
-    EXPECT_EQ(facets.size(), tree.get_children()->size());
+    EXPECT_EQ(number_facets, tree.get_children()->size());
     tree.init_tree_based_on_mother_child_relations();
 
     //The clustering will not help (reduce the number of children) 
     //because all the geometry is stucked on top of each other.
-    EXPECT_EQ(facets.size(), tree.get_children()->size());
+    EXPECT_EQ(number_facets, tree.get_children()->size());
 }

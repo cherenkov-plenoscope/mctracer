@@ -13,7 +13,7 @@ void add_stl_to_and_inherit_surface_from_surfac_entity(
 
     uint facet_count = 0;
     for(Facet facet: facets) {
-        Triangle* tri = new Triangle;
+        Triangle* tri = proto->append<Triangle>();
         tri->set_name_pos_rot(
             "triangle_"+std::to_string(facet_count++),
             Vec3::null, 
@@ -26,9 +26,7 @@ void add_stl_to_and_inherit_surface_from_surfac_entity(
             facet.c*scale
         );  
         tri->take_boundary_layer_properties_from(proto);        
-        proto->set_mother_and_child(tri);
     }
-    proto->cluster_using_helper_frames();
 }
 //------------------------------------------------------------------------------
 void add_stl_to_frame(const string path, Frame* proto, const double scale) {
@@ -37,7 +35,7 @@ void add_stl_to_frame(const string path, Frame* proto, const double scale) {
 
     uint facet_count = 0;
     for(Facet facet: facets) {
-        Triangle* tri = new Triangle;
+        Triangle* tri = proto->append<Triangle>();
         tri->set_name_pos_rot(
             "triangle_"+std::to_string(facet_count++),
             Vec3::null, 
@@ -51,9 +49,7 @@ void add_stl_to_frame(const string path, Frame* proto, const double scale) {
         );  
         tri->set_outer_color(&Color::gray);
         tri->set_inner_color(&Color::dark_gray);       
-        proto->set_mother_and_child(tri);
     }
-    proto->cluster_using_helper_frames();
 }
 //------------------------------------------------------------------------------
 } // StereoLitography

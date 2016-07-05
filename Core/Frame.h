@@ -52,6 +52,7 @@ public:
 
     //SET
     Frame();
+    virtual ~Frame();
     Frame(const string name, const Vec3 pos, const Rot3 rot);
     void set_name_pos_rot(const string name, const Vec3 pos, const Rot3 rot);
     void set_name(const string name);
@@ -72,9 +73,16 @@ public:
     virtual string get_print()const;
     string get_tree_print()const;
 
+    template<class ProtoFrame>
+    ProtoFrame* append() {
+        ProtoFrame* child = new ProtoFrame;
+        children.push_back(child);
+        child->mother = this;
+        return child;
+    }
+
     //DO
     void init_tree_based_on_mother_child_relations();
-    void set_mother_and_child(Frame *new_child);
     void update_rotation(const Rot3 rot);
     virtual void calculate_intersection_with(
         const Ray* ray, 
@@ -85,17 +93,14 @@ protected:
     // post initialization
     void post_init_root_of_world();
     // post initialization based on root
-    void post_init_me_and_all_my_children();
-    void post_init_transformations();
+    void init_transformations();
     HomTra3 calculate_frame2world()const;
     // initialize
-    void set_mother(Frame *const new_mother);
-    void add_child(Frame * const new_child);
     void update_sphere_enclosing_all_children(Frame *new_child);
     void update_enclosing_sphere_for_all_children();
     void assert_name_is_valid(const string name_to_check)const;
     Vec3 get_mean_pos_in_mother(vector<Frame*> frames)const;
-    public: void cluster_using_helper_frames();
+    void cluster_using_helper_frames();
     bool positions_in_mother_are_too_close_together(vector<Frame*> frames)const;
     void warn_about_neglection_of(const Frame* frame)const;
     void warn_about_close_frames()const;

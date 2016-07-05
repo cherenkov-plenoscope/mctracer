@@ -12,8 +12,6 @@
 
 //=================================
 class RectangularBox :public SurfaceEntity{
-
-	Plane walls[6];
 public:
 
 	void set_xyz_width(

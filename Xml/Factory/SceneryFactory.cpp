@@ -23,7 +23,6 @@ SceneryFactory::SceneryFactory(const string path): xml_path(path), xml_doc(path)
 void SceneryFactory::add_scenery_to_frame(Frame* frame) {
     const Node root_node = xml_doc.node().first_child();
     make_geometry(frame, root_node);
-    frame->cluster_using_helper_frames();
 }
 //------------------------------------------------------------------------------
 void SceneryFactory::make_geometry(Frame* mother, const Node node) {
@@ -81,15 +80,15 @@ void SceneryFactory::add_to_sensors_if_sensitive(Frame* frame, const Node node) 
 Frame* SceneryFactory::add_Frame(Frame* mother, const Node node) {
 
     FrameFab fab(node);
-    Frame* frame = new Frame(fab.name, fab.pos, fab.rot);
-    mother->set_mother_and_child(frame);
+    Frame* frame = mother->append<Frame>();
+    frame->set_name_pos_rot(fab.name, fab.pos, fab.rot);
     return frame;
 }
 //------------------------------------------------------------------------------
 Frame* SceneryFactory::add_Disc(Frame* mother, const Node node) {
 
     FrameFab framefab(node);
-    Disc* disc = new Disc;
+    Disc* disc = mother->append<Disc>();
     disc->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
 
     disc->set_inner_color(surface_color(node));
@@ -97,14 +96,13 @@ Frame* SceneryFactory::add_Disc(Frame* mother, const Node node) {
     disc->set_outer_reflection(surface_refl(node));
     disc->set_inner_reflection(surface_refl(node)); 
     disc->set_radius(node.child("set_disc").attribute2double("radius"));
-    mother->set_mother_and_child(disc);
     return disc;
 }
 //------------------------------------------------------------------------------
 Frame* SceneryFactory::add_Sphere(Frame* mother, const Node node) {
 
     FrameFab framefab(node);
-    Sphere* sphere = new Sphere;
+    Sphere* sphere = mother->append<Sphere>();
     sphere->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
 
     sphere->set_inner_color(surface_color(node));
@@ -113,14 +111,13 @@ Frame* SceneryFactory::add_Sphere(Frame* mother, const Node node) {
     sphere->set_inner_reflection(surface_refl(node));   
     sphere->set_radius(
         node.child("set_sphere").attribute2double("radius"));
-    mother->set_mother_and_child(sphere);
     return sphere;
 }
 //------------------------------------------------------------------------------
 Frame* SceneryFactory::add_Plane(Frame* mother, const Node node) {
 
     FrameFab framefab(node);
-    Plane* plane = new Plane;
+    Plane* plane = mother->append<Plane>();
     plane->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
 
     plane->set_inner_color(surface_color(node));
@@ -131,14 +128,13 @@ Frame* SceneryFactory::add_Plane(Frame* mother, const Node node) {
         node.child("set_plane").attribute2double("x_width"), 
         node.child("set_plane").attribute2double("y_width")
     );
-    mother->set_mother_and_child(plane);
     return plane;
 }
 //------------------------------------------------------------------------------
 Frame* SceneryFactory::add_HexPlane(Frame* mother, const Node node) {
 
     FrameFab framefab(node);
-    HexPlane* plane = new HexPlane;
+    HexPlane* plane = mother->append<HexPlane>();
     plane->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
 
     plane->set_inner_color(surface_color(node));
@@ -147,14 +143,13 @@ Frame* SceneryFactory::add_HexPlane(Frame* mother, const Node node) {
     plane->set_inner_reflection(surface_refl(node));
     plane->set_outer_hex_radius(
         node.child("set_hex_plane").attribute2double("outer_hex_radius"));
-    mother->set_mother_and_child(plane);
     return plane;
 }
 //------------------------------------------------------------------------------
 Frame* SceneryFactory::add_Cylinder(Frame* mother, const Node node) {
 
     FrameFab framefab(node);
-    Cylinder* cyl = new Cylinder;
+    Cylinder* cyl = mother->append<Cylinder>();
     cyl->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
 
     cyl->set_inner_color(surface_color(node));
@@ -166,14 +161,13 @@ Frame* SceneryFactory::add_Cylinder(Frame* mother, const Node node) {
         node.child("set_cylinder").attribute2Vec3("start_pos"),
         node.child("set_cylinder").attribute2Vec3("end_pos")
     );
-    mother->set_mother_and_child(cyl);
     return cyl;
 }
 //------------------------------------------------------------------------------
 Frame* SceneryFactory::add_Annulus(Frame* mother, const Node node) {
 
     FrameFab framefab(node);
-    Annulus* ann = new Annulus;
+    Annulus* ann = mother->append<Annulus>();
     ann->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
 
     ann->set_inner_color(surface_color(node));
@@ -184,14 +178,13 @@ Frame* SceneryFactory::add_Annulus(Frame* mother, const Node node) {
         node.child("set_annulus").attribute2double("outer_radius"),
         node.child("set_annulus").attribute2double("inner_radius")
     );
-    mother->set_mother_and_child(ann);
     return ann;
 }
 //------------------------------------------------------------------------------
 Frame* SceneryFactory::add_BiConvexLensHex(Frame* mother, const Node node) {
 
     FrameFab framefab(node);
-    BiConvexLensHexBound* lens = new BiConvexLensHexBound;
+    BiConvexLensHexBound* lens = mother->append<BiConvexLensHexBound>();
     lens->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
 
     lens->set_inner_color(surface_color(node));
@@ -205,14 +198,13 @@ Frame* SceneryFactory::add_BiConvexLensHex(Frame* mother, const Node node) {
         node.child("set_bi_convex_lens_hex").attribute2double("curvature_radius"),
         node.child("set_bi_convex_lens_hex").attribute2double("outer_radius")
     );
-    mother->set_mother_and_child(lens);
     return lens;
 }
 //------------------------------------------------------------------------------
 Frame* SceneryFactory::add_SphereCapWithHexagonalBound(Frame* mother, const Node node) {
 
     FrameFab framefab(node);
-    SphereCapWithHexagonalBound* cap = new SphereCapWithHexagonalBound;
+    SphereCapWithHexagonalBound* cap = mother->append<SphereCapWithHexagonalBound>();
     cap->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
 
     cap->set_inner_color(surface_color(node));
@@ -223,14 +215,13 @@ Frame* SceneryFactory::add_SphereCapWithHexagonalBound(Frame* mother, const Node
         2.0*node.child("set_sphere_cap_hexagonal").attribute2double("focal_length"),
         node.child("set_sphere_cap_hexagonal").attribute2double("outer_radius")
     );
-    mother->set_mother_and_child(cap);
     return cap;
 }
 //------------------------------------------------------------------------------
 Frame* SceneryFactory::add_SphereCapWithRectangularBound(Frame* mother, const Node node) {
 
     FrameFab framefab(node);
-    SphereCapWithRectangularBound* cap = new SphereCapWithRectangularBound;
+    SphereCapWithRectangularBound* cap = mother->append<SphereCapWithRectangularBound>();
     cap->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
 
     cap->set_inner_color(surface_color(node));
@@ -242,14 +233,13 @@ Frame* SceneryFactory::add_SphereCapWithRectangularBound(Frame* mother, const No
         node.child("set_sphere_cap_rectangular").attribute2double("x_width"),
         node.child("set_sphere_cap_rectangular").attribute2double("y_width")
     );
-    mother->set_mother_and_child(cap);
     return cap;
 }
 //------------------------------------------------------------------------------
 Frame* SceneryFactory::add_Triangle(Frame* mother, const Node node) {
 
     FrameFab framefab(node);
-    Triangle* tri = new Triangle;
+    Triangle* tri = mother->append<Triangle>();
     tri->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
 
     tri->set_inner_color(surface_color(node));
@@ -264,7 +254,6 @@ Frame* SceneryFactory::add_Triangle(Frame* mother, const Node node) {
         node.child("set_triangle").attribute2double("Cx"),
         node.child("set_triangle").attribute2double("Cy")
     );
-    mother->set_mother_and_child(tri);
     return tri;
 }
 //------------------------------------------------------------------------------
@@ -274,7 +263,7 @@ Frame* SceneryFactory::add_STL(Frame* mother, const Node node) {
     const double scale = node.child("set_stl").attribute2double("scale");
 
     FrameFab framefab(node);
-    SurfaceEntity* object = new SurfaceEntity;
+    SurfaceEntity* object = mother->append<SurfaceEntity>();
     object->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
     object->set_inner_color(surface_color(node));
     object->set_outer_color(surface_color(node));
@@ -283,8 +272,6 @@ Frame* SceneryFactory::add_STL(Frame* mother, const Node node) {
     StereoLitography::add_stl_to_and_inherit_surface_from_surfac_entity(
         file, object, scale
     );
-
-    mother->set_mother_and_child(object);
     return object;
 }
 //------------------------------------------------------------------------------
@@ -303,16 +290,17 @@ Frame* SceneryFactory::add_SegmentedReflector(Frame* mother, const Node node) {
     SegmentedReflector::Factory refl_fab(cfg);
 
     FrameFab fab(node);
-    Frame* reflector = new Frame(fab.name, fab.pos, fab.rot);
+    Frame* reflector = mother->append<Frame>();
+    reflector->set_name_pos_rot(fab.name, fab.pos, fab.rot);
     refl_fab.add_reflector_mirror_facets_to_frame(reflector);
-    mother->set_mother_and_child(reflector);
     return reflector;
 }
 //------------------------------------------------------------------------------
 Frame* SceneryFactory::add_light_field_sensor(Frame* mother, const Node node) {
 
     FrameFab ffab(node);
-    Frame* light_field_sensor = new Frame(ffab.name, ffab.pos, ffab.rot);
+    Frame* light_field_sensor = mother->append<Frame>();
+    light_field_sensor->set_name_pos_rot(ffab.name, ffab.pos, ffab.rot);
 
     const Node lfs = node.child("set_light_field_sensor");
 
@@ -335,7 +323,6 @@ Frame* SceneryFactory::add_light_field_sensor(Frame* mother, const Node node) {
     pis.light_field_channels = lfs_factory.get_sub_pixels();
     plenoscopes.push_back(pis);
 
-    mother->set_mother_and_child(light_field_sensor);
     return light_field_sensor;    
 }
 //------------------------------------------------------------------------------

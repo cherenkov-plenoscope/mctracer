@@ -20,7 +20,7 @@ class PlaneIntersectionTest : public ::testing::Test {
 	Color*      colo;
 	double x_width = 2.5;
 	double y_width = 1.3;
-	Plane plane;
+	Plane* plane;
 	Frame world;
 	Random::Mt19937 dice;
 	double wavelength = 433e-9;
@@ -45,15 +45,13 @@ class PlaneIntersectionTest : public ::testing::Test {
 	colo = new Color(200,128,128);;
 
 	//------------Plane----------------
-	plane.set_name_pos_rot("My_Plane", pos, rot);
-	plane.set_outer_color(colo);
-	plane.set_inner_color(colo);
-	plane.set_outer_reflection(refl_vs_wavl);
-	plane.set_inner_reflection(refl_vs_wavl);
-	plane.set_x_y_width(x_width, y_width);
-
-	//----------declare relationships------------
-	world.set_mother_and_child(&plane);
+	plane = world.append<Plane>();
+	plane->set_name_pos_rot("My_Plane", pos, rot);
+	plane->set_outer_color(colo);
+	plane->set_inner_color(colo);
+	plane->set_outer_reflection(refl_vs_wavl);
+	plane->set_inner_reflection(refl_vs_wavl);
+	plane->set_x_y_width(x_width, y_width);
 
 	//---post initialize the world to calculate all bounding spheres---
 	world.init_tree_based_on_mother_child_relations();
@@ -66,7 +64,7 @@ TEST_F(PlaneIntersectionTest, frontal) {
 	const Intersection intersec = RayAndFrame::first_intersection(&ray, &world);
 
 	ASSERT_TRUE(intersec.does_intersect());
-	EXPECT_EQ(&plane, intersec.get_object());
+	EXPECT_EQ(plane, intersec.get_object());
 	EXPECT_EQ(Vec3::null, intersec.get_intersection_vector_in_object_system());
 	EXPECT_EQ(Vec3(0.0, 0.0, 1.0), intersec.get_surface_normal_in_object_system());
 }
@@ -82,7 +80,7 @@ TEST_F(PlaneIntersectionTest, frontal_lateral_offset_alwas_intersection) {
 			const Intersection intersec = RayAndFrame::first_intersection(&ray, &world);
 
 			ASSERT_TRUE(intersec.does_intersect());
-			EXPECT_EQ(&plane, intersec.get_object());
+			EXPECT_EQ(plane, intersec.get_object());
 			EXPECT_EQ(Vec3(x_support, y_support, 0.0), intersec.get_intersection_vector_in_object_system());
 			EXPECT_EQ(Vec3(0.0, 0.0, 1.0), intersec.get_surface_normal_in_object_system());
 		}
@@ -114,15 +112,13 @@ TEST_F(PlaneIntersectionTest, move_plane_up) {
 
 	//------------sphere----------------
 	pos.set(0.0,0.0,1.0);
-	plane.set_name_pos_rot("MySphere", pos, rot);
-	plane.set_outer_color(colo);
-	plane.set_inner_color(colo);
-	plane.set_outer_reflection(refl_vs_wavl);
-	plane.set_inner_reflection(refl_vs_wavl);
-	plane.set_x_y_width(x_width, y_width);
-
-	//----------declare relationships------------
-	world.set_mother_and_child(&plane);
+	Plane* plane2 = world.append<Plane>();
+	plane2->set_name_pos_rot("My_second_plane", pos, rot);
+	plane2->set_outer_color(colo);
+	plane2->set_inner_color(colo);
+	plane2->set_outer_reflection(refl_vs_wavl);
+	plane2->set_inner_reflection(refl_vs_wavl);
+	plane2->set_x_y_width(x_width, y_width);
 
 	//---post initialize the world to calculate all bounding spheres---
 	world.init_tree_based_on_mother_child_relations();

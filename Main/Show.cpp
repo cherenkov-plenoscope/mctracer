@@ -29,21 +29,21 @@ int main(int argc, char* argv[]) {
 		return 0;
 	}
 
-	Frame *scenery = new Frame("root", Vec3::null, Rot3::null);
+	Frame scenery("root", Vec3::null, Rot3::null);
 	if(
 		StringTools::is_ending(cmd.get("scenery"),".stl") || 
 		StringTools::is_ending(cmd.get("scenery"),".STL")
 	) {
 		const double scale = 1.0;
-		StereoLitography::add_stl_to_frame(cmd.get("scenery"), scenery, scale);
+		StereoLitography::add_stl_to_frame(cmd.get("scenery"), &scenery, scale);
 	}else if(	
 		StringTools::is_ending(cmd.get("scenery"),".xml") ||
 		StringTools::is_ending(cmd.get("scenery"),".XML")
 	) {
 		Xml::SceneryFactory fab(cmd.get("scenery"));
-		fab.add_scenery_to_frame(scenery);
+		fab.add_scenery_to_frame(&scenery);
 	}else{
-		scenery = Frame::void_frame;
+		scenery = *Frame::void_frame;
 		cout << "Can only read stl or xml files.\n";
 		return 0;
 	}
@@ -57,8 +57,8 @@ int main(int argc, char* argv[]) {
 		settings.visual = Xml::Configs::get_VisualConfig_from_node(vc_node);
 	}
 
-	scenery->init_tree_based_on_mother_child_relations();
-	FlyingCamera free(scenery, &settings);
+	scenery.init_tree_based_on_mother_child_relations();
+	FlyingCamera free(&scenery, &settings);
 
 	}catch(std::exception &error) {
 		std::cerr << error.what(); 

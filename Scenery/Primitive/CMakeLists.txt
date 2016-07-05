@@ -15,5 +15,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithRectangularBound.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Triangle.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/RectangularBox.cpp
+	#${CMAKE_CURRENT_SOURCE_DIR}/Prism3D.cpp
    	PARENT_SCOPE
 )

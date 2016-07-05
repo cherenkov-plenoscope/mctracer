@@ -12,11 +12,7 @@
 #include "Triangle.h"
 #include "Plane.h"
 //=================================
-class Prism3D :public SurfaceEntity{
-
-	Triangle tri_1;
-	Triangle tri_2;
-	Plane plane_a, plane_b, plane_c;		
+class Prism3D :public SurfaceEntity{	
 public:
 
 	void set_triangle_edge(const double edge_length);

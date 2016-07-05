@@ -12,8 +12,9 @@ Frame::Frame(const string name, const Vec3 pos, const Rot3 rot): Frame() {
     set_name_pos_rot(name, pos, rot); 
 }
 //------------------------------------------------------------------------------
-void Frame::post_init_transformations() {
-	T_frame2world = calculate_frame2world();
+Frame::~Frame() {
+	for(Frame* child: children)
+		delete child;
 }
 //------------------------------------------------------------------------------
 HomTra3 Frame::calculate_frame2world()const {
@@ -100,15 +101,6 @@ string Frame::get_tree_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-void Frame::set_mother(Frame *const new_mother) {
-	mother = new_mother;
-}
-//------------------------------------------------------------------------------
-void Frame::add_child(Frame * const new_child) {
-	children.push_back(new_child);
-	update_sphere_enclosing_all_children(new_child);
-}
-//------------------------------------------------------------------------------
 void Frame::update_sphere_enclosing_all_children(Frame *new_child) {
 	// When a child frame is added to a frame we have to check if the sphere 
 	// enclosing all the frames previous children is also enclosing the new
@@ -182,28 +174,24 @@ void Frame::update_sphere_enclosing_all_children(Frame *new_child) {
 		radius_needed_to_enclose_new_child;	
 }
 //------------------------------------------------------------------------------
-void Frame::set_mother_and_child(Frame *new_child) {
-	this->add_child(new_child);
-	new_child->set_mother(this);
-}
-//------------------------------------------------------------------------------
 void Frame::init_tree_based_on_mother_child_relations() {
-	children.shrink_to_fit();
-	cluster_using_helper_frames();
-	post_init_me_and_all_my_children();
+	//children.shrink_to_fit();
 	update_enclosing_sphere_for_all_children();
+	cluster_using_helper_frames();
 	post_init_root_of_world();
+	init_transformations();
+	update_enclosing_sphere_for_all_children();
 }
 //------------------------------------------------------------------------------
-void Frame::post_init_me_and_all_my_children() {
+void Frame::init_transformations() {
 	// post initialize all frames in world tree of frames.
 	// This has to be done to ensure the relationships between each frame and
 	// the root frame are declared in each frame.
-	post_init_transformations();
+	T_frame2world = calculate_frame2world();
 
 	// and all children
 	for(Frame* child : children)
-		child->post_init_me_and_all_my_children();
+		child->init_transformations();
 }
 //------------------------------------------------------------------------------
 void Frame::update_enclosing_sphere_for_all_children() {
@@ -271,13 +259,14 @@ void Frame::calculate_intersection_with(
 //------------------------------------------------------------------------------
 void Frame::cluster_using_helper_frames() {
 	if(children.size() > max_number_of_children) {
-		
 		vector<Frame*> oct_tree[8];
-		vector<Frame*> new_children;
 
-		// assign children to octtree
-		for(Frame* child : children)
+		// assign children temporarly to octtree
+		for(Frame* child : children) {
+			child->mother = void_frame;
 			oct_tree[child->pos_in_mother.get_octant()].push_back(child);
+		}
+		children.clear();
 
 		for(uint sector=0; sector<8; sector++) {
 
@@ -285,10 +274,13 @@ void Frame::cluster_using_helper_frames() {
 				// this can not be clustered
 				warn_about_close_frames();
 				for(Frame* child : oct_tree[sector]) {
-					if(child->contour_radius() > minimal_structure_size)
-						new_children.push_back(child);
-					else
+					if(child->contour_radius() > minimal_structure_size) {
+						child->mother = this;
+						children.push_back(child);
+					}else{
 						warn_about_neglection_of(child);
+						// ownership of neglected children?
+					}
 				}
 			}else{
 				// if children assigned to this sector
@@ -298,9 +290,9 @@ void Frame::cluster_using_helper_frames() {
 					Vec3 mean_pos_in_mother = get_mean_pos_in_mother(
 						oct_tree[sector]
 					);
-
-					Frame* helper_frame = new Frame(
-						"octant_"+std::to_string(sector),
+					Frame* helper_frame = append<Frame>();
+					helper_frame->set_name_pos_rot(
+						"oct_"+std::to_string(sector),
 						mean_pos_in_mother,
 						Rot3::null
 					);
@@ -317,22 +309,21 @@ void Frame::cluster_using_helper_frames() {
 								sector_child->pos_in_mother
 							);
 
-							helper_frame->set_mother_and_child(sector_child);
-						}else
+							sector_child->mother = helper_frame;
+							helper_frame->children.push_back(sector_child);
+
+						}else{
 							warn_about_neglection_of(sector_child);
+							// ownership of neglected children?
+						}
 					}
-					// now cluster the helper frame itself
-					helper_frame->cluster_using_helper_frames();
-					// now add only helper frame to new children
-					new_children.push_back(helper_frame);
 				}
 			}
 		}
-
-		children.clear();
-		for(Frame* new_helper_frame_child : new_children)
-			set_mother_and_child(new_helper_frame_child);
 	}
+
+	for(Frame* child: children)
+		child->cluster_using_helper_frames();
 }
 //------------------------------------------------------------------------------
 void Frame::warn_about_close_frames()const {
@@ -421,7 +412,7 @@ const vector<Frame*>* Frame::get_children()const {
 void Frame::update_rotation(const Rot3 rot) {
 	rot_in_mother = rot;
 	T_frame2mother.set_transformation(rot_in_mother, pos_in_mother);
-	post_init_me_and_all_my_children();	
+	init_transformations();	
 }
 //------------------------------------------------------------------------------
 void Frame::assert_no_children_duplicate_names()const {

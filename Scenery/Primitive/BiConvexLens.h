@@ -12,9 +12,6 @@
 
 //=================================
 class BiConvexLens :public SurfaceEntity{
-
-	SphereCapWithCylinderBound front_cap;
-	SphereCapWithCylinderBound rear_cap;
 public:
 
 	void set_curvature_radius_and_aperture_radius(

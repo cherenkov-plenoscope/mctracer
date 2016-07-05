@@ -52,12 +52,13 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
     int number_of_bounces = 42;
     setup.max_number_of_interactions_per_photon = number_of_bounces;
 
-    Vec3    pos(0,0,0);
+    Vec3  pos(0,0,0);
     Rot3  rot(0,0,0);
 
     // create a test setup with two mirrors bouncing the photon
     Frame world("world",pos,rot);
-    Frame optical_table("optical_table",pos,rot);
+    Frame* optical_table = world.append<Plane>();
+    optical_table->set_name_pos_rot("optical_table",pos,rot);
     
     Function::Constant refl(1.0, Function::Limits(200e-9, 1200e-9)); 
     Color      colo(200,128,128);
@@ -66,28 +67,24 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
     rot.set(0.0,0.0,0.0);
     
     //------------mirror 1----------------
-    Plane mirror1("mirror_1",pos,rot);
-    mirror1.set_outer_color(&colo);
-    mirror1.set_inner_color(&colo);
-    mirror1.set_outer_reflection(&refl);
-    mirror1.set_inner_reflection(&refl); 
-    mirror1.set_x_y_width(1.0, 1.0);
+    Plane* mirror1 = optical_table->append<Plane>();
+    mirror1->set_name_pos_rot("mirror_1",pos,rot);
+    mirror1->set_outer_color(&colo);
+    mirror1->set_inner_color(&colo);
+    mirror1->set_outer_reflection(&refl);
+    mirror1->set_inner_reflection(&refl); 
+    mirror1->set_x_y_width(1.0, 1.0);
     
     //------------mirror 2----------------
     pos.set(0.0,0.0,1.0);
     rot.set(0.0,0.0,0.0);
-    Plane mirror2("mirror_2",pos,rot);
-    mirror2.set_outer_color(&colo);
-    mirror2.set_inner_color(&colo);
-    mirror2.set_outer_reflection(&refl);
-    mirror2.set_inner_reflection(&refl);
-    mirror2.set_x_y_width(1.0, 1.0);
-
-    //----------declare relationships------------
-    optical_table.set_mother_and_child(&mirror1);
-    optical_table.set_mother_and_child(&mirror2);
-
-    world.set_mother_and_child(&optical_table);
+    Plane* mirror2 = optical_table->append<Plane>();
+    mirror2->set_name_pos_rot("mirror_2",pos,rot);
+    mirror2->set_outer_color(&colo);
+    mirror2->set_inner_color(&colo);
+    mirror2->set_outer_reflection(&refl);
+    mirror2->set_inner_reflection(&refl);
+    mirror2->set_x_y_width(1.0, 1.0);
 
     //---post initialize the world to calculate all bounding spheres---
     world.init_tree_based_on_mother_child_relations();
@@ -113,8 +110,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
     //creation is 1 interaction itself
     const uint num_of_total_interactions = number_of_bounces + 1; 
 
-    for(int i=0; i<1; i++)
-    {
+    for(int i=0; i<1; i++) {
         Photon P(Support, direction, wavelength);
 
         PhotonAndFrame::Propagator(&P, environment);
@@ -158,8 +154,8 @@ TEST_F(PhotonTest, Reflections){
 
     // create a test setup with two mirrors bouncing the photon
     Frame world("world",pos,rot);
-
-    Frame optical_table("optical_table",pos,rot);
+    Frame* optical_table = world.append<Plane>();
+    optical_table->set_name_pos_rot("optical_table",pos,rot);
 
     pos.set(0.0,0.0,0.0);
     rot.set(0.0,0.0,0.0);
@@ -179,12 +175,13 @@ TEST_F(PhotonTest, Reflections){
     Color mirror_color;
     mirror_color = Color(200,64,64);
 
-    Plane mirror("mirror",pos,rot);
-    mirror.set_outer_color(&mirror_color);
-    mirror.set_inner_color(&mirror_color);
-    mirror.set_outer_reflection(&mirror_reflection);
-    mirror.set_inner_reflection(&mirror_reflection); 
-    mirror.set_x_y_width(1.0, 1.0);
+    Plane* mirror = optical_table->append<Plane>();
+    mirror->set_name_pos_rot("mirror",pos,rot);
+    mirror->set_outer_color(&mirror_color);
+    mirror->set_inner_color(&mirror_color);
+    mirror->set_outer_reflection(&mirror_reflection);
+    mirror->set_inner_reflection(&mirror_reflection); 
+    mirror->set_x_y_width(1.0, 1.0);
 
     //------------absorber----------------
     pos.set(0.0,+2.0,0.0);
@@ -192,19 +189,14 @@ TEST_F(PhotonTest, Reflections){
 
     Color absorber_color(50,50,50);
 
-    Plane absorber("absorber",pos,rot);
-    absorber.set_outer_color(&absorber_color);
-    absorber.set_inner_color(&absorber_color);
-    absorber.set_x_y_width(1.0, 1.0);
-    PhotonSensor::Sensor absorber_sensor(0, &absorber);
+    Plane* absorber = optical_table->append<Plane>();
+    absorber->set_name_pos_rot("absorber",pos,rot);
+    absorber->set_outer_color(&absorber_color);
+    absorber->set_inner_color(&absorber_color);
+    absorber->set_x_y_width(1.0, 1.0);
+    PhotonSensor::Sensor absorber_sensor(0, absorber);
     std::vector<PhotonSensor::Sensor*> sensors_vector = {&absorber_sensor};
     PhotonSensors::Sensors sensors(sensors_vector);
-
-    //----------declare relationships------------
-    optical_table.set_mother_and_child(&mirror);
-    optical_table.set_mother_and_child(&absorber);
-
-    world.set_mother_and_child(&optical_table);
 
     //---post initialize the world to calculate all bounding spheres---
     world.init_tree_based_on_mother_child_relations();
@@ -269,36 +261,33 @@ TEST_F(PhotonTest, Refraction){
     //------------ box ---------------
     Color entrance_surface_color(200,64,64);
 
-    RectangularBox box;
-    box.set_name_pos_rot(
+    RectangularBox* box = world.append<RectangularBox>();
+    box->set_name_pos_rot(
         "box", 
         Vec3(0.0, 0.0, 1.0), 
         Rot3(0.0, 0.0, 0.0)
     );
-    box.set_outer_color(&entrance_surface_color);
-    box.set_inner_color(&entrance_surface_color);
-    box.set_inner_refraction(&water_refraction);
-    box.set_xyz_width(1.0, 1.0, 1.0);
+    box->set_outer_color(&entrance_surface_color);
+    box->set_inner_color(&entrance_surface_color);
+    box->set_inner_refraction(&water_refraction);
+    box->set_xyz_width(1.0, 1.0, 1.0);
 
     //------------absorber----------------
     Color absorber_color(50,50,50);
 
-    Plane absorber(
+    Plane* absorber = world.append<Plane>();
+    absorber->set_name_pos_rot(
         "absorber", 
         Vec3(0.0, 0.0, 3.0),
         Rot3::null
     );
-    absorber.set_outer_color(&absorber_color);
-    absorber.set_inner_color(&absorber_color);
-    absorber.set_x_y_width(1.0, 1.0);
+    absorber->set_outer_color(&absorber_color);
+    absorber->set_inner_color(&absorber_color);
+    absorber->set_x_y_width(1.0, 1.0);
     uint sensor_id = 0;
-    PhotonSensor::Sensor absorber_sensor(sensor_id, &absorber);
+    PhotonSensor::Sensor absorber_sensor(sensor_id, absorber);
     std::vector<PhotonSensor::Sensor*> sensors_vector = {&absorber_sensor};
     PhotonSensors::Sensors sensors(sensors_vector);
-
-    //----------declare relationships------------
-    world.set_mother_and_child(&box);
-    world.set_mother_and_child(&absorber);
 
     //---post initialize the world to calculate all bounding spheres---
     world.init_tree_based_on_mother_child_relations();
@@ -367,37 +356,34 @@ TEST_F(PhotonTest, absorbtion_in_medium){
     //------------ box ---------------
     Color entrance_surface_color(200,64,64);
 
-    RectangularBox box;
-    box.set_name_pos_rot(
+    RectangularBox* box = world.append<RectangularBox>();
+    box->set_name_pos_rot(
         "box", 
         Vec3(0.0, 0.0, 1.0), 
         Rot3(0.0, 0.0, 0.0)
     );
-    box.set_outer_color(&entrance_surface_color);
-    box.set_inner_color(&entrance_surface_color);
-    box.set_inner_absorption(&free_half_path); 
-    box.set_inner_refraction(&water_refraction);
-    box.set_xyz_width(1.0, 1.0, 1.0);
+    box->set_outer_color(&entrance_surface_color);
+    box->set_inner_color(&entrance_surface_color);
+    box->set_inner_absorption(&free_half_path); 
+    box->set_inner_refraction(&water_refraction);
+    box->set_xyz_width(1.0, 1.0, 1.0);
 
     //------------collector----------------
     Color absorber_color(50,50,50);
 
-    Plane collector(
+    Plane* collector = world.append<Plane>();
+    collector->set_name_pos_rot(
         "collector", 
         Vec3(0.0, 0.0, 3.0),
         Rot3::null
     );
-    collector.set_outer_color(&absorber_color);
-    collector.set_inner_color(&absorber_color);
-    collector.set_x_y_width(1.0, 1.0);
+    collector->set_outer_color(&absorber_color);
+    collector->set_inner_color(&absorber_color);
+    collector->set_x_y_width(1.0, 1.0);
     uint sensor_id = 0;
-    PhotonSensor::Sensor collector_sensor(sensor_id, &collector);
+    PhotonSensor::Sensor collector_sensor(sensor_id, collector);
     std::vector<PhotonSensor::Sensor*> sensors_vector = {&collector_sensor};
     PhotonSensors::Sensors sensors(sensors_vector);
-
-    //----------declare relationships------------
-    world.set_mother_and_child(&box);
-    world.set_mother_and_child(&collector);
 
     //---post initialize the world to calculate all bounding spheres---
     world.init_tree_based_on_mother_child_relations();

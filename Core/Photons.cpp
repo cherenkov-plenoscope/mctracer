@@ -1,7 +1,7 @@
 #include "Photons.h"
 #include <omp.h>
 #include <sstream>
-#include "Scenery/TrajectoryFactory.h"
+//#include "Scenery/TrajectoryFactory.h"
 #include "Core/PhotonAndFrame.h"
 using std::string;
 using std::stringstream;
@@ -169,7 +169,7 @@ namespace Photons {
 	//--------------------------------------------------------------------------
 	// Trajectories
 	//--------------------------------------------------------------------------
-	Trajectories::Trajectories(
+	/*Trajectories::Trajectories(
 		vector<Photon*> *_photons,
 		const TracerSettings *settings
 	) {
@@ -191,7 +191,7 @@ namespace Photons {
 		factory.set_trajectory_radius(settings->visual.photon_trajectories.radius);
 
 		return factory.get_trajectory();
-	}
+	}*/
 	//--------------------------------------------------------------------------
 	// light source
 	//--------------------------------------------------------------------------

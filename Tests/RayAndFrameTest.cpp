@@ -206,17 +206,23 @@ TEST_F(RayAndFrameTest, transform_ray_into_rotated_frame) {
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameTest, causal_intersection) {
 
-    Sphere s0("s0", Vec3(0.0, 0.0,0.0), Rot3::null); s0.set_radius(1.0);
-    Sphere s1("s1", Vec3(0.0, 3.0,0.0), Rot3::null); s1.set_radius(1.0);
-    Sphere s2("s2", Vec3(0.0, 6.0,0.0), Rot3::null); s2.set_radius(1.0);
-    Sphere s3("s3", Vec3(0.0, 9.0,0.0), Rot3::null); s3.set_radius(1.0);
-    Sphere s4("s4", Vec3(0.0,12.0,0.0), Rot3::null); s4.set_radius(1.0);
-
     Frame spheres_in_a_row("spheres", Vec3::null, Rot3::null);
-    spheres_in_a_row.set_mother_and_child(&s0);
-    spheres_in_a_row.set_mother_and_child(&s1);
-    spheres_in_a_row.set_mother_and_child(&s2);
-    spheres_in_a_row.set_mother_and_child(&s3);
-    spheres_in_a_row.set_mother_and_child(&s4);
+
+    Sphere* s0 = spheres_in_a_row.append<Sphere>();
+    s0->set_name_pos_rot("s0", Vec3(0.0, 0.0,0.0), Rot3::null);
+    s0->set_radius(1.0);
+    Sphere* s1 = spheres_in_a_row.append<Sphere>();
+    s1->set_name_pos_rot("s1", Vec3(0.0, 3.0,0.0), Rot3::null);
+    s1->set_radius(1.0);
+    Sphere* s2 = spheres_in_a_row.append<Sphere>();
+    s2->set_name_pos_rot("s2", Vec3(0.0, 6.0,0.0), Rot3::null);
+    s2->set_radius(1.0);
+    Sphere* s3 = spheres_in_a_row.append<Sphere>();
+    s3->set_name_pos_rot("s3", Vec3(0.0, 9.0,0.0), Rot3::null);
+    s3->set_radius(1.0);
+    Sphere* s4 = spheres_in_a_row.append<Sphere>();
+    s4->set_name_pos_rot("s4", Vec3(0.0,12.0,0.0), Rot3::null);
+    s4->set_radius(1.0);
+
     spheres_in_a_row.init_tree_based_on_mother_child_relations();
 }

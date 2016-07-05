@@ -13,7 +13,7 @@
 class BiConvexLensTest : public ::testing::Test {
 protected:
 
-	Frame* test_bench;
+	Frame test_bench;
 	TracerSettings settings;
 	Random::Mt19937 prng;
 	PropagationEnvironment lens_test_bench_environment;
@@ -28,7 +28,7 @@ protected:
 
 		prng.set_seed(Random::zero_seed);
 
-		lens_test_bench_environment.world_geometry = test_bench;
+		lens_test_bench_environment.world_geometry = &test_bench;
 		lens_test_bench_environment.propagation_options = &settings;
 		lens_test_bench_environment.random_engine = &prng;
 	}
@@ -38,25 +38,18 @@ protected:
 	}
 	//------------------
 	void set_up_test_bench() {
-		BiConvexLens* lens = get_preassambled_lens();
-		Disc* image_sensor = get_preassambled_sensor_disc();
-		test_bench = get_test_bench_frame();
 
-		test_bench->set_mother_and_child(lens);
-		test_bench->set_mother_and_child(image_sensor);
-
-		test_bench->init_tree_based_on_mother_child_relations();     
-	}
-	//------------------  
-	BiConvexLens* get_preassambled_lens() {
-		
+		test_bench.set_name_pos_rot(
+			"BiConvexLens_test_world",
+			Vec3::null,
+			Rot3::null
+		);  
+		//-------------------------
 		cfg.focal_length = 1.0;
 		cfg.aperture_radius = 0.125;
 		cfg.refractive_index = 1.49;
 
-		BiConvexLens* lens;
-		lens = new BiConvexLens;
-
+		BiConvexLens* lens = test_bench.append<BiConvexLens>();
 		lens->set_name_pos_rot(
 			"little_lens",
 			Vec3::null,
@@ -70,7 +63,6 @@ protected:
 		Function::Constant* refraction_vs_wavelength = 
 			new Function::Constant(1.49, limits);
 
-		//////////////////////////////////
 		lens->set_outer_color(lens_color);
 		lens->set_inner_color(lens_color);
 		lens->set_inner_refraction(refraction_vs_wavelength);
@@ -78,14 +70,8 @@ protected:
 			LensMaker::Approximation::get_curvature_radius(cfg),
 			cfg.aperture_radius
 		);
-		return lens;
-	}
-	//------------------
-	Disc* get_preassambled_sensor_disc() {
-
-		Disc* image_sensor;
-		image_sensor = new Disc;
-
+		//-------------------------
+		Disc* image_sensor = test_bench.append<Disc>();
 		image_sensor->set_name_pos_rot(
 			"sensor_disc",
 			Vec3(0.0, 0.0, -1.0), 
@@ -102,24 +88,10 @@ protected:
 		sensor = new PhotonSensor::Sensor(0, image_sensor);
 		std::vector<PhotonSensor::Sensor*> sensors_vector = {sensor};
 		sensor_list.init(sensors_vector);
+		//-------------------------
 
-		return image_sensor;   
-	}
-	//------------------
-	Frame* get_test_bench_frame() {
-
-		Frame* test_bench;
-		test_bench = new Frame;
-
-		test_bench->set_name_pos_rot(
-			"BiConvexLens_test_world",
-			Vec3::null,
-			Rot3::null
-		);  
-
-		
-		return test_bench;
-	}
+		test_bench.init_tree_based_on_mother_child_relations();     
+	} 
 	//------------------
 	virtual ~BiConvexLensTest() {
 	//------------------

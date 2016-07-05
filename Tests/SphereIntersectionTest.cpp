@@ -18,7 +18,7 @@ protected:
 	Rot3  rot; 
 	Color*      colo;
 	double radius;
-	Sphere MySphere;
+	Sphere* MySphere;
 	Frame world;
 	Random::Mt19937 dice;
 	double wavelength = 433e-9;
@@ -43,13 +43,11 @@ protected:
 
 	//------------sphere----------------
 	radius = 1.0;
-	MySphere.set_name_pos_rot("MySphere", pos, rot);
-	MySphere.set_inner_color(colo);
-	MySphere.set_outer_color(colo);
-	MySphere.set_radius(radius);
-
-	//----------declare relationships------------
-	world.set_mother_and_child(&MySphere);
+	MySphere = world.append<Sphere>();
+	MySphere->set_name_pos_rot("MySphere", pos, rot);
+	MySphere->set_inner_color(colo);
+	MySphere->set_outer_color(colo);
+	MySphere->set_radius(radius);
 
 	//---post initialize the world to calculate all bounding spheres---
 	world.init_tree_based_on_mother_child_relations();
@@ -138,10 +136,10 @@ TEST_F(SphereIntersectionTest, ray_frontal_intersection) {
   Ray ray_with_intersection(Vec3(0.0,0.0,-2.0), Vec3(0.0,0.0,1.0));
 
   vector<Intersection> intersections;
-  MySphere.calculate_intersection_with(&ray_with_intersection, &intersections);
+  MySphere->calculate_intersection_with(&ray_with_intersection, &intersections);
 
   ASSERT_FALSE(intersections.empty());
-  EXPECT_EQ(intersections.front().get_object(), &MySphere);
+  EXPECT_EQ(intersections.front().get_object(), MySphere);
   EXPECT_EQ(
   	Vec3(0.0,0.0,-1.0),
   	intersections.front().get_intersection_vector_in_object_system()
@@ -157,7 +155,7 @@ TEST_F(SphereIntersectionTest, ray_intersection_but_no_causal_intersection) {
   Ray ray_without_intersection(Vec3(0.0,0.0,+2.0), Vec3(0.0,0.0,1.0));
 
   vector<Intersection> intersections;
-  MySphere.calculate_intersection_with(&ray_without_intersection, &intersections);
+  MySphere->calculate_intersection_with(&ray_without_intersection, &intersections);
 
   EXPECT_TRUE(intersections.empty());
 }
@@ -167,7 +165,7 @@ TEST_F(SphereIntersectionTest, ray_completely_outside_of_sphere) {
   Ray ray_outside(Vec3(5.0,0.0,0.0), Vec3(0.0,0.0,1.0));
 
   vector<Intersection> intersections;
-  MySphere.calculate_intersection_with(&ray_outside, &intersections);
+  MySphere->calculate_intersection_with(&ray_outside, &intersections);
 
   EXPECT_TRUE(intersections.empty());
 }
@@ -177,10 +175,10 @@ TEST_F(SphereIntersectionTest, ray_starts_inside_sphere) {
   Ray ray_inside(Vec3::null, Vec3(0.0,0.0,1.0));
 
   vector<Intersection> intersections;
-  MySphere.calculate_intersection_with(&ray_inside, &intersections);
+  MySphere->calculate_intersection_with(&ray_inside, &intersections);
 
   ASSERT_FALSE(intersections.empty());
-  EXPECT_EQ(intersections.front().get_object(), &MySphere);
+  EXPECT_EQ(intersections.front().get_object(), MySphere);
   EXPECT_EQ(
   	Vec3(0.0,0.0,+1.0),
   	intersections.front().get_intersection_vector_in_object_system()
@@ -196,10 +194,10 @@ TEST_F(SphereIntersectionTest, ray_tangents_sphere) {
   Ray ray_inside(Vec3(1.0, 0.0, -2.0), Vec3(0.0, 0.0, 1.0));
 
   vector<Intersection> intersections;
-  MySphere.calculate_intersection_with(&ray_inside, &intersections);
+  MySphere->calculate_intersection_with(&ray_inside, &intersections);
 
   ASSERT_FALSE(intersections.empty());
-  EXPECT_EQ(intersections.front().get_object(), &MySphere);
+  EXPECT_EQ(intersections.front().get_object(), MySphere);
   EXPECT_EQ(
   	Vec3(1.0, 0.0, 0.0),
   	intersections.front().get_intersection_vector_in_object_system())
