@@ -118,7 +118,7 @@ void Propagator::propagate_on_after_boundary_layer(
 			isec.get_object()->get_allowed_frame_to_propagate_to();
 	else
 		env.world_geometry = 
-			isec.get_object()->get_root_of_world();
+			isec.get_object()->get_root();
 
 	ph->set_support_and_direction(
 		isec.get_intersection_vector_in_world_system(),

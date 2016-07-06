@@ -29,7 +29,8 @@ int main(int argc, char* argv[]) {
 		return 0;
 	}
 
-	Frame scenery("root", Vec3::null, Rot3::null);
+	Frame scenery;
+	scenery.set_name_pos_rot("root", Vec3::null, Rot3::null);
 	if(
 		StringTools::is_ending(cmd.get("scenery"),".stl") || 
 		StringTools::is_ending(cmd.get("scenery"),".STL")
@@ -43,7 +44,6 @@ int main(int argc, char* argv[]) {
 		Xml::SceneryFactory fab(cmd.get("scenery"));
 		fab.add_scenery_to_frame(&scenery);
 	}else{
-		scenery = *Frame::void_frame;
 		cout << "Can only read stl or xml files.\n";
 		return 0;
 	}

@@ -138,7 +138,8 @@ class RayAndFrameTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameTest, transform_into_unit_frame) {
 
-    Frame frame("frame", Vec3::null, Rot3::null);
+    Frame frame;
+    frame.set_name_pos_rot("frame", Vec3::null, Rot3::null);
     frame.init_tree_based_on_mother_child_relations();
 
     Ray ray(Vec3::null, Vec3::unit_z);
@@ -154,7 +155,8 @@ TEST_F(RayAndFrameTest, transform_into_unit_frame) {
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameTest, transform_into_translated_frame) {
 
-    Frame frame("frame", Vec3(0.0, 0.0, 13.37), Rot3::null);
+    Frame frame;
+    frame.set_name_pos_rot("frame", Vec3(0.0, 0.0, 13.37), Rot3::null);
     frame.init_tree_based_on_mother_child_relations();
 
     Ray ray(Vec3(0.0, 4.2, 0.0), Vec3::unit_z);
@@ -170,7 +172,8 @@ TEST_F(RayAndFrameTest, transform_into_translated_frame) {
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameTest, transform_ray_in_z_into_frame_rotated_in_z) {
 
-    Frame frame("frame", Vec3::null, Rot3(0.0, 0.0, 0.5*M_PI));
+    Frame frame;
+    frame.set_name_pos_rot("frame", Vec3::null, Rot3(0.0, 0.0, 0.5*M_PI));
     frame.init_tree_based_on_mother_child_relations();
 
     Ray ray(Vec3::null, Vec3::unit_z);
@@ -186,7 +189,8 @@ TEST_F(RayAndFrameTest, transform_ray_in_z_into_frame_rotated_in_z) {
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameTest, transform_ray_into_rotated_frame) {
 
-    Frame frame("frame", Vec3::null, Rot3(0.0, 0.0, 0.5*M_PI));
+    Frame frame;
+    frame.set_name_pos_rot("frame", Vec3::null, Rot3(0.0, 0.0, 0.5*M_PI));
     frame.init_tree_based_on_mother_child_relations();
 
     Ray ray(Vec3::null, Vec3::unit_x);
@@ -206,7 +210,8 @@ TEST_F(RayAndFrameTest, transform_ray_into_rotated_frame) {
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameTest, causal_intersection) {
 
-    Frame spheres_in_a_row("spheres", Vec3::null, Rot3::null);
+    Frame spheres_in_a_row;
+    spheres_in_a_row.set_name_pos_rot("spheres", Vec3::null, Rot3::null);
 
     Sphere* s0 = spheres_in_a_row.append<Sphere>();
     s0->set_name_pos_rot("s0", Vec3(0.0, 0.0,0.0), Rot3::null);

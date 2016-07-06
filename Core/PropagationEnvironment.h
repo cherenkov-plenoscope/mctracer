@@ -15,15 +15,12 @@
 class PropagationEnvironment {
 public:
 
-	const Frame* world_geometry = 
-		Frame::void_frame;
-
+	const Frame* world_geometry = &Frame::void_frame;
 	const TracerSettings* propagation_options = 
 		&TracerSettings::default_settings;
-
 	Random::Generator* random_engine =
 		&Random::void_generator;
-
+		
 	static PropagationEnvironment default_environment;
 };
 #endif // __PropagationEnvironment_H_INCLUDED__ 

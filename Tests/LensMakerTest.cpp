@@ -83,7 +83,8 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 		double image_sensor_disc_distance = cfg.focal_length + offset;
 
 	    // geometry
-		Frame optical_table("table", Vec3::null, Rot3::null);
+		Frame optical_table;
+		optical_table.set_name_pos_rot("table", Vec3::null, Rot3::null);
 
 		BiConvexLensHexBound* lens = optical_table.append<BiConvexLensHexBound>();
 		lens->set_name_pos_rot("lens", Vec3::null, Rot3::null);

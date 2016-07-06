@@ -10,7 +10,8 @@ class OwnerShipTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(OwnerShipTest, own) {
 
-	Frame tree("tree", Vec3::null, Rot3::null);
+	Frame tree;
+	tree.set_name_pos_rot("tree", Vec3::null, Rot3::null);
 
 	Sphere* sphere = tree.append<Sphere>();
 	sphere->set_name_pos_rot("leaf_ball", Vec3(0,0,1.8), Rot3::null);

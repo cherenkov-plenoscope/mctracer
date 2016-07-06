@@ -33,7 +33,8 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
                     photons.push_back(cpf.get_photon());
 
                     // propagate mctracer photons down to ground
-                    Frame world("world", Vec3::null, Rot3::null);
+                    Frame world;
+                    world.set_name_pos_rot("world", Vec3::null, Rot3::null);
 
                     Disc* ground = world.append<Disc>();
                     ground->set_name_pos_rot("ground", Vec3::null, Rot3::null);
@@ -269,7 +270,8 @@ TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         }
 
         // propagate mctracer photons down to ground
-        Frame world("world", Vec3::null, Rot3::null);
+        Frame world;
+        world.set_name_pos_rot("world", Vec3::null, Rot3::null);
         
         Disc* ground = world.append<Disc>();
         ground->set_name_pos_rot("ground", Vec3::null, Rot3::null);

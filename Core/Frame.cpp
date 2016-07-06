@@ -4,13 +4,9 @@
 const uint Frame::max_number_of_children = 16;
 const double Frame::minimal_structure_size = 1e-6;
 //------------------------------------------------------------------------------
-Frame* Frame::void_frame = new Frame("void_frame", Vec3::null, Rot3::null);
+Frame Frame::void_frame;
 //------------------------------------------------------------------------------
 Frame::Frame():radius_of_sphere_enclosing_all_children(0.0), root_frame(this) {}
-//------------------------------------------------------------------------------
-Frame::Frame(const string name, const Vec3 pos, const Rot3 rot): Frame() { 
-    set_name_pos_rot(name, pos, rot); 
-}
 //------------------------------------------------------------------------------
 Frame::~Frame() {
 	for(Frame* child: children)
@@ -210,7 +206,7 @@ void Frame::update_enclosing_sphere_for_all_children() {
 void Frame::post_init_root_of_world() {
 
 	if(has_mother())
-		root_frame = mother->get_root_of_world();
+		root_frame = mother->get_root();
 	else
 		root_frame = this;
 
@@ -218,7 +214,7 @@ void Frame::post_init_root_of_world() {
 		child->post_init_root_of_world();
 }
 //------------------------------------------------------------------------------
-const Frame* Frame::get_root_of_world()const {
+const Frame* Frame::get_root()const {
 	return root_frame;
 }
 //------------------------------------------------------------------------------
@@ -242,7 +238,7 @@ string Frame::get_path_in_tree_of_frames()const {
 }
 //------------------------------------------------------------------------------
 bool Frame::has_mother()const {
-	return mother != void_frame;
+	return mother != &void_frame;
 }
 //------------------------------------------------------------------------------
 bool Frame::has_children()const {
@@ -263,7 +259,7 @@ void Frame::cluster_using_helper_frames() {
 
 		// assign children temporarly to octtree
 		for(Frame* child : children) {
-			child->mother = void_frame;
+			child->mother = &void_frame;
 			oct_tree[child->pos_in_mother.get_octant()].push_back(child);
 		}
 		children.clear();
@@ -357,24 +353,24 @@ Vec3 Frame::get_mean_pos_in_mother(vector<Frame*> frames)const {
 //------------------------------------------------------------------------------
 bool Frame::positions_in_mother_are_too_close_together(vector<Frame*> frames)const {
 
-		if(frames.size() < 2)
-			return false;
+	if(frames.size() < 2)
+		return false;
 
-		const Vec3 mean_pos_in_mother = get_mean_pos_in_mother(frames);
+	const Vec3 mean_pos_in_mother = get_mean_pos_in_mother(frames);
 
-		Vec3 u = Vec3::null;
-		for(Frame* frame : frames) {
-			const Vec3 r =  frame->pos_in_mother - mean_pos_in_mother;
-			u = u + Vec3(
-				r.x()*r.x(), 
-				r.y()*r.y(), 
-				r.z()*r.z()
-			);
-		}
+	Vec3 u = Vec3::null;
+	for(Frame* frame : frames) {
+		const Vec3 r =  frame->pos_in_mother - mean_pos_in_mother;
+		u = u + Vec3(
+			r.x()*r.x(), 
+			r.y()*r.y(), 
+			r.z()*r.z()
+		);
+	}
 
-		u = u/frames.size();
-		const double spread = sqrt(u.norm());
-		return spread < minimal_structure_size;
+	u = u/frames.size();
+	const double spread = sqrt(u.norm());
+	return spread < minimal_structure_size;
 }
 //------------------------------------------------------------------------------
 string Frame::get_name()const { 

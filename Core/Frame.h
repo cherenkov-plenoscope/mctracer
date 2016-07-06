@@ -39,23 +39,22 @@ protected:
     HomTra3 T_frame2world;
     
     vector<Frame*> children;
-	Frame *mother = void_frame;
+	Frame *mother = &void_frame;
     const Frame *root_frame;
-private:
 
-    static const char path_delimiter = '/';
+    bool must_update_boundary_sphere;
+    bool must_update_frame2world;
 public:
 
+    static const char path_delimiter = '/';
     static const uint max_number_of_children;
     static const double minimal_structure_size;
-    static Frame* void_frame;
+    static Frame void_frame;
 
     //SET
     Frame();
     virtual ~Frame();
-    Frame(const string name, const Vec3 pos, const Rot3 rot);
     void set_name_pos_rot(const string name, const Vec3 pos, const Rot3 rot);
-    void set_name(const string name);
     //GET
     string get_name()const;
     string get_path_in_tree_of_frames()const;
@@ -66,13 +65,13 @@ public:
     const HomTra3* frame2mother()const;
     const HomTra3* frame2world()const;
     const vector<Frame*>* get_children()const;
-    const Frame* get_root_of_world()const;
+    const Frame* get_root()const;
     bool has_mother()const;
     bool has_children()const;
     void assert_no_children_duplicate_names()const;
     virtual string get_print()const;
     string get_tree_print()const;
-
+    //DO
     template<class ProtoFrame>
     ProtoFrame* append() {
         ProtoFrame* child = new ProtoFrame;
@@ -80,8 +79,6 @@ public:
         child->mother = this;
         return child;
     }
-
-    //DO
     void init_tree_based_on_mother_child_relations();
     void update_rotation(const Rot3 rot);
     virtual void calculate_intersection_with(
@@ -90,30 +87,28 @@ public:
     )const;
 protected:
 
-    // post initialization
     void post_init_root_of_world();
-    // post initialization based on root
     void init_transformations();
     HomTra3 calculate_frame2world()const;
-    // initialize
-    void update_sphere_enclosing_all_children(Frame *new_child);
-    void update_enclosing_sphere_for_all_children();
-    void assert_name_is_valid(const string name_to_check)const;
-    Vec3 get_mean_pos_in_mother(vector<Frame*> frames)const;
-    void cluster_using_helper_frames();
-    bool positions_in_mother_are_too_close_together(vector<Frame*> frames)const;
+private:
+
+    void set_name(const string name);
     void warn_about_neglection_of(const Frame* frame)const;
     void warn_about_close_frames()const;
+    void cluster_using_helper_frames();
+    bool positions_in_mother_are_too_close_together(vector<Frame*> frames)const;
+    void assert_name_is_valid(const string name_to_check)const;
+    Vec3 get_mean_pos_in_mother(vector<Frame*> frames)const;
+    void update_sphere_enclosing_all_children(Frame *new_child);
+    void update_enclosing_sphere_for_all_children();
 public:
 
     class DuplicateChildName :public TracerException{
         using TracerException::TracerException;
     };
-
     class BadName :public TracerException{
         using TracerException::TracerException;
     };
-
     friend std::ostream& operator<<(std::ostream& os, const Frame& frame) {
         os << frame.get_print();
         return os;

@@ -56,7 +56,8 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
     Rot3  rot(0,0,0);
 
     // create a test setup with two mirrors bouncing the photon
-    Frame world("world",pos,rot);
+    Frame world;
+    world.set_name_pos_rot("world",pos,rot);
     Frame* optical_table = world.append<Plane>();
     optical_table->set_name_pos_rot("optical_table",pos,rot);
     
@@ -149,11 +150,12 @@ TEST_F(PhotonTest, Reflections){
     TracerSettings setup;
     setup.use_multithread_when_possible = false;
 
-    Vec3    pos = Vec3::null;
-    Rot3  rot = Rot3::null;
+    Vec3 pos = Vec3::null;
+    Rot3 rot = Rot3::null;
 
     // create a test setup with two mirrors bouncing the photon
-    Frame world("world",pos,rot);
+    Frame world;
+    world.set_name_pos_rot("world",pos,rot);
     Frame* optical_table = world.append<Plane>();
     optical_table->set_name_pos_rot("optical_table",pos,rot);
 
@@ -251,7 +253,8 @@ TEST_F(PhotonTest, Refraction){
     setup.use_multithread_when_possible = false;
 
     // create a test setup with two planes and high refractive index in between
-    Frame world("world", Vec3::null, Rot3::null);
+    Frame world;
+    world.set_name_pos_rot("world", Vec3::null, Rot3::null);
 
     Function::Constant water_refraction(
             1.33,
@@ -341,7 +344,8 @@ TEST_F(PhotonTest, absorbtion_in_medium){
     setup.use_multithread_when_possible = false;
 
     // create a test setup with two planes and high refractive index in between
-    Frame world("world", Vec3::null, Rot3::null);
+    Frame world;
+    world.set_name_pos_rot("world", Vec3::null, Rot3::null);
 
     Function::Constant free_half_path(
         1.0,

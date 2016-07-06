@@ -19,7 +19,8 @@ TEST_F(SetUpScenery, create_scenery) {
     /*@Declare the geometry@*/
 
     //--world--
-    Frame world("World", Vec3::null, Rot3::null);
+    Frame world;
+    world.set_name_pos_rot("World", Vec3::null, Rot3::null);
     //--tree--
     Vec3 tree_pos(5.0, 0.0, 0.0);
     Frame* tree = world.append<Frame>();

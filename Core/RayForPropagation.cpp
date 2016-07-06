@@ -11,7 +11,7 @@ RayForPropagation::RayForPropagation(
 void RayForPropagation::push_back_production_of_ray() {
 
 	Intersection production_intersection(
-		SurfaceEntity::source_object,
+		&SurfaceEntity::source_object,
 		support,
 		direction, // set normal of production obj to direction of ray
 		0.0,

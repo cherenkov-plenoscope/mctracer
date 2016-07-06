@@ -5,9 +5,8 @@ using Function::Func1D;
 using Function::Constant;
 using Function::Limits;
 //------------------------------------------------------------------------------
-const SurfaceEntity* SurfaceEntity::void_object = new SurfaceEntity();
-
-const SurfaceEntity* SurfaceEntity::source_object = new SurfaceEntity();
+const SurfaceEntity SurfaceEntity::void_object;
+const SurfaceEntity SurfaceEntity::source_object;
 
 const Color* SurfaceEntity::default_color = &Color::dark_gray;
 
@@ -34,10 +33,11 @@ SurfaceEntity::SurfaceEntity() {
 //------------------------------------------------------------------------------
 SurfaceEntity::SurfaceEntity(
 	const std::string new_name,
-    const Vec3    new_pos,
-    const Rot3  new_rot)
-	: 	Frame(new_name, new_pos, new_rot)	
+    const Vec3 new_pos,
+    const Rot3 new_rot
+): Frame()	
 {
+	set_name_pos_rot(new_name, new_pos, new_rot);
 	init_surface_defaults();
 }
 //------------------------------------------------------------------------------
@@ -117,7 +117,7 @@ void SurfaceEntity::set_allowed_frames_to_propagate_to(
 }
 //------------------------------------------------------------------------------
 bool SurfaceEntity::has_restrictions_on_frames_to_propagate_to()const {
-	return allowed_frame_to_propagate_to != Frame::void_frame;
+	return allowed_frame_to_propagate_to != &Frame::void_frame;
 }
 //------------------------------------------------------------------------------
 const Frame* SurfaceEntity::get_allowed_frame_to_propagate_to()const {

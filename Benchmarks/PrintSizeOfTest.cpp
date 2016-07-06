@@ -62,7 +62,8 @@ TEST_F(SizeOfTest, sizes_of_mct) {
     print_size("PropagationEnvironment", environment);
     cout << "--------------------------------------------" << "\n";
 
-    Frame tree("0123456789", Vec3::null, Rot3::null); 
+    Frame tree;
+    tree.set_name_pos_rot("0123456789", Vec3::null, Rot3::null); 
     print_size("Frame", tree);
 
     SurfaceEntity surf("0123456789", Vec3::null, Rot3::null); 

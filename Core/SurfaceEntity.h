@@ -16,7 +16,7 @@ class RayForPropagation;
 //=================================
 class SurfaceEntity :public Frame {
 
-	const Frame* allowed_frame_to_propagate_to = Frame::void_frame;
+	const Frame* allowed_frame_to_propagate_to = &Frame::void_frame;
 
 	bool _boundary_layer_is_transparent;
 	
@@ -33,14 +33,14 @@ class SurfaceEntity :public Frame {
 	const Function::Func1D* inner_absorption_vs_wavelength;
 public:	
 
-	static const SurfaceEntity* void_object;
-	static const SurfaceEntity* source_object;
+	static const SurfaceEntity void_object;
+	static const SurfaceEntity source_object;
 
 	SurfaceEntity();
 	SurfaceEntity(
 		const std::string new_name,
-        const Vec3    new_pos,
-        const Rot3  new_rot
+        const Vec3 new_pos,
+        const Rot3 new_rot
     );
 	void set_outer_color(const Color* color);
 	void set_inner_color(const Color* color);

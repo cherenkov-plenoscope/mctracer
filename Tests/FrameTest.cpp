@@ -13,8 +13,8 @@ class FrameTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(FrameTest, assert_name_is_valid) {
 
-    Vec3    pos = Vec3::null;
-    Rot3  rot = Rot3::null;
+    Vec3 pos = Vec3::null;
+    Rot3 rot = Rot3::null;
 
     Frame Peter;
     EXPECT_NO_THROW(Peter.set_name_pos_rot("A_nice_name",pos,rot));
@@ -44,7 +44,8 @@ TEST_F(FrameTest, assert_name_is_valid) {
 //------------------------------------------------------------------------------
 TEST_F(FrameTest, duplicate_name_of_children_frames) {
 
-    Frame Peter("peter", Vec3::null, Rot3::null);
+    Frame Peter;
+    Peter.set_name_pos_rot("peter", Vec3::null, Rot3::null);
 
     Frame* Klaus1 = Peter.append<Frame>();
     Klaus1->set_name_pos_rot("klaus", Vec3::null, Rot3::null);
@@ -80,7 +81,8 @@ TEST_F(FrameTest, re_set_frame) {
     Vec3 pos(1.3,3.7,4.2);
     Rot3 rot(3.1,4.1,7.7);
 
-    Frame peter("a_name", pos, rot);
+    Frame peter;
+    peter.set_name_pos_rot("a_name", pos, rot);
     Frame* hans = peter.append<Frame>();
     hans->set_name_pos_rot("child_of_peter", Vec3(1.0, 2.0, 3.0), Rot3::null);
 
@@ -98,7 +100,8 @@ TEST_F(FrameTest, re_set_frame) {
 TEST_F(FrameTest, root_of_world_on_complete_tree) {
 
     //-----define frames
-    Frame tree("tree" ,Vec3::null, Rot3::null);
+    Frame tree;
+    tree.set_name_pos_rot("tree" ,Vec3::null, Rot3::null);
 
     Frame* leaf1 = tree.append<Frame>();
     leaf1->set_name_pos_rot("leaf1" ,Vec3(1.0,0.0,0.0), Rot3::null);
@@ -126,19 +129,20 @@ TEST_F(FrameTest, root_of_world_on_complete_tree) {
     tree.init_tree_based_on_mother_child_relations();
 
     //-----test
-    EXPECT_EQ(&tree, tree.get_root_of_world());
-    EXPECT_EQ(&tree, leaf1->get_root_of_world());
-    EXPECT_EQ(&tree, leaf2->get_root_of_world());
-    EXPECT_EQ(&tree, branch->get_root_of_world());
-    EXPECT_EQ(&tree, leaf1_on_branch->get_root_of_world());
-    EXPECT_EQ(&tree, leaf2_on_branch->get_root_of_world());
+    EXPECT_EQ(&tree, tree.get_root());
+    EXPECT_EQ(&tree, leaf1->get_root());
+    EXPECT_EQ(&tree, leaf2->get_root());
+    EXPECT_EQ(&tree, branch->get_root());
+    EXPECT_EQ(&tree, leaf1_on_branch->get_root());
+    EXPECT_EQ(&tree, leaf2_on_branch->get_root());
 }
 //------------------------------------------------------------------------------
 TEST_F(FrameTest, root_frame_default) {
 
     //A single frame with no relations set (post initialized) is its own root. 
-    Frame tree("tree" ,Vec3::null, Rot3::null);
-    EXPECT_EQ(&tree, tree.get_root_of_world());
+    Frame tree;
+    tree.set_name_pos_rot("tree" ,Vec3::null, Rot3::null);
+    EXPECT_EQ(&tree, tree.get_root());
 }
 //------------------------------------------------------------------------------
 TEST_F(FrameTest, cluster_frames_during_tree_initializing) {
@@ -171,7 +175,8 @@ TEST_F(FrameTest, cluster_frames_during_tree_initializing) {
 //------------------------------------------------------------------------------
 TEST_F(FrameTest, clustering_frames_which_are_stucked_close_together) {
 
-    Frame tree("tree" ,Vec3::null, Rot3::null);
+    Frame tree;
+    tree.set_name_pos_rot("tree" ,Vec3::null, Rot3::null);
     const uint number_facets = 100;
 
     for(uint i=0; i<number_facets; i++) {

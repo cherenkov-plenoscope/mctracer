@@ -8,7 +8,8 @@ class SceneryFactoryTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(SceneryFactoryTest, call_SceneryFactory) {
 
-    Frame frame("root", Vec3::null, Rot3::null);
+    Frame frame;
+    frame.set_name_pos_rot("root", Vec3::null, Rot3::null);
     Xml::SceneryFactory xml2frame("test_scenery/tree_epoch_20160320.xml");
     xml2frame.add_scenery_to_frame(&frame);
 

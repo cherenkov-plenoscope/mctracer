@@ -53,7 +53,8 @@ int main(int argc, char* argv[]) {
 
     // SET UP SCENERY
     Xml::SceneryFactory scenery_factory(scenery_path.path);
-    Frame scenery("root", Vec3::null, Rot3::null);
+    Frame scenery;
+    scenery.set_name_pos_rot("root", Vec3::null, Rot3::null);
     scenery_factory.add_scenery_to_frame(&scenery);
     scenery.init_tree_based_on_mother_child_relations();
 
