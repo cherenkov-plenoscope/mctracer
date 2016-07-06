@@ -9,6 +9,7 @@
 //=================================
 // included dependencies
 #include "Core/Function/Function.h"
+#include "Core/HomTra3.h"
 #include <limits>
 #include "Tools/Tools.h"
 
@@ -17,6 +18,7 @@ namespace Plenoscope {
 	namespace LightFieldSensor {
 
 		struct Config {
+			HomTra3 relative_orientation_and_position_to_imaging_system;
 			// The imaging system's expected properties as focal length and max
 			// outer aperture radius do not neccessarily match the dimensions 
 			// of the actual imaging system which will be used.
@@ -33,7 +35,7 @@ namespace Plenoscope {
 			unsigned int number_of_paxel_on_pixel_diagonal;
 			const Function::Func1D* lens_refraction;
 			const Function::Func1D* lens_absorbtion;
-			const Function::Func1D* bin_relection;
+			const Function::Func1D* bin_reflection;
 			Config(); 
 		};
 	

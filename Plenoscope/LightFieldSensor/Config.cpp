@@ -12,7 +12,7 @@ namespace Plenoscope {
 			housing_overhead = 1.2;
 			lens_refraction = &pmma_refraction;
 			lens_absorbtion = &perfect_transparency;
-			bin_relection = SurfaceEntity::default_refl;
+			bin_reflection = SurfaceEntity::default_refl;
 		}
 	}
 }

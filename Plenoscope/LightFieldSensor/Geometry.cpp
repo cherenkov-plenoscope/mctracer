@@ -262,7 +262,7 @@ string Geometry::get_print()const{
 	tab << "\n";
 	tab << "__Concentrator_Bin__\n";
 	tab << " Bin_hight........... " << bin_hight() << "m\n";
-	tab << " Reflectivity........ " << config.bin_relection->get_mean(137) << "\n";
+	tab << " Reflectivity........ " << config.bin_reflection->get_mean(137) << "\n";
 	return tab.str();		
 }
 //------------------------------------------------------------------------------

@@ -88,7 +88,7 @@ void Factory::add_pixel_bin_with_name_at_pos(
 
 		binwall->set_outer_color(&Color::green);
 		binwall->set_inner_color(&Color::green);
-		binwall->set_outer_reflection(geometry->config.bin_relection);
+		binwall->set_outer_reflection(geometry->config.bin_reflection);
 	}
 }
 //------------------------------------------------------------------------------
