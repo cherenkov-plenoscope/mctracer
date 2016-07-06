@@ -88,17 +88,17 @@ public:
 private:
 
     HomTra3 calculate_frame2world()const;
-    void init_transformations();
-    void post_init_root_of_world();
+    void init_frame2world();
+    void init_root();
     void set_name(const string name);
     void warn_about_neglection_of(const Frame* frame)const;
     void warn_about_close_frames()const;
-    void cluster_using_helper_frames();
+    void cluster_children();
     bool positions_in_mother_are_too_close_together(vector<Frame*> frames)const;
     void assert_name_is_valid(const string name_to_check)const;
     Vec3 get_mean_pos_in_mother(vector<Frame*> frames)const;
-    void update_sphere_enclosing_all_children(Frame *new_child);
-    void update_enclosing_sphere_for_all_children();
+    void update_boundary_sphere_radius_for_child(Frame *new_child);
+    void update_boundary_sphere();
 public:
 
     class DuplicateChildName :public TracerException{
