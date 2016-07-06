@@ -55,6 +55,7 @@ public:
     Frame();
     virtual ~Frame();
     void set_name_pos_rot(const string name, const Vec3 pos, const Rot3 rot);
+    void update_rotation(const Rot3 rot);
     //GET
     string get_name()const;
     string get_path_in_tree_of_frames()const;
@@ -80,18 +81,15 @@ public:
         return child;
     }
     void init_tree_based_on_mother_child_relations();
-    void update_rotation(const Rot3 rot);
     virtual void calculate_intersection_with(
         const Ray* ray, 
         vector<Intersection> *intersections
-    )const;
-protected:
-
-    void post_init_root_of_world();
-    void init_transformations();
-    HomTra3 calculate_frame2world()const;
+    )const;    
 private:
 
+    HomTra3 calculate_frame2world()const;
+    void init_transformations();
+    void post_init_root_of_world();
     void set_name(const string name);
     void warn_about_neglection_of(const Frame* frame)const;
     void warn_about_close_frames()const;
