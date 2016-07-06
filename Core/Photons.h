@@ -48,19 +48,6 @@ namespace Photons {
 	vector<double> photon2raw_row(Photon* ph);
 	Photon* raw_row2photon(vector<double> &raw_row);
 	void assert_raw_row_size_matches_photon(vector<double> &raw_row);
-	// Trajectories
-	/*class Trajectories {
-		uint number_of_trajectories_handed_out_already;
-		vector<Photon*> *photons;
-		const TracerSettings *settings;
-	public:
-		Trajectories(
-			vector<Photon*> *_photon_bunch, 
-			const TracerSettings *settings
-		);
-		bool has_still_trajectories_left()const;
-		Frame* get_next_trajectoy();
-	};*/
 
 	// creation of photons
 	namespace Source {

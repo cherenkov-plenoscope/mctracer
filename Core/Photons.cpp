@@ -167,32 +167,6 @@ namespace Photons {
 		}
 	}
 	//--------------------------------------------------------------------------
-	// Trajectories
-	//--------------------------------------------------------------------------
-	/*Trajectories::Trajectories(
-		vector<Photon*> *_photons,
-		const TracerSettings *settings
-	) {
-		this->settings = settings;
-		photons = _photons;
-		number_of_trajectories_handed_out_already = 0;
-	}
-	//--------------------------------------------------------------------------
-	bool Trajectories::has_still_trajectories_left()const {
-
-		return number_of_trajectories_handed_out_already<photons->size();
-	}	
-	//--------------------------------------------------------------------------
-	Frame* Trajectories::get_next_trajectoy() {
-
-		TrajectoryFactory factory(
-			photons->at(number_of_trajectories_handed_out_already++)
-		);
-		factory.set_trajectory_radius(settings->visual.photon_trajectories.radius);
-
-		return factory.get_trajectory();
-	}*/
-	//--------------------------------------------------------------------------
 	// light source
 	//--------------------------------------------------------------------------
 	namespace Source {
