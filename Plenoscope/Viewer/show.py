@@ -21,44 +21,44 @@ class LixelStatistics(object):
         self.__path2lixel_statistics_header = os.path.join(calibration_path, 'lixel_statistics.header.bin')
         self.__path2lixel_positions = os.path.join(calibration_path, 'lixel_positions.txt')
         
-        lixel_statistics = np.fromfile(self.__path2lixel_statistics, dtype=np.float32) 
-        lixel_statistics = lixel_statistics.reshape([lixel_statistics.shape[0]/11 ,11])
+        ls = np.fromfile(self.__path2lixel_statistics, dtype=np.float32) 
+        ls = ls.reshape([ls.shape[0]/11 ,11])
 
-        self.geometric_efficiency = lixel_statistics[:,0]
+        self.geometric_efficiency = ls[:,0]
         self.geometric_efficiency[np.isnan(self.geometric_efficiency)] = 0.0
 
-        self.cx_mean = lixel_statistics[:,1]
-        self.cx_std = lixel_statistics[:,2]
+        self.cx_mean = ls[:,1]
+        self.cx_std = ls[:,2]
 
-        self.cy_mean = lixel_statistics[:,3]
-        self.cy_std = lixel_statistics[:,4]
+        self.cy_mean = ls[:,3]
+        self.cy_std = ls[:,4]
 
-        self.x_mean = lixel_statistics[:,5]
-        self.x_std = lixel_statistics[:,6]
+        self.x_mean = ls[:,5]
+        self.x_std = ls[:,6]
 
-        self.y_mean = lixel_statistics[:,7]
-        self.y_std = lixel_statistics[:,8]
+        self.y_mean = ls[:,7]
+        self.y_std = ls[:,8]
 
-        self.time_mean = lixel_statistics[:,9]
-        self.time_std = lixel_statistics[:,10]
+        self.time_mean = ls[:,9]
+        self.time_std = ls[:,10]
 
         self.__read_lixel_statistics_header()
         self.__read_lixel_positions_and_outer_radius()
         self.__init_lixel_polygons()
 
     def __read_lixel_statistics_header(self):
-        lixel_statistics_header = np.fromfile(self.__path2lixel_statistics_header, dtype=np.float32)
-        self.number_lixel = lixel_statistics_header[0]
-        self.number_pixel = lixel_statistics_header[1]
-        self.number_paxel = lixel_statistics_header[2]
-        self.lixel_outer_radius = lixel_statistics_header[3]
-        self.lixel_z_orientation = lixel_statistics_header[4]
-        self.photons_emitted_per_lixel = lixel_statistics_header[5]
+        lsh = np.fromfile(self.__path2lixel_statistics_header, dtype=np.float32)
+        self.number_lixel = lsh[0]
+        self.number_pixel = lsh[1]
+        self.number_paxel = lsh[2]
+        self.lixel_outer_radius = lsh[3]
+        self.lixel_z_orientation = lsh[4]
+        self.photons_emitted_per_lixel = lsh[5]
 
     def __read_lixel_positions_and_outer_radius(self):
-        lixel_positions = np.genfromtxt(self.__path2lixel_positions)
-        self.lixel_positions_x = lixel_positions[:,0]
-        self.lixel_positions_y = lixel_positions[:,1]
+        lp = np.genfromtxt(self.__path2lixel_positions)
+        self.lixel_positions_x = lp[:,0]
+        self.lixel_positions_y = lp[:,1]
 
     def __init_lixel_polygons(self):
         s32 = np.sqrt(3)/2.
