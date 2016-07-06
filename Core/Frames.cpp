@@ -18,7 +18,7 @@ Vec3 optimal_bounding_sphere_center(const vector<Frame*> &frames) {
 	Frame* end_frame = &Frame::void_frame;
    	double maximum = 0.0;
 	for(uint i=0; i<frames.size(); i++) {
-		for(uint j=0; j<frames.size(); j++) {
+		for(uint j=i; j<frames.size(); j++) {
 			if(i != j) {
 				double dist = (
 						frames[i]->get_position_in_mother() - 
