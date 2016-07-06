@@ -9,6 +9,7 @@
 //=================================
 // included dependencies
 #include "PhotonSensor/PhotonSensor.h"
+using std::vector;
 //=================================
 
 namespace PhotonSensors {
@@ -16,19 +17,19 @@ namespace PhotonSensors {
 	class Sensors {
 
 	public:
-		std::vector<PhotonSensor::Sensor*> by_occurence;
-		std::vector<PhotonSensor::Sensor*> by_frame;
-		std::vector<uint> occurence2frame_indices;
+		vector<PhotonSensor::Sensor*> by_occurence;
+		vector<PhotonSensor::Sensor*> by_frame;
+		vector<uint> occurence2frame_indices;
 		
 		Sensors();
-		Sensors(std::vector<PhotonSensor::Sensor*> &sensors);
-		void init(std::vector<PhotonSensor::Sensor*> &sensors);
+		Sensors(vector<PhotonSensor::Sensor*> &sensors);
+		void init(vector<PhotonSensor::Sensor*> &sensors);
 		uint size()const;
 		PhotonSensor::Sensor* at(const uint pos);
 		PhotonSensor::Sensor* at_frame(const Frame* frame);
 		uint get_pos_at_frame(const Frame* frame)const;
 		void assign_photon(const Photon* photon);
-		void assign_photons(const std::vector<Photon*> *photons);
+		void assign_photons(const vector<Photon*> *photons);
 		void clear_history();
 	private:
 
@@ -47,10 +48,10 @@ namespace PhotonSensors {
 		};
 	};
 
-	std::vector<PhotonSensor::Sensor*>::const_iterator 
+	vector<PhotonSensor::Sensor*>::const_iterator 
 		get_upper_bound_for_final_frame_in_sensors(
 		const Frame* final_frame,
-		const std::vector<PhotonSensor::Sensor*>* sensors
+		const vector<PhotonSensor::Sensor*>* sensors
 	);
 
 	class FindSensorByFrame {
@@ -61,7 +62,7 @@ namespace PhotonSensors {
 	public:
 		FindSensorByFrame(
 			const Frame* final_frame,
-			const std::vector<PhotonSensor::Sensor*> *sensors
+			const vector<PhotonSensor::Sensor*> *sensors
 		);
 		uint get_index()const;
 		bool frame_is_in_sensors()const;

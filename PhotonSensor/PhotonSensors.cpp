@@ -8,12 +8,12 @@ Sensors::Sensors() {
     // all vectors are left empty
 }
 //------------------------------------------------------------------------------
-Sensors::Sensors(std::vector<PhotonSensor::Sensor*> &sensors) {
+Sensors::Sensors(vector<PhotonSensor::Sensor*> &sensors) {
   
     init(sensors);
 }
 //------------------------------------------------------------------------------
-void Sensors::init(std::vector<PhotonSensor::Sensor*> &sensors) {
+void Sensors::init(vector<PhotonSensor::Sensor*> &sensors) {
  
     by_occurence.clear();
     by_frame.clear();
@@ -66,7 +66,7 @@ void Sensors::assign_photon(const Photon* photon) {
         finder.get_sensor()->assign_photon_to_this_sensor(photon);
 }
 //------------------------------------------------------------------------------
-void Sensors::assign_photons(const std::vector<Photon*> *photons) {
+void Sensors::assign_photons(const vector<Photon*> *photons) {
 	for(Photon* photon : *photons) 
 		assign_photon(photon);
 }
@@ -141,9 +141,9 @@ uint Sensors::get_pos_at_frame(const Frame* frame)const {
     return finder.get_index(); 
 }
 //------------------------------------------------------------------------------
-std::vector<Sensor*>::const_iterator get_upper_bound_for_final_frame_in_sensors(
+vector<Sensor*>::const_iterator get_upper_bound_for_final_frame_in_sensors(
 	const Frame* final_frame,
-	const std::vector<Sensor*>* sensors
+	const vector<Sensor*>* sensors
 ) {
 	return std::upper_bound(
 		sensors->begin(),
@@ -155,9 +155,9 @@ std::vector<Sensor*>::const_iterator get_upper_bound_for_final_frame_in_sensors(
 //------------------------------------------------------------------------------
 FindSensorByFrame::FindSensorByFrame(
 	const Frame* final_frame,
-	const std::vector<Sensor*> *sensors
+	const vector<Sensor*> *sensors
 ) {
-	std::vector<PhotonSensor::Sensor*>::const_iterator it = 
+	vector<PhotonSensor::Sensor*>::const_iterator it = 
         get_upper_bound_for_final_frame_in_sensors(final_frame, sensors);
 
 	photon_is_absorbed_by_known_sensor = true;
