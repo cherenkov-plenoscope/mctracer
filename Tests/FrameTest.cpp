@@ -3,8 +3,7 @@
 #include "Core/Vec3.h"
 #include "Core/Rot3.h"
 #include "Core/HomTra3.h"
-#include "Scenery/Primitive/Sphere.h"
-#include "Scenery/Primitive/SphereCapWithRectangularBound.h"
+#include "Scenery/Primitive/Primitive.h"
 #include <array>
 
 using namespace std;
@@ -191,4 +190,82 @@ TEST_F(FrameTest, clustering_frames_which_are_stucked_close_together) {
     //The clustering will not help (reduce the number of children) 
     //because all the geometry is stucked on top of each other.
     EXPECT_EQ(number_facets, tree.get_children()->size());
+}
+#include "Core/RayAndFrame.h"
+//------------------------------------------------------------------------------
+TEST_F(FrameTest, removing_a_non_existing_cild) {
+    Frame tree;
+    tree.set_name_pos_rot("tree", Vec3::null, Rot3::null);    
+
+    Frame another_tree;
+    tree.set_name_pos_rot("another_tree", Vec3::null, Rot3::null);
+
+    EXPECT_THROW(
+        tree.erase(&another_tree),
+        Frame::NoSuchChild
+    );
+}
+//------------------------------------------------------------------------------
+TEST_F(FrameTest, removing_a_cild) {
+
+    Frame tree;
+    tree.set_name_pos_rot("tree", Vec3::null, Rot3::null);
+
+    Sphere* sphere = tree.append<Sphere>();
+    sphere->set_name_pos_rot("leaf_ball", Vec3(0,0,1.8), Rot3::null);
+    sphere->set_radius(1);
+    sphere->set_outer_color(&Color::green);
+
+    Frame* pole = tree.append<Frame>();
+    pole->set_name_pos_rot("pole", Vec3(0,0,0.5), Rot3::null);
+
+    Cylinder* pole1 = pole->append<Cylinder>();
+    pole1->set_name_pos_rot("pole1", Vec3(0,0,0.0), Rot3::null);
+    pole1->set_radius_and_length(0.25, 1.0);
+    pole1->set_outer_color(&Color::red);
+
+    Cylinder* fork = pole->append<Cylinder>();
+    fork->set_name_pos_rot("fork", Vec3(0,0,0), Rot3::null);
+    fork->set_cylinder(0.1, Vec3::null, Vec3(0,0.5,0.5));
+    fork->set_outer_color(&Color::red);
+
+    Disc* ground = tree.append<Disc>();
+    ground->set_name_pos_rot("ground", Vec3(0,0,0), Rot3::null);
+    ground->set_radius(3.0);
+    ground->set_outer_color(&Color::grass_green);
+
+    //--------------------------------------------------------------------------
+    EXPECT_EQ(tree.contour_radius(), 0.0);
+    EXPECT_EQ(pole->contour_radius(), 0.0);
+
+    tree.init_tree_based_on_mother_child_relations();
+
+    EXPECT_GT(tree.contour_radius(), 0.0);
+    EXPECT_GT(pole->contour_radius(), 0.0);
+
+    Ray ray(Vec3(0,-5,-1.8), Vec3(0,1,0));
+    Intersection isec = RayAndFrame::first_intersection(&ray, &tree);
+    EXPECT_FALSE(isec.does_intersect());
+    //--------------------------------------------------------------------------
+    // Append a temporary frame
+    Frame* temp = tree.append<Frame>();
+    tree.set_name_pos_rot("temp", Vec3::null, Rot3::null);
+
+    Sphere* tball = temp->append<Sphere>();
+    tball->set_name_pos_rot("tball", Vec3(0,0,-1.8), Rot3::null);
+    tball->set_radius(1);
+    tball->set_outer_color(&Color::green);
+
+    tree.init_tree_based_on_mother_child_relations();
+
+    isec = RayAndFrame::first_intersection(&ray, &tree);
+    ASSERT_TRUE(isec.does_intersect());
+    EXPECT_EQ(isec.get_object(), tball);
+    //--------------------------------------------------------------------------
+    // Erase temporary frame
+    tree.erase(temp);
+    tree.init_tree_based_on_mother_child_relations();
+
+    isec = RayAndFrame::first_intersection(&ray, &tree);
+    EXPECT_FALSE(isec.does_intersect());
 }

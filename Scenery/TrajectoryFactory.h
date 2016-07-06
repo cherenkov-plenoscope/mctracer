@@ -12,6 +12,7 @@
 #include "Core/SurfaceEntity.h"
 #include "Scenery/Primitive/Cylinder.h"
 #include "Scenery/Primitive/Sphere.h"
+using std::string;
 
 //=================================
 // Spectate the propagation history of a photon.
@@ -28,21 +29,24 @@
 class TrajectoryFactory {
 
 	const RayForPropagation* ray;
-	double radius_of_trajectory_in_m;
+	double radius_of_trajectory;
 	uint intersection_index;
 	uint num_of_interactions;
+	Frame* trajectory;
 public:
 
 	static const Color trajectory_col;
 	static const Color absorption_in_void_col;
-	static const Color interaction_col;	
+	static const Color interaction_col;
+
 	TrajectoryFactory(const RayForPropagation* ray);
-	void add_trajectory(Frame* frame)const;
 	void set_trajectory_radius(const double radius);
+	void append_trajectory_to(Frame* root_frame);
+	void erase_trajectory_from(Frame* root_frame);
 private:
 
-	std::string get_trajectory_of_part_index(const uint part_index)const;
-	std::string get_intersection_point_name_of_part(const uint part_index)const;
+	string get_trajectory_of_part_index(const uint part_index)const;
+	string get_intersection_point_name_of_part(const uint part_index)const;
 	bool is_not_the_last_intersection(const uint part_index)const;
 };
 #endif // __TrajectoryFactory_H_INCLUDED__

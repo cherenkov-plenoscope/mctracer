@@ -8,6 +8,7 @@
 #include "Xml/Factory/TracerSettingsFab.h"
 #include "CommandLine/CommandLine.h"
 #include "Cameras/FlyingCamera.h"
+#include "Scenery/TrajectoryFactory.h"
 using std::string;
 using std::cout;
 
@@ -32,8 +33,7 @@ int main(int argc, char* argv[]) {
 	cmd.parse(argc, argv);
 
 	if(
-		!cmd.exist("scenery") || !cmd.exist("photons") ||
-		!cmd.exist("visual_config")
+		!cmd.exist("scenery") || !cmd.exist("photons")
 	) {
 		cout << help_text();
 		return 0;
@@ -55,10 +55,11 @@ int main(int argc, char* argv[]) {
 	Random::Mt19937 prng(settings.pseudo_random_number_seed);
 
 	// load scenery
-	Frame* world = new Frame("root", Vec3::null, Rot3::null);
+	Frame world;
+	world.set_name_pos_rot("root", Vec3::null, Rot3::null);
 	Xml::SceneryFactory fab(cmd.get("scenery"));
-	fab.add_scenery_to_frame(world);
-	world->init_tree_based_on_mother_child_relations();
+	fab.add_scenery_to_frame(&world);
+	world.init_tree_based_on_mother_child_relations();
 	// init Telescope Array Control
 	TelescopeArrayControl* array_ctrl = fab.telescopes;
 
@@ -68,7 +69,7 @@ int main(int argc, char* argv[]) {
 	// propagate each event
 	uint event_counter = 0;
 
-	FlyingCamera free_orb(world, &settings);
+	FlyingCamera free_orb(&world, &settings);
 
 	while(corsika_run.has_still_events_left()) {
 
@@ -93,20 +94,16 @@ int main(int argc, char* argv[]) {
             
 				// propagate the cherenkov photons in the world
 				Photons::propagate_photons_in_scenery_with_settings(
-					&photons, world, &settings, &prng
+					&photons, &world, &settings, &prng
 				);
 
-				Photons::Trajectories trayect_fab(&photons, &settings);
-
-				while(trayect_fab.has_still_trajectories_left()) {
-
-					Frame SWorld = *world;
-					SWorld.set_mother_and_child(trayect_fab.get_next_trajectoy());
-					SWorld.init_tree_based_on_mother_child_relations();
-					//cout << SWorld.get_tree_print();
-					free_orb.continue_with_new_scenery_and_settings(&SWorld, &settings);
+				for(Photon* ph: photons) {
+					TrajectoryFactory traj(ph);
+					traj.append_trajectory_to(&world);
+					world.init_tree_based_on_mother_child_relations();
+					free_orb.continue_with_new_scenery_and_settings(&world, &settings);
+					traj.erase_trajectory_from(&world);
 				}
-
 				Photons::delete_photons(&photons);
 			}
 		}

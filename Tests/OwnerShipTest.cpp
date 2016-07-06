@@ -38,6 +38,6 @@ TEST_F(OwnerShipTest, own) {
 
 	tree.init_tree_based_on_mother_child_relations();
 
-	TracerSettings set;
-	FlyingCamera fly(&tree, &set);
+	//TracerSettings set;
+	//FlyingCamera fly(&tree, &set);
 }

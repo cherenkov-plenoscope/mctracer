@@ -41,9 +41,6 @@ protected:
     vector<Frame*> children;
 	Frame *mother = &void_frame;
     const Frame *root_frame;
-
-    bool must_update_boundary_sphere;
-    bool must_update_frame2world;
 public:
 
     static const char path_delimiter = '/';
@@ -80,6 +77,7 @@ public:
         child->mother = this;
         return child;
     }
+    void erase(const Frame* child);
     void init_tree_based_on_mother_child_relations();
     virtual void calculate_intersection_with(
         const Ray* ray, 
@@ -91,16 +89,18 @@ private:
     void init_frame2world();
     void init_root();
     void set_name(const string name);
-    void warn_about_neglection_of(const Frame* frame)const;
+    void warn_small_child(const Frame* frame)const;
     void warn_about_close_frames()const;
     void cluster_children();
-    bool positions_in_mother_are_too_close_together(vector<Frame*> frames)const;
     void assert_name_is_valid(const string name_to_check)const;
-    Vec3 get_mean_pos_in_mother(vector<Frame*> frames)const;
     void update_boundary_sphere_radius_for_child(Frame *new_child);
     void update_boundary_sphere();
+    
 public:
 
+    class NoSuchChild: public TracerException{
+        using TracerException::TracerException;
+    };
     class DuplicateChildName :public TracerException{
         using TracerException::TracerException;
     };

@@ -24,6 +24,7 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/FitsIoTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SensorStorageTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FrameTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/FramesTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SimpleTdcQdcTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflectionTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SphereIntersectionTest.cpp

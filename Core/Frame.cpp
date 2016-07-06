@@ -1,4 +1,5 @@
 #include "Frame.h"
+#include "Frames.h"
 #include <set>
 
 const uint Frame::max_number_of_children = 16;
@@ -8,8 +9,7 @@ Frame Frame::void_frame;
 //------------------------------------------------------------------------------
 Frame::Frame():
 	radius_of_sphere_enclosing_all_children(0.0), 
-	root_frame(this),
-	must_update_boundary_sphere(true) {}
+	root_frame(this) {}
 //------------------------------------------------------------------------------
 Frame::~Frame() {
 	for(Frame* child: children)
@@ -24,13 +24,12 @@ HomTra3 Frame::calculate_frame2world()const {
 }
 //------------------------------------------------------------------------------
 void Frame::set_name_pos_rot(const string name,	const Vec3 pos,	const Rot3 rot) {
-	this->set_name(name);
-	this->pos_in_mother = pos;
-	this->rot_in_mother = rot;
+	set_name(name);
+	pos_in_mother = pos;
+	rot_in_mother = rot;
 
 	// The only transformation set yet is the frame2mother. The others are set
-	// when the construction of the world tree has finished and the post 
-	// initialization is performed.
+	// when the post initialization is performed.
 	T_frame2mother.set_transformation(rot_in_mother, pos_in_mother);
 }
 //------------------------------------------------------------------------------
@@ -173,8 +172,26 @@ void Frame::update_boundary_sphere_radius_for_child(Frame *new_child) {
 		radius_needed_to_enclose_new_child;	
 }
 //------------------------------------------------------------------------------
+void Frame::erase(const Frame* child_rm) {
+
+	bool found = false;
+	for(uint i=0; i<children.size(); i++) {
+		if(children.at(i) == child_rm) {
+			delete children.at(i);
+			children.erase(children.begin()+i);
+			found = true;
+		}
+	}
+	if(!found) {
+		stringstream info;
+		info << "Expected frame '" << name << "'' ";
+		info << "to have child '" << child_rm->name; 
+		info << "', but actual there is no such child.";
+		throw NoSuchChild(info.str());			
+	}
+}
+//------------------------------------------------------------------------------
 void Frame::init_tree_based_on_mother_child_relations() {
-	update_boundary_sphere();
 	cluster_children();
 	init_root();
 	init_frame2world();
@@ -213,22 +230,13 @@ const Frame* Frame::get_root()const {
 }
 //------------------------------------------------------------------------------
 string Frame::get_path_in_tree_of_frames()const {
-	/// The path of a frame is returned here. The root frame called world is not 
-	/// included in the path. The delimiter sign is '/' as for directorys on 
-	/// unix systems.
-	/// eg. City/Street14/house18/roof/chimney/chimney_wall_2
-
-	// chech if this frame has a mother frame 
-	if( has_mother() ){
-		// This frame has a mother. Therefore it is not the root frame. 
-		// Here we add at least the delimiter to the path and ,at least there 
-		// is one, the path of its mother
+	// The delimiter sign is '/' as for directorys on 
+	// unix systems.
+	// eg. City/Street14/house18/roof/chimney/chimney_wall_2
+	if(has_mother())
 		return mother->get_path_in_tree_of_frames() + path_delimiter + name;
-	}else{
-		// This frame has not a mother. So this is the root frame. Here is 
-		// nothing added to the string
+	else
 		return "";
-	}
 }
 //------------------------------------------------------------------------------
 bool Frame::has_mother()const {
@@ -248,6 +256,7 @@ void Frame::calculate_intersection_with(
 )const {}
 //------------------------------------------------------------------------------
 void Frame::cluster_children() {
+
 	if(children.size() > max_number_of_children) {
 		vector<Frame*> oct_tree[8];
 
@@ -260,35 +269,47 @@ void Frame::cluster_children() {
 
 		for(uint sector=0; sector<8; sector++) {
 
-			if(positions_in_mother_are_too_close_together(oct_tree[sector])) {
-				// this can not be clustered
+			if(Frames::positions_in_mother_are_too_close_together(oct_tree[sector])) {
 				warn_about_close_frames();
 				for(Frame* child : oct_tree[sector]) {
 					if(child->contour_radius() < minimal_structure_size)
-						warn_about_neglection_of(child);
+						warn_small_child(child);
 
 					child->mother = this;
 					children.push_back(child);
 				}
 			}else{
-				// if children assigned to this sector
-				if(oct_tree[sector].size() > 0) {
+				if(oct_tree[sector].size() == 1) {
 
-					// create helper sector
-					Vec3 mean_pos_in_mother = get_mean_pos_in_mother(
-						oct_tree[sector]
-					);
-					Frame* helper_frame = append<Frame>();
-					helper_frame->set_name_pos_rot(
+					oct_tree[sector].at(0)->mother = this;
+					this->children.push_back(oct_tree[sector].at(0));			
+				}else if(oct_tree[sector].size() > 1){
+
+					Vec3 mean_pos_in_mother;
+					if(oct_tree[sector].size() < max_number_of_children) {
+						mean_pos_in_mother = Frames::optimal_bounding_sphere_center(
+							oct_tree[sector]
+						);
+					}else{
+						mean_pos_in_mother = Frames::get_mean_pos_in_mother(
+							oct_tree[sector]
+						);
+					}
+
+					Frame* octant = append<Frame>();
+					octant->set_name_pos_rot(
 						"oct_"+std::to_string(sector),
 						mean_pos_in_mother,
 						Rot3::null
 					);
 
-					// assign children to helper frame
 					for(Frame* sector_child : oct_tree[sector]) {
-						if(sector_child->contour_radius() < minimal_structure_size)
-							warn_about_neglection_of(sector_child);
+						if(
+							!sector_child->has_children() && 
+							sector_child->contour_radius() < 
+							minimal_structure_size
+						)
+							warn_small_child(sector_child);
 
 						sector_child->pos_in_mother = 
 							sector_child->pos_in_mother - mean_pos_in_mother;
@@ -298,8 +319,8 @@ void Frame::cluster_children() {
 							sector_child->pos_in_mother
 						);
 
-						sector_child->mother = helper_frame;
-						helper_frame->children.push_back(sector_child);
+						sector_child->mother = octant;
+						octant->children.push_back(sector_child);
 					}
 				}
 			}
@@ -314,51 +335,22 @@ void Frame::warn_about_close_frames()const {
 	stringstream out;
 	out << "___Warning___\n";
 	out << __FILE__ << " " << __func__ << "(frame) " << __LINE__ << "\n";
-	out << "The children of the frame '" << name << "' are stucked very close together.\n";
-	out << "No tree structure can be used to accelerate the photon propagation in such a scenery.\n";
+	out << "The children of the frame '" << name;
+	out << "' are stucked very close together.\n";
+	out << "No tree structure can be used to accelerate ";
+	out << "the photon propagation in such a scenery.\n";
 	out << "Procesing continues, but poor performance is expected.\n";
 	std::cout << out.str();	
 }
 //------------------------------------------------------------------------------
-void Frame::warn_about_neglection_of(const Frame* frame)const {
+void Frame::warn_small_child(const Frame* frame)const {
 	stringstream out;
 	out << "___Warning___\n";
 	out << __FILE__ << " " << __func__ << "(frame) " << __LINE__ << "\n";
-	out << "Frame: " << frame->get_name() << " is neglected. ";
+	out << "Frame: " << frame->name << " is neglected. ";
 	out << "Contour radius is below " << minimal_structure_size << "m, i.e. ";
 	out << frame->contour_radius() << "m.\n";
 	std::cout << out.str();	
-}
-//------------------------------------------------------------------------------
-Vec3 Frame::get_mean_pos_in_mother(vector<Frame*> frames)const {
-	Vec3 sum_pos = Vec3::null;
-
-	for(Frame* frame : frames)
-		sum_pos = sum_pos + frame->pos_in_mother;
-
-	return sum_pos/frames.size();
-}
-//------------------------------------------------------------------------------
-bool Frame::positions_in_mother_are_too_close_together(vector<Frame*> frames)const {
-
-	if(frames.size() < 2)
-		return false;
-
-	const Vec3 mean_pos_in_mother = get_mean_pos_in_mother(frames);
-
-	Vec3 u = Vec3::null;
-	for(Frame* frame : frames) {
-		const Vec3 r =  frame->pos_in_mother - mean_pos_in_mother;
-		u = u + Vec3(
-			r.x()*r.x(), 
-			r.y()*r.y(), 
-			r.z()*r.z()
-		);
-	}
-
-	u = u/frames.size();
-	const double spread = sqrt(u.norm());
-	return spread < minimal_structure_size;
 }
 //------------------------------------------------------------------------------
 string Frame::get_name()const { 
@@ -419,4 +411,3 @@ void Frame::assert_no_children_duplicate_names()const {
 	for(Frame* child: children)
 		child->assert_no_children_duplicate_names();
 }
-//------------------------------------------------------------------------------

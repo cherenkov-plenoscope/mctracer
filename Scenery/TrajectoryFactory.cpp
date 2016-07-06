@@ -4,18 +4,17 @@ const Color TrajectoryFactory::trajectory_col = Color(255,128,128);
 const Color TrajectoryFactory::absorption_in_void_col = Color(128,128,255);
 const Color TrajectoryFactory::interaction_col = Color(128,255,128);
 //------------------------------------------------------------------------------
-TrajectoryFactory::TrajectoryFactory(const RayForPropagation* _ray) {
-	ray = _ray;
-	radius_of_trajectory_in_m = 0.01;
-}
+TrajectoryFactory::TrajectoryFactory(const RayForPropagation* _ray):
+	ray(_ray), radius_of_trajectory(0.01), trajectory(&Frame::void_frame)
+{}
 //------------------------------------------------------------------------------
 void TrajectoryFactory::set_trajectory_radius(const double radius) {
-	radius_of_trajectory_in_m = radius;
+	radius_of_trajectory = radius;
 }
 //------------------------------------------------------------------------------
-void TrajectoryFactory::add_trajectory(Frame* frame)const {
+void TrajectoryFactory::append_trajectory_to(Frame* root_frame) {
 	
-	Frame* trajectory = frame->append<Frame>();
+	trajectory = root_frame->append<Frame>();
 	trajectory->set_name_pos_rot(
 		"trajectory_" + std::to_string(ray->identifier),
 	 	Vec3::null, 
@@ -33,7 +32,7 @@ void TrajectoryFactory::add_trajectory(Frame* frame)const {
 		 		Rot3::null
 		 	);
 		 	ray_trajectory->set_cylinder(
-		 		radius_of_trajectory_in_m, 
+		 		radius_of_trajectory, 
 		 		ray->intersection_history.at(i).
 		 			get_intersection_vector_in_world_system(),
 		 		ray->intersection_history.at(i+1).
@@ -51,16 +50,17 @@ void TrajectoryFactory::add_trajectory(Frame* frame)const {
 			Rot3::null
 		);
 
-		intersection_indicator->set_radius(radius_of_trajectory_in_m*2.0);
+		intersection_indicator->set_radius(radius_of_trajectory*2.0);
 
 		if(ray->interaction_type_history.at(i) == absorption_in_void)
 			intersection_indicator->set_outer_color(&absorption_in_void_col);
 		else
 			intersection_indicator->set_outer_color(&interaction_col);	
 	}
-
-	// post init
-	trajectory->init_tree_based_on_mother_child_relations();
+}
+//------------------------------------------------------------------------------
+void TrajectoryFactory::erase_trajectory_from(Frame* root_frame) {
+	root_frame->erase(trajectory);
 }
 //------------------------------------------------------------------------------
 bool TrajectoryFactory::is_not_the_last_intersection(
