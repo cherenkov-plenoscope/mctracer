@@ -66,7 +66,7 @@ int main(int argc, char* argv[]) {
     Plenoscope::PlenoscopeInScenery* pis = &scenery_factory.plenoscopes.at(0);
 
     HeaderBlock::write(
-        pis->light_field_sensor_geometry.get_header(), 
+        pis->light_field_sensor_geometry.get_info_header(), 
         PathTools::join(cmd.get("output"), "light_field_sensor_geometry.header.bin")
     );
 

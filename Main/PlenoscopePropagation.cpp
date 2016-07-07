@@ -248,7 +248,6 @@ int main(int argc, char* argv[]) {
         //-------------
         // export event
         //Time::StopWatch write_event("write event");
-
         PathTools::Path event_output_path = PathTools::join(out_path.path, std::to_string(event_counter));
         fs::create_directory(event_output_path.path);
 
@@ -257,9 +256,17 @@ int main(int argc, char* argv[]) {
             PathTools::join(event_output_path.path, "raw_plenoscope_response.bin")
         );
 
-        HeaderBlock::write(corsika_run.header.raw, PathTools::join(event_output_path.path, "corsika_run.header.bin"));
-        HeaderBlock::write(event.header.raw, PathTools::join(event_output_path.path, "corsika_event.header.bin"));
+        HeaderBlock::write(
+            pis->light_field_sensor_geometry.config.get_sensor_plane2imaging_system_header(), 
+            PathTools::join(event_output_path.path, "sensor_plane2imaging_system.bin")
+        );
 
+        //-------------
+        // export Monte Carlo Truth
+        PathTools::Path event_mc_truth_path = PathTools::join(event_output_path.path, "mc_truth");
+        fs::create_directory(event_mc_truth_path.path);
+        HeaderBlock::write(corsika_run.header.raw, PathTools::join(event_mc_truth_path.path, "corsika_run_header.bin"));
+        HeaderBlock::write(event.header.raw, PathTools::join(event_mc_truth_path.path, "corsika_event_header.bin"));
         //write_event.stop();
 
         cout << "event " << event_counter << ", ";
