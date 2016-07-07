@@ -5,7 +5,7 @@
 #include "Tools/AsciiIo.h"
 #include "Tools/StringTools.h"
 #include "LensMaker/LensMaker.h"
-
+#include "Corsika/Tools.h"
 namespace Plenoscope {
 namespace LightFieldSensor {
 //------------------------------------------------------------------------------
@@ -208,7 +208,7 @@ double Geometry::expected_imaging_system_max_aperture_radius()const{
 	return config.expected_imaging_system_max_aperture_radius;
 }
 //------------------------------------------------------------------------------
-void Geometry::write_lixel_positions(const string path)const {
+void Geometry::write_lixel_positions(const string &path)const {
 
     std::ofstream file;
     file.open(path, std::ios::out | std::ios::binary);
@@ -228,6 +228,58 @@ void Geometry::write_lixel_positions(const string path)const {
     }
 
     file.close();
+}
+//------------------------------------------------------------------------------
+array<float, 273> Geometry::get_header()const {
+
+	array<float, 273> header;
+	header[  1-1] = Corsika::str2float("PLGH");
+
+	header[ 11-1] = config.sensor_plane2imaging_system.get_rot_x().x();
+	header[ 12-1] = config.sensor_plane2imaging_system.get_rot_x().y();
+	header[ 13-1] = config.sensor_plane2imaging_system.get_rot_x().z();
+
+	header[ 14-1] = config.sensor_plane2imaging_system.get_rot_y().x();
+	header[ 15-1] = config.sensor_plane2imaging_system.get_rot_y().y();
+	header[ 16-1] = config.sensor_plane2imaging_system.get_rot_y().z();
+ 
+	header[ 17-1] = config.sensor_plane2imaging_system.get_rot_z().x();
+	header[ 18-1] = config.sensor_plane2imaging_system.get_rot_z().y();
+	header[ 19-1] = config.sensor_plane2imaging_system.get_rot_z().z();
+ 
+	header[ 20-1] = config.sensor_plane2imaging_system.get_translation().x();
+	header[ 21-1] = config.sensor_plane2imaging_system.get_translation().y();
+	header[ 22-1] = config.sensor_plane2imaging_system.get_translation().z();
+
+	header[ 23-1] = config.expected_imaging_system_focal_length;
+	header[ 24-1] = config.expected_imaging_system_max_aperture_radius;
+	header[ 25-1] = config.max_FoV_diameter;
+	header[ 26-1] = config.pixel_FoV_hex_flat2flat;
+	header[ 27-1] = config.number_of_paxel_on_pixel_diagonal;
+	header[ 28-1] = config.housing_overhead;
+
+	header[101-1] = number_of_pixels();
+	header[102-1] = number_of_paxel_per_pixel();
+
+	header[103-1] = lixel_outer_radius();
+	header[104-1] = lixel_spacing();
+	header[105-1] = lixel_z_orientation();
+
+	header[106-1] = pixel_FoV_hex_flat2flat();	
+	header[107-1] = pixel_lens_outer_aperture_radius();
+	header[108-1] = pixel_spacing();
+
+	header[109-1] = pixel_lens_f_over_D();	
+	header[110-1] = pixel_lens_focal_length();
+	header[111-1] = pixel_lens_curvature_radius();
+	header[112-1] = pixel_plane_to_paxel_plane_distance();
+	header[113-1] = aperture_image_radius_on_paxel_plane();
+	header[114-1] = pixel_lens_mean_refraction();
+
+	header[115-1] = field_of_view_solid_angle();
+	header[116-1] = max_outer_sensor_radius();
+
+	return header;
 }
 //------------------------------------------------------------------------------
 string Geometry::get_print()const{

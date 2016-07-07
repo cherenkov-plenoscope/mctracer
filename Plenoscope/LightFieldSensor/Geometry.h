@@ -10,7 +10,9 @@
 // included dependencies
 #include "Plenoscope/LightFieldSensor/Config.h"
 #include "Core/Vec3.h"
+#include <array>
 using std::vector;
+using std::array;
 using std::string;
 using std::stringstream;
 
@@ -64,12 +66,14 @@ namespace LightFieldSensor {
 		vector<vector<uint>>  paxel_neighbor_relations()const;
 		vector<Vec3> paxel_grid_center_positions()const;
 		uint number_of_lixel()const;
-		void write_lixel_positions(const string path)const;
+		void write_lixel_positions(const string &path)const;
 		double bin_hight()const;
 		double field_of_view_solid_angle()const;
 		double expected_imaging_system_focal_length()const;
 		double expected_imaging_system_max_aperture_radius()const;
+		array<float, 273> get_header()const;
 	private:
+
 		void set_up_pixel_grid();
 		void set_up_pixel_lens_geometry();
 		void set_up_paxel_grid_centers_of_pixels();
