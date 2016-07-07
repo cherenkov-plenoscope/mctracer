@@ -44,13 +44,13 @@ TEST_F(FramesTest, too_close_together_false) {
 TEST_F(FramesTest, mean_no_frame) {
 
 	vector<Frame*> vf;
-	EXPECT_THROW(Frames::get_mean_pos_in_mother(vf), Frames::TooFewFrames);
+	EXPECT_THROW(Frames::mean_of_positions_in_mother(vf), Frames::TooFewFrames);
 }
 //------------------------------------------------------------------------------
 TEST_F(FramesTest, optimal_bounding_sphere_pos_no_frame) {
 
 	vector<Frame*> vf;
-	EXPECT_THROW(Frames::optimal_bounding_sphere_center(vf), Frames::TooFewFrames);
+	EXPECT_THROW(Frames::dumb_bounding_sphere_center(vf), Frames::TooFewFrames);
 }
 //------------------------------------------------------------------------------
 TEST_F(FramesTest, optimal_bounding_sphere_pos_one_frame) {
@@ -58,7 +58,7 @@ TEST_F(FramesTest, optimal_bounding_sphere_pos_one_frame) {
     Frame root;
     root.set_name_pos_rot("root", Vec3::unit_x, Rot3::null);
     vector<Frame*> vf; vf.push_back(&root);
-	EXPECT_EQ(Frames::optimal_bounding_sphere_center(vf), Vec3::unit_x);
+	EXPECT_EQ(Frames::dumb_bounding_sphere_center(vf), Vec3::unit_x);
 }
 //------------------------------------------------------------------------------
 TEST_F(FramesTest, optimal_bounding_sphere_pos_many_frames_symetric) {
@@ -69,7 +69,7 @@ TEST_F(FramesTest, optimal_bounding_sphere_pos_many_frames_symetric) {
     Frame f3; f3.set_name_pos_rot("f3", Vec3(2,0,0), Rot3::null); vf.push_back(&f3);
    	Frame f4; f4.set_name_pos_rot("f4", Vec3(3,0,0), Rot3::null); vf.push_back(&f4);
     Frame f5; f5.set_name_pos_rot("f5", Vec3(4,0,0), Rot3::null); vf.push_back(&f5);
-	EXPECT_EQ(Vec3(2,0,0), Frames::optimal_bounding_sphere_center(vf));
+	EXPECT_EQ(Vec3(2,0,0), Frames::dumb_bounding_sphere_center(vf));
 }
 //------------------------------------------------------------------------------
 TEST_F(FramesTest, optimal_bounding_sphere_pos_many_spheres_symetric) {
@@ -80,7 +80,7 @@ TEST_F(FramesTest, optimal_bounding_sphere_pos_many_spheres_symetric) {
     Sphere f3; f3.set_name_pos_rot("f3", Vec3(2,0,0), Rot3::null); f3.set_radius(1.0); vf.push_back(&f3);
    	Sphere f4; f4.set_name_pos_rot("f4", Vec3(3,0,0), Rot3::null); f4.set_radius(1.0); vf.push_back(&f4);
     Sphere f5; f5.set_name_pos_rot("f5", Vec3(4,0,0), Rot3::null); f5.set_radius(1.0); vf.push_back(&f5);
-	EXPECT_EQ(Vec3(2,0,0), Frames::optimal_bounding_sphere_center(vf));
+	EXPECT_EQ(Vec3(2,0,0), Frames::dumb_bounding_sphere_center(vf));
 }
 //------------------------------------------------------------------------------
 TEST_F(FramesTest, optimal_bounding_sphere_pos_many_spheres_asymetric) {
@@ -91,5 +91,5 @@ TEST_F(FramesTest, optimal_bounding_sphere_pos_many_spheres_asymetric) {
     Sphere f3; f3.set_name_pos_rot("f3", Vec3(2,0,0), Rot3::null); f3.set_radius(1.0); vf.push_back(&f3);
    	Sphere f4; f4.set_name_pos_rot("f4", Vec3(3,0,0), Rot3::null); f4.set_radius(1.0); vf.push_back(&f4);
     Sphere f5; f5.set_name_pos_rot("f5", Vec3(4,0,0), Rot3::null); f5.set_radius(5.0); vf.push_back(&f5);
-	EXPECT_EQ(Vec3(4,0,0), Frames::optimal_bounding_sphere_center(vf));
+	EXPECT_EQ(Vec3(4,0,0), Frames::dumb_bounding_sphere_center(vf));
 }

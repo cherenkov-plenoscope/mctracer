@@ -93,9 +93,7 @@ private:
     void warn_about_close_frames()const;
     void cluster_children();
     void assert_name_is_valid(const string name_to_check)const;
-    void update_boundary_sphere_radius_for_child(Frame *new_child);
-    void update_boundary_sphere();
-    
+    void update_bounding_sphere();
 public:
 
     class NoSuchChild: public TracerException{

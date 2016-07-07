@@ -98,80 +98,6 @@ string Frame::get_tree_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-void Frame::update_boundary_sphere_radius_for_child(Frame *new_child) {
-	// When a child frame is added to a frame we have to check if the sphere 
-	// enclosing all the frames previous children is also enclosing the new
-	// child. In case the old sphere is to small we have to increase its radius
-	// to enclose all the childrens again.
-	// To do so we calculate the radius needed to enclose only the new child.
-	
-	// Case: The new child is not enclosed by the previous sphere of this frame
-	//-------             _______________                                     //
-	//               ____/               \____                                //
-	//            __/     \                   \__                             //
-	//           /         \  radius             \                            //
-    //          |           \  enclosing          |                           //
-    //         |             \  all                |                          //
-    //         |              \  (previous)        |          new child       //
-    //        |  ___           \  children          |            ___          //
-	//        |/     \          \                   |          /     \        //
-    //        |       |          x------------------|---------|---x   |       //
-    //        |\ ___ /         frame                |          \ _._ /.       //
-    //        | previous child   .                  |             .   . 
-    //         | defining        .                 |              .   .
-    //         |  the current    .                 |              .   .
-	//          |  radius        .                |               .   .
-	//           \__             .             __/                .   .
-	//              \___         .        ____/                   .   .
-	//                  \________._______/                        .   .
-	//                           .                                .   .
-	//                           \_________________  ____________/\_ _/
-	//                                             \/               V
-	//                                   new childs rel. pos    new childs
-	//                                      to mother frame       radius
-	//                                             \________  _______/
-	//                                                      \/
-	//                         new radius of sphere enclosing all children   
-	// 
-	// Here we have to update the radius of the sphere enclosing all children.
-	//      
-	// Case: The new child is enclosed by the previous sphere of this frame
-	//-------
-	//                    _______________
-	//               ____/               \____                                //
-	//            __/     \ radius            \__                             // 
-	//           /         \ enclosing           \                            //
-    //          |           \  all                |                        
-    //         |             \  (previous)         |
-    //         |              \  children           |            
-    //        |                \           ___      |            
-	//        |                 \        /     \    |          
-    //        |                  x------|---x   |   |
-    //        |                frame     \ ___ /    |          
-    //        |                  .      new child   |                 
-    //         |                 .                 |                 
-    //         |                 .                 |                  
-	//          |                .                |                   
-	//           \__             .             __/                    
-	//              \___         .        ____/                       
-	//                  \________________/                            
-	//                                                              
-	//                             
-	// In this case the old radius remains because it is already enclosing the 
-	// new child.
-
-	const double radius_needed_to_enclose_new_child = 
-		new_child->pos_in_mother.norm() + 
-		new_child->radius_of_sphere_enclosing_all_children;
-
-	if(	
-		radius_needed_to_enclose_new_child > 
-		radius_of_sphere_enclosing_all_children
-	)
-		radius_of_sphere_enclosing_all_children = 
-		radius_needed_to_enclose_new_child;	
-}
-//------------------------------------------------------------------------------
 void Frame::erase(const Frame* child_rm) {
 
 	bool found = false;
@@ -195,7 +121,7 @@ void Frame::init_tree_based_on_mother_child_relations() {
 	cluster_children();
 	init_root();
 	init_frame2world();
-	update_boundary_sphere();
+	update_bounding_sphere();
 }
 //------------------------------------------------------------------------------
 void Frame::init_frame2world() {
@@ -206,12 +132,13 @@ void Frame::init_frame2world() {
 		child->init_frame2world();
 }
 //------------------------------------------------------------------------------
-void Frame::update_boundary_sphere() {
+void Frame::update_bounding_sphere() {
 	// Run from bottom to the top through the tree.
-	for(Frame *child : children){
-		child->update_boundary_sphere();
-		update_boundary_sphere_radius_for_child(child);
-	}
+	for(Frame *child : children)
+		child->update_bounding_sphere();
+	if(has_children())
+		radius_of_sphere_enclosing_all_children = 	
+			Frames::bounding_sphere_radius(children, Vec3::null);
 }
 //------------------------------------------------------------------------------
 void Frame::init_root() {
@@ -285,21 +212,12 @@ void Frame::cluster_children() {
 					this->children.push_back(oct_tree[sector].at(0));			
 				}else if(oct_tree[sector].size() > 1){
 
-					Vec3 mean_pos_in_mother;
-					if(oct_tree[sector].size() < max_number_of_children) {
-						mean_pos_in_mother = Frames::optimal_bounding_sphere_center(
-							oct_tree[sector]
-						);
-					}else{
-						mean_pos_in_mother = Frames::get_mean_pos_in_mother(
-							oct_tree[sector]
-						);
-					}
+					Vec3 octant_center = Frames::bounding_sphere_center(oct_tree[sector]);
 
 					Frame* octant = append<Frame>();
 					octant->set_name_pos_rot(
 						"oct_"+std::to_string(sector),
-						mean_pos_in_mother,
+						octant_center,
 						Rot3::null
 					);
 
@@ -312,7 +230,7 @@ void Frame::cluster_children() {
 							warn_small_child(sector_child);
 
 						sector_child->pos_in_mother = 
-							sector_child->pos_in_mother - mean_pos_in_mother;
+							sector_child->pos_in_mother - octant_center;
 
 						sector_child->T_frame2mother.set_transformation(
 							sector_child->rot_in_mother, 

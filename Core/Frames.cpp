@@ -1,7 +1,17 @@
 #include "Core/Frames.h"
+#include "Scenery/Geometry/QuadraticEquation.h"
 namespace Frames {
 //------------------------------------------------------------------------------
-Vec3 optimal_bounding_sphere_center(const vector<Frame*> &frames) {
+Vec3 bounding_sphere_center(const vector<Frame*> &frames) {
+	Vec3 center;
+	if(frames.size() < Frame::max_number_of_children)
+		center = dumb_bounding_sphere_center(frames);
+	else
+		center = mean_of_positions_in_mother(frames);
+	return center;
+}
+//------------------------------------------------------------------------------
+Vec3 dumb_bounding_sphere_center(const vector<Frame*> &frames) {
 
 	if(frames.size() < 1) {
 		stringstream info;
@@ -44,7 +54,7 @@ Vec3 optimal_bounding_sphere_center(const vector<Frame*> &frames) {
 		dir*(0.5*maximum - start_frame->contour_radius());
 }
 //------------------------------------------------------------------------------
-Vec3 get_mean_pos_in_mother(const vector<Frame*> &frames) {
+Vec3 mean_of_positions_in_mother(const vector<Frame*> &frames) {
 
 	if(frames.size() < 1) {
 		stringstream info;
@@ -66,8 +76,17 @@ bool positions_in_mother_are_too_close_together(const vector<Frame*> &frames) {
 
 	if(frames.size() < 2)
 		return false;
+	else
+		return spread_of_frame_position_in_mother(frames) < 
+			Frame::minimal_structure_size;
+}
+//------------------------------------------------------------------------------
+double spread_of_frame_position_in_mother(const vector<Frame*> &frames) {
+	
+	if(frames.size() < 2)
+		return 0.0;
 
-	const Vec3 mean_pos_in_mother = get_mean_pos_in_mother(frames);
+	const Vec3 mean_pos_in_mother = mean_of_positions_in_mother(frames);
 
 	Vec3 u = Vec3::null;
 	for(Frame* frame : frames) {
@@ -80,8 +99,76 @@ bool positions_in_mother_are_too_close_together(const vector<Frame*> &frames) {
 	}
 
 	u = u/frames.size();
-	const double spread = sqrt(u.norm());
-	return spread < Frame::minimal_structure_size;
+	return sqrt(u.norm());
+}
+//------------------------------------------------------------------------------
+double bounding_sphere_radius(const vector<Frame*> &frames, const Vec3 center) {
+	// Case: The new child is not enclosed by the previous sphere of this frame
+	//-------             _______________                                     //
+	//               ____/               \____                                //
+	//            __/     \                   \__                             //
+	//           /         \  radius             \                            //
+    //          |           \  enclosing          |                           //
+    //         |             \  all                |                          //
+    //         |              \  (previous)        |          new child       //
+    //        |  ___           \  children          |            ___          //
+	//        |/     \          \                   |          /     \        //
+    //        |       |          x------------------|---------|---x   |       //
+    //        |\ ___ /         frame center         |          \ _._ /.       //
+    //        | previous child   .                  |             .   . 
+    //         | defining        .                 |              .   .
+    //         |  the current    .                 |              .   .
+	//          |  radius        .                |               .   .
+	//           \__             .             __/                .   .
+	//              \___         .        ____/                   .   .
+	//                  \________._______/                        .   .
+	//                           .                                .   .
+	//                           \_________________  ____________/\_ _/
+	//                                             \/               V
+	//                                   new childs rel. pos    new childs
+	//                                      to mother frame       radius
+	//                                             \________  _______/
+	//                                                      \/
+	//                         new radius of sphere enclosing all children   
+	// 
+	// Here we have to update the radius of the sphere enclosing all children.
+	//      
+	// Case: The new child is enclosed by the previous sphere of this frame
+	//-------
+	//                    _______________
+	//               ____/               \____                                //
+	//            __/     \ radius            \__                             // 
+	//           /         \ enclosing           \                            //
+    //          |           \  all                |                        
+    //         |             \  (previous)         |
+    //         |              \  children           |            
+    //        |                \           ___      |            
+	//        |                 \        /     \    |          
+    //        |                  x------|---x   |   |
+    //        |            frame center  \ ___ /    |          
+    //        |                  .      new child   |                 
+    //         |                 .                 |                 
+    //         |                 .                 |                  
+	//          |                .                |                   
+	//           \__             .             __/                    
+	//              \___         .        ____/                       
+	//                  \________________/                            
+	//                                                              
+	//                             
+	// In this case the old radius remains because it is already enclosing the 
+	// new child.
+
+	double radius = 0.0;
+	for(const Frame* child: frames) {
+		const double radius_needed_for_child = 
+			(center - child->get_position_in_mother()).norm() + 
+			child->contour_radius();
+
+		if(radius_needed_for_child > radius)
+			radius = radius_needed_for_child;
+	}
+
+	return radius;
 }
 //------------------------------------------------------------------------------
 }// Frames
