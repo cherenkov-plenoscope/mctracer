@@ -54,7 +54,6 @@ namespace Plenoscope {
 		);
 		void export_sub_pixel_statistics(const string path)const;
 		void write_lixel_statistics(const string &path)const;
-		void write_lixel_statistics_header(const string &path)const;
 		string get_print()const;
 	private:
 
