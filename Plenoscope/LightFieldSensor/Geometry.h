@@ -71,7 +71,7 @@ namespace LightFieldSensor {
 		double field_of_view_solid_angle()const;
 		double expected_imaging_system_focal_length()const;
 		double expected_imaging_system_max_aperture_radius()const;
-		array<float, 273> get_header()const;
+		array<float, 273> get_info_header()const;
 	private:
 
 		void set_up_pixel_grid();
