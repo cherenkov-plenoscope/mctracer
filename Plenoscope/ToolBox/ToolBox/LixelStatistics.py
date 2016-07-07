@@ -4,6 +4,7 @@ from __future__ import absolute_import, print_function, division
 import numpy as np
 import scipy.spatial
 import os
+from SensorPlane2ImagingSystem import SensorPlane2ImagingSystem
 
 __all__ = ['LixelStatistics']
     
@@ -43,7 +44,7 @@ class LixelStatistics(object):
                 'cy_mean','cy_std',
                 'x_mean','x_std',
                 'y_mean','y_std',
-                'time_mean','time_std'
+                'time_delay_mean','time_delay_std'
                 ]):
             setattr(
                 self, 
@@ -53,20 +54,17 @@ class LixelStatistics(object):
 
     def __read_light_field_sensor_geometry_header(self, path):
         gh = np.fromfile(path, dtype=np.float32)
-        self.number_pixel = gh[101-1]
-        self.number_paxel = gh[102-1]
+        self.number_pixel = int(gh[101-1])
+        self.number_paxel = int(gh[102-1])
         self.number_lixel = self.number_pixel*self.number_paxel
         
         self.lixel_outer_radius = gh[103-1]
         self.lixel_z_orientation = gh[105-1]
 
-        self.sensor_plane2imaging_system = np.array([
-            [ gh[ 11-1], gh[ 14-1], gh[ 17-1], gh[ 20-1] ],
-            [ gh[ 12-1], gh[ 15-1], gh[ 18-1], gh[ 21-1] ],
-            [ gh[ 13-1], gh[ 16-1], gh[ 19-1], gh[ 22-1] ],
-        ])
+        self.expected_focal_length_of_imaging_system = gh[ 23-1]
+        self.expected_aperture_radius_of_imaging_system = gh[ 24-1]
 
-        self.light_field_sensor_distance = self.sensor_plane2imaging_system[2,3]
+        self.sensor_plane2imaging_system = SensorPlane2ImagingSystem(path)
 
     def __read_lixel_positions(self, path):
         lp = np.fromfile(path, dtype=np.float32)
