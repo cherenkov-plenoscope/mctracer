@@ -4,6 +4,7 @@
 #include "Xml/Xml.h"
 #include "Xml/Factory/SceneryFactory.h"
 #include "Plenoscope/Calibration/Calibrator.h"
+#include "Tools/HeaderBlock.h"
 #include <experimental/filesystem>
 namespace fs = std::experimental::filesystem;
 using std::string;
@@ -64,6 +65,11 @@ int main(int argc, char* argv[]) {
         throw TracerException("There is more then one plenoscope in the scenery");
     Plenoscope::PlenoscopeInScenery* pis = &scenery_factory.plenoscopes.at(0);
 
+    HeaderBlock::write(
+        pis->light_field_sensor_geometry.get_header(), 
+        PathTools::join(cmd.get("output"), "light_field_sensor_geometry.header.bin")
+    );
+
     pis->light_field_sensor_geometry.write_lixel_positions(
         PathTools::join(out_path.path, "lixel_positions.bin")
     );
@@ -79,8 +85,9 @@ int main(int argc, char* argv[]) {
         pis,
         &scenery
     );
+
+    // WRITE OUTPUT
     calibrator.write_lixel_statistics(PathTools::join(cmd.get("output"), "lixel_statistics.bin"));
-    calibrator.write_lixel_statistics_header(PathTools::join(cmd.get("output"), "lixel_statistics.header.bin"));
 
     }catch(std::exception &error) {
         std::cerr << error.what(); 
