@@ -50,7 +50,10 @@ TEST_F(EventIoTest, make_runheader) {
     for (size_t i=0; i<16; i++) foo++;
 
     std::copy_n(foo, 100, std::ostreambuf_iterator<char>(sout));
-    array<float, 273> my_run_header = EventIo::make_corsika_273float_sub_block_form_stream(sout);
+    array<float, 273> my_run_header = 
+        EventIo::make_corsika_273float_sub_block_form_stream(sout);
+
+    EXPECT_EQ(Corsika::str2float("RUNH"), my_run_header.at(0));
 }
 //------------------------------------------------------------------------------
 TEST_F(EventIoTest, EventIoFile_telescope_dat__check_tel_pos) {
