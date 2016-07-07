@@ -48,6 +48,9 @@ public:
 	Vec3 get_transformed_position(const Vec3& pos)const;
 	Vec3 get_transformed_position_inverse(const Vec3& pos)const;
 	Vec3 get_translation()const;
+	Vec3 get_rot_x()const;
+	Vec3 get_rot_y()const;
+	Vec3 get_rot_z()const;
 	void operator= (HomTra3 G);
 	HomTra3 operator* (const HomTra3 G)const;
 	HomTra3 inverse()const;

@@ -218,6 +218,10 @@ Vec3 HomTra3::get_translation()const {
     return Vec3(T[0][3], T[1][3], T[2][3]);
 }
 //------------------------------------------------------------------------------
+Vec3 HomTra3::get_rot_x()const { return Vec3(T[0][0], T[1][0], T[2][0]); }
+Vec3 HomTra3::get_rot_y()const { return Vec3(T[0][1], T[1][1], T[2][1]); }
+Vec3 HomTra3::get_rot_z()const { return Vec3(T[0][2], T[1][2], T[2][2]); }
+//------------------------------------------------------------------------------
 string HomTra3::get_print()const {
     stringstream out; 
     out << std::setprecision(3);
