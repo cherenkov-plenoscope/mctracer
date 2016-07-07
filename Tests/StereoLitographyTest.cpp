@@ -91,8 +91,8 @@ TEST_F(StereoLitographyTest, scaling) {
     add_stl_to_frame("test_scenery/LCCone-simple_parab.stl", &obj_scaled, scaleing);
 
     EXPECT_EQ(
-        scaleing*obj_normal.contour_radius(),
-        obj_scaled.contour_radius()
+        scaleing*obj_normal.get_bounding_sphere_radius(),
+        obj_scaled.get_bounding_sphere_radius()
     );
 }
 //----------------------------------------------------------------------

@@ -9,7 +9,7 @@ void Plane::set_x_y_width(
 }
 //------------------------------------------------------------------------------
 void Plane::post_initialize_radius_of_enclosing_sphere() {
-	radius_of_sphere_enclosing_all_children = hypot(
+	bounding_sphere_radius = hypot(
 		RectBounds.get_half_x_width(), 
 		RectBounds.get_half_y_width()
 	);

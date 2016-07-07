@@ -7,7 +7,7 @@ TEST_F(DiscTest, set_Disc) {
 
 	Disc D;
 	D.set_radius(42.0);
-	EXPECT_EQ(42.0, D.contour_radius());
+	EXPECT_EQ(42.0, D.get_bounding_sphere_radius());
 }
 //------------------------------------------------------------------------------
 TEST_F(DiscTest, set_Disc_negative_radius) {

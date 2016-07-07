@@ -3,11 +3,17 @@
 namespace Frames {
 //------------------------------------------------------------------------------
 Vec3 bounding_sphere_center(const vector<Frame*> &frames) {
-	Vec3 center;
-	if(frames.size() < Frame::max_number_of_children)
-		center = dumb_bounding_sphere_center(frames);
-	else
-		center = mean_of_positions_in_mother(frames);
+	// this can be optimized using Fischer's thesis on spheres enclosing spheres
+
+	Vec3 center = mean_of_positions_in_mother(frames);
+
+	if(frames.size() < Frame::max_number_of_children) {
+		const Vec3 alternative = dumb_bounding_sphere_center(frames);
+		const double m_radius = bounding_sphere_radius(frames, center); 
+		const double alt_radius = bounding_sphere_radius(frames, alternative);
+		if(m_radius > alt_radius)
+			center = alternative;
+	}
 	return center;
 }
 //------------------------------------------------------------------------------
@@ -34,8 +40,8 @@ Vec3 dumb_bounding_sphere_center(const vector<Frame*> &frames) {
 						frames[i]->get_position_in_mother() - 
 						frames[j]->get_position_in_mother()
 					).norm() + 
-					frames[i]->contour_radius() + 
-					frames[j]->contour_radius();
+					frames[i]->get_bounding_sphere_radius() + 
+					frames[j]->get_bounding_sphere_radius();
 
 				if(dist > maximum) {
 					maximum = dist;
@@ -51,7 +57,7 @@ Vec3 dumb_bounding_sphere_center(const vector<Frame*> &frames) {
 
 	dir = dir/dir.norm();
 	return start_frame->get_position_in_mother() + 
-		dir*(0.5*maximum - start_frame->contour_radius());
+		dir*(0.5*maximum - start_frame->get_bounding_sphere_radius());
 }
 //------------------------------------------------------------------------------
 Vec3 mean_of_positions_in_mother(const vector<Frame*> &frames) {
@@ -162,7 +168,7 @@ double bounding_sphere_radius(const vector<Frame*> &frames, const Vec3 center) {
 	for(const Frame* child: frames) {
 		const double radius_needed_for_child = 
 			(center - child->get_position_in_mother()).norm() + 
-			child->contour_radius();
+			child->get_bounding_sphere_radius();
 
 		if(radius_needed_for_child > radius)
 			radius = radius_needed_for_child;

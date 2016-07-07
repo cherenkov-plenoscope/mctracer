@@ -80,7 +80,7 @@ void Triangle::post_initialize_radius_of_enclosing_sphere() {
 	dist_corner_to_base.push_back( B.norm() );
 	dist_corner_to_base.push_back( C.norm() );
 
-	radius_of_sphere_enclosing_all_children = *max_element(	
+	bounding_sphere_radius = *max_element(	
 		dist_corner_to_base.begin(),
 		dist_corner_to_base.end() 
 	);

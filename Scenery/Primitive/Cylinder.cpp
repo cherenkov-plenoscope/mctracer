@@ -115,7 +115,7 @@ void Cylinder::post_initialize_radius_of_enclosing_sphere(){
 
 	double half_the_cylinder_length = 0.5*Length;
 
-	radius_of_sphere_enclosing_all_children = hypot(
+	bounding_sphere_radius = hypot(
 		half_the_cylinder_length,
 		Radius
 	);

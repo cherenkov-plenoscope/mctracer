@@ -16,7 +16,7 @@ void Sphere::set_radius(double new_radius) {
 	}
 
 	radius = new_radius;
-	radius_of_sphere_enclosing_all_children = new_radius;
+	bounding_sphere_radius = new_radius;
 }
 //------------------------------------------------------------------------------
 string Sphere::get_print()const {

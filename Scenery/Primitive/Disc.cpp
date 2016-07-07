@@ -7,7 +7,7 @@ void Disc::set_radius(const double radius){
 }
 //------------------------------------------------------------------------------
 void Disc::post_initialize_radius_of_enclosing_sphere(){
-	radius_of_sphere_enclosing_all_children = cylinder_bounds.get_radius();
+	bounding_sphere_radius = cylinder_bounds.get_radius();
 }
 //------------------------------------------------------------------------------
 std::string Disc::get_print()const {

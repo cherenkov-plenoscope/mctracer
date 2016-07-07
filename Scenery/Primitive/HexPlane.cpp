@@ -7,7 +7,7 @@ void HexPlane::set_outer_hex_radius(const double outer_hex_radius) {
 }
 //------------------------------------------------------------------------------
 void HexPlane::post_initialize_radius_of_enclosing_sphere() {
-	radius_of_sphere_enclosing_all_children = hex_bounds.get_outer_radius();
+	bounding_sphere_radius = hex_bounds.get_outer_radius();
 }
 //------------------------------------------------------------------------------
 std::string HexPlane::get_print()const {

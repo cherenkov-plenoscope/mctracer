@@ -35,7 +35,7 @@ void EllipticalCapWithHexagonalBound::post_initialize_radius_of_enclosing_sphere
 	double sphere_center_to_edge_in_z = 
 		sqrt(Z_curvature_radius*Z_curvature_radius - outer_hex_radius*outer_hex_radius);
 
-	radius_of_sphere_enclosing_all_children = hypot(
+	bounding_sphere_radius = hypot(
 		outer_hex_radius,
 		Z_curvature_radius - sphere_center_to_edge_in_z
 	);

@@ -10,7 +10,7 @@ TEST_F(RayAndFrameBoundingSphereTest, frame_has_bounding_sphere) {
 
     Sphere sphere("sphere", Vec3::null, Rot3::null);
     sphere.set_radius(1.0);
-    EXPECT_EQ(1.0, sphere.contour_radius());
+    EXPECT_EQ(1.0, sphere.get_bounding_sphere_radius());
 }
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameBoundingSphereTest, support_inside_bounding_sphere) {

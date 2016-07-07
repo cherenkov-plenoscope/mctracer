@@ -20,7 +20,7 @@ void SphereCapWithCylinderBound::post_initialize_radius_of_enclosing_sphere() {
 	double sphere_center_to_edge_in_z = 
 		sqrt(curvature_radius*curvature_radius - cap_radius*cap_radius);
 
-	radius_of_sphere_enclosing_all_children = hypot(
+	bounding_sphere_radius = hypot(
 		cap_radius,
 		curvature_radius - sphere_center_to_edge_in_z
 	);	

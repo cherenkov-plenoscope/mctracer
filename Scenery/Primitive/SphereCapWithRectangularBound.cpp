@@ -16,7 +16,7 @@ double SphereCapWithRectangularBound::get_focal_length()const {
 }
 //------------------------------------------------------------------------------
 void SphereCapWithRectangularBound::post_initialize_radius_of_enclosing_sphere() {
-	radius_of_sphere_enclosing_all_children = hypot(
+	bounding_sphere_radius = hypot(
 		rect_bounds.get_half_x_width(),
 		rect_bounds.get_half_y_width()
 	);	

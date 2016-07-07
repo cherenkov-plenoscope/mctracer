@@ -33,7 +33,7 @@ protected:
 
     Vec3 pos_in_mother; 
     Rot3 rot_in_mother;
-    double radius_of_sphere_enclosing_all_children; 
+    double bounding_sphere_radius; 
     
     HomTra3 T_frame2mother;
     HomTra3 T_frame2world;
@@ -59,7 +59,7 @@ public:
     Vec3 get_position_in_mother()const;
     Rot3 get_rotation_in_mother()const;
     Vec3 get_position_in_world()const;
-    double contour_radius()const;
+    double get_bounding_sphere_radius()const;
     const HomTra3* frame2mother()const;
     const HomTra3* frame2world()const;
     const vector<Frame*>* get_children()const;

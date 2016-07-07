@@ -235,13 +235,13 @@ TEST_F(FrameTest, removing_a_cild) {
     ground->set_outer_color(&Color::grass_green);
 
     //--------------------------------------------------------------------------
-    EXPECT_EQ(tree.contour_radius(), 0.0);
-    EXPECT_EQ(pole->contour_radius(), 0.0);
+    EXPECT_EQ(tree.get_bounding_sphere_radius(), 0.0);
+    EXPECT_EQ(pole->get_bounding_sphere_radius(), 0.0);
 
     tree.init_tree_based_on_mother_child_relations();
 
-    EXPECT_GT(tree.contour_radius(), 0.0);
-    EXPECT_GT(pole->contour_radius(), 0.0);
+    EXPECT_GT(tree.get_bounding_sphere_radius(), 0.0);
+    EXPECT_GT(pole->get_bounding_sphere_radius(), 0.0);
 
     Ray ray(Vec3(0,-5,-1.8), Vec3(0,1,0));
     Intersection isec = RayAndFrame::first_intersection(&ray, &tree);

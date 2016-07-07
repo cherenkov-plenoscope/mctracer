@@ -8,7 +8,7 @@ const double Frame::minimal_structure_size = 1e-6;
 Frame Frame::void_frame;
 //------------------------------------------------------------------------------
 Frame::Frame():
-	radius_of_sphere_enclosing_all_children(0.0), 
+	bounding_sphere_radius(0.0), 
 	root_frame(this) {}
 //------------------------------------------------------------------------------
 Frame::~Frame() {
@@ -76,10 +76,8 @@ string Frame::get_print()const {
 	out << "| pos in mother: " << pos_in_mother << "\n";
 	out << "| rot in mother: " << rot_in_mother << "\n";
 	out << "| pos in world:  ";
-	out << (has_mother() ? get_position_in_world().get_print() : "root");
-	out << "\n";
-	out << "| enclosing boundary radius: ";
-	out << radius_of_sphere_enclosing_all_children << "m\n";	
+	out << (has_mother()? get_position_in_world().get_print(): "root") << "\n";
+	out << "| bounding radius: " << bounding_sphere_radius << "m\n";	
 	return out.str();
 }
 //------------------------------------------------------------------------------
@@ -87,7 +85,7 @@ string Frame::get_tree_print()const {
 	
 	stringstream out;
 	out << name << ", pos " << pos_in_mother << ", r ";
-	out << radius_of_sphere_enclosing_all_children << "m\n";
+	out << bounding_sphere_radius << "m\n";
 
 	for(Frame* child : children)
 		out << StringTools::place_first_infront_of_each_new_line_of_second(
@@ -137,7 +135,7 @@ void Frame::update_bounding_sphere() {
 	for(Frame *child : children)
 		child->update_bounding_sphere();
 	if(has_children())
-		radius_of_sphere_enclosing_all_children = 	
+		bounding_sphere_radius = 	
 			Frames::bounding_sphere_radius(children, Vec3::null);
 }
 //------------------------------------------------------------------------------
@@ -199,7 +197,7 @@ void Frame::cluster_children() {
 			if(Frames::positions_in_mother_are_too_close_together(oct_tree[sector])) {
 				warn_about_close_frames();
 				for(Frame* child : oct_tree[sector]) {
-					if(child->contour_radius() < minimal_structure_size)
+					if(child->get_bounding_sphere_radius() < minimal_structure_size)
 						warn_small_child(child);
 
 					child->mother = this;
@@ -224,7 +222,7 @@ void Frame::cluster_children() {
 					for(Frame* sector_child : oct_tree[sector]) {
 						if(
 							!sector_child->has_children() && 
-							sector_child->contour_radius() < 
+							sector_child->get_bounding_sphere_radius() < 
 							minimal_structure_size
 						)
 							warn_small_child(sector_child);
@@ -267,7 +265,7 @@ void Frame::warn_small_child(const Frame* frame)const {
 	out << __FILE__ << " " << __func__ << "(frame) " << __LINE__ << "\n";
 	out << "Frame: " << frame->name << " is neglected. ";
 	out << "Contour radius is below " << minimal_structure_size << "m, i.e. ";
-	out << frame->contour_radius() << "m.\n";
+	out << frame->get_bounding_sphere_radius() << "m.\n";
 	std::cout << out.str();	
 }
 //------------------------------------------------------------------------------
@@ -287,8 +285,8 @@ Vec3 Frame::get_position_in_world()const {
     return T_frame2world.get_translation();
 }
 //------------------------------------------------------------------------------
-double Frame::contour_radius()const {
-    return radius_of_sphere_enclosing_all_children;
+double Frame::get_bounding_sphere_radius()const {
+    return bounding_sphere_radius;
 }
 //------------------------------------------------------------------------------
 const HomTra3* Frame::frame2mother()const {

@@ -11,7 +11,7 @@ void Annulus::set_outer_inner_radius(
 }
 //------------------------------------------------------------------------------
 void Annulus::post_initialize_radius_of_enclosing_sphere(){
-    radius_of_sphere_enclosing_all_children = outer_bound.get_radius();
+    bounding_sphere_radius = outer_bound.get_radius();
 }
 //------------------------------------------------------------------------------
 std::string Annulus::get_print()const {

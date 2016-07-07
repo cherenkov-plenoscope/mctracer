@@ -9,7 +9,7 @@ void PlaneDualSphericalBound::set_x_hight_and_y_width(
 }
 //------------------------------------------------------------------------------
 void PlaneDualSphericalBound::post_initialize_radius_of_enclosing_sphere() {
-	radius_of_sphere_enclosing_all_children = 
+	bounding_sphere_radius = 
 		dual_sphere_bounds.get_enclosing_radius();
 }
 //------------------------------------------------------------------------------

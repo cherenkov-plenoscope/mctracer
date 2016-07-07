@@ -3,7 +3,7 @@ namespace RayAndFrame {
 //------------------------------------------------------------------------------
 bool ray_support_inside_frames_bounding_sphere(const Ray* ray, const Frame *frame) {
     return (frame->get_position_in_world() - ray->get_support()).
-        norm_is_less_equal_than(frame->contour_radius());
+        norm_is_less_equal_than(frame->get_bounding_sphere_radius());
 }
 //------------------------------------------------------------------------------
 bool ray_has_intersection_with_bounding_sphere_of(const Ray* ray, const Frame *frame) {
@@ -16,7 +16,7 @@ bool ray_has_intersection_with_bounding_sphere_of(const Ray* ray, const Frame *f
     const Vec3 shortest_connection = frame->get_position_in_world() - q;
     const double dist_square = shortest_connection*shortest_connection;
 
-    if(dist_square > frame->contour_radius()*frame->contour_radius()) {
+    if(dist_square > frame->get_bounding_sphere_radius()*frame->get_bounding_sphere_radius()) {
         //
         // -------------+-----\--------> ray
         //              |     |
