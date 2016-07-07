@@ -12,7 +12,7 @@ class LixelStatistics(object):
         path = os.path.abspath(path)
 
         self.__read_lixel_statistics_header(os.path.join(path, 'lixel_statistics.header.bin'))
-        self.__read_lixel_positions(os.path.join(path, 'lixel_positions.txt'))
+        self.__read_lixel_positions(os.path.join(path, 'lixel_positions.bin'))
         self.__read_lixel_statistics(os.path.join(path, 'lixel_statistics.bin'))
 
         self.__calc_pixel_and_paxel_average_positions()
@@ -61,7 +61,8 @@ class LixelStatistics(object):
         self.photons_emitted_per_lixel = lsh[5]
 
     def __read_lixel_positions(self, path):
-        lp = np.genfromtxt(path)
+        lp = np.fromfile(path, dtype=np.float32)
+        lp = lp.reshape([lp.shape[0]/2 ,2])
         self.lixel_positions_x = lp[:,0]
         self.lixel_positions_y = lp[:,1]
 

@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
     Plenoscope::PlenoscopeInScenery* pis = &scenery_factory.plenoscopes.at(0);
 
     pis->light_field_sensor_geometry.write_lixel_positions(
-        PathTools::join(out_path.path, "lixel_positions.txt")
+        PathTools::join(out_path.path, "lixel_positions.bin")
     );
 
     // CALIBRATION CONFIG

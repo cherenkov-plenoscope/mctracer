@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 '''
-Save plots of a plenoscope light field calibration
+Save plots of a plenoscope light field calibration. 
+When the OUTPUT_PATH is not set, a plot folder is created in the input
+calibration folder.
 
 Usage:
     LixelStatisticsPlot -i=INPUT_PATH [-o=OUTPUT_PATH]
@@ -290,7 +292,8 @@ def main():
         arguments = do.docopt(__doc__)
         output_path = arguments['--output']
         if output_path is None:
-            output_path = arguments['--input']
+            output_path = os.path.join(arguments['--input'], 'plots')
+            os.mkdir(output_path)
 
         ls = LixelStatistics(path=arguments['--input'])
         ls_plotter = PlotLixelStatistics(ls, output_path)

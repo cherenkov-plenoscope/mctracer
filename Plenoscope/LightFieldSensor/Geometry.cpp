@@ -210,26 +210,24 @@ double Geometry::expected_imaging_system_max_aperture_radius()const{
 //------------------------------------------------------------------------------
 void Geometry::write_lixel_positions(const string path)const {
 
-	vector<vector<double>> all_lixel_xy;
+    std::ofstream file;
+    file.open(path, std::ios::out | std::ios::binary);
+    if(!file.is_open()) {
+        std::stringstream info;
+        info << __FILE__ << " " << __LINE__ << "\n";
+        info << __func__ << "\n";
+        info << "Unable to write file: '" << path << "'\n";
+        throw TracerException(info.str());      
+    }
 
-	for(Vec3 pos : lixel_grid) {
-		vector<double> lixel_xy = {pos.x(), pos.y()};
-		all_lixel_xy.push_back(lixel_xy);
-	}
+    for(Vec3 pos : lixel_grid) {
+    	const float x = pos.x();
+    	const float y = pos.y();
+    	file.write((char*)&x, sizeof(float));
+    	file.write((char*)&y, sizeof(float));
+    }
 
-	stringstream header;
-	header << "number_of_lixels = " << lixel_grid.size() << "\n";
-	header << "number_of_paxel_per_pixel = " << number_of_paxel_per_pixel() << "\n";
-	header << "lixel_z_orientation = " << lixel_z_orientation() << "\n";
-	header << "lixel_inner_radius = " << lixel_inner_radius() << "\n";
-	header << "lixel_outer_radius = " << lixel_outer_radius() << "\n";
-	header << "x[m]\ty[m]\n";
-
-	AsciiIo::write_table_to_file_with_header(
-		all_lixel_xy,
-		path,
-		header.str()
-	);
+    file.close();
 }
 //------------------------------------------------------------------------------
 string Geometry::get_print()const{
