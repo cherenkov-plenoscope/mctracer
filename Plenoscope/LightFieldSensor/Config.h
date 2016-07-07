@@ -18,7 +18,7 @@ namespace Plenoscope {
 	namespace LightFieldSensor {
 
 		struct Config {
-			HomTra3 relative_orientation_and_position_to_imaging_system;
+			HomTra3 sensor_plane2imaging_system;
 			// The imaging system's expected properties as focal length and max
 			// outer aperture radius do not neccessarily match the dimensions 
 			// of the actual imaging system which will be used.

@@ -305,7 +305,7 @@ Frame* SceneryFactory::add_light_field_sensor(Frame* mother, const Node node) {
     const Node lfs = node.child("set_light_field_sensor");
 
     Plenoscope::LightFieldSensor::Config config;
-    config.relative_orientation_and_position_to_imaging_system = *light_field_sensor->frame2mother();
+    config.sensor_plane2imaging_system = *light_field_sensor->frame2mother();
     config.expected_imaging_system_focal_length = lfs.attribute2double("expected_imaging_system_focal_length");
     config.expected_imaging_system_max_aperture_radius = lfs.attribute2double("expected_imaging_system_aperture_radius");
     config.max_FoV_diameter = Deg2Rad(lfs.attribute2double("max_FoV_diameter_deg"));
