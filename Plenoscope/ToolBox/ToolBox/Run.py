@@ -16,7 +16,6 @@ class Run(object):
 
         self.lixel_statistics = LixelStatistics(self.__path_input_plenoscope)
         self.event_numbers = self.__event_numbers_in_run()
-        self.__counter = 1
 
     def __event_numbers_in_run(self):
         files_in_run_folder = glob.glob(os.path.join(self.__path, '*'))
@@ -24,7 +23,6 @@ class Run(object):
         for fi in files_in_run_folder:
             if os.path.isdir(fi) and os.path.basename(fi).isdigit():
                 events.append(int(os.path.basename(fi)))
-
         events = np.array(events)
         events.sort()
         return events
