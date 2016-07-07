@@ -9,13 +9,13 @@ setup(
     author_email='sebmuell@phys.ethz.ch',
     license='MIT',
     packages=[
-        'ToolBox.LixelStatistics',
+        'ToolBox',
         ],
     install_requires=[
         'numpy',            # in anaconda
     ],
     entry_points={'console_scripts': [
-        'mctPlenoscopePlotLixelStatistics = ToolBox.LixelStatistics.__init__:main',
+        'mctPlenoscopePlotLixelStatistics = ToolBox.plot_lixel_statistics:main',
     ]},
     zip_safe=False
 )

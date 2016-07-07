@@ -27,7 +27,7 @@ from matplotlib import gridspec
 import mpl_toolkits.mplot3d.art3d as art3d
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import os
-from .LixelStatistics import LixelStatistics
+from LixelStatistics import LixelStatistics
 
 def add_to_ax_symmetric_hist(vals, ax, nbins=None):
     if nbins == None:
@@ -67,13 +67,13 @@ def add_to_ax_cy_std_hist(lss, ax):
     add_to_ax_symmetric_hist(cy_std, ax)
     ax.set_xlabel('incoming direction stddev c'+'y'+'/deg')
 def add_to_ax_time_mean_hist(lss, ax):
-    time_mean = lss.time_mean[lss.efficiency > 0.0]
-    add_to_ax_symmetric_hist(time_mean, ax)
+    time_delay_mean = lss.time_delay_mean[lss.efficiency > 0.0]
+    add_to_ax_symmetric_hist(time_delay_mean, ax)
     ax.set_xlabel('relative arrival time mean t/s')
 def add_to_ax_time_std_hist(lss, ax):
-    time_std = lss.time_std[lss.efficiency > 0.0]
-    time_std = time_std[~np.isnan(time_std)]
-    add_to_ax_symmetric_hist(time_std, ax)
+    time_delay_std = lss.time_delay_std[lss.efficiency > 0.0]
+    time_delay_std = time_delay_std[~np.isnan(time_delay_std)]
+    add_to_ax_symmetric_hist(time_delay_std, ax)
     ax.set_xlabel('relative arrival time stddev t/s')
 def add_to_ax_geometric_efficieny_hist(lss, ax):
     geo_eff = lss.efficiency
@@ -209,7 +209,7 @@ class PlotLixelStatistics(object):
         fig, ax = self.fig_ax()
         add_to_ax_time_mean_hist(self.lss, ax)
         ax.semilogy()
-        self.__save_fig(fig, 'time_mean.png')
+        self.__save_fig(fig, 'time_delay_mean.png')
         plt.close(fig)
     def save_time_stddev(self):
         fig, ax = self.fig_ax()
