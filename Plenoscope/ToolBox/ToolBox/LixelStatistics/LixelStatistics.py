@@ -6,12 +6,12 @@ import scipy.spatial
 import os
 
 __all__ = ['LixelStatistics']
-
+    
 class LixelStatistics(object):
     def __init__(self, path):
         path = os.path.abspath(path)
 
-        self.__read_lixel_statistics_header(os.path.join(path, 'lixel_statistics.header.bin'))
+        self.__read_light_field_sensor_geometry_header(os.path.join(path, 'light_field_sensor_geometry.header.bin'))
         self.__read_lixel_positions(os.path.join(path, 'lixel_positions.bin'))
         self.__read_lixel_statistics(os.path.join(path, 'lixel_statistics.bin'))
 
@@ -51,14 +51,22 @@ class LixelStatistics(object):
                 ls[:,i].reshape(self.number_pixel, self.number_paxel)
             )        
 
-    def __read_lixel_statistics_header(self, path):
-        lsh = np.fromfile(path, dtype=np.float32)
-        self.number_lixel = lsh[0]
-        self.number_pixel = lsh[1]
-        self.number_paxel = lsh[2]
-        self.lixel_outer_radius = lsh[3]
-        self.lixel_z_orientation = lsh[4]
-        self.photons_emitted_per_lixel = lsh[5]
+    def __read_light_field_sensor_geometry_header(self, path):
+        gh = np.fromfile(path, dtype=np.float32)
+        self.number_pixel = gh[101-1]
+        self.number_paxel = gh[102-1]
+        self.number_lixel = self.number_pixel*self.number_paxel
+        
+        self.lixel_outer_radius = gh[103-1]
+        self.lixel_z_orientation = gh[105-1]
+
+        self.sensor_plane2imaging_system = np.array([
+            [ gh[ 11-1], gh[ 14-1], gh[ 17-1], gh[ 20-1] ],
+            [ gh[ 12-1], gh[ 15-1], gh[ 18-1], gh[ 21-1] ],
+            [ gh[ 13-1], gh[ 16-1], gh[ 19-1], gh[ 22-1] ],
+        ])
+
+        self.light_field_sensor_distance = self.sensor_plane2imaging_system[2,3]
 
     def __read_lixel_positions(self, path):
         lp = np.fromfile(path, dtype=np.float32)

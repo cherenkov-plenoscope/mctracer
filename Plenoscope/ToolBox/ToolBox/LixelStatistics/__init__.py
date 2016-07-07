@@ -77,7 +77,7 @@ def add_to_ax_time_std_hist(lss, ax):
     ax.set_xlabel('relative arrival time stddev t/s')
 def add_to_ax_geometric_efficieny_hist(lss, ax):
     geo_eff = lss.efficiency
-    add_to_ax_symmetric_hist(geo_eff, ax, nbins=np.floor(lss.photons_emitted_per_lixel))
+    add_to_ax_symmetric_hist(geo_eff, ax)
     ax.set_xlabel('geometric efficiency eff/1')
 def add_to_ax_2d_hist(x,y, ax, aspect='auto'):
     nbins_x = np.sqrt(x.shape[0])
