@@ -31,3 +31,16 @@ class McTruth(object):
 
     def __repr__(self):
         return self.__str__()
+
+    def short_event_info(self):
+        az = str(round(np.rad2deg(self.corsika_event_header[12-1]),2))
+        zd = str(round(np.rad2deg(self.corsika_event_header[11-1]),2))
+        core_y = str(round(0.01*self.corsika_event_header[118],2))
+        core_x = str(round(0.01*self.corsika_event_header[98],2))
+        E = str(round(self.corsika_event_header[4-1],2))
+
+        return str("E: "+E+"GeV\n"+
+            "core pos: x="+core_x+'m, '+
+            "y="+core_y+'m, '+
+            "direction: Zd="+zd+'deg, '+
+            "Az="+az+'deg')

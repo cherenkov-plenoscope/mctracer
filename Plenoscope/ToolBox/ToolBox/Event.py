@@ -7,6 +7,7 @@ from SensorPlane2ImagingSystem import SensorPlane2ImagingSystem
 from RawPlenoscopeResponse import RawPlenoscopeResponse
 from McTruth import McTruth
 from LightField import LightField
+from PlotEventSumProjections import plot_sum_projections
 
 __all__ = ['Event']
 
@@ -41,3 +42,7 @@ class Event(object):
         
     def __repr__(self):
         return self.__str__()
+
+    def plot(self):
+        plot_sum_projections(self)
+

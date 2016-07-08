@@ -29,7 +29,7 @@ class Run(object):
 
     def __getitem__(self, index):
         try:
-            event_path = os.path.join(self.__path, str(index))
+            event_path = os.path.join(self.__path, str(index+1))
             return Event(event_path, self.lixel_statistics)
         except(FileNotFoundError):
             raise StopIteration

@@ -40,20 +40,9 @@ def save_refocus_stack(event, path, obj_dist_min=2e3, obj_dist_max=12e3, steps=1
         image = images[i]
         object_distance = object_distances[i]
 
-        az = str(round(np.rad2deg(event.mc_truth.corsika_event_header[12-1]),2))
-        zd = str(round(np.rad2deg(event.mc_truth.corsika_event_header[11-1]),2))
-        core_y = str(round(0.01*event.mc_truth.corsika_event_header[118],2))
-        core_x = str(round(0.01*event.mc_truth.corsika_event_header[98],2))
-        E = str(round(event.mc_truth.corsika_event_header[4-1],2))
-
         fig = plt.figure(figsize=(7, 6)) 
         fig, (ax_dir, ax_pap) = plt.subplots(1,2)
-        plt.suptitle("E: "+E+"GeV\n"+
-            "core pos: x="+core_x+'m, '+
-            "y="+core_y+'m, '+
-            "direction: Zd="+zd+'deg, '+
-            "Az="+az+'deg'
-            )
+        plt.suptitle(event.mc_truth.short_event_info())
 
         gs = gridspec.GridSpec(1, 2, width_ratios=[1, 6]) 
         ax0 = plt.subplot(gs[0])

@@ -23,7 +23,6 @@ import tempfile
 import pickle
 from copy import deepcopy
 
-
 def add_to_ax(ax, I, px, py, colormap='viridis', hexrotation=30, vmin=None, vmax=None):
 
     if vmin is None:
