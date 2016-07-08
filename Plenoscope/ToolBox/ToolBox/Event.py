@@ -33,3 +33,11 @@ class Event(object):
             self.sensor_plane2imaging_system
         )
 
+    def __str__(self):
+        out = '_Event_'+str(int(self.mc_truth.corsika_event_header[1]))+'_\n'
+        out+= ' path: '+self.__path+'\n'
+        out+= '  '+self.mc_truth.__str__().replace('\n', '\n  ')
+        return out
+        
+    def __repr__(self):
+        return self.__str__()

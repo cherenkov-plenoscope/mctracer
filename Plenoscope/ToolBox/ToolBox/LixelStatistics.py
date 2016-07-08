@@ -5,6 +5,7 @@ import numpy as np
 import scipy.spatial
 import os
 from SensorPlane2ImagingSystem import SensorPlane2ImagingSystem
+from HeaderRepresentation import assert_marker_of_header_is
 
 __all__ = ['LixelStatistics']
     
@@ -54,6 +55,7 @@ class LixelStatistics(object):
 
     def __read_light_field_sensor_geometry_header(self, path):
         gh = np.fromfile(path, dtype=np.float32)
+        assert_marker_of_header_is(gh, 'PLGH')
         self.number_pixel = int(gh[101-1])
         self.number_paxel = int(gh[102-1])
         self.number_lixel = self.number_pixel*self.number_paxel
@@ -92,3 +94,20 @@ class LixelStatistics(object):
         ])
 
         self.lixel_polygons = [xy + poly_template for xy in lixel_centers_xy.T]
+
+    def mask_of_fraction_of_most_efficient_lixels(self, fraction):
+        number_valid_lixels = int(np.floor(self.number_lixel*fraction))
+        flat_idxs = np.argsort(self.efficiency.flatten())[-number_valid_lixels:]
+        flat_mask = np.zeros(self.number_lixel, dtype=bool)
+        flat_mask[flat_idxs] = True
+        return flat_mask.reshape([self.number_pixel, self.number_paxel])
+
+    def __str__(self):
+        out = 'LixelStatistics( '
+        out+= str(self.number_lixel)+' lixel = '
+        out+= str(self.number_pixel)+' pixel x '
+        out+= str(self.number_paxel)+' paxel)\n'
+        return out
+
+    def __repr__(self):
+        return self.__str__()        

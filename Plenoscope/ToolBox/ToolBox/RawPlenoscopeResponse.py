@@ -11,3 +11,11 @@ class RawPlenoscopeResponse(object):
         raw = raw.reshape([raw.shape[0]/2 ,2])
         self.arrival_time = raw[:,0]
         self.intensity = raw[:,1]
+
+    def __str__(self):
+        out = 'RawPlenoscopeResponse( '
+        out+= str(self.arrival_time.shape[0])+' lixel )\n'
+        return out
+
+    def __repr__(self):
+        return self.__str__()

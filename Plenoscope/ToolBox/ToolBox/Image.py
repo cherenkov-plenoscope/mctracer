@@ -24,3 +24,4 @@ class Image:
         fig, ax = plt.subplots()
         add_to_ax(ax, self.intensity, self.pixel_pos_x, self.pixel_pos_y)
         plt.show()
+
