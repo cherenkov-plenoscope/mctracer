@@ -22,7 +22,7 @@ namespace Plenoscope {
         float cy_mean, cy_std;
         float x_mean, x_std;
         float y_mean, y_std;
-        float time_mean, time_std;
+        float time_delay_mean, time_delay_std;
         LixelStatistic();
     };
 
@@ -39,7 +39,7 @@ namespace Plenoscope {
         OnlineStatistics cy;
         OnlineStatistics x;
         OnlineStatistics y;
-        OnlineStatistics time;
+        OnlineStatistics timed_delay;
         OnlineLixelStatistic();
     };
     //--------------------------------------------------------------------------

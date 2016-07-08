@@ -15,8 +15,8 @@ TEST_F(PlenoscopeLixelStatisticsTest, default_ctor) {
     EXPECT_EQ(stat.x_std, 0.0);
     EXPECT_EQ(stat.y_mean, 0.0);
     EXPECT_EQ(stat.y_std, 0.0);
-    EXPECT_EQ(stat.time_mean, 0.0);
-    EXPECT_EQ(stat.time_std, 0.0);
+    EXPECT_EQ(stat.time_delay_mean, 0.0);
+    EXPECT_EQ(stat.time_delay_std, 0.0);
 }
 //----------------------------------------------------------------------
 TEST_F(PlenoscopeLixelStatisticsTest, write_and_read_binary) {
@@ -35,8 +35,8 @@ TEST_F(PlenoscopeLixelStatisticsTest, write_and_read_binary) {
         stat.x_std =      i*1.006;
         stat.y_mean =     i*1.007; 
         stat.y_std =      i*1.008;
-        stat.time_mean =  i*1.009;
-        stat.time_std =   i*1.010;    
+        stat.time_delay_mean =  i*1.009;
+        stat.time_delay_std =   i*1.010;    
         lixel_stats.push_back(stat);
     }
     
@@ -58,8 +58,8 @@ TEST_F(PlenoscopeLixelStatisticsTest, write_and_read_binary) {
         EXPECT_NEAR(lixel_stats_in.at(i).x_std,      i*1.006, 1e-4);
         EXPECT_NEAR(lixel_stats_in.at(i).y_mean,     i*1.007, 1e-4);
         EXPECT_NEAR(lixel_stats_in.at(i).y_std,      i*1.008, 1e-4);
-        EXPECT_NEAR(lixel_stats_in.at(i).time_mean,  i*1.009, 1e-4);
-        EXPECT_NEAR(lixel_stats_in.at(i).time_std,   i*1.010, 1e-4);
+        EXPECT_NEAR(lixel_stats_in.at(i).time_delay_mean,  i*1.009, 1e-4);
+        EXPECT_NEAR(lixel_stats_in.at(i).time_delay_std,   i*1.010, 1e-4);
     }
 }
 //----------------------------------------------------------------------
