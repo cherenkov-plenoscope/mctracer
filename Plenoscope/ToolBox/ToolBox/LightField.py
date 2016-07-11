@@ -3,11 +3,12 @@
 from __future__ import absolute_import, print_function, division
 import numpy as np
 from Image import Image
+from ApertureMasks import circular_mask
 
 __all__ = ['LightField']
     
 class LightField(object):
-    def __init__(self, raw_plenoscope_response, lixel_statistics, sensor_plane2imaging_system):
+    def __init__(self, raw_plenoscope_response, lixel_statistics, sensor_plane2imaging_system, correct_intensity=False):
         self.lixel_statistics = lixel_statistics
         self.sensor_plane2imaging_system = sensor_plane2imaging_system
         
@@ -18,10 +19,11 @@ class LightField(object):
             self.lixel_statistics.number_paxel)
         # correct for efficiency of lixels
         where_sensitive = self.lixel_statistics.mask_of_fraction_of_most_efficient_lixels(0.95)
-        #mean_efficiency_where_sensitive = self.lixel_statistics.efficiency[where_sensitive].mean()
-        #self.I[np.invert(where_sensitive)] = 0.0
-        #self.I[where_sensitive] /= self.lixel_statistics.efficiency[where_sensitive]
-        #self.I[where_sensitive] *= mean_efficiency_where_sensitive
+        if correct_intensity:
+            mean_efficiency_where_sensitive = self.lixel_statistics.efficiency[where_sensitive].mean()
+            self.I[np.invert(where_sensitive)] = 0.0
+            self.I[where_sensitive] /= self.lixel_statistics.efficiency[where_sensitive]
+            self.I[where_sensitive] *= mean_efficiency_where_sensitive
 
         # ARRIVAL TIMES
         self.t = raw_plenoscope_response.arrival_time.copy()
@@ -74,14 +76,36 @@ class LightField(object):
             self.lixel_statistics.pixel_pos_cx, 
             self.lixel_statistics.pixel_pos_cy)
 
+    def __zero_mask_save_average(self, I, axis, mask):
+        if mask.sum() == 0.0:
+            return np.zeros(I.shape[np.invert(axis)])
+        else:
+            return np.average(I, axis=axis, weights=mask)     
+
     def pixel_sum(self, mask=None):
         return Image(
-            np.sum(self.I, axis=1), 
+            self.__zero_mask_save_average(self.I, axis=1, mask=mask), 
             self.lixel_statistics.pixel_pos_cx, 
             self.lixel_statistics.pixel_pos_cy)
 
     def paxel_sum(self, mask=None):
         return Image(
-            np.sum(self.I, axis=0), 
+            self.__zero_mask_save_average(self.I, axis=0, mask=mask), 
             self.lixel_statistics.paxel_pos_x, 
             self.lixel_statistics.paxel_pos_y)
+
+    def pixel_sum_sub_aperture(self, sub_x, sub_y, sub_r, smear=0.0):
+        """
+        Returns an Image as seen by a sub aperture at sub_x, sub_y with radius sub_r.
+        The subaperture radius sub_r can be smeared.
+        """
+        return self.pixel_sum(
+            circular_mask(
+                self.lixel_statistics.paxel_pos_x,
+                self.lixel_statistics.paxel_pos_y,
+                x=sub_x,
+                y=sub_y,
+                r=sub_r,
+                smear=smear
+            )
+        )
