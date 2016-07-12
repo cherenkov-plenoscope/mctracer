@@ -20,6 +20,9 @@ class LixelStatistics(object):
         self.__calc_pixel_and_paxel_average_positions()
         self.__init_lixel_polygons()
 
+        #self.valid_efficiency = self.efficiency > 0.10
+        self.valid_efficiency = self.mask_of_fraction_of_most_efficient_lixels(0.95)
+
     def __calc_pixel_and_paxel_average_positions(self):
         self.paxel_pos_x = np.nanmean(self.x_mean, axis=0) 
         self.paxel_pos_y = np.nanmean(self.y_mean, axis=0)

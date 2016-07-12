@@ -51,7 +51,7 @@ def add_to_ax(ax, I, px, py, colormap='viridis', hexrotation=30, vmin=None, vmax
 
     return p 
 
-def plot_pixel(img, ax, colormap="viridis", vmin=None, vmax=None):
+def add_pixel_image_to_ax(img, ax, colormap="viridis", vmin=None, vmax=None):
     ax.set_xlabel('x/deg')
     ax.set_ylabel('y/deg')
     ax.spines['right'].set_visible(False)
@@ -68,7 +68,7 @@ def plot_pixel(img, ax, colormap="viridis", vmin=None, vmax=None):
         vmax=vmax,
     )
 
-def plot_paxel(img, ax, colormap="viridis", vmin=None, vmax=None):
+def add_paxel_image_to_ax(img, ax, colormap="viridis", vmin=None, vmax=None):
     ax.set_xlabel('x/m')
     ax.set_ylabel('y/m')
     ax.spines['right'].set_visible(False)

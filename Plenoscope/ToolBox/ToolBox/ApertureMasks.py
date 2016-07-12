@@ -2,26 +2,23 @@
 from __future__ import absolute_import, print_function, division
 import numpy as np
 
-def circular_mask(paxel_pos_x, paxel_pos_y, x, y, r, smear=0.0):
+def circular_mask(xs, ys, x, y, r, smear=0.0):
 
-    r1 = r - smear
-    r2 = r + smear
+    r_smear = r + smear
 
     if smear > 0.0:
-        m = -1.0/(r2 - r1)
-        b = 1.0 - m*r1
+        slope = -1.0/(r_smear - r)
+        intercept = 1.0 - slope*r
 
     center = np.array([x,y])
-    mask = np.zeros(shape=paxel_pos_x.shape)
+    mask = np.zeros(shape=xs.shape)
 
-    for pax in range(paxel_pos_x.shape[0]):
-        pax_pos = np.array([paxel_pos_x[pax], paxel_pos_y[pax]])
+    for pax in range(xs.shape[0]):
+        pax_pos = np.array([xs[pax], ys[pax]])
         dist = np.linalg.norm(center - pax_pos)
-        if dist <= r1:
+        if dist <= r:
             mask[pax] = 1.0
-        elif dist > r1 and dist < r2 and smear > 0.0:
-            mask[pax] = m*dist + b
-        elif dist > r2:
-            mask[pax] = 0.0
+        elif dist > r and dist < r_smear and smear > 0.0:
+            mask[pax] = slope*dist + intercept
 
     return mask
