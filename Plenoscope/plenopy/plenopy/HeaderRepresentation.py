@@ -26,7 +26,6 @@ def corsika_event_header_repr(h):
     assert_marker_of_header_is(h,'EVTH')
 
     out = 'CORSIKA event header\n'
-    #out+= '  1 '+'EVTH\n'
     out+= '  2 '+'event number '+str(int(h[2-1]))+'\n'
     out+= '  3 '+'particle id '+str(int(h[3-1]))+'\n'
     out+= '  4 '+'total energy '+str(h[4-1])+' GeV\n'
@@ -45,7 +44,6 @@ def corsika_run_header_repr(h):
     assert_marker_of_header_is(h,'RUNH')
 
     out = 'CORSIKA run header\n'
-    #out+= '  1 '+'RUNH\n'
     out+= '  2 '+'run number '+str(int(h[2-1]))+'\n'
     out+= '  4 '+'date of begin run (yymmdd) '+str(int(h[3-1]))+'\n'
     out+= '  4 '+'version of program '+str(h[4-1])+'\n'

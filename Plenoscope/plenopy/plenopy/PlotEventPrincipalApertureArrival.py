@@ -12,8 +12,6 @@ import subprocess
 
 from PlotTools import FigureSize
 
-__all__ = ['save_principal_aperture_arrival_stack', 'save_principal_aperture_arrival_video']
-
 def save_principal_aperture_arrival_stack(lf, path, steps=7, threshold=100):
 
     plt.rcParams.update({'font.size': 12})

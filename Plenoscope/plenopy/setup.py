@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(
-    name='mctPlenoscopeToolbox',
+    name='plenopy',
     version='0.0.0',
     description='View and work on plenoscope events',
     url='',
@@ -9,13 +9,13 @@ setup(
     author_email='sebmuell@phys.ethz.ch',
     license='MIT',
     packages=[
-        'ToolBox',
+        'plenopy',
         ],
     install_requires=[
         'numpy',            # in anaconda
     ],
     entry_points={'console_scripts': [
-        'mctPlenoscopePlotLixelStatistics = ToolBox.plot_lixel_statistics:main',
+        'mctPlenoscopePlotLixelStatistics = plenopy.plot.plot_lixel_statistics:main',
     ]},
     zip_safe=False
 )

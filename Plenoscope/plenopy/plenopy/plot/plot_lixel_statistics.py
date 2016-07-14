@@ -12,22 +12,13 @@ Options:
     -o --output=OUTPUT_PATH     path to save the plots
     -i --input=INPUT_PATH       path to plenoscope calibration
 '''
-#from __future__ import absolute_import, print_function, division
+from __future__ import absolute_import, print_function, division
 import docopt as do
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
-from matplotlib.patches import RegularPolygon
-from matplotlib.collections import RegularPolyCollection, PolyCollection
-from matplotlib.patches import Circle
-from matplotlib.collections import PatchCollection
-from mpl_toolkits.mplot3d import Axes3D
-import matplotlib.pyplot as plt
-from matplotlib import gridspec
-import mpl_toolkits.mplot3d.art3d as art3d
-from mpl_toolkits.axes_grid1 import make_axes_locatable
+from matplotlib.collections import PolyCollection
 import os
-from LixelStatistics import LixelStatistics
+from ..LixelStatistics import LixelStatistics
 
 def add_to_ax_symmetric_hist(vals, ax, nbins=None):
     if nbins == None:
@@ -168,7 +159,10 @@ class PlotLixelStatistics(object):
         self.__style(ax)
         return fig, ax
     def __save_fig(self, fig, filename):
-        fig.savefig(os.path.join(self.path, filename), bbox_inches='tight', dpi=self.dpi)
+        fig.savefig(
+            os.path.join(self.path, filename), 
+            bbox_inches='tight', 
+            dpi=self.dpi)
     def save_cx_mean(self):
         fig, ax = self.fig_ax()
         add_to_ax_cx_mean_hist(self.lss, ax)
@@ -256,10 +250,12 @@ class PlotLixelStatistics(object):
         self.__save_fig(fig, 'overview_'+name+'_zoom_center.png')
         # zoom pos x
         ax.set_ylim([-zoom_radius, zoom_radius])
-        ax.set_xlim([0.95*outer_radius-zoom_radius, 0.95*outer_radius+zoom_radius])
+        ax.set_xlim(
+            [0.95*outer_radius-zoom_radius, 0.95*outer_radius+zoom_radius])
         self.__save_fig(fig, 'overview_'+name+'_zoom_pos_x.png')
         # zoom pos y
-        ax.set_ylim([0.95*outer_radius-zoom_radius, 0.95*outer_radius+zoom_radius])
+        ax.set_ylim(
+            [0.95*outer_radius-zoom_radius, 0.95*outer_radius+zoom_radius])
         ax.set_xlim([-zoom_radius, zoom_radius])
         self.__save_fig(fig, 'overview_'+name+'_zoom_pos_y.png')
         plt.close(fig)
@@ -282,10 +278,14 @@ class PlotLixelStatistics(object):
         self.save_sensor_plane_overview(self.lss.x_std, 'x_stddev', 'm')
         self.save_sensor_plane_overview(self.lss.y_mean, 'y_mean', 'm')
         self.save_sensor_plane_overview(self.lss.y_std, 'y_stddev', 'm')
-        self.save_sensor_plane_overview(np.rad2deg(self.lss.cx_mean), 'cx_mean', 'deg')
-        self.save_sensor_plane_overview(np.rad2deg(self.lss.cx_std), 'cx_stddev', 'deg')
-        self.save_sensor_plane_overview(np.rad2deg(self.lss.cy_mean), 'cy_mean', 'deg')
-        self.save_sensor_plane_overview(np.rad2deg(self.lss.cy_std), 'cy_stddev', 'deg')
+        self.save_sensor_plane_overview(
+            np.rad2deg(self.lss.cx_mean), 'cx_mean', 'deg')
+        self.save_sensor_plane_overview(
+            np.rad2deg(self.lss.cx_std), 'cx_stddev', 'deg')
+        self.save_sensor_plane_overview(
+            np.rad2deg(self.lss.cy_mean), 'cy_mean', 'deg')
+        self.save_sensor_plane_overview(
+            np.rad2deg(self.lss.cy_std), 'cy_stddev', 'deg')
 
 def main():
     try:

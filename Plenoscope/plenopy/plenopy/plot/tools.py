@@ -2,11 +2,8 @@
 from __future__ import absolute_import, print_function, division
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
 from matplotlib.patches import RegularPolygon
 from matplotlib.collections import PatchCollection
-from mpl_toolkits.mplot3d import Axes3D
-import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 def add_to_ax(ax, I, px, py, colormap='viridis', hexrotation=30, vmin=None, vmax=None):
@@ -38,7 +35,6 @@ def add_to_ax(ax, I, px, py, colormap='viridis', hexrotation=30, vmin=None, vmax
         )
 
     p = PatchCollection(patches, cmap=colormap, alpha=1, edgecolor='none')
-
     p.set_array(I)
     p.set_clim([vmin, vmax])
 
@@ -48,7 +44,6 @@ def add_to_ax(ax, I, px, py, colormap='viridis', hexrotation=30, vmin=None, vmax
 
     ax.add_collection(p)
     ax.set_aspect('equal')
-
     return p 
 
 def add_pixel_image_to_ax(img, ax, colormap="viridis", vmin=None, vmax=None):

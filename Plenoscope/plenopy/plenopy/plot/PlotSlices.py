@@ -12,11 +12,11 @@ import tempfile
 import subprocess
 import shutil
 
-from PlotTools import plot_pixel
+from PlotTools import add_pixel_image_to_ax
 
-__all__ = ['save_refocus_stack', 'save_refocus_video']
+__all__ = ['save_object_distance_slice_stack', 'save_slices_video']
 
-def save_refocus_stack(event, path, obj_dist_min=2e3, obj_dist_max=12e3, steps=10, use_absolute_scale=True):
+def save_slice_stack(event, path, obj_dist_min=2e3, obj_dist_max=12e3, steps=10, use_absolute_scale=True, restrict_to_plenoscope_aperture=True):
 
     plt.rcParams.update({'font.size': 12})
     plt.rc('text', usetex=True)
@@ -28,20 +28,48 @@ def save_refocus_stack(event, path, obj_dist_min=2e3, obj_dist_max=12e3, steps=1
         steps
     )
 
-    images = [event.light_field.refocus(object_distance) for object_distance in object_distances]
-    intensities = [i.intensity for i in images]
-    if use_absolute_scale:
-        vmin=np.array(intensities).min()
-        vmax=np.array(intensities).max()
-    else:
-        vmin, vmax = None, None
+    n_lixel = event.light_field.valid_lixel.sum()
+    xs = np.zeros([steps, n_lixel])
+    ys = np.zeros([steps, n_lixel])
+    intensity = event.light_field.intensity.flatten()[event.light_field.valid_lixel.flatten()]
 
-    for i in range(len(images)):
-        image = images[i]
+    for i, object_distance in enumerate(object_distances):
+        pos_xy = event.light_field.rays.pos_x_y_for_object_distance(object_distance)
+        xs[i,:] = pos_xy[:,0][event.light_field.valid_lixel.flatten()]
+        ys[i,:] = pos_xy[:,1][event.light_field.valid_lixel.flatten()]
+
+    if restrict_to_plenoscope_aperture:
+        r = 5.0*event.light_field.expected_aperture_radius_of_imaging_system
+        xmax = r
+        xmin = -r
+        ymax = r
+        ymin = -r      
+    else:
+        xmax = xs.max()
+        xmin = xs.min()
+        ymax = ys.max()
+        ymin = ys.min()
+
+    n_bins = int(0.5*np.sqrt(n_lixel))
+
+    bins = np.zeros([steps, n_bins, n_bins])
+    xedges = np.zeros(n_bins+1)
+    yedges = np.zeros(n_bins+1)
+    for i in range(steps):
+        bins[i,:,:], xedges, yedges = np.histogram2d(
+            x=xs[i],
+            y=ys[i], 
+            weights=intensity,
+            bins=[n_bins, n_bins],
+            range=[[xmin, xmax], [ymin, ymax]])
+
+    Imax = bins.max()
+
+    for i in range(len(xs)):
         object_distance = object_distances[i]
 
         fig = plt.figure(figsize=(7, 6)) 
-        fig, (ax_dir, ax_pap) = plt.subplots(1,2)
+        fig, (ax0, ax1) = plt.subplots(1,2)
         plt.suptitle(event.mc_truth.short_event_info())
 
         gs = gridspec.GridSpec(1, 2, width_ratios=[1, 6]) 
@@ -59,14 +87,24 @@ def save_refocus_stack(event, path, obj_dist_min=2e3, obj_dist_max=12e3, steps=1
 
         ax1 = plt.subplot(gs[1])
         ax1.set_aspect('equal')  
+        im = ax1.imshow(
+            bins[i,:,:], 
+            vmin=0.0,
+            vmax=Imax,
+            interpolation='none', 
+            origin='low', 
+            extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]], 
+            aspect='equal')    
+        im.set_cmap('viridis')
+        ax1.set_xlabel('x/m')  
+        ax1.set_ylabel('y/m')
 
-        plot_pixel(image, ax1, vmin=vmin, vmax=vmax)
         plt.savefig(os.path.join(path, 'refocus_'+str(i).zfill(6)+".png"), dpi=180)
         plt.close()
 
-def save_refocus_video(event, path, obj_dist_min=2e3, obj_dist_max=12e3, steps=25, fps=25, use_absolute_scale=True):
+def save_slices_video(event, path, obj_dist_min=2e3, obj_dist_max=12e3, steps=25, fps=25, use_absolute_scale=True):
     with tempfile.TemporaryDirectory() as work_dir:
-        save_refocus_stack(
+        save_slice_stack(
             event,
             obj_dist_min=obj_dist_min,
             obj_dist_max=obj_dist_max,
