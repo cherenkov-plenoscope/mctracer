@@ -253,7 +253,7 @@ int main(int argc, char* argv[]) {
 
         Plenoscope::save_event_to_file_epoch_2016May27(
             tacs,
-            PathTools::join(event_output_path.path, "raw_plenoscope_response.bin")
+            PathTools::join(event_output_path.path, "raw_light_field_sensor_response.bin")
         );
 
         HeaderBlock::write(
@@ -263,7 +263,7 @@ int main(int argc, char* argv[]) {
 
         //-------------
         // export Monte Carlo Truth
-        PathTools::Path event_mc_truth_path = PathTools::join(event_output_path.path, "mc_truth");
+        PathTools::Path event_mc_truth_path = PathTools::join(event_output_path.path, "simulation_truth");
         fs::create_directory(event_mc_truth_path.path);
         HeaderBlock::write(corsika_run.header.raw, PathTools::join(event_mc_truth_path.path, "corsika_run_header.bin"));
         HeaderBlock::write(event.header.raw, PathTools::join(event_mc_truth_path.path, "corsika_event_header.bin"));
