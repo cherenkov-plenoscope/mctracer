@@ -43,17 +43,18 @@ int main(int argc, char* argv[]) {
     PathTools::Path input_copy_path = PathTools::join(out_path.path, "input");
     fs::create_directory(input_copy_path.path);
     fs::copy(config_path.path, PathTools::join(input_copy_path.path, "calibration_config.xml"));
-    fs::copy(scenery_path.path, PathTools::join(input_copy_path.path, "scenery.xml"));
+    fs::copy(scenery_path.path, PathTools::join(input_copy_path.path, "scenery"));
     // 3) use the copied input files
     config_path = PathTools::join(input_copy_path.path, "calibration_config.xml");
-    scenery_path = PathTools::join(input_copy_path.path, "scenery.xml");
+    scenery_path = PathTools::join(input_copy_path.path, "scenery");
+    PathTools::Path scenery_xml_path = PathTools::join(scenery_path.path, "scenery.xml");
 
     Xml::Document doc(config_path.path);
     Xml::Node calibration = doc.node().child("calibration");
     Xml::Node block_node = calibration.child("photon_blocks");
 
     // SET UP SCENERY
-    Xml::SceneryFactory scenery_factory(scenery_path.path);
+    Xml::SceneryFactory scenery_factory(scenery_xml_path.path);
     Frame scenery;
     scenery.set_name_pos_rot("root", Vec3::null, Rot3::null);
     scenery_factory.add_scenery_to_frame(&scenery);

@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
     out_path = PathTools::Path(cmd.get("output"));
     lixel_calib_path = PathTools::join(PathTools::join(input_copy_path.path, "plenoscope"),"lixel_statistics.bin");
     input_path = PathTools::join(input_copy_path.path, input_path.basename);
-    PathTools::Path scenery_path =  PathTools::join(PathTools::join(input_copy_path.path, "plenoscope"),"input/scenery.xml");
+    PathTools::Path scenery_path =  PathTools::join(PathTools::join(input_copy_path.path, "plenoscope"),"input/scenery/scenery.xml");
 
     //--------------------------------------------------------------------------
     //  111
