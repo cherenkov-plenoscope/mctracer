@@ -110,7 +110,7 @@
 \makeatother
 %------------------------------------------------------------------------------
 \newcommand{\tool}{mctracer}
-\newcommand{\thetitle}{\tool\\photon propagation\\ in complex geometries}
+\newcommand{\thetitle}{\tool\\ \large{photon propagation in complex sceneries}}
 %
 \thispagestyle{empty}
 \begin{center}
@@ -151,7 +151,7 @@ ETH Zurich\\2015-2017
 %
 The \tool{} is a simulation for geometrical optics. 
 %
-It can propagate photons in a complex 3D environment.
+It can propagate photons in a complex 3D scenery.
 %
 The \tool{} simulates reflection, refraction and absorbtion.
 %
@@ -167,9 +167,9 @@ To produce photons, \tool{} comes with a set of light sources to illuminate your
 %
 For more complex light sources, photons can be read from external files.
 %
-\tool{} can handle very complex geometry while beeing fast and accurate on a scientific level.
+\tool{} can handle very complex sceneries with million of primitives while beeing fast and accurate on a scientific level.
 %
-You can feed your geometry into \tool{} using common CAD files for triangular meshes and a custom \tool{} file which describes the primitives provided by \tool{} itself.
+You can feed your scenery into \tool{} using common CAD files for triangular meshes and a custom \tool{} xml file which describes the primitives provided by \tool{} itself.
 %
 When the provided tools do not cover your demand you have the chance to implement the features yourself.   
 %
@@ -177,6 +177,10 @@ The \tool{} was originally created for simulations in Astro Particle Physics.
 %
 Imaging Atmospheric Cherenkov Telescopes like FACT and the CTA MST made use of \tool{} to investigate and improve their performance.
 %
+The \acf{acp} was born in this simulation.
+%
+\input{chapters/acp.tex}
+\input{chapters/function.tex}
 %-------------------------------------------------------------------------------
 \chapter{How to set up a scenery in source code}
 %
@@ -196,8 +200,6 @@ Also part of the tree is the wooden pole.
 \CppFileStartEnd{../Tests/Examples/set_up_scenery.cpp}{leaf_ball}{tree_pole}
 and the rest of the source...
 \CppFileStartEnd{../Tests/Examples/set_up_scenery.cpp}{tree_pole}{end_set_up_scene_in_source}
-\input{chapters/acp.tex}
-\input{chapters/function.tex}
 %------------------------------------------------------------------------------
 %--references--
 \renewcommand{\bibname}{References}
@@ -209,6 +211,7 @@ and the rest of the source...
     \acro{mct}[MCt]{Monte Carlo Tracer}
     \acro{acp}[ACP]{Atmospheric Cherenkov Plenoscope}
     \acro{iact}[IACT]{Imaging Atmospheric Cherenkov Telescope}
+    \acro{eas}[EAS]{Extensive Atmospheric Showers}
 \end{acronym}
 %--Appendix--
 \end{document}
