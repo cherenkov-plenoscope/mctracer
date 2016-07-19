@@ -10,25 +10,25 @@ The \lstinline{Function::Func1D} class provides $1$D mapping for floating number
 %
 All functions have limits which need to be respected. Any call of a function $f(x)$ with $x \notin X$ will throw an exception. We are strict about this behaviour to enforce that no propagation passes silently where e.g. your mirror's reflective index is only defined up to $600\,$nm but you shoot $800\,$nm photons onto it. Functions live in their own namespace.
 %
-\CppFileStartEnd{examples/Func1DExample.cpp}{using_namespace}{using_namespace_end}
+\CppFileStartEnd{../Tests/Examples/Func1DExample.cpp}{using_namespace}{using_namespace_end}
 %------------------------------------------------------------------------------
 \section{Domains and their limits}
 %
 First we define limits for the domains of our functions.
 %
-\CppFileStartEnd{examples/Func1DExample.cpp}{func_limits}{func_limits_assert}
+\CppFileStartEnd{../Tests/Examples/Func1DExample.cpp}{func_limits}{func_limits_assert}
 %
 The limits here include the lower bound $0.0$ and exclude the upper one $1.0$. A limit can assert that a given argument is in its domain. If not, it will throw an exception.
 %
-\CppFileStartEnd{examples/Func1DExample.cpp}{func_limits_assert}{func_limits_constant}
+\CppFileStartEnd{../Tests/Examples/Func1DExample.cpp}{func_limits_assert}{func_limits_constant}
 %
 All functions have a domain within their limits. The limits are given to the funcions during construction.
 %
-\CppFileStartEnd{examples/Func1DExample.cpp}{func_limits_constant}{func_limits_const_call}
+\CppFileStartEnd{../Tests/Examples/Func1DExample.cpp}{func_limits_constant}{func_limits_const_call}
 %
 Functions assert, the argument to be inside their domain.
 %
-\CppFileStartEnd{examples/Func1DExample.cpp}{func_limits_const_call}{func_limits_call_end}
+\CppFileStartEnd{../Tests/Examples/Func1DExample.cpp}{func_limits_const_call}{func_limits_call_end}
 %------------------------------------------------------------------------------
 \section{Constant}
 %
@@ -40,11 +40,11 @@ Sometimes it needs a constant function which will return the same value for any 
 %
 A constant function is created given its single constant value e.g. $1.337$ and its domain limits.
 %
-\CppFileStartEnd{examples/Func1DExample.cpp}{func_const}{func_const_call}
+\CppFileStartEnd{../Tests/Examples/Func1DExample.cpp}{func_const}{func_const_call}
 %
 When called, within the limits, it will always return its constant value.
 %
-\CppFileStartEnd{examples/set_up_scenery.cpp}{func_const_call}{func_const_call_end}
+\CppFileStartEnd{../Tests/Examples/set_up_scenery.cpp}{func_const_call}{func_const_call_end}
 \CenFig{figures/function_const.png}{0.75}
 %------------------------------------------------------------------------------
 \section{Polynom3}
@@ -59,16 +59,16 @@ We initialize the \lstinline{Polynom3} using $a,b,c,d$ and the limits.
 %
 By setting the higer orders to zero, we create e.g. a linear mapping.
 %
-\CppFileStartEnd{examples/Func1DExample.cpp}{func_poly3}{func_poly3_call}
+\CppFileStartEnd{../Tests/Examples/Func1DExample.cpp}{func_poly3}{func_poly3_call}
 \CenFig{figures/function_polynom1.png}{0.75}
 %
 We can do a quadratic mapping.
-\CppFileStartEnd{examples/Func1DExample.cpp}{func_poly3_quad}{func_poly3_quad_end}
+\CppFileStartEnd{../Tests/Examples/Func1DExample.cpp}{func_poly3_quad}{func_poly3_quad_end}
 \CenFig{figures/function_polynom2.png}{0.75}
 %
 The full polynom to the power of $3$.
 %
-\CppFileStartEnd{examples/Func1DExample.cpp}{func_poly3_tri}{func_poly3_tri_end}
+\CppFileStartEnd{../Tests/Examples/Func1DExample.cpp}{func_poly3_tri}{func_poly3_tri_end}
 \CenFig{figures/function_polynom3.png}{0.75}
 %
 %------------------------------------------------------------------------------
@@ -78,7 +78,7 @@ In some cases, it can be tough to model an analytic $1D$ function. In these case
 %
 The input table also defines the domain limits, so no limits have to be given during construction.
 %
-\CppFileStartEnd{examples/Func1DExample.cpp}{look_up}{look_up_end}
+\CppFileStartEnd{../Tests/Examples/Func1DExample.cpp}{look_up}{look_up_end}
 \CenFig{figures/function_interpol.png}{0.75}
 %------------------------------------------------------------------------------
 \section{Concatenation}
@@ -89,22 +89,22 @@ The functions to be concatenated can be of any kind, even concatenated functions
 %
 Since the concatenated function can deduce its domain limits from the input functions, no limit has to be given during construction.
 %
-\CppFileStartEnd{examples/Func1DExample.cpp}{func_concat}{func_concat_end}
+\CppFileStartEnd{../Tests/Examples/Func1DExample.cpp}{func_concat}{func_concat_end}
 \CenFig{figures/function_concat.png}{0.75}
 %------------------------------------------------------------------------------
 \section{Access}
 %
 Access to the values of a function is done using the bracket operator.
 %
-\CppFileStartEnd{examples/Func1DExample.cpp}{func_access}{func_access_end}
+\CppFileStartEnd{../Tests/Examples/Func1DExample.cpp}{func_access}{func_access_end}
 %
 Also a function can provide a table of both argument and value. The number of samples along the domain limits of the function can be specified.
 % 
-\CppFileStartEnd{examples/Func1DExample.cpp}{func_access_sampling}{func_access_sampling_end}
+\CppFileStartEnd{../Tests/Examples/Func1DExample.cpp}{func_access_sampling}{func_access_sampling_end}
 %
 Using the ascci io, a function can be exported into a text file.
 %
-\CppFileStartEnd{examples/Func1DExample.cpp}{func_access_sampling_export}{func_access_sampling_export_end}
+\CppFileStartEnd{../Tests/Examples/Func1DExample.cpp}{func_access_sampling_export}{func_access_sampling_export_end}
 %
 The output text file is a two column matrix. First column is the argument $x$, second is the function value $f(x)$.
 %

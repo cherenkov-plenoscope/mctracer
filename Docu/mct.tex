@@ -177,18 +177,6 @@ The \tool{} was originally created for simulations in Astro Particle Physics.
 %
 Imaging Atmospheric Cherenkov Telescopes like FACT and the CTA MST made use of \tool{} to investigate and improve their performance.
 %
-%\linenumbers
-%-------------------------------------------------------------------------------
-\chapter{The scenery tree}
-\blindtext[2]
-%-------------------------------------------------------------------------------
-\section{The root of the scenery tree}
-\label{SubSecRootFrame}
-The frame at the root of the tree structure represents the whole scenery.
-%
-Before ray tracing is performed on the scenery tree, all frames in the tree estimate threir position and orientation w.r.t. the root frame.
-%
-This way rays can easily and fast be transformed back and forth from the root tree to an individual object frame.
 %-------------------------------------------------------------------------------
 \chapter{How to set up a scenery in source code}
 %
@@ -199,15 +187,16 @@ First we will define the geometry and their surfaces, second we will declare the
 %
 First we define the main frame of our scenery. The main frame, often called world, will be the root of the scenery tree \ref{SubSecRootFrame}. 
 %
-\CppFileStartEnd{examples/set_up_scenery.cpp}{world}{tree}
+\CppFileStartEnd{../Tests/Examples/set_up_scenery.cpp}{world}{tree}
 %
 Second we define frames that hold individual structures like a tree which will be composed from several objects. The tree will be placed in $x=5\,$m w.r.t. its later mother frame, i.e. the wolrd. 
 %
-\CppFileStartEnd{examples/set_up_scenery.cpp}{tree}{house}
+\CppFileStartEnd{../Tests/Examples/set_up_scenery.cpp}{tree}{house}
 Also part of the tree is the wooden pole.
-\CppFileStartEnd{examples/set_up_scenery.cpp}{leaf_ball}{tree_pole}
+\CppFileStartEnd{../Tests/Examples/set_up_scenery.cpp}{leaf_ball}{tree_pole}
 and the rest of the source...
-\CppFileStartEnd{examples/set_up_scenery.cpp}{tree_pole}{end_set_up_scene_in_source}
+\CppFileStartEnd{../Tests/Examples/set_up_scenery.cpp}{tree_pole}{end_set_up_scene_in_source}
+\input{chapters/acp.tex}
 \input{chapters/function.tex}
 %------------------------------------------------------------------------------
 %--references--
@@ -218,6 +207,8 @@ and the rest of the source...
 %
 \begin{acronym}
     \acro{mct}[MCt]{Monte Carlo Tracer}
+    \acro{acp}[ACP]{Atmospheric Cherenkov Plenoscope}
+    \acro{iact}[IACT]{Imaging Atmospheric Cherenkov Telescope}
 \end{acronym}
 %--Appendix--
 \end{document}
