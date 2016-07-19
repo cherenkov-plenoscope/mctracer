@@ -5,7 +5,7 @@ namespace Plenoscope {
     namespace Calibration {
 //------------------------------------------------------------------------------
 LixelStatistic::LixelStatistic():
-    efficiency(0.0),
+    efficiency(0.0), efficiency_std(0.0),
     cx_mean(0.0), cx_std(0.0), 
     cy_mean(0.0), cy_std(0.0),
     x_mean(0.0), x_std(0.0),
@@ -105,7 +105,8 @@ vector<LixelStatistic> LixelStatisticsFiller::get_lixel_statistics()const {
 
     for(const OnlineLixelStatistic &lixel: lixel_stats) {
         LixelStatistic stat;
-        stat.efficiency = lixel.count/photons_emitted_per_lixel;
+        stat.efficiency     = lixel.count/photons_emitted_per_lixel;
+        stat.efficiency_std = sqrt(float(lixel.count))/photons_emitted_per_lixel;
         stat.cx_mean    = lixel.cx.mean();
         stat.cx_std     = lixel.cx.stddev();
         stat.cy_mean    = lixel.cy.mean();

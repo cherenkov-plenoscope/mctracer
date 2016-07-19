@@ -17,7 +17,7 @@ namespace Plenoscope {
     namespace Calibration {
     //--------------------------------------------------------------------------
     struct LixelStatistic {
-        float efficiency;
+        float efficiency, efficiency_std;
         float cx_mean, cx_std;
         float cy_mean, cy_std;
         float x_mean, x_std;
