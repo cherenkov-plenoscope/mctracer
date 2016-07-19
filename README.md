@@ -2,12 +2,11 @@
 
 mctracer is short for Monte Carlo Ray Tracing.
 
-## installation on a fresh Ubuntu 14 LTS Desktop
-Installation tested on a fresh Ububtu 14.04 LTS VM on 19 Sep 2015.
+## installation on Ubuntu
 
 ### tools needed to get and build mctracer:
 * git
-* g++ >= 4.8
+* g++ >= 5.3
 * cmake
 
 ### dependencies of mctracer:
@@ -59,10 +58,11 @@ make
 ```
 
 ## run mctracer:
+
+The mctracer has several executeables. To interacively explore a scenery use mctShow.
 ```
 #!bash
-cd mctracer/scenery
-../../build/mctracer --geometry fact.xml --render
+mctShow --scenery fact.xml
 
 ```
 
@@ -72,7 +72,7 @@ The unit tests are meant to run in the mctracer/test directory because they are 
 ```
 #!bash
 cd mctracer/test
-../../build/mctracerTest
+../../build/mctTest
 
 ```
 
@@ -80,6 +80,7 @@ cd mctracer/test
 
 
 # Upcoming: Python support #
+Due to bad desigend memory management of the c++ mctracer, this project got delayed. The problem is, taht at the moment the mctracer library API forces the users of the API to dynamically manage the memory of some resources. How ever, great progress was already made to overcome this problem by refactoring the mctracer library and python support (a python wrapper API) is still a major goal.
 
 ## Install ##
 
