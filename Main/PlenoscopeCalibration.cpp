@@ -13,9 +13,13 @@ using std::cout;
 string help_text() {
     std::stringstream out; 
     out << "  Plenoscope calibration\n";
-    out << "  --scenery, -s     scenery with at least one plenoscope in it\n";
-    out << "  --config, -c      config path steering the calibration and the plenoscope\n";
-    out << "  --output, -o      output path of plenoscope calibration\n";
+    out << "\n";
+    out << "  --scenery, -s                 scenery with at least one plenoscope in it\n";
+    out << "\n";
+    out << "  --number_mega_photons, -n     the number count [Mega Photons] of\n";
+    out << "                                calibration photons to be emitted\n";
+    out << "\n";
+    out << "  --output, -o                  output path of plenoscope calibration\n";
     return out.str();   
 }
 
@@ -23,17 +27,35 @@ int main(int argc, char* argv[]) {
     try{
 
     CommandLine::Parser cmd;
-    cmd.define_key_val_by_key_short_desc("config", 'c' ,"plenoscope calibration config path");
+    cmd.define_key_val_by_key_short_desc("number_mega_photons", 'n' ,"the number count [Mega Photons] of calibration photons to be emitted");
     cmd.define_key_val_by_key_short_desc("output", 'o', "output path of plenoscope calibration");
     cmd.define_key_val_by_key_short_desc("scenery", 's', "scenery with at least one plenoscope in it");
     cmd.parse(argc, argv);
 
-    if(!cmd.exist("config") || !cmd.exist("output") || !cmd.exist("scenery")) {
+    if(!cmd.exist("number_mega_photons") || !cmd.exist("output") || !cmd.exist("scenery")) {
         cout << help_text();
         return 1;
     }
 
-    PathTools::Path config_path = PathTools::Path(cmd.get("config"));
+    // parse number_mega_photons
+    int number_mega_photons = 0;
+    try{
+        number_mega_photons = StringTools::to_int(cmd.get("number_mega_photons"));
+    }catch(StringTools::CanNotParseInt &error) {
+        stringstream info;
+        info << __FILE__ << ", " << __LINE__ << "\n";
+        info << "Can not parse input argument '--number_mega_photons', '-n' to a integer number.";
+        info << StringTools::place_first_infront_of_each_new_line_of_second("|  ", error.what());
+        throw TracerException(info.str());        
+    }
+
+    if(number_mega_photons <= 0.0) {
+        stringstream info;
+        info << __FILE__ << ", " << __LINE__ << "\n";
+        info << "Expected '--number_mega_photons', '-n' to be >= 0, but actual: " << number_mega_photons;
+        throw TracerException(info.str());         
+    }
+
     PathTools::Path out_path = PathTools::Path(cmd.get("output"));
     PathTools::Path scenery_path = PathTools::Path(cmd.get("scenery"));
 
@@ -42,16 +64,10 @@ int main(int argc, char* argv[]) {
     // 2) copy input into output directory
     PathTools::Path input_copy_path = PathTools::join(out_path.path, "input");
     fs::create_directory(input_copy_path.path);
-    fs::copy(config_path.path, PathTools::join(input_copy_path.path, "calibration_config.xml"));
     fs::copy(scenery_path.path, PathTools::join(input_copy_path.path, "scenery"));
     // 3) use the copied input files
-    config_path = PathTools::join(input_copy_path.path, "calibration_config.xml");
     scenery_path = PathTools::join(input_copy_path.path, "scenery");
     PathTools::Path scenery_xml_path = PathTools::join(scenery_path.path, "scenery.xml");
-
-    Xml::Document doc(config_path.path);
-    Xml::Node calibration = doc.node().child("calibration");
-    Xml::Node block_node = calibration.child("photon_blocks");
 
     // SET UP SCENERY
     Xml::SceneryFactory scenery_factory(scenery_xml_path.path);
@@ -77,8 +93,8 @@ int main(int argc, char* argv[]) {
 
     // CALIBRATION CONFIG
     Plenoscope::Calibration::Config calib_config;
-    calib_config.number_of_blocks = block_node.attribute2int("number_of_blocks");
-    calib_config.photons_per_block = int(block_node.attribute2double("photons_per_block"));
+    calib_config.number_of_blocks = number_mega_photons;
+    calib_config.photons_per_block = int(1e6);
 
     // RUN PLENOSCOPE CALIBRATION   
     Plenoscope::Calibration::Calibrator calibrator(
