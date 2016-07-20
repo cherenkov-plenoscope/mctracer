@@ -159,7 +159,7 @@ void Calibrator::fill_calibration_block_to_table() {
 void Calibrator::run_calibration() {
 
 	cout << "Plenoscope Calibrator: propagating ";
-	cout << double(number_of_photons)/1.0e6 << "M photons\n";
+	cout << double(number_of_photons)/1.0e6 << "Mega photons\n";
 	
 	photon_results.resize(config.photons_per_block);
 
