@@ -10,40 +10,103 @@ Second, a light field sensor.
 %
 %------------------------------------------------------------------------------
 \section{Create an \ac{acp} scenery}
-The scenery, with the \ac{acp} in it, is described in a folder.
 %
-The folder must contain all the resources needed to describe the scenery of the \ac{acp} and its sourroundings.
+Lets create an example scenery of an \ac{acp} called PLERITAS, which is a plenoptic extension to the VERITAS \ac{iact}.
 %
-\subsection{create a scenery folder}
+\begin{lstlisting}[style=MctBash]
+/demo$ mkdir pleritas
+/demo$ cd pleritas/
+\end{lstlisting}
+All the resources needed to describe PLERITAS have to be in a folder.
 %
-\subsection{create a scenery.xml file}
+\begin{lstlisting}[style=MctBash]
+demo/pleritas$ vi scenery.xml
+\end{lstlisting}
 %
-\subsection{copy all resources into the scenery folder}
+Create a xml file called scenery.xml and describe your scenery in there.
+%
+For our PLERITAS we use a basic VERITAS like imaging reflecor (created using the segmented reflector tool),\\
+%
+\XmlFileStartEnd{demo/pleritas/scenery.xml}{reflector_s}{stl_s}
+%
+a light field sensor\\
+%
+\XmlFileStartEnd{demo/pleritas/scenery.xml}{light_field_sensor_s}{light_field_sensor_e}
+%
+and an additional spider web which causes additional shadowing and is described in a CAD file.\\
+%
+\XmlFileStartEnd{demo/pleritas/scenery.xml}{stl_s}{light_field_sensor_s}
+%
+\newline
+\SideBySide{
+\CenFig{demo/pleritas_reflector.png}{1.0}	
+}{
+\CenFig{demo/pleritas_light_field_sensor.png}{1.0}	
+}
+%
+\SideBySide{
+\CenFig{demo/pleritas_focus_reflector.png}{1.0}	
+}{
+\CenFig{demo/sensor_back.png}{1.0}	
+}
+%
+All resources like the CAD file of the spider web must be placed in the scenery folder.
+%
+\begin{lstlisting}[style=MctBash]
+/demo/pleritas$ ls
+scenery.xml  spider.stl
+\end{lstlisting}
+%
+
+Explore your scenery using mctShow.
+%
+\begin{lstlisting}[style=MctBash]
+/demo/pleritas$ mctShow -s scenery.xml
+\end{lstlisting}
+%
 %------------------------------------------------------------------------------
-\section{Run the light field calibration on your \ac{acp} scenery}
+\section{Run the light field calibration}
 %
-\subsection{What and why do we collect statistics on the lixels?}
-%
-Each read out channel (lixel) on the light field sensor of the \ac{acp} corresponds to a specific position $x$ and $y$ on the principal aperture plane and a specific direction $c_x$ and $c_y$ in the field of view.
-%
-Further, each of these lixel has a specific time delay $t_\text{delay}$ which the light needs to travel when comig from the principal aperture plane and each lixel has its own efficency $\eta$ due to its specific position in the set up.
-%
-So in the light field calibration we determine $\eta$, $x$, $y$, $c_x$, $c_y$ and $t_\text{delay}$ for each lixel.
-%
-The calibration is done by throughing photons into the \ac{acp}, where we randomly draw both the photons intersection with the principal aperture plane $x$, $y$ and the incoming direction $c_x$, $c_y$.
-%
-In the calibration, many photons are used and several of them will be absorbed in the same lixel.
-%
-So for each lixel, there is list of the photon properties ($x$, $y$, $c_x$, $c_y$ and $t_\text{delay}$) for the photons that reached this lixel.
-%
-From this list, the lixel is assigned the averages of all these properties, as well as their standard deviations.
-%
-The number of photons reaching the lixel during the calibration gives us the efficiency $\eta$.
+\begin{lstlisting}[style=MctBash]
+/demo$ mctPlenoscopeCalibration -i scenery -o pleritas_calibration -n 3
+Plenoscope Calibrator: propagating 3M photons
+1 of 3
+2 of 3
+3 of 3
+/demo$ 
+\end{lstlisting}
 %
 \CppFileStartEnd{../Plenoscope/Calibration/LixelStatistics.h}{lixel_statistics_s}{lixel_statistics_e}
 %
-
 %------------------------------------------------------------------------------
 \section{Simulate \ac{acp} responses to \ac{eas}}
+%
+\begin{lstlisting}[style=MctBash]
+/demo$ mctPlenoscopePropagation -c propagation_config.xml -l pleritas_calibration -i /some/simulation/gamma1_RUN41.dat -o my_run
+event 1, PRMPAR 1, E 225.569 GeV
+event 2, PRMPAR 1, E 168.365 GeV
+event 3, PRMPAR 1, E 46.5717 GeV
+...
+\end{lstlisting}
 %------------------------------------------------------------------------------
 \section{Explore the siumlated events}
+
+\section{Light Field calibration}
+%
+Each read out channel (lixel) on the light field sensor of the \ac{acp} corresponds to a specific ray in the light field. 
+%
+Each of these rays has a support on the principal aperture plane at position $x$ and $y$ on and a direction vector descibed by $c_x$ and $c_y$.
+%
+Further, each of these lixel has a specific time delay $t_\text{delay}$ which the light needs to travel when comig from the principal aperture plane and each lixel has its own efficency $\eta$ due to its specific geometrical position in the set up.
+%
+So in the light field calibration we determine $\eta$, $x$, $y$, $c_x$, $c_y$ and $t_\text{delay}$ for each lixel.
+%
+The calibration is done by throughing photons into the \ac{acp}, where we randomly draw both the photons intersection on the principal aperture plane $x$, $y$ and their incoming direction $c_x$, $c_y$.
+%
+In the calibration, many photons are used and several of them will be absorbed in the lixels.
+%
+For each lixel, there is list of the photon properties ($x$, $y$, $c_x$, $c_y$ and $t_\text{delay}$) of the photons that reached this lixel.
+%
+From this list, the lixel is assigned the averages of all these properties, as well as their standard deviations.
+%
+The number of photons reaching the lixel during the calibration gives the efficiency $\eta$.

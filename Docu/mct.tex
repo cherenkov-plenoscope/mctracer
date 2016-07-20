@@ -12,8 +12,10 @@
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{blindtext}
+\usepackage{sansmath}
 
 \definecolor{LightGray}{gray}{0.70}
+
 \lstdefinestyle{MctCpp}{%
     language=C++,
     keywordstyle=\bfseries,
@@ -23,9 +25,26 @@
     columns=spaceflexible,
     escapeinside={/*@}{@*/},
     tabsize=4,
-    frame=leftline,
+    %frame=leftline,
     rulecolor=\color{LightGray},
-    basicstyle=\linespread{0.8}\ttfamily,
+    basicstyle=\linespread{0.8}\sffamily,
+    numbers=left,
+    numberstyle=\normalfont\tiny\color{LightGray},
+    xleftmargin=0.75cm,
+}
+
+\lstdefinestyle{MctXml}{%
+    language=C++,
+    keywordstyle=\bfseries,
+    commentstyle=\itshape,
+    rangeprefix=<!--,rangesuffix=-->,
+    includerangemarker=false,
+    columns=spaceflexible,
+    escapeinside={/*@}{@*/},
+    tabsize=4,
+    %frame=leftline,
+    rulecolor=\color{LightGray},
+    basicstyle=\linespread{0.8}\sffamily,
     numbers=left,
     numberstyle=\normalfont\tiny\color{LightGray},
     xleftmargin=0.75cm,
@@ -48,6 +67,19 @@
     xleftmargin=0.75cm,
 }
 
+\lstdefinestyle{MctBash}{%
+    language={},
+    keywordstyle=\bfseries,
+    commentstyle=\itshape,
+    rangeprefix=//--,rangesuffix=--,
+    includerangemarker=false,
+    columns=spaceflexible,
+    escapeinside={/*@}{@*/},
+    tabsize=4,
+    frame=leftline,
+    basicstyle=\linespread{0.8}\sffamily,
+    xleftmargin=0.75cm,
+}
 
 %\oddsidemargin = 31pt
 %\topmargin = 20pt
@@ -71,13 +103,23 @@
 \begin{document}
 %------------------------------------------------------------------------------
 \newcommand{\CppFileStartEnd}[3]{%
-\newline
 \begin{footnotesize}%
 \begin{minipage}{\linewidth}%
 \vspace{3mm}%
 \textcolor{LightGray}{\path{#1}}%
 \vspace{-1mm}%
 \lstinputlisting[linerange=#2-#3, style=MctCpp]{#1}%
+\end{minipage}%
+\end{footnotesize}%
+}%
+
+\newcommand{\XmlFileStartEnd}[3]{%
+\begin{footnotesize}%
+\begin{minipage}{\linewidth}%
+\vspace{3mm}%
+\textcolor{LightGray}{\path{#1}}%
+\vspace{-1mm}%
+\lstinputlisting[linerange=#2-#3, style=MctXml]{#1}%
 \end{minipage}%
 \end{footnotesize}%
 }%
@@ -98,6 +140,18 @@
             \includegraphics[width=#2\textwidth]{#1}
         \end{center}
     \end{figure}
+}
+
+\newcommand{\SideBySide}[2]{
+    \begin{minipage}[t]{0.485\linewidth}
+        #1
+        \end{minipage}
+    %
+    \hfill
+    %
+        \begin{minipage}[t]{0.485\linewidth}
+        #2
+    \end{minipage}\\
 }
 
 \makeatletter
