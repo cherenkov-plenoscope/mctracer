@@ -1,4 +1,4 @@
-\chapter{\acf{acp}}
+\chapter{The \acf{acp}}
 %
 The \tool{} can simulate \acp{acp}.
 %
@@ -8,7 +8,7 @@ First, an imaging system like e.g. a segmented imaging reflector as it is used f
 %
 Second, a light field sensor.
 %
-%-------------------------------------------------------------------------------
+%------------------------------------------------------------------------------
 \section{Create an \ac{acp} scenery}
 The scenery, with the \ac{acp} in it, is described in a folder.
 %
@@ -19,9 +19,31 @@ The folder must contain all the resources needed to describe the scenery of the 
 \subsection{create a scenery.xml file}
 %
 \subsection{copy all resources into the scenery folder}
-%-------------------------------------------------------------------------------
+%------------------------------------------------------------------------------
 \section{Run the light field calibration on your \ac{acp} scenery}
-%-------------------------------------------------------------------------------
+%
+\subsection{What and why do we collect statistics on the lixels?}
+%
+Each read out channel (lixel) on the light field sensor of the \ac{acp} corresponds to a specific position $x$ and $y$ on the principal aperture plane and a specific direction $c_x$ and $c_y$ in the field of view.
+%
+Further, each of these lixel has a specific time delay $t_\text{delay}$ which the light needs to travel when comig from the principal aperture plane and each lixel has its own efficency $\eta$ due to its specific position in the set up.
+%
+So in the light field calibration we determine $\eta$, $x$, $y$, $c_x$, $c_y$ and $t_\text{delay}$ for each lixel.
+%
+The calibration is done by throughing photons into the \ac{acp}, where we randomly draw both the photons intersection with the principal aperture plane $x$, $y$ and the incoming direction $c_x$, $c_y$.
+%
+In the calibration, many photons are used and several of them will be absorbed in the same lixel.
+%
+So for each lixel, there is list of the photon properties ($x$, $y$, $c_x$, $c_y$ and $t_\text{delay}$) for the photons that reached this lixel.
+%
+From this list, the lixel is assigned the averages of all these properties, as well as their standard deviations.
+%
+The number of photons reaching the lixel during the calibration gives us the efficiency $\eta$.
+%
+\CppFileStartEnd{../Plenoscope/Calibration/LixelStatistics.h}{lixel_statistics_s}{lixel_statistics_e}
+%
+
+%------------------------------------------------------------------------------
 \section{Simulate \ac{acp} responses to \ac{eas}}
-%-------------------------------------------------------------------------------
+%------------------------------------------------------------------------------
 \section{Explore the siumlated events}

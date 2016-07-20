@@ -25,7 +25,7 @@
     tabsize=4,
     frame=leftline,
     rulecolor=\color{LightGray},
-    basicstyle=\ttfamily,
+    basicstyle=\linespread{0.8}\ttfamily,
     numbers=left,
     numberstyle=\normalfont\tiny\color{LightGray},
     xleftmargin=0.75cm,
@@ -71,11 +71,16 @@
 \begin{document}
 %------------------------------------------------------------------------------
 \newcommand{\CppFileStartEnd}[3]{%
-    \begin{footnotesize}
-        \lstinputlisting[linerange=#2-#3, style=MctCpp]{#1}%
-    %\hfill\path{#1}\\
-    \end{footnotesize}
-}
+\newline
+\begin{footnotesize}%
+\begin{minipage}{\linewidth}%
+\vspace{3mm}%
+\textcolor{LightGray}{\path{#1}}%
+\vspace{-1mm}%
+\lstinputlisting[linerange=#2-#3, style=MctCpp]{#1}%
+\end{minipage}%
+\end{footnotesize}%
+}%
 
 \newcommand{\TxtFile}[1]{%
     \begin{footnotesize}
