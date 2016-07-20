@@ -11,21 +11,12 @@
 #include "Plenoscope/PlenoscopeInScenery.h"
 #include "Plenoscope/Calibration/Config.h"
 #include "Plenoscope/Calibration/CalibrationPhotonResult.h"
-#include "Plenoscope/Calibration/LixelStatistics.h"
+#include "Plenoscope/Calibration/LixelStatisticsFiller.h"
 #include "Core/Random/Random.h"
 #include "Core/PropagationEnvironment.h"
 
 namespace Plenoscope {
     namespace Calibration {
-
-    static const struct HeaderIndices {
-    	uint number_of_lixel = 0;
-    	uint number_of_pixel = 1;
-    	uint number_of_paxel = 2;
-    	uint lixel_outer_radius = 3;
-    	uint lixel_z_orientation = 4;
-    	uint photons_emitted_per_lixel = 5;
-    } Header; 
 
 	class Calibrator: public Printable {
 

@@ -5,5 +5,7 @@ set(SOURCE
   	${CMAKE_CURRENT_SOURCE_DIR}/Config.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/CalibrationPhotonResult.cpp
   	${CMAKE_CURRENT_SOURCE_DIR}/LixelStatistics.cpp
+  	${CMAKE_CURRENT_SOURCE_DIR}/OnlineLixelStatistics.cpp
+  	${CMAKE_CURRENT_SOURCE_DIR}/LixelStatisticsFiller.cpp
    	PARENT_SCOPE
 )

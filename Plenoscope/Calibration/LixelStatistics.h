@@ -12,10 +12,12 @@
 #include "Plenoscope/Calibration/Config.h"
 #include "Plenoscope/LightFieldSensor/Geometry.h"
 #include "Tools/OnlineStatistics.h"
+#include "Plenoscope/Calibration/OnlineLixelStatistics.h"
 
 namespace Plenoscope {
     namespace Calibration {
-    //--------------------------------------------------------------------------
+
+    //--lixel_statistics_s--    
     struct LixelStatistic {
         float efficiency, efficiency_std;
         float cx_mean, cx_std;
@@ -25,6 +27,7 @@ namespace Plenoscope {
         float time_delay_mean, time_delay_std;
         LixelStatistic();
     };
+    //--lixel_statistics_e-- 
 
     void write(const vector<LixelStatistic> &lixel_statistics, const string &path);
     vector<LixelStatistic> read(const string &path);
@@ -32,36 +35,7 @@ namespace Plenoscope {
     class CanNotOpenLixelStatisticsFile : public TracerException {
         using TracerException::TracerException;
     };
-    //--------------------------------------------------------------------------
-    struct OnlineLixelStatistic {
-        uint count;
-        OnlineStatistics cx;
-        OnlineStatistics cy;
-        OnlineStatistics x;
-        OnlineStatistics y;
-        OnlineStatistics timed_delay;
-        OnlineLixelStatistic();
-    };
-    //--------------------------------------------------------------------------
-    class LixelStatisticsFiller {
 
-        const Config *calib_config;
-        const LightFieldSensor::Geometry *sensor_geometry;
-        vector<OnlineLixelStatistic> lixel_stats;
-    public:
-
-        const double photons_emitted_per_lixel;
-        LixelStatisticsFiller(
-            const LightFieldSensor::Geometry *sensor_geometry, 
-            const Config *config
-        );
-        vector<LixelStatistic> get_lixel_statistics()const;
-        void fill_in_block(vector<CalibrationPhotonResult> &calib_block);
-    private:
-
-        double min_arrival_time_mean()const;
-    };
-    //--------------------------------------------------------------------------
     }//Calibration
 }//Plenoscope
 #endif // __LightFieldTelescopeLixelStatistics_H_INCLUDED__ 
