@@ -259,7 +259,10 @@ Frame* SceneryFactory::add_Triangle(Frame* mother, const Node node) {
 //------------------------------------------------------------------------------
 Frame* SceneryFactory::add_STL(Frame* mother, const Node node) {
 
-    const string file = xml_path.dirname+"/"+node.child("set_stl").attribute("file");
+    const string file = PathTools::join(
+        xml_path.dirname, 
+        node.child("set_stl").attribute("file")
+    );
     const double scale = node.child("set_stl").attribute2double("scale");
 
     FrameFab framefab(node);

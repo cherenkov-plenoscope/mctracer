@@ -8,7 +8,7 @@ namespace PathTools {
         std::stringstream out;
         if(StringTools::is_ending(path1, "/"))
             out << path1;
-        else 
+        else if(!path1.empty())
             out << path1 << "/";
 
         if(path2.find_last_of("/") == 0)

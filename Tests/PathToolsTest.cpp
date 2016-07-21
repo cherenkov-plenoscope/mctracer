@@ -137,3 +137,17 @@ TEST_F(PathToolsTest, join_delimiter_both) {
 	string p2 = "/file.txt";
 	EXPECT_EQ("/home/hans/file.txt", PathTools::join(p1, p2));
 }
+//------------------------------------------------------------------------------
+TEST_F(PathToolsTest, join_first_path_empty) {
+	
+	string p1 = "";
+	string p2 = "file.txt";
+	EXPECT_EQ("file.txt", PathTools::join(p1, p2));
+}
+//------------------------------------------------------------------------------
+TEST_F(PathToolsTest, join_second_path_empty) {
+	
+	string p1 = "hans";
+	string p2 = "";
+	EXPECT_EQ("hans/", PathTools::join(p1, p2));
+}
