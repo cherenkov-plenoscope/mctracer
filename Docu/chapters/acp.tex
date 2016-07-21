@@ -14,7 +14,6 @@ Second, a light field sensor.
 Lets create an example scenery of an \ac{acp} called PLERITAS, which is a plenoptic version to a VERITAS \ac{iact}.
 %
 \begin{lstlisting}[style=MctBash]
-\Bash{
 /demo$ mkdir pleritas
 /demo$ cd pleritas/
 \end{lstlisting}
@@ -90,7 +89,15 @@ lixel_positions.bin
 lixel_statistics.bin
 \end{lstlisting}
 \end{minipage}%
-
+%
+Make summary plots of the calibration result.
+\begin{minipage}{\linewidth}%
+\begin{lstlisting}[style=MctBash]
+/demo$ mctPlenoscopePlotLixelStatistics -i pleritas_calibration
+\end{lstlisting}
+\end{minipage}%
+%
+When no output path is defined, a folder with plots is placed in the input folder.
 %
 %------------------------------------------------------------------------------
 \section{Simulate \ac{acp} responses to \ac{eas}}
@@ -106,6 +113,18 @@ event 3, PRMPAR 1, E 46.5717 GeV
 %------------------------------------------------------------------------------
 \section{Explore the siumlated events}
 
+\begin{minipage}{\linewidth}%
+\begin{lstlisting}[style=MctBash]
+/demo$ ipython
+In [1]: import plenopy as pop
+In [2]: run = pop.Run('my_run')
+In [3]: event = run.event(1)
+In [4]: event.plot()
+\end{lstlisting}
+\end{minipage}%
+%
+\CenFig{demo/event_overview.png}{1.0}	
+%
 \section{Light Field calibration}
 %
 Each read out channel (lixel) on the light field sensor of the \ac{acp} corresponds to a specific ray in the light field. 
