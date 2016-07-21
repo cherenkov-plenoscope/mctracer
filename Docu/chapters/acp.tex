@@ -11,9 +11,10 @@ Second, a light field sensor.
 %------------------------------------------------------------------------------
 \section{Create an \ac{acp} scenery}
 %
-Lets create an example scenery of an \ac{acp} called PLERITAS, which is a plenoptic extension to the VERITAS \ac{iact}.
+Lets create an example scenery of an \ac{acp} called PLERITAS, which is a plenoptic version to a VERITAS \ac{iact}.
 %
 \begin{lstlisting}[style=MctBash]
+\Bash{
 /demo$ mkdir pleritas
 /demo$ cd pleritas/
 \end{lstlisting}
@@ -33,7 +34,7 @@ a light field sensor\\
 %
 \XmlFileStartEnd{demo/pleritas/scenery.xml}{light_field_sensor_s}{light_field_sensor_e}
 %
-and an additional spider web which causes additional shadowing and is described in a CAD file.\\
+and a spider web which causes shadowing and is described in a CAD file named spider.stl which is also in the scenery folder.\\
 %
 \XmlFileStartEnd{demo/pleritas/scenery.xml}{stl_s}{light_field_sensor_s}
 %
@@ -57,7 +58,6 @@ All resources like the CAD file of the spider web must be placed in the scenery 
 scenery.xml  spider.stl
 \end{lstlisting}
 %
-
 Explore your scenery using mctShow.
 %
 \begin{lstlisting}[style=MctBash]
@@ -67,6 +67,7 @@ Explore your scenery using mctShow.
 %------------------------------------------------------------------------------
 \section{Run the light field calibration}
 %
+\begin{minipage}{\linewidth}%
 \begin{lstlisting}[style=MctBash]
 /demo$ mctPlenoscopeCalibration -i scenery -o pleritas_calibration -n 3
 Plenoscope Calibrator: propagating 3M photons
@@ -75,14 +76,28 @@ Plenoscope Calibrator: propagating 3M photons
 3 of 3
 /demo$ 
 \end{lstlisting}
+\end{minipage}\\
 %
-\CppFileStartEnd{../Plenoscope/Calibration/LixelStatistics.h}{lixel_statistics_s}{lixel_statistics_e}
+Inside the calibration output folder we find a copy of the scenery folder in the input folder and the results in 3 binary blocks.\\
+%
+\begin{minipage}{\linewidth}%
+\begin{lstlisting}[style=MctBash]
+/demo$ cd pleritas_calibration/
+/demo/pleritas_calibration$ ls
+input  
+light_field_sensor_geometry.header.bin  
+lixel_positions.bin  
+lixel_statistics.bin
+\end{lstlisting}
+\end{minipage}%
+
 %
 %------------------------------------------------------------------------------
 \section{Simulate \ac{acp} responses to \ac{eas}}
 %
 \begin{lstlisting}[style=MctBash]
-/demo$ mctPlenoscopePropagation -c propagation_config.xml -l pleritas_calibration -i /some/simulation/gamma1_RUN41.dat -o my_run
+/demo$ mctPlenoscopePropagation -c propagation_config.xml 
+-l pleritas_calibration -i /some/simulation/gamma1_RUN41.dat -o my_run
 event 1, PRMPAR 1, E 225.569 GeV
 event 2, PRMPAR 1, E 168.365 GeV
 event 3, PRMPAR 1, E 46.5717 GeV
@@ -110,3 +125,5 @@ For each lixel, there is list of the photon properties ($x$, $y$, $c_x$, $c_y$ a
 From this list, the lixel is assigned the averages of all these properties, as well as their standard deviations.
 %
 The number of photons reaching the lixel during the calibration gives the efficiency $\eta$.
+%
+\CppFileStartEnd{../Plenoscope/Calibration/LixelStatistics.h}{lixel_statistics_s}{lixel_statistics_e}

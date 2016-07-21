@@ -27,7 +27,7 @@
     tabsize=4,
     %frame=leftline,
     rulecolor=\color{LightGray},
-    basicstyle=\linespread{0.8}\sffamily,
+    basicstyle=\footnotesize\linespread{0.8}\sffamily,
     numbers=left,
     numberstyle=\normalfont\tiny\color{LightGray},
     xleftmargin=0.75cm,
@@ -44,7 +44,7 @@
     tabsize=4,
     %frame=leftline,
     rulecolor=\color{LightGray},
-    basicstyle=\linespread{0.8}\sffamily,
+    basicstyle=\footnotesize\linespread{0.8}\sffamily,
     numbers=left,
     numberstyle=\normalfont\tiny\color{LightGray},
     xleftmargin=0.75cm,
@@ -77,7 +77,7 @@
     escapeinside={/*@}{@*/},
     tabsize=4,
     frame=leftline,
-    basicstyle=\linespread{0.8}\sffamily,
+    basicstyle=\footnotesize\linespread{0.8}\sffamily,
     xleftmargin=0.75cm,
 }
 
@@ -103,26 +103,26 @@
 \begin{document}
 %------------------------------------------------------------------------------
 \newcommand{\CppFileStartEnd}[3]{%
-\begin{footnotesize}%
 \begin{minipage}{\linewidth}%
 \vspace{3mm}%
 \textcolor{LightGray}{\path{#1}}%
 \vspace{-1mm}%
 \lstinputlisting[linerange=#2-#3, style=MctCpp]{#1}%
 \end{minipage}%
-\end{footnotesize}%
 }%
 
 \newcommand{\XmlFileStartEnd}[3]{%
-\begin{footnotesize}%
 \begin{minipage}{\linewidth}%
 \vspace{3mm}%
 \textcolor{LightGray}{\path{#1}}%
 \vspace{-1mm}%
 \lstinputlisting[linerange=#2-#3, style=MctXml]{#1}%
 \end{minipage}%
-\end{footnotesize}%
 }%
+
+\newenvironment{bash}[1]
+{\begin{minipage}{\linewidth}\begin{lstlisting}[style=MctBash]#1}
+{\end{lstlisting}\end{minipage}}
 
 \newcommand{\TxtFile}[1]{%
     \begin{footnotesize}
