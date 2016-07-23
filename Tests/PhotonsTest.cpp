@@ -16,7 +16,7 @@ TEST_F(PhotonsTest, raw_row2photon) {
     
     Photon* ph = Photons::raw_row2photon(raw_row);
 
-    EXPECT_EQ(ph->get_id(), raw_row[0]);
+    EXPECT_EQ(ph->get_simulation_truth_id(), raw_row[0]);
     EXPECT_EQ(ph->get_support().x(), raw_row[1]);
     EXPECT_EQ(ph->get_support().y(), raw_row[2]);
     EXPECT_EQ(ph->get_support().z(), raw_row[3]);
@@ -34,13 +34,13 @@ TEST_F(PhotonsTest, photon2raw_row) {
     double wavelength = 433.5;
 
     Photon* ph = new Photon(sup, dir, wavelength);
-    ph->set_id(id);
+    ph->set_simulation_truth_id(id);
     
     std::vector<double> raw_row = Photons::photon2raw_row(ph);
 
     ASSERT_EQ(8u, raw_row.size());
 
-    EXPECT_EQ(ph->get_id(), raw_row[0]);
+    EXPECT_EQ(ph->get_simulation_truth_id(), raw_row[0]);
     EXPECT_EQ(ph->get_support().x(), raw_row[1]);
     EXPECT_EQ(ph->get_support().y(), raw_row[2]);
     EXPECT_EQ(ph->get_support().z(), raw_row[3]);
@@ -65,7 +65,7 @@ TEST_F(PhotonsTest, bunch2raw_matrix2bunch) {
         double wavelength = prng.uniform();
 
         Photon* ph = new Photon(sup, dir, wavelength);
-        ph->set_id(id);
+        ph->set_simulation_truth_id(id);
 
         photon_bunch->push_back(ph);
     }
@@ -85,7 +85,7 @@ TEST_F(PhotonsTest, bunch2raw_matrix2bunch) {
         Photon* ph1 = photon_bunch->at(n);
         Photon* ph2 = photon_bunch2->at(n);
 
-        EXPECT_EQ(ph2->get_id(), ph1->get_id());
+        EXPECT_EQ(ph2->get_simulation_truth_id(), ph1->get_simulation_truth_id());
         EXPECT_EQ(ph2->get_support().x(), ph1->get_support().x());
         EXPECT_EQ(ph2->get_support().y(), ph1->get_support().y());
         EXPECT_EQ(ph2->get_support().z(), ph1->get_support().z());
@@ -111,7 +111,7 @@ TEST_F(PhotonsTest, bunch2raw_matrix2file) {
         double wavelength = prng.uniform();
 
         Photon* ph = new Photon(sup, dir, wavelength);
-        ph->set_id(id);
+        ph->set_simulation_truth_id(id);
 
         photon_bunch1->push_back(ph);
     }
@@ -134,7 +134,7 @@ TEST_F(PhotonsTest, bunch2raw_matrix2file) {
         Photon* ph1 = photon_bunch1->at(n);
         Photon* ph2 = photon_bunch2->at(n);
 
-        EXPECT_EQ(ph2->get_id(), ph1->get_id());
+        EXPECT_EQ(ph2->get_simulation_truth_id(), ph1->get_simulation_truth_id());
         EXPECT_NEAR(ph2->get_support().x(), ph1->get_support().x(), 1e-9);
         EXPECT_NEAR(ph2->get_support().y(), ph1->get_support().y(), 1e-9);
         EXPECT_NEAR(ph2->get_support().z(), ph1->get_support().z(), 1e-9);

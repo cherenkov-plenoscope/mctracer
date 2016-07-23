@@ -1,9 +1,12 @@
 #include "RayForPropagation.h"
+#include "SimulationTruth.h"
 //------------------------------------------------------------------------------
 RayForPropagation::RayForPropagation(
 	const Vec3 support,
 	const Vec3 direction
-) {
+):
+	simulation_truth_id(SimulationTruth::MCTRACER)
+{
 	set_support_and_direction(support, direction);
 	push_back_production_of_ray();
 }
@@ -24,18 +27,18 @@ void RayForPropagation::push_back_production_of_ray() {
 	);	
 }
 //------------------------------------------------------------------------------
-void RayForPropagation::set_id(const uint identifier) {
-	this->identifier = identifier;
+void RayForPropagation::set_simulation_truth_id(const int id) {
+	simulation_truth_id = id;
 }
 //------------------------------------------------------------------------------
-uint RayForPropagation::get_id()const {
-	return identifier;
+int RayForPropagation::get_simulation_truth_id()const {
+	return simulation_truth_id;
 }
 //------------------------------------------------------------------------------
 string RayForPropagation::get_print()const {
 	stringstream out;
 	out << Ray::get_print() << ", ";
-	out << "ID: " << identifier << ", Interactions: " ;
+	out << "ID: " << simulation_truth_id << ", Interactions: " ;
 	out << get_number_of_interactions_so_far() << "\n";
 	out << get_history_print();
 	return out.str();

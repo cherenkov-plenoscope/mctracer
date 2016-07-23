@@ -129,7 +129,7 @@ namespace Photons {
 		vector<double> raw_row;
 		raw_row.reserve(8);
 
-		raw_row.push_back(double(ph->get_id()));
+		raw_row.push_back(double(ph->get_simulation_truth_id()));
 
 		raw_row.push_back(ph->get_support().x());
 		raw_row.push_back(ph->get_support().y());
@@ -153,7 +153,7 @@ namespace Photons {
 		const double wavelength = raw_row[7];
 
 		Photon* ph = new Photon(support, direction, wavelength);
-		ph->set_id(id);
+		ph->set_simulation_truth_id(id);
 		return ph;
 	}
 	//--------------------------------------------------------------------------

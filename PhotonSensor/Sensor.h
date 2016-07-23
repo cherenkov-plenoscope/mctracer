@@ -17,14 +17,13 @@
 namespace PhotonSensor {
 
 	struct photon_info {
-		uint id;
+		int simulation_truth_id;
 		double wavelength;
 		double arrival_time;
 		double x_intersect;
 		double y_intersect;
 		double theta_x;
-		double theta_y;
-		double production_height_over_sea_level;		
+		double theta_y;		
 	};
 
 	class Sensor {

@@ -9,7 +9,6 @@ namespace PhotonAndFrame {class Propagator;}
 //=================================
 // included dependencies
 #include "Core/RayForPropagation.h"
-#include "Core/PhotonMcTruth.h"
 #include "FresnelRefractionAndReflection.h"
 
 //=================================
@@ -18,7 +17,6 @@ class Photon :public RayForPropagation{
 protected:
 
 	double wavelength;
-	const PhotonMcTruth* mc_truth = &PhotonMcTruth::void_truth;
 public:
 
 	Photon(
@@ -26,22 +24,14 @@ public:
 		const Vec3 direction,
 		const double wavelength
 	);
-	Photon(
-		const Vec3 support,
-		const Vec3 direction,
-		const double wavelength,
-		const PhotonMcTruth* mc_truth
-	);
-	~Photon();
 	double get_wavelength()const;
-	const PhotonMcTruth* get_mc_truth()const;
 	std::string get_print()const;
 	double get_time_of_flight()const;
-	
 	class BadWaveLength : public TracerException {
 		using TracerException::TracerException;
-	};		
+	};
 private:
+
 	double get_time_to_pass_distance_in_refractive_index(
 		const double distance_in_medium,
 		const double refractive_index_in_medium

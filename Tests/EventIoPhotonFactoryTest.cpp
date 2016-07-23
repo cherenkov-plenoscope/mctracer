@@ -80,7 +80,7 @@ TEST_F(EventIoPhotonFactoryTest, convert_photons) {
     //   x    y    xcos ycos time  zem  weight lambda
     //   cm   cm   1    1    ns    cm   1    nm
     
-    const uint id = 1337;
+    const int id = 1337;
     Random::FakeConstant prng(0.0);
 
     EventIo::PhotonFactory cpf(corsika_photon, id, &prng);
@@ -91,7 +91,7 @@ TEST_F(EventIoPhotonFactoryTest, convert_photons) {
     	
     ph = cpf.get_photon();
 
-    EXPECT_EQ(id, ph->get_id());
+    EXPECT_EQ(id, ph->get_simulation_truth_id());
     EXPECT_NEAR(433e-9, ph->get_wavelength(), 1e-9);
 
     // since the x,y angles are zero, the support vector can be tested
@@ -319,7 +319,7 @@ TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         // of the mctracer photon which ran down to the ground.  
         for(uint i=0; i<sensor.arrival_table.size(); i++) {
 
-            uint id = sensor.arrival_table[i].id;
+            uint id = sensor.arrival_table[i].simulation_truth_id;
 
             EXPECT_NEAR(
                 relative_arrival_times_in_corsika_file.at(id),

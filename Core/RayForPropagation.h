@@ -37,13 +37,20 @@ protected:
 
 	vector<Intersection> intersection_history;
 	vector<InteractionType> interaction_type_history;
-	uint identifier;
+
+	int simulation_truth_id;
+	// The sumilation truth identifier is a encoding additional information of
+	// the photon.
+	//
+	// If simulation_truth_id >= 0, 
+	// encodes the index of the input photons e.g. out of a CORSIKA Cherenkov 
+	// photon file
 public:
 	
 	RayForPropagation(const Vec3 support, const Vec3 direction);
 	virtual ~RayForPropagation();
-	void set_id(const uint nID);
-	uint get_id()const;
+	void set_simulation_truth_id(const int id);
+	int get_simulation_truth_id()const;
 	void push_back_intersection_and_type_to_propagation_history(
 		const Intersection& interact, 
 		const InteractionType type

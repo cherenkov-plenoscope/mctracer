@@ -16,7 +16,7 @@ void TrajectoryFactory::append_trajectory_to(Frame* root_frame) {
 	
 	trajectory = root_frame->append<Frame>();
 	trajectory->set_name_pos_rot(
-		"trajectory_" + std::to_string(ray->identifier),
+		"trajectory_" + std::to_string(ray->simulation_truth_id),
 	 	Vec3::null, 
 	 	Rot3::null
 	);
@@ -73,7 +73,7 @@ std::string TrajectoryFactory::get_trajectory_of_part_index(
 	const uint part_index
 )const {
 	std::stringstream name_trajectory;
-	name_trajectory << "ID_" << ray->identifier;
+	name_trajectory << "ID_" << ray->simulation_truth_id;
 	name_trajectory << "_part_" << part_index+1;
 	return name_trajectory.str();
 }
@@ -82,7 +82,7 @@ std::string TrajectoryFactory::get_intersection_point_name_of_part(
 	const uint part_index
 )const {
 	std::stringstream name;
-	name << "ID_" << ray->identifier << "_";
+	name << "ID_" << ray->simulation_truth_id << "_";
 	name << ray->get_type_print(ray->interaction_type_history.at(part_index));
 	return name.str();
 }

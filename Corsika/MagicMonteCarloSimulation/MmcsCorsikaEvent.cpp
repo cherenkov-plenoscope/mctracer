@@ -58,7 +58,7 @@ Photon* MmcsCorsikaEvent::get_mctracer_photon(const uint i)const {
 	Photon* cherenkov_photon = 
 		new Photon(causal_support, causal_dir, wavelength_in_m(i));	
 
-	cherenkov_photon->set_id(i);
+	cherenkov_photon->set_simulation_truth_id(i);
 
 	return cherenkov_photon;
 }

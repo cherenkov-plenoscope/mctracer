@@ -225,7 +225,7 @@ TEST_F(PhotonTest, Reflections){
 
         Photon *P;
         P = new Photon(Support, direction, wavelength);
-        P->set_id(i);
+        P->set_simulation_truth_id(i);
         photons.push_back(P);
     }
 
@@ -309,7 +309,7 @@ TEST_F(PhotonTest, Refraction){
         
         Photon *P;
         P = new Photon(Vec3::null, Vec3::unit_z, wavelength);
-        P->set_id(i);
+        P->set_simulation_truth_id(i);
         photons.push_back(P);
     }
 
@@ -405,7 +405,7 @@ TEST_F(PhotonTest, absorbtion_in_medium){
         
         Photon *P;
         P = new Photon(Vec3::null, Vec3::unit_z, wavelength);
-        P->set_id(i);
+        P->set_simulation_truth_id(i);
         photons.push_back(P);
     }
 

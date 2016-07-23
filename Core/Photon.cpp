@@ -8,22 +8,9 @@ Photon::Photon(
 	const double _wavelength
 ): 	
 	RayForPropagation(support, direction), 
-	wavelength(_wavelength) 
+	wavelength(_wavelength)
 {
 	assert_wavelength_is_positive();
-}
-//------------------------------------------------------------------------------
-Photon::Photon(
-	const Vec3 support,
-	const Vec3 direction,
-	const double _wavelength,
-	const PhotonMcTruth* _mc_truth
-): 
-	RayForPropagation(support, direction), 
-	wavelength(_wavelength), 
-	mc_truth(_mc_truth) 
-{
-	assert_wavelength_is_positive();	
 }
 //------------------------------------------------------------------------------
 void Photon::assert_wavelength_is_positive()const {
@@ -39,10 +26,6 @@ void Photon::assert_wavelength_is_positive()const {
 //------------------------------------------------------------------------------
 double Photon::get_wavelength()const {
 	return wavelength;
-}
-//------------------------------------------------------------------------------
-const PhotonMcTruth* Photon::get_mc_truth()const{
-	return mc_truth;
 }
 //------------------------------------------------------------------------------
 std::string Photon::get_print()const {
@@ -75,10 +58,5 @@ double Photon::get_time_of_flight()const {
 	}
 	
 	return time_of_flight;
-}
-//------------------------------------------------------------------------------
-Photon::~Photon() {
-	if(mc_truth != &PhotonMcTruth::void_truth)
-		delete mc_truth;
 }
 //------------------------------------------------------------------------------

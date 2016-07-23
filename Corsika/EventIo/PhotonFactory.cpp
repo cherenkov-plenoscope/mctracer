@@ -1,6 +1,5 @@
 #include "PhotonFactory.h"
 #include "Core/PhysicalConstants.h"
-#include "Core/PhotonMcTruth.h"
 namespace EventIo {
 //------------------------------------------------------------------------------
 PhotonFactory::PhotonFactory(
@@ -37,13 +36,10 @@ Photon* PhotonFactory::get_photon() {
         ray_running_upwards_from_ground_to_pos_of_production.
         get_pos_at(ray_parameter_for_production_point());
 
-    PhotonMcTruth* mc_truth = new PhotonMcTruth();
-    mc_truth->production_height_over_sea_level = production_height_in_m();
-
     Photon* cherenkov_photon = 
-        new Photon(causal_support, causal_dir, wavelength_in_m(), mc_truth);    
+        new Photon(causal_support, causal_dir, wavelength_in_m());    
 
-    cherenkov_photon->set_id(id);
+    cherenkov_photon->set_simulation_truth_id(id);
 
     return cherenkov_photon;
 }

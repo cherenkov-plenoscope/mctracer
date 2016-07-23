@@ -27,7 +27,7 @@ namespace PhotonSensor {
 
 			photon_info info;
 
-			info.id = photon->get_id();
+			info.simulation_truth_id = photon->get_simulation_truth_id();
 			info.wavelength = photon->get_wavelength();
 			info.arrival_time = photon->get_time_of_flight();
 			info.x_intersect = photon->get_final_intersection().
@@ -36,9 +36,6 @@ namespace PhotonSensor {
 					get_intersection_vector_in_object_system().y();
 			info.theta_x = cos_theta_x;
 			info.theta_y = cos_theta_y;
-			info.production_height_over_sea_level = 
-				photon->get_mc_truth()->get_production_height_over_sea_level();
-
 			arrival_table.push_back(info);
 		}
 	}
@@ -121,8 +118,7 @@ namespace PhotonSensor {
 			output_row.push_back(ph.theta_y);
 			output_row.push_back(ph.wavelength);
 			output_row.push_back(ph.arrival_time);
-			output_row.push_back(ph.id);
-			output_row.push_back(ph.production_height_over_sea_level);
+			output_row.push_back(ph.simulation_truth_id);
 			output_table.push_back(output_row);
 		}
 
@@ -138,9 +134,8 @@ namespace PhotonSensor {
 		header << "            inverse_incident = (cos_x, cos_y, sqrt(1 - cos_x^2 - cos_y^2))^T\n";
 		header << "lambda: [m] wavelength\n";
 		header << "t: [s] relative arrival time on principal aperture plane.\n";
-		header << "id [1] number of the photon in CORSIKA event\n";
-		header << "h: [m] production height above sea level\n";
-		header << "x\ty\tcos_x\tcos_y\tlambda\tt\tid\th\n";
+		header << "id [1] simulation_truth_id\n";
+		header << "x\ty\tcos_x\tcos_y\tlambda\tt\tid\n";
 		return header.str();
 	}
 } // PhotonSensor
