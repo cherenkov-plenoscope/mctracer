@@ -13,14 +13,19 @@
 using std::vector;
 
 struct PipelinePhoton {
-	double arrival_time;
-	double wavelength;
-	int simulation_truth_id;
-	PipelinePhoton();
+    double arrival_time;
+    double wavelength;
+    int simulation_truth_id;
+    PipelinePhoton();
+    PipelinePhoton(
+        const double arrival_time,
+        const double wavelength,
+        const int simulation_truth_id
+    );
 };
 
 std::vector<std::vector<PipelinePhoton>> get_photon_pipelines(
-	const PhotonSensors::Sensors* sensors
+    const PhotonSensors::Sensors* sensors
 );
 
 void sort_photon_pipelines_arrival_time(std::vector<PipelinePhoton>* pipeline);
