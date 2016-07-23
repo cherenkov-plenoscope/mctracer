@@ -1,7 +1,10 @@
 #include "PipelinePhoton.h"
+#include "Core/SimulationTruth.h"
 #include <algorithm>
 
-PipelinePhoton::PipelinePhoton() {
+PipelinePhoton::PipelinePhoton(): 
+	simulation_truth_id(SimulationTruth::MCTRACER) 
+{
 	arrival_time = 0.0;
 	wavelength = 0.0;
 }

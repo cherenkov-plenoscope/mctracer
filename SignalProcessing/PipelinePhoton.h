@@ -15,6 +15,7 @@ using std::vector;
 struct PipelinePhoton {
 	double arrival_time;
 	double wavelength;
+	int simulation_truth_id;
 	PipelinePhoton();
 };
 
