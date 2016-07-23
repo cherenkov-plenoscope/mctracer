@@ -12,6 +12,7 @@
 #include "Core/Function/Function.h"
 #include "Core/Random/Random.h"
 #include "PipelinePhoton.h"
+#include "ElectricPulse.h"
 //#include <random>
 //=================================
 
@@ -37,20 +38,20 @@ namespace PhotoElectricConverter {
 
         Converter(const Config* config);
 
-        vector<double> get_pulse_pipeline_for_photon_pipeline(
+        vector<ElectricPulse> get_pulse_pipeline_for_photon_pipeline(
             const vector<PipelinePhoton> &photon_pipeline,
             const double exposure_time,
             Random::Generator* prng
         );
 
-        void add_time_to_electric_pipeline(
-            const double arrival_time,
-            vector<double> *electric_pipeline, 
+        void add_pulse(
+            const ElectricPulse &pulse,
+            vector<ElectricPulse> *electric_pipeline, 
             Random::Generator* prng
         )const;
 
-        void add_dark_rate(
-            vector<double> *electric_pipeline, 
+        void add_accidental_pulse(
+            vector<ElectricPulse> *electric_pipeline, 
             const double exposure_time,
             Random::Generator* prng
         )const;

@@ -1,5 +1,5 @@
 #include "PhotoElectricConverter.h"
-
+#include "Core/SimulationTruth.h"
 
 namespace PhotoElectricConverter {
 //------------------------------------------------------------------------------
@@ -22,40 +22,49 @@ Converter::Converter(const Config* config) {
 	}
 }
 //------------------------------------------------------------------------------
-vector<double> Converter::get_pulse_pipeline_for_photon_pipeline(
+vector<ElectricPulse> Converter::get_pulse_pipeline_for_photon_pipeline(
 	const vector<PipelinePhoton> &photon_pipeline,
 	const double exposure_time,
 	Random::Generator* prng
 ) {
 
-	vector<double> electric_pipeline;
+	vector<ElectricPulse> electric_pipeline;
 
-	for(PipelinePhoton ph: photon_pipeline) {
+	for(const PipelinePhoton &ph: photon_pipeline) {
 
-		if((*config->quantum_efficiency_vs_wavelength)(ph.wavelength) 
-			>= prng->uniform()) {
-			add_time_to_electric_pipeline(ph.arrival_time, &electric_pipeline, prng);
+		if(
+			(*config->quantum_efficiency_vs_wavelength)(ph.wavelength) >= 
+			prng->uniform()
+		) {
+			const ElectricPulse converted_photon(
+				ph.arrival_time, 
+				ph.simulation_truth_id
+			);
+			add_pulse(converted_photon, &electric_pipeline, prng);
 		}
-			
 	}
-
-	add_dark_rate(&electric_pipeline, exposure_time, prng);
-
+	add_accidental_pulse(&electric_pipeline, exposure_time, prng);
 	return electric_pipeline;
 }
 //------------------------------------------------------------------------------
-void Converter::add_time_to_electric_pipeline(
-	const double arrival_time,
-	vector<double> *electric_pipeline, 
+void Converter::add_pulse(
+	const ElectricPulse &pulse,
+	vector<ElectricPulse> *electric_pipeline, 
 	Random::Generator* prng
 )const {
-	electric_pipeline->push_back(arrival_time);
-	if(config->probability_for_second_puls >= prng->uniform())
-		add_time_to_electric_pipeline(arrival_time, electric_pipeline, prng);
+	electric_pipeline->push_back(pulse);
+	
+	if(config->probability_for_second_puls >= prng->uniform()) {
+		const ElectricPulse crosstalk_pulse(
+			pulse.arrival_time, 
+			SimulationTruth::PHOTO_ELECTRIC_CONVERTER_CROSSTALK
+		);
+		add_pulse(crosstalk_pulse, electric_pipeline, prng);
+	}
 }
 //------------------------------------------------------------------------------
-void Converter::add_dark_rate(
-	vector<double> *electric_pipeline, 
+void Converter::add_accidental_pulse(
+	vector<ElectricPulse> *electric_pipeline, 
 	const double exposure_time,
 	Random::Generator* prng
 )const{
@@ -65,8 +74,13 @@ void Converter::add_dark_rate(
 
 		double time_until_next_pulse = prng->expovariate(config->dark_rate);
 
-		add_time_to_electric_pipeline(
-			relative_arrival_times_sum,
+		const ElectricPulse accidental_pulse(
+				relative_arrival_times_sum,
+				SimulationTruth::PHOTO_ELECTRIC_CONVERTER_ACCIDENTAL
+		);
+
+		add_pulse(
+			accidental_pulse,
 			electric_pipeline,
 			prng
 		);

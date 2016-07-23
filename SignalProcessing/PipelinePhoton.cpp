@@ -3,7 +3,7 @@
 #include <algorithm>
 
 PipelinePhoton::PipelinePhoton(): 
-    simulation_truth_id(SimulationTruth::MCTRACER) 
+    simulation_truth_id(SimulationTruth::MCTRACER_DEFAULT) 
 {
     arrival_time = 0.0;
     wavelength = 0.0;

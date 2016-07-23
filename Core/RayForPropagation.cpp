@@ -5,7 +5,7 @@ RayForPropagation::RayForPropagation(
 	const Vec3 support,
 	const Vec3 direction
 ):
-	simulation_truth_id(SimulationTruth::MCTRACER)
+	simulation_truth_id(SimulationTruth::MCTRACER_DEFAULT)
 {
 	set_support_and_direction(support, direction);
 	push_back_production_of_ray();

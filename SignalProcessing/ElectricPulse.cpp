@@ -2,7 +2,7 @@
 #include "Core/SimulationTruth.h"
 //------------------------------------------------------------------------------
 ElectricPulse::ElectricPulse(): 
-    simulation_truth_id(SimulationTruth::MCTRACER) 
+    simulation_truth_id(SimulationTruth::MCTRACER_DEFAULT) 
 {}
 //------------------------------------------------------------------------------
 ElectricPulse::ElectricPulse(
