@@ -11,6 +11,8 @@
 #include "Scenery/Primitive/Primitive.h"
 #include "Core/PropagationEnvironment.h"
 #include "Tools/StringTools.h"
+
+#include "SignalProcessing/PipelinePhoton.h"
 using std::cout;
 using StringTools::fill_up_text_with_whitespaces_until_column;
 
@@ -108,5 +110,8 @@ TEST_F(SizeOfTest, sizes_of_mct) {
     Triangle triangle; 
     print_size("Triangle", triangle);
     cout << "--------------------------------------------" << "\n";
+
+    PipelinePhoton pipe_ph; 
+    print_size("PipelinePhoton", pipe_ph);
 }
 //------------------------------------------------------------------------------
