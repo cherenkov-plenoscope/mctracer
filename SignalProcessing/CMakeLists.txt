@@ -2,6 +2,7 @@ set(SOURCE
    	${SOURCE}
 	${CMAKE_CURRENT_SOURCE_DIR}/PreTrigger.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PipelinePhoton.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Sampler.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PhotoElectricConverter.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SimpleTDCQDC.cpp
    	PARENT_SCOPE
