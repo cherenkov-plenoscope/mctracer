@@ -37,20 +37,20 @@ namespace PhotoElectricConverter {
 
 		Converter(const Config* config);
 
-		std::vector<double> get_pulse_pipeline_for_photon_pipeline(
-			const std::vector<PipelinePhoton> &photon_pipeline,
+		vector<double> get_pulse_pipeline_for_photon_pipeline(
+			const vector<PipelinePhoton> &photon_pipeline,
 			const double exposure_time,
 			Random::Generator* prng
 		);
 
 		void add_time_to_electric_pipeline(
 			const double arrival_time,
-			std::vector<double> *electric_pipeline, 
+			vector<double> *electric_pipeline, 
 			Random::Generator* prng
 		)const;
 
 		void add_dark_rate(
-			std::vector<double> *electric_pipeline, 
+			vector<double> *electric_pipeline, 
 			const double exposure_time,
 			Random::Generator* prng
 		)const;
@@ -77,8 +77,8 @@ namespace PhotoElectricConverter {
 	public:
 
 		Sampler(const SamplerConfig* config);
-		std::vector<double> time_line(
-			const std::vector<double> *electric_pipeline,
+		vector<double> time_line(
+			const vector<double> *electric_pipeline,
 			const Function::DiscretSampling::LookUpTable* puls_look_up_table,
 			Random::Generator* prng
 		);

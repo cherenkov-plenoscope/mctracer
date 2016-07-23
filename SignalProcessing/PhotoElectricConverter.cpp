@@ -22,13 +22,13 @@ Converter::Converter(const Config* config) {
 	}
 }
 //------------------------------------------------------------------------------
-std::vector<double> Converter::get_pulse_pipeline_for_photon_pipeline(
-	const std::vector<PipelinePhoton> &photon_pipeline,
+vector<double> Converter::get_pulse_pipeline_for_photon_pipeline(
+	const vector<PipelinePhoton> &photon_pipeline,
 	const double exposure_time,
 	Random::Generator* prng
 ) {
 
-	std::vector<double> electric_pipeline;
+	vector<double> electric_pipeline;
 
 	for(PipelinePhoton ph: photon_pipeline) {
 
@@ -46,7 +46,7 @@ std::vector<double> Converter::get_pulse_pipeline_for_photon_pipeline(
 //------------------------------------------------------------------------------
 void Converter::add_time_to_electric_pipeline(
 	const double arrival_time,
-	std::vector<double> *electric_pipeline, 
+	vector<double> *electric_pipeline, 
 	Random::Generator* prng
 )const {
 	electric_pipeline->push_back(arrival_time);
@@ -55,7 +55,7 @@ void Converter::add_time_to_electric_pipeline(
 }
 //------------------------------------------------------------------------------
 void Converter::add_dark_rate(
-	std::vector<double> *electric_pipeline, 
+	vector<double> *electric_pipeline, 
 	const double exposure_time,
 	Random::Generator* prng
 )const{
@@ -123,12 +123,12 @@ Sampler::Sampler(const SamplerConfig* config) {
 	));
 }
 //------------------------------------------------------------------------------
-std::vector<double> Sampler::time_line(
-	const std::vector<double> *electric_pipeline,
+vector<double> Sampler::time_line(
+	const vector<double> *electric_pipeline,
 	const Function::DiscretSampling::LookUpTable* puls_look_up_table,
 	Random::Generator* prng
 ) {	
-	std::vector<double> time_line;
+	vector<double> time_line;
 	time_line.reserve(number_of_slices);
 
 	// add noise
@@ -145,7 +145,7 @@ std::vector<double> Sampler::time_line(
 		
 		const double start_offset_in_slices = fmod(start_pos_in_slices, 1);
 
-		const std::vector<double> *pulse = 
+		const vector<double> *pulse = 
 			puls_look_up_table->at(start_offset_in_slices);
 
 		add_second_to_first_at(&time_line, pulse, start_slice);
