@@ -72,6 +72,9 @@ namespace Corsika {
         float azimuth(const array<float, 273> &eh) {
             return eh.at(11);
         }
+        float first_interaction_height_in_cm(const array<float, 273> &eh) {
+            return eh.at(7-1);
+        }
     }
     
     namespace RunHeader {

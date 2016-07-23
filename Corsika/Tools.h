@@ -28,6 +28,7 @@ namespace Corsika {
 		float total_energy_in_GeV(const array<float, 273> &eh);
 		float zenith(const array<float, 273> &eh);
 		float azimuth(const array<float, 273> &eh);
+		float first_interaction_height_in_cm(const array<float, 273> &eh);
 	}
 
 	namespace RunHeader {
