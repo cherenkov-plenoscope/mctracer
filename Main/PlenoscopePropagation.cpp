@@ -3,6 +3,7 @@
 #include "CommandLine/CommandLine.h"
 #include "Core/Photons.h"
 #include "Corsika/EventIo/EventIo.h"
+#include "Corsika/EventIo/Export.h"
 #include "Corsika/Tools.h"
 #include "Corsika/EventIo/PhotonFactory.h"
 #include "Core/Histogram1D.h"
@@ -19,6 +20,7 @@
 #include "Xml/Factory/SceneryFactory.h"
 #include "Xml/Factory/TracerSettingsFab.h"
 #include "SignalProcessing/SimpleTDCQDC.h"
+#include "SignalProcessing/ElectricPulse.h"
 #include "Tools/PathTools.h"
 #include "Tools/HeaderBlock.h"
 #include "Tools/Time.h"
@@ -55,6 +57,8 @@ int main(int argc, char* argv[]) {
     PathTools::Path out_path = PathTools::Path(cmd.get("output"));
     PathTools::Path lixel_calib_path = PathTools::Path(cmd.get("lixel_calib"));
     PathTools::Path input_path = PathTools::Path(cmd.get("input"));
+
+    const bool export_all_simulation_truth = true;
 
     // 1) create output directory
     fs::create_directory(out_path.path);
@@ -179,10 +183,9 @@ int main(int argc, char* argv[]) {
         //Time::StopWatch c2mct("corsika 2 mct photons");
         vector<Photon*> photons;
         uint photon_id = 0;
-        for(const array<float, 8> &corsika_photon: event.photons) {
-            
-            EventIo::PhotonFactory cpf(corsika_photon, photon_id++, &prng);
 
+        for(const array<float, 8> &corsika_photon: event.photons) {
+            EventIo::PhotonFactory cpf(corsika_photon, photon_id++, &prng);
             if(cpf.passed_atmosphere())
                 photons.push_back(cpf.get_photon());
         }
@@ -218,7 +221,7 @@ int main(int argc, char* argv[]) {
         //Time::StopWatch pecs("photo electric conversion");
         //--------------------------
         // Photo Electric conversion
-        vector<vector<double>> electric_pipelines;
+        vector<vector<ElectricPulse>> electric_pipelines;
         electric_pipelines.reserve(photon_pipelines.size());
         for(vector<PipelinePhoton> ph_pipe: photon_pipelines) {
 
@@ -235,7 +238,7 @@ int main(int argc, char* argv[]) {
         // Pulse extraction Tdc Qdc
         vector<SimpleTdcQdc::TimeAndCount> tacs;
         tacs.reserve(electric_pipelines.size());
-        for(const vector<double> electric_pipe: electric_pipelines) {
+        for(const vector<ElectricPulse> electric_pipe: electric_pipelines) {
             tacs.push_back(
                 SimpleTdcQdc::get_arrival_time_and_count_given_arrival_moments_and_integration_time_window(
                     electric_pipe,
@@ -267,6 +270,18 @@ int main(int argc, char* argv[]) {
         fs::create_directory(event_mc_truth_path.path);
         HeaderBlock::write(corsika_run.header.raw, PathTools::join(event_mc_truth_path.path, "corsika_run_header.bin"));
         HeaderBlock::write(event.header.raw, PathTools::join(event_mc_truth_path.path, "corsika_event_header.bin"));
+        
+        if(export_all_simulation_truth) {
+            SimpleTdcQdc::write_intensity_simulation_truth(
+                tacs,
+                PathTools::join(event_mc_truth_path.path, "intensity_truth.txt")
+            );
+
+            EventIo::write_raw_photons(
+                event.photons,
+                PathTools::join(event_mc_truth_path.path, "air_shower_photons.bin")
+            );
+        }
         //write_event.stop();
 
         cout << "event " << event_counter << ", ";
