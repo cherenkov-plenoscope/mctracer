@@ -18,7 +18,10 @@ using std::ifstream;
 
 namespace EventIo {
 
-    void write_raw_photons(const string &path, vector<array<float, 8>>);
+    void write_raw_photons(
+        const vector<array<float, 8>> &photons, 
+        const string &path
+    );
 } //namespace EventIo
 
 #endif // __WriteCorsikaEventIoPhotonsRaw_H_INCLUDED__ 

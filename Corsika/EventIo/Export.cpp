@@ -6,10 +6,9 @@
 namespace EventIo {
 
     void write_raw_photons(
-        const string &path, 
-        const vector<array<float, 8>> &photons
+        const vector<array<float, 8>> &photons, 
+        const string &path
     ) {
-
         std::ofstream file;
         file.open(path, std::ios::out | std::ios::binary);
         
