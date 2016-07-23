@@ -1,6 +1,7 @@
 #include "Plenoscope/NightSkyBackground/Injector.h"
 #include "Tools/Tools.h"
 #include "Core/Histogram1D.h"
+#include "Core/SimulationTruth.h"
 
 namespace Plenoscope {
 namespace NightSkyBackground {
@@ -93,9 +94,11 @@ namespace NightSkyBackground {
 			};
 
 			for(double nsb_arrival_time: nsb_arrival_times) {
-				PipelinePhoton nsb_ph;
-				nsb_ph.arrival_time = nsb_arrival_time;
-				nsb_ph.wavelength = nsb->draw_wavelength(prng);
+				PipelinePhoton nsb_ph(
+					nsb_arrival_time,
+					nsb->draw_wavelength(prng),
+					SimulationTruth::NIGHT_SKY_BACKGROUND
+				);
 
 				photon_pipelines->at(i).push_back(nsb_ph);
 			}
