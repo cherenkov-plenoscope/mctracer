@@ -75,7 +75,9 @@ uint arrival_count_in_ith_integration_window(
     uint arrival_count = 1;
     while(
         i+arrival_count < arrival_moments.size() &&
-        arrival_moments[i+arrival_count].arrival_time - arrival_moments[i].arrival_time < integration_time
+        arrival_moments[i+arrival_count].arrival_time - 
+        arrival_moments[i].arrival_time < 
+        integration_time
     ) {
         arrival_count++;
     }

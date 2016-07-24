@@ -66,3 +66,45 @@ TEST_F(SimpleTdcQdcTest, tdcqdc_empty) {
 	EXPECT_EQ(0u, enclosure.size());
 }
 //------------------------------------------------------------------------------
+TEST_F(SimpleTdcQdcTest, Charge_count_equals_simulation_truth_count) {
+
+	vector<ElectricPulse> pulses;
+	pulses.push_back(ElectricPulse(0.0,  1));
+	pulses.push_back(ElectricPulse(1.0,  2));
+	pulses.push_back(ElectricPulse(2.0,  3)); //
+	pulses.push_back(ElectricPulse(2.1,  4)); //
+	pulses.push_back(ElectricPulse(2.2,  5)); //
+	pulses.push_back(ElectricPulse(2.3,  6)); // 
+	pulses.push_back(ElectricPulse(2.4,  7)); //
+	pulses.push_back(ElectricPulse(2.5,  8)); //                          
+	pulses.push_back(ElectricPulse(2.55, 9)); //
+	pulses.push_back(ElectricPulse(2.6, 10));
+	pulses.push_back(ElectricPulse(2.7, 11));
+	pulses.push_back(ElectricPulse(2.8, 12));
+	pulses.push_back(ElectricPulse(2.9, 13));
+	pulses.push_back(ElectricPulse(3.0, 14));
+	pulses.push_back(ElectricPulse(4.0, 15));
+	pulses.push_back(ElectricPulse(5.0, 16));
+	pulses.push_back(ElectricPulse(6.0, 17));
+
+	EXPECT_EQ(17u, pulses.size());
+
+	const double integration_time_window = 0.49;
+
+	SimpleTdcQdc::TimeAndCount tac = SimpleTdcQdc::get_arrival_time_and_count_given_arrival_moments_and_integration_time_window(
+		pulses,
+		integration_time_window
+	);
+
+	EXPECT_EQ(2.1, tac.time);
+	EXPECT_EQ(6u, tac.count);
+	EXPECT_EQ(tac.count, tac.simulation_truth_ids.size());
+	ASSERT_EQ(6u, tac.simulation_truth_ids.size());
+
+	EXPECT_EQ(4, tac.simulation_truth_ids.at(0));
+	EXPECT_EQ(5, tac.simulation_truth_ids.at(1));
+	EXPECT_EQ(6, tac.simulation_truth_ids.at(2));
+	EXPECT_EQ(7, tac.simulation_truth_ids.at(3));
+	EXPECT_EQ(8, tac.simulation_truth_ids.at(4));
+	EXPECT_EQ(9, tac.simulation_truth_ids.at(5));
+}
