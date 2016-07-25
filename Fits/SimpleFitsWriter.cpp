@@ -1,4 +1,4 @@
-#include "FitsIO/SimpleFitsWriter.h"
+#include "Fits/SimpleFitsWriter.h"
 #include <algorithm>
 #include <string>
 

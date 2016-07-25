@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "FitsIO/SimpleFitsWriter.h"
+#include "Fits/SimpleFitsWriter.h"
 
 class FitsIoTest : public ::testing::Test {};
 //----------------------------------------------------------------------
