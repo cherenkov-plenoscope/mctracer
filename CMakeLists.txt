@@ -89,6 +89,7 @@ target_link_libraries(mctPlenoscopeCalibration stdc++fs)
 add_executable(mctPlenoscopePropagation Main/PlenoscopePropagation.cpp)
 target_link_libraries(mctPlenoscopePropagation mct)
 target_link_libraries(mctPlenoscopePropagation stdc++fs)
+target_link_libraries(mctPlenoscopePropagation docopt)
 
 
 #---------------------------------

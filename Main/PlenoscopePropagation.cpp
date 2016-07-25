@@ -1,3 +1,4 @@
+#include "CommandLine/DocOpt/docopt.h"
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"
 #include "CommandLine/CommandLine.h"
@@ -27,38 +28,40 @@
 #include <experimental/filesystem>
 namespace fs = std::experimental::filesystem;
 
-string help_text() {
-    std::stringstream out; 
-    out << "  Plenoscope simulation\n";
-    out << "  --lixel_calib, -l light field cell calibration of the plenoscope\n";
-    out << "  --config, -c      config path steering the simulation and the plenoscope\n";
-    out << "  --input, -i       input path of CORSIKA run\n";
-    out << "  --output, -o      output path of plenoscope lightfields\n";
-    return out.str();   
-}
+static const char USAGE[] =
+R"(Plenoscope air showher propagation
+
+    Usage:
+      mctPlenoscopePropagation -l <LIXEL_STATISTICS_PATH> -c <CONFIG_PATH> -i <CORSIKA_PATH> -o <OUTPUT_PATH> [--all_truth]
+      mctPlenoscopePropagation (-h | --help)
+      mctPlenoscopePropagation --version
+
+    Options:
+      -l --lixel_statistics     light field calibration directory of the plenoscope.
+      -c --config               Config path to xml file steering the simulation.
+      -i --input                CORSIKA run path.
+      -o --output               Output path.
+      --all_truth               Write all simulation truth avaiable into the output.
+      -h --help                 Show this screen.
+      --version                 Show version.
+      
+)";
 
 int main(int argc, char* argv[]) {
-    try{
+    try {
 
-    CommandLine::Parser cmd;
-    cmd.define_key_val_by_key_short_desc("lixel_calib", 'l' ,"light field cell calibration of the plenoscope");
-    cmd.define_key_val_by_key_short_desc("config", 'c' ,"config path steering the simulation and plenoscope");
-    cmd.define_key_val_by_key_short_desc("output", 'o', "output path of plenoscope lightfields");
-    cmd.define_key_val_by_key_short_desc("input", 'i', "input path of CORSIKA run");
-    cmd.parse(argc, argv);
+    std::map<std::string, docopt::value> args = docopt::docopt(
+        USAGE,
+        { argv + 1, argv + argc },
+        true,        // show help if requested
+        "mct 0.0"
+    );  // version string
 
-    if(!cmd.exist("config") || !cmd.exist("input") || 
-       !cmd.exist("output") || !cmd.exist("lixel_calib")) {
-        cout << help_text();
-        return 0;
-    }
-        
-    PathTools::Path config_path = PathTools::Path(cmd.get("config"));
-    PathTools::Path out_path = PathTools::Path(cmd.get("output"));
-    PathTools::Path lixel_calib_path = PathTools::Path(cmd.get("lixel_calib"));
-    PathTools::Path input_path = PathTools::Path(cmd.get("input"));
-
-    const bool export_all_simulation_truth = true;
+    PathTools::Path config_path = PathTools::Path(args.find("<CONFIG_PATH>")->second.asString());
+    PathTools::Path out_path = PathTools::Path(args.find("<OUTPUT_PATH>")->second.asString());
+    PathTools::Path lixel_calib_path = PathTools::Path(args.find("<LIXEL_STATISTICS_PATH>")->second.asString());
+    PathTools::Path input_path = PathTools::Path(args.find("<CORSIKA_PATH>")->second.asString());
+    const bool export_all_simulation_truth = args.find("--all_truth")->second.asBool();
 
     // 1) create output directory
     fs::create_directory(out_path.path);
@@ -70,7 +73,6 @@ int main(int argc, char* argv[]) {
     fs::copy(lixel_calib_path.path, PathTools::join(input_copy_path.path, "plenoscope"), fs::copy_options::recursive);            
 
     config_path = PathTools::join(input_copy_path.path, "propagation_config.xml");
-    out_path = PathTools::Path(cmd.get("output"));
     lixel_calib_path = PathTools::join(PathTools::join(input_copy_path.path, "plenoscope"),"lixel_statistics.bin");
     input_path = PathTools::join(input_copy_path.path, input_path.basename);
     PathTools::Path scenery_path =  PathTools::join(PathTools::join(input_copy_path.path, "plenoscope"),"input/scenery/scenery.xml");
@@ -121,7 +123,7 @@ int main(int argc, char* argv[]) {
     if(light_field_channels->size() != optics_calibration_result.size()) {
         std::stringstream info;
         info << "The light field calibration results, read from file '";
-        info << cmd.get("lixel_calib");
+        info << lixel_calib_path.path;
         info << "', do no not match the plenoscope simulated here.\n";
         info << "Expected sub pixel size: " << light_field_channels->size();
         info << ", but actual: " << optics_calibration_result.size();
@@ -265,7 +267,7 @@ int main(int argc, char* argv[]) {
         );
 
         //-------------
-        // export Monte Carlo Truth
+        // export Simulation Truth
         PathTools::Path event_mc_truth_path = PathTools::join(event_output_path.path, "simulation_truth");
         fs::create_directory(event_mc_truth_path.path);
         HeaderBlock::write(corsika_run.header.raw, PathTools::join(event_mc_truth_path.path, "corsika_run_header.bin"));
