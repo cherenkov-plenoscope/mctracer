@@ -30,6 +30,4 @@ std::vector<std::vector<PipelinePhoton>> get_photon_pipelines(
 
 void sort_photon_pipelines_arrival_time(std::vector<PipelinePhoton>* pipeline);
 
-//double get_arrival_time_mean()
-
 #endif // __PipelinePhoton_H_INCLUDED__
