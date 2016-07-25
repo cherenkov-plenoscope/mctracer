@@ -1,4 +1,4 @@
-#include "CommandLine/CommandLine.h"
+#include "DocOpt/docopt.h"
 #include "Tools/FileTools.h"
 #include "Tools/PathTools.h"
 #include "Xml/Xml.h"
@@ -10,37 +10,39 @@ namespace fs = std::experimental::filesystem;
 using std::string;
 using std::cout;
 
-string help_text() {
-    std::stringstream out; 
-    out << "  Plenoscope calibration\n";
-    out << "\n";
-    out << "  --scenery, -s                 scenery with at least one plenoscope in it\n";
-    out << "\n";
-    out << "  --number_mega_photons, -n     the number count [Mega Photons] of\n";
-    out << "                                calibration photons to be emitted\n";
-    out << "\n";
-    out << "  --output, -o                  output path of plenoscope calibration\n";
-    return out.str();   
-}
+static const char USAGE[] =
+R"(Plenoscope light field calibration
+
+    Usage:
+      mctPlenoscopeCalibration -s=SCENERY_PATH -n=NUMBER_MEGA_PHOTONS -o=OUTPUT_PATH
+      mctPlenoscopeCalibration (-h | --help)
+      mctPlenoscopeCalibration --version
+
+    Options:
+      -s --scenery=SCENERY_PATH                     Scenery directory path.
+      -n --number_mega_photons=NUMBER_MEGA_PHOTONS  Number count [Mega Photons] 
+                                                    of calibration photons to be 
+                                                    emitted.
+      -o --output=OUTPUT_PATH                       Output path.
+      -h --help                                     Show this screen.
+      --version                                     Show version.
+      
+)";
 
 int main(int argc, char* argv[]) {
     try{
 
-    CommandLine::Parser cmd;
-    cmd.define_key_val_by_key_short_desc("number_mega_photons", 'n' ,"the number count [Mega Photons] of calibration photons to be emitted");
-    cmd.define_key_val_by_key_short_desc("output", 'o', "output path of plenoscope calibration");
-    cmd.define_key_val_by_key_short_desc("scenery", 's', "scenery with at least one plenoscope in it");
-    cmd.parse(argc, argv);
-
-    if(!cmd.exist("number_mega_photons") || !cmd.exist("output") || !cmd.exist("scenery")) {
-        cout << help_text();
-        return 1;
-    }
+    std::map<std::string, docopt::value> args = docopt::docopt(
+        USAGE,
+        { argv + 1, argv + argc },
+        true,        // show help if requested
+        "mct 0.0"
+    );  // version string
 
     // parse number_mega_photons
     int number_mega_photons = 0;
     try{
-        number_mega_photons = StringTools::to_int(cmd.get("number_mega_photons"));
+        number_mega_photons = StringTools::to_int(args.find("--number_mega_photons")->second.asString());
     }catch(StringTools::CanNotParseInt &error) {
         stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
@@ -56,8 +58,8 @@ int main(int argc, char* argv[]) {
         throw TracerException(info.str());         
     }
 
-    PathTools::Path out_path = PathTools::Path(cmd.get("output"));
-    PathTools::Path scenery_path = PathTools::Path(cmd.get("scenery"));
+    PathTools::Path out_path = PathTools::Path(args.find("--output")->second.asString());
+    PathTools::Path scenery_path = PathTools::Path(args.find("--scenery")->second.asString());
 
     // 1) create output directory
     fs::create_directory(out_path.path);
@@ -84,7 +86,7 @@ int main(int argc, char* argv[]) {
 
     HeaderBlock::write(
         pis->light_field_sensor_geometry.get_info_header(), 
-        PathTools::join(cmd.get("output"), "light_field_sensor_geometry.header.bin")
+        PathTools::join(out_path.path, "light_field_sensor_geometry.header.bin")
     );
 
     pis->light_field_sensor_geometry.write_lixel_positions(
@@ -104,7 +106,7 @@ int main(int argc, char* argv[]) {
     );
 
     // WRITE OUTPUT
-    calibrator.write_lixel_statistics(PathTools::join(cmd.get("output"), "lixel_statistics.bin"));
+    calibrator.write_lixel_statistics(PathTools::join(out_path.path, "lixel_statistics.bin"));
 
     }catch(std::exception &error) {
         std::cerr << error.what(); 

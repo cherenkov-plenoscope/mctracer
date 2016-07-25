@@ -1,7 +1,6 @@
 #include "DocOpt/docopt.h"
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"
-#include "CommandLine/CommandLine.h"
 #include "Core/Photons.h"
 #include "Corsika/EventIo/EventIo.h"
 #include "Corsika/EventIo/Export.h"
@@ -32,15 +31,15 @@ static const char USAGE[] =
 R"(Plenoscope air showher propagation
 
     Usage:
-      mctPlenoscopePropagation -l <LIXEL_STATISTICS_PATH> -c <CONFIG_PATH> -i <CORSIKA_PATH> -o <OUTPUT_PATH> [--all_truth]
+      mctPlenoscopePropagation -l=LIXEL_STATISTICS_PATH -c=CONFIG_PATH -i=CORSIKA_PATH -o=OUTPUT_PATH [--all_truth]
       mctPlenoscopePropagation (-h | --help)
       mctPlenoscopePropagation --version
 
     Options:
-      -l --lixel_statistics     light field calibration directory of the plenoscope.
-      -c --config               Config path to xml file steering the simulation.
-      -i --input                CORSIKA run path.
-      -o --output               Output path.
+      -l --lixel=LIXEL_PATH     Light field calibration directory of the plenoscope.
+      -c --config=CONFIG_PATH   Config path to xml file steering the simulation.
+      -i --input=CORSIKA_PATH   CORSIKA run path.
+      -o --output=OUTPUT_PATH   Output path.
       --all_truth               Write all simulation truth avaiable into the output.
       -h --help                 Show this screen.
       --version                 Show version.
@@ -57,10 +56,10 @@ int main(int argc, char* argv[]) {
         "mct 0.0"
     );  // version string
 
-    PathTools::Path config_path = PathTools::Path(args.find("<CONFIG_PATH>")->second.asString());
-    PathTools::Path out_path = PathTools::Path(args.find("<OUTPUT_PATH>")->second.asString());
-    PathTools::Path lixel_calib_path = PathTools::Path(args.find("<LIXEL_STATISTICS_PATH>")->second.asString());
-    PathTools::Path input_path = PathTools::Path(args.find("<CORSIKA_PATH>")->second.asString());
+    PathTools::Path config_path = PathTools::Path(args.find("--config")->second.asString());
+    PathTools::Path out_path = PathTools::Path(args.find("--output")->second.asString());
+    PathTools::Path lixel_calib_path = PathTools::Path(args.find("--lixel")->second.asString());
+    PathTools::Path input_path = PathTools::Path(args.find("--input")->second.asString());
     const bool export_all_simulation_truth = args.find("--all_truth")->second.asBool();
 
     // 1) create output directory

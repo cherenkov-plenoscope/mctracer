@@ -1,44 +1,47 @@
+#include "DocOpt/docopt.h"
 #include "Core/Photons.h"
 #include "Tools/AsciiIo.h"
 #include "Xml/Factory/SceneryFactory.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "Xml/Factory/TracerSettingsFab.h"
 #include "PhotonsReader/PhotonsReader.h"
-#include "CommandLine/CommandLine.h"
 using std::string;
 using std::cout;
 
-string help_text() {
-	std::stringstream out; 
-	out << "  Propagate photons in scenery.\n";
-	out << "  --scenery, -s  path of scenery\n";
-	out << "  --photons, -p  path of photons\n";
-	out << "  --config,  -c  path of mctracer configuration\n";
-	out << "  --output,  -o  path to write \n";
-	return out.str();
-}
+static const char USAGE[] =
+R"(Photon propagation
+
+    Usage:
+      mctPropagate -s=SCENERY_PATH -c=CONFIG_PATH -i=INPUT_PATH -o=OUTPUT_PATH
+      mctPropagate (-h | --help)
+      mctPropagate --version
+
+    Options:
+      -s --scenery=SCENERY_PATH Scenery xml file path.
+      -c --config=CONFIG_PATH   Config path to xml file steering the simulation.
+      -i --input=INPUT_PATH     Photon file path (e.g. a CORSIKA run).
+      -o --output=OUTPUT_PATH   Output path.
+      -h --help                 Show this screen.
+      --version                 Show version.
+      
+)";
 
 int main(int argc, char* argv[]) {
 	try{
-	//--------------------------------------------------------------------------
 
-	CommandLine::Parser cmd;
-	cmd.define_key_val_by_key_short_desc("scenery", 's', "scenery path");
-	cmd.define_key_val_by_key_short_desc("photons", 'p', "photon path");
-	cmd.define_key_val_by_key_short_desc("config", 'c' ,"configuration path");
-	cmd.define_key_val_by_key_short_desc("output", 'o', "output path");
-	cmd.parse(argc, argv);
+    std::map<std::string, docopt::value> args = docopt::docopt(
+        USAGE,
+        { argv + 1, argv + argc },
+        true,        // show help if requested
+        "mct 0.0"
+    );  // version string
 
-	if(
-		!cmd.exist("scenery") || !cmd.exist("photons") || 
-		!cmd.exist("config") ||	!cmd.exist("output")
-	) {
-		cout << help_text();
-		return 0;
-	}
+    PathTools::Path out_path = PathTools::Path(args.find("--output")->second.asString());
+    PathTools::Path scenery_path = PathTools::Path(args.find("--scenery")->second.asString());
+    PathTools::Path photon_path = PathTools::Path(args.find("--input")->second.asString());
+    PathTools::Path config_path = PathTools::Path(args.find("--config")->second.asString());
 
-	// Bokeh settings
-	Xml::Document doc(cmd.get("config"));
+	Xml::Document doc(config_path.path);
 	Xml::Node se = doc.node().child("settings");
    
     //--------------------------------------------------------------------------
@@ -54,7 +57,7 @@ int main(int argc, char* argv[]) {
 
 	Frame scenery;
 	scenery.set_name_pos_rot("root", Vec3::null, Rot3::null);
-	Xml::SceneryFactory fab(cmd.get("scenery"));
+	Xml::SceneryFactory fab(scenery_path.path);
 	fab.add_scenery_to_frame(&scenery);
 	scenery.init_tree_based_on_mother_child_relations();
 	//--------------------------------------------------------------------------
@@ -63,7 +66,7 @@ int main(int argc, char* argv[]) {
 	
 	//--------------------------------------------------------------------------
 	// photon source
-	PhotonsReader photon_file(cmd.get("photons"));
+	PhotonsReader photon_file(photon_path.path);
 	std::vector<Photon*>* photons;
 
 	uint event_counter = 1;
@@ -85,12 +88,12 @@ int main(int argc, char* argv[]) {
 		for(uint i=0; i<sensors.size(); i++) {
 
 			std::stringstream outname;
-			outname << cmd.get("output") << event_counter << "_" << i;
+			outname << out_path.path << event_counter << "_" << i;
 
 			std::stringstream header;
-			header << "scenery: " << cmd.get("scenery") << "\n";
+			header << "scenery: " << scenery_path.path << "\n";
 			header << "sensor:  " << sensors.at(i)->get_frame()->get_path_in_tree_of_frames() << ", ID: " << i << "\n";
-			header << "photons: " << cmd.get("photons") << "\n";
+			header << "photons: " << photon_path.path << "\n";
 			header << "-------------\n";
 			header << sensors.at(i)->get_arrival_table_header();
 

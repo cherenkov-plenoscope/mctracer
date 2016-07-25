@@ -52,7 +52,6 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/Plenoscope")
 add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonSensor")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Tools")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Xml")
-add_subdirectory("${PROJECT_SOURCE_DIR}/CommandLine")
 add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonsReader")
 add_subdirectory("${PROJECT_SOURCE_DIR}/SignalProcessing")
 add_subdirectory("${PROJECT_SOURCE_DIR}/DocOpt")
@@ -67,23 +66,26 @@ target_link_libraries(mct ${OpenCV_LIBS})
 # Show exe
 add_executable(mctShow Main/Show.cpp)
 target_link_libraries(mctShow mct)
+target_link_libraries(mctShow docopt)
 
 #---------------
 # Propagate exe
 add_executable(mctPropagate Main/Propagate.cpp)
 target_link_libraries(mctPropagate mct)
+target_link_libraries(mctPropagate docopt)
 
 #----------------
 # ShowPhotons exe
 add_executable(mctShowPhotons Main/ShowPhotons.cpp)
 target_link_libraries(mctShowPhotons mct)
+target_link_libraries(mctShowPhotons docopt)
 
 #------------------------
 # light field calibration
 add_executable(mctPlenoscopeCalibration Main/PlenoscopeCalibration.cpp)
 target_link_libraries(mctPlenoscopeCalibration mct)
 target_link_libraries(mctPlenoscopeCalibration stdc++fs)
-
+target_link_libraries(mctPlenoscopeCalibration docopt)
 
 #------------------------
 # light field propagation
@@ -91,7 +93,6 @@ add_executable(mctPlenoscopePropagation Main/PlenoscopePropagation.cpp)
 target_link_libraries(mctPlenoscopePropagation mct)
 target_link_libraries(mctPlenoscopePropagation stdc++fs)
 target_link_libraries(mctPlenoscopePropagation docopt)
-
 
 #---------------------------------
 # unit test exe
