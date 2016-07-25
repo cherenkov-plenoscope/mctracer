@@ -55,6 +55,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/Xml")
 add_subdirectory("${PROJECT_SOURCE_DIR}/CommandLine")
 add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonsReader")
 add_subdirectory("${PROJECT_SOURCE_DIR}/SignalProcessing")
+add_subdirectory("${PROJECT_SOURCE_DIR}/DocOpt")
 #-------------------------------
 # mctracer library
 add_library(mct SHARED ${SOURCE})

@@ -1,4 +1,4 @@
-#include "CommandLine/DocOpt/docopt.h"
+#include "DocOpt/docopt.h"
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"
 #include "CommandLine/CommandLine.h"
