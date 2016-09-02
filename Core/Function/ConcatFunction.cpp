@@ -5,7 +5,14 @@
 
 namespace Function {
 
+	Concat::Concat() {
+	}
+	//--------------------------------------------------------------------------
 	Concat::Concat(const std::vector<const Func1D*> _conc) {
+		set_functions(_conc);
+	}
+	//--------------------------------------------------------------------------
+	void Concat::set_functions(const std::vector<const Func1D*> _conc) {
 		conc = _conc;
 		assert_limits_do_fit();
 		adopt_new_limits();

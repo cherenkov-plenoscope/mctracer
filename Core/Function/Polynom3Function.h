@@ -13,9 +13,10 @@
 namespace Function {
 	class Polynom3 : public Func1D {
 
-		const double a3, a2, a1, a0;
+		double a3, a2, a1, a0;
 		double average;
 	public:
+		Polynom3();
 		Polynom3(
 			const double _a3, 
 			const double _a2, 
@@ -23,6 +24,12 @@ namespace Function {
 			const double _a0,
 			const Limits &_limits
 		);
+		void set_coefficients(
+			const double _a3, 
+			const double _a2, 
+			const double _a1, 
+			const double _a0
+		);	
 		double operator()(const double x)const;
 	};
 } // namespace Function

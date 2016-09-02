@@ -8,7 +8,15 @@
 
 namespace Function {
 	//--------------------------------------------------------------------------
-	LinInterpol::LinInterpol(const vector<vector<double>> xy) {
+	LinInterpol::LinInterpol() {
+
+	}
+	//--------------------------------------------------------------------------
+	LinInterpol::LinInterpol(const vector<vector<double>>& xy) {
+		set_table(xy);
+	}
+	//--------------------------------------------------------------------------
+	void LinInterpol::set_table(const vector<vector<double>>& xy) {
 		func.reserve(xy.size());
 
 		for(uint i=0; i<xy.size(); i++) {
@@ -28,7 +36,7 @@ namespace Function {
 		sort_function_arguments();
 		assert_no_duplicate_argument_on_sorted_arguments();
 
-		limits = Limits(func.front().x, func.back().x);
+		limits = Limits(func.front().x, func.back().x);		
 	}
 	//--------------------------------------------------------------------------
 	double LinInterpol::slope_in_table_in_row(

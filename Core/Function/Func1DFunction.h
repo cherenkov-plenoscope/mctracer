@@ -27,6 +27,7 @@ namespace Function {
 
 		Func1D() {};
 		Func1D(const Limits &_limits);
+		void set_limits(const Limits limits);
 		virtual ~Func1D();
 		vector<vector<double>> get_samples(const uint N)const;
 		double get_mean(const uint N)const;

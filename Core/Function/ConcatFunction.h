@@ -16,9 +16,13 @@ namespace Function {
 
 		std::vector<const Func1D*> conc;
 	public:
+
+		Concat();
 		Concat(const std::vector<const Func1D*> _conc);
+		void set_functions(const std::vector<const Func1D*> _conc);
 		double operator()(const double x)const;
 	private:
+
 		void assert_limits_do_fit()const;
 		void adopt_new_limits();
 		const Func1D* get_sub_function_responsible_for(const double x)const;

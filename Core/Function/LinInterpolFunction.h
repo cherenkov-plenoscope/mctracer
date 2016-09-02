@@ -25,7 +25,9 @@ namespace Function {
 		vector<Point> func;
 	public:
 
-		LinInterpol(const vector<vector<double> > two_column_xy);
+		LinInterpol();
+		LinInterpol(const vector<vector<double>>& two_column_xy);
+		void set_table(const vector<vector<double>>& two_column_xy);
 		double operator()(const double x)const;
 		double get_max_value()const;
 		double get_min_value()const;

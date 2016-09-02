@@ -7,6 +7,10 @@ namespace Function {
 	//--------------------------------------------------------------------------
 	Func1D::~Func1D() {}
 	//--------------------------------------------------------------------------
+	void Func1D::set_limits(const Limits limits) {
+		this->limits = limits;
+	}
+	//--------------------------------------------------------------------------
  	vector<vector<double>>Func1D::get_samples(const uint N)const {
 		
 		double arg = limits.get_lower();
