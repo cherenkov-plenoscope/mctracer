@@ -60,5 +60,7 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/PlenoscopeLixelStatisticsTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/HeaderBlockTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/OwnerShipTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ColorMapTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/FunctionMapTest.cpp
     PARENT_SCOPE
 )
