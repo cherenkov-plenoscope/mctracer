@@ -23,11 +23,6 @@ using std::vector;
 
 struct Scenery {
 
-    string name;
-    string filename;
-    string author;
-    string comment;
-
     Frame root;
 
     ColorMap colors;
