@@ -111,35 +111,3 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/Benchmarks")
 add_executable(mctBenchMark ./Benchmarks/benchmark.cpp ${TEST_BENCHMARK})
 target_link_libraries(mctBenchMark gtest gtest_main)
 target_link_libraries(mctBenchMark mct)
-
-#---------------------------------
-# HDF5
-#add_executable(mctH5Test Hdf5/examples/create.cpp)
-#target_link_libraries(mctH5Test mct)
-
-#-------------------------------------------------------------------------------
-# http://stackoverflow.com/questions/992068/building-a-python-shared-object-binding-with-cmake-which-depends-upon-external
-# http://www.swig.org/Doc1.3/Introduction.html#Introduction_build_system
-# This is a CMake example for Python
-
-#FIND_PACKAGE(SWIG REQUIRED)
-#INCLUDE(${SWIG_USE_FILE})
-#
-#FIND_PACKAGE(PythonLibs)
-#INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_PATH})
-#
-#INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
-#INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/Core)
-#INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/Cameras)
-#
-#
-#SET(CMAKE_SWIG_FLAGS "")
-#
-#SET_SOURCE_FILES_PROPERTIES("mctracer.i" PROPERTIES CPLUSPLUS ON)
-#SET_SOURCE_FILES_PROPERTIES("mctracer.i" PROPERTIES SWIG_FLAGS "")
-#
-#SWIG_ADD_MODULE(mctracer python "mctracer.i")
-#
-#SWIG_LINK_LIBRARIES(mctracer ${PYTHON_LIBRARIES})
-#SWIG_LINK_LIBRARIES(mctracer mct)
-#
