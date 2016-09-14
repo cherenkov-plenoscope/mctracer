@@ -13,7 +13,7 @@ FIXCHI  0.
 MAGNET 30.3 24.1
 ELMFLG  T   T
 MAXPRT  1
-TELFIL  "/home/sebastian/Desktop/ELMFLG_T_T.dat"
+TELFIL  "my_file.dat"
 PAROUT  F F
 TELESCOPE  0. 0. 0. 5500.0
 ATMOSPHERE 6 N
