@@ -1,6 +1,6 @@
 <calibration>
     <photon_blocks 
-        number_of_blocks="25"
+        number_of_blocks="125"
         photons_per_block="1e6"
     />
 </calibration>
