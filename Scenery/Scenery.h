@@ -27,7 +27,9 @@ struct Scenery {
 
     ColorMap colors;
     FunctionMap functions;
-    
+
     Scenery();
+
+    static Scenery void_scenery;
 };
 #endif // __SCENERY_H_INCLUDED__
