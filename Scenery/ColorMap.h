@@ -14,9 +14,10 @@
 using std::string;
 using std::map;
 
+#include "ResourceMap.h"
 #include "Core/Color.h"
 
-class ColorMap {
+class ColorMap: public ResourceMap {
 public:
     map<string, Color> colors;
 
@@ -27,14 +28,5 @@ private:
 
     void assert_has(const string key)const;
     void assert_not_in_use_yet(const string key);
-public:
-
-    class NoSuchKey: public TracerException{
-        using TracerException::TracerException;
-    };
-
-    class KeyAlreadyInUse: public TracerException{
-        using TracerException::TracerException;
-    };
 };
 #endif // __COLORMAP_H_INCLUDED__
