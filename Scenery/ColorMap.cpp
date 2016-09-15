@@ -6,7 +6,7 @@ bool ColorMap::has(const string key)const {
     return colors.find(key) != colors.end();
 }
 //------------------------------------------------------------------------------
-const Color* ColorMap::get(const string key)const {
+Color* ColorMap::get(const string key) {
     assert_has(key);
     return &colors.find(key)->second;
 }

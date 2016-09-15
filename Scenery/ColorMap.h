@@ -22,7 +22,7 @@ public:
     map<string, Color> colors;
 
     bool has(const string key)const;
-    const Color* get(const string key)const;
+    Color* get(const string key);
     void add(const string key, const Color color);
 private:
 
