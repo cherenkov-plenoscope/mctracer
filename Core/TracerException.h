@@ -10,22 +10,23 @@
 // included dependencies
 #include <iostream>
 #include <stdexcept>
+using std::string;
 
 //------------------------------------------------------------------------------
 class TracerException :public std::exception{
 protected:
 
-	std::string message = "";
-	const char* str2chararray(const std::string text)const;
+	string message = "";
+	const char* str2chararray(const string text)const;
 	TracerException();
 public:
 
-	TracerException(std::string message);
+	TracerException(const string message);
 	const char * what () const throw();
-	static const std::string compile_time;
+	static const string compile_time;
 private:
 
-	std::string get_full_message_print()const;
-	static std::string get_compile_time();
+	string get_full_message_print()const;
+	static string get_compile_time();
 };
 #endif // __TRACEREXCEPTION_H_INCLUDED__
