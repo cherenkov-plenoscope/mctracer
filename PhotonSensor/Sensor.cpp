@@ -105,13 +105,13 @@ namespace PhotonSensor {
 		return hypot(x_std_dev(), y_std_dev());		
 	}
 
-	std::vector<std::vector<double>> Sensor::get_arrival_table()const {
+	vector<vector<double>> Sensor::get_arrival_table()const {
 
-		std::vector<std::vector<double>> output_table;
+		vector<vector<double>> output_table;
 
 		for(photon_info ph: arrival_table) {
 
-			std::vector<double> output_row;
+			vector<double> output_row;
 			output_row.push_back(ph.x_intersect);
 			output_row.push_back(ph.y_intersect);
 			output_row.push_back(ph.theta_x);
@@ -125,7 +125,7 @@ namespace PhotonSensor {
 		return output_table;
 	}
 
-	std::string Sensor::get_arrival_table_header()const {
+	string Sensor::get_arrival_table_header()const {
 		std::stringstream header;
 		header << "x: [m], intersection on principal aperture plane\n";
 		header << "y: [m], intersection on principal aperture plane\n";
