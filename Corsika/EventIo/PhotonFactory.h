@@ -50,7 +50,7 @@ namespace EventIo {
 			Random::Generator *prng
 		);
 		bool passed_atmosphere()const;
-		Photon* get_photon();
+		Photon get_photon();
 		Vec3 causal_get_direction()const;
 		Vec3 intersection_with_xy_floor_plane()const;
 		double ray_parameter_for_production_point()const;

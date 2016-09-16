@@ -24,7 +24,7 @@ public:
 	BasicWrapper(const string path);
 	virtual ~BasicWrapper() {};
 	virtual bool has_still_photons_left()const=0;
-	virtual vector<Photon*>* next(Random::Generator* prng)=0;
+	virtual vector<Photon> next(Random::Generator* prng)=0;
 };
 
 #endif // __PhotonsReaderBasicWrapper_H_INCLUDED__ 

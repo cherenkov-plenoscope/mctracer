@@ -182,7 +182,7 @@ int main(int argc, char* argv[]) {
         //read_event.stop();
 
         //Time::StopWatch c2mct("corsika 2 mct photons");
-        vector<Photon*> photons;
+        vector<Photon> photons;
         uint photon_id = 0;
 
         for(const array<float, 8> &corsika_photon: event.photons) {
@@ -201,7 +201,6 @@ int main(int argc, char* argv[]) {
         //Time::StopWatch assign("assign photons to sensors");
         light_field_channels->clear_history();
         light_field_channels->assign_photons(&photons);
-        Photons::delete_photons(&photons);
 
         vector<vector<PipelinePhoton>> photon_pipelines = 
             get_photon_pipelines(light_field_channels);

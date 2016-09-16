@@ -124,8 +124,9 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 
 	// light source
 	uint number_of_photons_emitted = 1e4;
-    std::vector<Photon*>* photons = 
-	    Photons::Source::parallel_towards_z_from_xy_disc(0.125, number_of_photons_emitted);
+    vector<Photon> photons = Photons::Source::parallel_towards_z_from_xy_disc(
+    	0.125, 
+    	number_of_photons_emitted);
 
 	HomTra3 Trafo;
 	Trafo.set_transformation(
@@ -133,11 +134,11 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 		Vec3(0.0, 0.0 ,1.0)
 	);
 
-	Photons::transform_all_photons(Trafo, photons);
+	Photons::transform_all_photons(Trafo, &photons);
 
 	// photon propagation
 	Photons::propagate_photons_in_scenery_with_settings(
-		photons, 
+		&photons, 
 		lens_test_bench_environment.world_geometry, 
 		lens_test_bench_environment.propagation_options,
 		&prng
@@ -145,9 +146,7 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 
 	// detect photons in sensors
 	sensor_list.clear_history();
-	sensor_list.assign_photons(photons);
-
-	Photons::delete_photons(photons);
+	sensor_list.assign_photons(&photons);
 
 	EXPECT_NEAR(1.5e-3, sensor->point_spread_std_dev(), 1e-3);
 

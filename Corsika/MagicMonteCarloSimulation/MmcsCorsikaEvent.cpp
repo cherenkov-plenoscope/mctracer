@@ -10,7 +10,7 @@ MmcsCorsikaEvent::MmcsCorsikaEvent(
 	this->event_end	= event_end;
 }
 //------------------------------------------------------------------------------
-std::vector<Photon*>* MmcsCorsikaEvent::use_once_more_and_get_photons() {
+vector<Photon> MmcsCorsikaEvent::use_once_more_and_get_photons() {
 // CORSIKA Coordinate system
 // The coordinates in CORSIKA are defined with respect to a Cartesian coordinate
 // system with the positive x-axis pointing to the magnetic north, the positive
@@ -23,11 +23,11 @@ std::vector<Photon*>* MmcsCorsikaEvent::use_once_more_and_get_photons() {
 // positive x-axis and the x-y-component of the particle momentum vector 
 // (i.e. with respect to north) proceeding counterclockwise.
 	
-	std::vector<Photon*> *photon_bunch = new std::vector<Photon*>;
-	photon_bunch->reserve(photon_data.number_of_photons());
+	vector<Photon> photon_bunch;
+	photon_bunch.reserve(photon_data.number_of_photons());
 
 	for(uint i=0; i<photon_data.number_of_photons(); i++)
-		photon_bunch->push_back(get_mctracer_photon(i));
+		photon_bunch.push_back(get_mctracer_photon(i));
 
 	reuse_counter++;
 	return photon_bunch;
@@ -38,7 +38,7 @@ bool MmcsCorsikaEvent::can_be_reused_again()const {
 		event_header.x_coordinate_of_core_location_for_scattered_events_in_cm.size();
 }
 //------------------------------------------------------------------------------
-Photon* MmcsCorsikaEvent::get_mctracer_photon(const uint i)const {
+Photon MmcsCorsikaEvent::get_mctracer_photon(const uint i)const {
 
 	Vec3 causal_dir = causal_direction(i);
 
@@ -55,11 +55,8 @@ Photon* MmcsCorsikaEvent::get_mctracer_photon(const uint i)const {
 		ray_running_upwards_from_ground_to_pos_of_production.
 		get_pos_at(ray_parameter_for_production_height);
 
-	Photon* cherenkov_photon = 
-		new Photon(causal_support, causal_dir, wavelength_in_m(i));	
-
-	cherenkov_photon->set_simulation_truth_id(i);
-
+	Photon cherenkov_photon(causal_support, causal_dir, wavelength_in_m(i));	
+	cherenkov_photon.set_simulation_truth_id(i);
 	return cherenkov_photon;
 }
 //------------------------------------------------------------------------------

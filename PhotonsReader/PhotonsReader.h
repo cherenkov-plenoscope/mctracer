@@ -27,6 +27,6 @@ public:
 	PhotonsReader(const string path);
 	~PhotonsReader();
 	bool has_still_photons_left()const;
-	vector<Photon*>* next(Random::Generator* prng);
+	vector<Photon> next(Random::Generator* prng);
 };
 #endif // __PhotonsReader_H_INCLUDED__ 

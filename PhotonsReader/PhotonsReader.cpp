@@ -53,6 +53,6 @@ bool PhotonsReader::has_still_photons_left()const {
     return photons_from_file->has_still_photons_left();
 }
 //------------------------------------------------------------------------------
-vector<Photon*>* PhotonsReader::next(Random::Generator* prng) {
+vector<Photon> PhotonsReader::next(Random::Generator* prng) {
     return photons_from_file->next(prng);
 }

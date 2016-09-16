@@ -4,9 +4,9 @@ using StringTools::is_equal;
 namespace Xml {
 	namespace InternalPhotonSource {
 //------------------------------------------------------------------------------
-vector<Photon*>* node2photons(const Xml::Node &node) {
+vector<Photon> node2photons(const Xml::Node &node) {
 	// this is the lightsource node
-	vector<Photon*>* photons;
+	vector<Photon> photons;
 	std::stringstream info;
 	try{
 
@@ -34,27 +34,27 @@ vector<Photon*>* node2photons(const Xml::Node &node) {
 	return photons;
 }
 //------------------------------------------------------------------------------
-vector<Photon*>* pointsource(const Xml::Node &node) {
+vector<Photon> pointsource(const Xml::Node &node) {
 	
-	vector<Photon*>* photons = Photons::Source::point_like_towards_z_opening_angle_num_photons(
+	vector<Photon> photons = Photons::Source::point_like_towards_z_opening_angle_num_photons(
 		Deg2Rad(node.attribute2double("opening_angle_in_deg")),
 		int(node.attribute2double("number_of_photons"))
 	);
-	transform(node, photons);
+	transform(node, &photons);
 	return photons;
 }
 //------------------------------------------------------------------------------
-vector<Photon*>* parallel_disc(const Xml::Node &node) {
+vector<Photon> parallel_disc(const Xml::Node &node) {
 	
-	vector<Photon*>* photons = Photons::Source::parallel_towards_z_from_xy_disc(
+	vector<Photon> photons = Photons::Source::parallel_towards_z_from_xy_disc(
 		node.attribute2double("disc_radius_in_m"),
 		int(node.attribute2double("number_of_photons"))
 	);
-	transform(node, photons);
+	transform(node, &photons);
 	return photons;
 }
 //------------------------------------------------------------------------------
-void transform(const Xml::Node &node, vector<Photon*>* photons) {
+void transform(const Xml::Node &node, vector<Photon> *photons) {
 	
 	Vec3 pos = node.attribute2Vec3("pos");
 	Tuple3 rot_deg = node.attribute2Tuple3("rot_in_deg");

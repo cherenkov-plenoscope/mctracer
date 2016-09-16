@@ -12,6 +12,8 @@
 #include <math.h>
 #include <sstream>
 #include "Core/Photon.h"
+using std::vector;
+using std::string;
 
 //=================================
 namespace PhotonSensor {
@@ -31,7 +33,7 @@ namespace PhotonSensor {
 		
 		const Frame* sensor_frame;
 	public:
-		std::vector<photon_info> arrival_table;
+		vector<photon_info> arrival_table;
 
 		uint id;
 		Sensor(uint _id, const Frame* _sensor_frame);
@@ -48,8 +50,8 @@ namespace PhotonSensor {
 
 		double arrival_time_mean()const;
 
-		std::vector<std::vector<double>> get_arrival_table()const;
-		std::string get_arrival_table_header()const;
+		vector<vector<double>> get_arrival_table()const;
+		string get_arrival_table_header()const;
 
 	    struct SensorSensorByIdCompare {
 			bool operator()(const Sensor* l, const Sensor* r) {

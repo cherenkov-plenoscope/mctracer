@@ -23,7 +23,7 @@ bool PhotonFactory::passed_atmosphere()const {
     return passed_through_atmosphere_flag;
 }
 //------------------------------------------------------------------------------
-Photon* PhotonFactory::get_photon() {
+Photon PhotonFactory::get_photon() {
 
     Vec3 causal_dir = causal_get_direction();
 
@@ -36,11 +36,8 @@ Photon* PhotonFactory::get_photon() {
         ray_running_upwards_from_ground_to_pos_of_production.
         get_pos_at(ray_parameter_for_production_point());
 
-    Photon* cherenkov_photon = 
-        new Photon(causal_support, causal_dir, wavelength_in_m());    
-
-    cherenkov_photon->set_simulation_truth_id(id);
-
+    Photon cherenkov_photon(causal_support, causal_dir, wavelength_in_m());    
+    cherenkov_photon.set_simulation_truth_id(id);
     return cherenkov_photon;
 }
 //------------------------------------------------------------------------------
