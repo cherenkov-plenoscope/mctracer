@@ -45,31 +45,15 @@ Photon* PhotonFactory::get_photon() {
 }
 //------------------------------------------------------------------------------
 Vec3 PhotonFactory::causal_get_direction()const {
-
-    const double z = sqrt(
-        1.0 -
-        corsika_photon[x_dir_cos_idx]*
-        corsika_photon[x_dir_cos_idx] -
-        corsika_photon[y_dir_cos_idx]*
-        corsika_photon[y_dir_cos_idx]
-    );
-
-    Vec3 causal_dir(
-        corsika_photon[x_dir_cos_idx],
-        corsika_photon[y_dir_cos_idx],
-        z
-    );  
-
+    const double cos_x = corsika_photon[x_dir_cos_idx];
+    const double cos_y = corsika_photon[y_dir_cos_idx];
+    const double z = sqrt(1.0 -cos_x*cos_x -cos_y*cos_y);
+    Vec3 causal_dir(cos_x, cos_y, z);  
     return causal_dir*-1.0;
 }
 //------------------------------------------------------------------------------
 Vec3 PhotonFactory::intersection_with_xy_floor_plane()const {
-    
-    return Vec3( 
-        x_pos_on_xy_plane_in_m(), 
-        y_pos_on_xy_plane_in_m(), 
-        0.0
-    );
+    return Vec3(x_pos_on_xy_plane_in_m(), y_pos_on_xy_plane_in_m(), 0.0);
 }
 //------------------------------------------------------------------------------
 double PhotonFactory::production_distance_offset()const {
