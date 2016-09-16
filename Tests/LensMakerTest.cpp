@@ -73,8 +73,8 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
     Random::Mt19937 prng(Random::zero_seed);
 
     uint number_of_photons_per_run = 1000;
-    std::vector<double> sigma_psf_vs_image_sensor_distance;
-    std::vector<double> image_sensor_distances;
+    vector<double> sigma_psf_vs_image_sensor_distance;
+    vector<double> image_sensor_distances;
 	for(
 		double offset=-cfg.focal_length*0.3;
 		offset<cfg.focal_length*0.3;
@@ -106,13 +106,13 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 	    sensor_disc->set_inner_color(sensor_disc_col);
 	    sensor_disc->set_radius(cfg.aperture_radius*0.85);
 	    PhotonSensor::Sensor sensor(0, sensor_disc);
-	    std::vector<PhotonSensor::Sensor*> sensor_vec = {&sensor};
+	    vector<PhotonSensor::Sensor*> sensor_vec = {&sensor};
 	    PhotonSensors::Sensors sensor_list(sensor_vec);
 
 	    optical_table.init_tree_based_on_mother_child_relations();
 
 	    // light source
-	    std::vector<Photon*>* photons = 
+	    vector<Photon> photons = 
 		    Photons::Source::parallel_towards_z_from_xy_disc(
 				cfg.aperture_radius*0.85, // 0.85 inner hex radius
 				number_of_photons_per_run
@@ -124,7 +124,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 			Vec3(0.0, 0.0 ,2.0)
 		);
 
-		Photons::transform_all_photons(Trafo, photons);
+		Photons::transform_all_photons(Trafo, &photons);
 
 		// propagation settings
 		TracerSettings settings;	
@@ -132,17 +132,15 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 
 		// photon propagation
 		Photons::propagate_photons_in_scenery_with_settings(
-			photons, &optical_table, &settings, &prng
+			&photons, &optical_table, &settings, &prng
 		);
 
 		// detect photons in sensors
 		sensor_list.clear_history();
-		sensor_list.assign_photons(photons);
+		sensor_list.assign_photons(&photons);
 
 		sigma_psf_vs_image_sensor_distance.push_back(sensor.point_spread_std_dev());
 		image_sensor_distances.push_back(image_sensor_disc_distance);
-
-		Photons::delete_photons(photons);
 
 		//FreeOrbitCamera free(&optical_table, &settings);
 	}

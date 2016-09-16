@@ -22,6 +22,6 @@ public:
 
 	MmcsCorsikaIoWrapper(const string path);
 	bool has_still_photons_left()const;
-	vector<Photon*>* next(Random::Generator* prng);	
+	vector<Photon> next(Random::Generator* prng);	
 };
 #endif // __PhotonsReaderMmcsCorsikaIoWrapper_H_INCLUDED__ 

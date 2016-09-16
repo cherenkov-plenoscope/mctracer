@@ -14,10 +14,10 @@ using std::vector;
 //------------------------------------------------------------------------------
 namespace Xml {
 	namespace InternalPhotonSource {
-		vector<Photon*>* node2photons(const Xml::Node &node);
-		vector<Photon*>* pointsource(const Xml::Node &node);
-		vector<Photon*>* parallel_disc(const Xml::Node &node);
-		void transform(const Xml::Node &node, vector<Photon*>* photons);
+		vector<Photon> node2photons(const Xml::Node &node);
+		vector<Photon> pointsource(const Xml::Node &node);
+		vector<Photon> parallel_disc(const Xml::Node &node);
+		void transform(const Xml::Node &node, vector<Photon> *photons);
 
 		class UnkownTypeOfLightSource : public TracerException {
 			using TracerException::TracerException;

@@ -159,7 +159,7 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat_run_time) {
 
         Random::Mt19937 prng;
 
-        vector<Photon*> photons;
+        vector<Photon> photons;
         uint id = 0;
         for(array<float, 8> corsika_photon : event.photons) {
             

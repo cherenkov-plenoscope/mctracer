@@ -24,7 +24,7 @@ bool MmcsCorsikaIoWrapper::has_still_photons_left()const {
 	}
 }
 //------------------------------------------------------------------------------
-vector<Photon*>* MmcsCorsikaIoWrapper::next(Random::Generator* prng) {
+vector<Photon> MmcsCorsikaIoWrapper::next(Random::Generator* prng) {
 	return event.use_once_more_and_get_photons();
 }
 //------------------------------------------------------------------------------

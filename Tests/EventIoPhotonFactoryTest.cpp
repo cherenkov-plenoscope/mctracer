@@ -29,7 +29,7 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
 
                     EventIo::PhotonFactory cpf(corsika_photon, id, &fake_prng);
 
-                    vector<Photon*> photons;
+                    vector<Photon> photons;
                     photons.push_back(cpf.get_photon());
 
                     // propagate mctracer photons down to ground
@@ -45,7 +45,7 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
                     ground->set_radius(1e3);
 
                     PhotonSensor::Sensor sensor(ground_sensor_id, ground);
-                    std::vector<PhotonSensor::Sensor*> sensor_vec = {&sensor};
+                    vector<PhotonSensor::Sensor*> sensor_vec = {&sensor};
                     PhotonSensors::Sensors sensor_list(sensor_vec);
 
                     world.init_tree_based_on_mother_child_relations();
@@ -84,21 +84,17 @@ TEST_F(EventIoPhotonFactoryTest, convert_photons) {
     Random::FakeConstant prng(0.0);
 
     EventIo::PhotonFactory cpf(corsika_photon, id, &prng);
-    
-    Photon* ph;
 
-    ASSERT_TRUE(cpf.passed_atmosphere());
-    	
-    ph = cpf.get_photon();
+    ASSERT_TRUE(cpf.passed_atmosphere());	
+    Photon ph = cpf.get_photon();
 
-    EXPECT_EQ(id, ph->get_simulation_truth_id());
-    EXPECT_NEAR(433e-9, ph->get_wavelength(), 1e-9);
+    EXPECT_EQ(id, ph.get_simulation_truth_id());
+    EXPECT_NEAR(433e-9, ph.get_wavelength(), 1e-9);
 
     // since the x,y angles are zero, the support vector can be tested
-    EXPECT_NEAR(0.012, ph->get_support().x(), 1e-9);
-    EXPECT_NEAR(0.034, ph->get_support().y(), 1e-9);
-    EXPECT_NEAR(1e3, ph->get_support().z(), 1e-9);
-    delete ph;
+    EXPECT_NEAR(0.012, ph.get_support().x(), 1e-9);
+    EXPECT_NEAR(0.034, ph.get_support().y(), 1e-9);
+    EXPECT_NEAR(1e3, ph.get_support().z(), 1e-9);
 }
 //------------------------------------------------------------------------------
 TEST_F(EventIoPhotonFactoryTest, execute_atmospheric_absorption) {
@@ -250,7 +246,7 @@ TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         
         vector<float> relative_arrival_times_in_corsika_file;
 
-        vector<Photon*> photons;
+        vector<Photon> photons;
 
         Random::Mt19937 prng(Random::zero_seed);
 

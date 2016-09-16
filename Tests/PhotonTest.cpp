@@ -215,7 +215,7 @@ TEST_F(PhotonTest, Reflections){
 
     Random::Mt19937 prng(Random::zero_seed);
 
-    std::vector<Photon*> photons;
+    vector<Photon> photons;
 
     double num_phot = 1e4;
     for(int i=1; i<=num_phot; i++) {
@@ -223,9 +223,8 @@ TEST_F(PhotonTest, Reflections){
         
         double wavelength = double(i)/num_phot*100e-9+250e-9;
 
-        Photon *P;
-        P = new Photon(Support, direction, wavelength);
-        P->set_simulation_truth_id(i);
+        Photon P(Support, direction, wavelength);
+        P.set_simulation_truth_id(i);
         photons.push_back(P);
     }
 
@@ -243,8 +242,6 @@ TEST_F(PhotonTest, Reflections){
         ph_reached_sensor/ph_emitted,
         2e-2
     );
-
-    Photons::delete_photons(&photons); 
 }
 //------------------------------------------------------------------------------
 TEST_F(PhotonTest, Refraction){
@@ -302,14 +299,13 @@ TEST_F(PhotonTest, Refraction){
     double wavelength = 433.0e-9;
 
     Random::Mt19937 prng(Random::zero_seed);
-    std::vector<Photon*> photons;
+    vector<Photon> photons;
 
     double num_phot = 1e4;
     for(int i=1; i<=num_phot; i++) {
         
-        Photon *P;
-        P = new Photon(Vec3::null, Vec3::unit_z, wavelength);
-        P->set_simulation_truth_id(i);
+        Photon P(Vec3::null, Vec3::unit_z, wavelength);
+        P.set_simulation_truth_id(i);
         photons.push_back(P);
     }
 
@@ -334,8 +330,6 @@ TEST_F(PhotonTest, Refraction){
         absorber_sensor.arrival_time_mean(),
         1e-10
     );
-
-    Photons::delete_photons(&photons);
 }
 //------------------------------------------------------------------------------
 TEST_F(PhotonTest, absorbtion_in_medium){
@@ -398,14 +392,13 @@ TEST_F(PhotonTest, absorbtion_in_medium){
     //-----------send Photons----------------------
     double wavelength = 433.0e-9;
     Random::Mt19937 prng(Random::zero_seed);
-    std::vector<Photon*> photons;
+    std::vector<Photon> photons;
 
     double num_phot = 1e4;
     for(int i=1; i<=num_phot; i++) {
         
-        Photon *P;
-        P = new Photon(Vec3::null, Vec3::unit_z, wavelength);
-        P->set_simulation_truth_id(i);
+        Photon P(Vec3::null, Vec3::unit_z, wavelength);
+        P.set_simulation_truth_id(i);
         photons.push_back(P);
     }
 
@@ -420,6 +413,4 @@ TEST_F(PhotonTest, absorbtion_in_medium){
         double(collector_sensor.get_arrival_table().size())/double(num_phot),
         2e-2
     );
-
-    Photons::delete_photons(&photons);
 }

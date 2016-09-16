@@ -9,18 +9,18 @@ using std::vector;
 
 namespace Photons {
 	//--------------------------------------------------------------------------
-	string get_print(const vector<Photon*> *photons) {
+	string get_print(const vector<Photon> *photons) {
 		stringstream out;
 		out << "Photon bunble "<< photons->size() << "\n";
-		for(Photon* photon : *photons)
-			out << photon->get_print() << "\n";
+		for(const Photon &photon : *photons)
+			out << photon.get_print() << "\n";
 		return out.str();	
 	}	
 	//--------------------------------------------------------------------------
 	// propagation
 	//--------------------------------------------------------------------------
 	void propagate_photons_in_scenery_with_settings(
-		vector<Photon*> *photons,
+		vector<Photon> *photons,
 		const Frame* world, 
 		const TracerSettings* settings,
 		Random::Generator* prng
@@ -32,7 +32,7 @@ namespace Photons {
 	}	
 	//--------------------------------------------------------------------------
 	void propagate_photons_using_single_thread(
-		vector<Photon*> *photons,
+		vector<Photon> *photons,
 		const Frame* world, 
 		const TracerSettings* settings,
 		Random::Generator* prng
@@ -43,11 +43,11 @@ namespace Photons {
 		env.random_engine = prng;
 
 		for(uint i = 0; i<photons->size(); i++ )
-			PhotonAndFrame::Propagator(photons->at(i), env);
+			PhotonAndFrame::Propagator(&photons->at(i), env);
 	}
 	//--------------------------------------------------------------------------
 	void propagate_photons_using_multi_thread(
-		vector<Photon*> *photons,
+		vector<Photon> *photons,
 		const Frame* world, 
 		const TracerSettings* settings
 	) {
@@ -74,7 +74,7 @@ namespace Photons {
 				try {
 					ray_counter++;
 					PhotonAndFrame::Propagator(
-						photons->at(i), 
+						&photons->at(i), 
 						env_for_this_thread_only
 					);
 				}catch(std::exception &error) {
@@ -107,20 +107,20 @@ namespace Photons {
 	//--------------------------------------------------------------------------
 	// In Out to raw matrix/table -> AsciiIO can read/write this to text files
 	//--------------------------------------------------------------------------
-	vector<Photon*>* raw_matrix2photons(vector<vector<double>> raw_matrix) {
-		vector<Photon*> *photons = new vector<Photon*>;
+	vector<Photon> raw_matrix2photons(vector<vector<double>> raw_matrix) {
+		vector<Photon> photons;
 
 		for(vector<double> raw_row : raw_matrix)
-			photons->push_back(raw_row2photon(raw_row));
+			photons.push_back(raw_row2photon(raw_row));
 
 		return photons;
 	}
 	//--------------------------------------------------------------------------
-	vector<vector<double>> photons2raw_matrix(vector<Photon*> *photons) {
+	vector<vector<double>> photons2raw_matrix(vector<Photon> *photons) {
 		vector<vector<double>> raw_matrix;
 
-		for(Photon* ph : *photons)
-			raw_matrix.push_back(photon2raw_row(ph));
+		for(Photon &ph : *photons)
+			raw_matrix.push_back(photon2raw_row(&ph));
 
 		return raw_matrix;		
 	}
@@ -144,7 +144,7 @@ namespace Photons {
 		return raw_row;
 	}
 	//--------------------------------------------------------------------------
-	Photon* raw_row2photon(vector<double> &raw_row) {
+	Photon raw_row2photon(vector<double> &raw_row) {
 
 		assert_raw_row_size_matches_photon(raw_row);
 		const double id = raw_row[0];
@@ -152,8 +152,8 @@ namespace Photons {
 		const Vec3 direction(raw_row[4], raw_row[5], raw_row[6]);
 		const double wavelength = raw_row[7];
 
-		Photon* ph = new Photon(support, direction, wavelength);
-		ph->set_simulation_truth_id(id);
+		Photon ph = Photon(support, direction, wavelength);
+		ph.set_simulation_truth_id(id);
 		return ph;
 	}
 	//--------------------------------------------------------------------------
@@ -171,66 +171,57 @@ namespace Photons {
 	//--------------------------------------------------------------------------
 	namespace Source {
 
-		vector<Photon*> *point_like_towards_z_opening_angle_num_photons(
+		vector<Photon> point_like_towards_z_opening_angle_num_photons(
 			const double opening_angle,
 			const uint number_of_photons
 		) {
-			vector<Photon*>* photons = new vector<Photon*>;
-			photons->reserve(number_of_photons);
-
+			vector<Photon> photons;
+			photons.reserve(number_of_photons);
 			const Vec3 support = Vec3::null;
 
 			Random::Mt19937 prng(0);
 
-			Vec3 direction;
 			for(uint i=0; i<number_of_photons; i++) {
-
-				direction = prng.get_point_on_unitsphere_within_polar_distance(
-					opening_angle
-				);
-
-				Photon* photon = new Photon(support, direction, 433e-9);
-				photons->push_back(photon);
+				Vec3 direction = prng.get_point_on_unitsphere_within_polar_distance(
+					opening_angle);
+				Photon ph = Photon(support, direction, 433e-9);
+				ph.set_simulation_truth_id(i);
+				photons.push_back(ph);
 			}
 			return photons;
 		}
 		//----------------------------------------------------------------------
-		vector<Photon*> *parallel_towards_z_from_xy_disc(
+		vector<Photon> parallel_towards_z_from_xy_disc(
 			const double disc_radius,
 			const uint number_of_photons
 		) {
-			vector<Photon*>* photons = new vector<Photon*>;
-			photons->reserve(number_of_photons);
-
+			vector<Photon> photons;
+			photons.reserve(number_of_photons);
 			const Vec3 direction = Vec3::unit_z;
 
 			Random::Mt19937 prng(0);
 
-			Vec3 support;
 			for(uint i=0; i<number_of_photons; i++) {
-
-				support = prng.get_point_on_xy_disc_within_radius(disc_radius);
-				Photon* photon = new Photon(support, direction, 433e-9);
-				photons->push_back(photon);
+				Vec3 support = prng.get_point_on_xy_disc_within_radius(
+					disc_radius);
+				Photon ph(support, direction, 433e-9);
+				ph.set_simulation_truth_id(i);
+				photons.push_back(ph);
 			}
-
 			return photons;
 		}
 	}
 	//--------------------------------------------------------------------------
 	// transformations, move and rotate photons
 	//--------------------------------------------------------------------------
-	void transform_all_photons(
-		const HomTra3 Trafo, 
-		vector<Photon*> *photons
-	) {
-		for(Photon* photon : *photons)
-			photon->transform(&Trafo);
+	void transform_all_photons(const HomTra3 Trafo, vector<Photon> *photons) {
+		for(size_t i=0; i<photons->size(); i++)
+			photons->at(i).transform(&Trafo);
 	}
 	//--------------------------------------------------------------------------
 	void transform_all_photons_multi_thread(
 		const HomTra3 Trafo, 
-		vector<Photon*> *photons
+		vector<Photon> *photons
 	) {
 		uint i;
 		int HadCatch = 0;
@@ -239,7 +230,7 @@ namespace Photons {
 			#pragma omp for schedule(dynamic) private(i) 
 			for(i=0; i<photons->size(); i++) {
 				try{
-					photons->at(i)->transform(&Trafo);
+					photons->at(i).transform(&Trafo);
 				}catch(std::exception &error) {
 					HadCatch++;
 					std::cerr << error.what(); 
@@ -255,12 +246,5 @@ namespace Photons {
 			info << "Cought exception during multithread transformation.\n";
 			throw(TracerException(info.str()));
 		}
-	}
-	//--------------------------------------------------------------------------
-	// delete all history
-	//--------------------------------------------------------------------------
-	void delete_photons(vector<Photon*> *photons) {
-		for(uint i=0; i<photons->size(); i++)
-			delete photons->at(i);
 	}
 }

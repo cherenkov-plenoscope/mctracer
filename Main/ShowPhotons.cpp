@@ -100,7 +100,7 @@ int main(int argc, char* argv[]) {
         uint id = 0;
         for(array<float, 8> corsika_photon : event.photons) {
             
-            vector<Photon*> photons;
+            vector<Photon> photons;
             EventIo::PhotonFactory cpf(corsika_photon, id++, &prng);
 
             if(cpf.passed_atmosphere()) {
@@ -111,14 +111,13 @@ int main(int argc, char* argv[]) {
                     &photons, &world, &settings, &prng
                 );
 
-                for(Photon* ph: photons) {
-                    TrajectoryFactory traj(ph);
+                for(const Photon &ph: photons) {
+                    TrajectoryFactory traj(&ph);
                     traj.append_trajectory_to(&world);
                     world.init_tree_based_on_mother_child_relations();
                     free_orb.continue_with_new_scenery_and_settings(&world, &settings);
                     traj.erase_trajectory_from(&world);
                 }
-                Photons::delete_photons(&photons);
             }
         }
     }

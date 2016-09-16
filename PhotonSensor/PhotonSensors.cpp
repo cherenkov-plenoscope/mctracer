@@ -66,9 +66,9 @@ void Sensors::assign_photon(const Photon* photon) {
         finder.get_sensor()->assign_photon_to_this_sensor(photon);
 }
 //------------------------------------------------------------------------------
-void Sensors::assign_photons(const vector<Photon*> *photons) {
-	for(Photon* photon : *photons) 
-		assign_photon(photon);
+void Sensors::assign_photons(const vector<Photon> *photons) {
+	for(const Photon &photon : *photons) 
+		assign_photon(&photon);
 }
 //------------------------------------------------------------------------------
 void Sensors::clear_history() {

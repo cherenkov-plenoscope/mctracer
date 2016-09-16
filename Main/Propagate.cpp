@@ -67,22 +67,23 @@ int main(int argc, char* argv[]) {
 	//--------------------------------------------------------------------------
 	// photon source
 	PhotonsReader photon_file(photon_path.path);
-	std::vector<Photon*>* photons;
 
 	uint event_counter = 1;
 	while(photon_file.has_still_photons_left()) {
+
+		vector<Photon> photons;
 		photons = photon_file.next(&prng);
 
 		//----------------------------------------------------------------------
 		// photon propagation
 		Photons::propagate_photons_in_scenery_with_settings(
-			photons, &scenery, &settings, &prng
+			&photons, &scenery, &settings, &prng
 		);
 
 		//----------------------------------------------------------------------
 		// detect photons in sensors
 		sensors.clear_history();
-		sensors.assign_photons(photons);
+		sensors.assign_photons(&photons);
 		//----------------------------------------------------------------------
 		// write each sensors to file
 		for(uint i=0; i<sensors.size(); i++) {
@@ -103,9 +104,6 @@ int main(int argc, char* argv[]) {
 				header.str()
 			);
 		}
-		//----------------------------------------------------------------------
-		Photons::delete_photons(photons);
-		delete photons;
 		event_counter++;
 	}
 	//--------------------------------------------------------------------------
