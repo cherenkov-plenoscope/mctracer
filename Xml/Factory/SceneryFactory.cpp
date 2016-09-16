@@ -11,6 +11,7 @@ namespace Xml {
 SceneryFactory::SceneryFactory(const string path): xml_path(path), xml_doc(path) {
 
     const Node root_node = xml_doc.node().first_child();
+    
     if(root_node.has_attribute("author"))
         author = root_node.attribute("author");
     if(root_node.has_attribute("comment"))
@@ -18,6 +19,14 @@ SceneryFactory::SceneryFactory(const string path): xml_path(path), xml_doc(path)
 
     telescopes = new TelescopeArrayControl();
     raw_sensors = new vector<PhotonSensor::Sensor*>;
+
+    scenery = &Scenery::void_scenery;
+}
+//------------------------------------------------------------------------------
+void SceneryFactory::append_to_frame_in_scenery(Frame* frame, Scenery* scenery) {
+    this->scenery = scenery;
+    const Node root_node = xml_doc.node().first_child();
+    make_geometry(frame, root_node);
 }
 //------------------------------------------------------------------------------
 void SceneryFactory::add_scenery_to_frame(Frame* frame) {
@@ -33,6 +42,8 @@ void SceneryFactory::make_geometry(Frame* mother, const Node node) {
     for(Node child=node.first_child(); child; child=child.next_child()) {
         if(is_equal(child.name(), "function"))
             functions.add(child);
+        else if(is_equal(child.name(), "color"))
+            add_color(child);
         else if(is_equal(child.name(), "frame"))
             make_geometry(add_Frame(mother, child), child);
         else if(is_equal(child.name(), "disc"))
@@ -334,9 +345,14 @@ const Function::Func1D* SceneryFactory::surface_refl(const Node node)const {
     return functions.by_name(node.child("set_surface").attribute("reflection_vs_wavelength"));
 }
 //------------------------------------------------------------------------------
-Color* SceneryFactory::surface_color(const Node node)const {
-    Color* color = new Color(node.child("set_surface").attribute2Color("color"));
-    return color;
+void SceneryFactory::add_color(const Node node) {
+    scenery->colors.add(
+        node.attribute("name"),
+        node.attribute2Color("rgb"));
+}
+//------------------------------------------------------------------------------
+const Color* SceneryFactory::surface_color(const Node node)const {
+    return scenery->colors.get(node.child("set_surface").attribute("color"));
 }
 //------------------------------------------------------------------------------
 PhotonSensors::Sensors SceneryFactory::sensors()const {
