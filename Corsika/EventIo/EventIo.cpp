@@ -128,19 +128,16 @@ array<float, 273> make_run_end_from_stream(istream& f) {
 }
 //------------------------------------------------------------------------------
 string make_input_card_from_stream(istream& f, const Header& head) {
-    char * input_card = new char[head.length+1];
-    f.read(input_card, head.length);
+    vector<char> input_card(head.length+1);
+    f.read(input_card.data(), head.length);
     input_card[head.length] = 0;
 
-    string foo;
+    string input_card_text;
 
-    for(size_t i=0; i<head.length; i++){
-        foo.push_back(input_card[i]);
-    }
+    for(size_t i=0; i<head.length; i++)
+        input_card_text.push_back(input_card[i]);
 
-    delete[] input_card;
-
-    return foo;
+    return input_card_text;
 }
 //------------------------------------------------------------------------------
 vector<TelPos> make_telescope_positions(istream& f, const Header& head) {
@@ -241,43 +238,37 @@ vector<array<float, 8>> make_photons_from_stream(istream& f) {
     BunchHeader b_head;
     f.read((char*)&b_head, sizeof(BunchHeader));
 
-    const int fields_per_photon = 8;
     const bool is_compact = bool(subhead.version/1000 == 1);
     const int element_size = is_compact? 2 : 4;
 
-    char *buf = new char[b_head.n_bunches * fields_per_photon * element_size];
-    f.read(buf, b_head.n_bunches* fields_per_photon * element_size);
+    vector<char> buff(b_head.n_bunches*8*element_size);
+    f.read(buff.data(), b_head.n_bunches*8*element_size);
 
-    vector<array<float, 8>> bunches;
-    bunches.resize(b_head.n_bunches);
-    int row_id = 0;
+    vector<array<float, 8>> bunches(b_head.n_bunches);
 
-    if(is_compact) {
-        for(auto row=bunches.begin(); row!=bunches.end(); row++, row_id++) {
-            for(size_t i=0; i<fields_per_photon; i++)
-                (*row)[i] = float(((int16_t*)buf)[row_id*8 + i]);
-        }                
-    }else{
-        for(auto row=bunches.begin(); row!=bunches.end(); row++, row_id++) {
-            for(size_t i=0; i<fields_per_photon; i++)
-                (*row)[i] = float(((float*)buf)[row_id*8 + i]);
-        }   
-    }
+    if(is_compact)
+        for(size_t row=0; row<bunches.size(); row++)
+            for(size_t field=0; field<8; field++)
+                bunches.at(row).at(field) = 
+                    float(((int16_t*)buff.data())[row*8 + field]);             
+    else
+        for(size_t row=0; row<bunches.size(); row++)
+            for(size_t field=0; field<8; field++)
+                bunches.at(row).at(field) = 
+                    float(((float*)buff.data())[row*8 + field]); 
 
-    if(is_compact) {
-        for(auto row=bunches.begin(); row!=bunches.end(); row++, row_id++) {
-            (*row)[0] *= 0.1;     
-            (*row)[1] *= 0.1;     
-            (*row)[2] /= 30000.;  
-            (*row)[3] /= 30000.;  
-            (*row)[4] *= 0.1;
-            (*row)[5] = pow(10, (*row)[5] * 0.001);  
-            (*row)[6] *= 0.01;    
-            //(*row)[7] *= 1.;
+    if(is_compact)
+        for(size_t row=0; row<bunches.size(); row++) {
+            bunches[row][0] *= 0.1;     
+            bunches[row][1] *= 0.1;     
+            bunches[row][2] /= 30000.;  
+            bunches[row][3] /= 30000.;  
+            bunches[row][4] *= 0.1;
+            bunches[row][5] = pow(10, bunches[row][5] * 0.001);  
+            bunches[row][6] *= 0.01;    
+            //bunches[row][7] *= 1.;
         }
-    }
 
-    delete[] buf;
     return bunches;    
 }
 //------------------------------------------------------------------------------
