@@ -3,19 +3,29 @@
 		<constant value="0.0" lower_limit="200e-9" upper_limit="1200e-9"/>
 	</function>
 
+	<color name="grass_green" rgb="[22,91,49]"/>
+	<color name="leaf_green" rgb="[25,200,0]"/>
+	<color name="wood_brown" rgb="[200,200,0]"/>
+
+	<disc>
+		<set_frame name="ground" pos="[0,0,0]" rot="[0,0,0]"/>
+		<set_surface reflection_vs_wavelength="zero" color="grass_green"/>
+		<set_disc radius="10.25"/>	
+	</disc>	
+
 	<frame>
-		<set_frame name="tree" pos="[0,0,0]" rot="[0,0,0]"/>	
+		<set_frame name="tree" pos="[5,5,-2]" rot="[0,0,0]"/>	
 		
 		<sphere>
-			<set_frame name="ball" pos="[0,0,1]" rot="[0,0,0]"/>
-			<set_surface reflection_vs_wavelength="zero" color="[25,200,0]"/>
-			<set_sphere radius="0.5"/>
+			<set_frame name="leaf_ball" pos="[0,0,3]" rot="[0,0,0]"/>
+			<set_surface reflection_vs_wavelength="zero" color="leaf_green"/>
+			<set_sphere radius="1.5"/>
 		</sphere>	
 
-		<disc>
-			<set_frame name="ground" pos="[0,0,0]" rot="[0,0,0]"/>
-			<set_surface reflection_vs_wavelength="zero" color="[200,200,0]"/>
-			<set_disc radius="10.25"/>	
-		</disc>		
+		<cylinder>
+			<set_frame name="pole" pos="[0,0,0]" rot="[0,0,0]"/>
+			<set_surface reflection_vs_wavelength="zero" color="wood_brown"/>
+			<set_cylinder radius="0.25" start_pos="[0,0,0]" end_pos="[0,0,1.5]"/>
+		</cylinder>
 	</frame>
 </scenery>
