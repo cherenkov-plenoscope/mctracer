@@ -39,7 +39,6 @@ namespace Xml {
 
         SceneryFactory(const string path);
         PhotonSensors::Sensors sensors()const;
-        void add_scenery_to_frame(Frame* frame);
         void append_to_frame_in_scenery(Frame* frame, Scenery* scenery);
     private:
 
@@ -66,38 +65,5 @@ namespace Xml {
 
         void add_color(const Node node);
     };
-
-/*    class SceneryFactory2 {
-    public:
-        PathTools::Path xml_path;
-        Document xml_doc;
-        Scenery* scenery;
-
-        SceneryFactory2(const string path);
-        PhotonSensors::Sensors sensors()const;
-        void append_to_frame_of_scenery(Frame* frame, Scenery* scenery);
-    private:
-
-        void make_geometry(Frame* mother, const Node node);
-        Frame* add_Frame(Frame* mother, const Node node);
-        Frame* add_Disc(Frame* mother, const Node node);
-        Frame* add_Sphere(Frame* mother, const Node node);
-        Frame* add_Plane(Frame* mother, const Node node);
-        Frame* add_HexPlane(Frame* mother, const Node node);
-        Frame* add_Cylinder(Frame* mother, const Node node);
-        Frame* add_Annulus(Frame* mother, const Node node);
-        Frame* add_BiConvexLensHex(Frame* mother, const Node node);
-        Frame* add_SphereCapWithHexagonalBound(Frame* mother, const Node node);
-        Frame* add_SphereCapWithRectangularBound(Frame* mother, const Node node);
-        Frame* add_Triangle(Frame* mother, const Node node);
-        Frame* add_SegmentedReflector(Frame* mother, const Node node);
-        Frame* add_STL(Frame* mother, const Node node);
-        Frame* add_light_field_sensor(Frame* mother, const Node node);
-
-        Color* surface_color(const Node node)const;
-        const Function::Func1D* surface_refl(const Node node)const;
-        void add_to_sensors_if_sensitive(Frame* frame, const Node node);
-        void add_to_array_if_telescope(Frame* frame, const Node node);
-    };*/
 }//Xml
 #endif // __SceneryFactory_H_INCLUDED__ 

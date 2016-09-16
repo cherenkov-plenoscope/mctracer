@@ -29,11 +29,6 @@ void SceneryFactory::append_to_frame_in_scenery(Frame* frame, Scenery* scenery) 
     make_geometry(frame, root_node);
 }
 //------------------------------------------------------------------------------
-void SceneryFactory::add_scenery_to_frame(Frame* frame) {
-    const Node root_node = xml_doc.node().first_child();
-    make_geometry(frame, root_node);
-}
-//------------------------------------------------------------------------------
 void SceneryFactory::make_geometry(Frame* mother, const Node node) {
 
     add_to_sensors_if_sensitive(mother, node);

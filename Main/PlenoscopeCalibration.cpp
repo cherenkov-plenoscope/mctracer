@@ -5,6 +5,7 @@
 #include "Xml/Factory/SceneryFactory.h"
 #include "Plenoscope/Calibration/Calibrator.h"
 #include "Tools/HeaderBlock.h"
+#include "Scenery/Scenery.h"
 #include <experimental/filesystem>
 namespace fs = std::experimental::filesystem;
 using std::string;
@@ -73,10 +74,9 @@ int main(int argc, char* argv[]) {
 
     // SET UP SCENERY
     Xml::SceneryFactory scenery_factory(scenery_xml_path.path);
-    Frame scenery;
-    scenery.set_name_pos_rot("root", Vec3::null, Rot3::null);
-    scenery_factory.add_scenery_to_frame(&scenery);
-    scenery.init_tree_based_on_mother_child_relations();
+    Scenery scenery;
+    scenery_factory.append_to_frame_in_scenery(&scenery.root, &scenery);
+    scenery.root.init_tree_based_on_mother_child_relations();
 
     if(scenery_factory.plenoscopes.size() == 0)
         throw TracerException("There is no plenoscope in the scenery");
@@ -102,7 +102,7 @@ int main(int argc, char* argv[]) {
     Plenoscope::Calibration::Calibrator calibrator(
         calib_config, 
         pis,
-        &scenery
+        &scenery.root
     );
 
     // WRITE OUTPUT

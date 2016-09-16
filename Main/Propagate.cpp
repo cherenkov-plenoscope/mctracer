@@ -5,6 +5,7 @@
 #include "PhotonSensor/PhotonSensor.h"
 #include "Xml/Factory/TracerSettingsFab.h"
 #include "PhotonsReader/PhotonsReader.h"
+#include "Scenery/Scenery.h"
 using std::string;
 using std::cout;
 
@@ -54,12 +55,10 @@ int main(int argc, char* argv[]) {
 	
 	//--------------------------------------------------------------------------
 	// scenery
-
-	Frame scenery;
-	scenery.set_name_pos_rot("root", Vec3::null, Rot3::null);
 	Xml::SceneryFactory fab(scenery_path.path);
-	fab.add_scenery_to_frame(&scenery);
-	scenery.init_tree_based_on_mother_child_relations();
+	Scenery scenery;
+	fab.append_to_frame_in_scenery(&scenery.root, &scenery);
+	scenery.root.init_tree_based_on_mother_child_relations();
 	//--------------------------------------------------------------------------
 	// sensors in scenery
 	PhotonSensors::Sensors sensors = fab.sensors();
@@ -77,7 +76,7 @@ int main(int argc, char* argv[]) {
 		//----------------------------------------------------------------------
 		// photon propagation
 		Photons::propagate_photons_in_scenery_with_settings(
-			&photons, &scenery, &settings, &prng
+			&photons, &scenery.root, &settings, &prng
 		);
 
 		//----------------------------------------------------------------------

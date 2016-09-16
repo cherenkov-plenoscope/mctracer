@@ -9,6 +9,7 @@
 #include "Xml/Factory/TracerSettingsFab.h"
 #include "Cameras/FlyingCamera.h"
 #include "Scenery/TrajectoryFactory.h"
+#include "Scenery/Scenery.h"
 using std::string;
 using std::cout;
 
@@ -69,11 +70,10 @@ int main(int argc, char* argv[]) {
     Random::Mt19937 prng(settings.pseudo_random_number_seed);
 
     // load scenery
-    Frame world;
-    world.set_name_pos_rot("root", Vec3::null, Rot3::null);
+    Scenery scenery;
     Xml::SceneryFactory fab(scenery_path.path);
-    fab.add_scenery_to_frame(&world);
-    world.init_tree_based_on_mother_child_relations();
+    fab.append_to_frame_in_scenery(&scenery.root, &scenery);
+    scenery.root.init_tree_based_on_mother_child_relations();
     // init Telescope Array Control
     TelescopeArrayControl* array_ctrl = fab.telescopes;
 
@@ -83,7 +83,7 @@ int main(int argc, char* argv[]) {
     // propagate each event
     uint event_counter = 0;
 
-    FlyingCamera free_orb(&world, &settings);
+    FlyingCamera free_orb(&scenery.root, &settings);
 
     while(corsika_run.has_still_events_left()) {
 
@@ -106,17 +106,17 @@ int main(int argc, char* argv[]) {
             if(cpf.passed_atmosphere()) {
                 photons.push_back(cpf.get_photon());
             
-                // propagate the cherenkov photons in the world
+                // propagate the cherenkov photons in the scenery
                 Photons::propagate_photons_in_scenery_with_settings(
-                    &photons, &world, &settings, &prng
+                    &photons, &scenery.root, &settings, &prng
                 );
 
                 for(const Photon &ph: photons) {
                     TrajectoryFactory traj(&ph);
-                    traj.append_trajectory_to(&world);
-                    world.init_tree_based_on_mother_child_relations();
-                    free_orb.continue_with_new_scenery_and_settings(&world, &settings);
-                    traj.erase_trajectory_from(&world);
+                    traj.append_trajectory_to(&scenery.root);
+                    scenery.root.init_tree_based_on_mother_child_relations();
+                    free_orb.continue_with_new_scenery_and_settings(&scenery.root, &settings);
+                    traj.erase_trajectory_from(&scenery.root);
                 }
             }
         }

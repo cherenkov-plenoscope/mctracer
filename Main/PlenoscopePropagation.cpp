@@ -24,6 +24,7 @@
 #include "Tools/PathTools.h"
 #include "Tools/HeaderBlock.h"
 #include "Tools/Time.h"
+#include "Scenery/Scenery.h"
 #include <experimental/filesystem>
 namespace fs = std::experimental::filesystem;
 
@@ -101,10 +102,13 @@ int main(int argc, char* argv[]) {
     //--------------------------------------------------------------------------
     // SET UP SCENERY
     Xml::SceneryFactory scenery_factory(scenery_path.path);
-    Frame scenery;
-    scenery.set_name_pos_rot("root", Vec3::null, Rot3::null);
-    scenery_factory.add_scenery_to_frame(&scenery);
-    scenery.init_tree_based_on_mother_child_relations();
+
+    Scenery scenery;
+
+    //Frame scenery;
+    //scenery.set_name_pos_rot("root", Vec3::null, Rot3::null);
+    scenery_factory.append_to_frame_in_scenery(&scenery.root, &scenery);
+    scenery.root.init_tree_based_on_mother_child_relations();
     if(scenery_factory.plenoscopes.size() == 0)
         throw TracerException("There is no plenoscope in the scenery");
     else if(scenery_factory.plenoscopes.size() > 1)
@@ -194,7 +198,7 @@ int main(int argc, char* argv[]) {
 
         //Time::StopWatch prop("propagate photons");
         Photons::propagate_photons_in_scenery_with_settings(
-            &photons, &scenery, &settings, &prng
+            &photons, &scenery.root, &settings, &prng
         );
         //prop.stop();
 

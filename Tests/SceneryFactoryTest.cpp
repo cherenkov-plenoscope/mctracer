@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "Xml/Factory/SceneryFactory.h"
+#include "Scenery/Scenery.h"
 //#include "Cameras/FlyingCamera.h"
 using std::cout;
 using std::string;
@@ -8,12 +9,10 @@ class SceneryFactoryTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(SceneryFactoryTest, call_SceneryFactory) {
 
-    Frame frame;
-    frame.set_name_pos_rot("root", Vec3::null, Rot3::null);
+    Scenery scenery;
     Xml::SceneryFactory xml2frame("test_scenery/tree_epoch_20160320.xml");
-    xml2frame.add_scenery_to_frame(&frame);
-
-    EXPECT_EQ(frame.get_name(), "root");
+    xml2frame.append_to_frame_in_scenery(&scenery.root, &scenery);
+    EXPECT_EQ(scenery.root.get_name(), "root");
 
     //TracerSettings settings;
     //FlyingCamera free(xml2frame.scenery, &settings);
