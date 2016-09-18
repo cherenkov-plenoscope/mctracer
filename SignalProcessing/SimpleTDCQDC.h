@@ -15,7 +15,8 @@ using std::string;
 using std::vector;
 #include "ElectricPulse.h"
 
-namespace SimpleTdcQdc{
+namespace SignalProcessing {
+    namespace SimpleTdcQdc{
 
     struct TimeAndCount {
         double time;
@@ -54,5 +55,7 @@ namespace SimpleTdcQdc{
         const vector<TimeAndCount> &tacs,
         const string &path
     );
-}//TdC QdC
+    
+    }//SimpleTdcQdc
+}//SignalProcessing
 #endif // __SimpleTdcQdc_H_INCLUDED__

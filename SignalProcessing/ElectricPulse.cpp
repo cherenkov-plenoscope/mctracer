@@ -1,5 +1,6 @@
 #include "ElectricPulse.h"
 #include "Core/SimulationTruth.h"
+namespace SignalProcessing {
 //------------------------------------------------------------------------------
 ElectricPulse::ElectricPulse(): 
     simulation_truth_id(SimulationTruth::MCTRACER_DEFAULT) 
@@ -13,3 +14,4 @@ ElectricPulse::ElectricPulse(
     simulation_truth_id(_simulation_truth_id)
 {}
 //------------------------------------------------------------------------------
+}//SignalProcessing

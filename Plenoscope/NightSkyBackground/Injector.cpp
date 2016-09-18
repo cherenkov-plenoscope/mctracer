@@ -7,7 +7,7 @@ namespace Plenoscope {
 namespace NightSkyBackground {
 
 	void inject_nsb_into_photon_pipeline(
-		vector<vector<PipelinePhoton>> *photon_pipelines,
+		vector<vector<SignalProcessing::PipelinePhoton>> *photon_pipelines,
 		const double nsb_exposure_time,
 		const vector<Plenoscope::Calibration::LixelStatistic> *lixel_statistics,
 		const Light *nsb,
@@ -37,7 +37,7 @@ namespace NightSkyBackground {
 				number_cherenkov_photons += photon_pipelines->at(i).size();
 			}
 
-			for(PipelinePhoton ph: photon_pipelines->at(i))
+			for(SignalProcessing::PipelinePhoton ph: photon_pipelines->at(i))
 				arrival_times.push_back(ph.arrival_time);
 		}
 
@@ -94,7 +94,7 @@ namespace NightSkyBackground {
 			};
 
 			for(double nsb_arrival_time: nsb_arrival_times) {
-				PipelinePhoton nsb_ph(
+				SignalProcessing::PipelinePhoton nsb_ph(
 					nsb_arrival_time,
 					nsb->draw_wavelength(prng),
 					SimulationTruth::NIGHT_SKY_BACKGROUND

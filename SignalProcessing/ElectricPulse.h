@@ -8,6 +8,7 @@
 
 //=================================
 // included dependencies
+namespace SignalProcessing {
 
 struct ElectricPulse {
     double arrival_time;
@@ -19,4 +20,5 @@ struct ElectricPulse {
     );
 };
 
+}//SignalProcessing
 #endif // __ElectricPulse_H_INCLUDED__

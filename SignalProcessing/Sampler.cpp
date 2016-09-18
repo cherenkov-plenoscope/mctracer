@@ -1,6 +1,7 @@
 #include "Sampler.h"
 
-namespace PhotoElectricConverter {
+namespace SignalProcessing {
+	namespace PhotoElectricConverter {
 //------------------------------------------------------------------------------
 SamplerConfig::SamplerConfig() {
 
@@ -81,4 +82,5 @@ uint Sampler::get_number_of_slices()const {
 	return number_of_slices;
 }
 //------------------------------------------------------------------------------
-}// PhotoElectricConverter
+	}// PhotoElectricConverter
+}//SignalProcessing

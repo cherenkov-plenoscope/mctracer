@@ -12,6 +12,8 @@
 #include "PhotonSensor/PhotonSensor.h"
 using std::vector;
 
+namespace SignalProcessing {
+
 struct PipelinePhoton {
     double arrival_time;
     double wavelength;
@@ -30,4 +32,5 @@ std::vector<std::vector<PipelinePhoton>> get_photon_pipelines(
 
 void sort_photon_pipelines_arrival_time(std::vector<PipelinePhoton>* pipeline);
 
+}//SignalProcessing
 #endif // __PipelinePhoton_H_INCLUDED__

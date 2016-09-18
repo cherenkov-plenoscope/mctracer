@@ -4,7 +4,8 @@
 #include <fstream>
 #include <sstream>
 
-namespace SimpleTdcQdc{
+namespace SignalProcessing {
+    namespace SimpleTdcQdc{
 //------------------------------------------------------------------------------
 TimeAndCount::TimeAndCount(
     const double _time,
@@ -132,4 +133,5 @@ void write_intensity_simulation_truth(
     } 
 }
 //------------------------------------------------------------------------------
-}//TdC QdC
+    }//TdC QdC
+}//SignalProcessing

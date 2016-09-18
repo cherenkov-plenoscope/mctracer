@@ -149,12 +149,13 @@ int main(int argc, char* argv[]) {
     const Function::LinInterpol pde_vs_wavelength = 
         Xml::get_LinInterpol_from(pec.child("function").child("linear_interpolation"));
 
-    PhotoElectricConverter::Config converter_config;
+    SignalProcessing::PhotoElectricConverter::Config converter_config;
     converter_config.dark_rate = pec.attribute2double("dark_rate");
     converter_config.probability_for_second_puls = pec.attribute2double("probability_for_second_puls");
     converter_config.quantum_efficiency_vs_wavelength = &pde_vs_wavelength;
 
-    PhotoElectricConverter::Converter sipm_converter(&converter_config);
+    SignalProcessing::PhotoElectricConverter::Converter sipm_converter(
+        &converter_config);
 
     //--------------------------------------------------------------------------
     // SET UP PULSE EXTRACTOR
@@ -206,8 +207,8 @@ int main(int argc, char* argv[]) {
         light_field_channels->clear_history();
         light_field_channels->assign_photons(&photons);
 
-        vector<vector<PipelinePhoton>> photon_pipelines = 
-            get_photon_pipelines(light_field_channels);
+        vector<vector<SignalProcessing::PipelinePhoton>> photon_pipelines = 
+            SignalProcessing::get_photon_pipelines(light_field_channels);
         //assign.stop();
 
         //Time::StopWatch nsbsw("night sky background");
@@ -225,9 +226,9 @@ int main(int argc, char* argv[]) {
         //Time::StopWatch pecs("photo electric conversion");
         //--------------------------
         // Photo Electric conversion
-        vector<vector<ElectricPulse>> electric_pipelines;
+        vector<vector<SignalProcessing::ElectricPulse>> electric_pipelines;
         electric_pipelines.reserve(photon_pipelines.size());
-        for(vector<PipelinePhoton> ph_pipe: photon_pipelines) {
+        for(vector<SignalProcessing::PipelinePhoton> ph_pipe: photon_pipelines) {
 
             electric_pipelines.push_back(
                 sipm_converter.get_pulse_pipeline_for_photon_pipeline(
@@ -240,11 +241,11 @@ int main(int argc, char* argv[]) {
 
         //-------------------------
         // Pulse extraction Tdc Qdc
-        vector<SimpleTdcQdc::TimeAndCount> tacs;
+        vector<SignalProcessing::SimpleTdcQdc::TimeAndCount> tacs;
         tacs.reserve(electric_pipelines.size());
-        for(const vector<ElectricPulse> electric_pipe: electric_pipelines) {
+        for(const vector<SignalProcessing::ElectricPulse> electric_pipe: electric_pipelines) {
             tacs.push_back(
-                SimpleTdcQdc::get_arrival_time_and_count_given_arrival_moments_and_integration_time_window(
+                SignalProcessing::SimpleTdcQdc::get_arrival_time_and_count_given_arrival_moments_and_integration_time_window(
                     electric_pipe,
                     integration_time_window
                 )
@@ -276,7 +277,7 @@ int main(int argc, char* argv[]) {
         HeaderBlock::write(event.header.raw, PathTools::join(event_mc_truth_path.path, "corsika_event_header.bin"));
         
         if(export_all_simulation_truth) {
-            SimpleTdcQdc::write_intensity_simulation_truth(
+            SignalProcessing::SimpleTdcQdc::write_intensity_simulation_truth(
                 tacs,
                 PathTools::join(event_mc_truth_path.path, "intensity_truth.txt")
             );

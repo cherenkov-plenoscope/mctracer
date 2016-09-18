@@ -17,7 +17,7 @@ namespace Plenoscope {
 	namespace NightSkyBackground {
 
 	void inject_nsb_into_photon_pipeline(
-		vector<vector<PipelinePhoton>> *photon_pipelines,
+		vector<vector<SignalProcessing::PipelinePhoton>> *photon_pipelines,
 		const double exposure_time,
 		const vector<Plenoscope::Calibration::LixelStatistic> *lixel_statistics,
 		const Light *nsb,

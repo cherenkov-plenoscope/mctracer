@@ -14,17 +14,20 @@
 #include <sstream>
 #include <vector>
 
-namespace PreTrigger {
+namespace SignalProcessing {
+	namespace PreTrigger {
 
-	struct Config {
-		double time_window;
-		uint threshold;
-		Config();
-	};
+struct Config {
+	double time_window;
+	uint threshold;
+	Config();
+};
 
-	bool might_trigger(
-		const std::vector<double> *arrival_moments,
-		const Config &config
-	);
-}
+bool might_trigger(
+	const std::vector<double> *arrival_moments,
+	const Config &config
+);
+		
+	}//PreTrigger
+}//SignalProcessing
 #endif // __PreSumTrigger_H_INCLUDED__

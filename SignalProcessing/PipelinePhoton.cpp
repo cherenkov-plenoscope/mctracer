@@ -2,13 +2,15 @@
 #include "Core/SimulationTruth.h"
 #include <algorithm>
 
+namespace SignalProcessing {
+//------------------------------------------------------------------------------
 PipelinePhoton::PipelinePhoton(): 
     simulation_truth_id(SimulationTruth::MCTRACER_DEFAULT) 
 {
     arrival_time = 0.0;
     wavelength = 0.0;
 }
-
+//------------------------------------------------------------------------------
 PipelinePhoton::PipelinePhoton(
     const double _arrival_time,
     const double _wavelength,
@@ -18,7 +20,7 @@ PipelinePhoton::PipelinePhoton(
     wavelength(_wavelength),
     simulation_truth_id(_simulation_truth_id)
 {}
-
+//------------------------------------------------------------------------------
 vector<vector<PipelinePhoton>> get_photon_pipelines(
     const PhotonSensors::Sensors* sensors
 ) {
@@ -52,7 +54,7 @@ vector<vector<PipelinePhoton>> get_photon_pipelines(
 
     return photon_pipelines;
 }
-
+//------------------------------------------------------------------------------
 void sort_photon_pipelines_arrival_time(vector<PipelinePhoton>* pipeline) {
     
     std::sort(
@@ -65,3 +67,5 @@ void sort_photon_pipelines_arrival_time(vector<PipelinePhoton>* pipeline) {
         }
     );
 }
+//------------------------------------------------------------------------------
+}//SignalProcessing

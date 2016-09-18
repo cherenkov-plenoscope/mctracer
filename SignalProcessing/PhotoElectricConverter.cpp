@@ -1,7 +1,8 @@
 #include "PhotoElectricConverter.h"
 #include "Core/SimulationTruth.h"
 
-namespace PhotoElectricConverter {
+namespace SignalProcessing {
+	namespace PhotoElectricConverter {
 //------------------------------------------------------------------------------
 Config::Config() {
 	dark_rate = 0.0;
@@ -89,4 +90,5 @@ void Converter::add_accidental_pulse(
 	};
 }
 //------------------------------------------------------------------------------
-}// PhotoElectricConverter
+	}//PhotoElectricConverter
+}//SignalProcessing

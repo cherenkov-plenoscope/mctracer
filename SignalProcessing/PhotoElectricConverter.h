@@ -13,49 +13,49 @@
 #include "Core/Random/Random.h"
 #include "PipelinePhoton.h"
 #include "ElectricPulse.h"
-//#include <random>
 //=================================
+namespace SignalProcessing {
+    namespace PhotoElectricConverter {
 
-namespace PhotoElectricConverter {
+struct Config {
 
-    struct Config {
+    const Function::Func1D* quantum_efficiency_vs_wavelength;
+    double dark_rate;
+    double probability_for_second_puls;
+    Config();
+};
 
-        const Function::Func1D* quantum_efficiency_vs_wavelength;
-        double dark_rate;
-        double probability_for_second_puls;
-        Config();
-    };
+static const Function::Constant perfect_efficiency(
+    1.0, 
+    Function::Limits(200e-9, 1200e-9)
+);
 
-    static const Function::Constant perfect_efficiency(
-        1.0, 
-        Function::Limits(200e-9, 1200e-9)
+class Converter {
+
+    const Config* config;
+public:
+
+    Converter(const Config* config);
+
+    vector<ElectricPulse> get_pulse_pipeline_for_photon_pipeline(
+        const vector<PipelinePhoton> &photon_pipeline,
+        const double exposure_time,
+        Random::Generator* prng
     );
 
-    class Converter {
+    void add_pulse(
+        const ElectricPulse &pulse,
+        vector<ElectricPulse> *electric_pipeline, 
+        Random::Generator* prng
+    )const;
 
-        const Config* config;
-    public:
+    void add_accidental_pulse(
+        vector<ElectricPulse> *electric_pipeline, 
+        const double exposure_time,
+        Random::Generator* prng
+    )const;
+};
 
-        Converter(const Config* config);
-
-        vector<ElectricPulse> get_pulse_pipeline_for_photon_pipeline(
-            const vector<PipelinePhoton> &photon_pipeline,
-            const double exposure_time,
-            Random::Generator* prng
-        );
-
-        void add_pulse(
-            const ElectricPulse &pulse,
-            vector<ElectricPulse> *electric_pipeline, 
-            Random::Generator* prng
-        )const;
-
-        void add_accidental_pulse(
-            vector<ElectricPulse> *electric_pipeline, 
-            const double exposure_time,
-            Random::Generator* prng
-        )const;
-    };
-
-}// PhotoElectricConverter
+    }//PhotoElectricConverter
+}//SignalProcessing
 #endif // __PhotoElectricConverter_H_INCLUDED__ 

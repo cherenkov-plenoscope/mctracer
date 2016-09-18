@@ -14,8 +14,8 @@
 #include "PipelinePhoton.h"
 //#include <random>
 //=================================
-
-namespace PhotoElectricConverter {
+namespace SignalProcessing {
+	namespace PhotoElectricConverter {
 
 	struct SamplerConfig {
 		
@@ -47,5 +47,6 @@ namespace PhotoElectricConverter {
 		uint get_number_of_slices()const;
 	};
 
-}// PhotoElectricConverter
+	}// PhotoElectricConverter
+}//SignalProcessing
 #endif // __PhotoElectricSampler_H_INCLUDED__ 

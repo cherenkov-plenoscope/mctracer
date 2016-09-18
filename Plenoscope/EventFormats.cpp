@@ -46,7 +46,7 @@ namespace Plenoscope {
     }
 //------------------------------------------------------------------------------
 void save_event_to_file_epoch_2016May27(
-    const vector<SimpleTdcQdc::TimeAndCount> &tacs,
+    const vector<SignalProcessing::SimpleTdcQdc::TimeAndCount> &tacs,
     const string path
 ) {
     std::ofstream file;
@@ -59,7 +59,7 @@ void save_event_to_file_epoch_2016May27(
     }   
 
     const uint float_count = 2;
-    for(SimpleTdcQdc::TimeAndCount tac: tacs) {
+    for(SignalProcessing::SimpleTdcQdc::TimeAndCount tac: tacs) {
         const float ct = float(tac.count);
         const float tm = float(tac.time);
         float v[float_count] = {tm, ct};
@@ -70,13 +70,13 @@ void save_event_to_file_epoch_2016May27(
 }
 //------------------------------------------------------------------------------
 void save_event_to_file_epoch_2016Mar10(
-    const vector<SimpleTdcQdc::TimeAndCount> &tacs,
+    const vector<SignalProcessing::SimpleTdcQdc::TimeAndCount> &tacs,
     const string path,
     const EventIo::Event &event,
     const EventIo::Run &corsika_run
 ) {
     vector<vector<double>> dtacs;
-    for(SimpleTdcQdc::TimeAndCount tac: tacs) {
+    for(SignalProcessing::SimpleTdcQdc::TimeAndCount tac: tacs) {
         const double tm = tac.time;
         const double ct = double(tac.count);
         vector<double> dtac = {tm, ct};

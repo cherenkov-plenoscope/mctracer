@@ -4,18 +4,18 @@
 #include "Core/SimulationTruth.h"
 using std::vector;
 using std::cout;
-
+namespace SP = SignalProcessing;
 
 class SimpleTdcQdcTest : public ::testing::Test {
 public:
-	vector<ElectricPulse> pulses_with_arrival_times(
+	vector<SP::ElectricPulse> pulses_with_arrival_times(
 		const vector<double> &arrival_moments
 	) {
 
-		vector<ElectricPulse> pulses;
+		vector<SP::ElectricPulse> pulses;
 		for(double arrival_moment: arrival_moments)
 			pulses.push_back(
-				ElectricPulse(
+				SP::ElectricPulse(
 					arrival_moment,
 					SimulationTruth::MCTRACER_DEFAULT
 				)
@@ -31,12 +31,12 @@ TEST_F(SimpleTdcQdcTest, tdcqdc1) {
 	//  1    1    5    5    5    5    5    5    5    4    3    2    1    1    1
 		0.0, 1.0, 2.0, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 2.8, 2.9, 3.0, 4.0, 5.0
 	};
-	vector<ElectricPulse> pulses = pulses_with_arrival_times(arrival_moments);
+	vector<SP::ElectricPulse> pulses = pulses_with_arrival_times(arrival_moments);
 
 	const double integration_time_window = 0.5;
 
 	vector<uint> enclosure = 
-		SimpleTdcQdc::convolution_of_arrival_times_and_integration_window(
+		SP::SimpleTdcQdc::convolution_of_arrival_times_and_integration_window(
 			pulses,
 			integration_time_window
 		);
@@ -53,12 +53,12 @@ TEST_F(SimpleTdcQdcTest, tdcqdc1) {
 TEST_F(SimpleTdcQdcTest, tdcqdc_empty) {
 
 	vector<double> arrival_moments;
-	vector<ElectricPulse> pulses = pulses_with_arrival_times(arrival_moments);
+	vector<SP::ElectricPulse> pulses = pulses_with_arrival_times(arrival_moments);
 
 	const double integration_time_window = 0.5;
 
 	vector<uint> enclosure = 
-		SimpleTdcQdc::convolution_of_arrival_times_and_integration_window(
+		SP::SimpleTdcQdc::convolution_of_arrival_times_and_integration_window(
 			pulses,
 			integration_time_window
 		);
@@ -68,30 +68,30 @@ TEST_F(SimpleTdcQdcTest, tdcqdc_empty) {
 //------------------------------------------------------------------------------
 TEST_F(SimpleTdcQdcTest, Charge_count_equals_simulation_truth_count) {
 
-	vector<ElectricPulse> pulses;
-	pulses.push_back(ElectricPulse(0.0,  1));
-	pulses.push_back(ElectricPulse(1.0,  2));
-	pulses.push_back(ElectricPulse(2.0,  3)); //
-	pulses.push_back(ElectricPulse(2.1,  4)); //
-	pulses.push_back(ElectricPulse(2.2,  5)); //
-	pulses.push_back(ElectricPulse(2.3,  6)); // 
-	pulses.push_back(ElectricPulse(2.4,  7)); //
-	pulses.push_back(ElectricPulse(2.5,  8)); //                          
-	pulses.push_back(ElectricPulse(2.55, 9)); //
-	pulses.push_back(ElectricPulse(2.6, 10));
-	pulses.push_back(ElectricPulse(2.7, 11));
-	pulses.push_back(ElectricPulse(2.8, 12));
-	pulses.push_back(ElectricPulse(2.9, 13));
-	pulses.push_back(ElectricPulse(3.0, 14));
-	pulses.push_back(ElectricPulse(4.0, 15));
-	pulses.push_back(ElectricPulse(5.0, 16));
-	pulses.push_back(ElectricPulse(6.0, 17));
+	vector<SP::ElectricPulse> pulses;
+	pulses.push_back(SP::ElectricPulse(0.0,  1));
+	pulses.push_back(SP::ElectricPulse(1.0,  2));
+	pulses.push_back(SP::ElectricPulse(2.0,  3)); //
+	pulses.push_back(SP::ElectricPulse(2.1,  4)); //
+	pulses.push_back(SP::ElectricPulse(2.2,  5)); //
+	pulses.push_back(SP::ElectricPulse(2.3,  6)); // 
+	pulses.push_back(SP::ElectricPulse(2.4,  7)); //
+	pulses.push_back(SP::ElectricPulse(2.5,  8)); //                          
+	pulses.push_back(SP::ElectricPulse(2.55, 9)); //
+	pulses.push_back(SP::ElectricPulse(2.6, 10));
+	pulses.push_back(SP::ElectricPulse(2.7, 11));
+	pulses.push_back(SP::ElectricPulse(2.8, 12));
+	pulses.push_back(SP::ElectricPulse(2.9, 13));
+	pulses.push_back(SP::ElectricPulse(3.0, 14));
+	pulses.push_back(SP::ElectricPulse(4.0, 15));
+	pulses.push_back(SP::ElectricPulse(5.0, 16));
+	pulses.push_back(SP::ElectricPulse(6.0, 17));
 
 	EXPECT_EQ(17u, pulses.size());
 
 	const double integration_time_window = 0.49;
 
-	SimpleTdcQdc::TimeAndCount tac = SimpleTdcQdc::get_arrival_time_and_count_given_arrival_moments_and_integration_time_window(
+	SP::SimpleTdcQdc::TimeAndCount tac = SP::SimpleTdcQdc::get_arrival_time_and_count_given_arrival_moments_and_integration_time_window(
 		pulses,
 		integration_time_window
 	);

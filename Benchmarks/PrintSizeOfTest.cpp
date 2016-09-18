@@ -111,7 +111,7 @@ TEST_F(SizeOfTest, sizes_of_mct) {
     print_size("Triangle", triangle);
     cout << "--------------------------------------------" << "\n";
 
-    PipelinePhoton pipe_ph; 
+    SignalProcessing::PipelinePhoton pipe_ph; 
     print_size("PipelinePhoton", pipe_ph);
 }
 //------------------------------------------------------------------------------
