@@ -3,7 +3,7 @@
 #include "Core/Color.h"
 #include "Scenery/Primitive/BiConvexLensHexBound.h"
 #include "Scenery/Primitive/Disc.h"
-#include "LensMaker/LensMaker.h"
+#include "Scenery/Geometry/LensMaker/LensMaker.h"
 #include "Core/Random/Random.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "Core/Photons.h"

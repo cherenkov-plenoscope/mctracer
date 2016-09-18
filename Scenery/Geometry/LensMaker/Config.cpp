@@ -1,4 +1,4 @@
-#include "LensMaker/Config.h"
+#include "Config.h"
 
 namespace LensMaker {
 

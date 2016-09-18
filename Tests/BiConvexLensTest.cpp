@@ -6,7 +6,7 @@
 #include "Scenery/Primitive/BiConvexLens.h"
 #include "Scenery/Primitive/Disc.h"
 #include "Scenery/Primitive/BiConvexLensHexBound.h"
-#include "LensMaker/LensMaker.h"
+#include "Scenery/Geometry/LensMaker/LensMaker.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "Tools/AsciiIo.h"
 

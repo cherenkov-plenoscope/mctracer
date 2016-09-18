@@ -4,7 +4,7 @@
 #include "Scenery/Geometry/HexGridFlower.h"
 #include "Tools/AsciiIo.h"
 #include "Tools/StringTools.h"
-#include "LensMaker/LensMaker.h"
+#include "Scenery/Geometry/LensMaker/LensMaker.h"
 #include "Corsika/Tools.h"
 namespace Plenoscope {
 namespace LightFieldSensor {

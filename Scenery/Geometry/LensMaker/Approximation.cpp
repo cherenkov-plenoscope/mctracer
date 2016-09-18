@@ -1,4 +1,4 @@
-#include "LensMaker/Approximation.h"
+#include "Approximation.h"
 
 #include <sstream>
 #include <math.h>

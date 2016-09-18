@@ -1,3 +1,4 @@
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/LensMaker")
 set(SOURCE
    	${SOURCE}	
 	${CMAKE_CURRENT_SOURCE_DIR}/XyPlaneRayIntersectionEquation.cpp 
