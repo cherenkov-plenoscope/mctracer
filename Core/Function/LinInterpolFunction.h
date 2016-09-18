@@ -27,7 +27,7 @@ namespace Function {
 
 		LinInterpol();
 		LinInterpol(const vector<vector<double>>& two_column_xy);
-		void set_table(const vector<vector<double>>& two_column_xy);
+		void init(const vector<vector<double>>& two_column_xy);
 		double operator()(const double x)const;
 		double get_max_value()const;
 		double get_min_value()const;

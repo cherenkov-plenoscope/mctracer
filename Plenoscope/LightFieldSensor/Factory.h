@@ -10,6 +10,7 @@
 // included dependencies
 #include "PhotonSensor/PhotonSensor.h"
 #include "Plenoscope/LightFieldSensor/Geometry.h"
+#include "Scenery/Scenery.h"
 
 namespace Plenoscope {
 namespace LightFieldSensor {
@@ -18,11 +19,14 @@ namespace LightFieldSensor {
 
 		PhotonSensors::Sensors *sub_pixel_sensors;
 	public:
-
 		const Geometry* geometry;
+		Scenery* scenery;
+		
 		Factory(const Geometry* geo);
-		void add_light_field_sensor_to_frame(Frame *frame);
+		void add_light_field_sensor_to_frame_in_scenery(Frame* frame, Scenery* scenery);
 		PhotonSensors::Sensors* get_sub_pixels()const;
+	private:
+
 		void add_lens_array(Frame* frame);
 		void add_light_field_sensor_frontplate(Frame* frame);
 		void add_image_sensor_housing(Frame* frame);

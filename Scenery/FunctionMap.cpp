@@ -6,7 +6,7 @@ bool FunctionMap::has(const string key)const {
     return functions.find(key) != functions.end();
 }
 //------------------------------------------------------------------------------
-const Function::Func1D* FunctionMap::get(const string key)const {
+Function::Func1D* FunctionMap::get(const string key)const {
     assert_has(key);
     return functions.find(key)->second;
 }

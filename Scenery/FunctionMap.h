@@ -22,7 +22,7 @@ public:
     map<string, Function::Func1D*> functions;
 
     bool has(const string key)const;
-    const Function::Func1D* get(const string key)const;
+    Function::Func1D* get(const string key)const;
     
     template<class ProtoFunction>
     ProtoFunction* add(const string key) {

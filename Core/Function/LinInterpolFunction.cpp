@@ -13,10 +13,10 @@ namespace Function {
 	}
 	//--------------------------------------------------------------------------
 	LinInterpol::LinInterpol(const vector<vector<double>>& xy) {
-		set_table(xy);
+		init(xy);
 	}
 	//--------------------------------------------------------------------------
-	void LinInterpol::set_table(const vector<vector<double>>& xy) {
+	void LinInterpol::init(const vector<vector<double>>& xy) {
 		func.reserve(xy.size());
 
 		for(uint i=0; i<xy.size(); i++) {

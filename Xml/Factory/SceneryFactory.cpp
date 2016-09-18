@@ -3,6 +3,7 @@
 #include "Scenery/Primitive/Primitive.h"
 #include "Scenery/StereoLitography/StereoLitography.h"
 #include "Scenery/SegmentedReflector/SegmentedReflector.h"
+#include "Xml/Factory/Function.h"
 using StringTools::is_equal;
 using std::stringstream;
 
@@ -36,7 +37,7 @@ void SceneryFactory::make_geometry(Frame* mother, const Node node) {
 
     for(Node child=node.first_child(); child; child=child.next_child()) {
         if(is_equal(child.name(), "function"))
-            functions.add(child);
+            add_function(child);
         else if(is_equal(child.name(), "color"))
             add_color(child);
         else if(is_equal(child.name(), "frame"))
@@ -198,7 +199,7 @@ Frame* SceneryFactory::add_BiConvexLensHex(Frame* mother, const Node node) {
     lens->set_outer_reflection(surface_refl(node));
     //lens->set_inner_reflection(surface_refl(node));
     lens->set_inner_refraction(
-        functions.by_name(node.child("set_medium").attribute("refraction_vs_wavelength"))
+        scenery->functions.get(node.child("set_medium").attribute("refraction_vs_wavelength"))
     );
     lens->set_curvature_radius_and_outer_hex_radius(
         node.child("set_bi_convex_lens_hex").attribute2double("curvature_radius"),
@@ -321,14 +322,16 @@ Frame* SceneryFactory::add_light_field_sensor(Frame* mother, const Node node) {
     config.pixel_FoV_hex_flat2flat = Deg2Rad(lfs.attribute2double("hex_pixel_FoV_flat2flat_deg")); 
     config.number_of_paxel_on_pixel_diagonal = lfs.attribute2int("number_of_paxel_on_pixel_diagonal");
     config.housing_overhead = lfs.attribute2double("housing_overhead");
-    config.lens_refraction = functions.by_name(lfs.attribute("lens_refraction_vs_wavelength"));
+    config.lens_refraction = scenery->functions.get(lfs.attribute("lens_refraction_vs_wavelength"));
     //config.lens_absorbtion = &perfect_transparency;
-    config.bin_reflection = functions.by_name(lfs.attribute("bin_reflection_vs_wavelength"));
+    config.bin_reflection = scenery->functions.get(lfs.attribute("bin_reflection_vs_wavelength"));
 
 
     Plenoscope::PlenoscopeInScenery pis(config);
     Plenoscope::LightFieldSensor::Factory lfs_factory(&pis.light_field_sensor_geometry);
-    lfs_factory.add_light_field_sensor_to_frame(light_field_sensor);    
+    lfs_factory.add_light_field_sensor_to_frame_in_scenery(
+        light_field_sensor,
+        scenery);    
     pis.frame = light_field_sensor;    
     pis.light_field_channels = lfs_factory.get_sub_pixels();
     plenoscopes.push_back(pis);
@@ -337,13 +340,47 @@ Frame* SceneryFactory::add_light_field_sensor(Frame* mother, const Node node) {
 }
 //------------------------------------------------------------------------------
 const Function::Func1D* SceneryFactory::surface_refl(const Node node)const {
-    return functions.by_name(node.child("set_surface").attribute("reflection_vs_wavelength"));
+    return scenery->functions.get(node.child("set_surface").attribute("reflection_vs_wavelength"));
 }
 //------------------------------------------------------------------------------
 void SceneryFactory::add_color(const Node node) {
     scenery->colors.add(
         node.attribute("name"),
         node.attribute2Color("rgb"));
+}
+//------------------------------------------------------------------------------
+void SceneryFactory::add_function(const Node node) {
+  
+    for(Xml::Node child=node.first_child(); child; child=child.next_child()) {
+
+        if(is_equal(child.name(),"linear_interpolation")) {
+            Function::LinInterpol* f = scenery->functions.add<Function::LinInterpol>(
+                node.attribute("name")
+            );
+            init_function_with_node(f, child);
+        }else if(is_equal(child.name(),"constant")) {
+            Function::Constant* f = scenery->functions.add<Function::Constant>(
+                node.attribute("name")
+            );
+            init_function_with_node(f, child);
+        }else if(is_equal(child.name(),"polynom3")) {
+            Function::Polynom3* f = scenery->functions.add<Function::Polynom3>(
+                node.attribute("name")
+            );
+            init_function_with_node(f, child);
+        }else if(is_equal(child.name(),"concatenation")) {
+            Function::Concat* f = scenery->functions.add<Function::Concat>(
+                node.attribute("name")
+            );
+            init_function_with_node(f, child, &scenery->functions);
+        }else{
+            stringstream info;
+            info << "SceneryFactory " << __FILE__ << ", " << __LINE__;
+            info << "Unknown xml child in '" << child.name() << "' in node ";
+            info << "'" << node.name() << "'";
+            throw TracerException(info.str());
+        }
+    }
 }
 //------------------------------------------------------------------------------
 const Color* SceneryFactory::surface_color(const Node node)const {

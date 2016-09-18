@@ -18,11 +18,11 @@
 class FunctionFab {
 
 	PathTools::Path full_path_of_original_xml_file;
-	std::map<string, const Function::Func1D*> functions;
+	std::map<string, Function::Func1D*> functions;
 public:
 
 	void add(const Xml::Node &node);
-	const Function::Func1D* by_name(const string name)const;
+	Function::Func1D* by_name(const string name)const;
 private:
 	bool is_function_node(const Xml::Node &node)const;
 	string extract_name(const Xml::Node &node);

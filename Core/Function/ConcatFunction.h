@@ -14,12 +14,12 @@ namespace Function {
 
 	class Concat : public Func1D {
 
-		std::vector<const Func1D*> conc;
+		vector<Func1D*> conc;
 	public:
 
 		Concat();
-		Concat(const std::vector<const Func1D*> _conc);
-		void set_functions(const std::vector<const Func1D*> _conc);
+		Concat(const vector<Func1D*> conc);
+		void init(const vector<Func1D*> conc);
 		double operator()(const double x)const;
 	private:
 

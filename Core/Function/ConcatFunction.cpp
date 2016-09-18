@@ -8,12 +8,12 @@ namespace Function {
 	Concat::Concat() {
 	}
 	//--------------------------------------------------------------------------
-	Concat::Concat(const std::vector<const Func1D*> _conc) {
-		set_functions(_conc);
+	Concat::Concat(const vector<Func1D*> conc) {
+		init(conc);
 	}
 	//--------------------------------------------------------------------------
-	void Concat::set_functions(const std::vector<const Func1D*> _conc) {
-		conc = _conc;
+	void Concat::init(const vector<Func1D*> conc) {
+		this->conc = conc;
 		assert_limits_do_fit();
 		adopt_new_limits();
 	}

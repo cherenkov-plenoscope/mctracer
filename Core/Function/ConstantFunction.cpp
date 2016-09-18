@@ -5,23 +5,21 @@
 namespace Function {
 	const Constant Constant::void_function = Constant(0.0, Limits::void_limits);
 	//--------------------------------------------------------------------------
-	Constant::Constant(): function_value(0.0) {
-
-	}
+	Constant::Constant(): value(0.0) {}
 	//--------------------------------------------------------------------------
-	Constant::Constant(const double val, const Limits &_limits)
-		:function_value(val) 
+	Constant::Constant(const double value, const Limits &limits)
 	{
-		limits = _limits; 
+		init(value, limits);
 	}
 	//--------------------------------------------------------------------------
-	void Constant::set_value(const double val) {
-		function_value = val;
+	void Constant::init(const double value, const Limits &limits) {
+		this->value = value;
+		this->limits = limits;
 	}
 	//--------------------------------------------------------------------------
 	double Constant::operator()(const double x)const {
 		limits.assert_contains(x);
-		return function_value;
+		return value;
 	}
 	//--------------------------------------------------------------------------
 } // namespace Function

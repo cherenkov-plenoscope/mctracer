@@ -14,11 +14,11 @@ namespace Function {
 
 	class Constant :public Func1D {
 
-		double function_value;
+		double value;
 	public:
 		Constant();
-		Constant(const double val, const Limits &_limit);
-		void set_value(const double val);
+		Constant(const double value, const Limits &limits);
+		void init(const double value, const Limits &limits);
 		double operator()(const double x)const;
 		static const Constant void_function;
 	};

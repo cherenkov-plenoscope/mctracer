@@ -9,7 +9,6 @@
 //=================================
 // included dependencies
 #include "Xml/Xml.h"
-#include "Xml/Factory/FunctionFab.h"
 #include "Tools/PathTools.h"
 #include "Core/Frame.h"
 #include "PhotonSensor/PhotonSensor.h"
@@ -25,7 +24,6 @@ namespace Xml {
     class SceneryFactory {
     public:
         vector<PhotonSensor::Sensor*>* raw_sensors;
-        FunctionFab functions;
         TelescopeArrayControl* telescopes;
         vector<Plenoscope::PlenoscopeInScenery> plenoscopes;
 
@@ -63,6 +61,7 @@ namespace Xml {
         void add_to_sensors_if_sensitive(Frame* frame, const Node node);
         void add_to_array_if_telescope(Frame* frame, const Node node);
 
+        void add_function(const Node node);
         void add_color(const Node node);
     };
 }//Xml

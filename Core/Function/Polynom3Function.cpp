@@ -5,25 +5,27 @@ namespace Function {
 	}
 	//--------------------------------------------------------------------------
 	Polynom3::Polynom3(
-		const double _a3, 
-		const double _a2, 
-		const double _a1, 
-		const double _a0,
-		const Limits &_limits 
-	): a3(_a3), a2(_a2), a1(_a1), a0(_a0) {
-		limits = _limits;
+		const double a3, 
+		const double a2, 
+		const double a1, 
+		const double a0,
+		const Limits &limits 
+	) {
+		init(a3, a2, a1, a0, limits);
 	}
 	//--------------------------------------------------------------------------
-	void Polynom3::set_coefficients(
-		const double _a3, 
-		const double _a2, 
-		const double _a1, 
-		const double _a0
+	void Polynom3::init(
+		const double a3, 
+		const double a2, 
+		const double a1, 
+		const double a0,
+		const Limits &limits
 	) {
-		a3 = _a3;
-		a2 = _a2;
-		a1 = _a1;
-		a0 = _a0;
+		this->a3 = a3;
+		this->a2 = a2;
+		this->a1 = a1;
+		this->a0 = a0;
+		this->limits = limits;
 	}
 	//--------------------------------------------------------------------------
 	double Polynom3::operator()(const double x)const {

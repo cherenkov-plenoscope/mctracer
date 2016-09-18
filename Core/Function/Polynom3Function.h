@@ -18,17 +18,18 @@ namespace Function {
 	public:
 		Polynom3();
 		Polynom3(
-			const double _a3, 
-			const double _a2, 
-			const double _a1, 
-			const double _a0,
-			const Limits &_limits
+			const double a3, 
+			const double a2, 
+			const double a1, 
+			const double a0,
+			const Limits &limits
 		);
-		void set_coefficients(
-			const double _a3, 
-			const double _a2, 
-			const double _a1, 
-			const double _a0
+		void init(
+			const double a3, 
+			const double a2, 
+			const double a1, 
+			const double a0,
+			const Limits &limits
 		);	
 		double operator()(const double x)const;
 	};

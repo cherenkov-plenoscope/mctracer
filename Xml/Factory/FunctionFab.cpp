@@ -12,7 +12,7 @@ void FunctionFab::add(const Xml::Node &node) {
 	full_path_of_original_xml_file = 
 		PathTools::Path(node.xml_path());
 
-	const Function::Func1D* func = &Function::Constant::void_function;
+	Function::Func1D* func;
 	bool export_function = false;
 
 	for(Xml::Node child=node.first_child();	child; child=child.next_child()) {
@@ -39,7 +39,7 @@ void FunctionFab::add(const Xml::Node &node) {
 	assert_name_not_in_use_yet(node.attribute("name"));
 
 	functions.insert(
-		std::pair<string, const Function::Func1D*>
+		std::pair<string, Function::Func1D*>
 			(node.attribute("name"), func)
 	);
 
@@ -113,7 +113,7 @@ Function::Func1D* FunctionFab::extract_polynom3(const Xml::Node &node) {
 //------------------------------------------------------------------------------
 Function::Func1D* FunctionFab::extract_concatenation(const Xml::Node &node) {
 	string attribute = "f0";
-	std::vector<const Function::Func1D*> funcs;
+	std::vector<Function::Func1D*> funcs;
 	uint count = 0;
 
 	while (node.has_attribute(attribute)) {
@@ -134,7 +134,7 @@ Function::Limits FunctionFab::extract_limits_from_attributes(const Xml::Node &no
 	);
 }
 //------------------------------------------------------------------------------
-const Function::Func1D* FunctionFab::by_name(const string name)const {
+Function::Func1D* FunctionFab::by_name(const string name)const {
 	assert_has_function(name);
 	return functions.find(name)->second;
 }

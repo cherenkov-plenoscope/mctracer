@@ -98,7 +98,7 @@ TEST_F(FunctionExample, function_concat) {
     Polynom3 f2(0.0, 0.0, 2.0, 0.0, Limits(-0.5, 0.5));
     Polynom3 f3(0.0, -1.0, 0.0, 0.0, Limits(0.5, 1.5));
 
-    std::vector<const Func1D*> funcs = {&f1, &f2, &f3};
+    std::vector<Func1D*> funcs = {&f1, &f2, &f3};
     Concat concat(funcs);
     //--func_concat_end--
     AsciiIo::write_table_to_file(concat.get_samples(1000),"Examples/Out/function_concat.func");

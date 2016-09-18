@@ -11,15 +11,20 @@
 namespace Plenoscope {
 namespace LightFieldSensor {
 //------------------------------------------------------------------------------
-Factory::Factory(const Geometry* geo): geometry(geo) {}
+Factory::Factory(const Geometry* geo): 
+	geometry(geo), 
+	scenery(&Scenery::void_scenery) 
+{}
 //------------------------------------------------------------------------------
 void Factory::add_lens_array(Frame* frame) {
 	
+	scenery->colors.add("lens_white", Color::white);
+	const Color* white = scenery->colors.get("lens_white");
+
 	Frame* lens_array = frame->append<Frame>();
 	lens_array->set_name_pos_rot("lens_array", Vec3::null, Rot3::null);
+	vector<Vec3> pixel_positions = geometry->pixel_positions(); 
 
-	std::vector<Vec3> pixel_positions = geometry->pixel_positions();
-	 
 	for(uint i=0; i<pixel_positions.size(); i++) {
 
 		BiConvexLensHexBound* lens = lens_array->append<BiConvexLensHexBound>();
@@ -28,8 +33,8 @@ void Factory::add_lens_array(Frame* frame) {
 			pixel_positions.at(i), 
 			Rot3::null
 		);
-		lens->set_outer_color(&Color::white);
-		lens->set_inner_color(&Color::white);
+		lens->set_outer_color(white);
+		lens->set_inner_color(white);
 		lens->set_inner_refraction(geometry->config.lens_refraction);
 		lens->set_curvature_radius_and_outer_hex_radius(
 			geometry->pixel_lens_curvature_radius(),
@@ -47,10 +52,10 @@ void Factory::add_pixel_bin_array(Frame* frame) {
 		Rot3::null
 	);
 
-	std::vector<Vec3> flower_positions = geometry->paxel_grid_center_positions();
+	vector<Vec3> flower_positions = geometry->paxel_grid_center_positions();
+	scenery->colors.add("bin_wall_green", Color::green);
 
 	for(uint i=0; i<flower_positions.size(); i++) {
-
 		add_pixel_bin_with_name_at_pos(
 			bin_array,
 			"bin_" + std::to_string(i),
@@ -61,9 +66,10 @@ void Factory::add_pixel_bin_array(Frame* frame) {
 //------------------------------------------------------------------------------
 void Factory::add_pixel_bin_with_name_at_pos(
 	Frame* frame,
-	const std::string name, 
+	const string name, 
 	const Vec3 pos
 ) {
+	const Color* green = scenery->colors.get("bin_wall_green");
 
 	Frame* bin = frame->append<Frame>();
 	bin->set_name_pos_rot(name,	pos, Rot3::null);
@@ -80,20 +86,21 @@ void Factory::add_pixel_bin_with_name_at_pos(
 			Vec3(R*sin(phi), R*cos(phi), -0.5*hight),
 			Rot3(M_PI*0.5, 0.0, phi)
 		);
-
 		binwall->set_x_y_width(
 			geometry->pixel_lens_outer_aperture_radius(),
 			hight
 		);
-
-		binwall->set_outer_color(&Color::green);
-		binwall->set_inner_color(&Color::green);
+		binwall->set_outer_color(green);
+		binwall->set_inner_color(green);
 		binwall->set_outer_reflection(geometry->config.bin_reflection);
 	}
 }
 //------------------------------------------------------------------------------
 void Factory::add_light_field_sensor_frontplate(Frame* frame) {
-	
+
+	scenery->colors.add("light_field_sensor_housing_gray", Color::gray);
+	const Color* gray = scenery->colors.get("light_field_sensor_housing_gray");
+
 	HexGridAnnulus face_plate_grid(
 		geometry->max_outer_sensor_radius() + 
 		geometry->pixel_spacing(),
@@ -102,8 +109,7 @@ void Factory::add_light_field_sensor_frontplate(Frame* frame) {
 		geometry->pixel_spacing()
 	);
 
-	std::vector<Vec3> face_plate_positions = face_plate_grid.get_grid();
-
+	vector<Vec3> face_plate_positions = face_plate_grid.get_grid();
 	Frame* face_plate = frame->append<Frame>();
 	face_plate->set_name_pos_rot("face_plate", Vec3::null, Rot3::null);
 
@@ -115,23 +121,26 @@ void Factory::add_light_field_sensor_frontplate(Frame* frame) {
 			face_plate_positions.at(i),
 			Rot3::null
 		);
-		face->set_outer_color(&Color::gray);
-		face->set_inner_color(&Color::gray);
+		face->set_outer_color(gray);
+		face->set_inner_color(gray);
 		face->set_outer_hex_radius(geometry->pixel_lens_outer_aperture_radius());
 	}
 
 	Annulus* outer_front_ring = face_plate->append<Annulus>();
 	outer_front_ring->set_name_pos_rot("outer_front_ring", Vec3::null, Rot3::null);
-	outer_front_ring->set_outer_color(&Color::gray);
-	outer_front_ring->set_inner_color(&Color::gray);
+	outer_front_ring->set_outer_color(gray);
+	outer_front_ring->set_inner_color(gray);
 	outer_front_ring->set_outer_inner_radius(
 		geometry->outer_sensor_housing_radius(),
 		geometry->max_outer_sensor_radius()
 	);	
 }
 //------------------------------------------------------------------------------
-void Factory::add_lixel_sensor_plane(Frame* frame) {
-	
+void Factory::add_lixel_sensor_plane(Frame* frame) {	
+
+	scenery->colors.add("light_field_sensor_cell_red", Color::red);
+	const Color* red = scenery->colors.get("light_field_sensor_cell_red");
+
 	Frame* sub_pixel_array = frame->append<Frame>();
 	sub_pixel_array->set_name_pos_rot(
 		"lixel_array", 
@@ -139,9 +148,9 @@ void Factory::add_lixel_sensor_plane(Frame* frame) {
 		Rot3::null
 	);
 
-	const std::vector<Vec3> &lixel_positions = geometry->lixel_positions();
+	const vector<Vec3> &lixel_positions = geometry->lixel_positions();
 
-	std::vector<PhotonSensor::Sensor*> sub_pixels;
+	vector<PhotonSensor::Sensor*> sub_pixels;
 	sub_pixels.reserve(lixel_positions.size());
 
 	for(uint i=0; i<lixel_positions.size(); i++) {
@@ -152,8 +161,8 @@ void Factory::add_lixel_sensor_plane(Frame* frame) {
 			lixel_positions.at(i),
 			Rot3(0.0, 0.0, geometry->lixel_z_orientation())
 		);
-		subpix->set_outer_color(&Color::red);
-		subpix->set_inner_color(&Color::red);
+		subpix->set_outer_color(red);
+		subpix->set_inner_color(red);
 		subpix->set_outer_hex_radius(geometry->lixel_outer_radius());
 
 		PhotonSensor::Sensor* sub_pixel_sensor = 
@@ -197,8 +206,12 @@ void Factory::add_image_sensor_housing(Frame *frame) {
 	);
 }
 //------------------------------------------------------------------------------
-void Factory::add_light_field_sensor_to_frame(Frame *frame) {
-	
+void Factory::add_light_field_sensor_to_frame_in_scenery(
+	Frame *frame, 
+	Scenery* scenery
+) {
+	this->scenery = scenery;
+
 	Frame* light_field_sensor_front = frame->append<Frame>();
 	light_field_sensor_front->set_name_pos_rot(
 		"front",
