@@ -147,57 +147,74 @@ TEST_F(XmlTest, visual_config) {
 		in.global_illumination.incoming_direction);
 }
 //------------------------------------------------------------------------------
-#include "Xml/Factory/FunctionFab.h"
+#include "Xml/Factory/Function.h"
+#include "Scenery/Scenery.h"
 TEST_F(XmlTest, functions) {
 
 	const std::string path = "xml/functions.xml";
 
-	FunctionFab fab;
+	Scenery scenery;
 
 	Xml::Document doc(path);
 	Xml::Node tree = doc.node();
 	
 	Xml::Node child = tree.first_child(); 
 	ASSERT_TRUE(child);
-	EXPECT_EQ("function", child.name());
-	fab.add(child);
+	ASSERT_EQ("function", child.name());
+	ASSERT_EQ("linear_interpolation", child.first_child().name());
+
+	Function::LinInterpol* f1 = 
+		scenery.functions.add<Function::LinInterpol>(child.attribute("name"));
+	Xml::init_function_with_node(f1, child.first_child());
 
 	child = child.next_child();
 	ASSERT_TRUE(child);
-	EXPECT_EQ("function", child.name());
-	fab.add(child);
+	ASSERT_EQ("function", child.name());
+	ASSERT_EQ("constant", child.first_child().name());
+
+	Function::Constant* f2 = 
+		scenery.functions.add<Function::Constant>(child.attribute("name"));
+	Xml::init_function_with_node(f2, child.first_child());
 
 	child = child.next_child();
 	ASSERT_TRUE(child);
-	EXPECT_EQ("function", child.name());
-	fab.add(child);
+	ASSERT_EQ("function", child.name());
+	ASSERT_EQ("polynom3", child.first_child().name());
+
+	Function::Polynom3* f3 = 
+		scenery.functions.add<Function::Polynom3>(child.attribute("name"));
+	Xml::init_function_with_node(f3, child.first_child());
 
 	child = child.next_child();
 	ASSERT_TRUE(child);
-	EXPECT_EQ("function", child.name());
-	fab.add(child);
+	ASSERT_EQ("function", child.name());
+	ASSERT_EQ("concatenation", child.first_child().name());
+
+	Function::Concat* f4 = 
+		scenery.functions.add<Function::Concat>(child.attribute("name"));
+	Xml::init_function_with_node(f4, child.first_child(), &scenery.functions);	
 
 	child = child.next_child();
 	EXPECT_FALSE(child);
 
-	const Function::Func1D* func;
-	func = fab.by_name("my_funny_function");
+	Function::Func1D* func;
+	func = scenery.functions.get("my_funny_function");
 	EXPECT_EQ(100e-9, func->get_limits().get_lower());
 	EXPECT_EQ(200e-9, func->get_limits().get_upper());
 	EXPECT_NEAR(0.8, (*func)(160e-9), 1e-6);
 
-	func = fab.by_name("constant_function");
+	func = scenery.functions.get("constant_function");
 	EXPECT_EQ(200e-9, func->get_limits().get_lower());
 	EXPECT_EQ(400e-9, func->get_limits().get_upper());
 	EXPECT_NEAR(1.337, (*func)(300e-9), 1e-6);
 
-	func = fab.by_name("polynom_function");
+	func = scenery.functions.get("polynom_function");
 	EXPECT_EQ(400e-9, func->get_limits().get_lower());
 	EXPECT_EQ(1200e-9, func->get_limits().get_upper());
 	double x = 600e-9;
 	EXPECT_NEAR(1.0*x*x*x + 0.0*x*x + 1.2*x - 1.7, (*func)(x), 1e-6);
 
-	func = fab.by_name("concat_function");
+	func = scenery.functions.get("concat_function");
 	EXPECT_EQ(100e-9, func->get_limits().get_lower());
 	EXPECT_EQ(1200e-9, func->get_limits().get_upper());
 }
