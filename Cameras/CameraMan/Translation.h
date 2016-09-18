@@ -8,17 +8,18 @@
 
 //=================================
 // included dependencies
-#include "CameraManVerbosity.h"
+#include "Verbosity.h"
 #include "Cameras/CameraDevice.h"
-
 //=================================
-class CameraManForTranslation: public CameraManVerbosity {
+namespace CameraMan {
+
+class Translation: public Verbosity {
 public:
 
-	CameraManForTranslation(CameraDevice* camera_to_work_with);
+	Translation(CameraDevice* camera_to_work_with);
 	void set_default_position();
 	void set_default_position(const Vec3 default_pos);
-	void move_for();
+	void move_forward();
 	void move_back();
 	void move_left();
 	void move_right();
@@ -35,4 +36,5 @@ private:
 	void print_camera_moved_in_direction(const std::string dir)const;
 	double translation_increment()const;
 };
+}//CameraMan
 #endif // __CAMERAMANFORTRANSLATION_H_INCLUDE__

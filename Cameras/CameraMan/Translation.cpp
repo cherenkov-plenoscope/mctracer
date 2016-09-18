@@ -1,19 +1,20 @@
-#include "CameraManForTranslation.h"
+#include "Translation.h"
+namespace CameraMan {
 //------------------------------------------------------------------------------
-CameraManForTranslation::CameraManForTranslation(CameraDevice* camera_to_work_with) {
+Translation::Translation(CameraDevice* camera_to_work_with) {
 	camera = camera_to_work_with;
 }
 //------------------------------------------------------------------------------
-void CameraManForTranslation::set_default_position(){
+void Translation::set_default_position(){
 	camera->update_position(default_position);
 }
 //------------------------------------------------------------------------------
-void CameraManForTranslation::set_default_position(const Vec3 default_pos) {
+void Translation::set_default_position(const Vec3 default_pos) {
 	default_position = default_pos;
 	camera->update_position(default_position);
 }
 //------------------------------------------------------------------------------
-void CameraManForTranslation::move_for(){
+void Translation::move_forward(){
 	camera->update_position(
 		camera->get_position_in_world() +
 		camera->get_normalized_pointing_get_direction()*translation_increment() 
@@ -21,7 +22,7 @@ void CameraManForTranslation::move_for(){
 	if(verbose) print_camera_moved_in_direction("forward");
 }
 //------------------------------------------------------------------------------
-void CameraManForTranslation::move_back(){
+void Translation::move_back(){
 	camera->update_position(
 		camera->get_position_in_world() -
 		camera->get_normalized_pointing_get_direction()*translation_increment() 
@@ -29,7 +30,7 @@ void CameraManForTranslation::move_back(){
 	if(verbose) print_camera_moved_in_direction("back");
 }
 //------------------------------------------------------------------------------
-void CameraManForTranslation::move_left(){
+void Translation::move_left(){
 	camera->update_position(
 		camera->get_position_in_world() -
 		camera->direction_to_the_right_of_the_camera()*translation_increment() 
@@ -37,7 +38,7 @@ void CameraManForTranslation::move_left(){
 	if(verbose) print_camera_moved_in_direction("left");
 }
 //------------------------------------------------------------------------------
-void CameraManForTranslation::move_right(){
+void Translation::move_right(){
 	camera->update_position(
 		camera->get_position_in_world() +
 		camera->direction_to_the_right_of_the_camera()*translation_increment() 
@@ -45,18 +46,18 @@ void CameraManForTranslation::move_right(){
 	if(verbose) print_camera_moved_in_direction("right");
 }
 //------------------------------------------------------------------------------
-double CameraManForTranslation::translation_increment()const{
+double Translation::translation_increment()const{
 	return 0.5/camera->get_FoV_in_rad();
 }
 //------------------------------------------------------------------------------
-void CameraManForTranslation::print_camera_moved_in_direction(
+void Translation::print_camera_moved_in_direction(
 	const std::string dir
 )const{
 	std::cout << camera->get_name() << " move " << dir << ": ";
 	std::cout << camera->get_position_in_world() << "\n";
 }
 //------------------------------------------------------------------------------
-void CameraManForTranslation::move_right(const double step_in_m){
+void Translation::move_right(const double step_in_m){
 	camera->update_position(
 		camera->get_position_in_world() +
 		camera->direction_to_the_right_of_the_camera()*step_in_m 
@@ -64,7 +65,7 @@ void CameraManForTranslation::move_right(const double step_in_m){
 	if(verbose) print_camera_moved_in_direction("right");
 }
 //------------------------------------------------------------------------------
-void CameraManForTranslation::move_up() {
+void Translation::move_up() {
 	camera->update_position(
 		camera->get_position_in_world() + 
 		Vec3::unit_z*translation_increment() 
@@ -72,7 +73,7 @@ void CameraManForTranslation::move_up() {
 	if(verbose) print_camera_moved_in_direction("up");	
 }
 //------------------------------------------------------------------------------
-void CameraManForTranslation::move_down() {
+void Translation::move_down() {
 	camera->update_position(
 		camera->get_position_in_world() - 
 		Vec3::unit_z*translation_increment() 
@@ -80,7 +81,7 @@ void CameraManForTranslation::move_down() {
 	if(verbose) print_camera_moved_in_direction("up");
 }
 //------------------------------------------------------------------------------
-void CameraManForTranslation::move_to(const Vec3 pos) {
+void Translation::move_to(const Vec3 pos) {
 	camera->update_position(pos);
 
 	if(verbose) {
@@ -89,3 +90,4 @@ void CameraManForTranslation::move_to(const Vec3 pos) {
 	}	
 }
 //------------------------------------------------------------------------------
+}//CameraMan

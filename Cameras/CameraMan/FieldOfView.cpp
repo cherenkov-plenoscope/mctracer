@@ -1,63 +1,64 @@
-#include "CameraManForFieldOfView.h"
+#include "FieldOfView.h"
 #include "Tools/Tools.h"
+namespace CameraMan {
 //------------------------------------------------------------------------------
-CameraManFoV::CameraManFoV(CameraDevice* camera_to_work_with) {
+FieldOfView::FieldOfView(CameraDevice* camera_to_work_with) {
 	camera = camera_to_work_with;
 	set_default_FoV();
 }
 //------------------------------------------------------------------------------
-void CameraManFoV::set_default_FoV() {
+void FieldOfView::set_default_FoV() {
 	camera->set_FoV_in_rad( default_FoV_in_rad );
 }
 //------------------------------------------------------------------------------
-void CameraManFoV::increase_FoV_when_possible() {
-	if(FoV_is_not_too_large_when_increased())
-		increase_FoV();
+void FieldOfView::increase_when_possible() {
+	if(too_large_when_increased())
+		increase();
 	else
 		print_can_not_be_increased_when_verbose();
 }
 //------------------------------------------------------------------------------
-void CameraManFoV::decrease_FoV_when_possible() {
-	if(FoV_is_not_too_small_when_decreased())
-		decrease_FoV();
+void FieldOfView::decrease_when_possible() {
+	if(too_small_when_decreased())
+		decrease();
 	else
 		print_can_not_be_decreased_when_verbose();
 }
 //------------------------------------------------------------------------------
-double CameraManFoV::FoV_rate()const {
+double FieldOfView::rate()const {
 	return 1.1;
 }
 //------------------------------------------------------------------------------
-bool CameraManFoV::FoV_is_not_too_large_when_increased()const {
-	return camera->get_FoV_in_rad()*FoV_rate() < max_FoV_in_rad;
+bool FieldOfView::too_large_when_increased()const {
+	return camera->get_FoV_in_rad()*rate() < max_FoV_in_rad;
 }
 //------------------------------------------------------------------------------
-bool CameraManFoV::FoV_is_not_too_small_when_decreased()const {
-	return camera->get_FoV_in_rad()/FoV_rate() > min_FoV_in_rad;
+bool FieldOfView::too_small_when_decreased()const {
+	return camera->get_FoV_in_rad()/rate() > min_FoV_in_rad;
 }
 //------------------------------------------------------------------------------
-void  CameraManFoV::increase_FoV() {
-	camera->set_FoV_in_rad( camera->get_FoV_in_rad()*FoV_rate());
-	print_FoV_manipulation_when_verbose();
+void  FieldOfView::increase() {
+	camera->set_FoV_in_rad( camera->get_FoV_in_rad()*rate());
+	print_manipulation_when_verbose();
 }
 //------------------------------------------------------------------------------
-void  CameraManFoV::decrease_FoV() {
-	camera->set_FoV_in_rad( camera->get_FoV_in_rad()/FoV_rate());
-	print_FoV_manipulation_when_verbose();
+void  FieldOfView::decrease() {
+	camera->set_FoV_in_rad( camera->get_FoV_in_rad()/rate());
+	print_manipulation_when_verbose();
 }
 //------------------------------------------------------------------------------
-double CameraManFoV::get_default_FoV_in_rad()const {
+double FieldOfView::get_default_FoV_in_rad()const {
 	return default_FoV_in_rad;
 }
 //------------------------------------------------------------------------------
-void CameraManFoV::print_FoV_manipulation_when_verbose()const {
+void FieldOfView::print_manipulation_when_verbose()const {
 	if(verbose){
 		print_prefix();
 		std::cout << Rad2Deg(camera->get_FoV_in_rad()) << " DEG\n";	
 	}
 }
 //------------------------------------------------------------------------------
-void CameraManFoV::print_can_not_be_decreased_when_verbose()const {
+void FieldOfView::print_can_not_be_decreased_when_verbose()const {
 	if(verbose){
 		print_prefix();
 		std::cout << "Can not decrease FoV any further. Min Fov: ";
@@ -65,7 +66,7 @@ void CameraManFoV::print_can_not_be_decreased_when_verbose()const {
 	}
 }
 //------------------------------------------------------------------------------
-void CameraManFoV::print_can_not_be_increased_when_verbose()const {
+void FieldOfView::print_can_not_be_increased_when_verbose()const {
 	if(verbose){
 		print_prefix();
 		std::cout << "Can not increase FoV any further. Max Fov: ";
@@ -73,7 +74,8 @@ void CameraManFoV::print_can_not_be_increased_when_verbose()const {
 	}
 }
 //------------------------------------------------------------------------------
-void CameraManFoV::print_prefix()const {
+void FieldOfView::print_prefix()const {
 	std::cout << camera->get_name() << " FoV: ";
 }
 //------------------------------------------------------------------------------
+}//CameraMan

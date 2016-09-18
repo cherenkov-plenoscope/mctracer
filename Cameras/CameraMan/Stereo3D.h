@@ -10,12 +10,14 @@ class Frame;
 // included dependencies
 #include "Core/DistanceMeter.h"
 #include "Cameras/CameraDevice.h"
-#include "CameraManVerbosity.h"
+#include "Verbosity.h"
 //=================================
-class CameraManForStereo3D: public CameraManVerbosity {
+namespace CameraMan {
+
+class Stereo3D: public Verbosity {
 public:
 	
-	CameraManForStereo3D(CameraDevice* camera_to_work_with);
+	Stereo3D(CameraDevice* camera_to_work_with);
 	void aquire_stereo_image(	
 		const Frame* world,
 		const TracerSettings* settings
@@ -23,7 +25,7 @@ public:
 	void increase_stereo_offset();
 	void decrease_stereo_offset();
 	const CameraImage* get_anaglyph_stereo3D_image();
-	void use_same_stereo_offset_as(const CameraManForStereo3D *college);
+	void use_same_stereo_offset_as(const Stereo3D *college);
 private:
 
 	CameraDevice* camera;
@@ -76,4 +78,5 @@ private:
 		const TracerSettings* settings
 	);
 };
+}//CameraMan
 #endif // __CAMERAMANFORSTEREO3D_H_INCLUDE__

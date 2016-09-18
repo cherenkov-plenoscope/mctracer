@@ -32,7 +32,7 @@ TEST_F(CameraManTest, creation) {
 
 	EXPECT_EQ(initial_FoV_in_rad, cam->get_FoV_in_rad());
 
-	CameraManFoV FoVCamMan( cam );
+	CameraMan::FieldOfView FoVCamMan( cam );
 
 	EXPECT_NE(FoVCamMan.get_default_FoV_in_rad(), initial_FoV_in_rad);
 	EXPECT_EQ(FoVCamMan.get_default_FoV_in_rad(), cam->get_FoV_in_rad());
@@ -40,10 +40,10 @@ TEST_F(CameraManTest, creation) {
 //------------------------------------------------------------------------------
 TEST_F(CameraManTest, increase_FoV) {
 
-	CameraManFoV FoVCamMan( cam );
+	CameraMan::FieldOfView FoVCamMan( cam );
 
 	for(int i=0; i<250; i++)
-		FoVCamMan.increase_FoV_when_possible();
+		FoVCamMan.increase_when_possible();
 
 	EXPECT_TRUE(cam->get_FoV_in_rad() > Deg2Rad(160.0));
 	EXPECT_TRUE(cam->get_FoV_in_rad() < Deg2Rad(180.0));
@@ -51,10 +51,10 @@ TEST_F(CameraManTest, increase_FoV) {
 //------------------------------------------------------------------------------
 TEST_F(CameraManTest, decrease_FoV) {
 
-	CameraManFoV FoVCamMan( cam );
+	CameraMan::FieldOfView FoVCamMan( cam );
 
 	for(int i=0; i<250; i++)
-		FoVCamMan.decrease_FoV_when_possible();
+		FoVCamMan.decrease_when_possible();
 
 	EXPECT_TRUE(cam->get_FoV_in_rad() > Deg2Rad(0.0));
 	EXPECT_TRUE(cam->get_FoV_in_rad() < Deg2Rad(0.003));
@@ -62,9 +62,9 @@ TEST_F(CameraManTest, decrease_FoV) {
 //------------------------------------------------------------------------------
 TEST_F(CameraManTest, default_FoV) {
 
-	CameraManFoV FoVCamMan( cam );
+	CameraMan::FieldOfView FoVCamMan( cam );
 	
-	FoVCamMan.increase_FoV_when_possible();
+	FoVCamMan.increase_when_possible();
 
 	EXPECT_NE(FoVCamMan.get_default_FoV_in_rad(), cam->get_FoV_in_rad());
 
@@ -75,18 +75,18 @@ TEST_F(CameraManTest, default_FoV) {
 //------------------------------------------------------------------------------
 TEST_F(CameraManTest, increase_and_decrease_FoV) {
 
-	CameraManFoV FoVCamMan( cam );
+	CameraMan::FieldOfView FoVCamMan( cam );
 
 	FoVCamMan.set_verbosity(false);
 
 	for(int i=0; i<250; i++)
-		FoVCamMan.decrease_FoV_when_possible();
+		FoVCamMan.decrease_when_possible();
 
 	EXPECT_TRUE(cam->get_FoV_in_rad() > Deg2Rad(0.0));
 	EXPECT_TRUE(cam->get_FoV_in_rad() < Deg2Rad(0.003));
 
 	for(int i=0; i<250; i++)
-		FoVCamMan.increase_FoV_when_possible();
+		FoVCamMan.increase_when_possible();
 
 	EXPECT_TRUE(cam->get_FoV_in_rad() > Deg2Rad(160.0));
 	EXPECT_TRUE(cam->get_FoV_in_rad() < Deg2Rad(180.0));
@@ -98,7 +98,7 @@ TEST_F(CameraManTest, default_rotation) {
 	Rot3 looking_in_pos_x_dir(0.0,Deg2Rad(-90.0),0.0);
 
 	cam->update_orientation(non_default_rotation);
-	CameraManForRotation rot_operator( cam );
+	CameraMan::Rotation rot_operator( cam );
 	rot_operator.set_default_rotation(looking_in_pos_x_dir);
 
 	EXPECT_EQ(looking_in_pos_x_dir, cam->get_rotation_in_world());
@@ -106,7 +106,7 @@ TEST_F(CameraManTest, default_rotation) {
 //------------------------------------------------------------------------------
 TEST_F(CameraManTest, look_up) {
 
-	CameraManForRotation rot_operator( cam );
+	CameraMan::Rotation rot_operator( cam );
 	rot_operator.set_default_rotation(Rot3(0.0,Deg2Rad(-90.0),0.0));
 
 	for(int i=0; i<50; i++)
@@ -118,7 +118,7 @@ TEST_F(CameraManTest, look_up) {
 //------------------------------------------------------------------------------
 TEST_F(CameraManTest, look_down) {
 
-	CameraManForRotation rot_operator( cam );
+	CameraMan::Rotation rot_operator( cam );
 	rot_operator.set_default_rotation(Rot3(0.0,Deg2Rad(-90.0),0.0));
 
 	for(int i=0; i<50; i++)

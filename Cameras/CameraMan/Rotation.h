@@ -8,12 +8,14 @@
 
 //=================================
 // included dependencies
-#include "CameraManVerbosity.h"
+#include "Verbosity.h"
 #include "Cameras/CameraDevice.h"
 //=================================
-class CameraManForRotation: public CameraManVerbosity {
+namespace CameraMan {
+
+class Rotation: public Verbosity {
 public:
-	CameraManForRotation(CameraDevice* camera_to_work_with);
+	Rotation(CameraDevice* camera_to_work_with);
 	void set_default_rotation(const Rot3 rot);
 	void look_further_up_when_possible();
 	void look_further_down_when_possible();
@@ -46,4 +48,5 @@ private:
 		const std::string dir
 	)const;
 };
+}//CameraMan
 #endif // __CAMERAMANFORROTATION_H_INCLUDE__

@@ -45,10 +45,10 @@ private:
 
 	CameraImage image;
 
-	CameraManFoV 				*FoV_operator;
-	CameraManForTranslation 	*Translation_operator;
-	CameraManForRotation 		*Rotation_operator;
-	CameraManForStereo3D		*Stereo_operator;
+	CameraMan::FieldOfView 	*fov_operator;
+	CameraMan::Translation 	*translation_operator;
+	CameraMan::Rotation 	*rotation_operator;
+	CameraMan::Stereo3D		*stereo_operator;
 
 	bool stereo3D = false;
 

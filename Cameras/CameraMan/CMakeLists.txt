@@ -1,9 +1,9 @@
 set(SOURCE
    	${SOURCE}
-	${CMAKE_CURRENT_SOURCE_DIR}/CameraManVerbosity.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/CameraManForFieldOfView.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/CameraManForRotation.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/CameraManForStereo3D.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/CameraManForTranslation.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Verbosity.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/FieldOfView.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Rotation.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Stereo3D.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Translation.cpp
    	PARENT_SCOPE
 )
