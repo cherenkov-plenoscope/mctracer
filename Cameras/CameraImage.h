@@ -38,7 +38,6 @@ public:
 		CameraImage* left_image, CameraImage* right_image
 	);
 	void scale(const uint scale);
-	void get_component(const Color color);
 private:
 
 	void convert_to_grayscale();
