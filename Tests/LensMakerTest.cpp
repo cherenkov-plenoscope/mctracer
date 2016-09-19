@@ -127,7 +127,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 		Photons::transform_all_photons(Trafo, &photons);
 
 		// propagation settings
-		TracerSettings settings;	
+		PropagationConfig settings;	
 		settings.use_multithread_when_possible = false;
 
 		// photon propagation

@@ -43,5 +43,5 @@ world.set_mother_and_child(tree)
 world.init_tree_based_on_mother_child_relations()
 
 
-propagation_settings = TracerSettings()
+propagation_settings = PropagationConfig()
 cam =FreeOrbitCamera(world, propagation_settings)

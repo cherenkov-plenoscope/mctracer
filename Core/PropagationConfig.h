@@ -1,7 +1,7 @@
 //=================================
 // include guard
-#ifndef __TracerSettings_H_INCLUDED__
-#define __TracerSettings_H_INCLUDED__
+#ifndef __PropagationConfig_H_INCLUDED__
+#define __PropagationConfig_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
@@ -15,13 +15,13 @@
 #include <sstream>
 
 //=================================
-struct TracerSettings {
+struct PropagationConfig {
 
 	uint max_number_of_interactions_per_photon;
 	bool use_multithread_when_possible;
 	uint pseudo_random_number_seed;
 
-	static const TracerSettings default_settings;
-	TracerSettings();	
+	static const PropagationConfig default_config;
+	PropagationConfig();	
 };
-#endif // __TracerSettings_H_INCLUDED__ 
+#endif // __PropagationConfig_H_INCLUDED__ 

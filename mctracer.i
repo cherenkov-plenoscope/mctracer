@@ -24,7 +24,7 @@
 	#include "Core/Rot3.h"
 	#include "Core/SurfaceEntity.h"
 	#include "Core/TimeStamp.h"
-	#include "Core/TracerSettings.h"
+	#include "Core/PropagationConfig.h"
 
 	#include "Core/Function/LimitsFunction.h"
 	#include "Core/Function/Func1DFunction.h"
@@ -98,7 +98,7 @@ namespace std {
 %include "Core/Rot3.h"
 %include "Core/SurfaceEntity.h"
 %include "Core/TimeStamp.h"
-%include "Core/TracerSettings.h"
+%include "Core/PropagationConfig.h"
 
 %include "Core/Function/LimitsFunction.h"
 %include "Core/Function/Func1DFunction.h"

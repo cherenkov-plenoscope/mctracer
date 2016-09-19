@@ -14,7 +14,7 @@
 #include "SignalProcessing/PhotoElectricConverter.h"
 #include "Xml/Xml.h"
 #include "Xml/Factory/SceneryFactory.h"
-#include "Xml/Factory/TracerSettingsFab.h"
+#include "Xml/Factory/PropagationConfigFab.h"
 #include "SignalProcessing/SimpleTDCQDC.h"
 #include "Tools/PathTools.h"
 
@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // BASIC SETTINGS
-    TracerSettings settings = Xml::Configs::get_TracerSettings_from_node(
+    PropagationConfig settings = Xml::Configs::get_PropagationConfig_from_node(
         config_node.child("settings")
     );
 

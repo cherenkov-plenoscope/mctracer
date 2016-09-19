@@ -1,12 +1,12 @@
 #include "gtest/gtest.h"
 #include "Scenery/SegmentedReflector/SegmentedReflector.h"
-#include "Core/TracerSettings.h"
+#include "Core/PropagationConfig.h"
 
 class PostInitFrameSpeed : public ::testing::Test {
 protected:
     Frame world;
     Frame* reflector;
-    TracerSettings settings;
+    PropagationConfig settings;
     double Zd_Rad = 45.0;
     double Az_Rad = 75.0;
     Rot3 new_rot;

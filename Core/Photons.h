@@ -24,21 +24,21 @@ namespace Photons {
 	void propagate_photons_in_scenery_with_settings(
 		vector<Photon> *photons,
 		const Frame *world, 
-		const TracerSettings *settings,
+		const PropagationConfig *settings,
 		Random::Generator* prng
 	);	
 
 	void propagate_photons_using_single_thread(
 		vector<Photon> *photons,
 		const Frame* world, 
-		const TracerSettings* settings,
+		const PropagationConfig* settings,
 		Random::Generator* prng
 	);
 
 	void propagate_photons_using_multi_thread(
 		vector<Photon> *photons,
 		const Frame* world, 
-		const TracerSettings* settings
+		const PropagationConfig* settings
 	);
 
 	// In Out to raw matrix vec<vec<d>>

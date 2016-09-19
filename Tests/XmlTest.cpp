@@ -219,12 +219,12 @@ TEST_F(XmlTest, functions) {
 	EXPECT_EQ(1200e-9, func->get_limits().get_upper());
 }
 //------------------------------------------------------------------------------
-#include "Xml/Factory/TracerSettingsFab.h"
-TEST_F(XmlTest, TracerSettings) {
+#include "Xml/Factory/PropagationConfigFab.h"
+TEST_F(XmlTest, PropagationConfig) {
 
 	const std::string path = "xml/tracer_settings.xml";
 
-	TracerSettings out;
+	PropagationConfig out;
 
 	out.max_number_of_interactions_per_photon = 1337;
 	out.pseudo_random_number_seed = 42;
@@ -234,7 +234,7 @@ TEST_F(XmlTest, TracerSettings) {
 
 	Xml::Document doc(path);
 	Xml::Node node = doc.node();
-	TracerSettings in = Xml::Configs::get_TracerSettings_from_node(node.child("settings"));
+	PropagationConfig in = Xml::Configs::get_PropagationConfig_from_node(node.child("settings"));
 
 	EXPECT_EQ(in.max_number_of_interactions_per_photon, out.max_number_of_interactions_per_photon);
 	EXPECT_EQ(in.pseudo_random_number_seed, out.pseudo_random_number_seed);

@@ -46,7 +46,7 @@ TEST_F(PhotonTest, reject_negative_wavelength) {
 //------------------------------------------------------------------------------
 TEST_F(PhotonTest, PropagationSimpleGeometry){
 
-    TracerSettings setup;
+    PropagationConfig setup;
     setup.use_multithread_when_possible = false;
 
     int number_of_bounces = 42;
@@ -147,7 +147,7 @@ TEST_F(PhotonTest, Reflections){
     \/ +Y
 
     */                              
-    TracerSettings setup;
+    PropagationConfig setup;
     setup.use_multithread_when_possible = false;
 
     Vec3 pos = Vec3::null;
@@ -246,7 +246,7 @@ TEST_F(PhotonTest, Reflections){
 //------------------------------------------------------------------------------
 TEST_F(PhotonTest, Refraction){
                            
-    TracerSettings setup;
+    PropagationConfig setup;
     setup.use_multithread_when_possible = false;
 
     // create a test setup with two planes and high refractive index in between
@@ -334,7 +334,7 @@ TEST_F(PhotonTest, Refraction){
 //------------------------------------------------------------------------------
 TEST_F(PhotonTest, absorbtion_in_medium){
                            
-    TracerSettings setup;
+    PropagationConfig setup;
     setup.use_multithread_when_possible = false;
 
     // create a test setup with two planes and high refractive index in between

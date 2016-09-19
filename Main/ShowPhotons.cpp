@@ -6,7 +6,7 @@
 #include "Corsika/Tools.h"
 #include "Corsika/EventIo/PhotonFactory.h"
 #include "Xml/Factory/VisualConfigFab.h"
-#include "Xml/Factory/TracerSettingsFab.h"
+#include "Xml/Factory/PropagationConfigFab.h"
 #include "Cameras/FlyingCamera.h"
 #include "Scenery/TrajectoryFactory.h"
 #include "Scenery/Scenery.h"
@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
     }
     
     // settings
-    TracerSettings settings;
+    PropagationConfig settings;
 
     // Random
     Random::Mt19937 prng(settings.pseudo_random_number_seed);

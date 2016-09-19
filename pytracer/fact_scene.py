@@ -68,7 +68,7 @@ tree_node = T.set_mother_and_child_frame_dict(world)
 tree_node.init_tree_based_on_mother_child_relations()
 
 texture = T.Texture('./scenery/chile_night_sky.tif')
-propagation_settings = T.TracerSettings()
+propagation_settings = T.PropagationConfig()
 propagation_settings.set_sky_dome(texture)
 cam = T.FreeOrbitCamera(tree_node, propagation_settings)
     

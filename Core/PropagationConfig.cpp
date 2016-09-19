@@ -1,9 +1,9 @@
-#include "TracerSettings.h"
+#include "PropagationConfig.h"
 #include "Tools/Tools.h"
 
-const TracerSettings TracerSettings::default_settings = TracerSettings();
+const PropagationConfig PropagationConfig::default_config = PropagationConfig();
 //------------------------------------------------------------------------------
-TracerSettings::TracerSettings()
+PropagationConfig::PropagationConfig()
 {
 	use_multithread_when_possible = true;
 	max_number_of_interactions_per_photon = 5;

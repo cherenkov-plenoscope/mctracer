@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "Core/Function/ConstantFunction.h"
-#include "Core/TracerSettings.h"
+#include "Core/PropagationConfig.h"
 #include "Core/Rot3.h"
 #include "Core/Frame.h"
 #include "Core/RayAndFrame.h"
@@ -13,7 +13,7 @@ using namespace std;
 class PlaneIntersectionTest : public ::testing::Test {
  protected:
 
-	TracerSettings setup;
+	PropagationConfig setup;
 	Vec3    pos;
 	Rot3  rot;
 	Function::Constant* refl_vs_wavl;

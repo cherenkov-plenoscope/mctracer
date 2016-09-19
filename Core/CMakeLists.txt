@@ -13,7 +13,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Ray.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/RayAndFrame.cpp	
 	${CMAKE_CURRENT_SOURCE_DIR}/RayForPropagation.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/TracerSettings.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/PropagationConfig.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Photon.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PhotonAndFrame.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Photons.cpp

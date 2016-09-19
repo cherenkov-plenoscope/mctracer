@@ -3,7 +3,7 @@
 #include "Tools/AsciiIo.h"
 #include "Xml/Factory/SceneryFactory.h"
 #include "PhotonSensor/PhotonSensor.h"
-#include "Xml/Factory/TracerSettingsFab.h"
+#include "Xml/Factory/PropagationConfigFab.h"
 #include "PhotonsReader/PhotonsReader.h"
 #include "Scenery/Scenery.h"
 using std::string;
@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
    
     //--------------------------------------------------------------------------
     // BASIC SETTINGS
-	TracerSettings settings = Xml::Configs::get_TracerSettings_from_node(se);
+	PropagationConfig settings = Xml::Configs::get_PropagationConfig_from_node(se);
 	
 	//--------------------------------------------------------------------------
 	// Random

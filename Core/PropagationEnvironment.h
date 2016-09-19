@@ -9,15 +9,15 @@
 //=================================
 // included dependencies
 #include "Core/Frame.h"
-#include "Core/TracerSettings.h"
+#include "Core/PropagationConfig.h"
 #include "Core/Random/Random.h"
 
 class PropagationEnvironment {
 public:
 
 	const Frame* world_geometry = &Frame::void_frame;
-	const TracerSettings* propagation_options = 
-		&TracerSettings::default_settings;
+	const PropagationConfig* propagation_options = 
+		&PropagationConfig::default_config;
 	Random::Generator* random_engine =
 		&Random::void_generator;
 		

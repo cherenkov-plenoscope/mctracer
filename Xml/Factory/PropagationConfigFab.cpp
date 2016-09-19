@@ -1,17 +1,17 @@
-#include "TracerSettingsFab.h"
+#include "PropagationConfigFab.h"
 namespace Xml {
 	namespace Configs {
 //------------------------------------------------------------------------------
-TracerSettings get_TracerSettings_from_node(Xml::Node node) {
+PropagationConfig get_PropagationConfig_from_node(Xml::Node node) {
 
-	TracerSettings vc;
+	PropagationConfig vc;
 	vc.pseudo_random_number_seed = node.attribute2int("pseudo_random_number_seed");
 	vc.max_number_of_interactions_per_photon = node.attribute2int("max_number_of_interactions_per_photon");
 	vc.use_multithread_when_possible = node.attribute2bool("use_multithread_when_possible");
 	return vc;
 }
 //------------------------------------------------------------------------------
-std::string to_node(const TracerSettings &settings) {
+std::string to_node(const PropagationConfig &settings) {
 
 	std::stringstream out;
 	out << "<settings\n";

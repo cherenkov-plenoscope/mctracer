@@ -3,7 +3,7 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/Function.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/VisualConfigFab.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FrameFab.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/TracerSettingsFab.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PropagationConfigFab.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/InternalPhotonSource.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SceneryFactory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FunctionFromXml.cpp

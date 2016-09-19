@@ -14,7 +14,7 @@ TEST_F(SceneryFactoryTest, call_SceneryFactory) {
     xml2frame.append_to_frame_in_scenery(&scenery.root, &scenery);
     EXPECT_EQ(scenery.root.get_name(), "root");
 
-    //TracerSettings settings;
+    //PropagationConfig settings;
     //FlyingCamera free(xml2frame.scenery, &settings);
 }
 //------------------------------------------------------------------------------

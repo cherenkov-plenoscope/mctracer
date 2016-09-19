@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "Core/Vec3.h"
-#include "Core/TracerSettings.h"
+#include "Core/PropagationConfig.h"
 #include "Scenery/Primitive/Sphere.h"
 #include "Core/Rot3.h"
 #include "Core/Random/Random.h"
@@ -13,7 +13,7 @@ using namespace std;
 class SphereIntersectionTest : public ::testing::Test {
 protected:
 
-	TracerSettings setup;
+	PropagationConfig setup;
 	Vec3    pos;
 	Rot3  rot; 
 	Color*      colo;

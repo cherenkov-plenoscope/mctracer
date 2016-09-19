@@ -2,7 +2,7 @@
 #include "Core/Photons.h"
 #include "Scenery/StereoLitography/StereoLitography.h"
 #include "Xml/Factory/VisualConfigFab.h"
-#include "Xml/Factory/TracerSettingsFab.h"
+#include "Xml/Factory/PropagationConfigFab.h"
 #include "Xml/Factory/SceneryFactory.h"
 #include "Cameras/FlyingCamera.h"
 #include "Scenery/Scenery.h"

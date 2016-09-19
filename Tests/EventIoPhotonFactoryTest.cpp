@@ -51,7 +51,7 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
                     world.init_tree_based_on_mother_child_relations();
 
                     // propagation settings
-                    TracerSettings settings;    
+                    PropagationConfig settings;    
                     settings.use_multithread_when_possible = false;
 
                     // photon propagation down to the ground
@@ -284,7 +284,7 @@ TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         world.init_tree_based_on_mother_child_relations();
 
         // propagation settings
-        TracerSettings settings;    
+        PropagationConfig settings;    
         settings.use_multithread_when_possible = false;
 
         // photon propagation

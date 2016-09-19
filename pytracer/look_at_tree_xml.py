@@ -2,7 +2,7 @@
 import mctracer as T
 import os.path
 
-settings = T.TracerSettings()
+settings = T.PropagationConfig()
 
 wf = T.WorldFactory()
 

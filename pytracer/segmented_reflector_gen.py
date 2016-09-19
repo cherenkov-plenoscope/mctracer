@@ -197,7 +197,7 @@ if __name__ == '__main__':
 
     def start():
         texture = T.Texture('./scenery/chile_night_sky.tif')
-        propagation_settings = T.TracerSettings()
+        propagation_settings = T.PropagationConfig()
         propagation_settings.set_sky_dome(texture)
         cam = T.FreeOrbitCamera(world, propagation_settings)
 

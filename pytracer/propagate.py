@@ -66,7 +66,7 @@ def make_photons(event_bunches, causal_supports, causal_directions):
 
     return photons
 
-settings = T.TracerSettings()
+settings = T.PropagationConfig()
 settings.SetMultiThread(False)
 settings.store_only_last_intersection(True)
 

@@ -1,6 +1,6 @@
 # coding: utf-8
 from mctracer import *
-settings = TracerSettings()
+settings = PropagationConfig()
 
 world = Frame()
 world.set_name_pos_rot("world", Vec3.null, Rot3.null)
