@@ -8,8 +8,6 @@
 #include "Scenery/Primitive/Plane.h"
 #include "Core/Vec3.h"
 
-using namespace std;
-
 class PlaneIntersectionTest : public ::testing::Test {
  protected:
 

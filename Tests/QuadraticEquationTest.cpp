@@ -1,8 +1,6 @@
 #include "gtest/gtest.h"
 #include "Scenery/Geometry/QuadraticEquation.h"
 
-using namespace std;
-
 class QuadraticEquationTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(QuadraticEquationTest, no_valid_solution) {

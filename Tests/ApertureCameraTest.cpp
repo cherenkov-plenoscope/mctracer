@@ -1,8 +1,6 @@
 #include "gtest/gtest.h"
 #include "Cameras/ApertureCamera.h"
 
-using namespace std;
-
 // The fixture for testing class Foo.
 class ApertureCameraTest : public ::testing::Test {
  protected:

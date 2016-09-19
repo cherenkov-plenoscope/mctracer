@@ -1,8 +1,6 @@
 #include "gtest/gtest.h"
 #include "Core/FresnelRefractionAndReflection.h"
 
-using namespace std;
-
 class FresnelRefractionAndReflectionTest : public ::testing::Test {
 };
 //----------------------------------------------------------------------

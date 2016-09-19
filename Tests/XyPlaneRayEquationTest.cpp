@@ -2,7 +2,6 @@
 #include "Scenery/Geometry/HexagonalPrismZ.h"
 #include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
 #include "Core/Ray.h"
-using namespace std;
 
 class XyPlaneRayEquationTest : public ::testing::Test {
 };

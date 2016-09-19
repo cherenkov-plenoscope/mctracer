@@ -14,8 +14,6 @@
 #include <math.h>
 #include <string>
 
-using namespace std;
-
 class PhotonTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(PhotonTest, creation) {

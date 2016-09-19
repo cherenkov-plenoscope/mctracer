@@ -6,8 +6,6 @@
 #include "Scenery/Primitive/Primitive.h"
 #include <array>
 
-using namespace std;
-
 class FrameTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(FrameTest, assert_name_is_valid) {

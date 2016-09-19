@@ -1,8 +1,6 @@
 #include "gtest/gtest.h"
 #include "Core/PropagationEnvironment.h"
 
-using namespace std;
-
 class PropagationEnvironmentTest : public ::testing::Test {
 protected:
 

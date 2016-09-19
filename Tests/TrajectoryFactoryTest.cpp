@@ -1,8 +1,6 @@
 #include "gtest/gtest.h"
 /*#include "Scenery/TrajectoryFactory.h"
 
-using namespace std;
-
 class TrajectoryFactoryTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(TrajectoryFactoryTest, constructor_using_RayForPropagation) {

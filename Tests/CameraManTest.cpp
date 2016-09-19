@@ -2,8 +2,6 @@
 #include "Cameras/CameraMan/CameraMan.h"
 #include "Cameras/PinHoleCamera.h"
 
-using namespace std;
-
 class CameraManTest : public ::testing::Test {
 protected:
 	PinHoleCamera *cam;	

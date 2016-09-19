@@ -1,8 +1,6 @@
 #include "gtest/gtest.h"
 #include "Core/Rot3.h"
 
-using namespace std;
-
 // The fixture for testing class Foo.
 class Rot3Test : public ::testing::Test {};
 //------------------------------------------------------------------------------
