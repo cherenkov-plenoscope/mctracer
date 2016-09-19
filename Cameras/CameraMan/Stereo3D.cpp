@@ -7,23 +7,22 @@ Stereo3D::Stereo3D(CameraDevice* camera_to_work_with) {
 //------------------------------------------------------------------------------
 void Stereo3D::aquire_stereo_image(
 	const Frame* world,
-	const TracerSettings* settings
+	const VisualConfig* visual_config
 ){
 	remember_initial_camera_config();
-	calc_pos_and_rot_for_left_and_right_camera_config(world, settings);
+	calc_pos_and_rot_for_left_and_right_camera_config(world);
 	set_up_camera_in_left_stereo_config();
-	take_left_image(world, settings);
+	take_left_image(world, visual_config);
 	set_up_camera_in_right_stereo_config();
-	take_right_image(world, settings);
+	take_right_image(world, visual_config);
 	set_up_camera_back_to_initial_config();
 }
 //------------------------------------------------------------------------------
 void Stereo3D::calc_pos_and_rot_for_left_and_right_camera_config(
-	const Frame* world,
-	const TracerSettings* settings
+	const Frame* world
 ){
 	set_positions_for_left_and_right_stereo_config();
-	set_object_distance_to_focus_on(world, settings);
+	set_object_distance_to_focus_on(world);
 	set_intersec_point_for_left_and_right_optical_axis();
 	set_pointing_dir_for_left_and_right_stereo_config();	
 }
@@ -45,17 +44,17 @@ void Stereo3D::set_positions_for_left_and_right_stereo_config(){
 //------------------------------------------------------------------------------
 void Stereo3D::take_left_image(
 	const Frame* world,
-	const TracerSettings* settings
+	const VisualConfig* visual_config
 ){
-	camera->acquire_image(world, settings);
+	camera->acquire_image(world, visual_config);
 	left_image = new CameraImage(camera->get_image());
 }
 //------------------------------------------------------------------------------
 void Stereo3D::take_right_image(
 	const Frame* world,
-	const TracerSettings* settings
+	const VisualConfig* visual_config
 ){
-	camera->acquire_image(world, settings);
+	camera->acquire_image(world, visual_config);
 	right_image = new CameraImage(camera->get_image());
 }
 //------------------------------------------------------------------------------
@@ -69,10 +68,7 @@ void Stereo3D::remmber_initial_camera_image_upward_get_direction(){
 		camera->get_image_upwards_direction_in_world_frame();
 }
 //------------------------------------------------------------------------------
-void Stereo3D::set_object_distance_to_focus_on(
-	const Frame* world,
-	const TracerSettings* settings
-){
+void Stereo3D::set_object_distance_to_focus_on(const Frame* world) {
 	Ray optical_axis = camera->get_optical_axis_in_world();
 	DistanceMeter dist_meter(&optical_axis, world);
 

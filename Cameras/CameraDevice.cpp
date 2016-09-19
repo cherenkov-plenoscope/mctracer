@@ -150,7 +150,8 @@ Ray CameraDevice::get_optical_axis_in_world()const{
 }
 //------------------------------------------------------------------------------
 void CameraDevice::acquire_image(
-	const Frame* world, const TracerSettings* settings
+	const Frame* world, 
+	const VisualConfig* visual_config
 ){
 	std::cout << "Calling " << __func__ << " in CameraDevice!\n";
 }

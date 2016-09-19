@@ -28,7 +28,7 @@ public:
 
 	virtual void acquire_image(	
 		const Frame* world, 
-		const TracerSettings* settings
+		const VisualConfig* visual_config
 	);
 
 	virtual void update_position(const Vec3 new_cam_pos_in_world);

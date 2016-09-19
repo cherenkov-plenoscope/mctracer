@@ -15,7 +15,7 @@ std::string CameraRay::get_print()const{
 Color CameraRay::trace(
 	const Frame* world,
 	uint refl_count,
-	const TracerSettings *settings
+	const VisualConfig *visual_config
 )const {
 	Color color;
 	const Intersection intersection = 
@@ -33,7 +33,7 @@ Color CameraRay::trace(
 			);
 
 			Color reflection_color = 
-				reflected_ray.trace(world, refl_count, settings);
+				reflected_ray.trace(world, refl_count, visual_config);
 
 			color = intersection.get_facing_color();
 			color.reflection_mix(
@@ -42,13 +42,13 @@ Color CameraRay::trace(
 			);
 		}else{
 
-			if(settings->visual.global_illumination.on)
-				color = shadow_of_sky_light(world, settings, intersection);
+			if(visual_config->global_illumination.on)
+				color = shadow_of_sky_light(world, visual_config, intersection);
 			else
 				color = intersection.get_facing_color();
 		}
 	}else{
-		color = settings->visual.sky_dome.get_color_for_direction(direction);
+		color = visual_config->sky_dome.get_color_for_direction(direction);
 	}
 
 	return color;
@@ -56,14 +56,14 @@ Color CameraRay::trace(
 //------------------------------------------------------------------------------
 Color CameraRay::shadow_of_sky_light(
 	const Frame* world,
-	const TracerSettings *settings,
+	const VisualConfig *visual_config,
 	const Intersection &intersection
 )const {
 
 	const double max_darkening = 0.750;
 
 	Vec3 specular_dir = intersection.get_reflection_direction_in_world_system(
-		settings->visual.global_illumination.incoming_direction
+		visual_config->global_illumination.incoming_direction
 	);
 
 	double darkening = specular_dir*direction;
@@ -74,7 +74,7 @@ Color CameraRay::shadow_of_sky_light(
 	Color color;
 	color = intersection.get_facing_color();
 
-	if(!is_iluminated_by_sky_light_source(world, settings, intersection))
+	if(!is_iluminated_by_sky_light_source(world, visual_config, intersection))
 		darkening = darkening*0.25;
 
 	color.reflection_mix(Color::black, max_darkening - darkening);	
@@ -84,20 +84,20 @@ Color CameraRay::shadow_of_sky_light(
 //------------------------------------------------------------------------------
 bool CameraRay::is_iluminated_by_sky_light_source(
 	const Frame* world,
-	const TracerSettings *settings,
+	const VisualConfig *visual_config,
 	const Intersection &intersection
 )const {
 
 	Ray ray_to_source(
 		intersection.get_intersection_vector_in_world_system(),
-		settings->visual.global_illumination.incoming_direction
+		visual_config->global_illumination.incoming_direction
 	);
 
 	const Intersection intersec_light_source = 
 		RayAndFrame::first_intersection(&ray_to_source, world);
 
 	double p = intersection.get_surface_normal_in_world_system()*
-		settings->visual.global_illumination.incoming_direction;
+		visual_config->global_illumination.incoming_direction;
 
 	if(surface_normal_is_facing_camera(intersection))
 		p = p*-1.0;	

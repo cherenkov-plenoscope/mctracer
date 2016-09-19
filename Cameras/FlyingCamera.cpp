@@ -5,18 +5,21 @@ using std::cout;
 using std::stringstream;
 using std::string;
 //------------------------------------------------------------------------------
-FlyingCamera::FlyingCamera(const Frame *world, const TracerSettings *settings) {	
+FlyingCamera::FlyingCamera(
+	const Frame *world, 
+	const VisualConfig *visual_config
+) {	
 	this->world = world;
-	this->settings = settings;
+	this->visual_config = visual_config;
 
 	flying_camera = new PinHoleCamera("Cam", 
-		settings->visual.preview.cols, 
-		settings->visual.preview.rows
+		visual_config->preview.cols, 
+		visual_config->preview.rows
 	);
 	
 	flying_camera_full_resolution = new PinHoleCamera("Cam", 
-		settings->visual.preview.cols*settings->visual.preview.scale, 
-		settings->visual.preview.rows*settings->visual.preview.scale
+		visual_config->preview.cols*visual_config->preview.scale, 
+		visual_config->preview.rows*visual_config->preview.scale
 	);
 
 	create_CameraMen_to_safely_operate_the_flying_camera();
@@ -212,14 +215,14 @@ string FlyingCamera::get_snapshot_filename() {
 ApertureCamera FlyingCamera::get_ApertureCamera_based_on_display_camera()const{
 
 	ApertureCamera apcam("Imax70mm", 
-		settings->visual.snapshot.cols, 
-		settings->visual.snapshot.rows
+		visual_config->snapshot.cols, 
+		visual_config->snapshot.rows
 	);
 
 	apcam.set_fStop_sesnorWidth_rayPerPixel(
-		settings->visual.snapshot.focal_length_over_aperture_diameter, 
-		settings->visual.snapshot.image_sensor_size_along_a_row, 
-		settings->visual.snapshot.rays_per_pixel
+		visual_config->snapshot.focal_length_over_aperture_diameter, 
+		visual_config->snapshot.image_sensor_size_along_a_row, 
+		visual_config->snapshot.rays_per_pixel
 	);
 
 	apcam.set_FoV_in_rad(flying_camera_full_resolution->get_FoV_in_rad());
@@ -261,15 +264,15 @@ const CameraImage* FlyingCamera::acquire_scaled_image_with_camera(
 
 			CameraMan::Stereo3D op(cam);
 			op.use_same_stereo_offset_as(stereo_operator);
-			op.aquire_stereo_image(world, settings);
+			op.aquire_stereo_image(world, visual_config);
 			image = *op.get_anaglyph_stereo3D_image();
-			image.scale(settings->visual.preview.scale);
+			image.scale(visual_config->preview.scale);
 			return &image;
 		}else{
 
-			cam->acquire_image(world, settings);
+			cam->acquire_image(world, visual_config);
 			image = *cam->get_image();
-			image.scale(settings->visual.preview.scale);
+			image.scale(visual_config->preview.scale);
 			return &image;
 		}	
 	}else{
@@ -278,11 +281,11 @@ const CameraImage* FlyingCamera::acquire_scaled_image_with_camera(
 
 			CameraMan::Stereo3D op(cam);
 			op.use_same_stereo_offset_as(stereo_operator);
-			op.aquire_stereo_image(world, settings);
+			op.aquire_stereo_image(world, visual_config);
 			return op.get_anaglyph_stereo3D_image();
 		}else{
 
-			cam->acquire_image(world, settings);
+			cam->acquire_image(world, visual_config);
 			return cam->get_image();
 		}	
 	}
@@ -368,12 +371,12 @@ void FlyingCamera::print_display_help_text()const {
 	cout << out.str();
 }
 //------------------------------------------------------------------------------
-void FlyingCamera::continue_with_new_scenery_and_settings(
+void FlyingCamera::continue_with_new_scenery_and_visual_config(
 	const Frame *world, 
-	const TracerSettings *settings
+	const VisualConfig *visual_config
 ) {
 	this->world = world;
-	this->settings = settings;	
+	this->visual_config = visual_config;
 	enter_interactive_display();
 }
 //------------------------------------------------------------------------------

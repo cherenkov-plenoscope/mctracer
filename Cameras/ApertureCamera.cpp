@@ -103,21 +103,15 @@ void ApertureCamera::update_aperture_radius() {
 	ApertureRadius_in_m = FocalLength_in_m/(2.0*FStopNumber);
 }
 //------------------------------------------------------------------------------
-void ApertureCamera::auto_focus(
-	const Frame* world,
-	const TracerSettings* settings
-){
-	set_focus_to(get_average_object_distance(world, settings));
+void ApertureCamera::auto_focus(const Frame* world) {
+	set_focus_to(get_average_object_distance(world));
 }
 //------------------------------------------------------------------------------
 uint ApertureCamera::_5_permil_of_pixels()const {
 	return image.get_number_of_pixels()*5e-4;
 }
 //------------------------------------------------------------------------------
-double ApertureCamera::get_average_object_distance(
-	const Frame* world,
-	const TracerSettings* settings
-) {
+double ApertureCamera::get_average_object_distance(const Frame* world) {
 	double sum_of_valid_object_distances = 0.0;
 	uint number_of_valid_distances = 0;
 
@@ -235,14 +229,14 @@ Vec3 ApertureCamera::camera_ray_direction_vector_in_world_frame(
 //------------------------------------------------------------------------------
 void ApertureCamera::acquire_image(
 	const Frame* world,
-	const TracerSettings* settings
+	const VisualConfig* visual_config
 ){	
 	CameraRay cam_ray;
 	uint pix, row, col;
 	const uint initial_interaction_counter = 0;
 	int HadCatch = 0;
 	
-	#pragma omp parallel shared(settings,world,HadCatch) private(pix,cam_ray,row,col) 
+	#pragma omp parallel shared(visual_config,world,HadCatch) private(pix,cam_ray,row,col) 
 	{	
 		#pragma omp for schedule(dynamic) 
 		for (pix = 0; pix < image.get_number_of_pixels(); pix++) 
@@ -261,7 +255,7 @@ void ApertureCamera::acquire_image(
 						cam_ray.trace(
 							world,
 							initial_interaction_counter,
-							settings
+							visual_config
 						)
 					);
 				}

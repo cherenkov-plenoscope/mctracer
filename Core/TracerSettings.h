@@ -10,7 +10,6 @@
 // included dependencies
 #include "Color.h"
 #include "Core/TracerException.h"
-#include "Cameras/VisualConfig.h"
 #include "Vec3.h"
 #include <string>
 #include <sstream>
@@ -21,8 +20,6 @@ struct TracerSettings {
 	uint max_number_of_interactions_per_photon;
 	bool use_multithread_when_possible;
 	uint pseudo_random_number_seed;
-
-	VisualConfig visual;
 
 	static const TracerSettings default_settings;
 	TracerSettings();	

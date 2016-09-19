@@ -54,18 +54,17 @@ int main(int argc, char* argv[]) {
     PathTools::Path scenery_path = PathTools::Path(args.find("--scenery")->second.asString());
     PathTools::Path photon_path = PathTools::Path(args.find("--input")->second.asString());
     
-    // settings
-    TracerSettings settings;
-    settings.use_multithread_when_possible = false;
-    settings.visual.photon_trajectories.radius = 2.0;
-
+    VisualConfig visual_config;
     if(args.find("--config")->second) {
         Xml::Document doc(args.find("--config")->second.asString());
         Xml::Node node = doc.node();
         Xml::Node vc_node = node.child("visual");
-        settings.visual = Xml::Configs::get_VisualConfig_from_node(vc_node);        
+        visual_config = Xml::Configs::get_VisualConfig_from_node(vc_node);        
     }
     
+    // settings
+    TracerSettings settings;
+
     // Random
     Random::Mt19937 prng(settings.pseudo_random_number_seed);
 
@@ -83,7 +82,7 @@ int main(int argc, char* argv[]) {
     // propagate each event
     uint event_counter = 0;
 
-    FlyingCamera free_orb(&scenery.root, &settings);
+    FlyingCamera free_orb(&scenery.root, &visual_config);
 
     while(corsika_run.has_still_events_left()) {
 
@@ -115,7 +114,9 @@ int main(int argc, char* argv[]) {
                     TrajectoryFactory traj(&ph);
                     traj.append_trajectory_to(&scenery.root);
                     scenery.root.init_tree_based_on_mother_child_relations();
-                    free_orb.continue_with_new_scenery_and_settings(&scenery.root, &settings);
+                    free_orb.continue_with_new_scenery_and_visual_config(
+                        &scenery.root, 
+                        &visual_config);
                     traj.erase_trajectory_from(&scenery.root);
                 }
             }

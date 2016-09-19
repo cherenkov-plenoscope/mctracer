@@ -55,16 +55,16 @@ int main(int argc, char* argv[]) {
         return 0;
     }
     
-    TracerSettings settings;
+    VisualConfig visual_config;
     if(args.find("--config")->second) {
         Xml::Document doc(args.find("--config")->second.asString());
         Xml::Node node = doc.node();
         Xml::Node vc_node = node.child("visual");
-        settings.visual = Xml::Configs::get_VisualConfig_from_node(vc_node);        
+        visual_config = Xml::Configs::get_VisualConfig_from_node(vc_node);        
     }
 
     scenery.root.init_tree_based_on_mother_child_relations();
-    FlyingCamera free(&scenery.root, &settings);
+    FlyingCamera free(&scenery.root, &visual_config);
 
     }catch(std::exception &error) {
         std::cerr << error.what(); 

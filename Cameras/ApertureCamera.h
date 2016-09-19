@@ -31,13 +31,10 @@ public:
 
 	void acquire_image(
 		const Frame* world,
-		const TracerSettings* settings
+		const VisualConfig* visual_config
 	);
 
-	void auto_focus(
-		const Frame* world,
-		const TracerSettings* settings
-	);
+	void auto_focus(const Frame* world);
 
 	std::string get_print()const;
 private:
@@ -84,10 +81,7 @@ private:
 	uint get_random_row();
 	uint get_random_col();
 
-	double get_average_object_distance(
-		const Frame* world,
-		const TracerSettings* settings
-	);
+	double get_average_object_distance(const Frame* world);
 	uint _5_permil_of_pixels()const;
 public:
 
