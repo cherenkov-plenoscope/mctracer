@@ -6,7 +6,6 @@
 //=================================
 // forward declared dependencies
 class Frame;
-class TracerSettings;
 //=================================
 // included dependencies
 //#include <omp.h>
