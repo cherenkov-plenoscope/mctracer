@@ -14,7 +14,7 @@
 using std::vector;
 using std::string;
 
-enum InteractionType { 
+enum Interaction { 
 	production,
 	absorption_in_void,
 
@@ -36,7 +36,7 @@ class RayForPropagation :public Ray{
 protected:
 
 	vector<Intersection> intersection_history;
-	vector<InteractionType> interaction_type_history;
+	vector<Interaction> interaction_history;
 
 	int simulation_truth_id;
 	// The sumilation truth identifier is a encoding additional information of
@@ -53,13 +53,13 @@ public:
 	int get_simulation_truth_id()const;
 	void push_back_intersection_and_type_to_propagation_history(
 		const Intersection& interact, 
-		const InteractionType type
+		const Interaction type
 	);
 	string get_print()const;
 	double get_accumulative_distance()const;
 	uint get_number_of_interactions_so_far()const;
 	const Intersection& get_intersection_at(const uint index)const;
-	InteractionType get_final_interaction_type()const;
+	Interaction get_final_interaction_type()const;
 	const Intersection& get_final_intersection()const;
 	virtual double get_time_of_flight()const;
 	Vec3 get_final_intersection_incident_vector_in_object_frame()const;
@@ -67,6 +67,6 @@ protected:
 
 	void push_back_production_of_ray();
 	string get_history_print()const;
-	string get_type_print(const InteractionType type)const;
+	string get_type_print(const Interaction type)const;
 };
 #endif // __RayForPropagation_H_INCLUDED__ 

@@ -55,7 +55,7 @@ void Propagator::get_absorbed_in_void_space() {
 	);
 }
 //------------------------------------------------------------------------------
-void Propagator::reflect_on_surface_and_propagate_on(const InteractionType type) {
+void Propagator::reflect_on_surface_and_propagate_on(const Interaction type) {
 	ph->set_support_and_direction(
 		isec.get_intersection_vector_in_world_system(),
 		isec.get_reflection_direction_in_world_system(ph->get_direction())

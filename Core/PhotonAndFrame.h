@@ -31,7 +31,7 @@ namespace PhotonAndFrame {
 		bool absorbed_in_medium_before_reaching_surface()const ;
 		void interact_with_object();
 		void get_absorbed_in_void_space();
-		void reflect_on_surface_and_propagate_on(const InteractionType type);
+		void reflect_on_surface_and_propagate_on(const Interaction type);
 		void reach_boundary_layer();
 		void fresnel_refraction_and_reflection();
 		void pass_the_boundary_layer(

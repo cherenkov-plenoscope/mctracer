@@ -47,7 +47,7 @@ string RayForPropagation::get_print()const {
 string RayForPropagation::get_history_print()const {
 	stringstream out;
 	int index = 0;
-	for(InteractionType type : interaction_type_history) {
+	for(Interaction type : interaction_history) {
 		out << ++index << ") " << get_type_print(type) << " in ";
 		out << intersection_history.at(index-1).get_object()->get_name();
 		out << " " << intersection_history.at(index-1).	
@@ -66,10 +66,10 @@ string RayForPropagation::get_history_print()const {
 //------------------------------------------------------------------------------
 void RayForPropagation::push_back_intersection_and_type_to_propagation_history(
 	const Intersection &interact, 
-	const InteractionType type
+	const Interaction type
 ) {
 	intersection_history.push_back(interact);
-	interaction_type_history.push_back(type);	
+	interaction_history.push_back(type);	
 }
 //------------------------------------------------------------------------------
 double RayForPropagation::get_accumulative_distance()const {
@@ -96,7 +96,7 @@ const Intersection& RayForPropagation::get_intersection_at(
 	return intersection_history.at(index);
 }
 //------------------------------------------------------------------------------
-string RayForPropagation::get_type_print(const InteractionType type)const {
+string RayForPropagation::get_type_print(const Interaction type)const {
 	switch(type) {
 		case production: return "production"; break;
 		case absorption_in_void: return "absorption_in_void"; break;
@@ -148,8 +148,8 @@ double RayForPropagation::get_time_of_flight()const {
 	return 0.0;
 }
 //------------------------------------------------------------------------------
-InteractionType RayForPropagation::get_final_interaction_type()const {
-	return interaction_type_history.back();
+Interaction RayForPropagation::get_final_interaction_type()const {
+	return interaction_history.back();
 }
 //------------------------------------------------------------------------------
 RayForPropagation::~RayForPropagation() {}

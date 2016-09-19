@@ -52,7 +52,7 @@ void TrajectoryFactory::append_trajectory_to(Frame* root_frame) {
 
 		intersection_indicator->set_radius(radius_of_trajectory*2.0);
 
-		if(ray->interaction_type_history.at(i) == absorption_in_void)
+		if(ray->interaction_history.at(i) == absorption_in_void)
 			intersection_indicator->set_outer_color(&absorption_in_void_col);
 		else
 			intersection_indicator->set_outer_color(&interaction_col);	
@@ -83,6 +83,6 @@ std::string TrajectoryFactory::get_intersection_point_name_of_part(
 )const {
 	std::stringstream name;
 	name << "ID_" << ray->simulation_truth_id << "_";
-	name << ray->get_type_print(ray->interaction_type_history.at(part_index));
+	name << ray->get_type_print(ray->interaction_history.at(part_index));
 	return name.str();
 }
