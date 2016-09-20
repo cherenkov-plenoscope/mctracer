@@ -25,7 +25,6 @@ namespace Plenoscope {
 		double area;
 		double max_principal_aperture_radius_to_trow_photons_in;
 		double max_tilt_vs_optical_axis_to_throw_photons_in;
-		std::vector<double> relative_arrival_times;
 	public:
 		const LightFieldSensor::Geometry *sensor_geometry;
 
@@ -34,7 +33,7 @@ namespace Plenoscope {
 			const Function::Func1D* nsb_flux_vs_wavelength
 		);
 
-		std::vector<Photon*>* get_photons_in_duration(
+		vector<Photon> get_photons_in_duration(
 			const double delay,
 			const double duration,
 			Random::Generator* prng
@@ -42,15 +41,15 @@ namespace Plenoscope {
 
 		double draw_wavelength(Random::Generator* prng)const;
 
-		std::string get_print()const;
+		string get_print()const;
 
 		double get_overall_rate()const {return overall_nsb_rate;};
 	private:
-		void init_relative_arrival_times(
+		vector<double> draw_relative_arrival_times(
 			const double duration,
 			Random::Generator* prng
 		);
-		Photon* get_photon_on_principal_aperture(
+		Photon get_photon_on_principal_aperture(
 			double time_until_reaching_principal_aperture,
 			Random::Generator* prng
 		)const;

@@ -28,31 +28,31 @@ Light::Light(
 		nsb_cdf.get_total_integral_of_distribution()*area*solid_angle;
 }	
 //------------------------------------------------------------------------------
-std::vector<Photon*>* Light::get_photons_in_duration(
+vector<Photon> Light::get_photons_in_duration(
 	const double delay,
 	const double duration,
 	Random::Generator* prng
 ) {
+	vector<double> relative_arrival_times = draw_relative_arrival_times(
+		duration, 
+		prng);
 
-	init_relative_arrival_times(duration, prng);
-
-	std::vector<Photon*>* photons = new std::vector<Photon*>;
-	photons->reserve(relative_arrival_times.size());
+	vector<Photon> photons;
+	photons.reserve(relative_arrival_times.size());
 
 	for(double relative_time: relative_arrival_times)
-		photons->push_back(
+		photons.push_back(
 			get_photon_on_principal_aperture(delay + relative_time,	prng)
 		);
 
 	return photons;
 }
 //------------------------------------------------------------------------------
-void Light::init_relative_arrival_times(
+vector<double> Light::draw_relative_arrival_times(
 	const double duration,
 	Random::Generator* prng
 ) {
-
-	relative_arrival_times.clear();
+	vector<double> relative_arrival_times;
 	double relative_arrival_times_sum = 0.0;
 
 	while(relative_arrival_times_sum < duration) {
@@ -62,9 +62,11 @@ void Light::init_relative_arrival_times(
 		relative_arrival_times.push_back(relative_arrival_times_sum);
 		relative_arrival_times_sum += time_until_next_photon;
 	};
+
+	return relative_arrival_times;
 }
 //------------------------------------------------------------------------------
-Photon* Light::get_photon_on_principal_aperture(
+Photon Light::get_photon_on_principal_aperture(
 	double time_until_reaching_principal_aperture,
 	Random::Generator* prng
 )const {
@@ -94,16 +96,14 @@ Photon* Light::get_photon_on_principal_aperture(
 		distance_to_travel_before_intersecting_principal_aperture
 	);
 
-	Photon* ph = new Photon(
+	return Photon(
 		support_of_photon,
 		incident_direction_on_principal_aperture*(-1.0),
 		wavelength
 	);
-
-	return ph;
 }
 //------------------------------------------------------------------------------
-std::string Light::get_print()const {
+string Light::get_print()const {
 
 	std::stringstream out;
 	out << "NightSkyBackground\n";
