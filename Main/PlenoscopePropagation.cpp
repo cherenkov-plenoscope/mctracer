@@ -173,7 +173,6 @@ int main(int argc, char* argv[]) {
     //--------------------------------------------------------------------------
     // open cherenkov photon file
     EventIo::Run corsika_run(input_path.path);
-    vector<vector<double>> number_of_pulses_in_events;
 
     //--------------------------------------------------------------------------
     // propagate each event
