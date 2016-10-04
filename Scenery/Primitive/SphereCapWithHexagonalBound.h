@@ -17,7 +17,6 @@ class SphereCapWithHexagonalBound :public SurfaceWithOuterPrismBound {
 protected:	
 	HexagonalPrismZ hexBounds;
 
-	double focal_length;
 	double curvature_radius;
 	double outer_hex_radius;
 public:
