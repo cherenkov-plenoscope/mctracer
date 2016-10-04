@@ -219,7 +219,7 @@ Frame* SceneryFactory::add_SphereCapWithHexagonalBound(Frame* mother, const Node
     cap->set_outer_reflection(surface_refl(node));
     cap->set_inner_reflection(surface_refl(node));
     cap->set_curvature_radius_and_outer_hex_radius(
-        2.0*node.child("set_sphere_cap_hexagonal").attribute2double("focal_length"),
+        node.child("set_sphere_cap_hexagonal").attribute2double("curvature_radius"),
         node.child("set_sphere_cap_hexagonal").attribute2double("outer_radius")
     );
     return cap;
