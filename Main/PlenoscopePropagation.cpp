@@ -268,7 +268,7 @@ int main(int argc, char* argv[]) {
 
             EventIo::write_raw_photons(
                 event.photons,
-                PathTools::join(event_mc_truth_path.path, "air_shower_photons.bin")
+                PathTools::join(event_mc_truth_path.path, "air_shower_photon_bunches.bin")
             );
         }
 
