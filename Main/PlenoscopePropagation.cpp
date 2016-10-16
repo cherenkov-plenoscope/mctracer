@@ -128,7 +128,7 @@ int main(int argc, char* argv[]) {
         info << "The light field calibration results, read from file '";
         info << lixel_calib_path.path;
         info << "', do no not match the plenoscope simulated here.\n";
-        info << "Expected sub pixel size: " << light_field_channels->size();
+        info << "Expected number of light field channels: " << light_field_channels->size();
         info << ", but actual: " << optics_calibration_result.size();
         info << "\n";
         throw TracerException(info.str());
