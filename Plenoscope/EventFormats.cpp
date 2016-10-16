@@ -3,47 +3,43 @@
 #include "Corsika/Tools.h"
 #include "Core/TracerException.h"
 #include "Tools/AsciiIo.h"
-#include <experimental/filesystem>
-namespace fs = std::experimental::filesystem;
-
 
 namespace Plenoscope {
+//------------------------------------------------------------------------------
+EventHeader::EventHeader() {
+    for(uint i=0; i<raw.size(); i++)
+        raw[i]=0.0;
 
-    struct Event {
-        array<float, 273> corsika_event_header;
-    };
+    raw[  1-1] = Corsika::str2float("PEVT");
+}
+//------------------------------------------------------------------------------
+void EventHeader::set_event_type(const float event_type) {
+    raw[  2-1] = event_type;
+}
+//------------------------------------------------------------------------------
+void EventHeader::set_trigger_type(const float trigger_type) {
+    raw[  3-1] = trigger_type;    
+}
+//------------------------------------------------------------------------------
+void EventHeader::set_sensor_plane_2_imaging_system(
+    const HomTra3 &sensor_plane2imaging_system
+) {
+    raw[ 11-1] = sensor_plane2imaging_system.get_rot_x().x();
+    raw[ 12-1] = sensor_plane2imaging_system.get_rot_x().y();
+    raw[ 13-1] = sensor_plane2imaging_system.get_rot_x().z();
 
-    namespace Run {
-        //
-        //  Run
-        //  |-  Readme
-        //  |   |-  Readme.txt
-        //  |   |-  Formats.txt
-        //  |-  Input
-        //  |   |-  Scenery.xml
-        //  |   |-  Lixel_calibration.bin
-        //  |   |-  Configuration.xml
-        //  |   |-  Corsika_Run_Header.bin
-        //  |-  Event_1
-        //  |   |-  Corsika_Event_Header.bin
-        //  |   |-  Plenoscope_Response.bin
-        //  |-  Event_2
-        //  |   |-  Corsika_Event_Header.bin
-        //  |   |-  Plenoscope_Response.bin
-        //  |-  Event_3
-        //      .
-        //      .
-        //      .
-        struct Run {
-            string path;
-            uint run_number;
+    raw[ 14-1] = sensor_plane2imaging_system.get_rot_y().x();
+    raw[ 15-1] = sensor_plane2imaging_system.get_rot_y().y();
+    raw[ 16-1] = sensor_plane2imaging_system.get_rot_y().z();
 
-            string scenery;
-            string lixel_calibration;
-            string configuration;
-            void append_event();
-        };
-    }
+    raw[ 17-1] = sensor_plane2imaging_system.get_rot_z().x();
+    raw[ 18-1] = sensor_plane2imaging_system.get_rot_z().y();
+    raw[ 19-1] = sensor_plane2imaging_system.get_rot_z().z();
+
+    raw[ 20-1] = sensor_plane2imaging_system.get_translation().x();
+    raw[ 21-1] = sensor_plane2imaging_system.get_translation().y();
+    raw[ 22-1] = sensor_plane2imaging_system.get_translation().z();  
+}
 //------------------------------------------------------------------------------
 void save_event_to_file_epoch_2016May27(
     const vector<SignalProcessing::SimpleTdcQdc::TimeAndCount> &tacs,

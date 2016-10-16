@@ -217,10 +217,20 @@ int main(int argc, char* argv[]) {
             PathTools::join(event_output_path.path, "raw_light_field_sensor_response.bin")
         );
 
+        Plenoscope::EventHeader event_header;
+        event_header.set_event_type(Plenoscope::EventTypes::SIMULATION);
+        event_header.set_trigger_type(Plenoscope::TriggerType::EXTERNAL_RANDOM_TRIGGER);
+        event_header.set_sensor_plane_2_imaging_system(pis->light_field_sensor_geometry.config.sensor_plane2imaging_system);
         HeaderBlock::write(
-            pis->light_field_sensor_geometry.config.get_sensor_plane2imaging_system_header(), 
-            PathTools::join(event_output_path.path, "sensor_plane2imaging_system.bin")
+            event_header.raw, 
+            PathTools::join(event_output_path.path, "event_header.bin")
         );
+
+        //-------------
+        // export Simulation Truth
+        PathTools::Path event_mc_truth_path = PathTools::join(event_output_path.path, "simulation_truth");
+        fs::create_directory(event_mc_truth_path.path);
+        //HeaderBlock::write(corsika_run.header.raw, PathTools::join(event_mc_truth_path.path, "corsika_run_header.bin"));
 
         cout << "event " << event_counter << " of " << number_events << "\n";
     }

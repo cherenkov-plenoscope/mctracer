@@ -248,9 +248,13 @@ int main(int argc, char* argv[]) {
             PathTools::join(event_output_path.path, "raw_light_field_sensor_response.bin")
         );
 
+        Plenoscope::EventHeader event_header;
+        event_header.set_event_type(Plenoscope::EventTypes::SIMULATION);
+        event_header.set_trigger_type(Plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
+        event_header.set_sensor_plane_2_imaging_system(pis->light_field_sensor_geometry.config.sensor_plane2imaging_system);
         HeaderBlock::write(
-            pis->light_field_sensor_geometry.config.get_sensor_plane2imaging_system_header(), 
-            PathTools::join(event_output_path.path, "sensor_plane2imaging_system.bin")
+            event_header.raw, 
+            PathTools::join(event_output_path.path, "event_header.bin")
         );
 
         //-------------
