@@ -13,7 +13,7 @@
 #include <sstream>
 #include "SignalProcessing/SimpleTDCQDC.h"
 #include "Corsika/EventIo/EventIo.h"
-#include "Core/HomTra3.h"
+#include "LightFieldSensor/Config.h"
 using std::vector;
 using std::string;
 using std::stringstream;
@@ -36,8 +36,7 @@ namespace Plenoscope {
         EventHeader();
         void set_event_type(const float event_type);
         void set_trigger_type(const float trigger_type);
-        void set_sensor_plane_2_imaging_system(
-            const HomTra3 &sensor_plane2imaging_system);
+        void set_plenoscope_geometry(const LightFieldSensor::Config &cfg);
     };
 
     void save_event_to_file_epoch_2016May27(

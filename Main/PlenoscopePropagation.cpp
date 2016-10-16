@@ -251,7 +251,7 @@ int main(int argc, char* argv[]) {
         Plenoscope::EventHeader event_header;
         event_header.set_event_type(Plenoscope::EventTypes::SIMULATION);
         event_header.set_trigger_type(Plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
-        event_header.set_sensor_plane_2_imaging_system(pis->light_field_sensor_geometry.config.sensor_plane2imaging_system);
+        event_header.set_plenoscope_geometry(pis->light_field_sensor_geometry.config);
         HeaderBlock::write(
             event_header.raw, 
             PathTools::join(event_output_path.path, "event_header.bin")

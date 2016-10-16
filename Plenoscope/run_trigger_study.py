@@ -9,6 +9,7 @@ import scoop as sc
 from subprocess import call
 import tempfile
 import os
+import json
 
 def mctPlenoscopePropagation_path():
     return sc.shared.getConst('mctPlenoscopePropagation', timeout=5)
@@ -22,13 +23,12 @@ def plenoscope_calibration_path():
     return sc.shared.getConst('plenoscope_calibration', timeout=5)
 
 
-def analyse_plenoscope_response(plenoscope_response_path):
+def analyse_plenoscope_response(plenoscope_response_path, output_path):
     run = pl.Run(plenoscope_response_path)
     trigger_info = []
     for event in run:
         trigger_info.append(pl.trigger_study.export_trigger_information(event))
-    return trigger_info
-
+    pl.trigger_study.write_dict_to_file(trigger_info, output_path)
 
 def make_plenoscope_response(corsika_run_path, plenoscope_response_path):
 
@@ -48,13 +48,13 @@ def make_plenoscope_response(corsika_run_path, plenoscope_response_path):
     stdout.close()            
 
 
-def trigger_study_run(steering_card):
+def trigger_study_run(steering):
     with tempfile.TemporaryDirectory() as temp_path:
         corsika_run_path = os.path.join(temp_path, 'corsika_run.evtio')
         plenoscope_response_path = os.path.join(temp_path, 'response.pleno')
 
         cw.corsika(
-            steering_card=steering_card,
+            steering_card=steering['steering_card'],
             output_path=corsika_run_path, 
             save_stdout=True)
 
@@ -62,15 +62,18 @@ def trigger_study_run(steering_card):
             corsika_run_path=corsika_run_path,
             plenoscope_response_path=plenoscope_response_path)
 
-        trigger_info = analyse_plenoscope_response(plenoscope_response_path)
+        trigger_info = analyse_plenoscope_response(
+            plenoscope_response_path=plenoscope_response_path,
+            output_path=steering['output_path'])
 
-    return trigger_info
+    return True
 
 if __name__ == '__main__':
 
     sc.shared.setConst(mctPlenoscopePropagation='/home/sebastian/raytracing/build/mctPlenoscopePropagation')
-    sc.shared.setConst(plenoscope_calibration='/home/sebastian/Desktop/demo_big/portal_calibration')
-    sc.shared.setConst(mct_propagation_config='/home/sebastian/Desktop/demo_big/propagation_config.xml')
+    sc.shared.setConst(plenoscope_calibration='/home/sebastian/Desktop/demo/calibration')
+    sc.shared.setConst(mct_propagation_config='/home/sebastian/Desktop/demo/propagation_config.xml')
+    output_path='/home/sebastian/Desktop/demo/trigger'
 
     def dict2corsika(d):
         steering_card = [
@@ -102,7 +105,7 @@ if __name__ == '__main__':
         return steering_card
    
     def make_corsika_steering_cards(number_of_runs=1):
-        steering_cards = []
+        steering = []
         for run_index in range(number_of_runs):
             run_number = run_index + 1
             d={}
@@ -116,8 +119,17 @@ if __name__ == '__main__':
             d['TELESCOPE_radius'] = 55e2
             d['CSCAT_radius'] = 500e2
 
-            steering_cards.append(dict2corsika(d))
-        return steering_cards
+            steering.append({
+                'steering_card': dict2corsika(d),
+                'output_path': os.path.join(output_path, str(int(run_number))+'.json')
+            })
+        return steering
 
-    steering_cards = make_corsika_steering_cards(3)
-    result = list(sc.futures.map(trigger_study_run, steering_cards))
+    steering = make_corsika_steering_cards(8)
+
+
+    results = list(sc.futures.map(trigger_study_run, steering))
+
+    pl.trigger_study.write_dict_to_file(
+        results, 
+        '/home/sebastian/Desktop/demo/trigger.json')
