@@ -29,9 +29,9 @@ static const char USAGE[] =
 R"(Plenoscope night sky background only simulation
 
     Usage:
-      mctPlenoscopePedestal -l=LIXEL_STATISTICS_PATH -c=CONFIG_PATH -n=NUMBER_EVENTS -o=OUTPUT_PATH
-      mctPlenoscopePedestal (-h | --help)
-      mctPlenoscopePedestal --version
+      PlenoscopeNsbOnlyPropagation -l=LIXEL_STATISTICS_PATH -c=CONFIG_PATH -n=NUMBER_EVENTS -o=OUTPUT_PATH
+      PlenoscopeNsbOnlyPropagation (-h | --help)
+      PlenoscopeNsbOnlyPropagation --version
 
     Options:
       -l --lixel=LIXEL_PATH     Light field calibration directory of the plenoscope.
