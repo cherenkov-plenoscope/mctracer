@@ -15,7 +15,7 @@ void FunctionMap::assert_has(const string key)const {
     if(!has(key)) {
         stringstream info;
         info << "FunctionMap " << __FILE__ << ", " << __LINE__ << "\n";
-        info << "There is no color called '" << key << "'. \n";
+        info << "There is no function called '" << key << "'. \n";
         throw NoSuchKey(info.str());
     }   
 }
