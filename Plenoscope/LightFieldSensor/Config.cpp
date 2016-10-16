@@ -20,7 +20,7 @@ namespace Plenoscope {
 			for(uint i=0; i<header.size(); i++) header[i]=0.0;
 
 			header[  1-1] = Corsika::str2float("S2IS");
-			header[  2-1] = 1.0; // monte carlo = 1, observation = 0
+			header[  2-1] = 1.0; // simulation = 1, observation = 0
 
 			header[ 11-1] = sensor_plane2imaging_system.get_rot_x().x();
 			header[ 12-1] = sensor_plane2imaging_system.get_rot_x().y();
