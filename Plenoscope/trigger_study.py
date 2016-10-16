@@ -26,7 +26,7 @@ def analyse_plenoscope_response(plenoscope_response_path):
     run = pl.Run(plenoscope_response_path)
     trigger_info = []
     for event in run:
-        trigger_info.append(pl.trigger_studie.export_trigger_information(event))
+        trigger_info.append(pl.trigger_study.export_trigger_information(event))
     return trigger_info
 
 
