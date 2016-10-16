@@ -105,8 +105,6 @@ int main(int argc, char* argv[]) {
 
     Scenery scenery;
 
-    //Frame scenery;
-    //scenery.set_name_pos_rot("root", Vec3::null, Rot3::null);
     scenery_factory.append_to_frame_in_scenery(&scenery.root, &scenery);
     scenery.root.init_tree_based_on_mother_child_relations();
     if(scenery_factory.plenoscopes.size() == 0)
@@ -181,11 +179,8 @@ int main(int argc, char* argv[]) {
 
         //------------------
         // Cherenkov photons
-        //Time::StopWatch read_event("read_event");
         EventIo::Event event = corsika_run.next_event();
-        //read_event.stop();
 
-        //Time::StopWatch c2mct("corsika 2 mct photons");
         vector<Photon> photons;
         uint photon_id = 0;
 
@@ -194,23 +189,17 @@ int main(int argc, char* argv[]) {
             if(cpf.passed_atmosphere())
                 photons.push_back(cpf.get_photon());
         }
-        //c2mct.stop();
 
-        //Time::StopWatch prop("propagate photons");
         Photons::propagate_photons_in_scenery_with_settings(
             &photons, &scenery.root, &settings, &prng
         );
-        //prop.stop();
 
-        //Time::StopWatch assign("assign photons to sensors");
         light_field_channels->clear_history();
         light_field_channels->assign_photons(&photons);
 
         vector<vector<SignalProcessing::PipelinePhoton>> photon_pipelines = 
             SignalProcessing::get_photon_pipelines(light_field_channels);
-        //assign.stop();
 
-        //Time::StopWatch nsbsw("night sky background");
         //-----------------------------
         // Night Sky Background photons
         Plenoscope::NightSkyBackground::inject_nsb_into_photon_pipeline(
@@ -220,9 +209,7 @@ int main(int argc, char* argv[]) {
             &nsb,
             &prng
         );
-        //nsbsw.stop();
 
-        //Time::StopWatch pecs("photo electric conversion");
         //--------------------------
         // Photo Electric conversion
         vector<vector<SignalProcessing::ElectricPulse>> electric_pipelines;
@@ -250,11 +237,9 @@ int main(int argc, char* argv[]) {
                 )
             );
         }
-        //pecs.stop();
 
         //-------------
         // export event
-        //Time::StopWatch write_event("write event");
         PathTools::Path event_output_path = PathTools::join(out_path.path, std::to_string(event_counter));
         fs::create_directory(event_output_path.path);
 
@@ -286,7 +271,6 @@ int main(int argc, char* argv[]) {
                 PathTools::join(event_mc_truth_path.path, "air_shower_photons.bin")
             );
         }
-        //write_event.stop();
 
         cout << "event " << event_counter << ", ";
         cout << "PRMPAR " << Corsika::EventHeader::particle_id(event.header.raw) << ", ";
