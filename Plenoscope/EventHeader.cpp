@@ -17,6 +17,7 @@ void EventHeader::set_event_type(const float event_type) {
 void EventHeader::set_trigger_type(const float trigger_type) {
     raw[  3-1] = trigger_type;    
 }
+//------------------------------------------------------------------------------
 void EventHeader::set_random_number_seed_of_run(const uint32_t seed) {
     float f;
     memcpy(&f, &seed, sizeof f);
