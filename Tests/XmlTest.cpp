@@ -227,7 +227,6 @@ TEST_F(XmlTest, PropagationConfig) {
 	PropagationConfig out;
 
 	out.max_number_of_interactions_per_photon = 1337;
-	out.pseudo_random_number_seed = 42;
 	out.use_multithread_when_possible = false;
 
 	FileTools::write_text_to_file(Xml::Configs::to_node(out), path);
@@ -237,6 +236,5 @@ TEST_F(XmlTest, PropagationConfig) {
 	PropagationConfig in = Xml::Configs::get_PropagationConfig_from_node(node.child("settings"));
 
 	EXPECT_EQ(in.max_number_of_interactions_per_photon, out.max_number_of_interactions_per_photon);
-	EXPECT_EQ(in.pseudo_random_number_seed, out.pseudo_random_number_seed);
 	EXPECT_EQ(in.use_multithread_when_possible, out.use_multithread_when_possible);
 }

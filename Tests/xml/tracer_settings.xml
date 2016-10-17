@@ -1,5 +1,4 @@
 <settings
-    pseudo_random_number_seed="42"
     max_number_of_interactions_per_photon="1337"
     use_multithread_when_possible="false"
 />

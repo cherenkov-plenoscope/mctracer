@@ -19,7 +19,6 @@ struct PropagationConfig {
 
 	uint max_number_of_interactions_per_photon;
 	bool use_multithread_when_possible;
-	uint pseudo_random_number_seed;
 
 	static const PropagationConfig default_config;
 	PropagationConfig();	

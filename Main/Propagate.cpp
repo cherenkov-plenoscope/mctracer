@@ -13,7 +13,7 @@ static const char USAGE[] =
 R"(Photon propagation
 
     Usage:
-      mctPropagate -s=SCENERY_PATH -c=CONFIG_PATH -i=INPUT_PATH -o=OUTPUT_PATH
+      mctPropagate -s=SCENERY_PATH -c=CONFIG_PATH -i=INPUT_PATH -o=OUTPUT_PATH [-r=SEED]
       mctPropagate (-h | --help)
       mctPropagate --version
 
@@ -22,6 +22,7 @@ R"(Photon propagation
       -c --config=CONFIG_PATH   Config path to xml file steering the simulation.
       -i --input=INPUT_PATH     Photon file path (e.g. a CORSIKA run).
       -o --output=OUTPUT_PATH   Output path.
+      -r --random_seed=SEED     Seed for pseudo random number generator.
       -h --help                 Show this screen.
       --version                 Show version.
       
@@ -51,8 +52,10 @@ int main(int argc, char* argv[]) {
 	
 	//--------------------------------------------------------------------------
 	// Random
-	Random::Mt19937 prng(settings.pseudo_random_number_seed);
-	
+    Random::Mt19937 prng;
+    if(args.find("--random_seed")->second)
+        prng.set_seed(args.find("--random_seed")->second.asLong());
+
 	//--------------------------------------------------------------------------
 	// scenery
 	Xml::SceneryFactory fab(scenery_path.path);

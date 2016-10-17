@@ -28,14 +28,15 @@ static const char USAGE[] =
 R"(Show a scenery with photons
 
     Usage:
-      mctShow --scenery=SCENERY_PATH --input=PHOTON_PATH [--config=CONFIG_PATH]
+      mctShow --scenery=SCENERY_PATH --input=PHOTON_PATH [--config=CONFIG_PATH] [-r=SEED]
       mctShow (-h | --help)
       mctShow --version
 
     Options:
       -s --scenery=SCENERY_PATH     Scenery xml file path.
       -i --input=INPUT_PATH         Photon file path (e.g. a CORSIKA run).
-      -c --config=CONFIG_PATH       Visual config xml file path
+      -c --config=CONFIG_PATH       Visual config xml file path.
+      -r --random_seed=SEED         Seed for pseudo random number generator.
       -h --help                     Show this screen.
       --version                     Show version.
        
@@ -66,7 +67,9 @@ int main(int argc, char* argv[]) {
     PropagationConfig settings;
 
     // Random
-    Random::Mt19937 prng(settings.pseudo_random_number_seed);
+    Random::Mt19937 prng;
+    if(args.find("--random_seed")->second)
+        prng.set_seed(args.find("--random_seed")->second.asLong());
 
     // load scenery
     Scenery scenery;

@@ -33,7 +33,7 @@ static const char USAGE[] =
 R"(Plenoscope air showher propagation
 
     Usage:
-      mctPlenoscopePropagation -l=LIXEL_STATISTICS_PATH -c=CONFIG_PATH -i=CORSIKA_PATH -o=OUTPUT_PATH [--all_truth]
+      mctPlenoscopePropagation -l=LIXEL_STATISTICS_PATH -c=CONFIG_PATH -i=CORSIKA_PATH -o=OUTPUT_PATH [-r=SEED] [--all_truth]
       mctPlenoscopePropagation (-h | --help)
       mctPlenoscopePropagation --version
 
@@ -42,6 +42,7 @@ R"(Plenoscope air showher propagation
       -c --config=CONFIG_PATH   Config path to xml file steering the simulation.
       -i --input=CORSIKA_PATH   CORSIKA run path.
       -o --output=OUTPUT_PATH   Output path.
+      -r --random_seed=SEED     Seed for pseudo random number generator.
       --all_truth               Write all simulation truth avaiable into the output.
       -h --help                 Show this screen.
       --version                 Show version.
@@ -98,7 +99,9 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // INIT PRNG 
-    Random::Mt19937 prng(settings.pseudo_random_number_seed);
+    Random::Mt19937 prng;
+    if(args.find("--random_seed")->second)
+        prng.set_seed(args.find("--random_seed")->second.asLong());
 
     //--------------------------------------------------------------------------
     // SET UP SCENERY

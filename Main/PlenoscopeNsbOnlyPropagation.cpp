@@ -30,7 +30,7 @@ static const char USAGE[] =
 R"(Plenoscope night sky background only simulation
 
     Usage:
-      PlenoscopeNsbOnlyPropagation -l=LIXEL_STATISTICS_PATH -c=CONFIG_PATH -n=NUMBER_EVENTS -o=OUTPUT_PATH
+      PlenoscopeNsbOnlyPropagation -l=LIXEL_STATISTICS_PATH -c=CONFIG_PATH -n=NUMBER_EVENTS -o=OUTPUT_PATH [-r=SEED]
       PlenoscopeNsbOnlyPropagation (-h | --help)
       PlenoscopeNsbOnlyPropagation --version
 
@@ -39,6 +39,7 @@ R"(Plenoscope night sky background only simulation
       -c --config=CONFIG_PATH   Config path to xml file steering the simulation.
       -n --number=NUMBER_EVENTS Number of events to be simulated
       -o --output=OUTPUT_PATH   Output path.
+      -r --random_seed=SEED     Seed for pseudo random number generator.
       -h --help                 Show this screen.
       --version                 Show version.
       
@@ -83,14 +84,10 @@ int main(int argc, char* argv[]) {
     Xml::Node config_node = doc.node().child("propagation");
 
     //--------------------------------------------------------------------------
-    // BASIC SETTINGS
-    PropagationConfig settings = Xml::Configs::get_PropagationConfig_from_node(
-        config_node.child("settings")
-    );
-
-    //--------------------------------------------------------------------------
     // INIT PRNG 
-    Random::Mt19937 prng(settings.pseudo_random_number_seed);
+    Random::Mt19937 prng;
+    if(args.find("--random_seed")->second)
+        prng.set_seed(args.find("--random_seed")->second.asLong());
 
     //--------------------------------------------------------------------------
     // SET UP SCENERY
