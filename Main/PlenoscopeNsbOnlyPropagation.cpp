@@ -219,6 +219,7 @@ int main(int argc, char* argv[]) {
         );
 
         Plenoscope::EventHeader event_header;
+        event_header.set_random_number_seed_of_run(prng.get_seed());
         event_header.set_event_type(Plenoscope::EventTypes::SIMULATION);
         event_header.set_trigger_type(Plenoscope::TriggerType::EXTERNAL_RANDOM_TRIGGER);
         event_header.set_plenoscope_geometry(pis->light_field_sensor_geometry.config);
