@@ -13,6 +13,7 @@
 #include "SignalProcessing/PipelinePhoton.h"
 #include "Plenoscope/NightSkyBackground/Light.h"
 #include "Plenoscope/EventFormats.h"
+#include "Plenoscope/EventHeader.h"
 #include "Plenoscope/NightSkyBackground/Injector.h"
 #include "SignalProcessing/PhotoElectricConverter.h"
 #include "Xml/Xml.h"
