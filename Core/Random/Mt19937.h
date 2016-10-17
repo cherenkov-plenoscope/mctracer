@@ -19,11 +19,11 @@ namespace Random {
 		double inv_max;
 	public:
 
-		Mt19937(const uint _seed);
+		Mt19937(const uint32_t seed);
 		Mt19937();
 		double uniform();
 		double normal(const double mean, const double std_dev);
-		void set_seed(const uint _seed);
+		void set_seed(const uint32_t seed);
 	private:
 
 		void init_inverse_maximum();

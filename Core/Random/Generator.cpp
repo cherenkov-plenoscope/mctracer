@@ -3,7 +3,7 @@
 #include "Random.h"
 using namespace Random;
 //------------------------------------------------------------------------------
-unsigned Generator::get_seed()const{
+uint32_t Generator::get_seed()const{
 	return seed;
 }
 //------------------------------------------------------------------------------
@@ -13,8 +13,8 @@ void Generator::set_seed_now_using_system_clock() {
 	);
 }
 //------------------------------------------------------------------------------
-void Generator::set_seed(const unsigned _seed) {
-	seed = _seed;
+void Generator::set_seed(const uint32_t seed) {
+	this->seed = seed;
 }
 //------------------------------------------------------------------------------
 Vec3 Generator::get_point_on_xy_disc_within_radius_slow(const double max_r) {

@@ -10,6 +10,7 @@
 // included dependencies
 #include <iostream>
 #include <random>
+#include <stdint.h>
 #include "Core/Vec3.h"
 //==============================================================================
 
@@ -19,12 +20,12 @@ namespace Random {
 	class Generator {
 	protected:
 
-		unsigned seed;
+		uint32_t seed;
 	public:
 
-		uint get_seed()const;
+		uint32_t get_seed()const;
 		virtual double uniform() = 0;
-		virtual void set_seed(const uint _seed);
+		virtual void set_seed(const uint32_t seed);
 		void set_seed_now_using_system_clock();
 		Vec3 get_point_on_xy_disc_within_radius(const double r);
 		Vec3 get_point_on_xy_disc_within_radius_slow(const double r);

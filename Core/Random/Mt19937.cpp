@@ -1,9 +1,9 @@
 #include "Mt19937.h"
 namespace Random {
 //------------------------------------------------------------------------------
-Mt19937::Mt19937(const unsigned _seed) {
+Mt19937::Mt19937(const uint32_t seed) {
 	init_inverse_maximum();
-	set_seed(_seed);
+	set_seed(seed);
 }
 //------------------------------------------------------------------------------
 Mt19937::Mt19937() {
@@ -15,8 +15,8 @@ double Mt19937::uniform() {
 	return double(pRNG_mt19937())*inv_max;
 }
 //------------------------------------------------------------------------------
-void Mt19937::set_seed(const unsigned _seed) {
-	seed = _seed;
+void Mt19937::set_seed(const uint32_t seed) {
+	this->seed = seed;
 	pRNG_mt19937.seed(seed);
 }
 //------------------------------------------------------------------------------
