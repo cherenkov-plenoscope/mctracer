@@ -1,4 +1,21 @@
-#!/usr/bin/env python
+"""
+Run Trigger study
+
+Usage: run_trigger_study -i=STEERING_CARD_PATH -o=OUTPUT_PATH -c=CALIB_PATH -p=PROPCONFIG -n=NUMBER_RUNS -m=MCTPROPEXE [-s]
+
+Options:
+    -i --input_path=STEERING_CARD_PATH          Path to corsika steering card
+                                                template.
+    -o --output_path=OUTPUT_PATH                Directory to collect trigger 
+                                                study results of rach run.
+    -n --number_runs=NUMBER_RUNS
+    -c --calib_plenoscope_path=CALIB_PATH 
+    -p --propagation_config_path=PROPCONFIG_PATH
+    -m --mctracer=MCTPROPEXE
+    -s --save_stdout                            Saves stdout and stderr of 
+                                                Corsika next to OUTPUT_PATH.
+"""
+import docopt
 import numpy as np
 import plenopy as pl
 import corsika_wrapper as cw
@@ -30,20 +47,19 @@ def analyse_plenoscope_response(plenoscope_response_path, output_path):
         trigger_info.append(pl.trigger_study.export_trigger_information(event))
     pl.trigger_study.write_dict_to_file(trigger_info, output_path)
 
-def make_plenoscope_response(corsika_run_path, plenoscope_response_path):
 
+def make_plenoscope_response(corsika_run_path, plenoscope_response_path, prng_seed):
     stdout = open(plenoscope_response_path+'.stdout.txt', 'w')
     stderr = open(plenoscope_response_path+'.stderr.txt', 'w')
-
     call([
         mctPlenoscopePropagation_path(),
         '-l', plenoscope_calibration_path(),
         '-c', mct_propagation_config_path(),
         '-i', corsika_run_path,
-        '-o', plenoscope_response_path],
+        '-o', plenoscope_response_path,
+        '-r', str(prng_seed)],
         stdout=stdout,
         stderr=stderr)
-
     stderr.close()
     stdout.close()            
 
@@ -60,20 +76,15 @@ def trigger_study_run(steering):
 
         make_plenoscope_response(
             corsika_run_path=corsika_run_path,
-            plenoscope_response_path=plenoscope_response_path)
+            plenoscope_response_path=plenoscope_response_path,
+            prng_seed=steering['mctracer_seed'])
 
-        trigger_info = analyse_plenoscope_response(
+        analyse_plenoscope_response(
             plenoscope_response_path=plenoscope_response_path,
             output_path=steering['output_path'])
-
     return True
 
 if __name__ == '__main__':
-
-    sc.shared.setConst(mctPlenoscopePropagation='/home/sebastian/raytracing/build/mctPlenoscopePropagation')
-    sc.shared.setConst(plenoscope_calibration='/home/sebastian/Desktop/demo/calibration')
-    sc.shared.setConst(mct_propagation_config='/home/sebastian/Desktop/demo/propagation_config.xml')
-    output_path='/home/sebastian/Desktop/demo/trigger'
 
     def dict2corsika(d):
         steering_card = [
@@ -121,15 +132,20 @@ if __name__ == '__main__':
 
             steering.append({
                 'steering_card': dict2corsika(d),
-                'output_path': os.path.join(output_path, str(int(run_number))+'.json')
+                'output_path': os.path.join(output_path, str(int(run_number))+'.json'),
+                'mctracer_seed': run_number
             })
         return steering
 
-    steering = make_corsika_steering_cards(8)
+    try:
+        arguments = docopt.docopt(__doc__)
+        sc.shared.setConst(mctPlenoscopePropagation=arguments['--mctracer'])
+        sc.shared.setConst(plenoscope_calibration=arguments['--calib_plenoscope_path'])
+        sc.shared.setConst(mct_propagation_config=arguments['--propagation_config_path'])
+        output_path=arguments['--output_path']
 
+        steering = make_corsika_steering_cards(int(arguments['--number_runs']))
+        results = list(sc.futures.map(trigger_study_run, steering))
+    except docopt.DocoptExit as e:
+        print(e)
 
-    results = list(sc.futures.map(trigger_study_run, steering))
-
-    pl.trigger_study.write_dict_to_file(
-        results, 
-        '/home/sebastian/Desktop/demo/trigger.json')
