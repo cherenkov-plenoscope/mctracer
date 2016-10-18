@@ -9,7 +9,6 @@
 //=================================
 // included dependencies
 #include "LightFieldSensor/Config.h"
-#include <stdint.h>
 
 namespace Plenoscope {
     
@@ -27,7 +26,6 @@ namespace Plenoscope {
     struct EventHeader {
         array<float, 273> raw;
         EventHeader();
-        void set_random_number_seed_of_run(const uint32_t seed);
         void set_event_type(const float event_type);
         void set_trigger_type(const float trigger_type);
         void set_plenoscope_geometry(const LightFieldSensor::Config &cfg);

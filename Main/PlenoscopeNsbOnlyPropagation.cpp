@@ -11,6 +11,7 @@
 #include "Plenoscope/NightSkyBackground/Light.h"
 #include "Plenoscope/EventFormats.h"
 #include "Plenoscope/EventHeader.h"
+#include "Plenoscope/SimulationTruthHeader.h"
 #include "Plenoscope/NightSkyBackground/Injector.h"
 #include "SignalProcessing/PhotoElectricConverter.h"
 #include "Xml/Xml.h"
@@ -216,7 +217,6 @@ int main(int argc, char* argv[]) {
         );
 
         Plenoscope::EventHeader event_header;
-        event_header.set_random_number_seed_of_run(prng.get_seed());
         event_header.set_event_type(Plenoscope::EventTypes::SIMULATION);
         event_header.set_trigger_type(Plenoscope::TriggerType::EXTERNAL_RANDOM_TRIGGER);
         event_header.set_plenoscope_geometry(pis->light_field_sensor_geometry.config);
@@ -224,6 +224,18 @@ int main(int argc, char* argv[]) {
             event_header.raw, 
             PathTools::join(event_output_path.path, "event_header.bin")
         );
+
+        //-------------
+        // export Simulation Truth
+        PathTools::Path event_mc_truth_path = PathTools::join(event_output_path.path, "simulation_truth");
+        fs::create_directory(event_mc_truth_path.path);
+
+        Plenoscope::SimulationTruthHeader sim_truth_header;
+        sim_truth_header.set_random_number_seed_of_run(prng.get_seed());
+        HeaderBlock::write(
+            sim_truth_header.raw, 
+            PathTools::join(event_mc_truth_path.path, "mctracer_event_header.bin")
+        );        
 
         cout << "event " << event_counter << " of " << number_events << "\n";
     }

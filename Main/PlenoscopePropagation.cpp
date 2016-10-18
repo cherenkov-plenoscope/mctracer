@@ -14,6 +14,7 @@
 #include "Plenoscope/NightSkyBackground/Light.h"
 #include "Plenoscope/EventFormats.h"
 #include "Plenoscope/EventHeader.h"
+#include "Plenoscope/SimulationTruthHeader.h"
 #include "Plenoscope/NightSkyBackground/Injector.h"
 #include "SignalProcessing/PhotoElectricConverter.h"
 #include "Xml/Xml.h"
@@ -253,7 +254,6 @@ int main(int argc, char* argv[]) {
         );
 
         Plenoscope::EventHeader event_header;
-        event_header.set_random_number_seed_of_run(prng.get_seed());
         event_header.set_event_type(Plenoscope::EventTypes::SIMULATION);
         event_header.set_trigger_type(Plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
         event_header.set_plenoscope_geometry(pis->light_field_sensor_geometry.config);
@@ -269,6 +269,13 @@ int main(int argc, char* argv[]) {
         HeaderBlock::write(corsika_run.header.raw, PathTools::join(event_mc_truth_path.path, "corsika_run_header.bin"));
         HeaderBlock::write(event.header.raw, PathTools::join(event_mc_truth_path.path, "corsika_event_header.bin"));
         
+        Plenoscope::SimulationTruthHeader sim_truth_header;
+        sim_truth_header.set_random_number_seed_of_run(prng.get_seed());
+        HeaderBlock::write(
+            sim_truth_header.raw, 
+            PathTools::join(event_mc_truth_path.path, "mctracer_event_header.bin")
+        );   
+
         if(export_all_simulation_truth) {
             SignalProcessing::SimpleTdcQdc::write_intensity_simulation_truth(
                 tacs,
