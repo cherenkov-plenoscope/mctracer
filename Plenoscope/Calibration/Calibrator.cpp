@@ -5,6 +5,7 @@
 #include "Tools/FileTools.h"
 #include "Core/PhotonAndFrame.h"
 #include "Tools/HeaderBlock.h"
+#include "omp.h"
 //#include "Cameras/FlyingCamera.h"
 using std::cout;
 
@@ -90,14 +91,18 @@ void Calibrator::fill_calibration_block_to_table() {
 		for(i=0; i<config.photons_per_block; i++) {
 
 			try{
+				Random::Mt19937 thread_local_prng(
+					prng.get_seed() + omp_get_thread_num()
+				);
+
 				// create photon
 				Vec3 pos_on_principal_aperture = 
-					prng.get_point_on_xy_disc_within_radius(
+					thread_local_prng.get_point_on_xy_disc_within_radius(
 						max_principal_aperture_radius_to_trow_photons_on
 					);
 
 				Vec3 direction_on_principal_aperture = 
-					prng.get_point_on_unitsphere_within_polar_distance(
+					thread_local_prng.get_point_on_unitsphere_within_polar_distance(
 						max_tilt_vs_optical_axis_to_throw_photons_in
 					);
 
