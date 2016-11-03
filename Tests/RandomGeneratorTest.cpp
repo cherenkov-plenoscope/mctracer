@@ -2,6 +2,8 @@
 #include "Core/Random/Random.h"
 #include "Core/Histogram1D.h"
 #include "Tools/Tools.h"
+#include <array>
+using std::array;
 
 class RandomGeneratorTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
@@ -197,3 +199,52 @@ TEST_F(RandomGeneratorTest, rejection_sampling_disc_1M_draws) {
     }
 }
 //------------------------------------------------------------------------------
+TEST_F(RandomGeneratorTest, sphere_point_picking) {
+
+    Random::Mt19937 prng(0);
+
+    for(double max_zenith=5.0; max_zenith<10.0; max_zenith += 1.5) {
+
+        const uint n_points = 1e4*(max_zenith*max_zenith)/25.0;
+        vector<Vec3> points;
+        for(uint i=0; i<n_points; i++) {
+            points.push_back(
+                prng.get_point_on_unitsphere_within_polar_distance(
+                    Deg2Rad(max_zenith))
+            );
+        }
+
+        const uint n_test_points = 0.01*n_points;
+        vector<Vec3> test_points;
+        for(uint i=0; i<n_test_points; i++) {
+            test_points.push_back(
+                prng.get_point_on_unitsphere_within_polar_distance(
+                    Deg2Rad(max_zenith - 3.0))
+            );
+        }
+
+        const double inclusion_radius = Deg2Rad(3.0);
+        vector<uint> inclusion(n_test_points);
+        for(uint i=0; i<n_test_points; i++) inclusion[i] = 0;
+
+        for(uint i=0; i<n_test_points; i++) {
+            for(uint j=0; j<n_points; j++) {
+                double distance = (points[j] - test_points[i]).norm();
+                if(distance <= inclusion_radius)
+                    inclusion[i]++;
+            }
+        }
+
+        double sum = 0.0;
+        for(uint i=0; i<n_test_points; i++) sum += (double)inclusion[i];
+        const double mean = sum/(double)n_test_points;
+
+        double s = 0.0;
+        for(uint val: inclusion) s += ((double)val - mean)*((double)val - mean);
+        const double stddev = sqrt(s/inclusion.size());
+        
+        const double relative_spread = stddev/mean;
+
+        EXPECT_NEAR(relative_spread, 0.01, 0.01);
+    }
+}
