@@ -87,14 +87,13 @@ void Calibrator::fill_calibration_block_to_table() {
 
 	#pragma omp parallel shared(HadCatch)
 	{
+		Random::Mt19937 thread_local_prng(
+			prng.get_seed() + omp_get_thread_num()
+		);
 		#pragma omp for schedule(dynamic) private(i) 
 		for(i=0; i<config.photons_per_block; i++) {
 
 			try{
-				Random::Mt19937 thread_local_prng(
-					prng.get_seed() + omp_get_thread_num()
-				);
-
 				// create photon
 				Vec3 pos_on_principal_aperture = 
 					thread_local_prng.get_point_on_xy_disc_within_radius(
