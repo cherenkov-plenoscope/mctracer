@@ -1,7 +1,6 @@
 # mctracer
-scientific photon propagation and ray traing in complex sceneries
+scientific photon propagation and ray tracing in complex sceneries
 ![img](Readme/fact_and_spider_web.jpg)
-
 
 ## installation on Ubuntu
 
