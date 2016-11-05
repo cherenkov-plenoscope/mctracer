@@ -9,6 +9,7 @@
 //=================================
 // included dependencies
 #include "Plenoscope/Calibration/Calibrator.h"
+#include <fstream>
 
 namespace Plenoscope {
 namespace Calibration {

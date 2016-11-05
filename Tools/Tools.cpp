@@ -1,5 +1,6 @@
 #include "Tools.h"
 #include "Tools/StringTools.h"
+#include <cmath>
 //------------------------------------------------------------------------------
 double Deg2Rad(double angle_in_Deg) {
 	return (M_PI*angle_in_Deg)/180.0;

@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"
+#include <cmath>
 
 class Tools : public ::testing::Test {};
 //----------------------------------------------------------------------

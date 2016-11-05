@@ -7,15 +7,9 @@
 // forward declared dependencies
 
 //=================================
-// included dependencies
-#include "math.h"	  
-#include <iostream>
+// included dependencies	  
 #include <string>
-#include <string.h>
-#include <sstream>
 #include <vector>
-#include <fstream>
-#include <algorithm>
 
 double Deg2Rad(double angle_in_Deg);
 double Rad2Deg(double angle_in_Rad);
