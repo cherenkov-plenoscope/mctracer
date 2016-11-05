@@ -22,7 +22,6 @@ https://github.com/itseez/opencv
 
 then, for instance
 ```
-#!bash
 cd ~/opencv
 mkdir release
 cd release
@@ -38,34 +37,27 @@ This ensures that CMakeLists.txt finds the correct version of OpenCV.
 
 ### make
 ```
-#!bash
 git clone https://github.com/TheBigLebowSky/mctracer.git
 mkdir build
 ```
 The /build directory is best located side by side to the /mctracer directory.
 
 ```
-#!bash
 cd build
 cmake ../mctracer
 make
-
 ```
 
 ## run mctracer
 The mctracer has several executeables. To interacively explore a scenery use mctShow.
 ```
-#!bash
 mctShow --scenery fact.xml
-
 ```
 
 ## Unit Tests
 Run the unit tests in the mctracer/Tests directory to ensure your build is fine.
 
-```
-#!bash
+```bash
 cd mctracer/test
 ../../build/mctTest
-
 ```
