@@ -5,6 +5,7 @@
 #include "Tools/Numeric.h"
 #include <array>
 using std::array;
+using std::vector;
 
 class RandomGeneratorTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
@@ -38,7 +39,7 @@ TEST_F(RandomGeneratorTest, Mt19937_set_and_get_seed) {
 TEST_F(RandomGeneratorTest, uniform_0_to_1_stddev) {
 
     Random::Mt19937 prng(0);
-    std::vector<double> samples;
+    vector<double> samples;
 
     for(uint i=0; i<42*1337; i++) 
         samples.push_back(prng.uniform());
@@ -52,7 +53,7 @@ TEST_F(RandomGeneratorTest, generator_point_on_disc) {
 
     uint n_points = 1e6;
     double disc_radius = 1.337;
-    std::vector<Vec3> points;
+    vector<Vec3> points;
 
     for(uint i=0; i<n_points; i++)
         points.push_back(prng.get_point_on_xy_disc_within_radius(disc_radius));
@@ -69,7 +70,7 @@ TEST_F(RandomGeneratorTest, generator_point_on_disc) {
     EXPECT_EQ(0.0, sum.z());
 
     // distibution is evenly spread
-    std::vector<double> counts_in_evaluation_bins;
+    vector<double> counts_in_evaluation_bins;
 
     double evaluation_disc_radius = disc_radius/5.0;
     
@@ -112,7 +113,7 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
     Random::SamplesFromDistribution sfd(&f);
 
     uint n_samples = 1e6;
-    std::vector<double> samples;
+    vector<double> samples;
 
     for(uint i=0; i<n_samples; i++)
         samples.push_back(sfd.draw(prng.uniform()));
@@ -121,7 +122,7 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
     // fill samples drawn from distribution into histogram
 
     uint bin_count = uint(pow(double(n_samples), 1.0/3.0));
-    std::vector<double> bin_edges = Numeric::linspace(
+    vector<double> bin_edges = Numeric::linspace(
         f.get_limits().get_lower(),
         f.get_limits().get_upper(), 
         bin_count
@@ -140,7 +141,7 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
         f_integral = f_integral + f(bin_edges[i]);
     }
 
-    std::vector<double> drawn_f_normalized;
+    vector<double> drawn_f_normalized;
     for(uint i=0; i<histo.bins.size(); i++)
         drawn_f_normalized.push_back( 
             double(histo.bins[i])/double(drawn_f_integral)
@@ -149,7 +150,7 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
     //--------------------
     // compare initial distribution and samples drawn from distribution
 
-    std::vector<double> ys = Numeric::linspace(
+    vector<double> ys = Numeric::linspace(
         f.get_limits().get_lower(),
         f.get_limits().get_upper(), 
         sqrt(n_samples)

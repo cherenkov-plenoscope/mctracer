@@ -2,18 +2,19 @@
 #include "Tools/Numeric.h"
 #include "Tools/Tools.h"
 #include "SignalProcessing/TimeLineAddition.h"
+using std::vector;
 
 class TimeLineAddition : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(TimeLineAddition, all_empty) {
 
-	std::vector<double> first;
-	std::vector<double> second;
+	vector<double> first;
+	vector<double> second;
 
 	EXPECT_EQ(0u, first.size());
 	EXPECT_EQ(0u, second.size());
 
-	std::vector<double> first_before_adding = first; 
+	vector<double> first_before_adding = first; 
 
 	SignalProcessing::add_second_to_first_at(&first, &second, 0);
 
@@ -22,13 +23,13 @@ TEST_F(TimeLineAddition, all_empty) {
 //------------------------------------------------------------------------------
 TEST_F(TimeLineAddition, empty_summand) {
 
-	std::vector<double> first = Numeric::linspace(0.0, 1.0, 100);
-	std::vector<double> second;
+	vector<double> first = Numeric::linspace(0.0, 1.0, 100);
+	vector<double> second;
 
 	EXPECT_EQ(100u, first.size());
 	EXPECT_EQ(0u, second.size());
 
-	std::vector<double> first_before_adding = first; 
+	vector<double> first_before_adding = first; 
 
 	SignalProcessing::add_second_to_first_at(&first, &second, 0);
 
@@ -39,13 +40,13 @@ TEST_F(TimeLineAddition, empty_summand) {
 //------------------------------------------------------------------------------
 TEST_F(TimeLineAddition, empty_base_summand) {
 
-	std::vector<double> first;
-	std::vector<double> second = Numeric::linspace(0.0, 1.0, 100);
+	vector<double> first;
+	vector<double> second = Numeric::linspace(0.0, 1.0, 100);
 
 	EXPECT_EQ(0u, first.size());
 	EXPECT_EQ(100u, second.size());
 
-	std::vector<double> first_before_adding = first; 
+	vector<double> first_before_adding = first; 
 
 	SignalProcessing::add_second_to_first_at(&first, &second, 0);
 
@@ -54,10 +55,10 @@ TEST_F(TimeLineAddition, empty_base_summand) {
 //------------------------------------------------------------------------------
 TEST_F(TimeLineAddition, simple_addition_front) {
 
-	std::vector<double> first(3, 0.0);
-	std::vector<double> second(1, 1.0);
+	vector<double> first(3, 0.0);
+	vector<double> second(1, 1.0);
 
-	std::vector<double> first_before_adding = first; 
+	vector<double> first_before_adding = first; 
 
 	SignalProcessing::add_second_to_first_at(&first, &second, 0);
 
@@ -70,10 +71,10 @@ TEST_F(TimeLineAddition, simple_addition_front) {
 //------------------------------------------------------------------------------
 TEST_F(TimeLineAddition, simple_addition_middle) {
 
-	std::vector<double> first(3, 0.0);
-	std::vector<double> second(1, 1.0);
+	vector<double> first(3, 0.0);
+	vector<double> second(1, 1.0);
 
-	std::vector<double> first_before_adding = first; 
+	vector<double> first_before_adding = first; 
 
 	SignalProcessing::add_second_to_first_at(&first, &second, 1);
 
@@ -86,10 +87,10 @@ TEST_F(TimeLineAddition, simple_addition_middle) {
 //------------------------------------------------------------------------------
 TEST_F(TimeLineAddition, simple_addition_end) {
 
-	std::vector<double> first(3, 0.0);
-	std::vector<double> second(1, 1.0);
+	vector<double> first(3, 0.0);
+	vector<double> second(1, 1.0);
 
-	std::vector<double> first_before_adding = first; 
+	vector<double> first_before_adding = first; 
 
 	SignalProcessing::add_second_to_first_at(&first, &second, 2);
 
@@ -102,10 +103,10 @@ TEST_F(TimeLineAddition, simple_addition_end) {
 //------------------------------------------------------------------------------
 TEST_F(TimeLineAddition, simple_addition_out_of_range) {
 
-	std::vector<double> first(3, 0.0);
-	std::vector<double> second(1, 1.0);
+	vector<double> first(3, 0.0);
+	vector<double> second(1, 1.0);
 
-	std::vector<double> first_before_adding = first; 
+	vector<double> first_before_adding = first; 
 
 	SignalProcessing::add_second_to_first_at(&first, &second, 3);
 
@@ -118,8 +119,8 @@ TEST_F(TimeLineAddition, simple_addition_out_of_range) {
 //------------------------------------------------------------------------------
 TEST_F(TimeLineAddition, complex_addition_front) {
 
-	std::vector<double> first(5, 0.0);
-	std::vector<double> second(2, 1.0);
+	vector<double> first(5, 0.0);
+	vector<double> second(2, 1.0);
 
 	SignalProcessing::add_second_to_first_at(&first, &second, 0);
 
@@ -132,8 +133,8 @@ TEST_F(TimeLineAddition, complex_addition_front) {
 //------------------------------------------------------------------------------
 TEST_F(TimeLineAddition, complex_addition_front_plus_1) {
 
-	std::vector<double> first(5, 0.0);
-	std::vector<double> second(2, 1.0);
+	vector<double> first(5, 0.0);
+	vector<double> second(2, 1.0);
 
 	SignalProcessing::add_second_to_first_at(&first, &second, 1);
 
@@ -146,8 +147,8 @@ TEST_F(TimeLineAddition, complex_addition_front_plus_1) {
 //------------------------------------------------------------------------------
 TEST_F(TimeLineAddition, complex_addition_front_minus_1) {
 
-	std::vector<double> first(5, 0.0);
-	std::vector<double> second(2, 1.0);
+	vector<double> first(5, 0.0);
+	vector<double> second(2, 1.0);
 
 	SignalProcessing::add_second_to_first_at(&first, &second, -1);
 
@@ -160,8 +161,8 @@ TEST_F(TimeLineAddition, complex_addition_front_minus_1) {
 //------------------------------------------------------------------------------
 TEST_F(TimeLineAddition, complex_addition_middle) {
 
-	std::vector<double> first(5, 0.0);
-	std::vector<double> second(2, 1.0);
+	vector<double> first(5, 0.0);
+	vector<double> second(2, 1.0);
 
 	SignalProcessing::add_second_to_first_at(&first, &second, 2);
 
@@ -174,8 +175,8 @@ TEST_F(TimeLineAddition, complex_addition_middle) {
 //------------------------------------------------------------------------------
 TEST_F(TimeLineAddition, complex_addition_end) {
 
-	std::vector<double> first(5, 0.0);
-	std::vector<double> second(2, 1.0);
+	vector<double> first(5, 0.0);
+	vector<double> second(2, 1.0);
 
 	SignalProcessing::add_second_to_first_at(&first, &second, 3);
 
@@ -188,8 +189,8 @@ TEST_F(TimeLineAddition, complex_addition_end) {
 //------------------------------------------------------------------------------
 TEST_F(TimeLineAddition, complex_addition_partly_beyond_end) {
 
-	std::vector<double> first(5, 0.0);
-	std::vector<double> second(2, 1.0);
+	vector<double> first(5, 0.0);
+	vector<double> second(2, 1.0);
 
 	SignalProcessing::add_second_to_first_at(&first, &second, 4);
 
