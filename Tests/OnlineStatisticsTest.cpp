@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "Tools/OnlineStatistics.h"
 #include "Core/Random/Random.h"
+#include "Tools/Numeric.h"
 #include "Tools/Tools.h"
 using std::vector;
 //------------------------------------------------------------------------------
@@ -33,7 +34,7 @@ TEST_F(OnlineStatisticsTest, online_variance) {
     }
 
     double stddev_using_online = ov.stddev();
-    double stddev_using_classic = numeric::stddev(vals);
+    double stddev_using_classic = Numeric::stddev(vals);
 
     EXPECT_NEAR(stddev_using_online, stddev_using_classic, 1e-6);
     EXPECT_EQ(ov.number_of_samples(), 1000000);
@@ -48,7 +49,7 @@ TEST_F(OnlineStatisticsTest, online_variance_simple_numbers) {
         ov.add(vals.at(i));
 
     double stddev_using_online = ov.stddev();
-    double stddev_using_classic = numeric::stddev(vals);
+    double stddev_using_classic = Numeric::stddev(vals);
 
     EXPECT_NEAR(stddev_using_online, stddev_using_classic, 1e-6);
     EXPECT_EQ(ov.number_of_samples(), 7);

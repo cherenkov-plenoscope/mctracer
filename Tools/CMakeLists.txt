@@ -10,5 +10,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Time.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/OnlineStatistics.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/HeaderBlock.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Numeric.cpp
    	PARENT_SCOPE
 )

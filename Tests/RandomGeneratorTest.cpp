@@ -2,6 +2,7 @@
 #include "Core/Random/Random.h"
 #include "Core/Histogram1D.h"
 #include "Tools/Tools.h"
+#include "Tools/Numeric.h"
 #include <array>
 using std::array;
 
@@ -42,7 +43,7 @@ TEST_F(RandomGeneratorTest, uniform_0_to_1_stddev) {
     for(uint i=0; i<42*1337; i++) 
         samples.push_back(prng.uniform());
 
-    EXPECT_NEAR(1.0/sqrt(12.0), numeric::stddev(samples), 1e-3);
+    EXPECT_NEAR(1.0/sqrt(12.0), Numeric::stddev(samples), 1e-3);
 }
 //------------------------------------------------------------------------------
 TEST_F(RandomGeneratorTest, generator_point_on_disc) {
@@ -90,8 +91,8 @@ TEST_F(RandomGeneratorTest, generator_point_on_disc) {
         }
     }
 
-    double mean_count = numeric::mean(counts_in_evaluation_bins);
-    double stddev_count = numeric::stddev(counts_in_evaluation_bins);
+    double mean_count = Numeric::mean(counts_in_evaluation_bins);
+    double stddev_count = Numeric::stddev(counts_in_evaluation_bins);
 
     EXPECT_TRUE(stddev_count/mean_count < 1e-2);
     //std::cout << mean_count << " pm " << stddev_count << "\n";
@@ -120,7 +121,7 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
     // fill samples drawn from distribution into histogram
 
     uint bin_count = uint(pow(double(n_samples), 1.0/3.0));
-    std::vector<double> bin_edges = numeric::linspace(
+    std::vector<double> bin_edges = Numeric::linspace(
         f.get_limits().get_lower(),
         f.get_limits().get_upper(), 
         bin_count
@@ -148,7 +149,7 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
     //--------------------
     // compare initial distribution and samples drawn from distribution
 
-    std::vector<double> ys = numeric::linspace(
+    std::vector<double> ys = Numeric::linspace(
         f.get_limits().get_lower(),
         f.get_limits().get_upper(), 
         sqrt(n_samples)

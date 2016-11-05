@@ -2,6 +2,7 @@
 #include "Tools/Tools.h"
 #include "Core/Histogram1D.h"
 #include "Core/SimulationTruth.h"
+#include "Tools/Numeric.h"
 
 namespace Plenoscope {
 namespace NightSkyBackground {
@@ -53,7 +54,7 @@ namespace NightSkyBackground {
 
 			const uint bin_count = sqrt(number_cherenkov_photons);
 
-			vector<double> arrival_time_bin_edges = numeric::linspace(
+			vector<double> arrival_time_bin_edges = Numeric::linspace(
 				min_crk_arrival_time, 
 				max_crk_arrival_time, 
 				bin_count

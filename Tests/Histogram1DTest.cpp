@@ -2,6 +2,7 @@
 #include "Core/Histogram1D.h"
 #include "Core/Random/Random.h"
 #include "Tools/Tools.h"
+#include "Tools/Numeric.h"
 
 class Histogram1DTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
@@ -24,7 +25,7 @@ TEST_F(Histogram1DTest, empty_bin_edges) {
 //------------------------------------------------------------------------------
 TEST_F(Histogram1DTest, init) {
 
-    std::vector<double> bins = numeric::linspace(0.0, 1.0, 50);
+    std::vector<double> bins = Numeric::linspace(0.0, 1.0, 50);
 
     Random::Mt19937 prng(0);
     std::vector<double> samples;
@@ -39,7 +40,7 @@ TEST_F(Histogram1DTest, init) {
 //------------------------------------------------------------------------------
 TEST_F(Histogram1DTest, underflow_bin_above_expect_empty) {
 
-    std::vector<double> bins = numeric::linspace(0.0, 1.0, 50);
+    std::vector<double> bins = Numeric::linspace(0.0, 1.0, 50);
     std::vector<double> samples = {0.1, 0.2, 0.3};
 
     Histogram1D histo(samples, bins);
@@ -49,7 +50,7 @@ TEST_F(Histogram1DTest, underflow_bin_above_expect_empty) {
 //------------------------------------------------------------------------------
 TEST_F(Histogram1DTest, underflow_bin_exact_expect_empty) {
 
-    std::vector<double> bins = numeric::linspace(0.0, 1.0, 50);
+    std::vector<double> bins = Numeric::linspace(0.0, 1.0, 50);
     std::vector<double> samples = {0.0, 0.1, 0.2, 0.3};
 
     Histogram1D histo(samples, bins);
@@ -59,7 +60,7 @@ TEST_F(Histogram1DTest, underflow_bin_exact_expect_empty) {
 //------------------------------------------------------------------------------
 TEST_F(Histogram1DTest, underflow_bin_below_expect_full) {
 
-    std::vector<double> bins = numeric::linspace(0.0, 1.0, 50);
+    std::vector<double> bins = Numeric::linspace(0.0, 1.0, 50);
     std::vector<double> samples = {-1e-9, 0.1, 0.2, 0.3};
 
     Histogram1D histo(samples, bins);
@@ -69,7 +70,7 @@ TEST_F(Histogram1DTest, underflow_bin_below_expect_full) {
 //------------------------------------------------------------------------------
 TEST_F(Histogram1DTest, overflow_bin_above_expect_full) {
 
-    std::vector<double> bins = numeric::linspace(0.0, 1.0, 50);
+    std::vector<double> bins = Numeric::linspace(0.0, 1.0, 50);
     std::vector<double> samples = {0.1, 0.2, 0.3, 1.0+1e-9};
 
     Histogram1D histo(samples, bins);
@@ -79,7 +80,7 @@ TEST_F(Histogram1DTest, overflow_bin_above_expect_full) {
 //------------------------------------------------------------------------------
 TEST_F(Histogram1DTest, overflow_bin_exact_expect_full) {
 
-    std::vector<double> bins = numeric::linspace(0.0, 1.0, 50);
+    std::vector<double> bins = Numeric::linspace(0.0, 1.0, 50);
     std::vector<double> samples = {0.1, 0.2, 0.3, 1.0};
 
     Histogram1D histo(samples, bins);
@@ -89,7 +90,7 @@ TEST_F(Histogram1DTest, overflow_bin_exact_expect_full) {
 //------------------------------------------------------------------------------
 TEST_F(Histogram1DTest, overflow_bin_below_expect_empty) {
 
-    std::vector<double> bins = numeric::linspace(0.0, 1.0, 50);
+    std::vector<double> bins = Numeric::linspace(0.0, 1.0, 50);
     std::vector<double> samples = {0.1, 0.2, 0.3, 1.0-1e-9};
 
     Histogram1D histo(samples, bins);
@@ -101,7 +102,7 @@ TEST_F(Histogram1DTest, all_in_one_bin_middle) {
 
     // bins    |   0   |   1     |     2    | 
     // edges  0.0   0.3333   0.666666      1.0
-    std::vector<double> bins_edges =  numeric::linspace(0.0, 1.0, 4);
+    std::vector<double> bins_edges =  Numeric::linspace(0.0, 1.0, 4);
 
     std::vector<double> samples;
     for(uint i=0u; i<42u*1337u; i++)
@@ -121,7 +122,7 @@ TEST_F(Histogram1DTest, all_in_one_bin_front) {
 
     // bins    |   0   |   1     |     2    | 
     // edges  0.0   0.3333   0.666666      1.0
-    std::vector<double> bins_edges =  numeric::linspace(0.0, 1.0, 4);
+    std::vector<double> bins_edges =  Numeric::linspace(0.0, 1.0, 4);
 
     std::vector<double> samples;
     for(uint i=0u; i<42u*1337u; i++)
@@ -141,7 +142,7 @@ TEST_F(Histogram1DTest, all_in_one_bin_back) {
 
     // bins    |   0   |   1     |     2    | 
     // edges  0.0   0.3333   0.666666      1.0
-    std::vector<double> bins_edges =  numeric::linspace(0.0, 1.0, 4);
+    std::vector<double> bins_edges =  Numeric::linspace(0.0, 1.0, 4);
 
     std::vector<double> samples;
     for(uint i=0u; i<42u*1337u; i++)

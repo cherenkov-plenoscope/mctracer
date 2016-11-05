@@ -1,4 +1,5 @@
 #include "gtest/gtest.h"
+#include "Tools/Numeric.h"
 #include "Tools/Tools.h"
 #include "SignalProcessing/TimeLineAddition.h"
 
@@ -21,7 +22,7 @@ TEST_F(TimeLineAddition, all_empty) {
 //------------------------------------------------------------------------------
 TEST_F(TimeLineAddition, empty_summand) {
 
-	std::vector<double> first = numeric::linspace(0.0, 1.0, 100);
+	std::vector<double> first = Numeric::linspace(0.0, 1.0, 100);
 	std::vector<double> second;
 
 	EXPECT_EQ(100u, first.size());
@@ -39,7 +40,7 @@ TEST_F(TimeLineAddition, empty_summand) {
 TEST_F(TimeLineAddition, empty_base_summand) {
 
 	std::vector<double> first;
-	std::vector<double> second = numeric::linspace(0.0, 1.0, 100);
+	std::vector<double> second = Numeric::linspace(0.0, 1.0, 100);
 
 	EXPECT_EQ(0u, first.size());
 	EXPECT_EQ(100u, second.size());

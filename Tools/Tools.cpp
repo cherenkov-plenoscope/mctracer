@@ -45,33 +45,6 @@ double get_mean_along_column(
 	return mean;	
 }
 //------------------------------------------------------------------------------
-double numeric::mean(const std::vector<double> &vec) {
-	double sum = 0;
-	for(double val: vec) sum = sum + val;
-	return sum/vec.size();
-}
-//------------------------------------------------------------------------------
-double numeric::stddev(const std::vector<double> &vec) {
-	double mean = numeric::mean(vec);
-    double s = 0.0;
-    for(double val: vec) s = s + (val - mean)*(val - mean);
-    return sqrt(s/vec.size());
-}
-//------------------------------------------------------------------------------
-std::vector<double> numeric::linspace(double begin, double end, uint steps) {
-		
-	std::vector<double> lin;
-	lin.reserve(steps);
-
-	double range = end - begin; 
-	double step = range/double(steps-1);
-
-	for(uint i=0; i<steps; i++)
-		lin.push_back(begin + step*i);
-
-	return lin;
-}
-//------------------------------------------------------------------------------
 double get_solid_angle_for_opening_angle(const double theta) {
 	//-------                    
 	//         _ _        _______________    
