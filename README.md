@@ -1,16 +1,18 @@
 # mctracer
+scientific photon propagation and ray traing in complex sceneries
+![img](Readme/fact_and_spider_web.jpg)
 
-mctracer is short for Monte Carlo Ray Tracing.
 
 ## installation on Ubuntu
 
-### tools needed to get and build mctracer:
+### tools needed
 * git
 * g++ >= 5.3
 * cmake
 
-### dependencies of mctracer:
+### dependencies
 * libopencv-dev >= 2.4.8
+* OpenMP
 
 opencv can be installed with apt-get when running Ubuntu >= 14. Otherwise one has to install it locally by hand. This is easiest done by getting it from the git repo:
 
@@ -34,21 +36,14 @@ export OpenCV_DIR=<CMAKE_INSTALL_PREFIX>
 ```
 This ensures that CMakeLists.txt finds the correct version of OpenCV.
 
-### set up directories and get mctracer:
+### make
 ```
 #!bash
-mkdir yourDirectorieToPlayWithMctracer
-cd yourDirectorieToPlayWithMctracer
-git clone https://Relleums@bitbucket.org/Relleums/mctracer.git
+git clone https://github.com/TheBigLebowSky/mctracer.git
 mkdir build
 ```
 The /build directory is best located side by side to the /mctracer directory.
 
-- yourDirectoryToPlayWithMctracer
-	- mctracer
-	- build
-
-### compile:
 ```
 #!bash
 cd build
@@ -57,8 +52,7 @@ make
 
 ```
 
-## run mctracer:
-
+## run mctracer
 The mctracer has several executeables. To interacively explore a scenery use mctShow.
 ```
 #!bash
@@ -66,8 +60,8 @@ mctShow --scenery fact.xml
 
 ```
 
-## run Unit Tests:
-The unit tests are meant to run in the mctracer/test directory because they are looking for files in there to do IO tests.
+## Unit Tests
+Run the unit tests in the mctracer/Tests directory to ensure your build is fine.
 
 ```
 #!bash
@@ -75,9 +69,3 @@ cd mctracer/test
 ../../build/mctTest
 
 ```
-
-----
-
-
-# Upcoming: Python support #
-Due to bad desigend memory management of the c++ mctracer, this project got delayed. The problem is, taht at the moment the mctracer library API forces the users of the API to dynamically manage the memory of some resources. How ever, great progress was already made to overcome this problem by refactoring the mctracer library and python support (a python wrapper API) is still a major goal.
