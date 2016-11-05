@@ -1,4 +1,5 @@
 #include "Sampler.h"
+#include "TimeLineAddition.h"
 
 namespace SignalProcessing {
 	namespace PhotoElectricConverter {

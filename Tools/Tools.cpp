@@ -98,23 +98,3 @@ double get_solid_angle_for_opening_angle(const double theta) {
 	return 2.0*M_PI*h;
 }
 //------------------------------------------------------------------------------
-void add_second_to_first_at(
-	std::vector<double> *first, 
-	const std::vector<double> *second, 
-	int i
-) {
-	uint is=i;
-	uint wait=0;
-	
-	if(i<0) {
-		wait = -i;
-		is = 0;
-	}
-
-	uint j = wait;
-	while(is<first->size() && j<second->size()) {
-		(*first)[is] += (*second)[j];
-		j++;
-		is++;
-	};
-}
