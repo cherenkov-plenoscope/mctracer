@@ -53,6 +53,6 @@ mctShow --scenery fact.xml
 Run the unit tests in the mctracer/Tests directory to ensure your build is fine.
 
 ```bash
-cd mctracer/test
+cd mctracer/Tests
 ../../build/mctTest
 ```
