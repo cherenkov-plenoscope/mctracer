@@ -93,3 +93,17 @@ TEST_F(FramesTest, optimal_bounding_sphere_pos_many_spheres_asymetric) {
     Sphere f5; f5.set_name_pos_rot("f5", Vec3(4,0,0), Rot3::null); f5.set_radius(5.0); vf.push_back(&f5);
 	EXPECT_EQ(Vec3(4,0,0), Frames::dumb_bounding_sphere_center(vf));
 }
+//------------------------------------------------------------------------------
+TEST_F(FramesTest, not_optimal_in_symetric_case) {
+
+    vector<Frame*> vf;
+    Sphere f1; f1.set_name_pos_rot("f1", Vec3(cos(Deg2Rad(  0.0)), sin(Deg2Rad(  0.0)),0), Rot3::null); f1.set_radius(0.5); vf.push_back(&f1);
+    Sphere f2; f2.set_name_pos_rot("f2", Vec3(cos(Deg2Rad(120.0)), sin(Deg2Rad(120.0)),0), Rot3::null); f2.set_radius(0.5); vf.push_back(&f2);
+    Sphere f3; f3.set_name_pos_rot("f3", Vec3(cos(Deg2Rad(240.0)), sin(Deg2Rad(240.0)),0), Rot3::null); f3.set_radius(0.5); vf.push_back(&f3);
+    
+    const Vec3 center = Frames::dumb_bounding_sphere_center(vf);
+    const double radius = Frames::bounding_sphere_radius(vf, center);
+
+    const double expected_enclosing_radius_for_three_balls = 1.5;
+    EXPECT_TRUE(radius > expected_enclosing_radius_for_three_balls);
+}
