@@ -57,7 +57,7 @@ void Calibrator::set_up_plenoscope_environment() {
 	plenoscope_environment.random_engine = &prng;		
 }
 //------------------------------------------------------------------------------
-Photon* Calibrator::get_photon_given_pos_and_angle_on_principal_aperture(
+Photon Calibrator::get_photon_given_pos_and_angle_on_principal_aperture(
 	Vec3 pos_on_principal_aperture,
 	Vec3 direction_on_principal_aperture
 )const {
@@ -71,13 +71,11 @@ Photon* Calibrator::get_photon_given_pos_and_angle_on_principal_aperture(
 		distance_to_travel_before_intersecting_principal_aperture
 	);
 
-	Photon* ph = new Photon(
+	return Photon(
 		support_of_photon,
 		direction_on_principal_aperture*(-1.0),
 		callibration_photon_wavelenght
 	);
-
-	return ph;
 }
 //------------------------------------------------------------------------------
 void Calibrator::fill_calibration_block_to_table() {
@@ -105,16 +103,16 @@ void Calibrator::fill_calibration_block_to_table() {
 						max_tilt_vs_optical_axis_to_throw_photons_in
 					);
 
-				Photon* ph = get_photon_given_pos_and_angle_on_principal_aperture(
+				Photon ph = get_photon_given_pos_and_angle_on_principal_aperture(
 					pos_on_principal_aperture,
 					direction_on_principal_aperture
 				);
 
 				// propagate photon
-				PhotonAndFrame::Propagator(ph, plenoscope_environment);
+				PhotonAndFrame::Propagator(&ph, plenoscope_environment);
 
 				PhotonSensors::FindSensorByFrame sensor_finder(
-					ph->get_final_intersection().get_object(),
+					ph.get_final_intersection().get_object(),
 					&plenoscope->light_field_channels->by_frame
 				);
 
@@ -128,7 +126,7 @@ void Calibrator::fill_calibration_block_to_table() {
 					result.y_pos_on_principal_aperture = pos_on_principal_aperture.y();
 					result.x_tilt_vs_optical_axis = direction_on_principal_aperture.x();
 					result.y_tilt_vs_optical_axis = direction_on_principal_aperture.y();
-					result.relative_time_of_flight = ph->get_time_of_flight();
+					result.relative_time_of_flight = ph.get_time_of_flight();
 
 					photon_results[i] = result;
 				}else{
@@ -138,8 +136,6 @@ void Calibrator::fill_calibration_block_to_table() {
 					photon_results[i] = result;
 				}
 
-				// delete photon
-				delete ph;
 			}catch(std::exception &error) {
 
 				HadCatch++;

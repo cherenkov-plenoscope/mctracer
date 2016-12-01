@@ -54,7 +54,7 @@ namespace Plenoscope {
 		void set_up_plenoscope_environment();
 		void run_calibration();
 		void fill_calibration_block_to_table();
-		Photon* get_photon_given_pos_and_angle_on_principal_aperture(
+		Photon get_photon_given_pos_and_angle_on_principal_aperture(
 			Vec3 pos_on_principal_aperture,
 			Vec3 direction_on_principal_aperture
 		)const;

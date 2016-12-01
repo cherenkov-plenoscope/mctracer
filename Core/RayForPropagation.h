@@ -48,7 +48,6 @@ protected:
 public:
 	
 	RayForPropagation(const Vec3 support, const Vec3 direction);
-	virtual ~RayForPropagation();
 	void set_simulation_truth_id(const int id);
 	int get_simulation_truth_id()const;
 	void push_back_intersection_and_type_to_propagation_history(

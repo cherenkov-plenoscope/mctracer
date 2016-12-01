@@ -148,5 +148,3 @@ Interaction RayForPropagation::get_final_interaction_type()const {
 	return interaction_history.back();
 }
 //------------------------------------------------------------------------------
-RayForPropagation::~RayForPropagation() {}
-//------------------------------------------------------------------------------
