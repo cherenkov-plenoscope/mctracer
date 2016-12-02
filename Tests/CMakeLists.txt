@@ -22,6 +22,7 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/RayAndFrameTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Rot3Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SensorStorageTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SensorAssignmentTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FrameTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FramesTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SimpleTdcQdcTest.cpp
