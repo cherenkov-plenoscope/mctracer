@@ -33,29 +33,24 @@ namespace PhotonSensor {
 
 	void Sensor::assign_photon_to_this_sensor(const Photon* photon) {
 		
-		if(	
-			photon->get_final_intersection().get_object() == 
-			sensor_frame
-		) {
-			arrival_table.emplace_back( // A PhotonInfo Object
-				// id
-				photon->get_simulation_truth_id(),
-				// wavelength
-				photon->get_wavelength(),
-				// arrival_time
-				photon->get_time_of_flight(),
-				// x
-				photon->get_final_intersection().
-					get_intersection_vector_in_object_system().x(),
-				// y
-				photon->get_final_intersection().
-					get_intersection_vector_in_object_system().y(),
-				// tx
-				-1.0*photon->get_final_intersection_incident_vector_in_object_frame().x(),
-				// ty
-				-1.0*photon->get_final_intersection_incident_vector_in_object_frame().y()
-			);
-		}
+		arrival_table.emplace_back( // A PhotonInfo Object
+			// id
+			photon->get_simulation_truth_id(),
+			// wavelength
+			photon->get_wavelength(),
+			// arrival_time
+			photon->get_time_of_flight(),
+			// x
+			photon->get_final_intersection().
+				get_intersection_vector_in_object_system().x(),
+			// y
+			photon->get_final_intersection().
+				get_intersection_vector_in_object_system().y(),
+			// tx
+			-1.0*photon->get_final_intersection_incident_vector_in_object_frame().x(),
+			// ty
+			-1.0*photon->get_final_intersection_incident_vector_in_object_frame().y()
+		);
 	}
 
 	void Sensor::clear_history() {
