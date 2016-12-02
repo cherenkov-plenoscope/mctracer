@@ -25,7 +25,7 @@ namespace PhotonSensor {
 			double cos_theta_x = final_intersection_incident.x();
 			double cos_theta_y = final_intersection_incident.y();
 
-			photon_info info;
+			PhotonInfo info;
 
 			info.simulation_truth_id = photon->get_simulation_truth_id();
 			info.wavelength = photon->get_wavelength();
@@ -52,7 +52,7 @@ namespace PhotonSensor {
 
 		double t = 0.0;
 
-		for(photon_info ph: arrival_table)
+		for(PhotonInfo ph: arrival_table)
 			t += ph.arrival_time;
 
 		return t/arrival_table.size();
@@ -62,7 +62,7 @@ namespace PhotonSensor {
 
 		double xm = 0.0;
 
-		for(photon_info ph: arrival_table)
+		for(PhotonInfo ph: arrival_table)
 			xm += ph.x_intersect;
 
 		return xm/arrival_table.size();
@@ -72,7 +72,7 @@ namespace PhotonSensor {
 
 		double ym = 0.0;
 
-		for(photon_info ph: arrival_table)
+		for(PhotonInfo ph: arrival_table)
 			ym += ph.y_intersect;
 
 		return ym/arrival_table.size();
@@ -83,7 +83,7 @@ namespace PhotonSensor {
 		double xm = x_mean();
 		double sx = 0.0;
 
-		for(photon_info ph: arrival_table)
+		for(PhotonInfo ph: arrival_table)
 			sx += (ph.x_intersect - xm)*(ph.x_intersect - xm);
 
 		return sqrt(sx/arrival_table.size());
@@ -94,7 +94,7 @@ namespace PhotonSensor {
 		double ym = y_mean();
 		double sy = 0.0;
 
-		for(photon_info ph: arrival_table)
+		for(PhotonInfo ph: arrival_table)
 			sy += (ph.y_intersect - ym)*(ph.y_intersect - ym);
 
 		return sqrt(sy/arrival_table.size());
@@ -109,7 +109,7 @@ namespace PhotonSensor {
 
 		vector<vector<double>> output_table;
 
-		for(photon_info ph: arrival_table) {
+		for(PhotonInfo ph: arrival_table) {
 
 			vector<double> output_row;
 			output_row.push_back(ph.x_intersect);

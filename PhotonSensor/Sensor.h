@@ -18,7 +18,7 @@ using std::string;
 //=================================
 namespace PhotonSensor {
 
-	struct photon_info {
+	struct PhotonInfo {
 		int simulation_truth_id;
 		double wavelength;
 		double arrival_time;
@@ -33,7 +33,7 @@ namespace PhotonSensor {
 		
 		const Frame* sensor_frame;
 	public:
-		vector<photon_info> arrival_table;
+		vector<PhotonInfo> arrival_table;
 
 		uint id;
 		Sensor(uint _id, const Frame* _sensor_frame);
