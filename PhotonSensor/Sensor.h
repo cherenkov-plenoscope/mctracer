@@ -53,24 +53,6 @@ namespace PhotonSensor {
 		vector<vector<double>> get_arrival_table()const;
 		string get_arrival_table_header()const;
 
-	    struct SensorSensorByIdCompare {
-			bool operator()(const Sensor* l, const Sensor* r) {
-				return l->id < r->id;
-			}
-	    };
-
-	    struct IdSensorByIdCompare {
-			bool operator()(const uint i, const Sensor* s) {
-				return i < s->id;
-			}
-	    };
-
-	    struct SensorSensorByFramePointerCompare {
-			bool operator()(const Sensor* l, const Sensor* r) {
-				return l->sensor_frame < r->sensor_frame;
-			}
-	    };
-
 	    struct FrameSensorByFramePointerCompare {
 			bool operator()(const Frame* f, const Sensor* s) {
 				return f < s->sensor_frame;
