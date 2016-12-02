@@ -2,26 +2,6 @@
 
 namespace PhotonSensor {
 
-	PhotonInfo::PhotonInfo() {}
-
-	PhotonInfo::PhotonInfo(
-		int id,
-		double w,
-		double t,
-		double x,
-		double y,
-		double tx,
-		double ty
-	):
-		simulation_truth_id(id),
-		wavelength(w),
-		arrival_time(t),
-		x_intersect(x),
-		y_intersect(y),
-		theta_x(tx),
-		theta_y(ty)		
-	{}
-
 	Sensor::Sensor(uint _id, const Frame* _sensor_frame) {
 		id = _id;
 		sensor_frame = _sensor_frame;
@@ -33,7 +13,7 @@ namespace PhotonSensor {
 
 	void Sensor::assign_photon_to_this_sensor(const Photon* photon) {
 		
-		arrival_table.emplace_back( // A PhotonInfo Object
+		arrival_table.emplace_back(// ArrivalInformation
 			// id
 			photon->get_simulation_truth_id(),
 			// wavelength
@@ -65,7 +45,7 @@ namespace PhotonSensor {
 
 		double t = 0.0;
 
-		for(PhotonInfo ph: arrival_table)
+		for(ArrivalInformation ph: arrival_table)
 			t += ph.arrival_time;
 
 		return t/arrival_table.size();
@@ -75,7 +55,7 @@ namespace PhotonSensor {
 
 		double xm = 0.0;
 
-		for(PhotonInfo ph: arrival_table)
+		for(ArrivalInformation ph: arrival_table)
 			xm += ph.x_intersect;
 
 		return xm/arrival_table.size();
@@ -85,7 +65,7 @@ namespace PhotonSensor {
 
 		double ym = 0.0;
 
-		for(PhotonInfo ph: arrival_table)
+		for(ArrivalInformation ph: arrival_table)
 			ym += ph.y_intersect;
 
 		return ym/arrival_table.size();
@@ -96,7 +76,7 @@ namespace PhotonSensor {
 		double xm = x_mean();
 		double sx = 0.0;
 
-		for(PhotonInfo ph: arrival_table)
+		for(ArrivalInformation ph: arrival_table)
 			sx += (ph.x_intersect - xm)*(ph.x_intersect - xm);
 
 		return sqrt(sx/arrival_table.size());
@@ -107,7 +87,7 @@ namespace PhotonSensor {
 		double ym = y_mean();
 		double sy = 0.0;
 
-		for(PhotonInfo ph: arrival_table)
+		for(ArrivalInformation ph: arrival_table)
 			sy += (ph.y_intersect - ym)*(ph.y_intersect - ym);
 
 		return sqrt(sy/arrival_table.size());
@@ -122,7 +102,7 @@ namespace PhotonSensor {
 
 		vector<vector<double>> output_table;
 
-		for(PhotonInfo ph: arrival_table) {
+		for(ArrivalInformation ph: arrival_table) {
 
 			vector<double> output_row;
 			output_row.push_back(ph.x_intersect);

@@ -12,38 +12,19 @@
 #include <math.h>
 #include <sstream>
 #include "Core/Photon.h"
+#include "ArrivalInformation.h"
 using std::vector;
 using std::string;
 
 //=================================
 namespace PhotonSensor {
 
-	struct PhotonInfo {
-		int simulation_truth_id;
-		double wavelength;
-		double arrival_time;
-		double x_intersect;
-		double y_intersect;
-		double theta_x;
-		double theta_y;
-		PhotonInfo();
-		PhotonInfo(
-			int id,
-			double w,
-			double t,
-			double x,
-			double y,
-			double tx,
-			double ty
-		);	
-	};
-
 	class Sensor {
 	protected:
 		
 		const Frame* sensor_frame;
 	public:
-		vector<PhotonInfo> arrival_table;
+		vector<ArrivalInformation> arrival_table;
 
 		uint id;
 		Sensor(uint _id, const Frame* _sensor_frame);

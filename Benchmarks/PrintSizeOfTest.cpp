@@ -11,6 +11,7 @@
 #include "Scenery/Primitive/Primitive.h"
 #include "Core/PropagationEnvironment.h"
 #include "Tools/StringTools.h"
+#include "PhotonSensor/PhotonSensor.h"
 
 #include "SignalProcessing/PipelinePhoton.h"
 using std::cout;
@@ -109,6 +110,10 @@ TEST_F(SizeOfTest, sizes_of_mct) {
 
     Triangle triangle; 
     print_size("Triangle", triangle);
+    cout << "--------------------------------------------" << "\n";
+
+    PhotonSensor::ArrivalInformation arr_info;
+    print_size("ArrivalInformation", arr_info);
     cout << "--------------------------------------------" << "\n";
 
     SignalProcessing::PipelinePhoton pipe_ph; 

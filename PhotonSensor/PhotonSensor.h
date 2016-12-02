@@ -11,5 +11,6 @@
 #include "PhotonSensor/Sensor.h"
 #include "PhotonSensor/Finder.h"
 #include "PhotonSensor/Sensors.h"
+#include "PhotonSensor/ArrivalInformation.h"
 //=================================
 #endif // __PHOTONSENSOR_H_INCLUDED__ 
