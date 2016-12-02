@@ -114,6 +114,16 @@ TEST_F(SizeOfTest, sizes_of_mct) {
 
     PhotonSensor::ArrivalInformation arr_info;
     print_size("ArrivalInformation", arr_info);
+
+    PhotonSensor::Sensor sensor(0u, &tree);
+    print_size("Sensor", sensor);
+
+    std::vector<PhotonSensor::Sensor*> raw_sensors;
+    PhotonSensor::Sensors sensors(raw_sensors);
+    print_size("Sensors", sensors);
+
+    PhotonSensor::FindSensorByFrame finder(&tree, &sensors.by_frame);
+    print_size("FindSensorByFrame", finder);
     cout << "--------------------------------------------" << "\n";
 
     SignalProcessing::PipelinePhoton pipe_ph; 
