@@ -1,6 +1,7 @@
 set(SOURCE
    	${SOURCE}
 	${CMAKE_CURRENT_SOURCE_DIR}/Sensor.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Finder.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PhotonSensors.cpp
    	PARENT_SCOPE
 )
