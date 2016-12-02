@@ -36,7 +36,7 @@ namespace Xml {
         Scenery* scenery;
 
         SceneryFactory(const string path);
-        PhotonSensors::Sensors sensors()const;
+        PhotonSensor::Sensors sensors()const;
         void append_to_frame_in_scenery(Frame* frame, Scenery* scenery);
     private:
 

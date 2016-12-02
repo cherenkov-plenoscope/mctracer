@@ -111,7 +111,7 @@ void Calibrator::fill_calibration_block_to_table() {
 				// propagate photon
 				PhotonAndFrame::Propagator(&ph, plenoscope_environment);
 
-				PhotonSensors::FindSensorByFrame sensor_finder(
+				PhotonSensor::FindSensorByFrame sensor_finder(
 					ph.get_final_intersection().get_object(),
 					&plenoscope->light_field_channels->by_frame
 				);

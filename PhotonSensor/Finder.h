@@ -12,7 +12,7 @@
 using std::vector;
 //=================================
 
-namespace PhotonSensors {
+namespace PhotonSensor {
 
 	class FindSensorByFrame {
 
@@ -29,6 +29,6 @@ namespace PhotonSensors {
 		PhotonSensor::Sensor* get_sensor()const;
 	};
 
-} // PhotonSensors
+} // PhotonSensor
 //------------------------------------------------------------------------------
 #endif // __PHOTONSENSORS_FINDER_H_INCLUDED__ 

@@ -1,9 +1,8 @@
 #include "Sensors.h"
 #include "Finder.h"
-//------------------------------------------------------------------------------
-namespace PhotonSensors {
-	using PhotonSensor::Sensor;
 
+namespace PhotonSensor {
+//------------------------------------------------------------------------------
 Sensors::Sensors() {
     // all vectors are left empty
 }
@@ -141,4 +140,4 @@ uint Sensors::get_pos_at_frame(const Frame* frame)const {
     return finder.get_index(); 
 }
 //------------------------------------------------------------------------------
-} // PhotonSensors
+} // PhotonSensor

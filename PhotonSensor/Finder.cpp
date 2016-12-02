@@ -1,8 +1,7 @@
 #include "Finder.h"
 #include <algorithm>
-//------------------------------------------------------------------------------
-namespace PhotonSensors {
-	using PhotonSensor::Sensor;
+
+namespace PhotonSensor {
 //------------------------------------------------------------------------------
 FindSensorByFrame::FindSensorByFrame(
 	const Frame* final_frame,
@@ -50,4 +49,4 @@ uint FindSensorByFrame::get_index()const {
     return index;
 }
 //------------------------------------------------------------------------------
-} // PhotonSensors
+} // PhotonSensor

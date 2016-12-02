@@ -27,7 +27,7 @@ struct PipelinePhoton {
 };
 
 std::vector<std::vector<PipelinePhoton>> get_photon_pipelines(
-    const PhotonSensors::Sensors* sensors
+    const PhotonSensor::Sensors* sensors
 );
 
 void sort_photon_pipelines_arrival_time(std::vector<PipelinePhoton>* pipeline);

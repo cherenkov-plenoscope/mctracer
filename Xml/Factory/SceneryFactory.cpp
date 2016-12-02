@@ -387,8 +387,8 @@ const Color* SceneryFactory::surface_color(const Node node)const {
     return scenery->colors.get(node.child("set_surface").attribute("color"));
 }
 //------------------------------------------------------------------------------
-PhotonSensors::Sensors SceneryFactory::sensors()const {
-    return PhotonSensors::Sensors(*raw_sensors);
+PhotonSensor::Sensors SceneryFactory::sensors()const {
+    return PhotonSensor::Sensors(*raw_sensors);
 }
 //------------------------------------------------------------------------------
 }//Xml

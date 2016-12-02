@@ -17,14 +17,14 @@ namespace LightFieldSensor {
 
 	class Factory {
 
-		PhotonSensors::Sensors *sub_pixel_sensors;
+		PhotonSensor::Sensors *sub_pixel_sensors;
 	public:
 		const Geometry* geometry;
 		Scenery* scenery;
 		
 		Factory(const Geometry* geo);
 		void add_light_field_sensor_to_frame_in_scenery(Frame* frame, Scenery* scenery);
-		PhotonSensors::Sensors* get_sub_pixels()const;
+		PhotonSensor::Sensors* get_sub_pixels()const;
 	private:
 
 		void add_lens_array(Frame* frame);

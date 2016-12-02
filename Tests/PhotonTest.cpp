@@ -196,7 +196,7 @@ TEST_F(PhotonTest, Reflections){
     absorber->set_x_y_width(1.0, 1.0);
     PhotonSensor::Sensor absorber_sensor(0, absorber);
     std::vector<PhotonSensor::Sensor*> sensors_vector = {&absorber_sensor};
-    PhotonSensors::Sensors sensors(sensors_vector);
+    PhotonSensor::Sensors sensors(sensors_vector);
 
     //---post initialize the world to calculate all bounding spheres---
     world.init_tree_based_on_mother_child_relations();
@@ -285,7 +285,7 @@ TEST_F(PhotonTest, Refraction){
     uint sensor_id = 0;
     PhotonSensor::Sensor absorber_sensor(sensor_id, absorber);
     std::vector<PhotonSensor::Sensor*> sensors_vector = {&absorber_sensor};
-    PhotonSensors::Sensors sensors(sensors_vector);
+    PhotonSensor::Sensors sensors(sensors_vector);
 
     //---post initialize the world to calculate all bounding spheres---
     world.init_tree_based_on_mother_child_relations();
@@ -379,7 +379,7 @@ TEST_F(PhotonTest, absorbtion_in_medium){
     uint sensor_id = 0;
     PhotonSensor::Sensor collector_sensor(sensor_id, collector);
     std::vector<PhotonSensor::Sensor*> sensors_vector = {&collector_sensor};
-    PhotonSensors::Sensors sensors(sensors_vector);
+    PhotonSensor::Sensors sensors(sensors_vector);
 
     //---post initialize the world to calculate all bounding spheres---
     world.init_tree_based_on_mother_child_relations();

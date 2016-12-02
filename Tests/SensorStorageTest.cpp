@@ -1,6 +1,5 @@
 #include "gtest/gtest.h"
 #include "PhotonSensor/PhotonSensor.h"
-using namespace PhotonSensors;
 using namespace PhotonSensor;
 
 class SensorStorageTest : public ::testing::Test {};
@@ -25,7 +24,7 @@ TEST_F(SensorStorageTest, default_constructor_and_access_not_existing_frame) {
 	// access invalid frame
 	EXPECT_THROW(
 		sens.at_frame(&dog), 
-		PhotonSensors::Sensors::NoSuchFrame
+		PhotonSensor::Sensors::NoSuchFrame
 	);
 }
 //------------------------------------------------------------------------------
@@ -59,7 +58,7 @@ TEST_F(SensorStorageTest, empty_Sensors_access_invalid_frame) {
 	// access invalid frame
 	EXPECT_THROW(
 		sens.at_frame(&dog), 
-		PhotonSensors::Sensors::NoSuchFrame
+		PhotonSensor::Sensors::NoSuchFrame
 	);
 }
 //------------------------------------------------------------------------------
@@ -145,7 +144,7 @@ TEST_F(SensorStorageTest, assert_no_duplicate_frames) {
 	//Preparing for access
 	EXPECT_THROW(
 		Sensors sens(my_sensors), 
-		PhotonSensors::Sensors::DuplicateFrame
+		PhotonSensor::Sensors::DuplicateFrame
 	);
 }
 //------------------------------------------------------------------------------
@@ -187,26 +186,7 @@ TEST_F(SensorStorageTest, access_non_existing_frame) {
 	// access invalid frame
 	EXPECT_THROW(
 		sens.at_frame(&dog), 
-		PhotonSensors::Sensors::NoSuchFrame
+		PhotonSensor::Sensors::NoSuchFrame
 	);
 }
 //------------------------------------------------------------------------------
-TEST_F(SensorStorageTest, empty_sensors_init) {
-
-	std::vector<Sensor*> empty_sensors;
-
-	Sensors sens(empty_sensors);
-	EXPECT_EQ(0u, sens.size());
-}
-//------------------------------------------------------------------------------
-TEST_F(SensorStorageTest, empty_sensor_list_find_sensor_init) {
-
-    std::vector<Sensor*> empty_sensors;
-    Sensors sens(empty_sensors);
-
-    Frame car;
-    car.set_name_pos_rot("car", Vec3::null, Rot3::null);
-    
-    PhotonSensors::FindSensorByFrame finder(&car, &sens.by_frame);
-    EXPECT_FALSE(finder.frame_is_in_sensors());
-}

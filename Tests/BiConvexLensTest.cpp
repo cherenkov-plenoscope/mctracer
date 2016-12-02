@@ -17,7 +17,7 @@ protected:
 	PropagationConfig settings;
 	Random::Mt19937 prng;
 	PropagationEnvironment lens_test_bench_environment;
-	PhotonSensors::Sensors sensor_list;
+	PhotonSensor::Sensors sensor_list;
 	PhotonSensor::Sensor *sensor;
 	LensMaker::Config cfg;
 

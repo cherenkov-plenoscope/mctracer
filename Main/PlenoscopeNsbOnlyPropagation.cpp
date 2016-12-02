@@ -104,7 +104,7 @@ int main(int argc, char* argv[]) {
         throw TracerException("There is more then one plenoscope in the scenery");
     Plenoscope::PlenoscopeInScenery* pis = &scenery_factory.plenoscopes.at(0);
 
-    PhotonSensors::Sensors* light_field_channels = pis->light_field_channels;
+    PhotonSensor::Sensors* light_field_channels = pis->light_field_channels;
 
     //--------------------------------------------------------------------------
     // load light field calibration result

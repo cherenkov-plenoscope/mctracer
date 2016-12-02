@@ -64,7 +64,7 @@ int main(int argc, char* argv[]) {
 	scenery.root.init_tree_based_on_mother_child_relations();
 	//--------------------------------------------------------------------------
 	// sensors in scenery
-	PhotonSensors::Sensors sensors = fab.sensors();
+	PhotonSensor::Sensors sensors = fab.sensors();
 	
 	//--------------------------------------------------------------------------
 	// photon source

@@ -17,7 +17,7 @@ namespace Plenoscope {
 			light_field_sensor_geometry(config)
 		{};
 		Frame* frame;
-		PhotonSensors::Sensors* light_field_channels;
+		PhotonSensor::Sensors* light_field_channels;
 		LightFieldSensor::Geometry light_field_sensor_geometry;
 	};
 }

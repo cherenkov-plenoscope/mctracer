@@ -22,7 +22,7 @@ PipelinePhoton::PipelinePhoton(
 {}
 //------------------------------------------------------------------------------
 vector<vector<PipelinePhoton>> get_photon_pipelines(
-    const PhotonSensors::Sensors* sensors
+    const PhotonSensor::Sensors* sensors
 ) {
     vector<vector<PipelinePhoton>> photon_pipelines;
     const uint number_sensors = sensors->size();

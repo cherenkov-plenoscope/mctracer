@@ -12,7 +12,7 @@
 using std::vector;
 //=================================
 
-namespace PhotonSensors {
+namespace PhotonSensor {
 
 	class Sensors {
 
@@ -47,6 +47,6 @@ namespace PhotonSensors {
 			using TracerException::TracerException;
 		};
 	};
-} // PhotonSensors
+} // PhotonSensor
 //------------------------------------------------------------------------------
 #endif // __PHOTONSENSORS_H_INCLUDED__ 

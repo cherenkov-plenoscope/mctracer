@@ -46,7 +46,7 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
 
                     PhotonSensor::Sensor sensor(ground_sensor_id, ground);
                     vector<PhotonSensor::Sensor*> sensor_vec = {&sensor};
-                    PhotonSensors::Sensors sensor_list(sensor_vec);
+                    PhotonSensor::Sensors sensor_list(sensor_vec);
 
                     world.init_tree_based_on_mother_child_relations();
 
@@ -279,7 +279,7 @@ TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
 
         PhotonSensor::Sensor sensor(ground_sensor_id, ground);
         std::vector<PhotonSensor::Sensor*> sensor_vec = {&sensor};
-        PhotonSensors::Sensors sensor_list(sensor_vec);
+        PhotonSensor::Sensors sensor_list(sensor_vec);
 
         world.init_tree_based_on_mother_child_relations();
 

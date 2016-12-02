@@ -171,7 +171,7 @@ void Factory::add_lixel_sensor_plane(Frame* frame) {
 		sub_pixels.push_back(sub_pixel_sensor);
 	}
 
-	sub_pixel_sensors = new PhotonSensors::Sensors(sub_pixels);
+	sub_pixel_sensors = new PhotonSensor::Sensors(sub_pixels);
 }
 //------------------------------------------------------------------------------
 void Factory::add_image_sensor_housing(Frame *frame) {
@@ -227,7 +227,7 @@ void Factory::add_light_field_sensor_to_frame_in_scenery(
 	add_lixel_sensor_plane(frame);
 }
 //------------------------------------------------------------------------------
-PhotonSensors::Sensors* Factory::get_sub_pixels()const {
+PhotonSensor::Sensors* Factory::get_sub_pixels()const {
 	return sub_pixel_sensors;
 }
 //------------------------------------------------------------------------------

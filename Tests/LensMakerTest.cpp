@@ -107,7 +107,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 	    sensor_disc->set_radius(cfg.aperture_radius*0.85);
 	    PhotonSensor::Sensor sensor(0, sensor_disc);
 	    vector<PhotonSensor::Sensor*> sensor_vec = {&sensor};
-	    PhotonSensors::Sensors sensor_list(sensor_vec);
+	    PhotonSensor::Sensors sensor_list(sensor_vec);
 
 	    optical_table.init_tree_based_on_mother_child_relations();
 
