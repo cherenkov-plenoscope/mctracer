@@ -27,7 +27,6 @@ namespace PhotonSensor {
 		uint size()const;
 		PhotonSensor::Sensor* at(const uint pos);
 		PhotonSensor::Sensor* at_frame(const Frame* frame);
-		uint get_pos_at_frame(const Frame* frame)const;
 		void assign_photon(const Photon* photon);
 		void assign_photons(const vector<Photon> *photons);
 		void clear_history();

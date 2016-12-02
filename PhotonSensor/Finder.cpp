@@ -34,7 +34,6 @@ FindSensorByFrame::FindSensorByFrame(
 	}
 
 	closest_sensor = (*(it-1));
-    index = (it - sensors->begin());
 }
 //------------------------------------------------------------------------------
 bool FindSensorByFrame::frame_is_in_sensors()const {
@@ -43,10 +42,6 @@ bool FindSensorByFrame::frame_is_in_sensors()const {
 //------------------------------------------------------------------------------
 Sensor* FindSensorByFrame::get_sensor()const {
 	return closest_sensor;
-}
-//------------------------------------------------------------------------------
-uint FindSensorByFrame::get_index()const {
-    return index;
 }
 //------------------------------------------------------------------------------
 } // PhotonSensor

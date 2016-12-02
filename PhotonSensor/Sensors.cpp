@@ -123,21 +123,4 @@ void Sensors::init_sensors_by_frames() {
     assert_no_two_sensors_have_same_frame();
 }
 //------------------------------------------------------------------------------
-uint Sensors::get_pos_at_frame(const Frame* frame)const {
-
-    FindSensorByFrame finder(frame, &by_frame);
-
-    if(!finder.frame_is_in_sensors()) {
-        std::stringstream info;
-        info << __FILE__ << ", " << __LINE__ << "\n";
-        info << "There is no sensor for a frame called '";
-        info << frame->get_path_in_tree_of_frames();
-        info << "', '" << frame->get_name();
-        info << "' in the list of " << by_frame.size() << " sensors.";
-        throw NoSuchFrame(info.str());
-    }
-
-    return finder.get_index(); 
-}
-//------------------------------------------------------------------------------
 } // PhotonSensor
