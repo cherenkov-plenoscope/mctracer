@@ -25,7 +25,17 @@ namespace PhotonSensor {
 		double x_intersect;
 		double y_intersect;
 		double theta_x;
-		double theta_y;		
+		double theta_y;
+		PhotonInfo();
+		PhotonInfo(
+			int id,
+			double w,
+			double t,
+			double x,
+			double y,
+			double tx,
+			double ty
+		);	
 	};
 
 	class Sensor {

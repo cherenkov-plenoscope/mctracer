@@ -2,6 +2,26 @@
 
 namespace PhotonSensor {
 
+	PhotonInfo::PhotonInfo() {}
+
+	PhotonInfo::PhotonInfo(
+		int id,
+		double w,
+		double t,
+		double x,
+		double y,
+		double tx,
+		double ty
+	):
+		simulation_truth_id(id),
+		wavelength(w),
+		arrival_time(t),
+		x_intersect(x),
+		y_intersect(y),
+		theta_x(tx),
+		theta_y(ty)		
+	{}
+
 	Sensor::Sensor(uint _id, const Frame* _sensor_frame) {
 		id = _id;
 		sensor_frame = _sensor_frame;
@@ -17,26 +37,24 @@ namespace PhotonSensor {
 			photon->get_final_intersection().get_object() == 
 			sensor_frame
 		) {
-
-			Vec3 final_intersection_incident = 
-				photon->get_final_intersection_incident_vector_in_object_frame();
-
-			final_intersection_incident = final_intersection_incident*-1.0;
-			double cos_theta_x = final_intersection_incident.x();
-			double cos_theta_y = final_intersection_incident.y();
-
-			PhotonInfo info;
-
-			info.simulation_truth_id = photon->get_simulation_truth_id();
-			info.wavelength = photon->get_wavelength();
-			info.arrival_time = photon->get_time_of_flight();
-			info.x_intersect = photon->get_final_intersection().
-					get_intersection_vector_in_object_system().x();
-			info.y_intersect = photon->get_final_intersection().
-					get_intersection_vector_in_object_system().y();
-			info.theta_x = cos_theta_x;
-			info.theta_y = cos_theta_y;
-			arrival_table.push_back(info);
+			arrival_table.emplace_back( // A PhotonInfo Object
+				// id
+				photon->get_simulation_truth_id(),
+				// wavelength
+				photon->get_wavelength(),
+				// arrival_time
+				photon->get_time_of_flight(),
+				// x
+				photon->get_final_intersection().
+					get_intersection_vector_in_object_system().x(),
+				// y
+				photon->get_final_intersection().
+					get_intersection_vector_in_object_system().y(),
+				// tx
+				-1.0*photon->get_final_intersection_incident_vector_in_object_frame().x(),
+				// ty
+				-1.0*photon->get_final_intersection_incident_vector_in_object_frame().y()
+			);
 		}
 	}
 
