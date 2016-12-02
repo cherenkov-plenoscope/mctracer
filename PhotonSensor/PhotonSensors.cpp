@@ -141,24 +141,16 @@ uint Sensors::get_pos_at_frame(const Frame* frame)const {
     return finder.get_index(); 
 }
 //------------------------------------------------------------------------------
-vector<Sensor*>::const_iterator get_upper_bound_for_final_frame_in_sensors(
-	const Frame* final_frame,
-	const vector<Sensor*>* sensors
-) {
-	return std::upper_bound(
-		sensors->begin(),
-		sensors->end(), 
-		final_frame, 
-		Sensor::FrameSensorByFramePointerCompare()
-	);	
-}
-//------------------------------------------------------------------------------
 FindSensorByFrame::FindSensorByFrame(
 	const Frame* final_frame,
 	const vector<Sensor*> *sensors
 ) {
-	vector<PhotonSensor::Sensor*>::const_iterator it = 
-        get_upper_bound_for_final_frame_in_sensors(final_frame, sensors);
+	vector<PhotonSensor::Sensor*>::const_iterator it = std::upper_bound(
+		sensors->begin(),
+		sensors->end(), 
+		final_frame, 
+		Sensor::FrameSensorByFramePointerCompare()
+	);
 
 	photon_is_absorbed_by_known_sensor = true;
 

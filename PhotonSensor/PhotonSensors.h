@@ -48,12 +48,6 @@ namespace PhotonSensors {
 		};
 	};
 
-	vector<PhotonSensor::Sensor*>::const_iterator 
-		get_upper_bound_for_final_frame_in_sensors(
-		const Frame* final_frame,
-		const vector<PhotonSensor::Sensor*>* sensors
-	);
-
 	class FindSensorByFrame {
 
 		bool photon_is_absorbed_by_known_sensor;
