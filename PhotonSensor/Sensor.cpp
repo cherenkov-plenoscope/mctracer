@@ -120,15 +120,14 @@ namespace PhotonSensor {
 
 	string Sensor::get_arrival_table_header()const {
 		std::stringstream header;
-		header << "x: [m], intersection on principal aperture plane\n";
-		header << "y: [m], intersection on principal aperture plane\n";
-		header << "cos_x: [1], x component of inverse incident direction\n";
-		header << "cos_y: [1], x component of inverse incident direction\n";
-		header << "            inverse_incident = (cos_x, cos_y, sqrt(1 - cos_x^2 - cos_y^2))^T\n";
-		header << "lambda: [m] wavelength\n";
-		header << "t: [s] relative arrival time on principal aperture plane.\n";
-		header << "id [1] simulation_truth_id\n";
-		header << "x\ty\tcos_x\tcos_y\tlambda\tt\tid\n";
+		header << "x intersection [m]\n";
+		header << "y intersection [m]\n";
+		header << "inverse_incident cos_x [1]\n";
+		header << "inverse_incident cos_y [1] inverse_incident = (cos_x, cos_y, sqrt(1 - cos_x^2 - cos_y^2))^T\n";           
+		header << "wavelength [m]\n";
+		header << "relative arrival time t [s]\n";
+		header << "photon id [1]\n";
+		header << "x\ty\tcos_x\tcos_y\twavelength\tt\tid\n";
 		return header.str();
 	}
 } // PhotonSensor
