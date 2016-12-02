@@ -1,4 +1,4 @@
-#include "PhotonSensors.h"
+#include "Sensors.h"
 #include "Finder.h"
 //------------------------------------------------------------------------------
 namespace PhotonSensors {

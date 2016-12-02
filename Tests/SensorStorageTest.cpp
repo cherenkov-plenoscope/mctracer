@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "PhotonSensor/PhotonSensors.h"
+#include "PhotonSensor/PhotonSensor.h"
 using namespace PhotonSensors;
 using namespace PhotonSensor;
 
