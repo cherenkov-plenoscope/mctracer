@@ -12,9 +12,9 @@ namespace LightFieldSensor {
 Geometry::Geometry(const Config ncfg): 
 	config(ncfg)
 {	
+	set_up_paxel_per_pixel_template_grid();
 	set_up_pixel_grid();
 	set_up_paxel_grid_centers_of_pixels();
-	set_up_paxel_per_pixel_template_grid();
 	set_up_lixel_grid();
 	set_up_pixel_lens_geometry();
 }
