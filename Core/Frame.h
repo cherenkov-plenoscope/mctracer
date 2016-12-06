@@ -39,11 +39,11 @@ protected:
     HomTra3 T_frame2world;
     
     vector<Frame*> children;
-	Frame *mother = &void_frame;
+	Frame *mother;
     const Frame *root_frame;
 public:
 
-    static const char path_delimiter = '/';
+    static const char path_delimiter;
     static const uint max_number_of_children;
     static const double minimal_structure_size;
     static Frame void_frame;

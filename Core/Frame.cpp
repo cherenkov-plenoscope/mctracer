@@ -2,6 +2,7 @@
 #include "Frames.h"
 #include <set>
 
+const char Frame::path_delimiter = '/';
 const uint Frame::max_number_of_children = 16;
 const double Frame::minimal_structure_size = 1e-6;
 //------------------------------------------------------------------------------
@@ -9,6 +10,7 @@ Frame Frame::void_frame;
 //------------------------------------------------------------------------------
 Frame::Frame():
 	bounding_sphere_radius(0.0), 
+	mother(&void_frame),
 	root_frame(this) {}
 //------------------------------------------------------------------------------
 Frame::~Frame() {
