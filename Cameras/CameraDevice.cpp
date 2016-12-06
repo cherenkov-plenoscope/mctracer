@@ -145,13 +145,7 @@ Rot3 CameraDevice::get_rotation_in_world()const{
 Vec3 CameraDevice::direction_to_the_right_of_the_camera()const{
 	return Vec3::unit_z.cross(get_normalized_pointing_get_direction());	
 }
+//------------------------------------------------------------------------------
 Ray CameraDevice::get_optical_axis_in_world()const{
 	return OpticalAxis;
-}
-//------------------------------------------------------------------------------
-void CameraDevice::acquire_image(
-	const Frame* world, 
-	const VisualConfig* visual_config
-){
-	std::cout << "Calling " << __func__ << " in CameraDevice!\n";
 }

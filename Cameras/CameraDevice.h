@@ -29,7 +29,7 @@ public:
 	virtual void acquire_image(	
 		const Frame* world, 
 		const VisualConfig* visual_config
-	);
+	) = 0;
 
 	virtual void update_position(const Vec3 new_cam_pos_in_world);
 
