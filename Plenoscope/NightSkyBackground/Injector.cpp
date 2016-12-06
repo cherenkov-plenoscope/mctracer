@@ -52,12 +52,12 @@ namespace NightSkyBackground {
 			mode_of_cherenkov_arrival_times = 0.0;
 		}else{
 
-			const uint bin_count = sqrt(number_cherenkov_photons);
+			const uint bin_edge_count = 2u + sqrt(number_cherenkov_photons);
 
 			vector<double> arrival_time_bin_edges = Numeric::linspace(
 				min_crk_arrival_time, 
 				max_crk_arrival_time, 
-				bin_count
+				bin_edge_count
 			);
 
 			Histogram1D arrival_time_histo(arrival_times, arrival_time_bin_edges);
