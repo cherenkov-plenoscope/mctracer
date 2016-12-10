@@ -3,6 +3,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Sensor.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Finder.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Sensors.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/inout.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ArrivalInformation.cpp
    	PARENT_SCOPE
 )
