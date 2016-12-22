@@ -61,14 +61,12 @@ void SurfaceWithOuterPrismBound::add_causeal_intersection(
 
 		if(ray->get_support() != causal_intersec) {
 			
-			intersections->push_back(
-				Intersection(
-					this,
-					causal_intersec,
-					eq->get_surface_normal_given_intersection_vector(&causal_intersec),
-					causal_solution,
-					ray->get_direction()
-				)
+			intersections->emplace_back(
+				this,
+				causal_intersec,
+				eq->get_surface_normal_given_intersection_vector(&causal_intersec),
+				causal_solution,
+				ray->get_direction()
 			);
 		}
 	}

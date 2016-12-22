@@ -45,14 +45,12 @@ void Plane::calculate_intersection_with(
 
 			if(ray->get_support() != intersection_vector) {
 
-				intersections->push_back(
-					Intersection(
-						this,
-						intersection_vector,
-						xyPlaneRayEquation.get_plane_normal_vector(),
-						v,
-						ray->get_direction()
-					)
+				intersections->emplace_back(
+					this,
+					intersection_vector,
+					xyPlaneRayEquation.get_plane_normal_vector(),
+					v,
+					ray->get_direction()
 				);
 			}
 		}

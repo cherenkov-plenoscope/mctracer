@@ -83,14 +83,12 @@ void Sphere::add_sphere_intersection_for_ray_parameter(
 	
 	if(ray->get_support() != intersection_point) {
 		
-		intersections->push_back(
-			Intersection(
-				this,
-				intersection_point,
-				surface_normal,
-				ray_parameter,
-				ray->get_direction()
-			)
+		intersections->emplace_back(
+			this,
+			intersection_point,
+			surface_normal,
+			ray_parameter,
+			ray->get_direction()
 		);
 	}
 }

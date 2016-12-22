@@ -148,14 +148,12 @@ void Cylinder::calculate_intersection_with(
 
 			if(ray->get_support() != intersection_vector) {
 				
-				intersections->push_back(
-					Intersection(
-						this,
-						intersection_vector,
-						get_surface_normal_for_intersection_vec(&intersection_vector),
-						v,
-						ray->get_direction()
-					)
+				intersections->emplace_back(
+					this,
+					intersection_vector,
+					get_surface_normal_for_intersection_vec(&intersection_vector),
+					v,
+					ray->get_direction()
 				);
 			}			
 		}
