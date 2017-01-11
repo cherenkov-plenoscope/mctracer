@@ -17,7 +17,7 @@
 namespace Visual {
 struct Config {
 	
-	uint max_interactions;
+	uint max_interaction_depth;
 
 	struct Preview {
 		uint cols;

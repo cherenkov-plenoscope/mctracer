@@ -7,6 +7,8 @@ Visual::Config get_VisualConfig_from_node(Xml::Node node) {
 
 	Visual::Config vc;
 
+	vc.max_interaction_depth = node.attribute2int("max_interaction_depth");
+
 	Xml::Node preview = node.child("preview");
 	vc.preview.cols = preview.attribute2int("cols");
 	vc.preview.rows = preview.attribute2int("rows");
@@ -48,7 +50,7 @@ Visual::Config get_VisualConfig_from_node(Xml::Node node) {
 std::string to_node(const Visual::Config &vc) {
 
 	std::stringstream out;
-	out << "<visual>\n";
+	out << "<visual " << av("max_interaction_depth", std::to_string(vc.max_interaction_depth)) << ">\n";
 
 	out << "    " << comment(
 	"Image size of the interactive preview window (cols*scale x rows*scale). "
