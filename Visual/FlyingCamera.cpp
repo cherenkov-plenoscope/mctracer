@@ -7,7 +7,7 @@ using std::string;
 //------------------------------------------------------------------------------
 FlyingCamera::FlyingCamera(
 	const Frame *world, 
-	const VisualConfig *visual_config
+	const Config *visual_config
 ) {	
 	this->world = world;
 	this->visual_config = visual_config;
@@ -373,7 +373,7 @@ void FlyingCamera::print_display_help_text()const {
 //------------------------------------------------------------------------------
 void FlyingCamera::continue_with_new_scenery_and_visual_config(
 	const Frame *world, 
-	const VisualConfig *visual_config
+	const Config *visual_config
 ) {
 	this->world = world;
 	this->visual_config = visual_config;

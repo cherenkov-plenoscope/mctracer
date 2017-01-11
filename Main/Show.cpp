@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
         return 0;
     }
     
-    VisualConfig visual_config;
+    Config visual_config;
     if(args.find("--config")->second) {
         Xml::Document doc(args.find("--config")->second.asString());
         Xml::Node node = doc.node();

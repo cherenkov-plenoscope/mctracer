@@ -30,7 +30,7 @@ public:
 
 	void acquire_image(
 		const Frame* world,
-		const VisualConfig* visual_config
+		const Config* visual_config
 	);
 
 	void auto_focus(const Frame* world);

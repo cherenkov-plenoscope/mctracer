@@ -8,14 +8,14 @@
 
 //=================================
 // included dependencies
-#include "Visual/VisualConfig.h"
+#include "Visual/Config.h"
 #include "Xml/Xml.h"
 
 //------------------------------------------------------------------------------
 namespace Xml {
 	namespace Configs {
-		VisualConfig get_VisualConfig_from_node(Xml::Node node);
-		std::string to_node(const VisualConfig &visual_config);
+		Config get_VisualConfig_from_node(Xml::Node node);
+		std::string to_node(const Config &visual_config);
 	}
 }//Xml
 #endif // __VisualConfigXmlFactory_H_INCLUDED__

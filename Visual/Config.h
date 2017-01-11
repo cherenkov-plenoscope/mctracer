@@ -15,7 +15,7 @@
 
 //=================================
 
-struct VisualConfig {
+struct Config {
 	
 	uint max_interactions;
 
@@ -44,6 +44,6 @@ struct VisualConfig {
 	
 	SkyDome sky_dome;
 
-	VisualConfig();
+	Config();
 };
 #endif // __VisualConfig_H_INCLUDED__ 

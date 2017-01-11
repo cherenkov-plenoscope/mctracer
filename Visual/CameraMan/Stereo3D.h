@@ -19,7 +19,7 @@ public:
 	Stereo3D(CameraDevice* camera_to_work_with);
 	void aquire_stereo_image(	
 		const Frame* world,
-		const VisualConfig* visual_config
+		const Config* visual_config
 	);
 	void increase_stereo_offset();
 	void decrease_stereo_offset();
@@ -66,11 +66,11 @@ private:
 	void print_stereo_offset_manipulation(const std::string status)const;
 	void take_left_image(	
 		const Frame* world,
-		const VisualConfig* visual_config
+		const Config* visual_config
 	);
 	void take_right_image(	
 		const Frame* world,
-		const VisualConfig* visual_config
+		const Config* visual_config
 	);
 };
 }//CameraMan

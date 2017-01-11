@@ -1,6 +1,6 @@
-#include "VisualConfig.h"
+#include "Config.h"
 //------------------------------------------------------------------------------
-VisualConfig::VisualConfig():sky_dome(Color::sky_blue) {
+Config::Config():sky_dome(Color::sky_blue) {
 	max_interactions = 42;
 
 	preview.cols = 128;

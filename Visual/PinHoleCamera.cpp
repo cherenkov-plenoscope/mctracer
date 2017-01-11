@@ -95,7 +95,7 @@ Vec3 PinHoleCamera::get_intersection_of_ray_on_image_sensor_for_pixel(
 //------------------------------------------------------------------------------
 void PinHoleCamera::acquire_image(	
 	const Frame* world, 
-	const VisualConfig* visual_config
+	const Config* visual_config
 ){
 	uint i, row, col;
 	CameraRay cam_ray;

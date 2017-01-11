@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
     PathTools::Path scenery_path = PathTools::Path(args.find("--scenery")->second.asString());
     PathTools::Path photon_path = PathTools::Path(args.find("--input")->second.asString());
     
-    VisualConfig visual_config;
+    Config visual_config;
     if(args.find("--config")->second) {
         Xml::Document doc(args.find("--config")->second.asString());
         Xml::Node node = doc.node();

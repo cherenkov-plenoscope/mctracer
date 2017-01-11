@@ -7,7 +7,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/FlyingCamera.cpp 
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraImage.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/CameraRay.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/VisualConfig.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Config.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SkyDome.cpp
    	PARENT_SCOPE
 )

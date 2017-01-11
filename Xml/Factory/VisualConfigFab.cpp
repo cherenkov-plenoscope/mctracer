@@ -3,9 +3,9 @@
 namespace Xml {
 	namespace Configs {
 //------------------------------------------------------------------------------
-VisualConfig get_VisualConfig_from_node(Xml::Node node) {
+Config get_VisualConfig_from_node(Xml::Node node) {
 
-	VisualConfig vc;
+	Config vc;
 
 	Xml::Node preview = node.child("preview");
 	vc.preview.cols = preview.attribute2int("cols");
@@ -45,7 +45,7 @@ VisualConfig get_VisualConfig_from_node(Xml::Node node) {
 	return vc;
 }
 //------------------------------------------------------------------------------
-std::string to_node(const VisualConfig &vc) {
+std::string to_node(const Config &vc) {
 
 	std::stringstream out;
 	out << "<visual>\n";

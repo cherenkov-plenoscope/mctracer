@@ -25,7 +25,7 @@ public:
 
 	void acquire_image(	
 		const Frame* world, 
-		const VisualConfig* visual_config
+		const Config* visual_config
 	);
 
 	void set_FoV_in_rad(const double FoV_in_rad);

@@ -15,7 +15,7 @@ std::string CameraRay::get_print()const{
 Color CameraRay::trace(
 	const Frame* world,
 	uint refl_count,
-	const VisualConfig *visual_config
+	const Config *visual_config
 )const {
 	Color color;
 	const Intersection intersection = 
@@ -56,7 +56,7 @@ Color CameraRay::trace(
 //------------------------------------------------------------------------------
 Color CameraRay::shadow_of_sky_light(
 	const Frame* world,
-	const VisualConfig *visual_config,
+	const Config *visual_config,
 	const Intersection &intersection
 )const {
 
@@ -84,7 +84,7 @@ Color CameraRay::shadow_of_sky_light(
 //------------------------------------------------------------------------------
 bool CameraRay::is_iluminated_by_sky_light_source(
 	const Frame* world,
-	const VisualConfig *visual_config,
+	const Config *visual_config,
 	const Intersection &intersection
 )const {
 

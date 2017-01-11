@@ -12,7 +12,7 @@
 #include "PinHoleCamera.h"
 #include "Tools/Tools.h"
 #include "CameraMan/CameraMan.h"
-#include "VisualConfig.h"
+#include "Config.h"
 #include "Tools/Time.h"
 #include "Tools/UserInteraction.h"
 
@@ -31,11 +31,11 @@ public:
 	
 	FlyingCamera(
 		const Frame *world, 
-		const VisualConfig *visual_config);
+		const Config *visual_config);
 
 	void continue_with_new_scenery_and_visual_config(
 		const Frame *world, 
-		const VisualConfig *visual_config
+		const Config *visual_config
 	);
 
 	~FlyingCamera();
@@ -56,7 +56,7 @@ private:
 	bool stereo3D = false;
 
 	const Frame *world;
-	const VisualConfig *visual_config;
+	const Config *visual_config;
 
 	int snapshot_counter = 0;
 	uint user_input_counter = 0;

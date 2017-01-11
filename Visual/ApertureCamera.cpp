@@ -229,7 +229,7 @@ Vec3 ApertureCamera::camera_ray_direction_vector_in_world_frame(
 //------------------------------------------------------------------------------
 void ApertureCamera::acquire_image(
 	const Frame* world,
-	const VisualConfig* visual_config
+	const Config* visual_config
 ){	
 	CameraRay cam_ray;
 	uint pix, row, col;

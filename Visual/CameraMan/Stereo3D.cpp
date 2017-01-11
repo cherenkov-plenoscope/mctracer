@@ -7,7 +7,7 @@ Stereo3D::Stereo3D(CameraDevice* camera_to_work_with) {
 //------------------------------------------------------------------------------
 void Stereo3D::aquire_stereo_image(
 	const Frame* world,
-	const VisualConfig* visual_config
+	const Config* visual_config
 ){
 	remember_initial_camera_config();
 	calc_pos_and_rot_for_left_and_right_camera_config(world);
@@ -44,7 +44,7 @@ void Stereo3D::set_positions_for_left_and_right_stereo_config(){
 //------------------------------------------------------------------------------
 void Stereo3D::take_left_image(
 	const Frame* world,
-	const VisualConfig* visual_config
+	const Config* visual_config
 ){
 	camera->acquire_image(world, visual_config);
 	left_image = new CameraImage(camera->get_image());
@@ -52,7 +52,7 @@ void Stereo3D::take_left_image(
 //------------------------------------------------------------------------------
 void Stereo3D::take_right_image(
 	const Frame* world,
-	const VisualConfig* visual_config
+	const Config* visual_config
 ){
 	camera->acquire_image(world, visual_config);
 	right_image = new CameraImage(camera->get_image());
