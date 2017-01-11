@@ -1,6 +1,8 @@
 #include "CameraDevice.h"
 #include "Tools/Tools.h"
 #include "Tools/StringTools.h"
+
+namespace Visual {
 //------------------------------------------------------------------------------
 CameraDevice::CameraDevice(
 	const std::string camera_name, 
@@ -149,3 +151,5 @@ Vec3 CameraDevice::direction_to_the_right_of_the_camera()const{
 Ray CameraDevice::get_optical_axis_in_world()const{
 	return OpticalAxis;
 }
+//------------------------------------------------------------------------------
+}//Visual

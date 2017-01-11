@@ -11,6 +11,7 @@ class Frame;
 #include "Core/DistanceMeter.h"
 #include "Verbosity.h"
 //=================================
+namespace Visual {
 namespace CameraMan {
 
 class Stereo3D: public Verbosity {
@@ -73,5 +74,8 @@ private:
 		const Config* visual_config
 	);
 };
+
 }//CameraMan
+}//Visual
+
 #endif // __CAMERAMANFORSTEREO3D_H_INCLUDE__

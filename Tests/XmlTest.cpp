@@ -103,7 +103,7 @@ TEST_F(XmlTest, invalid_attribute_Tuple3) {
 TEST_F(XmlTest, visual_config) {
 
 	const std::string path = "xml/visual_config.xml";
-	Config out;
+	Visual::Config out;
 
 	out.preview.rows = 1337;
 	out.preview.cols = 42;
@@ -125,7 +125,7 @@ TEST_F(XmlTest, visual_config) {
 	Xml::Document doc(path);
 	Xml::Node node = doc.node();
 	Xml::Node vc_node = node.child("visual");
-	Config in = Xml::Configs::get_VisualConfig_from_node(vc_node);
+	Visual::Config in = Xml::Configs::get_VisualConfig_from_node(vc_node);
 
 	EXPECT_EQ(out.preview.cols, in.preview.cols);
 	EXPECT_EQ(out.preview.rows, in.preview.rows);

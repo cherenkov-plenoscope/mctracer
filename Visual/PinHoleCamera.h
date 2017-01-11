@@ -11,7 +11,8 @@ class Frame;
 //#include <omp.h>
 #include "CameraDevice.h"
 
-//======================================================================
+namespace Visual {
+
 class PinHoleCamera:public CameraDevice{
 public:
 	using CameraDevice::CameraDevice;
@@ -53,4 +54,7 @@ private:
 
 	std::string get_pin_hole_cam_print()const;
 };
+
+}//Visual
+
 #endif // __PINHOLECAMERA_H_INCLUDED__

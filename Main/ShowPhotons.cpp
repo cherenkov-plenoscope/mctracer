@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
     PathTools::Path scenery_path = PathTools::Path(args.find("--scenery")->second.asString());
     PathTools::Path photon_path = PathTools::Path(args.find("--input")->second.asString());
     
-    Config visual_config;
+    Visual::Config visual_config;
     if(args.find("--config")->second) {
         Xml::Document doc(args.find("--config")->second.asString());
         Xml::Node node = doc.node();
@@ -85,7 +85,7 @@ int main(int argc, char* argv[]) {
     // propagate each event
     uint event_counter = 0;
 
-    FlyingCamera free_orb(&scenery.root, &visual_config);
+    Visual::FlyingCamera free_orb(&scenery.root, &visual_config);
 
     while(corsika_run.has_still_events_left()) {
 

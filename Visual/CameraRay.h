@@ -12,7 +12,9 @@ class Intersection;
 #include "Core/Ray.h"
 #include "Core/Color.h"
 #include "Config.h"
-//------------------------------------------------------------------------------
+
+namespace Visual {
+
 class CameraRay :public Ray{
 protected:
 	
@@ -42,4 +44,7 @@ private:
 		const Intersection &intersection
 	)const;
 };
+
+}//Visual
+
 #endif // __CAMERARAY_H_INCLUDED__ 

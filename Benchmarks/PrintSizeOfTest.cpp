@@ -48,7 +48,7 @@ TEST_F(SizeOfTest, sizes_of_mct) {
     Ray ray(Vec3::null, Vec3::unit_z); 
     print_size("Ray", ray);
 
-    CameraRay camray(Vec3::null, Vec3::unit_z); 
+    Visual::CameraRay camray(Vec3::null, Vec3::unit_z); 
     print_size("CameraRay", camray);
 
     RayForPropagation rayfp(Vec3::null, Vec3::unit_z); 

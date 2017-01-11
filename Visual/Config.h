@@ -14,7 +14,7 @@
 #include "Core/Vec3.h"
 
 //=================================
-
+namespace Visual {
 struct Config {
 	
 	uint max_interactions;
@@ -46,4 +46,5 @@ struct Config {
 
 	Config();
 };
+}//Visual
 #endif // __VisualConfig_H_INCLUDED__ 

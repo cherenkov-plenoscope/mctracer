@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
         return 0;
     }
     
-    Config visual_config;
+    Visual::Config visual_config;
     if(args.find("--config")->second) {
         Xml::Document doc(args.find("--config")->second.asString());
         Xml::Node node = doc.node();
@@ -64,7 +64,7 @@ int main(int argc, char* argv[]) {
     }
 
     scenery.root.init_tree_based_on_mother_child_relations();
-    FlyingCamera free(&scenery.root, &visual_config);
+    Visual::FlyingCamera free(&scenery.root, &visual_config);
 
     }catch(std::exception &error) {
         std::cerr << error.what(); 

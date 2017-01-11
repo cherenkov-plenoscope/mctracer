@@ -1,4 +1,6 @@
 #include "Stereo3D.h"
+
+namespace Visual {
 namespace CameraMan {
 //------------------------------------------------------------------------------
 Stereo3D::Stereo3D(CameraDevice* camera_to_work_with) {
@@ -150,3 +152,4 @@ void Stereo3D::use_same_stereo_offset_as(
 }
 //------------------------------------------------------------------------------
 }//CameraMan
+}//Visual

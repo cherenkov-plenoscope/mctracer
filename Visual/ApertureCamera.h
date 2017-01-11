@@ -12,6 +12,9 @@ class Frame;
 #include "CameraDevice.h"
 #include "Core/Random/Random.h"
 //=================================
+
+namespace Visual {
+
 class ApertureCamera :public CameraDevice{
 public:
 	using CameraDevice::CameraDevice;
@@ -100,4 +103,7 @@ public:
         using TracerException::TracerException;
     };
 };
+
+}//Visual
+
 #endif // __APERTURECAMERA_H_INCLUDED__

@@ -1,4 +1,6 @@
 #include "Config.h"
+
+namespace Visual {
 //------------------------------------------------------------------------------
 Config::Config():sky_dome(Color::sky_blue) {
 	max_interactions = 42;
@@ -18,3 +20,4 @@ Config::Config():sky_dome(Color::sky_blue) {
 
 	photon_trajectories.radius = 0.025;
 }
+}//Visual

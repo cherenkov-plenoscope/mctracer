@@ -1,4 +1,6 @@
 #include "Verbosity.h"
+
+namespace Visual {
 namespace CameraMan {
 //------------------------------------------------------------------------------
 void Verbosity::set_verbosity(const bool verbosity) {
@@ -6,3 +8,4 @@ void Verbosity::set_verbosity(const bool verbosity) {
 }
 //------------------------------------------------------------------------------
 }//CameraMan
+}//Visual

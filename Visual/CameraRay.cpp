@@ -1,6 +1,8 @@
 #include "CameraRay.h"
 #include "Core/RayAndFrame.h"
 #include "Core/Intersection.h"
+
+namespace Visual {
 //------------------------------------------------------------------------------
 CameraRay::CameraRay(const Vec3 support, const Vec3 direction){
 	set_support_and_direction(support, direction);
@@ -112,3 +114,5 @@ bool CameraRay::surface_normal_is_facing_camera(
 )const {
 	return intersection.get_surface_normal_in_world_system()*get_direction() > 0.0;
 }
+//------------------------------------------------------------------------------
+}//Visual

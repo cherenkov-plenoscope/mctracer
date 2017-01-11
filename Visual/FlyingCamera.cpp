@@ -4,6 +4,9 @@
 using std::cout;
 using std::stringstream;
 using std::string;
+
+namespace Visual {
+
 //------------------------------------------------------------------------------
 FlyingCamera::FlyingCamera(
 	const Frame *world, 
@@ -380,3 +383,4 @@ void FlyingCamera::continue_with_new_scenery_and_visual_config(
 	enter_interactive_display();
 }
 //------------------------------------------------------------------------------
+}//Visual

@@ -18,6 +18,8 @@
 #include "CameraImage.h"
 #include "Core/TracerException.h"
 
+namespace Visual {
+
 class CameraDevice{
 public: 
 	CameraDevice(
@@ -101,4 +103,7 @@ protected:
 
 	void update_optical_axis_and_orientation();
 };
+
+}//Visual
+
 #endif // __CAMERADEVICE_H_INCLUDED__ 

@@ -16,7 +16,8 @@
 #include "Tools/Time.h"
 #include "Tools/UserInteraction.h"
 
-//=================================
+namespace Visual {
+
 class FlyingCamera {
 // Fly through the scene like you want!
 // This FlyingCamera class allows the user to interact with the 
@@ -98,4 +99,7 @@ private:
 		const bool scale, CameraDevice* cam
 	);
 };
+
+}//Visual
+
 #endif // __FlyingCamera_H_INCLUDED__

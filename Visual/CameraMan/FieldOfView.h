@@ -11,6 +11,8 @@
 #include "Tools/Tools.h"
 #include "Verbosity.h"
 
+
+namespace Visual {
 namespace CameraMan {
 
 class FieldOfView: public Verbosity {
@@ -39,4 +41,6 @@ private:
 };
 
 }//CameraMan
+}//Visual
+
 #endif // __CAMERAMANFOV_H_INCLUDE__

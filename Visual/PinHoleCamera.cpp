@@ -1,4 +1,6 @@
 #include "PinHoleCamera.h"
+
+namespace Visual {
 //------------------------------------------------------------------------------
 void PinHoleCamera::update_position_and_orientation(		
 	const Vec3 cam_pos_in_world,
@@ -131,3 +133,5 @@ void PinHoleCamera::acquire_image(
 		throw(TracerException(info.str()));
 	}
 }
+//------------------------------------------------------------------------------
+}//Visual

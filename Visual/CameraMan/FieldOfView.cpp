@@ -1,5 +1,7 @@
 #include "FieldOfView.h"
 #include "Tools/Tools.h"
+
+namespace Visual {
 namespace CameraMan {
 //------------------------------------------------------------------------------
 FieldOfView::FieldOfView(CameraDevice* camera_to_work_with) {
@@ -79,3 +81,4 @@ void FieldOfView::print_prefix()const {
 }
 //------------------------------------------------------------------------------
 }//CameraMan
+}//Visual

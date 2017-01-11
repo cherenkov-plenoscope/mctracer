@@ -1,4 +1,6 @@
 #include "ApertureCamera.h"
+
+namespace Visual {
 //------------------------------------------------------------------------------
 void ApertureCamera::set_fStop_sesnorWidth_rayPerPixel(	
 	const double new_FStopNumber,
@@ -277,3 +279,4 @@ void ApertureCamera::acquire_image(
 	} 
 }
 //------------------------------------------------------------------------------
+}//Visual
