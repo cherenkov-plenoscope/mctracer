@@ -17,6 +17,8 @@
 
 struct VisualConfig {
 	
+	uint max_interactions;
+
 	struct Preview {
 		uint cols;
 		uint rows;
