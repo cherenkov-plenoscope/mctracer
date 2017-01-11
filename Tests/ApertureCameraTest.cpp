@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "Cameras/ApertureCamera.h"
+#include "Visual/ApertureCamera.h"
 
 // The fixture for testing class Foo.
 class ApertureCameraTest : public ::testing::Test {

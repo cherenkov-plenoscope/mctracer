@@ -4,7 +4,7 @@
 #include "Core/Rot3.h"
 #include "Core/Ray.h"
 #include "Core/Photon.h"
-#include "Cameras/CameraRay.h"
+#include "Visual/CameraRay.h"
 #include "Core/Color.h"
 #include "Core/HomTra3.h"
 #include "Core/SurfaceEntity.h"

@@ -7,7 +7,7 @@
 #include "Corsika/EventIo/PhotonFactory.h"
 #include "Xml/Factory/VisualConfigFab.h"
 #include "Xml/Factory/PropagationConfigFab.h"
-#include "Cameras/FlyingCamera.h"
+#include "Visual/FlyingCamera.h"
 #include "Scenery/TrajectoryFactory.h"
 #include "Scenery/Scenery.h"
 using std::string;

@@ -11,8 +11,8 @@
 #include "ApertureCamera.h"
 #include "PinHoleCamera.h"
 #include "Tools/Tools.h"
-#include "Cameras/CameraMan/CameraMan.h"
-#include "Cameras/VisualConfig.h"
+#include "CameraMan/CameraMan.h"
+#include "VisualConfig.h"
 #include "Tools/Time.h"
 #include "Tools/UserInteraction.h"
 

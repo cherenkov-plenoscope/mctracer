@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
-#include "Cameras/CameraMan/CameraMan.h"
-#include "Cameras/PinHoleCamera.h"
+#include "Visual/CameraMan/CameraMan.h"
+#include "Visual/PinHoleCamera.h"
 
 class CameraManTest : public ::testing::Test {
 protected:

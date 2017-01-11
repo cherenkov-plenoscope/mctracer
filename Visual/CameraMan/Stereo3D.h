@@ -9,7 +9,6 @@ class Frame;
 //=================================
 // included dependencies
 #include "Core/DistanceMeter.h"
-#include "Cameras/CameraDevice.h"
 #include "Verbosity.h"
 //=================================
 namespace CameraMan {

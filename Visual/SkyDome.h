@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "Cameras/CameraImage.h"
+#include "CameraImage.h"
 #include "Core/Vec3.h"
 
 class SkyDome {

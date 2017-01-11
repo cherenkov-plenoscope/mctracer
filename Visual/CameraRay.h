@@ -11,7 +11,7 @@ class Intersection;
 // included dependencies
 #include "Core/Ray.h"
 #include "Core/Color.h"
-#include "Cameras/VisualConfig.h"
+#include "VisualConfig.h"
 //------------------------------------------------------------------------------
 class CameraRay :public Ray{
 protected:

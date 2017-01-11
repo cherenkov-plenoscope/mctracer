@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "Verbosity.h"
-#include "Cameras/CameraDevice.h"
+
 //=================================
 namespace CameraMan {
 

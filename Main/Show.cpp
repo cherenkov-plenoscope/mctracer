@@ -4,7 +4,7 @@
 #include "Xml/Factory/VisualConfigFab.h"
 #include "Xml/Factory/PropagationConfigFab.h"
 #include "Xml/Factory/SceneryFactory.h"
-#include "Cameras/FlyingCamera.h"
+#include "Visual/FlyingCamera.h"
 #include "Scenery/Scenery.h"
 using std::string;
 using std::cout;

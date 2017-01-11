@@ -1,4 +1,4 @@
-#include "Cameras/SkyDome.h"
+#include "SkyDome.h"
 #include <sstream>
 
 SkyDome::SkyDome(const std::string _filename):sky(CameraImage(_filename)) {

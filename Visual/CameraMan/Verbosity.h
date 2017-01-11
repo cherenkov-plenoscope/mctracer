@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "Cameras/CameraDevice.h"
+#include "Visual/CameraDevice.h"
 //=================================
 namespace CameraMan {
 

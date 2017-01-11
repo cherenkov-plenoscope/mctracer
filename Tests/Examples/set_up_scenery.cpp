@@ -1,4 +1,4 @@
-#include "Cameras/FlyingCamera.h"
+#include "Visual/FlyingCamera.h"
 #include "Core/Color.h"
 #include "Core/Function/ConcatFunction.h"
 #include "Core/Function/ConstantFunction.h"

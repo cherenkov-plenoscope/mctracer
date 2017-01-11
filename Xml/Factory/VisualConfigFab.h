@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "Cameras/VisualConfig.h"
+#include "Visual/VisualConfig.h"
 #include "Xml/Xml.h"
 
 //------------------------------------------------------------------------------
