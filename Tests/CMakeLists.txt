@@ -63,5 +63,6 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/OwnerShipTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ColorMapTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FunctionMapTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PhotoElectricConverterTest.cpp
     PARENT_SCOPE
 )

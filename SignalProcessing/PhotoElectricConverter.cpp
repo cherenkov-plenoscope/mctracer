@@ -7,7 +7,7 @@ namespace SignalProcessing {
 Config::Config() {
 	dark_rate = 0.0;
 	probability_for_second_puls = 0.0;
-	quantum_efficiency_vs_wavelength = &perfect_efficiency;
+	quantum_efficiency_vs_wavelength = &zero_efficiency;
 }
 //------------------------------------------------------------------------------
 Converter::Converter(const Config* config) {

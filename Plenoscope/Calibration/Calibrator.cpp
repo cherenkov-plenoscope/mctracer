@@ -85,10 +85,9 @@ void Calibrator::fill_calibration_block_to_table() {
 
 	#pragma omp parallel shared(HadCatch)
 	{
-		Random::Mt19937 thread_local_prng(
-			prng.get_seed() + omp_get_thread_num()
-		);
-		#pragma omp for schedule(dynamic) private(i) 
+		Random::Mt19937 thread_local_prng(omp_get_thread_num());
+
+		#pragma omp for schedule(dynamic) private(i, thread_local_prng) 
 		for(i=0; i<config.photons_per_block; i++) {
 
 			try{
