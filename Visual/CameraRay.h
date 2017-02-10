@@ -27,7 +27,7 @@ public:
 		const Frame* world,
 		uint refl_count,
 		const Config *visual_config
-	)const;
+	);
 private:
 
 	Color shadow_of_sky_light(

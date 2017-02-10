@@ -1,6 +1,7 @@
 #include "CameraRay.h"
 #include "Core/RayAndFrame.h"
 #include "Core/Intersection.h"
+#include "Propagator.h"
 
 namespace Visual {
 //------------------------------------------------------------------------------
@@ -18,7 +19,16 @@ Color CameraRay::trace(
 	const Frame* world,
 	uint refl_count,
 	const Config *visual_config
-)const {
+) {
+
+	Propagator prop(
+		this,
+		world,
+		visual_config);
+	
+	return prop.color;
+
+	/*
 	Color color;
 	const Intersection intersection = 
 		RayAndFrame::first_intersection(this, world);
@@ -52,8 +62,9 @@ Color CameraRay::trace(
 	}else{
 		color = visual_config->sky_dome.get_color_for_direction(direction);
 	}
-
+	
 	return color;
+	*/
 }
 //------------------------------------------------------------------------------
 Color CameraRay::shadow_of_sky_light(
