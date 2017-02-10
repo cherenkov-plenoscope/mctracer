@@ -25,8 +25,8 @@ struct Config {
     Config();
 };
 
-static const Function::Constant perfect_efficiency(
-    1.0, 
+static const Function::Constant zero_efficiency(
+    0.0, 
     Function::Limits(200e-9, 1200e-9)
 );
 
