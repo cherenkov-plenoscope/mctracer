@@ -58,6 +58,7 @@ namespace Xml {
 
         const Color* surface_color(const Node node)const;
         const Function::Func1D* surface_refl(const Node node)const;
+        const Function::Func1D* surface_refrac(const Node node)const;
         void add_to_sensors_if_sensitive(Frame* frame, const Node node);
         void add_to_array_if_telescope(Frame* frame, const Node node);
 
