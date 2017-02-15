@@ -46,9 +46,7 @@ Color SkyDome::sky_dome_color_for(const Vec3 dir)const {
 	const double az = get_azimuth_angle_of(dir);
 
 	const double zd_in_pix = zd*(2.0/M_PI)*zenith_to_horizon_radius;
-	
-	// round towards 0 (by calling (int) instead of rounding)
-	// to prevent segfault when index out of bounds
+
 	const int col_offset = (int)(zd_in_pix*cos(az)); 
 	const int row_offset =-(int)(zd_in_pix*sin(az)); 
 
