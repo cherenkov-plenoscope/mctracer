@@ -18,12 +18,12 @@ void Propagator::back_trace() {
 	isec = RayAndFrame::first_intersection(cray, scenery);
 
 	if(isec.does_intersect())
-		interact_with_object();
+		came_from_object_interaction();
 	else
-		reach_sky_dome();	
+		came_from_sky_dome();	
 }
 //------------------------------------------------------------------------------
-void Propagator::interact_with_object() {
+void Propagator::came_from_object_interaction() {
 	if(isec.get_facing_reflection_propability(wavelength) >= prng.uniform())
 		reflect_on_surface_and_back_trace_further();
 	else
@@ -83,7 +83,7 @@ void Propagator::back_trace_beyond_boundary_layer(
 	back_trace();	
 }
 //------------------------------------------------------------------------------
-void Propagator::reach_sky_dome() {
+void Propagator::came_from_sky_dome() {
 	color = config->sky_dome.get_color_for_direction(cray->get_direction());
 }
 //------------------------------------------------------------------------------

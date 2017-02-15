@@ -38,7 +38,7 @@ public:
 		const Frame* scenery,
 		const Config* config);
 	void back_trace();
-	void interact_with_object();
+	void came_from_object_interaction();
 	void reflect_on_surface_and_back_trace_further();
 	void reach_boundary_layer();
 	void fresnel_refraction_and_reflection();
@@ -46,7 +46,7 @@ public:
 	void back_trace_beyond_boundary_layer(
 		const FresnelRefractionAndReflection &fresnel
 	);
-	void reach_sky_dome();
+	void came_from_sky_dome();
 };
 
 }//Visual
