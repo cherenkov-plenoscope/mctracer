@@ -5,11 +5,11 @@ namespace Visual {
 CameraImage::CameraImage() {}
 //------------------------------------------------------------------------------
 CameraImage::CameraImage(const uint cols,const uint rows){
-	Image = cv::Mat (rows, cols, CV_8UC3);
+	raw_image = cv::Mat (rows, cols, CV_8UC3);
 }
 //------------------------------------------------------------------------------
 CameraImage::CameraImage(const CameraImage* image_to_copy_from){
-	Image = image_to_copy_from->Image.clone();
+	raw_image = image_to_copy_from->raw_image.clone();
 }
 //------------------------------------------------------------------------------
 CameraImage::CameraImage(const std::string filename_of_image){
@@ -25,7 +25,7 @@ void CameraImage::save(std::string filename_of_image)const{
 	compression_params.push_back(1);			
 	
 	try {
-		cv::imwrite(filename_of_image, Image, compression_params);
+		cv::imwrite(filename_of_image, raw_image, compression_params);
 	}
 	catch (std::runtime_error& ex) {
 
@@ -42,7 +42,7 @@ void CameraImage::save(std::string filename_of_image)const{
 void CameraImage::load(const std::string filename) {
 
 	try{;
-		Image = cv::imread(filename, CV_LOAD_IMAGE_COLOR);
+		raw_image = cv::imread(filename, CV_LOAD_IMAGE_COLOR);
 	}catch (std::runtime_error& ex) {
 
 		std::stringstream info;
@@ -53,7 +53,7 @@ void CameraImage::load(const std::string filename) {
 		throw TracerException(info.str());
 	}
 
-	if(!Image.data) {
+	if(!raw_image.data) {
 
 		std::stringstream info;
 		info << "CameraImage::" << __func__ << "()\n";
@@ -68,11 +68,11 @@ uint CameraImage::get_number_of_pixels()const {
 }
 //------------------------------------------------------------------------------
 uint CameraImage::get_number_of_cols()const {
- 	return Image.cols; 
+ 	return raw_image.cols; 
 }
 //------------------------------------------------------------------------------
 uint CameraImage::get_number_of_rows()const {
- 	return Image.rows;
+ 	return raw_image.rows;
 }
 //------------------------------------------------------------------------------
 void CameraImage::set_pixel_row_col_to_color(
@@ -83,11 +83,11 @@ void CameraImage::set_pixel_row_col_to_color(
 	intensity.val[1] = color.get_green();
 	intensity.val[2] = color.get_red();
 
-	Image.at<cv::Vec3b>(row,col) = intensity;
+	raw_image.at<cv::Vec3b>(row,col) = intensity;
 }
 //------------------------------------------------------------------------------
 Color CameraImage::get_pixel_row_col(const uint row, const uint col)const{
-	cv::Vec3b intensity = Image.at<cv::Vec3b>(row,col);
+	cv::Vec3b intensity = raw_image.at<cv::Vec3b>(row,col);
 	return Color(intensity.val[0], intensity.val[1], intensity.val[2]);
 }
 //------------------------------------------------------------------------------
@@ -102,27 +102,27 @@ void CameraImage::merge_left_and_right_image_to_anaglyph_3DStereo(
 	right_image->convert_to_grayscale();
 
 	std::vector<cv::Mat> single_channels_left(3);
-	cv::split(left_image->Image, single_channels_left);
+	cv::split(left_image->raw_image, single_channels_left);
 
 	std::vector<cv::Mat> single_channels_right(3);
-	cv::split(right_image->Image, single_channels_right);
+	cv::split(right_image->raw_image, single_channels_right);
 
 	std::vector<cv::Mat> anaglyph_image_channels;		
 	anaglyph_image_channels.push_back(single_channels_right.at(0)); //Blue
 	anaglyph_image_channels.push_back(single_channels_right.at(1)); //Green
 	anaglyph_image_channels.push_back(single_channels_left.at(2) ); //Red
 	
-	cv::merge(anaglyph_image_channels, Image);
+	cv::merge(anaglyph_image_channels, raw_image);
 }
 //------------------------------------------------------------------------------
 void CameraImage::convert_to_grayscale() {
-	cv::cvtColor(Image, Image, CV_RGB2GRAY);
-	cv::cvtColor(Image, Image, CV_GRAY2RGB);
+	cv::cvtColor(raw_image, raw_image, CV_RGB2GRAY);
+	cv::cvtColor(raw_image, raw_image, CV_GRAY2RGB);
 }
 //------------------------------------------------------------------------------
 void CameraImage::scale(const uint scale) {
-	cv::Size dst_size(Image.cols*scale, Image.rows*scale);
-	cv::resize(Image, Image, dst_size);
+	cv::Size dst_size(raw_image.cols*scale, raw_image.rows*scale);
+	cv::resize(raw_image, raw_image, dst_size);
 }
 //------------------------------------------------------------------------------
 }//Visual

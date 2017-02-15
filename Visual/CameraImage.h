@@ -20,7 +20,7 @@ namespace Visual {
 class CameraImage{
 public:
 	
-	cv::Mat Image;
+	cv::Mat raw_image;
 
 	CameraImage();
 	CameraImage(const uint cols, const uint rows);

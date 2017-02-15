@@ -170,7 +170,7 @@ void FlyingCamera::update_display_full_resolution() {
 		flying_camera_full_resolution
 	);
 
-	cv::imshow(display_name, img->Image); 
+	cv::imshow(display_name, img->raw_image); 
 }
 //------------------------------------------------------------------------------
 void FlyingCamera::update_display() {
@@ -184,7 +184,7 @@ void FlyingCamera::update_display() {
 	);
 
 	const CameraImage* img = acquire_scaled_image_with_camera(true, flying_camera);
-	cv::imshow(display_name, img->Image); 
+	cv::imshow(display_name, img->raw_image); 
 }
 //------------------------------------------------------------------------------
 void FlyingCamera::mouse_button_event(
