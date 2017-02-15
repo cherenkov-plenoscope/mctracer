@@ -1,7 +1,7 @@
 #include "CameraRay.h"
 #include "Core/RayAndFrame.h"
 #include "Core/Intersection.h"
-#include "Propagator.h"
+#include "Tracer.h"
 
 namespace Visual {
 //------------------------------------------------------------------------------
@@ -21,12 +21,12 @@ Color CameraRay::trace(
 	const Config *visual_config
 ) {
 
-	Propagator prop(
+	Tracer tracer(
 		this,
 		world,
 		visual_config);
 	
-	return prop.color;
+	return tracer.color;
 
 	/*
 	Color color;

@@ -1,9 +1,9 @@
-#include "Propagator.h"
+#include "Tracer.h"
 
 namespace Visual {
-const double Propagator::wavelength = 533e-9;
+const double Tracer::wavelength = 533e-9;
 //------------------------------------------------------------------------------
-Propagator::Propagator(
+Tracer::Tracer(
 	CameraRay* _cray,
 	const Frame* _scenery,
 	const Config* _config): 
@@ -14,7 +14,7 @@ Propagator::Propagator(
 	back_trace();
 }
 //------------------------------------------------------------------------------
-void Propagator::back_trace() {
+void Tracer::back_trace() {
 	isec = RayAndFrame::first_intersection(cray, scenery);
 
 	if(isec.does_intersect())
@@ -23,14 +23,14 @@ void Propagator::back_trace() {
 		came_from_sky_dome();	
 }
 //------------------------------------------------------------------------------
-void Propagator::came_from_object_interaction() {
+void Tracer::came_from_object_interaction() {
 	if(isec.get_facing_reflection_propability(wavelength) >= prng.uniform())
 		reflect_on_surface_and_back_trace_further();
 	else
 		reach_boundary_layer(); 
 }
 //------------------------------------------------------------------------------
-void Propagator::reflect_on_surface_and_back_trace_further() {
+void Tracer::reflect_on_surface_and_back_trace_further() {
 	cray->set_support_and_direction(
 		isec.get_intersection_vector_in_world_system(),
 		isec.get_reflection_direction_in_world_system(cray->get_direction())
@@ -38,14 +38,14 @@ void Propagator::reflect_on_surface_and_back_trace_further() {
 	back_trace();
 }
 //------------------------------------------------------------------------------
-void Propagator::reach_boundary_layer() {
+void Tracer::reach_boundary_layer() {
 	if(isec.boundary_layer_is_transparent())
 		fresnel_refraction_and_reflection();
 	else
 		get_absorbed_on_surface();
 }
 //------------------------------------------------------------------------------
-void Propagator::fresnel_refraction_and_reflection() {
+void Tracer::fresnel_refraction_and_reflection() {
 	FresnelRefractionAndReflection fresnel(
 		isec.object2world()->
 			get_transformed_orientation_inverse(cray->get_direction()),
@@ -60,11 +60,11 @@ void Propagator::fresnel_refraction_and_reflection() {
 		back_trace_beyond_boundary_layer(fresnel);
 }
 //------------------------------------------------------------------------------
-void Propagator::get_absorbed_on_surface() {
+void Tracer::get_absorbed_on_surface() {
 	color = isec.get_facing_color();	
 }
 //------------------------------------------------------------------------------
-void Propagator::back_trace_beyond_boundary_layer(
+void Tracer::back_trace_beyond_boundary_layer(
 	const FresnelRefractionAndReflection &fresnel
 ) {
 	if(	isec.get_object()->has_restrictions_on_frames_to_propagate_to() && 
@@ -83,7 +83,7 @@ void Propagator::back_trace_beyond_boundary_layer(
 	back_trace();	
 }
 //------------------------------------------------------------------------------
-void Propagator::came_from_sky_dome() {
+void Tracer::came_from_sky_dome() {
 	color = config->sky_dome.get_color_for_direction(cray->get_direction());
 }
 //------------------------------------------------------------------------------

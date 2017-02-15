@@ -1,7 +1,7 @@
 //=================================
 // include guard
-#ifndef __VisualPropagator_H_INCLUDED__
-#define __VisualPropagator_H_INCLUDED__
+#ifndef __VisualTracer_H_INCLUDED__
+#define __VisualTracer_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
@@ -20,7 +20,7 @@
 
 namespace Visual {
 
-class Propagator {
+class Tracer {
 public:
 	Random::Mt19937 prng;
 
@@ -33,7 +33,7 @@ public:
 
 	static const double wavelength;
 
-	Propagator(
+	Tracer(
 		CameraRay* cray,
 		const Frame* scenery,
 		const Config* config);
@@ -51,4 +51,4 @@ public:
 
 }//Visual
 
-#endif // __VisualPropagator_H_INCLUDED__ 
+#endif // __VisualTracer_H_INCLUDED__ 
