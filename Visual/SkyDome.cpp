@@ -3,7 +3,7 @@
 
 namespace Visual {
 
-SkyDome::SkyDome(const std::string _filename):sky(CameraImage(_filename)) {
+SkyDome::SkyDome(const std::string _filename):sky(Image(_filename)) {
 	has_texture = true;
 	filename = _filename;
 

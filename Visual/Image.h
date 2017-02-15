@@ -1,7 +1,7 @@
 //=================================
 // include guard
-#ifndef __CAMERAIMAGE_H_INCLUDED__
-#define __CAMERAIMAGE_H_INCLUDED__
+#ifndef __VISUAL_IMAGE_H_INCLUDED__
+#define __VISUAL_IMAGE_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
@@ -17,15 +17,15 @@
 //=================================
 namespace Visual {
 
-class CameraImage{
+class Image{
 public:
 	
 	cv::Mat raw_image;
 
-	CameraImage();
-	CameraImage(const uint cols, const uint rows);
-	CameraImage(const CameraImage* image_to_copy_from);
-	CameraImage(const std::string filename_of_image);
+	Image();
+	Image(const uint cols, const uint rows);
+	Image(const Image* image_to_copy_from);
+	Image(const std::string filename_of_image);
 	uint get_number_of_pixels()const;
 	uint get_number_of_cols()const;
 	uint get_number_of_rows()const;
@@ -37,7 +37,7 @@ public:
 	Color get_pixel_row_col(const uint row, const uint col)const;
 	double get_width_to_height_ratio()const;
 	void merge_left_and_right_image_to_anaglyph_3DStereo(
-		CameraImage* left_image, CameraImage* right_image
+		Image* left_image, Image* right_image
 	);
 	void scale(const uint scale);
 private:
@@ -46,4 +46,4 @@ private:
 };
 
 }//Visual
-#endif // __CAMERAIMAGE_H_INCLUDED__
+#endif // __VISUAL_IMAGE_H_INCLUDED__

@@ -165,7 +165,7 @@ void FlyingCamera::update_display_full_resolution() {
 	flying_camera_full_resolution->get_number_of_sensor_rows()/1e6 
 	<< " MPixel\n";
 
-	const CameraImage* img = acquire_scaled_image_with_camera(
+	const Image* img = acquire_scaled_image_with_camera(
 		false,
 		flying_camera_full_resolution
 	);
@@ -183,7 +183,7 @@ void FlyingCamera::update_display() {
 		flying_camera_full_resolution->get_rotation_in_world()
 	);
 
-	const CameraImage* img = acquire_scaled_image_with_camera(true, flying_camera);
+	const Image* img = acquire_scaled_image_with_camera(true, flying_camera);
 	cv::imshow(display_name, img->raw_image); 
 }
 //------------------------------------------------------------------------------
@@ -254,11 +254,11 @@ void FlyingCamera::take_snapshot_manual_focus_on_pixel_col_row(int col, int row)
 	apcam.set_focus_to(object_distance_to_focus_on);
 	cout << apcam.get_print();
 
-	const CameraImage* img = acquire_scaled_image_with_camera(false ,&apcam);
+	const Image* img = acquire_scaled_image_with_camera(false ,&apcam);
 	img->save(get_snapshot_filename());
 }
 //------------------------------------------------------------------------------
-const CameraImage* FlyingCamera::acquire_scaled_image_with_camera(
+const Image* FlyingCamera::acquire_scaled_image_with_camera(
 	const bool scale, CameraDevice* cam
 ) {	
 	if(scale){

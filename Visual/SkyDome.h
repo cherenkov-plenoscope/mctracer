@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include "CameraImage.h"
+#include "Image.h"
 #include "Core/Vec3.h"
 
 namespace Visual {
@@ -17,7 +17,7 @@ class SkyDome {
 
     bool has_texture;
     std::string filename;
-    CameraImage sky;
+    Image sky;
     uint central_row;
     uint central_col;
     uint zenith_to_horizon_radius;

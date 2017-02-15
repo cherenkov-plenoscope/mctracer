@@ -47,7 +47,7 @@ private:
 	PinHoleCamera *flying_camera;
 	PinHoleCamera *flying_camera_full_resolution;
 
-	CameraImage image;
+	Image image;
 
 	CameraMan::FieldOfView 	*fov_operator;
 	CameraMan::Translation 	*translation_operator;
@@ -95,7 +95,7 @@ private:
 	void print_stereo_offset_manipulation(const std::string status)const;
 	std::string get_snapshot_filename();
 	bool it_is_time_again_to_show_the_help();
-	const CameraImage* acquire_scaled_image_with_camera(
+	const Image* acquire_scaled_image_with_camera(
 		const bool scale, CameraDevice* cam
 	);
 };

@@ -128,7 +128,7 @@ std::string CameraDevice::get_name()const {
 	return CameraName;
 }
 //------------------------------------------------------------------------------
-const CameraImage* CameraDevice::get_image()const {
+const Image* CameraDevice::get_image()const {
 	return &image;
 }
 //------------------------------------------------------------------------------

@@ -15,7 +15,7 @@
 #include "Core/Vec3.h"
 #include "Core/HomTra3.h"
 #include "CameraRay.h"
-#include "CameraImage.h"
+#include "Image.h"
 #include "Core/TracerException.h"
 
 namespace Visual {
@@ -63,7 +63,7 @@ public:
 
 	void save_image(const std::string image_path)const;
 
-	virtual const CameraImage* get_image()const;
+	virtual const Image* get_image()const;
 
 	Vec3 get_position_in_world()const;
 
@@ -81,7 +81,7 @@ public:
 protected:
 	const std::string CameraName;
 
-	CameraImage image;
+	Image image;
 
 	HomTra3 T_Camera2World;
 	HomTra3 T_World2Camera;
