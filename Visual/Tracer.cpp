@@ -11,41 +11,41 @@ Tracer::Tracer(
 	config(_config),
 	cray(_cray)
 {
-	back_trace();
+	trace_back();
 }
 //------------------------------------------------------------------------------
-void Tracer::back_trace() {
+void Tracer::trace_back() {
 	isec = RayAndFrame::first_intersection(cray, scenery);
 
 	if(isec.does_intersect())
-		came_from_object_interaction();
+		trace_back_to_object_interaction();
 	else
-		came_from_sky_dome();	
+		trace_back_to_sky_dome();	
 }
 //------------------------------------------------------------------------------
-void Tracer::came_from_object_interaction() {
+void Tracer::trace_back_to_object_interaction() {
 	if(isec.get_facing_reflection_propability(wavelength) >= prng.uniform())
-		reflect_on_surface_and_back_trace_further();
+		trace_back_after_reflection();
 	else
-		reach_boundary_layer(); 
+		trace_back_to_boundary_layer(); 
 }
 //------------------------------------------------------------------------------
-void Tracer::reflect_on_surface_and_back_trace_further() {
+void Tracer::trace_back_after_reflection() {
 	cray->set_support_and_direction(
 		isec.get_intersection_vector_in_world_system(),
 		isec.get_reflection_direction_in_world_system(cray->get_direction())
 	);
-	back_trace();
+	trace_back();
 }
 //------------------------------------------------------------------------------
-void Tracer::reach_boundary_layer() {
+void Tracer::trace_back_to_boundary_layer() {
 	if(isec.boundary_layer_is_transparent())
-		fresnel_refraction_and_reflection();
+		trace_back_to_fresnel_interaction();
 	else
-		get_absorbed_on_surface();
+		trace_back_to_surface();
 }
 //------------------------------------------------------------------------------
-void Tracer::fresnel_refraction_and_reflection() {
+void Tracer::trace_back_to_fresnel_interaction() {
 	FresnelRefractionAndReflection fresnel(
 		isec.object2world()->
 			get_transformed_orientation_inverse(cray->get_direction()),
@@ -55,16 +55,16 @@ void Tracer::fresnel_refraction_and_reflection() {
 	);
 
 	if(fresnel.reflection_propability() > prng.uniform())
-		reflect_on_surface_and_back_trace_further(); 
+		trace_back_after_reflection(); 
 	else
-		back_trace_beyond_boundary_layer(fresnel);
+		trace_back_beyond_boundary_layer(fresnel);
 }
 //------------------------------------------------------------------------------
-void Tracer::get_absorbed_on_surface() {
+void Tracer::trace_back_to_surface() {
 	color = isec.get_facing_color();	
 }
 //------------------------------------------------------------------------------
-void Tracer::back_trace_beyond_boundary_layer(
+void Tracer::trace_back_beyond_boundary_layer(
 	const FresnelRefractionAndReflection &fresnel
 ) {
 	if(	isec.get_object()->has_restrictions_on_frames_to_propagate_to() && 
@@ -80,10 +80,10 @@ void Tracer::back_trace_beyond_boundary_layer(
 			fresnel.get_refrac_dir_in_object_system())
 	);
 
-	back_trace();	
+	trace_back();	
 }
 //------------------------------------------------------------------------------
-void Tracer::came_from_sky_dome() {
+void Tracer::trace_back_to_sky_dome() {
 	color = config->sky_dome.get_color_for_direction(cray->get_direction());
 }
 //------------------------------------------------------------------------------
