@@ -53,7 +53,7 @@ Color SkyDome::sky_dome_color_for(const Vec3 dir)const {
 	const uint col = central_col + col_offset;
 	const uint row = central_row + row_offset;
 
-	return sky.get_pixel_row_col(row, col);
+	return sky.get_color_row_col(row, col);
 }
 
 std::string SkyDome::get_print()const {

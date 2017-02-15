@@ -261,7 +261,7 @@ void ApertureCamera::acquire_image(
 						)
 					);
 				}
-				image.set_pixel_row_col_to_color(row, col, Color(colors_of_pixel));
+				image.set_row_col_to_color(row, col, Color(colors_of_pixel));
 			}catch(std::exception &error) {
 				HadCatch++;
 				std::cerr << error.what(); 

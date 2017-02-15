@@ -31,10 +31,10 @@ public:
 	uint get_number_of_rows()const;
 	void save(std::string filename)const;
 	void load(const std::string filename);
-	void set_pixel_row_col_to_color(
+	void set_row_col_to_color(
 		const uint row, const uint col, const Color &color
 	);
-	Color get_pixel_row_col(const uint row, const uint col)const;
+	Color get_color_row_col(const uint row, const uint col)const;
 	double get_width_to_height_ratio()const;
 	void merge_left_and_right_image_to_anaglyph_3DStereo(
 		Image* left_image, Image* right_image

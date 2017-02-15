@@ -75,7 +75,7 @@ uint Image::get_number_of_rows()const {
  	return raw_image.rows;
 }
 //------------------------------------------------------------------------------
-void Image::set_pixel_row_col_to_color(
+void Image::set_row_col_to_color(
 	const uint row, const uint col, const Color &color){
 	cv::Vec3b intensity;
 
@@ -86,7 +86,7 @@ void Image::set_pixel_row_col_to_color(
 	raw_image.at<cv::Vec3b>(row,col) = intensity;
 }
 //------------------------------------------------------------------------------
-Color Image::get_pixel_row_col(const uint row, const uint col)const{
+Color Image::get_color_row_col(const uint row, const uint col)const{
 	cv::Vec3b intensity = raw_image.at<cv::Vec3b>(row,col);
 	return Color(intensity.val[0], intensity.val[1], intensity.val[2]);
 }

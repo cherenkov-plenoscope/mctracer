@@ -116,7 +116,7 @@ void PinHoleCamera::acquire_image(
 				cam_ray = get_ray_for_pixel_in_row_and_col(row, col);
 				color = cam_ray.trace(world, 0, visual_config);
 
-				image.set_pixel_row_col_to_color(row, col, color);
+				image.set_row_col_to_color(row, col, color);
 			}catch(std::exception &error) {
 				HadCatch++;
 				std::cerr << error.what(); 
