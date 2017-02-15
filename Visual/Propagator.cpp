@@ -57,17 +57,11 @@ void Propagator::fresnel_refraction_and_reflection() {
 	if(fresnel.reflection_propability() > prng.uniform())
 		reflect_on_surface_and_propagate_on(); 
 	else
-		pass_the_boundary_layer(fresnel);
+		propagate_on_after_boundary_layer(fresnel);
 }
 //------------------------------------------------------------------------------
 void Propagator::get_absorbed_on_surface() {
 	color = isec.get_facing_color();	
-}
-//------------------------------------------------------------------------------
-void Propagator::pass_the_boundary_layer(
-	const FresnelRefractionAndReflection &fresnel 
-) {
-	propagate_on_after_boundary_layer(fresnel);
 }
 //------------------------------------------------------------------------------
 void Propagator::propagate_on_after_boundary_layer(

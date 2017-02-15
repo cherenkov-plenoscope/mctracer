@@ -43,17 +43,10 @@ public:
 	void reach_boundary_layer();
 	void fresnel_refraction_and_reflection();
 	void get_absorbed_on_surface();
-	void pass_the_boundary_layer(
-		const FresnelRefractionAndReflection &fresnel 
-	);
 	void propagate_on_after_boundary_layer(
 		const FresnelRefractionAndReflection &fresnel
 	);
 	void reach_sky_dome();
-/*
-	void work_on_first_causal_intersection();
-	bool absorbed_in_medium_before_reaching_surface()const ;
-*/
 };
 
 }//Visual
