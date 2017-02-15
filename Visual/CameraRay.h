@@ -28,21 +28,6 @@ public:
 		uint refl_count,
 		const Config *visual_config
 	);
-private:
-
-	Color shadow_of_sky_light(
-		const Frame* world,
-		const Config *visual_config,
-		const Intersection &intersection
-	)const;
-	bool is_iluminated_by_sky_light_source(
-		const Frame* world,
-		const Config *visual_config,
-		const Intersection &intersection
-	)const;
-	bool surface_normal_is_facing_camera(
-		const Intersection &intersection
-	)const;
 };
 
 }//Visual
