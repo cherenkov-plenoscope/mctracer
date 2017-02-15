@@ -47,6 +47,11 @@ public:
 		const FresnelRefractionAndReflection &fresnel
 	);
 	void trace_back_to_sky_dome();
+	bool surface_iluminated_by_global_light_source()const;
+	bool surface_normal_is_facing_observer(
+	    const Intersection &intersection
+	)const;
+	Color shadow_of_sky_light()const;
 };
 
 }//Visual
