@@ -49,7 +49,7 @@ public:
 	void propagate_on_after_boundary_layer(
 		const FresnelRefractionAndReflection &fresnel
 	);
-	void get_absorbed_in_void_space();
+	void reach_sky_dome();
 /*
 	void work_on_first_causal_intersection();
 	bool absorbed_in_medium_before_reaching_surface()const ;

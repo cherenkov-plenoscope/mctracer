@@ -20,7 +20,7 @@ void Propagator::propagate() {
 	if(isec.does_intersect())
 		interact_with_object();
 	else
-		get_absorbed_in_void_space();	
+		reach_sky_dome();	
 }
 //------------------------------------------------------------------------------
 void Propagator::interact_with_object() {
@@ -89,7 +89,7 @@ void Propagator::propagate_on_after_boundary_layer(
 	propagate();	
 }
 //------------------------------------------------------------------------------
-void Propagator::get_absorbed_in_void_space() {
+void Propagator::reach_sky_dome() {
 	color = config->sky_dome.get_color_for_direction(cray->get_direction());
 }
 //------------------------------------------------------------------------------
