@@ -23,11 +23,6 @@ public:
 	CameraRay(){};
 	CameraRay(const Vec3 support, const Vec3 direction);
 	std::string get_print()const;
-	Color trace(
-		const Frame* world,
-		uint refl_count,
-		const Config *visual_config
-	);
 };
 
 }//Visual

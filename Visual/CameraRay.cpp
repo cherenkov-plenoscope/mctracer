@@ -1,7 +1,6 @@
 #include "CameraRay.h"
 #include "Core/RayAndFrame.h"
 #include "Core/Intersection.h"
-#include "Tracer.h"
 
 namespace Visual {
 //------------------------------------------------------------------------------
@@ -14,21 +13,13 @@ std::string CameraRay::get_print()const{
 	out << Ray::get_print() << ", color: " << color;
 	return out.str();
 }
+/*
 //------------------------------------------------------------------------------
 Color CameraRay::trace(
 	const Frame* world,
 	uint refl_count,
 	const Config *visual_config
 ) {
-
-	Tracer tracer(
-		this,
-		world,
-		visual_config);
-	
-	return tracer.color;
-
-	/*
 	Color color;
 	const Intersection intersection = 
 		RayAndFrame::first_intersection(this, world);
@@ -63,8 +54,8 @@ Color CameraRay::trace(
 		color = visual_config->sky_dome.get_color_for_direction(direction);
 	}
 	
-	return color;
-	*/
+	return color;	
 }
+*/
 //------------------------------------------------------------------------------
 }//Visual

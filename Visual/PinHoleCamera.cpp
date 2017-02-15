@@ -1,4 +1,5 @@
 #include "PinHoleCamera.h"
+#include "Tracer.h"
 
 namespace Visual {
 //------------------------------------------------------------------------------
@@ -101,10 +102,9 @@ void PinHoleCamera::acquire_image(
 ){
 	uint i, row, col;
 	CameraRay cam_ray;
-	Color color;
 	int HadCatch = 0;
 
-	#pragma omp parallel shared(visual_config,world,HadCatch) private(i,cam_ray,color,row,col) 
+	#pragma omp parallel shared(visual_config,world,HadCatch) private(i,cam_ray,row,col) 
 	{	
 		#pragma omp for schedule(dynamic) 
 		for (i = 0; i < image.get_number_of_pixels(); i++) {
@@ -114,9 +114,10 @@ void PinHoleCamera::acquire_image(
 				col = i % image.get_number_of_cols();
 
 				cam_ray = get_ray_for_pixel_in_row_and_col(row, col);
-				color = cam_ray.trace(world, 0, visual_config);
+				
+				Tracer tracer(&cam_ray,	world, visual_config);
 
-				image.set_row_col_to_color(row, col, color);
+				image.set_row_col_to_color(row, col, tracer.color);
 			}catch(std::exception &error) {
 				HadCatch++;
 				std::cerr << error.what(); 
