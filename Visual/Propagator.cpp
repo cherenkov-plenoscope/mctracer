@@ -11,10 +11,10 @@ Propagator::Propagator(
 	config(_config),
 	cray(_cray)
 {
-	propagate();
+	back_trace();
 }
 //------------------------------------------------------------------------------
-void Propagator::propagate() {
+void Propagator::back_trace() {
 	isec = RayAndFrame::first_intersection(cray, scenery);
 
 	if(isec.does_intersect())
@@ -25,17 +25,17 @@ void Propagator::propagate() {
 //------------------------------------------------------------------------------
 void Propagator::interact_with_object() {
 	if(isec.get_facing_reflection_propability(wavelength) >= prng.uniform())
-		reflect_on_surface_and_propagate_on();
+		reflect_on_surface_and_back_trace_further();
 	else
 		reach_boundary_layer(); 
 }
 //------------------------------------------------------------------------------
-void Propagator::reflect_on_surface_and_propagate_on() {
+void Propagator::reflect_on_surface_and_back_trace_further() {
 	cray->set_support_and_direction(
 		isec.get_intersection_vector_in_world_system(),
 		isec.get_reflection_direction_in_world_system(cray->get_direction())
 	);
-	propagate();
+	back_trace();
 }
 //------------------------------------------------------------------------------
 void Propagator::reach_boundary_layer() {
@@ -55,16 +55,16 @@ void Propagator::fresnel_refraction_and_reflection() {
 	);
 
 	if(fresnel.reflection_propability() > prng.uniform())
-		reflect_on_surface_and_propagate_on(); 
+		reflect_on_surface_and_back_trace_further(); 
 	else
-		propagate_on_after_boundary_layer(fresnel);
+		back_trace_beyond_boundary_layer(fresnel);
 }
 //------------------------------------------------------------------------------
 void Propagator::get_absorbed_on_surface() {
 	color = isec.get_facing_color();	
 }
 //------------------------------------------------------------------------------
-void Propagator::propagate_on_after_boundary_layer(
+void Propagator::back_trace_beyond_boundary_layer(
 	const FresnelRefractionAndReflection &fresnel
 ) {
 	if(	isec.get_object()->has_restrictions_on_frames_to_propagate_to() && 
@@ -80,7 +80,7 @@ void Propagator::propagate_on_after_boundary_layer(
 			fresnel.get_refrac_dir_in_object_system())
 	);
 
-	propagate();	
+	back_trace();	
 }
 //------------------------------------------------------------------------------
 void Propagator::reach_sky_dome() {

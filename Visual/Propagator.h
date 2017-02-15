@@ -37,13 +37,13 @@ public:
 		CameraRay* cray,
 		const Frame* scenery,
 		const Config* config);
-	void propagate();
+	void back_trace();
 	void interact_with_object();
-	void reflect_on_surface_and_propagate_on();
+	void reflect_on_surface_and_back_trace_further();
 	void reach_boundary_layer();
 	void fresnel_refraction_and_reflection();
 	void get_absorbed_on_surface();
-	void propagate_on_after_boundary_layer(
+	void back_trace_beyond_boundary_layer(
 		const FresnelRefractionAndReflection &fresnel
 	);
 	void reach_sky_dome();
