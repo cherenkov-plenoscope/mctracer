@@ -1,6 +1,8 @@
 #include "SkyDome.h"
 #include <sstream>
 
+namespace Visual {
+
 SkyDome::SkyDome(const std::string _filename):sky(CameraImage(_filename)) {
 	has_texture = true;
 	filename = _filename;
@@ -78,3 +80,5 @@ double SkyDome::get_zenith_distance_of(const Vec3 dir)const {
 double SkyDome::get_azimuth_angle_of(const Vec3 dir)const {
 	return atan2(dir.y(),dir.x());
 }
+
+}//Visual

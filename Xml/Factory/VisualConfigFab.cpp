@@ -34,11 +34,11 @@ Visual::Config get_VisualConfig_from_node(Xml::Node node) {
 
 	if(image_path.empty()) {
 
-		vc.sky_dome = SkyDome(sky_dome_node.attribute2Color("color"));
+		vc.sky_dome = Visual::SkyDome(sky_dome_node.attribute2Color("color"));
 	}else{
 
 		PathTools::Path xmlpath = PathTools::Path(node.xml_path());
-		vc.sky_dome = SkyDome(PathTools::join(xmlpath.dirname, image_path));
+		vc.sky_dome = Visual::SkyDome(PathTools::join(xmlpath.dirname, image_path));
 		vc.sky_dome.set_background_color(
 			sky_dome_node.attribute2Color("color")
 		);
