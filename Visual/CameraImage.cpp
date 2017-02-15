@@ -1,4 +1,6 @@
 #include "CameraImage.h"
+
+namespace Visual {
 //------------------------------------------------------------------------------
 CameraImage::CameraImage() {}
 //------------------------------------------------------------------------------
@@ -122,3 +124,5 @@ void CameraImage::scale(const uint scale) {
 	cv::Size dst_size(Image.cols*scale, Image.rows*scale);
 	cv::resize(Image, Image, dst_size);
 }
+//------------------------------------------------------------------------------
+}//Visual

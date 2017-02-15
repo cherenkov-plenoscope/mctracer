@@ -15,6 +15,8 @@
 #include "Core/Color.h"
 
 //=================================
+namespace Visual {
+
 class CameraImage{
 public:
 	
@@ -42,4 +44,6 @@ private:
 
 	void convert_to_grayscale();
 };
+
+}//Visual
 #endif // __CAMERAIMAGE_H_INCLUDED__
