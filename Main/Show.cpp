@@ -4,7 +4,7 @@
 #include "Xml/Factory/VisualConfigFab.h"
 #include "Xml/Factory/PropagationConfigFab.h"
 #include "Xml/Factory/SceneryFactory.h"
-#include "Cameras/FlyingCamera.h"
+#include "Visual/FlyingCamera.h"
 #include "Scenery/Scenery.h"
 using std::string;
 using std::cout;
@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
         return 0;
     }
     
-    VisualConfig visual_config;
+    Visual::Config visual_config;
     if(args.find("--config")->second) {
         Xml::Document doc(args.find("--config")->second.asString());
         Xml::Node node = doc.node();
@@ -64,7 +64,7 @@ int main(int argc, char* argv[]) {
     }
 
     scenery.root.init_tree_based_on_mother_child_relations();
-    FlyingCamera free(&scenery.root, &visual_config);
+    Visual::FlyingCamera free(&scenery.root, &visual_config);
 
     }catch(std::exception &error) {
         std::cerr << error.what(); 

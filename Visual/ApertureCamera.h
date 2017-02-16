@@ -12,6 +12,9 @@ class Frame;
 #include "CameraDevice.h"
 #include "Core/Random/Random.h"
 //=================================
+
+namespace Visual {
+
 class ApertureCamera :public CameraDevice{
 public:
 	using CameraDevice::CameraDevice;
@@ -30,7 +33,7 @@ public:
 
 	void acquire_image(
 		const Frame* world,
-		const VisualConfig* visual_config
+		const Config* visual_config
 	);
 
 	void auto_focus(const Frame* world);
@@ -100,4 +103,7 @@ public:
         using TracerException::TracerException;
     };
 };
+
+}//Visual
+
 #endif // __APERTURECAMERA_H_INCLUDED__

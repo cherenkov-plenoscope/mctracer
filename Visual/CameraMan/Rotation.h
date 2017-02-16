@@ -9,8 +9,9 @@
 //=================================
 // included dependencies
 #include "Verbosity.h"
-#include "Cameras/CameraDevice.h"
+
 //=================================
+namespace Visual {
 namespace CameraMan {
 
 class Rotation: public Verbosity {
@@ -48,5 +49,8 @@ private:
 		const std::string dir
 	)const;
 };
+
 }//CameraMan
+}//Visual
+
 #endif // __CAMERAMANFORROTATION_H_INCLUDE__

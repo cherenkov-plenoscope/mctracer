@@ -1,6 +1,9 @@
-#include "VisualConfig.h"
+#include "Config.h"
+
+namespace Visual {
 //------------------------------------------------------------------------------
-VisualConfig::VisualConfig():sky_dome(Color::sky_blue) {
+Config::Config():sky_dome(Color::sky_blue) {
+	max_interaction_depth = 42;
 
 	preview.cols = 128;
 	preview.rows = 72;
@@ -17,3 +20,4 @@ VisualConfig::VisualConfig():sky_dome(Color::sky_blue) {
 
 	photon_trajectories.radius = 0.025;
 }
+}//Visual

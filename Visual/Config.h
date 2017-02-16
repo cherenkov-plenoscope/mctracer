@@ -14,9 +14,11 @@
 #include "Core/Vec3.h"
 
 //=================================
-
-struct VisualConfig {
+namespace Visual {
+struct Config {
 	
+	uint max_interaction_depth;
+
 	struct Preview {
 		uint cols;
 		uint rows;
@@ -42,6 +44,7 @@ struct VisualConfig {
 	
 	SkyDome sky_dome;
 
-	VisualConfig();
+	Config();
 };
+}//Visual
 #endif // __VisualConfig_H_INCLUDED__ 

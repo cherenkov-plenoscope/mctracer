@@ -9,8 +9,9 @@
 //=================================
 // included dependencies
 #include "Verbosity.h"
-#include "Cameras/CameraDevice.h"
+
 //=================================
+namespace Visual {
 namespace CameraMan {
 
 class Translation: public Verbosity {
@@ -36,5 +37,8 @@ private:
 	void print_camera_moved_in_direction(const std::string dir)const;
 	double translation_increment()const;
 };
+
 }//CameraMan
+}//Visual
+
 #endif // __CAMERAMANFORTRANSLATION_H_INCLUDE__

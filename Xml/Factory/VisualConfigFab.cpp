@@ -3,9 +3,11 @@
 namespace Xml {
 	namespace Configs {
 //------------------------------------------------------------------------------
-VisualConfig get_VisualConfig_from_node(Xml::Node node) {
+Visual::Config get_VisualConfig_from_node(Xml::Node node) {
 
-	VisualConfig vc;
+	Visual::Config vc;
+
+	vc.max_interaction_depth = node.attribute2int("max_interaction_depth");
 
 	Xml::Node preview = node.child("preview");
 	vc.preview.cols = preview.attribute2int("cols");
@@ -32,11 +34,11 @@ VisualConfig get_VisualConfig_from_node(Xml::Node node) {
 
 	if(image_path.empty()) {
 
-		vc.sky_dome = SkyDome(sky_dome_node.attribute2Color("color"));
+		vc.sky_dome = Visual::SkyDome(sky_dome_node.attribute2Color("color"));
 	}else{
 
 		PathTools::Path xmlpath = PathTools::Path(node.xml_path());
-		vc.sky_dome = SkyDome(PathTools::join(xmlpath.dirname, image_path));
+		vc.sky_dome = Visual::SkyDome(PathTools::join(xmlpath.dirname, image_path));
 		vc.sky_dome.set_background_color(
 			sky_dome_node.attribute2Color("color")
 		);
@@ -45,10 +47,10 @@ VisualConfig get_VisualConfig_from_node(Xml::Node node) {
 	return vc;
 }
 //------------------------------------------------------------------------------
-std::string to_node(const VisualConfig &vc) {
+std::string to_node(const Visual::Config &vc) {
 
 	std::stringstream out;
-	out << "<visual>\n";
+	out << "<visual " << av("max_interaction_depth", std::to_string(vc.max_interaction_depth)) << ">\n";
 
 	out << "    " << comment(
 	"Image size of the interactive preview window (cols*scale x rows*scale). "

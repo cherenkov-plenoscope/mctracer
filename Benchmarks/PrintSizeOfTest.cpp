@@ -4,7 +4,7 @@
 #include "Core/Rot3.h"
 #include "Core/Ray.h"
 #include "Core/Photon.h"
-#include "Cameras/CameraRay.h"
+#include "Visual/CameraRay.h"
 #include "Core/Color.h"
 #include "Core/HomTra3.h"
 #include "Core/SurfaceEntity.h"
@@ -48,7 +48,7 @@ TEST_F(SizeOfTest, sizes_of_mct) {
     Ray ray(Vec3::null, Vec3::unit_z); 
     print_size("Ray", ray);
 
-    CameraRay camray(Vec3::null, Vec3::unit_z); 
+    Visual::CameraRay camray(Vec3::null, Vec3::unit_z); 
     print_size("CameraRay", camray);
 
     RayForPropagation rayfp(Vec3::null, Vec3::unit_z); 

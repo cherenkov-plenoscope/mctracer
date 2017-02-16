@@ -42,7 +42,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/TelescopeArrayControl.cpp		
 	${CMAKE_CURRENT_SOURCE_DIR}/ZdAzMount.cpp
 )
-add_subdirectory("${PROJECT_SOURCE_DIR}/Cameras")
+add_subdirectory("${PROJECT_SOURCE_DIR}/Visual")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Core")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Corsika")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Scenery")

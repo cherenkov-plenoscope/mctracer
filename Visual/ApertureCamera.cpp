@@ -1,4 +1,7 @@
 #include "ApertureCamera.h"
+#include "Tracer.h"
+
+namespace Visual {
 //------------------------------------------------------------------------------
 void ApertureCamera::set_fStop_sesnorWidth_rayPerPixel(	
 	const double new_FStopNumber,
@@ -229,11 +232,10 @@ Vec3 ApertureCamera::camera_ray_direction_vector_in_world_frame(
 //------------------------------------------------------------------------------
 void ApertureCamera::acquire_image(
 	const Frame* world,
-	const VisualConfig* visual_config
+	const Config* visual_config
 ){	
 	CameraRay cam_ray;
 	uint pix, row, col;
-	const uint initial_interaction_counter = 0;
 	int HadCatch = 0;
 	
 	#pragma omp parallel shared(visual_config,world,HadCatch) private(pix,cam_ray,row,col) 
@@ -247,19 +249,13 @@ void ApertureCamera::acquire_image(
 				std::vector<Color> colors_of_pixel; 
 				colors_of_pixel.reserve(rays_per_pixel);
 
-				for(int j = 0; j < rays_per_pixel; j++ ){
+				for(int j = 0; j < rays_per_pixel; j++ ) {
 
 					cam_ray = get_ray_for_pixel_in_row_and_col(row, col);
-				
-					colors_of_pixel.push_back(
-						cam_ray.trace(
-							world,
-							initial_interaction_counter,
-							visual_config
-						)
-					);
+					Tracer tracer(&cam_ray,	world, visual_config);
+					colors_of_pixel.push_back(tracer.color);
 				}
-				image.set_pixel_row_col_to_color(row, col, Color(colors_of_pixel));
+				image.set_row_col_to_color(row, col, Color(colors_of_pixel));
 			}catch(std::exception &error) {
 				HadCatch++;
 				std::cerr << error.what(); 
@@ -277,3 +273,4 @@ void ApertureCamera::acquire_image(
 	} 
 }
 //------------------------------------------------------------------------------
+}//Visual

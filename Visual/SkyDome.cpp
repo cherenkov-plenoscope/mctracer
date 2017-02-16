@@ -1,7 +1,9 @@
-#include "Cameras/SkyDome.h"
+#include "SkyDome.h"
 #include <sstream>
 
-SkyDome::SkyDome(const std::string _filename):sky(CameraImage(_filename)) {
+namespace Visual {
+
+SkyDome::SkyDome(const std::string _filename):sky(Image(_filename)) {
 	has_texture = true;
 	filename = _filename;
 
@@ -44,16 +46,14 @@ Color SkyDome::sky_dome_color_for(const Vec3 dir)const {
 	const double az = get_azimuth_angle_of(dir);
 
 	const double zd_in_pix = zd*(2.0/M_PI)*zenith_to_horizon_radius;
-	
-	// round towards 0 (by calling (int) instead of rounding)
-	// to prevent segfault when index out of bounds
+
 	const int col_offset = (int)(zd_in_pix*cos(az)); 
 	const int row_offset =-(int)(zd_in_pix*sin(az)); 
 
 	const uint col = central_col + col_offset;
 	const uint row = central_row + row_offset;
 
-	return sky.get_pixel_row_col(row, col);
+	return sky.get_color_row_col(row, col);
 }
 
 std::string SkyDome::get_print()const {
@@ -78,3 +78,5 @@ double SkyDome::get_zenith_distance_of(const Vec3 dir)const {
 double SkyDome::get_azimuth_angle_of(const Vec3 dir)const {
 	return atan2(dir.y(),dir.x());
 }
+
+}//Visual

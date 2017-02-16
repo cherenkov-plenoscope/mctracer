@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "Scenery/Primitive/Primitive.h"
-#include "Cameras/FlyingCamera.h"
+#include "Visual/FlyingCamera.h"
 #include <vector>
 #include <string>
 using std::string;

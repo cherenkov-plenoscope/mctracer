@@ -1,4 +1,6 @@
 #include "Stereo3D.h"
+
+namespace Visual {
 namespace CameraMan {
 //------------------------------------------------------------------------------
 Stereo3D::Stereo3D(CameraDevice* camera_to_work_with) {
@@ -7,7 +9,7 @@ Stereo3D::Stereo3D(CameraDevice* camera_to_work_with) {
 //------------------------------------------------------------------------------
 void Stereo3D::aquire_stereo_image(
 	const Frame* world,
-	const VisualConfig* visual_config
+	const Config* visual_config
 ){
 	remember_initial_camera_config();
 	calc_pos_and_rot_for_left_and_right_camera_config(world);
@@ -44,18 +46,18 @@ void Stereo3D::set_positions_for_left_and_right_stereo_config(){
 //------------------------------------------------------------------------------
 void Stereo3D::take_left_image(
 	const Frame* world,
-	const VisualConfig* visual_config
+	const Config* visual_config
 ){
 	camera->acquire_image(world, visual_config);
-	left_image = new CameraImage(camera->get_image());
+	left_image = new Image(camera->get_image());
 }
 //------------------------------------------------------------------------------
 void Stereo3D::take_right_image(
 	const Frame* world,
-	const VisualConfig* visual_config
+	const Config* visual_config
 ){
 	camera->acquire_image(world, visual_config);
-	right_image = new CameraImage(camera->get_image());
+	right_image = new Image(camera->get_image());
 }
 //------------------------------------------------------------------------------
 Vec3 Stereo3D::offset_to_the_right()const {
@@ -135,7 +137,7 @@ void Stereo3D::print_stereo_offset_manipulation(
 	std::cout << stereo_offset_in_m << "m\n";
 }
 //------------------------------------------------------------------------------
-const CameraImage* Stereo3D::get_anaglyph_stereo3D_image() {
+const Image* Stereo3D::get_anaglyph_stereo3D_image() {
 	left_image->merge_left_and_right_image_to_anaglyph_3DStereo(
 		left_image,
 		right_image	
@@ -150,3 +152,4 @@ void Stereo3D::use_same_stereo_offset_as(
 }
 //------------------------------------------------------------------------------
 }//CameraMan
+}//Visual

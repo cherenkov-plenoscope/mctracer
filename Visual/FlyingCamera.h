@@ -11,12 +11,13 @@
 #include "ApertureCamera.h"
 #include "PinHoleCamera.h"
 #include "Tools/Tools.h"
-#include "Cameras/CameraMan/CameraMan.h"
-#include "Cameras/VisualConfig.h"
+#include "CameraMan/CameraMan.h"
+#include "Config.h"
 #include "Tools/Time.h"
 #include "Tools/UserInteraction.h"
 
-//=================================
+namespace Visual {
+
 class FlyingCamera {
 // Fly through the scene like you want!
 // This FlyingCamera class allows the user to interact with the 
@@ -31,11 +32,11 @@ public:
 	
 	FlyingCamera(
 		const Frame *world, 
-		const VisualConfig *visual_config);
+		const Config *visual_config);
 
 	void continue_with_new_scenery_and_visual_config(
 		const Frame *world, 
-		const VisualConfig *visual_config
+		const Config *visual_config
 	);
 
 	~FlyingCamera();
@@ -46,7 +47,7 @@ private:
 	PinHoleCamera *flying_camera;
 	PinHoleCamera *flying_camera_full_resolution;
 
-	CameraImage image;
+	Image image;
 
 	CameraMan::FieldOfView 	*fov_operator;
 	CameraMan::Translation 	*translation_operator;
@@ -56,7 +57,7 @@ private:
 	bool stereo3D = false;
 
 	const Frame *world;
-	const VisualConfig *visual_config;
+	const Config *visual_config;
 
 	int snapshot_counter = 0;
 	uint user_input_counter = 0;
@@ -94,8 +95,11 @@ private:
 	void print_stereo_offset_manipulation(const std::string status)const;
 	std::string get_snapshot_filename();
 	bool it_is_time_again_to_show_the_help();
-	const CameraImage* acquire_scaled_image_with_camera(
+	const Image* acquire_scaled_image_with_camera(
 		const bool scale, CameraDevice* cam
 	);
 };
+
+}//Visual
+
 #endif // __FlyingCamera_H_INCLUDED__

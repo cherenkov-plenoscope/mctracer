@@ -11,7 +11,8 @@ class Frame;
 //#include <omp.h>
 #include "CameraDevice.h"
 
-//======================================================================
+namespace Visual {
+
 class PinHoleCamera:public CameraDevice{
 public:
 	using CameraDevice::CameraDevice;
@@ -25,7 +26,7 @@ public:
 
 	void acquire_image(	
 		const Frame* world, 
-		const VisualConfig* visual_config
+		const Config* visual_config
 	);
 
 	void set_FoV_in_rad(const double FoV_in_rad);
@@ -53,4 +54,7 @@ private:
 
 	std::string get_pin_hole_cam_print()const;
 };
+
+}//Visual
+
 #endif // __PINHOLECAMERA_H_INCLUDED__

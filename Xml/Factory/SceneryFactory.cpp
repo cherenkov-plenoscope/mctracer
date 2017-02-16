@@ -115,7 +115,11 @@ Frame* SceneryFactory::add_Sphere(Frame* mother, const Node node) {
     sphere->set_inner_color(surface_color(node));
     sphere->set_outer_color(surface_color(node));
     sphere->set_outer_reflection(surface_refl(node));
-    sphere->set_inner_reflection(surface_refl(node));   
+    sphere->set_inner_reflection(surface_refl(node));
+
+    if(node.child("set_surface").has_attribute("refraction_vs_wavelength"))
+        sphere->set_inner_refraction(surface_refrac(node));
+
     sphere->set_radius(
         node.child("set_sphere").attribute2double("radius"));
     return sphere;
@@ -341,6 +345,10 @@ Frame* SceneryFactory::add_light_field_sensor(Frame* mother, const Node node) {
 //------------------------------------------------------------------------------
 const Function::Func1D* SceneryFactory::surface_refl(const Node node)const {
     return scenery->functions.get(node.child("set_surface").attribute("reflection_vs_wavelength"));
+}
+//------------------------------------------------------------------------------
+const Function::Func1D* SceneryFactory::surface_refrac(const Node node)const {
+    return scenery->functions.get(node.child("set_surface").attribute("refraction_vs_wavelength"));
 }
 //------------------------------------------------------------------------------
 void SceneryFactory::add_color(const Node node) {

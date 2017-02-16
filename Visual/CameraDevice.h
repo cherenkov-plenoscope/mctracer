@@ -15,8 +15,10 @@
 #include "Core/Vec3.h"
 #include "Core/HomTra3.h"
 #include "CameraRay.h"
-#include "CameraImage.h"
+#include "Image.h"
 #include "Core/TracerException.h"
+
+namespace Visual {
 
 class CameraDevice{
 public: 
@@ -28,7 +30,7 @@ public:
 
 	virtual void acquire_image(	
 		const Frame* world, 
-		const VisualConfig* visual_config
+		const Config* visual_config
 	) = 0;
 
 	virtual void update_position(const Vec3 new_cam_pos_in_world);
@@ -61,7 +63,7 @@ public:
 
 	void save_image(const std::string image_path)const;
 
-	virtual const CameraImage* get_image()const;
+	virtual const Image* get_image()const;
 
 	Vec3 get_position_in_world()const;
 
@@ -79,7 +81,7 @@ public:
 protected:
 	const std::string CameraName;
 
-	CameraImage image;
+	Image image;
 
 	HomTra3 T_Camera2World;
 	HomTra3 T_World2Camera;
@@ -101,4 +103,7 @@ protected:
 
 	void update_optical_axis_and_orientation();
 };
+
+}//Visual
+
 #endif // __CAMERADEVICE_H_INCLUDED__ 

@@ -1,5 +1,7 @@
 #include "Rotation.h"
 #include "Tools/Tools.h"
+
+namespace Visual {
 namespace CameraMan {
 //------------------------------------------------------------------------------	
 Rotation::Rotation(CameraDevice* camera_to_work_with){
@@ -131,3 +133,4 @@ Rot3 Rotation::get_R_World2Camera()const {
 }
 //------------------------------------------------------------------------------
 }//CameraMan
+}//Visual
