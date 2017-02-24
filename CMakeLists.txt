@@ -116,6 +116,12 @@ add_executable(mctTest ./Tests/test.cpp ${TEST_SOURCE})
 target_link_libraries(mctTest gtest gtest_main)
 target_link_libraries(mctTest mct)
 
+#---------
+# STL scaling
+add_executable(mctScaleStl Main/ScaleStl.cpp)
+target_link_libraries(mctScaleStl mct)
+target_link_libraries(mctScaleStl docopt)
+
 #---------------------------------
 # Benchmark
 add_subdirectory("${PROJECT_SOURCE_DIR}/Benchmarks")
