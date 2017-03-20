@@ -1,3 +1,5 @@
 my_stats.LixelStatistics.bin
 header_block.bin
 *.bin
+photon_stream.bin
+photon_stream_truth.bin
