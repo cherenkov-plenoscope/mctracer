@@ -19,6 +19,12 @@ using std::stringstream;
 
 namespace Plenoscope {
 
+    void save_event_to_file_epoch_2017Mar19(
+        const vector<vector<SignalProcessing::ElectricPulse>> &electric_pipelines,
+        const double slice_duration,
+        const string path
+    );
+
     void save_event_to_file_epoch_2016May27(
         const vector<SignalProcessing::SimpleTdcQdc::TimeAndCount> &tacs,
         const string path

@@ -3,8 +3,21 @@
 #include "Corsika/Tools.h"
 #include "Core/TracerException.h"
 #include "Tools/AsciiIo.h"
+#include "SignalProcessing/PhotonStream.h"
 
 namespace Plenoscope {
+//------------------------------------------------------------------------------
+void save_event_to_file_epoch_2017Mar19(
+    const vector<vector<SignalProcessing::ElectricPulse>> &electric_pipelines,
+    const double slice_duration,
+    const string path
+) {
+    SignalProcessing::PhotonStream::write(
+        electric_pipelines,
+        slice_duration,
+        path
+    );
+}
 //------------------------------------------------------------------------------
 void save_event_to_file_epoch_2016May27(
     const vector<SignalProcessing::SimpleTdcQdc::TimeAndCount> &tacs,
