@@ -2,14 +2,16 @@
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"
 #include "Core/Photons.h"
+#include "Corsika/EventIo/EventIo.h"
+#include "Corsika/EventIo/Export.h"
 #include "Corsika/Tools.h"
+#include "Corsika/EventIo/PhotonFactory.h"
 #include "Core/Histogram1D.h"
 #include "Tools/AsciiIo.h"
 #include "Tools/FileTools.h"
 #include "Tools/Tools.h"
 #include "SignalProcessing/PipelinePhoton.h"
 #include "Plenoscope/NightSkyBackground/Light.h"
-#include "Plenoscope/EventFormats.h"
 #include "Plenoscope/EventHeader.h"
 #include "Plenoscope/SimulationTruthHeader.h"
 #include "Plenoscope/NightSkyBackground/Injector.h"
@@ -20,6 +22,7 @@
 #include "Xml/Factory/PropagationConfigFab.h"
 #include "SignalProcessing/SimpleTDCQDC.h"
 #include "SignalProcessing/ElectricPulse.h"
+#include "SignalProcessing/PhotonStream.h"
 #include "Tools/PathTools.h"
 #include "Tools/HeaderBlock.h"
 #include "Tools/Time.h"
@@ -147,9 +150,9 @@ int main(int argc, char* argv[]) {
         &converter_config);
 
     //--------------------------------------------------------------------------
-    // SET UP PULSE EXTRACTOR
-    Xml::Node pue = config_node.child("pulse_extractor");
-    const double integration_time_window = pue.attribute2double("integration_time_window");
+    // SET SINGLE PULSE OUTPUT
+    Xml::Node spe = config_node.child("photon_stream");
+    const double slice_duration = spe.attribute2double("slice_duration");
 
     //--------------------------------------------------------------------------
     //  2222
@@ -193,27 +196,15 @@ int main(int argc, char* argv[]) {
             );
         }
 
-        //-------------------------
-        // Pulse extraction Tdc Qdc
-        vector<SignalProcessing::SimpleTdcQdc::TimeAndCount> tacs;
-        tacs.reserve(electric_pipelines.size());
-        for(const vector<SignalProcessing::ElectricPulse> electric_pipe: electric_pipelines) {
-            tacs.push_back(
-                SignalProcessing::SimpleTdcQdc::get_arrival_time_and_count_given_arrival_moments_and_integration_time_window(
-                    electric_pipe,
-                    integration_time_window
-                )
-            );
-        }
-
         //-------------
         // export event
         PathTools::Path event_output_path = PathTools::join(out_path.path, std::to_string(event_counter));
         fs::create_directory(event_output_path.path);
 
-        Plenoscope::save_event_to_file_epoch_2016May27(
-            tacs,
-            PathTools::join(event_output_path.path, "raw_light_field_sensor_response.bin")
+        SignalProcessing::PhotonStream::write(
+            electric_pipelines,
+            slice_duration,
+            PathTools::join(event_output_path.path, "raw_light_field_sensor_response.phs")
         );
 
         Plenoscope::EventHeader event_header;
