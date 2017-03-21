@@ -12,7 +12,6 @@
 #include "Tools/Tools.h"
 #include "SignalProcessing/PipelinePhoton.h"
 #include "Plenoscope/NightSkyBackground/Light.h"
-#include "Plenoscope/EventFormats.h"
 #include "Plenoscope/EventHeader.h"
 #include "Plenoscope/SimulationTruthHeader.h"
 #include "Plenoscope/NightSkyBackground/Injector.h"
@@ -162,7 +161,7 @@ int main(int argc, char* argv[]) {
         &converter_config);
 
     //--------------------------------------------------------------------------
-    // SET SINGLE PULSE EXTRACTOR
+    // SET SINGLE PULSE OUTPUT
     Xml::Node spe = config_node.child("photon_stream");
     const double slice_duration = spe.attribute2double("slice_duration");
 
@@ -236,7 +235,7 @@ int main(int argc, char* argv[]) {
         PathTools::Path event_output_path = PathTools::join(out_path.path, std::to_string(event_counter));
         fs::create_directory(event_output_path.path);
 
-        Plenoscope::save_event_to_file_epoch_2017Mar19(
+        SignalProcessing::PhotonStream::write(
             electric_pipelines,
             slice_duration,
             PathTools::join(event_output_path.path, "raw_light_field_sensor_response.phs")
@@ -268,7 +267,7 @@ int main(int argc, char* argv[]) {
         if(export_all_simulation_truth) {
             SignalProcessing::PhotonStream::write_simulation_truth(
                 electric_pipelines,
-                PathTools::join(event_mc_truth_path.path, "intensity_truth.bin")
+                PathTools::join(event_mc_truth_path.path, "detector_pulse_origins.bin")
             );
 
             EventIo::write_raw_photons(
