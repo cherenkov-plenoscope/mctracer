@@ -16,14 +16,13 @@ void write(
 	const float slice_duration,
     const string path
 ) {
-    uint32_t number_of_pulses_and_number_of_channels = 
-        number_of_pulses(pulses) + pulses.size();
+    const uint32_t number_channels = pulses.size();
 
-    uint32_t number_of_symbols;
-    if(number_of_pulses_and_number_of_channels > 0)
-        number_of_symbols = number_of_pulses_and_number_of_channels - 1;
-    else
-        number_of_symbols = 0;
+    const uint32_t number_symbols = number_of_symbols_to_represent_pulses(
+        pulses);
+
+    const uint32_t number_time_slices = 100u;
+    assert_number_time_slices_below_8bit_max(number_time_slices);
 
     std::ofstream file;
     file.open(path, std::ios::binary);
@@ -34,14 +33,18 @@ void write(
         throw TracerException(info.str());
     }       
 
-    // PhotonStream Header 
+    // PhotonStream Header 16 byte
+    // -------------------
     file.write( (char*)&slice_duration, sizeof(float));
-    file.write( (char*)&number_of_symbols, sizeof(uint32_t));
+    file.write( (char*)&number_channels, sizeof(uint32_t));
+    file.write( (char*)&number_time_slices, sizeof(uint32_t));
+    file.write( (char*)&number_symbols, sizeof(uint32_t));
 
     // Pulses
+    // ------
     uint arrival_time_out_of_range_counter = 0;
     uint total_number_of_arrival_times = 0;
-    for(uint channel=0; channel<pulses.size(); channel++) {
+    for(uint channel=0; channel<number_channels; channel++) {
         for(uint pulse=0; pulse<pulses.at(channel).size(); pulse++) {
     		total_number_of_arrival_times++;
 
@@ -57,7 +60,7 @@ void write(
 
     		file.write( (char*)&arrival_slice_8bit, 1);
     	}
-        if (channel < pulses.size()-1)
+        if (channel < number_channels-1)
     	   file.write( (char*)&NEXT_READOUT_CHANNEL_MARKER, 1);
     }
 
@@ -107,22 +110,30 @@ Stream read(const string path) {
         throw TracerException(info.str());}
 
     file.read((char*)&stream.slice_duration, sizeof(float));
-    uint32_t number_of_symbols;
-    file.read((char*)&number_of_symbols, sizeof(uint32_t));
 
-    if(number_of_symbols > 0) {
+    uint32_t number_channels;
+    file.read((char*)&number_channels, sizeof(uint32_t));
+  
+    uint32_t number_time_slices;
+    file.read((char*)&number_time_slices, sizeof(uint32_t));
+    assert_number_time_slices_below_8bit_max(number_time_slices);
+
+    uint32_t number_symbols;
+    file.read((char*)&number_symbols, sizeof(uint32_t));
+
+    if(number_symbols > 0) {
         vector<SignalProcessing::ElectricPulse> first_channel;
         stream.photon_stream.push_back(first_channel);
     }
 
     uint32_t channel = 0;
-    for (uint32_t i=0; i<number_of_symbols; i++) {
+    for (uint32_t i=0; i<number_symbols; i++) {
         unsigned char symbol;
         file.read((char*)&symbol, 1);
 
         if (symbol == NEXT_READOUT_CHANNEL_MARKER) {
             channel++;
-            if (i < number_of_symbols) {
+            if (i < number_symbols) {
                 vector<SignalProcessing::ElectricPulse> next_channel;
                 stream.photon_stream.push_back(next_channel);
             }
@@ -171,6 +182,35 @@ uint number_of_pulses(
     for(uint channel=0; channel<pulses.size(); channel++)
         number_pulses += pulses.at(channel).size(); 
     return number_pulses;
+}
+//------------------------------------------------------------------------------
+uint number_of_symbols_to_represent_pulses(
+    const vector<vector<SignalProcessing::ElectricPulse>> &pulses
+) {
+    uint32_t number_of_pulses_and_number_of_channels = 
+        number_of_pulses(pulses) + pulses.size();
+
+    uint32_t number_symbols;
+    if(number_of_pulses_and_number_of_channels > 0)
+        number_symbols = number_of_pulses_and_number_of_channels - 1;
+    else
+        number_symbols = 0;
+    return number_symbols;
+}
+//------------------------------------------------------------------------------
+void assert_number_time_slices_below_8bit_max(
+    const uint32_t number_time_slices) {
+
+    if(number_time_slices > NEXT_READOUT_CHANNEL_MARKER) {
+        std::stringstream info;
+        info << __FILE__ << " " << __LINE__ << "\n";
+        info << "Expected number_time_slices <= NEXT_READOUT_CHANNEL_MARKER ";
+        info << "but actual number_time_slices = ";
+        info << number_time_slices << ", ";
+        info << "and NEXT_READOUT_CHANNEL_MARKER = ";
+        info << NEXT_READOUT_CHANNEL_MARKER << ".\n";
+        throw TracerException(info.str());
+    }
 }
 //------------------------------------------------------------------------------
 	}//PhotonStream

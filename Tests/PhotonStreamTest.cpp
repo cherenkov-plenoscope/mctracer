@@ -160,3 +160,15 @@ TEST_F(PhotonStreamTest, empty_channels) {
         seed);
 }
 //------------------------------------------------------------------------------
+TEST_F(PhotonStreamTest, number_time_slices_too_big) {
+
+    EXPECT_NO_THROW(
+        SignalProcessing::PhotonStream::assert_number_time_slices_below_8bit_max(0);
+    );
+
+    EXPECT_THROW(
+        SignalProcessing::PhotonStream::assert_number_time_slices_below_8bit_max(256);,
+        TracerException
+    );
+}
+//------------------------------------------------------------------------------

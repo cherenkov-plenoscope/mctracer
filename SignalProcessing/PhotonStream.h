@@ -45,6 +45,13 @@ uint number_of_pulses(
     const vector<vector<SignalProcessing::ElectricPulse>> &pulses
 );
 
+uint number_of_symbols_to_represent_pulses(
+    const vector<vector<SignalProcessing::ElectricPulse>> &pulses
+);
+
+void assert_number_time_slices_below_8bit_max(
+    const uint32_t number_time_slices);
+
     }//PhotonStream
 }//SignalProcessing
 #endif // __PhotonStream_H_INCLUDED__
