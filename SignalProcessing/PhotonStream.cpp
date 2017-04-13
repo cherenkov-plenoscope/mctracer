@@ -42,18 +42,11 @@ void write(
 
     // Pulses
     // ------
-    uint arrival_time_out_of_range_counter = 0;
-    uint total_number_of_arrival_times = 0;
     for(uint channel=0; channel<number_channels; channel++) {
         for(uint pulse=0; pulse<pulses.at(channel).size(); pulse++) {
-    		total_number_of_arrival_times++;
 
             int arrival_slice_32bit = round(
-                pulses.at(channel).at(pulse).arrival_time/slice_duration);
-
-            if(arrival_slice_32bit >= NEXT_READOUT_CHANNEL_MARKER ||
-               arrival_slice_32bit < 0 )
-                arrival_time_out_of_range_counter++;             
+                pulses.at(channel).at(pulse).arrival_time/slice_duration);           
 
             const unsigned char arrival_slice_8bit = 
                 (unsigned char)arrival_slice_32bit;
@@ -65,13 +58,6 @@ void write(
     }
 
     file.close();
-
-    if(arrival_time_out_of_range_counter > 0.01*total_number_of_arrival_times) {
-        std::stringstream info;
-        info << "Over 1 percent of the arrival times are out of the range: ";
-        info << "0.0ns to " << 254.0*slice_duration*1e9 << "ns.\n";
-        throw TracerException(info.str());        
-    }
 }
 //------------------------------------------------------------------------------
 void write_simulation_truth(
