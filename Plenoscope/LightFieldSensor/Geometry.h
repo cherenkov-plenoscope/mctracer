@@ -20,6 +20,7 @@ namespace Plenoscope {
 namespace LightFieldSensor {
 
 	class Geometry : public Printable {
+	public:
 		// PIXEL: picture cell
 		vector<Vec3> pixel_grid;
 		vector<vector<uint>> pixel_neighborhood;
@@ -36,7 +37,7 @@ namespace LightFieldSensor {
 
 		double pixel_lens_curv_radius;
 		double pixel_lens_mean_refrac;
-	public:
+	
 		const Config config;
 
 		Geometry(const Config ncfg);
