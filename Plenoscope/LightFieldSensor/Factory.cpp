@@ -84,7 +84,7 @@ void Factory::add_pixel_bin_with_name_at_pos(
 		binwall->set_name_pos_rot(
 			name + "_" + std::to_string(i),
 			Vec3(R*sin(phi), R*cos(phi), -0.5*hight),
-			Rot3(M_PI*0.5, 0.0, phi)
+			Rot3(-M_PI*0.5, 0.0, phi)
 		);
 		binwall->set_x_y_width(
 			geometry->pixel_lens_outer_aperture_radius(),
