@@ -227,6 +227,79 @@ void Factory::add_light_field_sensor_to_frame_in_scenery(
 	add_lixel_sensor_plane(frame);
 }
 //------------------------------------------------------------------------------
+void Factory::add_demonstration_light_field_sensor_to_frame_in_scenery(
+	Frame *frame, 
+	Scenery* scenery
+) {
+	this->scenery = scenery;
+
+	// Add lens
+	scenery->colors.add("lens_white", Color::white);
+	const Color* white = scenery->colors.get("lens_white");
+
+	BiConvexLensHexBound* lens = frame->append<BiConvexLensHexBound>();
+	lens->set_name_pos_rot("lens_0", Vec3(0.0, 0.0, 0.0), Rot3::null);
+	lens->set_outer_color(white);
+	lens->set_inner_color(white);
+	lens->set_inner_refraction(geometry->config.lens_refraction);
+	lens->set_curvature_radius_and_outer_hex_radius(
+		geometry->pixel_lens_curvature_radius(),
+		geometry->pixel_lens_outer_aperture_radius()
+	);
+
+	// Add bin walls
+	Frame* bin_array = frame->append<Frame>();
+	bin_array->set_name_pos_rot(
+		"bin_array",
+		Vec3(0.0, 0.0, geometry->pixel_plane_to_paxel_plane_distance()),
+		Rot3::null
+	);
+
+	scenery->colors.add("bin_wall_green", Color::green);
+
+	add_pixel_bin_with_name_at_pos(
+		bin_array,
+		"bin_0",
+		Vec3(0.0, 0.0, 0.0)
+	);
+
+	// Add lixels
+	scenery->colors.add("light_field_sensor_cell_red", Color::red);
+	const Color* red = scenery->colors.get("light_field_sensor_cell_red");
+
+	Frame* sub_pixel_array = frame->append<Frame>();
+	sub_pixel_array->set_name_pos_rot(
+		"lixel_array", 
+		Vec3(0.0, 0.0, geometry->pixel_plane_to_paxel_plane_distance()), 
+		Rot3::null
+	);
+
+	const vector<Vec3> lixel_positions = geometry->paxel_per_pixel_template_grid;
+
+	vector<PhotonSensor::Sensor*> sub_pixels;
+	sub_pixels.reserve(geometry->paxel_per_pixel_template_grid.size());
+
+	for(uint i=0; i<lixel_positions.size(); i++) {
+
+		HexPlane* subpix = sub_pixel_array->append<HexPlane>(); 
+		subpix->set_name_pos_rot(
+			"lixel_" + std::to_string(i),
+			lixel_positions.at(i),
+			Rot3(0.0, 0.0, geometry->lixel_z_orientation())
+		);
+		subpix->set_outer_color(red);
+		subpix->set_inner_color(red);
+		subpix->set_outer_hex_radius(0.95*geometry->lixel_outer_radius());
+
+		PhotonSensor::Sensor* sub_pixel_sensor = 
+			new PhotonSensor::Sensor(i, subpix);
+
+		sub_pixels.push_back(sub_pixel_sensor);
+	}
+
+	sub_pixel_sensors = new PhotonSensor::Sensors(sub_pixels);
+}
+//------------------------------------------------------------------------------
 PhotonSensor::Sensors* Factory::get_sub_pixels()const {
 	return sub_pixel_sensors;
 }

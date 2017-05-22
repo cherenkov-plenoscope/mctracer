@@ -55,6 +55,7 @@ namespace Xml {
         Frame* add_SegmentedReflector(Frame* mother, const Node node);
         Frame* add_STL(Frame* mother, const Node node);
         Frame* add_light_field_sensor(Frame* mother, const Node node);
+        Frame* add_light_field_sensor_demonstration(Frame* mother, const Node node);
 
         const Color* surface_color(const Node node)const;
         const Function::Func1D* surface_refl(const Node node)const;

@@ -23,7 +23,12 @@ namespace LightFieldSensor {
 		Scenery* scenery;
 		
 		Factory(const Geometry* geo);
-		void add_light_field_sensor_to_frame_in_scenery(Frame* frame, Scenery* scenery);
+		void add_light_field_sensor_to_frame_in_scenery(
+			Frame* frame, 
+			Scenery* scenery);
+		void add_demonstration_light_field_sensor_to_frame_in_scenery(
+			Frame *frame, 
+			Scenery* scenery);
 		PhotonSensor::Sensors* get_sub_pixels()const;
 	private:
 
