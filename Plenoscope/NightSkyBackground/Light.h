@@ -21,10 +21,10 @@ namespace Plenoscope {
 		const Function::Func1D* flux_vs_wavelength;
 		Random::SamplesFromDistribution wavelength_probability;
 		double rate;
-		double fov_solid_angle;
-		double aperture_area;
-		double max_principal_aperture_radius_to_trow_photons_in;
 		double fov_radius;
+		double fov_solid_angle;
+		double aperture_radius;
+		double aperture_area;
 		const LightFieldSensor::Geometry *sensor_geometry;
 		Light(
 			const LightFieldSensor::Geometry *_sensor_geometry, 

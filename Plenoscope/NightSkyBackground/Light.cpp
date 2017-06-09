@@ -21,13 +21,11 @@ Light::Light(
 	fov_solid_angle = get_solid_angle_for_opening_angle(
 		fov_radius);
 
-	max_principal_aperture_radius_to_trow_photons_in = 
+	aperture_radius = 
 		APERTURE_RADIUS_OVERHEAD*
 		sensor_geometry->expected_imaging_system_max_aperture_radius();
 
-	aperture_area = max_principal_aperture_radius_to_trow_photons_in*
-	 	max_principal_aperture_radius_to_trow_photons_in*
-	 	M_PI;
+	aperture_area = M_PI*aperture_radius*aperture_radius;
 
 	rate =
 		wavelength_probability.get_total_integral_of_distribution()*
@@ -43,8 +41,7 @@ string Light::__repr__()const {
 	out << "  FoV solid angle...... " << fov_solid_angle << " sr\n";
 	out << "  FoV radius........... " << Rad2Deg(fov_radius) << " deg\n";
 	out << "  aperture area........ " << aperture_area << " m^2\n";
-	out << "  aperture radius...... " << 
-		max_principal_aperture_radius_to_trow_photons_in << " m\n";
+	out << "  aperture radius...... " << aperture_radius << " m\n";
 	out << "  wavelength integral.. " << 
 		wavelength_probability.get_total_integral_of_distribution() << 
 		" 1/(s sr m^2)\n";

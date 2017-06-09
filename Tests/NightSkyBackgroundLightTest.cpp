@@ -36,7 +36,7 @@ TEST_F(NightSkyBackgroundLightTest, init) {
         0.5*Deg2Rad(6.5)*Plenoscope::NightSkyBackground::FOV_RADIUS_OVERHEAD);
 
     EXPECT_EQ(
-        nsb.max_principal_aperture_radius_to_trow_photons_in, 
+        nsb.aperture_radius, 
         25*Plenoscope::NightSkyBackground::APERTURE_RADIUS_OVERHEAD);
 
 
