@@ -31,23 +31,9 @@ namespace Plenoscope {
 			const LightFieldSensor::Geometry *_sensor_geometry, 
 			const Function::Func1D* nsb_flux_vs_wavelength
 		);
-		vector<Photon> get_photons_in_duration(
-			const double delay,
-			const double duration,
-			Random::Generator* prng
-		);
 		double draw_wavelength(Random::Generator* prng)const;
 		string get_print()const;
 		double get_overall_rate()const;
-	private:
-		vector<double> draw_relative_arrival_times(
-			const double duration,
-			Random::Generator* prng
-		);
-		Photon get_photon_on_principal_aperture(
-			double time_until_reaching_principal_aperture,
-			Random::Generator* prng
-		)const;
 	};
 	
 	}// NightSkyBackground
