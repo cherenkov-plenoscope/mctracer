@@ -97,7 +97,7 @@ namespace NightSkyBackground {
 			for(double nsb_arrival_time: nsb_arrival_times) {
 				SignalProcessing::PipelinePhoton nsb_ph(
 					nsb_arrival_time,
-					nsb->draw_wavelength(prng),
+					nsb->wavelength_probability.draw(prng->uniform()),
 					SimulationTruth::NIGHT_SKY_BACKGROUND
 				);
 

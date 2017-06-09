@@ -53,9 +53,5 @@ string Light::__repr__()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-double Light::draw_wavelength(Random::Generator* prng)const {
-	return wavelength_probability.draw(prng->uniform());
-}
-//------------------------------------------------------------------------------
 }// NightSkyBackground
 }// Plenoscope
