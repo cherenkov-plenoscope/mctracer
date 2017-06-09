@@ -15,6 +15,7 @@ Light::Light(
 	sensor_geometry(_sensor_geometry)
 {
 	max_tilt_vs_optical_axis_to_throw_photons_in = 
+		FOV_RADIUS_OVERHEAD*
 		sensor_geometry->max_FoV_radius();
 
 	fov_solid_angle = get_solid_angle_for_opening_angle(
