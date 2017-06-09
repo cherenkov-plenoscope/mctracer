@@ -29,7 +29,7 @@ Light::Light(
 	 	max_principal_aperture_radius_to_trow_photons_in*
 	 	M_PI;
 
-	overall_nsb_rate =
+	rate =
 		wavelength_probability.get_total_integral_of_distribution()*
 		aperture_area*
 		fov_solid_angle;
@@ -39,7 +39,7 @@ string Light::__repr__()const {
 
 	std::stringstream out;
 	out << "NightSkyBackground\n";
-	out << "  rate................. " << overall_nsb_rate << " Hz\n";
+	out << "  rate................. " << rate << " Hz\n";
 	out << "  FoV solid angle...... " << fov_solid_angle << " sr\n";
 	out << "  FoV radius........... " << 
 		Rad2Deg(max_tilt_vs_optical_axis_to_throw_photons_in) << " deg\n";
@@ -58,7 +58,7 @@ double Light::draw_wavelength(Random::Generator* prng)const {
 }
 //------------------------------------------------------------------------------
 double Light::get_overall_rate()const {
-	return overall_nsb_rate;
+	return rate;
 }
 //------------------------------------------------------------------------------
 }// NightSkyBackground

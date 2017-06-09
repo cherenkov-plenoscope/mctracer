@@ -20,7 +20,7 @@ namespace Plenoscope {
 	
 		const Function::Func1D* flux_vs_wavelength;
 		Random::SamplesFromDistribution wavelength_probability;
-		double overall_nsb_rate;
+		double rate;
 		double fov_solid_angle;
 		double aperture_area;
 		double max_principal_aperture_radius_to_trow_photons_in;
