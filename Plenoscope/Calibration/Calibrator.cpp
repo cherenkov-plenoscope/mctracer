@@ -1,5 +1,6 @@
 #include "Calibrator.h"
 #include "Plenoscope/Calibration/Writer.h"
+#include "Plenoscope/NightSkyBackground/NightSkyBackground.h"
 #include "Tools/UserInteraction.h"
 #include <iomanip> 
 #include "Tools/FileTools.h"
@@ -39,14 +40,16 @@ void Calibrator::set_up_photon_properties() {
 //------------------------------------------------------------------------------
 void Calibrator::set_up_principal_aperture_range() {
 
-	max_principal_aperture_radius_to_trow_photons_on = 1.05*
+	max_principal_aperture_radius_to_trow_photons_on = 
+		NightSkyBackground::APERTURE_RADIUS_OVERHEAD*
 		plenoscope->light_field_sensor_geometry.
 			expected_imaging_system_max_aperture_radius();
 }
 //------------------------------------------------------------------------------
 void Calibrator::set_up_field_of_view_range() {
 
-	max_tilt_vs_optical_axis_to_throw_photons_in = 1.05*
+	max_tilt_vs_optical_axis_to_throw_photons_in = 
+		NightSkyBackground::FOV_RADIUS_OVERHEAD*
 		plenoscope->light_field_sensor_geometry.max_FoV_radius();
 }
 //------------------------------------------------------------------------------
