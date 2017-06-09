@@ -1,5 +1,6 @@
 #include "Plenoscope/NightSkyBackground/Light.h"
 #include "Core/PhysicalConstants.h"
+#include "Tools/Tools.h"
 
 namespace Plenoscope {
 namespace NightSkyBackground {
@@ -15,7 +16,8 @@ Light::Light(
 	max_tilt_vs_optical_axis_to_throw_photons_in = 
 		sensor_geometry->max_FoV_radius();
 
-	solid_angle = sensor_geometry->field_of_view_solid_angle();
+	fov_solid_angle = get_solid_angle_for_opening_angle(
+		max_tilt_vs_optical_axis_to_throw_photons_in);
 
 	max_principal_aperture_radius_to_trow_photons_in = 1.05*
 		sensor_geometry->expected_imaging_system_max_aperture_radius();
@@ -25,7 +27,7 @@ Light::Light(
 	 	M_PI;
 
 	overall_nsb_rate =
-		nsb_cdf.get_total_integral_of_distribution()*area*solid_angle;
+		nsb_cdf.get_total_integral_of_distribution()*area*fov_solid_angle;
 }	
 //------------------------------------------------------------------------------
 vector<Photon> Light::get_photons_in_duration(
@@ -108,7 +110,7 @@ string Light::get_print()const {
 	std::stringstream out;
 	out << "NightSkyBackground\n";
 	out << "  rate................. " << overall_nsb_rate << " Hz\n";
-	out << "  FoV solid angle...... " << solid_angle << " sr\n";
+	out << "  FoV solid angle...... " << fov_solid_angle << " sr\n";
 	out << "  FoV radius........... " << 
 		Rad2Deg(max_tilt_vs_optical_axis_to_throw_photons_in) << " deg\n";
 	out << "  area................. " << area << " m^2\n";
