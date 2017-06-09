@@ -68,6 +68,7 @@ namespace LightFieldSensor {
 		vector<Vec3> paxel_grid_center_positions()const;
 		uint number_of_lixel()const;
 		void write_lixel_positions(const string &path)const;
+		void write_info_header(const string &path)const;
 		double bin_hight()const;
 		double field_of_view_solid_angle()const;
 		double expected_imaging_system_focal_length()const;

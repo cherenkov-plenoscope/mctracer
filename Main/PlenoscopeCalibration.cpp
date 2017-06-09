@@ -93,6 +93,10 @@ int main(int argc, char* argv[]) {
         PathTools::join(out_path.path, "lixel_positions.bin")
     );
 
+    pis->light_field_sensor_geometry.write_info_header(
+        PathTools::join(out_path.path, "info.md")
+    );
+
     // CALIBRATION CONFIG
     Plenoscope::Calibration::Config calib_config;
     calib_config.number_of_blocks = number_mega_photons;

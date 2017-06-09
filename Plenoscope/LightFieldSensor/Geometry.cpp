@@ -4,6 +4,7 @@
 #include "Scenery/Geometry/HexGridFlower.h"
 #include "Tools/AsciiIo.h"
 #include "Tools/StringTools.h"
+#include "Tools/FileTools.h"
 #include "Scenery/Geometry/LensMaker/LensMaker.h"
 #include "Corsika/Tools.h"
 namespace Plenoscope {
@@ -281,6 +282,10 @@ array<float, 273> Geometry::get_info_header()const {
 	header[116-1] = max_outer_sensor_radius();
 
 	return header;
+}
+//------------------------------------------------------------------------------
+void Geometry::write_info_header(const string &path)const {
+	FileTools::write_text_to_file(get_print(), path);
 }
 //------------------------------------------------------------------------------
 string Geometry::get_print()const{
