@@ -14,12 +14,12 @@ Light::Light(
 	wavelength_probability(_flux_vs_wavelength),
 	sensor_geometry(_sensor_geometry)
 {
-	max_tilt_vs_optical_axis_to_throw_photons_in = 
+	fov_radius = 
 		FOV_RADIUS_OVERHEAD*
 		sensor_geometry->max_FoV_radius();
 
 	fov_solid_angle = get_solid_angle_for_opening_angle(
-		max_tilt_vs_optical_axis_to_throw_photons_in);
+		fov_radius);
 
 	max_principal_aperture_radius_to_trow_photons_in = 
 		APERTURE_RADIUS_OVERHEAD*
@@ -41,8 +41,7 @@ string Light::__repr__()const {
 	out << "NightSkyBackground\n";
 	out << "  rate................. " << rate << " Hz\n";
 	out << "  FoV solid angle...... " << fov_solid_angle << " sr\n";
-	out << "  FoV radius........... " << 
-		Rad2Deg(max_tilt_vs_optical_axis_to_throw_photons_in) << " deg\n";
+	out << "  FoV radius........... " << Rad2Deg(fov_radius) << " deg\n";
 	out << "  aperture area........ " << aperture_area << " m^2\n";
 	out << "  aperture radius...... " << 
 		max_principal_aperture_radius_to_trow_photons_in << " m\n";

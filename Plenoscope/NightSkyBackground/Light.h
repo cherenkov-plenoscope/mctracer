@@ -24,7 +24,7 @@ namespace Plenoscope {
 		double fov_solid_angle;
 		double aperture_area;
 		double max_principal_aperture_radius_to_trow_photons_in;
-		double max_tilt_vs_optical_axis_to_throw_photons_in;
+		double fov_radius;
 		const LightFieldSensor::Geometry *sensor_geometry;
 		Light(
 			const LightFieldSensor::Geometry *_sensor_geometry, 
