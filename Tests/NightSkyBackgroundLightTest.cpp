@@ -35,5 +35,10 @@ TEST_F(NightSkyBackgroundLightTest, init) {
         nsb.max_tilt_vs_optical_axis_to_throw_photons_in, 
         0.5*Deg2Rad(6.5)*Plenoscope::NightSkyBackground::FOV_RADIUS_OVERHEAD);
 
+    EXPECT_EQ(
+        nsb.max_principal_aperture_radius_to_trow_photons_in, 
+        25*Plenoscope::NightSkyBackground::APERTURE_RADIUS_OVERHEAD);
+
+
     std::cout << nsb.__repr__() << "\n";
 }
