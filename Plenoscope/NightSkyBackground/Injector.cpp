@@ -25,7 +25,7 @@ namespace NightSkyBackground {
 		double min_crk_arrival_time = std::numeric_limits<double>::max();
 		double max_crk_arrival_time = std::numeric_limits<double>::min();
 
-		// for each sub_pixel
+
 		for(uint i=0; i<photon_pipelines->size(); i++) {
 				
 			if(photon_pipelines->at(i).size() > 0) {
@@ -65,15 +65,13 @@ namespace NightSkyBackground {
 			mode_of_cherenkov_arrival_times = arrival_time_histo.mode();
 		}
 
-		//std::cout << "min: " << min_crk_arrival_time << ", max: " << max_crk_arrival_time  << ", duration: " << max_crk_arrival_time - min_crk_arrival_time << ", mode " << mode_of_cherenkov_arrival_times << "\n";
-
 		//--------------------------------
 		// INIT START TIME OF NSB EXPOSURE
 
 		const double nsb_exposure_start_time = 
 			mode_of_cherenkov_arrival_times - 0.5*nsb_exposure_time;
 
-		// for each sub_pixel
+
 		for(uint i=0; i<photon_pipelines->size(); i++) {
 
 			const double lixel_nsb_rate = 
