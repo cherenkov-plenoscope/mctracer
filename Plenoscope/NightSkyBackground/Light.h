@@ -22,7 +22,7 @@ namespace Plenoscope {
 		Random::SamplesFromDistribution nsb_cdf;
 		double overall_nsb_rate;
 		double fov_solid_angle;
-		double area;
+		double aperture_area;
 		double max_principal_aperture_radius_to_trow_photons_in;
 		double max_tilt_vs_optical_axis_to_throw_photons_in;
 	public:

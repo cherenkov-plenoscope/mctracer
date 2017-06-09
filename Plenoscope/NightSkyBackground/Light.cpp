@@ -22,12 +22,12 @@ Light::Light(
 	max_principal_aperture_radius_to_trow_photons_in = 1.05*
 		sensor_geometry->expected_imaging_system_max_aperture_radius();
 
-	area = max_principal_aperture_radius_to_trow_photons_in*
+	aperture_area = max_principal_aperture_radius_to_trow_photons_in*
 	 	max_principal_aperture_radius_to_trow_photons_in*
 	 	M_PI;
 
 	overall_nsb_rate =
-		nsb_cdf.get_total_integral_of_distribution()*area*fov_solid_angle;
+		nsb_cdf.get_total_integral_of_distribution()*aperture_area*fov_solid_angle;
 }	
 //------------------------------------------------------------------------------
 vector<Photon> Light::get_photons_in_duration(
@@ -113,8 +113,8 @@ string Light::get_print()const {
 	out << "  FoV solid angle...... " << fov_solid_angle << " sr\n";
 	out << "  FoV radius........... " << 
 		Rad2Deg(max_tilt_vs_optical_axis_to_throw_photons_in) << " deg\n";
-	out << "  area................. " << area << " m^2\n";
-	out << "  area radius.......... " << 
+	out << "  aperture area........ " << aperture_area << " m^2\n";
+	out << "  aperture radius...... " << 
 		max_principal_aperture_radius_to_trow_photons_in << " m\n";
 	out << "  wavelength integral.. " << 
 		nsb_cdf.get_total_integral_of_distribution() << " 1/(s sr m^2)\n";
