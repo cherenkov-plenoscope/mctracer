@@ -33,7 +33,7 @@ Light::Light(
 		nsb_cdf.get_total_integral_of_distribution()*aperture_area*fov_solid_angle;
 }
 //------------------------------------------------------------------------------
-string Light::get_print()const {
+string Light::__repr__()const {
 
 	std::stringstream out;
 	out << "NightSkyBackground\n";

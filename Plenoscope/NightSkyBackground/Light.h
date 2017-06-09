@@ -16,7 +16,7 @@
 namespace Plenoscope {
 	namespace NightSkyBackground {
 
-	class Light: public Printable {
+	struct Light {
 	
 		const Function::Func1D* nsb_flux_vs_wavelength;
 		Random::SamplesFromDistribution nsb_cdf;
@@ -25,15 +25,15 @@ namespace Plenoscope {
 		double aperture_area;
 		double max_principal_aperture_radius_to_trow_photons_in;
 		double max_tilt_vs_optical_axis_to_throw_photons_in;
-	public:
+
 		const LightFieldSensor::Geometry *sensor_geometry;
 		Light(
 			const LightFieldSensor::Geometry *_sensor_geometry, 
 			const Function::Func1D* nsb_flux_vs_wavelength
 		);
 		double draw_wavelength(Random::Generator* prng)const;
-		string get_print()const;
 		double get_overall_rate()const;
+		string __repr__()const;
 	};
 	
 	}// NightSkyBackground

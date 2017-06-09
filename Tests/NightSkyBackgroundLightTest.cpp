@@ -1,7 +1,6 @@
 #include "gtest/gtest.h"
 #include "Plenoscope/LightFieldSensor/Config.h"
-#include "Plenoscope/NightSkyBackground/Light.h"
-#include "Plenoscope/NightSkyBackground/Injector.h"
+#include "Plenoscope/NightSkyBackground/NightSkyBackground.h"
 #include "Tools/AsciiIo.h"
 class NightSkyBackgroundLightTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
@@ -32,11 +31,9 @@ TEST_F(NightSkyBackgroundLightTest, init) {
     	&nsb_flux_vs_wavelength
     );
 
-    std::cout << nsb << "\n";
-    Random::Mt19937 prng(0);
+    EXPECT_EQ(
+        nsb.max_tilt_vs_optical_axis_to_throw_photons_in, 
+        0.5*Deg2Rad(6.5)*Plenoscope::NightSkyBackground::FOV_RADIUS_OVERHEAD);
 
-    //std::vector<Photon*>* nsb_photons = 
-    //	nsb.get_photons_in_duration(0.0, 1e-9, &prng);
-
-    //std::cout << Photons::get_print(nsb_photons);
+    std::cout << nsb.__repr__() << "\n";
 }
