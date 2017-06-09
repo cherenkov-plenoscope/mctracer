@@ -14,21 +14,16 @@ Light::Light(
 	wavelength_probability(_flux_vs_wavelength),
 	sensor_geometry(_sensor_geometry)
 {
-	fov_radius = 
-		FOV_RADIUS_OVERHEAD*
-		sensor_geometry->max_FoV_radius();
+	fov_radius = FOV_RADIUS_OVERHEAD*sensor_geometry->max_FoV_radius();
 
-	fov_solid_angle = get_solid_angle_for_opening_angle(
-		fov_radius);
+	fov_solid_angle = get_solid_angle_for_opening_angle(fov_radius);
 
-	aperture_radius = 
-		APERTURE_RADIUS_OVERHEAD*
+	aperture_radius = APERTURE_RADIUS_OVERHEAD*
 		sensor_geometry->expected_imaging_system_max_aperture_radius();
 
 	aperture_area = M_PI*aperture_radius*aperture_radius;
 
-	rate =
-		wavelength_probability.get_total_integral_of_distribution()*
+	rate = wavelength_probability.get_total_integral_of_distribution()*
 		aperture_area*
 		fov_solid_angle;
 }
