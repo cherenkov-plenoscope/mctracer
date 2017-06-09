@@ -81,7 +81,7 @@ int main(int argc, char* argv[]) {
     if(scenery_factory.plenoscopes.size() == 0)
         throw TracerException("There is no plenoscope in the scenery");
     else if(scenery_factory.plenoscopes.size() > 1)
-        throw TracerException("There is more then one plenoscope in the scenery");
+        throw TracerException("There is more than one plenoscope in the scenery");
     Plenoscope::PlenoscopeInScenery* pis = &scenery_factory.plenoscopes.at(0);
 
     HeaderBlock::write(
