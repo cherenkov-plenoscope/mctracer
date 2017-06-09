@@ -1,7 +1,7 @@
 //=================================
 // include guard
-#ifndef __PlenopscopeNightSkyBackground_H_INCLUDED__
-#define __PlenopscopeNightSkyBackground_H_INCLUDED__
+#ifndef __PlenopscopeNightSkyBackgroundNightSkyBackground_H_INCLUDED__
+#define __PlenopscopeNightSkyBackgroundNightSkyBackground_H_INCLUDED__
 
 //=================================
 // forward declared dependencies
@@ -20,4 +20,4 @@ namespace Plenoscope {
 	}// NightSkyBackground
 }// Plenoscope
 
-#endif // __PlenopscopeNightSkyBackground_H_INCLUDED__ 
+#endif // __PlenopscopeNightSkyBackgroundNightSkyBackground_H_INCLUDED__ 
