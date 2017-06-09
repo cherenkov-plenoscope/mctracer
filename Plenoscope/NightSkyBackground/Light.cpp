@@ -8,10 +8,10 @@ namespace NightSkyBackground {
 //------------------------------------------------------------------------------
 Light::Light(
 	const LightFieldSensor::Geometry *_sensor_geometry, 
-	const Function::Func1D* _nsb_flux_vs_wavelength
+	const Function::Func1D* _flux_vs_wavelength
 ):
-	nsb_flux_vs_wavelength(_nsb_flux_vs_wavelength),
-	nsb_cdf(_nsb_flux_vs_wavelength),
+	flux_vs_wavelength(_flux_vs_wavelength),
+	wavelength_probability(_flux_vs_wavelength),
 	sensor_geometry(_sensor_geometry)
 {
 	max_tilt_vs_optical_axis_to_throw_photons_in = 
@@ -30,7 +30,9 @@ Light::Light(
 	 	M_PI;
 
 	overall_nsb_rate =
-		nsb_cdf.get_total_integral_of_distribution()*aperture_area*fov_solid_angle;
+		wavelength_probability.get_total_integral_of_distribution()*
+		aperture_area*
+		fov_solid_angle;
 }
 //------------------------------------------------------------------------------
 string Light::__repr__()const {
@@ -45,13 +47,14 @@ string Light::__repr__()const {
 	out << "  aperture radius...... " << 
 		max_principal_aperture_radius_to_trow_photons_in << " m\n";
 	out << "  wavelength integral.. " << 
-		nsb_cdf.get_total_integral_of_distribution() << " 1/(s sr m^2)\n";
-	out << "  flux vs wavelength... " << *nsb_flux_vs_wavelength;
+		wavelength_probability.get_total_integral_of_distribution() << 
+		" 1/(s sr m^2)\n";
+	out << "  flux vs wavelength... " << *flux_vs_wavelength;
 	return out.str();
 }
 //------------------------------------------------------------------------------
 double Light::draw_wavelength(Random::Generator* prng)const {
-	return nsb_cdf.draw(prng->uniform());
+	return wavelength_probability.draw(prng->uniform());
 }
 //------------------------------------------------------------------------------
 double Light::get_overall_rate()const {

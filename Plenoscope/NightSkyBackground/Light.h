@@ -18,8 +18,8 @@ namespace Plenoscope {
 
 	struct Light {
 	
-		const Function::Func1D* nsb_flux_vs_wavelength;
-		Random::SamplesFromDistribution nsb_cdf;
+		const Function::Func1D* flux_vs_wavelength;
+		Random::SamplesFromDistribution wavelength_probability;
 		double overall_nsb_rate;
 		double fov_solid_angle;
 		double aperture_area;
@@ -29,7 +29,7 @@ namespace Plenoscope {
 		const LightFieldSensor::Geometry *sensor_geometry;
 		Light(
 			const LightFieldSensor::Geometry *_sensor_geometry, 
-			const Function::Func1D* nsb_flux_vs_wavelength
+			const Function::Func1D* flux_vs_wavelength
 		);
 		double draw_wavelength(Random::Generator* prng)const;
 		double get_overall_rate()const;
