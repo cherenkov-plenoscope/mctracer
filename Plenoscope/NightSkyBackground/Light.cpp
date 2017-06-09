@@ -1,6 +1,7 @@
 #include "Plenoscope/NightSkyBackground/Light.h"
 #include "Core/PhysicalConstants.h"
 #include "Tools/Tools.h"
+#include "NightSkyBackground.h"
 
 namespace Plenoscope {
 namespace NightSkyBackground {
@@ -19,7 +20,8 @@ Light::Light(
 	fov_solid_angle = get_solid_angle_for_opening_angle(
 		max_tilt_vs_optical_axis_to_throw_photons_in);
 
-	max_principal_aperture_radius_to_trow_photons_in = 1.05*
+	max_principal_aperture_radius_to_trow_photons_in = 
+		APERTURE_RADIUS_OVERHEAD*
 		sensor_geometry->expected_imaging_system_max_aperture_radius();
 
 	aperture_area = max_principal_aperture_radius_to_trow_photons_in*
