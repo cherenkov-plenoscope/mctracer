@@ -77,7 +77,7 @@ namespace NightSkyBackground {
 		for(uint i=0; i<photon_pipelines->size(); i++) {
 
 			const double lixel_nsb_rate = 
-				nsb->get_overall_rate()*
+				nsb->rate*
 				lixel_statistics->at(i).efficiency/
 				nsb->sensor_geometry->number_of_lixel();
 

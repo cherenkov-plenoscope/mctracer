@@ -57,9 +57,5 @@ double Light::draw_wavelength(Random::Generator* prng)const {
 	return wavelength_probability.draw(prng->uniform());
 }
 //------------------------------------------------------------------------------
-double Light::get_overall_rate()const {
-	return rate;
-}
-//------------------------------------------------------------------------------
 }// NightSkyBackground
 }// Plenoscope

@@ -32,7 +32,6 @@ namespace Plenoscope {
 			const Function::Func1D* flux_vs_wavelength
 		);
 		double draw_wavelength(Random::Generator* prng)const;
-		double get_overall_rate()const;
 		string __repr__()const;
 	};
 	
