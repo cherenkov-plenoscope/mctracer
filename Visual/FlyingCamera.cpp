@@ -245,8 +245,8 @@ void FlyingCamera::take_snapshot_manual_focus_on_pixel_col_row(int col, int row)
 
 	double object_distance_to_focus_on;
 
-	if(dist_meter.does_face_an_object())
-		object_distance_to_focus_on = dist_meter.get_distance_to_closest_object();
+	if(dist_meter.faces_an_object)
+		object_distance_to_focus_on = dist_meter.distance_to_closest_object;
 	else
 		object_distance_to_focus_on = 9e99; // a very large distance
 	

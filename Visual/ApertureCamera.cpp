@@ -127,10 +127,10 @@ double ApertureCamera::get_average_object_distance(const Frame* world) {
 
 		DistanceMeter dist_meter(&ray, world);
 
-		if(dist_meter.does_face_an_object()) {
+		if(dist_meter.faces_an_object) {
 			number_of_valid_distances++;
 			sum_of_valid_object_distances = sum_of_valid_object_distances + 
-				dist_meter.get_distance_to_closest_object();
+				dist_meter.distance_to_closest_object;
 		}
 	}
 

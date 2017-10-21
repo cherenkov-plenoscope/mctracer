@@ -74,8 +74,8 @@ void Stereo3D::set_object_distance_to_focus_on(const Frame* world) {
 	Ray optical_axis = camera->get_optical_axis_in_world();
 	DistanceMeter dist_meter(&optical_axis, world);
 
-	if(dist_meter.does_face_an_object()) {
-		distance_to_object = dist_meter.get_distance_to_closest_object();
+	if(dist_meter.faces_an_object) {
+		distance_to_object = dist_meter.distance_to_closest_object;
 	}else{
 		distance_to_object = 1e2;
 	}

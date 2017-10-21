@@ -65,5 +65,6 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/FunctionMapTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PhotoElectricConverterTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PhotonStreamTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeterTest.cpp
     PARENT_SCOPE
 )
