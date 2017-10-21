@@ -63,7 +63,7 @@ bool Rot3::uses_xyz_angels()const {
 	return flag_rot_angles_xyz;
 }
 //------------------------------------------------------------------------------
-std::string Rot3::get_print()const {
+std::string Rot3::str()const {
 	std::stringstream out; 
 
 	if(flag_rot_angles_xyz == true)

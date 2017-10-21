@@ -31,9 +31,9 @@ void SphereCapWithHexagonalBound::restrict_outer_hex_radius_to_curvature_radius(
 		outer_hex_radius = curvature_radius;
 }
 //------------------------------------------------------------------------------
-std::string SphereCapWithHexagonalBound::get_print()const {
+std::string SphereCapWithHexagonalBound::str()const {
 	std::stringstream out;
-	out << SurfaceEntity::get_print();
+	out << SurfaceEntity::str();
 
 	out << "sphere cap with hexagonal bound:\n";
 	out << "| focal length: " << get_focal_length() << "m\n";

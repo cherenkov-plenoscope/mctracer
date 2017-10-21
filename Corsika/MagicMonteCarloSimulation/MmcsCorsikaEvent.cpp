@@ -116,13 +116,13 @@ double MmcsCorsikaEvent::wavelength_in_m(const uint i)const {
 	return photon_data.get_wavelength_in_nm(i)*1e-9;
 }
 //------------------------------------------------------------------------------
-std::string MmcsCorsikaEvent::get_print()const {
+std::string MmcsCorsikaEvent::str()const {
 	std::stringstream out;
 	out << "____MAGCIC_MC_CORSIKA_EVENT____\n";
 	out << "\n";
 	out << StringTools::place_first_infront_of_each_new_line_of_second(
 		" ",
-		event_header.get_print()
+		event_header.str()
 	);
 	out << "\n";
 	out << StringTools::place_first_infront_of_each_new_line_of_second(

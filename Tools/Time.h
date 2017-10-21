@@ -47,7 +47,7 @@ namespace Time {
 
 		Stamp();
 		void update_now();
-		string get_print()const;
+		string str()const;
 		string yyyy()const;
 		string mm()const;
 		string dd()const;

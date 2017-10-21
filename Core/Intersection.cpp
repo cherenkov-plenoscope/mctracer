@@ -58,7 +58,7 @@ double Intersection::get_intersection_distance()const {
 	return distance_of_ray;
 }
 //------------------------------------------------------------------------------
-std::string Intersection::get_print()const {
+std::string Intersection::str()const {
 
 	std::stringstream out; 
 	if(does_intersect()) {

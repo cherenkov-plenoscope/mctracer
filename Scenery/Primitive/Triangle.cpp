@@ -86,10 +86,10 @@ void Triangle::post_initialize_radius_of_enclosing_sphere() {
 	);
 }
 //------------------------------------------------------------------------------
-std::string Triangle::get_print()const{
+std::string Triangle::str()const{
 
 	std::stringstream out;
-	out << SurfaceEntity::get_print();
+	out << SurfaceEntity::str();
 
 	out << "triangle:\n";
 	out << "| A: " << A << "\n";

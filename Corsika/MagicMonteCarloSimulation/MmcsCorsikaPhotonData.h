@@ -24,7 +24,7 @@ public:
 		const MmcsCorsikaSubBlock &sub_block
 	);
 	void print()const;
-	std::string get_print()const;
+	std::string str()const;
 	uint number_of_photons()const;
 
 	int get_parent_code(const uint at)const;

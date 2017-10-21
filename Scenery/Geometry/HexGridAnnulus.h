@@ -25,7 +25,7 @@ public:
 	HexGridAnnulus(const double outer_radius, const double spacing);
 	HexGridAnnulus(const double outer_radius, const double inner_radius ,const double spacing);
 	std::vector<Vec3> get_grid()const; 
-	std::string get_print()const;
+	std::string str()const;
 private:
 	void init_unit_vectors_hex_grid_with_length(const double spacing);
 	void init_grid(

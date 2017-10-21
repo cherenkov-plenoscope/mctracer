@@ -38,7 +38,7 @@ public:
 
 	void auto_focus(const Frame* world);
 
-	std::string get_print()const;
+	std::string str()const;
 private:
 	double FStopNumber;			
 	double ApertureRadius_in_m;	

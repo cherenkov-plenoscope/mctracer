@@ -36,7 +36,7 @@ public:
 	bool is_photon_data()const;
 	bool get_bool_representation_at(const uint i)const;
 	void print()const;
-	std::string get_print()const;
+	std::string str()const;
 	uint cols()const;
 	uint rows()const;
 	std::vector<float> get_words_from_until(const uint begin, const uint end)const;

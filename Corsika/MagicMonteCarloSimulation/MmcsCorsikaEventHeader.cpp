@@ -130,7 +130,7 @@ void MmcsCorsikaEventHeader::assert_sub_block_is_event_header(
 	}
 }
 //------------------------------------------------------------------------------
-std::string MmcsCorsikaEventHeader::get_print()const {
+std::string MmcsCorsikaEventHeader::str()const {
 	std::stringstream out;
 	out << "Event_Header\n";
 	out << "core positions: \n";

@@ -35,9 +35,9 @@ int RayForPropagation::get_simulation_truth_id()const {
 	return simulation_truth_id;
 }
 //------------------------------------------------------------------------------
-string RayForPropagation::get_print()const {
+string RayForPropagation::str()const {
 	stringstream out;
-	out << Ray::get_print() << ", ";
+	out << Ray::str() << ", ";
 	out << "ID: " << simulation_truth_id << ", Interactions: " ;
 	out << get_number_of_interactions_so_far() << "\n";
 	out << get_history_print();

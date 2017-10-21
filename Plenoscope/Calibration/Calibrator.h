@@ -18,7 +18,7 @@
 namespace Plenoscope {
     namespace Calibration {
 
-	class Calibrator: public Printable {
+	class Calibrator {
 
 		const Config config;
 		const Frame* scenery; 
@@ -45,7 +45,7 @@ namespace Plenoscope {
 		);
 		void export_sub_pixel_statistics(const string path)const;
 		void write_lixel_statistics(const string &path)const;
-		string get_print()const;
+		string str()const;
 	private:
 
 		void set_up_photon_properties();

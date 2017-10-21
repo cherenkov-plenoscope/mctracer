@@ -29,7 +29,7 @@ public:
     SkyDome(const std::string _filename);
     void set_background_color(const Color background_color);
     Color get_color_for_direction(const Vec3 dir)const;
-    std::string get_print()const;
+    std::string str()const;
 private:
 
     Color sky_dome_color_for(const Vec3 dir)const;

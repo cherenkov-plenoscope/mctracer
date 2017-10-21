@@ -96,7 +96,7 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__event_header) {
 
     EXPECT_EQ(1u, event.header.telescope_offsets.size());
     EXPECT_NEAR(379489.3125, event.header.telescope_offsets[0].toff, 1e-6);
-    //std::cout << my_run.current_event_header.telescope_offsets[0].get_print() << std::endl;
+    //std::cout << my_run.current_event_header.telescope_offsets[0].str() << std::endl;
     EXPECT_NEAR(-0., event.header.telescope_offsets[0].xoff, 1e-6);
     EXPECT_NEAR(-6589.96044922, event.header.telescope_offsets[0].yoff, 1e-6);
 

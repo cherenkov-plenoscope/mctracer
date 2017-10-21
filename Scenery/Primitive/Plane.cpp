@@ -15,9 +15,9 @@ void Plane::post_initialize_radius_of_enclosing_sphere() {
 	);
 }
 //------------------------------------------------------------------------------
-std::string Plane::get_print()const {
+std::string Plane::str()const {
 	std::stringstream out;
-	out << SurfaceEntity::get_print();
+	out << SurfaceEntity::str();
 
 	out << "plane:\n";
 	out << "| x width: " << 2.0*RectBounds.get_half_x_width() << "m\n";

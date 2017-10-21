@@ -89,10 +89,10 @@ bool MmcsCorsikaSubBlock::is_photon_data()const {
 }
 //------------------------------------------------------------------------------
 void MmcsCorsikaSubBlock::print()const {
-	std::cout << get_print();
+	std::cout << str();
 }
 //------------------------------------------------------------------------------
-std::string MmcsCorsikaSubBlock::get_print()const {
+std::string MmcsCorsikaSubBlock::str()const {
 	std::stringstream out;
 
 	for(uint row=0; row<size_in_words()/number_of_columns; row++)

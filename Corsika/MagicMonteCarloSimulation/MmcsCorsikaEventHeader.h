@@ -97,7 +97,7 @@ public:
     MmcsCorsikaEventHeader(const std::vector<float>& block);
     void create_from_MMCS_sub_block(const MmcsCorsikaSubBlock &sub_block); 
    	void print()const;
-    std::string get_print()const;
+    std::string str()const;
 private:
     void assert_sub_block_is_event_header(const MmcsCorsikaSubBlock &sub_block);
 };

@@ -35,13 +35,13 @@ public:
     Vec3 get_pos_at(const double scalar)const;
     void transform(const HomTra3 *T);
     void transform_inverse(const HomTra3 *T);
-    string get_print()const;
+    string str()const;
     double get_parameter_on_ray_for_closest_distance_to_point(
         const Vec3 &point
     )const;
     double get_closest_distance_to_point(const Vec3 &point)const;
     friend std::ostream& operator<<(std::ostream& os, const Ray& ray) {
-        os << ray.get_print();
+        os << ray.str();
         return os;
     };
 protected:

@@ -39,7 +39,7 @@ void HexGridAnnulus::init_unit_vectors_hex_grid_with_length(const double spacing
 	unit_hex_a = (Vec3::unit_y*0.5+Vec3::unit_x*sqrt(3.0)/2.0)*spacing;
 }
 //------------------------------------------------------------------------------
-std::string HexGridAnnulus::get_print()const {
+std::string HexGridAnnulus::str()const {
 	std::stringstream out;
 
 	uint number = 1;

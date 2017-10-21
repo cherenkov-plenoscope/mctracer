@@ -56,7 +56,7 @@ Color SkyDome::sky_dome_color_for(const Vec3 dir)const {
 	return sky.get_color_row_col(row, col);
 }
 
-std::string SkyDome::get_print()const {
+std::string SkyDome::str()const {
 	std::stringstream out;
 	out << "SkyDome ";
 	out << sky.get_number_of_cols() << "x" << sky.get_number_of_rows();

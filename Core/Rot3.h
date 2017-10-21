@@ -35,7 +35,7 @@ public:
 	Vec3 get_rot_axis()const;
 	double get_rot_angle_in_rad()const;
 	bool uses_xyz_angels()const;
-	std::string get_print()const;
+	std::string str()const;
 	double get_rot_x()const;
 	double get_rot_y()const;
 	double get_rot_z()const;
@@ -47,7 +47,7 @@ public:
 	double sinRz()const;
 	bool operator == (const Rot3& eqRot)const;
     friend std::ostream& operator<<(std::ostream& os, const Rot3& rot) {
-        os << rot.get_print();
+        os << rot.str();
         return os;
     };
 };

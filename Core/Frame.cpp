@@ -72,13 +72,13 @@ void Frame::assert_name_is_valid(const string name_to_check)const {
 	}
 }
 //------------------------------------------------------------------------------
-string Frame::get_print()const {
+string Frame::str()const {
 	stringstream out;
 	out << "frame: " << name << "\n";
 	out << "| pos in mother: " << pos_in_mother << "\n";
 	out << "| rot in mother: " << rot_in_mother << "\n";
 	out << "| pos in world:  ";
-	out << (has_mother()? get_position_in_world().get_print(): "root") << "\n";
+	out << (has_mother()? get_position_in_world().str(): "root") << "\n";
 	out << "| bounding radius: " << bounding_sphere_radius << "m\n";	
 	return out.str();
 }

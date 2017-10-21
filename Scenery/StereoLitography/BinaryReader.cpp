@@ -104,7 +104,7 @@ uint16_t BinaryReader::read_single_uint16() {
 	return number;
 }
 //------------------------------------------------------------------------------
-string BinaryReader::get_print()const {
+string BinaryReader::str()const {
 
 	std::stringstream out;
     out << "BinaryReader(" << filename << ")\n";

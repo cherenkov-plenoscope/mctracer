@@ -57,7 +57,7 @@ void Vec3::operator=(const Vec3 eq) {
 	Z = eq.Z;
 }
 //------------------------------------------------------------------------------
-std::string Vec3::get_print()const {
+std::string Vec3::str()const {
 	std::stringstream out; 
 	out << "(" << X << " " << Y << " " << Z << ")m";
 	return out.str();

@@ -11,7 +11,7 @@ std::string MmcsCorsikaPhotonData::get_statistics_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-std::string MmcsCorsikaPhotonData::get_print()const {
+std::string MmcsCorsikaPhotonData::str()const {
 	std::stringstream out;
 	out << "Photon Matrix\n" << get_matrix_print();
 	return out.str();

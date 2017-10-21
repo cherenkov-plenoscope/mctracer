@@ -14,9 +14,9 @@ void Annulus::post_initialize_radius_of_enclosing_sphere(){
     bounding_sphere_radius = outer_bound.get_radius();
 }
 //------------------------------------------------------------------------------
-std::string Annulus::get_print()const {
+std::string Annulus::str()const {
     std::stringstream out;
-    out << SurfaceEntity::get_print();
+    out << SurfaceEntity::str();
 
     out << "Annulus:\n";
     out << "| Ri: " << inner_bound.get_radius() << "m, ";

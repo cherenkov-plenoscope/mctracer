@@ -22,7 +22,7 @@ protected:
 public:
 	CameraRay(){};
 	CameraRay(const Vec3 support, const Vec3 direction);
-	std::string get_print()const;
+	std::string str()const;
 };
 
 }//Visual

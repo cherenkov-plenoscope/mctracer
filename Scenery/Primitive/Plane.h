@@ -33,7 +33,7 @@ public:
 		const double y_width
 	);
 
-	std::string get_print()const;
+	std::string str()const;
 	void calculate_intersection_with(
         const Ray* ray, 
         vector<Intersection> *intersections

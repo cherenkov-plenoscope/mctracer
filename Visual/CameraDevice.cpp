@@ -85,7 +85,7 @@ std::string CameraDevice::get_camera_print()const{
 	out << "| T_" << CameraName << "2world:\n";
 	out << StringTools::place_first_infront_of_each_new_line_of_second(
 		"| ",
-		T_Camera2World.get_print()
+		T_Camera2World.str()
 	);	
 	out << "| camera position          : " << CameraPositionInWorld << "\n";
 	out << "| direction of optical axis: " << CameraPointingDirection << "\n";
@@ -101,7 +101,7 @@ Vec3 CameraDevice::get_normalized_pointing_get_direction()const{
 	return CameraPointingDirection/CameraPointingDirection.norm();
 }
 //------------------------------------------------------------------------------
-std::string CameraDevice::get_print()const{
+std::string CameraDevice::str()const{
 	return get_camera_print();
 }
 //------------------------------------------------------------------------------

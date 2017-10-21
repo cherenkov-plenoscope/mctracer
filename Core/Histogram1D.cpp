@@ -63,7 +63,7 @@ uint Histogram1D::arg_max()const {
 	return idx_max_bin;
 }
 //------------------------------------------------------------------------------
-string Histogram1D::get_print()const {
+string Histogram1D::str()const {
 
 	std::stringstream out;
 	out.precision(2);

@@ -40,7 +40,7 @@ string Light::__repr__()const {
 	out << "  wavelength integral.. " << 
 		wavelength_probability.get_total_integral_of_distribution() << 
 		" 1/(s sr m^2)\n";
-	out << "  flux vs wavelength... " << *flux_vs_wavelength;
+	out << "  flux vs wavelength... " << flux_vs_wavelength->str();
 	return out.str();
 }
 //------------------------------------------------------------------------------

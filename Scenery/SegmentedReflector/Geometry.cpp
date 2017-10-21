@@ -223,7 +223,7 @@ namespace SegmentedReflector {
 		return z_pos_given_dist_to_optical_axis(max_outer_aperture_radius());
 	}
 
-	string Geometry::get_print()const {
+	string Geometry::str()const {
 
 		stringstream out;
 		out << std::setprecision(4);

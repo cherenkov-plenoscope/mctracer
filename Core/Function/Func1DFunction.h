@@ -13,13 +13,12 @@
 #include <vector>
 #include <string>
 #include "Core/TracerException.h"
-#include "Core/Printable.h"
 using std::string;
 using std::vector;
 
 namespace Function {
 
-	class Func1D: public Printable{
+	class Func1D {
 	protected:
 
 		Limits limits;
@@ -33,7 +32,7 @@ namespace Function {
 		double get_mean(const uint N)const;
 		virtual double operator()(const double x)const =0;	
 		Limits get_limits()const;
-		virtual string get_print()const;
+		virtual string str()const;
 	protected:
 
 		double increment_for_steps(const uint N)const;

@@ -16,7 +16,7 @@ using std::string;
 
 namespace SegmentedReflector {
 
-	class Geometry :public Printable {
+	class Geometry {
 	
 		double _davies_cotton_weight;
 		double _parabolic_weight;
@@ -54,7 +54,7 @@ namespace SegmentedReflector {
 		double facet_area()const;
 		double number_of_facets()const;
 		double average_image_distances_of_facets()const;
-		string get_print()const;
+		string str()const;
 		string facet_positions_and_normals_to_text()const;
 	private:
 

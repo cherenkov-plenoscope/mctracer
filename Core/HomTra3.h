@@ -55,7 +55,7 @@ public:
 	HomTra3 operator* (const HomTra3 G)const;
 	HomTra3 inverse()const;
 	bool operator== (HomTra3 G)const;
-	string get_print()const;
+	string str()const;
 private:
 
 	string get_single_row_print(const uint c)const;

@@ -19,7 +19,7 @@ using std::stringstream;
 namespace Plenoscope {
 namespace LightFieldSensor {
 
-	class Geometry : public Printable {
+	class Geometry {
 	public:
 		// PIXEL: picture cell
 		vector<Vec3> pixel_grid;
@@ -41,7 +41,7 @@ namespace LightFieldSensor {
 		const Config config;
 
 		Geometry(const Config ncfg);
-		string get_print()const;
+		string str()const;
 		double max_outer_sensor_radius()const;
 		double max_FoV_radius()const;
 		double pixel_spacing()const;

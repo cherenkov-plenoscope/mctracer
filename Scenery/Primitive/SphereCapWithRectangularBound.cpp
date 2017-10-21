@@ -22,12 +22,12 @@ void SphereCapWithRectangularBound::post_initialize_radius_of_enclosing_sphere()
 	);	
 }
 //------------------------------------------------------------------------------
-std::string SphereCapWithRectangularBound::get_print()const {
+std::string SphereCapWithRectangularBound::str()const {
 	const double xw = 2.0*rect_bounds.get_half_x_width();
 	const double yw = 2.0*rect_bounds.get_half_y_width();
 
 	std::stringstream out;
-	out << SurfaceEntity::get_print();
+	out << SurfaceEntity::str();
 	out << "SphereCapWithRectangularBound:\n";
 	out << "| focal length: " << get_focal_length() << "m\n";
 	out << "| curvature radius: " << curvature_radius << "m\n";

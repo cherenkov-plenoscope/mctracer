@@ -50,7 +50,7 @@ namespace Function {
 		}	
 	}
 	//--------------------------------------------------------------------------
-	std::string Limits::get_print()const {
+	std::string Limits::str()const {
 		std::stringstream out;
 		out << "[" << lower << ", " << upper << ")";
 		return out.str();

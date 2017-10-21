@@ -41,7 +41,7 @@ public:
 	Vec3 get_surface_normal_in_object_system()const;
 	Vec3 get_surface_normal_in_world_system()const;
 	double get_intersection_distance()const;
-	std::string get_print()const;
+	std::string str()const;
 	void get_reflection_direction_in_object_system(Vec3* vec)const;
 	Vec3 get_reflection_direction_in_world_system(
 		Vec3 incomming_dir_in_world

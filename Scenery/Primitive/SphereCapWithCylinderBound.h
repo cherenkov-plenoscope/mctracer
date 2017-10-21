@@ -25,7 +25,7 @@ public:
 		const double curvature_radius,
 		const double cap_radius
 	);
-	std::string get_print()const;
+	std::string str()const;
 	void calculate_intersection_with(
         const Ray* ray, 
         vector<Intersection> *intersections

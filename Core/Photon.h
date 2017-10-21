@@ -25,7 +25,7 @@ public:
 		const double wavelength
 	);
 	double get_wavelength()const;
-	std::string get_print()const;
+	std::string str()const;
 	double get_time_of_flight()const;
 	class BadWaveLength : public TracerException {
 		using TracerException::TracerException;

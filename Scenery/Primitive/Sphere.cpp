@@ -19,9 +19,9 @@ void Sphere::set_radius(double new_radius) {
 	bounding_sphere_radius = new_radius;
 }
 //------------------------------------------------------------------------------
-string Sphere::get_print()const {
+string Sphere::str()const {
 	stringstream out;
-	out << SurfaceEntity::get_print();
+	out << SurfaceEntity::str();
 
 	out << "sphere:\n";
 	out << "| radius: " << radius << "m\n";

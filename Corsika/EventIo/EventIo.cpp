@@ -77,7 +77,7 @@ Header::LengthInfo::LengthInfo(int32_t _length) {
     length = _length &  0x3fffffff;
 }
 //------------------------------------------------------------------------------
-string Header::get_print() {
+string Header::str() {
     stringstream out;
     out << "HEADER" << endl;
     out << "------" << endl;
@@ -164,7 +164,7 @@ vector<TelPos> make_telescope_positions(istream& f, const Header& head) {
     return telescope_positions;
 }
 //------------------------------------------------------------------------------
-string TelOffset::get_print() const{
+string TelOffset::str() const{
     stringstream out;
     out << "TelOffset\n";
     out << "---------\n";

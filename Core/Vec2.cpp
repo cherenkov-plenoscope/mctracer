@@ -50,7 +50,7 @@ void Vec2::operator=(const Vec2 eq) {
 	Y = eq.Y;
 }
 //------------------------------------------------------------------------------
-std::string Vec2::get_print()const {
+std::string Vec2::str()const {
 	std::stringstream out; 
 	out << "(" << X << " " << Y << ")m";
 	return out.str();

@@ -39,7 +39,7 @@ public:
 		const double outer_hex_radius
 	);
 
-	std::string get_print()const;
+	std::string str()const;
 
 	void calculate_intersection_with(
         const Ray* ray, 

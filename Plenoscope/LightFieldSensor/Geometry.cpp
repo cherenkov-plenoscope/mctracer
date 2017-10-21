@@ -285,10 +285,10 @@ array<float, 273> Geometry::get_info_header()const {
 }
 //------------------------------------------------------------------------------
 void Geometry::write_info_header(const string &path)const {
-	FileTools::write_text_to_file(get_print(), path);
+	FileTools::write_text_to_file(str(), path);
 }
 //------------------------------------------------------------------------------
-string Geometry::get_print()const{
+string Geometry::str()const{
 	
 	stringstream tab;
 	tab << "__Light_Field_Sensor__\n";

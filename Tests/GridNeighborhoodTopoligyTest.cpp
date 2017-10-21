@@ -29,6 +29,6 @@ TEST_F(GridNeighborhoodTopoligyTest, init) {
 
     for (int i = 0; i < grid.size(); ++i)
     {
-       std::cout << grid[i].get_print() << "\n";
+       std::cout << grid[i].str() << "\n";
     }*/
 }

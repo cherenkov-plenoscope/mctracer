@@ -66,7 +66,7 @@ public:
 	const Frame* get_allowed_frame_to_propagate_to()const;
 	bool boundary_layer_is_transparent()const;
 	bool has_restrictions_on_frames_to_propagate_to()const;
-	std::string get_print()const;
+	std::string str()const;
 
 	static const Function::Limits default_wavelength_range;
 	static const Function::Func1D* default_refl;

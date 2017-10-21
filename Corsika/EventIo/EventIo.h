@@ -30,7 +30,7 @@ namespace EventIo {
     
     struct TelPos {
         float x,y,z,r;
-        string get_print() const;
+        string str() const;
     };
 
     struct TelOffset {
@@ -38,7 +38,7 @@ namespace EventIo {
         float xoff;
         float yoff;
         float weight;
-        string get_print() const;
+        string str() const;
     };
 
     struct EventIoRunHeader {
@@ -69,7 +69,7 @@ namespace EventIo {
         uint64_t length;
         int32_t id;
         Header(istream& f, bool top_level=true);
-        string get_print();
+        string str();
     private:
 
         struct FirstFour {
@@ -102,7 +102,7 @@ namespace EventIo {
         int16_t tel;
         float photons;
         int32_t n_bunches;
-        string get_print() const;
+        string str() const;
     };
 
     array<float, 273> make_corsika_273float_sub_block_form_stream(istream& f);

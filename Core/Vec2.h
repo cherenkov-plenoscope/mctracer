@@ -42,10 +42,10 @@ public:
 	bool operator != (const Vec2& eqVec)const;
 	double distance_to(const Vec2 &v)const;
 	bool norm_is_less_equal_than(const double length_to_compare)const;
-	std::string get_print()const;
+	std::string str()const;
 
     friend std::ostream& operator<<(std::ostream& os, const Vec2& vec) {
-        os << vec.get_print();
+        os << vec.str();
         return os;
     };
 };

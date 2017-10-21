@@ -32,7 +32,7 @@ public:
 	std::vector<Photon> use_once_more_and_get_photons();
 	bool can_be_reused_again()const;
 
-	std::string get_print()const;
+	std::string str()const;
 	double get_Az()const{return event_header.azimuth_angle_Phi_in_radian;}
 	double get_Zd()const{return event_header.zenith_angle_Theta_in_radian;}
 

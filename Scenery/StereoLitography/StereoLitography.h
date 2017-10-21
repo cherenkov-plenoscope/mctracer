@@ -147,7 +147,7 @@ namespace StereoLitography {
 
         BinaryReader(const string filename);
         vector<Facet> get_facets()const;
-        string get_print()const;
+        string str()const;
         string get_header()const;
         uint get_number_of_facets()const;
         string get_report()const;

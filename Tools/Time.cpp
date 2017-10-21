@@ -43,7 +43,7 @@ namespace Time {
 		now = localtime(&initialization_time);		
 	}
 
-	string Stamp::get_print()const {
+	string Stamp::str()const {
 		std::stringstream out; 
 		out << "time stamp: ";
 		out <<yyyy()<<"."<<mm()<<"."<<dd()<<" "<<HH()<<":"<<MM()<<":"<<SS();

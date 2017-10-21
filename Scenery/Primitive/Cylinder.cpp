@@ -121,9 +121,9 @@ void Cylinder::post_initialize_radius_of_enclosing_sphere(){
 	);
 }
 //------------------------------------------------------------------------------
-string Cylinder::get_print()const {
+string Cylinder::str()const {
 	stringstream out;
-	out << SurfaceEntity::get_print();
+	out << SurfaceEntity::str();
 
 	out << "cylinder:\n";
 	out << "| radius: " << Radius << "m\n";

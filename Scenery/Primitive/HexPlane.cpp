@@ -10,9 +10,9 @@ void HexPlane::post_initialize_radius_of_enclosing_sphere() {
 	bounding_sphere_radius = hex_bounds.get_outer_radius();
 }
 //------------------------------------------------------------------------------
-std::string HexPlane::get_print()const {
+std::string HexPlane::str()const {
 	std::stringstream out;
-	out << SurfaceEntity::get_print();
+	out << SurfaceEntity::str();
 
 	out << "hexagonal plane:\n";
 	out << "| outer radius: " << hex_bounds.get_outer_radius() << "m\n";

@@ -34,13 +34,13 @@ public:
     unsigned char get_red()const;
     unsigned char get_green()const;
     unsigned char get_blue()const;
-    std::string get_print()const;
+    std::string str()const;
     void reflection_mix(const Color &c, const double refl);
     bool operator == (const Color& eq)const;
     bool operator != (const Color& eq)const;
 
     friend std::ostream& operator<<(std::ostream& os, const Color& to_be_displayed) {
-        os << to_be_displayed.get_print();
+        os << to_be_displayed.str();
         return os;
     };
 

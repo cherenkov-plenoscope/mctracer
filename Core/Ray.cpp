@@ -21,7 +21,7 @@ void Ray::set_direction(const Vec3 dir) {
 	direction.normalize();
 }
 //------------------------------------------------------------------------------
-string Ray::get_print()const {
+string Ray::str()const {
 	stringstream out;
 	out << "support: " << support << ", direction: " << direction;
 	return out.str();

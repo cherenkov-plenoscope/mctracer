@@ -54,7 +54,7 @@ public:
 		const Intersection& interact, 
 		const Interaction type
 	);
-	string get_print()const;
+	string str()const;
 	double get_accumulative_distance()const;
 	uint get_number_of_interactions_so_far()const;
 	const Intersection& get_intersection_at(const uint index)const;

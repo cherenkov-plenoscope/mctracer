@@ -27,7 +27,7 @@ namespace Function {
 		double get_upper()const;
 		double get_range()const;
 		void assert_contains(const double x)const;
-		std::string get_print()const;
+		std::string str()const;
 	
 		class OutOfRange : public TracerException {
 			using TracerException::TracerException;

@@ -10,9 +10,9 @@ void Disc::post_initialize_radius_of_enclosing_sphere(){
 	bounding_sphere_radius = cylinder_bounds.get_radius();
 }
 //------------------------------------------------------------------------------
-std::string Disc::get_print()const {
+std::string Disc::str()const {
 	std::stringstream out;
-	out << SurfaceEntity::get_print();
+	out << SurfaceEntity::str();
 
 	out << "disc:\n";
 	out << "| radius: " << cylinder_bounds.get_radius() << "m\n";

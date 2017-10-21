@@ -41,9 +41,9 @@ void EllipticalCapWithHexagonalBound::post_initialize_radius_of_enclosing_sphere
 	);
 }
 //------------------------------------------------------------------------------
-std::string EllipticalCapWithHexagonalBound::get_print()const {
+std::string EllipticalCapWithHexagonalBound::str()const {
 	std::stringstream out;
-	out << SurfaceEntity::get_print();
+	out << SurfaceEntity::str();
 
 	out << "elliptical cap with hexagonal bound:\n";
 	out << "| focal length: " << focal_length << "m\n";

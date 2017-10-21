@@ -252,7 +252,7 @@ void FlyingCamera::take_snapshot_manual_focus_on_pixel_col_row(int col, int row)
 	
 	ApertureCamera apcam = get_ApertureCamera_based_on_display_camera();
 	apcam.set_focus_to(object_distance_to_focus_on);
-	cout << apcam.get_print();
+	cout << apcam.str();
 
 	const Image* img = acquire_scaled_image_with_camera(false ,&apcam);
 	img->save(get_snapshot_filename());
@@ -337,7 +337,7 @@ string FlyingCamera::get_intersection_info_print(const Intersection intersec)con
 	out << "|\n";		
 	out << StringTools::place_first_infront_of_each_new_line_of_second(
 		"| ",
-		intersec.get_object()->get_print()
+		intersec.get_object()->str()
 	);
 	return out.str();	
 }

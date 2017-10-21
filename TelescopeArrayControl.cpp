@@ -9,7 +9,7 @@ void TelescopeArrayControl::move_all_to_Az_Zd(const double Az_Rad, const double 
 		telescope->update_rotation(rot);
 }
 //------------------------------------------------------------------------------
-std::string TelescopeArrayControl::get_print()const {
+std::string TelescopeArrayControl::str()const {
 
 	std::stringstream out;
 

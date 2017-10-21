@@ -28,7 +28,7 @@ public:
 		const Vec3 end_pos
 	);
 	void set_radius_and_length(const double radius, const double length);
-	string get_print()const;
+	string str()const;
 	void calculate_intersection_with(
         const Ray* ray, 
         vector<Intersection> *intersections

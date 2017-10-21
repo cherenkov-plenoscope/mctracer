@@ -40,7 +40,7 @@ public:
     bool has_still_sub_blocks_left()const;
     MmcsCorsikaSubBlock get_next_sub_block();
 	void print();
-	std::string get_print();
+	std::string str();
 	void print_sub_block()const;
 private:
    	bool is_a_gzip_file()const;

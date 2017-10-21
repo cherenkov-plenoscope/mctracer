@@ -50,10 +50,10 @@ namespace Function {
 		return limits;
 	}
 	//--------------------------------------------------------------------------
-	string Func1D::get_print()const {
+	string Func1D::str()const {
 		std::stringstream out;
 		out.precision(2);
-		out << limits.get_print() << " ";
+		out << limits.str() << " ";
 
 		vector<vector<double>> table = get_samples(3);
 

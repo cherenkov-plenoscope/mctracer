@@ -97,10 +97,10 @@ void MmcsCorsikaRunHeader::assert_number_of_observation_levels_is_valid()const {
 }
 //------------------------------------------------------------------------------
 void MmcsCorsikaRunHeader::print()const {
-	std::cout << get_print();
+	std::cout << str();
 }
 //------------------------------------------------------------------------------
-std::string MmcsCorsikaRunHeader::get_print()const {
+std::string MmcsCorsikaRunHeader::str()const {
 	std::stringstream out;
 	out << "MMCS_Run_Header_________________________________________________\n";
 	out << "| run_number " << run_number << "\n";

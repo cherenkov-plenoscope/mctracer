@@ -13,7 +13,7 @@ namespace Photons {
 		stringstream out;
 		out << "Photon bunble "<< photons->size() << "\n";
 		for(const Photon &photon : *photons)
-			out << photon.get_print() << "\n";
+			out << photon.str() << "\n";
 		return out.str();	
 	}	
 	//--------------------------------------------------------------------------

@@ -179,10 +179,10 @@ uint MmcsCorsikaSubBlockGetter::number_of_completed_blocks()const {
 }
 //------------------------------------------------------------------------------
 void MmcsCorsikaSubBlockGetter::print() {
-	std::cout << get_print();
+	std::cout << str();
 }
 //------------------------------------------------------------------------------
-std::string MmcsCorsikaSubBlockGetter::get_print() {
+std::string MmcsCorsikaSubBlockGetter::str() {
 	std::stringstream out;
 	out << " MMCS_Sub_Block_Getter__________________________________________\n";
 	out << "| file name..................... '" << filename << "'\n";	
@@ -209,6 +209,6 @@ void MmcsCorsikaSubBlockGetter::print_sub_block()const {
 	out << "/" << file_size_in_bytes/block_size_in_bytes << " i.e. ";
 	out << "sub block " << total_number_of_sub_blocks() << "/";
 	out << sum_of_sub_blocks_so_far() << "\n";
-	out << SubBlock.get_print() << "\n";
+	out << SubBlock.str() << "\n";
 	std::cout << out.str();
 }

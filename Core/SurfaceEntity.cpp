@@ -171,21 +171,21 @@ void SurfaceEntity::take_boundary_layer_properties_but_inside_out_from(
 	set_inner_absorption(proto->get_outer_absorption_());
 }
 //------------------------------------------------------------------------------
-std::string SurfaceEntity::get_print()const {
+std::string SurfaceEntity::str()const {
 	std::stringstream out;
-	out << Frame::get_print();
+	out << Frame::str();
 
 	out << " inner surface:\n";
 	out << "| color : " << *inner_color << "\n";
-	out << "| reflec: " << inner_reflection_vs_wavelength->get_print() << "\n";
-	out << "| refrac: " << inner_refraction_vs_wavelength->get_print() << "\n";
-	out << "| absorp: " << inner_absorption_vs_wavelength->get_print() << "\n";
+	out << "| reflec: " << inner_reflection_vs_wavelength->str() << "\n";
+	out << "| refrac: " << inner_refraction_vs_wavelength->str() << "\n";
+	out << "| absorp: " << inner_absorption_vs_wavelength->str() << "\n";
 
 	out << " outer surface:\n";
 	out << "| color : " << *outer_color << "\n";
-	out << "| reflec: " << outer_reflection_vs_wavelength->get_print() << "\n";
-	out << "| refrac: " << outer_refraction_vs_wavelength->get_print() << "\n";
-	out << "| absorp: " << inner_absorption_vs_wavelength->get_print() << "\n";
+	out << "| reflec: " << outer_reflection_vs_wavelength->str() << "\n";
+	out << "| refrac: " << outer_refraction_vs_wavelength->str() << "\n";
+	out << "| absorp: " << inner_absorption_vs_wavelength->str() << "\n";
 
 	out << " boundary layer: ";
 	if(_boundary_layer_is_transparent)

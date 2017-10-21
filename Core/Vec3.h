@@ -54,10 +54,10 @@ public:
     bool is_paralell_to_z_axis()const;
     bool is_parallel_to_x_y_plane()const;
     bool norm_is_less_equal_than(const double length_to_compare)const;
-    std::string get_print()const;
+    std::string str()const;
 
     friend std::ostream& operator<<(std::ostream& os, const Vec3& vec) {
-        os << vec.get_print();
+        os << vec.str();
         return os;
     };
 };

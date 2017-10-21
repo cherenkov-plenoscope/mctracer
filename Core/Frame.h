@@ -67,7 +67,7 @@ public:
     bool has_mother()const;
     bool has_children()const;
     void assert_no_children_duplicate_names()const;
-    virtual string get_print()const;
+    virtual string str()const;
     string get_tree_print()const;
     //DO
     template<class ProtoFrame>
@@ -106,7 +106,7 @@ public:
         using TracerException::TracerException;
     };
     friend std::ostream& operator<<(std::ostream& os, const Frame& frame) {
-        os << frame.get_print();
+        os << frame.str();
         return os;
     };
 };

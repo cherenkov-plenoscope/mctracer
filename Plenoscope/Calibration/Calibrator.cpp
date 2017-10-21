@@ -180,7 +180,7 @@ void Calibrator::write_lixel_statistics(const string &path)const {
 	write(lixel_statistics, path);	
 }
 //------------------------------------------------------------------------------
-std::string Calibrator::get_print()const {
+std::string Calibrator::str()const {
 
 	std::stringstream out;
 	out << "Light_Field_Calibration__\n";

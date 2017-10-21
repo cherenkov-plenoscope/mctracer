@@ -164,7 +164,7 @@ std::string ApertureCamera::get_aperture_camera_print()const {
 	return out.str();
 }
 //------------------------------------------------------------------------------
-std::string ApertureCamera::get_print()const {
+std::string ApertureCamera::str()const {
 	std::stringstream out;
 	out << get_camera_print() << get_aperture_camera_print();
 	return out.str();

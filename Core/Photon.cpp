@@ -28,9 +28,9 @@ double Photon::get_wavelength()const {
 	return wavelength;
 }
 //------------------------------------------------------------------------------
-std::string Photon::get_print()const {
+std::string Photon::str()const {
 	std::stringstream out; 
-	out << RayForPropagation::get_print();
+	out << RayForPropagation::str();
 	out << "wavelength " << wavelength*1e9 << "nm\n";
 	return out.str();
 }

@@ -53,7 +53,7 @@ unsigned char Color::get_blue()const {
 	return bl;
 }
 //------------------------------------------------------------------------------
-std::string Color::get_print()const {
+std::string Color::str()const {
 	std::stringstream out;
 	out << "(" << (int)(re);
 	out << " " << (int)(gr);
@@ -75,7 +75,7 @@ void Color::assert_is_in_valid_8Bit_range(const int channel)const {
 		info << "Color::" << __func__ << "()\n";
 		info << "Each RGB color channel must be within the valid 8 Bit range\n";
 		info << "Expected channels to be: 0 <= channel <= 255, but actual: ";
-		info << get_print() << "\n";
+		info << str() << "\n";
 		throw NotIn8bitRange(info.str());	
 	}
 }
