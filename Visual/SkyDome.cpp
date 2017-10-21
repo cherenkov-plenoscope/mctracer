@@ -65,7 +65,7 @@ std::string SkyDome::str()const {
 		out << "central pixel (" << central_col << "," << central_row << "), ";
 		out << "zenith to horizon " << zenith_to_horizon_radius << "pixels ";
 	}else{
-		out << "no texture, background color " << background_color;
+		out << "no texture, background color " << background_color.str();
 	}
 
 	return out.str();

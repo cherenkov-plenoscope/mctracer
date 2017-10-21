@@ -51,7 +51,7 @@ string RayForPropagation::get_history_print()const {
 		out << ++index << ") " << get_type_print(type) << " in ";
 		out << intersection_history.at(index-1).get_object()->get_name();
 		out << " " << intersection_history.at(index-1).	
-			get_intersection_vector_in_world_system() << ", dist to prev.:";
+			get_intersection_vector_in_world_system().str() << ", dist to prev.:";
 
 		if(index>1) {
 			out << intersection_history.at(index-1).get_intersection_vector_in_world_system().distance_to(

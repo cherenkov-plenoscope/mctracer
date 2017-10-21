@@ -75,8 +75,8 @@ void Frame::assert_name_is_valid(const string name_to_check)const {
 string Frame::str()const {
 	stringstream out;
 	out << "frame: " << name << "\n";
-	out << "| pos in mother: " << pos_in_mother << "\n";
-	out << "| rot in mother: " << rot_in_mother << "\n";
+	out << "| pos in mother: " << pos_in_mother.str() << "\n";
+	out << "| rot in mother: " << rot_in_mother.str() << "\n";
 	out << "| pos in world:  ";
 	out << (has_mother()? get_position_in_world().str(): "root") << "\n";
 	out << "| bounding radius: " << bounding_sphere_radius << "m\n";	
@@ -86,7 +86,7 @@ string Frame::str()const {
 string Frame::get_tree_print()const {
 	
 	stringstream out;
-	out << name << ", pos " << pos_in_mother << ", r ";
+	out << name << ", pos " << pos_in_mother.str() << ", r ";
 	out << bounding_sphere_radius << "m\n";
 
 	for(Frame* child : children)

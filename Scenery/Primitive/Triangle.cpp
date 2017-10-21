@@ -92,9 +92,9 @@ std::string Triangle::str()const{
 	out << SurfaceEntity::str();
 
 	out << "triangle:\n";
-	out << "| A: " << A << "\n";
-	out << "| B: " << B << "\n";
-	out << "| C: " << C << "\n";
+	out << "| A: " << A.str() << "\n";
+	out << "| B: " << B.str() << "\n";
+	out << "| C: " << C.str() << "\n";
 	return out.str();	
 }
 //------------------------------------------------------------------------------

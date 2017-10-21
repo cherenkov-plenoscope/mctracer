@@ -63,7 +63,7 @@ std::string Intersection::str()const {
 	std::stringstream out; 
 	if(does_intersect()) {
 		out << object->get_name() << " in ";
-		out << get_intersection_vector_in_world_system() << " after ";
+		out << get_intersection_vector_in_world_system().str() << " after ";
 		out << get_intersection_distance() << "m";
 	}else
 		out << "no intersection with any object";

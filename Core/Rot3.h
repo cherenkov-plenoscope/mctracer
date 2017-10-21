@@ -46,9 +46,5 @@ public:
 	double sinRy()const;
 	double sinRz()const;
 	bool operator == (const Rot3& eqRot)const;
-    friend std::ostream& operator<<(std::ostream& os, const Rot3& rot) {
-        os << rot.str();
-        return os;
-    };
 };
 #endif // __Rot3_H_INCLUDED__ 

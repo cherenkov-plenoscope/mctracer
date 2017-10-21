@@ -176,13 +176,13 @@ std::string SurfaceEntity::str()const {
 	out << Frame::str();
 
 	out << " inner surface:\n";
-	out << "| color : " << *inner_color << "\n";
+	out << "| color : " << inner_color->str() << "\n";
 	out << "| reflec: " << inner_reflection_vs_wavelength->str() << "\n";
 	out << "| refrac: " << inner_refraction_vs_wavelength->str() << "\n";
 	out << "| absorp: " << inner_absorption_vs_wavelength->str() << "\n";
 
 	out << " outer surface:\n";
-	out << "| color : " << *outer_color << "\n";
+	out << "| color : " << outer_color->str() << "\n";
 	out << "| reflec: " << outer_reflection_vs_wavelength->str() << "\n";
 	out << "| refrac: " << outer_refraction_vs_wavelength->str() << "\n";
 	out << "| absorp: " << inner_absorption_vs_wavelength->str() << "\n";

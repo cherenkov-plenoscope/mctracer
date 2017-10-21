@@ -186,7 +186,7 @@ void BinaryReader::assert_normal_is_actually_normalized(const Vec3 normal) {
 		info << "BinaryReader: in file '" << filename << "', triangle number ";
 		info << current_triangle_number << " of ";
 		info << total_number_of_facets << "\n";
-		info << "The normal vector " << normal;
+		info << "The normal vector " << normal.str();
 		info << " is not exactly normalized.\n";
 		info << "STL header:\n";
 		info << stl_header << "\n";

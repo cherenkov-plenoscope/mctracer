@@ -231,7 +231,7 @@ namespace SegmentedReflector {
 
 		stringstream tab;
 		tab << "focal length................... " << focal_length() << "m\n";
-		tab << "focal point.................... " << focal_point() << "\n";
+		tab << "focal point.................... " << focal_point().str() << "\n";
 		tab << "max outer aperture diameter.... " << 2.0*max_outer_aperture_radius() << "m\n";
 		tab << "min inner aperture diameter.... " << 2.0*min_inner_aperture_radius() << "m\n";
 		tab << "naive f over D................. " << naive_f_over_D() << "\n";

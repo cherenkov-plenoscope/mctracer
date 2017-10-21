@@ -39,11 +39,6 @@ public:
     bool operator == (const Color& eq)const;
     bool operator != (const Color& eq)const;
 
-    friend std::ostream& operator<<(std::ostream& os, const Color& to_be_displayed) {
-        os << to_be_displayed.str();
-        return os;
-    };
-
     class NotIn8bitRange : public TracerException {
         using TracerException::TracerException;
     };

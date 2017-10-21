@@ -65,7 +65,7 @@ void Cylinder::assert_start_and_end_point_are_distinct(
 		stringstream info;
 		info << "Cylinder::" << __func__ << "()\n";
 		info << "The start and end point of a cylinder must not be the same!\n";
-		info << "Start: " << start_pos << " and end: " << end_pos << ".\n";
+		info << "Start: " << start_pos.str() << " and end: " << end_pos.str() << ".\n";
 		throw BadStartEndPoints(info.str());
 	}
 }

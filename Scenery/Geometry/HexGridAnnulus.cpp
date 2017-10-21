@@ -44,7 +44,7 @@ std::string HexGridAnnulus::str()const {
 
 	uint number = 1;
 	for(Vec3 vec : grid)
-		out << number++ << " " << vec << "\n";
+		out << number++ << " " << vec.str() << "\n";
 
 	return out.str();
 }

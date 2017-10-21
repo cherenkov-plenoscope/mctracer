@@ -40,10 +40,6 @@ public:
         const Vec3 &point
     )const;
     double get_closest_distance_to_point(const Vec3 &point)const;
-    friend std::ostream& operator<<(std::ostream& os, const Ray& ray) {
-        os << ray.str();
-        return os;
-    };
 protected:
 
     Ray();

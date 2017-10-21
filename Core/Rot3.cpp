@@ -69,7 +69,7 @@ std::string Rot3::str()const {
 	if(flag_rot_angles_xyz == true)
 		out << "(" << Rx << " " << Ry << " " << Rz << ")rad";
 	else
-		out << "rot-axis: " << rot_axis << ", rot-angle: " 
+		out << "rot-axis: " << rot_axis.str() << ", rot-angle: " 
 			<< rot_angle_in_rad << "rad";
 
 	return out.str();

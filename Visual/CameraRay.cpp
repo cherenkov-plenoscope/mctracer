@@ -10,7 +10,7 @@ CameraRay::CameraRay(const Vec3 support, const Vec3 direction){
 //------------------------------------------------------------------------------
 std::string CameraRay::str()const{
 	std::stringstream out; 
-	out << Ray::str() << ", color: " << color;
+	out << Ray::str() << ", color: " << color.str();
 	return out.str();
 }
 //------------------------------------------------------------------------------

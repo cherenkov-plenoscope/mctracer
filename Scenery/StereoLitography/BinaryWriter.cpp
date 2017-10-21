@@ -28,7 +28,7 @@ void BinaryWriter::assert_normal_is_actually_normalized(const Vec3 normal) {
 	   	info << __FILE__ << " " << __LINE__ << "\n";
 		info << "BinaryWriter: in file '" << filename << "', triangle number ";
 		info << facets.size()+1 << " ";
-		info << "The normal vector " << normal << " is not exactly normalized.\n";
+		info << "The normal vector " << normal.str() << " is not exactly normalized.\n";
 		throw BadNormal(info.str());	 	
 	}
 }

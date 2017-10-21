@@ -105,9 +105,5 @@ public:
     class BadName :public TracerException{
         using TracerException::TracerException;
     };
-    friend std::ostream& operator<<(std::ostream& os, const Frame& frame) {
-        os << frame.str();
-        return os;
-    };
 };
 #endif // __CARTESIANFRAME_H_INCLUDED__

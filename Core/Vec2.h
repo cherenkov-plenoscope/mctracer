@@ -43,10 +43,5 @@ public:
 	double distance_to(const Vec2 &v)const;
 	bool norm_is_less_equal_than(const double length_to_compare)const;
 	std::string str()const;
-
-    friend std::ostream& operator<<(std::ostream& os, const Vec2& vec) {
-        os << vec.str();
-        return os;
-    };
 };
 #endif // __Vec2_H_INCLUDED__ 

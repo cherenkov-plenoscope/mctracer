@@ -87,8 +87,8 @@ std::string CameraDevice::get_camera_print()const{
 		"| ",
 		T_Camera2World.str()
 	);	
-	out << "| camera position          : " << CameraPositionInWorld << "\n";
-	out << "| direction of optical axis: " << CameraPointingDirection << "\n";
+	out << "| camera position          : " << CameraPositionInWorld.str() << "\n";
+	out << "| direction of optical axis: " << CameraPointingDirection.str() << "\n";
 	out << "| field of view: " << Rad2Deg(FoV_in_rad) <<" deg\n";
 	out << "| resolution: cols x rows : ";
 	out << image.get_number_of_cols() << "x";
