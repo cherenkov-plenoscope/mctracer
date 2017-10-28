@@ -9,6 +9,7 @@
 //=================================
 // included dependencies
 #include <string>
+#include <vector>
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
 #include "Scenery/Geometry/QuadraticEquation.h"
