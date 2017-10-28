@@ -11,11 +11,10 @@
 #include <string>
 #include <vector>
 
-class Color {
+struct Color {
 
-    unsigned char re, gr, bl; 
-public:
-    
+    unsigned char r, g, b; 
+
     static const Color white;
     static const Color sky_blue;
     static const Color gray;
@@ -27,17 +26,12 @@ public:
     static const Color grass_green;
 
     Color();
-    Color(const int r, const int g, const int b);
+    Color(const int _r, const int _g, const int _b);
     Color(const std::vector<Color> &mean);
-    unsigned char get_red()const;
-    unsigned char get_green()const;
-    unsigned char get_blue()const;
     std::string str()const;
     void reflection_mix(const Color &c, const double refl);
     bool operator == (const Color& eq)const;
     bool operator != (const Color& eq)const;
-private:
-
     void assert_is_in_valid_8Bit_range(const int channel)const;
 };
 #endif // __Color_H_INCLUDED__ 

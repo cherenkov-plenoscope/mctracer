@@ -79,9 +79,9 @@ void Image::set_row_col_to_color(
 	const uint row, const uint col, const Color &color){
 	cv::Vec3b intensity;
 
-	intensity.val[0] = color.get_blue();
-	intensity.val[1] = color.get_green();
-	intensity.val[2] = color.get_red();
+	intensity.val[0] = color.b;
+	intensity.val[1] = color.g;
+	intensity.val[2] = color.r;
 
 	raw_image.at<cv::Vec3b>(row,col) = intensity;
 }

@@ -39,8 +39,8 @@ TEST_F(ColorMapTest, add_color_and_get_it_again) {
     my_colors.add("red", novel_red);
     const Color* my_red = my_colors.get("red");
 
-    EXPECT_EQ(my_red->get_red(),   novel_red.get_red());
-    EXPECT_EQ(my_red->get_green(), novel_red.get_green());
-    EXPECT_EQ(my_red->get_blue(),  novel_red.get_blue());
+    EXPECT_EQ(my_red->r, novel_red.r);
+    EXPECT_EQ(my_red->g, novel_red.g);
+    EXPECT_EQ(my_red->b, novel_red.b);
 }
 //------------------------------------------------------------------------------
