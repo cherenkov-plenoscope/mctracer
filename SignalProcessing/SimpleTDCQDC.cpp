@@ -2,6 +2,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+using std::string;
+using std::vector;
 
 namespace SignalProcessing {
     namespace SimpleTdcQdc{
