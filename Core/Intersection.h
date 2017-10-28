@@ -8,9 +8,7 @@
 class Ray;
 //=================================
 // included dependencies
-#include <iostream>
 #include <string>
-#include <sstream>
 #include "Core/Vec3.h"
 #include "Core/SurfaceEntity.h"
 

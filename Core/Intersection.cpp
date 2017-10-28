@@ -1,4 +1,5 @@
 #include "Intersection.h"
+#include <sstream>
 #include <limits>
 //------------------------------------------------------------------------------
 const Intersection Intersection::void_intersection = Intersection();
