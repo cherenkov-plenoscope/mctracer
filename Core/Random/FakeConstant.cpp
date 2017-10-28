@@ -12,6 +12,8 @@ double FakeConstant::uniform() {
 }
 //------------------------------------------------------------------------------
 double FakeConstant::normal(const double mean, const double std_dev) {
+	(void)mean;
+	(void)std_dev;
 	return constant;
 }
 //------------------------------------------------------------------------------

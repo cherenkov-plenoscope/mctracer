@@ -180,7 +180,10 @@ bool Frame::has_children()const {
 void Frame::calculate_intersection_with(
 	const Ray* ray, 
     vector<Intersection> *intersections
-)const {}
+)const {
+	(void)*ray;
+	(void)*intersections;
+}
 //------------------------------------------------------------------------------
 void Frame::cluster_children() {
 

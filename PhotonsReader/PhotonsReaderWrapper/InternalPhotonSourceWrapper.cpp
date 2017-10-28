@@ -17,6 +17,7 @@ bool InternalPhotonSourceWrapper::has_still_photons_left()const {
 }
 //------------------------------------------------------------------------------
 vector<Photon> InternalPhotonSourceWrapper::next(Random::Generator* prng) {
+	(void)*prng;
 	the_single_event_was_already_read = true;
 	return photons;
 }

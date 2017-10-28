@@ -190,6 +190,7 @@ void FlyingCamera::update_display() {
 void FlyingCamera::mouse_button_event(
 	int event, int col, int row, int flags, void *param
 ) {
+	(void)flags;
 	FlyingCamera* p = (FlyingCamera*)param;
 	
 	if( event == cv::EVENT_LBUTTONDOWN )
