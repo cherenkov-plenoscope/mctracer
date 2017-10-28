@@ -10,23 +10,19 @@
 // included dependencies
 #include <string>
 #include <map>
-
-using std::string;
-using std::map;
-
 #include "ResourceMap.h"
 #include "Core/Color.h"
 
 class ColorMap: public ResourceMap {
 public:
-    map<string, Color> colors;
+    std::map<std::string, Color> colors;
 
-    bool has(const string key)const;
-    Color* get(const string key);
-    void add(const string key, const Color color);
+    bool has(const std::string key)const;
+    Color* get(const std::string key);
+    void add(const std::string key, const Color color);
 private:
 
-    void assert_has(const string key)const;
-    void assert_not_in_use_yet(const string key);
+    void assert_has(const std::string key)const;
+    void assert_not_in_use_yet(const std::string key);
 };
 #endif // __COLORMAP_H_INCLUDED__

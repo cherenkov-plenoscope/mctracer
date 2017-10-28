@@ -1,6 +1,8 @@
 #include "ColorMap.h"
 #include <sstream>
 using std::stringstream;
+using std::string;
+using std::map;
 //------------------------------------------------------------------------------
 bool ColorMap::has(const string key)const {
     return colors.find(key) != colors.end();
