@@ -1,5 +1,7 @@
 #include "Scenery/SegmentedReflector/Factory.h"
 #include "Scenery/Primitive/SphereCapWithHexagonalBound.h"
+using std::vector;
+using std::string;
 
 namespace SegmentedReflector {
 
@@ -10,7 +12,7 @@ namespace SegmentedReflector {
 
 	void Factory::add_reflector_mirror_facets_to_frame(Frame* reflector) {
 			
-		std::vector<Vec3> facet_positions = geometry.facet_positions();
+		vector<Vec3> facet_positions = geometry.facet_positions();
 
 		for(uint i=0; i<facet_positions.size(); i++) {
 

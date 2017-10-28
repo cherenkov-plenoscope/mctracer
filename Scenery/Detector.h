@@ -8,8 +8,6 @@
 
 //=================================
 // included dependencies
-
-
 #include "Core/Frame.h"
 
 struct Detector {

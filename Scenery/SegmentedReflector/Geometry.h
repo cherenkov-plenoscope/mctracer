@@ -11,8 +11,6 @@
 #include "Scenery/SegmentedReflector/Config.h"
 #include "Core/Vec3.h"
 #include "Core/Rot3.h"
-using std::vector;
-using std::string;
 
 namespace SegmentedReflector {
 
@@ -21,8 +19,8 @@ namespace SegmentedReflector {
 		double _davies_cotton_weight;
 		double _parabolic_weight;
 		double _z_offset_makeing_avg_facet_dist_to_f_point_match_f;
-		vector<Vec3> _facet_positions;
-		vector<Rot3> _facet_orientations;
+		std::vector<Vec3> _facet_positions;
+		std::vector<Rot3> _facet_orientations;
 		Vec3 _focal_point;
 	public:	
 
@@ -41,7 +39,7 @@ namespace SegmentedReflector {
 		double z_offset_makeing_avg_facet_dist_to_f_point_match_f()const;
 		double thickness_of_dish()const;
 		Vec3 focal_point()const;
-		vector<Vec3> facet_positions()const;
+		std::vector<Vec3> facet_positions()const;
 		Rot3 get_rotation_for_facet_position(const Vec3 facet_position)const;
 		double DaviesCotton_weight()const;
 		double Parabolic_weight()const;
@@ -54,8 +52,8 @@ namespace SegmentedReflector {
 		double facet_area()const;
 		double number_of_facets()const;
 		double average_image_distances_of_facets()const;
-		string str()const;
-		string facet_positions_and_normals_to_text()const;
+		std::string str()const;
+		std::string facet_positions_and_normals_to_text()const;
 	private:
 
 		void init_focal_point();
