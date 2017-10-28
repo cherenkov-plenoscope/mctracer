@@ -1,5 +1,8 @@
 #include "gtest/gtest.h"
 #include "Tools/HeaderBlock.h"
+using std::string;
+using std::vector;
+using std::array;
 
 class HeaderBlockTest : public ::testing::Test {};
 //----------------------------------------------------------------------

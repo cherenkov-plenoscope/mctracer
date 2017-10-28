@@ -1,4 +1,9 @@
 #include "HeaderBlock.h"
+#include <fstream>
+#include <sstream>
+using std::string;
+using std::vector;
+using std::array;
 
 namespace HeaderBlock {
 //------------------------------------------------------------------------------
