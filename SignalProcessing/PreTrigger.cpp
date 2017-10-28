@@ -13,7 +13,7 @@ bool might_trigger(
 	const Config &config
 ) {
 	double growing_delay;
-	uint j;	
+	unsigned int j;	
 
 	if(arrival_moments->size() == 0) {
 
@@ -33,7 +33,7 @@ bool might_trigger(
 			return false;
 	}else{
 
-		for(uint i=0; i<arrival_moments->size()-1; i++) {
+		for(unsigned int i=0; i<arrival_moments->size()-1; i++) {
 			
 			growing_delay = 0.0;
 			j = 1;

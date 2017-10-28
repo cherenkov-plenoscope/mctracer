@@ -8,10 +8,6 @@
 
 //=================================
 // included dependencies
-#include <iostream>
-#include <string>
-#include <string.h>
-#include <sstream>
 #include <vector>
 
 namespace SignalProcessing {
@@ -19,7 +15,7 @@ namespace SignalProcessing {
 
 struct Config {
 	double time_window;
-	uint threshold;
+	unsigned int threshold;
 	Config();
 };
 
