@@ -11,7 +11,6 @@
 #include <string>
 #include "Core/Vec3.h"
 #include "Core/Rot3.h"
-using std::string;
 
 //=================================
 // The concept of Homogeneous Transformations is taken from the text book 
@@ -55,10 +54,10 @@ public:
 	HomTra3 operator* (const HomTra3 G)const;
 	HomTra3 inverse()const;
 	bool operator== (HomTra3 G)const;
-	string str()const;
+	std::string str()const;
 private:
 
-	string get_single_row_print(const uint c)const;
+	std::string get_single_row_print(const uint c)const;
 	void set_rotation_component_based_on_xyz_angles(const Rot3 R);
 	void set_rotation_component_based_on_rot_axis(const Rot3 R);
 	void set_translation_component(const Vec3 &t);

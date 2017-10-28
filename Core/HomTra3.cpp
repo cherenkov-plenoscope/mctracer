@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <iostream>
 using std::stringstream;
+using std::string;
 
 // homogenous Transformation, component adresses:
 // [ 0,0    0,1     0,2     0,3 ]
