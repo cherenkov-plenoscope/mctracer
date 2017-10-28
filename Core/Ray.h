@@ -8,16 +8,9 @@
 
 //=================================
 // included dependencies
-#include <iostream>
-#include <string>
-#include <math.h>
-#include <vector>
-#include <algorithm>
 #include "Core/Vec3.h"
 #include "Core/HomTra3.h"
-using std::string;
-using std::stringstream;
-using std::vector;
+#include <string>
 
 class Ray {
 protected:
@@ -35,7 +28,7 @@ public:
     Vec3 get_pos_at(const double scalar)const;
     void transform(const HomTra3 *T);
     void transform_inverse(const HomTra3 *T);
-    string str()const;
+    std::string str()const;
     double get_parameter_on_ray_for_closest_distance_to_point(
         const Vec3 &point
     )const;

@@ -1,4 +1,8 @@
 #include "SphereCapWithHexagonalBound.h"
+using std::string;
+using std::vector;
+using std::stringstream;
+
 //------------------------------------------------------------------------------
 void SphereCapWithHexagonalBound::set_curvature_radius_and_outer_hex_radius(
 	const double curvature_radius,

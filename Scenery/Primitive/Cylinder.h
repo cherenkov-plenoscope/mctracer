@@ -11,6 +11,8 @@
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
 #include "Scenery/Geometry/ZaxisCylinderRayIntersectionEquation.h"
+#include <vector>
+#include <string>
 
 //=================================
 class Cylinder :public SurfaceEntity{
@@ -21,17 +23,17 @@ protected:
 public:
 
 	Cylinder();
-	Cylinder(const string name, const Vec3 pos, const Rot3 rot);
+	Cylinder(const std::string name, const Vec3 pos, const Rot3 rot);
 	void set_cylinder(
 		const double radius, 
 		const Vec3 start_pos, 
 		const Vec3 end_pos
 	);
 	void set_radius_and_length(const double radius, const double length);
-	string str()const;
+	std::string str()const;
 	void calculate_intersection_with(
         const Ray* ray, 
-        vector<Intersection> *intersections
+        std::vector<Intersection> *intersections
     )const;
 private:
 

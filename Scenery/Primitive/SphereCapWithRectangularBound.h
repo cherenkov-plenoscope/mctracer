@@ -11,6 +11,8 @@
 #include "Scenery/Geometry/SphericalCapRayIntersectionEquation.h"
 #include "Scenery/Geometry/RectangularPrismZ.h"
 #include "Scenery/Geometry/SurfaceWithOuterPrismBound.h"
+#include <vector>
+#include <string>
 
 //=================================
 class SphereCapWithRectangularBound :public SurfaceWithOuterPrismBound {
@@ -28,7 +30,7 @@ public:
 	std::string str()const;
 	void calculate_intersection_with(
         const Ray* ray, 
-        vector<Intersection> *intersections
+        std::vector<Intersection> *intersections
     )const;
     double get_focal_length()const;
 private:

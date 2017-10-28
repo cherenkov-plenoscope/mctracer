@@ -1,4 +1,10 @@
 #include "Triangle.h"
+#include <algorithm>
+using std::string;
+using std::stringstream;
+using std::vector;
+
+
 //------------------------------------------------------------------------------
 void Triangle::set_corners_in_xy_plane(
 	const double Ax, const double Ay,

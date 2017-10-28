@@ -1,4 +1,8 @@
  #include "HexPlane.h"
+using std::vector;
+using std::string;
+using std::stringstream;
+
 const Vec3 HexPlane::plane_surface_normal = Vec3::unit_z;
 //------------------------------------------------------------------------------
 void HexPlane::set_outer_hex_radius(const double outer_hex_radius) {
@@ -10,8 +14,8 @@ void HexPlane::post_initialize_radius_of_enclosing_sphere() {
 	bounding_sphere_radius = hex_bounds.get_outer_radius();
 }
 //------------------------------------------------------------------------------
-std::string HexPlane::str()const {
-	std::stringstream out;
+string HexPlane::str()const {
+	stringstream out;
 	out << SurfaceEntity::str();
 
 	out << "hexagonal plane:\n";

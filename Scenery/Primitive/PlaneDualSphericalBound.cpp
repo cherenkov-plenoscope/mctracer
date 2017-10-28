@@ -1,4 +1,8 @@
  #include "PlaneDualSphericalBound.h"
+using std::string;
+using std::vector;
+using std::stringstream;
+
 //------------------------------------------------------------------------------
 void PlaneDualSphericalBound::set_x_hight_and_y_width(
 	const double x_width, 

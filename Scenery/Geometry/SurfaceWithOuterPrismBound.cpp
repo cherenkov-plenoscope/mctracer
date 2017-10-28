@@ -1,4 +1,6 @@
 #include "SurfaceWithOuterPrismBound.h"
+using std::vector;
+
 //------------------------------------------------------------------------------
 void SurfaceWithOuterPrismBound::add_causeal_intersection(
 		const TwoSolutionSurfaceRayEquation* eq,

@@ -11,6 +11,8 @@
 #include "Scenery/Geometry/EllipticalCapRayIntersectionEquation.h"
 #include "Scenery/Geometry/HexagonalPrismZ.h"
 #include "Scenery/Geometry/SurfaceWithOuterPrismBound.h"
+#include <vector>
+#include <string>
 
 //=================================
 class EllipticalCapWithHexagonalBound :public SurfaceWithOuterPrismBound {
@@ -43,7 +45,7 @@ public:
 
 	void calculate_intersection_with(
         const Ray* ray, 
-        vector<Intersection> *intersections
+        std::vector<Intersection> *intersections
     )const;
 private:
 	void restrict_outer_hex_radius_to_curvature_radius();

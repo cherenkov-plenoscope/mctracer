@@ -1,4 +1,7 @@
 #include "Core/RayAndFrame.h"
+#include <algorithm>
+using std::vector;
+
 namespace RayAndFrame {
 //------------------------------------------------------------------------------
 bool ray_support_inside_frames_bounding_sphere(const Ray* ray, const Frame *frame) {

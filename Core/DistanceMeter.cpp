@@ -1,6 +1,7 @@
 #include "DistanceMeter.h"
 #include "Core/RayAndFrame.h"
 #include <limits.h>
+#include <algorithm>
 
 DistanceMeter::DistanceMeter(const Ray* ray, const Frame* world) {
 	faces_an_object = false;

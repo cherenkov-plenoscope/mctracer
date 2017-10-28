@@ -5,6 +5,9 @@
 #include "Core/HomTra3.h"
 #include "Scenery/Primitive/Primitive.h"
 #include <array>
+using std::string;
+using std::stringstream;
+using std::vector;
 
 class FrameTest : public ::testing::Test {};
 //------------------------------------------------------------------------------

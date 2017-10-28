@@ -12,6 +12,7 @@
 #include "Core/Ray.h"
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
+#include <vector>
 
 namespace RayAndFrame {
     // Frame's bounding sphere
@@ -36,8 +37,8 @@ namespace RayAndFrame {
 
     struct CausalIntersection {
         const Ray* ray;
-        static thread_local vector<const Frame*> candidate_objects;
-        static thread_local vector<Intersection> candidate_intersections;
+        static thread_local std::vector<const Frame*> candidate_objects;
+        static thread_local std::vector<Intersection> candidate_intersections;
         
         Intersection closest_intersection;
         CausalIntersection(const Ray* _ray, const Frame* frame);

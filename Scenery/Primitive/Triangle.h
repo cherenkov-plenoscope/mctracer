@@ -14,6 +14,8 @@
 #include "Core/Intersection.h"
 #include "Core/Vec2.h"
 #include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
+#include <vector>
+#include <string>
 
 //=================================
 class Triangle  :public SurfaceEntity{	
@@ -37,7 +39,7 @@ public:
 	std::string str()const;
 	void calculate_intersection_with(
         const Ray* ray, 
-        vector<Intersection> *intersections
+        std::vector<Intersection> *intersections
     )const;
 private:
 

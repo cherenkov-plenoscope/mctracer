@@ -1,4 +1,8 @@
 #include "EllipticalCapWithHexagonalBound.h"
+using std::string;
+using std::stringstream;
+using std::vector;
+
 //------------------------------------------------------------------------------
 void EllipticalCapWithHexagonalBound::set_focalLength_radiiRatio_hexAngel_hexRadius(
 	const double _focal_length,

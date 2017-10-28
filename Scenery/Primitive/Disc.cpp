@@ -1,4 +1,8 @@
 #include "Disc.h"
+#include <sstream>
+using std::string;
+using std::vector;
+using std::stringstream;
 //------------------------------------------------------------------------------
 void Disc::set_radius(const double radius){
 
@@ -10,8 +14,8 @@ void Disc::post_initialize_radius_of_enclosing_sphere(){
 	bounding_sphere_radius = cylinder_bounds.get_radius();
 }
 //------------------------------------------------------------------------------
-std::string Disc::str()const {
-	std::stringstream out;
+string Disc::str()const {
+	stringstream out;
 	out << SurfaceEntity::str();
 
 	out << "disc:\n";

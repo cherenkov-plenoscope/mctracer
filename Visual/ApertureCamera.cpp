@@ -1,6 +1,8 @@
 #include "ApertureCamera.h"
 #include "Tracer.h"
 #include <exception>
+using std::string;
+using std::stringstream;
 
 namespace Visual {
 //------------------------------------------------------------------------------

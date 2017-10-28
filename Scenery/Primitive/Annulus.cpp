@@ -1,4 +1,9 @@
 #include "Annulus.h"
+#include <sstream>
+using std::string;
+using std::stringstream;
+using std::vector;
+
 //------------------------------------------------------------------------------
 void Annulus::set_outer_inner_radius(
         const double outer_radius, 
@@ -14,8 +19,8 @@ void Annulus::post_initialize_radius_of_enclosing_sphere(){
     bounding_sphere_radius = outer_bound.get_radius();
 }
 //------------------------------------------------------------------------------
-std::string Annulus::str()const {
-    std::stringstream out;
+string Annulus::str()const {
+    stringstream out;
     out << SurfaceEntity::str();
 
     out << "Annulus:\n";

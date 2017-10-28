@@ -1,5 +1,9 @@
 #include "RayForPropagation.h"
 #include "SimulationTruth.h"
+using std::string;
+using std::stringstream;
+
+
 //------------------------------------------------------------------------------
 RayForPropagation::RayForPropagation(
 	const Vec3 support,

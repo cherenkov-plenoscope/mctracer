@@ -1,4 +1,7 @@
  #include "Plane.h"
+using std::string;
+using std::vector;
+using std::stringstream;
 //------------------------------------------------------------------------------
 void Plane::set_x_y_width(
 	const double x_width, 
@@ -15,8 +18,8 @@ void Plane::post_initialize_radius_of_enclosing_sphere() {
 	);
 }
 //------------------------------------------------------------------------------
-std::string Plane::str()const {
-	std::stringstream out;
+string Plane::str()const {
+	stringstream out;
 	out << SurfaceEntity::str();
 
 	out << "plane:\n";

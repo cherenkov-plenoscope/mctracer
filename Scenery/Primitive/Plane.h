@@ -13,6 +13,9 @@
 #include "Core/Intersection.h"
 #include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
 #include "Scenery/Geometry/RectangularPrismZ.h"
+#include <vector>
+#include <string>
+
 //=================================
 class Plane :public SurfaceEntity{
 protected:	
@@ -36,7 +39,7 @@ public:
 	std::string str()const;
 	void calculate_intersection_with(
         const Ray* ray, 
-        vector<Intersection> *intersections
+        std::vector<Intersection> *intersections
     )const;
 private:
 	

@@ -1,5 +1,6 @@
 #include "Sensors.h"
 #include "Finder.h"
+#include <algorithm>
 
 namespace PhotonSensor {
 //------------------------------------------------------------------------------

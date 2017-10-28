@@ -1,4 +1,8 @@
 #include "SphereCapWithCylinderBound.h"
+using std::string;
+using std::vector;
+using std::stringstream;
+
 //------------------------------------------------------------------------------
 void SphereCapWithCylinderBound::set_curvature_radius_and_outer_radius(
 	const double _curvature_radius,

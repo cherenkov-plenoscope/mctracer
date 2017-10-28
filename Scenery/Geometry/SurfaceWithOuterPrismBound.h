@@ -12,6 +12,7 @@
 #include "Core/Intersection.h"
 #include "TwoSolutionSurfaceRayEquation.h"
 #include "PrismZ.h"
+#include <vector>
 
 //=================================
 class SurfaceWithOuterPrismBound :public SurfaceEntity{
@@ -21,7 +22,7 @@ protected:
 		const TwoSolutionSurfaceRayEquation* eq,
 		const PrismZ* outer_bound,
 		const Ray *ray,
-		vector<Intersection> *intersections
+		std::vector<Intersection> *intersections
 	)const;	
 };
 #endif // __SurfaceWithOuterPrismBound_H_INCLUDED__

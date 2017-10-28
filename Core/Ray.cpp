@@ -1,5 +1,13 @@
 #include "Ray.h"
 #include <sstream>
+#include <iostream>
+#include <math.h>
+#include <vector>
+#include <algorithm>
+
+using std::string;
+using std::stringstream;
+
 //------------------------------------------------------------------------------
 Ray::Ray() {}
 //------------------------------------------------------------------------------
