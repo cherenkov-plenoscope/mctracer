@@ -1,5 +1,7 @@
 #include "FunctionMap.h"
 #include <sstream>
+using std::string;
+using std::map;
 using std::stringstream;
 //------------------------------------------------------------------------------
 bool FunctionMap::has(const string key)const {

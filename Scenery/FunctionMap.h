@@ -10,32 +10,28 @@
 // included dependencies
 #include <string>
 #include <map>
-
-using std::string;
-using std::map;
-
 #include "ResourceMap.h"
 #include "Core/Function/Function.h"
 
 class FunctionMap: public ResourceMap {
 public:
-    map<string, Function::Func1D*> functions;
+    std::map<std::string, Function::Func1D*> functions;
 
-    bool has(const string key)const;
-    Function::Func1D* get(const string key)const;
+    bool has(const std::string key)const;
+    Function::Func1D* get(const std::string key)const;
     
     template<class ProtoFunction>
-    ProtoFunction* add(const string key) {
+    ProtoFunction* add(const std::string key) {
         assert_not_in_use_yet(key);
         ProtoFunction* child = new ProtoFunction;
-        functions.insert(std::pair<string, Function::Func1D*>(key, child)); 
+        functions.insert(std::pair<std::string, Function::Func1D*>(key, child)); 
         return child;        
     }
 
     ~FunctionMap();
 private:
 
-    void assert_has(const string key)const;
-    void assert_not_in_use_yet(const string key);
+    void assert_has(const std::string key)const;
+    void assert_not_in_use_yet(const std::string key);
 };
 #endif // __FUNCTIONMAP_H_INCLUDED__
