@@ -32,7 +32,7 @@ protected:
   }
   virtual void SetUp() {
 
-  	dice.set_seed(Random::zero_seed);
+  	dice.set_seed(Random::ZERO_SEED);
   	pos.set(0.0,0.0,0.0);
   	rot.set(0.0,0.0,0.0);
 

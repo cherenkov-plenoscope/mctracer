@@ -1,18 +1,10 @@
 #include "Generator.h"
-#include "Random.h"
-#include <chrono>
 #include <iostream>
 
 using namespace Random;
 //------------------------------------------------------------------------------
 uint32_t Generator::get_seed()const{
 	return seed;
-}
-//------------------------------------------------------------------------------
-void Generator::set_seed_now_using_system_clock() {
-	set_seed(
-		std::chrono::system_clock::now().time_since_epoch().count()
-	);
 }
 //------------------------------------------------------------------------------
 void Generator::set_seed(const uint32_t seed) {

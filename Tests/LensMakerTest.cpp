@@ -70,7 +70,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
     		Function::Limits(200e-9, 1200e-9)
     	);
 
-    Random::Mt19937 prng(Random::zero_seed);
+    Random::Mt19937 prng(Random::ZERO_SEED);
 
     uint number_of_photons_per_run = 1000;
     vector<double> sigma_psf_vs_image_sensor_distance;

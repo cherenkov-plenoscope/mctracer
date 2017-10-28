@@ -17,7 +17,7 @@
 // the Pseudo random generators
 namespace Random {
 
-	static const uint zero_seed = 0;
-	static Mt19937 void_generator = Mt19937(zero_seed);
+	static const unsigned int ZERO_SEED = 0;
+	static Mt19937 void_generator = Mt19937(ZERO_SEED);
 }
 #endif // __RANDOM_H_INCLUDED__

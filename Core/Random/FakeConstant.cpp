@@ -1,10 +1,11 @@
 #include "FakeConstant.h"
 #include "Random.h"
+
 namespace Random {
 //------------------------------------------------------------------------------
 FakeConstant::FakeConstant(const double _constant) {
 	constant = _constant;
-	seed = zero_seed;
+	seed = ZERO_SEED;
 }
 //------------------------------------------------------------------------------
 double FakeConstant::uniform() {
