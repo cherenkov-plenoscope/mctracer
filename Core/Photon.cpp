@@ -1,6 +1,7 @@
 #include "Photon.h"
 #include "PhysicalConstants.h"
 #include "Core/RayAndFrame.h"
+#include <sstream>
 //------------------------------------------------------------------------------
 Photon::Photon(
 	const Vec3 support,

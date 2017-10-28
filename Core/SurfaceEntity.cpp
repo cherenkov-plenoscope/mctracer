@@ -2,6 +2,7 @@
 #include "Core/Function/LimitsFunction.h"
 #include "Core/Function/ConstantFunction.h"
 #include <limits>
+#include <sstream>
 using Function::Func1D;
 using Function::Constant;
 using Function::Limits;

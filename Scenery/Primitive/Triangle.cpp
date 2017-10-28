@@ -1,5 +1,6 @@
 #include "Triangle.h"
 #include <algorithm>
+#include <sstream>
 using std::string;
 using std::stringstream;
 using std::vector;

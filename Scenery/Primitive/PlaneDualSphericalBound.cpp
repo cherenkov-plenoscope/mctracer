@@ -1,4 +1,5 @@
  #include "PlaneDualSphericalBound.h"
+#include <sstream>
 using std::string;
 using std::vector;
 using std::stringstream;

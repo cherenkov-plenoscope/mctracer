@@ -1,4 +1,5 @@
  #include "HexPlane.h"
+#include <sstream>
 using std::vector;
 using std::string;
 using std::stringstream;

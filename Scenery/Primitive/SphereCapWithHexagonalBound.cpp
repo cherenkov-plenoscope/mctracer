@@ -1,5 +1,6 @@
 #include "SphereCapWithHexagonalBound.h"
 #include "math.h"
+#include <sstream>
 using std::string;
 using std::vector;
 using std::stringstream;

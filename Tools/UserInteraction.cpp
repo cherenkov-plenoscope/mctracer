@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sstream>
+#include <iostream>
 #include "Xml/BasicAttributes.h"
 
 namespace UserInteraction {

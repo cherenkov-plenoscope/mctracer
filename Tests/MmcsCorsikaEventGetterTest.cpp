@@ -3,6 +3,8 @@
 #include "Corsika/MagicMonteCarloSimulation/MmcsCorsikaSubBlockGetter.h"
 #include "Corsika/MagicMonteCarloSimulation/MmcsCorsikaPhotonData.h"
 #include "Corsika/MagicMonteCarloSimulation/MmcsCorsikaTools.h"
+using std::string;
+
 
 class MmcsCorsikaEventGetterTest : public ::testing::Test {};
 //----------------------------------------------------------------------

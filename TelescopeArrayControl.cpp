@@ -1,5 +1,6 @@
 #include "TelescopeArrayControl.h"
 #include "ZdAzMount.h"
+#include <sstream>
 //------------------------------------------------------------------------------
 void TelescopeArrayControl::move_all_to_Az_Zd(const double Az_Rad, const double Zd_Rad) {
 

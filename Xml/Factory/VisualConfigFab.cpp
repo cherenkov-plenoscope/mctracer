@@ -1,5 +1,7 @@
 #include "VisualConfigFab.h"
 #include "Tools/PathTools.h"
+#include <sstream>
+
 namespace Xml {
 	namespace Configs {
 //------------------------------------------------------------------------------

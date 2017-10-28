@@ -1,4 +1,5 @@
 #include "InternalPhotonSource.h"
+#include <sstream>
 using StringTools::is_equal;
 
 namespace Xml {

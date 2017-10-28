@@ -1,6 +1,7 @@
 #include "FlyingCamera.h"
 #include "Core/RayAndFrame.h"
 #include "Core/Intersection.h"
+#include <sstream>
 using std::cout;
 using std::stringstream;
 using std::string;

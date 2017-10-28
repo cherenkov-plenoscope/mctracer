@@ -1,5 +1,6 @@
 #include "SphereCapWithRectangularBound.h"
 #include <algorithm>
+#include <sstream>
 using std::string;
 using std::vector;
 using std::stringstream;

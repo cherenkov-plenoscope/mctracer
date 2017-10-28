@@ -1,4 +1,5 @@
 #include "FiniteStateMashine.h"
+#include <sstream>
 //------------------------------------------------------------------------------
 void FiniteStateMashine::define_state(const int new_state) {
 	assert_no_transition_made_so_far();

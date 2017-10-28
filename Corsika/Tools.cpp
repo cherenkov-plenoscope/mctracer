@@ -1,6 +1,7 @@
 #include "Tools.h"
 #include <sstream>
 using std::stringstream;
+using std::string;
 
 namespace Corsika {
 

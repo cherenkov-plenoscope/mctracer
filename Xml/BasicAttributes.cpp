@@ -1,4 +1,5 @@
 #include "BasicAttributes.h"
+#include <sstream>
 using std::string;
 
 namespace Xml {

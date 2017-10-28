@@ -1,4 +1,5 @@
 #include "PropagationConfigFab.h"
+#include <sstream>
 namespace Xml {
 	namespace Configs {
 //------------------------------------------------------------------------------

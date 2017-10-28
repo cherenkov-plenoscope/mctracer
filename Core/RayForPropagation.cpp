@@ -1,5 +1,6 @@
 #include "RayForPropagation.h"
 #include "SimulationTruth.h"
+#include <sstream>
 using std::stringstream;
 using std::vector;
 using std::string;

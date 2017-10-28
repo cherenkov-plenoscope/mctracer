@@ -82,7 +82,7 @@ private:
     HomTra3 calculate_frame2world()const;
     void init_frame2world();
     void init_root();
-    void set_name(const string name);
+    void set_name(const std::string name);
     void warn_small_child(const Frame* frame)const;
     void warn_about_close_frames()const;
     void cluster_children();

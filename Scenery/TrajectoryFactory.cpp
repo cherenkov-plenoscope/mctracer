@@ -1,4 +1,5 @@
 #include "TrajectoryFactory.h"
+#include <sstream>
 using std::string;
 
 //------------------------------------------------------------------------------
