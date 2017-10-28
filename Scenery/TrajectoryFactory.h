@@ -12,7 +12,6 @@
 #include "Core/SurfaceEntity.h"
 #include "Scenery/Primitive/Cylinder.h"
 #include "Scenery/Primitive/Sphere.h"
-using std::string;
 
 //=================================
 // Spectate the propagation history of a photon.
@@ -45,8 +44,8 @@ public:
 	void erase_trajectory_from(Frame* root_frame);
 private:
 
-	string get_trajectory_of_part_index(const uint part_index)const;
-	string get_intersection_point_name_of_part(const uint part_index)const;
+	std::string get_trajectory_of_part_index(const uint part_index)const;
+	std::string get_intersection_point_name_of_part(const uint part_index)const;
 	bool is_not_the_last_intersection(const uint part_index)const;
 };
 #endif // __TrajectoryFactory_H_INCLUDED__

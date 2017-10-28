@@ -1,4 +1,6 @@
 #include "TrajectoryFactory.h"
+using std::string;
+
 //------------------------------------------------------------------------------
 const Color TrajectoryFactory::trajectory_col = Color(255,128,128);
 const Color TrajectoryFactory::absorption_in_void_col = Color(128,128,255);
