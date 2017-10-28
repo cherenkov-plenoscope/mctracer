@@ -3,6 +3,7 @@
 #include "Core/Histogram1D.h"
 #include "Core/SimulationTruth.h"
 #include "Tools/Numeric.h"
+using std::vector;
 
 namespace Plenoscope {
 namespace NightSkyBackground {
