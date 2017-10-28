@@ -8,15 +8,10 @@
 
 //=================================
 // included dependencies
-#include <string>
-#include <vector>
-#include "SignalProcessing/SimpleTDCQDC.h"
-using std::string;
-using std::vector;
+
 //=================================
 
 namespace SimulationTruth {
-
     static const int MCTRACER_DEFAULT = -1; 
     static const int NIGHT_SKY_BACKGROUND = -100;
     static const int PHOTO_ELECTRIC_CONVERTER_ACCIDENTAL = - 201;
