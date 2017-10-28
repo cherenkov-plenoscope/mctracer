@@ -11,12 +11,12 @@
 #include "Core/Frame.h"
 
 namespace Frames {
-	double spread_of_frame_position_in_mother(const vector<Frame*> &frames);
-	Vec3 bounding_sphere_center(const vector<Frame*> &frames);
-    Vec3 dumb_bounding_sphere_center(const vector<Frame*> &frames);
-    Vec3 mean_of_positions_in_mother(const vector<Frame*> &frames);
-    bool positions_in_mother_are_too_close_together(const vector<Frame*> &frames);
-    double bounding_sphere_radius(const vector<Frame*> &frames, const Vec3 center);
+	double spread_of_frame_position_in_mother(const std::vector<Frame*> &frames);
+	Vec3 bounding_sphere_center(const std::vector<Frame*> &frames);
+    Vec3 dumb_bounding_sphere_center(const std::vector<Frame*> &frames);
+    Vec3 mean_of_positions_in_mother(const std::vector<Frame*> &frames);
+    bool positions_in_mother_are_too_close_together(const std::vector<Frame*> &frames);
+    double bounding_sphere_radius(const std::vector<Frame*> &frames, const Vec3 center);
 }
 
 #endif // __FRAMES_H_INCLUDED__

@@ -1,6 +1,10 @@
 #include "gtest/gtest.h"
 #include "Core/Frames.h"
 #include "Scenery/Primitive/Sphere.h"
+using std::string;
+using std::stringstream;
+using std::vector;
+
 class FramesTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(FramesTest, too_close_together_no_frame) {

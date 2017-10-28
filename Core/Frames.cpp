@@ -1,5 +1,9 @@
 #include "Core/Frames.h"
 #include "Scenery/Geometry/QuadraticEquation.h"
+using std::string;
+using std::stringstream;
+using std::vector;
+
 namespace Frames {
 //------------------------------------------------------------------------------
 Vec3 bounding_sphere_center(const vector<Frame*> &frames) {

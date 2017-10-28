@@ -22,12 +22,12 @@ protected:
 public:
 
     Sphere();
-    Sphere(const string name, const Vec3 pos, const Rot3 rot);
+    Sphere(const std::string name, const Vec3 pos, const Rot3 rot);
     void set_radius(double nradius);
-    string str()const;
+    std::string str()const;
     void calculate_intersection_with(
         const Ray* ray, 
-        vector<Intersection> *intersections
+        std::vector<Intersection> *intersections
     )const;
 private:
 
@@ -44,7 +44,7 @@ private:
     void add_sphere_intersection_for_ray_parameter(
         const Ray* ray, 
         const double ray_parameter,
-        vector<Intersection> *intersections
+        std::vector<Intersection> *intersections
     )const;
 
     QuadraticEquation get_ray_parameter_equation_for_intersections_with_sphere(

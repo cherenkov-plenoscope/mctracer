@@ -2,6 +2,12 @@
 #include "Frames.h"
 #include <set>
 #include <exception>
+#include <sstream>
+#include <iostream>
+using std::string;
+using std::stringstream;
+using std::vector;
+
 
 const char Frame::path_delimiter = '/';
 const uint Frame::max_number_of_children = 16;
