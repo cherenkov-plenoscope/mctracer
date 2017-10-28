@@ -2,6 +2,9 @@
 #include "Tools/StringTools.h"
 #include <algorithm>
 #include <iomanip> 
+using std::string;
+using std::vector;
+
 //------------------------------------------------------------------------------
 Histogram1D::Histogram1D(
 	const vector<double> &samples, 

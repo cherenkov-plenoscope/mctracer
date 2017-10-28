@@ -9,27 +9,25 @@
 //==============================================================================
 // included dependencies
 #include <vector>
-#include <stdint.h>
-#include <iostream>
-using std::string;
-using std::vector;
+#include <string>
+
 //==============================================================================
 class Histogram1D {
 
-	vector<double> bin_edges;
+	std::vector<double> bin_edges;
 public:
-	vector<uint> bins;
-	uint number_of_samples = 0;
-	uint underflow_bin = 0;
-	uint overflow_bin = 0;
+	std::vector<unsigned int> bins;
+	unsigned int number_of_samples = 0;
+	unsigned int underflow_bin = 0;
+	unsigned int overflow_bin = 0;
 
 	Histogram1D(
-		const vector<double> &samples, 
-		const vector<double> &_bin_edges
+		const std::vector<double> &samples, 
+		const std::vector<double> &_bin_edges
 	);
-	string str()const;
+	std::string str()const;
 	double mode()const;
-	uint arg_max()const;
+	unsigned int arg_max()const;
 private:
 
 	void init_bins_to_zero();
