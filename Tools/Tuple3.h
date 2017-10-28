@@ -8,7 +8,6 @@
 
 //=================================
 // included dependencies  
-#include <iostream>
 
 struct Tuple3 {
 
