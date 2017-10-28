@@ -3,6 +3,8 @@
 #include <ratio>
 #include <sstream>
 #include <iomanip>
+#include <iostream>
+using std::string;
 
 namespace Time {
 	Point now() {

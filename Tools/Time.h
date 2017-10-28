@@ -8,13 +8,8 @@
 
 //=================================
 // included dependencies
-#include <iostream>
 #include <chrono>
 #include <string>
-#include <map>
-#include <vector>
-using std::string;
-using std::vector;
 
 //=================================
 namespace Time {
@@ -23,7 +18,7 @@ namespace Time {
 	double periode(const Point &t1, const Point &t2); 
 	//--------------------------------------------------------------------------
 	class StopPeriode {
-		const string what;
+		const std::string what;
 		Point t1;
 	public:
 		StopPeriode();
@@ -32,10 +27,10 @@ namespace Time {
 	//--------------------------------------------------------------------------
 	class StopWatch {
 		StopPeriode stop_periode;
-		const string what;
+		const std::string what;
 	public:
 
-		StopWatch(const string what_to_time);
+		StopWatch(const std::string what_to_time);
 		void stop();
 	};
 	//--------------------------------------------------------------------------
@@ -47,15 +42,15 @@ namespace Time {
 
 		Stamp();
 		void update_now();
-		string str()const;
-		string yyyy()const;
-		string mm()const;
-		string dd()const;
-		string HH()const;
-		string MM()const;
-		string SS()const;
+		std::string str()const;
+		std::string yyyy()const;
+		std::string mm()const;
+		std::string dd()const;
+		std::string HH()const;
+		std::string MM()const;
+		std::string SS()const;
 	private:
-		string fill_zeros_to_value_for_width(
+		std::string fill_zeros_to_value_for_width(
 			const uint value, 
 			const uint width
 		)const;
