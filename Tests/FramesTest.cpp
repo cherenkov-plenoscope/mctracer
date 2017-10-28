@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "Core/Frames.h"
 #include "Scenery/Primitive/Sphere.h"
+#include "math.h"
 using std::string;
 using std::stringstream;
 using std::vector;

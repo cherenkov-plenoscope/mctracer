@@ -1,5 +1,6 @@
 #include "Sphere.h"
 #include <sstream>
+#include "math.h"
 using std::string;
 using std::stringstream;
 using std::vector;

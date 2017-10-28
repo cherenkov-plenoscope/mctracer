@@ -8,11 +8,7 @@
 
 //=================================
 // included dependencies
-#include "math.h"	  
-#include <iostream>
-#include <string>
-#include <sstream>
-
+  
 class QuadraticEquation{
 	// f(x) = ax^2 + bx + c
 

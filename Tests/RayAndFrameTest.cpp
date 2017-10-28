@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "Core/RayAndFrame.h"
 #include "Scenery/Primitive/Sphere.h"
+#include "math.h"
 
 using namespace RayAndFrame;
 

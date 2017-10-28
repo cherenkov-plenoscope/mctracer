@@ -1,5 +1,5 @@
 #include "Core/Frames.h"
-#include "Scenery/Geometry/QuadraticEquation.h"
+#include "math.h"
 using std::string;
 using std::stringstream;
 using std::vector;

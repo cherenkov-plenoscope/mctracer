@@ -1,4 +1,5 @@
 #include "EllipticalCapRayIntersectionEquation.h"
+#include "math.h"
 //------------------------------------------------------------------------------
 EllipticalCapRayIntersectionEquation::EllipticalCapRayIntersectionEquation(
 	const double _A, const double _B,  const double _C,
