@@ -1,6 +1,7 @@
 #include "Photons.h"
 #include <omp.h>
 #include <sstream>
+#include <iostream>
 #include "Core/PhotonAndFrame.h"
 using std::string;
 using std::stringstream;
