@@ -1,6 +1,8 @@
 #include "Generator.h"
-#include <chrono>
 #include "Random.h"
+#include <chrono>
+#include <iostream>
+
 using namespace Random;
 //------------------------------------------------------------------------------
 uint32_t Generator::get_seed()const{
