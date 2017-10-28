@@ -1,4 +1,5 @@
 #include "BiConvexLensHexBound.h"
+#include "math.h"
 //------------------------------------------------------------------------------
 void BiConvexLensHexBound::set_curvature_radius_and_outer_hex_radius(
     const double curvature_radius,

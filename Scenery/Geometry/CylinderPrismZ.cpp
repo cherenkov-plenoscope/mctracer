@@ -1,4 +1,6 @@
 #include "CylinderPrismZ.h"
+#include "math.h"
+#include <sstream>
 //------------------------------------------------------------------------------
 void CylinderPrismZ::set_radius(const double radius) {
 	assert_radius_is_positiv(radius);

@@ -1,4 +1,5 @@
- #include "Plane.h"
+#include "Plane.h"
+#include "math.h"
 using std::string;
 using std::vector;
 using std::stringstream;

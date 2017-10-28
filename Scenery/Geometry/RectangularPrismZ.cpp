@@ -1,4 +1,6 @@
 #include "RectangularPrismZ.h"
+#include <sstream>
+#include "math.h"
 //------------------------------------------------------------------------------
 void RectangularPrismZ::set_x_y_width(
 	const double x_width,

@@ -1,4 +1,5 @@
 #include "BiConvexLens.h"
+#include "math.h"
 //------------------------------------------------------------------------------
 void BiConvexLens::set_curvature_radius_and_aperture_radius(
 	const double curvature_radius,

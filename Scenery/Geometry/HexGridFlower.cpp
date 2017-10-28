@@ -1,5 +1,6 @@
 #include "HexGridFlower.h"
 #include "Tools/Tools.h"
+#include "math.h"
 //------------------------------------------------------------------------------
 HexGridFlower::HexGridFlower(
 	const double outer_hex_grid_radius,

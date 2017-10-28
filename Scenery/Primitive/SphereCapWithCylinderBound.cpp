@@ -1,4 +1,5 @@
 #include "SphereCapWithCylinderBound.h"
+#include "math.h"
 using std::string;
 using std::vector;
 using std::stringstream;

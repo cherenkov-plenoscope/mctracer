@@ -1,4 +1,5 @@
 #include "EllipticalCapWithHexagonalBound.h"
+#include "math.h"
 using std::string;
 using std::stringstream;
 using std::vector;

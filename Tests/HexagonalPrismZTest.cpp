@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "Scenery/Geometry/HexagonalPrismZ.h"
+#include "math.h"
 
 class HexagonalPrismZTest : public ::testing::Test {
 };

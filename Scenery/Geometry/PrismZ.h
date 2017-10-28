@@ -8,11 +8,8 @@
 
 //=================================
 // included dependencies
-#include <iostream> 
-#include <string>
-#include <sstream>
-#include <math.h>
 #include "Core/Vec3.h"
+
 //=================================
 class PrismZ {
 public:
