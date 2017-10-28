@@ -1,6 +1,10 @@
 #include "gtest/gtest.h"
 #include "Tools/AsciiIo.h"
 #include "Core/Photons.h"
+#include <math.h>
+using std::stringstream;
+using std::string;
+using std::vector;
 
 class PhotonsTest : public ::testing::Test {};
 //------------------------------------------------------------------------------

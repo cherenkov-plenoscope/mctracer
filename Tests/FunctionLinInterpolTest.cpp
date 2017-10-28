@@ -2,6 +2,9 @@
 #include <math.h> 
 #include "Core/Function/LinInterpolFunction.h"
 #include "Tools/AsciiIo.h"
+using std::stringstream;
+using std::string;
+using std::vector;
 
 class LinInterpolTest : public ::testing::Test {
     protected:

@@ -1,6 +1,11 @@
 #include "AsciiIo.h"
 #include "Tools/StringTools.h"
+#include <sstream>
+#include <math.h>
+#include <string>
 using std::stringstream;
+using std::string;
+using std::vector;
 
 namespace AsciiIo {
 	//--------------------------------------------------------------------------

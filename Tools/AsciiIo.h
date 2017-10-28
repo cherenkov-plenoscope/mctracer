@@ -8,55 +8,52 @@
 
 //=================================
 // included dependencies
-#include <iostream> 
 #include <string>
-#include <sstream>
 #include <vector>
-#include <math.h>
 #include <fstream>
+#include <sstream>
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"
-using std::string;
-using std::vector;
+
 
 //=================================
 namespace AsciiIo {
 	
-	vector<vector<double>> gen_table_from_file(const string &path);
-	vector<vector<double>> gen_table_from_string(const string &text);
+	std::vector<std::vector<double>> gen_table_from_file(const std::string &path);
+	std::vector<std::vector<double>> gen_table_from_string(const std::string &text);
 	void write_table_to_file(
-		vector<vector<double>> table,
-		const string &path
+		std::vector<std::vector<double>> table,
+		const std::string &path
 	);
 	void write_table_to_file_with_header(
-		vector<vector<double>> table,
-		const string &path,
-		const string &header
+		std::vector<std::vector<double>> table,
+		const std::string &path,
+		const std::string &header
 	);
 
 	const char delimiter = '\t';
-	const string delimiters_for_reading = "\t" " ";
+	const std::string delimiters_for_reading = "\t" " ";
 	const char comment_escape = '#';
 	const int precision = 10;
 
-	string get_table_print(vector<vector<double>> &table);
+	std::string get_table_print(std::vector<std::vector<double>> &table);
 
 	class TableReader {
 		uint current_row = 0;
 		uint current_col = 0;
 		std::istringstream text;
-		vector<vector<double>> table;
+		std::vector<std::vector<double>> table;
 	public:
-		TableReader(const string &text);
-		vector<vector<double>> get_table()const;
+		TableReader(const std::string &text);
+		std::vector<std::vector<double>> get_table()const;
 	private:
 		void fill_matrix_from_text();
-		vector<double> text_row_2_numeric_row(
-			const string &row
+		std::vector<double> text_row_2_numeric_row(
+			const std::string &row
 		);
 		void push_back_token_to_numeric_row(
-			const string token,
-			vector<double> *numeric_row
+			const std::string token,
+			std::vector<double> *numeric_row
 		);
 	};
 }

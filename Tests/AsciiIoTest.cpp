@@ -1,5 +1,8 @@
 #include "gtest/gtest.h"
 #include "Tools/AsciiIo.h"
+using std::stringstream;
+using std::string;
+using std::vector;
 
 class AsciiIoTest : public ::testing::Test {};
 //------------------------------------------------------------------------------

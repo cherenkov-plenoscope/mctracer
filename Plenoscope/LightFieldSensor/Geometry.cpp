@@ -7,6 +7,8 @@
 #include "Tools/FileTools.h"
 #include "Scenery/Geometry/LensMaker/LensMaker.h"
 #include "Corsika/Tools.h"
+#include <sstream>
+#include <math.h>
 namespace Plenoscope {
 namespace LightFieldSensor {
 //------------------------------------------------------------------------------
