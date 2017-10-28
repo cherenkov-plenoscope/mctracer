@@ -9,9 +9,7 @@
 //=================================
 // included dependencies
 #include "Core/Vec3.h"
-#include <iostream> 
 #include <string>
-#include <sstream>
 #include <vector>
 
 //=================================
