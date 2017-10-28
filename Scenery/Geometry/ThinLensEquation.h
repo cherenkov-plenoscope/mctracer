@@ -8,7 +8,7 @@
 
 //=================================
 // included dependencies
-#include <iostream>
+
 //=================================
 
 // The thin lens equation
