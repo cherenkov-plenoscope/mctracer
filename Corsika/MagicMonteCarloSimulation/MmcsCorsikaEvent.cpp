@@ -1,4 +1,6 @@
 #include "MmcsCorsikaEvent.h"
+using std::vector;
+
 //------------------------------------------------------------------------------
 MmcsCorsikaEvent::MmcsCorsikaEvent(
 		MmcsCorsikaEventHeader event_header,

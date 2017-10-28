@@ -1,8 +1,8 @@
 #include "RayForPropagation.h"
 #include "SimulationTruth.h"
-using std::string;
 using std::stringstream;
-
+using std::vector;
+using std::string;
 
 //------------------------------------------------------------------------------
 RayForPropagation::RayForPropagation(
@@ -86,12 +86,12 @@ double RayForPropagation::get_accumulative_distance()const {
     return accumulative_distance;	
 }
 //------------------------------------------------------------------------------
-uint RayForPropagation::get_number_of_interactions_so_far()const {
+unsigned int RayForPropagation::get_number_of_interactions_so_far()const {
 	return uint(intersection_history.size());
 }
 //------------------------------------------------------------------------------
 const Intersection& RayForPropagation::get_intersection_at(
-	const uint index
+	const unsigned int index
 )const{
 	return intersection_history.at(index);
 }
@@ -126,8 +126,8 @@ Vec3 RayForPropagation::get_final_intersection_incident_vector_in_object_frame()
 		return Vec3::null;
 	}else {
 
-		const uint last_i = intersection_history.size() - 1 ;
-		const uint second_last_i = last_i - 1;
+		const unsigned int last_i = intersection_history.size() - 1 ;
+		const unsigned int second_last_i = last_i - 1;
 
 		Vec3 final = 
 			intersection_history.at(last_i).

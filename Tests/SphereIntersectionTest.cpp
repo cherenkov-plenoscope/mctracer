@@ -8,6 +8,7 @@
 #include "Core/Photon.h"
 #include "Core/PhotonAndFrame.h"
 #include "Core/Photons.h"
+using std::vector;
 
 class SphereIntersectionTest : public ::testing::Test {
 protected:

@@ -11,8 +11,6 @@
 #include "Core/Ray.h"
 #include "Core/Intersection.h"
 #include "Core/SurfaceEntity.h"
-using std::vector;
-using std::string;
 
 enum Interaction { 
 	production,
@@ -35,8 +33,8 @@ class RayForPropagation :public Ray{
 	friend class TrajectoryFactory;
 protected:
 
-	vector<Intersection> intersection_history;
-	vector<Interaction> interaction_history;
+	std::vector<Intersection> intersection_history;
+	std::vector<Interaction> interaction_history;
 
 	int simulation_truth_id;
 	// The sumilation truth identifier is a encoding additional information of
@@ -54,10 +52,10 @@ public:
 		const Intersection& interact, 
 		const Interaction type
 	);
-	string str()const;
+	std::string str()const;
 	double get_accumulative_distance()const;
-	uint get_number_of_interactions_so_far()const;
-	const Intersection& get_intersection_at(const uint index)const;
+	unsigned int get_number_of_interactions_so_far()const;
+	const Intersection& get_intersection_at(const unsigned int index)const;
 	Interaction get_final_interaction_type()const;
 	const Intersection& get_final_intersection()const;
 	virtual double get_time_of_flight()const;
@@ -65,7 +63,7 @@ public:
 protected:
 
 	void push_back_production_of_ray();
-	string get_history_print()const;
-	string get_type_print(const Interaction type)const;
+	std::string get_history_print()const;
+	std::string get_type_print(const Interaction type)const;
 };
 #endif // __RayForPropagation_H_INCLUDED__ 
