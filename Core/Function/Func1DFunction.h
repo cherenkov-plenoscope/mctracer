@@ -12,7 +12,6 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "Core/TracerException.h"
 using std::string;
 using std::vector;
 

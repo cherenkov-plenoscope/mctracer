@@ -17,7 +17,7 @@ void write(vector<array<float, 273>> blocks, const string &path) {
         std::stringstream info;
         info << __FILE__ << " " << __LINE__ << "\n";
         info << "HeaderBlock: Unable to write file: '" << path << "'\n";
-        throw CanNotOpenFile(info.str());      
+        throw std::runtime_error(info.str());      
     }
 
     for(const array<float, 273> &block: blocks)
@@ -34,7 +34,7 @@ vector<array<float, 273>> read(const string &path) {
         std::stringstream info;
         info << __FILE__ << " " << __LINE__ << "\n";
         info << "HeaderBlock: Unable to read file: '" << path << "'\n";
-        throw CanNotOpenFile(info.str());      
+        throw std::runtime_error(info.str());      
     }
 
     vector<array<float, 273>> blocks;

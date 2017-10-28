@@ -7,7 +7,7 @@ class Corsika_io : public ::testing::Test {};
 TEST_F(Corsika_io, word_size_is_too_large) {
     EXPECT_THROW(
         Corsika::str2float("Hans Peter"),
-        Corsika::Not4Chars
+        std::invalid_argument
     );
 }
 //----------------------------------------------------------------------

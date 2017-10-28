@@ -85,23 +85,6 @@ private:
 
 	double get_average_object_distance(const Frame* world);
 	uint _5_permil_of_pixels()const;
-public:
-
-	class BadFStopNumber :public TracerException{
-        using TracerException::TracerException;
-    };
-
-	class BadImageSensorWidth :public TracerException{
-        using TracerException::TracerException;
-    };
-
-	class BadNumberRaysPerPixel :public TracerException{
-        using TracerException::TracerException;
-    };
-
-	class BadObjectDistance :public TracerException{
-        using TracerException::TracerException;
-    };
 };
 
 }//Visual

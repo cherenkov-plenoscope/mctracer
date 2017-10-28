@@ -13,8 +13,6 @@
 #include <sstream>
 #include <math.h>
 #include "Core/Vec3.h"
-#include "Core/TracerException.h"
-
 //=================================
 class PrismZ {
 public:

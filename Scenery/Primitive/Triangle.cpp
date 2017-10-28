@@ -68,7 +68,7 @@ void Triangle::assert_edge_length_is_non_zero(
 		out << "Triangle::" << __func__ <<"():\n";
 		out << "Expected edge length of " << edge << " > 0.0, but actual: ";
 		out << "edge length of " << edge << " = " << edge_length << "m.\n";
-		throw TracerException(out.str());
+		throw std::invalid_argument(out.str());
 	}
 }
 //------------------------------------------------------------------------------

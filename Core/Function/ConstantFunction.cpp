@@ -1,6 +1,5 @@
 #include "ConstantFunction.h"
 #include <sstream>
-#include "Core/TracerException.h"
 
 namespace Function {
 	const Constant Constant::void_function = Constant(0.0, Limits::void_limits);

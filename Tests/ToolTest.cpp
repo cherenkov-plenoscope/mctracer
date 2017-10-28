@@ -41,7 +41,7 @@ TEST_F(Tools, file_existance_on_existing_file) {
 TEST_F(Tools, file_size_of_not_existing_file) {
     EXPECT_THROW(
         {FileTools::size_in_bytes("no_such_file");},
-        TracerException
+        std::runtime_error
     );
 }
 //------------------------------------------------------------------------------

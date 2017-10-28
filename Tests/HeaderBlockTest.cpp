@@ -52,7 +52,7 @@ TEST_F(HeaderBlockTest, read_non_existing_file) {
     
     EXPECT_THROW(
         HeaderBlock::read("InOut/non_existing_file.bin");,
-        HeaderBlock::CanNotOpenFile
+        std::runtime_error
     );
 }
 //----------------------------------------------------------------------

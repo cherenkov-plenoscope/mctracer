@@ -29,7 +29,7 @@ void MmcsCorsikaFullEventGetter::assert_MMCS_file_syntax_is_valid(
 		info << "Mmcs_acceptor state: " << Mmcs_acceptor.get_state() << "\n";
 		info << "Expected current sub_block to be: ?, but actual: ";
 		info << sub_block.get_4char_string_representation_at(0) << " \n";
-		throw TracerException(info.str());			
+		throw std::runtime_error(info.str());			
 	}
 }
 //------------------------------------------------------------------------------

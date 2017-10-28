@@ -33,12 +33,12 @@ TEST_F(EventIoTest,  EventIoHeader_fails_wrong_sync_marker) {
     sout.put(0x00);
     sout.seekp(0);
     
-    EXPECT_THROW(EventIo::Header my_header(sout), TracerException);
+    EXPECT_THROW(EventIo::Header my_header(sout), EventIo::NoSyncFoundException);
 }
 //------------------------------------------------------------------------------
 TEST_F(EventIoTest, EventIoHeader_fails_empty_file) {
     std::stringstream fake_file;
-    EXPECT_THROW(EventIo::Header my_header(fake_file), TracerException);
+    EXPECT_THROW(EventIo::Header my_header(fake_file), std::runtime_error);
 }
 //------------------------------------------------------------------------------
 TEST_F(EventIoTest, make_runheader) {

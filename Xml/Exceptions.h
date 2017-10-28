@@ -8,32 +8,31 @@
 
 //=================================
 // included dependencies
-#include "Core/TracerException.h"
 
 namespace Xml {
 
-	class IoError : public TracerException {
-		using TracerException::TracerException;
+	class IoError : public std::runtime_error {
+		using runtime_error::runtime_error;
 	};
 
-	class SyntaxError : public TracerException {
-		using TracerException::TracerException;
+	class SyntaxError : public std::invalid_argument {
+		using invalid_argument::invalid_argument;
 	};
 
-	class InternalError : public TracerException {
-		using TracerException::TracerException;
+	class InternalError : public std::runtime_error {
+		using runtime_error::runtime_error;
 	};
 
-	class NoSuchChild : public TracerException {
-		using TracerException::TracerException;
+	class NoSuchChild : public std::invalid_argument {
+		using invalid_argument::invalid_argument;
 	};
 
-	class NoSuchAttribute : public TracerException {
-		using TracerException::TracerException;
+	class NoSuchAttribute : public std::invalid_argument {
+		using invalid_argument::invalid_argument;
 	};
 
-	class BadAttribute : public TracerException {
-		using TracerException::TracerException;
+	class BadAttribute : public std::invalid_argument {
+		using invalid_argument::invalid_argument;
 	};
 }//Xml
 

@@ -101,7 +101,7 @@ array<float, 273> make_corsika_273float_sub_block_form_stream(istream& f) {
         info << __FILE__ << " " << __LINE__ <<"\n";
         info << __func__ << "()\n";
         info << "Expected first int32 to be 273 but actual it is " << n << "\n";
-        throw TracerException(info.str());
+        throw std::runtime_error(info.str());
     }
     // read the sub_block from file.
     array<float, 273> block;
@@ -119,7 +119,7 @@ array<float, 273> make_run_end_from_stream(istream& f) {
         out << "in function:" << __func__ << endl;
         out << "Line:" << __LINE__ << endl;
         out << "First integer was not 273 but n=" << n << endl;
-        throw TracerException(out.str());
+        throw std::runtime_error(out.str());
     }
     // read the sub_block from file.
     array<float, 273> block;
@@ -153,7 +153,7 @@ vector<TelPos> make_telescope_positions(istream& f, const Header& head) {
         out << "Line:" << __LINE__ << endl;
         out << " number_of_following_arrays is:" ;
         out <<  number_of_following_arrays << endl;
-        throw TracerException(out.str());
+        throw std::runtime_error(out.str());
     }
     vector<TelPos> telescope_positions(ntel);
 
@@ -210,7 +210,7 @@ vector<TelOffset> make_telescope_offsets_from_stream(
             out << "Line:" << __LINE__ << endl;
             out << "number_of_following_arrays is " << number_of_following_arrays << endl;
             out << "but only 2 or 3 are allowed." << endl;
-            throw TracerException(out.str());
+            throw std::runtime_error(out.str());
     }
     
     int i=0;
@@ -285,7 +285,7 @@ Run::Run(string path):
         stringstream info;
         info << __FILE__ " " << __LINE__ << "\n";
         info << "Can not open file: " << path << "\n";
-        throw TracerException(info.str());
+        throw std::runtime_error(info.str());
     }
 
     this->__read_run_header();
@@ -396,7 +396,7 @@ vector<array<float, 8>> Run::_next() {
         catch (NoSyncFoundException& e) { /*nothing to do*/ }
 
         if(!something_found) {
-            throw TracerException("Not a single valid structure found in file.");
+            throw std::runtime_error("Not a single valid structure found in file.");
         }
     }
 

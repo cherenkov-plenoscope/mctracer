@@ -94,7 +94,7 @@ TEST_F(FiniteStateMashineTEST, add_duplicate_state) {
 		fsm.define_state(0);
 		fsm.define_state(0);
 		,
-		TracerException
+		std::runtime_error
 	);
 }
 //------------------------------------------------------------------------------
@@ -105,7 +105,7 @@ TEST_F(FiniteStateMashineTEST, transition_state_must_be_defined) {
 		fsm.define_state(0);
 		fsm.define_state_to_state_when_event(0,1,1337);
 		,
-		TracerException
+		std::runtime_error
 	);
 }
 //------------------------------------------------------------------------------
@@ -145,7 +145,7 @@ TEST_F(FiniteStateMashineTEST, must_not_define_state_after_transition) {
 
 		fsm.define_state(3);
 		,
-		TracerException
+		std::runtime_error
 	);
 }
 //------------------------------------------------------------------------------
@@ -163,7 +163,7 @@ TEST_F(FiniteStateMashineTEST, init_in_invalid_state) {
 
 		fsm.transition_given_event(1337);
 		,
-		TracerException
+		std::runtime_error
 	);
 }
 //------------------------------------------------------------------------------

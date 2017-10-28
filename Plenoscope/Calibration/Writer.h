@@ -26,10 +26,7 @@ namespace Calibration {
 
 		void clear_file();
 		void write_row(const CalibrationPhotonResult &row);
-		void assert_file_is_open();
-		class CanNotReadFile : public TracerException {
-			using TracerException::TracerException;
-		};		
+		void assert_file_is_open();	
 	};
 }//Calibration
 }//Plenoscope

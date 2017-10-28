@@ -10,7 +10,7 @@ namespace MmcsCorsikaTools {
 			info << "Expected word size: 4 bytes, but actual: ";
 			info << word.size() << " bytes.\n";
 			info << "word: '" << word << "'.\n";
-			throw TracerException(info.str());			
+			throw std::runtime_error(info.str());			
 		}
 
 		char word_array[] = {word.at(0), word.at(1), word.at(2), word.at(3)};

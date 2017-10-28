@@ -10,7 +10,6 @@
 // included dependencies
 #include <iostream> 
 #include <string>
-#include "Core/TracerException.h"
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"
 #include "Tools/StringTools.h"
@@ -82,16 +81,16 @@ namespace StereoLitography {
         const uint triangle_size_in_32bit_floats = 12;
     public:
 
-        class CanNotReadFile : public TracerException {
-            using TracerException::TracerException;
+        class CanNotReadFile : public std::runtime_error {
+            using runtime_error::runtime_error;
         };
 
-        class BadNormal : public TracerException {
-            using TracerException::TracerException;
+        class BadNormal : public std::runtime_error {
+            using runtime_error::runtime_error;
         };
 
-        class CanNotReadAscii : public TracerException {
-            using TracerException::TracerException;
+        class CanNotReadAscii : public std::runtime_error {
+            using runtime_error::runtime_error;
         };
     };
 //--------------------------------

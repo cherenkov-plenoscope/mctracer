@@ -66,7 +66,7 @@ void abort_if_too_many_iterations(
 		info << "  lens thickness........." << get_lens_thickness_for_R_r(
 			R,cfg.aperture_radius
 		) <<"m\n";
-		throw NoConvergence(info.str());
+		throw std::runtime_error(info.str());
 	}
 }
 //------------------------------------------------------------------------------

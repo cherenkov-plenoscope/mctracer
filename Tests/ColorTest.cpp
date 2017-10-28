@@ -19,32 +19,32 @@ TEST_F(ColorTest, 8bit_range) {
 
     EXPECT_THROW(
         Color col(256,0,0);,
-        Color::NotIn8bitRange
+        std::out_of_range
     );
 
     EXPECT_THROW(
         Color col(0,256,0);,
-        Color::NotIn8bitRange
+        std::out_of_range
     );
 
     EXPECT_THROW(
         Color col(0,0,256);,
-        Color::NotIn8bitRange
+        std::out_of_range
     );
 
     EXPECT_THROW(
         Color col(-1,0,0);,
-        Color::NotIn8bitRange
+        std::out_of_range
     );
 
     EXPECT_THROW(
         Color col(0,-1,0);,
-        Color::NotIn8bitRange
+        std::out_of_range
     );
 
     EXPECT_THROW(
         Color col(0,0,-1);,
-        Color::NotIn8bitRange
+        std::out_of_range
     );
 }
 //------------------------------------------------------------------------------

@@ -9,14 +9,14 @@ class MmcsCorsikaEventGetterTest : public ::testing::Test {};
 TEST_F(MmcsCorsikaEventGetterTest, word_size_is_too_large) {
   	EXPECT_THROW(
   		{MmcsCorsikaTools::str2float_4byte_bin_map("Hans Peter");},
- 		TracerException
+ 		std::runtime_error
 	);
 }
 //------------------------------------------------------------------------------
 TEST_F(MmcsCorsikaEventGetterTest, word_size_is_zero) {
   	EXPECT_THROW(
   		{MmcsCorsikaTools::str2float_4byte_bin_map("");},
- 		TracerException
+ 		std::runtime_error
 	);
 }
 //------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ TEST_F(MmcsCorsikaEventGetterTest, invalid_file_size) {
 		while(event_getter.has_still_events_left())
 			MmcsCorsikaEvent event = event_getter.get_next_event();
 		,
-		TracerException
+		std::runtime_error
 	);
 }
 //----------------------------------------------------------------------
@@ -72,7 +72,7 @@ TEST_F(MmcsCorsikaEventGetterTest, gzip_file) {
 		while(event_getter.has_still_events_left())
 				MmcsCorsikaEvent event = event_getter.get_next_event();
 		,
-		TracerException
+		std::runtime_error
 	);
 }
 //----------------------------------------------------------------------
@@ -80,7 +80,7 @@ TEST_F(MmcsCorsikaEventGetterTest, not_existing_file) {
 
 	EXPECT_THROW(
 		{MmcsCorsikaFullEventGetter event_getter("./no_such_path/no_such_file");},
-		TracerException
+		std::runtime_error
 	);
 }
 //----------------------------------------------------------------------
@@ -91,59 +91,37 @@ TEST_F(MmcsCorsikaEventGetterTest, not_existing_file_exception_type) {
 		while(event_getter.has_still_events_left())
 				MmcsCorsikaEvent event = event_getter.get_next_event();
 		,
-		TracerException
+		std::runtime_error
 	);
 }
 //----------------------------------------------------------------------
 TEST_F(MmcsCorsikaEventGetterTest, sub_block_getter) {
-
 	string filename = "./MMCS_files/cer001004";
 	MmcsCorsikaSubBlockGetter fritz(filename);
-
-	//fritz.print();
 
 	while(fritz.has_still_sub_blocks_left()) {
 		MmcsCorsikaSubBlock heinz_subl_bock = fritz.get_next_sub_block();	
 		heinz_subl_bock[0] = heinz_subl_bock[0];
 	}
 
-	//fritz.print();
 }
 //----------------------------------------------------------------------
 TEST_F(MmcsCorsikaEventGetterTest, FullEventGetter) {
-
-	try{
-		string filename = "./MMCS_files/cer000005";
-		MmcsCorsikaFullEventGetter event_getter(filename);
-
-		while(event_getter.has_still_events_left()) {
-			
-			MmcsCorsikaEvent event = event_getter.get_next_event();	
-		}
-
-	}catch(TracerException &e ){
-		std::cout << e.what();
+	string filename = "./MMCS_files/cer000005";
+	MmcsCorsikaFullEventGetter event_getter(filename);
+	while(event_getter.has_still_events_left()) {
+		MmcsCorsikaEvent event = event_getter.get_next_event();	
 	}
+
 }
 //----------------------------------------------------------------------
 TEST_F(MmcsCorsikaEventGetterTest, has_still_events_left) {
-
-	try{
-		MmcsCorsikaFullEventGetter event_getter("./MMCS_files/cer000005");
-		EXPECT_TRUE(event_getter.has_still_events_left());
-	}catch(TracerException &e ){
-		std::cout << e.what();
-	}
+	MmcsCorsikaFullEventGetter event_getter("./MMCS_files/cer000005");
+	EXPECT_TRUE(event_getter.has_still_events_left());
 }
 //----------------------------------------------------------------------
 TEST_F(MmcsCorsikaEventGetterTest, photon_data) {
-
-	try{
-		MmcsCorsikaPhotonData photons;
-		//photons.print();
-	}catch(TracerException &e ){
-		std::cout << e.what();
-	}
+	MmcsCorsikaPhotonData photons;
 }
 //----------------------------------------------------------------------
 //TEST_F(MmcsCorsikaEventGetterTest, reader_speed) {

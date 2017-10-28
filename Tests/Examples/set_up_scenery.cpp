@@ -10,7 +10,6 @@
 #include "gtest/gtest.h"
 #include "TelescopeArrayControl.h"
 #include "Tools/AsciiIo.h"
-#include "Core/TracerException.h"
 
 class SetUpScenery : public ::testing::Test {};
 //------------------------------------------------------------------------------

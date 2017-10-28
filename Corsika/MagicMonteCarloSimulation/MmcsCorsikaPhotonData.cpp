@@ -60,7 +60,7 @@ void MmcsCorsikaPhotonData::access_is_in_range(const uint at)const {
 		info << "MmcsCorsikaPhotonData:\n";
 		info << "Tried to access photon number " << at << " but there are only";
 		info << " " << number_of_photons() << " in this set.\n";
-		throw TracerException(info.str());	
+		throw std::runtime_error(info.str());	
 	}
 }
 //------------------------------------------------------------------------------

@@ -44,19 +44,19 @@ int main(int argc, char* argv[]) {
     int number_mega_photons = 0;
     try{
         number_mega_photons = StringTools::to_int(args.find("--number_mega_photons")->second.asString());
-    }catch(StringTools::CanNotParseInt &error) {
+    }catch(std::invalid_argument &error) {
         stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
         info << "Can not parse input argument '--number_mega_photons', '-n' to a integer number.";
         info << StringTools::place_first_infront_of_each_new_line_of_second("|  ", error.what());
-        throw TracerException(info.str());        
+        throw std::invalid_argument(info.str());        
     }
 
     if(number_mega_photons <= 0.0) {
         stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
         info << "Expected '--number_mega_photons', '-n' to be >= 0, but actual: " << number_mega_photons;
-        throw TracerException(info.str());         
+        throw std::invalid_argument(info.str());         
     }
 
     PathTools::Path out_path = PathTools::Path(args.find("--output")->second.asString());
@@ -79,9 +79,9 @@ int main(int argc, char* argv[]) {
     scenery.root.init_tree_based_on_mother_child_relations();
 
     if(scenery_factory.plenoscopes.size() == 0)
-        throw TracerException("There is no plenoscope in the scenery");
+        throw std::invalid_argument("There is no plenoscope in the scenery");
     else if(scenery_factory.plenoscopes.size() > 1)
-        throw TracerException("There is more than one plenoscope in the scenery");
+        throw std::invalid_argument("There is more than one plenoscope in the scenery");
     Plenoscope::PlenoscopeInScenery* pis = &scenery_factory.plenoscopes.at(0);
 
     HeaderBlock::write(

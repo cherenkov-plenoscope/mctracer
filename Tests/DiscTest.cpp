@@ -14,8 +14,7 @@ TEST_F(DiscTest, set_Disc_negative_radius) {
 
 	EXPECT_THROW(
 		Disc D;
-		D.set_radius(-42.0);
-		,
-		TracerException
+		D.set_radius(-42.0);,
+		std::invalid_argument
 	);
 }

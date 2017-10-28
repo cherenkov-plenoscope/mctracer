@@ -21,7 +21,7 @@ void write(const vector<LixelStatistic> &lixel_statistics, const string &path) {
         std::stringstream info;
         info << __FILE__ << " " << __LINE__ << "\n";
         info << "LixelStatistics: Unable to write file: '" << path << "'\n";
-        throw CanNotOpenLixelStatisticsFile(info.str());      
+        throw std::runtime_error(info.str());      
     }
 
     for(const LixelStatistic &lixel: lixel_statistics)
@@ -37,7 +37,7 @@ vector<LixelStatistic> read(const string &path) {
         std::stringstream info;
         info << __FILE__ << " " << __LINE__ << "\n";
         info << "LixelStatistics: Unable to read file: '" << path << "'\n";
-        throw CanNotOpenLixelStatisticsFile(info.str());      
+        throw std::runtime_error(info.str());      
     }
 
     vector<LixelStatistic> lixel_statistics;

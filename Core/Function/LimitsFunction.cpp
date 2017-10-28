@@ -1,5 +1,6 @@
 #include "LimitsFunction.h"
 #include <sstream>
+#include <exception>
 
 namespace Function {
 	const Limits Limits::void_limits = Limits(0.0, 0.0);
@@ -23,7 +24,7 @@ namespace Function {
 			info << "Expected upper limit u to be ";
 			info << "equal or larger the lower limit l, but actual ";
 			info << "u=" << upper << " , l=" << lower << "\n";
-			throw NotCausal(info.str());
+			throw std::logic_error(info.str());
 		}
 	}
 	//--------------------------------------------------------------------------
@@ -46,7 +47,7 @@ namespace Function {
 			info << "Expected function argument x ";
 			info << "to be in limits " << lower << "<= x <";
 			info << upper << " but actual x=" << x << "\n";
-			throw OutOfRange(info.str());
+			throw std::out_of_range(info.str());
 		}	
 	}
 	//--------------------------------------------------------------------------

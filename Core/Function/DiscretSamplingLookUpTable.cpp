@@ -1,6 +1,7 @@
 #include "DiscretSamplingLookUpTable.h"
 #include  <math.h>
 #include <sstream>
+#include <exception>
 //------------------------------------------------------------------------------
 namespace Function {
 	namespace DiscretSampling {
@@ -22,7 +23,7 @@ LookUpTable::LookUpTable(const Func1D* func, const Config config) {
 		info << "Expected config->slice_width > 0.0, ";
 		info << "but actual it is: " << config.slice_width;
 		info << "\n";
-		throw BadInput(info.str());
+		throw std::invalid_argument(info.str());
 	}
 
 	if(func->get_limits().get_range() == 0.0) {
@@ -31,7 +32,7 @@ LookUpTable::LookUpTable(const Func1D* func, const Config config) {
 		info << "Expected the function range to be > 0.0, ";
 		info << "but actual it is: " << func->get_limits().get_range();
 		info << "\n";
-		throw BadInput(info.str());
+		throw std::invalid_argument(info.str());
 	}
 
 	number_of_slices = ceil(func->get_limits().get_range()/config.slice_width);
@@ -70,7 +71,7 @@ void LookUpTable::fill_table() {
 		"8 byte * " << config.samples_per_slice << " samples/slice * " 
 		<< number_of_slices << " slices = " 
 		<< 8*config.samples_per_slice*number_of_slices << " byte.\n";
-		throw MemoryProblemMaybeTooManySamples(info.str());
+		throw std::runtime_error(info.str());
 	}
 }
 //------------------------------------------------------------------------------
@@ -82,7 +83,7 @@ const std::vector<double>* LookUpTable::at(const double slice_offset)const {
 		info << "Expected  0.0 <= slice_offset < 1.0, ";
 		info << "but actual it is: " << slice_offset;
 		info << "\n";
-		throw BadInput(info.str());
+		throw std::out_of_range(info.str());
 	}
 
 	const uint row_to_look_up = floor(

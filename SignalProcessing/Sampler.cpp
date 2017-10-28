@@ -22,7 +22,7 @@ Sampler::Sampler(const SamplerConfig* config) {
 		info << "Expected config->std_dev_noise > 0.0, ";
 		info << "but actual it is: " << config->std_dev_noise;
 		info << "\n";
-		throw TracerException(info.str());
+		throw std::invalid_argument(info.str());
 	}
 
 	if(config->sampling_frequency < 0.0) {
@@ -31,7 +31,7 @@ Sampler::Sampler(const SamplerConfig* config) {
 		info << "Expected config->sampling_frequency > 0.0, ";
 		info << "but actual it is: " << config->sampling_frequency;
 		info << "\n";
-		throw TracerException(info.str());
+		throw std::invalid_argument(info.str());
 	}
 
 	if(config->exposure_time < 0.0) {
@@ -40,7 +40,7 @@ Sampler::Sampler(const SamplerConfig* config) {
 		info << "Expected config->exposure_time > 0.0, ";
 		info << "but actual it is: " << config->exposure_time;
 		info << "\n";
-		throw TracerException(info.str());
+		throw std::invalid_argument(info.str());
 	}
 
 	number_of_slices = uint(ceil(

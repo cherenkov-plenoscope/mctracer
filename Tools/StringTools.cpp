@@ -1,5 +1,6 @@
 #include "StringTools.h"
 #include <algorithm>
+#include <exception>
 using std::string;
 using std::stringstream;
 using std::vector;
@@ -119,7 +120,7 @@ namespace StringTools {
 			stringstream info;
 			info << __FILE__ << ", " << __LINE__ << "\n";
 			info << "StringTools::to_double: String is empty.";
-			throw CanNotParseDouble(info.str());
+			throw std::invalid_argument(info.str());
 		}
 		
 		char *e;
@@ -130,7 +131,7 @@ namespace StringTools {
 			info << __FILE__ << ", " << __LINE__ << "\n";
 			info << "StringTools::to_double: ";
 			info << "Can not parse '" << text_to_parse << "' to double.";
-			throw CanNotParseDouble(info.str());
+			throw std::invalid_argument(info.str());
 		}
 
 		return number_parsed_in;
@@ -142,7 +143,7 @@ namespace StringTools {
 			stringstream info;
 			info << __FILE__ << ", " << __LINE__ << "\n";
 			info << "StringTools::to_bool: String is empty.";
-			throw CanNotParseBool(info.str());
+			throw std::invalid_argument(info.str());
 		}
 		
 		std::transform(
@@ -161,7 +162,7 @@ namespace StringTools {
 			info << __FILE__ << ", " << __LINE__ << "\n";
 			info << "StringTools::to_bool: Can not parse: ";
 			info << "'" << text_to_parse << " to bool";
-			throw CanNotParseBool(info.str());
+			throw std::invalid_argument(info.str());
 		}
 	}
 	//--------------------------------------------------------------------------
@@ -171,7 +172,7 @@ namespace StringTools {
 			stringstream info;
 			info << __FILE__ << ", " << __LINE__ << "\n";
 			info << "StringTools::to_int: String is empty.";
-			throw CanNotParseInt(info.str());
+			throw std::invalid_argument(info.str());
 		}
 		
 		const int dezimal_base = 10;
@@ -187,7 +188,7 @@ namespace StringTools {
 			info << __FILE__ << ", " << __LINE__ << "\n";
 			info << "StringTools::to_int: ";
 			info << "Can not parse '" << text_to_parse << "' to int.";
-			throw CanNotParseInt(info.str());
+			throw std::invalid_argument(info.str());
 		}
 
 		return number_parsed_in;
@@ -209,7 +210,7 @@ namespace StringTools {
 		if(pos != string::npos)
 			text = text.substr(pos+1);	
 		else
-			throw CanNotParseTuple3(info.str());
+			throw std::invalid_argument(info.str());
 			
 		pos = text.find(",");
 
@@ -217,7 +218,7 @@ namespace StringTools {
 			if(pos != string::npos)
 				t3.x = to_double(strip_whitespaces(text.substr(0,pos)));	
 			else
-				throw CanNotParseTuple3(info.str());
+				throw std::invalid_argument(info.str());
 
 			text = text.substr(pos+1);
 			pos = text.find(",");
@@ -225,7 +226,7 @@ namespace StringTools {
 			if(pos != string::npos)
 				t3.y = to_double(strip_whitespaces(text.substr(0,pos)));
 			else
-				throw CanNotParseTuple3(info.str());
+				throw std::invalid_argument(info.str());
 			
 			text = text.substr(pos+1);
 			pos = text.find("]");
@@ -233,14 +234,14 @@ namespace StringTools {
 			if(pos != string::npos)
 				t3.z = to_double(strip_whitespaces(text.substr(0,pos)));
 			else
-				throw CanNotParseTuple3(info.str());
+				throw std::invalid_argument(info.str());
 		}catch(std::exception &error) {
 
 	        info << "\n" << error.what() << "\n";
-            throw CanNotParseTuple3(info.str());		
+            throw std::invalid_argument(info.str());		
 		}catch(...) {
 
-            throw CanNotParseTuple3(info.str());           
+            throw std::invalid_argument(info.str());           
         }
 
 		return t3; 

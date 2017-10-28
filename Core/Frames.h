@@ -17,11 +17,6 @@ namespace Frames {
     Vec3 mean_of_positions_in_mother(const vector<Frame*> &frames);
     bool positions_in_mother_are_too_close_together(const vector<Frame*> &frames);
     double bounding_sphere_radius(const vector<Frame*> &frames, const Vec3 center);
-
-
-    class TooFewFrames: public TracerException{
-        using TracerException::TracerException;
-    };
 }
 
 #endif // __FRAMES_H_INCLUDED__

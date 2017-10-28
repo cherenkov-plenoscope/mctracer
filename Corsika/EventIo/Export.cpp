@@ -16,7 +16,7 @@ namespace EventIo {
             std::stringstream info;
             info << __FILE__ << " " << __LINE__ << "\n";
             info << "EventIo: Unable to write file: '" << path << "'\n";
-            throw TracerException(info.str());      
+            throw std::runtime_error(info.str());      
         }
 
         for(const array<float, 8> &photon: photons)

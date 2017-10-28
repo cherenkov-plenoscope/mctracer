@@ -44,13 +44,13 @@ TEST_F(FramesTest, too_close_together_false) {
 TEST_F(FramesTest, mean_no_frame) {
 
 	vector<Frame*> vf;
-	EXPECT_THROW(Frames::mean_of_positions_in_mother(vf), Frames::TooFewFrames);
+	EXPECT_THROW(Frames::mean_of_positions_in_mother(vf), std::invalid_argument);
 }
 //------------------------------------------------------------------------------
 TEST_F(FramesTest, optimal_bounding_sphere_pos_no_frame) {
 
 	vector<Frame*> vf;
-	EXPECT_THROW(Frames::dumb_bounding_sphere_center(vf), Frames::TooFewFrames);
+	EXPECT_THROW(Frames::dumb_bounding_sphere_center(vf), std::invalid_argument);
 }
 //------------------------------------------------------------------------------
 TEST_F(FramesTest, optimal_bounding_sphere_pos_one_frame) {

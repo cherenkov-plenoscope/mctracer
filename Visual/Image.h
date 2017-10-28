@@ -11,7 +11,6 @@
 #include <cv.h>
 #include <highgui.h>
 #include <opencv2/opencv.hpp>
-#include "Core/TracerException.h"
 #include "Core/Color.h"
 
 //=================================

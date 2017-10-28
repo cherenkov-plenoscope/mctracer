@@ -1,5 +1,6 @@
 #include "Color.h"
 #include <sstream>
+#include <exception>
 #include "math.h"
 //------------------------------------------------------------------------------
 const Color Color::white = Color(255,255,255);
@@ -76,7 +77,7 @@ void Color::assert_is_in_valid_8Bit_range(const int channel)const {
 		info << "Each RGB color channel must be within the valid 8 Bit range\n";
 		info << "Expected channels to be: 0 <= channel <= 255, but actual: ";
 		info << str() << "\n";
-		throw NotIn8bitRange(info.str());	
+		throw std::out_of_range(info.str());	
 	}
 }
 //------------------------------------------------------------------------------

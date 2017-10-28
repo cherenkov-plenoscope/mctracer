@@ -39,15 +39,6 @@ public:
 private:
 
 	void fill_table();
-public: 
-
-	class BadInput : public TracerException {
-		using TracerException::TracerException;
-	};	
-
-	class MemoryProblemMaybeTooManySamples : public TracerException {
-		using TracerException::TracerException;
-	};	
 };
 
 	}// DiscretSampling

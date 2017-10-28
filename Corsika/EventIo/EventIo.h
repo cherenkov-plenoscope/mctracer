@@ -7,7 +7,6 @@
 #include <array>
 #include <iostream>
 #include <fstream>
-#include "Core/TracerException.h"
 
 using std::cout;
 using std::endl;
@@ -20,12 +19,12 @@ using std::ifstream;
 
 namespace EventIo {
 
-    class WrongTypeException :public TracerException {
-        using TracerException::TracerException;
+    class WrongTypeException :public std::runtime_error {
+        using runtime_error::runtime_error;
     };
 
-    class NoSyncFoundException :public TracerException {
-        using TracerException::TracerException;
+    class NoSyncFoundException :public std::runtime_error {
+        using runtime_error::runtime_error;
     };
     
     struct TelPos {

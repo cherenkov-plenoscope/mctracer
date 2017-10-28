@@ -1,5 +1,6 @@
 #include "PinHoleCamera.h"
 #include "Tracer.h"
+#include <exception>
 
 namespace Visual {
 //------------------------------------------------------------------------------
@@ -131,7 +132,7 @@ void PinHoleCamera::acquire_image(
 		std::stringstream info;
 		info << "PinHoleCamera::"<<__func__<<"() in "<<__FILE__<<", "<<__LINE__<<"\n";
 		info << "Cought exception during multithread ray tracing.\n";
-		throw(TracerException(info.str()));
+		throw std::runtime_error(info.str());
 	}
 }
 //------------------------------------------------------------------------------

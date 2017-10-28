@@ -16,7 +16,6 @@ class Intersection;
 #include "Core/Vec3.h"
 #include "Core/Rot3.h"
 #include "Core/HomTra3.h"
-#include "Core/TracerException.h"
 #include "Tools/StringTools.h"
 #include "Tools/Tools.h"
 using std::string;
@@ -94,16 +93,5 @@ private:
     void cluster_children();
     void assert_name_is_valid(const string name_to_check)const;
     void update_bounding_sphere();
-public:
-
-    class NoSuchChild: public TracerException{
-        using TracerException::TracerException;
-    };
-    class DuplicateChildName :public TracerException{
-        using TracerException::TracerException;
-    };
-    class BadName :public TracerException{
-        using TracerException::TracerException;
-    };
 };
 #endif // __CARTESIANFRAME_H_INCLUDED__

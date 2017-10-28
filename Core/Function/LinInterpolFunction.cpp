@@ -1,9 +1,8 @@
 #include "LinInterpolFunction.h"
 #include <iostream>
 #include <sstream>
-#include <algorithm>    // std::lower_bound, std::upper_bound, std::sort
+#include <algorithm>
 #include <utility>
-#include "Core/TracerException.h"
 #include "Tools/StringTools.h"
 
 namespace Function {
@@ -60,7 +59,7 @@ namespace Function {
 			info << "Expected vec of vec matrix of shape N x 2, but actual:\n";
 			info << "Row " << row << " has " << xy_table.at(row).size();
 			info << " cols.\n";
-			throw BadShape( info.str() );	
+			throw std::invalid_argument(info.str());	
 		}
 	}
 	//--------------------------------------------------------------------------
@@ -92,7 +91,7 @@ namespace Function {
 			info << "Expected argument to be in range of arguments ";
 			info << "[ " << func.begin()->x << ", " << (func.end()-1)->x << " ] ";
 			info << ", but actual argument = " << arg << "\n";
-			throw TracerException( info.str() );	
+			throw std::out_of_range( info.str() );	
 		}
 	}
 	//--------------------------------------------------------------------------
@@ -113,7 +112,7 @@ namespace Function {
 	        	info << "Expected argument " << func.at(i).x;
 	        	info << " to be unique, but actual its not, see position: " << i;
 	        	info << "\n";
-				throw TracerException(info.str());	
+				throw std::logic_error(info.str());	
 			}
 		}	
 	}
@@ -148,7 +147,7 @@ namespace Function {
 			std::stringstream info;
 			info << exception_header();
 			info << "Can not integrate on function in range 0.0";
-			throw TracerException( info.str() );			
+			throw std::runtime_error( info.str() );			
 		}else{
 			return get_integral()/Range;		
 		}
@@ -159,7 +158,7 @@ namespace Function {
 			std::stringstream info;
 			info << exception_header();
 			info << "Function is empty.\n";
-			throw TracerException( info.str() );			
+			throw std::invalid_argument( info.str() );			
 		}	
 	}
 	//--------------------------------------------------------------------------

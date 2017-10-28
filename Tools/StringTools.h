@@ -13,7 +13,6 @@
 #include <string.h>
 #include <sstream>
 #include <vector>
-#include "Core/TracerException.h"
 #include "Tuple3.h"
 using std::string;
 
@@ -49,27 +48,11 @@ namespace StringTools {
 		const string &text, const uint column
 	);
 
-	class CanNotParseDouble : public TracerException {
-    	using TracerException::TracerException;
-	};
-
 	double to_double(string text_to_parse );
-
-	class CanNotParseBool : public TracerException {
-    	using TracerException::TracerException;
-	};
 
 	bool to_bool(string text_to_parse );
 
-	class CanNotParseInt : public TracerException {
-    	using TracerException::TracerException;
-	};
-
 	int to_int(string text_to_parse );
-
-	class CanNotParseTuple3 : public TracerException {
-	    using TracerException::TracerException;
-	};
 
 	Tuple3 to_Tuple3(const string original_text);
 }

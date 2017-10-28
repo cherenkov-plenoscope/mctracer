@@ -33,12 +33,12 @@ TEST_F(PhotonTest, reject_negative_wavelength) {
 
     EXPECT_THROW(
         Photon pho(Vec3::null, Vec3::unit_x, 0.0),
-        Photon::BadWaveLength
+        std::invalid_argument
     ); 
 
     EXPECT_THROW(
         Photon pho(Vec3::null, Vec3::unit_x, -1.0),
-        Photon::BadWaveLength
+        std::invalid_argument
     );   
 }
 //------------------------------------------------------------------------------

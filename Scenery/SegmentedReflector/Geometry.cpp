@@ -70,7 +70,7 @@ namespace SegmentedReflector {
 			info << __FILE__ << ", " << __LINE__<< "\n";
 			info << "Exceeded max number of 100 iterations. ";
 			info << "Can not reach best reflector z position. ";
-			throw TracerException(info.str());
+			throw std::runtime_error(info.str());
 		}
 	}
 

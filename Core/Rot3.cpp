@@ -1,3 +1,7 @@
+#include <iostream>
+#include <math.h>
+#include <sstream>
+#include <exception>
 #include "Rot3.h"
 //------------------------------------------------------------------------------
 const Rot3 Rot3::null = Rot3(0.0, 0.0, 0.0);
@@ -41,7 +45,7 @@ void Rot3::set(
 //------------------------------------------------------------------------------
 Vec3 Rot3::get_rot_axis()const {
 	if(flag_rot_angles_xyz == true)
-		throw TracerException(
+		throw std::runtime_error(
 			"Rot3::get_rot_axis():\n"
 			"rot_axis was not set! Returning default ez.\n"
 		);
@@ -51,7 +55,7 @@ Vec3 Rot3::get_rot_axis()const {
 //------------------------------------------------------------------------------
 double Rot3::get_rot_angle_in_rad()const {
 	if(flag_rot_angles_xyz == true)
-		throw TracerException(
+		throw std::runtime_error(
 			"Rot3::get_rot_angle_in_rad():\n"
 			"rot_angle_in_rad was not set!"
 		);

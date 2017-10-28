@@ -96,6 +96,6 @@ void Histogram1D::assert_at_least_two_bin_edges()const {
 		info << __FILE__ << ", " << __LINE__ << ", " << __func__ << "\n";   
 		info << "Expected at least two bin edges, but actual there is only ";
 		info << bin_edges.size() << ".\n";
-		throw ValueError(info.str());
+		throw std::invalid_argument(info.str());
 	}
 }

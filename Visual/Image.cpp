@@ -35,7 +35,7 @@ void Image::save(std::string filename_of_image)const{
 		info << filename_of_image<< "\n";
 		info << "Exception converting image to PNG format: " << ex.what();
 		info << "\n",
-		throw TracerException(info.str());
+		throw std::runtime_error(info.str());
 	}
 }
 //------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ void Image::load(const std::string filename) {
 		info << "mctracer trys to load an OpenCV image called: ";
 		info << filename << "\n";
 		info << ex.what() << "\n",
-		throw TracerException(info.str());
+		throw std::runtime_error(info.str());
 	}
 
 	if(!raw_image.data) {
@@ -59,7 +59,7 @@ void Image::load(const std::string filename) {
 		info << "Image::" << __func__ << "()\n";
 		info << "mctracer failed to load an OpenCV image called: ";
 		info << filename << "\n";
-		throw TracerException(info.str());
+		throw std::runtime_error(info.str());
 	}
 }
 //------------------------------------------------------------------------------

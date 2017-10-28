@@ -154,7 +154,7 @@ void Calibrator::fill_calibration_block_to_table() {
 		info <<__FILE__<<", "<<__LINE__<<"\n";
 		info << "Cought exception during multithread ";
 		info << "Light Field Telescope Calibration.\n";
-		throw(TracerException(info.str()));
+		throw std::runtime_error(info.str());
 	}
 }
 //------------------------------------------------------------------------------

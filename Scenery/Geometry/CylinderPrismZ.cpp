@@ -20,7 +20,7 @@ void CylinderPrismZ::assert_radius_is_positiv(const double radius)const {
 		info << "CylinderPrismZ::" << __func__ << "()\n";
 		info << "The radius of a cylinder must be larger than 0.0m !\n";
 		info << "Expected: >0.0, but actual: " << radius << "\n";
-		throw TracerException(info.str());
+		throw std::invalid_argument(info.str());
 	}	
 }
 //------------------------------------------------------------------------------

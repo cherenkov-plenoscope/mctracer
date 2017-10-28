@@ -19,7 +19,7 @@ Converter::Converter(const Config* config) {
 		info << "Expected config->probability_for_second_puls < 1.0, ";
 		info << "but actual it is: " << config->probability_for_second_puls;
 		info << "\n";
-		throw TracerException(info.str());
+		throw std::invalid_argument(info.str());
 	}
 }
 //------------------------------------------------------------------------------

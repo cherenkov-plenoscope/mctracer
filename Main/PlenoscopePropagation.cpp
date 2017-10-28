@@ -113,9 +113,9 @@ int main(int argc, char* argv[]) {
     scenery_factory.append_to_frame_in_scenery(&scenery.root, &scenery);
     scenery.root.init_tree_based_on_mother_child_relations();
     if(scenery_factory.plenoscopes.size() == 0)
-        throw TracerException("There is no plenoscope in the scenery");
+        throw std::invalid_argument("There is no plenoscope in the scenery");
     else if(scenery_factory.plenoscopes.size() > 1)
-        throw TracerException("There is more then one plenoscope in the scenery");
+        throw std::invalid_argument("There is more then one plenoscope in the scenery");
     Plenoscope::PlenoscopeInScenery* pis = &scenery_factory.plenoscopes.at(0);
 
     PhotonSensor::Sensors* light_field_channels = pis->light_field_channels;
@@ -134,7 +134,7 @@ int main(int argc, char* argv[]) {
         info << "Expected number of light field channels: " << light_field_channels->size();
         info << ", but actual: " << optics_calibration_result.size();
         info << "\n";
-        throw TracerException(info.str());
+        throw std::invalid_argument(info.str());
     }
 
     //--------------------------------------------------------------------------

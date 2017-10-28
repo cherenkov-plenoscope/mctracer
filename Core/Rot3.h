@@ -8,11 +8,7 @@
 
 //=================================
 // included dependencies
-#include <iostream>
-#include <math.h>
-#include <sstream>
 #include "Core/Vec3.h"
-#include "Core/TracerException.h"
 //=================================
 // Tait–Bryan angles with an extrinsic coordinate frame fasion
 class Rot3 {

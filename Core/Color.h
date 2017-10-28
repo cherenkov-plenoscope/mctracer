@@ -11,7 +11,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Core/TracerException.h"
 
 class Color {
 
@@ -38,10 +37,6 @@ public:
     void reflection_mix(const Color &c, const double refl);
     bool operator == (const Color& eq)const;
     bool operator != (const Color& eq)const;
-
-    class NotIn8bitRange : public TracerException {
-        using TracerException::TracerException;
-    };
 private:
 
     void assert_is_in_valid_8Bit_range(const int channel)const;

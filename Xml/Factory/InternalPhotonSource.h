@@ -19,8 +19,8 @@ namespace Xml {
 		vector<Photon> parallel_disc(const Xml::Node &node);
 		void transform(const Xml::Node &node, vector<Photon> *photons);
 
-		class UnkownTypeOfLightSource : public TracerException {
-			using TracerException::TracerException;
+		class UnkownTypeOfLightSource : public std::invalid_argument {
+			using invalid_argument::invalid_argument;
 		};
 	}//InternalPhotonSource
 }//Xml

@@ -1,5 +1,6 @@
 #include "ApertureCamera.h"
 #include "Tracer.h"
+#include <exception>
 
 namespace Visual {
 //------------------------------------------------------------------------------
@@ -26,7 +27,7 @@ void ApertureCamera::set_F_stop_number(const double new_FStopNumber){
 		stringstream info;
 		info << "Expected F-Stop number to be greater zero, but actual it is ";
 		info << new_FStopNumber << ".";
-		throw BadFStopNumber(info.str());
+		throw std::invalid_argument(info.str());
 	}
 	FStopNumber = new_FStopNumber;
 }
@@ -37,7 +38,7 @@ void ApertureCamera::set_sensor_size_using_width(const double width_in_m) {
 		stringstream info;
 		info << "Expected image sensor width to be greater zero, but actual it is ";
 		info << width_in_m << ".";
-		throw BadImageSensorWidth(info.str());
+		throw std::invalid_argument(info.str());
 	}
 	sensor_width_in_m = width_in_m;
 	sensor_height_in_m = sensor_width_in_m / image.get_width_to_height_ratio();
@@ -54,7 +55,7 @@ void ApertureCamera::set_number_of_rays_per_pixel(const uint rays_per_pixel) {
 		info << "Expected number of rays emitted per pixel to be ";
 		info << "greater zero, but actual it is ";
 		info << rays_per_pixel << ".";
-		throw BadNumberRaysPerPixel(info.str());
+		throw std::invalid_argument(info.str());
 	}
 	this->rays_per_pixel = rays_per_pixel;	
 }
@@ -70,7 +71,7 @@ void ApertureCamera::set_object_distance(const double ObjectDistance_in_m){
 		info << "Expected object distance to focus on to be ";
 		info << "greater zero, but actual it is ";
 		info << ObjectDistance_in_m << ".";
-		throw BadObjectDistance(info.str());
+		throw std::invalid_argument(info.str());
 	}
 	this->ObjectDistance_in_m = ObjectDistance_in_m;
 }
@@ -269,7 +270,7 @@ void ApertureCamera::acquire_image(
 		std::stringstream info;
 		info << "ApertureCamera::"<<__func__<<"() in "<<__FILE__<<", "<<__LINE__<<"\n";
 		info << "Cought exception during multithread ray tracing.\n";
-		throw(TracerException(info.str()));
+		throw std::runtime_error(info.str());
 	} 
 }
 //------------------------------------------------------------------------------

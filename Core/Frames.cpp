@@ -24,7 +24,7 @@ Vec3 dumb_bounding_sphere_center(const vector<Frame*> &frames) {
 		info << __FILE__ << ", " << __LINE__ << "\n";
 		info << "Expected at least 1 frame to calculate center position of frames, ";
 		info << "but actual there are only " << frames.size() << " frames.";
-		throw TooFewFrames(info.str());		
+		throw std::invalid_argument(info.str());		
 	}
 
 	if(frames.size() == 1)
@@ -67,7 +67,7 @@ Vec3 mean_of_positions_in_mother(const vector<Frame*> &frames) {
 		info << __FILE__ << ", " << __LINE__ << "\n";
 		info << "Expected at leas 1 frame to calculate mean position of frames, ";
 		info << "but actual there are only " << frames.size() << " frames.";
-		throw TooFewFrames(info.str());		
+		throw std::invalid_argument(info.str());		
 	}
 
 	Vec3 sum_pos = Vec3::null;

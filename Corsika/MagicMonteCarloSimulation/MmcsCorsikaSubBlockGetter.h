@@ -10,7 +10,6 @@
 // included dependencies
 #include <iostream> 
 #include <string>
-#include "Core/TracerException.h"
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"
 #include "Tools/StringTools.h"

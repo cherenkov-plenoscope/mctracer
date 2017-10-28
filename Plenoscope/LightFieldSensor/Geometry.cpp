@@ -218,7 +218,7 @@ void Geometry::write_lixel_positions(const string &path)const {
         info << __FILE__ << " " << __LINE__ << "\n";
         info << __func__ << "\n";
         info << "Unable to write file: '" << path << "'\n";
-        throw TracerException(info.str());      
+        throw std::runtime_error(info.str());      
     }
 
     for(Vec3 pos : lixel_grid) {

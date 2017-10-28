@@ -16,7 +16,6 @@
 #include "Core/HomTra3.h"
 #include "CameraRay.h"
 #include "Image.h"
-#include "Core/TracerException.h"
 
 namespace Visual {
 

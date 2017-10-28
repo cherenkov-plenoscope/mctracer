@@ -421,7 +421,7 @@ void SceneryFactory::add_function(const Node node) {
             info << "SceneryFactory " << __FILE__ << ", " << __LINE__;
             info << "Unknown xml child in '" << child.name() << "' in node ";
             info << "'" << node.name() << "'";
-            throw TracerException(info.str());
+            throw std::invalid_argument(info.str());
         }
     }
 }

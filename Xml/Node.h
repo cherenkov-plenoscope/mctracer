@@ -54,32 +54,32 @@ namespace Xml {
 		Rot3 attribute2Rot3(const string attribute_name)const;
 		Color attribute2Color(const string attribute_name)const;
 
-	    class AttributeIsNoInt : public TracerException {
-	        using TracerException::TracerException;
+	    class AttributeIsNoInt : public std::invalid_argument {
+	        using invalid_argument::invalid_argument;
 	    }; 
 
-	    class AttributeIsNoDouble : public TracerException {
-	        using TracerException::TracerException;
+	    class AttributeIsNoDouble : public std::invalid_argument {
+	        using invalid_argument::invalid_argument;
 	    }; 
 
-	    class AttributeIsNoBool : public TracerException {
-	        using TracerException::TracerException;
+	    class AttributeIsNoBool : public std::invalid_argument {
+	        using invalid_argument::invalid_argument;
 	    }; 
 
-	    class AttributeIsNoTuple3 : public TracerException {
-	        using TracerException::TracerException;
+	    class AttributeIsNoTuple3 : public std::invalid_argument {
+	        using invalid_argument::invalid_argument;
 	    }; 
 
-	    class AttributeIsNoVec3 : public TracerException {
-	        using TracerException::TracerException;
+	    class AttributeIsNoVec3 : public std::invalid_argument {
+	        using invalid_argument::invalid_argument;
 	    }; 
 	    
-	    class AttributeIsNoRot3 : public TracerException {
-	        using TracerException::TracerException;
+	    class AttributeIsNoRot3 : public std::invalid_argument {
+	        using invalid_argument::invalid_argument;
 	    }; 
 	    
-	    class AttributeIsNoColor : public TracerException {
-	        using TracerException::TracerException;
+	    class AttributeIsNoColor : public std::invalid_argument {
+	        using invalid_argument::invalid_argument;
 	    }; 
 	private:
 

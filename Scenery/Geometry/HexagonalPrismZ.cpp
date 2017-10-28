@@ -48,7 +48,7 @@ void HexagonalPrismZ::assert_outer_radius_positive(const double outer_radius)con
 		info << "The outer radius must not be smaller or equal zero! ";
 		info << "Expected: outer_radius > 0m, but actual: outer radius = ";
 		info << outer_radius  << "m\n";
-		throw TracerException(info.str());
+		throw std::invalid_argument(info.str());
 	}
 }
 //------------------------------------------------------------------------------

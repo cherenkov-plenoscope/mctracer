@@ -1,6 +1,7 @@
 #include "CameraDevice.h"
 #include "Tools/Tools.h"
 #include "Tools/StringTools.h"
+#include <exception>
 
 namespace Visual {
 //------------------------------------------------------------------------------
@@ -120,7 +121,7 @@ void CameraDevice::assert_FoV_is_valid(const double FoV_in_rad)const {
 		info << "CameraDevice::" << __func__ << "()\n";
 		info << "Expected 0.0DEG < FoV < 180.0DEG, but actual FoV: ";
 		info << Rad2Deg(FoV_in_rad) << "DEG\n";
-		throw TracerException(info.str());
+		throw std::invalid_argument(info.str());
 	}
 }
 //------------------------------------------------------------------------------

@@ -51,16 +51,16 @@ private:
 	Rot3 calculate_new_rotation_in_mother(const Vec3 rotsym_axis)const;
 public:
 
-    class BadRadius :public TracerException{
-        using TracerException::TracerException;
+    class BadRadius :public std::invalid_argument{
+        using invalid_argument::invalid_argument;
     };
 
-    class BadStartEndPoints :public TracerException{
-        using TracerException::TracerException;
+    class BadStartEndPoints :public std::invalid_argument{
+        using invalid_argument::invalid_argument;
     };
 
-    class BadLength :public TracerException{
-        using TracerException::TracerException;
+    class BadLength :public std::invalid_argument{
+        using invalid_argument::invalid_argument;
     };
 };
 #endif // __CYLINDER_H_INCLUDED__

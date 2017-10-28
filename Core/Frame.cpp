@@ -1,6 +1,7 @@
 #include "Frame.h"
 #include "Frames.h"
 #include <set>
+#include <exception>
 
 const char Frame::path_delimiter = '/';
 const uint Frame::max_number_of_children = 16;
@@ -47,7 +48,7 @@ void Frame::assert_name_is_valid(const string name_to_check)const {
 		stringstream info;
 		info << "Expected name of frame not to be empty, ";
 		info << "but actually it is empty.";
-		throw BadName(info.str());
+		throw std::invalid_argument(info.str());
 	}	
 
 	uint char_pos = 0;
@@ -58,7 +59,7 @@ void Frame::assert_name_is_valid(const string name_to_check)const {
 			info << "to have no whitespaces, but actual the char at pos ";
 			info << char_pos << " is a whitespace: '";
 			info << name_to_check << "'.";
-			throw BadName(info.str());			
+			throw std::invalid_argument(info.str());			
 		}
 		char_pos++;
 	}
@@ -68,7 +69,7 @@ void Frame::assert_name_is_valid(const string name_to_check)const {
 		info << "Expected name of frame '" << name_to_check << "' ";
 		info << "to not contain any char of '" << path_delimiter << "', ";
 		info << "but actual it does.";
-		throw BadName(info.str());		
+		throw std::invalid_argument(info.str());		
 	}
 }
 //------------------------------------------------------------------------------
@@ -113,7 +114,7 @@ void Frame::erase(const Frame* child_rm) {
 		info << "Expected frame '" << name << "'' ";
 		info << "to have child '" << child_rm->name; 
 		info << "', but actual there is no such child.";
-		throw NoSuchChild(info.str());			
+		throw std::out_of_range(info.str());			
 	}
 }
 //------------------------------------------------------------------------------
@@ -325,7 +326,7 @@ void Frame::assert_no_children_duplicate_names()const {
 			info << "' has a duplicate child name '";
 			info << child->get_name();
 			info << "', maybe even the child is a duplicate itself.";
-			throw DuplicateChildName(info.str());
+			throw std::invalid_argument(info.str());
 		}
 	}
 

@@ -20,7 +20,7 @@ void MmcsCorsikaSubBlock::assert_range_is_valid(const uint i)const {
 		info << "MmcsCorsikaSubBlock:\n";
 		info << "Invalid range. Expected 0 <= i < " << size();
 		info << ", but actual i = " << i << "\n";
-		throw TracerException(info.str());
+		throw std::runtime_error(info.str());
 	}
 }
 //------------------------------------------------------------------------------

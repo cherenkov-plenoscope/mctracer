@@ -20,7 +20,7 @@ void Photon::assert_wavelength_is_positive()const {
 		info << __FILE__ << " " << __LINE__ << "\n";
 		info << "Expected photon wavelength lambda > 0.0nm, but actual ";
 		info << "it is: " << wavelength*1e9 << "nm\n";
-		throw BadWaveLength(info.str());
+		throw std::invalid_argument(info.str());
 	}
 }
 //------------------------------------------------------------------------------

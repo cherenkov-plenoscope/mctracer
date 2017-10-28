@@ -56,11 +56,6 @@ namespace Function {
 		double get_x_range()const;
 		void assert_func_is_not_empty()const;
 		double get_weighted_mean_of_value()const;
-	public:
-		
-		class BadShape : public TracerException {
-			using TracerException::TracerException;
-		};
 	};
 } // namespace Function
 #endif // __FUNCTIONLINEARINTERPOL_H_INCLUDED__

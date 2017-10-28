@@ -13,7 +13,6 @@
 #include <string>
 #include <cstring>
 #include <array>
-#include "Core/TracerException.h"
 using std::string;
 using std::vector;
 using std::array;
@@ -43,9 +42,5 @@ namespace Corsika {
 
 	float str2float(const string word);
 	string float2str(const float word_in_float);
-
-	class Not4Chars : public TracerException {
-		using TracerException::TracerException;
-	};
 }
 #endif // __CORSIKATOOLS_H_INCLUDE__ 

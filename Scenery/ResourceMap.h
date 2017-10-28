@@ -8,17 +8,16 @@
 
 //=================================
 // included dependencies
-#include "Core/TracerException.h"
 
 class ResourceMap {
 public:
 
-    class NoSuchKey: public TracerException{
-        using TracerException::TracerException;
+    class NoSuchKey: public std::out_of_range {
+        using out_of_range::out_of_range;
     };
 
-    class KeyAlreadyInUse: public TracerException{
-        using TracerException::TracerException;
+    class KeyAlreadyInUse: public std::invalid_argument {
+        using invalid_argument::invalid_argument;
     };
 };
 #endif // __RESOURCEMAP_H_INCLUDED__

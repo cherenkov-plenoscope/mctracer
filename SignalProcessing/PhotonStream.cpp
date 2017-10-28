@@ -1,6 +1,5 @@
 #include "PhotonStream.h"
 #include <sstream>
-#include "Core/TracerException.h"
 #include <math.h>
 #include <fstream> 
 
@@ -30,7 +29,7 @@ void write(
     if(!file.is_open()) {
         std::stringstream info;
         info << "Can not write file '" << path << "'.\n";
-        throw TracerException(info.str());
+        throw std::runtime_error(info.str());
     }       
 
     // PhotonStream Header 16 byte
@@ -70,7 +69,7 @@ void write_simulation_truth(
     if(!file.is_open()) {
         std::stringstream info;
         info << "Can not write file '" << path << "'.\n";
-        throw TracerException(info.str());
+        throw std::runtime_error(info.str());
     }       
 
     for(uint channel=0; channel<pulses.size(); channel++) {
@@ -93,7 +92,7 @@ Stream read(const string path) {
         std::stringstream info;
         info << __FILE__ << " " << __LINE__ << "\n";
         info << "PhotonStream: Unable to open file: '" << path << "'\n";
-        throw TracerException(info.str());}
+        throw std::runtime_error(info.str());}
 
     file.read((char*)&stream.slice_duration, sizeof(float));
 
@@ -144,7 +143,7 @@ Stream read_with_simulation_truth(const string path, const string truth_path) {
         std::stringstream info;
         info << __FILE__ << " " << __LINE__ << "\n";
         info << "PhotonStream: Unable to open file: '" << truth_path << "'\n";
-        throw TracerException(info.str());}
+        throw std::runtime_error(info.str());}
 
     for(uint channel=0; channel<stream.photon_stream.size(); channel++) {
         for(uint pulse=0; pulse<stream.photon_stream.at(channel).size(); pulse++) {
@@ -195,7 +194,7 @@ void assert_number_time_slices_below_8bit_max(
         info << number_time_slices << ", ";
         info << "and NEXT_READOUT_CHANNEL_MARKER = ";
         info << NEXT_READOUT_CHANNEL_MARKER << ".\n";
-        throw TracerException(info.str());
+        throw std::invalid_argument(info.str());
     }
 }
 //------------------------------------------------------------------------------

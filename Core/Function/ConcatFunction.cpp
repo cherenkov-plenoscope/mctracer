@@ -1,7 +1,7 @@
 #include "ConcatFunction.h"
 #include <sstream>
-#include "Core/TracerException.h"
-#include <algorithm>    // std::lower_bound, std::upper_bound, std::sort
+#include <algorithm>
+#include <exception>
 
 namespace Function {
 
@@ -32,7 +32,7 @@ namespace Function {
 				info << conc.at(i)->get_limits().get_upper() << "\n";
 				info << "f[" << i+1 << "].lower_limit = ";
 				info << conc.at(i+1)->get_limits().get_lower() << "\n";
-				throw Limits::NotCausal(info.str());			
+				throw std::logic_error(info.str());			
 			}
 		}
 	}

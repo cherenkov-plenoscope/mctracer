@@ -70,7 +70,7 @@ TEST_F(PlenoscopeLixelStatisticsTest, read_non_existing_binary_file) {
 
     EXPECT_THROW(
         Plenoscope::Calibration::read("InOut/non_existing_file.bin");,
-        Plenoscope::Calibration::CanNotOpenLixelStatisticsFile
+        std::runtime_error
     );
 }
 //----------------------------------------------------------------------

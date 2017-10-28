@@ -32,10 +32,12 @@ TEST_F(PhotoElectricConverterTest, config_defaults) {
 
     EXPECT_THROW(
         (*config.quantum_efficiency_vs_wavelength)(1200e-9), 
-        Function::Limits::OutOfRange);
+        std::out_of_range
+    );
     EXPECT_THROW(
         (*config.quantum_efficiency_vs_wavelength)(199e-9), 
-        Function::Limits::OutOfRange);
+        std::out_of_range
+    );
 }
 //----------------------------------------------------------------------
 TEST_F(PhotoElectricConverterTest, empty_input_yields_empty_output) {

@@ -12,7 +12,7 @@ TEST_F(FunctionTest, causal_limits_correct) {
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, causal_limits_false) {
     
-    EXPECT_THROW(Function::Limits l(0.0, -1.0);, TracerException);
+    EXPECT_THROW(Function::Limits l(0.0, -1.0);, std::logic_error);
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, causal_limits_lower_included) {
@@ -24,19 +24,19 @@ TEST_F(FunctionTest, causal_limits_lower_included) {
 TEST_F(FunctionTest, causal_limits_upper_excluded) {
     
     Function::Limits l(0.0, 1.0);
-    EXPECT_THROW(l.assert_contains(1.0), TracerException);
+    EXPECT_THROW(l.assert_contains(1.0), std::out_of_range);
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, causal_limits_above_upper) {
     
     Function::Limits l(0.0, 1.0);
-    EXPECT_THROW(l.assert_contains(1.1), TracerException);
+    EXPECT_THROW(l.assert_contains(1.1), std::out_of_range);
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, causal_limits_below_lower) {
     
     Function::Limits l(0.0, 1.0);
-    EXPECT_THROW(l.assert_contains(-0.1), TracerException);
+    EXPECT_THROW(l.assert_contains(-0.1), std::out_of_range);
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, check_limits) {
@@ -53,9 +53,9 @@ TEST_F(FunctionTest, default_limits) {
     EXPECT_EQ(0.0, l.get_lower());
     EXPECT_EQ(0.0, l.get_upper());
 
-    EXPECT_THROW(l.assert_contains(-0.1), TracerException);
-    EXPECT_THROW(l.assert_contains( 0.0), TracerException);
-    EXPECT_THROW(l.assert_contains(+0.1), TracerException);
+    EXPECT_THROW(l.assert_contains(-0.1), std::out_of_range);
+    EXPECT_THROW(l.assert_contains( 0.0), std::out_of_range);
+    EXPECT_THROW(l.assert_contains(+0.1), std::out_of_range);
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, limit_default_range) {
@@ -90,11 +90,11 @@ TEST_F(FunctionTest, constant_function_limits) {
     double y = 133.7;
     Function::Constant f(y, l);
 
-    EXPECT_THROW(f(-0.5), TracerException);
+    EXPECT_THROW(f(-0.5), std::out_of_range);
     EXPECT_NO_THROW(f(0.0));
     EXPECT_NO_THROW(f(0.5));
-    EXPECT_THROW(f(1.0), TracerException);
-    EXPECT_THROW(f(1.5), TracerException);
+    EXPECT_THROW(f(1.0), std::out_of_range);
+    EXPECT_THROW(f(1.5), std::out_of_range);
 }
 //------------------------------------------------------------------------------
 // Polynom3
@@ -115,11 +115,11 @@ TEST_F(FunctionTest, Polynom3_limits) {
   
     Function::Polynom3 f(1.0, 1.0, 1.0, 1.0, l);
 
-    EXPECT_THROW(f(-0.5), TracerException);
+    EXPECT_THROW(f(-0.5), std::out_of_range);
     EXPECT_NO_THROW(f(0.0));
     EXPECT_NO_THROW(f(0.5));
-    EXPECT_THROW(f(1.0), TracerException);
-    EXPECT_THROW(f(1.5), TracerException);
+    EXPECT_THROW(f(1.0), std::out_of_range);
+    EXPECT_THROW(f(1.5), std::out_of_range);
 }
 //------------------------------------------------------------------------------
 // Sampling
@@ -208,7 +208,7 @@ TEST_F(FunctionTest, Concat_bad_limits) {
 
     std::vector<Function::Func1D*> f = {&f1, &f2};
 
-    EXPECT_THROW(Function::Concat con(f), TracerException);
+    EXPECT_THROW(Function::Concat con(f), std::logic_error);
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, Concat_bad_access) {
@@ -222,13 +222,13 @@ TEST_F(FunctionTest, Concat_bad_access) {
     std::vector<Function::Func1D*> f = {&f1, &f2};
     Function::Concat con(f);
 
-    EXPECT_THROW(con(-0.5), TracerException);
+    EXPECT_THROW(con(-0.5), std::out_of_range);
     EXPECT_NO_THROW(con(0.0));
     EXPECT_NO_THROW(con(0.5));
     EXPECT_NO_THROW(con(1.0));
     EXPECT_NO_THROW(con(1.5));
-    EXPECT_THROW(con(2.0), TracerException);
-    EXPECT_THROW(con(2.5), TracerException);
+    EXPECT_THROW(con(2.0), std::out_of_range);
+    EXPECT_THROW(con(2.5), std::out_of_range);
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, Concat_y_in_different_sub_functions) {
@@ -255,7 +255,7 @@ TEST_F(FunctionTest, Concat_y_in_different_sub_functions) {
         else if(x >= 2.0 && x < 3.0)
             EXPECT_EQ(3.141, con(x));
         else
-            EXPECT_THROW(con(x), TracerException);
+            EXPECT_THROW(con(x), std::out_of_range);
     }
 }
 //------------------------------------------------------------------------------

@@ -14,7 +14,6 @@
 #include <sstream>
 #include <vector>
 #include <fstream>
-#include "Core/TracerException.h"
 
 namespace FileTools {
 	bool can_be_opened(const std::string &file_path);	

@@ -70,7 +70,7 @@ void MmcsCorsikaRunHeader::assert_sub_block_has_Run_Header()const {
 		info << "Expected first word of block to be: 'RUNH', but actual: '";
 		info << MmcsCorsikaTools::float2str_4byte_bin_map(mmcs_sub_block[0]);
 		info << "'\n";
-		throw TracerException(info.str());		
+		throw std::runtime_error(info.str());		
 	}
 }
 //------------------------------------------------------------------------------
@@ -92,7 +92,7 @@ void MmcsCorsikaRunHeader::assert_number_of_observation_levels_is_valid()const {
 		info << "Expected  0 < number_of_observation_levels < 10, ";
 		info << "but actual: number_of_observation_levels = ";
 		info << number_of_observation_levels << "\n";
-		throw TracerException(info.str());		
+		throw std::runtime_error(info.str());		
 	}
 }
 //------------------------------------------------------------------------------

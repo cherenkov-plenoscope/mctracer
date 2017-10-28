@@ -13,7 +13,6 @@
 #include <string.h>
 #include <sstream>
 #include <vector>
-#include "Core/TracerException.h"
 
 namespace MmcsCorsikaTools {
 	

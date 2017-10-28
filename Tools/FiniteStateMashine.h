@@ -9,7 +9,6 @@
 //=================================
 // included dependencies
 #include "Tools/StringTools.h"
-#include "Core/TracerException.h"
 
 namespace fsm {
 	class State2StateOnEvent{

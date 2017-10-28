@@ -19,7 +19,7 @@ uint FileTools::size_in_bytes(const std::string name_of_file_to_get_size_of) {
 		info << "Toolbox: " << __func__ << "()\n";
 		info << "Can not open file : '" << name_of_file_to_get_size_of;
 		info << "' in order to get file size.\n";
-		throw TracerException(info.str());
+		throw std::runtime_error(info.str());
 	}
 
 	uint size_in_bytes = file.tellg();
@@ -40,7 +40,7 @@ void FileTools::write_text_to_file(
 		std::stringstream info;
 		info << "FileTools: ";
 		info << "Unable to write text to file: '" << path << "'.";
-		throw TracerException(info.str());	  	
+		throw std::runtime_error(info.str());	  	
 	}	
 }
 //------------------------------------------------------------------------------

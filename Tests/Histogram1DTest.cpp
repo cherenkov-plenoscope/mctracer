@@ -17,7 +17,8 @@ TEST_F(Histogram1DTest, empty_bin_edges) {
 
     EXPECT_THROW(
         Histogram1D histo(samples, bins_edges),
-        Histogram1D::ValueError);
+        std::invalid_argument
+    );
 }
 //------------------------------------------------------------------------------
 TEST_F(Histogram1DTest, init) {
@@ -180,7 +181,8 @@ TEST_F(Histogram1DTest, arg_max_empty) {
     vector<double> samples;
     EXPECT_THROW(
         Histogram1D histo(samples, bins_edges),
-        Histogram1D::ValueError);
+        std::invalid_argument
+    );
 }
 //------------------------------------------------------------------------------
 TEST_F(Histogram1DTest, arg_max_empty_sample) {
@@ -195,7 +197,8 @@ TEST_F(Histogram1DTest, arg_max_empty_edges) {
     vector<double> samples = {0.1, 0.2, 0.5};
     EXPECT_THROW(
         Histogram1D histo(samples, bins_edges),
-        Histogram1D::ValueError);
+        std::invalid_argument
+    );
 }
 //------------------------------------------------------------------------------
 TEST_F(Histogram1DTest, mode_empty_sample) {

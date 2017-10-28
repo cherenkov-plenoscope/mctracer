@@ -245,114 +245,114 @@ TEST_F(StringToolsTest, to_double) {
     );
 
     EXPECT_THROW(
-    EXPECT_NE(42.1337,StringTools::to_double("42p1337"));,
-    StringTools::CanNotParseDouble
+        EXPECT_NE(42.1337,StringTools::to_double("42p1337"));,
+        std::invalid_argument
     );
 
     EXPECT_THROW(
-    EXPECT_NE(1337,StringTools::to_double("1337 "));,
-    StringTools::CanNotParseDouble
+        EXPECT_NE(1337,StringTools::to_double("1337 "));,
+        std::invalid_argument
     );
 
     EXPECT_THROW(
-    EXPECT_NE(1u,StringTools::to_double(""));,
-    StringTools::CanNotParseDouble
+        EXPECT_NE(1u,StringTools::to_double(""));,
+        std::invalid_argument
     );
 
     EXPECT_THROW(
-    EXPECT_NE(.1442,StringTools::to_double(".1 442"));,
-    StringTools::CanNotParseDouble
+        EXPECT_NE(.1442,StringTools::to_double(".1 442"));,
+        std::invalid_argument
     );
 }
 //------------------------------------------------------------------------------
 TEST_F(StringToolsTest, to_bool) {
 
     EXPECT_NO_THROW(
-    EXPECT_TRUE(StringTools::to_bool("true"));
-    EXPECT_TRUE(StringTools::to_bool("TRUE"));
-    EXPECT_FALSE(StringTools::to_bool("false"));
-    EXPECT_FALSE(StringTools::to_bool("FALSE"));   
+        EXPECT_TRUE(StringTools::to_bool("true"));
+        EXPECT_TRUE(StringTools::to_bool("TRUE"));
+        EXPECT_FALSE(StringTools::to_bool("false"));
+        EXPECT_FALSE(StringTools::to_bool("FALSE"));   
     );
 
     EXPECT_THROW(
-    EXPECT_NE(true, StringTools::to_bool(" true"));,
-    StringTools::CanNotParseBool
+        EXPECT_NE(true, StringTools::to_bool(" true"));,
+        std::invalid_argument
     );
 
     EXPECT_THROW(
-    EXPECT_NE(true, StringTools::to_bool("true "));,
-    StringTools::CanNotParseBool
+        EXPECT_NE(true, StringTools::to_bool("true "));,
+        std::invalid_argument
     );
 
     EXPECT_THROW(
-    EXPECT_NE(true, StringTools::to_bool("wahr"));,
-    StringTools::CanNotParseBool
+        EXPECT_NE(true, StringTools::to_bool("wahr"));,
+        std::invalid_argument
     );
 
     EXPECT_THROW(
-    EXPECT_NE(true, StringTools::to_bool("Troe"));,
-    StringTools::CanNotParseBool
+        EXPECT_NE(true, StringTools::to_bool("Troe"));,
+        std::invalid_argument
     );
 
     EXPECT_THROW(
-    EXPECT_NE(true, StringTools::to_bool("yes"));,
-    StringTools::CanNotParseBool
+        EXPECT_NE(true, StringTools::to_bool("yes"));,
+        std::invalid_argument
     );
 
     EXPECT_THROW(
-    EXPECT_NE(true, StringTools::to_bool("no"));,
-    StringTools::CanNotParseBool
+        EXPECT_NE(true, StringTools::to_bool("no"));,
+        std::invalid_argument
     );
 
     EXPECT_THROW(
-    EXPECT_NE(true, StringTools::to_bool("0"));,
-    StringTools::CanNotParseBool
+        EXPECT_NE(true, StringTools::to_bool("0"));,
+        std::invalid_argument
     );
 
     EXPECT_THROW(
-    EXPECT_NE(true, StringTools::to_bool(""));,
-    StringTools::CanNotParseBool
+        EXPECT_NE(true, StringTools::to_bool(""));,
+        std::invalid_argument
     );
 }
 //------------------------------------------------------------------------------
 TEST_F(StringToolsTest, to_int) {
 
     EXPECT_NO_THROW(
-    EXPECT_EQ(1, StringTools::to_int("1"));
-    EXPECT_EQ(12, StringTools::to_int("12"));
-    EXPECT_EQ(1337, StringTools::to_int("1337"));
-    EXPECT_EQ(42, StringTools::to_int(" 42"));
-    EXPECT_EQ(123456789, StringTools::to_int("123456789")); 
+        EXPECT_EQ(1, StringTools::to_int("1"));
+        EXPECT_EQ(12, StringTools::to_int("12"));
+        EXPECT_EQ(1337, StringTools::to_int("1337"));
+        EXPECT_EQ(42, StringTools::to_int(" 42"));
+        EXPECT_EQ(123456789, StringTools::to_int("123456789")); 
     );
 
     EXPECT_THROW(
-    EXPECT_NE(1, StringTools::to_int("1 "));,
-    StringTools::CanNotParseInt
+        EXPECT_NE(1, StringTools::to_int("1 "));,
+        std::invalid_argument
     );
 
     EXPECT_THROW(
-    EXPECT_NE(1, StringTools::to_int(""));,
-    StringTools::CanNotParseInt
+        EXPECT_NE(1, StringTools::to_int(""));,
+        std::invalid_argument
     );
 
     EXPECT_THROW(
-    EXPECT_NE(123456, StringTools::to_int("123 456"));,
-    StringTools::CanNotParseInt
+        EXPECT_NE(123456, StringTools::to_int("123 456"));,
+        std::invalid_argument
     );
 
     EXPECT_THROW(
-    EXPECT_NE(12.344, StringTools::to_int("12.344"));,
-    StringTools::CanNotParseInt
+        EXPECT_NE(12.344, StringTools::to_int("12.344"));,
+        std::invalid_argument
     );
 
     EXPECT_THROW(
-    EXPECT_NE(1, StringTools::to_int("no"));,
-    StringTools::CanNotParseInt
+        EXPECT_NE(1, StringTools::to_int("no"));,
+        std::invalid_argument
     );
 
     EXPECT_THROW(
-    EXPECT_NE(6.6, StringTools::to_int("6p6"));,
-    StringTools::CanNotParseInt
+        EXPECT_NE(6.6, StringTools::to_int("6p6"));,
+        std::invalid_argument
     );
 }
 //------------------------------------------------------------------------------
@@ -377,56 +377,56 @@ TEST_F(StringToolsTest, to_Tuple3) {
 
     EXPECT_THROW(
         StringTools::to_Tuple3("1,2,3]");,
-        StringTools::CanNotParseTuple3
+        std::invalid_argument
     );
 
     EXPECT_THROW(
         StringTools::to_Tuple3("[1,2,3");,
-        StringTools::CanNotParseTuple3
+        std::invalid_argument
     );
 
     EXPECT_THROW(
         StringTools::to_Tuple3("1,2,3");,
-        StringTools::CanNotParseTuple3
+        std::invalid_argument
     );
 
     EXPECT_THROW(
         StringTools::to_Tuple3("[1,2]");,
-        StringTools::CanNotParseTuple3
+        std::invalid_argument
     );
 
     EXPECT_THROW(
         StringTools::to_Tuple3("[1 2,3]");,
-        StringTools::CanNotParseTuple3
+        std::invalid_argument
     );
 
     EXPECT_THROW(
         StringTools::to_Tuple3("[1 2 3]");,
-        StringTools::CanNotParseTuple3
+        std::invalid_argument
     );
 
     EXPECT_THROW(
         StringTools::to_Tuple3("[1,2 3]");,
-        StringTools::CanNotParseTuple3
+        std::invalid_argument
     );
 
     EXPECT_THROW(
         StringTools::to_Tuple3("[1,,3]");,
-        StringTools::CanNotParseTuple3
+        std::invalid_argument
     );
 
     EXPECT_THROW(
         StringTools::to_Tuple3("[,,]");,
-        StringTools::CanNotParseTuple3
+        std::invalid_argument
     );
 
     EXPECT_THROW(
         StringTools::to_Tuple3("[1,,]");,
-        StringTools::CanNotParseTuple3
+        std::invalid_argument
     );
 
     EXPECT_THROW(
         StringTools::to_Tuple3("[,2,]");,
-        StringTools::CanNotParseTuple3
+        std::invalid_argument
     );
 }

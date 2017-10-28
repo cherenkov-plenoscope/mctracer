@@ -125,7 +125,8 @@ TEST_F(PhotonStreamTest, write_and_read_back_full_single_pulse_event) {
         sample_frequency,
         single_pulse_rate,
         exposure_time,
-        seed);
+        seed
+    );
 }
 //------------------------------------------------------------------------------
 TEST_F(PhotonStreamTest, zero_channels) {
@@ -141,7 +142,8 @@ TEST_F(PhotonStreamTest, zero_channels) {
         sample_frequency,
         single_pulse_rate,
         exposure_time,
-        seed);
+        seed
+    );
 }
 //------------------------------------------------------------------------------
 TEST_F(PhotonStreamTest, empty_channels) {
@@ -157,7 +159,8 @@ TEST_F(PhotonStreamTest, empty_channels) {
         sample_frequency,
         single_pulse_rate,
         exposure_time,
-        seed);
+        seed
+    );
 }
 //------------------------------------------------------------------------------
 TEST_F(PhotonStreamTest, number_time_slices_too_big) {
@@ -168,7 +171,7 @@ TEST_F(PhotonStreamTest, number_time_slices_too_big) {
 
     EXPECT_THROW(
         SignalProcessing::PhotonStream::assert_number_time_slices_below_8bit_max(256);,
-        TracerException
+        std::invalid_argument
     );
 }
 //------------------------------------------------------------------------------

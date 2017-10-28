@@ -6,12 +6,12 @@ class HexagonalPrismZTest : public ::testing::Test {
 //------------------------------------------------------------------------------
 TEST_F(HexagonalPrismZTest, throw_when_negativ_radius) {
 	HexagonalPrismZ hexBound;
-  	EXPECT_THROW({ hexBound.set_outer_radius(-55.0);}, TracerException);
+  	EXPECT_THROW({ hexBound.set_outer_radius(-55.0);}, std::invalid_argument);
 }
 //------------------------------------------------------------------------------
 TEST_F(HexagonalPrismZTest, throw_when_zero_radius) {
 	HexagonalPrismZ hexBound;
- 	EXPECT_THROW({ hexBound.set_outer_radius(0.0);}, TracerException);
+ 	EXPECT_THROW({ hexBound.set_outer_radius(0.0);}, std::invalid_argument);
 }
 //------------------------------------------------------------------------------
 TEST_F(HexagonalPrismZTest, is_inside) {

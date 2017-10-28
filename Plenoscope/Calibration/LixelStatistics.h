@@ -32,10 +32,6 @@ namespace Plenoscope {
     void write(const vector<LixelStatistic> &lixel_statistics, const string &path);
     vector<LixelStatistic> read(const string &path);
 
-    class CanNotOpenLixelStatisticsFile : public TracerException {
-        using TracerException::TracerException;
-    };
-
     }//Calibration
 }//Plenoscope
 #endif // __LightFieldTelescopeLixelStatistics_H_INCLUDED__ 

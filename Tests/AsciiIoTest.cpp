@@ -8,7 +8,7 @@ TEST_F(AsciiIoTest, read_non_existing_file) {
 EXPECT_THROW(
     std::vector<std::vector<double>> table = 
         AsciiIo::gen_table_from_file("non_existing_path/non_existing_file.csv"),
-        TracerException
+        std::runtime_error
     );
 }
 //------------------------------------------------------------------------------

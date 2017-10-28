@@ -10,17 +10,17 @@ TEST_F(FunctionExample, function_limits) {
     //--func_limits--
     Limits limits(0.0, 1.0);
     //--func_limits_assert--
-    EXPECT_THROW( limits.assert_contains(-0.1), Limits::OutOfRange );
+    EXPECT_THROW( limits.assert_contains(-0.1), std::out_of_range );
     EXPECT_NO_THROW( limits.assert_contains(0.0) );
     EXPECT_NO_THROW( limits.assert_contains(0.5) );
-    EXPECT_THROW( limits.assert_contains(1.0), Limits::OutOfRange );
+    EXPECT_THROW( limits.assert_contains(1.0), std::out_of_range );
     //--func_limits_constant--
     Constant con(1.337, limits);
     //--func_limits_const_call--
-    EXPECT_THROW( con(-0.1), Limits::OutOfRange );
+    EXPECT_THROW( con(-0.1), std::out_of_range );
     EXPECT_NO_THROW( con(0.0) );
     EXPECT_NO_THROW( con(0.5) );
-    EXPECT_THROW( con(1.0), Limits::OutOfRange );
+    EXPECT_THROW( con(1.0), std::out_of_range );
     //--func_limits_call_end--
 }
 //------------------------------------------------------------------------------

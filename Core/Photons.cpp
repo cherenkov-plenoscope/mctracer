@@ -1,7 +1,6 @@
 #include "Photons.h"
 #include <omp.h>
 #include <sstream>
-//#include "Scenery/TrajectoryFactory.h"
 #include "Core/PhotonAndFrame.h"
 using std::string;
 using std::stringstream;
@@ -96,7 +95,7 @@ namespace Photons {
 			stringstream info;
 			info << "PhotonBunch::"<<__func__<<"() in "<<__FILE__<<", "<<__LINE__<<"\n";
 			info << "Cought exception during multithread propagation.\n";
-			throw(TracerException(info.str()));
+			throw std::runtime_error(info.str());
 		}
 	}
 	/*
@@ -163,7 +162,7 @@ namespace Photons {
 			out << "PhotonBunch, raw row of doubles to photon.\n";
 			out << "Expected row to have exactly 8 columns, but actual it has ";
 			out << raw_row.size() << " columns.\n";
-			throw TracerException(out.str());
+			throw std::invalid_argument(out.str());
 		}
 	}
 	//--------------------------------------------------------------------------
@@ -244,7 +243,7 @@ namespace Photons {
 			stringstream info;
 			info << "PhotonBunch::"<<__func__<<"() in "<<__FILE__<<", "<<__LINE__<<"\n";
 			info << "Cought exception during multithread transformation.\n";
-			throw(TracerException(info.str()));
+			throw std::runtime_error(info.str());
 		}
 	}
 }

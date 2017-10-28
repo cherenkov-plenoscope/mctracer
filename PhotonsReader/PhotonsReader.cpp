@@ -38,7 +38,7 @@ PhotonsReader::PhotonsReader(const string path) {
                     "Can not read photons from file, it is neither "
                     "Corsika EventIo, Mmcs Corsika, nor Ascci text\n";
 
-                    throw TracerException(out.str());   
+                    throw std::invalid_argument(out.str());   
                 }   
             }
         }   

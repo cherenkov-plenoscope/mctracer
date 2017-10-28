@@ -1,7 +1,6 @@
 #include "Time.h"
 #include <ctime>
 #include <ratio>
-#include "Core/TracerException.h"
 #include <sstream>
 #include <iomanip>
 

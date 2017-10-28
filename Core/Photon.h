@@ -27,9 +27,6 @@ public:
 	double get_wavelength()const;
 	std::string str()const;
 	double get_time_of_flight()const;
-	class BadWaveLength : public TracerException {
-		using TracerException::TracerException;
-	};
 private:
 
 	double get_time_to_pass_distance_in_refractive_index(

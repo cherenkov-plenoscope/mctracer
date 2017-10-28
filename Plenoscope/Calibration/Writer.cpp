@@ -45,7 +45,7 @@ void Writer::assert_file_is_open() {
         info << __FILE__ << " " << __LINE__ << "\n";
         info << "Light Field Telescope Calibration: Unable to write to file: '";
         info << path << "'\n";
-        throw CanNotReadFile(info.str());       
+        throw std::runtime_error(info.str());       
     }   
 }
 //------------------------------------------------------------------------------

@@ -22,7 +22,7 @@ TEST_F(FunctionDiscretSamplingTest, bad_sample_width_Config) {
 
 	EXPECT_THROW(
 		Function::DiscretSampling::LookUpTable table(&poly3, config), 
-		Function::DiscretSampling::LookUpTable::BadInput
+		std::invalid_argument
 	);
 }
 //------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ TEST_F(FunctionDiscretSamplingTest, zero_function_range) {
 
 	EXPECT_THROW(
 		Function::DiscretSampling::LookUpTable table(&poly3, config), 
-		Function::DiscretSampling::LookUpTable::BadInput
+		std::invalid_argument
 	);
 }
 //------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ TEST_F(FunctionDiscretSamplingTest, bad_offset_get_discrete_samples) {
 
 	EXPECT_THROW(
 		discrete_samples = table.at(-0.1),
-		TracerException
+		std::out_of_range
 	);
 
 	EXPECT_NO_THROW(
@@ -87,12 +87,12 @@ TEST_F(FunctionDiscretSamplingTest, bad_offset_get_discrete_samples) {
 
 	EXPECT_THROW(
 		discrete_samples = table.at(1.0),
-		TracerException
+		std::out_of_range
 	);
 
 	EXPECT_THROW(
 		discrete_samples = table.at(1.1),
-		TracerException
+		std::out_of_range
 	);
 
 	discrete_samples = table.at(0.5);

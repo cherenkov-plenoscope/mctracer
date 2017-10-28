@@ -52,8 +52,8 @@ private:
     )const;
 public:
 
-    class BadRadius :public TracerException{
-        using TracerException::TracerException;
+    class BadRadius :public std::invalid_argument{
+        using invalid_argument::invalid_argument;
     };
 };
 #endif // __SPHERE_H_INCLUDED__

@@ -14,7 +14,6 @@
 #include <vector>
 #include <math.h>
 #include <fstream>
-#include "Core/TracerException.h"
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"
 using std::string;

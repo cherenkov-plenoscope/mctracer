@@ -13,7 +13,7 @@ void FiniteStateMashine::assert_state_is_unique(const int new_state)const {
 		info << "There must not be duplicate states. ";
 		info << "Expected state: " << new_state << " to be unique, ";
 		info << "but actual its a duplicate.\n";
-		throw TracerException(info.str());
+		throw std::runtime_error(info.str());
 	}
 }
 //------------------------------------------------------------------------------
@@ -43,7 +43,7 @@ void FiniteStateMashine::assert_state_has_been_defined(const int a_state)const {
 		info << "Request for unknown state. ";
 		info << "Expected state: " << a_state << " to be defined previous, ";
 		info << "but actual its not.\n";
-		throw TracerException(info.str());		
+		throw std::runtime_error(info.str());		
 	}
 }
 //------------------------------------------------------------------------------
@@ -69,7 +69,7 @@ void FiniteStateMashine::assert_no_transition_made_so_far()const {
 		info << "after first state transition. ";
 		info << "Expected no transition took place yet, ";
 		info << "but actual it does.\n";
-		throw TracerException(info.str());		
+		throw std::runtime_error(info.str());		
 	}
 }
 //------------------------------------------------------------------------------

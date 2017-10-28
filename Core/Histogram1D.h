@@ -11,7 +11,6 @@
 #include <vector>
 #include <stdint.h>
 #include <iostream>
-#include "Core/TracerException.h"
 using std::string;
 using std::vector;
 //==============================================================================
@@ -36,10 +35,5 @@ private:
 	void init_bins_to_zero();
 	void assert_at_least_two_bin_edges()const;
 	void fill_in(const double sample);
-public:
-
-    class ValueError: public TracerException{
-        using TracerException::TracerException;
-    };
 };
 #endif // __Histogram1D_H_INCLUDED__

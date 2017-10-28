@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sstream>
-#include "Core/TracerException.h"
 #include "Xml/BasicAttributes.h"
 
 namespace UserInteraction {
@@ -25,8 +24,7 @@ namespace UserInteraction {
         out << "|                                                           \n";
         out << "|     1st Author: Sebastian Achim Mueller                   \n";
         out << "|     2nd Author: Dominik Neise                             \n";
-        out << "|                                                           \n";
-        out << "|     compiled on: " << TracerException::compile_time <<   "\n";    
+        out << "|                                                           \n";  
         out << "|___________________________________________________________\n";
         std::cout << out.str(); 
     }

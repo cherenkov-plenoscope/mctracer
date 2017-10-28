@@ -18,24 +18,24 @@ TEST_F(FrameTest, assert_name_is_valid) {
 
     EXPECT_THROW(
         Peter.set_name_pos_rot("I feel like using whitespaces",pos,rot),
-        Frame::BadName
+        std::invalid_argument
     );
 
     EXPECT_THROW(
         Peter.set_name_pos_rot("I\tfeel\rlike\tusing\nwhitespaces",pos,rot),
-        Frame::BadName
+        std::invalid_argument
     );
 
-    EXPECT_THROW(Peter.set_name_pos_rot("",pos,rot), TracerException);
+    EXPECT_THROW(Peter.set_name_pos_rot("",pos,rot), std::invalid_argument);
 
     EXPECT_THROW(   
         Peter.set_name_pos_rot("I/feel/like/using/the/delimiter/symbol",pos,rot),
-        Frame::BadName
+        std::invalid_argument
     );
 
     EXPECT_THROW(
         Peter.set_name_pos_rot(" ",pos,rot),
-        Frame::BadName
+        std::invalid_argument
     );
 }
 //------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ TEST_F(FrameTest, duplicate_name_of_children_frames) {
 
     EXPECT_THROW(
         Peter.assert_no_children_duplicate_names(),
-        Frame::DuplicateChildName
+        std::invalid_argument
     );
 }
 //------------------------------------------------------------------------------
@@ -200,7 +200,7 @@ TEST_F(FrameTest, removing_a_non_existing_cild) {
 
     EXPECT_THROW(
         tree.erase(&another_tree),
-        Frame::NoSuchChild
+        std::out_of_range
     );
 }
 //------------------------------------------------------------------------------

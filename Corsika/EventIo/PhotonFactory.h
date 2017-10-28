@@ -36,12 +36,12 @@ namespace EventIo {
 		array<float, 8> corsika_photon;
 	public:
 
-		class BadCorsikaPhotonShape : public TracerException {
-			using TracerException::TracerException;
+		class BadCorsikaPhotonShape : public std::runtime_error {
+			using runtime_error::runtime_error;
 		};
 
-		class BadPhotonWeight : public TracerException {
-			using TracerException::TracerException;
+		class BadPhotonWeight : public std::runtime_error {
+			using runtime_error::runtime_error;
 		};	
 
 		PhotonFactory(

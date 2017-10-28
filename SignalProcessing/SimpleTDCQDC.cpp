@@ -1,5 +1,4 @@
 #include "SimpleTDCQDC.h"
-#include "Core/TracerException.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -129,7 +128,7 @@ void write_intensity_simulation_truth(
         std::stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
         info << "Can not write file '" << path << "'.";
-        throw TracerException(info.str());
+        throw std::runtime_error(info.str());
     } 
 }
 //------------------------------------------------------------------------------

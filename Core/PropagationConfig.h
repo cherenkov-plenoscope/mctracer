@@ -9,7 +9,6 @@
 //=================================
 // included dependencies
 #include "Color.h"
-#include "Core/TracerException.h"
 #include "Vec3.h"
 #include <string>
 #include <sstream>

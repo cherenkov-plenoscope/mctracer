@@ -7,7 +7,6 @@
 #include <array>
 #include <iostream>
 #include <fstream>
-#include "Core/TracerException.h"
 
 using std::string;
 using std::stringstream;

@@ -118,7 +118,7 @@ namespace Corsika {
             info << "Expected word size: 4 chars, but actual: ";
             info << word.size() << " chars.\n";
             info << "word: '" << word << "'.\n";
-            throw Not4Chars(info.str());          
+            throw std::invalid_argument(info.str());          
         }
 
         char word_array[] = {word.at(0), word.at(1), word.at(2), word.at(3)};

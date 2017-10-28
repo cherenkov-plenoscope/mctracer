@@ -12,7 +12,7 @@ namespace AsciiIo {
 			stringstream info;
 			info << "AsciiIo::gen_table_from_file\n";
 			info << "Can not open file '" << path << "'.";
-			throw TracerException(info.str());
+			throw std::runtime_error(info.str());
 		}
 
 		string text_in_file;
@@ -113,14 +113,14 @@ namespace AsciiIo {
 		current_col++;
 		try{
 			numeric_row->push_back(StringTools::to_double(token));
-		}catch(TracerException &error) {
+		}catch(std::invalid_argument &error) {
 			stringstream info;
 			info << "TableReader::push_back_token_to_numeric_row:\n";
 			info << "Can not convert item '" << token << "' into a ";
 			info << "floating point number in row ";
 			info << current_row << " and column " << current_col << ".\n";
 			info << error.what();
-			throw TracerException(info.str());
+			throw std::invalid_argument(info.str());
 		}	
 	}
 }

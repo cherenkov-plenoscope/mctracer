@@ -38,12 +38,12 @@ namespace PhotonSensor {
 		uint occurence_index_given_frame_index(const uint frame_idx)const;
 	public:
 
-		class NoSuchFrame : public TracerException {
-			using TracerException::TracerException;
+		class NoSuchFrame : public std::out_of_range {
+			using out_of_range::out_of_range;
 		};
 
-		class DuplicateFrame : public TracerException {
-			using TracerException::TracerException;
+		class DuplicateFrame : public std::invalid_argument {
+			using invalid_argument::invalid_argument;
 		};
 	};
 } // PhotonSensor

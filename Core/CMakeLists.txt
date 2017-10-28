@@ -23,6 +23,5 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/SimulationTruth.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Histogram1D.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeter.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/TracerException.cpp
    	PARENT_SCOPE
 )

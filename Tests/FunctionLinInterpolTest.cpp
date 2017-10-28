@@ -69,14 +69,14 @@ TEST_F(LinInterpolTest, access_below_lowest_argument) {
 
     Function::LinInterpol f(table);
     double arg_below_definition = table.at(0).at(0) - 1e-9;
-    EXPECT_THROW(f(arg_below_definition), TracerException);
+    EXPECT_THROW(f(arg_below_definition), std::out_of_range);
 }
 //------------------------------------------------------------------------------
 TEST_F(LinInterpolTest, access_at_highest_argument) {
 
     Function::LinInterpol f(table);
     double upper_limit = table.back().at(0);
-    EXPECT_THROW(f(upper_limit), TracerException);
+    EXPECT_THROW(f(upper_limit), std::out_of_range);
 }
 //------------------------------------------------------------------------------
 TEST_F(LinInterpolTest, generate_from_from_file) {
@@ -117,7 +117,7 @@ TEST_F(LinInterpolTest, linear_interpolation) {
         if(x >= 0.0 && x < 1.0)
             EXPECT_NEAR(x, f(x), 1e-9);
         else
-            EXPECT_THROW(f(x), TracerException);
+            EXPECT_THROW(f(x), std::out_of_range);
     }
 }
 //------------------------------------------------------------------------------
@@ -126,7 +126,7 @@ TEST_F(LinInterpolTest, empty_table_for_LinInterpol) {
     std::vector<std::vector<double>> empty_table;
 
     EXPECT_EQ(0u, empty_table.size());
-    EXPECT_THROW(Function::LinInterpol f(empty_table), TracerException);
+    EXPECT_THROW(Function::LinInterpol f(empty_table), std::invalid_argument);
     // It must throw anyhow when it is first used because its limit's range is
     // zero.
 }
