@@ -1,5 +1,7 @@
 #include "PathTools.h"
 #include <sstream>
+using std::string;
+
 
 namespace PathTools {
     
