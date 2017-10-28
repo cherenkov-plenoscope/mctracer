@@ -8,8 +8,6 @@
 
 //=================================
 // included dependencies
-#include <iostream>
-#include <string>
 #include "Core/Vec3.h"
 
 namespace UserInteraction {
