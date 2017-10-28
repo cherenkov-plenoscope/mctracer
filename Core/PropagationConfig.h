@@ -10,8 +10,6 @@
 // included dependencies
 #include "Color.h"
 #include "Vec3.h"
-#include <string>
-#include <sstream>
 
 //=================================
 struct PropagationConfig {
