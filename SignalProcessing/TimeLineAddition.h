@@ -9,13 +9,12 @@
 //=================================
 // included dependencies
 #include <vector>
-using std::vector;
 
 namespace SignalProcessing {
 
     void add_second_to_first_at(
-        vector<double> *first, 
-        const vector<double> *second, 
+        std::vector<double> *first, 
+        const std::vector<double> *second, 
         int i
     );
 

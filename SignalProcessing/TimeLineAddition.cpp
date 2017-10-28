@@ -1,4 +1,5 @@
 #include "TimeLineAddition.h"
+using std::vector;
 
 namespace SignalProcessing {
 
