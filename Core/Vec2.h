@@ -8,9 +8,8 @@
 
 //=================================
 // included dependencies
-#include <iostream>
-#include <math.h>
-#include <sstream>
+#include <string>
+
 //=================================
 class Vec2 {
 private:
@@ -28,7 +27,7 @@ public:
 	void set(const double nx, const double ny);
 	double x()const;
 	double y()const;
-	uint get_quadrant()const;
+	unsigned int get_quadrant()const;
 	double norm()const;
 	void normalize();
 	double get_angle_in_between_in_rad(const Vec2& vec)const;

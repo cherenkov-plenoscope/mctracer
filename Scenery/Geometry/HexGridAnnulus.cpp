@@ -1,4 +1,5 @@
 #include "HexGridAnnulus.h"
+#include <math.h>
 //------------------------------------------------------------------------------
 HexGridAnnulus::HexGridAnnulus(const double outer_radius, const double spacing) {
 	init_grid(outer_radius, 0.0, spacing);

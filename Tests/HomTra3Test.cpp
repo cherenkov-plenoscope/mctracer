@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "Core/HomTra3.h"
+#include <math.h>
 
 class HomTra3Test : public ::testing::Test {};
 //------------------------------------------------------------------------------

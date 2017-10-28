@@ -1,4 +1,7 @@
 #include "Vec3.h"
+#include <math.h>
+#include <sstream>
+
 //------------------------------------------------------------------------------
 const Vec3 Vec3::null   = Vec3(0.0, 0.0, 0.0);
 const Vec3 Vec3::unit_x = Vec3(1.0, 0.0, 0.0);
@@ -169,7 +172,7 @@ bool Vec3::norm_is_less_equal_than(const double length_to_compare)const {
 	return (*this)*(*this) <= length_to_compare*length_to_compare;
 }
 //------------------------------------------------------------------------------
-uint Vec3::get_octant()const {
+unsigned int Vec3::get_octant()const {
 	// encodes the octant sectors where the vector is pointing to
 	// x y z sector
 	// - - -   0

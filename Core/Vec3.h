@@ -8,9 +8,8 @@
 
 //=================================
 // included dependencies
-#include <iostream>
-#include <math.h>
-#include <sstream>
+#include <string>
+
 //=================================
 class Vec3 {
 private:
@@ -32,7 +31,7 @@ public:
     double x()const;
     double y()const;
     double z()const;
-    uint get_octant()const;
+    unsigned int get_octant()const;
     Vec3 get_projection_on_XZ_plane()const;
     Vec3 get_projection_on_YZ_plane()const;
     Vec3 get_projection_on_XY_plane()const;

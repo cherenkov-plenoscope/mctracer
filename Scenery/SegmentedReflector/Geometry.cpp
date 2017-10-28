@@ -3,7 +3,7 @@
 #include <iomanip>
 #include "Tools/StringTools.h"
 #include "Core/HomTra3.h"
-#include <iomanip>
+#include <math.h>
 using std::stringstream;
 
 namespace SegmentedReflector {

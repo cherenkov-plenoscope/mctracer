@@ -1,4 +1,5 @@
 #include "FresnelRefractionAndReflection.h"
+#include <math.h>
 //------------------------------------------------------------------------------
 FresnelRefractionAndReflection::FresnelRefractionAndReflection(
 	const Vec3 &_incident_obj_sys,

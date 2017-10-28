@@ -1,5 +1,6 @@
 #include "Generator.h"
 #include <iostream>
+#include <math.h>
 
 using namespace Random;
 //------------------------------------------------------------------------------

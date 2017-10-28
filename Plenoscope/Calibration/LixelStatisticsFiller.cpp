@@ -1,4 +1,5 @@
 #include "LixelStatisticsFiller.h"
+#include <math.h>
 
 namespace Plenoscope {
     namespace Calibration {

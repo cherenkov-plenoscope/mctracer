@@ -1,4 +1,7 @@
 #include "Vec2.h"
+#include <math.h>
+#include <sstream>
+
 //------------------------------------------------------------------------------
 const Vec2 Vec2::null   = Vec2(0.0, 0.0);
 const Vec2 Vec2::unit_x = Vec2(1.0, 0.0);
@@ -87,7 +90,7 @@ bool Vec2::norm_is_less_equal_than(const double length_to_compare)const {
 	return (*this)*(*this) <= length_to_compare*length_to_compare;
 }
 //------------------------------------------------------------------------------
-uint Vec2::get_quadrant()const {
+unsigned int Vec2::get_quadrant()const {
 	// encodes the octant sectors where the vector is pointing to
 	// x y sector
 	// - -   0
