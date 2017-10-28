@@ -1,5 +1,7 @@
 #include "Numeric.h"
 #include <math.h>
+using std::vector;
+
 //------------------------------------------------------------------------------
 double Numeric::mean(const vector<double> &vec) {
 	double sum = 0;
