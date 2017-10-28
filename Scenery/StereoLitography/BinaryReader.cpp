@@ -1,6 +1,8 @@
 #include "StereoLitography.h"
 #include "Scenery/Primitive/Triangle.h"
 #include <math.h>
+using std::string;
+using std::vector;
 //------------------------------------------------------------------------------
 namespace StereoLitography {
 //------------------------------------------------------------------------------

@@ -8,18 +8,15 @@
 
 //=================================
 // included dependencies
-#include <iostream> 
+
 #include <string>
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"
 #include "Tools/StringTools.h"
 #include <fstream>
 #include <stdio.h>
-#include <string.h>
 #include "Core/Frame.h"
 #include "Core/SurfaceEntity.h"
-using std::string;
-using std::vector;
 
 //=================================
 /* 
@@ -46,13 +43,13 @@ assumed to be little-endian, although this is not stated in documentation.
 namespace StereoLitography {
 
     void add_stl_to_and_inherit_surface_from_surfac_entity(
-        const string path, 
+        const std::string path, 
         SurfaceEntity* proto,
         const double scale = 1.0
     );
 
     void add_stl_to_frame(
-        const string path, 
+        const std::string path, 
         Frame* proto,
         const double scale = 1.0
     );
@@ -100,11 +97,11 @@ namespace StereoLitography {
     class BinaryWriter :public BinaryIo{
 
         std::ofstream file;
-        string filename;
-        vector<Facet> facets;
+        std::string filename;
+        std::vector<Facet> facets;
     public:
 
-        void add_facets(const vector<Facet> additional_facets);
+        void add_facets(const std::vector<Facet> additional_facets);
 
         void add_facet_normal_and_three_vertices(
             const Vec3 n,
@@ -113,7 +110,7 @@ namespace StereoLitography {
             const Vec3 c
         );
 
-        void write_to_file(const string filename);
+        void write_to_file(const std::string filename);
     private:
 
         void assert_file_is_open()const;
@@ -131,11 +128,11 @@ namespace StereoLitography {
     
     class BinaryReader :public BinaryIo{
 
-        const string filename;
+        const std::string filename;
         std::ifstream stl_file;
-        string stl_header;
+        std::string stl_header;
 
-        vector<Facet> facets;
+        std::vector<Facet> facets;
 
         uint current_triangle_number = 0;
         uint32_t total_number_of_facets;
@@ -144,12 +141,12 @@ namespace StereoLitography {
         std::vector<uint> facets_with_bad_attribute_count;
     public:
 
-        BinaryReader(const string filename);
-        vector<Facet> get_facets()const;
-        string str()const;
-        string get_header()const;
+        BinaryReader(const std::string filename);
+        std::vector<Facet> get_facets()const;
+        std::string str()const;
+        std::string get_header()const;
         uint get_number_of_facets()const;
-        string get_report()const;
+        std::string get_report()const;
     private:
 
         void read_header();
@@ -161,8 +158,8 @@ namespace StereoLitography {
         void assert_normal_is_actually_normalized(const Vec3 nomral);
         void assert_file_is_open()const;
         void read_facets();
-        vector<float> read_floats(const uint n);
-        string read_chars(const uint n);
+        std::vector<float> read_floats(const uint n);
+        std::string read_chars(const uint n);
         uint32_t read_single_uint32();
         uint16_t read_single_uint16();
         void check_attribute_byte_count_is_zero(

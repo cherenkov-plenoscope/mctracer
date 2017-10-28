@@ -3,6 +3,7 @@
 #include "Scenery/StereoLitography/StereoLitography.h"
 using std::string;
 using std::cout;
+using std::vector;
 
 static const char USAGE[] =
 R"(Scale up or down the geometry of a STL CAD file.
