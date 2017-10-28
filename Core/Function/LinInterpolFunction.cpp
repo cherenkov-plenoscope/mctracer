@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <utility>
 #include "Tools/StringTools.h"
+using std::vector;
+using std::string;
 
 namespace Function {
 	//--------------------------------------------------------------------------

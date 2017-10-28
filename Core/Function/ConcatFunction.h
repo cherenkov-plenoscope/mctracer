@@ -8,18 +8,19 @@
 
 //==============================================================================
 // included dependencies
+#include <vector>
 #include "Func1DFunction.h"
 
 namespace Function {
 
 	class Concat : public Func1D {
 
-		vector<Func1D*> conc;
+		std::vector<Func1D*> conc;
 	public:
 
 		Concat();
-		Concat(const vector<Func1D*> conc);
-		void init(const vector<Func1D*> conc);
+		Concat(const std::vector<Func1D*> conc);
+		void init(const std::vector<Func1D*> conc);
 		double operator()(const double x)const;
 	private:
 
@@ -27,7 +28,7 @@ namespace Function {
 		void adopt_new_limits();
 		const Func1D* get_sub_function_responsible_for(const double x)const;
 		static bool compare_upper_limit(const double x, const Func1D *f);
-		bool func_does_not_match_limit_of_next_func(const uint i)const;
+		bool func_does_not_match_limit_of_next_func(const unsigned int i)const;
 	};
 } // namespace Function
 #endif // __FUNCTIONCONCATENATE_H_INCLUDED__

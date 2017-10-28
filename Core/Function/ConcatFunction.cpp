@@ -2,6 +2,8 @@
 #include <sstream>
 #include <algorithm>
 #include <exception>
+using std::vector;
+
 
 namespace Function {
 
@@ -37,7 +39,7 @@ namespace Function {
 		}
 	}
 	//--------------------------------------------------------------------------
-	bool Concat::func_does_not_match_limit_of_next_func(const uint i)const {
+	bool Concat::func_does_not_match_limit_of_next_func(const unsigned int i)const {
 		return conc.at(i)->get_limits().get_upper() != 
 			conc.at(i+1)->get_limits().get_lower();
 	}

@@ -1,5 +1,8 @@
 #include "Func1DFunction.h"
 #include <sstream>
+using std::string;
+using std::vector;
+
 
 namespace Function {
 

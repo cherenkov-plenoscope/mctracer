@@ -12,8 +12,6 @@
 #include <iostream>
 #include <vector>
 #include <string>
-using std::string;
-using std::vector;
 
 namespace Function {
 
@@ -27,11 +25,11 @@ namespace Function {
 		Func1D(const Limits &_limits);
 		void set_limits(const Limits limits);
 		virtual ~Func1D();
-		vector<vector<double>> get_samples(const uint N)const;
+		std::vector<std::vector<double>> get_samples(const uint N)const;
 		double get_mean(const uint N)const;
 		virtual double operator()(const double x)const =0;	
 		Limits get_limits()const;
-		virtual string str()const;
+		virtual std::string str()const;
 	protected:
 
 		double increment_for_steps(const uint N)const;

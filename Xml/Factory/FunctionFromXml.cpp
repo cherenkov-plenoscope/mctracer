@@ -1,5 +1,7 @@
 #include "FunctionFromXml.h"
 #include "Tools/StringTools.h"
+using std::vector;
+
 namespace Xml { 
 //------------------------------------------------------------------------------
 Function::LinInterpol get_LinInterpol_from(const Xml::Node &node) {

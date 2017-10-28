@@ -10,6 +10,7 @@
 // included dependencies
 #include "LimitsFunction.h"
 #include "Func1DFunction.h"
+#include <vector>
 
 //------------------------------------------------------------------------------
 namespace Function {
