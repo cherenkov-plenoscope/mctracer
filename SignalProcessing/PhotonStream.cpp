@@ -2,6 +2,8 @@
 #include <sstream>
 #include <math.h>
 #include <fstream> 
+using std::vector;
+using std::string;
 
 namespace SignalProcessing {
 	namespace PhotonStream {

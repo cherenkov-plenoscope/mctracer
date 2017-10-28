@@ -4,6 +4,8 @@
 #include "Core/Random/Random.h"
 #include "Core/SimulationTruth.h"
 using std::vector;
+using std::string;
+
 
 vector<vector<SignalProcessing::ElectricPulse>> create_photon_stream(
     const uint number_of_channels,

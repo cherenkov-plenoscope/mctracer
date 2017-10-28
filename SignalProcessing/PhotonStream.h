@@ -11,8 +11,6 @@
 #include <vector>
 #include <string>
 #include "SignalProcessing/ElectricPulse.h"
-using std::vector;
-using std::string;
 
 namespace SignalProcessing {
     namespace PhotonStream {
@@ -21,32 +19,32 @@ namespace SignalProcessing {
 const unsigned char NEXT_READOUT_CHANNEL_MARKER = 255;
 
 void write(
-    const vector<vector<SignalProcessing::ElectricPulse>> &pulses,
+    const std::vector<std::vector<SignalProcessing::ElectricPulse>> &pulses,
     const float slice_duration,
-    const string path
+    const std::string path
 );
 
 void write_simulation_truth(
-    const vector<vector<SignalProcessing::ElectricPulse>> &pulses,
-    const string path
+    const std::vector<std::vector<SignalProcessing::ElectricPulse>> &pulses,
+    const std::string path
 );
 
 struct Stream {
-    vector<vector<SignalProcessing::ElectricPulse>> photon_stream;
+    std::vector<std::vector<SignalProcessing::ElectricPulse>> photon_stream;
     float slice_duration;
     Stream();
 };
 
-Stream read(const string path);
+Stream read(const std::string path);
 
-Stream read_with_simulation_truth(const string path, const string truth_path);
+Stream read_with_simulation_truth(const std::string path, const std::string truth_path);
 
 uint number_of_pulses(
-    const vector<vector<SignalProcessing::ElectricPulse>> &pulses
+    const std::vector<std::vector<SignalProcessing::ElectricPulse>> &pulses
 );
 
 uint number_of_symbols_to_represent_pulses(
-    const vector<vector<SignalProcessing::ElectricPulse>> &pulses
+    const std::vector<std::vector<SignalProcessing::ElectricPulse>> &pulses
 );
 
 void assert_number_time_slices_below_8bit_max(
