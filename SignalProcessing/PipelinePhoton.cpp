@@ -1,7 +1,7 @@
 #include "PipelinePhoton.h"
 #include "Core/SimulationTruth.h"
 #include <algorithm>
-
+using std::vector;
 namespace SignalProcessing {
 //------------------------------------------------------------------------------
 PipelinePhoton::PipelinePhoton(): 

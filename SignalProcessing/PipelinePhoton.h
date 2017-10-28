@@ -7,10 +7,8 @@
 // forward declared dependencies
 
 //=================================
-// included dependencies
-#include <iostream>
+// included dependencies>
 #include "PhotonSensor/PhotonSensor.h"
-using std::vector;
 
 namespace SignalProcessing {
 
