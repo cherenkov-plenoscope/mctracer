@@ -8,7 +8,6 @@
 
 //=================================
 // included dependencies
-#include <iostream>
 #include "Core/Function/Function.h"
 #include "Core/Random/Random.h"
 #include "PipelinePhoton.h"
