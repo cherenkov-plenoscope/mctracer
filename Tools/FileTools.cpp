@@ -1,4 +1,6 @@
 #include "FileTools.h"
+#include <sstream>
+#include <fstream>
 //------------------------------------------------------------------------------
 bool FileTools::can_be_opened(const std::string &file_path) {
     if(FILE *file = fopen(file_path.c_str(), "r")) {

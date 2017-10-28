@@ -8,12 +8,8 @@
 
 //=================================
 // included dependencies	  
-#include <iostream>
 #include <string>
-#include <string.h>
-#include <sstream>
-#include <vector>
-#include <fstream>
+
 
 namespace FileTools {
 	bool can_be_opened(const std::string &file_path);	

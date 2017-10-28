@@ -1,6 +1,7 @@
 #include "StereoLitography.h"
 #include "Scenery/Primitive/Triangle.h"
 #include <math.h>
+#include <sstream>
 using std::string;
 using std::vector;
 //------------------------------------------------------------------------------
