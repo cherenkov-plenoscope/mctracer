@@ -13,7 +13,7 @@
 #include <limits>
 #include "Tools/Tools.h"
 #include <array>
-using std::array;
+
 
 namespace Plenoscope {
 
@@ -40,7 +40,7 @@ namespace Plenoscope {
 			const Function::Func1D* bin_reflection;
 			Config(); 
 
-			array<float, 273> get_sensor_plane2imaging_system_header()const;
+			std::array<float, 273> get_sensor_plane2imaging_system_header()const;
 		};
 	
 		static const Function::Constant pmma_refraction(

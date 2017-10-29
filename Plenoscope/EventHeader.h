@@ -9,6 +9,8 @@
 //=================================
 // included dependencies
 #include "LightFieldSensor/Config.h"
+#include <array>
+
 
 namespace Plenoscope {
     
@@ -24,7 +26,7 @@ namespace Plenoscope {
     }//TriggerType
 
     struct EventHeader {
-        array<float, 273> raw;
+        std::array<float, 273> raw;
         EventHeader();
         void set_event_type(const float event_type);
         void set_trigger_type(const float trigger_type);

@@ -10,11 +10,13 @@
 // included dependencies
 #include "LightFieldSensor/Config.h"
 #include <stdint.h>
+#include <array>
+
 
 namespace Plenoscope {
     
     struct SimulationTruthHeader {
-        array<float, 273> raw;
+        std::array<float, 273> raw;
         SimulationTruthHeader();
         void set_random_number_seed_of_run(const uint32_t seed);
     };

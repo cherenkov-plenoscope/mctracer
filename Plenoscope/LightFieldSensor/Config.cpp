@@ -1,6 +1,8 @@
 #include "Plenoscope/LightFieldSensor/Config.h"
 #include "Core/SurfaceEntity.h"
 #include "Corsika/Tools.h"
+using std::array;
+
 namespace Plenoscope {
 	namespace LightFieldSensor {
 		Config::Config() {
