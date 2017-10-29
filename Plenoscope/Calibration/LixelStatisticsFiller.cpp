@@ -1,5 +1,6 @@
 #include "LixelStatisticsFiller.h"
 #include <math.h>
+using std::vector;
 
 namespace Plenoscope {
     namespace Calibration {

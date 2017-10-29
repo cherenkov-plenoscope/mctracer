@@ -9,6 +9,12 @@
 #include "Corsika/Tools.h"
 #include <sstream>
 #include <math.h>
+using std::vector;
+using std::array;
+using std::string;
+using std::stringstream;
+
+
 namespace Plenoscope {
 namespace LightFieldSensor {
 //------------------------------------------------------------------------------

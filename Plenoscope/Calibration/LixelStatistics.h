@@ -13,6 +13,7 @@
 #include "Plenoscope/LightFieldSensor/Geometry.h"
 #include "Tools/OnlineStatistics.h"
 #include "Plenoscope/Calibration/OnlineLixelStatistics.h"
+#include <vector>
 
 namespace Plenoscope {
     namespace Calibration {
@@ -29,8 +30,8 @@ namespace Plenoscope {
     };
     //--lixel_statistics_e-- 
 
-    void write(const vector<LixelStatistic> &lixel_statistics, const string &path);
-    vector<LixelStatistic> read(const string &path);
+    void write(const std::vector<LixelStatistic> &lixel_statistics, const std::string &path);
+    std::vector<LixelStatistic> read(const std::string &path);
 
     }//Calibration
 }//Plenoscope

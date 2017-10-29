@@ -12,6 +12,7 @@
 #include "Core/Random/Random.h"
 #include "Core/Function/Function.h"
 #include "Core/Photon.h"
+#include <string>
 
 namespace Plenoscope {
 	namespace NightSkyBackground {
@@ -30,7 +31,7 @@ namespace Plenoscope {
 			const LightFieldSensor::Geometry *_sensor_geometry, 
 			const Function::Func1D* flux_vs_wavelength
 		);
-		string __repr__()const;
+		std::string __repr__()const;
 	};
 	
 	}// NightSkyBackground
