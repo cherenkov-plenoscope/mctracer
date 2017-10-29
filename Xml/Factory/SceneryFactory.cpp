@@ -4,6 +4,7 @@
 #include "Scenery/StereoLitography/StereoLitography.h"
 #include "Scenery/SegmentedReflector/SegmentedReflector.h"
 #include "Xml/Factory/Function.h"
+#include <sstream>
 using StringTools::is_equal;
 using std::stringstream;
 

@@ -1,6 +1,8 @@
 #include "gtest/gtest.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "Core/Random/Random.h"
+#include <vector>
+using std::vector;
 using namespace PhotonSensor;
 
 class SensorInOutTest : public ::testing::Test {};

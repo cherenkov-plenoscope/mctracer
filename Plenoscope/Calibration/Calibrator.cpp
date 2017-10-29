@@ -8,6 +8,7 @@
 #include "Tools/HeaderBlock.h"
 #include "omp.h"
 //#include "Cameras/FlyingCamera.h"
+using std::vector;
 using std::cout;
 
 namespace Plenoscope {

@@ -2,6 +2,7 @@
 #include "Core/PhysicalConstants.h"
 #include "Tools/Tools.h"
 #include "NightSkyBackground.h"
+#include <sstream>
 
 namespace Plenoscope {
 namespace NightSkyBackground {

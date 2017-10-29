@@ -1,5 +1,7 @@
 #include "PhotoElectricConverter.h"
 #include "Core/SimulationTruth.h"
+#include <sstream>
+using std::vector;
 
 namespace SignalProcessing {
 	namespace PhotoElectricConverter {

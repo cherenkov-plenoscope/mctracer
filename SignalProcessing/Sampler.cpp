@@ -1,5 +1,8 @@
 #include "Sampler.h"
 #include "TimeLineAddition.h"
+#include <sstream>
+using std::vector;
+
 
 namespace SignalProcessing {
 	namespace PhotoElectricConverter {

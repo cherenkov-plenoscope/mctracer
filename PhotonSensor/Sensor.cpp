@@ -1,4 +1,8 @@
 #include "PhotonSensor.h"
+#include <math.h>
+#include <sstream>
+using std::vector;
+using std::string;
 
 namespace PhotonSensor {
 

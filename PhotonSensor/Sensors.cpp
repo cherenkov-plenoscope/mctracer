@@ -1,6 +1,8 @@
 #include "Sensors.h"
 #include "Finder.h"
 #include <algorithm>
+#include <sstream>
+using std::vector;
 
 namespace PhotonSensor {
 //------------------------------------------------------------------------------

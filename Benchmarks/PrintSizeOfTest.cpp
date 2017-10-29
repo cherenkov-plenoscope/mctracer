@@ -12,9 +12,11 @@
 #include "Core/PropagationEnvironment.h"
 #include "Tools/StringTools.h"
 #include "PhotonSensor/PhotonSensor.h"
-
 #include "SignalProcessing/PipelinePhoton.h"
+#include <sstream>
+#include <string>
 using std::cout;
+using std::string;
 using StringTools::fill_up_text_with_whitespaces_until_column;
 
 template<typename T>

@@ -14,6 +14,9 @@
 #include "Plenoscope/Calibration/LixelStatisticsFiller.h"
 #include "Core/Random/Random.h"
 #include "Core/PropagationEnvironment.h"
+#include <vector>
+#include <string>
+
 
 namespace Plenoscope {
     namespace Calibration {
@@ -34,7 +37,7 @@ namespace Plenoscope {
 		PropagationEnvironment plenoscope_environment;
 		Random::Mt19937 prng;
 
-		vector<CalibrationPhotonResult> photon_results;
+		std::vector<CalibrationPhotonResult> photon_results;
 		LixelStatisticsFiller lixel_statistics_filler;
 	public:
 
@@ -43,9 +46,9 @@ namespace Plenoscope {
 			PlenoscopeInScenery *plenoscope, 
 			const Frame* _scenery
 		);
-		void export_sub_pixel_statistics(const string path)const;
-		void write_lixel_statistics(const string &path)const;
-		string str()const;
+		void export_sub_pixel_statistics(const std::string path)const;
+		void write_lixel_statistics(const std::string &path)const;
+		std::string str()const;
 	private:
 
 		void set_up_photon_properties();

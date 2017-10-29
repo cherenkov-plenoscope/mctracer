@@ -13,6 +13,8 @@
 #include <iostream> 
 #include <math.h>
 #include <string>
+#include <vector>
+using std::vector;
 
 class PhotonTest : public ::testing::Test {};
 //------------------------------------------------------------------------------

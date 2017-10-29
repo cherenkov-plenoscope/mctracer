@@ -7,6 +7,9 @@
 #include "Core/Random/Random.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "Core/Photons.h"
+#include <vector>
+using std::vector;
+
 class LensMakerTest : public ::testing::Test {};
 //----------------------------------------------------------------------
 TEST_F(LensMakerTest, check_sebastians_paper_and_pen_calculation) {

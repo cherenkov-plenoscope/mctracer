@@ -11,7 +11,8 @@
 #include "Core/Function/Function.h"
 #include "Core/Random/Random.h"
 #include "PipelinePhoton.h"
-//#include <random>
+#include <vector>
+
 //=================================
 namespace SignalProcessing {
 	namespace PhotoElectricConverter {
@@ -37,8 +38,8 @@ namespace SignalProcessing {
 	public:
 
 		Sampler(const SamplerConfig* config);
-		vector<double> time_line(
-			const vector<double> *electric_pipeline,
+		std::vector<double> time_line(
+			const std::vector<double> *electric_pipeline,
 			const Function::DiscretSampling::LookUpTable* puls_look_up_table,
 			Random::Generator* prng
 		);

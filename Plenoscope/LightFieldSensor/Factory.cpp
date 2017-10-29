@@ -7,6 +7,9 @@
 #include "Scenery/Primitive/Cylinder.h"
 #include "Scenery/Primitive/BiConvexLensHexBound.h"
 #include "Scenery/Primitive/PlaneDualSphericalBound.h"
+#include <math.h>
+using std::vector;
+using std::string;
 
 namespace Plenoscope {
 namespace LightFieldSensor {

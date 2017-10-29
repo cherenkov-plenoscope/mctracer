@@ -1,4 +1,5 @@
 #include "Plenoscope/Calibration/Writer.h"
+#include <sstream>
 
 namespace Plenoscope {
     namespace Calibration {

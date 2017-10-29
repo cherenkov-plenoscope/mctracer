@@ -8,13 +8,9 @@
 
 //=================================
 // included dependencies
-#include <iostream>
-#include <math.h>
-#include <sstream>
 #include "Core/Photon.h"
 #include "ArrivalInformation.h"
-using std::vector;
-using std::string;
+
 
 //=================================
 namespace PhotonSensor {
@@ -24,7 +20,7 @@ namespace PhotonSensor {
 		
 		const Frame* sensor_frame;
 	public:
-		vector<ArrivalInformation> arrival_table;
+		std::vector<ArrivalInformation> arrival_table;
 
 		uint id;
 		Sensor(uint _id, const Frame* _sensor_frame);
@@ -41,8 +37,8 @@ namespace PhotonSensor {
 
 		double arrival_time_mean()const;
 
-		vector<vector<double>> get_arrival_table()const;
-		string get_arrival_table_header()const;
+		std::vector<std::vector<double>> get_arrival_table()const;
+		std::string get_arrival_table_header()const;
 
 	    struct FrameSensorByFramePointerCompare {
 			bool operator()(const Frame* f, const Sensor* s) {

@@ -9,7 +9,8 @@
 //=================================
 // included dependencies
 #include "PhotonSensor/PhotonSensor.h"
-using std::vector;
+#include <vector>
+
 //=================================
 
 namespace PhotonSensor {
@@ -21,7 +22,7 @@ namespace PhotonSensor {
 	public:
 		FindSensorByFrame(
 			const Frame* final_frame,
-			const vector<PhotonSensor::Sensor*> *sensors
+			const std::vector<PhotonSensor::Sensor*> *sensors
 		);
 		bool frame_is_in_sensors()const;
 		PhotonSensor::Sensor* get_sensor()const;

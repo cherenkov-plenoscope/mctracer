@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "PhotonSensor/PhotonSensor.h"
-using std::vector;
+
 //=================================
 
 namespace PhotonSensor {
@@ -17,18 +17,18 @@ namespace PhotonSensor {
 	class Sensors {
 
 	public:
-		vector<PhotonSensor::Sensor*> by_occurence;
-		vector<PhotonSensor::Sensor*> by_frame;
-		vector<uint> occurence2frame_indices;
+		std::vector<PhotonSensor::Sensor*> by_occurence;
+		std::vector<PhotonSensor::Sensor*> by_frame;
+		std::vector<uint> occurence2frame_indices;
 		
 		Sensors();
-		Sensors(vector<PhotonSensor::Sensor*> &sensors);
-		void init(vector<PhotonSensor::Sensor*> &sensors);
+		Sensors(std::vector<PhotonSensor::Sensor*> &sensors);
+		void init(std::vector<PhotonSensor::Sensor*> &sensors);
 		uint size()const;
 		PhotonSensor::Sensor* at(const uint pos);
 		PhotonSensor::Sensor* at_frame(const Frame* frame);
 		void assign_photon(const Photon* photon);
-		void assign_photons(const vector<Photon> *photons);
+		void assign_photons(const std::vector<Photon> *photons);
 		void clear_history();
 	private:
 

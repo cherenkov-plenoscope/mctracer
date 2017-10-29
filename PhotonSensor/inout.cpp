@@ -1,6 +1,7 @@
 #include "inout.h"
 #include <array>
 using std::array;
+using std::vector;
 
 namespace PhotonSensor {
 

@@ -9,6 +9,8 @@
 #include "Scenery/Geometry/LensMaker/LensMaker.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "Tools/AsciiIo.h"
+#include <vector>
+using std::vector;
 
 class BiConvexLensTest : public ::testing::Test {
 protected:

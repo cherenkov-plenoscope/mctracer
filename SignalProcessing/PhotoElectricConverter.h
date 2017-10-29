@@ -12,6 +12,9 @@
 #include "Core/Random/Random.h"
 #include "PipelinePhoton.h"
 #include "ElectricPulse.h"
+#include <vector>
+
+
 //=================================
 namespace SignalProcessing {
     namespace PhotoElectricConverter {
@@ -36,20 +39,20 @@ public:
 
     Converter(const Config* config);
 
-    vector<ElectricPulse> get_pulse_pipeline_for_photon_pipeline(
-        const vector<PipelinePhoton> &photon_pipeline,
+    std::vector<ElectricPulse> get_pulse_pipeline_for_photon_pipeline(
+        const std::vector<PipelinePhoton> &photon_pipeline,
         const double exposure_time,
         Random::Generator* prng
     );
 
     void add_pulse(
         const ElectricPulse &pulse,
-        vector<ElectricPulse> *electric_pipeline, 
+        std::vector<ElectricPulse> *electric_pipeline, 
         Random::Generator* prng
     )const;
 
     void add_accidental_pulse(
-        vector<ElectricPulse> *electric_pipeline, 
+        std::vector<ElectricPulse> *electric_pipeline, 
         const double exposure_time,
         Random::Generator* prng
     )const;

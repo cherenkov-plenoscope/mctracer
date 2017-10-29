@@ -10,17 +10,20 @@
 // included dependencies
 #include "PhotonSensor/PhotonSensor.h"
 #include <fstream>
+#include <vector>
 //=================================
 
 namespace PhotonSensor {
 
     void write_arrival_information_to_file(
-        const vector<ArrivalInformation>* arrival_table,
-        std::ofstream *file);
+        const std::vector<ArrivalInformation>* arrival_table,
+        std::ofstream *file
+    );
 
-     vector<ArrivalInformation> read_arrival_information_from_file(
+    std::vector<ArrivalInformation> read_arrival_information_from_file(
         std::ifstream *file,
-        const uint number_of_arrivals);
+        const uint number_of_arrivals
+    );
 
 } // PhotonSensor
 //------------------------------------------------------------------------------
