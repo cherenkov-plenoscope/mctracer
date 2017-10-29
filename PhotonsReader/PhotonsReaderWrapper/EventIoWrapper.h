@@ -10,8 +10,8 @@
 // included dependencies
 #include "BasicWrapper.h"
 #include "Corsika/EventIo/EventIo.h"
-using std::string;
-using std::vector;
+#include <vector>
+#include <string>
 
 //=================================
 class EventIoWrapper: public BasicWrapper {
@@ -19,8 +19,8 @@ class EventIoWrapper: public BasicWrapper {
 	EventIo::Run corsika_run;
 public:
 
-	EventIoWrapper(const string path);
+	EventIoWrapper(const std::string path);
 	bool has_still_photons_left()const;
-	vector<Photon> next(Random::Generator* prng);	
+	std::vector<Photon> next(Random::Generator* prng);	
 };
 #endif // __PhotonsReaderEventIoWrapper_H_INCLUDED__ 

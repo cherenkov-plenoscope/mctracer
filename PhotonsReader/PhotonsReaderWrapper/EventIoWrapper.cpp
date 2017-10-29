@@ -1,5 +1,8 @@
 #include "EventIoWrapper.h"
 #include "Corsika/EventIo/PhotonFactory.h"
+using std::string;
+using std::vector;
+
 //------------------------------------------------------------------------------
 EventIoWrapper::EventIoWrapper(const string _path): 
 	BasicWrapper(_path),

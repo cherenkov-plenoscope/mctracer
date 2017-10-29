@@ -1,5 +1,7 @@
 #include "MmcsCorsikaIoWrapper.h"
-using std::cout;
+using std::string;
+using std::vector;
+
 //------------------------------------------------------------------------------
 MmcsCorsikaIoWrapper::MmcsCorsikaIoWrapper(const string _path): 
 	BasicWrapper(_path),

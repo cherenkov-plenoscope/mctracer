@@ -3,7 +3,8 @@
 #include "PhotonsReaderWrapper/MmcsCorsikaIoWrapper.h"
 #include "PhotonsReaderWrapper/AsciiIoWrapper.h"
 #include "PhotonsReaderWrapper/InternalPhotonSourceWrapper.h"
-using std::cout;
+using std::string;
+using std::vector;
 //------------------------------------------------------------------------------
 PhotonsReader::PhotonsReader(const string path) {
     

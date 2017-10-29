@@ -10,8 +10,8 @@
 // included dependencies
 #include "Corsika/MagicMonteCarloSimulation/MmcsCorsikaFullEventGetter.h"
 #include "BasicWrapper.h"
-using std::string;
-using std::vector;
+#include <vector>
+#include <string>
 
 //=================================
 class MmcsCorsikaIoWrapper: public BasicWrapper {
@@ -20,8 +20,8 @@ class MmcsCorsikaIoWrapper: public BasicWrapper {
 	mutable MmcsCorsikaEvent event;
 public:
 
-	MmcsCorsikaIoWrapper(const string path);
+	MmcsCorsikaIoWrapper(const std::string path);
 	bool has_still_photons_left()const;
-	vector<Photon> next(Random::Generator* prng);	
+	std::vector<Photon> next(Random::Generator* prng);	
 };
 #endif // __PhotonsReaderMmcsCorsikaIoWrapper_H_INCLUDED__ 

@@ -1,6 +1,9 @@
 #include "AsciiIoWrapper.h"
 #include "Tools/AsciiIo.h"
 #include <utility>
+using std::string;
+using std::vector;
+
 //------------------------------------------------------------------------------
 AsciiIoWrapper::AsciiIoWrapper(const string _path): 
 	BasicWrapper(_path)

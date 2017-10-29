@@ -9,18 +9,18 @@
 //=================================
 // included dependencies
 #include "BasicWrapper.h"
-using std::string;
-using std::vector;
+#include <vector>
+#include <string>
 
 //=================================
 class InternalPhotonSourceWrapper: public BasicWrapper {
 
 	bool the_single_event_was_already_read;
-	vector<Photon> photons;
+	std::vector<Photon> photons;
 public:
 
-	InternalPhotonSourceWrapper(const string path);
+	InternalPhotonSourceWrapper(const std::string path);
 	bool has_still_photons_left()const;
-	vector<Photon> next(Random::Generator* prng);	
+	std::vector<Photon> next(Random::Generator* prng);	
 };
 #endif // __PhotonsReaderInternalLightSourceWrapper_H_INCLUDED__ 

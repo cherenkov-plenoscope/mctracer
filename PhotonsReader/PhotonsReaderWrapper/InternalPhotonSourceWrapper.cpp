@@ -1,5 +1,8 @@
 #include "InternalPhotonSourceWrapper.h"
 #include "Xml/Factory/InternalPhotonSource.h"
+using std::string;
+using std::vector;
+
 //------------------------------------------------------------------------------
 InternalPhotonSourceWrapper::InternalPhotonSourceWrapper(const string _path): 
 	BasicWrapper(_path)

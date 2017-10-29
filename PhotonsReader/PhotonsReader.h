@@ -9,8 +9,8 @@
 //=================================
 // included dependencies
 #include "PhotonsReaderWrapper/BasicWrapper.h"
-using std::string;
-using std::vector;
+#include <vector>
+#include <string>
 
 //=================================
 // read in photons from any file
@@ -24,9 +24,9 @@ class PhotonsReader {
 	BasicWrapper *photons_from_file;
 public:
 
-	PhotonsReader(const string path);
+	PhotonsReader(const std::string path);
 	~PhotonsReader();
 	bool has_still_photons_left()const;
-	vector<Photon> next(Random::Generator* prng);
+	std::vector<Photon> next(Random::Generator* prng);
 };
 #endif // __PhotonsReader_H_INCLUDED__ 
