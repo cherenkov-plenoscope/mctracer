@@ -7,7 +7,7 @@ void RectangularBox::set_xyz_width(
     const double z_width
 ) {
     Plane* walls[6];
-    for(uint c=0; c<6; c++)
+    for(unsigned int c=0; c<6; c++)
         walls[c] = append<Plane>();
 
     // along z axis

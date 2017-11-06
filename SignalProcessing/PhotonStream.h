@@ -39,11 +39,11 @@ Stream read(const std::string path);
 
 Stream read_with_simulation_truth(const std::string path, const std::string truth_path);
 
-uint number_of_pulses(
+unsigned int number_of_pulses(
     const std::vector<std::vector<SignalProcessing::ElectricPulse>> &pulses
 );
 
-uint number_of_symbols_to_represent_pulses(
+unsigned int number_of_symbols_to_represent_pulses(
     const std::vector<std::vector<SignalProcessing::ElectricPulse>> &pulses
 );
 

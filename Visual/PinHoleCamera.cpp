@@ -101,7 +101,7 @@ void PinHoleCamera::acquire_image(
 	const Frame* world, 
 	const Config* visual_config
 ){
-	uint i, row, col;
+	unsigned int i, row, col;
 	CameraRay cam_ray;
 	int HadCatch = 0;
 

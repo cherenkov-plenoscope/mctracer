@@ -12,7 +12,7 @@ TEST_F(Histogram1DTest, empty_bin_edges) {
 
     Random::Mt19937 prng(0);
     vector<double> samples;
-    for(uint i=0; i<42*1337; i++)
+    for(unsigned int i=0; i<42*1337; i++)
         samples.push_back(prng.uniform());
 
     EXPECT_THROW(
@@ -28,7 +28,7 @@ TEST_F(Histogram1DTest, init) {
     Random::Mt19937 prng(0);
     vector<double> samples;
 
-    for(uint i=0; i<42*1337; i++)
+    for(unsigned int i=0; i<42*1337; i++)
         samples.push_back(prng.uniform());
 
     Histogram1D histo(samples, bins);
@@ -103,7 +103,7 @@ TEST_F(Histogram1DTest, all_in_one_bin_middle) {
     vector<double> bins_edges = Numeric::linspace(0.0, 1.0, 4);
 
     vector<double> samples;
-    for(uint i=0u; i<42u*1337u; i++)
+    for(unsigned int i=0u; i<42u*1337u; i++)
         samples.push_back(0.5);
 
     Histogram1D histo(samples, bins_edges);
@@ -123,7 +123,7 @@ TEST_F(Histogram1DTest, all_in_one_bin_front) {
     vector<double> bins_edges = Numeric::linspace(0.0, 1.0, 4);
 
     vector<double> samples;
-    for(uint i=0u; i<42u*1337u; i++)
+    for(unsigned int i=0u; i<42u*1337u; i++)
         samples.push_back(0.15);
 
     Histogram1D histo(samples, bins_edges);
@@ -143,7 +143,7 @@ TEST_F(Histogram1DTest, all_in_one_bin_back) {
     vector<double> bins_edges = Numeric::linspace(0.0, 1.0, 4);
 
     vector<double> samples;
-    for(uint i=0u; i<42u*1337u; i++)
+    for(unsigned int i=0u; i<42u*1337u; i++)
         samples.push_back(0.75);
 
     Histogram1D histo(samples, bins_edges);

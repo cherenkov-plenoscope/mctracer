@@ -13,15 +13,15 @@ GridNeighborhoodTopoligy::GridNeighborhoodTopoligy(
 
 	neigbors.resize(grid->size());
 
-	for(uint a=0; a<grid->size(); a++) {
+	for(unsigned int a=0; a<grid->size(); a++) {
 
-		std::vector<uint> a_neighbors;
+		std::vector<unsigned int> a_neighbors;
 
-		uint lox = get_candidate_low_x(grid->at(a).x());
-		uint hix = get_candidate_hig_x(grid->at(a).x());
+		unsigned int lox = get_candidate_low_x(grid->at(a).x());
+		unsigned int hix = get_candidate_hig_x(grid->at(a).x());
 
-		for(uint b=lox; b<hix; b++) {
-		//for(uint b=0; b<grid->size(); b++) {
+		for(unsigned int b=lox; b<hix; b++) {
+		//for(unsigned int b=0; b<grid->size(); b++) {
 			if(a != b) {
 				if(grid->at(a).distance_to(grid->at(b)) <= neighborhood_radius) {
 					a_neighbors.push_back(b);
@@ -33,7 +33,7 @@ GridNeighborhoodTopoligy::GridNeighborhoodTopoligy(
 	}
 }
 //------------------------------------------------------------------------------
-std::vector<std::vector<uint>> GridNeighborhoodTopoligy::get_neighbor_relations()const {
+std::vector<std::vector<unsigned int>> GridNeighborhoodTopoligy::get_neighbor_relations()const {
 	return neigbors;
 }
 //------------------------------------------------------------------------------
@@ -41,7 +41,7 @@ void GridNeighborhoodTopoligy::init_idx() {
 
 	idx_x.resize(grid->size());
 
-	for(uint i=0; i<grid->size(); i++) {
+	for(unsigned int i=0; i<grid->size(); i++) {
 		idx_x[i] = i;
 	}
 }
@@ -49,35 +49,35 @@ void GridNeighborhoodTopoligy::init_idx() {
 void GridNeighborhoodTopoligy::sort_idx() {		
 
 	std::sort(idx_x.begin(), idx_x.end(),
-        [&](const uint a, const uint b) {
+        [&](const unsigned int a, const unsigned int b) {
             return(grid->at(a).x() < grid->at(b).x());
         }
     );
 }
 //------------------------------------------------------------------------------
-uint GridNeighborhoodTopoligy::get_candidate_low_x(const double x) {	
+unsigned int GridNeighborhoodTopoligy::get_candidate_low_x(const double x) {	
 
-	std::vector<uint>::const_iterator it;
+	std::vector<unsigned int>::const_iterator it;
 
 	it = std::lower_bound(
 		idx_x.begin(), idx_x.end(), 
 		(x - 1.1*neighborhood_radius), 
-		[&](const uint a, const double X) {return(grid->at(a).x() < X);}
+		[&](const unsigned int a, const double X) {return(grid->at(a).x() < X);}
 	);
 
 	return (it - idx_x.begin());
 }
 //------------------------------------------------------------------------------
-uint GridNeighborhoodTopoligy::get_candidate_hig_x(const double x) {	
+unsigned int GridNeighborhoodTopoligy::get_candidate_hig_x(const double x) {	
 
-	std::vector<uint>::const_iterator it;
+	std::vector<unsigned int>::const_iterator it;
 
 	it = std::upper_bound(
 		idx_x.begin(), idx_x.end(), 
 		(x + 1.1*neighborhood_radius), 
-		[&](const double X, const uint a) {return(grid->at(a).x() > X);}
+		[&](const double X, const unsigned int a) {return(grid->at(a).x() > X);}
 	);
 
 	return (it - idx_x.begin());
 }
-//std::vector<uint> get_candidates_x()
+//std::vector<unsigned int> get_candidates_x()

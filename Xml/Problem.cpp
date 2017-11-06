@@ -33,11 +33,11 @@ void Problem::init() {
     locate_problem_column_and_line_using_new_lines();
 }
 //------------------------------------------------------------------------------
-uint Problem::get_line()const {
+unsigned int Problem::get_line()const {
     return line;
 }
 //------------------------------------------------------------------------------
-uint Problem::get_column()const {
+unsigned int Problem::get_column()const {
     return column;
 }
 //------------------------------------------------------------------------------
@@ -49,7 +49,7 @@ void Problem::locate_new_lines_in_xml_file() {
 
     new_lines.clear();
 
-    for(uint offset=0; offset<file->length(); offset++)
+    for(unsigned int offset=0; offset<file->length(); offset++)
         if(file->at(offset++) == '\n')
             new_lines.push_back(offset);
 }
@@ -71,10 +71,10 @@ string Problem::get_problem_section_from_original_file()const {
     std::istringstream ifile(*file);
     string line_of_text;
 
-    const uint line_radius = 5;
-    const uint max_digits_for_row_number = ceil(log10(line+line_radius));
+    const unsigned int line_radius = 5;
+    const unsigned int max_digits_for_row_number = ceil(log10(line+line_radius));
 
-    uint current_line_number = 0;
+    unsigned int current_line_number = 0;
     while (std::getline(ifile, line_of_text)) {
             
         std::stringstream line_prefix;

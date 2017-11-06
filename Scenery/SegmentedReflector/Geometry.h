@@ -61,7 +61,7 @@ namespace SegmentedReflector {
 		void init_facet_z_positions();
 		void init_facet_orientations();
 		void make_average_facet_distance_to_focal_point_match_focal_length();
-		void abort_if_too_many_iterations(const uint iteration_conter);
+		void abort_if_too_many_iterations(const unsigned int iteration_conter);
 		void move_all_facets_in_z(const double movement);
 	};
 } // SegmentedReflector

@@ -109,7 +109,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry){
     environment.random_engine = &dice;
 
     //creation is 1 interaction itself
-    const uint num_of_total_interactions = number_of_bounces + 1; 
+    const unsigned int num_of_total_interactions = number_of_bounces + 1; 
 
     for(int i=0; i<1; i++) {
         Photon P(Support, direction, wavelength);
@@ -284,7 +284,7 @@ TEST_F(PhotonTest, Refraction){
     absorber->set_outer_color(&absorber_color);
     absorber->set_inner_color(&absorber_color);
     absorber->set_x_y_width(1.0, 1.0);
-    uint sensor_id = 0;
+    unsigned int sensor_id = 0;
     PhotonSensor::Sensor absorber_sensor(sensor_id, absorber);
     std::vector<PhotonSensor::Sensor*> sensors_vector = {&absorber_sensor};
     PhotonSensor::Sensors sensors(sensors_vector);
@@ -378,7 +378,7 @@ TEST_F(PhotonTest, absorbtion_in_medium){
     collector->set_outer_color(&absorber_color);
     collector->set_inner_color(&absorber_color);
     collector->set_x_y_width(1.0, 1.0);
-    uint sensor_id = 0;
+    unsigned int sensor_id = 0;
     PhotonSensor::Sensor collector_sensor(sensor_id, collector);
     std::vector<PhotonSensor::Sensor*> sensors_vector = {&collector_sensor};
     PhotonSensor::Sensors sensors(sensors_vector);

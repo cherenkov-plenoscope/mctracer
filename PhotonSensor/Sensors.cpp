@@ -23,7 +23,7 @@ void Sensors::init(vector<PhotonSensor::Sensor*> &sensors) {
 
     by_occurence = std::move(sensors);
 
-    for(uint i=0; i<by_occurence.size(); i++)
+    for(unsigned int i=0; i<by_occurence.size(); i++)
     	by_occurence[i]->id = i;
 
     init_indices_occurence2frame();
@@ -32,11 +32,11 @@ void Sensors::init(vector<PhotonSensor::Sensor*> &sensors) {
     sensors.clear();   
 }
 //------------------------------------------------------------------------------
-uint Sensors::size()const {
+unsigned int Sensors::size()const {
 	return by_occurence.size();
 }
 //------------------------------------------------------------------------------
-Sensor* Sensors::at(const uint pos) {
+Sensor* Sensors::at(const unsigned int pos) {
 	return by_occurence.at(pos);
 }
 //------------------------------------------------------------------------------
@@ -81,7 +81,7 @@ void Sensors::clear_history() {
 void Sensors::assert_no_two_sensors_have_same_frame()const {
 	
 	// look for duplicate sensor frames in the sensor list sorted by frames
-	for(uint i=1; i<by_frame.size(); i++) {
+	for(unsigned int i=1; i<by_frame.size(); i++) {
 
 		if(	by_frame.at(i)->get_frame() == 
 			by_frame.at(i-1)->get_frame()
@@ -101,7 +101,7 @@ void Sensors::init_indices_occurence2frame() {
 
     occurence2frame_indices.reserve(by_occurence.size());
 
-    for(uint i=0; i<by_occurence.size(); i++) 
+    for(unsigned int i=0; i<by_occurence.size(); i++) 
         occurence2frame_indices.push_back(i);
     
     std::sort(
@@ -120,7 +120,7 @@ void Sensors::init_sensors_by_frames() {
 
     by_frame.reserve(by_occurence.size());
 
-    for(uint i=0; i<by_occurence.size(); i++) 
+    for(unsigned int i=0; i<by_occurence.size(); i++) 
         by_frame.push_back( by_occurence[occurence2frame_indices[i]] );
 
     assert_no_two_sensors_have_same_frame();

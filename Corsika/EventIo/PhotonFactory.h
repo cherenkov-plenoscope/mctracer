@@ -22,17 +22,17 @@ namespace EventIo {
 
 	class PhotonFactory {
 
-		static const uint x_pos_idx = 0;
-		static const uint y_pos_idx = 1;
-		static const uint x_dir_cos_idx = 2;
-		static const uint y_dir_cos_idx = 3;
-		static const uint time_idx = 4; 
-		static const uint z_emission_height_idx = 5;
-		static const uint photon_weight_idx = 6;
-		static const uint wavelength_idx = 7;
+		static const unsigned int x_pos_idx = 0;
+		static const unsigned int y_pos_idx = 1;
+		static const unsigned int x_dir_cos_idx = 2;
+		static const unsigned int y_dir_cos_idx = 3;
+		static const unsigned int time_idx = 4; 
+		static const unsigned int z_emission_height_idx = 5;
+		static const unsigned int photon_weight_idx = 6;
+		static const unsigned int wavelength_idx = 7;
 
 		bool passed_through_atmosphere_flag = false;
-		uint id;
+		unsigned int id;
 		array<float, 8> corsika_photon;
 	public:
 
@@ -46,7 +46,7 @@ namespace EventIo {
 
 		PhotonFactory(
 			const array<float, 8>& _corsika_photon, 
-			const uint id,
+			const unsigned int id,
 			Random::Generator *prng
 		);
 		bool passed_atmosphere()const;

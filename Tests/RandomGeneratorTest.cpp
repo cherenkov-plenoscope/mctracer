@@ -20,7 +20,7 @@ TEST_F(RandomGeneratorTest, fake_constant) {
 //------------------------------------------------------------------------------
 TEST_F(RandomGeneratorTest, Mt19937_init_and_get_seed) {
 
-    for(uint i=0; i<100; i++) {
+    for(unsigned int i=0; i<100; i++) {
         Random::Mt19937 prng(i);
         EXPECT_EQ(i, prng.get_seed());
     }
@@ -30,7 +30,7 @@ TEST_F(RandomGeneratorTest, Mt19937_set_and_get_seed) {
 
     Random::Mt19937 prng;
 
-    for(uint i=0; i<100; i++) {
+    for(unsigned int i=0; i<100; i++) {
         prng.set_seed(i);
         EXPECT_EQ(i, prng.get_seed());
     }
@@ -41,7 +41,7 @@ TEST_F(RandomGeneratorTest, uniform_0_to_1_stddev) {
     Random::Mt19937 prng(0);
     vector<double> samples;
 
-    for(uint i=0; i<42*1337; i++) 
+    for(unsigned int i=0; i<42*1337; i++) 
         samples.push_back(prng.uniform());
 
     EXPECT_NEAR(1.0/sqrt(12.0), Numeric::stddev(samples), 1e-3);
@@ -51,11 +51,11 @@ TEST_F(RandomGeneratorTest, generator_point_on_disc) {
 
     Random::Mt19937 prng(0);
 
-    uint n_points = 1e6;
+    unsigned int n_points = 1e6;
     double disc_radius = 1.337;
     vector<Vec3> points;
 
-    for(uint i=0; i<n_points; i++)
+    for(unsigned int i=0; i<n_points; i++)
         points.push_back(prng.get_point_on_xy_disc_within_radius(disc_radius));
 
     // mean position
@@ -112,16 +112,16 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
     Random::Mt19937 prng(0);
     Random::SamplesFromDistribution sfd(&f);
 
-    uint n_samples = 1e6;
+    unsigned int n_samples = 1e6;
     vector<double> samples;
 
-    for(uint i=0; i<n_samples; i++)
+    for(unsigned int i=0; i<n_samples; i++)
         samples.push_back(sfd.draw(prng.uniform()));
 
     //--------------------
     // fill samples drawn from distribution into histogram
 
-    uint bin_count = uint(pow(double(n_samples), 1.0/3.0));
+    unsigned int bin_count = (unsigned int)(pow(double(n_samples), 1.0/3.0));
     vector<double> bin_edges = Numeric::linspace(
         f.get_limits().get_lower(),
         f.get_limits().get_upper(), 
@@ -134,15 +134,15 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
     //--------------------
     // normalize histogram
     
-    uint drawn_f_integral = 0;
+    unsigned int drawn_f_integral = 0;
     double f_integral = 0;
-    for(uint i=0; i<histo.bins.size(); i++) {
+    for(unsigned int i=0; i<histo.bins.size(); i++) {
         drawn_f_integral = drawn_f_integral + histo.bins[i];
         f_integral = f_integral + f(bin_edges[i]);
     }
 
     vector<double> drawn_f_normalized;
-    for(uint i=0; i<histo.bins.size(); i++)
+    for(unsigned int i=0; i<histo.bins.size(); i++)
         drawn_f_normalized.push_back( 
             double(histo.bins[i])/double(drawn_f_integral)
         );
@@ -157,11 +157,11 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
     );
 
     double max_f = ys.front();
-    for(uint i=0; i<ys.size()-1; i++)
+    for(unsigned int i=0; i<ys.size()-1; i++)
         if(max_f < ys[i])
             max_f = ys[i];
     
-    for(uint i=0; i<bin_edges.size()-1; i++)
+    for(unsigned int i=0; i<bin_edges.size()-1; i++)
         EXPECT_NEAR(
             f(bin_edges[i])/f_integral, 
             drawn_f_normalized[i], 
@@ -175,7 +175,7 @@ TEST_F(RandomGeneratorTest, draw_from_poisson_distribution) {
     double sum = 0.0;
     const double rate = 1e6;
 
-    for(uint i=0; i<uint(rate); i++)
+    for(unsigned int i=0; i<(unsigned int)(rate); i++)
         sum += prng.expovariate(rate);
 
     EXPECT_NEAR(1.0, sum, 1e-3);
@@ -185,7 +185,7 @@ TEST_F(RandomGeneratorTest, conventional_disc_1M_draws) {
 
     const double r = 2.23;
     Random::Mt19937 prng(0);
-    for(uint i=0; i<uint(1e5); i++) {
+    for(unsigned int i=0; i<(unsigned int)(1e5); i++) {
         Vec3 p = prng.get_point_on_xy_disc_within_radius_slow(r);
         EXPECT_TRUE(r*r >= p*p);
     }
@@ -195,7 +195,7 @@ TEST_F(RandomGeneratorTest, rejection_sampling_disc_1M_draws) {
 
     const double r = 2.23;
     Random::Mt19937 prng(0);
-    for(uint i=0; i<uint(1e5); i++) {
+    for(unsigned int i=0; i<(unsigned int)(1e5); i++) {
         Vec3 p = prng.get_point_on_xy_disc_within_radius(r);
         EXPECT_TRUE(r*r >= p*p);
     }
@@ -207,18 +207,18 @@ TEST_F(RandomGeneratorTest, sphere_point_picking) {
 
     for(double max_zenith=5.0; max_zenith<10.0; max_zenith += 1.5) {
 
-        const uint n_points = 1e4*(max_zenith*max_zenith)/25.0;
+        const unsigned int n_points = 1e4*(max_zenith*max_zenith)/25.0;
         vector<Vec3> points;
-        for(uint i=0; i<n_points; i++) {
+        for(unsigned int i=0; i<n_points; i++) {
             points.push_back(
                 prng.get_point_on_unitsphere_within_polar_distance(
                     Deg2Rad(max_zenith))
             );
         }
 
-        const uint n_test_points = 0.01*n_points;
+        const unsigned int n_test_points = 0.01*n_points;
         vector<Vec3> test_points;
-        for(uint i=0; i<n_test_points; i++) {
+        for(unsigned int i=0; i<n_test_points; i++) {
             test_points.push_back(
                 prng.get_point_on_unitsphere_within_polar_distance(
                     Deg2Rad(max_zenith - 3.0))
@@ -226,11 +226,11 @@ TEST_F(RandomGeneratorTest, sphere_point_picking) {
         }
 
         const double inclusion_radius = Deg2Rad(3.0);
-        vector<uint> inclusion(n_test_points);
-        for(uint i=0; i<n_test_points; i++) inclusion[i] = 0;
+        vector<unsigned int> inclusion(n_test_points);
+        for(unsigned int i=0; i<n_test_points; i++) inclusion[i] = 0;
 
-        for(uint i=0; i<n_test_points; i++) {
-            for(uint j=0; j<n_points; j++) {
+        for(unsigned int i=0; i<n_test_points; i++) {
+            for(unsigned int j=0; j<n_points; j++) {
                 double distance = (points[j] - test_points[i]).norm();
                 if(distance <= inclusion_radius)
                     inclusion[i]++;
@@ -238,11 +238,11 @@ TEST_F(RandomGeneratorTest, sphere_point_picking) {
         }
 
         double sum = 0.0;
-        for(uint i=0; i<n_test_points; i++) sum += (double)inclusion[i];
+        for(unsigned int i=0; i<n_test_points; i++) sum += (double)inclusion[i];
         const double mean = sum/(double)n_test_points;
 
         double s = 0.0;
-        for(uint val: inclusion) s += ((double)val - mean)*((double)val - mean);
+        for(unsigned int val: inclusion) s += ((double)val - mean)*((double)val - mean);
         const double stddev = sqrt(s/inclusion.size());
         
         const double relative_spread = stddev/mean;

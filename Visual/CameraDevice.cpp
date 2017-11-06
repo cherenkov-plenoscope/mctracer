@@ -7,8 +7,8 @@ namespace Visual {
 //------------------------------------------------------------------------------
 CameraDevice::CameraDevice(
 	const std::string camera_name, 
-	const uint sensor_cols, 
-	const uint sensor_rows
+	const unsigned int sensor_cols, 
+	const unsigned int sensor_rows
 ): CameraName(camera_name), image(sensor_cols, sensor_rows) {}
 //------------------------------------------------------------------------------
 void CameraDevice::update_position(const Vec3 new_cam_pos_in_world) {

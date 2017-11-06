@@ -35,7 +35,7 @@ std::string get_print(const std::vector<std::vector<double>> &table) {
 //------------------------------------------------------------------------------
 double get_mean_along_column(
 	const std::vector<std::vector<double>> &table, 
-	const uint column
+	const unsigned int column
 ) {
 	double sum = 0.0;
 

@@ -33,7 +33,7 @@ namespace Corsika {
             out << " 46 " << "version of program " << eh[46-1] << "\n";
             out << "------------------------------------------------------------\n";
             out << " 47 " << "number of observation levels " << eh[47-1] << "\n";
-            for(uint t=1; t<= eh[47-1]; t++) {
+            for(unsigned int t=1; t<= eh[47-1]; t++) {
             out << " " << 47+t << " " << "height of level " << t << eh[47+t-1] << "cm\n";
             }
             out << "------------------------------------------------------------\n";
@@ -106,7 +106,7 @@ namespace Corsika {
         float number_of_observation_levels(const array<float, 273> &rh) {
             return rh.at(4);
         }
-        float observation_level_at(const array<float, 273> &rh, const uint i) {
+        float observation_level_at(const array<float, 273> &rh, const unsigned int i) {
             return rh.at(5+i);
         }
     }
@@ -133,7 +133,7 @@ namespace Corsika {
         char word_array[4];
         memcpy(&word_array, &word_in_float, sizeof(word_array));
         string word;
-        for(uint i=0; i<4; i++)
+        for(unsigned int i=0; i<4; i++)
             word += word_array[i];
         return word;
     }

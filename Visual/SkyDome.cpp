@@ -50,8 +50,8 @@ Color SkyDome::sky_dome_color_for(const Vec3 dir)const {
 	const int col_offset = (int)(zd_in_pix*cos(az)); 
 	const int row_offset =-(int)(zd_in_pix*sin(az)); 
 
-	const uint col = central_col + col_offset;
-	const uint row = central_row + row_offset;
+	const unsigned int col = central_col + col_offset;
+	const unsigned int row = central_row + row_offset;
 
 	return sky.get_color_row_col(row, col);
 }

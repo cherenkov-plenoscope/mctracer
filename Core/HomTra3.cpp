@@ -233,7 +233,7 @@ string HomTra3::str()const {
     return  out.str();
 }
 //------------------------------------------------------------------------------
-string HomTra3::get_single_row_print(const uint r)const {
+string HomTra3::get_single_row_print(const unsigned int r)const {
     stringstream out; 
     out << std::setprecision(3) << "[  ";
     out << T[r][0] << " \t" << T[r][1] << " \t" << T[r][2] << " \t" << T[r][3];
@@ -242,8 +242,8 @@ string HomTra3::get_single_row_print(const uint r)const {
 }
 //------------------------------------------------------------------------------
 void HomTra3::operator= (const HomTra3 G) {
-    for(uint row=0; row<3; row++)
-        for(uint col=0; col<4; col++)
+    for(unsigned int row=0; row<3; row++)
+        for(unsigned int col=0; col<4; col++)
             T[row][col] = G.T[row][col];
 }
 //------------------------------------------------------------------------------
@@ -303,8 +303,8 @@ HomTra3 HomTra3::inverse()const {
 }
 //------------------------------------------------------------------------------
 bool HomTra3::operator== (HomTra3 G)const {
-    for(uint row=0; row<4; row++)
-        for(uint col=0; col<3; col++)
+    for(unsigned int row=0; row<4; row++)
+        for(unsigned int col=0; col<3; col++)
             if(T[col][row] != G.T[col][row])
                 return false;
 

@@ -20,19 +20,19 @@
 
 //=================================
 class MmcsCorsikaSubBlockGetter {
-    const uint block_size_in_bytes = 22932;
-    const uint block_size_in_words = block_size_in_bytes / 4;
+    const unsigned int block_size_in_bytes = 22932;
+    const unsigned int block_size_in_words = block_size_in_bytes / 4;
 
     float *block;
 
     MmcsCorsikaSubBlock SubBlock;
 
-    uint sub_block_in_block_counter = 0;
-    uint block_counter = 0;
+    unsigned int sub_block_in_block_counter = 0;
+    unsigned int block_counter = 0;
 
 	const std::string filename;
     std::ifstream MMCS_file;
-    uint file_size_in_bytes;
+    unsigned int file_size_in_bytes;
 public:
     MmcsCorsikaSubBlockGetter(const std::string filename);
     ~MmcsCorsikaSubBlockGetter();
@@ -49,7 +49,7 @@ private:
 	void assert_file_reading_is_fine(const std::ifstream &file)const;
 	void assert_file_size_is_multiple_of_MMCS_block_size()const;
 	void remember_MMCS_file_size_in_bytes();
-	uint current_position_in_MMCS_file_in_bytes();
+	unsigned int current_position_in_MMCS_file_in_bytes();
 	bool enough_MMCS_file_left_to_read_next_block();
 	char* read_binary_block_from_MMCS_file();
 	float* read_block_from_MMCS_file();
@@ -59,14 +59,14 @@ private:
 	void read_next_sub_block_from_block();
 	bool block_has_already_been_used()const;
 	void delete_old_data_in_block();
-	uint start_for_sub_block_in_block_in_words()const;
-	uint end_for_sub_block_in_block_in_words()const;
-	uint file_size_left_in_bytes();
-	uint number_of_sub_blocks_in_block()const;
+	unsigned int start_for_sub_block_in_block_in_words()const;
+	unsigned int end_for_sub_block_in_block_in_words()const;
+	unsigned int file_size_left_in_bytes();
+	unsigned int number_of_sub_blocks_in_block()const;
 	bool has_still_sub_blocks_left_on_block()const;
-	uint total_number_of_sub_blocks()const;
-	uint sum_of_sub_blocks_so_far()const;
-	uint number_of_completed_blocks()const;
+	unsigned int total_number_of_sub_blocks()const;
+	unsigned int sum_of_sub_blocks_so_far()const;
+	unsigned int number_of_completed_blocks()const;
 	void throw_can_not_open_Mmcs_file(const std::string details)const;
 };
 #endif // __MMCSCORSIKASUBBLOCKGETTER_H_INCLUDE__ 

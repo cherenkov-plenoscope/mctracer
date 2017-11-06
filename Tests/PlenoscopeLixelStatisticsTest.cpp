@@ -23,10 +23,10 @@ TEST_F(PlenoscopeLixelStatisticsTest, default_ctor) {
 //----------------------------------------------------------------------
 TEST_F(PlenoscopeLixelStatisticsTest, write_and_read_binary) {
 
-    const uint number_of_lixels = 1337;
+    const unsigned int number_of_lixels = 1337;
     vector<Plenoscope::Calibration::LixelStatistic> lixel_stats;
 
-    for(uint i=0; i<number_of_lixels; i++) {
+    for(unsigned int i=0; i<number_of_lixels; i++) {
         Plenoscope::Calibration::LixelStatistic stat;
         stat.efficiency =       i*1.000;
         stat.efficiency_std =   i*1.001;
@@ -51,7 +51,7 @@ TEST_F(PlenoscopeLixelStatisticsTest, write_and_read_binary) {
 
     EXPECT_EQ(lixel_stats_in.size(), number_of_lixels);
 
-    for(uint i=0; i<number_of_lixels; i++) {
+    for(unsigned int i=0; i<number_of_lixels; i++) {
         EXPECT_NEAR(lixel_stats_in.at(i).efficiency,        i*1.000, 1e-4);
         EXPECT_NEAR(lixel_stats_in.at(i).efficiency_std,    i*1.001, 1e-4);
         EXPECT_NEAR(lixel_stats_in.at(i).cx_mean,           i*1.002, 1e-4);

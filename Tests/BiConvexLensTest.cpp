@@ -102,10 +102,10 @@ protected:
 //----------------------------------------------------------------------
 TEST_F(BiConvexLensTest, send_photon_frontal_into_lens) {
 
-	uint total_propagations = 1e4; 
-	uint number_of_photons_reaching_sensor_disc = 0;
+	unsigned int total_propagations = 1e4; 
+	unsigned int number_of_photons_reaching_sensor_disc = 0;
 	
-	for(uint i=0; i<total_propagations; i++) {
+	for(unsigned int i=0; i<total_propagations; i++) {
 
 		Photon blue_photon(Vec3(0.0, 0.0, 1.0), Vec3(0.0, 0.0, -1.0), 433e-9);
 		PhotonAndFrame::Propagator(&blue_photon, lens_test_bench_environment);
@@ -125,7 +125,7 @@ TEST_F(BiConvexLensTest, send_photon_frontal_into_lens) {
 TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 
 	// light source
-	uint number_of_photons_emitted = 1e4;
+	unsigned int number_of_photons_emitted = 1e4;
     vector<Photon> photons = Photons::Source::parallel_towards_z_from_xy_disc(
     	0.125, 
     	number_of_photons_emitted);

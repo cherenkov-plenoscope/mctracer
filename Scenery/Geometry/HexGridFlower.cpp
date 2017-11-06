@@ -4,13 +4,13 @@
 //------------------------------------------------------------------------------
 HexGridFlower::HexGridFlower(
 	const double outer_hex_grid_radius,
-	uint facet_count_on_outer_diameter
+	unsigned int facet_count_on_outer_diameter
 ) {
 	// ensure diagonal count is odd
 	if(is_even(facet_count_on_outer_diameter))
 		facet_count_on_outer_diameter++;
 
-	const uint facet_row_count_on_flat2flat_diameter = 
+	const unsigned int facet_row_count_on_flat2flat_diameter = 
 		facet_count_on_outer_diameter;
 
 	const double inner_hex_grid_radius = outer_hex_grid_radius*(sqrt(3.0)/2.0);

@@ -17,7 +17,7 @@ vector<Photon> EventIoWrapper::next(Random::Generator* prng) {
 	EventIo::Event event = corsika_run.next_event();
 
 	vector<Photon> photons;
-    uint photon_id = 0;
+    unsigned int photon_id = 0;
     for(array<float, 8> corsika_photon: event.photons) {
         
         EventIo::PhotonFactory cpf(corsika_photon, photon_id++, prng);

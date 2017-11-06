@@ -22,9 +22,9 @@ namespace PhotonSensor {
 	public:
 		std::vector<ArrivalInformation> arrival_table;
 
-		uint id;
-		Sensor(uint _id, const Frame* _sensor_frame);
-		uint get_id()const;
+		unsigned int id;
+		Sensor(unsigned int _id, const Frame* _sensor_frame);
+		unsigned int get_id()const;
 		void assign_photon_to_this_sensor(const Photon* photon);
 		void clear_history();
 		const Frame* get_frame()const;

@@ -109,7 +109,7 @@ double Geometry::max_FoV_radius()const {
 	return config.max_FoV_diameter/2.0;
 }
 //------------------------------------------------------------------------------
-uint Geometry::number_of_pixels()const {
+unsigned int Geometry::number_of_pixels()const {
 	return pixel_grid.size();
 }
 //------------------------------------------------------------------------------
@@ -165,7 +165,7 @@ std::vector<Vec3> Geometry::pixel_positions()const {
 	return pixel_grid;
 }
 //------------------------------------------------------------------------------
-vector<vector<uint>> Geometry::pixel_neighbor_relations()const {
+vector<vector<unsigned int>> Geometry::pixel_neighbor_relations()const {
 	return pixel_neighborhood;
 }
 //------------------------------------------------------------------------------
@@ -173,7 +173,7 @@ const std::vector<Vec3>& Geometry::lixel_positions()const {
 	return lixel_grid;
 }
 //------------------------------------------------------------------------------
-vector<vector<uint>> Geometry::paxel_neighbor_relations()const {
+vector<vector<unsigned int>> Geometry::paxel_neighbor_relations()const {
 	return paxel_neighborhood;
 }
 //------------------------------------------------------------------------------
@@ -201,7 +201,7 @@ double Geometry::lixel_spacing()const {
 	return lixel_hex_flat2flat_diameter;
 }
 //------------------------------------------------------------------------------
-uint Geometry::number_of_lixel()const {
+unsigned int Geometry::number_of_lixel()const {
 	return lixel_grid.size();
 }
 //------------------------------------------------------------------------------
@@ -241,7 +241,7 @@ void Geometry::write_lixel_positions(const string &path)const {
 //------------------------------------------------------------------------------
 array<float, 273> Geometry::get_info_header()const {
 	array<float, 273> header;
-	for(uint i=0; i<header.size(); i++) header[i]=0.0;
+	for(unsigned int i=0; i<header.size(); i++) header[i]=0.0;
 
 	header[  1-1] = Corsika::str2float("PLGH");
 

@@ -88,7 +88,7 @@ double RayForPropagation::get_accumulative_distance()const {
 }
 //------------------------------------------------------------------------------
 unsigned int RayForPropagation::get_number_of_interactions_so_far()const {
-	return uint(intersection_history.size());
+	return (unsigned int)(intersection_history.size());
 }
 //------------------------------------------------------------------------------
 const Intersection& RayForPropagation::get_intersection_at(

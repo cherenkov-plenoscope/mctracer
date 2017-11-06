@@ -84,7 +84,7 @@ Photon Calibrator::get_photon_given_pos_and_angle_on_principal_aperture(
 //------------------------------------------------------------------------------
 void Calibrator::fill_calibration_block_to_table() {
 	
-	uint i;
+	unsigned int i;
 	int HadCatch = 0;
 
 	#pragma omp parallel shared(HadCatch)
@@ -166,7 +166,7 @@ void Calibrator::run_calibration() {
 	
 	photon_results.resize(config.photons_per_block);
 
-	for(uint j=0; j<config.number_of_blocks; j++) {
+	for(unsigned int j=0; j<config.number_of_blocks; j++) {
 		
 		cout << j+1 << " of " << config.number_of_blocks << "\n";	
 		fill_calibration_block_to_table();

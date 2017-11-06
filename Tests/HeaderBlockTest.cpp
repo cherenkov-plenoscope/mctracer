@@ -10,7 +10,7 @@ TEST_F(HeaderBlockTest, write_and_read_binary_block) {
 
     array<float, 273> block;
 
-    for(uint i=0; i<273; i++)
+    for(unsigned int i=0; i<273; i++)
         block.at(i) = i*1.01;
     
     const string path = "InOut/header_block.bin";
@@ -20,19 +20,19 @@ TEST_F(HeaderBlockTest, write_and_read_binary_block) {
 
     ASSERT_EQ(blocks_in.size(), 1u);
 
-    for(uint i=0; i<273; i++)
+    for(unsigned int i=0; i<273; i++)
         EXPECT_NEAR(blocks_in.at(0).at(i), i*1.01, 1e-4);
 }
 //----------------------------------------------------------------------
 TEST_F(HeaderBlockTest, write_and_read_several_binary_blocks) {
 
     vector<array<float, 273>> blocks;
-    const uint number_blocks = 11;
+    const unsigned int number_blocks = 11;
 
-    for(uint j=0; j<number_blocks; j++) {
+    for(unsigned int j=0; j<number_blocks; j++) {
         array<float, 273> block;
         blocks.push_back(block);
-        for(uint i=0; i<273; i++) {
+        for(unsigned int i=0; i<273; i++) {
             blocks.at(j).at(i) = (i+1)*(j+1)*1.01;
         }
     }
@@ -44,8 +44,8 @@ TEST_F(HeaderBlockTest, write_and_read_several_binary_blocks) {
 
     ASSERT_EQ(blocks_in.size(), number_blocks);
 
-    for(uint j=0; j<number_blocks; j++) {
-        for(uint i=0; i<273; i++) {
+    for(unsigned int j=0; j<number_blocks; j++) {
+        for(unsigned int i=0; i<273; i++) {
              EXPECT_NEAR(blocks_in.at(j).at(i), (i+1)*(j+1)*1.01, 1e-3);
         }
     }

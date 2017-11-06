@@ -10,7 +10,7 @@ namespace SignalProcessing {
 //------------------------------------------------------------------------------
 TimeAndCount::TimeAndCount(
     const double _time,
-    const uint _count,
+    const unsigned int _count,
     const vector<int> _simulation_truth_ids
 ):
     time(_time),
@@ -22,7 +22,7 @@ TimeAndCount get_arrival_time_and_count_given_arrival_moments_and_integration_ti
     const vector<ElectricPulse> &arrival_moments,
     const double integration_time_window
 ) { 
-    vector<uint> enclo = convolution_of_arrival_times_and_integration_window(
+    vector<unsigned int> enclo = convolution_of_arrival_times_and_integration_window(
         arrival_moments,
         integration_time_window
     );
@@ -30,9 +30,9 @@ TimeAndCount get_arrival_time_and_count_given_arrival_moments_and_integration_ti
     if(enclo.size() == 0) 
         return TimeAndCount(0.0, 0u, vector<int>());
 
-    uint max = 0;
-    uint max_idx = 0;
-    for(uint i=0; i<enclo.size(); i++) {
+    unsigned int max = 0;
+    unsigned int max_idx = 0;
+    for(unsigned int i=0; i<enclo.size(); i++) {
         if(enclo[i]>max) {
             max = enclo[i];
             max_idx = i;
@@ -50,14 +50,14 @@ TimeAndCount get_arrival_time_and_count_given_arrival_moments_and_integration_ti
     );
 }
 //------------------------------------------------------------------------------
-vector<uint> convolution_of_arrival_times_and_integration_window(
+vector<unsigned int> convolution_of_arrival_times_and_integration_window(
     const vector<ElectricPulse> &arrival_moments,
     const double integration_time_window
 ) {
-    vector<uint> enclos;
+    vector<unsigned int> enclos;
     enclos.reserve(arrival_moments.size());
 
-    for(uint i=0; i<arrival_moments.size(); i++)
+    for(unsigned int i=0; i<arrival_moments.size(); i++)
         enclos.push_back(
             arrival_count_in_ith_integration_window(
                 i, 
@@ -69,12 +69,12 @@ vector<uint> convolution_of_arrival_times_and_integration_window(
     return enclos;
 }
 //------------------------------------------------------------------------------
-uint arrival_count_in_ith_integration_window(
-    const uint i,
+unsigned int arrival_count_in_ith_integration_window(
+    const unsigned int i,
     const double integration_time,
     const vector<ElectricPulse> &arrival_moments
 ) {
-    uint arrival_count = 1;
+    unsigned int arrival_count = 1;
     while(
         i+arrival_count < arrival_moments.size() &&
         arrival_moments[i+arrival_count].arrival_time - 
@@ -88,14 +88,14 @@ uint arrival_count_in_ith_integration_window(
 //------------------------------------------------------------------------------
 vector<int> simulation_truth_ids_in_time_window(
     const vector<ElectricPulse> &arrival_moments,
-    const uint start_pulse_index,
+    const unsigned int start_pulse_index,
     const double integration_time_window
 ) {
     vector<int> simulation_truth_ids;
 
     const double start_time = arrival_moments[start_pulse_index].arrival_time;
 
-    for(uint idx = start_pulse_index; idx<arrival_moments.size(); idx++) {
+    for(unsigned int idx = start_pulse_index; idx<arrival_moments.size(); idx++) {
         if(
             arrival_moments[idx].arrival_time - start_time > integration_time_window
         ) {
@@ -115,8 +115,8 @@ void write_intensity_simulation_truth(
     std::ofstream file (path.c_str());
     if(file.is_open()) {
 
-        for(uint i=0; i<tacs.size(); i++) {
-            for(uint j=0; j<tacs[i].simulation_truth_ids.size(); j++) {
+        for(unsigned int i=0; i<tacs.size(); i++) {
+            for(unsigned int j=0; j<tacs[i].simulation_truth_ids.size(); j++) {
                 file << tacs[i].simulation_truth_ids[j];
                 if(j+1 < tacs[i].simulation_truth_ids.size()) {
                    file << " ";

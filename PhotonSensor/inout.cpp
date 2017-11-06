@@ -9,7 +9,7 @@ namespace PhotonSensor {
         const vector<ArrivalInformation>* arrival_table,
         std::ofstream *file
     ) {
-        for(uint i=0; i<arrival_table->size(); i++) {
+        for(unsigned int i=0; i<arrival_table->size(); i++) {
             // convert to float32
             array<float, 7> out;
             out[0] = (float)arrival_table->at(i).simulation_truth_id;
@@ -25,12 +25,12 @@ namespace PhotonSensor {
 
     vector<ArrivalInformation> read_arrival_information_from_file(
         std::ifstream *file,
-        const uint number_of_arrivals
+        const unsigned int number_of_arrivals
     ) {
         vector<ArrivalInformation> arrivals;
         arrivals.reserve(number_of_arrivals);
 
-        for(uint i=0; i<number_of_arrivals; i++) {
+        for(unsigned int i=0; i<number_of_arrivals; i++) {
 
             array<float, 7> block;  
             file->read((char*)block.data(), block.size()*sizeof(float));

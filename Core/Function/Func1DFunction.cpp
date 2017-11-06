@@ -14,7 +14,7 @@ namespace Function {
 		this->limits = limits;
 	}
 	//--------------------------------------------------------------------------
- 	vector<vector<double>>Func1D::get_samples(const uint N)const {
+ 	vector<vector<double>>Func1D::get_samples(const unsigned int N)const {
 		
 		double arg = limits.get_lower();
 		const double increment = increment_for_steps(N);
@@ -22,7 +22,7 @@ namespace Function {
 		vector<vector<double>> table;
 		table.reserve(N);
 
-		for(uint i=0; i<N; i++) {
+		for(unsigned int i=0; i<N; i++) {
 
 			const double value = (*this)(arg);
 			vector<double> row = {arg, value};
@@ -34,7 +34,7 @@ namespace Function {
 		return table;
 	}
 	//--------------------------------------------------------------------------
-	double Func1D::get_mean(const uint N)const {
+	double Func1D::get_mean(const unsigned int N)const {
 
 		vector<vector<double>> x_vs_y	= get_samples(N);
 		double y_mean = 0.0;
@@ -45,7 +45,7 @@ namespace Function {
 		return y_mean/x_vs_y.size();
 	}
 	//--------------------------------------------------------------------------
-	double Func1D::increment_for_steps(const uint N)const {
+	double Func1D::increment_for_steps(const unsigned int N)const {
 		return limits.get_range()/double(N);
 	}
 	//--------------------------------------------------------------------------

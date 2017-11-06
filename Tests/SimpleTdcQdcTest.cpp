@@ -35,18 +35,18 @@ TEST_F(SimpleTdcQdcTest, tdcqdc1) {
 
 	const double integration_time_window = 0.5;
 
-	vector<uint> enclosure = 
+	vector<unsigned int> enclosure = 
 		SP::SimpleTdcQdc::convolution_of_arrival_times_and_integration_window(
 			pulses,
 			integration_time_window
 		);
 
-	vector<uint> expected_enclosure = {
+	vector<unsigned int> expected_enclosure = {
 		1,   1,   5,   5,   5,   5,   5,   5,   5,   4,   3,   2,   1,   1,   1
 	};
 
 	ASSERT_EQ(expected_enclosure.size(), enclosure.size());
-	for(uint i=0; i<enclosure.size(); i++)
+	for(unsigned int i=0; i<enclosure.size(); i++)
 		EXPECT_EQ(enclosure.at(i), expected_enclosure.at(i));
 }
 //------------------------------------------------------------------------------
@@ -57,7 +57,7 @@ TEST_F(SimpleTdcQdcTest, tdcqdc_empty) {
 
 	const double integration_time_window = 0.5;
 
-	vector<uint> enclosure = 
+	vector<unsigned int> enclosure = 
 		SP::SimpleTdcQdc::convolution_of_arrival_times_and_integration_window(
 			pulses,
 			integration_time_window

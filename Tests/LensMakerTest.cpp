@@ -75,7 +75,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 
     Random::Mt19937 prng(Random::ZERO_SEED);
 
-    uint number_of_photons_per_run = 1000;
+    unsigned int number_of_photons_per_run = 1000;
     vector<double> sigma_psf_vs_image_sensor_distance;
     vector<double> image_sensor_distances;
 	for(
@@ -153,7 +153,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 		sigma_psf_vs_image_sensor_distance.end()
 	);
 
-	uint min_sigma_psf_pos = std::min_element(
+	unsigned int min_sigma_psf_pos = std::min_element(
 			sigma_psf_vs_image_sensor_distance.begin(),
 			sigma_psf_vs_image_sensor_distance.end()
 		)

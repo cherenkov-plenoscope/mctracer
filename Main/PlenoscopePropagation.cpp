@@ -179,7 +179,7 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // propagate each event
-    uint event_counter = 1;
+    unsigned int event_counter = 1;
     while(corsika_run.has_still_events_left()) {
 
         //------------------
@@ -187,7 +187,7 @@ int main(int argc, char* argv[]) {
         EventIo::Event event = corsika_run.next_event();
 
         vector<Photon> photons;
-        uint photon_id = 0;
+        unsigned int photon_id = 0;
 
         for(const array<float, 8> &corsika_photon: event.photons) {
             EventIo::PhotonFactory cpf(corsika_photon, photon_id++, &prng);

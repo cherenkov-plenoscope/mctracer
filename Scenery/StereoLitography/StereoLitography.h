@@ -74,8 +74,8 @@ namespace StereoLitography {
     class BinaryIo {
     protected:
             
-        const uint header_size_in_chars = 80;
-        const uint triangle_size_in_32bit_floats = 12;
+        const unsigned int header_size_in_chars = 80;
+        const unsigned int triangle_size_in_32bit_floats = 12;
     public:
 
         class CanNotReadFile : public std::runtime_error {
@@ -134,18 +134,18 @@ namespace StereoLitography {
 
         std::vector<Facet> facets;
 
-        uint current_triangle_number = 0;
+        unsigned int current_triangle_number = 0;
         uint32_t total_number_of_facets;
 
         // keep track of facets with bad "attribute byte count"
-        std::vector<uint> facets_with_bad_attribute_count;
+        std::vector<unsigned int> facets_with_bad_attribute_count;
     public:
 
         BinaryReader(const std::string filename);
         std::vector<Facet> get_facets()const;
         std::string str()const;
         std::string get_header()const;
-        uint get_number_of_facets()const;
+        unsigned int get_number_of_facets()const;
         std::string get_report()const;
     private:
 
@@ -158,8 +158,8 @@ namespace StereoLitography {
         void assert_normal_is_actually_normalized(const Vec3 nomral);
         void assert_file_is_open()const;
         void read_facets();
-        std::vector<float> read_floats(const uint n);
-        std::string read_chars(const uint n);
+        std::vector<float> read_floats(const unsigned int n);
+        std::string read_chars(const unsigned int n);
         uint32_t read_single_uint32();
         uint16_t read_single_uint16();
         void check_attribute_byte_count_is_zero(

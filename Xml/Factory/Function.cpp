@@ -43,7 +43,7 @@ void init_function_with_node(Function::LinInterpol* function, const Node &node) 
 void init_function_with_node(Function::Concat* function, const Node &node, FunctionMap* functions) {
     string attribute = "f0";    
     vector<Function::Func1D*> funcs;
-    uint count = 0;
+    unsigned int count = 0;
     while (node.has_attribute(attribute)) {
 
         funcs.push_back(functions->get(node.attribute(attribute)));

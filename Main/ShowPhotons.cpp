@@ -83,7 +83,7 @@ int main(int argc, char* argv[]) {
     EventIo::Run corsika_run(photon_path.path);
 
     // propagate each event
-    uint event_counter = 0;
+    unsigned int event_counter = 0;
 
     Visual::FlyingCamera free_orb(&scenery.root, &visual_config);
 
@@ -99,7 +99,7 @@ int main(int argc, char* argv[]) {
         double zd = Corsika::EventHeader::zenith(event.header.raw);
         array_ctrl->move_all_to_Az_Zd(az, zd);
         
-        uint id = 0;
+        unsigned int id = 0;
         for(array<float, 8> corsika_photon : event.photons) {
             
             vector<Photon> photons;

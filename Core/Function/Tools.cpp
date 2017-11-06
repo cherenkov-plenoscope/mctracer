@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 namespace Function {
 
-	LinInterpol get_integral(const Func1D &f, uint steps) {
+	LinInterpol get_integral(const Func1D &f, unsigned int steps) {
 
 		double step = f.get_limits().get_range()/double(steps);
 		std::vector<std::vector<double>> F;
@@ -11,7 +11,7 @@ namespace Function {
 		std::vector<double> F_start = {f.get_limits().get_lower(), 0.0};
 		F.push_back(F_start);
 
-		for(uint i=1; i<steps; i++) {
+		for(unsigned int i=1; i<steps; i++) {
 			double x = f.get_limits().get_lower() + i*step;
 			double y = f(x)*step + F.back()[1];
 
@@ -27,7 +27,7 @@ namespace Function {
 		return LinInterpol(F);
 	}
 	//--------------------------------------------------------------------------
-	LinInterpol get_inverse(const Func1D &f, uint steps) {
+	LinInterpol get_inverse(const Func1D &f, unsigned int steps) {
 
 		double step = f.get_limits().get_range()/double(steps);
 
@@ -39,7 +39,7 @@ namespace Function {
 		};
 		fvec_inv.push_back(f_inv_start);
 
-		for(uint i=1; i<steps; i++) {
+		for(unsigned int i=1; i<steps; i++) {
 			double x = f.get_limits().get_lower() + i*step;
 			double y = f(x);
 
@@ -55,12 +55,12 @@ namespace Function {
 		return LinInterpol(fvec_inv);
 	}
 	//--------------------------------------------------------------------------
-	LinInterpol get_derivative(const Func1D &f, uint steps) {
+	LinInterpol get_derivative(const Func1D &f, unsigned int steps) {
 
 		double step = f.get_limits().get_range()/double(steps);
 		std::vector<std::vector<double>> fvec_deriv;
 
-		for(uint i=0; i<(steps-1); i++) {
+		for(unsigned int i=0; i<(steps-1); i++) {
 			double x = f.get_limits().get_lower() + i*step;
 			double y = (f(x+step) - f(x))/step;
 
@@ -77,12 +77,12 @@ namespace Function {
 		return LinInterpol(fvec_deriv);
 	}
 	//--------------------------------------------------------------------------
-	bool value_flips_sign(const Func1D &f, uint steps) {
+	bool value_flips_sign(const Func1D &f, unsigned int steps) {
 
 		double step = f.get_limits().get_range()/double(steps);
 		bool flip = false;
 
-		for(uint i=0; i<(steps-1); i++) {
+		for(unsigned int i=0; i<(steps-1); i++) {
 			double x = f.get_limits().get_lower() + i*step;
 			if( (f(x)>=0.0) != (f(x+step)>=0.0) )
 				flip = true;

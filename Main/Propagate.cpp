@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
     // photon source
     PhotonsReader photon_file(photon_path.path);
 
-    uint event_counter = 1;
+    unsigned int event_counter = 1;
     while(photon_file.has_still_photons_left()) {
 
         vector<Photon> photons;
@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
         sensors.assign_photons(&photons);
         //----------------------------------------------------------------------
         // write each sensors to file
-        for(uint i=0; i<sensors.size(); i++) {
+        for(unsigned int i=0; i<sensors.size(); i++) {
 
             std::stringstream outname;
             outname << out_path.path << event_counter << "_" << i;

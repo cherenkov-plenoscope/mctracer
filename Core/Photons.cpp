@@ -42,7 +42,7 @@ namespace Photons {
 		env.propagation_options = settings;
 		env.random_engine = prng;
 
-		for(uint i = 0; i<photons->size(); i++ )
+		for(unsigned int i = 0; i<photons->size(); i++ )
 			PhotonAndFrame::Propagator(&photons->at(i), env);
 	}
 	//--------------------------------------------------------------------------
@@ -51,9 +51,9 @@ namespace Photons {
 		const Frame* world, 
 		const PropagationConfig* settings
 	) {
-		uint i;
-		uint number_of_threads;
-		uint thread_id, ray_counter;
+		unsigned int i;
+		unsigned int number_of_threads;
+		unsigned int thread_id, ray_counter;
 		stringstream out;
 		int HadCatch = 0;
 
@@ -173,7 +173,7 @@ namespace Photons {
 
 		vector<Photon> point_like_towards_z_opening_angle_num_photons(
 			const double opening_angle,
-			const uint number_of_photons
+			const unsigned int number_of_photons
 		) {
 			vector<Photon> photons;
 			photons.reserve(number_of_photons);
@@ -181,7 +181,7 @@ namespace Photons {
 
 			Random::Mt19937 prng(0);
 
-			for(uint i=0; i<number_of_photons; i++) {
+			for(unsigned int i=0; i<number_of_photons; i++) {
 				Vec3 direction = prng.get_point_on_unitsphere_within_polar_distance(
 					opening_angle);
 				Photon ph = Photon(support, direction, 433e-9);
@@ -193,7 +193,7 @@ namespace Photons {
 		//----------------------------------------------------------------------
 		vector<Photon> parallel_towards_z_from_xy_disc(
 			const double disc_radius,
-			const uint number_of_photons
+			const unsigned int number_of_photons
 		) {
 			vector<Photon> photons;
 			photons.reserve(number_of_photons);
@@ -201,7 +201,7 @@ namespace Photons {
 
 			Random::Mt19937 prng(0);
 
-			for(uint i=0; i<number_of_photons; i++) {
+			for(unsigned int i=0; i<number_of_photons; i++) {
 				Vec3 support = prng.get_point_on_xy_disc_within_radius(
 					disc_radius);
 				Photon ph(support, direction, 433e-9);
@@ -223,7 +223,7 @@ namespace Photons {
 		const HomTra3 Trafo, 
 		vector<Photon> *photons
 	) {
-		uint i;
+		unsigned int i;
 		int HadCatch = 0;
 		#pragma omp parallel shared(photons,HadCatch)
 		{	

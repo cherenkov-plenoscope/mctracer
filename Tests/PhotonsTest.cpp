@@ -34,7 +34,7 @@ TEST_F(PhotonsTest, photon2raw_row) {
 
     Vec3 sup(13.0, 37.0, 42.0);
     Vec3 dir(66.6, 57.8, 99.9);
-    uint id = 1337;
+    unsigned int id = 1337;
     double wavelength = 433.5;
 
     Photon ph(sup, dir, wavelength);
@@ -56,16 +56,16 @@ TEST_F(PhotonsTest, photon2raw_row) {
 //------------------------------------------------------------------------------
 TEST_F(PhotonsTest, bunch2raw_matrix2bunch) {
 
-    const uint number_of_photons = 1e3;
+    const unsigned int number_of_photons = 1e3;
 
     vector<Photon> photon_bunch;
 
     Random::Mt19937 prng(Random::ZERO_SEED);
-    for(uint n=0; n<number_of_photons; n++) {
+    for(unsigned int n=0; n<number_of_photons; n++) {
 
         Vec3 sup(prng.uniform(), prng.uniform(), prng.uniform());
         Vec3 dir(prng.uniform(), prng.uniform(), prng.uniform());
-        uint id = int(prng.uniform());
+        unsigned int id = int(prng.uniform());
         double wavelength = prng.uniform();
 
         Photon ph(sup, dir, wavelength);
@@ -83,7 +83,7 @@ TEST_F(PhotonsTest, bunch2raw_matrix2bunch) {
 
     ASSERT_EQ(number_of_photons, photon_bunch2.size());
 
-    for(uint n=0; n<number_of_photons; n++) {
+    for(unsigned int n=0; n<number_of_photons; n++) {
 
         Photon ph1 = photon_bunch.at(n);
         Photon ph2 = photon_bunch2.at(n);
@@ -101,16 +101,16 @@ TEST_F(PhotonsTest, bunch2raw_matrix2bunch) {
 //------------------------------------------------------------------------------
 TEST_F(PhotonsTest, bunch2raw_matrix2file) {
 
-    const uint number_of_photons = 1e3;
+    const unsigned int number_of_photons = 1e3;
 
     std::vector<Photon> photon_bunch1;
 
     Random::Mt19937 prng(Random::ZERO_SEED);
-    for(uint n=0; n<number_of_photons; n++) {
+    for(unsigned int n=0; n<number_of_photons; n++) {
 
         Vec3 sup(prng.uniform(), prng.uniform(), prng.uniform());
         Vec3 dir(prng.uniform(), prng.uniform(), prng.uniform());
-        uint id = int(prng.uniform()*number_of_photons);
+        unsigned int id = int(prng.uniform()*number_of_photons);
         double wavelength = prng.uniform();
 
         Photon ph(sup, dir, wavelength);
@@ -132,7 +132,7 @@ TEST_F(PhotonsTest, bunch2raw_matrix2file) {
 
     ASSERT_EQ(number_of_photons, photon_bunch2.size());
 
-    for(uint n=0; n<number_of_photons; n++) {
+    for(unsigned int n=0; n<number_of_photons; n++) {
 
         Photon ph1 = photon_bunch1.at(n);
         Photon ph2 = photon_bunch2.at(n);

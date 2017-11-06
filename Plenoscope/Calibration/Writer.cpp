@@ -26,7 +26,7 @@ void Writer::write_row(const CalibrationPhotonResult &row) {
     file.write( (char*)&row.lixel_id, sizeof(uint32_t));
 
     // write pos dir and time floats
-    const uint float_count = 5;
+    const unsigned int float_count = 5;
 
     float v[float_count] = {
         row.x_pos_on_principal_aperture, 

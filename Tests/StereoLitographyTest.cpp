@@ -41,10 +41,10 @@ TEST_F(StereoLitographyTest, write_and_read_stl_with_zero_triangles) {
 //----------------------------------------------------------------------
 TEST_F(StereoLitographyTest, write_and_read_1000_triangle) {
 
-    uint number_of_triangles = 1000;
+    unsigned int number_of_triangles = 1000;
     std::vector<Facet> facets;
 
-    for(uint i=0; i<number_of_triangles; i++) {
+    for(unsigned int i=0; i<number_of_triangles; i++) {
 
         double offset = double(i)/double(number_of_triangles);
 
@@ -70,7 +70,7 @@ TEST_F(StereoLitographyTest, write_and_read_1000_triangle) {
     
     ASSERT_EQ(facets.size(), facets_from_file.size());
 
-    for(uint i=0; i<facets.size(); i++) {
+    for(unsigned int i=0; i<facets.size(); i++) {
         EXPECT_EQ(facets.at(i).n, facets_from_file.at(i).n);
         EXPECT_EQ(facets.at(i).a, facets_from_file.at(i).a);
         EXPECT_EQ(facets.at(i).b, facets_from_file.at(i).b);

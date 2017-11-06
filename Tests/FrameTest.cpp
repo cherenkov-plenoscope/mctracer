@@ -151,7 +151,7 @@ TEST_F(FrameTest, cluster_frames_during_tree_initializing) {
     tree.set_name_pos_rot("tree" ,Vec3::null, Rot3::null);
     double qube_edge = 10.0;
 
-    uint count = 0;
+    unsigned int count = 0;
     for(double x=0.0; x<qube_edge; x++) {
         for(double y=0.0; y<qube_edge; y++) {
             for(double z=0.0; z<qube_edge; z++) {
@@ -177,9 +177,9 @@ TEST_F(FrameTest, clustering_frames_which_are_stucked_close_together) {
 
     Frame tree;
     tree.set_name_pos_rot("tree" ,Vec3::null, Rot3::null);
-    const uint number_facets = 100;
+    const unsigned int number_facets = 100;
 
-    for(uint i=0; i<number_facets; i++) {
+    for(unsigned int i=0; i<number_facets; i++) {
         SphereCapWithRectangularBound* facet = tree.append<SphereCapWithRectangularBound>();
         facet->set_name_pos_rot("facet"+std::to_string(i), Vec3::null, Rot3::null);
         facet->set_curvature_radius_and_x_y_width(34.0, 1.0, 1.0);

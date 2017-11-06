@@ -22,7 +22,7 @@ namespace PhotonSensor {
 
     std::vector<ArrivalInformation> read_arrival_information_from_file(
         std::ifstream *file,
-        const uint number_of_arrivals
+        const unsigned int number_of_arrivals
     );
 
 } // PhotonSensor

@@ -6,12 +6,12 @@ using std::string;
 
 namespace PhotonSensor {
 
-	Sensor::Sensor(uint _id, const Frame* _sensor_frame) {
+	Sensor::Sensor(unsigned int _id, const Frame* _sensor_frame) {
 		id = _id;
 		sensor_frame = _sensor_frame;
 	}
 
-	uint Sensor::get_id()const {
+	unsigned int Sensor::get_id()const {
 		return id;
 	}
 

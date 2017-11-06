@@ -24,7 +24,7 @@ void TrajectoryFactory::append_trajectory_to(Frame* root_frame) {
 	 	Rot3::null
 	);
 
-	for(uint i=0; i < ray->get_number_of_interactions_so_far(); i++) {
+	for(unsigned int i=0; i < ray->get_number_of_interactions_so_far(); i++) {
 
 		if(is_not_the_last_intersection(i)) {
 
@@ -67,13 +67,13 @@ void TrajectoryFactory::erase_trajectory_from(Frame* root_frame) {
 }
 //------------------------------------------------------------------------------
 bool TrajectoryFactory::is_not_the_last_intersection(
-	const uint part_index
+	const unsigned int part_index
 )const {
 	return part_index < ray->get_number_of_interactions_so_far() - 1;
 }
 //------------------------------------------------------------------------------
 std::string TrajectoryFactory::get_trajectory_of_part_index(
-	const uint part_index
+	const unsigned int part_index
 )const {
 	std::stringstream name_trajectory;
 	name_trajectory << "ID_" << ray->simulation_truth_id;
@@ -82,7 +82,7 @@ std::string TrajectoryFactory::get_trajectory_of_part_index(
 }
 //------------------------------------------------------------------------------
 std::string TrajectoryFactory::get_intersection_point_name_of_part(
-	const uint part_index
+	const unsigned int part_index
 )const {
 	std::stringstream name;
 	name << "ID_" << ray->simulation_truth_id << "_";

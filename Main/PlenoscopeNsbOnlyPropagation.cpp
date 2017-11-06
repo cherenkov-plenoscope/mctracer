@@ -164,7 +164,7 @@ int main(int argc, char* argv[]) {
     // 222222 22
     //--------------------------------------------------------------------------
     // propagate each event
-    for(uint event_counter=1; event_counter<=number_events; event_counter++) {
+    for(unsigned int event_counter=1; event_counter<=number_events; event_counter++) {
 
         light_field_channels->clear_history();
 

@@ -14,7 +14,7 @@ namespace SegmentedReflector {
 			
 		vector<Vec3> facet_positions = geometry.facet_positions();
 
-		for(uint i=0; i<facet_positions.size(); i++) {
+		for(unsigned int i=0; i<facet_positions.size(); i++) {
 
 			SphereCapWithHexagonalBound* facet = 
 				reflector->append<SphereCapWithHexagonalBound>();

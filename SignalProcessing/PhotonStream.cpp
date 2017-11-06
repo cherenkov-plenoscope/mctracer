@@ -43,8 +43,8 @@ void write(
 
     // Pulses
     // ------
-    for(uint channel=0; channel<number_channels; channel++) {
-        for(uint pulse=0; pulse<pulses.at(channel).size(); pulse++) {
+    for(unsigned int channel=0; channel<number_channels; channel++) {
+        for(unsigned int pulse=0; pulse<pulses.at(channel).size(); pulse++) {
 
             int arrival_slice_32bit = round(
                 pulses.at(channel).at(pulse).arrival_time/slice_duration);           
@@ -74,8 +74,8 @@ void write_simulation_truth(
         throw std::runtime_error(info.str());
     }       
 
-    for(uint channel=0; channel<pulses.size(); channel++) {
-        for(uint pulse=0; pulse<pulses.at(channel).size(); pulse++) {
+    for(unsigned int channel=0; channel<pulses.size(); channel++) {
+        for(unsigned int pulse=0; pulse<pulses.at(channel).size(); pulse++) {
             int pulse_truth_id = pulses.at(channel).at(pulse).simulation_truth_id;
             file.write( (char*)&pulse_truth_id, sizeof(int));
         }
@@ -147,8 +147,8 @@ Stream read_with_simulation_truth(const string path, const string truth_path) {
         info << "PhotonStream: Unable to open file: '" << truth_path << "'\n";
         throw std::runtime_error(info.str());}
 
-    for(uint channel=0; channel<stream.photon_stream.size(); channel++) {
-        for(uint pulse=0; pulse<stream.photon_stream.at(channel).size(); pulse++) {
+    for(unsigned int channel=0; channel<stream.photon_stream.size(); channel++) {
+        for(unsigned int pulse=0; pulse<stream.photon_stream.at(channel).size(); pulse++) {
 
             int simulation_truth_id;
             file.read((char*)&simulation_truth_id, sizeof(int));
@@ -162,16 +162,16 @@ Stream read_with_simulation_truth(const string path, const string truth_path) {
     return stream;
 }
 //------------------------------------------------------------------------------
-uint number_of_pulses(
+unsigned int number_of_pulses(
     const vector<vector<SignalProcessing::ElectricPulse>> &pulses
 ) {
-    uint number_pulses = 0;
-    for(uint channel=0; channel<pulses.size(); channel++)
+    unsigned int number_pulses = 0;
+    for(unsigned int channel=0; channel<pulses.size(); channel++)
         number_pulses += pulses.at(channel).size(); 
     return number_pulses;
 }
 //------------------------------------------------------------------------------
-uint number_of_symbols_to_represent_pulses(
+unsigned int number_of_symbols_to_represent_pulses(
     const vector<vector<SignalProcessing::ElectricPulse>> &pulses
 ) {
     uint32_t number_of_pulses_and_number_of_channels = 

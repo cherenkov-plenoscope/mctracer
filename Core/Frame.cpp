@@ -10,7 +10,7 @@ using std::vector;
 
 
 const char Frame::path_delimiter = '/';
-const uint Frame::max_number_of_children = 16;
+const unsigned int Frame::max_number_of_children = 16;
 const double Frame::minimal_structure_size = 1e-6;
 //------------------------------------------------------------------------------
 Frame Frame::void_frame;
@@ -57,7 +57,7 @@ void Frame::assert_name_is_valid(const string name_to_check)const {
 		throw std::invalid_argument(info.str());
 	}	
 
-	uint char_pos = 0;
+	unsigned int char_pos = 0;
 	for(auto single_character : name_to_check) {
 		if(isspace(single_character)) {
 			stringstream info;
@@ -108,7 +108,7 @@ string Frame::get_tree_print()const {
 void Frame::erase(const Frame* child_rm) {
 
 	bool found = false;
-	for(uint i=0; i<children.size(); i++) {
+	for(unsigned int i=0; i<children.size(); i++) {
 		if(children.at(i) == child_rm) {
 			delete children.at(i);
 			children.erase(children.begin()+i);
@@ -204,7 +204,7 @@ void Frame::cluster_children() {
 		}
 		children.clear();
 
-		for(uint sector=0; sector<8; sector++) {
+		for(unsigned int sector=0; sector<8; sector++) {
 
 			if(Frames::positions_in_mother_are_too_close_together(oct_tree[sector])) {
 				warn_about_close_frames();

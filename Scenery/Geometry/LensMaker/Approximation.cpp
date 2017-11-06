@@ -13,7 +13,7 @@ double get_curvature_radius(const Config &cfg) {
 
 	double R = cfg.focal_length; // iteration start point
 	double deviation = 0.0;
-	uint iteration_conter = 0;
+	unsigned int iteration_conter = 0;
 
 	do {
 		abort_if_too_many_iterations(cfg, ++iteration_conter, R);
@@ -47,10 +47,10 @@ double get_lens_thickness_for_R_r(const double R, const double r) {
 //------------------------------------------------------------------------------
 void abort_if_too_many_iterations(
 	const Config &cfg, 
-	const uint iteration_conter,
+	const unsigned int iteration_conter,
 	const double R
 ) {
-	const uint max_iterations = 1000;
+	const unsigned int max_iterations = 1000;
 	if(iteration_conter > max_iterations) {
 		std::stringstream info;
 		info << "LensMaker::" << __func__ << "()\n";

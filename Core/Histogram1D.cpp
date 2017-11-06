@@ -20,9 +20,9 @@ Histogram1D::Histogram1D(
 }
 //------------------------------------------------------------------------------
 void Histogram1D::init_bins_to_zero() {
-	uint bin_count = bin_edges.size() - 1;
+	unsigned int bin_count = bin_edges.size() - 1;
 	bins.reserve(bin_count);
-	for(uint i=0; i<bin_count; i++)
+	for(unsigned int i=0; i<bin_count; i++)
 		bins.push_back(0);
 }
 //------------------------------------------------------------------------------
@@ -43,21 +43,21 @@ void Histogram1D::fill_in(const double sample) {
 		return;
 	}
 
-	uint bin_index = (up_bin_edge - bin_edges.begin()) - 1;
+	unsigned int bin_index = (up_bin_edge - bin_edges.begin()) - 1;
 	bins.at(bin_index)++;
 }
 //------------------------------------------------------------------------------
 double Histogram1D::mode()const {
-	uint idx_max_bin = arg_max();
+	unsigned int idx_max_bin = arg_max();
 	return 0.5*(bin_edges.at(idx_max_bin+1) + bin_edges.at(idx_max_bin));
 }
 //------------------------------------------------------------------------------
-uint Histogram1D::arg_max()const {
+unsigned int Histogram1D::arg_max()const {
 	
-	uint idx_max_bin = 0;
-	uint max_bin_count = 0;
+	unsigned int idx_max_bin = 0;
+	unsigned int max_bin_count = 0;
 
-	for(uint i=0; i<bins.size(); i++)
+	for(unsigned int i=0; i<bins.size(); i++)
 		if(bins.at(i) > max_bin_count) {
 			idx_max_bin = i;
 			max_bin_count = bins.at(i);
@@ -71,21 +71,21 @@ string Histogram1D::str()const {
 	std::stringstream out;
 	out.precision(2);
 
-	uint max_cols = 40;
-	uint max_bin_count = 0;
-	for(uint bin: bins) if(bin > max_bin_count) max_bin_count = bin;
+	unsigned int max_cols = 40;
+	unsigned int max_bin_count = 0;
+	for(unsigned int bin: bins) if(bin > max_bin_count) max_bin_count = bin;
 
 	double scaling = double(max_cols)/double(max_bin_count);
 	
-	uint bin_number_cols = ceil(log10(bins.size()));
+	unsigned int bin_number_cols = ceil(log10(bins.size()));
 	if(bin_number_cols<2) bin_number_cols = 2;
 
 	out << "underflow " << underflow_bin << "\n";
-	for(uint i=0; i<bins.size(); i++) {
+	for(unsigned int i=0; i<bins.size(); i++) {
 		out << std::setw(bin_number_cols) << i << " ";
 		out << "[" << std::setw(8) << bin_edges.at(i) << ", ";
 		out << std::setw(8) << bin_edges.at(i+1) << "] ";
-		out << StringTools::repeat_multiple_times("|",uint(scaling*bins.at(i)));
+		out << StringTools::repeat_multiple_times("|",(unsigned int)(scaling*bins.at(i)));
 		out << " " << bins.at(i) << "\n";
 	}
 	out << "overflow  " << overflow_bin << "\n";

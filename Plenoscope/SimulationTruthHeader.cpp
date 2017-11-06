@@ -5,7 +5,7 @@
 namespace Plenoscope {
 //------------------------------------------------------------------------------
 SimulationTruthHeader::SimulationTruthHeader() {
-    for(uint i=0; i<raw.size(); i++) raw[i]=0.0;
+    for(unsigned int i=0; i<raw.size(); i++) raw[i]=0.0;
     raw[  1-1] = Corsika::str2float("MTST");
 }
 //------------------------------------------------------------------------------
