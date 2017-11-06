@@ -29,8 +29,6 @@ class TrajectoryFactory {
 
 	const RayForPropagation* ray;
 	double radius_of_trajectory;
-	unsigned int intersection_index;
-	unsigned int num_of_interactions;
 	Frame* trajectory;
 public:
 
