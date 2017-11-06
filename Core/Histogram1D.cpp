@@ -1,6 +1,7 @@
 #include "Histogram1D.h"
 #include "Tools/StringTools.h"
 #include <algorithm>
+#include <sstream> 
 #include <iomanip> 
 using std::string;
 using std::vector;
