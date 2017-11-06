@@ -14,7 +14,6 @@ namespace Function {
 	class Polynom3 : public Func1D {
 
 		double a3, a2, a1, a0;
-		double average;
 	public:
 		Polynom3();
 		Polynom3(

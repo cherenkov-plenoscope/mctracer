@@ -15,9 +15,7 @@
 namespace SegmentedReflector {
 
 	class Geometry {
-	
-		double _davies_cotton_weight;
-		double _parabolic_weight;
+
 		double _z_offset_makeing_avg_facet_dist_to_f_point_match_f;
 		std::vector<Vec3> _facet_positions;
 		std::vector<Rot3> _facet_orientations;
