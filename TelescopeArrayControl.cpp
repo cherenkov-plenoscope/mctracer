@@ -16,7 +16,7 @@ std::string TelescopeArrayControl::str()const {
 
 	out << "___Telescope_Array_Control___\n";
 
-	uint i=0;
+	unsigned int i=0;
 	for(Frame* telescope : telescopes_in_world) {
 		out << i << " " << telescope->get_name() << "\t";
 		out << "Az: " << Rad2Deg(ZdAzMount::get_az_of_frame(telescope)) << ",\t";

@@ -81,7 +81,7 @@ void SceneryFactory::add_to_array_if_telescope(Frame* frame, const Node node) {
 void SceneryFactory::add_to_sensors_if_sensitive(Frame* frame, const Node node) {
 
     if(node.has_child("set_sensitive")) {
-        const uint id = node.child("set_sensitive").attribute2int("id");
+        const unsigned int id = node.child("set_sensitive").attribute2int("id");
         PhotonSensor::Sensor* sens = new PhotonSensor::Sensor(id, frame);
         raw_sensors->push_back(sens);
     }

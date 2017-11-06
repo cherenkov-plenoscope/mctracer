@@ -51,7 +51,7 @@ void BiConvexLensHexBound::set_curvature_radius_and_outer_hex_radius(
     );
 
     PlaneDualSphericalBound* walls[6];
-    for(uint i=0; i<6; i++) {
+    for(unsigned int i=0; i<6; i++) {
         const double phi = double(i)*1.0/3.0*M_PI;
 
         walls[i] = append<PlaneDualSphericalBound>();

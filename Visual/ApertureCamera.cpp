@@ -9,7 +9,7 @@ namespace Visual {
 void ApertureCamera::set_fStop_sesnorWidth_rayPerPixel(	
 	const double new_FStopNumber,
 	const double new_SensorSizeX,
-	const uint rays_per_pixel 
+	const unsigned int rays_per_pixel 
 ){
 	set_F_stop_number(new_FStopNumber);
 	set_sensor_size_using_width(new_SensorSizeX);
@@ -50,7 +50,7 @@ void ApertureCamera::update_sensor_pixel_pitch(){
 	PixelPitch_in_m = sensor_width_in_m/double(image.get_number_of_cols());
 }
 //------------------------------------------------------------------------------
-void ApertureCamera::set_number_of_rays_per_pixel(const uint rays_per_pixel) {
+void ApertureCamera::set_number_of_rays_per_pixel(const unsigned int rays_per_pixel) {
 	
 	if(rays_per_pixel <= 0.0) {
 		stringstream info;
@@ -113,15 +113,15 @@ void ApertureCamera::auto_focus(const Frame* world) {
 	set_focus_to(get_average_object_distance(world));
 }
 //------------------------------------------------------------------------------
-uint ApertureCamera::_5_permil_of_pixels()const {
+unsigned int ApertureCamera::_5_permil_of_pixels()const {
 	return image.get_number_of_pixels()*5e-4;
 }
 //------------------------------------------------------------------------------
 double ApertureCamera::get_average_object_distance(const Frame* world) {
 	double sum_of_valid_object_distances = 0.0;
-	uint number_of_valid_distances = 0;
+	unsigned int number_of_valid_distances = 0;
 
-	for(uint pixel_it=0; pixel_it < _5_permil_of_pixels(); pixel_it++) {
+	for(unsigned int pixel_it=0; pixel_it < _5_permil_of_pixels(); pixel_it++) {
 
 		CameraRay ray = get_ray_for_pixel_in_row_and_col(
 			get_random_row(),
@@ -143,12 +143,12 @@ double ApertureCamera::get_average_object_distance(const Frame* world) {
 		return sum_of_valid_object_distances/double(number_of_valid_distances);
 }
 //------------------------------------------------------------------------------
-uint ApertureCamera::get_random_row(){
-	return uint(floor(dice.uniform()*image.get_number_of_rows()));
+unsigned int ApertureCamera::get_random_row(){
+	return (unsigned int)(floor(dice.uniform()*image.get_number_of_rows()));
 }
 //------------------------------------------------------------------------------
-uint ApertureCamera::get_random_col(){
-	return uint(floor(dice.uniform()*image.get_number_of_cols()));
+unsigned int ApertureCamera::get_random_col(){
+	return (unsigned int)(floor(dice.uniform()*image.get_number_of_cols()));
 }
 //------------------------------------------------------------------------------
 std::string ApertureCamera::get_aperture_camera_print()const {
@@ -180,7 +180,7 @@ Vec3 ApertureCamera::get_random_point_on_bounded_aperture_plane() {
 }
 //------------------------------------------------------------------------------
 Vec3 ApertureCamera::get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(
-	const uint row, const uint col
+	const unsigned int row, const unsigned int col
 ){
 	const int x_pos_on_sensor_in_pixel =  row - image.get_number_of_rows()/2;
 	const int y_pos_on_sensor_in_pixel =  col - image.get_number_of_cols()/2;
@@ -202,7 +202,7 @@ double ApertureCamera::get_object_size_for_image_size(
 }
 //------------------------------------------------------------------------------
 CameraRay ApertureCamera::get_ray_for_pixel_in_row_and_col(
-	const uint row, const uint col
+	const unsigned int row, const unsigned int col
 ){	
 	const Vec3 support_vec_in_cam_frame = 
 		get_random_point_on_bounded_aperture_plane();
@@ -238,7 +238,7 @@ void ApertureCamera::acquire_image(
 	const Config* visual_config
 ){	
 	CameraRay cam_ray;
-	uint pix, row, col;
+	unsigned int pix, row, col;
 	int HadCatch = 0;
 	
 	#pragma omp parallel shared(visual_config,world,HadCatch) private(pix,cam_ray,row,col) 

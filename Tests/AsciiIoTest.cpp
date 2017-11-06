@@ -59,16 +59,16 @@ TEST_F(AsciiIoTest, read_valid_file_table_only) {
 //------------------------------------------------------------------------------
 TEST_F(AsciiIoTest, write_table) {
 
-    const uint rows = 100;
-    const uint cols = 10;
+    const unsigned int rows = 100;
+    const unsigned int cols = 10;
     std::string path = "numeric_table_IO/written_table.csv";
 
     std::vector<std::vector<double>> table(rows);
 
     double value;
-    for(uint row=0; row<rows; row++) {
+    for(unsigned int row=0; row<rows; row++) {
         std::vector<double> single_row(cols);
-        for(uint col=0; col<cols; col++) {
+        for(unsigned int col=0; col<cols; col++) {
             value = double(col)*double(row)/(double(rows)*double(cols));
             single_row[col] = value;
         }
@@ -87,9 +87,9 @@ TEST_F(AsciiIoTest, write_table) {
     // check column names
     ASSERT_EQ(rows, table_in.size());
     
-    for(uint row=0; row<rows; row++) {
+    for(unsigned int row=0; row<rows; row++) {
         ASSERT_EQ(cols, table_in.at(row).size());       
-        for(uint col=0; col<cols; col++) {
+        for(unsigned int col=0; col<cols; col++) {
             EXPECT_NEAR(table[row][col], table_in[row][col], 1e-9);            
         }
     }

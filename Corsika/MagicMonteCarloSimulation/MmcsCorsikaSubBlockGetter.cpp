@@ -70,7 +70,7 @@ void MmcsCorsikaSubBlockGetter::assert_file_size_is_multiple_of_MMCS_block_size(
 	}
 }
 //------------------------------------------------------------------------------
-uint MmcsCorsikaSubBlockGetter::current_position_in_MMCS_file_in_bytes() {
+unsigned int MmcsCorsikaSubBlockGetter::current_position_in_MMCS_file_in_bytes() {
 	return MMCS_file.tellg();
 }
 //------------------------------------------------------------------------------
@@ -78,7 +78,7 @@ bool MmcsCorsikaSubBlockGetter::enough_MMCS_file_left_to_read_next_block() {
 	return (file_size_left_in_bytes() >= block_size_in_bytes);
 }
 //------------------------------------------------------------------------------
-uint MmcsCorsikaSubBlockGetter::file_size_left_in_bytes() {
+unsigned int MmcsCorsikaSubBlockGetter::file_size_left_in_bytes() {
 	return 	file_size_in_bytes - current_position_in_MMCS_file_in_bytes();
 }
 //------------------------------------------------------------------------------
@@ -124,13 +124,13 @@ bool MmcsCorsikaSubBlockGetter::has_still_sub_blocks_left_on_block()const {
 	return (sub_block_in_block_counter < number_of_sub_blocks_in_block());
 }
 //------------------------------------------------------------------------------
-uint MmcsCorsikaSubBlockGetter::number_of_sub_blocks_in_block()const {
+unsigned int MmcsCorsikaSubBlockGetter::number_of_sub_blocks_in_block()const {
 	return block_size_in_words/SubBlock.size_in_words();
 }
 //------------------------------------------------------------------------------
 void MmcsCorsikaSubBlockGetter::copy_sub_block_from_block() {
 
-	for(uint i = start_for_sub_block_in_block_in_words(); 
+	for(unsigned int i = start_for_sub_block_in_block_in_words(); 
 		i < end_for_sub_block_in_block_in_words(); 
 		i++ ) {
 		SubBlock[i-start_for_sub_block_in_block_in_words()] = block[i];
@@ -139,11 +139,11 @@ void MmcsCorsikaSubBlockGetter::copy_sub_block_from_block() {
 	sub_block_in_block_counter += 1;	
 }
 //------------------------------------------------------------------------------
-uint MmcsCorsikaSubBlockGetter::start_for_sub_block_in_block_in_words()const{
+unsigned int MmcsCorsikaSubBlockGetter::start_for_sub_block_in_block_in_words()const{
 	return sub_block_in_block_counter * SubBlock.size_in_words();
 }
 //------------------------------------------------------------------------------
-uint MmcsCorsikaSubBlockGetter::end_for_sub_block_in_block_in_words()const{
+unsigned int MmcsCorsikaSubBlockGetter::end_for_sub_block_in_block_in_words()const{
 	return start_for_sub_block_in_block_in_words() + SubBlock.size_in_words();
 }
 //------------------------------------------------------------------------------
@@ -164,17 +164,17 @@ bool MmcsCorsikaSubBlockGetter::has_still_sub_blocks_left()const {
 	return ( sum_of_sub_blocks_so_far() < total_number_of_sub_blocks() );
 }
 //------------------------------------------------------------------------------
-uint MmcsCorsikaSubBlockGetter::total_number_of_sub_blocks()const {
+unsigned int MmcsCorsikaSubBlockGetter::total_number_of_sub_blocks()const {
 	return file_size_in_bytes/SubBlock.size_in_bytes();
 }
 //------------------------------------------------------------------------------
-uint MmcsCorsikaSubBlockGetter::sum_of_sub_blocks_so_far()const {
+unsigned int MmcsCorsikaSubBlockGetter::sum_of_sub_blocks_so_far()const {
 	return 	
 		number_of_completed_blocks()*number_of_sub_blocks_in_block()+
 		sub_block_in_block_counter;
 }
 //------------------------------------------------------------------------------
-uint MmcsCorsikaSubBlockGetter::number_of_completed_blocks()const {
+unsigned int MmcsCorsikaSubBlockGetter::number_of_completed_blocks()const {
 	return block_counter-1;
 }
 //------------------------------------------------------------------------------

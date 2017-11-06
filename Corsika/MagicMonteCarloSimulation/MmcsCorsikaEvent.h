@@ -19,7 +19,7 @@ class MmcsCorsikaEvent {
 	MmcsCorsikaPhotonData photon_data;
 	MmcsCorsikaSubBlock event_end;
 
-	uint reuse_counter = 0;
+	unsigned int reuse_counter = 0;
 public:
 	MmcsCorsikaEvent() {};
 
@@ -39,13 +39,13 @@ public:
 private:
 	double x_core_position_in_m()const;
 	double y_core_position_in_m()const;
-	double x_pos_on_xy_plane_in_m(const uint i)const;
-	double y_pos_on_xy_plane_in_m(const uint i)const;
-	double wavelength_in_m(const uint i)const;
-	double production_height_in_m(const uint i)const;
-	Vec3 intersection_with_xy_floor_plane(const uint i)const;
-	Photon get_mctracer_photon(const uint i)const;
-	Vec3 causal_direction(const uint i)const;
+	double x_pos_on_xy_plane_in_m(const unsigned int i)const;
+	double y_pos_on_xy_plane_in_m(const unsigned int i)const;
+	double wavelength_in_m(const unsigned int i)const;
+	double production_height_in_m(const unsigned int i)const;
+	Vec3 intersection_with_xy_floor_plane(const unsigned int i)const;
+	Photon get_mctracer_photon(const unsigned int i)const;
+	Vec3 causal_direction(const unsigned int i)const;
 };
 
 #endif // __MMCSCORSIKAEVENT_H_INCLUDE__ 

@@ -46,7 +46,7 @@ Sampler::Sampler(const SamplerConfig* config) {
 		throw std::invalid_argument(info.str());
 	}
 
-	number_of_slices = uint(ceil(
+	number_of_slices = (unsigned int)(ceil(
 		config->exposure_time*config->sampling_frequency
 	));
 }
@@ -60,16 +60,16 @@ vector<double> Sampler::time_line(
 	time_line.reserve(number_of_slices);
 
 	// add noise
-	for(uint i=0; i<number_of_slices; i++)
+	for(unsigned int i=0; i<number_of_slices; i++)
 		time_line.push_back(prng->normal(0.0, config->std_dev_noise));
 
 	// add pulses
-	for(uint p=0; p<electric_pipeline->size(); p++) {
+	for(unsigned int p=0; p<electric_pipeline->size(); p++) {
 
 		const double start_pos_in_slices = 
 			electric_pipeline->at(p)*config->sampling_frequency;
 
-		const uint start_slice = floor(start_pos_in_slices);
+		const unsigned int start_slice = floor(start_pos_in_slices);
 		
 		const double start_offset_in_slices = fmod(start_pos_in_slices, 1);
 
@@ -82,7 +82,7 @@ vector<double> Sampler::time_line(
 	return time_line;
 }
 //------------------------------------------------------------------------------
-uint Sampler::get_number_of_slices()const {
+unsigned int Sampler::get_number_of_slices()const {
 	return number_of_slices;
 }
 //------------------------------------------------------------------------------

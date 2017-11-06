@@ -76,7 +76,7 @@ namespace Time {
 	}
 
 	string Stamp::fill_zeros_to_value_for_width(
-		const uint value, const uint width
+		const unsigned int value, const unsigned int width
 	)const {
 		std::stringstream out;
 		out << std::setfill('0') << std::setw(width) << value;

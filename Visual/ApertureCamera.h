@@ -26,10 +26,10 @@ public:
 	void set_fStop_sesnorWidth_rayPerPixel(	
 		const double new_FStopNumber,
 		const double new_SensorSizeX,
-		const uint rays_per_pixel 
+		const unsigned int rays_per_pixel 
 	);
 	
-	CameraRay get_ray_for_pixel_in_row_and_col(const uint row, const uint col);
+	CameraRay get_ray_for_pixel_in_row_and_col(const unsigned int row, const unsigned int col);
 
 	void acquire_image(
 		const Frame* world,
@@ -59,11 +59,11 @@ private:
 	void update_sensor_pixel_pitch();
 	void update_sensor_distance_given_focal_and_object_distance();
 	void set_object_distance(const double ObjectDistance_in_m);
-	void set_number_of_rays_per_pixel(const uint rays_per_pixel);
+	void set_number_of_rays_per_pixel(const unsigned int rays_per_pixel);
 	Vec3 get_random_point_on_bounded_aperture_plane();
 
 	Vec3 get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(
-		const uint row, const uint col
+		const unsigned int row, const unsigned int col
 	);
 
 	Vec3 camera_ray_support_vector_in_world_frame(
@@ -80,11 +80,11 @@ private:
 	void set_default_object_distance();
 	std::string get_aperture_camera_print()const;
 	
-	uint get_random_row();
-	uint get_random_col();
+	unsigned int get_random_row();
+	unsigned int get_random_col();
 
 	double get_average_object_distance(const Frame* world);
-	uint _5_permil_of_pixels()const;
+	unsigned int _5_permil_of_pixels()const;
 };
 
 }//Visual

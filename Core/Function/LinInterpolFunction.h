@@ -37,7 +37,7 @@ namespace Function {
 
 		void assert_table_two_columns(
 			const std::vector<std::vector<double> > &xy_table, 
-			const uint row
+			const unsigned int row
 		)const;
 		void assert_upper_bound_and_argument_in_range(
 			const std::vector<Point>::const_iterator it,
@@ -45,7 +45,7 @@ namespace Function {
 		)const;
 		double slope_in_table_in_row(
 			const std::vector<std::vector<double> > &xy,
-			const uint row
+			const unsigned int row
 		)const;
 		std::string exception_header()const;
 		void sort_function_arguments();

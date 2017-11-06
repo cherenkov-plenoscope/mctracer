@@ -102,9 +102,9 @@ namespace StringTools {
 	}
 	//--------------------------------------------------------------------------
 	string fill_up_text_with_whitespaces_until_column(
-		const string &text, const uint column
+		const string &text, const unsigned int column
 	) {
-		const uint spaces_to_be_filled = column - text.length() % column;
+		const unsigned int spaces_to_be_filled = column - text.length() % column;
 
 		string spaces(spaces_to_be_filled, ' ');
 

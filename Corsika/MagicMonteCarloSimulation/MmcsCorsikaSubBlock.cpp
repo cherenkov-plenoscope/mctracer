@@ -4,17 +4,17 @@ MmcsCorsikaSubBlock::MmcsCorsikaSubBlock() {
 	init_sub_block();
 }
 //------------------------------------------------------------------------------
-std::string MmcsCorsikaSubBlock::get_4char_string_representation_at(const uint i)const {
+std::string MmcsCorsikaSubBlock::get_4char_string_representation_at(const unsigned int i)const {
 	assert_range_is_valid(i);
 	return MmcsCorsikaTools::float2str_4byte_bin_map(sub_block[i]);
 }
 //------------------------------------------------------------------------------
-bool MmcsCorsikaSubBlock::get_bool_representation_at(const uint i)const {
+bool MmcsCorsikaSubBlock::get_bool_representation_at(const unsigned int i)const {
 	assert_range_is_valid(i);
 	return  bool(sub_block[i]);
 }
 //------------------------------------------------------------------------------
-void MmcsCorsikaSubBlock::assert_range_is_valid(const uint i)const {
+void MmcsCorsikaSubBlock::assert_range_is_valid(const unsigned int i)const {
 	if(i >= sub_block_size_in_words) {
 		std::stringstream info;
 		info << "MmcsCorsikaSubBlock:\n";
@@ -34,15 +34,15 @@ const float& MmcsCorsikaSubBlock::operator[] (const size_t index) const {
     return sub_block[index];
 }
 //------------------------------------------------------------------------------
-uint MmcsCorsikaSubBlock::size_in_bytes()const {
+unsigned int MmcsCorsikaSubBlock::size_in_bytes()const {
 	return sub_block_size_in_bytes;
 }
 //------------------------------------------------------------------------------
-uint MmcsCorsikaSubBlock::size()const {
+unsigned int MmcsCorsikaSubBlock::size()const {
 	return size_in_words();
 }
 //------------------------------------------------------------------------------
-uint MmcsCorsikaSubBlock::size_in_words()const {
+unsigned int MmcsCorsikaSubBlock::size_in_words()const {
 	return sub_block_size_in_words;
 }
 //------------------------------------------------------------------------------
@@ -95,44 +95,44 @@ void MmcsCorsikaSubBlock::print()const {
 std::string MmcsCorsikaSubBlock::str()const {
 	std::stringstream out;
 
-	for(uint row=0; row<size_in_words()/number_of_columns; row++)
+	for(unsigned int row=0; row<size_in_words()/number_of_columns; row++)
 		out << get_print_of_row_number(row) << "\n";
 
 	return out.str();
 }
 //------------------------------------------------------------------------------
-std::string MmcsCorsikaSubBlock::get_print_of_row_number(const uint row)const {
+std::string MmcsCorsikaSubBlock::get_print_of_row_number(const unsigned int row)const {
 	std::stringstream out;
 
-	for(uint col=0; col<number_of_columns; col++) {
-		const uint c = row*number_of_columns+col;
+	for(unsigned int col=0; col<number_of_columns; col++) {
+		const unsigned int c = row*number_of_columns+col;
 		assert_range_is_valid(c);
 		out << sub_block.at(c) << " ";		
 	}	
 	return out.str();
 }
 //------------------------------------------------------------------------------
-uint MmcsCorsikaSubBlock::cols()const {
+unsigned int MmcsCorsikaSubBlock::cols()const {
 	return number_of_columns;
 }
 //------------------------------------------------------------------------------
-uint MmcsCorsikaSubBlock::rows()const {
+unsigned int MmcsCorsikaSubBlock::rows()const {
 	return size_in_words()/number_of_columns;
 }
 //------------------------------------------------------------------------------
 std::vector<float> MmcsCorsikaSubBlock::get_words_from_until(
-	const uint begin, 
-	const uint end
+	const unsigned int begin, 
+	const unsigned int end
 )const {
 	std::vector<float> words;
-	for(uint j=begin; j<end; j++) {
+	for(unsigned int j=begin; j<end; j++) {
 		assert_range_is_valid(j);
 		words.push_back( sub_block[j] );
 	}
 	return words;		
 }
 //------------------------------------------------------------------------------
-float MmcsCorsikaSubBlock::get_word(const uint at)const {
+float MmcsCorsikaSubBlock::get_word(const unsigned int at)const {
 	assert_range_is_valid(at);
 	return sub_block[at];	
 }

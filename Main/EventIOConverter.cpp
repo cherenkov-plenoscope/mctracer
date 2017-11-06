@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) {
         corsika_run.header.raw, 
         PathTools::join(out_path.path, "corsika_run_header.bin"));
 
-    uint event_counter = 1;
+    unsigned int event_counter = 1;
     while(corsika_run.has_still_events_left()) {
 
         EventIo::Event event = corsika_run.next_event();

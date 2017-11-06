@@ -79,14 +79,14 @@ void BinaryReader::assert_file_is_open()const {
 	}
 }
 //------------------------------------------------------------------------------
-vector<float> BinaryReader::read_floats(const uint n) {
+vector<float> BinaryReader::read_floats(const unsigned int n) {
 
     vector<float> block(n);
     stl_file.read((char*)block.data(), block.size()*sizeof(float));
     return block;
 }
 //------------------------------------------------------------------------------
-string BinaryReader::read_chars(const uint n) {
+string BinaryReader::read_chars(const unsigned int n) {
 
     vector<char> block(n);
     stl_file.read((char*)block.data(), block.size()*sizeof(char));
@@ -198,7 +198,7 @@ void BinaryReader::assert_normal_is_actually_normalized(const Vec3 normal) {
 	}
 }
 //------------------------------------------------------------------------------
-uint BinaryReader::get_number_of_facets()const {
+unsigned int BinaryReader::get_number_of_facets()const {
 	return current_triangle_number;
 }
 //------------------------------------------------------------------------------

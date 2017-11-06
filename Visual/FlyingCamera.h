@@ -61,7 +61,7 @@ private:
 	const Config *visual_config;
 
 	int snapshot_counter = 0;
-	uint user_input_counter = 0;
+	unsigned int user_input_counter = 0;
 	Time::Stamp time_stamp;
 
 	int wait_for_user_key_stroke();

@@ -13,7 +13,7 @@
 
 namespace FileTools {
 	bool can_be_opened(const std::string &file_path);	
-	uint size_in_bytes(const std::string name_of_file_to_get_size_of);
+	unsigned int size_in_bytes(const std::string name_of_file_to_get_size_of);
 	void write_text_to_file(
 		const std::string &text,
 		const std::string &path

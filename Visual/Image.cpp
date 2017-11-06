@@ -4,7 +4,7 @@ namespace Visual {
 //------------------------------------------------------------------------------
 Image::Image() {}
 //------------------------------------------------------------------------------
-Image::Image(const uint cols,const uint rows){
+Image::Image(const unsigned int cols,const unsigned int rows){
 	raw_image = cv::Mat (rows, cols, CV_8UC3);
 }
 //------------------------------------------------------------------------------
@@ -63,20 +63,20 @@ void Image::load(const std::string filename) {
 	}
 }
 //------------------------------------------------------------------------------
-uint Image::get_number_of_pixels()const {
+unsigned int Image::get_number_of_pixels()const {
 	return get_number_of_cols() * get_number_of_rows();
 }
 //------------------------------------------------------------------------------
-uint Image::get_number_of_cols()const {
+unsigned int Image::get_number_of_cols()const {
  	return raw_image.cols; 
 }
 //------------------------------------------------------------------------------
-uint Image::get_number_of_rows()const {
+unsigned int Image::get_number_of_rows()const {
  	return raw_image.rows;
 }
 //------------------------------------------------------------------------------
 void Image::set_row_col_to_color(
-	const uint row, const uint col, const Color &color){
+	const unsigned int row, const unsigned int col, const Color &color){
 	cv::Vec3b intensity;
 
 	intensity.val[0] = color.b;
@@ -86,7 +86,7 @@ void Image::set_row_col_to_color(
 	raw_image.at<cv::Vec3b>(row,col) = intensity;
 }
 //------------------------------------------------------------------------------
-Color Image::get_color_row_col(const uint row, const uint col)const{
+Color Image::get_color_row_col(const unsigned int row, const unsigned int col)const{
 	cv::Vec3b intensity = raw_image.at<cv::Vec3b>(row,col);
 	return Color(intensity.val[0], intensity.val[1], intensity.val[2]);
 }
@@ -120,7 +120,7 @@ void Image::convert_to_grayscale() {
 	cv::cvtColor(raw_image, raw_image, CV_GRAY2RGB);
 }
 //------------------------------------------------------------------------------
-void Image::scale(const uint scale) {
+void Image::scale(const unsigned int scale) {
 	cv::Size dst_size(raw_image.cols*scale, raw_image.rows*scale);
 	cv::resize(raw_image, raw_image, dst_size);
 }

@@ -17,22 +17,22 @@ namespace SignalProcessing {
 
     struct TimeAndCount {
         double time;
-        uint count;
+        unsigned int count;
         std::vector<int> simulation_truth_ids;
         TimeAndCount(
             const double time,
-            const uint count,
+            const unsigned int count,
             const std::vector<int> simulation_truth_ids
         );
     };
 
-    std::vector<uint> convolution_of_arrival_times_and_integration_window(
+    std::vector<unsigned int> convolution_of_arrival_times_and_integration_window(
     	const std::vector<ElectricPulse> &arrival_moments,
         const double integration_time_window
     );
 
-    uint arrival_count_in_ith_integration_window(
-    	const uint i, 
+    unsigned int arrival_count_in_ith_integration_window(
+    	const unsigned int i, 
     	const double integration_time, 
     	const std::vector<ElectricPulse> &arrival_pipeline
     );
@@ -44,7 +44,7 @@ namespace SignalProcessing {
 
     std::vector<int> simulation_truth_ids_in_time_window(
         const std::vector<ElectricPulse> &arrival_moments,
-        const uint start_pulse_index, 
+        const unsigned int start_pulse_index, 
         const double integration_time_window
     );
 

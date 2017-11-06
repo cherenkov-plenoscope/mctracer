@@ -8,7 +8,7 @@ class XyPlaneRayEquationTest : public ::testing::Test {
 //------------------------------------------------------------------------------
 TEST_F(XyPlaneRayEquationTest, frontal_hit) {
 
-  for(uint i=-100; i<100; i++) {
+  for(unsigned int i=-100; i<100; i++) {
     
     double sup_z = double(i)*1.337;
     Ray ray(Vec3(0.0, 0.0, sup_z),Vec3(0.0, 0.0, 1.0));

@@ -13,7 +13,7 @@ void add_stl_to_and_inherit_surface_from_surfac_entity(
     BinaryReader reader(path);
     vector<Facet> facets = reader.get_facets();
 
-    uint facet_count = 0;
+    unsigned int facet_count = 0;
     for(Facet facet: facets) {
         Triangle* tri = proto->append<Triangle>();
         tri->set_name_pos_rot(
@@ -35,7 +35,7 @@ void add_stl_to_frame(const string path, Frame* proto, const double scale) {
     BinaryReader reader(path);
     vector<Facet> facets = reader.get_facets();
 
-    uint facet_count = 0;
+    unsigned int facet_count = 0;
     for(Facet facet: facets) {
         Triangle* tri = proto->append<Triangle>();
         tri->set_name_pos_rot(

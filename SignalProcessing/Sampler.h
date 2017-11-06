@@ -33,7 +33,7 @@ namespace SignalProcessing {
 
 	class Sampler {
 
-		uint number_of_slices;
+		unsigned int number_of_slices;
 		const SamplerConfig* config;
 	public:
 
@@ -44,7 +44,7 @@ namespace SignalProcessing {
 			Random::Generator* prng
 		);
 
-		uint get_number_of_slices()const;
+		unsigned int get_number_of_slices()const;
 	};
 
 	}// PhotoElectricConverter

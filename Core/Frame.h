@@ -38,7 +38,7 @@ protected:
 public:
 
     static const char path_delimiter;
-    static const uint max_number_of_children;
+    static const unsigned int max_number_of_children;
     static const double minimal_structure_size;
     static Frame void_frame;
 

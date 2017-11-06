@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) {
     StereoLitography::BinaryReader input = StereoLitography::BinaryReader(input_path.path);
     vector<StereoLitography::Facet> facets = input.get_facets();
 
-    for(uint i=0; i<facets.size(); i++) {
+    for(unsigned int i=0; i<facets.size(); i++) {
         facets.at(i).a = facets.at(i).a*scale;
         facets.at(i).b = facets.at(i).b*scale;
         facets.at(i).c = facets.at(i).c*scale;

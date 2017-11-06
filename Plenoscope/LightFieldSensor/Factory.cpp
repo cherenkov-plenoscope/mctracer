@@ -28,7 +28,7 @@ void Factory::add_lens_array(Frame* frame) {
 	lens_array->set_name_pos_rot("lens_array", Vec3::null, Rot3::null);
 	vector<Vec3> pixel_positions = geometry->pixel_positions(); 
 
-	for(uint i=0; i<pixel_positions.size(); i++) {
+	for(unsigned int i=0; i<pixel_positions.size(); i++) {
 
 		BiConvexLensHexBound* lens = lens_array->append<BiConvexLensHexBound>();
 		lens->set_name_pos_rot(
@@ -58,7 +58,7 @@ void Factory::add_pixel_bin_array(Frame* frame) {
 	vector<Vec3> flower_positions = geometry->paxel_grid_center_positions();
 	scenery->colors.add("bin_wall_green", Color::green);
 
-	for(uint i=0; i<flower_positions.size(); i++) {
+	for(unsigned int i=0; i<flower_positions.size(); i++) {
 		add_pixel_bin_with_name_at_pos(
 			bin_array,
 			"bin_" + std::to_string(i),
@@ -80,7 +80,7 @@ void Factory::add_pixel_bin_with_name_at_pos(
 	const double R = geometry->pixel_lens_inner_aperture_radius();
 	const double hight = geometry->bin_hight();
 
-	for(uint i=0; i<6; i++) {
+	for(unsigned int i=0; i<6; i++) {
 		const double phi = double(i)*1.0/3.0*M_PI;
 		
 		Plane* binwall = bin->append<Plane>();
@@ -116,7 +116,7 @@ void Factory::add_light_field_sensor_frontplate(Frame* frame) {
 	Frame* face_plate = frame->append<Frame>();
 	face_plate->set_name_pos_rot("face_plate", Vec3::null, Rot3::null);
 
-	for(uint i=0; i<face_plate_positions.size(); i++) {
+	for(unsigned int i=0; i<face_plate_positions.size(); i++) {
 
 		HexPlane* face = face_plate->append<HexPlane>();
 		face->set_name_pos_rot(
@@ -156,7 +156,7 @@ void Factory::add_lixel_sensor_plane(Frame* frame) {
 	vector<PhotonSensor::Sensor*> sub_pixels;
 	sub_pixels.reserve(lixel_positions.size());
 
-	for(uint i=0; i<lixel_positions.size(); i++) {
+	for(unsigned int i=0; i<lixel_positions.size(); i++) {
 
 		HexPlane* subpix = sub_pixel_array->append<HexPlane>(); 
 		subpix->set_name_pos_rot(
@@ -282,7 +282,7 @@ void Factory::add_demonstration_light_field_sensor_to_frame_in_scenery(
 	vector<PhotonSensor::Sensor*> sub_pixels;
 	sub_pixels.reserve(geometry->paxel_per_pixel_template_grid.size());
 
-	for(uint i=0; i<lixel_positions.size(); i++) {
+	for(unsigned int i=0; i<lixel_positions.size(); i++) {
 
 		HexPlane* subpix = sub_pixel_array->append<HexPlane>(); 
 		subpix->set_name_pos_rot(

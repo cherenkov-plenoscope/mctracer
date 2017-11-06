@@ -19,7 +19,7 @@ namespace Plenoscope {
 
 		array<float, 273> Config::get_sensor_plane2imaging_system_header()const {
 			array<float, 273> header;
-			for(uint i=0; i<header.size(); i++) header[i]=0.0;
+			for(unsigned int i=0; i<header.size(); i++) header[i]=0.0;
 
 			header[  1-1] = Corsika::str2float("S2IS");
 			header[  2-1] = 1.0; // simulation = 1, observation = 0

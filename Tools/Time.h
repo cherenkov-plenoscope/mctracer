@@ -51,8 +51,8 @@ namespace Time {
 		std::string SS()const;
 	private:
 		std::string fill_zeros_to_value_for_width(
-			const uint value, 
-			const uint width
+			const unsigned int value, 
+			const unsigned int width
 		)const;
 	};
 }

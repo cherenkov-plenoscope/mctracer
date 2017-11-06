@@ -12,7 +12,7 @@ TEST_F(OnlineStatisticsTest, few_samples) {
     vector<double> vals = {1.0};
     OnlineStatistics ov;
 
-    for(uint i=0; i<vals.size(); i++)
+    for(unsigned int i=0; i<vals.size(); i++)
         ov.add(vals.at(i));
 
     EXPECT_EQ(ov.mean(), 1.0);
@@ -27,7 +27,7 @@ TEST_F(OnlineStatisticsTest, online_variance) {
     Random::Mt19937 prng(0);
     OnlineStatistics ov;
 
-    for(uint i=0; i<1000000; i++) {
+    for(unsigned int i=0; i<1000000; i++) {
         const double r = prng.uniform();
         vals.push_back(r);
         ov.add(r);
@@ -45,7 +45,7 @@ TEST_F(OnlineStatisticsTest, online_variance_simple_numbers) {
     vector<double> vals = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
     OnlineStatistics ov;
 
-    for(uint i=0; i<vals.size(); i++)
+    for(unsigned int i=0; i<vals.size(); i++)
         ov.add(vals.at(i));
 
     double stddev_using_online = ov.stddev();
@@ -60,7 +60,7 @@ TEST_F(OnlineStatisticsTest, sum) {
     vector<double> vals = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
     OnlineStatistics ov;
 
-    for(uint i=0; i<vals.size(); i++)
+    for(unsigned int i=0; i<vals.size(); i++)
         ov.add(vals.at(i));
 
     EXPECT_EQ(ov.sum(), 21.0);
@@ -71,7 +71,7 @@ TEST_F(OnlineStatisticsTest, mean) {
     vector<double> vals = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
     OnlineStatistics ov;
 
-    for(uint i=0; i<vals.size(); i++)
+    for(unsigned int i=0; i<vals.size(); i++)
         ov.add(vals.at(i));
 
     EXPECT_EQ(ov.mean(), 3.0);

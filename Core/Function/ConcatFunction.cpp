@@ -22,7 +22,7 @@ namespace Function {
 	//--------------------------------------------------------------------------
 	void Concat::assert_limits_do_fit()const {
 
-		for(uint i=0; i<conc.size()-1; i++) {
+		for(unsigned int i=0; i<conc.size()-1; i++) {
 			if(func_does_not_match_limit_of_next_func(i)) {
 				std::stringstream info;
 				info << "Function::Concat::" << __func__ << "()\n";

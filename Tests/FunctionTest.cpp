@@ -132,13 +132,13 @@ TEST_F(FunctionTest, sampling_table_size) {
     std::vector<std::vector<double>> sample_xy = f.get_samples(1000);
 
     ASSERT_EQ(1000u, sample_xy.size());
-    for(uint i=0; i<sample_xy.size(); i++)
+    for(unsigned int i=0; i<sample_xy.size(); i++)
         ASSERT_EQ(2u, sample_xy.at(i).size());
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, sampling_table_x_values) {
 
-    const uint samples = 10;
+    const unsigned int samples = 10;
     Function::Limits l(-4.2, 1.337);
 
     Function::Polynom3 f(0.0, 1.0, 0.0, 0.0, l); // f(x) = x^2
@@ -147,7 +147,7 @@ TEST_F(FunctionTest, sampling_table_x_values) {
     //std::cout << get_print(sample_xy);
 
     ASSERT_EQ(samples, sample_xy.size());
-    for(uint i=0; i<sample_xy.size(); i++) {
+    for(unsigned int i=0; i<sample_xy.size(); i++) {
 
         ASSERT_EQ(2u, sample_xy.at(i).size());
         double x = -4.2 + double(i)*(1.337+4.2)/double(samples);
@@ -158,7 +158,7 @@ TEST_F(FunctionTest, sampling_table_x_values) {
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, sampling_table_y_values) {
 
-    const uint samples = 10;
+    const unsigned int samples = 10;
     Function::Limits l(-4.2, 1.337);
 
     Function::Polynom3 f(0.0, 1.0, 0.0, 0.0, l); // f(x) = x^2
@@ -167,7 +167,7 @@ TEST_F(FunctionTest, sampling_table_y_values) {
     //std::cout << get_print(sample_xy);
 
     ASSERT_EQ(samples, sample_xy.size());
-    for(uint i=0; i<sample_xy.size(); i++) {
+    for(unsigned int i=0; i<sample_xy.size(); i++) {
 
         ASSERT_EQ(2u, sample_xy.at(i).size());
         double x = sample_xy[i][0];

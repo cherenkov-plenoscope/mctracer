@@ -10,11 +10,11 @@ class SensorInOutTest : public ::testing::Test {};
 TEST_F(SensorInOutTest, write_and_read) {
 
     vector<ArrivalInformation> arrivals_1;
-    const uint number_of_arrivals = 1337*42;
+    const unsigned int number_of_arrivals = 1337*42;
 
     Random::Mt19937 prng(0);
 
-    for(uint i=0; i<number_of_arrivals; i++) {
+    for(unsigned int i=0; i<number_of_arrivals; i++) {
         ArrivalInformation arrival;
         arrival.simulation_truth_id = prng.uniform();
         arrival.wavelength = prng.uniform();
@@ -44,7 +44,7 @@ TEST_F(SensorInOutTest, write_and_read) {
 
 
     ASSERT_EQ(arrivals_1.size(), arrivals_2.size());
-    for(uint i=0; i<number_of_arrivals; i++) {
+    for(unsigned int i=0; i<number_of_arrivals; i++) {
 
         ArrivalInformation ar1 = arrivals_1.at(i);
         ArrivalInformation ar2 = arrivals_2.at(i);

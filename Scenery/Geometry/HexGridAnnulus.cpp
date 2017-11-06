@@ -44,7 +44,7 @@ void HexGridAnnulus::init_unit_vectors_hex_grid_with_length(const double spacing
 std::string HexGridAnnulus::str()const {
 	std::stringstream out;
 
-	uint number = 1;
+	unsigned int number = 1;
 	for(Vec3 vec : grid)
 		out << number++ << " " << vec.str() << "\n";
 

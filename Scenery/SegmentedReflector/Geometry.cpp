@@ -36,7 +36,7 @@ namespace SegmentedReflector {
 
 	void Geometry::init_facet_z_positions() {
 
-		for(uint i=0; i<_facet_positions.size(); i++) {
+		for(unsigned int i=0; i<_facet_positions.size(); i++) {
 
 			_facet_positions.at(i).set(
 				_facet_positions.at(i).x(),
@@ -51,7 +51,7 @@ namespace SegmentedReflector {
 	void Geometry::make_average_facet_distance_to_focal_point_match_focal_length() {
 
 		_z_offset_makeing_avg_facet_dist_to_f_point_match_f = 0.0;
-		uint iteration_conter = 0;
+		unsigned int iteration_conter = 0;
 		double deviation = 0.0;
 
 		do{
@@ -66,7 +66,7 @@ namespace SegmentedReflector {
 		}while( fabs(deviation) > focal_length()*1e-6);
 	}
 	
-	void Geometry::abort_if_too_many_iterations(const uint iteration_conter) {
+	void Geometry::abort_if_too_many_iterations(const unsigned int iteration_conter) {
 		
 		if(iteration_conter > 100) {
 			stringstream info;
@@ -90,7 +90,7 @@ namespace SegmentedReflector {
 
 	void Geometry::move_all_facets_in_z(const double movement) {
 
-		for(uint i=0; i<_facet_positions.size(); i++) {
+		for(unsigned int i=0; i<_facet_positions.size(); i++) {
 
 			_facet_positions.at(i).set(
 				_facet_positions.at(i).x(),
@@ -263,7 +263,7 @@ namespace SegmentedReflector {
 	string Geometry::facet_positions_and_normals_to_text()const {
 		stringstream out;
 		out << "x[m] " << "y[m] " << "z[m] " << "nx[1] " << "ny[1] " << "nz[1]\n"; 
-		for(uint i=0; i<_facet_positions.size(); i++) {
+		for(unsigned int i=0; i<_facet_positions.size(); i++) {
 
 			HomTra3 trafo;
 			trafo.set_transformation(_facet_orientations[i], Vec3::null);

@@ -48,7 +48,7 @@ double Photon::get_time_of_flight()const {
 
 	double time_of_flight = 0.0;
 
-	uint i =0;
+	unsigned int i =0;
 	for(const Intersection &intersec : intersection_history) {
 		if(i!=0)
 			time_of_flight += get_time_to_pass_distance_in_refractive_index(

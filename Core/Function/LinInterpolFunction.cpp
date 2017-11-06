@@ -20,7 +20,7 @@ namespace Function {
 	void LinInterpol::init(const vector<vector<double>>& xy) {
 		func.reserve(xy.size());
 
-		for(uint i=0; i<xy.size(); i++) {
+		for(unsigned int i=0; i<xy.size(); i++) {
 
 			assert_table_two_columns(xy, i);
 
@@ -42,7 +42,7 @@ namespace Function {
 	//--------------------------------------------------------------------------
 	double LinInterpol::slope_in_table_in_row(
 		const vector<vector<double>> &xy,
-		const uint row
+		const unsigned int row
 	)const {
 			if(row != xy.size()-1)
 				return (xy[row][1] -xy[row+1][1]) / (xy[row][0] - xy[row+1][0]);
@@ -52,7 +52,7 @@ namespace Function {
 	//--------------------------------------------------------------------------
 	void LinInterpol::assert_table_two_columns(
 		const vector<vector<double>> &xy_table,
-		const uint row
+		const unsigned int row
 	)const {
 
 		if(xy_table.at(row).size() != 2) {
@@ -107,7 +107,7 @@ namespace Function {
 		// be next to each other. We go through the vector and compare each element
 		// with its upper neighbor.
 		
-		for(uint i=0; i < func.size()-1; i++) {
+		for(unsigned int i=0; i < func.size()-1; i++) {
 			if(func.at(i).x == func.at(i+1).x) {
 				std::stringstream info;
 				info << exception_header();

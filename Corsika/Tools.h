@@ -37,7 +37,7 @@ namespace Corsika {
 		float energy_range_start(const array<float, 273> &rh);
 		float energy_range_end(const array<float, 273> &rh);
 		float number_of_observation_levels(const array<float, 273> &rh);
-		float observation_level_at(const array<float, 273> &rh, const uint i);
+		float observation_level_at(const array<float, 273> &rh, const unsigned int i);
 	}
 
 	float str2float(const string word);

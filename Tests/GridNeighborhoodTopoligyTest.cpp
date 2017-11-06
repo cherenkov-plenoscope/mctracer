@@ -15,12 +15,12 @@ TEST_F(GridNeighborhoodTopoligyTest, init) {
 
     GridNeighborhoodTopoligy topo(&grid, spacing*1.1);
 
-    std::vector<std::vector<uint>> neighbors = topo.get_neighbor_relations();
+    std::vector<std::vector<unsigned int>> neighbors = topo.get_neighbor_relations();
 
-    /*uint i=0;
-    for(std::vector<uint> ne: neighbors) {
+    /*unsigned int i=0;
+    for(std::vector<unsigned int> ne: neighbors) {
         std::cout << i << ") ";
-        for(uint n: ne) {
+        for(unsigned int n: ne) {
             std::cout << n << ", ";
         }
         std::cout << "\n";

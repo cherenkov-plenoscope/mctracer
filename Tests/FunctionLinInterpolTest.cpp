@@ -9,7 +9,7 @@ using std::vector;
 class LinInterpolTest : public ::testing::Test {
     protected:
 
-    const uint table_size = 100;
+    const unsigned int table_size = 100;
     std::vector<std::vector<double>> table;
     std::vector<std::vector<double>> table_with_duplicate_argument;
 
@@ -23,7 +23,7 @@ class LinInterpolTest : public ::testing::Test {
     void init_table() {
 
         double phase = 0.25;
-        for(uint i=0; i<table_size; i++) {
+        for(unsigned int i=0; i<table_size; i++) {
 
             double x = double(i)/double(table_size);
             double y = sin(x*2.0*M_PI + phase);
@@ -35,7 +35,7 @@ class LinInterpolTest : public ::testing::Test {
 
     void init_table_with_duplicate_argument() {
 
-        for(uint i=0; i<table_size; i++) {
+        for(unsigned int i=0; i<table_size; i++) {
 
             double x = 1.337;
             double y = 1.0;
@@ -51,7 +51,7 @@ TEST_F(LinInterpolTest, check_setup) {
     ASSERT_EQ(table_size, table.size());
     ASSERT_EQ(table_size, table_with_duplicate_argument.size());
 
-    for(uint i=0; i<table_size; i++) {
+    for(unsigned int i=0; i<table_size; i++) {
         ASSERT_EQ(2u, table.at(i).size());
         ASSERT_EQ(2u, table_with_duplicate_argument.at(i).size());
     }
@@ -61,7 +61,7 @@ TEST_F(LinInterpolTest, construct_using_matrix_of_vectors) {
 
     Function::LinInterpol f(table);
 
-    for(uint i=0; i<table.size()-1; i++) {
+    for(unsigned int i=0; i<table.size()-1; i++) {
         double argument = table.at(i).at(0);
         double value = table.at(i).at(1);
         EXPECT_NEAR(value, f(argument), 1e-9);
@@ -91,7 +91,7 @@ TEST_F(LinInterpolTest, generate_from_from_file) {
 
     // precision loss in ascii files, cant access boundarys sharp,
     // start in row 1 and stop one row before end.
-    for(uint i=1; i<table.size()-1.; i++) {
+    for(unsigned int i=1; i<table.size()-1.; i++) {
         double argument = table[i][0];
         double value = table[i][1];
         EXPECT_NEAR(value, f(argument), 1e-9);

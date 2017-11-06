@@ -21,13 +21,13 @@ namespace NightSkyBackground {
 		//------------------------------------------------
 		// FIND MIN MAX ARRIVAL TIMES OF CHERENKOV PHOTONS
 
-		uint number_cherenkov_photons = 0;
+		unsigned int number_cherenkov_photons = 0;
 		vector<double> arrival_times;
 		double min_crk_arrival_time = std::numeric_limits<double>::max();
 		double max_crk_arrival_time = std::numeric_limits<double>::min();
 
 
-		for(uint i=0; i<photon_pipelines->size(); i++) {
+		for(unsigned int i=0; i<photon_pipelines->size(); i++) {
 				
 			if(photon_pipelines->at(i).size() > 0) {
 				if(photon_pipelines->at(i).front().arrival_time < min_crk_arrival_time)
@@ -53,7 +53,7 @@ namespace NightSkyBackground {
 			mode_of_cherenkov_arrival_times = 0.0;
 		}else{
 
-			const uint bin_edge_count = 2u + sqrt(number_cherenkov_photons);
+			const unsigned int bin_edge_count = 2u + sqrt(number_cherenkov_photons);
 
 			vector<double> arrival_time_bin_edges = Numeric::linspace(
 				min_crk_arrival_time, 
@@ -73,7 +73,7 @@ namespace NightSkyBackground {
 			mode_of_cherenkov_arrival_times - 0.5*nsb_exposure_time;
 
 
-		for(uint i=0; i<photon_pipelines->size(); i++) {
+		for(unsigned int i=0; i<photon_pipelines->size(); i++) {
 
 			const double lixel_nsb_rate = 
 				nsb->rate*
@@ -110,9 +110,9 @@ namespace NightSkyBackground {
 		// substract nsb_exposure_start_time 
 
 		// for each read out channel
-		for(uint i=0; i<photon_pipelines->size(); i++) {
+		for(unsigned int i=0; i<photon_pipelines->size(); i++) {
 			// for each photon
-			for(uint p=0; p<photon_pipelines->at(i).size(); p++) {
+			for(unsigned int p=0; p<photon_pipelines->at(i).size(); p++) {
 				photon_pipelines->at(i).at(p).arrival_time -= 
 					nsb_exposure_start_time;
 			}

@@ -24,8 +24,8 @@ namespace Xml {
 		const string path;
 
 		std::vector<ptrdiff_t> new_lines;
-		uint column;
-		uint line;
+		unsigned int column;
+		unsigned int line;
 	public:
 
 		Problem(
@@ -35,8 +35,8 @@ namespace Xml {
 		);
 		Problem(Node node);
 		string get_problem_section_from_original_file()const;
-		uint get_line()const;
-		uint get_column()const;
+		unsigned int get_line()const;
+		unsigned int get_column()const;
 		string get_path()const;
 	private:
 

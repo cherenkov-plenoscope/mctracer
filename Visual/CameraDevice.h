@@ -23,8 +23,8 @@ class CameraDevice{
 public: 
 	CameraDevice(
 		const std::string camera_name, 
-		const uint sensor_cols, 
-		const uint sensor_rows
+		const unsigned int sensor_cols, 
+		const unsigned int sensor_rows
 	);
 
 	virtual void acquire_image(	
@@ -70,11 +70,11 @@ public:
 
 	Vec3 get_image_upwards_direction_in_world_frame()const;
 
-	uint get_number_of_sensor_cols()const {
+	unsigned int get_number_of_sensor_cols()const {
 		return image.get_number_of_cols();
 	}
 
-	uint get_number_of_sensor_rows()const {
+	unsigned int get_number_of_sensor_rows()const {
 		return image.get_number_of_rows();
 	}
 protected:

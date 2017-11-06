@@ -21,7 +21,7 @@ public:
 	int date_of_begin_run;
 	float version_of_program;
 
-	uint number_of_observation_levels;
+	unsigned int number_of_observation_levels;
 	std::vector<float> observation_levels;
 
     float slope_of_energy_spektrum;
@@ -69,7 +69,7 @@ private:
    	void fill_observation_levels();
 	void assert_sub_block_has_Run_Header()const;
     void assert_number_of_observation_levels_is_valid()const;
-	void fill_from_until(std::vector<float> &vec, const uint begin, const uint end);
-	void fill_from(float &num_to_fill, const uint at);
+	void fill_from_until(std::vector<float> &vec, const unsigned int begin, const unsigned int end);
+	void fill_from(float &num_to_fill, const unsigned int at);
 };
 #endif // __MMCSCORSIKARUNHEADER_H_INCLUDE__ 

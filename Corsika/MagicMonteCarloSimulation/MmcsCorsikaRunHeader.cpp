@@ -76,10 +76,10 @@ void MmcsCorsikaRunHeader::assert_sub_block_has_Run_Header()const {
 //------------------------------------------------------------------------------
 void MmcsCorsikaRunHeader::fill_observation_levels() {
 
-	number_of_observation_levels = uint(std::round(mmcs_sub_block[4]));
+	number_of_observation_levels = (unsigned int)(std::round(mmcs_sub_block[4]));
 	assert_number_of_observation_levels_is_valid();
 
-	for(uint obs_lvl=0; obs_lvl<number_of_observation_levels; obs_lvl++) {
+	for(unsigned int obs_lvl=0; obs_lvl<number_of_observation_levels; obs_lvl++) {
 		observation_levels.push_back(mmcs_sub_block[5+obs_lvl]);		
 	}	
 }
@@ -140,12 +140,12 @@ std::string MmcsCorsikaRunHeader::str()const {
 }
 //------------------------------------------------------------------------------
 void MmcsCorsikaRunHeader::fill_from_until(
-	std::vector<float> &vec, const uint begin, const uint end
+	std::vector<float> &vec, const unsigned int begin, const unsigned int end
 ) {
-	for(uint j=begin; j<end; j++)
+	for(unsigned int j=begin; j<end; j++)
 		vec.push_back( mmcs_sub_block[j] );		
 }
 //------------------------------------------------------------------------------
-void MmcsCorsikaRunHeader::fill_from(float &num_to_fill, const uint at) {
+void MmcsCorsikaRunHeader::fill_from(float &num_to_fill, const unsigned int at) {
 	num_to_fill = mmcs_sub_block[at];	
 }

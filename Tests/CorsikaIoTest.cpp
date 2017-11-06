@@ -23,7 +23,7 @@ TEST_F(Corsika_io, four_char_word_forth_and_back) {
 
     Random::Mt19937 prng(0);
 
-    for(uint i=0; i<1e4; i++) {
+    for(unsigned int i=0; i<1e4; i++) {
         float num = float(prng.uniform());
         string word = Corsika::float2str(num);
         float num_back = Corsika::str2float(word);

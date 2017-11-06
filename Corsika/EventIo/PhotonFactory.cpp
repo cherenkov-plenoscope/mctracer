@@ -4,7 +4,7 @@ namespace EventIo {
 //------------------------------------------------------------------------------
 PhotonFactory::PhotonFactory(
     const array<float, 8> &_corsika_photon, 
-    const uint _id,
+    const unsigned int _id,
     Random::Generator *prng
 ):
     id(_id),

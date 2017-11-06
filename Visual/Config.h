@@ -16,18 +16,18 @@
 namespace Visual {
 struct Config {
 	
-	uint max_interaction_depth;
+	unsigned int max_interaction_depth;
 
 	struct Preview {
-		uint cols;
-		uint rows;
-		uint scale;
+		unsigned int cols;
+		unsigned int rows;
+		unsigned int scale;
 	} preview;
 
 	struct Snapshot {
-		uint cols;
-		uint rows;
-		uint rays_per_pixel;
+		unsigned int cols;
+		unsigned int rows;
+		unsigned int rays_per_pixel;
 		double focal_length_over_aperture_diameter;
 		double image_sensor_size_along_a_row;
 	} snapshot;

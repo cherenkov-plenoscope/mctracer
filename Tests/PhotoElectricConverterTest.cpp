@@ -6,9 +6,9 @@ using std::vector;
 
 class PhotoElectricConverterTest : public ::testing::Test {};
 
-vector<SignalProcessing::PipelinePhoton> equi_distant_photons(const uint n) {
+vector<SignalProcessing::PipelinePhoton> equi_distant_photons(const unsigned int n) {
     vector<SignalProcessing::PipelinePhoton> photon_pipeline;
-    for(uint i=0; i<n; i++) {
+    for(unsigned int i=0; i<n; i++) {
         const double arrival_time = double(i)*1e-9;
         const double wavelength = 433e-9;
         const int simulation_truth_id = i;
@@ -100,7 +100,7 @@ TEST_F(PhotoElectricConverterTest, input_pulses_pass_qunatum_eff_is_one) {
         );
 
     ASSERT_EQ(1337u, result.size());
-    for(uint i=0; i<result.size(); i++) {
+    for(unsigned int i=0; i<result.size(); i++) {
         EXPECT_EQ(
             photon_pipeline.at(i).arrival_time, 
             result.at(i).arrival_time);
@@ -156,8 +156,8 @@ TEST_F(PhotoElectricConverterTest, triangle_qeff) {
     SignalProcessing::PhotoElectricConverter::Converter conv(&config);
 
     vector<SignalProcessing::PipelinePhoton> photon_pipeline;
-    const uint n = 1000*1000;
-    for(uint i=0; i<n; i++) {
+    const unsigned int n = 1000*1000;
+    for(unsigned int i=0; i<n; i++) {
         const double arrival_time = double(i);
         const double wavelength = 200e-9 + double(i)/double(n)*1000e-9;
         const int simulation_truth_id = i;

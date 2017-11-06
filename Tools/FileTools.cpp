@@ -11,7 +11,7 @@ bool FileTools::can_be_opened(const std::string &file_path) {
     } 
 }
 //------------------------------------------------------------------------------
-uint FileTools::size_in_bytes(const std::string name_of_file_to_get_size_of) {
+unsigned int FileTools::size_in_bytes(const std::string name_of_file_to_get_size_of) {
 	std::ifstream file;
 	file.open(name_of_file_to_get_size_of, std::ios::binary | std::ios::ate);
 
@@ -24,7 +24,7 @@ uint FileTools::size_in_bytes(const std::string name_of_file_to_get_size_of) {
 		throw std::runtime_error(info.str());
 	}
 
-	uint size_in_bytes = file.tellg();
+	unsigned int size_in_bytes = file.tellg();
 	file.close();
 
 	return size_in_bytes;

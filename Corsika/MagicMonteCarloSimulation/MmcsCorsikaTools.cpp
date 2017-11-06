@@ -26,7 +26,7 @@ namespace MmcsCorsikaTools {
 		memcpy(&word_array, &word_in_float, sizeof(word_array));
 
 		std::string word;
-		for(uint i=0; i<4; i++)
+		for(unsigned int i=0; i<4; i++)
 			word += word_array[i];
 
 		return word;

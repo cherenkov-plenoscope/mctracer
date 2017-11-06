@@ -34,7 +34,7 @@ TEST_F(TimeLineAddition, empty_summand) {
 	SignalProcessing::add_second_to_first_at(&first, &second, 0);
 
 	ASSERT_EQ(first_before_adding.size(), first.size());
-	for(uint i=0; i<first.size(); i++)
+	for(unsigned int i=0; i<first.size(); i++)
 		EXPECT_EQ(first_before_adding[i], first[i]);
 }
 //------------------------------------------------------------------------------

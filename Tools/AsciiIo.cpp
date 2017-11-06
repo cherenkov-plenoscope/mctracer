@@ -64,8 +64,8 @@ namespace AsciiIo {
 		stringstream out;
 		out.precision(precision);
 
-		for(uint row=0; row<table.size(); row++) {
-			for(uint col=0; col<table.at(row).size()-1; col++) {
+		for(unsigned int row=0; row<table.size(); row++) {
+			for(unsigned int col=0; col<table.at(row).size()-1; col++) {
 				out << table[row][col] << delimiter;
 			}
 			out << table[row][table.at(row).size()-1];

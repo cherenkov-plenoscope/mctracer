@@ -18,9 +18,9 @@ class SkyDome {
     bool has_texture;
     std::string filename;
     Image sky;
-    uint central_row;
-    uint central_col;
-    uint zenith_to_horizon_radius;
+    unsigned int central_row;
+    unsigned int central_col;
+    unsigned int zenith_to_horizon_radius;
     Color background_color;
 public:
 

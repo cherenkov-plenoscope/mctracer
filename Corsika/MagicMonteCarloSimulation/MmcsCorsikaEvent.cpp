@@ -28,7 +28,7 @@ vector<Photon> MmcsCorsikaEvent::use_once_more_and_get_photons() {
 	vector<Photon> photon_bunch;
 	photon_bunch.reserve(photon_data.number_of_photons());
 
-	for(uint i=0; i<photon_data.number_of_photons(); i++)
+	for(unsigned int i=0; i<photon_data.number_of_photons(); i++)
 		photon_bunch.push_back(get_mctracer_photon(i));
 
 	reuse_counter++;
@@ -40,7 +40,7 @@ bool MmcsCorsikaEvent::can_be_reused_again()const {
 		event_header.x_coordinate_of_core_location_for_scattered_events_in_cm.size();
 }
 //------------------------------------------------------------------------------
-Photon MmcsCorsikaEvent::get_mctracer_photon(const uint i)const {
+Photon MmcsCorsikaEvent::get_mctracer_photon(const unsigned int i)const {
 
 	Vec3 causal_dir = causal_direction(i);
 
@@ -62,7 +62,7 @@ Photon MmcsCorsikaEvent::get_mctracer_photon(const uint i)const {
 	return cherenkov_photon;
 }
 //------------------------------------------------------------------------------
-Vec3 MmcsCorsikaEvent::causal_direction(const uint i)const {
+Vec3 MmcsCorsikaEvent::causal_direction(const unsigned int i)const {
 
 	const double z = sqrt(
 		1.0 -
@@ -81,7 +81,7 @@ Vec3 MmcsCorsikaEvent::causal_direction(const uint i)const {
 	return causal_dir*-1.0;
 }
 //------------------------------------------------------------------------------
-Vec3 MmcsCorsikaEvent::intersection_with_xy_floor_plane(const uint i)const {
+Vec3 MmcsCorsikaEvent::intersection_with_xy_floor_plane(const unsigned int i)const {
 	
 	return Vec3(
 		x_pos_on_xy_plane_in_m(i) - x_core_position_in_m(), 
@@ -102,19 +102,19 @@ double MmcsCorsikaEvent::y_core_position_in_m()const {
 			at(reuse_counter)*1e-2;
 }
 //------------------------------------------------------------------------------
-double MmcsCorsikaEvent::x_pos_on_xy_plane_in_m(const uint i)const {
+double MmcsCorsikaEvent::x_pos_on_xy_plane_in_m(const unsigned int i)const {
 	return photon_data.get_x_pos_on_world_x_y_plane_in_cm(i)*1e-2;
 }
 //------------------------------------------------------------------------------
-double MmcsCorsikaEvent::y_pos_on_xy_plane_in_m(const uint i)const {
+double MmcsCorsikaEvent::y_pos_on_xy_plane_in_m(const unsigned int i)const {
 	return photon_data.get_y_pos_on_world_x_y_plane_in_cm(i)*1e-2;
 }
 //------------------------------------------------------------------------------
-double MmcsCorsikaEvent::production_height_in_m(const uint i)const {
+double MmcsCorsikaEvent::production_height_in_m(const unsigned int i)const {
 	return photon_data.get_production_height_in_cm(i)*1e-2;
 }
 //------------------------------------------------------------------------------
-double MmcsCorsikaEvent::wavelength_in_m(const uint i)const {
+double MmcsCorsikaEvent::wavelength_in_m(const unsigned int i)const {
 	return photon_data.get_wavelength_in_nm(i)*1e-9;
 }
 //------------------------------------------------------------------------------

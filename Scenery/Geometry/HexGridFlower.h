@@ -25,7 +25,7 @@ public:
 
 	HexGridFlower(
 		const double outer_hex_grid_radius,
-		uint facet_count_on_outer_diameter
+		unsigned int facet_count_on_outer_diameter
 	);
 	double get_facet_spacing()const;
 	std::vector<Vec3> get_grid()const; 

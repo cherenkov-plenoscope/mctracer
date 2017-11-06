@@ -130,7 +130,7 @@ void CausalIntersection::find_intersection_candidates_in_tree_of_frames(
 ) {
     if(ray_has_intersection_with_bounding_sphere_of(ray ,frame)) {
         if(frame->has_children()) { 
-            for(uint i=0; i<frame->get_children()->size(); i++)
+            for(unsigned int i=0; i<frame->get_children()->size(); i++)
                 find_intersection_candidates_in_tree_of_frames(
                     frame->get_children()->at(i)
                 );      

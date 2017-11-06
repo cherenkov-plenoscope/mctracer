@@ -39,8 +39,8 @@ namespace AsciiIo {
 	std::string get_table_print(std::vector<std::vector<double>> &table);
 
 	class TableReader {
-		uint current_row = 0;
-		uint current_col = 0;
+		unsigned int current_row = 0;
+		unsigned int current_col = 0;
 		std::istringstream text;
 		std::vector<std::vector<double>> table;
 	public:

@@ -27,7 +27,7 @@ namespace Plenoscope {
 		const Frame* scenery; 
 		PlenoscopeInScenery* plenoscope;
 		
-		uint number_of_photons;
+		unsigned int number_of_photons;
 		double max_principal_aperture_radius_to_trow_photons_on;
 		double max_tilt_vs_optical_axis_to_throw_photons_in;
 		double distance_to_travel_before_intersecting_principal_aperture;

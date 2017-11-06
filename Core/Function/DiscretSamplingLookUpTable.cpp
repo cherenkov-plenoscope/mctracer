@@ -45,13 +45,13 @@ void LookUpTable::fill_table() {
 
 	try{
 
-		for(uint i=0; i<config.samples_per_slice; i++) {
+		for(unsigned int i=0; i<config.samples_per_slice; i++) {
 
 			std::vector<double> row;
 			row.reserve(number_of_slices);
 			const double x_off = step_width_in_slice*double(i);
 
-			for (uint j=0; j<number_of_slices; j++) {
+			for (unsigned int j=0; j<number_of_slices; j++) {
 
 				const double x = config.slice_width*double(j) + 
 					func->get_limits().get_lower();
@@ -86,14 +86,14 @@ const std::vector<double>* LookUpTable::at(const double slice_offset)const {
 		throw std::out_of_range(info.str());
 	}
 
-	const uint row_to_look_up = floor(
+	const unsigned int row_to_look_up = floor(
 		slice_offset/double(config.samples_per_slice)
 	);
 
 	return &table.at(row_to_look_up);
 }
 //------------------------------------------------------------------------------
-uint LookUpTable::size()const {
+unsigned int LookUpTable::size()const {
 	return number_of_slices;
 }
 //------------------------------------------------------------------------------
