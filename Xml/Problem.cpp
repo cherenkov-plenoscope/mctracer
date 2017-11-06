@@ -86,7 +86,7 @@ string Problem::get_problem_section_from_original_file()const {
         else 
             line_prefix << "|   ";
 
-        if( abs(current_line_number - int(line)) < int(line_radius))
+        if( abs(int(current_line_number) - int(line)) < int(line_radius))
             problem_section << line_prefix.str() << line_of_text << std::endl;
 
         current_line_number++;

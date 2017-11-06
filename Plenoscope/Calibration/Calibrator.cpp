@@ -2,11 +2,13 @@
 #include "Plenoscope/Calibration/Writer.h"
 #include "Plenoscope/NightSkyBackground/NightSkyBackground.h"
 #include "Tools/UserInteraction.h"
-#include <iomanip> 
+#include <iomanip>
+#include <sstream>
 #include "Tools/FileTools.h"
 #include "Core/PhotonAndFrame.h"
 #include "Tools/HeaderBlock.h"
 #include "omp.h"
+
 //#include "Cameras/FlyingCamera.h"
 using std::vector;
 using std::cout;
