@@ -1,17 +1,9 @@
 // Copyright 2014 Sebastian A. Mueller
-//=================================
-// include guard
 #ifndef MCTRACER_CORE_VEC3_H_
 #define MCTRACER_CORE_VEC3_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
 #include <string>
 
-//=================================
 class Vec3 {
  private:
     double X;
