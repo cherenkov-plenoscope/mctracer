@@ -1,38 +1,31 @@
-//=================================
-// include guard
-#ifndef __PHOTON_H_INCLUDED__
-#define __PHOTON_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef MCTRACER_CORE_PHOTON_H_
+#define MCTRACER_CORE_PHOTON_H_
 
-//=================================
-// forward declared dependencies
 namespace PhotonAndFrame {class Propagator;}
-//=================================
-// included dependencies
+
+#include <string>
 #include "Core/RayForPropagation.h"
 #include "FresnelRefractionAndReflection.h"
 
-//=================================
 class Photon :public RayForPropagation{
-	friend class PhotonAndFrame::Propagator;
-protected:
+    friend class PhotonAndFrame::Propagator;
+ protected:
+    double wavelength;
 
-	double wavelength;
-public:
+ public:
+    Photon(
+        const Vec3 support,
+        const Vec3 direction,
+        const double wavelength);
+    double get_wavelength()const;
+    std::string str()const;
+    double get_time_of_flight()const;
 
-	Photon(
-		const Vec3 support,
-		const Vec3 direction,
-		const double wavelength
-	);
-	double get_wavelength()const;
-	std::string str()const;
-	double get_time_of_flight()const;
-private:
-
-	double get_time_to_pass_distance_in_refractive_index(
-		const double distance_in_medium,
-		const double refractive_index_in_medium
-	)const;
-	void assert_wavelength_is_positive()const;
+ private:
+    double get_time_to_pass_distance_in_refractive_index(
+        const double distance_in_medium,
+        const double refractive_index_in_medium)const;
+    void assert_wavelength_is_positive()const;
 };
-#endif // __PHOTON_H_INCLUDED__ 
+#endif  // MCTRACER_CORE_PHOTON_H_

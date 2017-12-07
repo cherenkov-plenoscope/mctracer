@@ -1,14 +1,10 @@
-//=================================
-// include guard
-#ifndef __CARTESIANFRAME_H_INCLUDED__
-#define __CARTESIANFRAME_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef MCTRACER_CORE_FRAME_H_
+#define MCTRACER_CORE_FRAME_H_
 
-//=================================
-// forward declared dependencies
 class Ray;
 class Intersection;
-//=================================
-// included dependencies
+
 #include <string>
 #include <vector>
 #include "Core/Vec3.h"
@@ -18,36 +14,35 @@ class Intersection;
 #include "Tools/Tools.h"
 
 class Frame {
-    // A frame defines the geometric relation to its mother frame and its 
+    // A frame defines the geometric relation to its mother frame and its
     // children frames. This way a tree structure of the scenery is created.
     // The root of this tree is often called 'world' or 'world frame' here.
-protected:
-
+ protected:
     std::string name;
-
-    Vec3 pos_in_mother; 
+    Vec3 pos_in_mother;
     Rot3 rot_in_mother;
-    double bounding_sphere_radius; 
-    
+    double bounding_sphere_radius;
     HomTra3 T_frame2mother;
     HomTra3 T_frame2world;
-    
     std::vector<Frame*> children;
-	Frame *mother;
+    Frame *mother;
     const Frame *root_frame;
-public:
 
+ public:
     static const char path_delimiter;
     static const unsigned int max_number_of_children;
     static const double minimal_structure_size;
     static Frame void_frame;
 
-    //SET
+    // SET
     Frame();
     virtual ~Frame();
-    void set_name_pos_rot(const std::string name, const Vec3 pos, const Rot3 rot);
+    void set_name_pos_rot(
+        const std::string name,
+        const Vec3 pos,
+        const Rot3 rot);
     void update_rotation(const Rot3 rot);
-    //GET
+    // GET
     std::string get_name()const;
     std::string get_path_in_tree_of_frames()const;
     Vec3 get_position_in_mother()const;
@@ -63,7 +58,7 @@ public:
     void assert_no_children_duplicate_names()const;
     virtual std::string str()const;
     std::string get_tree_print()const;
-    //DO
+    // DO
     template<class ProtoFrame>
     ProtoFrame* append() {
         ProtoFrame* child = new ProtoFrame;
@@ -74,11 +69,10 @@ public:
     void erase(const Frame* child);
     void init_tree_based_on_mother_child_relations();
     virtual void calculate_intersection_with(
-        const Ray* ray, 
-        std::vector<Intersection> *intersections
-    )const;    
-private:
+        const Ray* ray,
+        std::vector<Intersection> *intersections)const;
 
+ private:
     HomTra3 calculate_frame2world()const;
     void init_frame2world();
     void init_root();
@@ -89,4 +83,4 @@ private:
     void assert_name_is_valid(const std::string name_to_check)const;
     void update_bounding_sphere();
 };
-#endif // __CARTESIANFRAME_H_INCLUDED__
+#endif  // MCTRACER_CORE_FRAME_H_

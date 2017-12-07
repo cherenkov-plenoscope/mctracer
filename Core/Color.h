@@ -1,19 +1,13 @@
-//======================================================================
-// include guard
-#ifndef __Color_H_INCLUDED__
-#define __Color_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef MCTRACER_CORE_COLOR_H_
+#define MCTRACER_CORE_COLOR_H_
 
-//======================================================================
-// forward declared dependencies
-
-//======================================================================
-// included dependencies
 #include <string>
 #include <vector>
 
 struct Color {
 
-    unsigned char r, g, b; 
+    unsigned char r, g, b;
 
     static const Color white;
     static const Color sky_blue;
@@ -34,4 +28,4 @@ struct Color {
     bool operator != (const Color& eq)const;
     void assert_is_in_valid_8Bit_range(const int channel)const;
 };
-#endif // __Color_H_INCLUDED__ 
+#endif  // MCTRACER_CORE_COLOR_H_
