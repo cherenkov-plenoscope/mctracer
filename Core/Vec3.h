@@ -1,7 +1,8 @@
+// Copyright 2014 Sebastian A. Mueller
 //=================================
 // include guard
-#ifndef __Vec3_H_INCLUDED__
-#define __Vec3_H_INCLUDED__
+#ifndef MCTRACER_CORE_VEC3_H_
+#define MCTRACER_CORE_VEC3_H_
 
 //=================================
 // forward declared dependencies
@@ -12,14 +13,13 @@
 
 //=================================
 class Vec3 {
-private:
-
+ private:
     double X;
     double Y;
     double Z;
     static const double squared_max_deviation_of_eq_vectors;
-public:
-    
+
+ public:
     static const Vec3 null;
     static const Vec3 unit_x;
     static const Vec3 unit_y;
@@ -55,4 +55,4 @@ public:
     bool norm_is_less_equal_than(const double length_to_compare)const;
     std::string str()const;
 };
-#endif // __Vec3_H_INCLUDED__ 
+#endif  // MCTRACER_CORE_VEC3_H_
