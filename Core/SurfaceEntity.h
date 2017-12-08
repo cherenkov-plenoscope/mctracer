@@ -23,7 +23,7 @@ class SurfaceEntity :public Frame {
 
  public:
     static const SurfaceEntity VOID_SURFACE_ENTITY;
-    static const SurfaceEntity source_object;
+    static const SurfaceEntity PHOTON_SOURCE;
 
     SurfaceEntity();
     SurfaceEntity(

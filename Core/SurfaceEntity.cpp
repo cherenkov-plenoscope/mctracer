@@ -9,7 +9,7 @@ using Function::Constant;
 using Function::Limits;
 
 const SurfaceEntity SurfaceEntity::VOID_SURFACE_ENTITY;
-const SurfaceEntity SurfaceEntity::source_object;
+const SurfaceEntity SurfaceEntity::PHOTON_SOURCE;
 
 const Color* SurfaceEntity::default_color = &Color::DARK_GRAY;
 
