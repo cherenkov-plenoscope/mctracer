@@ -1,20 +1,14 @@
-//=================================
-// include guard
-#ifndef __SkyDome_H_INCLUDED__
-#define __SkyDome_H_INCLUDED__
+// Copyright 2016 Sebastian A. Mueller, Max L. Ahnen
+#ifndef MCTRACER_VISUAL_SKYDOME_H_
+#define MCTRACER_VISUAL_SKYDOME_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
-#include "Image.h"
+#include <string>
+#include "Visual/Image.h"
 #include "Core/Vec3.h"
 
 namespace Visual {
 
 class SkyDome {
-
     bool has_texture;
     std::string filename;
     Image sky;
@@ -22,20 +16,21 @@ class SkyDome {
     unsigned int central_col;
     unsigned int zenith_to_horizon_radius;
     Color background_color;
-public:
 
+ public:
     SkyDome();
-    SkyDome(const Color color);
-    SkyDome(const std::string _filename);
+    explicit SkyDome(const Color color);
+    explicit SkyDome(const std::string _filename);
     void set_background_color(const Color background_color);
     Color get_color_for_direction(const Vec3 dir)const;
     std::string str()const;
-private:
 
+ private:
     Color sky_dome_color_for(const Vec3 dir)const;
     double get_zenith_distance_of(const Vec3 dir)const;
     double get_azimuth_angle_of(const Vec3 dir)const;
 };
 
-}//Visual
-#endif // __SkyDome_H_INCLUDED__ 
+}  // namespace Visual
+
+#endif  // MCTRACER_VISUAL_SKYDOME_H_
