@@ -12,10 +12,10 @@
 
 namespace Function {
 
-	static const unsigned int default_steps = 4096;
-	LinInterpol get_integral(const Func1D &f, unsigned int steps=default_steps);
-	LinInterpol get_inverse(const Func1D &f, unsigned int steps=default_steps);
-	LinInterpol get_derivative(const Func1D &f, unsigned int steps=default_steps);
-	bool value_flips_sign(const Func1D &f, unsigned int steps=default_steps);
+	static const unsigned int DEFAULT_STEPS = 4096;
+	LinInterpol get_integral(const Func1D &f, unsigned int steps=DEFAULT_STEPS);
+	LinInterpol get_inverse(const Func1D &f, unsigned int steps=DEFAULT_STEPS);
+	LinInterpol get_derivative(const Func1D &f, unsigned int steps=DEFAULT_STEPS);
+	bool value_flips_sign(const Func1D &f, unsigned int steps=DEFAULT_STEPS);
 } // Function
 #endif // __FUNCTIONTOOLS_H_INCLUDED__
