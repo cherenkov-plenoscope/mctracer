@@ -22,14 +22,14 @@ namespace EventIo {
 
 	class PhotonFactory {
 
-		static const unsigned int x_pos_idx = 0;
-		static const unsigned int y_pos_idx = 1;
-		static const unsigned int x_dir_cos_idx = 2;
-		static const unsigned int y_dir_cos_idx = 3;
-		static const unsigned int time_idx = 4; 
-		static const unsigned int z_emission_height_idx = 5;
-		static const unsigned int photon_weight_idx = 6;
-		static const unsigned int wavelength_idx = 7;
+		static const unsigned int IDX_X_POS = 0;
+		static const unsigned int IDX_Y_POS = 1;
+		static const unsigned int IDX_X_DIR_COSINE = 2;
+		static const unsigned int IDX_Y_DIR_COSINE = 3;
+		static const unsigned int IDX_ARRIVAL_TIME = 4;
+		static const unsigned int IDX_Z_EMISSION_HEIGHT = 5;
+		static const unsigned int IDX_PHOTON_WEIGTH = 6;
+		static const unsigned int IDX_WAVELENGTH = 7;
 
 		bool passed_through_atmosphere_flag = false;
 		unsigned int id;

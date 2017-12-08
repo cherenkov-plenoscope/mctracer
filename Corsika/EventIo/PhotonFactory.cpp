@@ -42,8 +42,8 @@ Photon PhotonFactory::get_photon() {
 }
 //------------------------------------------------------------------------------
 Vec3 PhotonFactory::causal_get_direction()const {
-    const double cos_x = corsika_photon[x_dir_cos_idx];
-    const double cos_y = corsika_photon[y_dir_cos_idx];
+    const double cos_x = corsika_photon[IDX_X_DIR_COSINE];
+    const double cos_y = corsika_photon[IDX_Y_DIR_COSINE];
     const double z = sqrt(1.0 -cos_x*cos_x -cos_y*cos_y);
     Vec3 causal_dir(cos_x, cos_y, z);  
     return causal_dir*-1.0;
@@ -83,27 +83,27 @@ double PhotonFactory::wavelength_in_m()const {
 }
 //------------------------------------------------------------------------------
 double PhotonFactory::relative_arrival_time_on_ground()const {
-    return corsika_photon[time_idx]*1e-9;
+    return corsika_photon[IDX_ARRIVAL_TIME]*1e-9;
 }
 //------------------------------------------------------------------------------
 float PhotonFactory::x_pos_on_world_x_y_plane_in_cm()const {
-    return corsika_photon[x_pos_idx];
+    return corsika_photon[IDX_X_POS];
 }
 //------------------------------------------------------------------------------
 float PhotonFactory::y_pos_on_world_x_y_plane_in_cm()const {
-    return corsika_photon[y_pos_idx];
+    return corsika_photon[IDX_Y_POS];
 }
 //------------------------------------------------------------------------------
 float PhotonFactory::wavelength_in_nm()const {
-    return corsika_photon[wavelength_idx];
+    return corsika_photon[IDX_WAVELENGTH];
 }
 //------------------------------------------------------------------------------
 float PhotonFactory::production_height_in_cm()const {
-    return corsika_photon[z_emission_height_idx];
+    return corsika_photon[IDX_Z_EMISSION_HEIGHT];
 }
 //------------------------------------------------------------------------------
 float PhotonFactory::photon_survival_probability()const {
-    return corsika_photon[photon_weight_idx];
+    return corsika_photon[IDX_PHOTON_WEIGTH];
 }
 //------------------------------------------------------------------------------
 void PhotonFactory::assert_photon_weight_is_between_zero_and_one()const {
