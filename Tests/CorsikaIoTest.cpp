@@ -2,6 +2,8 @@
 #include "Corsika/Tools.h"
 #include "Core/Random/Random.h"
 
+using std::string;
+
 class Corsika_io : public ::testing::Test {};
 //----------------------------------------------------------------------
 TEST_F(Corsika_io, word_size_is_too_large) {

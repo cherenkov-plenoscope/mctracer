@@ -3,6 +3,10 @@
 #include "Corsika/Tools.h"
 #include <algorithm>
 
+using std::string;
+using std::vector;
+using std::array;
+
 class EventIoTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(EventIoTest, EventIoHeader_works) {
