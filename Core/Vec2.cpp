@@ -4,9 +4,9 @@
 #include <sstream>
 
 
-const Vec2 Vec2::null   = Vec2(0.0, 0.0);
-const Vec2 Vec2::unit_x = Vec2(1.0, 0.0);
-const Vec2 Vec2::unit_y = Vec2(0.0, 1.0);
+const Vec2 Vec2::ORIGIN   = Vec2(0.0, 0.0);
+const Vec2 Vec2::UNIT_X = Vec2(1.0, 0.0);
+const Vec2 Vec2::UNIT_Y = Vec2(0.0, 1.0);
 const double Vec2::max_deviation_of_eq_vectors = 1e-7;
 
 Vec2::Vec2() {}
