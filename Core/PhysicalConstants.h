@@ -5,7 +5,7 @@
 
 namespace PhysicalConstants {
 
-static const double speed_of_light_in_vacuum = 299792458.0;
+static const double VACUUM_SPPED_OF_LIGHT = 299792458.0;
 
 }  // namespace PhysicalConstants
 

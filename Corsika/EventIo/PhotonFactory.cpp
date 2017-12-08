@@ -63,7 +63,7 @@ double PhotonFactory::production_distance_offset()const {
 //------------------------------------------------------------------------------
 double PhotonFactory::ray_parameter_for_production_point()const {
     return relative_arrival_time_on_ground()*
-        PhysicalConstants::speed_of_light_in_vacuum + production_distance_offset();
+        PhysicalConstants::VACUUM_SPPED_OF_LIGHT + production_distance_offset();
 }
 //------------------------------------------------------------------------------
 double PhotonFactory::x_pos_on_xy_plane_in_m()const {

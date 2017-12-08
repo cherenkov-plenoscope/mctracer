@@ -323,7 +323,7 @@ TEST_F(PhotonTest, Refraction){
     );
 
     double travel_time = (2.0 + 1.33*1.0)/
-        PhysicalConstants::speed_of_light_in_vacuum;
+        PhysicalConstants::VACUUM_SPPED_OF_LIGHT;
 
     EXPECT_NEAR(
         travel_time, 
