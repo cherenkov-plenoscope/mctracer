@@ -7,7 +7,7 @@
 const Vec2 Vec2::ORIGIN   = Vec2(0.0, 0.0);
 const Vec2 Vec2::UNIT_X = Vec2(1.0, 0.0);
 const Vec2 Vec2::UNIT_Y = Vec2(0.0, 1.0);
-const double Vec2::max_deviation_of_eq_vectors = 1e-7;
+const double Vec2::MAX_DEVIATION_EQUAL_VEC2 = 1e-7;
 
 Vec2::Vec2() {}
 
@@ -74,11 +74,11 @@ double Vec2::y()const {
 }
 
 bool Vec2::operator == (const Vec2& eqVec) const {
-    return distance_to(eqVec) <= max_deviation_of_eq_vectors;
+    return distance_to(eqVec) <= MAX_DEVIATION_EQUAL_VEC2;
 }
 
 bool Vec2::operator != (const Vec2& eqVec) const {
-    return distance_to(eqVec) > max_deviation_of_eq_vectors;
+    return distance_to(eqVec) > MAX_DEVIATION_EQUAL_VEC2;
 }
 
 double Vec2::distance_to(const Vec2 &v)const {

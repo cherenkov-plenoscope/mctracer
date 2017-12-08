@@ -8,7 +8,7 @@ class Vec2 {
  private:
     double X;
     double Y;
-    static const double max_deviation_of_eq_vectors;
+    static const double MAX_DEVIATION_EQUAL_VEC2;
 
  public:
     static const Vec2 ORIGIN;

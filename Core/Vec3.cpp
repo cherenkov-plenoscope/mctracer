@@ -4,11 +4,11 @@
 #include <sstream>
 
 
-const Vec3 Vec3::ORIGIN   = Vec3(0.0, 0.0, 0.0);
+const Vec3 Vec3::ORIGIN = Vec3(0.0, 0.0, 0.0);
 const Vec3 Vec3::UNIT_X = Vec3(1.0, 0.0, 0.0);
 const Vec3 Vec3::UNIT_Y = Vec3(0.0, 1.0, 0.0);
 const Vec3 Vec3::UNIT_Z = Vec3(0.0, 0.0, 1.0);
-const double Vec3::squared_max_deviation_of_eq_vectors = 1e-14;
+const double Vec3::MAX_DEVIATION_EQUAL_VEC3_SQUARE = 1e-14;
 
 Vec3::Vec3() {}
 
@@ -141,11 +141,11 @@ double Vec3::z()const {
 }
 
 bool Vec3::operator == (const Vec3& eqVec)const {
-    return squared_distance_to(eqVec) <= squared_max_deviation_of_eq_vectors;
+    return squared_distance_to(eqVec) <= MAX_DEVIATION_EQUAL_VEC3_SQUARE;
 }
 
 bool Vec3::operator != (const Vec3& eqVec)const {
-    return squared_distance_to(eqVec) > squared_max_deviation_of_eq_vectors;
+    return squared_distance_to(eqVec) > MAX_DEVIATION_EQUAL_VEC3_SQUARE;
 }
 
 double Vec3::squared_distance_to(const Vec3 &v)const {

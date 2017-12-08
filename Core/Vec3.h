@@ -9,7 +9,7 @@ class Vec3 {
     double X;
     double Y;
     double Z;
-    static const double squared_max_deviation_of_eq_vectors;
+    static const double MAX_DEVIATION_EQUAL_VEC3_SQUARE;
 
  public:
     static const Vec3 ORIGIN;
