@@ -104,18 +104,18 @@ std::vector<TelOffset> make_telescope_offsets_from_stream(
     std::istream& f,
     const Header& head);
 
-/* returns photon bunches as 2D float Matrix: with shape: (N x 8)
- *
- *  the 8 floats per 'row' stand for:
- *  * x in cm
- *  * y in cm
- *  * cx
- *  * cy
- *  * time in nanoseconds since first interaction.
- *  * zem
- *  * photons
- *  * wavelength is in nanometer negative if scattered ?! (whatever this means)
- */
+//  returns N photon bunches as 2D float Matrix: with shape: (N x 8)
+//
+//  the 8 floats per 'row' stand for:
+//  * x in cm
+//  * y in cm
+//  * cx
+//  * cy
+//  * time in nanoseconds since first interaction.
+//  * zem
+//  * photons
+//  * wavelength is in nanometer negative if scattered ?! (whatever this means)
+//
 std::vector<std::array<float, 8>> make_photons_from_stream(
     std::istream& f,
     const Header& head);
