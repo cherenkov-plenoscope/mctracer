@@ -1,6 +1,7 @@
 #include "PinHoleCamera.h"
 #include "Tracer.h"
 #include <exception>
+#include "Core/Random/Random.h"
 
 namespace Visual {
 //------------------------------------------------------------------------------
@@ -104,6 +105,7 @@ void PinHoleCamera::acquire_image(
 	unsigned int i, row, col;
 	CameraRay cam_ray;
 	int HadCatch = 0;
+	Random::Mt19937 prng;
 
 	#pragma omp parallel shared(visual_config,world,HadCatch) private(i,cam_ray,row,col) 
 	{	
@@ -116,7 +118,7 @@ void PinHoleCamera::acquire_image(
 
 				cam_ray = get_ray_for_pixel_in_row_and_col(row, col);
 				
-				Tracer tracer(&cam_ray,	world, visual_config);
+				Tracer tracer(&cam_ray,	world, visual_config, &prng);
 
 				image.set_row_col_to_color(row, col, tracer.color);
 			}catch(std::exception &error) {

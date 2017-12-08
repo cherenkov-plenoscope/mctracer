@@ -8,10 +8,12 @@ const double Tracer::wavelength = 533e-9;
 Tracer::Tracer(
     CameraRay* _cray,
     const Frame* _scenery,
-    const Config* _config):
+    const Config* _config,
+    Random::Mt19937* _prng):
     scenery(_scenery),
     config(_config),
-    cray(_cray) {
+    cray(_cray),
+    prng(_prng) {
     trace_back();
 }
 
@@ -25,7 +27,7 @@ void Tracer::trace_back() {
 }
 
 void Tracer::trace_back_to_object_interaction() {
-    if (isec.get_facing_reflection_propability(wavelength) >= prng.uniform())
+    if (isec.get_facing_reflection_propability(wavelength) >= prng->uniform())
         trace_back_after_reflection();
     else
         trace_back_to_boundary_layer();
@@ -53,7 +55,7 @@ void Tracer::trace_back_to_fresnel_interaction() {
         isec.get_refractive_index_coming_from(wavelength),
         isec.get_refractive_index_going_to(wavelength));
 
-    if (fresnel.reflection_propability() > prng.uniform())
+    if (fresnel.reflection_propability() > prng->uniform())
         trace_back_after_reflection();
     else
         trace_back_beyond_boundary_layer(fresnel);

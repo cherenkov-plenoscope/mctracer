@@ -15,7 +15,7 @@ namespace Visual {
 
 class Tracer {
  public:
-    Random::Mt19937 prng;
+    Random::Mt19937* prng;
 
     const Frame* scenery;
     const Config* config;
@@ -29,7 +29,8 @@ class Tracer {
     Tracer(
         CameraRay* cray,
         const Frame* scenery,
-        const Config* config);
+        const Config* config,
+        Random::Mt19937* prng);
     void trace_back();
     void trace_back_to_object_interaction();
     void trace_back_after_reflection();

@@ -1,6 +1,7 @@
 #include "ApertureCamera.h"
 #include "Tracer.h"
 #include <exception>
+#include "Core/Random/Random.h"
 using std::string;
 using std::stringstream;
 
@@ -240,6 +241,7 @@ void ApertureCamera::acquire_image(
 	CameraRay cam_ray;
 	unsigned int pix, row, col;
 	int HadCatch = 0;
+	Random::Mt19937 prng;
 	
 	#pragma omp parallel shared(visual_config,world,HadCatch) private(pix,cam_ray,row,col) 
 	{	
@@ -255,7 +257,7 @@ void ApertureCamera::acquire_image(
 				for(int j = 0; j < rays_per_pixel; j++ ) {
 
 					cam_ray = get_ray_for_pixel_in_row_and_col(row, col);
-					Tracer tracer(&cam_ray,	world, visual_config);
+					Tracer tracer(&cam_ray,	world, visual_config, &prng);
 					colors_of_pixel.push_back(tracer.color);
 				}
 				image.set_row_col_to_color(row, col, Color(colors_of_pixel));
