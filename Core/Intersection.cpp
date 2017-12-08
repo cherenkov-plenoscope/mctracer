@@ -3,8 +3,6 @@
 #include <sstream>
 #include <limits>
 
-const Intersection Intersection::void_intersection = Intersection();
-
 Intersection::Intersection() {
     object = &SurfaceEntity::void_object;
     intersection_point = Vec3(

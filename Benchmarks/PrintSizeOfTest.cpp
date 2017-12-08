@@ -60,7 +60,7 @@ TEST_F(SizeOfTest, sizes_of_mct) {
     print_size("Photon", ph);
     cout << "--------------------------------------------" << "\n";
 
-    Intersection is = Intersection::void_intersection; 
+    Intersection is;
     print_size("Intersection", is);
 
     PropagationEnvironment environment = PropagationEnvironment::default_environment; 
