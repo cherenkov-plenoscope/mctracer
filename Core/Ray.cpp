@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "Ray.h"
+#include "Core/Ray.h"
 
 using std::string;
 using std::stringstream;

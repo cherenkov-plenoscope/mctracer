@@ -3,7 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <exception>
-#include "Rot3.h"
+#include "Core/Rot3.h"
 
 const Rot3 Rot3::null = Rot3(0.0, 0.0, 0.0);
 
