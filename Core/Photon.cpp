@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <sstream>
-#include "Photon.h"
-#include "PhysicalConstants.h"
+#include "Core/Photon.h"
+#include "Core/PhysicalConstants.h"
 #include "Core/RayAndFrame.h"
 
 Photon::Photon(
