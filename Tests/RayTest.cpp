@@ -26,8 +26,8 @@ TEST_F(RayTest, position_on_ray) {
 //------------------------------------------------------------------------------
 TEST_F(RayTest, closest_distance_to_point) {
 
-  Ray ray(Vec3::null, Vec3(0.0, 0.0, 1.0));
-  EXPECT_EQ(0.0, ray.get_closest_distance_to_point(Vec3::null));
+  Ray ray(Vec3::ORIGIN, Vec3(0.0, 0.0, 1.0));
+  EXPECT_EQ(0.0, ray.get_closest_distance_to_point(Vec3::ORIGIN));
   EXPECT_EQ(1.0, ray.get_closest_distance_to_point(Vec3(1.0, 0.0, 0.0)));
   EXPECT_EQ(1.0, ray.get_closest_distance_to_point(Vec3(0.0, 1.0, 0.0)));
   EXPECT_EQ(0.0, ray.get_closest_distance_to_point(Vec3(0.0, 0.0, 1.0)));

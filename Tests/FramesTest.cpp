@@ -17,7 +17,7 @@ TEST_F(FramesTest, too_close_together_no_frame) {
 TEST_F(FramesTest, too_close_together_one_frame) {
 
     Frame root;
-    root.set_name_pos_rot("root", Vec3::null, Rot3::null);
+    root.set_name_pos_rot("root", Vec3::ORIGIN, Rot3::null);
     vector<Frame*> vf; vf.push_back(&root);
 	EXPECT_FALSE(Frames::positions_in_mother_are_too_close_together(vf));
 }
@@ -25,10 +25,10 @@ TEST_F(FramesTest, too_close_together_one_frame) {
 TEST_F(FramesTest, too_close_together_true) {
 
     Frame f1;
-    f1.set_name_pos_rot("f1", Vec3::null, Rot3::null);
+    f1.set_name_pos_rot("f1", Vec3::ORIGIN, Rot3::null);
 
     Frame f2;
-    f2.set_name_pos_rot("f2", Vec3::null, Rot3::null);
+    f2.set_name_pos_rot("f2", Vec3::ORIGIN, Rot3::null);
 
     vector<Frame*> vf; vf.push_back(&f1); vf.push_back(&f2);
 	EXPECT_TRUE(Frames::positions_in_mother_are_too_close_together(vf));
@@ -37,7 +37,7 @@ TEST_F(FramesTest, too_close_together_true) {
 TEST_F(FramesTest, too_close_together_false) {
 
     Frame f1;
-    f1.set_name_pos_rot("f1", Vec3::null, Rot3::null);
+    f1.set_name_pos_rot("f1", Vec3::ORIGIN, Rot3::null);
 
     Frame f2;
     f2.set_name_pos_rot("f2", Vec3(0,0,10.0*Frame::minimal_structure_size), Rot3::null);

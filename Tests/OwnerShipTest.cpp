@@ -11,7 +11,7 @@ class OwnerShipTest : public ::testing::Test {};
 TEST_F(OwnerShipTest, own) {
 
 	Frame tree;
-	tree.set_name_pos_rot("tree", Vec3::null, Rot3::null);
+	tree.set_name_pos_rot("tree", Vec3::ORIGIN, Rot3::null);
 
 	Sphere* sphere = tree.append<Sphere>();
 	sphere->set_name_pos_rot("leaf_ball", Vec3(0,0,1.8), Rot3::null);
@@ -28,7 +28,7 @@ TEST_F(OwnerShipTest, own) {
 
 	Cylinder* fork = pole->append<Cylinder>();
 	fork->set_name_pos_rot("fork", Vec3(0,0,0), Rot3::null);
-	fork->set_cylinder(0.1, Vec3::null, Vec3(0,0.5,0.5));
+	fork->set_cylinder(0.1, Vec3::ORIGIN, Vec3(0,0.5,0.5));
 	fork->set_outer_color(&Color::red);
 
 	Disc* ground = tree.append<Disc>();

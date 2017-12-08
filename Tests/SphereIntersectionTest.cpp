@@ -172,7 +172,7 @@ TEST_F(SphereIntersectionTest, ray_completely_outside_of_sphere) {
 //------------------------------------------------------------------------------
 TEST_F(SphereIntersectionTest, ray_starts_inside_sphere) {
 
-  Ray ray_inside(Vec3::null, Vec3(0.0,0.0,1.0));
+  Ray ray_inside(Vec3::ORIGIN, Vec3(0.0,0.0,1.0));
 
   vector<Intersection> intersections;
   MySphere->calculate_intersection_with(&ray_inside, &intersections);

@@ -74,7 +74,7 @@ Vec3 mean_of_positions_in_mother(const vector<Frame*> &frames) {
         throw std::invalid_argument(info.str());
     }
 
-    Vec3 sum_pos = Vec3::null;
+    Vec3 sum_pos = Vec3::ORIGIN;
 
     for (Frame* frame : frames)
         sum_pos = sum_pos + frame->get_position_in_mother();
@@ -96,7 +96,7 @@ double spread_of_frame_position_in_mother(const vector<Frame*> &frames) {
 
     const Vec3 mean_pos_in_mother = mean_of_positions_in_mother(frames);
 
-    Vec3 u = Vec3::null;
+    Vec3 u = Vec3::ORIGIN;
     for (Frame* frame : frames) {
         const Vec3 r =  frame->get_position_in_mother() - mean_pos_in_mother;
         u = u + Vec3(

@@ -19,7 +19,7 @@ TEST_F(SetUpScenery, create_scenery) {
 
     //--world--
     Frame world;
-    world.set_name_pos_rot("World", Vec3::null, Rot3::null);
+    world.set_name_pos_rot("World", Vec3::ORIGIN, Rot3::null);
     //--tree--
     Vec3 tree_pos(5.0, 0.0, 0.0);
     Frame* tree = world.append<Frame>();

@@ -43,7 +43,7 @@ protected:
 
 		test_bench.set_name_pos_rot(
 			"BiConvexLens_test_world",
-			Vec3::null,
+			Vec3::ORIGIN,
 			Rot3::null
 		);  
 		//-------------------------
@@ -54,7 +54,7 @@ protected:
 		BiConvexLens* lens = test_bench.append<BiConvexLens>();
 		lens->set_name_pos_rot(
 			"little_lens",
-			Vec3::null,
+			Vec3::ORIGIN,
 			Rot3::null
 		);
 

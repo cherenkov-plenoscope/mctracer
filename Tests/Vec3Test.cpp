@@ -6,7 +6,7 @@
 class Vec3Test : public ::testing::Test {};
 //----------------------------------------------------------------------
 TEST_F(Vec3Test, NullVector) {
-    Vec3 a = Vec3::null;
+    Vec3 a = Vec3::ORIGIN;
 
     EXPECT_EQ(0.0, a.x());
     EXPECT_EQ(0.0, a.y());
@@ -240,7 +240,7 @@ TEST_F(Vec3Test, normalize) {
     a.normalize();
     EXPECT_EQ( 1.0, a.norm());
 
-    a = Vec3::null;
+    a = Vec3::ORIGIN;
     EXPECT_NE( 1.0, a.norm());
 
     a.normalize();

@@ -87,10 +87,10 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 
 	    // geometry
 		Frame optical_table;
-		optical_table.set_name_pos_rot("table", Vec3::null, Rot3::null);
+		optical_table.set_name_pos_rot("table", Vec3::ORIGIN, Rot3::null);
 
 		BiConvexLensHexBound* lens = optical_table.append<BiConvexLensHexBound>();
-		lens->set_name_pos_rot("lens", Vec3::null, Rot3::null);
+		lens->set_name_pos_rot("lens", Vec3::ORIGIN, Rot3::null);
 	    lens->set_outer_color(lens_col);
 	    lens->set_inner_color(lens_col);
 	    lens->set_inner_refraction(refraction_vs_wavelength);

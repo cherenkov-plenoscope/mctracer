@@ -25,7 +25,7 @@ void Factory::add_lens_array(Frame* frame) {
 	const Color* white = scenery->colors.get("lens_white");
 
 	Frame* lens_array = frame->append<Frame>();
-	lens_array->set_name_pos_rot("lens_array", Vec3::null, Rot3::null);
+	lens_array->set_name_pos_rot("lens_array", Vec3::ORIGIN, Rot3::null);
 	vector<Vec3> pixel_positions = geometry->pixel_positions(); 
 
 	for(unsigned int i=0; i<pixel_positions.size(); i++) {
@@ -114,7 +114,7 @@ void Factory::add_light_field_sensor_frontplate(Frame* frame) {
 
 	vector<Vec3> face_plate_positions = face_plate_grid.get_grid();
 	Frame* face_plate = frame->append<Frame>();
-	face_plate->set_name_pos_rot("face_plate", Vec3::null, Rot3::null);
+	face_plate->set_name_pos_rot("face_plate", Vec3::ORIGIN, Rot3::null);
 
 	for(unsigned int i=0; i<face_plate_positions.size(); i++) {
 
@@ -130,7 +130,7 @@ void Factory::add_light_field_sensor_frontplate(Frame* frame) {
 	}
 
 	Annulus* outer_front_ring = face_plate->append<Annulus>();
-	outer_front_ring->set_name_pos_rot("outer_front_ring", Vec3::null, Rot3::null);
+	outer_front_ring->set_name_pos_rot("outer_front_ring", Vec3::ORIGIN, Rot3::null);
 	outer_front_ring->set_outer_color(gray);
 	outer_front_ring->set_inner_color(gray);
 	outer_front_ring->set_outer_inner_radius(
@@ -182,7 +182,7 @@ void Factory::add_image_sensor_housing(Frame *frame) {
 	double housing_height =  2.0*geometry->outer_sensor_housing_radius();
 
 	Frame* sensor_housing = frame->append<Frame>();
-	sensor_housing->set_name_pos_rot("sensor_housing", Vec3::null, Rot3::null);
+	sensor_housing->set_name_pos_rot("sensor_housing", Vec3::ORIGIN, Rot3::null);
 
 	Disc* sensor_housing_top = sensor_housing->append<Disc>();
 	sensor_housing_top->set_name_pos_rot(
@@ -197,7 +197,7 @@ void Factory::add_image_sensor_housing(Frame *frame) {
 	Cylinder* sensor_housing_cylinder = sensor_housing->append<Cylinder>();
 	sensor_housing_cylinder->set_name_pos_rot(
 		"cylinder",
-		Vec3::null,
+		Vec3::ORIGIN,
 		Rot3::null
 	);
 	sensor_housing_cylinder->set_outer_color(&Color::gray);
@@ -218,7 +218,7 @@ void Factory::add_light_field_sensor_to_frame_in_scenery(
 	Frame* light_field_sensor_front = frame->append<Frame>();
 	light_field_sensor_front->set_name_pos_rot(
 		"front",
-		Vec3::null, 
+		Vec3::ORIGIN, 
 		Rot3::null
 	);
 

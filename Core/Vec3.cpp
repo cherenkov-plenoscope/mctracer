@@ -4,7 +4,7 @@
 #include <sstream>
 
 
-const Vec3 Vec3::null   = Vec3(0.0, 0.0, 0.0);
+const Vec3 Vec3::ORIGIN   = Vec3(0.0, 0.0, 0.0);
 const Vec3 Vec3::unit_x = Vec3(1.0, 0.0, 0.0);
 const Vec3 Vec3::unit_y = Vec3(0.0, 1.0, 0.0);
 const Vec3 Vec3::unit_z = Vec3(0.0, 0.0, 1.0);

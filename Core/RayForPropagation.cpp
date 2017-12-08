@@ -124,7 +124,7 @@ Vec3 RayForPropagation::
 get_final_intersection_incident_vector_in_object_frame()const {
     if (intersection_history.size() == 1) {
         // only production
-        return Vec3::null;
+        return Vec3::ORIGIN;
     } else {
         const unsigned int last_i = intersection_history.size() - 1;
         const unsigned int second_last_i = last_i - 1;

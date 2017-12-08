@@ -20,7 +20,7 @@ void TrajectoryFactory::append_trajectory_to(Frame* root_frame) {
 	trajectory = root_frame->append<Frame>();
 	trajectory->set_name_pos_rot(
 		"trajectory_" + std::to_string(ray->simulation_truth_id),
-	 	Vec3::null, 
+	 	Vec3::ORIGIN, 
 	 	Rot3::null
 	);
 
@@ -31,7 +31,7 @@ void TrajectoryFactory::append_trajectory_to(Frame* root_frame) {
 			Cylinder* ray_trajectory = trajectory->append<Cylinder>();
 			ray_trajectory->set_name_pos_rot(
 				get_trajectory_of_part_index(i),	 	
-				Vec3::null, 
+				Vec3::ORIGIN, 
 		 		Rot3::null
 		 	);
 		 	ray_trajectory->set_cylinder(

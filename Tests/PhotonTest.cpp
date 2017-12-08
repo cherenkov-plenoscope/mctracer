@@ -21,10 +21,10 @@ class PhotonTest : public ::testing::Test {};
 TEST_F(PhotonTest, creation) {
     
     double wavelength = 433e-9;
-    Photon pho(Vec3::null, Vec3::unit_z*1.337, wavelength);
+    Photon pho(Vec3::ORIGIN, Vec3::unit_z*1.337, wavelength);
 
     EXPECT_EQ(Vec3::unit_z, pho.get_direction());
-    EXPECT_EQ(Vec3::null, pho.get_support());
+    EXPECT_EQ(Vec3::ORIGIN, pho.get_support());
     EXPECT_EQ(1.0, pho.get_direction().norm());
     EXPECT_EQ(wavelength, pho.get_wavelength());
     //creation is an interaction
@@ -34,12 +34,12 @@ TEST_F(PhotonTest, creation) {
 TEST_F(PhotonTest, reject_negative_wavelength) {
 
     EXPECT_THROW(
-        Photon pho(Vec3::null, Vec3::unit_x, 0.0),
+        Photon pho(Vec3::ORIGIN, Vec3::unit_x, 0.0),
         std::invalid_argument
     ); 
 
     EXPECT_THROW(
-        Photon pho(Vec3::null, Vec3::unit_x, -1.0),
+        Photon pho(Vec3::ORIGIN, Vec3::unit_x, -1.0),
         std::invalid_argument
     );   
 }
@@ -150,7 +150,7 @@ TEST_F(PhotonTest, Reflections){
     PropagationConfig setup;
     setup.use_multithread_when_possible = false;
 
-    Vec3 pos = Vec3::null;
+    Vec3 pos = Vec3::ORIGIN;
     Rot3 rot = Rot3::null;
 
     // create a test setup with two mirrors bouncing the photon
@@ -251,7 +251,7 @@ TEST_F(PhotonTest, Refraction){
 
     // create a test setup with two planes and high refractive index in between
     Frame world;
-    world.set_name_pos_rot("world", Vec3::null, Rot3::null);
+    world.set_name_pos_rot("world", Vec3::ORIGIN, Rot3::null);
 
     Function::Constant water_refraction(
             1.33,
@@ -304,7 +304,7 @@ TEST_F(PhotonTest, Refraction){
     double num_phot = 1e4;
     for(int i=1; i<=num_phot; i++) {
         
-        Photon P(Vec3::null, Vec3::unit_z, wavelength);
+        Photon P(Vec3::ORIGIN, Vec3::unit_z, wavelength);
         P.set_simulation_truth_id(i);
         photons.push_back(P);
     }
@@ -339,7 +339,7 @@ TEST_F(PhotonTest, absorbtion_in_medium){
 
     // create a test setup with two planes and high refractive index in between
     Frame world;
-    world.set_name_pos_rot("world", Vec3::null, Rot3::null);
+    world.set_name_pos_rot("world", Vec3::ORIGIN, Rot3::null);
 
     Function::Constant free_half_path(
         1.0,
@@ -397,7 +397,7 @@ TEST_F(PhotonTest, absorbtion_in_medium){
     double num_phot = 1e4;
     for(int i=1; i<=num_phot; i++) {
         
-        Photon P(Vec3::null, Vec3::unit_z, wavelength);
+        Photon P(Vec3::ORIGIN, Vec3::unit_z, wavelength);
         P.set_simulation_truth_id(i);
         photons.push_back(P);
     }

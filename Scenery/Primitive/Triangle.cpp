@@ -46,7 +46,7 @@ void Triangle::set_normal_and_3_vertecies(
 		rot = Rot3(rot_axis, rotation_angle);
 
 		HomTra3 trafo;
-		trafo.set_transformation(rot, Vec3::null);
+		trafo.set_transformation(rot, Vec3::ORIGIN);
 		
 		HomTra3 trafo_inv = trafo.inverse();
 		// transform a b c

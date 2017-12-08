@@ -266,7 +266,7 @@ namespace SegmentedReflector {
 		for(unsigned int i=0; i<_facet_positions.size(); i++) {
 
 			HomTra3 trafo;
-			trafo.set_transformation(_facet_orientations[i], Vec3::null);
+			trafo.set_transformation(_facet_orientations[i], Vec3::ORIGIN);
 
 			Vec3 pos = _facet_positions[i];
 			Vec3 normal = trafo.get_transformed_orientation(Vec3::unit_z);

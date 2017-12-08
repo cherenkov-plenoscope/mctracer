@@ -12,7 +12,7 @@ class Vec3 {
     static const double squared_max_deviation_of_eq_vectors;
 
  public:
-    static const Vec3 null;
+    static const Vec3 ORIGIN;
     static const Vec3 unit_x;
     static const Vec3 unit_y;
     static const Vec3 unit_z;
