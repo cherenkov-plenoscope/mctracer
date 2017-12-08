@@ -44,7 +44,7 @@ protected:
 		test_bench.set_name_pos_rot(
 			"BiConvexLens_test_world",
 			Vec3::ORIGIN,
-			Rot3::null
+			Rot3::UNITY
 		);  
 		//-------------------------
 		cfg.focal_length = 1.0;
@@ -55,7 +55,7 @@ protected:
 		lens->set_name_pos_rot(
 			"little_lens",
 			Vec3::ORIGIN,
-			Rot3::null
+			Rot3::UNITY
 		);
 
 		Color* lens_color;
@@ -77,7 +77,7 @@ protected:
 		image_sensor->set_name_pos_rot(
 			"sensor_disc",
 			Vec3(0.0, 0.0, -1.0), 
-			Rot3::null
+			Rot3::UNITY
 		);
 
 		Color* sensor_color;

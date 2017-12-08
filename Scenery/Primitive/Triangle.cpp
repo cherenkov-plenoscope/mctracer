@@ -54,7 +54,7 @@ void Triangle::set_normal_and_3_vertecies(
 		b = trafo_inv.get_transformed_orientation(b);
 		c = trafo_inv.get_transformed_orientation(c);
 	}else{
-		rot = Rot3::null;
+		rot = Rot3::UNITY;
 	}
 
 	set_name_pos_rot(name, pos, rot);

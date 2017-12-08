@@ -9,7 +9,7 @@ class RayAndFrameBoundingSphereTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameBoundingSphereTest, frame_has_bounding_sphere) {
 
-    Sphere sphere("sphere", Vec3::ORIGIN, Rot3::null);
+    Sphere sphere("sphere", Vec3::ORIGIN, Rot3::UNITY);
     sphere.set_radius(1.0);
     EXPECT_EQ(1.0, sphere.get_bounding_sphere_radius());
 }
@@ -25,7 +25,7 @@ TEST_F(RayAndFrameBoundingSphereTest, support_inside_bounding_sphere) {
     //                \__     __/                          
     //                   -----                          
     */ 
-    Sphere sphere("sphere", Vec3::ORIGIN, Rot3::null);
+    Sphere sphere("sphere", Vec3::ORIGIN, Rot3::UNITY);
     sphere.set_radius(1.0);
 
     Ray ray(Vec3::ORIGIN, Vec3::UNIT_X);
@@ -43,7 +43,7 @@ TEST_F(RayAndFrameBoundingSphereTest, support_outside_bounding_sphere) {
     //                \__     __/                          
     //                   -----                          
     */     
-    Sphere sphere("sphere", Vec3::ORIGIN, Rot3::null);
+    Sphere sphere("sphere", Vec3::ORIGIN, Rot3::UNITY);
     sphere.set_radius(1.0);
 
     Ray ray(Vec3(2.0, 0.0, 0.0), Vec3::UNIT_X);
@@ -61,7 +61,7 @@ TEST_F(RayAndFrameBoundingSphereTest, frontal_hit) {
     //                \__     __/
     //                   -----
     */                      
-    Sphere sphere("sphere", Vec3::ORIGIN, Rot3::null);
+    Sphere sphere("sphere", Vec3::ORIGIN, Rot3::UNITY);
     sphere.set_radius(1.0);
 
     Ray ray(Vec3(-2.0, 0.0, 0.0), Vec3::UNIT_X);
@@ -79,7 +79,7 @@ TEST_F(RayAndFrameBoundingSphereTest, no_hit) {
     //                \__     __/                          
     //                   -----                          
     */                                                
-    Sphere sphere("sphere", Vec3::ORIGIN, Rot3::null);
+    Sphere sphere("sphere", Vec3::ORIGIN, Rot3::UNITY);
     sphere.set_radius(1.0);
 
     Ray ray(Vec3(+2.0, 0.0, 0.0), Vec3::UNIT_X);
@@ -97,7 +97,7 @@ TEST_F(RayAndFrameBoundingSphereTest, hit_inside_bounding_sphere) {
     //                \__     __/                          
     //                   -----                          
     */                                                
-    Sphere sphere("sphere", Vec3::ORIGIN, Rot3::null);
+    Sphere sphere("sphere", Vec3::ORIGIN, Rot3::UNITY);
     sphere.set_radius(1.0);
 
     Ray ray(Vec3::ORIGIN, Vec3::UNIT_X);
@@ -121,7 +121,7 @@ TEST_F(RayAndFrameBoundingSphereTest, frontal_hits) {
     */
     
     const double sphere_radius = 1.0;
-    Sphere sphere("sphere", Vec3::ORIGIN, Rot3::null);
+    Sphere sphere("sphere", Vec3::ORIGIN, Rot3::UNITY);
     sphere.set_radius(sphere_radius);
 
     for(double y=-2.0; y<2.0; y+=0.002) {
@@ -140,7 +140,7 @@ class RayAndFrameTest : public ::testing::Test {};
 TEST_F(RayAndFrameTest, transform_into_unit_frame) {
 
     Frame frame;
-    frame.set_name_pos_rot("frame", Vec3::ORIGIN, Rot3::null);
+    frame.set_name_pos_rot("frame", Vec3::ORIGIN, Rot3::UNITY);
     frame.init_tree_based_on_mother_child_relations();
 
     Ray ray(Vec3::ORIGIN, Vec3::UNIT_Z);
@@ -157,7 +157,7 @@ TEST_F(RayAndFrameTest, transform_into_unit_frame) {
 TEST_F(RayAndFrameTest, transform_into_translated_frame) {
 
     Frame frame;
-    frame.set_name_pos_rot("frame", Vec3(0.0, 0.0, 13.37), Rot3::null);
+    frame.set_name_pos_rot("frame", Vec3(0.0, 0.0, 13.37), Rot3::UNITY);
     frame.init_tree_based_on_mother_child_relations();
 
     Ray ray(Vec3(0.0, 4.2, 0.0), Vec3::UNIT_Z);
@@ -212,22 +212,22 @@ TEST_F(RayAndFrameTest, transform_ray_into_rotated_frame) {
 TEST_F(RayAndFrameTest, causal_intersection) {
 
     Frame spheres_in_a_row;
-    spheres_in_a_row.set_name_pos_rot("spheres", Vec3::ORIGIN, Rot3::null);
+    spheres_in_a_row.set_name_pos_rot("spheres", Vec3::ORIGIN, Rot3::UNITY);
 
     Sphere* s0 = spheres_in_a_row.append<Sphere>();
-    s0->set_name_pos_rot("s0", Vec3(0.0, 0.0,0.0), Rot3::null);
+    s0->set_name_pos_rot("s0", Vec3(0.0, 0.0,0.0), Rot3::UNITY);
     s0->set_radius(1.0);
     Sphere* s1 = spheres_in_a_row.append<Sphere>();
-    s1->set_name_pos_rot("s1", Vec3(0.0, 3.0,0.0), Rot3::null);
+    s1->set_name_pos_rot("s1", Vec3(0.0, 3.0,0.0), Rot3::UNITY);
     s1->set_radius(1.0);
     Sphere* s2 = spheres_in_a_row.append<Sphere>();
-    s2->set_name_pos_rot("s2", Vec3(0.0, 6.0,0.0), Rot3::null);
+    s2->set_name_pos_rot("s2", Vec3(0.0, 6.0,0.0), Rot3::UNITY);
     s2->set_radius(1.0);
     Sphere* s3 = spheres_in_a_row.append<Sphere>();
-    s3->set_name_pos_rot("s3", Vec3(0.0, 9.0,0.0), Rot3::null);
+    s3->set_name_pos_rot("s3", Vec3(0.0, 9.0,0.0), Rot3::UNITY);
     s3->set_radius(1.0);
     Sphere* s4 = spheres_in_a_row.append<Sphere>();
-    s4->set_name_pos_rot("s4", Vec3(0.0,12.0,0.0), Rot3::null);
+    s4->set_name_pos_rot("s4", Vec3(0.0,12.0,0.0), Rot3::UNITY);
     s4->set_radius(1.0);
 
     spheres_in_a_row.init_tree_based_on_mother_child_relations();

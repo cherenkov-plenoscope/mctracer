@@ -19,7 +19,7 @@ void add_stl_to_and_inherit_surface_from_surfac_entity(
         tri->set_name_pos_rot(
             "triangle_"+std::to_string(facet_count++),
             Vec3::ORIGIN, 
-            Rot3::null
+            Rot3::UNITY
         );
         tri->set_normal_and_3_vertecies(
             facet.n,
@@ -41,7 +41,7 @@ void add_stl_to_frame(const string path, Frame* proto, const double scale) {
         tri->set_name_pos_rot(
             "triangle_"+std::to_string(facet_count++),
             Vec3::ORIGIN, 
-            Rot3::null
+            Rot3::UNITY
         );
         tri->set_normal_and_3_vertecies(
             facet.n,

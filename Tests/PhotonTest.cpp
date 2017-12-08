@@ -151,7 +151,7 @@ TEST_F(PhotonTest, Reflections){
     setup.use_multithread_when_possible = false;
 
     Vec3 pos = Vec3::ORIGIN;
-    Rot3 rot = Rot3::null;
+    Rot3 rot = Rot3::UNITY;
 
     // create a test setup with two mirrors bouncing the photon
     Frame world;
@@ -251,7 +251,7 @@ TEST_F(PhotonTest, Refraction){
 
     // create a test setup with two planes and high refractive index in between
     Frame world;
-    world.set_name_pos_rot("world", Vec3::ORIGIN, Rot3::null);
+    world.set_name_pos_rot("world", Vec3::ORIGIN, Rot3::UNITY);
 
     Function::Constant water_refraction(
             1.33,
@@ -279,7 +279,7 @@ TEST_F(PhotonTest, Refraction){
     absorber->set_name_pos_rot(
         "absorber", 
         Vec3(0.0, 0.0, 3.0),
-        Rot3::null
+        Rot3::UNITY
     );
     absorber->set_outer_color(&absorber_color);
     absorber->set_inner_color(&absorber_color);
@@ -339,7 +339,7 @@ TEST_F(PhotonTest, absorbtion_in_medium){
 
     // create a test setup with two planes and high refractive index in between
     Frame world;
-    world.set_name_pos_rot("world", Vec3::ORIGIN, Rot3::null);
+    world.set_name_pos_rot("world", Vec3::ORIGIN, Rot3::UNITY);
 
     Function::Constant free_half_path(
         1.0,
@@ -373,7 +373,7 @@ TEST_F(PhotonTest, absorbtion_in_medium){
     collector->set_name_pos_rot(
         "collector", 
         Vec3(0.0, 0.0, 3.0),
-        Rot3::null
+        Rot3::UNITY
     );
     collector->set_outer_color(&absorber_color);
     collector->set_inner_color(&absorber_color);

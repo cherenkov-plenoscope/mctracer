@@ -5,7 +5,7 @@
 #include <exception>
 #include "Core/Rot3.h"
 
-const Rot3 Rot3::null = Rot3(0.0, 0.0, 0.0);
+const Rot3 Rot3::UNITY = Rot3(0.0, 0.0, 0.0);
 
 Rot3::Rot3() {}
 
