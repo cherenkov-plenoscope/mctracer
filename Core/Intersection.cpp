@@ -106,8 +106,8 @@ double Intersection::get_refractive_index_going_to(
 
 bool Intersection::going_to_default_refractive_index()const {
     return _from_outside_to_inside ?
-    object->get_inner_refraction_() == SurfaceEntity::default_refr:
-    object->get_outer_refraction_() == SurfaceEntity::default_refr;
+    object->get_inner_refraction_() == SurfaceEntity::DEFAULT_REFRACTION:
+    object->get_outer_refraction_() == SurfaceEntity::DEFAULT_REFRACTION;
 }
 
 double Intersection::get_refractive_index_coming_from(

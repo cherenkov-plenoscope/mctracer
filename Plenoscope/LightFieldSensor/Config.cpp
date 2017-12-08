@@ -14,7 +14,7 @@ namespace Plenoscope {
 			housing_overhead = 1.2;
 			lens_refraction = &pmma_refraction;
 			lens_absorbtion = &perfect_transparency;
-			bin_reflection = SurfaceEntity::default_refl;
+			bin_reflection = SurfaceEntity::DEFAULT_REFLECTION;
 		}
 
 		array<float, 273> Config::get_sensor_plane2imaging_system_header()const {
