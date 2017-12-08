@@ -22,7 +22,7 @@ class SurfaceEntity :public Frame {
     const Function::Func1D* inner_absorption_vs_wavelength;
 
  public:
-    static const SurfaceEntity void_object;
+    static const SurfaceEntity VOID_SURFACE_ENTITY;
     static const SurfaceEntity source_object;
 
     SurfaceEntity();

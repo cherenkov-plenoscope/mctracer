@@ -4,7 +4,7 @@
 #include <limits>
 
 Intersection::Intersection() {
-    object = &SurfaceEntity::void_object;
+    object = &SurfaceEntity::VOID_SURFACE_ENTITY;
     intersection_point = Vec3(
         std::numeric_limits<double>::infinity(),
         std::numeric_limits<double>::infinity(),
@@ -29,7 +29,7 @@ Intersection::Intersection(
 {}
 
 bool Intersection::does_intersect()const {
-    return object != &SurfaceEntity::void_object;
+    return object != &SurfaceEntity::VOID_SURFACE_ENTITY;
 }
 
 const SurfaceEntity * Intersection::get_object()const {
