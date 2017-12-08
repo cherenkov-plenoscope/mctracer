@@ -3,10 +3,6 @@
 using std::string;
 
 //------------------------------------------------------------------------------
-const Color TrajectoryFactory::trajectory_col = Color(255,128,128);
-const Color TrajectoryFactory::absorption_in_void_col = Color(128,128,255);
-const Color TrajectoryFactory::interaction_col = Color(128,255,128);
-//------------------------------------------------------------------------------
 TrajectoryFactory::TrajectoryFactory(const RayForPropagation* _ray):
 	ray(_ray), radius_of_trajectory(0.01), trajectory(&Frame::VOID_FRAME)
 {}
@@ -41,8 +37,8 @@ void TrajectoryFactory::append_trajectory_to(Frame* root_frame) {
 		 		ray->intersection_history.at(i+1).
 		 			get_intersection_vector_in_world_system()
 		 	);
-		 	ray_trajectory->set_outer_color(&trajectory_col);
-		 	ray_trajectory->set_inner_color(&trajectory_col);
+		 	ray_trajectory->set_outer_color(&Color::RED);
+		 	ray_trajectory->set_inner_color(&Color::RED);
 		}	
 
 		Sphere* intersection_indicator = trajectory->append<Sphere>();
@@ -56,9 +52,9 @@ void TrajectoryFactory::append_trajectory_to(Frame* root_frame) {
 		intersection_indicator->set_radius(radius_of_trajectory*2.0);
 
 		if(ray->interaction_history.at(i) == absorption_in_void)
-			intersection_indicator->set_outer_color(&absorption_in_void_col);
+			intersection_indicator->set_outer_color(&Color::DARK_GRAY);
 		else
-			intersection_indicator->set_outer_color(&interaction_col);	
+			intersection_indicator->set_outer_color(&Color::GREEN);
 	}
 }
 //------------------------------------------------------------------------------

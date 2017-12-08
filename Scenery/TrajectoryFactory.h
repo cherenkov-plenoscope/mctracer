@@ -31,11 +31,6 @@ class TrajectoryFactory {
 	double radius_of_trajectory;
 	Frame* trajectory;
 public:
-
-	static const Color trajectory_col;
-	static const Color absorption_in_void_col;
-	static const Color interaction_col;
-
 	TrajectoryFactory(const RayForPropagation* ray);
 	void set_trajectory_radius(const double radius);
 	void append_trajectory_to(Frame* root_frame);
