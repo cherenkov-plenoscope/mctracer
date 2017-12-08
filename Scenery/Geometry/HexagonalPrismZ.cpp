@@ -2,7 +2,7 @@
 #include "math.h"
 #include <sstream>
 
-const Vec3 HexagonalPrismZ::hexU = Vec3::unit_y;
+const Vec3 HexagonalPrismZ::hexU = Vec3::UNIT_Y;
 const Vec3 HexagonalPrismZ::hexV = Vec3(1.0, 0.0, 0.0)*+sin(2.0/3.0*M_PI) + 
 									Vec3(0.0, 1.0, 0.0)*cos(2.0/3.0*M_PI);
 const Vec3 HexagonalPrismZ::hexW = Vec3(1.0, 0.0, 0.0)*-sin(2.0/3.0*M_PI) + 

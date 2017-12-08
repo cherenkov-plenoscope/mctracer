@@ -51,9 +51,9 @@ std::vector<Vec3> HexGridFlower::get_grid()const {
 //------------------------------------------------------------------------------
 void HexGridFlower::init_unit_vectors_hex_grid_with_length() {
 
-	unit_hex_b = Vec3::unit_x*facet_spacing;
+	unit_hex_b = Vec3::UNIT_X*facet_spacing;
 	unit_hex_a = (
-		Vec3::unit_x*0.5+Vec3::unit_y*sqrt(3.0)/2.0
+		Vec3::UNIT_X*0.5+Vec3::UNIT_Y*sqrt(3.0)/2.0
 	)*facet_spacing;
 }
 //------------------------------------------------------------------------------

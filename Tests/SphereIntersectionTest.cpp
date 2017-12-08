@@ -78,7 +78,7 @@ TEST_F(SphereIntersectionTest, frontal) {
 	"radius 1m. So there are 5-1=4m to traverse. ";
 
 	EXPECT_EQ(
-		Vec3::unit_x*(-1),
+		Vec3::UNIT_X*(-1),
 		P.get_intersection_at(1).get_surface_normal_in_object_system()
 	);
 }
@@ -118,7 +118,7 @@ TEST_F(SphereIntersectionTest, tangential_intersection) {
 
 	ASSERT_EQ(2u, P.get_number_of_interactions_so_far() );
 
-	Vec3 normal = Vec3::unit_z;
+	Vec3 normal = Vec3::UNIT_Z;
 
 	EXPECT_NEAR(
 		0.0,

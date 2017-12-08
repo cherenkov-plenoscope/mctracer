@@ -28,7 +28,7 @@ TEST_F(RayAndFrameBoundingSphereTest, support_inside_bounding_sphere) {
     Sphere sphere("sphere", Vec3::ORIGIN, Rot3::null);
     sphere.set_radius(1.0);
 
-    Ray ray(Vec3::ORIGIN, Vec3::unit_x);
+    Ray ray(Vec3::ORIGIN, Vec3::UNIT_X);
     EXPECT_TRUE(ray_support_inside_frames_bounding_sphere(&ray, &sphere));
 }
 //------------------------------------------------------------------------------
@@ -46,7 +46,7 @@ TEST_F(RayAndFrameBoundingSphereTest, support_outside_bounding_sphere) {
     Sphere sphere("sphere", Vec3::ORIGIN, Rot3::null);
     sphere.set_radius(1.0);
 
-    Ray ray(Vec3(2.0, 0.0, 0.0), Vec3::unit_x);
+    Ray ray(Vec3(2.0, 0.0, 0.0), Vec3::UNIT_X);
     EXPECT_FALSE(ray_support_inside_frames_bounding_sphere(&ray, &sphere));
 }
 //------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ TEST_F(RayAndFrameBoundingSphereTest, frontal_hit) {
     Sphere sphere("sphere", Vec3::ORIGIN, Rot3::null);
     sphere.set_radius(1.0);
 
-    Ray ray(Vec3(-2.0, 0.0, 0.0), Vec3::unit_x);
+    Ray ray(Vec3(-2.0, 0.0, 0.0), Vec3::UNIT_X);
     EXPECT_TRUE(ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
 }
 //------------------------------------------------------------------------------
@@ -82,7 +82,7 @@ TEST_F(RayAndFrameBoundingSphereTest, no_hit) {
     Sphere sphere("sphere", Vec3::ORIGIN, Rot3::null);
     sphere.set_radius(1.0);
 
-    Ray ray(Vec3(+2.0, 0.0, 0.0), Vec3::unit_x);
+    Ray ray(Vec3(+2.0, 0.0, 0.0), Vec3::UNIT_X);
     EXPECT_FALSE(ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
 }
 //------------------------------------------------------------------------------
@@ -100,7 +100,7 @@ TEST_F(RayAndFrameBoundingSphereTest, hit_inside_bounding_sphere) {
     Sphere sphere("sphere", Vec3::ORIGIN, Rot3::null);
     sphere.set_radius(1.0);
 
-    Ray ray(Vec3::ORIGIN, Vec3::unit_x);
+    Ray ray(Vec3::ORIGIN, Vec3::UNIT_X);
     EXPECT_TRUE(ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
 }
 //------------------------------------------------------------------------------
@@ -126,7 +126,7 @@ TEST_F(RayAndFrameBoundingSphereTest, frontal_hits) {
 
     for(double y=-2.0; y<2.0; y+=0.002) {
     
-        Ray ray(Vec3(-5.0, y, 0.0), Vec3::unit_x);
+        Ray ray(Vec3(-5.0, y, 0.0), Vec3::UNIT_X);
 
         if(fabs(y) > sphere_radius)
             EXPECT_FALSE(ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
@@ -143,7 +143,7 @@ TEST_F(RayAndFrameTest, transform_into_unit_frame) {
     frame.set_name_pos_rot("frame", Vec3::ORIGIN, Rot3::null);
     frame.init_tree_based_on_mother_child_relations();
 
-    Ray ray(Vec3::ORIGIN, Vec3::unit_z);
+    Ray ray(Vec3::ORIGIN, Vec3::UNIT_Z);
 
     Ray ray_t = RayAndFrame::get_ray_transformed_in_object_system_of_frame(
         &ray, 
@@ -151,7 +151,7 @@ TEST_F(RayAndFrameTest, transform_into_unit_frame) {
     );
 
     EXPECT_EQ(ray_t.get_support(), Vec3::ORIGIN);
-    EXPECT_EQ(ray_t.get_direction(), Vec3::unit_z);
+    EXPECT_EQ(ray_t.get_direction(), Vec3::UNIT_Z);
 }
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameTest, transform_into_translated_frame) {
@@ -160,7 +160,7 @@ TEST_F(RayAndFrameTest, transform_into_translated_frame) {
     frame.set_name_pos_rot("frame", Vec3(0.0, 0.0, 13.37), Rot3::null);
     frame.init_tree_based_on_mother_child_relations();
 
-    Ray ray(Vec3(0.0, 4.2, 0.0), Vec3::unit_z);
+    Ray ray(Vec3(0.0, 4.2, 0.0), Vec3::UNIT_Z);
 
     Ray ray_t = RayAndFrame::get_ray_transformed_in_object_system_of_frame(
         &ray, 
@@ -168,7 +168,7 @@ TEST_F(RayAndFrameTest, transform_into_translated_frame) {
     );
 
     EXPECT_EQ(ray_t.get_support(), Vec3(0.0, 4.2, -13.37));
-    EXPECT_EQ(ray_t.get_direction(), Vec3::unit_z);
+    EXPECT_EQ(ray_t.get_direction(), Vec3::UNIT_Z);
 }
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameTest, transform_ray_in_z_into_frame_rotated_in_z) {
@@ -177,7 +177,7 @@ TEST_F(RayAndFrameTest, transform_ray_in_z_into_frame_rotated_in_z) {
     frame.set_name_pos_rot("frame", Vec3::ORIGIN, Rot3(0.0, 0.0, 0.5*M_PI));
     frame.init_tree_based_on_mother_child_relations();
 
-    Ray ray(Vec3::ORIGIN, Vec3::unit_z);
+    Ray ray(Vec3::ORIGIN, Vec3::UNIT_Z);
 
     Ray ray_t = RayAndFrame::get_ray_transformed_in_object_system_of_frame(
         &ray, 
@@ -185,7 +185,7 @@ TEST_F(RayAndFrameTest, transform_ray_in_z_into_frame_rotated_in_z) {
     );
 
     EXPECT_EQ(ray_t.get_support(), Vec3::ORIGIN);
-    EXPECT_EQ(ray_t.get_direction(), Vec3::unit_z);
+    EXPECT_EQ(ray_t.get_direction(), Vec3::UNIT_Z);
 }
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameTest, transform_ray_into_rotated_frame) {
@@ -194,7 +194,7 @@ TEST_F(RayAndFrameTest, transform_ray_into_rotated_frame) {
     frame.set_name_pos_rot("frame", Vec3::ORIGIN, Rot3(0.0, 0.0, 0.5*M_PI));
     frame.init_tree_based_on_mother_child_relations();
 
-    Ray ray(Vec3::ORIGIN, Vec3::unit_x);
+    Ray ray(Vec3::ORIGIN, Vec3::UNIT_X);
 
     Ray ray_t = RayAndFrame::get_ray_transformed_in_object_system_of_frame(
         &ray, 
@@ -202,7 +202,7 @@ TEST_F(RayAndFrameTest, transform_ray_into_rotated_frame) {
     );
 
     EXPECT_EQ(ray_t.get_support(), Vec3::ORIGIN);
-    EXPECT_EQ(ray_t.get_direction(), Vec3::unit_y);
+    EXPECT_EQ(ray_t.get_direction(), Vec3::UNIT_Y);
 }
 //------------------------------------------------------------------------------
 /*class RayAndFrameTest : public ::testing::Test {

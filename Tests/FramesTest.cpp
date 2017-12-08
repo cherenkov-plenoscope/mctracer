@@ -61,9 +61,9 @@ TEST_F(FramesTest, optimal_bounding_sphere_pos_no_frame) {
 TEST_F(FramesTest, optimal_bounding_sphere_pos_one_frame) {
 
     Frame root;
-    root.set_name_pos_rot("root", Vec3::unit_x, Rot3::null);
+    root.set_name_pos_rot("root", Vec3::UNIT_X, Rot3::null);
     vector<Frame*> vf; vf.push_back(&root);
-	EXPECT_EQ(Frames::dumb_bounding_sphere_center(vf), Vec3::unit_x);
+	EXPECT_EQ(Frames::dumb_bounding_sphere_center(vf), Vec3::UNIT_X);
 }
 //------------------------------------------------------------------------------
 TEST_F(FramesTest, optimal_bounding_sphere_pos_many_frames_symetric) {

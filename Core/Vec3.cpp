@@ -5,9 +5,9 @@
 
 
 const Vec3 Vec3::ORIGIN   = Vec3(0.0, 0.0, 0.0);
-const Vec3 Vec3::unit_x = Vec3(1.0, 0.0, 0.0);
-const Vec3 Vec3::unit_y = Vec3(0.0, 1.0, 0.0);
-const Vec3 Vec3::unit_z = Vec3(0.0, 0.0, 1.0);
+const Vec3 Vec3::UNIT_X = Vec3(1.0, 0.0, 0.0);
+const Vec3 Vec3::UNIT_Y = Vec3(0.0, 1.0, 0.0);
+const Vec3 Vec3::UNIT_Z = Vec3(0.0, 0.0, 1.0);
 const double Vec3::squared_max_deviation_of_eq_vectors = 1e-14;
 
 Vec3::Vec3() {}

@@ -47,16 +47,16 @@ TEST_F(SizeOfTest, sizes_of_mct) {
     print_size("HomTra3", h);
     cout << "--------------------------------------------" << "\n";
 
-    Ray ray(Vec3::ORIGIN, Vec3::unit_z); 
+    Ray ray(Vec3::ORIGIN, Vec3::UNIT_Z); 
     print_size("Ray", ray);
 
-    Visual::CameraRay camray(Vec3::ORIGIN, Vec3::unit_z); 
+    Visual::CameraRay camray(Vec3::ORIGIN, Vec3::UNIT_Z); 
     print_size("CameraRay", camray);
 
-    RayForPropagation rayfp(Vec3::ORIGIN, Vec3::unit_z); 
+    RayForPropagation rayfp(Vec3::ORIGIN, Vec3::UNIT_Z); 
     print_size("RayForPropagation", rayfp);
 
-    Photon ph(Vec3::ORIGIN, Vec3::unit_z, 433e-9); 
+    Photon ph(Vec3::ORIGIN, Vec3::UNIT_Z, 433e-9); 
     print_size("Photon", ph);
     cout << "--------------------------------------------" << "\n";
 
