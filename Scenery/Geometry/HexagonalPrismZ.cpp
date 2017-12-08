@@ -2,11 +2,13 @@
 #include "math.h"
 #include <sstream>
 
-const Vec3 HexagonalPrismZ::hexU = Vec3::UNIT_Y;
-const Vec3 HexagonalPrismZ::hexV = Vec3(1.0, 0.0, 0.0)*+sin(2.0/3.0*M_PI) + 
-									Vec3(0.0, 1.0, 0.0)*cos(2.0/3.0*M_PI);
-const Vec3 HexagonalPrismZ::hexW = Vec3(1.0, 0.0, 0.0)*-sin(2.0/3.0*M_PI) + 
-									Vec3(0.0, 1.0, 0.0)*cos(2.0/3.0*M_PI);
+const Vec3 HexagonalPrismZ::UNIT_U = Vec3::UNIT_Y;
+const Vec3 HexagonalPrismZ::UNIT_V =
+	Vec3(1.0, 0.0, 0.0) * +sin(2.0/3.0*M_PI) +
+	Vec3(0.0, 1.0, 0.0) * cos(2.0/3.0*M_PI);
+const Vec3 HexagonalPrismZ::UNIT_W =
+	Vec3(1.0, 0.0, 0.0) * -sin(2.0/3.0*M_PI) +
+	Vec3(0.0, 1.0, 0.0) * cos(2.0/3.0*M_PI);
 //------------------------------------------------------------------------------
 //            /|\ Y-axis                                                  //
 //             |                                                          //
@@ -24,22 +26,22 @@ void HexagonalPrismZ::set_outer_radius(const double outer_radius) {
 //------------------------------------------------------------------------------
 bool HexagonalPrismZ::is_inside(const Vec3* vec)const {
 
-	const double projection_onto_hexU = hexU * *vec;
-	const double projection_onto_hexV = hexV * *vec;
-	const double projection_onto_hexW = hexW * *vec;
+	const double projection_onto_UNIT_U = UNIT_U * *vec;
+	const double projection_onto_UNIT_V = UNIT_V * *vec;
+	const double projection_onto_UNIT_W = UNIT_W * *vec;
 
 	return (
-		projection_onto_hexU < inner_radius
+		projection_onto_UNIT_U < inner_radius
 		&&
-		projection_onto_hexU > -inner_radius
+		projection_onto_UNIT_U > -inner_radius
 		&&
-		projection_onto_hexV < inner_radius
+		projection_onto_UNIT_V < inner_radius
 		&&
-		projection_onto_hexV > -inner_radius
+		projection_onto_UNIT_V > -inner_radius
 		&&
-		projection_onto_hexW < inner_radius
+		projection_onto_UNIT_W < inner_radius
 		&&
-		projection_onto_hexW > -inner_radius
+		projection_onto_UNIT_W > -inner_radius
 	);
 }
 //------------------------------------------------------------------------------
