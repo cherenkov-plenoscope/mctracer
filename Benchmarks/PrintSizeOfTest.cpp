@@ -47,20 +47,20 @@ TEST_F(SizeOfTest, sizes_of_mct) {
     print_size("HomTra3", h);
     cout << "--------------------------------------------" << "\n";
 
-    Ray ray(Vec3::null, Vec3::unit_z); 
+    Ray ray(Vec3::ORIGIN, Vec3::UNIT_Z); 
     print_size("Ray", ray);
 
-    Visual::CameraRay camray(Vec3::null, Vec3::unit_z); 
+    Visual::CameraRay camray(Vec3::ORIGIN, Vec3::UNIT_Z); 
     print_size("CameraRay", camray);
 
-    RayForPropagation rayfp(Vec3::null, Vec3::unit_z); 
+    RayForPropagation rayfp(Vec3::ORIGIN, Vec3::UNIT_Z); 
     print_size("RayForPropagation", rayfp);
 
-    Photon ph(Vec3::null, Vec3::unit_z, 433e-9); 
+    Photon ph(Vec3::ORIGIN, Vec3::UNIT_Z, 433e-9); 
     print_size("Photon", ph);
     cout << "--------------------------------------------" << "\n";
 
-    Intersection is = Intersection::void_intersection; 
+    Intersection is;
     print_size("Intersection", is);
 
     PropagationEnvironment environment = PropagationEnvironment::default_environment; 
@@ -68,10 +68,10 @@ TEST_F(SizeOfTest, sizes_of_mct) {
     cout << "--------------------------------------------" << "\n";
 
     Frame tree;
-    tree.set_name_pos_rot("0123456789", Vec3::null, Rot3::null); 
+    tree.set_name_pos_rot("0123456789", Vec3::ORIGIN, Rot3::UNITY); 
     print_size("Frame", tree);
 
-    SurfaceEntity surf("0123456789", Vec3::null, Rot3::null); 
+    SurfaceEntity surf("0123456789", Vec3::ORIGIN, Rot3::UNITY); 
     print_size("SurfaceEntity", surf);
 
     Annulus annulus; 

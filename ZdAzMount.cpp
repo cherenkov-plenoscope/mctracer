@@ -8,10 +8,10 @@ namespace ZdAzMount {
 	//--------------------------------------------------------------------------
 	double get_zd_of_frame(const Frame* frame) {
 		Vec3 optical_axis_in_world = frame->frame2world()->
-			get_transformed_orientation(Vec3::unit_z);
+			get_transformed_orientation(Vec3::UNIT_Z);
 
 		return 
-			Vec3::unit_z.get_angle_in_between_in_rad(optical_axis_in_world);	
+			Vec3::UNIT_Z.get_angle_in_between_in_rad(optical_axis_in_world);	
 	}
 	//--------------------------------------------------------------------------
 	double get_az_of_frame(const Frame* frame) {

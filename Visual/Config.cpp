@@ -2,7 +2,7 @@
 
 namespace Visual {
 //------------------------------------------------------------------------------
-Config::Config():sky_dome(Color::sky_blue) {
+Config::Config():sky_dome(Color::SKY_BLUE) {
 	max_interaction_depth = 42;
 
 	preview.cols = 128;

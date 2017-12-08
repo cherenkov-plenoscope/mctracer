@@ -12,7 +12,7 @@ Vec3 bounding_sphere_center(const vector<Frame*> &frames) {
 
     Vec3 center = mean_of_positions_in_mother(frames);
 
-    if (frames.size() < Frame::max_number_of_children) {
+    if (frames.size() < Frame::MAX_NUMBER_CHILDREN) {
         const Vec3 alternative = dumb_bounding_sphere_center(frames);
         const double m_radius = bounding_sphere_radius(frames, center);
         const double alt_radius = bounding_sphere_radius(frames, alternative);
@@ -35,8 +35,8 @@ Vec3 dumb_bounding_sphere_center(const vector<Frame*> &frames) {
     if (frames.size() == 1)
         return frames.at(0)->get_position_in_mother();
 
-    Frame* start_frame = &Frame::void_frame;
-    Frame* end_frame = &Frame::void_frame;
+    Frame* start_frame = &Frame::VOID_FRAME;
+    Frame* end_frame = &Frame::VOID_FRAME;
     double maximum = 0.0;
     for (unsigned int i = 0; i < frames.size(); i++) {
         for (unsigned int j = i; j < frames.size(); j++) {
@@ -74,7 +74,7 @@ Vec3 mean_of_positions_in_mother(const vector<Frame*> &frames) {
         throw std::invalid_argument(info.str());
     }
 
-    Vec3 sum_pos = Vec3::null;
+    Vec3 sum_pos = Vec3::ORIGIN;
 
     for (Frame* frame : frames)
         sum_pos = sum_pos + frame->get_position_in_mother();
@@ -87,7 +87,7 @@ bool positions_in_mother_are_too_close_together(const vector<Frame*> &frames) {
         return false;
     else
         return spread_of_frame_position_in_mother(frames) <
-            Frame::minimal_structure_size;
+            Frame::MIN_STRUCTURE_SIZE;
 }
 
 double spread_of_frame_position_in_mother(const vector<Frame*> &frames) {
@@ -96,7 +96,7 @@ double spread_of_frame_position_in_mother(const vector<Frame*> &frames) {
 
     const Vec3 mean_pos_in_mother = mean_of_positions_in_mother(frames);
 
-    Vec3 u = Vec3::null;
+    Vec3 u = Vec3::ORIGIN;
     for (Frame* frame : frames) {
         const Vec3 r =  frame->get_position_in_mother() - mean_pos_in_mother;
         u = u + Vec3(

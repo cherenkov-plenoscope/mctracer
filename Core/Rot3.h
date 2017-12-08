@@ -16,7 +16,7 @@ class Rot3 {
     bool flag_rot_angles_xyz;
 
  public:
-    static const Rot3 null;
+    static const Rot3 UNITY;
     Rot3();
     Rot3(double Phi, double The, double Psi);
     Rot3(const Vec3 new_rot_axis, const double new_rot_angle_on_rad);

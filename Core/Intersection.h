@@ -17,7 +17,6 @@ class Intersection {
     bool _from_outside_to_inside;
 
  public:
-    static const Intersection void_intersection;
     Intersection();
     Intersection(
         const SurfaceEntity* intersectiong_object,

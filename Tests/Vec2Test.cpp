@@ -6,7 +6,7 @@
 class Vec2Test : public ::testing::Test {};
 //----------------------------------------------------------------------
 TEST_F(Vec2Test, NullVector) {
-    Vec2 a = Vec2::null;
+    Vec2 a = Vec2::ORIGIN;
 
     EXPECT_EQ(0.0, a.x());
     EXPECT_EQ(0.0, a.y());
@@ -16,12 +16,12 @@ TEST_F(Vec2Test, NullVector) {
 TEST_F(Vec2Test, UnitVectors) {
     Vec2 a;
 
-    a = Vec2::unit_x;
+    a = Vec2::UNIT_X;
     EXPECT_EQ(1.0, a.x());
     EXPECT_EQ(0.0, a.y());
     EXPECT_EQ(1.0, a.norm());
 
-    a = Vec2::unit_y; 
+    a = Vec2::UNIT_Y; 
     EXPECT_EQ(0.0, a.x());
     EXPECT_EQ(1.0, a.y());
     EXPECT_EQ(1.0, a.norm());
@@ -75,8 +75,8 @@ TEST_F(Vec2Test, EuclideanNorm) {
 //----------------------------------------------------------------------
 TEST_F(Vec2Test, Scalar_Product_unit_vectors) {
 
-    const Vec2 x = Vec2::unit_x;
-    const Vec2 y = Vec2::unit_y;
+    const Vec2 x = Vec2::UNIT_X;
+    const Vec2 y = Vec2::UNIT_Y;
     EXPECT_EQ(0.0, x*y);
     EXPECT_EQ(1.0, x*x);
 }
@@ -131,8 +131,8 @@ TEST_F(Vec2Test, ScalarDiviation) {
 //----------------------------------------------------------------------
 TEST_F(Vec2Test, distance_unit_x_to_unit_y) {
 
-    Vec2 a = Vec2::unit_x;
-    Vec2 b = Vec2::unit_y;
+    Vec2 a = Vec2::UNIT_X;
+    Vec2 b = Vec2::UNIT_Y;
 
     EXPECT_EQ( sqrt(2.0), a.distance_to(b) );
 }
@@ -177,7 +177,7 @@ TEST_F(Vec2Test, normalize) {
     a.normalize();
     EXPECT_EQ(1.0, a.norm());
 
-    a = Vec2::null;
+    a = Vec2::ORIGIN;
     EXPECT_NE(1.0, a.norm());
 
     a.normalize();
@@ -186,25 +186,25 @@ TEST_F(Vec2Test, normalize) {
 //----------------------------------------------------------------------
 TEST_F(Vec2Test, angle_in_between) {
   
-    Vec2 a = Vec2::unit_x;
-    Vec2 b = Vec2::unit_x;
+    Vec2 a = Vec2::UNIT_X;
+    Vec2 b = Vec2::UNIT_X;
 
     EXPECT_EQ(0.0, a.get_angle_in_between_in_rad(b));
     EXPECT_EQ(b.get_angle_in_between_in_rad(a), a.get_angle_in_between_in_rad(b));
 
-    Vec2 c = Vec2::unit_x*5.0;
+    Vec2 c = Vec2::UNIT_X*5.0;
     EXPECT_NE( 1.0, c.norm());
 
-    Vec2 d = Vec2::unit_x*5.0;
+    Vec2 d = Vec2::UNIT_X*5.0;
     EXPECT_NE( 1.0, d.norm());
 
     EXPECT_EQ(0.0, d.get_angle_in_between_in_rad(c));  
     EXPECT_EQ(c.get_angle_in_between_in_rad(d), d.get_angle_in_between_in_rad(c));
 
-    Vec2 foo = Vec2::unit_x*5.0 + Vec2::unit_y*5.0;
+    Vec2 foo = Vec2::UNIT_X*5.0 + Vec2::UNIT_Y*5.0;
     EXPECT_NE( 1.0, c.norm());
 
-    Vec2 bar = Vec2::unit_x*5.0;
+    Vec2 bar = Vec2::UNIT_X*5.0;
     EXPECT_NE( 1.0, d.norm());
 
     EXPECT_NEAR(Deg2Rad(45.0) , foo.get_angle_in_between_in_rad(bar), 1e-5);

@@ -66,12 +66,12 @@ TEST_F(Rot3Test, SineAndCosineWhenSetXYZ) {
 //------------------------------------------------------------------------------
 TEST_F(Rot3Test, zoro_rot_angle) {
 
-  Rot3 r(Vec3::null, 0.0); 
-  EXPECT_EQ(Rot3::null ,r); 
+  Rot3 r(Vec3::ORIGIN, 0.0); 
+  EXPECT_EQ(Rot3::UNITY ,r); 
 
-  Rot3 s(Vec3::unit_z, 0.0); 
-  EXPECT_EQ(Rot3::null ,s); 
+  Rot3 s(Vec3::UNIT_Z, 0.0); 
+  EXPECT_EQ(Rot3::UNITY ,s); 
 
-  Rot3 t(Vec3::unit_y, 0.0); 
-  EXPECT_EQ(Rot3::null ,t); 
+  Rot3 t(Vec3::UNIT_Y, 0.0); 
+  EXPECT_EQ(Rot3::UNITY ,t); 
 }

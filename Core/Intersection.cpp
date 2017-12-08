@@ -3,10 +3,8 @@
 #include <sstream>
 #include <limits>
 
-const Intersection Intersection::void_intersection = Intersection();
-
 Intersection::Intersection() {
-    object = &SurfaceEntity::void_object;
+    object = &SurfaceEntity::VOID_SURFACE_ENTITY;
     intersection_point = Vec3(
         std::numeric_limits<double>::infinity(),
         std::numeric_limits<double>::infinity(),
@@ -31,7 +29,7 @@ Intersection::Intersection(
 {}
 
 bool Intersection::does_intersect()const {
-    return object != &SurfaceEntity::void_object;
+    return object != &SurfaceEntity::VOID_SURFACE_ENTITY;
 }
 
 const SurfaceEntity * Intersection::get_object()const {
@@ -108,8 +106,8 @@ double Intersection::get_refractive_index_going_to(
 
 bool Intersection::going_to_default_refractive_index()const {
     return _from_outside_to_inside ?
-    object->get_inner_refraction_() == SurfaceEntity::default_refr:
-    object->get_outer_refraction_() == SurfaceEntity::default_refr;
+    object->get_inner_refraction_() == SurfaceEntity::DEFAULT_REFRACTION:
+    object->get_outer_refraction_() == SurfaceEntity::DEFAULT_REFRACTION;
 }
 
 double Intersection::get_refractive_index_coming_from(

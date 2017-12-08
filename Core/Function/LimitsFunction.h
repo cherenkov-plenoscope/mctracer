@@ -18,7 +18,7 @@ namespace Function {
 		double upper;
 	public:
 		
-		static const Limits void_limits;
+		static const Limits VOID_LIMITS;
 		Limits();
 		Limits(const double _lower, const double _upper);
 		void assert_limits_are_causal()const;

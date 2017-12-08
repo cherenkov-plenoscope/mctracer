@@ -2,7 +2,7 @@
 #include <sstream>
 
 namespace Function {
-	const Constant Constant::void_function = Constant(0.0, Limits::void_limits);
+	const Constant Constant::VOID_FUNCTION = Constant(0.0, Limits::VOID_LIMITS);
 	//--------------------------------------------------------------------------
 	Constant::Constant(): value(0.0) {}
 	//--------------------------------------------------------------------------

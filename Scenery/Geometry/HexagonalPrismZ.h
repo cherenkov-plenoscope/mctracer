@@ -13,9 +13,9 @@
 //=================================
 class HexagonalPrismZ :public PrismZ {
 private:	
-	static const Vec3 hexU;
-	static const Vec3 hexV;
-	static const Vec3 hexW;
+	static const Vec3 UNIT_U;
+	static const Vec3 UNIT_V;
+	static const Vec3 UNIT_W;
 
 	double outer_radius;
 	double inner_radius;

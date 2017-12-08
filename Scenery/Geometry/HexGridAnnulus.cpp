@@ -37,8 +37,8 @@ std::vector<Vec3> HexGridAnnulus::get_grid()const {
 }
 //------------------------------------------------------------------------------
 void HexGridAnnulus::init_unit_vectors_hex_grid_with_length(const double spacing) { 
-	unit_hex_b = Vec3::unit_y*spacing;
-	unit_hex_a = (Vec3::unit_y*0.5+Vec3::unit_x*sqrt(3.0)/2.0)*spacing;
+	unit_hex_b = Vec3::UNIT_Y*spacing;
+	unit_hex_a = (Vec3::UNIT_Y*0.5+Vec3::UNIT_X*sqrt(3.0)/2.0)*spacing;
 }
 //------------------------------------------------------------------------------
 std::string HexGridAnnulus::str()const {

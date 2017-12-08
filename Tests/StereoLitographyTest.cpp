@@ -83,11 +83,11 @@ TEST_F(StereoLitographyTest, scaling) {
     const double scaleing = 42.1337;
 
     Frame obj_normal;
-    obj_normal.set_name_pos_rot("normal", Vec3::null, Rot3::null);
+    obj_normal.set_name_pos_rot("normal", Vec3::ORIGIN, Rot3::UNITY);
     add_stl_to_frame("test_scenery/LCCone-simple_parab.stl", &obj_normal);
 
     Frame obj_scaled;
-    obj_scaled.set_name_pos_rot("scaled", Vec3::null, Rot3::null);
+    obj_scaled.set_name_pos_rot("scaled", Vec3::ORIGIN, Rot3::UNITY);
     add_stl_to_frame("test_scenery/LCCone-simple_parab.stl", &obj_scaled, scaleing);
 
     EXPECT_EQ(

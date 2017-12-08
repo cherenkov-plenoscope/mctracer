@@ -8,9 +8,9 @@
 
 class PropagationEnvironment {
  public:
-    const Frame* world_geometry = &Frame::void_frame;
+    const Frame* world_geometry = &Frame::VOID_FRAME;
     const PropagationConfig* propagation_options =
-        &PropagationConfig::default_config;
+        &PropagationConfig::DEFAULT_CONFIG;
     Random::Generator* random_engine =
         &Random::void_generator;
     static PropagationEnvironment default_environment;

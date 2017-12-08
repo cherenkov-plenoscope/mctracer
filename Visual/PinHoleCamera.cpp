@@ -15,8 +15,8 @@ void PinHoleCamera::update_position_and_orientation(
 	update_principal_point_for_current_FoV();
 
 	// calculate sensor vectors
-	SensorDirectionHori = T_Camera2World.get_transformed_orientation(Vec3::unit_y);
-	SensorDirectionVert = T_Camera2World.get_transformed_orientation(Vec3::unit_x);
+	SensorDirectionHori = T_Camera2World.get_transformed_orientation(Vec3::UNIT_Y);
+	SensorDirectionVert = T_Camera2World.get_transformed_orientation(Vec3::UNIT_X);
 }
 //------------------------------------------------------------------------------
 void PinHoleCamera::set_FoV_in_rad(const double FoV_in_rad) {

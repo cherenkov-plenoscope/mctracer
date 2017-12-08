@@ -20,7 +20,7 @@ namespace Function {
 		Constant(const double value, const Limits &limits);
 		void init(const double value, const Limits &limits);
 		double operator()(const double x)const;
-		static const Constant void_function;
+		static const Constant VOID_FUNCTION;
 	};
 
 } // namespace Function

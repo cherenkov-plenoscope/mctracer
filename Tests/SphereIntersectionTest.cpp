@@ -78,7 +78,7 @@ TEST_F(SphereIntersectionTest, frontal) {
 	"radius 1m. So there are 5-1=4m to traverse. ";
 
 	EXPECT_EQ(
-		Vec3::unit_x*(-1),
+		Vec3::UNIT_X*(-1),
 		P.get_intersection_at(1).get_surface_normal_in_object_system()
 	);
 }
@@ -118,7 +118,7 @@ TEST_F(SphereIntersectionTest, tangential_intersection) {
 
 	ASSERT_EQ(2u, P.get_number_of_interactions_so_far() );
 
-	Vec3 normal = Vec3::unit_z;
+	Vec3 normal = Vec3::UNIT_Z;
 
 	EXPECT_NEAR(
 		0.0,
@@ -172,7 +172,7 @@ TEST_F(SphereIntersectionTest, ray_completely_outside_of_sphere) {
 //------------------------------------------------------------------------------
 TEST_F(SphereIntersectionTest, ray_starts_inside_sphere) {
 
-  Ray ray_inside(Vec3::null, Vec3(0.0,0.0,1.0));
+  Ray ray_inside(Vec3::ORIGIN, Vec3(0.0,0.0,1.0));
 
   vector<Intersection> intersections;
   MySphere->calculate_intersection_with(&ray_inside, &intersections);

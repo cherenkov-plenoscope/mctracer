@@ -64,8 +64,8 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 		LensMaker::Approximation::get_curvature_radius(cfg);
 
 	// ok lets test it...
-	const Color* lens_col = &Color::gray;
-	const Color* sensor_disc_col = &Color::dark_gray;
+	const Color* lens_col = &Color::GRAY;
+	const Color* sensor_disc_col = &Color::DARK_GRAY;
 
     const Function::Constant* refraction_vs_wavelength = 
     	new Function::Constant(
@@ -87,10 +87,10 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 
 	    // geometry
 		Frame optical_table;
-		optical_table.set_name_pos_rot("table", Vec3::null, Rot3::null);
+		optical_table.set_name_pos_rot("table", Vec3::ORIGIN, Rot3::UNITY);
 
 		BiConvexLensHexBound* lens = optical_table.append<BiConvexLensHexBound>();
-		lens->set_name_pos_rot("lens", Vec3::null, Rot3::null);
+		lens->set_name_pos_rot("lens", Vec3::ORIGIN, Rot3::UNITY);
 	    lens->set_outer_color(lens_col);
 	    lens->set_inner_color(lens_col);
 	    lens->set_inner_refraction(refraction_vs_wavelength);
@@ -103,7 +103,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 	    sensor_disc->set_name_pos_rot(
 	    	"sensor_disc", 
 	    	Vec3(0.0, 0.0, -image_sensor_disc_distance), 
-	    	Rot3::null
+	    	Rot3::UNITY
 	    );
 	    sensor_disc->set_outer_color(sensor_disc_col);
 	    sensor_disc->set_inner_color(sensor_disc_col);

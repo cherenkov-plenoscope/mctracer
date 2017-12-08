@@ -171,7 +171,7 @@ vector<Photon> point_like_towards_z_opening_angle_num_photons(
 ) {
     vector<Photon> photons;
     photons.reserve(number_of_photons);
-    const Vec3 support = Vec3::null;
+    const Vec3 support = Vec3::ORIGIN;
 
     Random::Mt19937 prng(0);
 
@@ -191,7 +191,7 @@ vector<Photon> parallel_towards_z_from_xy_disc(
 ) {
     vector<Photon> photons;
     photons.reserve(number_of_photons);
-    const Vec3 direction = Vec3::unit_z;
+    const Vec3 direction = Vec3::UNIT_Z;
 
     Random::Mt19937 prng(0);
 

@@ -13,7 +13,7 @@ SkyDome::SkyDome(const std::string _filename):sky(Image(_filename)) {
     zenith_to_horizon_radius =
         central_row < central_col ? central_row : central_col;
 
-    background_color = Color::black;
+    background_color = Color::BLACK;
 }
 
 SkyDome::SkyDome(const Color color) {
@@ -23,7 +23,7 @@ SkyDome::SkyDome(const Color color) {
 
 SkyDome::SkyDome() {
     has_texture = false;
-    background_color = Color::sky_blue;
+    background_color = Color::SKY_BLUE;
 }
 
 void SkyDome::set_background_color(const Color background_color) {
@@ -72,7 +72,7 @@ std::string SkyDome::str()const {
 }
 
 double SkyDome::get_zenith_distance_of(const Vec3 dir)const {
-    return Vec3::unit_z.get_angle_in_between_in_rad(dir);
+    return Vec3::UNIT_Z.get_angle_in_between_in_rad(dir);
 }
 
 double SkyDome::get_azimuth_angle_of(const Vec3 dir)const {

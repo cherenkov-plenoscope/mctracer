@@ -59,7 +59,7 @@ TEST_F(RandomGeneratorTest, generator_point_on_disc) {
         points.push_back(prng.get_point_on_xy_disc_within_radius(disc_radius));
 
     // mean position
-    Vec3 sum = Vec3::null;
+    Vec3 sum = Vec3::ORIGIN;
     for(Vec3 p: points)
         sum = sum + p;
 

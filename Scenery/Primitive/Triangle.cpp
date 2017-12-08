@@ -37,16 +37,16 @@ void Triangle::set_normal_and_3_vertecies(
 
 	Rot3 rot;
 
-	if(normal != Vec3::unit_z) {
+	if(normal != Vec3::UNIT_Z) {
 
 		// transformation to make surface normal match z-axis
-		Vec3 rot_axis = Vec3::unit_z.cross(normal);
-		double rotation_angle = Vec3::unit_z.get_angle_in_between_in_rad(normal);
+		Vec3 rot_axis = Vec3::UNIT_Z.cross(normal);
+		double rotation_angle = Vec3::UNIT_Z.get_angle_in_between_in_rad(normal);
 
 		rot = Rot3(rot_axis, rotation_angle);
 
 		HomTra3 trafo;
-		trafo.set_transformation(rot, Vec3::null);
+		trafo.set_transformation(rot, Vec3::ORIGIN);
 		
 		HomTra3 trafo_inv = trafo.inverse();
 		// transform a b c
@@ -54,7 +54,7 @@ void Triangle::set_normal_and_3_vertecies(
 		b = trafo_inv.get_transformed_orientation(b);
 		c = trafo_inv.get_transformed_orientation(c);
 	}else{
-		rot = Rot3::null;
+		rot = Rot3::UNITY;
 	}
 
 	set_name_pos_rot(name, pos, rot);

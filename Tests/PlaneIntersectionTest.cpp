@@ -63,7 +63,7 @@ TEST_F(PlaneIntersectionTest, frontal) {
 
 	ASSERT_TRUE(intersec.does_intersect());
 	EXPECT_EQ(plane, intersec.get_object());
-	EXPECT_EQ(Vec3::null, intersec.get_intersection_vector_in_object_system());
+	EXPECT_EQ(Vec3::ORIGIN, intersec.get_intersection_vector_in_object_system());
 	EXPECT_EQ(Vec3(0.0, 0.0, 1.0), intersec.get_surface_normal_in_object_system());
 }
 //------------------------------------------------------------------------------

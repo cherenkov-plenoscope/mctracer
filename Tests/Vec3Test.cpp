@@ -6,7 +6,7 @@
 class Vec3Test : public ::testing::Test {};
 //----------------------------------------------------------------------
 TEST_F(Vec3Test, NullVector) {
-    Vec3 a = Vec3::null;
+    Vec3 a = Vec3::ORIGIN;
 
     EXPECT_EQ(0.0, a.x());
     EXPECT_EQ(0.0, a.y());
@@ -17,19 +17,19 @@ TEST_F(Vec3Test, NullVector) {
 TEST_F(Vec3Test, UnitVectors) {
     Vec3 a;
 
-    a = Vec3::unit_x;
+    a = Vec3::UNIT_X;
     EXPECT_EQ(1.0, a.x());
     EXPECT_EQ(0.0, a.y());
     EXPECT_EQ(0.0, a.z());
     EXPECT_EQ(1.0, a.norm());
 
-    a = Vec3::unit_y; 
+    a = Vec3::UNIT_Y; 
     EXPECT_EQ(0.0, a.x());
     EXPECT_EQ(1.0, a.y());
     EXPECT_EQ(0.0, a.z());
     EXPECT_EQ(1.0, a.norm());
 
-    a = Vec3::unit_z; 
+    a = Vec3::UNIT_Z; 
     EXPECT_EQ(0.0, a.x());
     EXPECT_EQ(0.0, a.y());
     EXPECT_EQ(1.0, a.z());
@@ -76,11 +76,11 @@ TEST_F(Vec3Test, EuclideanNorm) {
 //----------------------------------------------------------------------
 TEST_F(Vec3Test, crossUnitVectors) {
 
-    Vec3 u = Vec3::unit_x;
-    Vec3 v = Vec3::unit_y;
+    Vec3 u = Vec3::UNIT_X;
+    Vec3 v = Vec3::UNIT_Y;
     Vec3 w = u.cross(v);
     EXPECT_EQ(1.0, w.z());
-    EXPECT_EQ(Vec3::unit_z, w);
+    EXPECT_EQ(Vec3::UNIT_Z, w);
 }
 //----------------------------------------------------------------------
 TEST_F(Vec3Test, cross) {
@@ -111,11 +111,11 @@ TEST_F(Vec3Test, cross) {
 //----------------------------------------------------------------------
 TEST_F(Vec3Test, Scalar_Product_unit_vectors) {
 
-    const Vec3 x = Vec3::unit_x;
-    const Vec3 y = Vec3::unit_y;
+    const Vec3 x = Vec3::UNIT_X;
+    const Vec3 y = Vec3::UNIT_Y;
     EXPECT_EQ(0.0, x*y);
 
-    const Vec3 z = Vec3::unit_z; 
+    const Vec3 z = Vec3::UNIT_Z; 
     EXPECT_EQ(0.0, y*z);
 
     EXPECT_EQ(1.0, x*x);
@@ -181,8 +181,8 @@ TEST_F(Vec3Test, ScalarDiviation) {
 //----------------------------------------------------------------------
 TEST_F(Vec3Test, distance_unit_x_to_unit_y) {
 
-    Vec3 a = Vec3::unit_x;
-    Vec3 b = Vec3::unit_y;
+    Vec3 a = Vec3::UNIT_X;
+    Vec3 b = Vec3::UNIT_Y;
 
     EXPECT_EQ( sqrt(2.0), a.distance_to(b) );
 }
@@ -240,7 +240,7 @@ TEST_F(Vec3Test, normalize) {
     a.normalize();
     EXPECT_EQ( 1.0, a.norm());
 
-    a = Vec3::null;
+    a = Vec3::ORIGIN;
     EXPECT_NE( 1.0, a.norm());
 
     a.normalize();
@@ -249,25 +249,25 @@ TEST_F(Vec3Test, normalize) {
 //----------------------------------------------------------------------
 TEST_F(Vec3Test, angle_in_between) {
   
-    Vec3 a = Vec3::unit_x;
-    Vec3 b = Vec3::unit_x;
+    Vec3 a = Vec3::UNIT_X;
+    Vec3 b = Vec3::UNIT_X;
 
     EXPECT_EQ(0.0, a.get_angle_in_between_in_rad(b));
     EXPECT_EQ(b.get_angle_in_between_in_rad(a), a.get_angle_in_between_in_rad(b));
 
-    Vec3 c = Vec3::unit_x*5.0;
+    Vec3 c = Vec3::UNIT_X*5.0;
     EXPECT_NE( 1.0, c.norm());
 
-    Vec3 d = Vec3::unit_x*5.0;
+    Vec3 d = Vec3::UNIT_X*5.0;
     EXPECT_NE( 1.0, d.norm());
 
     EXPECT_EQ(0.0, d.get_angle_in_between_in_rad(c));  
     EXPECT_EQ(c.get_angle_in_between_in_rad(d), d.get_angle_in_between_in_rad(c));
 
-    Vec3 foo = Vec3::unit_x*5.0 + Vec3::unit_y*5.0;
+    Vec3 foo = Vec3::UNIT_X*5.0 + Vec3::UNIT_Y*5.0;
     EXPECT_NE( 1.0, c.norm());
 
-    Vec3 bar = Vec3::unit_x*5.0;
+    Vec3 bar = Vec3::UNIT_X*5.0;
     EXPECT_NE( 1.0, d.norm());
 
     EXPECT_NEAR(Deg2Rad(45.0) , foo.get_angle_in_between_in_rad(bar), 1e-5);

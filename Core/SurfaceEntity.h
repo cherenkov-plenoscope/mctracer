@@ -10,7 +10,7 @@ class RayForPropagation;
 #include "Core/Function/Function.h"
 
 class SurfaceEntity :public Frame {
-    const Frame* allowed_frame_to_propagate_to = &Frame::void_frame;
+    const Frame* allowed_frame_to_propagate_to = &Frame::VOID_FRAME;
     bool _boundary_layer_is_transparent;
     const Color* outer_color;
     const Color* inner_color;
@@ -22,8 +22,8 @@ class SurfaceEntity :public Frame {
     const Function::Func1D* inner_absorption_vs_wavelength;
 
  public:
-    static const SurfaceEntity void_object;
-    static const SurfaceEntity source_object;
+    static const SurfaceEntity VOID_SURFACE_ENTITY;
+    static const SurfaceEntity PHOTON_SOURCE;
 
     SurfaceEntity();
     SurfaceEntity(
@@ -54,11 +54,11 @@ class SurfaceEntity :public Frame {
     bool boundary_layer_is_transparent()const;
     bool has_restrictions_on_frames_to_propagate_to()const;
     std::string str()const;
-    static const Function::Limits default_wavelength_range;
-    static const Function::Func1D* default_refl;
-    static const Function::Func1D* default_refr;
-    static const Function::Func1D* default_abso;
-    static const Color* default_color;
+    static const Function::Limits DEFAULT_WAVELENGTH_RANGE;
+    static const Function::Func1D* DEFAULT_REFLECTION;
+    static const Function::Func1D* DEFAULT_REFRACTION;
+    static const Function::Func1D* DEFAULT_ABSORPTION;
+    static const Color* DEFAULT_COLOR;
 
  private:
     void init_surface_defaults();
