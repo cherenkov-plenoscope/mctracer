@@ -1,23 +1,14 @@
-//=================================
-// include guard
-#ifndef __PropagationConfig_H_INCLUDED__
-#define __PropagationConfig_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef MCTRACER_CORE_PROPAGATIONCONFIG_H_
+#define MCTRACER_CORE_PROPAGATIONCONFIG_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
 #include "Color.h"
 #include "Vec3.h"
 
-//=================================
 struct PropagationConfig {
-
-	unsigned int max_number_of_interactions_per_photon;
-	bool use_multithread_when_possible;
-
-	static const PropagationConfig default_config;
-	PropagationConfig();	
+    unsigned int max_number_of_interactions_per_photon;
+    bool use_multithread_when_possible;
+    static const PropagationConfig default_config;
+    PropagationConfig();
 };
-#endif // __PropagationConfig_H_INCLUDED__ 
+#endif  // MCTRACER_CORE_PROPAGATIONCONFIG_H_
