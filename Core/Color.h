@@ -6,7 +6,6 @@
 #include <vector>
 
 struct Color {
-
     unsigned char r, g, b;
 
     static const Color white;
@@ -21,7 +20,7 @@ struct Color {
 
     Color();
     Color(const int _r, const int _g, const int _b);
-    Color(const std::vector<Color> &mean);
+    explicit Color(const std::vector<Color> &mean);
     std::string str()const;
     void reflection_mix(const Color &c, const double refl);
     bool operator == (const Color& eq)const;

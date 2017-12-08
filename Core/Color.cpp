@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
+#include <math.h>
 #include <sstream>
 #include <exception>
-#include "math.h"
 #include "Core/Color.h"
 
 const Color Color::white = Color(255, 255, 255);
