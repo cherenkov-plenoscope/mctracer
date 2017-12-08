@@ -1,21 +1,12 @@
-//=================================
-// include guard
-#ifndef __SIMULATION_TRUTH_CODE_H_INCLUDED__
-#define __SIMULATION_TRUTH_CODE_H_INCLUDED__
-
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
-
-//=================================
+// Copyright 2014 Sebastian A. Mueller
+#ifndef MCTRACER_CORE_SIMULATIONTRUTH_H_
+#define MCTRACER_CORE_SIMULATIONTRUTH_H_
 
 namespace SimulationTruth {
-    static const int MCTRACER_DEFAULT = -1; 
+    static const int MCTRACER_DEFAULT = -1;
     static const int NIGHT_SKY_BACKGROUND = -100;
     static const int PHOTO_ELECTRIC_CONVERTER_ACCIDENTAL = - 201;
     static const int PHOTO_ELECTRIC_CONVERTER_CROSSTALK = - 202;
-}//SimulationTruth
+}  // namespace SimulationTruth
 
-#endif // __SIMULATION_TRUTH_CODE_H_INCLUDED__ 
+#endif  // MCTRACER_CORE_SIMULATIONTRUTH_H_
