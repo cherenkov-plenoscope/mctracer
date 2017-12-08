@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Core/PropagationConfig.h"
 
-const PropagationConfig PropagationConfig::default_config = PropagationConfig();
+const PropagationConfig PropagationConfig::DEFAULT_CONFIG = PropagationConfig();
 
 PropagationConfig::PropagationConfig() {
     use_multithread_when_possible = true;
