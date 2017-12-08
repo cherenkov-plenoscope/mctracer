@@ -30,6 +30,8 @@
 #include <experimental/filesystem>
 namespace fs = std::experimental::filesystem;
 
+using std::cout;
+
 static const char USAGE[] =
 R"(Plenoscope air showher propagation
 
