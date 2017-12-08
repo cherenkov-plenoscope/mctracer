@@ -29,10 +29,10 @@ class Frame {
     const Frame *root_frame;
 
  public:
-    static const char path_delimiter;
-    static const unsigned int max_number_of_children;
-    static const double minimal_structure_size;
-    static Frame void_frame;
+    static const char PATH_DELIMITER;
+    static const unsigned int MAX_NUMBER_CHILDREN;
+    static const double MIN_STRUCTURE_SIZE;
+    static Frame VOID_FRAME;
 
     // SET
     Frame();

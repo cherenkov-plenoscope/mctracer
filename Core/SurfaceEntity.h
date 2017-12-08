@@ -10,7 +10,7 @@ class RayForPropagation;
 #include "Core/Function/Function.h"
 
 class SurfaceEntity :public Frame {
-    const Frame* allowed_frame_to_propagate_to = &Frame::void_frame;
+    const Frame* allowed_frame_to_propagate_to = &Frame::VOID_FRAME;
     bool _boundary_layer_is_transparent;
     const Color* outer_color;
     const Color* inner_color;

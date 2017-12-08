@@ -14,7 +14,7 @@ TEST_F(PropagationEnvironmentTest, default_instance) {
 
     PropagationEnvironment env;
 
-    EXPECT_EQ(&Frame::void_frame, env.world_geometry);
+    EXPECT_EQ(&Frame::VOID_FRAME, env.world_geometry);
     EXPECT_EQ(&PropagationConfig::default_config, env.propagation_options);
     EXPECT_EQ(&Random::void_generator, env.random_engine);
 }

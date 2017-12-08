@@ -8,7 +8,7 @@ const Color TrajectoryFactory::absorption_in_void_col = Color(128,128,255);
 const Color TrajectoryFactory::interaction_col = Color(128,255,128);
 //------------------------------------------------------------------------------
 TrajectoryFactory::TrajectoryFactory(const RayForPropagation* _ray):
-	ray(_ray), radius_of_trajectory(0.01), trajectory(&Frame::void_frame)
+	ray(_ray), radius_of_trajectory(0.01), trajectory(&Frame::VOID_FRAME)
 {}
 //------------------------------------------------------------------------------
 void TrajectoryFactory::set_trajectory_radius(const double radius) {

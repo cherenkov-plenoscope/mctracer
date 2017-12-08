@@ -9,15 +9,15 @@ using std::string;
 using std::stringstream;
 using std::vector;
 
-const char Frame::path_delimiter = '/';
-const unsigned int Frame::max_number_of_children = 16;
-const double Frame::minimal_structure_size = 1e-6;
+const char Frame::PATH_DELIMITER = '/';
+const unsigned int Frame::MAX_NUMBER_CHILDREN = 16;
+const double Frame::MIN_STRUCTURE_SIZE = 1e-6;
 
-Frame Frame::void_frame;
+Frame Frame::VOID_FRAME;
 
 Frame::Frame():
     bounding_sphere_radius(0.0),
-    mother(&void_frame),
+    mother(&VOID_FRAME),
     root_frame(this) {}
 
 Frame::~Frame() {
@@ -73,10 +73,10 @@ void Frame::assert_name_is_valid(const string name_to_check)const {
         char_pos++;
     }
 
-    if (StringTools::string_contains_char(name_to_check, path_delimiter)) {
+    if (StringTools::string_contains_char(name_to_check, PATH_DELIMITER)) {
         std::stringstream info;
         info << "Expected name of frame '" << name_to_check << "' ";
-        info << "to not contain any char of '" << path_delimiter << "', ";
+        info << "to not contain any char of '" << PATH_DELIMITER << "', ";
         info << "but actual it does.";
         throw std::invalid_argument(info.str());
     }
@@ -168,13 +168,13 @@ string Frame::get_path_in_tree_of_frames()const {
     // unix systems.
     // eg. City/Street14/house18/roof/chimney/chimney_wall_2
     if (has_mother())
-        return mother->get_path_in_tree_of_frames() + path_delimiter + name;
+        return mother->get_path_in_tree_of_frames() + PATH_DELIMITER + name;
     else
         return "";
 }
 
 bool Frame::has_mother()const {
-    return mother != &void_frame;
+    return mother != &VOID_FRAME;
 }
 
 bool Frame::has_children()const {
@@ -193,12 +193,12 @@ void Frame::calculate_intersection_with(
 }
 
 void Frame::cluster_children() {
-    if (children.size() > max_number_of_children) {
+    if (children.size() > MAX_NUMBER_CHILDREN) {
         vector<Frame*> oct_tree[8];
 
         // assign children temporarly to octtree
         for (Frame* child : children) {
-            child->mother = &void_frame;
+            child->mother = &VOID_FRAME;
             oct_tree[child->pos_in_mother.get_octant()].push_back(child);
         }
         children.clear();
@@ -211,7 +211,7 @@ void Frame::cluster_children() {
                 for (Frame* child : oct_tree[sector]) {
                     if (
                         child->get_bounding_sphere_radius() <
-                        minimal_structure_size
+                        MIN_STRUCTURE_SIZE
                     )
                         warn_small_child(child);
 
@@ -236,7 +236,7 @@ void Frame::cluster_children() {
                         if (
                             !sector_child->has_children() &&
                             sector_child->get_bounding_sphere_radius() <
-                            minimal_structure_size
+                            MIN_STRUCTURE_SIZE
                         )
                             warn_small_child(sector_child);
 
@@ -276,7 +276,7 @@ void Frame::warn_small_child(const Frame* frame)const {
     out << "___Warning___\n";
     out << __FILE__ << " " << __func__ << "(frame) " << __LINE__ << "\n";
     out << "Frame: " << frame->name << " is neglected. ";
-    out << "Contour radius is below " << minimal_structure_size << "m, i.e. ";
+    out << "Contour radius is below " << MIN_STRUCTURE_SIZE << "m, i.e. ";
     out << frame->get_bounding_sphere_radius() << "m.\n";
     std::cout << out.str();
 }
