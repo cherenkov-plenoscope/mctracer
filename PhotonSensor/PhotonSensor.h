@@ -1,17 +1,11 @@
-//=================================
-// include guard
-#ifndef __PHOTONSENSOR_H_INCLUDED__
-#define __PHOTONSENSOR_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef MCTRACER_PHOTONSENSOR_PHOTONSENSOR_H_
+#define MCTRACER_PHOTONSENSOR_PHOTONSENSOR_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
 #include "PhotonSensor/Sensor.h"
 #include "PhotonSensor/Finder.h"
 #include "PhotonSensor/Sensors.h"
 #include "PhotonSensor/ArrivalInformation.h"
 #include "PhotonSensor/inout.h"
-//=================================
-#endif // __PHOTONSENSOR_H_INCLUDED__ 
+
+#endif  // MCTRACER_PHOTONSENSOR_PHOTONSENSOR_H_
