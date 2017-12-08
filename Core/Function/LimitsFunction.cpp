@@ -3,7 +3,7 @@
 #include <exception>
 
 namespace Function {
-	const Limits Limits::void_limits = Limits(0.0, 0.0);
+	const Limits Limits::VOID_LIMITS = Limits(0.0, 0.0);
 	//--------------------------------------------------------------------------
 	Limits::Limits(const double _lower, const double _upper) {
 		lower = _lower;
