@@ -49,8 +49,8 @@ void add_stl_to_frame(const string path, Frame* proto, const double scale) {
             facet.b*scale,
             facet.c*scale
         );  
-        tri->set_outer_color(&Color::gray);
-        tri->set_inner_color(&Color::dark_gray);       
+        tri->set_outer_color(&Color::GRAY);
+        tri->set_inner_color(&Color::DARK_GRAY);       
     }
 }
 //------------------------------------------------------------------------------

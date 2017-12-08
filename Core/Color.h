@@ -8,15 +8,15 @@
 struct Color {
     unsigned char r, g, b;
 
-    static const Color white;
-    static const Color sky_blue;
-    static const Color gray;
-    static const Color dark_gray;
-    static const Color black;
-    static const Color red;
-    static const Color green;
-    static const Color blue;
-    static const Color grass_green;
+    static const Color WHITE;
+    static const Color SKY_BLUE;
+    static const Color GRAY;
+    static const Color DARK_GRAY;
+    static const Color BLACK;
+    static const Color RED;
+    static const Color GREEN;
+    static const Color BLUE;
+    static const Color GRASS_GREEN;
 
     Color();
     Color(const int _r, const int _g, const int _b);

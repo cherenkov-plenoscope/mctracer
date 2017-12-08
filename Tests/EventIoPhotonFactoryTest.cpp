@@ -38,7 +38,7 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
 
                     Disc* ground = world.append<Disc>();
                     ground->set_name_pos_rot("ground", Vec3::ORIGIN, Rot3::null);
-                    const Color* ground_color = &Color::gray;
+                    const Color* ground_color = &Color::GRAY;
                     const unsigned int ground_sensor_id = 0;
                     ground->set_outer_color(ground_color);
                     ground->set_inner_color(ground_color);
@@ -271,7 +271,7 @@ TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         
         Disc* ground = world.append<Disc>();
         ground->set_name_pos_rot("ground", Vec3::ORIGIN, Rot3::null);
-        const Color* ground_color = &Color::gray;
+        const Color* ground_color = &Color::GRAY;
         const unsigned int ground_sensor_id = 0;
         ground->set_outer_color(ground_color);
         ground->set_inner_color(ground_color);

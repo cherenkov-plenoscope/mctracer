@@ -64,8 +64,8 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 		LensMaker::Approximation::get_curvature_radius(cfg);
 
 	// ok lets test it...
-	const Color* lens_col = &Color::gray;
-	const Color* sensor_disc_col = &Color::dark_gray;
+	const Color* lens_col = &Color::GRAY;
+	const Color* sensor_disc_col = &Color::DARK_GRAY;
 
     const Function::Constant* refraction_vs_wavelength = 
     	new Function::Constant(

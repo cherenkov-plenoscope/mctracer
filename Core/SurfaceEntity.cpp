@@ -11,7 +11,7 @@ using Function::Limits;
 const SurfaceEntity SurfaceEntity::void_object;
 const SurfaceEntity SurfaceEntity::source_object;
 
-const Color* SurfaceEntity::default_color = &Color::dark_gray;
+const Color* SurfaceEntity::default_color = &Color::DARK_GRAY;
 
 const Limits SurfaceEntity::default_wavelength_range = Limits(200e-9, 1200e-9);
 
