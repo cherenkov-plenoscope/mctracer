@@ -9,11 +9,13 @@ Tracer::Tracer(
     CameraRay* _cray,
     const Frame* _scenery,
     const Config* _config,
-    Random::Mt19937* _prng):
+    Random::Mt19937* _prng
+):
+    prng(_prng),
     scenery(_scenery),
     config(_config),
-    cray(_cray),
-    prng(_prng) {
+    cray(_cray)
+{
     trace_back();
 }
 
