@@ -1,30 +1,21 @@
-//=================================
-// include guard
-#ifndef __PHOTONSENSORS_WRITER_H_INCLUDED__
-#define __PHOTONSENSORS_WRITER_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef MCTRACER_PHOTONSENSOR_INOUT_H_
+#define MCTRACER_PHOTONSENSOR_INOUT_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
-#include "PhotonSensor/PhotonSensor.h"
 #include <fstream>
 #include <vector>
-//=================================
+#include "PhotonSensor/PhotonSensor.h"
 
 namespace PhotonSensor {
 
-    void write_arrival_information_to_file(
-        const std::vector<ArrivalInformation>* arrival_table,
-        std::ofstream *file
-    );
+void write_arrival_information_to_file(
+    const std::vector<ArrivalInformation>* arrival_table,
+    std::ofstream *file);
 
-    std::vector<ArrivalInformation> read_arrival_information_from_file(
-        std::ifstream *file,
-        const unsigned int number_of_arrivals
-    );
+std::vector<ArrivalInformation> read_arrival_information_from_file(
+    std::ifstream *file,
+    const unsigned int number_of_arrivals);
 
-} // PhotonSensor
-//------------------------------------------------------------------------------
-#endif // __PHOTONSENSORS_WRITER_H_INCLUDED__ 
+}  // namespace PhotonSensor
+
+#endif  // MCTRACER_PHOTONSENSOR_INOUT_H_
