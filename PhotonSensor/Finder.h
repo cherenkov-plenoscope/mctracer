@@ -1,33 +1,24 @@
-//=================================
-// include guard
-#ifndef __PHOTONSENSORS_FINDER_H_INCLUDED__
-#define __PHOTONSENSORS_FINDER_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef MCTRACER_PHOTONSENSOR_FINDER_H_
+#define MCTRACER_PHOTONSENSOR_FINDER_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
-#include "PhotonSensor/PhotonSensor.h"
 #include <vector>
-
-//=================================
+#include "PhotonSensor/PhotonSensor.h"
 
 namespace PhotonSensor {
 
-	class FindSensorByFrame {
+class FindSensorByFrame {
+    bool photon_is_absorbed_by_known_sensor;
+    PhotonSensor::Sensor* closest_sensor;
 
-		bool photon_is_absorbed_by_known_sensor;
-		PhotonSensor::Sensor* closest_sensor;
-	public:
-		FindSensorByFrame(
-			const Frame* final_frame,
-			const std::vector<PhotonSensor::Sensor*> *sensors
-		);
-		bool frame_is_in_sensors()const;
-		PhotonSensor::Sensor* get_sensor()const;
-	};
+ public:
+    FindSensorByFrame(
+        const Frame* final_frame,
+        const std::vector<PhotonSensor::Sensor*> *sensors);
+    bool frame_is_in_sensors()const;
+    PhotonSensor::Sensor* get_sensor()const;
+};
 
-} // PhotonSensor
-//------------------------------------------------------------------------------
-#endif // __PHOTONSENSORS_FINDER_H_INCLUDED__ 
+}  // namespace PhotonSensor
+
+#endif  // MCTRACER_PHOTONSENSOR_FINDER_H_
