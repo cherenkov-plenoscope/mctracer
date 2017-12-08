@@ -57,8 +57,8 @@ class SurfaceEntity :public Frame {
     static const Function::Limits DEFAULT_WAVELENGTH_RANGE;
     static const Function::Func1D* DEFAULT_REFLECTION;
     static const Function::Func1D* DEFAULT_REFRACTION;
-    static const Function::Func1D* default_abso;
-    static const Color* default_color;
+    static const Function::Func1D* DEFAULT_ABSORPTION;
+    static const Color* DEFAULT_COLOR;
 
  private:
     void init_surface_defaults();
