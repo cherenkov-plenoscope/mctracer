@@ -79,7 +79,7 @@ TEST_F(SphereIntersectionTest, frontal) {
 
 	EXPECT_EQ(
 		Vec3::UNIT_X*(-1),
-		P.get_intersection_at(1).get_surface_normal_in_object_system()
+		P.get_intersection_at(1).surface_normal_in_object_frame()
 	);
 }
 //------------------------------------------------------------------------------
@@ -123,7 +123,7 @@ TEST_F(SphereIntersectionTest, tangential_intersection) {
 	EXPECT_NEAR(
 		0.0,
 		normal.distance_to(
-			P.get_intersection_at(1).get_surface_normal_in_object_system()
+			P.get_intersection_at(1).surface_normal_in_object_frame()
 		),
 		1e-12
 	);
@@ -146,7 +146,7 @@ TEST_F(SphereIntersectionTest, ray_frontal_intersection) {
   );
   EXPECT_EQ(
   	Vec3(0.0,0.0,-1.0),
-  	intersections.front().get_surface_normal_in_object_system()
+  	intersections.front().surface_normal_in_object_frame()
   );
 }
 //------------------------------------------------------------------------------
@@ -185,7 +185,7 @@ TEST_F(SphereIntersectionTest, ray_starts_inside_sphere) {
   );
   EXPECT_EQ(
   	Vec3(0.0,0.0,+1.0),
-  	intersections.front().get_surface_normal_in_object_system()
+  	intersections.front().surface_normal_in_object_frame()
   );
 }
 //------------------------------------------------------------------------------
@@ -204,7 +204,7 @@ TEST_F(SphereIntersectionTest, ray_tangents_sphere) {
   ;
   EXPECT_EQ(
   	Vec3(1.0, 0.0, 0.0),
-  	intersections.front().get_surface_normal_in_object_system()
+  	intersections.front().surface_normal_in_object_frame()
   );
 }
 //------------------------------------------------------------------------------

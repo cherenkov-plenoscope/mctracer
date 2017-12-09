@@ -122,7 +122,7 @@ bool Tracer::surface_iluminated_by_global_light_source()const {
     const Intersection intersec_light_source =
         RayAndFrame::first_intersection(&ray_to_source, scenery);
 
-    double p = isec.get_surface_normal_in_world_system()*
+    double p = isec.surface_normal_in_root_frame()*
         config->global_illumination.incoming_direction;
 
     if (surface_normal_is_facing_observer(isec))
@@ -137,7 +137,7 @@ bool Tracer::surface_normal_is_facing_observer(
     const Intersection &intersection
 )const {
     return (
-        intersection.get_surface_normal_in_world_system()*
+        intersection.surface_normal_in_root_frame()*
         cray->get_direction() >
         0.0);
 }

@@ -45,11 +45,11 @@ Vec3 Intersection::position_in_root_frame()const {
         frame2world()->get_transformed_position(intersection_point);
 }
 
-Vec3 Intersection::get_surface_normal_in_object_system()const {
+Vec3 Intersection::surface_normal_in_object_frame()const {
     return surfacenormal_in_intersection_point;
 }
 
-Vec3 Intersection::get_surface_normal_in_world_system()const {
+Vec3 Intersection::surface_normal_in_root_frame()const {
     return object->frame2world()->
         get_transformed_orientation(surfacenormal_in_intersection_point);
 }
@@ -148,7 +148,7 @@ bool Intersection::ray_is_running_from_outside_to_inside(
     const Vec3 incident_in_obj_sys
 )const {
     double projection_of_incident_onto_normal =
-        get_surface_normal_in_object_system()*incident_in_obj_sys;
+        surface_normal_in_object_frame()*incident_in_obj_sys;
 
     return projection_of_incident_onto_normal < 0.0;
 }

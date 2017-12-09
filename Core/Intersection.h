@@ -28,8 +28,8 @@ class Intersection {
     const SurfaceEntity * get_object()const;
     Vec3 position_in_object_frame()const;
     Vec3 position_in_root_frame()const;
-    Vec3 get_surface_normal_in_object_system()const;
-    Vec3 get_surface_normal_in_world_system()const;
+    Vec3 surface_normal_in_object_frame()const;
+    Vec3 surface_normal_in_root_frame()const;
     double get_intersection_distance()const;
     std::string str()const;
     void get_reflection_direction_in_object_system(Vec3* vec)const;
