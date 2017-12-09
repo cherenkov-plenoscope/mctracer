@@ -146,7 +146,7 @@ double Vec3::distance_to(const Vec3 &v)const {
 }
 
 bool Vec3::is_paralell_to_z_axis()const {
-    return x == 0.0 && y == 0.0 && z > 0.0;
+    return x == 0.0 && y == 0.0 && fabs(z) > 0.0;
 }
 
 bool Vec3::is_parallel_to_x_y_plane()const {
