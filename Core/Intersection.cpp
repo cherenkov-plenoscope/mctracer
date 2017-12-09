@@ -145,11 +145,10 @@ const Color Intersection::facing_color()const {
 }
 
 bool Intersection::ray_is_running_from_outside_to_inside(
-    const Vec3 incident_in_obj_sys
+    const Vec3& incident_in_obj_sys
 )const {
     double projection_of_incident_onto_normal =
         surface_normal_in_object_frame()*incident_in_obj_sys;
-
     return projection_of_incident_onto_normal < 0.0;
 }
 

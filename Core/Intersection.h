@@ -51,6 +51,6 @@ class Intersection {
 
  protected:
     bool ray_is_running_from_outside_to_inside(
-        const Vec3 incident_in_obj_sys)const;
+        const Vec3& incident_in_obj_sys)const;
 };
 #endif  // MCTRACER_CORE_INTERSECTION_H_
