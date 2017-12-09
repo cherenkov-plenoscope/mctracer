@@ -12,14 +12,14 @@ const double Vec3::MAX_DEVIATION_EQUAL_VEC3_SQUARE = 1e-14;
 
 Vec3::Vec3() {}
 
-Vec3::Vec3(const double nx, const double ny, const double nz):
-    X(nx), Y(ny), Z(nz)
+Vec3::Vec3(const double _x, const double _y, const double _z):
+    x(_x), y(_y), z(_z)
 {}
 
-void Vec3::set(const double nx, const double ny, const double nz) {
-    X = nx;
-    Y = ny;
-    Z = nz;
+void Vec3::set(const double _x, const double _y, const double _z) {
+    x = _x;
+    y = _y;
+    z = _z;
 }
 
 void Vec3::normalize() {
@@ -27,42 +27,42 @@ void Vec3::normalize() {
 }
 
 double Vec3::norm()const {
-    return sqrt( X*X + Y*Y + Z*Z );
+    return sqrt(x*x + y*y + z*z);
 }
 
 Vec3 Vec3::cross(const Vec3 v)const {
-    return Vec3(Y*v.Z-Z*v.Y, Z*v.X-X*v.Z, X*v.Y-Y*v.X);
+    return Vec3(y*v.z-z*v.y, z*v.x-x*v.z, x*v.y-y*v.x);
 }
 
-double Vec3::operator*(const Vec3 vec_two)const {
-    return vec_two.X*X + vec_two.Y*Y + vec_two.Z*Z;
+double Vec3::operator*(const Vec3 v)const {
+    return v.x*x + v.y*y + v.z*z;
 }
 
 Vec3 Vec3::operator*(const double scalar)const {
-    return Vec3(X*scalar, Y*scalar, Z*scalar);
+    return Vec3(x*scalar, y*scalar, z*scalar);
 }
 
-Vec3 Vec3::operator-(const Vec3 vec)const {
-    return Vec3(X-vec.X, Y-vec.Y, Z-vec.Z);
+Vec3 Vec3::operator-(const Vec3 v)const {
+    return Vec3(x-v.x, y-v.y, z-v.z);
 }
 
-Vec3 Vec3::operator+(const Vec3 vec)const {
-    return Vec3(X+vec.X, Y+vec.Y, Z+vec.Z);
+Vec3 Vec3::operator+(const Vec3 v)const {
+    return Vec3(x+v.x, y+v.y, z+v.z);
 }
 
 Vec3 Vec3::operator/(const double scalar)const {
-    return Vec3(X/scalar, Y/scalar, Z/scalar);
+    return Vec3(x/scalar, y/scalar, z/scalar);
 }
 
 void Vec3::operator=(const Vec3 eq) {
-    X = eq.X;
-    Y = eq.Y;
-    Z = eq.Z;
+    x = eq.x;
+    y = eq.y;
+    z = eq.z;
 }
 
 std::string Vec3::str()const {
     std::stringstream out;
-    out << "(" << X << " " << Y << " " << Z << ")m";
+    out << "(" << x << " " << y << " " << z << ")m";
     return out.str();
 }
 
@@ -109,35 +109,23 @@ void Vec3::mirror(Vec3* ray)const {
     // dir_of_ray_to_be_reflected is overwritten with the reflected ray.
 
     ray->set(   // X
-                (1.0 - 2.0*X*X) * ray->X +
-                     - 2.0*X*Y  * ray->Y +
-                     - 2.0*X*Z  * ray->Z,
+                (1.0 - 2.0*x*x) * ray->x +
+                     - 2.0*x*y  * ray->y +
+                     - 2.0*x*z  * ray->z,
                 // Y
-                     - 2.0*X*Y  * ray->X +
-                (1.0 - 2.0*Y*Y) * ray->Y +
-                     - 2.0*Y*Z  * ray->Z,
+                     - 2.0*x*y  * ray->x +
+                (1.0 - 2.0*y*y) * ray->y +
+                     - 2.0*y*z  * ray->z,
                 // Z
-                     - 2.0*X*Z  * ray->X +
-                     - 2.0*Y*Z  * ray->Y +
-                (1.0 - 2.0*Z*Z) * ray->Z);
+                     - 2.0*x*z  * ray->x +
+                     - 2.0*y*z  * ray->y +
+                (1.0 - 2.0*z*z) * ray->z);
 }
 
 double Vec3::get_angle_in_between_in_rad(const Vec3& that)const {
     Vec3 this_normalized = *this/this->norm();
     Vec3 that_normalized = that/that.norm();
     return acos(this_normalized*that_normalized);
-}
-
-double Vec3::x()const {
-    return X;
-}
-
-double Vec3::y()const {
-    return Y;
-}
-
-double Vec3::z()const {
-    return Z;
 }
 
 bool Vec3::operator == (const Vec3& eqVec)const {
@@ -158,11 +146,11 @@ double Vec3::distance_to(const Vec3 &v)const {
 }
 
 bool Vec3::is_paralell_to_z_axis()const {
-    return X == 0.0 && Y == 0.0 && Z > 0.0;
+    return x == 0.0 && y == 0.0 && fabs(z) > 0.0;
 }
 
 bool Vec3::is_parallel_to_x_y_plane()const {
-    return Z == 0.0 && ( X != 0.0 || Y != 0.0 );
+    return z == 0.0 && ( x != 0.0 || y != 0.0 );
 }
 
 bool Vec3::norm_is_less_equal_than(const double length_to_compare)const {
@@ -181,20 +169,20 @@ unsigned int Vec3::get_octant()const {
     // + - +   5
     // + + -   6
     // + + +   7
-    const bool sx = X >= 0.0;
-    const bool sy = Y >= 0.0;
-    const bool sz = Z >= 0.0;
+    const bool sx = x >= 0.0;
+    const bool sy = y >= 0.0;
+    const bool sz = z >= 0.0;
     return 4*sx + 2*sy + 1*sz;
 }
 
 Vec3 Vec3::get_projection_on_XZ_plane()const {
-    return Vec3(X, 0.0, Z);
+    return Vec3(x, 0.0, z);
 }
 
 Vec3 Vec3::get_projection_on_YZ_plane()const {
-    return Vec3(0.0, Y, Z);
+    return Vec3(0.0, y, z);
 }
 
 Vec3 Vec3::get_projection_on_XY_plane()const {
-    return Vec3(X, Y, 0.0);
+    return Vec3(x, y, 0.0);
 }

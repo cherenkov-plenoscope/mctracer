@@ -32,7 +32,7 @@ void SkyDome::set_background_color(const Color background_color) {
 
 Color SkyDome::get_color_for_direction(Vec3 dir)const {
     if (has_texture) {
-        if (dir.z() < 0.0)
+        if (dir.z < 0.0)
             return background_color;
         else
             return sky_dome_color_for(dir);
@@ -76,7 +76,7 @@ double SkyDome::get_zenith_distance_of(const Vec3 dir)const {
 }
 
 double SkyDome::get_azimuth_angle_of(const Vec3 dir)const {
-    return atan2(dir.y(), dir.x());
+    return atan2(dir.y, dir.x);
 }
 
 }  // namespace Visual

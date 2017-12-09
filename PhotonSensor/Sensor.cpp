@@ -26,16 +26,16 @@ void Sensor::assign_photon_to_this_sensor(const Photon* photon) {
         photon->get_time_of_flight(),
         // x
         photon->get_final_intersection().
-            get_intersection_vector_in_object_system().x(),
+            get_intersection_vector_in_object_system().x,
         // y
         photon->get_final_intersection().
-            get_intersection_vector_in_object_system().y(),
+            get_intersection_vector_in_object_system().y,
         // tx
         -1.0*photon->
-            get_final_intersection_incident_vector_in_object_frame().x(),
+            get_final_intersection_incident_vector_in_object_frame().x,
         // ty
         -1.0*photon->
-            get_final_intersection_incident_vector_in_object_frame().y());
+            get_final_intersection_incident_vector_in_object_frame().y);
 }
 
 void Sensor::clear_history() {

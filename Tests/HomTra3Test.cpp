@@ -82,15 +82,15 @@ TEST_F(HomTra3Test, transform_position_forth_and_back_only_translation_component
 
     Vec3 ux_forth = homtra.get_transformed_position(ux_original);
 
-    EXPECT_EQ(ux_forth.x(), 1.0);
-    EXPECT_EQ(ux_forth.y(), 0.0);
-    EXPECT_EQ(ux_forth.z(), 133.7);
+    EXPECT_EQ(ux_forth.x, 1.0);
+    EXPECT_EQ(ux_forth.y, 0.0);
+    EXPECT_EQ(ux_forth.z, 133.7);
 
     Vec3 ux_back = homtra.get_transformed_position_inverse(ux_forth);
 
-    EXPECT_EQ(ux_back.x(), ux_original.x());
-    EXPECT_EQ(ux_back.y(), ux_original.y());
-    EXPECT_EQ(ux_back.z(), ux_original.z());
+    EXPECT_EQ(ux_back.x, ux_original.x);
+    EXPECT_EQ(ux_back.y, ux_original.y);
+    EXPECT_EQ(ux_back.z, ux_original.z);
 }
 //------------------------------------------------------------------------------
 TEST_F(HomTra3Test, transform_position_forth_and_back_full_set) {
@@ -104,15 +104,15 @@ TEST_F(HomTra3Test, transform_position_forth_and_back_full_set) {
 
     Vec3 ux_forth = homtra.get_transformed_position(ux_original);
 
-    EXPECT_NEAR(-1.0, ux_forth.x(), 1e-12);
-    EXPECT_NEAR( 0.0, ux_forth.y(), 1e-12);
-    EXPECT_NEAR( 133.7, ux_forth.z(), 1e-12);
+    EXPECT_NEAR(-1.0, ux_forth.x, 1e-12);
+    EXPECT_NEAR( 0.0, ux_forth.y, 1e-12);
+    EXPECT_NEAR( 133.7, ux_forth.z, 1e-12);
 
     Vec3 ux_back = homtra.get_transformed_position_inverse(ux_forth);
 
-    EXPECT_EQ(ux_back.x(), ux_original.x());
-    EXPECT_EQ(ux_back.y(), ux_original.y());
-    EXPECT_EQ(ux_back.z(), ux_original.z());
+    EXPECT_EQ(ux_back.x, ux_original.x);
+    EXPECT_EQ(ux_back.y, ux_original.y);
+    EXPECT_EQ(ux_back.z, ux_original.z);
 }
 //------------------------------------------------------------------------------
 TEST_F(HomTra3Test, transform_orientation_forth_and_back_only_rot_component_set) {
@@ -126,14 +126,14 @@ TEST_F(HomTra3Test, transform_orientation_forth_and_back_only_rot_component_set)
 
     Vec3 ux_forth = homtra.get_transformed_orientation(ux_original);
 
-    EXPECT_NEAR(-1.0, ux_forth.x(), 1e-12);
-    EXPECT_NEAR( 0.0, ux_forth.y(), 1e-12);
-    EXPECT_NEAR( 0.0, ux_forth.z(), 1e-12);
+    EXPECT_NEAR(-1.0, ux_forth.x, 1e-12);
+    EXPECT_NEAR( 0.0, ux_forth.y, 1e-12);
+    EXPECT_NEAR( 0.0, ux_forth.z, 1e-12);
 
     Vec3 ux_back = homtra.get_transformed_orientation_inverse(ux_forth);
 
-    EXPECT_EQ(ux_back.x(), ux_original.x());
-    EXPECT_EQ(ux_back.y(), ux_original.y());
-    EXPECT_EQ(ux_back.z(), ux_original.z());
+    EXPECT_EQ(ux_back.x, ux_original.x);
+    EXPECT_EQ(ux_back.y, ux_original.y);
+    EXPECT_EQ(ux_back.z, ux_original.z);
 }
 //------------------------------------------------------------------------------

@@ -50,8 +50,8 @@ Photon MmcsCorsikaEvent::get_mctracer_photon(const unsigned int i)const {
 	);
 
 	double ray_parameter_for_production_height = (
-		production_height_in_m(i) - intersection_with_xy_floor_plane(i).z()
-		)/-causal_dir.z();
+		production_height_in_m(i) - intersection_with_xy_floor_plane(i).z
+		)/-causal_dir.z;
 
 	Vec3 causal_support = 
 		ray_running_upwards_from_ground_to_pos_of_production.

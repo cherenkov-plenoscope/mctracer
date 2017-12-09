@@ -8,20 +8,20 @@ class Vec2Test : public ::testing::Test {};
 
 TEST_F(Vec2Test, NullVector) {
     Vec2 a = Vec2::ORIGIN;
-    EXPECT_EQ(0.0, a.x());
-    EXPECT_EQ(0.0, a.y());
+    EXPECT_EQ(0.0, a.x);
+    EXPECT_EQ(0.0, a.y);
     EXPECT_EQ(0.0, a.norm());
 }
 
 TEST_F(Vec2Test, UnitVectors) {
     Vec2 a;
     a = Vec2::UNIT_X;
-    EXPECT_EQ(1.0, a.x());
-    EXPECT_EQ(0.0, a.y());
+    EXPECT_EQ(1.0, a.x);
+    EXPECT_EQ(0.0, a.y);
     EXPECT_EQ(1.0, a.norm());
     a = Vec2::UNIT_Y;
-    EXPECT_EQ(0.0, a.x());
-    EXPECT_EQ(1.0, a.y());
+    EXPECT_EQ(0.0, a.x);
+    EXPECT_EQ(1.0, a.y);
     EXPECT_EQ(1.0, a.norm());
 }
 
@@ -30,8 +30,8 @@ TEST_F(Vec2Test, ConstructorAndGetter) {
     for (x = -2.0; x > 2.0; x = x+.25) {
         for (y = -2.0; y > 2.0; y = y+.25) {
             Vec2 v(x, y);
-            EXPECT_EQ(x, v.x());
-            EXPECT_EQ(y, v.y());
+            EXPECT_EQ(x, v.x);
+            EXPECT_EQ(y, v.y);
         }
     }
 }
@@ -42,8 +42,8 @@ TEST_F(Vec2Test, SetterAndGetter) {
         for (y = -2.0; y > 2.0; y = y+.25) {
             Vec2 v;
             v.set(x, y);
-            EXPECT_EQ(x, v.x());
-            EXPECT_EQ(y, v.y());
+            EXPECT_EQ(x, v.x);
+            EXPECT_EQ(y, v.y);
         }
     }
 }
@@ -90,8 +90,8 @@ TEST_F(Vec2Test, ScalarMultiplication) {
         for (y = -2.0; y > 2.0; y = y+.25) {
             Vec2 a(x, y);
             for (f = -2.0; f > 2.0; f = f+.25) {
-                EXPECT_EQ(x*f, (a*f).x());
-                EXPECT_EQ(y*f, (a*f).y());
+                EXPECT_EQ(x*f, (a*f).x);
+                EXPECT_EQ(y*f, (a*f).y);
             }
         }
     }
@@ -103,8 +103,8 @@ TEST_F(Vec2Test, ScalarDiviation) {
         for (y = -2.0; y > 2.0; y = y+.25) {
             Vec2 a(x, y);
             for (f = -2.0; f > 2.0; f = f+.25) {
-                EXPECT_EQ(x/f, (a/f).x());
-                EXPECT_EQ(y/f, (a/f).y());
+                EXPECT_EQ(x/f, (a/f).x);
+                EXPECT_EQ(y/f, (a/f).y);
             }
         }
     }

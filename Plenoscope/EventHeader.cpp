@@ -13,26 +13,26 @@ void EventHeader::set_event_type(const float event_type) {
 }
 //------------------------------------------------------------------------------
 void EventHeader::set_trigger_type(const float trigger_type) {
-    raw[  3-1] = trigger_type;    
+    raw[  3-1] = trigger_type;
 }
 //------------------------------------------------------------------------------
 void EventHeader::set_plenoscope_geometry(const LightFieldSensor::Config &cfg) {
 
-    raw[ 11-1] = cfg.sensor_plane2imaging_system.get_rot_x().x();
-    raw[ 12-1] = cfg.sensor_plane2imaging_system.get_rot_x().y();
-    raw[ 13-1] = cfg.sensor_plane2imaging_system.get_rot_x().z();
+    raw[ 11-1] = cfg.sensor_plane2imaging_system.get_rot_x().x;
+    raw[ 12-1] = cfg.sensor_plane2imaging_system.get_rot_x().y;
+    raw[ 13-1] = cfg.sensor_plane2imaging_system.get_rot_x().z;
 
-    raw[ 14-1] = cfg.sensor_plane2imaging_system.get_rot_y().x();
-    raw[ 15-1] = cfg.sensor_plane2imaging_system.get_rot_y().y();
-    raw[ 16-1] = cfg.sensor_plane2imaging_system.get_rot_y().z();
+    raw[ 14-1] = cfg.sensor_plane2imaging_system.get_rot_y().x;
+    raw[ 15-1] = cfg.sensor_plane2imaging_system.get_rot_y().y;
+    raw[ 16-1] = cfg.sensor_plane2imaging_system.get_rot_y().z;
 
-    raw[ 17-1] = cfg.sensor_plane2imaging_system.get_rot_z().x();
-    raw[ 18-1] = cfg.sensor_plane2imaging_system.get_rot_z().y();
-    raw[ 19-1] = cfg.sensor_plane2imaging_system.get_rot_z().z();
+    raw[ 17-1] = cfg.sensor_plane2imaging_system.get_rot_z().x;
+    raw[ 18-1] = cfg.sensor_plane2imaging_system.get_rot_z().y;
+    raw[ 19-1] = cfg.sensor_plane2imaging_system.get_rot_z().z;
 
-    raw[ 20-1] = cfg.sensor_plane2imaging_system.get_translation().x();
-    raw[ 21-1] = cfg.sensor_plane2imaging_system.get_translation().y();
-    raw[ 22-1] = cfg.sensor_plane2imaging_system.get_translation().z();
+    raw[ 20-1] = cfg.sensor_plane2imaging_system.get_translation().x;
+    raw[ 21-1] = cfg.sensor_plane2imaging_system.get_translation().y;
+    raw[ 22-1] = cfg.sensor_plane2imaging_system.get_translation().z;
 
     raw[ 23-1] = cfg.expected_imaging_system_focal_length;
     raw[ 24-1] = cfg.expected_imaging_system_max_aperture_radius;

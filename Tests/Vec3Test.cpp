@@ -9,9 +9,9 @@ class Vec3Test : public ::testing::Test {};
 TEST_F(Vec3Test, NullVector) {
     Vec3 a = Vec3::ORIGIN;
 
-    EXPECT_EQ(0.0, a.x());
-    EXPECT_EQ(0.0, a.y());
-    EXPECT_EQ(0.0, a.z());
+    EXPECT_EQ(0.0, a.x);
+    EXPECT_EQ(0.0, a.y);
+    EXPECT_EQ(0.0, a.z);
     EXPECT_EQ(0.0, a.norm());
 }
 
@@ -19,21 +19,21 @@ TEST_F(Vec3Test, UnitVectors) {
     Vec3 a;
 
     a = Vec3::UNIT_X;
-    EXPECT_EQ(1.0, a.x());
-    EXPECT_EQ(0.0, a.y());
-    EXPECT_EQ(0.0, a.z());
+    EXPECT_EQ(1.0, a.x);
+    EXPECT_EQ(0.0, a.y);
+    EXPECT_EQ(0.0, a.z);
     EXPECT_EQ(1.0, a.norm());
 
     a = Vec3::UNIT_Y;
-    EXPECT_EQ(0.0, a.x());
-    EXPECT_EQ(1.0, a.y());
-    EXPECT_EQ(0.0, a.z());
+    EXPECT_EQ(0.0, a.x);
+    EXPECT_EQ(1.0, a.y);
+    EXPECT_EQ(0.0, a.z);
     EXPECT_EQ(1.0, a.norm());
 
     a = Vec3::UNIT_Z;
-    EXPECT_EQ(0.0, a.x());
-    EXPECT_EQ(0.0, a.y());
-    EXPECT_EQ(1.0, a.z());
+    EXPECT_EQ(0.0, a.x);
+    EXPECT_EQ(0.0, a.y);
+    EXPECT_EQ(1.0, a.z);
     EXPECT_EQ(1.0, a.norm());
 }
 
@@ -42,9 +42,9 @@ TEST_F(Vec3Test, ConstructorAndGetter) {
     const double y = (rand()-.5);
     const double z = (rand()-.5);
     Vec3 v(x, y, z);
-    EXPECT_EQ(x, v.x());
-    EXPECT_EQ(y, v.y());
-    EXPECT_EQ(z, v.z());
+    EXPECT_EQ(x, v.x);
+    EXPECT_EQ(y, v.y);
+    EXPECT_EQ(z, v.z);
 }
 
 TEST_F(Vec3Test, SetterAndGetter) {
@@ -53,9 +53,9 @@ TEST_F(Vec3Test, SetterAndGetter) {
     const double z = (rand()-.5);
     Vec3 v;
     v.set(x, y, z);
-    EXPECT_EQ(x, v.x());
-    EXPECT_EQ(y, v.y());
-    EXPECT_EQ(z, v.z());
+    EXPECT_EQ(x, v.x);
+    EXPECT_EQ(y, v.y);
+    EXPECT_EQ(z, v.z);
 }
 
 TEST_F(Vec3Test, EuclideanNorm) {
@@ -76,7 +76,7 @@ TEST_F(Vec3Test, crossUnitVectors) {
     Vec3 u = Vec3::UNIT_X;
     Vec3 v = Vec3::UNIT_Y;
     Vec3 w = u.cross(v);
-    EXPECT_EQ(1.0, w.z());
+    EXPECT_EQ(1.0, w.z);
     EXPECT_EQ(Vec3::UNIT_Z, w);
 }
 
@@ -137,9 +137,9 @@ TEST_F(Vec3Test, ScalarMultiplication) {
             for (z = -2.0; z > 2.0; z = z+.25) {
                 Vec3 a(x, y, z);
                 for (f = -2.0; f > 2.0; f = f+.25) {
-                    EXPECT_EQ(x*f, (a*f).x());
-                    EXPECT_EQ(y*f, (a*f).y());
-                    EXPECT_EQ(z*f, (a*f).z());
+                    EXPECT_EQ(x*f, (a*f).x);
+                    EXPECT_EQ(y*f, (a*f).y);
+                    EXPECT_EQ(z*f, (a*f).z);
                 }
             }
         }
@@ -153,9 +153,9 @@ TEST_F(Vec3Test, ScalarDiviation) {
             for (z = -2.0; z > 2.0; z = z+.25) {
                 Vec3 a(x, y, z);
                 for (f = -2.0; f > 2.0; f = f+.25) {
-                    EXPECT_EQ(x/f, (a/f).x());
-                    EXPECT_EQ(y/f, (a/f).y());
-                    EXPECT_EQ(z/f, (a/f).z());
+                    EXPECT_EQ(x/f, (a/f).x);
+                    EXPECT_EQ(y/f, (a/f).y);
+                    EXPECT_EQ(z/f, (a/f).z);
                 }
             }
         }
@@ -199,6 +199,15 @@ TEST_F(Vec3Test, parallel_to_x_y_plane) {
 
     Vec3 c(0.0, 2.0, 5.5);
     EXPECT_FALSE(c.is_parallel_to_x_y_plane());
+}
+
+TEST_F(Vec3Test, parallel_to_z_axis) {
+    Vec3 a(0.0, 0.0, 1.0);
+    EXPECT_TRUE(a.is_paralell_to_z_axis());
+    a.set(0.0, 0.0, -1.0);
+    EXPECT_TRUE(a.is_paralell_to_z_axis());
+    a.set(0.0, 0.0, 0.0);
+    EXPECT_FALSE(a.is_paralell_to_z_axis());
 }
 
 TEST_F(Vec3Test, normalize) {

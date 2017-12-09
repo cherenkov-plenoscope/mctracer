@@ -66,7 +66,7 @@ void BinaryWriter::write_facet(const Facet &facet) {
 //------------------------------------------------------------------------------
 void BinaryWriter::write_vector(const Vec3 &vec) {
 
-	float v[3] = {float(vec.x()), float(vec.y()), float(vec.z())};
+	float v[3] = {float(vec.x), float(vec.y), float(vec.z)};
 	file.write( (char*)&v, 3*sizeof(float));
 }
 //------------------------------------------------------------------------------
