@@ -42,7 +42,7 @@ class Intersection {
     double get_half_way_depth_going_to(const double wavelength)const;
     bool boundary_layer_is_transparent()const;
     bool from_outside_to_inside()const;
-    const Color get_facing_color()const;
+    const Color facing_color()const;
     const HomTra3* object2world()const;
     Vec3 get_normal_in_faceing_surface_system()const;
     bool going_to_default_refractive_index()const;

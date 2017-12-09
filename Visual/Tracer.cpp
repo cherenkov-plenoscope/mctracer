@@ -67,7 +67,7 @@ void Tracer::trace_back_to_surface() {
     if (config->global_illumination.on)
         color = shadow_of_sky_light();
     else
-        color = isec.get_facing_color();
+        color = isec.facing_color();
 }
 
 void Tracer::trace_back_beyond_boundary_layer(
@@ -104,7 +104,7 @@ Color Tracer::shadow_of_sky_light()const {
     if (darkening > max_darkening) darkening = max_darkening;
 
     Color color;
-    color = isec.get_facing_color();
+    color = isec.facing_color();
 
     if (!surface_iluminated_by_global_light_source())
         darkening = darkening*0.25;

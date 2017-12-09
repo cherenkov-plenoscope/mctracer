@@ -138,7 +138,7 @@ bool Intersection::boundary_layer_is_transparent()const {
     return object->boundary_layer_is_transparent();
 }
 
-const Color Intersection::get_facing_color()const {
+const Color Intersection::facing_color()const {
     return _from_outside_to_inside ?
         *object->get_outer_color():
         *object->get_inner_color();
