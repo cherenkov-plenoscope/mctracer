@@ -326,7 +326,7 @@ string FlyingCamera::get_intersection_info_print(const Intersection intersec)con
 	
 	stringstream out;
 	out << "| Object: " << intersec.get_object()->get_path_in_tree_of_frames() << "\n";
-	out << "| Distance to first intersection: " << intersec.get_intersection_distance() << "m\n";
+	out << "| Distance to first intersection: " << intersec.distance_to_ray_support() << "m\n";
 	out << "|\n";
 	out << "| In frame of intersecting object\n";
 	out << "| | intesection point: " << intersec.position_in_object_frame().str() << "\n";

@@ -33,7 +33,7 @@ bool Propagator::absorbed_in_medium_before_reaching_surface()const {
     const double one_over_e_way =
         isec.get_half_way_depth_coming_from(ph->wavelength);
     const double survival_prob =
-        exp(-isec.get_intersection_distance()/one_over_e_way);
+        exp(-isec.distance_to_ray_support()/one_over_e_way);
     return env.random_engine->uniform() > survival_prob;
 }
 

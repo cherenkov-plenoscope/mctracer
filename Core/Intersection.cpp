@@ -54,7 +54,7 @@ Vec3 Intersection::surface_normal_in_root_frame()const {
         get_transformed_orientation(surfacenormal_in_intersection_point);
 }
 
-double Intersection::get_intersection_distance()const {
+double Intersection::distance_to_ray_support()const {
     return distance_of_ray;
 }
 
@@ -63,7 +63,7 @@ std::string Intersection::str()const {
     if (does_intersect()) {
         out << object->get_name() << " in ";
         out << position_in_root_frame().str() << " after ";
-        out << get_intersection_distance() << "m";
+        out << distance_to_ray_support() << "m";
     } else {
         out << "no intersection with any object";
     }
@@ -168,10 +168,10 @@ const HomTra3* Intersection::object2world()const {
 
 bool Intersection::operator<(const Intersection& other)const {
     return (
-        this->get_intersection_distance() <
-        other.get_intersection_distance());
+        this->distance_to_ray_support() <
+        other.distance_to_ray_support());
 }
 
 bool Intersection::compare(const Intersection &one, const Intersection &two) {
-    return  one.get_intersection_distance() < two.get_intersection_distance();
+    return  one.distance_to_ray_support() < two.distance_to_ray_support();
 }

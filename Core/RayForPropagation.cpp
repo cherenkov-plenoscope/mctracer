@@ -81,7 +81,7 @@ double RayForPropagation::get_accumulative_distance()const {
     double accumulative_distance = 0.0;
 
     for (const Intersection &intersection : intersection_history)
-        accumulative_distance += intersection.get_intersection_distance();
+        accumulative_distance += intersection.distance_to_ray_support();
 
     return accumulative_distance;
 }
