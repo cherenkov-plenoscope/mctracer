@@ -26,7 +26,7 @@ class Intersection {
         const Vec3 incident_in_obj_sys);
     bool does_intersect()const;
     const SurfaceEntity * get_object()const;
-    Vec3 get_intersection_vector_in_object_system()const;
+    Vec3 position_in_object_frame()const;
     Vec3 get_intersection_vector_in_world_system()const;
     Vec3 get_surface_normal_in_object_system()const;
     Vec3 get_surface_normal_in_world_system()const;

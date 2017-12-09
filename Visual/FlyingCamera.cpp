@@ -329,7 +329,7 @@ string FlyingCamera::get_intersection_info_print(const Intersection intersec)con
 	out << "| Distance to first intersection: " << intersec.get_intersection_distance() << "m\n";
 	out << "|\n";
 	out << "| In frame of intersecting object\n";
-	out << "| | intesection point: " << intersec.get_intersection_vector_in_object_system().str() << "\n";
+	out << "| | intesection point: " << intersec.position_in_object_frame().str() << "\n";
 	out << "| | surface normal   : " << intersec.get_surface_normal_in_object_system().str() << "\n";
 	out << "| | facing surface   : " << (intersec.from_outside_to_inside() ? "outside" : "inside") << "\n";
 	out << "|\n";

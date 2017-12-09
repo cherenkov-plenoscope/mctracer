@@ -142,7 +142,7 @@ TEST_F(SphereIntersectionTest, ray_frontal_intersection) {
   EXPECT_EQ(intersections.front().get_object(), MySphere);
   EXPECT_EQ(
   	Vec3(0.0,0.0,-1.0),
-  	intersections.front().get_intersection_vector_in_object_system()
+  	intersections.front().position_in_object_frame()
   );
   EXPECT_EQ(
   	Vec3(0.0,0.0,-1.0),
@@ -181,7 +181,7 @@ TEST_F(SphereIntersectionTest, ray_starts_inside_sphere) {
   EXPECT_EQ(intersections.front().get_object(), MySphere);
   EXPECT_EQ(
   	Vec3(0.0,0.0,+1.0),
-  	intersections.front().get_intersection_vector_in_object_system()
+  	intersections.front().position_in_object_frame()
   );
   EXPECT_EQ(
   	Vec3(0.0,0.0,+1.0),
@@ -200,7 +200,7 @@ TEST_F(SphereIntersectionTest, ray_tangents_sphere) {
   EXPECT_EQ(intersections.front().get_object(), MySphere);
   EXPECT_EQ(
   	Vec3(1.0, 0.0, 0.0),
-  	intersections.front().get_intersection_vector_in_object_system())
+  	intersections.front().position_in_object_frame())
   ;
   EXPECT_EQ(
   	Vec3(1.0, 0.0, 0.0),

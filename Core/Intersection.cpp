@@ -36,7 +36,7 @@ const SurfaceEntity * Intersection::get_object()const {
     return object;
 }
 
-Vec3 Intersection::get_intersection_vector_in_object_system()const {
+Vec3 Intersection::position_in_object_frame()const {
     return intersection_point;
 }
 
