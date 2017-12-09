@@ -55,7 +55,7 @@ void Propagator::get_absorbed_in_void_space() {
 
 void Propagator::reflect_on_surface_and_propagate_on(const Interaction type) {
     ph->set_support_and_direction(
-        isec.get_intersection_vector_in_world_system(),
+        isec.position_in_root_frame(),
         isec.get_reflection_direction_in_world_system(ph->get_direction()));
 
     ph->push_back_intersection_and_type_to_propagation_history(
@@ -114,7 +114,7 @@ void Propagator::propagate_on_after_boundary_layer(
             isec.get_object()->get_root();
 
     ph->set_support_and_direction(
-        isec.get_intersection_vector_in_world_system(),
+        isec.position_in_root_frame(),
         isec.object2world()->get_transformed_orientation(
             fresnel.get_refrac_dir_in_object_system()));
 

@@ -40,7 +40,7 @@ Vec3 Intersection::position_in_object_frame()const {
     return intersection_point;
 }
 
-Vec3 Intersection::get_intersection_vector_in_world_system()const {
+Vec3 Intersection::position_in_root_frame()const {
     return object->
         frame2world()->get_transformed_position(intersection_point);
 }
@@ -62,7 +62,7 @@ std::string Intersection::str()const {
     std::stringstream out;
     if (does_intersect()) {
         out << object->get_name() << " in ";
-        out << get_intersection_vector_in_world_system().str() << " after ";
+        out << position_in_root_frame().str() << " after ";
         out << get_intersection_distance() << "m";
     } else {
         out << "no intersection with any object";

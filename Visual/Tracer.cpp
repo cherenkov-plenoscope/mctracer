@@ -37,7 +37,7 @@ void Tracer::trace_back_to_object_interaction() {
 
 void Tracer::trace_back_after_reflection() {
     cray->set_support_and_direction(
-        isec.get_intersection_vector_in_world_system(),
+        isec.position_in_root_frame(),
         isec.get_reflection_direction_in_world_system(cray->get_direction()));
     trace_back();
 }
@@ -81,7 +81,7 @@ void Tracer::trace_back_beyond_boundary_layer(
         scenery = isec.get_object()->get_root();
 
     cray->set_support_and_direction(
-        isec.get_intersection_vector_in_world_system(),
+        isec.position_in_root_frame(),
         isec.object2world()->get_transformed_orientation(
             fresnel.get_refrac_dir_in_object_system()));
 
@@ -116,7 +116,7 @@ Color Tracer::shadow_of_sky_light()const {
 
 bool Tracer::surface_iluminated_by_global_light_source()const {
     Ray ray_to_source(
-        isec.get_intersection_vector_in_world_system(),
+        isec.position_in_root_frame(),
         config->global_illumination.incoming_direction);
 
     const Intersection intersec_light_source =

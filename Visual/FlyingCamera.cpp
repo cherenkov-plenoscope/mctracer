@@ -334,7 +334,7 @@ string FlyingCamera::get_intersection_info_print(const Intersection intersec)con
 	out << "| | facing surface   : " << (intersec.from_outside_to_inside() ? "outside" : "inside") << "\n";
 	out << "|\n";
 	out << "| In world frame\n";
-	out << "| | intesection point: " << intersec.get_intersection_vector_in_world_system().str() << "\n";
+	out << "| | intesection point: " << intersec.position_in_root_frame().str() << "\n";
 	out << "| | surface normal   : " << intersec.get_surface_normal_in_world_system().str() << "\n";
 	out << "|\n";		
 	out << StringTools::place_first_infront_of_each_new_line_of_second(
