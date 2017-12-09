@@ -177,7 +177,7 @@ std::string ApertureCamera::str()const {
 Vec3 ApertureCamera::get_random_point_on_bounded_aperture_plane() {
 
 	Vec3 ap = dice.get_point_on_xy_disc_within_radius(ApertureRadius_in_m);
-	return Vec3(ap.x(), ap.y(), SensorDistance_in_m);
+	return Vec3(ap.x, ap.y, SensorDistance_in_m);
 }
 //------------------------------------------------------------------------------
 Vec3 ApertureCamera::get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(

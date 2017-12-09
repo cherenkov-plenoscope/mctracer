@@ -226,12 +226,12 @@ void Geometry::write_lixel_positions(const string &path)const {
         info << __FILE__ << " " << __LINE__ << "\n";
         info << __func__ << "\n";
         info << "Unable to write file: '" << path << "'\n";
-        throw std::runtime_error(info.str());      
+        throw std::runtime_error(info.str());
     }
 
     for(Vec3 pos : lixel_grid) {
-    	const float x = pos.x();
-    	const float y = pos.y();
+    	const float x = pos.x;
+    	const float y = pos.y;
     	file.write((char*)&x, sizeof(float));
     	file.write((char*)&y, sizeof(float));
     }
@@ -245,21 +245,21 @@ array<float, 273> Geometry::get_info_header()const {
 
 	header[  1-1] = Corsika::str2float("PLGH");
 
-	header[ 11-1] = config.sensor_plane2imaging_system.get_rot_x().x();
-	header[ 12-1] = config.sensor_plane2imaging_system.get_rot_x().y();
-	header[ 13-1] = config.sensor_plane2imaging_system.get_rot_x().z();
+	header[ 11-1] = config.sensor_plane2imaging_system.get_rot_x().x;
+	header[ 12-1] = config.sensor_plane2imaging_system.get_rot_x().y;
+	header[ 13-1] = config.sensor_plane2imaging_system.get_rot_x().z;
 
-	header[ 14-1] = config.sensor_plane2imaging_system.get_rot_y().x();
-	header[ 15-1] = config.sensor_plane2imaging_system.get_rot_y().y();
-	header[ 16-1] = config.sensor_plane2imaging_system.get_rot_y().z();
+	header[ 14-1] = config.sensor_plane2imaging_system.get_rot_y().x;
+	header[ 15-1] = config.sensor_plane2imaging_system.get_rot_y().y;
+	header[ 16-1] = config.sensor_plane2imaging_system.get_rot_y().z;
  
-	header[ 17-1] = config.sensor_plane2imaging_system.get_rot_z().x();
-	header[ 18-1] = config.sensor_plane2imaging_system.get_rot_z().y();
-	header[ 19-1] = config.sensor_plane2imaging_system.get_rot_z().z();
+	header[ 17-1] = config.sensor_plane2imaging_system.get_rot_z().x;
+	header[ 18-1] = config.sensor_plane2imaging_system.get_rot_z().y;
+	header[ 19-1] = config.sensor_plane2imaging_system.get_rot_z().z;
  
-	header[ 20-1] = config.sensor_plane2imaging_system.get_translation().x();
-	header[ 21-1] = config.sensor_plane2imaging_system.get_translation().y();
-	header[ 22-1] = config.sensor_plane2imaging_system.get_translation().z();
+	header[ 20-1] = config.sensor_plane2imaging_system.get_translation().x;
+	header[ 21-1] = config.sensor_plane2imaging_system.get_translation().y;
+	header[ 22-1] = config.sensor_plane2imaging_system.get_translation().z;
 
 	header[ 23-1] = config.expected_imaging_system_focal_length;
 	header[ 24-1] = config.expected_imaging_system_max_aperture_radius;

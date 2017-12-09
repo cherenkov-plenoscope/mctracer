@@ -14,7 +14,7 @@ XyPlaneRayIntersectionEquation::XyPlaneRayIntersectionEquation(const Ray* ray) {
 	if( !ray->get_direction().is_parallel_to_x_y_plane() ){
 
 		has_valid_intersection = true;
-		ray_parameter_v = -ray->get_support().z() / ray->get_direction().z();	
+		ray_parameter_v = -ray->get_support().z / ray->get_direction().z;
 	}else{
 
 		has_valid_intersection = false;

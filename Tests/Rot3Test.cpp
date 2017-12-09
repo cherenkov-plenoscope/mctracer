@@ -22,9 +22,9 @@ TEST_F(Rot3Test, ConstructorAndGetter) {
 
   Rot3 p(v,angle);
   EXPECT_EQ(angle, p.get_rot_angle_in_rad());
-  EXPECT_EQ(v.x(), (p.get_rot_axis()).x());
-  EXPECT_EQ(v.y(), (p.get_rot_axis()).y());
-  EXPECT_EQ(v.z(), (p.get_rot_axis()).z());
+  EXPECT_EQ(v.x, (p.get_rot_axis()).x);
+  EXPECT_EQ(v.y, (p.get_rot_axis()).y);
+  EXPECT_EQ(v.z, (p.get_rot_axis()).z);
   EXPECT_FALSE(p.uses_xyz_angels());
 }
 //------------------------------------------------------------------------------
@@ -44,9 +44,9 @@ TEST_F(Rot3Test, SetterAndGetter) {
 
   Rot3 p; p.set(v,angle);
   EXPECT_EQ(angle, p.get_rot_angle_in_rad());
-  EXPECT_EQ(v.x(), (p.get_rot_axis()).x());
-  EXPECT_EQ(v.y(), (p.get_rot_axis()).y());
-  EXPECT_EQ(v.z(), (p.get_rot_axis()).z());
+  EXPECT_EQ(v.x, (p.get_rot_axis()).x);
+  EXPECT_EQ(v.y, (p.get_rot_axis()).y);
+  EXPECT_EQ(v.z, (p.get_rot_axis()).z);
   EXPECT_FALSE(p.uses_xyz_angels());
 }
 //------------------------------------------------------------------------------

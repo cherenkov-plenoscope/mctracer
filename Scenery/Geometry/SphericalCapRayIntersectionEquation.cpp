@@ -20,8 +20,8 @@ SphericalCapRayIntersectionEquation::SphericalCapRayIntersectionEquation(
 	const double dir_times_dir = dir*dir;
 	const double sup_times_sup = sup*sup;
 	const double sup_times_dir = sup*dir;
-	const double R_times_dir_z = radius*dir.z();
-	const double R_times_sup_z = radius*sup.z();
+	const double R_times_dir_z = radius*dir.z;
+	const double R_times_sup_z = radius*sup.z;
 
 	const double P = 2.0 * ( sup_times_dir - R_times_dir_z ) / dir_times_dir;
 	const double Q = ( sup_times_sup - 2.0*R_times_sup_z ) / dir_times_dir;

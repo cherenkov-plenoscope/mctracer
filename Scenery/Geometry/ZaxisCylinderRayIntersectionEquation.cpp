@@ -16,14 +16,14 @@ ZaxisCylinderRayIntersectionEquation::ZaxisCylinderRayIntersectionEquation(
 	//
 	// 0 = l^2 + l*2*(sxdx + sydy)/(dx^2 + dy^2) + (sx^2 +sy^2 -r^2)/(dx^2 + dy^2)
 
-	const double dx2 = ray->get_direction().x()*ray->get_direction().x();
-	const double dy2 = ray->get_direction().y()*ray->get_direction().y();
+	const double dx2 = ray->get_direction().x*ray->get_direction().x;
+	const double dy2 = ray->get_direction().y*ray->get_direction().y;
 
-	const double sxdx = ray->get_support().x()*ray->get_direction().x();
-	const double sydy = ray->get_support().y()*ray->get_direction().y();
+	const double sxdx = ray->get_support().x*ray->get_direction().x;
+	const double sydy = ray->get_support().y*ray->get_direction().y;
 
-	const double sx2 = ray->get_support().x()*ray->get_support().x();
-	const double sy2 = ray->get_support().y()*ray->get_support().y();
+	const double sx2 = ray->get_support().x*ray->get_support().x;
+	const double sy2 = ray->get_support().y*ray->get_support().y;
 
 	const double r2 = radius*radius;
 	const double dnom = dx2 + dy2;

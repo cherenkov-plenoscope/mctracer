@@ -4,25 +4,14 @@
 
 #include <string>
 
-class Vec3 {
- private:
-    double X;
-    double Y;
-    double Z;
-    static const double MAX_DEVIATION_EQUAL_VEC3_SQUARE;
-
- public:
-    static const Vec3 ORIGIN;
-    static const Vec3 UNIT_X;
-    static const Vec3 UNIT_Y;
-    static const Vec3 UNIT_Z;
+struct Vec3 {
+    double x;
+    double y;
+    double z;
 
     Vec3();
-    Vec3(const double nx, const double ny, const double nz);
-    void set(const double nx, const double ny, const double nz);
-    double x()const;
-    double y()const;
-    double z()const;
+    Vec3(const double x, const double y, const double z);
+    void set(const double x, const double y, const double z);
     unsigned int get_octant()const;
     Vec3 get_projection_on_XZ_plane()const;
     Vec3 get_projection_on_YZ_plane()const;
@@ -32,10 +21,10 @@ class Vec3 {
     Vec3 cross(const Vec3 v)const;
     void mirror(Vec3* ray)const;
     double get_angle_in_between_in_rad(const Vec3& vec)const;
-    double operator*(const Vec3 vec_two)const;
+    double operator*(const Vec3 v)const;
     Vec3 operator*(const double scalar)const;
-    Vec3 operator-(const Vec3 vec_two)const;
-    Vec3 operator+(const Vec3 vec_two)const;
+    Vec3 operator-(const Vec3 v)const;
+    Vec3 operator+(const Vec3 v)const;
     Vec3 operator/(const double scalar)const;
     void operator=(const Vec3 eq);
     bool operator == (const Vec3& eqVec)const;
@@ -46,5 +35,11 @@ class Vec3 {
     bool is_parallel_to_x_y_plane()const;
     bool norm_is_less_equal_than(const double length_to_compare)const;
     std::string str()const;
+
+    static const double MAX_DEVIATION_EQUAL_VEC3_SQUARE;
+    static const Vec3 ORIGIN;
+    static const Vec3 UNIT_X;
+    static const Vec3 UNIT_Y;
+    static const Vec3 UNIT_Z;
 };
 #endif  // MCTRACER_CORE_VEC3_H_

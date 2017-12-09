@@ -39,8 +39,8 @@ namespace SegmentedReflector {
 		for(unsigned int i=0; i<_facet_positions.size(); i++) {
 
 			_facet_positions.at(i).set(
-				_facet_positions.at(i).x(),
-				_facet_positions.at(i).y(),
+				_facet_positions.at(i).x,
+				_facet_positions.at(i).y,
 				z_pos_given_dist_to_optical_axis(
 					_facet_positions.at(i).get_projection_on_XY_plane().norm()
 				)
@@ -93,9 +93,9 @@ namespace SegmentedReflector {
 		for(unsigned int i=0; i<_facet_positions.size(); i++) {
 
 			_facet_positions.at(i).set(
-				_facet_positions.at(i).x(),
-				_facet_positions.at(i).y(),
-				_facet_positions.at(i).z() + movement
+				_facet_positions.at(i).x,
+				_facet_positions.at(i).y,
+				_facet_positions.at(i).z + movement
 			);
 		}	
 	}
@@ -272,14 +272,14 @@ namespace SegmentedReflector {
 			Vec3 normal = trafo.get_transformed_orientation(Vec3::UNIT_Z);
 
 			out << std::fixed << std::setprecision(4);
-			out << pos.x() << " ";
-			out << pos.y() << " ";
-			out << pos.z() << " ";
+			out << pos.x << " ";
+			out << pos.y << " ";
+			out << pos.z << " ";
 
 			out << std::fixed << std::setprecision(9);
-			out << normal.x() << " ";
-			out << normal.y() << " ";
-			out << normal.z() << "\n";
+			out << normal.x << " ";
+			out << normal.y << " ";
+			out << normal.z << "\n";
 		}
 		return out.str();
 	}

@@ -99,10 +99,7 @@ double spread_of_frame_position_in_mother(const vector<Frame*> &frames) {
     Vec3 u = Vec3::ORIGIN;
     for (Frame* frame : frames) {
         const Vec3 r =  frame->get_position_in_mother() - mean_pos_in_mother;
-        u = u + Vec3(
-            r.x()*r.x(),
-            r.y()*r.y(),
-            r.z()*r.z());
+        u = u + Vec3(r.x*r.x, r.y*r.y, r.z*r.z);
     }
 
     u = u/frames.size();

@@ -18,7 +18,7 @@ string comment(const string &text) {
 //------------------------------------------------------------------------------
 string to_string(const Vec3 &vec) {
     std::stringstream out;
-    out << "[" << vec.x() << "," << vec.y() << "," <<  vec.z() << "]";
+    out << "[" << vec.x << "," << vec.y << "," <<  vec.z << "]";
     return out.str();
 }
 //------------------------------------------------------------------------------

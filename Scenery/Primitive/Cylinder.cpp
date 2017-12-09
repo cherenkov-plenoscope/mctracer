@@ -166,10 +166,10 @@ void Cylinder::calculate_intersection_with(
 }
 //------------------------------------------------------------------------------
 bool Cylinder::is_in_cylinders_z_bounds(const Vec3* vec)const {
-	return fabs(vec->z()) <= Length/2.0;
+	return fabs(vec->z) <= Length/2.0;
 }
 //------------------------------------------------------------------------------
 Vec3 Cylinder::get_surface_normal_for_intersection_vec(const Vec3* vec)const {
-	Vec3 surface_normal(vec->x(), vec->y(), 0.0);
+	Vec3 surface_normal(vec->x, vec->y, 0.0);
 	return surface_normal / surface_normal.norm();
 }

@@ -60,9 +60,9 @@ void Triangle::set_normal_and_3_vertecies(
 	set_name_pos_rot(name, pos, rot);
 
 	set_corners_in_xy_plane(
-		a.x(), a.y(),
-		b.x(), b.y(),
-		c.x(), c.y()
+		a.x, a.y,
+		b.x, b.y,
+		c.x, c.y
 	);
 }
 //------------------------------------------------------------------------------
@@ -108,7 +108,7 @@ std::string Triangle::str()const{
 double Triangle::sign(
 	const Vec3 &P1, const Vec2 &P2, const Vec2 &P3
 )const {
-    return (P1.x()-P3.x()) * (P2.y()-P3.y())-(P2.x()-P3.x()) * (P1.y()-P3.y());
+    return (P1.x-P3.x()) * (P2.y()-P3.y())-(P2.x()-P3.x()) * (P1.y-P3.y());
 }
 //------------------------------------------------------------------------------
 bool Triangle::is_inside_triangle(const Vec3 &intersec_vec)const {

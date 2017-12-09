@@ -65,9 +65,9 @@ TEST_F(RandomGeneratorTest, generator_point_on_disc) {
 
     Vec3 mean = sum*(1.0/double(points.size()));
 
-    EXPECT_NEAR(0.0, mean.x(), 1e-2);
-    EXPECT_NEAR(0.0, mean.y(), 1e-2);
-    EXPECT_EQ(0.0, sum.z());
+    EXPECT_NEAR(0.0, mean.x, 1e-2);
+    EXPECT_NEAR(0.0, mean.y, 1e-2);
+    EXPECT_EQ(0.0, sum.z);
 
     // distibution is evenly spread
     vector<double> counts_in_evaluation_bins;

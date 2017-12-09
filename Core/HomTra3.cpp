@@ -59,9 +59,9 @@ void HomTra3::set_rotation_component(const Rot3 R) {
 }
 
 void HomTra3::set_translation_component(const Vec3 &t) {
-    T[0][3] = t.x();
-    T[1][3] = t.y();
-    T[2][3] = t.z();
+    T[0][3] = t.x;
+    T[1][3] = t.y;
+    T[2][3] = t.z;
 }
 
 void HomTra3::set_rotation_component_based_on_rot_axis(const Rot3 R) {
@@ -69,9 +69,9 @@ void HomTra3::set_rotation_component_based_on_rot_axis(const Rot3 R) {
     Vec3 rot_axis = R.get_rot_axis();
     rot_axis = rot_axis/rot_axis.norm();
 
-    const double rx = rot_axis.x();
-    const double ry = rot_axis.y();
-    const double rz = rot_axis.z();
+    const double rx = rot_axis.x;
+    const double ry = rot_axis.y;
+    const double rz = rot_axis.z;
 
     const double sinR = sin(R.get_rot_angle_in_rad());
     const double cosR = cos(R.get_rot_angle_in_rad());
@@ -134,85 +134,85 @@ void HomTra3::set_transformation(
 }
 
 void HomTra3::set_x_column_of_rotation_component(const Vec3 &R) {
-    T[0][0] = R.x();
-    T[1][0] = R.y();
-    T[2][0] = R.z();
+    T[0][0] = R.x;
+    T[1][0] = R.y;
+    T[2][0] = R.z;
 }
 
 void HomTra3::set_y_column_of_rotation_component(const Vec3 &R) {
-    T[0][1] = R.x();
-    T[1][1] = R.y();
-    T[2][1] = R.z();
+    T[0][1] = R.x;
+    T[1][1] = R.y;
+    T[2][1] = R.z;
 }
 
 void HomTra3::set_z_column_of_rotation_component(const Vec3 &R) {
-    T[0][2] = R.x();
-    T[1][2] = R.y();
-    T[2][2] = R.z();
+    T[0][2] = R.x;
+    T[1][2] = R.y;
+    T[2][2] = R.z;
 }
 
 Vec3 HomTra3::get_transformed_orientation(const Vec3& ori)const {
     return Vec3(
         // x
-        ori.x()*T[0][0] +
-        ori.y()*T[0][1] +
-        ori.z()*T[0][2],
+        ori.x*T[0][0] +
+        ori.y*T[0][1] +
+        ori.z*T[0][2],
         // y
-        ori.x()*T[1][0] +
-        ori.y()*T[1][1] +
-        ori.z()*T[1][2],
+        ori.x*T[1][0] +
+        ori.y*T[1][1] +
+        ori.z*T[1][2],
         // z
-        ori.x()*T[2][0] +
-        ori.y()*T[2][1] +
-        ori.z()*T[2][2]);
+        ori.x*T[2][0] +
+        ori.y*T[2][1] +
+        ori.z*T[2][2]);
 }
 
 Vec3 HomTra3::get_transformed_orientation_inverse(const Vec3& ori)const {
     return Vec3(
         // x
-        ori.x()*T[0][0] +
-        ori.y()*T[1][0] +
-        ori.z()*T[2][0],
+        ori.x*T[0][0] +
+        ori.y*T[1][0] +
+        ori.z*T[2][0],
         // y
-        ori.x()*T[0][1] +
-        ori.y()*T[1][1] +
-        ori.z()*T[2][1],
+        ori.x*T[0][1] +
+        ori.y*T[1][1] +
+        ori.z*T[2][1],
         // z
-        ori.x()*T[0][2] +
-        ori.y()*T[1][2] +
-        ori.z()*T[2][2]);
+        ori.x*T[0][2] +
+        ori.y*T[1][2] +
+        ori.z*T[2][2]);
 }
 
 Vec3 HomTra3::get_transformed_position(const Vec3& pos)const {
     return Vec3(
         // x
-        pos.x()*T[0][0] +
-        pos.y()*T[0][1] +
-        pos.z()*T[0][2] + T[0][3],
+        pos.x*T[0][0] +
+        pos.y*T[0][1] +
+        pos.z*T[0][2] + T[0][3],
         // y
-        pos.x()*T[1][0] +
-        pos.y()*T[1][1] +
-        pos.z()*T[1][2] + T[1][3],
+        pos.x*T[1][0] +
+        pos.y*T[1][1] +
+        pos.z*T[1][2] + T[1][3],
         // z
-        pos.x()*T[2][0] +
-        pos.y()*T[2][1] +
-        pos.z()*T[2][2] + T[2][3]);
+        pos.x*T[2][0] +
+        pos.y*T[2][1] +
+        pos.z*T[2][2] + T[2][3]);
 }
 
 Vec3 HomTra3::get_transformed_position_inverse(const Vec3& pos)const {
   return Vec3(
     // x
-    pos.x()*T[0][0] +
-    pos.y()*T[1][0] +
-    pos.z()*T[2][0] - (T[0][0]*T[0][3] + T[1][0]*T[1][3] + T[2][0]*T[2][3]),
+    pos.x*T[0][0] +
+    pos.y*T[1][0] +
+    pos.z*T[2][0] - (T[0][0]*T[0][3] + T[1][0]*T[1][3] + T[2][0]*T[2][3]),
     // y
-    pos.x()*T[0][1] +
-    pos.y()*T[1][1] +
-    pos.z()*T[2][1] - (T[0][1]*T[0][3] + T[1][1]*T[1][3] + T[2][1]*T[2][3]),
+    pos.x*T[0][1] +
+    pos.y*T[1][1] +
+    pos.z*T[2][1] - (T[0][1]*T[0][3] + T[1][1]*T[1][3] + T[2][1]*T[2][3]),
     // z
-    pos.x()*T[0][2] +
-    pos.y()*T[1][2] +
-    pos.z()*T[2][2] - (T[0][2]*T[0][3] + T[1][2]*T[1][3] + T[2][2]*T[2][3]));
+    pos.x*T[0][2] +
+    pos.y*T[1][2] +
+    pos.z*T[2][2] - (T[0][2]*T[0][3] + T[1][2]*T[1][3] + T[2][2]*T[2][3]));
 }
 
 Vec3 HomTra3::get_translation()const {

@@ -38,12 +38,12 @@ EllipticalCapRayIntersectionEquation::EllipticalCapRayIntersectionEquation(
 //  B = 2*long_focal_length
 //  c = (A+B)/2   just the mean of the two ... since I don't have any better idea.
 
-	const double dx = ray->get_direction().x();
-	const double dy = ray->get_direction().y();
-	const double dz = ray->get_direction().z();
-	const double bx = ray->get_support().x();
-	const double by = ray->get_support().y();
-	const double bz = ray->get_support().z();
+	const double dx = ray->get_direction().x;
+	const double dy = ray->get_direction().y;
+	const double dz = ray->get_direction().z;
+	const double bx = ray->get_support().x;
+	const double by = ray->get_support().y;
+	const double bz = ray->get_support().z;
 	
 	const double a = (dx*dx)*iAA + (dy*dy)*iBB +  (dz*dz)*iCC;
 	const double b = 2.0*( (bx*dx)*iAA + (by*dy)*iBB + dz*(bz-C)*iCC );
@@ -86,8 +86,8 @@ Vec3 EllipticalCapRayIntersectionEquation::get_surface_normal_given_intersection
 	// normal = ( -dz/dx , -dz/dy , 1 )
 	// surface_normal_factor = C*1/2*(1-x^2/A^2-y^2/B^2)^(-1/2) 
 
-	const double ix = intersec->x();
-	const double iy = intersec->y();	
+	const double ix = intersec->x;
+	const double iy = intersec->y;	
 
 	const double surface_normal_factor = 
 		C * 0.5 * sqrt(1.0 - (ix*ix)*iAA - (iy*iy)*iBB );
