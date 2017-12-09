@@ -4,36 +4,32 @@
 
 #include <string>
 
-class Vec2 {
- private:
-    double X;
-    double Y;
-    static const double MAX_DEVIATION_EQUAL_VEC2;
-
- public:
-    static const Vec2 ORIGIN;
-    static const Vec2 UNIT_X;
-    static const Vec2 UNIT_Y;
+struct Vec2 {
+    double x;
+    double y;
 
     Vec2();
-    Vec2(const double nx, const double ny);
-    void set(const double nx, const double ny);
-    double x()const;
-    double y()const;
+    Vec2(const double x, const double y);
+    void set(const double x, const double y);
     unsigned int get_quadrant()const;
     double norm()const;
     void normalize();
     double get_angle_in_between_in_rad(const Vec2& vec)const;
-    double operator*(const Vec2 vec_two)const;
+    double operator*(const Vec2 v)const;
     Vec2 operator*(const double scalar)const;
-    Vec2 operator-(const Vec2 vec_two)const;
-    Vec2 operator+(const Vec2 vec_two)const;
+    Vec2 operator-(const Vec2 v)const;
+    Vec2 operator+(const Vec2 v)const;
     Vec2 operator/(const double scalar)const;
     void operator=(const Vec2 eq);
-    bool operator == (const Vec2& eqVec)const;
-    bool operator != (const Vec2& eqVec)const;
+    bool operator == (const Vec2& eq_v)const;
+    bool operator != (const Vec2& eq_v)const;
     double distance_to(const Vec2 &v)const;
     bool norm_is_less_equal_than(const double length_to_compare)const;
     std::string str()const;
+
+    static const double MAX_DEVIATION_EQUAL_VEC2;
+    static const Vec2 ORIGIN;
+    static const Vec2 UNIT_X;
+    static const Vec2 UNIT_Y;
 };
 #endif  // MCTRACER_CORE_VEC2_H_
