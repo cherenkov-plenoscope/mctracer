@@ -2,9 +2,6 @@
 #ifndef MCTRACER_CORSIKA_EVENTIO_PHOTONFACTORY_H_
 #define MCTRACER_CORSIKA_EVENTIO_PHOTONFACTORY_H_
 
-#include <iostream>
-#include <string>
-#include <sstream>
 #include <array>
 #include "Core/Photon.h"
 #include "Core/Random/Random.h"
