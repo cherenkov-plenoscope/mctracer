@@ -9,19 +9,19 @@ Intersection::Intersection() {
         std::numeric_limits<double>::infinity(),
         std::numeric_limits<double>::infinity(),
         std::numeric_limits<double>::infinity());
-    surfacenormal_in_intersection_point = Vec3(0.0, 0.0, 1.0);
+    surface_normal = Vec3(0.0, 0.0, 1.0);
     distance_of_ray = std::numeric_limits<double>::infinity();
 }
 
 Intersection::Intersection(
     const SurfaceEntity* intersectiong_object,
     const Vec3 _position,
-    const Vec3 surfacenormal,
+    const Vec3 _surface_normal,
     const double distance_of_ray_support_to_intersection,
     const Vec3 incident_in_obj_sys
 ):
     position(_position),
-    surfacenormal_in_intersection_point(surfacenormal),
+    surface_normal(_surface_normal),
     object(intersectiong_object),
     distance_of_ray(distance_of_ray_support_to_intersection),
     _from_outside_to_inside(
@@ -46,12 +46,12 @@ Vec3 Intersection::position_in_root_frame()const {
 }
 
 Vec3 Intersection::surface_normal_in_object_frame()const {
-    return surfacenormal_in_intersection_point;
+    return surface_normal;
 }
 
 Vec3 Intersection::surface_normal_in_root_frame()const {
     return object->frame2world()->
-        get_transformed_orientation(surfacenormal_in_intersection_point);
+        get_transformed_orientation(surface_normal);
 }
 
 double Intersection::distance_to_ray_support()const {
@@ -74,7 +74,7 @@ std::string Intersection::str()const {
 Vec3 Intersection::reflection_direction_in_root_frame(Vec3 in_dir_world)const {
     Vec3 in_dir_obj = object->frame2world()->
         get_transformed_orientation_inverse(in_dir_world);
-    surfacenormal_in_intersection_point.mirror(&in_dir_obj);
+    surface_normal.mirror(&in_dir_obj);
     return object->frame2world()->get_transformed_orientation(in_dir_obj);
 }
 
@@ -148,8 +148,8 @@ bool Intersection::from_outside_to_inside()const {
 
 Vec3 Intersection::get_normal_in_faceing_surface_system()const {
     return _from_outside_to_inside ?
-    surfacenormal_in_intersection_point:
-    surfacenormal_in_intersection_point*-1.0;
+    surface_normal:
+    surface_normal*-1.0;
 }
 
 const HomTra3* Intersection::object2world()const {
