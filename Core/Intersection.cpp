@@ -71,12 +71,6 @@ std::string Intersection::str()const {
     return out.str();
 }
 
-void Intersection::get_reflection_direction_in_object_system(
-    Vec3* vec
-)const {
-    surfacenormal_in_intersection_point.mirror(vec);
-}
-
 Vec3 Intersection::get_reflection_direction_in_world_system(
     Vec3 in_dir_world
 )const {
