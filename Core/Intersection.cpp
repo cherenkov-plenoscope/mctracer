@@ -100,7 +100,7 @@ bool Intersection::going_to_default_refractive_index()const {
     object->get_outer_refraction_() == SurfaceEntity::DEFAULT_REFRACTION;
 }
 
-double Intersection::get_refractive_index_coming_from(
+double Intersection::refractive_index_coming_from(
     const double wavelength
 )const {
     return _from_outside_to_inside ?
