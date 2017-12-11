@@ -39,7 +39,7 @@ bool Propagator::absorbed_in_medium_before_reaching_surface()const {
 
 void Propagator::interact_with_object() {
     if (
-        isec.get_facing_reflection_propability(ph->wavelength) >=
+        isec.facing_reflection_propability(ph->wavelength) >=
         env.random_engine->uniform()
     )
         reflect_on_surface_and_propagate_on(reflection_on_surface);

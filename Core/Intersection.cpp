@@ -80,7 +80,7 @@ Vec3 Intersection::reflection_direction_in_root_frame(Vec3 in_dir_world)const {
 
 #include "Core/Ray.h"
 
-double Intersection::get_facing_reflection_propability(
+double Intersection::facing_reflection_propability(
     const double wavelength
 )const {
     return _from_outside_to_inside ?

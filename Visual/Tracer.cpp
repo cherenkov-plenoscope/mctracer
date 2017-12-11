@@ -29,7 +29,7 @@ void Tracer::trace_back() {
 }
 
 void Tracer::trace_back_to_object_interaction() {
-    if (isec.get_facing_reflection_propability(wavelength) >= prng->uniform())
+    if (isec.facing_reflection_propability(wavelength) >= prng->uniform())
         trace_back_after_reflection();
     else
         trace_back_to_boundary_layer();

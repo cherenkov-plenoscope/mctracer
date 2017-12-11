@@ -33,7 +33,7 @@ class Intersection {
     double distance_to_ray_support()const;
     std::string str()const;
     Vec3 reflection_direction_in_root_frame(Vec3 incomming_dir_in_world)const;
-    double get_facing_reflection_propability(const double wavelength)const;
+    double facing_reflection_propability(const double wavelength)const;
     double get_refractive_index_going_to(const double wavelength)const;
     double get_refractive_index_coming_from(const double wavelength)const;
     double get_half_way_depth_coming_from(const double wavelength)const;
