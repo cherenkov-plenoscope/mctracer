@@ -10,7 +10,7 @@ class Ray;
 
 class Intersection {
  protected:
-    Vec3 intersection_point;
+    Vec3 position;
     Vec3 surfacenormal_in_intersection_point;
     const SurfaceEntity* object;
     double distance_of_ray;
@@ -20,7 +20,7 @@ class Intersection {
     Intersection();
     Intersection(
         const SurfaceEntity* intersectiong_object,
-        const Vec3 intersection_vector,
+        const Vec3 position,
         const Vec3 surfacenormal_in_intersection_point,
         const double distance_of_ray_support_to_intersection,
         const Vec3 incident_in_obj_sys);

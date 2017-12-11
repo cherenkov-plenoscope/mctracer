@@ -5,7 +5,7 @@
 
 Intersection::Intersection() {
     object = &SurfaceEntity::VOID_SURFACE_ENTITY;
-    intersection_point = Vec3(
+    position = Vec3(
         std::numeric_limits<double>::infinity(),
         std::numeric_limits<double>::infinity(),
         std::numeric_limits<double>::infinity());
@@ -15,12 +15,12 @@ Intersection::Intersection() {
 
 Intersection::Intersection(
     const SurfaceEntity* intersectiong_object,
-    const Vec3 intersection_vector,
+    const Vec3 _position,
     const Vec3 surfacenormal,
     const double distance_of_ray_support_to_intersection,
     const Vec3 incident_in_obj_sys
 ):
-    intersection_point(intersection_vector),
+    position(_position),
     surfacenormal_in_intersection_point(surfacenormal),
     object(intersectiong_object),
     distance_of_ray(distance_of_ray_support_to_intersection),
@@ -37,12 +37,12 @@ const SurfaceEntity * Intersection::get_object()const {
 }
 
 Vec3 Intersection::position_in_object_frame()const {
-    return intersection_point;
+    return position;
 }
 
 Vec3 Intersection::position_in_root_frame()const {
     return object->
-        frame2world()->get_transformed_position(intersection_point);
+        frame2world()->get_transformed_position(position);
 }
 
 Vec3 Intersection::surface_normal_in_object_frame()const {
