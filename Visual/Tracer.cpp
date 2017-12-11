@@ -38,7 +38,7 @@ void Tracer::trace_back_to_object_interaction() {
 void Tracer::trace_back_after_reflection() {
     cray->set_support_and_direction(
         isec.position_in_root_frame(),
-        isec.get_reflection_direction_in_world_system(cray->get_direction()));
+        isec.reflection_direction_in_root_frame(cray->get_direction()));
     trace_back();
 }
 
@@ -95,7 +95,7 @@ void Tracer::trace_back_to_sky_dome() {
 Color Tracer::shadow_of_sky_light()const {
     const double max_darkening = 0.750;
 
-    Vec3 specular_dir = isec.get_reflection_direction_in_world_system(
+    Vec3 specular_dir = isec.reflection_direction_in_root_frame(
         config->global_illumination.incoming_direction);
 
     double darkening = specular_dir*cray->get_direction();

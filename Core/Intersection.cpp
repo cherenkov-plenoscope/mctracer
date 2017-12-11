@@ -71,7 +71,7 @@ std::string Intersection::str()const {
     return out.str();
 }
 
-Vec3 Intersection::get_reflection_direction_in_world_system(
+Vec3 Intersection::reflection_direction_in_root_frame(
     Vec3 in_dir_world
 )const {
     Vec3 in_dir_obj = object->frame2world()->
