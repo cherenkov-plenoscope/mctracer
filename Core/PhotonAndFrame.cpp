@@ -78,7 +78,7 @@ void Propagator::fresnel_refraction_and_reflection() {
             get_transformed_orientation_inverse(ph->get_direction()),
         isec.get_normal_in_faceing_surface_system(),
         isec.get_refractive_index_coming_from(ph->wavelength),
-        isec.get_refractive_index_going_to(ph->wavelength));
+        isec.refractive_index_going_to(ph->wavelength));
 
     if (fresnel.reflection_propability() > env.random_engine->uniform())
         reflect_on_surface_and_propagate_on(fresnel_reflection_on_surface);

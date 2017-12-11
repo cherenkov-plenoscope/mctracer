@@ -55,7 +55,7 @@ void Tracer::trace_back_to_fresnel_interaction() {
             get_transformed_orientation_inverse(cray->get_direction()),
         isec.get_normal_in_faceing_surface_system(),
         isec.get_refractive_index_coming_from(wavelength),
-        isec.get_refractive_index_going_to(wavelength));
+        isec.refractive_index_going_to(wavelength));
 
     if (fresnel.reflection_propability() > prng->uniform())
         trace_back_after_reflection();

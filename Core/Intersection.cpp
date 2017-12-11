@@ -88,9 +88,7 @@ double Intersection::facing_reflection_propability(
     (*object->get_inner_reflection_())(wavelength);
 }
 
-double Intersection::get_refractive_index_going_to(
-    const double wavelength
-)const {
+double Intersection::refractive_index_going_to(const double wavelength)const {
     return _from_outside_to_inside ?
     (*object->get_inner_refraction_())(wavelength):
     (*object->get_outer_refraction_())(wavelength);
