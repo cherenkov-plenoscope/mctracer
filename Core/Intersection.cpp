@@ -71,9 +71,7 @@ std::string Intersection::str()const {
     return out.str();
 }
 
-Vec3 Intersection::reflection_direction_in_root_frame(
-    Vec3 in_dir_world
-)const {
+Vec3 Intersection::reflection_direction_in_root_frame(Vec3 in_dir_world)const {
     Vec3 in_dir_obj = object->frame2world()->
         get_transformed_orientation_inverse(in_dir_world);
     surfacenormal_in_intersection_point.mirror(&in_dir_obj);
