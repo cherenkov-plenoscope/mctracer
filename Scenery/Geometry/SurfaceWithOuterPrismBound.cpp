@@ -68,7 +68,7 @@ void SurfaceWithOuterPrismBound::add_causeal_intersection(
 				causal_intersec,
 				eq->get_surface_normal_given_intersection_vector(&causal_intersec),
 				causal_solution,
-				ray->get_direction()
+				ray->direction()
 			);
 		}
 	}

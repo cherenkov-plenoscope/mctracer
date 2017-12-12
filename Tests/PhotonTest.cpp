@@ -23,9 +23,9 @@ TEST_F(PhotonTest, creation) {
     double wavelength = 433e-9;
     Photon pho(Vec3::ORIGIN, Vec3::UNIT_Z*1.337, wavelength);
 
-    EXPECT_EQ(Vec3::UNIT_Z, pho.get_direction());
+    EXPECT_EQ(Vec3::UNIT_Z, pho.direction());
     EXPECT_EQ(Vec3::ORIGIN, pho.get_support());
-    EXPECT_EQ(1.0, pho.get_direction().norm());
+    EXPECT_EQ(1.0, pho.direction().norm());
     EXPECT_EQ(wavelength, pho.get_wavelength());
     //creation is an interaction
     EXPECT_EQ(1u, pho.get_number_of_interactions_so_far()); 

@@ -56,7 +56,7 @@ void Propagator::get_absorbed_in_void_space() {
 void Propagator::reflect_on_surface_and_propagate_on(const Interaction type) {
     ph->set_support_and_direction(
         isec.position_in_root_frame(),
-        isec.reflection_direction_in_root_frame(ph->get_direction()));
+        isec.reflection_direction_in_root_frame(ph->direction()));
 
     ph->push_back_intersection_and_type_to_propagation_history(
         isec,
@@ -75,7 +75,7 @@ void Propagator::reach_boundary_layer() {
 void Propagator::fresnel_refraction_and_reflection() {
     FresnelRefractionAndReflection fresnel(
         isec.object2root()->
-            get_transformed_orientation_inverse(ph->get_direction()),
+            get_transformed_orientation_inverse(ph->direction()),
         isec.surface_normal_of_facing_surface_in_object_frame(),
         isec.refractive_index_coming_from(ph->wavelength),
         isec.refractive_index_going_to(ph->wavelength));

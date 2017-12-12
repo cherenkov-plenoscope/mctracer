@@ -38,7 +38,7 @@ void Tracer::trace_back_to_object_interaction() {
 void Tracer::trace_back_after_reflection() {
     cray->set_support_and_direction(
         isec.position_in_root_frame(),
-        isec.reflection_direction_in_root_frame(cray->get_direction()));
+        isec.reflection_direction_in_root_frame(cray->direction()));
     trace_back();
 }
 
@@ -52,7 +52,7 @@ void Tracer::trace_back_to_boundary_layer() {
 void Tracer::trace_back_to_fresnel_interaction() {
     FresnelRefractionAndReflection fresnel(
         isec.object2root()->
-            get_transformed_orientation_inverse(cray->get_direction()),
+            get_transformed_orientation_inverse(cray->direction()),
         isec.surface_normal_of_facing_surface_in_object_frame(),
         isec.refractive_index_coming_from(wavelength),
         isec.refractive_index_going_to(wavelength));
@@ -89,7 +89,7 @@ void Tracer::trace_back_beyond_boundary_layer(
 }
 
 void Tracer::trace_back_to_sky_dome() {
-    color = config->sky_dome.get_color_for_direction(cray->get_direction());
+    color = config->sky_dome.get_color_for_direction(cray->direction());
 }
 
 Color Tracer::shadow_of_sky_light()const {
@@ -98,7 +98,7 @@ Color Tracer::shadow_of_sky_light()const {
     Vec3 specular_dir = isec.reflection_direction_in_root_frame(
         config->global_illumination.incoming_direction);
 
-    double darkening = specular_dir*cray->get_direction();
+    double darkening = specular_dir*cray->direction();
 
     if (darkening < 0.0) darkening = 0.0;
     if (darkening > max_darkening) darkening = max_darkening;
@@ -138,7 +138,7 @@ bool Tracer::surface_normal_is_facing_observer(
 )const {
     return (
         intersection.surface_normal_in_root_frame()*
-        cray->get_direction() >
+        cray->direction() >
         0.0);
 }
 

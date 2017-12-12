@@ -49,7 +49,7 @@ void Disc::calculate_intersection_with(
 					intersection_vector,
 					xyPlaneRayEquation.get_plane_normal_vector(),
 					v,
-					ray->get_direction()
+					ray->direction()
 				);
 			}
 		}

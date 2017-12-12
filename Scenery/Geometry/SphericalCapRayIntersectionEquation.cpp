@@ -15,7 +15,7 @@ SphericalCapRayIntersectionEquation::SphericalCapRayIntersectionEquation(
 	// v^2*(d*d) + v*2(s*d -R*dz) +s*s -2*R*sz = 0
 	// v^2 + v 2(s*d - R*dz)/(d*d) + (s*s - 2*R*sz)/(d*d) = 0
 	const Vec3 sup = ray->get_support();
-	const Vec3 dir = ray->get_direction();
+	const Vec3 dir = ray->direction();
 
 	const double dir_times_dir = dir*dir;
 	const double sup_times_sup = sup*sup;

@@ -166,9 +166,9 @@ void CausalIntersection::calculate_closest_intersection() {
         closest_intersection = Intersection(
             &SurfaceEntity::VOID_SURFACE_ENTITY,
             ray->position_at(1e4),
-            ray->get_direction(),
+            ray->direction(),
             1e4,
-            ray->get_direction());
+            ray->direction());
     else
         closest_intersection = *min_element(
             candidate_intersections.begin(),

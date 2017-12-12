@@ -35,7 +35,7 @@ Vec3 Ray::get_support()const {
     return support_;
 }
 
-Vec3 Ray::get_direction()const {
+Vec3 Ray::direction()const {
     return direction_;
 }
 

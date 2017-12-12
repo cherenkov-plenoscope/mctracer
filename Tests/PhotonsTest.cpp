@@ -24,9 +24,9 @@ TEST_F(PhotonsTest, raw_row2photon) {
     EXPECT_EQ(ph.get_support().x, raw_row[1]);
     EXPECT_EQ(ph.get_support().y, raw_row[2]);
     EXPECT_EQ(ph.get_support().z, raw_row[3]);
-    EXPECT_NEAR(ph.get_direction().x, raw_row[4], 1e-9);
-    EXPECT_NEAR(ph.get_direction().y, raw_row[5], 1e-9);
-    EXPECT_NEAR(ph.get_direction().z, raw_row[6], 1e-9);
+    EXPECT_NEAR(ph.direction().x, raw_row[4], 1e-9);
+    EXPECT_NEAR(ph.direction().y, raw_row[5], 1e-9);
+    EXPECT_NEAR(ph.direction().z, raw_row[6], 1e-9);
     EXPECT_EQ(ph.get_wavelength(), raw_row[7]);
 }
 //------------------------------------------------------------------------------
@@ -48,9 +48,9 @@ TEST_F(PhotonsTest, photon2raw_row) {
     EXPECT_EQ(ph.get_support().x, raw_row[1]);
     EXPECT_EQ(ph.get_support().y, raw_row[2]);
     EXPECT_EQ(ph.get_support().z, raw_row[3]);
-    EXPECT_NEAR(ph.get_direction().x, raw_row[4], 1e-9);
-    EXPECT_NEAR(ph.get_direction().y, raw_row[5], 1e-9);
-    EXPECT_NEAR(ph.get_direction().z, raw_row[6], 1e-9);
+    EXPECT_NEAR(ph.direction().x, raw_row[4], 1e-9);
+    EXPECT_NEAR(ph.direction().y, raw_row[5], 1e-9);
+    EXPECT_NEAR(ph.direction().z, raw_row[6], 1e-9);
     EXPECT_EQ(ph.get_wavelength(), raw_row[7]);
 }
 //------------------------------------------------------------------------------
@@ -92,9 +92,9 @@ TEST_F(PhotonsTest, bunch2raw_matrix2bunch) {
         EXPECT_EQ(ph2.get_support().x, ph1.get_support().x);
         EXPECT_EQ(ph2.get_support().y, ph1.get_support().y);
         EXPECT_EQ(ph2.get_support().z, ph1.get_support().z);
-        EXPECT_NEAR(ph2.get_direction().x, ph1.get_direction().x, 1e-9);
-        EXPECT_NEAR(ph2.get_direction().y, ph1.get_direction().y, 1e-9);
-        EXPECT_NEAR(ph2.get_direction().z, ph1.get_direction().z, 1e-9);
+        EXPECT_NEAR(ph2.direction().x, ph1.direction().x, 1e-9);
+        EXPECT_NEAR(ph2.direction().y, ph1.direction().y, 1e-9);
+        EXPECT_NEAR(ph2.direction().z, ph1.direction().z, 1e-9);
         EXPECT_EQ(ph2.get_wavelength(), ph1.get_wavelength());
     }
 }
@@ -141,9 +141,9 @@ TEST_F(PhotonsTest, bunch2raw_matrix2file) {
         EXPECT_NEAR(ph2.get_support().x, ph1.get_support().x, 1e-9);
         EXPECT_NEAR(ph2.get_support().y, ph1.get_support().y, 1e-9);
         EXPECT_NEAR(ph2.get_support().z, ph1.get_support().z, 1e-9);
-        EXPECT_NEAR(ph2.get_direction().x, ph1.get_direction().x, 1e-9);
-        EXPECT_NEAR(ph2.get_direction().y, ph1.get_direction().y, 1e-9);
-        EXPECT_NEAR(ph2.get_direction().z, ph1.get_direction().z, 1e-9);
+        EXPECT_NEAR(ph2.direction().x, ph1.direction().x, 1e-9);
+        EXPECT_NEAR(ph2.direction().y, ph1.direction().y, 1e-9);
+        EXPECT_NEAR(ph2.direction().z, ph1.direction().z, 1e-9);
         EXPECT_NEAR(ph2.get_wavelength(), ph1.get_wavelength(), 1e-9);
     }
 }

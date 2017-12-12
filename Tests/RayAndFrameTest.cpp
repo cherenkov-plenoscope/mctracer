@@ -151,7 +151,7 @@ TEST_F(RayAndFrameTest, transform_into_unit_frame) {
     );
 
     EXPECT_EQ(ray_t.get_support(), Vec3::ORIGIN);
-    EXPECT_EQ(ray_t.get_direction(), Vec3::UNIT_Z);
+    EXPECT_EQ(ray_t.direction(), Vec3::UNIT_Z);
 }
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameTest, transform_into_translated_frame) {
@@ -168,7 +168,7 @@ TEST_F(RayAndFrameTest, transform_into_translated_frame) {
     );
 
     EXPECT_EQ(ray_t.get_support(), Vec3(0.0, 4.2, -13.37));
-    EXPECT_EQ(ray_t.get_direction(), Vec3::UNIT_Z);
+    EXPECT_EQ(ray_t.direction(), Vec3::UNIT_Z);
 }
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameTest, transform_ray_in_z_into_frame_rotated_in_z) {
@@ -185,7 +185,7 @@ TEST_F(RayAndFrameTest, transform_ray_in_z_into_frame_rotated_in_z) {
     );
 
     EXPECT_EQ(ray_t.get_support(), Vec3::ORIGIN);
-    EXPECT_EQ(ray_t.get_direction(), Vec3::UNIT_Z);
+    EXPECT_EQ(ray_t.direction(), Vec3::UNIT_Z);
 }
 //------------------------------------------------------------------------------
 TEST_F(RayAndFrameTest, transform_ray_into_rotated_frame) {
@@ -202,7 +202,7 @@ TEST_F(RayAndFrameTest, transform_ray_into_rotated_frame) {
     );
 
     EXPECT_EQ(ray_t.get_support(), Vec3::ORIGIN);
-    EXPECT_EQ(ray_t.get_direction(), Vec3::UNIT_Y);
+    EXPECT_EQ(ray_t.direction(), Vec3::UNIT_Y);
 }
 //------------------------------------------------------------------------------
 /*class RayAndFrameTest : public ::testing::Test {

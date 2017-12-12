@@ -158,7 +158,7 @@ void Cylinder::calculate_intersection_with(
 					intersection_vector,
 					get_surface_normal_for_intersection_vec(&intersection_vector),
 					v,
-					ray->get_direction()
+					ray->direction()
 				);
 			}			
 		}
