@@ -9,13 +9,11 @@
 class Ray {
  protected:
     Ray();
-    Vec3 support;
-    Vec3 direction;
+    Vec3 support_;
+    Vec3 direction_;
 
  public:
     Ray(const Vec3 support, const Vec3 direction);
-    void set_direction(const Vec3 ndir);
-    void set_support(const Vec3 nsup);
     void set_support_and_direction(const Vec3 nsup, const Vec3 ndir);
     Vec3 get_support()const;
     Vec3 get_direction()const;

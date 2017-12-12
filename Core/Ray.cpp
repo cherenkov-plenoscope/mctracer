@@ -16,45 +16,37 @@ Ray::Ray(const Vec3 support, const Vec3 direction) {
 }
 
 void Ray::set_support_and_direction(const Vec3 support, const Vec3 direction) {
-    set_support(support);
-    set_direction(direction);
-}
-
-void Ray::set_support(const Vec3 sup) {
-    support = sup;
-}
-
-void Ray::set_direction(const Vec3 dir) {
-    direction = dir;
-    direction.normalize();
+    support_ = support;
+    direction_ = direction;
+    direction_.normalize();
 }
 
 string Ray::str()const {
     stringstream out;
-    out << "support: " << support.str() << ", direction: " << direction.str();
+    out << "support: " << support_.str() << ", direction: " << direction_.str();
     return out.str();
 }
 
 Vec3 Ray::position_at(const double scalar)const {
-    return support + direction*scalar;
+    return support_ + direction_*scalar;
 }
 
 Vec3 Ray::get_support()const {
-    return support;
+    return support_;
 }
 
 Vec3 Ray::get_direction()const {
-    return direction;
+    return direction_;
 }
 
 void Ray::transform(const HomTra3 *T) {
-    support = T->get_transformed_position(support);
-    direction = T->get_transformed_orientation(direction);
+    support_ = T->get_transformed_position(support_);
+    direction_ = T->get_transformed_orientation(direction_);
 }
 
 void Ray::transform_inverse(const HomTra3 *T) {
-    support = T->get_transformed_position_inverse(support);
-    direction = T->get_transformed_orientation_inverse(direction);
+    support_ = T->get_transformed_position_inverse(support_);
+    direction_ = T->get_transformed_orientation_inverse(direction_);
 }
 
 double Ray::parameter_for_closest_distance_to_point(const Vec3 &point)const {
@@ -67,11 +59,11 @@ double Ray::parameter_for_closest_distance_to_point(const Vec3 &point)const {
     //
     // Now we insert the support vector of the frame into the plane eqaution:
     //  d = point.x*dirx + point.y*diry + point.z*dirz
-    const double d = direction*point;
+    const double d = direction_*point;
 
     // Insert the ray into plane equation and solve for the ray parameter.
     // The ray's direction is normalized, therefore: (direction * direction)=1
-    return d - support*direction;
+    return d - support_*direction_;
 }
 
 double Ray::closest_distance_to_point(const Vec3 &point)const {

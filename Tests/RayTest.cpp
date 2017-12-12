@@ -33,9 +33,9 @@ TEST_F(RayTest, closest_distance_to_point) {
   EXPECT_EQ(0.0, ray.closest_distance_to_point(Vec3(0.0, 0.0, 1.0)));
 }
 //------------------------------------------------------------------------------
-TEST_F(RayTest, set_direction) {
+TEST_F(RayTest, set_support_and_direction) {
   
   Ray ray(Vec3(1.2, 3.4, 5.6), Vec3(0, 0, 1));
-  ray.set_direction(Vec3(1.2, 3.4, 5.6));
+  ray.set_support_and_direction(Vec3(1.2, 3.4, 5.6), Vec3(1.2, 3.4, 5.6));
   EXPECT_EQ(1.0, ray.get_direction().norm());
 }
