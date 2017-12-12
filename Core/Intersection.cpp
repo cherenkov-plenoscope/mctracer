@@ -148,7 +148,7 @@ Vec3 Intersection::surface_normal_of_facing_surface_in_object_frame()const {
     surface_normal*-1.0;
 }
 
-const HomTra3* Intersection::object2world()const {
+const HomTra3* Intersection::object2root()const {
     return object->frame2world();
 }
 

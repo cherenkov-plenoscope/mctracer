@@ -139,7 +139,7 @@ get_final_intersection_incident_vector_in_object_frame()const {
         Vec3 incident_direction_in_world = (final - second_last);
             incident_direction_in_world.normalize();
 
-        return intersection_history.back().object2world()->
+        return intersection_history.back().object2root()->
             get_transformed_orientation_inverse(incident_direction_in_world);
     }
 }

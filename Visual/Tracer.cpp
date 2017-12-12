@@ -51,7 +51,7 @@ void Tracer::trace_back_to_boundary_layer() {
 
 void Tracer::trace_back_to_fresnel_interaction() {
     FresnelRefractionAndReflection fresnel(
-        isec.object2world()->
+        isec.object2root()->
             get_transformed_orientation_inverse(cray->get_direction()),
         isec.surface_normal_of_facing_surface_in_object_frame(),
         isec.refractive_index_coming_from(wavelength),
@@ -82,7 +82,7 @@ void Tracer::trace_back_beyond_boundary_layer(
 
     cray->set_support_and_direction(
         isec.position_in_root_frame(),
-        isec.object2world()->get_transformed_orientation(
+        isec.object2root()->get_transformed_orientation(
             fresnel.get_refrac_dir_in_object_system()));
 
     trace_back();

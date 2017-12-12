@@ -43,7 +43,7 @@ class Intersection {
     bool boundary_layer_is_transparent()const;
     bool from_outside_to_inside()const;
     const Color facing_color()const;
-    const HomTra3* object2world()const;
+    const HomTra3* object2root()const;
     Vec3 surface_normal_of_facing_surface_in_object_frame()const;
     bool going_to_default_refractive_index()const;
     bool operator<(const Intersection& other) const;
