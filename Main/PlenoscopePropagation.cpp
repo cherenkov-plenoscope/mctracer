@@ -30,6 +30,9 @@
 #include <experimental/filesystem>
 namespace fs = std::experimental::filesystem;
 
+using std::string;
+using std::vector;
+using std::array;
 using std::cout;
 
 static const char USAGE[] =

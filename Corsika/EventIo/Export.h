@@ -1,26 +1,18 @@
-//=================================
-// include guard
-#ifndef __WriteCorsikaEventIoPhotonsRaw_H_INCLUDED__
-#define __WriteCorsikaEventIoPhotonsRaw_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef MCTRACER_CORSIKA_EVENTIO_EXPORT_H_
+#define MCTRACER_CORSIKA_EVENTIO_EXPORT_H_
 
 #include <vector>
 #include <array>
-#include <iostream>
-#include <fstream>
-
-using std::string;
-using std::stringstream;
-using std::vector;
-using std::array;
-using std::istream;
-using std::ifstream;
+#include <string>
 
 namespace EventIo {
 
-    void write_raw_photons(
-        const vector<array<float, 8>> &photons, 
-        const string &path
-    );
-} //namespace EventIo
+void write_raw_photons(
+    const std::vector<std::array<float, 8>> &photons,
+    const std::string &path
+);
 
-#endif // __WriteCorsikaEventIoPhotonsRaw_H_INCLUDED__ 
+}  // namespace EventIo
+
+#endif  // MCTRACER_CORSIKA_EVENTIO_EXPORT_H_
