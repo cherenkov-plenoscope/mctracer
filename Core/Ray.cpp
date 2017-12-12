@@ -57,9 +57,7 @@ void Ray::transform_inverse(const HomTra3 *T) {
     direction = T->get_transformed_orientation_inverse(direction);
 }
 
-double Ray::parameter_for_closest_distance_to_point(
-    const Vec3 &point
-)const {
+double Ray::parameter_for_closest_distance_to_point(const Vec3 &point)const {
     // We create a plane orthogonal to this ray and containing the point
     // plane equation:
     //  d = x*a + y*b + z*c
