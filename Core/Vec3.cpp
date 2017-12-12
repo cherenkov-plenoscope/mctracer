@@ -175,14 +175,14 @@ unsigned int Vec3::get_octant()const {
     return 4*sx + 2*sy + 1*sz;
 }
 
-Vec3 Vec3::get_projection_on_XZ_plane()const {
+Vec3 Vec3::project_in_x_z_plane()const {
     return Vec3(x, 0.0, z);
 }
 
-Vec3 Vec3::get_projection_on_YZ_plane()const {
+Vec3 Vec3::project_in_y_z_plane()const {
     return Vec3(0.0, y, z);
 }
 
-Vec3 Vec3::get_projection_on_XY_plane()const {
+Vec3 Vec3::project_in_x_y_plane()const {
     return Vec3(x, y, 0.0);
 }

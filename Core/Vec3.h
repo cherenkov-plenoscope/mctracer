@@ -13,9 +13,9 @@ struct Vec3 {
     Vec3(const double x, const double y, const double z);
     void set(const double x, const double y, const double z);
     unsigned int get_octant()const;
-    Vec3 get_projection_on_XZ_plane()const;
-    Vec3 get_projection_on_YZ_plane()const;
-    Vec3 get_projection_on_XY_plane()const;
+    Vec3 project_in_x_z_plane()const;
+    Vec3 project_in_y_z_plane()const;
+    Vec3 project_in_x_y_plane()const;
     double norm()const;
     void normalize();
     Vec3 cross(const Vec3 v)const;

@@ -42,7 +42,7 @@ namespace SegmentedReflector {
 				_facet_positions.at(i).x,
 				_facet_positions.at(i).y,
 				z_pos_given_dist_to_optical_axis(
-					_facet_positions.at(i).get_projection_on_XY_plane().norm()
+					_facet_positions.at(i).project_in_x_y_plane().norm()
 				)
 			);
 		}

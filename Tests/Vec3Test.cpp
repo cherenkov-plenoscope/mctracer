@@ -316,15 +316,15 @@ TEST_F(Vec3Test, octant_encoding) {
 
 TEST_F(Vec3Test, projection_on_xz_plane) {
     Vec3 v(42.0, 13.37, 3.141);
-    EXPECT_EQ(Vec3(42.0, 0.0, 3.141), v.get_projection_on_XZ_plane());
+    EXPECT_EQ(Vec3(42.0, 0.0, 3.141), v.project_in_x_z_plane());
 }
 
 TEST_F(Vec3Test, projection_on_yz_plane) {
     Vec3 v(42.0, 13.37, 3.141);
-    EXPECT_EQ(Vec3(0.0, 13.37, 3.141), v.get_projection_on_YZ_plane());
+    EXPECT_EQ(Vec3(0.0, 13.37, 3.141), v.project_in_y_z_plane());
 }
 
 TEST_F(Vec3Test, projection_on_xy_plane) {
     Vec3 v(42.0, 13.37, 3.141);
-    EXPECT_EQ(Vec3(42.0, 13.37, 0.0), v.get_projection_on_XY_plane());
+    EXPECT_EQ(Vec3(42.0, 13.37, 0.0), v.project_in_x_y_plane());
 }
