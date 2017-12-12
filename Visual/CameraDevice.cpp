@@ -49,8 +49,10 @@ void CameraDevice::set_position_and_orientation(
 void CameraDevice::update_optical_axis_and_orientation() {
 	CameraPointingDirection = 
 		T_Camera2World.get_transformed_orientation(Vec3::UNIT_Z);
-	OpticalAxis.set_support(CameraPositionInWorld);
-	OpticalAxis.set_direction(CameraPointingDirection);	
+	OpticalAxis.set_support_and_direction(
+		CameraPositionInWorld,
+		CameraPointingDirection
+	);
 }
 //------------------------------------------------------------------------------
 void CameraDevice::set_pointing_direction(	
