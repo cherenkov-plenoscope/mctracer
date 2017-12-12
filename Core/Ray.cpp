@@ -31,7 +31,7 @@ Vec3 Ray::position_at(const double scalar)const {
     return support_ + direction_*scalar;
 }
 
-Vec3 Ray::get_support()const {
+Vec3 Ray::support()const {
     return support_;
 }
 

@@ -46,7 +46,7 @@ void PlaneDualSphericalBound::calculate_intersection_with(
 
 		if(dual_sphere_bounds.is_inside(&intersection_vector) ) {
 
-			if(ray->get_support() != intersection_vector) {
+			if(ray->support() != intersection_vector) {
 
 				intersections->emplace_back(
 					this,

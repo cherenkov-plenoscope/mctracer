@@ -128,9 +128,9 @@ vector<double> photon2raw_row(Photon* ph) {
 
     raw_row.push_back(static_cast<double>(ph->get_simulation_truth_id()));
 
-    raw_row.push_back(ph->get_support().x);
-    raw_row.push_back(ph->get_support().y);
-    raw_row.push_back(ph->get_support().z);
+    raw_row.push_back(ph->support().x);
+    raw_row.push_back(ph->support().y);
+    raw_row.push_back(ph->support().z);
 
     raw_row.push_back(ph->direction().x);
     raw_row.push_back(ph->direction().y);

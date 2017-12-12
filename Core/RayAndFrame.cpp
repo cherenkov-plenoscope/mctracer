@@ -9,7 +9,7 @@ bool ray_support_inside_frames_bounding_sphere(
     const Ray* ray,
     const Frame *frame
 ) {
-    return (frame->get_position_in_world() - ray->get_support()).
+    return (frame->get_position_in_world() - ray->support()).
         norm_is_less_equal_than(frame->get_bounding_sphere_radius());
 }
 

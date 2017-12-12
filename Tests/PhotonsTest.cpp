@@ -21,9 +21,9 @@ TEST_F(PhotonsTest, raw_row2photon) {
     Photon ph = Photons::raw_row2photon(raw_row);
 
     EXPECT_EQ(ph.get_simulation_truth_id(), raw_row[0]);
-    EXPECT_EQ(ph.get_support().x, raw_row[1]);
-    EXPECT_EQ(ph.get_support().y, raw_row[2]);
-    EXPECT_EQ(ph.get_support().z, raw_row[3]);
+    EXPECT_EQ(ph.support().x, raw_row[1]);
+    EXPECT_EQ(ph.support().y, raw_row[2]);
+    EXPECT_EQ(ph.support().z, raw_row[3]);
     EXPECT_NEAR(ph.direction().x, raw_row[4], 1e-9);
     EXPECT_NEAR(ph.direction().y, raw_row[5], 1e-9);
     EXPECT_NEAR(ph.direction().z, raw_row[6], 1e-9);
@@ -45,9 +45,9 @@ TEST_F(PhotonsTest, photon2raw_row) {
     ASSERT_EQ(8u, raw_row.size());
 
     EXPECT_EQ(ph.get_simulation_truth_id(), raw_row[0]);
-    EXPECT_EQ(ph.get_support().x, raw_row[1]);
-    EXPECT_EQ(ph.get_support().y, raw_row[2]);
-    EXPECT_EQ(ph.get_support().z, raw_row[3]);
+    EXPECT_EQ(ph.support().x, raw_row[1]);
+    EXPECT_EQ(ph.support().y, raw_row[2]);
+    EXPECT_EQ(ph.support().z, raw_row[3]);
     EXPECT_NEAR(ph.direction().x, raw_row[4], 1e-9);
     EXPECT_NEAR(ph.direction().y, raw_row[5], 1e-9);
     EXPECT_NEAR(ph.direction().z, raw_row[6], 1e-9);
@@ -89,9 +89,9 @@ TEST_F(PhotonsTest, bunch2raw_matrix2bunch) {
         Photon ph2 = photon_bunch2.at(n);
 
         EXPECT_EQ(ph2.get_simulation_truth_id(), ph1.get_simulation_truth_id());
-        EXPECT_EQ(ph2.get_support().x, ph1.get_support().x);
-        EXPECT_EQ(ph2.get_support().y, ph1.get_support().y);
-        EXPECT_EQ(ph2.get_support().z, ph1.get_support().z);
+        EXPECT_EQ(ph2.support().x, ph1.support().x);
+        EXPECT_EQ(ph2.support().y, ph1.support().y);
+        EXPECT_EQ(ph2.support().z, ph1.support().z);
         EXPECT_NEAR(ph2.direction().x, ph1.direction().x, 1e-9);
         EXPECT_NEAR(ph2.direction().y, ph1.direction().y, 1e-9);
         EXPECT_NEAR(ph2.direction().z, ph1.direction().z, 1e-9);
@@ -138,9 +138,9 @@ TEST_F(PhotonsTest, bunch2raw_matrix2file) {
         Photon ph2 = photon_bunch2.at(n);
 
         EXPECT_EQ(ph2.get_simulation_truth_id(), ph1.get_simulation_truth_id());
-        EXPECT_NEAR(ph2.get_support().x, ph1.get_support().x, 1e-9);
-        EXPECT_NEAR(ph2.get_support().y, ph1.get_support().y, 1e-9);
-        EXPECT_NEAR(ph2.get_support().z, ph1.get_support().z, 1e-9);
+        EXPECT_NEAR(ph2.support().x, ph1.support().x, 1e-9);
+        EXPECT_NEAR(ph2.support().y, ph1.support().y, 1e-9);
+        EXPECT_NEAR(ph2.support().z, ph1.support().z, 1e-9);
         EXPECT_NEAR(ph2.direction().x, ph1.direction().x, 1e-9);
         EXPECT_NEAR(ph2.direction().y, ph1.direction().y, 1e-9);
         EXPECT_NEAR(ph2.direction().z, ph1.direction().z, 1e-9);

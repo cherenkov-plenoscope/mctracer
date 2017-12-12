@@ -43,7 +43,7 @@ void Disc::calculate_intersection_with(
 
 		if(cylinder_bounds.is_inside(&intersection_vector) ) {
 
-			if(ray->get_support() != intersection_vector) {
+			if(ray->support() != intersection_vector) {
 				intersections->emplace_back(
 					this,
 					intersection_vector,

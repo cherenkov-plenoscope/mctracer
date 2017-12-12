@@ -15,7 +15,7 @@ class Ray {
  public:
     Ray(const Vec3 support, const Vec3 direction);
     void set_support_and_direction(const Vec3 nsup, const Vec3 ndir);
-    Vec3 get_support()const;
+    Vec3 support()const;
     Vec3 direction()const;
     Vec3 position_at(const double scalar)const;
     void transform(const HomTra3 *T);

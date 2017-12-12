@@ -9,7 +9,7 @@ TEST_F(RayTest, Constructor_using_vectors) {
   const Vec3 sup(1.2, 3.4, 5.6);
   const Vec3 dir(7.8, 9.0, 4.2);
   const Ray ray(sup, dir);
-  EXPECT_EQ(sup, ray.get_support());
+  EXPECT_EQ(sup, ray.support());
   EXPECT_EQ(dir/dir.norm(), ray.direction());
   EXPECT_NEAR(1.0, ray.direction().norm(), 1e-6);
 }

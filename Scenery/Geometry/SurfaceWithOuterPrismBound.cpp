@@ -61,7 +61,7 @@ void SurfaceWithOuterPrismBound::add_causeal_intersection(
 
 		Vec3 causal_intersec = ray->position_at(causal_solution);
 
-		if(ray->get_support() != causal_intersec) {
+		if(ray->support() != causal_intersec) {
 			
 			intersections->emplace_back(
 				this,

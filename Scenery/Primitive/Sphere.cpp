@@ -64,9 +64,9 @@ QuadraticEquation Sphere::get_ray_parameter_equation_for_intersections_with_sphe
 	// 	   	0 = v^2 + v 2(bd/dd) + (bb/dd -r^2)
 	//		solve quadrativ eqaution in v
 
-	const double sup_times_dir = ray->get_support() * ray->direction();
+	const double sup_times_dir = ray->support() * ray->direction();
 	const double dir_times_dir = ray->direction() * ray->direction();
-	const double sup_times_sup = ray->get_support() * ray->get_support();
+	const double sup_times_sup = ray->support() * ray->support();
 	const double radius_square = radius*radius;
 
 	QuadraticEquation quadratic_eq_in_v(
@@ -86,7 +86,7 @@ void Sphere::add_sphere_intersection_for_ray_parameter(
 	Vec3 intersection_point = ray->position_at(ray_parameter);
 	Vec3 surface_normal = intersection_point/intersection_point.norm();
 	
-	if(ray->get_support() != intersection_point) {
+	if(ray->support() != intersection_point) {
 		
 		intersections->emplace_back(
 			this,

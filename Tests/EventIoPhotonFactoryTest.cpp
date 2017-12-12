@@ -91,9 +91,9 @@ TEST_F(EventIoPhotonFactoryTest, convert_photons) {
     EXPECT_NEAR(433e-9, ph.get_wavelength(), 1e-9);
 
     // since the x,y angles are zero, the support vector can be tested
-    EXPECT_NEAR(0.012, ph.get_support().x, 1e-9);
-    EXPECT_NEAR(0.034, ph.get_support().y, 1e-9);
-    EXPECT_NEAR(1e3, ph.get_support().z, 1e-9);
+    EXPECT_NEAR(0.012, ph.support().x, 1e-9);
+    EXPECT_NEAR(0.034, ph.support().y, 1e-9);
+    EXPECT_NEAR(1e3, ph.support().z, 1e-9);
 }
 //------------------------------------------------------------------------------
 TEST_F(EventIoPhotonFactoryTest, execute_atmospheric_absorption) {

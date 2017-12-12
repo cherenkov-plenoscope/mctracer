@@ -24,7 +24,7 @@ TEST_F(PhotonTest, creation) {
     Photon pho(Vec3::ORIGIN, Vec3::UNIT_Z*1.337, wavelength);
 
     EXPECT_EQ(Vec3::UNIT_Z, pho.direction());
-    EXPECT_EQ(Vec3::ORIGIN, pho.get_support());
+    EXPECT_EQ(Vec3::ORIGIN, pho.support());
     EXPECT_EQ(1.0, pho.direction().norm());
     EXPECT_EQ(wavelength, pho.get_wavelength());
     //creation is an interaction

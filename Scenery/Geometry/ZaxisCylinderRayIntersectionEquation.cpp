@@ -19,11 +19,11 @@ ZaxisCylinderRayIntersectionEquation::ZaxisCylinderRayIntersectionEquation(
 	const double dx2 = ray->direction().x*ray->direction().x;
 	const double dy2 = ray->direction().y*ray->direction().y;
 
-	const double sxdx = ray->get_support().x*ray->direction().x;
-	const double sydy = ray->get_support().y*ray->direction().y;
+	const double sxdx = ray->support().x*ray->direction().x;
+	const double sydy = ray->support().y*ray->direction().y;
 
-	const double sx2 = ray->get_support().x*ray->get_support().x;
-	const double sy2 = ray->get_support().y*ray->get_support().y;
+	const double sx2 = ray->support().x*ray->support().x;
+	const double sy2 = ray->support().y*ray->support().y;
 
 	const double r2 = radius*radius;
 	const double dnom = dx2 + dy2;

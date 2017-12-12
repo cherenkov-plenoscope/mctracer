@@ -150,7 +150,7 @@ TEST_F(RayAndFrameTest, transform_into_unit_frame) {
         &frame
     );
 
-    EXPECT_EQ(ray_t.get_support(), Vec3::ORIGIN);
+    EXPECT_EQ(ray_t.support(), Vec3::ORIGIN);
     EXPECT_EQ(ray_t.direction(), Vec3::UNIT_Z);
 }
 //------------------------------------------------------------------------------
@@ -167,7 +167,7 @@ TEST_F(RayAndFrameTest, transform_into_translated_frame) {
         &frame
     );
 
-    EXPECT_EQ(ray_t.get_support(), Vec3(0.0, 4.2, -13.37));
+    EXPECT_EQ(ray_t.support(), Vec3(0.0, 4.2, -13.37));
     EXPECT_EQ(ray_t.direction(), Vec3::UNIT_Z);
 }
 //------------------------------------------------------------------------------
@@ -184,7 +184,7 @@ TEST_F(RayAndFrameTest, transform_ray_in_z_into_frame_rotated_in_z) {
         &frame
     );
 
-    EXPECT_EQ(ray_t.get_support(), Vec3::ORIGIN);
+    EXPECT_EQ(ray_t.support(), Vec3::ORIGIN);
     EXPECT_EQ(ray_t.direction(), Vec3::UNIT_Z);
 }
 //------------------------------------------------------------------------------
@@ -201,7 +201,7 @@ TEST_F(RayAndFrameTest, transform_ray_into_rotated_frame) {
         &frame
     );
 
-    EXPECT_EQ(ray_t.get_support(), Vec3::ORIGIN);
+    EXPECT_EQ(ray_t.support(), Vec3::ORIGIN);
     EXPECT_EQ(ray_t.direction(), Vec3::UNIT_Y);
 }
 //------------------------------------------------------------------------------

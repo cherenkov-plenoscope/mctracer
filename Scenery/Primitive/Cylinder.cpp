@@ -151,7 +151,7 @@ void Cylinder::calculate_intersection_with(
 
 		if(is_in_cylinders_z_bounds(&intersection_vector)) {
 
-			if(ray->get_support() != intersection_vector) {
+			if(ray->support() != intersection_vector) {
 				
 				intersections->emplace_back(
 					this,

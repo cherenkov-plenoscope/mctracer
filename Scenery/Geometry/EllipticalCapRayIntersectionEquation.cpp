@@ -41,9 +41,9 @@ EllipticalCapRayIntersectionEquation::EllipticalCapRayIntersectionEquation(
 	const double dx = ray->direction().x;
 	const double dy = ray->direction().y;
 	const double dz = ray->direction().z;
-	const double bx = ray->get_support().x;
-	const double by = ray->get_support().y;
-	const double bz = ray->get_support().z;
+	const double bx = ray->support().x;
+	const double by = ray->support().y;
+	const double bz = ray->support().z;
 	
 	const double a = (dx*dx)*iAA + (dy*dy)*iBB +  (dz*dz)*iCC;
 	const double b = 2.0*( (bx*dx)*iAA + (by*dy)*iBB + dz*(bz-C)*iCC );

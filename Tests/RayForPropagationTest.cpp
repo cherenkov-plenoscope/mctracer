@@ -19,7 +19,7 @@ TEST_F(RayForPropagationTest, Constructor_using_vectors) {
     RayForPropagation prop_ray(support, direction);
     prop_ray.set_simulation_truth_id(1337);
 
-    EXPECT_EQ(support, prop_ray.get_support() );
+    EXPECT_EQ(support, prop_ray.support() );
     EXPECT_EQ(direction, prop_ray.direction() );
     EXPECT_EQ(1u, prop_ray.get_number_of_interactions_so_far()); //creation itselt
     EXPECT_EQ(1337, prop_ray.get_simulation_truth_id());
