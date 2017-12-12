@@ -76,7 +76,7 @@ void Propagator::fresnel_refraction_and_reflection() {
     FresnelRefractionAndReflection fresnel(
         isec.object2world()->
             get_transformed_orientation_inverse(ph->get_direction()),
-        isec.get_normal_in_faceing_surface_system(),
+        isec.surface_normal_of_facing_surface_in_object_frame(),
         isec.refractive_index_coming_from(ph->wavelength),
         isec.refractive_index_going_to(ph->wavelength));
 

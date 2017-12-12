@@ -44,7 +44,7 @@ class Intersection {
     bool from_outside_to_inside()const;
     const Color facing_color()const;
     const HomTra3* object2world()const;
-    Vec3 get_normal_in_faceing_surface_system()const;
+    Vec3 surface_normal_of_facing_surface_in_object_frame()const;
     bool going_to_default_refractive_index()const;
     bool operator<(const Intersection& other) const;
     static bool compare(const Intersection &one, const Intersection &two);

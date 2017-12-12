@@ -53,7 +53,7 @@ void Tracer::trace_back_to_fresnel_interaction() {
     FresnelRefractionAndReflection fresnel(
         isec.object2world()->
             get_transformed_orientation_inverse(cray->get_direction()),
-        isec.get_normal_in_faceing_surface_system(),
+        isec.surface_normal_of_facing_surface_in_object_frame(),
         isec.refractive_index_coming_from(wavelength),
         isec.refractive_index_going_to(wavelength));
 

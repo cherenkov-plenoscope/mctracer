@@ -142,7 +142,7 @@ bool Intersection::from_outside_to_inside()const {
     return _from_outside_to_inside;
 }
 
-Vec3 Intersection::get_normal_in_faceing_surface_system()const {
+Vec3 Intersection::surface_normal_of_facing_surface_in_object_frame()const {
     return _from_outside_to_inside ?
     surface_normal:
     surface_normal*-1.0;
