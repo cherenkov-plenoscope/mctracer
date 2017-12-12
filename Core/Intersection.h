@@ -38,8 +38,8 @@ class Intersection {
     double facing_reflection_propability(const double wavelength)const;
     double refractive_index_going_to(const double wavelength)const;
     double refractive_index_coming_from(const double wavelength)const;
-    double get_half_way_depth_coming_from(const double wavelength)const;
-    double get_half_way_depth_going_to(const double wavelength)const;
+    double half_way_depth_coming_from(const double wavelength)const;
+    double half_way_depth_going_to(const double wavelength)const;
     bool boundary_layer_is_transparent()const;
     bool from_outside_to_inside()const;
     const Color facing_color()const;

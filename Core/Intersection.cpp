@@ -108,17 +108,13 @@ double Intersection::refractive_index_coming_from(
     (*object->get_inner_refraction_())(wavelength);
 }
 
-double Intersection::get_half_way_depth_coming_from(
-    const double wavelength
-)const {
+double Intersection::half_way_depth_coming_from(const double wavelength)const {
     return _from_outside_to_inside ?
     (*object->get_outer_absorption_())(wavelength):
     (*object->get_inner_absorption_())(wavelength);
 }
 
-double Intersection::get_half_way_depth_going_to(
-    const double wavelength
-)const {
+double Intersection::half_way_depth_going_to(const double wavelength)const {
     return _from_outside_to_inside ?
     (*object->get_inner_absorption_())(wavelength):
     (*object->get_outer_absorption_())(wavelength);
