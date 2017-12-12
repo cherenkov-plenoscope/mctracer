@@ -25,6 +25,6 @@ class Ray {
     std::string str()const;
     double get_parameter_on_ray_for_closest_distance_to_point(
         const Vec3 &point)const;
-    double get_closest_distance_to_point(const Vec3 &point)const;
+    double closest_distance_to_point(const Vec3 &point)const;
 };
 #endif  // MCTRACER_CORE_RAY_H_

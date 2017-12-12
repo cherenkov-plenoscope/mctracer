@@ -76,7 +76,7 @@ double Ray::get_parameter_on_ray_for_closest_distance_to_point(
     return d - support*direction;
 }
 
-double Ray::get_closest_distance_to_point(const Vec3 &point)const {
+double Ray::closest_distance_to_point(const Vec3 &point)const {
     const double a = get_parameter_on_ray_for_closest_distance_to_point(point);
     const Vec3 q = get_pos_at(a);
     const Vec3 shortest_connection = point - q;
