@@ -18,7 +18,7 @@ bool ray_has_intersection_with_bounding_sphere_of(
     const Frame *frame
 ) {
     const double alpha =
-        ray->get_parameter_on_ray_for_closest_distance_to_point(
+        ray->parameter_for_closest_distance_to_point(
             frame->get_position_in_world());
 
     const Vec3 q = ray->get_pos_at(alpha);

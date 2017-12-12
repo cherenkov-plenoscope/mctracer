@@ -23,7 +23,7 @@ class Ray {
     void transform(const HomTra3 *T);
     void transform_inverse(const HomTra3 *T);
     std::string str()const;
-    double get_parameter_on_ray_for_closest_distance_to_point(
+    double parameter_for_closest_distance_to_point(
         const Vec3 &point)const;
     double closest_distance_to_point(const Vec3 &point)const;
 };
