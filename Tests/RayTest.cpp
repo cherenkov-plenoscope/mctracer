@@ -21,7 +21,7 @@ TEST_F(RayTest, position_on_ray) {
   const Ray ray(sup, dir);
   const double alpha = 5.0;
   const Vec3 pos_on_ray = sup+dir/dir.norm()*alpha;
-  EXPECT_NEAR(0.0, (pos_on_ray - ray.get_pos_at(alpha) ).norm(), 1e-6);
+  EXPECT_NEAR(0.0, (pos_on_ray - ray.position_at(alpha) ).norm(), 1e-6);
 }
 //------------------------------------------------------------------------------
 TEST_F(RayTest, closest_distance_to_point) {

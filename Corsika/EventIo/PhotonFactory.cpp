@@ -37,7 +37,7 @@ Photon PhotonFactory::get_photon() {
 
     Vec3 causal_support =
         ray_running_upwards_from_ground_to_pos_of_production.
-        get_pos_at(ray_parameter_for_production_point());
+        position_at(ray_parameter_for_production_point());
 
     Photon cherenkov_photon(causal_support, causal_dir, wavelength_in_m());
     cherenkov_photon.set_simulation_truth_id(id);

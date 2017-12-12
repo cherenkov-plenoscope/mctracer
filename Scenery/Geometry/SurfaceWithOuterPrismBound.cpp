@@ -9,8 +9,8 @@ void SurfaceWithOuterPrismBound::add_causeal_intersection(
 		vector<Intersection> *intersections
 )const {
 
-	const Vec3 plus_intersec = ray->get_pos_at(eq->get_plus_solution());
-	const Vec3 minus_intersec = ray->get_pos_at(eq->get_minus_solution()); 	
+	const Vec3 plus_intersec = ray->position_at(eq->get_plus_solution());
+	const Vec3 minus_intersec = ray->position_at(eq->get_minus_solution()); 	
 
 	const bool p_is_inside = outer_bound->is_inside(&plus_intersec);
 	const bool m_is_inside = outer_bound->is_inside(&minus_intersec);
@@ -59,7 +59,7 @@ void SurfaceWithOuterPrismBound::add_causeal_intersection(
 
 	if(is_inside_cylinder) {
 
-		Vec3 causal_intersec = ray->get_pos_at(causal_solution);
+		Vec3 causal_intersec = ray->position_at(causal_solution);
 
 		if(ray->get_support() != causal_intersec) {
 			

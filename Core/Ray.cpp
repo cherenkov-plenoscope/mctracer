@@ -35,7 +35,7 @@ string Ray::str()const {
     return out.str();
 }
 
-Vec3 Ray::get_pos_at(const double scalar)const {
+Vec3 Ray::position_at(const double scalar)const {
     return support + direction*scalar;
 }
 
@@ -76,7 +76,7 @@ double Ray::parameter_for_closest_distance_to_point(const Vec3 &point)const {
 
 double Ray::closest_distance_to_point(const Vec3 &point)const {
     const double a = parameter_for_closest_distance_to_point(point);
-    const Vec3 q = get_pos_at(a);
+    const Vec3 q = position_at(a);
     const Vec3 shortest_connection = point - q;
     return shortest_connection.norm();
 }

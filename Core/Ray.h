@@ -19,7 +19,7 @@ class Ray {
     void set_support_and_direction(const Vec3 nsup, const Vec3 ndir);
     Vec3 get_support()const;
     Vec3 get_direction()const;
-    Vec3 get_pos_at(const double scalar)const;
+    Vec3 position_at(const double scalar)const;
     void transform(const HomTra3 *T);
     void transform_inverse(const HomTra3 *T);
     std::string str()const;

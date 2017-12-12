@@ -21,7 +21,7 @@ bool ray_has_intersection_with_bounding_sphere_of(
         ray->parameter_for_closest_distance_to_point(
             frame->get_position_in_world());
 
-    const Vec3 q = ray->get_pos_at(alpha);
+    const Vec3 q = ray->position_at(alpha);
     const Vec3 shortest_connection = frame->get_position_in_world() - q;
     const double dist_square = shortest_connection*shortest_connection;
 
@@ -165,7 +165,7 @@ void CausalIntersection::calculate_closest_intersection() {
     if (candidate_intersections.size() == 0)
         closest_intersection = Intersection(
             &SurfaceEntity::VOID_SURFACE_ENTITY,
-            ray->get_pos_at(1e4),
+            ray->position_at(1e4),
             ray->get_direction(),
             1e4,
             ray->get_direction());

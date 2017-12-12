@@ -83,7 +83,7 @@ void Stereo3D::set_object_distance_to_focus_on(const Frame* world) {
 //------------------------------------------------------------------------------
 void Stereo3D::set_intersec_point_for_left_and_right_optical_axis(){
 	intersection_point_for_l_and_r_optical_axes = 
-		camera->get_optical_axis_in_world().get_pos_at(distance_to_object);
+		camera->get_optical_axis_in_world().position_at(distance_to_object);
 }
 //------------------------------------------------------------------------------
 void Stereo3D::set_pointing_dir_for_left_and_right_stereo_config(){

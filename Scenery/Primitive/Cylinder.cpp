@@ -147,7 +147,7 @@ void Cylinder::calculate_intersection_with(
 	if(cylRayEquation.has_causal_solution()) {
 
 		double v = cylRayEquation.get_ray_parameter_for_intersection();
-		Vec3 intersection_vector = ray->get_pos_at(v);
+		Vec3 intersection_vector = ray->position_at(v);
 
 		if(is_in_cylinders_z_bounds(&intersection_vector)) {
 

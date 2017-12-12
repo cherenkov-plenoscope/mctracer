@@ -55,7 +55,7 @@ Photon MmcsCorsikaEvent::get_mctracer_photon(const unsigned int i)const {
 
 	Vec3 causal_support = 
 		ray_running_upwards_from_ground_to_pos_of_production.
-		get_pos_at(ray_parameter_for_production_height);
+		position_at(ray_parameter_for_production_height);
 
 	Photon cherenkov_photon(causal_support, causal_dir, wavelength_in_m(i));	
 	cherenkov_photon.set_simulation_truth_id(i);

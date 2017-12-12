@@ -73,7 +73,7 @@ Photon Calibrator::get_photon_given_pos_and_angle_on_principal_aperture(
 		direction_on_principal_aperture
 	);
 
-	Vec3 support_of_photon = back_running_ray.get_pos_at(
+	Vec3 support_of_photon = back_running_ray.position_at(
 		distance_to_travel_before_intersecting_principal_aperture
 	);
 

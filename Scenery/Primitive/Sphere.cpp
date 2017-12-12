@@ -83,7 +83,7 @@ void Sphere::add_sphere_intersection_for_ray_parameter(
 	vector<Intersection> *intersections
 )const {
 
-	Vec3 intersection_point = ray->get_pos_at(ray_parameter);
+	Vec3 intersection_point = ray->position_at(ray_parameter);
 	Vec3 surface_normal = intersection_point/intersection_point.norm();
 	
 	if(ray->get_support() != intersection_point) {
