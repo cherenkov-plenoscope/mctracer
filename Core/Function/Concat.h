@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_FUNCTION_CONCATFUNCTION_H_
-#define CORE_FUNCTION_CONCATFUNCTION_H_
+#ifndef CORE_FUNCTION_CONCAT_H_
+#define CORE_FUNCTION_CONCAT_H_
 
 #include <vector>
 #include "Func1DFunction.h"
@@ -26,4 +26,4 @@ class Concat : public Func1D {
 
 }  // namespace Function
 
-#endif  // CORE_FUNCTION_CONCATFUNCTION_H_
+#endif  // CORE_FUNCTION_CONCAT_H_
