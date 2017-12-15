@@ -28,7 +28,7 @@ vector<vector<double>> Func1D::get_samples(const unsigned int N)const {
     return table;
 }
 
-double Func1D::get_mean(const unsigned int N)const {
+double Func1D::mean(const unsigned int N)const {
     vector<vector<double>> x_vs_y   = get_samples(N);
     double y_mean = 0.0;
     for (vector<double> point : x_vs_y)
