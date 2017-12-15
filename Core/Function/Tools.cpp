@@ -7,7 +7,7 @@ using std::vector;
 namespace Function {
 
 LinInterpol get_integral(const Func1D &f, unsigned int steps) {
-    double step = f.limits().get_range()/static_cast<double>(steps);
+    double step = f.limits().range()/static_cast<double>(steps);
     vector<vector<double>> F;
     vector<double> F_start = {f.limits().lower(), 0.0};
     F.push_back(F_start);
@@ -29,7 +29,7 @@ LinInterpol get_integral(const Func1D &f, unsigned int steps) {
 }
 
 LinInterpol get_inverse(const Func1D &f, unsigned int steps) {
-    double step = f.limits().get_range()/static_cast<double>(steps);
+    double step = f.limits().range()/static_cast<double>(steps);
     vector<vector<double>> fvec_inv;
     vector<double> f_inv_start = {
         f.evaluate(f.limits().lower()),
@@ -50,7 +50,7 @@ LinInterpol get_inverse(const Func1D &f, unsigned int steps) {
 }
 
 LinInterpol get_derivative(const Func1D &f, unsigned int steps) {
-    double step = f.limits().get_range()/static_cast<double>(steps);
+    double step = f.limits().range()/static_cast<double>(steps);
     vector<vector<double>> fvec_deriv;
     for (unsigned int i = 0; i < (steps-1); i++) {
         double x = f.limits().lower() + i*step;
@@ -69,7 +69,7 @@ LinInterpol get_derivative(const Func1D &f, unsigned int steps) {
 }
 
 bool value_flips_sign(const Func1D &f, unsigned int steps) {
-    double step = f.limits().get_range()/static_cast<double>(steps);
+    double step = f.limits().range()/static_cast<double>(steps);
     bool flip = false;
     for (unsigned int i = 0; i < (steps-1); i++) {
         double x = f.limits().lower() + i*step;

@@ -38,7 +38,7 @@ double Limits::upper()const {
     return upper_;
 }
 
-double Limits::get_range()const {
+double Limits::range()const {
     return upper_ - lower_;
 }
 

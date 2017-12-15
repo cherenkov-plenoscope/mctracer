@@ -61,13 +61,13 @@ TEST_F(FunctionTest, default_limits) {
 TEST_F(FunctionTest, limit_default_range) {
     
     Function::Limits l;
-    EXPECT_EQ(0.0, l.get_range());
+    EXPECT_EQ(0.0, l.range());
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, limit_range) {
     
     Function::Limits l(0.0, 1.0);
-    EXPECT_EQ(1.0, l.get_range());
+    EXPECT_EQ(1.0, l.range());
 }
 //------------------------------------------------------------------------------
 // Constant

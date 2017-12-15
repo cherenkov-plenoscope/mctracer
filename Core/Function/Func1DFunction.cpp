@@ -37,7 +37,7 @@ double Func1D::mean(const unsigned int N)const {
 }
 
 double Func1D::increment_for_steps(const unsigned int N)const {
-    return limits_.get_range()/static_cast<double>(N);
+    return limits_.range()/static_cast<double>(N);
 }
 
 Limits Func1D::limits()const {
