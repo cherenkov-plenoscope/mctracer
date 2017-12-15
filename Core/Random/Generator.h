@@ -9,10 +9,10 @@ namespace Random {
 
 class Generator {
  protected:
-    uint32_t seed;
+    uint32_t seed_;
 
  public:
-    uint32_t get_seed()const;
+    uint32_t seed()const;
     virtual double uniform() = 0;
     virtual void set_seed(const uint32_t seed);
     Vec3 get_point_on_xy_disc_within_radius(const double r);

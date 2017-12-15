@@ -263,7 +263,7 @@ int main(int argc, char* argv[]) {
         HeaderBlock::write(event.header.raw, PathTools::join(event_mc_truth_path.path, "corsika_event_header.bin"));
         
         Plenoscope::SimulationTruthHeader sim_truth_header;
-        sim_truth_header.set_random_number_seed_of_run(prng.get_seed());
+        sim_truth_header.set_random_number_seed_of_run(prng.seed());
         HeaderBlock::write(
             sim_truth_header.raw, 
             PathTools::join(event_mc_truth_path.path, "mctracer_event_header.bin")

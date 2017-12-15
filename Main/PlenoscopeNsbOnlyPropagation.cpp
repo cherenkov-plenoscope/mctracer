@@ -224,7 +224,7 @@ int main(int argc, char* argv[]) {
         fs::create_directory(event_mc_truth_path.path);
 
         Plenoscope::SimulationTruthHeader sim_truth_header;
-        sim_truth_header.set_random_number_seed_of_run(prng.get_seed());
+        sim_truth_header.set_random_number_seed_of_run(prng.seed());
         HeaderBlock::write(
             sim_truth_header.raw, 
             PathTools::join(event_mc_truth_path.path, "mctracer_event_header.bin")

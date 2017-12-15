@@ -88,7 +88,7 @@ void propagate_photons_using_multi_thread(
         out << "Thread " << thread_id+1 << "/" << number_of_threads;
         out << " is doing " << ray_counter << "/";
         out << photons->size() << " photons. ";
-        out << "Seed: " << dice_for_this_thread_only.get_seed() << "\n";
+        out << "Seed: " << dice_for_this_thread_only.seed() << "\n";
         //  cout << out.str();
     }
 

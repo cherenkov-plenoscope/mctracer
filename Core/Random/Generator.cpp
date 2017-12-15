@@ -6,12 +6,12 @@
 
 namespace Random {
 
-uint32_t Generator::get_seed()const {
-    return seed;
+uint32_t Generator::seed()const {
+    return seed_;
 }
 
 void Generator::set_seed(const uint32_t seed) {
-    this->seed = seed;
+    this->seed_ = seed;
 }
 
 Vec3 Generator::get_point_on_xy_disc_within_radius_slow(const double max_r) {

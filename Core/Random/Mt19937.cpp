@@ -19,8 +19,8 @@ double Mt19937::uniform() {
 }
 
 void Mt19937::set_seed(const uint32_t seed) {
-    this->seed = seed;
-    pRNG_mt19937.seed(seed);
+    this->seed_ = seed;
+    pRNG_mt19937.seed(this->seed_);
 }
 
 void Mt19937::init_inverse_maximum() {

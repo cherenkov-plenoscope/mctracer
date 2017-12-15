@@ -22,7 +22,7 @@ TEST_F(RandomGeneratorTest, Mt19937_init_and_get_seed) {
 
     for(unsigned int i=0; i<100; i++) {
         Random::Mt19937 prng(i);
-        EXPECT_EQ(i, prng.get_seed());
+        EXPECT_EQ(i, prng.seed());
     }
 }
 //------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ TEST_F(RandomGeneratorTest, Mt19937_set_and_get_seed) {
 
     for(unsigned int i=0; i<100; i++) {
         prng.set_seed(i);
-        EXPECT_EQ(i, prng.get_seed());
+        EXPECT_EQ(i, prng.seed());
     }
 }
 //------------------------------------------------------------------------------
