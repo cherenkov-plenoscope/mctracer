@@ -42,7 +42,7 @@ TEST_F(FunctionTest, causal_limits_below_lower) {
 TEST_F(FunctionTest, check_limits) {
     
     Function::Limits l(4.2, 133.7);
-    EXPECT_EQ(4.2, l.get_lower());
+    EXPECT_EQ(4.2, l.lower());
     EXPECT_EQ(133.7, l.get_upper());
 }
 //------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ TEST_F(FunctionTest, default_limits) {
     
     Function::Limits l;
 
-    EXPECT_EQ(0.0, l.get_lower());
+    EXPECT_EQ(0.0, l.lower());
     EXPECT_EQ(0.0, l.get_upper());
 
     EXPECT_THROW(l.assert_contains(-0.1), std::out_of_range);
@@ -194,7 +194,7 @@ TEST_F(FunctionTest, Concat_valid_limits) {
 
     Function::Concat con(f);
 
-    EXPECT_EQ(0.0, con.limits().get_lower());
+    EXPECT_EQ(0.0, con.limits().lower());
     EXPECT_EQ(3.0, con.limits().get_upper());
 }
 //------------------------------------------------------------------------------
@@ -266,7 +266,7 @@ TEST_F(FunctionTest, numerical_integration_const) {
     Function::Polynom3 f(0.0, 0.0, 0.0, 1.0, Function::Limits(0.0, 1.0));
     Function::LinInterpol F = Function::get_integral(f);
 
-    EXPECT_EQ(f.limits().get_lower(), F.limits().get_lower());
+    EXPECT_EQ(f.limits().lower(), F.limits().lower());
     EXPECT_EQ(f.limits().get_upper(), F.limits().get_upper());
 
     // F(0) != 0
@@ -284,7 +284,7 @@ TEST_F(FunctionTest, numerical_integration_linear) {
     Function::Polynom3 f(0.0, 0.0, 1.0, 0.0, Function::Limits(0.0, 1.0));
     Function::LinInterpol F = Function::get_integral(f);
 
-    EXPECT_EQ(f.limits().get_lower(), F.limits().get_lower());
+    EXPECT_EQ(f.limits().lower(), F.limits().lower());
     EXPECT_EQ(f.limits().get_upper(), F.limits().get_upper());
 
     // F(0) != 0
@@ -302,7 +302,7 @@ TEST_F(FunctionTest, numerical_inverse_limits) {
     Function::Polynom3 f(0.0, 0.0, 2.0, 0.0, Function::Limits(0.0, 1.0));
     Function::LinInterpol f_inv = Function::get_inverse(f);
 
-    EXPECT_NEAR(0.0, f_inv.limits().get_lower(), 1e-6);
+    EXPECT_NEAR(0.0, f_inv.limits().lower(), 1e-6);
     EXPECT_NEAR(2.0, f_inv.limits().get_upper(), 1e-6);
 }
 //------------------------------------------------------------------------------
@@ -313,7 +313,7 @@ TEST_F(FunctionTest, numerical_inverse_linear) {
     Function::Polynom3 f(0.0, 0.0, 1.0, 0.0, Function::Limits(0.0, 1.0));
     Function::LinInterpol f_inv = Function::get_inverse(f);
 
-    EXPECT_NEAR(0.0, f_inv.limits().get_lower(), 1e-6);
+    EXPECT_NEAR(0.0, f_inv.limits().lower(), 1e-6);
     EXPECT_NEAR(1.0, f_inv.limits().get_upper(), 1e-6);
 
     // f_inv(0) != 0
@@ -331,7 +331,7 @@ TEST_F(FunctionTest, numerical_inverse_quadratic) {
     Function::Polynom3 f(0.0, 1.0, 0.0, 0.0, Function::Limits(0.0, 1.0));
     Function::LinInterpol f_inv = Function::get_inverse(f);
 
-    EXPECT_NEAR(0.0, f_inv.limits().get_lower(), 1e-6);
+    EXPECT_NEAR(0.0, f_inv.limits().lower(), 1e-6);
     EXPECT_NEAR(1.0, f_inv.limits().get_upper(), 1e-6);
 
     //AsciiIo::write_table_to_file(f.sample(1024), "f.func");
@@ -352,7 +352,7 @@ TEST_F(FunctionTest, numerical_derivative_of_constant_function) {
     Function::Polynom3 f(0.0, 0.0, 0.0, 1.0, Function::Limits(0.0, 1.0));
     Function::LinInterpol f_prime = Function::get_derivative(f);
 
-    EXPECT_EQ(f.limits().get_lower(), f_prime.limits().get_lower());
+    EXPECT_EQ(f.limits().lower(), f_prime.limits().lower());
     EXPECT_EQ(f.limits().get_upper(), f_prime.limits().get_upper());
 
     for(double x=0; x<1.0; x=x+1e-3)
@@ -366,7 +366,7 @@ TEST_F(FunctionTest, numerical_derivative_of_linear_function) {
     Function::Polynom3 f(0.0, 0.0, 1.0, 1.0, Function::Limits(0.0, 1.0));
     Function::LinInterpol f_prime = Function::get_derivative(f);
 
-    EXPECT_EQ(f.limits().get_lower(), f_prime.limits().get_lower());
+    EXPECT_EQ(f.limits().lower(), f_prime.limits().lower());
     EXPECT_EQ(f.limits().get_upper(), f_prime.limits().get_upper());
 
     for(double x=0; x<1.0; x=x+1e-3)
@@ -380,7 +380,7 @@ TEST_F(FunctionTest, numerical_derivative_of_quadratic_function) {
     Function::Polynom3 f(0.0, 1.0, 0.0, 0.0, Function::Limits(0.0, 1.0));
     Function::LinInterpol f_prime = Function::get_derivative(f);
 
-    EXPECT_EQ(f.limits().get_lower(), f_prime.limits().get_lower());
+    EXPECT_EQ(f.limits().lower(), f_prime.limits().lower());
     EXPECT_EQ(f.limits().get_upper(), f_prime.limits().get_upper());
 
     for(double x=0; x<1.0; x=x+1e-3)

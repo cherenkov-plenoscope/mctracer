@@ -30,7 +30,7 @@ void Limits::assert_limits_are_causal()const {
     }
 }
 
-double Limits::get_lower()const {
+double Limits::lower()const {
     return lower_;
 }
 

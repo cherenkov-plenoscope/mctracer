@@ -49,7 +49,7 @@ void LookUpTable::fill_table() {
             const double x_off = step_width_in_slice*static_cast<double>(i);
             for (unsigned int j = 0; j < number_of_slices; j++) {
                 const double x = config.slice_width*static_cast<double>(j) +
-                    func->limits().get_lower();
+                    func->limits().lower();
                 row.push_back(func->evaluate(x + x_off));
             }
             table.push_back(row);

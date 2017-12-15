@@ -14,7 +14,7 @@ Func1D::Func1D(const Limits &_limits): limits_(_limits) {}
 Func1D::~Func1D() {}
 
 vector<vector<double>> Func1D::sample(const unsigned int N)const {
-    double arg = limits_.get_lower();
+    double arg = limits_.lower();
     const double increment = increment_for_steps(N);
     vector<vector<double>> table;
     table.reserve(N);
