@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include <math.h> 
-#include "Core/Function/LinInterpolFunction.h"
+#include "Core/Function/LinInterpol.h"
 #include "Tools/AsciiIo.h"
 using std::stringstream;
 using std::string;

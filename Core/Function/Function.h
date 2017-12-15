@@ -4,7 +4,7 @@
 
 #include "Limits.h"
 #include "Func1DFunction.h"
-#include "LinInterpolFunction.h"
+#include "LinInterpol.h"
 #include "Polynom3.h"
 #include "Constant.h"
 #include "Concat.h"

@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_FUNCTION_LININTERPOLFUNCTION_H_
-#define CORE_FUNCTION_LININTERPOLFUNCTION_H_
+#ifndef CORE_FUNCTION_LININTERPOL_H_
+#define CORE_FUNCTION_LININTERPOL_H_
 
 #include "Func1DFunction.h"
 #include <vector>
@@ -46,4 +46,4 @@ class LinInterpol : public Func1D {
 
 }  // namespace Function
 
-#endif  // CORE_FUNCTION_LININTERPOLFUNCTION_H_
+#endif  // CORE_FUNCTION_LININTERPOL_H_
