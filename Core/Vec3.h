@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORE_VEC3_H_
-#define MCTRACER_CORE_VEC3_H_
+#ifndef CORE_VEC3_H_
+#define CORE_VEC3_H_
 
 #include <string>
 
@@ -42,4 +42,4 @@ struct Vec3 {
     static const Vec3 UNIT_Y;
     static const Vec3 UNIT_Z;
 };
-#endif  // MCTRACER_CORE_VEC3_H_
+#endif  // CORE_VEC3_H_

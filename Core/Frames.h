@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORE_FRAMES_H_
-#define MCTRACER_CORE_FRAMES_H_
+#ifndef CORE_FRAMES_H_
+#define CORE_FRAMES_H_
 
 #include <vector>
 #include "Core/Frame.h"
@@ -18,4 +18,4 @@ double bounding_sphere_radius(
 
 }  // namespace Frames
 
-#endif  // MCTRACER_CORE_FRAMES_H_
+#endif  // CORE_FRAMES_H_

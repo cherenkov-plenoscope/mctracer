@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORE_PROPAGATIONCONFIG_H_
-#define MCTRACER_CORE_PROPAGATIONCONFIG_H_
+#ifndef CORE_PROPAGATIONCONFIG_H_
+#define CORE_PROPAGATIONCONFIG_H_
 
 #include "Color.h"
 #include "Vec3.h"
@@ -11,4 +11,4 @@ struct PropagationConfig {
     static const PropagationConfig DEFAULT_CONFIG;
     PropagationConfig();
 };
-#endif  // MCTRACER_CORE_PROPAGATIONCONFIG_H_
+#endif  // CORE_PROPAGATIONCONFIG_H_

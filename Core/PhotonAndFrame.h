@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORE_PHOTONANDFRAME_H_
-#define MCTRACER_CORE_PHOTONANDFRAME_H_
+#ifndef CORE_PHOTONANDFRAME_H_
+#define CORE_PHOTONANDFRAME_H_
 
 #include "Core/Photon.h"
 #include "Core/Frame.h"
@@ -36,4 +36,4 @@ class Propagator {
 
 }  // namespace PhotonAndFrame
 
-#endif  // MCTRACER_CORE_PHOTONANDFRAME_H_
+#endif  // CORE_PHOTONANDFRAME_H_

@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORE_HISTOGRAM1D_H_
-#define MCTRACER_CORE_HISTOGRAM1D_H_
+#ifndef CORE_HISTOGRAM1D_H_
+#define CORE_HISTOGRAM1D_H_
 
 #include <vector>
 #include <string>
@@ -25,4 +25,4 @@ class Histogram1D {
     void assert_at_least_two_bin_edges()const;
     void fill_in(const double sample);
 };
-#endif  // MCTRACER_CORE_HISTOGRAM1D_H_
+#endif  // CORE_HISTOGRAM1D_H_

@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORE_RAY_H_
-#define MCTRACER_CORE_RAY_H_
+#ifndef CORE_RAY_H_
+#define CORE_RAY_H_
 
 #include <string>
 #include "Core/Vec3.h"
@@ -24,4 +24,4 @@ class Ray {
     double parameter_for_closest_distance_to_point(const Vec3 &point)const;
     double closest_distance_to_point(const Vec3 &point)const;
 };
-#endif  // MCTRACER_CORE_RAY_H_
+#endif  // CORE_RAY_H_

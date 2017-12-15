@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORE_VEC2_H_
-#define MCTRACER_CORE_VEC2_H_
+#ifndef CORE_VEC2_H_
+#define CORE_VEC2_H_
 
 #include <string>
 
@@ -32,4 +32,4 @@ struct Vec2 {
     static const Vec2 UNIT_X;
     static const Vec2 UNIT_Y;
 };
-#endif  // MCTRACER_CORE_VEC2_H_
+#endif  // CORE_VEC2_H_

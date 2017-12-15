@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORE_SIMULATIONTRUTH_H_
-#define MCTRACER_CORE_SIMULATIONTRUTH_H_
+#ifndef CORE_SIMULATIONTRUTH_H_
+#define CORE_SIMULATIONTRUTH_H_
 
 namespace SimulationTruth {
     static const int MCTRACER_DEFAULT = -1;
@@ -9,4 +9,4 @@ namespace SimulationTruth {
     static const int PHOTO_ELECTRIC_CONVERTER_CROSSTALK = - 202;
 }  // namespace SimulationTruth
 
-#endif  // MCTRACER_CORE_SIMULATIONTRUTH_H_
+#endif  // CORE_SIMULATIONTRUTH_H_

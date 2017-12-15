@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORE_SURFACEENTITY_H_
-#define MCTRACER_CORE_SURFACEENTITY_H_
+#ifndef CORE_SURFACEENTITY_H_
+#define CORE_SURFACEENTITY_H_
 
 class RayForPropagation;
 
@@ -63,4 +63,4 @@ class SurfaceEntity :public Frame {
  private:
     void init_surface_defaults();
 };
-#endif  // MCTRACER_CORE_SURFACEENTITY_H_
+#endif  // CORE_SURFACEENTITY_H_

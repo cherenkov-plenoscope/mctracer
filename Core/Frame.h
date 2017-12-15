@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORE_FRAME_H_
-#define MCTRACER_CORE_FRAME_H_
+#ifndef CORE_FRAME_H_
+#define CORE_FRAME_H_
 
 class Ray;
 class Intersection;
@@ -83,4 +83,4 @@ class Frame {
     void assert_name_is_valid(const std::string name_to_check)const;
     void update_bounding_sphere();
 };
-#endif  // MCTRACER_CORE_FRAME_H_
+#endif  // CORE_FRAME_H_

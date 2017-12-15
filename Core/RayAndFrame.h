@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORE_RAYANDFRAME_H_
-#define MCTRACER_CORE_RAYANDFRAME_H_
+#ifndef CORE_RAYANDFRAME_H_
+#define CORE_RAYANDFRAME_H_
 
 #include <vector>
 #include "Core/Frame.h"
@@ -40,4 +40,4 @@ struct CausalIntersection {
 };
 
 }  // namespace RayAndFrame
-#endif  // MCTRACER_CORE_RAYANDFRAME_H_
+#endif  // CORE_RAYANDFRAME_H_

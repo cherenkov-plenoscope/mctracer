@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORE_FRESNELREFRACTIONANDREFLECTION_H_
-#define MCTRACER_CORE_FRESNELREFRACTIONANDREFLECTION_H_
+#ifndef CORE_FRESNELREFRACTIONANDREFLECTION_H_
+#define CORE_FRESNELREFRACTIONANDREFLECTION_H_
 
 #include "Core/Vec3.h"
 
@@ -26,4 +26,4 @@ class FresnelRefractionAndReflection{
     Vec3 get_refrac_dir_in_object_system()const;
     double reflection_propability()const;
 };
-#endif  // MCTRACER_CORE_FRESNELREFRACTIONANDREFLECTION_H_
+#endif  // CORE_FRESNELREFRACTIONANDREFLECTION_H_

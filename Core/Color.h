@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORE_COLOR_H_
-#define MCTRACER_CORE_COLOR_H_
+#ifndef CORE_COLOR_H_
+#define CORE_COLOR_H_
 
 #include <string>
 #include <vector>
@@ -27,4 +27,4 @@ struct Color {
     bool operator != (const Color& eq)const;
     void assert_is_in_valid_8Bit_range(const int channel)const;
 };
-#endif  // MCTRACER_CORE_COLOR_H_
+#endif  // CORE_COLOR_H_

@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORE_ROT3_H_
-#define MCTRACER_CORE_ROT3_H_
+#ifndef CORE_ROT3_H_
+#define CORE_ROT3_H_
 
 #include <string>
 #include "Core/Vec3.h"
@@ -37,4 +37,4 @@ class Rot3 {
     double sinRz()const;
     bool operator == (const Rot3& eqRot)const;
 };
-#endif  // MCTRACER_CORE_ROT3_H_
+#endif  // CORE_ROT3_H_

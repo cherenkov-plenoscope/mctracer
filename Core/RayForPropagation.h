@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORE_RAYFORPROPAGATION_H_
-#define MCTRACER_CORE_RAYFORPROPAGATION_H_
+#ifndef CORE_RAYFORPROPAGATION_H_
+#define CORE_RAYFORPROPAGATION_H_
 
 #include <vector>
 #include <string>
@@ -60,4 +60,4 @@ class RayForPropagation :public Ray{
     std::string get_history_print()const;
     std::string get_type_print(const Interaction type)const;
 };
-#endif  // MCTRACER_CORE_RAYFORPROPAGATION_H_
+#endif  // CORE_RAYFORPROPAGATION_H_

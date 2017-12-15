@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORE_PHOTONS_H_
-#define MCTRACER_CORE_PHOTONS_H_
+#ifndef CORE_PHOTONS_H_
+#define CORE_PHOTONS_H_
 
 #include <vector>
 #include <string>
@@ -58,4 +58,4 @@ void transform_all_photons_multi_thread(
 
 }  // namespace Photons
 
-#endif  // MCTRACER_CORE_PHOTONS_H_
+#endif  // CORE_PHOTONS_H_

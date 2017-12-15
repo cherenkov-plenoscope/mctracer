@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORE_INTERSECTION_H_
-#define MCTRACER_CORE_INTERSECTION_H_
+#ifndef CORE_INTERSECTION_H_
+#define CORE_INTERSECTION_H_
 
 class Ray;
 
@@ -49,4 +49,4 @@ class Intersection {
     bool operator<(const Intersection& other) const;
     static bool compare(const Intersection &one, const Intersection &two);
 };
-#endif  // MCTRACER_CORE_INTERSECTION_H_
+#endif  // CORE_INTERSECTION_H_

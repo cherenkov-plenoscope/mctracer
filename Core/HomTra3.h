@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORE_HOMTRA3_H_
-#define MCTRACER_CORE_HOMTRA3_H_
+#ifndef CORE_HOMTRA3_H_
+#define CORE_HOMTRA3_H_
 
 #include <string>
 #include "Core/Vec3.h"
@@ -62,4 +62,4 @@ class HomTra3 {
         const double r01, const double r11, const double r21, const double t31,
         const double r02, const double r12, const double r22, const double t32);
 };
-#endif  // MCTRACER_CORE_HOMTRA3_H_
+#endif  // CORE_HOMTRA3_H_

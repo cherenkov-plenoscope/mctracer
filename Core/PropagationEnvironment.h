@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORE_PROPAGATIONENVIRONMENT_H_
-#define MCTRACER_CORE_PROPAGATIONENVIRONMENT_H_
+#ifndef CORE_PROPAGATIONENVIRONMENT_H_
+#define CORE_PROPAGATIONENVIRONMENT_H_
 
 #include "Core/Frame.h"
 #include "Core/PropagationConfig.h"
@@ -15,4 +15,4 @@ class PropagationEnvironment {
         &Random::void_generator;
     static PropagationEnvironment default_environment;
 };
-#endif  // MCTRACER_CORE_PROPAGATIONENVIRONMENT_H_
+#endif  // CORE_PROPAGATIONENVIRONMENT_H_

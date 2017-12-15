@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORE_PHOTON_H_
-#define MCTRACER_CORE_PHOTON_H_
+#ifndef CORE_PHOTON_H_
+#define CORE_PHOTON_H_
 
 namespace PhotonAndFrame {class Propagator;}
 
@@ -28,4 +28,4 @@ class Photon :public RayForPropagation{
         const double refractive_index_in_medium)const;
     void assert_wavelength_is_positive()const;
 };
-#endif  // MCTRACER_CORE_PHOTON_H_
+#endif  // CORE_PHOTON_H_
