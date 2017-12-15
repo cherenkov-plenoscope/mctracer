@@ -199,24 +199,24 @@ TEST_F(XmlTest, functions) {
 
 	Function::Func1D* func;
 	func = scenery.functions.get("my_funny_function");
-	EXPECT_EQ(100e-9, func->get_limits().get_lower());
-	EXPECT_EQ(200e-9, func->get_limits().get_upper());
+	EXPECT_EQ(100e-9, func->limits().get_lower());
+	EXPECT_EQ(200e-9, func->limits().get_upper());
 	EXPECT_NEAR(0.8, func->evaluate(160e-9), 1e-6);
 
 	func = scenery.functions.get("constant_function");
-	EXPECT_EQ(200e-9, func->get_limits().get_lower());
-	EXPECT_EQ(400e-9, func->get_limits().get_upper());
+	EXPECT_EQ(200e-9, func->limits().get_lower());
+	EXPECT_EQ(400e-9, func->limits().get_upper());
 	EXPECT_NEAR(1.337, func->evaluate(300e-9), 1e-6);
 
 	func = scenery.functions.get("polynom_function");
-	EXPECT_EQ(400e-9, func->get_limits().get_lower());
-	EXPECT_EQ(1200e-9, func->get_limits().get_upper());
+	EXPECT_EQ(400e-9, func->limits().get_lower());
+	EXPECT_EQ(1200e-9, func->limits().get_upper());
 	double x = 600e-9;
 	EXPECT_NEAR(1.0*x*x*x + 0.0*x*x + 1.2*x - 1.7, func->evaluate(x), 1e-6);
 
 	func = scenery.functions.get("concat_function");
-	EXPECT_EQ(100e-9, func->get_limits().get_lower());
-	EXPECT_EQ(1200e-9, func->get_limits().get_upper());
+	EXPECT_EQ(100e-9, func->limits().get_lower());
+	EXPECT_EQ(1200e-9, func->limits().get_upper());
 }
 //------------------------------------------------------------------------------
 #include "Xml/Factory/PropagationConfigFab.h"

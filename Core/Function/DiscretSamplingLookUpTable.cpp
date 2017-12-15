@@ -25,16 +25,16 @@ LookUpTable::LookUpTable(const Func1D* func, const Config config) {
         throw std::invalid_argument(info.str());
     }
 
-    if (func->get_limits().get_range() == 0.0) {
+    if (func->limits().get_range() == 0.0) {
         std::stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
         info << "Expected the function range to be > 0.0, ";
-        info << "but actual it is: " << func->get_limits().get_range();
+        info << "but actual it is: " << func->limits().get_range();
         info << "\n";
         throw std::invalid_argument(info.str());
     }
 
-    number_of_slices = ceil(func->get_limits().get_range()/config.slice_width);
+    number_of_slices = ceil(func->limits().get_range()/config.slice_width);
     step_width_in_slice = config.slice_width/
         static_cast<double>(config.samples_per_slice);
 
@@ -49,7 +49,7 @@ void LookUpTable::fill_table() {
             const double x_off = step_width_in_slice*static_cast<double>(i);
             for (unsigned int j = 0; j < number_of_slices; j++) {
                 const double x = config.slice_width*static_cast<double>(j) +
-                    func->get_limits().get_lower();
+                    func->limits().get_lower();
                 row.push_back(func->evaluate(x + x_off));
             }
             table.push_back(row);

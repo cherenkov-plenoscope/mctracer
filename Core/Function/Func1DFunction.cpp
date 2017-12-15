@@ -40,7 +40,7 @@ double Func1D::increment_for_steps(const unsigned int N)const {
     return limits_.get_range()/static_cast<double>(N);
 }
 
-Limits Func1D::get_limits()const {
+Limits Func1D::limits()const {
     return limits_;
 }
 
