@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/Function/ConcatFunction.h"
+#include "Core/Function/Concat.h"
 #include <sstream>
 #include <algorithm>
 #include <exception>

@@ -7,7 +7,7 @@
 #include "LinInterpolFunction.h"
 #include "Polynom3.h"
 #include "ConstantFunction.h"
-#include "ConcatFunction.h"
+#include "Concat.h"
 #include "DiscretSamplingLookUpTable.h"
 #include "Tools.h"
 

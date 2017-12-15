@@ -2,7 +2,7 @@ set(SOURCE
     ${SOURCE}
     ${CMAKE_CURRENT_SOURCE_DIR}/Limits.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Func1DFunction.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ConcatFunction.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Concat.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ConstantFunction.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/LinInterpolFunction.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Polynom3.cpp
