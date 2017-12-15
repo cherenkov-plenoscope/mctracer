@@ -143,7 +143,7 @@ void LinInterpol::assert_func_is_not_empty()const {
     }
 }
 
-double LinInterpol::get_max_value()const {
+double LinInterpol::max()const {
     double max_y = func.front().y;
     for (Point p : func) if (p.y > max_y) max_y = p.y;
     return max_y;

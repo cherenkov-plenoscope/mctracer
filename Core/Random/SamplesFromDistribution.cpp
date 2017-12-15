@@ -10,7 +10,7 @@ SamplesFromDistribution::SamplesFromDistribution(
         Function::get_integral(*distribution);
 
     total_integral_of_distribution =
-        integral_of_distribution.get_max_value();
+        integral_of_distribution.max();
 
     cumulative_distribution_function = new Function::LinInterpol(
         Function::get_inverse(integral_of_distribution));
