@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_FUNCTION_POLYNOM3FUNCTION_H_
-#define CORE_FUNCTION_POLYNOM3FUNCTION_H_
+#ifndef CORE_FUNCTION_POLYNOM3_H_
+#define CORE_FUNCTION_POLYNOM3_H_
 
 #include "Core/Function/Func1DFunction.h"
 
@@ -28,4 +28,4 @@ class Polynom3 : public Func1D {
 
 }  // namespace Function
 
-#endif  // CORE_FUNCTION_POLYNOM3FUNCTION_H_
+#endif  // CORE_FUNCTION_POLYNOM3_H_

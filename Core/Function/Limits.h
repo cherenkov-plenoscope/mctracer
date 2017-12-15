@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_FUNCTION_LIMITSFUNCTION_H_
-#define CORE_FUNCTION_LIMITSFUNCTION_H_
+#ifndef CORE_FUNCTION_LIMITS_H_
+#define CORE_FUNCTION_LIMITS_H_
 
 #include <string>
 
@@ -24,4 +24,4 @@ class Limits{
 
 }  // namespace Function
 
-#endif  // CORE_FUNCTION_LIMITSFUNCTION_H_
+#endif  // CORE_FUNCTION_LIMITS_H_
