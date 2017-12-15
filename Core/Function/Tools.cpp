@@ -13,7 +13,7 @@ namespace Function {
 
 		for(unsigned int i=1; i<steps; i++) {
 			double x = f.get_limits().get_lower() + i*step;
-			double y = f(x)*step + F.back()[1];
+			double y = f.evaluate(x)*step + F.back()[1];
 
 			std::vector<double> F_at_x = {x, y};
 			F.push_back(F_at_x);
@@ -21,7 +21,7 @@ namespace Function {
 
 		double x_end = f.get_limits().get_upper();
 		double x_end_in_f = nextafter(x_end, f.get_limits().get_lower());
-		std::vector<double> F_end = {x_end, f(x_end_in_f)*step + F.back()[1]};
+		std::vector<double> F_end = {x_end, f.evaluate(x_end_in_f)*step + F.back()[1]};
 		F.push_back(F_end);
 
 		return LinInterpol(F);
@@ -34,14 +34,14 @@ namespace Function {
 		std::vector<std::vector<double>> fvec_inv;
 
 		std::vector<double> f_inv_start = {
-			f(f.get_limits().get_lower()), 
+			f.evaluate(f.get_limits().get_lower()), 
 			f.get_limits().get_lower()
 		};
 		fvec_inv.push_back(f_inv_start);
 
 		for(unsigned int i=1; i<steps; i++) {
 			double x = f.get_limits().get_lower() + i*step;
-			double y = f(x);
+			double y = f.evaluate(x);
 
 			std::vector<double> f_inv_at_x = {y, x};
 			fvec_inv.push_back(f_inv_at_x);
@@ -49,7 +49,7 @@ namespace Function {
 
 		double x_end = f.get_limits().get_upper();
 		double x_end_in_f = nextafter(x_end, f.get_limits().get_lower());
-		std::vector<double> f_inv_end = {f(x_end_in_f), x_end};
+		std::vector<double> f_inv_end = {f.evaluate(x_end_in_f), x_end};
 		fvec_inv.push_back(f_inv_end);
 
 		return LinInterpol(fvec_inv);
@@ -62,7 +62,7 @@ namespace Function {
 
 		for(unsigned int i=0; i<(steps-1); i++) {
 			double x = f.get_limits().get_lower() + i*step;
-			double y = (f(x+step) - f(x))/step;
+			double y = (f.evaluate(x+step) - f.evaluate(x))/step;
 
 			std::vector<double> f_inv_at_x = {x, y};
 			fvec_deriv.push_back(f_inv_at_x);
@@ -70,7 +70,7 @@ namespace Function {
 
 		double x_end = f.get_limits().get_upper();
 		double x_end_margin = step*1e-9;
-		double y_end = (f(x_end-x_end_margin) - f(x_end-x_end_margin-step))/step;
+		double y_end = (f.evaluate(x_end-x_end_margin) - f.evaluate(x_end-x_end_margin-step))/step;
 		std::vector<double> f_inv_end = {x_end, y_end};
 		fvec_deriv.push_back(f_inv_end);
 
@@ -84,7 +84,7 @@ namespace Function {
 
 		for(unsigned int i=0; i<(steps-1); i++) {
 			double x = f.get_limits().get_lower() + i*step;
-			if( (f(x)>=0.0) != (f(x+step)>=0.0) )
+			if( (f.evaluate(x)>=0.0) != (f.evaluate(x+step)>=0.0) )
 				flip = true;
 		}
 

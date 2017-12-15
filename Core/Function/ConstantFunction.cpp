@@ -16,7 +16,7 @@ namespace Function {
 		this->limits = limits;
 	}
 	//--------------------------------------------------------------------------
-	double Constant::operator()(const double x)const {
+	double Constant::evaluate(const double x)const {
 		limits.assert_contains(x);
 		return value;
 	}

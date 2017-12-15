@@ -56,7 +56,7 @@ void LookUpTable::fill_table() {
 				const double x = config.slice_width*double(j) + 
 					func->get_limits().get_lower();
 
-				row.push_back((*func)(x + x_off));
+				row.push_back(func->evaluate(x + x_off));
 			}
 
 			table.push_back(row);

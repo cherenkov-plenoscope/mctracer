@@ -80,7 +80,7 @@ TEST_F(FunctionTest, ConstantFunction) {
     Function::Constant f(y, l);
 
     for(double x=-1e2; x<1e2; x=x+0.55)
-        EXPECT_EQ(y, f(x));
+        EXPECT_EQ(y, f.evaluate(x));
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, constant_function_limits) {
@@ -90,11 +90,11 @@ TEST_F(FunctionTest, constant_function_limits) {
     double y = 133.7;
     Function::Constant f(y, l);
 
-    EXPECT_THROW(f(-0.5), std::out_of_range);
-    EXPECT_NO_THROW(f(0.0));
-    EXPECT_NO_THROW(f(0.5));
-    EXPECT_THROW(f(1.0), std::out_of_range);
-    EXPECT_THROW(f(1.5), std::out_of_range);
+    EXPECT_THROW(f.evaluate(-0.5), std::out_of_range);
+    EXPECT_NO_THROW(f.evaluate(0.0));
+    EXPECT_NO_THROW(f.evaluate(0.5));
+    EXPECT_THROW(f.evaluate(1.0), std::out_of_range);
+    EXPECT_THROW(f.evaluate(1.5), std::out_of_range);
 }
 //------------------------------------------------------------------------------
 // Polynom3
@@ -106,7 +106,7 @@ TEST_F(FunctionTest, Polynom3) {
     Function::Polynom3 f(1.0, 1.0, 1.0, 1.0, l);
 
     for(double x=-0.0; x<1.0; x=x+0.11)
-        EXPECT_EQ(x*x*x + x*x + x + 1.0, f(x));
+        EXPECT_EQ(x*x*x + x*x + x + 1.0, f.evaluate(x));
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, Polynom3_limits) {
@@ -115,11 +115,11 @@ TEST_F(FunctionTest, Polynom3_limits) {
   
     Function::Polynom3 f(1.0, 1.0, 1.0, 1.0, l);
 
-    EXPECT_THROW(f(-0.5), std::out_of_range);
-    EXPECT_NO_THROW(f(0.0));
-    EXPECT_NO_THROW(f(0.5));
-    EXPECT_THROW(f(1.0), std::out_of_range);
-    EXPECT_THROW(f(1.5), std::out_of_range);
+    EXPECT_THROW(f.evaluate(-0.5), std::out_of_range);
+    EXPECT_NO_THROW(f.evaluate(0.0));
+    EXPECT_NO_THROW(f.evaluate(0.5));
+    EXPECT_THROW(f.evaluate(1.0), std::out_of_range);
+    EXPECT_THROW(f.evaluate(1.5), std::out_of_range);
 }
 //------------------------------------------------------------------------------
 // Sampling
@@ -172,7 +172,7 @@ TEST_F(FunctionTest, sampling_table_y_values) {
         ASSERT_EQ(2u, sample_xy.at(i).size());
         double x = sample_xy[i][0];
 
-        EXPECT_NEAR(x*x, f(x), 1e-9);
+        EXPECT_NEAR(x*x, f.evaluate(x), 1e-9);
         EXPECT_NEAR(x*x, sample_xy[i][1], 1e-9);
     }
 }
@@ -222,13 +222,13 @@ TEST_F(FunctionTest, Concat_bad_access) {
     std::vector<Function::Func1D*> f = {&f1, &f2};
     Function::Concat con(f);
 
-    EXPECT_THROW(con(-0.5), std::out_of_range);
-    EXPECT_NO_THROW(con(0.0));
-    EXPECT_NO_THROW(con(0.5));
-    EXPECT_NO_THROW(con(1.0));
-    EXPECT_NO_THROW(con(1.5));
-    EXPECT_THROW(con(2.0), std::out_of_range);
-    EXPECT_THROW(con(2.5), std::out_of_range);
+    EXPECT_THROW(con.evaluate(-0.5), std::out_of_range);
+    EXPECT_NO_THROW(con.evaluate(0.0));
+    EXPECT_NO_THROW(con.evaluate(0.5));
+    EXPECT_NO_THROW(con.evaluate(1.0));
+    EXPECT_NO_THROW(con.evaluate(1.5));
+    EXPECT_THROW(con.evaluate(2.0), std::out_of_range);
+    EXPECT_THROW(con.evaluate(2.5), std::out_of_range);
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, Concat_y_in_different_sub_functions) {
@@ -249,13 +249,13 @@ TEST_F(FunctionTest, Concat_y_in_different_sub_functions) {
     for(double x=-0.5; x<3.5; x=x+0.011) {
 
         if(x >= 0.0 && x < 1.0)
-            EXPECT_EQ(1.337, con(x));
+            EXPECT_EQ(1.337, con.evaluate(x));
         else if(x >= 1.0 && x < 2.0)
-            EXPECT_EQ(4.2, con(x));
+            EXPECT_EQ(4.2, con.evaluate(x));
         else if(x >= 2.0 && x < 3.0)
-            EXPECT_EQ(3.141, con(x));
+            EXPECT_EQ(3.141, con.evaluate(x));
         else
-            EXPECT_THROW(con(x), std::out_of_range);
+            EXPECT_THROW(con.evaluate(x), std::out_of_range);
     }
 }
 //------------------------------------------------------------------------------
@@ -270,11 +270,11 @@ TEST_F(FunctionTest, numerical_integration_const) {
     EXPECT_EQ(f.get_limits().get_upper(), F.get_limits().get_upper());
 
     // F(0) != 0
-    EXPECT_NEAR(0.0, F(0.0), 1e-3);
+    EXPECT_NEAR(0.0, F.evaluate(0.0), 1e-3);
     // F(0.5) != 0.5
-    EXPECT_NEAR(0.5, F(0.5), 1e-3);
+    EXPECT_NEAR(0.5, F.evaluate(0.5), 1e-3);
     // F(1) != 1
-    EXPECT_NEAR(1.0, F(1.0-1e-6), 1e-3);
+    EXPECT_NEAR(1.0, F.evaluate(1.0-1e-6), 1e-3);
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, numerical_integration_linear) {
@@ -288,11 +288,11 @@ TEST_F(FunctionTest, numerical_integration_linear) {
     EXPECT_EQ(f.get_limits().get_upper(), F.get_limits().get_upper());
 
     // F(0) != 0
-    EXPECT_NEAR(0.0, F(0.0), 1e-3);
+    EXPECT_NEAR(0.0, F.evaluate(0.0), 1e-3);
     // F(0.5) != 0.5
-    EXPECT_NEAR(0.125, F(0.5), 1e-3);
+    EXPECT_NEAR(0.125, F.evaluate(0.5), 1e-3);
     // F(1) != 1
-    EXPECT_NEAR(0.5, F(1.0-1e-6), 1e-3);
+    EXPECT_NEAR(0.5, F.evaluate(1.0-1e-6), 1e-3);
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, numerical_inverse_limits) {
@@ -317,11 +317,11 @@ TEST_F(FunctionTest, numerical_inverse_linear) {
     EXPECT_NEAR(1.0, f_inv.get_limits().get_upper(), 1e-6);
 
     // f_inv(0) != 0
-    EXPECT_NEAR(0.0, f_inv(0.0), 1e-3);
+    EXPECT_NEAR(0.0, f_inv.evaluate(0.0), 1e-3);
     // f_inv(0.5) != 0.5
-    EXPECT_NEAR(0.5, f_inv(0.5), 1e-3);
+    EXPECT_NEAR(0.5, f_inv.evaluate(0.5), 1e-3);
     // f_inv(1) != 1
-    EXPECT_NEAR(1.0, f_inv(1.0-1e-6), 1e-3);
+    EXPECT_NEAR(1.0, f_inv.evaluate(1.0-1e-6), 1e-3);
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, numerical_inverse_quadratic) {
@@ -338,11 +338,11 @@ TEST_F(FunctionTest, numerical_inverse_quadratic) {
     //AsciiIo::write_table_to_file(f_inv.get_samples(1024), "f_inv.func");
 
     // f_inv(0) != sqrt(0) = 0
-    EXPECT_NEAR(0.0, f_inv(0.0), 1e-3);
+    EXPECT_NEAR(0.0, f_inv.evaluate(0.0), 1e-3);
     // f_inv(0.5) != sqrt(0.5) = sqrt(2)/2
-    EXPECT_NEAR(sqrt(2.0)/2.0, f_inv(0.5), 1e-3);
+    EXPECT_NEAR(sqrt(2.0)/2.0, f_inv.evaluate(0.5), 1e-3);
     // f_inv(1) != sqrt(1.0) = 1.0
-    EXPECT_NEAR(1.0, f_inv(1.0-1e-6), 1e-3);
+    EXPECT_NEAR(1.0, f_inv.evaluate(1.0-1e-6), 1e-3);
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, numerical_derivative_of_constant_function) {
@@ -356,7 +356,7 @@ TEST_F(FunctionTest, numerical_derivative_of_constant_function) {
     EXPECT_EQ(f.get_limits().get_upper(), f_prime.get_limits().get_upper());
 
     for(double x=0; x<1.0; x=x+1e-3)
-        EXPECT_NEAR(0.0, f_prime(x), 1e-3);
+        EXPECT_NEAR(0.0, f_prime.evaluate(x), 1e-3);
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, numerical_derivative_of_linear_function) {
@@ -370,7 +370,7 @@ TEST_F(FunctionTest, numerical_derivative_of_linear_function) {
     EXPECT_EQ(f.get_limits().get_upper(), f_prime.get_limits().get_upper());
 
     for(double x=0; x<1.0; x=x+1e-3)
-        EXPECT_NEAR(1.0, f_prime(x), 1e-3);
+        EXPECT_NEAR(1.0, f_prime.evaluate(x), 1e-3);
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, numerical_derivative_of_quadratic_function) {
@@ -384,7 +384,7 @@ TEST_F(FunctionTest, numerical_derivative_of_quadratic_function) {
     EXPECT_EQ(f.get_limits().get_upper(), f_prime.get_limits().get_upper());
 
     for(double x=0; x<1.0; x=x+1e-3)
-        EXPECT_NEAR(2.0*x, f_prime(x), 1e-3);
+        EXPECT_NEAR(2.0*x, f_prime.evaluate(x), 1e-3);
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionTest, numerical_sign_flip_of_value_of_constant_function) {

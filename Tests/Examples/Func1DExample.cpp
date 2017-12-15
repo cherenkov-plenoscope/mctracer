@@ -17,10 +17,10 @@ TEST_F(FunctionExample, function_limits) {
     //--func_limits_constant--
     Constant con(1.337, limits);
     //--func_limits_const_call--
-    EXPECT_THROW( con(-0.1), std::out_of_range );
-    EXPECT_NO_THROW( con(0.0) );
-    EXPECT_NO_THROW( con(0.5) );
-    EXPECT_THROW( con(1.0), std::out_of_range );
+    EXPECT_THROW( con.evaluate(-0.1), std::out_of_range );
+    EXPECT_NO_THROW( con.evaluate(0.0) );
+    EXPECT_NO_THROW( con.evaluate(0.5) );
+    EXPECT_THROW( con.evaluate(1.0), std::out_of_range );
     //--func_limits_call_end--
 }
 //------------------------------------------------------------------------------
@@ -29,12 +29,12 @@ TEST_F(FunctionExample, function_constant) {
     //--func_const--
     Constant c(1.337, Limits(0.0, 1.0));
     //--func_const_call--
-    EXPECT_EQ( 1.337, c(0.0) );
-    EXPECT_EQ( 1.337, c(0.2) );
-    EXPECT_EQ( 1.337, c(0.3) );
-    EXPECT_EQ( 1.337, c(0.43657657) );
-    EXPECT_EQ( 1.337, c(0.78) );
-    EXPECT_EQ( 1.337, c(0.9999) );
+    EXPECT_EQ( 1.337, c.evaluate(0.0) );
+    EXPECT_EQ( 1.337, c.evaluate(0.2) );
+    EXPECT_EQ( 1.337, c.evaluate(0.3) );
+    EXPECT_EQ( 1.337, c.evaluate(0.43657657) );
+    EXPECT_EQ( 1.337, c.evaluate(0.78) );
+    EXPECT_EQ( 1.337, c.evaluate(0.9999) );
     //--func_const_call_end--
 
     AsciiIo::write_table_to_file(c.get_samples(1000),"Examples/Out/function_const.func");
@@ -45,9 +45,9 @@ TEST_F(FunctionExample, function_polynom_1) {
     //--func_poly3--
     Polynom3 p3(0.0, 0.0, 1.0, 0.0, Limits(0.0, 1.0));
     //--func_poly3_call--
-    EXPECT_EQ( 0.43657657, p3(0.43657657) );
-    EXPECT_EQ( 0.78, p3(0.78) );
-    EXPECT_EQ( 0.9999, p3(0.9999) );
+    EXPECT_EQ( 0.43657657, p3.evaluate(0.43657657) );
+    EXPECT_EQ( 0.78, p3.evaluate(0.78) );
+    EXPECT_EQ( 0.9999, p3.evaluate(0.9999) );
     //--func_poly3_call_end--
     AsciiIo::write_table_to_file(p3.get_samples(1000),"Examples/Out/function_polynom1.func");
 }
@@ -57,9 +57,9 @@ TEST_F(FunctionExample, function_polynom_2) {
     //--func_poly3_quad--
     Polynom3 p3(0.0, 1.0, 0.0, 0.0, Limits(0.0, 1.0));
    
-    EXPECT_NEAR( 0.0, p3(0.0) ,1e-9);
-    EXPECT_NEAR( 0.25, p3(0.5) ,1e-9);
-    EXPECT_NEAR( 0.04, p3(0.2) ,1e-9);
+    EXPECT_NEAR( 0.0, p3.evaluate(0.0) ,1e-9);
+    EXPECT_NEAR( 0.25, p3.evaluate(0.5) ,1e-9);
+    EXPECT_NEAR( 0.04, p3.evaluate(0.2) ,1e-9);
     //--func_poly3_quad_end--
     AsciiIo::write_table_to_file(p3.get_samples(1000),"Examples/Out/unction_polynom2.func");
 }
@@ -109,8 +109,8 @@ TEST_F(FunctionExample, access) {
     //--func_access--
     Polynom3 p3(1.0, -3.0, -1.0, -3.0, Limits(-2.0, 4.0));
 
-    double value1 = p3(-1.0);
-    double value2 = p3(-0.0);
+    double value1 = p3.evaluate(-1.0);
+    double value2 = p3.evaluate(-0.0);
     //--func_access_end--
     value1 = value2;
     value2 = value1;

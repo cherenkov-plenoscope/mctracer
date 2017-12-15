@@ -65,7 +65,7 @@ namespace Function {
 		}
 	}
 	//--------------------------------------------------------------------------
-	double LinInterpol::operator()(const double x)const {
+	double LinInterpol::evaluate(const double x)const {
 		limits.assert_contains(x);
 		return boundary_mode_strict(x);
 	}

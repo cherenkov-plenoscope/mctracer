@@ -51,10 +51,10 @@ namespace Function {
 		);
 	}
 	//--------------------------------------------------------------------------
-	double Concat::operator()(const double x)const {
+	double Concat::evaluate(const double x)const {
 		limits.assert_contains(x);
 		const Func1D* sub_f = get_sub_function_responsible_for(x);
-		return (*sub_f)(x);
+		return sub_f->evaluate(x);
 	}
 	//--------------------------------------------------------------------------
 	const Func1D* Concat::get_sub_function_responsible_for(const double x)const {

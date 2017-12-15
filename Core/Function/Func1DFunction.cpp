@@ -23,7 +23,7 @@ vector<vector<double>> Func1D::get_samples(const unsigned int N)const {
     vector<vector<double>> table;
     table.reserve(N);
     for (unsigned int i = 0; i < N; i++) {
-        const double value = (*this)(arg);
+        const double value = evaluate(arg);
         vector<double> row = {arg, value};
 
         table.push_back(row);

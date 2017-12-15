@@ -64,7 +64,7 @@ TEST_F(LinInterpolTest, construct_using_matrix_of_vectors) {
     for(unsigned int i=0; i<table.size()-1; i++) {
         double argument = table.at(i).at(0);
         double value = table.at(i).at(1);
-        EXPECT_NEAR(value, f(argument), 1e-9);
+        EXPECT_NEAR(value, f.evaluate(argument), 1e-9);
     }
 }
 //------------------------------------------------------------------------------
@@ -72,14 +72,14 @@ TEST_F(LinInterpolTest, access_below_lowest_argument) {
 
     Function::LinInterpol f(table);
     double arg_below_definition = table.at(0).at(0) - 1e-9;
-    EXPECT_THROW(f(arg_below_definition), std::out_of_range);
+    EXPECT_THROW(f.evaluate(arg_below_definition), std::out_of_range);
 }
 //------------------------------------------------------------------------------
 TEST_F(LinInterpolTest, access_at_highest_argument) {
 
     Function::LinInterpol f(table);
     double upper_limit = table.back().at(0);
-    EXPECT_THROW(f(upper_limit), std::out_of_range);
+    EXPECT_THROW(f.evaluate(upper_limit), std::out_of_range);
 }
 //------------------------------------------------------------------------------
 TEST_F(LinInterpolTest, generate_from_from_file) {
@@ -94,7 +94,7 @@ TEST_F(LinInterpolTest, generate_from_from_file) {
     for(unsigned int i=1; i<table.size()-1.; i++) {
         double argument = table[i][0];
         double value = table[i][1];
-        EXPECT_NEAR(value, f(argument), 1e-9);
+        EXPECT_NEAR(value, f.evaluate(argument), 1e-9);
     }
 }
 //------------------------------------------------------------------------------
@@ -118,9 +118,9 @@ TEST_F(LinInterpolTest, linear_interpolation) {
     for(double x=-0.1; x<1.1; x=x+0.011) {
 
         if(x >= 0.0 && x < 1.0)
-            EXPECT_NEAR(x, f(x), 1e-9);
+            EXPECT_NEAR(x, f.evaluate(x), 1e-9);
         else
-            EXPECT_THROW(f(x), std::out_of_range);
+            EXPECT_THROW(f.evaluate(x), std::out_of_range);
     }
 }
 //------------------------------------------------------------------------------

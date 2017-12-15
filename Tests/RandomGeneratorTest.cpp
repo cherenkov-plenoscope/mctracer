@@ -138,7 +138,7 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
     double f_integral = 0;
     for(unsigned int i=0; i<histo.bins.size(); i++) {
         drawn_f_integral = drawn_f_integral + histo.bins[i];
-        f_integral = f_integral + f(bin_edges[i]);
+        f_integral = f_integral + f.evaluate(bin_edges[i]);
     }
 
     vector<double> drawn_f_normalized;
@@ -163,7 +163,7 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
     
     for(unsigned int i=0; i<bin_edges.size()-1; i++)
         EXPECT_NEAR(
-            f(bin_edges[i])/f_integral, 
+            f.evaluate(bin_edges[i])/f_integral, 
             drawn_f_normalized[i], 
             max_f*1e-2
         );

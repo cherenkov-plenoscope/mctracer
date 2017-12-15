@@ -84,14 +84,14 @@ double Intersection::facing_reflection_propability(
     const double wavelength
 )const {
     return _from_outside_to_inside ?
-    (*object->get_outer_reflection_())(wavelength):
-    (*object->get_inner_reflection_())(wavelength);
+    object->get_outer_reflection_()->evaluate(wavelength):
+    object->get_inner_reflection_()->evaluate(wavelength);
 }
 
 double Intersection::refractive_index_going_to(const double wavelength)const {
     return _from_outside_to_inside ?
-    (*object->get_inner_refraction_())(wavelength):
-    (*object->get_outer_refraction_())(wavelength);
+    object->get_inner_refraction_()->evaluate(wavelength):
+    object->get_outer_refraction_()->evaluate(wavelength);
 }
 
 bool Intersection::going_to_default_refractive_index()const {
@@ -104,20 +104,20 @@ double Intersection::refractive_index_coming_from(
     const double wavelength
 )const {
     return _from_outside_to_inside ?
-    (*object->get_outer_refraction_())(wavelength):
-    (*object->get_inner_refraction_())(wavelength);
+    object->get_outer_refraction_()->evaluate(wavelength):
+    object->get_inner_refraction_()->evaluate(wavelength);
 }
 
 double Intersection::half_way_depth_coming_from(const double wavelength)const {
     return _from_outside_to_inside ?
-    (*object->get_outer_absorption_())(wavelength):
-    (*object->get_inner_absorption_())(wavelength);
+    object->get_outer_absorption_()->evaluate(wavelength):
+    object->get_inner_absorption_()->evaluate(wavelength);
 }
 
 double Intersection::half_way_depth_going_to(const double wavelength)const {
     return _from_outside_to_inside ?
-    (*object->get_inner_absorption_())(wavelength):
-    (*object->get_outer_absorption_())(wavelength);
+    object->get_inner_absorption_()->evaluate(wavelength):
+    object->get_outer_absorption_()->evaluate(wavelength);
 }
 
 bool Intersection::boundary_layer_is_transparent()const {

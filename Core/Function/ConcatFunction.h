@@ -21,7 +21,7 @@ namespace Function {
 		Concat();
 		Concat(const std::vector<Func1D*> conc);
 		void init(const std::vector<Func1D*> conc);
-		double operator()(const double x)const;
+		double evaluate(const double x)const;
 	private:
 
 		void assert_limits_do_fit()const;

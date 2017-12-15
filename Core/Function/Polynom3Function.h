@@ -30,7 +30,7 @@ namespace Function {
 			const double a0,
 			const Limits &limits
 		);	
-		double operator()(const double x)const;
+		double evaluate(const double x)const;
 	};
 } // namespace Function
 #endif // __FUNCTIONPOLYNOM3_H_INCLUDED__

@@ -20,7 +20,7 @@ class Func1D {
     virtual ~Func1D();
     std::vector<std::vector<double>> get_samples(const unsigned int N)const;
     double get_mean(const unsigned int N)const;
-    virtual double operator()(const double x)const = 0;
+    virtual double evaluate(const double x)const = 0;
     Limits get_limits()const;
     virtual std::string str()const;
 

@@ -36,7 +36,7 @@ vector<ElectricPulse> Converter::get_pulse_pipeline_for_photon_pipeline(
 	for(const PipelinePhoton &ph: photon_pipeline) {
 
 		if(
-			(*config->quantum_efficiency_vs_wavelength)(ph.wavelength) >= 
+			config->quantum_efficiency_vs_wavelength->evaluate(ph.wavelength) >= 
 			prng->uniform()
 		) {
 			const ElectricPulse converted_photon(

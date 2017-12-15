@@ -19,7 +19,7 @@ namespace Function {
 		Constant();
 		Constant(const double value, const Limits &limits);
 		void init(const double value, const Limits &limits);
-		double operator()(const double x)const;
+		double evaluate(const double x)const;
 		static const Constant VOID_FUNCTION;
 	};
 

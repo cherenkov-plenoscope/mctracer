@@ -28,7 +28,7 @@ namespace Function {
 		this->limits = limits;
 	}
 	//--------------------------------------------------------------------------
-	double Polynom3::operator()(const double x)const {
+	double Polynom3::evaluate(const double x)const {
 		limits.assert_contains(x);
 		const double x2 = x*x;
 		const double x3 = x2*x;

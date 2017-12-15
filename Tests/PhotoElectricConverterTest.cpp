@@ -30,14 +30,16 @@ TEST_F(PhotoElectricConverterTest, config_defaults) {
     EXPECT_EQ(0.0, config.probability_for_second_puls);
 
     for(double wavelength=200e-9; wavelength<1200e-9; wavelength+=10e-9)
-        EXPECT_EQ(0.0, (*config.quantum_efficiency_vs_wavelength)(wavelength));
+        EXPECT_EQ(
+            0.0,
+            config.quantum_efficiency_vs_wavelength->evaluate(wavelength));
 
     EXPECT_THROW(
-        (*config.quantum_efficiency_vs_wavelength)(1200e-9), 
+        config.quantum_efficiency_vs_wavelength->evaluate(1200e-9), 
         std::out_of_range
     );
     EXPECT_THROW(
-        (*config.quantum_efficiency_vs_wavelength)(199e-9), 
+        config.quantum_efficiency_vs_wavelength->evaluate(199e-9), 
         std::out_of_range
     );
 }

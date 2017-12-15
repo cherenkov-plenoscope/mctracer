@@ -30,7 +30,7 @@ namespace Function {
 		LinInterpol();
 		LinInterpol(const std::vector<std::vector<double>>& two_column_xy);
 		void init(const std::vector<std::vector<double>>& two_column_xy);
-		double operator()(const double x)const;
+		double evaluate(const double x)const;
 		double get_max_value()const;
 		double get_min_value()const;
 	private:
