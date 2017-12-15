@@ -129,7 +129,7 @@ TEST_F(FunctionTest, sampling_table_size) {
     Function::Limits l(-4.2, 1.337);
 
     Function::Polynom3 f(0.0, 0.0, 1.0, 0.0, l); // f(x) = x
-    std::vector<std::vector<double>> sample_xy = f.get_samples(1000);
+    std::vector<std::vector<double>> sample_xy = f.sample(1000);
 
     ASSERT_EQ(1000u, sample_xy.size());
     for(unsigned int i=0; i<sample_xy.size(); i++)
@@ -142,7 +142,7 @@ TEST_F(FunctionTest, sampling_table_x_values) {
     Function::Limits l(-4.2, 1.337);
 
     Function::Polynom3 f(0.0, 1.0, 0.0, 0.0, l); // f(x) = x^2
-    std::vector<std::vector<double>> sample_xy = f.get_samples(samples);
+    std::vector<std::vector<double>> sample_xy = f.sample(samples);
 
     //std::cout << get_print(sample_xy);
 
@@ -162,7 +162,7 @@ TEST_F(FunctionTest, sampling_table_y_values) {
     Function::Limits l(-4.2, 1.337);
 
     Function::Polynom3 f(0.0, 1.0, 0.0, 0.0, l); // f(x) = x^2
-    std::vector<std::vector<double>> sample_xy = f.get_samples(samples);
+    std::vector<std::vector<double>> sample_xy = f.sample(samples);
 
     //std::cout << get_print(sample_xy);
 
@@ -334,8 +334,8 @@ TEST_F(FunctionTest, numerical_inverse_quadratic) {
     EXPECT_NEAR(0.0, f_inv.get_limits().get_lower(), 1e-6);
     EXPECT_NEAR(1.0, f_inv.get_limits().get_upper(), 1e-6);
 
-    //AsciiIo::write_table_to_file(f.get_samples(1024), "f.func");
-    //AsciiIo::write_table_to_file(f_inv.get_samples(1024), "f_inv.func");
+    //AsciiIo::write_table_to_file(f.sample(1024), "f.func");
+    //AsciiIo::write_table_to_file(f_inv.sample(1024), "f_inv.func");
 
     // f_inv(0) != sqrt(0) = 0
     EXPECT_NEAR(0.0, f_inv.evaluate(0.0), 1e-3);

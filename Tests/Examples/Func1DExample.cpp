@@ -37,7 +37,7 @@ TEST_F(FunctionExample, function_constant) {
     EXPECT_EQ( 1.337, c.evaluate(0.9999) );
     //--func_const_call_end--
 
-    AsciiIo::write_table_to_file(c.get_samples(1000),"Examples/Out/function_const.func");
+    AsciiIo::write_table_to_file(c.sample(1000),"Examples/Out/function_const.func");
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionExample, function_polynom_1) {
@@ -49,7 +49,7 @@ TEST_F(FunctionExample, function_polynom_1) {
     EXPECT_EQ( 0.78, p3.evaluate(0.78) );
     EXPECT_EQ( 0.9999, p3.evaluate(0.9999) );
     //--func_poly3_call_end--
-    AsciiIo::write_table_to_file(p3.get_samples(1000),"Examples/Out/function_polynom1.func");
+    AsciiIo::write_table_to_file(p3.sample(1000),"Examples/Out/function_polynom1.func");
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionExample, function_polynom_2) {
@@ -61,7 +61,7 @@ TEST_F(FunctionExample, function_polynom_2) {
     EXPECT_NEAR( 0.25, p3.evaluate(0.5) ,1e-9);
     EXPECT_NEAR( 0.04, p3.evaluate(0.2) ,1e-9);
     //--func_poly3_quad_end--
-    AsciiIo::write_table_to_file(p3.get_samples(1000),"Examples/Out/unction_polynom2.func");
+    AsciiIo::write_table_to_file(p3.sample(1000),"Examples/Out/unction_polynom2.func");
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionExample, function_polynom_3) {
@@ -69,7 +69,7 @@ TEST_F(FunctionExample, function_polynom_3) {
     //--func_poly3_tri--
     Polynom3 p3(1.0, -3.0, -1.0, -3.0, Limits(-2.0, 4.0));
     //--func_poly3_tri_end--
-    AsciiIo::write_table_to_file(p3.get_samples(1000),"Examples/Out/function_polynom3.func");
+    AsciiIo::write_table_to_file(p3.sample(1000),"Examples/Out/function_polynom3.func");
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionExample, interpol) {
@@ -88,7 +88,7 @@ TEST_F(FunctionExample, interpol) {
 
     LinInterpol ip(table);
     //--look_up_end--
-    AsciiIo::write_table_to_file(ip.get_samples(1000),"Examples/Out/function_interpol.func");
+    AsciiIo::write_table_to_file(ip.sample(1000),"Examples/Out/function_interpol.func");
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionExample, function_concat) {
@@ -101,7 +101,7 @@ TEST_F(FunctionExample, function_concat) {
     std::vector<Func1D*> funcs = {&f1, &f2, &f3};
     Concat concat(funcs);
     //--func_concat_end--
-    AsciiIo::write_table_to_file(concat.get_samples(1000),"Examples/Out/function_concat.func");
+    AsciiIo::write_table_to_file(concat.sample(1000),"Examples/Out/function_concat.func");
 }
 //------------------------------------------------------------------------------
 TEST_F(FunctionExample, access) {
@@ -115,11 +115,11 @@ TEST_F(FunctionExample, access) {
     value1 = value2;
     value2 = value1;
     //--func_access_sampling--
-    std::vector<std::vector<double>> table = p3.get_samples(1000);
+    std::vector<std::vector<double>> table = p3.sample(1000);
     EXPECT_EQ(1000u, table.size());
     //--func_access_sampling_end--
     //--func_access_sampling_export--
-    AsciiIo::write_table_to_file(p3.get_samples(7), "Examples/Out/my_p3.txt");
+    AsciiIo::write_table_to_file(p3.sample(7), "Examples/Out/my_p3.txt");
     //--func_access_sampling_export_end--
 }
 //------------------------------------------------------------------------------

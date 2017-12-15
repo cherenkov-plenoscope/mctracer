@@ -17,7 +17,7 @@ class Func1D {
  public:
     explicit Func1D(const Limits &_limits);
     virtual ~Func1D();
-    std::vector<std::vector<double>> get_samples(const unsigned int N)const;
+    std::vector<std::vector<double>> sample(const unsigned int N)const;
     double mean(const unsigned int N)const;
     virtual double evaluate(const double x)const = 0;
     Limits get_limits()const;

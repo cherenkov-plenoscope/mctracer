@@ -13,7 +13,7 @@ Func1D::Func1D(const Limits &_limits): limits(_limits) {}
 
 Func1D::~Func1D() {}
 
-vector<vector<double>> Func1D::get_samples(const unsigned int N)const {
+vector<vector<double>> Func1D::sample(const unsigned int N)const {
     double arg = limits.get_lower();
     const double increment = increment_for_steps(N);
     vector<vector<double>> table;
@@ -29,7 +29,7 @@ vector<vector<double>> Func1D::get_samples(const unsigned int N)const {
 }
 
 double Func1D::mean(const unsigned int N)const {
-    vector<vector<double>> x_vs_y   = get_samples(N);
+    vector<vector<double>> x_vs_y   = sample(N);
     double y_mean = 0.0;
     for (vector<double> point : x_vs_y)
         y_mean = y_mean + point.at(1);
@@ -48,7 +48,7 @@ string Func1D::str()const {
     std::stringstream out;
     out.precision(2);
     out << limits.str() << " ";
-    vector<vector<double>> table = get_samples(3);
+    vector<vector<double>> table = sample(3);
     for (vector<double> xy : table) {
         out << "f(" << xy.at(0) << ")=" << xy.at(1) <<", ";
     }
