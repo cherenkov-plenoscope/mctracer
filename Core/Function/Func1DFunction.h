@@ -11,12 +11,11 @@ namespace Function {
 
 class Func1D {
  protected:
+    Func1D();
     Limits limits;
 
  public:
-    Func1D();
     explicit Func1D(const Limits &_limits);
-    void set_limits(const Limits limits);
     virtual ~Func1D();
     std::vector<std::vector<double>> get_samples(const unsigned int N)const;
     double get_mean(const unsigned int N)const;

@@ -13,10 +13,6 @@ Func1D::Func1D(const Limits &_limits): limits(_limits) {}
 
 Func1D::~Func1D() {}
 
-void Func1D::set_limits(const Limits limits) {
-    this->limits = limits;
-}
-
 vector<vector<double>> Func1D::get_samples(const unsigned int N)const {
     double arg = limits.get_lower();
     const double increment = increment_for_steps(N);
