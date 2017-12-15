@@ -5,6 +5,7 @@ using std::vector;
 
 
 namespace Function {
+	Func1D::Func1D() {}
 
 	Func1D::Func1D(const Limits &_limits): limits(_limits){}
 	//--------------------------------------------------------------------------

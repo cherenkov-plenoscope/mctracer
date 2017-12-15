@@ -14,7 +14,7 @@ class Func1D {
     Limits limits;
 
  public:
-    Func1D() {}
+    Func1D();
     explicit Func1D(const Limits &_limits);
     void set_limits(const Limits limits);
     virtual ~Func1D();
