@@ -1,19 +1,13 @@
-//=================================
-// include guard
-#ifndef __PRISMZ_H_INCLUDE__
-#define __PRISMZ_H_INCLUDE__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef SCENERY_GEOMETRY_PRISMZ_H_
+#define SCENERY_GEOMETRY_PRISMZ_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
 #include "Core/Vec3.h"
 
-//=================================
 class PrismZ {
-public:
-	virtual bool is_inside(const Vec3* vec)const = 0;
-	virtual double get_area()const {return 0.0;};
+ public:
+    virtual bool is_inside(const Vec3* vec)const = 0;
+    virtual double get_area()const {return 0.0;}
 };
-#endif // __PRISMZ_H_INCLUDE__
+
+#endif  // SCENERY_GEOMETRY_PRISMZ_H_
