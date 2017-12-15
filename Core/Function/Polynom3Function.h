@@ -6,6 +6,7 @@
 
 namespace Function {
 class Polynom3 : public Func1D {
+    // y(x) = a3*x^3 + a2*x^2 + a1*x + a0
     double a3, a2, a1, a0;
 
  public:
