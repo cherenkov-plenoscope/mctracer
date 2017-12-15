@@ -1,12 +1,12 @@
 set(SOURCE
-   	${SOURCE}
-   	${CMAKE_CURRENT_SOURCE_DIR}/LimitsFunction.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Func1DFunction.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ConcatFunction.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ConstantFunction.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/LinInterpolFunction.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Polynom3Function.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/DiscretSamplingLookUpTable.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Tools.cpp
-   	PARENT_SCOPE
+    ${SOURCE}
+    ${CMAKE_CURRENT_SOURCE_DIR}/LimitsFunction.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Func1DFunction.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ConcatFunction.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ConstantFunction.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/LinInterpolFunction.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Polynom3Function.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/DiscretSamplingLookUpTable.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Tools.cpp
+    PARENT_SCOPE
 )
