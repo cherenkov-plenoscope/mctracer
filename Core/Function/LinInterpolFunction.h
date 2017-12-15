@@ -43,7 +43,6 @@ class LinInterpol : public Func1D {
     double boundary_mode_strict(const double arg)const;
     std::vector<Point>::const_iterator get_upper_bound(double arg)const;
     double get_integral()const;
-    double get_x_range()const;
     void assert_func_is_not_empty()const;
     double get_weighted_mean_of_value()const;
 };

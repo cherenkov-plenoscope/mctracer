@@ -139,7 +139,7 @@ string LinInterpol::exception_header()const {
 }
 
 double LinInterpol::get_weighted_mean_of_value()const {
-    double Range = get_x_range();
+    double Range = limits_.range();
     if (Range == 0.0) {
         std::stringstream info;
         info << exception_header();
@@ -165,10 +165,6 @@ double LinInterpol::get_integral()const {
     for (it = func.begin(); it < (func.end()-1); it++)
         integral_over_value += 0.5*((it+1)->x - it->x)*(it->y + (it+1)->y);
     return integral_over_value;
-}
-
-double LinInterpol::get_x_range()const {
-    return (func.end()-1)->x - func.begin()->x;
 }
 
 double LinInterpol::get_max_value()const {
