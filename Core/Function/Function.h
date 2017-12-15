@@ -2,7 +2,7 @@
 #ifndef CORE_FUNCTION_FUNCTION_H_
 #define CORE_FUNCTION_FUNCTION_H_
 
-#include "LimitsFunction.h"
+#include "Limits.h"
 #include "Func1DFunction.h"
 #include "LinInterpolFunction.h"
 #include "Polynom3.h"

@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/Function/LimitsFunction.h"
+#include "Core/Function/Limits.h"
 #include <sstream>
 #include <exception>
 

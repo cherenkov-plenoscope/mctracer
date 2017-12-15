@@ -2,9 +2,9 @@
 #ifndef CORE_FUNCTION_DISCRETSAMPLINGLOOKUPTABLE_H_
 #define CORE_FUNCTION_DISCRETSAMPLINGLOOKUPTABLE_H_
 
-#include "LimitsFunction.h"
-#include "Func1DFunction.h"
 #include <vector>
+#include "Core/Function/Limits.h"
+#include "Core/Function/Func1DFunction.h"
 
 namespace Function {
 namespace DiscretSampling {

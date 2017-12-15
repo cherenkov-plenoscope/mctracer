@@ -1,6 +1,6 @@
 set(SOURCE
     ${SOURCE}
-    ${CMAKE_CURRENT_SOURCE_DIR}/LimitsFunction.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Limits.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Func1DFunction.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ConcatFunction.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ConstantFunction.cpp

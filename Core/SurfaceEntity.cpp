@@ -2,7 +2,7 @@
 #include "Core/SurfaceEntity.h"
 #include <limits>
 #include <sstream>
-#include "Core/Function/LimitsFunction.h"
+#include "Core/Function/Limits.h"
 #include "Core/Function/ConstantFunction.h"
 using Function::Func1D;
 using Function::Constant;

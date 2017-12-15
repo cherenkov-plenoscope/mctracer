@@ -2,7 +2,7 @@
 #ifndef CORE_FUNCTION_FUNC1DFUNCTION_H_
 #define CORE_FUNCTION_FUNC1DFUNCTION_H_
 
-#include "LimitsFunction.h"
+#include "Limits.h"
 #include <iostream>
 #include <vector>
 #include <string>
