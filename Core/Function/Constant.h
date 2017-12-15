@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_FUNCTION_CONSTANTFUNCTION_H_
-#define CORE_FUNCTION_CONSTANTFUNCTION_H_
+#ifndef CORE_FUNCTION_CONSTANT_H_
+#define CORE_FUNCTION_CONSTANT_H_
 
 #include "Func1DFunction.h"
 
@@ -18,4 +18,4 @@ class Constant :public Func1D {
 };
 
 }  // namespace Function
-#endif  // CORE_FUNCTION_CONSTANTFUNCTION_H_
+#endif  // CORE_FUNCTION_CONSTANT_H_

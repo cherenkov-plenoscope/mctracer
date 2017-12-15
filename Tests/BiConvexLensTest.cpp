@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 //#include "Cameras/FlyingCamera.h"
-#include "Core/Function/ConstantFunction.h"
+#include "Core/Function/Constant.h"
 #include "Core/Photons.h"
 #include "Core/PhotonAndFrame.h"
 #include "Scenery/Primitive/BiConvexLens.h"

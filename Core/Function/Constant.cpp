@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/Function/ConstantFunction.h"
+#include "Core/Function/Constant.h"
 #include <sstream>
 
 namespace Function {

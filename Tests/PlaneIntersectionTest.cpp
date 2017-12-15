@@ -1,5 +1,5 @@
 #include "gtest/gtest.h"
-#include "Core/Function/ConstantFunction.h"
+#include "Core/Function/Constant.h"
 #include "Core/PropagationConfig.h"
 #include "Core/Rot3.h"
 #include "Core/Frame.h"

@@ -3,7 +3,7 @@
 #include <limits>
 #include <sstream>
 #include "Core/Function/Limits.h"
-#include "Core/Function/ConstantFunction.h"
+#include "Core/Function/Constant.h"
 using Function::Func1D;
 using Function::Constant;
 using Function::Limits;
