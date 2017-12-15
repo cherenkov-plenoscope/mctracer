@@ -1,33 +1,28 @@
-//==============================================================================
-// include guard
-#ifndef __PRNG_Mt19937_INCLUDED__
-#define __PRNG_Mt19937_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef CORE_RANDOM_MT19937_H_
+#define CORE_RANDOM_MT19937_H_
 
-//==============================================================================
-// forward declared dependencies
-
-//==============================================================================
-// included dependencies
 #include "Generator.h"
 #include <random>
-//==============================================================================
+
 namespace Random {
 
-	// mt19937 is a standard mersenne_twister_engine
-	class Mt19937 : public Generator{
-		
-		std::mt19937_64 pRNG_mt19937;
-		double inv_max;
-	public:
+class Mt19937 : public Generator{
+    // mersenne_twister_engine
+    std::mt19937_64 pRNG_mt19937;
+    double inv_max;
 
-		Mt19937(const uint32_t seed);
-		Mt19937();
-		double uniform();
-		double normal(const double mean, const double std_dev);
-		void set_seed(const uint32_t seed);
-	private:
+ public:
+    explicit Mt19937(const uint32_t seed);
+    Mt19937();
+    double uniform();
+    double normal(const double mean, const double std_dev);
+    void set_seed(const uint32_t seed);
 
-		void init_inverse_maximum();
-	};
-}
-#endif // __PRNG_Mt19937_INCLUDED__
+ private:
+    void init_inverse_maximum();
+};
+
+}  // namespace Random
+
+#endif  // CORE_RANDOM_MT19937_H_
