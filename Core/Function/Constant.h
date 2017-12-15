@@ -2,7 +2,7 @@
 #ifndef CORE_FUNCTION_CONSTANT_H_
 #define CORE_FUNCTION_CONSTANT_H_
 
-#include "Func1DFunction.h"
+#include "Func1D.h"
 
 namespace Function {
 

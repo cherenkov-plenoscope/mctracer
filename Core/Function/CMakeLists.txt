@@ -1,7 +1,7 @@
 set(SOURCE
     ${SOURCE}
     ${CMAKE_CURRENT_SOURCE_DIR}/Limits.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Func1DFunction.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Func1D.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Concat.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Constant.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/LinInterpol.cpp

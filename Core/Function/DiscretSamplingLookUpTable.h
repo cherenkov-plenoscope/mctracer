@@ -4,7 +4,7 @@
 
 #include <vector>
 #include "Core/Function/Limits.h"
-#include "Core/Function/Func1DFunction.h"
+#include "Core/Function/Func1D.h"
 
 namespace Function {
 namespace DiscretSampling {

@@ -3,7 +3,7 @@
 #define CORE_FUNCTION_FUNCTION_H_
 
 #include "Limits.h"
-#include "Func1DFunction.h"
+#include "Func1D.h"
 #include "LinInterpol.h"
 #include "Polynom3.h"
 #include "Constant.h"

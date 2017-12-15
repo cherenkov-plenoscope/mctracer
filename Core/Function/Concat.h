@@ -3,7 +3,7 @@
 #define CORE_FUNCTION_CONCAT_H_
 
 #include <vector>
-#include "Func1DFunction.h"
+#include "Func1D.h"
 
 namespace Function {
 

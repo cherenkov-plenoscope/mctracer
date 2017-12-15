@@ -2,7 +2,7 @@
 #ifndef CORE_FUNCTION_POLYNOM3_H_
 #define CORE_FUNCTION_POLYNOM3_H_
 
-#include "Core/Function/Func1DFunction.h"
+#include "Core/Function/Func1D.h"
 
 namespace Function {
 class Polynom3 : public Func1D {

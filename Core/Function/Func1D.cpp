@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/Function/Func1DFunction.h"
+#include "Core/Function/Func1D.h"
 #include <sstream>
 using std::string;
 using std::vector;

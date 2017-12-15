@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_FUNCTION_FUNC1DFUNCTION_H_
-#define CORE_FUNCTION_FUNC1DFUNCTION_H_
+#ifndef CORE_FUNCTION_FUNC1D_H_
+#define CORE_FUNCTION_FUNC1D_H_
 
 #include "Limits.h"
 #include <iostream>
@@ -29,4 +29,4 @@ class Func1D {
 
 }  // namespace Function
 
-#endif  // CORE_FUNCTION_FUNC1DFUNCTION_H_
+#endif  // CORE_FUNCTION_FUNC1D_H_
