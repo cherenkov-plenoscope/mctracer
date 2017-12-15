@@ -23,7 +23,7 @@ class LinInterpol : public Func1D {
     void init(const std::vector<std::vector<double>>& two_column_xy);
     double evaluate(const double x)const;
     double max()const;
-    double get_min_value()const;
+    double min()const;
 
  private:
     void assert_table_two_columns(

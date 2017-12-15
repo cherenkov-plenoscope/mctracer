@@ -147,7 +147,7 @@ TEST_F(LinInterpolTest, max_value) {
 
         Function::LinInterpol f(table);
         EXPECT_NEAR(amp, f.max(), 1e-6);
-        EXPECT_NEAR(-amp, f.get_min_value(), 1e-6);
+        EXPECT_NEAR(-amp, f.min(), 1e-6);
     }
 }
 //------------------------------------------------------------------------------

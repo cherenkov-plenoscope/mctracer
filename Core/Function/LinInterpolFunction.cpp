@@ -149,7 +149,7 @@ double LinInterpol::max()const {
     return max_y;
 }
 
-double LinInterpol::get_min_value()const {
+double LinInterpol::min()const {
     double min_y = func.front().y;
     for (Point p : func) if (p.y < min_y) min_y = p.y;
     return min_y;
