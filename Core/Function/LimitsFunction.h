@@ -7,13 +7,13 @@
 namespace Function {
 
 class Limits{
-    double lower;
-    double upper;
+    double lower_;
+    double upper_;
 
  public:
     static const Limits VOID_LIMITS;
     Limits();
-    Limits(const double _lower, const double _upper);
+    Limits(const double lower, const double upper);
     void assert_limits_are_causal()const;
     double get_lower()const;
     double get_upper()const;
