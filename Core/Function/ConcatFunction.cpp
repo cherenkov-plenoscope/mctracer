@@ -30,7 +30,7 @@ void Concat::assert_limits_do_fit()const {
             info << "function[" << i << "].upper_limit == ";
             info << "function[" << i+1 << "].lower_limit, but actual\n";
             info << "f[" << i << "].upper_limit = ";
-            info << conc.at(i)->limits().get_upper() << "\n";
+            info << conc.at(i)->limits().upper() << "\n";
             info << "f[" << i+1 << "].lower_limit = ";
             info << conc.at(i+1)->limits().lower() << "\n";
             throw std::logic_error(info.str());
@@ -39,14 +39,14 @@ void Concat::assert_limits_do_fit()const {
 }
 
 bool Concat::func_does_not_match_limit_of_next_func(const unsigned int i)const {
-    return conc.at(i)->limits().get_upper() !=
+    return conc.at(i)->limits().upper() !=
         conc.at(i+1)->limits().lower();
 }
 
 void Concat::adopt_new_limits() {
     limits_ = Limits(
         conc.front()->limits().lower(),
-        conc.back()->limits().get_upper());
+        conc.back()->limits().upper());
 }
 
 double Concat::evaluate(const double x)const {
@@ -64,7 +64,7 @@ const Func1D* Concat::get_sub_function_responsible_for(const double x)const {
 }
 
 bool Concat::compare_upper_limit(const double x, const Func1D *f) {
-    return f->limits().get_upper() > x;
+    return f->limits().upper() > x;
 }
 
 }  // namespace Function

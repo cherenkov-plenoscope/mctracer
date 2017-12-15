@@ -18,7 +18,7 @@ LinInterpol get_integral(const Func1D &f, unsigned int steps) {
         vector<double> F_at_x = {x, y};
         F.push_back(F_at_x);
     }
-    double x_end = f.limits().get_upper();
+    double x_end = f.limits().upper();
     double x_end_in_f = nextafter(x_end, f.limits().lower());
     vector<double> F_end = {
         x_end,
@@ -42,7 +42,7 @@ LinInterpol get_inverse(const Func1D &f, unsigned int steps) {
         vector<double> f_inv_at_x = {y, x};
         fvec_inv.push_back(f_inv_at_x);
     }
-    double x_end = f.limits().get_upper();
+    double x_end = f.limits().upper();
     double x_end_in_f = nextafter(x_end, f.limits().lower());
     vector<double> f_inv_end = {f.evaluate(x_end_in_f), x_end};
     fvec_inv.push_back(f_inv_end);
@@ -58,7 +58,7 @@ LinInterpol get_derivative(const Func1D &f, unsigned int steps) {
         vector<double> f_inv_at_x = {x, y};
         fvec_deriv.push_back(f_inv_at_x);
     }
-    double x_end = f.limits().get_upper();
+    double x_end = f.limits().upper();
     double x_end_margin = step*1e-9;
     double y_end = (
         f.evaluate(x_end-x_end_margin) -

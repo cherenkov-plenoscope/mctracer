@@ -16,7 +16,7 @@ class Limits{
     Limits(const double lower, const double upper);
     void assert_limits_are_causal()const;
     double lower()const;
-    double get_upper()const;
+    double upper()const;
     double get_range()const;
     void assert_contains(const double x)const;
     std::string str()const;

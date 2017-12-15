@@ -124,7 +124,7 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
     unsigned int bin_count = (unsigned int)(pow(double(n_samples), 1.0/3.0));
     vector<double> bin_edges = Numeric::linspace(
         f.limits().lower(),
-        f.limits().get_upper(), 
+        f.limits().upper(), 
         bin_count
     );
 
@@ -152,7 +152,7 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
 
     vector<double> ys = Numeric::linspace(
         f.limits().lower(),
-        f.limits().get_upper(), 
+        f.limits().upper(), 
         sqrt(n_samples)
     );
 

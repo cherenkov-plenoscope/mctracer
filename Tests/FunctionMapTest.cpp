@@ -42,6 +42,6 @@ TEST_F(FunctionMapTest, add_func_and_get_it_again) {
     function->init(0.0, 1.0, 0.0, 1.0, Function::Limits(0.0, 1.0));
 
     EXPECT_EQ(function->limits().lower(), my_limits.lower());
-    EXPECT_EQ(function->limits().get_upper(), my_limits.get_upper());
+    EXPECT_EQ(function->limits().upper(), my_limits.upper());
 }
 //------------------------------------------------------------------------------

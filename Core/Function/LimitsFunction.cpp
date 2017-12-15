@@ -34,7 +34,7 @@ double Limits::lower()const {
     return lower_;
 }
 
-double Limits::get_upper()const {
+double Limits::upper()const {
     return upper_;
 }
 
