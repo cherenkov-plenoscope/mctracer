@@ -26,11 +26,11 @@ void Polynom3::init(
     this->a2 = a2;
     this->a1 = a1;
     this->a0 = a0;
-    this->limits = limits;
+    this->limits_ = limits;
 }
 
 double Polynom3::evaluate(const double x)const {
-    limits.assert_contains(x);
+    limits_.assert_contains(x);
     const double x2 = x*x;
     const double x3 = x2*x;
     return a3*x3 + a2*x2 + a1*x + a0;

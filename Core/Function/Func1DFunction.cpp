@@ -9,12 +9,12 @@ namespace Function {
 
 Func1D::Func1D() {}
 
-Func1D::Func1D(const Limits &_limits): limits(_limits) {}
+Func1D::Func1D(const Limits &_limits): limits_(_limits) {}
 
 Func1D::~Func1D() {}
 
 vector<vector<double>> Func1D::sample(const unsigned int N)const {
-    double arg = limits.get_lower();
+    double arg = limits_.get_lower();
     const double increment = increment_for_steps(N);
     vector<vector<double>> table;
     table.reserve(N);
@@ -37,17 +37,17 @@ double Func1D::mean(const unsigned int N)const {
 }
 
 double Func1D::increment_for_steps(const unsigned int N)const {
-    return limits.get_range()/static_cast<double>(N);
+    return limits_.get_range()/static_cast<double>(N);
 }
 
 Limits Func1D::get_limits()const {
-    return limits;
+    return limits_;
 }
 
 string Func1D::str()const {
     std::stringstream out;
     out.precision(2);
-    out << limits.str() << " ";
+    out << limits_.str() << " ";
     vector<vector<double>> table = sample(3);
     for (vector<double> xy : table) {
         out << "f(" << xy.at(0) << ")=" << xy.at(1) <<", ";

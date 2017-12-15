@@ -12,7 +12,7 @@ namespace Function {
 class Func1D {
  protected:
     Func1D();
-    Limits limits;
+    Limits limits_;
 
  public:
     explicit Func1D(const Limits &_limits);

@@ -44,13 +44,13 @@ bool Concat::func_does_not_match_limit_of_next_func(const unsigned int i)const {
 }
 
 void Concat::adopt_new_limits() {
-    limits = Limits(
+    limits_ = Limits(
         conc.front()->get_limits().get_lower(),
         conc.back()->get_limits().get_upper());
 }
 
 double Concat::evaluate(const double x)const {
-    limits.assert_contains(x);
+    limits_.assert_contains(x);
     const Func1D* sub_f = get_sub_function_responsible_for(x);
     return sub_f->evaluate(x);
 }

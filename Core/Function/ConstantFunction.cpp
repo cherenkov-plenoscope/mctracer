@@ -14,11 +14,11 @@ Constant::Constant(const double value, const Limits &limits) {
 
 void Constant::init(const double value, const Limits &limits) {
     this->value = value;
-    this->limits = limits;
+    this->limits_ = limits;
 }
 
 double Constant::evaluate(const double x)const {
-    limits.assert_contains(x);
+    limits_.assert_contains(x);
     return value;
 }
 

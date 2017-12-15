@@ -33,7 +33,7 @@ void LinInterpol::init(const vector<vector<double>>& xy) {
     sort_function_arguments();
     assert_no_duplicate_argument_on_sorted_arguments();
 
-    limits = Limits(func.front().x, func.back().x);
+    limits_ = Limits(func.front().x, func.back().x);
 }
 
 double LinInterpol::slope_in_table_in_row(
@@ -61,7 +61,7 @@ void LinInterpol::assert_table_two_columns(
 }
 
 double LinInterpol::evaluate(const double x)const {
-    limits.assert_contains(x);
+    limits_.assert_contains(x);
     return boundary_mode_strict(x);
 }
 
