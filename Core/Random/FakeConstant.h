@@ -1,26 +1,21 @@
-//==============================================================================
-// include guard
-#ifndef __PRNG_FakeConstant_INCLUDED__
-#define __PRNG_FakeConstant_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef CORE_RANDOM_FAKECONSTANT_H_
+#define CORE_RANDOM_FAKECONSTANT_H_
 
-//==============================================================================
-// forward declared dependencies
-
-//==============================================================================
-// included dependencies
 #include "Generator.h"
-//==============================================================================
+
 namespace Random {
 
-	// fake prng retruning always a specific value
-	class FakeConstant : public Generator{
-		
-		double constant;
-	public:
+class FakeConstant : public Generator{
+    // Gives always the same value.
+    double constant;
 
-		FakeConstant(const double _constant);
-		double uniform();
-		double normal(const double mean, const double std_dev);
-	};
-}
-#endif // __PRNG_FakeConstant_INCLUDED__
+ public:
+    explicit FakeConstant(const double _constant);
+    double uniform();
+    double normal(const double mean, const double std_dev);
+};
+
+}  // namespace Random
+
+#endif  // CORE_RANDOM_FAKECONSTANT_H_
