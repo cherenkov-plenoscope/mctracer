@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/Function/Polynom3Function.h"
+#include "Core/Function/Polynom3.h"
 
 namespace Function {
 

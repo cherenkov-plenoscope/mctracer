@@ -5,7 +5,7 @@
 #include "LimitsFunction.h"
 #include "Func1DFunction.h"
 #include "LinInterpolFunction.h"
-#include "Polynom3Function.h"
+#include "Polynom3.h"
 #include "ConstantFunction.h"
 #include "ConcatFunction.h"
 #include "DiscretSamplingLookUpTable.h"

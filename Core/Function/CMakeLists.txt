@@ -5,7 +5,7 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/ConcatFunction.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ConstantFunction.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/LinInterpolFunction.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Polynom3Function.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Polynom3.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/DiscretSamplingLookUpTable.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Tools.cpp
     PARENT_SCOPE
