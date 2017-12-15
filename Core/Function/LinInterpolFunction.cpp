@@ -138,18 +138,6 @@ string LinInterpol::exception_header()const {
     return "LinInterpol:\n";
 }
 
-double LinInterpol::get_weighted_mean_of_value()const {
-    double Range = limits_.range();
-    if (Range == 0.0) {
-        std::stringstream info;
-        info << exception_header();
-        info << "Can not integrate on function in range 0.0";
-        throw std::runtime_error(info.str());
-    } else {
-        return get_integral()/Range;
-    }
-}
-
 void LinInterpol::assert_func_is_not_empty()const {
     if (func.size() == 0) {
         std::stringstream info;
@@ -157,14 +145,6 @@ void LinInterpol::assert_func_is_not_empty()const {
         info << "Function is empty.\n";
         throw std::invalid_argument(info.str());
     }
-}
-
-double LinInterpol::get_integral()const {
-    double integral_over_value = 0.0;
-    vector<LinInterpol::Point>::const_iterator it;
-    for (it = func.begin(); it < (func.end()-1); it++)
-        integral_over_value += 0.5*((it+1)->x - it->x)*(it->y + (it+1)->y);
-    return integral_over_value;
 }
 
 double LinInterpol::get_max_value()const {
