@@ -40,7 +40,6 @@ class LinInterpol : public Func1D {
     void assert_no_duplicate_argument_on_sorted_arguments()const;
     static bool comp_upp(const double x, const Point P);
     double interpolate_linear(const Point p0, const double x)const;
-    double boundary_mode_strict(const double arg)const;
     std::vector<Point>::const_iterator get_upper_bound(double arg)const;
     void assert_func_is_not_empty()const;
 };

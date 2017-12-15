@@ -62,19 +62,15 @@ void LinInterpol::assert_table_two_columns(
 
 double LinInterpol::evaluate(const double x)const {
     limits_.assert_contains(x);
-    return boundary_mode_strict(x);
+    vector<LinInterpol::Point>::const_iterator upper = get_upper_bound(x);
+    assert_upper_bound_and_argument_in_range(upper, x);
+    return interpolate_linear(*(upper-1), x);
 }
 
 vector<LinInterpol::Point>::const_iterator LinInterpol::get_upper_bound(
     double arg
 )const {
     return std::upper_bound(func.begin(), func.end(), arg, comp_upp);
-}
-
-double LinInterpol::boundary_mode_strict(const double arg)const {
-    vector<LinInterpol::Point>::const_iterator upper = get_upper_bound(arg);
-    assert_upper_bound_and_argument_in_range(upper, arg);
-    return interpolate_linear(*(upper-1), arg);
 }
 
 void LinInterpol::assert_upper_bound_and_argument_in_range(
