@@ -1,28 +1,21 @@
-//=================================
-// include guard
-#ifndef __CYLINDERPRISMZ_H_INCLUDE__
-#define __CYLINDERPRISMZ_H_INCLUDE__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef SCENERY_GEOMETRY_CYLINDERPRISMZ_H_
+#define SCENERY_GEOMETRY_CYLINDERPRISMZ_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
 #include "PrismZ.h"
 
-//=================================
 class CylinderPrismZ :public PrismZ {
-protected:
+ protected:
+    double radius_square;
 
-	double radius_square;
-public:
+ public:
+    void set_radius(const double radius);
+    bool is_inside(const Vec3* vec)const;
+    double get_radius()const;
+    double get_area()const;
 
-	void set_radius(const double radius);
-	bool is_inside(const Vec3* vec)const;
-	double get_radius()const;
-	double get_area()const;
-private:
-	
-	void assert_radius_is_positiv(const double radius)const;
+ private:
+    void assert_radius_is_positiv(const double radius)const;
 };
-#endif // __CYLINDERPRISMZ_H_INCLUDE__
+
+#endif  // SCENERY_GEOMETRY_CYLINDERPRISMZ_H_
