@@ -174,10 +174,13 @@ vector<Photon> point_like_towards_z_opening_angle_num_photons(
     const Vec3 support = Vec3::ORIGIN;
 
     Random::Mt19937 prng(0);
-
+    Random::ZenithDistancePicker zenith_picker(0.0, opening_angle);
+    Random::UniformPicker azimuth_picker(0.0, 2*M_PI);
     for (unsigned int i = 0; i < number_of_photons; i++) {
-        Vec3 direction =
-            prng.get_point_on_unitsphere_within_polar_distance(opening_angle);
+        Vec3 direction = Random::draw_point_on_sphere(
+            &prng,
+            zenith_picker,
+            azimuth_picker);
         Photon ph = Photon(support, direction, 433e-9);
         ph.set_simulation_truth_id(i);
         photons.push_back(ph);

@@ -34,18 +34,6 @@ Vec3 Generator::get_point_on_xy_disc_within_radius(const double r) {
     return Vec3(x, y, 0.0);
 }
 
-Vec3 Generator::get_point_on_unitsphere_within_polar_distance(
-    const double max_dist
-) {
-    const double The = max_dist*sqrt(uniform());
-    const double Phi = uniform()*2.0*M_PI;
-
-    return Vec3(
-        sin(The)*cos(Phi),
-        sin(The)*sin(Phi),
-        cos(The));
-}
-
 double Generator::expovariate(const double rate) {
     // sampling from a poisson distribution
     return -log(uniform())/rate;
