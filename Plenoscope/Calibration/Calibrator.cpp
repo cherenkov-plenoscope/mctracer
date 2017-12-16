@@ -3,7 +3,7 @@
 #include <omp.h>
 #include <iomanip>
 #include <sstream>
-#include <chrono>
+#include <random>
 #include "Plenoscope/Calibration/Writer.h"
 #include "Plenoscope/NightSkyBackground/NightSkyBackground.h"
 #include "Tools/UserInteraction.h"
@@ -79,8 +79,8 @@ void Calibrator::fill_calibration_block_to_table() {
 
     unsigned int i;
     int HadCatch = 0;
-    const uint32_t master_seed =
-        std::chrono::system_clock::now().time_since_epoch().count();
+    std::random_device rd;
+    const uint32_t master_seed = rd();
 
     #pragma omp parallel shared(HadCatch)
     {
