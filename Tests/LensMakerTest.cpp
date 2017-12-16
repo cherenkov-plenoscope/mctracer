@@ -57,7 +57,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
     // ok lets test it...
     const Color* lens_col = &Color::GRAY;
     const Color* sensor_disc_col = &Color::DARK_GRAY;
-    const Function::Constant* refraction_vs_wavelength = new Function::Constant(
+    const Function::Constant refraction_vs_wavelength = Function::Constant(
         cfg.refractive_index,
         Function::Limits(200e-9, 1200e-9));
     Random::Mt19937 prng(Random::ZERO_SEED);
@@ -79,7 +79,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
         lens->set_name_pos_rot("lens", Vec3::ORIGIN, Rot3::UNITY);
         lens->set_outer_color(lens_col);
         lens->set_inner_color(lens_col);
-        lens->set_inner_refraction(refraction_vs_wavelength);
+        lens->set_inner_refraction(&refraction_vs_wavelength);
         lens->set_curvature_radius_and_outer_hex_radius(
             lens_curvature_radius,
             cfg.aperture_radius);
