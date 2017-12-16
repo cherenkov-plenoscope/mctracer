@@ -26,10 +26,8 @@ TEST_F(HomTra3Test, unit_trafo_has_no_rotation) {
     // and rotation should be unity as well
     Vec3 unit_x(1.0, 0.0, 0.0);
     EXPECT_EQ(unit_x, trafo.get_transformed_orientation(unit_x));
-
     Vec3 unit_y(0.0, 1.0, 0.0);
     EXPECT_EQ(unit_y, trafo.get_transformed_orientation(unit_y));
-
     Vec3 unit_z(0.0, 0.0, 1.0);
     EXPECT_EQ(unit_z, trafo.get_transformed_orientation(unit_z));
 }
