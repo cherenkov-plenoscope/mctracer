@@ -1,33 +1,30 @@
-//=================================
-// include guard
-#ifndef __PlenoscopeCalibrationWriter_H_INCLUDED__
-#define __PlenoscopeCalibrationWriter_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef PLENOSCOPE_CALIBRATION_WRITER_H_
+#define PLENOSCOPE_CALIBRATION_WRITER_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
-#include "Plenoscope/Calibration/Calibrator.h"
+#include <vector>
+#include <string>
 #include <fstream>
+#include "Plenoscope/Calibration/Calibrator.h"
 
 namespace Plenoscope {
 namespace Calibration {
 
-	class Writer {
+class Writer {
+    const std::string path;
+    std::ofstream file;
 
-		const std::string path;
-		std::ofstream file;
-	public:
+ public:
+    explicit Writer(const std::string path);
+    void append(const std::vector<CalibrationPhotonResult> &table);
 
-		Writer(const std::string path);
-		void append(const std::vector<CalibrationPhotonResult> &table);
-	private:
+ private:
+    void clear_file();
+    void write_row(const CalibrationPhotonResult &row);
+    void assert_file_is_open();
+};
 
-		void clear_file();
-		void write_row(const CalibrationPhotonResult &row);
-		void assert_file_is_open();	
-	};
-}//Calibration
-}//Plenoscope
-#endif // __PlenoscopeCalibrationWriter_H_INCLUDED__ 
+}  // namespace Calibration
+}  // namespace Plenoscope
+
+#endif  // PLENOSCOPE_CALIBRATION_WRITER_H_
