@@ -37,3 +37,13 @@ TEST_F(ColorTest, default_ctor) {
     EXPECT_EQ(c.g, 128);
     EXPECT_EQ(c.b, 128);
 }
+
+TEST_F(ColorTest, reflection_mix) {
+    Color base(0, 0, 0);
+    Color green(0, 100, 0);
+    const double reflectivity = 0.5;
+    base.reflection_mix(green, reflectivity);
+    EXPECT_EQ(base.r, 0);
+    EXPECT_EQ(base.g, 50);
+    EXPECT_EQ(base.b, 0);
+}
