@@ -138,12 +138,9 @@ TEST_F(FunctionTest, sampling_table_y_values) {
 
 // Concat
 TEST_F(FunctionTest, Concat_valid_limits) {
-    Function::Limits l1(0.0, 1.0);
-    Function::Constant f1(1.0, l1);
-    Function::Limits l2(1.0, 2.0);
-    Function::Constant f2(4.2, l2);
-    Function::Limits l3(2.0, 3.0);
-    Function::Constant f3(1.0, l3);
+    Function::Constant f1(1.0, Function::Limits(0.0, 1.0));
+    Function::Constant f2(4.2, Function::Limits(1.0, 2.0));
+    Function::Constant f3(1.0, Function::Limits(2.0, 3.0));
     std::vector<Function::Func1D*> f = {&f1, &f2, &f3};
     Function::Concat con(f);
     EXPECT_EQ(0.0, con.limits().lower());
@@ -151,19 +148,15 @@ TEST_F(FunctionTest, Concat_valid_limits) {
 }
 
 TEST_F(FunctionTest, Concat_bad_limits) {
-    Function::Limits l1(0.0, 0.9);
-    Function::Polynom3 f1(1.0, 1.0, 1.0, 1.0, l1);
-    Function::Limits l2(1.1, 2.0);
-    Function::Constant f2(4.2, l2);
+    Function::Polynom3 f1(1.0, 1.0, 1.0, 1.0, Function::Limits(0.0, 0.9));
+    Function::Constant f2(4.2, Function::Limits(1.1, 2.0));
     std::vector<Function::Func1D*> f = {&f1, &f2};
     EXPECT_THROW(Function::Concat con(f), std::logic_error);
 }
 
 TEST_F(FunctionTest, Concat_bad_access) {
-    Function::Limits l1(0.0, 1.0);
-    Function::Polynom3 f1(1.0, 1.0, 1.0, 1.0, l1);
-    Function::Limits l2(1.0, 2.0);
-    Function::Constant f2(4.2, l2);
+    Function::Polynom3 f1(1.0, 1.0, 1.0, 1.0, Function::Limits(0.0, 1.0));
+    Function::Constant f2(4.2, Function::Limits(1.0, 2.0));
     std::vector<Function::Func1D*> f = {&f1, &f2};
     Function::Concat con(f);
     EXPECT_THROW(con.evaluate(-0.5), std::out_of_range);
@@ -176,12 +169,9 @@ TEST_F(FunctionTest, Concat_bad_access) {
 }
 
 TEST_F(FunctionTest, Concat_y_in_different_sub_functions) {
-    Function::Limits l1(0.0, 1.0);
-    Function::Constant f1(1.337, l1);
-    Function::Limits l2(1.0, 2.0);
-    Function::Constant f2(4.2, l2);
-    Function::Limits l3(2.0, 3.0);
-    Function::Constant f3(3.141, l3);
+    Function::Constant f1(1.337, Function::Limits(0.0, 1.0));
+    Function::Constant f2(4.2, Function::Limits(1.0, 2.0));
+    Function::Constant f3(3.141, Function::Limits(2.0, 3.0));
     std::vector<Function::Func1D*> f = {&f1, &f2, &f3};
     Function::Concat con(f);
     for (double x = -0.5; x < 3.5; x = x+0.011) {
