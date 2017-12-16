@@ -129,7 +129,3 @@ TEST_F(LinInterpolTest, max_value) {
         EXPECT_NEAR(-amp, f.min(), 1e-6);
     }
 }
-
-TEST_F(LinInterpolTest, all_in_xml) {
-    string path = "xml/all_in_xml_function.xml";
-}
