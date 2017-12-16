@@ -108,7 +108,7 @@ TEST_F(BiConvexLensTest, send_photon_frontal_into_lens) {
 	for(unsigned int i=0; i<total_propagations; i++) {
 
 		Photon blue_photon(Vec3(0.0, 0.0, 1.0), Vec3(0.0, 0.0, -1.0), 433e-9);
-		PhotonAndFrame::Propagator(&blue_photon, lens_test_bench_environment);
+		PhotonAndFrame::Propagator(&blue_photon, &lens_test_bench_environment);
 		//blue_photon.propagate_in(lens_test_bench_environment);
 
 		if(2.0 == blue_photon.get_accumulative_distance())

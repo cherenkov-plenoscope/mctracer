@@ -12,12 +12,12 @@ namespace PhotonAndFrame {
 class Propagator {
  public:
     Intersection isec;
-    PropagationEnvironment env;
+    PropagationEnvironment* env;
     Photon* ph;
 
     Propagator(
         Photon* photon,
-        PropagationEnvironment env);
+        PropagationEnvironment* env);
     void propagate();
     bool limit_of_interactions_is_not_reached_yet()const;
     void work_on_first_causal_intersection();
