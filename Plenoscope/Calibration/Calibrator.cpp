@@ -8,6 +8,7 @@
 #include "Core/PhotonAndFrame.h"
 #include "Tools/HeaderBlock.h"
 #include "omp.h"
+#include <chrono>
 
 //#include "Cameras/FlyingCamera.h"
 using std::vector;
@@ -31,7 +32,6 @@ Calibrator::Calibrator(
 	set_up_photon_properties();
 	set_up_principal_aperture_range();
 	set_up_field_of_view_range();
-	set_up_plenoscope_environment();
 	run_calibration();
 }
 //------------------------------------------------------------------------------
@@ -54,13 +54,6 @@ void Calibrator::set_up_field_of_view_range() {
 	max_tilt_vs_optical_axis_to_throw_photons_in = 
 		NightSkyBackground::FOV_RADIUS_OVERHEAD*
 		plenoscope->light_field_sensor_geometry.max_FoV_radius();
-}
-//------------------------------------------------------------------------------
-void Calibrator::set_up_plenoscope_environment() {
-
-	plenoscope_environment.world_geometry = scenery;
-	plenoscope_environment.propagation_options = &settings;
-	plenoscope_environment.random_engine = &prng;		
 }
 //------------------------------------------------------------------------------
 Photon Calibrator::get_photon_given_pos_and_angle_on_principal_aperture(
@@ -88,12 +81,14 @@ void Calibrator::fill_calibration_block_to_table() {
 	
 	unsigned int i;
 	int HadCatch = 0;
+	const uint32_t master_seed =
+		std::chrono::system_clock::now().time_since_epoch().count();
 
 	#pragma omp parallel shared(HadCatch)
 	{
-		Random::Mt19937 thread_local_prng(omp_get_thread_num());
+		Random::Mt19937 thread_local_prng(master_seed + omp_get_thread_num());
 
-		#pragma omp for schedule(dynamic) private(i, thread_local_prng) 
+		#pragma omp for schedule(dynamic) private(i) 
 		for(i=0; i<config.photons_per_block; i++) {
 
 			try{
@@ -114,7 +109,10 @@ void Calibrator::fill_calibration_block_to_table() {
 				);
 
 				// propagate photon
-				PhotonAndFrame::Propagator(&ph, plenoscope_environment);
+				PropagationEnvironment my_env;
+				my_env.world_geometry = scenery;
+				my_env.random_engine = &thread_local_prng;
+				PhotonAndFrame::Propagator(&ph, &my_env);
 
 				PhotonSensor::FindSensorByFrame sensor_finder(
 					ph.get_final_intersection().get_object(),

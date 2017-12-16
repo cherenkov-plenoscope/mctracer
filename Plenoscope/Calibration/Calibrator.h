@@ -33,10 +33,6 @@ namespace Plenoscope {
 		double distance_to_travel_before_intersecting_principal_aperture;
 		double callibration_photon_wavelenght;
 
-		PropagationConfig settings;
-		PropagationEnvironment plenoscope_environment;
-		Random::Mt19937 prng;
-
 		std::vector<CalibrationPhotonResult> photon_results;
 		LixelStatisticsFiller lixel_statistics_filler;
 	public:
