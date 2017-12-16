@@ -47,3 +47,14 @@ TEST_F(ColorTest, reflection_mix) {
     EXPECT_EQ(base.g, 50);
     EXPECT_EQ(base.b, 0);
 }
+
+TEST_F(ColorTest, ctor_mix) {
+    std::vector<Color> rainbow;
+    rainbow.push_back(Color(100, 0, 0));
+    rainbow.push_back(Color(0, 100, 0));
+    rainbow.push_back(Color(0, 0, 100));
+    Color mix = Color(rainbow);
+    EXPECT_EQ(mix.r, 33);
+    EXPECT_EQ(mix.g, 33);
+    EXPECT_EQ(mix.b, 33);
+}
