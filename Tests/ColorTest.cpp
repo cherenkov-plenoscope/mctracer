@@ -4,7 +4,7 @@
 
 class ColorTest : public ::testing::Test {};
 
-TEST_F(ColorTest, 8bit_range) {
+TEST_F(ColorTest, assert_8bit_range) {
     EXPECT_NO_THROW(
         Color col(0, 0, 0));
     EXPECT_NO_THROW(
@@ -29,4 +29,11 @@ TEST_F(ColorTest, 8bit_range) {
     EXPECT_THROW(
         Color col(0, 0, -1),
         std::out_of_range);
+}
+
+TEST_F(ColorTest, default_ctor) {
+    Color c;
+    EXPECT_EQ(c.r, 128);
+    EXPECT_EQ(c.g, 128);
+    EXPECT_EQ(c.b, 128);
 }
