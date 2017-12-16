@@ -158,43 +158,50 @@ TEST_F(RandomGeneratorTest, rejection_sampling_disc_1M_draws) {
     }
 }
 
-TEST_F(RandomGeneratorTest, sphere_point_picking) {
+TEST_F(RandomGeneratorTest, full_sphere) {
+    unsigned int n = static_cast<unsigned int>(1e6);
     Random::Mt19937 prng(0);
-    for (double max_zenith = 5.0; max_zenith < 10.0; max_zenith += 1.5) {
-        const unsigned int n_points = 1e4*(max_zenith*max_zenith)/25.0;
-        vector<Vec3> points;
-        for (unsigned int i = 0; i < n_points; i++) {
-            points.push_back(
-                prng.get_point_on_unitsphere_within_polar_distance(
-                    Deg2Rad(max_zenith)));
-        }
-        const unsigned int n_test_points = 0.01*n_points;
-        vector<Vec3> test_points;
-        for (unsigned int i = 0; i < n_test_points; i++) {
-            test_points.push_back(
-                prng.get_point_on_unitsphere_within_polar_distance(
-                    Deg2Rad(max_zenith - 3.0)));
-        }
-        const double inclusion_radius = Deg2Rad(3.0);
-        vector<unsigned int> inclusion(n_test_points);
-        for (unsigned int i = 0; i < n_test_points; i++) inclusion[i] = 0;
-        for (unsigned int i = 0; i < n_test_points; i++) {
-            for (unsigned int j = 0; j < n_points; j++) {
-                double distance = (points[j] - test_points[i]).norm();
-                if (distance <= inclusion_radius)
-                    inclusion[i]++;
-            }
-        }
-        double sum = 0.0;
-        for (unsigned int i = 0; i < n_test_points; i++)
-            sum += static_cast<double>(inclusion[i]);
-        const double mean = sum/static_cast<double>(n_test_points);
-        double s = 0.0;
-        for (unsigned int val : inclusion)
-            s += (static_cast<double>(val) - mean)*
-                (static_cast<double>(val) - mean);
-        const double stddev = sqrt(s/inclusion.size());
-        const double relative_spread = stddev/mean;
-        EXPECT_NEAR(relative_spread, 0.01, 0.01);
+    Random::ZenithDistancePicker zd_picker(0, M_PI);
+    Random::UniformPicker az_picker(0, 2*M_PI);
+    Vec3 mean_position = Vec3::ORIGIN;
+    for (unsigned int i = 0; i < n; i++) {
+        mean_position = mean_position +
+            Random::draw_point_on_sphere(&prng, zd_picker, az_picker);
     }
+    mean_position = mean_position/static_cast<double>(n);
+    EXPECT_NEAR(mean_position.x, 0.0, 1e-3);
+    EXPECT_NEAR(mean_position.y, 0.0, 1e-3);
+    EXPECT_NEAR(mean_position.z, 0.0, 1e-3);
+}
+
+TEST_F(RandomGeneratorTest, octo_sphere) {
+    unsigned int n = static_cast<unsigned int>(1e6);
+    Random::Mt19937 prng(0);
+    Random::ZenithDistancePicker zd_picker(0, M_PI/2);
+    Random::UniformPicker az_picker(0, M_PI/2);
+    Vec3 mean_position = Vec3::ORIGIN;
+    for (unsigned int i = 0; i < n; i++) {
+        mean_position = mean_position +
+            Random::draw_point_on_sphere(&prng, zd_picker, az_picker);
+    }
+    mean_position = mean_position/static_cast<double>(n);
+    EXPECT_NEAR(mean_position.x, 0.5, 1e-3);
+    EXPECT_NEAR(mean_position.y, 0.5, 1e-3);
+    EXPECT_NEAR(mean_position.z, 0.5, 1e-3);
+}
+
+TEST_F(RandomGeneratorTest, octo_sphere_minus_z) {
+    unsigned int n = static_cast<unsigned int>(1e3);
+    Random::Mt19937 prng(0);
+    Random::ZenithDistancePicker zd_picker(M_PI/2, M_PI);
+    Random::UniformPicker az_picker(0, M_PI/2);
+    Vec3 mean_position = Vec3::ORIGIN;
+    for (unsigned int i = 0; i < n; i++) {
+        mean_position = mean_position +
+            Random::draw_point_on_sphere(&prng, zd_picker, az_picker);
+    }
+    mean_position = mean_position/static_cast<double>(n);
+    EXPECT_NEAR(mean_position.x, 0.5, 2e-2);
+    EXPECT_NEAR(mean_position.y, 0.5, 2e-2);
+    EXPECT_NEAR(mean_position.z, -0.5, 2e-2);
 }

@@ -17,8 +17,6 @@ class Generator {
     virtual void set_seed(const uint32_t seed);
     Vec3 get_point_on_xy_disc_within_radius(const double r);
     Vec3 get_point_on_xy_disc_within_radius_slow(const double r);
-    Vec3 get_point_on_unitsphere_within_polar_distance(
-        const double max_dist);
     double expovariate(const double rate);
     virtual double normal(const double mean, const double std_dev) = 0;
 };

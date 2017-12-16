@@ -6,6 +6,7 @@
 #include "Mt19937.h"
 #include "FakeConstant.h"
 #include "SamplesFromDistribution.h"
+#include "SpherePointPicker.h"
 
 namespace Random {
 

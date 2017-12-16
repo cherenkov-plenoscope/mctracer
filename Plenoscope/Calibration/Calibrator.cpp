@@ -7,6 +7,7 @@
 #include "Tools/FileTools.h"
 #include "Core/PhotonAndFrame.h"
 #include "Tools/HeaderBlock.h"
+#include "Core/Random/Random.h"
 #include "omp.h"
 
 //#include "Cameras/FlyingCamera.h"
@@ -85,7 +86,11 @@ Photon Calibrator::get_photon_given_pos_and_angle_on_principal_aperture(
 }
 //------------------------------------------------------------------------------
 void Calibrator::fill_calibration_block_to_table() {
-	
+	Random::ZenithDistancePicker zenith_picker(
+		0.0,
+		max_tilt_vs_optical_axis_to_throw_photons_in);
+	Random::UniformPicker azimuth_picker(0.0, 2*M_PI);
+
 	unsigned int i;
 	int HadCatch = 0;
 
@@ -103,10 +108,11 @@ void Calibrator::fill_calibration_block_to_table() {
 						max_principal_aperture_radius_to_trow_photons_on
 					);
 
-				Vec3 direction_on_principal_aperture = 
-					thread_local_prng.get_point_on_unitsphere_within_polar_distance(
-						max_tilt_vs_optical_axis_to_throw_photons_in
-					);
+				Vec3 direction_on_principal_aperture =
+					Random::draw_point_on_sphere(
+						&thread_local_prng,
+						zenith_picker,
+						azimuth_picker);
 
 				Photon ph = get_photon_given_pos_and_angle_on_principal_aperture(
 					pos_on_principal_aperture,
