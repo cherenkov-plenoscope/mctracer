@@ -38,10 +38,6 @@ void Sensor::assign_photon_to_this_sensor(const Photon* photon) {
             get_final_intersection_incident_vector_in_object_frame().y);
 }
 
-void Sensor::clear_history() {
-    photon_arrival_history.clear();
-}
-
 double Sensor::arrival_time_mean()const {
     double t = 0.0;
     for (ArrivalInformation ph : photon_arrival_history)

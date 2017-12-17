@@ -62,7 +62,7 @@ void Sensors::assign_photons(const vector<Photon> *photons) {
 
 void Sensors::clear_history() {
     for (Sensor* sensor : by_occurence)
-        sensor->clear_history();
+        sensor->photon_arrival_history.clear();
 }
 
 void Sensors::assert_no_two_sensors_have_same_frame()const {
