@@ -1,20 +1,20 @@
+// Copyright 2014 Sebastian A. Mueller
+#include <vector>
 #include "gtest/gtest.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "Core/Random/Random.h"
-#include <vector>
 using std::vector;
-using namespace PhotonSensor;
+using PhotonSensor::PhotonArrival;
+using PhotonSensor::write_arrival_information_to_file;
+using PhotonSensor::read_arrival_information_from_file;
 
 class SensorInOutTest : public ::testing::Test {};
-//------------------------------------------------------------------------------
-TEST_F(SensorInOutTest, write_and_read) {
 
+TEST_F(SensorInOutTest, write_and_read) {
     vector<PhotonArrival> arrivals_1;
     const unsigned int number_of_arrivals = 1337*42;
-
     Random::Mt19937 prng(0);
-
-    for(unsigned int i=0; i<number_of_arrivals; i++) {
+    for (unsigned int i = 0; i < number_of_arrivals; i++) {
         PhotonArrival arrival;
         arrival.simulation_truth_id = prng.uniform();
         arrival.wavelength = prng.uniform();
@@ -25,7 +25,6 @@ TEST_F(SensorInOutTest, write_and_read) {
         arrival.theta_y = prng.uniform();
         arrivals_1.push_back(arrival);
     }
-
     EXPECT_EQ(arrivals_1.size(), number_of_arrivals);
 
     // write to disk
@@ -42,10 +41,8 @@ TEST_F(SensorInOutTest, write_and_read) {
         number_of_arrivals);
     in.close();
 
-
     ASSERT_EQ(arrivals_1.size(), arrivals_2.size());
-    for(unsigned int i=0; i<number_of_arrivals; i++) {
-
+    for (unsigned int i = 0; i < number_of_arrivals; i++) {
         PhotonArrival ar1 = arrivals_1.at(i);
         PhotonArrival ar2 = arrivals_2.at(i);
         EXPECT_NEAR(ar1.simulation_truth_id, ar2.simulation_truth_id, 1e-5);
