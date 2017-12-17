@@ -9,11 +9,8 @@
 
 namespace PhotonSensor {
 
-class Sensor {
- protected:
+struct Sensor {
     const Frame* sensor_frame;
-
- public:
     std::vector<ArrivalInformation> arrival_table;
     unsigned int id;
     Sensor(unsigned int _id, const Frame* _sensor_frame);
