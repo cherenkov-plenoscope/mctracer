@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_PHOTONSENSOR_INOUT_H_
-#define MCTRACER_PHOTONSENSOR_INOUT_H_
+#ifndef PHOTONSENSOR_INOUT_H_
+#define PHOTONSENSOR_INOUT_H_
 
 #include <fstream>
 #include <vector>
@@ -18,4 +18,4 @@ std::vector<PhotonArrival> read_arrival_information_from_file(
 
 }  // namespace PhotonSensor
 
-#endif  // MCTRACER_PHOTONSENSOR_INOUT_H_
+#endif  // PHOTONSENSOR_INOUT_H_

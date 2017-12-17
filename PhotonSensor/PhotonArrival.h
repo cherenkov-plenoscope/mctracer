@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_PHOTONSENSOR_PHOTONARRIVAL_H_
-#define MCTRACER_PHOTONSENSOR_PHOTONARRIVAL_H_
+#ifndef PHOTONSENSOR_PHOTONARRIVAL_H_
+#define PHOTONSENSOR_PHOTONARRIVAL_H_
 
 namespace PhotonSensor {
 
@@ -26,4 +26,4 @@ struct PhotonArrival {
 
 }  // namespace PhotonSensor
 
-#endif  // MCTRACER_PHOTONSENSOR_PHOTONARRIVAL_H_
+#endif  // PHOTONSENSOR_PHOTONARRIVAL_H_

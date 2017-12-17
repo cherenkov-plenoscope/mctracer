@@ -49,7 +49,7 @@ double point_spread_std_dev(const vector<PhotonArrival>& arrivals) {
 }
 
 vector<vector<double>> history_to_table(
-	const vector<PhotonArrival>& arrivals
+    const vector<PhotonArrival>& arrivals
 ) {
     vector<vector<double>> output_table;
     for (PhotonArrival ph : arrivals) {
