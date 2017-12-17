@@ -6,8 +6,7 @@
 #include "Core/PropagationConfig.h"
 #include "Core/Random/Random.h"
 
-class PropagationEnvironment {
- public:
+struct PropagationEnvironment {
     const Frame* world_geometry = &Frame::VOID_FRAME;
     const PropagationConfig* propagation_options =
         &PropagationConfig::DEFAULT_CONFIG;
