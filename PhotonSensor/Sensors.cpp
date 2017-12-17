@@ -52,7 +52,7 @@ void Sensors::assign_photon(const Photon* photon) {
         photon->get_final_intersection().get_object(),
         &by_frame);
     if (finder.frame_is_in_sensors())
-        finder.get_sensor()->assign_photon_to_this_sensor(photon);
+        finder.get_sensor()->assign_photon(photon);
 }
 
 void Sensors::assign_photons(const vector<Photon> *photons) {

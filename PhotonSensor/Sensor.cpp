@@ -16,7 +16,7 @@ unsigned int Sensor::get_id()const {
     return id;
 }
 
-void Sensor::assign_photon_to_this_sensor(const Photon* photon) {
+void Sensor::assign_photon(const Photon* photon) {
     photon_arrival_history.emplace_back(  // ArrivalInformation
         // id
         photon->get_simulation_truth_id(),
