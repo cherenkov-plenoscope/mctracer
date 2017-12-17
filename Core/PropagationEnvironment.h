@@ -11,7 +11,7 @@ struct PropagationEnvironment {
     const PropagationConfig* propagation_options =
         &PropagationConfig::DEFAULT_CONFIG;
     Random::Generator* random_engine =
-        &Random::void_generator;
+        &Random::VOID_PRNG;
     static PropagationEnvironment default_environment;
 };
 #endif  // CORE_PROPAGATIONENVIRONMENT_H_

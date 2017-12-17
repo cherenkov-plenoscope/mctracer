@@ -11,7 +11,7 @@
 namespace Random {
 
 static const unsigned int ZERO_SEED = 0;
-static Mt19937 void_generator = Mt19937(ZERO_SEED);
+static Mt19937 VOID_PRNG = Mt19937(ZERO_SEED);
 
 }  // namespace Random
 
