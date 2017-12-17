@@ -109,10 +109,11 @@ int main(int argc, char* argv[]) {
                 header << "sensor:  " << sensors.at(i)->frame->get_path_in_tree_of_frames() << ", ID: " << i << "\n";
                 header << "photons: " << photon_path.path << "\n";
                 header << "-------------\n";
-                header << sensors.at(i)->get_arrival_table_header();
+                header << PhotonSensor::arrival_table_header();
 
                 AsciiIo::write_table_to_file_with_header(
-                    sensors.at(i)->get_arrival_table(),
+                    PhotonSensor::history_to_table(
+                        sensors.at(i)->photon_arrival_history),
                     outname.str(),
                     header.str()
                 );      

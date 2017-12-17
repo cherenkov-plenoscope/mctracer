@@ -183,7 +183,7 @@ TEST_F(PhotonTest, Reflections) {
     Photons::propagate_photons_in_scenery_with_settings(
         &photons, &world, &setup, &prng);
     sensors.assign_photons(&photons);
-    const double ph_reached_sensor = absorber_sensor.get_arrival_table().size();
+    const double ph_reached_sensor = absorber_sensor.photon_arrival_history.size();
     const double ph_emitted = photons.size();
     EXPECT_NEAR(
         reflection_coefficient,
@@ -250,14 +250,14 @@ TEST_F(PhotonTest, Refraction) {
     // 5% fresnell reflection
     EXPECT_NEAR(
         0.95,
-        static_cast<double>(absorber_sensor.get_arrival_table().size())/
+        static_cast<double>(absorber_sensor.photon_arrival_history.size())/
         static_cast<double>(num_phot),
         2e-2);
     const double travel_time = (2.0 + 1.33*1.0)/
         PhysicalConstants::VACUUM_SPPED_OF_LIGHT;
     EXPECT_NEAR(
         travel_time,
-        absorber_sensor.arrival_time_mean(),
+        PhotonSensor::arrival_time_mean(absorber_sensor.photon_arrival_history),
         1e-10);
 }
 
@@ -323,7 +323,7 @@ TEST_F(PhotonTest, absorbtion_in_medium) {
     sensors.assign_photons(&photons);
     EXPECT_NEAR(
         0.367,
-        static_cast<double>(collector_sensor.get_arrival_table().size())/
+        static_cast<double>(collector_sensor.photon_arrival_history.size())/
         static_cast<double>(num_phot),
         2e-2);
 }

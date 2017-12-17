@@ -293,7 +293,8 @@ TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         sensor_list.clear_history();
         sensor_list.assign_photons(&photons);
 
-        double mean_arrival_time = sensor.arrival_time_mean();
+        double mean_arrival_time = PhotonSensor::arrival_time_mean(
+            sensor.photon_arrival_history);
 
         for(unsigned int row=0; row<sensor.photon_arrival_history.size(); row++)
             sensor.photon_arrival_history[row].arrival_time -= mean_arrival_time;

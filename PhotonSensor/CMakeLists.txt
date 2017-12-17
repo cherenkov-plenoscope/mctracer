@@ -5,5 +5,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Sensors.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/inout.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PhotonArrival.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/PhotonArrivals.cpp
    	PARENT_SCOPE
 )

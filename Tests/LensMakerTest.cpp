@@ -119,7 +119,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
         sensor_list.clear_history();
         sensor_list.assign_photons(&photons);
         sigma_psf_vs_image_sensor_distance.push_back(
-            sensor.point_spread_std_dev());
+            PhotonSensor::point_spread_std_dev(sensor.photon_arrival_history));
         image_sensor_distances.push_back(image_sensor_disc_distance);
 
         // FreeOrbitCamera free(&optical_table, &settings);

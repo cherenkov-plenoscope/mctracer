@@ -15,14 +15,6 @@ struct Sensor {
     std::vector<PhotonArrival> photon_arrival_history;
     Sensor(unsigned int id, const Frame* frame);
     void assign_photon(const Photon* photon);
-    double x_mean()const;
-    double y_mean()const;
-    double x_std_dev()const;
-    double y_std_dev()const;
-    double point_spread_std_dev()const;
-    double arrival_time_mean()const;
-    std::vector<std::vector<double>> get_arrival_table()const;
-    std::string get_arrival_table_header()const;
     struct FrameSensorByFramePointerCompare {
         bool operator()(const Frame* f, const Sensor* s) {
             return f < s->frame;

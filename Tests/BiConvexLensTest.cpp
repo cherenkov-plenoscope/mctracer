@@ -150,11 +150,14 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 	sensor_list.clear_history();
 	sensor_list.assign_photons(&photons);
 
-	EXPECT_NEAR(1.5e-3, sensor->point_spread_std_dev(), 1e-3);
+	EXPECT_NEAR(
+		1.5e-3,
+		PhotonSensor::point_spread_std_dev(sensor->photon_arrival_history),
+		1e-3);
 
 	EXPECT_NEAR(
 		1.0, 
-		double(sensor->get_arrival_table().size())/double(number_of_photons_emitted), 
+		double(sensor->photon_arrival_history.size())/double(number_of_photons_emitted), 
 		10e-2
 	);
 
