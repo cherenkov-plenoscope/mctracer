@@ -1,6 +1,6 @@
 #include "PhotonsReader.h"
+#include <sstream>
 #include "PhotonsReaderWrapper/EventIoWrapper.h"
-#include "PhotonsReaderWrapper/MmcsCorsikaIoWrapper.h"
 #include "PhotonsReaderWrapper/AsciiIoWrapper.h"
 #include "PhotonsReaderWrapper/InternalPhotonSourceWrapper.h"
 using std::string;
@@ -18,31 +18,24 @@ PhotonsReader::PhotonsReader(const string path) {
         out << error.what();
         try{
 
-            out << "___MmcsCorsikaIo___\n";
-            photons_from_file = new MmcsCorsikaIoWrapper(path);
+            out << "___AsciiIo___\n";
+            photons_from_file = new AsciiIoWrapper(path);
         }catch(std::exception &error) {
             out << error.what();
             try{
-                
-                out << "___AsciiIo___\n";
-                photons_from_file = new AsciiIoWrapper(path);
+            
+                out << "___InternalLightSource___\n";
+                photons_from_file = new InternalPhotonSourceWrapper(path);
             }catch(std::exception &error) {
+
                 out << error.what();
-                try{
-                
-                    out << "___InternalLightSource___\n";
-                    photons_from_file = new InternalPhotonSourceWrapper(path);
-                }catch(std::exception &error) {
+                out << 
+                "Can not read photons from file, it is neither "
+                "Corsika EventIo, Mmcs Corsika, nor Ascci text\n";
 
-                    out << error.what();
-                    out << 
-                    "Can not read photons from file, it is neither "
-                    "Corsika EventIo, Mmcs Corsika, nor Ascci text\n";
-
-                    throw std::invalid_argument(out.str());   
-                }   
-            }
-        }   
+                throw std::invalid_argument(out.str());   
+            }   
+        }
     }
 }
 //------------------------------------------------------------------------------

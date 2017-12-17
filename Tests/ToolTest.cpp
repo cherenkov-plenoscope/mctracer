@@ -30,27 +30,6 @@ TEST_F(Tools, Rad2Deg) {
     EXPECT_NEAR( 180.0e3,   Rad2Deg(  1.0e3*M_PI ), 1e-9);
 }
 //------------------------------------------------------------------------------
-TEST_F(Tools, file_existance_on_not_existing_file) {
-    EXPECT_FALSE(FileTools::can_be_opened("no_such_file"));
-}
-//------------------------------------------------------------------------------
-TEST_F(Tools, file_existance_on_existing_file) {
-    EXPECT_TRUE(FileTools::can_be_opened("ToolTest.cpp"));
-}
-//------------------------------------------------------------------------------
-TEST_F(Tools, file_size_of_not_existing_file) {
-    EXPECT_THROW(
-        {FileTools::size_in_bytes("no_such_file");},
-        std::runtime_error
-    );
-}
-//------------------------------------------------------------------------------
-TEST_F(Tools, file_size_of_existing_file) {
-    EXPECT_NO_THROW(
-        {FileTools::size_in_bytes("ToolTest.cpp");}
-    );
-}
-//------------------------------------------------------------------------------
 TEST_F(Tools, odd_and_even) {
     EXPECT_TRUE(is_even(0));
     EXPECT_TRUE(is_even(2));

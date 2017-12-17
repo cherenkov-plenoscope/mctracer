@@ -17,7 +17,6 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/EventIoPhotonFactoryTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/EventIoTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/RayForPropagationTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/FiniteStateMashineTEST.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/RayTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/RayAndFrameTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Rot3Test.cpp
@@ -46,7 +45,6 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/StereoLitographyTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/LensMakerTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Vec2Test.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaEventGetterTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Vec3Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/NightSkyBackgroundLightTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/XmlTest.cpp

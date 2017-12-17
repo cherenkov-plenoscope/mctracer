@@ -2,7 +2,6 @@ set(SOURCE
    	${SOURCE}
 	${CMAKE_CURRENT_SOURCE_DIR}/BasicWrapper.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/EventIoWrapper.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/MmcsCorsikaIoWrapper.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/AsciiIoWrapper.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/InternalPhotonSourceWrapper.cpp
    	PARENT_SCOPE
