@@ -68,12 +68,12 @@ void Sensors::clear_history() {
 void Sensors::assert_no_two_sensors_have_same_frame()const {
     // look for duplicate sensor frames in the sensor list sorted by frames
     for (unsigned int i = 1; i < by_frame.size(); i++) {
-        if (by_frame.at(i)->get_frame() == by_frame.at(i-1)->get_frame()) {
+        if (by_frame.at(i)->frame == by_frame.at(i-1)->frame) {
             std::stringstream info;
             info << __FILE__ << ", " << __LINE__ << "\n";
             info << "The sensors at " << i << " and " << i-1 << " share the ";
             info << "same frame '";
-            info << by_frame.at(i)->get_frame()->get_path_in_tree_of_frames();
+            info << by_frame.at(i)->frame->get_path_in_tree_of_frames();
             info << "'\n";
             throw DuplicateFrame(info.str());
         }
@@ -88,7 +88,7 @@ void Sensors::init_indices_occurence2frame() {
         occurence2frame_indices.begin(),
         occurence2frame_indices.end(),
         [&](const int& a, const int& b) {
-            return by_occurence[a]->get_frame() < by_occurence[b]->get_frame();
+            return by_occurence[a]->frame < by_occurence[b]->frame;
         });
 }
 

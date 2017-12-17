@@ -7,9 +7,9 @@ using std::string;
 
 namespace PhotonSensor {
 
-Sensor::Sensor(unsigned int _id, const Frame* _sensor_frame) {
+Sensor::Sensor(unsigned int _id, const Frame* _frame) {
     id = _id;
-    sensor_frame = _sensor_frame;
+    frame = _frame;
 }
 
 unsigned int Sensor::get_id()const {
@@ -40,10 +40,6 @@ void Sensor::assign_photon_to_this_sensor(const Photon* photon) {
 
 void Sensor::clear_history() {
     arrival_table.clear();
-}
-
-const Frame* Sensor::get_frame()const {
-    return sensor_frame;
 }
 
 double Sensor::arrival_time_mean()const {

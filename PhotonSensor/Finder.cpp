@@ -23,13 +23,13 @@ FindSensorByFrame::FindSensorByFrame(
         return;
     }
 
-    if (it == sensors->end() && (*(it-1))->get_frame() != final_frame) {
+    if (it == sensors->end() && (*(it-1))->frame != final_frame) {
         // final frame pointer is latger than all known sensor frame pointers
         photon_is_absorbed_by_known_sensor = false;
         return;
     }
 
-    if ((*(it-1))->get_frame() != final_frame) {
+    if ((*(it-1))->frame != final_frame) {
         photon_is_absorbed_by_known_sensor = false;
         return;
     }
