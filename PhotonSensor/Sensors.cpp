@@ -44,7 +44,7 @@ Sensors::Sensors(const vector<Sensor*> &sensors) {
 void Sensors::init(const vector<Sensor*> &sensors) {
     by_occurence.clear();
     by_frame.clear();
-    by_occurence = sensors; //std::move(sensors);
+    by_occurence = sensors;
     by_frame = sort_by_frame(&by_occurence);
     assert_no_two_sensors_have_same_frame();
 }
@@ -85,7 +85,6 @@ void Sensors::clear_history() {
 }
 
 void Sensors::assert_no_two_sensors_have_same_frame()const {
-    // look for duplicate sensor frames in the sensor list sorted by frames
     for (unsigned int i = 1; i < by_frame.size(); i++) {
         if (by_frame.at(i)->frame == by_frame.at(i-1)->frame) {
             std::stringstream info;
