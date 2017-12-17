@@ -7,11 +7,10 @@
 
 namespace PhotonSensor {
 
-class FindSensorByFrame {
+struct FindSensorByFrame {
     bool photon_is_absorbed_by_known_sensor;
     PhotonSensor::Sensor* closest_sensor;
 
- public:
     FindSensorByFrame(
         const Frame* final_frame,
         const std::vector<PhotonSensor::Sensor*> *sensors);
