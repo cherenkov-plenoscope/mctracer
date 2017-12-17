@@ -63,7 +63,7 @@ TEST_F(SizeOfTest, sizes_of_mct) {
     Intersection is;
     print_size("Intersection", is);
 
-    PropagationEnvironment environment = PropagationEnvironment::default_environment; 
+    PropagationEnvironment environment = PropagationEnvironment::VOID_ENVIRONMENT; 
     print_size("PropagationEnvironment", environment);
     cout << "--------------------------------------------" << "\n";
 

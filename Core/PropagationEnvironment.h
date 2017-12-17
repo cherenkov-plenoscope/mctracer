@@ -10,6 +10,6 @@ struct PropagationEnvironment {
     const Frame* root_frame = &Frame::VOID_FRAME;
     const PropagationConfig* config = &PropagationConfig::DEFAULT_CONFIG;
     Random::Generator* prng = &Random::VOID_PRNG;
-    static PropagationEnvironment default_environment;
+    static PropagationEnvironment VOID_ENVIRONMENT;
 };
 #endif  // CORE_PROPAGATIONENVIRONMENT_H_
