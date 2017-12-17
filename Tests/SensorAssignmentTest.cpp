@@ -21,7 +21,7 @@ TEST_F(SensorAssignmentTest, empty_sensor_list_find_sensor_init) {
     car.set_name_pos_rot("car", Vec3::ORIGIN, Rot3::UNITY);
     
     PhotonSensor::FindSensorByFrame finder(&car, &sens.by_frame);
-    EXPECT_FALSE(finder.frame_is_in_sensors());
+    EXPECT_FALSE(finder.is_absorbed_by_known_sensor);
 }
 //------------------------------------------------------------------------------
 TEST_F(SensorAssignmentTest, single_sensor_find) {
@@ -39,12 +39,12 @@ TEST_F(SensorAssignmentTest, single_sensor_find) {
 	duck.set_name_pos_rot("duck", Vec3::ORIGIN, Rot3::UNITY);
 
     PhotonSensor::FindSensorByFrame finder1(&duck, &sensors.by_frame);
-    EXPECT_FALSE(finder1.frame_is_in_sensors());
+    EXPECT_FALSE(finder1.is_absorbed_by_known_sensor);
 
     PhotonSensor::FindSensorByFrame finder2(&car, &sensors.by_frame);
-    EXPECT_TRUE(finder2.frame_is_in_sensors());
+    EXPECT_TRUE(finder2.is_absorbed_by_known_sensor);
 
-    EXPECT_EQ(finder2.get_sensor(), &on_car);
+    EXPECT_EQ(finder2.final_sensor, &on_car);
 }
 //------------------------------------------------------------------------------
 TEST_F(SensorAssignmentTest, many_sensor_find) {
@@ -74,17 +74,17 @@ TEST_F(SensorAssignmentTest, many_sensor_find) {
 	duck.set_name_pos_rot("duck", Vec3::ORIGIN, Rot3::UNITY);
 
     PhotonSensor::FindSensorByFrame find_duck(&duck, &sensors.by_frame);
-    EXPECT_FALSE(find_duck.frame_is_in_sensors());
+    EXPECT_FALSE(find_duck.is_absorbed_by_known_sensor);
 
     PhotonSensor::FindSensorByFrame find_car(&car, &sensors.by_frame);
-    EXPECT_TRUE(find_car.frame_is_in_sensors());
-    EXPECT_EQ(find_car.get_sensor(), &on_car);
+    EXPECT_TRUE(find_car.is_absorbed_by_known_sensor);
+    EXPECT_EQ(find_car.final_sensor, &on_car);
 
     PhotonSensor::FindSensorByFrame find_house(&house, &sensors.by_frame);
-    EXPECT_TRUE(find_house.frame_is_in_sensors());
-    EXPECT_EQ(find_house.get_sensor(), &on_house);
+    EXPECT_TRUE(find_house.is_absorbed_by_known_sensor);
+    EXPECT_EQ(find_house.final_sensor, &on_house);
 
     PhotonSensor::FindSensorByFrame find_tree(&tree, &sensors.by_frame);
-    EXPECT_TRUE(find_tree.frame_is_in_sensors());
-    EXPECT_EQ(find_tree.get_sensor(), &on_tree);
+    EXPECT_TRUE(find_tree.is_absorbed_by_known_sensor);
+    EXPECT_EQ(find_tree.final_sensor, &on_tree);
 }

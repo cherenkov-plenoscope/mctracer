@@ -37,12 +37,4 @@ FindSensorByFrame::FindSensorByFrame(
     final_sensor = (*(it-1));
 }
 
-bool FindSensorByFrame::frame_is_in_sensors()const {
-    return is_absorbed_by_known_sensor;
-}
-
-Sensor* FindSensorByFrame::get_sensor()const {
-    return final_sensor;
-}
-
 }  // namespace PhotonSensor

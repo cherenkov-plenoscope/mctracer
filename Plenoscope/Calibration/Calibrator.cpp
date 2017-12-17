@@ -114,11 +114,11 @@ void Calibrator::fill_calibration_block_to_table() {
                     ph.get_final_intersection().get_object(),
                     &plenoscope->light_field_channels->by_frame);
 
-                if (sensor_finder.frame_is_in_sensors()) {
+                if (sensor_finder.is_absorbed_by_known_sensor) {
                     // remember photon
                     CalibrationPhotonResult result;
                     result.reached_sensor = true;
-                    result.lixel_id = sensor_finder.get_sensor()->id;
+                    result.lixel_id = sensor_finder.final_sensor->id;
                     result.x_pos_on_principal_aperture =
                         pos_on_principal_aperture.x;
                     result.y_pos_on_principal_aperture =

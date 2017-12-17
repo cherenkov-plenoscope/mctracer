@@ -35,7 +35,7 @@ Sensor* Sensors::at(const unsigned int pos) {
 
 Sensor* Sensors::at_frame(const Frame* frame) {
     FindSensorByFrame finder(frame, &by_frame);
-    if (!finder.frame_is_in_sensors()) {
+    if (!finder.is_absorbed_by_known_sensor) {
         std::stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
         info << "There is no sensor for a frame called '";
@@ -44,15 +44,15 @@ Sensor* Sensors::at_frame(const Frame* frame) {
         info << "' in the list of " << by_frame.size() << " sensors.";
         throw NoSuchFrame(info.str());
     }
-    return finder.get_sensor();
+    return finder.final_sensor;
 }
 
 void Sensors::assign_photon(const Photon* photon) {
     FindSensorByFrame finder(
         photon->get_final_intersection().get_object(),
         &by_frame);
-    if (finder.frame_is_in_sensors())
-        finder.get_sensor()->assign_photon(photon);
+    if (finder.is_absorbed_by_known_sensor)
+        finder.final_sensor->assign_photon(photon);
 }
 
 void Sensors::assign_photons(const vector<Photon> *photons) {

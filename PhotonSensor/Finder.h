@@ -14,8 +14,6 @@ struct FindSensorByFrame {
     FindSensorByFrame(
         const Frame* final_frame,
         const std::vector<PhotonSensor::Sensor*> *sensors);
-    bool frame_is_in_sensors()const;
-    PhotonSensor::Sensor* get_sensor()const;
 };
 
 }  // namespace PhotonSensor
