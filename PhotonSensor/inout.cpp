@@ -11,16 +11,17 @@ void write_arrival_information_to_file(
     std::ofstream *file
 ) {
     for (unsigned int i = 0; i < arrival_table->size(); i++) {
-        // convert to float32
         array<float, 7> out;
-        out[0] = (float)arrival_table->at(i).simulation_truth_id;
-        out[1] = (float)arrival_table->at(i).wavelength;
-        out[2] = (float)arrival_table->at(i).arrival_time;
-        out[3] = (float)arrival_table->at(i).x_intersect;
-        out[4] = (float)arrival_table->at(i).y_intersect;
-        out[5] = (float)arrival_table->at(i).theta_x;
-        out[6] = (float)arrival_table->at(i).theta_y;
-        file->write((char*)out.data(), out.size()*sizeof(float));
+        out[0] = static_cast<float>(arrival_table->at(i).simulation_truth_id);
+        out[1] = static_cast<float>(arrival_table->at(i).wavelength);
+        out[2] = static_cast<float>(arrival_table->at(i).arrival_time);
+        out[3] = static_cast<float>(arrival_table->at(i).x_intersect);
+        out[4] = static_cast<float>(arrival_table->at(i).y_intersect);
+        out[5] = static_cast<float>(arrival_table->at(i).theta_x);
+        out[6] = static_cast<float>(arrival_table->at(i).theta_y);
+        file->write(
+            reinterpret_cast<const char*>(out.data()),
+            out.size()*sizeof(float));
     }
 }
 
@@ -33,18 +34,18 @@ vector<PhotonArrival> read_arrival_information_from_file(
 
     for (unsigned int i = 0; i < number_of_arrivals; i++) {
         array<float, 7> block;
-        file->read((char*)block.data(), block.size()*sizeof(float));
-
+        file->read(
+            reinterpret_cast<char*>(block.data()),
+            block.size()*sizeof(float));
         PhotonArrival arrival;
-
         arrivals.emplace_back(
-            (int)block[0],      // simulation_truth_id
-            (double)block[1],   // wavelength
-            (double)block[2],   // arrival_time
-            (double)block[3],   // x_intersect
-            (double)block[4],   // y_intersect
-            (double)block[5],   // theta_x
-            (double)block[6]);  // theta_y
+            static_cast<int>(block[0]),      // simulation_truth_id
+            static_cast<double>(block[1]),   // wavelength
+            static_cast<double>(block[2]),   // arrival_time
+            static_cast<double>(block[3]),   // x_intersect
+            static_cast<double>(block[4]),   // y_intersect
+            static_cast<double>(block[5]),   // theta_x
+            static_cast<double>(block[6]));  // theta_y
     }
     return arrivals;
 }
