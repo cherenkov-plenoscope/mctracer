@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_PHOTONSENSOR_FINDER_H_
-#define MCTRACER_PHOTONSENSOR_FINDER_H_
+#ifndef PHOTONSENSOR_FINDSENSORBYFRAME_H_
+#define PHOTONSENSOR_FINDSENSORBYFRAME_H_
 
 #include <vector>
 #include "PhotonSensor/PhotonSensor.h"
@@ -18,4 +18,4 @@ struct FindSensorByFrame {
 
 }  // namespace PhotonSensor
 
-#endif  // MCTRACER_PHOTONSENSOR_FINDER_H_
+#endif  // PHOTONSENSOR_FINDSENSORBYFRAME_H_
