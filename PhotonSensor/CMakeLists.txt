@@ -1,7 +1,7 @@
 set(SOURCE
    	${SOURCE}
 	${CMAKE_CURRENT_SOURCE_DIR}/Sensor.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Finder.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/FindSensorByFrame.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Sensors.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/inout.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PhotonArrival.cpp

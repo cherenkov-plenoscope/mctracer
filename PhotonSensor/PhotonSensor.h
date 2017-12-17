@@ -3,7 +3,7 @@
 #define MCTRACER_PHOTONSENSOR_PHOTONSENSOR_H_
 
 #include "PhotonSensor/Sensor.h"
-#include "PhotonSensor/Finder.h"
+#include "PhotonSensor/FindSensorByFrame.h"
 #include "PhotonSensor/Sensors.h"
 #include "PhotonSensor/PhotonArrival.h"
 #include "PhotonSensor/PhotonArrivals.h"

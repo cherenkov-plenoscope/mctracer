@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "PhotonSensor/Finder.h"
+#include "PhotonSensor/FindSensorByFrame.h"
 #include <algorithm>
 using std::vector;
 
