@@ -9,10 +9,10 @@
 namespace PhotonSensor {
 
 void write_arrival_information_to_file(
-    const std::vector<ArrivalInformation>* arrival_table,
+    const std::vector<PhotonArrival>* arrival_table,
     std::ofstream *file);
 
-std::vector<ArrivalInformation> read_arrival_information_from_file(
+std::vector<PhotonArrival> read_arrival_information_from_file(
     std::ifstream *file,
     const unsigned int number_of_arrivals);
 

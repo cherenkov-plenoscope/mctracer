@@ -5,7 +5,7 @@
 #include "PhotonSensor/Sensor.h"
 #include "PhotonSensor/Finder.h"
 #include "PhotonSensor/Sensors.h"
-#include "PhotonSensor/ArrivalInformation.h"
+#include "PhotonSensor/PhotonArrival.h"
 #include "PhotonSensor/inout.h"
 
 #endif  // MCTRACER_PHOTONSENSOR_PHOTONSENSOR_H_

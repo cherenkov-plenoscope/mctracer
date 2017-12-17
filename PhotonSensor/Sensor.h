@@ -5,14 +5,14 @@
 #include <vector>
 #include <string>
 #include "Core/Photon.h"
-#include "ArrivalInformation.h"
+#include "PhotonArrival.h"
 
 namespace PhotonSensor {
 
 struct Sensor {
     unsigned int id;
     const Frame* frame;
-    std::vector<ArrivalInformation> photon_arrival_history;
+    std::vector<PhotonArrival> photon_arrival_history;
     Sensor(unsigned int id, const Frame* frame);
     void assign_photon(const Photon* photon);
     double x_mean()const;

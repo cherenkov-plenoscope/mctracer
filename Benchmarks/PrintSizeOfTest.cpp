@@ -114,8 +114,8 @@ TEST_F(SizeOfTest, sizes_of_mct) {
     print_size("Triangle", triangle);
     cout << "--------------------------------------------" << "\n";
 
-    PhotonSensor::ArrivalInformation arr_info;
-    print_size("ArrivalInformation", arr_info);
+    PhotonSensor::PhotonArrival arr_info;
+    print_size("PhotonArrival", arr_info);
 
     PhotonSensor::Sensor sensor(0u, &tree);
     print_size("Sensor", sensor);

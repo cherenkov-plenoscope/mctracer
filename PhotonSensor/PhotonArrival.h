@@ -1,10 +1,10 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_PHOTONSENSOR_ARRIVALINFORMATION_H_
-#define MCTRACER_PHOTONSENSOR_ARRIVALINFORMATION_H_
+#ifndef MCTRACER_PHOTONSENSOR_PHOTONARRIVAL_H_
+#define MCTRACER_PHOTONSENSOR_PHOTONARRIVAL_H_
 
 namespace PhotonSensor {
 
-struct ArrivalInformation {
+struct PhotonArrival {
     int simulation_truth_id;
     double wavelength;
     double arrival_time;
@@ -13,8 +13,8 @@ struct ArrivalInformation {
     double theta_x;
     double theta_y;
 
-    ArrivalInformation();
-    ArrivalInformation(
+    PhotonArrival();
+    PhotonArrival(
         int id,
         double w,
         double t,
@@ -26,4 +26,4 @@ struct ArrivalInformation {
 
 }  // namespace PhotonSensor
 
-#endif  // MCTRACER_PHOTONSENSOR_ARRIVALINFORMATION_H_
+#endif  // MCTRACER_PHOTONSENSOR_PHOTONARRIVAL_H_

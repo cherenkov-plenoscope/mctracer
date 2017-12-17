@@ -7,7 +7,7 @@ using std::vector;
 namespace PhotonSensor {
 
 void write_arrival_information_to_file(
-    const vector<ArrivalInformation>* arrival_table,
+    const vector<PhotonArrival>* arrival_table,
     std::ofstream *file
 ) {
     for (unsigned int i = 0; i < arrival_table->size(); i++) {
@@ -24,18 +24,18 @@ void write_arrival_information_to_file(
     }
 }
 
-vector<ArrivalInformation> read_arrival_information_from_file(
+vector<PhotonArrival> read_arrival_information_from_file(
     std::ifstream *file,
     const unsigned int number_of_arrivals
 ) {
-    vector<ArrivalInformation> arrivals;
+    vector<PhotonArrival> arrivals;
     arrivals.reserve(number_of_arrivals);
 
     for (unsigned int i = 0; i < number_of_arrivals; i++) {
         array<float, 7> block;
         file->read((char*)block.data(), block.size()*sizeof(float));
 
-        ArrivalInformation arrival;
+        PhotonArrival arrival;
 
         arrivals.emplace_back(
             (int)block[0],      // simulation_truth_id

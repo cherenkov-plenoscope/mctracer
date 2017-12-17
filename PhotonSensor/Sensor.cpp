@@ -12,7 +12,7 @@ Sensor::Sensor(unsigned int _id, const Frame* _frame):
     frame(_frame) {}
 
 void Sensor::assign_photon(const Photon* photon) {
-    photon_arrival_history.emplace_back(  // ArrivalInformation
+    photon_arrival_history.emplace_back(  // PhotonArrival
         // id
         photon->get_simulation_truth_id(),
         // wavelength
@@ -35,21 +35,21 @@ void Sensor::assign_photon(const Photon* photon) {
 
 double Sensor::arrival_time_mean()const {
     double t = 0.0;
-    for (ArrivalInformation ph : photon_arrival_history)
+    for (PhotonArrival ph : photon_arrival_history)
         t += ph.arrival_time;
     return t/photon_arrival_history.size();
 }
 
 double Sensor::x_mean()const {
     double xm = 0.0;
-    for (ArrivalInformation ph : photon_arrival_history)
+    for (PhotonArrival ph : photon_arrival_history)
         xm += ph.x_intersect;
     return xm/photon_arrival_history.size();
 }
 
 double Sensor::y_mean()const {
     double ym = 0.0;
-    for (ArrivalInformation ph : photon_arrival_history)
+    for (PhotonArrival ph : photon_arrival_history)
         ym += ph.y_intersect;
     return ym/photon_arrival_history.size();
 }
@@ -57,7 +57,7 @@ double Sensor::y_mean()const {
 double Sensor::x_std_dev()const {
     double xm = x_mean();
     double sx = 0.0;
-    for (ArrivalInformation ph : photon_arrival_history)
+    for (PhotonArrival ph : photon_arrival_history)
         sx += (ph.x_intersect - xm)*(ph.x_intersect - xm);
     return sqrt(sx/photon_arrival_history.size());
 }
@@ -65,7 +65,7 @@ double Sensor::x_std_dev()const {
 double Sensor::y_std_dev()const {
     double ym = y_mean();
     double sy = 0.0;
-    for (ArrivalInformation ph : photon_arrival_history)
+    for (PhotonArrival ph : photon_arrival_history)
         sy += (ph.y_intersect - ym)*(ph.y_intersect - ym);
     return sqrt(sy/photon_arrival_history.size());
 }
@@ -76,7 +76,7 @@ double Sensor::point_spread_std_dev()const {
 
 vector<vector<double>> Sensor::get_arrival_table()const {
     vector<vector<double>> output_table;
-    for (ArrivalInformation ph : photon_arrival_history) {
+    for (PhotonArrival ph : photon_arrival_history) {
         vector<double> output_row;
         output_row.push_back(ph.x_intersect);
         output_row.push_back(ph.y_intersect);

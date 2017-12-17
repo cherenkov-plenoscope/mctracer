@@ -9,13 +9,13 @@ class SensorInOutTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(SensorInOutTest, write_and_read) {
 
-    vector<ArrivalInformation> arrivals_1;
+    vector<PhotonArrival> arrivals_1;
     const unsigned int number_of_arrivals = 1337*42;
 
     Random::Mt19937 prng(0);
 
     for(unsigned int i=0; i<number_of_arrivals; i++) {
-        ArrivalInformation arrival;
+        PhotonArrival arrival;
         arrival.simulation_truth_id = prng.uniform();
         arrival.wavelength = prng.uniform();
         arrival.arrival_time = prng.uniform();
@@ -37,7 +37,7 @@ TEST_F(SensorInOutTest, write_and_read) {
     // read in again
     std::ifstream in;
     in.open("InOut/arrival_information.bin", std::ios::in | std::ios::binary);
-    vector<ArrivalInformation> arrivals_2 = read_arrival_information_from_file(
+    vector<PhotonArrival> arrivals_2 = read_arrival_information_from_file(
         &in,
         number_of_arrivals);
     in.close();
@@ -46,8 +46,8 @@ TEST_F(SensorInOutTest, write_and_read) {
     ASSERT_EQ(arrivals_1.size(), arrivals_2.size());
     for(unsigned int i=0; i<number_of_arrivals; i++) {
 
-        ArrivalInformation ar1 = arrivals_1.at(i);
-        ArrivalInformation ar2 = arrivals_2.at(i);
+        PhotonArrival ar1 = arrivals_1.at(i);
+        PhotonArrival ar2 = arrivals_2.at(i);
         EXPECT_NEAR(ar1.simulation_truth_id, ar2.simulation_truth_id, 1e-5);
         EXPECT_NEAR(ar1.wavelength, ar2.wavelength, 1e-5);
         EXPECT_NEAR(ar1.arrival_time, ar2.arrival_time, 1e-5);

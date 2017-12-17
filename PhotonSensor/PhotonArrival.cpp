@@ -1,11 +1,11 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "PhotonSensor/ArrivalInformation.h"
+#include "PhotonSensor/PhotonArrival.h"
 
 namespace PhotonSensor {
 
-ArrivalInformation::ArrivalInformation() {}
+PhotonArrival::PhotonArrival() {}
 
-ArrivalInformation::ArrivalInformation(
+PhotonArrival::PhotonArrival(
     int id,
     double w,
     double t,
