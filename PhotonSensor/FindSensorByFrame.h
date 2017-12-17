@@ -3,7 +3,7 @@
 #define PHOTONSENSOR_FINDSENSORBYFRAME_H_
 
 #include <vector>
-#include "PhotonSensor/PhotonSensor.h"
+#include "PhotonSensor/Sensor.h"
 
 namespace PhotonSensor {
 

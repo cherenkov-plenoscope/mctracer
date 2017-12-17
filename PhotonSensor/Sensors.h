@@ -3,7 +3,8 @@
 #define PHOTONSENSOR_SENSORS_H_
 
 #include <vector>
-#include "PhotonSensor/PhotonSensor.h"
+#include "PhotonSensor/Sensor.h"
+#include "Core/Photon.h"
 
 namespace PhotonSensor {
 

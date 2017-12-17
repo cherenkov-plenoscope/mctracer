@@ -4,7 +4,7 @@
 
 #include <fstream>
 #include <vector>
-#include "PhotonSensor/PhotonSensor.h"
+#include "PhotonSensor/PhotonArrival.h"
 
 namespace PhotonSensor {
 
