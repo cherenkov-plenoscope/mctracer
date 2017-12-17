@@ -3,27 +3,50 @@
 #include <algorithm>
 #include <sstream>
 #include "PhotonSensor/FindSensorByFrame.h"
-
 using std::vector;
 
 namespace PhotonSensor {
 
+vector<Sensor*> sort_by_frame(const vector<Sensor*>* by_occurence) {
+    vector<Sensor*> by_frame(by_occurence->begin(), by_occurence->end());
+    std::sort(
+        by_frame.begin(),
+        by_frame.end(),
+        [&](const Sensor* a, const Sensor* b) {return a->frame < b->frame;});
+    return by_frame;
+}
+
+void assign_photon_to_sensors(
+    const Photon* photon,
+    vector<Sensor*>* sensors_by_frame
+) {
+    FindSensorByFrame finder(
+        photon->get_final_intersection().get_object(),
+        sensors_by_frame);
+    if (finder.is_absorbed_by_known_sensor)
+        finder.final_sensor->assign_photon(photon);
+}
+
+void assign_photons_to_sensors(
+    const vector<Photon>* photons,
+    vector<Sensor*>* sensors_by_frame
+) {
+    for (const Photon &photon : *photons)
+        assign_photon_to_sensors(&photon, sensors_by_frame);
+}
+
 Sensors::Sensors() {}
 
-Sensors::Sensors(vector<PhotonSensor::Sensor*> &sensors) {
+Sensors::Sensors(const vector<Sensor*> &sensors) {
     init(sensors);
 }
 
-void Sensors::init(vector<PhotonSensor::Sensor*> &sensors) {
+void Sensors::init(const vector<Sensor*> &sensors) {
     by_occurence.clear();
     by_frame.clear();
-    occurence2frame_indices.clear();
-    by_occurence = std::move(sensors);
-    for (unsigned int i = 0; i < by_occurence.size(); i++)
-        by_occurence[i]->id = i;
-    init_indices_occurence2frame();
-    init_sensors_by_frames();
-    sensors.clear();
+    by_occurence = sensors; //std::move(sensors);
+    by_frame = sort_by_frame(&by_occurence);
+    assert_no_two_sensors_have_same_frame();
 }
 
 unsigned int Sensors::size()const {
@@ -49,16 +72,11 @@ Sensor* Sensors::at_frame(const Frame* frame) {
 }
 
 void Sensors::assign_photon(const Photon* photon) {
-    FindSensorByFrame finder(
-        photon->get_final_intersection().get_object(),
-        &by_frame);
-    if (finder.is_absorbed_by_known_sensor)
-        finder.final_sensor->assign_photon(photon);
+    assign_photon_to_sensors(photon, &by_frame);
 }
 
-void Sensors::assign_photons(const vector<Photon> *photons) {
-    for (const Photon &photon : *photons)
-        assign_photon(&photon);
+void Sensors::assign_photons(const vector<Photon>* photons) {
+    assign_photons_to_sensors(photons, &by_frame);
 }
 
 void Sensors::clear_history() {
@@ -79,25 +97,6 @@ void Sensors::assert_no_two_sensors_have_same_frame()const {
             throw DuplicateFrame(info.str());
         }
     }
-}
-
-void Sensors::init_indices_occurence2frame() {
-    occurence2frame_indices.reserve(by_occurence.size());
-    for (unsigned int i = 0; i < by_occurence.size(); i++)
-        occurence2frame_indices.push_back(i);
-    std::sort(
-        occurence2frame_indices.begin(),
-        occurence2frame_indices.end(),
-        [&](const int& a, const int& b) {
-            return by_occurence[a]->frame < by_occurence[b]->frame;
-        });
-}
-
-void Sensors::init_sensors_by_frames() {
-    by_frame.reserve(by_occurence.size());
-    for (unsigned int i = 0; i < by_occurence.size(); i++)
-        by_frame.push_back(by_occurence[occurence2frame_indices[i]]);
-    assert_no_two_sensors_have_same_frame();
 }
 
 }  // namespace PhotonSensor

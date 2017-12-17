@@ -62,8 +62,7 @@ TEST_F(SensorStorageTest, empty_Sensors_access_invalid_frame) {
 	);
 }
 //------------------------------------------------------------------------------
-TEST_F(SensorStorageTest, take_over_sensors_from_vector) {
-
+TEST_F(SensorStorageTest, not_take_over_sensors_from_vector) {
 	// Creation
 	Frame tree;
 	tree.set_name_pos_rot("tree", Vec3::ORIGIN, Rot3::UNITY);
@@ -76,7 +75,7 @@ TEST_F(SensorStorageTest, take_over_sensors_from_vector) {
 	Frame car;
 	car.set_name_pos_rot("car", Vec3::ORIGIN, Rot3::UNITY);
 	Sensor on_car(2u, &car);
-	
+
 	// Collecting
 	std::vector<Sensor*> my_sensors;
 	my_sensors.push_back(&on_tree);
@@ -87,7 +86,7 @@ TEST_F(SensorStorageTest, take_over_sensors_from_vector) {
 	// Taking over the sensors
 	Sensors sens(my_sensors);
 	EXPECT_EQ(3u, sens.size());
-	EXPECT_TRUE(my_sensors.empty());
+	EXPECT_EQ(3u, my_sensors.size());
 }
 //------------------------------------------------------------------------------
 // USAGE

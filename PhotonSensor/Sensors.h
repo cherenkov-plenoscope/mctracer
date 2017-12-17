@@ -8,27 +8,33 @@
 
 namespace PhotonSensor {
 
+std::vector<Sensor*> sort_by_frame(const std::vector<Sensor*>* by_occurence);
+
+void assign_photon_to_sensors(
+    const Photon* photon,
+    std::vector<Sensor*>* sensors_by_frame);
+
+void assign_photons_to_sensors(
+    const std::vector<Photon>* photons,
+    std::vector<Sensor*>* sensors_by_frame);
+
+
 class Sensors {
  public:
-    std::vector<PhotonSensor::Sensor*> by_occurence;
-    std::vector<PhotonSensor::Sensor*> by_frame;
-    std::vector<unsigned int> occurence2frame_indices;
+    std::vector<Sensor*> by_occurence;
+    std::vector<Sensor*> by_frame;
     Sensors();
-    explicit Sensors(std::vector<PhotonSensor::Sensor*> &sensors);
-    void init(std::vector<PhotonSensor::Sensor*> &sensors);
+    explicit Sensors(const std::vector<Sensor*> &sensors);
+    void init(const std::vector<Sensor*> &sensors);
     unsigned int size()const;
-    PhotonSensor::Sensor* at(const unsigned int pos);
-    PhotonSensor::Sensor* at_frame(const Frame* frame);
+    Sensor* at(const unsigned int pos);
+    Sensor* at_frame(const Frame* frame);
     void assign_photon(const Photon* photon);
     void assign_photons(const std::vector<Photon> *photons);
     void clear_history();
 
  private:
-    void init_indices_occurence2frame();
-    void init_sensors_by_frames();
     void assert_no_two_sensors_have_same_frame()const;
-    unsigned int occurence_index_given_frame_index(
-        const unsigned int frame_idx)const;
 
  public:
     class NoSuchFrame : public std::out_of_range {
