@@ -1,10 +1,9 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/Function/DiscretSamplingLookUpTable.h"
+#include "SignalProcessing/DiscretSampling.h"
 #include  <math.h>
 #include <sstream>
 #include <exception>
 
-namespace Function {
 namespace DiscretSampling {
 
 Config::Config() {
@@ -12,7 +11,7 @@ Config::Config() {
     samples_per_slice = 10;
 }
 
-LookUpTable::LookUpTable(const Func1D* func, const Config config) {
+LookUpTable::LookUpTable(const Function::Func1D* func, const Config config) {
     this->config = config;
     this->func = func;
 
@@ -86,4 +85,3 @@ unsigned int LookUpTable::size()const {
 }
 
 }  // namespace DiscretSampling
-}  // namespace Function

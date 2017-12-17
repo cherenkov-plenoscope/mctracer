@@ -11,6 +11,7 @@
 #include "Core/Function/Function.h"
 #include "Core/Random/Random.h"
 #include "PipelinePhoton.h"
+#include "DiscretSampling.h"
 #include <vector>
 
 //=================================
@@ -40,7 +41,7 @@ namespace SignalProcessing {
 		Sampler(const SamplerConfig* config);
 		std::vector<double> time_line(
 			const std::vector<double> *electric_pipeline,
-			const Function::DiscretSampling::LookUpTable* puls_look_up_table,
+			const DiscretSampling::LookUpTable* puls_look_up_table,
 			Random::Generator* prng
 		);
 

@@ -6,7 +6,6 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/Constant.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/LinInterpol.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Polynom3.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/DiscretSamplingLookUpTable.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Tools.cpp
     PARENT_SCOPE
 )

@@ -53,7 +53,7 @@ Sampler::Sampler(const SamplerConfig* config) {
 //------------------------------------------------------------------------------
 vector<double> Sampler::time_line(
 	const vector<double> *electric_pipeline,
-	const Function::DiscretSampling::LookUpTable* puls_look_up_table,
+	const DiscretSampling::LookUpTable* puls_look_up_table,
 	Random::Generator* prng
 ) {	
 	vector<double> time_line;

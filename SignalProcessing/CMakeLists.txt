@@ -8,5 +8,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/PhotoElectricConverter.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SimpleTDCQDC.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/TimeLineAddition.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/DiscretSampling.cpp
    	PARENT_SCOPE
 )
