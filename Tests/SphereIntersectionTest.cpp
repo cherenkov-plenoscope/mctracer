@@ -52,9 +52,9 @@ protected:
 	//---post initialize the world to calculate all bounding spheres---
 	world.init_tree_based_on_mother_child_relations();
 
-	sphere_test_environment.world_geometry = &world;
-	sphere_test_environment.propagation_options = &setup;
-	sphere_test_environment.random_engine = &dice;
+	sphere_test_environment.root_frame = &world;
+	sphere_test_environment.config = &setup;
+	sphere_test_environment.prng = &dice;
   }
 };
 //------------------------------------------------------------------------------

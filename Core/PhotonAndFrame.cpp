@@ -17,11 +17,11 @@ void Propagator::propagate() {
 
 bool Propagator::limit_of_interactions_is_not_reached_yet()const {
     return ph->get_number_of_interactions_so_far() <=
-        env->propagation_options->max_number_of_interactions_per_photon;
+        env->config->max_number_of_interactions_per_photon;
 }
 
 void Propagator::work_on_first_causal_intersection() {
-    isec = RayAndFrame::first_intersection(ph, env->world_geometry);
+    isec = RayAndFrame::first_intersection(ph, env->root_frame);
 
     if (isec.does_intersect() && !absorbed_in_medium_before_reaching_surface())
         interact_with_object();
@@ -34,13 +34,13 @@ bool Propagator::absorbed_in_medium_before_reaching_surface()const {
         isec.half_way_depth_coming_from(ph->wavelength);
     const double survival_prob =
         exp(-isec.distance_to_ray_support()/one_over_e_way);
-    return env->random_engine->uniform() > survival_prob;
+    return env->prng->uniform() > survival_prob;
 }
 
 void Propagator::interact_with_object() {
     if (
         isec.facing_reflection_propability(ph->wavelength) >=
-        env->random_engine->uniform()
+        env->prng->uniform()
     )
         reflect_on_surface_and_propagate_on(reflection_on_surface);
     else
@@ -80,7 +80,7 @@ void Propagator::fresnel_refraction_and_reflection() {
         isec.refractive_index_coming_from(ph->wavelength),
         isec.refractive_index_going_to(ph->wavelength));
 
-    if (fresnel.reflection_propability() > env->random_engine->uniform())
+    if (fresnel.reflection_propability() > env->prng->uniform())
         reflect_on_surface_and_propagate_on(fresnel_reflection_on_surface);
     else
         pass_the_boundary_layer(fresnel);
@@ -107,10 +107,10 @@ void Propagator::propagate_on_after_boundary_layer(
     if (isec.get_object()->has_restrictions_on_frames_to_propagate_to() &&
         !isec.going_to_default_refractive_index()
     )
-        env->world_geometry =
+        env->root_frame =
             isec.get_object()->get_allowed_frame_to_propagate_to();
     else
-        env->world_geometry =
+        env->root_frame =
             isec.get_object()->get_root();
 
     ph->set_support_and_direction(

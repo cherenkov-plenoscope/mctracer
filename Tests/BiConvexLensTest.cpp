@@ -30,9 +30,9 @@ protected:
 
 		prng.set_seed(Random::ZERO_SEED);
 
-		lens_test_bench_environment.world_geometry = &test_bench;
-		lens_test_bench_environment.propagation_options = &settings;
-		lens_test_bench_environment.random_engine = &prng;
+		lens_test_bench_environment.root_frame = &test_bench;
+		lens_test_bench_environment.config = &settings;
+		lens_test_bench_environment.prng = &prng;
 	}
 	//------------------
 	void set_up_settings() {
@@ -141,8 +141,8 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 	// photon propagation
 	Photons::propagate_photons_in_scenery_with_settings(
 		&photons, 
-		lens_test_bench_environment.world_geometry, 
-		lens_test_bench_environment.propagation_options,
+		lens_test_bench_environment.root_frame, 
+		lens_test_bench_environment.config,
 		&prng
 	);	
 
@@ -159,7 +159,7 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 	);
 
 	/*FlyingCamera free(
-		lens_test_bench_environment.world_geometry, 
-		lens_test_bench_environment.propagation_options
+		lens_test_bench_environment.root_frame, 
+		lens_test_bench_environment.config
 	);*/
 }

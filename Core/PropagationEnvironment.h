@@ -7,11 +7,9 @@
 #include "Core/Random/Random.h"
 
 struct PropagationEnvironment {
-    const Frame* world_geometry = &Frame::VOID_FRAME;
-    const PropagationConfig* propagation_options =
-        &PropagationConfig::DEFAULT_CONFIG;
-    Random::Generator* random_engine =
-        &Random::VOID_PRNG;
+    const Frame* root_frame = &Frame::VOID_FRAME;
+    const PropagationConfig* config = &PropagationConfig::DEFAULT_CONFIG;
+    Random::Generator* prng = &Random::VOID_PRNG;
     static PropagationEnvironment default_environment;
 };
 #endif  // CORE_PROPAGATIONENVIRONMENT_H_

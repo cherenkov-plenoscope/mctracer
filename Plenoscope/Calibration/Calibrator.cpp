@@ -106,8 +106,8 @@ void Calibrator::fill_calibration_block_to_table() {
 
                 // propagate photon
                 PropagationEnvironment my_env;
-                my_env.world_geometry = scenery;
-                my_env.random_engine = &thread_local_prng;
+                my_env.root_frame = scenery;
+                my_env.prng = &thread_local_prng;
                 PhotonAndFrame::Propagator(&ph, &my_env);
 
                 PhotonSensor::FindSensorByFrame sensor_finder(

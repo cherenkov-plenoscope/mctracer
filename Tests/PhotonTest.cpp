@@ -82,9 +82,9 @@ TEST_F(PhotonTest, PropagationSimpleGeometry) {
     double wavelength = 433e-9;
     Random::Mt19937 dice(Random::ZERO_SEED);
     PropagationEnvironment environment;
-    environment.world_geometry = &world;
-    environment.propagation_options = &setup;
-    environment.random_engine = &dice;
+    environment.root_frame = &world;
+    environment.config = &setup;
+    environment.prng = &dice;
     // creation is 1 interaction itself
     const unsigned int num_of_total_interactions = number_of_bounces + 1;
     for (int i = 0; i < 1; i++) {

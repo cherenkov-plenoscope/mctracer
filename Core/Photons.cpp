@@ -39,9 +39,9 @@ void propagate_photons_using_single_thread(
     Random::Generator* prng
 ) {
     PropagationEnvironment env;
-    env.world_geometry = world;
-    env.propagation_options = settings;
-    env.random_engine = prng;
+    env.root_frame = world;
+    env.config = settings;
+    env.prng = prng;
 
     for (unsigned int i = 0; i < photons->size(); i++)
         PhotonAndFrame::Propagator(&photons->at(i), &env);
@@ -66,9 +66,9 @@ void propagate_photons_using_multi_thread(
         number_of_threads = omp_get_num_threads();
 
         PropagationEnvironment env_for_this_thread_only;
-        env_for_this_thread_only.world_geometry = world;
-        env_for_this_thread_only.propagation_options = settings;
-        env_for_this_thread_only.random_engine = &dice_for_this_thread_only;
+        env_for_this_thread_only.root_frame = world;
+        env_for_this_thread_only.config = settings;
+        env_for_this_thread_only.prng = &dice_for_this_thread_only;
 
         #pragma omp for schedule(dynamic) private(i)
         for (i = 0; i < photons->size(); i++) {
