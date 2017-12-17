@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_PHOTONSENSOR_SENSORS_H_
-#define MCTRACER_PHOTONSENSOR_SENSORS_H_
+#ifndef PHOTONSENSOR_SENSORS_H_
+#define PHOTONSENSOR_SENSORS_H_
 
 #include <vector>
 #include "PhotonSensor/PhotonSensor.h"
@@ -41,4 +41,4 @@ class Sensors {
 
 }  // namespace PhotonSensor
 
-#endif  // MCTRACER_PHOTONSENSOR_SENSORS_H_
+#endif  // PHOTONSENSOR_SENSORS_H_
