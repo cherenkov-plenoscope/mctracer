@@ -15,22 +15,22 @@ FindSensorByFrame::FindSensorByFrame(
         final_frame,
         Sensor::FrameSensorByFramePointerCompare());
 
-    photon_is_absorbed_by_known_sensor = true;
+    is_absorbed_by_known_sensor = true;
 
     if (it == sensors->begin()) {
         // final frame pointer is smaller than all known sensor frame pointers
-        photon_is_absorbed_by_known_sensor = false;
+        is_absorbed_by_known_sensor = false;
         return;
     }
 
     if (it == sensors->end() && (*(it-1))->frame != final_frame) {
         // final frame pointer is latger than all known sensor frame pointers
-        photon_is_absorbed_by_known_sensor = false;
+        is_absorbed_by_known_sensor = false;
         return;
     }
 
     if ((*(it-1))->frame != final_frame) {
-        photon_is_absorbed_by_known_sensor = false;
+        is_absorbed_by_known_sensor = false;
         return;
     }
 
@@ -38,7 +38,7 @@ FindSensorByFrame::FindSensorByFrame(
 }
 
 bool FindSensorByFrame::frame_is_in_sensors()const {
-    return photon_is_absorbed_by_known_sensor;
+    return is_absorbed_by_known_sensor;
 }
 
 Sensor* FindSensorByFrame::get_sensor()const {
