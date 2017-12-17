@@ -1,14 +1,7 @@
 #include "gtest/gtest.h"
 #include "Core/PropagationEnvironment.h"
 
-class PropagationEnvironmentTest : public ::testing::Test {
-protected:
-
-    PropagationEnvironmentTest() {}
-    virtual ~PropagationEnvironmentTest() {}
-    virtual void SetUp() {}
-    virtual void TearDown() {}
-};
+class PropagationEnvironmentTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(PropagationEnvironmentTest, default_instance) {
 
