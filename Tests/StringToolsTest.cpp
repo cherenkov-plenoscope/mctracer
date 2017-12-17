@@ -112,28 +112,28 @@ TEST_F(StringToolsTest, cut_leading_token) {
     string names = "Hans,Peter,Klaus";
 
     string first_name = 
-    StringTools::cut_leading_token_infront_of_delimiter(names,',');
+    StringTools::cut_leading_token_infront_of_delimiter(&names,',');
     
     EXPECT_EQ("Hans", first_name);
     EXPECT_EQ("Peter,Klaus", names);
 
     names = ",Hans,Peter,Klaus";
-    first_name = StringTools::cut_leading_token_infront_of_delimiter(names,','); 
+    first_name = StringTools::cut_leading_token_infront_of_delimiter(&names,','); 
     EXPECT_EQ("", first_name);
     EXPECT_EQ("Hans,Peter,Klaus", names);
 
     names = ",Hans/Peter/Klaus/";
-    first_name = StringTools::cut_leading_token_infront_of_delimiter(names,'/'); 
+    first_name = StringTools::cut_leading_token_infront_of_delimiter(&names,'/'); 
     EXPECT_EQ(",Hans", first_name);
     EXPECT_EQ("Peter/Klaus/", names);
 
     names = "Hans ,Peter,Klaus";
-    first_name = StringTools::cut_leading_token_infront_of_delimiter(names,','); 
+    first_name = StringTools::cut_leading_token_infront_of_delimiter(&names,','); 
     EXPECT_EQ("Hans ", first_name);
     EXPECT_EQ("Peter,Klaus", names);
 
     names =  " Hans,Peter,Klaus";
-    first_name = StringTools::cut_leading_token_infront_of_delimiter(names,','); 
+    first_name = StringTools::cut_leading_token_infront_of_delimiter(&names,','); 
     EXPECT_EQ(" Hans", first_name);
     EXPECT_EQ("Peter,Klaus", names);
 }

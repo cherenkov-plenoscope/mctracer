@@ -1,56 +1,47 @@
-//=================================
-// include guard
-#ifndef __STRINGTOOLS_H_INCLUDE__
-#define __STRINGTOOLS_H_INCLUDE__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef TOOLS_STRINGTOOLS_H_
+#define TOOLS_STRINGTOOLS_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies 
 #include <string>
 #include <vector>
 #include "Tuple3.h"
 
 namespace StringTools {
-	bool is_equal(const std::string text_A,const std::string text_B);
 
-	std::string cut_leading_token_infront_of_delimiter( 
-		std::string &text_of_tokens, const char delimiter 
-	);
+bool is_equal(const std::string text_A, const std::string text_B);
 
-	std::string repeat_multiple_times( 
-		const std::string text_to_repeat, 
-		const unsigned int times 
-	);
+std::string cut_leading_token_infront_of_delimiter(
+    std::string *text_of_tokens, const char delimiter);
 
-	bool is_ending(std::string text, std::string ending);
+std::string repeat_multiple_times(
+    const std::string text_to_repeat,
+    const unsigned int times);
 
-	bool string_contains_char(const std::string &text, const char ch);
+bool is_ending(std::string text, std::string ending);
 
-	std::string place_first_infront_of_each_new_line_of_second(
-		const std::string front,
-		std::string text
-	);
+bool string_contains_char(const std::string &text, const char ch);
 
-	std::vector<std::string> tokenize_text_using_either_one_of_delimiters(
-		const std::string &text, 
-		const std::string delimiters
-	);
+std::string place_first_infront_of_each_new_line_of_second(
+    const std::string front,
+    std::string text);
 
-	std::string strip_whitespaces(std::string text);
+std::vector<std::string> tokenize_text_using_either_one_of_delimiters(
+    const std::string &text,
+    const std::string delimiters);
 
-	std::string fill_up_text_with_whitespaces_until_column(
-		const std::string &text, const unsigned int column
-	);
+std::string strip_whitespaces(std::string text);
 
-	double to_double(std::string text_to_parse );
+std::string fill_up_text_with_whitespaces_until_column(
+    const std::string &text, const unsigned int column);
 
-	bool to_bool(std::string text_to_parse );
+double to_double(std::string text_to_parse);
 
-	int to_int(std::string text_to_parse );
+bool to_bool(std::string text_to_parse);
 
-	Tuple3 to_Tuple3(const std::string original_text);
-}
+int to_int(std::string text_to_parse);
 
-#endif // __STRINGTOOLS_H_INCLUDE__
+Tuple3 to_Tuple3(const std::string original_text);
+
+}  // namespace StringTools
+
+#endif  // TOOLS_STRINGTOOLS_H_
