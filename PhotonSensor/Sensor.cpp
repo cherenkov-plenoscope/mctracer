@@ -7,10 +7,9 @@ using std::string;
 
 namespace PhotonSensor {
 
-Sensor::Sensor(unsigned int _id, const Frame* _frame) {
-    id = _id;
-    frame = _frame;
-}
+Sensor::Sensor(unsigned int _id, const Frame* _frame):
+    id(_id),
+    frame(_frame) {}
 
 unsigned int Sensor::get_id()const {
     return id;
