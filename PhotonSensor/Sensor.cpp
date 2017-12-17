@@ -11,10 +11,6 @@ Sensor::Sensor(unsigned int _id, const Frame* _frame):
     id(_id),
     frame(_frame) {}
 
-unsigned int Sensor::get_id()const {
-    return id;
-}
-
 void Sensor::assign_photon(const Photon* photon) {
     photon_arrival_history.emplace_back(  // ArrivalInformation
         // id

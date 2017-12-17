@@ -118,7 +118,7 @@ void Calibrator::fill_calibration_block_to_table() {
                     // remember photon
                     CalibrationPhotonResult result;
                     result.reached_sensor = true;
-                    result.lixel_id = sensor_finder.get_sensor()->get_id();
+                    result.lixel_id = sensor_finder.get_sensor()->id;
                     result.x_pos_on_principal_aperture =
                         pos_on_principal_aperture.x;
                     result.y_pos_on_principal_aperture =

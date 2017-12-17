@@ -14,7 +14,6 @@ struct Sensor {
     const Frame* frame;
     std::vector<ArrivalInformation> photon_arrival_history;
     Sensor(unsigned int id, const Frame* frame);
-    unsigned int get_id()const;
     void assign_photon(const Photon* photon);
     double x_mean()const;
     double y_mean()const;
