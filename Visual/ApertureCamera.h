@@ -52,7 +52,7 @@ private:
 
 	int rays_per_pixel;
 	
-	Random::Mt19937 dice;
+	Random::Mt19937 prng;
 
 	void set_F_stop_number(const double new_FStopNumber);
 	void set_sensor_size_using_width(const double sensor_width_in_m);

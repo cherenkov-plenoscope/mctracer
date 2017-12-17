@@ -60,7 +60,7 @@ void propagate_photons_using_multi_thread(
 
     #pragma omp parallel shared(settings, world, HadCatch) private(number_of_threads, thread_id, out, ray_counter)
     {
-        Random::Mt19937 dice_for_this_thread_only;
+        Random::Mt19937 prng_local_thread;
         ray_counter = 0;
         thread_id = omp_get_thread_num();
         number_of_threads = omp_get_num_threads();
@@ -68,7 +68,7 @@ void propagate_photons_using_multi_thread(
         PropagationEnvironment env_for_this_thread_only;
         env_for_this_thread_only.root_frame = world;
         env_for_this_thread_only.config = settings;
-        env_for_this_thread_only.prng = &dice_for_this_thread_only;
+        env_for_this_thread_only.prng = &prng_local_thread;
 
         #pragma omp for schedule(dynamic) private(i)
         for (i = 0; i < photons->size(); i++) {
@@ -88,7 +88,7 @@ void propagate_photons_using_multi_thread(
         out << "Thread " << thread_id+1 << "/" << number_of_threads;
         out << " is doing " << ray_counter << "/";
         out << photons->size() << " photons. ";
-        out << "Seed: " << dice_for_this_thread_only.seed() << "\n";
+        out << "Seed: " << prng_local_thread.seed() << "\n";
         //  cout << out.str();
     }
 

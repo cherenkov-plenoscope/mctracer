@@ -20,7 +20,7 @@ class PlaneIntersectionTest : public ::testing::Test {
 	double y_width = 1.3;
 	Plane* plane;
 	Frame world;
-	Random::Mt19937 dice;
+	Random::Mt19937 prng;
 	double wavelength = 433e-9;
 
   PlaneIntersectionTest() {
@@ -32,7 +32,7 @@ class PlaneIntersectionTest : public ::testing::Test {
   }
   virtual void SetUp() {
 
-  	dice.set_seed(Random::ZERO_SEED);
+  	prng.set_seed(Random::ZERO_SEED);
   	
   	pos.set(0.0,0.0,0.0);
   	rot.set(0.0,0.0,0.0);

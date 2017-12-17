@@ -145,11 +145,11 @@ double ApertureCamera::get_average_object_distance(const Frame* world) {
 }
 //------------------------------------------------------------------------------
 unsigned int ApertureCamera::get_random_row(){
-	return (unsigned int)(floor(dice.uniform()*image.get_number_of_rows()));
+	return (unsigned int)(floor(prng.uniform()*image.get_number_of_rows()));
 }
 //------------------------------------------------------------------------------
 unsigned int ApertureCamera::get_random_col(){
-	return (unsigned int)(floor(dice.uniform()*image.get_number_of_cols()));
+	return (unsigned int)(floor(prng.uniform()*image.get_number_of_cols()));
 }
 //------------------------------------------------------------------------------
 std::string ApertureCamera::get_aperture_camera_print()const {
@@ -176,7 +176,7 @@ std::string ApertureCamera::str()const {
 //------------------------------------------------------------------------------
 Vec3 ApertureCamera::get_random_point_on_bounded_aperture_plane() {
 
-	Vec3 ap = dice.get_point_on_xy_disc_within_radius(ApertureRadius_in_m);
+	Vec3 ap = prng.get_point_on_xy_disc_within_radius(ApertureRadius_in_m);
 	return Vec3(ap.x, ap.y, SensorDistance_in_m);
 }
 //------------------------------------------------------------------------------
