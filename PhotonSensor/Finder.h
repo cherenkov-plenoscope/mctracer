@@ -9,7 +9,7 @@ namespace PhotonSensor {
 
 struct FindSensorByFrame {
     bool photon_is_absorbed_by_known_sensor;
-    PhotonSensor::Sensor* closest_sensor;
+    PhotonSensor::Sensor* final_sensor;
 
     FindSensorByFrame(
         const Frame* final_frame,
