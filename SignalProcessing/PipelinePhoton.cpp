@@ -33,16 +33,16 @@ vector<vector<PipelinePhoton>> get_photon_pipelines(
         
         vector<PipelinePhoton> photon_pipeline;
         const unsigned int number_photons = 
-            sensors->by_occurence[i]->arrival_table.size();
+            sensors->by_occurence[i]->photon_arrival_history.size();
         photon_pipeline.reserve(number_photons);
 
         // for each photon 
         for(unsigned int j=0; j<number_photons; j++) {
             
             PipelinePhoton ph(
-                sensors->by_occurence[i]->arrival_table[j].arrival_time,
-                sensors->by_occurence[i]->arrival_table[j].wavelength,
-                sensors->by_occurence[i]->arrival_table[j].simulation_truth_id
+                sensors->by_occurence[i]->photon_arrival_history[j].arrival_time,
+                sensors->by_occurence[i]->photon_arrival_history[j].wavelength,
+                sensors->by_occurence[i]->photon_arrival_history[j].simulation_truth_id
             );
 
             photon_pipeline.push_back(ph);

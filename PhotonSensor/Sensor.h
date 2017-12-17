@@ -11,7 +11,7 @@ namespace PhotonSensor {
 
 struct Sensor {
     const Frame* frame;
-    std::vector<ArrivalInformation> arrival_table;
+    std::vector<ArrivalInformation> photon_arrival_history;
     unsigned int id;
     Sensor(unsigned int _id, const Frame* frame);
     unsigned int get_id()const;

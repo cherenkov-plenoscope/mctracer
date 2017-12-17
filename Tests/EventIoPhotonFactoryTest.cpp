@@ -63,10 +63,10 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
                     sensor_list.clear_history();
                     sensor_list.assign_photons(&photons);
 
-                    ASSERT_EQ(1u, sensor.arrival_table.size());
+                    ASSERT_EQ(1u, sensor.photon_arrival_history.size());
 
-                    EXPECT_NEAR(x*1e-2, sensor.arrival_table[0].x_intersect, 1e-6);
-                    EXPECT_NEAR(y*1e-2, sensor.arrival_table[0].y_intersect, 1e-6);
+                    EXPECT_NEAR(x*1e-2, sensor.photon_arrival_history[0].x_intersect, 1e-6);
+                    EXPECT_NEAR(y*1e-2, sensor.photon_arrival_history[0].y_intersect, 1e-6);
                 }
             }
         }
@@ -295,8 +295,8 @@ TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
 
         double mean_arrival_time = sensor.arrival_time_mean();
 
-        for(unsigned int row=0; row<sensor.arrival_table.size(); row++)
-            sensor.arrival_table[row].arrival_time -= mean_arrival_time;
+        for(unsigned int row=0; row<sensor.photon_arrival_history.size(); row++)
+            sensor.photon_arrival_history[row].arrival_time -= mean_arrival_time;
 
         double mean_time_of_corsika_photons = std::accumulate(
             relative_arrival_times_in_corsika_file.begin(),
@@ -304,19 +304,19 @@ TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
             0.0
         )/double(relative_arrival_times_in_corsika_file.size());
 
-        for(unsigned int row=0; row<sensor.arrival_table.size(); row++)
-            sensor.arrival_table[row].arrival_time += mean_time_of_corsika_photons;
+        for(unsigned int row=0; row<sensor.photon_arrival_history.size(); row++)
+            sensor.photon_arrival_history[row].arrival_time += mean_time_of_corsika_photons;
 
         // for each photon we compare the relative arrival
         // time written in the in the eventio file with the actual arrival time
         // of the mctracer photon which ran down to the ground.  
-        for(unsigned int i=0; i<sensor.arrival_table.size(); i++) {
+        for(unsigned int i=0; i<sensor.photon_arrival_history.size(); i++) {
 
-            unsigned int id = sensor.arrival_table[i].simulation_truth_id;
+            unsigned int id = sensor.photon_arrival_history[i].simulation_truth_id;
 
             EXPECT_NEAR(
                 relative_arrival_times_in_corsika_file.at(id),
-                sensor.arrival_table[i].arrival_time,
+                sensor.photon_arrival_history[i].arrival_time,
                 1e-11
             );
         }

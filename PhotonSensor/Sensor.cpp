@@ -17,7 +17,7 @@ unsigned int Sensor::get_id()const {
 }
 
 void Sensor::assign_photon_to_this_sensor(const Photon* photon) {
-    arrival_table.emplace_back(  // ArrivalInformation
+    photon_arrival_history.emplace_back(  // ArrivalInformation
         // id
         photon->get_simulation_truth_id(),
         // wavelength
@@ -39,44 +39,44 @@ void Sensor::assign_photon_to_this_sensor(const Photon* photon) {
 }
 
 void Sensor::clear_history() {
-    arrival_table.clear();
+    photon_arrival_history.clear();
 }
 
 double Sensor::arrival_time_mean()const {
     double t = 0.0;
-    for (ArrivalInformation ph : arrival_table)
+    for (ArrivalInformation ph : photon_arrival_history)
         t += ph.arrival_time;
-    return t/arrival_table.size();
+    return t/photon_arrival_history.size();
 }
 
 double Sensor::x_mean()const {
     double xm = 0.0;
-    for (ArrivalInformation ph : arrival_table)
+    for (ArrivalInformation ph : photon_arrival_history)
         xm += ph.x_intersect;
-    return xm/arrival_table.size();
+    return xm/photon_arrival_history.size();
 }
 
 double Sensor::y_mean()const {
     double ym = 0.0;
-    for (ArrivalInformation ph : arrival_table)
+    for (ArrivalInformation ph : photon_arrival_history)
         ym += ph.y_intersect;
-    return ym/arrival_table.size();
+    return ym/photon_arrival_history.size();
 }
 
 double Sensor::x_std_dev()const {
     double xm = x_mean();
     double sx = 0.0;
-    for (ArrivalInformation ph : arrival_table)
+    for (ArrivalInformation ph : photon_arrival_history)
         sx += (ph.x_intersect - xm)*(ph.x_intersect - xm);
-    return sqrt(sx/arrival_table.size());
+    return sqrt(sx/photon_arrival_history.size());
 }
 
 double Sensor::y_std_dev()const {
     double ym = y_mean();
     double sy = 0.0;
-    for (ArrivalInformation ph : arrival_table)
+    for (ArrivalInformation ph : photon_arrival_history)
         sy += (ph.y_intersect - ym)*(ph.y_intersect - ym);
-    return sqrt(sy/arrival_table.size());
+    return sqrt(sy/photon_arrival_history.size());
 }
 
 double Sensor::point_spread_std_dev()const {
@@ -85,7 +85,7 @@ double Sensor::point_spread_std_dev()const {
 
 vector<vector<double>> Sensor::get_arrival_table()const {
     vector<vector<double>> output_table;
-    for (ArrivalInformation ph : arrival_table) {
+    for (ArrivalInformation ph : photon_arrival_history) {
         vector<double> output_row;
         output_row.push_back(ph.x_intersect);
         output_row.push_back(ph.y_intersect);

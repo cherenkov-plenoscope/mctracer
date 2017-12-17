@@ -99,7 +99,7 @@ int main(int argc, char* argv[]) {
                 std::ofstream out;
                 out.open(outname.str(), std::ios::out | std::ios::binary);
                 PhotonSensor::write_arrival_information_to_file(
-                    &(sensors.at(i)->arrival_table),
+                    &(sensors.at(i)->photon_arrival_history),
                     &out);
                 out.close();
             }else{
