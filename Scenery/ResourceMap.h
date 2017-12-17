@@ -1,23 +1,15 @@
-//=================================
-// include guard
-#ifndef __RESOURCEMAP_H_INCLUDED__
-#define __RESOURCEMAP_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef SCENERY_RESOURCEMAP_H_
+#define SCENERY_RESOURCEMAP_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
-
-class ResourceMap {
-public:
-
-    class NoSuchKey: public std::out_of_range {
+struct ResourceMap {
+    struct NoSuchKey: public std::out_of_range {
         using out_of_range::out_of_range;
     };
 
-    class KeyAlreadyInUse: public std::invalid_argument {
+    struct KeyAlreadyInUse: public std::invalid_argument {
         using invalid_argument::invalid_argument;
     };
 };
-#endif // __RESOURCEMAP_H_INCLUDED__
+
+#endif  // SCENERY_RESOURCEMAP_H_
