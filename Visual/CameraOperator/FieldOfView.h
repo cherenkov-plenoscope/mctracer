@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef VISUAL_CAMERAMAN_FIELDOFVIEW_H_
-#define VISUAL_CAMERAMAN_FIELDOFVIEW_H_
+#ifndef VISUAL_CAMERAOPERATOR_FIELDOFVIEW_H_
+#define VISUAL_CAMERAOPERATOR_FIELDOFVIEW_H_
 
 #include "Tools/Tools.h"
 #include "Verbosity.h"
@@ -34,4 +34,4 @@ class FieldOfView: public Verbosity {
 }  // namespace CameraOperator
 }  // namespace Visual
 
-#endif  // VISUAL_CAMERAMAN_FIELDOFVIEW_H_
+#endif  // VISUAL_CAMERAOPERATOR_FIELDOFVIEW_H_
