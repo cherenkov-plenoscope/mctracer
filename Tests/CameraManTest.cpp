@@ -32,8 +32,8 @@ TEST_F(CameraManTest, creation) {
 
 	Visual::CameraMan::FieldOfView FoVCamMan( cam );
 
-	EXPECT_NE(FoVCamMan.get_default_FoV_in_rad(), initial_FoV_in_rad);
-	EXPECT_EQ(FoVCamMan.get_default_FoV_in_rad(), cam->get_FoV_in_rad());
+	EXPECT_NE(FoVCamMan.default_fov, initial_FoV_in_rad);
+	EXPECT_EQ(FoVCamMan.default_fov, cam->get_FoV_in_rad());
 }
 //------------------------------------------------------------------------------
 TEST_F(CameraManTest, increase_FoV) {
@@ -64,11 +64,11 @@ TEST_F(CameraManTest, default_FoV) {
 	
 	FoVCamMan.increase_when_possible();
 
-	EXPECT_NE(FoVCamMan.get_default_FoV_in_rad(), cam->get_FoV_in_rad());
+	EXPECT_NE(FoVCamMan.default_fov, cam->get_FoV_in_rad());
 
 	FoVCamMan.set_default();
 
-	EXPECT_EQ(FoVCamMan.get_default_FoV_in_rad(), cam->get_FoV_in_rad());
+	EXPECT_EQ(FoVCamMan.default_fov, cam->get_FoV_in_rad());
 }
 //------------------------------------------------------------------------------
 TEST_F(CameraManTest, increase_and_decrease_FoV) {

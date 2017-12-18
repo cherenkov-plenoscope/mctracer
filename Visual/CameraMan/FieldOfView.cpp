@@ -50,10 +50,6 @@ void FieldOfView::decrease() {
     print_manipulation_when_verbose();
 }
 
-double FieldOfView::get_default_FoV_in_rad()const {
-    return default_fov;
-}
-
 void FieldOfView::print_manipulation_when_verbose()const {
     if (verbose) {
         print_prefix();
