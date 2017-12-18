@@ -66,7 +66,7 @@ TEST_F(CameraManTest, default_FoV) {
 
 	EXPECT_NE(FoVCamMan.get_default_FoV_in_rad(), cam->get_FoV_in_rad());
 
-	FoVCamMan.set_default_FoV();
+	FoVCamMan.set_default();
 
 	EXPECT_EQ(FoVCamMan.get_default_FoV_in_rad(), cam->get_FoV_in_rad());
 }

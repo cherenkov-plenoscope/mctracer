@@ -7,10 +7,10 @@ namespace CameraMan {
 
 FieldOfView::FieldOfView(CameraDevice* _camera) {
     camera = _camera;
-    set_default_FoV();
+    set_default();
 }
 
-void FieldOfView::set_default_FoV() {
+void FieldOfView::set_default() {
     camera->set_FoV_in_rad(default_FoV_in_rad);
 }
 

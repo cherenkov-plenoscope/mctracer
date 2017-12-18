@@ -13,7 +13,7 @@ class FieldOfView: public Verbosity {
     explicit FieldOfView(CameraDevice* camera);
     void increase_when_possible();
     void decrease_when_possible();
-    void set_default_FoV();
+    void set_default();
     double get_default_FoV_in_rad()const;
 
  private:

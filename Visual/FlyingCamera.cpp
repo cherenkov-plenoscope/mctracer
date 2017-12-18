@@ -55,7 +55,7 @@ void FlyingCamera::create_CameraMen_to_safely_operate_the_flying_camera() {
 void FlyingCamera::reset_camera() {
 	translation_operator->set_default_position(Vec3(0.0, 0.0, 0.0));
 	rotation_operator->set_default_rotation(Rot3(0.0,Deg2Rad(-90.0),0.0));
-	fov_operator->set_default_FoV();
+	fov_operator->set_default();
 }
 //------------------------------------------------------------------------------
 void FlyingCamera::enter_interactive_display() {
