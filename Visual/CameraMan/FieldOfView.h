@@ -10,7 +10,7 @@ namespace CameraMan {
 
 class FieldOfView: public Verbosity {
  public:
-    explicit FieldOfView(CameraDevice* camera_to_work_with);
+    explicit FieldOfView(CameraDevice* camera);
     void increase_when_possible();
     void decrease_when_possible();
     void set_default_FoV();

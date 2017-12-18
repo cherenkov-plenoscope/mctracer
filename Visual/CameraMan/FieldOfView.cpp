@@ -5,8 +5,8 @@
 namespace Visual {
 namespace CameraMan {
 
-FieldOfView::FieldOfView(CameraDevice* camera_to_work_with) {
-    camera = camera_to_work_with;
+FieldOfView::FieldOfView(CameraDevice* _camera) {
+    camera = _camera;
     set_default_FoV();
 }
 
