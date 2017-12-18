@@ -1,4 +1,4 @@
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/CameraMan")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/CameraOperator")
 set(SOURCE
    	${SOURCE}
    	${CMAKE_CURRENT_SOURCE_DIR}/CameraDevice.cpp 

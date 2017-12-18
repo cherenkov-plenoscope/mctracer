@@ -12,7 +12,7 @@ class Frame;
 #include "Verbosity.h"
 //=================================
 namespace Visual {
-namespace CameraMan {
+namespace CameraOperator {
 
 class Stereo3D: public Verbosity {
 public:
@@ -75,7 +75,7 @@ private:
 	);
 };
 
-}//CameraMan
+}//CameraOperator
 }//Visual
 
 #endif // __CAMERAMANFORSTEREO3D_H_INCLUDE__

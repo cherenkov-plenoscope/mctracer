@@ -11,7 +11,7 @@
 #include "ApertureCamera.h"
 #include "PinHoleCamera.h"
 #include "Tools/Tools.h"
-#include "CameraMan/CameraMan.h"
+#include "CameraOperator/CameraOperator.h"
 #include "Config.h"
 #include "Tools/Time.h"
 #include "Tools/UserInteraction.h"
@@ -50,10 +50,10 @@ private:
 
 	Image image;
 
-	CameraMan::FieldOfView 	*fov_operator;
-	CameraMan::Translation 	*translation_operator;
-	CameraMan::Rotation 	*rotation_operator;
-	CameraMan::Stereo3D		*stereo_operator;
+	CameraOperator::FieldOfView 	*fov_operator;
+	CameraOperator::Translation 	*translation_operator;
+	CameraOperator::Rotation 	*rotation_operator;
+	CameraOperator::Stereo3D		*stereo_operator;
 
 	bool stereo3D = false;
 

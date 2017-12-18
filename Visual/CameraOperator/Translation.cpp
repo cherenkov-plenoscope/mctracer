@@ -1,7 +1,7 @@
 #include "Translation.h"
 
 namespace Visual {
-namespace CameraMan {
+namespace CameraOperator {
 //------------------------------------------------------------------------------
 Translation::Translation(CameraDevice* camera_to_work_with) {
 	camera = camera_to_work_with;
@@ -92,5 +92,5 @@ void Translation::move_to(const Vec3 pos) {
 	}	
 }
 //------------------------------------------------------------------------------
-}//CameraMan
+}//CameraOperator
 }//Visual

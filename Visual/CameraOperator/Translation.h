@@ -12,7 +12,7 @@
 
 //=================================
 namespace Visual {
-namespace CameraMan {
+namespace CameraOperator {
 
 class Translation: public Verbosity {
 public:
@@ -38,7 +38,7 @@ private:
 	double translation_increment()const;
 };
 
-}//CameraMan
+}//CameraOperator
 }//Visual
 
 #endif // __CAMERAMANFORTRANSLATION_H_INCLUDE__

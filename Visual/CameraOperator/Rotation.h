@@ -12,7 +12,7 @@
 
 //=================================
 namespace Visual {
-namespace CameraMan {
+namespace CameraOperator {
 
 class Rotation: public Verbosity {
 public:
@@ -50,7 +50,7 @@ private:
 	)const;
 };
 
-}//CameraMan
+}//CameraOperator
 }//Visual
 
 #endif // __CAMERAMANFORROTATION_H_INCLUDE__

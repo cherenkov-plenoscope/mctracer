@@ -39,16 +39,16 @@ FlyingCamera::~FlyingCamera() {
 }
 //------------------------------------------------------------------------------
 void FlyingCamera::create_CameraMen_to_safely_operate_the_flying_camera() {
-	fov_operator = new CameraMan::FieldOfView(flying_camera_full_resolution);
+	fov_operator = new CameraOperator::FieldOfView(flying_camera_full_resolution);
 	fov_operator->set_verbosity(true);
 
-	translation_operator = new CameraMan::Translation(flying_camera_full_resolution);
+	translation_operator = new CameraOperator::Translation(flying_camera_full_resolution);
 	translation_operator->set_verbosity(true);
 
-	rotation_operator = new CameraMan::Rotation(flying_camera_full_resolution);
+	rotation_operator = new CameraOperator::Rotation(flying_camera_full_resolution);
 	rotation_operator->set_verbosity(true);
 
-	stereo_operator = new CameraMan::Stereo3D(flying_camera_full_resolution);
+	stereo_operator = new CameraOperator::Stereo3D(flying_camera_full_resolution);
 	stereo_operator->set_verbosity(true);
 }
 //------------------------------------------------------------------------------
@@ -267,7 +267,7 @@ const Image* FlyingCamera::acquire_scaled_image_with_camera(
 		
 		if(stereo3D) {
 
-			CameraMan::Stereo3D op(cam);
+			CameraOperator::Stereo3D op(cam);
 			op.use_same_stereo_offset_as(stereo_operator);
 			op.aquire_stereo_image(world, visual_config);
 			image = *op.get_anaglyph_stereo3D_image();
@@ -284,7 +284,7 @@ const Image* FlyingCamera::acquire_scaled_image_with_camera(
 
 		if(stereo3D) {
 
-			CameraMan::Stereo3D op(cam);
+			CameraOperator::Stereo3D op(cam);
 			op.use_same_stereo_offset_as(stereo_operator);
 			op.aquire_stereo_image(world, visual_config);
 			return op.get_anaglyph_stereo3D_image();

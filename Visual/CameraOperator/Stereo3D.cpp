@@ -1,7 +1,7 @@
 #include "Stereo3D.h"
 
 namespace Visual {
-namespace CameraMan {
+namespace CameraOperator {
 //------------------------------------------------------------------------------
 Stereo3D::Stereo3D(CameraDevice* camera_to_work_with) {
 	camera = camera_to_work_with;
@@ -151,5 +151,5 @@ void Stereo3D::use_same_stereo_offset_as(
 	stereo_offset_in_m = college->stereo_offset_in_m;
 }
 //------------------------------------------------------------------------------
-}//CameraMan
+}//CameraOperator
 }//Visual

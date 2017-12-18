@@ -1,9 +1,9 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Visual/CameraMan/FieldOfView.h"
+#include "Visual/CameraOperator/FieldOfView.h"
 #include "Tools/Tools.h"
 
 namespace Visual {
-namespace CameraMan {
+namespace CameraOperator {
 
 FieldOfView::FieldOfView(CameraDevice* _camera) {
     camera = _camera;
@@ -77,5 +77,5 @@ void FieldOfView::print_prefix()const {
     std::cout << camera->get_name() << " FoV: ";
 }
 
-}  // namespace CameraMan
+}  // namespace CameraOperator
 }  // namespace Visual

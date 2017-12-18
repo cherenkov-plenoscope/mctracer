@@ -12,7 +12,7 @@
 //=================================
 
 namespace Visual {
-namespace CameraMan {
+namespace CameraOperator {
 
 class Verbosity {
 protected:
@@ -23,7 +23,7 @@ public:
 	void set_verbosity(const bool verbosity);
 };
 
-}//CameraMan
+}//CameraOperator
 }//Visual
 
 #endif // __CameraManVerbosity_H_INCLUDE__
