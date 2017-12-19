@@ -28,25 +28,21 @@ void FieldOfView::decrease_when_possible() {
         print_can_not_be_decreased_when_verbose();
 }
 
-double FieldOfView::rate()const {
-    return 1.1;
-}
-
 bool FieldOfView::too_large_when_increased()const {
-    return camera->get_FoV_in_rad()*rate() < max_fov;
+    return camera->get_FoV_in_rad()*rate < max_fov;
 }
 
 bool FieldOfView::too_small_when_decreased()const {
-    return camera->get_FoV_in_rad()/rate() > min_fov;
+    return camera->get_FoV_in_rad()/rate > min_fov;
 }
 
 void FieldOfView::increase() {
-    camera->set_FoV_in_rad(camera->get_FoV_in_rad()*rate());
+    camera->set_FoV_in_rad(camera->get_FoV_in_rad()*rate);
     print_manipulation_when_verbose();
 }
 
 void FieldOfView::decrease() {
-    camera->set_FoV_in_rad(camera->get_FoV_in_rad()/rate());
+    camera->set_FoV_in_rad(camera->get_FoV_in_rad()/rate);
     print_manipulation_when_verbose();
 }
 

@@ -17,12 +17,12 @@ class FieldOfView: public Verbosity {
     double max_fov = Deg2Rad(175.0);
     double min_fov = Deg2Rad(0.0001);
     double default_fov = Deg2Rad(65.0);
+    double rate = 1.1;
 
  private:
     CameraDevice* camera;
     void increase();
     void decrease();
-    double rate()const;
     bool too_large_when_increased()const;
     bool too_small_when_decreased()const;
     void print_manipulation_when_verbose()const;
