@@ -15,24 +15,24 @@ void FieldOfView::set_default() {
 }
 
 void FieldOfView::increase_when_possible() {
-    if (too_large_when_increased())
+    if (below_max_when_increased())
         increase();
     else
         print_can_not_be_increased_when_verbose();
 }
 
 void FieldOfView::decrease_when_possible() {
-    if (too_small_when_decreased())
+    if (above_min_when_decreased())
         decrease();
     else
         print_can_not_be_decreased_when_verbose();
 }
 
-bool FieldOfView::too_large_when_increased()const {
+bool FieldOfView::below_max_when_increased()const {
     return camera->get_FoV_in_rad()*rate < max_fov;
 }
 
-bool FieldOfView::too_small_when_decreased()const {
+bool FieldOfView::above_min_when_decreased()const {
     return camera->get_FoV_in_rad()/rate > min_fov;
 }
 

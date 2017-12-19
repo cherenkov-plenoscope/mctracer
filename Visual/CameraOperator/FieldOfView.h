@@ -23,8 +23,8 @@ class FieldOfView: public Verbosity {
     CameraDevice* camera;
     void increase();
     void decrease();
-    bool too_large_when_increased()const;
-    bool too_small_when_decreased()const;
+    bool below_max_when_increased()const;
+    bool above_min_when_decreased()const;
     void print_manipulation_when_verbose()const;
     void print_can_not_be_decreased_when_verbose()const;
     void print_can_not_be_increased_when_verbose()const;
