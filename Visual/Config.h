@@ -1,49 +1,42 @@
-//=================================
-// include guard
-#ifndef __VisualConfig_H_INCLUDED__
-#define __VisualConfig_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef VISUAL_CONFIG_H_
+#define VISUAL_CONFIG_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
 #include "Core/Color.h"
 #include "SkyDome.h"
 #include "Core/Vec3.h"
 
-//=================================
 namespace Visual {
+
 struct Config {
-	
-	unsigned int max_interaction_depth;
+    unsigned int max_interaction_depth;
 
-	struct Preview {
-		unsigned int cols;
-		unsigned int rows;
-		unsigned int scale;
-	} preview;
+    struct Preview {
+        unsigned int cols;
+        unsigned int rows;
+        unsigned int scale;
+    } preview;
 
-	struct Snapshot {
-		unsigned int cols;
-		unsigned int rows;
-		unsigned int rays_per_pixel;
-		double focal_length_over_aperture_diameter;
-		double image_sensor_size_along_a_row;
-	} snapshot;
+    struct Snapshot {
+        unsigned int cols;
+        unsigned int rows;
+        unsigned int rays_per_pixel;
+        double focal_length_over_aperture_diameter;
+        double image_sensor_size_along_a_row;
+    } snapshot;
 
-	struct GlobalIllumination {
-		bool on;
-		Vec3 incoming_direction;
-	} global_illumination;
+    struct GlobalIllumination {
+        bool on;
+        Vec3 incoming_direction;
+    } global_illumination;
 
-	struct PhotonTrajectories{
-		double radius;
-	} photon_trajectories;
-	
-	SkyDome sky_dome;
-
-	Config();
+    struct PhotonTrajectories {
+        double radius;
+    } photon_trajectories;
+    SkyDome sky_dome;
+    Config();
 };
-}//Visual
-#endif // __VisualConfig_H_INCLUDED__ 
+
+}  // namespace Visual
+
+#endif  // VISUAL_CONFIG_H_
