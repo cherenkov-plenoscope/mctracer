@@ -1,30 +1,26 @@
-//=================================
-// include guard
-#ifndef __CAMERARAY_H_INCLUDED__
-#define __CAMERARAY_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef VISUAL_CAMERARAY_H_
+#define VISUAL_CAMERARAY_H_
 
-//=================================
-// forward declared dependencies
 class Frame;
 class Intersection;
-//=================================
-// included dependencies
+
+#include <string>
 #include "Core/Ray.h"
 #include "Core/Color.h"
 #include "Config.h"
 
 namespace Visual {
 
-class CameraRay :public Ray{
-protected:
-	
-	Color color;
-public:
-	CameraRay(){};
-	CameraRay(const Vec3 support, const Vec3 direction);
-	std::string str()const;
+class CameraRay :public Ray {
+ protected:
+    Color color;
+ public:
+    CameraRay();
+    CameraRay(const Vec3 support, const Vec3 direction);
+    std::string str()const;
 };
 
-}//Visual
+}  // namespace Visual
 
-#endif // __CAMERARAY_H_INCLUDED__ 
+#endif  // VISUAL_CAMERARAY_H_
