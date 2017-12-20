@@ -13,15 +13,11 @@ CameraDevice::CameraDevice(
 ): name(camera_name), image(sensor_cols, sensor_rows) {}
 
 void CameraDevice::update_position(const Vec3 _pos_in_root) {
-    update_position_and_orientation(
-        _pos_in_root,
-        rot_in_root);
+    update_position_and_orientation(_pos_in_root, rot_in_root);
 }
 
 void CameraDevice::update_orientation(const Rot3 _rot_in_root) {
-    update_position_and_orientation(
-        pos_in_root,
-        _rot_in_root);
+    update_position_and_orientation(pos_in_root, _rot_in_root);
 }
 
 void CameraDevice::update_position_and_orientation(
@@ -38,18 +34,13 @@ void CameraDevice::set_position_and_orientation(
 ) {
     this->pos_in_root = _pos_in_root;
     this->rot_in_root = _rot_in_root;
-
-    camera2root.set_transformation(
-        rot_in_root,
-        pos_in_root);
+    camera2root.set_transformation(rot_in_root, pos_in_root);
 }
 
 void CameraDevice::update_optical_axis_and_orientation() {
     pointing =
         camera2root.get_transformed_orientation(Vec3::UNIT_Z);
-    optical_axis.set_support_and_direction(
-        pos_in_root,
-        pointing);
+    optical_axis.set_support_and_direction(pos_in_root, pointing);
 }
 
 void CameraDevice::set_pointing_direction(
