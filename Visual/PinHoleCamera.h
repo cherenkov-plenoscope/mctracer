@@ -29,7 +29,7 @@ public:
 		const Config* visual_config
 	);
 
-	void set_FoV_in_rad(const double FoV_in_rad);
+	void set_FoV_in_rad(const double field_of_view);
 
 	CameraRay get_ray_for_pixel_in_row_and_col(
 		const int row, const int col

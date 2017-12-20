@@ -21,7 +21,7 @@ void ApertureCamera::set_fStop_sesnorWidth_rayPerPixel(
 	update_sensor_distance_given_focal_and_object_distance();
 
 	// init back transformation T_cam2world
-	T_World2Camera = T_Camera2World.inverse();
+	root2camera = camera2root.inverse();
 }
 //------------------------------------------------------------------------------
 void ApertureCamera::set_F_stop_number(const double new_FStopNumber){
@@ -92,16 +92,16 @@ void ApertureCamera::set_focus_to(const double ObjectDistance_in_m){
 	update_sensor_distance_given_focal_and_object_distance();
 }
 //------------------------------------------------------------------------------
-void ApertureCamera::set_FoV_in_rad(const double FoV_in_rad) {
-	assert_FoV_is_valid(FoV_in_rad);
+void ApertureCamera::set_FoV_in_rad(const double field_of_view) {
+	assert_FoV_is_valid(field_of_view);
 
-	this -> FoV_in_rad = FoV_in_rad;
+	this -> field_of_view = field_of_view;
 	update_focal_length();
 }
 //------------------------------------------------------------------------------
 void ApertureCamera::update_focal_length() {
 	
-	FocalLength_in_m = (sensor_width_in_m/2.0)/tan(FoV_in_rad/2.0);
+	FocalLength_in_m = (sensor_width_in_m/2.0)/tan(field_of_view/2.0);
 	update_aperture_radius();
 	update_sensor_distance_given_focal_and_object_distance();
 }
@@ -223,7 +223,7 @@ CameraRay ApertureCamera::get_ray_for_pixel_in_row_and_col(
 Vec3 ApertureCamera::camera_ray_support_vector_in_world_frame(
 	const Vec3 &cam_ray_support_in_cam_frame
 )const{
-	return CameraPositionInWorld + T_Camera2World.get_transformed_orientation(
+	return CameraPositionInWorld + camera2root.get_transformed_orientation(
 		cam_ray_support_in_cam_frame
 	);
 }
@@ -231,7 +231,7 @@ Vec3 ApertureCamera::camera_ray_support_vector_in_world_frame(
 Vec3 ApertureCamera::camera_ray_direction_vector_in_world_frame(
 	const Vec3 &cam_ray_direction
 )const{
-	return T_Camera2World.get_transformed_orientation(cam_ray_direction);
+	return camera2root.get_transformed_orientation(cam_ray_direction);
 }
 //------------------------------------------------------------------------------
 void ApertureCamera::acquire_image(

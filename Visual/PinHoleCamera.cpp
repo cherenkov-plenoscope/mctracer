@@ -15,13 +15,13 @@ void PinHoleCamera::update_position_and_orientation(
 	update_principal_point_for_current_FoV();
 
 	// calculate sensor vectors
-	SensorDirectionHori = T_Camera2World.get_transformed_orientation(Vec3::UNIT_Y);
-	SensorDirectionVert = T_Camera2World.get_transformed_orientation(Vec3::UNIT_X);
+	SensorDirectionHori = camera2root.get_transformed_orientation(Vec3::UNIT_Y);
+	SensorDirectionVert = camera2root.get_transformed_orientation(Vec3::UNIT_X);
 }
 //------------------------------------------------------------------------------
-void PinHoleCamera::set_FoV_in_rad(const double FoV_in_rad) {
-	assert_FoV_is_valid(FoV_in_rad);
-	this->FoV_in_rad = FoV_in_rad;
+void PinHoleCamera::set_FoV_in_rad(const double field_of_view) {
+	assert_FoV_is_valid(field_of_view);
+	this->field_of_view = field_of_view;
 	update_principal_point_for_current_FoV();
 }
 //------------------------------------------------------------------------------
@@ -30,7 +30,7 @@ void PinHoleCamera::update_principal_point_for_current_FoV(){
 	 calculate principal point (intersection of optical axis and
 	 image sensor plane)
 	 calculate distance of camera base and principal point
-	 using FoV_in_rad angle 
+	 using field_of_view angle 
 	
 		         camera base
 		              /|  \
@@ -54,7 +54,7 @@ void PinHoleCamera::update_principal_point_for_current_FoV(){
 	*/	
 	//distance
 	dist_camera_support_to_principal_point =
-		((image.get_number_of_cols()/2.0)/tan(FoV_in_rad/2.0));
+		((image.get_number_of_cols()/2.0)/tan(field_of_view/2.0));
 
 	// principal point
 	principal_point = 

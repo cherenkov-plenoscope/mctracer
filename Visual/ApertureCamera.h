@@ -21,7 +21,7 @@ public:
 
 	void set_focus_to(const double ObjectDistance_in_m);
 
-	void set_FoV_in_rad(const double FoV_in_rad);
+	void set_FoV_in_rad(const double field_of_view);
 
 	void set_fStop_sesnorWidth_rayPerPixel(	
 		const double new_FStopNumber,

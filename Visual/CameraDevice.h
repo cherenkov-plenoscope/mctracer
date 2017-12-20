@@ -30,7 +30,7 @@ class CameraDevice{
     void set_pointing_direction(
         Vec3 camera_pointing_direction_in_World,
         Vec3 camera_image_upwards_image_dir_in_world);
-    virtual void set_FoV_in_rad(const double FoV_in_rad);
+    virtual void set_FoV_in_rad(const double field_of_view);
     double get_FoV_in_rad()const;
     Vec3 get_normalized_pointing_get_direction()const;
     Vec3 direction_to_the_right_of_the_camera()const;
@@ -48,18 +48,18 @@ class CameraDevice{
  protected:
     const std::string CameraName;
     Image image;
-    HomTra3 T_Camera2World;
-    HomTra3 T_World2Camera;
+    HomTra3 camera2root;
+    HomTra3 root2camera;
     Vec3 CameraPositionInWorld;
     Rot3 CameraOrientationInWorld;
     Vec3 CameraPointingDirection;
-    CameraRay OpticalAxis;
-    double FoV_in_rad;
+    CameraRay optical_axis;
+    double field_of_view;
     void set_position_and_orientation(
         const Vec3 cam_pos_in_world,
         const Rot3 cam_rot_in_world);
     std::string get_camera_print()const;
-    void assert_FoV_is_valid(const double FoV_in_rad)const;
+    void assert_FoV_is_valid(const double field_of_view)const;
     void update_optical_axis_and_orientation();
 };
 
