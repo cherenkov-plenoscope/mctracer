@@ -14,8 +14,7 @@ Tracer::Tracer(
     prng(_prng),
     scenery(_scenery),
     config(_config),
-    cray(_cray)
-{
+    cray(_cray) {
     trace_back();
 }
 

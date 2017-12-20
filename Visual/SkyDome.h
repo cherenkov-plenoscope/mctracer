@@ -1,6 +1,6 @@
 // Copyright 2016 Sebastian A. Mueller, Max L. Ahnen
-#ifndef MCTRACER_VISUAL_SKYDOME_H_
-#define MCTRACER_VISUAL_SKYDOME_H_
+#ifndef VISUAL_SKYDOME_H_
+#define VISUAL_SKYDOME_H_
 
 #include <string>
 #include "Visual/Image.h"
@@ -33,4 +33,4 @@ class SkyDome {
 
 }  // namespace Visual
 
-#endif  // MCTRACER_VISUAL_SKYDOME_H_
+#endif  // VISUAL_SKYDOME_H_
