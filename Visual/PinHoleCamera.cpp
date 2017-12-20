@@ -20,7 +20,7 @@ void PinHoleCamera::update_position_and_orientation(
 }
 //------------------------------------------------------------------------------
 void PinHoleCamera::set_FoV_in_rad(const double field_of_view) {
-	assert_FoV_is_valid(field_of_view);
+	assert_field_of_view_is_valid(field_of_view);
 	this->field_of_view = field_of_view;
 	update_principal_point_for_current_FoV();
 }
@@ -58,7 +58,7 @@ void PinHoleCamera::update_principal_point_for_current_FoV(){
 
 	// principal point
 	principal_point = 
-		CameraPointingDirection*dist_camera_support_to_principal_point;		
+		pointing*dist_camera_support_to_principal_point;		
 }
 //------------------------------------------------------------------------------
 std::string PinHoleCamera::get_pin_hole_cam_print()const {
@@ -77,7 +77,7 @@ CameraRay PinHoleCamera::get_ray_for_pixel_in_row_and_col(
 	const int row, const int col
 )const{
 	return CameraRay(
-		CameraPositionInWorld, get_direction_of_ray_for_pixel(row, col)
+		pos_in_root, get_direction_of_ray_for_pixel(row, col)
 	);
 }
 //------------------------------------------------------------------------------

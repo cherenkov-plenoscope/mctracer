@@ -93,7 +93,7 @@ void ApertureCamera::set_focus_to(const double ObjectDistance_in_m){
 }
 //------------------------------------------------------------------------------
 void ApertureCamera::set_FoV_in_rad(const double field_of_view) {
-	assert_FoV_is_valid(field_of_view);
+	assert_field_of_view_is_valid(field_of_view);
 
 	this -> field_of_view = field_of_view;
 	update_focal_length();
@@ -223,7 +223,7 @@ CameraRay ApertureCamera::get_ray_for_pixel_in_row_and_col(
 Vec3 ApertureCamera::camera_ray_support_vector_in_world_frame(
 	const Vec3 &cam_ray_support_in_cam_frame
 )const{
-	return CameraPositionInWorld + camera2root.get_transformed_orientation(
+	return pos_in_root + camera2root.get_transformed_orientation(
 		cam_ray_support_in_cam_frame
 	);
 }

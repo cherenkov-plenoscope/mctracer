@@ -10,46 +10,46 @@ CameraDevice::CameraDevice(
     const std::string camera_name,
     const unsigned int sensor_cols,
     const unsigned int sensor_rows
-): CameraName(camera_name), image(sensor_cols, sensor_rows) {}
+): name(camera_name), image(sensor_cols, sensor_rows) {}
 
-void CameraDevice::update_position(const Vec3 new_cam_pos_in_world) {
+void CameraDevice::update_position(const Vec3 _pos_in_root) {
     update_position_and_orientation(
-        new_cam_pos_in_world,
-        CameraOrientationInWorld);
+        _pos_in_root,
+        rot_in_root);
 }
 
-void CameraDevice::update_orientation(const Rot3 new_cam_rot_in_world) {
+void CameraDevice::update_orientation(const Rot3 _rot_in_root) {
     update_position_and_orientation(
-        CameraPositionInWorld,
-        new_cam_rot_in_world);
+        pos_in_root,
+        _rot_in_root);
 }
 
 void CameraDevice::update_position_and_orientation(
-    const Vec3 new_cam_pos_in_world,
-    const Rot3 new_cam_rot_in_world
+    const Vec3 _pos_in_root,
+    const Rot3 _rot_in_root
 ) {
-    set_position_and_orientation(new_cam_pos_in_world, new_cam_rot_in_world);
+    set_position_and_orientation(_pos_in_root, _rot_in_root);
     update_optical_axis_and_orientation();
 }
 
 void CameraDevice::set_position_and_orientation(
-    const Vec3 cam_pos_in_world,
-    const Rot3 cam_rot_in_world
+    const Vec3 _pos_in_root,
+    const Rot3 _rot_in_root
 ) {
-    this->CameraPositionInWorld = cam_pos_in_world;
-    this->CameraOrientationInWorld = cam_rot_in_world;
+    this->pos_in_root = _pos_in_root;
+    this->rot_in_root = _rot_in_root;
 
     camera2root.set_transformation(
-        CameraOrientationInWorld,
-        CameraPositionInWorld);
+        rot_in_root,
+        pos_in_root);
 }
 
 void CameraDevice::update_optical_axis_and_orientation() {
-    CameraPointingDirection =
+    pointing =
         camera2root.get_transformed_orientation(Vec3::UNIT_Z);
     optical_axis.set_support_and_direction(
-        CameraPositionInWorld,
-        CameraPointingDirection);
+        pos_in_root,
+        pointing);
 }
 
 void CameraDevice::set_pointing_direction(
@@ -67,7 +67,7 @@ void CameraDevice::set_pointing_direction(
         cam_x_axis_in_world,
         cam_y_axis_in_world,
         cam_z_axis_in_world,
-        CameraPositionInWorld);
+        pos_in_root);
     update_optical_axis_and_orientation();
 }
 
@@ -77,15 +77,15 @@ Vec3 CameraDevice::get_image_upwards_direction_in_world_frame()const {
 
 std::string CameraDevice::get_camera_print()const {
     std::stringstream out;
-    out << " _camera:_" << CameraName << "________________\n";
-    out << "| T_" << CameraName << "2world:\n";
+    out << " _camera:_" << name << "________________\n";
+    out << "| T_" << name << "2world:\n";
     out << StringTools::place_first_infront_of_each_new_line_of_second(
         "| ",
         camera2root.str());
     out << "| camera position          : ";
-    out << CameraPositionInWorld.str() << "\n";
+    out << pos_in_root.str() << "\n";
     out << "| direction of optical axis: ";
-    out << CameraPointingDirection.str() << "\n";
+    out << pointing.str() << "\n";
     out << "| field of view: " << Rad2Deg(field_of_view) <<" deg\n";
     out << "| resolution: cols x rows : ";
     out << image.get_number_of_cols() << "x";
@@ -95,7 +95,7 @@ std::string CameraDevice::get_camera_print()const {
 }
 
 Vec3 CameraDevice::get_normalized_pointing_get_direction()const {
-    return CameraPointingDirection/CameraPointingDirection.norm();
+    return pointing/pointing.norm();
 }
 
 std::string CameraDevice::str()const {
@@ -103,7 +103,7 @@ std::string CameraDevice::str()const {
 }
 
 void CameraDevice::set_FoV_in_rad(const double field_of_view) {
-    assert_FoV_is_valid(field_of_view);
+    assert_field_of_view_is_valid(field_of_view);
     this -> field_of_view = field_of_view;
 }
 
@@ -111,7 +111,7 @@ double CameraDevice::get_FoV_in_rad()const {
     return field_of_view;
 }
 
-void CameraDevice::assert_FoV_is_valid(const double field_of_view)const {
+void CameraDevice::assert_field_of_view_is_valid(const double field_of_view)const {
     if (field_of_view <= Deg2Rad(0.0) || field_of_view > Deg2Rad(180.0)) {
         std::stringstream info;
         info << "CameraDevice::" << __func__ << "()\n";
@@ -122,23 +122,23 @@ void CameraDevice::assert_FoV_is_valid(const double field_of_view)const {
 }
 
 std::string CameraDevice::get_name()const {
-    return CameraName;
+    return name;
 }
 
 const Image* CameraDevice::get_image()const {
     return &image;
 }
 
-void CameraDevice::save_image(const std::string image_path)const {
-    image.save(image_path);
+void CameraDevice::save_image(const std::string path)const {
+    image.save(path);
 }
 
 Vec3 CameraDevice::get_position_in_world()const {
-    return CameraPositionInWorld;
+    return pos_in_root;
 }
 
 Rot3 CameraDevice::get_rotation_in_world()const {
-    return CameraOrientationInWorld;
+    return rot_in_root;
 }
 
 Vec3 CameraDevice::direction_to_the_right_of_the_camera()const {
