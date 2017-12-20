@@ -1,3 +1,5 @@
+// Copyright 2014 Sebastian A. Mueller
+#include <numeric>
 #include "gtest/gtest.h"
 #include "Corsika/EventIo/PhotonFactory.h"
 #include "Corsika/EventIo/EventIo.h"
@@ -7,19 +9,16 @@
 using std::vector;
 
 class EventIoPhotonFactoryTest : public ::testing::Test {};
-//------------------------------------------------------------------------------
-TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
 
+TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
     // compare the input ground intersection point with the actual intersection
     // point of the mctracer photons when they are absorbed on the ground.
-
     Random::Mt19937 prng(0);
 
-    for(float x=-1e4; x<1e4; x=x+1495.0) {
-        for(float y=-1e4; y<1e4; y=y+1495.0) {
-            for(float cx=-0.5; cx<0.5; cx=cx+0.11) {
-                for(float cy=-0.5; cy<0.5; cy=cy+0.11) {
-
+    for (float x = -1e4; x < 1e4; x = x+1495.0) {
+        for (float y = -1e4; y < 1e4; y = y+1495.0) {
+            for (float cx = -0.5; cx < 0.5; cx = cx+0.11) {
+                for (float cy = -0.5; cy < 0.5; cy = cy+0.11) {
                     const std::array<float, 8> corsika_photon =
                     {    x,   y,   cx,  cy,  0.0,  1e5, 1.0,   433};
                     //   x    y    xcos ycos time  zem  weight lambda
@@ -37,7 +36,10 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
                     world.set_name_pos_rot("world", Vec3::ORIGIN, Rot3::UNITY);
 
                     Disc* ground = world.append<Disc>();
-                    ground->set_name_pos_rot("ground", Vec3::ORIGIN, Rot3::UNITY);
+                    ground->set_name_pos_rot(
+                        "ground",
+                        Vec3::ORIGIN,
+                        Rot3::UNITY);
                     const Color* ground_color = &Color::GRAY;
                     const unsigned int ground_sensor_id = 0;
                     ground->set_outer_color(ground_color);
@@ -56,8 +58,7 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
 
                     // photon propagation down to the ground
                     Photons::propagate_photons_in_scenery_with_settings(
-                        &photons, &world, &settings, &prng
-                    );
+                        &photons, &world, &settings, &prng);
 
                     // detect photons in ground sensor
                     sensor_list.clear_history();
@@ -65,17 +66,21 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
 
                     ASSERT_EQ(1u, sensor.photon_arrival_history.size());
 
-                    EXPECT_NEAR(x*1e-2, sensor.photon_arrival_history[0].x_intersect, 1e-6);
-                    EXPECT_NEAR(y*1e-2, sensor.photon_arrival_history[0].y_intersect, 1e-6);
+                    EXPECT_NEAR(
+                        x*1e-2,
+                        sensor.photon_arrival_history[0].x_intersect, 1e-6);
+                    EXPECT_NEAR(
+                        y*1e-2,
+                        sensor.photon_arrival_history[0].y_intersect, 1e-6);
                 }
             }
         }
     }
 }
-//------------------------------------------------------------------------------
+
 TEST_F(EventIoPhotonFactoryTest, convert_photons) {
     const std::array<float, 8> corsika_photon =
-    	{1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.999, 433};
+        {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.999, 433};
     //   x    y    xcos ycos time  zem  weight lambda
     //   cm   cm   1    1    ns    cm   1    nm
 
@@ -95,19 +100,19 @@ TEST_F(EventIoPhotonFactoryTest, convert_photons) {
     EXPECT_NEAR(0.034, ph.support().y, 1e-9);
     EXPECT_NEAR(1e3, ph.support().z, 1e-9);
 }
-//------------------------------------------------------------------------------
+
 TEST_F(EventIoPhotonFactoryTest, execute_atmospheric_absorption) {
-	// In Corsika photons can have a 'weight' to represent a bunch of photons.
-	// This was introduced in Corsika to save computations and disk space.
-	// Corsika does not recomend to have weights above 5.
-	// Mctracer has no concet of weighted photon bunches.
-	// We force Corsika to produce single photons, i.e. the maximum weight
-	// in the Corsika output is 1.0.
-	// A weight below 1.0 means, that the photon passed Corsika's atmosphere
-	// simulation with a probability of this weigth.
-	// In mctracer we collapse this photons probability when the photon
-	// is created in mctracer. This is why the EventIo::PhotonFactory is
-	// given a PseudoRandomNumberGenerator.
+    // In Corsika photons can have a 'weight' to represent a bunch of photons.
+    // This was introduced in Corsika to save computations and disk space.
+    // Corsika does not recomend to have weights above 5.
+    // Mctracer has no concet of weighted photon bunches.
+    // We force Corsika to produce single photons, i.e. the maximum weight
+    // in the Corsika output is 1.0.
+    // A weight below 1.0 means, that the photon passed Corsika's atmosphere
+    // simulation with a probability of this weigth.
+    // In mctracer we collapse this photons probability when the photon
+    // is created in mctracer. This is why the EventIo::PhotonFactory is
+    // given a PseudoRandomNumberGenerator.
 
     double absorbed = 0;
     double passed = 0;
@@ -115,124 +120,99 @@ TEST_F(EventIoPhotonFactoryTest, execute_atmospheric_absorption) {
 
     Random::Mt19937 prng(Random::ZERO_SEED);
 
-    for(double i=0; i<total-1; i++) {
+    for (double i = 0; i < total-1; i++) {
+        float weight = i/total;  // from 0.0 to 1.0
+        const std::array<float, 8> corsika_photon =
+            {1.2, 3.4, 0.0, 0.0, 1e-9, 1e3, weight, 433};
+        //   x    y    xcos ycos time  zem  weight lambda
+        //   cm   cm   1    1    ns    cm   1    nm
 
-    	float weight = i/total; // from 0.0 to 1.0
-	    const std::array<float, 8> corsika_photon = 
-	    	{1.2, 3.4, 0.0, 0.0, 1e-9, 1e3, weight, 433};
-	    //   x    y    xcos ycos time  zem  weight lambda
-	    //   cm   cm   1    1    ns    cm   1    nm
+        EventIo::PhotonFactory cpf(corsika_photon, 1337, &prng);
 
-	    EventIo::PhotonFactory cpf(corsika_photon, 1337, &prng);
-
-	    if(cpf.passed_atmosphere())
-	    	passed++;
-	    else
-	    	absorbed++;
+        if (cpf.passed_atmosphere())
+            passed++;
+        else
+            absorbed++;
     }
 
     double passed_ratio = passed/total;
     EXPECT_NEAR(0.5, passed_ratio, 1e-2);
 }
-//------------------------------------------------------------------------------
-TEST_F(EventIoPhotonFactoryTest, mctracer_rejects_photon_weight_below_0) {
 
+TEST_F(EventIoPhotonFactoryTest, mctracer_rejects_photon_weight_below_0) {
     const unsigned int id = 1337;
     Random::Mt19937 prng(Random::ZERO_SEED);
     const std::array<float, 8> corsika_photon =
-    	{1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, -0.1, 433};
+        {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, -0.1, 433};
 
     EXPECT_THROW(
-    	EventIo::PhotonFactory cpf(corsika_photon, id, &prng), 
-    	EventIo::PhotonFactory::BadPhotonWeight
-    );
+        EventIo::PhotonFactory cpf(corsika_photon, id, &prng),
+        EventIo::PhotonFactory::BadPhotonWeight);
 }
-//------------------------------------------------------------------------------
+
 TEST_F(EventIoPhotonFactoryTest, mctracer_accepts_photon_weight_equal_1) {
     const unsigned int id = 1337;
     Random::Mt19937 prng(Random::ZERO_SEED);
-    const std::array<float, 8> corsika_photon = 
-    	{1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 1.0, 433};
+    const std::array<float, 8> corsika_photon =
+        {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 1.0, 433};
 
     EXPECT_NO_THROW(
-    	EventIo::PhotonFactory cpf(corsika_photon, id, &prng)
-    );
+        EventIo::PhotonFactory cpf(corsika_photon, id, &prng));
 }
-//------------------------------------------------------------------------------
+
 TEST_F(EventIoPhotonFactoryTest, mctracer_rejects_photon_weight_above_1) {
- 
     const unsigned int id = 1337;
     Random::Mt19937 prng(Random::ZERO_SEED);
-    const std::array<float, 8> corsika_photon = 
-    	{1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 1.1, 433};
-    
+    const std::array<float, 8> corsika_photon =
+        {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 1.1, 433};
+
     EXPECT_THROW(
-    	EventIo::PhotonFactory cpf(corsika_photon, id, &prng), 
-    	EventIo::PhotonFactory::BadPhotonWeight
-    ); 
+        EventIo::PhotonFactory cpf(corsika_photon, id, &prng),
+        EventIo::PhotonFactory::BadPhotonWeight);
 }
-//------------------------------------------------------------------------------
+
 TEST_F(EventIoPhotonFactoryTest, mctracer_accepts_photon_weight_equal_0) {
- 
     const unsigned int id = 1337;
     Random::Mt19937 prng(Random::ZERO_SEED);
-    const std::array<float, 8> corsika_photon = 
-    	{1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.0, 433};
-    
+    const std::array<float, 8> corsika_photon =
+        {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.0, 433};
     EXPECT_NO_THROW(
-    	EventIo::PhotonFactory cpf(corsika_photon, id, &prng)
-    ); 
+        EventIo::PhotonFactory cpf(corsika_photon, id, &prng));
 }
-//------------------------------------------------------------------------------
+
 TEST_F(EventIoPhotonFactoryTest, mctracer_accepts_photon_weight_btw_0_and_1) {
- 
     const unsigned int id = 1337;
     Random::Mt19937 prng(Random::ZERO_SEED);
-    const std::array<float, 8>  corsika_photon = 
-    	{1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.4455, 433};
-    
+    const std::array<float, 8>  corsika_photon =
+        {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.4455, 433};
     EXPECT_NO_THROW(
-    	EventIo::PhotonFactory cpf(corsika_photon, id, &prng)
-    ); 
+        EventIo::PhotonFactory cpf(corsika_photon, id, &prng));
 }
-//------------------------------------------------------------------------------
+
 TEST_F(EventIoPhotonFactoryTest, zero_weight_is_passed_on_zero_from_prng) {
- 
-    const std::array<float, 8>  corsika_photon = 
+    const std::array<float, 8>  corsika_photon =
     {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.0, 433};
-    
     const unsigned int id = 1337;
     Random::FakeConstant prng(0.0);
-
-   	EventIo::PhotonFactory cpf(corsika_photon, id, &prng);
-
-   	EXPECT_TRUE(cpf.passed_atmosphere());
-}
-//------------------------------------------------------------------------------
-TEST_F(EventIoPhotonFactoryTest, relative_arrival_time_on_ground) {
-    
-    float arrival_time_on_dround_in_ns = 1.0;
-    const std::array<float, 8>  corsika_photon = 
-    {1.2, 3.4, 0.0, 0.0, arrival_time_on_dround_in_ns, 1e5, 0.4455, 433};
-    
-    const unsigned int id = 1337;
-    Random::FakeConstant prng(0.0);
-    
     EventIo::PhotonFactory cpf(corsika_photon, id, &prng);
-
-    EXPECT_EQ(
-        arrival_time_on_dround_in_ns*1e-9, 
-        cpf.relative_arrival_time_on_ground()
-    );
+    EXPECT_TRUE(cpf.passed_atmosphere());
 }
-#include <numeric>
-//------------------------------------------------------------------------------
-TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground) {
-   
+
+TEST_F(EventIoPhotonFactoryTest, relative_arrival_time_on_ground) {
+    float arrival_time_on_dround_in_ns = 1.0;
+    const std::array<float, 8>  corsika_photon =
+    {1.2, 3.4, 0.0, 0.0, arrival_time_on_dround_in_ns, 1e5, 0.4455, 433};
+    const unsigned int id = 1337;
+    Random::FakeConstant prng(0.0);
+    EventIo::PhotonFactory cpf(corsika_photon, id, &prng);
+    EXPECT_EQ(
+        arrival_time_on_dround_in_ns*1e-9,
+        cpf.relative_arrival_time_on_ground());
+}
+
+TEST_F(EventIoPhotonFactoryTest, correct_rel_time_when_intersecting_ground) {
     EventIo::Run corsika_file("telescope.dat");
-
     while (corsika_file.has_still_events_left()) {
-
         /*
         read in a corsika eventio event. we remember the relative arrival
         times in the eventio file 'relative_arrival_times_in_corsika_file' and
@@ -240,32 +220,27 @@ TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         photons on ground.
         */
         EventIo::Event event = corsika_file.next_event();
-        
+
         vector<float> relative_arrival_times_in_corsika_file;
 
         vector<Photon> photons;
 
         Random::Mt19937 prng(Random::ZERO_SEED);
 
-        for (unsigned int id=0; id<event.photons.size(); id++) {
-
+        for (unsigned int id = 0; id < event.photons.size(); id++) {
             EventIo::PhotonFactory factory(
                 event.photons.at(id),
                 id,
-                &prng
-            );
-            
+                &prng);
             relative_arrival_times_in_corsika_file.push_back(
-                factory.relative_arrival_time_on_ground()
-            );
-
+                factory.relative_arrival_time_on_ground());
             photons.push_back(factory.get_photon());
         }
 
         // propagate mctracer photons down to ground
         Frame world;
         world.set_name_pos_rot("world", Vec3::ORIGIN, Rot3::UNITY);
-        
+
         Disc* ground = world.append<Disc>();
         ground->set_name_pos_rot("ground", Vec3::ORIGIN, Rot3::UNITY);
         const Color* ground_color = &Color::GRAY;
@@ -281,13 +256,12 @@ TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         world.init_tree_based_on_mother_child_relations();
 
         // propagation settings
-        PropagationConfig settings;    
+        PropagationConfig settings;
         settings.use_multithread_when_possible = false;
 
         // photon propagation
         Photons::propagate_photons_in_scenery_with_settings(
-            &photons, &world, &settings, &prng
-        );
+            &photons, &world, &settings, &prng);
 
         // detect photons in sensors
         sensor_list.clear_history();
@@ -296,42 +270,57 @@ TEST_F(EventIoPhotonFactoryTest, correct_relative_time_when_intersecting_ground)
         double mean_arrival_time = PhotonSensor::arrival_time_mean(
             sensor.photon_arrival_history);
 
-        for(unsigned int row=0; row<sensor.photon_arrival_history.size(); row++)
-            sensor.photon_arrival_history[row].arrival_time -= mean_arrival_time;
+        for (
+            unsigned int row = 0;
+            row < sensor.photon_arrival_history.size();
+            row++
+        )
+            sensor.photon_arrival_history[row].arrival_time -=
+                mean_arrival_time;
 
         double mean_time_of_corsika_photons = std::accumulate(
             relative_arrival_times_in_corsika_file.begin(),
             relative_arrival_times_in_corsika_file.end(),
-            0.0
-        )/double(relative_arrival_times_in_corsika_file.size());
+            0.0)/static_cast<double>(
+                relative_arrival_times_in_corsika_file.size());
 
-        for(unsigned int row=0; row<sensor.photon_arrival_history.size(); row++)
-            sensor.photon_arrival_history[row].arrival_time += mean_time_of_corsika_photons;
+        for (unsigned int row = 0;
+            row < sensor.photon_arrival_history.size();
+            row++
+        )
+            sensor.photon_arrival_history[row].arrival_time +=
+                mean_time_of_corsika_photons;
 
         // for each photon we compare the relative arrival
         // time written in the in the eventio file with the actual arrival time
-        // of the mctracer photon which ran down to the ground.  
-        for(unsigned int i=0; i<sensor.photon_arrival_history.size(); i++) {
-
-            unsigned int id = sensor.photon_arrival_history[i].simulation_truth_id;
-
+        // of the mctracer photon which ran down to the ground.
+        for (
+            unsigned int i = 0;
+            i < sensor.photon_arrival_history.size();
+            i++
+        ) {
+            unsigned int id =
+                sensor.photon_arrival_history[i].simulation_truth_id;
             EXPECT_NEAR(
                 relative_arrival_times_in_corsika_file.at(id),
                 sensor.photon_arrival_history[i].arrival_time,
-                1e-11
-            );
+                1e-11);
         }
 
         /*
         // relative_arrival_times_in_corsika_file
-        std::cout << "corsika times: " << relative_arrival_times_in_corsika_file.size() << ", avg " << mean_time_of_corsika_photons << "s \n";
+        std::cout << "corsika times: ";
+        std::cout << relative_arrival_times_in_corsika_file.size();
+        std::cout << ", avg " << mean_time_of_corsika_photons << "s \n";
         for(int i=0;i<10;i++) {
-            std::cout << "id " << i << ", " << relative_arrival_times_in_corsika_file.at(i) << "\n";
+            std::cout << "id " << i << ", ";
+            std::cout << relative_arrival_times_in_corsika_file.at(i) << "\n";
         }
-        std::cout << "mctracer times: " << id_time.size() << ", avg " << get_mean_along_column(id_time,4) << "s\n";
+        std::cout << "mctracer times: " << id_time.size();
+        std::cout << ", avg " << get_mean_along_column(id_time,4) << "s\n";
         for(int i=0;i<10;i++) {
-            std::cout << "id " << id_time.at(i).at(5) << ", " << float(id_time.at(i).at(4)) << "\n";
+            std::cout << "id " << id_time.at(i).at(5);
+            std::cout << ", " << float(id_time.at(i).at(4)) << "\n";
         }*/
     }
 }
-//------------------------------------------------------------------------------
