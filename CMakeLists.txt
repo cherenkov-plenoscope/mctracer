@@ -129,3 +129,11 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/Benchmarks")
 add_executable(mctBenchMark ./Benchmarks/benchmark.cpp ${TEST_BENCHMARK})
 target_link_libraries(mctBenchMark gtest gtest_main)
 target_link_libraries(mctBenchMark mct)
+
+
+#------------------------
+# FACT propagation
+add_executable(mctFactPropagation ./Main/FactPropagation.cpp)
+target_link_libraries(mctFactPropagation mct)
+target_link_libraries(mctFactPropagation stdc++fs)
+target_link_libraries(mctFactPropagation docopt)
