@@ -450,8 +450,7 @@ int main(int argc, char* argv[]) {
 
     array<float, 273> run_end;
     run_end[0] = Corsika::str2float("RUNE");
-    run_end[1] = Corsika::RunHeader::run_number(
-            corsika_run.header.raw);
+    run_end[1] = Corsika::RunHeader::run_number(corsika_run.header.raw);
     run_end[2] = static_cast<float>(event_counter);
     append_header_block(run_end, fch);
 
