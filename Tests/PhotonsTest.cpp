@@ -1,16 +1,15 @@
 // Copyright 2014 Sebastian A. Mueller
+#include <math.h>
 #include "gtest/gtest.h"
 #include "Tools/AsciiIo.h"
 #include "Core/Photons.h"
-#include <math.h>
 using std::stringstream;
 using std::string;
 using std::vector;
 
 class PhotonsTest : public ::testing::Test {};
-//------------------------------------------------------------------------------
-TEST_F(PhotonsTest, raw_row2photon) {
 
+TEST_F(PhotonsTest, raw_row2photon) {
     Vec3 dir(66.6, 57.8, 99.9);
     dir.normalize();
 
@@ -30,9 +29,8 @@ TEST_F(PhotonsTest, raw_row2photon) {
     EXPECT_NEAR(ph.direction().z, raw_row[6], 1e-9);
     EXPECT_EQ(ph.get_wavelength(), raw_row[7]);
 }
-//------------------------------------------------------------------------------
-TEST_F(PhotonsTest, photon2raw_row) {
 
+TEST_F(PhotonsTest, photon2raw_row) {
     Vec3 sup(13.0, 37.0, 42.0);
     Vec3 dir(66.6, 57.8, 99.9);
     unsigned int id = 1337;
@@ -54,19 +52,15 @@ TEST_F(PhotonsTest, photon2raw_row) {
     EXPECT_NEAR(ph.direction().z, raw_row[6], 1e-9);
     EXPECT_EQ(ph.get_wavelength(), raw_row[7]);
 }
-//------------------------------------------------------------------------------
+
 TEST_F(PhotonsTest, bunch2raw_matrix2bunch) {
-
     const unsigned int number_of_photons = 1e3;
-
     vector<Photon> photon_bunch;
-
     Random::Mt19937 prng(Random::ZERO_SEED);
-    for(unsigned int n=0; n<number_of_photons; n++) {
-
+    for (unsigned int n = 0; n < number_of_photons; n++) {
         Vec3 sup(prng.uniform(), prng.uniform(), prng.uniform());
         Vec3 dir(prng.uniform(), prng.uniform(), prng.uniform());
-        unsigned int id = int(prng.uniform());
+        unsigned int id =  static_cast<int>(prng.uniform());
         double wavelength = prng.uniform();
 
         Photon ph(sup, dir, wavelength);
@@ -84,8 +78,7 @@ TEST_F(PhotonsTest, bunch2raw_matrix2bunch) {
 
     ASSERT_EQ(number_of_photons, photon_bunch2.size());
 
-    for(unsigned int n=0; n<number_of_photons; n++) {
-
+    for (unsigned int n = 0; n < number_of_photons; n++) {
         Photon ph1 = photon_bunch.at(n);
         Photon ph2 = photon_bunch2.at(n);
 
@@ -99,19 +92,15 @@ TEST_F(PhotonsTest, bunch2raw_matrix2bunch) {
         EXPECT_EQ(ph2.get_wavelength(), ph1.get_wavelength());
     }
 }
-//------------------------------------------------------------------------------
+
 TEST_F(PhotonsTest, bunch2raw_matrix2file) {
-
     const unsigned int number_of_photons = 1e3;
-
     std::vector<Photon> photon_bunch1;
-
     Random::Mt19937 prng(Random::ZERO_SEED);
-    for(unsigned int n=0; n<number_of_photons; n++) {
-
+    for (unsigned int n = 0; n < number_of_photons; n++) {
         Vec3 sup(prng.uniform(), prng.uniform(), prng.uniform());
         Vec3 dir(prng.uniform(), prng.uniform(), prng.uniform());
-        unsigned int id = int(prng.uniform()*number_of_photons);
+        unsigned int id = static_cast<int>(prng.uniform()*number_of_photons);
         double wavelength = prng.uniform();
 
         Photon ph(sup, dir, wavelength);
@@ -123,18 +112,16 @@ TEST_F(PhotonsTest, bunch2raw_matrix2file) {
     // write to text file
     AsciiIo::write_table_to_file(
         Photons::photons2raw_matrix(&photon_bunch1),
-        "numeric_table_IO/my_big_photon_list.txt"
-    );
+        "numeric_table_IO/my_big_photon_list.txt");
 
     // read back again from text file
     std::vector<Photon> photon_bunch2 = Photons::raw_matrix2photons(
-        AsciiIo::gen_table_from_file("numeric_table_IO/my_big_photon_list.txt")
-    );
+        AsciiIo::gen_table_from_file(
+            "numeric_table_IO/my_big_photon_list.txt"));
 
     ASSERT_EQ(number_of_photons, photon_bunch2.size());
 
-    for(unsigned int n=0; n<number_of_photons; n++) {
-
+    for (unsigned int n = 0; n < number_of_photons; n++) {
         Photon ph1 = photon_bunch1.at(n);
         Photon ph2 = photon_bunch2.at(n);
 
