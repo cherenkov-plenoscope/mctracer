@@ -183,7 +183,8 @@ TEST_F(PhotonTest, Reflections) {
     Photons::propagate_photons_in_scenery_with_settings(
         &photons, &world, &setup, &prng);
     sensors.assign_photons(&photons);
-    const double ph_reached_sensor = absorber_sensor.photon_arrival_history.size();
+    const double ph_reached_sensor =
+        absorber_sensor.photon_arrival_history.size();
     const double ph_emitted = photons.size();
     EXPECT_NEAR(
         reflection_coefficient,
