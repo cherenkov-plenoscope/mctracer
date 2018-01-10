@@ -1,3 +1,4 @@
+// Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
 #include "Xml/Xml.h"
 #include "Tools/FileTools.h"

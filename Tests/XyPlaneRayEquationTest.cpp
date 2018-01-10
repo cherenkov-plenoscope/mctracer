@@ -1,3 +1,4 @@
+// Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
 #include "Scenery/Geometry/HexagonalPrismZ.h"
 #include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"

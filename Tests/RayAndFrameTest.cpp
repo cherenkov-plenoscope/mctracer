@@ -1,3 +1,4 @@
+// Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
 #include "Core/RayAndFrame.h"
 #include "Scenery/Primitive/Sphere.h"

@@ -1,3 +1,4 @@
+// Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
 #include "Core/RayForPropagation.h"
 #include "Core/SimulationTruth.h"

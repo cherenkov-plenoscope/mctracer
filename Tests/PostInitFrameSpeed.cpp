@@ -1,3 +1,4 @@
+// Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
 #include "Scenery/SegmentedReflector/SegmentedReflector.h"
 #include "Core/PropagationConfig.h"
