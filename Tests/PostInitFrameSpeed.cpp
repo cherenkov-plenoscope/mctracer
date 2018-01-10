@@ -4,7 +4,7 @@
 #include "Core/PropagationConfig.h"
 
 class PostInitFrameSpeed : public ::testing::Test {
-protected:
+ protected:
     Frame world;
     Frame* reflector;
     PropagationConfig settings;
@@ -13,7 +13,6 @@ protected:
     Rot3 new_rot;
 
     PostInitFrameSpeed() {
-
         new_rot.set(0.0, Zd_Rad, Deg2Rad(180.0) - Az_Rad);
 
         world.set_name_pos_rot("world", Vec3::ORIGIN, Rot3::UNITY);
@@ -34,11 +33,10 @@ protected:
         world.init_tree_based_on_mother_child_relations();
     }
 };
-//------------------------------------------------------------------------------
-TEST_F(PostInitFrameSpeed, post_init_based_on_mother) {
 
-    for(int i=0; i<1e3; i++) {
-        Rot3 rot(0.0, 0.0, double(i)/1.0e6);
+TEST_F(PostInitFrameSpeed, post_init_based_on_mother) {
+    for (int i = 0; i < 1e3; i++) {
+        Rot3 rot(0.0, 0.0, static_cast<double>(i)/1.0e6);
         reflector->update_rotation(rot);
     }
 }
