@@ -1,15 +1,18 @@
+// Copyright 2014 Sebastian A. Mueller
+#include <vector>
 #include "gtest/gtest.h"
 #include "SignalProcessing/PhotoElectricConverter.h"
 #include "Core/Histogram1D.h"
-#include <vector>
 using std::vector;
 
 class PhotoElectricConverterTest : public ::testing::Test {};
 
-vector<SignalProcessing::PipelinePhoton> equi_distant_photons(const unsigned int n) {
+vector<SignalProcessing::PipelinePhoton> equi_distant_photons(
+    const unsigned int n
+) {
     vector<SignalProcessing::PipelinePhoton> photon_pipeline;
-    for(unsigned int i=0; i<n; i++) {
-        const double arrival_time = double(i)*1e-9;
+    for (unsigned int i = 0; i < n; i++) {
+        const double arrival_time = static_cast<double>(i)*1e-9;
         const double wavelength = 433e-9;
         const int simulation_truth_id = i;
 
@@ -22,30 +25,26 @@ vector<SignalProcessing::PipelinePhoton> equi_distant_photons(const unsigned int
     return photon_pipeline;
 }
 
-//----------------------------------------------------------------------
-TEST_F(PhotoElectricConverterTest, config_defaults) {
 
+TEST_F(PhotoElectricConverterTest, config_defaults) {
     SignalProcessing::PhotoElectricConverter::Config config;
     EXPECT_EQ(0.0, config.dark_rate);
     EXPECT_EQ(0.0, config.probability_for_second_puls);
 
-    for(double wavelength=200e-9; wavelength<1200e-9; wavelength+=10e-9)
+    for (double wavelength = 200e-9; wavelength < 1200e-9; wavelength+=10e-9)
         EXPECT_EQ(
             0.0,
             config.quantum_efficiency_vs_wavelength->evaluate(wavelength));
 
     EXPECT_THROW(
-        config.quantum_efficiency_vs_wavelength->evaluate(1200e-9), 
-        std::out_of_range
-    );
+        config.quantum_efficiency_vs_wavelength->evaluate(1200e-9),
+        std::out_of_range);
     EXPECT_THROW(
-        config.quantum_efficiency_vs_wavelength->evaluate(199e-9), 
-        std::out_of_range
-    );
+        config.quantum_efficiency_vs_wavelength->evaluate(199e-9),
+        std::out_of_range);
 }
-//----------------------------------------------------------------------
-TEST_F(PhotoElectricConverterTest, empty_input_yields_empty_output) {
 
+TEST_F(PhotoElectricConverterTest, empty_input_yields_empty_output) {
     SignalProcessing::PhotoElectricConverter::Config config;
     SignalProcessing::PhotoElectricConverter::Converter conv(&config);
 
@@ -56,18 +55,16 @@ TEST_F(PhotoElectricConverterTest, empty_input_yields_empty_output) {
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
             exposure_time,
-            &prng
-        );
+            &prng);
 
     EXPECT_EQ(0u, result.size());
 }
-//----------------------------------------------------------------------
-TEST_F(PhotoElectricConverterTest, input_pulses_absorbed_zero_qunatum_eff) {
 
+TEST_F(PhotoElectricConverterTest, input_pulses_absorbed_zero_qunatum_eff) {
     SignalProcessing::PhotoElectricConverter::Config config;
     SignalProcessing::PhotoElectricConverter::Converter conv(&config);
 
-    vector<SignalProcessing::PipelinePhoton> photon_pipeline = 
+    vector<SignalProcessing::PipelinePhoton> photon_pipeline =
         equi_distant_photons(1337u);
 
     double exposure_time = 1337e-9;
@@ -76,20 +73,18 @@ TEST_F(PhotoElectricConverterTest, input_pulses_absorbed_zero_qunatum_eff) {
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
             exposure_time,
-            &prng
-        );
+            &prng);
 
     EXPECT_EQ(0u, result.size());
 }
-//----------------------------------------------------------------------
-TEST_F(PhotoElectricConverterTest, input_pulses_pass_qunatum_eff_is_one) {
 
+TEST_F(PhotoElectricConverterTest, input_pulses_pass_qunatum_eff_is_one) {
     SignalProcessing::PhotoElectricConverter::Config config;
     Function::Constant qeff(1.0, Function::Limits(200e-9, 1200e-9));
     config.quantum_efficiency_vs_wavelength = &qeff;
     SignalProcessing::PhotoElectricConverter::Converter conv(&config);
 
-    vector<SignalProcessing::PipelinePhoton> photon_pipeline = 
+    vector<SignalProcessing::PipelinePhoton> photon_pipeline =
         equi_distant_photons(1337u);
 
     double exposure_time = 1337e-9;
@@ -98,19 +93,17 @@ TEST_F(PhotoElectricConverterTest, input_pulses_pass_qunatum_eff_is_one) {
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
             exposure_time,
-            &prng
-        );
+            &prng);
 
     ASSERT_EQ(1337u, result.size());
-    for(unsigned int i=0; i<result.size(); i++) {
+    for (unsigned int i = 0; i < result.size(); i++) {
         EXPECT_EQ(
-            photon_pipeline.at(i).arrival_time, 
+            photon_pipeline.at(i).arrival_time,
             result.at(i).arrival_time);
     }
 }
-//----------------------------------------------------------------------
-TEST_F(PhotoElectricConverterTest, dark_rate_on_empty_photon_pipe) {
 
+TEST_F(PhotoElectricConverterTest, dark_rate_on_empty_photon_pipe) {
     SignalProcessing::PhotoElectricConverter::Config config;
     config.dark_rate = 100e6;
     SignalProcessing::PhotoElectricConverter::Converter conv(&config);
@@ -123,27 +116,24 @@ TEST_F(PhotoElectricConverterTest, dark_rate_on_empty_photon_pipe) {
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
             exposure_time,
-            &prng
-        );
+            &prng);
 
     EXPECT_NEAR(100u, result.size(), 3);
 }
-//----------------------------------------------------------------------
-TEST_F(PhotoElectricConverterTest, triangle_qeff) {
 
-                                                            
-    // Qeff [1]                                            //    
-    //                                                     // 
-    // _1.0_|                                              //  
-    //      |            /\                                //                
-    //      |           /  \                               //                 
-    //      |          /    \                              //                  
-    //      |         /      \                             //                   
-    //      |        /        \                            //                    
-    //      |       /          \                           //                     
-    //      |      /            \                          //                      
-    //      |     /              \                         //                       
-    //      |    /                \                        //                        
+TEST_F(PhotoElectricConverterTest, triangle_qeff) {
+    // Qeff [1]                                            //
+    //                                                     //
+    // _1.0_|                                              //
+    //      |            /\                                //
+    //      |           /  \                               //
+    //      |          /    \                              //
+    //      |         /      \                             //
+    //      |        /        \                            //
+    //      |       /          \                           //
+    //      |      /            \                          //
+    //      |     /              \                         //
+    //      |    /                \                        //
     //      |   /                  \                       //
     //      |  /                    \                      //
     // _0.0_|--|----------|----------|----                 //
@@ -159,9 +149,10 @@ TEST_F(PhotoElectricConverterTest, triangle_qeff) {
 
     vector<SignalProcessing::PipelinePhoton> photon_pipeline;
     const unsigned int n = 1000*1000;
-    for(unsigned int i=0; i<n; i++) {
-        const double arrival_time = double(i);
-        const double wavelength = 200e-9 + double(i)/double(n)*1000e-9;
+    for (unsigned int i = 0; i < n; i++) {
+        const double arrival_time = static_cast<double>(i);
+        const double wavelength = 200e-9 + static_cast<double>(i)/
+            static_cast<double>(n)*1000e-9;
         const int simulation_truth_id = i;
         photon_pipeline.push_back(
             SignalProcessing::PipelinePhoton(
@@ -176,20 +167,19 @@ TEST_F(PhotoElectricConverterTest, triangle_qeff) {
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
             exposure_time,
-            &prng
-        );
+            &prng);
 
-    EXPECT_NEAR(n/2, result.size(), double(n));
+    EXPECT_NEAR(n/2, result.size(), static_cast<double>(n));
 
-    vector<double> survived_arrival_times; 
-    // We created a correlation between wavelength and arrival 
+    vector<double> survived_arrival_times;
+    // We created a correlation between wavelength and arrival
     // time in this case on purpose.
-    for(const SignalProcessing::ElectricPulse pulse: result)
+    for (const SignalProcessing::ElectricPulse pulse : result)
         survived_arrival_times.push_back(pulse.arrival_time);
 
     Histogram1D hist(
-        survived_arrival_times, 
-        {   
+        survived_arrival_times,
+        {
             0,
             100*1000,
             200*1000,
@@ -201,8 +191,7 @@ TEST_F(PhotoElectricConverterTest, triangle_qeff) {
             800*1000,
             900*1000,
             1000*1000
-        }
-    );
+        });
 
     EXPECT_NEAR(10*1000u, hist.bins.at(0), 58);
     EXPECT_NEAR(30*1000u, hist.bins.at(1), 253);
