@@ -1,40 +1,36 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
 #include "PhotonSensor/PhotonSensor.h"
-using namespace PhotonSensor;
 using std::vector;
 
 class SensorAssignmentTest : public ::testing::Test {};
-//------------------------------------------------------------------------------
+
 TEST_F(SensorAssignmentTest, empty_sensors_init) {
+    vector<PhotonSensor::Sensor*> empty_sensors;
 
-    vector<Sensor*> empty_sensors;
-
-    Sensors sens(empty_sensors);
+    PhotonSensor::Sensors sens(empty_sensors);
     EXPECT_EQ(0u, sens.size());
 }
-//------------------------------------------------------------------------------
-TEST_F(SensorAssignmentTest, empty_sensor_list_find_sensor_init) {
 
-    vector<Sensor*> empty_sensors;
-    Sensors sens(empty_sensors);
+TEST_F(SensorAssignmentTest, empty_sensor_list_find_sensor_init) {
+    vector<PhotonSensor::Sensor*> empty_sensors;
+    PhotonSensor::Sensors sens(empty_sensors);
 
     Frame car;
     car.set_name_pos_rot("car", Vec3::ORIGIN, Rot3::UNITY);
-    
+
     PhotonSensor::FindSensorByFrame finder(&car, &sens.by_frame);
     EXPECT_FALSE(finder.is_absorbed_by_known_sensor);
 }
-//------------------------------------------------------------------------------
+
 TEST_F(SensorAssignmentTest, single_sensor_find) {
- 
     Frame car;
     car.set_name_pos_rot("car", Vec3::ORIGIN, Rot3::UNITY);
-    Sensor on_car(0u, &car); 
+    PhotonSensor::Sensor on_car(0u, &car);
 
-    vector<Sensor*> raw_sensors;
+    vector<PhotonSensor::Sensor*> raw_sensors;
     raw_sensors.push_back(&on_car);
-    Sensors sensors(raw_sensors);
+    PhotonSensor::Sensors sensors(raw_sensors);
     EXPECT_EQ(1u, sensors.size());
 
     Frame duck;
@@ -48,27 +44,27 @@ TEST_F(SensorAssignmentTest, single_sensor_find) {
 
     EXPECT_EQ(finder2.final_sensor, &on_car);
 }
-//------------------------------------------------------------------------------
+
 TEST_F(SensorAssignmentTest, many_sensor_find) {
     // Creation
     Frame tree;
     tree.set_name_pos_rot("tree", Vec3::ORIGIN, Rot3::UNITY);
-    Sensor on_tree(0u, &tree);
+    PhotonSensor::Sensor on_tree(0u, &tree);
 
     Frame house;
     house.set_name_pos_rot("house", Vec3::ORIGIN, Rot3::UNITY);
-    Sensor on_house(1u, &house);
+    PhotonSensor::Sensor on_house(1u, &house);
 
     Frame car;
     car.set_name_pos_rot("car", Vec3::ORIGIN, Rot3::UNITY);
-    Sensor on_car(2u, &car);
+    PhotonSensor::Sensor on_car(2u, &car);
 
     // Collecting
-    vector<Sensor*> raw_sensors;
+    vector<PhotonSensor::Sensor*> raw_sensors;
     raw_sensors.push_back(&on_tree);
     raw_sensors.push_back(&on_house);
     raw_sensors.push_back(&on_car);
-    Sensors sensors(raw_sensors);
+    PhotonSensor::Sensors sensors(raw_sensors);
     EXPECT_EQ(3u, sensors.size());
 
     Frame duck;
@@ -92,7 +88,7 @@ TEST_F(SensorAssignmentTest, many_sensor_find) {
 
 TEST_F(SensorAssignmentTest, sort_sensors_by_brame) {
     unsigned int n = 1000;
-    vector<Sensor> sensors;
+    vector<PhotonSensor::Sensor> sensors;
     Frame root;
     root.set_name_pos_rot("root", Vec3::ORIGIN, Rot3::UNITY);
     for (unsigned int i = 0; i < n; i++) {
@@ -101,14 +97,14 @@ TEST_F(SensorAssignmentTest, sort_sensors_by_brame) {
             "child"+std::to_string(i),
             Vec3::ORIGIN,
             Rot3::UNITY);
-        sensors.push_back(Sensor(i, child));
+        sensors.push_back(PhotonSensor::Sensor(i, child));
     }
     // Collecting
-    vector<Sensor*> raw_sensors;
+    vector<PhotonSensor::Sensor*> raw_sensors;
     for (unsigned int i = 0; i < sensors.size(); i++) {
         raw_sensors.push_back(&sensors.at(i));
     }
-    vector<Sensor*> by_frame = sort_by_frame(&raw_sensors);
+    vector<PhotonSensor::Sensor*> by_frame = sort_by_frame(&raw_sensors);
     for (unsigned int i = 0; i < by_frame.size()-1; i ++) {
         EXPECT_TRUE(by_frame.at(i)->frame < by_frame.at(i+1)->frame);
     }
