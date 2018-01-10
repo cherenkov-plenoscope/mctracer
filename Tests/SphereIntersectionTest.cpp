@@ -13,16 +13,16 @@ using std::vector;
 class SphereIntersectionTest : public ::testing::Test {
 protected:
 
-	PropagationConfig setup;
-	Vec3    pos;
-	Rot3  rot; 
-	Color*      colo;
-	double radius;
-	Sphere* MySphere;
-	Frame world;
-	Random::Mt19937 prng;
-	double wavelength = 433e-9;
-	PropagationEnvironment sphere_test_environment;
+    PropagationConfig setup;
+    Vec3    pos;
+    Rot3  rot; 
+    Color*      colo;
+    double radius;
+    Sphere* MySphere;
+    Frame world;
+    Random::Mt19937 prng;
+    double wavelength = 433e-9;
+    PropagationEnvironment sphere_test_environment;
 
   SphereIntersectionTest() {
     // You can do set-up work for each test here.
@@ -33,96 +33,96 @@ protected:
   }
   virtual void SetUp() {
 
-  	prng.set_seed(Random::ZERO_SEED);
-  	pos.set(0.0,0.0,0.0);
-  	rot.set(0.0,0.0,0.0);
+    prng.set_seed(Random::ZERO_SEED);
+    pos.set(0.0,0.0,0.0);
+    rot.set(0.0,0.0,0.0);
 
-	world.set_name_pos_rot("world",pos,rot);
+    world.set_name_pos_rot("world",pos,rot);
 
-	colo = new Color(200,128,128);
+    colo = new Color(200,128,128);
 
-	//------------sphere----------------
-	radius = 1.0;
-	MySphere = world.append<Sphere>();
-	MySphere->set_name_pos_rot("MySphere", pos, rot);
-	MySphere->set_inner_color(colo);
-	MySphere->set_outer_color(colo);
-	MySphere->set_radius(radius);
+    //------------sphere----------------
+    radius = 1.0;
+    MySphere = world.append<Sphere>();
+    MySphere->set_name_pos_rot("MySphere", pos, rot);
+    MySphere->set_inner_color(colo);
+    MySphere->set_outer_color(colo);
+    MySphere->set_radius(radius);
 
-	//---post initialize the world to calculate all bounding spheres---
-	world.init_tree_based_on_mother_child_relations();
+    //---post initialize the world to calculate all bounding spheres---
+    world.init_tree_based_on_mother_child_relations();
 
-	sphere_test_environment.root_frame = &world;
-	sphere_test_environment.config = &setup;
-	sphere_test_environment.prng = &prng;
+    sphere_test_environment.root_frame = &world;
+    sphere_test_environment.config = &setup;
+    sphere_test_environment.prng = &prng;
   }
 };
 //------------------------------------------------------------------------------
 TEST_F(SphereIntersectionTest, frontal) {
  
-	double x_pos = -5.0;
+    double x_pos = -5.0;
 
-	Vec3 Support(x_pos,0.0,0.0);
-	Vec3 direction(1.0,0.0,0.0);
+    Vec3 Support(x_pos,0.0,0.0);
+    Vec3 direction(1.0,0.0,0.0);
 
-	Photon P(Support,direction,wavelength);
-	PhotonAndFrame::Propagator(&P, &sphere_test_environment);
+    Photon P(Support,direction,wavelength);
+    PhotonAndFrame::Propagator(&P, &sphere_test_environment);
 
-	ASSERT_EQ(2u, P.get_number_of_interactions_so_far() ) << "There should be 2 "
-	"interaction stored in the history, 1 for creation of the photon and 1 for"
-	"the intersection with the sphere";
+    ASSERT_EQ(2u, P.get_number_of_interactions_so_far() ) << "There should be 2 "
+    "interaction stored in the history, 1 for creation of the photon and 1 for"
+    "the intersection with the sphere";
 
-	EXPECT_EQ(-radius-x_pos, P.get_accumulative_distance() ) << 
-	"The photon was shot from 5m away from the spheres center. The sphere has "
-	"radius 1m. So there are 5-1=4m to traverse. ";
+    EXPECT_EQ(-radius-x_pos, P.get_accumulative_distance() ) << 
+    "The photon was shot from 5m away from the spheres center. The sphere has "
+    "radius 1m. So there are 5-1=4m to traverse. ";
 
-	EXPECT_EQ(
-		Vec3::UNIT_X*(-1),
-		P.get_intersection_at(1).surface_normal_in_object_frame()
-	);
+    EXPECT_EQ(
+        Vec3::UNIT_X*(-1),
+        P.get_intersection_at(1).surface_normal_in_object_frame()
+    );
 }
 //------------------------------------------------------------------------------
 TEST_F(SphereIntersectionTest, emmitting_close_above_surface_tangential) {
 
-	Vec3 Support(0.0,0.0,1.0+1e-9);
-	Vec3 direction(1.0,0.0,0.0);
+    Vec3 Support(0.0,0.0,1.0+1e-9);
+    Vec3 direction(1.0,0.0,0.0);
 
-	Photon P(Support,direction,wavelength);
-	PhotonAndFrame::Propagator(&P, &sphere_test_environment);
+    Photon P(Support,direction,wavelength);
+    PhotonAndFrame::Propagator(&P, &sphere_test_environment);
 
-	ASSERT_EQ(absorption_in_void, P.get_final_interaction_type() );
+    ASSERT_EQ(absorption_in_void, P.get_final_interaction_type() );
 }
 //------------------------------------------------------------------------------
 TEST_F(SphereIntersectionTest, emmitting_close_above_surface_straigtht_away) {
 
-	Vec3 Support(0.0,0.0,1.0+1e-9);
-	Vec3 direction(0.0,0.0,1.0);
+    Vec3 Support(0.0,0.0,1.0+1e-9);
+    Vec3 direction(0.0,0.0,1.0);
 
-	Photon P(Support,direction,wavelength);
-	PhotonAndFrame::Propagator(&P, &sphere_test_environment);
+    Photon P(Support,direction,wavelength);
+    PhotonAndFrame::Propagator(&P, &sphere_test_environment);
 
-	ASSERT_EQ(absorption_in_void, P.get_final_interaction_type() );
+    ASSERT_EQ(absorption_in_void, P.get_final_interaction_type() );
 }
 //------------------------------------------------------------------------------
 TEST_F(SphereIntersectionTest, tangential_intersection) {
 
-	Vec3 Support(-5.0,0.0,1.0);
-	Vec3 direction(1.0,0.0,0.0);
+    Vec3 Support(-5.0,0.0,1.0);
+    Vec3 direction(1.0,0.0,0.0);
 
-	Photon P(Support,direction,wavelength);
-	PhotonAndFrame::Propagator(&P, &sphere_test_environment);
+    Photon P(Support,direction,wavelength);
+    PhotonAndFrame::Propagator(&P, &sphere_test_environment);
 
-	ASSERT_EQ(2u, P.get_number_of_interactions_so_far() );
+    ASSERT_EQ(2u, P.get_number_of_interactions_so_far() );
 
-	Vec3 normal = Vec3::UNIT_Z;
+    Vec3 normal = Vec3::UNIT_Z;
 
-	EXPECT_NEAR(
-		0.0,
-		normal.distance_to(
-			P.get_intersection_at(1).surface_normal_in_object_frame()
-		),
-		1e-12
-	);
+    EXPECT_NEAR(
+        0.0,
+        normal.distance_to(
+            P.get_intersection_at(1).surface_normal_in_object_frame()
+        ),
+        1e-12
+    );
 }
 //------------------------------------------------------------------------------
 // NEW INTERSECTION METHOD
@@ -137,12 +137,12 @@ TEST_F(SphereIntersectionTest, ray_frontal_intersection) {
   ASSERT_FALSE(intersections.empty());
   EXPECT_EQ(intersections.front().get_object(), MySphere);
   EXPECT_EQ(
-  	Vec3(0.0,0.0,-1.0),
-  	intersections.front().position_in_object_frame()
+    Vec3(0.0,0.0,-1.0),
+    intersections.front().position_in_object_frame()
   );
   EXPECT_EQ(
-  	Vec3(0.0,0.0,-1.0),
-  	intersections.front().surface_normal_in_object_frame()
+    Vec3(0.0,0.0,-1.0),
+    intersections.front().surface_normal_in_object_frame()
   );
 }
 //------------------------------------------------------------------------------
@@ -176,12 +176,12 @@ TEST_F(SphereIntersectionTest, ray_starts_inside_sphere) {
   ASSERT_FALSE(intersections.empty());
   EXPECT_EQ(intersections.front().get_object(), MySphere);
   EXPECT_EQ(
-  	Vec3(0.0,0.0,+1.0),
-  	intersections.front().position_in_object_frame()
+    Vec3(0.0,0.0,+1.0),
+    intersections.front().position_in_object_frame()
   );
   EXPECT_EQ(
-  	Vec3(0.0,0.0,+1.0),
-  	intersections.front().surface_normal_in_object_frame()
+    Vec3(0.0,0.0,+1.0),
+    intersections.front().surface_normal_in_object_frame()
   );
 }
 //------------------------------------------------------------------------------
@@ -195,12 +195,12 @@ TEST_F(SphereIntersectionTest, ray_tangents_sphere) {
   ASSERT_FALSE(intersections.empty());
   EXPECT_EQ(intersections.front().get_object(), MySphere);
   EXPECT_EQ(
-  	Vec3(1.0, 0.0, 0.0),
-  	intersections.front().position_in_object_frame())
+    Vec3(1.0, 0.0, 0.0),
+    intersections.front().position_in_object_frame())
   ;
   EXPECT_EQ(
-  	Vec3(1.0, 0.0, 0.0),
-  	intersections.front().surface_normal_in_object_frame()
+    Vec3(1.0, 0.0, 0.0),
+    intersections.front().surface_normal_in_object_frame()
   );
 }
 //------------------------------------------------------------------------------
