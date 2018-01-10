@@ -2,11 +2,9 @@
 #include "gtest/gtest.h"
 #include "Scenery/Geometry/ZaxisCylinderRayIntersectionEquation.h"
 
-class ZaxisCylinderRayIntersectionEquationTest : public ::testing::Test{
-};
-//------------------------------------------------------------------------------
-TEST_F(ZaxisCylinderRayIntersectionEquationTest, start_inside_run_in_z_no_hit) {
+class ZaxisCylinderRayIntersectionEquationTest : public ::testing::Test{};
 
+TEST_F(ZaxisCylinderRayIntersectionEquationTest, start_inside_run_in_z_no_hit) {
   Ray ray(Vec3::ORIGIN, Vec3::ORIGIN);
 
   ZaxisCylinderRayIntersectionEquation eq(1.0, &ray);
@@ -14,9 +12,8 @@ TEST_F(ZaxisCylinderRayIntersectionEquationTest, start_inside_run_in_z_no_hit) {
   EXPECT_FALSE(eq.has_solution());
   EXPECT_FALSE(eq.has_causal_solution());
 }
-//------------------------------------------------------------------------------
+
 TEST_F(ZaxisCylinderRayIntersectionEquationTest, start_inside_and_hit) {
-  
   Ray ray(Vec3::ORIGIN, Vec3(1.0, 0.0, 0.0));
   ZaxisCylinderRayIntersectionEquation eq(1.0, &ray);
 
@@ -26,9 +23,8 @@ TEST_F(ZaxisCylinderRayIntersectionEquationTest, start_inside_and_hit) {
   EXPECT_TRUE(eq.has_causal_solution());
   EXPECT_EQ(1.0, eq.get_ray_parameter_for_intersection());
 }
-//------------------------------------------------------------------------------
+
 TEST_F(ZaxisCylinderRayIntersectionEquationTest, start_outside_and_hit) {
-  
   Ray ray(Vec3(-2.0, 0.0, 0.0), Vec3(1.0, 0.0, 0.0));
   ZaxisCylinderRayIntersectionEquation eq(1.0, &ray);
 
