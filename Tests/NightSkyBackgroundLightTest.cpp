@@ -1,13 +1,12 @@
+// Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
 #include "Plenoscope/LightFieldSensor/Config.h"
 #include "Plenoscope/NightSkyBackground/NightSkyBackground.h"
 #include "Tools/AsciiIo.h"
 class NightSkyBackgroundLightTest : public ::testing::Test {};
-//------------------------------------------------------------------------------
+
 TEST_F(NightSkyBackgroundLightTest, init) {
-
     // SET UP TELESCOPE
-
     Plenoscope::LightFieldSensor::Config config;
 
     config.expected_imaging_system_focal_length = 75.0;
@@ -21,24 +20,20 @@ TEST_F(NightSkyBackgroundLightTest, init) {
     Plenoscope::LightFieldSensor::Geometry geometry(config);
 
     Function::LinInterpol nsb_flux_vs_wavelength(
-    	AsciiIo::gen_table_from_file(
-    		"night_sky_background_flux_vs_wavelength_la_palma.txt"
-    	)
-    );
+        AsciiIo::gen_table_from_file(
+            "night_sky_background_flux_vs_wavelength_la_palma.txt"));
 
     Plenoscope::NightSkyBackground::Light nsb(
-    	&geometry,
-    	&nsb_flux_vs_wavelength
-    );
+        &geometry,
+        &nsb_flux_vs_wavelength);
 
     EXPECT_EQ(
-        nsb.fov_radius, 
+        nsb.fov_radius,
         0.5*Deg2Rad(6.5)*Plenoscope::NightSkyBackground::FOV_RADIUS_OVERHEAD);
 
     EXPECT_EQ(
-        nsb.aperture_radius, 
+        nsb.aperture_radius,
         25*Plenoscope::NightSkyBackground::APERTURE_RADIUS_OVERHEAD);
-
 
     std::cout << nsb.__repr__() << "\n";
 }
