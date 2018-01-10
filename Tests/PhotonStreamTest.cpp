@@ -1,3 +1,4 @@
+// Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
 #include "SignalProcessing/PhotonStream.h"
 #include "SignalProcessing/ElectricPulse.h"
@@ -5,7 +6,6 @@
 #include "Core/SimulationTruth.h"
 using std::vector;
 using std::string;
-
 
 vector<vector<SignalProcessing::ElectricPulse>> create_photon_stream(
     const unsigned int number_of_channels,
@@ -16,23 +16,22 @@ vector<vector<SignalProcessing::ElectricPulse>> create_photon_stream(
     Random::Mt19937 prng(seed);
 
     vector<vector<SignalProcessing::ElectricPulse>> photon_stream;
-    for(unsigned int i=0; i<number_of_channels; i++) {
+    for (unsigned int i = 0; i < number_of_channels; i++) {
         vector<SignalProcessing::ElectricPulse> pulses_in_channel;
-
         float t = 0.0;
-        while(true) {
-
+        while (true) {
             const float t_next = prng.expovariate(pulse_rate_per_slice);
-            if(t + t_next > exposure_time) {
+            if (t + t_next > exposure_time) {
                 break;
-            }else{
+            } else {
                 t += t_next;
                 SignalProcessing::ElectricPulse pulse;
                 pulse.arrival_time = t;
-                pulse.simulation_truth_id = (int)(1000*prng.uniform());
+                pulse.simulation_truth_id = static_cast<int>(
+                    1000*prng.uniform());
                 pulses_in_channel.push_back(pulse);
             }
-        } 
+        }
         photon_stream.push_back(pulses_in_channel);
     }
 
@@ -40,32 +39,28 @@ vector<vector<SignalProcessing::ElectricPulse>> create_photon_stream(
 }
 
 void expect_eq(
-    SignalProcessing::PhotonStream::Stream &A, 
-    SignalProcessing::PhotonStream::Stream &B,
-    bool simulation_truth_eq=true) {
-
+    const SignalProcessing::PhotonStream::Stream &A,
+    const SignalProcessing::PhotonStream::Stream &B,
+    bool simulation_truth_eq = true
+) {
     EXPECT_EQ(A.slice_duration, B.slice_duration);
     ASSERT_EQ(
-        A.photon_stream.size(), 
+        A.photon_stream.size(),
         B.photon_stream.size());
-    for(unsigned int c=0; c<A.photon_stream.size(); c++) {
-
+    for (unsigned int c = 0; c < A.photon_stream.size(); c++) {
         ASSERT_EQ(
-            A.photon_stream.at(c).size(), 
+            A.photon_stream.at(c).size(),
             B.photon_stream.at(c).size());
-        for(unsigned int p=0; p<A.photon_stream.at(c).size(); p++) {
-
+        for (unsigned int p = 0; p < A.photon_stream.at(c).size(); p++) {
             EXPECT_NEAR(
                 A.photon_stream.at(c).at(p).arrival_time,
                 B.photon_stream.at(c).at(p).arrival_time,
-                A.slice_duration
-            );
+                A.slice_duration);
 
-            if (simulation_truth_eq){
+            if (simulation_truth_eq) {
                 EXPECT_EQ(
-                    A.photon_stream.at(c).at(p).simulation_truth_id, 
-                    B.photon_stream.at(c).at(p).simulation_truth_id
-                );
+                    A.photon_stream.at(c).at(p).simulation_truth_id,
+                    B.photon_stream.at(c).at(p).simulation_truth_id);
             }
         }
     }
@@ -99,23 +94,22 @@ void write_and_read_back(
         stream.photon_stream,
         truth_path);
 
-    SignalProcessing::PhotonStream::Stream ps_without_truth = 
+    SignalProcessing::PhotonStream::Stream ps_without_truth =
         SignalProcessing::PhotonStream::read(path);
 
     expect_eq(stream, ps_without_truth, false);
 
-    SignalProcessing::PhotonStream::Stream ps_with_truth = 
+    SignalProcessing::PhotonStream::Stream ps_with_truth =
         SignalProcessing::PhotonStream::read_with_simulation_truth(
-            path, 
+            path,
             truth_path);
 
     expect_eq(stream, ps_with_truth);
 }
 
 class PhotonStreamTest : public ::testing::Test {};
-//----------------------------------------------------------------------
-TEST_F(PhotonStreamTest, write_and_read_back_full_single_pulse_event) {
 
+TEST_F(PhotonStreamTest, write_and_read_back_full_single_pulse_event) {
     const unsigned int number_of_channels = 1337;
     const float sample_frequency = 2e9;
     const float single_pulse_rate = 50e6;
@@ -127,12 +121,10 @@ TEST_F(PhotonStreamTest, write_and_read_back_full_single_pulse_event) {
         sample_frequency,
         single_pulse_rate,
         exposure_time,
-        seed
-    );
+        seed);
 }
-//------------------------------------------------------------------------------
-TEST_F(PhotonStreamTest, zero_channels) {
 
+TEST_F(PhotonStreamTest, zero_channels) {
     const unsigned int number_of_channels = 0;
     const float sample_frequency = 2e9;
     const float single_pulse_rate = 50e6;
@@ -144,12 +136,10 @@ TEST_F(PhotonStreamTest, zero_channels) {
         sample_frequency,
         single_pulse_rate,
         exposure_time,
-        seed
-    );
+        seed);
 }
-//------------------------------------------------------------------------------
-TEST_F(PhotonStreamTest, empty_channels) {
 
+TEST_F(PhotonStreamTest, empty_channels) {
     const unsigned int number_of_channels = 1337;
     const float sample_frequency = 2e9;
     const float single_pulse_rate = 0.0;
@@ -161,19 +151,18 @@ TEST_F(PhotonStreamTest, empty_channels) {
         sample_frequency,
         single_pulse_rate,
         exposure_time,
-        seed
-    );
+        seed);
 }
-//------------------------------------------------------------------------------
-TEST_F(PhotonStreamTest, number_time_slices_too_big) {
 
+TEST_F(PhotonStreamTest, number_time_slices_too_big) {
     EXPECT_NO_THROW(
-        SignalProcessing::PhotonStream::assert_number_time_slices_below_8bit_max(0);
-    );
+        SignalProcessing::
+            PhotonStream::
+                assert_number_time_slices_below_8bit_max(0));
 
     EXPECT_THROW(
-        SignalProcessing::PhotonStream::assert_number_time_slices_below_8bit_max(256);,
-        std::invalid_argument
-    );
+        SignalProcessing::
+            PhotonStream::
+                assert_number_time_slices_below_8bit_max(256),
+        std::invalid_argument);
 }
-//------------------------------------------------------------------------------
