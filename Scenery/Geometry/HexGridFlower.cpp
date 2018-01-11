@@ -14,8 +14,11 @@ HexGridFlower::HexGridFlower(
         facet_count_on_outer_diameter;
     const double inner_hex_grid_radius = outer_hex_grid_radius*(sqrt(3.0)/2.0);
     const double inner_hex_grid_diameter = 2.0*inner_hex_grid_radius;
-    const double outer_hex_facet_radius = inner_hex_grid_diameter/(
-            0.5*(3.0*double(facet_row_count_on_flat2flat_diameter) + 1.0));
+    const double outer_hex_facet_radius =
+        inner_hex_grid_diameter/(
+            0.5*(
+                3.0*static_cast<double>(facet_row_count_on_flat2flat_diameter)
+                + 1.0));
     const double inner_hex_facet_radius =
         outer_hex_facet_radius*(sqrt(3.0)/2.0);
     facet_spacing = 2.0*inner_hex_facet_radius;
