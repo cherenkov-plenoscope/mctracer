@@ -1,7 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef __RectangularPrismZ_H_INCLUDE__
-#define __RectangularPrismZ_H_INCLUDE__
+#ifndef SCENERY_GEOMETRY_RECTANGULARPRISMZ_H_
+#define SCENERY_GEOMETRY_RECTANGULARPRISMZ_H_
 
+#include <string>
 #include "PrismZ.h"
 
 class RectangularPrismZ :public PrismZ {
@@ -24,4 +25,5 @@ class RectangularPrismZ :public PrismZ {
     void set_rectangle_x_width(const double x_width);
     void set_rectangle_y_width(const double y_width);
 };
-#endif // __RectangularPrismZ_H_INCLUDE__
+
+#endif  // SCENERY_GEOMETRY_RECTANGULARPRISMZ_H_
