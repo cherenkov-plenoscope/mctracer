@@ -17,7 +17,6 @@
 #include "HexPlane.h"
 #include "Plane.h"
 #include "PlaneDualSphericalBound.h"
-#include "Prism3D.h"
 #include "RectangularBox.h"
 #include "Sphere.h"
 #include "SphereCapWithCylinderBound.h"
