@@ -1,39 +1,31 @@
-//=================================
-// include guard
-#ifndef __Annulus_H_INCLUDED__
-#define __Annulus_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef SCENERY_PRIMITIVE_ANNULUS_H_
+#define SCENERY_PRIMITIVE_ANNULUS_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
 #include <string>
 #include <vector>
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
 #include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
 #include "Scenery/Geometry/CylinderPrismZ.h"
-//=================================
+
 class Annulus :public SurfaceEntity{
-protected:
+ protected:
+    CylinderPrismZ outer_bound;
+    CylinderPrismZ inner_bound;
 
-	CylinderPrismZ outer_bound;
-	CylinderPrismZ inner_bound;
-public:
+ public:
+    void set_outer_inner_radius(
+        const double outer_radius,
+        const double inner_radius);
+    std::string str()const;
+    void calculate_intersection_with(
+        const Ray* ray,
+        std::vector<Intersection> *intersections)const;
 
-	void set_outer_inner_radius(
-		const double outer_radius, 
-		const double inner_radius
-	);
-	std::string str()const;
-	void calculate_intersection_with(
-        const Ray* ray, 
-        std::vector<Intersection> *intersections
-    )const;
-private:
-
-	double get_area()const;
-	void post_initialize_radius_of_enclosing_sphere();
+ private:
+    double get_area()const;
+    void post_initialize_radius_of_enclosing_sphere();
 };
-#endif // __Annulus_H_INCLUDED__
+
+#endif  // SCENERY_PRIMITIVE_ANNULUS_H_

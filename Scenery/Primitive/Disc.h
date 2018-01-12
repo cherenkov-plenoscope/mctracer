@@ -1,34 +1,28 @@
-//=================================
-// include guard
-#ifndef __DISC_H_INCLUDED__
-#define __DISC_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef SCENERY_PRIMITIVE_DISC_H_
+#define SCENERY_PRIMITIVE_DISC_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
+#include <vector>
+#include <string>
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
 #include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
 #include "Scenery/Geometry/CylinderPrismZ.h"
-#include <vector>
-#include <string>
-//=================================
+
 class Disc :public SurfaceEntity{
-protected:
+ protected:
+    CylinderPrismZ cylinder_bounds;
 
-	CylinderPrismZ cylinder_bounds;
-public:
+ public:
+    void set_radius(const double radius);
+    std::string str()const;
+    void calculate_intersection_with(
+        const Ray* ray,
+        std::vector<Intersection> *intersections)const;
 
-	void set_radius(const double radius);
-	std::string str()const;
-	void calculate_intersection_with(
-        const Ray* ray, 
-        std::vector<Intersection> *intersections
-    )const;
-private:
-	double get_area()const;
-	void post_initialize_radius_of_enclosing_sphere();
+ private:
+    double get_area()const;
+    void post_initialize_radius_of_enclosing_sphere();
 };
-#endif // __DISC_H_INCLUDED__
+
+#endif  // SCENERY_PRIMITIVE_DISC_H_
