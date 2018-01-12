@@ -1,13 +1,7 @@
-//=================================
-// include guard
-#ifndef __PRIMITIVE_H_INCLUDED__
-#define __PRIMITIVE_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef SCENERY_PRIMITIVE_PRIMITIVE_H_
+#define SCENERY_PRIMITIVE_PRIMITIVE_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
 #include "Annulus.h"
 #include "BiConvexLens.h"
 #include "BiConvexLensHexBound.h"
@@ -24,5 +18,4 @@
 #include "SphereCapWithRectangularBound.h"
 #include "Triangle.h"
 
-//=================================
-#endif // __PRIMITIVE_H_INCLUDED__
+#endif  // SCENERY_PRIMITIVE_PRIMITIVE_H_
