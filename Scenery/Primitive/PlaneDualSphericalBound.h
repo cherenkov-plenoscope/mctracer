@@ -1,40 +1,29 @@
-//=================================
-// include guard
-#ifndef __PlaneDualSphericalBound_H_INCLUDED__
-#define __PlaneDualSphericalBound_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef SCENERY_PRIMITIVE_PLANEDUALSPHERICALBOUND_H_
+#define SCENERY_PRIMITIVE_PLANEDUALSPHERICALBOUND_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
-#include <iostream> 
+#include <vector>
+#include <string>
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
 #include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
 #include "Scenery/Geometry/DualSphericalPrismZ.h"
-#include <vector>
-#include <string>
 
-//=================================
 class PlaneDualSphericalBound :public SurfaceEntity{
-protected:	
+ protected:
+    DualSphericalPrismZ dual_sphere_bounds;
 
-	DualSphericalPrismZ dual_sphere_bounds;
-public:
+ public:
+    void set_x_hight_and_y_width(
+        const double x_width,
+        const double y_width);
+    std::string str()const;
+    void calculate_intersection_with(
+        const Ray* ray,
+        std::vector<Intersection> *intersections)const;
 
-	void set_x_hight_and_y_width(
-		const double x_width,
-		const double y_width
-	);
-
-	std::string str()const;
-	void calculate_intersection_with(
-        const Ray* ray, 
-        std::vector<Intersection> *intersections
-    )const;
-private:
-	
-	void post_initialize_radius_of_enclosing_sphere();
+ private:
+    void post_initialize_radius_of_enclosing_sphere();
 };
-#endif // __PlaneDualSphericalBound_H_INCLUDED__
+
+#endif  // SCENERY_PRIMITIVE_PLANEDUALSPHERICALBOUND_H_
