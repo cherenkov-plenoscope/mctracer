@@ -1,48 +1,31 @@
-//=================================
-// include guard
-#ifndef __PLANE_H_INCLUDED__
-#define __PLANE_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef SCENERY_PRIMITIVE_PLANE_H_
+#define SCENERY_PRIMITIVE_PLANE_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
 #include <string>
+#include <vector>
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
 #include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
 #include "Scenery/Geometry/RectangularPrismZ.h"
-#include <vector>
-#include <string>
 
-//=================================
-class Plane :public SurfaceEntity{
-protected:	
+class Plane :public SurfaceEntity {
+ protected:
+    RectangularPrismZ RectBounds;
 
-	RectangularPrismZ RectBounds;
-public:
+ public:
+    Plane();
+    Plane(const std::string name, const Vec3 pos, const Rot3 rot);
+    void set_x_y_width(
+        const double x_width,
+        const double y_width);
+    std::string str()const;
+    void calculate_intersection_with(
+        const Ray* ray,
+        std::vector<Intersection> *intersections)const;
 
-	Plane() {};
-	
-	Plane(
-		const std::string new_name,
-        const Vec3    new_pos,
-        const Rot3  new_rot)
-		: SurfaceEntity(new_name, new_pos, new_rot) {};
-
-	void set_x_y_width(
-		const double x_width,
-		const double y_width
-	);
-
-	std::string str()const;
-	void calculate_intersection_with(
-        const Ray* ray, 
-        std::vector<Intersection> *intersections
-    )const;
-private:
-	
-	void post_initialize_radius_of_enclosing_sphere();
+ private:
+    void post_initialize_radius_of_enclosing_sphere();
 };
-#endif // __PLANE_H_INCLUDED__
+
+#endif  // SCENERY_PRIMITIVE_PLANE_H_
