@@ -1,20 +1,19 @@
 set(SOURCE
-   	${SOURCE}	
-	${CMAKE_CURRENT_SOURCE_DIR}/Annulus.cpp 
-	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLens.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLensHexBound.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Cylinder.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Disc.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/EllipticalCapWithHexagonalBound.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/HexPlane.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Plane.cpp 
-	${CMAKE_CURRENT_SOURCE_DIR}/PlaneDualSphericalBound.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Sphere.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithCylinderBound.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithHexagonalBound.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithRectangularBound.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Triangle.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/RectangularBox.cpp
-	#${CMAKE_CURRENT_SOURCE_DIR}/Prism3D.cpp
-   	PARENT_SCOPE
+    ${SOURCE}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Annulus.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLens.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLensHexBound.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Cylinder.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Disc.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/EllipticalCapWithHexagonalBound.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/HexPlane.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Plane.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PlaneDualSphericalBound.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Sphere.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithCylinderBound.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithHexagonalBound.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SphereCapWithRectangularBound.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Triangle.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/RectangularBox.cpp
+    PARENT_SCOPE
 )

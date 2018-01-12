@@ -3,10 +3,10 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/StereoLitography")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/Primitive")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/Geometry")
 set(SOURCE
-   	${SOURCE}	
-	${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryFactory.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ColorMap.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/FunctionMap.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Scenery.cpp
-   	PARENT_SCOPE
+    ${SOURCE}   
+    ${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryFactory.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ColorMap.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/FunctionMap.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Scenery.cpp
+    PARENT_SCOPE
 )
