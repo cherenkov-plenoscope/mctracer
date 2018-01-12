@@ -1,25 +1,15 @@
-//=================================
-// include guard
-#ifndef __RectangularBox_H_INCLUDED__
-#define __RectangularBox_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef SCENERY_PRIMITIVE_RECTANGULARBOX_H_
+#define SCENERY_PRIMITIVE_RECTANGULARBOX_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
 #include "Plane.h"
 
-//=================================
-class RectangularBox :public SurfaceEntity{
-public:
-
-	void set_xyz_width(
-		const double x_width,
-		const double y_width,
-		const double z_width
-	);
-protected:
-
+class RectangularBox :public SurfaceEntity {
+ public:
+    void set_xyz_width(
+        const double x_width,
+        const double y_width,
+        const double z_width);
 };
-#endif // __RectangularBox_H_INCLUDED__ 
+
+#endif  // SCENERY_PRIMITIVE_RECTANGULARBOX_H_
