@@ -25,7 +25,6 @@
 #include "SignalProcessing/PhotonStream.h"
 #include "Tools/PathTools.h"
 #include "Tools/HeaderBlock.h"
-#include "Tools/Time.h"
 #include "Scenery/Scenery.h"
 #include <experimental/filesystem>
 namespace fs = std::experimental::filesystem;
