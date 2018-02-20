@@ -1,13 +1,7 @@
-//=================================
-// include guard
-#ifndef __TOOLS_NUMERIC_H_INCLUDED__
-#define __TOOLS_NUMERIC_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef TOOLS_NUMERIC_H_
+#define TOOLS_NUMERIC_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
 #include <vector>
 
 namespace Numeric {
@@ -16,4 +10,4 @@ namespace Numeric {
     std::vector<double> linspace(double begin, double end, unsigned int steps);
 }
 
-#endif // __TOOLS_NUMERIC_H_INCLUDED__
+#endif  // TOOLS_NUMERIC_H_
