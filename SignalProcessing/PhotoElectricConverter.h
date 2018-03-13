@@ -1,26 +1,18 @@
-//=================================
-// include guard
-#ifndef __PhotoElectricConverter_H_INCLUDED__
-#define __PhotoElectricConverter_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef MCTRACER_SIGNALPROCESSING_PHOTOELECTRICCONVERTER_H_
+#define MCTRACER_SIGNALPROCESSING_PHOTOELECTRICCONVERTER_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
+#include <vector>
 #include "Core/Function/Function.h"
 #include "Core/Random/Random.h"
 #include "PipelinePhoton.h"
 #include "ElectricPulse.h"
-#include <vector>
 
 
-//=================================
 namespace SignalProcessing {
-    namespace PhotoElectricConverter {
+namespace PhotoElectricConverter {
 
 struct Config {
-
     const Function::Func1D* quantum_efficiency_vs_wavelength;
     double dark_rate;
     double probability_for_second_puls;
@@ -28,36 +20,29 @@ struct Config {
 };
 
 static const Function::Constant zero_efficiency(
-    0.0, 
-    Function::Limits(200e-9, 1200e-9)
-);
+    0.0,
+    Function::Limits(200e-9, 1200e-9));
 
 class Converter {
-
     const Config* config;
-public:
 
-    Converter(const Config* config);
-
+ public:
+    explicit Converter(const Config* config);
     std::vector<ElectricPulse> get_pulse_pipeline_for_photon_pipeline(
         const std::vector<PipelinePhoton> &photon_pipeline,
         const double exposure_time,
-        Random::Generator* prng
-    );
-
+        Random::Generator* prng);
     void add_pulse(
         const ElectricPulse &pulse,
-        std::vector<ElectricPulse> *electric_pipeline, 
-        Random::Generator* prng
-    )const;
-
+        std::vector<ElectricPulse> *electric_pipeline,
+        Random::Generator* prng)const;
     void add_accidental_pulse(
-        std::vector<ElectricPulse> *electric_pipeline, 
+        std::vector<ElectricPulse> *electric_pipeline,
         const double exposure_time,
-        Random::Generator* prng
-    )const;
+        Random::Generator* prng)const;
 };
 
-    }//PhotoElectricConverter
-}//SignalProcessing
-#endif // __PhotoElectricConverter_H_INCLUDED__ 
+}  // namespace PhotoElectricConverter
+}  // namespace SignalProcessing
+
+#endif  // MCTRACER_SIGNALPROCESSING_PHOTOELECTRICCONVERTER_H_

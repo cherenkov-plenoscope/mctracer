@@ -1,13 +1,7 @@
-//=================================
-// include guard
-#ifndef __ElectricPulse_H_INCLUDED__
-#define __ElectricPulse_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef MCTRACER_SIGNALPROCESSING_ELECTRICPULSE_H_
+#define MCTRACER_SIGNALPROCESSING_ELECTRICPULSE_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
 namespace SignalProcessing {
 
 struct ElectricPulse {
@@ -16,9 +10,9 @@ struct ElectricPulse {
     ElectricPulse();
     ElectricPulse(
         const double arrival_time,
-        const int simulation_truth_id
-    );
+        const int simulation_truth_id);
 };
 
-}//SignalProcessing
-#endif // __ElectricPulse_H_INCLUDED__
+}  // namespace SignalProcessing
+
+#endif  // MCTRACER_SIGNALPROCESSING_ELECTRICPULSE_H_

@@ -1,58 +1,48 @@
-#include "PreTrigger.h"
-//------------------------------------------------------------------------------
+// Copyright 2015 Sebastian A. Mueller
+#include "SignalProcessing/PreTrigger.h"
+
 namespace SignalProcessing {
-	namespace PreTrigger {
-//------------------------------------------------------------------------------
+namespace PreTrigger {
+
 Config::Config() {
-	time_window = 1.0;
-	threshold = 1;
+    time_window = 1.0;
+    threshold = 1;
 }
-//------------------------------------------------------------------------------
+
 bool might_trigger(
-	const std::vector<double> *arrival_moments,
-	const Config &config
+    const std::vector<double> *arrival_moments,
+    const Config &config
 ) {
-	double growing_delay;
-	unsigned int j;	
-
-	if(arrival_moments->size() == 0) {
-
-		if(config.threshold == 0)
-
-			return true;
-		else
-
-			return false;
-	}else if(arrival_moments->size() == 1 && config.threshold <= 1) {
-
-		if(config.threshold <= 1)
-
-			return true;
-		else
-
-			return false;
-	}else{
-
-		for(unsigned int i=0; i<arrival_moments->size()-1; i++) {
-			
-			growing_delay = 0.0;
-			j = 1;
-
-			while(	growing_delay < config.time_window && 
-					j<arrival_moments->size()-i-1
-			) {
-				if(j >= config.threshold)
-					return true;
-				
-				growing_delay += arrival_moments->at(i+1+j) - 
-					arrival_moments->at(i+j);
-				j++;
-			}
-		}
-
-		return false;
-	}
+    double growing_delay;
+    unsigned int j;
+    if (arrival_moments->size() == 0) {
+        if (config.threshold == 0)
+            return true;
+        else
+            return false;
+    } else if (arrival_moments->size() == 1 && config.threshold <= 1) {
+        if (config.threshold <= 1)
+            return true;
+        else
+            return false;
+    } else {
+        for (unsigned int i = 0; i < arrival_moments->size()-1; i++) {
+            growing_delay = 0.0;
+            j = 1;
+            while (
+                growing_delay < config.time_window &&
+                j < arrival_moments->size()-i-1
+            ) {
+                if (j >= config.threshold)
+                    return true;
+                growing_delay += arrival_moments->at(i+1+j) -
+                    arrival_moments->at(i+j);
+                j++;
+            }
+        }
+        return false;
+    }
 }
-//------------------------------------------------------------------------------
-	}//PreTrigger
-}//SignalProcessing
+
+}  // namespace PreTrigger
+}  // namespace SignalProcessing

@@ -1,29 +1,24 @@
-//=================================
-// include guard
-#ifndef __PreSumTrigger_H_INCLUDED__
-#define __PreSumTrigger_H_INCLUDED__
+// Copyright 2015 Sebastian A. Mueller
+#ifndef MCTRACER_SIGNALPROCESSING_PRETRIGGER_H_
+#define MCTRACER_SIGNALPROCESSING_PRETRIGGER_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
 #include <vector>
 
 namespace SignalProcessing {
-	namespace PreTrigger {
+namespace PreTrigger {
 
 struct Config {
-	double time_window;
-	unsigned int threshold;
-	Config();
+    double time_window;
+    unsigned int threshold;
+    Config();
 };
 
 bool might_trigger(
-	const std::vector<double> *arrival_moments,
-	const Config &config
+    const std::vector<double> *arrival_moments,
+    const Config &config
 );
-		
-	}//PreTrigger
-}//SignalProcessing
-#endif // __PreSumTrigger_H_INCLUDED__
+
+}  // namespace PreTrigger
+}  // namespace SignalProcessing
+
+#endif  // MCTRACER_SIGNALPROCESSING_PRETRIGGER_H_

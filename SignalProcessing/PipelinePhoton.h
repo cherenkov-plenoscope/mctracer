@@ -1,13 +1,8 @@
-//=================================
-// include guard
-#ifndef __PipelinePhoton_H_INCLUDED__
-#define __PipelinePhoton_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef MCTRACER_SIGNALPROCESSING_PIPELINEPHOTON_H_
+#define MCTRACER_SIGNALPROCESSING_PIPELINEPHOTON_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies>
+#include <vector>
 #include "PhotonSensor/PhotonSensor.h"
 
 namespace SignalProcessing {
@@ -20,15 +15,15 @@ struct PipelinePhoton {
     PipelinePhoton(
         const double arrival_time,
         const double wavelength,
-        const int simulation_truth_id
-    );
+        const int simulation_truth_id);
 };
 
 std::vector<std::vector<PipelinePhoton>> get_photon_pipelines(
-    const PhotonSensor::Sensors* sensors
-);
+    const PhotonSensor::Sensors* sensors);
 
-void sort_photon_pipelines_arrival_time(std::vector<PipelinePhoton>* pipeline);
+void sort_photon_pipelines_arrival_time(
+    std::vector<PipelinePhoton>* pipeline);
 
-}//SignalProcessing
-#endif // __PipelinePhoton_H_INCLUDED__
+}  // namespace SignalProcessing
+
+#endif  // MCTRACER_SIGNALPROCESSING_PIPELINEPHOTON_H_

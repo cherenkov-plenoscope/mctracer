@@ -1,22 +1,16 @@
-//=================================
-// include guard
-#ifndef __SignalProcessing_TimeLineAddition_H_INCLUDED__
-#define __SignalProcessing_TimeLineAddition_H_INCLUDED__
+// Copyright 2015 Sebastian A. Mueller
+#ifndef MCTRACER_SIGNALPROCESSING_TIMELINEADDITION_H_
+#define MCTRACER_SIGNALPROCESSING_TIMELINEADDITION_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
 #include <vector>
 
 namespace SignalProcessing {
 
-    void add_second_to_first_at(
-        std::vector<double> *first, 
-        const std::vector<double> *second, 
-        int i
-    );
+void add_second_to_first_at(
+    std::vector<double> *first,
+    const std::vector<double> *second,
+    int i);
 
-}//SignalProcessing
-#endif // __SignalProcessing_TimeLineAddition_H_INCLUDED__
+}  // namespace SignalProcessing
+
+#endif  // MCTRACER_SIGNALPROCESSING_TIMELINEADDITION_H_
