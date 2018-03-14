@@ -1,21 +1,15 @@
-//=================================
-// include guard
-#ifndef __FILETOOLS_H_INCLUDED__
-#define __FILETOOLS_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef MCTRACER_TOOLS_FILETOOLS_H_
+#define MCTRACER_TOOLS_FILETOOLS_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies	  
 #include <string>
 
-
 namespace FileTools {
-	void write_text_to_file(
-		const std::string &text,
-		const std::string &path
-	);
-}
 
-#endif // __FILETOOLS_H_INCLUDED__
+void write_text_to_file(
+    const std::string &text,
+    const std::string &path);
+
+}  // namespace FileTools
+
+#endif  // MCTRACER_TOOLS_FILETOOLS_H_

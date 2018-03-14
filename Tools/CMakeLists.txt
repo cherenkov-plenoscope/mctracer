@@ -1,14 +1,14 @@
 set(SOURCE
-   	${SOURCE}
-	${CMAKE_CURRENT_SOURCE_DIR}/FileTools.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/StringTools.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/AsciiIo.cpp	
-	${CMAKE_CURRENT_SOURCE_DIR}/Tools.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/UserInteraction.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/PathTools.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Time.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/OnlineStatistics.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/HeaderBlock.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Numeric.cpp
-   	PARENT_SCOPE
+    ${SOURCE}
+    ${CMAKE_CURRENT_SOURCE_DIR}/FileTools.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/StringTools.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/AsciiIo.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Tools.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/UserInteraction.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PathTools.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Time.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/OnlineStatistics.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/HeaderBlock.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Numeric.cpp
+    PARENT_SCOPE
 )
