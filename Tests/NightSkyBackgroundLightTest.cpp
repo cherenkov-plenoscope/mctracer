@@ -35,5 +35,5 @@ TEST_F(NightSkyBackgroundLightTest, init) {
         nsb.aperture_radius,
         25*Plenoscope::NightSkyBackground::APERTURE_RADIUS_OVERHEAD);
 
-    std::cout << nsb.__repr__() << "\n";
+    std::cout << nsb.str() << "\n";
 }

@@ -23,7 +23,7 @@ struct Light {
     Light(
         const LightFieldSensor::Geometry *_sensor_geometry,
         const Function::Func1D* flux_vs_wavelength);
-    std::string __repr__()const;
+    std::string str()const;
 };
 
 }  // namespace NightSkyBackground
