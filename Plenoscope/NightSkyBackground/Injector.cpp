@@ -20,7 +20,6 @@ void inject_nsb_into_photon_pipeline(
     if (photon_pipelines->size() == 0)
         return;
 
-    //------------------------------------------------
     // FIND MIN MAX ARRIVAL TIMES OF CHERENKOV PHOTONS
 
     unsigned int number_cherenkov_photons = 0;
@@ -30,27 +29,22 @@ void inject_nsb_into_photon_pipeline(
 
     for (unsigned int i = 0; i < photon_pipelines->size(); i++) {
         if (photon_pipelines->at(i).size() > 0) {
-            if (
-                photon_pipelines->at(i).front().arrival_time <
+            if (photon_pipelines->at(i).front().arrival_time <
                 min_crk_arrival_time
             )
                 min_crk_arrival_time =
                     photon_pipelines->at(i).front().arrival_time;
-            if (
-                photon_pipelines->at(i).back().arrival_time >
+            if (photon_pipelines->at(i).back().arrival_time >
                 max_crk_arrival_time
             )
                 max_crk_arrival_time =
                     photon_pipelines->at(i).back().arrival_time;
-
             number_cherenkov_photons += photon_pipelines->at(i).size();
         }
-
         for (SignalProcessing::PipelinePhoton ph : photon_pipelines->at(i))
             arrival_times.push_back(ph.arrival_time);
     }
 
-    //--------------------------------------------
     // FIND MODE OF CHERENKOV PHOTON ARRIVAL TIMES
 
     double mode_of_cherenkov_arrival_times;
@@ -59,18 +53,14 @@ void inject_nsb_into_photon_pipeline(
         mode_of_cherenkov_arrival_times = 0.0;
     } else {
         const unsigned int bin_edge_count = 2u + sqrt(number_cherenkov_photons);
-
         vector<double> arrival_time_bin_edges = Numeric::linspace(
             min_crk_arrival_time,
             max_crk_arrival_time,
             bin_edge_count);
-
         Histogram1D arrival_time_histo(arrival_times, arrival_time_bin_edges);
-
         mode_of_cherenkov_arrival_times = arrival_time_histo.mode();
     }
 
-    //--------------------------------
     // INIT START TIME OF NSB EXPOSURE
 
     const double nsb_exposure_start_time =
@@ -83,7 +73,6 @@ void inject_nsb_into_photon_pipeline(
             lixel_statistics->at(i).efficiency/
             nsb->sensor_geometry->number_of_lixel();
 
-        // arrival times of nsb
         vector<double> nsb_arrival_times;
         double relative_arrival_times_sum = prng->expovariate(lixel_nsb_rate);
         while (relative_arrival_times_sum < nsb_exposure_time) {
@@ -105,12 +94,9 @@ void inject_nsb_into_photon_pipeline(
         sort_photon_pipelines_arrival_time(&photon_pipelines->at(i));
     }
 
-    //----------------------------------------------------------------------
-    // substract nsb_exposure_start_time
+    // SUBTRACT nsb_exposure_start_time
 
-    // for each read out channel
     for (unsigned int i = 0; i < photon_pipelines->size(); i++) {
-        // for each photon
         for (unsigned int p = 0; p < photon_pipelines->at(i).size(); p++) {
             photon_pipelines->at(i).at(p).arrival_time -=
                 nsb_exposure_start_time;
