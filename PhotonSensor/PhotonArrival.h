@@ -2,10 +2,12 @@
 #ifndef PHOTONSENSOR_PHOTONARRIVAL_H_
 #define PHOTONSENSOR_PHOTONARRIVAL_H_
 
+#include <stdint.h>
+
 namespace PhotonSensor {
 
 struct PhotonArrival {
-    int simulation_truth_id;
+    int32_t simulation_truth_id;
     double wavelength;
     double arrival_time;
     double x_intersect;
@@ -15,7 +17,7 @@ struct PhotonArrival {
 
     PhotonArrival();
     PhotonArrival(
-        int id,
+        int32_t id,
         double w,
         double t,
         double x,

@@ -1,4 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
+#include <stdint.h>
 #include "gtest/gtest.h"
 #include "SignalProcessing/PhotonStream.h"
 #include "SignalProcessing/ElectricPulse.h"
@@ -27,7 +28,7 @@ vector<vector<SignalProcessing::ElectricPulse>> create_photon_stream(
                 t += t_next;
                 SignalProcessing::ElectricPulse pulse;
                 pulse.arrival_time = t;
-                pulse.simulation_truth_id = static_cast<int>(
+                pulse.simulation_truth_id = static_cast<int32_t>(
                     1000*prng.uniform());
                 pulses_in_channel.push_back(pulse);
             }

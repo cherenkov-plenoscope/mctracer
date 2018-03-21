@@ -19,12 +19,12 @@ float read_float32(std::istream &fin) {
     return v;
 }
 
-void append_int64(const int64_t &v, std::ostream &fout) {
+void append_int32(const int32_t &v, std::ostream &fout) {
     fout.write(reinterpret_cast<const char*>(&v), sizeof(v));
 }
 
-int64_t read_int64(std::istream &fin) {
-    int64_t v;
+int32_t read_int32(std::istream &fin) {
+    int32_t v;
     fin.read(reinterpret_cast<char*>(&v), sizeof(v));
     return v;
 }
@@ -116,7 +116,7 @@ void write_simulation_truth(
 
     for (uint32_t channel = 0; channel < pulses.size(); channel++) {
         for (uint32_t pulse = 0; pulse < pulses.at(channel).size(); pulse++) {
-            append_int64(
+            append_int32(
                 pulses.at(channel).at(pulse).simulation_truth_id,
                 file);
         }
@@ -191,7 +191,7 @@ Stream read_with_simulation_truth(const string path, const string truth_path) {
             pulse++
         ) {
             stream.photon_stream.at(channel).at(pulse).simulation_truth_id =
-                read_int64(file);
+                read_int32(file);
         }
     }
 

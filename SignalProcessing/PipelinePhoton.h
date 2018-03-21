@@ -2,6 +2,7 @@
 #ifndef MCTRACER_SIGNALPROCESSING_PIPELINEPHOTON_H_
 #define MCTRACER_SIGNALPROCESSING_PIPELINEPHOTON_H_
 
+#include <stdint.h>
 #include <vector>
 #include "PhotonSensor/PhotonSensor.h"
 
@@ -10,12 +11,12 @@ namespace SignalProcessing {
 struct PipelinePhoton {
     double arrival_time;
     double wavelength;
-    int simulation_truth_id;
+    int32_t simulation_truth_id;
     PipelinePhoton();
     PipelinePhoton(
         const double arrival_time,
         const double wavelength,
-        const int simulation_truth_id);
+        const int32_t simulation_truth_id);
 };
 
 std::vector<std::vector<PipelinePhoton>> get_photon_pipelines(

@@ -2,15 +2,17 @@
 #ifndef MCTRACER_SIGNALPROCESSING_ELECTRICPULSE_H_
 #define MCTRACER_SIGNALPROCESSING_ELECTRICPULSE_H_
 
+#include <stdint.h>
+
 namespace SignalProcessing {
 
 struct ElectricPulse {
     double arrival_time;
-    int simulation_truth_id;
+    int32_t simulation_truth_id;
     ElectricPulse();
     ElectricPulse(
         const double arrival_time,
-        const int simulation_truth_id);
+        const int32_t simulation_truth_id);
 };
 
 }  // namespace SignalProcessing

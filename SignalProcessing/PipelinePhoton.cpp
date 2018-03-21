@@ -14,7 +14,7 @@ PipelinePhoton::PipelinePhoton():
 PipelinePhoton::PipelinePhoton(
     const double _arrival_time,
     const double _wavelength,
-    const int _simulation_truth_id
+    const int32_t _simulation_truth_id
 ):
     arrival_time(_arrival_time),
     wavelength(_wavelength),

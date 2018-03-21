@@ -6,7 +6,7 @@ namespace PhotonSensor {
 PhotonArrival::PhotonArrival() {}
 
 PhotonArrival::PhotonArrival(
-    int id,
+    int32_t id,
     double w,
     double t,
     double x,

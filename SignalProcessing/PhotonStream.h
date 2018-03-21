@@ -9,14 +9,6 @@
 namespace SignalProcessing {
 namespace PhotonStream {
 
-void append_float32(const float &v, std::ostream &fout);
-float read_float32(std::istream &fin);
-void append_int64(const int64_t &v, std::ostream &fout);
-void append_uint32(const uint32_t &v, std::ostream &fout);
-uint32_t read_uint32(std::istream &fin);
-void append_uint8(const uint8_t &v, std::ostream &fout);
-uint8_t read_uint8(std::istream &fin);
-
 // Write and read ElectricPulses in the very compact photon_stream format.
 
 const unsigned char NEXT_READOUT_CHANNEL_MARKER = 255;

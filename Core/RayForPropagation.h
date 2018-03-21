@@ -3,6 +3,7 @@
 #define CORE_RAYFORPROPAGATION_H_
 
 #include <vector>
+#include <stdint.h>
 #include <string>
 #include "Core/Ray.h"
 #include "Core/Intersection.h"
@@ -31,7 +32,7 @@ class RayForPropagation :public Ray{
     std::vector<Intersection> intersection_history;
     std::vector<Interaction> interaction_history;
 
-    int simulation_truth_id;
+    int32_t simulation_truth_id;
     // The sumilation truth identifier is a encoding additional information of
     // the photon.
     //
@@ -41,8 +42,8 @@ class RayForPropagation :public Ray{
 
  public:
     RayForPropagation(const Vec3 support, const Vec3 direction);
-    void set_simulation_truth_id(const int id);
-    int get_simulation_truth_id()const;
+    void set_simulation_truth_id(const int32_t id);
+    int32_t get_simulation_truth_id()const;
     void push_back_intersection_and_type_to_propagation_history(
         const Intersection& interact,
         const Interaction type);
