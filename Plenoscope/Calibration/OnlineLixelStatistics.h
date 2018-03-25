@@ -1,28 +1,23 @@
-//=================================
-// include guard
-#ifndef __PlenoscopeCalibrationOnloneLixelStatistics_H_INCLUDED__
-#define __PlenoscopeCalibrationOnloneLixelStatistics_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef MCTRACER_PLENOSCOPE_CALIBRATION_ONLINELIXELSTATISTICS_H_
+#define MCTRACER_PLENOSCOPE_CALIBRATION_ONLINELIXELSTATISTICS_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
 #include "Tools/OnlineStatistics.h"
 
 namespace Plenoscope {
-    namespace Calibration {
+namespace Calibration {
 
-    struct OnlineLixelStatistics {
-        unsigned int count;
-        OnlineStatistics cx;
-        OnlineStatistics cy;
-        OnlineStatistics x;
-        OnlineStatistics y;
-        OnlineStatistics timed_delay;
-        OnlineLixelStatistics();
-    };
+struct OnlineLixelStatistics {
+    unsigned int count;
+    OnlineStatistics cx;
+    OnlineStatistics cy;
+    OnlineStatistics x;
+    OnlineStatistics y;
+    OnlineStatistics timed_delay;
+    OnlineLixelStatistics();
+};
 
-    }//Calibration
-}//Plenoscope
-#endif // __PlenoscopeCalibrationOnloneLixelStatistics_H_INCLUDED__ 
+}  // namespace Calibration
+}  // namespace Plenoscope
+
+#endif  // MCTRACER_PLENOSCOPE_CALIBRATION_ONLINELIXELSTATISTICS_H_

@@ -1,10 +1,11 @@
-#include "OnlineLixelStatistics.h"
+// Copyright 2014 Sebastian A. Mueller
+#include "Plenoscope/Calibration/OnlineLixelStatistics.h"
 #include "Tools/FileTools.h"
 
 namespace Plenoscope {
-    namespace Calibration {
+namespace Calibration {
 
 OnlineLixelStatistics::OnlineLixelStatistics(): count(0) {}
 
-    }//Calibration
-}//Plenoscope
+}  // namespace Calibration
+}  // namespace Plenoscope
