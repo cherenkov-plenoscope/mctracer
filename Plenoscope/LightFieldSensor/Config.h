@@ -1,55 +1,47 @@
-//=================================
-// include guard
-#ifndef __PlenoscopeLightFieldSensorConfig_H_INCLUDED__
-#define __PlenoscopeLightFieldSensorConfig_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef PLENOSCOPE_LIGHTFIELDSENSOR_CONFIG_H_
+#define PLENOSCOPE_LIGHTFIELDSENSOR_CONFIG_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
+#include <array>
+#include <limits>
 #include "Core/Function/Function.h"
 #include "Core/HomTra3.h"
-#include <limits>
 #include "Tools/Tools.h"
-#include <array>
-
 
 namespace Plenoscope {
+namespace LightFieldSensor {
 
-	namespace LightFieldSensor {
+struct Config {
+    HomTra3 sensor_plane2imaging_system;
+    // The imaging system's expected properties as focal length and max
+    // outer aperture radius do not neccessarily match the dimensions
+    // of the actual imaging system which will be used.
+    // For the best performance of the plenoscope, the expected
+    // dimensions should match the actual ones of the imaging system,
+    // but to study imperfect imaging systems, where the dimensions
+    // differ on purpose, the expected dimensions can differ from
+    // the actual ones.
+    double expected_imaging_system_focal_length;
+    double expected_imaging_system_max_aperture_radius;
+    double max_FoV_diameter;
+    double pixel_FoV_hex_flat2flat;
+    double housing_overhead;
+    unsigned int number_of_paxel_on_pixel_diagonal;
+    const Function::Func1D* lens_refraction;
+    const Function::Func1D* lens_absorbtion;
+    const Function::Func1D* bin_reflection;
+    Config();
 
-		struct Config {
-			HomTra3 sensor_plane2imaging_system;
-			// The imaging system's expected properties as focal length and max
-			// outer aperture radius do not neccessarily match the dimensions 
-			// of the actual imaging system which will be used.
-			// For the best performance of the plenoscope, the expected 
-			// dimensions should match the actual ones of the imaging system, 
-			// but to study imperfect imaging systems, where the dimensions
-			// differ on purpose, the expected dimensions can differ from 
-			// the actual ones.
-			double expected_imaging_system_focal_length;
-			double expected_imaging_system_max_aperture_radius;
-			double max_FoV_diameter;
-			double pixel_FoV_hex_flat2flat;	
-			double housing_overhead;
-			unsigned int number_of_paxel_on_pixel_diagonal;
-			const Function::Func1D* lens_refraction;
-			const Function::Func1D* lens_absorbtion;
-			const Function::Func1D* bin_reflection;
-			Config(); 
+    std::array<float, 273> get_sensor_plane2imaging_system_header()const;
+};
 
-			std::array<float, 273> get_sensor_plane2imaging_system_header()const;
-		};
-	
-		static const Function::Constant pmma_refraction(
-			1.49, Function::Limits(200e-9, 1200e-9)
-		);
+static const Function::Constant pmma_refraction(
+    1.49, Function::Limits(200e-9, 1200e-9));
 
-		static const Function::Constant perfect_transparency(
-			std::numeric_limits<double>::infinity(), Function::Limits(200e-9, 1200e-9)
-		);
-	}
-}
-#endif // __PlenoscopeLightFieldSensorConfig_H_INCLUDED__ 
+static const Function::Constant perfect_transparency(
+    std::numeric_limits<double>::infinity(), Function::Limits(200e-9, 1200e-9));
+
+}  // namespace LightFieldSensor
+}  // namespace Plenoscope
+
+#endif  // PLENOSCOPE_LIGHTFIELDSENSOR_CONFIG_H_

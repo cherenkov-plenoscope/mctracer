@@ -1,23 +1,23 @@
-#include "EventHeader.h"
+// Copyright 2014 Sebastian A. Mueller
+#include "Plenoscope/EventHeader.h"
 #include "Corsika/Tools.h"
 
 namespace Plenoscope {
-//------------------------------------------------------------------------------
+
 EventHeader::EventHeader() {
-    for(unsigned int i=0; i<raw.size(); i++) raw[i]=0.0;
+    for (unsigned int i = 0; i < raw.size(); i++) raw[i]=0.0;
     raw[  1-1] = Corsika::str2float("PEVT");
 }
-//------------------------------------------------------------------------------
+
 void EventHeader::set_event_type(const float event_type) {
     raw[  2-1] = event_type;
 }
-//------------------------------------------------------------------------------
+
 void EventHeader::set_trigger_type(const float trigger_type) {
     raw[  3-1] = trigger_type;
 }
-//------------------------------------------------------------------------------
-void EventHeader::set_plenoscope_geometry(const LightFieldSensor::Config &cfg) {
 
+void EventHeader::set_plenoscope_geometry(const LightFieldSensor::Config &cfg) {
     raw[ 11-1] = cfg.sensor_plane2imaging_system.get_rot_x().x;
     raw[ 12-1] = cfg.sensor_plane2imaging_system.get_rot_x().y;
     raw[ 13-1] = cfg.sensor_plane2imaging_system.get_rot_x().z;
@@ -41,5 +41,5 @@ void EventHeader::set_plenoscope_geometry(const LightFieldSensor::Config &cfg) {
     raw[ 27-1] = cfg.number_of_paxel_on_pixel_diagonal;
     raw[ 28-1] = cfg.housing_overhead;
 }
-//------------------------------------------------------------------------------
-}//Plenoscope
+
+}  // namespace Plenoscope

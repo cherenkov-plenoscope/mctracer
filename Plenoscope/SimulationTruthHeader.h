@@ -1,24 +1,18 @@
-//=================================
-// include guard
-#ifndef __PlenoscopeSimulationTruthHeader_H_INCLUDED__
-#define __PlenoscopeSimulationTruthHeader_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef PLENOSCOPE_SIMULATIONTRUTHHEADER_H_
+#define PLENOSCOPE_SIMULATIONTRUTHHEADER_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
-#include "LightFieldSensor/Config.h"
 #include <stdint.h>
 #include <array>
-
+#include "LightFieldSensor/Config.h"
 
 namespace Plenoscope {
-    
-    struct SimulationTruthHeader {
-        std::array<float, 273> raw;
-        SimulationTruthHeader();
-        void set_random_number_seed_of_run(const uint32_t seed);
-    };
+
+struct SimulationTruthHeader {
+    std::array<float, 273> raw;
+    SimulationTruthHeader();
+    void set_random_number_seed_of_run(const uint32_t seed);
+};
+
 }
-#endif // __PlenoscopeSimulationTruthHeader_H_INCLUDED__ 
+#endif  // PLENOSCOPE_SIMULATIONTRUTHHEADER_H_
