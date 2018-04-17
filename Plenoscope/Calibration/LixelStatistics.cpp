@@ -4,6 +4,7 @@
 #include <fstream>
 #include "Tools/FileTools.h"
 using std::vector;
+using std::string;
 
 namespace Plenoscope {
 namespace Calibration {

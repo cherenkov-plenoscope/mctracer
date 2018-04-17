@@ -29,7 +29,7 @@ sensor_geometry(_sensor_geometry) {
         fov_solid_angle;
 }
 
-string Light::str()const {
+std::string Light::str()const {
     std::stringstream out;
     out << "NightSkyBackground\n";
     out << "  rate................. " << rate << " Hz\n";

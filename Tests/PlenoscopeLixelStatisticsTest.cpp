@@ -2,6 +2,7 @@
 #include "gtest/gtest.h"
 #include "Plenoscope/Calibration/LixelStatistics.h"
 using std::vector;
+using std::string;
 
 class PlenoscopeLixelStatisticsTest : public ::testing::Test {};
 

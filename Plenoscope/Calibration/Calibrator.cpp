@@ -162,7 +162,7 @@ void Calibrator::run_calibration() {
     }
 }
 
-void Calibrator::write_lixel_statistics(const string &path)const {
+void Calibrator::write_lixel_statistics(const std::string &path)const {
     vector<LixelStatistic> lixel_statistics =
         lixel_statistics_filler.get_lixel_statistics();
     write(lixel_statistics, path);

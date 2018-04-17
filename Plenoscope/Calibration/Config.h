@@ -3,8 +3,6 @@
 #define MCTRACER_PLENOSCOPE_CALIBRATION_CONFIG_H_
 
 #include <stdint.h>
-#include <string>
-using std::string;
 
 namespace Plenoscope {
 namespace Calibration {
