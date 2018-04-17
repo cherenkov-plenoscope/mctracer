@@ -6,7 +6,6 @@
 #include "Plenoscope/LightFieldSensor/Geometry.h"
 #include "Core/Random/Random.h"
 #include "Core/Function/Function.h"
-#include "Core/Photon.h"
 
 namespace Plenoscope {
 namespace NightSkyBackground {
