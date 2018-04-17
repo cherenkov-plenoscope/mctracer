@@ -4,7 +4,6 @@
 
 #include <stdint.h>
 #include <array>
-#include "LightFieldSensor/Config.h"
 
 namespace Plenoscope {
 
