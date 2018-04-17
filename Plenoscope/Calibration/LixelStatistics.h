@@ -7,7 +7,6 @@
 #include "Plenoscope/Calibration/CalibrationPhotonResult.h"
 #include "Plenoscope/Calibration/Config.h"
 #include "Plenoscope/LightFieldSensor/Geometry.h"
-#include "Tools/OnlineStatistics.h"
 #include "Plenoscope/Calibration/OnlineLixelStatistics.h"
 
 namespace Plenoscope {
