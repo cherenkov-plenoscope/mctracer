@@ -20,12 +20,11 @@ PhotonFactory::PhotonFactory(
 }
 
 void PhotonFactory::check_once_if_passed_atmosphere(Random::Generator *prng) {
-    passed_through_atmosphere_flag =
-        prng->uniform() <= photon_survival_probability();
+    _passed_atmosphere = prng->uniform() <= photon_survival_probability();
 }
 
 bool PhotonFactory::passed_atmosphere()const {
-    return passed_through_atmosphere_flag;
+    return _passed_atmosphere;
 }
 
 Photon PhotonFactory::get_photon() {
