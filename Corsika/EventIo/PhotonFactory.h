@@ -22,9 +22,6 @@ class PhotonFactory {
     std::array<float, 8> corsika_photon;
 
  public:
-    class BadCorsikaPhotonShape : public std::runtime_error {
-        using runtime_error::runtime_error;
-    };
     class BadPhotonWeight : public std::runtime_error {
         using runtime_error::runtime_error;
     };
