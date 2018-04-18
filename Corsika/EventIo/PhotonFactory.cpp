@@ -43,14 +43,6 @@ Photon PhotonFactory::get_photon() {
     return cherenkov_photon;
 }
 
-Vec3 PhotonFactory::causal_get_direction()const {
-    const double cos_x = corsika_photon[IDX_X_DIR_COSINE];
-    const double cos_y = corsika_photon[IDX_Y_DIR_COSINE];
-    const double z = sqrt(1.0 -cos_x*cos_x -cos_y*cos_y);
-    Vec3 causal_dir(cos_x, cos_y, z);
-    return causal_dir*-1.0;
-}
-
 Vec3 PhotonFactory::intersection_with_xy_floor_plane()const {
     return Vec3(x_pos_on_xy_plane(), y_pos_on_xy_plane(), 0.0);
 }
@@ -69,27 +61,35 @@ double PhotonFactory::ray_parameter_for_production_point()const {
 }
 
 double PhotonFactory::x_pos_on_xy_plane()const {
-    return corsika_photon[IDX_X_POS]*1e-2;
+    return corsika_photon[0]*1e-2;
 }
 
 double PhotonFactory::y_pos_on_xy_plane()const {
-    return corsika_photon[IDX_Y_POS]*1e-2;
+    return corsika_photon[1]*1e-2;
 }
 
-double PhotonFactory::production_height()const {
-    return corsika_photon[IDX_Z_EMISSION_HEIGHT]*1e-2;
-}
-
-double PhotonFactory::wavelength()const {
-    return fabs(corsika_photon[IDX_WAVELENGTH]*1e-9);
+Vec3 PhotonFactory::causal_get_direction()const {
+    const double cos_x = corsika_photon[2];
+    const double cos_y = corsika_photon[3];
+    const double z = sqrt(1.0 -cos_x*cos_x -cos_y*cos_y);
+    Vec3 causal_dir(cos_x, cos_y, z);
+    return causal_dir*-1.0;
 }
 
 double PhotonFactory::relative_arrival_time_on_ground()const {
-    return corsika_photon[IDX_ARRIVAL_TIME]*1e-9;
+    return corsika_photon[4]*1e-9;
+}
+
+double PhotonFactory::production_height()const {
+    return corsika_photon[5]*1e-2;
 }
 
 float PhotonFactory::photon_survival_probability()const {
-    return corsika_photon[IDX_PHOTON_WEIGTH];
+    return corsika_photon[6];
+}
+
+double PhotonFactory::wavelength()const {
+    return fabs(corsika_photon[7]*1e-9);
 }
 
 void PhotonFactory::assert_photon_weight_is_between_zero_and_one()const {

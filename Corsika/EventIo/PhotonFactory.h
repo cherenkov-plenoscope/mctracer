@@ -9,14 +9,6 @@
 namespace EventIo {
 
 class PhotonFactory {
-    static const unsigned int IDX_X_POS = 0;
-    static const unsigned int IDX_Y_POS = 1;
-    static const unsigned int IDX_X_DIR_COSINE = 2;
-    static const unsigned int IDX_Y_DIR_COSINE = 3;
-    static const unsigned int IDX_ARRIVAL_TIME = 4;
-    static const unsigned int IDX_Z_EMISSION_HEIGHT = 5;
-    static const unsigned int IDX_PHOTON_WEIGTH = 6;
-    static const unsigned int IDX_WAVELENGTH = 7;
     bool _passed_atmosphere = false;
     unsigned int id;
     std::array<float, 8> corsika_photon;
