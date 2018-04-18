@@ -69,11 +69,57 @@ double PhotonFactory::y_pos_on_xy_plane()const {
 }
 
 Vec3 PhotonFactory::causal_get_direction()const {
-    const double cos_x = corsika_photon[2];
-    const double cos_y = corsika_photon[3];
-    const double z = sqrt(1.0 -cos_x*cos_x -cos_y*cos_y);
-    Vec3 causal_dir(cos_x, cos_y, z);
-    return causal_dir*-1.0;
+    // KIT-CORSIKA coordinate-system
+    //
+    //                   /\ z-axis                                            //
+    //                   |                                                    //
+    //                   |\ p                                                 //
+    //                   | \ a                                                //
+    //                   |  \ r                                               //
+    //                   |   \ t                                              //
+    //                   |    \ i                                             //
+    //                   |     \ c                                            //
+    //                   |      \ l                                           //
+    //                   |       \ e                                          //
+    //                   |        \                                           //
+    //                   |  theta  \ m                                        //
+    //                   |       ___\ o                                       //
+    //                   |___----    \ m      ___                             //
+    //                   |            \ e       /| y-axis (west)              //
+    //                   |             \ n    /                               //
+    //                   |              \ t /                                 //
+    //                   |               \/u                                  //
+    //                   |              / \ m                                 //
+    //                   |            /    \                                  //
+    //                   |          /       \                                 //
+    //                   |        /__________\                                //
+    //                   |      /      ___---/                                //
+    //                   |    /   __---    /                                  //
+    //                   |  /__--- phi \ /                                    //
+    //   ________________|/--__________/______\ x-axis (north)                //
+    //                  /|                    /                               //
+    //                /  |                                                    //
+    //              /    |                                                    //
+    //            /                                                           //
+    //                                                                        //
+    //                                                                        //
+    //    Extensive Air Shower Simulation with CORSIKA, Figure 1, page 114
+    //    (Version 7.6400 from December 27, 2017)
+    //
+    //    Direction-cosines:
+    //
+    //    u = sin(theta) * cos(phi)
+    //    v = sin(theta) * sin(phi)
+    //
+    //    The zenith-angle theta opens relative to the negative z-axis.
+    //
+    //    It is the momentum of the Cherenkov-photon, which is pointing
+    //    down towards the observation-plane.
+    //
+    const double u = corsika_photon[2];
+    const double v = corsika_photon[3];
+    const double z = sqrt(1.0 -u*u -v*v);
+    return Vec3(u, v, -z);
 }
 
 double PhotonFactory::relative_arrival_time_on_ground()const {
