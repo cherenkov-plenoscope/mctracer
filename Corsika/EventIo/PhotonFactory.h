@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_CORSIKA_EVENTIO_PHOTONFACTORY_H_
-#define MCTRACER_CORSIKA_EVENTIO_PHOTONFACTORY_H_
+#ifndef CORSIKA_EVENTIO_PHOTONFACTORY_H_
+#define CORSIKA_EVENTIO_PHOTONFACTORY_H_
 
 #include <array>
 #include "Core/Photon.h"
@@ -42,4 +42,4 @@ class PhotonFactory {
 
 }  // namespace EventIo
 
-#endif  // MCTRACER_CORSIKA_EVENTIO_PHOTONFACTORY_H_
+#endif  // CORSIKA_EVENTIO_PHOTONFACTORY_H_

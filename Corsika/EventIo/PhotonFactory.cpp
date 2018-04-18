@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Corsika/EventIo/PhotonFactory.h"
-#include "Core/PhysicalConstants.h"
 #include <sstream>
+#include "Core/PhysicalConstants.h"
 using std::stringstream;
 using std::vector;
 using std::array;
