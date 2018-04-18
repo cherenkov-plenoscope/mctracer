@@ -78,6 +78,23 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
     }
 }
 
+TEST_F(EventIoPhotonFactoryTest, wavelength_sign) {
+    Random::FakeConstant prng(0.0);
+    for (int l = 1; l < 1337; l++) {
+        const float sign = (l%2 == 0) ? +1.0: -1.0;
+        const float lambda = static_cast<float>(l)*sign;
+        const std::array<float, 8> corsika_photon = {
+             1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.999, lambda};
+        //   x    y    xcos ycos time  zem  weight lambda
+        //   cm   cm   1    1    ns    cm   1      nm
+
+        const int id = 1337;
+        EventIo::PhotonFactory cpf(corsika_photon, id, &prng);
+        ASSERT_NEAR(fabs(lambda), cpf.wavelength()*1e9, 1e-2);
+        ASSERT_TRUE(cpf.wavelength() > 0.0);
+    }
+}
+
 TEST_F(EventIoPhotonFactoryTest, convert_photons) {
     const std::array<float, 8> corsika_photon =
         {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.999, 433};
