@@ -39,7 +39,7 @@ Photon PhotonFactory::get_photon() {
         ray_running_upwards_from_ground_to_pos_of_production.
         position_at(ray_parameter_for_production_point());
 
-    Photon cherenkov_photon(causal_support, causal_dir, wavelength_in_m());
+    Photon cherenkov_photon(causal_support, causal_dir, wavelength());
     cherenkov_photon.set_simulation_truth_id(id);
     return cherenkov_photon;
 }
@@ -81,8 +81,8 @@ double PhotonFactory::production_height_in_m()const {
     return production_height_in_cm()*1e-2;
 }
 
-double PhotonFactory::wavelength_in_m()const {
-    return fabs(wavelength_in_nm()*1e-9);
+double PhotonFactory::wavelength()const {
+    return fabs(corsika_photon[IDX_WAVELENGTH]*1e-9);
 }
 
 double PhotonFactory::relative_arrival_time_on_ground()const {
@@ -95,10 +95,6 @@ float PhotonFactory::x_pos_on_world_x_y_plane_in_cm()const {
 
 float PhotonFactory::y_pos_on_world_x_y_plane_in_cm()const {
     return corsika_photon[IDX_Y_POS];
-}
-
-float PhotonFactory::wavelength_in_nm()const {
-    return corsika_photon[IDX_WAVELENGTH];
 }
 
 float PhotonFactory::production_height_in_cm()const {

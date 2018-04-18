@@ -37,12 +37,11 @@ class PhotonFactory {
     double x_pos_on_xy_plane_in_m()const;
     double y_pos_on_xy_plane_in_m()const;
     double production_height_in_m()const;
-    double wavelength_in_m()const;
+    double wavelength()const;
     double production_distance_offset()const;
     double relative_arrival_time_on_ground()const;
     float x_pos_on_world_x_y_plane_in_cm()const;
     float y_pos_on_world_x_y_plane_in_cm()const;
-    float wavelength_in_nm()const;
     float production_height_in_cm()const;
     float photon_survival_probability()const;
 
