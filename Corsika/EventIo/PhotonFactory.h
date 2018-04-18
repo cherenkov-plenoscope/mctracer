@@ -34,14 +34,12 @@ class PhotonFactory {
     Vec3 causal_get_direction()const;
     Vec3 intersection_with_xy_floor_plane()const;
     double ray_parameter_for_production_point()const;
-    double x_pos_on_xy_plane_in_m()const;
-    double y_pos_on_xy_plane_in_m()const;
+    double x_pos_on_xy_plane()const;
+    double y_pos_on_xy_plane()const;
     double production_height()const;
     double wavelength()const;
     double production_distance_offset()const;
     double relative_arrival_time_on_ground()const;
-    float x_pos_on_world_x_y_plane_in_cm()const;
-    float y_pos_on_world_x_y_plane_in_cm()const;
     float photon_survival_probability()const;
 
  private:

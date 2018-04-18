@@ -53,7 +53,7 @@ Vec3 PhotonFactory::causal_get_direction()const {
 }
 
 Vec3 PhotonFactory::intersection_with_xy_floor_plane()const {
-    return Vec3(x_pos_on_xy_plane_in_m(), y_pos_on_xy_plane_in_m(), 0.0);
+    return Vec3(x_pos_on_xy_plane(), y_pos_on_xy_plane(), 0.0);
 }
 
 double PhotonFactory::production_distance_offset()const {
@@ -69,12 +69,12 @@ double PhotonFactory::ray_parameter_for_production_point()const {
         PhysicalConstants::VACUUM_SPPED_OF_LIGHT + production_distance_offset();
 }
 
-double PhotonFactory::x_pos_on_xy_plane_in_m()const {
-    return x_pos_on_world_x_y_plane_in_cm()*1e-2;
+double PhotonFactory::x_pos_on_xy_plane()const {
+    return corsika_photon[IDX_X_POS]*1e-2;
 }
 
-double PhotonFactory::y_pos_on_xy_plane_in_m()const {
-    return y_pos_on_world_x_y_plane_in_cm()*1e-2;
+double PhotonFactory::y_pos_on_xy_plane()const {
+    return corsika_photon[IDX_Y_POS]*1e-2;
 }
 
 double PhotonFactory::production_height()const {
@@ -87,14 +87,6 @@ double PhotonFactory::wavelength()const {
 
 double PhotonFactory::relative_arrival_time_on_ground()const {
     return corsika_photon[IDX_ARRIVAL_TIME]*1e-9;
-}
-
-float PhotonFactory::x_pos_on_world_x_y_plane_in_cm()const {
-    return corsika_photon[IDX_X_POS];
-}
-
-float PhotonFactory::y_pos_on_world_x_y_plane_in_cm()const {
-    return corsika_photon[IDX_Y_POS];
 }
 
 float PhotonFactory::photon_survival_probability()const {
