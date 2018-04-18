@@ -77,8 +77,8 @@ double PhotonFactory::y_pos_on_xy_plane_in_m()const {
     return y_pos_on_world_x_y_plane_in_cm()*1e-2;
 }
 
-double PhotonFactory::production_height_in_m()const {
-    return production_height_in_cm()*1e-2;
+double PhotonFactory::production_height()const {
+    return corsika_photon[IDX_Z_EMISSION_HEIGHT]*1e-2;
 }
 
 double PhotonFactory::wavelength()const {
@@ -95,10 +95,6 @@ float PhotonFactory::x_pos_on_world_x_y_plane_in_cm()const {
 
 float PhotonFactory::y_pos_on_world_x_y_plane_in_cm()const {
     return corsika_photon[IDX_Y_POS];
-}
-
-float PhotonFactory::production_height_in_cm()const {
-    return corsika_photon[IDX_Z_EMISSION_HEIGHT];
 }
 
 float PhotonFactory::photon_survival_probability()const {
