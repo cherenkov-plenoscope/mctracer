@@ -44,7 +44,7 @@ void propagate_photons_using_single_thread(
     env.prng = prng;
 
     for (unsigned int i = 0; i < photons->size(); i++)
-        PhotonAndFrame::Propagator(&photons->at(i), &env);
+        PhotonAndFrame::Propagator(&photons->at(i), env);
 }
 
 void propagate_photons_using_multi_thread(
@@ -76,7 +76,7 @@ void propagate_photons_using_multi_thread(
                 ray_counter++;
                 PhotonAndFrame::Propagator(
                     &photons->at(i),
-                    &env_for_this_thread_only);
+                    env_for_this_thread_only);
             } catch (std::exception &error) {
                 HadCatch++;
                 std::cerr << error.what();

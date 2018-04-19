@@ -53,7 +53,7 @@ TEST_F(SphereIntersectionTest, frontal) {
     Vec3 Support(x_pos, 0.0, 0.0);
     Vec3 direction(1.0, 0.0, 0.0);
     Photon P(Support , direction, wavelength);
-    PhotonAndFrame::Propagator(&P, &sphere_test_environment);
+    PhotonAndFrame::Propagator(&P, sphere_test_environment);
 
     ASSERT_EQ(2u, P.get_number_of_interactions_so_far() ) <<
     "There should be 2 "
@@ -73,7 +73,7 @@ TEST_F(SphereIntersectionTest, emmitting_close_above_surface_tangential) {
     Vec3 Support(0.0, 0.0, 1.0+1e-9);
     Vec3 direction(1.0, 0.0, 0.0);
     Photon P(Support, direction, wavelength);
-    PhotonAndFrame::Propagator(&P, &sphere_test_environment);
+    PhotonAndFrame::Propagator(&P, sphere_test_environment);
     ASSERT_EQ(absorption_in_void, P.get_final_interaction_type() );
 }
 
@@ -81,7 +81,7 @@ TEST_F(SphereIntersectionTest, emmitting_close_above_surface_straigtht_away) {
     Vec3 Support(0.0, 0.0, 1.0+1e-9);
     Vec3 direction(0.0, 0.0, 1.0);
     Photon P(Support, direction, wavelength);
-    PhotonAndFrame::Propagator(&P, &sphere_test_environment);
+    PhotonAndFrame::Propagator(&P, sphere_test_environment);
     ASSERT_EQ(absorption_in_void, P.get_final_interaction_type() );
 }
 
@@ -89,7 +89,7 @@ TEST_F(SphereIntersectionTest, tangential_intersection) {
     Vec3 Support(-5.0, 0.0, 1.0);
     Vec3 direction(1.0, 0.0, 0.0);
     Photon P(Support, direction, wavelength);
-    PhotonAndFrame::Propagator(&P, &sphere_test_environment);
+    PhotonAndFrame::Propagator(&P, sphere_test_environment);
     ASSERT_EQ(2u, P.get_number_of_interactions_so_far() );
     Vec3 normal = Vec3::UNIT_Z;
     EXPECT_NEAR(

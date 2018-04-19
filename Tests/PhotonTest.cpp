@@ -89,7 +89,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry) {
     const unsigned int num_of_total_interactions = number_of_bounces + 1;
     for (int i = 0; i < 1; i++) {
         Photon P(Support, direction, wavelength);
-        PhotonAndFrame::Propagator(&P, &environment);
+        PhotonAndFrame::Propagator(&P, environment);
         EXPECT_EQ(
             number_of_bounces*1.0-0.5,
             P.get_accumulative_distance());
