@@ -116,6 +116,8 @@ int main(int argc, char* argv[]) {
 
                 for(const Photon &ph: photons) {
                     TrajectoryFactory traj(&ph);
+                    traj.set_trajectory_radius(
+                        visual_config.photon_trajectories.radius);
                     traj.append_trajectory_to(&scenery.root);
                     scenery.root.init_tree_based_on_mother_child_relations();
                     free_orb.continue_with_new_scenery_and_visual_config(
