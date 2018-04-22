@@ -1,3 +1,6 @@
+// Copyright 2015 Sebastian A. Mueller
+#include <sstream>
+#include <string>
 #include "gtest/gtest.h"
 #include "Core/Frame.h"
 #include "Core/Vec3.h"
@@ -13,104 +16,103 @@
 #include "Tools/StringTools.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "SignalProcessing/PipelinePhoton.h"
-#include <sstream>
-#include <string>
 using std::cout;
 using std::string;
-using StringTools::fill_up_text_with_whitespaces_until_column;
 
 template<typename T>
 void print_size(const string &name, T s) {
-    cout << fill_up_text_with_whitespaces_until_column(name, 36) << sizeof(s) << '\n';
+    cout << StringTools::fill_up_text_with_whitespaces_until_column(name, 36);
+    cout << sizeof(s) << '\n';
 }
 
 class SizeOfTest : public ::testing::Test {};
-//------------------------------------------------------------------------------
-TEST_F(SizeOfTest, sizes_of_mct) {
 
+TEST_F(SizeOfTest, sizes_of_mct) {
     cout << "Size in bytes\n";
     cout << "--------------------------------------------" << "\n";
 
-    Color col(123, 65, 12); 
+    Color col(123, 65, 12);
     print_size("Color", col);
 
-    Vec2 v2; 
+    Vec2 v2;
     print_size("Vec2", v2);
 
-    Vec3 v3; 
+    Vec3 v3;
     print_size("Vec3", v3);
 
-    Rot3 r;  
+    Rot3 r;
     print_size("Rot3", r);
 
-    HomTra3 h; 
+    HomTra3 h;
     print_size("HomTra3", h);
     cout << "--------------------------------------------" << "\n";
 
-    Ray ray(Vec3::ORIGIN, Vec3::UNIT_Z); 
+    Ray ray(Vec3::ORIGIN, Vec3::UNIT_Z);
     print_size("Ray", ray);
 
-    Visual::CameraRay camray(Vec3::ORIGIN, Vec3::UNIT_Z); 
+    Visual::CameraRay camray(Vec3::ORIGIN, Vec3::UNIT_Z);
     print_size("CameraRay", camray);
 
-    RayForPropagation rayfp(Vec3::ORIGIN, Vec3::UNIT_Z); 
+    RayForPropagation rayfp(Vec3::ORIGIN, Vec3::UNIT_Z);
     print_size("RayForPropagation", rayfp);
 
-    Photon ph(Vec3::ORIGIN, Vec3::UNIT_Z, 433e-9); 
+    Photon ph(Vec3::ORIGIN, Vec3::UNIT_Z, 433e-9);
     print_size("Photon", ph);
     cout << "--------------------------------------------" << "\n";
 
     Intersection is;
     print_size("Intersection", is);
 
-    PropagationEnvironment environment = PropagationEnvironment::VOID_ENVIRONMENT; 
+    PropagationEnvironment environment =
+        PropagationEnvironment::VOID_ENVIRONMENT;
     print_size("PropagationEnvironment", environment);
     cout << "--------------------------------------------" << "\n";
 
     Frame tree;
-    tree.set_name_pos_rot("0123456789", Vec3::ORIGIN, Rot3::UNITY); 
+    tree.set_name_pos_rot("0123456789", Vec3::ORIGIN, Rot3::UNITY);
     print_size("Frame", tree);
 
-    SurfaceEntity surf("0123456789", Vec3::ORIGIN, Rot3::UNITY); 
+    SurfaceEntity surf("0123456789", Vec3::ORIGIN, Rot3::UNITY);
     print_size("SurfaceEntity", surf);
 
-    Annulus annulus; 
+    Annulus annulus;
     print_size("Annulus", annulus);
 
-    BiConvexLens biConvexLens; 
+    BiConvexLens biConvexLens;
     print_size("BiConvexLens", biConvexLens);
 
-    BiConvexLensHexBound biConvexLensHexBound; 
+    BiConvexLensHexBound biConvexLensHexBound;
     print_size("BiConvexLensHexBound", biConvexLensHexBound);
 
-    Cylinder cylinder; 
+    Cylinder cylinder;
     print_size("Cylinder", cylinder);
 
-    Disc disc; 
+    Disc disc;
     print_size("Disc", disc);
 
-    EllipticalCapWithHexagonalBound ellipticalCapWithHexagonalBound; 
-    print_size("EllipticalCapWithHexagonalBound", ellipticalCapWithHexagonalBound);
+    EllipticalCapWithHexagonalBound ellipticalCapWithHexagonalBound;
+    print_size(
+        "EllipticalCapWithHexagonalBound", ellipticalCapWithHexagonalBound);
 
-    HexPlane hexPlane; 
+    HexPlane hexPlane;
     print_size("HexPlane", hexPlane);
 
-    Plane plane; 
+    Plane plane;
     print_size("Plane", plane);
 
     PlaneDualSphericalBound planeDualSphericalBound;
     print_size("PlaneDualSphericalBound", planeDualSphericalBound);
 
-    Sphere sphere; 
+    Sphere sphere;
     print_size("Sphere", sphere);
 
     SphereCapWithCylinderBound sphereCapWithCylinderBound;
     print_size("SphereCapWithCylinderBound", sphereCapWithCylinderBound);
 
-    SphereCapWithHexagonalBound sphereCapWithHexagonalBound; 
+    SphereCapWithHexagonalBound sphereCapWithHexagonalBound;
     print_size("SphereCapWithHexagonalBound", sphereCapWithHexagonalBound);
 
-    Triangle triangle; 
+    Triangle triangle;
     print_size("Triangle", triangle);
     cout << "--------------------------------------------" << "\n";
 
@@ -128,7 +130,6 @@ TEST_F(SizeOfTest, sizes_of_mct) {
     print_size("FindSensorByFrame", finder);
     cout << "--------------------------------------------" << "\n";
 
-    SignalProcessing::PipelinePhoton pipe_ph; 
+    SignalProcessing::PipelinePhoton pipe_ph;
     print_size("PipelinePhoton", pipe_ph);
 }
-//------------------------------------------------------------------------------
