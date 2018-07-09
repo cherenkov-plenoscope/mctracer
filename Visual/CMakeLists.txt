@@ -10,5 +10,6 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/Config.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SkyDome.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Tracer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PortablePictureMap.cpp
     PARENT_SCOPE
 )
