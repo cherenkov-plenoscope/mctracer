@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Visual/PortablePictureMap.h"
+#include "Visual/PortablePixMap.h"
 #include "Tools/StringTools.h"
 #include <stdint.h>
 
