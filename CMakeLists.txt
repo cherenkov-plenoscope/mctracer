@@ -66,6 +66,12 @@ add_executable(mctShow Main/Show.cpp)
 target_link_libraries(mctShow mct)
 target_link_libraries(mctShow docopt)
 
+#---------
+# CameraServer exe
+add_executable(mctCameraServer Main/CameraServer.cpp)
+target_link_libraries(mctCameraServer mct)
+target_link_libraries(mctCameraServer docopt)
+
 #---------------
 # Propagate exe
 add_executable(mctPropagate Main/Propagate.cpp)
