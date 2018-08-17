@@ -5,6 +5,9 @@
 #include "Tools/FileTools.h"
 #include "Core/Photons.h"
 #include "Core/Histogram1D.h"
+#include "Corsika/EventIo/EventIo.h"
+#include "Corsika/EventIo/Export.h"
+#include "Corsika/Tools.h"
 #include "Tools/AsciiIo.h"
 #include "SignalProcessing/PipelinePhoton.h"
 #include "Plenoscope/NightSkyBackground/Light.h"
@@ -35,7 +38,7 @@ static const char USAGE[] =
 R"(Plenoscope raw photon propagation
 
     Usage:
-      mctPlenoscopeRawPhotonPropagation -l=LIXEL_STATISTICS_PATH -c=CONFIG_PATH -i=PHOTON_PATH -o=OUTPUT_PATH [-r=SEED]
+      mctPlenoscopeRawPhotonPropagation -l=LIXEL_STATISTICS_PATH -c=CONFIG_PATH -i=PHOTON_PATH -o=OUTPUT_PATH [-r=SEED] [--all_truth]
       mctPlenoscopeRawPhotonPropagation (-h | --help)
       mctPlenoscopeRawPhotonPropagation --version
 
@@ -45,6 +48,7 @@ R"(Plenoscope raw photon propagation
       -i --input=PHOTON_PATH    Photon input path.
       -o --output=OUTPUT_PATH   Output path.
       -r --random_seed=SEED     Seed for pseudo random number generator.
+      --all_truth               Write all simulation truth avaiable into the output.
       -h --help                 Show this screen.
       --version                 Show version.
 )";
@@ -61,6 +65,8 @@ int main(int argc, char* argv[]) {
     Path config_path = Path(args.find("--config")->second.asString());
     Path input_path = Path(args.find("--input")->second.asString());
     Path output_path = Path(args.find("--output")->second.asString());
+    const bool export_all_simulation_truth =
+        args.find("--all_truth")->second.asBool();
 
     // 1) create output directory
     fs::create_directory(output_path.path);
@@ -252,6 +258,77 @@ int main(int argc, char* argv[]) {
         HeaderBlock::write(
             event_header.raw,
             join(event_output_path.path, "event_header.bin"));
+
+        //-------------
+        // export Simulation Truth
+        Path event_mc_truth_path = join(
+            event_output_path.path, "simulation_truth");
+        fs::create_directory(event_mc_truth_path.path);
+        std::array<float, 273> run_header;
+        for (unsigned int i = 0; i < run_header.size(); i++) {run_header[i] = 0.0f;}
+        run_header[0] = Corsika::str2float("RUNH");
+        run_header[1] = 1.0f;  // run-number
+        run_header[2] = 20180101.0f;  // date
+        run_header[3] = -1.0f;  // program version
+        run_header[4] = 1.0f;  // number observation-levels
+        run_header[5] = 5e3f;  // height observation-levels
+        HeaderBlock::write(
+            run_header,
+            join(event_mc_truth_path.path, "corsika_run_header.bin"));
+        std::array<float, 273> evt_header;
+        for (unsigned int i = 0; i < evt_header.size(); i++) {evt_header[i] = 0.0f;}
+        evt_header[0] = Corsika::str2float("EVTH");
+        evt_header[1] = static_cast<float>(event_counter + 1);  // evt-number
+        evt_header[2] = -1.0f;  // particle id
+        evt_header[3] = -1.0f;  // energy
+        evt_header[4] = 1.0f;  // number observation-levels
+        evt_header[5] = 5e3f;  // height observation-levels
+        evt_header[44-1] = run_header[1];  // run-number
+        evt_header[45-1] = run_header[2];  // date
+        evt_header[46-1] = run_header[3];  // program version
+        evt_header[47-1] = run_header[4];  // number observation-levels
+        evt_header[48-1] = run_header[5];  // height observation-levels
+        HeaderBlock::write(
+            evt_header,
+            join(event_mc_truth_path.path, "corsika_event_header.bin"));
+        Plenoscope::SimulationTruthHeader sim_truth_header;
+        sim_truth_header.set_random_number_seed_of_run(prng.seed());
+        HeaderBlock::write(
+            sim_truth_header.raw,
+            join(event_mc_truth_path.path, "mctracer_event_header.bin"));
+
+        if (export_all_simulation_truth) {
+            SignalProcessing::PhotonStream::write_simulation_truth(
+                electric_pipelines,
+                join(event_mc_truth_path.path, "detector_pulse_origins.bin"));
+
+            std::vector<std::array<float, 8>> raw_photons;
+            for (unsigned int p = 0; p < photons.size(); p++) {
+                const double lambda =
+                    photons.at(p).support().z/photons.at(p).direction().z;
+
+                std::array<float, 8> raw_photon;
+                raw_photon[0] = 1e2*(
+                    photons.at(p).support().x +
+                    lambda*photons.at(p).direction().x);  // x
+                raw_photon[1] = 1e2*(
+                    photons.at(p).support().y +
+                    lambda*photons.at(p).direction().y);  // y
+                raw_photon[2] = photons.at(p).direction().x;  // cx
+                raw_photon[3] = photons.at(p).direction().y;  // cy
+                raw_photon[4] = 0.0f;  // relative arrival-time on ground
+                raw_photon[5] = 1e2*photons.at(p).support().z;  // production height
+                raw_photon[6] = 1.0f;  // survival probability
+                raw_photon[7] = 1e9*photons.at(p).get_wavelength();
+                raw_photons.push_back(raw_photon);
+            }
+
+            EventIo::write_raw_photons(
+                raw_photons,
+                join(event_mc_truth_path.path,
+                    "air_shower_photon_bunches.bin"));
+        }
+
 
         event_counter++;
     }
