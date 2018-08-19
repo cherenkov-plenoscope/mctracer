@@ -1,29 +1,21 @@
-//=================================
-// include guard
-#ifndef __CameraManVerbosity_H_INCLUDE__
-#define __CameraManVerbosity_H_INCLUDE__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef VISUAL_CAMERAOPERATOR_VERBOSITY_H_
+#define VISUAL_CAMERAOPERATOR_VERBOSITY_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
 #include "Visual/CameraDevice.h"
-//=================================
 
 namespace Visual {
 namespace CameraOperator {
 
 class Verbosity {
-protected:
+ protected:
+    bool verbose = false;
 
-	bool verbose = false;
-public:
-
-	void set_verbosity(const bool verbosity);
+ public:
+    void set_verbosity(const bool verbosity);
 };
 
-}//CameraOperator
-}//Visual
+}  // namespace CameraOperator
+}  // namespace Visual
 
-#endif // __CameraManVerbosity_H_INCLUDE__
+#endif  // VISUAL_CAMERAOPERATOR_VERBOSITY_H_
