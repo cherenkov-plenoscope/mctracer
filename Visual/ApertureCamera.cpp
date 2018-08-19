@@ -21,9 +21,6 @@ void ApertureCamera::set_fStop_sesnorWidth_rayPerPixel(
 
     set_default_object_distance();
     update_sensor_distance_given_focal_and_object_distance();
-
-    // init back transformation T_cam2world
-    root2camera = camera2root.inverse();
 }
 
 void ApertureCamera::set_F_stop_number(const double new_FStopNumber) {

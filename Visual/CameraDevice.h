@@ -49,7 +49,6 @@ class CameraDevice{
     const std::string name;
     Image image;
     HomTra3 camera2root;
-    HomTra3 root2camera;
     Vec3 pos_in_root;
     Rot3 rot_in_root;
     Vec3 pointing;
