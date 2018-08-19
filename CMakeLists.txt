@@ -112,6 +112,13 @@ target_link_libraries(mctPlenoscopeNsbOnlyPropagation mct)
 target_link_libraries(mctPlenoscopeNsbOnlyPropagation stdc++fs)
 target_link_libraries(mctPlenoscopeNsbOnlyPropagation docopt)
 
+#------------------------
+# light field raw photon propagation
+add_executable(mctPlenoscopeRawPhotonPropagation Main/PlenoscopeRawPhotonPropagation.cpp)
+target_link_libraries(mctPlenoscopeRawPhotonPropagation mct)
+target_link_libraries(mctPlenoscopeRawPhotonPropagation stdc++fs)
+target_link_libraries(mctPlenoscopeRawPhotonPropagation docopt)
+
 #---------------------------------
 # unit test exe
 add_subdirectory("${PROJECT_SOURCE_DIR}/Tests/gtest-1.7.0")
