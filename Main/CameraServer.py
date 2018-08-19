@@ -34,11 +34,11 @@ def cam_command(
     optical_axis=[0, 0, 1],
     upward_direction=[0, 1, 0],
     sensor_size=0.06,
-    field_of_view=np.deg2rad(90),
+    field_of_view=np.deg2rad(120),
     f_stop=0.95,
     number_columns=480,
     number_rows=270,
-    number_rays_per_pixel=5
+    number_rays_per_pixel=1
 ):
     fout = BytesIO()
     fout.write(np.uint64(645).tobytes())  # MAGIC
@@ -68,11 +68,12 @@ def cam_command(
 
 
 call = [path_exe, '--scenery', scenery_path, '--config', visual_path]
-
 mctracer = sp.Popen(call, stdin=sp.PIPE, stdout=sp.PIPE)
+outdir = 'fly'
+os.makedirs(outdir, exist_ok=True)
 
 for i, y in enumerate(np.linspace(-1, 5, 100)):
-    w = mctracer.stdin.write(cam_command(position=[y, y, 2]))
+    w = mctracer.stdin.write(cam_command(position=[y, 0, 2]))
     w = mctracer.stdin.flush()
     img = read_ppm_image(mctracer.stdout)
-    io.imsave('fly/{:06d}.jpg'.format(i), img)
+    io.imsave(os.path.join(outdir, '{:06d}.jpg'.format(i)), img)
