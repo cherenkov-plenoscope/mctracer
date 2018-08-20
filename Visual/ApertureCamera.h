@@ -5,7 +5,9 @@
 class Frame;
 
 #include <string>
+#include <vector>
 #include "Core/DistanceMeter.h"
+#include "PixelCoordinate.h"
 #include "CameraDevice.h"
 #include "Core/Random/Random.h"
 
@@ -63,6 +65,10 @@ class ApertureCamera :public CameraDevice{
     unsigned int get_random_col();
     double get_average_object_distance(const Frame* world);
     unsigned int _5_permil_of_pixels()const;
+    std::vector<Color> acquire_pixels(
+        const Frame* world,
+        const Config* visual_config,
+        const std::vector<PixelCoordinate> pixels);
 };
 
 }  // namespace Visual
