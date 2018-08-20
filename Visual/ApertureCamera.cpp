@@ -149,22 +149,22 @@ Imagef luminance_threshold_dilatation(
     const float threshold
 ) {
     const Colorf o(255., 255., 255.);
-    const unsigned int rows = image.rows();
-    const unsigned int cols = image.cols();
+    const int rows = image.rows();
+    const int cols = image.cols();
     Imagef rc(cols, rows);
-    for (unsigned int col = 1; col < cols - 1; col++) {
-        for (unsigned int row = 1; row < rows - 1; row++) {
+    for (int col = 0; col < cols; col++) {
+        for (int row = 0; row < rows; row++) {
             double luminance = 0.0;
             Colorf c = image.at_col_row(col, row);
             luminance = c.r + c.g + c.b;
             if (luminance > threshold) {
-                for (int orow = -2; orow < 3 - 1; orow++) {
-                    for (int ocol = -2; ocol < 3 - 1; ocol++) {
+                for (int orow = -1; orow < 2; orow++) {
+                    for (int ocol = -1; ocol < 2; ocol++) {
                         if (
-                            row + orow > 0 &&
-                            col + ocol > 0 &&
-                            row + orow <= rows &&
-                            col + ocol <= cols) {
+                            row + orow >= 0 &&
+                            col + ocol >= 0 &&
+                            row + orow < rows &&
+                            col + ocol < cols) {
                             rc.set_col_row(col + ocol, row + orow, o);
                         }
                     }
@@ -228,15 +228,13 @@ Imagef fabs_image(const Imagef &a, const Imagef &b) {
     return rc;
 }
 
-void ApertureCamera::set_fStop_sesnorWidth_rayPerPixel(
+void ApertureCamera::set_fStop_sesnorWidth(
     const double new_FStopNumber,
-    const double new_SensorSizeX,
-    const unsigned int rays_per_pixel
+    const double new_SensorSizeX
 ) {
     set_F_stop_number(new_FStopNumber);
     set_sensor_size_using_width(new_SensorSizeX);
     update_sensor_pixel_pitch();
-    set_number_of_rays_per_pixel(rays_per_pixel);
 
     set_default_object_distance();
     update_sensor_distance_given_focal_and_object_distance();
@@ -267,19 +265,6 @@ void ApertureCamera::set_sensor_size_using_width(const double width_in_m) {
 void ApertureCamera::update_sensor_pixel_pitch() {
     PixelPitch_in_m = sensor_width_in_m/
         static_cast<double>(image.get_number_of_cols());
-}
-
-void ApertureCamera::set_number_of_rays_per_pixel(
-    const unsigned int rays_per_pixel
-) {
-    if (rays_per_pixel <= 0.0) {
-        stringstream info;
-        info << "Expected number of rays emitted per pixel to be ";
-        info << "greater zero, but actual it is ";
-        info << rays_per_pixel << ".";
-        throw std::invalid_argument(info.str());
-    }
-    this->rays_per_pixel = rays_per_pixel;
 }
 
 void ApertureCamera::set_default_object_distance() {
@@ -382,10 +367,6 @@ std::string ApertureCamera::get_aperture_camera_print()const {
     out << "| Pixel pitch      : " << PixelPitch_in_m*1e6 << " um\n";
     out << "| Object distance  : " << ObjectDistance_in_m << " m\n";
     out << "| Sensor distance  : " << SensorDistance_in_m*1e3 << " mm\n";
-    out << "| Rays per pixel   : " << rays_per_pixel << "\n";
-    out << "| Rays per image   : " <<
-    static_cast<double>(rays_per_pixel * image.get_number_of_pixels()/1e6);
-    out << " M rays\n";
     return out.str();
 }
 
@@ -482,12 +463,12 @@ void ApertureCamera::acquire_image(
 
     const unsigned int MAX_ITERATIONS = 100;
     const unsigned int MIN_NUMBER_RAYS = 1000;
-    unsigned int iter = 0;
+    unsigned int iteration = 0;
     Imagef diff_image(cols, rows);
     Imagef previous_sobel_image(cols, rows);
 
     while (true) {
-        if (iter >= MAX_ITERATIONS)
+        if (iteration >= MAX_ITERATIONS)
             break;
 
         std::vector<PixelCoordinate> pix_to_do =
@@ -496,7 +477,6 @@ void ApertureCamera::acquire_image(
         if (pix_to_do.size() <= MIN_NUMBER_RAYS)
             break;
 
-        std::cout << "number rays " << pix_to_do.size() << "\n";
         std::vector<Color> new_colors = acquire_pixels(
             world,
             visual_config,
@@ -520,10 +500,13 @@ void ApertureCamera::acquire_image(
             previous_sobel_image,
             sobel_image);
 
-        diff_image = luminance_threshold_dilatation(diff_image, 16.);
+        diff_image = luminance_threshold_dilatation(
+            diff_image,
+            visual_config->snapshot.noise_level);
+
         to_do_image = luminance_threshold_dilatation(diff_image, 128.);
 
-        iter += 1;
+        iteration += 1;
     }
 
     image = to_255_image(reconstructed_image);

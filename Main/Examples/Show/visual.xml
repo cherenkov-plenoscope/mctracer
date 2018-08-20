@@ -9,19 +9,15 @@
         scale="10"
     />
     <!--
-        Snaphot images are taken with a cineatic camera with depth of field.
-        Several rays are emitted per pixel (rows x cols x rays_per_pixel).
-        The more rays per pixel are emitted, the less noisy the image's depth
-        of field will be, but the longer it takes to be calculated. For a
-        strong depth of field, choose a small
-        focal_length_over_aperture_diameter, e.g. 0.95, and a large sensor
-        size e.g. 70mm. For a moderate human like depth of field, choose
-        focal_length_over_aperture_diameter=2.8 and
-        image_sensor_size_along_a_row=25mm.
+        Snaphot images are taken with a cinematic camera with an extended
+        aperture and depth-of-field.
+        Choose a low noise_level to obtain smooth images, choose a
+        high noise_level for fast imaging. The noise_level is an 8bit unsigned
+        integer between 0 and 255.
     -->
     <snapshot
-        cols="1920" rows="1080"
-        rays_per_pixel="3"
+        cols="1280" rows="720"
+        noise_level="4"
         focal_length_over_aperture_diameter="0.95"
         image_sensor_size_along_a_row="0.07"
     />

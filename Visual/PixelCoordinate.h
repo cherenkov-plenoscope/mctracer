@@ -12,10 +12,6 @@ struct PixelCoordinate{
     unsigned int col;
 };
 
-std::vector<PixelCoordinate> pixel_coordinates_above_threshold(
-    const Image &image,
-    const double threshold);
-
 std::vector<PixelCoordinate> pixel_coordinates(
     const unsigned int cols,
     const unsigned int rows);

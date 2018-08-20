@@ -12,8 +12,7 @@ Config::Config():sky_dome(Color::SKY_BLUE) {
 
     snapshot.cols = 1920;
     snapshot.rows = 1080;
-    snapshot.rays_per_pixel = 3;  // good trade off of computation time
-                                  // and image smoothness
+    snapshot.noise_level = 16;  // fairly smooth
     snapshot.focal_length_over_aperture_diameter = 0.95;  // Ultra fast lens
     snapshot.image_sensor_size_along_a_row = 0.07;  // IMAX 70mm format
 

@@ -104,7 +104,7 @@ TEST_F(XmlTest, visual_config) {
 
     out.snapshot.rows = 137;
     out.snapshot.cols = 42;
-    out.snapshot.rays_per_pixel = 55;
+    out.snapshot.noise_level = 55;
     out.snapshot.focal_length_over_aperture_diameter = 2.8;
     out.snapshot.image_sensor_size_along_a_row = 0.060;
 
@@ -126,7 +126,7 @@ TEST_F(XmlTest, visual_config) {
 
     EXPECT_EQ(out.snapshot.cols, in.snapshot.cols);
     EXPECT_EQ(out.snapshot.rows, in.snapshot.rows);
-    EXPECT_EQ(out.snapshot.rays_per_pixel, in.snapshot.rays_per_pixel);
+    EXPECT_EQ(out.snapshot.noise_level, in.snapshot.noise_level);
     EXPECT_EQ(
         out.snapshot.focal_length_over_aperture_diameter,
         in.snapshot.focal_length_over_aperture_diameter);

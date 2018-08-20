@@ -210,10 +210,9 @@ ApertureCamera FlyingCamera::get_ApertureCamera_based_on_display_camera()const {
     ApertureCamera apcam("Imax70mm",
         visual_config->snapshot.cols,
         visual_config->snapshot.rows);
-    apcam.set_fStop_sesnorWidth_rayPerPixel(
+    apcam.set_fStop_sesnorWidth(
         visual_config->snapshot.focal_length_over_aperture_diameter,
-        visual_config->snapshot.image_sensor_size_along_a_row,
-        visual_config->snapshot.rays_per_pixel);
+        visual_config->snapshot.image_sensor_size_along_a_row);
     apcam.set_FoV_in_rad(flying_camera_full_resolution->get_FoV_in_rad());
     apcam.update_position_and_orientation(
         flying_camera_full_resolution->get_position_in_world(),

@@ -40,7 +40,7 @@ struct ApertureCameraInstructions {
     double focal_length_over_aperture_diameter;
     uint64_t number_columns;
     uint64_t number_rows;
-    uint64_t number_rays_per_pixel;
+    uint64_t noise_level;
 };
 
 double read_float64(std::istream &fin) {
@@ -72,7 +72,7 @@ ApertureCameraInstructions read_from_stream(std::istream &fin) {
     inst.focal_length_over_aperture_diameter = read_float64(fin);
     inst.number_columns = read_uint64(fin);
     inst.number_rows = read_uint64(fin);
-    inst.number_rays_per_pixel = read_uint64(fin);
+    inst.noise_level = read_uint64(fin);
     return inst;
 }
 
@@ -117,27 +117,26 @@ int main(int argc, char* argv[]) {
 
         while (true) {
             ApertureCameraInstructions ins = read_from_stream(std::cin);
-            if (ins.magic_sync != MAGIC_INSTRUCTION_SYNC) {
+            if (ins.magic_sync != MAGIC_INSTRUCTION_SYNC)
                 break;
-            }
 
             Visual::ApertureCamera cam(
                 "camera",
                 ins.number_columns,
                 ins.number_rows);
-            cam.set_fStop_sesnorWidth_rayPerPixel(
+            cam.set_fStop_sesnorWidth(
                 ins.focal_length_over_aperture_diameter,
-                ins.sensor_size_along_columns,
-                ins.number_rays_per_pixel);
+                ins.sensor_size_along_columns);
             cam.set_FoV_in_rad(ins.field_of_view_along_columns);
             cam.update_position(ins.position);
             cam.update_orientation(ins.orientation);
             cam.set_focus_to(ins.object_distance);
+            visual_config.snapshot.noise_level = ins.noise_level;
             cam.acquire_image(&scenery.root, &visual_config);
-            const Visual::Image *image = cam.get_image();
+            const Visual::Image *camera_image = cam.get_image();
 
             Visual::append_picture_to_file(
-                *image,
+                *camera_image,
                 std::cout);
         }
 

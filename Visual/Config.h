@@ -20,7 +20,7 @@ struct Config {
     struct Snapshot {
         unsigned int cols;
         unsigned int rows;
-        unsigned int rays_per_pixel;
+        unsigned int noise_level;
         double focal_length_over_aperture_diameter;
         double image_sensor_size_along_a_row;
     } snapshot;
