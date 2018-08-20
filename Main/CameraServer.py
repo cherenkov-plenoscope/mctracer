@@ -47,7 +47,7 @@ def cam_command(
     fout.write(np.float64(position[1]).tobytes())
     fout.write(np.float64(position[2]).tobytes())
 
-    fout.write(np.float64(orientation[0]).tobytes())  # Euler-angles
+    fout.write(np.float64(orientation[0]).tobytes())  # Tait–Bryan-angles
     fout.write(np.float64(orientation[1]).tobytes())
     fout.write(np.float64(orientation[2]).tobytes())
 
