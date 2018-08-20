@@ -33,8 +33,8 @@ const uint64_t MAGIC_INSTRUCTION_SYNC = 645;
 struct ApertureCameraInstructions {
     uint64_t magic_sync;
     Vec3 position;
-    Vec3 optical_axis;
-    Vec3 upward_direction;
+    Rot3 orientation;
+    double object_distance;
     double sensor_size_along_columns;
     double field_of_view_along_columns;
     double focal_length_over_aperture_diameter;
@@ -62,14 +62,11 @@ ApertureCameraInstructions read_from_stream(std::istream &fin) {
         read_float64(fin),
         read_float64(fin),
         read_float64(fin));
-    inst.optical_axis = Vec3(
+    inst.orientation = Rot3(
         read_float64(fin),
         read_float64(fin),
         read_float64(fin));
-    inst.upward_direction = Vec3(
-        read_float64(fin),
-        read_float64(fin),
-        read_float64(fin));
+    inst.object_distance = read_float64(fin);
     inst.sensor_size_along_columns = read_float64(fin);
     inst.field_of_view_along_columns = read_float64(fin);
     inst.focal_length_over_aperture_diameter = read_float64(fin);
@@ -134,9 +131,11 @@ int main(int argc, char* argv[]) {
                 ins.number_rays_per_pixel);
             cam.set_FoV_in_rad(ins.field_of_view_along_columns);
             cam.update_position(ins.position);
-            cam.set_pointing_direction(ins.optical_axis, ins.upward_direction);
+            cam.update_orientation(ins.orientation);
+            cam.set_focus_to(ins.object_distance);
             cam.acquire_image(&scenery.root, &visual_config);
             const Visual::Image *image = cam.get_image();
+
             Visual::append_picture_to_file(
                 *image,
                 std::cout);
