@@ -244,8 +244,11 @@ void ApertureCamera::set_sensor_size_using_width(const double width_in_m) {
         info << width_in_m << ".";
         throw std::invalid_argument(info.str());
     }
+    const double width_to_height_ratio =
+        static_cast<double>(image.get_number_of_cols())/
+        static_cast<double>(image.get_number_of_rows());
     sensor_width_in_m = width_in_m;
-    sensor_height_in_m = sensor_width_in_m / image.get_width_to_height_ratio();
+    sensor_height_in_m = sensor_width_in_m / width_to_height_ratio;
 }
 
 void ApertureCamera::update_sensor_pixel_pitch() {

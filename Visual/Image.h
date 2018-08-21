@@ -27,7 +27,6 @@ class Image{
     Color get_color_row_col(
         const unsigned int row,
         const unsigned int col)const;
-    double get_width_to_height_ratio()const;
     void merge_left_and_right_image_to_anaglyph_3DStereo(
         Image* left_image, Image* right_image);
     void scale(const unsigned int scale);

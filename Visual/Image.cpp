@@ -90,11 +90,6 @@ Color Image::get_color_row_col(
     return Color(intensity.val[0], intensity.val[1], intensity.val[2]);
 }
 
-double Image::get_width_to_height_ratio()const {
-    return static_cast<double>(get_number_of_cols())/
-        static_cast<double>(get_number_of_rows());
-}
-
 void Image::merge_left_and_right_image_to_anaglyph_3DStereo(
     Image* left_image, Image* right_image
 ) {
