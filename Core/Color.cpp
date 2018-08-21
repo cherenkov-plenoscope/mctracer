@@ -16,63 +16,42 @@ const Color Color::GRASS_GREEN = Color(22, 91, 49);
 
 Color::Color(): r(128), g(128), b(128) {}
 
-Color::Color(const int _r, const int _g, const int _b) {
-    assert_is_in_valid_8Bit_range(_r);
-    assert_is_in_valid_8Bit_range(_g);
-    assert_is_in_valid_8Bit_range(_b);
-    r = _r;
-    g = _g;
-    b = _b;
-}
+Color::Color(float _r, float _g, float _b): r(_r), g(_g), b(_b) {}
 
 Color::Color(const std::vector<Color> &colors) {
-    double _r = 0.0;
-    double _g = 0.0;
-    double _b = 0.0;
+    float _r = 0.0;
+    float _g = 0.0;
+    float _b = 0.0;
 
     for (Color c : colors) {
         _r += c.r;
         _g += c.g;
         _b += c.b;
     }
-    const double weight = 1.0/colors.size();
+    const float weight = 1.0/colors.size();
 
-    r = (unsigned char)round(_r*weight);
-    g = (unsigned char)round(_g*weight);
-    b = (unsigned char)round(_b*weight);
+    r = _r*weight;
+    g = _g*weight;
+    b = _b*weight;
 }
 
 std::string Color::str()const {
     std::stringstream out;
-    out << "(" << static_cast<int>(r);
-    out << " " << static_cast<int>(g);
-    out << " " << static_cast<int>(b) << ")";
-    out << "8 Bit RGB";
+    out << "(" << round(r);
+    out << " " << round(g);
+    out << " " << round(b) << ")";
+    out << "RGB";
     return out.str();
 }
 
 void Color::reflection_mix(const Color &c, const double refl) {
-    r = static_cast<unsigned char>(
-        (1.0 - refl)*static_cast<double>(r) + refl*static_cast<double>(c.r));
-    g = static_cast<unsigned char>(
-        (1.0 - refl)*static_cast<double>(g) + refl*static_cast<double>(c.g));
-    b = static_cast<unsigned char>(
-        (1.0 - refl)*static_cast<double>(b) + refl*static_cast<double>(c.b));
-}
-
-void Color::assert_is_in_valid_8Bit_range(const int channel)const {
-    if ( channel < 0.0 || channel > 255.0 ) {
-        std::stringstream info;
-        info << "Color::" << __func__ << "()\n";
-        info << "Each RGB color channel must be within the valid 8 Bit range\n";
-        info << "Expected channels to be: 0 <= channel <= 255, but actual: ";
-        info << str() << "\n";
-        throw std::out_of_range(info.str());
-    }
+    r = (1.0 - refl)*r + refl*c.r;
+    g = (1.0 - refl)*g + refl*c.g;
+    b = (1.0 - refl)*b + refl*c.b;
 }
 
 bool Color::operator == (const Color& eq)const {
-    return r == eq.r && g == eq.g && b == eq.b;
+    return fabs(r - eq.r) < 1. && fabs(g - eq.g) < 1. && fabs(b - eq.b) < 1.;
 }
 
 bool Color::operator != (const Color& eq)const {
