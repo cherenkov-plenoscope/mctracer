@@ -25,9 +25,9 @@ cv::Mat image_to_opencv_image(const Image& image) {
             if (c.g > 255.) c.g = 255.;
             if (c.b > 255.) c.b = 255.;
             cv::Vec3b intensity;
-            intensity.val[0] = static_cast<unsigned char>(c.b);
-            intensity.val[1] = static_cast<unsigned char>(c.g);
-            intensity.val[2] = static_cast<unsigned char>(c.r);
+            intensity.val[0] = c.b;
+            intensity.val[1] = c.g;
+            intensity.val[2] = c.r;
             raw.at<cv::Vec3b>(row, col) = intensity;
         }
     }
@@ -276,11 +276,7 @@ void FlyingCamera::take_snapshot_manual_focus_on_pixel_col_row(
     apcam.set_focus_to(object_distance_to_focus_on);
     cout << apcam.str();
     const Image* img = acquire_scaled_image_with_camera(false, &apcam);
-
-    std::ofstream fout;
-    fout.open(get_snapshot_filename(), std::ios::out | std::ios::binary);
-    append_picture_to_file(*img, fout);
-    fout.close();
+    ppm::write_image_to_path(*img, get_snapshot_filename());
 }
 
 const Image* FlyingCamera::acquire_scaled_image_with_camera(

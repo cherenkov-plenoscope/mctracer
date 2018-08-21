@@ -23,9 +23,6 @@ def read_ppm_image(fstream):
     count = number_columns*number_rows*3
     raw = np.fromstring(fstream.read(count), dtype=np.uint8)
     img = raw.reshape((number_rows, number_columns, 3))
-    b = img[:, :, 0].copy()
-    img[: , :, 0] = img[: , :, 2]
-    img[: , :, 2] = b
     return img
 
 
@@ -36,8 +33,8 @@ def cam_command(
     sensor_size=0.06,
     field_of_view=np.deg2rad(45),
     f_stop=0.95,
-    number_columns=256*10,
-    number_rows=144*10,
+    number_columns=256,
+    number_rows=144,
     noise_level=16
 ):
     fout = BytesIO()

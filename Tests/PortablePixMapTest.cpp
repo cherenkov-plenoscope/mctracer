@@ -22,16 +22,12 @@ TEST_F(PortablePixMapTest, write_and_read) {
             }
         }
     }
+    Visual::ppm::write_image_to_path(
+        img,
+        "test_image_16x9_rgb.ppm");
 
-    std::ofstream fout;
-    fout.open("test_image_16x9_rgb.ppm", std::ios::out | std::ios::binary);
-    Visual::append_picture_to_file(img, fout);
-    fout.close();
-
-    std::ifstream fin;
-    fin.open("test_image_16x9_rgb.ppm", std::ios::in | std::ios::binary);
-    Visual::Image img_back = Visual::read_picture_from_file(fin);
-    fin.close();
+    Visual::Image img_back = Visual::ppm::read_image_from_path(
+        "test_image_16x9_rgb.ppm");
 
     ASSERT_EQ(img.number_cols, img_back.number_cols);
     ASSERT_EQ(img.number_rows, img_back.number_rows);

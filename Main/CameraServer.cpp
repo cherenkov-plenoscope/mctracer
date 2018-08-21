@@ -135,7 +135,7 @@ int main(int argc, char* argv[]) {
             cam.acquire_image(&scenery.root, &visual_config);
             const Visual::Image *camera_image = cam.get_image();
 
-            Visual::append_picture_to_file(
+            Visual::ppm::append_image_to_file(
                 *camera_image,
                 std::cout);
         }
