@@ -17,7 +17,7 @@
     -->
     <snapshot
         cols="1280" rows="720"
-        noise_level="4"
+        noise_level="25"
         focal_length_over_aperture_diameter="0.95"
         image_sensor_size_along_a_row="0.07"
     />
