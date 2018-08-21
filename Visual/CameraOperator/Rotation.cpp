@@ -1,4 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
+#include <math.h>
 #include "Visual/CameraOperator/Rotation.h"
 #include "Tools/Tools.h"
 using std::cout;

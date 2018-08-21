@@ -21,13 +21,13 @@ void append_picture_to_file(const Image &img, std::ostream &fout) {
     std::stringstream head;
     head << "P6\n";
     head << "# CREATOR: MCTRACER\n";
-    head << int(img.get_number_of_cols()) << " ";
-    head << int(img.get_number_of_rows()) << "\n";
+    head << int(img.number_cols) << " ";
+    head << int(img.number_rows) << "\n";
     head << "255\n";
     fout << head.str();
-    for (unsigned int row = 0; row < img.get_number_of_rows(); row++) {
-        for (unsigned int col = 0; col < img.get_number_of_cols(); col++) {
-            const Color c = img.get_color_row_col(row, col);
+    for (unsigned int row = 0; row < img.number_rows; row++) {
+        for (unsigned int col = 0; col < img.number_cols; col++) {
+            const Color c = img.at_col_row(col, row);
             append_uint8(c.r, fout);
             append_uint8(c.g, fout);
             append_uint8(c.b, fout);
@@ -84,11 +84,11 @@ Image read_picture_from_file(std::istream &fin) {
     }
 
     Image img(number_columns, number_rows);
-    for (unsigned int row = 0; row < img.get_number_of_rows(); row++) {
-        for (unsigned int col = 0; col < img.get_number_of_cols(); col++) {
-            img.set_row_col_to_color(
-                row,
+    for (unsigned int row = 0; row < img.number_rows; row++) {
+        for (unsigned int col = 0; col < img.number_cols; col++) {
+            img.set_col_row(
                 col,
+                row,
                 Color(
                     read_uint8(fin),
                     read_uint8(fin),

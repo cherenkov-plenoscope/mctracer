@@ -33,5 +33,5 @@
         the sky dome will be monochrome with the color defined here. If the
         sky dome is taken from a file, the color is used below the horizon.
     -->
-    <sky_dome image_path="chile_night_sky.tif" color="[0, 0, 0]"/>
+    <sky_dome image_path="chile_night_sky.ppm" color="[0, 0, 0]"/>
 </visual>

@@ -24,8 +24,9 @@ class Stereo3D: public Verbosity {
 
  private:
     CameraDevice* camera;
-    Image *left_image;
-    Image *right_image;
+    Image left_image;
+    Image right_image;
+    Image stereo_image;
     Vec3 initial_camera_pos;
     Rot3 initial_camera_rotation;
     Vec3 initial_camera_image_upward_direction;

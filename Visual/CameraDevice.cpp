@@ -79,9 +79,9 @@ std::string CameraDevice::get_camera_print()const {
     out << pointing.str() << "\n";
     out << "| field of view: " << Rad2Deg(field_of_view) <<" deg\n";
     out << "| resolution: cols x rows : ";
-    out << image.get_number_of_cols() << "x";
-    out << image.get_number_of_rows() <<" pixels";
-    out << " / " << image.get_number_of_pixels()/1e6 << " M pixels\n";
+    out << image.number_cols << "x";
+    out << image.number_rows <<" pixels";
+    out << " / " << (image.number_cols*image.number_rows)/1e6 << " M pixels\n";
     return out.str();
 }
 
@@ -102,7 +102,9 @@ double CameraDevice::get_FoV_in_rad()const {
     return field_of_view;
 }
 
-void CameraDevice::assert_field_of_view_is_valid(const double field_of_view)const {
+void CameraDevice::assert_field_of_view_is_valid(
+    const double field_of_view
+)const {
     if (field_of_view <= Deg2Rad(0.0) || field_of_view > Deg2Rad(180.0)) {
         std::stringstream info;
         info << "CameraDevice::" << __func__ << "()\n";
@@ -118,10 +120,6 @@ std::string CameraDevice::get_name()const {
 
 const Image* CameraDevice::get_image()const {
     return &image;
-}
-
-void CameraDevice::save_image(const std::string path)const {
-    image.save(path);
 }
 
 Vec3 CameraDevice::get_position_in_world()const {
@@ -141,11 +139,11 @@ Ray CameraDevice::get_optical_axis_in_world()const {
 }
 
 unsigned int CameraDevice::get_number_of_sensor_cols()const {
-    return image.get_number_of_cols();
+    return image.number_cols;
 }
 
 unsigned int CameraDevice::get_number_of_sensor_rows()const {
-    return image.get_number_of_rows();
+    return image.number_rows;
 }
 
 }  // namespace Visual

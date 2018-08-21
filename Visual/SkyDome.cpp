@@ -1,27 +1,29 @@
 // Copyright 2016 Sebastian A. Mueller, Max L. Ahnen
 #include "Visual/SkyDome.h"
+#include <math.h>
 #include <sstream>
 
 namespace Visual {
 
-SkyDome::SkyDome(const std::string _filename):sky(Image(_filename)) {
+SkyDome::SkyDome(const std::string _filename):
+    sky(Image(_filename)) {
     has_texture = true;
     filename = _filename;
 
-    central_row = sky.get_number_of_rows()/2;
-    central_col = sky.get_number_of_cols()/2;
+    central_row = sky.number_rows/2;
+    central_col = sky.number_cols/2;
     zenith_to_horizon_radius =
         central_row < central_col ? central_row : central_col;
 
     background_color = Color::BLACK;
 }
 
-SkyDome::SkyDome(const Color color) {
+SkyDome::SkyDome(const Color color): sky(Image(0, 0)) {
     has_texture = false;
     background_color = color;
 }
 
-SkyDome::SkyDome() {
+SkyDome::SkyDome(): sky(Image(0, 0)) {
     has_texture = false;
     background_color = Color::SKY_BLUE;
 }
@@ -53,13 +55,13 @@ Color SkyDome::sky_dome_color_for(const Vec3 dir)const {
     const unsigned int col = central_col + col_offset;
     const unsigned int row = central_row + row_offset;
 
-    return sky.get_color_row_col(row, col);
+    return sky.at_col_row(col, row);
 }
 
 std::string SkyDome::str()const {
     std::stringstream out;
     out << "SkyDome ";
-    out << sky.get_number_of_cols() << "x" << sky.get_number_of_rows();
+    out << sky.number_cols << "x" << sky.number_rows;
     if (has_texture) {
         out << ", " << filename << ", ";
         out << "central pixel (" << central_col << "," << central_row << "), ";

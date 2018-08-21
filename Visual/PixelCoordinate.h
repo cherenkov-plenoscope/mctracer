@@ -3,7 +3,6 @@
 #define VISUAL_PIXELCOORDINATE_H_
 
 #include <vector>
-#include "Visual/Image.h"
 
 namespace Visual {
 

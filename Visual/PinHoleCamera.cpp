@@ -53,7 +53,7 @@ void PinHoleCamera::update_principal_point_for_current_FoV() {
     */
     // distance
     dist_camera_support_to_principal_point =
-        ((image.get_number_of_cols()/2.0)/tan(field_of_view/2.0));
+        ((image.number_cols/2.0)/tan(field_of_view/2.0));
 
     // principal point
     principal_point =
@@ -88,8 +88,8 @@ Vec3 PinHoleCamera::get_direction_of_ray_for_pixel(
 Vec3 PinHoleCamera::get_intersection_of_ray_on_image_sensor_for_pixel(
     const int row, const int col
 )const {
-    const int vert_position_on_image_sensor = row-image.get_number_of_rows()/2;
-    const int hori_position_on_image_sensor = col-image.get_number_of_cols()/2;
+    const int vert_position_on_image_sensor = row-image.number_rows/2;
+    const int hori_position_on_image_sensor = col-image.number_cols/2;
 
     return principal_point +
         SensorDirectionVert * vert_position_on_image_sensor +
@@ -104,17 +104,18 @@ void PinHoleCamera::acquire_image(
     CameraRay cam_ray;
     int HadCatch = 0;
     Random::Mt19937 prng;
+    const unsigned int number_pixel = image.number_cols*image.number_rows;
 
     #pragma omp parallel shared(visual_config, world, HadCatch) private(i, cam_ray, row, col)
     {
         #pragma omp for schedule(dynamic)
-        for (i = 0; i < image.get_number_of_pixels(); i++) {
+        for (i = 0; i < number_pixel; i++) {
             try {
-                row = i / image.get_number_of_cols();
-                col = i % image.get_number_of_cols();
+                row = i / image.number_cols;
+                col = i % image.number_cols;
                 cam_ray = get_ray_for_pixel_in_row_and_col(row, col);
                 Tracer tracer(&cam_ray, world, visual_config, &prng);
-                image.set_row_col_to_color(row, col, tracer.color);
+                image.set_col_row(col, row, tracer.color);
             } catch (std::exception &error) {
                 HadCatch++;
                 std::cerr << error.what();

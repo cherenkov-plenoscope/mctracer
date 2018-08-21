@@ -1,5 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <experimental/filesystem>
+#include <algorithm>
 #include "DocOpt/docopt.h"
 #include "Main/photon_stream.h"
 #include "Tools/Tools.h"

@@ -4,9 +4,18 @@
 namespace Visual {
 namespace CameraOperator {
 
-Stereo3D::Stereo3D(CameraDevice* camera_to_work_with) {
-    camera = camera_to_work_with;
-}
+Stereo3D::Stereo3D(CameraDevice* camera_to_work_with):
+    camera(camera_to_work_with),
+    left_image(
+        Image(
+            camera->get_image()->number_cols,
+            camera->get_image()->number_rows)),
+    right_image(
+        Image(camera->get_image()->number_cols,
+            camera->get_image()->number_rows)),
+    stereo_image(
+        Image(camera->get_image()->number_cols,
+            camera->get_image()->number_rows)) {}
 
 void Stereo3D::aquire_stereo_image(
     const Frame* world,
@@ -50,7 +59,7 @@ void Stereo3D::take_left_image(
     const Config* visual_config
 ) {
     camera->acquire_image(world, visual_config);
-    left_image = new Image(camera->get_image());
+    left_image = *camera->get_image();
 }
 
 void Stereo3D::take_right_image(
@@ -58,7 +67,7 @@ void Stereo3D::take_right_image(
     const Config* visual_config
 ) {
     camera->acquire_image(world, visual_config);
-    right_image = new Image(camera->get_image());
+    right_image = *camera->get_image();
 }
 
 Vec3 Stereo3D::offset_to_the_right()const {
@@ -134,10 +143,10 @@ void Stereo3D::print_stereo_offset_manipulation(
 }
 
 const Image* Stereo3D::get_anaglyph_stereo3D_image() {
-    left_image->merge_left_and_right_image_to_anaglyph_3DStereo(
+    stereo_image = merge_left_and_right_image_to_anaglyph_3DStereo(
         left_image,
         right_image);
-    return left_image;
+    return &stereo_image;
 }
 
 void Stereo3D::use_same_stereo_offset_as(

@@ -33,17 +33,17 @@ class FlyingCamera {
     ~FlyingCamera();
 
  private:
-    const std::string display_name = "Monte Carlo Ray Tracer";
-    PinHoleCamera *flying_camera;
-    PinHoleCamera *flying_camera_full_resolution;
+    const std::string display_name;
+    const Frame *world;
+    const Config *visual_config;
+    PinHoleCamera flying_camera;
+    PinHoleCamera flying_camera_full_resolution;
     Image image;
     CameraOperator::FieldOfView* fov_operator;
     CameraOperator::Translation* translation_operator;
     CameraOperator::Rotation* rotation_operator;
     CameraOperator::Stereo3D* stereo_operator;
     bool stereo3D = false;
-    const Frame *world;
-    const Config *visual_config;
     int snapshot_counter = 0;
     unsigned int user_input_counter = 0;
     Time::Stamp time_stamp;

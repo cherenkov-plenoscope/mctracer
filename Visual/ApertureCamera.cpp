@@ -8,7 +8,7 @@ using std::string;
 using std::stringstream;
 
 namespace Visual {
-
+/*
 struct Imagef {
     unsigned int number_cols;
     unsigned int number_rows;
@@ -213,6 +213,7 @@ Imagef fabs_image(const Imagef &a, const Imagef &b) {
     }
     return rc;
 }
+*/
 
 void ApertureCamera::set_fStop_sesnorWidth(
     const double new_FStopNumber,
@@ -245,15 +246,15 @@ void ApertureCamera::set_sensor_size_using_width(const double width_in_m) {
         throw std::invalid_argument(info.str());
     }
     const double width_to_height_ratio =
-        static_cast<double>(image.get_number_of_cols())/
-        static_cast<double>(image.get_number_of_rows());
+        static_cast<double>(image.number_cols)/
+        static_cast<double>(image.number_rows);
     sensor_width_in_m = width_in_m;
     sensor_height_in_m = sensor_width_in_m / width_to_height_ratio;
 }
 
 void ApertureCamera::update_sensor_pixel_pitch() {
     PixelPitch_in_m = sensor_width_in_m/
-        static_cast<double>(image.get_number_of_cols());
+        static_cast<double>(image.number_cols);
 }
 
 void ApertureCamera::set_default_object_distance() {
@@ -305,7 +306,7 @@ void ApertureCamera::auto_focus(const Frame* world) {
 }
 
 unsigned int ApertureCamera::_5_permil_of_pixels()const {
-    return image.get_number_of_pixels()*5e-4;
+    return (image.number_cols*image.number_rows)*5e-4;
 }
 
 double ApertureCamera::get_average_object_distance(const Frame* world) {
@@ -338,11 +339,11 @@ double ApertureCamera::get_average_object_distance(const Frame* world) {
 }
 
 unsigned int ApertureCamera::get_random_row() {
-    return (unsigned int)(floor(prng.uniform()*image.get_number_of_rows()));
+    return (unsigned int)(floor(prng.uniform()*image.number_rows));
 }
 
 unsigned int ApertureCamera::get_random_col() {
-    return (unsigned int)(floor(prng.uniform()*image.get_number_of_cols()));
+    return (unsigned int)(floor(prng.uniform()*image.number_cols));
 }
 
 std::string ApertureCamera::get_aperture_camera_print()const {
@@ -373,8 +374,8 @@ Vec3 ApertureCamera::get_random_point_on_bounded_aperture_plane() {
 Vec3 ApertureCamera::get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(
     const unsigned int row, const unsigned int col
 ) {
-    const int x_pos_on_sensor_in_pixel =  row - image.get_number_of_rows()/2;
-    const int y_pos_on_sensor_in_pixel =  col - image.get_number_of_cols()/2;
+    const int x_pos_on_sensor_in_pixel =  row - image.number_rows/2;
+    const int y_pos_on_sensor_in_pixel =  col - image.number_cols/2;
 
     const double image_size_x = x_pos_on_sensor_in_pixel * PixelPitch_in_m;
     const double image_size_y = y_pos_on_sensor_in_pixel * PixelPitch_in_m;
@@ -422,11 +423,11 @@ void ApertureCamera::acquire_image(
     const Frame* world,
     const Config* visual_config
 ) {
-    unsigned int rows = image.get_number_of_rows();
-    unsigned int cols = image.get_number_of_cols();
+    unsigned int rows = image.number_rows;
+    unsigned int cols = image.number_cols;
 
-    Imagef sum_image(cols, rows);
-    Imagef exposure_image(cols, rows);
+    Image sum_image(cols, rows);
+    Image exposure_image(cols, rows);
 
     // initial image
     std::vector<PixelCoordinate> all_pixels = pixel_coordinates(cols, rows);
@@ -441,20 +442,20 @@ void ApertureCamera::acquire_image(
         &sum_image,
         &exposure_image);
 
-    Imagef reconstructed_image = image_from_sum_and_exposure(
+    Image reconstructed_image = image_from_sum_and_exposure(
         sum_image,
         exposure_image);
 
-    Imagef sobel_image = sobel_operator(reconstructed_image);
+    Image sobel_image = sobel_operator(reconstructed_image);
     sobel_image = truncate_to_255(sobel_image);
 
-    Imagef to_do_image = luminance_threshold_dilatation(sobel_image, 128.);
+    Image to_do_image = luminance_threshold_dilatation(sobel_image, 128.);
 
     const unsigned int MAX_ITERATIONS = 100;
     const unsigned int MIN_NUMBER_RAYS = 1000;
     unsigned int iteration = 0;
-    Imagef diff_image(cols, rows);
-    Imagef previous_sobel_image(cols, rows);
+    Image diff_image(cols, rows);
+    Image previous_sobel_image(cols, rows);
 
     while (true) {
         if (iteration >= MAX_ITERATIONS)
@@ -498,7 +499,7 @@ void ApertureCamera::acquire_image(
         iteration += 1;
     }
 
-    image = to_255_image(reconstructed_image);
+    image = reconstructed_image;
 }
 
 std::vector<Color> ApertureCamera::acquire_pixels(

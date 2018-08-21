@@ -37,7 +37,6 @@ class CameraDevice{
     Ray get_optical_axis_in_world()const;
     std::string get_name()const;
     std::string str()const;
-    void save_image(const std::string path)const;
     virtual const Image* get_image()const;
     Vec3 get_position_in_world()const;
     Rot3 get_rotation_in_world()const;

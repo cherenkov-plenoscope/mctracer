@@ -9,15 +9,15 @@ class PortablePixMapTest : public ::testing::Test {};
 TEST_F(PortablePixMapTest, write_and_read) {
     Visual::Image img(16, 9);
 
-    for (unsigned int c = 0; c < img.get_number_of_cols(); c++) {
-        for (unsigned int r = 0; r < img.get_number_of_rows(); r++) {
+    for (unsigned int c = 0; c < img.number_cols; c++) {
+        for (unsigned int r = 0; r < img.number_rows; r++) {
             if (c == 8) {
-                img.set_row_col_to_color(r, c, Color(255, 0, 0));
+                img.set_col_row(c, r, Color(255, 0, 0));
             } else {
                 if (r == 4) {
-                    img.set_row_col_to_color(r, c, Color(0, 255, 0));
+                    img.set_col_row(c, r, Color(0, 255, 0));
                 } else {
-                    img.set_row_col_to_color(r, c, Color(0, 0, 255));
+                    img.set_col_row(c, r, Color(0, 0, 255));
                 }
             }
         }
@@ -33,20 +33,20 @@ TEST_F(PortablePixMapTest, write_and_read) {
     Visual::Image img_back = Visual::read_picture_from_file(fin);
     fin.close();
 
-    ASSERT_EQ(img.get_number_of_cols(), img_back.get_number_of_cols());
-    ASSERT_EQ(img.get_number_of_rows(), img_back.get_number_of_rows());
+    ASSERT_EQ(img.number_cols, img_back.number_cols);
+    ASSERT_EQ(img.number_rows, img_back.number_rows);
 
-    for (unsigned int c = 0; c < img.get_number_of_cols(); c++) {
-        for (unsigned int r = 0; r < img.get_number_of_rows(); r++) {
+    for (unsigned int c = 0; c < img.number_cols; c++) {
+        for (unsigned int r = 0; r < img.number_rows; r++) {
             ASSERT_EQ(
-                img.get_color_row_col(r, c).r,
-                img_back.get_color_row_col(r, c).r);
+                img.at_col_row(c, r).r,
+                img_back.at_col_row(c, r).r);
             ASSERT_EQ(
-                img.get_color_row_col(r, c).g,
-                img_back.get_color_row_col(r, c).g);
+                img.at_col_row(c, r).g,
+                img_back.at_col_row(c, r).g);
             ASSERT_EQ(
-                img.get_color_row_col(r, c).b,
-                img_back.get_color_row_col(r, c).b);
+                img.at_col_row(c, r).b,
+                img_back.at_col_row(c, r).b);
         }
     }
 }
