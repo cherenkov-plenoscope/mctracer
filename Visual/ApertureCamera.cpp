@@ -10,34 +10,28 @@ using std::stringstream;
 namespace Visual {
 
 struct Imagef {
-    std::vector<std::vector<Color>> raw;
-    Imagef(unsigned int cols, unsigned int rows) {
-        std::vector<std::vector<Color>> tmp(
-            cols,
-            std::vector<Color>(rows));
-        raw = tmp;
-    }
+    unsigned int number_cols;
+    unsigned int number_rows;
+    std::vector<Color> raw;
+    Imagef(unsigned int _number_cols, unsigned int _number_rows):
+        number_cols(_number_cols),
+        number_rows(_number_rows),
+        raw(std::vector<Color>(number_cols*number_rows)) {}
     Color at_col_row(unsigned int col, unsigned int row)const {
-        return raw.at(col).at(row);
+        return raw.at(_idx(col, row));
     }
     void set_col_row(unsigned int col, unsigned int row, Color c) {
-        raw.at(col).at(row) = c;
+        raw.at(_idx(col, row)) = c;
     }
-    unsigned int cols()const {
-        return raw.size();
-    }
-    unsigned int rows()const {
-        if (cols() > 0)
-            return raw.at(0).size();
-        else
-            return 0;
+    unsigned int _idx(unsigned int col, unsigned int row)const {
+        return col*number_rows + row;
     }
 };
 
 Imagef truncate_to_255(const Imagef &image) {
-    Imagef rc(image.cols(), image.rows());
-    for (unsigned int col = 0; col < image.cols(); col++) {
-        for (unsigned int row = 0; row < image.rows(); row++) {
+    Imagef rc(image.number_cols, image.number_rows);
+    for (unsigned int col = 0; col < image.number_cols; col++) {
+        for (unsigned int row = 0; row < image.number_rows; row++) {
             Color c = image.at_col_row(col, row);
             if (c.r > 255.) c.r = 255.;
             if (c.g > 255.) c.g = 255.;
@@ -50,9 +44,9 @@ Imagef truncate_to_255(const Imagef &image) {
 
 Image to_255_image(const Imagef &image) {
     Imagef trunc_image = truncate_to_255(image);
-    Image rc(image.cols(), image.rows());
-    for (unsigned int col = 0; col < image.cols(); col++) {
-        for (unsigned int row = 0; row < image.rows(); row++) {
+    Image rc(image.number_cols, image.number_rows);
+    for (unsigned int col = 0; col < image.number_cols; col++) {
+        for (unsigned int row = 0; row < image.number_rows; row++) {
             Color c(
                 static_cast<unsigned char>(trunc_image.at_col_row(col, row).r),
                 static_cast<unsigned char>(trunc_image.at_col_row(col, row).g),
@@ -64,11 +58,9 @@ Image to_255_image(const Imagef &image) {
 }
 
 Imagef sobel_operator(const Imagef &image) {
-    const unsigned int rows = image.rows();
-    const unsigned int cols = image.cols();
-    Imagef rc(cols, rows);
-    for (unsigned int col = 1; col < cols - 1; col++) {
-        for (unsigned int row = 1; row < rows - 1; row++) {
+    Imagef rc(image.number_cols, image.number_rows);
+    for (unsigned int col = 1; col < image.number_cols - 1; col++) {
+        for (unsigned int row = 1; row < image.number_rows - 1; row++) {
             double xr = 0;
             double xg = 0;
             double xb = 0;
@@ -143,8 +135,8 @@ Imagef luminance_threshold_dilatation(
     const float threshold
 ) {
     const Color o(255., 255., 255.);
-    const int rows = image.rows();
-    const int cols = image.cols();
+    const int rows = image.number_rows;
+    const int cols = image.number_cols;
     Imagef rc(cols, rows);
     for (int col = 0; col < cols; col++) {
         for (int row = 0; row < rows; row++) {
@@ -174,9 +166,9 @@ Imagef image_from_sum_and_exposure(
     const Imagef &sum,
     const Imagef &exposure
 ) {
-    Imagef image(sum.cols(), sum.rows());
-    for (unsigned int col = 0; col < sum.cols(); col++) {
-        for (unsigned int row = 0; row < sum.rows(); row++) {
+    Imagef image(sum.number_cols, sum.number_rows);
+    for (unsigned int col = 0; col < sum.number_cols; col++) {
+        for (unsigned int row = 0; row < sum.number_rows; row++) {
             Color c;
             c.r = sum.at_col_row(col, row).r/exposure.at_col_row(col, row).r;
             c.g = sum.at_col_row(col, row).g/exposure.at_col_row(col, row).g;
@@ -192,8 +184,8 @@ std::vector<PixelCoordinate> pixel_coordinates_above_threshold(
     const double threshold
 ) {
     std::vector<PixelCoordinate> coordinates;
-    for (unsigned int row = 0; row < image.rows(); row++) {
-        for (unsigned int col = 0; col < image.cols(); col++) {
+    for (unsigned int row = 0; row < image.number_rows; row++) {
+        for (unsigned int col = 0; col < image.number_cols; col++) {
             double lum = 0.0;
             Color c = image.at_col_row(col, row);
             lum = c.r + c.g + c.b;
@@ -209,9 +201,9 @@ std::vector<PixelCoordinate> pixel_coordinates_above_threshold(
 }
 
 Imagef fabs_image(const Imagef &a, const Imagef &b) {
-    Imagef rc(a.cols(), a.rows());
-    for (unsigned int row = 0; row < a.rows(); row++) {
-        for (unsigned int col = 0; col < a.cols(); col++) {
+    Imagef rc(a.number_cols, a.number_rows);
+    for (unsigned int row = 0; row < a.number_rows; row++) {
+        for (unsigned int col = 0; col < a.number_cols; col++) {
             Color c(
                 fabs(a.at_col_row(col, row).r - b.at_col_row(col, row).r),
                 fabs(a.at_col_row(col, row).g - b.at_col_row(col, row).g),
