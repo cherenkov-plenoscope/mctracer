@@ -14,7 +14,7 @@ const Color Color::GREEN = Color(0, 255, 0);
 const Color Color::BLUE = Color(0, 0, 255);
 const Color Color::GRASS_GREEN = Color(22, 91, 49);
 
-Color::Color(): r(128), g(128), b(128) {}
+Color::Color(): r(0), g(0), b(0) {}
 
 Color::Color(float _r, float _g, float _b): r(_r), g(_g), b(_b) {}
 
