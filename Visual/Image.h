@@ -10,6 +10,7 @@
 namespace Visual {
 
 struct Image {
+    // For fast striding: Use cols in outer loop and rows in inner loop.
     unsigned int number_cols;
     unsigned int number_rows;
     std::vector<Color> raw;
