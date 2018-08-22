@@ -2,6 +2,7 @@
 #include "Scenery/Primitive/SphereCapWithRectangularBound.h"
 #include <algorithm>
 #include <sstream>
+#include <math.h>
 using std::string;
 using std::vector;
 using std::stringstream;

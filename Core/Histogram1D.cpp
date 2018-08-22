@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <sstream>
 #include <iomanip>
+#include <math.h>
 #include "Core/Histogram1D.h"
 #include "Tools/StringTools.h"
 using std::string;

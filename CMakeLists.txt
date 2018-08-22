@@ -29,7 +29,7 @@ if(OPENMP_FOUND)
 endif()
 
 # 	OpenCV
-find_package(OpenCV 2.4.8 REQUIRED)
+find_package(OpenCV)
 include_directories(${OpenCV_INCLUDE_DIRS})
 link_directories(${OpenCV_LIB_DIR})
 #-------------------------------------------------------------------------------
