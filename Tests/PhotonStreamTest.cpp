@@ -167,3 +167,26 @@ TEST_F(PhotonStreamTest, number_time_slices_too_big) {
                 assert_number_time_slices_below_8bit_max(256),
         std::invalid_argument);
 }
+
+
+TEST_F(PhotonStreamTest, arrival_time_slices_below_next_channel_marker) {
+    const float slice_duration = .5e-9;
+    vector<vector<SignalProcessing::ElectricPulse>> response;
+    vector<SignalProcessing::ElectricPulse> read_out_channel;
+    SignalProcessing::ElectricPulse pulse;
+    pulse.arrival_time = slice_duration*255;
+    pulse.simulation_truth_id = 0;
+    read_out_channel.push_back(pulse);
+    response.push_back(read_out_channel);
+
+    const string path = "InOut/photon_stream.bin";
+    SignalProcessing::PhotonStream::write(
+        response,
+        slice_duration,
+        path);
+
+    SignalProcessing::PhotonStream::Stream response_back =
+        SignalProcessing::PhotonStream::read(path);
+
+    EXPECT_EQ(response.size(), response_back.photon_stream.size());
+}
