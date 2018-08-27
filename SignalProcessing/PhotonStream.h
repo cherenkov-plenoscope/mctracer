@@ -1,6 +1,6 @@
 // Copyright 2016 Sebastian A. Mueller
-#ifndef MCTRACER_SIGNALPROCESSING_PHOTONSTREAM_H_
-#define MCTRACER_SIGNALPROCESSING_PHOTONSTREAM_H_
+#ifndef SIGNALPROCESSING_PHOTONSTREAM_H_
+#define SIGNALPROCESSING_PHOTONSTREAM_H_
 
 #include <vector>
 #include <string>
@@ -35,19 +35,19 @@ Stream read_with_simulation_truth(
     const std::string truth_path);
 
 unsigned int number_of_pulses(
-    const std::vector<std::vector<SignalProcessing::ElectricPulse>> &pulses);
+    const std::vector<std::vector<uint8_t>> &pulses);
 
 unsigned int number_of_symbols_to_represent_pulses(
-    const std::vector<std::vector<SignalProcessing::ElectricPulse>> &pulses);
+    const std::vector<std::vector<uint8_t>> &pulses);
 
 void assert_number_time_slices_below_8bit_max(
     const uint32_t number_time_slices);
 
-std::vector<std::vector<uint8_t>> pulses_to_8bit_arrival_slices (
+std::vector<std::vector<uint8_t>> truncate_arrival_times(
     const std::vector<std::vector<SignalProcessing::ElectricPulse>> &pulses,
     const float slice_duration);
 
 }  // namespace PhotonStream
 }  // namespace SignalProcessing
 
-#endif  // MCTRACER_SIGNALPROCESSING_PHOTONSTREAM_H_
+#endif  // SIGNALPROCESSING_PHOTONSTREAM_H_

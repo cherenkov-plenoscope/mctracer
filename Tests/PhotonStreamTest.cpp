@@ -173,7 +173,7 @@ TEST_F(PhotonStreamTest, arrival_time_slices_below_next_channel_marker) {
     vector<vector<SignalProcessing::ElectricPulse>> response;
     vector<SignalProcessing::ElectricPulse> read_out_channel;
     SignalProcessing::ElectricPulse pulse;
-    pulse.arrival_time = slice_duration*255;
+    pulse.arrival_time = slice_duration*254;
     pulse.simulation_truth_id = 0;
     read_out_channel.push_back(pulse);
     response.push_back(read_out_channel);
@@ -213,7 +213,7 @@ TEST_F(PhotonStreamTest, truncate_invalid_arrival_times) {
     EXPECT_EQ(number_invalid_photons, 2000 - 255);
 
     vector<vector<uint8_t>> raw =
-        SignalProcessing::PhotonStream::pulses_to_8bit_arrival_slices(
+        SignalProcessing::PhotonStream::truncate_arrival_times(
         response,
         slice_duration);
 
