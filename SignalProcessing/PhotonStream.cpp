@@ -53,6 +53,26 @@ Stream::Stream() {
     slice_duration = 0.0;
 }
 
+vector<vector<uint8_t>> pulses_to_8bit_arrival_slices (
+    const vector<vector<SignalProcessing::ElectricPulse>> &pulses,
+    const float slice_duration
+) {
+    vector<vector<uint8_t>> all_arrival_slices;
+    for (uint32_t ch = 0; ch < pulses.size(); ch++) {
+        vector<uint8_t> channel_arrival_slices;
+        for (uint32_t pu = 0; pu < pulses.at(ch).size(); pu++) {
+            int32_t slice = round(
+                pulses.at(ch).at(pu).arrival_time/slice_duration);
+            if (slice >= 0 && slice < 255) {
+                channel_arrival_slices.push_back(
+                    static_cast<uint8_t>(slice));
+            }
+        }
+        all_arrival_slices.push_back(channel_arrival_slices);
+    }
+    return all_arrival_slices;
+}
+
 void write(
     const vector<vector<SignalProcessing::ElectricPulse>> &pulses,
     const float slice_duration,

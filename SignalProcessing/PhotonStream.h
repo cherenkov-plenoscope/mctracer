@@ -43,6 +43,10 @@ unsigned int number_of_symbols_to_represent_pulses(
 void assert_number_time_slices_below_8bit_max(
     const uint32_t number_time_slices);
 
+std::vector<std::vector<uint8_t>> pulses_to_8bit_arrival_slices (
+    const std::vector<std::vector<SignalProcessing::ElectricPulse>> &pulses,
+    const float slice_duration);
+
 }  // namespace PhotonStream
 }  // namespace SignalProcessing
 

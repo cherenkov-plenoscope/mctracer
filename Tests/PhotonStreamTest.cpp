@@ -168,7 +168,6 @@ TEST_F(PhotonStreamTest, number_time_slices_too_big) {
         std::invalid_argument);
 }
 
-
 TEST_F(PhotonStreamTest, arrival_time_slices_below_next_channel_marker) {
     const float slice_duration = .5e-9;
     vector<vector<SignalProcessing::ElectricPulse>> response;
@@ -189,4 +188,46 @@ TEST_F(PhotonStreamTest, arrival_time_slices_below_next_channel_marker) {
         SignalProcessing::PhotonStream::read(path);
 
     EXPECT_EQ(response.size(), response_back.photon_stream.size());
+}
+
+TEST_F(PhotonStreamTest, truncate_invalid_arrival_times) {
+    const float slice_duration = .5e-9;
+    vector<vector<SignalProcessing::ElectricPulse>> response;
+    vector<SignalProcessing::ElectricPulse> read_out_channel;
+    for (int i = -1000; i < 1000; i++) {
+        SignalProcessing::ElectricPulse pulse;
+        pulse.arrival_time = slice_duration*i;
+        pulse.simulation_truth_id = 0;
+        read_out_channel.push_back(pulse);
+    }
+    response.push_back(read_out_channel);
+
+    int number_invalid_photons = 0;
+    for (uint32_t p = 0; p < response.at(0).size(); p++) {
+        int32_t slice = round(
+            response.at(0).at(p).arrival_time/slice_duration);
+        if (slice < 0 || slice >= 255)
+            number_invalid_photons++;
+    }
+
+    EXPECT_EQ(number_invalid_photons, 2000 - 255);
+
+    vector<vector<uint8_t>> raw =
+        SignalProcessing::PhotonStream::pulses_to_8bit_arrival_slices(
+        response,
+        slice_duration);
+
+    ASSERT_EQ(response.size(), raw.size());
+    ASSERT_EQ(response.size(), 1u);
+    EXPECT_FALSE(response.at(0).size() == raw.at(0).size());
+
+    int number_of_passing_photons = 0;
+    for (uint32_t ch = 0; ch < raw.size(); ch++) {
+        for (uint32_t ph = 0; ph < raw.at(ch).size(); ph++) {
+            number_of_passing_photons++;
+            ASSERT_LT(raw.at(ch).at(ph), 255);
+        }
+    }
+
+    EXPECT_EQ(number_of_passing_photons, 255);
 }
