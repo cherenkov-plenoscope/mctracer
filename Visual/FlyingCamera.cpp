@@ -16,22 +16,17 @@ using std::string;
 
 namespace Visual {
 
-cv::Mat image_to_opencv_image(const Image& image) {
-    cv::Mat raw = cv::Mat(image.number_rows, image.number_cols, CV_8UC3);
+void image_to_opencv_image(const Image& image, cv::Mat* out) {
     for (unsigned int col = 0; col < image.number_cols; col++) {
         for (unsigned int row = 0; row < image.number_rows; row++) {
-            Color c = image.at_col_row(col, row);
-            if (c.r > 255.) c.r = 255.;
-            if (c.g > 255.) c.g = 255.;
-            if (c.b > 255.) c.b = 255.;
+            const unsigned idx = image._idx(col, row);
             cv::Vec3b intensity;
-            intensity.val[0] = c.b;
-            intensity.val[1] = c.g;
-            intensity.val[2] = c.r;
-            raw.at<cv::Vec3b>(row, col) = intensity;
+            intensity.val[0] = image.raw.at(idx).b;
+            intensity.val[1] = image.raw.at(idx).g;;
+            intensity.val[2] = image.raw.at(idx).r;;
+            out->at<cv::Vec3b>(row, col) = intensity;
         }
     }
-    return raw;
 }
 
 FlyingCamera::FlyingCamera(
@@ -55,7 +50,12 @@ FlyingCamera::FlyingCamera(
     image(
         Image(
             visual_config->preview.cols*visual_config->preview.scale,
-            visual_config->preview.rows*visual_config->preview.scale)) {
+            visual_config->preview.rows*visual_config->preview.scale)),
+    display_image(
+        cv::Mat(
+            visual_config->preview.rows*visual_config->preview.scale,
+            visual_config->preview.cols*visual_config->preview.scale,
+            CV_8UC3)) {
     create_CameraMen_to_safely_operate_the_flying_camera();
     reset_camera();
     time_stamp.update_now();
@@ -197,11 +197,10 @@ void FlyingCamera::update_display_full_resolution() {
     << flying_camera_full_resolution.get_number_of_sensor_cols()*
     flying_camera_full_resolution.get_number_of_sensor_rows()/1e6
     << " MPixel\n";
-    const Image* img = acquire_scaled_image_with_camera(
-        false,
+    const Image* img = acquire_image_with_camera(
         &flying_camera_full_resolution);
-    cv::Mat raw = image_to_opencv_image(*img);
-    cv::imshow(display_name, raw);
+    image_to_opencv_image(*img, &display_image);
+    cv::imshow(display_name, display_image);
 }
 
 void FlyingCamera::update_display() {
@@ -210,11 +209,10 @@ void FlyingCamera::update_display() {
     flying_camera.update_position_and_orientation(
         flying_camera_full_resolution.get_position_in_world(),
         flying_camera_full_resolution.get_rotation_in_world());
-    const Image* img = acquire_scaled_image_with_camera(
-        true,
-        &flying_camera);
-    cv::Mat raw = image_to_opencv_image(*img);
-    cv::imshow(display_name, raw);
+    const Image* img = acquire_image_with_camera(&flying_camera);
+    scale_up(*img, visual_config->preview.scale, &image);
+    image_to_opencv_image(image, &display_image);
+    cv::imshow(display_name, display_image);
 }
 
 void FlyingCamera::mouse_button_event(
@@ -275,38 +273,20 @@ void FlyingCamera::take_snapshot_manual_focus_on_pixel_col_row(
     ApertureCamera apcam = get_ApertureCamera_based_on_display_camera();
     apcam.set_focus_to(object_distance_to_focus_on);
     cout << apcam.str();
-    const Image* img = acquire_scaled_image_with_camera(false, &apcam);
+    const Image* img = acquire_image_with_camera(&apcam);
     ppm::write_image_to_path(*img, get_snapshot_filename());
 }
 
-const Image* FlyingCamera::acquire_scaled_image_with_camera(
-    const bool scale, CameraDevice* cam
-) {
-    if (scale) {
-        if (stereo3D) {
-            CameraOperator::Stereo3D op(cam);
-            op.use_same_stereo_offset_as(stereo_operator);
-            op.aquire_stereo_image(world, visual_config);
-            image = *op.get_anaglyph_stereo3D_image();
-            image = scale_up(image, visual_config->preview.scale);
-            return &image;
-        } else {
-            cam->acquire_image(world, visual_config);
-            image = *cam->get_image();
-            image = scale_up(image, visual_config->preview.scale);
-            return &image;
-        }
+const Image* FlyingCamera::acquire_image_with_camera(CameraDevice* cam) {
+    if (stereo3D) {
+        CameraOperator::Stereo3D op(cam);
+        op.use_same_stereo_offset_as(stereo_operator);
+        op.aquire_stereo_image(world, visual_config);
+        image = *op.get_anaglyph_stereo3D_image();
+        return &image;
     } else {
-        if (stereo3D) {
-            CameraOperator::Stereo3D op(cam);
-            op.use_same_stereo_offset_as(stereo_operator);
-            op.aquire_stereo_image(world, visual_config);
-            image = *op.get_anaglyph_stereo3D_image();
-            return &image;
-        } else {
-            cam->acquire_image(world, visual_config);
-            return cam->get_image();
-        }
+        cam->acquire_image(world, visual_config);
+        return cam->get_image();
     }
 }
 

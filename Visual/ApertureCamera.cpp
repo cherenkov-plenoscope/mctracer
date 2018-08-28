@@ -8,212 +8,6 @@ using std::string;
 using std::stringstream;
 
 namespace Visual {
-/*
-struct Imagef {
-    unsigned int number_cols;
-    unsigned int number_rows;
-    std::vector<Color> raw;
-    Imagef(unsigned int _number_cols, unsigned int _number_rows):
-        number_cols(_number_cols),
-        number_rows(_number_rows),
-        raw(std::vector<Color>(number_cols*number_rows)) {}
-    Color at_col_row(unsigned int col, unsigned int row)const {
-        return raw.at(_idx(col, row));
-    }
-    void set_col_row(unsigned int col, unsigned int row, Color c) {
-        raw.at(_idx(col, row)) = c;
-    }
-    unsigned int _idx(unsigned int col, unsigned int row)const {
-        return col*number_rows + row;
-    }
-};
-
-Imagef truncate_to_255(const Imagef &image) {
-    Imagef rc(image.number_cols, image.number_rows);
-    for (unsigned int col = 0; col < image.number_cols; col++) {
-        for (unsigned int row = 0; row < image.number_rows; row++) {
-            Color c = image.at_col_row(col, row);
-            if (c.r > 255.) c.r = 255.;
-            if (c.g > 255.) c.g = 255.;
-            if (c.b > 255.) c.b = 255.;
-            rc.set_col_row(col, row, c);
-        }
-    }
-    return rc;
-}
-
-Image to_255_image(const Imagef &image) {
-    Imagef trunc_image = truncate_to_255(image);
-    Image rc(image.number_cols, image.number_rows);
-    for (unsigned int col = 0; col < image.number_cols; col++) {
-        for (unsigned int row = 0; row < image.number_rows; row++) {
-            Color c(
-                static_cast<unsigned char>(trunc_image.at_col_row(col, row).r),
-                static_cast<unsigned char>(trunc_image.at_col_row(col, row).g),
-                static_cast<unsigned char>(trunc_image.at_col_row(col, row).b));
-            rc.set_row_col_to_color(row, col, c);
-        }
-    }
-    return rc;
-}
-
-Imagef sobel_operator(const Imagef &image) {
-    Imagef rc(image.number_cols, image.number_rows);
-    for (unsigned int col = 1; col < image.number_cols - 1; col++) {
-        for (unsigned int row = 1; row < image.number_rows - 1; row++) {
-            double xr = 0;
-            double xg = 0;
-            double xb = 0;
-
-            Color z;
-            z = image.at_col_row(col - 1, row + 1);
-            xr += -1*z.r; xg += -1*z.g; xb += -1*z.b;
-            z = image.at_col_row(col - 1, row);
-            xr += -2*z.r; xg += -2*z.g; xb += -2*z.b;
-            z = image.at_col_row(col - 1, row - 1);
-            xr += -1*z.r; xg += -1*z.g; xb += -1*z.b;
-
-            z = image.at_col_row(col + 1, row + 1);
-            xr += z.r; xg += z.g; xb += z.b;
-            z = image.at_col_row(col + 1, row);
-            xr += 2*z.r; xg += 2*z.g; xb += 2*z.b;
-            z = image.at_col_row(col + 1, row - 1);
-            xr += z.r; xg += z.g; xb += z.b;
-
-            double yr = 0;
-            double yg = 0;
-            double yb = 0;
-            z = image.at_col_row(col + 1, row + 1);
-            yr += -1*z.r; yg += -1*z.g; yb += -1*z.b;
-            z = image.at_col_row(col    , row + 1);
-            yr += -2*z.r; yg += -2*z.g; yb += -2*z.b;
-            z = image.at_col_row(col - 1, row + 1);
-            yr += -1*z.r; yg += -1*z.g; yb += -1*z.b;
-
-            z = image.at_col_row(col + 1, row - 1);
-            yr += z.r; yg += z.g; yb += z.b;
-            z = image.at_col_row(col    , row - 1);
-            yr += 2*z.r; yg += 2*z.g; yb += 2*z.b;
-            z = image.at_col_row(col - 1, row - 1);
-            yr += z.r; yg += z.g; yb += z.b;
-
-            double gr = sqrt(xr*xr + yr*yr);
-            double gg = sqrt(xg*xg + yg*yg);
-            double gb = sqrt(xb*xb + yb*yb);
-            Color g(gr, gg, gb);
-            rc.set_col_row(col, row, g);
-        }
-    }
-    return rc;
-}
-
-void assign_pixel_colors_to_sum_and_exposure_image(
-    const std::vector<PixelCoordinate> &pixels,
-    const std::vector<Color> &colors,
-    Imagef *sum_image,
-    Imagef* exposure_image
-) {
-    for (unsigned int pix = 0; pix < pixels.size(); pix++) {
-        const unsigned int row = pixels.at(pix).row;
-        const unsigned int col = pixels.at(pix).col;
-        Color c;
-        c.r = sum_image->at_col_row(col, row).r + colors.at(pix).r;
-        c.g = sum_image->at_col_row(col, row).g + colors.at(pix).g;
-        c.b = sum_image->at_col_row(col, row).b + colors.at(pix).b;
-        sum_image->set_col_row(col, row, c);
-        Color e;
-        e.r = exposure_image->at_col_row(col, row).r + 1.;
-        e.g = exposure_image->at_col_row(col, row).g + 1.;
-        e.b = exposure_image->at_col_row(col, row).b + 1.;
-        exposure_image->set_col_row(col, row, e);
-    }
-}
-
-
-Imagef luminance_threshold_dilatation(
-    const Imagef &image,
-    const float threshold
-) {
-    const Color o(255., 255., 255.);
-    const int rows = image.number_rows;
-    const int cols = image.number_cols;
-    Imagef rc(cols, rows);
-    for (int col = 0; col < cols; col++) {
-        for (int row = 0; row < rows; row++) {
-            double luminance = 0.0;
-            Color c = image.at_col_row(col, row);
-            luminance = c.r + c.g + c.b;
-            if (luminance > threshold) {
-                for (int orow = -1; orow < 2; orow++) {
-                    for (int ocol = -1; ocol < 2; ocol++) {
-                        if (
-                            row + orow >= 0 &&
-                            col + ocol >= 0 &&
-                            row + orow < rows &&
-                            col + ocol < cols) {
-                            rc.set_col_row(col + ocol, row + orow, o);
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return rc;
-}
-
-
-Imagef image_from_sum_and_exposure(
-    const Imagef &sum,
-    const Imagef &exposure
-) {
-    Imagef image(sum.number_cols, sum.number_rows);
-    for (unsigned int col = 0; col < sum.number_cols; col++) {
-        for (unsigned int row = 0; row < sum.number_rows; row++) {
-            Color c;
-            c.r = sum.at_col_row(col, row).r/exposure.at_col_row(col, row).r;
-            c.g = sum.at_col_row(col, row).g/exposure.at_col_row(col, row).g;
-            c.b = sum.at_col_row(col, row).b/exposure.at_col_row(col, row).b;
-            image.set_col_row(col, row, c);
-        }
-    }
-    return image;
-}
-
-std::vector<PixelCoordinate> pixel_coordinates_above_threshold(
-    const Imagef &image,
-    const double threshold
-) {
-    std::vector<PixelCoordinate> coordinates;
-    for (unsigned int row = 0; row < image.number_rows; row++) {
-        for (unsigned int col = 0; col < image.number_cols; col++) {
-            double lum = 0.0;
-            Color c = image.at_col_row(col, row);
-            lum = c.r + c.g + c.b;
-            if (lum > threshold) {
-                PixelCoordinate pc;
-                pc.row = row;
-                pc.col = col;
-                coordinates.push_back(pc);
-            }
-        }
-    }
-    return coordinates;
-}
-
-Imagef fabs_image(const Imagef &a, const Imagef &b) {
-    Imagef rc(a.number_cols, a.number_rows);
-    for (unsigned int row = 0; row < a.number_rows; row++) {
-        for (unsigned int col = 0; col < a.number_cols; col++) {
-            Color c(
-                fabs(a.at_col_row(col, row).r - b.at_col_row(col, row).r),
-                fabs(a.at_col_row(col, row).g - b.at_col_row(col, row).g),
-                fabs(a.at_col_row(col, row).b - b.at_col_row(col, row).b));
-            rc.set_col_row(col, row, c);
-        }
-    }
-    return rc;
-}
-*/
 
 void ApertureCamera::set_fStop_sesnorWidth(
     const double new_FStopNumber,
@@ -423,8 +217,9 @@ void ApertureCamera::acquire_image(
     const Frame* world,
     const Config* visual_config
 ) {
-    unsigned int rows = image.number_rows;
-    unsigned int cols = image.number_cols;
+    const unsigned int rows = image.number_rows;
+    const unsigned int cols = image.number_cols;
+    const unsigned int number_pixel = rows*cols;
 
     Image sum_image(cols, rows);
     Image exposure_image(cols, rows);
@@ -442,17 +237,20 @@ void ApertureCamera::acquire_image(
         &sum_image,
         &exposure_image);
 
-    Image reconstructed_image = image_from_sum_and_exposure(
+    Image reconstructed_image(cols, rows);
+    image_from_sum_and_exposure(
         sum_image,
-        exposure_image);
+        exposure_image,
+        &reconstructed_image);
 
-    Image sobel_image = sobel_operator(reconstructed_image);
-    sobel_image = truncate_to_255(sobel_image);
+    Image sobel_image(cols, rows);
+    sobel_operator(reconstructed_image, &sobel_image);
+    truncate_to_255(&sobel_image);
 
-    Image to_do_image = luminance_threshold_dilatation(sobel_image, 128.);
+    Image to_do_image(cols, rows);
+    luminance_threshold_dilatation(sobel_image, 128., &to_do_image);
 
     const unsigned int MAX_ITERATIONS = 100;
-    const unsigned int MIN_NUMBER_RAYS = 1000;
     unsigned int iteration = 0;
     Image diff_image(cols, rows);
     Image previous_sobel_image(cols, rows);
@@ -464,37 +262,52 @@ void ApertureCamera::acquire_image(
         std::vector<PixelCoordinate> pix_to_do =
             pixel_coordinates_above_threshold(to_do_image, 128.);
 
-        if (pix_to_do.size() <= MIN_NUMBER_RAYS)
+        if (pix_to_do.size() <= number_pixel/10)
             break;
+
+        std::vector<PixelCoordinate> pix_to_do_actually = pix_to_do;
+        while (pix_to_do_actually.size() < number_pixel/2) {
+            pix_to_do_actually.insert(
+                pix_to_do_actually.end(), 
+                pix_to_do.begin(),
+                pix_to_do.end());
+        }
 
         std::vector<Color> new_colors = acquire_pixels(
             world,
             visual_config,
-            pix_to_do);
+            pix_to_do_actually);
 
         assign_pixel_colors_to_sum_and_exposure_image(
-            pix_to_do,
+            pix_to_do_actually,
             new_colors,
             &sum_image,
             &exposure_image);
 
-        reconstructed_image = image_from_sum_and_exposure(
+        image_from_sum_and_exposure(
             sum_image,
-            exposure_image);
+            exposure_image,
+            &reconstructed_image);
 
-        previous_sobel_image  = sobel_image;
-        sobel_image = sobel_operator(reconstructed_image);
-        sobel_image = truncate_to_255(sobel_image);
+        previous_sobel_image = sobel_image;
+        sobel_operator(reconstructed_image, &sobel_image);
+        truncate_to_255(&sobel_image);
 
-        diff_image = fabs_image(
+        fabs_difference(
             previous_sobel_image,
-            sobel_image);
+            sobel_image,
+            &diff_image);
 
-        diff_image = luminance_threshold_dilatation(
+        for (unsigned int pix = 0; pix < to_do_image.raw.size(); pix++) {
+            to_do_image.raw.at(pix).r = 0.;
+            to_do_image.raw.at(pix).g = 0.;
+            to_do_image.raw.at(pix).b = 0.;
+        }
+
+        luminance_threshold_dilatation(
             diff_image,
-            visual_config->snapshot.noise_level);
-
-        to_do_image = luminance_threshold_dilatation(diff_image, 128.);
+            visual_config->snapshot.noise_level,
+            &to_do_image);
 
         iteration += 1;
     }

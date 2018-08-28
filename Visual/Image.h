@@ -25,9 +25,9 @@ Image merge_left_and_right_image_to_anaglyph_3DStereo(
     const Image &left,
     const Image &right);
 
-Image truncate_to_255(const Image &image);
+void truncate_to_255(Image* image);
 
-Image sobel_operator(const Image &image);
+void sobel_operator(const Image &image, Image* out);
 
 void assign_pixel_colors_to_sum_and_exposure_image(
     const std::vector<PixelCoordinate> &pixels,
@@ -35,23 +35,23 @@ void assign_pixel_colors_to_sum_and_exposure_image(
     Image *sum_image,
     Image* exposure_image);
 
-Image luminance_threshold_dilatation(
+void luminance_threshold_dilatation(
     const Image &image,
-    const float threshold);
+    const float threshold,
+    Image* out);
 
-
-Image image_from_sum_and_exposure(
+void image_from_sum_and_exposure(
     const Image &sum,
-    const Image &exposure);
+    const Image &exposure,
+    Image* out);
 
 std::vector<PixelCoordinate> pixel_coordinates_above_threshold(
     const Image &image,
     const double threshold);
 
-Image fabs_image(const Image &a, const Image &b);
+void fabs_difference(const Image &a, const Image &b, Image* out);
 
-Image scale_up(const Image &image, const unsigned int scale);
-
+void scale_up(const Image &in, const unsigned int scale, Image* out);
 }  // namespace Visual
 
 #endif  // VISUAL_IMAGE_H_

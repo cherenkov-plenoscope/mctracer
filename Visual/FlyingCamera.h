@@ -10,6 +10,7 @@
 #include "Config.h"
 #include "Tools/Time.h"
 #include "Tools/UserInteraction.h"
+#include <cv.h>
 
 namespace Visual {
 
@@ -39,6 +40,7 @@ class FlyingCamera {
     PinHoleCamera flying_camera;
     PinHoleCamera flying_camera_full_resolution;
     Image image;
+    cv::Mat display_image;
     CameraOperator::FieldOfView* fov_operator;
     CameraOperator::Translation* translation_operator;
     CameraOperator::Rotation* rotation_operator;
@@ -78,8 +80,7 @@ class FlyingCamera {
     void print_stereo_offset_manipulation(const std::string status)const;
     std::string get_snapshot_filename();
     bool it_is_time_again_to_show_the_help();
-    const Image* acquire_scaled_image_with_camera(
-        const bool scale, CameraDevice* cam);
+    const Image* acquire_image_with_camera(CameraDevice* cam);
 };
 
 }  // namespace Visual
