@@ -23,6 +23,7 @@
 #include "SignalProcessing/SimpleTDCQDC.h"
 #include "SignalProcessing/ElectricPulse.h"
 #include "SignalProcessing/PhotonStream.h"
+#include "SignalProcessing/pulse_extraction.h"
 #include "Tools/PathTools.h"
 #include "Tools/HeaderBlock.h"
 #include "Scenery/Scenery.h"
@@ -245,6 +246,14 @@ int main(int argc, char* argv[]) {
                     &prng));
         }
 
+        //-------------------------
+        // Single-photon-extraction
+        SignalProcessing::PhotonStream::Stream record;
+        record.slice_duration = slice_duration;
+        record.photon_stream = SignalProcessing::extract_pulses(
+            electric_pipelines,
+            slice_duration);
+
         //-------------
         // export event
         Path event_output_path = join(
@@ -252,8 +261,8 @@ int main(int argc, char* argv[]) {
         fs::create_directory(event_output_path.path);
 
         SignalProcessing::PhotonStream::write(
-            electric_pipelines,
-            slice_duration,
+            record.photon_stream,
+            record.slice_duration,
             join(
                 event_output_path.path, "raw_light_field_sensor_response.phs"));
 
@@ -287,7 +296,7 @@ Plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
 
         if (export_all_simulation_truth) {
             SignalProcessing::PhotonStream::write_simulation_truth(
-                electric_pipelines,
+                record.photon_stream,
                 join(event_mc_truth_path.path, "detector_pulse_origins.bin"));
 
             EventIo::write_raw_photons(

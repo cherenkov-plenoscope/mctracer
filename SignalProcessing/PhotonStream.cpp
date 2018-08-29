@@ -3,6 +3,7 @@
 #include <math.h>
 #include <sstream>
 #include <fstream>
+#include "SignalProcessing/pulse_extraction.h"
 using std::vector;
 using std::string;
 
@@ -53,38 +54,13 @@ Stream::Stream() {
     slice_duration = 0.0;
 }
 
-vector<vector<uint8_t>> truncate_arrival_times(
-    const vector<vector<SignalProcessing::ElectricPulse>> &pulses,
-    const float slice_duration
-) {
-    vector<vector<uint8_t>> channels;
-    for (uint32_t ch = 0; ch < pulses.size(); ch++) {
-        vector<uint8_t> channel;
-        for (uint32_t pu = 0; pu < pulses.at(ch).size(); pu++) {
-            int32_t slice = round(
-                pulses.at(ch).at(pu).arrival_time/slice_duration);
-            if (slice >= 0 && slice < NEXT_READOUT_CHANNEL_MARKER) {
-                channel.push_back(
-                    static_cast<uint8_t>(slice));
-            }
-        }
-        channels.push_back(channel);
-    }
-    return channels;
-}
-
 void write(
-    const vector<vector<SignalProcessing::ElectricPulse>> &pulses,
+    const vector<vector<ExtractedPulse>> &channels,
     const float slice_duration,
     const string path
 ) {
-    vector<vector<uint8_t>> raw = truncate_arrival_times(
-        pulses,
-        slice_duration);
-    const uint32_t number_channels = raw.size();
-    const uint32_t number_symbols = number_of_symbols_to_represent_pulses(raw);
-    const uint32_t number_time_slices = 100u;
-    assert_number_time_slices_below_8bit_max(number_time_slices);
+    const uint32_t number_channels = channels.size();
+    const uint32_t number_symbols = number_of_symbols_to_represent(channels);
 
     std::ofstream file;
     file.open(path, std::ios::binary);
@@ -99,14 +75,24 @@ void write(
     // -------------------
     append_float32(slice_duration, file);
     append_uint32(number_channels, file);
-    append_uint32(number_time_slices, file);
+    append_uint32(NUMBER_TIME_SLICES, file);
     append_uint32(number_symbols, file);
 
     // Pulses
     // ------
-    for (uint32_t ch = 0; ch < number_channels; ch++) {
-        for (uint32_t pu = 0; pu < raw.at(ch).size(); pu++) {
-            append_uint8(raw.at(ch).at(pu), file);
+    for (uint64_t ch = 0; ch < number_channels; ch++) {
+        for (uint64_t pu = 0; pu < channels.at(ch).size(); pu++) {
+            if (
+                channels.at(ch).at(pu).arrival_time_slice ==
+                NEXT_READOUT_CHANNEL_MARKER
+            ) {
+                std::stringstream info;
+                info << "PhotonStream::write(" << path << ")\n";
+                info << "Expected arrival slice of photon != ";
+                info << "NEXT_READOUT_CHANNEL_MARKER\n";
+                throw std::runtime_error(info.str());    
+            }  
+            append_uint8(channels.at(ch).at(pu).arrival_time_slice, file);
         }
         if (ch < number_channels-1)
             append_uint8(NEXT_READOUT_CHANNEL_MARKER, file);
@@ -116,7 +102,7 @@ void write(
 }
 
 void write_simulation_truth(
-    const vector<vector<SignalProcessing::ElectricPulse>> &pulses,
+    const vector<vector<ExtractedPulse>> &channels,
     const string path
 ) {
     std::ofstream file;
@@ -128,10 +114,10 @@ void write_simulation_truth(
         throw std::runtime_error(info.str());
     }
 
-    for (uint32_t ch = 0; ch < pulses.size(); ch++) {
-        for (uint32_t pu = 0; pu < pulses.at(ch).size(); pu++) {
+    for (uint32_t ch = 0; ch < channels.size(); ch++) {
+        for (uint32_t pu = 0; pu < channels.at(ch).size(); pu++) {
             append_int32(
-                pulses.at(ch).at(pu).simulation_truth_id,
+                channels.at(ch).at(pu).simulation_truth_id,
                 file);
         }
     }
@@ -154,26 +140,32 @@ Stream read(const string path) {
     stream.slice_duration = read_float32(file);
     read_uint32(file);
     uint32_t number_time_slices = read_uint32(file);
-    assert_number_time_slices_below_8bit_max(number_time_slices);
+    if (number_time_slices != NUMBER_TIME_SLICES) {
+        std::stringstream info;
+        info << "PhotonStream::read(" << path << ")\n";
+        info << "Expected number_time_slices == " << NUMBER_TIME_SLICES;
+        info << ", but actual it is " << number_time_slices << "\n";
+        throw std::runtime_error(info.str());   
+    }
     uint32_t number_symbols = read_uint32(file);
 
     if (number_symbols > 0) {
-        vector<SignalProcessing::ElectricPulse> first_channel;
+        vector<ExtractedPulse> first_channel;
         stream.photon_stream.push_back(first_channel);
     }
 
     uint32_t channel = 0;
     for (uint32_t i = 0; i < number_symbols; i++) {
-        unsigned char symbol = read_uint8(file);
+        uint8_t symbol = read_uint8(file);
         if (symbol == NEXT_READOUT_CHANNEL_MARKER) {
             channel++;
             if (i < number_symbols) {
-                vector<SignalProcessing::ElectricPulse> next_channel;
+                vector<ExtractedPulse> next_channel;
                 stream.photon_stream.push_back(next_channel);
             }
         } else {
-            SignalProcessing::ElectricPulse pulse;
-            pulse.arrival_time = symbol*stream.slice_duration;
+            ExtractedPulse pulse;
+            pulse.arrival_time_slice = symbol;
             stream.photon_stream.at(channel).push_back(pulse);
         }
     }
@@ -213,42 +205,27 @@ Stream read_with_simulation_truth(const string path, const string truth_path) {
     return stream;
 }
 
-unsigned int number_of_pulses(
-    const vector<vector<uint8_t>> &raw
+uint64_t number_of_pulses(
+    const vector<vector<ExtractedPulse>> &raw
 ) {
-    unsigned int number_pulses = 0;
-    for (unsigned int channel = 0; channel < raw.size(); channel++)
+    uint64_t number_pulses = 0;
+    for (uint64_t channel = 0; channel < raw.size(); channel++)
         number_pulses += raw.at(channel).size();
     return number_pulses;
 }
 
-unsigned int number_of_symbols_to_represent_pulses(
-    const vector<vector<uint8_t>> &raw
+uint64_t number_of_symbols_to_represent(
+    const vector<vector<ExtractedPulse>> &raw
 ) {
-    uint32_t number_pulses_plus_number_channels =
+    uint64_t number_pulses_plus_number_channels =
         number_of_pulses(raw) + raw.size();
 
-    uint32_t number_symbols;
+    uint64_t number_symbols;
     if (number_pulses_plus_number_channels > 0)
         number_symbols = number_pulses_plus_number_channels - 1;
     else
         number_symbols = 0;
     return number_symbols;
-}
-
-void assert_number_time_slices_below_8bit_max(
-    const uint32_t number_time_slices
-) {
-    if (number_time_slices > NEXT_READOUT_CHANNEL_MARKER) {
-        std::stringstream info;
-        info << __FILE__ << " " << __LINE__ << "\n";
-        info << "Expected number_time_slices <= NEXT_READOUT_CHANNEL_MARKER ";
-        info << "but actual number_time_slices = ";
-        info << number_time_slices << ", ";
-        info << "and NEXT_READOUT_CHANNEL_MARKER = ";
-        info << NEXT_READOUT_CHANNEL_MARKER << ".\n";
-        throw std::invalid_argument(info.str());
-    }
 }
 
 }  // namespace PhotonStream
