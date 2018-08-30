@@ -2,32 +2,35 @@
 #include <stdint.h>
 #include "gtest/gtest.h"
 #include "SignalProcessing/PhotonStream.h"
-#include "SignalProcessing/ElectricPulse.h"
+#include "SignalProcessing/ExtractedPulse.h"
 #include "Core/Random/Random.h"
 #include "Core/SimulationTruth.h"
 using std::vector;
 using std::string;
+using namespace SignalProcessing;
 
-vector<vector<SignalProcessing::ElectricPulse>> create_photon_stream(
+vector<vector<ExtractedPulse>> create_photon_stream(
     const unsigned int number_of_channels,
-    const float pulse_rate_per_slice,
+    const float single_pulse_rate,
     const float exposure_time,
+    const float time_slice_duration,
     const unsigned int seed) {
 
     Random::Mt19937 prng(seed);
 
-    vector<vector<SignalProcessing::ElectricPulse>> photon_stream;
+    vector<vector<ExtractedPulse>> photon_stream;
     for (unsigned int i = 0; i < number_of_channels; i++) {
-        vector<SignalProcessing::ElectricPulse> pulses_in_channel;
+        vector<ExtractedPulse> pulses_in_channel;
         float t = 0.0;
         while (true) {
-            const float t_next = prng.expovariate(pulse_rate_per_slice);
+            const float t_next = prng.expovariate(single_pulse_rate);
             if (t + t_next > exposure_time) {
                 break;
             } else {
                 t += t_next;
-                SignalProcessing::ElectricPulse pulse;
-                pulse.arrival_time = t;
+                ExtractedPulse pulse;
+                pulse.arrival_time_slice = static_cast<int32_t>(
+                    floor(t/time_slice_duration));
                 pulse.simulation_truth_id = static_cast<int32_t>(
                     1000*prng.uniform());
                 pulses_in_channel.push_back(pulse);
@@ -40,11 +43,11 @@ vector<vector<SignalProcessing::ElectricPulse>> create_photon_stream(
 }
 
 void expect_eq(
-    const SignalProcessing::PhotonStream::Stream &A,
-    const SignalProcessing::PhotonStream::Stream &B,
+    const PhotonStream::Stream &A,
+    const PhotonStream::Stream &B,
     bool simulation_truth_eq = true
 ) {
-    EXPECT_EQ(A.slice_duration, B.slice_duration);
+    EXPECT_EQ(A.time_slice_duration, B.time_slice_duration);
     ASSERT_EQ(
         A.photon_stream.size(),
         B.photon_stream.size());
@@ -53,10 +56,9 @@ void expect_eq(
             A.photon_stream.at(c).size(),
             B.photon_stream.at(c).size());
         for (unsigned int p = 0; p < A.photon_stream.at(c).size(); p++) {
-            EXPECT_NEAR(
-                A.photon_stream.at(c).at(p).arrival_time,
-                B.photon_stream.at(c).at(p).arrival_time,
-                A.slice_duration);
+            EXPECT_EQ(
+                A.photon_stream.at(c).at(p).arrival_time_slice,
+                B.photon_stream.at(c).at(p).arrival_time_slice);
 
             if (simulation_truth_eq) {
                 EXPECT_EQ(
@@ -69,39 +71,38 @@ void expect_eq(
 
 void write_and_read_back(
     const unsigned int number_of_channels,
-    const float sample_frequency,
+    const float time_slice_duration,
     const float single_pulse_rate,
     const float exposure_time,
     const unsigned int seed
 ) {
-    const float slice_duration = 1.0/sample_frequency;
-
-    SignalProcessing::PhotonStream::Stream stream;
+    PhotonStream::Stream stream;
     stream.photon_stream = create_photon_stream(
             number_of_channels,
             single_pulse_rate,
             exposure_time,
+            time_slice_duration,
             seed);
-    stream.slice_duration = slice_duration;
+    stream.time_slice_duration = time_slice_duration;
 
     const string path = "InOut/photon_stream.bin";
-    SignalProcessing::PhotonStream::write(
+    PhotonStream::write(
         stream.photon_stream,
-        slice_duration,
+        time_slice_duration,
         path);
 
     const string truth_path = "InOut/photon_stream_truth.bin";
-    SignalProcessing::PhotonStream::write_simulation_truth(
+    PhotonStream::write_simulation_truth(
         stream.photon_stream,
         truth_path);
 
-    SignalProcessing::PhotonStream::Stream ps_without_truth =
-        SignalProcessing::PhotonStream::read(path);
+    PhotonStream::Stream ps_without_truth =
+        PhotonStream::read(path);
 
     expect_eq(stream, ps_without_truth, false);
 
-    SignalProcessing::PhotonStream::Stream ps_with_truth =
-        SignalProcessing::PhotonStream::read_with_simulation_truth(
+    PhotonStream::Stream ps_with_truth =
+        PhotonStream::read_with_simulation_truth(
             path,
             truth_path);
 
@@ -110,16 +111,42 @@ void write_and_read_back(
 
 class PhotonStreamTest : public ::testing::Test {};
 
+TEST_F(PhotonStreamTest, arrival_slices_must_not_be_NEXT_CHANNEL_MARKER) {
+    vector<vector<ExtractedPulse>> channels;
+    vector<ExtractedPulse> channel;
+    const int32_t simulation_truth_id = 1337;
+    channel.emplace_back(
+        ExtractedPulse(
+            PhotonStream::NEXT_CHANNEL_MARKER,
+            simulation_truth_id));
+    channels.push_back(channel);
+
+    EXPECT_THROW(
+        PhotonStream::write(
+            channels,
+            0.5e-9,
+            "InOut/must_not_be_written.phs"),
+            std::runtime_error);
+
+    channels.at(0).at(0).arrival_time_slice = 254;
+
+    EXPECT_NO_THROW(
+        PhotonStream::write(
+            channels,
+            0.5e-9,
+            "InOut/shall_be_written.phs"));
+}
+
 TEST_F(PhotonStreamTest, write_and_read_back_full_single_pulse_event) {
     const unsigned int number_of_channels = 1337;
-    const float sample_frequency = 2e9;
+    const float time_slice_duration = 0.5e-9;
     const float single_pulse_rate = 50e6;
     const float exposure_time = 127.0e-9;
     const unsigned int seed = 0;
 
     write_and_read_back(
         number_of_channels,
-        sample_frequency,
+        time_slice_duration,
         single_pulse_rate,
         exposure_time,
         seed);
@@ -127,14 +154,14 @@ TEST_F(PhotonStreamTest, write_and_read_back_full_single_pulse_event) {
 
 TEST_F(PhotonStreamTest, zero_channels) {
     const unsigned int number_of_channels = 0;
-    const float sample_frequency = 2e9;
+    const float time_slice_duration = 0.5e-9;
     const float single_pulse_rate = 50e6;
     const float exposure_time = 127.0e-9;
     const unsigned int seed = 0;
 
     write_and_read_back(
         number_of_channels,
-        sample_frequency,
+        time_slice_duration,
         single_pulse_rate,
         exposure_time,
         seed);
@@ -142,92 +169,15 @@ TEST_F(PhotonStreamTest, zero_channels) {
 
 TEST_F(PhotonStreamTest, empty_channels) {
     const unsigned int number_of_channels = 1337;
-    const float sample_frequency = 2e9;
+    const float time_slice_duration = 0.5e-9;
     const float single_pulse_rate = 0.0;
     const float exposure_time = 127.0e-9;
     const unsigned int seed = 0;
 
     write_and_read_back(
         number_of_channels,
-        sample_frequency,
+        time_slice_duration,
         single_pulse_rate,
         exposure_time,
         seed);
-}
-
-TEST_F(PhotonStreamTest, number_time_slices_too_big) {
-    EXPECT_NO_THROW(
-        SignalProcessing::
-            PhotonStream::
-                assert_number_time_slices_below_8bit_max(0));
-
-    EXPECT_THROW(
-        SignalProcessing::
-            PhotonStream::
-                assert_number_time_slices_below_8bit_max(256),
-        std::invalid_argument);
-}
-
-TEST_F(PhotonStreamTest, arrival_time_slices_below_next_channel_marker) {
-    const float slice_duration = .5e-9;
-    vector<vector<SignalProcessing::ElectricPulse>> response;
-    vector<SignalProcessing::ElectricPulse> read_out_channel;
-    SignalProcessing::ElectricPulse pulse;
-    pulse.arrival_time = slice_duration*254;
-    pulse.simulation_truth_id = 0;
-    read_out_channel.push_back(pulse);
-    response.push_back(read_out_channel);
-
-    const string path = "InOut/photon_stream.bin";
-    SignalProcessing::PhotonStream::write(
-        response,
-        slice_duration,
-        path);
-
-    SignalProcessing::PhotonStream::Stream response_back =
-        SignalProcessing::PhotonStream::read(path);
-
-    EXPECT_EQ(response.size(), response_back.photon_stream.size());
-}
-
-TEST_F(PhotonStreamTest, truncate_invalid_arrival_times) {
-    const float slice_duration = .5e-9;
-    vector<vector<SignalProcessing::ElectricPulse>> response;
-    vector<SignalProcessing::ElectricPulse> read_out_channel;
-    for (int i = -1000; i < 1000; i++) {
-        SignalProcessing::ElectricPulse pulse;
-        pulse.arrival_time = slice_duration*i;
-        pulse.simulation_truth_id = 0;
-        read_out_channel.push_back(pulse);
-    }
-    response.push_back(read_out_channel);
-
-    int number_invalid_photons = 0;
-    for (uint32_t p = 0; p < response.at(0).size(); p++) {
-        int32_t slice = round(
-            response.at(0).at(p).arrival_time/slice_duration);
-        if (slice < 0 || slice >= 255)
-            number_invalid_photons++;
-    }
-
-    EXPECT_EQ(number_invalid_photons, 2000 - 255);
-
-    vector<vector<uint8_t>> raw =
-        SignalProcessing::PhotonStream::truncate_arrival_times(
-        response,
-        slice_duration);
-
-    ASSERT_EQ(response.size(), raw.size());
-    ASSERT_EQ(response.size(), 1u);
-    EXPECT_FALSE(response.at(0).size() == raw.at(0).size());
-
-    int number_of_passing_photons = 0;
-    for (uint32_t ch = 0; ch < raw.size(); ch++) {
-        for (uint32_t ph = 0; ph < raw.at(ch).size(); ph++) {
-            number_of_passing_photons++;
-            ASSERT_LT(raw.at(ch).at(ph), 255);
-        }
-    }
-
-    EXPECT_EQ(number_of_passing_photons, 255);
 }

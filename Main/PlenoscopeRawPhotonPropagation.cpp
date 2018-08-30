@@ -22,6 +22,7 @@
 #include "SignalProcessing/SimpleTDCQDC.h"
 #include "SignalProcessing/ElectricPulse.h"
 #include "SignalProcessing/PhotonStream.h"
+#include "SignalProcessing/pulse_extraction.h"
 #include "Tools/PathTools.h"
 #include "Tools/HeaderBlock.h"
 #include "Scenery/Scenery.h"
@@ -183,7 +184,7 @@ int main(int argc, char* argv[]) {
     //--------------------------------------------------------------------------
     // SET SINGLE PULSE OUTPUT
     Xml::Node spe = config_node.child("photon_stream");
-    const double slice_duration = spe.attribute2double("slice_duration");
+    const double time_slice_duration = spe.attribute2double("slice_duration");
 
     //--------------------------------------------------------------------------
     //  2222
@@ -200,8 +201,7 @@ int main(int argc, char* argv[]) {
     //--------------------------------------------------------------------------
     // propagate photons
     unsigned int event_counter = 1;
-    while(photon_file.has_still_photons_left()) {
-
+    while (photon_file.has_still_photons_left()) {
         vector<Photon> photons;
         photons = photon_file.next(&prng);
 
@@ -238,6 +238,14 @@ int main(int argc, char* argv[]) {
                     &prng));
         }
 
+        //-------------------------
+        // Single-photon-extraction
+        SignalProcessing::PhotonStream::Stream record;
+        record.time_slice_duration = time_slice_duration;
+        record.photon_stream = SignalProcessing::extract_pulses(
+            electric_pipelines,
+            time_slice_duration);
+
         //-------------
         // export event
         Path event_output_path = join(
@@ -245,14 +253,15 @@ int main(int argc, char* argv[]) {
         fs::create_directory(event_output_path.path);
 
         SignalProcessing::PhotonStream::write(
-            electric_pipelines,
-            slice_duration,
+            record.photon_stream,
+            record.time_slice_duration,
             join(
                 event_output_path.path, "raw_light_field_sensor_response.phs"));
 
         Plenoscope::EventHeader event_header;
         event_header.set_event_type(Plenoscope::EventTypes::SIMULATION);
-        event_header.set_trigger_type(Plenoscope::TriggerType::EXTERNAL_RANDOM_TRIGGER);
+        event_header.set_trigger_type(
+            Plenoscope::TriggerType::EXTERNAL_RANDOM_TRIGGER);
         event_header.set_plenoscope_geometry(
             pis->light_field_sensor_geometry.config);
         HeaderBlock::write(
@@ -265,7 +274,11 @@ int main(int argc, char* argv[]) {
             event_output_path.path, "simulation_truth");
         fs::create_directory(event_mc_truth_path.path);
         std::array<float, 273> run_header;
-        for (unsigned int i = 0; i < run_header.size(); i++) {run_header[i] = 0.0f;}
+        for (
+            unsigned int i = 0;
+            i < run_header.size();
+            i++
+        ) {run_header[i] = 0.0f;}
         run_header[0] = Corsika::str2float("RUNH");
         run_header[1] = 1.0f;  // run-number
         run_header[2] = 20180101.0f;  // date
@@ -276,7 +289,11 @@ int main(int argc, char* argv[]) {
             run_header,
             join(event_mc_truth_path.path, "corsika_run_header.bin"));
         std::array<float, 273> evt_header;
-        for (unsigned int i = 0; i < evt_header.size(); i++) {evt_header[i] = 0.0f;}
+        for (
+            unsigned int i = 0;
+            i < evt_header.size();
+            i++
+        ) {evt_header[i] = 0.0f;}
         evt_header[0] = Corsika::str2float("EVTH");
         evt_header[1] = static_cast<float>(event_counter + 1);  // evt-number
         evt_header[2] = -1.0f;  // particle id
@@ -299,7 +316,7 @@ int main(int argc, char* argv[]) {
 
         if (export_all_simulation_truth) {
             SignalProcessing::PhotonStream::write_simulation_truth(
-                electric_pipelines,
+                record.photon_stream,
                 join(event_mc_truth_path.path, "detector_pulse_origins.bin"));
 
             std::vector<std::array<float, 8>> raw_photons;
@@ -317,7 +334,8 @@ int main(int argc, char* argv[]) {
                 raw_photon[2] = photons.at(p).direction().x;  // cx
                 raw_photon[3] = photons.at(p).direction().y;  // cy
                 raw_photon[4] = 0.0f;  // relative arrival-time on ground
-                raw_photon[5] = 1e2*photons.at(p).support().z;  // production height
+                raw_photon[5] = 1e2*photons.at(p).support().z;
+                // production height
                 raw_photon[6] = 1.0f;  // survival probability
                 raw_photon[7] = 1e9*photons.at(p).get_wavelength();
                 raw_photons.push_back(raw_photon);

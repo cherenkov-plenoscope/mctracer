@@ -23,6 +23,7 @@
 #include "SignalProcessing/SimpleTDCQDC.h"
 #include "SignalProcessing/ElectricPulse.h"
 #include "SignalProcessing/PhotonStream.h"
+#include "SignalProcessing/pulse_extraction.h"
 #include "Tools/PathTools.h"
 #include "Tools/HeaderBlock.h"
 #include "Scenery/Scenery.h"
@@ -153,7 +154,7 @@ int main(int argc, char* argv[]) {
     //--------------------------------------------------------------------------
     // SET SINGLE PULSE OUTPUT
     Xml::Node spe = config_node.child("photon_stream");
-    const double slice_duration = spe.attribute2double("slice_duration");
+    const double time_slice_duration = spe.attribute2double("slice_duration");
 
     //--------------------------------------------------------------------------
     //  2222
@@ -197,21 +198,35 @@ int main(int argc, char* argv[]) {
             );
         }
 
+        //-------------------------
+        // Single-photon-extraction
+        SignalProcessing::PhotonStream::Stream record;
+        record.time_slice_duration = time_slice_duration;
+        record.photon_stream = SignalProcessing::extract_pulses(
+            electric_pipelines,
+            time_slice_duration);
+
         //-------------
         // export event
-        PathTools::Path event_output_path = PathTools::join(out_path.path, std::to_string(event_counter));
+        PathTools::Path event_output_path = PathTools::join(
+            out_path.path,
+            std::to_string(event_counter));
         fs::create_directory(event_output_path.path);
 
         SignalProcessing::PhotonStream::write(
-            electric_pipelines,
-            slice_duration,
-            PathTools::join(event_output_path.path, "raw_light_field_sensor_response.phs")
+            record.photon_stream,
+            record.time_slice_duration,
+            PathTools::join(
+                event_output_path.path,
+                "raw_light_field_sensor_response.phs")
         );
 
         Plenoscope::EventHeader event_header;
         event_header.set_event_type(Plenoscope::EventTypes::SIMULATION);
-        event_header.set_trigger_type(Plenoscope::TriggerType::EXTERNAL_RANDOM_TRIGGER);
-        event_header.set_plenoscope_geometry(pis->light_field_sensor_geometry.config);
+        event_header.set_trigger_type(
+            Plenoscope::TriggerType::EXTERNAL_RANDOM_TRIGGER);
+        event_header.set_plenoscope_geometry(
+            pis->light_field_sensor_geometry.config);
         HeaderBlock::write(
             event_header.raw, 
             PathTools::join(event_output_path.path, "event_header.bin")
@@ -219,14 +234,18 @@ int main(int argc, char* argv[]) {
 
         //-------------
         // export Simulation Truth
-        PathTools::Path event_mc_truth_path = PathTools::join(event_output_path.path, "simulation_truth");
+        PathTools::Path event_mc_truth_path = PathTools::join(
+            event_output_path.path,
+            "simulation_truth");
         fs::create_directory(event_mc_truth_path.path);
 
         Plenoscope::SimulationTruthHeader sim_truth_header;
         sim_truth_header.set_random_number_seed_of_run(prng.seed());
         HeaderBlock::write(
             sim_truth_header.raw, 
-            PathTools::join(event_mc_truth_path.path, "mctracer_event_header.bin")
+            PathTools::join(
+                event_mc_truth_path.path,
+                "mctracer_event_header.bin")
         );        
 
         cout << "event " << event_counter << " of " << number_events << "\n";
