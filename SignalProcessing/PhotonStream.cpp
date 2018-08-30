@@ -4,51 +4,12 @@
 #include <sstream>
 #include <fstream>
 #include "SignalProcessing/pulse_extraction.h"
+#include "Tools/binary_input_output.h"
 using std::vector;
 using std::string;
 
 namespace SignalProcessing {
 namespace PhotonStream {
-
-void append_float32(const float &v, std::ostream &fout) {
-    fout.write(reinterpret_cast<const char*>(&v), sizeof(v));
-}
-
-float read_float32(std::istream &fin) {
-    float v;
-    fin.read(reinterpret_cast<char*>(&v), sizeof(v));
-    return v;
-}
-
-void append_int32(const int32_t &v, std::ostream &fout) {
-    fout.write(reinterpret_cast<const char*>(&v), sizeof(v));
-}
-
-int32_t read_int32(std::istream &fin) {
-    int32_t v;
-    fin.read(reinterpret_cast<char*>(&v), sizeof(v));
-    return v;
-}
-
-void append_uint32(const uint32_t &v, std::ostream &fout) {
-    fout.write(reinterpret_cast<const char*>(&v), sizeof(v));
-}
-
-uint32_t read_uint32(std::istream &fin) {
-    uint32_t v;
-    fin.read(reinterpret_cast<char*>(&v), sizeof(v));
-    return v;
-}
-
-void append_uint8(const uint8_t &v, std::ostream &fout) {
-    fout.write(reinterpret_cast<const char*>(&v), sizeof(v));
-}
-
-uint8_t read_uint8(std::istream &fin) {
-    uint8_t v;
-    fin.read(reinterpret_cast<char*>(&v), sizeof(v));
-    return v;
-}
 
 Stream::Stream() {
     slice_duration = 0.0;
@@ -73,10 +34,10 @@ void write(
 
     // PhotonStream Header 16 byte
     // -------------------
-    append_float32(slice_duration, file);
-    append_uint32(number_channels, file);
-    append_uint32(NUMBER_TIME_SLICES, file);
-    append_uint32(number_symbols, file);
+    bio::append_float32(slice_duration, file);
+    bio::append_uint32(number_channels, file);
+    bio::append_uint32(NUMBER_TIME_SLICES, file);
+    bio::append_uint32(number_symbols, file);
 
     // Pulses
     // ------
@@ -90,12 +51,12 @@ void write(
                 info << "PhotonStream::write(" << path << ")\n";
                 info << "Expected arrival slice of photon != ";
                 info << "NEXT_READOUT_CHANNEL_MARKER\n";
-                throw std::runtime_error(info.str());    
-            }  
-            append_uint8(channels.at(ch).at(pu).arrival_time_slice, file);
+                throw std::runtime_error(info.str());
+            }
+            bio::append_uint8(channels.at(ch).at(pu).arrival_time_slice, file);
         }
         if (ch < number_channels-1)
-            append_uint8(NEXT_READOUT_CHANNEL_MARKER, file);
+            bio::append_uint8(NEXT_READOUT_CHANNEL_MARKER, file);
     }
 
     file.close();
@@ -116,7 +77,7 @@ void write_simulation_truth(
 
     for (uint32_t ch = 0; ch < channels.size(); ch++) {
         for (uint32_t pu = 0; pu < channels.at(ch).size(); pu++) {
-            append_int32(
+            bio::append_int32(
                 channels.at(ch).at(pu).simulation_truth_id,
                 file);
         }
@@ -137,17 +98,17 @@ Stream read(const string path) {
         info << "PhotonStream: Unable to open file: '" << path << "'\n";
         throw std::runtime_error(info.str());}
 
-    stream.slice_duration = read_float32(file);
-    read_uint32(file);
-    uint32_t number_time_slices = read_uint32(file);
+    stream.slice_duration = bio::read_float32(file);
+    bio::read_uint32(file);
+    uint32_t number_time_slices = bio::read_uint32(file);
     if (number_time_slices != NUMBER_TIME_SLICES) {
         std::stringstream info;
         info << "PhotonStream::read(" << path << ")\n";
         info << "Expected number_time_slices == " << NUMBER_TIME_SLICES;
         info << ", but actual it is " << number_time_slices << "\n";
-        throw std::runtime_error(info.str());   
+        throw std::runtime_error(info.str());
     }
-    uint32_t number_symbols = read_uint32(file);
+    uint32_t number_symbols = bio::read_uint32(file);
 
     if (number_symbols > 0) {
         vector<ExtractedPulse> first_channel;
@@ -156,7 +117,7 @@ Stream read(const string path) {
 
     uint32_t channel = 0;
     for (uint32_t i = 0; i < number_symbols; i++) {
-        uint8_t symbol = read_uint8(file);
+        uint8_t symbol = bio::read_uint8(file);
         if (symbol == NEXT_READOUT_CHANNEL_MARKER) {
             channel++;
             if (i < number_symbols) {
@@ -197,7 +158,7 @@ Stream read_with_simulation_truth(const string path, const string truth_path) {
             pulse++
         ) {
             stream.photon_stream.at(channel).at(pulse).simulation_truth_id =
-                read_int32(file);
+                bio::read_int32(file);
         }
     }
 
