@@ -12,11 +12,11 @@ namespace PhotonStream {
 
 // Write and read ElectricPulses in the very compact photon_stream format.
 
-const uint8_t NEXT_READOUT_CHANNEL_MARKER = 255;
+const uint8_t NEXT_CHANNEL_MARKER = 255;
 
 void write(
     const std::vector<std::vector<ExtractedPulse>> &pulses,
-    const float slice_duration,
+    const float time_slice_duration,
     const std::string path);
 
 void write_simulation_truth(
@@ -25,7 +25,7 @@ void write_simulation_truth(
 
 struct Stream {
     std::vector<std::vector<ExtractedPulse>> photon_stream;
-    float slice_duration;
+    float time_slice_duration;
     Stream();
 };
 

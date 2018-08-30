@@ -12,12 +12,12 @@ namespace SignalProcessing {
 namespace PhotonStream {
 
 Stream::Stream() {
-    slice_duration = 0.0;
+    time_slice_duration = 0.0;
 }
 
 void write(
     const vector<vector<ExtractedPulse>> &channels,
-    const float slice_duration,
+    const float time_slice_duration,
     const string path
 ) {
     const uint32_t number_channels = channels.size();
@@ -34,7 +34,7 @@ void write(
 
     // PhotonStream Header 16 byte
     // -------------------
-    bio::append_float32(slice_duration, file);
+    bio::append_float32(time_slice_duration, file);
     bio::append_uint32(number_channels, file);
     bio::append_uint32(NUMBER_TIME_SLICES, file);
     bio::append_uint32(number_symbols, file);
@@ -45,18 +45,18 @@ void write(
         for (uint64_t pu = 0; pu < channels.at(ch).size(); pu++) {
             if (
                 channels.at(ch).at(pu).arrival_time_slice ==
-                NEXT_READOUT_CHANNEL_MARKER
+                NEXT_CHANNEL_MARKER
             ) {
                 std::stringstream info;
                 info << "PhotonStream::write(" << path << ")\n";
                 info << "Expected arrival slice of photon != ";
-                info << "NEXT_READOUT_CHANNEL_MARKER\n";
+                info << "NEXT_CHANNEL_MARKER\n";
                 throw std::runtime_error(info.str());
             }
             bio::append_uint8(channels.at(ch).at(pu).arrival_time_slice, file);
         }
         if (ch < number_channels-1)
-            bio::append_uint8(NEXT_READOUT_CHANNEL_MARKER, file);
+            bio::append_uint8(NEXT_CHANNEL_MARKER, file);
     }
 
     file.close();
@@ -98,7 +98,7 @@ Stream read(const string path) {
         info << "PhotonStream: Unable to open file: '" << path << "'\n";
         throw std::runtime_error(info.str());}
 
-    stream.slice_duration = bio::read_float32(file);
+    stream.time_slice_duration = bio::read_float32(file);
     bio::read_uint32(file);
     uint32_t number_time_slices = bio::read_uint32(file);
     if (number_time_slices != NUMBER_TIME_SLICES) {
@@ -118,7 +118,7 @@ Stream read(const string path) {
     uint32_t channel = 0;
     for (uint32_t i = 0; i < number_symbols; i++) {
         uint8_t symbol = bio::read_uint8(file);
-        if (symbol == NEXT_READOUT_CHANNEL_MARKER) {
+        if (symbol == NEXT_CHANNEL_MARKER) {
             channel++;
             if (i < number_symbols) {
                 vector<ExtractedPulse> next_channel;

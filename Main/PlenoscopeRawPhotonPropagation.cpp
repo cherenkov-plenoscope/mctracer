@@ -184,7 +184,7 @@ int main(int argc, char* argv[]) {
     //--------------------------------------------------------------------------
     // SET SINGLE PULSE OUTPUT
     Xml::Node spe = config_node.child("photon_stream");
-    const double slice_duration = spe.attribute2double("slice_duration");
+    const double time_slice_duration = spe.attribute2double("slice_duration");
 
     //--------------------------------------------------------------------------
     //  2222
@@ -241,10 +241,10 @@ int main(int argc, char* argv[]) {
         //-------------------------
         // Single-photon-extraction
         SignalProcessing::PhotonStream::Stream record;
-        record.slice_duration = slice_duration;
+        record.time_slice_duration = time_slice_duration;
         record.photon_stream = SignalProcessing::extract_pulses(
             electric_pipelines,
-            slice_duration);
+            time_slice_duration);
 
         //-------------
         // export event
@@ -254,7 +254,7 @@ int main(int argc, char* argv[]) {
 
         SignalProcessing::PhotonStream::write(
             record.photon_stream,
-            record.slice_duration,
+            record.time_slice_duration,
             join(
                 event_output_path.path, "raw_light_field_sensor_response.phs"));
 
