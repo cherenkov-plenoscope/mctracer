@@ -21,7 +21,7 @@ void write(
     const string path
 ) {
     const uint32_t number_channels = channels.size();
-    const uint32_t number_symbols = number_of_symbols_to_represent(channels);
+    const uint32_t number_symbols = number_symbols_to_represent(channels);
 
     std::ofstream file;
     file.open(path, std::ios::binary);
@@ -166,7 +166,7 @@ Stream read_with_simulation_truth(const string path, const string truth_path) {
     return stream;
 }
 
-uint64_t number_of_pulses(
+uint64_t number_pulses(
     const vector<vector<ExtractedPulse>> &raw
 ) {
     uint64_t number_pulses = 0;
@@ -175,11 +175,11 @@ uint64_t number_of_pulses(
     return number_pulses;
 }
 
-uint64_t number_of_symbols_to_represent(
+uint64_t number_symbols_to_represent(
     const vector<vector<ExtractedPulse>> &raw
 ) {
     uint64_t number_pulses_plus_number_channels =
-        number_of_pulses(raw) + raw.size();
+        number_pulses(raw) + raw.size();
 
     uint64_t number_symbols;
     if (number_pulses_plus_number_channels > 0)

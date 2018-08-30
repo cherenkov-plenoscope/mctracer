@@ -35,10 +35,10 @@ Stream read_with_simulation_truth(
     const std::string path,
     const std::string truth_path);
 
-uint64_t number_of_pulses(
+uint64_t number_pulses(
     const std::vector<std::vector<ExtractedPulse>> &pulses);
 
-uint64_t number_of_symbols_to_represent(
+uint64_t number_symbols_to_represent(
     const std::vector<std::vector<ExtractedPulse>> &pulses);
 
 }  // namespace PhotonStream
