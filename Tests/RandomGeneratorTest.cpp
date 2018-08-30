@@ -205,3 +205,18 @@ TEST_F(RandomGeneratorTest, octo_sphere_minus_z) {
     EXPECT_NEAR(mean_position.y, 0.5, 2e-2);
     EXPECT_NEAR(mean_position.z, -0.5, 2e-2);
 }
+
+TEST_F(RandomGeneratorTest, normal_distribution) {
+    const vector<double> means = {-1.9, -.3, 0.0, 4.6};
+    const vector<double> stds = {0.2, 0.7, 1.0, 2.3};
+    for (double mean: means) {
+        for (double std: stds) {
+            Random::Mt19937 prng(0);
+            vector<double> samples;
+            for (unsigned int i = 0; i < 10*1000; i++)
+                samples.push_back(prng.normal(mean, std));
+            EXPECT_NEAR(std, Numeric::stddev(samples), 1e-1);
+            EXPECT_NEAR(mean, Numeric::mean(samples), 1e-1);
+        }
+    }
+}
