@@ -24,10 +24,10 @@ TEST_F(PortablePixMapTest, write_and_read) {
     }
     Visual::ppm::write_image_to_path(
         img,
-        "test_image_16x9_rgb.ppm");
+        "InOut/image_16x9_rgb.ppm");
 
     Visual::Image img_back = Visual::ppm::read_image_from_path(
-        "test_image_16x9_rgb.ppm");
+        "InOut/image_16x9_rgb.ppm");
 
     ASSERT_EQ(img.number_cols, img_back.number_cols);
     ASSERT_EQ(img.number_rows, img_back.number_rows);

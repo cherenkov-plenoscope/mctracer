@@ -3,3 +3,6 @@ header_block.bin
 *.bin
 photon_stream.bin
 photon_stream_truth.bin
+shall_be_written.phs
+must_not_be_written.phs
+image_16x9_rgb.ppm
