@@ -268,7 +268,7 @@ void Frame::warn_about_close_frames()const {
     out << "No tree structure can be used to accelerate ";
     out << "the photon propagation in such a scenery.\n";
     out << "Procesing continues, but poor performance is expected.\n";
-    std::cout << out.str();
+    std::cerr << out.str();
 }
 
 void Frame::warn_small_child(const Frame* frame)const {
@@ -278,7 +278,7 @@ void Frame::warn_small_child(const Frame* frame)const {
     out << "Frame: " << frame->name << " is neglected. ";
     out << "Contour radius is below " << MIN_STRUCTURE_SIZE << "m, i.e. ";
     out << frame->get_bounding_sphere_radius() << "m.\n";
-    std::cout << out.str();
+    std::cerr << out.str();
 }
 
 string Frame::get_name()const {
