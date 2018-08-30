@@ -33,9 +33,9 @@ def cam_command(
     sensor_size=0.06,
     field_of_view=np.deg2rad(45),
     f_stop=0.95,
-    number_columns=256,
-    number_rows=144,
-    noise_level=16
+    number_columns=512,
+    number_rows=288,
+    noise_level=25
 ):
     fout = BytesIO()
     fout.write(np.uint64(645).tobytes())  # MAGIC
