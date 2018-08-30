@@ -174,9 +174,12 @@ Vec3 ApertureCamera::get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(
     const double image_size_x = x_pos_on_sensor_in_pixel * PixelPitch_in_m;
     const double image_size_y = y_pos_on_sensor_in_pixel * PixelPitch_in_m;
 
+    const double sensor_extension_x = (prng.uniform() - .5) * PixelPitch_in_m;
+    const double sensor_extension_y = (prng.uniform() - .5) * PixelPitch_in_m;
+
     return Vec3(
-        get_object_size_for_image_size(image_size_x),
-        get_object_size_for_image_size(image_size_y),
+        get_object_size_for_image_size(image_size_x + sensor_extension_x),
+        get_object_size_for_image_size(image_size_y + sensor_extension_y),
         ObjectDistance_in_m);
 }
 
@@ -268,7 +271,7 @@ void ApertureCamera::acquire_image(
         std::vector<PixelCoordinate> pix_to_do_actually = pix_to_do;
         while (pix_to_do_actually.size() < number_pixel/2) {
             pix_to_do_actually.insert(
-                pix_to_do_actually.end(), 
+                pix_to_do_actually.end(),
                 pix_to_do.begin(),
                 pix_to_do.end());
         }
