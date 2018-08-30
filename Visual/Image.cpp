@@ -135,37 +135,6 @@ void assign_pixel_colors_to_sum_and_exposure_image(
     }
 }
 
-Image luminance_threshold_dilatation(
-    const Image &image,
-    const float threshold
-) {
-    const Color o(255., 255., 255.);
-    const int rows = image.number_rows;
-    const int cols = image.number_cols;
-    Image rc(cols, rows);
-    for (int col = 0; col < cols; col++) {
-        for (int row = 0; row < rows; row++) {
-            double luminance = 0.0;
-            Color c = image.at_col_row(col, row);
-            luminance = c.r + c.g + c.b;
-            if (luminance > threshold) {
-                for (int orow = -1; orow < 2; orow++) {
-                    for (int ocol = -1; ocol < 2; ocol++) {
-                        if (
-                            row + orow >= 0 &&
-                            col + ocol >= 0 &&
-                            row + orow < rows &&
-                            col + ocol < cols) {
-                            rc.set_col_row(col + ocol, row + orow, o);
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return rc;
-}
-
 void luminance_threshold_dilatation(
     const Image &image,
     const float threshold,
@@ -202,7 +171,6 @@ void luminance_threshold_dilatation(
         }
     }
 }
-
 
 void image_from_sum_and_exposure(
     const Image &sum,
