@@ -155,6 +155,7 @@ int main(int argc, char* argv[]) {
     // SET SINGLE PULSE OUTPUT
     Xml::Node spe = config_node.child("photon_stream");
     const double time_slice_duration = spe.attribute2double("slice_duration");
+    const double arrival_time_std = 416e-12;
 
     //--------------------------------------------------------------------------
     //  2222
@@ -204,7 +205,9 @@ int main(int argc, char* argv[]) {
         record.time_slice_duration = time_slice_duration;
         record.photon_stream = SignalProcessing::extract_pulses(
             electric_pipelines,
-            time_slice_duration);
+            time_slice_duration,
+            arrival_time_std,
+            &prng);
 
         //-------------
         // export event

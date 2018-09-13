@@ -8,13 +8,18 @@ namespace SignalProcessing {
 
 vector<ExtractedPulse> extract_pulses(
     const vector<ElectricPulse> &electric_pulses,
-    const double time_slice_duration
+    const double time_slice_duration,
+    const double arrival_time_std,
+    Random::Generator* prng
 ) {
     vector<ExtractedPulse> channel;
     channel.reserve(electric_pulses.size());
     for (uint32_t p = 0; p < electric_pulses.size(); p++) {
+        const double true_arrival_time = electric_pulses.at(p).arrival_time;
+        const double reconstructed_arrival_time = true_arrival_time +
+            prng->normal(0.0f, arrival_time_std);
         const int32_t slice = round(
-            electric_pulses.at(p).arrival_time/time_slice_duration);
+            reconstructed_arrival_time/time_slice_duration);
         if (slice >= 0 && slice < NUMBER_TIME_SLICES) {
             channel.emplace_back(
                 ExtractedPulse(
@@ -27,7 +32,9 @@ vector<ExtractedPulse> extract_pulses(
 
 vector<vector<ExtractedPulse>> extract_pulses(
     const vector<vector<ElectricPulse>> &electric_pulses,
-    const double time_slice_duration
+    const double time_slice_duration,
+    const double arrival_time_std,
+    Random::Generator* prng
 ) {
     vector<vector<ExtractedPulse>> channels;
     channels.reserve(electric_pulses.size());
@@ -35,7 +42,9 @@ vector<vector<ExtractedPulse>> extract_pulses(
         channels.emplace_back(
             extract_pulses(
                 electric_pulses.at(channel),
-                time_slice_duration));
+                time_slice_duration,
+                arrival_time_std,
+                prng));
     }
     return channels;
 }

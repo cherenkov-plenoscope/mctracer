@@ -7,13 +7,14 @@
 #include "SignalProcessing/pulse_extraction.h"
 #include "Core/Random/Random.h"
 #include "Core/SimulationTruth.h"
+#include "Tools/Numeric.h"
 using std::vector;
 using std::string;
 
 class PulseExtractionTest : public ::testing::Test {};
 
 TEST_F(PulseExtractionTest, arrival_time_slices_below_next_channel_marker) {
-    const float slice_duration = .5e-9;
+    const float time_slice_duration = .5e-9;
     vector<vector<SignalProcessing::ExtractedPulse>> response;
     vector<SignalProcessing::ExtractedPulse> read_out_channel;
     SignalProcessing::ExtractedPulse pulse;
@@ -25,7 +26,7 @@ TEST_F(PulseExtractionTest, arrival_time_slices_below_next_channel_marker) {
     const string path = "InOut/photon_stream.bin";
     SignalProcessing::PhotonStream::write(
         response,
-        slice_duration,
+        time_slice_duration,
         path);
 
     SignalProcessing::PhotonStream::Stream response_back =
@@ -35,12 +36,15 @@ TEST_F(PulseExtractionTest, arrival_time_slices_below_next_channel_marker) {
 }
 
 TEST_F(PulseExtractionTest, truncate_invalid_arrival_times) {
-    const float slice_duration = .5e-9;
+    Random::Mt19937 prng(0);
+    const double time_slice_duration = .5e-9;
+    const double arrival_time_std = 0.0;
+
     vector<vector<SignalProcessing::ElectricPulse>> response;
     vector<SignalProcessing::ElectricPulse> read_out_channel;
     for (int i = -1000; i < 1000; i++) {
         SignalProcessing::ElectricPulse pulse;
-        pulse.arrival_time = slice_duration*i;
+        pulse.arrival_time = time_slice_duration*i;
         pulse.simulation_truth_id = 0;
         read_out_channel.push_back(pulse);
     }
@@ -49,7 +53,7 @@ TEST_F(PulseExtractionTest, truncate_invalid_arrival_times) {
     int number_invalid_photons = 0;
     for (uint32_t p = 0; p < response.at(0).size(); p++) {
         int32_t slice = round(
-            response.at(0).at(p).arrival_time/slice_duration);
+            response.at(0).at(p).arrival_time/time_slice_duration);
         if (
             slice < 0 ||
             slice >= SignalProcessing::NUMBER_TIME_SLICES
@@ -64,7 +68,9 @@ TEST_F(PulseExtractionTest, truncate_invalid_arrival_times) {
     vector<vector<SignalProcessing::ExtractedPulse>> raw =
         SignalProcessing::extract_pulses(
             response,
-            slice_duration);
+            time_slice_duration,
+            arrival_time_std,
+            &prng);
 
     ASSERT_EQ(response.size(), raw.size());
     ASSERT_EQ(response.size(), 1u);
@@ -81,4 +87,49 @@ TEST_F(PulseExtractionTest, truncate_invalid_arrival_times) {
     EXPECT_EQ(
         number_of_passing_photons,
         SignalProcessing::NUMBER_TIME_SLICES);
+}
+
+TEST_F(PulseExtractionTest, arrival_time_std) {
+    Random::Mt19937 prng(0);
+    const double time_slice_duration = .5e-9;
+    const double arrival_time_std = 5e-9;
+    const double true_arrival_time = 25e-9;
+
+    vector<vector<SignalProcessing::ElectricPulse>> response;
+    vector<SignalProcessing::ElectricPulse> read_out_channel;
+    for (int i = 0; i < 10*1000; i++) {
+        SignalProcessing::ElectricPulse pulse;
+        pulse.arrival_time = true_arrival_time;
+        pulse.simulation_truth_id = i;
+        read_out_channel.push_back(pulse);
+    }
+    response.push_back(read_out_channel);
+
+    vector<double> true_arrival_times;
+    for (SignalProcessing::ElectricPulse &pulse : response.at(0))
+        true_arrival_times.push_back(pulse.arrival_time);
+
+    EXPECT_NEAR(0.0, Numeric::stddev(true_arrival_times), 1e-1);
+    EXPECT_NEAR(true_arrival_time, Numeric::mean(true_arrival_times), 1e-1);
+
+    vector<vector<SignalProcessing::ExtractedPulse>> raw =
+        SignalProcessing::extract_pulses(
+            response,
+            time_slice_duration,
+            arrival_time_std,
+            &prng);
+
+    vector<double> reconstructed_arrival_times;
+    for (SignalProcessing::ExtractedPulse &pulse : raw.at(0))
+        reconstructed_arrival_times.push_back(
+            pulse.arrival_time_slice * time_slice_duration);
+
+    EXPECT_NEAR(
+        arrival_time_std,
+        Numeric::stddev(reconstructed_arrival_times),
+        1e-10);
+    EXPECT_NEAR(
+        true_arrival_time,
+        Numeric::mean(reconstructed_arrival_times),
+        1e-10);
 }
