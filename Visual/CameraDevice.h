@@ -22,10 +22,10 @@ class CameraDevice{
     virtual void acquire_image(
         const Frame* world,
         const Config* visual_config) = 0;
-    virtual void update_position(const Vec3 pos_in_root);
+    virtual void update_position(const Vec3 position);
     virtual void update_orientation(const Rot3 rot_in_root);
     virtual void update_position_and_orientation(
-        const Vec3 pos_in_root,
+        const Vec3 position,
         const Rot3 rot_in_root);
     void set_pointing_direction(
         Vec3 camera_pointing_direction_in_World,
@@ -48,13 +48,13 @@ class CameraDevice{
     const std::string name;
     Image image;
     HomTra3 camera2root;
-    Vec3 pos_in_root;
+    Vec3 position;
     Rot3 rot_in_root;
     Vec3 pointing;
     CameraRay optical_axis;
     double field_of_view;
     void set_position_and_orientation(
-        const Vec3 pos_in_root,
+        const Vec3 position,
         const Rot3 rot_in_root);
     std::string get_camera_print()const;
     void assert_field_of_view_is_valid(const double field_of_view)const;

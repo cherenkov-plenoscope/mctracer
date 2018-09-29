@@ -76,7 +76,7 @@ CameraRay PinHoleCamera::get_ray_for_pixel_in_row_and_col(
     const int row, const int col
 )const {
     return CameraRay(
-        pos_in_root, get_direction_of_ray_for_pixel(row, col));
+        position, get_direction_of_ray_for_pixel(row, col));
 }
 
 Vec3 PinHoleCamera::get_direction_of_ray_for_pixel(

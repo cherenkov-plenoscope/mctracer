@@ -206,7 +206,7 @@ CameraRay ApertureCamera::get_ray_for_pixel_in_row_and_col(
 Vec3 ApertureCamera::camera_ray_support_vector_in_world_frame(
     const Vec3 &cam_ray_support_in_cam_frame
 )const {
-    return pos_in_root + camera2root.get_transformed_orientation(
+    return position + camera2root.get_transformed_orientation(
         cam_ray_support_in_cam_frame);
 }
 

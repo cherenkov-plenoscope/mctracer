@@ -12,35 +12,35 @@ CameraDevice::CameraDevice(
     const unsigned int sensor_rows
 ): name(_name), image(sensor_cols, sensor_rows) {}
 
-void CameraDevice::update_position(const Vec3 _pos_in_root) {
-    update_position_and_orientation(_pos_in_root, rot_in_root);
+void CameraDevice::update_position(const Vec3 _position) {
+    update_position_and_orientation(_position, rot_in_root);
 }
 
 void CameraDevice::update_orientation(const Rot3 _rot_in_root) {
-    update_position_and_orientation(pos_in_root, _rot_in_root);
+    update_position_and_orientation(position, _rot_in_root);
 }
 
 void CameraDevice::update_position_and_orientation(
-    const Vec3 _pos_in_root,
+    const Vec3 _position,
     const Rot3 _rot_in_root
 ) {
-    set_position_and_orientation(_pos_in_root, _rot_in_root);
+    set_position_and_orientation(_position, _rot_in_root);
     update_optical_axis_and_orientation();
 }
 
 void CameraDevice::set_position_and_orientation(
-    const Vec3 _pos_in_root,
+    const Vec3 _position,
     const Rot3 _rot_in_root
 ) {
-    this->pos_in_root = _pos_in_root;
+    this->position = _position;
     this->rot_in_root = _rot_in_root;
-    camera2root.set_transformation(rot_in_root, pos_in_root);
+    camera2root.set_transformation(rot_in_root, position);
 }
 
 void CameraDevice::update_optical_axis_and_orientation() {
     pointing =
         camera2root.get_transformed_orientation(Vec3::UNIT_Z);
-    optical_axis.set_support_and_direction(pos_in_root, pointing);
+    optical_axis.set_support_and_direction(position, pointing);
 }
 
 void CameraDevice::set_pointing_direction(
@@ -58,7 +58,7 @@ void CameraDevice::set_pointing_direction(
         cam_x_axis_in_world,
         cam_y_axis_in_world,
         cam_z_axis_in_world,
-        pos_in_root);
+        position);
     update_optical_axis_and_orientation();
 }
 
@@ -74,7 +74,7 @@ std::string CameraDevice::get_camera_print()const {
         "| ",
         camera2root.str());
     out << "| camera position          : ";
-    out << pos_in_root.str() << "\n";
+    out << position.str() << "\n";
     out << "| direction of optical axis: ";
     out << pointing.str() << "\n";
     out << "| field of view: " << Rad2Deg(field_of_view) <<" deg\n";
@@ -123,7 +123,7 @@ const Image* CameraDevice::get_image()const {
 }
 
 Vec3 CameraDevice::get_position_in_world()const {
-    return pos_in_root;
+    return position;
 }
 
 Rot3 CameraDevice::get_rotation_in_world()const {
