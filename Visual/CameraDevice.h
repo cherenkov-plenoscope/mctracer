@@ -16,7 +16,7 @@ namespace Visual {
 class CameraDevice{
  public:
     CameraDevice(
-        const std::string camera_name,
+        const std::string name,
         const unsigned int sensor_cols,
         const unsigned int sensor_rows);
     virtual void acquire_image(

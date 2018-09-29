@@ -7,10 +7,10 @@
 namespace Visual {
 
 CameraDevice::CameraDevice(
-    const std::string camera_name,
+    const std::string _name,
     const unsigned int sensor_cols,
     const unsigned int sensor_rows
-): name(camera_name), image(sensor_cols, sensor_rows) {}
+): name(_name), image(sensor_cols, sensor_rows) {}
 
 void CameraDevice::update_position(const Vec3 _pos_in_root) {
     update_position_and_orientation(_pos_in_root, rot_in_root);
