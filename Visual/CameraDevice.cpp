@@ -13,28 +13,28 @@ CameraDevice::CameraDevice(
 ): name(_name), image(sensor_cols, sensor_rows) {}
 
 void CameraDevice::update_position(const Vec3 _position) {
-    update_position_and_orientation(_position, rot_in_root);
+    update_position_and_orientation(_position, rotation);
 }
 
-void CameraDevice::update_orientation(const Rot3 _rot_in_root) {
-    update_position_and_orientation(position, _rot_in_root);
+void CameraDevice::update_orientation(const Rot3 _rotation) {
+    update_position_and_orientation(position, _rotation);
 }
 
 void CameraDevice::update_position_and_orientation(
     const Vec3 _position,
-    const Rot3 _rot_in_root
+    const Rot3 _rotation
 ) {
-    set_position_and_orientation(_position, _rot_in_root);
+    set_position_and_orientation(_position, _rotation);
     update_optical_axis_and_orientation();
 }
 
 void CameraDevice::set_position_and_orientation(
     const Vec3 _position,
-    const Rot3 _rot_in_root
+    const Rot3 _rotation
 ) {
     this->position = _position;
-    this->rot_in_root = _rot_in_root;
-    camera2root.set_transformation(rot_in_root, position);
+    this->rotation = _rotation;
+    camera2root.set_transformation(rotation, position);
 }
 
 void CameraDevice::update_optical_axis_and_orientation() {
@@ -127,7 +127,7 @@ Vec3 CameraDevice::get_position_in_world()const {
 }
 
 Rot3 CameraDevice::get_rotation_in_world()const {
-    return rot_in_root;
+    return rotation;
 }
 
 Vec3 CameraDevice::direction_to_the_right_of_the_camera()const {
