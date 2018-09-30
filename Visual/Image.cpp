@@ -131,7 +131,6 @@ void assign_pixel_colors_to_sum_and_exposure_image(
         exposure_image->raw.at(idx).r += 1.;
         exposure_image->raw.at(idx).g += 1.;
         exposure_image->raw.at(idx).b += 1.;
-
     }
 }
 

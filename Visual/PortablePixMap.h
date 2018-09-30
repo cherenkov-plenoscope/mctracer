@@ -3,6 +3,7 @@
 #define VISUAL_PORTABLEPIXMAP_H_
 
 #include <fstream>
+#include <string>
 #include "Visual/Image.h"
 
 namespace Visual {

@@ -2,6 +2,7 @@
 #ifndef VISUAL_FLYINGCAMERA_H_
 #define VISUAL_FLYINGCAMERA_H_
 
+#include <cv.h>
 #include <string>
 #include "ApertureCamera.h"
 #include "PinHoleCamera.h"
@@ -10,7 +11,6 @@
 #include "Config.h"
 #include "Tools/Time.h"
 #include "Tools/UserInteraction.h"
-#include <cv.h>
 
 namespace Visual {
 
