@@ -5,8 +5,8 @@
         demand a full resolution image (cols*scale x rows*scale) is created.
     -->
     <preview
-        cols="128" rows="72"
-        scale="10"
+        cols="256" rows="144"
+        scale="5"
     />
     <!--
         Snaphot images are taken with a cinematic camera with an extended

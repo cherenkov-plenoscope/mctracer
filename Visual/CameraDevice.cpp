@@ -8,9 +8,12 @@ namespace Visual {
 
 CameraDevice::CameraDevice(
     const std::string _name,
-    const unsigned int sensor_cols,
-    const unsigned int sensor_rows
-): name(_name), image(sensor_cols, sensor_rows) {}
+    const unsigned int _num_pixel_columns,
+    const unsigned int _num_pixel_rows
+):
+    name(_name),
+    num_pixel_columns(_num_pixel_columns),
+    num_pixel_rows(_num_pixel_rows) {}
 
 void CameraDevice::update_position(const Vec3 _position) {
     update_position_and_orientation(_position, rotation);
@@ -79,9 +82,9 @@ std::string CameraDevice::get_camera_print()const {
     out << pointing.str() << "\n";
     out << "| field of view: " << Rad2Deg(field_of_view) <<" deg\n";
     out << "| resolution: cols x rows : ";
-    out << image.number_cols << "x";
-    out << image.number_rows <<" pixels";
-    out << " / " << (image.number_cols*image.number_rows)/1e6 << " M pixels\n";
+    out << num_pixel_columns << "x";
+    out << num_pixel_rows <<" pixels";
+    out << " / " << (num_pixel_columns*num_pixel_rows)/1e6 << " M pixels\n";
     return out.str();
 }
 
@@ -114,12 +117,20 @@ void CameraDevice::assert_field_of_view_is_valid(
     }
 }
 
-std::string CameraDevice::get_name()const {
-    return name;
-}
-
-const Image* CameraDevice::get_image()const {
-    return &image;
+void CameraDevice::assert_resolution(Image* image)const {
+    if (
+        image->number_cols != num_pixel_columns ||
+        image->number_rows != num_pixel_rows
+    ) {
+        std::stringstream info;
+        info << "CameraDevice::" << __func__ << "()\n";
+        info << "Expected resolution of image to be ";
+        info << num_pixel_columns << "x";
+        info << num_pixel_rows << ", but actual it is: ";
+        info << image->number_cols << "x";
+        info << image->number_rows << ".\n";
+        throw std::runtime_error(info.str());
+    }
 }
 
 Vec3 CameraDevice::get_position_in_world()const {
@@ -136,14 +147,6 @@ Vec3 CameraDevice::direction_to_the_right_of_the_camera()const {
 
 Ray CameraDevice::get_optical_axis_in_world()const {
     return optical_axis;
-}
-
-unsigned int CameraDevice::get_number_of_sensor_cols()const {
-    return image.number_cols;
-}
-
-unsigned int CameraDevice::get_number_of_sensor_rows()const {
-    return image.number_rows;
 }
 
 }  // namespace Visual

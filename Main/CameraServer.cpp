@@ -120,6 +120,10 @@ int main(int argc, char* argv[]) {
             if (ins.magic_sync != MAGIC_INSTRUCTION_SYNC)
                 break;
 
+            Visual::Image image = Visual::Image(
+                ins.number_columns,
+                ins.number_rows);
+
             Visual::ApertureCamera cam(
                 "camera",
                 ins.number_columns,
@@ -132,12 +136,8 @@ int main(int argc, char* argv[]) {
             cam.update_orientation(ins.orientation);
             cam.set_focus_to(ins.object_distance);
             visual_config.snapshot.noise_level = ins.noise_level;
-            cam.acquire_image(&scenery.root, &visual_config);
-            const Visual::Image *camera_image = cam.get_image();
-
-            Visual::ppm::append_image_to_file(
-                *camera_image,
-                std::cout);
+            cam.acquire_image(&scenery.root, &visual_config, &image);
+            Visual::ppm::append_image_to_file(image, std::cout);
         }
 
     }catch(std::exception &error) {

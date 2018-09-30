@@ -53,7 +53,7 @@ void PinHoleCamera::update_principal_point_for_current_FoV() {
     */
     // distance
     dist_camera_support_to_principal_point =
-        ((image.number_cols/2.0)/tan(field_of_view/2.0));
+        ((num_pixel_columns/2.0)/tan(field_of_view/2.0));
 
     // principal point
     principal_point =
@@ -88,8 +88,8 @@ Vec3 PinHoleCamera::get_direction_of_ray_for_pixel(
 Vec3 PinHoleCamera::get_intersection_of_ray_on_image_sensor_for_pixel(
     const int row, const int col
 )const {
-    const int vert_position_on_image_sensor = row-image.number_rows/2;
-    const int hori_position_on_image_sensor = col-image.number_cols/2;
+    const int vert_position_on_image_sensor = row - num_pixel_rows/2;
+    const int hori_position_on_image_sensor = col - num_pixel_columns/2;
 
     return principal_point +
         SensorDirectionVert * vert_position_on_image_sensor +
@@ -98,24 +98,26 @@ Vec3 PinHoleCamera::get_intersection_of_ray_on_image_sensor_for_pixel(
 
 void PinHoleCamera::acquire_image(
     const Frame* world,
-    const Config* visual_config
+    const Config* visual_config,
+    Image* image
 ) {
+    assert_resolution(image);
     unsigned int i, row, col;
     CameraRay cam_ray;
     int HadCatch = 0;
     Random::Mt19937 prng;
-    const unsigned int number_pixel = image.number_cols*image.number_rows;
+    const unsigned int number_pixel = num_pixel_columns*num_pixel_rows;
 
     #pragma omp parallel shared(visual_config, world, HadCatch) private(i, cam_ray, row, col)
     {
         #pragma omp for schedule(dynamic)
         for (i = 0; i < number_pixel; i++) {
             try {
-                row = i / image.number_cols;
-                col = i % image.number_cols;
+                row = i / num_pixel_columns;
+                col = i % num_pixel_columns;
                 cam_ray = get_ray_for_pixel_in_row_and_col(row, col);
                 Tracer tracer(&cam_ray, world, visual_config, &prng);
-                image.set_col_row(col, row, tracer.color);
+                image->set_col_row(col, row, tracer.color);
             } catch (std::exception &error) {
                 HadCatch++;
                 std::cerr << error.what();

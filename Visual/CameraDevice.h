@@ -17,11 +17,12 @@ class CameraDevice{
  public:
     CameraDevice(
         const std::string name,
-        const unsigned int sensor_cols,
-        const unsigned int sensor_rows);
+        const unsigned int num_pixel_columns,
+        const unsigned int num_pixel_rows);
     virtual void acquire_image(
         const Frame* world,
-        const Config* visual_config) = 0;
+        const Config* visual_config,
+        Image* image) = 0;
     virtual void update_position(const Vec3 position);
     virtual void update_orientation(const Rot3 rotation);
     virtual void update_position_and_orientation(
@@ -35,18 +36,17 @@ class CameraDevice{
     Vec3 get_normalized_pointing_get_direction()const;
     Vec3 direction_to_the_right_of_the_camera()const;
     Ray get_optical_axis_in_world()const;
-    std::string get_name()const;
     std::string str()const;
-    virtual const Image* get_image()const;
     Vec3 get_position_in_world()const;
     Rot3 get_rotation_in_world()const;
     Vec3 get_image_upwards_direction_in_world_frame()const;
-    unsigned int get_number_of_sensor_cols()const;
-    unsigned int get_number_of_sensor_rows()const;
+    void assert_resolution(Image* image)const;
+
+    const std::string name;
+    const unsigned int num_pixel_columns;
+    const unsigned int num_pixel_rows;
 
  protected:
-    const std::string name;
-    Image image;
     HomTra3 camera2root;
     Vec3 position;
     Rot3 rotation;

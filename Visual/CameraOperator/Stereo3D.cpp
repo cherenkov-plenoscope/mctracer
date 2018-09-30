@@ -8,26 +8,29 @@ Stereo3D::Stereo3D(CameraDevice* camera_to_work_with):
     camera(camera_to_work_with),
     left_image(
         Image(
-            camera->get_image()->number_cols,
-            camera->get_image()->number_rows)),
+            camera->num_pixel_columns,
+            camera->num_pixel_rows)),
     right_image(
-        Image(camera->get_image()->number_cols,
-            camera->get_image()->number_rows)),
-    stereo_image(
-        Image(camera->get_image()->number_cols,
-            camera->get_image()->number_rows)) {}
+        Image(
+            camera->num_pixel_columns,
+            camera->num_pixel_rows)) {}
 
 void Stereo3D::aquire_stereo_image(
     const Frame* world,
-    const Config* visual_config
+    const Config* visual_config,
+    Image* stereo_image
 ) {
     remember_initial_camera_config();
     calc_pos_and_rot_for_left_and_right_camera_config(world);
     set_up_camera_in_left_stereo_config();
-    take_left_image(world, visual_config);
+    camera->acquire_image(world, visual_config, &left_image);
     set_up_camera_in_right_stereo_config();
-    take_right_image(world, visual_config);
+    camera->acquire_image(world, visual_config, &right_image);
     set_up_camera_back_to_initial_config();
+    merge_left_and_right_image_to_anaglyph_3DStereo(
+        left_image,
+        right_image,
+        stereo_image);
 }
 
 void Stereo3D::calc_pos_and_rot_for_left_and_right_camera_config(
@@ -52,22 +55,6 @@ void Stereo3D::remember_initial_camera_position_and_rotation() {
 void Stereo3D::set_positions_for_left_and_right_stereo_config() {
     left_camera_pos = initial_camera_pos - offset_to_the_right();
     right_camera_pos = initial_camera_pos + offset_to_the_right();
-}
-
-void Stereo3D::take_left_image(
-    const Frame* world,
-    const Config* visual_config
-) {
-    camera->acquire_image(world, visual_config);
-    left_image = *camera->get_image();
-}
-
-void Stereo3D::take_right_image(
-    const Frame* world,
-    const Config* visual_config
-) {
-    camera->acquire_image(world, visual_config);
-    right_image = *camera->get_image();
 }
 
 Vec3 Stereo3D::offset_to_the_right()const {
@@ -138,15 +125,8 @@ void Stereo3D::decrease_stereo_offset() {
 void Stereo3D::print_stereo_offset_manipulation(
     const std::string status
 )const {
-    std::cout << camera->get_name() << " stereo offset " << status << ": ";
+    std::cout << camera->name << " stereo offset " << status << ": ";
     std::cout << stereo_offset_in_m << "m\n";
-}
-
-const Image* Stereo3D::get_anaglyph_stereo3D_image() {
-    stereo_image = merge_left_and_right_image_to_anaglyph_3DStereo(
-        left_image,
-        right_image);
-    return &stereo_image;
 }
 
 void Stereo3D::use_same_stereo_offset_as(

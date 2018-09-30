@@ -16,17 +16,16 @@ class Stereo3D: public Verbosity {
     explicit Stereo3D(CameraDevice* camera_to_work_with);
     void aquire_stereo_image(
         const Frame* world,
-        const Config* visual_config);
+        const Config* visual_config,
+        Image* stereo_image);
     void increase_stereo_offset();
     void decrease_stereo_offset();
-    const Image* get_anaglyph_stereo3D_image();
     void use_same_stereo_offset_as(const Stereo3D *college);
 
  private:
     CameraDevice* camera;
     Image left_image;
     Image right_image;
-    Image stereo_image;
     Vec3 initial_camera_pos;
     Rot3 initial_camera_rotation;
     Vec3 initial_camera_image_upward_direction;
@@ -56,12 +55,6 @@ class Stereo3D: public Verbosity {
     Vec3 offset_to_the_right()const;
     void set_intersection_for_l_and_r_cameras_optical_axes();
     void print_stereo_offset_manipulation(const std::string status)const;
-    void take_left_image(
-        const Frame* world,
-        const Config* visual_config);
-    void take_right_image(
-        const Frame* world,
-        const Config* visual_config);
 };
 
 }  // namespace CameraOperator

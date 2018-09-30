@@ -70,7 +70,7 @@ void FieldOfView::print_can_not_be_increased_when_verbose()const {
 }
 
 void FieldOfView::print_prefix()const {
-    std::cout << camera->get_name() << " FoV: ";
+    std::cout << camera->name << " FoV: ";
 }
 
 }  // namespace CameraOperator

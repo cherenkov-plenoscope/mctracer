@@ -54,7 +54,7 @@ double Translation::translation_increment()const {
 }
 
 void Translation::print_camera_moved_in_direction(const std::string dir)const {
-    std::cout << camera->get_name() << " move " << dir << ": ";
+    std::cout << camera->name << " move " << dir << ": ";
     std::cout << camera->get_position_in_world().str() << "\n";
 }
 
@@ -82,7 +82,7 @@ void Translation::move_down() {
 void Translation::move_to(const Vec3 pos) {
     camera->update_position(pos);
     if (verbose) {
-        std::cout << camera->get_name() << " move to: ";
+        std::cout << camera->name << " move to: ";
         std::cout << camera->get_position_in_world().str() << "\n";
     }
 }

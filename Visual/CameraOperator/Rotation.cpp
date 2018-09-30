@@ -81,7 +81,7 @@ void Rotation::decrease_rot_y() {
 void
 Rotation::print_when_verbose_camera_rotation_for_y_axis_manipulation()const {
     if (verbose) {
-        cout << camera->get_name() << " rot y: ";
+        cout << camera->name << " rot y: ";
         cout << Rad2Deg(RotWorld2CameraY_in_rad) << "DEG\n";
     }
 }
@@ -90,7 +90,7 @@ void Rotation::print_when_verbose_camera_can_not_look_further(
     const std::string dir
 )const {
     if (verbose) {
-        cout << camera->get_name() << " can not look further " << dir << ", ";
+        cout << camera->name << " can not look further " << dir << ", ";
         cout << " rot y: " << Rad2Deg(RotWorld2CameraY_in_rad) << "DEG\n";
     }
 }
@@ -120,7 +120,7 @@ void Rotation::decrease_rot_z() {
 void
 Rotation::print_when_verbose_camera_rotation_for_z_axis_manipulation()const {
     if (verbose) {
-        cout << camera->get_name() << " rot z: ";
+        cout << camera->name << " rot z: ";
         cout << Rad2Deg(RotWorld2CameraZ_in_rad) << "DEG\n";
     }
 }

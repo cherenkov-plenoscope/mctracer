@@ -21,9 +21,10 @@ struct Image {
     unsigned int _idx(unsigned int col, unsigned int row)const;
 };
 
-Image merge_left_and_right_image_to_anaglyph_3DStereo(
+void merge_left_and_right_image_to_anaglyph_3DStereo(
     const Image &left,
-    const Image &right);
+    const Image &right,
+    Image* stereo_image);
 
 void truncate_to_255(Image* image);
 

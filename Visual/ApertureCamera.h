@@ -26,7 +26,8 @@ class ApertureCamera :public CameraDevice{
         const unsigned int col);
     void acquire_image(
         const Frame* world,
-        const Config* visual_config);
+        const Config* visual_config,
+        Image* image);
     void auto_focus(const Frame* world);
     std::string str()const;
 

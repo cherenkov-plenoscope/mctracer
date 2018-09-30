@@ -231,11 +231,11 @@ void scale_up(const Image &in, const unsigned int scale, Image* out) {
     }
 }
 
-Image merge_left_and_right_image_to_anaglyph_3DStereo(
+void merge_left_and_right_image_to_anaglyph_3DStereo(
     const Image &left,
-    const Image &right
+    const Image &right,
+    Image* stereo_image
 ) {
-    Image out(left.number_cols, left.number_rows);
     for (unsigned int row = 0; row < left.number_rows; row++) {
         for (unsigned int col = 0; col < left.number_cols; col++) {
             const Color cl = left.at_col_row(col, row);
@@ -243,10 +243,9 @@ Image merge_left_and_right_image_to_anaglyph_3DStereo(
             const Color cr = right.at_col_row(col, row);
             const double lum_right = (cr.r + cr.g + cr.b)/3;
             const Color ana(lum_left, lum_right, lum_right);
-            out.set_col_row(col, row, ana);
+            stereo_image->set_col_row(col, row, ana);
         }
     }
-    return out;
 }
 
 }  // namespace Visual

@@ -51,6 +51,10 @@ FlyingCamera::FlyingCamera(
         Image(
             visual_config->preview.cols*visual_config->preview.scale,
             visual_config->preview.rows*visual_config->preview.scale)),
+    small_image(
+        Image(
+            visual_config->preview.cols,
+            visual_config->preview.rows)),
     display_image(
         cv::Mat(
             visual_config->preview.rows*visual_config->preview.scale,
@@ -192,14 +196,13 @@ void FlyingCamera::destroy_display() {
 
 void FlyingCamera::update_display_full_resolution() {
     cout << "Full resolution image "
-    << flying_camera_full_resolution.get_number_of_sensor_cols() <<"x"
-    << flying_camera_full_resolution.get_number_of_sensor_rows() <<", "
-    << flying_camera_full_resolution.get_number_of_sensor_cols()*
-    flying_camera_full_resolution.get_number_of_sensor_rows()/1e6
+    << flying_camera_full_resolution.num_pixel_columns <<"x"
+    << flying_camera_full_resolution.num_pixel_rows <<", "
+    << flying_camera_full_resolution.num_pixel_columns*
+    flying_camera_full_resolution.num_pixel_rows/1e6
     << " MPixel\n";
-    const Image* img = acquire_image_with_camera(
-        &flying_camera_full_resolution);
-    image_to_opencv_image(*img, &display_image);
+    acquire_image_with_camera(&flying_camera_full_resolution, &image);
+    image_to_opencv_image(image, &display_image);
     cv::imshow(display_name, display_image);
 }
 
@@ -209,8 +212,8 @@ void FlyingCamera::update_display() {
     flying_camera.update_position_and_orientation(
         flying_camera_full_resolution.get_position_in_world(),
         flying_camera_full_resolution.get_rotation_in_world());
-    const Image* img = acquire_image_with_camera(&flying_camera);
-    scale_up(*img, visual_config->preview.scale, &image);
+    acquire_image_with_camera(&flying_camera, &small_image);
+    scale_up(small_image, visual_config->preview.scale, &image);
     image_to_opencv_image(image, &display_image);
     cv::imshow(display_name, display_image);
 }
@@ -273,20 +276,18 @@ void FlyingCamera::take_snapshot_manual_focus_on_pixel_col_row(
     ApertureCamera apcam = get_ApertureCamera_based_on_display_camera();
     apcam.set_focus_to(object_distance_to_focus_on);
     cout << apcam.str();
-    const Image* img = acquire_image_with_camera(&apcam);
-    ppm::write_image_to_path(*img, get_snapshot_filename());
+    Image apcam_img = Image(apcam.num_pixel_columns, apcam.num_pixel_rows);
+    acquire_image_with_camera(&apcam, &apcam_img);
+    ppm::write_image_to_path(apcam_img, get_snapshot_filename());
 }
 
-const Image* FlyingCamera::acquire_image_with_camera(CameraDevice* cam) {
+void FlyingCamera::acquire_image_with_camera(CameraDevice* cam, Image* img) {
     if (stereo3D) {
         CameraOperator::Stereo3D op(cam);
         op.use_same_stereo_offset_as(stereo_operator);
-        op.aquire_stereo_image(world, visual_config);
-        image = *op.get_anaglyph_stereo3D_image();
-        return &image;
+        op.aquire_stereo_image(world, visual_config, img);
     } else {
-        cam->acquire_image(world, visual_config);
-        return cam->get_image();
+        cam->acquire_image(world, visual_config, img);
     }
 }
 

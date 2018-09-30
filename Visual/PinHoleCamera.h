@@ -18,7 +18,8 @@ class PinHoleCamera:public CameraDevice{
     void print()const;
     void acquire_image(
         const Frame* world,
-        const Config* visual_config);
+        const Config* visual_config,
+        Image* image);
     void set_FoV_in_rad(const double field_of_view);
     CameraRay get_ray_for_pixel_in_row_and_col(
         const int row, const int col)const;
