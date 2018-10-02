@@ -58,8 +58,6 @@ class FlyingCamera {
     void update_display();
     void take_snapshot_manual_focus_on_pixel_col_row(int col, int y);
     void print_help()const;
-    void increase_stereo_offset();
-    void decrease_stereo_offset();
     static void mouse_button_event(
         int event,
         int col,
@@ -73,11 +71,6 @@ class FlyingCamera {
     void create_display();
     void destroy_display();
     void reset_camera();
-    void reset_stereo_view();
-    void reset_free_orbit();
-    bool stereo_offset_wont_be_too_large_when_increased()const;
-    bool stereo_offset_wont_be_too_small_when_decreased()const;
-    void print_stereo_offset_manipulation(const std::string status)const;
     std::string get_snapshot_filename();
     bool it_is_time_again_to_show_the_help();
     void acquire_image_with_camera(CameraDevice* cam, Image* img);
