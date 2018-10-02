@@ -207,7 +207,7 @@ void FlyingCamera::mouse_button_event(
     (void)flags;
     FlyingCamera* p = reinterpret_cast<FlyingCamera*>(param);
     if (event == cv::EVENT_LBUTTONDOWN)
-        p->print_info_of_probing_ray_for_pixel_col_row(col, row);
+        p->print_ray_for_pixel_col_row(col, row);
     else if (event == cv::EVENT_RBUTTONDOWN)
         p->take_snapshot_manual_focus_on_pixel_col_row(col, row);
     else
@@ -271,7 +271,7 @@ void FlyingCamera::acquire_image_with_camera(CameraDevice* cam, Image* img) {
     }
 }
 
-void FlyingCamera::print_info_of_probing_ray_for_pixel_col_row(
+void FlyingCamera::print_ray_for_pixel_col_row(
     int col,
     int row
 ) {
