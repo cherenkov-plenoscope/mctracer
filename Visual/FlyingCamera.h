@@ -37,10 +37,10 @@ class FlyingCamera {
     const std::string display_name;
     const Frame *world;
     const Config *visual_config;
+    PinHoleCamera camera_preview;
     PinHoleCamera camera;
-    PinHoleCamera camera_full_resolution;
     Image image;
-    Image small_image;
+    Image image_preview;
     cv::Mat display_image;
     CameraOperator::FieldOfView* fov_operator;
     CameraOperator::Translation* translation_operator;
@@ -52,7 +52,7 @@ class FlyingCamera {
     Time::Stamp time_stamp;
     int wait_for_user_key_stroke();
     void toggle_stereo3D();
-    void create_CameraMen_to_safely_operate_the_flying_camera();
+    void create_CameraMen();
     void enter_interactive_display();
     void aquire_image();
     void update_display();
