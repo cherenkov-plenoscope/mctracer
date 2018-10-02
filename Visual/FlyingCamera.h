@@ -57,7 +57,7 @@ class FlyingCamera {
     void update_display_preview();
     void update_display();
     void take_snapshot_manual_focus_on_pixel_col_row(int col, int y);
-    void print_display_help_text()const;
+    void print_help()const;
     void increase_stereo_offset();
     void decrease_stereo_offset();
     static void mouse_button_event(

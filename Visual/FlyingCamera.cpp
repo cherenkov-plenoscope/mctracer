@@ -82,7 +82,7 @@ void FlyingCamera::reset_camera() {
 
 void FlyingCamera::enter_interactive_display() {
     UserInteraction::print_welcome_screen();
-    print_display_help_text();
+    print_help();
 
     int user_input_key = 0;
     bool key_stroke_requires_image_update = true;
@@ -91,7 +91,7 @@ void FlyingCamera::enter_interactive_display() {
         user_input_counter++;
 
         if (it_is_time_again_to_show_the_help())
-            print_display_help_text();
+            print_help();
 
         if (key_stroke_requires_image_update)
             update_display_preview();
@@ -144,7 +144,7 @@ void FlyingCamera::enter_interactive_display() {
             }
             break;
             case 'h': {
-                print_display_help_text();
+                print_help();
                 key_stroke_requires_image_update = false;
             };
             break;
@@ -326,7 +326,7 @@ string FlyingCamera::get_intersection_info_print(
     return out.str();
 }
 
-void FlyingCamera::print_display_help_text()const {
+void FlyingCamera::print_help()const {
     UserInteraction::ClearScreen();
     stringstream out;
 
