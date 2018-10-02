@@ -59,8 +59,11 @@ FlyingCamera::FlyingCamera(
         cv::Mat(
             visual_config->preview.rows*visual_config->preview.scale,
             visual_config->preview.cols*visual_config->preview.scale,
-            CV_8UC3)) {
-    create_CameraMen();
+            CV_8UC3)),
+    fov_operator(CameraOperator::FieldOfView(&camera)),
+    translation_operator(CameraOperator::Translation(&camera)),
+    rotation_operator(CameraOperator::Rotation(&camera)),
+    stereo_operator(CameraOperator::Stereo3D(&camera)) {
     reset_camera();
     time_stamp.update_now();
     create_display();
@@ -71,24 +74,10 @@ FlyingCamera::~FlyingCamera() {
     destroy_display();
 }
 
-void FlyingCamera::create_CameraMen() {
-    fov_operator = new CameraOperator::FieldOfView(&camera);
-    fov_operator->set_verbosity(true);
-
-    translation_operator = new CameraOperator::Translation(&camera);
-    translation_operator->set_verbosity(true);
-
-    rotation_operator = new CameraOperator::Rotation(&camera);
-    rotation_operator->set_verbosity(true);
-
-    stereo_operator = new CameraOperator::Stereo3D(&camera);
-    stereo_operator->set_verbosity(true);
-}
-
 void FlyingCamera::reset_camera() {
-    translation_operator->set_default_position(Vec3(0.0, 0.0, 0.0));
-    rotation_operator->set_default_rotation(Rot3(0.0, Deg2Rad(-90.0), 0.0));
-    fov_operator->set_default();
+    translation_operator.set_default_position(Vec3(0.0, 0.0, 0.0));
+    rotation_operator.set_default_rotation(Rot3(0.0, Deg2Rad(-90.0), 0.0));
+    fov_operator.set_default();
 }
 
 void FlyingCamera::enter_interactive_display() {
@@ -113,35 +102,35 @@ void FlyingCamera::enter_interactive_display() {
         switch (user_input_key) {
             case 't': toggle_stereo3D();
             break;
-            case 'w': translation_operator->move_forward();
+            case 'w': translation_operator.move_forward();
             break;
-            case 's': translation_operator->move_back();
+            case 's': translation_operator.move_back();
             break;
-            case 'a': translation_operator->move_left();
+            case 'a': translation_operator.move_left();
             break;
-            case 'd': translation_operator->move_right();
+            case 'd': translation_operator.move_right();
             break;
-            case 'q': translation_operator->move_up();
+            case 'q': translation_operator.move_up();
             break;
-            case 'e': translation_operator->move_down();
+            case 'e': translation_operator.move_down();
             break;
-            case 'n': fov_operator->increase_when_possible();
+            case 'n': fov_operator.increase_when_possible();
             break;
-            case 'm': fov_operator->decrease_when_possible();
+            case 'm': fov_operator.decrease_when_possible();
             break;
-            case 'i': rotation_operator->look_further_up_when_possible();
+            case 'i': rotation_operator.look_further_up_when_possible();
             break;
-            case 'k': rotation_operator->look_further_down_when_possible();
+            case 'k': rotation_operator.look_further_down_when_possible();
             break;
-            case 'j': rotation_operator->look_left();
+            case 'j': rotation_operator.look_left();
             break;
-            case 'l': rotation_operator->look_right();
+            case 'l': rotation_operator.look_right();
             break;
-            case 'x': stereo_operator->increase_stereo_offset();
+            case 'x': stereo_operator.increase_stereo_offset();
             break;
-            case 'y': stereo_operator->decrease_stereo_offset();
+            case 'y': stereo_operator.decrease_stereo_offset();
             break;
-            case 'g': translation_operator->move_to(
+            case 'g': translation_operator.move_to(
                 UserInteraction::get_Vec3());
             break;
             case UserInteraction::space_key: {
@@ -275,7 +264,7 @@ void FlyingCamera::take_snapshot_manual_focus_on_pixel_col_row(
 void FlyingCamera::acquire_image_with_camera(CameraDevice* cam, Image* img) {
     if (stereo3D) {
         CameraOperator::Stereo3D op(cam);
-        op.use_same_stereo_offset_as(stereo_operator);
+        op.use_same_stereo_offset_as(&stereo_operator);
         op.aquire_stereo_image(world, visual_config, img);
     } else {
         cam->acquire_image(world, visual_config, img);
