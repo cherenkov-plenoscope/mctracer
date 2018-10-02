@@ -209,7 +209,7 @@ void FlyingCamera::mouse_button_event(
     if (event == cv::EVENT_LBUTTONDOWN)
         p->print_ray_for_pixel_col_row(col, row);
     else if (event == cv::EVENT_RBUTTONDOWN)
-        p->take_snapshot_manual_focus_on_pixel_col_row(col, row);
+        p->aquire_image_focused_on_pixel_col_row(col, row);
     else
         return;
 }
@@ -242,10 +242,7 @@ ApertureCamera FlyingCamera::get_aperture_camera_based_on_camera()const {
     return apcam;
 }
 
-void FlyingCamera::take_snapshot_manual_focus_on_pixel_col_row(
-    int col,
-    int row
-) {
+void FlyingCamera::aquire_image_focused_on_pixel_col_row(int col, int row) {
     Ray probing_ray = camera.get_ray_for_pixel_in_row_and_col(row, col);
     DistanceMeter dist_meter(&probing_ray, world);
     double object_distance_to_focus_on;

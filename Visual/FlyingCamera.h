@@ -56,7 +56,7 @@ class FlyingCamera {
     void aquire_image();
     void update_display_preview();
     void update_display();
-    void take_snapshot_manual_focus_on_pixel_col_row(int col, int y);
+    void aquire_image_focused_on_pixel_col_row(int col, int y);
     void print_help()const;
     static void mouse_button_event(
         int event,
