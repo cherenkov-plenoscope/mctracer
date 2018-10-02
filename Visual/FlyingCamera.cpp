@@ -94,7 +94,7 @@ void FlyingCamera::enter_interactive_display() {
             print_display_help_text();
 
         if (key_stroke_requires_image_update)
-            update_display();
+            update_display_preview();
 
         key_stroke_requires_image_update = true;
         user_input_key = wait_for_user_key_stroke();
@@ -134,7 +134,7 @@ void FlyingCamera::enter_interactive_display() {
                 UserInteraction::get_Vec3());
             break;
             case UserInteraction::space_key: {
-                update_display_full_resolution();
+                update_display();
                 key_stroke_requires_image_update = false;
             }
             break;
@@ -179,7 +179,7 @@ void FlyingCamera::destroy_display() {
     cv::destroyWindow(display_name);
 }
 
-void FlyingCamera::update_display_full_resolution() {
+void FlyingCamera::update_display() {
     cout << "Full resolution image "
     << camera.number_cols <<"x"
     << camera.number_rows <<", "
@@ -190,7 +190,7 @@ void FlyingCamera::update_display_full_resolution() {
     cv::imshow(display_name, display_image);
 }
 
-void FlyingCamera::update_display() {
+void FlyingCamera::update_display_preview() {
     camera_preview.set_FoV_in_rad(camera.get_FoV_in_rad());
     camera_preview.update_position_and_orientation(
         camera.get_position_in_world(),

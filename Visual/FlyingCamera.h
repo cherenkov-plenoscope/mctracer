@@ -54,8 +54,8 @@ class FlyingCamera {
     void toggle_stereo3D();
     void enter_interactive_display();
     void aquire_image();
+    void update_display_preview();
     void update_display();
-    void update_display_full_resolution();
     void take_snapshot_manual_focus_on_pixel_col_row(int col, int y);
     void print_display_help_text()const;
     void increase_stereo_offset();
