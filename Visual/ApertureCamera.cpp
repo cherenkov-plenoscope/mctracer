@@ -243,14 +243,13 @@ void ApertureCamera::acquire_image(
         &sum_image,
         &exposure_image);
 
-    Image reconstructed_image(cols, rows);
     image_from_sum_and_exposure(
         sum_image,
         exposure_image,
-        &reconstructed_image);
+        image);
 
     Image sobel_image(cols, rows);
-    sobel_operator(reconstructed_image, &sobel_image);
+    sobel_operator(*image, &sobel_image);
     truncate_to_255(&sobel_image);
 
     Image to_do_image(cols, rows);
@@ -293,10 +292,10 @@ void ApertureCamera::acquire_image(
         image_from_sum_and_exposure(
             sum_image,
             exposure_image,
-            &reconstructed_image);
+            image);
 
         previous_sobel_image = sobel_image;
-        sobel_operator(reconstructed_image, &sobel_image);
+        sobel_operator(*image, &sobel_image);
         truncate_to_255(&sobel_image);
 
         fabs_difference(
@@ -317,8 +316,6 @@ void ApertureCamera::acquire_image(
 
         iteration += 1;
     }
-
-    *image = reconstructed_image;
 }
 
 std::vector<Color> ApertureCamera::acquire_pixels(
