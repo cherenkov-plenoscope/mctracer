@@ -196,10 +196,10 @@ void FlyingCamera::destroy_display() {
 
 void FlyingCamera::update_display_full_resolution() {
     cout << "Full resolution image "
-    << flying_camera_full_resolution.num_pixel_columns <<"x"
-    << flying_camera_full_resolution.num_pixel_rows <<", "
-    << flying_camera_full_resolution.num_pixel_columns*
-    flying_camera_full_resolution.num_pixel_rows/1e6
+    << flying_camera_full_resolution.number_cols <<"x"
+    << flying_camera_full_resolution.number_rows <<", "
+    << flying_camera_full_resolution.number_cols*
+    flying_camera_full_resolution.number_rows/1e6
     << " MPixel\n";
     acquire_image_with_camera(&flying_camera_full_resolution, &image);
     image_to_opencv_image(image, &display_image);
@@ -276,7 +276,7 @@ void FlyingCamera::take_snapshot_manual_focus_on_pixel_col_row(
     ApertureCamera apcam = get_ApertureCamera_based_on_display_camera();
     apcam.set_focus_to(object_distance_to_focus_on);
     cout << apcam.str();
-    Image apcam_img = Image(apcam.num_pixel_columns, apcam.num_pixel_rows);
+    Image apcam_img = Image(apcam.number_cols, apcam.number_rows);
     acquire_image_with_camera(&apcam, &apcam_img);
     ppm::write_image_to_path(apcam_img, get_snapshot_filename());
 }

@@ -17,8 +17,8 @@ class CameraDevice{
  public:
     CameraDevice(
         const std::string name,
-        const unsigned int num_pixel_columns,
-        const unsigned int num_pixel_rows);
+        const unsigned int number_cols,
+        const unsigned int number_rows);
     virtual void acquire_image(
         const Frame* world,
         const Config* visual_config,
@@ -43,8 +43,8 @@ class CameraDevice{
     void assert_resolution(Image* image)const;
 
     const std::string name;
-    const unsigned int num_pixel_columns;
-    const unsigned int num_pixel_rows;
+    const unsigned int number_cols;
+    const unsigned int number_rows;
 
  protected:
     HomTra3 camera2root;
