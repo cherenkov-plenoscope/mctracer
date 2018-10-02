@@ -67,12 +67,12 @@ class FlyingCamera {
     void print_ray_for_pixel_col_row(int x, int y);
     std::string get_intersection_info_print(const Intersection intersec)const;
     void update_current_camera_position(Vec3 new_translation_World2Camera);
-    ApertureCamera get_ApertureCamera_based_on_display_camera()const;
+    ApertureCamera get_aperture_camera_based_on_camera()const;
     void create_display();
     void destroy_display();
     void reset_camera();
     std::string get_snapshot_filename();
-    bool it_is_time_again_to_show_the_help();
+    bool time_to_print_help();
     void acquire_image_with_camera(CameraDevice* cam, Image* img);
 };
 

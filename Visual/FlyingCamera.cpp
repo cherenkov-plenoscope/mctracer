@@ -90,7 +90,7 @@ void FlyingCamera::enter_interactive_display() {
     while (!UserInteraction::is_Escape_key(user_input_key)) {
         user_input_counter++;
 
-        if (it_is_time_again_to_show_the_help())
+        if (time_to_print_help())
             print_help();
 
         if (key_stroke_requires_image_update)
@@ -157,7 +157,7 @@ int FlyingCamera::wait_for_user_key_stroke() {
     return cvWaitKey(0);
 }
 
-bool FlyingCamera::it_is_time_again_to_show_the_help() {
+bool FlyingCamera::time_to_print_help() {
     if (user_input_counter > 15) {
         user_input_counter = 0;
         return true;
@@ -228,7 +228,7 @@ string FlyingCamera::get_snapshot_filename() {
     return filename.str();
 }
 
-ApertureCamera FlyingCamera::get_ApertureCamera_based_on_display_camera()const {
+ApertureCamera FlyingCamera::get_aperture_camera_based_on_camera()const {
     ApertureCamera apcam("Imax70mm",
         visual_config->snapshot.cols,
         visual_config->snapshot.rows);
@@ -253,7 +253,7 @@ void FlyingCamera::take_snapshot_manual_focus_on_pixel_col_row(
         object_distance_to_focus_on = dist_meter.distance_to_closest_object;
     else
         object_distance_to_focus_on = 9e99;  // a very large distance
-    ApertureCamera apcam = get_ApertureCamera_based_on_display_camera();
+    ApertureCamera apcam = get_aperture_camera_based_on_camera();
     apcam.set_focus_to(object_distance_to_focus_on);
     cout << apcam.str();
     Image apcam_img = Image(apcam.number_cols, apcam.number_rows);
@@ -271,10 +271,7 @@ void FlyingCamera::acquire_image_with_camera(CameraDevice* cam, Image* img) {
     }
 }
 
-void FlyingCamera::print_ray_for_pixel_col_row(
-    int col,
-    int row
-) {
+void FlyingCamera::print_ray_for_pixel_col_row(int col, int row) {
     Ray probing_ray = camera.get_ray_for_pixel_in_row_and_col(row, col);
     Intersection intersec = RayAndFrame::first_intersection(
         &probing_ray,
