@@ -37,8 +37,8 @@ class FlyingCamera {
     const std::string display_name;
     const Frame *world;
     const Config *visual_config;
-    PinHoleCamera flying_camera;
-    PinHoleCamera flying_camera_full_resolution;
+    PinHoleCamera camera;
+    PinHoleCamera camera_full_resolution;
     Image image;
     Image small_image;
     cv::Mat display_image;

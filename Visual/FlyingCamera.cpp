@@ -37,12 +37,12 @@ FlyingCamera::FlyingCamera(
         std::string("Monte Carlo Ray Tracer")),
     world(_world),
     visual_config(_visual_config),
-    flying_camera(
+    camera(
         PinHoleCamera(
             "Cam",
             visual_config->preview.cols,
             visual_config->preview.rows)),
-    flying_camera_full_resolution(
+    camera_full_resolution(
         PinHoleCamera(
             "CamFull",
             visual_config->preview.cols*visual_config->preview.scale,
@@ -73,19 +73,19 @@ FlyingCamera::~FlyingCamera() {
 
 void FlyingCamera::create_CameraMen_to_safely_operate_the_flying_camera() {
     fov_operator = new CameraOperator::FieldOfView(
-        &flying_camera_full_resolution);
+        &camera_full_resolution);
     fov_operator->set_verbosity(true);
 
     translation_operator = new CameraOperator::Translation(
-        &flying_camera_full_resolution);
+        &camera_full_resolution);
     translation_operator->set_verbosity(true);
 
     rotation_operator = new CameraOperator::Rotation(
-        &flying_camera_full_resolution);
+        &camera_full_resolution);
     rotation_operator->set_verbosity(true);
 
     stereo_operator = new CameraOperator::Stereo3D(
-        &flying_camera_full_resolution);
+        &camera_full_resolution);
     stereo_operator->set_verbosity(true);
 }
 
@@ -196,23 +196,23 @@ void FlyingCamera::destroy_display() {
 
 void FlyingCamera::update_display_full_resolution() {
     cout << "Full resolution image "
-    << flying_camera_full_resolution.number_cols <<"x"
-    << flying_camera_full_resolution.number_rows <<", "
-    << flying_camera_full_resolution.number_cols*
-    flying_camera_full_resolution.number_rows/1e6
+    << camera_full_resolution.number_cols <<"x"
+    << camera_full_resolution.number_rows <<", "
+    << camera_full_resolution.number_cols*
+    camera_full_resolution.number_rows/1e6
     << " MPixel\n";
-    acquire_image_with_camera(&flying_camera_full_resolution, &image);
+    acquire_image_with_camera(&camera_full_resolution, &image);
     image_to_opencv_image(image, &display_image);
     cv::imshow(display_name, display_image);
 }
 
 void FlyingCamera::update_display() {
-    flying_camera.set_FoV_in_rad(
-        flying_camera_full_resolution.get_FoV_in_rad());
-    flying_camera.update_position_and_orientation(
-        flying_camera_full_resolution.get_position_in_world(),
-        flying_camera_full_resolution.get_rotation_in_world());
-    acquire_image_with_camera(&flying_camera, &small_image);
+    camera.set_FoV_in_rad(
+        camera_full_resolution.get_FoV_in_rad());
+    camera.update_position_and_orientation(
+        camera_full_resolution.get_position_in_world(),
+        camera_full_resolution.get_rotation_in_world());
+    acquire_image_with_camera(&camera, &small_image);
     scale_up(small_image, visual_config->preview.scale, &image);
     image_to_opencv_image(image, &display_image);
     cv::imshow(display_name, display_image);
@@ -252,10 +252,10 @@ ApertureCamera FlyingCamera::get_ApertureCamera_based_on_display_camera()const {
     apcam.set_fStop_sesnorWidth(
         visual_config->snapshot.focal_length_over_aperture_diameter,
         visual_config->snapshot.image_sensor_size_along_a_row);
-    apcam.set_FoV_in_rad(flying_camera_full_resolution.get_FoV_in_rad());
+    apcam.set_FoV_in_rad(camera_full_resolution.get_FoV_in_rad());
     apcam.update_position_and_orientation(
-        flying_camera_full_resolution.get_position_in_world(),
-        flying_camera_full_resolution.get_rotation_in_world());
+        camera_full_resolution.get_position_in_world(),
+        camera_full_resolution.get_rotation_in_world());
     return apcam;
 }
 
@@ -264,7 +264,7 @@ void FlyingCamera::take_snapshot_manual_focus_on_pixel_col_row(
     int row
 ) {
     Ray probing_ray =
-        flying_camera_full_resolution.get_ray_for_pixel_in_row_and_col(
+        camera_full_resolution.get_ray_for_pixel_in_row_and_col(
             row,
             col);
     DistanceMeter dist_meter(&probing_ray, world);
@@ -295,7 +295,7 @@ void FlyingCamera::print_info_of_probing_ray_for_pixel_col_row(
     int col,
     int row
 ) {
-    Ray probing_ray = flying_camera_full_resolution.
+    Ray probing_ray = camera_full_resolution.
         get_ray_for_pixel_in_row_and_col(row, col);
     Intersection intersec = RayAndFrame::first_intersection(
         &probing_ray,
