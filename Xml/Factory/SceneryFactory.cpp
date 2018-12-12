@@ -69,6 +69,8 @@ void SceneryFactory::make_geometry(Frame* mother, const Node node) {
             make_geometry(add_light_field_sensor_demonstration(mother, child), child);
         else if(is_equal(child.name(), "stl"))
             make_geometry(add_STL(mother, child), child);
+        else if(is_equal(child.name(), "bi_convex_lens_hexagonal"))
+            make_geometry(add_BiConvexLensHex(mother, child), child);
     }
 }
 //------------------------------------------------------------------------------
@@ -209,8 +211,8 @@ Frame* SceneryFactory::add_BiConvexLensHex(Frame* mother, const Node node) {
         scenery->functions.get(node.child("set_medium").attribute("refraction_vs_wavelength"))
     );
     lens->set_curvature_radius_and_outer_hex_radius(
-        node.child("set_bi_convex_lens_hex").attribute2double("curvature_radius"),
-        node.child("set_bi_convex_lens_hex").attribute2double("outer_radius")
+        node.child("set_bi_convex_lens_hexagonal").attribute2double("curvature_radius"),
+        node.child("set_bi_convex_lens_hexagonal").attribute2double("outer_radius")
     );
     return lens;
 }
