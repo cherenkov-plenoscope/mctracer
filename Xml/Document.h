@@ -1,38 +1,28 @@
-//=================================
-// include guard
-#ifndef __XmlDocument_H_INCLUDED__
-#define __XmlDocument_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef XML_DOCUMENT_H_
+#define XML_DOCUMENT_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
+#include <string>
 #include "pugi/pugixml.hpp"
 #include "Node.h"
-#include <vector>
-#include <string>
-#include <memory>
 
-//------------------------------------------------------------------------------
 namespace Xml {
 
-	class Document {
+class Document {
+    std::string path;
+    std::shared_ptr<std::string> file;
+    pugi::xml_document pugi_doc;
+    pugi::xml_parse_result pugi_result;
+ public:
+    explicit Document(const std::string path);
+    Node node()const;
+    std::string get_info_print(Node node);
+ private:
+    void read_in_documnet();
+    void assert_xml_file_is_valid();
+    std::string pugi_status_msg(int encoding)const;
+};
 
-		std::string path;
-		std::shared_ptr<std::string> file;
-		pugi::xml_document pugi_doc;
-		pugi::xml_parse_result pugi_result;
-	public:
+}  // namespace Xml
 
-		Document(const std::string path);
-		Node node()const;
-		std::string get_info_print(Node node);
-	private:
-
-		void read_in_documnet();
-		void assert_xml_file_is_valid();
-		std::string pugi_status_msg(int encoding)const;
-	};
-}
-#endif // __XmlDocument_H_INCLUDED__ 
+#endif  // XML_DOCUMENT_H_
