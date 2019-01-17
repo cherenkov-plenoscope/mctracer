@@ -7,6 +7,7 @@
 #include "Xml/Problem.h"
 #include "Tools/StringTools.h"
 using std::stringstream;
+using std::string;
 
 namespace Xml  {
 
