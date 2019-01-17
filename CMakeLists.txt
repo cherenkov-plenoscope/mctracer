@@ -1,5 +1,4 @@
-# mctracer scientific ray tracing
-# Author: Sebastian Achim Mueller
+# Copyright 2011-2018 Sebastian A. Mueller
 cmake_minimum_required(VERSION 2.8)
 set (CMAKE_CXX_FLAGS "-std=c++1z -Wall -Wextra -pedantic -O1 -g -I")
 project(mctracer)
