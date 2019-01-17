@@ -1,17 +1,11 @@
-//=================================
-// include guard
-#ifndef __Xml_H_INCLUDED__
-#define __Xml_H_INCLUDED__
+// Copyright 2014 Sebastian A. Mueller
+#ifndef XML_XML_H_
+#define XML_XML_H_
 
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
 #include "Document.h"
 #include "Node.h"
 #include "Exceptions.h"
 #include "Problem.h"
 #include "BasicAttributes.h"
 
-#endif // __Xml_H_INCLUDED__
+#endif  // XML_XML_H_
