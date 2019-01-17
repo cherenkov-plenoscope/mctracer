@@ -1,39 +1,33 @@
-//=================================
-// include guard
-#ifndef __XmlExceptions_H_INCLUDED__
-#define __XmlExceptions_H_INCLUDED__
-
-//=================================
-// forward declared dependencies
-
-//=================================
-// included dependencies
+// Copyright 2014 Sebastian A. Mueller
+#ifndef XML_EXCEPTIONS_H_
+#define XML_EXCEPTIONS_H_
 
 namespace Xml {
 
-	class IoError : public std::runtime_error {
-		using runtime_error::runtime_error;
-	};
+class IoError : public std::runtime_error {
+    using runtime_error::runtime_error;
+};
 
-	class SyntaxError : public std::invalid_argument {
-		using invalid_argument::invalid_argument;
-	};
+class SyntaxError : public std::invalid_argument {
+    using invalid_argument::invalid_argument;
+};
 
-	class InternalError : public std::runtime_error {
-		using runtime_error::runtime_error;
-	};
+class InternalError : public std::runtime_error {
+    using runtime_error::runtime_error;
+};
 
-	class NoSuchChild : public std::invalid_argument {
-		using invalid_argument::invalid_argument;
-	};
+class NoSuchChild : public std::invalid_argument {
+    using invalid_argument::invalid_argument;
+};
 
-	class NoSuchAttribute : public std::invalid_argument {
-		using invalid_argument::invalid_argument;
-	};
+class NoSuchAttribute : public std::invalid_argument {
+    using invalid_argument::invalid_argument;
+};
 
-	class BadAttribute : public std::invalid_argument {
-		using invalid_argument::invalid_argument;
-	};
-}//Xml
+class BadAttribute : public std::invalid_argument {
+    using invalid_argument::invalid_argument;
+};
 
-#endif // __XmlExceptions_H_INCLUDED__ 
+}  // namespace Xml
+
+#endif  // XML_EXCEPTIONS_H_

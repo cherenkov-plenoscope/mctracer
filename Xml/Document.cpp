@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Xml/Document.h"
-#include "Exceptions.h"
-#include "Problem.h"
+#include "Xml/Exceptions.h"
+#include "Xml/Problem.h"
 #include <fstream>
 #include <sstream>
 using std::string;
