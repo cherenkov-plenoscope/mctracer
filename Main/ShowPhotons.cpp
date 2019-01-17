@@ -77,8 +77,6 @@ int main(int argc, char* argv[]) {
     Xml::SceneryFactory fab(scenery_path.path);
     fab.append_to_frame_in_scenery(&scenery.root, &scenery);
     scenery.root.init_tree_based_on_mother_child_relations();
-    // init Telescope Array Control
-    TelescopeArrayControl* array_ctrl = fab.telescopes;
 
     // load photons
     EventIo::Run corsika_run(photon_path.path);
@@ -96,9 +94,8 @@ int main(int argc, char* argv[]) {
         EventIo::Event event = corsika_run.next_event();
 
         // point the telescope into shower direction
-        double az = Corsika::EventHeader::azimuth(event.header.raw);
-        double zd = Corsika::EventHeader::zenith(event.header.raw);
-        array_ctrl->move_all_to_Az_Zd(az, zd);
+        // double az = Corsika::EventHeader::azimuth(event.header.raw);
+        // double zd = Corsika::EventHeader::zenith(event.header.raw);
         
         unsigned int id = 0;
         for(array<float, 8> corsika_photon : event.photons) {

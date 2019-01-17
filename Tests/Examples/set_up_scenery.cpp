@@ -5,7 +5,6 @@
 #include "Core/Vec3.h"
 #include "Scenery/Primitive/Primitive.h"
 #include "gtest/gtest.h"
-#include "TelescopeArrayControl.h"
 #include "Tools/AsciiIo.h"
 
 class SetUpScenery : public ::testing::Test {};

@@ -19,7 +19,6 @@ SceneryFactory::SceneryFactory(const string path): xml_path(path), xml_doc(path)
     if(root_node.has_attribute("comment"))
         comment = root_node.attribute("comment");
 
-    telescopes = new TelescopeArrayControl();
     raw_sensors = new vector<PhotonSensor::Sensor*>;
 
     scenery = &Scenery::void_scenery;
@@ -34,7 +33,6 @@ void SceneryFactory::append_to_frame_in_scenery(Frame* frame, Scenery* scenery) 
 void SceneryFactory::make_geometry(Frame* mother, const Node node) {
 
     add_to_sensors_if_sensitive(mother, node);
-    add_to_array_if_telescope(mother, node);
 
     for(Node child=node.first_child(); child; child=child.next_child()) {
         if(is_equal(child.name(), "function"))
@@ -72,12 +70,6 @@ void SceneryFactory::make_geometry(Frame* mother, const Node node) {
         else if(is_equal(child.name(), "bi_convex_lens_hexagonal"))
             make_geometry(add_BiConvexLensHex(mother, child), child);
     }
-}
-//------------------------------------------------------------------------------
-void SceneryFactory::add_to_array_if_telescope(Frame* frame, const Node node) {
-    
-    if(node.has_child("set_telescope"))
-        telescopes->add_to_telescope_array(frame);        
 }
 //------------------------------------------------------------------------------
 void SceneryFactory::add_to_sensors_if_sensitive(Frame* frame, const Node node) {

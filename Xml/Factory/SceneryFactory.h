@@ -12,7 +12,6 @@
 #include "Tools/PathTools.h"
 #include "Core/Frame.h"
 #include "PhotonSensor/PhotonSensor.h"
-#include "TelescopeArrayControl.h"
 #include "Plenoscope/PlenoscopeInScenery.h"
 #include "Scenery/Scenery.h"
 using std::string;
@@ -24,7 +23,6 @@ namespace Xml {
     class SceneryFactory {
     public:
         vector<PhotonSensor::Sensor*>* raw_sensors;
-        TelescopeArrayControl* telescopes;
         vector<Plenoscope::PlenoscopeInScenery> plenoscopes;
 
         string author;
