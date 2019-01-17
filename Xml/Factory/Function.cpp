@@ -1,4 +1,5 @@
 #include "Xml/Factory/Function.h"
+#include "Tools/StringTools.h"
 using std::vector;
 using std::string;
 
