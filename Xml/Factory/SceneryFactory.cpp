@@ -7,6 +7,8 @@
 #include <sstream>
 using StringTools::is_equal;
 using std::stringstream;
+using std::string;
+using std::vector;
 
 //------------------------------------------------------------------------------
 namespace Xml {

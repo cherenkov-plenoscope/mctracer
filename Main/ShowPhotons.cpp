@@ -13,6 +13,7 @@
 using std::string;
 using std::cout;
 using std::array;
+using std::vector;
 
 string help_text() {
     std::stringstream out; 

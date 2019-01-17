@@ -8,6 +8,7 @@
 #include "Scenery/Scenery.h"
 using std::string;
 using std::cout;
+using std::vector;
 
 static const char USAGE[] =
 R"(Photon propagation
