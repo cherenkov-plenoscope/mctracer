@@ -1,55 +1,51 @@
-#include "Document.h"
+// Copyright 2014 Sebastian A. Mueller
+#include "Xml/Document.h"
 #include "Exceptions.h"
 #include "Problem.h"
 #include <fstream>
 #include <sstream>
 using std::string;
-//------------------------------------------------------------------------------
-namespace Xml  {
-//------------------------------------------------------------------------------    
-Document::Document(const string path) {
 
+namespace Xml {
+
+Document::Document(const string path) {
     this->path = path;
     read_in_documnet();
     assert_xml_file_is_valid();
 }
-//------------------------------------------------------------------------------
+
 Node Document::node()const {
     return Node(pugi_doc, file, path);
 }
-//------------------------------------------------------------------------------
-void Document::read_in_documnet() {
 
+void Document::read_in_documnet() {
     std::shared_ptr<string> xmlfile (new string);
     file = xmlfile;
     std::ifstream t(path.c_str());
 
-    if(!t) {
+    if (!t) {
         std::stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
         info << "\n";
         info << "Xml Documnet: Can not open '" << path << "'\n";
-        throw IoError(info.str());       
+        throw IoError(info.str());
     }
 
-    t.seekg(0, std::ios::end);   
+    t.seekg(0, std::ios::end);
     file->reserve(t.tellg());
     t.seekg(0, std::ios::beg);
 
     file->assign(
         (std::istreambuf_iterator<char>(t)),
-        std::istreambuf_iterator<char>()
-    );
+        std::istreambuf_iterator<char>());
 
     pugi_result = pugi_doc.load(file->c_str());
 }
-//------------------------------------------------------------------------------
+
 void Document::assert_xml_file_is_valid() {
-
-    if(pugi_result.status == pugi::status_ok) {
-
+    if (pugi_result.status == pugi::status_ok) {
         return;
-    }else if(
+    } else if (
         pugi_result.status == pugi::status_unrecognized_tag ||
         pugi_result.status == pugi::status_bad_pi ||
         pugi_result.status == pugi::status_bad_comment ||
@@ -59,11 +55,10 @@ void Document::assert_xml_file_is_valid() {
         pugi_result.status == pugi::status_end_element_mismatch
     ) {
         Problem xml_problem(file, pugi_result.offset, path);
-
         std::stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
         info << "\n";
-        info << "Xml Syntax Error in '" << 
+        info << "Xml Syntax Error in '" <<
         path << "', line " << xml_problem.get_line()+1;
         info << ", column " << xml_problem.get_column() << "\n";
         info << "\n";
@@ -72,22 +67,21 @@ void Document::assert_xml_file_is_valid() {
         info << "Pugi Xml reader Error message:\n";
         info << pugi_status_msg(pugi_result.status) << "\n";
         throw SyntaxError(info.str());
-    }else{
-
+    } else {
         std::stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
         info << "\n";
         info << "Xml Internal parser Error.\n";
         info << "Pugi Xml reader Error message:\n";
         info << pugi_status_msg(pugi_result.status) << "\n";
-        throw InternalError(info.str()); 
+        throw InternalError(info.str());
     }
 }
-//------------------------------------------------------------------------------
-string Document::pugi_status_msg(int encoding)const{
+
+string Document::pugi_status_msg(int encoding)const {
     // The pugi xml error encodings with detailed informaion
     // http://pugixml.googlecode.com/svn/tags/latest/docs/manual/loading.html
-    switch(encoding){
+    switch (encoding) {
         case pugi::status_ok:
             return"status_ok means that no error was encountered during "
             "parsing; the source stream represents the valid XML document "
@@ -149,11 +143,13 @@ string Document::pugi_status_msg(int encoding)const{
         break;
         // this seems not to be supported by the pugi xml used here
         // case pugi::status_no_document_element:
-        // return"status_no_document_element means that no element nodes were discovered during parsing; this usually indicates an empty or invalid document.";
+        // return"status_no_document_element means that no element nodes were
+        // discovered during parsing; this usually indicates an empty or
+        // invalid document.";
         break;
         default:
             return"Unknown pugi::xml encoding";
-    };
+    }
 }
-//------------------------------------------------------------------------------
-}//Xml
+
+}  // namespace Xml
