@@ -1,284 +1,284 @@
 <scenery author="Sebastian" comment="The 4m FACT telescope">
-	<function name="zero">
-		<constant value="0.0" lower_limit="200e-9" upper_limit="1200e-9"/>
-	</function>
+    <function name="zero">
+        <constant value="0.0" lower_limit="200e-9" upper_limit="1200e-9"/>
+    </function>
 
-	<function name="leaf_reflection">
-		<constant value="0.5" lower_limit="200e-9" upper_limit="1200e-9"/>
-	</function>
+    <function name="leaf_reflection">
+        <constant value="0.5" lower_limit="200e-9" upper_limit="1200e-9"/>
+    </function>
 
-	<function name="mirror_reflection">
-		<constant value="0.95" lower_limit="200e-9" upper_limit="1200e-9"/>
-	</function>
+    <function name="mirror_reflection">
+        <constant value="0.95" lower_limit="200e-9" upper_limit="1200e-9"/>
+    </function>
 
     <function name="glas_refraction">
         <constant value="1.49" lower_limit="200e-9" upper_limit="1200e-9"/>
     </function>
 
-	<color name="grass_green" rgb="[22,91,49]"/>
-	<color name="orange" rgb="[255,91,49]"/>
+    <color name="grass_green" rgb="[22,91,49]"/>
+    <color name="orange" rgb="[255,91,49]"/>
 
-	<disc>
-		<set_frame name="ground" pos="[0,0,-2]" rot="[0,0,0]"/>		
-		<set_surface reflection_vs_wavelength="zero" color="grass_green"/>	
-		<set_disc radius="100"/>
-		<set_sensitive id="0"/>
-	</disc>
+    <disc>
+        <set_frame name="ground" pos="[0,0,-2]" rot="[0,0,0]"/>
+        <set_surface reflection_vs_wavelength="zero" color="grass_green"/>
+        <set_disc radius="100"/>
+        <set_sensitive id="0"/>
+    </disc>
 
-	<stl>
-		<set_frame name="spider" pos="[-5,3,-1.5]" rot="[0,0,0]"/>
-		<set_stl file="spider.stl" scale="0.15"/>
-		<set_surface reflection_vs_wavelength="zero" color="orange"/>
-	</stl>
+    <stl>
+        <set_frame name="spider" pos="[-5,3,-1.5]" rot="[0,0,0]"/>
+        <set_stl file="spider.stl" scale="0.15"/>
+        <set_surface reflection_vs_wavelength="zero" color="orange"/>
+    </stl>
 
-	<color name="leaf_green" rgb="[22,200,49]"/>
-	<color name="wood_brown" rgb="[200,200,0]"/>
+    <color name="leaf_green" rgb="[22,200,49]"/>
+    <color name="wood_brown" rgb="[200,200,0]"/>
 
-	<frame>
-		<set_frame name="tree" pos="[5,5,-2]" rot="[0,0,0]"/>	
-		
-		<sphere>
-			<set_frame name="leaf_ball" pos="[0,0,3]" rot="[0,0,0]"/>
-			<set_surface reflection_vs_wavelength="leaf_reflection" color="leaf_green"/>
-			<set_sphere radius="1.5"/>
-		</sphere>	
+    <frame>
+        <set_frame name="tree" pos="[5,5,-2]" rot="[0,0,0]"/>
 
-		<cylinder>
-			<set_frame name="pole" pos="[0,0,0]" rot="[0,0,0]"/>
-			<set_surface reflection_vs_wavelength="zero" color="wood_brown"/>
-			<set_cylinder radius="0.25" start_pos="[0,0,0]" end_pos="[0,0,1.5]"/>	
-		</cylinder>
-	</frame>
+        <sphere>
+            <set_frame name="leaf_ball" pos="[0,0,3]" rot="[0,0,0]"/>
+            <set_surface reflection_vs_wavelength="leaf_reflection" color="leaf_green"/>
+            <set_sphere radius="1.5"/>
+        </sphere>
 
-	<frame>
-		<set_frame name="tree2" pos="[10,5,-2]" rot="[0,0,0]"/>	
-		
-		<sphere>
-			<set_frame name="leaf_ball" pos="[0,0,3]" rot="[0,0,0]"/>
-			<set_surface reflection_vs_wavelength="zero" refraction_vs_wavelength="glas_refraction" color="leaf_green"/>
-			<set_sphere radius="1.5"/>
-		</sphere>	
+        <cylinder>
+            <set_frame name="pole" pos="[0,0,0]" rot="[0,0,0]"/>
+            <set_surface reflection_vs_wavelength="zero" color="wood_brown"/>
+            <set_cylinder radius="0.25" start_pos="[0,0,0]" end_pos="[0,0,1.5]"/>
+        </cylinder>
+    </frame>
 
-		<cylinder>
-			<set_frame name="pole" pos="[0,0,0]" rot="[0,0,0]"/>
-			<set_surface reflection_vs_wavelength="zero" color="wood_brown"/>
-			<set_cylinder radius="0.25" start_pos="[0,0,0]" end_pos="[0,0,1.5]"/>	
-		</cylinder>
-	</frame>
+    <frame>
+        <set_frame name="tree2" pos="[10,5,-2]" rot="[0,0,0]"/>
 
-	<color name="water_blue" rgb="[22,22,200]"/>
-	<color name="dark_bricks" rgb="[110,110,110]"/>
+        <sphere>
+            <set_frame name="leaf_ball" pos="[0,0,3]" rot="[0,0,0]"/>
+            <set_surface reflection_vs_wavelength="zero" refraction_vs_wavelength="glas_refraction" color="leaf_green"/>
+            <set_sphere radius="1.5"/>
+        </sphere>
 
-	<frame>
-		<set_frame name="fountain" pos="[3,6,-2]" rot="[0,0,0]"/>	
-		
-		<annulus>
-			<set_frame name="top" pos="[0,0,1.0]" rot="[0,0,0]"/>		
-			<set_surface reflection_vs_wavelength="zero" color="dark_bricks"/>	
-			<set_annulus outer_radius="0.6" inner_radius="0.5"/>
-		</annulus>
+        <cylinder>
+            <set_frame name="pole" pos="[0,0,0]" rot="[0,0,0]"/>
+            <set_surface reflection_vs_wavelength="zero" color="wood_brown"/>
+            <set_cylinder radius="0.25" start_pos="[0,0,0]" end_pos="[0,0,1.5]"/>
+        </cylinder>
+    </frame>
 
-		<cylinder>
-			<set_frame name="outer_wall" pos="[0,0,0]" rot="[0,0,0]"/>
-			<set_surface reflection_vs_wavelength="zero" color="dark_bricks"/>
-			<set_cylinder radius="0.6" start_pos="[0,0,0]" end_pos="[0,0,1.0]"/>	
-		</cylinder>
+    <color name="water_blue" rgb="[22,22,200]"/>
+    <color name="dark_bricks" rgb="[110,110,110]"/>
 
-		<cylinder>
-			<set_frame name="inner_wall" pos="[0,0,0]" rot="[0,0,0]"/>
-			<set_surface reflection_vs_wavelength="zero" color="dark_bricks"/>
-			<set_cylinder radius="0.5" start_pos="[0,0,0]" end_pos="[0,0,1.0]"/>	
-		</cylinder>
+    <frame>
+        <set_frame name="fountain" pos="[3,6,-2]" rot="[0,0,0]"/>
 
-		<disc>
-			<set_frame name="water" pos="[0,0,0.75]" rot="[0,0,0]"/>		
-			<set_surface reflection_vs_wavelength="leaf_reflection" color="water_blue"/>	
-			<set_disc radius="0.5"/>
-		</disc>
-	</frame>
+        <annulus>
+            <set_frame name="top" pos="[0,0,1.0]" rot="[0,0,0]"/>
+            <set_surface reflection_vs_wavelength="zero" color="dark_bricks"/>
+            <set_annulus outer_radius="0.6" inner_radius="0.5"/>
+        </annulus>
 
-	<color name="brick_gray" rgb="[180,180,180]"/>
-	<color name="roof_red" rgb="[190,0,80]"/>
+        <cylinder>
+            <set_frame name="outer_wall" pos="[0,0,0]" rot="[0,0,0]"/>
+            <set_surface reflection_vs_wavelength="zero" color="dark_bricks"/>
+            <set_cylinder radius="0.6" start_pos="[0,0,0]" end_pos="[0,0,1.0]"/>
+        </cylinder>
 
-	<frame>
-		<set_frame name="house" pos="[5,0,-2]" rot="[0,0,0]"/>	
+        <cylinder>
+            <set_frame name="inner_wall" pos="[0,0,0]" rot="[0,0,0]"/>
+            <set_surface reflection_vs_wavelength="zero" color="dark_bricks"/>
+            <set_cylinder radius="0.5" start_pos="[0,0,0]" end_pos="[0,0,1.0]"/>
+        </cylinder>
 
-		<frame>
-			<set_frame name="big_wall_1" pos="[1,0,0]" rot="[0,0,0]"/>	
-			<plane>
-				<set_frame name="lower_wall" pos="[0,0,0.75]" rot="[0,1.57,0.0]"/>
-				<set_surface reflection_vs_wavelength="zero" color="brick_gray"/>
-				<set_plane x_width="1.5" y_width="2.0" /> 
-			</plane>
-			<triangle>
-				<set_frame name="upper_wall" pos="[0,0,1.5]" rot="[-1.57,0.0,-1.57]"/>
-				<set_surface reflection_vs_wavelength="zero" color="brick_gray"/>
-				<set_triangle Ax="-1" Ay="0.0" Bx="+1" By="0.0" Cx="0.0" Cy="1.0"/>		
-			</triangle>
-		</frame>
+        <disc>
+            <set_frame name="water" pos="[0,0,0.75]" rot="[0,0,0]"/>
+            <set_surface reflection_vs_wavelength="leaf_reflection" color="water_blue"/>
+            <set_disc radius="0.5"/>
+        </disc>
+    </frame>
 
-		<frame>
-			<set_frame name="big_wall_2" pos="[-1,0,0]" rot="[0,0,0]"/>	
-			<plane>
-				<set_frame name="lower_wall" pos="[0,0,0.75]" rot="[0,1.57,0.0]"/>
-				<set_surface reflection_vs_wavelength="zero" color="brick_gray"/>
-				<set_plane x_width="1.5" y_width="2.0" /> 
-			</plane>
-			<triangle>
-				<set_frame name="upper_wall" pos="[0,0,1.5]" rot="[-1.57,0.0,-1.57]"/>
-				<set_surface reflection_vs_wavelength="zero" color="brick_gray"/>
-				<set_triangle Ax="-1" Ay="0.0" Bx="+1" By="0.0" Cx="0.0" Cy="1.0"/>		
-			</triangle>
-		</frame>
+    <color name="brick_gray" rgb="[180,180,180]"/>
+    <color name="roof_red" rgb="[190,0,80]"/>
 
-		<plane>
-			<set_frame name="wall_3" pos="[0,1,0.75]" rot="[0,1.57,1.57]"/>
-			<set_surface reflection_vs_wavelength="zero" color="brick_gray"/>
-			<set_plane x_width="1.5" y_width="2.0" /> 
-		</plane>	
-		<plane>
-			<set_frame name="wall_4" pos="[0,-1,0.75]" rot="[0,1.57,1.57]"/>
-			<set_surface reflection_vs_wavelength="zero" color="brick_gray"/>
-			<set_plane x_width="1.5" y_width="2.0" /> 
-		</plane>
+    <frame>
+        <set_frame name="house" pos="[5,0,-2]" rot="[0,0,0]"/>
 
-		<frame>
-			<set_frame name="roof" pos="[0,0,1.1]" rot="[0,0,0]"/>
-			<plane>
-				<set_frame name="roof_1" pos="[0,0.707,0.707]" rot="[0,0.7853,1.57]"/>
-				<set_surface reflection_vs_wavelength="zero" color="roof_red"/>
-				<set_plane x_width="2.0" y_width="2.2" /> 
-			</plane>
-			<plane>
-				<set_frame name="roof_2" pos="[0,-0.707,0.707]" rot="[0,0.7853,-1.57]"/>
-				<set_surface reflection_vs_wavelength="zero" color="roof_red"/>
-				<set_plane x_width="2.0" y_width="2.2" /> 
-			</plane>
-		</frame>	
-		
-		<frame>
-			<set_frame name="chimney" pos="[0.0,0.6,2.1]" rot="[0,0,0]"/>	
-			
-			<plane>
-				<set_frame name="chimney_wall_1" pos="[0.15,0,0]" rot="[0,1.57,0.0]"/>
-				<set_surface reflection_vs_wavelength="zero" color="brick_gray"/>
-				<set_plane x_width="0.65" y_width="0.3" /> 
-			</plane>	
-			<plane>
-				<set_frame name="chimney_wall_2" pos="[-0.15,0,0]" rot="[0,1.57,0]"/>
-				<set_surface reflection_vs_wavelength="zero" color="brick_gray"/>
-				<set_plane x_width="0.65" y_width="0.3" /> 
-			</plane>
-			<plane>
-				<set_frame name="chimney_wall_3" pos="[0,0.15,0]" rot="[0,1.57,1.57]"/>
-				<set_surface reflection_vs_wavelength="zero" color="brick_gray"/>
-				<set_plane x_width="0.65" y_width="0.3" /> 
-			</plane>	
-			<plane>
-				<set_frame name="chimney_wall_4" pos="[0,-0.15,0]" rot="[0,1.57,1.57]"/>
-				<set_surface reflection_vs_wavelength="zero" color="brick_gray"/>
-				<set_plane x_width="0.65" y_width="0.3" /> 
-			</plane>	
-		</frame>
-	</frame>
+        <frame>
+            <set_frame name="big_wall_1" pos="[1,0,0]" rot="[0,0,0]"/>
+            <plane>
+                <set_frame name="lower_wall" pos="[0,0,0.75]" rot="[0,1.57,0.0]"/>
+                <set_surface reflection_vs_wavelength="zero" color="brick_gray"/>
+                <set_plane x_width="1.5" y_width="2.0" />
+            </plane>
+            <triangle>
+                <set_frame name="upper_wall" pos="[0,0,1.5]" rot="[-1.57,0.0,-1.57]"/>
+                <set_surface reflection_vs_wavelength="zero" color="brick_gray"/>
+                <set_triangle Ax="-1" Ay="0.0" Bx="+1" By="0.0" Cx="0.0" Cy="1.0"/>
+            </triangle>
+        </frame>
 
-	<color name="body_white" rgb="[230,230,215]"/>
-	<color name="sensor_green" rgb="[0,255,128]"/>
-	<color name="carbon_black" rgb="[75,75,75]"/>
+        <frame>
+            <set_frame name="big_wall_2" pos="[-1,0,0]" rot="[0,0,0]"/>
+            <plane>
+                <set_frame name="lower_wall" pos="[0,0,0.75]" rot="[0,1.57,0.0]"/>
+                <set_surface reflection_vs_wavelength="zero" color="brick_gray"/>
+                <set_plane x_width="1.5" y_width="2.0" />
+            </plane>
+            <triangle>
+                <set_frame name="upper_wall" pos="[0,0,1.5]" rot="[-1.57,0.0,-1.57]"/>
+                <set_surface reflection_vs_wavelength="zero" color="brick_gray"/>
+                <set_triangle Ax="-1" Ay="0.0" Bx="+1" By="0.0" Cx="0.0" Cy="1.0"/>
+            </triangle>
+        </frame>
 
-	<frame>
-		<set_telescope/>
-		<set_frame name="FACT" pos="[0,0,0]" rot="[0.0,1.2,0.0]"/>
-		
-		<segmented_reflector>
-			<set_frame name="reflector" pos="[0,0,0]" rot="[0,0,0]"/>
-			<set_surface reflection_vs_wavelength="mirror_reflection"/>
-			<set_segmented_reflector focal_length="4.889" max_outer_aperture_radius="2.1" min_inner_aperture_radius="0.25" DaviesCotton_over_parabolic_mixing_factor="1.0" facet_inner_hex_radius="0.3" gap_between_facets="0.01"/>
-		</segmented_reflector>
-		
-		<frame>
-			<set_frame name="GAPD_camera" pos="[0,0,4.8892]" rot="[0,0,0]"/>		
-			
-			<disc>
-				<set_frame name="camera_housing_lower_end_cap" pos="[0,0,0.01]" rot="[0,0,0]"/>		
-				<set_surface reflection_vs_wavelength="zero" color="body_white"/>	
-				<set_disc radius="0.33"/>
-			</disc>
+        <plane>
+            <set_frame name="wall_3" pos="[0,1,0.75]" rot="[0,1.57,1.57]"/>
+            <set_surface reflection_vs_wavelength="zero" color="brick_gray"/>
+            <set_plane x_width="1.5" y_width="2.0" />
+        </plane>
+        <plane>
+            <set_frame name="wall_4" pos="[0,-1,0.75]" rot="[0,1.57,1.57]"/>
+            <set_surface reflection_vs_wavelength="zero" color="brick_gray"/>
+            <set_plane x_width="1.5" y_width="2.0" />
+        </plane>
 
-			<disc>
-				<set_frame name="camera_housing_upper_end_cap" pos="[0,0,0.89]" rot="[0,0,0]"/>		
-				<set_surface reflection_vs_wavelength="zero" color="body_white"/>	
-				<set_disc radius="0.33"/>
-			</disc>
+        <frame>
+            <set_frame name="roof" pos="[0,0,1.1]" rot="[0,0,0]"/>
+            <plane>
+                <set_frame name="roof_1" pos="[0,0.707,0.707]" rot="[0,0.7853,1.57]"/>
+                <set_surface reflection_vs_wavelength="zero" color="roof_red"/>
+                <set_plane x_width="2.0" y_width="2.2" />
+            </plane>
+            <plane>
+                <set_frame name="roof_2" pos="[0,-0.707,0.707]" rot="[0,0.7853,-1.57]"/>
+                <set_surface reflection_vs_wavelength="zero" color="roof_red"/>
+                <set_plane x_width="2.0" y_width="2.2" />
+            </plane>
+        </frame>
 
-			<disc>
-				<set_frame name="GAPD_sensor_plane" pos="[0,0,0.0]" rot="[0,0,0]"/>		
-				<set_surface reflection_vs_wavelength="zero" color="sensor_green"/>	
-				<set_disc radius="0.195"/>
-				<set_sensitive id="1"/>
-			</disc>
-			
-			<cylinder>
-				<set_frame name="camera_housing_cylinder" pos="[0,0,445]" rot="[0,0,0]"/>
-				<set_surface reflection_vs_wavelength="zero" color="body_white"/>
-				<set_cylinder radius="0.33" start_pos="[0,0,0]" end_pos="[0,0,0.89]"/>	
-			</cylinder>			
-		</frame>
-		
-		<frame>
-			<set_frame name="small_support_tubes" pos="[0,0,2.7]" rot="[0,0,0]"/>
-			
-			<cylinder>
-				<set_frame name="support_tube_1_1" pos="[0,0,0]" rot="[0,0,0]"/>
-				<set_surface reflection_vs_wavelength="zero" color="carbon_black"/>
-				<set_cylinder radius="0.015" start_pos="[-0.83,0.57,0.0]" end_pos="[+0.83,0.57,0.0]"/>	
-			</cylinder>	
+        <frame>
+            <set_frame name="chimney" pos="[0.0,0.6,2.1]" rot="[0,0,0]"/>
 
-			<cylinder>
-				<set_frame name="support_tube_1_2" pos="[0,0,0]" rot="[0,0,0]"/>
-				<set_surface reflection_vs_wavelength="zero" color="carbon_black"/>
-				<set_cylinder radius="0.015" start_pos="[-0.83,-0.57,0.0]" end_pos="[+0.83,-0.57,0.0]"/>	
-			</cylinder>		
-			
-			<cylinder>
-				<set_frame name="support_tube_1_3" pos="[0,0,0]" rot="[0,0,0]"/>
-				<set_surface reflection_vs_wavelength="zero" color="carbon_black"/>
-				<set_cylinder radius="0.015" start_pos="[+0.83,+0.57,0.0]" end_pos="[+0.83,-0.57,0.0]"/>	
-			</cylinder>		
-			
-			<cylinder>
-				<set_frame name="support_tube_1_4" pos="[0,0,0]" rot="[0,0,0]"/>
-				<set_surface reflection_vs_wavelength="zero" color="carbon_black"/>
-				<set_cylinder radius="0.015" start_pos="[-0.83,-0.57,0.0]" end_pos="[-0.83,+0.57,0.0]"/>	
-			</cylinder>			
-		</frame>
-		
-		<frame>
-			<set_frame name="support_tubes" pos="[0,0,0]" rot="[0,0,0]"/>	
-			
-			<cylinder>
-				<set_frame name="support_tube_1" pos="[0,0,0]" rot="[0,0,0]"/>
-				<set_surface reflection_vs_wavelength="zero" color="carbon_black"/>
-				<set_cylinder radius="0.03" start_pos="[1.5,1.0,0.0]" end_pos="[0.2,0.2,4.9]"/>	
-			</cylinder>	
-			
-			<cylinder>
-				<set_frame name="support_tube_2" pos="[0,0,0]" rot="[0,0,0]"/>
-				<set_surface reflection_vs_wavelength="zero" color="carbon_black"/>
-				<set_cylinder radius="0.03" start_pos="[1.5,-1.0,0.0]" end_pos="[0.2,-0.2,4.9]"/>	
-			</cylinder>	
-			
-			<cylinder>
-				<set_frame name="support_tube_3" pos="[0,0,0]" rot="[0,0,0]"/>
-				<set_surface reflection_vs_wavelength="zero" color="carbon_black"/>
-				<set_cylinder radius="0.03" start_pos="[-1.5,-1.0,0.0]" end_pos="[-0.2,-0.2,4.9]"/>	
-			</cylinder>	
-			
-			<cylinder>
-				<set_frame name="support_tube_4" pos="[0,0,0]" rot="[0,0,0]"/>
-				<set_surface reflection_vs_wavelength="zero" color="carbon_black"/>
-				<set_cylinder radius="0.03" start_pos="[-1.5,1.0,0.0]" end_pos="[-0.2,0.2,4.9]"/>	
-			</cylinder>	
-		</frame>
-	</frame>
+            <plane>
+                <set_frame name="chimney_wall_1" pos="[0.15,0,0]" rot="[0,1.57,0.0]"/>
+                <set_surface reflection_vs_wavelength="zero" color="brick_gray"/>
+                <set_plane x_width="0.65" y_width="0.3" />
+            </plane>
+            <plane>
+                <set_frame name="chimney_wall_2" pos="[-0.15,0,0]" rot="[0,1.57,0]"/>
+                <set_surface reflection_vs_wavelength="zero" color="brick_gray"/>
+                <set_plane x_width="0.65" y_width="0.3" />
+            </plane>
+            <plane>
+                <set_frame name="chimney_wall_3" pos="[0,0.15,0]" rot="[0,1.57,1.57]"/>
+                <set_surface reflection_vs_wavelength="zero" color="brick_gray"/>
+                <set_plane x_width="0.65" y_width="0.3" />
+            </plane>
+            <plane>
+                <set_frame name="chimney_wall_4" pos="[0,-0.15,0]" rot="[0,1.57,1.57]"/>
+                <set_surface reflection_vs_wavelength="zero" color="brick_gray"/>
+                <set_plane x_width="0.65" y_width="0.3" />
+            </plane>
+        </frame>
+    </frame>
+
+    <color name="body_white" rgb="[230,230,215]"/>
+    <color name="sensor_green" rgb="[0,255,128]"/>
+    <color name="carbon_black" rgb="[75,75,75]"/>
+
+    <frame>
+        <set_telescope/>
+        <set_frame name="FACT" pos="[0,0,0]" rot="[0.0,1.2,0.0]"/>
+
+        <segmented_reflector>
+            <set_frame name="reflector" pos="[0,0,0]" rot="[0,0,0]"/>
+            <set_surface reflection_vs_wavelength="mirror_reflection"/>
+            <set_segmented_reflector focal_length="4.889" max_outer_aperture_radius="2.1" min_inner_aperture_radius="0.25" DaviesCotton_over_parabolic_mixing_factor="1.0" facet_inner_hex_radius="0.3" gap_between_facets="0.01"/>
+        </segmented_reflector>
+
+        <frame>
+            <set_frame name="GAPD_camera" pos="[0,0,4.8892]" rot="[0,0,0]"/>
+
+            <disc>
+                <set_frame name="camera_housing_lower_end_cap" pos="[0,0,0.01]" rot="[0,0,0]"/>
+                <set_surface reflection_vs_wavelength="zero" color="body_white"/>
+                <set_disc radius="0.33"/>
+            </disc>
+
+            <disc>
+                <set_frame name="camera_housing_upper_end_cap" pos="[0,0,0.89]" rot="[0,0,0]"/>
+                <set_surface reflection_vs_wavelength="zero" color="body_white"/>
+                <set_disc radius="0.33"/>
+            </disc>
+
+            <disc>
+                <set_frame name="GAPD_sensor_plane" pos="[0,0,0.0]" rot="[0,0,0]"/>
+                <set_surface reflection_vs_wavelength="zero" color="sensor_green"/>
+                <set_disc radius="0.195"/>
+                <set_sensitive id="1"/>
+            </disc>
+
+            <cylinder>
+                <set_frame name="camera_housing_cylinder" pos="[0,0,445]" rot="[0,0,0]"/>
+                <set_surface reflection_vs_wavelength="zero" color="body_white"/>
+                <set_cylinder radius="0.33" start_pos="[0,0,0]" end_pos="[0,0,0.89]"/>
+            </cylinder>
+        </frame>
+
+        <frame>
+            <set_frame name="small_support_tubes" pos="[0,0,2.7]" rot="[0,0,0]"/>
+
+            <cylinder>
+                <set_frame name="support_tube_1_1" pos="[0,0,0]" rot="[0,0,0]"/>
+                <set_surface reflection_vs_wavelength="zero" color="carbon_black"/>
+                <set_cylinder radius="0.015" start_pos="[-0.83,0.57,0.0]" end_pos="[+0.83,0.57,0.0]"/>
+            </cylinder>
+
+            <cylinder>
+                <set_frame name="support_tube_1_2" pos="[0,0,0]" rot="[0,0,0]"/>
+                <set_surface reflection_vs_wavelength="zero" color="carbon_black"/>
+                <set_cylinder radius="0.015" start_pos="[-0.83,-0.57,0.0]" end_pos="[+0.83,-0.57,0.0]"/>
+            </cylinder>
+
+            <cylinder>
+                <set_frame name="support_tube_1_3" pos="[0,0,0]" rot="[0,0,0]"/>
+                <set_surface reflection_vs_wavelength="zero" color="carbon_black"/>
+                <set_cylinder radius="0.015" start_pos="[+0.83,+0.57,0.0]" end_pos="[+0.83,-0.57,0.0]"/>
+            </cylinder>
+
+            <cylinder>
+                <set_frame name="support_tube_1_4" pos="[0,0,0]" rot="[0,0,0]"/>
+                <set_surface reflection_vs_wavelength="zero" color="carbon_black"/>
+                <set_cylinder radius="0.015" start_pos="[-0.83,-0.57,0.0]" end_pos="[-0.83,+0.57,0.0]"/>
+            </cylinder>
+        </frame>
+
+        <frame>
+            <set_frame name="support_tubes" pos="[0,0,0]" rot="[0,0,0]"/>
+
+            <cylinder>
+                <set_frame name="support_tube_1" pos="[0,0,0]" rot="[0,0,0]"/>
+                <set_surface reflection_vs_wavelength="zero" color="carbon_black"/>
+                <set_cylinder radius="0.03" start_pos="[1.5,1.0,0.0]" end_pos="[0.2,0.2,4.9]"/>
+            </cylinder>
+
+            <cylinder>
+                <set_frame name="support_tube_2" pos="[0,0,0]" rot="[0,0,0]"/>
+                <set_surface reflection_vs_wavelength="zero" color="carbon_black"/>
+                <set_cylinder radius="0.03" start_pos="[1.5,-1.0,0.0]" end_pos="[0.2,-0.2,4.9]"/>
+            </cylinder>
+
+            <cylinder>
+                <set_frame name="support_tube_3" pos="[0,0,0]" rot="[0,0,0]"/>
+                <set_surface reflection_vs_wavelength="zero" color="carbon_black"/>
+                <set_cylinder radius="0.03" start_pos="[-1.5,-1.0,0.0]" end_pos="[-0.2,-0.2,4.9]"/>
+            </cylinder>
+
+            <cylinder>
+                <set_frame name="support_tube_4" pos="[0,0,0]" rot="[0,0,0]"/>
+                <set_surface reflection_vs_wavelength="zero" color="carbon_black"/>
+                <set_cylinder radius="0.03" start_pos="[-1.5,1.0,0.0]" end_pos="[-0.2,0.2,4.9]"/>
+            </cylinder>
+        </frame>
+    </frame>
 </scenery>
