@@ -16,7 +16,6 @@ class Document {
  public:
     explicit Document(const std::string path);
     Node node()const;
-    std::string get_info_print(Node node);
  private:
     void read_in_documnet();
     void assert_xml_file_is_valid();
