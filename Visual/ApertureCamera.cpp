@@ -267,7 +267,7 @@ void ApertureCamera::acquire_image(
         std::vector<PixelCoordinate> pix_to_do =
             pixel_coordinates_above_threshold(to_do_image, 128.);
 
-        if (pix_to_do.size() <= number_pixel/10)
+        if (pix_to_do.size() <= number_pixel/100)
             break;
 
         std::vector<PixelCoordinate> pix_to_do_actually = pix_to_do;
