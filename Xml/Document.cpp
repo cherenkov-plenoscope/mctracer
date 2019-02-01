@@ -78,7 +78,7 @@ void Document::assert_xml_file_is_valid() {
     }
 }
 
-string Document::pugi_status_msg(int encoding)const {
+string pugi_status_msg(int encoding) {
     // The pugi xml error encodings with detailed informaion
     // http://pugixml.googlecode.com/svn/tags/latest/docs/manual/loading.html
     switch (encoding) {

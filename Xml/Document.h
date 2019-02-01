@@ -19,8 +19,9 @@ class Document {
  private:
     void read_in_documnet();
     void assert_xml_file_is_valid();
-    std::string pugi_status_msg(int encoding)const;
 };
+
+std::string pugi_status_msg(int encoding);
 
 }  // namespace Xml
 
