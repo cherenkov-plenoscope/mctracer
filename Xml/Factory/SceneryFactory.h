@@ -36,7 +36,6 @@ class SceneryFactory {
     void make_geometry(Frame* mother, const Node node);
     Frame* add_SphereCapWithHexagonalBound(Frame* mother, const Node node);
     Frame* add_SphereCapWithRectangularBound(Frame* mother, const Node node);
-    Frame* add_Triangle(Frame* mother, const Node node);
     Frame* add_SegmentedReflector(Frame* mother, const Node node);
     Frame* add_STL(Frame* mother, const Node node);
     Frame* add_light_field_sensor(Frame* mother, const Node node);
@@ -185,6 +184,25 @@ Frame* add_BiConvexLensHex(Frame* mother, const Node node, Scenery *scenery) {
         node.child("set_bi_convex_lens_hexagonal").to_double(
             "outer_radius"));
     return lens;
+}
+
+Frame* add_Triangle(Frame* mother, const Node node, Scenery *scenery) {
+    FrameFab framefab(node);
+    Triangle* tri = mother->append<Triangle>();
+    tri->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
+
+    tri->set_inner_color(surface_color(node, scenery));
+    tri->set_outer_color(surface_color(node, scenery));
+    tri->set_outer_reflection(surface_refl(node, scenery));
+    tri->set_inner_reflection(surface_refl(node, scenery));
+    tri->set_corners_in_xy_plane(
+        node.child("set_triangle").to_double("Ax"),
+        node.child("set_triangle").to_double("Ay"),
+        node.child("set_triangle").to_double("Bx"),
+        node.child("set_triangle").to_double("By"),
+        node.child("set_triangle").to_double("Cx"),
+        node.child("set_triangle").to_double("Cy"));
+    return tri;
 }
 
 }  // namespace Xml
