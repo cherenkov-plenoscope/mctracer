@@ -39,7 +39,6 @@ class SceneryFactory {
     Frame* add_light_field_sensor(Frame* mother, const Node node);
     Frame* add_light_field_sensor_demonstration(Frame* mother, const Node node);
     void add_to_sensors_if_sensitive(Frame* frame, const Node node);
-    void add_to_array_if_telescope(Frame* frame, const Node node);
 
     void add_function(const Node node);
     void add_color(const Node node);
