@@ -91,13 +91,6 @@ void SceneryFactory::add_to_sensors_if_sensitive(
     }
 }
 
-Frame* SceneryFactory::add_Frame(Frame* mother, const Node node) {
-    FrameFab fab(node);
-    Frame* frame = mother->append<Frame>();
-    frame->set_name_pos_rot(fab.name, fab.pos, fab.rot);
-    return frame;
-}
-
 Frame* SceneryFactory::add_Disc(Frame* mother, const Node node) {
     FrameFab framefab(node);
     Disc* disc = mother->append<Disc>();

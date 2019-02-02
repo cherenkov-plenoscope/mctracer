@@ -10,6 +10,7 @@
 #include "PhotonSensor/PhotonSensor.h"
 #include "Plenoscope/PlenoscopeInScenery.h"
 #include "Scenery/Scenery.h"
+#include "Xml/Factory/FrameFab.h"
 
 namespace Xml {
 
@@ -32,7 +33,6 @@ class SceneryFactory {
 
  private:
     void make_geometry(Frame* mother, const Node node);
-    Frame* add_Frame(Frame* mother, const Node node);
     Frame* add_Disc(Frame* mother, const Node node);
     Frame* add_Sphere(Frame* mother, const Node node);
     Frame* add_Plane(Frame* mother, const Node node);
@@ -57,6 +57,13 @@ class SceneryFactory {
     void add_function(const Node node);
     void add_color(const Node node);
 };
+
+Frame* add_Frame(Frame* mother, const Node node) {
+    FrameFab fab(node);
+    Frame* frame = mother->append<Frame>();
+    frame->set_name_pos_rot(fab.name, fab.pos, fab.rot);
+    return frame;
+}
 
 }  // namespace Xml
 
