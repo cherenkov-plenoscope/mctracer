@@ -13,6 +13,7 @@
 #include "Xml/Factory/FrameFab.h"
 #include "Scenery/Primitive/Primitive.h"
 #include "Scenery/StereoLitography/StereoLitography.h"
+#include "Scenery/SegmentedReflector/SegmentedReflector.h"
 
 namespace Xml {
 
@@ -35,7 +36,6 @@ class SceneryFactory {
 
  private:
     void make_geometry(Frame* mother, const Node node);
-    Frame* add_SegmentedReflector(Frame* mother, const Node node);
     Frame* add_light_field_sensor(Frame* mother, const Node node);
     Frame* add_light_field_sensor_demonstration(Frame* mother, const Node node);
     void add_to_sensors_if_sensitive(Frame* frame, const Node node);
@@ -243,6 +243,32 @@ Frame* add_SphereCapWithRectangularBound(
         node.child("set_sphere_cap_rectangular").to_double("x_width"),
         node.child("set_sphere_cap_rectangular").to_double("y_width"));
     return cap;
+}
+
+Frame* add_SegmentedReflector(
+    Frame* mother,
+    const Node node,
+    Scenery* scenery
+) {
+    const Node refl = node.child("set_segmented_reflector");
+    SegmentedReflector::Config cfg;
+    cfg.focal_length = refl.to_double("focal_length");
+    cfg.DaviesCotton_over_parabolic_mixing_factor =
+        refl.to_double("DaviesCotton_over_parabolic_mixing_factor");
+    cfg.max_outer_aperture_radius =
+        refl.to_double("max_outer_aperture_radius");
+    cfg.min_inner_aperture_radius =
+        refl.to_double("min_inner_aperture_radius");
+    cfg.facet_inner_hex_radius =
+        refl.to_double("facet_inner_hex_radius");
+    cfg.gap_between_facets = refl.to_double("gap_between_facets");
+    cfg.reflectivity = surface_refl(node, scenery);
+    SegmentedReflector::Factory refl_fab(cfg);
+    FrameFab fab(node);
+    Frame* reflector = mother->append<Frame>();
+    reflector->set_name_pos_rot(fab.name, fab.pos, fab.rot);
+    refl_fab.add_reflector_mirror_facets_to_frame(reflector);
+    return reflector;
 }
 
 Frame* add_STL(

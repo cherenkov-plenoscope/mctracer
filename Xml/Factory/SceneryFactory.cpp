@@ -3,7 +3,6 @@
 #include <sstream>
 #include "FrameFab.h"
 #include "Scenery/Primitive/Primitive.h"
-#include "Scenery/SegmentedReflector/SegmentedReflector.h"
 #include "Xml/Factory/Function.h"
 
 using StringTools::is_equal;
@@ -58,7 +57,12 @@ void SceneryFactory::make_geometry(Frame* mother, const Node node) {
         else if (is_equal(child.name(), "annulus"))
             make_geometry(add_Annulus(mother, child, scenery), child);
         else if (is_equal(child.name(), "segmented_reflector"))
-            make_geometry(add_SegmentedReflector(mother, child), child);
+            make_geometry(
+                add_SegmentedReflector(
+                    mother,
+                    child,
+                    scenery),
+                child);
         else if (is_equal(child.name(), "sphere_cap_hexagonal"))
             make_geometry(
                 add_SphereCapWithHexagonalBound(mother, child, scenery), child);
@@ -94,30 +98,6 @@ void SceneryFactory::add_to_sensors_if_sensitive(
         PhotonSensor::Sensor* sens = new PhotonSensor::Sensor(id, frame);
         raw_sensors->push_back(sens);
     }
-}
-
-Frame* SceneryFactory::add_SegmentedReflector(Frame* mother, const Node node) {
-    const Node refl = node.child("set_segmented_reflector");
-    SegmentedReflector::Config cfg;
-    cfg.focal_length = refl.to_double("focal_length");
-    cfg.DaviesCotton_over_parabolic_mixing_factor =
-        refl.to_double("DaviesCotton_over_parabolic_mixing_factor");
-    cfg.max_outer_aperture_radius =
-        refl.to_double("max_outer_aperture_radius");
-    cfg.min_inner_aperture_radius =
-        refl.to_double("min_inner_aperture_radius");
-    cfg.facet_inner_hex_radius =
-        refl.to_double("facet_inner_hex_radius");
-    cfg.gap_between_facets = refl.to_double("gap_between_facets");
-    cfg.reflectivity = surface_refl(node, scenery);
-
-    SegmentedReflector::Factory refl_fab(cfg);
-
-    FrameFab fab(node);
-    Frame* reflector = mother->append<Frame>();
-    reflector->set_name_pos_rot(fab.name, fab.pos, fab.rot);
-    refl_fab.add_reflector_mirror_facets_to_frame(reflector);
-    return reflector;
 }
 
 Frame* SceneryFactory::add_light_field_sensor(Frame* mother, const Node node) {
