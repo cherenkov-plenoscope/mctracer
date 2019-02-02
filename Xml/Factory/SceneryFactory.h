@@ -34,7 +34,6 @@ class SceneryFactory {
 
  private:
     void make_geometry(Frame* mother, const Node node);
-    Frame* add_HexPlane(Frame* mother, const Node node);
     Frame* add_Cylinder(Frame* mother, const Node node);
     Frame* add_Annulus(Frame* mother, const Node node);
     Frame* add_BiConvexLensHex(Frame* mother, const Node node);
@@ -124,6 +123,20 @@ Frame* add_Plane(Frame* mother, const Node node, Scenery *scenery) {
     plane->set_x_y_width(
         node.child("set_plane").to_double("x_width"),
         node.child("set_plane").to_double("y_width"));
+    return plane;
+}
+
+Frame* add_HexPlane(Frame* mother, const Node node, Scenery *scenery) {
+    FrameFab framefab(node);
+    HexPlane* plane = mother->append<HexPlane>();
+    plane->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
+
+    plane->set_inner_color(surface_color(node, scenery));
+    plane->set_outer_color(surface_color(node, scenery));
+    plane->set_outer_reflection(surface_refl(node, scenery));
+    plane->set_inner_reflection(surface_refl(node, scenery));
+    plane->set_outer_hex_radius(
+        node.child("set_hex_plane").to_double("outer_hex_radius"));
     return plane;
 }
 
