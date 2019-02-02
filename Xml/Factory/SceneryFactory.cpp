@@ -85,7 +85,12 @@ void SceneryFactory::make_geometry(Frame* mother, const Node node) {
                 child);
         else if (is_equal(child.name(), "light_field_sensor_demonstration"))
             make_geometry(
-                add_light_field_sensor_demonstration(mother, child), child);
+                add_light_field_sensor_demonstration(
+                    mother,
+                    child,
+                    scenery,
+                    &plenoscopes),
+                child);
         else if (is_equal(child.name(), "stl"))
             make_geometry(
                 add_STL(mother, child, scenery, xml_path.dirname),
@@ -104,49 +109,6 @@ void SceneryFactory::add_to_sensors_if_sensitive(
         PhotonSensor::Sensor* sens = new PhotonSensor::Sensor(id, frame);
         raw_sensors->push_back(sens);
     }
-}
-
-Frame* SceneryFactory::add_light_field_sensor_demonstration(
-    Frame* mother,
-    const Node node
-) {
-    FrameFab ffab(node);
-    Frame* light_field_sensor = mother->append<Frame>();
-    light_field_sensor->set_name_pos_rot(ffab.name, ffab.pos, ffab.rot);
-
-    const Node lfs = node.child("set_light_field_sensor");
-
-    Plenoscope::LightFieldSensor::Config config;
-    config.sensor_plane2imaging_system =
-        *light_field_sensor->frame2mother();
-    config.expected_imaging_system_focal_length =
-        lfs.to_double("expected_imaging_system_focal_length");
-    config.expected_imaging_system_max_aperture_radius =
-        lfs.to_double("expected_imaging_system_aperture_radius");
-    config.max_FoV_diameter =
-        Deg2Rad(lfs.to_double("max_FoV_diameter_deg"));
-    config.pixel_FoV_hex_flat2flat =
-        Deg2Rad(lfs.to_double("hex_pixel_FoV_flat2flat_deg"));
-    config.number_of_paxel_on_pixel_diagonal =
-        lfs.to_int("number_of_paxel_on_pixel_diagonal");
-    config.housing_overhead = lfs.to_double("housing_overhead");
-    config.lens_refraction =
-        scenery->functions.get(lfs.attribute("lens_refraction_vs_wavelength"));
-    // config.lens_absorbtion = &perfect_transparency;
-    config.bin_reflection =
-        scenery->functions.get(lfs.attribute("bin_reflection_vs_wavelength"));
-
-    Plenoscope::PlenoscopeInScenery pis(config);
-    Plenoscope::LightFieldSensor::Factory lfs_factory(
-        &pis.light_field_sensor_geometry);
-    lfs_factory.add_demonstration_light_field_sensor_to_frame_in_scenery(
-        light_field_sensor,
-        scenery);
-    pis.frame = light_field_sensor;
-    pis.light_field_channels = lfs_factory.get_sub_pixels();
-    plenoscopes.push_back(pis);
-
-    return light_field_sensor;
 }
 
 void SceneryFactory::add_color(const Node node) {
