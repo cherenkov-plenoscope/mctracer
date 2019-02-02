@@ -35,7 +35,6 @@ class SceneryFactory {
 
  private:
     void make_geometry(Frame* mother, const Node node);
-    Frame* add_SphereCapWithHexagonalBound(Frame* mother, const Node node);
     Frame* add_SphereCapWithRectangularBound(Frame* mother, const Node node);
     Frame* add_SegmentedReflector(Frame* mother, const Node node);
     Frame* add_light_field_sensor(Frame* mother, const Node node);
@@ -203,6 +202,27 @@ Frame* add_Triangle(Frame* mother, const Node node, Scenery *scenery) {
         node.child("set_triangle").to_double("Cx"),
         node.child("set_triangle").to_double("Cy"));
     return tri;
+}
+
+Frame* add_SphereCapWithHexagonalBound(
+    Frame* mother,
+    const Node node,
+    Scenery* scenery
+) {
+    FrameFab framefab(node);
+    SphereCapWithHexagonalBound* cap =
+        mother->append<SphereCapWithHexagonalBound>();
+    cap->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
+    cap->set_inner_color(surface_color(node, scenery));
+    cap->set_outer_color(surface_color(node, scenery));
+    cap->set_outer_reflection(surface_refl(node, scenery));
+    cap->set_inner_reflection(surface_refl(node, scenery));
+    cap->set_curvature_radius_and_outer_hex_radius(
+        node.child("set_sphere_cap_hexagonal").to_double(
+            "curvature_radius"),
+        node.child("set_sphere_cap_hexagonal").to_double(
+            "outer_radius"));
+    return cap;
 }
 
 Frame* add_STL(

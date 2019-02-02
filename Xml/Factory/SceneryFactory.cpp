@@ -61,7 +61,7 @@ void SceneryFactory::make_geometry(Frame* mother, const Node node) {
             make_geometry(add_SegmentedReflector(mother, child), child);
         else if (is_equal(child.name(), "sphere_cap_hexagonal"))
             make_geometry(
-                add_SphereCapWithHexagonalBound(mother, child), child);
+                add_SphereCapWithHexagonalBound(mother, child, scenery), child);
         else if (is_equal(child.name(), "sphere_cap_rectangular"))
             make_geometry(
                 add_SphereCapWithRectangularBound(mother, child), child);
@@ -90,27 +90,6 @@ void SceneryFactory::add_to_sensors_if_sensitive(
         PhotonSensor::Sensor* sens = new PhotonSensor::Sensor(id, frame);
         raw_sensors->push_back(sens);
     }
-}
-
-Frame* SceneryFactory::add_SphereCapWithHexagonalBound(
-    Frame* mother,
-    const Node node
-) {
-    FrameFab framefab(node);
-    SphereCapWithHexagonalBound* cap =
-        mother->append<SphereCapWithHexagonalBound>();
-    cap->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
-
-    cap->set_inner_color(surface_color(node, scenery));
-    cap->set_outer_color(surface_color(node, scenery));
-    cap->set_outer_reflection(surface_refl(node, scenery));
-    cap->set_inner_reflection(surface_refl(node, scenery));
-    cap->set_curvature_radius_and_outer_hex_radius(
-        node.child("set_sphere_cap_hexagonal").to_double(
-            "curvature_radius"),
-        node.child("set_sphere_cap_hexagonal").to_double(
-            "outer_radius"));
-    return cap;
 }
 
 Frame* SceneryFactory::add_SphereCapWithRectangularBound(
