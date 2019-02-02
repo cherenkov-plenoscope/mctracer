@@ -4,12 +4,14 @@
 
 #include "ColorMap.h"
 #include "FunctionMap.h"
+#include "SensorMap.h"
 #include "Core/Frame.h"
 
 struct Scenery {
     Frame root;
     ColorMap colors;
     FunctionMap functions;
+    SensorMap sensors;
 
     Scenery();
     static Scenery void_scenery;

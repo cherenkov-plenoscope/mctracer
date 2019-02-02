@@ -21,7 +21,6 @@ SceneryFactory::SceneryFactory(const string path):
         author = root_node.attribute("author");
     if (root_node.has_attribute("comment"))
         comment = root_node.attribute("comment");
-    raw_sensors = new vector<PhotonSensor::Sensor*>;
     scenery = &Scenery::void_scenery;
 }
 
@@ -106,8 +105,7 @@ void SceneryFactory::add_to_sensors_if_sensitive(
 ) {
     if (node.has_child("set_sensitive")) {
         const unsigned int id = node.child("set_sensitive").to_int("id");
-        PhotonSensor::Sensor* sens = new PhotonSensor::Sensor(id, frame);
-        raw_sensors->push_back(sens);
+        scenery->sensors.add(id, frame);
     }
 }
 
@@ -148,10 +146,6 @@ void SceneryFactory::add_function(const Node node) {
             throw std::invalid_argument(info.str());
         }
     }
-}
-
-PhotonSensor::Sensors SceneryFactory::sensors()const {
-    return PhotonSensor::Sensors(*raw_sensors);
 }
 
 }  // namespace Xml

@@ -7,7 +7,6 @@
 #include "Xml/Xml.h"
 #include "Tools/PathTools.h"
 #include "Core/Frame.h"
-#include "PhotonSensor/PhotonSensor.h"
 #include "Plenoscope/PlenoscopeInScenery.h"
 #include "Scenery/Scenery.h"
 #include "Xml/Factory/FrameFab.h"
@@ -19,25 +18,18 @@ namespace Xml {
 
 class SceneryFactory {
  public:
-    std::vector<PhotonSensor::Sensor*>* raw_sensors;
-    std::vector<Plenoscope::PlenoscopeInScenery> plenoscopes;
-
     std::string author;
     std::string comment;
-
+    std::vector<Plenoscope::PlenoscopeInScenery> plenoscopes;
     PathTools::Path xml_path;
     Document xml_doc;
-
     Scenery* scenery;
-
     explicit SceneryFactory(const std::string path);
-    PhotonSensor::Sensors sensors()const;
     void append_to_frame_in_scenery(Frame* frame, Scenery* scenery);
 
  private:
     void make_geometry(Frame* mother, const Node node);
     void add_to_sensors_if_sensitive(Frame* frame, const Node node);
-
     void add_function(const Node node);
     void add_color(const Node node);
 };
