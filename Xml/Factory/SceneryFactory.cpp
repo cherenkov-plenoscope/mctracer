@@ -85,7 +85,7 @@ void SceneryFactory::add_to_sensors_if_sensitive(
     const Node node
 ) {
     if (node.has_child("set_sensitive")) {
-        const unsigned int id = node.child("set_sensitive").attribute2int("id");
+        const unsigned int id = node.child("set_sensitive").to_int("id");
         PhotonSensor::Sensor* sens = new PhotonSensor::Sensor(id, frame);
         raw_sensors->push_back(sens);
     }
@@ -107,7 +107,7 @@ Frame* SceneryFactory::add_Disc(Frame* mother, const Node node) {
     disc->set_outer_color(surface_color(node));
     disc->set_outer_reflection(surface_refl(node));
     disc->set_inner_reflection(surface_refl(node));
-    disc->set_radius(node.child("set_disc").attribute2double("radius"));
+    disc->set_radius(node.child("set_disc").to_double("radius"));
     return disc;
 }
 
@@ -125,7 +125,7 @@ Frame* SceneryFactory::add_Sphere(Frame* mother, const Node node) {
         sphere->set_inner_refraction(surface_refrac(node));
 
     sphere->set_radius(
-        node.child("set_sphere").attribute2double("radius"));
+        node.child("set_sphere").to_double("radius"));
     return sphere;
 }
 
@@ -139,8 +139,8 @@ Frame* SceneryFactory::add_Plane(Frame* mother, const Node node) {
     plane->set_outer_reflection(surface_refl(node));
     plane->set_inner_reflection(surface_refl(node));
     plane->set_x_y_width(
-        node.child("set_plane").attribute2double("x_width"),
-        node.child("set_plane").attribute2double("y_width"));
+        node.child("set_plane").to_double("x_width"),
+        node.child("set_plane").to_double("y_width"));
     return plane;
 }
 
@@ -154,7 +154,7 @@ Frame* SceneryFactory::add_HexPlane(Frame* mother, const Node node) {
     plane->set_outer_reflection(surface_refl(node));
     plane->set_inner_reflection(surface_refl(node));
     plane->set_outer_hex_radius(
-        node.child("set_hex_plane").attribute2double("outer_hex_radius"));
+        node.child("set_hex_plane").to_double("outer_hex_radius"));
     return plane;
 }
 
@@ -168,9 +168,9 @@ Frame* SceneryFactory::add_Cylinder(Frame* mother, const Node node) {
     cyl->set_outer_reflection(surface_refl(node));
     cyl->set_inner_reflection(surface_refl(node));
     cyl->set_cylinder(
-        node.child("set_cylinder").attribute2double("radius"),
-        node.child("set_cylinder").attribute2Vec3("start_pos"),
-        node.child("set_cylinder").attribute2Vec3("end_pos"));
+        node.child("set_cylinder").to_double("radius"),
+        node.child("set_cylinder").to_vec3("start_pos"),
+        node.child("set_cylinder").to_vec3("end_pos"));
     return cyl;
 }
 
@@ -184,8 +184,8 @@ Frame* SceneryFactory::add_Annulus(Frame* mother, const Node node) {
     ann->set_outer_reflection(surface_refl(node));
     ann->set_inner_reflection(surface_refl(node));
     ann->set_outer_inner_radius(
-        node.child("set_annulus").attribute2double("outer_radius"),
-        node.child("set_annulus").attribute2double("inner_radius"));
+        node.child("set_annulus").to_double("outer_radius"),
+        node.child("set_annulus").to_double("inner_radius"));
     return ann;
 }
 
@@ -202,9 +202,9 @@ Frame* SceneryFactory::add_BiConvexLensHex(Frame* mother, const Node node) {
         scenery->functions.get(node.child("set_medium").attribute(
             "refraction_vs_wavelength")));
     lens->set_curvature_radius_and_outer_hex_radius(
-        node.child("set_bi_convex_lens_hexagonal").attribute2double(
+        node.child("set_bi_convex_lens_hexagonal").to_double(
             "curvature_radius"),
-        node.child("set_bi_convex_lens_hexagonal").attribute2double(
+        node.child("set_bi_convex_lens_hexagonal").to_double(
             "outer_radius"));
     return lens;
 }
@@ -223,9 +223,9 @@ Frame* SceneryFactory::add_SphereCapWithHexagonalBound(
     cap->set_outer_reflection(surface_refl(node));
     cap->set_inner_reflection(surface_refl(node));
     cap->set_curvature_radius_and_outer_hex_radius(
-        node.child("set_sphere_cap_hexagonal").attribute2double(
+        node.child("set_sphere_cap_hexagonal").to_double(
             "curvature_radius"),
-        node.child("set_sphere_cap_hexagonal").attribute2double(
+        node.child("set_sphere_cap_hexagonal").to_double(
             "outer_radius"));
     return cap;
 }
@@ -244,10 +244,10 @@ Frame* SceneryFactory::add_SphereCapWithRectangularBound(
     cap->set_outer_reflection(surface_refl(node));
     cap->set_inner_reflection(surface_refl(node));
     cap->set_curvature_radius_and_x_y_width(
-        node.child("set_sphere_cap_rectangular").attribute2double(
+        node.child("set_sphere_cap_rectangular").to_double(
             "curvature_radius"),
-        node.child("set_sphere_cap_rectangular").attribute2double("x_width"),
-        node.child("set_sphere_cap_rectangular").attribute2double("y_width"));
+        node.child("set_sphere_cap_rectangular").to_double("x_width"),
+        node.child("set_sphere_cap_rectangular").to_double("y_width"));
     return cap;
 }
 
@@ -261,12 +261,12 @@ Frame* SceneryFactory::add_Triangle(Frame* mother, const Node node) {
     tri->set_outer_reflection(surface_refl(node));
     tri->set_inner_reflection(surface_refl(node));
     tri->set_corners_in_xy_plane(
-        node.child("set_triangle").attribute2double("Ax"),
-        node.child("set_triangle").attribute2double("Ay"),
-        node.child("set_triangle").attribute2double("Bx"),
-        node.child("set_triangle").attribute2double("By"),
-        node.child("set_triangle").attribute2double("Cx"),
-        node.child("set_triangle").attribute2double("Cy"));
+        node.child("set_triangle").to_double("Ax"),
+        node.child("set_triangle").to_double("Ay"),
+        node.child("set_triangle").to_double("Bx"),
+        node.child("set_triangle").to_double("By"),
+        node.child("set_triangle").to_double("Cx"),
+        node.child("set_triangle").to_double("Cy"));
     return tri;
 }
 
@@ -274,7 +274,7 @@ Frame* SceneryFactory::add_STL(Frame* mother, const Node node) {
     const string file = PathTools::join(
         xml_path.dirname,
         node.child("set_stl").attribute("file"));
-    const double scale = node.child("set_stl").attribute2double("scale");
+    const double scale = node.child("set_stl").to_double("scale");
 
     FrameFab framefab(node);
     SurfaceEntity* object = mother->append<SurfaceEntity>();
@@ -291,16 +291,16 @@ Frame* SceneryFactory::add_STL(Frame* mother, const Node node) {
 Frame* SceneryFactory::add_SegmentedReflector(Frame* mother, const Node node) {
     const Node refl = node.child("set_segmented_reflector");
     SegmentedReflector::Config cfg;
-    cfg.focal_length = refl.attribute2double("focal_length");
+    cfg.focal_length = refl.to_double("focal_length");
     cfg.DaviesCotton_over_parabolic_mixing_factor =
-        refl.attribute2double("DaviesCotton_over_parabolic_mixing_factor");
+        refl.to_double("DaviesCotton_over_parabolic_mixing_factor");
     cfg.max_outer_aperture_radius =
-        refl.attribute2double("max_outer_aperture_radius");
+        refl.to_double("max_outer_aperture_radius");
     cfg.min_inner_aperture_radius =
-        refl.attribute2double("min_inner_aperture_radius");
+        refl.to_double("min_inner_aperture_radius");
     cfg.facet_inner_hex_radius =
-        refl.attribute2double("facet_inner_hex_radius");
-    cfg.gap_between_facets = refl.attribute2double("gap_between_facets");
+        refl.to_double("facet_inner_hex_radius");
+    cfg.gap_between_facets = refl.to_double("gap_between_facets");
     cfg.reflectivity = surface_refl(node);
 
     SegmentedReflector::Factory refl_fab(cfg);
@@ -322,17 +322,17 @@ Frame* SceneryFactory::add_light_field_sensor(Frame* mother, const Node node) {
     Plenoscope::LightFieldSensor::Config config;
     config.sensor_plane2imaging_system = *light_field_sensor->frame2mother();
     config.expected_imaging_system_focal_length =
-        lfs.attribute2double("expected_imaging_system_focal_length");
+        lfs.to_double("expected_imaging_system_focal_length");
     config.expected_imaging_system_max_aperture_radius =
-        lfs.attribute2double("expected_imaging_system_aperture_radius");
+        lfs.to_double("expected_imaging_system_aperture_radius");
     config.max_FoV_diameter =
-        Deg2Rad(lfs.attribute2double("max_FoV_diameter_deg"));
+        Deg2Rad(lfs.to_double("max_FoV_diameter_deg"));
     config.pixel_FoV_hex_flat2flat =
-        Deg2Rad(lfs.attribute2double("hex_pixel_FoV_flat2flat_deg"));
+        Deg2Rad(lfs.to_double("hex_pixel_FoV_flat2flat_deg"));
     config.number_of_paxel_on_pixel_diagonal =
-        lfs.attribute2int("number_of_paxel_on_pixel_diagonal");
+        lfs.to_int("number_of_paxel_on_pixel_diagonal");
     config.housing_overhead =
-        lfs.attribute2double("housing_overhead");
+        lfs.to_double("housing_overhead");
     config.lens_refraction =
         scenery->functions.get(lfs.attribute("lens_refraction_vs_wavelength"));
     // config.lens_absorbtion = &perfect_transparency;
@@ -367,16 +367,16 @@ Frame* SceneryFactory::add_light_field_sensor_demonstration(
     config.sensor_plane2imaging_system =
         *light_field_sensor->frame2mother();
     config.expected_imaging_system_focal_length =
-        lfs.attribute2double("expected_imaging_system_focal_length");
+        lfs.to_double("expected_imaging_system_focal_length");
     config.expected_imaging_system_max_aperture_radius =
-        lfs.attribute2double("expected_imaging_system_aperture_radius");
+        lfs.to_double("expected_imaging_system_aperture_radius");
     config.max_FoV_diameter =
-        Deg2Rad(lfs.attribute2double("max_FoV_diameter_deg"));
+        Deg2Rad(lfs.to_double("max_FoV_diameter_deg"));
     config.pixel_FoV_hex_flat2flat =
-        Deg2Rad(lfs.attribute2double("hex_pixel_FoV_flat2flat_deg"));
+        Deg2Rad(lfs.to_double("hex_pixel_FoV_flat2flat_deg"));
     config.number_of_paxel_on_pixel_diagonal =
-        lfs.attribute2int("number_of_paxel_on_pixel_diagonal");
-    config.housing_overhead = lfs.attribute2double("housing_overhead");
+        lfs.to_int("number_of_paxel_on_pixel_diagonal");
+    config.housing_overhead = lfs.to_double("housing_overhead");
     config.lens_refraction =
         scenery->functions.get(lfs.attribute("lens_refraction_vs_wavelength"));
     // config.lens_absorbtion = &perfect_transparency;
@@ -409,7 +409,7 @@ const Function::Func1D* SceneryFactory::surface_refrac(const Node node)const {
 void SceneryFactory::add_color(const Node node) {
     scenery->colors.add(
         node.attribute("name"),
-        node.attribute2Color("rgb"));
+        node.to_color("rgb"));
 }
 
 void SceneryFactory::add_function(const Node node) {

@@ -37,13 +37,13 @@ class Node {
     bool has_attribute(const std::string attribute)const;
     std::string xml_path()const;
 
-    int attribute2int(const std::string attribute_name)const;
-    double attribute2double(const std::string attribute_name)const;
-    bool attribute2bool(const std::string attribute_name)const;
-    Tuple3 attribute2Tuple3(const std::string attribute_name)const;
-    Vec3 attribute2Vec3(const std::string attribute_name)const;
-    Rot3 attribute2Rot3(const std::string attribute_name)const;
-    Color attribute2Color(const std::string attribute_name)const;
+    int to_int(const std::string attribute_name)const;
+    double to_double(const std::string attribute_name)const;
+    bool to_bool(const std::string attribute_name)const;
+    Tuple3 to_tuple3(const std::string attribute_name)const;
+    Vec3 to_vec3(const std::string attribute_name)const;
+    Rot3 to_rot3(const std::string attribute_name)const;
+    Color to_color(const std::string attribute_name)const;
 
     class AttributeIsNoInt : public std::invalid_argument {
         using invalid_argument::invalid_argument;

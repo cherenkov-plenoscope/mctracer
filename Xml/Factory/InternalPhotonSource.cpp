@@ -38,8 +38,8 @@ vector<Photon> node2photons(const Xml::Node &node) {
 vector<Photon> pointsource(const Xml::Node &node) {
 	
 	vector<Photon> photons = Photons::Source::point_like_towards_z_opening_angle_num_photons(
-		Deg2Rad(node.attribute2double("opening_angle_in_deg")),
-		int(node.attribute2double("number_of_photons"))
+		Deg2Rad(node.to_double("opening_angle_in_deg")),
+		int(node.to_double("number_of_photons"))
 	);
 	transform(node, &photons);
 	return photons;
@@ -48,8 +48,8 @@ vector<Photon> pointsource(const Xml::Node &node) {
 vector<Photon> parallel_disc(const Xml::Node &node) {
 	
 	vector<Photon> photons = Photons::Source::parallel_towards_z_from_xy_disc(
-		node.attribute2double("disc_radius_in_m"),
-		int(node.attribute2double("number_of_photons"))
+		node.to_double("disc_radius_in_m"),
+		int(node.to_double("number_of_photons"))
 	);
 	transform(node, &photons);
 	return photons;
@@ -57,8 +57,8 @@ vector<Photon> parallel_disc(const Xml::Node &node) {
 //------------------------------------------------------------------------------
 void transform(const Xml::Node &node, vector<Photon> *photons) {
 	
-	Vec3 pos = node.attribute2Vec3("pos");
-	Tuple3 rot_deg = node.attribute2Tuple3("rot_in_deg");
+	Vec3 pos = node.to_vec3("pos");
+	Tuple3 rot_deg = node.to_tuple3("rot_in_deg");
 	Rot3 rot(Deg2Rad(rot_deg.x), Deg2Rad(rot_deg.y), Deg2Rad(rot_deg.z));
 
 	HomTra3 Trafo;

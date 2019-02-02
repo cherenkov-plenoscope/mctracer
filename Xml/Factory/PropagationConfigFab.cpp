@@ -6,8 +6,8 @@ namespace Xml {
 PropagationConfig get_PropagationConfig_from_node(Xml::Node node) {
 
 	PropagationConfig vc;
-	vc.max_number_of_interactions_per_photon = node.attribute2int("max_number_of_interactions_per_photon");
-	vc.use_multithread_when_possible = node.attribute2bool("use_multithread_when_possible");
+	vc.max_number_of_interactions_per_photon = node.to_int("max_number_of_interactions_per_photon");
+	vc.use_multithread_when_possible = node.to_bool("use_multithread_when_possible");
 	return vc;
 }
 //------------------------------------------------------------------------------

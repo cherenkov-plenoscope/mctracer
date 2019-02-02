@@ -85,7 +85,7 @@ string Node::xml_path()const {
     return path;
 }
 
-int Node::attribute2int(const string attribute_name)const {
+int Node::to_int(const string attribute_name)const {
     string att = attribute(attribute_name);
     int number;
     try {
@@ -107,7 +107,7 @@ int Node::attribute2int(const string attribute_name)const {
     return number;
 }
 
-double Node::attribute2double(const string attribute_name)const {
+double Node::to_double(const string attribute_name)const {
     string att = attribute(attribute_name);
     double number;
     try {
@@ -129,7 +129,7 @@ double Node::attribute2double(const string attribute_name)const {
     return number;
 }
 
-bool Node::attribute2bool(const string attribute_name)const {
+bool Node::to_bool(const string attribute_name)const {
     string att = attribute(attribute_name);
     bool boolean;
     try {
@@ -151,7 +151,7 @@ bool Node::attribute2bool(const string attribute_name)const {
     return boolean;
 }
 
-Tuple3 Node::attribute2Tuple3(const string attribute_name)const {
+Tuple3 Node::to_tuple3(const string attribute_name)const {
     string att = attribute(attribute_name);
     Tuple3 t3;
     try {
@@ -173,9 +173,9 @@ Tuple3 Node::attribute2Tuple3(const string attribute_name)const {
     return t3;
 }
 
-Vec3 Node::attribute2Vec3(const string attribute_name)const {
+Vec3 Node::to_vec3(const string attribute_name)const {
     try {
-        Tuple3 t3 = attribute2Tuple3(attribute_name);
+        Tuple3 t3 = to_tuple3(attribute_name);
         return Vec3(t3.x, t3.y, t3.z);
     } catch (std::exception &error) {
         stringstream info;
@@ -185,9 +185,9 @@ Vec3 Node::attribute2Vec3(const string attribute_name)const {
     }
 }
 
-Rot3 Node::attribute2Rot3(const string attribute_name)const {
+Rot3 Node::to_rot3(const string attribute_name)const {
     try {
-        Tuple3 t3 = attribute2Tuple3(attribute_name);
+        Tuple3 t3 = to_tuple3(attribute_name);
         return Rot3(t3.x, t3.y, t3.z);
     } catch (std::exception &error) {
         stringstream info;
@@ -197,9 +197,9 @@ Rot3 Node::attribute2Rot3(const string attribute_name)const {
     }
 }
 
-Color Node::attribute2Color(const string attribute_name)const {
+Color Node::to_color(const string attribute_name)const {
     try {
-        Tuple3 t3 = attribute2Tuple3(attribute_name);
+        Tuple3 t3 = to_tuple3(attribute_name);
         return Color(t3.x, t3.y, t3.z);
     } catch (std::exception &error) {
         stringstream info;

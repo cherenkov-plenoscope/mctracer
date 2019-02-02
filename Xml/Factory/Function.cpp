@@ -9,16 +9,16 @@ namespace Xml {
 //------------------------------------------------------------------------------
 void init_function_with_node(Function::Constant* function, const Node &node) {
     function->init(
-        node.attribute2double("value"),
+        node.to_double("value"),
         limits_from_node(node));
 }
 //------------------------------------------------------------------------------
 void init_function_with_node(Function::Polynom3* function, const Node &node) {
     function->init(
-        node.attribute2double("x3"),
-        node.attribute2double("x2"),
-        node.attribute2double("x1"),
-        node.attribute2double("x0"),
+        node.to_double("x3"),
+        node.to_double("x2"),
+        node.to_double("x1"),
+        node.to_double("x0"),
         limits_from_node(node));
 }
 //------------------------------------------------------------------------------
@@ -32,8 +32,8 @@ void init_function_with_node(Function::LinInterpol* function, const Node &node) 
     ) {
         if(StringTools::is_equal(child.name(), "xy")) {
             vector<double> row = {
-                child.attribute2double("x"),
-                child.attribute2double("y")
+                child.to_double("x"),
+                child.to_double("y")
             };
             table.push_back(row);
         }
@@ -57,8 +57,8 @@ void init_function_with_node(Function::Concat* function, const Node &node, Funct
 //------------------------------------------------------------------------------
 Function::Limits limits_from_node(const Xml::Node &node) {
     return Function::Limits(
-        node.attribute2double("lower_limit"), 
-        node.attribute2double("upper_limit")
+        node.to_double("lower_limit"), 
+        node.to_double("upper_limit")
     );    
 }
 //------------------------------------------------------------------------------

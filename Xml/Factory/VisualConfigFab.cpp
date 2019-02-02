@@ -9,26 +9,26 @@ Visual::Config get_VisualConfig_from_node(Xml::Node node) {
 
 	Visual::Config vc;
 
-	vc.max_interaction_depth = node.attribute2int("max_interaction_depth");
+	vc.max_interaction_depth = node.to_int("max_interaction_depth");
 
 	Xml::Node preview = node.child("preview");
-	vc.preview.cols = preview.attribute2int("cols");
-	vc.preview.rows = preview.attribute2int("rows");
-	vc.preview.scale = preview.attribute2int("scale");
+	vc.preview.cols = preview.to_int("cols");
+	vc.preview.rows = preview.to_int("rows");
+	vc.preview.scale = preview.to_int("scale");
 
 	Xml::Node snapshot = node.child("snapshot");
-	vc.snapshot.cols = snapshot.attribute2int("cols");
-	vc.snapshot.rows = snapshot.attribute2int("rows");
-	vc.snapshot.noise_level = snapshot.attribute2int("noise_level");
-	vc.snapshot.focal_length_over_aperture_diameter = snapshot.attribute2double("focal_length_over_aperture_diameter");
-	vc.snapshot.image_sensor_size_along_a_row = snapshot.attribute2double("image_sensor_size_along_a_row");
+	vc.snapshot.cols = snapshot.to_int("cols");
+	vc.snapshot.rows = snapshot.to_int("rows");
+	vc.snapshot.noise_level = snapshot.to_int("noise_level");
+	vc.snapshot.focal_length_over_aperture_diameter = snapshot.to_double("focal_length_over_aperture_diameter");
+	vc.snapshot.image_sensor_size_along_a_row = snapshot.to_double("image_sensor_size_along_a_row");
 
 	Xml::Node global_illumination = node.child("global_illumination");
-	vc.global_illumination.on = global_illumination.attribute2bool("on");
-	vc.global_illumination.incoming_direction = global_illumination.attribute2Vec3("incoming_direction");
+	vc.global_illumination.on = global_illumination.to_bool("on");
+	vc.global_illumination.incoming_direction = global_illumination.to_vec3("incoming_direction");
 
 	Xml::Node photon_trajectories = node.child("photon_trajectories");
-	vc.photon_trajectories.radius = photon_trajectories.attribute2double("radius");
+	vc.photon_trajectories.radius = photon_trajectories.to_double("radius");
 
 	Xml::Node sky_dome_node = node.child("sky_dome");
 	std::string image_path = sky_dome_node.attribute("image_path");
@@ -36,13 +36,13 @@ Visual::Config get_VisualConfig_from_node(Xml::Node node) {
 
 	if(image_path.empty()) {
 
-		vc.sky_dome = Visual::SkyDome(sky_dome_node.attribute2Color("color"));
+		vc.sky_dome = Visual::SkyDome(sky_dome_node.to_color("color"));
 	}else{
 
 		PathTools::Path xmlpath = PathTools::Path(node.xml_path());
 		vc.sky_dome = Visual::SkyDome(PathTools::join(xmlpath.dirname, image_path));
 		vc.sky_dome.set_background_color(
-			sky_dome_node.attribute2Color("color")
+			sky_dome_node.to_color("color")
 		);
 	}
 

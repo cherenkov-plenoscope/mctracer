@@ -10,8 +10,8 @@ Function::LinInterpol get_LinInterpol_from(const Xml::Node &node) {
 	for(Xml::Node child=node.first_child();	child; child=child.next_child()) {
 		if(StringTools::is_equal(child.name(), "xy")) {
 			vector<double> row = {
-				child.attribute2double("x"),
-				child.attribute2double("y")
+				child.to_double("x"),
+				child.to_double("y")
 			};
 			table.push_back(row);
 		}

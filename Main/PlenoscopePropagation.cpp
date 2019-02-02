@@ -161,7 +161,7 @@ int main(int argc, char* argv[]) {
     Plenoscope::NightSkyBackground::Light nsb(
         &pis->light_field_sensor_geometry,
         &nsb_flux_vs_wavelength);
-    const double nsb_exposure_time = nsb_node.attribute2double("exposure_time");
+    const double nsb_exposure_time = nsb_node.to_double("exposure_time");
 
     //--------------------------------------------------------------------------
     // SET UP PhotoElectricConverter
@@ -171,9 +171,9 @@ int main(int argc, char* argv[]) {
             pec.child("function").child("linear_interpolation"));
 
     SignalProcessing::PhotoElectricConverter::Config converter_config;
-    converter_config.dark_rate = pec.attribute2double("dark_rate");
+    converter_config.dark_rate = pec.to_double("dark_rate");
     converter_config.probability_for_second_puls =
-        pec.attribute2double("probability_for_second_puls");
+        pec.to_double("probability_for_second_puls");
     converter_config.quantum_efficiency_vs_wavelength = &pde_vs_wavelength;
 
     SignalProcessing::PhotoElectricConverter::Converter sipm_converter(
@@ -182,7 +182,7 @@ int main(int argc, char* argv[]) {
     //--------------------------------------------------------------------------
     // SET SINGLE PULSE OUTPUT
     Xml::Node spe = config_node.child("photon_stream");
-    const double time_slice_duration = spe.attribute2double("slice_duration");
+    const double time_slice_duration = spe.to_double("slice_duration");
     const double arrival_time_std = 416e-12;
 
     //--------------------------------------------------------------------------
