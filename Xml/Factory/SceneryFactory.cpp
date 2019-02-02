@@ -3,7 +3,6 @@
 #include <sstream>
 #include "FrameFab.h"
 #include "Scenery/Primitive/Primitive.h"
-#include "Scenery/StereoLitography/StereoLitography.h"
 #include "Scenery/SegmentedReflector/SegmentedReflector.h"
 #include "Xml/Factory/Function.h"
 
@@ -74,7 +73,9 @@ void SceneryFactory::make_geometry(Frame* mother, const Node node) {
             make_geometry(
                 add_light_field_sensor_demonstration(mother, child), child);
         else if (is_equal(child.name(), "stl"))
-            make_geometry(add_STL(mother, child), child);
+            make_geometry(
+                add_STL(mother, child, scenery, xml_path.dirname),
+                child);
         else if (is_equal(child.name(), "bi_convex_lens_hexagonal"))
             make_geometry(add_BiConvexLensHex(mother, child, scenery), child);
     }
@@ -131,24 +132,6 @@ Frame* SceneryFactory::add_SphereCapWithRectangularBound(
         node.child("set_sphere_cap_rectangular").to_double("x_width"),
         node.child("set_sphere_cap_rectangular").to_double("y_width"));
     return cap;
-}
-
-Frame* SceneryFactory::add_STL(Frame* mother, const Node node) {
-    const string file = PathTools::join(
-        xml_path.dirname,
-        node.child("set_stl").attribute("file"));
-    const double scale = node.child("set_stl").to_double("scale");
-
-    FrameFab framefab(node);
-    SurfaceEntity* object = mother->append<SurfaceEntity>();
-    object->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
-    object->set_inner_color(surface_color(node, scenery));
-    object->set_outer_color(surface_color(node, scenery));
-    object->set_outer_reflection(surface_refl(node, scenery));
-    object->set_inner_reflection(surface_refl(node, scenery));
-    StereoLitography::add_stl_to_and_inherit_surface_from_surfac_entity(
-        file, object, scale);
-    return object;
 }
 
 Frame* SceneryFactory::add_SegmentedReflector(Frame* mother, const Node node) {

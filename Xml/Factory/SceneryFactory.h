@@ -12,6 +12,7 @@
 #include "Scenery/Scenery.h"
 #include "Xml/Factory/FrameFab.h"
 #include "Scenery/Primitive/Primitive.h"
+#include "Scenery/StereoLitography/StereoLitography.h"
 
 namespace Xml {
 
@@ -37,7 +38,6 @@ class SceneryFactory {
     Frame* add_SphereCapWithHexagonalBound(Frame* mother, const Node node);
     Frame* add_SphereCapWithRectangularBound(Frame* mother, const Node node);
     Frame* add_SegmentedReflector(Frame* mother, const Node node);
-    Frame* add_STL(Frame* mother, const Node node);
     Frame* add_light_field_sensor(Frame* mother, const Node node);
     Frame* add_light_field_sensor_demonstration(Frame* mother, const Node node);
     void add_to_sensors_if_sensitive(Frame* frame, const Node node);
@@ -203,6 +203,29 @@ Frame* add_Triangle(Frame* mother, const Node node, Scenery *scenery) {
         node.child("set_triangle").to_double("Cx"),
         node.child("set_triangle").to_double("Cy"));
     return tri;
+}
+
+Frame* add_STL(
+    Frame* mother,
+    const Node node,
+    Scenery *scenery,
+    const std::string xml_dirname
+) {
+    const std::string file = PathTools::join(
+        xml_dirname,
+        node.child("set_stl").attribute("file"));
+    const double scale = node.child("set_stl").to_double("scale");
+
+    FrameFab framefab(node);
+    SurfaceEntity* object = mother->append<SurfaceEntity>();
+    object->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
+    object->set_inner_color(surface_color(node, scenery));
+    object->set_outer_color(surface_color(node, scenery));
+    object->set_outer_reflection(surface_refl(node, scenery));
+    object->set_inner_reflection(surface_refl(node, scenery));
+    StereoLitography::add_stl_to_and_inherit_surface_from_surfac_entity(
+        file, object, scale);
+    return object;
 }
 
 }  // namespace Xml
