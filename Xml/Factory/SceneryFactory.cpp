@@ -51,7 +51,7 @@ void SceneryFactory::make_geometry(Frame* mother, const Node node) {
         else if (is_equal(child.name(), "sphere"))
             make_geometry(add_Sphere(mother, child, scenery), child);
         else if (is_equal(child.name(), "plane"))
-            make_geometry(add_Plane(mother, child), child);
+            make_geometry(add_Plane(mother, child, scenery), child);
         else if (is_equal(child.name(), "hex_plane"))
             make_geometry(add_HexPlane(mother, child), child);
         else if (is_equal(child.name(), "cylinder"))
@@ -89,21 +89,6 @@ void SceneryFactory::add_to_sensors_if_sensitive(
         PhotonSensor::Sensor* sens = new PhotonSensor::Sensor(id, frame);
         raw_sensors->push_back(sens);
     }
-}
-
-Frame* SceneryFactory::add_Plane(Frame* mother, const Node node) {
-    FrameFab framefab(node);
-    Plane* plane = mother->append<Plane>();
-    plane->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
-
-    plane->set_inner_color(surface_color(node, scenery));
-    plane->set_outer_color(surface_color(node, scenery));
-    plane->set_outer_reflection(surface_refl(node, scenery));
-    plane->set_inner_reflection(surface_refl(node, scenery));
-    plane->set_x_y_width(
-        node.child("set_plane").to_double("x_width"),
-        node.child("set_plane").to_double("y_width"));
-    return plane;
 }
 
 Frame* SceneryFactory::add_HexPlane(Frame* mother, const Node node) {

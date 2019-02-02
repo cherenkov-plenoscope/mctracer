@@ -34,7 +34,6 @@ class SceneryFactory {
 
  private:
     void make_geometry(Frame* mother, const Node node);
-    Frame* add_Plane(Frame* mother, const Node node);
     Frame* add_HexPlane(Frame* mother, const Node node);
     Frame* add_Cylinder(Frame* mother, const Node node);
     Frame* add_Annulus(Frame* mother, const Node node);
@@ -111,6 +110,21 @@ Frame* add_Sphere(Frame* mother, const Node node, Scenery *scenery) {
     sphere->set_radius(
         node.child("set_sphere").to_double("radius"));
     return sphere;
+}
+
+Frame* add_Plane(Frame* mother, const Node node, Scenery *scenery) {
+    FrameFab framefab(node);
+    Plane* plane = mother->append<Plane>();
+    plane->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
+
+    plane->set_inner_color(surface_color(node, scenery));
+    plane->set_outer_color(surface_color(node, scenery));
+    plane->set_outer_reflection(surface_refl(node, scenery));
+    plane->set_inner_reflection(surface_refl(node, scenery));
+    plane->set_x_y_width(
+        node.child("set_plane").to_double("x_width"),
+        node.child("set_plane").to_double("y_width"));
+    return plane;
 }
 
 }  // namespace Xml
