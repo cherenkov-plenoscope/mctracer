@@ -47,7 +47,7 @@ void SceneryFactory::make_geometry(Frame* mother, const Node node) {
         else if (is_equal(child.name(), "frame"))
             make_geometry(add_Frame(mother, child), child);
         else if (is_equal(child.name(), "disc"))
-            make_geometry(add_Disc(mother, child), child);
+            make_geometry(add_Disc(mother, child, scenery), child);
         else if (is_equal(child.name(), "sphere"))
             make_geometry(add_Sphere(mother, child), child);
         else if (is_equal(child.name(), "plane"))
@@ -91,31 +91,18 @@ void SceneryFactory::add_to_sensors_if_sensitive(
     }
 }
 
-Frame* SceneryFactory::add_Disc(Frame* mother, const Node node) {
-    FrameFab framefab(node);
-    Disc* disc = mother->append<Disc>();
-    disc->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
-
-    disc->set_inner_color(surface_color(node));
-    disc->set_outer_color(surface_color(node));
-    disc->set_outer_reflection(surface_refl(node));
-    disc->set_inner_reflection(surface_refl(node));
-    disc->set_radius(node.child("set_disc").to_double("radius"));
-    return disc;
-}
-
 Frame* SceneryFactory::add_Sphere(Frame* mother, const Node node) {
     FrameFab framefab(node);
     Sphere* sphere = mother->append<Sphere>();
     sphere->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
 
-    sphere->set_inner_color(surface_color(node));
-    sphere->set_outer_color(surface_color(node));
-    sphere->set_outer_reflection(surface_refl(node));
-    sphere->set_inner_reflection(surface_refl(node));
+    sphere->set_inner_color(surface_color(node, scenery));
+    sphere->set_outer_color(surface_color(node, scenery));
+    sphere->set_outer_reflection(surface_refl(node, scenery));
+    sphere->set_inner_reflection(surface_refl(node, scenery));
 
     if (node.child("set_surface").has_attribute("refraction_vs_wavelength"))
-        sphere->set_inner_refraction(surface_refrac(node));
+        sphere->set_inner_refraction(surface_refrac(node, scenery));
 
     sphere->set_radius(
         node.child("set_sphere").to_double("radius"));
@@ -127,10 +114,10 @@ Frame* SceneryFactory::add_Plane(Frame* mother, const Node node) {
     Plane* plane = mother->append<Plane>();
     plane->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
 
-    plane->set_inner_color(surface_color(node));
-    plane->set_outer_color(surface_color(node));
-    plane->set_outer_reflection(surface_refl(node));
-    plane->set_inner_reflection(surface_refl(node));
+    plane->set_inner_color(surface_color(node, scenery));
+    plane->set_outer_color(surface_color(node, scenery));
+    plane->set_outer_reflection(surface_refl(node, scenery));
+    plane->set_inner_reflection(surface_refl(node, scenery));
     plane->set_x_y_width(
         node.child("set_plane").to_double("x_width"),
         node.child("set_plane").to_double("y_width"));
@@ -142,10 +129,10 @@ Frame* SceneryFactory::add_HexPlane(Frame* mother, const Node node) {
     HexPlane* plane = mother->append<HexPlane>();
     plane->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
 
-    plane->set_inner_color(surface_color(node));
-    plane->set_outer_color(surface_color(node));
-    plane->set_outer_reflection(surface_refl(node));
-    plane->set_inner_reflection(surface_refl(node));
+    plane->set_inner_color(surface_color(node, scenery));
+    plane->set_outer_color(surface_color(node, scenery));
+    plane->set_outer_reflection(surface_refl(node, scenery));
+    plane->set_inner_reflection(surface_refl(node, scenery));
     plane->set_outer_hex_radius(
         node.child("set_hex_plane").to_double("outer_hex_radius"));
     return plane;
@@ -156,10 +143,10 @@ Frame* SceneryFactory::add_Cylinder(Frame* mother, const Node node) {
     Cylinder* cyl = mother->append<Cylinder>();
     cyl->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
 
-    cyl->set_inner_color(surface_color(node));
-    cyl->set_outer_color(surface_color(node));
-    cyl->set_outer_reflection(surface_refl(node));
-    cyl->set_inner_reflection(surface_refl(node));
+    cyl->set_inner_color(surface_color(node, scenery));
+    cyl->set_outer_color(surface_color(node, scenery));
+    cyl->set_outer_reflection(surface_refl(node, scenery));
+    cyl->set_inner_reflection(surface_refl(node, scenery));
     cyl->set_cylinder(
         node.child("set_cylinder").to_double("radius"),
         node.child("set_cylinder").to_vec3("start_pos"),
@@ -172,10 +159,10 @@ Frame* SceneryFactory::add_Annulus(Frame* mother, const Node node) {
     Annulus* ann = mother->append<Annulus>();
     ann->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
 
-    ann->set_inner_color(surface_color(node));
-    ann->set_outer_color(surface_color(node));
-    ann->set_outer_reflection(surface_refl(node));
-    ann->set_inner_reflection(surface_refl(node));
+    ann->set_inner_color(surface_color(node, scenery));
+    ann->set_outer_color(surface_color(node, scenery));
+    ann->set_outer_reflection(surface_refl(node, scenery));
+    ann->set_inner_reflection(surface_refl(node, scenery));
     ann->set_outer_inner_radius(
         node.child("set_annulus").to_double("outer_radius"),
         node.child("set_annulus").to_double("inner_radius"));
@@ -187,9 +174,9 @@ Frame* SceneryFactory::add_BiConvexLensHex(Frame* mother, const Node node) {
     BiConvexLensHexBound* lens = mother->append<BiConvexLensHexBound>();
     lens->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
 
-    lens->set_inner_color(surface_color(node));
-    lens->set_outer_color(surface_color(node));
-    lens->set_outer_reflection(surface_refl(node));
+    lens->set_inner_color(surface_color(node, scenery));
+    lens->set_outer_color(surface_color(node, scenery));
+    lens->set_outer_reflection(surface_refl(node, scenery));
     // lens->set_inner_reflection(surface_refl(node));
     lens->set_inner_refraction(
         scenery->functions.get(node.child("set_medium").attribute(
@@ -211,10 +198,10 @@ Frame* SceneryFactory::add_SphereCapWithHexagonalBound(
         mother->append<SphereCapWithHexagonalBound>();
     cap->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
 
-    cap->set_inner_color(surface_color(node));
-    cap->set_outer_color(surface_color(node));
-    cap->set_outer_reflection(surface_refl(node));
-    cap->set_inner_reflection(surface_refl(node));
+    cap->set_inner_color(surface_color(node, scenery));
+    cap->set_outer_color(surface_color(node, scenery));
+    cap->set_outer_reflection(surface_refl(node, scenery));
+    cap->set_inner_reflection(surface_refl(node, scenery));
     cap->set_curvature_radius_and_outer_hex_radius(
         node.child("set_sphere_cap_hexagonal").to_double(
             "curvature_radius"),
@@ -232,10 +219,10 @@ Frame* SceneryFactory::add_SphereCapWithRectangularBound(
         mother->append<SphereCapWithRectangularBound>();
     cap->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
 
-    cap->set_inner_color(surface_color(node));
-    cap->set_outer_color(surface_color(node));
-    cap->set_outer_reflection(surface_refl(node));
-    cap->set_inner_reflection(surface_refl(node));
+    cap->set_inner_color(surface_color(node, scenery));
+    cap->set_outer_color(surface_color(node, scenery));
+    cap->set_outer_reflection(surface_refl(node, scenery));
+    cap->set_inner_reflection(surface_refl(node, scenery));
     cap->set_curvature_radius_and_x_y_width(
         node.child("set_sphere_cap_rectangular").to_double(
             "curvature_radius"),
@@ -249,10 +236,10 @@ Frame* SceneryFactory::add_Triangle(Frame* mother, const Node node) {
     Triangle* tri = mother->append<Triangle>();
     tri->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
 
-    tri->set_inner_color(surface_color(node));
-    tri->set_outer_color(surface_color(node));
-    tri->set_outer_reflection(surface_refl(node));
-    tri->set_inner_reflection(surface_refl(node));
+    tri->set_inner_color(surface_color(node, scenery));
+    tri->set_outer_color(surface_color(node, scenery));
+    tri->set_outer_reflection(surface_refl(node, scenery));
+    tri->set_inner_reflection(surface_refl(node, scenery));
     tri->set_corners_in_xy_plane(
         node.child("set_triangle").to_double("Ax"),
         node.child("set_triangle").to_double("Ay"),
@@ -272,10 +259,10 @@ Frame* SceneryFactory::add_STL(Frame* mother, const Node node) {
     FrameFab framefab(node);
     SurfaceEntity* object = mother->append<SurfaceEntity>();
     object->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
-    object->set_inner_color(surface_color(node));
-    object->set_outer_color(surface_color(node));
-    object->set_outer_reflection(surface_refl(node));
-    object->set_inner_reflection(surface_refl(node));
+    object->set_inner_color(surface_color(node, scenery));
+    object->set_outer_color(surface_color(node, scenery));
+    object->set_outer_reflection(surface_refl(node, scenery));
+    object->set_inner_reflection(surface_refl(node, scenery));
     StereoLitography::add_stl_to_and_inherit_surface_from_surfac_entity(
         file, object, scale);
     return object;
@@ -294,7 +281,7 @@ Frame* SceneryFactory::add_SegmentedReflector(Frame* mother, const Node node) {
     cfg.facet_inner_hex_radius =
         refl.to_double("facet_inner_hex_radius");
     cfg.gap_between_facets = refl.to_double("gap_between_facets");
-    cfg.reflectivity = surface_refl(node);
+    cfg.reflectivity = surface_refl(node, scenery);
 
     SegmentedReflector::Factory refl_fab(cfg);
 
@@ -389,16 +376,6 @@ Frame* SceneryFactory::add_light_field_sensor_demonstration(
     return light_field_sensor;
 }
 
-const Function::Func1D* SceneryFactory::surface_refl(const Node node)const {
-    return scenery->functions.get(node.child("set_surface").attribute(
-        "reflection_vs_wavelength"));
-}
-
-const Function::Func1D* SceneryFactory::surface_refrac(const Node node)const {
-    return scenery->functions.get(node.child("set_surface").attribute(
-        "refraction_vs_wavelength"));
-}
-
 void SceneryFactory::add_color(const Node node) {
     scenery->colors.add(
         node.attribute("name"),
@@ -436,10 +413,6 @@ void SceneryFactory::add_function(const Node node) {
             throw std::invalid_argument(info.str());
         }
     }
-}
-
-const Color* SceneryFactory::surface_color(const Node node)const {
-    return scenery->colors.get(node.child("set_surface").attribute("color"));
 }
 
 PhotonSensor::Sensors SceneryFactory::sensors()const {

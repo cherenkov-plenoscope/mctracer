@@ -11,6 +11,7 @@
 #include "Plenoscope/PlenoscopeInScenery.h"
 #include "Scenery/Scenery.h"
 #include "Xml/Factory/FrameFab.h"
+#include "Scenery/Primitive/Primitive.h"
 
 namespace Xml {
 
@@ -33,7 +34,6 @@ class SceneryFactory {
 
  private:
     void make_geometry(Frame* mother, const Node node);
-    Frame* add_Disc(Frame* mother, const Node node);
     Frame* add_Sphere(Frame* mother, const Node node);
     Frame* add_Plane(Frame* mother, const Node node);
     Frame* add_HexPlane(Frame* mother, const Node node);
@@ -47,10 +47,6 @@ class SceneryFactory {
     Frame* add_STL(Frame* mother, const Node node);
     Frame* add_light_field_sensor(Frame* mother, const Node node);
     Frame* add_light_field_sensor_demonstration(Frame* mother, const Node node);
-
-    const Color* surface_color(const Node node)const;
-    const Function::Func1D* surface_refl(const Node node)const;
-    const Function::Func1D* surface_refrac(const Node node)const;
     void add_to_sensors_if_sensitive(Frame* frame, const Node node);
     void add_to_array_if_telescope(Frame* frame, const Node node);
 
@@ -58,11 +54,46 @@ class SceneryFactory {
     void add_color(const Node node);
 };
 
+const Function::Func1D* surface_refl(
+    const Node node,
+    const Scenery* scenery
+) {
+    return scenery->functions.get(
+        node.child("set_surface").attribute("reflection_vs_wavelength"));
+}
+
+const Function::Func1D* surface_refrac(
+    const Node node,
+    const Scenery* scenery
+) {
+    return scenery->functions.get(
+        node.child("set_surface").attribute("refraction_vs_wavelength"));
+}
+
+const Color* surface_color(
+    const Node node,
+    Scenery* scenery
+) {
+    return scenery->colors.get(node.child("set_surface").attribute("color"));
+}
+
 Frame* add_Frame(Frame* mother, const Node node) {
     FrameFab fab(node);
     Frame* frame = mother->append<Frame>();
     frame->set_name_pos_rot(fab.name, fab.pos, fab.rot);
     return frame;
+}
+
+Frame* add_Disc(Frame* mother, const Node node, Scenery *scenery) {
+    FrameFab framefab(node);
+    Disc* disc = mother->append<Disc>();
+    disc->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
+    disc->set_inner_color(surface_color(node, scenery));
+    disc->set_outer_color(surface_color(node, scenery));
+    disc->set_outer_reflection(surface_refl(node, scenery));
+    disc->set_inner_reflection(surface_refl(node, scenery));
+    disc->set_radius(node.child("set_disc").to_double("radius"));
+    return disc;
 }
 
 }  // namespace Xml
