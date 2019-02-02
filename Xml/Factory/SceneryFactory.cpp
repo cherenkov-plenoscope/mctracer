@@ -55,7 +55,7 @@ void SceneryFactory::make_geometry(Frame* mother, const Node node) {
         else if (is_equal(child.name(), "hex_plane"))
             make_geometry(add_HexPlane(mother, child, scenery), child);
         else if (is_equal(child.name(), "cylinder"))
-            make_geometry(add_Cylinder(mother, child), child);
+            make_geometry(add_Cylinder(mother, child, scenery), child);
         else if (is_equal(child.name(), "annulus"))
             make_geometry(add_Annulus(mother, child), child);
         else if (is_equal(child.name(), "segmented_reflector"))
@@ -89,22 +89,6 @@ void SceneryFactory::add_to_sensors_if_sensitive(
         PhotonSensor::Sensor* sens = new PhotonSensor::Sensor(id, frame);
         raw_sensors->push_back(sens);
     }
-}
-
-Frame* SceneryFactory::add_Cylinder(Frame* mother, const Node node) {
-    FrameFab framefab(node);
-    Cylinder* cyl = mother->append<Cylinder>();
-    cyl->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
-
-    cyl->set_inner_color(surface_color(node, scenery));
-    cyl->set_outer_color(surface_color(node, scenery));
-    cyl->set_outer_reflection(surface_refl(node, scenery));
-    cyl->set_inner_reflection(surface_refl(node, scenery));
-    cyl->set_cylinder(
-        node.child("set_cylinder").to_double("radius"),
-        node.child("set_cylinder").to_vec3("start_pos"),
-        node.child("set_cylinder").to_vec3("end_pos"));
-    return cyl;
 }
 
 Frame* SceneryFactory::add_Annulus(Frame* mother, const Node node) {
