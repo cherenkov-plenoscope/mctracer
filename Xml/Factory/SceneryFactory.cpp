@@ -57,7 +57,7 @@ void SceneryFactory::make_geometry(Frame* mother, const Node node) {
         else if (is_equal(child.name(), "cylinder"))
             make_geometry(add_Cylinder(mother, child, scenery), child);
         else if (is_equal(child.name(), "annulus"))
-            make_geometry(add_Annulus(mother, child), child);
+            make_geometry(add_Annulus(mother, child, scenery), child);
         else if (is_equal(child.name(), "segmented_reflector"))
             make_geometry(add_SegmentedReflector(mother, child), child);
         else if (is_equal(child.name(), "sphere_cap_hexagonal"))
@@ -89,21 +89,6 @@ void SceneryFactory::add_to_sensors_if_sensitive(
         PhotonSensor::Sensor* sens = new PhotonSensor::Sensor(id, frame);
         raw_sensors->push_back(sens);
     }
-}
-
-Frame* SceneryFactory::add_Annulus(Frame* mother, const Node node) {
-    FrameFab framefab(node);
-    Annulus* ann = mother->append<Annulus>();
-    ann->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
-
-    ann->set_inner_color(surface_color(node, scenery));
-    ann->set_outer_color(surface_color(node, scenery));
-    ann->set_outer_reflection(surface_refl(node, scenery));
-    ann->set_inner_reflection(surface_refl(node, scenery));
-    ann->set_outer_inner_radius(
-        node.child("set_annulus").to_double("outer_radius"),
-        node.child("set_annulus").to_double("inner_radius"));
-    return ann;
 }
 
 Frame* SceneryFactory::add_BiConvexLensHex(Frame* mother, const Node node) {

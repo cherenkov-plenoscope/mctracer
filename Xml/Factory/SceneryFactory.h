@@ -34,7 +34,6 @@ class SceneryFactory {
 
  private:
     void make_geometry(Frame* mother, const Node node);
-    Frame* add_Annulus(Frame* mother, const Node node);
     Frame* add_BiConvexLensHex(Frame* mother, const Node node);
     Frame* add_SphereCapWithHexagonalBound(Frame* mother, const Node node);
     Frame* add_SphereCapWithRectangularBound(Frame* mother, const Node node);
@@ -153,6 +152,21 @@ Frame* add_Cylinder(Frame* mother, const Node node, Scenery *scenery) {
         node.child("set_cylinder").to_vec3("start_pos"),
         node.child("set_cylinder").to_vec3("end_pos"));
     return cyl;
+}
+
+Frame* add_Annulus(Frame* mother, const Node node, Scenery *scenery) {
+    FrameFab framefab(node);
+    Annulus* ann = mother->append<Annulus>();
+    ann->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
+
+    ann->set_inner_color(surface_color(node, scenery));
+    ann->set_outer_color(surface_color(node, scenery));
+    ann->set_outer_reflection(surface_refl(node, scenery));
+    ann->set_inner_reflection(surface_refl(node, scenery));
+    ann->set_outer_inner_radius(
+        node.child("set_annulus").to_double("outer_radius"),
+        node.child("set_annulus").to_double("inner_radius"));
+    return ann;
 }
 
 }  // namespace Xml
