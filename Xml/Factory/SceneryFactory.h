@@ -35,7 +35,6 @@ class SceneryFactory {
 
  private:
     void make_geometry(Frame* mother, const Node node);
-    Frame* add_SphereCapWithRectangularBound(Frame* mother, const Node node);
     Frame* add_SegmentedReflector(Frame* mother, const Node node);
     Frame* add_light_field_sensor(Frame* mother, const Node node);
     Frame* add_light_field_sensor_demonstration(Frame* mother, const Node node);
@@ -222,6 +221,27 @@ Frame* add_SphereCapWithHexagonalBound(
             "curvature_radius"),
         node.child("set_sphere_cap_hexagonal").to_double(
             "outer_radius"));
+    return cap;
+}
+
+Frame* add_SphereCapWithRectangularBound(
+    Frame* mother,
+    const Node node,
+    Scenery* scenery
+) {
+    FrameFab framefab(node);
+    SphereCapWithRectangularBound* cap =
+        mother->append<SphereCapWithRectangularBound>();
+    cap->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
+    cap->set_inner_color(surface_color(node, scenery));
+    cap->set_outer_color(surface_color(node, scenery));
+    cap->set_outer_reflection(surface_refl(node, scenery));
+    cap->set_inner_reflection(surface_refl(node, scenery));
+    cap->set_curvature_radius_and_x_y_width(
+        node.child("set_sphere_cap_rectangular").to_double(
+            "curvature_radius"),
+        node.child("set_sphere_cap_rectangular").to_double("x_width"),
+        node.child("set_sphere_cap_rectangular").to_double("y_width"));
     return cap;
 }
 

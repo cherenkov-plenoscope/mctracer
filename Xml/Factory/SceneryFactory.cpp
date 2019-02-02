@@ -64,7 +64,11 @@ void SceneryFactory::make_geometry(Frame* mother, const Node node) {
                 add_SphereCapWithHexagonalBound(mother, child, scenery), child);
         else if (is_equal(child.name(), "sphere_cap_rectangular"))
             make_geometry(
-                add_SphereCapWithRectangularBound(mother, child), child);
+                add_SphereCapWithRectangularBound(
+                    mother,
+                    child,
+                    scenery),
+                child);
         else if (is_equal(child.name(), "triangle"))
             make_geometry(add_Triangle(mother, child, scenery), child);
         else if (is_equal(child.name(), "light_field_sensor"))
@@ -90,27 +94,6 @@ void SceneryFactory::add_to_sensors_if_sensitive(
         PhotonSensor::Sensor* sens = new PhotonSensor::Sensor(id, frame);
         raw_sensors->push_back(sens);
     }
-}
-
-Frame* SceneryFactory::add_SphereCapWithRectangularBound(
-    Frame* mother,
-    const Node node
-) {
-    FrameFab framefab(node);
-    SphereCapWithRectangularBound* cap =
-        mother->append<SphereCapWithRectangularBound>();
-    cap->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
-
-    cap->set_inner_color(surface_color(node, scenery));
-    cap->set_outer_color(surface_color(node, scenery));
-    cap->set_outer_reflection(surface_refl(node, scenery));
-    cap->set_inner_reflection(surface_refl(node, scenery));
-    cap->set_curvature_radius_and_x_y_width(
-        node.child("set_sphere_cap_rectangular").to_double(
-            "curvature_radius"),
-        node.child("set_sphere_cap_rectangular").to_double("x_width"),
-        node.child("set_sphere_cap_rectangular").to_double("y_width"));
-    return cap;
 }
 
 Frame* SceneryFactory::add_SegmentedReflector(Frame* mother, const Node node) {
