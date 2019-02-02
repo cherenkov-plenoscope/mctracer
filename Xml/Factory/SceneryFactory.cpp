@@ -49,7 +49,7 @@ void SceneryFactory::make_geometry(Frame* mother, const Node node) {
         else if (is_equal(child.name(), "disc"))
             make_geometry(add_Disc(mother, child, scenery), child);
         else if (is_equal(child.name(), "sphere"))
-            make_geometry(add_Sphere(mother, child), child);
+            make_geometry(add_Sphere(mother, child, scenery), child);
         else if (is_equal(child.name(), "plane"))
             make_geometry(add_Plane(mother, child), child);
         else if (is_equal(child.name(), "hex_plane"))
@@ -89,24 +89,6 @@ void SceneryFactory::add_to_sensors_if_sensitive(
         PhotonSensor::Sensor* sens = new PhotonSensor::Sensor(id, frame);
         raw_sensors->push_back(sens);
     }
-}
-
-Frame* SceneryFactory::add_Sphere(Frame* mother, const Node node) {
-    FrameFab framefab(node);
-    Sphere* sphere = mother->append<Sphere>();
-    sphere->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
-
-    sphere->set_inner_color(surface_color(node, scenery));
-    sphere->set_outer_color(surface_color(node, scenery));
-    sphere->set_outer_reflection(surface_refl(node, scenery));
-    sphere->set_inner_reflection(surface_refl(node, scenery));
-
-    if (node.child("set_surface").has_attribute("refraction_vs_wavelength"))
-        sphere->set_inner_refraction(surface_refrac(node, scenery));
-
-    sphere->set_radius(
-        node.child("set_sphere").to_double("radius"));
-    return sphere;
 }
 
 Frame* SceneryFactory::add_Plane(Frame* mother, const Node node) {
