@@ -34,7 +34,6 @@ class SceneryFactory {
 
  private:
     void make_geometry(Frame* mother, const Node node);
-    Frame* add_BiConvexLensHex(Frame* mother, const Node node);
     Frame* add_SphereCapWithHexagonalBound(Frame* mother, const Node node);
     Frame* add_SphereCapWithRectangularBound(Frame* mother, const Node node);
     Frame* add_Triangle(Frame* mother, const Node node);
@@ -167,6 +166,25 @@ Frame* add_Annulus(Frame* mother, const Node node, Scenery *scenery) {
         node.child("set_annulus").to_double("outer_radius"),
         node.child("set_annulus").to_double("inner_radius"));
     return ann;
+}
+
+Frame* add_BiConvexLensHex(Frame* mother, const Node node, Scenery *scenery) {
+    FrameFab framefab(node);
+    BiConvexLensHexBound* lens = mother->append<BiConvexLensHexBound>();
+    lens->set_name_pos_rot(framefab.name, framefab.pos, framefab.rot);
+
+    lens->set_inner_color(surface_color(node, scenery));
+    lens->set_outer_color(surface_color(node, scenery));
+    lens->set_outer_reflection(surface_refl(node, scenery));
+    lens->set_inner_refraction(
+        scenery->functions.get(
+            node.child("set_medium").attribute("refraction_vs_wavelength")));
+    lens->set_curvature_radius_and_outer_hex_radius(
+        node.child("set_bi_convex_lens_hexagonal").to_double(
+            "curvature_radius"),
+        node.child("set_bi_convex_lens_hexagonal").to_double(
+            "outer_radius"));
+    return lens;
 }
 
 }  // namespace Xml
