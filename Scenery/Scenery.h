@@ -13,6 +13,8 @@ struct Scenery {
     FunctionMap functions;
     SensorMap sensors;
 
+    std::string current_working_directory;
+
     Scenery();
     static Scenery void_scenery;
 };

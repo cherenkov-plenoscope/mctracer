@@ -1,0 +1,59 @@
+{
+  "functions": {
+    "leaf_reflection": {
+      "type":"constant",
+      "value": 0.5,
+      "limits": [200e-9, 1200e-9]},
+    "pole_dull": {
+      "type":"constant",
+      "value": 0.0,
+      "limits": [200e-9, 1200e-9]}},
+  "colors": {
+    "grass_green": [22, 91, 49],
+    "orange": [255, 91, 49],
+    "leaf_green": [22, 200, 49],
+    "wood_brown": [200,200,0]},
+  "children": [
+    {
+      "type": "Frame",
+      "name": "tree",
+      "pos": [5, 5, -2],
+      "rot": [0, 0, 0],
+      "children": [
+        {
+          "type": "Sphere",
+          "name": "leaf_ball",
+          "pos": [0, 0, 3],
+          "rot": [0, 0, 0],
+          "radius": 1.5,
+          "surface": {
+            "outer_color": "leaf_green",
+            "inner_color": "leaf_green"},
+          "children": []
+        },
+        {
+          "type": "Cylinder",
+          "name": "pole",
+          "radius": 0.25,
+          "start_pos": [0, 0, 0],
+          "end_pos": [0, 0, 1.5],
+          "surface": {
+            "outer_color": "wood_brown",
+            "inner_color": "wood_brown"},
+          "children": []
+        }
+      ]
+    },
+    {
+      "type": "StereoLitography",
+      "name": "spyder",
+      "pos": [10, 10, -1],
+      "rot": [0, 0, 0],
+      "scale": 0.15,
+      "path": "spider.stl",
+      "surface": {
+        "outer_color": "orange"},
+      "children": []
+    }
+  ]
+}

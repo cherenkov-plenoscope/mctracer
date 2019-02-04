@@ -9,5 +9,6 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/FunctionMap.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SensorMap.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Scenery.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/json_to_scenery.cpp
     PARENT_SCOPE
 )
