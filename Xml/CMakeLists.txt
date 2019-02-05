@@ -1,4 +1,3 @@
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/pugi")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/Factory")
 set(SOURCE
     ${SOURCE}

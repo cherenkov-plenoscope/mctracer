@@ -44,10 +44,11 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/Scenery")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Plenoscope")
 add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonSensor")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Tools")
-add_subdirectory("${PROJECT_SOURCE_DIR}/Xml")
-add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonsReader")
 add_subdirectory("${PROJECT_SOURCE_DIR}/SignalProcessing")
 add_subdirectory("${PROJECT_SOURCE_DIR}/DocOpt")
+#set(SOURCE
+#    ${SOURCE}
+#    ${CMAKE_CURRENT_SOURCE_DIR}/json_to_scenery.cpp)
 #-------------------------------
 # mctracer library
 add_library(mct SHARED ${SOURCE})

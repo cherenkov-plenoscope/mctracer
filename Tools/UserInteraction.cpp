@@ -6,7 +6,6 @@
 #include <sstream>
 #include <iostream>
 #include <string>
-#include "Xml/BasicAttributes.h"
 #include "Tools/StringTools.h"
 
 namespace UserInteraction {

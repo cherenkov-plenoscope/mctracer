@@ -6,7 +6,7 @@
 #include "Scenery.h"
 #include "Core/Frame.h"
 #include "Scenery/Primitive/Primitive.h"
-#include "Scenery/json.hpp"
+#include "nlohmann_json.hpp"
 
 namespace mct {
 namespace json {
