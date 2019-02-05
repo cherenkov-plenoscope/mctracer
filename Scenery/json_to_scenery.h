@@ -29,13 +29,10 @@ class BadVec3 : public std::invalid_argument {
     using invalid_argument::invalid_argument;};
 class BadRot3 : public std::invalid_argument {
     using invalid_argument::invalid_argument;};
-class BadLimit : public std::invalid_argument {
-    using invalid_argument::invalid_argument;};
 
 nlohmann::json load(const std::string &path);
-void assert_key(const nlohmann::json &j, const std::string &key, const std::string &obj);
+void assert_key(const nlohmann::json &j, const std::string &key);
 Color to_color(const nlohmann::json &j);
-Function::Limits to_limits(const nlohmann::json &j);
 Vec3 to_vec3(const nlohmann::json &j);
 Rot3 to_rot3(const nlohmann::json &j);
 void set_frame(Frame *f, const nlohmann::json &j);
@@ -105,12 +102,27 @@ SphereCapWithRectangularBound* add_SphereCapWithRectangularBound(
     const nlohmann::json &j);
 
 template<class Ret>
-Ret g(const nlohmann::json &j, const std::string &key, const std::string &obj) {
-	assert_key(j, key, obj);
+Ret g(const nlohmann::json &j, const std::string &key) {
+	assert_key(j, key);
 	return j[key].get<Ret>();}
 
 bool has(const nlohmann::json &j, const std::string &key) {
 	return j.find(key) != j.end();
+}
+
+Color as_color(const nlohmann::json &j, const std::string key) {
+    assert_key(j, key);
+    return to_color(j[key]);
+}
+
+Vec3 as_vec3(const nlohmann::json &j, const std::string key) {
+    assert_key(j, key);
+    return to_vec3(j[key]);
+}
+
+std::string as_string(const nlohmann::json &j, const std::string key) {
+    assert_key(j, key);
+    return j[key].get<std::string>();
 }
 
 }  // namespace json

@@ -4,8 +4,8 @@
 #include "Scenery/json_to_scenery.h"
 #include "Scenery/Scenery.h"
 #include "Scenery/Primitive/Primitive.h"
-#include "Visual/Config.h"
-#include "Visual/FlyingCamera.h"
+//#include "Visual/Config.h"
+//#include "Visual/FlyingCamera.h"
 namespace nl = nlohmann;
 using std::string;
 using StringTools::is_equal;
@@ -25,8 +25,8 @@ TEST_F(JsonTest, mini_scenery_with_stl) {
     Scenery s;
     mct::json::append_to_frame_in_scenery(&s.root, &s, path);
     s.root.init_tree_based_on_mother_child_relations();
-    Visual::Config cfg;
-    Visual::FlyingCamera(&s.root, &cfg);
+    //Visual::Config cfg;
+    //Visual::FlyingCamera(&s.root, &cfg);
 }
 
 TEST_F(JsonTest, valid_color) {
@@ -48,12 +48,18 @@ TEST_F(JsonTest, color_no_array_but_string) {
 }
 
 TEST_F(JsonTest, fine_colors) {
-    nl::json jcolors = {
-        {"red", {255,0,0}},
-        {"green", {0,255,0}},
-        {"blue", {0,0,255}}};
+    auto j = R"(
+    {
+      "colors": [
+        {"name":"red", "rgb":[255, 0, 0]},
+        {"name":"green", "rgb":[0, 255, 0]},
+        {"name":"blue", "rgb":[0, 0, 255]}
+      ]
+    }
+    )"_json;
     ColorMap cmap;
-    mct::json::add_colors(&cmap, jcolors);
+    mct::json::assert_key(j, "colors");
+    mct::json::add_colors(&cmap, j["colors"]);
     EXPECT_TRUE(cmap.has("red"));
     EXPECT_EQ(*cmap.get("red"), Color(255, 0, 0));
     EXPECT_TRUE(cmap.has("green"));
@@ -63,43 +69,32 @@ TEST_F(JsonTest, fine_colors) {
 }
 
 TEST_F(JsonTest, empty_colors) {
-    nl::json j = "{ \"colors\": {}}"_json;
+    nl::json j = R"({"colors": {}})"_json;
     ColorMap cmap;
+    mct::json::assert_key(j, "colors");
     mct::json::add_colors(&cmap, j["colors"]);
     EXPECT_EQ(cmap.colors.size(), 0u);
 }
 
-TEST_F(JsonTest, valid_limits) {
-    nl::json j = "{\"limits\": [1e-9, 2e-9]}"_json;
-    Function::Limits limit = mct::json::to_limits(j["limits"]);
-    EXPECT_EQ(limit.lower(), 1e-9);
-    EXPECT_EQ(limit.upper(), 2e-9);
-}
-
-TEST_F(JsonTest, invalid_limits) {
-    nl::json j = "{\"limits\": \"nope\"}"_json;
-    EXPECT_THROW(
-        mct::json::to_limits(j["limits"]),
-        mct::json::BadLimit);
-}
-
 TEST_F(JsonTest, parse_mini_scenery) {
     auto jscenery = R"(
-    {
-      "functions": {
-        "leaf_reflection": {
-          "type":"constant",
-          "value": 0.5,
-          "limits": [200e-9, 1200e-9]},
-        "pole_dull": {
-          "type":"constant",
-          "value": 0.0,
-          "limits": [200e-9, 1200e-9]}},
-      "colors": {
-        "grass_green": [22, 91, 49],
-        "orange": [255, 91, 49],
-        "leaf_green": [22, 200, 49],
-        "wood_brown": [200, 200, 0]},
+    { "functions":[
+        { "name":"leaf_reflection",
+          "argument_versus_value":[
+            [200e-9, 0.5],
+            [1200e-9, 0.5]]},
+        { "name":"pole_dull",
+          "argument_versus_value":[
+            [200e-9, 0.0],
+            [1200e-9, 0.0]]}
+      ],
+      "colors":
+      [
+        {"name":"grass_green", "rgb":[22, 91, 49]},
+        {"name":"orange", "rgb":[255, 91, 49]},
+        {"name":"leaf_green", "rgb":[22, 200, 49]},
+        {"name":"wood_brown", "rgb":[200, 200, 0]}
+      ],
       "children": [
         {
           "type": "Frame",
@@ -155,10 +150,10 @@ TEST_F(JsonTest, parse_mini_scenery) {
 
 TEST_F(JsonTest, linear_interpolation_function) {
     auto j = R"(
-    {
-      "foo": {
-        "type": "linear_interpolation",
-        "argument_versus_value": [
+    [
+      {
+        "name":"foo",
+        "argument_versus_value":[
           [0, 5],
           [1, 4],
           [2, 3],
@@ -167,7 +162,7 @@ TEST_F(JsonTest, linear_interpolation_function) {
           [5, 0]
         ]
       }
-    }
+    ]
     )"_json;
 
     FunctionMap functions;

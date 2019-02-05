@@ -1,18 +1,20 @@
 {
-  "functions": {
-    "leaf_reflection": {
-      "type":"constant",
-      "value": 0.5,
-      "limits": [200e-9, 1200e-9]},
-    "pole_dull": {
-      "type":"constant",
-      "value": 0.0,
-      "limits": [200e-9, 1200e-9]}},
-  "colors": {
-    "grass_green": [22, 91, 49],
-    "orange": [255, 91, 49],
-    "leaf_green": [22, 200, 49],
-    "wood_brown": [200,200,0]},
+  "functions":[
+    { "name":"leaf_reflection",
+      "argument_versus_value":[
+        [200e-9, 0.5],
+        [1200e-9, 0.5]]},
+    { "name":"pole_dull",
+      "argument_versus_value":[
+        [200e-9, 0.0],
+        [1200e-9, 0.0]]}
+  ],
+  "colors":[
+    {"name":"grass_green", "rgb":[22, 91, 49]},
+    {"name":"orange", "rgb":[255, 91, 49]},
+    {"name":"leaf_green", "rgb":[22, 200, 49]},
+    {"name":"wood_brown", "rgb":[200, 200, 0]}
+  ],
   "children": [
     {
       "type": "Frame",
