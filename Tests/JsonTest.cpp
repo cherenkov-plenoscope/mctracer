@@ -153,6 +153,34 @@ TEST_F(JsonTest, parse_mini_scenery) {
     EXPECT_EQ(children->at(0)->get_name(), "tree");
 }
 
+TEST_F(JsonTest, linear_interpolation_function) {
+    auto j = R"(
+    {
+      "foo": {
+        "type": "linear_interpolation",
+        "argument_versus_value": [
+          [0, 5],
+          [1, 4],
+          [2, 3],
+          [3, 2],
+          [4, 1],
+          [5, 0]
+        ]
+      }
+    }
+    )"_json;
+
+    FunctionMap functions;
+    mct::json::add_functions(&functions, j);
+    EXPECT_TRUE(functions.has("foo"));
+    EXPECT_TRUE(functions.get("foo")->limits().upper() == 5);
+    EXPECT_TRUE(functions.get("foo")->limits().lower() == 0);
+    EXPECT_NEAR(functions.get("foo")->evaluate(0.0), 5.0, 1e-9);
+    EXPECT_NEAR(functions.get("foo")->evaluate(0.5), 4.5, 1e-9);
+    EXPECT_NEAR(functions.get("foo")->evaluate(1.0), 4.0, 1e-9);
+    EXPECT_NEAR(functions.get("foo")->evaluate(4.999), 0.0, 2e-3);
+}
+
 TEST_F(JsonTest, Annulus) {
     auto j = R"(
     {
@@ -247,4 +275,17 @@ TEST_F(JsonTest, Disc) {
     Disc* a = mct::json::add_Disc(&s.root, &s, j);
     EXPECT_EQ(a->get_name(), "didi");
     EXPECT_EQ(a->get_children()->size(), 0u);
+}
+
+TEST_F(JsonTest, What_is_key) {
+    auto j = R"(
+    {
+      "key": {
+        "val1": 1,
+        "val2": 2
+      }
+    }
+    )"_json;
+    j["key"]["val1"].get<double>();
+    EXPECT_EQ(j["key"]["val1"], 1);
 }

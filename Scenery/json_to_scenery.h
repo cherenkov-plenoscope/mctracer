@@ -104,6 +104,15 @@ SphereCapWithRectangularBound* add_SphereCapWithRectangularBound(
     Scenery *scenery,
     const nlohmann::json &j);
 
+template<class Ret>
+Ret g(const nlohmann::json &j, const std::string &key, const std::string &obj) {
+	assert_key(j, key, obj);
+	return j[key].get<Ret>();}
+
+bool has(const nlohmann::json &j, const std::string &key) {
+	return j.find(key) != j.end();
+}
+
 }  // namespace json
 }  // namespace mct
 
