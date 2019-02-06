@@ -4,12 +4,11 @@
 #include "Core/Photons.h"
 #include "Core/Vec3.h"
 #include "Scenery/StereoLitography/StereoLitography.h"
-#include "Xml/Factory/VisualConfigFab.h"
-#include "Xml/Factory/PropagationConfigFab.h"
-#include "Xml/Factory/SceneryFactory.h"
 #include "Visual/FlyingCamera.h"
 #include "Visual/PortablePixMap.h"
 #include "Scenery/Scenery.h"
+#include "Tools/PathTools.h"
+#include "json.h"
 using std::string;
 using std::cout;
 
@@ -99,8 +98,10 @@ int main(int argc, char* argv[]) {
             StringTools::is_ending(scenery_path.path, ".xml") ||
             StringTools::is_ending(scenery_path.path, ".XML")
         ) {
-            Xml::SceneryFactory fab(scenery_path.path);
-            fab.append_to_frame_in_scenery(&scenery.root, &scenery);
+            mct::json::append_to_frame_in_scenery(
+                &scenery.root,
+                &scenery,
+                scenery_path.path);
         } else {
             cout << "Can only read stl or xml files.\n";
             return 0;
@@ -108,10 +109,8 @@ int main(int argc, char* argv[]) {
 
         Visual::Config visual_config;
         if (args.find("--config")->second) {
-            Xml::Document doc(args.find("--config")->second.asString());
-            Xml::Node node = doc.node();
-            Xml::Node vc_node = node.child("visual");
-            visual_config = Xml::Configs::get_VisualConfig_from_node(vc_node);
+            visual_config = mct::json::to_visual_config(
+                args.find("--config")->second.asString());
         }
         scenery.root.init_tree_based_on_mother_child_relations();
 

@@ -1,8 +1,8 @@
 // Copyright 2018 Sebastian A. Mueller
-#include "Scenery/json_to_scenery.h"
+#include "json.h"
 #include <fstream>
 #include <sstream>
-#include "Scenery/json.hpp"
+#include "nlohmann_json.hpp"
 #include "Tools/StringTools.h"
 #include "Scenery/Primitive/Primitive.h"
 #include "Scenery/StereoLitography/StereoLitography.h"
@@ -455,6 +455,107 @@ Frame* add_light_field_sensor(
 
 Frame* add_light_field_sensor_demonstration(
 */
+
+bool has(const nlohmann::json &j, const std::string &key) {
+    return j.find(key) != j.end();
+}
+
+Color as_color(const nlohmann::json &j, const std::string key) {
+    assert_key(j, key);
+    return to_color(j[key]);
+}
+
+Vec3 as_vec3(const nlohmann::json &j, const std::string key) {
+    assert_key(j, key);
+    return to_vec3(j[key]);
+}
+
+std::string as_string(const nlohmann::json &j, const std::string key) {
+    assert_key(j, key);
+    return j[key].get<std::string>();
+}
+
+Visual::Config to_visual_config(const nlohmann::json &j) {
+    Visual::Config cfg;
+    cfg.max_interaction_depth = g<uint64_t>(j, "max_interaction_depth");
+    cfg.preview.cols = 128;
+    cfg.preview.rows = 72;
+    cfg.preview.scale = 10;
+    cfg.snapshot.cols = 1920;
+    cfg.snapshot.rows = 1080;
+    cfg.snapshot.noise_level = 16;  // fairly smooth
+    cfg.snapshot.focal_length_over_aperture_diameter = 0.95;  // Ultra fast lens
+    cfg.snapshot.image_sensor_size_along_a_row = 0.07;  // IMAX 70mm format
+    cfg.global_illumination.on = true;
+    cfg.global_illumination.incoming_direction = Vec3(0.6, 0.2, 1.0);
+    cfg.photon_trajectories.radius = 0.025;
+    return cfg;
+}
+
+Visual::Config to_visual_config(const std::string &path) {
+    const nlohmann::json j = load(path);
+    return to_visual_config(j);
+}
+
+PropagationConfig to_PropagationConfig(const std::string &path) {
+    const nlohmann::json j = load(path);
+    return to_PropagationConfig(j);
+}
+
+PropagationConfig to_PropagationConfig(const nlohmann::json &j) {
+    PropagationConfig cfg;
+    cfg.use_multithread_when_possible =
+        g<bool>(j, "use_multithread_when_possible");
+    cfg.max_number_of_interactions_per_photon =
+        g<uint64_t>(j, "max_number_of_interactions_per_photon");
+    return cfg;
+}
+
+void transform(const nlohmann::json &j, std::vector<Photon> *photons) {
+    Vec3 pos = as_vec3(j, "pos");
+    Vec3 rot_deg = as_vec3(j, "rot_in_deg");
+    Rot3 rot(Deg2Rad(rot_deg.x), Deg2Rad(rot_deg.y), Deg2Rad(rot_deg.z));
+    HomTra3 Trafo;
+    Trafo.set_transformation(rot, pos);
+    Photons::transform_all_photons_multi_thread(Trafo, photons);
+}
+
+std::vector<Photon> to_parallel_disc(const nlohmann::json &j) {
+    std::vector<Photon> photons =
+        Photons::Source::parallel_towards_z_from_xy_disc(
+            g<double>(j, "disc_radius_in_m"),
+            g<uint64_t>(j, "disc_radius_in_m"));
+    transform(j, &photons);
+    return photons;
+}
+
+std::vector<Photon> to_pointsource(const nlohmann::json &j) {
+    std::vector<Photon> photons =
+        Photons::Source::point_like_towards_z_opening_angle_num_photons(
+            Deg2Rad(g<double>(j, "opening_angle_in_deg")),
+            g<uint64_t>(j, "number_of_photons"));
+    transform(j, &photons);
+    return photons;
+}
+
+std::vector<Photon> to_photons(const std::string &path) {
+    return to_photons(load(path));
+}
+
+std::vector<Photon> to_photons(const nlohmann::json &j) {
+    std::vector<Photon> photons;
+    if (has(j, "point_source"))  {
+        photons = to_pointsource(j["point_source"]);
+    } else if (has(j, "parallel_disc")) {
+        photons = to_parallel_disc(j["parallel_disc"]);
+    } else {
+        std::stringstream info;
+        info << "Expected InternalPhotonSource from json ";
+        info << "to be either 'point_source', or 'parallel_disc'.\n";
+        throw UnkownTypeOfLightSource(info.str());
+    }
+    return photons;
+}
 
 }  // namespace json
 }  // namespace mct

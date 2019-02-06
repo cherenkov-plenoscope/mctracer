@@ -1,8 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "Xml/Xml.h"
+//#include "Xml/Xml.h"
 #include "Tools/FileTools.h"
-
+/*
 class XmlTest : public ::testing::Test {};
 
 TEST_F(XmlTest, empty_xml_path) {
@@ -234,3 +234,4 @@ TEST_F(XmlTest, PropagationConfig) {
         in.use_multithread_when_possible,
         out.use_multithread_when_possible);
 }
+*/

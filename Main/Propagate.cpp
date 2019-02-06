@@ -1,14 +1,15 @@
 #include "DocOpt/docopt.h"
 #include "Core/Photons.h"
 #include "Tools/AsciiIo.h"
-#include "Xml/Factory/SceneryFactory.h"
+#include "json.h"
+#include "Tools/PathTools.h"
 #include "PhotonSensor/PhotonSensor.h"
-#include "Xml/Factory/PropagationConfigFab.h"
 #include "PhotonsReader/PhotonsReader.h"
 #include "Scenery/Scenery.h"
 using std::string;
 using std::cout;
 using std::vector;
+using PathTools::Path;
 
 static const char USAGE[] =
 R"(Photon propagation
@@ -36,78 +37,71 @@ int main(int argc, char* argv[]) {
         USAGE,
         { argv + 1, argv + argc },
         true,        // show help if requested
-        "mct 0.0"
-    );  // version string
+        "mct 0.0");  // version string
 
-    PathTools::Path out_path = PathTools::Path(args.find("--output")->second.asString());
-    PathTools::Path scenery_path = PathTools::Path(args.find("--scenery")->second.asString());
-    PathTools::Path photon_path = PathTools::Path(args.find("--input")->second.asString());
-    PathTools::Path config_path = PathTools::Path(args.find("--config")->second.asString());
+    Path out_path = Path(args.find("--output")->second.asString());
+    Path scenery_path = Path(args.find("--scenery")->second.asString());
+    Path photon_path = Path(args.find("--input")->second.asString());
+    Path config_path = Path(args.find("--config")->second.asString());
     const bool export_binary = args.find("--binary")->second.asBool();
-    std::cout << "exp bin: " << export_binary << "\n";
-    Xml::Document doc(config_path.path);
-    Xml::Node se = doc.node().child("settings");
-   
-    //--------------------------------------------------------------------------
+
     // BASIC SETTINGS
-    PropagationConfig settings = Xml::Configs::get_PropagationConfig_from_node(se);
-    
-    //--------------------------------------------------------------------------
+    PropagationConfig settings = mct::json::to_PropagationConfig(
+        config_path.path);
+
     // Random
     Random::Mt19937 prng;
     if(args.find("--random_seed")->second)
         prng.set_seed(args.find("--random_seed")->second.asLong());
 
-    //--------------------------------------------------------------------------
     // scenery
-    Xml::SceneryFactory fab(scenery_path.path);
     Scenery scenery;
-    fab.append_to_frame_in_scenery(&scenery.root, &scenery);
+    mct::json::append_to_frame_in_scenery(
+        &scenery.root,
+        &scenery,
+        scenery_path.path);
     scenery.root.init_tree_based_on_mother_child_relations();
-    //--------------------------------------------------------------------------
+
     // sensors in scenery
     PhotonSensor::Sensors sensors(scenery.sensors.sensors);
 
-    //--------------------------------------------------------------------------
     // photon source
     PhotonsReader photon_file(photon_path.path);
 
     unsigned int event_counter = 1;
-    while(photon_file.has_still_photons_left()) {
-
+    while (photon_file.has_still_photons_left()) {
         vector<Photon> photons;
         photons = photon_file.next(&prng);
 
-        //----------------------------------------------------------------------
         // photon propagation
         Photons::propagate_photons_in_scenery_with_settings(
-            &photons, &scenery.root, &settings, &prng
-        );
+            &photons,
+            &scenery.root,
+            &settings,
+            &prng);
 
-        //----------------------------------------------------------------------
         // detect photons in sensors
         sensors.clear_history();
         sensors.assign_photons(&photons);
-        //----------------------------------------------------------------------
-        // write each sensors to file
-        for(unsigned int i=0; i<sensors.size(); i++) {
 
+        // write each sensors to file
+        for (unsigned int i = 0; i < sensors.size(); i++) {
             std::stringstream outname;
             outname << out_path.path << event_counter << "_" << i;
 
-            if(export_binary) {
-
+            if (export_binary) {
                 std::ofstream out;
                 out.open(outname.str(), std::ios::out | std::ios::binary);
                 PhotonSensor::write_arrival_information_to_file(
                     &(sensors.at(i)->photon_arrival_history),
                     &out);
                 out.close();
-            }else{
-
+            } else {
                 std::stringstream header;
                 header << "scenery: " << scenery_path.path << "\n";
-                header << "sensor:  " << sensors.at(i)->frame->get_path_in_tree_of_frames() << ", ID: " << i << "\n";
+                header << "sensor:  ";
+                header << sensors.at(i)->frame->get_path_in_tree_of_frames();
+                header << ", ID: " << i << "\n";
                 header << "photons: " << photon_path.path << "\n";
                 header << "-------------\n";
                 header << PhotonSensor::arrival_table_header();
@@ -117,14 +111,14 @@ int main(int argc, char* argv[]) {
                         sensors.at(i)->photon_arrival_history),
                     outname.str(),
                     header.str()
-                );      
+                );
             }
         }
         event_counter++;
     }
-    //--------------------------------------------------------------------------
-    }catch(std::exception &error) {
-        std::cerr << error.what(); 
+
+    } catch (std::exception &error) {
+        std::cerr << error.what();
     }
     return 0;
 }

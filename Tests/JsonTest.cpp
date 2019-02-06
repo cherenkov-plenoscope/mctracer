@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "Scenery/json.hpp"
-#include "Scenery/json_to_scenery.h"
+#include "nlohmann_json.hpp"
+#include "json.h"
 #include "Scenery/Scenery.h"
 #include "Scenery/Primitive/Primitive.h"
 //#include "Visual/Config.h"

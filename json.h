@@ -1,10 +1,14 @@
 // Copyright 2018 Sebastian A. Mueller
-#ifndef SCENERY_JSON_TO_SCENERY_H_
-#define SCENERY_JSON_TO_SCENERY_H_
+#ifndef MCT_JSON_H_
+#define MCT_JSON_H_
 
 #include <string>
-#include "Scenery.h"
+#include <sstream>
+#include "Scenery/Scenery.h"
 #include "Core/Frame.h"
+#include "Core/Photons.h"
+#include "Core/PropagationConfig.h"
+#include "Visual/Config.h"
 #include "Scenery/Primitive/Primitive.h"
 #include "nlohmann_json.hpp"
 
@@ -106,26 +110,36 @@ Ret g(const nlohmann::json &j, const std::string &key) {
 	assert_key(j, key);
 	return j[key].get<Ret>();}
 
-bool has(const nlohmann::json &j, const std::string &key) {
-	return j.find(key) != j.end();
-}
+bool has(const nlohmann::json &j, const std::string &key);
 
-Color as_color(const nlohmann::json &j, const std::string key) {
-    assert_key(j, key);
-    return to_color(j[key]);
-}
+Color as_color(const nlohmann::json &j, const std::string key);
 
-Vec3 as_vec3(const nlohmann::json &j, const std::string key) {
-    assert_key(j, key);
-    return to_vec3(j[key]);
-}
+Vec3 as_vec3(const nlohmann::json &j, const std::string key);
 
-std::string as_string(const nlohmann::json &j, const std::string key) {
-    assert_key(j, key);
-    return j[key].get<std::string>();
-}
+std::string as_string(const nlohmann::json &j, const std::string key);
+
+Visual::Config to_visual_config(const nlohmann::json &j);
+
+Visual::Config to_visual_config(const std::string &path);
+
+PropagationConfig to_PropagationConfig(const std::string &path);
+
+PropagationConfig to_PropagationConfig(const nlohmann::json &j);
+
+void transform(const nlohmann::json &j, std::vector<Photon> *photons);
+
+std::vector<Photon> to_parallel_disc(const nlohmann::json &j);
+
+std::vector<Photon> to_pointsource(const nlohmann::json &j);
+
+class UnkownTypeOfLightSource : public std::invalid_argument {
+    using invalid_argument::invalid_argument;};
+
+std::vector<Photon> to_photons(const std::string &path);
+
+std::vector<Photon> to_photons(const nlohmann::json &j);
 
 }  // namespace json
 }  // namespace mct
 
-#endif  // SCENERY_JSON_TO_SCENERY_H_
+#endif  // MCT_JSON_H_

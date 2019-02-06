@@ -37,18 +37,18 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
 #-----------
 # The Source
+set(SOURCE 	
+	${CMAKE_CURRENT_SOURCE_DIR}/json.cpp)
 add_subdirectory("${PROJECT_SOURCE_DIR}/Visual")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Core")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Corsika")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Scenery")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Plenoscope")
 add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonSensor")
+add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonsReader")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Tools")
 add_subdirectory("${PROJECT_SOURCE_DIR}/SignalProcessing")
 add_subdirectory("${PROJECT_SOURCE_DIR}/DocOpt")
-#set(SOURCE
-#    ${SOURCE}
-#    ${CMAKE_CURRENT_SOURCE_DIR}/json_to_scenery.cpp)
 #-------------------------------
 # mctracer library
 add_library(mct SHARED ${SOURCE})
