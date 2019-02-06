@@ -43,4 +43,16 @@ uint8_t read_uint8(std::istream &fin) {
     return v;
 }
 
+double read_float64(std::istream &fin) {
+    double v;
+    fin.read(reinterpret_cast<char*>(&v), sizeof(v));
+    return v;
+}
+
+uint64_t read_uint64(std::istream &fin) {
+    uint64_t v;
+    fin.read(reinterpret_cast<char*>(&v), sizeof(v));
+    return v;
+}
+
 }  // namespace bio

@@ -1,13 +1,12 @@
 // Copyright 2018 Sebastian A. Mueller
 #include <stdint.h>
 #include "DocOpt/docopt.h"
-#include "Core/Photons.h"
 #include "Core/Vec3.h"
-#include "Scenery/StereoLitography/StereoLitography.h"
 #include "Visual/FlyingCamera.h"
 #include "Visual/PortablePixMap.h"
 #include "Scenery/Scenery.h"
 #include "Tools/PathTools.h"
+#include "Tools/binary_input_output.h"
 #include "json.h"
 using std::string;
 using std::cout;
@@ -21,8 +20,8 @@ R"(Show a scenery
       mctCameraServer --version
 
     Options:
-      -s --scenery=SCENERY_PATH     Scenery xml file path.
-      -c --config=CONFIG_PATH       Visual config xml file path.
+      -s --scenery=SCENERY_PATH     Scenery file path.
+      -c --config=CONFIG_PATH       Visual config file path.
       -h --help                     Show this screen.
       --version                     Show version.
 )";
@@ -42,36 +41,24 @@ struct ApertureCameraInstructions {
     uint64_t noise_level;
 };
 
-double read_float64(std::istream &fin) {
-    double v;
-    fin.read(reinterpret_cast<char*>(&v), sizeof(v));
-    return v;
-}
-
-uint64_t read_uint64(std::istream &fin) {
-    uint64_t v;
-    fin.read(reinterpret_cast<char*>(&v), sizeof(v));
-    return v;
-}
-
 ApertureCameraInstructions read_from_stream(std::istream &fin) {
     ApertureCameraInstructions inst;
-    inst.magic_sync = read_uint64(fin);
+    inst.magic_sync = bio::read_uint64(fin);
     inst.position = Vec3(
-        read_float64(fin),
-        read_float64(fin),
-        read_float64(fin));
+        bio::read_float64(fin),
+        bio::read_float64(fin),
+        bio::read_float64(fin));
     inst.orientation = Rot3(
-        read_float64(fin),
-        read_float64(fin),
-        read_float64(fin));
-    inst.object_distance = read_float64(fin);
-    inst.sensor_size_along_columns = read_float64(fin);
-    inst.field_of_view_along_columns = read_float64(fin);
-    inst.focal_length_over_aperture_diameter = read_float64(fin);
-    inst.number_columns = read_uint64(fin);
-    inst.number_rows = read_uint64(fin);
-    inst.noise_level = read_uint64(fin);
+        bio::read_float64(fin),
+        bio::read_float64(fin),
+        bio::read_float64(fin));
+    inst.object_distance = bio::read_float64(fin);
+    inst.sensor_size_along_columns = bio::read_float64(fin);
+    inst.field_of_view_along_columns = bio::read_float64(fin);
+    inst.focal_length_over_aperture_diameter = bio::read_float64(fin);
+    inst.number_columns = bio::read_uint64(fin);
+    inst.number_rows = bio::read_uint64(fin);
+    inst.noise_level = bio::read_uint64(fin);
     return inst;
 }
 
@@ -81,31 +68,16 @@ int main(int argc, char* argv[]) {
             USAGE,
             { argv + 1, argv + argc },
             true,        // show help if requested
-            "mctCameraServer 0.0");  // version string
+            "mctCameraServer 0.1");  // version string
 
         PathTools::Path scenery_path = PathTools::Path(
             args.find("--scenery")->second.asString());
 
         Scenery scenery;
-        if (
-            StringTools::is_ending(scenery_path.path, ".stl") ||
-            StringTools::is_ending(scenery_path.path, ".STL")
-        ) {
-            const double scale = 1.0;
-            StereoLitography::add_stl_to_frame(
-                scenery_path.path, &scenery.root, scale);
-        } else if (
-            StringTools::is_ending(scenery_path.path, ".xml") ||
-            StringTools::is_ending(scenery_path.path, ".XML")
-        ) {
-            mct::json::append_to_frame_in_scenery(
-                &scenery.root,
-                &scenery,
-                scenery_path.path);
-        } else {
-            cout << "Can only read stl or xml files.\n";
-            return 0;
-        }
+        mct::json::append_to_frame_in_scenery(
+            &scenery.root,
+            &scenery,
+            scenery_path.path);
 
         Visual::Config visual_config;
         if (args.find("--config")->second) {

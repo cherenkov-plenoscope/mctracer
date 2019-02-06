@@ -19,6 +19,9 @@ int32_t read_int32(std::istream &fin);
 void append_uint32(const uint32_t &v, std::ostream &fout);
 uint32_t read_uint32(std::istream &fin);
 
+double read_float64(std::istream &fin);
+uint64_t read_uint64(std::istream &fin);
+
 }  // namespace bio
 
 #endif  // TOOLS_BINARY_INPUT_OUTPUT_H_
