@@ -284,3 +284,15 @@ TEST_F(JsonTest, What_is_key) {
     j["key"]["val1"].get<double>();
     EXPECT_EQ(j["key"]["val1"], 1);
 }
+
+TEST_F(JsonTest, PropagationConfig) {
+    auto j = R"(
+    {
+      "max_number_of_interactions_per_photon": 1337,
+      "use_multithread_when_possible": true
+    }
+    )"_json;
+    PropagationConfig cfg = mct::json::to_PropagationConfig(j);
+    EXPECT_EQ(cfg.max_number_of_interactions_per_photon, 1337u);
+    EXPECT_TRUE(cfg.use_multithread_when_possible);
+}

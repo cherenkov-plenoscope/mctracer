@@ -120,11 +120,11 @@ std::string as_string(const nlohmann::json &j, const std::string key);
 
 Visual::Config to_visual_config(const nlohmann::json &j);
 
-Visual::Config to_visual_config(const std::string &path);
-
-PropagationConfig to_PropagationConfig(const std::string &path);
+Visual::Config load_visual_config(const std::string &path);
 
 PropagationConfig to_PropagationConfig(const nlohmann::json &j);
+
+PropagationConfig load_PropagationConfig(const std::string &path);
 
 void transform(const nlohmann::json &j, std::vector<Photon> *photons);
 

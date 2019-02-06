@@ -475,6 +475,11 @@ std::string as_string(const nlohmann::json &j, const std::string key) {
     return j[key].get<std::string>();
 }
 
+Visual::Config load_visual_config(const std::string &path) {
+    const nlohmann::json j = load(path);
+    return to_visual_config(j);
+}
+
 Visual::Config to_visual_config(const nlohmann::json &j) {
     Visual::Config cfg;
     cfg.max_interaction_depth = g<uint64_t>(j, "max_interaction_depth");
@@ -492,12 +497,7 @@ Visual::Config to_visual_config(const nlohmann::json &j) {
     return cfg;
 }
 
-Visual::Config to_visual_config(const std::string &path) {
-    const nlohmann::json j = load(path);
-    return to_visual_config(j);
-}
-
-PropagationConfig to_PropagationConfig(const std::string &path) {
+PropagationConfig load_PropagationConfig(const std::string &path) {
     const nlohmann::json j = load(path);
     return to_PropagationConfig(j);
 }

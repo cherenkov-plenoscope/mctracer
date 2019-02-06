@@ -68,52 +68,45 @@ add_executable(mctCameraServer Main/CameraServer.cpp)
 target_link_libraries(mctCameraServer mct)
 target_link_libraries(mctCameraServer docopt)
 
-#---------------
-# Propagate exe
-add_executable(mctPropagate Main/Propagate.cpp)
-target_link_libraries(mctPropagate mct)
-target_link_libraries(mctPropagate docopt)
-
-#----------------
-# ShowPhotons exe
-add_executable(mctShowPhotons Main/ShowPhotons.cpp)
-target_link_libraries(mctShowPhotons mct)
-target_link_libraries(mctShowPhotons docopt)
-
-#------------------------
-# light field calibration
-add_executable(mctPlenoscopeCalibration Main/PlenoscopeCalibration.cpp)
-target_link_libraries(mctPlenoscopeCalibration mct)
-target_link_libraries(mctPlenoscopeCalibration stdc++fs)
-target_link_libraries(mctPlenoscopeCalibration docopt)
-
-#------------------------
-# EventIOConverter
-add_executable(mctEventIOConverter Main/EventIOConverter.cpp)
-target_link_libraries(mctEventIOConverter mct)
-target_link_libraries(mctEventIOConverter stdc++fs)
-target_link_libraries(mctEventIOConverter docopt)
-
-#------------------------
-# light field propagation
-add_executable(mctPlenoscopePropagation Main/PlenoscopePropagation.cpp)
-target_link_libraries(mctPlenoscopePropagation mct)
-target_link_libraries(mctPlenoscopePropagation stdc++fs)
-target_link_libraries(mctPlenoscopePropagation docopt)
-
-#------------------------
-# light field nsb only propagation
-add_executable(mctPlenoscopeNsbOnlyPropagation Main/PlenoscopeNsbOnlyPropagation.cpp)
-target_link_libraries(mctPlenoscopeNsbOnlyPropagation mct)
-target_link_libraries(mctPlenoscopeNsbOnlyPropagation stdc++fs)
-target_link_libraries(mctPlenoscopeNsbOnlyPropagation docopt)
-
-#------------------------
-# light field raw photon propagation
-add_executable(mctPlenoscopeRawPhotonPropagation Main/PlenoscopeRawPhotonPropagation.cpp)
-target_link_libraries(mctPlenoscopeRawPhotonPropagation mct)
-target_link_libraries(mctPlenoscopeRawPhotonPropagation stdc++fs)
-target_link_libraries(mctPlenoscopeRawPhotonPropagation docopt)
+##---------------
+## Propagate exe
+#add_executable(mctPropagate Main/Propagate.cpp)
+#target_link_libraries(mctPropagate mct)
+#target_link_libraries(mctPropagate docopt)
+#
+##----------------
+## ShowPhotons exe
+#add_executable(mctShowPhotons Main/ShowPhotons.cpp)
+#target_link_libraries(mctShowPhotons mct)
+#target_link_libraries(mctShowPhotons docopt)
+#
+##------------------------
+## light field calibration
+#add_executable(mctPlenoscopeCalibration Main/PlenoscopeCalibration.cpp)
+#target_link_libraries(mctPlenoscopeCalibration mct)
+#target_link_libraries(mctPlenoscopeCalibration stdc++fs)
+#target_link_libraries(mctPlenoscopeCalibration docopt)
+#
+##------------------------
+## EventIOConverter
+#add_executable(mctEventIOConverter Main/EventIOConverter.cpp)
+#target_link_libraries(mctEventIOConverter mct)
+#target_link_libraries(mctEventIOConverter stdc++fs)
+#target_link_libraries(mctEventIOConverter docopt)
+#
+##------------------------
+## light field propagation
+#add_executable(mctPlenoscopePropagation Main/PlenoscopePropagation.cpp)
+#target_link_libraries(mctPlenoscopePropagation mct)
+#target_link_libraries(mctPlenoscopePropagation stdc++fs)
+#target_link_libraries(mctPlenoscopePropagation docopt)
+#
+##------------------------
+## light field raw photon propagation
+#add_executable(mctPlenoscopeRawPhotonPropagation Main/PlenoscopeRawPhotonPropagation.cpp)
+#target_link_libraries(mctPlenoscopeRawPhotonPropagation mct)
+#target_link_libraries(mctPlenoscopeRawPhotonPropagation stdc++fs)
+#target_link_libraries(mctPlenoscopeRawPhotonPropagation docopt)
 
 #---------------------------------
 # unit test exe
