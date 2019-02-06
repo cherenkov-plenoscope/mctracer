@@ -1,0 +1,371 @@
+{
+  "functions": [
+    { "name": "zero",
+      "argument_versus_value": [
+        [200e-9, 0.0],
+        [1200e-9, 0.0]]},
+    { "name": "leaf_reflection",
+      "argument_versus_value": [
+        [200e-9, 0.5],
+        [1200e-9, 0.5]]},
+    { "name": "mirror_reflection",
+      "argument_versus_value": [
+        [200e-9, 0.95],
+        [1200e-9, 0.95]]},
+    { "name": "glas_refraction",
+      "argument_versus_value": [
+        [200e-9, 1.49],
+        [1200e-9, 1.49]]}
+  ],
+  "colors":
+  [
+    {"name": "grass_green", "rgb": [22, 91, 49]},
+    {"name": "orange", "rgb": [255, 91, 49]},
+    {"name": "leaf_green", "rgb": [22, 200, 49]},
+    {"name": "wood_brown", "rgb": [200, 200, 0]},
+    {"name": "water_blue", "rgb": [22, 22, 200]},
+    {"name": "dark_bricks", "rgb": [110, 110, 110]},
+    {"name": "brick_gray", "rgb": [180,180,180]},
+    {"name": "roof_red", "rgb": [190,0,80]},
+    {"name": "body_white", "rgb": [230,230,215]},
+    {"name": "sensor_green", "rgb": [0,255,128]},
+    {"name": "carbon_black", "rgb": [75,75,75]}
+  ],
+  "children": [
+    {
+      "type": "Disc",
+      "name": "ground",
+      "pos": [0, 0, -2],
+      "rot": [0, 0,  0],
+      "radius": 100,
+      "surface": {
+        "outer_color": "grass_green",
+        "inner_color": "grass_green"},
+      "children": []
+    },
+    {
+      "type": "StereoLitography",
+      "name": "Spyder",
+      "pos": [-5, 3, -1.5],
+      "rot": [0, 0,  0],
+      "path": "spider.stl",
+      "scale": 0.15,
+      "surface": {
+        "outer_color": "orange",
+        "inner_color": "orange"},
+      "children": []
+    },
+    {
+      "type": "Frame",
+      "name": "tree",
+      "pos": [5, 5, -2],
+      "rot": [0, 0, 0],
+      "children": [
+        {
+          "type": "Sphere",
+          "name": "leaf_ball",
+          "pos": [0, 0, 3],
+          "rot": [0, 0, 0],
+          "radius": 1.5,
+          "surface": {
+            "outer_color": "leaf_green"},
+          "children": []
+        },
+        {
+          "type": "Cylinder",
+          "name": "pole",
+          "start_pos": [0, 0, 0],
+          "end_pos": [0, 0, 1.5],
+          "radius": 0.25,
+          "surface": {
+            "outer_color": "wood_brown"},
+          "children": []
+        }
+      ]
+    },
+    {
+      "type": "Frame",
+      "name": "tree2",
+      "pos": [10, 5, -2],
+      "rot": [0, 0, 0],
+      "children": [
+        {
+          "type": "Sphere",
+          "name": "leaf_ball",
+          "pos": [0, 0, 3],
+          "rot": [0, 0, 0],
+          "radius": 1.5,
+          "surface": {
+            "outer_color": "leaf_green",
+            "inner_refraction": "glas_refraction"},
+          "children": []
+        },
+        {
+          "type": "Cylinder",
+          "name": "pole",
+          "start_pos": [0, 0, 0],
+          "end_pos": [0, 0, 1.5],
+          "radius": 0.25,
+          "surface": {
+            "outer_color": "wood_brown"},
+          "children": []
+        }
+      ]
+    },
+    {
+      "type": "Frame",
+      "name": "fountain",
+      "pos": [3, 6, -2],
+      "rot": [0, 0, 0],
+      "children": [
+        {
+          "type": "Annulus",
+          "name": "top",
+          "pos": [0, 0, 1.0],
+          "rot": [0, 0, 0],
+          "inner_radius": 0.5,
+          "outer_radius": 0.6,
+          "surface": {
+            "outer_color": "dark_bricks"},
+          "children": []
+        },
+        {
+          "type": "Cylinder",
+          "name": "outer_wall",
+          "start_pos": [0, 0, 0],
+          "end_pos": [0, 0, 1],
+          "radius": 0.6,
+          "surface": {
+            "outer_color": "dark_bricks"},
+          "children": []
+        },
+        {
+          "type": "Cylinder",
+          "name": "outer_wall",
+          "start_pos": [0, 0, 0],
+          "end_pos": [0, 0, 1],
+          "radius": 0.5,
+          "surface": {
+            "outer_color": "dark_bricks"},
+          "children": []
+        },
+        {
+          "type": "Disc",
+          "name": "water",
+          "pos": [0, 0, 0.75],
+          "rot": [0, 0,  0],
+          "radius": 0.5,
+          "surface": {
+            "outer_color": "water_blue",
+            "outer_reflection": "leaf_reflection"},
+          "children": []
+        }
+      ]
+    },
+    {
+      "type": "Frame",
+      "name": "house",
+      "pos": [5,0,-2],
+      "rot": [0,0,0],
+      "children": [
+        {
+          "type": "Frame",
+          "name": "big_wall_1",
+          "pos": [1,0,0],
+          "rot": [0,0,0],
+          "children": [
+            {
+              "type": "Plane",
+              "name": "lower_wall",
+              "pos": [0, 0, 0.75],
+              "rot": [0, 1.57, 0.0],
+              "x_width": 1.5,
+              "y_width": 2.0,
+              "surface": {
+                "outer_color": "brick_gray",
+                "inner_color": "brick_gray"},
+              "children": []
+            },
+            {
+              "type": "Triangle",
+              "name": "upper_wall",
+              "pos": [0,0,1.5],
+              "rot": [-1.57, 0.0, -1.57],
+              "Ax": -1, "Ay": 0, "Bx": 1, "By": 0, "Cx": 0, "Cy":1,
+              "surface": {
+                "outer_color": "brick_gray",
+                "inner_color": "brick_gray"},
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "Frame",
+          "name": "big_wall_2",
+          "pos": [-1,0,0],
+          "rot": [0,0,0],
+          "children": [
+            {
+              "type": "Plane",
+              "name": "lower_wall",
+              "pos": [0, 0, 0.75],
+              "rot": [0, 1.57, 0.0],
+              "x_width": 1.5,
+              "y_width": 2.0,
+              "surface": {
+                "outer_color": "brick_gray",
+                "inner_color": "brick_gray"},
+              "children": []
+            },
+            {
+              "type": "Triangle",
+              "name": "upper_wall",
+              "pos": [0,0,1.5],
+              "rot": [-1.57, 0.0, -1.57],
+              "Ax": -1, "Ay": 0, "Bx": 1, "By": 0, "Cx": 0, "Cy":1,
+              "surface": {
+                "outer_color": "brick_gray",
+                "inner_color": "brick_gray"},
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "Plane",
+          "name": "wall_3",
+          "pos": [0, 1, 0.75],
+          "rot": [0, 1.57, 1.57],
+          "x_width": 1.5,
+          "y_width": 2.0,
+          "surface": {
+            "outer_color": "brick_gray",
+            "inner_color": "brick_gray"},
+          "children": []
+        },
+        {
+          "type": "Plane",
+          "name": "wall_4",
+          "pos": [0, -1, 0.75],
+          "rot": [0, 1.57, 1.57],
+          "x_width": 1.5,
+          "y_width": 2.0,
+          "surface": {
+            "outer_color": "brick_gray",
+            "inner_color": "brick_gray"},
+          "children": []
+        },
+        {
+          "type": "Frame",
+          "name": "roof",
+          "pos": [0, 0, 1.1],
+          "rot": [0, 0, 0],
+          "children": [
+            {
+              "type": "Plane",
+              "name": "roof_1",
+              "pos": [0, 0.707, 0.707],
+              "rot": [0, 0.7853, 1.57],
+              "x_width": 2.0,
+              "y_width": 2.2,
+              "surface": {
+                "outer_color": "roof_red",
+                "inner_color": "roof_red"},
+              "children": []
+            },
+            {
+              "type": "Plane",
+              "name": "roof_2",
+              "pos": [0, -0.707, 0.707],
+              "rot": [0, 0.7853, -1.57],
+              "x_width": 2.0,
+              "y_width": 2.2,
+              "surface": {
+                "outer_color": "roof_red",
+                "inner_color": "roof_red"},
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "Frame",
+          "name": "chimney",
+          "pos": [0.0, 0.6, 2.1],
+          "rot": [0, 0, 0],
+          "children": [
+            {
+              "type": "Plane",
+              "name": "chimney_wall_1",
+              "pos": [0.15, 0, 0],
+              "rot": [0, 1.57, 0],
+              "x_width": 0.65,
+              "y_width": 0.3,
+              "surface": {
+                "outer_color": "brick_gray",
+                "inner_color": "brick_gray"},
+              "children": []
+            },
+            {
+              "type": "Plane",
+              "name": "chimney_wall_2",
+              "pos": [-0.15, 0, 0],
+              "rot": [0, 1.57, 0],
+              "x_width": 0.65,
+              "y_width": 0.3,
+              "surface": {
+                "outer_color": "brick_gray",
+                "inner_color": "brick_gray"},
+              "children": []
+            },
+            {
+              "type": "Plane",
+              "name": "chimney_wall_3",
+              "pos": [0, 0.15, 0],
+              "rot": [0, 1.57, 1.57],
+              "x_width": 0.65,
+              "y_width": 0.3,
+              "surface": {
+                "outer_color": "brick_gray",
+                "inner_color": "brick_gray"},
+              "children": []
+            },
+            {
+              "type": "Plane",
+              "name": "chimney_wall_4",
+              "pos": [0, -0.15, 0],
+              "rot": [0, 1.57, 1.57],
+              "x_width": 0.65,
+              "y_width": 0.3,
+              "surface": {
+                "outer_color": "brick_gray",
+                "inner_color": "brick_gray"},
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Frame",
+      "name": "FACT",
+      "pos": [0, 0, 0],
+      "rot": [0, 1.2, 0],
+      "children": [
+        {
+          "type": "SegmentedReflector",
+          "name": "reflector",
+          "pos": [0, 0, 0],
+          "rot": [0, 0, 0],
+          "focal_length": 4.889,
+          "max_outer_aperture_radius": 2.1,
+          "min_inner_aperture_radius": 0.25,
+          "DaviesCotton_over_parabolic_mixing_factor": 1.0,
+          "facet_inner_hex_radius": 0.3,
+          "gap_between_facets": 0.01,
+          "surface": {
+            "outer_reflection": "mirror_reflection"},
+          "children": []
+        }
+      ]
+    }
+  ]
+}

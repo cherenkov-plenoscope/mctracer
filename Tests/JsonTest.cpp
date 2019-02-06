@@ -364,3 +364,47 @@ TEST_F(JsonTest, ParallelDisc_rotated) {
     EXPECT_NEAR(ph.direction().z, 0.0, 0.1);
   }
 }
+
+TEST_F(JsonTest, visual_config) {
+  auto j = R"(
+  {
+    "max_interaction_depth": 41,
+    "preview": {
+      "rows": 256,
+      "cols": 144,
+      "scale": 5
+    },
+    "snapshot": {
+      "cols": 1280,
+      "rows":  720,
+      "noise_level": 25,
+      "focal_length_over_aperture_diameter": 0.95,
+      "image_sensor_size_along_a_row": 0.07
+    },
+    "global_illumination": {
+      "on": true,
+      "incoming_direction": [0.2, 0.3, 1.0]
+    },
+    "sky_dome": {
+      "path": "",
+      "color": [0, 0, 0]
+    },
+    "photon_trajectories": {
+      "radius": 0.15
+    }
+  }
+  )"_json;
+  Visual::Config cfg = mct::json::to_visual_config(j, "./");
+  EXPECT_TRUE(cfg.max_interaction_depth == 41u);
+  EXPECT_TRUE(cfg.preview.rows == 256u);
+  EXPECT_TRUE(cfg.preview.cols == 144u);
+  EXPECT_TRUE(cfg.preview.scale == 5u);
+  EXPECT_TRUE(cfg.snapshot.cols == 1280u);
+  EXPECT_TRUE(cfg.snapshot.rows == 720u);
+  EXPECT_TRUE(cfg.snapshot.noise_level == 25u);
+  EXPECT_TRUE(cfg.snapshot.focal_length_over_aperture_diameter == 0.95);
+  EXPECT_TRUE(cfg.snapshot.image_sensor_size_along_a_row == 0.07);
+  EXPECT_TRUE(cfg.global_illumination.on);
+  EXPECT_TRUE(cfg.global_illumination.incoming_direction == Vec3(.2, .3, 1.));
+  EXPECT_TRUE(cfg.photon_trajectories.radius == 0.15);
+}

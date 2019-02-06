@@ -132,9 +132,24 @@ void make_children(Frame* mother, Scenery* scenery, const nl::json &j) {
                 add_Sphere(mother, scenery, jchild),
                 scenery,
                 jchild["children"]);
+        } else if (is_equal(type, "Disc")) {
+            make_children(
+                add_Disc(mother, scenery, jchild),
+                scenery,
+                jchild["children"]);
+        } else if (is_equal(type, "Triangle")) {
+            make_children(
+                add_Triangle(mother, scenery, jchild),
+                scenery,
+                jchild["children"]);
         } else if (is_equal(type, "StereoLitography")) {
             make_children(
                 add_StereoLitography(mother, scenery, jchild),
+                scenery,
+                jchild["children"]);
+        } else if (is_equal(type, "SegmentedReflector")) {
+            make_children(
+                add_SegmentedReflector(mother, scenery, jchild),
                 scenery,
                 jchild["children"]);
         } else if (is_equal(type, "Annulus")) {
@@ -470,6 +485,11 @@ Vec3 as_vec3(const nlohmann::json &j, const std::string key) {
     return to_vec3(j[key]);
 }
 
+Rot3 as_rot3(const nlohmann::json &j, const std::string key) {
+    assert_key(j, key);
+    return to_rot3(j[key]);
+}
+
 std::string as_string(const nlohmann::json &j, const std::string key) {
     assert_key(j, key);
     return j[key].get<std::string>();
@@ -477,23 +497,44 @@ std::string as_string(const nlohmann::json &j, const std::string key) {
 
 Visual::Config load_visual_config(const std::string &path) {
     const nlohmann::json j = load(path);
-    return to_visual_config(j);
+    return to_visual_config(j, path);
 }
 
-Visual::Config to_visual_config(const nlohmann::json &j) {
+Visual::Config to_visual_config(
+    const nlohmann::json &j,
+    const std::string &path
+) {
     Visual::Config cfg;
     cfg.max_interaction_depth = g<uint64_t>(j, "max_interaction_depth");
-    cfg.preview.cols = 128;
-    cfg.preview.rows = 72;
-    cfg.preview.scale = 10;
-    cfg.snapshot.cols = 1920;
-    cfg.snapshot.rows = 1080;
-    cfg.snapshot.noise_level = 16;  // fairly smooth
-    cfg.snapshot.focal_length_over_aperture_diameter = 0.95;  // Ultra fast lens
-    cfg.snapshot.image_sensor_size_along_a_row = 0.07;  // IMAX 70mm format
-    cfg.global_illumination.on = true;
-    cfg.global_illumination.incoming_direction = Vec3(0.6, 0.2, 1.0);
-    cfg.photon_trajectories.radius = 0.025;
+    cfg.preview.cols = g<uint64_t>(j["preview"], "cols");
+    cfg.preview.rows = g<uint64_t>(j["preview"], "rows");
+    cfg.preview.scale = g<uint64_t>(j["preview"], "scale");
+    cfg.snapshot.cols = g<uint64_t>(j["snapshot"], "cols");
+    cfg.snapshot.rows = g<uint64_t>(j["snapshot"], "rows");
+    cfg.snapshot.noise_level = g<uint64_t>(j["snapshot"], "noise_level");
+    cfg.snapshot.focal_length_over_aperture_diameter =
+        g<double>(j["snapshot"], "focal_length_over_aperture_diameter");
+    cfg.snapshot.image_sensor_size_along_a_row =
+        g<double>(j["snapshot"], "image_sensor_size_along_a_row");
+    cfg.global_illumination.on =
+        g<bool>(j["global_illumination"], "on");
+    cfg.global_illumination.incoming_direction =
+        as_vec3(j["global_illumination"], "incoming_direction");
+    cfg.photon_trajectories.radius =
+        g<double>(j["photon_trajectories"], "radius");
+
+    assert_key(j, "sky_dome");
+    const nlohmann::json &skyj = j["sky_dome"];
+    string image_path = g<string>(skyj, "path");
+
+    if (image_path.empty()) {
+        cfg.sky_dome = Visual::SkyDome(as_color(skyj, "color"));
+    } else {
+        PathTools::Path jsonpath = PathTools::Path(path);
+        cfg.sky_dome = Visual::SkyDome(
+            PathTools::join(jsonpath.dirname, image_path));
+        cfg.sky_dome.set_background_color(as_color(skyj, "color"));
+    }
     return cfg;
 }
 
@@ -513,8 +554,7 @@ PropagationConfig to_PropagationConfig(const nlohmann::json &j) {
 
 void transform(const nlohmann::json &j, std::vector<Photon> *photons) {
     Vec3 pos = as_vec3(j, "pos");
-    Vec3 rot_deg = as_vec3(j, "rot_in_deg");
-    Rot3 rot(Deg2Rad(rot_deg.x), Deg2Rad(rot_deg.y), Deg2Rad(rot_deg.z));
+    Rot3 rot = as_rot3(j, "rot");
     HomTra3 Trafo;
     Trafo.set_transformation(rot, pos);
     Photons::transform_all_photons_multi_thread(Trafo, photons);
@@ -523,22 +563,20 @@ void transform(const nlohmann::json &j, std::vector<Photon> *photons) {
 std::vector<Photon> to_parallel_disc(const nlohmann::json &j) {
     std::vector<Photon> photons =
         Photons::Source::parallel_towards_z_from_xy_disc(
-            g<double>(j, "disc_radius_in_m"),
-            g<uint64_t>(j, "disc_radius_in_m"));
-    transform(j, &photons);
+            g<double>(j, "disc_radius"),
+            g<uint64_t>(j, "num_photons"));
     return photons;
 }
 
 std::vector<Photon> to_pointsource(const nlohmann::json &j) {
     std::vector<Photon> photons =
         Photons::Source::point_like_towards_z_opening_angle_num_photons(
-            Deg2Rad(g<double>(j, "opening_angle_in_deg")),
-            g<uint64_t>(j, "number_of_photons"));
-    transform(j, &photons);
+            g<double>(j, "opening_angle"),
+            g<uint64_t>(j, "num_photons"));
     return photons;
 }
 
-std::vector<Photon> to_photons(const std::string &path) {
+std::vector<Photon> load_photons(const std::string &path) {
     return to_photons(load(path));
 }
 
@@ -554,6 +592,7 @@ std::vector<Photon> to_photons(const nlohmann::json &j) {
         info << "to be either 'point_source', or 'parallel_disc'.\n";
         throw UnkownTypeOfLightSource(info.str());
     }
+    transform(j, &photons);
     return photons;
 }
 

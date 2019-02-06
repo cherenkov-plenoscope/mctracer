@@ -105,6 +105,11 @@ SphereCapWithRectangularBound* add_SphereCapWithRectangularBound(
     Scenery *scenery,
     const nlohmann::json &j);
 
+Frame* add_SegmentedReflector(
+    Frame* mother,
+    Scenery *scenery,
+    const nlohmann::json &j);
+
 template<class Ret>
 Ret g(const nlohmann::json &j, const std::string &key) {
 	assert_key(j, key);
@@ -116,9 +121,11 @@ Color as_color(const nlohmann::json &j, const std::string key);
 
 Vec3 as_vec3(const nlohmann::json &j, const std::string key);
 
+Rot3 as_rot3(const nlohmann::json &j, const std::string key);
+
 std::string as_string(const nlohmann::json &j, const std::string key);
 
-Visual::Config to_visual_config(const nlohmann::json &j);
+Visual::Config to_visual_config(const nlohmann::json &j, const std::string &path);
 
 Visual::Config load_visual_config(const std::string &path);
 
@@ -135,7 +142,7 @@ std::vector<Photon> to_pointsource(const nlohmann::json &j);
 class UnkownTypeOfLightSource : public std::invalid_argument {
     using invalid_argument::invalid_argument;};
 
-std::vector<Photon> to_photons(const std::string &path);
+std::vector<Photon> load_photons(const std::string &path);
 
 std::vector<Photon> to_photons(const nlohmann::json &j);
 

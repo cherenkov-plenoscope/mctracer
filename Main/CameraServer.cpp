@@ -109,7 +109,7 @@ int main(int argc, char* argv[]) {
 
         Visual::Config visual_config;
         if (args.find("--config")->second) {
-            visual_config = mct::json::to_visual_config(
+            visual_config = mct::json::load_visual_config(
                 args.find("--config")->second.asString());
         }
         scenery.root.init_tree_based_on_mother_child_relations();

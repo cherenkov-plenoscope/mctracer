@@ -1,0 +1,26 @@
+{
+  "max_interaction_depth": 41,
+  "preview": {
+    "cols": 256,
+    "rows": 144,
+    "scale": 5
+  },
+  "snapshot": {
+    "cols": 1280,
+    "rows":  720,
+    "noise_level": 25,
+    "focal_length_over_aperture_diameter": 0.95,
+    "image_sensor_size_along_a_row": 0.07
+  },
+  "global_illumination": {
+    "on": true,
+    "incoming_direction": [0.2, 0.3, 1.0]
+  },
+  "sky_dome": {
+    "path": "",
+    "color": [0, 0, 0]
+  },
+  "photon_trajectories": {
+    "radius": 0.15
+  }
+}
