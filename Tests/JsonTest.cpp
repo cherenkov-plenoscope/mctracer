@@ -296,3 +296,71 @@ TEST_F(JsonTest, PropagationConfig) {
     EXPECT_EQ(cfg.max_number_of_interactions_per_photon, 1337u);
     EXPECT_TRUE(cfg.use_multithread_when_possible);
 }
+
+TEST_F(JsonTest, PointSource) {
+  auto j = R"(
+  {
+    "point_source": {
+      "opening_angle": 0.01,
+      "num_photons": 137
+    },
+    "pos": [0, 2, 0],
+    "rot": [0, 0, 0]
+  }
+  )"_json;
+  std::vector<Photon> phs = mct::json::to_photons(j);
+  EXPECT_EQ(phs.size(), 137u);
+  for (const Photon &ph: phs) {
+    EXPECT_EQ(ph.support().x, 0.0);
+    EXPECT_EQ(ph.support().y, 2.0);
+    EXPECT_EQ(ph.support().z, 0.0);
+
+    EXPECT_NEAR(ph.direction().x, 0.0, 0.1);
+    EXPECT_NEAR(ph.direction().y, 0.0, 0.1);
+    EXPECT_NEAR(ph.direction().z, 1.0, 0.1);
+  }
+}
+
+TEST_F(JsonTest, PointSource_rotated) {
+  auto j = R"(
+  {
+    "point_source": {
+      "opening_angle": 0.01,
+      "num_photons": 13
+    },
+    "pos": [0, 2, 0],
+    "rot": [0, 1.5705, 0]
+  }
+  )"_json;
+  std::vector<Photon> phs = mct::json::to_photons(j);
+  EXPECT_EQ(phs.size(), 13u);
+  for (const Photon &ph: phs) {
+    EXPECT_EQ(ph.support().x, 0.0);
+    EXPECT_EQ(ph.support().y, 2.0);
+    EXPECT_EQ(ph.support().z, 0.0);
+
+    EXPECT_NEAR(ph.direction().x, -1.0, 0.1);
+    EXPECT_NEAR(ph.direction().y, 0.0, 0.1);
+    EXPECT_NEAR(ph.direction().z, 0.0, 0.1);
+  }
+}
+
+TEST_F(JsonTest, ParallelDisc_rotated) {
+  auto j = R"(
+  {
+    "parallel_disc": {
+      "disc_radius": 2.5,
+      "num_photons": 13
+    },
+    "pos": [0, 0, 0],
+    "rot": [0, 1.5705, 0]
+  }
+  )"_json;
+  std::vector<Photon> phs = mct::json::to_photons(j);
+  EXPECT_EQ(phs.size(), 13u);
+  for (const Photon &ph: phs) {
+    EXPECT_NEAR(ph.direction().x, -1.0, 0.1);
+    EXPECT_NEAR(ph.direction().y, 0.0, 0.1);
+    EXPECT_NEAR(ph.direction().z, 0.0, 0.1);
+  }
+}
