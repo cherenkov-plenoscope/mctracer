@@ -73,13 +73,13 @@ target_link_libraries(mctCameraServer docopt)
 add_executable(mctPropagate Main/Propagate.cpp)
 target_link_libraries(mctPropagate mct)
 target_link_libraries(mctPropagate docopt)
-#
-##----------------
-## ShowPhotons exe
-#add_executable(mctShowPhotons Main/ShowPhotons.cpp)
-#target_link_libraries(mctShowPhotons mct)
-#target_link_libraries(mctShowPhotons docopt)
-#
+
+#----------------
+# ShowPhotons exe
+add_executable(mctShowPhotons Main/ShowPhotons.cpp)
+target_link_libraries(mctShowPhotons mct)
+target_link_libraries(mctShowPhotons docopt)
+
 ##------------------------
 ## light field calibration
 #add_executable(mctPlenoscopeCalibration Main/PlenoscopeCalibration.cpp)

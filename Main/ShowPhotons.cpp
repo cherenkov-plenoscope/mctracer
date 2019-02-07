@@ -1,15 +1,14 @@
 #include "DocOpt/docopt.h"
 #include "Core/Photons.h"
-#include "Xml/Factory/SceneryFactory.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "Corsika/EventIo/EventIo.h"
 #include "Corsika/Tools.h"
 #include "Corsika/EventIo/PhotonFactory.h"
-#include "Xml/Factory/VisualConfigFab.h"
-#include "Xml/Factory/PropagationConfigFab.h"
 #include "Visual/FlyingCamera.h"
 #include "Scenery/TrajectoryFactory.h"
 #include "Scenery/Scenery.h"
+#include "Tools/PathTools.h"
+#include "json.h"
 using std::string;
 using std::cout;
 using std::array;
@@ -35,13 +34,12 @@ R"(Show a scenery with photons
       mctShow --version
 
     Options:
-      -s --scenery=SCENERY_PATH     Scenery xml file path.
-      -i --input=INPUT_PATH         Photon file path (e.g. a CORSIKA run).
-      -c --config=CONFIG_PATH       Visual config xml file path.
+      -s --scenery=SCENERY_PATH     Scenery file path.
+      -i --input=INPUT_PATH         CORSIKA run path.
+      -c --config=CONFIG_PATH       Visual config file path.
       -r --random_seed=SEED         Seed for pseudo random number generator.
       -h --help                     Show this screen.
       --version                     Show version.
-       
 )";
 
 int main(int argc, char* argv[]) {
@@ -51,44 +49,36 @@ int main(int argc, char* argv[]) {
         USAGE,
         { argv + 1, argv + argc },
         true,        // show help if requested
-        "mct 0.0"
-    );  // version string
+        "mct 0.1");  // version string
 
-    PathTools::Path scenery_path = PathTools::Path(args.find("--scenery")->second.asString());
-    PathTools::Path photon_path = PathTools::Path(args.find("--input")->second.asString());
-    
+    PathTools::Path scenery_path = PathTools::Path(
+        args.find("--scenery")->second.asString());
+    PathTools::Path photon_path = PathTools::Path(
+        args.find("--input")->second.asString());
+
     Visual::Config visual_config;
-    if(args.find("--config")->second) {
-        Xml::Document doc(args.find("--config")->second.asString());
-        Xml::Node node = doc.node();
-        Xml::Node vc_node = node.child("visual");
-        visual_config = Xml::Configs::get_VisualConfig_from_node(vc_node);        
-    }
-    
-    // settings
+    if (args.find("--config")->second) {
+      visual_config = mct::json::load_visual_config(
+        args.find("--config")->second.asString());}
+
     PropagationConfig settings;
 
-    // Random
     Random::Mt19937 prng;
     if(args.find("--random_seed")->second)
         prng.set_seed(args.find("--random_seed")->second.asLong());
 
-    // load scenery
     Scenery scenery;
-    Xml::SceneryFactory fab(scenery_path.path);
-    fab.append_to_frame_in_scenery(&scenery.root, &scenery);
+    mct::json::append_to_frame_in_scenery(
+      &scenery.root, &scenery, scenery_path.path);
+
     scenery.root.init_tree_based_on_mother_child_relations();
 
-    // load photons
     EventIo::Run corsika_run(photon_path.path);
-
-    // propagate each event
-    unsigned int event_counter = 0;
 
     Visual::FlyingCamera free_orb(&scenery.root, &visual_config);
 
+    unsigned int event_counter = 0;
     while(corsika_run.has_still_events_left()) {
-
         event_counter++;
 
         // read next event
@@ -97,20 +87,18 @@ int main(int argc, char* argv[]) {
         // point the telescope into shower direction
         // double az = Corsika::EventHeader::azimuth(event.header.raw);
         // double zd = Corsika::EventHeader::zenith(event.header.raw);
-        
+
         unsigned int id = 0;
         for(array<float, 8> corsika_photon : event.photons) {
-            
             vector<Photon> photons;
             EventIo::PhotonFactory cpf(corsika_photon, id++, &prng);
 
             if(cpf.passed_atmosphere()) {
                 photons.push_back(cpf.get_photon());
-            
+
                 // propagate the cherenkov photons in the scenery
                 Photons::propagate_photons_in_scenery_with_settings(
-                    &photons, &scenery.root, &settings, &prng
-                );
+                    &photons, &scenery.root, &settings, &prng);
 
                 for(const Photon &ph: photons) {
                     TrajectoryFactory traj(&ph);
@@ -128,7 +116,7 @@ int main(int argc, char* argv[]) {
     }
 
     }catch(std::exception &error) {
-        std::cerr << error.what(); 
+        std::cerr << error.what();
     }
     return 0;
 }
