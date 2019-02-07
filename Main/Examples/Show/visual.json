@@ -17,7 +17,7 @@
     "incoming_direction": [0.2, 0.3, 1.0]
   },
   "sky_dome": {
-    "path": "",
+    "path": "chile_night_sky.ppm",
     "color": [0, 0, 0]
   },
   "photon_trajectories": {

@@ -364,6 +364,150 @@
           "surface": {
             "outer_reflection": "mirror_reflection"},
           "children": []
+        },
+        {
+          "type": "Frame",
+          "name": "GAPD_camera",
+          "pos": [0, 0, 4.8892],
+          "rot": [0, 0, 0],
+          "children": [
+            {
+              "type": "Disc",
+              "name": "camera_housing_lower_end_cap",
+              "pos": [0, 0, 0.01],
+              "rot": [0, 0, 0],
+              "radius": 0.33,
+              "surface": {
+                "inner_color": "body_white"},
+              "children": []
+            },
+            {
+              "type": "Disc",
+              "name": "camera_housing_upper_end_cap",
+              "pos": [0, 0, 0.89],
+              "rot": [0, 0, 0],
+              "radius": 0.33,
+              "surface": {
+                "outer_color": "body_white"},
+              "children": []
+            },
+            {
+              "type": "Cylinder",
+              "name": "camera_housing_upper_end_cap",
+              "start_pos": [0,0,0],
+              "end_pos": [0,0,0.89],
+              "radius": 0.33,
+              "surface": {
+                "outer_color": "body_white"},
+              "children": []
+            },
+            {
+              "type": "Disc",
+              "name": "GAPD_sensor_plane",
+              "pos": [0, 0, 0],
+              "rot": [0, 0, 0],
+              "radius": 0.195,
+              "surface": {
+                "inner_color": "sensor_green"},
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "Frame",
+          "name": "small_support_tubes",
+          "pos": [0, 0, 2.7],
+          "rot": [0, 0, 0],
+          "children": [
+            {
+              "type": "Cylinder",
+              "name": "support_tube_1_1",
+              "start_pos": [-0.83, 0.57, 0.0],
+              "end_pos": [0.83, 0.57, 0.0],
+              "radius": 0.015,
+              "surface": {
+                "outer_color": "carbon_black"},
+              "children": []
+            },
+            {
+              "type": "Cylinder",
+              "name": "support_tube_1_2",
+              "start_pos": [-0.83,-0.57, 0.0],
+              "end_pos": [0.83,-0.57, 0.0],
+              "radius": 0.015,
+              "surface": {
+                "outer_color": "carbon_black"},
+              "children": []
+            },
+            {
+              "type": "Cylinder",
+              "name": "support_tube_1_3",
+              "start_pos": [0.83, 0.57, 0.0],
+              "end_pos": [0.83,-0.57, 0.0],
+              "radius": 0.015,
+              "surface": {
+                "outer_color": "carbon_black"},
+              "children": []
+            },
+            {
+              "type": "Cylinder",
+              "name": "support_tube_1_4",
+              "start_pos": [-0.83,-0.57, 0.0],
+              "end_pos": [-0.83, 0.57, 0.0],
+              "radius": 0.015,
+              "surface": {
+                "outer_color": "carbon_black"},
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "Frame",
+          "name": "support_tubes",
+          "pos": [0, 0, 0],
+          "rot": [0, 0, 0],
+          "children": [
+            {
+              "type": "Cylinder",
+              "name": "support_tube_1",
+              "start_pos": [1.5, 1.0, 0],
+              "end_pos": [0.2, 0.2, 4.9],
+              "radius": 0.03,
+              "surface": {
+                "outer_color": "carbon_black"},
+              "children": []
+            },
+            {
+              "type": "Cylinder",
+              "name": "support_tube_2",
+              "start_pos": [1.5, -1.0, 0],
+              "end_pos": [0.2, -0.2, 4.9],
+              "radius": 0.03,
+              "surface": {
+                "outer_color": "carbon_black"},
+              "children": []
+            },
+            {
+              "type": "Cylinder",
+              "name": "support_tube_3",
+              "start_pos": [-1.5, -1.0, 0],
+              "end_pos": [-0.2, -0.2, 4.9],
+              "radius": 0.03,
+              "surface": {
+                "outer_color": "carbon_black"},
+              "children": []
+            },
+            {
+              "type": "Cylinder",
+              "name": "support_tube_4",
+              "start_pos": [-1.5, 1.0, 0],
+              "end_pos": [-0.2, 0.2, 4.9],
+              "radius": 0.03,
+              "surface": {
+                "outer_color": "carbon_black"},
+              "children": []
+            }
+          ]
         }
       ]
     }
