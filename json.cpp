@@ -1,5 +1,5 @@
 // Copyright 2018 Sebastian A. Mueller
-#include "json.h"
+#include "./json.h"
 #include <fstream>
 #include <sstream>
 #include "nlohmann_json.hpp"
@@ -326,8 +326,8 @@ Sphere* add_Sphere(Frame* mother, Scenery *scenery, const Object &o) {
 Frame* add_StereoLitography(
     Frame* mother,
     Scenery *scenery,
-    const Object &o)
-{
+    const Object &o
+) {
     SurfaceEntity* object = mother->append<SurfaceEntity>();
     set_frame(object, o);
     set_surface(object, scenery, o);
@@ -356,8 +356,8 @@ Cylinder* add_Cylinder(Frame* mother, Scenery *scenery, const Object &o) {
         c->set_radius_and_length(
             o.f8("radius"),
             o.f8("length"));
-    } else if(o.key("start_pos")) {
-        c->set_name_pos_rot(o.st("name"), Vec3(0, 0 ,0), Rot3(0, 0, 0));
+    } else if (o.key("start_pos")) {
+        c->set_name_pos_rot(o.st("name"), Vec3(0, 0, 0), Rot3(0, 0, 0));
         c->set_cylinder(
             o.f8("radius"),
             o.vec3("start_pos"),
@@ -441,8 +441,8 @@ SphereCapWithHexagonalBound* add_SphereCapWithHexagonalBound(
 SphereCapWithRectangularBound* add_SphereCapWithRectangularBound(
     Frame* mother,
     Scenery *scenery,
-    const Object &o)
-{
+    const Object &o
+) {
     SphereCapWithRectangularBound* cap =
         mother->append<SphereCapWithRectangularBound>();
     set_frame(cap, o);
@@ -457,8 +457,8 @@ SphereCapWithRectangularBound* add_SphereCapWithRectangularBound(
 Frame* add_SegmentedReflector(
     Frame* mother,
     Scenery *scenery,
-    const Object &o)
-{
+    const Object &o
+) {
     SegmentedReflector::Config cfg;
     cfg.focal_length = o.f8("focal_length");
     cfg.DaviesCotton_over_parabolic_mixing_factor =
@@ -574,7 +574,7 @@ PropagationConfig to_PropagationConfig(const Object &o) {
     return cfg;
 }
 
-void transform(const Object &o, std::vector<Photon> *photons) {
+void transform_photons(const Object &o, std::vector<Photon> *photons) {
     Vec3 pos = o.vec3("pos");
     Rot3 rot = o.rot3("rot");
     HomTra3 Trafo;
@@ -614,7 +614,7 @@ std::vector<Photon> to_photons(const Object &o) {
         info << "to be either 'point_source', or 'parallel_disc'.\n";
         throw UnkownTypeOfLightSource(info.str());
     }
-    transform(o, &photons);
+    transform_photons(o, &photons);
     return photons;
 }
 

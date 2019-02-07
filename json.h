@@ -1,8 +1,9 @@
 // Copyright 2018 Sebastian A. Mueller
-#ifndef MCT_JSON_H_
-#define MCT_JSON_H
+#ifndef JSON_H_
+#define JSON_H_
 #include <string>
 #include <sstream>
+#include <vector>
 #include "Scenery/Scenery.h"
 #include "Core/Frame.h"
 #include "Core/Photons.h"
@@ -29,30 +30,30 @@ class ListTooShort : public std::invalid_argument {
     using invalid_argument::invalid_argument;};
 
 struct Object {
-	const nlohmann::json j;
-	Object(const nlohmann::json _j);
-	bool key(const std::string &key)const;
-	double f8(const std::string &key)const;
-	double f8(const uint64_t idx)const;
-	int64_t i8(const std::string &key)const;
-	int64_t i8(const uint64_t idx)const;
-	uint64_t u8(const std::string &key)const;
-	uint64_t u8(const uint64_t idx)const;
-	std::string st(const std::string &key)const;
-	std::string st(const uint64_t idx)const;
-	Object obj(const std::string &key)const;
-	Object obj(const uint64_t idx)const;
-	Vec3 vec3(const std::string &key)const;
-	Vec3 vec3(const uint64_t idx)const;
-	Rot3 rot3(const std::string &key)const;
-	Rot3 rot3(const uint64_t idx)const;
-	Color color(const std::string &key)const;
-	Color color(const uint64_t idx)const;
-	bool b1(const std::string &key)const;
-	bool b1(const uint64_t idx)const;
+    const nlohmann::json j;
+    Object(const nlohmann::json _j);
+    bool key(const std::string &key)const;
+    double f8(const std::string &key)const;
+    double f8(const uint64_t idx)const;
+    int64_t i8(const std::string &key)const;
+    int64_t i8(const uint64_t idx)const;
+    uint64_t u8(const std::string &key)const;
+    uint64_t u8(const uint64_t idx)const;
+    std::string st(const std::string &key)const;
+    std::string st(const uint64_t idx)const;
+    Object obj(const std::string &key)const;
+    Object obj(const uint64_t idx)const;
+    Vec3 vec3(const std::string &key)const;
+    Vec3 vec3(const uint64_t idx)const;
+    Rot3 rot3(const std::string &key)const;
+    Rot3 rot3(const uint64_t idx)const;
+    Color color(const std::string &key)const;
+    Color color(const uint64_t idx)const;
+    bool b1(const std::string &key)const;
+    bool b1(const uint64_t idx)const;
 
-	uint64_t size()const;
-	std::string str()const;
+    uint64_t size()const;
+    std::string str()const;
 };
 
 Object load(const std::string &path);
@@ -74,49 +75,49 @@ void append_to_frame_in_scenery(
     const Object &o);
 
 Frame* add_Frame(
-	Frame* mother,
-	Scenery *scenery,
-	const Object &o);
+    Frame* mother,
+    Scenery *scenery,
+    const Object &o);
 
 Sphere* add_Sphere(
-	Frame* mother,
-	Scenery *scenery,
-	const Object &o);
+    Frame* mother,
+    Scenery *scenery,
+    const Object &o);
 
 Annulus* add_Annulus(
-	Frame* mother,
-	Scenery *scenery,
-	const Object &o);
+    Frame* mother,
+    Scenery *scenery,
+    const Object &o);
 
 Cylinder* add_Cylinder(
-	Frame* mother,
-	Scenery *scenery,
-	const Object &o);
+    Frame* mother,
+    Scenery *scenery,
+    const Object &o);
 
 Triangle* add_Triangle(
-	Frame* mother,
-	Scenery *scenery,
-	const Object &o);
+    Frame* mother,
+    Scenery *scenery,
+    const Object &o);
 
 Disc* add_Disc(
-	Frame* mother,
-	Scenery *scenery,
-	const Object &o);
+    Frame* mother,
+    Scenery *scenery,
+    const Object &o);
 
 Plane* add_Plane(
-	Frame* mother,
-	Scenery *scenery,
-	const Object &o);
+    Frame* mother,
+    Scenery *scenery,
+    const Object &o);
 
 HexPlane* add_HexPlane(
-	Frame* mother,
-	Scenery *scenery,
-	const Object &o);
+    Frame* mother,
+    Scenery *scenery,
+    const Object &o);
 
 Frame* add_StereoLitography(
-	Frame* mother,
-	Scenery *scenery,
-	const Object &o);
+    Frame* mother,
+    Scenery *scenery,
+    const Object &o);
 
 BiConvexLensHexBound* add_BiConvexLensHex(
     Frame* mother,
@@ -146,7 +147,7 @@ PropagationConfig to_PropagationConfig(const Object &o);
 
 PropagationConfig load_PropagationConfig(const std::string &path);
 
-void transform(const Object &o, std::vector<Photon> *photons);
+void transform_photons(const Object &o, std::vector<Photon> *photons);
 
 std::vector<Photon> to_parallel_disc(const Object &o);
 
@@ -162,4 +163,4 @@ std::vector<Photon> to_photons(const Object &o);
 }  // namespace json
 }  // namespace mct
 
-#endif  // MCT_JSON_H_
+#endif  // JSON_H_
