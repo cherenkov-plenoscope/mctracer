@@ -144,6 +144,12 @@ typedef Frame* (*json_to_frame)(Frame*, Scenery*, const Object &);
 
 std::map<std::string, json_to_frame> basic_scenery();
 
+bool has_key(std::map<std::string, json_to_frame> m, const std::string &key);
+
+void assert_has_key(std::map<std::string, json_to_frame> m, const std::string &key);
+
+json_to_frame get(std::map<std::string, json_to_frame> m, const std::string &key);
+
 Visual::Config to_visual_config(const Object &o, const std::string &path);
 
 Visual::Config load_visual_config(const std::string &path);

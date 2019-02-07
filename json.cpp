@@ -454,50 +454,6 @@ Frame* add_SegmentedReflector(
     return reflector;
 }
 
-/*
-Frame* add_light_field_sensor(
-    Frame* mother,
-    Scenery* scenery,
-    const nl::json &j,
-    std::vector<Plenoscope::PlenoscopeInScenery>* plenoscopes
-) {
-    Frame* light_field_sensor = mother->append<Frame>();
-    set_frame(light_field_sensor, j);
-    Plenoscope::LightFieldSensor::Config config;
-    config.sensor_plane2imaging_system = *light_field_sensor->frame2mother();
-    config.expected_imaging_system_focal_length =
-        g<double>(j, "expected_imaging_system_focal_length");
-    config.expected_imaging_system_max_aperture_radius =
-        g<double>(j, "expected_imaging_system_aperture_radius");
-    config.max_FoV_diameter =
-        Deg2Rad(g<double>(j, "max_FoV_diameter_deg"));
-    config.pixel_FoV_hex_flat2flat =
-        Deg2Rad(g<double>(j, "hex_pixel_FoV_flat2flat_deg"));
-    config.number_of_paxel_on_pixel_diagonal =
-        g<uint64_t>(j, "number_of_paxel_on_pixel_diagonal");
-    config.housing_overhead =
-        g<double>(j, "housing_overhead");
-    config.lens_refraction = scenery->functions.get(
-            g<string>(j, "lens_refraction_vs_wavelength"));
-    config.bin_reflection = scenery->functions.get(
-            g<string>(j, "bin_reflection_vs_wavelength"));
-    Plenoscope::PlenoscopeInScenery pis(config);
-    Plenoscope::LightFieldSensor::Factory lfs_factory(
-        &pis.light_field_sensor_geometry);
-    lfs_factory.add_light_field_sensor_to_frame_in_scenery(
-        light_field_sensor,
-        scenery);
-    pis.frame = light_field_sensor;
-    pis.light_field_channels = lfs_factory.get_sub_pixels();
-    plenoscopes->push_back(pis);
-    return light_field_sensor;
-}
-
-
-Frame* add_light_field_sensor_demonstration(
-*/
-
-
 Visual::Config load_visual_config(const std::string &path) {
     return to_visual_config(load(path), path);
 }

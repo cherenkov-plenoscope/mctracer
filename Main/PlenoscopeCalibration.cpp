@@ -4,6 +4,7 @@
 #include "Tools/FileTools.h"
 #include "Tools/PathTools.h"
 #include "Plenoscope/Calibration/Calibrator.h"
+#include "Plenoscope/json_to_plenoscope.h"
 #include "Tools/HeaderBlock.h"
 #include "Scenery/Scenery.h"
 namespace fs = std::experimental::filesystem;
@@ -77,19 +78,20 @@ int main(int argc, char* argv[]) {
         Path scenery_xml_path = join(scenery_path.path, "scenery.xml");
 
         // SET UP SCENERY
-        Xml::SceneryFactory scenery_factory(scenery_xml_path.path);
-        Scenery scenery;
-        scenery_factory.append_to_frame_in_scenery(&scenery.root, &scenery);
+        Plenoscope::PlenoscopeScenery scenery;
+        Plenoscope::json::append_to_frame_in_scenery(
+            &scenery.root,
+            &scenery,
+            scenery_xml_path.path);
         scenery.root.init_tree_based_on_mother_child_relations();
 
-        if (scenery_factory.plenoscopes.size() == 0)
+        if (scenery.plenoscopes.size() == 0)
             throw std::invalid_argument(
                 "There is no plenoscope in the scenery");
-        else if (scenery_factory.plenoscopes.size() > 1)
+        else if (scenery.plenoscopes.size() > 1)
             throw std::invalid_argument(
                 "There is more than one plenoscope in the scenery");
-        Plenoscope::PlenoscopeInScenery* pis =
-            &scenery_factory.plenoscopes.at(0);
+        Plenoscope::PlenoscopeInScenery* pis = &scenery.plenoscopes.at(0);
 
         HeaderBlock::write(
             pis->light_field_sensor_geometry.get_info_header(),

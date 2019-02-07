@@ -82,10 +82,10 @@ target_link_libraries(mctShowPhotons docopt)
 
 #------------------------
 # light field calibration
-#add_executable(mctPlenoscopeCalibration Main/PlenoscopeCalibration.cpp)
-#target_link_libraries(mctPlenoscopeCalibration mct)
-#target_link_libraries(mctPlenoscopeCalibration stdc++fs)
-#target_link_libraries(mctPlenoscopeCalibration docopt)
+add_executable(mctPlenoscopeCalibration Main/PlenoscopeCalibration.cpp)
+target_link_libraries(mctPlenoscopeCalibration mct)
+target_link_libraries(mctPlenoscopeCalibration stdc++fs)
+target_link_libraries(mctPlenoscopeCalibration docopt)
 
 #------------------------
 # EventIOConverter
