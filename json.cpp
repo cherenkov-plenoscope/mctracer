@@ -148,6 +148,15 @@ Object load(const string &path) {
     }
 }
 
+std::map<string, json_to_frame> make_map() {
+    std::map<string, json_to_frame> mymap;
+    mymap["Frame"] = add_Frame;
+    mymap["Sphere"] = add_Sphere;
+    mymap["Annulus"] = add_Annulus;
+    mymap["Cylinder"] = add_Cylinder;
+    return mymap;
+}
+
 void set_frame(Frame *f, const Object &o) {
     string name = o.st("name");
     Vec3 pos = o.vec3("pos");
@@ -315,7 +324,7 @@ Frame* add_Frame(Frame* mother, Scenery *scenery, const Object &o) {
     return frame;
 }
 
-Sphere* add_Sphere(Frame* mother, Scenery *scenery, const Object &o) {
+Frame* add_Sphere(Frame* mother, Scenery *scenery, const Object &o) {
     Sphere* sphere = mother->append<Sphere>();
     set_frame(sphere, o);
     sphere->set_radius(o.f8("radius"));
@@ -339,7 +348,7 @@ Frame* add_StereoLitography(
     return object;
 }
 
-Annulus* add_Annulus(Frame* mother, Scenery *scenery, const Object &o) {
+Frame* add_Annulus(Frame* mother, Scenery *scenery, const Object &o) {
     Annulus* annulus = mother->append<Annulus>();
     set_frame(annulus, o);
     annulus->set_outer_inner_radius(
@@ -349,7 +358,7 @@ Annulus* add_Annulus(Frame* mother, Scenery *scenery, const Object &o) {
     return annulus;
 }
 
-Cylinder* add_Cylinder(Frame* mother, Scenery *scenery, const Object &o) {
+Frame* add_Cylinder(Frame* mother, Scenery *scenery, const Object &o) {
     Cylinder* c = mother->append<Cylinder>();
     if (o.key("rot")) {
         set_frame(c, o);
@@ -374,7 +383,7 @@ Cylinder* add_Cylinder(Frame* mother, Scenery *scenery, const Object &o) {
     return c;
 }
 
-Triangle* add_Triangle(Frame* mother, Scenery *scenery, const Object &o) {
+Frame* add_Triangle(Frame* mother, Scenery *scenery, const Object &o) {
     Triangle* tri = mother->append<Triangle>();
     set_frame(tri, o);
     tri->set_corners_in_xy_plane(
@@ -385,7 +394,7 @@ Triangle* add_Triangle(Frame* mother, Scenery *scenery, const Object &o) {
     return tri;
 }
 
-Disc* add_Disc(Frame* mother, Scenery *scenery, const Object &o) {
+Frame* add_Disc(Frame* mother, Scenery *scenery, const Object &o) {
     Disc* disc = mother->append<Disc>();
     set_frame(disc, o);
     disc->set_radius(o.f8("radius"));
@@ -393,7 +402,7 @@ Disc* add_Disc(Frame* mother, Scenery *scenery, const Object &o) {
     return disc;
 }
 
-Plane* add_Plane(Frame* mother, Scenery *scenery, const Object &o) {
+Frame* add_Plane(Frame* mother, Scenery *scenery, const Object &o) {
     Plane* plane = mother->append<Plane>();
     set_frame(plane, o);
     plane->set_x_y_width(o.f8("x_width"), o.f8("y_width"));
@@ -401,7 +410,7 @@ Plane* add_Plane(Frame* mother, Scenery *scenery, const Object &o) {
     return plane;
 }
 
-HexPlane* add_HexPlane(Frame* mother, Scenery *scenery, const Object &o) {
+Frame* add_HexPlane(Frame* mother, Scenery *scenery, const Object &o) {
     HexPlane* plane = mother->append<HexPlane>();
     set_frame(plane, o);
     plane->set_outer_hex_radius(o.f8("outer_radius"));
@@ -409,7 +418,7 @@ HexPlane* add_HexPlane(Frame* mother, Scenery *scenery, const Object &o) {
     return plane;
 }
 
-BiConvexLensHexBound* add_BiConvexLensHex(
+Frame* add_BiConvexLensHex(
     Frame* mother,
     Scenery *scenery,
     const Object &o
@@ -423,7 +432,7 @@ BiConvexLensHexBound* add_BiConvexLensHex(
     return lens;
 }
 
-SphereCapWithHexagonalBound* add_SphereCapWithHexagonalBound(
+Frame* add_SphereCapWithHexagonalBound(
     Frame* mother,
     Scenery *scenery,
     const Object &o
@@ -438,7 +447,7 @@ SphereCapWithHexagonalBound* add_SphereCapWithHexagonalBound(
     return cap;
 }
 
-SphereCapWithRectangularBound* add_SphereCapWithRectangularBound(
+Frame* add_SphereCapWithRectangularBound(
     Frame* mother,
     Scenery *scenery,
     const Object &o

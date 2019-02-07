@@ -248,7 +248,7 @@ TEST_F(JsonTest, Annulus) {
     )"_json;
     mct::json::Object o(j);
     Scenery s;
-    Annulus* a = mct::json::add_Annulus(&s.root, &s, o);
+    Frame* a = mct::json::add_Annulus(&s.root, &s, o);
     EXPECT_EQ(a->get_name(), "ring");
     EXPECT_EQ(a->get_position_in_mother(), Vec3(0, 0, 3));
     EXPECT_EQ(a->get_rotation_in_mother(), Rot3(0, 1, 0));
@@ -270,7 +270,7 @@ TEST_F(JsonTest, Cylinder_with_rot_and_pos) {
     )"_json;
     mct::json::Object o(j);
     Scenery s;
-    Cylinder* a = mct::json::add_Cylinder(&s.root, &s, o);
+    Frame* a = mct::json::add_Cylinder(&s.root, &s, o);
     EXPECT_EQ(a->get_name(), "cyl");
     EXPECT_EQ(a->get_position_in_mother(), Vec3(0, 0, 3));
     EXPECT_EQ(a->get_rotation_in_mother(), Rot3(0, 1, 0));
@@ -291,7 +291,7 @@ TEST_F(JsonTest, Cylinder_with_start_pos_and_end_pos) {
     )"_json;
     mct::json::Object o(j);
     Scenery s;
-    Cylinder* a = mct::json::add_Cylinder(&s.root, &s, o);
+    Frame* a = mct::json::add_Cylinder(&s.root, &s, o);
     EXPECT_EQ(a->get_name(), "cyl");
     EXPECT_EQ(a->get_children()->size(), 0u);
 }
@@ -310,7 +310,7 @@ TEST_F(JsonTest, Triangle) {
     )"_json;
     mct::json::Object o(j);
     Scenery s;
-    Triangle* a = mct::json::add_Triangle(&s.root, &s, o);
+    Frame* a = mct::json::add_Triangle(&s.root, &s, o);
     EXPECT_EQ(a->get_name(), "tri");
     EXPECT_EQ(a->get_children()->size(), 0u);
 }
@@ -329,7 +329,7 @@ TEST_F(JsonTest, Disc) {
     )"_json;
     Scenery s;
     mct::json::Object o(j);
-    Disc* a = mct::json::add_Disc(&s.root, &s, o);
+    Frame* a = mct::json::add_Disc(&s.root, &s, o);
     EXPECT_EQ(a->get_name(), "didi");
     EXPECT_EQ(a->get_children()->size(), 0u);
 }

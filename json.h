@@ -79,37 +79,37 @@ Frame* add_Frame(
     Scenery *scenery,
     const Object &o);
 
-Sphere* add_Sphere(
+Frame* add_Sphere(
     Frame* mother,
     Scenery *scenery,
     const Object &o);
 
-Annulus* add_Annulus(
+Frame* add_Annulus(
     Frame* mother,
     Scenery *scenery,
     const Object &o);
 
-Cylinder* add_Cylinder(
+Frame* add_Cylinder(
     Frame* mother,
     Scenery *scenery,
     const Object &o);
 
-Triangle* add_Triangle(
+Frame* add_Triangle(
     Frame* mother,
     Scenery *scenery,
     const Object &o);
 
-Disc* add_Disc(
+Frame* add_Disc(
     Frame* mother,
     Scenery *scenery,
     const Object &o);
 
-Plane* add_Plane(
+Frame* add_Plane(
     Frame* mother,
     Scenery *scenery,
     const Object &o);
 
-HexPlane* add_HexPlane(
+Frame* add_HexPlane(
     Frame* mother,
     Scenery *scenery,
     const Object &o);
@@ -119,17 +119,17 @@ Frame* add_StereoLitography(
     Scenery *scenery,
     const Object &o);
 
-BiConvexLensHexBound* add_BiConvexLensHex(
+Frame* add_BiConvexLensHex(
     Frame* mother,
     Scenery *scenery,
     const Object &o);
 
-SphereCapWithHexagonalBound* add_SphereCapWithHexagonalBound(
+Frame* add_SphereCapWithHexagonalBound(
     Frame* mother,
     Scenery *scenery,
     const Object &o);
 
-SphereCapWithRectangularBound* add_SphereCapWithRectangularBound(
+Frame* add_SphereCapWithRectangularBound(
     Frame* mother,
     Scenery *scenery,
     const Object &o);
@@ -138,6 +138,12 @@ Frame* add_SegmentedReflector(
     Frame* mother,
     Scenery *scenery,
     const Object &o);
+
+// simple frames
+
+typedef Frame* (*json_to_frame)(Frame*, Scenery*, const Object &);
+
+std::map<std::string, json_to_frame> make_map();
 
 Visual::Config to_visual_config(const Object &o, const std::string &path);
 
