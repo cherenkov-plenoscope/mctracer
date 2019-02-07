@@ -8,7 +8,7 @@ InternalPhotonSourceWrapper::InternalPhotonSourceWrapper(const string _path):
 	BasicWrapper(_path)
 {
 	the_single_event_was_already_read = false;
-	photons = mct::json::to_photons(path);
+	photons = mct::json::load_photons(path);
 }
 //------------------------------------------------------------------------------
 bool InternalPhotonSourceWrapper::has_still_photons_left()const {

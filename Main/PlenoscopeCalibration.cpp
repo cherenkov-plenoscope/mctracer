@@ -3,8 +3,6 @@
 #include "DocOpt/docopt.h"
 #include "Tools/FileTools.h"
 #include "Tools/PathTools.h"
-#include "Xml/Xml.h"
-#include "Xml/Factory/SceneryFactory.h"
 #include "Plenoscope/Calibration/Calibrator.h"
 #include "Tools/HeaderBlock.h"
 #include "Scenery/Scenery.h"

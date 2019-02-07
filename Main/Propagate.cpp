@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
     const bool export_binary = args.find("--binary")->second.asBool();
 
     // BASIC SETTINGS
-    PropagationConfig settings = mct::json::to_PropagationConfig(
+    PropagationConfig settings = mct::json::load_PropagationConfig(
         config_path.path);
 
     // Random

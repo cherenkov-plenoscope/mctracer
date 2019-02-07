@@ -80,20 +80,20 @@ add_executable(mctShowPhotons Main/ShowPhotons.cpp)
 target_link_libraries(mctShowPhotons mct)
 target_link_libraries(mctShowPhotons docopt)
 
-##------------------------
-## light field calibration
+#------------------------
+# light field calibration
 #add_executable(mctPlenoscopeCalibration Main/PlenoscopeCalibration.cpp)
 #target_link_libraries(mctPlenoscopeCalibration mct)
 #target_link_libraries(mctPlenoscopeCalibration stdc++fs)
 #target_link_libraries(mctPlenoscopeCalibration docopt)
-#
-##------------------------
-## EventIOConverter
-#add_executable(mctEventIOConverter Main/EventIOConverter.cpp)
-#target_link_libraries(mctEventIOConverter mct)
-#target_link_libraries(mctEventIOConverter stdc++fs)
-#target_link_libraries(mctEventIOConverter docopt)
-#
+
+#------------------------
+# EventIOConverter
+add_executable(mctEventIOConverter Main/EventIOConverter.cpp)
+target_link_libraries(mctEventIOConverter mct)
+target_link_libraries(mctEventIOConverter stdc++fs)
+target_link_libraries(mctEventIOConverter docopt)
+
 ##------------------------
 ## light field propagation
 #add_executable(mctPlenoscopePropagation Main/PlenoscopePropagation.cpp)
