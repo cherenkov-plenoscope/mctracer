@@ -68,11 +68,11 @@ add_executable(mctCameraServer Main/CameraServer.cpp)
 target_link_libraries(mctCameraServer mct)
 target_link_libraries(mctCameraServer docopt)
 
-##---------------
-## Propagate exe
-#add_executable(mctPropagate Main/Propagate.cpp)
-#target_link_libraries(mctPropagate mct)
-#target_link_libraries(mctPropagate docopt)
+#---------------
+# Propagate exe
+add_executable(mctPropagate Main/Propagate.cpp)
+target_link_libraries(mctPropagate mct)
+target_link_libraries(mctPropagate docopt)
 #
 ##----------------
 ## ShowPhotons exe

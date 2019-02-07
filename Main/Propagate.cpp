@@ -20,9 +20,9 @@ R"(Photon propagation
       mctPropagate --version
 
     Options:
-      -s --scenery=SCENERY_PATH Scenery xml file path.
-      -c --config=CONFIG_PATH   Config path to xml file steering the simulation.
-      -i --input=INPUT_PATH     Photon file path (e.g. a CORSIKA run).
+      -s --scenery=SCENERY_PATH Scenery path.
+      -c --config=CONFIG_PATH   Config path to steer the simulation.
+      -i --input=INPUT_PATH     Photon path (e.g. a CORSIKA run).
       -o --output=OUTPUT_PATH   Output path.
       -r --random_seed=SEED     Seed for pseudo random number generator.
       -b --binary               Exports a binary float32 table for each sensor.
@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
         USAGE,
         { argv + 1, argv + argc },
         true,        // show help if requested
-        "mct 0.0");  // version string
+        "mct 0.1");  // version string
 
     Path out_path = Path(args.find("--output")->second.asString());
     Path scenery_path = Path(args.find("--scenery")->second.asString());
