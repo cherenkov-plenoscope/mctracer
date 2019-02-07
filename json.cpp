@@ -148,13 +148,39 @@ Object load(const string &path) {
     }
 }
 
-std::map<string, json_to_frame> make_map() {
+std::map<string, json_to_frame> basic_scenery() {
     std::map<string, json_to_frame> mymap;
     mymap["Frame"] = add_Frame;
     mymap["Sphere"] = add_Sphere;
     mymap["Annulus"] = add_Annulus;
     mymap["Cylinder"] = add_Cylinder;
+    mymap["Triangle"] = add_Triangle;
+    mymap["Disc"] = add_Disc;
+    mymap["Plane"] = add_Plane;
+    mymap["HexPlane"] = add_HexPlane;
+    mymap["StereoLitography"] = add_StereoLitography;
+    mymap["BiConvexLensHex"] = add_BiConvexLensHex;
+    mymap["SphereCapWithHexagonalBound"] = add_SphereCapWithHexagonalBound;
+    mymap["SphereCapWithRectangularBound"] = add_SphereCapWithRectangularBound;
+    mymap["SegmentedReflector"] = add_SegmentedReflector;
     return mymap;
+}
+
+bool has_key(std::map<string, json_to_frame> m, const string &key) {
+    return m.find(key) != m.end();
+}
+
+void assert_has_key(std::map<string, json_to_frame> m, const string &key) {
+    if (!has_key(m, key)) {
+        std::stringstream info;
+        info << "There is no json-to-frame called '" << key << "'. \n";
+        throw std::invalid_argument(info.str());
+    }
+}
+
+json_to_frame get(std::map<string, json_to_frame> m, const string &key) {
+    assert_has_key(m, key);
+    return m.find(key)->second;
 }
 
 void set_frame(Frame *f, const Object &o) {
@@ -193,73 +219,15 @@ void set_surface(SurfaceEntity *s, Scenery *scenery, const Object &o) {
 }
 
 void make_children(Frame* mother, Scenery* scenery, const Object &o) {
+    std::map<string, json_to_frame> j2s = basic_scenery();
     const uint64_t num_children = o.size();
     for (uint64_t cidx = 0; cidx < num_children; cidx++) {
         const Object &jchild = o.obj(cidx);
         string type = jchild.st("type");
-        if (is_equal(type, "Frame")) {
+        if (has_key(j2s, type)) {
+            json_to_frame us = get(j2s, type);
             make_children(
-                add_Frame(mother, scenery, jchild),
-                scenery,
-                jchild.obj("children"));
-        } else if (is_equal(type, "Sphere")) {
-            make_children(
-                add_Sphere(mother, scenery, jchild),
-                scenery,
-                jchild.obj("children"));
-        } else if (is_equal(type, "Disc")) {
-            make_children(
-                add_Disc(mother, scenery, jchild),
-                scenery,
-                jchild.obj("children"));
-        } else if (is_equal(type, "Triangle")) {
-            make_children(
-                add_Triangle(mother, scenery, jchild),
-                scenery,
-                jchild.obj("children"));
-        } else if (is_equal(type, "StereoLitography")) {
-            make_children(
-                add_StereoLitography(mother, scenery, jchild),
-                scenery,
-                jchild.obj("children"));
-        } else if (is_equal(type, "SegmentedReflector")) {
-            make_children(
-                add_SegmentedReflector(mother, scenery, jchild),
-                scenery,
-                jchild.obj("children"));
-        } else if (is_equal(type, "Annulus")) {
-            make_children(
-                add_Annulus(mother, scenery, jchild),
-                scenery,
-                jchild.obj("children"));
-        } else if (is_equal(type, "Cylinder")) {
-            make_children(
-                add_Cylinder(mother, scenery, jchild),
-                scenery,
-                jchild.obj("children"));
-        } else if (is_equal(type, "Plane")) {
-            make_children(
-                add_Plane(mother, scenery, jchild),
-                scenery,
-                jchild.obj("children"));
-        } else if (is_equal(type, "HexPlane")) {
-            make_children(
-                add_HexPlane(mother, scenery, jchild),
-                scenery,
-                jchild.obj("children"));
-        } else if (is_equal(type, "BiConvexLensHex")) {
-            make_children(
-                add_BiConvexLensHex(mother, scenery, jchild),
-                scenery,
-                jchild.obj("children"));
-        } else if (is_equal(type, "SphereCapWithHexagonalBound")) {
-            make_children(
-                add_SphereCapWithHexagonalBound(mother, scenery, jchild),
-                scenery,
-                jchild.obj("children"));
-        } else if (is_equal(type, "SphereCapWithRectangularBound")) {
-            make_children(
-                add_SphereCapWithRectangularBound(mother, scenery, jchild),
+                us(mother, scenery, jchild),
                 scenery,
                 jchild.obj("children"));
         }

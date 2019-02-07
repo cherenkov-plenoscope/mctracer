@@ -139,11 +139,10 @@ Frame* add_SegmentedReflector(
     Scenery *scenery,
     const Object &o);
 
-// simple frames
 
 typedef Frame* (*json_to_frame)(Frame*, Scenery*, const Object &);
 
-std::map<std::string, json_to_frame> make_map();
+std::map<std::string, json_to_frame> basic_scenery();
 
 Visual::Config to_visual_config(const Object &o, const std::string &path);
 
