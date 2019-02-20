@@ -265,6 +265,24 @@ void add_functions(FunctionMap* functions, const Object &o) {
     }
 }
 
+Function::LinInterpol json_to_linear_interpol_function(const Object &avsv) {
+    Function::LinInterpol f;
+    std::vector<std::vector<double>> argument_versus_value;
+    const uint64_t num_points = avsv.size();
+    for (uint64_t i = 0; i < num_points; i++) {
+        const Object &point = avsv.obj(i);
+        if (point.size() != 2) {
+            std::stringstream info;
+            info << "Expected argument_versus_value in ";
+            info << "linear_interpolation to be a list ";
+            info << "of length-two-lists.\n";
+            throw std::invalid_argument(info.str());}
+        argument_versus_value.push_back({point.f8(0), point.f8(1)});
+    }
+    f.init(argument_versus_value);
+    return f;
+}
+
 void append_to_frame_in_scenery(
     Frame* mother,
     Scenery* scenery,

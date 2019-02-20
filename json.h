@@ -62,6 +62,7 @@ void set_frame(Frame *f, const Object &o);
 void set_surface(SurfaceEntity *s, Scenery *scenery, const Object &o);
 void make_children(Frame* mother, Scenery* scenery, const Object &o);
 void add_colors(ColorMap* colors, const Object &o);
+Function::LinInterpol json_to_linear_interpol_function(const Object &avsv);
 void add_functions(FunctionMap* functions, const Object &o);
 
 void append_to_frame_in_scenery(
