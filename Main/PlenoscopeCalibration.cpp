@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
             USAGE,
             { argv + 1, argv + argc },
             true,        // show help if requested
-            "mct 0.0");  // version string
+            "mct 0.1");  // version string
 
         int number_mega_photons = 0;
         try {
@@ -75,14 +75,14 @@ int main(int argc, char* argv[]) {
             join(input_copy_path.path, "scenery"));
         // 3) use the copied input files
         scenery_path = join(input_copy_path.path, "scenery");
-        Path scenery_xml_path = join(scenery_path.path, "scenery.xml");
+        Path scenery_file_path = join(scenery_path.path, "scenery.json");
 
         // SET UP SCENERY
         Plenoscope::PlenoscopeScenery scenery;
         Plenoscope::json::append_to_frame_in_scenery(
             &scenery.root,
             &scenery,
-            scenery_xml_path.path);
+            scenery_file_path.path);
         scenery.root.init_tree_based_on_mother_child_relations();
 
         if (scenery.plenoscopes.size() == 0)
