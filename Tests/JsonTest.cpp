@@ -475,3 +475,32 @@ TEST_F(JsonTest, visual_config) {
   EXPECT_TRUE(cfg.global_illumination.incoming_direction == Vec3(.2, .3, 1.));
   EXPECT_TRUE(cfg.photon_trajectories.radius == 0.15);
 }
+
+TEST_F(JsonTest, linear_interpolation_function2) {
+  auto j = R"(
+  {
+    "argument_versus_value": [
+      [266e-9, 0.03],
+      [277e-9, 0.1],
+      [283e-9, 0.2],
+      [300e-9, 0.254]
+    ]
+  }
+  )"_json;
+  mct::json::Object o(j);
+  std::vector<std::vector<double>> f = mct::json::json_to_vec_of_vecs(
+    o.obj("argument_versus_value"));
+  ASSERT_EQ(f.size(), 4u);
+  ASSERT_EQ(f.at(0).size(), 2u);
+  EXPECT_EQ(f.at(0).at(0), 266e-9);
+  EXPECT_EQ(f.at(0).at(1), 0.03);
+  ASSERT_EQ(f.at(1).size(), 2u);
+  EXPECT_EQ(f.at(1).at(0), 277e-9);
+  EXPECT_EQ(f.at(1).at(1), 0.1);
+  ASSERT_EQ(f.at(2).size(), 2u);
+  EXPECT_EQ(f.at(2).at(0), 283e-9);
+  EXPECT_EQ(f.at(2).at(1), 0.2);
+  ASSERT_EQ(f.at(3).size(), 2u);
+  EXPECT_EQ(f.at(3).at(0), 300e-9);
+  EXPECT_EQ(f.at(3).at(1), 0.254);
+}

@@ -242,31 +242,7 @@ void add_colors(ColorMap* colors, const Object &o) {
     }
 }
 
-void add_functions(FunctionMap* functions, const Object &o) {
-    const uint64_t num_functions = o.size();
-    for (uint64_t fidx = 0; fidx < num_functions; fidx++) {
-        const Object &jfun = o.obj(fidx);
-        string name = jfun.st("name");
-        const Object &avsv = jfun.obj("argument_versus_value");
-        const uint64_t num_points = avsv.size();
-        std::vector<std::vector<double>> argument_versus_value;
-        for (uint64_t i = 0; i < num_points; i++) {
-            const Object &point = avsv.obj(i);
-            if (point.size() != 2) {
-                std::stringstream info;
-                info << "Expected argument_versus_value in ";
-                info << "linear_interpolation to be a list ";
-                info << "of length-two-lists.\n";
-                throw std::invalid_argument(info.str());}
-            argument_versus_value.push_back({point.f8(0), point.f8(1)});
-        }
-        Function::LinInterpol* f = functions->add<Function::LinInterpol>(name);
-        f->init(argument_versus_value);
-    }
-}
-
-Function::LinInterpol json_to_linear_interpol_function(const Object &avsv) {
-    Function::LinInterpol f;
+std::vector<std::vector<double>> json_to_vec_of_vecs(const Object &avsv) {
     std::vector<std::vector<double>> argument_versus_value;
     const uint64_t num_points = avsv.size();
     for (uint64_t i = 0; i < num_points; i++) {
@@ -279,7 +255,23 @@ Function::LinInterpol json_to_linear_interpol_function(const Object &avsv) {
             throw std::invalid_argument(info.str());}
         argument_versus_value.push_back({point.f8(0), point.f8(1)});
     }
-    f.init(argument_versus_value);
+    return argument_versus_value;
+}
+
+void add_functions(FunctionMap* functions, const Object &o) {
+    const uint64_t num_functions = o.size();
+    for (uint64_t fidx = 0; fidx < num_functions; fidx++) {
+        const Object &jfun = o.obj(fidx);
+        string name = jfun.st("name");
+        const Object &avsv = jfun.obj("argument_versus_value");
+        Function::LinInterpol* f = functions->add<Function::LinInterpol>(name);
+        f->init(json_to_vec_of_vecs(avsv));
+    }
+}
+
+Function::LinInterpol json_to_linear_interpol_function(const Object &avsv) {
+    Function::LinInterpol f;
+    f.init(json_to_vec_of_vecs(avsv));
     return f;
 }
 
