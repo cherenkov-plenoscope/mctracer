@@ -7,7 +7,7 @@
 namespace UserInteraction {
     void print_welcome_screen();
     void ClearScreen();
-    bool is_Escape_key(const int user_input_key);
+    bool is_Escape_key(const int key);
     Vec3 get_Vec3();
     static const unsigned int space_key = 32;
 }

@@ -33,8 +33,8 @@ void ClearScreen() {
     std::cout << std::string(5, '\n');
 }
 
-bool is_Escape_key(const int user_input_key) {
-    return user_input_key == 27;
+bool is_Escape_key(const int key) {
+    return key == 27;
 }
 
 Vec3 get_Vec3() {

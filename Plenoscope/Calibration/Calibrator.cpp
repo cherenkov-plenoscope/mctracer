@@ -6,7 +6,6 @@
 #include <random>
 #include "Plenoscope/Calibration/Writer.h"
 #include "Plenoscope/NightSkyBackground/NightSkyBackground.h"
-#include "Tools/UserInteraction.h"
 #include "Tools/FileTools.h"
 #include "Core/PhotonAndFrame.h"
 #include "Tools/HeaderBlock.h"
