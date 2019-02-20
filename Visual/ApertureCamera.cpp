@@ -95,51 +95,6 @@ void ApertureCamera::update_aperture_radius() {
     ApertureRadius_in_m = FocalLength_in_m/(2.0*FStopNumber);
 }
 
-void ApertureCamera::auto_focus(const Frame* world) {
-    set_focus_to(get_average_object_distance(world));
-}
-
-unsigned int ApertureCamera::_5_permil_of_pixels()const {
-    return (number_cols*number_rows)*5e-4;
-}
-
-double ApertureCamera::get_average_object_distance(const Frame* world) {
-    double sum_of_valid_object_distances = 0.0;
-    unsigned int number_of_valid_distances = 0;
-
-    for (
-        unsigned int pixel_it = 0;
-        pixel_it < _5_permil_of_pixels();
-        pixel_it++
-    ) {
-        CameraRay ray = get_ray_for_pixel_in_row_and_col(
-            get_random_row(),
-            get_random_col());
-
-        DistanceMeter dist_meter(&ray, world);
-
-        if (dist_meter.faces_an_object) {
-            number_of_valid_distances++;
-            sum_of_valid_object_distances = sum_of_valid_object_distances +
-                dist_meter.distance_to_closest_object;
-        }
-    }
-
-    if (number_of_valid_distances == 0)
-        return default_object_distance_in_m;
-    else
-        return sum_of_valid_object_distances/
-            static_cast<double>(number_of_valid_distances);
-}
-
-unsigned int ApertureCamera::get_random_row() {
-    return (unsigned int)(floor(prng.uniform()*number_rows));
-}
-
-unsigned int ApertureCamera::get_random_col() {
-    return (unsigned int)(floor(prng.uniform()*number_cols));
-}
-
 std::string ApertureCamera::get_aperture_camera_print()const {
     std::stringstream out;
     out << "| Focal ratio      : " << FStopNumber << "\n";

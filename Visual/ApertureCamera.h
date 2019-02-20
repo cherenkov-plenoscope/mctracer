@@ -28,7 +28,6 @@ class ApertureCamera :public CameraDevice{
         const Frame* world,
         const Config* visual_config,
         Image* image);
-    void auto_focus(const Frame* world);
     std::string str()const;
 
  private:
@@ -59,10 +58,6 @@ class ApertureCamera :public CameraDevice{
     void update_aperture_radius();
     void set_default_object_distance();
     std::string get_aperture_camera_print()const;
-    unsigned int get_random_row();
-    unsigned int get_random_col();
-    double get_average_object_distance(const Frame* world);
-    unsigned int _5_permil_of_pixels()const;
     std::vector<Color> acquire_pixels(
         const Frame* world,
         const Config* visual_config,
