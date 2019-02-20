@@ -6,7 +6,7 @@
 #include "Verbosity.h"
 
 namespace visual {
-namespace CameraOperator {
+namespace camera_operator {
 
 class Rotation: public Verbosity {
  public:
@@ -42,7 +42,7 @@ class Rotation: public Verbosity {
         const std::string dir)const;
 };
 
-}  // namespace CameraOperator
+}  // namespace camera_operator
 }  // namespace visual
 
 #endif  // VISUAL_CAMERAOPERATOR_ROTATION_H_

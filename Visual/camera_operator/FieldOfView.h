@@ -6,7 +6,7 @@
 #include "Verbosity.h"
 
 namespace visual {
-namespace CameraOperator {
+namespace camera_operator {
 
 class FieldOfView: public Verbosity {
  public:
@@ -31,7 +31,7 @@ class FieldOfView: public Verbosity {
     void print_prefix()const;
 };
 
-}  // namespace CameraOperator
+}  // namespace camera_operator
 }  // namespace visual
 
 #endif  // VISUAL_CAMERAOPERATOR_FIELDOFVIEW_H_

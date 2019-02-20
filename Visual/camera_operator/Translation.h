@@ -1,5 +1,3 @@
-//=================================
-// include guard
 // Copyright 2014 Sebastian A. Mueller
 #ifndef VISUAL_CAMERAOPERATOR_TRANSLATION_H_
 #define VISUAL_CAMERAOPERATOR_TRANSLATION_H_
@@ -8,7 +6,7 @@
 #include "Verbosity.h"
 
 namespace visual {
-namespace CameraOperator {
+namespace camera_operator {
 
 class Translation: public Verbosity {
  public:
@@ -32,7 +30,7 @@ class Translation: public Verbosity {
     double translation_increment()const;
 };
 
-}  // namespace CameraOperator
+}  // namespace camera_operator
 }  // namespace visual
 
 #endif  // VISUAL_CAMERAOPERATOR_TRANSLATION_H_

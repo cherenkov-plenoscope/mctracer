@@ -1,16 +1,16 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "Visual/CameraOperator/CameraOperator.h"
+#include "Visual/camera_operator/camera_operator.h"
 #include "Visual/PinHoleCamera.h"
 
-class CameraOperatorTest : public ::testing::Test {
+class camera_operatorTest : public ::testing::Test {
  protected:
     visual::PinHoleCamera *cam;
     double initial_FoV_in_rad;
 
-    CameraOperatorTest() {}
+    camera_operatorTest() {}
 
-    virtual ~CameraOperatorTest() {}
+    virtual ~camera_operatorTest() {}
 
     virtual void SetUp() {
         // Code here will be called immediately after the constructor (right
@@ -27,39 +27,39 @@ class CameraOperatorTest : public ::testing::Test {
     virtual void TearDown() {}
 };
 
-TEST_F(CameraOperatorTest, creation) {
+TEST_F(camera_operatorTest, creation) {
     EXPECT_EQ(initial_FoV_in_rad, cam->get_FoV_in_rad());
-    visual::CameraOperator::FieldOfView FoVCamMan(cam);
+    visual::camera_operator::FieldOfView FoVCamMan(cam);
     EXPECT_NE(FoVCamMan.default_fov, initial_FoV_in_rad);
     EXPECT_EQ(FoVCamMan.default_fov, cam->get_FoV_in_rad());
 }
 
-TEST_F(CameraOperatorTest, increase_FoV) {
-    visual::CameraOperator::FieldOfView FoVCamMan(cam);
+TEST_F(camera_operatorTest, increase_FoV) {
+    visual::camera_operator::FieldOfView FoVCamMan(cam);
     for (int i = 0; i < 250; i++)
         FoVCamMan.increase_when_possible();
     EXPECT_TRUE(cam->get_FoV_in_rad() > Deg2Rad(160.0));
     EXPECT_TRUE(cam->get_FoV_in_rad() < Deg2Rad(180.0));
 }
 
-TEST_F(CameraOperatorTest, decrease_FoV) {
-    visual::CameraOperator::FieldOfView FoVCamMan(cam);
+TEST_F(camera_operatorTest, decrease_FoV) {
+    visual::camera_operator::FieldOfView FoVCamMan(cam);
     for (int i = 0; i < 250; i++)
         FoVCamMan.decrease_when_possible();
     EXPECT_TRUE(cam->get_FoV_in_rad() > Deg2Rad(0.0));
     EXPECT_TRUE(cam->get_FoV_in_rad() < Deg2Rad(0.003));
 }
 
-TEST_F(CameraOperatorTest, default_FoV) {
-    visual::CameraOperator::FieldOfView FoVCamMan(cam);
+TEST_F(camera_operatorTest, default_FoV) {
+    visual::camera_operator::FieldOfView FoVCamMan(cam);
     FoVCamMan.increase_when_possible();
     EXPECT_NE(FoVCamMan.default_fov, cam->get_FoV_in_rad());
     FoVCamMan.set_default();
     EXPECT_EQ(FoVCamMan.default_fov, cam->get_FoV_in_rad());
 }
 
-TEST_F(CameraOperatorTest, increase_and_decrease_FoV) {
-    visual::CameraOperator::FieldOfView FoVCamMan(cam);
+TEST_F(camera_operatorTest, increase_and_decrease_FoV) {
+    visual::camera_operator::FieldOfView FoVCamMan(cam);
     FoVCamMan.verbose = false;
     for (int i = 0; i < 250; i++)
         FoVCamMan.decrease_when_possible();
@@ -71,17 +71,17 @@ TEST_F(CameraOperatorTest, increase_and_decrease_FoV) {
     EXPECT_TRUE(cam->get_FoV_in_rad() < Deg2Rad(180.0));
 }
 
-TEST_F(CameraOperatorTest, default_rotation) {
+TEST_F(camera_operatorTest, default_rotation) {
     Rot3 non_default_rotation(1.2, 3.4, 5.6);
     Rot3 looking_in_pos_x_dir(0.0, Deg2Rad(-90.0), 0.0);
     cam->update_orientation(non_default_rotation);
-    visual::CameraOperator::Rotation rot_operator(cam);
+    visual::camera_operator::Rotation rot_operator(cam);
     rot_operator.set_default_rotation(looking_in_pos_x_dir);
     EXPECT_EQ(looking_in_pos_x_dir, cam->get_rotation_in_world());
 }
 
-TEST_F(CameraOperatorTest, look_up) {
-    visual::CameraOperator::Rotation rot_operator(cam);
+TEST_F(camera_operatorTest, look_up) {
+    visual::camera_operator::Rotation rot_operator(cam);
     rot_operator.set_default_rotation(Rot3(0.0, Deg2Rad(-90.0), 0.0));
     for (int i = 0; i < 50; i++)
         rot_operator.look_further_up_when_possible();
@@ -89,8 +89,8 @@ TEST_F(CameraOperatorTest, look_up) {
     EXPECT_LT(Deg2Rad(-0.1), cam->get_rotation_in_world().get_rot_y());
 }
 
-TEST_F(CameraOperatorTest, look_down) {
-    visual::CameraOperator::Rotation rot_operator(cam);
+TEST_F(camera_operatorTest, look_down) {
+    visual::camera_operator::Rotation rot_operator(cam);
     rot_operator.set_default_rotation(Rot3(0.0, Deg2Rad(-90.0), 0.0));
     for (int i = 0; i < 50; i++)
         rot_operator.look_further_down_when_possible();

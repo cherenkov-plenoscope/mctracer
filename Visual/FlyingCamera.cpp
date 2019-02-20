@@ -60,10 +60,10 @@ FlyingCamera::FlyingCamera(
             visual_config->preview.rows*visual_config->preview.scale,
             visual_config->preview.cols*visual_config->preview.scale,
             CV_8UC3)),
-    fov_operator(CameraOperator::FieldOfView(&camera)),
-    translation_operator(CameraOperator::Translation(&camera)),
-    rotation_operator(CameraOperator::Rotation(&camera)),
-    stereo_operator(CameraOperator::Stereo3D(&camera)) {
+    fov_operator(camera_operator::FieldOfView(&camera)),
+    translation_operator(camera_operator::Translation(&camera)),
+    rotation_operator(camera_operator::Rotation(&camera)),
+    stereo_operator(camera_operator::Stereo3D(&camera)) {
     reset_camera();
     time_stamp.update_now();
     create_display();
@@ -260,7 +260,7 @@ void FlyingCamera::aquire_image_focused_on_pixel_col_row(int col, int row) {
 
 void FlyingCamera::acquire_image_with_camera(CameraDevice* cam, Image* img) {
     if (stereo3D) {
-        CameraOperator::Stereo3D op(cam);
+        camera_operator::Stereo3D op(cam);
         op.use_same_stereo_offset_as(&stereo_operator);
         op.aquire_stereo_image(world, visual_config, img);
     } else {

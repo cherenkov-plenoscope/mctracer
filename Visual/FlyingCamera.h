@@ -7,7 +7,7 @@
 #include "ApertureCamera.h"
 #include "PinHoleCamera.h"
 #include "Tools/Tools.h"
-#include "CameraOperator/CameraOperator.h"
+#include "camera_operator/camera_operator.h"
 #include "Config.h"
 #include "Tools/Time.h"
 #include "Tools/UserInteraction.h"
@@ -42,10 +42,10 @@ class FlyingCamera {
     Image image;
     Image image_preview;
     cv::Mat display_image;
-    CameraOperator::FieldOfView fov_operator;
-    CameraOperator::Translation translation_operator;
-    CameraOperator::Rotation rotation_operator;
-    CameraOperator::Stereo3D stereo_operator;
+    camera_operator::FieldOfView fov_operator;
+    camera_operator::Translation translation_operator;
+    camera_operator::Rotation rotation_operator;
+    camera_operator::Stereo3D stereo_operator;
     bool stereo3D = false;
     int snapshot_counter = 0;
     unsigned int user_input_counter = 0;

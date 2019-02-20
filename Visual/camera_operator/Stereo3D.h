@@ -9,7 +9,7 @@ class Frame;
 #include "Verbosity.h"
 
 namespace visual {
-namespace CameraOperator {
+namespace camera_operator {
 
 class Stereo3D: public Verbosity {
  public:
@@ -57,7 +57,7 @@ class Stereo3D: public Verbosity {
     void print_stereo_offset_manipulation(const std::string status)const;
 };
 
-}  // namespace CameraOperator
+}  // namespace camera_operator
 }  // namespace visual
 
 #endif  // VISUAL_CAMERAOPERATOR_STEREO3D_H_

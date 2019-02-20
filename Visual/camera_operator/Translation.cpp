@@ -1,8 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Visual/CameraOperator/Translation.h"
+#include "Visual/camera_operator/Translation.h"
 
 namespace visual {
-namespace CameraOperator {
+namespace camera_operator {
 
 Translation::Translation(CameraDevice* camera_to_work_with) {
     camera = camera_to_work_with;
@@ -87,5 +87,5 @@ void Translation::move_to(const Vec3 pos) {
     }
 }
 
-}  // namespace CameraOperator
+}  // namespace camera_operator
 }  // namespace visual

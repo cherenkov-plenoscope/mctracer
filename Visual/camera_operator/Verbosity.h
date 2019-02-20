@@ -5,13 +5,13 @@
 #include "Visual/CameraDevice.h"
 
 namespace visual {
-namespace CameraOperator {
+namespace camera_operator {
 
 struct Verbosity {
     bool verbose = false;
 };
 
-}  // namespace CameraOperator
+}  // namespace camera_operator
 }  // namespace visual
 
 #endif  // VISUAL_CAMERAOPERATOR_VERBOSITY_H_

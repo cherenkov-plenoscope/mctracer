@@ -1,11 +1,11 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <math.h>
-#include "Visual/CameraOperator/Rotation.h"
+#include "Visual/camera_operator/Rotation.h"
 #include "Tools/Tools.h"
 using std::cout;
 
 namespace visual {
-namespace CameraOperator {
+namespace camera_operator {
 
 Rotation::Rotation(CameraDevice* camera_to_work_with) {
     camera = camera_to_work_with;
@@ -137,5 +137,5 @@ Rot3 Rotation::get_R_World2Camera()const {
     return R_World2Camera;
 }
 
-}  // namespace CameraOperator
+}  // namespace camera_operator
 }  // namespace visual

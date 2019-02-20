@@ -1,8 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Visual/CameraOperator/Stereo3D.h"
+#include "Visual/camera_operator/Stereo3D.h"
 
 namespace visual {
-namespace CameraOperator {
+namespace camera_operator {
 
 Stereo3D::Stereo3D(CameraDevice* camera_to_work_with):
     camera(camera_to_work_with),
@@ -135,5 +135,5 @@ void Stereo3D::use_same_stereo_offset_as(
     stereo_offset_in_m = college->stereo_offset_in_m;
 }
 
-}  // namespace CameraOperator
+}  // namespace camera_operator
 }  // namespace visual
