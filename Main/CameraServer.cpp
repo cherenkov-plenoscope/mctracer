@@ -58,14 +58,15 @@ uint64_t read_uint64(std::istream &fin) {
 ApertureCameraInstructions read_from_stream(std::istream &fin) {
     ApertureCameraInstructions inst;
     inst.magic_sync = read_uint64(fin);
-    inst.position = Vec3(
-        read_float64(fin),
-        read_float64(fin),
-        read_float64(fin));
-    inst.orientation = Rot3(
-        read_float64(fin),
-        read_float64(fin),
-        read_float64(fin));
+    double x, y, z;
+    x = read_float64(fin);
+    y = read_float64(fin);
+    z = read_float64(fin);
+    inst.position = Vec3(x, y, z);
+    x = read_float64(fin);
+    y = read_float64(fin);
+    z = read_float64(fin);
+    inst.orientation = Rot3(x, y, z);
     inst.object_distance = read_float64(fin);
     inst.sensor_size_along_columns = read_float64(fin);
     inst.field_of_view_along_columns = read_float64(fin);
@@ -132,8 +133,9 @@ int main(int argc, char* argv[]) {
                 ins.focal_length_over_aperture_diameter,
                 ins.sensor_size_along_columns);
             cam.set_FoV_in_rad(ins.field_of_view_along_columns);
-            cam.update_position(ins.position);
-            cam.update_orientation(ins.orientation);
+            cam.update_position_and_orientation(
+                ins.position,
+                ins.orientation);
             cam.set_focus_to(ins.object_distance);
             visual_config.snapshot.noise_level = ins.noise_level;
             cam.acquire_image(&scenery.root, &visual_config, &image);
