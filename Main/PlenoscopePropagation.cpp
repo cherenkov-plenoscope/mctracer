@@ -108,7 +108,6 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // SET UP SCENERY
-    // SET UP SCENERY
     Plenoscope::PlenoscopeScenery scenery;
     Plenoscope::json::append_to_frame_in_scenery(
         &scenery.root,

@@ -100,13 +100,13 @@ add_executable(mctPlenoscopePropagation Main/PlenoscopePropagation.cpp)
 target_link_libraries(mctPlenoscopePropagation mct)
 target_link_libraries(mctPlenoscopePropagation stdc++fs)
 target_link_libraries(mctPlenoscopePropagation docopt)
-#
-##------------------------
-## light field raw photon propagation
-#add_executable(mctPlenoscopeRawPhotonPropagation Main/PlenoscopeRawPhotonPropagation.cpp)
-#target_link_libraries(mctPlenoscopeRawPhotonPropagation mct)
-#target_link_libraries(mctPlenoscopeRawPhotonPropagation stdc++fs)
-#target_link_libraries(mctPlenoscopeRawPhotonPropagation docopt)
+
+#------------------------
+# light field raw photon propagation
+add_executable(mctPlenoscopeRawPhotonPropagation Main/PlenoscopeRawPhotonPropagation.cpp)
+target_link_libraries(mctPlenoscopeRawPhotonPropagation mct)
+target_link_libraries(mctPlenoscopeRawPhotonPropagation stdc++fs)
+target_link_libraries(mctPlenoscopeRawPhotonPropagation docopt)
 
 #---------------------------------
 # unit test exe

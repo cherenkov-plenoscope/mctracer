@@ -2,25 +2,19 @@
 #include <experimental/filesystem>
 #include "DocOpt/docopt.h"
 #include "Tools/Tools.h"
-#include "Tools/FileTools.h"
 #include "Core/Photons.h"
-#include "Core/Histogram1D.h"
 #include "Corsika/EventIo/EventIo.h"
 #include "Corsika/EventIo/Export.h"
 #include "Corsika/Tools.h"
-#include "Tools/AsciiIo.h"
+#include "Corsika/EventIo/PhotonFactory.h"
+#include "Core/Histogram1D.h"
 #include "SignalProcessing/PipelinePhoton.h"
 #include "Plenoscope/NightSkyBackground/Light.h"
 #include "Plenoscope/EventHeader.h"
 #include "Plenoscope/SimulationTruthHeader.h"
 #include "Plenoscope/NightSkyBackground/Injector.h"
+#include "Plenoscope/json_to_plenoscope.h"
 #include "SignalProcessing/PhotoElectricConverter.h"
-#include "Xml/Xml.h"
-#include "Xml/Factory/FunctionFromXml.h"
-#include "Xml/Factory/SceneryFactory.h"
-#include "Xml/Factory/PropagationConfigFab.h"
-#include "SignalProcessing/SimpleTDCQDC.h"
-#include "SignalProcessing/ElectricPulse.h"
 #include "SignalProcessing/PhotonStream.h"
 #include "SignalProcessing/pulse_extraction.h"
 #include "Tools/PathTools.h"
@@ -45,7 +39,7 @@ R"(Plenoscope raw photon propagation
 
     Options:
       -l --lixel=LIXEL_PATH     Light field calibration directory of the plenoscope.
-      -c --config=CONFIG_PATH   Config path to xml file steering the simulation.
+      -c --config=CONFIG_PATH   Config path.
       -i --input=PHOTON_PATH    Photon input path.
       -o --output=OUTPUT_PATH   Output path.
       -r --random_seed=SEED     Seed for pseudo random number generator.
@@ -60,7 +54,7 @@ int main(int argc, char* argv[]) {
         USAGE,
         { argv + 1, argv + argc },
         true,        // show help if requested
-        "0.0.0");    // version string
+        "0.0.1");    // version string
 
     Path lixel_calib_path = Path(args.find("--lixel")->second.asString());
     Path config_path = Path(args.find("--config")->second.asString());
@@ -76,7 +70,7 @@ int main(int argc, char* argv[]) {
     fs::create_directory(input_copy_path.path);
     fs::copy(
         config_path.path,
-        join(input_copy_path.path, "propagation_config.xml"));
+        join(input_copy_path.path, "propagation_config.json"));
     fs::create_hard_link(
         input_path.path,
         join(input_copy_path.path, input_path.basename));
@@ -84,14 +78,14 @@ int main(int argc, char* argv[]) {
         lixel_calib_path.path,
         join(input_copy_path.path, "plenoscope"), fs::copy_options::recursive);
 
-    config_path = join(input_copy_path.path, "propagation_config.xml");
+    config_path = join(input_copy_path.path, "propagation_config.json");
     lixel_calib_path = join(
         join(input_copy_path.path, "plenoscope"),
         "lixel_statistics.bin");
     input_path = join(input_copy_path.path, input_path.basename);
     Path scenery_path = join(
         join(input_copy_path.path, "plenoscope"),
-        "input/scenery/scenery.xml");
+        "input/scenery/scenery.json");
 
 
 
@@ -104,13 +98,10 @@ int main(int argc, char* argv[]) {
     //   11
     // 111111 11
     //--------------------------------------------------------------------------
-    Xml::Document doc(config_path.path);
-    Xml::Node config_node = doc.node().child("propagation");
-
-    //--------------------------------------------------------------------------
     // BASIC SETTINGS
-    PropagationConfig settings = Xml::Configs::get_PropagationConfig_from_node(
-        config_node.child("settings"));
+    PropagationConfig settings;
+    settings.max_number_of_interactions_per_photon = 10;
+    settings.use_multithread_when_possible = false;
 
     //--------------------------------------------------------------------------
     // INIT PRNG
@@ -120,18 +111,19 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // SET UP SCENERY
-    Xml::SceneryFactory scenery_factory(scenery_path.path);
-
-    Scenery scenery;
-
-    scenery_factory.append_to_frame_in_scenery(&scenery.root, &scenery);
+    Plenoscope::PlenoscopeScenery scenery;
+    Plenoscope::json::append_to_frame_in_scenery(
+        &scenery.root,
+        &scenery,
+        scenery_path.path);
     scenery.root.init_tree_based_on_mother_child_relations();
-    if (scenery_factory.plenoscopes.size() == 0)
+
+    if (scenery.plenoscopes.size() == 0)
         throw std::invalid_argument("There is no plenoscope in the scenery");
-    else if (scenery_factory.plenoscopes.size() > 1)
+    else if (scenery.plenoscopes.size() > 1)
         throw std::invalid_argument(
             "There is more then one plenoscope in the scenery");
-    Plenoscope::PlenoscopeInScenery* pis = &scenery_factory.plenoscopes.at(0);
+    Plenoscope::PlenoscopeInScenery* pis = &scenery.plenoscopes.at(0);
 
     PhotonSensor::Sensors* light_field_channels = pis->light_field_channels;
 
@@ -153,39 +145,42 @@ int main(int argc, char* argv[]) {
         throw std::invalid_argument(info.str());
     }
 
+    mct::json::Object plcfg = mct::json::load(config_path.path);
     //--------------------------------------------------------------------------
     // INIT NIGHT SKY BACKGROUND
-    Xml::Node nsb_node = config_node.child("night_sky_background_ligth");
+    mct::json::Object nsb_obj = plcfg.obj("night_sky_background_ligth");
     const Function::LinInterpol nsb_flux_vs_wavelength =
-        Xml::get_LinInterpol_from(
-            nsb_node.child("function").child("linear_interpolation"));
+        mct::json::json_to_linear_interpol_function(
+            nsb_obj.obj("flux_vs_wavelength"));
 
     Plenoscope::NightSkyBackground::Light nsb(
         &pis->light_field_sensor_geometry,
         &nsb_flux_vs_wavelength);
-    const double nsb_exposure_time = nsb_node.to_double("exposure_time");
+    const double nsb_exposure_time = nsb_obj.f8("exposure_time");
 
     //--------------------------------------------------------------------------
     // SET UP PhotoElectricConverter
-    Xml::Node pec = config_node.child("photo_electric_converter");
-    const Function::LinInterpol pde_vs_wavelength =
-        Xml::get_LinInterpol_from(
-            pec.child("function").child("linear_interpolation"));
+    mct::json::Object pec_obj = plcfg.obj("photo_electric_converter");
+    const Function::LinInterpol quantum_efficiency_vs_wavelength =
+        mct::json::json_to_linear_interpol_function(
+            pec_obj.obj("quantum_efficiency_vs_wavelength"));
 
     SignalProcessing::PhotoElectricConverter::Config converter_config;
-    converter_config.dark_rate = pec.to_double("dark_rate");
-    converter_config.probability_for_second_puls =
-        pec.to_double("probability_for_second_puls");
-    converter_config.quantum_efficiency_vs_wavelength = &pde_vs_wavelength;
+    converter_config.dark_rate = pec_obj.f8("dark_rate");
+    converter_config.probability_for_second_puls = pec_obj.f8(
+        "probability_for_second_puls");
+    converter_config.quantum_efficiency_vs_wavelength =
+        &quantum_efficiency_vs_wavelength;
 
     SignalProcessing::PhotoElectricConverter::Converter sipm_converter(
         &converter_config);
 
     //--------------------------------------------------------------------------
     // SET SINGLE PULSE OUTPUT
-    Xml::Node spe = config_node.child("photon_stream");
-    const double time_slice_duration = spe.to_double("slice_duration");
-    const double arrival_time_std = 416e-12;
+    mct::json::Object phs_obj = plcfg.obj("photo_electric_converter");
+    const double time_slice_duration = phs_obj.f8("time_slice_duration");
+    const double arrival_time_std = phs_obj.f8(
+        "single_photon_arrival_time_resolution");
 
     //--------------------------------------------------------------------------
     //  2222
