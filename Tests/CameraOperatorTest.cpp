@@ -60,7 +60,7 @@ TEST_F(CameraOperatorTest, default_FoV) {
 
 TEST_F(CameraOperatorTest, increase_and_decrease_FoV) {
     visual::CameraOperator::FieldOfView FoVCamMan(cam);
-    FoVCamMan.set_verbosity(false);
+    FoVCamMan.verbose = false;
     for (int i = 0; i < 250; i++)
         FoVCamMan.decrease_when_possible();
     EXPECT_TRUE(cam->get_FoV_in_rad() > Deg2Rad(0.0));

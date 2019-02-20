@@ -7,12 +7,8 @@
 namespace visual {
 namespace CameraOperator {
 
-class Verbosity {
- protected:
+struct Verbosity {
     bool verbose = false;
-
- public:
-    void set_verbosity(const bool verbosity);
 };
 
 }  // namespace CameraOperator

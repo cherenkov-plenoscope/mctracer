@@ -1,6 +1,5 @@
 set(SOURCE
     ${SOURCE}
-    ${CMAKE_CURRENT_SOURCE_DIR}/Verbosity.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FieldOfView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Rotation.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Stereo3D.cpp
