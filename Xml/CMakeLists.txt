@@ -1,9 +1,0 @@
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/Factory")
-set(SOURCE
-    ${SOURCE}
-    ${CMAKE_CURRENT_SOURCE_DIR}/Document.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Node.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Problem.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/BasicAttributes.cpp
-    PARENT_SCOPE
-)

@@ -43,23 +43,23 @@ struct ApertureCameraInstructions {
 
 ApertureCameraInstructions read_from_stream(std::istream &fin) {
     ApertureCameraInstructions inst;
-    inst.magic_sync = read_uint64(fin);
+    inst.magic_sync = bio::read_uint64(fin);
     double x, y, z;
-    x = read_float64(fin);
-    y = read_float64(fin);
-    z = read_float64(fin);
+    x = bio::read_float64(fin);
+    y = bio::read_float64(fin);
+    z = bio::read_float64(fin);
     inst.position = Vec3(x, y, z);
-    x = read_float64(fin);
-    y = read_float64(fin);
-    z = read_float64(fin);
+    x = bio::read_float64(fin);
+    y = bio::read_float64(fin);
+    z = bio::read_float64(fin);
     inst.orientation = Rot3(x, y, z);
-    inst.object_distance = read_float64(fin);
-    inst.sensor_size_along_columns = read_float64(fin);
-    inst.field_of_view_along_columns = read_float64(fin);
-    inst.focal_length_over_aperture_diameter = read_float64(fin);
-    inst.number_columns = read_uint64(fin);
-    inst.number_rows = read_uint64(fin);
-    inst.noise_level = read_uint64(fin);
+    inst.object_distance = bio::read_float64(fin);
+    inst.sensor_size_along_columns = bio::read_float64(fin);
+    inst.field_of_view_along_columns = bio::read_float64(fin);
+    inst.focal_length_over_aperture_diameter = bio::read_float64(fin);
+    inst.number_columns = bio::read_uint64(fin);
+    inst.number_rows = bio::read_uint64(fin);
+    inst.noise_level = bio::read_uint64(fin);
     return inst;
 }
 
