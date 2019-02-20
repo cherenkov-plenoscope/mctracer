@@ -163,7 +163,7 @@ void Factory::add_lixel_sensor_plane(Frame* frame) {
 }
 
 void Factory::add_image_sensor_housing(Frame *frame) {
-    double housing_height = 2.0*geometry->outer_sensor_housing_radius();
+    double housing_height = .67*geometry->outer_sensor_housing_radius();
 
     Frame* sensor_housing = frame->append<Frame>();
     sensor_housing->set_name_pos_rot(
