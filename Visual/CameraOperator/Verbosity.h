@@ -4,7 +4,7 @@
 
 #include "Visual/CameraDevice.h"
 
-namespace Visual {
+namespace visual {
 namespace CameraOperator {
 
 class Verbosity {
@@ -16,6 +16,6 @@ class Verbosity {
 };
 
 }  // namespace CameraOperator
-}  // namespace Visual
+}  // namespace visual
 
 #endif  // VISUAL_CAMERAOPERATOR_VERBOSITY_H_

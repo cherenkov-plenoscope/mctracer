@@ -4,7 +4,7 @@
 #include "Tools/Tools.h"
 #include "Tools/StringTools.h"
 
-namespace Visual {
+namespace visual {
 
 CameraDevice::CameraDevice(
     const std::string _name,
@@ -149,4 +149,4 @@ Ray CameraDevice::get_optical_axis_in_world()const {
     return optical_axis;
 }
 
-}  // namespace Visual
+}  // namespace visual

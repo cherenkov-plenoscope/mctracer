@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Visual/Config.h"
 
-namespace Visual {
+namespace visual {
 
 Config::Config():sky_dome(Color::SKY_BLUE) {
     max_interaction_depth = 42;
@@ -22,4 +22,4 @@ Config::Config():sky_dome(Color::SKY_BLUE) {
     photon_trajectories.radius = 0.025;
 }
 
-}  // namespace Visual
+}  // namespace visual

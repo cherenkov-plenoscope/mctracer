@@ -37,13 +37,13 @@ int main(int argc, char* argv[]) {
     mct::json::append_to_frame_in_scenery(
       &scenery.root, &scenery, scenery_path.path);
 
-    Visual::Config visual_config;
+    visual::Config visual_config;
     if (args.find("--config")->second) {
       visual_config = mct::json::load_visual_config(
         args.find("--config")->second.asString());}
 
     scenery.root.init_tree_based_on_mother_child_relations();
-    Visual::FlyingCamera free(&scenery.root, &visual_config);
+    visual::FlyingCamera free(&scenery.root, &visual_config);
 
   } catch (std::exception &error) {
     std::cerr << error.what();

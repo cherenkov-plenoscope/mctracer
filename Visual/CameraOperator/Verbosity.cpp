@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Visual/CameraOperator/Verbosity.h"
 
-namespace Visual {
+namespace visual {
 namespace CameraOperator {
 
 void Verbosity::set_verbosity(const bool verbosity) {
@@ -9,4 +9,4 @@ void Verbosity::set_verbosity(const bool verbosity) {
 }
 
 }  // namespace CameraOperator
-}  // namespace Visual
+}  // namespace visual

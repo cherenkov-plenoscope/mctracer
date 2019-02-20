@@ -7,7 +7,7 @@ class Frame;
 #include <string>
 #include "CameraDevice.h"
 
-namespace Visual {
+namespace visual {
 
 class PinHoleCamera:public CameraDevice{
  public:
@@ -38,6 +38,6 @@ class PinHoleCamera:public CameraDevice{
     std::string get_pin_hole_cam_print()const;
 };
 
-}  // namespace Visual
+}  // namespace visual
 
 #endif  // VISUAL_PINHOLECAMERA_H_

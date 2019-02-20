@@ -72,8 +72,8 @@ TEST_F(JsonTest, mini_scenery_with_stl) {
     Scenery s;
     mct::json::append_to_frame_in_scenery(&s.root, &s, path);
     s.root.init_tree_based_on_mother_child_relations();
-    //Visual::Config cfg;
-    //Visual::FlyingCamera(&s.root, &cfg);
+    //visual::Config cfg;
+    //visual::FlyingCamera(&s.root, &cfg);
 }
 
 TEST_F(JsonTest, valid_color) {
@@ -461,7 +461,7 @@ TEST_F(JsonTest, visual_config) {
   }
   )"_json;
   mct::json::Object o(j);
-  Visual::Config cfg = mct::json::to_visual_config(o, "./");
+  visual::Config cfg = mct::json::to_visual_config(o, "./");
   EXPECT_TRUE(cfg.max_interaction_depth == 41u);
   EXPECT_TRUE(cfg.preview.rows == 256u);
   EXPECT_TRUE(cfg.preview.cols == 144u);

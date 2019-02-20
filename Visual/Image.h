@@ -7,7 +7,7 @@
 #include "Core/Color.h"
 #include "PixelCoordinate.h"
 
-namespace Visual {
+namespace visual {
 
 struct Image {
     // For fast striding: Use cols in outer loop and rows in inner loop.
@@ -53,6 +53,6 @@ std::vector<PixelCoordinate> pixel_coordinates_above_threshold(
 void fabs_difference(const Image &a, const Image &b, Image* out);
 
 void scale_up(const Image &in, const unsigned int scale, Image* out);
-}  // namespace Visual
+}  // namespace visual
 
 #endif  // VISUAL_IMAGE_H_

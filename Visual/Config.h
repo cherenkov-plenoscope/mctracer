@@ -6,7 +6,7 @@
 #include "SkyDome.h"
 #include "Core/Vec3.h"
 
-namespace Visual {
+namespace visual {
 
 struct Config {
     unsigned int max_interaction_depth;
@@ -37,6 +37,6 @@ struct Config {
     Config();
 };
 
-}  // namespace Visual
+}  // namespace visual
 
 #endif  // VISUAL_CONFIG_H_

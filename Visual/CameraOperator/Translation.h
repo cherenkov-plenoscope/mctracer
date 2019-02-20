@@ -7,7 +7,7 @@
 #include <string>
 #include "Verbosity.h"
 
-namespace Visual {
+namespace visual {
 namespace CameraOperator {
 
 class Translation: public Verbosity {
@@ -33,6 +33,6 @@ class Translation: public Verbosity {
 };
 
 }  // namespace CameraOperator
-}  // namespace Visual
+}  // namespace visual
 
 #endif  // VISUAL_CAMERAOPERATOR_TRANSLATION_H_

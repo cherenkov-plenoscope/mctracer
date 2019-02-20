@@ -6,7 +6,7 @@
 #include "Visual/Image.h"
 #include "Core/Vec3.h"
 
-namespace Visual {
+namespace visual {
 
 class SkyDome {
     bool has_texture;
@@ -31,6 +31,6 @@ class SkyDome {
     double get_azimuth_angle_of(const Vec3 dir)const;
 };
 
-}  // namespace Visual
+}  // namespace visual
 
 #endif  // VISUAL_SKYDOME_H_

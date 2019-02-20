@@ -464,15 +464,15 @@ Frame* add_SegmentedReflector(
     return reflector;
 }
 
-Visual::Config load_visual_config(const std::string &path) {
+visual::Config load_visual_config(const std::string &path) {
     return to_visual_config(load(path), path);
 }
 
-Visual::Config to_visual_config(
+visual::Config to_visual_config(
     const Object &o,
     const std::string &path
 ) {
-    Visual::Config cfg;
+    visual::Config cfg;
     cfg.max_interaction_depth = o.u8("max_interaction_depth");
     cfg.preview.cols = o.obj("preview").u8("cols");
     cfg.preview.rows = o.obj("preview").u8("rows");
@@ -494,10 +494,10 @@ Visual::Config to_visual_config(
     string image_path = skyj.st("path");
 
     if (image_path.empty()) {
-        cfg.sky_dome = Visual::SkyDome(skyj.color("color"));
+        cfg.sky_dome = visual::SkyDome(skyj.color("color"));
     } else {
         PathTools::Path jsonpath = PathTools::Path(path);
-        cfg.sky_dome = Visual::SkyDome(
+        cfg.sky_dome = visual::SkyDome(
             PathTools::join(jsonpath.dirname, image_path));
         cfg.sky_dome.set_background_color(skyj.color("color"));
     }

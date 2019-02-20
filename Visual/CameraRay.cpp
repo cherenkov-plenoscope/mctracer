@@ -4,7 +4,7 @@
 #include "Core/RayAndFrame.h"
 #include "Core/Intersection.h"
 
-namespace Visual {
+namespace visual {
 
 CameraRay::CameraRay() {}
 
@@ -18,4 +18,4 @@ std::string CameraRay::str()const {
     return out.str();
 }
 
-}  // namespace Visual
+}  // namespace visual

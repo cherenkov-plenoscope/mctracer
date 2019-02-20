@@ -5,7 +5,7 @@
 #include <string>
 #include "Verbosity.h"
 
-namespace Visual {
+namespace visual {
 namespace CameraOperator {
 
 class Rotation: public Verbosity {
@@ -43,6 +43,6 @@ class Rotation: public Verbosity {
 };
 
 }  // namespace CameraOperator
-}  // namespace Visual
+}  // namespace visual
 
 #endif  // VISUAL_CAMERAOPERATOR_ROTATION_H_

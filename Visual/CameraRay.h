@@ -10,7 +10,7 @@ class Intersection;
 #include "Core/Color.h"
 #include "Config.h"
 
-namespace Visual {
+namespace visual {
 
 class CameraRay :public Ray {
  protected:
@@ -21,6 +21,6 @@ class CameraRay :public Ray {
     std::string str()const;
 };
 
-}  // namespace Visual
+}  // namespace visual
 
 #endif  // VISUAL_CAMERARAY_H_

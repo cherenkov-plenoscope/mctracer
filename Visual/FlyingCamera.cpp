@@ -14,7 +14,7 @@ using std::cout;
 using std::stringstream;
 using std::string;
 
-namespace Visual {
+namespace visual {
 
 void image_to_opencv_image(const Image& image, cv::Mat* out) {
     for (unsigned int col = 0; col < image.number_cols; col++) {
@@ -360,4 +360,4 @@ void FlyingCamera::continue_with_new_scenery_and_visual_config(
     enter_interactive_display();
 }
 
-}  // namespace Visual
+}  // namespace visual

@@ -11,7 +11,7 @@ class Frame;
 #include "CameraDevice.h"
 #include "Core/Random/Random.h"
 
-namespace Visual {
+namespace visual {
 
 class ApertureCamera :public CameraDevice{
  public:
@@ -69,6 +69,6 @@ class ApertureCamera :public CameraDevice{
         const std::vector<PixelCoordinate> pixels);
 };
 
-}  // namespace Visual
+}  // namespace visual
 
 #endif  // VISUAL_APERTURECAMERA_H_

@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
     PathTools::Path photon_path = PathTools::Path(
         args.find("--input")->second.asString());
 
-    Visual::Config visual_config;
+    visual::Config visual_config;
     if (args.find("--config")->second) {
       visual_config = mct::json::load_visual_config(
         args.find("--config")->second.asString());}
@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
 
     EventIo::Run corsika_run(photon_path.path);
 
-    Visual::FlyingCamera free_orb(&scenery.root, &visual_config);
+    visual::FlyingCamera free_orb(&scenery.root, &visual_config);
 
     unsigned int event_counter = 0;
     while(corsika_run.has_still_events_left()) {

@@ -11,7 +11,7 @@
 #include "CameraRay.h"
 #include "Image.h"
 
-namespace Visual {
+namespace visual {
 
 class CameraDevice{
  public:
@@ -61,6 +61,6 @@ class CameraDevice{
     void update_optical_axis_and_orientation();
 };
 
-}  // namespace Visual
+}  // namespace visual
 
 #endif  // VISUAL_CAMERADEVICE_H_

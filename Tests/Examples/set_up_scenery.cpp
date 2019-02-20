@@ -56,8 +56,8 @@ TEST_F(SetUpScenery, create_scenery) {
 
     /*@//free like up to $\infty$@*/
 
-    Visual::Config visual_config;
-    //Visual::FlyingCamera cam(&world, &visual_config);
+    visual::Config visual_config;
+    //visual::FlyingCamera cam(&world, &visual_config);
     //--end_set_up_scene_in_source--
 }
 //--using_namespace--

@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Visual/Tracer.h"
 
-namespace Visual {
+namespace visual {
 
 const double Tracer::wavelength = 533e-9;
 
@@ -141,4 +141,4 @@ bool Tracer::surface_normal_is_facing_observer(
         0.0);
 }
 
-}  // namespace Visual
+}  // namespace visual

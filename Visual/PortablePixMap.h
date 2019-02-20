@@ -6,7 +6,7 @@
 #include <string>
 #include "Visual/Image.h"
 
-namespace Visual {
+namespace visual {
 namespace ppm {
 
 void append_image_to_file(const Image &img, std::ostream &fout);
@@ -16,6 +16,6 @@ void write_image_to_path(const Image &img, const std::string path);
 Image read_image_from_path(const std::string path);
 
 }  // namespace ppm
-}  // namespace Visual
+}  // namespace visual
 
 #endif  // VISUAL_PORTABLEPIXMAP_H_

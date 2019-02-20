@@ -4,7 +4,7 @@
 #include "Tools/Tools.h"
 using std::cout;
 
-namespace Visual {
+namespace visual {
 namespace CameraOperator {
 
 Rotation::Rotation(CameraDevice* camera_to_work_with) {
@@ -138,4 +138,4 @@ Rot3 Rotation::get_R_World2Camera()const {
 }
 
 }  // namespace CameraOperator
-}  // namespace Visual
+}  // namespace visual

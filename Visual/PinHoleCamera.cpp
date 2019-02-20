@@ -4,7 +4,7 @@
 #include "Tracer.h"
 #include "Core/Random/Random.h"
 
-namespace Visual {
+namespace visual {
 
 void PinHoleCamera::update_position_and_orientation(
     const Vec3 cam_pos_in_world,
@@ -136,4 +136,4 @@ void PinHoleCamera::acquire_image(
     }
 }
 
-}  // namespace Visual
+}  // namespace visual

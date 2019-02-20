@@ -152,9 +152,9 @@ void assert_has_key(std::map<std::string, json_to_frame> m, const std::string &k
 
 json_to_frame get(std::map<std::string, json_to_frame> m, const std::string &key);
 
-Visual::Config to_visual_config(const Object &o, const std::string &path);
+visual::Config to_visual_config(const Object &o, const std::string &path);
 
-Visual::Config load_visual_config(const std::string &path);
+visual::Config load_visual_config(const std::string &path);
 
 PropagationConfig to_PropagationConfig(const Object &o);
 

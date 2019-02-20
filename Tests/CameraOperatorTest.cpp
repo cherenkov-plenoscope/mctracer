@@ -5,7 +5,7 @@
 
 class CameraOperatorTest : public ::testing::Test {
  protected:
-    Visual::PinHoleCamera *cam;
+    visual::PinHoleCamera *cam;
     double initial_FoV_in_rad;
 
     CameraOperatorTest() {}
@@ -19,7 +19,7 @@ class CameraOperatorTest : public ::testing::Test {
         Rot3 rot(0.0, 0.0, 0.0);
         initial_FoV_in_rad = Deg2Rad(120.0);
 
-        cam = new Visual::PinHoleCamera("my_cam", 640, 480);
+        cam = new visual::PinHoleCamera("my_cam", 640, 480);
         cam->update_position_and_orientation(pos, rot);
         cam->set_FoV_in_rad(initial_FoV_in_rad);
     }
@@ -29,13 +29,13 @@ class CameraOperatorTest : public ::testing::Test {
 
 TEST_F(CameraOperatorTest, creation) {
     EXPECT_EQ(initial_FoV_in_rad, cam->get_FoV_in_rad());
-    Visual::CameraOperator::FieldOfView FoVCamMan(cam);
+    visual::CameraOperator::FieldOfView FoVCamMan(cam);
     EXPECT_NE(FoVCamMan.default_fov, initial_FoV_in_rad);
     EXPECT_EQ(FoVCamMan.default_fov, cam->get_FoV_in_rad());
 }
 
 TEST_F(CameraOperatorTest, increase_FoV) {
-    Visual::CameraOperator::FieldOfView FoVCamMan(cam);
+    visual::CameraOperator::FieldOfView FoVCamMan(cam);
     for (int i = 0; i < 250; i++)
         FoVCamMan.increase_when_possible();
     EXPECT_TRUE(cam->get_FoV_in_rad() > Deg2Rad(160.0));
@@ -43,7 +43,7 @@ TEST_F(CameraOperatorTest, increase_FoV) {
 }
 
 TEST_F(CameraOperatorTest, decrease_FoV) {
-    Visual::CameraOperator::FieldOfView FoVCamMan(cam);
+    visual::CameraOperator::FieldOfView FoVCamMan(cam);
     for (int i = 0; i < 250; i++)
         FoVCamMan.decrease_when_possible();
     EXPECT_TRUE(cam->get_FoV_in_rad() > Deg2Rad(0.0));
@@ -51,7 +51,7 @@ TEST_F(CameraOperatorTest, decrease_FoV) {
 }
 
 TEST_F(CameraOperatorTest, default_FoV) {
-    Visual::CameraOperator::FieldOfView FoVCamMan(cam);
+    visual::CameraOperator::FieldOfView FoVCamMan(cam);
     FoVCamMan.increase_when_possible();
     EXPECT_NE(FoVCamMan.default_fov, cam->get_FoV_in_rad());
     FoVCamMan.set_default();
@@ -59,7 +59,7 @@ TEST_F(CameraOperatorTest, default_FoV) {
 }
 
 TEST_F(CameraOperatorTest, increase_and_decrease_FoV) {
-    Visual::CameraOperator::FieldOfView FoVCamMan(cam);
+    visual::CameraOperator::FieldOfView FoVCamMan(cam);
     FoVCamMan.set_verbosity(false);
     for (int i = 0; i < 250; i++)
         FoVCamMan.decrease_when_possible();
@@ -75,13 +75,13 @@ TEST_F(CameraOperatorTest, default_rotation) {
     Rot3 non_default_rotation(1.2, 3.4, 5.6);
     Rot3 looking_in_pos_x_dir(0.0, Deg2Rad(-90.0), 0.0);
     cam->update_orientation(non_default_rotation);
-    Visual::CameraOperator::Rotation rot_operator(cam);
+    visual::CameraOperator::Rotation rot_operator(cam);
     rot_operator.set_default_rotation(looking_in_pos_x_dir);
     EXPECT_EQ(looking_in_pos_x_dir, cam->get_rotation_in_world());
 }
 
 TEST_F(CameraOperatorTest, look_up) {
-    Visual::CameraOperator::Rotation rot_operator(cam);
+    visual::CameraOperator::Rotation rot_operator(cam);
     rot_operator.set_default_rotation(Rot3(0.0, Deg2Rad(-90.0), 0.0));
     for (int i = 0; i < 50; i++)
         rot_operator.look_further_up_when_possible();
@@ -90,7 +90,7 @@ TEST_F(CameraOperatorTest, look_up) {
 }
 
 TEST_F(CameraOperatorTest, look_down) {
-    Visual::CameraOperator::Rotation rot_operator(cam);
+    visual::CameraOperator::Rotation rot_operator(cam);
     rot_operator.set_default_rotation(Rot3(0.0, Deg2Rad(-90.0), 0.0));
     for (int i = 0; i < 50; i++)
         rot_operator.look_further_down_when_possible();

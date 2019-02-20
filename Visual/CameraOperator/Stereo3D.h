@@ -8,7 +8,7 @@ class Frame;
 #include "Core/DistanceMeter.h"
 #include "Verbosity.h"
 
-namespace Visual {
+namespace visual {
 namespace CameraOperator {
 
 class Stereo3D: public Verbosity {
@@ -58,6 +58,6 @@ class Stereo3D: public Verbosity {
 };
 
 }  // namespace CameraOperator
-}  // namespace Visual
+}  // namespace visual
 
 #endif  // VISUAL_CAMERAOPERATOR_STEREO3D_H_

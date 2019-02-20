@@ -2,7 +2,7 @@
 #include "Visual/PixelCoordinate.h"
 #include <vector>
 
-namespace Visual {
+namespace visual {
 
 std::vector<PixelCoordinate> pixel_coordinates(
     const unsigned int cols,
@@ -20,4 +20,4 @@ std::vector<PixelCoordinate> pixel_coordinates(
     return coordinates;
 }
 
-}  // namespace Visual
+}  // namespace visual

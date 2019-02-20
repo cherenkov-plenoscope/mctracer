@@ -7,7 +7,7 @@
 using std::string;
 using std::stringstream;
 
-namespace Visual {
+namespace visual {
 
 void ApertureCamera::set_fStop_sesnorWidth(
     const double new_FStopNumber,
@@ -355,4 +355,4 @@ std::vector<Color> ApertureCamera::acquire_pixels(
     return out;
 }
 
-}  // namespace Visual
+}  // namespace visual

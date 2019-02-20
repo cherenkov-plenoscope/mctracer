@@ -4,7 +4,7 @@
 
 #include <vector>
 
-namespace Visual {
+namespace visual {
 
 struct PixelCoordinate{
     unsigned int row;
@@ -15,6 +15,6 @@ std::vector<PixelCoordinate> pixel_coordinates(
     const unsigned int cols,
     const unsigned int rows);
 
-}  // namespace Visual
+}  // namespace visual
 
 #endif  // VISUAL_PIXELCOORDINATE_H_

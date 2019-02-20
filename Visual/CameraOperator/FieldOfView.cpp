@@ -2,7 +2,7 @@
 #include "Visual/CameraOperator/FieldOfView.h"
 #include "Tools/Tools.h"
 
-namespace Visual {
+namespace visual {
 namespace CameraOperator {
 
 FieldOfView::FieldOfView(CameraDevice* _camera) {
@@ -74,4 +74,4 @@ void FieldOfView::print_prefix()const {
 }
 
 }  // namespace CameraOperator
-}  // namespace Visual
+}  // namespace visual

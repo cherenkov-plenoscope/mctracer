@@ -3,7 +3,7 @@
 #include <math.h>
 #include <sstream>
 
-namespace Visual {
+namespace visual {
 
 SkyDome::SkyDome(const std::string _filename):
     sky(Image(_filename)) {
@@ -81,4 +81,4 @@ double SkyDome::get_azimuth_angle_of(const Vec3 dir)const {
     return atan2(dir.y, dir.x);
 }
 
-}  // namespace Visual
+}  // namespace visual

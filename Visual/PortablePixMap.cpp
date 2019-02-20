@@ -6,7 +6,7 @@
 #include "Tools/StringTools.h"
 #include "Tools/binary_input_output.h"
 
-namespace Visual {
+namespace visual {
 namespace ppm {
 
 void append_image_to_file(const Image &img, std::ostream &fout) {
@@ -119,4 +119,4 @@ Image read_image_from_path(const std::string path) {
 }
 
 }  // namespace ppm
-}  // namespace Visual
+}  // namespace visual

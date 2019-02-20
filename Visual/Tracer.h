@@ -11,7 +11,7 @@
 #include "Core/RayAndFrame.h"
 #include "Core/PropagationEnvironment.h"
 
-namespace Visual {
+namespace visual {
 
 class Tracer {
  public:
@@ -46,6 +46,6 @@ class Tracer {
     Color shadow_of_sky_light()const;
 };
 
-}  // namespace Visual
+}  // namespace visual
 
 #endif  // VISUAL_TRACER_H_

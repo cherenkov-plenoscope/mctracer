@@ -12,7 +12,7 @@
 #include "Tools/Time.h"
 #include "Tools/UserInteraction.h"
 
-namespace Visual {
+namespace visual {
 
 class FlyingCamera {
 // Fly through the scene like you want!
@@ -76,6 +76,6 @@ class FlyingCamera {
     void acquire_image_with_camera(CameraDevice* cam, Image* img);
 };
 
-}  // namespace Visual
+}  // namespace visual
 
 #endif  // VISUAL_FLYINGCAMERA_H_
