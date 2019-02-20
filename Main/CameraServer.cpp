@@ -7,7 +7,7 @@
 #include "Scenery/Scenery.h"
 #include "Tools/PathTools.h"
 #include "Tools/binary_input_output.h"
-#include "json.h"
+#include "./json.h"
 using std::string;
 using std::cout;
 
@@ -112,7 +112,6 @@ int main(int argc, char* argv[]) {
             cam.acquire_image(&scenery.root, &visual_config, &image);
             Visual::ppm::append_image_to_file(image, std::cout);
         }
-
     }catch(std::exception &error) {
         std::cerr << error.what();
     }
