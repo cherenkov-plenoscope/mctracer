@@ -1,4 +1,5 @@
 set(TEST_SOURCE
+    ${CMAKE_CURRENT_SOURCE_DIR}/PrintSizeOfTest.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ImageTest.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ColorTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ApertureCameraTest.cpp

@@ -124,15 +124,6 @@ add_executable(mctScaleStl Main/ScaleStl.cpp)
 target_link_libraries(mctScaleStl mct)
 target_link_libraries(mctScaleStl docopt)
 
-#---------------------------------
-# Benchmark
-add_subdirectory("${PROJECT_SOURCE_DIR}/Benchmarks")
-
-add_executable(mctBenchMark ./Benchmarks/benchmark.cpp ${TEST_BENCHMARK})
-target_link_libraries(mctBenchMark gtest gtest_main)
-target_link_libraries(mctBenchMark mct)
-
-
 #------------------------
 # FACT propagation
 add_executable(mctFactPropagation ./Main/FactPropagation.cpp)
