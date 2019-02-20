@@ -37,7 +37,7 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
 #-----------
 # The Source
-set(SOURCE 	
+set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/json.cpp)
 add_subdirectory("${PROJECT_SOURCE_DIR}/Visual")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Core")
