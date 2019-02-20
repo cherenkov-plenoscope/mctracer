@@ -1,0 +1,71 @@
+{
+	"night_sky_background_ligth": {
+		"flux_vs_wavelength": [
+            [2.40e-07, 1.651e+18],
+            [2.70e-07, 2.018e+18],
+            [3.00e-07, 2.428e+18],
+            [3.30e-07, 2.357e+18],
+            [3.40e-07, 2.914e+18],
+            [3.94e-07, 3.772e+18],
+            [3.95e-07, 1.819e+19],
+            [3.96e-07, 3.753e+18],
+            [4.33e-07, 4.577e+18],
+            [4.35e-07, 9.225e+18],
+            [4.37e-07, 4.535e+18],
+            [4.62e-07, 5.362e+18],
+            [4.85e-07, 6.129e+18],
+            [5.25e-07, 7.550e+18],
+            [5.55e-07, 8.659e+18],
+            [5.58e-07, 8.425e+19],
+            [5.61e-07, 8.213e+18],
+            [5.85e-07, 8.893e+18],
+            [5.91e-07, 3.554e+19],
+            [5.95e-07, 1.216e+19],
+            [6.00e-07, 1.073e+19],
+            [6.05e-07, 8.680e+18],
+            [6.27e-07, 1.272e+19],
+            [6.30e-07, 6.692e+19],
+            [6.32e-07, 1.137e+19],
+            [6.38e-07, 2.881e+19],
+            [6.40e-07, 8.128e+18],
+            [6.45e-07, 8.065e+18],
+            [6.47e-07, 1.072e+19],
+            [6.60e-07, 1.051e+19],
+            [6.70e-07, 7.764e+18],
+            [6.78e-07, 7.673e+18],
+            [6.85e-07, 1.570e+19],
+            [7.01e-07, 9.895e+18]
+		],
+		"exposure_time": 50e-9,
+		"comment": "Night Sky Background Analysis for the Cherenkov Telescope Array using the Atmoscope instrument, Markus Gaug, arXiv preprint arXiv:1307.3053, based on Benn Ch.R., Ellison S.R., La Palma tech. note, 2007"
+	},
+	"photo_electric_converter": {
+		"quantum_efficiency_vs_wavelength": [
+            [266e-9, 0.03],
+            [277e-9, 0.1],
+            [283e-9, 0.2],
+            [300e-9, 0.254],
+            [313e-9, 0.3],
+            [339e-9, 0.352],
+            [353e-9, 0.352],
+            [373e-9, 0.4],
+            [400e-9, 0.443],
+            [420e-9, 0.477],
+            [452e-9, 0.5],
+            [500e-9, 0.486],
+            [552e-9, 0.4],
+            [600e-9, 0.33],
+            [620e-9, 0.3],
+            [689e-9, 0.2],
+            [800e-9, 0.1],
+            [900e-9, 0.043]
+		],
+		"dark_rate": 1.0e6,
+		"probability_for_second_puls": 0.1,
+		"comment": "Hamamatsu Multi-Pixel Photon Counter Photon detection efficiency vs. wavelength (typical example) Pixel pitch: 75 μm Temp: 25C S13360-**75CS"
+	},
+	"photon_stream": {
+		"time_slice_duration": 0.5e-9,
+		"single_photon_arrival_time_resolution": 0.416e-9
+	}
+}

@@ -1,0 +1,53 @@
+{
+  "functions": [
+    { "name": "mirror_reflection",
+      "argument_versus_value": [
+        [200e-9, 0.8],
+        [1200e-9, 0.8]]},
+    { "name": "lens_refraction",
+      "argument_versus_value": [
+        [200e-9, 1.49],
+        [1200e-9, 1.49]]}
+  ],
+  "colors": [],
+  "children": [
+    {
+      "type": "Frame",
+      "name": "Portal",
+      "pos": [0, 0, 0],
+      "rot": [0, 0, 0],
+      "children": [
+        {
+          "type": "SegmentedReflector",
+          "name": "reflector",
+          "pos": [0, 0, 0],
+          "rot": [0, 0, 0],
+          "focal_length": 106.5,
+          "max_outer_aperture_radius": 35.5,
+          "min_inner_aperture_radius": 3.5,
+          "DaviesCotton_over_parabolic_mixing_factor": 0.0,
+          "facet_inner_hex_radius": 0.75,
+          "gap_between_facets": 0.02,
+          "surface": {
+            "outer_reflection": "mirror_reflection"},
+          "children": []
+        },
+        {
+          "type": "light_field_sensor",
+          "name": "light_field_sensor",
+          "pos": [0, 0, 106.5],
+          "rot": [0, 0, 0],
+          "expected_imaging_system_focal_length": 106.5,
+          "expected_imaging_system_aperture_radius": 35.5,
+          "max_FoV_diameter_deg": 6.5,
+          "hex_pixel_FoV_flat2flat_deg": 0.06667,
+          "number_of_paxel_on_pixel_diagonal": 9,
+          "housing_overhead": 1.1,
+          "lens_refraction_vs_wavelength": "lens_refraction",
+          "bin_reflection_vs_wavelength": "mirror_reflection",
+          "children": []
+        },
+      ]
+    }
+  ]
+}
