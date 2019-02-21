@@ -28,12 +28,12 @@ struct Vec2 {
     double distance_to(const Vec2 &v)const;
     bool norm_is_less_equal_than(const double length_to_compare)const;
     std::string str()const;
-
-    static const double MAX_DEVIATION_EQUAL_VEC2;
-    static const Vec2 ORIGIN;
-    static const Vec2 UNIT_X;
-    static const Vec2 UNIT_Y;
 };
+
+const Vec2 VEC2_ORIGIN   = Vec2(0.0, 0.0);
+const Vec2 VEC2_UNIT_X = Vec2(1.0, 0.0);
+const Vec2 VEC2_UNIT_Y = Vec2(0.0, 1.0);
+const double MAX_DEVIATION_EQUAL_VEC2 = 1e-7;
 
 }  // namespace relleums
 
