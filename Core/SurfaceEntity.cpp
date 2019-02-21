@@ -14,7 +14,7 @@ using Function::Limits;
 const SurfaceEntity SurfaceEntity::VOID_SURFACE_ENTITY;
 const SurfaceEntity SurfaceEntity::PHOTON_SOURCE;
 
-const Color* SurfaceEntity::DEFAULT_COLOR = &Color::DARK_GRAY;
+const Color* SurfaceEntity::DEFAULT_COLOR = &COLOR_DARK_GRAY;
 
 const Limits SurfaceEntity::DEFAULT_WAVELENGTH_RANGE = Limits(200e-9, 1200e-9);
 

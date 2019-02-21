@@ -109,7 +109,7 @@ Color Tracer::shadow_of_sky_light()const {
     if (!surface_iluminated_by_global_light_source())
         darkening = darkening*0.25;
 
-    color.reflection_mix(Color::BLACK, max_darkening - darkening);
+    color.reflection_mix(COLOR_BLACK, max_darkening - darkening);
 
     return color;
 }

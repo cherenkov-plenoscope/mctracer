@@ -24,7 +24,7 @@ Factory::Factory(const Geometry* geo):
 {}
 
 void Factory::add_lens_array(Frame* frame) {
-    scenery->colors.add("lens_white", Color::WHITE);
+    scenery->colors.add("lens_white", COLOR_WHITE);
     const Color* white = scenery->colors.get("lens_white");
 
     Frame* lens_array = frame->append<Frame>();
@@ -54,7 +54,7 @@ void Factory::add_pixel_bin_array(Frame* frame) {
         ROT3_UNITY);
 
     vector<Vec3> flower_positions = geometry->paxel_grid_center_positions();
-    scenery->colors.add("bin_wall_green", Color::GREEN);
+    scenery->colors.add("bin_wall_green", COLOR_GREEN);
 
     for (unsigned int i = 0; i < flower_positions.size(); i++) {
         add_pixel_bin_with_name_at_pos(
@@ -94,7 +94,7 @@ void Factory::add_pixel_bin_with_name_at_pos(
 }
 
 void Factory::add_light_field_sensor_frontplate(Frame* frame) {
-    scenery->colors.add("light_field_sensor_housing_gray", Color::GRAY);
+    scenery->colors.add("light_field_sensor_housing_gray", COLOR_GRAY);
     const Color* gray = scenery->colors.get("light_field_sensor_housing_gray");
 
     HexGridAnnulus face_plate_grid(
@@ -131,7 +131,7 @@ void Factory::add_light_field_sensor_frontplate(Frame* frame) {
 }
 
 void Factory::add_lixel_sensor_plane(Frame* frame) {
-    scenery->colors.add("light_field_sensor_cell_red", Color::RED);
+    scenery->colors.add("light_field_sensor_cell_red", COLOR_RED);
     const Color* red = scenery->colors.get("light_field_sensor_cell_red");
 
     Frame* sub_pixel_array = frame->append<Frame>();
@@ -176,8 +176,8 @@ void Factory::add_image_sensor_housing(Frame *frame) {
         "top",
         Vec3(0.0, 0.0, housing_height),
         ROT3_UNITY);
-    sensor_housing_top->set_outer_color(&Color::GRAY);
-    sensor_housing_top->set_inner_color(&Color::GRAY);
+    sensor_housing_top->set_outer_color(&COLOR_GRAY);
+    sensor_housing_top->set_inner_color(&COLOR_GRAY);
     sensor_housing_top->set_radius(geometry->outer_sensor_housing_radius());
 
     Cylinder* sensor_housing_cylinder = sensor_housing->append<Cylinder>();
@@ -185,8 +185,8 @@ void Factory::add_image_sensor_housing(Frame *frame) {
         "cylinder",
         VEC3_ORIGIN,
         ROT3_UNITY);
-    sensor_housing_cylinder->set_outer_color(&Color::GRAY);
-    sensor_housing_cylinder->set_inner_color(&Color::GRAY);
+    sensor_housing_cylinder->set_outer_color(&COLOR_GRAY);
+    sensor_housing_cylinder->set_inner_color(&COLOR_GRAY);
     sensor_housing_cylinder->set_cylinder(
         geometry->outer_sensor_housing_radius(),
         Vec3(0.0, 0.0, 0.0),
@@ -220,7 +220,7 @@ void Factory::add_demonstration_light_field_sensor_to_frame_in_scenery(
     this->scenery = scenery;
 
     // Add lens
-    scenery->colors.add("lens_white", Color::WHITE);
+    scenery->colors.add("lens_white", COLOR_WHITE);
     const Color* white = scenery->colors.get("lens_white");
 
     BiConvexLensHexBound* lens = frame->append<BiConvexLensHexBound>();
@@ -239,7 +239,7 @@ void Factory::add_demonstration_light_field_sensor_to_frame_in_scenery(
         Vec3(0.0, 0.0, geometry->pixel_plane_to_paxel_plane_distance()),
         ROT3_UNITY);
 
-    scenery->colors.add("bin_wall_green", Color::GREEN);
+    scenery->colors.add("bin_wall_green", COLOR_GREEN);
 
     add_pixel_bin_with_name_at_pos(
         bin_array,
@@ -247,7 +247,7 @@ void Factory::add_demonstration_light_field_sensor_to_frame_in_scenery(
         Vec3(0.0, 0.0, 0.0));
 
     // Add lixels
-    scenery->colors.add("light_field_sensor_cell_red", Color::RED);
+    scenery->colors.add("light_field_sensor_cell_red", COLOR_RED);
     const Color* red = scenery->colors.get("light_field_sensor_cell_red");
 
     Frame* sub_pixel_array = frame->append<Frame>();

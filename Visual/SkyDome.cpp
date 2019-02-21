@@ -16,7 +16,7 @@ SkyDome::SkyDome(const std::string _filename):
     zenith_to_horizon_radius =
         central_row < central_col ? central_row : central_col;
 
-    background_color = Color::BLACK;
+    background_color = COLOR_BLACK;
 }
 
 SkyDome::SkyDome(const Color color): sky(Image(0, 0)) {
@@ -26,7 +26,7 @@ SkyDome::SkyDome(const Color color): sky(Image(0, 0)) {
 
 SkyDome::SkyDome(): sky(Image(0, 0)) {
     has_texture = false;
-    background_color = Color::SKY_BLUE;
+    background_color = COLOR_SKY_BLUE;
 }
 
 void SkyDome::set_background_color(const Color background_color) {

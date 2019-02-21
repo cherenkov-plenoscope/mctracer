@@ -38,8 +38,8 @@ void TrajectoryFactory::append_trajectory_to(Frame* root_frame) {
                     position_in_root_frame(),
                 ray->intersection_history.at(i+1).
                     position_in_root_frame());
-            ray_trajectory->set_outer_color(&Color::RED);
-            ray_trajectory->set_inner_color(&Color::RED);
+            ray_trajectory->set_outer_color(&COLOR_RED);
+            ray_trajectory->set_inner_color(&COLOR_RED);
         }
 
         Sphere* intersection_indicator = trajectory->append<Sphere>();
@@ -52,9 +52,9 @@ void TrajectoryFactory::append_trajectory_to(Frame* root_frame) {
         intersection_indicator->set_radius(radius_of_trajectory*2.0);
 
         if (ray->interaction_history.at(i) == absorption_in_void)
-            intersection_indicator->set_outer_color(&Color::DARK_GRAY);
+            intersection_indicator->set_outer_color(&COLOR_DARK_GRAY);
         else
-            intersection_indicator->set_outer_color(&Color::GREEN);
+            intersection_indicator->set_outer_color(&COLOR_GREEN);
     }
 }
 

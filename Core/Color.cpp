@@ -1,24 +1,10 @@
 // Copyright 2014 Sebastian A. Mueller
+#include "Core/Color.h"
 #include <math.h>
 #include <sstream>
 #include <exception>
-#include "Core/Color.h"
 
 namespace relleums {
-
-const Color Color::WHITE = Color(255, 255, 255);
-const Color Color::SKY_BLUE = Color(127, 188, 255);
-const Color Color::GRAY = Color(128, 128, 128);
-const Color Color::DARK_GRAY = Color(25, 25, 25);
-const Color Color::BLACK = Color(0, 0, 0);
-const Color Color::RED = Color(255, 0, 0);
-const Color Color::GREEN = Color(0, 255, 0);
-const Color Color::BLUE = Color(0, 0, 255);
-const Color Color::GRASS_GREEN = Color(22, 91, 49);
-
-Color::Color(): r(0), g(0), b(0) {}
-
-Color::Color(float _r, float _g, float _b): r(_r), g(_g), b(_b) {}
 
 Color::Color(const std::vector<Color> &colors) {
     float _r = 0.0;

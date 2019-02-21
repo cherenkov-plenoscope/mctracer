@@ -4,7 +4,7 @@
 namespace relleums {
 namespace visual {
 
-Config::Config():sky_dome(Color::SKY_BLUE) {
+Config::Config():sky_dome(COLOR_SKY_BLUE) {
     max_interaction_depth = 42;
 
     preview.cols = 128;

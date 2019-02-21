@@ -13,8 +13,8 @@ namespace SegmentedReflector {
 		facet_inner_hex_radius(0.30),
 		gap_between_facets(0.01),
 
-		mirror_color(&Color::WHITE),
-		inner_mirror_color(&Color::DARK_GRAY),
+		mirror_color(&COLOR_WHITE),
+		inner_mirror_color(&COLOR_DARK_GRAY),
 		reflectivity(&perfect_reflectivity)
 	{}
 } // SegmentedReflector
