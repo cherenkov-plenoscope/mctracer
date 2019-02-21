@@ -17,6 +17,10 @@ class Intersection;
 
 namespace relleums {
 
+const char FRAME_PATH_DELIMITER = '/';
+const unsigned int FRAME_MAX_NUMBER_CHILDREN = 16;
+const double FRAME_MIN_STRUCTURE_SIZE = 1e-6;
+
 class Frame {
     // A frame defines the geometric relation to its mother frame and its
     // children frames. This way a tree structure of the scenery is created.
@@ -33,9 +37,6 @@ class Frame {
     const Frame *root_frame;
 
  public:
-    static const char PATH_DELIMITER;
-    static const unsigned int MAX_NUMBER_CHILDREN;
-    static const double MIN_STRUCTURE_SIZE;
     static Frame VOID_FRAME;
 
     // SET

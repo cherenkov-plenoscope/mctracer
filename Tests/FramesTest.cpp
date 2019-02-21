@@ -40,7 +40,7 @@ TEST_F(FramesTest, too_close_together_false) {
     Frame f2;
     f2.set_name_pos_rot(
         "f2",
-        Vec3(0, 0, 10.0*Frame::MIN_STRUCTURE_SIZE),
+        Vec3(0, 0, 10.0*FRAME_MIN_STRUCTURE_SIZE),
         ROT3_UNITY);
 
     vector<Frame*> vf; vf.push_back(&f1); vf.push_back(&f2);

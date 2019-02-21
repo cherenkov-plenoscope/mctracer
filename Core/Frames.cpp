@@ -13,7 +13,7 @@ Vec3 bounding_sphere_center(const vector<Frame*> &frames) {
 
     Vec3 center = mean_of_positions_in_mother(frames);
 
-    if (frames.size() < Frame::MAX_NUMBER_CHILDREN) {
+    if (frames.size() < FRAME_MAX_NUMBER_CHILDREN) {
         const Vec3 alternative = dumb_bounding_sphere_center(frames);
         const double m_radius = bounding_sphere_radius(frames, center);
         const double alt_radius = bounding_sphere_radius(frames, alternative);
@@ -88,7 +88,7 @@ bool positions_in_mother_are_too_close_together(const vector<Frame*> &frames) {
         return false;
     else
         return spread_of_frame_position_in_mother(frames) <
-            Frame::MIN_STRUCTURE_SIZE;
+            FRAME_MIN_STRUCTURE_SIZE;
 }
 
 double spread_of_frame_position_in_mother(const vector<Frame*> &frames) {

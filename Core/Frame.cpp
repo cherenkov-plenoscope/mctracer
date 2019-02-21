@@ -11,10 +11,6 @@ using std::vector;
 
 namespace relleums {
 
-const char Frame::PATH_DELIMITER = '/';
-const unsigned int Frame::MAX_NUMBER_CHILDREN = 16;
-const double Frame::MIN_STRUCTURE_SIZE = 1e-6;
-
 Frame Frame::VOID_FRAME;
 
 Frame::Frame():
@@ -75,10 +71,10 @@ void Frame::assert_name_is_valid(const string name_to_check)const {
         char_pos++;
     }
 
-    if (StringTools::string_contains_char(name_to_check, PATH_DELIMITER)) {
+    if (StringTools::string_contains_char(name_to_check, FRAME_PATH_DELIMITER)) {
         std::stringstream info;
         info << "Expected name of frame '" << name_to_check << "' ";
-        info << "to not contain any char of '" << PATH_DELIMITER << "', ";
+        info << "to not contain any char of '" << FRAME_PATH_DELIMITER << "', ";
         info << "but actual it does.";
         throw std::invalid_argument(info.str());
     }
@@ -170,7 +166,7 @@ string Frame::get_path_in_tree_of_frames()const {
     // unix systems.
     // eg. City/Street14/house18/roof/chimney/chimney_wall_2
     if (has_mother())
-        return mother->get_path_in_tree_of_frames() + PATH_DELIMITER + name;
+        return mother->get_path_in_tree_of_frames() + FRAME_PATH_DELIMITER + name;
     else
         return "";
 }
@@ -195,7 +191,7 @@ void Frame::calculate_intersection_with(
 }
 
 void Frame::cluster_children() {
-    if (children.size() > MAX_NUMBER_CHILDREN) {
+    if (children.size() > FRAME_MAX_NUMBER_CHILDREN) {
         vector<Frame*> oct_tree[8];
 
         // assign children temporarly to octtree
@@ -213,7 +209,7 @@ void Frame::cluster_children() {
                 for (Frame* child : oct_tree[sector]) {
                     if (
                         child->get_bounding_sphere_radius() <
-                        MIN_STRUCTURE_SIZE
+                        FRAME_MIN_STRUCTURE_SIZE
                     )
                         warn_small_child(child);
 
@@ -238,7 +234,7 @@ void Frame::cluster_children() {
                         if (
                             !sector_child->has_children() &&
                             sector_child->get_bounding_sphere_radius() <
-                            MIN_STRUCTURE_SIZE
+                            FRAME_MIN_STRUCTURE_SIZE
                         )
                             warn_small_child(sector_child);
 
@@ -278,7 +274,7 @@ void Frame::warn_small_child(const Frame* frame)const {
     out << "___Warning___\n";
     out << __FILE__ << " " << __func__ << "(frame) " << __LINE__ << "\n";
     out << "Frame: " << frame->name << " is neglected. ";
-    out << "Contour radius is below " << MIN_STRUCTURE_SIZE << "m, i.e. ";
+    out << "Contour radius is below " << FRAME_MIN_STRUCTURE_SIZE << "m, i.e. ";
     out << frame->get_bounding_sphere_radius() << "m.\n";
     std::cerr << out.str();
 }
