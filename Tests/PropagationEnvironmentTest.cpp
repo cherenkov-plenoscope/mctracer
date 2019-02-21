@@ -9,6 +9,6 @@ class PropagationEnvironmentTest : public ::testing::Test {};
 TEST_F(PropagationEnvironmentTest, default_instance) {
     PropagationEnvironment env;
     EXPECT_EQ(&Frame::VOID_FRAME, env.root_frame);
-    EXPECT_EQ(&PropagationConfig::DEFAULT_CONFIG, env.config);
+    EXPECT_EQ(&DEFAULT_PROPAGATIONCONFIG, env.config);
     EXPECT_EQ(&Random::VOID_PRNG, env.prng);
 }
