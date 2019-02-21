@@ -8,7 +8,7 @@
 namespace relleums {
 
 double deg2rad(double angle_in_Deg);
-double Rad2Deg(double angle_in_Rad);
+double rad2deg(double angle_in_Rad);
 bool is_odd(const int n);
 bool is_even(const int n);
 double get_solid_angle_for_opening_angle(const double theta);

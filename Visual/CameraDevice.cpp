@@ -81,7 +81,7 @@ std::string CameraDevice::get_camera_print()const {
     out << position.str() << "\n";
     out << "| direction of optical axis: ";
     out << pointing.str() << "\n";
-    out << "| field of view: " << Rad2Deg(field_of_view) <<" deg\n";
+    out << "| field of view: " << rad2deg(field_of_view) <<" deg\n";
     out << "| resolution: cols x rows : ";
     out << number_cols << "x";
     out << number_rows <<" pixels";
@@ -113,7 +113,7 @@ void CameraDevice::assert_field_of_view_is_valid(
         std::stringstream info;
         info << "CameraDevice::" << __func__ << "()\n";
         info << "Expected 0.0DEG < FoV < 180.0DEG, but actual FoV: ";
-        info << Rad2Deg(field_of_view) << "DEG\n";
+        info << rad2deg(field_of_view) << "DEG\n";
         throw std::invalid_argument(info.str());
     }
 }

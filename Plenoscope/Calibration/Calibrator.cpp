@@ -177,7 +177,7 @@ std::string Calibrator::str()const {
     tab << "principal aperture illumunation radius... ";
     tab << max_principal_aperture_radius_to_trow_photons_on << "m\n";
     tab << "principal aperture illumunation angle.... ";
-    tab << Rad2Deg(max_tilt_vs_optical_axis_to_throw_photons_in) << "deg\n";
+    tab << rad2deg(max_tilt_vs_optical_axis_to_throw_photons_in) << "deg\n";
     tab << "distance for photon to travel before\n";
     tab << "reaching principal aperture plane........ ";
     tab << distance_to_travel_before_intersecting_principal_aperture << "m\n";

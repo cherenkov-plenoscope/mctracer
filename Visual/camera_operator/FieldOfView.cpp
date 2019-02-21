@@ -50,7 +50,7 @@ void FieldOfView::decrease() {
 void FieldOfView::print_manipulation_when_verbose()const {
     if (verbose) {
         print_prefix();
-        std::cout << Rad2Deg(camera->get_FoV_in_rad()) << " DEG\n";
+        std::cout << rad2deg(camera->get_FoV_in_rad()) << " DEG\n";
     }
 }
 
@@ -58,7 +58,7 @@ void FieldOfView::print_can_not_be_decreased_when_verbose()const {
     if (verbose) {
         print_prefix();
         std::cout << "Can not decrease FoV any further. Min Fov: ";
-        std::cout << Rad2Deg(min_fov) << " DEG\n";
+        std::cout << rad2deg(min_fov) << " DEG\n";
     }
 }
 
@@ -66,7 +66,7 @@ void FieldOfView::print_can_not_be_increased_when_verbose()const {
     if (verbose) {
         print_prefix();
         std::cout << "Can not increase FoV any further. Max Fov: ";
-        std::cout << Rad2Deg(max_fov) << " DEG\n";
+        std::cout << rad2deg(max_fov) << " DEG\n";
     }
 }
 

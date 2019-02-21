@@ -36,7 +36,7 @@ std::string Light::str()const {
     out << "NightSkyBackground\n";
     out << "  rate................. " << rate << " Hz\n";
     out << "  FoV solid angle...... " << fov_solid_angle << " sr\n";
-    out << "  FoV radius........... " << Rad2Deg(fov_radius) << " deg\n";
+    out << "  FoV radius........... " << rad2deg(fov_radius) << " deg\n";
     out << "  aperture area........ " << aperture_area << " m^2\n";
     out << "  aperture radius...... " << aperture_radius << " m\n";
     out << "  wavelength integral.. " <<

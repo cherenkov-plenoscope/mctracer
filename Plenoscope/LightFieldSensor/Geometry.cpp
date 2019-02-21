@@ -284,7 +284,7 @@ string Geometry::str()const {
     stringstream tab;
     tab << "__Light_Field_Sensor__\n";
     tab << " Field of View................. ";
-    tab << Rad2Deg(config.max_FoV_diameter) << "deg\n";
+    tab << rad2deg(config.max_FoV_diameter) << "deg\n";
     tab << " Field of View solid angle..... ";
     tab << field_of_view_solid_angle() << "sr\n";
     tab << " Max sensor radius............. ";
@@ -298,7 +298,7 @@ string Geometry::str()const {
     tab << "\n";
     tab << "__Pixel_Lens__\n";
     tab << " FoV hex flat2flat....... ";
-    tab << Rad2Deg(pixel_FoV_hex_flat2flat()) << "deg\n";
+    tab << rad2deg(pixel_FoV_hex_flat2flat()) << "deg\n";
     tab << " Spacing................. " << pixel_spacing() << "m\n";
     tab << " Inner aperture radius... ";
     tab << pixel_lens_inner_aperture_radius() << "m\n";

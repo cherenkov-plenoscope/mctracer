@@ -10,7 +10,7 @@ double deg2rad(double angle_in_Deg) {
     return (M_PI*angle_in_Deg)/180.0;
 }
 
-double Rad2Deg(double angle_in_Rad) {
+double rad2deg(double angle_in_Rad) {
     return (angle_in_Rad/M_PI)*180.0;
 }
 
