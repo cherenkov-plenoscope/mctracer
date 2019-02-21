@@ -14,8 +14,8 @@ TEST_F(NightSkyBackgroundLightTest, init) {
 
     config.expected_imaging_system_focal_length = 75.0;
     config.expected_imaging_system_max_aperture_radius = 25.0;
-    config.max_FoV_diameter = Deg2Rad(6.5);
-    config.pixel_FoV_hex_flat2flat = Deg2Rad(0.1);
+    config.max_FoV_diameter = deg2rad(6.5);
+    config.pixel_FoV_hex_flat2flat = deg2rad(0.1);
     config.number_of_paxel_on_pixel_diagonal = 13;
     config.housing_overhead = 1.2;
     config.lens_refraction = &Plenoscope::LightFieldSensor::pmma_refraction;
@@ -32,7 +32,7 @@ TEST_F(NightSkyBackgroundLightTest, init) {
 
     EXPECT_EQ(
         nsb.fov_radius,
-        0.5*Deg2Rad(6.5)*Plenoscope::NightSkyBackground::FOV_RADIUS_OVERHEAD);
+        0.5*deg2rad(6.5)*Plenoscope::NightSkyBackground::FOV_RADIUS_OVERHEAD);
 
     EXPECT_EQ(
         nsb.aperture_radius,

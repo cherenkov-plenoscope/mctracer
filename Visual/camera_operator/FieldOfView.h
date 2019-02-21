@@ -15,9 +15,9 @@ class FieldOfView: public Verbosity {
     void increase_when_possible();
     void decrease_when_possible();
     void set_default();
-    double max_fov = Deg2Rad(175.0);
-    double min_fov = Deg2Rad(0.0001);
-    double default_fov = Deg2Rad(65.0);
+    double max_fov = deg2rad(175.0);
+    double min_fov = deg2rad(0.0001);
+    double default_fov = deg2rad(65.0);
     double rate = 1.1;
 
  private:

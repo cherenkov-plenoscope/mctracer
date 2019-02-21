@@ -146,7 +146,7 @@ TEST_F(PhotonTest, Reflections) {
     mirror->set_name_pos_rot(
         "mirror",
         VEC3_ORIGIN,
-        Rot3(0, Deg2Rad(90), Deg2Rad(45)));
+        Rot3(0, deg2rad(90), deg2rad(45)));
     mirror->set_outer_color(&mirror_color);
     mirror->set_inner_color(&mirror_color);
     mirror->set_outer_reflection(&mirror_reflection);
@@ -159,7 +159,7 @@ TEST_F(PhotonTest, Reflections) {
     absorber->set_name_pos_rot(
         "absorber",
         Vec3(0, 2, 0),
-        Rot3(Deg2Rad(90), 0, 0));
+        Rot3(deg2rad(90), 0, 0));
     absorber->set_outer_color(&absorber_color);
     absorber->set_inner_color(&absorber_color);
     absorber->set_x_y_width(1.0, 1.0);

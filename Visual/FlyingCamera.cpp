@@ -98,7 +98,7 @@ FlyingCamera::~FlyingCamera() {
 
 void FlyingCamera::reset_camera() {
     translation_operator.set_default_position(Vec3(0.0, 0.0, 0.0));
-    rotation_operator.set_default_rotation(Rot3(0.0, Deg2Rad(-90.0), 0.0));
+    rotation_operator.set_default_rotation(Rot3(0.0, deg2rad(-90.0), 0.0));
     fov_operator.set_default();
 }
 

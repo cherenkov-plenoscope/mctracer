@@ -121,7 +121,7 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 
     HomTra3 Trafo;
     Trafo.set_transformation(
-        Rot3(0.0, -Deg2Rad(180.0), 0.0),
+        Rot3(0.0, -deg2rad(180.0), 0.0),
         Vec3(0.0, 0.0, 1.0));
 
     Photons::transform_all_photons(Trafo, &photons);

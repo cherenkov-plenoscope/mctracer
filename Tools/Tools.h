@@ -7,7 +7,7 @@
 
 namespace relleums {
 
-double Deg2Rad(double angle_in_Deg);
+double deg2rad(double angle_in_Deg);
 double Rad2Deg(double angle_in_Rad);
 bool is_odd(const int n);
 bool is_even(const int n);

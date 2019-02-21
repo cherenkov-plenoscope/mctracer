@@ -11,8 +11,8 @@ namespace LightFieldSensor {
 Config::Config() {
     expected_imaging_system_focal_length = 75.0;
     expected_imaging_system_max_aperture_radius = 25.0;
-    max_FoV_diameter = Deg2Rad(6.5);
-    pixel_FoV_hex_flat2flat = Deg2Rad(0.1);
+    max_FoV_diameter = deg2rad(6.5);
+    pixel_FoV_hex_flat2flat = deg2rad(0.1);
     number_of_paxel_on_pixel_diagonal = 13;
     housing_overhead = 1.2;
     lens_refraction = &pmma_refraction;

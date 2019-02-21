@@ -15,7 +15,7 @@ class PostInitFrameSpeed : public ::testing::Test {
     Rot3 new_rot;
 
     PostInitFrameSpeed() {
-        new_rot.set(0.0, Zd_Rad, Deg2Rad(180.0) - Az_Rad);
+        new_rot.set(0.0, Zd_Rad, deg2rad(180.0) - Az_Rad);
 
         world.set_name_pos_rot("world", VEC3_ORIGIN, ROT3_UNITY);
         reflector = world.append<Frame>();

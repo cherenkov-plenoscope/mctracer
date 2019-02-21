@@ -133,21 +133,21 @@ TEST_F(FramesTest, not_optimal_in_symetric_case) {
     Sphere f1;
     f1.set_name_pos_rot(
         "f1",
-        Vec3(cos(Deg2Rad(0.0)), sin(Deg2Rad(0.0)), 0),
+        Vec3(cos(deg2rad(0.0)), sin(deg2rad(0.0)), 0),
         ROT3_UNITY);
     f1.set_radius(0.5); vf.push_back(&f1);
 
     Sphere f2;
     f2.set_name_pos_rot(
         "f2",
-        Vec3(cos(Deg2Rad(120.0)), sin(Deg2Rad(120.0)), 0),
+        Vec3(cos(deg2rad(120.0)), sin(deg2rad(120.0)), 0),
         ROT3_UNITY);
     f2.set_radius(0.5); vf.push_back(&f2);
 
     Sphere f3;
     f3.set_name_pos_rot(
         "f3",
-        Vec3(cos(Deg2Rad(240.0)), sin(Deg2Rad(240.0)), 0),
+        Vec3(cos(deg2rad(240.0)), sin(deg2rad(240.0)), 0),
         ROT3_UNITY);
     f3.set_radius(0.5); vf.push_back(&f3);
 

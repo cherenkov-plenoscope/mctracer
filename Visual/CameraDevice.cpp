@@ -109,7 +109,7 @@ double CameraDevice::get_FoV_in_rad()const {
 void CameraDevice::assert_field_of_view_is_valid(
     const double field_of_view
 )const {
-    if (field_of_view <= Deg2Rad(0.0) || field_of_view > Deg2Rad(180.0)) {
+    if (field_of_view <= deg2rad(0.0) || field_of_view > deg2rad(180.0)) {
         std::stringstream info;
         info << "CameraDevice::" << __func__ << "()\n";
         info << "Expected 0.0DEG < FoV < 180.0DEG, but actual FoV: ";

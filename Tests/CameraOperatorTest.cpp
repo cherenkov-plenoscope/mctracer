@@ -19,7 +19,7 @@ class camera_operatorTest : public ::testing::Test {
         // before each test).
         Vec3 pos(0.0, 0.0, 0.0);
         Rot3 rot(0.0, 0.0, 0.0);
-        initial_FoV_in_rad = Deg2Rad(120.0);
+        initial_FoV_in_rad = deg2rad(120.0);
 
         cam = new visual::PinHoleCamera("my_cam", 640, 480);
         cam->update_position_and_orientation(pos, rot);
@@ -40,16 +40,16 @@ TEST_F(camera_operatorTest, increase_FoV) {
     visual::camera_operator::FieldOfView FoVCamMan(cam);
     for (int i = 0; i < 250; i++)
         FoVCamMan.increase_when_possible();
-    EXPECT_TRUE(cam->get_FoV_in_rad() > Deg2Rad(160.0));
-    EXPECT_TRUE(cam->get_FoV_in_rad() < Deg2Rad(180.0));
+    EXPECT_TRUE(cam->get_FoV_in_rad() > deg2rad(160.0));
+    EXPECT_TRUE(cam->get_FoV_in_rad() < deg2rad(180.0));
 }
 
 TEST_F(camera_operatorTest, decrease_FoV) {
     visual::camera_operator::FieldOfView FoVCamMan(cam);
     for (int i = 0; i < 250; i++)
         FoVCamMan.decrease_when_possible();
-    EXPECT_TRUE(cam->get_FoV_in_rad() > Deg2Rad(0.0));
-    EXPECT_TRUE(cam->get_FoV_in_rad() < Deg2Rad(0.003));
+    EXPECT_TRUE(cam->get_FoV_in_rad() > deg2rad(0.0));
+    EXPECT_TRUE(cam->get_FoV_in_rad() < deg2rad(0.003));
 }
 
 TEST_F(camera_operatorTest, default_FoV) {
@@ -65,17 +65,17 @@ TEST_F(camera_operatorTest, increase_and_decrease_FoV) {
     FoVCamMan.verbose = false;
     for (int i = 0; i < 250; i++)
         FoVCamMan.decrease_when_possible();
-    EXPECT_TRUE(cam->get_FoV_in_rad() > Deg2Rad(0.0));
-    EXPECT_TRUE(cam->get_FoV_in_rad() < Deg2Rad(0.003));
+    EXPECT_TRUE(cam->get_FoV_in_rad() > deg2rad(0.0));
+    EXPECT_TRUE(cam->get_FoV_in_rad() < deg2rad(0.003));
     for (int i = 0; i < 250; i++)
         FoVCamMan.increase_when_possible();
-    EXPECT_TRUE(cam->get_FoV_in_rad() > Deg2Rad(160.0));
-    EXPECT_TRUE(cam->get_FoV_in_rad() < Deg2Rad(180.0));
+    EXPECT_TRUE(cam->get_FoV_in_rad() > deg2rad(160.0));
+    EXPECT_TRUE(cam->get_FoV_in_rad() < deg2rad(180.0));
 }
 
 TEST_F(camera_operatorTest, default_rotation) {
     Rot3 non_default_rotation(1.2, 3.4, 5.6);
-    Rot3 looking_in_pos_x_dir(0.0, Deg2Rad(-90.0), 0.0);
+    Rot3 looking_in_pos_x_dir(0.0, deg2rad(-90.0), 0.0);
     cam->update_orientation(non_default_rotation);
     visual::camera_operator::Rotation rot_operator(cam);
     rot_operator.set_default_rotation(looking_in_pos_x_dir);
@@ -84,18 +84,18 @@ TEST_F(camera_operatorTest, default_rotation) {
 
 TEST_F(camera_operatorTest, look_up) {
     visual::camera_operator::Rotation rot_operator(cam);
-    rot_operator.set_default_rotation(Rot3(0.0, Deg2Rad(-90.0), 0.0));
+    rot_operator.set_default_rotation(Rot3(0.0, deg2rad(-90.0), 0.0));
     for (int i = 0; i < 50; i++)
         rot_operator.look_further_up_when_possible();
-    EXPECT_GT(Deg2Rad(0.1), cam->get_rotation_in_world().get_rot_y());
-    EXPECT_LT(Deg2Rad(-0.1), cam->get_rotation_in_world().get_rot_y());
+    EXPECT_GT(deg2rad(0.1), cam->get_rotation_in_world().get_rot_y());
+    EXPECT_LT(deg2rad(-0.1), cam->get_rotation_in_world().get_rot_y());
 }
 
 TEST_F(camera_operatorTest, look_down) {
     visual::camera_operator::Rotation rot_operator(cam);
-    rot_operator.set_default_rotation(Rot3(0.0, Deg2Rad(-90.0), 0.0));
+    rot_operator.set_default_rotation(Rot3(0.0, deg2rad(-90.0), 0.0));
     for (int i = 0; i < 50; i++)
         rot_operator.look_further_down_when_possible();
-    EXPECT_GT(Deg2Rad(-179.9), cam->get_rotation_in_world().get_rot_y());
-    EXPECT_LT(Deg2Rad(-180.1), cam->get_rotation_in_world().get_rot_y());
+    EXPECT_GT(deg2rad(-179.9), cam->get_rotation_in_world().get_rot_y());
+    EXPECT_LT(deg2rad(-180.1), cam->get_rotation_in_world().get_rot_y());
 }

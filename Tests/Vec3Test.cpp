@@ -258,7 +258,7 @@ TEST_F(Vec3Test, angle_in_between) {
     Vec3 bar = VEC3_UNIT_X*5.0;
     EXPECT_NE(1.0, d.norm());
 
-    EXPECT_NEAR(Deg2Rad(45.0) , foo.angle_in_between(bar), 1e-5);
+    EXPECT_NEAR(deg2rad(45.0) , foo.angle_in_between(bar), 1e-5);
 }
 
 TEST_F(Vec3Test, octant_encoding) {

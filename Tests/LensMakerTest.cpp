@@ -106,7 +106,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
                 number_of_photons_per_run);
         HomTra3 Trafo;
         Trafo.set_transformation(
-            Rot3(0.0, -Deg2Rad(180.0), 0.0),
+            Rot3(0.0, -deg2rad(180.0), 0.0),
             Vec3(0.0, 0.0, 2.0));
         Photons::transform_all_photons(Trafo, &photons);
 

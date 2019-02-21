@@ -7,20 +7,20 @@ using namespace relleums;
 
 class Tools : public ::testing::Test {};
 
-TEST_F(Tools, Deg2Rad_Rad2Deg) {
+TEST_F(Tools, deg2rad_Rad2Deg) {
     for (int i = -721; i < 721; i++) {
         double angle_in_deg = static_cast<double>(i);
-        EXPECT_NEAR(angle_in_deg, Rad2Deg(Deg2Rad(angle_in_deg)), 1e-9);
+        EXPECT_NEAR(angle_in_deg, Rad2Deg(deg2rad(angle_in_deg)), 1e-9);
     }
 }
 
-TEST_F(Tools, Deg2Rad) {
-    EXPECT_NEAR(0.0, Deg2Rad(0.0), 1e-9);
-    EXPECT_NEAR(M_PI/2.0, Deg2Rad(90.0), 1e-9);
-    EXPECT_NEAR(M_PI, Deg2Rad(180.0), 1e-9);
-    EXPECT_NEAR(-M_PI/2.0, Deg2Rad(-90.0), 1e-9);
-    EXPECT_NEAR(-M_PI, Deg2Rad(-180.0), 1e-9);
-    EXPECT_NEAR(2.0*M_PI, Deg2Rad(360.0), 1e-9);
+TEST_F(Tools, deg2rad) {
+    EXPECT_NEAR(0.0, deg2rad(0.0), 1e-9);
+    EXPECT_NEAR(M_PI/2.0, deg2rad(90.0), 1e-9);
+    EXPECT_NEAR(M_PI, deg2rad(180.0), 1e-9);
+    EXPECT_NEAR(-M_PI/2.0, deg2rad(-90.0), 1e-9);
+    EXPECT_NEAR(-M_PI, deg2rad(-180.0), 1e-9);
+    EXPECT_NEAR(2.0*M_PI, deg2rad(360.0), 1e-9);
 }
 
 TEST_F(Tools, Rad2Deg) {

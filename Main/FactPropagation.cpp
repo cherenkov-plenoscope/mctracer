@@ -333,7 +333,7 @@ int main(int argc, char* argv[]) {
         pixel_aperture->set_name_pos_rot(
             "pixel_"+std::to_string(chid),
             Vec3(x, y, 0),
-            Rot3(0, 0, Deg2Rad(30)));
+            Rot3(0, 0, deg2rad(30)));
         pixel_aperture->set_outer_hex_radius(0.00495);
         pixel_aperture->set_inner_color(scenery.colors.get("pixel_red"));
         pixel_aperture->set_outer_color(scenery.colors.get("pixel_red"));
