@@ -34,20 +34,6 @@ std::string get_print(const std::vector<std::vector<double>> &table) {
     return out.str();
 }
 
-double get_mean_along_column(
-    const std::vector<std::vector<double>> &table,
-    const unsigned int column
-) {
-    double sum = 0.0;
-
-    for (std::vector<double> row : table)
-        sum = sum + row.at(column);
-
-    double mean = sum/static_cast<double>(table.size());
-
-    return mean;
-}
-
 double get_solid_angle_for_opening_angle(const double theta) {
     //-------
     //         _ _        _______________

@@ -325,20 +325,6 @@ TEST_F(EventIoPhotonFactoryTest, correct_rel_time_when_intersecting_ground) {
                 1e-11);
         }
 
-        /*
         // relative_arrival_times_in_corsika_file
-        std::cout << "corsika times: ";
-        std::cout << relative_arrival_times_in_corsika_file.size();
-        std::cout << ", avg " << mean_time_of_corsika_photons << "s \n";
-        for(int i=0;i<10;i++) {
-            std::cout << "id " << i << ", ";
-            std::cout << relative_arrival_times_in_corsika_file.at(i) << "\n";
-        }
-        std::cout << "mctracer times: " << id_time.size();
-        std::cout << ", avg " << get_mean_along_column(id_time,4) << "s\n";
-        for(int i=0;i<10;i++) {
-            std::cout << "id " << id_time.at(i).at(5);
-            std::cout << ", " << float(id_time.at(i).at(4)) << "\n";
-        }*/
     }
 }
