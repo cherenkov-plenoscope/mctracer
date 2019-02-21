@@ -2,12 +2,13 @@
 #ifndef VISUAL_CAMERAOPERATOR_STEREO3D_H_
 #define VISUAL_CAMERAOPERATOR_STEREO3D_H_
 
-class Frame;
+namespace relleums {class Frame;}
 
 #include <string>
 #include "Core/DistanceMeter.h"
 #include "Verbosity.h"
 
+namespace relleums {
 namespace visual {
 namespace camera_operator {
 
@@ -59,5 +60,6 @@ class Stereo3D: public Verbosity {
 
 }  // namespace camera_operator
 }  // namespace visual
+}  // namespace relleums
 
 #endif  // VISUAL_CAMERAOPERATOR_STEREO3D_H_

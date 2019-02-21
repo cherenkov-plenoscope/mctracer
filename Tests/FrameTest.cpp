@@ -9,6 +9,7 @@
 using std::string;
 using std::stringstream;
 using std::vector;
+using namespace relleums;
 
 class FrameTest : public ::testing::Test {};
 

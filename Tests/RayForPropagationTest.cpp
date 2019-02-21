@@ -3,6 +3,8 @@
 #include "Core/RayForPropagation.h"
 #include "Core/SimulationTruth.h"
 
+using namespace relleums;
+
 class RayForPropagationTest : public ::testing::Test {
  protected:
     Vec3 support;

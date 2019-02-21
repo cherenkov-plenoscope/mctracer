@@ -2,6 +2,8 @@
 #include "Scenery/Primitive/BiConvexLens.h"
 #include <math.h>
 
+namespace relleums {
+
 void BiConvexLens::set_curvature_radius_and_aperture_radius(
     const double curvature_radius,
     const double aperture_radius
@@ -40,3 +42,5 @@ double BiConvexLens::height_of_a_cap_given_curv_radius_and_aperture_radius(
             curvature_radius*curvature_radius -
             aperture_radius*aperture_radius);
 }
+
+}  // namespace relleums

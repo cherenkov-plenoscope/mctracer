@@ -5,6 +5,7 @@
 #include <string>
 #include "Core/Vec3.h"
 
+namespace relleums {
 // Tait–Bryan angles with an extrinsic coordinate frame fasion
 
 class Rot3 {
@@ -37,4 +38,7 @@ class Rot3 {
     double sinRz()const;
     bool operator == (const Rot3& eqRot)const;
 };
+
+}  // namespace relleums
+
 #endif  // CORE_ROT3_H_

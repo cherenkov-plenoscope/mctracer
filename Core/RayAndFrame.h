@@ -8,6 +8,7 @@
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
 
+namespace relleums {
 namespace RayAndFrame {
 // Frame's bounding sphere
 
@@ -40,4 +41,6 @@ struct CausalIntersection {
 };
 
 }  // namespace RayAndFrame
+}  // namespace relleums
+
 #endif  // CORE_RAYANDFRAME_H_

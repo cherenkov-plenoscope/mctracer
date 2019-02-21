@@ -6,6 +6,7 @@ using std::string;
 using std::stringstream;
 using std::vector;
 
+namespace relleums {
 
 void Annulus::set_outer_inner_radius(
         const double outer_radius,
@@ -59,3 +60,5 @@ void Annulus::calculate_intersection_with(
         }
     }
 }
+
+}  // namespace relleums

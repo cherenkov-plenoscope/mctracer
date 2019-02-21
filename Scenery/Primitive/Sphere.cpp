@@ -2,9 +2,14 @@
 #include "Scenery/Primitive/Sphere.h"
 #include <math.h>
 #include <sstream>
+#include "Core/Ray.h"
+#include "Core/Intersection.h"
+
 using std::string;
 using std::stringstream;
 using std::vector;
+
+namespace relleums {
 
 Sphere::Sphere() {}
 
@@ -30,9 +35,6 @@ string Sphere::str()const {
     out << "| area:   " << 4.0*M_PI*radius*radius << "m^2\n";
     return out.str();
 }
-
-#include "Core/Ray.h"
-#include "Core/Intersection.h"
 
 bool Sphere::facing_sphere_from_outside_given_p_m(
     const double v_Plus,
@@ -103,3 +105,5 @@ void Sphere::calculate_intersection_with(
             add_sphere_intersection_for_ray_parameter(ray, vP, intersections);
     }
 }
+
+}  // namespace relleums

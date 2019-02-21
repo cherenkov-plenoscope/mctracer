@@ -15,13 +15,13 @@ struct Config {
 
 class LookUpTable {
     Config config;
-    const Function::Func1D* func;
+    const relleums::Function::Func1D* func;
     std::vector<std::vector<double>> table;
     unsigned int number_of_slices;
     double step_width_in_slice;
 
  public:
-    LookUpTable(const Function::Func1D* func, const Config config);
+    LookUpTable(const relleums::Function::Func1D* func, const Config config);
     unsigned int size()const;
     const std::vector<double>* at(const double slice_offset)const;
 

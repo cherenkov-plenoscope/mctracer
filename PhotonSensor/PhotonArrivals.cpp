@@ -5,6 +5,7 @@
 using std::vector;
 using std::string;
 
+namespace relleums {
 namespace PhotonSensor {
 
 double arrival_time_mean(const vector<PhotonArrival>& arrivals) {
@@ -81,3 +82,4 @@ string arrival_table_header() {
 }
 
 }  // namespace PhotonSensor
+}  // namespace relleums

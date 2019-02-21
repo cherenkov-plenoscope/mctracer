@@ -1,6 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Core/PhotonAndFrame.h"
 
+namespace relleums {
 namespace PhotonAndFrame {
 
 Propagator::Propagator(
@@ -128,3 +129,4 @@ void Propagator::get_absorbed_on_surface() {
 }
 
 }  // namespace PhotonAndFrame
+}  // namespace relleums

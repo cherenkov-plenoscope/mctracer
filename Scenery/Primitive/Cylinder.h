@@ -8,6 +8,8 @@
 #include "Core/Intersection.h"
 #include "Scenery/Geometry/ZaxisCylinderRayIntersectionEquation.h"
 
+namespace relleums {
+
 class Cylinder :public SurfaceEntity {
  protected:
     double Radius;
@@ -53,5 +55,7 @@ class Cylinder :public SurfaceEntity {
         using invalid_argument::invalid_argument;
     };
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_PRIMITIVE_CYLINDER_H_

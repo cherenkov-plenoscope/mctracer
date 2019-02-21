@@ -14,17 +14,17 @@ namespace LightFieldSensor {
 class Geometry {
  public:
     // PIXEL: picture cell
-    std::vector<Vec3> pixel_grid;
+    std::vector<relleums::Vec3> pixel_grid;
     std::vector<std::vector<unsigned int>> pixel_neighborhood;
 
     // PAXEL: principal aperture cell
-    std::vector<Vec3> paxel_per_pixel_template_grid;
+    std::vector<relleums::Vec3> paxel_per_pixel_template_grid;
     std::vector<std::vector<unsigned int>> paxel_neighborhood;
 
-    std::vector<Vec3> paxel_grid_centers_of_pixels;
+    std::vector<relleums::Vec3> paxel_grid_centers_of_pixels;
 
     // LIXEL: light field cell
-    std::vector<Vec3> lixel_grid;
+    std::vector<relleums::Vec3> lixel_grid;
     double lixel_hex_flat2flat_diameter;
 
     double pixel_lens_curv_radius;
@@ -48,16 +48,16 @@ class Geometry {
     double aperture_image_radius_on_paxel_plane()const;
     unsigned int number_of_pixels()const;
     double outer_sensor_housing_radius()const;
-    std::vector<Vec3> pixel_positions()const;
+    std::vector<relleums::Vec3> pixel_positions()const;
     std::vector<std::vector<unsigned int>>  pixel_neighbor_relations()const;
     double number_of_paxel_per_pixel()const;
     double lixel_outer_radius()const;
     double lixel_inner_radius()const;
     double lixel_spacing()const;
     double lixel_z_orientation()const;
-    const std::vector<Vec3>& lixel_positions()const;
+    const std::vector<relleums::Vec3>& lixel_positions()const;
     std::vector<std::vector<unsigned int>>  paxel_neighbor_relations()const;
-    std::vector<Vec3> paxel_grid_center_positions()const;
+    std::vector<relleums::Vec3> paxel_grid_center_positions()const;
     unsigned int number_of_lixel()const;
     void write_lixel_positions(const std::string &path)const;
     void write_info_header(const std::string &path)const;

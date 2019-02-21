@@ -3,6 +3,7 @@
 #include "gtest/gtest.h"
 #include "Core/RayAndFrame.h"
 #include "Scenery/Primitive/Sphere.h"
+using namespace relleums;
 namespace raf = RayAndFrame;
 
 class RayAndFrameBoundingSphereTest : public ::testing::Test {};

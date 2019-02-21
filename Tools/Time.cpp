@@ -4,6 +4,7 @@
 #include <iomanip>
 using std::string;
 
+namespace relleums {
 namespace Time {
 
     Stamp::Stamp() {
@@ -53,4 +54,6 @@ namespace Time {
         out << std::setfill('0') << std::setw(width) << value;
         return out.str();
     }
+
 }  // namespace Time
+}  // namespace relleums

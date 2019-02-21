@@ -2,6 +2,8 @@
 #include "gtest/gtest.h"
 #include "Core/Color.h"
 
+using namespace relleums;
+
 class ColorTest : public ::testing::Test {};
 
 TEST_F(ColorTest, default_ctor) {

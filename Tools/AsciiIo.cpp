@@ -8,6 +8,7 @@ using std::stringstream;
 using std::string;
 using std::vector;
 
+namespace relleums {
 namespace AsciiIo {
 
 vector<vector<double>> gen_table_from_file(const string &path) {
@@ -128,3 +129,4 @@ void TableReader::push_back_token_to_numeric_row(
 }
 
 }  // namespace AsciiIo
+}  // namespace relleums

@@ -4,6 +4,8 @@
 #include "gtest/gtest.h"
 #include "Visual/PortablePixMap.h"
 
+using namespace relleums;
+
 class PortablePixMapTest : public ::testing::Test {};
 
 TEST_F(PortablePixMapTest, write_and_read) {

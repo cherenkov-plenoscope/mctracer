@@ -2,6 +2,8 @@
 #include "gtest/gtest.h"
 #include "Scenery/ColorMap.h"
 
+using namespace relleums;
+
 class ColorMapTest : public ::testing::Test {};
 
 TEST_F(ColorMapTest, init_empty) {

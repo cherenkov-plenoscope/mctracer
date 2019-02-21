@@ -4,6 +4,7 @@
 #include "Tools/Tools.h"
 #include "SignalProcessing/TimeLineAddition.h"
 using std::vector;
+using namespace relleums;
 
 class TimeLineAddition : public ::testing::Test {};
 

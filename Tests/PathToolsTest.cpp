@@ -2,6 +2,7 @@
 #include "gtest/gtest.h"
 #include "Tools/PathTools.h"
 using std::string;
+using namespace relleums;
 
 class PathToolsTest : public ::testing::Test {};
 

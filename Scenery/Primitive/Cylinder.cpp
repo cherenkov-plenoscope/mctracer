@@ -6,6 +6,8 @@ using std::string;
 using std::stringstream;
 using std::vector;
 
+namespace relleums {
+
 Cylinder::Cylinder() {}
 
 Cylinder::Cylinder(
@@ -148,3 +150,5 @@ Vec3 Cylinder::get_surface_normal_for_intersection_vec(const Vec3* vec)const {
     Vec3 surface_normal(vec->x, vec->y, 0.0);
     return surface_normal / surface_normal.norm();
 }
+
+}  // namespace relleums

@@ -13,6 +13,7 @@
 #include <vector>
 #include <string>
 
+namespace relleums {
 //=================================
 class EventIoWrapper: public BasicWrapper {
 
@@ -23,4 +24,7 @@ public:
 	bool has_still_photons_left()const;
 	std::vector<Photon> next(Random::Generator* prng);	
 };
+
+}  // namespace relleums
+
 #endif // __PhotonsReaderEventIoWrapper_H_INCLUDED__ 

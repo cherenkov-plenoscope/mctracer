@@ -2,6 +2,8 @@
 #include "gtest/gtest.h"
 #include "Core/Vec3.h"
 #include "Scenery/StereoLitography/StereoLitography.h"
+
+using namespace relleums;
 namespace stl = StereoLitography;
 
 class StereoLitographyTest : public ::testing::Test {};

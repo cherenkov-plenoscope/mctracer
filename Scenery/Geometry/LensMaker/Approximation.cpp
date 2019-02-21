@@ -6,8 +6,9 @@
 #include "Core/Photons.h"
 #include "Tools/AsciiIo.h"
 
+namespace relleums {
 namespace LensMaker {
-	namespace Approximation {
+namespace Approximation {
 //------------------------------------------------------------------------------
 double get_curvature_radius(const Config &cfg) {
 
@@ -70,5 +71,6 @@ void abort_if_too_many_iterations(
 	}
 }
 //------------------------------------------------------------------------------
-	} 
-}
+}  // namespace Approximation
+}  // namespace LensMaker
+}  // namespace relleums

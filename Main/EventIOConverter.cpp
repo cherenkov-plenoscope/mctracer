@@ -15,6 +15,7 @@
 
 #include <experimental/filesystem>
 namespace fs = std::experimental::filesystem;
+using namespace relleums;
 
 static const char USAGE[] =
 R"(EventIO converter

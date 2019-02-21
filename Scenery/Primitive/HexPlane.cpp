@@ -1,9 +1,14 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Scenery/Primitive/HexPlane.h"
 #include <sstream>
+#include "Core/Ray.h"
+#include "Core/Intersection.h"
+
 using std::vector;
 using std::string;
 using std::stringstream;
+
+namespace relleums {
 
 void HexPlane::set_outer_hex_radius(const double outer_hex_radius) {
     hex_bounds.set_outer_radius(outer_hex_radius);
@@ -22,9 +27,6 @@ string HexPlane::str()const {
     out << "| area: "<< hex_bounds.get_area() << "m^2\n";
     return out.str();
 }
-
-#include "Core/Ray.h"
-#include "Core/Intersection.h"
 
 void HexPlane::calculate_intersection_with(
     const Ray* ray,
@@ -46,3 +48,5 @@ void HexPlane::calculate_intersection_with(
         }
     }
 }
+
+}  // namespace relleums

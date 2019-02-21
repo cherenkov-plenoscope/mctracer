@@ -4,10 +4,14 @@
 
 #include "Core/Vec3.h"
 
+namespace relleums {
+
 class PrismZ {
  public:
     virtual bool is_inside(const Vec3* vec)const = 0;
     virtual double get_area()const {return 0.0;}
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_GEOMETRY_PRISMZ_H_

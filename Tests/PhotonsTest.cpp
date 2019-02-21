@@ -6,6 +6,7 @@
 using std::stringstream;
 using std::string;
 using std::vector;
+using namespace relleums;
 
 class PhotonsTest : public ::testing::Test {};
 

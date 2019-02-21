@@ -4,6 +4,8 @@
 #include "Core/PhysicalConstants.h"
 #include "Core/RayAndFrame.h"
 
+namespace relleums {
+
 Photon::Photon(
     const Vec3 support,
     const Vec3 direction,
@@ -57,3 +59,5 @@ double Photon::get_time_of_flight()const {
     }
     return time_of_flight;
 }
+
+}  // namespace relleums

@@ -7,6 +7,7 @@
 #include "Tools/Numeric.h"
 using std::array;
 using std::vector;
+using namespace relleums;
 
 class RandomGeneratorTest : public ::testing::Test {};
 

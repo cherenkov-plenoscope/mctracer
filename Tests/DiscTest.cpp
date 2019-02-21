@@ -2,6 +2,8 @@
 #include "gtest/gtest.h"
 #include "Scenery/Primitive/Disc.h"
 
+using namespace relleums;
+
 class DiscTest : public ::testing::Test {};
 
 TEST_F(DiscTest, set_Disc) {

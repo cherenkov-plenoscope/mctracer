@@ -8,6 +8,7 @@
 using std::vector;
 using std::string;
 using namespace SignalProcessing;
+using namespace relleums;
 
 vector<vector<ExtractedPulse>> create_photon_stream(
     const unsigned int number_of_channels,

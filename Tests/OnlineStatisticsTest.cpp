@@ -5,6 +5,7 @@
 #include "Tools/Numeric.h"
 #include "Tools/Tools.h"
 using std::vector;
+using namespace relleums;
 
 class OnlineStatisticsTest : public ::testing::Test {};
 

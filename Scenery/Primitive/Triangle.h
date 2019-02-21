@@ -9,6 +9,8 @@
 #include "Core/Vec2.h"
 #include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
 
+namespace relleums {
+
 class Triangle  :public SurfaceEntity{
     Vec2 A;
     Vec2 B;
@@ -40,5 +42,7 @@ class Triangle  :public SurfaceEntity{
         const Vec2 &P3)const;
     bool is_inside_triangle(const Vec3 &intersec_vec)const;
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_PRIMITIVE_TRIANGLE_H_

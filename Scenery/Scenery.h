@@ -7,6 +7,8 @@
 #include "SensorMap.h"
 #include "Core/Frame.h"
 
+namespace relleums {
+
 struct Scenery {
     Frame root;
     ColorMap colors;
@@ -18,5 +20,7 @@ struct Scenery {
     Scenery();
     static Scenery void_scenery;
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_SCENERY_H_

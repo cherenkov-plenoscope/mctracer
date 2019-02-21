@@ -5,7 +5,7 @@
 namespace SignalProcessing {
 
 ElectricPulse::ElectricPulse():
-    simulation_truth_id(SimulationTruth::MCTRACER_DEFAULT)
+    simulation_truth_id(relleums::SimulationTruth::MCTRACER_DEFAULT)
 {}
 
 ElectricPulse::ElectricPulse(

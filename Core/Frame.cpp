@@ -9,6 +9,8 @@ using std::string;
 using std::stringstream;
 using std::vector;
 
+namespace relleums {
+
 const char Frame::PATH_DELIMITER = '/';
 const unsigned int Frame::MAX_NUMBER_CHILDREN = 16;
 const double Frame::MIN_STRUCTURE_SIZE = 1e-6;
@@ -339,3 +341,5 @@ void Frame::assert_no_children_duplicate_names()const {
     for (Frame* child : children)
         child->assert_no_children_duplicate_names();
 }
+
+}  // namespace relleums

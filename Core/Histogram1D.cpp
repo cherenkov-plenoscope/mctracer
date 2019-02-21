@@ -5,9 +5,11 @@
 #include <math.h>
 #include "Core/Histogram1D.h"
 #include "Tools/StringTools.h"
+
+namespace relleums {
+
 using std::string;
 using std::vector;
-
 
 Histogram1D::Histogram1D(
     const vector<double> &samples,
@@ -104,3 +106,5 @@ void Histogram1D::assert_at_least_two_bin_edges()const {
         throw std::invalid_argument(info.str());
     }
 }
+
+}  // namespace relleums

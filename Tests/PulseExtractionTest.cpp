@@ -10,6 +10,7 @@
 #include "Tools/Numeric.h"
 using std::vector;
 using std::string;
+using namespace relleums;
 
 class PulseExtractionTest : public ::testing::Test {};
 

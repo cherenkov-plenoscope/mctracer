@@ -5,6 +5,7 @@
 #include "Core/SimulationTruth.h"
 using std::vector;
 using std::cout;
+using namespace relleums;
 namespace SP = SignalProcessing;
 
 class SimpleTdcQdcTest : public ::testing::Test {

@@ -12,7 +12,7 @@ namespace Plenoscope {
 namespace LightFieldSensor {
 
 struct Config {
-    HomTra3 sensor_plane2imaging_system;
+    relleums::HomTra3 sensor_plane2imaging_system;
     // The imaging system's expected properties as focal length and max
     // outer aperture radius do not neccessarily match the dimensions
     // of the actual imaging system which will be used.
@@ -27,19 +27,20 @@ struct Config {
     double pixel_FoV_hex_flat2flat;
     double housing_overhead;
     unsigned int number_of_paxel_on_pixel_diagonal;
-    const Function::Func1D* lens_refraction;
-    const Function::Func1D* lens_absorbtion;
-    const Function::Func1D* bin_reflection;
+    const relleums::Function::Func1D* lens_refraction;
+    const relleums::Function::Func1D* lens_absorbtion;
+    const relleums::Function::Func1D* bin_reflection;
     Config();
 
     std::array<float, 273> get_sensor_plane2imaging_system_header()const;
 };
 
-static const Function::Constant pmma_refraction(
-    1.49, Function::Limits(200e-9, 1200e-9));
+static const relleums::Function::Constant pmma_refraction(
+    1.49, relleums::Function::Limits(200e-9, 1200e-9));
 
-static const Function::Constant perfect_transparency(
-    std::numeric_limits<double>::infinity(), Function::Limits(200e-9, 1200e-9));
+static const relleums::Function::Constant perfect_transparency(
+    std::numeric_limits<double>::infinity(),
+    relleums::Function::Limits(200e-9, 1200e-9));
 
 }  // namespace LightFieldSensor
 }  // namespace Plenoscope

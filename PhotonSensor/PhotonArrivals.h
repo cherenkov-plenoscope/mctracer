@@ -6,6 +6,7 @@
 #include <string>
 #include "PhotonSensor/PhotonArrival.h"
 
+namespace relleums {
 namespace PhotonSensor {
 
 double x_mean(const std::vector<PhotonArrival>& arrivals);
@@ -19,5 +20,6 @@ std::vector<std::vector<double>> history_to_table(
 std::string arrival_table_header();
 
 }  // namespace PhotonSensor
+}  // namespace relleums
 
 #endif  // PHOTONSENSOR_PHOTONARRIVALS_H_

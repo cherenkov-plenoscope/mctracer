@@ -3,6 +3,8 @@
 #include "gtest/gtest.h"
 #include "Core/Rot3.h"
 
+using namespace relleums;
+
 class Rot3Test : public ::testing::Test {};
 
 TEST_F(Rot3Test, ctor_xyz_mode) {

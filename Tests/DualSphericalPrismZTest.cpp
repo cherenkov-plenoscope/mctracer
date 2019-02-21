@@ -2,6 +2,8 @@
 #include "gtest/gtest.h"
 #include "Scenery/Geometry/DualSphericalPrismZ.h"
 
+using namespace relleums;
+
 class DualSphericalPrismZTest : public ::testing::Test {};
 
 TEST_F(DualSphericalPrismZTest, is_inside) {

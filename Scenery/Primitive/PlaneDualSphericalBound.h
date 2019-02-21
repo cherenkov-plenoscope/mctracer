@@ -9,6 +9,8 @@
 #include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
 #include "Scenery/Geometry/DualSphericalPrismZ.h"
 
+namespace relleums {
+
 class PlaneDualSphericalBound :public SurfaceEntity{
  protected:
     DualSphericalPrismZ dual_sphere_bounds;
@@ -25,5 +27,7 @@ class PlaneDualSphericalBound :public SurfaceEntity{
  private:
     void post_initialize_radius_of_enclosing_sphere();
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_PRIMITIVE_PLANEDUALSPHERICALBOUND_H_

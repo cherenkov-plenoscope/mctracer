@@ -3,6 +3,7 @@
 #include "Core/SurfaceEntity.h"
 #include "Corsika/Tools.h"
 using std::array;
+using namespace relleums;
 
 namespace Plenoscope {
 namespace LightFieldSensor {

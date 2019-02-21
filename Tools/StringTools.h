@@ -6,6 +6,7 @@
 #include <vector>
 #include "Tuple3.h"
 
+namespace relleums {
 namespace StringTools {
 
 bool is_equal(const std::string text_A, const std::string text_B);
@@ -43,5 +44,6 @@ int to_int(std::string text_to_parse);
 Tuple3 to_Tuple3(const std::string original_text);
 
 }  // namespace StringTools
+}  // namespace relleums
 
 #endif  // TOOLS_STRINGTOOLS_H_

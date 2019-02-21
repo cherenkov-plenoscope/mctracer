@@ -11,6 +11,7 @@
 #include "Core/Color.h"
 #include "Core/Function/Function.h"
 
+namespace relleums {
 namespace SegmentedReflector {
 
 	struct Config {
@@ -39,4 +40,5 @@ namespace SegmentedReflector {
 		Function::Limits(200e-9, 1200e-9)
 	);
 } // SegmentedReflector
+}  // namespace relleums
 #endif // __SegmentedReflectorConfig_H_INCLUDED__ 

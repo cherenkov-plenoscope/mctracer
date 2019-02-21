@@ -2,6 +2,8 @@
 #ifndef TOOLS_TUPLE3_H_
 #define TOOLS_TUPLE3_H_
 
+namespace relleums {
+
 struct Tuple3 {
     double x, y, z;
 
@@ -24,5 +26,7 @@ struct Tuple3 {
         return x != eq.x || y != eq.y || z != eq.z;
     }
 };
+
+}  // namespace relleums
 
 #endif  // TOOLS_TUPLE3_H_

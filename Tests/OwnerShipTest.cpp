@@ -6,6 +6,7 @@
 #include "Visual/FlyingCamera.h"
 using std::string;
 using std::vector;
+using namespace relleums;
 
 class OwnerShipTest : public ::testing::Test {};
 

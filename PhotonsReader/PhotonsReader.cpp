@@ -5,6 +5,9 @@
 #include "PhotonsReaderWrapper/InternalPhotonSourceWrapper.h"
 using std::string;
 using std::vector;
+
+namespace relleums {
+
 //------------------------------------------------------------------------------
 PhotonsReader::PhotonsReader(const string path) {
     
@@ -50,3 +53,5 @@ bool PhotonsReader::has_still_photons_left()const {
 vector<Photon> PhotonsReader::next(Random::Generator* prng) {
     return photons_from_file->next(prng);
 }
+
+}  // namespace relleums

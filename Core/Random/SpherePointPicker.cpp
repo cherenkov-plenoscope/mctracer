@@ -2,6 +2,7 @@
 #include "Core/Random/SpherePointPicker.h"
 #include <math.h>
 
+namespace relleums {
 namespace Random {
 
 ZenithDistancePicker::ZenithDistancePicker(
@@ -42,3 +43,4 @@ Vec3 draw_point_on_sphere(
 }
 
 }  // namespace Random
+}  // namespace relleums

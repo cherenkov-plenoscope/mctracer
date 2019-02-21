@@ -3,6 +3,7 @@
 #include <algorithm>
 using std::vector;
 
+namespace relleums {
 namespace PhotonSensor {
 
 FindSensorByFrame::FindSensorByFrame(
@@ -38,3 +39,4 @@ FindSensorByFrame::FindSensorByFrame(
 }
 
 }  // namespace PhotonSensor
+}  // namespace relleums

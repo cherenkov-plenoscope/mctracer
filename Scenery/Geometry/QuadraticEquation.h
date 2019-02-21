@@ -2,6 +2,8 @@
 #ifndef SCENERY_GEOMETRY_QUADRATICEQUATION_H_
 #define SCENERY_GEOMETRY_QUADRATICEQUATION_H_
 
+namespace relleums {
+
 class QuadraticEquation{
     // f(x) = ax^2 + bx + c
     // p = b/a
@@ -18,5 +20,7 @@ class QuadraticEquation{
     double minus_solution();
     double plus_solution();
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_GEOMETRY_QUADRATICEQUATION_H_

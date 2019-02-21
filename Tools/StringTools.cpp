@@ -7,6 +7,7 @@ using std::string;
 using std::stringstream;
 using std::vector;
 
+namespace relleums {
 namespace StringTools {
 
 bool is_equal(const string text_A, const string text_B) {
@@ -218,3 +219,4 @@ Tuple3 to_Tuple3(const string original_text) {
 }
 
 }  // namespace StringTools
+}  // namespace relleums

@@ -4,6 +4,7 @@
 
 #include <string>
 
+namespace relleums {
 namespace Function {
 
 class Limits{
@@ -23,5 +24,6 @@ class Limits{
 };
 
 }  // namespace Function
+}  // namespace relleums
 
 #endif  // CORE_FUNCTION_LIMITS_H_

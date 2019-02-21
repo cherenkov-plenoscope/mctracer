@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <fstream>
 
+namespace relleums {
 namespace bio {
 
 void append_float32(const float &v, std::ostream &fout);
@@ -23,5 +24,6 @@ double read_float64(std::istream &fin);
 uint64_t read_uint64(std::istream &fin);
 
 }  // namespace bio
+}  // namespace relleums
 
 #endif  // TOOLS_BINARY_INPUT_OUTPUT_H_

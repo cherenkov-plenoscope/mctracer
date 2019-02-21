@@ -6,6 +6,7 @@
 #include "Visual/Image.h"
 #include "Core/Vec3.h"
 
+namespace relleums {
 namespace visual {
 
 class SkyDome {
@@ -32,5 +33,6 @@ class SkyDome {
 };
 
 }  // namespace visual
+}  // namespace relleums
 
 #endif  // VISUAL_SKYDOME_H_

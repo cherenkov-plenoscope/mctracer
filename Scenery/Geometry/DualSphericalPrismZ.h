@@ -5,6 +5,8 @@
 #include "PrismZ.h"
 #include "Core/Vec2.h"
 
+namespace relleums {
+
 class DualSphericalPrismZ :public PrismZ {
  private:
     double circle_distance;
@@ -25,5 +27,7 @@ class DualSphericalPrismZ :public PrismZ {
     double get_area()const;
     bool is_inside(const Vec3* vec)const;
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_GEOMETRY_DUALSPHERICALPRISMZ_H_

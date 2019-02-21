@@ -5,6 +5,7 @@
 #include "Scenery/Scenery.h"
 using std::string;
 using std::cout;
+namespace mct = relleums;
 
 static const char USAGE[] =
 R"(Show a scenery
@@ -29,21 +30,21 @@ int main(int argc, char* argv[]) {
       true,        // show help if requested
       "mct 0.1");  // version string
 
-    PathTools::Path scenery_path = PathTools::Path(
+    mct::PathTools::Path scenery_path = mct::PathTools::Path(
       args.find("--scenery")->second.asString());
 
-    Scenery scenery;
+    mct::Scenery scenery;
 
     mct::json::append_to_frame_in_scenery(
       &scenery.root, &scenery, scenery_path.path);
 
-    visual::Config visual_config;
+    mct::visual::Config visual_config;
     if (args.find("--config")->second) {
       visual_config = mct::json::load_visual_config(
         args.find("--config")->second.asString());}
 
     scenery.root.init_tree_based_on_mother_child_relations();
-    visual::FlyingCamera free(&scenery.root, &visual_config);
+    mct::visual::FlyingCamera free(&scenery.root, &visual_config);
 
   } catch (std::exception &error) {
     std::cerr << error.what();

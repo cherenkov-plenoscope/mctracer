@@ -9,6 +9,8 @@
 #include "Scenery/Primitive/Plane.h"
 #include "Core/Vec3.h"
 
+using namespace relleums;
+
 class PlaneIntersectionTest : public ::testing::Test {
  protected:
     PropagationConfig setup;

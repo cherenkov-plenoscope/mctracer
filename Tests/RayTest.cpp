@@ -3,6 +3,8 @@
 #include "Core/Ray.h"
 #include "Scenery/Primitive/Sphere.h"
 
+using namespace relleums;
+
 class RayTest : public ::testing::Test {};
 
 TEST_F(RayTest, Constructor_using_vectors) {

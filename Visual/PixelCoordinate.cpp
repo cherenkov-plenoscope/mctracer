@@ -2,6 +2,7 @@
 #include "Visual/PixelCoordinate.h"
 #include <vector>
 
+namespace relleums {
 namespace visual {
 
 std::vector<PixelCoordinate> pixel_coordinates(
@@ -21,3 +22,4 @@ std::vector<PixelCoordinate> pixel_coordinates(
 }
 
 }  // namespace visual
+}  // namespace relleums

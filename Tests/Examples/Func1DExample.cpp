@@ -1,7 +1,9 @@
 #include "gtest/gtest.h"
 #include "Core/Function/Function.h"
 #include "Tools/AsciiIo.h"
+using namespace relleums;
 using namespace Function;
+
 
 class FunctionExample : public ::testing::Test {};
 //------------------------------------------------------------------------------

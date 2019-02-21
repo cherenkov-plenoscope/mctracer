@@ -3,6 +3,7 @@
 #include "gtest/gtest.h"
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"
+using namespace relleums;
 
 class Tools : public ::testing::Test {};
 

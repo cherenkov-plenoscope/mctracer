@@ -1,6 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Visual/camera_operator/Stereo3D.h"
 
+namespace relleums {
 namespace visual {
 namespace camera_operator {
 
@@ -137,3 +138,4 @@ void Stereo3D::use_same_stereo_offset_as(
 
 }  // namespace camera_operator
 }  // namespace visual
+}  // namespace relleums

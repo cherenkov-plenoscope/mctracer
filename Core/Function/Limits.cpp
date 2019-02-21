@@ -3,6 +3,7 @@
 #include <sstream>
 #include <exception>
 
+namespace relleums {
 namespace Function {
 
 const Limits Limits::VOID_LIMITS = Limits(0.0, 0.0);
@@ -60,3 +61,4 @@ std::string Limits::str()const {
 }
 
 }  // namespace Function
+}  // namespace relleums

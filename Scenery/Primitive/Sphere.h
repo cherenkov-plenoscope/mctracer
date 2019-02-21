@@ -8,6 +8,8 @@
 #include "Core/Intersection.h"
 #include "Scenery/Geometry/QuadraticEquation.h"
 
+namespace relleums {
+
 class Sphere :public SurfaceEntity {
  protected:
     double radius;
@@ -40,5 +42,7 @@ class Sphere :public SurfaceEntity {
         using invalid_argument::invalid_argument;
     };
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_PRIMITIVE_SPHERE_H_

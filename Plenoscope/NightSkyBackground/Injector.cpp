@@ -6,6 +6,7 @@
 #include "Core/SimulationTruth.h"
 #include "Tools/Numeric.h"
 using std::vector;
+using namespace relleums;
 
 namespace Plenoscope {
 namespace NightSkyBackground {

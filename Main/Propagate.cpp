@@ -9,6 +9,7 @@
 using std::string;
 using std::cout;
 using std::vector;
+using namespace relleums;
 using PathTools::Path;
 
 static const char USAGE[] =
@@ -46,7 +47,7 @@ int main(int argc, char* argv[]) {
     const bool export_binary = args.find("--binary")->second.asBool();
 
     // BASIC SETTINGS
-    PropagationConfig settings = mct::json::load_PropagationConfig(
+    PropagationConfig settings = json::load_PropagationConfig(
         config_path.path);
 
     // Random
@@ -56,7 +57,7 @@ int main(int argc, char* argv[]) {
 
     // scenery
     Scenery scenery;
-    mct::json::append_to_frame_in_scenery(
+    json::append_to_frame_in_scenery(
         &scenery.root,
         &scenery,
         scenery_path.path);

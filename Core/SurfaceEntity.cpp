@@ -4,6 +4,9 @@
 #include <sstream>
 #include "Core/Function/Limits.h"
 #include "Core/Function/Constant.h"
+
+namespace relleums {
+
 using Function::Func1D;
 using Function::Constant;
 using Function::Limits;
@@ -199,3 +202,5 @@ std::string SurfaceEntity::str()const {
 
     return out.str();
 }
+
+}  // namespace relleums

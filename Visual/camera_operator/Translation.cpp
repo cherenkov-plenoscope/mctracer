@@ -1,6 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Visual/camera_operator/Translation.h"
 
+namespace relleums {
 namespace visual {
 namespace camera_operator {
 
@@ -89,3 +90,4 @@ void Translation::move_to(const Vec3 pos) {
 
 }  // namespace camera_operator
 }  // namespace visual
+}  // namespace relleums

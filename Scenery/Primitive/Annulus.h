@@ -9,6 +9,8 @@
 #include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
 #include "Scenery/Geometry/CylinderPrismZ.h"
 
+namespace relleums {
+
 class Annulus :public SurfaceEntity{
  protected:
     CylinderPrismZ outer_bound;
@@ -27,5 +29,7 @@ class Annulus :public SurfaceEntity{
     double get_area()const;
     void post_initialize_radius_of_enclosing_sphere();
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_PRIMITIVE_ANNULUS_H_

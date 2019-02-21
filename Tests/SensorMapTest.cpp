@@ -3,6 +3,7 @@
 #include "Scenery/SensorMap.h"
 using std::string;
 using std::vector;
+using namespace relleums;
 
 class SensorMapTest : public ::testing::Test {};
 

@@ -5,7 +5,7 @@
 #include <exception>
 using std::vector;
 
-
+namespace relleums {
 namespace Function {
 
 Concat::Concat() {}
@@ -68,3 +68,4 @@ bool Concat::compare_upper_limit(const double x, const Func1D *f) {
 }
 
 }  // namespace Function
+}  // namespace relleums

@@ -3,6 +3,8 @@
 #include "Scenery/SegmentedReflector/SegmentedReflector.h"
 #include "Core/PropagationConfig.h"
 
+using namespace relleums;
+
 class PostInitFrameSpeed : public ::testing::Test {
  protected:
     Frame world;

@@ -2,6 +2,8 @@
 #include "gtest/gtest.h"
 #include "Visual/Image.h"
 
+using namespace relleums;
+
 class ImageTest : public ::testing::Test {};
 
 TEST_F(ImageTest, striding_order) {

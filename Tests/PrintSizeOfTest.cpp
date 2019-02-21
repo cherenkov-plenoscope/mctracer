@@ -18,6 +18,7 @@
 #include "SignalProcessing/PipelinePhoton.h"
 using std::cout;
 using std::string;
+using namespace relleums;
 
 template<typename T>
 void print_size(const string &name, T s) {

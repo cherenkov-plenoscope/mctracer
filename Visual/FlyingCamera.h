@@ -12,6 +12,7 @@
 #include "Tools/Time.h"
 #include "Tools/UserInteraction.h"
 
+namespace relleums {
 namespace visual {
 
 class FlyingCamera {
@@ -77,5 +78,6 @@ class FlyingCamera {
 };
 
 }  // namespace visual
+}  // namespace relleums
 
 #endif  // VISUAL_FLYINGCAMERA_H_

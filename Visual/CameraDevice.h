@@ -11,6 +11,7 @@
 #include "CameraRay.h"
 #include "Image.h"
 
+namespace relleums {
 namespace visual {
 
 class CameraDevice{
@@ -62,5 +63,6 @@ class CameraDevice{
 };
 
 }  // namespace visual
+}  // namespace relleums
 
 #endif  // VISUAL_CAMERADEVICE_H_

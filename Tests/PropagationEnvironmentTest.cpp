@@ -2,6 +2,8 @@
 #include "gtest/gtest.h"
 #include "Core/PropagationEnvironment.h"
 
+using namespace relleums;
+
 class PropagationEnvironmentTest : public ::testing::Test {};
 
 TEST_F(PropagationEnvironmentTest, default_instance) {

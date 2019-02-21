@@ -1,6 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "PhotonSensor/PhotonArrival.h"
 
+namespace relleums {
 namespace PhotonSensor {
 
 PhotonArrival::PhotonArrival() {}
@@ -24,3 +25,4 @@ PhotonArrival::PhotonArrival(
 {}
 
 }  // namespace PhotonSensor
+}  // namespace relleums

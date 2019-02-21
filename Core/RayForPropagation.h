@@ -9,6 +9,8 @@
 #include "Core/Intersection.h"
 #include "Core/SurfaceEntity.h"
 
+namespace relleums {
+
 enum Interaction {
     production,
     absorption_in_void,
@@ -61,4 +63,7 @@ class RayForPropagation :public Ray{
     std::string get_history_print()const;
     std::string get_type_print(const Interaction type)const;
 };
+
+}  // namespace relleums
+
 #endif  // CORE_RAYFORPROPAGATION_H_

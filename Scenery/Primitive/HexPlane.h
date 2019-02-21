@@ -8,6 +8,8 @@
 #include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
 #include "Scenery/Geometry/HexagonalPrismZ.h"
 
+namespace relleums {
+
 class HexPlane :public SurfaceEntity{
  protected:
     HexagonalPrismZ hex_bounds;
@@ -21,5 +23,7 @@ class HexPlane :public SurfaceEntity{
  private:
     void post_initialize_radius_of_enclosing_sphere();
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_PRIMITIVE_HEXPLANE_H_

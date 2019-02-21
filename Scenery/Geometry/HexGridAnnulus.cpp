@@ -3,6 +3,8 @@
 #include <math.h>
 #include <sstream>
 
+namespace relleums {
+
 HexGridAnnulus::HexGridAnnulus(
     const double outer_radius,
     const double spacing
@@ -53,3 +55,5 @@ std::string HexGridAnnulus::str()const {
         out << number++ << " " << vec.str() << "\n";
     return out.str();
 }
+
+}  // namespace relleums

@@ -5,6 +5,7 @@
 using std::stringstream;
 using std::vector;
 
+namespace relleums {
 namespace Frames {
 
 Vec3 bounding_sphere_center(const vector<Frame*> &frames) {
@@ -175,3 +176,4 @@ double bounding_sphere_radius(const vector<Frame*> &frames, const Vec3 center) {
 }
 
 }  // namespace Frames
+}  // namespace relleums

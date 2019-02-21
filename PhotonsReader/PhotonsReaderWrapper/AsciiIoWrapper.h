@@ -13,6 +13,9 @@
 #include <string>
 
 //=================================
+
+namespace relleums {
+
 class AsciiIoWrapper: public BasicWrapper {
 
 	bool the_single_event_was_already_read;
@@ -23,4 +26,7 @@ public:
 	bool has_still_photons_left()const;
 	std::vector<Photon> next(Random::Generator* prng);	
 };
+
+}  // namespace relleums
+
 #endif // __PhotonsReaderAsciiIoWrapper_H_INCLUDED__ 

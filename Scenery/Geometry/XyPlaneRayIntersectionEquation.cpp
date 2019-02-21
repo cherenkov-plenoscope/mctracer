@@ -1,6 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
 
+namespace relleums {
+
 XyPlaneRayIntersectionEquation::XyPlaneRayIntersectionEquation(const Ray* ray) {
     // calculate intersection of  ray: g := sup+v*dir
     //                      and plane: P := a*ex + b*ey
@@ -36,3 +38,5 @@ bool XyPlaneRayIntersectionEquation::has_causal_solution()const {
 Vec3 XyPlaneRayIntersectionEquation::get_plane_normal_vector()const {
     return Vec3(0.0, 0.0, 1.0);
 }
+
+}  // namespace relleums

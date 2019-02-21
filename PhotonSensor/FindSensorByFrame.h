@@ -5,6 +5,7 @@
 #include <vector>
 #include "PhotonSensor/Sensor.h"
 
+namespace relleums {
 namespace PhotonSensor {
 
 struct FindSensorByFrame {
@@ -17,5 +18,6 @@ struct FindSensorByFrame {
 };
 
 }  // namespace PhotonSensor
+}  // namespace relleums
 
 #endif  // PHOTONSENSOR_FINDSENSORBYFRAME_H_

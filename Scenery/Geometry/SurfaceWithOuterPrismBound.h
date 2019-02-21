@@ -8,6 +8,8 @@
 #include "TwoSolutionSurfaceRayEquation.h"
 #include "PrismZ.h"
 
+namespace relleums {
+
 class SurfaceWithOuterPrismBound :public SurfaceEntity{
  protected:
     void add_causeal_intersection(
@@ -16,4 +18,7 @@ class SurfaceWithOuterPrismBound :public SurfaceEntity{
         const Ray *ray,
         std::vector<Intersection> *intersections)const;
 };
+
+}  // namespace relleums
+
 #endif  // SCENERY_GEOMETRY_SURFACEWITHOUTERPRISMBOUND_H_

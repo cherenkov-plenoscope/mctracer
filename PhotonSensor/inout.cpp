@@ -4,6 +4,7 @@
 using std::array;
 using std::vector;
 
+namespace relleums {
 namespace PhotonSensor {
 
 void write_arrival_information_to_file(
@@ -51,3 +52,4 @@ vector<PhotonArrival> read_arrival_information_from_file(
 }
 
 }  // namespace PhotonSensor
+}  // namespace relleums

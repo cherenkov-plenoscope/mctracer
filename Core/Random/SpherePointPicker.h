@@ -5,6 +5,7 @@
 #include "Core/Vec3.h"
 #include "Generator.h"
 
+namespace relleums {
 namespace Random {
 
 struct ZenithDistancePicker {
@@ -29,5 +30,6 @@ Vec3 draw_point_on_sphere(
     const UniformPicker& azimuth);
 
 }  // namespace Random
+}  // namespace relleums
 
 #endif  // CORE_RANDOM_SPHEREPOINTPICKER_H_

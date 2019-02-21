@@ -7,6 +7,7 @@
 #include "Core/RayAndFrame.h"
 #include "Core/PropagationEnvironment.h"
 
+namespace relleums {
 namespace PhotonAndFrame {
 
 class Propagator {
@@ -35,5 +36,6 @@ class Propagator {
 };
 
 }  // namespace PhotonAndFrame
+}  // namespace relleums
 
 #endif  // CORE_PHOTONANDFRAME_H_

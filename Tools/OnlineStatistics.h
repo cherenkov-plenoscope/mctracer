@@ -2,6 +2,8 @@
 #ifndef TOOLS_ONLINESTATISTICS_H_
 #define TOOLS_ONLINESTATISTICS_H_
 
+namespace relleums {
+
 class OnlineStatistics {
     // https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
     // Online algorithm
@@ -19,5 +21,7 @@ class OnlineStatistics {
     double sum()const;
     double number_of_samples()const;
 };
+
+}  // namespace relleums
 
 #endif  // TOOLS_ONLINESTATISTICS_H_

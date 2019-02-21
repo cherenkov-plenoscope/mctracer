@@ -6,10 +6,15 @@
 #include "Core/PropagationConfig.h"
 #include "Core/Random/Random.h"
 
+namespace relleums {
+
 struct PropagationEnvironment {
     const Frame* root_frame = &Frame::VOID_FRAME;
     const PropagationConfig* config = &PropagationConfig::DEFAULT_CONFIG;
     Random::Generator* prng = &Random::VOID_PRNG;
     static PropagationEnvironment VOID_ENVIRONMENT;
 };
+
+}  // namespace relleums
+
 #endif  // CORE_PROPAGATIONENVIRONMENT_H_

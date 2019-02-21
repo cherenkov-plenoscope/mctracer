@@ -3,6 +3,7 @@
 #include <math.h>
 #include <sstream>
 
+namespace relleums {
 namespace visual {
 
 SkyDome::SkyDome(const std::string _filename):
@@ -82,3 +83,4 @@ double SkyDome::get_azimuth_angle_of(const Vec3 dir)const {
 }
 
 }  // namespace visual
+}  // namespace relleums

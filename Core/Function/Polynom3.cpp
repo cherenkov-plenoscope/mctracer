@@ -1,6 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Core/Function/Polynom3.h"
 
+namespace relleums {
 namespace Function {
 
 Polynom3::Polynom3(): a3(0.0), a2(0.0), a1(0.0), a0(0.0) {}
@@ -37,3 +38,4 @@ double Polynom3::evaluate(const double x)const {
 }
 
 }  // namespace Function
+}  // namespace relleums

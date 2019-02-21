@@ -2,6 +2,8 @@
 #include "gtest/gtest.h"
 #include "Scenery/Geometry/QuadraticEquation.h"
 
+using namespace relleums;
+
 class QuadraticEquationTest : public ::testing::Test {};
 
 TEST_F(QuadraticEquationTest, no_valid_solution) {

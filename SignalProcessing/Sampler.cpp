@@ -47,7 +47,7 @@ Sampler::Sampler(const SamplerConfig* config) {
 vector<double> Sampler::time_line(
     const vector<double> *electric_pipeline,
     const DiscretSampling::LookUpTable* puls_look_up_table,
-    Random::Generator* prng
+    relleums::Random::Generator* prng
 ) {
     vector<double> time_line;
     time_line.reserve(number_of_slices);

@@ -13,6 +13,7 @@ using std::string;
 using std::cout;
 using std::array;
 using std::vector;
+using namespace relleums;
 
 string help_text() {
     std::stringstream out; 
@@ -58,7 +59,7 @@ int main(int argc, char* argv[]) {
 
     visual::Config visual_config;
     if (args.find("--config")->second) {
-      visual_config = mct::json::load_visual_config(
+      visual_config = json::load_visual_config(
         args.find("--config")->second.asString());}
 
     PropagationConfig settings;
@@ -68,7 +69,7 @@ int main(int argc, char* argv[]) {
         prng.set_seed(args.find("--random_seed")->second.asLong());
 
     Scenery scenery;
-    mct::json::append_to_frame_in_scenery(
+    json::append_to_frame_in_scenery(
       &scenery.root, &scenery, scenery_path.path);
 
     scenery.root.init_tree_based_on_mother_child_relations();
@@ -91,7 +92,7 @@ int main(int argc, char* argv[]) {
         unsigned int id = 0;
         for(array<float, 8> corsika_photon : event.photons) {
             vector<Photon> photons;
-            EventIo::PhotonFactory cpf(corsika_photon, id++, &prng);
+            EventIoPhotonFactory cpf(corsika_photon, id++, &prng);
 
             if(cpf.passed_atmosphere()) {
                 photons.push_back(cpf.get_photon());

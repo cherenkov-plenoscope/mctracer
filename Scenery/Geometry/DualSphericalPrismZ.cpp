@@ -2,6 +2,8 @@
 #include "Scenery/Geometry/DualSphericalPrismZ.h"
 #include <math.h>
 
+namespace relleums {
+
 void DualSphericalPrismZ::set_x_hight_and_y_width(
     const double hight,
     const double width
@@ -44,3 +46,5 @@ double DualSphericalPrismZ::get_area()const {
     return 2.0*(circle_radius*circle_radius/2.0)*
         (opening_angle_of_circle - sin(opening_angle_of_circle));
 }
+
+}  // namespace relleums

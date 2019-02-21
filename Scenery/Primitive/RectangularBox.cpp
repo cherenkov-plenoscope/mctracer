@@ -2,6 +2,8 @@
 #include "Scenery/Primitive/RectangularBox.h"
 #include <math.h>
 
+namespace relleums {
+
 void RectangularBox::set_xyz_width(
     const double x_width,
     const double y_width,
@@ -50,3 +52,5 @@ void RectangularBox::set_xyz_width(
     walls[5]->set_x_y_width(x_width, z_width);
     walls[5]->take_boundary_layer_properties_from(this);
 }
+
+}  // namespace relleums

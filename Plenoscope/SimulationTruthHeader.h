@@ -13,5 +13,6 @@ struct SimulationTruthHeader {
     void set_random_number_seed_of_run(const uint32_t seed);
 };
 
-}
+}  // namespace Plenoscope
+
 #endif  // PLENOSCOPE_SIMULATIONTRUTHHEADER_H_

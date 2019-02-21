@@ -8,6 +8,8 @@ using std::string;
 using std::vector;
 using std::map;
 
+namespace relleums {
+
 void SensorMap::add(const uint64_t key, const Frame* frame) {
     if (key == sensors.size()) {
         PhotonSensor::Sensor* sens = new PhotonSensor::Sensor(key, frame);
@@ -27,3 +29,5 @@ SensorMap::~SensorMap() {
     for (PhotonSensor::Sensor* sens : sensors)
         delete sens;
 }
+
+}  // namespace relleums

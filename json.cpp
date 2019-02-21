@@ -10,9 +10,9 @@
 #include "Scenery/SegmentedReflector/SegmentedReflector.h"
 namespace nl = nlohmann;
 using std::string;
-using StringTools::is_equal;
+using relleums::StringTools::is_equal;
 
-namespace mct {
+namespace relleums {
 namespace json {
 
 void assert_key(const nl::json &j, const string &key) {
@@ -562,4 +562,4 @@ std::vector<Photon> to_photons(const Object &o) {
 }
 
 }  // namespace json
-}  // namespace mct
+}  // namespace relleums

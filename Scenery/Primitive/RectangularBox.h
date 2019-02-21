@@ -4,6 +4,8 @@
 
 #include "Plane.h"
 
+namespace relleums {
+
 class RectangularBox :public SurfaceEntity {
  public:
     void set_xyz_width(
@@ -11,5 +13,7 @@ class RectangularBox :public SurfaceEntity {
         const double y_width,
         const double z_width);
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_PRIMITIVE_RECTANGULARBOX_H_

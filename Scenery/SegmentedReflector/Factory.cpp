@@ -3,6 +3,7 @@
 using std::vector;
 using std::string;
 
+namespace relleums {
 namespace SegmentedReflector {
 
 	Factory::Factory(const Config ncfg): 
@@ -34,4 +35,5 @@ namespace SegmentedReflector {
 			);		
 		}
 	}
-} // SegmentedReflector
+}  // SegmentedReflector
+}  // namespace relleums

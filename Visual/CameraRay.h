@@ -2,14 +2,15 @@
 #ifndef VISUAL_CAMERARAY_H_
 #define VISUAL_CAMERARAY_H_
 
-class Frame;
-class Intersection;
+namespace relleums {class Frame;}
+namespace relleums {class Intersection;}
 
 #include <string>
 #include "Core/Ray.h"
 #include "Core/Color.h"
 #include "Config.h"
 
+namespace relleums {
 namespace visual {
 
 class CameraRay :public Ray {
@@ -22,5 +23,6 @@ class CameraRay :public Ray {
 };
 
 }  // namespace visual
+}  // namespace relleums
 
 #endif  // VISUAL_CAMERARAY_H_

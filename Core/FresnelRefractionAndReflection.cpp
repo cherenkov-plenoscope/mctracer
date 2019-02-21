@@ -2,6 +2,8 @@
 #include "Core/FresnelRefractionAndReflection.h"
 #include <math.h>
 
+namespace relleums {
+
 FresnelRefractionAndReflection::FresnelRefractionAndReflection(
     const Vec3 &_incident_obj_sys,
     const Vec3 &_normal_obj_sys,
@@ -35,3 +37,4 @@ double FresnelRefractionAndReflection::reflection_propability()const {
     return (rOrth*rOrth + rPar*rPar) / 2.0;
 }
 
+}  // namespace relleums

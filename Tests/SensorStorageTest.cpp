@@ -1,6 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
 #include "PhotonSensor/PhotonSensor.h"
+
+using namespace relleums;
 namespace pse = PhotonSensor;
 
 class SensorStorageTest : public ::testing::Test {};

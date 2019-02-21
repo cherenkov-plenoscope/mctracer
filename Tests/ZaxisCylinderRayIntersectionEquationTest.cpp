@@ -2,6 +2,8 @@
 #include "gtest/gtest.h"
 #include "Scenery/Geometry/ZaxisCylinderRayIntersectionEquation.h"
 
+using namespace relleums;
+
 class ZaxisCylinderRayIntersectionEquationTest : public ::testing::Test{};
 
 TEST_F(ZaxisCylinderRayIntersectionEquationTest, start_inside_run_in_z_no_hit) {

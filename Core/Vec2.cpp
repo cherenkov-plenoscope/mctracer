@@ -3,6 +3,7 @@
 #include <math.h>
 #include <sstream>
 
+namespace relleums {
 
 const Vec2 Vec2::ORIGIN   = Vec2(0.0, 0.0);
 const Vec2 Vec2::UNIT_X = Vec2(1.0, 0.0);
@@ -93,3 +94,5 @@ unsigned int Vec2::get_quadrant()const {
     const bool sy = y > 0.0;
     return 2*sx + 1*sy;
 }
+
+}  // namespace relleums

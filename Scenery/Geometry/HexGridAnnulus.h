@@ -6,6 +6,8 @@
 #include <vector>
 #include "Core/Vec3.h"
 
+namespace relleums {
+
 class HexGridAnnulus{
     Vec3 unit_hex_a;
     Vec3 unit_hex_b;
@@ -29,4 +31,7 @@ class HexGridAnnulus{
         const double inner_radius,
         const double spacing);
 };
+
+}  // namespace relleums
+
 #endif  // SCENERY_GEOMETRY_HEXGRIDANNULUS_H_

@@ -2,11 +2,19 @@
 #ifndef CORE_PHOTON_H_
 #define CORE_PHOTON_H_
 
-namespace PhotonAndFrame {class Propagator;}
+namespace relleums {
+namespace PhotonAndFrame {
+
+class Propagator;
+
+} // PhotonAndFrame
+} // namespace relleums
 
 #include <string>
 #include "Core/RayForPropagation.h"
 #include "FresnelRefractionAndReflection.h"
+
+namespace relleums {
 
 class Photon :public RayForPropagation{
     friend class PhotonAndFrame::Propagator;
@@ -28,4 +36,7 @@ class Photon :public RayForPropagation{
         const double refractive_index_in_medium)const;
     void assert_wavelength_is_positive()const;
 };
+
+}  // namespace relleums
+
 #endif  // CORE_PHOTON_H_

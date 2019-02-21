@@ -6,6 +6,7 @@
 #include "Tools/StringTools.h"
 #include "Tools/binary_input_output.h"
 
+namespace relleums {
 namespace visual {
 namespace ppm {
 
@@ -120,3 +121,4 @@ Image read_image_from_path(const std::string path) {
 
 }  // namespace ppm
 }  // namespace visual
+}  // namespace relleums

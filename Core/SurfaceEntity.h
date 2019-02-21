@@ -2,12 +2,12 @@
 #ifndef CORE_SURFACEENTITY_H_
 #define CORE_SURFACEENTITY_H_
 
-class RayForPropagation;
-
 #include <string>
 #include "Core/Frame.h"
 #include "Color.h"
 #include "Core/Function/Function.h"
+
+namespace relleums {
 
 class SurfaceEntity :public Frame {
     const Frame* allowed_frame_to_propagate_to = &Frame::VOID_FRAME;
@@ -63,4 +63,7 @@ class SurfaceEntity :public Frame {
  private:
     void init_surface_defaults();
 };
+
+}  // namespace relleums
+
 #endif  // CORE_SURFACEENTITY_H_

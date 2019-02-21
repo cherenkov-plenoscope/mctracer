@@ -12,6 +12,7 @@
 #include "Core/Vec3.h"
 #include "Core/Rot3.h"
 
+namespace relleums {
 namespace SegmentedReflector {
 
 	class Geometry {
@@ -62,5 +63,8 @@ namespace SegmentedReflector {
 		void abort_if_too_many_iterations(const unsigned int iteration_conter);
 		void move_all_facets_in_z(const double movement);
 	};
-} // SegmentedReflector
+
+}  // SegmentedReflector
+}  // namespace relleums
+
 #endif // __SegmentedReflectorGeometry_H_INCLUDED__ 

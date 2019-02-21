@@ -4,6 +4,7 @@
 #include "Tools/Tools.h"
 using std::cout;
 
+namespace relleums {
 namespace visual {
 namespace camera_operator {
 
@@ -139,3 +140,4 @@ Rot3 Rotation::get_R_World2Camera()const {
 
 }  // namespace camera_operator
 }  // namespace visual
+}  // namespace relleums

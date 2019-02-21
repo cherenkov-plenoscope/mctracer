@@ -4,6 +4,8 @@
 
 #include "TwoSolutionSurfaceRayEquation.h"
 
+namespace relleums {
+
 class SphericalCapRayIntersectionEquation :
     public TwoSolutionSurfaceRayEquation {
     double radius;
@@ -19,5 +21,7 @@ class SphericalCapRayIntersectionEquation :
     Vec3 get_surface_normal_given_intersection_vector(
         const Vec3* intersec)const;
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_GEOMETRY_SPHERICALCAPRAYINTERSECTIONEQUATION_H_

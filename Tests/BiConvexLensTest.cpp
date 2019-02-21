@@ -12,6 +12,7 @@
 #include "PhotonSensor/PhotonSensor.h"
 #include "Tools/AsciiIo.h"
 
+using namespace relleums;
 using std::vector;
 
 class BiConvexLensTest : public ::testing::Test {

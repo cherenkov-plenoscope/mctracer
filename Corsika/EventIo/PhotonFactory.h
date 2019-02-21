@@ -6,9 +6,9 @@
 #include "Core/Photon.h"
 #include "Core/Random/Random.h"
 
-namespace EventIo {
+namespace relleums {
 
-class PhotonFactory {
+class EventIoPhotonFactory {
     bool _passed_atmosphere = false;
     unsigned int id;
     std::array<float, 8> corsika_photon;
@@ -17,7 +17,7 @@ class PhotonFactory {
     class BadPhotonWeight : public std::runtime_error {
         using runtime_error::runtime_error;
     };
-    PhotonFactory(
+    EventIoPhotonFactory(
         const std::array<float, 8>& _corsika_photon,
         const unsigned int id,
         Random::Generator *prng);
@@ -40,6 +40,6 @@ class PhotonFactory {
     void assert_photon_weight_is_between_zero_and_one()const;
 };
 
-}  // namespace EventIo
+}  // namespace relleums
 
 #endif  // CORSIKA_EVENTIO_PHOTONFACTORY_H_

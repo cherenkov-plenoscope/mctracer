@@ -8,6 +8,8 @@
 #include "Scenery/Geometry/RectangularPrismZ.h"
 #include "Scenery/Geometry/SurfaceWithOuterPrismBound.h"
 
+namespace relleums {
+
 class SphereCapWithRectangularBound :public SurfaceWithOuterPrismBound {
  protected:
     RectangularPrismZ rect_bounds;
@@ -28,5 +30,7 @@ class SphereCapWithRectangularBound :public SurfaceWithOuterPrismBound {
     void restrict_cap_radius_to_curvature_radius();
     void post_initialize_radius_of_enclosing_sphere();
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_PRIMITIVE_SPHERECAPWITHRECTANGULARBOUND_H_

@@ -3,6 +3,8 @@
 #include "gtest/gtest.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "Core/Random/Random.h"
+
+using namespace relleums;
 using std::vector;
 using PhotonSensor::PhotonArrival;
 using PhotonSensor::write_arrival_information_to_file;

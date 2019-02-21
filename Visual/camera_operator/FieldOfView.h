@@ -5,6 +5,7 @@
 #include "Tools/Tools.h"
 #include "Verbosity.h"
 
+namespace relleums {
 namespace visual {
 namespace camera_operator {
 
@@ -33,5 +34,6 @@ class FieldOfView: public Verbosity {
 
 }  // namespace camera_operator
 }  // namespace visual
+}  // namespace relleums
 
 #endif  // VISUAL_CAMERAOPERATOR_FIELDOFVIEW_H_

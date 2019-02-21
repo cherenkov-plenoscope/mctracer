@@ -12,6 +12,8 @@
 #include "Scenery/Primitive/PlaneDualSphericalBound.h"
 using std::vector;
 using std::string;
+using namespace relleums;
+
 
 namespace Plenoscope {
 namespace LightFieldSensor {

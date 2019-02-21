@@ -8,6 +8,7 @@ using std::string;
 using std::stringstream;
 using std::vector;
 
+namespace relleums {
 namespace Photons {
 
 string get_print(const vector<Photon> *photons) {
@@ -248,3 +249,4 @@ void transform_all_photons_multi_thread(
 }
 
 }  // namespace Photons
+}  // namespace relleums

@@ -4,6 +4,7 @@
 using std::string;
 using std::vector;
 
+namespace relleums {
 //------------------------------------------------------------------------------
 AsciiIoWrapper::AsciiIoWrapper(const string _path): 
 	BasicWrapper(_path)
@@ -22,3 +23,4 @@ vector<Photon> AsciiIoWrapper::next(Random::Generator* prng) {
 	return photons;
 }
 //------------------------------------------------------------------------------
+}  // namespace relleums

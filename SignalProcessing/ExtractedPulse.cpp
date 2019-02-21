@@ -5,7 +5,7 @@
 namespace SignalProcessing {
 
 ExtractedPulse::ExtractedPulse():
-    simulation_truth_id(SimulationTruth::MCTRACER_DEFAULT)
+    simulation_truth_id(relleums::SimulationTruth::MCTRACER_DEFAULT)
 {}
 
 ExtractedPulse::ExtractedPulse(

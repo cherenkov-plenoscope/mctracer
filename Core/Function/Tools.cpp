@@ -4,6 +4,7 @@
 #include <vector>
 using std::vector;
 
+namespace relleums {
 namespace Function {
 
 LinInterpol get_integral(const Func1D &f, unsigned int steps) {
@@ -80,3 +81,4 @@ bool value_flips_sign(const Func1D &f, unsigned int steps) {
 }
 
 }  // namespace Function
+}  // namespace relleums

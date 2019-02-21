@@ -14,7 +14,7 @@ namespace Calibration {
 
 class Calibrator {
     const Config config;
-    const Frame* scenery;
+    const relleums::Frame* scenery;
     PlenoscopeInScenery* plenoscope;
     unsigned int number_of_photons;
     double max_principal_aperture_radius_to_trow_photons_on;
@@ -29,7 +29,7 @@ class Calibrator {
     Calibrator(
         const Config _calib_config,
         PlenoscopeInScenery *plenoscope,
-        const Frame* _scenery);
+        const relleums::Frame* _scenery);
     void export_sub_pixel_statistics(const std::string path)const;
     void write_lixel_statistics(const std::string &path)const;
     std::string str()const;
@@ -41,9 +41,9 @@ class Calibrator {
     void set_up_plenoscope_environment();
     void run_calibration();
     void fill_calibration_block_to_table();
-    Photon get_photon_given_pos_and_angle_on_principal_aperture(
-        Vec3 pos_on_principal_aperture,
-        Vec3 direction_on_principal_aperture)const;
+    relleums::Photon get_photon_given_pos_and_angle_on_principal_aperture(
+        relleums::Vec3 pos_on_principal_aperture,
+        relleums::Vec3 direction_on_principal_aperture)const;
 };
 
 }  // namespace Calibration

@@ -3,6 +3,7 @@
 #include <sstream>
 using std::string;
 
+namespace relleums {
 namespace PathTools {
 
     string join(string path1, string path2) {
@@ -48,3 +49,4 @@ namespace PathTools {
     }
 
 }  // namespace PathTools
+}  // namespace relleums

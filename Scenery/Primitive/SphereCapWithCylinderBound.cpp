@@ -6,6 +6,8 @@ using std::string;
 using std::vector;
 using std::stringstream;
 
+namespace relleums {
+
 void SphereCapWithCylinderBound::set_curvature_radius_and_outer_radius(
     const double _curvature_radius,
     const double cap_radius
@@ -58,3 +60,5 @@ void SphereCapWithCylinderBound::calculate_intersection_with(
             intersections);
     }
 }
+
+}  // namespace relleums

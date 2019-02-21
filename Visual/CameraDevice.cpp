@@ -4,6 +4,7 @@
 #include "Tools/Tools.h"
 #include "Tools/StringTools.h"
 
+namespace relleums {
 namespace visual {
 
 CameraDevice::CameraDevice(
@@ -150,3 +151,4 @@ Ray CameraDevice::get_optical_axis_in_world()const {
 }
 
 }  // namespace visual
+}  // namespace relleums

@@ -9,6 +9,8 @@
 #include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
 #include "Scenery/Geometry/RectangularPrismZ.h"
 
+namespace relleums {
+
 class Plane :public SurfaceEntity {
  protected:
     RectangularPrismZ RectBounds;
@@ -27,5 +29,7 @@ class Plane :public SurfaceEntity {
  private:
     void post_initialize_radius_of_enclosing_sphere();
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_PRIMITIVE_PLANE_H_

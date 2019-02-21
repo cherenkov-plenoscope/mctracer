@@ -15,6 +15,7 @@
 #include "gtest/gtest.h"
 #include "PhotonSensor/PhotonSensor.h"
 using std::vector;
+using namespace relleums;
 
 class PhotonTest : public ::testing::Test {};
 

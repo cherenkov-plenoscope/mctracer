@@ -2,6 +2,8 @@
 #include "Scenery/Geometry/QuadraticEquation.h"
 #include <math.h>
 
+namespace relleums {
+
 // y = a*x^2 + b*x + c
 // p = b/a
 // q = c/a
@@ -26,3 +28,5 @@ double QuadraticEquation::minus_solution() {
 double QuadraticEquation::plus_solution() {
     return -p_over_2 + squareroot;
 }
+
+}  // namespace relleums

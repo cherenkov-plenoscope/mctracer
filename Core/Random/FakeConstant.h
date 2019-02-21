@@ -4,6 +4,7 @@
 
 #include "Generator.h"
 
+namespace relleums {
 namespace Random {
 
 class FakeConstant : public Generator{
@@ -17,5 +18,6 @@ class FakeConstant : public Generator{
 };
 
 }  // namespace Random
+}  // namespace relleums
 
 #endif  // CORE_RANDOM_FAKECONSTANT_H_

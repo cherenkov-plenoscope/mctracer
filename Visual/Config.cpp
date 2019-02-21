@@ -1,6 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Visual/Config.h"
 
+namespace relleums {
 namespace visual {
 
 Config::Config():sky_dome(Color::SKY_BLUE) {
@@ -23,3 +24,4 @@ Config::Config():sky_dome(Color::SKY_BLUE) {
 }
 
 }  // namespace visual
+}  // namespace relleums

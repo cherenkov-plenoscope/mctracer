@@ -9,6 +9,8 @@
 #include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
 #include "Scenery/Geometry/CylinderPrismZ.h"
 
+namespace relleums {
+
 class Disc :public SurfaceEntity{
  protected:
     CylinderPrismZ cylinder_bounds;
@@ -24,5 +26,7 @@ class Disc :public SurfaceEntity{
     double get_area()const;
     void post_initialize_radius_of_enclosing_sphere();
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_PRIMITIVE_DISC_H_

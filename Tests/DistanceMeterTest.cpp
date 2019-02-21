@@ -4,6 +4,8 @@
 #include "Core/Ray.h"
 #include "Scenery/Primitive/Sphere.h"
 
+using namespace relleums;
+
 class DistanceMeterTest : public ::testing::Test {};
 
 TEST_F(DistanceMeterTest, is_facing) {

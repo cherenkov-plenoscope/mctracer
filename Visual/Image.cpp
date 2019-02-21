@@ -4,6 +4,7 @@
 #include <vector>
 #include "Visual/PortablePixMap.h"
 
+namespace relleums {
 namespace visual {
 
 Image::Image(unsigned int _number_cols, unsigned int _number_rows):
@@ -248,3 +249,4 @@ void merge_left_and_right_image_to_anaglyph_3DStereo(
 }
 
 }  // namespace visual
+}  // namespace relleums

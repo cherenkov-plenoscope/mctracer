@@ -6,6 +6,8 @@
 #include "Core/Vec3.h"
 #include "Core/Rot3.h"
 
+namespace relleums {
+
 // The concept of Homogeneous Transformations is taken from the text book
 //
 // "Robotics -- Modelling, Planning and Control"
@@ -62,4 +64,7 @@ class HomTra3 {
         const double r01, const double r11, const double r21, const double t31,
         const double r02, const double r12, const double r22, const double t32);
 };
+
+}  // namespace relleums
+
 #endif  // CORE_HOMTRA3_H_

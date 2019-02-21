@@ -1,6 +1,7 @@
 #include "Scenery/SegmentedReflector/Config.h"
 #include "Tools/AsciiIo.h"
 
+namespace relleums {
 namespace SegmentedReflector {
 
 	Config::Config(): 
@@ -17,3 +18,4 @@ namespace SegmentedReflector {
 		reflectivity(&perfect_reflectivity)
 	{}
 } // SegmentedReflector
+}  // namespace relleums

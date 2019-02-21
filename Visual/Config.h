@@ -6,6 +6,7 @@
 #include "SkyDome.h"
 #include "Core/Vec3.h"
 
+namespace relleums {
 namespace visual {
 
 struct Config {
@@ -38,5 +39,6 @@ struct Config {
 };
 
 }  // namespace visual
+}  // namespace relleums
 
 #endif  // VISUAL_CONFIG_H_

@@ -5,6 +5,8 @@ using std::string;
 using std::vector;
 using std::stringstream;
 
+namespace relleums {
+
 void PlaneDualSphericalBound::set_x_hight_and_y_width(
     const double x_width,
     const double y_width
@@ -53,3 +55,5 @@ void PlaneDualSphericalBound::calculate_intersection_with(
         }
     }
 }
+
+}  // namespace relleums

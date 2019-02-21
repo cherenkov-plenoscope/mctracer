@@ -2,6 +2,7 @@
 #include "Visual/camera_operator/FieldOfView.h"
 #include "Tools/Tools.h"
 
+namespace relleums {
 namespace visual {
 namespace camera_operator {
 
@@ -75,3 +76,4 @@ void FieldOfView::print_prefix()const {
 
 }  // namespace camera_operator
 }  // namespace visual
+}  // namespace relleums

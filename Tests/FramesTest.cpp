@@ -6,6 +6,7 @@
 using std::string;
 using std::stringstream;
 using std::vector;
+using namespace relleums;
 
 class FramesTest : public ::testing::Test {};
 

@@ -7,6 +7,8 @@
 #include "Core/Vec3.h"
 #include "HexagonalPrismZ.h"
 
+namespace relleums {
+
 class HexGridFlower{
     Vec3 unit_hex_a;
     Vec3 unit_hex_b;
@@ -25,5 +27,7 @@ class HexGridFlower{
     void init_unit_vectors_hex_grid_with_length();
     void init_grid();
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_GEOMETRY_HEXGRIDFLOWER_H_

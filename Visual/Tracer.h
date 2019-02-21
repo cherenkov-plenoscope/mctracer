@@ -11,6 +11,7 @@
 #include "Core/RayAndFrame.h"
 #include "Core/PropagationEnvironment.h"
 
+namespace relleums {
 namespace visual {
 
 class Tracer {
@@ -47,5 +48,6 @@ class Tracer {
 };
 
 }  // namespace visual
+}  // namespace relleums
 
 #endif  // VISUAL_TRACER_H_

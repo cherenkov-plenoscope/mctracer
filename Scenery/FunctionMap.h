@@ -8,6 +8,8 @@
 #include "ResourceMap.h"
 #include "Core/Function/Function.h"
 
+namespace relleums {
+
 struct FunctionMap: public ResourceMap {
     std::map<std::string, Function::Func1D*> functions;
     bool has(const std::string key)const;
@@ -23,4 +25,7 @@ struct FunctionMap: public ResourceMap {
     void assert_has(const std::string key)const;
     void assert_not_in_use_yet(const std::string key);
 };
+
+}  // namespace relleums
+
 #endif  // SCENERY_FUNCTIONMAP_H_

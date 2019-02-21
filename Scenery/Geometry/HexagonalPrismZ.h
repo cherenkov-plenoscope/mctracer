@@ -4,6 +4,8 @@
 
 #include "Scenery/Geometry/PrismZ.h"
 
+namespace relleums {
+
 class HexagonalPrismZ :public PrismZ {
  private:
     static const Vec3 UNIT_U;
@@ -20,5 +22,7 @@ class HexagonalPrismZ :public PrismZ {
  private:
     void assert_outer_radius_positive(const double outer_radius)const;
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_GEOMETRY_HEXAGONALPRISMZ_H_

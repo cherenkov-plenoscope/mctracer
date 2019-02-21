@@ -10,13 +10,13 @@ namespace Plenoscope {
 namespace EventTypes {
 static const float OBSERVATION = 0.0;
 static const float SIMULATION = 1.0;
-}
+}  // namespace EventTypes
 
 namespace TriggerType {
 static const float SELF_TRIGGER = 0.0;
 static const float EXTERNAL_RANDOM_TRIGGER = 1.0;
 static const float EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH = 2.0;
-}
+}  // namespace TriggerType
 
 struct EventHeader {
     std::array<float, 273> raw;

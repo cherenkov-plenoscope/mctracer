@@ -3,6 +3,8 @@
 #include <math.h>
 #include "Tools/Tools.h"
 
+namespace relleums {
+
 HexGridFlower::HexGridFlower(
     const double outer_hex_grid_radius,
     unsigned int facet_count_on_outer_diameter
@@ -51,3 +53,5 @@ void HexGridFlower::init_unit_vectors_hex_grid_with_length() {
 double HexGridFlower::get_facet_spacing()const {
     return facet_spacing;
 }
+
+}  // namespace relleums

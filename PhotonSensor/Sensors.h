@@ -6,6 +6,7 @@
 #include "PhotonSensor/Sensor.h"
 #include "Core/Photon.h"
 
+namespace relleums {
 namespace PhotonSensor {
 
 std::vector<Sensor*> sort_by_frame(const std::vector<Sensor*>* by_occurence);
@@ -47,5 +48,6 @@ class Sensors {
 };
 
 }  // namespace PhotonSensor
+}  // namespace relleums
 
 #endif  // PHOTONSENSOR_SENSORS_H_

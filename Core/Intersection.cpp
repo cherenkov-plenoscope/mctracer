@@ -3,6 +3,8 @@
 #include <sstream>
 #include <limits>
 
+namespace relleums {
+
 Intersection::Intersection() {
     object = &SurfaceEntity::VOID_SURFACE_ENTITY;
     position = Vec3(
@@ -161,3 +163,5 @@ bool Intersection::operator<(const Intersection& other)const {
 bool Intersection::compare(const Intersection &one, const Intersection &two) {
     return  one.distance_to_ray_support() < two.distance_to_ray_support();
 }
+
+}  // namespace relleums

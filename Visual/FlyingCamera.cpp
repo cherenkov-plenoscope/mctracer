@@ -9,11 +9,11 @@
 #include "Core/Intersection.h"
 #include "Visual/PortablePixMap.h"
 
-
 using std::cout;
 using std::stringstream;
 using std::string;
 
+namespace relleums {
 namespace visual {
 
 void image_to_opencv_image(const Image& image, cv::Mat* out) {
@@ -361,3 +361,4 @@ void FlyingCamera::continue_with_new_scenery_and_visual_config(
 }
 
 }  // namespace visual
+}  // namespace relleums

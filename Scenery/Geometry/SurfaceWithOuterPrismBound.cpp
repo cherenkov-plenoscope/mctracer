@@ -2,6 +2,8 @@
 #include "Scenery/Geometry/SurfaceWithOuterPrismBound.h"
 using std::vector;
 
+namespace relleums {
+
 void SurfaceWithOuterPrismBound::add_causeal_intersection(
         const TwoSolutionSurfaceRayEquation* eq,
         const PrismZ* outer_bound,
@@ -66,3 +68,5 @@ void SurfaceWithOuterPrismBound::add_causeal_intersection(
         }
     }
 }
+
+}  // namespace relleums

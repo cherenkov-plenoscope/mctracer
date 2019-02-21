@@ -3,6 +3,8 @@
 #include "PhotonSensor/PhotonSensor.h"
 using std::vector;
 
+using namespace relleums;
+
 class SensorAssignmentTest : public ::testing::Test {};
 
 TEST_F(SensorAssignmentTest, empty_sensors_init) {

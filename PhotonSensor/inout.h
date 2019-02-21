@@ -6,6 +6,7 @@
 #include <vector>
 #include "PhotonSensor/PhotonArrival.h"
 
+namespace relleums {
 namespace PhotonSensor {
 
 void write_arrival_information_to_file(
@@ -17,5 +18,6 @@ std::vector<PhotonArrival> read_arrival_information_from_file(
     const unsigned int number_of_arrivals);
 
 }  // namespace PhotonSensor
+}  // namespace relleums
 
 #endif  // PHOTONSENSOR_INOUT_H_

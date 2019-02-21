@@ -9,6 +9,7 @@ using std::vector;
 using std::string;
 using std::stringstream;
 
+namespace relleums {
 namespace SegmentedReflector {
 
 	Geometry::Geometry(const Config config): cfg(config) {
@@ -283,4 +284,6 @@ namespace SegmentedReflector {
 		}
 		return out.str();
 	}
-} // SegmentedReflector
+
+}  // SegmentedReflector
+}  // namespace relleums

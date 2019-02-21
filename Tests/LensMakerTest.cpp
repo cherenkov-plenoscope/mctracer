@@ -10,6 +10,7 @@
 #include "PhotonSensor/PhotonSensor.h"
 #include "Core/Photons.h"
 using std::vector;
+using namespace relleums;
 
 class LensMakerTest : public ::testing::Test {};
 

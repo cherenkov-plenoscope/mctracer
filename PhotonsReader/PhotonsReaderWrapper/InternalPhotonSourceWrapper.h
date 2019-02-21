@@ -12,6 +12,7 @@
 #include <vector>
 #include <string>
 
+namespace relleums {
 //=================================
 class InternalPhotonSourceWrapper: public BasicWrapper {
 
@@ -23,4 +24,7 @@ public:
 	bool has_still_photons_left()const;
 	std::vector<Photon> next(Random::Generator* prng);	
 };
+
+}  // namespace relleums
+
 #endif // __PhotonsReaderInternalLightSourceWrapper_H_INCLUDED__ 

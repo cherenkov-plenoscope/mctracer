@@ -2,6 +2,8 @@
 #include "Scenery/Geometry/EllipticalCapRayIntersectionEquation.h"
 #include <math.h>
 
+namespace relleums {
+
 EllipticalCapRayIntersectionEquation::EllipticalCapRayIntersectionEquation(
     const double _A, const double _B,  const double _C,
     const double _iAA, const double _iBB,  const double _iCC,
@@ -95,3 +97,5 @@ Vec3 EllipticalCapRayIntersectionEquation::
 
     return surface_normal/surface_normal.norm();
 }
+
+}  // namespace relleums

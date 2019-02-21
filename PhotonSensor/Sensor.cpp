@@ -5,6 +5,7 @@
 using std::vector;
 using std::string;
 
+namespace relleums {
 namespace PhotonSensor {
 
 Sensor::Sensor(unsigned int _id, const Frame* _frame):
@@ -34,3 +35,4 @@ void Sensor::assign_photon(const Photon* photon) {
 }
 
 }  // namespace PhotonSensor
+}  // namespace relleums

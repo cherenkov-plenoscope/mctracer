@@ -7,6 +7,7 @@
 #include "Tools/binary_input_output.h"
 using std::vector;
 using std::string;
+using namespace relleums;
 
 namespace SignalProcessing {
 namespace PhotonStream {

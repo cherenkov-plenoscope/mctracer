@@ -6,6 +6,8 @@ using std::string;
 using std::vector;
 using std::stringstream;
 
+namespace relleums {
+
 void Disc::set_radius(const double radius) {
     cylinder_bounds.set_radius(radius);
     post_initialize_radius_of_enclosing_sphere();
@@ -48,3 +50,5 @@ void Disc::calculate_intersection_with(
         }
     }
 }
+
+}  // namespace relleums

@@ -3,6 +3,7 @@
 #include <sstream>
 #include "Core/SimulationTruth.h"
 using std::vector;
+using namespace relleums;
 
 namespace SignalProcessing {
 namespace PhotoElectricConverter {

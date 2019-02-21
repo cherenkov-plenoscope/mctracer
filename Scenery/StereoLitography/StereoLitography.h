@@ -18,8 +18,10 @@
 #include "Core/Frame.h"
 #include "Core/SurfaceEntity.h"
 
-//=================================
-/* 
+namespace relleums {
+namespace StereoLitography {
+
+/*
 https://en.wikipedia.org/wiki/STL_%28file_format%29#Binary_STL
 
 __Binary STL (STereoLithography)__
@@ -40,7 +42,7 @@ should be zero because most software does not understand anything else.[6]
 Floating-point numbers are represented as IEEE floating-point numbers and are 
 assumed to be little-endian, although this is not stated in documentation.
 */
-namespace StereoLitography {
+
 
     void add_stl_to_and_inherit_surface_from_surfac_entity(
         const std::string path, 
@@ -166,5 +168,8 @@ namespace StereoLitography {
             const uint16_t attribute_byte_count
         ); 
     };
-} // StereoLitography
+
+}  // StereoLitography
+}  // namespace relleums
+
 #endif // __StereoLitography_H_INCLUDE__ 

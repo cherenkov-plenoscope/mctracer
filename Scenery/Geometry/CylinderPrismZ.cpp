@@ -3,6 +3,8 @@
 #include <math.h>
 #include <sstream>
 
+namespace relleums {
+
 void CylinderPrismZ::set_radius(const double radius) {
     assert_radius_is_positiv(radius);
     radius_square = radius*radius;
@@ -29,3 +31,5 @@ void CylinderPrismZ::assert_radius_is_positiv(const double radius)const {
 double CylinderPrismZ::get_area()const {
     return radius_square*M_PI;
 }
+
+}  // namespace relleums

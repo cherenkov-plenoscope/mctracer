@@ -2,11 +2,13 @@
 #ifndef CORE_INTERSECTION_H_
 #define CORE_INTERSECTION_H_
 
-class Ray;
+namespace relleums {class Ray;}
 
 #include <string>
 #include "Core/Vec3.h"
 #include "Core/SurfaceEntity.h"
+
+namespace relleums {
 
 class Intersection {
  protected:
@@ -49,4 +51,7 @@ class Intersection {
     bool operator<(const Intersection& other) const;
     static bool compare(const Intersection &one, const Intersection &two);
 };
+
+}  // namespace relleums
+
 #endif  // CORE_INTERSECTION_H_

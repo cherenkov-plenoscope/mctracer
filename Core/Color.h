@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+namespace relleums {
+
 struct Color {
     float r, g, b;
 
@@ -26,4 +28,7 @@ struct Color {
     bool operator == (const Color& eq)const;
     bool operator != (const Color& eq)const;
 };
+
+}  // namespace relleums
+
 #endif  // CORE_COLOR_H_

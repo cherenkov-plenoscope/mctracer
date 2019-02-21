@@ -19,6 +19,9 @@
 // When reading e.g. Air shower cherenkov photons, and one wants to access the
 // Monte Carlo truth aswell, you can not use this reader, but the specific 
 // reader, which is just wrapped here, itself.
+
+namespace relleums {
+
 class PhotonsReader {
 
 	BasicWrapper *photons_from_file;
@@ -29,4 +32,7 @@ public:
 	bool has_still_photons_left()const;
 	std::vector<Photon> next(Random::Generator* prng);
 };
+
+}  // namespace relleums
+
 #endif // __PhotonsReader_H_INCLUDED__ 

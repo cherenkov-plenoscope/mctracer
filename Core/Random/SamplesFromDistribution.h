@@ -5,6 +5,7 @@
 #include "Random.h"
 #include "Core/Function/Function.h"
 
+namespace relleums {
 namespace Random {
 
 class SamplesFromDistribution {
@@ -20,5 +21,6 @@ class SamplesFromDistribution {
 };
 
 }  // namespace Random
+}  // namespace relleums
 
 #endif  // CORE_RANDOM_SAMPLESFROMDISTRIBUTION_H_

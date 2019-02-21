@@ -1,6 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Scenery/Geometry/ZaxisCylinderRayIntersectionEquation.h"
 
+namespace relleums {
+
 ZaxisCylinderRayIntersectionEquation::ZaxisCylinderRayIntersectionEquation(
     const double radius,
     const Ray* ray
@@ -81,3 +83,5 @@ double ZaxisCylinderRayIntersectionEquation::
 bool ZaxisCylinderRayIntersectionEquation::has_solution()const {
     return has_intersection;
 }
+
+}  // namespace relleums

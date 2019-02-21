@@ -7,6 +7,7 @@
 #include "PhotonSensor/PhotonSensor.h"
 #include "Core/Photons.h"
 using std::vector;
+using namespace relleums;
 
 class EventIoPhotonFactoryTest : public ::testing::Test {};
 
@@ -26,7 +27,7 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
                     const unsigned int id = 1337;
                     Random::FakeConstant fake_prng(0.0);
 
-                    EventIo::PhotonFactory cpf(corsika_photon, id, &fake_prng);
+                    EventIoPhotonFactory cpf(corsika_photon, id, &fake_prng);
 
                     vector<Photon> photons;
                     photons.push_back(cpf.get_photon());
@@ -89,7 +90,7 @@ TEST_F(EventIoPhotonFactoryTest, wavelength_sign) {
         //   cm   cm   1    1    ns    cm   1      nm
 
         const int id = 1337;
-        EventIo::PhotonFactory cpf(corsika_photon, id, &prng);
+        EventIoPhotonFactory cpf(corsika_photon, id, &prng);
         ASSERT_NEAR(fabs(lambda), cpf.wavelength()*1e9, 1e-2);
         ASSERT_TRUE(cpf.wavelength() > 0.0);
     }
@@ -104,7 +105,7 @@ TEST_F(EventIoPhotonFactoryTest, convert_photons) {
     const int id = 1337;
     Random::FakeConstant prng(0.0);
 
-    EventIo::PhotonFactory cpf(corsika_photon, id, &prng);
+    EventIoPhotonFactory cpf(corsika_photon, id, &prng);
 
     ASSERT_TRUE(cpf.passed_atmosphere());
     Photon ph = cpf.get_photon();
@@ -128,7 +129,7 @@ TEST_F(EventIoPhotonFactoryTest, execute_atmospheric_absorption) {
     // A weight below 1.0 means, that the photon passed Corsika's atmosphere
     // simulation with a probability of this weigth.
     // In mctracer we collapse this photons probability when the photon
-    // is created in mctracer. This is why the EventIo::PhotonFactory is
+    // is created in mctracer. This is why the EventIoPhotonFactory is
     // given a PseudoRandomNumberGenerator.
 
     double absorbed = 0;
@@ -144,7 +145,7 @@ TEST_F(EventIoPhotonFactoryTest, execute_atmospheric_absorption) {
         //   x    y    xcos ycos time  zem  weight lambda
         //   cm   cm   1    1    ns    cm   1    nm
 
-        EventIo::PhotonFactory cpf(corsika_photon, 1337, &prng);
+        EventIoPhotonFactory cpf(corsika_photon, 1337, &prng);
 
         if (cpf.passed_atmosphere())
             passed++;
@@ -163,8 +164,8 @@ TEST_F(EventIoPhotonFactoryTest, mctracer_rejects_photon_weight_below_0) {
         {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, -0.1, 433};
 
     EXPECT_THROW(
-        EventIo::PhotonFactory cpf(corsika_photon, id, &prng),
-        EventIo::PhotonFactory::BadPhotonWeight);
+        EventIoPhotonFactory cpf(corsika_photon, id, &prng),
+        EventIoPhotonFactory::BadPhotonWeight);
 }
 
 TEST_F(EventIoPhotonFactoryTest, mctracer_accepts_photon_weight_equal_1) {
@@ -174,7 +175,7 @@ TEST_F(EventIoPhotonFactoryTest, mctracer_accepts_photon_weight_equal_1) {
         {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 1.0, 433};
 
     EXPECT_NO_THROW(
-        EventIo::PhotonFactory cpf(corsika_photon, id, &prng));
+        EventIoPhotonFactory cpf(corsika_photon, id, &prng));
 }
 
 TEST_F(EventIoPhotonFactoryTest, mctracer_rejects_photon_weight_above_1) {
@@ -184,8 +185,8 @@ TEST_F(EventIoPhotonFactoryTest, mctracer_rejects_photon_weight_above_1) {
         {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 1.1, 433};
 
     EXPECT_THROW(
-        EventIo::PhotonFactory cpf(corsika_photon, id, &prng),
-        EventIo::PhotonFactory::BadPhotonWeight);
+        EventIoPhotonFactory cpf(corsika_photon, id, &prng),
+        EventIoPhotonFactory::BadPhotonWeight);
 }
 
 TEST_F(EventIoPhotonFactoryTest, mctracer_accepts_photon_weight_equal_0) {
@@ -194,7 +195,7 @@ TEST_F(EventIoPhotonFactoryTest, mctracer_accepts_photon_weight_equal_0) {
     const std::array<float, 8> corsika_photon =
         {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.0, 433};
     EXPECT_NO_THROW(
-        EventIo::PhotonFactory cpf(corsika_photon, id, &prng));
+        EventIoPhotonFactory cpf(corsika_photon, id, &prng));
 }
 
 TEST_F(EventIoPhotonFactoryTest, mctracer_accepts_photon_weight_btw_0_and_1) {
@@ -203,7 +204,7 @@ TEST_F(EventIoPhotonFactoryTest, mctracer_accepts_photon_weight_btw_0_and_1) {
     const std::array<float, 8>  corsika_photon =
         {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.4455, 433};
     EXPECT_NO_THROW(
-        EventIo::PhotonFactory cpf(corsika_photon, id, &prng));
+        EventIoPhotonFactory cpf(corsika_photon, id, &prng));
 }
 
 TEST_F(EventIoPhotonFactoryTest, zero_weight_is_passed_on_zero_from_prng) {
@@ -211,7 +212,7 @@ TEST_F(EventIoPhotonFactoryTest, zero_weight_is_passed_on_zero_from_prng) {
     {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.0, 433};
     const unsigned int id = 1337;
     Random::FakeConstant prng(0.0);
-    EventIo::PhotonFactory cpf(corsika_photon, id, &prng);
+    EventIoPhotonFactory cpf(corsika_photon, id, &prng);
     EXPECT_TRUE(cpf.passed_atmosphere());
 }
 
@@ -221,7 +222,7 @@ TEST_F(EventIoPhotonFactoryTest, relative_arrival_time_on_ground) {
     {1.2, 3.4, 0.0, 0.0, arrival_time_on_dround_in_ns, 1e5, 0.4455, 433};
     const unsigned int id = 1337;
     Random::FakeConstant prng(0.0);
-    EventIo::PhotonFactory cpf(corsika_photon, id, &prng);
+    EventIoPhotonFactory cpf(corsika_photon, id, &prng);
     EXPECT_EQ(
         arrival_time_on_dround_in_ns*1e-9,
         cpf.relative_arrival_time_on_ground());
@@ -245,7 +246,7 @@ TEST_F(EventIoPhotonFactoryTest, correct_rel_time_when_intersecting_ground) {
         Random::Mt19937 prng(Random::ZERO_SEED);
 
         for (unsigned int id = 0; id < event.photons.size(); id++) {
-            EventIo::PhotonFactory factory(
+            EventIoPhotonFactory factory(
                 event.photons.at(id),
                 id,
                 &prng);

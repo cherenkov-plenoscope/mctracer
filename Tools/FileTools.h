@@ -4,6 +4,7 @@
 
 #include <string>
 
+namespace relleums {
 namespace FileTools {
 
 void write_text_to_file(
@@ -11,5 +12,6 @@ void write_text_to_file(
     const std::string &path);
 
 }  // namespace FileTools
+}  // namespace relleums
 
 #endif  // MCTRACER_TOOLS_FILETOOLS_H_

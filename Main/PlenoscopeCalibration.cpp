@@ -11,8 +11,10 @@ namespace fs = std::experimental::filesystem;
 using std::string;
 using std::cout;
 using std::stringstream;
+using namespace relleums;
 using PathTools::Path;
 using PathTools::join;
+
 
 static const char USAGE[] =
 R"(Plenoscope light field calibration

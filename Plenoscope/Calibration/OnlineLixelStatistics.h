@@ -9,11 +9,11 @@ namespace Calibration {
 
 struct OnlineLixelStatistics {
     unsigned int count;
-    OnlineStatistics cx;
-    OnlineStatistics cy;
-    OnlineStatistics x;
-    OnlineStatistics y;
-    OnlineStatistics timed_delay;
+    relleums::OnlineStatistics cx;
+    relleums::OnlineStatistics cy;
+    relleums::OnlineStatistics x;
+    relleums::OnlineStatistics y;
+    relleums::OnlineStatistics timed_delay;
     OnlineLixelStatistics();
 };
 

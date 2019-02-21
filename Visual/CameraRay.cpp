@@ -4,6 +4,7 @@
 #include "Core/RayAndFrame.h"
 #include "Core/Intersection.h"
 
+namespace relleums {
 namespace visual {
 
 CameraRay::CameraRay() {}
@@ -19,3 +20,4 @@ std::string CameraRay::str()const {
 }
 
 }  // namespace visual
+}  // namespace relleums

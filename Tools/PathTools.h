@@ -5,6 +5,7 @@
 #include <string>
 #include "StringTools.h"
 
+namespace relleums {
 namespace PathTools {
 // Inspired by python os.path.
 
@@ -21,5 +22,6 @@ struct Path {
 };
 
 }  // namespace PathTools
+}  // namespace relleums
 
 #endif  // TOOLS_PATHTOOLS_H_

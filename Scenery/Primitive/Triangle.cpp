@@ -6,6 +6,8 @@ using std::string;
 using std::stringstream;
 using std::vector;
 
+namespace relleums {
+
 void Triangle::set_corners_in_xy_plane(
     const double Ax, const double Ay,
     const double Bx, const double By,
@@ -124,3 +126,5 @@ void Triangle::calculate_intersection_with(
         }
     }
 }
+
+}  // namespace relleums

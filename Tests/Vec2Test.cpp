@@ -4,6 +4,8 @@
 #include "Core/Vec2.h"
 #include "Tools/Tools.h"
 
+using namespace relleums;
+
 class Vec2Test : public ::testing::Test {};
 
 TEST_F(Vec2Test, NullVector) {

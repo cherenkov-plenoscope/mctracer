@@ -5,6 +5,8 @@
 #include "Core/Ray.h"
 #include "QuadraticEquation.h"
 
+namespace relleums {
+
 class ZaxisCylinderRayIntersectionEquation {
     double radius;
     const Ray* ray;
@@ -26,4 +28,7 @@ class ZaxisCylinderRayIntersectionEquation {
     void choose_minus_solution();
     void choose_plus_solution();
 };
+
+}  // namespace relleums
+
 #endif  // SCENERY_GEOMETRY_ZAXISCYLINDERRAYINTERSECTIONEQUATION_H_

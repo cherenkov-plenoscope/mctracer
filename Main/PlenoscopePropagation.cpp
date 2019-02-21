@@ -25,6 +25,7 @@ using std::string;
 using std::vector;
 using std::array;
 using std::cout;
+using namespace relleums;
 using PathTools::join;
 using PathTools::Path;
 
@@ -142,12 +143,12 @@ int main(int argc, char* argv[]) {
         throw std::invalid_argument(info.str());
     }
 
-    mct::json::Object plcfg = mct::json::load(config_path.path);
+    json::Object plcfg = json::load(config_path.path);
     //--------------------------------------------------------------------------
     // INIT NIGHT SKY BACKGROUND
-    mct::json::Object nsb_obj = plcfg.obj("night_sky_background_ligth");
+    json::Object nsb_obj = plcfg.obj("night_sky_background_ligth");
     const Function::LinInterpol nsb_flux_vs_wavelength =
-        mct::json::json_to_linear_interpol_function(
+        json::json_to_linear_interpol_function(
             nsb_obj.obj("flux_vs_wavelength"));
 
     Plenoscope::NightSkyBackground::Light nsb(
@@ -157,9 +158,9 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // SET UP PhotoElectricConverter
-    mct::json::Object pec_obj = plcfg.obj("photo_electric_converter");
+    json::Object pec_obj = plcfg.obj("photo_electric_converter");
     const Function::LinInterpol quantum_efficiency_vs_wavelength =
-        mct::json::json_to_linear_interpol_function(
+        json::json_to_linear_interpol_function(
             pec_obj.obj("quantum_efficiency_vs_wavelength"));
 
     SignalProcessing::PhotoElectricConverter::Config converter_config;
@@ -174,7 +175,7 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // SET SINGLE PULSE OUTPUT
-    mct::json::Object phs_obj = plcfg.obj("photo_electric_converter");
+    json::Object phs_obj = plcfg.obj("photo_electric_converter");
     const double time_slice_duration = phs_obj.f8("time_slice_duration");
     const double arrival_time_std = phs_obj.f8(
         "single_photon_arrival_time_resolution");
@@ -203,7 +204,7 @@ int main(int argc, char* argv[]) {
         unsigned int photon_id = 0;
 
         for (const array<float, 8> &corsika_photon : event.photons) {
-            EventIo::PhotonFactory cpf(corsika_photon, photon_id++, &prng);
+            EventIoPhotonFactory cpf(corsika_photon, photon_id++, &prng);
             if (cpf.passed_atmosphere())
                 photons.push_back(cpf.get_photon());
         }

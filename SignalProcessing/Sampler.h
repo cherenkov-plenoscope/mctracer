@@ -15,13 +15,13 @@ struct SamplerConfig {
     double exposure_time;
     double sampling_frequency;
     double std_dev_noise;
-    const Function::Func1D* pulse_template;
+    const relleums::Function::Func1D* pulse_template;
     SamplerConfig();
 };
 
-static const Function::Constant box_pulse_5ns(
+static const relleums::Function::Constant box_pulse_5ns(
     1.0,
-    Function::Limits(0.0e-9, 5.0e-9));
+    relleums::Function::Limits(0.0e-9, 5.0e-9));
 
 class Sampler {
     unsigned int number_of_slices;
@@ -31,7 +31,7 @@ class Sampler {
     std::vector<double> time_line(
         const std::vector<double> *electric_pipeline,
         const DiscretSampling::LookUpTable* puls_look_up_table,
-        Random::Generator* prng);
+        relleums::Random::Generator* prng);
     unsigned int get_number_of_slices()const;
 };
 

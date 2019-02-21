@@ -9,6 +9,7 @@
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"
 
+namespace relleums {
 namespace AsciiIo {
 
 std::vector<std::vector<double>> gen_table_from_file(
@@ -46,4 +47,6 @@ class TableReader {
 };
 
 }  // namespace AsciiIo
+}  // namespace relleums
+
 #endif  // TOOLS_ASCIIIO_H_

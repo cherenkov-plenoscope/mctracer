@@ -5,6 +5,8 @@ using std::string;
 using std::map;
 using std::stringstream;
 
+namespace relleums {
+
 bool FunctionMap::has(const string key)const {
     return functions.find(key) != functions.end();
 }
@@ -36,3 +38,5 @@ FunctionMap::~FunctionMap() {
     for (std::pair<string, Function::Func1D*> function : functions)
         delete function.second;
 }
+
+}  // namespace relleums

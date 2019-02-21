@@ -5,6 +5,8 @@
 #include "Tools/Tools.h"
 #include "NightSkyBackground.h"
 
+using namespace relleums;
+
 namespace Plenoscope {
 namespace NightSkyBackground {
 

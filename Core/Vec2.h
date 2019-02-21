@@ -4,6 +4,8 @@
 
 #include <string>
 
+namespace relleums {
+
 struct Vec2 {
     double x;
     double y;
@@ -32,4 +34,7 @@ struct Vec2 {
     static const Vec2 UNIT_X;
     static const Vec2 UNIT_Y;
 };
+
+}  // namespace relleums
+
 #endif  // CORE_VEC2_H_

@@ -5,6 +5,8 @@
 #include <string>
 #include "PrismZ.h"
 
+namespace relleums {
+
 class RectangularPrismZ :public PrismZ {
  private:
     double half_x_width;
@@ -25,5 +27,7 @@ class RectangularPrismZ :public PrismZ {
     void set_rectangle_x_width(const double x_width);
     void set_rectangle_y_width(const double y_width);
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_GEOMETRY_RECTANGULARPRISMZ_H_

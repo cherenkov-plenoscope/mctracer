@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 
+namespace relleums {
 namespace Function {
 
 class LinInterpol : public Func1D {
@@ -45,5 +46,6 @@ class LinInterpol : public Func1D {
 };
 
 }  // namespace Function
+}  // namespace relleums
 
 #endif  // CORE_FUNCTION_LININTERPOL_H_

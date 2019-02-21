@@ -4,6 +4,7 @@
 
 #include "Visual/CameraDevice.h"
 
+namespace relleums {
 namespace visual {
 namespace camera_operator {
 
@@ -13,5 +14,6 @@ struct Verbosity {
 
 }  // namespace camera_operator
 }  // namespace visual
+}  // namespace relleums
 
 #endif  // VISUAL_CAMERAOPERATOR_VERBOSITY_H_

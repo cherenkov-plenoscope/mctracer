@@ -2,6 +2,7 @@
 #include "gtest/gtest.h"
 #include "Scenery/Geometry/HexGridAnnulus.h"
 #include "Scenery/Geometry/GridNeighborhoodTopoligy.h"
+using namespace relleums;
 
 class GridNeighborhoodTopoligyTest : public ::testing::Test {};
 

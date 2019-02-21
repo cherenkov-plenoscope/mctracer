@@ -14,6 +14,7 @@ using std::vector;
 using std::array;
 using std::string;
 using std::stringstream;
+using namespace relleums;
 
 namespace Plenoscope {
 namespace LightFieldSensor {

@@ -1,6 +1,7 @@
 // Copyright 2017 Sebastian A. Mueller
 #include "Tools/binary_input_output.h"
 
+namespace relleums {
 namespace bio {
 
 void append_float32(const float &v, std::ostream &fout) {
@@ -56,3 +57,4 @@ uint64_t read_uint64(std::istream &fin) {
 }
 
 }  // namespace bio
+}  // namespace relleums

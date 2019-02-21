@@ -4,6 +4,8 @@
 #include <sstream>
 #include "Tools/StringTools.h"
 
+namespace relleums {
+
 double Deg2Rad(double angle_in_Deg) {
     return (M_PI*angle_in_Deg)/180.0;
 }
@@ -71,3 +73,5 @@ double get_solid_angle_for_opening_angle(const double theta) {
     double h = (1.0 - cos(theta));
     return 2.0*M_PI*h;
 }
+
+}  // namespace relleums

@@ -7,6 +7,7 @@
 #include "Core/Color.h"
 #include "PixelCoordinate.h"
 
+namespace relleums {
 namespace visual {
 
 struct Image {
@@ -53,6 +54,8 @@ std::vector<PixelCoordinate> pixel_coordinates_above_threshold(
 void fabs_difference(const Image &a, const Image &b, Image* out);
 
 void scale_up(const Image &in, const unsigned int scale, Image* out);
+
 }  // namespace visual
+}  // namespace relleums
 
 #endif  // VISUAL_IMAGE_H_

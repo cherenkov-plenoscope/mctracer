@@ -2,6 +2,7 @@
 #include "Core/Function/Constant.h"
 #include <sstream>
 
+namespace relleums {
 namespace Function {
 
 const Constant Constant::VOID_FUNCTION = Constant(0.0, Limits::VOID_LIMITS);
@@ -23,3 +24,4 @@ double Constant::evaluate(const double x)const {
 }
 
 }  // namespace Function
+}  // namespace relleums

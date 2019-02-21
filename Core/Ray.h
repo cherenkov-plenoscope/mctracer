@@ -6,6 +6,8 @@
 #include "Core/Vec3.h"
 #include "Core/HomTra3.h"
 
+namespace relleums {
+
 class Ray {
  protected:
     Ray();
@@ -24,4 +26,7 @@ class Ray {
     double parameter_for_closest_distance_to_point(const Vec3 &point)const;
     double closest_distance_to_point(const Vec3 &point)const;
 };
+
+}  // namespace relleums
+
 #endif  // CORE_RAY_H_

@@ -1,6 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Scenery/Geometry/ThinLensEquation.h"
 
+namespace relleums {
 namespace ThinLensEquation {
 
 double get_image_dist_given_focal_and_object_dist(double f, double o) {
@@ -34,3 +35,4 @@ double get_focal_dist_given_object_and_image_dist(double o, double i) {
 }
 
 }  // namespace ThinLensEquation
+}  // namespace relleums

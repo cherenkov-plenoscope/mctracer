@@ -4,6 +4,9 @@
 #include <iomanip>
 #include <iostream>
 #include "Core/HomTra3.h"
+
+namespace relleums {
+
 using std::stringstream;
 using std::string;
 
@@ -309,3 +312,5 @@ bool HomTra3::operator== (HomTra3 G)const {
 
     return true;
 }
+
+}  // namespace relleums

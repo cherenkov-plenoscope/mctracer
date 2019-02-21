@@ -5,6 +5,8 @@
 #include <vector>
 #include <string>
 
+namespace relleums {
+
 class Histogram1D {
     std::vector<double> bin_edges;
 
@@ -25,4 +27,7 @@ class Histogram1D {
     void assert_at_least_two_bin_edges()const;
     void fill_in(const double sample);
 };
+
+}  // namespace relleums
+
 #endif  // CORE_HISTOGRAM1D_H_

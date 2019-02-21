@@ -3,10 +3,11 @@
 #include <sstream>
 #include "Core/SimulationTruth.h"
 
+namespace relleums {
+
 using std::stringstream;
 using std::vector;
 using std::string;
-
 
 RayForPropagation::RayForPropagation(
     const Vec3 support,
@@ -151,3 +152,5 @@ double RayForPropagation::get_time_of_flight()const {
 Interaction RayForPropagation::get_final_interaction_type()const {
     return interaction_history.back();
 }
+
+}  // namespace relleums

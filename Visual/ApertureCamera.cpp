@@ -7,6 +7,7 @@
 using std::string;
 using std::stringstream;
 
+namespace relleums {
 namespace visual {
 
 void ApertureCamera::set_fStop_sesnorWidth(
@@ -311,3 +312,4 @@ std::vector<Color> ApertureCamera::acquire_pixels(
 }
 
 }  // namespace visual
+}  // namespace relleums

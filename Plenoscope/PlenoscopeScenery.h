@@ -3,11 +3,14 @@
 #define PLENOSCOPE_PLENOSCOPESCENERY_H_
 
 #include <vector>
+#include "Scenery/Scenery.h"
 #include "Plenoscope/PlenoscopeInScenery.h"
 
 namespace Plenoscope {
 
-struct PlenoscopeScenery: Scenery {
+struct PlenoscopeInScenery;
+
+struct PlenoscopeScenery: relleums::Scenery {
 	std::vector<PlenoscopeInScenery> plenoscopes;
 };
 

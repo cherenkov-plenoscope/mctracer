@@ -3,6 +3,7 @@
 #include <algorithm>
 using std::vector;
 
+namespace relleums {
 namespace RayAndFrame {
 
 bool ray_support_inside_frames_bounding_sphere(
@@ -177,3 +178,4 @@ void CausalIntersection::calculate_closest_intersection() {
 }
 
 }  // namespace RayAndFrame
+}  // namespace relleums

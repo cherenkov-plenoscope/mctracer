@@ -3,6 +3,8 @@
 #include "gtest/gtest.h"
 #include "Scenery/Geometry/HexagonalPrismZ.h"
 
+using namespace relleums;
+
 class HexagonalPrismZTest : public ::testing::Test {};
 
 TEST_F(HexagonalPrismZTest, throw_when_negativ_radius) {

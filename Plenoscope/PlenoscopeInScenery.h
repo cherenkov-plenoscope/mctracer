@@ -3,15 +3,19 @@
 #define PLENOSCOPE_PLENOSCOPEINSCENERY_H_
 
 #include "Plenoscope/LightFieldSensor/LightFieldSensor.h"
+#include "Core/Frame.h"
+#include "PhotonSensor/PhotonSensor.h"
 
 namespace Plenoscope {
 
 struct PlenoscopeInScenery {
-PlenoscopeInScenery(const LightFieldSensor::Config config):
+
+	PlenoscopeInScenery(const LightFieldSensor::Config config):
         light_field_sensor_geometry(config)
     {};
-    Frame* frame;
-    PhotonSensor::Sensors* light_field_channels;
+
+    relleums::Frame* frame;
+    relleums::PhotonSensor::Sensors* light_field_channels;
     LightFieldSensor::Geometry light_field_sensor_geometry;
 };
 

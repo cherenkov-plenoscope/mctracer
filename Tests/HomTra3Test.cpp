@@ -3,6 +3,8 @@
 #include "gtest/gtest.h"
 #include "Core/HomTra3.h"
 
+using namespace relleums;
+
 class HomTra3Test : public ::testing::Test {};
 
 TEST_F(HomTra3Test, default_is_unit_trafo) {

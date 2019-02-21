@@ -7,8 +7,9 @@
 //#include "Visual/Config.h"
 //#include "Visual/FlyingCamera.h"
 namespace nl = nlohmann;
+namespace mct = relleums;
 using std::string;
-using StringTools::is_equal;
+using mct::StringTools::is_equal;
 
 class JsonTest : public ::testing::Test {};
 
@@ -50,7 +51,7 @@ TEST_F(JsonTest, object_wrapper_vec3) {
     nl::json j = R"({"f8": -0.898, "peter": [1, 2, 3]})"_json;
     mct::json::Object obj(j);
     EXPECT_EQ(obj.f8("f8"), -0.898);
-    EXPECT_EQ(obj.vec3("peter"), Vec3(1, 2, 3));
+    EXPECT_EQ(obj.vec3("peter"), mct::Vec3(1, 2, 3));
 }
 
 TEST_F(JsonTest, object_wrapper_bad_vec3) {
@@ -61,7 +62,7 @@ TEST_F(JsonTest, object_wrapper_bad_vec3) {
 
 TEST_F(JsonTest, empty_path) {
     const std::string path = "";
-    Scenery s;
+    mct::Scenery s;
     EXPECT_THROW(
         mct::json::append_to_frame_in_scenery(&s.root, &s, path),
         std::runtime_error);
@@ -69,7 +70,7 @@ TEST_F(JsonTest, empty_path) {
 
 TEST_F(JsonTest, mini_scenery_with_stl) {
     const std::string path =  "json/mini_scenery.json";
-    Scenery s;
+    mct::Scenery s;
     mct::json::append_to_frame_in_scenery(&s.root, &s, path);
     s.root.init_tree_based_on_mother_child_relations();
     //visual::Config cfg;
@@ -79,7 +80,7 @@ TEST_F(JsonTest, mini_scenery_with_stl) {
 TEST_F(JsonTest, valid_color) {
   auto j = R"({"red": [255, 0, 0]})"_json;
   mct::json::Object o(j);
-  Color c = o.color("red");
+  mct::Color c = o.color("red");
   EXPECT_EQ(c.r, 255);
   EXPECT_EQ(c.g, 0);
   EXPECT_EQ(c.b, 0);
@@ -107,20 +108,20 @@ TEST_F(JsonTest, fine_colors) {
       ]
     }
     )"_json;
-    ColorMap cmap;
+    mct::ColorMap cmap;
     mct::json::assert_key(j, "colors");
     mct::json::add_colors(&cmap, j["colors"]);
     EXPECT_TRUE(cmap.has("red"));
-    EXPECT_EQ(*cmap.get("red"), Color(255, 0, 0));
+    EXPECT_EQ(*cmap.get("red"), mct::Color(255, 0, 0));
     EXPECT_TRUE(cmap.has("green"));
-    EXPECT_EQ(*cmap.get("green"), Color(0, 255, 0));
+    EXPECT_EQ(*cmap.get("green"), mct::Color(0, 255, 0));
     EXPECT_TRUE(cmap.has("blue"));
-    EXPECT_EQ(*cmap.get("blue"), Color(0, 0, 255));
+    EXPECT_EQ(*cmap.get("blue"), mct::Color(0, 0, 255));
 }
 
 TEST_F(JsonTest, empty_colors) {
     nl::json j = R"({"colors": {}})"_json;
-    ColorMap cmap;
+    mct::ColorMap cmap;
     mct::json::assert_key(j, "colors");
     mct::json::add_colors(&cmap, j["colors"]);
     EXPECT_EQ(cmap.colors.size(), 0u);
@@ -181,7 +182,7 @@ TEST_F(JsonTest, parse_mini_scenery) {
     )"_json;
 
     mct::json::Object o(jscenery);
-    Scenery s;
+    mct::Scenery s;
     mct::json::append_to_frame_in_scenery(&s.root, &s, o);
 
     EXPECT_EQ(s.root.get_name(), "root");
@@ -194,7 +195,7 @@ TEST_F(JsonTest, parse_mini_scenery) {
     EXPECT_TRUE(s.colors.has("leaf_green"));
     EXPECT_TRUE(s.colors.has("orange"));
 
-    const std::vector<Frame*>* children = s.root.get_children();
+    const std::vector<mct::Frame*>* children = s.root.get_children();
     ASSERT_EQ(children->size(), 1u);
     EXPECT_EQ(children->at(0)->get_name(), "tree");
 }
@@ -222,7 +223,7 @@ TEST_F(JsonTest, linear_interpolation_function) {
     EXPECT_TRUE(fo.key("name"));
     EXPECT_TRUE(fo.key("argument_versus_value"));
 
-    FunctionMap functions;
+    mct::FunctionMap functions;
     mct::json::add_functions(&functions, o);
     EXPECT_TRUE(functions.has("foo"));
     EXPECT_TRUE(functions.get("foo")->limits().upper() == 5);
@@ -247,11 +248,11 @@ TEST_F(JsonTest, Annulus) {
     }
     )"_json;
     mct::json::Object o(j);
-    Scenery s;
-    Frame* a = mct::json::add_Annulus(&s.root, &s, o);
+    mct::Scenery s;
+    mct::Frame* a = mct::json::add_Annulus(&s.root, &s, o);
     EXPECT_EQ(a->get_name(), "ring");
-    EXPECT_EQ(a->get_position_in_mother(), Vec3(0, 0, 3));
-    EXPECT_EQ(a->get_rotation_in_mother(), Rot3(0, 1, 0));
+    EXPECT_EQ(a->get_position_in_mother(), mct::Vec3(0, 0, 3));
+    EXPECT_EQ(a->get_rotation_in_mother(), mct::Rot3(0, 1, 0));
     EXPECT_EQ(a->get_children()->size(), 0u);
 }
 
@@ -269,11 +270,11 @@ TEST_F(JsonTest, Cylinder_with_rot_and_pos) {
     }
     )"_json;
     mct::json::Object o(j);
-    Scenery s;
-    Frame* a = mct::json::add_Cylinder(&s.root, &s, o);
+    mct::Scenery s;
+    mct::Frame* a = mct::json::add_Cylinder(&s.root, &s, o);
     EXPECT_EQ(a->get_name(), "cyl");
-    EXPECT_EQ(a->get_position_in_mother(), Vec3(0, 0, 3));
-    EXPECT_EQ(a->get_rotation_in_mother(), Rot3(0, 1, 0));
+    EXPECT_EQ(a->get_position_in_mother(), mct::Vec3(0, 0, 3));
+    EXPECT_EQ(a->get_rotation_in_mother(), mct::Rot3(0, 1, 0));
     EXPECT_EQ(a->get_children()->size(), 0u);
 }
 
@@ -290,8 +291,8 @@ TEST_F(JsonTest, Cylinder_with_start_pos_and_end_pos) {
     }
     )"_json;
     mct::json::Object o(j);
-    Scenery s;
-    Frame* a = mct::json::add_Cylinder(&s.root, &s, o);
+    mct::Scenery s;
+    mct::Frame* a = mct::json::add_Cylinder(&s.root, &s, o);
     EXPECT_EQ(a->get_name(), "cyl");
     EXPECT_EQ(a->get_children()->size(), 0u);
 }
@@ -309,8 +310,8 @@ TEST_F(JsonTest, Triangle) {
     }
     )"_json;
     mct::json::Object o(j);
-    Scenery s;
-    Frame* a = mct::json::add_Triangle(&s.root, &s, o);
+    mct::Scenery s;
+    mct::Frame* a = mct::json::add_Triangle(&s.root, &s, o);
     EXPECT_EQ(a->get_name(), "tri");
     EXPECT_EQ(a->get_children()->size(), 0u);
 }
@@ -327,9 +328,9 @@ TEST_F(JsonTest, Disc) {
       "children": []
     }
     )"_json;
-    Scenery s;
+    mct::Scenery s;
     mct::json::Object o(j);
-    Frame* a = mct::json::add_Disc(&s.root, &s, o);
+    mct::Frame* a = mct::json::add_Disc(&s.root, &s, o);
     EXPECT_EQ(a->get_name(), "didi");
     EXPECT_EQ(a->get_children()->size(), 0u);
 }
@@ -355,7 +356,7 @@ TEST_F(JsonTest, PropagationConfig) {
     }
     )"_json;
     mct::json::Object o(j);
-    PropagationConfig cfg = mct::json::to_PropagationConfig(o);
+    mct::PropagationConfig cfg = mct::json::to_PropagationConfig(o);
     EXPECT_EQ(cfg.max_number_of_interactions_per_photon, 1337u);
     EXPECT_TRUE(cfg.use_multithread_when_possible);
 }
@@ -372,9 +373,9 @@ TEST_F(JsonTest, PointSource) {
   }
   )"_json;
   mct::json::Object o(j);
-  std::vector<Photon> phs = mct::json::to_photons(o);
+  std::vector<mct::Photon> phs = mct::json::to_photons(o);
   EXPECT_EQ(phs.size(), 137u);
-  for (const Photon &ph: phs) {
+  for (const mct::Photon &ph: phs) {
     EXPECT_EQ(ph.support().x, 0.0);
     EXPECT_EQ(ph.support().y, 2.0);
     EXPECT_EQ(ph.support().z, 0.0);
@@ -397,9 +398,9 @@ TEST_F(JsonTest, PointSource_rotated) {
   }
   )"_json;
   mct::json::Object o(j);
-  std::vector<Photon> phs = mct::json::to_photons(o);
+  std::vector<mct::Photon> phs = mct::json::to_photons(o);
   EXPECT_EQ(phs.size(), 13u);
-  for (const Photon &ph: phs) {
+  for (const mct::Photon &ph: phs) {
     EXPECT_EQ(ph.support().x, 0.0);
     EXPECT_EQ(ph.support().y, 2.0);
     EXPECT_EQ(ph.support().z, 0.0);
@@ -422,9 +423,9 @@ TEST_F(JsonTest, ParallelDisc_rotated) {
   }
   )"_json;
   mct::json::Object o(j);
-  std::vector<Photon> phs = mct::json::to_photons(o);
+  std::vector<mct::Photon> phs = mct::json::to_photons(o);
   EXPECT_EQ(phs.size(), 13u);
-  for (const Photon &ph: phs) {
+  for (const mct::Photon &ph: phs) {
     EXPECT_NEAR(ph.direction().x, -1.0, 0.1);
     EXPECT_NEAR(ph.direction().y, 0.0, 0.1);
     EXPECT_NEAR(ph.direction().z, 0.0, 0.1);
@@ -461,7 +462,7 @@ TEST_F(JsonTest, visual_config) {
   }
   )"_json;
   mct::json::Object o(j);
-  visual::Config cfg = mct::json::to_visual_config(o, "./");
+  mct::visual::Config cfg = mct::json::to_visual_config(o, "./");
   EXPECT_TRUE(cfg.max_interaction_depth == 41u);
   EXPECT_TRUE(cfg.preview.rows == 256u);
   EXPECT_TRUE(cfg.preview.cols == 144u);
@@ -472,7 +473,8 @@ TEST_F(JsonTest, visual_config) {
   EXPECT_TRUE(cfg.snapshot.focal_length_over_aperture_diameter == 0.95);
   EXPECT_TRUE(cfg.snapshot.image_sensor_size_along_a_row == 0.07);
   EXPECT_TRUE(cfg.global_illumination.on);
-  EXPECT_TRUE(cfg.global_illumination.incoming_direction == Vec3(.2, .3, 1.));
+  EXPECT_TRUE(cfg.global_illumination.incoming_direction ==
+    mct::Vec3(.2, .3, 1.));
   EXPECT_TRUE(cfg.photon_trajectories.radius == 0.15);
 }
 

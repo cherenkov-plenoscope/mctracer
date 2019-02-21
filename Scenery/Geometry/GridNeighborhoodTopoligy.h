@@ -7,6 +7,8 @@
 #include "Core/Vec3.h"
 #include "HexagonalPrismZ.h"
 
+namespace relleums {
+
 class GridNeighborhoodTopoligy{
     const std::vector<Vec3> *grid;
     double neighborhood_radius;
@@ -23,5 +25,7 @@ class GridNeighborhoodTopoligy{
     unsigned int get_candidate_low_x(const double x);
     unsigned int get_candidate_hig_x(const double x);
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_GEOMETRY_GRIDNEIGHBORHOODTOPOLIGY_H_

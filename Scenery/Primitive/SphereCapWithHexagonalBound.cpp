@@ -6,6 +6,8 @@ using std::string;
 using std::vector;
 using std::stringstream;
 
+namespace relleums {
+
 void SphereCapWithHexagonalBound::set_curvature_radius_and_outer_hex_radius(
     const double curvature_radius,
     const double outer_hex_radius
@@ -63,3 +65,5 @@ void SphereCapWithHexagonalBound::calculate_intersection_with(
             intersections);
     }
 }
+
+}  // namespace relleums

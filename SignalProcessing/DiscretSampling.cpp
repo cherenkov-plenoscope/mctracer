@@ -4,6 +4,8 @@
 #include <sstream>
 #include <exception>
 
+using namespace relleums;
+
 namespace DiscretSampling {
 
 Config::Config() {

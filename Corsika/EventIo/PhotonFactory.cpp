@@ -6,9 +6,9 @@ using std::stringstream;
 using std::vector;
 using std::array;
 
-namespace EventIo {
+namespace relleums {
 
-PhotonFactory::PhotonFactory(
+EventIoPhotonFactory::EventIoPhotonFactory(
     const array<float, 8> &_corsika_photon,
     const unsigned int _id,
     Random::Generator *prng
@@ -19,15 +19,15 @@ PhotonFactory::PhotonFactory(
     check_once_if_passed_atmosphere(prng);
 }
 
-void PhotonFactory::check_once_if_passed_atmosphere(Random::Generator *prng) {
+void EventIoPhotonFactory::check_once_if_passed_atmosphere(Random::Generator *prng) {
     _passed_atmosphere = prng->uniform() <= photon_survival_probability();
 }
 
-bool PhotonFactory::passed_atmosphere()const {
+bool EventIoPhotonFactory::passed_atmosphere()const {
     return _passed_atmosphere;
 }
 
-Photon PhotonFactory::get_photon() {
+Photon EventIoPhotonFactory::get_photon() {
     Vec3 causal_dir = causal_get_direction();
 
     Ray ray_running_upwards_from_ground_to_pos_of_production(
@@ -43,11 +43,11 @@ Photon PhotonFactory::get_photon() {
     return cherenkov_photon;
 }
 
-Vec3 PhotonFactory::intersection_with_xy_floor_plane()const {
+Vec3 EventIoPhotonFactory::intersection_with_xy_floor_plane()const {
     return Vec3(x_pos_on_xy_plane(), y_pos_on_xy_plane(), 0.0);
 }
 
-double PhotonFactory::production_distance_offset()const {
+double EventIoPhotonFactory::production_distance_offset()const {
     // an arbitrary offset distance for the photons to travel until they
     // reach the ground. If set to zero 0.0, the distance for a mctracer photon
     // to travel is only defined by the relative_arrival_time_on_ground().
@@ -55,20 +55,20 @@ double PhotonFactory::production_distance_offset()const {
     return 1e3;
 }
 
-double PhotonFactory::ray_parameter_for_production_point()const {
+double EventIoPhotonFactory::ray_parameter_for_production_point()const {
     return relative_arrival_time_on_ground()*
         PhysicalConstants::VACUUM_SPPED_OF_LIGHT + production_distance_offset();
 }
 
-double PhotonFactory::x_pos_on_xy_plane()const {
+double EventIoPhotonFactory::x_pos_on_xy_plane()const {
     return corsika_photon[0]*1e-2;
 }
 
-double PhotonFactory::y_pos_on_xy_plane()const {
+double EventIoPhotonFactory::y_pos_on_xy_plane()const {
     return corsika_photon[1]*1e-2;
 }
 
-Vec3 PhotonFactory::causal_get_direction()const {
+Vec3 EventIoPhotonFactory::causal_get_direction()const {
     // KIT-CORSIKA coordinate-system
     //
     //                   /\ z-axis                                            //
@@ -122,23 +122,23 @@ Vec3 PhotonFactory::causal_get_direction()const {
     return Vec3(u, v, -z);
 }
 
-double PhotonFactory::relative_arrival_time_on_ground()const {
+double EventIoPhotonFactory::relative_arrival_time_on_ground()const {
     return corsika_photon[4]*1e-9;
 }
 
-double PhotonFactory::production_height()const {
+double EventIoPhotonFactory::production_height()const {
     return corsika_photon[5]*1e-2;
 }
 
-float PhotonFactory::photon_survival_probability()const {
+float EventIoPhotonFactory::photon_survival_probability()const {
     return corsika_photon[6];
 }
 
-double PhotonFactory::wavelength()const {
+double EventIoPhotonFactory::wavelength()const {
     return fabs(corsika_photon[7]*1e-9);
 }
 
-void PhotonFactory::assert_photon_weight_is_between_zero_and_one()const {
+void EventIoPhotonFactory::assert_photon_weight_is_between_zero_and_one()const {
     if (photon_survival_probability() < 0.0 ||
         photon_survival_probability() > 1.0
     ) {
@@ -150,4 +150,4 @@ void PhotonFactory::assert_photon_weight_is_between_zero_and_one()const {
     }
 }
 
-}  // namespace EventIo
+}  // namespace relleums

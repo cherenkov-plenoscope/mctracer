@@ -3,10 +3,11 @@
 #include <algorithm>
 #include "Core/SimulationTruth.h"
 using std::vector;
+
 namespace SignalProcessing {
 
 PipelinePhoton::PipelinePhoton():
-    simulation_truth_id(SimulationTruth::MCTRACER_DEFAULT) {
+    simulation_truth_id(relleums::SimulationTruth::MCTRACER_DEFAULT) {
     arrival_time = 0.0;
     wavelength = 0.0;
 }
@@ -22,7 +23,7 @@ PipelinePhoton::PipelinePhoton(
 {}
 
 vector<vector<PipelinePhoton>> get_photon_pipelines(
-    const PhotonSensor::Sensors* sensors
+    const relleums::PhotonSensor::Sensors* sensors
 ) {
     vector<vector<PipelinePhoton>> photon_pipelines;
     const unsigned int number_sensors = sensors->size();

@@ -2,11 +2,12 @@
 #ifndef VISUAL_PINHOLECAMERA_H_
 #define VISUAL_PINHOLECAMERA_H_
 
-class Frame;
+namespace relleums {class Frame;}
 
 #include <string>
 #include "CameraDevice.h"
 
+namespace relleums {
 namespace visual {
 
 class PinHoleCamera:public CameraDevice{
@@ -39,5 +40,6 @@ class PinHoleCamera:public CameraDevice{
 };
 
 }  // namespace visual
+}  // namespace relleums
 
 #endif  // VISUAL_PINHOLECAMERA_H_

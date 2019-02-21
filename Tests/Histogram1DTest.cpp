@@ -5,6 +5,7 @@
 #include "Tools/Tools.h"
 #include "Tools/Numeric.h"
 using std::vector;
+using namespace relleums;
 
 class Histogram1DTest : public ::testing::Test {};
 

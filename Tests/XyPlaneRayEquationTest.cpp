@@ -4,6 +4,8 @@
 #include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
 #include "Core/Ray.h"
 
+using namespace relleums;
+
 class XyPlaneRayEquationTest : public ::testing::Test {};
 
 TEST_F(XyPlaneRayEquationTest, frontal_hit) {

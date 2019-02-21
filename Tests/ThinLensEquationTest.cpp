@@ -2,6 +2,8 @@
 #include "gtest/gtest.h"
 #include "Scenery/Geometry/ThinLensEquation.h"
 
+using namespace relleums;
+
 class ThinLensEquationTest : public ::testing::Test {};
 
 TEST_F(ThinLensEquationTest, obj_dist_large_vs_focal_dist) {

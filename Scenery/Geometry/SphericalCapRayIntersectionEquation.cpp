@@ -1,6 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Scenery/Geometry/SphericalCapRayIntersectionEquation.h"
 
+namespace relleums {
+
 SphericalCapRayIntersectionEquation::SphericalCapRayIntersectionEquation(
     const double _radius,
     const Ray* ray
@@ -55,3 +57,5 @@ Vec3 SphericalCapRayIntersectionEquation::
     normal = normal/normal.norm();
     return normal;
 }
+
+}  // namespace relleums

@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include "Core/Vec3.h"
 
+namespace relleums {
 namespace Random {
 
 class Generator {
@@ -22,5 +23,6 @@ class Generator {
 };
 
 }  // namespace Random
+}  // namespace relleums
 
 #endif  // CORE_RANDOM_GENERATOR_H_

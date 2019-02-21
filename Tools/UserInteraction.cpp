@@ -8,6 +8,7 @@
 #include <string>
 #include "Tools/StringTools.h"
 
+namespace relleums {
 namespace UserInteraction {
 
 void print_welcome_screen() {
@@ -55,3 +56,4 @@ Vec3 get_Vec3() {
 }
 
 }  // namespace UserInteraction
+}  // namespace relleums

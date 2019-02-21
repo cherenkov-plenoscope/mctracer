@@ -3,7 +3,7 @@
 #include <math.h>
 #include <iostream>
 
-
+namespace relleums {
 namespace Random {
 
 uint32_t Generator::seed()const {
@@ -40,3 +40,4 @@ double Generator::expovariate(const double rate) {
 }
 
 }  // namespace Random
+}  // namespace relleums

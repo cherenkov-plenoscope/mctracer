@@ -12,7 +12,7 @@
 #include "Scenery/Primitive/Primitive.h"
 #include "nlohmann_json.hpp"
 
-namespace mct {
+namespace relleums {
 namespace json {
 
 void assert_key(const nlohmann::json &j, const std::string &key);
@@ -174,6 +174,6 @@ std::vector<Photon> load_photons(const std::string &path);
 std::vector<Photon> to_photons(const Object &o);
 
 }  // namespace json
-}  // namespace mct
+}  // namespace relleums
 
 #endif  // JSON_H_

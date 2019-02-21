@@ -11,6 +11,8 @@
 #include "Core/Photons.h"
 using std::vector;
 
+using namespace relleums;
+
 class SphereIntersectionTest : public ::testing::Test {
  protected:
     PropagationConfig setup;

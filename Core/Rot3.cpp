@@ -5,6 +5,8 @@
 #include <exception>
 #include "Core/Rot3.h"
 
+namespace relleums {
+
 const Rot3 Rot3::UNITY = Rot3(0.0, 0.0, 0.0);
 
 Rot3::Rot3() {}
@@ -89,3 +91,5 @@ double Rot3::sinRz() const {return sin(Rz);}
 bool Rot3::operator == (const Rot3& eqRot)const {
     return Rx == eqRot.Rx && Ry == eqRot.Ry && Rz == eqRot.Rz;
 }
+
+}  // namespace relleums

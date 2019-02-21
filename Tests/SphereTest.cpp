@@ -2,6 +2,8 @@
 #include "gtest/gtest.h"
 #include "Scenery/Primitive/Sphere.h"
 
+using namespace relleums;
+
 class SphereTest : public ::testing::Test {};
 
 TEST_F(SphereTest, set_positiv_radius) {

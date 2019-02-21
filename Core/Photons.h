@@ -7,6 +7,7 @@
 #include "Core/Photon.h"
 #include "Core/PropagationEnvironment.h"
 
+namespace relleums {
 namespace Photons {
 
 std::string get_print(const std::vector<Photon> *photons);
@@ -57,5 +58,6 @@ void transform_all_photons_multi_thread(
 );
 
 }  // namespace Photons
+}  // namespace relleums
 
 #endif  // CORE_PHOTONS_H_

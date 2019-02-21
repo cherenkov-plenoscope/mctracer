@@ -3,6 +3,8 @@
 #include "SignalProcessing/DiscretSampling.h"
 #include "Core/Function/Function.h"
 
+using namespace relleums;
+
 class DiscretSamplingTest : public ::testing::Test {};
 
 TEST_F(DiscretSamplingTest, Config) {

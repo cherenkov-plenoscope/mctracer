@@ -2,6 +2,7 @@
 #include "Core/Random/Mt19937.h"
 #include "Random.h"
 
+namespace relleums {
 namespace Random {
 
 Mt19937::Mt19937(const uint32_t seed) {
@@ -33,3 +34,4 @@ double Mt19937::normal(const double mean, const double std_dev) {
 }
 
 }  // namespace Random
+}  // namespace relleums

@@ -8,6 +8,7 @@
 using std::vector;
 using std::string;
 
+namespace relleums {
 namespace Function {
 
 LinInterpol::LinInterpol() {}
@@ -156,3 +157,4 @@ double LinInterpol::min()const {
 }
 
 }  // namespace Function
+}  // namespace relleums

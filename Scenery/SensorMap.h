@@ -8,10 +8,14 @@
 #include "ResourceMap.h"
 #include "PhotonSensor/Sensor.h"
 
+namespace relleums {
+
 struct SensorMap: public ResourceMap {
 	std::vector<PhotonSensor::Sensor*> sensors;
     void add(const uint64_t key, const Frame* frame);
     ~SensorMap();
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_DETECTORMAP_H_

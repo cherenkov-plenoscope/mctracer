@@ -2,8 +2,10 @@
 #ifndef CORE_FRAME_H_
 #define CORE_FRAME_H_
 
+namespace relleums {
 class Ray;
 class Intersection;
+}  // namespace relleums
 
 #include <string>
 #include <vector>
@@ -12,6 +14,8 @@ class Intersection;
 #include "Core/HomTra3.h"
 #include "Tools/StringTools.h"
 #include "Tools/Tools.h"
+
+namespace relleums {
 
 class Frame {
     // A frame defines the geometric relation to its mother frame and its
@@ -83,4 +87,7 @@ class Frame {
     void assert_name_is_valid(const std::string name_to_check)const;
     void update_bounding_sphere();
 };
+
+}  // namespace relleums
+
 #endif  // CORE_FRAME_H_

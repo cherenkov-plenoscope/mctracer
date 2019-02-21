@@ -5,6 +5,7 @@
 using std::string;
 using std::vector;
 //------------------------------------------------------------------------------
+namespace relleums {
 namespace StereoLitography {
 //------------------------------------------------------------------------------
 BinaryReader::BinaryReader(const string _filename):
@@ -210,4 +211,5 @@ string BinaryReader::get_header()const {
 	return stl_header;
 }
 //------------------------------------------------------------------------------
-} // StereoLitography
+}  // StereoLitography
+}  // namespace relleums

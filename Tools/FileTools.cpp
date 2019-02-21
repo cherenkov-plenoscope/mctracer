@@ -3,6 +3,8 @@
 #include <sstream>
 #include <fstream>
 
+namespace relleums {
+
 void FileTools::write_text_to_file(
     const std::string &text,
     const std::string &path
@@ -18,3 +20,5 @@ void FileTools::write_text_to_file(
         throw std::runtime_error(info.str());
     }
 }
+
+}  // namespace relleums

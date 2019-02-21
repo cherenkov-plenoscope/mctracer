@@ -4,6 +4,7 @@
 using std::string;
 using std::vector;
 using std::array;
+using namespace relleums;
 
 class HeaderBlockTest : public ::testing::Test {};
 

@@ -4,6 +4,8 @@
 
 #include "SphereCapWithCylinderBound.h"
 
+namespace relleums {
+
 class BiConvexLens :public SurfaceEntity {
  public:
     void set_curvature_radius_and_aperture_radius(
@@ -14,5 +16,7 @@ class BiConvexLens :public SurfaceEntity {
     double height_of_a_cap_given_curv_radius_and_aperture_radius(
         const double curvature_radius, const double aperture_radius)const;
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_PRIMITIVE_BICONVEXLENS_H_

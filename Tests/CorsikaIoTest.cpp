@@ -3,6 +3,7 @@
 #include "Corsika/Tools.h"
 #include "Core/Random/Random.h"
 using std::string;
+using namespace relleums;
 
 class Corsika_io : public ::testing::Test {};
 

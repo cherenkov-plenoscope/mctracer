@@ -5,6 +5,7 @@
 #include <vector>
 #include "Core/Frame.h"
 
+namespace relleums {
 namespace Frames {
 
 double spread_of_frame_position_in_mother(const std::vector<Frame*> &frames);
@@ -17,5 +18,6 @@ double bounding_sphere_radius(
     const std::vector<Frame*> &frames, const Vec3 center);
 
 }  // namespace Frames
+}  // namespace relleums
 
 #endif  // CORE_FRAMES_H_

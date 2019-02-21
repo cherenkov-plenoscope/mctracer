@@ -4,6 +4,7 @@
 #include "Core/DistanceMeter.h"
 #include "Core/RayAndFrame.h"
 
+namespace relleums {
 
 DistanceMeter::DistanceMeter(const Ray* ray, const Frame* world) {
     faces_an_object = false;
@@ -16,3 +17,5 @@ DistanceMeter::DistanceMeter(const Ray* ray, const Frame* world) {
         distance_to_closest_object = intersec.distance_to_ray_support();
     }
 }
+
+}  // namespace relleums

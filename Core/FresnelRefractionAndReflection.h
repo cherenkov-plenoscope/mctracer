@@ -4,6 +4,8 @@
 
 #include "Core/Vec3.h"
 
+namespace relleums {
+
 class FresnelRefractionAndReflection{
  protected:
     const Vec3 incident_obj_sys;
@@ -26,4 +28,7 @@ class FresnelRefractionAndReflection{
     Vec3 get_refrac_dir_in_object_system()const;
     double reflection_propability()const;
 };
+
+}  // namespace relleums
+
 #endif  // CORE_FRESNELREFRACTIONANDREFLECTION_H_

@@ -13,7 +13,7 @@
 #include <vector>
 #include <string>
 
-
+namespace relleums {
 //=================================
 // pure virtual
 // serves only as API template for the other actual wrappers
@@ -27,5 +27,7 @@ public:
 	virtual bool has_still_photons_left()const=0;
 	virtual std::vector<Photon> next(Random::Generator* prng)=0;
 };
+
+}  // namespace relleums
 
 #endif // __PhotonsReaderBasicWrapper_H_INCLUDED__ 

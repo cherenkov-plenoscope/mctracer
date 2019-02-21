@@ -1,6 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Core/Random/SamplesFromDistribution.h"
 
+namespace relleums {
 namespace Random {
 
 SamplesFromDistribution::SamplesFromDistribution(
@@ -30,3 +31,4 @@ double SamplesFromDistribution::get_total_integral_of_distribution()const {
 }
 
 }  // namespace Random
+}  // namespace relleums

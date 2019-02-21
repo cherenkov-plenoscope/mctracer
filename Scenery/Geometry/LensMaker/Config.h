@@ -11,14 +11,17 @@
 
 //=================================
 
+namespace relleums {
 namespace LensMaker {
 
-	struct Config {
+struct Config {
+	double focal_length;
+	double aperture_radius;
+	double refractive_index;
+	Config();
+};
 
-		double focal_length;
-		double aperture_radius;
-		double refractive_index;
-		Config();
-	};
-}
-#endif // __LensMakerConfig_H_INCLUDED__ 
+}  // namespace LensMaker
+}  // namespace relleums
+
+#endif // __LensMakerConfig_H_INCLUDED__

@@ -7,6 +7,8 @@
 #include "gtest/gtest.h"
 #include "Tools/AsciiIo.h"
 
+using namespace relleums;
+
 class SetUpScenery : public ::testing::Test {};
 //------------------------------------------------------------------------------
 TEST_F(SetUpScenery, create_scenery) {

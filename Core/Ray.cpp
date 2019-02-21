@@ -6,6 +6,8 @@
 #include <algorithm>
 #include "Core/Ray.h"
 
+namespace relleums {
+
 using std::string;
 using std::stringstream;
 
@@ -72,3 +74,5 @@ double Ray::closest_distance_to_point(const Vec3 &point)const {
     const Vec3 shortest_connection = point - q;
     return shortest_connection.norm();
 }
+
+}  // namespace relleums

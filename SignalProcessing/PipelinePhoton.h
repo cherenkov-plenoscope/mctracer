@@ -20,7 +20,7 @@ struct PipelinePhoton {
 };
 
 std::vector<std::vector<PipelinePhoton>> get_photon_pipelines(
-    const PhotonSensor::Sensors* sensors);
+    const relleums::PhotonSensor::Sensors* sensors);
 
 void sort_photon_pipelines_arrival_time(
     std::vector<PipelinePhoton>* pipeline);

@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 
+namespace relleums {
 namespace Function {
 
 class Func1D {
@@ -28,5 +29,6 @@ class Func1D {
 };
 
 }  // namespace Function
+}  // namespace relleums
 
 #endif  // CORE_FUNCTION_FUNC1D_H_

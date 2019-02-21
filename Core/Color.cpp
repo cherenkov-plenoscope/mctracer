@@ -4,6 +4,8 @@
 #include <exception>
 #include "Core/Color.h"
 
+namespace relleums {
+
 const Color Color::WHITE = Color(255, 255, 255);
 const Color Color::SKY_BLUE = Color(127, 188, 255);
 const Color Color::GRAY = Color(128, 128, 128);
@@ -57,3 +59,5 @@ bool Color::operator == (const Color& eq)const {
 bool Color::operator != (const Color& eq)const {
     return r != eq.r || g != eq.g || b != eq.b;
 }
+
+}  // namespace relleums

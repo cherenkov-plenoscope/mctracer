@@ -2,6 +2,7 @@
 #include "Core/Random/FakeConstant.h"
 #include "Random.h"
 
+namespace relleums {
 namespace Random {
 
 FakeConstant::FakeConstant(const double _constant) {
@@ -20,3 +21,4 @@ double FakeConstant::normal(const double mean, const double std_dev) {
 }
 
 }  // namespace Random
+}  // namespace relleums

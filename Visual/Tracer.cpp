@@ -1,6 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Visual/Tracer.h"
 
+namespace relleums {
 namespace visual {
 
 const double Tracer::wavelength = 533e-9;
@@ -142,3 +143,4 @@ bool Tracer::surface_normal_is_facing_observer(
 }
 
 }  // namespace visual
+}  // namespace relleums

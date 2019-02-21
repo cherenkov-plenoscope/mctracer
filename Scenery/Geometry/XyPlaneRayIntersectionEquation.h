@@ -4,6 +4,8 @@
 
 #include "Core/Ray.h"
 
+namespace relleums {
+
 class XyPlaneRayIntersectionEquation {
     double ray_parameter_v;
     bool has_valid_intersection;
@@ -15,4 +17,7 @@ class XyPlaneRayIntersectionEquation {
     double get_ray_parameter_for_intersection()const;
     Vec3 get_plane_normal_vector()const;
 };
+
+}  // namespace relleums
+
 #endif  // SCENERY_GEOMETRY_XYPLANERAYINTERSECTIONEQUATION_H_

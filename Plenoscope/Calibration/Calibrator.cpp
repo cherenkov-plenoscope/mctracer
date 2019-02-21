@@ -12,6 +12,7 @@
 #include "Core/Random/Random.h"
 using std::vector;
 using std::cout;
+using namespace relleums;
 
 namespace Plenoscope {
 namespace Calibration {

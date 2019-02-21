@@ -4,7 +4,7 @@
 using std::string;
 using std::vector;
 
-
+namespace relleums {
 namespace Function {
 
 Func1D::Func1D() {}
@@ -56,3 +56,4 @@ string Func1D::str()const {
 }
 
 }  // namespace Function
+}  // namespace relleums

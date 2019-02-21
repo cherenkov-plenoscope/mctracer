@@ -3,6 +3,7 @@
 #include <math.h>
 #include <sstream>
 
+namespace relleums {
 
 const Vec3 Vec3::ORIGIN = Vec3(0.0, 0.0, 0.0);
 const Vec3 Vec3::UNIT_X = Vec3(1.0, 0.0, 0.0);
@@ -186,3 +187,5 @@ Vec3 Vec3::project_in_y_z_plane()const {
 Vec3 Vec3::project_in_x_y_plane()const {
     return Vec3(x, y, 0.0);
 }
+
+}  // namespace relleums

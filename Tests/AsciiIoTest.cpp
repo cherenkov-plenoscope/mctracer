@@ -4,6 +4,7 @@
 using std::stringstream;
 using std::string;
 using std::vector;
+using namespace relleums;
 
 class AsciiIoTest : public ::testing::Test {};
 

@@ -5,34 +5,35 @@
 #include <string>
 #include "PhotonSensor/PhotonSensor.h"
 #include "Plenoscope/LightFieldSensor/Geometry.h"
+#include "Plenoscope/PlenoscopeScenery.h"
 #include "Scenery/Scenery.h"
 
 namespace Plenoscope {
 namespace LightFieldSensor {
 
 class Factory {
-    PhotonSensor::Sensors *sub_pixel_sensors;
+    relleums::PhotonSensor::Sensors *sub_pixel_sensors;
  public:
     const Geometry* geometry;
-    Scenery* scenery;
+    relleums::Scenery* scenery;
     explicit Factory(const Geometry* geo);
     void add_light_field_sensor_to_frame_in_scenery(
-        Frame* frame,
-        Scenery* scenery);
+        relleums::Frame* frame,
+        relleums::Scenery* scenery);
     void add_demonstration_light_field_sensor_to_frame_in_scenery(
-        Frame *frame,
-        Scenery* scenery);
-    PhotonSensor::Sensors* get_sub_pixels()const;
+        relleums::Frame *frame,
+        relleums::Scenery* scenery);
+    relleums::PhotonSensor::Sensors* get_sub_pixels()const;
  private:
-    void add_lens_array(Frame* frame);
-    void add_light_field_sensor_frontplate(Frame* frame);
-    void add_image_sensor_housing(Frame* frame);
-    void add_pixel_bin_array(Frame* frame);
+    void add_lens_array(relleums::Frame* frame);
+    void add_light_field_sensor_frontplate(relleums::Frame* frame);
+    void add_image_sensor_housing(relleums::Frame* frame);
+    void add_pixel_bin_array(relleums::Frame* frame);
     void add_pixel_bin_with_name_at_pos(
-        Frame* frame,
+        relleums::Frame* frame,
         const std::string name,
-        const Vec3 pos);
-    void add_lixel_sensor_plane(Frame* frame);
+        const relleums::Vec3 pos);
+    void add_lixel_sensor_plane(relleums::Frame* frame);
 };
 
 }  // namespace LightFieldSensor

@@ -4,6 +4,7 @@
 
 #include <stdint.h>
 
+namespace relleums {
 namespace PhotonSensor {
 
 struct PhotonArrival {
@@ -27,5 +28,6 @@ struct PhotonArrival {
 };
 
 }  // namespace PhotonSensor
+}  // namespace relleums
 
 #endif  // PHOTONSENSOR_PHOTONARRIVAL_H_

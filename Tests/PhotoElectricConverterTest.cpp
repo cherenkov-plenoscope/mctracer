@@ -4,6 +4,7 @@
 #include "SignalProcessing/PhotoElectricConverter.h"
 #include "Core/Histogram1D.h"
 using std::vector;
+using namespace relleums;
 
 class PhotoElectricConverterTest : public ::testing::Test {};
 

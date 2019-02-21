@@ -6,6 +6,7 @@
 #include <string>
 #include "Visual/Image.h"
 
+namespace relleums {
 namespace visual {
 namespace ppm {
 
@@ -17,5 +18,6 @@ Image read_image_from_path(const std::string path);
 
 }  // namespace ppm
 }  // namespace visual
+}  // namespace relleums
 
 #endif  // VISUAL_PORTABLEPIXMAP_H_

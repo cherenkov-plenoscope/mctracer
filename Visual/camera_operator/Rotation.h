@@ -5,6 +5,7 @@
 #include <string>
 #include "Verbosity.h"
 
+namespace relleums {
 namespace visual {
 namespace camera_operator {
 
@@ -44,5 +45,6 @@ class Rotation: public Verbosity {
 
 }  // namespace camera_operator
 }  // namespace visual
+}  // namespace relleums
 
 #endif  // VISUAL_CAMERAOPERATOR_ROTATION_H_

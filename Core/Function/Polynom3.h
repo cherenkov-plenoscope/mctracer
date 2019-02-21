@@ -4,7 +4,9 @@
 
 #include "Core/Function/Func1D.h"
 
+namespace relleums {
 namespace Function {
+
 class Polynom3 : public Func1D {
     // y(x) = a3*x^3 + a2*x^2 + a1*x + a0
     double a3, a2, a1, a0;
@@ -27,5 +29,6 @@ class Polynom3 : public Func1D {
 };
 
 }  // namespace Function
+}  // namespace relleums
 
 #endif  // CORE_FUNCTION_POLYNOM3_H_

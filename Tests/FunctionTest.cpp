@@ -2,6 +2,7 @@
 #include <math.h>
 #include "gtest/gtest.h"
 #include "Core/Function/Function.h"
+using namespace relleums;
 
 class FunctionTest : public ::testing::Test {};
 

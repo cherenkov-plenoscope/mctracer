@@ -3,6 +3,7 @@
 #include "Plenoscope/Calibration/LixelStatistics.h"
 using std::vector;
 using std::string;
+using namespace relleums;
 
 class PlenoscopeLixelStatisticsTest : public ::testing::Test {};
 

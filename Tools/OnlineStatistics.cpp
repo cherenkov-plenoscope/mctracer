@@ -3,6 +3,8 @@
 #include <math.h>
 #include <limits>
 
+namespace relleums {
+
 OnlineStatistics::OnlineStatistics():
     n_samples(0.0),
     _sum(0.0),
@@ -47,3 +49,5 @@ double OnlineStatistics::sum()const {
 double OnlineStatistics::number_of_samples()const {
     return n_samples;
 }
+
+}  // namespace relleums

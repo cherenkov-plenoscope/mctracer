@@ -6,6 +6,8 @@ using std::string;
 using std::stringstream;
 using std::vector;
 
+namespace relleums {
+
 void EllipticalCapWithHexagonalBound::
     set_focalLength_radiiRatio_hexAngel_hexRadius(
     const double _focal_length,
@@ -80,3 +82,5 @@ void EllipticalCapWithHexagonalBound::calculate_intersection_with(
             intersections);
     }
 }
+
+}  // namespace relleums

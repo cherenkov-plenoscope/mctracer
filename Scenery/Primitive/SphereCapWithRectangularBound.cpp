@@ -7,6 +7,8 @@ using std::string;
 using std::vector;
 using std::stringstream;
 
+namespace relleums {
+
 void SphereCapWithRectangularBound::set_curvature_radius_and_x_y_width(
     const double _curvature_radius,
     const double x_width,
@@ -54,3 +56,5 @@ void SphereCapWithRectangularBound::calculate_intersection_with(
             intersections);
     }
 }
+
+}  // namespace relleums

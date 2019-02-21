@@ -15,4 +15,5 @@ struct Config {
 
 }  // namespace Calibration
 }  // namespace Plenoscope
+
 #endif  // MCTRACER_PLENOSCOPE_CALIBRATION_CONFIG_H_

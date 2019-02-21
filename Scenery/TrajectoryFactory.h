@@ -8,6 +8,8 @@
 #include "Scenery/Primitive/Cylinder.h"
 #include "Scenery/Primitive/Sphere.h"
 
+namespace relleums {
+
 class TrajectoryFactory {
     // Spectate the propagation history of a photon.
     // A set of geometry is created from the photons propagation history.
@@ -38,5 +40,7 @@ class TrajectoryFactory {
     bool is_not_the_last_intersection(
         const unsigned int part_index)const;
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_TRAJECTORYFACTORY_H_

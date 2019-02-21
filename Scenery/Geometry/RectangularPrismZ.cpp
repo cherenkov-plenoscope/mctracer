@@ -4,6 +4,8 @@
 #include <string>
 #include <sstream>
 
+namespace relleums {
+
 void RectangularPrismZ::set_x_y_width(
     const double x_width,
     const double y_width
@@ -47,3 +49,5 @@ double RectangularPrismZ::get_half_x_width()const {
 double RectangularPrismZ::get_half_y_width()const {
     return half_y_width;
 }
+
+}  // namespace relleums

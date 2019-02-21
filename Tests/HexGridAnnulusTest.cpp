@@ -2,6 +2,8 @@
 #include "gtest/gtest.h"
 #include "Scenery/Geometry/HexGridAnnulus.h"
 
+using namespace relleums;
+
 class HexGridAnnulusTest : public ::testing::Test {};
 
 TEST_F(HexGridAnnulusTest, Cells_are_inside_boundary) {

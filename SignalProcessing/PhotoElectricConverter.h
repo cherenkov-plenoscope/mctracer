@@ -13,15 +13,15 @@ namespace SignalProcessing {
 namespace PhotoElectricConverter {
 
 struct Config {
-    const Function::Func1D* quantum_efficiency_vs_wavelength;
+    const relleums::Function::Func1D* quantum_efficiency_vs_wavelength;
     double dark_rate;
     double probability_for_second_puls;
     Config();
 };
 
-static const Function::Constant zero_efficiency(
+static const relleums::Function::Constant zero_efficiency(
     0.0,
-    Function::Limits(200e-9, 1200e-9));
+    relleums::Function::Limits(200e-9, 1200e-9));
 
 class Converter {
     const Config* config;
@@ -31,15 +31,15 @@ class Converter {
     std::vector<ElectricPulse> get_pulse_pipeline_for_photon_pipeline(
         const std::vector<PipelinePhoton> &photon_pipeline,
         const double exposure_time,
-        Random::Generator* prng);
+        relleums::Random::Generator* prng);
     void add_pulse(
         const ElectricPulse &pulse,
         std::vector<ElectricPulse> *electric_pipeline,
-        Random::Generator* prng)const;
+        relleums::Random::Generator* prng)const;
     void add_accidental_pulse(
         std::vector<ElectricPulse> *electric_pipeline,
         const double exposure_time,
-        Random::Generator* prng)const;
+        relleums::Random::Generator* prng)const;
 };
 
 }  // namespace PhotoElectricConverter

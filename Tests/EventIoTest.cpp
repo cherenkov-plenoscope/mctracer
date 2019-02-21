@@ -207,12 +207,12 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat_run_time) {
     while (my_run.has_still_events_left()) {
         EventIo::Event event = my_run.next_event();
 
-        Random::Mt19937 prng;
+        relleums::Random::Mt19937 prng;
 
-        vector<Photon> photons;
+        vector<relleums::Photon> photons;
         unsigned int id = 0;
         for (array<float, 8> corsika_photon : event.photons) {
-            EventIo::PhotonFactory cpf(corsika_photon, id++, &prng);
+            relleums::EventIoPhotonFactory cpf(corsika_photon, id++, &prng);
 
             if (cpf.passed_atmosphere()) {
                 photons.push_back(cpf.get_photon());

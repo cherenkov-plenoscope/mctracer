@@ -3,6 +3,9 @@
 #include "Plenoscope/LightFieldSensor/Config.h"
 #include "Plenoscope/NightSkyBackground/NightSkyBackground.h"
 #include "Tools/AsciiIo.h"
+
+using namespace relleums;
+
 class NightSkyBackgroundLightTest : public ::testing::Test {};
 
 TEST_F(NightSkyBackgroundLightTest, init) {

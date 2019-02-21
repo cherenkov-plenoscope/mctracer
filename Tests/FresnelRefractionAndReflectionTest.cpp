@@ -2,6 +2,7 @@
 #include <math.h>
 #include "gtest/gtest.h"
 #include "Core/FresnelRefractionAndReflection.h"
+using namespace relleums;
 
 class FresnelRefractionAndReflectionTest : public ::testing::Test {};
 

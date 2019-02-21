@@ -4,6 +4,7 @@
 
 #include "Func1D.h"
 
+namespace relleums {
 namespace Function {
 
 class Constant :public Func1D {
@@ -18,4 +19,6 @@ class Constant :public Func1D {
 };
 
 }  // namespace Function
+}  // namespace relleums
+
 #endif  // CORE_FUNCTION_CONSTANT_H_

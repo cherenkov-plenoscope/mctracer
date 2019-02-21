@@ -5,6 +5,8 @@
 #include "Core/Ray.h"
 #include "QuadraticEquation.h"
 
+namespace relleums {
+
 class TwoSolutionSurfaceRayEquation {
  public:
     virtual bool has_solutions()const = 0;
@@ -13,5 +15,7 @@ class TwoSolutionSurfaceRayEquation {
     virtual Vec3 get_surface_normal_given_intersection_vector(
         const Vec3* intersec)const = 0;
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_GEOMETRY_TWOSOLUTIONSURFACERAYEQUATION_H_

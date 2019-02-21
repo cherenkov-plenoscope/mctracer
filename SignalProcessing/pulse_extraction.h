@@ -16,13 +16,13 @@ std::vector<ExtractedPulse> extract_pulses(
     const std::vector<ElectricPulse> &electric_pulses,
     const double time_slice_duration,
     const double arrival_time_std,
-    Random::Generator* prng);
+    relleums::Random::Generator* prng);
 
 std::vector<std::vector<ExtractedPulse>> extract_pulses(
     const std::vector<std::vector<ElectricPulse>> &electric_pulses,
     const double time_slice_duration,
     const double arrival_time_std,
-    Random::Generator* prng);
+    relleums::Random::Generator* prng);
 
 }  // namespace SignalProcessing
 

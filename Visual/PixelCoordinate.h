@@ -4,6 +4,7 @@
 
 #include <vector>
 
+namespace relleums {
 namespace visual {
 
 struct PixelCoordinate{
@@ -16,5 +17,6 @@ std::vector<PixelCoordinate> pixel_coordinates(
     const unsigned int rows);
 
 }  // namespace visual
+}  // namespace relleums
 
 #endif  // VISUAL_PIXELCOORDINATE_H_

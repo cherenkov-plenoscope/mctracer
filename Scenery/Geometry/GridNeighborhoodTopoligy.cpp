@@ -2,6 +2,8 @@
 #include "Scenery/Geometry/GridNeighborhoodTopoligy.h"
 #include <algorithm>
 
+namespace relleums {
+
 GridNeighborhoodTopoligy::GridNeighborhoodTopoligy(
     const std::vector<Vec3> *grid,
     const double neighborhood_radius
@@ -65,3 +67,5 @@ unsigned int GridNeighborhoodTopoligy::get_candidate_hig_x(const double x) {
         [&](const double X, const unsigned int a) {return(grid->at(a).x > X);});
     return (it - idx_x.begin());
 }
+
+}  // namespace relleums

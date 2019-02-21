@@ -1,6 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
 #include "Tools/StringTools.h"
+using namespace relleums;
 using std::string;
 using std::vector;
 

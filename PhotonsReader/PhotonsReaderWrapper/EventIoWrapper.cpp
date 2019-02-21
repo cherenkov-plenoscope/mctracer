@@ -4,8 +4,10 @@ using std::string;
 using std::vector;
 using std::array;
 
+namespace relleums {
+
 //------------------------------------------------------------------------------
-EventIoWrapper::EventIoWrapper(const string _path): 
+relleums::EventIoWrapper::EventIoWrapper(const string _path): 
 	BasicWrapper(_path),
 	corsika_run(_path) {}
 //------------------------------------------------------------------------------
@@ -21,10 +23,12 @@ vector<Photon> EventIoWrapper::next(Random::Generator* prng) {
     unsigned int photon_id = 0;
     for(array<float, 8> corsika_photon: event.photons) {
         
-        EventIo::PhotonFactory cpf(corsika_photon, photon_id++, prng);
+        EventIoPhotonFactory cpf(corsika_photon, photon_id++, prng);
 
         if(cpf.passed_atmosphere())
             photons.push_back(cpf.get_photon());
     }
     return photons;
 }
+
+}  // namespace relleums

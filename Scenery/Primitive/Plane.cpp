@@ -6,6 +6,8 @@ using std::string;
 using std::vector;
 using std::stringstream;
 
+namespace relleums {
+
 Plane::Plane() {}
 
 Plane::Plane(const string name, const Vec3 pos, const Rot3 rot):
@@ -57,3 +59,5 @@ void Plane::calculate_intersection_with(
         }
     }
 }
+
+}  // namespace relleums

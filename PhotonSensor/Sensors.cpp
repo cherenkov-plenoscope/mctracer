@@ -5,6 +5,7 @@
 #include "PhotonSensor/FindSensorByFrame.h"
 using std::vector;
 
+namespace relleums {
 namespace PhotonSensor {
 
 vector<Sensor*> sort_by_frame(const vector<Sensor*>* by_occurence) {
@@ -99,3 +100,4 @@ void Sensors::assert_no_two_sensors_have_same_frame()const {
 }
 
 }  // namespace PhotonSensor
+}  // namespace relleums

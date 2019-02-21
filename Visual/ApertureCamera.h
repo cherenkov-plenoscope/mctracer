@@ -2,7 +2,7 @@
 #ifndef VISUAL_APERTURECAMERA_H_
 #define VISUAL_APERTURECAMERA_H_
 
-class Frame;
+namespace relleums {class Frame;}
 
 #include <string>
 #include <vector>
@@ -11,6 +11,7 @@ class Frame;
 #include "CameraDevice.h"
 #include "Core/Random/Random.h"
 
+namespace relleums {
 namespace visual {
 
 class ApertureCamera :public CameraDevice{
@@ -65,5 +66,6 @@ class ApertureCamera :public CameraDevice{
 };
 
 }  // namespace visual
+}  // namespace relleums
 
 #endif  // VISUAL_APERTURECAMERA_H_

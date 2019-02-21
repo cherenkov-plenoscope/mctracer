@@ -4,6 +4,8 @@
 
 #include "PrismZ.h"
 
+namespace relleums {
+
 class CylinderPrismZ :public PrismZ {
  protected:
     double radius_square;
@@ -17,5 +19,7 @@ class CylinderPrismZ :public PrismZ {
  private:
     void assert_radius_is_positiv(const double radius)const;
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_GEOMETRY_CYLINDERPRISMZ_H_

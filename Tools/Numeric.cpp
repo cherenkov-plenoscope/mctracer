@@ -3,6 +3,8 @@
 #include <math.h>
 using std::vector;
 
+namespace relleums {
+
 double Numeric::mean(const vector<double> &vec) {
     double sum = 0;
     for (double val : vec) sum = sum + val;
@@ -28,3 +30,5 @@ vector<double> Numeric::linspace(double begin, double end, unsigned int steps) {
 
     return lin;
 }
+
+}  // namespace relleums

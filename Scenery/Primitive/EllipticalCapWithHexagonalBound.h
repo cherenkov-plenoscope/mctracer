@@ -8,6 +8,8 @@
 #include "Scenery/Geometry/HexagonalPrismZ.h"
 #include "Scenery/Geometry/SurfaceWithOuterPrismBound.h"
 
+namespace relleums {
+
 class EllipticalCapWithHexagonalBound :public SurfaceWithOuterPrismBound {
  protected:
     HexagonalPrismZ hexBounds;
@@ -37,5 +39,7 @@ class EllipticalCapWithHexagonalBound :public SurfaceWithOuterPrismBound {
     void restrict_outer_hex_radius_to_curvature_radius();
     void post_initialize_radius_of_enclosing_sphere();
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_PRIMITIVE_ELLIPTICALCAPWITHHEXAGONALBOUND_H_

@@ -3,6 +3,8 @@
 #include "Visual/camera_operator/camera_operator.h"
 #include "Visual/PinHoleCamera.h"
 
+using namespace relleums;
+
 class camera_operatorTest : public ::testing::Test {
  protected:
     visual::PinHoleCamera *cam;

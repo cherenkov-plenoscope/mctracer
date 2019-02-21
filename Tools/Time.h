@@ -5,6 +5,7 @@
 #include <ctime>
 #include <string>
 
+namespace relleums {
 namespace Time {
 
 class Stamp {
@@ -27,5 +28,6 @@ class Stamp {
 };
 
 }  // namespace Time
+}  // namespace relleums
 
 #endif  // TOOLS_TIME_H_

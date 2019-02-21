@@ -6,6 +6,7 @@ using std::string;
 using std::vector;
 using std::array;
 
+namespace relleums {
 namespace HeaderBlock {
 
 void write(array<float, 273> block, const string &path) {
@@ -56,3 +57,4 @@ vector<array<float, 273>> read(const string &path) {
 }
 
 }  // namespace HeaderBlock
+}  // namespace relleums

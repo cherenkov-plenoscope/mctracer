@@ -3,6 +3,8 @@
 #include <math.h>
 #include <sstream>
 
+namespace relleums {
+
 const Vec3 HexagonalPrismZ::UNIT_U = Vec3::UNIT_Y;
 const Vec3 HexagonalPrismZ::UNIT_V =
     Vec3(1.0, 0.0, 0.0) * +sin(2.0/3.0*M_PI) +
@@ -63,3 +65,5 @@ double HexagonalPrismZ::get_area()const {
 double HexagonalPrismZ::get_outer_radius()const {
     return outer_radius;
 }
+
+}  // namespace relleums

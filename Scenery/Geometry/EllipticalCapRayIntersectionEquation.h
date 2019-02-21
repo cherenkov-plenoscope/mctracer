@@ -4,6 +4,8 @@
 
 #include "TwoSolutionSurfaceRayEquation.h"
 
+namespace relleums {
+
 class EllipticalCapRayIntersectionEquation :
     public TwoSolutionSurfaceRayEquation {
     const double A, B, C, iAA, iBB, iCC;
@@ -26,5 +28,7 @@ class EllipticalCapRayIntersectionEquation :
     Vec3 get_surface_normal_given_intersection_vector(
         const Vec3* intersec)const;
 };
+
+}  // namespace relleums
 
 #endif  // SCENERY_GEOMETRY_ELLIPTICALCAPRAYINTERSECTIONEQUATION_H_

@@ -4,6 +4,7 @@
 #include "Tracer.h"
 #include "Core/Random/Random.h"
 
+namespace relleums {
 namespace visual {
 
 void PinHoleCamera::update_position_and_orientation(
@@ -137,3 +138,4 @@ void PinHoleCamera::acquire_image(
 }
 
 }  // namespace visual
+}  // namespace relleums

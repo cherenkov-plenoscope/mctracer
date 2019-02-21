@@ -6,6 +6,8 @@ using std::stringstream;
 using std::string;
 using std::map;
 
+namespace relleums {
+
 bool ColorMap::has(const string key)const {
     return colors.find(key) != colors.end();
 }
@@ -37,3 +39,5 @@ void ColorMap::assert_not_in_use_yet(const string key) {
         throw KeyAlreadyInUse(info.str());
     }
 }
+
+}  // namespace relleums

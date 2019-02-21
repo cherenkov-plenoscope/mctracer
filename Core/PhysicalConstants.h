@@ -2,11 +2,12 @@
 #ifndef CORE_PHYSICALCONSTANTS_H_
 #define CORE_PHYSICALCONSTANTS_H_
 
-
+namespace relleums {
 namespace PhysicalConstants {
 
 static const double VACUUM_SPPED_OF_LIGHT = 299792458.0;
 
 }  // namespace PhysicalConstants
+}  // namespace relleums
 
 #endif  // CORE_PHYSICALCONSTANTS_H_

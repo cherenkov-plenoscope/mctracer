@@ -5,6 +5,7 @@
 #include "Generator.h"
 #include <random>
 
+namespace relleums {
 namespace Random {
 
 class Mt19937 : public Generator{
@@ -24,5 +25,6 @@ class Mt19937 : public Generator{
 };
 
 }  // namespace Random
+}  // namespace relleums
 
 #endif  // CORE_RANDOM_MT19937_H_
