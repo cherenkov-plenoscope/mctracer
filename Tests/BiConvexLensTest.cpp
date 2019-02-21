@@ -42,7 +42,7 @@ class BiConvexLensTest : public ::testing::Test {
         test_bench.set_name_pos_rot(
             "BiConvexLens_test_world",
             VEC3_ORIGIN,
-            Rot3::UNITY);
+            ROT3_UNITY);
 
         cfg.focal_length = 1.0;
         cfg.aperture_radius = 0.125;
@@ -52,7 +52,7 @@ class BiConvexLensTest : public ::testing::Test {
         lens->set_name_pos_rot(
             "little_lens",
             VEC3_ORIGIN,
-            Rot3::UNITY);
+            ROT3_UNITY);
 
         Color* lens_color;
         lens_color = new Color(255, 128, 128);
@@ -72,7 +72,7 @@ class BiConvexLensTest : public ::testing::Test {
         image_sensor->set_name_pos_rot(
             "sensor_disc",
             Vec3(0.0, 0.0, -1.0),
-            Rot3::UNITY);
+            ROT3_UNITY);
 
         Color* sensor_color;
         sensor_color = new Color(128, 255, 128);

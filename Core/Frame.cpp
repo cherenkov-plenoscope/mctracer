@@ -232,7 +232,7 @@ void Frame::cluster_children() {
                     octant->set_name_pos_rot(
                         "oct_"+std::to_string(sector),
                         octant_center,
-                        Rot3::UNITY);
+                        ROT3_UNITY);
 
                     for (Frame* sector_child : oct_tree[sector]) {
                         if (

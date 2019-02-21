@@ -288,7 +288,7 @@ int main(int argc, char* argv[]) {
     // 111111 11
     //--------------------------------------------------------------------------
     Scenery scenery;
-    scenery.root.set_name_pos_rot("root", VEC3_ORIGIN, Rot3::UNITY);
+    scenery.root.set_name_pos_rot("root", VEC3_ORIGIN, ROT3_UNITY);
     Function::LinInterpol* mirror_reflectivity =
         scenery.functions.add<Function::LinInterpol>("mirror_reflectivity");
     mirror_reflectivity->init(fact_mirror_reflectivity());
@@ -312,9 +312,9 @@ int main(int argc, char* argv[]) {
         &scenery.root);
 
     Frame* camera = scenery.root.append<Frame>();
-    camera->set_name_pos_rot("camera", Vec3(0, 0, 4.889), Rot3::UNITY);
+    camera->set_name_pos_rot("camera", Vec3(0, 0, 4.889), ROT3_UNITY);
     Disc* shield = camera->append<Disc>();
-    shield->set_name_pos_rot("shield", Vec3(0, 0, 0.001), Rot3::UNITY);
+    shield->set_name_pos_rot("shield", Vec3(0, 0, 0.001), ROT3_UNITY);
     shield->set_radius(0.33);
 
     const unsigned int NUM_PIXEL = 1440;

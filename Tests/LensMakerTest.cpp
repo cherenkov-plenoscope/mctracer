@@ -74,10 +74,10 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
 
         // geometry
         Frame optical_table;
-        optical_table.set_name_pos_rot("table", VEC3_ORIGIN, Rot3::UNITY);
+        optical_table.set_name_pos_rot("table", VEC3_ORIGIN, ROT3_UNITY);
         BiConvexLensHexBound* lens =
             optical_table.append<BiConvexLensHexBound>();
-        lens->set_name_pos_rot("lens", VEC3_ORIGIN, Rot3::UNITY);
+        lens->set_name_pos_rot("lens", VEC3_ORIGIN, ROT3_UNITY);
         lens->set_outer_color(lens_col);
         lens->set_inner_color(lens_col);
         lens->set_inner_refraction(&refraction_vs_wavelength);
@@ -88,7 +88,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
         sensor_disc->set_name_pos_rot(
             "sensor_disc",
             Vec3(0.0, 0.0, -image_sensor_disc_distance),
-            Rot3::UNITY);
+            ROT3_UNITY);
         sensor_disc->set_outer_color(sensor_disc_col);
         sensor_disc->set_inner_color(sensor_disc_col);
         sensor_disc->set_radius(cfg.aperture_radius*0.85);

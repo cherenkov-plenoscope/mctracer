@@ -19,7 +19,7 @@ void TrajectoryFactory::append_trajectory_to(Frame* root_frame) {
     trajectory->set_name_pos_rot(
         "trajectory_" + std::to_string(ray->simulation_truth_id),
         VEC3_ORIGIN,
-        Rot3::UNITY);
+        ROT3_UNITY);
 
     for (
         unsigned int i = 0;
@@ -31,7 +31,7 @@ void TrajectoryFactory::append_trajectory_to(Frame* root_frame) {
             ray_trajectory->set_name_pos_rot(
                 get_trajectory_of_part_index(i),
                 VEC3_ORIGIN,
-                Rot3::UNITY);
+                ROT3_UNITY);
             ray_trajectory->set_cylinder(
                 radius_of_trajectory,
                 ray->intersection_history.at(i).
@@ -47,7 +47,7 @@ void TrajectoryFactory::append_trajectory_to(Frame* root_frame) {
             get_intersection_point_name_of_part(i),
             ray->intersection_history.at(i).
                 position_in_root_frame(),
-            Rot3::UNITY);
+            ROT3_UNITY);
 
         intersection_indicator->set_radius(radius_of_trajectory*2.0);
 

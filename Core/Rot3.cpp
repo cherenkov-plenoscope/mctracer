@@ -7,8 +7,6 @@
 
 namespace relleums {
 
-const Rot3 Rot3::UNITY = Rot3(0.0, 0.0, 0.0);
-
 Rot3::Rot3() {}
 
 Rot3::Rot3(double Phi, double The, double Psi) {

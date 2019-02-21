@@ -49,7 +49,7 @@ void Triangle::set_normal_and_3_vertecies(
         b = trafo_inv.get_transformed_orientation(b);
         c = trafo_inv.get_transformed_orientation(c);
     } else {
-        rot = Rot3::UNITY;
+        rot = ROT3_UNITY;
     }
     set_name_pos_rot(name, pos, rot);
     set_corners_in_xy_plane(

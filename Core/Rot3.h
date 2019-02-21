@@ -17,7 +17,6 @@ class Rot3 {
     bool flag_rot_angles_xyz;
 
  public:
-    static const Rot3 UNITY;
     Rot3();
     Rot3(double Phi, double The, double Psi);
     Rot3(const Vec3 new_rot_axis, const double new_rot_angle_on_rad);
@@ -38,6 +37,8 @@ class Rot3 {
     double sinRz()const;
     bool operator == (const Rot3& eqRot)const;
 };
+
+const Rot3 ROT3_UNITY = Rot3(0.0, 0.0, 0.0);
 
 }  // namespace relleums
 

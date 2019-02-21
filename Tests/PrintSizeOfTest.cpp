@@ -70,10 +70,10 @@ TEST_F(SizeOfTest, sizes_of_mct) {
     cout << "--------------------------------------------" << "\n";
 
     Frame tree;
-    tree.set_name_pos_rot("0123456789", VEC3_ORIGIN, Rot3::UNITY);
+    tree.set_name_pos_rot("0123456789", VEC3_ORIGIN, ROT3_UNITY);
     print_size("Frame", tree);
 
-    SurfaceEntity surf("0123456789", VEC3_ORIGIN, Rot3::UNITY);
+    SurfaceEntity surf("0123456789", VEC3_ORIGIN, ROT3_UNITY);
     print_size("SurfaceEntity", surf);
 
     Annulus annulus;
