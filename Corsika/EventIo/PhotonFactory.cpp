@@ -57,7 +57,7 @@ double EventIoPhotonFactory::production_distance_offset()const {
 
 double EventIoPhotonFactory::ray_parameter_for_production_point()const {
     return relative_arrival_time_on_ground()*
-        PhysicalConstants::VACUUM_SPPED_OF_LIGHT + production_distance_offset();
+        VACUUM_SPPED_OF_LIGHT + production_distance_offset();
 }
 
 double EventIoPhotonFactory::x_pos_on_xy_plane()const {

@@ -255,8 +255,7 @@ TEST_F(PhotonTest, Refraction) {
         static_cast<double>(absorber_sensor.photon_arrival_history.size())/
         static_cast<double>(num_phot),
         2e-2);
-    const double travel_time = (2.0 + 1.33*1.0)/
-        PhysicalConstants::VACUUM_SPPED_OF_LIGHT;
+    const double travel_time = (2.0 + 1.33*1.0)/VACUUM_SPPED_OF_LIGHT;
     EXPECT_NEAR(
         travel_time,
         PhotonSensor::arrival_time_mean(absorber_sensor.photon_arrival_history),

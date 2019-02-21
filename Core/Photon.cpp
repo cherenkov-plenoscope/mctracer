@@ -43,7 +43,7 @@ double Photon::get_time_to_pass_distance_in_refractive_index(
     const double refractive_index_in_medium
 )const {
     return refractive_index_in_medium *
-        distance_in_medium / PhysicalConstants::VACUUM_SPPED_OF_LIGHT;
+        distance_in_medium / VACUUM_SPPED_OF_LIGHT;
 }
 
 double Photon::get_time_of_flight()const {
