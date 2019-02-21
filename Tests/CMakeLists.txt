@@ -10,7 +10,6 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/PlaneIntersectionTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PostInitFrameSpeed.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/CameraOperatorTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/PreTriggerTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PropagationEnvironmentTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/QuadraticEquationTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/DiscTest.cpp
@@ -27,7 +26,6 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/SensorInOutTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FrameTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FramesTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/SimpleTdcQdcTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflectionTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SphereIntersectionTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/DiscretSamplingTest.cpp
