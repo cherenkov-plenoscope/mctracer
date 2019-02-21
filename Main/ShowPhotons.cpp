@@ -52,9 +52,9 @@ int main(int argc, char* argv[]) {
         true,        // show help if requested
         "mct 0.1");  // version string
 
-    PathTools::Path scenery_path = PathTools::Path(
+    path::Path scenery_path = path::Path(
         args.find("--scenery")->second.asString());
-    PathTools::Path photon_path = PathTools::Path(
+    path::Path photon_path = path::Path(
         args.find("--input")->second.asString());
 
     visual::Config visual_config;

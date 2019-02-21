@@ -273,10 +273,8 @@ int main(int argc, char* argv[]) {
         true,        // show help if requested
         "mct 0.0");  // version string
 
-    PathTools::Path out_path = PathTools::Path(
-        args.find("--output")->second.asString());
-    PathTools::Path input_path = PathTools::Path(
-        args.find("--input")->second.asString());
+    path::Path out_path = path::Path(args.find("--output")->second.asString());
+    path::Path input_path = path::Path(args.find("--input")->second.asString());
 
     //--------------------------------------------------------------------------
     //  111

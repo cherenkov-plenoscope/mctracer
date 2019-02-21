@@ -20,7 +20,6 @@ R"(Scale up or down the geometry of a STL CAD file.
       -s --scale=SCALING_FACTOR     Scaling factor to shrink or enlarge the geometry.
       -h --help                     Show this screen.
       --version                     Show version.
-      
 )";
 
 int main(int argc, char* argv[]) {
@@ -33,9 +32,9 @@ int main(int argc, char* argv[]) {
         "mct 0.0"
     );  // version string
 
-    const PathTools::Path input_path = PathTools::Path(
+    const path::Path input_path = path::Path(
         args.find("--input")->second.asString());
-    const PathTools::Path output_path = PathTools::Path(
+    const path::Path output_path = path::Path(
         args.find("--output")->second.asString());
 
     const double scale = StringTools::to_double(

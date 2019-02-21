@@ -280,7 +280,7 @@ void append_to_frame_in_scenery(
     Scenery* scenery,
     const string &path
 ) {
-    PathTools::Path json_path(path);
+    path::Path json_path(path);
     scenery->current_working_directory = json_path.dirname;
     append_to_frame_in_scenery(mother, scenery, load(path));
 }
@@ -319,7 +319,7 @@ Frame* add_StereoLitography(
     set_frame(object, o);
     set_surface(object, scenery, o);
     const double scale = o.f8("scale");
-    const string stl_path = PathTools::join(
+    const string stl_path = path::join(
         scenery->current_working_directory, o.st("path"));
     StereoLitography::add_stl_to_and_inherit_surface_from_surfac_entity(
         stl_path, object, scale);
@@ -496,9 +496,9 @@ visual::Config to_visual_config(
     if (image_path.empty()) {
         cfg.sky_dome = visual::SkyDome(skyj.color("color"));
     } else {
-        PathTools::Path jsonpath = PathTools::Path(path);
+        path::Path jsonpath = path::Path(path);
         cfg.sky_dome = visual::SkyDome(
-            PathTools::join(jsonpath.dirname, image_path));
+            path::join(jsonpath.dirname, image_path));
         cfg.sky_dome.set_background_color(skyj.color("color"));
     }
     return cfg;

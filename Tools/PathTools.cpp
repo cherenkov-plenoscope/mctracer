@@ -4,7 +4,7 @@
 using std::string;
 
 namespace relleums {
-namespace PathTools {
+namespace path {
 
     string join(string path1, string path2) {
         std::stringstream out;
@@ -48,5 +48,5 @@ namespace PathTools {
         *this = Path("");
     }
 
-}  // namespace PathTools
+}  // namespace path
 }  // namespace relleums

@@ -31,8 +31,8 @@ int main(int argc, char* argv[]) {
       true,        // show help if requested
       "mct 0.0");
 
-    mct::PathTools::Path input_path(args.find("--input")->second.asString());
-    mct::PathTools::Path out_path(args.find("--output")->second.asString());
+    mct::path::Path input_path(args.find("--input")->second.asString());
+    mct::path::Path out_path(args.find("--output")->second.asString());
 
     fs::create_directory(out_path.path);
 
@@ -40,24 +40,24 @@ int main(int argc, char* argv[]) {
 
     mct::HeaderBlock::write(
       corsika_run.header.raw,
-      mct::PathTools::join(out_path.path, "corsika_run_header.bin"));
+      mct::path::join(out_path.path, "corsika_run_header.bin"));
 
     unsigned int event_counter = 1;
     while (corsika_run.has_still_events_left()) {
       EventIo::Event event = corsika_run.next_event();
 
-      mct::PathTools::Path event_path(
-        mct::PathTools::join(out_path.path, std::to_string(event_counter)));
+      mct::path::Path event_path(
+        mct::path::join(out_path.path, std::to_string(event_counter)));
 
       fs::create_directory(event_path.path);
 
       mct::HeaderBlock::write(
         event.header.raw,
-        mct::PathTools::join(event_path.path, "corsika_event_header.bin"));
+        mct::path::join(event_path.path, "corsika_event_header.bin"));
 
       EventIo::write_raw_photons(
         event.photons,
-        mct::PathTools::join(event_path.path, "air_shower_photon_bunches.bin"));
+        mct::path::join(event_path.path, "air_shower_photon_bunches.bin"));
 
       event_counter++;
     }

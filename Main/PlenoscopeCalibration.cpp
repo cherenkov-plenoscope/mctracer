@@ -12,8 +12,8 @@ using std::string;
 using std::cout;
 using std::stringstream;
 using namespace relleums;
-using PathTools::Path;
-using PathTools::join;
+using path::Path;
+using path::join;
 
 
 static const char USAGE[] =

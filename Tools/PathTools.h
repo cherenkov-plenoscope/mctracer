@@ -6,7 +6,7 @@
 #include "StringTools.h"
 
 namespace relleums {
-namespace PathTools {
+namespace path {
 // Inspired by python os.path.
 
 std::string join(std::string path1, std::string path2);
@@ -21,7 +21,7 @@ struct Path {
     Path();
 };
 
-}  // namespace PathTools
+}  // namespace path
 }  // namespace relleums
 
 #endif  // TOOLS_PATHTOOLS_H_

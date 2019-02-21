@@ -26,8 +26,8 @@ using std::vector;
 using std::array;
 using std::cout;
 using namespace relleums;
-using PathTools::join;
-using PathTools::Path;
+using path::join;
+using path::Path;
 
 static const char USAGE[] =
 R"(Plenoscope air showher propagation

@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
       true,        // show help if requested
       "mct 0.1");  // version string
 
-    mct::PathTools::Path scenery_path = mct::PathTools::Path(
+    mct::path::Path scenery_path = mct::path::Path(
       args.find("--scenery")->second.asString());
 
     mct::Scenery scenery;

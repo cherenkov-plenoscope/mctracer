@@ -10,7 +10,7 @@ using std::string;
 using std::cout;
 using std::vector;
 using namespace relleums;
-using PathTools::Path;
+using path::Path;
 
 static const char USAGE[] =
 R"(Photon propagation
