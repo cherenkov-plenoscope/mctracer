@@ -3,7 +3,7 @@
 #include "Tools/UserInteraction.h"
 
 int main(int argc, char **argv) {
-    relleums::UserInteraction::print_welcome_screen();
+    relleums::print_welcome_screen();
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

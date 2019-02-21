@@ -5,11 +5,9 @@
 #include "Core/Vec3.h"
 
 namespace relleums {
-namespace UserInteraction {
 
 void print_welcome_screen();
 
-}
 }  // namespace relleums
 
 #endif  // TOOLS_USERINTERACTION_H_

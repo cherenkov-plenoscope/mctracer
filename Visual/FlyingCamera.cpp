@@ -103,7 +103,7 @@ void FlyingCamera::reset_camera() {
 }
 
 void FlyingCamera::enter_interactive_display() {
-    UserInteraction::print_welcome_screen();
+    print_welcome_screen();
     print_help();
 
     int user_input_key = 0;

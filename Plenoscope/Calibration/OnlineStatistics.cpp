@@ -1,9 +1,9 @@
 // Copyright 2014 Sebastian A. Mueller#
-#include "Tools/OnlineStatistics.h"
+#include "./OnlineStatistics.h"
 #include <math.h>
 #include <limits>
 
-namespace relleums {
+namespace Plenoscope {
 
 OnlineStatistics::OnlineStatistics():
     n_samples(0.0),
@@ -50,4 +50,4 @@ double OnlineStatistics::number_of_samples()const {
     return n_samples;
 }
 
-}  // namespace relleums
+}  // namespace Plenoscope

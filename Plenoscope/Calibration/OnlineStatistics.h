@@ -2,7 +2,7 @@
 #ifndef TOOLS_ONLINESTATISTICS_H_
 #define TOOLS_ONLINESTATISTICS_H_
 
-namespace relleums {
+namespace Plenoscope {
 
 class OnlineStatistics {
     // https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
@@ -22,6 +22,6 @@ class OnlineStatistics {
     double number_of_samples()const;
 };
 
-}  // namespace relleums
+}  // namespace Plenoscope
 
 #endif  // TOOLS_ONLINESTATISTICS_H_

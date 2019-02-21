@@ -9,7 +9,6 @@
 #include "Tools/StringTools.h"
 
 namespace relleums {
-namespace UserInteraction {
 
 void print_welcome_screen() {
     std::stringstream out;
@@ -30,5 +29,4 @@ void print_welcome_screen() {
     std::cout << out.str();
 }
 
-}  // namespace UserInteraction
 }  // namespace relleums
