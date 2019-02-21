@@ -37,8 +37,6 @@ class Frame {
     const Frame *root_frame;
 
  public:
-    static Frame VOID_FRAME;
-
     // SET
     Frame();
     virtual ~Frame();
@@ -88,6 +86,8 @@ class Frame {
     void assert_name_is_valid(const std::string name_to_check)const;
     void update_bounding_sphere();
 };
+
+const Frame VOID_FRAME;
 
 }  // namespace relleums
 

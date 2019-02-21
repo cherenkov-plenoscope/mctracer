@@ -7,8 +7,7 @@ namespace relleums {
 
 TrajectoryFactory::TrajectoryFactory(const RayForPropagation* _ray):
     ray(_ray),
-    radius_of_trajectory(0.01),
-    trajectory(&Frame::VOID_FRAME) {}
+    radius_of_trajectory(0.01) {}
 
 void TrajectoryFactory::set_trajectory_radius(const double radius) {
     radius_of_trajectory = radius;

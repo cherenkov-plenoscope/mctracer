@@ -36,8 +36,8 @@ Vec3 dumb_bounding_sphere_center(const vector<Frame*> &frames) {
     if (frames.size() == 1)
         return frames.at(0)->get_position_in_mother();
 
-    Frame* start_frame = &Frame::VOID_FRAME;
-    Frame* end_frame = &Frame::VOID_FRAME;
+    const Frame* start_frame = &VOID_FRAME;
+    const Frame* end_frame = &VOID_FRAME;
     double maximum = 0.0;
     for (unsigned int i = 0; i < frames.size(); i++) {
         for (unsigned int j = i; j < frames.size(); j++) {

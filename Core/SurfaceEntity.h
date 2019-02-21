@@ -10,7 +10,7 @@
 namespace relleums {
 
 class SurfaceEntity :public Frame {
-    const Frame* allowed_frame_to_propagate_to = &Frame::VOID_FRAME;
+    const Frame* allowed_frame_to_propagate_to = &VOID_FRAME;
     bool _boundary_layer_is_transparent;
     const Color* outer_color;
     const Color* inner_color;

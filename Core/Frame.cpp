@@ -11,11 +11,9 @@ using std::vector;
 
 namespace relleums {
 
-Frame Frame::VOID_FRAME;
-
 Frame::Frame():
     bounding_sphere_radius(0.0),
-    mother(&VOID_FRAME),
+    mother(this),
     root_frame(this) {}
 
 Frame::~Frame() {
@@ -172,7 +170,7 @@ string Frame::get_path_in_tree_of_frames()const {
 }
 
 bool Frame::has_mother()const {
-    return mother != &VOID_FRAME;
+    return mother != this;
 }
 
 bool Frame::has_children()const {
@@ -196,7 +194,7 @@ void Frame::cluster_children() {
 
         // assign children temporarly to octtree
         for (Frame* child : children) {
-            child->mother = &VOID_FRAME;
+            child->mother = child->mother;
             oct_tree[child->pos_in_mother.get_octant()].push_back(child);
         }
         children.clear();

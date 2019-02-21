@@ -9,7 +9,7 @@
 namespace relleums {
 
 struct PropagationEnvironment {
-    const Frame* root_frame = &Frame::VOID_FRAME;
+    const Frame* root_frame = &VOID_FRAME;
     const PropagationConfig* config = &DEFAULT_PROPAGATIONCONFIG;
     Random::Generator* prng = &Random::VOID_PRNG;
 };
