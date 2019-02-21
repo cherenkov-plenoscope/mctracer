@@ -4,7 +4,7 @@
 
 namespace relleums {
 
-static const double VACUUM_SPPED_OF_LIGHT = 299792458.0;
+const double VACUUM_SPPED_OF_LIGHT = 299792458.0;
 
 }  // namespace relleums
 
