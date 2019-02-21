@@ -17,7 +17,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/Photon.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PhotonAndFrame.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Photons.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/PropagationEnvironment.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/SimulationTruth.cpp
