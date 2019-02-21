@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "Core/Function/Constant.h"
+#include "Core/Function/Function.h"
 #include "Core/PropagationConfig.h"
 #include "Core/Rot3.h"
 #include "Core/Frame.h"
@@ -16,7 +16,7 @@ class PlaneIntersectionTest : public ::testing::Test {
     PropagationConfig setup;
     Vec3    pos;
     Rot3  rot;
-    Function::Constant* refl_vs_wavl;
+    Function::LinInterpol* refl_vs_wavl;
     Color*      colo;
     double x_width = 2.5;
     double y_width = 1.3;
@@ -31,9 +31,12 @@ class PlaneIntersectionTest : public ::testing::Test {
     rot.set(0.0, 0.0, 0.0);
     world.set_name_pos_rot("world", pos, rot);
 
-    refl_vs_wavl = new Function::Constant(
-        1.0,
-        Function::Limits(200e-9, 1200e-9));
+    refl_vs_wavl = new Function::LinInterpol(
+        {
+            {200e-9, 1.0},
+            {1200e-9, 1.0}
+        });
+
     colo = new Color(200, 128, 128);
 
     // ------------Plane----------------

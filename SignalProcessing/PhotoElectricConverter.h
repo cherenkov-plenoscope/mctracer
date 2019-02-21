@@ -19,9 +19,11 @@ struct Config {
     Config();
 };
 
-static const relleums::Function::Constant zero_efficiency(
-    0.0,
-    relleums::Function::Limits(200e-9, 1200e-9));
+static const relleums::Function::LinInterpol zero_efficiency(
+    {
+        {200e-9, 0},
+        {1200e-9, 0}
+    });
 
 class Converter {
     const Config* config;

@@ -81,7 +81,7 @@ TEST_F(PhotoElectricConverterTest, input_pulses_absorbed_zero_qunatum_eff) {
 
 TEST_F(PhotoElectricConverterTest, input_pulses_pass_qunatum_eff_is_one) {
     SignalProcessing::PhotoElectricConverter::Config config;
-    Function::Constant qeff(1.0, Function::Limits(200e-9, 1200e-9));
+    Function::LinInterpol qeff({{200e-9, 1.0}, {1200e-9, 1.0}});
     config.quantum_efficiency_vs_wavelength = &qeff;
     SignalProcessing::PhotoElectricConverter::Converter conv(&config);
 

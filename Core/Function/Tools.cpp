@@ -80,5 +80,27 @@ bool value_flips_sign(const Func1D &f, unsigned int steps) {
     return flip;
 }
 
+std::vector<std::vector<double>> polynom3(
+    double c3,
+    double c2,
+    double c1,
+    double c0,
+    double start,
+    double end,
+    uint64_t steps
+) {
+    const double increment = (end - start)/static_cast<double>(steps - 1);
+    std::vector<std::vector<double>> out;
+    for (uint64_t i = 0; i < (steps - 1); i++) {
+        const double x = start + increment*static_cast<double>(i);
+        const double y = x*x*x*c3 + x*x*c2 + x*c1 + c0;
+        out.push_back({x, y});
+    }
+    const double x = end;
+    const double y = x*x*x*c3 + x*x*c2 + x*c1 + c0;
+    out.push_back({x, y});
+    return out;
+}
+
 }  // namespace Function
 }  // namespace relleums

@@ -58,9 +58,11 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
     // ok lets test it...
     const Color* lens_col = &COLOR_GRAY;
     const Color* sensor_disc_col = &COLOR_DARK_GRAY;
-    const Function::Constant refraction_vs_wavelength = Function::Constant(
-        cfg.refractive_index,
-        Function::Limits(200e-9, 1200e-9));
+    const Function::LinInterpol refraction_vs_wavelength(
+        {
+            {200e-9, cfg.refractive_index},
+            {1200e-9, cfg.refractive_index}
+        });
     Random::Mt19937 prng(Random::ZERO_SEED);
     unsigned int number_of_photons_per_run = 1000;
     vector<double> sigma_psf_vs_image_sensor_distance;

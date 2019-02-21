@@ -45,12 +45,10 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/Vec2Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Vec3Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/NightSkyBackgroundLightTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/XmlTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/XyPlaneRayEquationTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PathToolsTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ZaxisCylinderRayIntersectionEquationTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SceneryFactoryTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Examples/Func1DExample.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Examples/set_up_scenery.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/CorsikaIoTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/OnlineStatisticsTest.cpp

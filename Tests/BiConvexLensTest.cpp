@@ -2,7 +2,7 @@
 #include <vector>
 #include "gtest/gtest.h"
 // #include "Cameras/FlyingCamera.h"
-#include "Core/Function/Constant.h"
+#include "Core/Function/Function.h"
 #include "Core/Photons.h"
 #include "Core/PhotonAndFrame.h"
 #include "Scenery/Primitive/BiConvexLens.h"
@@ -54,12 +54,13 @@ class BiConvexLensTest : public ::testing::Test {
             VEC3_ORIGIN,
             ROT3_UNITY);
 
-        Color* lens_color;
-        lens_color = new Color(255, 128, 128);
+        Color* lens_color = new Color(255, 128, 128);
 
-        Function::Limits limits(200e-9, 1200e-9);
-        Function::Constant* refraction_vs_wavelength =
-            new Function::Constant(1.49, limits);
+        Function::LinInterpol* refraction_vs_wavelength = new Function::LinInterpol(
+            {
+                {200e-9, 1.49},
+                {1200e-9, 1.49}
+            });
 
         lens->set_outer_color(lens_color);
         lens->set_inner_color(lens_color);

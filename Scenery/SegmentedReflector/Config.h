@@ -30,15 +30,17 @@ namespace SegmentedReflector {
 		Config();
 	};
 
-	static const Function::Constant typical_reflectivity(
-		0.8, 
-		Function::Limits(200e-9, 1200e-9)
-	);
+	static const Function::LinInterpol typical_reflectivity(
+		{
+			{200e-9, .8},
+			{1200e-9, .8}
+		});
 
-	static const Function::Constant perfect_reflectivity(
-		1.0, 
-		Function::Limits(200e-9, 1200e-9)
-	);
+	static const Function::LinInterpol perfect_reflectivity(
+		{
+			{200e-9, 1},
+			{1200e-9, 1}
+		});
 } // SegmentedReflector
 }  // namespace relleums
 #endif // __SegmentedReflectorConfig_H_INCLUDED__ 

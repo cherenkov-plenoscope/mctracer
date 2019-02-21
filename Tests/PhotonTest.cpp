@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Core/Function/Constant.h"
+#include "Core/Function/Function.h"
 #include "Core/Photon.h"
 #include "Core/PhotonAndFrame.h"
 #include "Core/Photons.h"
@@ -49,7 +49,12 @@ TEST_F(PhotonTest, PropagationSimpleGeometry) {
     world.set_name_pos_rot("world", VEC3_ORIGIN, ROT3_UNITY);
     Frame* optical_table = world.append<Plane>();
     optical_table->set_name_pos_rot("optical_table", VEC3_ORIGIN, ROT3_UNITY);
-    Function::Constant refl(1.0, Function::Limits(200e-9, 1200e-9));
+    Function::LinInterpol refl(
+        {
+            {200e-9, 1},
+            {1200e-9, 1}
+        });
+
     Color colo(200, 128, 128);
 
     // ------------mirror 1----------------
@@ -129,9 +134,12 @@ TEST_F(PhotonTest, Reflections) {
 
     // ------------mirror----------------
     const double reflection_coefficient = 0.42;
-    Function::Constant mirror_reflection(
-            reflection_coefficient,
-            Function::Limits(200e-9, 1200e-9));
+    Function::LinInterpol mirror_reflection(
+        {
+            {200e-9, reflection_coefficient},
+            {1200e-9, reflection_coefficient}
+        });
+
     Color mirror_color;
     mirror_color = Color(200, 64, 64);
     Plane* mirror = optical_table->append<Plane>();
@@ -199,9 +207,11 @@ TEST_F(PhotonTest, Refraction) {
     // create a test setup with two planes and high refractive index in between
     Frame world;
     world.set_name_pos_rot("world", VEC3_ORIGIN, ROT3_UNITY);
-    Function::Constant water_refraction(
-            1.33,
-            Function::Limits(200e-9, 1200e-9));
+    Function::LinInterpol water_refraction(
+        {
+            {200e-9, 1.33},
+            {1200e-9, 1.33}
+        });
 
     // ------------ box ---------------
     Color entrance_surface_color(200, 64, 64);
@@ -268,12 +278,17 @@ TEST_F(PhotonTest, absorbtion_in_medium) {
     // create a test setup with two planes and high refractive index in between
     Frame world;
     world.set_name_pos_rot("world", VEC3_ORIGIN, ROT3_UNITY);
-    Function::Constant free_half_path(
-        1.0,
-        Function::Limits(200e-9, 1200e-9));
-    Function::Constant water_refraction(
-        1.33,
-        Function::Limits(200e-9, 1200e-9));
+    Function::LinInterpol free_half_path(
+        {
+            {200e-9, 1.0},
+            {1200e-9, 1.0}
+        });
+
+    Function::LinInterpol water_refraction(
+        {
+            {200e-9, 1.33},
+            {1200e-9, 1.33}
+        });
 
     // ------------ box ---------------
     Color entrance_surface_color(200, 64, 64);

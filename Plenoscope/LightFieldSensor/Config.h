@@ -35,12 +35,17 @@ struct Config {
     std::array<float, 273> get_sensor_plane2imaging_system_header()const;
 };
 
-static const relleums::Function::Constant pmma_refraction(
-    1.49, relleums::Function::Limits(200e-9, 1200e-9));
+static const relleums::Function::LinInterpol pmma_refraction(
+    {
+        {200e-9, 1.49},
+        {1200e-9, 1.49}
+    });
 
-static const relleums::Function::Constant perfect_transparency(
-    std::numeric_limits<double>::infinity(),
-    relleums::Function::Limits(200e-9, 1200e-9));
+static const relleums::Function::LinInterpol perfect_transparency(
+    {
+        {200e-9, std::numeric_limits<double>::infinity()},
+        {1200e-9, std::numeric_limits<double>::infinity()}
+    });
 
 }  // namespace LightFieldSensor
 }  // namespace Plenoscope

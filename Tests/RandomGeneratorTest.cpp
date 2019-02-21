@@ -83,7 +83,7 @@ TEST_F(RandomGeneratorTest, generator_point_on_disc) {
 TEST_F(RandomGeneratorTest, draw_from_distribution) {
     // -------------------
     // create distributions
-    Function::Polynom3 f(0.0, 1.0, 0.0, 0.0, Function::Limits(0.0, 1.0));
+    Function::LinInterpol f(Function::polynom3(0, 1, 0, 0, 0.0, 1.0, 4096));
     // -------------------
     // sample from distribution
     Random::Mt19937 prng(0);
