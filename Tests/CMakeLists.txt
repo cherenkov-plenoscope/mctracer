@@ -28,7 +28,6 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/FramesTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflectionTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SphereIntersectionTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/DiscretSamplingTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SphereTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FunctionLinInterpolTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/StringToolsTest.cpp
