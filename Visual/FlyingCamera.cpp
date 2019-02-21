@@ -8,6 +8,7 @@
 #include "Core/RayAndFrame.h"
 #include "Core/Intersection.h"
 #include "Visual/PortablePixMap.h"
+#include "Tools/UserInteraction.h"
 
 using std::cout;
 using std::stringstream;
@@ -15,6 +16,27 @@ using std::string;
 
 namespace relleums {
 namespace visual {
+
+static const unsigned int SPACE_KEY = 32;
+static const unsigned int ESCAPE_KEY = 27;
+
+void clear_screen() {
+    std::cout << std::string(5, '\n');
+}
+
+Vec3 cin_Vec3() {
+    Tuple3 vec;
+    std::string input;
+    while (true) {
+        std::cout << "Enter 3D vector: '[x,y,z]'\n>";
+        getline(std::cin, input);
+        try {
+            vec = StringTools::to_Tuple3(input);
+            break;
+        } catch (...) {}
+    }
+    return Vec3(vec.x, vec.y, vec.z);
+}
 
 void image_to_opencv_image(const Image& image, cv::Mat* out) {
     for (unsigned int col = 0; col < image.number_cols; col++) {
@@ -87,7 +109,7 @@ void FlyingCamera::enter_interactive_display() {
     int user_input_key = 0;
     bool key_stroke_requires_image_update = true;
 
-    while (!UserInteraction::is_Escape_key(user_input_key)) {
+    while (user_input_key != ESCAPE_KEY) {
         user_input_counter++;
 
         if (time_to_print_help())
@@ -130,10 +152,9 @@ void FlyingCamera::enter_interactive_display() {
             break;
             case 'y': stereo_operator.decrease_stereo_offset();
             break;
-            case 'g': translation_operator.move_to(
-                UserInteraction::get_Vec3());
+            case 'g': translation_operator.move_to(cin_Vec3());
             break;
-            case UserInteraction::space_key: {
+            case SPACE_KEY: {
                 update_display();
                 key_stroke_requires_image_update = false;
             }
@@ -273,7 +294,7 @@ void FlyingCamera::print_ray_for_pixel_col_row(int col, int row) {
     Intersection intersec = RayAndFrame::first_intersection(
         &probing_ray,
         world);
-    UserInteraction::ClearScreen();
+    clear_screen();
     stringstream out;
     //      0        1         2         3         4         5         6
     //      123456789012345678901234567890123456789012345678901234567890
@@ -321,7 +342,7 @@ string FlyingCamera::get_intersection_info_print(
 }
 
 void FlyingCamera::print_help()const {
-    UserInteraction::ClearScreen();
+    clear_screen();
     stringstream out;
 
 //  0         1         2         3         4         5         6         7

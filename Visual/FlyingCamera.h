@@ -10,7 +10,6 @@
 #include "camera_operator/camera_operator.h"
 #include "Config.h"
 #include "Tools/Time.h"
-#include "Tools/UserInteraction.h"
 
 namespace relleums {
 namespace visual {

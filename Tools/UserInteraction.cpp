@@ -30,30 +30,5 @@ void print_welcome_screen() {
     std::cout << out.str();
 }
 
-void ClearScreen() {
-    std::cout << std::string(5, '\n');
-}
-
-bool is_Escape_key(const int key) {
-    return key == 27;
-}
-
-Vec3 get_Vec3() {
-    Tuple3 vec;
-    std::string input;
-
-    while (true) {
-        std::cout << "Enter 3D vector: '[x,y,z]'\n>";
-        getline(std::cin, input);
-
-        try {
-            vec = StringTools::to_Tuple3(input);
-            break;
-        } catch (...) {}
-    }
-
-    return Vec3(vec.x, vec.y, vec.z);
-}
-
 }  // namespace UserInteraction
 }  // namespace relleums
