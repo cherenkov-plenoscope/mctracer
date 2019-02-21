@@ -48,16 +48,16 @@ TEST_F(SizeOfTest, sizes_of_mct) {
     print_size("HomTra3", h);
     cout << "--------------------------------------------" << "\n";
 
-    Ray ray(Vec3::ORIGIN, Vec3::UNIT_Z);
+    Ray ray(VEC3_ORIGIN, VEC3_UNIT_Z);
     print_size("Ray", ray);
 
-    visual::CameraRay camray(Vec3::ORIGIN, Vec3::UNIT_Z);
+    visual::CameraRay camray(VEC3_ORIGIN, VEC3_UNIT_Z);
     print_size("CameraRay", camray);
 
-    RayForPropagation rayfp(Vec3::ORIGIN, Vec3::UNIT_Z);
+    RayForPropagation rayfp(VEC3_ORIGIN, VEC3_UNIT_Z);
     print_size("RayForPropagation", rayfp);
 
-    Photon ph(Vec3::ORIGIN, Vec3::UNIT_Z, 433e-9);
+    Photon ph(VEC3_ORIGIN, VEC3_UNIT_Z, 433e-9);
     print_size("Photon", ph);
     cout << "--------------------------------------------" << "\n";
 
@@ -70,10 +70,10 @@ TEST_F(SizeOfTest, sizes_of_mct) {
     cout << "--------------------------------------------" << "\n";
 
     Frame tree;
-    tree.set_name_pos_rot("0123456789", Vec3::ORIGIN, Rot3::UNITY);
+    tree.set_name_pos_rot("0123456789", VEC3_ORIGIN, Rot3::UNITY);
     print_size("Frame", tree);
 
-    SurfaceEntity surf("0123456789", Vec3::ORIGIN, Rot3::UNITY);
+    SurfaceEntity surf("0123456789", VEC3_ORIGIN, Rot3::UNITY);
     print_size("SurfaceEntity", surf);
 
     Annulus annulus;

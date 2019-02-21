@@ -20,7 +20,7 @@ TEST_F(HomTra3Test, default_is_unit_trafo) {
 TEST_F(HomTra3Test, unit_trafo_has_no_translation) {
     HomTra3 trafo;
     // translation should be zero
-    EXPECT_EQ(Vec3::ORIGIN, trafo.get_translation());
+    EXPECT_EQ(VEC3_ORIGIN, trafo.get_translation());
 }
 
 TEST_F(HomTra3Test, unit_trafo_has_no_rotation) {
@@ -63,7 +63,7 @@ TEST_F(HomTra3Test, trans_pos_forth_and_back_only_translation_component_set) {
     Rot3 r(0.0, 0.0, 0.0);
     HomTra3 homtra;
     homtra.set_transformation(r, t);
-    Vec3 ux_original = Vec3::UNIT_X;
+    Vec3 ux_original = VEC3_UNIT_X;
     Vec3 ux_forth = homtra.get_transformed_position(ux_original);
     EXPECT_EQ(ux_forth.x, 1.0);
     EXPECT_EQ(ux_forth.y, 0.0);
@@ -79,7 +79,7 @@ TEST_F(HomTra3Test, transform_position_forth_and_back_full_set) {
     Rot3 r(0.0, M_PI, 0.0);
     HomTra3 homtra;
     homtra.set_transformation(r, t);
-    Vec3 ux_original = Vec3::UNIT_X;
+    Vec3 ux_original = VEC3_UNIT_X;
     Vec3 ux_forth = homtra.get_transformed_position(ux_original);
     EXPECT_NEAR(-1.0, ux_forth.x, 1e-12);
     EXPECT_NEAR(0.0, ux_forth.y, 1e-12);
@@ -95,7 +95,7 @@ TEST_F(HomTra3Test, trans_orientation_forth_and_back_only_rot_component_set) {
     Rot3 r(0.0, M_PI, 0.0);
     HomTra3 homtra;
     homtra.set_transformation(r, t);
-    Vec3 ux_original = Vec3::UNIT_X;
+    Vec3 ux_original = VEC3_UNIT_X;
     Vec3 ux_forth = homtra.get_transformed_orientation(ux_original);
     EXPECT_NEAR(-1.0, ux_forth.x, 1e-12);
     EXPECT_NEAR(0.0, ux_forth.y, 1e-12);

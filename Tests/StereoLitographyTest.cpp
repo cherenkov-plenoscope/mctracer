@@ -70,11 +70,11 @@ TEST_F(StereoLitographyTest, write_and_read_1000_triangle) {
 TEST_F(StereoLitographyTest, scaling) {
     const double scaleing = 42.1337;
     Frame obj_normal;
-    obj_normal.set_name_pos_rot("normal", Vec3::ORIGIN, Rot3::UNITY);
+    obj_normal.set_name_pos_rot("normal", VEC3_ORIGIN, Rot3::UNITY);
     stl::add_stl_to_frame("test_scenery/LCCone-simple_parab.stl", &obj_normal);
 
     Frame obj_scaled;
-    obj_scaled.set_name_pos_rot("scaled", Vec3::ORIGIN, Rot3::UNITY);
+    obj_scaled.set_name_pos_rot("scaled", VEC3_ORIGIN, Rot3::UNITY);
     stl::add_stl_to_frame(
         "test_scenery/LCCone-simple_parab.stl",
         &obj_scaled,

@@ -21,9 +21,9 @@ class PhotonTest : public ::testing::Test {};
 
 TEST_F(PhotonTest, creation) {
     double wavelength = 433e-9;
-    Photon pho(Vec3::ORIGIN, Vec3::UNIT_Z*1.337, wavelength);
-    EXPECT_EQ(Vec3::UNIT_Z, pho.direction());
-    EXPECT_EQ(Vec3::ORIGIN, pho.support());
+    Photon pho(VEC3_ORIGIN, VEC3_UNIT_Z*1.337, wavelength);
+    EXPECT_EQ(VEC3_UNIT_Z, pho.direction());
+    EXPECT_EQ(VEC3_ORIGIN, pho.support());
     EXPECT_EQ(1.0, pho.direction().norm());
     EXPECT_EQ(wavelength, pho.get_wavelength());
     // creation is an interaction
@@ -32,10 +32,10 @@ TEST_F(PhotonTest, creation) {
 
 TEST_F(PhotonTest, reject_negative_wavelength) {
     EXPECT_THROW(
-        Photon pho(Vec3::ORIGIN, Vec3::UNIT_X, 0.0),
+        Photon pho(VEC3_ORIGIN, VEC3_UNIT_X, 0.0),
         std::invalid_argument);
     EXPECT_THROW(
-        Photon pho(Vec3::ORIGIN, Vec3::UNIT_X, -1.0),
+        Photon pho(VEC3_ORIGIN, VEC3_UNIT_X, -1.0),
         std::invalid_argument);
 }
 
@@ -46,15 +46,15 @@ TEST_F(PhotonTest, PropagationSimpleGeometry) {
     setup.max_number_of_interactions_per_photon = number_of_bounces;
     // create a test setup with two mirrors bouncing the photon
     Frame world;
-    world.set_name_pos_rot("world", Vec3::ORIGIN, Rot3::UNITY);
+    world.set_name_pos_rot("world", VEC3_ORIGIN, Rot3::UNITY);
     Frame* optical_table = world.append<Plane>();
-    optical_table->set_name_pos_rot("optical_table", Vec3::ORIGIN, Rot3::UNITY);
+    optical_table->set_name_pos_rot("optical_table", VEC3_ORIGIN, Rot3::UNITY);
     Function::Constant refl(1.0, Function::Limits(200e-9, 1200e-9));
     Color colo(200, 128, 128);
 
     // ------------mirror 1----------------
     Plane* mirror1 = optical_table->append<Plane>();
-    mirror1->set_name_pos_rot("mirror_1", Vec3::ORIGIN, Rot3::UNITY);
+    mirror1->set_name_pos_rot("mirror_1", VEC3_ORIGIN, Rot3::UNITY);
     mirror1->set_outer_color(&colo);
     mirror1->set_inner_color(&colo);
     mirror1->set_outer_reflection(&refl);
@@ -123,9 +123,9 @@ TEST_F(PhotonTest, Reflections) {
     setup.use_multithread_when_possible = false;
     // create a test setup with two mirrors bouncing the photon
     Frame world;
-    world.set_name_pos_rot("world", Vec3::ORIGIN, Rot3::UNITY);
+    world.set_name_pos_rot("world", VEC3_ORIGIN, Rot3::UNITY);
     Frame* optical_table = world.append<Plane>();
-    optical_table->set_name_pos_rot("optical_table", Vec3::ORIGIN, Rot3::UNITY);
+    optical_table->set_name_pos_rot("optical_table", VEC3_ORIGIN, Rot3::UNITY);
 
     // ------------mirror----------------
     const double reflection_coefficient = 0.42;
@@ -137,7 +137,7 @@ TEST_F(PhotonTest, Reflections) {
     Plane* mirror = optical_table->append<Plane>();
     mirror->set_name_pos_rot(
         "mirror",
-        Vec3::ORIGIN,
+        VEC3_ORIGIN,
         Rot3(0, Deg2Rad(90), Deg2Rad(45)));
     mirror->set_outer_color(&mirror_color);
     mirror->set_inner_color(&mirror_color);
@@ -170,7 +170,7 @@ TEST_F(PhotonTest, Reflections) {
     // the photon is starting in between the to mirrors
     // traveling to the upper mirror
     Vec3 Support(-2.0, 0.0, 0.0);
-    Vec3 direction = Vec3::UNIT_X;
+    Vec3 direction = VEC3_UNIT_X;
     Random::Mt19937 prng(Random::ZERO_SEED);
     vector<Photon> photons;
     double num_phot = 1e4;
@@ -198,7 +198,7 @@ TEST_F(PhotonTest, Refraction) {
     setup.use_multithread_when_possible = false;
     // create a test setup with two planes and high refractive index in between
     Frame world;
-    world.set_name_pos_rot("world", Vec3::ORIGIN, Rot3::UNITY);
+    world.set_name_pos_rot("world", VEC3_ORIGIN, Rot3::UNITY);
     Function::Constant water_refraction(
             1.33,
             Function::Limits(200e-9, 1200e-9));
@@ -242,7 +242,7 @@ TEST_F(PhotonTest, Refraction) {
     vector<Photon> photons;
     double num_phot = 1e4;
     for (int i = 1; i <= num_phot; i++) {
-        Photon P(Vec3::ORIGIN, Vec3::UNIT_Z, wavelength);
+        Photon P(VEC3_ORIGIN, VEC3_UNIT_Z, wavelength);
         P.set_simulation_truth_id(i);
         photons.push_back(P);
     }
@@ -268,7 +268,7 @@ TEST_F(PhotonTest, absorbtion_in_medium) {
     setup.use_multithread_when_possible = false;
     // create a test setup with two planes and high refractive index in between
     Frame world;
-    world.set_name_pos_rot("world", Vec3::ORIGIN, Rot3::UNITY);
+    world.set_name_pos_rot("world", VEC3_ORIGIN, Rot3::UNITY);
     Function::Constant free_half_path(
         1.0,
         Function::Limits(200e-9, 1200e-9));
@@ -316,7 +316,7 @@ TEST_F(PhotonTest, absorbtion_in_medium) {
     std::vector<Photon> photons;
     double num_phot = 1e4;
     for (int i = 1; i <= num_phot; i++) {
-        Photon P(Vec3::ORIGIN, Vec3::UNIT_Z, wavelength);
+        Photon P(VEC3_ORIGIN, VEC3_UNIT_Z, wavelength);
         P.set_simulation_truth_id(i);
         photons.push_back(P);
     }

@@ -50,7 +50,7 @@ TEST_F(RandomGeneratorTest, generator_point_on_disc) {
     for (unsigned int i = 0; i < n_points; i++)
         points.push_back(prng.get_point_on_xy_disc_within_radius(disc_radius));
     // mean position
-    Vec3 sum = Vec3::ORIGIN;
+    Vec3 sum = VEC3_ORIGIN;
     for (Vec3 p : points)
         sum = sum + p;
     Vec3 mean = sum*(1.0/static_cast<double>(points.size()));
@@ -164,7 +164,7 @@ TEST_F(RandomGeneratorTest, full_sphere) {
     Random::Mt19937 prng(0);
     Random::ZenithDistancePicker zd_picker(0, M_PI);
     Random::UniformPicker az_picker(0, 2*M_PI);
-    Vec3 mean_position = Vec3::ORIGIN;
+    Vec3 mean_position = VEC3_ORIGIN;
     for (unsigned int i = 0; i < n; i++) {
         mean_position = mean_position +
             Random::draw_point_on_sphere(&prng, zd_picker, az_picker);
@@ -180,7 +180,7 @@ TEST_F(RandomGeneratorTest, octo_sphere) {
     Random::Mt19937 prng(0);
     Random::ZenithDistancePicker zd_picker(0, M_PI/2);
     Random::UniformPicker az_picker(0, M_PI/2);
-    Vec3 mean_position = Vec3::ORIGIN;
+    Vec3 mean_position = VEC3_ORIGIN;
     for (unsigned int i = 0; i < n; i++) {
         mean_position = mean_position +
             Random::draw_point_on_sphere(&prng, zd_picker, az_picker);
@@ -196,7 +196,7 @@ TEST_F(RandomGeneratorTest, octo_sphere_minus_z) {
     Random::Mt19937 prng(0);
     Random::ZenithDistancePicker zd_picker(M_PI/2, M_PI);
     Random::UniformPicker az_picker(0, M_PI/2);
-    Vec3 mean_position = Vec3::ORIGIN;
+    Vec3 mean_position = VEC3_ORIGIN;
     for (unsigned int i = 0; i < n; i++) {
         mean_position = mean_position +
             Random::draw_point_on_sphere(&prng, zd_picker, az_picker);

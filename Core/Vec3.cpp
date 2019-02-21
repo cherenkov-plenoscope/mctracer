@@ -5,12 +5,6 @@
 
 namespace relleums {
 
-const Vec3 Vec3::ORIGIN = Vec3(0.0, 0.0, 0.0);
-const Vec3 Vec3::UNIT_X = Vec3(1.0, 0.0, 0.0);
-const Vec3 Vec3::UNIT_Y = Vec3(0.0, 1.0, 0.0);
-const Vec3 Vec3::UNIT_Z = Vec3(0.0, 0.0, 1.0);
-const double Vec3::MAX_DEVIATION_EQUAL_VEC3_SQUARE = 1e-14;
-
 Vec3::Vec3() {}
 
 Vec3::Vec3(const double _x, const double _y, const double _z):

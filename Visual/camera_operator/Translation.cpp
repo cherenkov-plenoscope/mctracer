@@ -68,15 +68,13 @@ void Translation::move_right(const double step_in_m) {
 
 void Translation::move_up() {
     camera->update_position(
-        camera->get_position_in_world() +
-        Vec3::UNIT_Z*translation_increment());
+        camera->get_position_in_world() + VEC3_UNIT_Z*translation_increment());
     if (verbose) print_camera_moved_in_direction("up");
 }
 
 void Translation::move_down() {
     camera->update_position(
-        camera->get_position_in_world() -
-        Vec3::UNIT_Z*translation_increment());
+        camera->get_position_in_world() - VEC3_UNIT_Z*translation_increment());
     if (verbose) print_camera_moved_in_direction("up");
 }
 

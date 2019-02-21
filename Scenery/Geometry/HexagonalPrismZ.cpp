@@ -5,7 +5,7 @@
 
 namespace relleums {
 
-const Vec3 HexagonalPrismZ::UNIT_U = Vec3::UNIT_Y;
+const Vec3 HexagonalPrismZ::UNIT_U = VEC3_UNIT_Y;
 const Vec3 HexagonalPrismZ::UNIT_V =
     Vec3(1.0, 0.0, 0.0) * +sin(2.0/3.0*M_PI) +
     Vec3(0.0, 1.0, 0.0) * cos(2.0/3.0*M_PI);

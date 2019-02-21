@@ -147,7 +147,7 @@ void Frame::update_bounding_sphere() {
         child->update_bounding_sphere();
     if (has_children())
         bounding_sphere_radius =
-            Frames::bounding_sphere_radius(children, Vec3::ORIGIN);
+            Frames::bounding_sphere_radius(children, VEC3_ORIGIN);
 }
 
 void Frame::init_root() {

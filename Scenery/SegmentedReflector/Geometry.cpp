@@ -114,10 +114,10 @@ namespace SegmentedReflector {
 		Vec3 focal_point_to_facet_pos = _focal_point - facet_position;
 			
 		Vec3 rotation_axis = 
-			focal_point_to_facet_pos.cross(Vec3::UNIT_Z);
+			focal_point_to_facet_pos.cross(VEC3_UNIT_Z);
 
 		double angle_between_unit_z_and_focal_point_to_mirror_pos =
-			Vec3::UNIT_Z.angle_in_between(focal_point_to_facet_pos);
+			VEC3_UNIT_Z.angle_in_between(focal_point_to_facet_pos);
 
 		double rot_angle = 0.5*angle_between_unit_z_and_focal_point_to_mirror_pos;
 
@@ -267,10 +267,10 @@ namespace SegmentedReflector {
 		for(unsigned int i=0; i<_facet_positions.size(); i++) {
 
 			HomTra3 trafo;
-			trafo.set_transformation(_facet_orientations[i], Vec3::ORIGIN);
+			trafo.set_transformation(_facet_orientations[i], VEC3_ORIGIN);
 
 			Vec3 pos = _facet_positions[i];
-			Vec3 normal = trafo.get_transformed_orientation(Vec3::UNIT_Z);
+			Vec3 normal = trafo.get_transformed_orientation(VEC3_UNIT_Z);
 
 			out << std::fixed << std::setprecision(4);
 			out << pos.x << " ";

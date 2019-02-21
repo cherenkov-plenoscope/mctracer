@@ -75,7 +75,7 @@ std::string SkyDome::str()const {
 }
 
 double SkyDome::get_zenith_distance_of(const Vec3 dir)const {
-    return Vec3::UNIT_Z.angle_in_between(dir);
+    return VEC3_UNIT_Z.angle_in_between(dir);
 }
 
 double SkyDome::get_azimuth_angle_of(const Vec3 dir)const {

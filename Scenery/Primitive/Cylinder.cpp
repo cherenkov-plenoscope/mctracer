@@ -42,7 +42,7 @@ Rot3 Cylinder::calculate_new_rotation_in_mother(
     const Vec3 rotsym_axis
 )const {
     Rot3 rotation_in_mother;
-    Vec3 ez = Vec3::UNIT_Z;
+    Vec3 ez = VEC3_UNIT_Z;
     if (rotsym_axis.is_paralell_to_z_axis()) {
         rotation_in_mother.set(ez, 0.0);
     } else {

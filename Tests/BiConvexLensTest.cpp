@@ -41,7 +41,7 @@ class BiConvexLensTest : public ::testing::Test {
     void set_up_test_bench() {
         test_bench.set_name_pos_rot(
             "BiConvexLens_test_world",
-            Vec3::ORIGIN,
+            VEC3_ORIGIN,
             Rot3::UNITY);
 
         cfg.focal_length = 1.0;
@@ -51,7 +51,7 @@ class BiConvexLensTest : public ::testing::Test {
         BiConvexLens* lens = test_bench.append<BiConvexLens>();
         lens->set_name_pos_rot(
             "little_lens",
-            Vec3::ORIGIN,
+            VEC3_ORIGIN,
             Rot3::UNITY);
 
         Color* lens_color;

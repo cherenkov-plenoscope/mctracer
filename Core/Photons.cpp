@@ -172,7 +172,7 @@ vector<Photon> point_like_towards_z_opening_angle_num_photons(
 ) {
     vector<Photon> photons;
     photons.reserve(number_of_photons);
-    const Vec3 support = Vec3::ORIGIN;
+    const Vec3 support = VEC3_ORIGIN;
 
     Random::Mt19937 prng(0);
     Random::ZenithDistancePicker zenith_picker(0.0, opening_angle);
@@ -195,7 +195,7 @@ vector<Photon> parallel_towards_z_from_xy_disc(
 ) {
     vector<Photon> photons;
     photons.reserve(number_of_photons);
-    const Vec3 direction = Vec3::UNIT_Z;
+    const Vec3 direction = VEC3_UNIT_Z;
 
     Random::Mt19937 prng(0);
 

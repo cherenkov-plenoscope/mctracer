@@ -14,7 +14,7 @@ using namespace relleums;
 class FrameTest : public ::testing::Test {};
 
 TEST_F(FrameTest, assert_name_is_valid) {
-    Vec3 pos = Vec3::ORIGIN;
+    Vec3 pos = VEC3_ORIGIN;
     Rot3 rot = Rot3::UNITY;
 
     Frame Peter;
@@ -42,13 +42,13 @@ TEST_F(FrameTest, assert_name_is_valid) {
 
 TEST_F(FrameTest, duplicate_name_of_children_frames) {
     Frame Peter;
-    Peter.set_name_pos_rot("peter", Vec3::ORIGIN, Rot3::UNITY);
+    Peter.set_name_pos_rot("peter", VEC3_ORIGIN, Rot3::UNITY);
 
     Frame* Klaus1 = Peter.append<Frame>();
-    Klaus1->set_name_pos_rot("klaus", Vec3::ORIGIN, Rot3::UNITY);
+    Klaus1->set_name_pos_rot("klaus", VEC3_ORIGIN, Rot3::UNITY);
 
     Frame* Klaus2 = Peter.append<Frame>();
-    Klaus2->set_name_pos_rot("klaus", Vec3::ORIGIN, Rot3::UNITY);
+    Klaus2->set_name_pos_rot("klaus", VEC3_ORIGIN, Rot3::UNITY);
 
     EXPECT_THROW(
         Peter.assert_no_children_duplicate_names(),
@@ -97,7 +97,7 @@ TEST_F(FrameTest, re_set_frame) {
 TEST_F(FrameTest, root_of_world_on_complete_tree) {
     // -----define frames
     Frame tree;
-    tree.set_name_pos_rot("tree", Vec3::ORIGIN, Rot3::UNITY);
+    tree.set_name_pos_rot("tree", VEC3_ORIGIN, Rot3::UNITY);
 
     Frame* leaf1 = tree.append<Frame>();
     leaf1->set_name_pos_rot("leaf1", Vec3(1.0, 0.0, 0.0), Rot3::UNITY);
@@ -134,13 +134,13 @@ TEST_F(FrameTest, root_of_world_on_complete_tree) {
 TEST_F(FrameTest, root_frame_default) {
     // A single frame with no relations set (post initialized) is its own root.
     Frame tree;
-    tree.set_name_pos_rot("tree", Vec3::ORIGIN, Rot3::UNITY);
+    tree.set_name_pos_rot("tree", VEC3_ORIGIN, Rot3::UNITY);
     EXPECT_EQ(&tree, tree.get_root());
 }
 
 TEST_F(FrameTest, cluster_frames_during_tree_initializing) {
     Frame tree;
-    tree.set_name_pos_rot("tree", Vec3::ORIGIN, Rot3::UNITY);
+    tree.set_name_pos_rot("tree", VEC3_ORIGIN, Rot3::UNITY);
     double qube_edge = 10.0;
 
     unsigned int count = 0;
@@ -167,7 +167,7 @@ TEST_F(FrameTest, cluster_frames_during_tree_initializing) {
 
 TEST_F(FrameTest, clustering_frames_which_are_stucked_close_together) {
     Frame tree;
-    tree.set_name_pos_rot("tree", Vec3::ORIGIN, Rot3::UNITY);
+    tree.set_name_pos_rot("tree", VEC3_ORIGIN, Rot3::UNITY);
     const unsigned int number_facets = 100;
 
     for (unsigned int i = 0; i < number_facets; i++) {
@@ -175,7 +175,7 @@ TEST_F(FrameTest, clustering_frames_which_are_stucked_close_together) {
             tree.append<SphereCapWithRectangularBound>();
         facet->set_name_pos_rot(
             "facet"+std::to_string(i),
-            Vec3::ORIGIN,
+            VEC3_ORIGIN,
             Rot3::UNITY);
         facet->set_curvature_radius_and_x_y_width(34.0, 1.0, 1.0);
     }
@@ -191,10 +191,10 @@ TEST_F(FrameTest, clustering_frames_which_are_stucked_close_together) {
 
 TEST_F(FrameTest, removing_a_non_existing_cild) {
     Frame tree;
-    tree.set_name_pos_rot("tree", Vec3::ORIGIN, Rot3::UNITY);
+    tree.set_name_pos_rot("tree", VEC3_ORIGIN, Rot3::UNITY);
 
     Frame another_tree;
-    tree.set_name_pos_rot("another_tree", Vec3::ORIGIN, Rot3::UNITY);
+    tree.set_name_pos_rot("another_tree", VEC3_ORIGIN, Rot3::UNITY);
 
     EXPECT_THROW(
         tree.erase(&another_tree),
@@ -203,7 +203,7 @@ TEST_F(FrameTest, removing_a_non_existing_cild) {
 
 TEST_F(FrameTest, removing_a_cild) {
     Frame tree;
-    tree.set_name_pos_rot("tree", Vec3::ORIGIN, Rot3::UNITY);
+    tree.set_name_pos_rot("tree", VEC3_ORIGIN, Rot3::UNITY);
 
     Sphere* sphere = tree.append<Sphere>();
     sphere->set_name_pos_rot("leaf_ball", Vec3(0, 0, 1.8), Rot3::UNITY);
@@ -220,7 +220,7 @@ TEST_F(FrameTest, removing_a_cild) {
 
     Cylinder* fork = pole->append<Cylinder>();
     fork->set_name_pos_rot("fork", Vec3(0, 0, 0), Rot3::UNITY);
-    fork->set_cylinder(0.1, Vec3::ORIGIN, Vec3(0, 0.5, 0.5));
+    fork->set_cylinder(0.1, VEC3_ORIGIN, Vec3(0, 0.5, 0.5));
     fork->set_outer_color(&Color::RED);
 
     Disc* ground = tree.append<Disc>();
@@ -242,7 +242,7 @@ TEST_F(FrameTest, removing_a_cild) {
 
     // Append a temporary frame
     Frame* temp = tree.append<Frame>();
-    tree.set_name_pos_rot("temp", Vec3::ORIGIN, Rot3::UNITY);
+    tree.set_name_pos_rot("temp", VEC3_ORIGIN, Rot3::UNITY);
 
     Sphere* tball = temp->append<Sphere>();
     tball->set_name_pos_rot("tball", Vec3(0, 0, -1.8), Rot3::UNITY);

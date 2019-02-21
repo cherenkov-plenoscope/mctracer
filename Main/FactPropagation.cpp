@@ -288,7 +288,7 @@ int main(int argc, char* argv[]) {
     // 111111 11
     //--------------------------------------------------------------------------
     Scenery scenery;
-    scenery.root.set_name_pos_rot("root", Vec3::ORIGIN, Rot3::UNITY);
+    scenery.root.set_name_pos_rot("root", VEC3_ORIGIN, Rot3::UNITY);
     Function::LinInterpol* mirror_reflectivity =
         scenery.functions.add<Function::LinInterpol>("mirror_reflectivity");
     mirror_reflectivity->init(fact_mirror_reflectivity());

@@ -37,13 +37,13 @@ struct Vec3 {
     bool is_parallel_to_x_y_plane()const;
     bool norm_is_less_equal_than(const double length_to_compare)const;
     std::string str()const;
-
-    static const double MAX_DEVIATION_EQUAL_VEC3_SQUARE;
-    static const Vec3 ORIGIN;
-    static const Vec3 UNIT_X;
-    static const Vec3 UNIT_Y;
-    static const Vec3 UNIT_Z;
 };
+
+const Vec3 VEC3_ORIGIN = Vec3(0.0, 0.0, 0.0);
+const Vec3 VEC3_UNIT_X = Vec3(1.0, 0.0, 0.0);
+const Vec3 VEC3_UNIT_Y = Vec3(0.0, 1.0, 0.0);
+const Vec3 VEC3_UNIT_Z = Vec3(0.0, 0.0, 1.0);
+const double MAX_DEVIATION_EQUAL_VEC3_SQUARE = 1e-14;
 
 }  // namespace relleums
 

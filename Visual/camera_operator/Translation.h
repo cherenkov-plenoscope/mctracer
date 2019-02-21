@@ -25,7 +25,7 @@ class Translation: public Verbosity {
  private:
     CameraDevice* camera;
     bool verbosity = false;
-    Vec3 default_position = Vec3::ORIGIN;
+    Vec3 default_position = VEC3_ORIGIN;
 
     void print_camera_moved_in_direction(const std::string dir)const;
     double translation_increment()const;

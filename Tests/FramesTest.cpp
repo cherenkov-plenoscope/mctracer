@@ -17,17 +17,17 @@ TEST_F(FramesTest, too_close_together_no_frame) {
 
 TEST_F(FramesTest, too_close_together_one_frame) {
     Frame root;
-    root.set_name_pos_rot("root", Vec3::ORIGIN, Rot3::UNITY);
+    root.set_name_pos_rot("root", VEC3_ORIGIN, Rot3::UNITY);
     vector<Frame*> vf; vf.push_back(&root);
     EXPECT_FALSE(Frames::positions_in_mother_are_too_close_together(vf));
 }
 
 TEST_F(FramesTest, too_close_together_true) {
     Frame f1;
-    f1.set_name_pos_rot("f1", Vec3::ORIGIN, Rot3::UNITY);
+    f1.set_name_pos_rot("f1", VEC3_ORIGIN, Rot3::UNITY);
 
     Frame f2;
-    f2.set_name_pos_rot("f2", Vec3::ORIGIN, Rot3::UNITY);
+    f2.set_name_pos_rot("f2", VEC3_ORIGIN, Rot3::UNITY);
 
     vector<Frame*> vf; vf.push_back(&f1); vf.push_back(&f2);
     EXPECT_TRUE(Frames::positions_in_mother_are_too_close_together(vf));
@@ -35,7 +35,7 @@ TEST_F(FramesTest, too_close_together_true) {
 
 TEST_F(FramesTest, too_close_together_false) {
     Frame f1;
-    f1.set_name_pos_rot("f1", Vec3::ORIGIN, Rot3::UNITY);
+    f1.set_name_pos_rot("f1", VEC3_ORIGIN, Rot3::UNITY);
 
     Frame f2;
     f2.set_name_pos_rot(
@@ -63,9 +63,9 @@ TEST_F(FramesTest, optimal_bounding_sphere_pos_no_frame) {
 
 TEST_F(FramesTest, optimal_bounding_sphere_pos_one_frame) {
     Frame root;
-    root.set_name_pos_rot("root", Vec3::UNIT_X, Rot3::UNITY);
+    root.set_name_pos_rot("root", VEC3_UNIT_X, Rot3::UNITY);
     vector<Frame*> vf; vf.push_back(&root);
-    EXPECT_EQ(Frames::dumb_bounding_sphere_center(vf), Vec3::UNIT_X);
+    EXPECT_EQ(Frames::dumb_bounding_sphere_center(vf), VEC3_UNIT_X);
 }
 
 TEST_F(FramesTest, optimal_bounding_sphere_pos_many_frames_symetric) {

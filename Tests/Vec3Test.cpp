@@ -9,7 +9,7 @@ using namespace relleums;
 class Vec3Test : public ::testing::Test {};
 
 TEST_F(Vec3Test, NullVector) {
-    Vec3 a = Vec3::ORIGIN;
+    Vec3 a = VEC3_ORIGIN;
 
     EXPECT_EQ(0.0, a.x);
     EXPECT_EQ(0.0, a.y);
@@ -20,19 +20,19 @@ TEST_F(Vec3Test, NullVector) {
 TEST_F(Vec3Test, UnitVectors) {
     Vec3 a;
 
-    a = Vec3::UNIT_X;
+    a = VEC3_UNIT_X;
     EXPECT_EQ(1.0, a.x);
     EXPECT_EQ(0.0, a.y);
     EXPECT_EQ(0.0, a.z);
     EXPECT_EQ(1.0, a.norm());
 
-    a = Vec3::UNIT_Y;
+    a = VEC3_UNIT_Y;
     EXPECT_EQ(0.0, a.x);
     EXPECT_EQ(1.0, a.y);
     EXPECT_EQ(0.0, a.z);
     EXPECT_EQ(1.0, a.norm());
 
-    a = Vec3::UNIT_Z;
+    a = VEC3_UNIT_Z;
     EXPECT_EQ(0.0, a.x);
     EXPECT_EQ(0.0, a.y);
     EXPECT_EQ(1.0, a.z);
@@ -75,11 +75,11 @@ TEST_F(Vec3Test, EuclideanNorm) {
 }
 
 TEST_F(Vec3Test, crossUnitVectors) {
-    Vec3 u = Vec3::UNIT_X;
-    Vec3 v = Vec3::UNIT_Y;
+    Vec3 u = VEC3_UNIT_X;
+    Vec3 v = VEC3_UNIT_Y;
     Vec3 w = u.cross(v);
     EXPECT_EQ(1.0, w.z);
-    EXPECT_EQ(Vec3::UNIT_Z, w);
+    EXPECT_EQ(VEC3_UNIT_Z, w);
 }
 
 TEST_F(Vec3Test, cross) {
@@ -105,10 +105,10 @@ TEST_F(Vec3Test, cross) {
 }
 
 TEST_F(Vec3Test, Scalar_Product_unit_vectors) {
-    const Vec3 x = Vec3::UNIT_X;
-    const Vec3 y = Vec3::UNIT_Y;
+    const Vec3 x = VEC3_UNIT_X;
+    const Vec3 y = VEC3_UNIT_Y;
     EXPECT_EQ(0.0, x*y);
-    const Vec3 z = Vec3::UNIT_Z;
+    const Vec3 z = VEC3_UNIT_Z;
     EXPECT_EQ(0.0, y*z);
     EXPECT_EQ(1.0, x*x);
 }
@@ -165,8 +165,8 @@ TEST_F(Vec3Test, ScalarDiviation) {
 }
 
 TEST_F(Vec3Test, distance_unit_x_to_unit_y) {
-    Vec3 a = Vec3::UNIT_X;
-    Vec3 b = Vec3::UNIT_Y;
+    Vec3 a = VEC3_UNIT_X;
+    Vec3 b = VEC3_UNIT_Y;
 
     EXPECT_EQ(sqrt(2.0), a.distance_to(b));
 }
@@ -225,7 +225,7 @@ TEST_F(Vec3Test, normalize) {
     a.normalize();
     EXPECT_EQ(1.0, a.norm());
 
-    a = Vec3::ORIGIN;
+    a = VEC3_ORIGIN;
     EXPECT_NE(1.0, a.norm());
 
     a.normalize();
@@ -233,18 +233,18 @@ TEST_F(Vec3Test, normalize) {
 }
 
 TEST_F(Vec3Test, angle_in_between) {
-    Vec3 a = Vec3::UNIT_X;
-    Vec3 b = Vec3::UNIT_X;
+    Vec3 a = VEC3_UNIT_X;
+    Vec3 b = VEC3_UNIT_X;
 
     EXPECT_EQ(0.0, a.angle_in_between(b));
     EXPECT_EQ(
         b.angle_in_between(a),
         a.angle_in_between(b));
 
-    Vec3 c = Vec3::UNIT_X*5.0;
+    Vec3 c = VEC3_UNIT_X*5.0;
     EXPECT_NE(1.0, c.norm());
 
-    Vec3 d = Vec3::UNIT_X*5.0;
+    Vec3 d = VEC3_UNIT_X*5.0;
     EXPECT_NE(1.0, d.norm());
 
     EXPECT_EQ(0.0, d.angle_in_between(c));
@@ -252,10 +252,10 @@ TEST_F(Vec3Test, angle_in_between) {
         c.angle_in_between(d),
         d.angle_in_between(c));
 
-    Vec3 foo = Vec3::UNIT_X*5.0 + Vec3::UNIT_Y*5.0;
+    Vec3 foo = VEC3_UNIT_X*5.0 + VEC3_UNIT_Y*5.0;
     EXPECT_NE(1.0, c.norm());
 
-    Vec3 bar = Vec3::UNIT_X*5.0;
+    Vec3 bar = VEC3_UNIT_X*5.0;
     EXPECT_NE(1.0, d.norm());
 
     EXPECT_NEAR(Deg2Rad(45.0) , foo.angle_in_between(bar), 1e-5);

@@ -17,9 +17,9 @@ class PostInitFrameSpeed : public ::testing::Test {
     PostInitFrameSpeed() {
         new_rot.set(0.0, Zd_Rad, Deg2Rad(180.0) - Az_Rad);
 
-        world.set_name_pos_rot("world", Vec3::ORIGIN, Rot3::UNITY);
+        world.set_name_pos_rot("world", VEC3_ORIGIN, Rot3::UNITY);
         reflector = world.append<Frame>();
-        reflector->set_name_pos_rot("reflector", Vec3::ORIGIN, Rot3::UNITY);
+        reflector->set_name_pos_rot("reflector", VEC3_ORIGIN, Rot3::UNITY);
 
         SegmentedReflector::Config cfg;
         cfg.focal_length = 1e6;

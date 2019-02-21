@@ -19,7 +19,7 @@ TEST_F(SensorAssignmentTest, empty_sensor_list_find_sensor_init) {
     PhotonSensor::Sensors sens(empty_sensors);
 
     Frame car;
-    car.set_name_pos_rot("car", Vec3::ORIGIN, Rot3::UNITY);
+    car.set_name_pos_rot("car", VEC3_ORIGIN, Rot3::UNITY);
 
     PhotonSensor::FindSensorByFrame finder(&car, &sens.by_frame);
     EXPECT_FALSE(finder.is_absorbed_by_known_sensor);
@@ -27,7 +27,7 @@ TEST_F(SensorAssignmentTest, empty_sensor_list_find_sensor_init) {
 
 TEST_F(SensorAssignmentTest, single_sensor_find) {
     Frame car;
-    car.set_name_pos_rot("car", Vec3::ORIGIN, Rot3::UNITY);
+    car.set_name_pos_rot("car", VEC3_ORIGIN, Rot3::UNITY);
     PhotonSensor::Sensor on_car(0u, &car);
 
     vector<PhotonSensor::Sensor*> raw_sensors;
@@ -36,7 +36,7 @@ TEST_F(SensorAssignmentTest, single_sensor_find) {
     EXPECT_EQ(1u, sensors.size());
 
     Frame duck;
-    duck.set_name_pos_rot("duck", Vec3::ORIGIN, Rot3::UNITY);
+    duck.set_name_pos_rot("duck", VEC3_ORIGIN, Rot3::UNITY);
 
     PhotonSensor::FindSensorByFrame finder1(&duck, &sensors.by_frame);
     EXPECT_FALSE(finder1.is_absorbed_by_known_sensor);
@@ -50,15 +50,15 @@ TEST_F(SensorAssignmentTest, single_sensor_find) {
 TEST_F(SensorAssignmentTest, many_sensor_find) {
     // Creation
     Frame tree;
-    tree.set_name_pos_rot("tree", Vec3::ORIGIN, Rot3::UNITY);
+    tree.set_name_pos_rot("tree", VEC3_ORIGIN, Rot3::UNITY);
     PhotonSensor::Sensor on_tree(0u, &tree);
 
     Frame house;
-    house.set_name_pos_rot("house", Vec3::ORIGIN, Rot3::UNITY);
+    house.set_name_pos_rot("house", VEC3_ORIGIN, Rot3::UNITY);
     PhotonSensor::Sensor on_house(1u, &house);
 
     Frame car;
-    car.set_name_pos_rot("car", Vec3::ORIGIN, Rot3::UNITY);
+    car.set_name_pos_rot("car", VEC3_ORIGIN, Rot3::UNITY);
     PhotonSensor::Sensor on_car(2u, &car);
 
     // Collecting
@@ -70,7 +70,7 @@ TEST_F(SensorAssignmentTest, many_sensor_find) {
     EXPECT_EQ(3u, sensors.size());
 
     Frame duck;
-    duck.set_name_pos_rot("duck", Vec3::ORIGIN, Rot3::UNITY);
+    duck.set_name_pos_rot("duck", VEC3_ORIGIN, Rot3::UNITY);
 
     PhotonSensor::FindSensorByFrame find_duck(&duck, &sensors.by_frame);
     EXPECT_FALSE(find_duck.is_absorbed_by_known_sensor);
@@ -92,12 +92,12 @@ TEST_F(SensorAssignmentTest, sort_sensors_by_brame) {
     unsigned int n = 1000;
     vector<PhotonSensor::Sensor> sensors;
     Frame root;
-    root.set_name_pos_rot("root", Vec3::ORIGIN, Rot3::UNITY);
+    root.set_name_pos_rot("root", VEC3_ORIGIN, Rot3::UNITY);
     for (unsigned int i = 0; i < n; i++) {
         Frame* child = root.append<Frame>();
         child->set_name_pos_rot(
             "child"+std::to_string(i),
-            Vec3::ORIGIN,
+            VEC3_ORIGIN,
             Rot3::UNITY);
         sensors.push_back(PhotonSensor::Sensor(i, child));
     }

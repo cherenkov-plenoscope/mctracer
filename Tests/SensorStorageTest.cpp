@@ -18,7 +18,7 @@ TEST_F(SensorStorageTest, default_constructor_and_access_not_existing_frame) {
 
     // a frame which is not assigned to a sensor
     Frame dog;
-    dog.set_name_pos_rot("dog", Vec3::ORIGIN, Rot3::UNITY);
+    dog.set_name_pos_rot("dog", VEC3_ORIGIN, Rot3::UNITY);
 
     // access invalid frame
     EXPECT_THROW(
@@ -41,7 +41,7 @@ TEST_F(SensorStorageTest, empty_Sensors_access_invalid_frame) {
     // Creation
     // a frame which is not assigned to a sensor
     Frame dog;
-    dog.set_name_pos_rot("dog", Vec3::ORIGIN, Rot3::UNITY);
+    dog.set_name_pos_rot("dog", VEC3_ORIGIN, Rot3::UNITY);
 
     // Collecting
     std::vector<pse::Sensor*> my_sensors;
@@ -60,15 +60,15 @@ TEST_F(SensorStorageTest, empty_Sensors_access_invalid_frame) {
 TEST_F(SensorStorageTest, not_take_over_sensors_from_vector) {
     // Creation
     Frame tree;
-    tree.set_name_pos_rot("tree", Vec3::ORIGIN, Rot3::UNITY);
+    tree.set_name_pos_rot("tree", VEC3_ORIGIN, Rot3::UNITY);
     pse::Sensor on_tree(0u, &tree);
 
     Frame house;
-    house.set_name_pos_rot("house", Vec3::ORIGIN, Rot3::UNITY);
+    house.set_name_pos_rot("house", VEC3_ORIGIN, Rot3::UNITY);
     pse::Sensor on_house(1u, &house);
 
     Frame car;
-    car.set_name_pos_rot("car", Vec3::ORIGIN, Rot3::UNITY);
+    car.set_name_pos_rot("car", VEC3_ORIGIN, Rot3::UNITY);
     pse::Sensor on_car(2u, &car);
 
     // Collecting
@@ -89,15 +89,15 @@ TEST_F(SensorStorageTest, not_take_over_sensors_from_vector) {
 TEST_F(SensorStorageTest, access_sensors_by_frame) {
     // Creation
     Frame tree;
-    tree.set_name_pos_rot("tree", Vec3::ORIGIN, Rot3::UNITY);
+    tree.set_name_pos_rot("tree", VEC3_ORIGIN, Rot3::UNITY);
     pse::Sensor on_tree(0u, &tree);
 
     Frame house;
-    house.set_name_pos_rot("house", Vec3::ORIGIN, Rot3::UNITY);
+    house.set_name_pos_rot("house", VEC3_ORIGIN, Rot3::UNITY);
     pse::Sensor on_house(1u, &house);
 
     Frame car;
-    car.set_name_pos_rot("car", Vec3::ORIGIN, Rot3::UNITY);
+    car.set_name_pos_rot("car", VEC3_ORIGIN, Rot3::UNITY);
     pse::Sensor on_car(2u, &car);
 
     // Collecting
@@ -121,7 +121,7 @@ TEST_F(SensorStorageTest, assert_no_duplicate_frames) {
     // Creation
     // 1st sensor
     Frame tree;
-    tree.set_name_pos_rot("tree", Vec3::ORIGIN, Rot3::UNITY);
+    tree.set_name_pos_rot("tree", VEC3_ORIGIN, Rot3::UNITY);
     pse::Sensor on_tree(0u, &tree);
 
     // 2nd sensor points also to the frame of sensor 1
@@ -142,20 +142,20 @@ TEST_F(SensorStorageTest, assert_no_duplicate_frames) {
 TEST_F(SensorStorageTest, access_non_existing_frame) {
     // Creation
     Frame tree;
-    tree.set_name_pos_rot("tree", Vec3::ORIGIN, Rot3::UNITY);
+    tree.set_name_pos_rot("tree", VEC3_ORIGIN, Rot3::UNITY);
     pse::Sensor on_tree(0u, &tree);
 
     Frame house;
-    house.set_name_pos_rot("house", Vec3::ORIGIN, Rot3::UNITY);
+    house.set_name_pos_rot("house", VEC3_ORIGIN, Rot3::UNITY);
     pse::Sensor on_house(1u, &house);
 
     Frame car;
-    car.set_name_pos_rot("car", Vec3::ORIGIN, Rot3::UNITY);
+    car.set_name_pos_rot("car", VEC3_ORIGIN, Rot3::UNITY);
     pse::Sensor on_car(2u, &car);
 
     // a frame which is not assigned to a sensor
     Frame dog;
-    dog.set_name_pos_rot("dog", Vec3::ORIGIN, Rot3::UNITY);
+    dog.set_name_pos_rot("dog", VEC3_ORIGIN, Rot3::UNITY);
 
     // Collecting
     std::vector<pse::Sensor*> my_sensors;
