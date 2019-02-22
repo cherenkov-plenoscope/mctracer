@@ -32,12 +32,12 @@ double mean(const Func1 &f, const uint64_t num_samples) {
     return y_mean/x_vs_y.size();
 }
 
-Func1 get_integral(const Func1 &f, unsigned int steps) {
+Func1 get_integral(const Func1 &f, uint64_t steps) {
     double step = f.limits.range()/static_cast<double>(steps);
     vector<vector<double>> F;
     vector<double> F_start = {f.limits.lower, 0.0};
     F.push_back(F_start);
-    for (unsigned int i = 1; i < steps; i++) {
+    for (uint64_t i = 1; i < steps; i++) {
         double x = f.limits.lower + i*step;
         double y = f.evaluate(x)*step + F.back()[1];
 
@@ -54,7 +54,7 @@ Func1 get_integral(const Func1 &f, unsigned int steps) {
     return Func1(F);
 }
 
-Func1 get_inverse(const Func1 &f, unsigned int steps) {
+Func1 get_inverse(const Func1 &f, uint64_t steps) {
     double step = f.limits.range()/static_cast<double>(steps);
     vector<vector<double>> fvec_inv;
     vector<double> f_inv_start = {
@@ -62,7 +62,7 @@ Func1 get_inverse(const Func1 &f, unsigned int steps) {
         f.limits.lower
     };
     fvec_inv.push_back(f_inv_start);
-    for (unsigned int i = 1; i < steps; i++) {
+    for (uint64_t i = 1; i < steps; i++) {
         double x = f.limits.lower + i*step;
         double y = f.evaluate(x);
         vector<double> f_inv_at_x = {y, x};
@@ -75,10 +75,10 @@ Func1 get_inverse(const Func1 &f, unsigned int steps) {
     return Func1(fvec_inv);
 }
 
-Func1 get_derivative(const Func1 &f, unsigned int steps) {
+Func1 get_derivative(const Func1 &f, uint64_t steps) {
     double step = f.limits.range()/static_cast<double>(steps);
     vector<vector<double>> fvec_deriv;
-    for (unsigned int i = 0; i < (steps-1); i++) {
+    for (uint64_t i = 0; i < (steps-1); i++) {
         double x = f.limits.lower + i*step;
         double y = (f.evaluate(x+step) - f.evaluate(x))/step;
         vector<double> f_inv_at_x = {x, y};
@@ -94,10 +94,10 @@ Func1 get_derivative(const Func1 &f, unsigned int steps) {
     return Func1(fvec_deriv);
 }
 
-bool value_flips_sign(const Func1 &f, unsigned int steps) {
+bool value_flips_sign(const Func1 &f, uint64_t steps) {
     double step = f.limits.range()/static_cast<double>(steps);
     bool flip = false;
-    for (unsigned int i = 0; i < (steps-1); i++) {
+    for (uint64_t i = 0; i < (steps-1); i++) {
         double x = f.limits.lower + i*step;
         if ((f.evaluate(x) >= 0.0) != (f.evaluate(x+step) >= 0.0))
             flip = true;

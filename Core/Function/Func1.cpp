@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/Function/LinInterpol.h"
+#include "Core/Function/Func1.h"
 #include <iostream>
 #include <sstream>
 #include <algorithm>

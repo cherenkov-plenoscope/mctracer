@@ -23,10 +23,10 @@ double mean(
 	const Func1 &f,
 	const uint64_t num_samples);
 
-Func1 get_integral(const Func1 &f, unsigned int steps = DEFAULT_STEPS);
-Func1 get_inverse(const Func1 &f, unsigned int steps = DEFAULT_STEPS);
-Func1 get_derivative(const Func1 &f, unsigned int steps = DEFAULT_STEPS);
-bool value_flips_sign(const Func1 &f, unsigned int steps = DEFAULT_STEPS);
+Func1 get_integral(const Func1 &f, uint64_t steps = DEFAULT_STEPS);
+Func1 get_inverse(const Func1 &f, uint64_t steps = DEFAULT_STEPS);
+Func1 get_derivative(const Func1 &f, uint64_t steps = DEFAULT_STEPS);
+bool value_flips_sign(const Func1 &f, uint64_t steps = DEFAULT_STEPS);
 std::vector<std::vector<double>> polynom3(
     double c3,
     double c2,

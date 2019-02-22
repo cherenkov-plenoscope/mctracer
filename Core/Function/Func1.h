@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_FUNCTION_LININTERPOL_H_
-#define CORE_FUNCTION_LININTERPOL_H_
+#ifndef CORE_FUNCTION_FUNC1_H_
+#define CORE_FUNCTION_FUNC1_H_
 
 #include <vector>
 #include <string>
@@ -49,4 +49,4 @@ struct Func1 {
 }  // namespace Function
 }  // namespace relleums
 
-#endif  // CORE_FUNCTION_LININTERPOL_H_
+#endif  // CORE_FUNCTION_FUNC1_H_
