@@ -2,11 +2,38 @@
 #include "Core/Frames.h"
 #include <math.h>
 #include <sstream>
+#include "Core/small_ball.h"
 using std::stringstream;
 using std::vector;
 
 namespace relleums {
 namespace Frames {
+
+Vec3 small_ball_nielsen_nock(const vector<Frame*> &frames) {
+    if (frames.size() < 1) {
+        stringstream info;
+        info << __FILE__ << ", " << __LINE__ << "\n";
+        info << "Expected at least 1 frame to calculate ";
+        info << "center position of frames, ";
+        info << "but actual there are only " << frames.size() << " frames.";
+        throw std::invalid_argument(info.str());
+    }
+
+    if (frames.size() == 1)
+        return frames.at(0)->get_position_in_mother();
+
+    std::vector<Ball> balls;
+    for (unsigned int i = 0; i < frames.size(); i++) {
+        Ball b;
+        b.center = frames.at(i)->get_position_in_mother();
+        b.radius = frames.at(i)->get_bounding_sphere_radius();
+        balls.push_back(b);
+    }
+
+    Ball r = many_iterations(balls);
+
+    return r.center;
+}
 
 Vec3 bounding_sphere_center(const vector<Frame*> &frames) {
     // this can be optimized using Fischer's thesis on spheres enclosing spheres

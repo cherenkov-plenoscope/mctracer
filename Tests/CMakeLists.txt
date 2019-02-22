@@ -51,6 +51,7 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/SceneryFactoryTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Examples/set_up_scenery.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/CorsikaIoTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SmallBallsTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/OnlineStatisticsTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PlenoscopeLixelStatisticsTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/HeaderBlockTest.cpp
