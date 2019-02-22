@@ -48,11 +48,11 @@
     },
     {
       "type": "StereoLitography",
-      "name": "spyder",
+      "name": "two_axis_joint",
       "pos": [10, 10, -1],
       "rot": [0, 0, 0],
       "scale": 0.15,
-      "path": "spider.stl",
+      "path": "two_axis_joint.stl",
       "surface": {
         "outer_color": "orange"},
       "children": []
