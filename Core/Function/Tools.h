@@ -12,16 +12,16 @@ namespace Function {
 static const unsigned int DEFAULT_STEPS = 4096;
 
 double increment_for_steps(
-	const Limits &l,
-	const uint64_t num_samples);
+    const Limits &l,
+    const uint64_t num_samples);
 
 std::vector<std::vector<double>> sample(
-	const Func1 &f,
-	const uint64_t num_samples);
+    const Func1 &f,
+    const uint64_t num_samples);
 
 double mean(
-	const Func1 &f,
-	const uint64_t num_samples);
+    const Func1 &f,
+    const uint64_t num_samples);
 
 Func1 get_integral(const Func1 &f, uint64_t steps = DEFAULT_STEPS);
 Func1 get_inverse(const Func1 &f, uint64_t steps = DEFAULT_STEPS);
