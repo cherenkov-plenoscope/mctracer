@@ -27,14 +27,16 @@ void propagate_photons_using_multi_thread(
     const Frame* world,
     const PropagationConfig* settings);
 
-// In Out to raw matrix vec<vec<d>>
-// Can be given to AsciiIO to write/read to/from text file
 std::vector<Photon> raw_matrix2photons(
-    std::vector<std::vector<double> > raw_matrix);
-std::vector<std::vector<double> > photons2raw_matrix(
+    std::vector<std::vector<double>> raw_matrix);
+
+std::vector<std::vector<double>> photons2raw_matrix(
     std::vector<Photon> *photons);
+
 std::vector<double> photon2raw_row(Photon* ph);
+
 Photon raw_row2photon(std::vector<double> &raw_row);
+
 void assert_raw_row_size_matches_photon(std::vector<double> &raw_row);
 
 namespace Source {
