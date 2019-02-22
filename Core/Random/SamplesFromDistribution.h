@@ -11,7 +11,7 @@ namespace Random {
 class SamplesFromDistribution {
     const Function::Func1D* distribution;
     double total_integral_of_distribution;
-    Function::LinInterpol* cumulative_distribution_function;
+    Function::Func1D* cumulative_distribution_function;
  public:
     explicit SamplesFromDistribution(
         const Function::Func1D* _distribution);

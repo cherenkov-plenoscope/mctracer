@@ -35,13 +35,13 @@ struct Config {
     std::array<float, 273> get_sensor_plane2imaging_system_header()const;
 };
 
-static const relleums::Function::LinInterpol pmma_refraction(
+static const relleums::Function::Func1D pmma_refraction(
     {
         {200e-9, 1.49},
         {1200e-9, 1.49}
     });
 
-static const relleums::Function::LinInterpol perfect_transparency(
+static const relleums::Function::Func1D perfect_transparency(
     {
         {200e-9, std::numeric_limits<double>::infinity()},
         {1200e-9, std::numeric_limits<double>::infinity()}

@@ -8,18 +8,18 @@ using std::string;
 using std::vector;
 using namespace relleums;
 
-class LinInterpolTest : public ::testing::Test {
+class Func1DTest : public ::testing::Test {
  protected:
     const unsigned int table_size = 100;
     std::vector<std::vector<double>> table;
     std::vector<std::vector<double>> table_with_duplicate_argument;
 
-    LinInterpolTest() {
+    Func1DTest() {
         init_table();
         init_table_with_duplicate_argument();
     }
 
-    ~LinInterpolTest() {}
+    ~Func1DTest() {}
 
     void init_table() {
         double phase = 0.25;
@@ -41,7 +41,7 @@ class LinInterpolTest : public ::testing::Test {
     }
 };
 
-TEST_F(LinInterpolTest, check_setup) {
+TEST_F(Func1DTest, check_setup) {
     ASSERT_EQ(table_size, table.size());
     ASSERT_EQ(table_size, table_with_duplicate_argument.size());
     for (unsigned int i = 0; i < table_size; i++) {
@@ -50,8 +50,8 @@ TEST_F(LinInterpolTest, check_setup) {
     }
 }
 
-TEST_F(LinInterpolTest, construct_using_matrix_of_vectors) {
-    Function::LinInterpol f(table);
+TEST_F(Func1DTest, construct_using_matrix_of_vectors) {
+    Function::Func1D f(table);
     for (unsigned int i = 0; i < table.size()-1; i++) {
         double argument = table.at(i).at(0);
         double value = table.at(i).at(1);
@@ -59,23 +59,23 @@ TEST_F(LinInterpolTest, construct_using_matrix_of_vectors) {
     }
 }
 
-TEST_F(LinInterpolTest, access_below_lowest_argument) {
-    Function::LinInterpol f(table);
+TEST_F(Func1DTest, access_below_lowest_argument) {
+    Function::Func1D f(table);
     double arg_below_definition = table.at(0).at(0) - 1e-9;
     EXPECT_THROW(f.evaluate(arg_below_definition), std::out_of_range);
 }
 
-TEST_F(LinInterpolTest, access_at_highest_argument) {
-    Function::LinInterpol f(table);
+TEST_F(Func1DTest, access_at_highest_argument) {
+    Function::Func1D f(table);
     double upper_limit = table.back().at(0);
     EXPECT_THROW(f.evaluate(upper_limit), std::out_of_range);
 }
 
-TEST_F(LinInterpolTest, generate_from_from_file) {
+TEST_F(Func1DTest, generate_from_from_file) {
     std::string path = "numeric_table_IO/tim_sinus.csv";
     AsciiIo::write_table_to_file(table, path);
 
-    Function::LinInterpol f(AsciiIo::gen_table_from_file(path));
+    Function::Func1D f(AsciiIo::gen_table_from_file(path));
 
     // precision loss in ascii files, cant access boundarys sharp,
     // start in row 1 and stop one row before end.
@@ -86,7 +86,7 @@ TEST_F(LinInterpolTest, generate_from_from_file) {
     }
 }
 
-TEST_F(LinInterpolTest, linear_interpolation) {
+TEST_F(Func1DTest, linear_interpolation) {
     std::vector<std::vector<double>> two_entry_table = {
         {0.0, 0.0},
         {1.0, 1.0}
@@ -100,7 +100,7 @@ TEST_F(LinInterpolTest, linear_interpolation) {
     //    |/____.___
     //   0      1
 
-    Function::LinInterpol f(two_entry_table);
+    Function::Func1D f(two_entry_table);
 
     for (double x = -0.1; x < 1.1; x = x+0.011) {
         if (x >= 0.0 && x < 1.0)
@@ -110,22 +110,22 @@ TEST_F(LinInterpolTest, linear_interpolation) {
     }
 }
 
-TEST_F(LinInterpolTest, empty_table_for_LinInterpol) {
+TEST_F(Func1DTest, empty_table_for_Func1D) {
     std::vector<std::vector<double>> empty_table;
     EXPECT_EQ(0u, empty_table.size());
-    EXPECT_THROW(Function::LinInterpol f(empty_table), std::invalid_argument);
+    EXPECT_THROW(Function::Func1D f(empty_table), std::invalid_argument);
     // It must throw anyhow when it is first used because its limit's range is
     // zero.
 }
 
-TEST_F(LinInterpolTest, max_value) {
+TEST_F(Func1DTest, max_value) {
     for (double amp = 0.0; amp < 1.337*4.2; amp = amp+1e-2) {
         std::vector<std::vector<double>> table;
         for (double x = 0; x < 1.0; x = x+1e-2) {
             double y = amp*sin(x*2.0*M_PI);
             table.push_back({x, y});
         }
-        Function::LinInterpol f(table);
+        Function::Func1D f(table);
         EXPECT_NEAR(amp, f.max(), 1e-6);
         EXPECT_NEAR(-amp, f.min(), 1e-6);
     }

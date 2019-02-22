@@ -10,9 +10,22 @@ namespace relleums {
 namespace Function {
 
 static const unsigned int DEFAULT_STEPS = 4096;
-LinInterpol get_integral(const Func1D &f, unsigned int steps = DEFAULT_STEPS);
-LinInterpol get_inverse(const Func1D &f, unsigned int steps = DEFAULT_STEPS);
-LinInterpol get_derivative(const Func1D &f, unsigned int steps = DEFAULT_STEPS);
+
+double increment_for_steps(
+	const Limits &l,
+	const uint64_t num_samples);
+
+std::vector<std::vector<double>> sample(
+	const Func1D &f,
+	const uint64_t num_samples);
+
+double mean(
+	const Func1D &f,
+	const uint64_t num_samples);
+
+Func1D get_integral(const Func1D &f, unsigned int steps = DEFAULT_STEPS);
+Func1D get_inverse(const Func1D &f, unsigned int steps = DEFAULT_STEPS);
+Func1D get_derivative(const Func1D &f, unsigned int steps = DEFAULT_STEPS);
 bool value_flips_sign(const Func1D &f, unsigned int steps = DEFAULT_STEPS);
 std::vector<std::vector<double>> polynom3(
     double c3,

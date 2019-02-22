@@ -1,3 +1,4 @@
+#include <iostream>
 #include "DocOpt/docopt.h"
 #include "Core/Photons.h"
 #include "Tools/AsciiIo.h"

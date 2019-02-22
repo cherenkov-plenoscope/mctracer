@@ -150,7 +150,7 @@ int main(int argc, char* argv[]) {
     //--------------------------------------------------------------------------
     // INIT NIGHT SKY BACKGROUND
     json::Object nsb_obj = plcfg.obj("night_sky_background_ligth");
-    const Function::LinInterpol nsb_flux_vs_wavelength =
+    const Function::Func1D nsb_flux_vs_wavelength =
         json::json_to_linear_interpol_function(
             nsb_obj.obj("flux_vs_wavelength"));
 
@@ -162,7 +162,7 @@ int main(int argc, char* argv[]) {
     //--------------------------------------------------------------------------
     // SET UP PhotoElectricConverter
     json::Object pec_obj = plcfg.obj("photo_electric_converter");
-    const Function::LinInterpol quantum_efficiency_vs_wavelength =
+    const Function::Func1D quantum_efficiency_vs_wavelength =
         json::json_to_linear_interpol_function(
             pec_obj.obj("quantum_efficiency_vs_wavelength"));
 

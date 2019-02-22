@@ -2,35 +2,29 @@
 #include "Core/SurfaceEntity.h"
 #include <limits>
 #include <sstream>
-#include "Core/Function/Limits.h"
-#include "Core/Function/LinInterpol.h"
 
 namespace relleums {
 
 using Function::Func1D;
-using Function::LinInterpol;
-using Function::Limits;
 
 const SurfaceEntity SurfaceEntity::VOID_SURFACE_ENTITY;
 const SurfaceEntity SurfaceEntity::PHOTON_SOURCE;
 
 const Color* SurfaceEntity::DEFAULT_COLOR = &COLOR_DARK_GRAY;
 
-const Limits SurfaceEntity::DEFAULT_WAVELENGTH_RANGE = Limits(200e-9, 1200e-9);
-
-const Func1D* SurfaceEntity::DEFAULT_REFLECTION = new LinInterpol(
+const Func1D* SurfaceEntity::DEFAULT_REFLECTION = new Func1D(
     {
         {200e-9, 0},
         {1200e-9, 0}
     });
 
-const Func1D* SurfaceEntity::DEFAULT_REFRACTION = new LinInterpol(
+const Func1D* SurfaceEntity::DEFAULT_REFRACTION = new Func1D(
     {
         {200e-9, 1},
         {1200e-9, 1}
     });
 
-const Func1D* SurfaceEntity::DEFAULT_ABSORPTION = new LinInterpol(
+const Func1D* SurfaceEntity::DEFAULT_ABSORPTION = new Func1D(
     {
         {200e-9, std::numeric_limits<double>::infinity()},
         {1200e-9, std::numeric_limits<double>::infinity()}

@@ -264,13 +264,13 @@ void add_functions(FunctionMap* functions, const Object &o) {
         const Object &jfun = o.obj(fidx);
         string name = jfun.st("name");
         const Object &avsv = jfun.obj("argument_versus_value");
-        Function::LinInterpol* f = functions->add<Function::LinInterpol>(name);
+        Function::Func1D* f = functions->add<Function::Func1D>(name);
         f->init(json_to_vec_of_vecs(avsv));
     }
 }
 
-Function::LinInterpol json_to_linear_interpol_function(const Object &avsv) {
-    Function::LinInterpol f;
+Function::Func1D json_to_linear_interpol_function(const Object &avsv) {
+    Function::Func1D f;
     f.init(json_to_vec_of_vecs(avsv));
     return f;
 }

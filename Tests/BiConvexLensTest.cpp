@@ -56,7 +56,7 @@ class BiConvexLensTest : public ::testing::Test {
 
         Color* lens_color = new Color(255, 128, 128);
 
-        Function::LinInterpol* refraction_vs_wavelength = new Function::LinInterpol(
+        Function::Func1D* refraction_vs_wavelength = new Function::Func1D(
             {
                 {200e-9, 1.49},
                 {1200e-9, 1.49}

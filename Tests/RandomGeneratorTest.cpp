@@ -83,7 +83,7 @@ TEST_F(RandomGeneratorTest, generator_point_on_disc) {
 TEST_F(RandomGeneratorTest, draw_from_distribution) {
     // -------------------
     // create distributions
-    Function::LinInterpol f(Function::polynom3(0, 1, 0, 0, 0.0, 1.0, 4096));
+    Function::Func1D f(Function::polynom3(0, 1, 0, 0, 0.0, 1.0, 4096));
     // -------------------
     // sample from distribution
     Random::Mt19937 prng(0);
@@ -97,8 +97,8 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
     unsigned int bin_count = static_cast<unsigned int>(
         pow(static_cast<double>(n_samples), 1.0/3.0));
     vector<double> bin_edges = Numeric::linspace(
-        f.limits().lower(),
-        f.limits().upper(),
+        f.limits.lower,
+        f.limits.upper,
         bin_count);
     Histogram1D histo(samples, bin_edges);
     // std::cout << histo;
@@ -118,8 +118,8 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
     // -------------------
     // compare initial distribution and samples drawn from distribution
     vector<double> ys = Numeric::linspace(
-        f.limits().lower(),
-        f.limits().upper(),
+        f.limits.lower,
+        f.limits.upper,
         sqrt(n_samples));
     double max_f = ys.front();
     for (unsigned int i = 0; i < ys.size()-1; i++)

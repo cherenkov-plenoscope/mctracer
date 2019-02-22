@@ -1,5 +1,6 @@
 // Copyright 2015 Sebastian A. Mueller
 #include <experimental/filesystem>
+#include <iostream>
 #include "DocOpt/docopt.h"
 #include "Tools/FileTools.h"
 #include "Tools/PathTools.h"

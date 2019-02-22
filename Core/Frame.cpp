@@ -5,6 +5,8 @@
 #include <exception>
 #include <sstream>
 #include <iostream>
+#include "Core/Ray.h"
+#include "Core/Intersection.h"
 using std::string;
 using std::stringstream;
 using std::vector;
@@ -176,9 +178,6 @@ bool Frame::has_mother()const {
 bool Frame::has_children()const {
     return children.size() > 0;
 }
-
-#include "Core/Ray.h"
-#include "Core/Intersection.h"
 
 void Frame::calculate_intersection_with(
     const Ray* ray,

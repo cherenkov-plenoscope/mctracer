@@ -2,14 +2,16 @@
 #ifndef CORE_FUNCTION_LININTERPOL_H_
 #define CORE_FUNCTION_LININTERPOL_H_
 
-#include "Func1D.h"
 #include <vector>
 #include <string>
+#include "Limits.h"
 
 namespace relleums {
 namespace Function {
 
-class LinInterpol : public Func1D {
+struct Func1D {
+    Limits limits;
+
     struct Point {
         double x, y, slope;
         bool operator()(const Point &l, const Point &r) {
@@ -18,15 +20,14 @@ class LinInterpol : public Func1D {
     };
     std::vector<Point> func;
 
- public:
-    LinInterpol();
-    explicit LinInterpol(const std::vector<std::vector<double>>& two_column_xy);
+    Func1D();
+    explicit Func1D(const std::vector<std::vector<double>>& two_column_xy);
     void init(const std::vector<std::vector<double>>& two_column_xy);
     double evaluate(const double x)const;
     double max()const;
     double min()const;
+    std::string str()const;
 
- private:
     void assert_table_two_columns(
         const std::vector<std::vector<double> > &xy_table,
         const unsigned int row)const;

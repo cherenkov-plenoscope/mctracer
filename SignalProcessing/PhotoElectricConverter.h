@@ -19,7 +19,7 @@ struct Config {
     Config();
 };
 
-static const relleums::Function::LinInterpol zero_efficiency(
+static const relleums::Function::Func1D zero_efficiency(
     {
         {200e-9, 0},
         {1200e-9, 0}

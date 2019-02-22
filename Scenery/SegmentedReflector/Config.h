@@ -30,13 +30,13 @@ namespace SegmentedReflector {
 		Config();
 	};
 
-	static const Function::LinInterpol typical_reflectivity(
+	static const Function::Func1D typical_reflectivity(
 		{
 			{200e-9, .8},
 			{1200e-9, .8}
 		});
 
-	static const Function::LinInterpol perfect_reflectivity(
+	static const Function::Func1D perfect_reflectivity(
 		{
 			{200e-9, 1},
 			{1200e-9, 1}

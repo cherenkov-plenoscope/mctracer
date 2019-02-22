@@ -75,7 +75,7 @@ void Geometry::set_up_lixel_grid() {
 }
 
 void Geometry::set_up_pixel_lens_geometry() {
-    pixel_lens_mean_refrac = config.lens_refraction->mean(137);
+    pixel_lens_mean_refrac = Function::mean(*config.lens_refraction, 137);
     LensMaker::Config lmcfg;
     lmcfg.focal_length = pixel_lens_focal_length();
     lmcfg.aperture_radius = pixel_lens_outer_aperture_radius();
@@ -321,7 +321,7 @@ string Geometry::str()const {
     tab << "\n";
     tab << "__Concentrator_Bin__\n";
     tab << " Bin_hight........... " << bin_hight() << "m\n";
-    tab << " Reflectivity........ " << config.bin_reflection->mean(137) << "\n";
+    tab << " Reflectivity........ " << Function::mean(*config.bin_reflection, 137) << "\n";
     return tab.str();
 }
 

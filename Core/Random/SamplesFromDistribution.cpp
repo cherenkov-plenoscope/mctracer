@@ -7,13 +7,13 @@ namespace Random {
 SamplesFromDistribution::SamplesFromDistribution(
     const Function::Func1D* _distribution
 ): distribution(_distribution) {
-    Function::LinInterpol integral_of_distribution =
+    Function::Func1D integral_of_distribution =
         Function::get_integral(*distribution);
 
     total_integral_of_distribution =
         integral_of_distribution.max();
 
-    cumulative_distribution_function = new Function::LinInterpol(
+    cumulative_distribution_function = new Function::Func1D(
         Function::get_inverse(integral_of_distribution));
 }
 

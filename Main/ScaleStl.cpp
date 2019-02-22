@@ -1,3 +1,4 @@
+#include <iostream>
 #include "DocOpt/docopt.h"
 #include "Tools/PathTools.h"
 #include "Scenery/StereoLitography/StereoLitography.h"

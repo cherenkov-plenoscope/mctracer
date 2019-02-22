@@ -226,8 +226,8 @@ TEST_F(JsonTest, linear_interpolation_function) {
     mct::FunctionMap functions;
     mct::json::add_functions(&functions, o);
     EXPECT_TRUE(functions.has("foo"));
-    EXPECT_TRUE(functions.get("foo")->limits().upper() == 5);
-    EXPECT_TRUE(functions.get("foo")->limits().lower() == 0);
+    EXPECT_TRUE(functions.get("foo")->limits.upper == 5);
+    EXPECT_TRUE(functions.get("foo")->limits.lower == 0);
     EXPECT_NEAR(functions.get("foo")->evaluate(0.0), 5.0, 1e-9);
     EXPECT_NEAR(functions.get("foo")->evaluate(0.5), 4.5, 1e-9);
     EXPECT_NEAR(functions.get("foo")->evaluate(1.0), 4.0, 1e-9);

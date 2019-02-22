@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <sstream>
 #include <random>
+#include <iostream>
 #include "Plenoscope/Calibration/Writer.h"
 #include "Plenoscope/NightSkyBackground/NightSkyBackground.h"
 #include "Tools/FileTools.h"

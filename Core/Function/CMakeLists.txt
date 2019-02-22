@@ -1,8 +1,6 @@
 set(SOURCE
     ${SOURCE}
-    ${CMAKE_CURRENT_SOURCE_DIR}/Limits.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Func1D.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/LinInterpol.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Tools.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/Tools.cpp
     PARENT_SCOPE
 )
