@@ -16,17 +16,17 @@ double increment_for_steps(
 	const uint64_t num_samples);
 
 std::vector<std::vector<double>> sample(
-	const Func1D &f,
+	const Func1 &f,
 	const uint64_t num_samples);
 
 double mean(
-	const Func1D &f,
+	const Func1 &f,
 	const uint64_t num_samples);
 
-Func1D get_integral(const Func1D &f, unsigned int steps = DEFAULT_STEPS);
-Func1D get_inverse(const Func1D &f, unsigned int steps = DEFAULT_STEPS);
-Func1D get_derivative(const Func1D &f, unsigned int steps = DEFAULT_STEPS);
-bool value_flips_sign(const Func1D &f, unsigned int steps = DEFAULT_STEPS);
+Func1 get_integral(const Func1 &f, unsigned int steps = DEFAULT_STEPS);
+Func1 get_inverse(const Func1 &f, unsigned int steps = DEFAULT_STEPS);
+Func1 get_derivative(const Func1 &f, unsigned int steps = DEFAULT_STEPS);
+bool value_flips_sign(const Func1 &f, unsigned int steps = DEFAULT_STEPS);
 std::vector<std::vector<double>> polynom3(
     double c3,
     double c2,

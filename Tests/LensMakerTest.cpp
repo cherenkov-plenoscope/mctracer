@@ -58,7 +58,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
     // ok lets test it...
     const Color* lens_col = &COLOR_GRAY;
     const Color* sensor_disc_col = &COLOR_DARK_GRAY;
-    const Function::Func1D refraction_vs_wavelength(
+    const Function::Func1 refraction_vs_wavelength(
         {
             {200e-9, cfg.refractive_index},
             {1200e-9, cfg.refractive_index}

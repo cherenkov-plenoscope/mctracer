@@ -9,12 +9,12 @@ namespace relleums {
 namespace Random {
 
 class SamplesFromDistribution {
-    const Function::Func1D* distribution;
+    const Function::Func1* distribution;
     double total_integral_of_distribution;
-    Function::Func1D* cumulative_distribution_function;
+    Function::Func1* cumulative_distribution_function;
  public:
     explicit SamplesFromDistribution(
-        const Function::Func1D* _distribution);
+        const Function::Func1* _distribution);
     ~SamplesFromDistribution();
     double draw(const double uniform_0_to_1)const;
     double get_total_integral_of_distribution()const;

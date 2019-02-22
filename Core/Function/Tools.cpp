@@ -11,7 +11,7 @@ double increment_for_steps(const Limits &l, const uint64_t num_samples) {
     return l.range()/static_cast<double>(num_samples);
 }
 
-vector<vector<double>> sample(const Func1D &f, const uint64_t num_samples) {
+vector<vector<double>> sample(const Func1 &f, const uint64_t num_samples) {
     double arg = f.limits.lower;
     const double increment = increment_for_steps(f.limits, num_samples);
     vector<vector<double>> table;
@@ -24,7 +24,7 @@ vector<vector<double>> sample(const Func1D &f, const uint64_t num_samples) {
     return table;
 }
 
-double mean(const Func1D &f, const uint64_t num_samples) {
+double mean(const Func1 &f, const uint64_t num_samples) {
     vector<vector<double>> x_vs_y = sample(f, num_samples);
     double y_mean = 0.0;
     for (vector<double> point : x_vs_y)
@@ -32,7 +32,7 @@ double mean(const Func1D &f, const uint64_t num_samples) {
     return y_mean/x_vs_y.size();
 }
 
-Func1D get_integral(const Func1D &f, unsigned int steps) {
+Func1 get_integral(const Func1 &f, unsigned int steps) {
     double step = f.limits.range()/static_cast<double>(steps);
     vector<vector<double>> F;
     vector<double> F_start = {f.limits.lower, 0.0};
@@ -51,10 +51,10 @@ Func1D get_integral(const Func1D &f, unsigned int steps) {
         f.evaluate(x_end_in_f)*step + F.back()[1]
     };
     F.push_back(F_end);
-    return Func1D(F);
+    return Func1(F);
 }
 
-Func1D get_inverse(const Func1D &f, unsigned int steps) {
+Func1 get_inverse(const Func1 &f, unsigned int steps) {
     double step = f.limits.range()/static_cast<double>(steps);
     vector<vector<double>> fvec_inv;
     vector<double> f_inv_start = {
@@ -72,10 +72,10 @@ Func1D get_inverse(const Func1D &f, unsigned int steps) {
     double x_end_in_f = nextafter(x_end, f.limits.lower);
     vector<double> f_inv_end = {f.evaluate(x_end_in_f), x_end};
     fvec_inv.push_back(f_inv_end);
-    return Func1D(fvec_inv);
+    return Func1(fvec_inv);
 }
 
-Func1D get_derivative(const Func1D &f, unsigned int steps) {
+Func1 get_derivative(const Func1 &f, unsigned int steps) {
     double step = f.limits.range()/static_cast<double>(steps);
     vector<vector<double>> fvec_deriv;
     for (unsigned int i = 0; i < (steps-1); i++) {
@@ -91,10 +91,10 @@ Func1D get_derivative(const Func1D &f, unsigned int steps) {
         f.evaluate(x_end-x_end_margin-step))/step;
     vector<double> f_inv_end = {x_end, y_end};
     fvec_deriv.push_back(f_inv_end);
-    return Func1D(fvec_deriv);
+    return Func1(fvec_deriv);
 }
 
-bool value_flips_sign(const Func1D &f, unsigned int steps) {
+bool value_flips_sign(const Func1 &f, unsigned int steps) {
     double step = f.limits.range()/static_cast<double>(steps);
     bool flip = false;
     for (unsigned int i = 0; i < (steps-1); i++) {

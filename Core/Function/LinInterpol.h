@@ -9,7 +9,7 @@
 namespace relleums {
 namespace Function {
 
-struct Func1D {
+struct Func1 {
     Limits limits;
 
     struct Point {
@@ -20,8 +20,8 @@ struct Func1D {
     };
     std::vector<Point> func;
 
-    Func1D();
-    explicit Func1D(const std::vector<std::vector<double>>& two_column_xy);
+    Func1();
+    explicit Func1(const std::vector<std::vector<double>>& two_column_xy);
     void init(const std::vector<std::vector<double>>& two_column_xy);
     double evaluate(const double x)const;
     double max()const;

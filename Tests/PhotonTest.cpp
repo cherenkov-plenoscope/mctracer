@@ -49,7 +49,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry) {
     world.set_name_pos_rot("world", VEC3_ORIGIN, ROT3_UNITY);
     Frame* optical_table = world.append<Plane>();
     optical_table->set_name_pos_rot("optical_table", VEC3_ORIGIN, ROT3_UNITY);
-    Function::Func1D refl(
+    Function::Func1 refl(
         {
             {200e-9, 1},
             {1200e-9, 1}
@@ -134,7 +134,7 @@ TEST_F(PhotonTest, Reflections) {
 
     // ------------mirror----------------
     const double reflection_coefficient = 0.42;
-    Function::Func1D mirror_reflection(
+    Function::Func1 mirror_reflection(
         {
             {200e-9, reflection_coefficient},
             {1200e-9, reflection_coefficient}
@@ -207,7 +207,7 @@ TEST_F(PhotonTest, Refraction) {
     // create a test setup with two planes and high refractive index in between
     Frame world;
     world.set_name_pos_rot("world", VEC3_ORIGIN, ROT3_UNITY);
-    Function::Func1D water_refraction(
+    Function::Func1 water_refraction(
         {
             {200e-9, 1.33},
             {1200e-9, 1.33}
@@ -278,13 +278,13 @@ TEST_F(PhotonTest, absorbtion_in_medium) {
     // create a test setup with two planes and high refractive index in between
     Frame world;
     world.set_name_pos_rot("world", VEC3_ORIGIN, ROT3_UNITY);
-    Function::Func1D free_half_path(
+    Function::Func1 free_half_path(
         {
             {200e-9, 1.0},
             {1200e-9, 1.0}
         });
 
-    Function::Func1D water_refraction(
+    Function::Func1 water_refraction(
         {
             {200e-9, 1.33},
             {1200e-9, 1.33}

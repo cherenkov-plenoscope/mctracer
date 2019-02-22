@@ -27,21 +27,21 @@ struct Config {
     double pixel_FoV_hex_flat2flat;
     double housing_overhead;
     unsigned int number_of_paxel_on_pixel_diagonal;
-    const relleums::Function::Func1D* lens_refraction;
-    const relleums::Function::Func1D* lens_absorbtion;
-    const relleums::Function::Func1D* bin_reflection;
+    const relleums::Function::Func1* lens_refraction;
+    const relleums::Function::Func1* lens_absorbtion;
+    const relleums::Function::Func1* bin_reflection;
     Config();
 
     std::array<float, 273> get_sensor_plane2imaging_system_header()const;
 };
 
-static const relleums::Function::Func1D pmma_refraction(
+static const relleums::Function::Func1 pmma_refraction(
     {
         {200e-9, 1.49},
         {1200e-9, 1.49}
     });
 
-static const relleums::Function::Func1D perfect_transparency(
+static const relleums::Function::Func1 perfect_transparency(
     {
         {200e-9, std::numeric_limits<double>::infinity()},
         {1200e-9, std::numeric_limits<double>::infinity()}

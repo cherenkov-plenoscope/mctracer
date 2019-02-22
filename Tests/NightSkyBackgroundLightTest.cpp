@@ -22,7 +22,7 @@ TEST_F(NightSkyBackgroundLightTest, init) {
 
     Plenoscope::LightFieldSensor::Geometry geometry(config);
 
-    Function::Func1D nsb_flux_vs_wavelength(
+    Function::Func1 nsb_flux_vs_wavelength(
         AsciiIo::gen_table_from_file(
             "night_sky_background_flux_vs_wavelength_la_palma.txt"));
 

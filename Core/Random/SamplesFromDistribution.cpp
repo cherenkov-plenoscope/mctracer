@@ -5,15 +5,15 @@ namespace relleums {
 namespace Random {
 
 SamplesFromDistribution::SamplesFromDistribution(
-    const Function::Func1D* _distribution
+    const Function::Func1* _distribution
 ): distribution(_distribution) {
-    Function::Func1D integral_of_distribution =
+    Function::Func1 integral_of_distribution =
         Function::get_integral(*distribution);
 
     total_integral_of_distribution =
         integral_of_distribution.max();
 
-    cumulative_distribution_function = new Function::Func1D(
+    cumulative_distribution_function = new Function::Func1(
         Function::get_inverse(integral_of_distribution));
 }
 

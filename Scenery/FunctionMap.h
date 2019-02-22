@@ -11,14 +11,14 @@
 namespace relleums {
 
 struct FunctionMap: public ResourceMap {
-    std::map<std::string, Function::Func1D*> functions;
+    std::map<std::string, Function::Func1*> functions;
     bool has(const std::string key)const;
-    Function::Func1D* get(const std::string key)const;
+    Function::Func1* get(const std::string key)const;
     template<class ProtoFunction>
     ProtoFunction* add(const std::string key) {
         assert_not_in_use_yet(key);
         ProtoFunction* child = new ProtoFunction;
-        functions.insert(std::pair<std::string, Function::Func1D*>(key, child));
+        functions.insert(std::pair<std::string, Function::Func1*>(key, child));
         return child;
     }
     ~FunctionMap();

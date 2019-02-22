@@ -13,13 +13,13 @@ namespace SignalProcessing {
 namespace PhotoElectricConverter {
 
 struct Config {
-    const relleums::Function::Func1D* quantum_efficiency_vs_wavelength;
+    const relleums::Function::Func1* quantum_efficiency_vs_wavelength;
     double dark_rate;
     double probability_for_second_puls;
     Config();
 };
 
-static const relleums::Function::Func1D zero_efficiency(
+static const relleums::Function::Func1 zero_efficiency(
     {
         {200e-9, 0},
         {1200e-9, 0}

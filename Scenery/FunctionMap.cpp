@@ -11,7 +11,7 @@ bool FunctionMap::has(const string key)const {
     return functions.find(key) != functions.end();
 }
 
-Function::Func1D* FunctionMap::get(const string key)const {
+Function::Func1* FunctionMap::get(const string key)const {
     assert_has(key);
     return functions.find(key)->second;
 }
@@ -35,7 +35,7 @@ void FunctionMap::assert_not_in_use_yet(const string key) {
 }
 
 FunctionMap::~FunctionMap() {
-    for (std::pair<string, Function::Func1D*> function : functions)
+    for (std::pair<string, Function::Func1*> function : functions)
         delete function.second;
 }
 
