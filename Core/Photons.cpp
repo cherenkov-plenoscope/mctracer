@@ -11,16 +11,6 @@ using std::vector;
 namespace relleums {
 namespace Photons {
 
-string get_print(const vector<Photon> *photons) {
-    stringstream out;
-    out << "Photon bunble "<< photons->size() << "\n";
-    for (const Photon &photon : *photons)
-        out << photon.str() << "\n";
-    return out.str();
-}
-
-// propagation
-
 void propagate_photons_in_scenery_with_settings(
     vector<Photon> *photons,
     const Frame* world,

@@ -10,8 +10,6 @@
 namespace relleums {
 namespace Photons {
 
-std::string get_print(const std::vector<Photon> *photons);
-// propagation
 void propagate_photons_in_scenery_with_settings(
     std::vector<Photon> *photons,
     const Frame *world,
