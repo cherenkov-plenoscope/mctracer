@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <stdexcept>
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
 #include "Scenery/Geometry/QuadraticEquation.h"

@@ -9,17 +9,14 @@
 namespace relleums {
 namespace Function {
 
+struct Point {
+    double x, y, slope;
+    bool operator()(const Point &l, const Point &r);
+};
+
 struct Func1 {
     Limits limits;
-
-    struct Point {
-        double x, y, slope;
-        bool operator()(const Point &l, const Point &r) {
-            return l.x < r.x;
-        }
-    };
     std::vector<Point> func;
-
     Func1();
     explicit Func1(const std::vector<std::vector<double>>& two_column_xy);
     void init(const std::vector<std::vector<double>>& two_column_xy);
@@ -27,7 +24,6 @@ struct Func1 {
     double max()const;
     double min()const;
     std::string str()const;
-
     void assert_table_two_columns(
         const std::vector<std::vector<double> > &xy_table,
         const unsigned int row)const;

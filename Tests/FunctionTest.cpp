@@ -122,7 +122,7 @@ TEST_F(FunctionTest, numerical_integration_const) {
     // F(x) = x
     Function::Func1 f(
         Function::polynom3(0, 0, 0, 1, 0, 1, 4096));
-    Function::Func1 F = Function::get_integral(f);
+    Function::Func1 F = Function::integral(f);
     EXPECT_EQ(f.limits.lower, F.limits.lower);
     EXPECT_EQ(f.limits.upper, F.limits.upper);
     // F(0) != 0
@@ -138,7 +138,7 @@ TEST_F(FunctionTest, numerical_integration_linear) {
     // F(x) = 1/2 x^2
     Function::Func1 f(
         Function::polynom3(0, 0, 1, 0, 0, 1, 4096));
-    Function::Func1 F = Function::get_integral(f);
+    Function::Func1 F = Function::integral(f);
     EXPECT_EQ(f.limits.lower, F.limits.lower);
     EXPECT_EQ(f.limits.upper, F.limits.upper);
     // F(0) != 0
@@ -154,7 +154,7 @@ TEST_F(FunctionTest, numerical_inverse_limits) {
     // f_inv(x) = 1/2x [0, 2)
     Function::Func1 f(
         Function::polynom3(0, 0, 2, 0, 0, 1, 4096));
-    Function::Func1 f_inv = Function::get_inverse(f);
+    Function::Func1 f_inv = Function::inverse(f);
     EXPECT_NEAR(0.0, f_inv.limits.lower, 1e-6);
     EXPECT_NEAR(2.0, f_inv.limits.upper, 1e-6);
 }
@@ -164,7 +164,7 @@ TEST_F(FunctionTest, numerical_inverse_linear) {
     // f_inv(x) = x
     Function::Func1 f(
         Function::polynom3(0, 0, 1, 0, 0, 1, 4096));
-    Function::Func1 f_inv = Function::get_inverse(f);
+    Function::Func1 f_inv = Function::inverse(f);
     EXPECT_NEAR(0.0, f_inv.limits.lower, 1e-6);
     EXPECT_NEAR(1.0, f_inv.limits.upper, 1e-6);
     // f_inv(0) != 0
@@ -180,7 +180,7 @@ TEST_F(FunctionTest, numerical_inverse_quadratic) {
     // f_inv(x) = sqrt(x)
     Function::Func1 f(
         Function::polynom3(0, 1, 0, 0, 0, 1, 4096));
-    Function::Func1 f_inv = Function::get_inverse(f);
+    Function::Func1 f_inv = Function::inverse(f);
     EXPECT_NEAR(0.0, f_inv.limits.lower, 1e-6);
     EXPECT_NEAR(1.0, f_inv.limits.upper, 1e-6);
     // AsciiIo::write_table_to_file(f.sample(1024), "f.func");
@@ -198,7 +198,7 @@ TEST_F(FunctionTest, numerical_derivative_of_constant_function) {
     // f'(x) = 0
     Function::Func1 f(
         Function::polynom3(0, 0, 0, 1, 0, 1, 4096));
-    Function::Func1 f_prime = Function::get_derivative(f);
+    Function::Func1 f_prime = Function::derivative(f);
     EXPECT_EQ(f.limits.lower, f_prime.limits.lower);
     EXPECT_EQ(f.limits.upper, f_prime.limits.upper);
     for (double x = 0; x < 1.0; x = x+1e-3)
@@ -210,7 +210,7 @@ TEST_F(FunctionTest, numerical_derivative_of_linear_function) {
     // f'(x) = 1
     Function::Func1 f(
         Function::polynom3(0, 0, 1, 1, 0, 1, 4096));
-    Function::Func1 f_prime = Function::get_derivative(f);
+    Function::Func1 f_prime = Function::derivative(f);
     EXPECT_EQ(f.limits.lower, f_prime.limits.lower);
     EXPECT_EQ(f.limits.upper, f_prime.limits.upper);
     for (double x = 0; x < 1.0; x = x+1e-3)
@@ -222,7 +222,7 @@ TEST_F(FunctionTest, numerical_derivative_of_quadratic_function) {
     // f'(x) = 2*x
     Function::Func1 f(
         Function::polynom3(0, 1, 0, 0, 0, 1, 4096));
-    Function::Func1 f_prime = Function::get_derivative(f);
+    Function::Func1 f_prime = Function::derivative(f);
     EXPECT_EQ(f.limits.lower, f_prime.limits.lower);
     EXPECT_EQ(f.limits.upper, f_prime.limits.upper);
     for (double x = 0; x < 1.0; x = x+1e-3)

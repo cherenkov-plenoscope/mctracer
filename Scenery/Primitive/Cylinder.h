@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #ifndef SCENERY_PRIMITIVE_CYLINDER_H_
 #define SCENERY_PRIMITIVE_CYLINDER_H_
-
+#include <stdexcept>
 #include <vector>
 #include <string>
 #include "Core/SurfaceEntity.h"
@@ -43,15 +43,15 @@ class Cylinder :public SurfaceEntity {
     Rot3 calculate_new_rotation_in_mother(const Vec3 rotsym_axis)const;
 
  public:
-    class BadRadius :public std::invalid_argument{
+    class BadRadius :public std::invalid_argument {
         using invalid_argument::invalid_argument;
     };
 
-    class BadStartEndPoints :public std::invalid_argument{
+    class BadStartEndPoints :public std::invalid_argument {
         using invalid_argument::invalid_argument;
     };
 
-    class BadLength :public std::invalid_argument{
+    class BadLength :public std::invalid_argument {
         using invalid_argument::invalid_argument;
     };
 };

@@ -32,7 +32,7 @@ double mean(const Func1 &f, const uint64_t num_samples) {
     return y_mean/x_vs_y.size();
 }
 
-Func1 get_integral(const Func1 &f, uint64_t steps) {
+Func1 integral(const Func1 &f, uint64_t steps) {
     double step = f.limits.range()/static_cast<double>(steps);
     vector<vector<double>> F;
     vector<double> F_start = {f.limits.lower, 0.0};
@@ -54,7 +54,7 @@ Func1 get_integral(const Func1 &f, uint64_t steps) {
     return Func1(F);
 }
 
-Func1 get_inverse(const Func1 &f, uint64_t steps) {
+Func1 inverse(const Func1 &f, uint64_t steps) {
     double step = f.limits.range()/static_cast<double>(steps);
     vector<vector<double>> fvec_inv;
     vector<double> f_inv_start = {
@@ -75,7 +75,7 @@ Func1 get_inverse(const Func1 &f, uint64_t steps) {
     return Func1(fvec_inv);
 }
 
-Func1 get_derivative(const Func1 &f, uint64_t steps) {
+Func1 derivative(const Func1 &f, uint64_t steps) {
     double step = f.limits.range()/static_cast<double>(steps);
     vector<vector<double>> fvec_deriv;
     for (uint64_t i = 0; i < (steps-1); i++) {

@@ -12,6 +12,10 @@ using std::string;
 namespace relleums {
 namespace Function {
 
+bool Point::operator()(const Point &l, const Point &r) {
+    return l.x < r.x;
+}
+
 Func1::Func1() {}
 
 Func1::Func1(const vector<vector<double>>& xy) {
@@ -23,7 +27,7 @@ void Func1::init(const vector<vector<double>>& xy) {
 
     for (unsigned int i = 0; i < xy.size(); i++) {
         assert_table_two_columns(xy, i);
-        Func1::Point p = {
+        Point p = {
             xy[i][0],
             xy[i][1],
             slope_in_table_in_row(xy, i)
@@ -64,19 +68,19 @@ void Func1::assert_table_two_columns(
 
 double Func1::evaluate(const double x)const {
     limits.assert_contains(x);
-    vector<Func1::Point>::const_iterator upper = get_upper_bound(x);
+    vector<Point>::const_iterator upper = get_upper_bound(x);
     assert_upper_bound_and_argument_in_range(upper, x);
     return interpolate_linear(*(upper-1), x);
 }
 
-vector<Func1::Point>::const_iterator Func1::get_upper_bound(
+vector<Point>::const_iterator Func1::get_upper_bound(
     double arg
 )const {
     return std::upper_bound(func.begin(), func.end(), arg, comp_upp);
 }
 
 void Func1::assert_upper_bound_and_argument_in_range(
-    const vector<Func1::Point>::const_iterator it,
+    const vector<Point>::const_iterator it,
     const double arg
 )const {
     if (
@@ -94,7 +98,7 @@ void Func1::assert_upper_bound_and_argument_in_range(
 }
 
 void Func1::sort_function_arguments() {
-    std::sort(func.begin(), func.end(), Func1::Point());
+    std::sort(func.begin(), func.end(), Point());
 }
 
 void Func1::assert_no_duplicate_argument_on_sorted_arguments()const {
@@ -115,7 +119,7 @@ void Func1::assert_no_duplicate_argument_on_sorted_arguments()const {
 }
 
 double Func1::interpolate_linear(
-    const Func1::Point p0,
+    const Point p0,
     const double x
 )const {
     //  Point p0: (x0, y0)
@@ -128,7 +132,7 @@ double Func1::interpolate_linear(
     return p0.slope*x + p0.y - p0.slope*p0.x;
 }
 
-bool Func1::comp_upp(const double x, const Func1::Point P) {
+bool Func1::comp_upp(const double x, const Point P) {
     return P.x > x;
 }
 

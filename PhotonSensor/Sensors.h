@@ -3,6 +3,7 @@
 #define PHOTONSENSOR_SENSORS_H_
 
 #include <vector>
+#include <stdexcept>
 #include "PhotonSensor/Sensor.h"
 #include "Core/Photon.h"
 
