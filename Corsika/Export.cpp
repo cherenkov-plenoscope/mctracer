@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <fstream>
 #include <sstream>
-#include "Corsika/EventIo/Export.h"
+#include "Corsika/Export.h"
 using std::string;
 using std::vector;
 using std::array;

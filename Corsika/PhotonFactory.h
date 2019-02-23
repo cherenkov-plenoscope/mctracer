@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORSIKA_EVENTIO_PHOTONFACTORY_H_
-#define CORSIKA_EVENTIO_PHOTONFACTORY_H_
+#ifndef CORSIKA_PHOTONFACTORY_H_
+#define CORSIKA_PHOTONFACTORY_H_
 
 #include <array>
 #include "Core/Photon.h"
@@ -42,4 +42,4 @@ class EventIoPhotonFactory {
 
 }  // namespace relleums
 
-#endif  // CORSIKA_EVENTIO_PHOTONFACTORY_H_
+#endif  // CORSIKA_PHOTONFACTORY_H_

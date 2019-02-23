@@ -4,7 +4,7 @@
 #include <sstream>
 #include "DocOpt/docopt.h"
 #include "eventio.h"
-#include "Corsika/EventIo/Export.h"
+#include "Corsika/Export.h"
 #include "Tools/PathTools.h"
 #include "Tools/HeaderBlock.h"
 

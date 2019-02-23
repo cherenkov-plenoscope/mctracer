@@ -1,5 +1,5 @@
 #include "EventIoWrapper.h"
-#include "Corsika/EventIo/PhotonFactory.h"
+#include "Corsika/PhotonFactory.h"
 using std::string;
 using std::vector;
 using std::array;

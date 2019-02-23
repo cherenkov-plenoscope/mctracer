@@ -3,7 +3,7 @@
 #include "PhotonSensor/PhotonSensor.h"
 #include "eventio.h"
 #include "Corsika/Tools.h"
-#include "Corsika/EventIo/PhotonFactory.h"
+#include "Corsika/PhotonFactory.h"
 #include "Visual/FlyingCamera.h"
 #include "Scenery/TrajectoryFactory.h"
 #include "Scenery/Scenery.h"

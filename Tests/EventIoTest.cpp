@@ -3,6 +3,7 @@
 #include "gtest/gtest.h"
 #include "eventio.h"
 #include "Corsika/Tools.h"
+#include "Corsika/PhotonFactory.h"
 using std::string;
 using std::vector;
 using std::array;
@@ -198,8 +199,6 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__photon_bundle_values) {
         EXPECT_FLOAT_EQ(some_photon_bundles[j][7], photon_bunch[7]);
     }
 }
-
-#include "Corsika/EventIo/PhotonFactory.h"
 
 TEST_F(EventIoTest, EventIoFile_telescope_dat_run_time) {
     eventio::Run my_run("telescope.dat");

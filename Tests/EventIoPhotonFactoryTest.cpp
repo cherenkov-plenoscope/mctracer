@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <numeric>
 #include "gtest/gtest.h"
-#include "Corsika/EventIo/PhotonFactory.h"
+#include "Corsika/PhotonFactory.h"
 #include "eventio.h"
 #include "Scenery/Primitive/Disc.h"
 #include "PhotonSensor/PhotonSensor.h"
