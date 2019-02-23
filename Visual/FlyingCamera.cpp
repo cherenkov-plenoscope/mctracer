@@ -8,7 +8,7 @@
 #include "Core/RayAndFrame.h"
 #include "Core/Intersection.h"
 #include "Visual/PortablePixMap.h"
-#include "Tools/UserInteraction.h"
+#include "Core/welcome_screen.h"
 
 using std::cout;
 using std::stringstream;
@@ -103,7 +103,7 @@ void FlyingCamera::reset_camera() {
 }
 
 void FlyingCamera::enter_interactive_display() {
-    print_welcome_screen();
+    std::cout << welcome_screen();
     print_help();
 
     int user_input_key = 0;
