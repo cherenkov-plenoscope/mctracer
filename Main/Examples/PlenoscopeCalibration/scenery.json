@@ -46,7 +46,7 @@
           "lens_refraction_vs_wavelength": "lens_refraction",
           "bin_reflection_vs_wavelength": "mirror_reflection",
           "children": []
-        },
+        }
       ]
     }
   ]
