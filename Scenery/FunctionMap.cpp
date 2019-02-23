@@ -11,9 +11,14 @@ bool FunctionMap::has(const string key)const {
     return functions.find(key) != functions.end();
 }
 
-Function::Func1* FunctionMap::get(const string key)const {
+const Function::Func1* FunctionMap::get(const string key)const {
     assert_has(key);
-    return functions.find(key)->second;
+    return &functions.find(key)->second;
+}
+
+void FunctionMap::add(const std::string key, const Function::Func1 f) {
+    assert_not_in_use_yet(key);
+    functions.insert(std::pair<std::string, Function::Func1>(key, f));
 }
 
 void FunctionMap::assert_has(const string key)const {
@@ -32,11 +37,6 @@ void FunctionMap::assert_not_in_use_yet(const string key) {
         info << "The key '" << key << "' is already in use.\n";
         throw KeyAlreadyInUse(info.str());
     }
-}
-
-FunctionMap::~FunctionMap() {
-    for (std::pair<string, Function::Func1*> function : functions)
-        delete function.second;
 }
 
 }  // namespace relleums

@@ -287,9 +287,9 @@ int main(int argc, char* argv[]) {
     //--------------------------------------------------------------------------
     Scenery scenery;
     scenery.root.set_name_pos_rot("root", VEC3_ORIGIN, ROT3_UNITY);
-    Function::Func1* mirror_reflectivity =
-        scenery.functions.add<Function::Func1>("mirror_reflectivity");
-    mirror_reflectivity->init(fact_mirror_reflectivity());
+    scenery.functions.add(
+      "mirror_reflectivity",
+      Function::Func1(fact_mirror_reflectivity()));
     scenery.colors.add("mirror_color", Color(128, 128, 128));
     scenery.colors.add("inner_mirror_color", Color(255, 255, 255));
     scenery.colors.add("pixel_red", Color(255, 0, 0));
@@ -303,7 +303,7 @@ int main(int argc, char* argv[]) {
     r_cfg.gap_between_facets = 0.01;
     r_cfg.mirror_color = scenery.colors.get("mirror_color");
     r_cfg.inner_mirror_color = scenery.colors.get("inner_mirror_color");
-    r_cfg.reflectivity = mirror_reflectivity;
+    r_cfg.reflectivity = scenery.functions.get("mirror_reflectivity");
 
     SegmentedReflector::Factory r_factory = SegmentedReflector::Factory(r_cfg);
     r_factory.add_reflector_mirror_facets_to_frame(

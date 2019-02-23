@@ -264,8 +264,7 @@ void add_functions(FunctionMap* functions, const Object &o) {
         const Object &jfun = o.obj(fidx);
         string name = jfun.st("name");
         const Object &avsv = jfun.obj("argument_versus_value");
-        Function::Func1* f = functions->add<Function::Func1>(name);
-        f->init(json_to_vec_of_vecs(avsv));
+        functions->add(name, Function::Func1(json_to_vec_of_vecs(avsv)));
     }
 }
 

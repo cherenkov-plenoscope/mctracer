@@ -22,8 +22,12 @@ TEST_F(ParallelPropagationTest, propagate_once) {
 
 	Scenery scenery;
 	scenery.colors.add("red", Color(255, 0, 0));
-	Function::Func1* f = scenery.functions.add<Function::Func1>("fifty_fifty");
-	f->init({{200e-9, 0.5}, {1200e-9, 0.5}});
+	scenery.functions.add(
+		"fifty_fifty",
+		Function::Func1({
+			{200e-9, 0.5},
+			{1200e-9, 0.5}
+		}));
 	Disc* disc = scenery.root.append<Disc>();
  	disc->set_name_pos_rot(
         "red_disc",
