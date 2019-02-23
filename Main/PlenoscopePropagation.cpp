@@ -7,7 +7,6 @@
 #include "eventio.h"
 #include "Corsika/Tools.h"
 #include "Corsika/PhotonFactory.h"
-#include "Corsika/Export.h"
 #include "Core/Histogram1D.h"
 #include "SignalProcessing/PipelinePhoton.h"
 #include "Plenoscope/NightSkyBackground/Light.h"
@@ -298,7 +297,7 @@ Plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
                 record.photon_stream,
                 join(event_mc_truth_path.path, "detector_pulse_origins.bin"));
 
-            relleums::write_corsika_photons(
+            eventio::write_photon_bunches_to_path(
                 event.photons,
                 join(event_mc_truth_path.path,
                     "air_shower_photon_bunches.bin"));

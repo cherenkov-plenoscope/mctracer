@@ -4,7 +4,6 @@
 #include <sstream>
 #include "DocOpt/docopt.h"
 #include "eventio.h"
-#include "Corsika/Export.h"
 #include "Tools/PathTools.h"
 #include "Tools/HeaderBlock.h"
 
@@ -58,7 +57,7 @@ int main(int argc, char* argv[]) {
         event.header.raw,
         mct::path::join(event_path.path, "corsika_event_header.bin"));
 
-      relleums::write_corsika_photons(
+      eventio::write_photon_bunches_to_path(
         event.photons,
         mct::path::join(event_path.path, "air_shower_photon_bunches.bin"));
 

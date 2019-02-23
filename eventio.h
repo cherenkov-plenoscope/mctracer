@@ -143,6 +143,11 @@ class Run {
     Event next_event();
 };
 
+void write_photon_bunches_to_path(
+    const std::vector<std::array<float, 8>> &photons,
+    const std::string &path
+);
+
 }  // namespace eventio
 
 #endif  // EVENTIO_H_

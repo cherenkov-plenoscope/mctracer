@@ -415,4 +415,23 @@ vector<array<float, 8>> Run::_next() {
     return dummy;
 }
 
+void write_photon_bunches_to_path(
+    const vector<array<float, 8>> &photons,
+    const string &path
+) {
+    std::ofstream file;
+    file.open(path, std::ios::out | std::ios::binary);
+
+    if (!file.is_open()) {
+        std::stringstream info;
+        info << __FILE__ << " " << __LINE__ << "\n";
+        info << "EventIo: Unable to write file: '" << path << "'\n";
+        throw std::runtime_error(info.str());
+    }
+
+    for (const array<float, 8> &photon : photons)
+        file.write((char*)&photon, sizeof(array<float, 8>));
+    file.close();
+}
+
 }  // namespace eventio
