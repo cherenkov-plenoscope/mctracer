@@ -20,6 +20,9 @@ int32_t read_int32(std::istream &fin);
 void append_uint32(const uint32_t &v, std::ostream &fout);
 uint32_t read_uint32(std::istream &fin);
 
+void append_uint16(const uint16_t &v, std::ostream &fout);
+uint16_t read_uint16(std::istream &fin);
+
 double read_float64(std::istream &fin);
 uint64_t read_uint64(std::istream &fin);
 

@@ -1,59 +1,54 @@
-#include "StereoLitography.h"
+// Copyright 2015 Sebastian A. Mueller
+#include "Scenery/StereoLitography/StereoLitography.h"
 #include "Scenery/Primitive/Triangle.h"
 using std::string;
 using std::vector;
-//------------------------------------------------------------------------------
+
 namespace relleums {
 namespace StereoLitography {
-//------------------------------------------------------------------------------
+
 void add_stl_to_and_inherit_surface_from_surfac_entity(
-    const string path, 
+    const string path,
     SurfaceEntity* proto,
     const double scale
 ) {
     BinaryReader reader(path);
     vector<Facet> facets = reader.get_facets();
-
     unsigned int facet_count = 0;
-    for(Facet facet: facets) {
+    for (Facet facet : facets) {
         Triangle* tri = proto->append<Triangle>();
         tri->set_name_pos_rot(
             "triangle_"+std::to_string(facet_count++),
-            VEC3_ORIGIN, 
-            ROT3_UNITY
-        );
+            VEC3_ORIGIN,
+            ROT3_UNITY);
         tri->set_normal_and_3_vertecies(
             facet.n,
             facet.a*scale,
             facet.b*scale,
-            facet.c*scale
-        );  
-        tri->take_boundary_layer_properties_from(proto);        
+            facet.c*scale);
+        tri->take_boundary_layer_properties_from(proto);
     }
 }
-//------------------------------------------------------------------------------
+
 void add_stl_to_frame(const string path, Frame* proto, const double scale) {
     BinaryReader reader(path);
     vector<Facet> facets = reader.get_facets();
-
     unsigned int facet_count = 0;
-    for(Facet facet: facets) {
+    for (Facet facet : facets) {
         Triangle* tri = proto->append<Triangle>();
         tri->set_name_pos_rot(
             "triangle_"+std::to_string(facet_count++),
-            VEC3_ORIGIN, 
-            ROT3_UNITY
-        );
+            VEC3_ORIGIN,
+            ROT3_UNITY);
         tri->set_normal_and_3_vertecies(
             facet.n,
             facet.a*scale,
             facet.b*scale,
-            facet.c*scale
-        );  
+            facet.c*scale);
         tri->set_outer_color(&COLOR_GRAY);
-        tri->set_inner_color(&COLOR_DARK_GRAY);       
+        tri->set_inner_color(&COLOR_DARK_GRAY);
     }
 }
-//------------------------------------------------------------------------------
-}  // StereoLitography
+
+}  // namespace StereoLitography
 }  // namespace relleums

@@ -34,6 +34,16 @@ uint32_t read_uint32(std::istream &fin) {
     return v;
 }
 
+void append_uint16(const uint16_t &v, std::ostream &fout) {
+    fout.write(reinterpret_cast<const char*>(&v), sizeof(v));
+}
+
+uint16_t read_uint16(std::istream &fin) {
+    uint16_t v;
+    fin.read(reinterpret_cast<char*>(&v), sizeof(v));
+    return v;
+}
+
 void append_uint8(const uint8_t &v, std::ostream &fout) {
     fout.write(reinterpret_cast<const char*>(&v), sizeof(v));
 }
