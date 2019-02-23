@@ -6,7 +6,7 @@
 #include <thread>
 #include "Visual/Tracer.h"
 #include "Core/Random/Random.h"
-#include "cptl_stl.h"
+#include "vit_vit_cptl_stl.h"
 using std::string;
 using std::stringstream;
 
@@ -290,6 +290,7 @@ Color do_one_ray(
     Random::Mt19937 *prng,
     const PixelCoordinate pixel,
     const ApertureCamera* cam) {
+    (void)id;
     CameraRay cam_ray = cam->get_ray_for_pixel_in_row_and_col(
         pixel.row,
         pixel.col,

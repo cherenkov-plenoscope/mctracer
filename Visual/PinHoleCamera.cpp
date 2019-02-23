@@ -3,7 +3,7 @@
 #include <exception>
 #include "Tracer.h"
 #include "Core/Random/Random.h"
-#include "cptl_stl.h"
+#include "vit_vit_cptl_stl.h"
 
 namespace relleums {
 namespace visual {
@@ -106,6 +106,7 @@ Color do_one_pixel(
     const unsigned int pixel,
     const PinHoleCamera* cam
 ) {
+    (void)id;
     const unsigned int row = pixel / cam->number_cols;
     const unsigned int col = pixel % cam->number_cols;
     CameraRay cam_ray = cam->get_ray_for_pixel_in_row_and_col(row, col);
