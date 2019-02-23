@@ -15,6 +15,7 @@ class Generator {
  public:
     uint64_t seed()const;
     virtual double uniform() = 0;
+    virtual uint64_t create_seed() = 0;
     virtual void set_seed(const uint64_t seed);
     Vec3 get_point_on_xy_disc_within_radius(const double r);
     Vec3 get_point_on_xy_disc_within_radius_slow(const double r);

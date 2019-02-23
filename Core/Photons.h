@@ -22,7 +22,7 @@ void propagate_photons(
     const PropagationConfig* settings,
     Random::Generator* prng);
 
-void propagate_photons_parallel(
+void propagate_photons_multi_thread(
     std::vector<Photon> *photons,
     const Frame* world,
     const PropagationConfig* settings,
@@ -44,11 +44,13 @@ namespace Source {
 
 std::vector<Photon> parallel_towards_z_from_xy_disc(
     const double disc_radius,
-    const unsigned int number_of_photons);
+    const unsigned int number_of_photons,
+    Random::Generator* prng);
 
 std::vector<Photon> point_like_towards_z_opening_angle_num_photons(
     const double opening_angle,
-    const unsigned int number_of_photons);
+    const unsigned int number_of_photons,
+    Random::Generator* prng);
 
 }  // namespace Source
 

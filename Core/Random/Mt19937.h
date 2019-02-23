@@ -17,6 +17,7 @@ class Mt19937 : public Generator{
     explicit Mt19937(const uint64_t seed);
     Mt19937();
     double uniform();
+    uint64_t create_seed();
     double normal(const double mean, const double std_dev);
     void set_seed(const uint64_t seed);
 

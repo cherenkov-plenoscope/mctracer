@@ -14,6 +14,7 @@ class FakeConstant : public Generator{
  public:
     explicit FakeConstant(const double _constant);
     double uniform();
+    uint64_t create_seed();
     double normal(const double mean, const double std_dev);
 };
 

@@ -19,6 +19,10 @@ double Mt19937::uniform() {
     return static_cast<double>(pRNG_mt19937())*inv_max;
 }
 
+uint64_t Mt19937::create_seed() {
+    return pRNG_mt19937();
+}
+
 void Mt19937::set_seed(const uint64_t seed) {
     this->seed_ = seed;
     pRNG_mt19937.seed(this->seed_);

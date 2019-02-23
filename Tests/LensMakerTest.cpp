@@ -103,7 +103,8 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
         vector<Photon> photons =
             Photons::Source::parallel_towards_z_from_xy_disc(
                 cfg.aperture_radius*0.85,  // 0.85 inner hex radius
-                number_of_photons_per_run);
+                number_of_photons_per_run,
+                &prng);
         HomTra3 Trafo;
         Trafo.set_transformation(
             Rot3(0.0, -deg2rad(180.0), 0.0),

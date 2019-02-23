@@ -20,5 +20,9 @@ double FakeConstant::normal(const double mean, const double std_dev) {
     return constant;
 }
 
+uint64_t FakeConstant::create_seed() {
+	return 0u;
+}
+
 }  // namespace Random
 }  // namespace relleums

@@ -115,9 +115,11 @@ TEST_F(BiConvexLensTest, send_photon_frontal_into_lens) {
 TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
     // light source
     unsigned int number_of_photons_emitted = 1e4;
+    Random::Mt19937 prng(0);
     vector<Photon> photons = Photons::Source::parallel_towards_z_from_xy_disc(
         0.125,
-        number_of_photons_emitted);
+        number_of_photons_emitted,
+        &prng);
 
     HomTra3 Trafo;
     Trafo.set_transformation(

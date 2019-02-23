@@ -20,7 +20,7 @@ void propagate_photons_in_scenery_with_settings(
     Random::Generator* prng
 ) {
     if (settings->use_multithread_when_possible)
-        propagate_photons_parallel(photons, world, settings, prng);
+        propagate_photons_multi_thread(photons, world, settings, prng);
     else
         propagate_photons(photons, world, settings, prng);
 }
@@ -44,23 +44,29 @@ void propagate_one_photon(
     int id,
     const Frame* world,
     const PropagationConfig* settings,
-    Random::Generator *prng,
+    const uint64_t seed,
     Photon* photon
 ) {
     (void)id;
+    Random::Mt19937 prng(seed);
     PropagationEnvironment env;
     env.root_frame = world;
     env.config = settings;
-    env.prng = prng;
+    env.prng = &prng;
     PhotonAndFrame::Propagator(photon, env);
 }
 
-void propagate_photons_parallel(
+void propagate_photons_multi_thread(
     vector<Photon> *photons,
     const Frame* world,
     const PropagationConfig* settings,
     Random::Generator* prng
 ) {
+    std::vector<uint64_t> prng_seeds(photons->size());
+    for (uint64_t i = 0; i < photons->size(); i ++) {
+        prng_seeds[i] = prng->create_seed();
+    }
+
     uint64_t num_threads = std::thread::hardware_concurrency();
     ctpl::thread_pool pool(num_threads);
     std::vector<std::future<void>> results(photons->size());
@@ -70,8 +76,8 @@ void propagate_photons_parallel(
             propagate_one_photon,
             world,
             settings,
-            prng,
-            &(photons->at(i)));
+            prng_seeds[i],
+            &(*photons)[i]);
     }
 
     for (uint64_t i = 0; i < photons->size(); i ++) {
@@ -140,18 +146,18 @@ namespace Source {
 
 vector<Photon> point_like_towards_z_opening_angle_num_photons(
     const double opening_angle,
-    const unsigned int number_of_photons
+    const unsigned int number_of_photons,
+    Random::Generator* prng
 ) {
     vector<Photon> photons;
     photons.reserve(number_of_photons);
     const Vec3 support = VEC3_ORIGIN;
 
-    Random::Mt19937 prng(0);
     Random::ZenithDistancePicker zenith_picker(0.0, opening_angle);
     Random::UniformPicker azimuth_picker(0.0, 2*M_PI);
     for (unsigned int i = 0; i < number_of_photons; i++) {
         Vec3 direction = Random::draw_point_on_sphere(
-            &prng,
+            prng,
             zenith_picker,
             azimuth_picker);
         Photon ph = Photon(support, direction, 433e-9);
@@ -163,16 +169,15 @@ vector<Photon> point_like_towards_z_opening_angle_num_photons(
 
 vector<Photon> parallel_towards_z_from_xy_disc(
     const double disc_radius,
-    const unsigned int number_of_photons
+    const unsigned int number_of_photons,
+    Random::Generator* prng
 ) {
     vector<Photon> photons;
     photons.reserve(number_of_photons);
     const Vec3 direction = VEC3_UNIT_Z;
 
-    Random::Mt19937 prng(0);
-
     for (unsigned int i = 0; i < number_of_photons; i++) {
-        Vec3 support = prng.get_point_on_xy_disc_within_radius(
+        Vec3 support = prng->get_point_on_xy_disc_within_radius(
             disc_radius);
         Photon ph(support, direction, 433e-9);
         ph.set_simulation_truth_id(i);
