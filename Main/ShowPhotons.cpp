@@ -1,5 +1,5 @@
 #include "DocOpt/docopt.h"
-#include "Core/Photons.h"
+#include "Core/mctracer.h"
 #include "sensor/PhotonSensor.h"
 #include "eventio.h"
 #include "Corsika/corsika.h"

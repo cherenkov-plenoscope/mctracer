@@ -8,7 +8,7 @@
 #include "Plenoscope/json_to_plenoscope.h"
 #include "Tools/HeaderBlock.h"
 #include "Scenery/Scenery.h"
-#include "Core/random/random.h"
+#include "Core/mctracer.h"
 namespace fs = std::experimental::filesystem;
 using std::string;
 using std::cout;

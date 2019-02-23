@@ -1,6 +1,6 @@
 #include <iostream>
 #include "DocOpt/docopt.h"
-#include "Core/Photons.h"
+#include "Core/mctracer.h"
 #include "Tools/AsciiIo.h"
 #include "json.h"
 #include "Tools/PathTools.h"

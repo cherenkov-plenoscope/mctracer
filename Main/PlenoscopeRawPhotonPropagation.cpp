@@ -3,7 +3,7 @@
 #include <iostream>
 #include "DocOpt/docopt.h"
 #include "Tools/Tools.h"
-#include "Core/Photons.h"
+#include "Core/mctracer.h"
 #include "eventio.h"
 #include "Corsika/corsika.h"
 #include "Corsika/PhotonFactory.h"
