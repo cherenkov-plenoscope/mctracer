@@ -79,23 +79,6 @@ relleums::Frame* add_light_field_sensor_demonstration(
     return light_field_sensor;
 }
 
-void append_to_frame_in_scenery(
-    relleums::Frame* mother,
-    PlenoscopeScenery* scenery,
-    const std::string &path) {
-    append_to_frame_in_scenery(mother, scenery, relleums::json::load(path));
-}
-
-void append_to_frame_in_scenery(
-    relleums::Frame* mother,
-    PlenoscopeScenery* scenery,
-    const relleums::json::Object &o
-) {
-    relleums::json::add_functions(&scenery->functions, o.obj("functions"));
-    relleums::json::add_colors(&scenery->colors, o.obj("colors"));
-    make_children(mother, scenery, o.obj("children"));
-}
-
 void make_children(
     relleums::Frame* mother,
     PlenoscopeScenery* scenery,
@@ -124,6 +107,26 @@ void make_children(
                 jchild.obj("children"));
         }
     }
+}
+
+void append_to_frame_in_scenery_from_json_obj(
+    relleums::Frame* mother,
+    PlenoscopeScenery* scenery,
+    const relleums::json::Object &o
+) {
+    relleums::json::add_functions(&scenery->functions, o.obj("functions"));
+    relleums::json::add_colors(&scenery->colors, o.obj("colors"));
+    make_children(mother, scenery, o.obj("children"));
+}
+
+void append_to_frame_in_scenery(
+    relleums::Frame* mother,
+    PlenoscopeScenery* scenery,
+    const std::string &path) {
+    append_to_frame_in_scenery_from_json_obj(
+        mother,
+        scenery,
+        relleums::json::load(path));
 }
 
 }  // namespace json

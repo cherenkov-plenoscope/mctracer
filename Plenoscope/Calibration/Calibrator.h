@@ -8,43 +8,32 @@
 #include "Plenoscope/Calibration/Config.h"
 #include "Plenoscope/Calibration/CalibrationPhotonResult.h"
 #include "Plenoscope/Calibration/LixelStatisticsFiller.h"
+#include "Core/Random/Random.h"
 
 namespace Plenoscope {
 namespace Calibration {
 
-class Calibrator {
+struct Calibrator {
     const Config config;
-    const relleums::Frame* scenery;
-    PlenoscopeInScenery* plenoscope;
-    unsigned int number_of_photons;
-    double max_principal_aperture_radius_to_trow_photons_on;
-    double max_tilt_vs_optical_axis_to_throw_photons_in;
-    double distance_to_travel_before_intersecting_principal_aperture;
-    double callibration_photon_wavelenght;
+    const PlenoscopeInScenery* plenoscope;
+    const relleums::Frame* world;
+    const unsigned int num_photons;
+    const double MAX_APERTURE_PLANE_RADIUS;
+    const double MAX_INCIDENT_ANGLE;
 
-    std::vector<CalibrationPhotonResult> photon_results;
-    LixelStatisticsFiller lixel_statistics_filler;
-
- public:
     Calibrator(
         const Config _calib_config,
-        PlenoscopeInScenery *plenoscope,
+        const PlenoscopeInScenery *plenoscope,
         const relleums::Frame* _scenery);
-    void export_sub_pixel_statistics(const std::string path)const;
-    void write_lixel_statistics(const std::string &path)const;
-    std::string str()const;
-
- private:
-    void set_up_photon_properties();
-    void set_up_principal_aperture_range();
-    void set_up_field_of_view_range();
-    void set_up_plenoscope_environment();
-    void run_calibration();
-    void fill_calibration_block_to_table();
-    relleums::Photon get_photon_given_pos_and_angle_on_principal_aperture(
-        relleums::Vec3 pos_on_principal_aperture,
-        relleums::Vec3 direction_on_principal_aperture)const;
 };
+
+const double WAVELENGTH = 433e-9;
+const double DISTANCE_TO_APERTURE_PLANE = 1e4;
+
+void run_calibration(
+    const Calibrator &cal,
+    const std::string &path,
+    relleums::Random::Generator *prng);
 
 }  // namespace Calibration
 }  // namespace Plenoscope

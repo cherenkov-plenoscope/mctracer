@@ -8,6 +8,7 @@
 #include "Plenoscope/json_to_plenoscope.h"
 #include "Tools/HeaderBlock.h"
 #include "Scenery/Scenery.h"
+#include "Core/Random/Random.h"
 namespace fs = std::experimental::filesystem;
 using std::string;
 using std::cout;
@@ -117,9 +118,13 @@ int main(int argc, char* argv[]) {
             pis,
             &scenery.root);
 
-        // WRITE OUTPUT
-        calibrator.write_lixel_statistics(
-            join(out_path.path, "lixel_statistics.bin"));
+        Random::Mt19937 prng(0);
+
+        Plenoscope::Calibration::run_calibration(
+            calibrator,
+            join(out_path.path, "lixel_statistics.bin"),
+            &prng);
+
     } catch (std::exception &error) {
         std::cerr << error.what();
     }
