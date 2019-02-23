@@ -6,11 +6,11 @@
 namespace relleums {
 namespace Random {
 
-uint32_t Generator::seed()const {
+uint64_t Generator::seed()const {
     return seed_;
 }
 
-void Generator::set_seed(const uint32_t seed) {
+void Generator::set_seed(const uint64_t seed) {
     this->seed_ = seed;
 }
 

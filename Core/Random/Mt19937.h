@@ -14,11 +14,11 @@ class Mt19937 : public Generator{
     double inv_max;
 
  public:
-    explicit Mt19937(const uint32_t seed);
+    explicit Mt19937(const uint64_t seed);
     Mt19937();
     double uniform();
     double normal(const double mean, const double std_dev);
-    void set_seed(const uint32_t seed);
+    void set_seed(const uint64_t seed);
 
  private:
     void init_inverse_maximum();

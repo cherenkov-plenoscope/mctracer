@@ -10,12 +10,12 @@ namespace Random {
 
 class Generator {
  protected:
-    uint32_t seed_;
+    uint64_t seed_;
 
  public:
-    uint32_t seed()const;
+    uint64_t seed()const;
     virtual double uniform() = 0;
-    virtual void set_seed(const uint32_t seed);
+    virtual void set_seed(const uint64_t seed);
     Vec3 get_point_on_xy_disc_within_radius(const double r);
     Vec3 get_point_on_xy_disc_within_radius_slow(const double r);
     double expovariate(const double rate);
