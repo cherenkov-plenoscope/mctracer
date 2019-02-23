@@ -4,6 +4,6 @@
 
 #include "Limits.h"
 #include "Func1.h"
-#include "Tools.h"
+#include "tools.h"
 
 #endif  // CORE_FUNCTION_FUNCTION_H_
