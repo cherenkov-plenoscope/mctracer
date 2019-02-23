@@ -2,7 +2,7 @@
 #include <array>
 #include "gtest/gtest.h"
 #include "Core/random/random.h"
-#include "Core/Histogram1D.h"
+#include "Core/Histogram1.h"
 #include "Tools/Tools.h"
 #include "Tools/Numeric.h"
 using std::array;
@@ -100,7 +100,7 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
         f.limits.lower,
         f.limits.upper,
         bin_count);
-    Histogram1D histo(samples, bin_edges);
+    Histogram1 histo(samples, bin_edges);
     // std::cout << histo;
     // -------------------
     // normalize histogram

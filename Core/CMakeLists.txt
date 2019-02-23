@@ -20,7 +20,7 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SimulationTruth.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Histogram1D.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Histogram1.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/small_ball.cpp
     PARENT_SCOPE

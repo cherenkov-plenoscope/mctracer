@@ -2,7 +2,7 @@
 #include "Plenoscope/NightSkyBackground/Injector.h"
 #include <limits>
 #include "Tools/Tools.h"
-#include "Core/Histogram1D.h"
+#include "Core/Histogram1.h"
 #include "Core/SimulationTruth.h"
 #include "Tools/Numeric.h"
 using std::vector;
@@ -58,7 +58,7 @@ void inject_nsb_into_photon_pipeline(
             min_crk_arrival_time,
             max_crk_arrival_time,
             bin_edge_count);
-        Histogram1D arrival_time_histo(arrival_times, arrival_time_bin_edges);
+        Histogram1 arrival_time_histo(arrival_times, arrival_time_bin_edges);
         mode_of_cherenkov_arrival_times = arrival_time_histo.mode();
     }
 

@@ -7,7 +7,7 @@
 #include "eventio.h"
 #include "Corsika/corsika.h"
 #include "Corsika/PhotonFactory.h"
-#include "Core/Histogram1D.h"
+#include "Core/Histogram1.h"
 #include "Plenoscope/NightSkyBackground/Light.h"
 #include "Plenoscope/EventHeader.h"
 #include "Plenoscope/SimulationTruthHeader.h"

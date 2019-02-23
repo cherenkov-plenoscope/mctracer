@@ -2,7 +2,7 @@
 #include <vector>
 #include "gtest/gtest.h"
 #include "signal_processing/PhotoElectricConverter.h"
-#include "Core/Histogram1D.h"
+#include "Core/Histogram1.h"
 using std::vector;
 using namespace relleums;
 
@@ -178,7 +178,7 @@ TEST_F(PhotoElectricConverterTest, triangle_qeff) {
     for (const signal_processing::ElectricPulse pulse : result)
         survived_arrival_times.push_back(pulse.arrival_time);
 
-    Histogram1D hist(
+    Histogram1 hist(
         survived_arrival_times,
         {
             0,

@@ -3,7 +3,7 @@
 #include <sstream>
 #include <iomanip>
 #include <math.h>
-#include "Core/Histogram1D.h"
+#include "Core/Histogram1.h"
 #include "Tools/StringTools.h"
 
 namespace relleums {
@@ -11,7 +11,7 @@ namespace relleums {
 using std::string;
 using std::vector;
 
-Histogram1D::Histogram1D(
+Histogram1::Histogram1(
     const vector<double> &samples,
     const vector<double> &_bin_edges
 ):bin_edges(_bin_edges) {
@@ -23,14 +23,14 @@ Histogram1D::Histogram1D(
     number_of_samples = samples.size();
 }
 
-void Histogram1D::init_bins_to_zero() {
+void Histogram1::init_bins_to_zero() {
     unsigned int bin_count = bin_edges.size() - 1;
     bins.reserve(bin_count);
     for (unsigned int i = 0; i < bin_count; i++)
         bins.push_back(0);
 }
 
-void Histogram1D::fill_in(const double sample) {
+void Histogram1::fill_in(const double sample) {
     vector<double>::const_iterator up_bin_edge = std::upper_bound(
         bin_edges.begin(),
         bin_edges.end(),
@@ -50,12 +50,12 @@ void Histogram1D::fill_in(const double sample) {
     bins.at(bin_index)++;
 }
 
-double Histogram1D::mode()const {
+double Histogram1::mode()const {
     unsigned int idx_max_bin = arg_max();
     return 0.5*(bin_edges.at(idx_max_bin+1) + bin_edges.at(idx_max_bin));
 }
 
-unsigned int Histogram1D::arg_max()const {
+unsigned int Histogram1::arg_max()const {
     unsigned int idx_max_bin = 0;
     unsigned int max_bin_count = 0;
 
@@ -68,7 +68,7 @@ unsigned int Histogram1D::arg_max()const {
     return idx_max_bin;
 }
 
-void Histogram1D::assert_at_least_two_bin_edges()const {
+void Histogram1::assert_at_least_two_bin_edges()const {
     if (bin_edges.size() < 2) {
         std::stringstream info;
         info << __FILE__ << ", " << __LINE__ << ", " << __func__ << "\n";
