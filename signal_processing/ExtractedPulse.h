@@ -4,7 +4,7 @@
 
 #include <stdint.h>
 
-namespace SignalProcessing {
+namespace signal_processing {
 
 struct ExtractedPulse {
     uint8_t arrival_time_slice;
@@ -15,6 +15,6 @@ struct ExtractedPulse {
         const int32_t simulation_truth_id);
 };
 
-}  // namespace SignalProcessing
+}  // namespace signal_processing
 
 #endif  // SIGNALPROCESSING_EXTRACTEDPULSE_H_

@@ -1,24 +1,24 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <vector>
 #include "gtest/gtest.h"
-#include "SignalProcessing/PhotoElectricConverter.h"
+#include "signal_processing/PhotoElectricConverter.h"
 #include "Core/Histogram1D.h"
 using std::vector;
 using namespace relleums;
 
 class PhotoElectricConverterTest : public ::testing::Test {};
 
-vector<SignalProcessing::PipelinePhoton> equi_distant_photons(
+vector<signal_processing::PipelinePhoton> equi_distant_photons(
     const unsigned int n
 ) {
-    vector<SignalProcessing::PipelinePhoton> photon_pipeline;
+    vector<signal_processing::PipelinePhoton> photon_pipeline;
     for (unsigned int i = 0; i < n; i++) {
         const double arrival_time = static_cast<double>(i)*1e-9;
         const double wavelength = 433e-9;
         const int simulation_truth_id = i;
 
         photon_pipeline.push_back(
-            SignalProcessing::PipelinePhoton(
+            signal_processing::PipelinePhoton(
                 arrival_time,
                 wavelength,
                 simulation_truth_id));
@@ -28,7 +28,7 @@ vector<SignalProcessing::PipelinePhoton> equi_distant_photons(
 
 
 TEST_F(PhotoElectricConverterTest, config_defaults) {
-    SignalProcessing::PhotoElectricConverter::Config config;
+    signal_processing::PhotoElectricConverter::Config config;
     EXPECT_EQ(0.0, config.dark_rate);
     EXPECT_EQ(0.0, config.probability_for_second_puls);
 
@@ -46,13 +46,13 @@ TEST_F(PhotoElectricConverterTest, config_defaults) {
 }
 
 TEST_F(PhotoElectricConverterTest, empty_input_yields_empty_output) {
-    SignalProcessing::PhotoElectricConverter::Config config;
-    SignalProcessing::PhotoElectricConverter::Converter conv(&config);
+    signal_processing::PhotoElectricConverter::Config config;
+    signal_processing::PhotoElectricConverter::Converter conv(&config);
 
-    vector<SignalProcessing::PipelinePhoton> photon_pipeline;
+    vector<signal_processing::PipelinePhoton> photon_pipeline;
     double exposure_time = 1.0;
     Random::Mt19937 prng(0);
-    vector<SignalProcessing::ElectricPulse> result = conv.
+    vector<signal_processing::ElectricPulse> result = conv.
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
             exposure_time,
@@ -62,15 +62,15 @@ TEST_F(PhotoElectricConverterTest, empty_input_yields_empty_output) {
 }
 
 TEST_F(PhotoElectricConverterTest, input_pulses_absorbed_zero_qunatum_eff) {
-    SignalProcessing::PhotoElectricConverter::Config config;
-    SignalProcessing::PhotoElectricConverter::Converter conv(&config);
+    signal_processing::PhotoElectricConverter::Config config;
+    signal_processing::PhotoElectricConverter::Converter conv(&config);
 
-    vector<SignalProcessing::PipelinePhoton> photon_pipeline =
+    vector<signal_processing::PipelinePhoton> photon_pipeline =
         equi_distant_photons(1337u);
 
     double exposure_time = 1337e-9;
     Random::Mt19937 prng(0);
-    vector<SignalProcessing::ElectricPulse> result = conv.
+    vector<signal_processing::ElectricPulse> result = conv.
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
             exposure_time,
@@ -80,17 +80,17 @@ TEST_F(PhotoElectricConverterTest, input_pulses_absorbed_zero_qunatum_eff) {
 }
 
 TEST_F(PhotoElectricConverterTest, input_pulses_pass_qunatum_eff_is_one) {
-    SignalProcessing::PhotoElectricConverter::Config config;
+    signal_processing::PhotoElectricConverter::Config config;
     Function::Func1 qeff({{200e-9, 1.0}, {1200e-9, 1.0}});
     config.quantum_efficiency_vs_wavelength = &qeff;
-    SignalProcessing::PhotoElectricConverter::Converter conv(&config);
+    signal_processing::PhotoElectricConverter::Converter conv(&config);
 
-    vector<SignalProcessing::PipelinePhoton> photon_pipeline =
+    vector<signal_processing::PipelinePhoton> photon_pipeline =
         equi_distant_photons(1337u);
 
     double exposure_time = 1337e-9;
     Random::Mt19937 prng(0);
-    vector<SignalProcessing::ElectricPulse> result = conv.
+    vector<signal_processing::ElectricPulse> result = conv.
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
             exposure_time,
@@ -105,15 +105,15 @@ TEST_F(PhotoElectricConverterTest, input_pulses_pass_qunatum_eff_is_one) {
 }
 
 TEST_F(PhotoElectricConverterTest, dark_rate_on_empty_photon_pipe) {
-    SignalProcessing::PhotoElectricConverter::Config config;
+    signal_processing::PhotoElectricConverter::Config config;
     config.dark_rate = 100e6;
-    SignalProcessing::PhotoElectricConverter::Converter conv(&config);
+    signal_processing::PhotoElectricConverter::Converter conv(&config);
 
-    vector<SignalProcessing::PipelinePhoton> photon_pipeline;
+    vector<signal_processing::PipelinePhoton> photon_pipeline;
 
     double exposure_time = 1e-6;
     Random::Mt19937 prng(0);
-    vector<SignalProcessing::ElectricPulse> result = conv.
+    vector<signal_processing::ElectricPulse> result = conv.
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
             exposure_time,
@@ -140,15 +140,15 @@ TEST_F(PhotoElectricConverterTest, triangle_qeff) {
     // _0.0_|--|----------|----------|----                 //
     //        200e-9    700e-9     1200e-9 [nm] wavelength //
 
-    SignalProcessing::PhotoElectricConverter::Config config;
+    signal_processing::PhotoElectricConverter::Config config;
     vector<vector<double>> raw_qeff {{  200e-9, 0.0},
                                      {  700e-9, 1.0},
                                      { 1200e-9, 0.0}};
     Function::Func1 qeff(raw_qeff);
     config.quantum_efficiency_vs_wavelength = &qeff;
-    SignalProcessing::PhotoElectricConverter::Converter conv(&config);
+    signal_processing::PhotoElectricConverter::Converter conv(&config);
 
-    vector<SignalProcessing::PipelinePhoton> photon_pipeline;
+    vector<signal_processing::PipelinePhoton> photon_pipeline;
     const unsigned int n = 1000*1000;
     for (unsigned int i = 0; i < n; i++) {
         const double arrival_time = static_cast<double>(i);
@@ -156,7 +156,7 @@ TEST_F(PhotoElectricConverterTest, triangle_qeff) {
             static_cast<double>(n)*1000e-9;
         const int simulation_truth_id = i;
         photon_pipeline.push_back(
-            SignalProcessing::PipelinePhoton(
+            signal_processing::PipelinePhoton(
                 arrival_time,
                 wavelength,
                 simulation_truth_id));
@@ -164,7 +164,7 @@ TEST_F(PhotoElectricConverterTest, triangle_qeff) {
 
     double exposure_time = 1.0;
     Random::Mt19937 prng(0);
-    vector<SignalProcessing::ElectricPulse> result = conv.
+    vector<signal_processing::ElectricPulse> result = conv.
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
             exposure_time,
@@ -175,7 +175,7 @@ TEST_F(PhotoElectricConverterTest, triangle_qeff) {
     vector<double> survived_arrival_times;
     // We created a correlation between wavelength and arrival
     // time in this case on purpose.
-    for (const SignalProcessing::ElectricPulse pulse : result)
+    for (const signal_processing::ElectricPulse pulse : result)
         survived_arrival_times.push_back(pulse.arrival_time);
 
     Histogram1D hist(

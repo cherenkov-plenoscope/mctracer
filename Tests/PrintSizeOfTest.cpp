@@ -15,7 +15,7 @@
 #include "Core/PropagationEnvironment.h"
 #include "Tools/StringTools.h"
 #include "PhotonSensor/PhotonSensor.h"
-#include "SignalProcessing/PipelinePhoton.h"
+#include "signal_processing/signal_processing.h"
 using std::cout;
 using std::string;
 using namespace relleums;
@@ -130,6 +130,6 @@ TEST_F(SizeOfTest, sizes_of_mct) {
     print_size("FindSensorByFrame", finder);
     cout << "--------------------------------------------" << "\n";
 
-    SignalProcessing::PipelinePhoton pipe_ph;
+    signal_processing::PipelinePhoton pipe_ph;
     print_size("PipelinePhoton", pipe_ph);
 }

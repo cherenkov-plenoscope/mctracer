@@ -1,13 +1,12 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <stdint.h>
 #include "gtest/gtest.h"
-#include "SignalProcessing/PhotonStream.h"
-#include "SignalProcessing/ExtractedPulse.h"
+#include "signal_processing/signal_processing.h"
 #include "Core/Random/Random.h"
 #include "Core/SimulationTruth.h"
 using std::vector;
 using std::string;
-using namespace SignalProcessing;
+using namespace signal_processing;
 using namespace relleums;
 
 vector<vector<ExtractedPulse>> create_photon_stream(

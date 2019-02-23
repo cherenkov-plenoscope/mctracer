@@ -9,7 +9,7 @@
 #include "ElectricPulse.h"
 
 
-namespace SignalProcessing {
+namespace signal_processing {
 namespace PhotoElectricConverter {
 
 struct Config {
@@ -45,6 +45,6 @@ class Converter {
 };
 
 }  // namespace PhotoElectricConverter
-}  // namespace SignalProcessing
+}  // namespace signal_processing
 
 #endif  // MCTRACER_SIGNALPROCESSING_PHOTOELECTRICCONVERTER_H_

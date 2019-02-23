@@ -42,7 +42,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/Plenoscope")
 add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonSensor")
 add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonsReader")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Tools")
-add_subdirectory("${PROJECT_SOURCE_DIR}/SignalProcessing")
+add_subdirectory("${PROJECT_SOURCE_DIR}/signal_processing")
 add_subdirectory("${PROJECT_SOURCE_DIR}/DocOpt")
 #-------------------------------
 # mctracer library

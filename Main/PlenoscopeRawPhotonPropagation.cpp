@@ -8,20 +8,18 @@
 #include "Corsika/corsika.h"
 #include "Corsika/PhotonFactory.h"
 #include "Core/Histogram1D.h"
-#include "SignalProcessing/PipelinePhoton.h"
 #include "Plenoscope/NightSkyBackground/Light.h"
 #include "Plenoscope/EventHeader.h"
 #include "Plenoscope/SimulationTruthHeader.h"
 #include "Plenoscope/NightSkyBackground/Injector.h"
 #include "Plenoscope/json_to_plenoscope.h"
-#include "SignalProcessing/PhotoElectricConverter.h"
-#include "SignalProcessing/PhotonStream.h"
-#include "SignalProcessing/pulse_extraction.h"
+#include "signal_processing/signal_processing.h"
 #include "Tools/PathTools.h"
 #include "Tools/HeaderBlock.h"
 #include "Scenery/Scenery.h"
 #include "PhotonsReader/PhotonsReader.h"
 namespace fs = std::experimental::filesystem;
+namespace sp = signal_processing;
 using std::string;
 using std::vector;
 using std::array;
@@ -166,14 +164,14 @@ int main(int argc, char* argv[]) {
         json::json_to_linear_interpol_function(
             pec_obj.obj("quantum_efficiency_vs_wavelength"));
 
-    SignalProcessing::PhotoElectricConverter::Config converter_config;
+    sp::PhotoElectricConverter::Config converter_config;
     converter_config.dark_rate = pec_obj.f8("dark_rate");
     converter_config.probability_for_second_puls = pec_obj.f8(
         "probability_for_second_puls");
     converter_config.quantum_efficiency_vs_wavelength =
         &quantum_efficiency_vs_wavelength;
 
-    SignalProcessing::PhotoElectricConverter::Converter sipm_converter(
+    sp::PhotoElectricConverter::Converter sipm_converter(
         &converter_config);
 
     //--------------------------------------------------------------------------
@@ -208,8 +206,8 @@ int main(int argc, char* argv[]) {
         light_field_channels->clear_history();
         light_field_channels->assign_photons(&photons);
 
-        vector<vector<SignalProcessing::PipelinePhoton>> photon_pipelines =
-            SignalProcessing::get_photon_pipelines(light_field_channels);
+        vector<vector<sp::PipelinePhoton>> photon_pipelines =
+            sp::get_photon_pipelines(light_field_channels);
 
         //-----------------------------
         // Night Sky Background photons
@@ -222,10 +220,10 @@ int main(int argc, char* argv[]) {
 
         //--------------------------
         // Photo Electric conversion
-        vector<vector<SignalProcessing::ElectricPulse>> electric_pipelines;
+        vector<vector<sp::ElectricPulse>> electric_pipelines;
         electric_pipelines.reserve(photon_pipelines.size());
         for (
-            vector<SignalProcessing::PipelinePhoton> ph_pipe :
+            vector<sp::PipelinePhoton> ph_pipe :
             photon_pipelines
         ) {
             electric_pipelines.push_back(
@@ -237,9 +235,9 @@ int main(int argc, char* argv[]) {
 
         //-------------------------
         // Single-photon-extraction
-        SignalProcessing::PhotonStream::Stream record;
+        sp::PhotonStream::Stream record;
         record.time_slice_duration = time_slice_duration;
-        record.photon_stream = SignalProcessing::extract_pulses(
+        record.photon_stream = sp::extract_pulses(
             electric_pipelines,
             time_slice_duration,
             arrival_time_std,
@@ -251,7 +249,7 @@ int main(int argc, char* argv[]) {
             output_path.path, std::to_string(event_counter));
         fs::create_directory(event_output_path.path);
 
-        SignalProcessing::PhotonStream::write(
+        sp::PhotonStream::write(
             record.photon_stream,
             record.time_slice_duration,
             join(
@@ -314,7 +312,7 @@ int main(int argc, char* argv[]) {
             join(event_mc_truth_path.path, "mctracer_event_header.bin"));
 
         if (export_all_simulation_truth) {
-            SignalProcessing::PhotonStream::write_simulation_truth(
+            sp::PhotonStream::write_simulation_truth(
                 record.photon_stream,
                 join(event_mc_truth_path.path, "detector_pulse_origins.bin"));
 

@@ -6,7 +6,7 @@
 #include <vector>
 #include "PhotonSensor/PhotonSensor.h"
 
-namespace SignalProcessing {
+namespace signal_processing {
 
 struct PipelinePhoton {
     double arrival_time;
@@ -25,6 +25,6 @@ std::vector<std::vector<PipelinePhoton>> get_photon_pipelines(
 void sort_photon_pipelines_arrival_time(
     std::vector<PipelinePhoton>* pipeline);
 
-}  // namespace SignalProcessing
+}  // namespace signal_processing
 
 #endif  // MCTRACER_SIGNALPROCESSING_PIPELINEPHOTON_H_

@@ -1,11 +1,11 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "SignalProcessing/PhotoElectricConverter.h"
+#include "signal_processing/PhotoElectricConverter.h"
 #include <sstream>
 #include "Core/SimulationTruth.h"
 using std::vector;
 using namespace relleums;
 
-namespace SignalProcessing {
+namespace signal_processing {
 namespace PhotoElectricConverter {
 
 Config::Config() {
@@ -86,4 +86,4 @@ void Converter::add_accidental_pulse(
 }
 
 }  // namespace PhotoElectricConverter
-}  // namespace SignalProcessing
+}  // namespace signal_processing

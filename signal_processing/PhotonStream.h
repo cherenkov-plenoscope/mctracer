@@ -5,9 +5,9 @@
 #include <stdint.h>
 #include <vector>
 #include <string>
-#include "SignalProcessing/ExtractedPulse.h"
+#include "signal_processing/ExtractedPulse.h"
 
-namespace SignalProcessing {
+namespace signal_processing {
 namespace PhotonStream {
 
 // Write and read ElectricPulses in the very compact photon_stream format.
@@ -42,6 +42,6 @@ uint64_t number_symbols_to_represent(
     const std::vector<std::vector<ExtractedPulse>> &pulses);
 
 }  // namespace PhotonStream
-}  // namespace SignalProcessing
+}  // namespace signal_processing
 
 #endif  // SIGNALPROCESSING_PHOTONSTREAM_H_

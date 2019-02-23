@@ -4,11 +4,11 @@
 
 #include <stdint.h>
 #include <vector>
-#include "SignalProcessing/ElectricPulse.h"
-#include "SignalProcessing/ExtractedPulse.h"
+#include "signal_processing/ElectricPulse.h"
+#include "signal_processing/ExtractedPulse.h"
 #include "Core/Random/Generator.h"
 
-namespace SignalProcessing {
+namespace signal_processing {
 
 const int32_t NUMBER_TIME_SLICES = 100;
 
@@ -24,6 +24,6 @@ std::vector<std::vector<ExtractedPulse>> extract_pulses(
     const double arrival_time_std,
     relleums::Random::Generator* prng);
 
-}  // namespace SignalProcessing
+}  // namespace signal_processing
 
 #endif  // SIGNALPROCESSING_PULSE_EXTRACTION_H_

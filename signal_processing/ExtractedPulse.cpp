@@ -1,8 +1,8 @@
 // Copyright 2017 Sebastian A. Mueller
-#include "SignalProcessing/ExtractedPulse.h"
+#include "signal_processing/ExtractedPulse.h"
 #include "Core/SimulationTruth.h"
 
-namespace SignalProcessing {
+namespace signal_processing {
 
 ExtractedPulse::ExtractedPulse():
     simulation_truth_id(relleums::SimulationTruth::MCTRACER_DEFAULT)
@@ -16,4 +16,4 @@ ExtractedPulse::ExtractedPulse(
     simulation_truth_id(_simulation_truth_id)
 {}
 
-}  // namespace SignalProcessing
+}  // namespace signal_processing

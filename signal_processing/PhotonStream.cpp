@@ -1,15 +1,15 @@
 // Copyright 2016 Sebastian A. Mueller
-#include "SignalProcessing/PhotonStream.h"
+#include "signal_processing/PhotonStream.h"
 #include <math.h>
 #include <sstream>
 #include <fstream>
-#include "SignalProcessing/pulse_extraction.h"
+#include "signal_processing/pulse_extraction.h"
 #include "Tools/binary_input_output.h"
 using std::vector;
 using std::string;
 using namespace relleums;
 
-namespace SignalProcessing {
+namespace signal_processing {
 namespace PhotonStream {
 
 Stream::Stream() {
@@ -191,4 +191,4 @@ uint64_t number_symbols_to_represent(
 }
 
 }  // namespace PhotonStream
-}  // namespace SignalProcessing
+}  // namespace signal_processing

@@ -4,14 +4,14 @@
 
 #include <vector>
 #include "Plenoscope/NightSkyBackground/Light.h"
-#include "SignalProcessing/PipelinePhoton.h"
+#include "signal_processing/signal_processing.h"
 #include "Plenoscope/Calibration/LixelStatistics.h"
 
 namespace Plenoscope {
 namespace NightSkyBackground {
 
 void inject_nsb_into_photon_pipeline(
-    std::vector<std::vector<SignalProcessing::PipelinePhoton>> *
+    std::vector<std::vector<signal_processing::PipelinePhoton>> *
         photon_pipelines,
     const double exposure_time,
     const std::vector<Plenoscope::Calibration::LixelStatistic> *

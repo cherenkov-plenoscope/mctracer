@@ -1,8 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "SignalProcessing/ElectricPulse.h"
+#include "signal_processing/ElectricPulse.h"
 #include "Core/SimulationTruth.h"
 
-namespace SignalProcessing {
+namespace signal_processing {
 
 ElectricPulse::ElectricPulse():
     simulation_truth_id(relleums::SimulationTruth::MCTRACER_DEFAULT)
@@ -16,4 +16,4 @@ ElectricPulse::ElectricPulse(
     simulation_truth_id(_simulation_truth_id)
 {}
 
-}  // namespace SignalProcessing
+}  // namespace signal_processing

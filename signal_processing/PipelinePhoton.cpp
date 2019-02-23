@@ -1,10 +1,10 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "SignalProcessing/PipelinePhoton.h"
+#include "signal_processing/PipelinePhoton.h"
 #include <algorithm>
 #include "Core/SimulationTruth.h"
 using std::vector;
 
-namespace SignalProcessing {
+namespace signal_processing {
 
 PipelinePhoton::PipelinePhoton():
     simulation_truth_id(relleums::SimulationTruth::MCTRACER_DEFAULT) {
@@ -65,4 +65,4 @@ void sort_photon_pipelines_arrival_time(vector<PipelinePhoton>* pipeline) {
         });
 }
 
-}  // namespace SignalProcessing
+}  // namespace signal_processing

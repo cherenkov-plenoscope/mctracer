@@ -4,7 +4,7 @@
 
 #include <stdint.h>
 
-namespace SignalProcessing {
+namespace signal_processing {
 
 struct ElectricPulse {
     double arrival_time;
@@ -15,6 +15,6 @@ struct ElectricPulse {
         const int32_t simulation_truth_id);
 };
 
-}  // namespace SignalProcessing
+}  // namespace signal_processing
 
 #endif  // MCTRACER_SIGNALPROCESSING_ELECTRICPULSE_H_

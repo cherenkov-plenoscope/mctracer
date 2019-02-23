@@ -1,10 +1,10 @@
 // Copyright 2017 Sebastian A. Mueller
 #include <math.h>
-#include "SignalProcessing/pulse_extraction.h"
+#include "signal_processing/pulse_extraction.h"
 #include "Core/SimulationTruth.h"
 using std::vector;
 
-namespace SignalProcessing {
+namespace signal_processing {
 
 vector<ExtractedPulse> extract_pulses(
     const vector<ElectricPulse> &electric_pulses,
@@ -49,4 +49,4 @@ vector<vector<ExtractedPulse>> extract_pulses(
     return channels;
 }
 
-}  // namespace SignalProcessing
+}  // namespace signal_processing
