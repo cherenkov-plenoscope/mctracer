@@ -63,7 +63,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
             {200e-9, cfg.refractive_index},
             {1200e-9, cfg.refractive_index}
         });
-    Random::Mt19937 prng(Random::ZERO_SEED);
+    random::Mt19937 prng(random::ZERO_SEED);
     unsigned int number_of_photons_per_run = 1000;
     vector<double> sigma_psf_vs_image_sensor_distance;
     vector<double> image_sensor_distances;

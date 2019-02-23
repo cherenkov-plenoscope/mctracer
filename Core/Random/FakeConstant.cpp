@@ -3,7 +3,7 @@
 #include "Random.h"
 
 namespace relleums {
-namespace Random {
+namespace random {
 
 FakeConstant::FakeConstant(const double _constant) {
     constant = _constant;
@@ -24,5 +24,5 @@ uint64_t FakeConstant::create_seed() {
 	return 0u;
 }
 
-}  // namespace Random
+}  // namespace random
 }  // namespace relleums

@@ -6,7 +6,7 @@
 #include "Generator.h"
 
 namespace relleums {
-namespace Random {
+namespace random {
 
 struct ZenithDistancePicker {
     const double z_min;
@@ -14,22 +14,22 @@ struct ZenithDistancePicker {
     ZenithDistancePicker(
         const double min_zenith_distance,
         const double max_zenith_distance);
-    double draw(Random::Generator* prng)const;
+    double draw(random::Generator* prng)const;
 };
 
 struct UniformPicker {
     const double v_min;
     const double v_range;
     UniformPicker(const double min_value, const double max_value);
-    double draw(Random::Generator* prng)const;
+    double draw(random::Generator* prng)const;
 };
 
 Vec3 draw_point_on_sphere(
-    Random::Generator* prng,
+    random::Generator* prng,
     const ZenithDistancePicker& zenith,
     const UniformPicker& azimuth);
 
-}  // namespace Random
+}  // namespace random
 }  // namespace relleums
 
 #endif  // CORE_RANDOM_SPHEREPOINTPICKER_H_

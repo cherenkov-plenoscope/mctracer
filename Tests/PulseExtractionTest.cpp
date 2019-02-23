@@ -34,7 +34,7 @@ TEST_F(PulseExtractionTest, arrival_time_slices_below_next_channel_marker) {
 }
 
 TEST_F(PulseExtractionTest, truncate_invalid_arrival_times) {
-    Random::Mt19937 prng(0);
+    random::Mt19937 prng(0);
     const double time_slice_duration = .5e-9;
     const double arrival_time_std = 0.0;
 
@@ -88,7 +88,7 @@ TEST_F(PulseExtractionTest, truncate_invalid_arrival_times) {
 }
 
 TEST_F(PulseExtractionTest, arrival_time_std) {
-    Random::Mt19937 prng(0);
+    random::Mt19937 prng(0);
     const double time_slice_duration = .5e-9;
     const double arrival_time_std = 5e-9;
     const double true_arrival_time = 25e-9;

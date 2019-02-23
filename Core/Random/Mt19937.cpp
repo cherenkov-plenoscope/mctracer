@@ -3,7 +3,7 @@
 #include "Random.h"
 
 namespace relleums {
-namespace Random {
+namespace random {
 
 Mt19937::Mt19937(const uint64_t seed) {
     init_inverse_maximum();
@@ -12,7 +12,7 @@ Mt19937::Mt19937(const uint64_t seed) {
 
 Mt19937::Mt19937() {
     init_inverse_maximum();
-    set_seed(Random::ZERO_SEED);
+    set_seed(random::ZERO_SEED);
 }
 
 double Mt19937::uniform() {
@@ -37,5 +37,5 @@ double Mt19937::normal(const double mean, const double std_dev) {
     return dist(pRNG_mt19937);
 }
 
-}  // namespace Random
+}  // namespace random
 }  // namespace relleums

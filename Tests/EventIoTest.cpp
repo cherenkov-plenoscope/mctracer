@@ -206,7 +206,7 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat_run_time) {
     while (my_run.has_still_events_left()) {
         eventio::Event event = my_run.next_event();
 
-        relleums::Random::Mt19937 prng;
+        relleums::random::Mt19937 prng;
 
         vector<relleums::Photon> photons;
         unsigned int id = 0;

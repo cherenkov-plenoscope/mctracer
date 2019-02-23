@@ -22,12 +22,12 @@ class SphereIntersectionTest : public ::testing::Test {
     double radius;
     Sphere* MySphere;
     Frame world;
-    Random::Mt19937 prng;
+    random::Mt19937 prng;
     double wavelength = 433e-9;
     PropagationEnvironment sphere_test_environment;
 
   virtual void SetUp() {
-    prng.set_seed(Random::ZERO_SEED);
+    prng.set_seed(random::ZERO_SEED);
     pos.set(0.0, 0.0, 0.0);
     rot.set(0.0, 0.0, 0.0);
     world.set_name_pos_rot("world", pos, rot);

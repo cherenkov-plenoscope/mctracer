@@ -351,7 +351,7 @@ int main(int argc, char* argv[]) {
 
     // -------------------------------------------------------------------------
     PropagationConfig settings;
-    Random::Mt19937 prng;
+    random::Mt19937 prng;
     if (args.find("--random_seed")->second)
         prng.set_seed(args.find("--random_seed")->second.asLong());
     Function::Func1 pde_vs_wavelength = Function::Func1(

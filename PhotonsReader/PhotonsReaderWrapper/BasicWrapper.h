@@ -25,7 +25,7 @@ public:
 	BasicWrapper(const std::string path);
 	virtual ~BasicWrapper() {};
 	virtual bool has_still_photons_left()const=0;
-	virtual std::vector<Photon> next(Random::Generator* prng)=0;
+	virtual std::vector<Photon> next(random::Generator* prng)=0;
 };
 
 }  // namespace relleums

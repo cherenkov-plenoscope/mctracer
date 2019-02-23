@@ -17,7 +17,7 @@ bool AsciiIoWrapper::has_still_photons_left()const {
 	return the_single_event_was_already_read? false: true;
 }
 //------------------------------------------------------------------------------
-vector<Photon> AsciiIoWrapper::next(Random::Generator* prng) {
+vector<Photon> AsciiIoWrapper::next(random::Generator* prng) {
 	(void)*prng;
 	the_single_event_was_already_read = true;
 	return photons;

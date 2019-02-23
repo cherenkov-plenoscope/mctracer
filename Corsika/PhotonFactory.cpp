@@ -11,7 +11,7 @@ namespace relleums {
 EventIoPhotonFactory::EventIoPhotonFactory(
     const array<float, 8> &_corsika_photon,
     const unsigned int _id,
-    Random::Generator *prng
+    random::Generator *prng
 ):
     id(_id),
     corsika_photon(_corsika_photon) {
@@ -19,7 +19,7 @@ EventIoPhotonFactory::EventIoPhotonFactory(
     check_once_if_passed_atmosphere(prng);
 }
 
-void EventIoPhotonFactory::check_once_if_passed_atmosphere(Random::Generator *prng) {
+void EventIoPhotonFactory::check_once_if_passed_atmosphere(random::Generator *prng) {
     _passed_atmosphere = prng->uniform() <= photon_survival_probability();
 }
 

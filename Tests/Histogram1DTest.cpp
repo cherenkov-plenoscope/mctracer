@@ -11,7 +11,7 @@ class Histogram1DTest : public ::testing::Test {};
 
 TEST_F(Histogram1DTest, empty_bin_edges) {
     vector<double> bins_edges;
-    Random::Mt19937 prng(0);
+    random::Mt19937 prng(0);
     vector<double> samples;
     for (unsigned int i = 0; i < 42*1337; i++)
         samples.push_back(prng.uniform());
@@ -22,7 +22,7 @@ TEST_F(Histogram1DTest, empty_bin_edges) {
 
 TEST_F(Histogram1DTest, init) {
     vector<double> bins = Numeric::linspace(0.0, 1.0, 50);
-    Random::Mt19937 prng(0);
+    random::Mt19937 prng(0);
     vector<double> samples;
     for (unsigned int i = 0; i < 42*1337; i++)
         samples.push_back(prng.uniform());

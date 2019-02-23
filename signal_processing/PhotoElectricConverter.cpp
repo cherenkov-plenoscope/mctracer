@@ -30,7 +30,7 @@ Converter::Converter(const Config* config) {
 vector<ElectricPulse> Converter::get_pulse_pipeline_for_photon_pipeline(
     const vector<PipelinePhoton> &photon_pipeline,
     const double exposure_time,
-    Random::Generator* prng
+    random::Generator* prng
 ) {
     vector<ElectricPulse> electric_pipeline;
     for (const PipelinePhoton &ph : photon_pipeline) {
@@ -51,7 +51,7 @@ vector<ElectricPulse> Converter::get_pulse_pipeline_for_photon_pipeline(
 void Converter::add_pulse(
     const ElectricPulse &pulse,
     vector<ElectricPulse> *electric_pipeline,
-    Random::Generator* prng
+    random::Generator* prng
 )const {
     electric_pipeline->push_back(pulse);
 
@@ -66,7 +66,7 @@ void Converter::add_pulse(
 void Converter::add_accidental_pulse(
     vector<ElectricPulse> *electric_pipeline,
     const double exposure_time,
-    Random::Generator* prng
+    random::Generator* prng
 )const {
     double relative_arrival_times_sum = prng->expovariate(config->dark_rate);
     while (relative_arrival_times_sum < exposure_time) {

@@ -13,7 +13,7 @@ class ParallelPropagationTest : public ::testing::Test {};
 
 TEST_F(ParallelPropagationTest, propagate_once) {
 	const uint64_t num_photons = 1000;
-	Random::Mt19937 prng(0u);
+	random::Mt19937 prng(0u);
 	vector<Photon> photons1 = Photons::Source::parallel_towards_z_from_xy_disc(
 		1.0,
 		num_photons,

@@ -17,7 +17,7 @@ void inject_nsb_into_photon_pipeline(
     const std::vector<Plenoscope::Calibration::LixelStatistic> *
         lixel_statistics,
     const Light *nsb,
-    relleums::Random::Generator* prng
+    relleums::random::Generator* prng
 );
 
 }  // namespace NightSkyBackground

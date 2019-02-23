@@ -22,7 +22,7 @@ public:
 
 	EventIoWrapper(const std::string path);
 	bool has_still_photons_left()const;
-	std::vector<Photon> next(Random::Generator* prng);	
+	std::vector<Photon> next(random::Generator* prng);	
 };
 
 }  // namespace relleums

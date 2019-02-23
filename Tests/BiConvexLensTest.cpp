@@ -19,7 +19,7 @@ class BiConvexLensTest : public ::testing::Test {
  protected:
     Frame test_bench;
     PropagationConfig settings;
-    Random::Mt19937 prng;
+    random::Mt19937 prng;
     PropagationEnvironment lens_test_bench_environment;
     PhotonSensor::Sensors sensor_list;
     PhotonSensor::Sensor *sensor;
@@ -29,7 +29,7 @@ class BiConvexLensTest : public ::testing::Test {
         set_up_settings();
         set_up_test_bench();
 
-        prng.set_seed(Random::ZERO_SEED);
+        prng.set_seed(random::ZERO_SEED);
 
         lens_test_bench_environment.root_frame = &test_bench;
         lens_test_bench_environment.config = &settings;
@@ -115,7 +115,7 @@ TEST_F(BiConvexLensTest, send_photon_frontal_into_lens) {
 TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
     // light source
     unsigned int number_of_photons_emitted = 1e4;
-    Random::Mt19937 prng(0);
+    random::Mt19937 prng(0);
     vector<Photon> photons = Photons::Source::parallel_towards_z_from_xy_disc(
         0.125,
         number_of_photons_emitted,

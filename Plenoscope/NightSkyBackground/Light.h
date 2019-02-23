@@ -12,7 +12,7 @@ namespace NightSkyBackground {
 
 struct Light {
     const relleums::Function::Func1* flux_vs_wavelength;
-    relleums::Random::SamplesFromDistribution wavelength_probability;
+    relleums::random::SamplesFromDistribution wavelength_probability;
     double rate;
     double fov_radius;
     double fov_solid_angle;

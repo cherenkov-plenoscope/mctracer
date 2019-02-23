@@ -6,7 +6,7 @@
 #include <random>
 
 namespace relleums {
-namespace Random {
+namespace random {
 
 class Mt19937 : public Generator{
     // mersenne_twister_engine
@@ -25,7 +25,7 @@ class Mt19937 : public Generator{
     void init_inverse_maximum();
 };
 
-}  // namespace Random
+}  // namespace random
 }  // namespace relleums
 
 #endif  // CORE_RANDOM_MT19937_H_

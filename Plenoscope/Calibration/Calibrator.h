@@ -33,7 +33,7 @@ const double DISTANCE_TO_APERTURE_PLANE = 1e4;
 void run_calibration(
     const Calibrator &cal,
     const std::string &path,
-    relleums::Random::Generator *prng);
+    relleums::random::Generator *prng);
 
 }  // namespace Calibration
 }  // namespace Plenoscope

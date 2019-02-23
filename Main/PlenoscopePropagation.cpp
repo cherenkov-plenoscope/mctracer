@@ -102,7 +102,7 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // INIT PRNG
-    Random::Mt19937 prng;
+    random::Mt19937 prng;
     if (args.find("--random_seed")->second)
         prng.set_seed(args.find("--random_seed")->second.asLong());
 

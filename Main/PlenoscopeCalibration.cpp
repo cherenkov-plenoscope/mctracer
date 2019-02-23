@@ -118,7 +118,7 @@ int main(int argc, char* argv[]) {
             pis,
             &scenery.root);
 
-        Random::Mt19937 prng(0);
+        random::Mt19937 prng(0);
 
         Plenoscope::Calibration::run_calibration(
             calibrator,

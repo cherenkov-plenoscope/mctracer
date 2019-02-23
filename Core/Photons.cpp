@@ -17,7 +17,7 @@ void propagate_photons_in_scenery_with_settings(
     vector<Photon> *photons,
     const Frame* world,
     const PropagationConfig* settings,
-    Random::Generator* prng
+    random::Generator* prng
 ) {
     if (settings->use_multithread_when_possible)
         propagate_photons_multi_thread(photons, world, settings, prng);
@@ -29,7 +29,7 @@ void propagate_photons(
     vector<Photon> *photons,
     const Frame* world,
     const PropagationConfig* settings,
-    Random::Generator* prng
+    random::Generator* prng
 ) {
     PropagationEnvironment env;
     env.root_frame = world;
@@ -48,7 +48,7 @@ void propagate_one_photon(
     Photon* photon
 ) {
     (void)id;
-    Random::Mt19937 prng(seed);
+    random::Mt19937 prng(seed);
     PropagationEnvironment env;
     env.root_frame = world;
     env.config = settings;
@@ -60,7 +60,7 @@ void propagate_photons_multi_thread(
     vector<Photon> *photons,
     const Frame* world,
     const PropagationConfig* settings,
-    Random::Generator* prng
+    random::Generator* prng
 ) {
     std::vector<uint64_t> prng_seeds(photons->size());
     for (uint64_t i = 0; i < photons->size(); i ++) {
@@ -147,16 +147,16 @@ namespace Source {
 vector<Photon> point_like_towards_z_opening_angle_num_photons(
     const double opening_angle,
     const unsigned int number_of_photons,
-    Random::Generator* prng
+    random::Generator* prng
 ) {
     vector<Photon> photons;
     photons.reserve(number_of_photons);
     const Vec3 support = VEC3_ORIGIN;
 
-    Random::ZenithDistancePicker zenith_picker(0.0, opening_angle);
-    Random::UniformPicker azimuth_picker(0.0, 2*M_PI);
+    random::ZenithDistancePicker zenith_picker(0.0, opening_angle);
+    random::UniformPicker azimuth_picker(0.0, 2*M_PI);
     for (unsigned int i = 0; i < number_of_photons; i++) {
-        Vec3 direction = Random::draw_point_on_sphere(
+        Vec3 direction = random::draw_point_on_sphere(
             prng,
             zenith_picker,
             azimuth_picker);
@@ -170,7 +170,7 @@ vector<Photon> point_like_towards_z_opening_angle_num_photons(
 vector<Photon> parallel_towards_z_from_xy_disc(
     const double disc_radius,
     const unsigned int number_of_photons,
-    Random::Generator* prng
+    random::Generator* prng
 ) {
     vector<Photon> photons;
     photons.reserve(number_of_photons);

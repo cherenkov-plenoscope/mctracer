@@ -86,7 +86,7 @@ TEST_F(PhotonTest, PropagationSimpleGeometry) {
     Vec3 Support(0.0, 0.0, 0.5);
     Vec3 direction(0.0, 0.0, 1.0);
     double wavelength = 433e-9;
-    Random::Mt19937 prng(Random::ZERO_SEED);
+    random::Mt19937 prng(random::ZERO_SEED);
     PropagationEnvironment environment;
     environment.root_frame = &world;
     environment.config = &setup;
@@ -179,7 +179,7 @@ TEST_F(PhotonTest, Reflections) {
     // traveling to the upper mirror
     Vec3 Support(-2.0, 0.0, 0.0);
     Vec3 direction = VEC3_UNIT_X;
-    Random::Mt19937 prng(Random::ZERO_SEED);
+    random::Mt19937 prng(random::ZERO_SEED);
     vector<Photon> photons;
     double num_phot = 1e4;
     for (int i = 1; i <= num_phot; i++) {
@@ -248,7 +248,7 @@ TEST_F(PhotonTest, Refraction) {
 
     // -----------send Photon----------------------
     double wavelength = 433.0e-9;
-    Random::Mt19937 prng(Random::ZERO_SEED);
+    random::Mt19937 prng(random::ZERO_SEED);
     vector<Photon> photons;
     double num_phot = 1e4;
     for (int i = 1; i <= num_phot; i++) {
@@ -326,7 +326,7 @@ TEST_F(PhotonTest, absorbtion_in_medium) {
 
     // -----------send Photons----------------------
     double wavelength = 433.0e-9;
-    Random::Mt19937 prng(Random::ZERO_SEED);
+    random::Mt19937 prng(random::ZERO_SEED);
     std::vector<Photon> photons;
     double num_phot = 1e4;
     for (int i = 1; i <= num_phot; i++) {

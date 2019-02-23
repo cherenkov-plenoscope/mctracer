@@ -120,7 +120,7 @@ std::string ApertureCamera::str()const {
 }
 
 Vec3 ApertureCamera::get_random_point_on_bounded_aperture_plane(
-    Random::Mt19937 *prng
+    random::Mt19937 *prng
 )const {
     Vec3 ap = prng->get_point_on_xy_disc_within_radius(ApertureRadius_in_m);
     return Vec3(ap.x, ap.y, SensorDistance_in_m);
@@ -129,7 +129,7 @@ Vec3 ApertureCamera::get_random_point_on_bounded_aperture_plane(
 Vec3 ApertureCamera::get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(
     const unsigned int row,
     const unsigned int col,
-    Random::Mt19937 *prng
+    random::Mt19937 *prng
 )const {
     const int x_pos_on_sensor_in_pixel =  row - number_rows/2;
     const int y_pos_on_sensor_in_pixel =  col - number_cols/2;
@@ -155,7 +155,7 @@ double ApertureCamera::get_object_size_for_image_size(
 CameraRay ApertureCamera::get_ray_for_pixel_in_row_and_col(
     const unsigned int row,
     const unsigned int col,
-    Random::Mt19937 *prng
+    random::Mt19937 *prng
 )const {
     const Vec3 support_vec_in_cam_frame =
         get_random_point_on_bounded_aperture_plane(prng);
@@ -287,7 +287,7 @@ Color do_one_ray(
     int id,
     const Frame* world,
     const Config* visual_config,
-    Random::Mt19937 *prng,
+    random::Mt19937 *prng,
     const PixelCoordinate pixel,
     const ApertureCamera* cam) {
     (void)id;
@@ -307,7 +307,7 @@ std::vector<Color> ApertureCamera::acquire_pixels(
     uint64_t num_threads = std::thread::hardware_concurrency();
 
     ctpl::thread_pool pool(num_threads);
-    Random::Mt19937 prng;
+    random::Mt19937 prng;
     std::vector<std::future<Color>> results(pixels.size());
 
     for (uint64_t j = 0; j < pixels.size(); ++j) {

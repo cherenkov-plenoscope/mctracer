@@ -23,7 +23,7 @@ TEST_F(OnlineStatisticsTest, few_samples) {
 
 TEST_F(OnlineStatisticsTest, online_variance) {
     vector<double> vals;
-    Random::Mt19937 prng(0);
+    random::Mt19937 prng(0);
     OnlineStatistics ov;
     for (unsigned int i = 0; i < 1000000; i++) {
         const double r = prng.uniform();

@@ -6,7 +6,7 @@
 #include "Core/Function/Function.h"
 
 namespace relleums {
-namespace Random {
+namespace random {
 
 class SamplesFromDistribution {
     const Function::Func1* distribution;
@@ -20,7 +20,7 @@ class SamplesFromDistribution {
     double get_total_integral_of_distribution()const;
 };
 
-}  // namespace Random
+}  // namespace random
 }  // namespace relleums
 
 #endif  // CORE_RANDOM_SAMPLESFROMDISTRIBUTION_H_

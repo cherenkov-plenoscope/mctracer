@@ -51,7 +51,7 @@ TEST_F(PhotoElectricConverterTest, empty_input_yields_empty_output) {
 
     vector<signal_processing::PipelinePhoton> photon_pipeline;
     double exposure_time = 1.0;
-    Random::Mt19937 prng(0);
+    random::Mt19937 prng(0);
     vector<signal_processing::ElectricPulse> result = conv.
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
@@ -69,7 +69,7 @@ TEST_F(PhotoElectricConverterTest, input_pulses_absorbed_zero_qunatum_eff) {
         equi_distant_photons(1337u);
 
     double exposure_time = 1337e-9;
-    Random::Mt19937 prng(0);
+    random::Mt19937 prng(0);
     vector<signal_processing::ElectricPulse> result = conv.
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
@@ -89,7 +89,7 @@ TEST_F(PhotoElectricConverterTest, input_pulses_pass_qunatum_eff_is_one) {
         equi_distant_photons(1337u);
 
     double exposure_time = 1337e-9;
-    Random::Mt19937 prng(0);
+    random::Mt19937 prng(0);
     vector<signal_processing::ElectricPulse> result = conv.
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
@@ -112,7 +112,7 @@ TEST_F(PhotoElectricConverterTest, dark_rate_on_empty_photon_pipe) {
     vector<signal_processing::PipelinePhoton> photon_pipeline;
 
     double exposure_time = 1e-6;
-    Random::Mt19937 prng(0);
+    random::Mt19937 prng(0);
     vector<signal_processing::ElectricPulse> result = conv.
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
@@ -163,7 +163,7 @@ TEST_F(PhotoElectricConverterTest, triangle_qeff) {
     }
 
     double exposure_time = 1.0;
-    Random::Mt19937 prng(0);
+    random::Mt19937 prng(0);
     vector<signal_processing::ElectricPulse> result = conv.
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,

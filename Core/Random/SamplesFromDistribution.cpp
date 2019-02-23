@@ -2,7 +2,7 @@
 #include "Core/Random/SamplesFromDistribution.h"
 
 namespace relleums {
-namespace Random {
+namespace random {
 
 SamplesFromDistribution::SamplesFromDistribution(
     const Function::Func1* _distribution
@@ -30,5 +30,5 @@ double SamplesFromDistribution::get_total_integral_of_distribution()const {
     return total_integral_of_distribution;
 }
 
-}  // namespace Random
+}  // namespace random
 }  // namespace relleums

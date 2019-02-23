@@ -3,7 +3,7 @@
 #include <math.h>
 
 namespace relleums {
-namespace Random {
+namespace random {
 
 ZenithDistancePicker::ZenithDistancePicker(
         const double min_zenith_distance,
@@ -12,7 +12,7 @@ ZenithDistancePicker::ZenithDistancePicker(
     z_range((cos(max_zenith_distance)+1.0)/2.0 - z_min)
 {}
 
-double ZenithDistancePicker::draw(Random::Generator* prng)const {
+double ZenithDistancePicker::draw(random::Generator* prng)const {
     const double z = z_range * prng->uniform() + z_min;
     return acos(2.0*z - 1.0);
 }
@@ -24,12 +24,12 @@ UniformPicker::UniformPicker(
     v_range(max_value - min_value)
 {}
 
-double UniformPicker::draw(Random::Generator* prng)const {
+double UniformPicker::draw(random::Generator* prng)const {
     return v_range * prng->uniform() + v_min;
 }
 
 Vec3 draw_point_on_sphere(
-    Random::Generator* prng,
+    random::Generator* prng,
     const ZenithDistancePicker& zenith,
     const UniformPicker& azimuth
 ) {
@@ -42,5 +42,5 @@ Vec3 draw_point_on_sphere(
         cos(zd));
 }
 
-}  // namespace Random
+}  // namespace random
 }  // namespace relleums

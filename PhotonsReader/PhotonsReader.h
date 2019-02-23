@@ -21,7 +21,7 @@ class PhotonsReader {
     explicit PhotonsReader(const std::string path);
     ~PhotonsReader();
     bool has_still_photons_left()const;
-    std::vector<Photon> next(Random::Generator* prng);
+    std::vector<Photon> next(random::Generator* prng);
 };
 
 }  // namespace relleums

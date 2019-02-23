@@ -33,15 +33,15 @@ class Converter {
     std::vector<ElectricPulse> get_pulse_pipeline_for_photon_pipeline(
         const std::vector<PipelinePhoton> &photon_pipeline,
         const double exposure_time,
-        relleums::Random::Generator* prng);
+        relleums::random::Generator* prng);
     void add_pulse(
         const ElectricPulse &pulse,
         std::vector<ElectricPulse> *electric_pipeline,
-        relleums::Random::Generator* prng)const;
+        relleums::random::Generator* prng)const;
     void add_accidental_pulse(
         std::vector<ElectricPulse> *electric_pipeline,
         const double exposure_time,
-        relleums::Random::Generator* prng)const;
+        relleums::random::Generator* prng)const;
 };
 
 }  // namespace PhotoElectricConverter

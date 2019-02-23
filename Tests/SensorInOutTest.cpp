@@ -15,7 +15,7 @@ class SensorInOutTest : public ::testing::Test {};
 TEST_F(SensorInOutTest, write_and_read) {
     vector<PhotonArrival> arrivals_1;
     const unsigned int number_of_arrivals = 1337*42;
-    Random::Mt19937 prng(0);
+    random::Mt19937 prng(0);
     for (unsigned int i = 0; i < number_of_arrivals; i++) {
         PhotonArrival arrival;
         arrival.simulation_truth_id = prng.uniform();

@@ -14,19 +14,19 @@ void propagate_photons_in_scenery_with_settings(
     std::vector<Photon> *photons,
     const Frame *world,
     const PropagationConfig *settings,
-    Random::Generator* prng);
+    random::Generator* prng);
 
 void propagate_photons(
     std::vector<Photon> *photons,
     const Frame* world,
     const PropagationConfig* settings,
-    Random::Generator* prng);
+    random::Generator* prng);
 
 void propagate_photons_multi_thread(
     std::vector<Photon> *photons,
     const Frame* world,
     const PropagationConfig* settings,
-    Random::Generator* prng);
+    random::Generator* prng);
 
 std::vector<Photon> raw_matrix2photons(
     std::vector<std::vector<double>> raw_matrix);
@@ -45,12 +45,12 @@ namespace Source {
 std::vector<Photon> parallel_towards_z_from_xy_disc(
     const double disc_radius,
     const unsigned int number_of_photons,
-    Random::Generator* prng);
+    random::Generator* prng);
 
 std::vector<Photon> point_like_towards_z_opening_angle_num_photons(
     const double opening_angle,
     const unsigned int number_of_photons,
-    Random::Generator* prng);
+    random::Generator* prng);
 
 }  // namespace Source
 

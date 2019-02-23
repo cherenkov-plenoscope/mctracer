@@ -16,7 +16,7 @@ void inject_nsb_into_photon_pipeline(
     const double nsb_exposure_time,
     const vector<Plenoscope::Calibration::LixelStatistic> *lixel_statistics,
     const Light *nsb,
-    Random::Generator* prng
+    random::Generator* prng
 ) {
     if (photon_pipelines->size() == 0)
         return;

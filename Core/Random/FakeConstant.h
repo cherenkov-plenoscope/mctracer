@@ -5,7 +5,7 @@
 #include "Generator.h"
 
 namespace relleums {
-namespace Random {
+namespace random {
 
 class FakeConstant : public Generator{
     // Gives always the same value.
@@ -18,7 +18,7 @@ class FakeConstant : public Generator{
     double normal(const double mean, const double std_dev);
 };
 
-}  // namespace Random
+}  // namespace random
 }  // namespace relleums
 
 #endif  // CORE_RANDOM_FAKECONSTANT_H_

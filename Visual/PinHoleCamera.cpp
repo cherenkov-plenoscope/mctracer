@@ -102,7 +102,7 @@ Color do_one_pixel(
     int id,
     const Frame* world,
     const Config* visual_config,
-    Random::Mt19937 *prng,
+    random::Mt19937 *prng,
     const unsigned int pixel,
     const PinHoleCamera* cam
 ) {
@@ -124,7 +124,7 @@ void PinHoleCamera::acquire_image(
 
     uint64_t num_threads = std::thread::hardware_concurrency();
     ctpl::thread_pool pool(num_threads);
-    Random::Mt19937 prng;
+    random::Mt19937 prng;
     std::vector<std::future<Color>> results(number_pixel);
 
     for (uint64_t i = 0; i < number_pixel; ++i) {

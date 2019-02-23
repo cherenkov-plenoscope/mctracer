@@ -16,7 +16,7 @@ vector<vector<ExtractedPulse>> create_photon_stream(
     const float time_slice_duration,
     const unsigned int seed) {
 
-    Random::Mt19937 prng(seed);
+    random::Mt19937 prng(seed);
 
     vector<vector<ExtractedPulse>> photon_stream;
     for (unsigned int i = 0; i < number_of_channels; i++) {

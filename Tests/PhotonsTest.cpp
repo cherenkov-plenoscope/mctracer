@@ -57,7 +57,7 @@ TEST_F(PhotonsTest, photon2raw_row) {
 TEST_F(PhotonsTest, bunch2raw_matrix2bunch) {
     const unsigned int number_of_photons = 1e3;
     vector<Photon> photon_bunch;
-    Random::Mt19937 prng(Random::ZERO_SEED);
+    random::Mt19937 prng(random::ZERO_SEED);
     for (unsigned int n = 0; n < number_of_photons; n++) {
         Vec3 sup(prng.uniform(), prng.uniform(), prng.uniform());
         Vec3 dir(prng.uniform(), prng.uniform(), prng.uniform());
@@ -97,7 +97,7 @@ TEST_F(PhotonsTest, bunch2raw_matrix2bunch) {
 TEST_F(PhotonsTest, bunch2raw_matrix2file) {
     const unsigned int number_of_photons = 1e3;
     std::vector<Photon> photon_bunch1;
-    Random::Mt19937 prng(Random::ZERO_SEED);
+    random::Mt19937 prng(random::ZERO_SEED);
     for (unsigned int n = 0; n < number_of_photons; n++) {
         Vec3 sup(prng.uniform(), prng.uniform(), prng.uniform());
         Vec3 dir(prng.uniform(), prng.uniform(), prng.uniform());

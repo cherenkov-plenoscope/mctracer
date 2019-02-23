@@ -6,7 +6,7 @@
 #include "Core/Vec3.h"
 
 namespace relleums {
-namespace Random {
+namespace random {
 
 class Generator {
  protected:
@@ -23,7 +23,7 @@ class Generator {
     virtual double normal(const double mean, const double std_dev) = 0;
 };
 
-}  // namespace Random
+}  // namespace random
 }  // namespace relleums
 
 #endif  // CORE_RANDOM_GENERATOR_H_

@@ -20,7 +20,7 @@ class EventIoPhotonFactory {
     EventIoPhotonFactory(
         const std::array<float, 8>& _corsika_photon,
         const unsigned int id,
-        Random::Generator *prng);
+        random::Generator *prng);
     bool passed_atmosphere()const;
     Photon get_photon();
     Vec3 causal_get_direction()const;
@@ -35,7 +35,7 @@ class EventIoPhotonFactory {
     float photon_survival_probability()const;
 
  private:
-    void check_once_if_passed_atmosphere(Random::Generator *prng);
+    void check_once_if_passed_atmosphere(random::Generator *prng);
     void assert_corsika_photon_has_correct_length()const;
     void assert_photon_weight_is_between_zero_and_one()const;
 };

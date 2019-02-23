@@ -4,7 +4,7 @@
 #include <iostream>
 
 namespace relleums {
-namespace Random {
+namespace random {
 
 uint64_t Generator::seed()const {
     return seed_;
@@ -39,5 +39,5 @@ double Generator::expovariate(const double rate) {
     return -log(uniform())/rate;
 }
 
-}  // namespace Random
+}  // namespace random
 }  // namespace relleums

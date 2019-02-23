@@ -52,17 +52,17 @@ CalibrationPhotonResult one_photon(
     int id,
     const uint64_t seed,
     const Calibrator &cal,
-    const Random::ZenithDistancePicker &zenith_picker,
-    const Random::UniformPicker &azimuth_picker)
+    const random::ZenithDistancePicker &zenith_picker,
+    const random::UniformPicker &azimuth_picker)
 {
     (void)id;
-    Random::Mt19937 prng(seed);
+    random::Mt19937 prng(seed);
 
     // create photon
     const Vec3 support_on_aperture = prng.get_point_on_xy_disc_within_radius(
         cal.MAX_APERTURE_PLANE_RADIUS);
 
-    const Vec3 incident_direction = Random::draw_point_on_sphere(
+    const Vec3 incident_direction = random::draw_point_on_sphere(
         &prng,
         zenith_picker,
         azimuth_picker);
@@ -101,15 +101,15 @@ CalibrationPhotonResult one_photon(
 void fill_another_block(
     const Calibrator &cal,
     LixelStatisticsFiller *lixel_statistics_filler,
-    Random::Generator *prng)
+    random::Generator *prng)
 {
     std::vector<CalibrationPhotonResult> photon_results(
         cal.config.photons_per_block);
 
-    const Random::ZenithDistancePicker zenith_picker(
+    const random::ZenithDistancePicker zenith_picker(
         0.0,
         cal.MAX_INCIDENT_ANGLE);
-    const Random::UniformPicker azimuth_picker(
+    const random::UniformPicker azimuth_picker(
         0.0,
         2*M_PI);
 
@@ -141,7 +141,7 @@ void fill_another_block(
 void run_calibration(
     const Calibrator &cal,
     const std::string &path,
-    Random::Generator *prng
+    random::Generator *prng
 ) {
     LixelStatisticsFiller lixel_statistics_filler(
         &cal.plenoscope->light_field_sensor_geometry,
@@ -166,10 +166,10 @@ void run_calibration(
 /*
 
 void Calibrator::fill_calibration_block_to_table() {
-    Random::ZenithDistancePicker zenith_picker(
+    random::ZenithDistancePicker zenith_picker(
         0.0,
         max_tilt_vs_optical_axis_to_throw_photons_in);
-    Random::UniformPicker azimuth_picker(0.0, 2*M_PI);
+    random::UniformPicker azimuth_picker(0.0, 2*M_PI);
 
     unsigned int i;
     int HadCatch = 0;
@@ -184,7 +184,7 @@ void Calibrator::fill_calibration_block_to_table() {
             thread_local_prng.get_point_on_xy_disc_within_radius(
                 max_principal_aperture_radius_to_trow_photons_on);
 
-        Vec3 direction_on_principal_aperture = Random::draw_point_on_sphere(
+        Vec3 direction_on_principal_aperture = random::draw_point_on_sphere(
             &thread_local_prng,
             zenith_picker,
             azimuth_picker);
