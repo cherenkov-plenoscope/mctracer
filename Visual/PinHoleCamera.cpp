@@ -3,6 +3,7 @@
 #include <exception>
 #include "Tracer.h"
 #include "Core/Random/Random.h"
+#include "cptl_stl.h"
 
 namespace relleums {
 namespace visual {
@@ -97,43 +98,48 @@ Vec3 PinHoleCamera::get_intersection_of_ray_on_image_sensor_for_pixel(
         SensorDirectionHori * hori_position_on_image_sensor;
 }
 
+Color do_one_pixel(
+    int id,
+    const Frame* world,
+    const Config* visual_config,
+    Random::Mt19937 *prng,
+    const unsigned int pixel,
+    const PinHoleCamera* cam
+) {
+    const unsigned int row = pixel / cam->number_cols;
+    const unsigned int col = pixel % cam->number_cols;
+    CameraRay cam_ray = cam->get_ray_for_pixel_in_row_and_col(row, col);
+    Tracer tracer(&cam_ray, world, visual_config, prng);
+    return tracer.color;
+}
+
 void PinHoleCamera::acquire_image(
     const Frame* world,
     const Config* visual_config,
     Image* image
 ) {
     assert_resolution(image);
-    unsigned int i, row, col;
-    CameraRay cam_ray;
-    int HadCatch = 0;
-    Random::Mt19937 prng;
     const unsigned int number_pixel = number_cols*number_rows;
 
-    #pragma omp parallel shared(visual_config, world, HadCatch) private(i, cam_ray, row, col)
-    {
-        #pragma omp for schedule(dynamic)
-        for (i = 0; i < number_pixel; i++) {
-            try {
-                row = i / number_cols;
-                col = i % number_cols;
-                cam_ray = get_ray_for_pixel_in_row_and_col(row, col);
-                Tracer tracer(&cam_ray, world, visual_config, &prng);
-                image->set_col_row(col, row, tracer.color);
-            } catch (std::exception &error) {
-                HadCatch++;
-                std::cerr << error.what();
-            } catch (...) {
-                HadCatch++;
-            }
-        }
+    uint64_t num_threads = std::thread::hardware_concurrency();
+    ctpl::thread_pool pool(num_threads);
+    Random::Mt19937 prng;
+    std::vector<std::future<Color>> results(number_pixel);
+
+    for (uint64_t i = 0; i < number_pixel; ++i) {
+        results[i] = pool.push(
+            do_one_pixel,
+            world,
+            visual_config,
+            &prng,
+            i,
+            this);
     }
 
-    if (HadCatch) {
-        std::stringstream info;
-        info << "PinHoleCamera::" << __func__ << "() in " << __FILE__ << ", ";
-        info << __LINE__ << "\n";
-        info << "Cought exception during multithread ray tracing.\n";
-        throw std::runtime_error(info.str());
+    for (uint64_t i = 0; i < number_pixel; i ++) {
+        const unsigned int row = i / number_cols;
+        const unsigned int col = i % number_cols;
+        image->set_col_row(col, row, results[i].get());
     }
 }
 

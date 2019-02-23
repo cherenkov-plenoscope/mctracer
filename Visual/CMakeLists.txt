@@ -12,5 +12,6 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/Tracer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PortablePixMap.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PixelCoordinate.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/thread_pool.cpp
     PARENT_SCOPE
 )

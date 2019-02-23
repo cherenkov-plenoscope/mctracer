@@ -2,8 +2,11 @@
 #include "Visual/ApertureCamera.h"
 #include <vector>
 #include <exception>
+#include <future>
+#include <thread>
 #include "Visual/Tracer.h"
 #include "Core/Random/Random.h"
+#include "cptl_stl.h"
 using std::string;
 using std::stringstream;
 
@@ -116,22 +119,26 @@ std::string ApertureCamera::str()const {
     return out.str();
 }
 
-Vec3 ApertureCamera::get_random_point_on_bounded_aperture_plane() {
-    Vec3 ap = prng.get_point_on_xy_disc_within_radius(ApertureRadius_in_m);
+Vec3 ApertureCamera::get_random_point_on_bounded_aperture_plane(
+    Random::Mt19937 *prng
+)const {
+    Vec3 ap = prng->get_point_on_xy_disc_within_radius(ApertureRadius_in_m);
     return Vec3(ap.x, ap.y, SensorDistance_in_m);
 }
 
 Vec3 ApertureCamera::get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(
-    const unsigned int row, const unsigned int col
-) {
+    const unsigned int row,
+    const unsigned int col,
+    Random::Mt19937 *prng
+)const {
     const int x_pos_on_sensor_in_pixel =  row - number_rows/2;
     const int y_pos_on_sensor_in_pixel =  col - number_cols/2;
 
     const double image_size_x = x_pos_on_sensor_in_pixel * PixelPitch_in_m;
     const double image_size_y = y_pos_on_sensor_in_pixel * PixelPitch_in_m;
 
-    const double sensor_extension_x = (prng.uniform() - .5) * PixelPitch_in_m;
-    const double sensor_extension_y = (prng.uniform() - .5) * PixelPitch_in_m;
+    const double sensor_extension_x = (prng->uniform() - .5) * PixelPitch_in_m;
+    const double sensor_extension_y = (prng->uniform() - .5) * PixelPitch_in_m;
 
     return Vec3(
         get_object_size_for_image_size(image_size_x + sensor_extension_x),
@@ -146,12 +153,14 @@ double ApertureCamera::get_object_size_for_image_size(
 }
 
 CameraRay ApertureCamera::get_ray_for_pixel_in_row_and_col(
-    const unsigned int row, const unsigned int col
-) {
+    const unsigned int row,
+    const unsigned int col,
+    Random::Mt19937 *prng
+)const {
     const Vec3 support_vec_in_cam_frame =
-        get_random_point_on_bounded_aperture_plane();
+        get_random_point_on_bounded_aperture_plane(prng);
     const Vec3 obj_plane_intersec_in_cam_frame =
-        get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(row, col);
+        get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(row, col, prng);
     const Vec3 direction_vec_in_cam_frame =
         obj_plane_intersec_in_cam_frame - support_vec_in_cam_frame;
     return CameraRay(
@@ -274,39 +283,45 @@ void ApertureCamera::acquire_image(
     }
 }
 
+Color do_one_ray(
+    int id,
+    const Frame* world,
+    const Config* visual_config,
+    Random::Mt19937 *prng,
+    const PixelCoordinate pixel,
+    const ApertureCamera* cam) {
+    CameraRay cam_ray = cam->get_ray_for_pixel_in_row_and_col(
+        pixel.row,
+        pixel.col,
+        prng);
+    Tracer tracer(&cam_ray, world, visual_config, prng);
+    return tracer.color;
+}
+
 std::vector<Color> ApertureCamera::acquire_pixels(
     const Frame* world,
     const Config* visual_config,
     const std::vector<PixelCoordinate> pixels
 ) {
-    int HadCatch = 0;
+    uint64_t num_threads = std::thread::hardware_concurrency();
+
+    ctpl::thread_pool pool(num_threads);
     Random::Mt19937 prng;
-    std::vector<Color> out(pixels.size());
-    #pragma omp parallel shared(visual_config, world, HadCatch)
-    {
-        #pragma omp for schedule(dynamic)
-        for (unsigned int p = 0; p < pixels.size(); p++) {
-            try {
-                CameraRay cam_ray = get_ray_for_pixel_in_row_and_col(
-                    pixels[p].row,
-                    pixels[p].col);
-                Tracer tracer(&cam_ray, world, visual_config, &prng);
-                out[p] = tracer.color;
-            } catch (std::exception &error) {
-                HadCatch++;
-                std::cerr << error.what();
-            } catch (...) {
-                HadCatch++;
-            }
-        }
+    std::vector<std::future<Color>> results(pixels.size());
+
+    for (uint64_t j = 0; j < pixels.size(); ++j) {
+        results[j] = pool.push(
+            do_one_ray,
+            world,
+            visual_config,
+            &prng,
+            pixels[j],
+            this);
     }
 
-    if (HadCatch) {
-        std::stringstream info;
-        info << "ApertureCamera::" << __func__ << "() in " << __FILE__ << ", ";
-        info << __LINE__ << "\n";
-        info << "Cought exception during multithread ray tracing.\n";
-        throw std::runtime_error(info.str());
+    std::vector<Color> out(pixels.size());
+    for (uint64_t i = 0; i < pixels.size(); i ++) {
+        out[i] = results[i].get();
     }
     return out;
 }
