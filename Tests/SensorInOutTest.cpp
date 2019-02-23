@@ -2,7 +2,7 @@
 #include <vector>
 #include "gtest/gtest.h"
 #include "PhotonSensor/PhotonSensor.h"
-#include "Core/Random/Random.h"
+#include "Core/random/random.h"
 
 using namespace relleums;
 using std::vector;

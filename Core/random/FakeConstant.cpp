@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/Random/FakeConstant.h"
-#include "Random.h"
+#include "Core/random/FakeConstant.h"
+#include "random.h"
 
 namespace relleums {
 namespace random {

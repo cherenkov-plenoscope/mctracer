@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/Random/Mt19937.h"
-#include "Random.h"
+#include "Core/random/Mt19937.h"
+#include "random.h"
 
 namespace relleums {
 namespace random {

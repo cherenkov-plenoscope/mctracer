@@ -6,7 +6,7 @@
 #include "Scenery/Primitive/BiConvexLensHexBound.h"
 #include "Scenery/Primitive/Disc.h"
 #include "Scenery/Geometry/LensMaker/LensMaker.h"
-#include "Core/Random/Random.h"
+#include "Core/random/random.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "Core/Photons.h"
 using std::vector;

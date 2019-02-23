@@ -4,7 +4,7 @@
 #include "Core/PropagationConfig.h"
 #include "Scenery/Primitive/Sphere.h"
 #include "Core/Rot3.h"
-#include "Core/Random/Random.h"
+#include "Core/random/random.h"
 #include "Core/PropagationEnvironment.h"
 #include "Core/Photon.h"
 #include "Core/PhotonAndFrame.h"

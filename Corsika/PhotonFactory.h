@@ -4,7 +4,7 @@
 
 #include <array>
 #include "Core/Photon.h"
-#include "Core/Random/Random.h"
+#include "Core/random/random.h"
 
 namespace relleums {
 

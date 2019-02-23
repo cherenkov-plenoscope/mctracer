@@ -5,7 +5,7 @@
 #include "Core/Rot3.h"
 #include "Core/Frame.h"
 #include "Core/RayAndFrame.h"
-#include "Core/Random/Random.h"
+#include "Core/random/random.h"
 #include "Scenery/Primitive/Plane.h"
 #include "Core/Vec3.h"
 

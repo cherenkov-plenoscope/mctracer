@@ -4,7 +4,7 @@
 
 #include <string>
 #include "Plenoscope/LightFieldSensor/Geometry.h"
-#include "Core/Random/Random.h"
+#include "Core/random/random.h"
 #include "Core/Function/Function.h"
 
 namespace Plenoscope {

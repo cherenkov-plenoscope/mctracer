@@ -2,7 +2,7 @@
 #ifndef CORE_RANDOM_SAMPLESFROMDISTRIBUTION_H_
 #define CORE_RANDOM_SAMPLESFROMDISTRIBUTION_H_
 
-#include "Random.h"
+#include "random.h"
 #include "Core/Function/Function.h"
 
 namespace relleums {

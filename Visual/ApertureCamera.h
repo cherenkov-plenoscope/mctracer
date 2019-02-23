@@ -9,7 +9,7 @@ namespace relleums {class Frame;}
 #include "Core/DistanceMeter.h"
 #include "PixelCoordinate.h"
 #include "CameraDevice.h"
-#include "Core/Random/Random.h"
+#include "Core/random/random.h"
 
 namespace relleums {
 namespace visual {

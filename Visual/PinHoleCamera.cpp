@@ -2,7 +2,7 @@
 #include "Visual/PinHoleCamera.h"
 #include <exception>
 #include "Tracer.h"
-#include "Core/Random/Random.h"
+#include "Core/random/random.h"
 #include "vit_vit_cptl_stl.h"
 
 namespace relleums {

@@ -8,7 +8,7 @@
 #include "Plenoscope/Calibration/Config.h"
 #include "Plenoscope/Calibration/CalibrationPhotonResult.h"
 #include "Plenoscope/Calibration/LixelStatisticsFiller.h"
-#include "Core/Random/Random.h"
+#include "Core/random/random.h"
 
 namespace Plenoscope {
 namespace Calibration {

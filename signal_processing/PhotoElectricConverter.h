@@ -4,7 +4,7 @@
 
 #include <vector>
 #include "Core/Function/Function.h"
-#include "Core/Random/Random.h"
+#include "Core/random/random.h"
 #include "PipelinePhoton.h"
 #include "ElectricPulse.h"
 

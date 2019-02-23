@@ -12,7 +12,7 @@
 #include "Tools/FileTools.h"
 #include "Core/PhotonAndFrame.h"
 #include "Tools/HeaderBlock.h"
-#include "Core/Random/Random.h"
+#include "Core/random/random.h"
 using std::vector;
 using std::cout;
 using namespace relleums;

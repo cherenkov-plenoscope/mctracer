@@ -8,7 +8,7 @@
 #include "Core/PhotonAndFrame.h"
 #include "Core/Photons.h"
 #include "Core/PhysicalConstants.h"
-#include "Core/Random/Random.h"
+#include "Core/random/random.h"
 #include "Core/SurfaceEntity.h"
 #include "Scenery/Primitive/Plane.h"
 #include "Scenery/Primitive/RectangularBox.h"

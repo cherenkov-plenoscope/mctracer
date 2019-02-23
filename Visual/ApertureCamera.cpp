@@ -5,7 +5,7 @@
 #include <future>
 #include <thread>
 #include "Visual/Tracer.h"
-#include "Core/Random/Random.h"
+#include "Core/random/random.h"
 #include "vit_vit_cptl_stl.h"
 using std::string;
 using std::stringstream;

@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
 #include "Core/Histogram1D.h"
-#include "Core/Random/Random.h"
+#include "Core/random/random.h"
 #include "Tools/Tools.h"
 #include "Tools/Numeric.h"
 using std::vector;

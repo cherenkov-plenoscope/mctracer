@@ -4,7 +4,7 @@
 
 #include "Core/Frame.h"
 #include "Core/PropagationConfig.h"
-#include "Core/Random/Random.h"
+#include "Core/random/random.h"
 
 namespace relleums {
 

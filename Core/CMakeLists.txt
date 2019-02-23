@@ -1,5 +1,5 @@
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/Function")
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/Random")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/random")
 set(SOURCE
    	${SOURCE}
    	${CMAKE_CURRENT_SOURCE_DIR}/Vec2.cpp

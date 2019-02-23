@@ -4,7 +4,7 @@
 
 #include "CameraRay.h"
 #include "Config.h"
-#include "Core/Random/Random.h"
+#include "Core/random/random.h"
 #include "Core/Photon.h"
 #include "Core/Frame.h"
 #include "Core/Color.h"

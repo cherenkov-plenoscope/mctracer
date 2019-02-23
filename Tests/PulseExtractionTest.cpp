@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include "gtest/gtest.h"
 #include "signal_processing/signal_processing.h"
-#include "Core/Random/Random.h"
+#include "Core/random/random.h"
 #include "Core/SimulationTruth.h"
 #include "Tools/Numeric.h"
 using std::vector;

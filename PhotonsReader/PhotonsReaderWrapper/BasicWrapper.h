@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "Core/Photons.h"
-#include "Core/Random/Random.h"
+#include "Core/random/random.h"
 #include <vector>
 #include <string>
 
