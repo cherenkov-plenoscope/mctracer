@@ -5,7 +5,7 @@
 #include <string>
 
 namespace relleums {
-namespace Function {
+namespace function {
 
 struct Limits{
     double lower;
@@ -18,7 +18,7 @@ struct Limits{
     std::string str()const;
 };
 
-}  // namespace Function
+}  // namespace function
 }  // namespace relleums
 
 #endif  // CORE_FUNCTION_LIMITS_H_

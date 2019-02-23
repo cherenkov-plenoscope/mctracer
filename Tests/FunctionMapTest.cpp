@@ -17,22 +17,22 @@ TEST_F(FunctionMapTest, get_not_existing_color) {
 
 TEST_F(FunctionMapTest, add_func_and_check_it_is_in) {
     FunctionMap my_funcs;
-    my_funcs.add("red", Function::Func1({{0, 0}, {1, 0}}));
+    my_funcs.add("red", function::Func1({{0, 0}, {1, 0}}));
     EXPECT_TRUE(my_funcs.has("red"));
 }
 
 TEST_F(FunctionMapTest, add_func_and_add_it_again) {
     FunctionMap my_funcs;
-    my_funcs.add("f_vs_x", Function::Func1({{0, 0}, {1, 0}}));
+    my_funcs.add("f_vs_x", function::Func1({{0, 0}, {1, 0}}));
     EXPECT_THROW(
-        my_funcs.add("f_vs_x", Function::Func1()),
+        my_funcs.add("f_vs_x", function::Func1()),
         FunctionMap::KeyAlreadyInUse);
 }
 
 TEST_F(FunctionMapTest, add_func_and_get_it_again) {
     FunctionMap my_funcs;
-    my_funcs.add("f_vs_x", Function::Func1({{0, 0}, {1, 0}}));
-    const Function::Func1* function = my_funcs.get("f_vs_x");
+    my_funcs.add("f_vs_x", function::Func1({{0, 0}, {1, 0}}));
+    const function::Func1* function = my_funcs.get("f_vs_x");
     EXPECT_EQ(function->limits.lower, 0);
     EXPECT_EQ(function->limits.upper, 1);
 }

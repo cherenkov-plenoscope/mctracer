@@ -8,41 +8,41 @@ class FunctionTest : public ::testing::Test {};
 
 // Limits
 TEST_F(FunctionTest, causal_limits_correct) {
-    EXPECT_NO_THROW(Function::Limits l(0.0, 1.0));
+    EXPECT_NO_THROW(function::Limits l(0.0, 1.0));
 }
 
 TEST_F(FunctionTest, causal_limits_false) {
-    EXPECT_THROW(Function::Limits l(0.0, -1.0), std::logic_error);
+    EXPECT_THROW(function::Limits l(0.0, -1.0), std::logic_error);
 }
 
 TEST_F(FunctionTest, causal_limits_lower_included) {
-    Function::Limits l(0.0, 1.0);
+    function::Limits l(0.0, 1.0);
     EXPECT_NO_THROW(l.assert_contains(0.0));
 }
 
 TEST_F(FunctionTest, causal_limits_upper_excluded) {
-    Function::Limits l(0.0, 1.0);
+    function::Limits l(0.0, 1.0);
     EXPECT_THROW(l.assert_contains(1.0), std::out_of_range);
 }
 
 TEST_F(FunctionTest, causal_limits_above_upper) {
-    Function::Limits l(0.0, 1.0);
+    function::Limits l(0.0, 1.0);
     EXPECT_THROW(l.assert_contains(1.1), std::out_of_range);
 }
 
 TEST_F(FunctionTest, causal_limits_below_lower) {
-    Function::Limits l(0.0, 1.0);
+    function::Limits l(0.0, 1.0);
     EXPECT_THROW(l.assert_contains(-0.1), std::out_of_range);
 }
 
 TEST_F(FunctionTest, check_limits) {
-    Function::Limits l(4.2, 133.7);
+    function::Limits l(4.2, 133.7);
     EXPECT_EQ(4.2, l.lower);
     EXPECT_EQ(133.7, l.upper);
 }
 
 TEST_F(FunctionTest, default_limits) {
-    Function::Limits l;
+    function::Limits l;
     EXPECT_EQ(0.0, l.lower);
     EXPECT_EQ(0.0, l.upper);
     EXPECT_THROW(l.assert_contains(-0.1), std::out_of_range);
@@ -51,25 +51,25 @@ TEST_F(FunctionTest, default_limits) {
 }
 
 TEST_F(FunctionTest, limit_default_range) {
-    Function::Limits l;
+    function::Limits l;
     EXPECT_EQ(0.0, l.range());
 }
 
 TEST_F(FunctionTest, limit_range) {
-    Function::Limits l(0.0, 1.0);
+    function::Limits l(0.0, 1.0);
     EXPECT_EQ(1.0, l.range());
 }
 
 TEST_F(FunctionTest, polynom3_size) {
     const uint64_t num_samples = 137;
-    std::vector<std::vector<double>> f = Function::polynom3(
+    std::vector<std::vector<double>> f = function::polynom3(
         0, 0, 1, 0, -1, 1, num_samples);
     ASSERT_EQ(f.size(), num_samples);
 }
 
 TEST_F(FunctionTest, polynom3_limits) {
     const uint64_t num_samples = 137;
-    std::vector<std::vector<double>> f = Function::polynom3(
+    std::vector<std::vector<double>> f = function::polynom3(
         0, 0, 1, 0, -1, 1, num_samples);
     ASSERT_EQ(f.size(), num_samples);
     ASSERT_EQ(f.at(0).size(), 2u);
@@ -80,9 +80,9 @@ TEST_F(FunctionTest, polynom3_limits) {
 
 // Sampling
 TEST_F(FunctionTest, sampling_table_size) {
-    Function::Func1 f(
-        Function::polynom3(0, 0, 1, 0, -4.2, 1.337, 4096)); // f(x) = x
-    std::vector<std::vector<double>> sample_xy = Function::sample(f, 1000);
+    function::Func1 f(
+        function::polynom3(0, 0, 1, 0, -4.2, 1.337, 4096)); // f(x) = x
+    std::vector<std::vector<double>> sample_xy = function::sample(f, 1000);
     ASSERT_EQ(1000u, sample_xy.size());
     for (unsigned int i = 0; i < sample_xy.size(); i++)
         ASSERT_EQ(2u, sample_xy.at(i).size());
@@ -90,9 +90,9 @@ TEST_F(FunctionTest, sampling_table_size) {
 
 TEST_F(FunctionTest, sampling_table_x_values) {
     const unsigned int samples = 10;
-    Function::Func1 f(
-        Function::polynom3(0, 1, 0, 0, -4.2, 1.337, 4096)); // f(x) = x^2
-    std::vector<std::vector<double>> sample_xy = Function::sample(f, samples);
+    function::Func1 f(
+        function::polynom3(0, 1, 0, 0, -4.2, 1.337, 4096)); // f(x) = x^2
+    std::vector<std::vector<double>> sample_xy = function::sample(f, samples);
     ASSERT_EQ(samples, sample_xy.size());
     for (unsigned int i = 0; i < sample_xy.size(); i++) {
         ASSERT_EQ(2u, sample_xy.at(i).size());
@@ -105,9 +105,9 @@ TEST_F(FunctionTest, sampling_table_x_values) {
 
 TEST_F(FunctionTest, sampling_table_y_values) {
     const unsigned int samples = 10;
-    Function::Func1 f(
-        Function::polynom3(0, 1, 0, 0, -4.2, 1.337, 4096)); // f(x) = x^2
-    std::vector<std::vector<double>> sample_xy = Function::sample(f, samples);
+    function::Func1 f(
+        function::polynom3(0, 1, 0, 0, -4.2, 1.337, 4096)); // f(x) = x^2
+    std::vector<std::vector<double>> sample_xy = function::sample(f, samples);
     ASSERT_EQ(samples, sample_xy.size());
     for (unsigned int i = 0; i < sample_xy.size(); i++) {
         ASSERT_EQ(2u, sample_xy.at(i).size());
@@ -120,9 +120,9 @@ TEST_F(FunctionTest, sampling_table_y_values) {
 TEST_F(FunctionTest, numerical_integration_const) {
     // f(x) = 1
     // F(x) = x
-    Function::Func1 f(
-        Function::polynom3(0, 0, 0, 1, 0, 1, 4096));
-    Function::Func1 F = Function::integral(f);
+    function::Func1 f(
+        function::polynom3(0, 0, 0, 1, 0, 1, 4096));
+    function::Func1 F = function::integral(f);
     EXPECT_EQ(f.limits.lower, F.limits.lower);
     EXPECT_EQ(f.limits.upper, F.limits.upper);
     // F(0) != 0
@@ -136,9 +136,9 @@ TEST_F(FunctionTest, numerical_integration_const) {
 TEST_F(FunctionTest, numerical_integration_linear) {
     // f(x) = x
     // F(x) = 1/2 x^2
-    Function::Func1 f(
-        Function::polynom3(0, 0, 1, 0, 0, 1, 4096));
-    Function::Func1 F = Function::integral(f);
+    function::Func1 f(
+        function::polynom3(0, 0, 1, 0, 0, 1, 4096));
+    function::Func1 F = function::integral(f);
     EXPECT_EQ(f.limits.lower, F.limits.lower);
     EXPECT_EQ(f.limits.upper, F.limits.upper);
     // F(0) != 0
@@ -152,9 +152,9 @@ TEST_F(FunctionTest, numerical_integration_linear) {
 TEST_F(FunctionTest, numerical_inverse_limits) {
     // f(x) = 2x [0, 1)
     // f_inv(x) = 1/2x [0, 2)
-    Function::Func1 f(
-        Function::polynom3(0, 0, 2, 0, 0, 1, 4096));
-    Function::Func1 f_inv = Function::inverse(f);
+    function::Func1 f(
+        function::polynom3(0, 0, 2, 0, 0, 1, 4096));
+    function::Func1 f_inv = function::inverse(f);
     EXPECT_NEAR(0.0, f_inv.limits.lower, 1e-6);
     EXPECT_NEAR(2.0, f_inv.limits.upper, 1e-6);
 }
@@ -162,9 +162,9 @@ TEST_F(FunctionTest, numerical_inverse_limits) {
 TEST_F(FunctionTest, numerical_inverse_linear) {
     // f(x) = x
     // f_inv(x) = x
-    Function::Func1 f(
-        Function::polynom3(0, 0, 1, 0, 0, 1, 4096));
-    Function::Func1 f_inv = Function::inverse(f);
+    function::Func1 f(
+        function::polynom3(0, 0, 1, 0, 0, 1, 4096));
+    function::Func1 f_inv = function::inverse(f);
     EXPECT_NEAR(0.0, f_inv.limits.lower, 1e-6);
     EXPECT_NEAR(1.0, f_inv.limits.upper, 1e-6);
     // f_inv(0) != 0
@@ -178,9 +178,9 @@ TEST_F(FunctionTest, numerical_inverse_linear) {
 TEST_F(FunctionTest, numerical_inverse_quadratic) {
     // f(x) = x^2
     // f_inv(x) = sqrt(x)
-    Function::Func1 f(
-        Function::polynom3(0, 1, 0, 0, 0, 1, 4096));
-    Function::Func1 f_inv = Function::inverse(f);
+    function::Func1 f(
+        function::polynom3(0, 1, 0, 0, 0, 1, 4096));
+    function::Func1 f_inv = function::inverse(f);
     EXPECT_NEAR(0.0, f_inv.limits.lower, 1e-6);
     EXPECT_NEAR(1.0, f_inv.limits.upper, 1e-6);
     // AsciiIo::write_table_to_file(f.sample(1024), "f.func");
@@ -196,9 +196,9 @@ TEST_F(FunctionTest, numerical_inverse_quadratic) {
 TEST_F(FunctionTest, numerical_derivative_of_constant_function) {
     // f(x) = 1
     // f'(x) = 0
-    Function::Func1 f(
-        Function::polynom3(0, 0, 0, 1, 0, 1, 4096));
-    Function::Func1 f_prime = Function::derivative(f);
+    function::Func1 f(
+        function::polynom3(0, 0, 0, 1, 0, 1, 4096));
+    function::Func1 f_prime = function::derivative(f);
     EXPECT_EQ(f.limits.lower, f_prime.limits.lower);
     EXPECT_EQ(f.limits.upper, f_prime.limits.upper);
     for (double x = 0; x < 1.0; x = x+1e-3)
@@ -208,9 +208,9 @@ TEST_F(FunctionTest, numerical_derivative_of_constant_function) {
 TEST_F(FunctionTest, numerical_derivative_of_linear_function) {
     // f(x) = x + 1
     // f'(x) = 1
-    Function::Func1 f(
-        Function::polynom3(0, 0, 1, 1, 0, 1, 4096));
-    Function::Func1 f_prime = Function::derivative(f);
+    function::Func1 f(
+        function::polynom3(0, 0, 1, 1, 0, 1, 4096));
+    function::Func1 f_prime = function::derivative(f);
     EXPECT_EQ(f.limits.lower, f_prime.limits.lower);
     EXPECT_EQ(f.limits.upper, f_prime.limits.upper);
     for (double x = 0; x < 1.0; x = x+1e-3)
@@ -220,9 +220,9 @@ TEST_F(FunctionTest, numerical_derivative_of_linear_function) {
 TEST_F(FunctionTest, numerical_derivative_of_quadratic_function) {
     // f(x) = x^2
     // f'(x) = 2*x
-    Function::Func1 f(
-        Function::polynom3(0, 1, 0, 0, 0, 1, 4096));
-    Function::Func1 f_prime = Function::derivative(f);
+    function::Func1 f(
+        function::polynom3(0, 1, 0, 0, 0, 1, 4096));
+    function::Func1 f_prime = function::derivative(f);
     EXPECT_EQ(f.limits.lower, f_prime.limits.lower);
     EXPECT_EQ(f.limits.upper, f_prime.limits.upper);
     for (double x = 0; x < 1.0; x = x+1e-3)
@@ -232,37 +232,37 @@ TEST_F(FunctionTest, numerical_derivative_of_quadratic_function) {
 TEST_F(FunctionTest, numerical_sign_flip_of_value_of_constant_function) {
     // f(x) = 0
     // sign flip -> no
-    Function::Func1 f(
-        Function::polynom3(0, 0, 0, 0, 0, 1, 4096));
-    EXPECT_FALSE(Function::value_flips_sign(f));
+    function::Func1 f(
+        function::polynom3(0, 0, 0, 0, 0, 1, 4096));
+    EXPECT_FALSE(function::value_flips_sign(f));
 }
 
 TEST_F(FunctionTest, numerical_sign_flip_of_value_of_linear_function) {
     // f(x) = x [-1, 1)
     // sign flip -> yes
-    Function::Func1 f(Function::polynom3(0, 0, 1, 0, -1, 1, 4096));
-    EXPECT_TRUE(Function::value_flips_sign(f));
+    function::Func1 f(function::polynom3(0, 0, 1, 0, -1, 1, 4096));
+    EXPECT_TRUE(function::value_flips_sign(f));
 }
 
 TEST_F(FunctionTest, numerical_sign_flip_of_value_of_quadratic_function) {
     // f(x) = x^2 - 1 [-1, 1)
     // sign flip -> yes
-    Function::Func1 f(Function::polynom3(0, 1, 0, -1, -1, 1, 4096));
-    EXPECT_TRUE(Function::value_flips_sign(f));
+    function::Func1 f(function::polynom3(0, 1, 0, -1, -1, 1, 4096));
+    EXPECT_TRUE(function::value_flips_sign(f));
 }
 
 TEST_F(FunctionTest, numerical_sign_flip_of_value_of_quadratic_function_no) {
     // f(x) = x^2 [0, 1)
     // sign flip -> no
-    Function::Func1 f(Function::polynom3(0, 1, 0, 0, 0, 1, 4096));
-    EXPECT_FALSE(Function::value_flips_sign(f));
+    function::Func1 f(function::polynom3(0, 1, 0, 0, 0, 1, 4096));
+    EXPECT_FALSE(function::value_flips_sign(f));
 }
 
 
 TEST_F(FunctionTest, mean) {
     // f(x) = x [0, 1)
     // sign flip -> no
-    Function::Func1 f(Function::polynom3(0, 0, 1, 0, 0, 1, 4096));
-    const double mean = Function::mean(f, 1337);
+    function::Func1 f(function::polynom3(0, 0, 1, 0, 0, 1, 4096));
+    const double mean = function::mean(f, 1337);
     EXPECT_NEAR(mean, 0.5, 1e-3);
 }

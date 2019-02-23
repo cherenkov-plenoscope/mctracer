@@ -83,7 +83,7 @@ TEST_F(RandomGeneratorTest, generator_point_on_disc) {
 TEST_F(RandomGeneratorTest, draw_from_distribution) {
     // -------------------
     // create distributions
-    Function::Func1 f(Function::polynom3(0, 1, 0, 0, 0.0, 1.0, 4096));
+    function::Func1 f(function::polynom3(0, 1, 0, 0, 0.0, 1.0, 4096));
     // -------------------
     // sample from distribution
     random::Mt19937 prng(0);

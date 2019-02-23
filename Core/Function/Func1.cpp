@@ -10,7 +10,7 @@ using std::vector;
 using std::string;
 
 namespace relleums {
-namespace Function {
+namespace function {
 
 bool Point::operator()(const Point &l, const Point &r) {
     return l.x < r.x;
@@ -172,5 +172,5 @@ string Func1::str()const {
     return out.str();
 }
 
-}  // namespace Function
+}  // namespace function
 }  // namespace relleums

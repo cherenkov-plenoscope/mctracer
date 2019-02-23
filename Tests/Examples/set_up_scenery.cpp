@@ -62,7 +62,4 @@ TEST_F(SetUpScenery, create_scenery) {
     //visual::FlyingCamera cam(&world, &visual_config);
     //--end_set_up_scene_in_source--
 }
-//--using_namespace--
-using namespace Function;
-//--using_namespace_end--
 //------------------------------------------------------------------------------

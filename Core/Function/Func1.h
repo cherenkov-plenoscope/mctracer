@@ -7,7 +7,7 @@
 #include "Limits.h"
 
 namespace relleums {
-namespace Function {
+namespace function {
 
 struct Point {
     double x, y, slope;
@@ -42,7 +42,7 @@ struct Func1 {
     void assert_func_is_not_empty()const;
 };
 
-}  // namespace Function
+}  // namespace function
 }  // namespace relleums
 
 #endif  // CORE_FUNCTION_FUNC1_H_

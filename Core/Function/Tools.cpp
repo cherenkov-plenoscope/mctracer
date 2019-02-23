@@ -5,7 +5,7 @@
 using std::vector;
 
 namespace relleums {
-namespace Function {
+namespace function {
 
 double increment_for_steps(const Limits &l, const uint64_t num_samples) {
     return l.range()/static_cast<double>(num_samples);
@@ -127,5 +127,5 @@ std::vector<std::vector<double>> polynom3(
     return out;
 }
 
-}  // namespace Function
+}  // namespace function
 }  // namespace relleums

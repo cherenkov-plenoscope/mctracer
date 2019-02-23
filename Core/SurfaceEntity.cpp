@@ -5,7 +5,7 @@
 
 namespace relleums {
 
-using Function::Func1;
+using function::Func1;
 
 const SurfaceEntity SurfaceEntity::VOID_SURFACE_ENTITY;
 const SurfaceEntity SurfaceEntity::PHOTON_SOURCE;

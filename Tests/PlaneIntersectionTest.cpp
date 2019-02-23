@@ -16,7 +16,7 @@ class PlaneIntersectionTest : public ::testing::Test {
     PropagationConfig setup;
     Vec3    pos;
     Rot3  rot;
-    Function::Func1* refl_vs_wavl;
+    function::Func1* refl_vs_wavl;
     Color*      colo;
     double x_width = 2.5;
     double y_width = 1.3;
@@ -31,7 +31,7 @@ class PlaneIntersectionTest : public ::testing::Test {
     rot.set(0.0, 0.0, 0.0);
     world.set_name_pos_rot("world", pos, rot);
 
-    refl_vs_wavl = new Function::Func1(
+    refl_vs_wavl = new function::Func1(
         {
             {200e-9, 1.0},
             {1200e-9, 1.0}

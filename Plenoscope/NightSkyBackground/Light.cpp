@@ -12,7 +12,7 @@ namespace NightSkyBackground {
 
 Light::Light(
     const LightFieldSensor::Geometry *_sensor_geometry,
-    const Function::Func1* _flux_vs_wavelength
+    const function::Func1* _flux_vs_wavelength
 ):
 flux_vs_wavelength(_flux_vs_wavelength),
 wavelength_probability(_flux_vs_wavelength),

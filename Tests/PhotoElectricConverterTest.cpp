@@ -81,7 +81,7 @@ TEST_F(PhotoElectricConverterTest, input_pulses_absorbed_zero_qunatum_eff) {
 
 TEST_F(PhotoElectricConverterTest, input_pulses_pass_qunatum_eff_is_one) {
     signal_processing::PhotoElectricConverter::Config config;
-    Function::Func1 qeff({{200e-9, 1.0}, {1200e-9, 1.0}});
+    function::Func1 qeff({{200e-9, 1.0}, {1200e-9, 1.0}});
     config.quantum_efficiency_vs_wavelength = &qeff;
     signal_processing::PhotoElectricConverter::Converter conv(&config);
 
@@ -144,7 +144,7 @@ TEST_F(PhotoElectricConverterTest, triangle_qeff) {
     vector<vector<double>> raw_qeff {{  200e-9, 0.0},
                                      {  700e-9, 1.0},
                                      { 1200e-9, 0.0}};
-    Function::Func1 qeff(raw_qeff);
+    function::Func1 qeff(raw_qeff);
     config.quantum_efficiency_vs_wavelength = &qeff;
     signal_processing::PhotoElectricConverter::Converter conv(&config);
 

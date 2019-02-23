@@ -24,7 +24,7 @@ TEST_F(ParallelPropagationTest, propagate_once) {
 	scenery.colors.add("red", Color(255, 0, 0));
 	scenery.functions.add(
 		"fifty_fifty",
-		Function::Func1({
+		function::Func1({
 			{200e-9, 0.5},
 			{1200e-9, 0.5}
 		}));

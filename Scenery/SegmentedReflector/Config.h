@@ -25,18 +25,18 @@ namespace SegmentedReflector {
 
 		const Color *mirror_color;
 		const Color *inner_mirror_color;
-		const Function::Func1* reflectivity;
+		const function::Func1* reflectivity;
 
 		Config();
 	};
 
-	static const Function::Func1 typical_reflectivity(
+	static const function::Func1 typical_reflectivity(
 		{
 			{200e-9, .8},
 			{1200e-9, .8}
 		});
 
-	static const Function::Func1 perfect_reflectivity(
+	static const function::Func1 perfect_reflectivity(
 		{
 			{200e-9, 1},
 			{1200e-9, 1}

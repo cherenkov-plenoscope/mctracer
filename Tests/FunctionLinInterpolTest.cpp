@@ -51,7 +51,7 @@ TEST_F(Func1Test, check_setup) {
 }
 
 TEST_F(Func1Test, construct_using_matrix_of_vectors) {
-    Function::Func1 f(table);
+    function::Func1 f(table);
     for (unsigned int i = 0; i < table.size()-1; i++) {
         double argument = table.at(i).at(0);
         double value = table.at(i).at(1);
@@ -60,13 +60,13 @@ TEST_F(Func1Test, construct_using_matrix_of_vectors) {
 }
 
 TEST_F(Func1Test, access_below_lowest_argument) {
-    Function::Func1 f(table);
+    function::Func1 f(table);
     double arg_below_definition = table.at(0).at(0) - 1e-9;
     EXPECT_THROW(f.evaluate(arg_below_definition), std::out_of_range);
 }
 
 TEST_F(Func1Test, access_at_highest_argument) {
-    Function::Func1 f(table);
+    function::Func1 f(table);
     double upper_limit = table.back().at(0);
     EXPECT_THROW(f.evaluate(upper_limit), std::out_of_range);
 }
@@ -75,7 +75,7 @@ TEST_F(Func1Test, generate_from_from_file) {
     std::string path = "numeric_table_IO/tim_sinus.csv";
     AsciiIo::write_table_to_file(table, path);
 
-    Function::Func1 f(AsciiIo::gen_table_from_file(path));
+    function::Func1 f(AsciiIo::gen_table_from_file(path));
 
     // precision loss in ascii files, cant access boundarys sharp,
     // start in row 1 and stop one row before end.
@@ -100,7 +100,7 @@ TEST_F(Func1Test, linear_interpolation) {
     //    |/____.___
     //   0      1
 
-    Function::Func1 f(two_entry_table);
+    function::Func1 f(two_entry_table);
 
     for (double x = -0.1; x < 1.1; x = x+0.011) {
         if (x >= 0.0 && x < 1.0)
@@ -113,7 +113,7 @@ TEST_F(Func1Test, linear_interpolation) {
 TEST_F(Func1Test, empty_table_for_Func1) {
     std::vector<std::vector<double>> empty_table;
     EXPECT_EQ(0u, empty_table.size());
-    EXPECT_THROW(Function::Func1 f(empty_table), std::invalid_argument);
+    EXPECT_THROW(function::Func1 f(empty_table), std::invalid_argument);
     // It must throw anyhow when it is first used because its limit's range is
     // zero.
 }
@@ -125,7 +125,7 @@ TEST_F(Func1Test, max_value) {
             double y = amp*sin(x*2.0*M_PI);
             table.push_back({x, y});
         }
-        Function::Func1 f(table);
+        function::Func1 f(table);
         EXPECT_NEAR(amp, f.max(), 1e-6);
         EXPECT_NEAR(-amp, f.min(), 1e-6);
     }

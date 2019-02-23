@@ -63,7 +63,7 @@ void set_surface(SurfaceEntity *s, Scenery *scenery, const Object &o);
 void make_children(Frame* mother, Scenery* scenery, const Object &o);
 void add_colors(ColorMap* colors, const Object &o);
 std::vector<std::vector<double>> json_to_vec_of_vecs(const Object &avsv);
-Function::Func1 json_to_linear_interpol_function(const Object &avsv);
+function::Func1 json_to_linear_interpol_function(const Object &avsv);
 void add_functions(FunctionMap* functions, const Object &o);
 
 void append_to_frame_in_scenery(

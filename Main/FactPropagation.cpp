@@ -288,7 +288,7 @@ int main(int argc, char* argv[]) {
     scenery.root.set_name_pos_rot("root", VEC3_ORIGIN, ROT3_UNITY);
     scenery.functions.add(
       "mirror_reflectivity",
-      Function::Func1(fact_mirror_reflectivity()));
+      function::Func1(fact_mirror_reflectivity()));
     scenery.colors.add("mirror_color", Color(128, 128, 128));
     scenery.colors.add("inner_mirror_color", Color(255, 255, 255));
     scenery.colors.add("pixel_red", Color(255, 0, 0));
@@ -354,7 +354,7 @@ int main(int argc, char* argv[]) {
     random::Mt19937 prng;
     if (args.find("--random_seed")->second)
         prng.set_seed(args.find("--random_seed")->second.asLong());
-    Function::Func1 pde_vs_wavelength = Function::Func1(
+    function::Func1 pde_vs_wavelength = function::Func1(
         pde_hamamatsu_S10362_33_050C());
 
     signal_processing::PhotoElectricConverter::Config converter_config;

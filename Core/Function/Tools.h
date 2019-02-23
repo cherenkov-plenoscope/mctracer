@@ -7,7 +7,7 @@
 #include "Function.h"
 
 namespace relleums {
-namespace Function {
+namespace function {
 
 static const unsigned int DEFAULT_STEPS = 4096;
 
@@ -49,7 +49,7 @@ std::vector<std::vector<double>> polynom3(
     uint64_t steps
 );
 
-}  // namespace Function
+}  // namespace function
 }  // namespace relleums
 
 #endif  // CORE_FUNCTION_TOOLS_H_

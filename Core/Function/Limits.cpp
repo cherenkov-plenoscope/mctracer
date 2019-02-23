@@ -5,7 +5,7 @@
 using std::string;
 
 namespace relleums {
-namespace Function {
+namespace function {
 
 void Limits::assert_causal()const {
     if (upper < lower) {
@@ -51,5 +51,5 @@ string Limits::str()const {
     return out.str();
 }
 
-}  // namespace Function
+}  // namespace function
 }  // namespace relleums
