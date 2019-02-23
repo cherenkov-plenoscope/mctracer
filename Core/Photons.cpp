@@ -1,8 +1,10 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Core/Photons.h"
-#include <omp.h>
 #include <sstream>
 #include <iostream>
+#include <future>
+#include <thread>
+#include "vit_vit_cptl_stl.h"
 #include "Core/PhotonAndFrame.h"
 using std::string;
 using std::stringstream;
@@ -18,12 +20,12 @@ void propagate_photons_in_scenery_with_settings(
     Random::Generator* prng
 ) {
     if (settings->use_multithread_when_possible)
-        propagate_photons_using_multi_thread(photons, world, settings);
+        propagate_photons_parallel(photons, world, settings, prng);
     else
-        propagate_photons_using_single_thread(photons, world, settings, prng);
+        propagate_photons(photons, world, settings, prng);
 }
 
-void propagate_photons_using_single_thread(
+void propagate_photons(
     vector<Photon> *photons,
     const Frame* world,
     const PropagationConfig* settings,
@@ -38,64 +40,44 @@ void propagate_photons_using_single_thread(
         PhotonAndFrame::Propagator(&photons->at(i), env);
 }
 
-void propagate_photons_using_multi_thread(
+void propagate_one_photon(
+    int id,
+    const Frame* world,
+    const PropagationConfig* settings,
+    Random::Generator *prng,
+    Photon* photon
+) {
+    (void)id;
+    PropagationEnvironment env;
+    env.root_frame = world;
+    env.config = settings;
+    env.prng = prng;
+    PhotonAndFrame::Propagator(photon, env);
+}
+
+void propagate_photons_parallel(
     vector<Photon> *photons,
     const Frame* world,
-    const PropagationConfig* settings
+    const PropagationConfig* settings,
+    Random::Generator* prng
 ) {
-    unsigned int i;
-    unsigned int number_of_threads;
-    unsigned int thread_id, ray_counter;
-    stringstream out;
-    int HadCatch = 0;
+    uint64_t num_threads = std::thread::hardware_concurrency();
+    ctpl::thread_pool pool(num_threads);
+    std::vector<std::future<void>> results(photons->size());
 
-    #pragma omp parallel shared(settings, world, HadCatch) private(number_of_threads, thread_id, out, ray_counter)
-    {
-        Random::Mt19937 prng_local_thread;
-        ray_counter = 0;
-        thread_id = omp_get_thread_num();
-        number_of_threads = omp_get_num_threads();
-
-        PropagationEnvironment env_for_this_thread_only;
-        env_for_this_thread_only.root_frame = world;
-        env_for_this_thread_only.config = settings;
-        env_for_this_thread_only.prng = &prng_local_thread;
-
-        #pragma omp for schedule(dynamic) private(i)
-        for (i = 0; i < photons->size(); i++) {
-            try {
-                ray_counter++;
-                PhotonAndFrame::Propagator(
-                    &photons->at(i),
-                    env_for_this_thread_only);
-            } catch (std::exception &error) {
-                HadCatch++;
-                std::cerr << error.what();
-            } catch (...) {
-                HadCatch++;
-            }
-        }
-
-        out << "Thread " << thread_id+1 << "/" << number_of_threads;
-        out << " is doing " << ray_counter << "/";
-        out << photons->size() << " photons. ";
-        out << "Seed: " << prng_local_thread.seed() << "\n";
-        //  cout << out.str();
+    for (uint64_t i = 0; i < photons->size(); ++i) {
+        results[i] = pool.push(
+            propagate_one_photon,
+            world,
+            settings,
+            prng,
+            &(photons->at(i)));
     }
 
-    if (HadCatch) {
-        stringstream info;
-        info << "PhotonBunch::" << __func__ << "() in " << __FILE__ << ", ";
-        info << __LINE__ <<"\n";
-        info << "Cought exception during multithread propagation.\n";
-        throw std::runtime_error(info.str());
+    for (uint64_t i = 0; i < photons->size(); i ++) {
+        results[i].get();
     }
 }
-/*
-A throw executed inside a parallel region must cause execution to resume
-within the same parallel region, and it must be caught by the same thread
-that threw the exception
-*/
 
 // In Out to raw matrix/table -> AsciiIO can read/write this to text files
 

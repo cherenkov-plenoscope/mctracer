@@ -16,16 +16,17 @@ void propagate_photons_in_scenery_with_settings(
     const PropagationConfig *settings,
     Random::Generator* prng);
 
-void propagate_photons_using_single_thread(
+void propagate_photons(
     std::vector<Photon> *photons,
     const Frame* world,
     const PropagationConfig* settings,
     Random::Generator* prng);
 
-void propagate_photons_using_multi_thread(
+void propagate_photons_parallel(
     std::vector<Photon> *photons,
     const Frame* world,
-    const PropagationConfig* settings);
+    const PropagationConfig* settings,
+    Random::Generator* prng);
 
 std::vector<Photon> raw_matrix2photons(
     std::vector<std::vector<double>> raw_matrix);
