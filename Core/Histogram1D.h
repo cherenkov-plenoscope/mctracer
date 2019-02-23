@@ -18,7 +18,6 @@ class Histogram1D {
     Histogram1D(
         const std::vector<double> &samples,
         const std::vector<double> &_bin_edges);
-    std::string str()const;
     double mode()const;
     unsigned int arg_max()const;
 
