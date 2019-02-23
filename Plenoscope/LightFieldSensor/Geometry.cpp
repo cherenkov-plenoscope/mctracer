@@ -9,7 +9,7 @@
 #include "Tools/StringTools.h"
 #include "Tools/FileTools.h"
 #include "Scenery/Geometry/LensMaker/LensMaker.h"
-#include "Corsika/Tools.h"
+#include "Corsika/corsika.h"
 using std::vector;
 using std::array;
 using std::string;

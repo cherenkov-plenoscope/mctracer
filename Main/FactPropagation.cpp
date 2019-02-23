@@ -6,7 +6,7 @@
 #include "Tools/Tools.h"
 #include "Core/Photons.h"
 #include "eventio.h"
-#include "Corsika/Tools.h"
+#include "Corsika/corsika.h"
 #include "Corsika/PhotonFactory.h"
 #include "Tools/PathTools.h"
 #include "Scenery/Scenery.h"

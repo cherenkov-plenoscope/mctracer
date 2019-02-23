@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Plenoscope/EventHeader.h"
-#include "Corsika/Tools.h"
+#include "Corsika/corsika.h"
 
 namespace Plenoscope {
 

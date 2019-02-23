@@ -2,7 +2,7 @@
 #include <algorithm>
 #include "gtest/gtest.h"
 #include "eventio.h"
-#include "Corsika/Tools.h"
+#include "Corsika/corsika.h"
 #include "Corsika/PhotonFactory.h"
 using std::string;
 using std::vector;

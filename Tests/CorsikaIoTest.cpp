@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "Corsika/Tools.h"
+#include "Corsika/corsika.h"
 #include "Core/Random/Random.h"
 using std::string;
 using namespace relleums;

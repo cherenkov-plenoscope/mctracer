@@ -5,7 +5,7 @@
 #include "Tools/Tools.h"
 #include "Core/Photons.h"
 #include "eventio.h"
-#include "Corsika/Tools.h"
+#include "Corsika/corsika.h"
 #include "Corsika/PhotonFactory.h"
 #include "Core/Histogram1D.h"
 #include "SignalProcessing/PipelinePhoton.h"
