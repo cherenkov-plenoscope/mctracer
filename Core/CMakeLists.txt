@@ -24,6 +24,6 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/small_ball.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/welcome_screen.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Numeric.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/numeric.cpp
     PARENT_SCOPE
 )

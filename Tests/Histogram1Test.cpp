@@ -3,7 +3,7 @@
 #include "Core/Histogram1.h"
 #include "Core/random/random.h"
 #include "Tools/Tools.h"
-#include "Core/Numeric.h"
+#include "Core/numeric.h"
 using std::vector;
 using namespace relleums;
 

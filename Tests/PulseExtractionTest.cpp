@@ -4,7 +4,7 @@
 #include "signal_processing/signal_processing.h"
 #include "Core/random/random.h"
 #include "Core/SimulationTruth.h"
-#include "Core/Numeric.h"
+#include "Core/numeric.h"
 using std::vector;
 using std::string;
 using namespace relleums;

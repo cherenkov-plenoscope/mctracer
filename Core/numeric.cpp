@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/Numeric.h"
+#include "Core/numeric.h"
 #include <math.h>
 using std::vector;
 
