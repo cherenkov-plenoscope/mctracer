@@ -12,7 +12,7 @@
 //   year={2009},
 //   publisher={World Scientific}
 // }
-#include <Core/small_ball.h>
+#include "Core/small_ball.h"
 #include <math.h>
 
 namespace relleums {
