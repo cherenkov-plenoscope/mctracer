@@ -3,7 +3,7 @@
 #define CORE_RANDOM_SAMPLESFROMDISTRIBUTION_H_
 
 #include "random.h"
-#include "Core/Function/Function.h"
+#include "Core/function/function.h"
 
 namespace relleums {
 namespace random {

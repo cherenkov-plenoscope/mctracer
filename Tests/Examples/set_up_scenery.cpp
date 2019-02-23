@@ -1,6 +1,6 @@
 #include "Visual/FlyingCamera.h"
 #include "Core/Color.h"
-#include "Core/Function/Function.h"
+#include "Core/function/function.h"
 #include "Core/Rot3.h"
 #include "Core/Vec3.h"
 #include "Scenery/Primitive/Primitive.h"

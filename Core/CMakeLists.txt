@@ -1,4 +1,4 @@
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/Function")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/function")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/random")
 set(SOURCE
    	${SOURCE}

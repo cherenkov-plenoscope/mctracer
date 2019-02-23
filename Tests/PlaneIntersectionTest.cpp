@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "Core/Function/Function.h"
+#include "Core/function/function.h"
 #include "Core/PropagationConfig.h"
 #include "Core/Rot3.h"
 #include "Core/Frame.h"

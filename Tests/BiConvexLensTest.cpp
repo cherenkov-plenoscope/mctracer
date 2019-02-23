@@ -2,7 +2,7 @@
 #include <vector>
 #include "gtest/gtest.h"
 // #include "Cameras/FlyingCamera.h"
-#include "Core/Function/Function.h"
+#include "Core/function/function.h"
 #include "Core/Photons.h"
 #include "Core/PhotonAndFrame.h"
 #include "Scenery/Primitive/BiConvexLens.h"

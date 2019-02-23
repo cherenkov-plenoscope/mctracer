@@ -6,7 +6,7 @@
 #include <utility>
 #include <map>
 #include "ResourceMap.h"
-#include "Core/Function/Function.h"
+#include "Core/function/function.h"
 
 namespace relleums {
 

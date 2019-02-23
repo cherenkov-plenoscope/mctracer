@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <math.h>
 #include "gtest/gtest.h"
-#include "Core/Function/Function.h"
+#include "Core/function/function.h"
 #include "Tools/AsciiIo.h"
 using std::stringstream;
 using std::string;

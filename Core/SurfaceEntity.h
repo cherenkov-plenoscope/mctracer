@@ -5,7 +5,7 @@
 #include <string>
 #include "Core/Frame.h"
 #include "Color.h"
-#include "Core/Function/Function.h"
+#include "Core/function/function.h"
 
 namespace relleums {
 

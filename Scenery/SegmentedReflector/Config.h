@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "Core/Color.h"
-#include "Core/Function/Function.h"
+#include "Core/function/function.h"
 
 namespace relleums {
 namespace SegmentedReflector {

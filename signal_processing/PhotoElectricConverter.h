@@ -3,7 +3,7 @@
 #define MCTRACER_SIGNALPROCESSING_PHOTOELECTRICCONVERTER_H_
 
 #include <vector>
-#include "Core/Function/Function.h"
+#include "Core/function/function.h"
 #include "Core/random/random.h"
 #include "PipelinePhoton.h"
 #include "ElectricPulse.h"

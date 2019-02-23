@@ -1,11 +1,11 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/Function/Func1.h"
+#include "Core/function/Func1.h"
 #include <iostream>
 #include <sstream>
 #include <algorithm>
 #include <utility>
 #include "Tools/StringTools.h"
-#include "Core/Function/Tools.h"
+#include "Core/function/function.h"
 using std::vector;
 using std::string;
 

@@ -5,7 +5,7 @@
 #include <string>
 #include "Plenoscope/LightFieldSensor/Geometry.h"
 #include "Core/random/random.h"
-#include "Core/Function/Function.h"
+#include "Core/function/function.h"
 
 namespace Plenoscope {
 namespace NightSkyBackground {

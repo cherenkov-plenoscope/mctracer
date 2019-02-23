@@ -4,7 +4,7 @@
 
 #include <stdint.h>
 #include <vector>
-#include "Function.h"
+#include "function.h"
 
 namespace relleums {
 namespace function {

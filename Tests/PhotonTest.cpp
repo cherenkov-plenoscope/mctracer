@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Core/Function/Function.h"
+#include "Core/function/function.h"
 #include "Core/Photon.h"
 #include "Core/PhotonAndFrame.h"
 #include "Core/Photons.h"
