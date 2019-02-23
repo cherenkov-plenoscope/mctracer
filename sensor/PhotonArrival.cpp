@@ -1,8 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "PhotonSensor/PhotonArrival.h"
+#include "sensor/PhotonArrival.h"
 
 namespace relleums {
-namespace PhotonSensor {
+namespace sensor {
 
 PhotonArrival::PhotonArrival() {}
 
@@ -24,5 +24,5 @@ PhotonArrival::PhotonArrival(
     theta_y(ty)
 {}
 
-}  // namespace PhotonSensor
+}  // namespace sensor
 }  // namespace relleums

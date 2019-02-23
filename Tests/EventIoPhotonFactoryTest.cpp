@@ -4,7 +4,7 @@
 #include "Corsika/PhotonFactory.h"
 #include "eventio.h"
 #include "Scenery/Primitive/Disc.h"
-#include "PhotonSensor/PhotonSensor.h"
+#include "sensor/PhotonSensor.h"
 #include "Core/Photons.h"
 using std::vector;
 using namespace relleums;
@@ -47,9 +47,9 @@ TEST_F(EventIoPhotonFactoryTest, intersection_point_on_ground) {
                     ground->set_inner_color(ground_color);
                     ground->set_radius(1e3);
 
-                    PhotonSensor::Sensor sensor(ground_sensor_id, ground);
-                    vector<PhotonSensor::Sensor*> sensor_vec = {&sensor};
-                    PhotonSensor::Sensors sensor_list(sensor_vec);
+                    sensor::Sensor sensor(ground_sensor_id, ground);
+                    vector<sensor::Sensor*> sensor_vec = {&sensor};
+                    sensor::Sensors sensor_list(sensor_vec);
 
                     world.init_tree_based_on_mother_child_relations();
 
@@ -267,9 +267,9 @@ TEST_F(EventIoPhotonFactoryTest, correct_rel_time_when_intersecting_ground) {
         ground->set_inner_color(ground_color);
         ground->set_radius(1e7);
 
-        PhotonSensor::Sensor sensor(ground_sensor_id, ground);
-        std::vector<PhotonSensor::Sensor*> sensor_vec = {&sensor};
-        PhotonSensor::Sensors sensor_list(sensor_vec);
+        sensor::Sensor sensor(ground_sensor_id, ground);
+        std::vector<sensor::Sensor*> sensor_vec = {&sensor};
+        sensor::Sensors sensor_list(sensor_vec);
 
         world.init_tree_based_on_mother_child_relations();
 
@@ -285,7 +285,7 @@ TEST_F(EventIoPhotonFactoryTest, correct_rel_time_when_intersecting_ground) {
         sensor_list.clear_history();
         sensor_list.assign_photons(&photons);
 
-        double mean_arrival_time = PhotonSensor::arrival_time_mean(
+        double mean_arrival_time = sensor::arrival_time_mean(
             sensor.photon_arrival_history);
 
         for (

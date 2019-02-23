@@ -8,7 +8,7 @@
 #include "PhotonArrival.h"
 
 namespace relleums {
-namespace PhotonSensor {
+namespace sensor {
 
 struct Sensor {
     unsigned int id;
@@ -23,7 +23,7 @@ struct Sensor {
     };
 };
 
-}  // namespace PhotonSensor
+}  // namespace sensor
 }  // namespace relleums
 
 #endif  // PHOTONSENSOR_SENSOR_H_

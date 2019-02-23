@@ -12,7 +12,7 @@ namespace relleums {
 
 void SensorMap::add(const uint64_t key, const Frame* frame) {
     if (key == sensors.size()) {
-        PhotonSensor::Sensor* sens = new PhotonSensor::Sensor(key, frame);
+        sensor::Sensor* sens = new sensor::Sensor(key, frame);
         sensors.push_back(sens);
     } else {
         std::stringstream info;
@@ -26,7 +26,7 @@ void SensorMap::add(const uint64_t key, const Frame* frame) {
 }
 
 SensorMap::~SensorMap() {
-    for (PhotonSensor::Sensor* sens : sensors)
+    for (sensor::Sensor* sens : sensors)
         delete sens;
 }
 

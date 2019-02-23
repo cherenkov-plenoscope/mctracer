@@ -4,7 +4,7 @@
 #include "Tools/AsciiIo.h"
 #include "json.h"
 #include "Tools/PathTools.h"
-#include "PhotonSensor/PhotonSensor.h"
+#include "sensor/PhotonSensor.h"
 #include "PhotonsReader/PhotonsReader.h"
 #include "Scenery/Scenery.h"
 using std::string;
@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
     scenery.root.init_tree_based_on_mother_child_relations();
 
     // sensors in scenery
-    PhotonSensor::Sensors sensors(scenery.sensors.sensors);
+    sensor::Sensors sensors(scenery.sensors.sensors);
 
     // photon source
     PhotonsReader photon_file(photon_path.path);
@@ -94,7 +94,7 @@ int main(int argc, char* argv[]) {
             if (export_binary) {
                 std::ofstream out;
                 out.open(outname.str(), std::ios::out | std::ios::binary);
-                PhotonSensor::write_arrival_information_to_file(
+                sensor::write_arrival_information_to_file(
                     &(sensors.at(i)->photon_arrival_history),
                     &out);
                 out.close();
@@ -106,10 +106,10 @@ int main(int argc, char* argv[]) {
                 header << ", ID: " << i << "\n";
                 header << "photons: " << photon_path.path << "\n";
                 header << "-------------\n";
-                header << PhotonSensor::arrival_table_header();
+                header << sensor::arrival_table_header();
 
                 AsciiIo::write_table_to_file_with_header(
-                    PhotonSensor::history_to_table(
+                    sensor::history_to_table(
                         sensors.at(i)->photon_arrival_history),
                     outname.str(),
                     header.str()

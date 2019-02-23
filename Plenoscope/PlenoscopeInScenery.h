@@ -4,7 +4,7 @@
 
 #include "Plenoscope/LightFieldSensor/LightFieldSensor.h"
 #include "Core/Frame.h"
-#include "PhotonSensor/PhotonSensor.h"
+#include "sensor/PhotonSensor.h"
 
 namespace Plenoscope {
 
@@ -15,7 +15,7 @@ struct PlenoscopeInScenery {
     {};
 
     relleums::Frame* frame;
-    relleums::PhotonSensor::Sensors* light_field_channels;
+    relleums::sensor::Sensors* light_field_channels;
     LightFieldSensor::Geometry light_field_sensor_geometry;
 };
 

@@ -122,7 +122,7 @@ int main(int argc, char* argv[]) {
             "There is more then one plenoscope in the scenery");
     Plenoscope::PlenoscopeInScenery* pis = &scenery.plenoscopes.at(0);
 
-    PhotonSensor::Sensors* light_field_channels = pis->light_field_channels;
+    sensor::Sensors* light_field_channels = pis->light_field_channels;
 
     //--------------------------------------------------------------------------
     // load light field calibration result

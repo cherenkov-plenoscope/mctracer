@@ -1,6 +1,6 @@
 #include "DocOpt/docopt.h"
 #include "Core/Photons.h"
-#include "PhotonSensor/PhotonSensor.h"
+#include "sensor/PhotonSensor.h"
 #include "eventio.h"
 #include "Corsika/corsika.h"
 #include "Corsika/PhotonFactory.h"

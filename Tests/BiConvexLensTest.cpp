@@ -9,7 +9,7 @@
 #include "Scenery/Primitive/Disc.h"
 #include "Scenery/Primitive/BiConvexLensHexBound.h"
 #include "Scenery/Geometry/LensMaker/LensMaker.h"
-#include "PhotonSensor/PhotonSensor.h"
+#include "sensor/PhotonSensor.h"
 #include "Tools/AsciiIo.h"
 
 using namespace relleums;
@@ -21,8 +21,8 @@ class BiConvexLensTest : public ::testing::Test {
     PropagationConfig settings;
     random::Mt19937 prng;
     PropagationEnvironment lens_test_bench_environment;
-    PhotonSensor::Sensors sensor_list;
-    PhotonSensor::Sensor *sensor;
+    sensor::Sensors sensor_list;
+    sensor::Sensor *sensor;
     LensMaker::Config cfg;
 
     BiConvexLensTest() {
@@ -82,8 +82,8 @@ class BiConvexLensTest : public ::testing::Test {
         image_sensor->set_inner_color(sensor_color);
         image_sensor->set_radius(cfg.aperture_radius);
 
-        sensor = new PhotonSensor::Sensor(0, image_sensor);
-        std::vector<PhotonSensor::Sensor*> sensors_vector = {sensor};
+        sensor = new sensor::Sensor(0, image_sensor);
+        std::vector<sensor::Sensor*> sensors_vector = {sensor};
         sensor_list.init(sensors_vector);
         //-------------------------
 
@@ -141,7 +141,7 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
 
     EXPECT_NEAR(
         1.5e-3,
-        PhotonSensor::point_spread_std_dev(sensor->photon_arrival_history),
+        sensor::point_spread_std_dev(sensor->photon_arrival_history),
         1e-3);
 
     EXPECT_NEAR(

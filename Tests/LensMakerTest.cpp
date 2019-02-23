@@ -7,7 +7,7 @@
 #include "Scenery/Primitive/Disc.h"
 #include "Scenery/Geometry/LensMaker/LensMaker.h"
 #include "Core/random/random.h"
-#include "PhotonSensor/PhotonSensor.h"
+#include "sensor/PhotonSensor.h"
 #include "Core/Photons.h"
 using std::vector;
 using namespace relleums;
@@ -94,9 +94,9 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
         sensor_disc->set_outer_color(sensor_disc_col);
         sensor_disc->set_inner_color(sensor_disc_col);
         sensor_disc->set_radius(cfg.aperture_radius*0.85);
-        PhotonSensor::Sensor sensor(0, sensor_disc);
-        vector<PhotonSensor::Sensor*> sensor_vec = {&sensor};
-        PhotonSensor::Sensors sensor_list(sensor_vec);
+        sensor::Sensor sensor(0, sensor_disc);
+        vector<sensor::Sensor*> sensor_vec = {&sensor};
+        sensor::Sensors sensor_list(sensor_vec);
         optical_table.init_tree_based_on_mother_child_relations();
 
         // light source
@@ -123,7 +123,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
         sensor_list.clear_history();
         sensor_list.assign_photons(&photons);
         sigma_psf_vs_image_sensor_distance.push_back(
-            PhotonSensor::point_spread_std_dev(sensor.photon_arrival_history));
+            sensor::point_spread_std_dev(sensor.photon_arrival_history));
         image_sensor_distances.push_back(image_sensor_disc_distance);
 
         // FreeOrbitCamera free(&optical_table, &settings);

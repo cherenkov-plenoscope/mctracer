@@ -75,7 +75,7 @@ CalibrationPhotonResult one_photon(
     env.prng = &prng;
     PhotonAndFrame::Propagator(&ph, env);
 
-    PhotonSensor::FindSensorByFrame sensor_finder(
+    sensor::FindSensorByFrame sensor_finder(
         ph.get_final_intersection().get_object(),
         &cal.plenoscope->light_field_channels->by_frame);
 
@@ -199,7 +199,7 @@ void Calibrator::fill_calibration_block_to_table() {
         my_env.prng = &thread_local_prng;
         PhotonAndFrame::Propagator(&ph, my_env);
 
-        PhotonSensor::FindSensorByFrame sensor_finder(
+        sensor::FindSensorByFrame sensor_finder(
             ph.get_final_intersection().get_object(),
             &plenoscope->light_field_channels->by_frame);
 

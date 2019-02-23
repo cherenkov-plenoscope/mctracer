@@ -4,11 +4,11 @@
 
 #include <vector>
 #include <stdexcept>
-#include "PhotonSensor/Sensor.h"
+#include "sensor/Sensor.h"
 #include "Core/Photon.h"
 
 namespace relleums {
-namespace PhotonSensor {
+namespace sensor {
 
 std::vector<Sensor*> sort_by_frame(const std::vector<Sensor*>* by_occurence);
 
@@ -48,7 +48,7 @@ class Sensors {
     };
 };
 
-}  // namespace PhotonSensor
+}  // namespace sensor
 }  // namespace relleums
 
 #endif  // PHOTONSENSOR_SENSORS_H_

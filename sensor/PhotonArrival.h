@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 namespace relleums {
-namespace PhotonSensor {
+namespace sensor {
 
 struct PhotonArrival {
     int32_t simulation_truth_id;
@@ -27,7 +27,7 @@ struct PhotonArrival {
         double ty);
 };
 
-}  // namespace PhotonSensor
+}  // namespace sensor
 }  // namespace relleums
 
 #endif  // PHOTONSENSOR_PHOTONARRIVAL_H_

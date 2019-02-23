@@ -1,12 +1,12 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "PhotonSensor/Sensors.h"
+#include "sensor/Sensors.h"
 #include <algorithm>
 #include <sstream>
-#include "PhotonSensor/FindSensorByFrame.h"
+#include "sensor/FindSensorByFrame.h"
 using std::vector;
 
 namespace relleums {
-namespace PhotonSensor {
+namespace sensor {
 
 vector<Sensor*> sort_by_frame(const vector<Sensor*>* by_occurence) {
     vector<Sensor*> by_frame(by_occurence->begin(), by_occurence->end());
@@ -99,5 +99,5 @@ void Sensors::assert_no_two_sensors_have_same_frame()const {
     }
 }
 
-}  // namespace PhotonSensor
+}  // namespace sensor
 }  // namespace relleums

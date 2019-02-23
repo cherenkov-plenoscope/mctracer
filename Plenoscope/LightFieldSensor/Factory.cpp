@@ -142,7 +142,7 @@ void Factory::add_lixel_sensor_plane(Frame* frame) {
 
     const vector<Vec3> &lixel_positions = geometry->lixel_positions();
 
-    vector<PhotonSensor::Sensor*> sub_pixels;
+    vector<sensor::Sensor*> sub_pixels;
     sub_pixels.reserve(lixel_positions.size());
 
     for (unsigned int i = 0; i < lixel_positions.size(); i++) {
@@ -155,13 +155,13 @@ void Factory::add_lixel_sensor_plane(Frame* frame) {
         subpix->set_inner_color(red);
         subpix->set_outer_hex_radius(geometry->lixel_outer_radius());
 
-        PhotonSensor::Sensor* sub_pixel_sensor =
-            new PhotonSensor::Sensor(i, subpix);
+        sensor::Sensor* sub_pixel_sensor =
+            new sensor::Sensor(i, subpix);
 
         sub_pixels.push_back(sub_pixel_sensor);
     }
 
-    sub_pixel_sensors = new PhotonSensor::Sensors(sub_pixels);
+    sub_pixel_sensors = new sensor::Sensors(sub_pixels);
 }
 
 void Factory::add_image_sensor_housing(Frame *frame) {
@@ -259,7 +259,7 @@ void Factory::add_demonstration_light_field_sensor_to_frame_in_scenery(
     const vector<Vec3> lixel_positions =
         geometry->paxel_per_pixel_template_grid;
 
-    vector<PhotonSensor::Sensor*> sub_pixels;
+    vector<sensor::Sensor*> sub_pixels;
     sub_pixels.reserve(geometry->paxel_per_pixel_template_grid.size());
 
     for (unsigned int i = 0; i < lixel_positions.size(); i++) {
@@ -272,15 +272,15 @@ void Factory::add_demonstration_light_field_sensor_to_frame_in_scenery(
         subpix->set_inner_color(red);
         subpix->set_outer_hex_radius(0.95*geometry->lixel_outer_radius());
 
-        PhotonSensor::Sensor* sub_pixel_sensor =
-            new PhotonSensor::Sensor(i, subpix);
+        sensor::Sensor* sub_pixel_sensor =
+            new sensor::Sensor(i, subpix);
 
         sub_pixels.push_back(sub_pixel_sensor);
     }
-    sub_pixel_sensors = new PhotonSensor::Sensors(sub_pixels);
+    sub_pixel_sensors = new sensor::Sensors(sub_pixels);
 }
 
-PhotonSensor::Sensors* Factory::get_sub_pixels()const {
+sensor::Sensors* Factory::get_sub_pixels()const {
     return sub_pixel_sensors;
 }
 

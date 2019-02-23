@@ -14,7 +14,7 @@
 #include "Scenery/Primitive/Primitive.h"
 #include "Core/PropagationEnvironment.h"
 #include "Tools/StringTools.h"
-#include "PhotonSensor/PhotonSensor.h"
+#include "sensor/PhotonSensor.h"
 #include "signal_processing/signal_processing.h"
 using std::cout;
 using std::string;
@@ -116,17 +116,17 @@ TEST_F(SizeOfTest, sizes_of_mct) {
     print_size("Triangle", triangle);
     cout << "--------------------------------------------" << "\n";
 
-    PhotonSensor::PhotonArrival arr_info;
+    sensor::PhotonArrival arr_info;
     print_size("PhotonArrival", arr_info);
 
-    PhotonSensor::Sensor sensor(0u, &tree);
+    sensor::Sensor sensor(0u, &tree);
     print_size("Sensor", sensor);
 
-    std::vector<PhotonSensor::Sensor*> raw_sensors;
-    PhotonSensor::Sensors sensors(raw_sensors);
+    std::vector<sensor::Sensor*> raw_sensors;
+    sensor::Sensors sensors(raw_sensors);
     print_size("Sensors", sensors);
 
-    PhotonSensor::FindSensorByFrame finder(&tree, &sensors.by_frame);
+    sensor::FindSensorByFrame finder(&tree, &sensors.by_frame);
     print_size("FindSensorByFrame", finder);
     cout << "--------------------------------------------" << "\n";
 

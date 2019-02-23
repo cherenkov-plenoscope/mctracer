@@ -1,14 +1,14 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <vector>
 #include "gtest/gtest.h"
-#include "PhotonSensor/PhotonSensor.h"
+#include "sensor/PhotonSensor.h"
 #include "Core/random/random.h"
 
 using namespace relleums;
 using std::vector;
-using PhotonSensor::PhotonArrival;
-using PhotonSensor::write_arrival_information_to_file;
-using PhotonSensor::read_arrival_information_from_file;
+using sensor::PhotonArrival;
+using sensor::write_arrival_information_to_file;
+using sensor::read_arrival_information_from_file;
 
 class SensorInOutTest : public ::testing::Test {};
 

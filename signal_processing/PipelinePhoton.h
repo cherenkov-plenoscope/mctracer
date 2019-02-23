@@ -4,7 +4,7 @@
 
 #include <stdint.h>
 #include <vector>
-#include "PhotonSensor/PhotonSensor.h"
+#include "sensor/PhotonSensor.h"
 
 namespace signal_processing {
 
@@ -20,7 +20,7 @@ struct PipelinePhoton {
 };
 
 std::vector<std::vector<PipelinePhoton>> get_photon_pipelines(
-    const relleums::PhotonSensor::Sensors* sensors);
+    const relleums::sensor::Sensors* sensors);
 
 void sort_photon_pipelines_arrival_time(
     std::vector<PipelinePhoton>* pipeline);

@@ -1,12 +1,12 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "PhotonSensor/PhotonArrivals.h"
+#include "sensor/PhotonArrivals.h"
 #include <math.h>
 #include <sstream>
 using std::vector;
 using std::string;
 
 namespace relleums {
-namespace PhotonSensor {
+namespace sensor {
 
 double arrival_time_mean(const vector<PhotonArrival>& arrivals) {
     double t = 0.0;
@@ -81,5 +81,5 @@ string arrival_table_header() {
     return header.str();
 }
 
-}  // namespace PhotonSensor
+}  // namespace sensor
 }  // namespace relleums

@@ -6,12 +6,12 @@
 #include <map>
 #include <vector>
 #include "ResourceMap.h"
-#include "PhotonSensor/Sensor.h"
+#include "sensor/Sensor.h"
 
 namespace relleums {
 
 struct SensorMap: public ResourceMap {
-	std::vector<PhotonSensor::Sensor*> sensors;
+	std::vector<sensor::Sensor*> sensors;
     void add(const uint64_t key, const Frame* frame);
     ~SensorMap();
 };

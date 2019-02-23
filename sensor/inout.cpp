@@ -1,11 +1,11 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "PhotonSensor/inout.h"
+#include "sensor/inout.h"
 #include <array>
 using std::array;
 using std::vector;
 
 namespace relleums {
-namespace PhotonSensor {
+namespace sensor {
 
 void write_arrival_information_to_file(
     const vector<PhotonArrival>* arrival_table,
@@ -51,5 +51,5 @@ vector<PhotonArrival> read_arrival_information_from_file(
     return arrivals;
 }
 
-}  // namespace PhotonSensor
+}  // namespace sensor
 }  // namespace relleums

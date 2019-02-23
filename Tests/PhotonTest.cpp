@@ -13,7 +13,7 @@
 #include "Scenery/Primitive/Plane.h"
 #include "Scenery/Primitive/RectangularBox.h"
 #include "gtest/gtest.h"
-#include "PhotonSensor/PhotonSensor.h"
+#include "sensor/PhotonSensor.h"
 using std::vector;
 using namespace relleums;
 
@@ -163,9 +163,9 @@ TEST_F(PhotonTest, Reflections) {
     absorber->set_outer_color(&absorber_color);
     absorber->set_inner_color(&absorber_color);
     absorber->set_x_y_width(1.0, 1.0);
-    PhotonSensor::Sensor absorber_sensor(0, absorber);
-    std::vector<PhotonSensor::Sensor*> sensors_vector = {&absorber_sensor};
-    PhotonSensor::Sensors sensors(sensors_vector);
+    sensor::Sensor absorber_sensor(0, absorber);
+    std::vector<sensor::Sensor*> sensors_vector = {&absorber_sensor};
+    sensor::Sensors sensors(sensors_vector);
 
     // ---post initialize the world to calculate all bounding spheres---
     world.init_tree_based_on_mother_child_relations();
@@ -236,9 +236,9 @@ TEST_F(PhotonTest, Refraction) {
     absorber->set_inner_color(&absorber_color);
     absorber->set_x_y_width(1.0, 1.0);
     unsigned int sensor_id = 0;
-    PhotonSensor::Sensor absorber_sensor(sensor_id, absorber);
-    std::vector<PhotonSensor::Sensor*> sensors_vector = {&absorber_sensor};
-    PhotonSensor::Sensors sensors(sensors_vector);
+    sensor::Sensor absorber_sensor(sensor_id, absorber);
+    std::vector<sensor::Sensor*> sensors_vector = {&absorber_sensor};
+    sensor::Sensors sensors(sensors_vector);
 
     // ---post initialize the world to calculate all bounding spheres---
     world.init_tree_based_on_mother_child_relations();
@@ -268,7 +268,7 @@ TEST_F(PhotonTest, Refraction) {
     const double travel_time = (2.0 + 1.33*1.0)/VACUUM_SPPED_OF_LIGHT;
     EXPECT_NEAR(
         travel_time,
-        PhotonSensor::arrival_time_mean(absorber_sensor.photon_arrival_history),
+        sensor::arrival_time_mean(absorber_sensor.photon_arrival_history),
         1e-10);
 }
 
@@ -314,9 +314,9 @@ TEST_F(PhotonTest, absorbtion_in_medium) {
     collector->set_inner_color(&absorber_color);
     collector->set_x_y_width(1.0, 1.0);
     unsigned int sensor_id = 0;
-    PhotonSensor::Sensor collector_sensor(sensor_id, collector);
-    std::vector<PhotonSensor::Sensor*> sensors_vector = {&collector_sensor};
-    PhotonSensor::Sensors sensors(sensors_vector);
+    sensor::Sensor collector_sensor(sensor_id, collector);
+    std::vector<sensor::Sensor*> sensors_vector = {&collector_sensor};
+    sensor::Sensors sensors(sensors_vector);
 
     // ---post initialize the world to calculate all bounding spheres---
     world.init_tree_based_on_mother_child_relations();

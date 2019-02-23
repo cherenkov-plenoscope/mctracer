@@ -1,12 +1,12 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "PhotonSensor/Sensor.h"
+#include "sensor/Sensor.h"
 #include <math.h>
 #include <sstream>
 using std::vector;
 using std::string;
 
 namespace relleums {
-namespace PhotonSensor {
+namespace sensor {
 
 Sensor::Sensor(unsigned int _id, const Frame* _frame):
     id(_id),
@@ -34,5 +34,5 @@ void Sensor::assign_photon(const Photon* photon) {
             get_final_intersection_incident_vector_in_object_frame().y);
 }
 
-}  // namespace PhotonSensor
+}  // namespace sensor
 }  // namespace relleums

@@ -3,7 +3,7 @@
 #define PLENOSCOPE_LIGHTFIELDSENSOR_FACTORY_H_
 
 #include <string>
-#include "PhotonSensor/PhotonSensor.h"
+#include "sensor/PhotonSensor.h"
 #include "Plenoscope/LightFieldSensor/Geometry.h"
 #include "Plenoscope/PlenoscopeScenery.h"
 #include "Scenery/Scenery.h"
@@ -12,7 +12,7 @@ namespace Plenoscope {
 namespace LightFieldSensor {
 
 class Factory {
-    relleums::PhotonSensor::Sensors *sub_pixel_sensors;
+    relleums::sensor::Sensors *sub_pixel_sensors;
  public:
     const Geometry* geometry;
     relleums::Scenery* scenery;
@@ -23,7 +23,7 @@ class Factory {
     void add_demonstration_light_field_sensor_to_frame_in_scenery(
         relleums::Frame *frame,
         relleums::Scenery* scenery);
-    relleums::PhotonSensor::Sensors* get_sub_pixels()const;
+    relleums::sensor::Sensors* get_sub_pixels()const;
  private:
     void add_lens_array(relleums::Frame* frame);
     void add_light_field_sensor_frontplate(relleums::Frame* frame);

@@ -1,16 +1,16 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "PhotonSensor/FindSensorByFrame.h"
+#include "sensor/FindSensorByFrame.h"
 #include <algorithm>
 using std::vector;
 
 namespace relleums {
-namespace PhotonSensor {
+namespace sensor {
 
 FindSensorByFrame::FindSensorByFrame(
     const Frame* final_frame,
     const vector<Sensor*>* sensors_by_frame
 ) {
-    vector<PhotonSensor::Sensor*>::const_iterator it = std::upper_bound(
+    vector<sensor::Sensor*>::const_iterator it = std::upper_bound(
         sensors_by_frame->begin(),
         sensors_by_frame->end(),
         final_frame,
@@ -38,5 +38,5 @@ FindSensorByFrame::FindSensorByFrame(
     final_sensor = (*(it-1));
 }
 
-}  // namespace PhotonSensor
+}  // namespace sensor
 }  // namespace relleums

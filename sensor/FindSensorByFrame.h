@@ -3,21 +3,21 @@
 #define PHOTONSENSOR_FINDSENSORBYFRAME_H_
 
 #include <vector>
-#include "PhotonSensor/Sensor.h"
+#include "sensor/Sensor.h"
 
 namespace relleums {
-namespace PhotonSensor {
+namespace sensor {
 
 struct FindSensorByFrame {
     bool is_absorbed_by_known_sensor;
-    PhotonSensor::Sensor* final_sensor;
+    sensor::Sensor* final_sensor;
 
     FindSensorByFrame(
         const Frame* final_frame,
-        const std::vector<PhotonSensor::Sensor*>* sensors_by_frame);
+        const std::vector<sensor::Sensor*>* sensors_by_frame);
 };
 
-}  // namespace PhotonSensor
+}  // namespace sensor
 }  // namespace relleums
 
 #endif  // PHOTONSENSOR_FINDSENSORBYFRAME_H_
