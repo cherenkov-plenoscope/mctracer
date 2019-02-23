@@ -29,7 +29,7 @@ PhotonsReader::PhotonsReader(const string path) {
                 out << error.what();
                 out <<
                 "Can not read photons from file, it is neither "
-                "Corsika EventIo, Mmcs Corsika, nor Ascci text\n";
+                "Corsika EventIo, nor Ascci, nor an internal source\n";
                 throw std::invalid_argument(out.str());
             }
         }
