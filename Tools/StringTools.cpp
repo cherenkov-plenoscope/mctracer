@@ -173,8 +173,8 @@ int to_int(string text_to_parse) {
     return number_parsed_in;
 }
 
-Tuple3 to_Tuple3(const string original_text) {
-    Tuple3 t3;
+Vec3 to_Vec3(const string original_text) {
+    Vec3 t3;
     stringstream info;
     info << __FILE__ << ", " << __LINE__ << "\n";
     info << "Expected Tuple3 '[float,float,float]', but actual it is ";

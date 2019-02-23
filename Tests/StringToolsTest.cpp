@@ -277,55 +277,55 @@ TEST_F(StringToolsTest, to_int) {
         std::invalid_argument);
 }
 
-TEST_F(StringToolsTest, to_Tuple3) {
-    EXPECT_EQ(Tuple3(1, 2, 3), StringTools::to_Tuple3("[1,2,3]"));
-    EXPECT_EQ(Tuple3(1.2, 3.4, 5.6), StringTools::to_Tuple3("[1.2,3.4,5.6]"));
-    EXPECT_EQ(Tuple3(1.2, 3.4, 5.6), StringTools::to_Tuple3("[ 1.2,3.4,5.6]"));
-    EXPECT_EQ(Tuple3(1.2, 3.4, 5.6), StringTools::to_Tuple3("[1.2 ,3.4,5.6]"));
-    EXPECT_EQ(Tuple3(1.2, 3.4, 5.6), StringTools::to_Tuple3("[1.2, 3.4,5.6]"));
-    EXPECT_EQ(Tuple3(1.2, 3.4, 5.6), StringTools::to_Tuple3("[1.2,3.4 ,5.6]"));
-    EXPECT_EQ(Tuple3(1.2, 3.4, 5.6), StringTools::to_Tuple3("[1.2,3.4, 5.6]"));
-    EXPECT_EQ(Tuple3(1.2, 3.4, 5.6), StringTools::to_Tuple3("[1.2,3.4,5.6 ]"));
-    EXPECT_EQ(Tuple3(1.2, 3.4, 5.6), StringTools::to_Tuple3("[ 1.2 ,3.4,5.6]"));
-    EXPECT_EQ(Tuple3(1.2, 3.4, 5.6), StringTools::to_Tuple3("[1.2 , 3.4,5.6]"));
-    EXPECT_EQ(Tuple3(1.2, 3.4, 5.6), StringTools::to_Tuple3("[1.2, 3.4 ,5.6]"));
-    EXPECT_EQ(Tuple3(1.2, 3.4, 5.6), StringTools::to_Tuple3("[1.2,3.4 , 5.6]"));
-    EXPECT_EQ(Tuple3(1.2, 3.4, 5.6), StringTools::to_Tuple3("[1.2,3.4 , 5.6]"));
-    EXPECT_EQ(Tuple3(1.2, 3.4, 5.6), StringTools::to_Tuple3("[1.2,3.4, 5.6 ]"));
-    EXPECT_EQ(Tuple3(1.2, 3.4, 5.6), StringTools::to_Tuple3("[1.2,3.4 , 5.6]"));
+TEST_F(StringToolsTest, to_Vec3) {
+    EXPECT_EQ(Vec3(1, 2, 3), StringTools::to_Vec3("[1,2,3]"));
+    EXPECT_EQ(Vec3(1.2, 3.4, 5.6), StringTools::to_Vec3("[1.2,3.4,5.6]"));
+    EXPECT_EQ(Vec3(1.2, 3.4, 5.6), StringTools::to_Vec3("[ 1.2,3.4,5.6]"));
+    EXPECT_EQ(Vec3(1.2, 3.4, 5.6), StringTools::to_Vec3("[1.2 ,3.4,5.6]"));
+    EXPECT_EQ(Vec3(1.2, 3.4, 5.6), StringTools::to_Vec3("[1.2, 3.4,5.6]"));
+    EXPECT_EQ(Vec3(1.2, 3.4, 5.6), StringTools::to_Vec3("[1.2,3.4 ,5.6]"));
+    EXPECT_EQ(Vec3(1.2, 3.4, 5.6), StringTools::to_Vec3("[1.2,3.4, 5.6]"));
+    EXPECT_EQ(Vec3(1.2, 3.4, 5.6), StringTools::to_Vec3("[1.2,3.4,5.6 ]"));
+    EXPECT_EQ(Vec3(1.2, 3.4, 5.6), StringTools::to_Vec3("[ 1.2 ,3.4,5.6]"));
+    EXPECT_EQ(Vec3(1.2, 3.4, 5.6), StringTools::to_Vec3("[1.2 , 3.4,5.6]"));
+    EXPECT_EQ(Vec3(1.2, 3.4, 5.6), StringTools::to_Vec3("[1.2, 3.4 ,5.6]"));
+    EXPECT_EQ(Vec3(1.2, 3.4, 5.6), StringTools::to_Vec3("[1.2,3.4 , 5.6]"));
+    EXPECT_EQ(Vec3(1.2, 3.4, 5.6), StringTools::to_Vec3("[1.2,3.4 , 5.6]"));
+    EXPECT_EQ(Vec3(1.2, 3.4, 5.6), StringTools::to_Vec3("[1.2,3.4, 5.6 ]"));
+    EXPECT_EQ(Vec3(1.2, 3.4, 5.6), StringTools::to_Vec3("[1.2,3.4 , 5.6]"));
     EXPECT_EQ(
-        Tuple3(1.2, 3.4, 5.6), StringTools::to_Tuple3("[ 1.2 , 3.4 , 5.6 ]"));
+        Vec3(1.2, 3.4, 5.6), StringTools::to_Vec3("[ 1.2 , 3.4 , 5.6 ]"));
     EXPECT_THROW(
-        StringTools::to_Tuple3("1,2,3]"),
+        StringTools::to_Vec3("1,2,3]"),
         std::invalid_argument);
     EXPECT_THROW(
-        StringTools::to_Tuple3("[1,2,3"),
+        StringTools::to_Vec3("[1,2,3"),
         std::invalid_argument);
     EXPECT_THROW(
-        StringTools::to_Tuple3("1,2,3"),
+        StringTools::to_Vec3("1,2,3"),
         std::invalid_argument);
     EXPECT_THROW(
-        StringTools::to_Tuple3("[1,2]"),
+        StringTools::to_Vec3("[1,2]"),
         std::invalid_argument);
     EXPECT_THROW(
-        StringTools::to_Tuple3("[1 2,3]"),
+        StringTools::to_Vec3("[1 2,3]"),
         std::invalid_argument);
     EXPECT_THROW(
-        StringTools::to_Tuple3("[1 2 3]"),
+        StringTools::to_Vec3("[1 2 3]"),
         std::invalid_argument);
     EXPECT_THROW(
-        StringTools::to_Tuple3("[1,2 3]"),
+        StringTools::to_Vec3("[1,2 3]"),
         std::invalid_argument);
     EXPECT_THROW(
-        StringTools::to_Tuple3("[1,,3]"),
+        StringTools::to_Vec3("[1,,3]"),
         std::invalid_argument);
     EXPECT_THROW(
-        StringTools::to_Tuple3("[,,]"),
+        StringTools::to_Vec3("[,,]"),
         std::invalid_argument);
     EXPECT_THROW(
-        StringTools::to_Tuple3("[1,,]"),
+        StringTools::to_Vec3("[1,,]"),
         std::invalid_argument);
     EXPECT_THROW(
-        StringTools::to_Tuple3("[,2,]"),
+        StringTools::to_Vec3("[,2,]"),
         std::invalid_argument);
 }

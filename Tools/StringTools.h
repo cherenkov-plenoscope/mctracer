@@ -4,7 +4,7 @@
 
 #include <string>
 #include <vector>
-#include "Tuple3.h"
+#include "Core/Vec3.h"
 
 namespace relleums {
 namespace StringTools {
@@ -41,7 +41,7 @@ bool to_bool(std::string text_to_parse);
 
 int to_int(std::string text_to_parse);
 
-Tuple3 to_Tuple3(const std::string original_text);
+Vec3 to_Vec3(const std::string original_text);
 
 }  // namespace StringTools
 }  // namespace relleums

@@ -25,13 +25,13 @@ void clear_screen() {
 }
 
 Vec3 cin_Vec3() {
-    Tuple3 vec;
+    Vec3 vec;
     std::string input;
     while (true) {
         std::cout << "Enter 3D vector: '[x,y,z]'\n>";
         getline(std::cin, input);
         try {
-            vec = StringTools::to_Tuple3(input);
+            vec = StringTools::to_Vec3(input);
             break;
         } catch (...) {}
     }
