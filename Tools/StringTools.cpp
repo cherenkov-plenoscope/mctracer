@@ -8,7 +8,7 @@ using std::stringstream;
 using std::vector;
 
 namespace relleums {
-namespace StringTools {
+namespace txt {
 
 bool is_equal(const string text_A, const string text_B) {
     return text_A.compare(text_B) == 0 && text_A.length() == text_B.length();
@@ -111,7 +111,7 @@ double to_double(string text_to_parse) {
     if (text_to_parse.compare("") == 0) {
         stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
-        info << "StringTools::to_double: String is empty.";
+        info << "txt::to_double: String is empty.";
         throw std::invalid_argument(info.str());
     }
     char *e;
@@ -119,7 +119,7 @@ double to_double(string text_to_parse) {
     if (*e != 0) {
         stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
-        info << "StringTools::to_double: ";
+        info << "txt::to_double: ";
         info << "Can not parse '" << text_to_parse << "' to double.";
         throw std::invalid_argument(info.str());
     }
@@ -130,7 +130,7 @@ bool to_bool(string text_to_parse) {
     if (text_to_parse.compare("") == 0) {
         stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
-        info << "StringTools::to_bool: String is empty.";
+        info << "txt::to_bool: String is empty.";
         throw std::invalid_argument(info.str());
     }
     std::transform(
@@ -138,14 +138,14 @@ bool to_bool(string text_to_parse) {
         text_to_parse.end(),
         text_to_parse.begin(),
         ::tolower);
-    if (StringTools::is_equal(text_to_parse, "true")) {
+    if (txt::is_equal(text_to_parse, "true")) {
         return true;
-    } else if (StringTools::is_equal(text_to_parse, "false")) {
+    } else if (txt::is_equal(text_to_parse, "false")) {
             return false;
     } else {
         stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
-        info << "StringTools::to_bool: Can not parse: ";
+        info << "txt::to_bool: Can not parse: ";
         info << "'" << text_to_parse << " to bool";
         throw std::invalid_argument(info.str());
     }
@@ -155,7 +155,7 @@ int to_int(string text_to_parse) {
     if (text_to_parse.compare("") == 0) {
         stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
-        info << "StringTools::to_int: String is empty.";
+        info << "txt::to_int: String is empty.";
         throw std::invalid_argument(info.str());
     }
     const int dezimal_base = 10;
@@ -166,7 +166,7 @@ int to_int(string text_to_parse) {
     if (*e != 0) {
         stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
-        info << "StringTools::to_int: ";
+        info << "txt::to_int: ";
         info << "Can not parse '" << text_to_parse << "' to int.";
         throw std::invalid_argument(info.str());
     }
@@ -218,5 +218,5 @@ Vec3 to_Vec3(const string original_text) {
     return t3;
 }
 
-}  // namespace StringTools
+}  // namespace txt
 }  // namespace relleums

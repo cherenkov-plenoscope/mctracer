@@ -253,7 +253,7 @@ namespace SegmentedReflector {
 		tab << "Davies Cotton weight........... " << DaviesCotton_weight() << "\n";
 		tab << "Parabolic weight............... " << Parabolic_weight() << "\n";
 			
-		out << StringTools::place_first_infront_of_each_new_line_of_second(
+		out << txt::place_first_infront_of_each_new_line_of_second(
 			"  ", 
 			tab.str()
 		);

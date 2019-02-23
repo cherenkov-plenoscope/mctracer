@@ -37,7 +37,7 @@ Image read_image_from_file(std::istream &fin) {
     std::string resolution;
     std::getline(fin, resolution);
 
-    if (!StringTools::is_equal(magic, "P6")) {
+    if (!txt::is_equal(magic, "P6")) {
         std::stringstream info;
         info << "PortablePixMap::" << __func__ << "()\n";
         info << "Expected magic file-descriptor to be 'P6', ";
@@ -45,8 +45,8 @@ Image read_image_from_file(std::istream &fin) {
         throw std::runtime_error(info.str());
     }
 
-    const int number_columns = StringTools::to_int(
-        StringTools::cut_leading_token_infront_of_delimiter(&resolution, ' '));
+    const int number_columns = txt::to_int(
+        txt::cut_leading_token_infront_of_delimiter(&resolution, ' '));
     if (number_columns < 0) {
         std::stringstream info;
         info << "PortablePixMap::" << __func__ << "()\n";
@@ -55,8 +55,8 @@ Image read_image_from_file(std::istream &fin) {
         throw std::runtime_error(info.str());
     }
 
-    const int number_rows = StringTools::to_int(
-        StringTools::cut_leading_token_infront_of_delimiter(&resolution, ' '));
+    const int number_rows = txt::to_int(
+        txt::cut_leading_token_infront_of_delimiter(&resolution, ' '));
     if (number_rows < 0) {
         std::stringstream info;
         info << "PortablePixMap::" << __func__ << "()\n";
@@ -67,7 +67,7 @@ Image read_image_from_file(std::istream &fin) {
 
     std::string color_depth;
     std::getline(fin, color_depth);
-    const int max_depth = StringTools::to_int(color_depth);
+    const int max_depth = txt::to_int(color_depth);
     if (max_depth != 255) {
         std::stringstream info;
         info << "PortablePixMap::" << __func__ << "()\n";

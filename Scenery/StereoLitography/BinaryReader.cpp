@@ -49,7 +49,7 @@ string BinaryReader::get_report()const {
     }
 
     out << " __fin_info__\n";
-    out << StringTools::place_first_infront_of_each_new_line_of_second(
+    out << txt::place_first_infront_of_each_new_line_of_second(
         "| ", info.str());
     out << "|___________\n";
     return out.str();
@@ -92,7 +92,7 @@ string BinaryReader::str()const {
     std::stringstream out;
     out << "BinaryReader(" << filename << ")\n";
     out << "header:\n";
-    out << StringTools::place_first_infront_of_each_new_line_of_second(
+    out << txt::place_first_infront_of_each_new_line_of_second(
         "  ",
         stl_header);
     out << "number of facets: " << total_number_of_facets << "\n";
@@ -172,7 +172,7 @@ unsigned int BinaryReader::get_number_of_facets()const {
 }
 
 bool BinaryReader::stl_header_implies_ascii_format()const {
-    return StringTools::is_equal("solid", stl_header.substr(0, 5));
+    return txt::is_equal("solid", stl_header.substr(0, 5));
 }
 
 string BinaryReader::get_header()const {

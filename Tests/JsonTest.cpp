@@ -9,7 +9,7 @@
 namespace nl = nlohmann;
 namespace mct = relleums;
 using std::string;
-using mct::StringTools::is_equal;
+using mct::txt::is_equal;
 
 class JsonTest : public ::testing::Test {};
 

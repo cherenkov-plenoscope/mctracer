@@ -95,12 +95,12 @@ void make_children(
                 us(mother, scenery, jchild),
                 scenery,
                 jchild.obj("children"));
-        } else if (relleums::StringTools::is_equal(type, "LightFieldSensor")) {
+        } else if (relleums::txt::is_equal(type, "LightFieldSensor")) {
             make_children(
                 add_light_field_sensor(mother, scenery, jchild),
                 scenery,
                 jchild.obj("children"));
-        } else if (relleums::StringTools::is_equal(type, "LightFieldSensor_for_demonstration")) {
+        } else if (relleums::txt::is_equal(type, "LightFieldSensor_for_demonstration")) {
             make_children(
                 add_light_field_sensor_demonstration(mother, scenery, jchild),
                 scenery,

@@ -258,7 +258,7 @@ std::string Calibrator::str()const {
     tab << distance_to_travel_before_intersecting_principal_aperture << "m\n";
     tab << "photon wavelength........................ ";
     tab << wavelenght << "m\n";
-    out << StringTools::place_first_infront_of_each_new_line_of_second(
+    out << txt::place_first_infront_of_each_new_line_of_second(
         "  ",
         tab.str());
     return out.str();

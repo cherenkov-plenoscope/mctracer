@@ -47,7 +47,7 @@ void write_table_to_file_with_header(
     const string &header
 ) {
     stringstream out;
-    out << StringTools::place_first_infront_of_each_new_line_of_second(
+    out << txt::place_first_infront_of_each_new_line_of_second(
             "# ", header);
     out << get_table_print(table);
     FileTools::write_text_to_file(out.str(), path);
@@ -87,7 +87,7 @@ vector<vector<double>> TableReader::get_table()const {
 void TableReader::fill_matrix_from_text() {
     string row;
     while (std::getline(text, row)) {
-        row = StringTools::strip_whitespaces(row);
+        row = txt::strip_whitespaces(row);
         current_row++;
         if (row.length()!= 0)
             if (*row.begin() != comment_escape)
@@ -97,7 +97,7 @@ void TableReader::fill_matrix_from_text() {
 
 vector<double> TableReader::text_row_2_numeric_row(const string &row) {
     const vector<string> tokens_in_row =
-        StringTools::tokenize_text_using_either_one_of_delimiters(
+        txt::tokenize_text_using_either_one_of_delimiters(
             row,
             delimiters_for_reading);
 
@@ -116,7 +116,7 @@ void TableReader::push_back_token_to_numeric_row(
 ) {
     current_col++;
     try {
-        numeric_row->push_back(StringTools::to_double(token));
+        numeric_row->push_back(txt::to_double(token));
     } catch(std::invalid_argument &error) {
         stringstream info;
         info << "TableReader::push_back_token_to_numeric_row:\n";

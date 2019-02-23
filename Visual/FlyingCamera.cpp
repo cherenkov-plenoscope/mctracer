@@ -31,7 +31,7 @@ Vec3 cin_Vec3() {
         std::cout << "Enter 3D vector: '[x,y,z]'\n>";
         getline(std::cin, input);
         try {
-            vec = StringTools::to_Vec3(input);
+            vec = txt::to_Vec3(input);
             break;
         } catch (...) {}
     }
@@ -335,7 +335,7 @@ string FlyingCamera::get_intersection_info_print(
     out << "| | surface normal   : ";
     out << intersec.surface_normal_in_root_frame().str() << "\n";
     out << "|\n";
-    out << StringTools::place_first_infront_of_each_new_line_of_second(
+    out << txt::place_first_infront_of_each_new_line_of_second(
         "| ",
         intersec.get_object()->str());
     return out.str();

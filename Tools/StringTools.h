@@ -7,7 +7,7 @@
 #include "Core/Vec3.h"
 
 namespace relleums {
-namespace StringTools {
+namespace txt {
 
 bool is_equal(const std::string text_A, const std::string text_B);
 
@@ -43,7 +43,7 @@ int to_int(std::string text_to_parse);
 
 Vec3 to_Vec3(const std::string original_text);
 
-}  // namespace StringTools
+}  // namespace txt
 }  // namespace relleums
 
 #endif  // TOOLS_STRINGTOOLS_H_

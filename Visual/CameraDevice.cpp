@@ -74,7 +74,7 @@ std::string CameraDevice::get_camera_print()const {
     std::stringstream out;
     out << " _camera:_" << name << "________________\n";
     out << "| T_" << name << "2world:\n";
-    out << StringTools::place_first_infront_of_each_new_line_of_second(
+    out << txt::place_first_infront_of_each_new_line_of_second(
         "| ",
         camera2root.str());
     out << "| camera position          : ";

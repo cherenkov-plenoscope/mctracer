@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
     const path::Path output_path = path::Path(
         args.find("--output")->second.asString());
 
-    const double scale = StringTools::to_double(
+    const double scale = txt::to_double(
         args.find("--scale")->second.asString());
 
     StereoLitography::BinaryReader input = StereoLitography::BinaryReader(input_path.path);

@@ -71,7 +71,7 @@ void Frame::assert_name_is_valid(const string name_to_check)const {
         char_pos++;
     }
 
-    if (StringTools::string_contains_char(name_to_check, FRAME_PATH_DELIMITER)) {
+    if (txt::string_contains_char(name_to_check, FRAME_PATH_DELIMITER)) {
         std::stringstream info;
         info << "Expected name of frame '" << name_to_check << "' ";
         info << "to not contain any char of '" << FRAME_PATH_DELIMITER << "', ";
@@ -97,7 +97,7 @@ string Frame::get_tree_print()const {
     out << bounding_sphere_radius << "m\n";
 
     for (Frame* child : children)
-        out << StringTools::place_first_infront_of_each_new_line_of_second(
+        out << txt::place_first_infront_of_each_new_line_of_second(
             "| ",
             child->get_tree_print());
 

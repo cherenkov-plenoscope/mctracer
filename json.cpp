@@ -10,7 +10,7 @@
 #include "Scenery/SegmentedReflector/SegmentedReflector.h"
 namespace nl = nlohmann;
 using std::string;
-using relleums::StringTools::is_equal;
+using relleums::txt::is_equal;
 
 namespace relleums {
 namespace json {

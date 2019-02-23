@@ -22,7 +22,7 @@ using namespace relleums;
 
 template<typename T>
 void print_size(const string &name, T s) {
-    cout << StringTools::fill_up_text_with_whitespaces_until_column(name, 36);
+    cout << txt::fill_up_text_with_whitespaces_until_column(name, 36);
     cout << sizeof(s) << '\n';
 }
 

@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) {
 
         int number_mega_photons = 0;
         try {
-            number_mega_photons = StringTools::to_int(
+            number_mega_photons = txt::to_int(
                 args.find("--number_mega_photons")->second.asString());
         } catch (std::invalid_argument &error) {
             stringstream info;

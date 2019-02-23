@@ -8,7 +8,7 @@ namespace path {
 
     string join(string path1, string path2) {
         std::stringstream out;
-        if (StringTools::is_ending(path1, "/"))
+        if (txt::is_ending(path1, "/"))
             out << path1;
         else if (!path1.empty())
             out << path1 << "/";
