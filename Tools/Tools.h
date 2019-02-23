@@ -12,7 +12,6 @@ double rad2deg(double angle_in_Rad);
 bool is_odd(const int n);
 bool is_even(const int n);
 double get_solid_angle_for_opening_angle(const double theta);
-//std::string get_print(const std::vector<std::vector<double>> &table);
 
 }  // namespace relleums
 
