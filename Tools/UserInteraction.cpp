@@ -1,12 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Tools/UserInteraction.h"
-#include <stdio.h>
-#include <sys/ioctl.h>
-#include <unistd.h>
 #include <sstream>
 #include <iostream>
 #include <string>
-#include "Tools/StringTools.h"
 
 namespace relleums {
 
