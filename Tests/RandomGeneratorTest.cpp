@@ -4,7 +4,7 @@
 #include "Core/random/random.h"
 #include "Core/Histogram1.h"
 #include "Tools/Tools.h"
-#include "Tools/Numeric.h"
+#include "Core/Numeric.h"
 using std::array;
 using std::vector;
 using namespace relleums;
@@ -39,7 +39,7 @@ TEST_F(RandomGeneratorTest, uniform_0_to_1_stddev) {
     vector<double> samples;
     for (unsigned int i = 0; i < 42*1337; i++)
         samples.push_back(prng.uniform());
-    EXPECT_NEAR(1.0/sqrt(12.0), Numeric::stddev(samples), 1e-3);
+    EXPECT_NEAR(1.0/sqrt(12.0), numeric::stddev(samples), 1e-3);
 }
 
 TEST_F(RandomGeneratorTest, generator_point_on_disc) {
@@ -74,8 +74,8 @@ TEST_F(RandomGeneratorTest, generator_point_on_disc) {
             counts_in_evaluation_bins.push_back(counts_in_evaluation_bin);
         }
     }
-    double mean_count = Numeric::mean(counts_in_evaluation_bins);
-    double stddev_count = Numeric::stddev(counts_in_evaluation_bins);
+    double mean_count = numeric::mean(counts_in_evaluation_bins);
+    double stddev_count = numeric::stddev(counts_in_evaluation_bins);
     EXPECT_TRUE(stddev_count/mean_count < 1e-2);
     // std::cout << mean_count << " pm " << stddev_count << "\n";
 }
@@ -96,7 +96,7 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
     // fill samples drawn from distribution into histogram
     unsigned int bin_count = static_cast<unsigned int>(
         pow(static_cast<double>(n_samples), 1.0/3.0));
-    vector<double> bin_edges = Numeric::linspace(
+    vector<double> bin_edges = numeric::linspace(
         f.limits.lower,
         f.limits.upper,
         bin_count);
@@ -117,7 +117,7 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
             static_cast<double>(drawn_f_integral));
     // -------------------
     // compare initial distribution and samples drawn from distribution
-    vector<double> ys = Numeric::linspace(
+    vector<double> ys = numeric::linspace(
         f.limits.lower,
         f.limits.upper,
         sqrt(n_samples));
@@ -216,8 +216,8 @@ TEST_F(RandomGeneratorTest, normal_distribution) {
             vector<double> samples;
             for (unsigned int i = 0; i < 10*1000; i++)
                 samples.push_back(prng.normal(mean, std));
-            EXPECT_NEAR(std, Numeric::stddev(samples), 1e-1);
-            EXPECT_NEAR(mean, Numeric::mean(samples), 1e-1);
+            EXPECT_NEAR(std, numeric::stddev(samples), 1e-1);
+            EXPECT_NEAR(mean, numeric::mean(samples), 1e-1);
         }
     }
 }

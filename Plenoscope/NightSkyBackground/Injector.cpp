@@ -4,7 +4,7 @@
 #include "Tools/Tools.h"
 #include "Core/Histogram1.h"
 #include "Core/SimulationTruth.h"
-#include "Tools/Numeric.h"
+#include "Core/Numeric.h"
 using std::vector;
 using namespace relleums;
 
@@ -54,7 +54,7 @@ void inject_nsb_into_photon_pipeline(
         mode_of_cherenkov_arrival_times = 0.0;
     } else {
         const unsigned int bin_edge_count = 2u + sqrt(number_cherenkov_photons);
-        vector<double> arrival_time_bin_edges = Numeric::linspace(
+        vector<double> arrival_time_bin_edges = numeric::linspace(
             min_crk_arrival_time,
             max_crk_arrival_time,
             bin_edge_count);

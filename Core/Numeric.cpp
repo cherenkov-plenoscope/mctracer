@@ -1,34 +1,34 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Tools/Numeric.h"
+#include "Core/Numeric.h"
 #include <math.h>
 using std::vector;
 
 namespace relleums {
+namespace numeric {
 
-double Numeric::mean(const vector<double> &vec) {
+double mean(const vector<double> &vec) {
     double sum = 0;
     for (double val : vec) sum = sum + val;
     return sum/vec.size();
 }
 
-double Numeric::stddev(const vector<double> &vec) {
-    double mean = Numeric::mean(vec);
+double stddev(const vector<double> &vec) {
+    const double m = mean(vec);
     double s = 0.0;
-    for (double val : vec) s = s + (val - mean)*(val - mean);
+    for (double val : vec) s = s + (val - m)*(val - m);
     return sqrt(s/vec.size());
 }
 
-vector<double> Numeric::linspace(double begin, double end, unsigned int steps) {
+vector<double> linspace(double begin, double end, unsigned int steps) {
     vector<double> lin;
     lin.reserve(steps);
-
-    double range = end - begin;
-    double step = range/static_cast<double>(steps-1);
-
+    const double range = end - begin;
+    const double step = range/static_cast<double>(steps-1);
     for (unsigned int i = 0; i < steps; i++)
         lin.push_back(begin + step*i);
 
     return lin;
 }
 
+}  // namespace numeric
 }  // namespace relleums

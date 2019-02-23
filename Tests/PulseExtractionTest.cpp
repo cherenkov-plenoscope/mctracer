@@ -4,7 +4,7 @@
 #include "signal_processing/signal_processing.h"
 #include "Core/random/random.h"
 #include "Core/SimulationTruth.h"
-#include "Tools/Numeric.h"
+#include "Core/Numeric.h"
 using std::vector;
 using std::string;
 using namespace relleums;
@@ -107,8 +107,8 @@ TEST_F(PulseExtractionTest, arrival_time_std) {
     for (signal_processing::ElectricPulse &pulse : response.at(0))
         true_arrival_times.push_back(pulse.arrival_time);
 
-    EXPECT_NEAR(0.0, Numeric::stddev(true_arrival_times), 1e-1);
-    EXPECT_NEAR(true_arrival_time, Numeric::mean(true_arrival_times), 1e-1);
+    EXPECT_NEAR(0.0, numeric::stddev(true_arrival_times), 1e-1);
+    EXPECT_NEAR(true_arrival_time, numeric::mean(true_arrival_times), 1e-1);
 
     vector<vector<signal_processing::ExtractedPulse>> raw =
         signal_processing::extract_pulses(
@@ -124,10 +124,10 @@ TEST_F(PulseExtractionTest, arrival_time_std) {
 
     EXPECT_NEAR(
         arrival_time_std,
-        Numeric::stddev(reconstructed_arrival_times),
+        numeric::stddev(reconstructed_arrival_times),
         1e-10);
     EXPECT_NEAR(
         true_arrival_time,
-        Numeric::mean(reconstructed_arrival_times),
+        numeric::mean(reconstructed_arrival_times),
         1e-10);
 }
