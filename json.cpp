@@ -522,7 +522,7 @@ void transform_photons(const Object &o, std::vector<Photon> *photons) {
     Rot3 rot = o.rot3("rot");
     HomTra3 Trafo;
     Trafo.set_transformation(rot, pos);
-    Photons::transform_all_photons_multi_thread(Trafo, photons);
+    Photons::transform_all_photons(Trafo, photons);
 }
 
 std::vector<Photon> to_parallel_disc(const Object &o) {

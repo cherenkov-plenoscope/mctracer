@@ -208,35 +208,5 @@ void transform_all_photons(const HomTra3 Trafo, vector<Photon> *photons) {
         photons->at(i).transform(&Trafo);
 }
 
-void transform_all_photons_multi_thread(
-    const HomTra3 Trafo,
-    vector<Photon> *photons
-) {
-    unsigned int i;
-    int HadCatch = 0;
-    #pragma omp parallel shared(photons, HadCatch)
-    {
-        #pragma omp for schedule(dynamic) private(i)
-        for (i = 0; i < photons->size(); i++) {
-            try {
-                photons->at(i).transform(&Trafo);
-            } catch (std::exception &error) {
-                HadCatch++;
-                std::cerr << error.what();
-            } catch (...) {
-                HadCatch++;
-            }
-        }
-    }
-
-    if (HadCatch) {
-        stringstream info;
-        info << "PhotonBunch::" << __func__ << "() in " << __FILE__ << ", ";
-        info << __LINE__ << "\n";
-        info << "Cought exception during multithread transformation.\n";
-        throw std::runtime_error(info.str());
-    }
-}
-
 }  // namespace Photons
 }  // namespace relleums
