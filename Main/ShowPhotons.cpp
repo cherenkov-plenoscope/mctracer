@@ -1,7 +1,7 @@
 #include "DocOpt/docopt.h"
 #include "Core/Photons.h"
 #include "PhotonSensor/PhotonSensor.h"
-#include "Corsika/EventIo/EventIo.h"
+#include "eventio.h"
 #include "Corsika/Tools.h"
 #include "Corsika/EventIo/PhotonFactory.h"
 #include "Visual/FlyingCamera.h"
@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
 
     scenery.root.init_tree_based_on_mother_child_relations();
 
-    EventIo::Run corsika_run(photon_path.path);
+    eventio::Run corsika_run(photon_path.path);
 
     visual::FlyingCamera free_orb(&scenery.root, &visual_config);
 
@@ -83,7 +83,7 @@ int main(int argc, char* argv[]) {
         event_counter++;
 
         // read next event
-        EventIo::Event event = corsika_run.next_event();
+        eventio::Event event = corsika_run.next_event();
 
         // point the telescope into shower direction
         // double az = Corsika::EventHeader::azimuth(event.header.raw);

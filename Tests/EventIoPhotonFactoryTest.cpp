@@ -2,7 +2,7 @@
 #include <numeric>
 #include "gtest/gtest.h"
 #include "Corsika/EventIo/PhotonFactory.h"
-#include "Corsika/EventIo/EventIo.h"
+#include "eventio.h"
 #include "Scenery/Primitive/Disc.h"
 #include "PhotonSensor/PhotonSensor.h"
 #include "Core/Photons.h"
@@ -229,7 +229,7 @@ TEST_F(EventIoPhotonFactoryTest, relative_arrival_time_on_ground) {
 }
 
 TEST_F(EventIoPhotonFactoryTest, correct_rel_time_when_intersecting_ground) {
-    EventIo::Run corsika_file("telescope.dat");
+    eventio::Run corsika_file("telescope.dat");
     while (corsika_file.has_still_events_left()) {
         /*
         read in a corsika eventio event. we remember the relative arrival
@@ -237,7 +237,7 @@ TEST_F(EventIoPhotonFactoryTest, correct_rel_time_when_intersecting_ground) {
         compare these to the actual arrival times of the mctracer 
         photons on ground.
         */
-        EventIo::Event event = corsika_file.next_event();
+        eventio::Event event = corsika_file.next_event();
 
         vector<float> relative_arrival_times_in_corsika_file;
 

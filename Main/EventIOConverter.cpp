@@ -1,10 +1,13 @@
 // Copyright 2015 Sebastian A. Mueller
 #include <experimental/filesystem>
+#include <fstream>
+#include <sstream>
 #include "DocOpt/docopt.h"
-#include "Corsika/EventIo/EventIo.h"
+#include "eventio.h"
 #include "Corsika/EventIo/Export.h"
 #include "Tools/PathTools.h"
 #include "Tools/HeaderBlock.h"
+
 namespace fs = std::experimental::filesystem;
 namespace mct = relleums;
 
@@ -36,7 +39,7 @@ int main(int argc, char* argv[]) {
 
     fs::create_directory(out_path.path);
 
-    EventIo::Run corsika_run(input_path.path);
+    eventio::Run corsika_run(input_path.path);
 
     mct::HeaderBlock::write(
       corsika_run.header.raw,
@@ -44,7 +47,7 @@ int main(int argc, char* argv[]) {
 
     unsigned int event_counter = 1;
     while (corsika_run.has_still_events_left()) {
-      EventIo::Event event = corsika_run.next_event();
+      eventio::Event event = corsika_run.next_event();
 
       mct::path::Path event_path(
         mct::path::join(out_path.path, std::to_string(event_counter)));
@@ -55,7 +58,7 @@ int main(int argc, char* argv[]) {
         event.header.raw,
         mct::path::join(event_path.path, "corsika_event_header.bin"));
 
-      EventIo::write_raw_photons(
+      relleums::write_corsika_photons(
         event.photons,
         mct::path::join(event_path.path, "air_shower_photon_bunches.bin"));
 

@@ -4,10 +4,10 @@
 #include "DocOpt/docopt.h"
 #include "Tools/Tools.h"
 #include "Core/Photons.h"
-#include "Corsika/EventIo/EventIo.h"
-#include "Corsika/EventIo/Export.h"
+#include "eventio.h"
 #include "Corsika/Tools.h"
 #include "Corsika/EventIo/PhotonFactory.h"
+#include "Corsika/EventIo/Export.h"
 #include "Core/Histogram1D.h"
 #include "SignalProcessing/PipelinePhoton.h"
 #include "Plenoscope/NightSkyBackground/Light.h"
@@ -191,7 +191,7 @@ int main(int argc, char* argv[]) {
     // 222222 22
     //--------------------------------------------------------------------------
     // open cherenkov photon file
-    EventIo::Run corsika_run(input_path.path);
+    eventio::Run corsika_run(input_path.path);
 
     //--------------------------------------------------------------------------
     // propagate each event
@@ -199,7 +199,7 @@ int main(int argc, char* argv[]) {
     while (corsika_run.has_still_events_left()) {
         //------------------
         // Cherenkov photons
-        EventIo::Event event = corsika_run.next_event();
+        eventio::Event event = corsika_run.next_event();
 
         vector<Photon> photons;
         unsigned int photon_id = 0;
@@ -298,7 +298,7 @@ Plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
                 record.photon_stream,
                 join(event_mc_truth_path.path, "detector_pulse_origins.bin"));
 
-            EventIo::write_raw_photons(
+            relleums::write_corsika_photons(
                 event.photons,
                 join(event_mc_truth_path.path,
                     "air_shower_photon_bunches.bin"));

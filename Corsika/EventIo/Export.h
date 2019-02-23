@@ -6,13 +6,13 @@
 #include <array>
 #include <string>
 
-namespace EventIo {
+namespace relleums {
 
-void write_raw_photons(
+void write_corsika_photons(
     const std::vector<std::array<float, 8>> &photons,
     const std::string &path
 );
 
-}  // namespace EventIo
+}  // namespace relleums
 
 #endif  // MCTRACER_CORSIKA_EVENTIO_EXPORT_H_

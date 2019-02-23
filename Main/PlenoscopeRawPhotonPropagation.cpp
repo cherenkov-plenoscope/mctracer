@@ -1,12 +1,13 @@
 // Copyright 2015 Sebastian A. Mueller
 #include <experimental/filesystem>
+#include <iostream>
 #include "DocOpt/docopt.h"
 #include "Tools/Tools.h"
 #include "Core/Photons.h"
-#include "Corsika/EventIo/EventIo.h"
-#include "Corsika/EventIo/Export.h"
+#include "eventio.h"
 #include "Corsika/Tools.h"
 #include "Corsika/EventIo/PhotonFactory.h"
+#include "Corsika/EventIo/Export.h"
 #include "Core/Histogram1D.h"
 #include "SignalProcessing/PipelinePhoton.h"
 #include "Plenoscope/NightSkyBackground/Light.h"
@@ -340,7 +341,7 @@ int main(int argc, char* argv[]) {
                 raw_photons.push_back(raw_photon);
             }
 
-            EventIo::write_raw_photons(
+            relleums::write_corsika_photons(
                 raw_photons,
                 join(event_mc_truth_path.path,
                     "air_shower_photon_bunches.bin"));

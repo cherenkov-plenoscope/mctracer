@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "BasicWrapper.h"
-#include "Corsika/EventIo/EventIo.h"
+#include "eventio.h"
 #include <vector>
 #include <string>
 
@@ -17,7 +17,7 @@ namespace relleums {
 //=================================
 class EventIoWrapper: public BasicWrapper {
 
-	EventIo::Run corsika_run;
+	eventio::Run corsika_run;
 public:
 
 	EventIoWrapper(const std::string path);

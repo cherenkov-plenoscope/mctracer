@@ -5,7 +5,7 @@
 #include "Main/photon_stream.h"
 #include "Tools/Tools.h"
 #include "Core/Photons.h"
-#include "Corsika/EventIo/EventIo.h"
+#include "eventio.h"
 #include "Corsika/Tools.h"
 #include "Corsika/EventIo/PhotonFactory.h"
 #include "Tools/PathTools.h"
@@ -376,7 +376,7 @@ int main(int argc, char* argv[]) {
     // 222222 22
     // -------------------------------------------------------------------------
     // open cherenkov photon file
-    EventIo::Run corsika_run(input_path.path);
+    eventio::Run corsika_run(input_path.path);
 
     std::ofstream fout(out_path.path.c_str(), std::ios::binary);
     std::ofstream fch((out_path.path+".ch").c_str(), std::ios::binary);
@@ -385,7 +385,7 @@ int main(int argc, char* argv[]) {
     // -------------------------------------------------------------------------
     unsigned int event_counter = 1;
     while (corsika_run.has_still_events_left()) {
-        EventIo::Event event = corsika_run.next_event();
+        eventio::Event event = corsika_run.next_event();
 
         vector<Photon> photons;
         unsigned int photon_id = 0;

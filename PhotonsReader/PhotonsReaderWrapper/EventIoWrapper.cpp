@@ -17,7 +17,7 @@ bool EventIoWrapper::has_still_photons_left()const {
 //------------------------------------------------------------------------------
 vector<Photon> EventIoWrapper::next(Random::Generator* prng) {
 		
-	EventIo::Event event = corsika_run.next_event();
+	eventio::Event event = corsika_run.next_event();
 
 	vector<Photon> photons;
     unsigned int photon_id = 0;

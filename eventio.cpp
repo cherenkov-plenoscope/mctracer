@@ -1,7 +1,7 @@
 // Copyright 2016 Sebastian A. Mueller, Dominik Neise
 #include <cmath>
 #include <sstream>
-#include "Corsika/EventIo/EventIo.h"
+#include "eventio.h"
 
 using std::cout;
 using std::endl;
@@ -12,7 +12,7 @@ using std::array;
 using std::istream;
 using std::ifstream;
 
-namespace EventIo {
+namespace eventio {
 
 Header::Header(istream& f, bool top_level) {
     size_t _start_pos = f.tellg();
@@ -415,4 +415,4 @@ vector<array<float, 8>> Run::_next() {
     return dummy;
 }
 
-}  // namespace EventIo
+}  // namespace eventio

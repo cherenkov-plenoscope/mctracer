@@ -6,9 +6,9 @@ using std::string;
 using std::vector;
 using std::array;
 
-namespace EventIo {
+namespace relleums {
 
-void write_raw_photons(
+void write_corsika_photons(
     const vector<array<float, 8>> &photons,
     const string &path
 ) {
@@ -27,4 +27,4 @@ void write_raw_photons(
     file.close();
 }
 
-}  // namespace EventIo
+}  // namespace relleums

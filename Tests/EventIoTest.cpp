@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller, Dominik Neise
 #include <algorithm>
 #include "gtest/gtest.h"
-#include "Corsika/EventIo/EventIo.h"
+#include "eventio.h"
 #include "Corsika/Tools.h"
 using std::string;
 using std::vector;
@@ -12,7 +12,7 @@ class EventIoTest : public ::testing::Test {};
 TEST_F(EventIoTest, EventIoHeader_works) {
     std::ifstream fake_file;
     fake_file.open("telescope.dat");
-    EventIo::Header my_header(fake_file);
+    eventio::Header my_header(fake_file);
     EXPECT_TRUE(my_header.is_sync);
     EXPECT_EQ(1200, my_header.type);
     EXPECT_EQ(0, my_header.version);
@@ -35,13 +35,13 @@ TEST_F(EventIoTest,  EventIoHeader_fails_wrong_sync_marker) {
     sout.put(0x00);
     sout.seekp(0);
     EXPECT_THROW(
-        EventIo::Header my_header(sout),
-        EventIo::NoSyncFoundException);
+        eventio::Header my_header(sout),
+        eventio::NoSyncFoundException);
 }
 
 TEST_F(EventIoTest, EventIoHeader_fails_empty_file) {
     std::stringstream fake_file;
-    EXPECT_THROW(EventIo::Header my_header(fake_file), std::runtime_error);
+    EXPECT_THROW(eventio::Header my_header(fake_file), std::runtime_error);
 }
 
 TEST_F(EventIoTest, make_runheader) {
@@ -53,13 +53,13 @@ TEST_F(EventIoTest, make_runheader) {
 
     std::copy_n(foo, 100, std::ostreambuf_iterator<char>(sout));
     array<float, 273> my_run_header =
-        EventIo::make_corsika_273float_sub_block_form_stream(sout);
+        eventio::make_corsika_273float_sub_block_form_stream(sout);
 
     EXPECT_EQ(Corsika::str2float("RUNH"), my_run_header.at(0));
 }
 
 TEST_F(EventIoTest, EventIoFile_telescope_dat__check_tel_pos) {
-    EventIo::Run my_run("telescope.dat");
+    eventio::Run my_run("telescope.dat");
     EXPECT_EQ(1u, my_run.header.tel_pos.size());
     EXPECT_EQ(0., my_run.header.tel_pos[0].x);
     EXPECT_EQ(0., my_run.header.tel_pos[0].y);
@@ -68,12 +68,12 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__check_tel_pos) {
 }
 
 TEST_F(EventIoTest, EventIoFile_telescope_dat__check_input_card) {
-    EventIo::Run my_run("telescope.dat");
+    eventio::Run my_run("telescope.dat");
     EXPECT_EQ(' ', my_run.header.input_card[100]);
 }
 
 TEST_F(EventIoTest, EventIoFile_telescope_dat__mmcs_run_header) {
-    EventIo::Run my_run("telescope.dat");
+    eventio::Run my_run("telescope.dat");
     EXPECT_NEAR(
         7.,
         Corsika::RunHeader::run_number(my_run.header.raw), 1e-6);
@@ -95,13 +95,13 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__mmcs_run_header) {
 }
 
 TEST_F(EventIoTest, EventIoFile_telescope_dat__next_call) {
-    EventIo::Run my_run("telescope.dat");
-    EventIo::Event event = my_run.next_event();
+    eventio::Run my_run("telescope.dat");
+    eventio::Event event = my_run.next_event();
 }
 
 TEST_F(EventIoTest, EventIoFile_telescope_dat__event_header) {
-    EventIo::Run my_run("telescope.dat");
-    EventIo::Event event = my_run.next_event();
+    eventio::Run my_run("telescope.dat");
+    eventio::Event event = my_run.next_event();
 
     EXPECT_EQ(1u, event.header.telescope_offsets.size());
     EXPECT_NEAR(379489.3125, event.header.telescope_offsets[0].toff, 1e-6);
@@ -117,8 +117,8 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__event_header) {
 }
 
 TEST_F(EventIoTest, EventIoFile_telescope_dat__photon_bundle_size) {
-    EventIo::Run my_run("telescope.dat");
-    EventIo::Event event = my_run.next_event();
+    eventio::Run my_run("telescope.dat");
+    eventio::Event event = my_run.next_event();
     EXPECT_EQ(42629u, event.photons.size());
 
     for (size_t i = 0; i < event.photons.size(); i++) {
@@ -128,8 +128,8 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__photon_bundle_size) {
 }
 
 TEST_F(EventIoTest, EventIoFile_telescope_dat__photon_bundle_values) {
-    EventIo::Run my_run("telescope.dat");
-    EventIo::Event event = my_run.next_event();
+    eventio::Run my_run("telescope.dat");
+    eventio::Event event = my_run.next_event();
     EXPECT_EQ(42629u, event.photons.size());
 
     float some_photon_bundles[5][8] = {
@@ -202,10 +202,10 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__photon_bundle_values) {
 #include "Corsika/EventIo/PhotonFactory.h"
 
 TEST_F(EventIoTest, EventIoFile_telescope_dat_run_time) {
-    EventIo::Run my_run("telescope.dat");
+    eventio::Run my_run("telescope.dat");
 
     while (my_run.has_still_events_left()) {
-        EventIo::Event event = my_run.next_event();
+        eventio::Event event = my_run.next_event();
 
         relleums::Random::Mt19937 prng;
 

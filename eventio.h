@@ -1,6 +1,6 @@
 // Copyright 2016 Sebastian A. Mueller, Dominik Neise
-#ifndef MCTRACER_CORSIKA_EVENTIO_EVENTIO_H_
-#define MCTRACER_CORSIKA_EVENTIO_EVENTIO_H_
+#ifndef EVENTIO_H_
+#define EVENTIO_H_
 
 #include <string>
 #include <vector>
@@ -8,7 +8,7 @@
 #include <iostream>
 #include <fstream>
 
-namespace EventIo {
+namespace eventio {
 
 class WrongTypeException :public std::runtime_error {
     using runtime_error::runtime_error;
@@ -143,6 +143,6 @@ class Run {
     Event next_event();
 };
 
-}  // namespace EventIo
+}  // namespace eventio
 
-#endif  // MCTRACER_CORSIKA_EVENTIO_EVENTIO_H_
+#endif  // EVENTIO_H_
