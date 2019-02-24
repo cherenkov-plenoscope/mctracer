@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 #include "Core/mctracer.h"
-#include "scenery/primitive/Plane.h"
-#include "scenery/primitive/RectangularBox.h"
+#include "Core/scenery/primitive/Plane.h"
+#include "Core/scenery/primitive/RectangularBox.h"
 #include "gtest/gtest.h"
 #include "sensor/PhotonSensor.h"
 using std::vector;

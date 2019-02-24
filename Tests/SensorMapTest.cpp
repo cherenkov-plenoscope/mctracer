@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "scenery/SensorMap.h"
+#include "Core/scenery/SensorMap.h"
 using std::string;
 using std::vector;
 using namespace relleums;

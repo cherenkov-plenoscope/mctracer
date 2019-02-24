@@ -4,10 +4,8 @@
 #include <sstream>
 #include "niels_lohmann_json.hpp"
 #include "Core/mctracer.h"
-#include "scenery/primitive/Primitive.h"
-#include "scenery/stereo_litography.h"
 #include "Tools/PathTools.h"
-#include "scenery/SegmentedReflector/SegmentedReflector.h"
+#include "Core/scenery/SegmentedReflector/SegmentedReflector.h"
 namespace nl = nlohmann;
 using std::string;
 using relleums::txt::is_equal;

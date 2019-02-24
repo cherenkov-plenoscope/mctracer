@@ -2,7 +2,7 @@
 #include "gtest/gtest.h"
 #include "Core/Vec3.h"
 #include "Core/PropagationConfig.h"
-#include "scenery/primitive/Sphere.h"
+#include "Core/scenery/primitive/Sphere.h"
 #include "Core/Rot3.h"
 #include "Core/random/random.h"
 #include "Core/PropagationEnvironment.h"

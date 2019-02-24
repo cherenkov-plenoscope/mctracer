@@ -4,12 +4,11 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include "scenery/Scenery.h"
+#include "Core/scenery/Scenery.h"
 #include "Core/Frame.h"
 #include "Core/Photons.h"
 #include "Core/PropagationConfig.h"
 #include "Visual/Config.h"
-#include "scenery/primitive/Primitive.h"
 #include "niels_lohmann_json.hpp"
 
 namespace relleums {

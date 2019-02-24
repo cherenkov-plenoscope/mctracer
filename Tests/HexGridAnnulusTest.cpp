@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "scenery/geometry/HexGridAnnulus.h"
+#include "Core/scenery/geometry/HexGridAnnulus.h"
 
 using namespace relleums;
 

@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include "gtest/gtest.h"
-#include "scenery/primitive/Primitive.h"
+#include "Core/mctracer.h"
 #include "Visual/FlyingCamera.h"
 using std::string;
 using std::vector;

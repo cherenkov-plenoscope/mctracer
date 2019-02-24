@@ -2,11 +2,7 @@
 #include "gtest/gtest.h"
 #include "niels_lohmann_json.hpp"
 #include "json.h"
-#include "Core/txt.h"
-#include "scenery/Scenery.h"
-#include "scenery/primitive/Primitive.h"
-//#include "Visual/Config.h"
-//#include "Visual/FlyingCamera.h"
+#include "Core/mctracer.h"
 namespace nl = nlohmann;
 namespace mct = relleums;
 using std::string;

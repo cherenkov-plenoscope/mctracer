@@ -3,9 +3,9 @@
 #include <vector>
 #include "gtest/gtest.h"
 #include "Core/mctracer.h"
-#include "scenery/primitive/BiConvexLensHexBound.h"
-#include "scenery/primitive/Disc.h"
-#include "scenery/geometry/lens_maker.h"
+#include "Core/scenery/primitive/BiConvexLensHexBound.h"
+#include "Core/scenery/primitive/Disc.h"
+#include "Core/scenery/geometry/lens_maker.h"
 #include "sensor/PhotonSensor.h"
 using std::vector;
 using namespace relleums;

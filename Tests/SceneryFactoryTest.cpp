@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
 //#include "Xml/Factory/SceneryFactory.h"
-//#include "scenery/Scenery.h"
+//#include "Core/scenery/Scenery.h"
 using std::cout;
 using std::string;
 /*

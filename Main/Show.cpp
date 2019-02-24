@@ -2,7 +2,7 @@
 #include "json.h"
 #include "Tools/PathTools.h"
 #include "Visual/FlyingCamera.h"
-#include "scenery/Scenery.h"
+#include "Core/scenery/Scenery.h"
 using std::string;
 using std::cout;
 namespace mct = relleums;

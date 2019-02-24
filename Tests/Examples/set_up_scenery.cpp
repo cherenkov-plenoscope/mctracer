@@ -1,10 +1,6 @@
-#include "Visual/FlyingCamera.h"
-#include "Core/Color.h"
-#include "Core/function/function.h"
-#include "Core/Rot3.h"
-#include "Core/Vec3.h"
-#include "scenery/primitive/Primitive.h"
 #include "gtest/gtest.h"
+#include "Core/mctracer.h"
+#include "Visual/FlyingCamera.h"
 #include "Tools/AsciiIo.h"
 
 using namespace relleums;

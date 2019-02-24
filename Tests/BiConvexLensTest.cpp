@@ -2,10 +2,10 @@
 #include <vector>
 #include "gtest/gtest.h"
 #include "Core/mctracer.h"
-#include "scenery/primitive/BiConvexLens.h"
-#include "scenery/primitive/Disc.h"
-#include "scenery/primitive/BiConvexLensHexBound.h"
-#include "scenery/geometry/lens_maker.h"
+#include "Core/scenery/primitive/BiConvexLens.h"
+#include "Core/scenery/primitive/Disc.h"
+#include "Core/scenery/primitive/BiConvexLensHexBound.h"
+#include "Core/scenery/geometry/lens_maker.h"
 #include "sensor/PhotonSensor.h"
 
 using namespace relleums;

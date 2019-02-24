@@ -2,7 +2,7 @@
 #include "gtest/gtest.h"
 #include "Core/DistanceMeter.h"
 #include "Core/Ray.h"
-#include "scenery/primitive/Sphere.h"
+#include "Core/scenery/primitive/Sphere.h"
 
 using namespace relleums;
 

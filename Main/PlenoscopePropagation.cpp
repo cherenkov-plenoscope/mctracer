@@ -15,7 +15,7 @@
 #include "signal_processing/signal_processing.h"
 #include "Tools/PathTools.h"
 #include "Tools/HeaderBlock.h"
-#include "scenery/Scenery.h"
+#include "Core/scenery/Scenery.h"
 namespace fs = std::experimental::filesystem;
 namespace sp = signal_processing;
 using std::string;

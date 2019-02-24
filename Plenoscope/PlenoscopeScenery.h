@@ -3,7 +3,7 @@
 #define PLENOSCOPE_PLENOSCOPESCENERY_H_
 
 #include <vector>
-#include "scenery/Scenery.h"
+#include "Core/scenery/Scenery.h"
 #include "Plenoscope/PlenoscopeInScenery.h"
 
 namespace Plenoscope {

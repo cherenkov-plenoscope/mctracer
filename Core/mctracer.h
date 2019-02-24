@@ -32,5 +32,6 @@
 
 #include "function/function.h"
 #include "random/random.h"
+#include "scenery/all_scenery.h"
 
 #endif  // CORE_MCTRACER_H_

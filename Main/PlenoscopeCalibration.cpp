@@ -7,7 +7,7 @@
 #include "Plenoscope/Calibration/Calibrator.h"
 #include "Plenoscope/json_to_plenoscope.h"
 #include "Tools/HeaderBlock.h"
-#include "scenery/Scenery.h"
+#include "Core/scenery/Scenery.h"
 #include "Core/mctracer.h"
 namespace fs = std::experimental::filesystem;
 using std::string;

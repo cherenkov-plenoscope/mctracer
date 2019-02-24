@@ -1,11 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <array>
 #include "gtest/gtest.h"
-#include "Core/Frame.h"
-#include "Core/Vec3.h"
-#include "Core/Rot3.h"
-#include "Core/HomTra3.h"
-#include "scenery/primitive/Primitive.h"
+#include "Core/mctracer.h"
 using std::string;
 using std::stringstream;
 using std::vector;

@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "scenery/FunctionMap.h"
+#include "Core/scenery/FunctionMap.h"
 using namespace relleums;
 
 class FunctionMapTest : public ::testing::Test {};

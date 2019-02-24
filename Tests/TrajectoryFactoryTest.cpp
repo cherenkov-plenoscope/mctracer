@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-/*#include "scenery/TrajectoryFactory.h"
+/*#include "Core/scenery/TrajectoryFactory.h"
 
 class TrajectoryFactoryTest : public ::testing::Test {};
 //------------------------------------------------------------------------------
