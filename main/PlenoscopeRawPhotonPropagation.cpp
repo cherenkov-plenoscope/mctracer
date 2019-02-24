@@ -13,7 +13,7 @@
 #include "plenoscope/night_sky_background/Injector.h"
 #include "plenoscope/json_to_plenoscope.h"
 #include "signal_processing/signal_processing.h"
-#include "PhotonsReader/PhotonsReader.h"
+#include "try_to_read/PhotonsReader.h"
 namespace fs = std::experimental::filesystem;
 namespace sp = signal_processing;
 using std::string;

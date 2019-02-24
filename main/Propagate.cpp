@@ -3,7 +3,7 @@
 #include "Core/mctracer.h"
 #include "Tools/AsciiIo.h"
 #include "json.h"
-#include "PhotonsReader/PhotonsReader.h"
+#include "try_to_read/PhotonsReader.h"
 using std::string;
 using std::cout;
 using std::vector;

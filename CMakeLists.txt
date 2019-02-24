@@ -37,7 +37,7 @@ set(SOURCE
 add_subdirectory("${PROJECT_SOURCE_DIR}/Core")
 add_subdirectory("${PROJECT_SOURCE_DIR}/corsika")
 add_subdirectory("${PROJECT_SOURCE_DIR}/plenoscope")
-add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonsReader")
+add_subdirectory("${PROJECT_SOURCE_DIR}/try_to_read")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Tools")
 add_subdirectory("${PROJECT_SOURCE_DIR}/signal_processing")
 add_subdirectory("${PROJECT_SOURCE_DIR}/docopt")

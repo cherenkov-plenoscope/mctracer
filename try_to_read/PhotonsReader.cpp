@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "PhotonsReader/PhotonsReader.h"
+#include "try_to_read/PhotonsReader.h"
 #include <sstream>
 #include "PhotonsReaderWrapper/EventIoWrapper.h"
 #include "PhotonsReaderWrapper/AsciiIoWrapper.h"
