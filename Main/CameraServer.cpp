@@ -1,7 +1,7 @@
 // Copyright 2018 Sebastian A. Mueller
 #include <stdint.h>
 #include <iostream>
-#include "DocOpt/docopt.h"
+#include "docopt/docopt.h"
 #include "Core/mctracer.h"
 #include "./json.h"
 using std::string;

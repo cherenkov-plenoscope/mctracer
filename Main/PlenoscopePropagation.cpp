@@ -1,7 +1,7 @@
 // Copyright 2015 Sebastian A. Mueller
 #include <experimental/filesystem>
 #include <iostream>
-#include "DocOpt/docopt.h"
+#include "docopt/docopt.h"
 #include "Core/mctracer.h"
 #include "eventio.h"
 #include "Corsika/corsika.h"

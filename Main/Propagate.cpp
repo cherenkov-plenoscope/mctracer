@@ -1,5 +1,5 @@
 #include <iostream>
-#include "DocOpt/docopt.h"
+#include "docopt/docopt.h"
 #include "Core/mctracer.h"
 #include "Tools/AsciiIo.h"
 #include "json.h"

@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-#include "DocOpt/docopt.h"
+#include "docopt/docopt.h"
 #include "eventio.h"
 #include "Tools/HeaderBlock.h"
 #include "Core/mctracer.h"

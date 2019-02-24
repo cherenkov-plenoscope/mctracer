@@ -1,5 +1,5 @@
 #include <iostream>
-#include "DocOpt/docopt.h"
+#include "docopt/docopt.h"
 #include "Core/mctracer.h"
 using std::string;
 using std::cout;

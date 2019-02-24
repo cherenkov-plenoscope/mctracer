@@ -1,7 +1,7 @@
 // Copyright 2015 Sebastian A. Mueller
 #include <experimental/filesystem>
 #include <iostream>
-#include "DocOpt/docopt.h"
+#include "docopt/docopt.h"
 #include "Tools/FileTools.h"
 #include "Plenoscope/Calibration/Calibrator.h"
 #include "Plenoscope/json_to_plenoscope.h"

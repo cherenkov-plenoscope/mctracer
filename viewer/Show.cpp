@@ -1,4 +1,4 @@
-#include "DocOpt/docopt.h"
+#include "docopt/docopt.h"
 #include "Core/mctracer.h"
 #include "json.h"
 #include "FlyingCamera.h"
