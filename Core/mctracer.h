@@ -26,6 +26,7 @@
 #include "welcome_screen.h"
 #include "numeric.h"
 #include "txt.h"
+#include "binary_input_output.h"
 
 #include "function/function.h"
 #include "random/random.h"

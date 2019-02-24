@@ -1,6 +1,6 @@
 // Copyright 2017 Sebastian A. Mueller
-#ifndef TOOLS_BINARY_INPUT_OUTPUT_H_
-#define TOOLS_BINARY_INPUT_OUTPUT_H_
+#ifndef CORE_BINARY_INPUT_OUTPUT_H_
+#define CORE_BINARY_INPUT_OUTPUT_H_
 
 #include <stdint.h>
 #include <fstream>
@@ -29,4 +29,4 @@ uint64_t read_uint64(std::istream &fin);
 }  // namespace bio
 }  // namespace relleums
 
-#endif  // TOOLS_BINARY_INPUT_OUTPUT_H_
+#endif  // CORE_BINARY_INPUT_OUTPUT_H_

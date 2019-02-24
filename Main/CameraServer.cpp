@@ -5,7 +5,6 @@
 #include "Visual/PortablePixMap.h"
 #include "Scenery/Scenery.h"
 #include "Tools/PathTools.h"
-#include "Tools/binary_input_output.h"
 #include "Core/mctracer.h"
 #include "./json.h"
 using std::string;

@@ -6,6 +6,5 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/PathTools.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Time.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/HeaderBlock.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/binary_input_output.cpp
     PARENT_SCOPE
 )

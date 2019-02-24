@@ -3,8 +3,8 @@
 #include <stdint.h>
 #include <string>
 #include <sstream>
-#include "Core/mctracer.h"
-#include "Tools/binary_input_output.h"
+#include "Core/txt.h"
+#include "Core/binary_input_output.h"
 
 namespace relleums {
 namespace visual {
