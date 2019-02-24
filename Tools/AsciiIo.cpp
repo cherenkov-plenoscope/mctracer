@@ -9,7 +9,7 @@ using std::string;
 using std::vector;
 
 namespace relleums {
-namespace AsciiIo {
+namespace tsvio {
 
 vector<vector<double>> gen_table_from_file(const string &path) {
     std::ifstream textfile;
@@ -17,7 +17,7 @@ vector<vector<double>> gen_table_from_file(const string &path) {
 
     if (!textfile.is_open()) {
         stringstream info;
-        info << "AsciiIo::gen_table_from_file\n";
+        info << "tsvio::gen_table_from_file\n";
         info << "Can not open file '" << path << "'.";
         throw std::runtime_error(info.str());
     }
@@ -128,5 +128,5 @@ void TableReader::push_back_token_to_numeric_row(
     }
 }
 
-}  // namespace AsciiIo
+}  // namespace tsvio
 }  // namespace relleums

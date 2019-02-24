@@ -111,13 +111,13 @@ TEST_F(PhotonsTest, bunch2raw_matrix2file) {
     }
 
     // write to text file
-    AsciiIo::write_table_to_file(
+    tsvio::write_table_to_file(
         Photons::photons2raw_matrix(&photon_bunch1),
         "numeric_table_IO/my_big_photon_list.txt");
 
     // read back again from text file
     std::vector<Photon> photon_bunch2 = Photons::raw_matrix2photons(
-        AsciiIo::gen_table_from_file(
+        tsvio::gen_table_from_file(
             "numeric_table_IO/my_big_photon_list.txt"));
 
     ASSERT_EQ(number_of_photons, photon_bunch2.size());

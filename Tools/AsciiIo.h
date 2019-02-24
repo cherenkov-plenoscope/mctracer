@@ -9,23 +9,28 @@
 #include "Tools/FileTools.h"
 
 namespace relleums {
-namespace AsciiIo {
+namespace tsvio {
 
 std::vector<std::vector<double>> gen_table_from_file(
     const std::string &path);
+
 std::vector<std::vector<double>> gen_table_from_string(
     const std::string &text);
+
 void write_table_to_file(
     std::vector<std::vector<double>> table,
     const std::string &path);
+
 void write_table_to_file_with_header(
     std::vector<std::vector<double>> table,
     const std::string &path,
     const std::string &header);
+
 const char delimiter = '\t';
 const char delimiters_for_reading[] = "\t" " ";
 const char comment_escape = '#';
 const int precision = 10;
+
 std::string get_table_print(const std::vector<std::vector<double>> &table);
 
 class TableReader {
@@ -45,7 +50,7 @@ class TableReader {
         std::vector<double> *numeric_row);
 };
 
-}  // namespace AsciiIo
+}  // namespace tsvio
 }  // namespace relleums
 
 #endif  // TOOLS_ASCIIIO_H_

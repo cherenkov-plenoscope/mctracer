@@ -7,7 +7,6 @@
 #include "Scenery/Primitive/BiConvexLensHexBound.h"
 #include "Scenery/Geometry/LensMaker/LensMaker.h"
 #include "sensor/PhotonSensor.h"
-#include "Tools/AsciiIo.h"
 
 using namespace relleums;
 using std::vector;

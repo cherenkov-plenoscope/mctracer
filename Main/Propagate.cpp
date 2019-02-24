@@ -108,7 +108,7 @@ int main(int argc, char* argv[]) {
                 header << "-------------\n";
                 header << sensor::arrival_table_header();
 
-                AsciiIo::write_table_to_file_with_header(
+                tsvio::write_table_to_file_with_header(
                     sensor::history_to_table(
                         sensors.at(i)->photon_arrival_history),
                     outname.str(),

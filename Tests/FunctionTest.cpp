@@ -183,8 +183,8 @@ TEST_F(FunctionTest, numerical_inverse_quadratic) {
     function::Func1 f_inv = function::inverse(f);
     EXPECT_NEAR(0.0, f_inv.limits.lower, 1e-6);
     EXPECT_NEAR(1.0, f_inv.limits.upper, 1e-6);
-    // AsciiIo::write_table_to_file(f.sample(1024), "f.func");
-    // AsciiIo::write_table_to_file(f_inv.sample(1024), "f_inv.func");
+    // tsvio::write_table_to_file(f.sample(1024), "f.func");
+    // tsvio::write_table_to_file(f_inv.sample(1024), "f_inv.func");
     // f_inv(0) != sqrt(0) = 0
     EXPECT_NEAR(0.0, f_inv.evaluate(0.0), 1e-3);
     // f_inv(0.5) != sqrt(0.5) = sqrt(2)/2

@@ -73,9 +73,9 @@ TEST_F(Func1Test, access_at_highest_argument) {
 
 TEST_F(Func1Test, generate_from_from_file) {
     std::string path = "numeric_table_IO/tim_sinus.csv";
-    AsciiIo::write_table_to_file(table, path);
+    tsvio::write_table_to_file(table, path);
 
-    function::Func1 f(AsciiIo::gen_table_from_file(path));
+    function::Func1 f(tsvio::gen_table_from_file(path));
 
     // precision loss in ascii files, cant access boundarys sharp,
     // start in row 1 and stop one row before end.
