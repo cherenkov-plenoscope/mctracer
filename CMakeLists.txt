@@ -103,11 +103,11 @@ target_link_libraries(mctPlenoscopeRawPhotonPropagation docopt)
 
 #---------------------------------
 # unit test exe
-add_subdirectory("${PROJECT_SOURCE_DIR}/Tests/gtest-1.7.0")
-include_directories("${PROJECT_SOURCE_DIR}/Tests/gtest-1.7.0/include")
-add_subdirectory("${PROJECT_SOURCE_DIR}/Tests")
+add_subdirectory("${PROJECT_SOURCE_DIR}/tests/gtest-1.7.0")
+include_directories("${PROJECT_SOURCE_DIR}/tests/gtest-1.7.0/include")
+add_subdirectory("${PROJECT_SOURCE_DIR}/tests")
 
-add_executable(mctTest ./Tests/test.cpp ${TEST_SOURCE})
+add_executable(mctTest ./tests/test.cpp ${TEST_SOURCE})
 target_link_libraries(mctTest gtest gtest_main)
 target_link_libraries(mctTest mct)
 
