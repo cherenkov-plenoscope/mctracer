@@ -5,7 +5,7 @@
 #include <vector>
 #include "plenoscope/calibration/CalibrationPhotonResult.h"
 #include "plenoscope/calibration/Config.h"
-#include "plenoscope/LightFieldSensor/Geometry.h"
+#include "plenoscope/light_field_sensor/Geometry.h"
 #include "plenoscope/calibration/OnlineLixelStatistics.h"
 #include "plenoscope/calibration/LixelStatistics.h"
 
@@ -14,12 +14,12 @@ namespace calibration {
 
 class LixelStatisticsFiller {
     const Config *calib_config;
-    const LightFieldSensor::Geometry *sensor_geometry;
+    const light_field_sensor::Geometry *sensor_geometry;
     std::vector<OnlineLixelStatistics> lixel_stats;
  public:
     const double photons_emitted_per_lixel;
     LixelStatisticsFiller(
-        const LightFieldSensor::Geometry *sensor_geometry,
+        const light_field_sensor::Geometry *sensor_geometry,
         const Config *config);
     std::vector<LixelStatistic> get_lixel_statistics()const;
     void fill_in_block(const std::vector<CalibrationPhotonResult> &calib_block);

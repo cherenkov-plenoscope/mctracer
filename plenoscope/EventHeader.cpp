@@ -17,7 +17,7 @@ void EventHeader::set_trigger_type(const float trigger_type) {
     raw[  3-1] = trigger_type;
 }
 
-void EventHeader::set_plenoscope_geometry(const LightFieldSensor::Config &cfg) {
+void EventHeader::set_plenoscope_geometry(const light_field_sensor::Config &cfg) {
     raw[ 11-1] = cfg.sensor_plane2imaging_system.get_rot_x().x;
     raw[ 12-1] = cfg.sensor_plane2imaging_system.get_rot_x().y;
     raw[ 13-1] = cfg.sensor_plane2imaging_system.get_rot_x().z;

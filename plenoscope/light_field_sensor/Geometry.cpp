@@ -1,5 +1,5 @@
 // Copyright 2015 Sebastian A. Mueller
-#include "plenoscope/LightFieldSensor/Geometry.h"
+#include "plenoscope/light_field_sensor/Geometry.h"
 #include <math.h>
 #include <sstream>
 #include "Core/scenery/geometry/HexGridAnnulus.h"
@@ -17,7 +17,7 @@ using std::stringstream;
 using namespace relleums;
 
 namespace plenoscope {
-namespace LightFieldSensor {
+namespace light_field_sensor {
 
 Geometry::Geometry(const Config ncfg):
     config(ncfg) {
@@ -329,5 +329,5 @@ double Geometry::field_of_view_solid_angle()const {
     return get_solid_angle_for_opening_angle(max_FoV_radius());
 }
 
-}  // namespace LightFieldSensor
+}  // namespace light_field_sensor
 }  // namespace plenoscope

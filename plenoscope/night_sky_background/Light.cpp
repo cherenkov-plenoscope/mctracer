@@ -11,7 +11,7 @@ namespace plenoscope {
 namespace night_sky_background {
 
 Light::Light(
-    const LightFieldSensor::Geometry *_sensor_geometry,
+    const light_field_sensor::Geometry *_sensor_geometry,
     const function::Func1* _flux_vs_wavelength
 ):
 flux_vs_wavelength(_flux_vs_wavelength),

@@ -16,7 +16,7 @@ relleums::Frame* add_light_field_sensor(
 ) {
     relleums::Frame* light_field_sensor = mother->append<relleums::Frame>();
     relleums::json::set_frame(light_field_sensor, o);
-    LightFieldSensor::Config config;
+    light_field_sensor::Config config;
     config.sensor_plane2imaging_system = *light_field_sensor->frame2mother();
     config.expected_imaging_system_focal_length =
         o.f8("expected_imaging_system_focal_length");
@@ -33,7 +33,7 @@ relleums::Frame* add_light_field_sensor(
             o.st("bin_reflection_vs_wavelength"));
 
     PlenoscopeInScenery pis(config);
-    LightFieldSensor::Factory lfs_factory(
+    light_field_sensor::Factory lfs_factory(
         &pis.light_field_sensor_geometry);
     lfs_factory.add_light_field_sensor_to_frame_in_scenery(
         light_field_sensor,
@@ -51,7 +51,7 @@ relleums::Frame* add_light_field_sensor_demonstration(
 ) {
     relleums::Frame* light_field_sensor = mother->append<relleums::Frame>();
     relleums::json::set_frame(light_field_sensor, o);
-    LightFieldSensor::Config config;
+    light_field_sensor::Config config;
     config.sensor_plane2imaging_system = *light_field_sensor->frame2mother();
     config.expected_imaging_system_focal_length =
         o.f8("expected_imaging_system_focal_length");
@@ -68,7 +68,7 @@ relleums::Frame* add_light_field_sensor_demonstration(
             o.st("bin_reflection_vs_wavelength"));
 
     PlenoscopeInScenery pis(config);
-    LightFieldSensor::Factory lfs_factory(
+    light_field_sensor::Factory lfs_factory(
         &pis.light_field_sensor_geometry);
     lfs_factory.add_demonstration_light_field_sensor_to_frame_in_scenery(
         light_field_sensor,

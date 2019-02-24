@@ -3,7 +3,7 @@
 #define PLENOSCOPE_EVENTHEADER_H_
 
 #include <array>
-#include "LightFieldSensor/Config.h"
+#include "light_field_sensor/Config.h"
 
 namespace plenoscope {
 
@@ -23,7 +23,7 @@ struct EventHeader {
     EventHeader();
     void set_event_type(const float event_type);
     void set_trigger_type(const float trigger_type);
-    void set_plenoscope_geometry(const LightFieldSensor::Config &cfg);
+    void set_plenoscope_geometry(const light_field_sensor::Config &cfg);
 };
 
 }  // namespace plenoscope

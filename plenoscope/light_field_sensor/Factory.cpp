@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "plenoscope/LightFieldSensor/Factory.h"
+#include "plenoscope/light_field_sensor/Factory.h"
 #include <math.h>
 #include <vector>
 #include "Core/mctracer.h"
@@ -10,7 +10,7 @@ using namespace relleums;
 
 
 namespace plenoscope {
-namespace LightFieldSensor {
+namespace light_field_sensor {
 
 Factory::Factory(const Geometry* geo):
     geometry(geo),
@@ -278,5 +278,5 @@ sensor::Sensors* Factory::get_sub_pixels()const {
     return sub_pixel_sensors;
 }
 
-}  // namespace LightFieldSensor
+}  // namespace light_field_sensor
 }  // namespace plenoscope

@@ -5,11 +5,11 @@
 #include <array>
 #include <vector>
 #include <string>
-#include "plenoscope/LightFieldSensor/Config.h"
+#include "plenoscope/light_field_sensor/Config.h"
 #include "Core/Vec3.h"
 
 namespace plenoscope {
-namespace LightFieldSensor {
+namespace light_field_sensor {
 
 class Geometry {
  public:
@@ -75,7 +75,7 @@ class Geometry {
     void set_up_lixel_grid();
 };
 
-}  // namespace LightFieldSensor
+}  // namespace light_field_sensor
 }  // namespace plenoscope
 
 #endif  // PLENOSCOPE_LIGHTFIELDSENSOR_GEOMETRY_H_

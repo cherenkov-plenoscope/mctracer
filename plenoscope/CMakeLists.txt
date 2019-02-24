@@ -1,5 +1,5 @@
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/calibration")
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/LightFieldSensor")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/light_field_sensor")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/night_sky_background")
 set(SOURCE
     ${SOURCE}

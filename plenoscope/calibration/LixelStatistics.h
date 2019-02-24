@@ -6,7 +6,7 @@
 #include <vector>
 #include "plenoscope/calibration/CalibrationPhotonResult.h"
 #include "plenoscope/calibration/Config.h"
-#include "plenoscope/LightFieldSensor/Geometry.h"
+#include "plenoscope/light_field_sensor/Geometry.h"
 #include "plenoscope/calibration/OnlineLixelStatistics.h"
 
 namespace plenoscope {

@@ -7,7 +7,7 @@ namespace plenoscope {
 namespace calibration {
 
 LixelStatisticsFiller::LixelStatisticsFiller(
-    const LightFieldSensor::Geometry *geometry,
+    const light_field_sensor::Geometry *geometry,
     const Config *_calib_config
 ):
     calib_config(_calib_config),

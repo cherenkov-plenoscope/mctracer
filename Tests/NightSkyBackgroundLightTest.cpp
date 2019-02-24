@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "plenoscope/LightFieldSensor/Config.h"
+#include "plenoscope/light_field_sensor/Config.h"
 #include "plenoscope/night_sky_background/NightSkyBackground.h"
 #include "Core/mctracer.h"
 #include "Tools/AsciiIo.h"
@@ -11,7 +11,7 @@ class NightSkyBackgroundLightTest : public ::testing::Test {};
 
 TEST_F(NightSkyBackgroundLightTest, init) {
     // SET UP TELESCOPE
-    plenoscope::LightFieldSensor::Config config;
+    plenoscope::light_field_sensor::Config config;
 
     config.expected_imaging_system_focal_length = 75.0;
     config.expected_imaging_system_max_aperture_radius = 25.0;
@@ -19,9 +19,9 @@ TEST_F(NightSkyBackgroundLightTest, init) {
     config.pixel_FoV_hex_flat2flat = deg2rad(0.1);
     config.number_of_paxel_on_pixel_diagonal = 13;
     config.housing_overhead = 1.2;
-    config.lens_refraction = &plenoscope::LightFieldSensor::pmma_refraction;
+    config.lens_refraction = &plenoscope::light_field_sensor::pmma_refraction;
 
-    plenoscope::LightFieldSensor::Geometry geometry(config);
+    plenoscope::light_field_sensor::Geometry geometry(config);
 
     function::Func1 nsb_flux_vs_wavelength(
         tsvio::gen_table_from_file(

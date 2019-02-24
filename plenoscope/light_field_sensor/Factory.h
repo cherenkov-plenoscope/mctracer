@@ -4,11 +4,11 @@
 
 #include <string>
 #include "Core/mctracer.h"
-#include "plenoscope/LightFieldSensor/Geometry.h"
+#include "plenoscope/light_field_sensor/Geometry.h"
 #include "plenoscope/PlenoscopeScenery.h"
 
 namespace plenoscope {
-namespace LightFieldSensor {
+namespace light_field_sensor {
 
 class Factory {
     relleums::sensor::Sensors *sub_pixel_sensors;
@@ -35,7 +35,7 @@ class Factory {
     void add_lixel_sensor_plane(relleums::Frame* frame);
 };
 
-}  // namespace LightFieldSensor
+}  // namespace light_field_sensor
 }  // namespace plenoscope
 
 #endif  // PLENOSCOPE_LIGHTFIELDSENSOR_FACTORY_H_

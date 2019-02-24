@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "plenoscope/LightFieldSensor/Config.h"
+#include "plenoscope/light_field_sensor/Config.h"
 #include "Core/mctracer.h"
 #include "Corsika/corsika.h"
 
@@ -7,7 +7,7 @@ using std::array;
 using namespace relleums;
 
 namespace plenoscope {
-namespace LightFieldSensor {
+namespace light_field_sensor {
 
 Config::Config() {
     expected_imaging_system_focal_length = 75.0;
@@ -47,5 +47,5 @@ array<float, 273> Config::get_sensor_plane2imaging_system_header()const {
     return header;
 }
 
-}  // namespace LightFieldSensor
+}  // namespace light_field_sensor
 }  // namespace plenoscope

@@ -7,7 +7,7 @@
 #include "Core/mctracer.h"
 
 namespace plenoscope {
-namespace LightFieldSensor {
+namespace light_field_sensor {
 
 struct Config {
     relleums::HomTra3 sensor_plane2imaging_system;
@@ -45,7 +45,7 @@ static const relleums::function::Func1 perfect_transparency(
         {1200e-9, std::numeric_limits<double>::infinity()}
     });
 
-}  // namespace LightFieldSensor
+}  // namespace light_field_sensor
 }  // namespace plenoscope
 
 #endif  // PLENOSCOPE_LIGHTFIELDSENSOR_CONFIG_H_
