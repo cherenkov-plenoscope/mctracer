@@ -3,12 +3,12 @@
 #define PLENOSCOPE_NIGHTSKYBACKGROUND_INJECTOR_H_
 
 #include <vector>
-#include "plenoscope/NightSkyBackground/Light.h"
+#include "plenoscope/night_sky_background/Light.h"
 #include "signal_processing/signal_processing.h"
 #include "plenoscope/Calibration/LixelStatistics.h"
 
 namespace plenoscope {
-namespace NightSkyBackground {
+namespace night_sky_background {
 
 void inject_nsb_into_photon_pipeline(
     std::vector<std::vector<signal_processing::PipelinePhoton>> *
@@ -20,7 +20,7 @@ void inject_nsb_into_photon_pipeline(
     relleums::random::Generator* prng
 );
 
-}  // namespace NightSkyBackground
+}  // namespace night_sky_background
 }  // namespace plenoscope
 
 #endif  // PLENOSCOPE_NIGHTSKYBACKGROUND_INJECTOR_H_

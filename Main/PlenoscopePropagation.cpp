@@ -7,10 +7,10 @@
 #include "Corsika/corsika.h"
 #include "Corsika/PhotonFactory.h"
 #include "signal_processing/signal_processing.h"
-#include "plenoscope/NightSkyBackground/Light.h"
+#include "plenoscope/night_sky_background/Light.h"
 #include "plenoscope/EventHeader.h"
 #include "plenoscope/SimulationTruthHeader.h"
-#include "plenoscope/NightSkyBackground/Injector.h"
+#include "plenoscope/night_sky_background/Injector.h"
 #include "plenoscope/json_to_plenoscope.h"
 #include "signal_processing/signal_processing.h"
 #include "Tools/HeaderBlock.h"
@@ -147,7 +147,7 @@ int main(int argc, char* argv[]) {
         json::json_to_linear_interpol_function(
             nsb_obj.obj("flux_vs_wavelength"));
 
-    plenoscope::NightSkyBackground::Light nsb(
+    plenoscope::night_sky_background::Light nsb(
         &pis->light_field_sensor_geometry,
         &nsb_flux_vs_wavelength);
     const double nsb_exposure_time = nsb_obj.f8("exposure_time");
@@ -216,7 +216,7 @@ int main(int argc, char* argv[]) {
 
         //-----------------------------
         // Night Sky Background photons
-        plenoscope::NightSkyBackground::inject_nsb_into_photon_pipeline(
+        plenoscope::night_sky_background::inject_nsb_into_photon_pipeline(
             &photon_pipelines,
             nsb_exposure_time,
             &optics_calibration_result,

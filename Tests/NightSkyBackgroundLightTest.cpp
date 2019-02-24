@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
 #include "plenoscope/LightFieldSensor/Config.h"
-#include "plenoscope/NightSkyBackground/NightSkyBackground.h"
+#include "plenoscope/night_sky_background/NightSkyBackground.h"
 #include "Core/mctracer.h"
 #include "Tools/AsciiIo.h"
 
@@ -27,17 +27,17 @@ TEST_F(NightSkyBackgroundLightTest, init) {
         tsvio::gen_table_from_file(
             "night_sky_background_flux_vs_wavelength_la_palma.txt"));
 
-    plenoscope::NightSkyBackground::Light nsb(
+    plenoscope::night_sky_background::Light nsb(
         &geometry,
         &nsb_flux_vs_wavelength);
 
     EXPECT_EQ(
         nsb.fov_radius,
-        0.5*deg2rad(6.5)*plenoscope::NightSkyBackground::FOV_RADIUS_OVERHEAD);
+        0.5*deg2rad(6.5)*plenoscope::night_sky_background::FOV_RADIUS_OVERHEAD);
 
     EXPECT_EQ(
         nsb.aperture_radius,
-        25*plenoscope::NightSkyBackground::APERTURE_RADIUS_OVERHEAD);
+        25*plenoscope::night_sky_background::APERTURE_RADIUS_OVERHEAD);
 
     std::cout << nsb.str() << "\n";
 }

@@ -8,7 +8,7 @@
 #include <iostream>
 #include "Core/mctracer.h"
 #include "plenoscope/Calibration/Writer.h"
-#include "plenoscope/NightSkyBackground/NightSkyBackground.h"
+#include "plenoscope/night_sky_background/NightSkyBackground.h"
 #include "Tools/FileTools.h"
 #include "Tools/HeaderBlock.h"
 using std::vector;
@@ -27,11 +27,11 @@ Calibrator::Calibrator(
         world(_world),
         num_photons(config.photons_per_block*config.number_of_blocks),
         MAX_APERTURE_PLANE_RADIUS(
-            NightSkyBackground::APERTURE_RADIUS_OVERHEAD*
+            night_sky_background::APERTURE_RADIUS_OVERHEAD*
             plenoscope->light_field_sensor_geometry.
                 expected_imaging_system_max_aperture_radius()),
         MAX_INCIDENT_ANGLE(
-            NightSkyBackground::FOV_RADIUS_OVERHEAD*
+            night_sky_background::FOV_RADIUS_OVERHEAD*
             plenoscope->light_field_sensor_geometry.max_FoV_radius()
         ) {}
 

@@ -1,5 +1,5 @@
 // Copyright 2016 Sebastian A. Mueller
-#include "plenoscope/NightSkyBackground/Injector.h"
+#include "plenoscope/night_sky_background/Injector.h"
 #include <limits>
 #include "Core/Histogram1.h"
 #include "Core/SimulationTruth.h"
@@ -8,7 +8,7 @@ using std::vector;
 using namespace relleums;
 
 namespace plenoscope {
-namespace NightSkyBackground {
+namespace night_sky_background {
 
 void inject_nsb_into_photon_pipeline(
     vector<vector<signal_processing::PipelinePhoton>> *photon_pipelines,
@@ -104,5 +104,5 @@ void inject_nsb_into_photon_pipeline(
     }
 }
 
-}  // namespace NightSkyBackground
+}  // namespace night_sky_background
 }  // namespace plenoscope

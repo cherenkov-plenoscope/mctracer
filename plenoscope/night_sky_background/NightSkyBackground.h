@@ -2,11 +2,11 @@
 #ifndef PLENOSCOPE_NIGHTSKYBACKGROUND_NIGHTSKYBACKGROUND_H_
 #define PLENOSCOPE_NIGHTSKYBACKGROUND_NIGHTSKYBACKGROUND_H_
 
-#include "plenoscope/NightSkyBackground/Injector.h"
-#include "plenoscope/NightSkyBackground/Light.h"
+#include "plenoscope/night_sky_background/Injector.h"
+#include "plenoscope/night_sky_background/Light.h"
 
 namespace plenoscope {
-namespace NightSkyBackground {
+namespace night_sky_background {
 
 const double APERTURE_RADIUS_OVERHEAD = 1.05;
 const double FOV_RADIUS_OVERHEAD = 1.20;
@@ -16,7 +16,7 @@ const double FOV_RADIUS_OVERHEAD = 1.20;
 // also stronger misalignments, we spear the incoming
 // photon directions more out.
 
-}  // namespace NightSkyBackground
+}  // namespace night_sky_background
 }  // namespace plenoscope
 
 #endif  // PLENOSCOPE_NIGHTSKYBACKGROUND_NIGHTSKYBACKGROUND_H_

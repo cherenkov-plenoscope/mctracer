@@ -8,7 +8,7 @@
 #include "Core/function/function.h"
 
 namespace plenoscope {
-namespace NightSkyBackground {
+namespace night_sky_background {
 
 struct Light {
     const relleums::function::Func1* flux_vs_wavelength;
@@ -25,7 +25,7 @@ struct Light {
     std::string str()const;
 };
 
-}  // namespace NightSkyBackground
+}  // namespace night_sky_background
 }  // namespace plenoscope
 
 #endif  // PLENOSCOPE_NIGHTSKYBACKGROUND_LIGHT_H_

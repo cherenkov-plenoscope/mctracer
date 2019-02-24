@@ -1,5 +1,5 @@
 // Copyright 2016 Sebastian A. Mueller
-#include "plenoscope/NightSkyBackground/Light.h"
+#include "plenoscope/night_sky_background/Light.h"
 #include <sstream>
 #include "Core/PhysicalConstants.h"
 #include "Core/tools.h"
@@ -8,7 +8,7 @@
 using namespace relleums;
 
 namespace plenoscope {
-namespace NightSkyBackground {
+namespace night_sky_background {
 
 Light::Light(
     const LightFieldSensor::Geometry *_sensor_geometry,
@@ -46,5 +46,5 @@ std::string Light::str()const {
     return out.str();
 }
 
-}  // namespace NightSkyBackground
+}  // namespace night_sky_background
 }  // namespace plenoscope
