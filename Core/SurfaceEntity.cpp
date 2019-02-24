@@ -5,26 +5,24 @@
 
 namespace relleums {
 
-using function::Func1;
-
 const SurfaceEntity SurfaceEntity::VOID_SURFACE_ENTITY;
 const SurfaceEntity SurfaceEntity::PHOTON_SOURCE;
 
 const Color* SurfaceEntity::DEFAULT_COLOR = &COLOR_DARK_GRAY;
 
-const Func1* SurfaceEntity::DEFAULT_REFLECTION = new Func1(
+const function::Func1* SurfaceEntity::DEFAULT_REFLECTION = new function::Func1(
     {
         {200e-9, 0},
         {1200e-9, 0}
     });
 
-const Func1* SurfaceEntity::DEFAULT_REFRACTION = new Func1(
+const function::Func1* SurfaceEntity::DEFAULT_REFRACTION = new function::Func1(
     {
         {200e-9, 1},
         {1200e-9, 1}
     });
 
-const Func1* SurfaceEntity::DEFAULT_ABSORPTION = new Func1(
+const function::Func1* SurfaceEntity::DEFAULT_ABSORPTION = new function::Func1(
     {
         {200e-9, std::numeric_limits<double>::infinity()},
         {1200e-9, std::numeric_limits<double>::infinity()}
@@ -59,55 +57,55 @@ void SurfaceEntity::init_surface_defaults() {
     inner_absorption_vs_wavelength = DEFAULT_ABSORPTION;
 }
 
-const Func1* SurfaceEntity::get_outer_reflection_()const {
+const function::Func1* SurfaceEntity::get_outer_reflection_()const {
     return outer_reflection_vs_wavelength;
 }
 
-const Func1* SurfaceEntity::get_inner_reflection_()const {
+const function::Func1* SurfaceEntity::get_inner_reflection_()const {
     return inner_reflection_vs_wavelength;
 }
 
-const Func1* SurfaceEntity::get_outer_refraction_()const {
+const function::Func1* SurfaceEntity::get_outer_refraction_()const {
     return outer_refraction_vs_wavelength;
 }
 
-const Func1* SurfaceEntity::get_inner_refraction_()const {
+const function::Func1* SurfaceEntity::get_inner_refraction_()const {
     return inner_refraction_vs_wavelength;
 }
 
-const Func1* SurfaceEntity::get_outer_absorption_()const {
+const function::Func1* SurfaceEntity::get_outer_absorption_()const {
     return outer_absorption_vs_wavelength;
 }
 
-const Func1* SurfaceEntity::get_inner_absorption_()const {
+const function::Func1* SurfaceEntity::get_inner_absorption_()const {
     return inner_absorption_vs_wavelength;
 }
 
-void SurfaceEntity::set_outer_reflection(const Func1* reflec) {
+void SurfaceEntity::set_outer_reflection(const function::Func1* reflec) {
     outer_reflection_vs_wavelength = reflec;
 }
 
-void SurfaceEntity::set_inner_reflection(const Func1* reflec) {
+void SurfaceEntity::set_inner_reflection(const function::Func1* reflec) {
     inner_reflection_vs_wavelength = reflec;
 }
 
-void SurfaceEntity::set_outer_refraction(const Func1* refrac) {
+void SurfaceEntity::set_outer_refraction(const function::Func1* refrac) {
     outer_refraction_vs_wavelength = refrac;
     if (outer_refraction_vs_wavelength != DEFAULT_REFRACTION)
         _boundary_layer_is_transparent = true;
 }
 
-void SurfaceEntity::set_inner_refraction(const Func1* refrac) {
+void SurfaceEntity::set_inner_refraction(const function::Func1* refrac) {
     inner_refraction_vs_wavelength = refrac;
     if (inner_refraction_vs_wavelength != DEFAULT_REFRACTION)
         _boundary_layer_is_transparent = true;
 }
 
-void SurfaceEntity::set_outer_absorption(const Func1* absorp) {
+void SurfaceEntity::set_outer_absorption(const function::Func1* absorp) {
     outer_absorption_vs_wavelength = absorp;
 }
 
-void SurfaceEntity::set_inner_absorption(const Func1* absorp) {
+void SurfaceEntity::set_inner_absorption(const function::Func1* absorp) {
     inner_absorption_vs_wavelength = absorp;
 }
 
