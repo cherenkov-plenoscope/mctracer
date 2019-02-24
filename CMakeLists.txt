@@ -123,3 +123,8 @@ add_executable(mctFactPropagation ./main/FactPropagation.cpp)
 target_link_libraries(mctFactPropagation mct)
 target_link_libraries(mctFactPropagation stdc++fs)
 target_link_libraries(mctFactPropagation docopt)
+
+#------------------------
+# catch header-only test
+add_executable(mctCatch ./Core/test/test.cpp)
+target_link_libraries(mctCatch mct)
