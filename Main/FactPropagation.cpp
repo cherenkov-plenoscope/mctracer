@@ -12,6 +12,7 @@
 namespace fs = std::experimental::filesystem;
 namespace ps = photon_stream;
 namespace re = relleums;
+namespace sp = signal_processing;
 using std::string;
 using std::vector;
 using std::array;
@@ -34,7 +35,7 @@ R"(FACT IACT air showher propagation
 )";
 
 double estimate_median_arrival_time(
-    const vector<vector<signal_processing::ElectricPulse>>& electric_pipelines
+    const vector<vector<sp::ElectricPulse>>& electric_pipelines
 ) {
     unsigned int num_pulses = 0;
     for (unsigned int chid = 0; chid < electric_pipelines.size(); chid++) {
@@ -62,7 +63,7 @@ double estimate_median_arrival_time(
 }
 
 vector<uint8_t> electric_pipelines_to_photon_stream(
-    const vector<vector<signal_processing::ElectricPulse>>& electric_pipelines,
+    const vector<vector<sp::ElectricPulse>>& electric_pipelines,
     const double trigger_time=25e-9
 ) {
     const double median_arrival_time = estimate_median_arrival_time(
@@ -345,11 +346,11 @@ int main(int argc, char* argv[]) {
         prng.set_seed(args.find("--random_seed")->second.asLong());
     re::function::Func1 pde_vs_wavelength(pde_hamamatsu_S10362_33_050C());
 
-    signal_processing::PhotoElectricConverter::Config converter_config;
+    sp::PhotoElectricConverter::Config converter_config;
     converter_config.dark_rate = 0.0;
     converter_config.probability_for_second_puls = 0.0;
     converter_config.quantum_efficiency_vs_wavelength = &pde_vs_wavelength;
-    signal_processing::PhotoElectricConverter::Converter sipm_converter(
+    sp::PhotoElectricConverter::Converter sipm_converter(
         &converter_config);
 
     const double nsb_exposure_time = 1e-9;
@@ -389,12 +390,12 @@ int main(int argc, char* argv[]) {
         pixels.clear_history();
         pixels.assign_photons(&photons);
 
-        vector<vector<signal_processing::PipelinePhoton>> photon_pipelines =
-            signal_processing::get_photon_pipelines(&pixels);
+        vector<vector<sp::PipelinePhoton>> photon_pipelines =
+            sp::get_photon_pipelines(&pixels);
 
-        vector<vector<signal_processing::ElectricPulse>> electric_pipelines;
+        vector<vector<sp::ElectricPulse>> electric_pipelines;
         electric_pipelines.reserve(photon_pipelines.size());
-        for (vector<signal_processing::PipelinePhoton> ph_pipe : photon_pipelines
+        for (vector<sp::PipelinePhoton> ph_pipe : photon_pipelines
         ) {
             electric_pipelines.push_back(
                 sipm_converter.get_pulse_pipeline_for_photon_pipeline(
