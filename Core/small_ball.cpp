@@ -1,17 +1,4 @@
 // Copyright 2014 Sebastian A. Mueller
-//
-// Inspired by:
-// @article{nielsen2009approximating,
-//   title={Approximating smallest enclosing balls with applications to
-//   machine learning},
-//   author={Nielsen, Frank and Nock, Richard},
-//   journal={International Journal of Computational Geometry \& Applications},
-//   volume={19},
-//   number={05},
-//   pages={389--414},
-//   year={2009},
-//   publisher={World Scientific}
-// }
 #include "Core/small_ball.h"
 #include <math.h>
 
