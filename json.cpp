@@ -2,7 +2,7 @@
 #include "./json.h"
 #include <fstream>
 #include <sstream>
-#include "nlohmann_json.hpp"
+#include "niels_lohmann_json.hpp"
 #include "Core/mctracer.h"
 #include "Scenery/Primitive/Primitive.h"
 #include "Scenery/StereoLitography/StereoLitography.h"

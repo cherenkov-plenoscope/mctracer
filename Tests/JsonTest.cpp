@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "nlohmann_json.hpp"
+#include "niels_lohmann_json.hpp"
 #include "json.h"
 #include "Core/txt.h"
 #include "Scenery/Scenery.h"

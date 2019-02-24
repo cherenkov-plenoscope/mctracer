@@ -10,7 +10,7 @@
 #include "Core/PropagationConfig.h"
 #include "Visual/Config.h"
 #include "Scenery/Primitive/Primitive.h"
-#include "nlohmann_json.hpp"
+#include "niels_lohmann_json.hpp"
 
 namespace relleums {
 namespace json {
