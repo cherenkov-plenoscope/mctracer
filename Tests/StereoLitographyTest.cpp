@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
 #include "Core/Vec3.h"
-#include "Scenery/stereo_litography.h"
+#include "scenery/stereo_litography.h"
 
 using namespace relleums;
 namespace stl = stereo_litography;

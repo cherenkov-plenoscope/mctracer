@@ -1,8 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "Scenery/primitive/Disc.h"
+#include "scenery/primitive/Disc.h"
 #include "Core/Photons.h"
-#include "Scenery/Scenery.h"
+#include "scenery/Scenery.h"
 
 using namespace relleums;
 using std::string;

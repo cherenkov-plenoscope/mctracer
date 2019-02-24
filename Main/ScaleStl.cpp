@@ -1,7 +1,7 @@
 #include <iostream>
 #include "DocOpt/docopt.h"
 #include "Tools/PathTools.h"
-#include "Scenery/stereo_litography.h"
+#include "scenery/stereo_litography.h"
 using std::string;
 using std::cout;
 using std::vector;

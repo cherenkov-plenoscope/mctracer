@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "Scenery/geometry/HexagonalPrismZ.h"
-#include "Scenery/geometry/XyPlaneRayIntersectionEquation.h"
+#include "scenery/geometry/HexagonalPrismZ.h"
+#include "scenery/geometry/XyPlaneRayIntersectionEquation.h"
 #include "Core/Ray.h"
 
 using namespace relleums;

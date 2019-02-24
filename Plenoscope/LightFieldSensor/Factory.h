@@ -6,7 +6,7 @@
 #include "sensor/PhotonSensor.h"
 #include "Plenoscope/LightFieldSensor/Geometry.h"
 #include "Plenoscope/PlenoscopeScenery.h"
-#include "Scenery/Scenery.h"
+#include "scenery/Scenery.h"
 
 namespace Plenoscope {
 namespace LightFieldSensor {

@@ -3,7 +3,7 @@
 #include "gtest/gtest.h"
 #include "Corsika/PhotonFactory.h"
 #include "eventio.h"
-#include "Scenery/primitive/Disc.h"
+#include "scenery/primitive/Disc.h"
 #include "sensor/PhotonSensor.h"
 #include "Core/Photons.h"
 using std::vector;

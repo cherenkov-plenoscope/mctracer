@@ -3,7 +3,7 @@
 #include "DocOpt/docopt.h"
 #include "Visual/FlyingCamera.h"
 #include "Visual/PortablePixMap.h"
-#include "Scenery/Scenery.h"
+#include "scenery/Scenery.h"
 #include "Tools/PathTools.h"
 #include "Core/mctracer.h"
 #include "./json.h"

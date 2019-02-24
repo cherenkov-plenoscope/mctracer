@@ -2,7 +2,7 @@
 #include <math.h>
 #include "gtest/gtest.h"
 #include "Core/mctracer.h"
-#include "Scenery/primitive/Sphere.h"
+#include "scenery/primitive/Sphere.h"
 using std::string;
 using std::stringstream;
 using std::vector;

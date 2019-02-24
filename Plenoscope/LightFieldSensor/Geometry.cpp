@@ -2,13 +2,13 @@
 #include "Plenoscope/LightFieldSensor/Geometry.h"
 #include <math.h>
 #include <sstream>
-#include "Scenery/geometry/HexGridAnnulus.h"
-#include "Scenery/geometry/GridNeighborhoodTopoligy.h"
-#include "Scenery/geometry/HexGridFlower.h"
+#include "scenery/geometry/HexGridAnnulus.h"
+#include "scenery/geometry/GridNeighborhoodTopoligy.h"
+#include "scenery/geometry/HexGridFlower.h"
 #include "Tools/AsciiIo.h"
 #include "Core/mctracer.h"
 #include "Tools/FileTools.h"
-#include "Scenery/geometry/lens_maker.h"
+#include "scenery/geometry/lens_maker.h"
 #include "Corsika/corsika.h"
 using std::vector;
 using std::array;

@@ -11,7 +11,7 @@
 #include "Core/Color.h"
 #include "Core/HomTra3.h"
 #include "Core/SurfaceEntity.h"
-#include "Scenery/primitive/Primitive.h"
+#include "scenery/primitive/Primitive.h"
 #include "Core/PropagationEnvironment.h"
 #include "Core/mctracer.h"
 #include "sensor/PhotonSensor.h"

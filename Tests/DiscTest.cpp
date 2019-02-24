@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "Scenery/primitive/Disc.h"
+#include "scenery/primitive/Disc.h"
 
 using namespace relleums;
 

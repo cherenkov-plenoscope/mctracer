@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "Scenery/geometry/QuadraticEquation.h"
+#include "scenery/geometry/QuadraticEquation.h"
 
 using namespace relleums;
 

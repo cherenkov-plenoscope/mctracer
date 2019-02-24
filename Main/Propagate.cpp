@@ -6,7 +6,7 @@
 #include "Tools/PathTools.h"
 #include "sensor/PhotonSensor.h"
 #include "PhotonsReader/PhotonsReader.h"
-#include "Scenery/Scenery.h"
+#include "scenery/Scenery.h"
 using std::string;
 using std::cout;
 using std::vector;

@@ -5,8 +5,8 @@
 #include "Corsika/corsika.h"
 #include "Corsika/PhotonFactory.h"
 #include "Visual/FlyingCamera.h"
-#include "Scenery/TrajectoryFactory.h"
-#include "Scenery/Scenery.h"
+#include "scenery/TrajectoryFactory.h"
+#include "scenery/Scenery.h"
 #include "Tools/PathTools.h"
 #include "json.h"
 using std::string;

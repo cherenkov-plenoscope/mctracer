@@ -37,7 +37,7 @@ set(SOURCE
 add_subdirectory("${PROJECT_SOURCE_DIR}/Visual")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Core")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Corsika")
-add_subdirectory("${PROJECT_SOURCE_DIR}/Scenery")
+add_subdirectory("${PROJECT_SOURCE_DIR}/scenery")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Plenoscope")
 add_subdirectory("${PROJECT_SOURCE_DIR}/sensor")
 add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonsReader")

@@ -2,14 +2,14 @@
 #include "Plenoscope/LightFieldSensor/Factory.h"
 #include <math.h>
 #include <vector>
-#include "Scenery/geometry/HexGridAnnulus.h"
-#include "Scenery/primitive/HexPlane.h"
-#include "Scenery/primitive/Annulus.h"
-#include "Scenery/primitive/Disc.h"
-#include "Scenery/primitive/Plane.h"
-#include "Scenery/primitive/Cylinder.h"
-#include "Scenery/primitive/BiConvexLensHexBound.h"
-#include "Scenery/primitive/PlaneDualSphericalBound.h"
+#include "scenery/geometry/HexGridAnnulus.h"
+#include "scenery/primitive/HexPlane.h"
+#include "scenery/primitive/Annulus.h"
+#include "scenery/primitive/Disc.h"
+#include "scenery/primitive/Plane.h"
+#include "scenery/primitive/Cylinder.h"
+#include "scenery/primitive/BiConvexLensHexBound.h"
+#include "scenery/primitive/PlaneDualSphericalBound.h"
 using std::vector;
 using std::string;
 using namespace relleums;

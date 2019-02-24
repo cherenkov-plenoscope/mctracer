@@ -8,10 +8,10 @@
 #include "Corsika/corsika.h"
 #include "Corsika/PhotonFactory.h"
 #include "Tools/PathTools.h"
-#include "Scenery/Scenery.h"
+#include "scenery/Scenery.h"
 #include "sensor/PhotonSensor.h"
-#include "Scenery/primitive/Primitive.h"
-#include "Scenery/SegmentedReflector/SegmentedReflector.h"
+#include "scenery/primitive/Primitive.h"
+#include "scenery/SegmentedReflector/SegmentedReflector.h"
 #include "signal_processing/signal_processing.h"
 #include "Visual/FlyingCamera.h"
 namespace fs = std::experimental::filesystem;

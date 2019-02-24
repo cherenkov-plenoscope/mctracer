@@ -3,8 +3,8 @@
 #include "niels_lohmann_json.hpp"
 #include "json.h"
 #include "Core/txt.h"
-#include "Scenery/Scenery.h"
-#include "Scenery/primitive/Primitive.h"
+#include "scenery/Scenery.h"
+#include "scenery/primitive/Primitive.h"
 //#include "Visual/Config.h"
 //#include "Visual/FlyingCamera.h"
 namespace nl = nlohmann;

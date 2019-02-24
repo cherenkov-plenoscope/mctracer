@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "Scenery/ColorMap.h"
+#include "scenery/ColorMap.h"
 
 using namespace relleums;
 
