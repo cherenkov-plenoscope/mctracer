@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "signal_processing/ElectricPulse.h"
-#include "Core/SimulationTruth.h"
+#include "Core/mctracer.h"
 
 namespace signal_processing {
 

@@ -4,10 +4,7 @@
 #include <string>
 #include <vector>
 #include "Core/mctracer.h"
-#include "Core/scenery/primitive/Plane.h"
-#include "Core/scenery/primitive/RectangularBox.h"
 #include "gtest/gtest.h"
-#include "sensor/PhotonSensor.h"
 using std::vector;
 using namespace relleums;
 

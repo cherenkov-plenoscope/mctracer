@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "sensor/PhotonSensor.h"
+#include "Core/mctracer.h"
 
 using namespace relleums;
 namespace pse = sensor;

@@ -6,13 +6,11 @@
 #include <sstream>
 #include <random>
 #include <iostream>
-#include "Core/vitaliy_vitsentiy_thread_pool.h"
+#include "Core/mctracer.h"
 #include "Plenoscope/Calibration/Writer.h"
 #include "Plenoscope/NightSkyBackground/NightSkyBackground.h"
 #include "Tools/FileTools.h"
-#include "Core/PhotonAndFrame.h"
 #include "Tools/HeaderBlock.h"
-#include "Core/random/random.h"
 using std::vector;
 using std::cout;
 using namespace relleums;
@@ -119,7 +117,7 @@ void fill_another_block(
     }
 
     uint64_t num_threads = std::thread::hardware_concurrency();
-    ctpl::thread_pool pool(num_threads);
+    relleums::ctpl::thread_pool pool(num_threads);
     std::vector<std::future<CalibrationPhotonResult>> futs(
         photon_results.size());
     for (uint64_t i = 0; i < futs.size(); ++i) {

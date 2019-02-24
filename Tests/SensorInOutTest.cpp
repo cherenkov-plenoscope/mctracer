@@ -1,8 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <vector>
 #include "gtest/gtest.h"
-#include "sensor/PhotonSensor.h"
-#include "Core/random/random.h"
+#include "Core/mctracer.h"
 
 using namespace relleums;
 using std::vector;

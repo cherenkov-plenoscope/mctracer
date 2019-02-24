@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "sensor/PhotonArrivals.h"
+#include "Core/sensor/PhotonArrivals.h"
 #include <math.h>
 #include <sstream>
 using std::vector;

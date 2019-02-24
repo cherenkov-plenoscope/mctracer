@@ -6,7 +6,7 @@
 #include <map>
 #include <vector>
 #include "ResourceMap.h"
-#include "sensor/Sensor.h"
+#include "Core/sensor/Sensor.h"
 
 namespace relleums {
 

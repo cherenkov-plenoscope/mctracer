@@ -4,9 +4,7 @@
 #include "Tools/AsciiIo.h"
 #include "json.h"
 #include "Tools/PathTools.h"
-#include "sensor/PhotonSensor.h"
 #include "PhotonsReader/PhotonsReader.h"
-#include "Core/scenery/Scenery.h"
 using std::string;
 using std::cout;
 using std::vector;

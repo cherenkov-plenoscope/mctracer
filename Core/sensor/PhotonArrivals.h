@@ -4,7 +4,7 @@
 
 #include <vector>
 #include <string>
-#include "sensor/PhotonArrival.h"
+#include "Core/sensor/PhotonArrival.h"
 
 namespace relleums {
 namespace sensor {

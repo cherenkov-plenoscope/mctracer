@@ -1,7 +1,7 @@
 // Copyright 2017 Sebastian A. Mueller
 #include <math.h>
 #include "signal_processing/pulse_extraction.h"
-#include "Core/SimulationTruth.h"
+#include "Core/mctracer.h"
 using std::vector;
 
 namespace signal_processing {

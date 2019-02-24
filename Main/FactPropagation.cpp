@@ -9,7 +9,6 @@
 #include "Corsika/PhotonFactory.h"
 #include "Tools/PathTools.h"
 #include "Core/scenery/SegmentedReflector/SegmentedReflector.h"
-#include "sensor/PhotonSensor.h"
 #include "signal_processing/signal_processing.h"
 #include "Visual/FlyingCamera.h"
 namespace fs = std::experimental::filesystem;

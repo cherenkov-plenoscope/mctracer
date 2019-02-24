@@ -3,9 +3,7 @@
 #include "gtest/gtest.h"
 #include "Corsika/PhotonFactory.h"
 #include "eventio.h"
-#include "Core/scenery/primitive/Disc.h"
-#include "sensor/PhotonSensor.h"
-#include "Core/Photons.h"
+#include "Core/mctracer.h"
 using std::vector;
 using namespace relleums;
 

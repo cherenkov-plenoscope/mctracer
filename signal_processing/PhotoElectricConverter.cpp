@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "signal_processing/PhotoElectricConverter.h"
 #include <sstream>
-#include "Core/SimulationTruth.h"
+#include "Core/mctracer.h"
 using std::vector;
 using namespace relleums;
 

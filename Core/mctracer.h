@@ -33,5 +33,8 @@
 #include "function/function.h"
 #include "random/random.h"
 #include "scenery/all_scenery.h"
+#include "sensor/all_sensor.h"
+
+#include "vitaliy_vitsentiy_thread_pool.h"
 
 #endif  // CORE_MCTRACER_H_

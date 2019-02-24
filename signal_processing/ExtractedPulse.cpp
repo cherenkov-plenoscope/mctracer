@@ -1,6 +1,6 @@
 // Copyright 2017 Sebastian A. Mueller
 #include "signal_processing/ExtractedPulse.h"
-#include "Core/SimulationTruth.h"
+#include "Core/mctracer.h"
 
 namespace signal_processing {
 

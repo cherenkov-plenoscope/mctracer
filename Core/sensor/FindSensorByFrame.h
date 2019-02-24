@@ -3,7 +3,7 @@
 #define PHOTONSENSOR_FINDSENSORBYFRAME_H_
 
 #include <vector>
-#include "sensor/Sensor.h"
+#include "Core/sensor/Sensor.h"
 
 namespace relleums {
 namespace sensor {

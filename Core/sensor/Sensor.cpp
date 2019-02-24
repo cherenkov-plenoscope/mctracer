@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "sensor/Sensor.h"
+#include "Core/sensor/Sensor.h"
 #include <math.h>
 #include <sstream>
 using std::vector;

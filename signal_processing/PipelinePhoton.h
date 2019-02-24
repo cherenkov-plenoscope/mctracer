@@ -4,7 +4,7 @@
 
 #include <stdint.h>
 #include <vector>
-#include "sensor/PhotonSensor.h"
+#include "Core/mctracer.h"
 
 namespace signal_processing {
 

@@ -37,7 +37,7 @@
 // where id is the index of the thread that runs the functor
 // ret is some return type
 
-
+namespace relleums {
 namespace ctpl {
 
     namespace detail {
@@ -247,5 +247,6 @@ namespace ctpl {
     };
 
 }
+}  // namespace relleums
 
 #endif // __ctpl_stl_thread_pool_H__
