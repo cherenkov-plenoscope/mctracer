@@ -6,7 +6,6 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include "Tools/FileTools.h"
 #include "Core/mctracer.h"
 #include "Core/Frame.h"
 #include "Core/SurfaceEntity.h"
