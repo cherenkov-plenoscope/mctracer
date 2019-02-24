@@ -1,7 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Core/Photons.h"
 #include <sstream>
-#include <iostream>
 #include <future>
 #include <thread>
 #include "vit_vit_cptl_stl.h"
