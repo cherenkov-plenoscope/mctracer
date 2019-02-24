@@ -3,7 +3,6 @@
 #define SCENERY_FUNCTIONMAP_H_
 
 #include <string>
-#include <utility>
 #include <map>
 #include "ResourceMap.h"
 #include "Core/function/function.h"
