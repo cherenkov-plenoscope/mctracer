@@ -1,6 +1,6 @@
 // Copyright 2017 Sebastian A. Mueller
-#ifndef CORE_BINARY_INPUT_OUTPUT_H_
-#define CORE_BINARY_INPUT_OUTPUT_H_
+#ifndef CORE_BINIO_H_
+#define CORE_BINIO_H_
 
 #include <stdint.h>
 #include <fstream>
@@ -29,4 +29,4 @@ uint64_t read_uint64(std::istream &fin);
 }  // namespace binio
 }  // namespace relleums
 
-#endif  // CORE_BINARY_INPUT_OUTPUT_H_
+#endif  // CORE_BINIO_H_
