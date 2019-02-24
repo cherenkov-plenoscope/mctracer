@@ -266,8 +266,8 @@ int main(int argc, char* argv[]) {
         true,        // show help if requested
         "mct 0.0");  // version string
 
-    re::ospath::Path out_path = re::ospath::Path(args.find("--output")->second.asString());
-    re::ospath::Path input_path = re::ospath::Path(args.find("--input")->second.asString());
+    re::ospath::Path out_path(args.find("--output")->second.asString());
+    re::ospath::Path input_path(args.find("--input")->second.asString());
 
     //--------------------------------------------------------------------------
     //  111
@@ -298,7 +298,7 @@ int main(int argc, char* argv[]) {
     r_cfg.inner_mirror_color = scenery.colors.get("inner_mirror_color");
     r_cfg.reflectivity = scenery.functions.get("mirror_reflectivity");
 
-    re::SegmentedReflector::Factory r_factory = re::SegmentedReflector::Factory(r_cfg);
+    re::SegmentedReflector::Factory r_factory(r_cfg);
     r_factory.add_reflector_mirror_facets_to_frame(
         &scenery.root);
 
@@ -348,8 +348,7 @@ int main(int argc, char* argv[]) {
     re::random::Mt19937 prng;
     if (args.find("--random_seed")->second)
         prng.set_seed(args.find("--random_seed")->second.asLong());
-    re::function::Func1 pde_vs_wavelength = re::function::Func1(
-        pde_hamamatsu_S10362_33_050C());
+    re::function::Func1 pde_vs_wavelength(pde_hamamatsu_S10362_33_050C());
 
     signal_processing::PhotoElectricConverter::Config converter_config;
     converter_config.dark_rate = 0.0;
