@@ -33,8 +33,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake-mod
 # The Source
 set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/json.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/eventio.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/FlyingCamera.cpp)
+	${CMAKE_CURRENT_SOURCE_DIR}/eventio.cpp)
 add_subdirectory("${PROJECT_SOURCE_DIR}/Core")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Corsika")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Plenoscope")
@@ -42,6 +41,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonsReader")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Tools")
 add_subdirectory("${PROJECT_SOURCE_DIR}/signal_processing")
 add_subdirectory("${PROJECT_SOURCE_DIR}/DocOpt")
+add_subdirectory("${PROJECT_SOURCE_DIR}/viewer")
 #-------------------------------
 # mctracer library
 add_library(mct SHARED ${SOURCE})
@@ -51,7 +51,7 @@ target_link_libraries(mct ${OpenCV_LIBS})
 
 #---------
 # Show exe
-add_executable(mctShow Main/Show.cpp)
+add_executable(mctShow viewer/Show.cpp)
 target_link_libraries(mctShow mct)
 target_link_libraries(mctShow docopt)
 
@@ -69,7 +69,7 @@ target_link_libraries(mctPropagate docopt)
 
 #----------------
 # ShowPhotons exe
-add_executable(mctShowPhotons Main/ShowPhotons.cpp)
+add_executable(mctShowPhotons viewer/ShowPhotons.cpp)
 target_link_libraries(mctShowPhotons mct)
 target_link_libraries(mctShowPhotons docopt)
 

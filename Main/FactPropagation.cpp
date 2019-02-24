@@ -10,7 +10,6 @@
 #include "Tools/PathTools.h"
 #include "Core/scenery/SegmentedReflector/SegmentedReflector.h"
 #include "signal_processing/signal_processing.h"
-#include "FlyingCamera.h"
 namespace fs = std::experimental::filesystem;
 namespace ps = photon_stream;
 using namespace relleums;
