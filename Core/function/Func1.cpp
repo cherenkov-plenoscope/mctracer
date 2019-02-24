@@ -1,9 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Core/function/Func1.h"
-#include <iostream>
 #include <sstream>
 #include <algorithm>
-#include <utility>
 #include "Core/txt.h"
 #include "Core/function/tools.h"
 using std::vector;
