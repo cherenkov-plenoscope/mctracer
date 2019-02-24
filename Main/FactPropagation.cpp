@@ -395,8 +395,7 @@ int main(int argc, char* argv[]) {
 
         vector<vector<sp::ElectricPulse>> electric_pipelines;
         electric_pipelines.reserve(photon_pipelines.size());
-        for (vector<sp::PipelinePhoton> ph_pipe : photon_pipelines
-        ) {
+        for (vector<sp::PipelinePhoton> ph_pipe : photon_pipelines) {
             electric_pipelines.push_back(
                 sipm_converter.get_pulse_pipeline_for_photon_pipeline(
                     ph_pipe,
