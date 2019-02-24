@@ -25,6 +25,6 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/small_ball.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/welcome_screen.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/numeric.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/StringTools.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/txt.cpp
     PARENT_SCOPE
 )

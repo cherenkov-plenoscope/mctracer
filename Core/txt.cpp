@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/StringTools.h"
+#include "Core/txt.h"
 #include <algorithm>
 #include <exception>
 #include <sstream>

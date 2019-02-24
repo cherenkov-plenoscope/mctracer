@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <math.h>
 #include "Core/Histogram1.h"
-#include "Core/StringTools.h"
+#include "Core/txt.h"
 
 namespace relleums {
 

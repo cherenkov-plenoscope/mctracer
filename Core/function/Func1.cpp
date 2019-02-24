@@ -4,7 +4,7 @@
 #include <sstream>
 #include <algorithm>
 #include <utility>
-#include "Core/StringTools.h"
+#include "Core/txt.h"
 #include "Core/function/tools.h"
 using std::vector;
 using std::string;

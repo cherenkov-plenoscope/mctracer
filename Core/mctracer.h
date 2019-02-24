@@ -25,7 +25,7 @@
 #include "small_ball.h"
 #include "welcome_screen.h"
 #include "numeric.h"
-#include "StringTools.h"
+#include "txt.h"
 
 #include "function/function.h"
 #include "random/random.h"
