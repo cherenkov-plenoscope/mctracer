@@ -1,7 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Core/random/Generator.h"
 #include <math.h>
-#include <iostream>
 
 namespace relleums {
 namespace random {
