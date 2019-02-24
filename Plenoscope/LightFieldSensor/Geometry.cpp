@@ -82,7 +82,7 @@ void Geometry::set_up_pixel_lens_geometry() {
     lmcfg.refractive_index = pixel_lens_mean_refrac;
     double lens_maker_correction = 1.20;
     pixel_lens_curv_radius = lens_maker_correction*
-        LensMaker::Approximation::get_curvature_radius(lmcfg);
+        LensMaker::get_curvature_radius(lmcfg);
 }
 
 double Geometry::max_outer_sensor_radius()const {

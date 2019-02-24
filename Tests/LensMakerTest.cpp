@@ -20,7 +20,7 @@ TEST_F(LensMakerTest, check_sebastians_paper_and_pen_calculation) {
     cfg.refractive_index = 1.49;
     EXPECT_NEAR(
         expected_curvature_radius,
-        LensMaker::Approximation::get_curvature_radius(cfg),
+        LensMaker::get_curvature_radius(cfg),
         expected_curvature_radius*3e-2);
 }
 
@@ -33,7 +33,7 @@ TEST_F(LensMakerTest, lens_thicknes) {
     cfg.refractive_index = 1.49;
     EXPECT_NEAR(
         expected_thickness,
-        LensMaker::Approximation::get_lens_thickness_for_R_r(
+        LensMaker::get_lens_thickness_for_R_r(
             expected_curvature_radius,
             cfg.aperture_radius),
         expected_thickness*3e-2);
@@ -51,7 +51,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
     // please tell us the needed curvature radius.
 
     double lens_curvature_radius =
-        LensMaker::Approximation::get_curvature_radius(cfg);
+        LensMaker::get_curvature_radius(cfg);
 
     // ok lets test it...
     const Color* lens_col = &COLOR_GRAY;

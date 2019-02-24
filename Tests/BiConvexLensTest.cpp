@@ -62,7 +62,7 @@ class BiConvexLensTest : public ::testing::Test {
         lens->set_inner_color(lens_color);
         lens->set_inner_refraction(refraction_vs_wavelength);
         lens->set_curvature_radius_and_aperture_radius(
-            LensMaker::Approximation::get_curvature_radius(cfg),
+            LensMaker::get_curvature_radius(cfg),
             cfg.aperture_radius);
         //-------------------------
         Disc* image_sensor = test_bench.append<Disc>();
