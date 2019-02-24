@@ -1,7 +1,7 @@
 #include <iostream>
 #include "DocOpt/docopt.h"
 #include "Tools/PathTools.h"
-#include "Scenery/StereoLitography/StereoLitography.h"
+#include "Scenery/stereo_litography.h"
 using std::string;
 using std::cout;
 using std::vector;
@@ -41,8 +41,8 @@ int main(int argc, char* argv[]) {
     const double scale = txt::to_double(
         args.find("--scale")->second.asString());
 
-    StereoLitography::BinaryReader input = StereoLitography::BinaryReader(input_path.path);
-    vector<StereoLitography::Facet> facets = input.get_facets();
+    stereo_litography::BinaryReader input = stereo_litography::BinaryReader(input_path.path);
+    vector<stereo_litography::Facet> facets = input.get_facets();
 
     for(unsigned int i=0; i<facets.size(); i++) {
         facets.at(i).a = facets.at(i).a*scale;
@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
         facets.at(i).c = facets.at(i).c*scale;
     }
 
-    StereoLitography::BinaryWriter output;
+    stereo_litography::BinaryWriter output;
     output.add_facets(facets);
     output.write_to_file(output_path.path);
 

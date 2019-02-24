@@ -1,10 +1,10 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
 #include "Core/Vec3.h"
-#include "Scenery/StereoLitography/StereoLitography.h"
+#include "Scenery/stereo_litography.h"
 
 using namespace relleums;
-namespace stl = StereoLitography;
+namespace stl = stereo_litography;
 
 class StereoLitographyTest : public ::testing::Test {};
 

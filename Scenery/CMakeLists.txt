@@ -1,9 +1,9 @@
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/SegmentedReflector")
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/StereoLitography")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/Primitive")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/Geometry")
 set(SOURCE
     ${SOURCE}
+    ${CMAKE_CURRENT_SOURCE_DIR}/stereo_litography.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryFactory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ColorMap.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FunctionMap.cpp

@@ -10,7 +10,7 @@
 #include "Core/SurfaceEntity.h"
 
 namespace relleums {
-namespace StereoLitography {
+namespace stereo_litography {
 
 /*
 https://en.wikipedia.org/wiki/STL_%28file_format%29#Binary_STL
@@ -142,7 +142,7 @@ class BinaryReader :public BinaryIo {
         const uint16_t attribute_byte_count);
 };
 
-}  // namespace StereoLitography
+}  // namespace stereo_litography
 }  // namespace relleums
 
 #endif  // SCENERY_STEREOLITOGRAPHY_STEREOLITOGRAPHY_H_

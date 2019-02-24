@@ -6,7 +6,7 @@ using std::string;
 using std::vector;
 
 namespace relleums {
-namespace StereoLitography {
+namespace stereo_litography {
 
 void BinaryWriter::add_facet_normal_and_three_vertices(
     const Vec3 n,
@@ -95,5 +95,5 @@ void BinaryWriter::assert_file_is_open()const {
     }
 }
 
-}  // namespace StereoLitography
+}  // namespace stereo_litography
 }  // namespace relleums

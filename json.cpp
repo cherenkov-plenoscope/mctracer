@@ -5,7 +5,7 @@
 #include "niels_lohmann_json.hpp"
 #include "Core/mctracer.h"
 #include "Scenery/Primitive/Primitive.h"
-#include "Scenery/StereoLitography/StereoLitography.h"
+#include "Scenery/stereo_litography.h"
 #include "Tools/PathTools.h"
 #include "Scenery/SegmentedReflector/SegmentedReflector.h"
 namespace nl = nlohmann;
@@ -320,7 +320,7 @@ Frame* add_StereoLitography(
     const double scale = o.f8("scale");
     const string stl_path = path::join(
         scenery->current_working_directory, o.st("path"));
-    StereoLitography::add_stl_to_and_inherit_surface_from_surfac_entity(
+    stereo_litography::add_stl_to_and_inherit_surface_from_surfac_entity(
         stl_path, object, scale);
     return object;
 }

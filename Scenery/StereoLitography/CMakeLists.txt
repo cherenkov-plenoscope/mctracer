@@ -1,7 +1,5 @@
 set(SOURCE
     ${SOURCE}
-    ${CMAKE_CURRENT_SOURCE_DIR}/BinaryReader.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/BinaryWriter.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/StereoLitography.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/stereo_litography.cpp
     PARENT_SCOPE
 )
