@@ -2,7 +2,7 @@
 #include <experimental/filesystem>
 #include <algorithm>
 #include "docopt/docopt.h"
-#include "Main/photon_stream.h"
+#include "main/photon_stream.h"
 #include "Core/mctracer.h"
 #include "eventio.h"
 #include "corsika/corsika.h"
