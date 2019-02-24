@@ -1,4 +1,3 @@
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/LensMaker")
 set(SOURCE
     ${SOURCE}
     ${CMAKE_CURRENT_SOURCE_DIR}/XyPlaneRayIntersectionEquation.cpp
@@ -8,6 +7,7 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/HexagonalPrismZ.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/HexGridAnnulus.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/HexGridFlower.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/LensMaker.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PrismZ.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/QuadraticEquation.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/RectangularPrismZ.cpp

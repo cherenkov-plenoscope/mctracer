@@ -5,7 +5,7 @@
 #include "Core/mctracer.h"
 #include "Scenery/Primitive/BiConvexLensHexBound.h"
 #include "Scenery/Primitive/Disc.h"
-#include "Scenery/Geometry/LensMaker/LensMaker.h"
+#include "Scenery/Geometry/LensMaker.h"
 #include "sensor/PhotonSensor.h"
 using std::vector;
 using namespace relleums;

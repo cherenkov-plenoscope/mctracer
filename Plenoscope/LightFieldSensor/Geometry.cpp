@@ -8,7 +8,7 @@
 #include "Tools/AsciiIo.h"
 #include "Core/mctracer.h"
 #include "Tools/FileTools.h"
-#include "Scenery/Geometry/LensMaker/LensMaker.h"
+#include "Scenery/Geometry/LensMaker.h"
 #include "Corsika/corsika.h"
 using std::vector;
 using std::array;
