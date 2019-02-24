@@ -1,7 +1,6 @@
 // Copyright 2015 Sebastian A. Mueller
 #include "StereoLitography.h"
 #include <math.h>
-#include <iostream>
 #include <sstream>
 using std::string;
 using std::vector;
