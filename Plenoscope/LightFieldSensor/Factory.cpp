@@ -3,13 +3,13 @@
 #include <math.h>
 #include <vector>
 #include "Scenery/geometry/HexGridAnnulus.h"
-#include "Scenery/Primitive/HexPlane.h"
-#include "Scenery/Primitive/Annulus.h"
-#include "Scenery/Primitive/Disc.h"
-#include "Scenery/Primitive/Plane.h"
-#include "Scenery/Primitive/Cylinder.h"
-#include "Scenery/Primitive/BiConvexLensHexBound.h"
-#include "Scenery/Primitive/PlaneDualSphericalBound.h"
+#include "Scenery/primitive/HexPlane.h"
+#include "Scenery/primitive/Annulus.h"
+#include "Scenery/primitive/Disc.h"
+#include "Scenery/primitive/Plane.h"
+#include "Scenery/primitive/Cylinder.h"
+#include "Scenery/primitive/BiConvexLensHexBound.h"
+#include "Scenery/primitive/PlaneDualSphericalBound.h"
 using std::vector;
 using std::string;
 using namespace relleums;

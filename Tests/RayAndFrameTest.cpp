@@ -2,7 +2,7 @@
 #include <math.h>
 #include "gtest/gtest.h"
 #include "Core/RayAndFrame.h"
-#include "Scenery/Primitive/Sphere.h"
+#include "Scenery/primitive/Sphere.h"
 using namespace relleums;
 namespace raf = RayAndFrame;
 

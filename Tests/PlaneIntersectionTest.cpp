@@ -6,7 +6,7 @@
 #include "Core/Frame.h"
 #include "Core/RayAndFrame.h"
 #include "Core/random/random.h"
-#include "Scenery/Primitive/Plane.h"
+#include "Scenery/primitive/Plane.h"
 #include "Core/Vec3.h"
 
 using namespace relleums;

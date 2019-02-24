@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Primitive/Plane.h"
+#include "Scenery/primitive/Plane.h"
 #include <math.h>
 #include <sstream>
 using std::string;

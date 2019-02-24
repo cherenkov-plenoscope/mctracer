@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Primitive/EllipticalCapWithHexagonalBound.h"
+#include "Scenery/primitive/EllipticalCapWithHexagonalBound.h"
 #include <math.h>
 #include <sstream>
 using std::string;

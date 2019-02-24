@@ -1,6 +1,6 @@
 // Copyright 2015 Sebastian A. Mueller
 #include "Scenery/stereo_litography.h"
-#include "Scenery/Primitive/Triangle.h"
+#include "Scenery/primitive/Triangle.h"
 #include <sstream>
 using std::string;
 using std::vector;

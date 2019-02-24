@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Primitive/Sphere.h"
+#include "Scenery/primitive/Sphere.h"
 #include <math.h>
 #include <sstream>
 #include "Core/Ray.h"

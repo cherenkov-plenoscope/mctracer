@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Primitive/RectangularBox.h"
+#include "Scenery/primitive/RectangularBox.h"
 #include <math.h>
 
 namespace relleums {

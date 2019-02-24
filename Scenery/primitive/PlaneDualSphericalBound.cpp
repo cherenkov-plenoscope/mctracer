@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Primitive/PlaneDualSphericalBound.h"
+#include "Scenery/primitive/PlaneDualSphericalBound.h"
 #include <sstream>
 using std::string;
 using std::vector;

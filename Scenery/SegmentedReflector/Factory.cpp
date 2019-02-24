@@ -1,5 +1,5 @@
 #include "Scenery/SegmentedReflector/Factory.h"
-#include "Scenery/Primitive/SphereCapWithHexagonalBound.h"
+#include "Scenery/primitive/SphereCapWithHexagonalBound.h"
 using std::vector;
 using std::string;
 

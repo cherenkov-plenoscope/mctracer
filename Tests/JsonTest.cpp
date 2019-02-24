@@ -4,7 +4,7 @@
 #include "json.h"
 #include "Core/txt.h"
 #include "Scenery/Scenery.h"
-#include "Scenery/Primitive/Primitive.h"
+#include "Scenery/primitive/Primitive.h"
 //#include "Visual/Config.h"
 //#include "Visual/FlyingCamera.h"
 namespace nl = nlohmann;

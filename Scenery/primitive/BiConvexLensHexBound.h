@@ -2,8 +2,8 @@
 #ifndef SCENERY_PRIMITIVE_BICONVEXLENSHEXBOUND_H_
 #define SCENERY_PRIMITIVE_BICONVEXLENSHEXBOUND_H_
 
-#include "Scenery/Primitive/SphereCapWithHexagonalBound.h"
-#include "Scenery/Primitive/PlaneDualSphericalBound.h"
+#include "Scenery/primitive/SphereCapWithHexagonalBound.h"
+#include "Scenery/primitive/PlaneDualSphericalBound.h"
 
 namespace relleums {
 

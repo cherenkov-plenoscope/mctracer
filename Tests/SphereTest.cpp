@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "Scenery/Primitive/Sphere.h"
+#include "Scenery/primitive/Sphere.h"
 
 using namespace relleums;
 

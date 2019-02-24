@@ -9,7 +9,7 @@
 #include "Core/Photons.h"
 #include "Core/PropagationConfig.h"
 #include "Visual/Config.h"
-#include "Scenery/Primitive/Primitive.h"
+#include "Scenery/primitive/Primitive.h"
 #include "niels_lohmann_json.hpp"
 
 namespace relleums {

@@ -3,7 +3,7 @@
 #include "Core/function/function.h"
 #include "Core/Rot3.h"
 #include "Core/Vec3.h"
-#include "Scenery/Primitive/Primitive.h"
+#include "Scenery/primitive/Primitive.h"
 #include "gtest/gtest.h"
 #include "Tools/AsciiIo.h"
 

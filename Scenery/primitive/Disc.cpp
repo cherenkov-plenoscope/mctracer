@@ -1,34 +1,36 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Primitive/HexPlane.h"
+#include "Scenery/primitive/Disc.h"
+#include <math.h>
 #include <sstream>
-#include "Core/Ray.h"
-#include "Core/Intersection.h"
-
-using std::vector;
 using std::string;
+using std::vector;
 using std::stringstream;
 
 namespace relleums {
 
-void HexPlane::set_outer_hex_radius(const double outer_hex_radius) {
-    hex_bounds.set_outer_radius(outer_hex_radius);
+void Disc::set_radius(const double radius) {
+    cylinder_bounds.set_radius(radius);
     post_initialize_radius_of_enclosing_sphere();
 }
 
-void HexPlane::post_initialize_radius_of_enclosing_sphere() {
-    bounding_sphere_radius = hex_bounds.get_outer_radius();
+void Disc::post_initialize_radius_of_enclosing_sphere() {
+    bounding_sphere_radius = cylinder_bounds.get_radius();
 }
 
-string HexPlane::str()const {
+string Disc::str()const {
     stringstream out;
     out << SurfaceEntity::str();
-    out << "hexagonal plane:\n";
-    out << "| outer radius: " << hex_bounds.get_outer_radius() << "m\n";
-    out << "| area: "<< hex_bounds.get_area() << "m^2\n";
+    out << "disc:\n";
+    out << "| radius: " << cylinder_bounds.get_radius() << "m\n";
+    out << "| area:   " << get_area() << "m^2\n";
     return out.str();
 }
 
-void HexPlane::calculate_intersection_with(
+double Disc::get_area()const {
+    return cylinder_bounds.get_radius()*cylinder_bounds.get_radius()*M_PI;
+}
+
+void Disc::calculate_intersection_with(
     const Ray* ray,
     vector<Intersection> *intersections
 )const {
@@ -36,7 +38,7 @@ void HexPlane::calculate_intersection_with(
     if (xyPlaneRayEquation.has_causal_solution()) {
         double v = xyPlaneRayEquation.get_ray_parameter_for_intersection();
         Vec3 intersection_vector = ray->position_at(v);
-        if (hex_bounds.is_inside(&intersection_vector)) {
+        if (cylinder_bounds.is_inside(&intersection_vector)) {
             if (ray->support() != intersection_vector) {
                 intersections->emplace_back(
                     this,

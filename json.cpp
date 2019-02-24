@@ -4,7 +4,7 @@
 #include <sstream>
 #include "niels_lohmann_json.hpp"
 #include "Core/mctracer.h"
-#include "Scenery/Primitive/Primitive.h"
+#include "Scenery/primitive/Primitive.h"
 #include "Scenery/stereo_litography.h"
 #include "Tools/PathTools.h"
 #include "Scenery/SegmentedReflector/SegmentedReflector.h"

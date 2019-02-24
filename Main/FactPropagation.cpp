@@ -10,7 +10,7 @@
 #include "Tools/PathTools.h"
 #include "Scenery/Scenery.h"
 #include "sensor/PhotonSensor.h"
-#include "Scenery/Primitive/Primitive.h"
+#include "Scenery/primitive/Primitive.h"
 #include "Scenery/SegmentedReflector/SegmentedReflector.h"
 #include "signal_processing/signal_processing.h"
 #include "Visual/FlyingCamera.h"

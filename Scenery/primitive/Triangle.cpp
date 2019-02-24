@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Primitive/Triangle.h"
+#include "Scenery/primitive/Triangle.h"
 #include <algorithm>
 #include <sstream>
 using std::string;

@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Primitive/SphereCapWithCylinderBound.h"
+#include "Scenery/primitive/SphereCapWithCylinderBound.h"
 #include <math.h>
 #include <sstream>
 using std::string;

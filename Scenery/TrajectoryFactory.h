@@ -5,8 +5,8 @@
 #include <string>
 #include "Core/RayForPropagation.h"
 #include "Core/SurfaceEntity.h"
-#include "Scenery/Primitive/Cylinder.h"
-#include "Scenery/Primitive/Sphere.h"
+#include "Scenery/primitive/Cylinder.h"
+#include "Scenery/primitive/Sphere.h"
 
 namespace relleums {
 

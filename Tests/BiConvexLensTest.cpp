@@ -2,9 +2,9 @@
 #include <vector>
 #include "gtest/gtest.h"
 #include "Core/mctracer.h"
-#include "Scenery/Primitive/BiConvexLens.h"
-#include "Scenery/Primitive/Disc.h"
-#include "Scenery/Primitive/BiConvexLensHexBound.h"
+#include "Scenery/primitive/BiConvexLens.h"
+#include "Scenery/primitive/Disc.h"
+#include "Scenery/primitive/BiConvexLensHexBound.h"
 #include "Scenery/geometry/lens_maker.h"
 #include "sensor/PhotonSensor.h"
 

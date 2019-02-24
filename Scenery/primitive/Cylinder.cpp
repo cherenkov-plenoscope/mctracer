@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Primitive/Cylinder.h"
+#include "Scenery/primitive/Cylinder.h"
 #include <math.h>
 #include <sstream>
 using std::string;

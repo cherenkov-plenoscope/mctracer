@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Primitive/SphereCapWithRectangularBound.h"
+#include "Scenery/primitive/SphereCapWithRectangularBound.h"
 #include <sstream>
 #include <math.h>
 using std::string;
