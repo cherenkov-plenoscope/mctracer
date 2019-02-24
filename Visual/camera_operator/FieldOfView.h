@@ -2,7 +2,7 @@
 #ifndef VISUAL_CAMERAOPERATOR_FIELDOFVIEW_H_
 #define VISUAL_CAMERAOPERATOR_FIELDOFVIEW_H_
 
-#include "Core/Tools.h"
+#include "Core/tools.h"
 #include "Verbosity.h"
 
 namespace relleums {

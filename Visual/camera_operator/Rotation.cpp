@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <math.h>
 #include "Visual/camera_operator/Rotation.h"
-#include "Core/Tools.h"
+#include "Core/tools.h"
 using std::cout;
 
 namespace relleums {

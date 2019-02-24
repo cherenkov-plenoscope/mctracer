@@ -2,7 +2,7 @@
 #include "Plenoscope/NightSkyBackground/Light.h"
 #include <sstream>
 #include "Core/PhysicalConstants.h"
-#include "Core/Tools.h"
+#include "Core/tools.h"
 #include "NightSkyBackground.h"
 
 using namespace relleums;

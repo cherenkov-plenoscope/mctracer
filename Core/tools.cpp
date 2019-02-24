@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/Tools.h"
+#include "Core/tools.h"
 #include <cmath>
 
 namespace relleums {

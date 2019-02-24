@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Scenery/Geometry/HexGridFlower.h"
 #include <math.h>
-#include "Core/Tools.h"
+#include "Core/tools.h"
 
 namespace relleums {
 
