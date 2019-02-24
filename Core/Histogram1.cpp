@@ -1,10 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <algorithm>
 #include <sstream>
-#include <iomanip>
-#include <math.h>
 #include "Core/Histogram1.h"
-#include "Core/txt.h"
 
 namespace relleums {
 
