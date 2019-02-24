@@ -1,10 +1,10 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "Plenoscope/Calibration/OnlineStatistics.h"
+#include "plenoscope/Calibration/OnlineStatistics.h"
 #include "Core/random/random.h"
 #include "Core/numeric.h"
 using std::vector;
-using namespace Plenoscope;
+using namespace plenoscope;
 using namespace relleums;
 
 class OnlineStatisticsTest : public ::testing::Test {};

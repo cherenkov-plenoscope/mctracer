@@ -36,7 +36,7 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/eventio.cpp)
 add_subdirectory("${PROJECT_SOURCE_DIR}/Core")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Corsika")
-add_subdirectory("${PROJECT_SOURCE_DIR}/Plenoscope")
+add_subdirectory("${PROJECT_SOURCE_DIR}/plenoscope")
 add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonsReader")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Tools")
 add_subdirectory("${PROJECT_SOURCE_DIR}/signal_processing")

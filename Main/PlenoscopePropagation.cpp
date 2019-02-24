@@ -7,11 +7,11 @@
 #include "Corsika/corsika.h"
 #include "Corsika/PhotonFactory.h"
 #include "signal_processing/signal_processing.h"
-#include "Plenoscope/NightSkyBackground/Light.h"
-#include "Plenoscope/EventHeader.h"
-#include "Plenoscope/SimulationTruthHeader.h"
-#include "Plenoscope/NightSkyBackground/Injector.h"
-#include "Plenoscope/json_to_plenoscope.h"
+#include "plenoscope/NightSkyBackground/Light.h"
+#include "plenoscope/EventHeader.h"
+#include "plenoscope/SimulationTruthHeader.h"
+#include "plenoscope/NightSkyBackground/Injector.h"
+#include "plenoscope/json_to_plenoscope.h"
 #include "signal_processing/signal_processing.h"
 #include "Tools/HeaderBlock.h"
 #include "Core/scenery/Scenery.h"
@@ -105,8 +105,8 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // SET UP SCENERY
-    Plenoscope::PlenoscopeScenery scenery;
-    Plenoscope::json::append_to_frame_in_scenery(
+    plenoscope::PlenoscopeScenery scenery;
+    plenoscope::json::append_to_frame_in_scenery(
         &scenery.root,
         &scenery,
         scenery_path.path);
@@ -117,14 +117,14 @@ int main(int argc, char* argv[]) {
     else if (scenery.plenoscopes.size() > 1)
         throw std::invalid_argument(
             "There is more then one plenoscope in the scenery");
-    Plenoscope::PlenoscopeInScenery* pis = &scenery.plenoscopes.at(0);
+    plenoscope::PlenoscopeInScenery* pis = &scenery.plenoscopes.at(0);
 
     sensor::Sensors* light_field_channels = pis->light_field_channels;
 
     //--------------------------------------------------------------------------
     // load light field calibration result
-    vector<Plenoscope::Calibration::LixelStatistic> optics_calibration_result =
-        Plenoscope::Calibration::read(lixel_calib_path.path);
+    vector<plenoscope::Calibration::LixelStatistic> optics_calibration_result =
+        plenoscope::Calibration::read(lixel_calib_path.path);
 
     // assert number os sub_pixel matches simulated plenoscope
     if (light_field_channels->size() != optics_calibration_result.size()) {
@@ -147,7 +147,7 @@ int main(int argc, char* argv[]) {
         json::json_to_linear_interpol_function(
             nsb_obj.obj("flux_vs_wavelength"));
 
-    Plenoscope::NightSkyBackground::Light nsb(
+    plenoscope::NightSkyBackground::Light nsb(
         &pis->light_field_sensor_geometry,
         &nsb_flux_vs_wavelength);
     const double nsb_exposure_time = nsb_obj.f8("exposure_time");
@@ -216,7 +216,7 @@ int main(int argc, char* argv[]) {
 
         //-----------------------------
         // Night Sky Background photons
-        Plenoscope::NightSkyBackground::inject_nsb_into_photon_pipeline(
+        plenoscope::NightSkyBackground::inject_nsb_into_photon_pipeline(
             &photon_pipelines,
             nsb_exposure_time,
             &optics_calibration_result,
@@ -260,10 +260,10 @@ int main(int argc, char* argv[]) {
             join(
                 event_output_path.path, "raw_light_field_sensor_response.phs"));
 
-        Plenoscope::EventHeader event_header;
-        event_header.set_event_type(Plenoscope::EventTypes::SIMULATION);
+        plenoscope::EventHeader event_header;
+        event_header.set_event_type(plenoscope::EventTypes::SIMULATION);
         event_header.set_trigger_type(
-Plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
+plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
         event_header.set_plenoscope_geometry(
             pis->light_field_sensor_geometry.config);
         HeaderBlock::write(
@@ -282,7 +282,7 @@ Plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
             event.header.raw,
             join(event_mc_truth_path.path, "corsika_event_header.bin"));
 
-        Plenoscope::SimulationTruthHeader sim_truth_header;
+        plenoscope::SimulationTruthHeader sim_truth_header;
         sim_truth_header.set_random_number_seed_of_run(prng.seed());
         HeaderBlock::write(
             sim_truth_header.raw,

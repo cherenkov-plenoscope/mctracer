@@ -3,8 +3,8 @@
 #include <iostream>
 #include "docopt/docopt.h"
 #include "Tools/FileTools.h"
-#include "Plenoscope/Calibration/Calibrator.h"
-#include "Plenoscope/json_to_plenoscope.h"
+#include "plenoscope/Calibration/Calibrator.h"
+#include "plenoscope/json_to_plenoscope.h"
 #include "Tools/HeaderBlock.h"
 #include "Core/scenery/Scenery.h"
 #include "Core/mctracer.h"
@@ -81,8 +81,8 @@ int main(int argc, char* argv[]) {
         Path scenery_file_path = join(scenery_path.path, "scenery.json");
 
         // SET UP SCENERY
-        Plenoscope::PlenoscopeScenery scenery;
-        Plenoscope::json::append_to_frame_in_scenery(
+        plenoscope::PlenoscopeScenery scenery;
+        plenoscope::json::append_to_frame_in_scenery(
             &scenery.root,
             &scenery,
             scenery_file_path.path);
@@ -94,7 +94,7 @@ int main(int argc, char* argv[]) {
         else if (scenery.plenoscopes.size() > 1)
             throw std::invalid_argument(
                 "There is more than one plenoscope in the scenery");
-        Plenoscope::PlenoscopeInScenery* pis = &scenery.plenoscopes.at(0);
+        plenoscope::PlenoscopeInScenery* pis = &scenery.plenoscopes.at(0);
 
         HeaderBlock::write(
             pis->light_field_sensor_geometry.get_info_header(),
@@ -107,19 +107,19 @@ int main(int argc, char* argv[]) {
             join(out_path.path, "info.md"));
 
         // CALIBRATION CONFIG
-        Plenoscope::Calibration::Config calib_config;
+        plenoscope::Calibration::Config calib_config;
         calib_config.number_of_blocks = number_mega_photons;
         calib_config.photons_per_block = static_cast<int>(1e6);
 
         // RUN PLENOSCOPE CALIBRATION
-        Plenoscope::Calibration::Calibrator calibrator(
+        plenoscope::Calibration::Calibrator calibrator(
             calib_config,
             pis,
             &scenery.root);
 
         random::Mt19937 prng(0);
 
-        Plenoscope::Calibration::run_calibration(
+        plenoscope::Calibration::run_calibration(
             calibrator,
             join(out_path.path, "lixel_statistics.bin"),
             &prng);

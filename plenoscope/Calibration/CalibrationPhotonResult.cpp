@@ -1,0 +1,10 @@
+// Copyright 2014 Sebastian A. Mueller
+#include "plenoscope/Calibration/CalibrationPhotonResult.h"
+
+namespace plenoscope {
+
+CalibrationPhotonResult::CalibrationPhotonResult() {
+    reached_sensor = false;
+}
+
+}  // namespace plenoscope
