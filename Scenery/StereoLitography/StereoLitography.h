@@ -2,7 +2,6 @@
 #ifndef SCENERY_STEREOLITOGRAPHY_STEREOLITOGRAPHY_H_
 #define SCENERY_STEREOLITOGRAPHY_STEREOLITOGRAPHY_H_
 
-#include <stdio.h>
 #include <string>
 #include <vector>
 #include <fstream>
