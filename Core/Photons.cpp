@@ -3,7 +3,7 @@
 #include <sstream>
 #include <future>
 #include <thread>
-#include "vit_vit_cptl_stl.h"
+#include "Core/vitaliy_vitsentiy_thread_pool.h"
 #include "Core/PhotonAndFrame.h"
 using std::string;
 using std::stringstream;

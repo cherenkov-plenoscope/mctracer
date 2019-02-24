@@ -6,7 +6,7 @@
 #include <sstream>
 #include <random>
 #include <iostream>
-#include "vit_vit_cptl_stl.h"
+#include "Core/vitaliy_vitsentiy_thread_pool.h"
 #include "Plenoscope/Calibration/Writer.h"
 #include "Plenoscope/NightSkyBackground/NightSkyBackground.h"
 #include "Tools/FileTools.h"
