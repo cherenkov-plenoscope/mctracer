@@ -4,11 +4,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include "Core/scenery/Scenery.h"
-#include "Core/Frame.h"
-#include "Core/Photons.h"
-#include "Core/PropagationConfig.h"
-#include "visual/Config.h"
+#include "Core/mctracer.h"
 #include "niels_lohmann_json.hpp"
 
 namespace relleums {

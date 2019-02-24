@@ -1,7 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
 #include "Core/mctracer.h"
-#include "visual/ApertureCamera.h"
 using namespace relleums;
 
 class ApertureCameraTest : public ::testing::Test {};

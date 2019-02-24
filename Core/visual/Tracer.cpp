@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "visual/Tracer.h"
+#include "Core/visual/Tracer.h"
 
 namespace relleums {
 namespace visual {

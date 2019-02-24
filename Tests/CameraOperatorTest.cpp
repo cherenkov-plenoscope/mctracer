@@ -1,7 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "visual/camera_operator/camera_operator.h"
-#include "visual/PinHoleCamera.h"
+#include "Core/mctracer.h"
 
 using namespace relleums;
 

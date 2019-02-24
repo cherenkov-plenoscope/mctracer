@@ -1,8 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "visual/Image.h"
+#include "Core/visual/Image.h"
 #include <math.h>
 #include <vector>
-#include "visual/PortablePixMap.h"
+#include "Core/visual/PortablePixMap.h"
 
 namespace relleums {
 namespace visual {

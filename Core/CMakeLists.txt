@@ -2,6 +2,7 @@ add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/function")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/random")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/scenery")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/sensor")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/visual")
 set(SOURCE
     ${SOURCE}
     ${CMAKE_CURRENT_SOURCE_DIR}/Vec2.cpp

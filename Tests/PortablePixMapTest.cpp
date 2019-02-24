@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include "gtest/gtest.h"
-#include "visual/PortablePixMap.h"
+#include "Core/mctracer.h"
 
 using namespace relleums;
 

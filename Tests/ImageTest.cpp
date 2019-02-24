@@ -1,6 +1,6 @@
 // Copyright 2018 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "visual/Image.h"
+#include "Core/mctracer.h"
 
 using namespace relleums;
 

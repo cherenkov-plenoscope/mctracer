@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <math.h>
-#include "visual/camera_operator/Rotation.h"
+#include "Core/visual/camera_operator/Rotation.h"
 #include "Core/tools.h"
 using std::cout;
 

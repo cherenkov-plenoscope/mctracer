@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "visual/PixelCoordinate.h"
+#include "Core/visual/PixelCoordinate.h"
 #include <vector>
 
 namespace relleums {

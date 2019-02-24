@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "visual/CameraDevice.h"
+#include "Core/visual/CameraDevice.h"
 #include <exception>
 #include "Core/mctracer.h"
 

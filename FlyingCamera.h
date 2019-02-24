@@ -5,7 +5,6 @@
 #include <cv.h>
 #include <string>
 #include "Core/mctracer.h"
-#include "visual/all_visual.h"
 #include "Tools/Time.h"
 
 namespace relleums {

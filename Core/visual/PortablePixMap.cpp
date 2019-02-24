@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "visual/PortablePixMap.h"
+#include "Core/visual/PortablePixMap.h"
 #include <stdint.h>
 #include <string>
 #include <sstream>

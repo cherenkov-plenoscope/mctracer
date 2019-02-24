@@ -34,6 +34,7 @@
 #include "random/random.h"
 #include "scenery/all_scenery.h"
 #include "sensor/all_sensor.h"
+#include "visual/all_visual.h"
 
 #include "vitaliy_vitsentiy_thread_pool.h"
 

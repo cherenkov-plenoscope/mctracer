@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "visual/camera_operator/Translation.h"
+#include "Core/visual/camera_operator/Translation.h"
 
 namespace relleums {
 namespace visual {
