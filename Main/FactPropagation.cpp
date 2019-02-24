@@ -3,8 +3,7 @@
 #include <algorithm>
 #include "DocOpt/docopt.h"
 #include "Main/photon_stream.h"
-#include "Tools/Tools.h"
-#include "Core/Photons.h"
+#include "Core/mctracer.h"
 #include "eventio.h"
 #include "Corsika/corsika.h"
 #include "Corsika/PhotonFactory.h"

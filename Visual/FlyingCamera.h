@@ -6,7 +6,6 @@
 #include <string>
 #include "ApertureCamera.h"
 #include "PinHoleCamera.h"
-#include "Tools/Tools.h"
 #include "camera_operator/camera_operator.h"
 #include "Config.h"
 #include "Tools/Time.h"

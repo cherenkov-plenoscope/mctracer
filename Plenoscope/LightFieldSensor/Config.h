@@ -6,7 +6,6 @@
 #include <limits>
 #include "Core/function/function.h"
 #include "Core/HomTra3.h"
-#include "Tools/Tools.h"
 
 namespace Plenoscope {
 namespace LightFieldSensor {

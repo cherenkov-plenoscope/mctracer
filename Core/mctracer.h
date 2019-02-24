@@ -2,6 +2,7 @@
 #ifndef CORE_MCTRACER_H_
 #define CORE_MCTRACER_H_
 
+#include "PhysicalConstants.h"
 #include "Vec2.h"
 #include "Vec3.h"
 #include "Rot3.h"
@@ -27,6 +28,7 @@
 #include "numeric.h"
 #include "txt.h"
 #include "binio.h"
+#include "Tools.h"
 
 #include "function/function.h"
 #include "random/random.h"

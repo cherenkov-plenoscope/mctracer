@@ -1,6 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Visual/camera_operator/FieldOfView.h"
-#include "Tools/Tools.h"
 
 namespace relleums {
 namespace visual {

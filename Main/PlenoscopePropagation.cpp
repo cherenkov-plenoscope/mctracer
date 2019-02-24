@@ -2,12 +2,10 @@
 #include <experimental/filesystem>
 #include <iostream>
 #include "DocOpt/docopt.h"
-#include "Tools/Tools.h"
 #include "Core/mctracer.h"
 #include "eventio.h"
 #include "Corsika/corsika.h"
 #include "Corsika/PhotonFactory.h"
-#include "Core/Histogram1.h"
 #include "signal_processing/signal_processing.h"
 #include "Plenoscope/NightSkyBackground/Light.h"
 #include "Plenoscope/EventHeader.h"

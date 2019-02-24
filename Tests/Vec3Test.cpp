@@ -1,8 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <cmath>
 #include "gtest/gtest.h"
-#include "Core/Vec3.h"
-#include "Tools/Tools.h"
+#include "Core/mctracer.h"
 
 using namespace relleums;
 

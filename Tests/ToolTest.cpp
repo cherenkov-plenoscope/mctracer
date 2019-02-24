@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <cmath>
 #include "gtest/gtest.h"
-#include "Tools/Tools.h"
+#include "Core/Tools.h"
 #include "Tools/FileTools.h"
 using namespace relleums;
 

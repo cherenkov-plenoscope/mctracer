@@ -2,7 +2,7 @@
 #include "gtest/gtest.h"
 #include "Core/Histogram1.h"
 #include "Core/random/random.h"
-#include "Tools/Tools.h"
+#include "Core/Tools.h"
 #include "Core/numeric.h"
 using std::vector;
 using namespace relleums;

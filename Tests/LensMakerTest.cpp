@@ -2,13 +2,11 @@
 #include <algorithm>
 #include <vector>
 #include "gtest/gtest.h"
-#include "Core/Color.h"
+#include "Core/mctracer.h"
 #include "Scenery/Primitive/BiConvexLensHexBound.h"
 #include "Scenery/Primitive/Disc.h"
 #include "Scenery/Geometry/LensMaker/LensMaker.h"
-#include "Core/random/random.h"
 #include "sensor/PhotonSensor.h"
-#include "Core/Photons.h"
 using std::vector;
 using namespace relleums;
 

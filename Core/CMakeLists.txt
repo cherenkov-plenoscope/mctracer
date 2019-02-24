@@ -27,5 +27,6 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/numeric.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/txt.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/binio.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Tools.cpp
     PARENT_SCOPE
 )

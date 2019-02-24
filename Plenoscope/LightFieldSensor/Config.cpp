@@ -2,6 +2,8 @@
 #include "Plenoscope/LightFieldSensor/Config.h"
 #include "Core/SurfaceEntity.h"
 #include "Corsika/corsika.h"
+#include "Core/Tools.h"
+
 using std::array;
 using namespace relleums;
 

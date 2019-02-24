@@ -1,10 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <vector>
 #include "gtest/gtest.h"
-// #include "Cameras/FlyingCamera.h"
-#include "Core/function/function.h"
-#include "Core/Photons.h"
-#include "Core/PhotonAndFrame.h"
+#include "Core/mctracer.h"
 #include "Scenery/Primitive/BiConvexLens.h"
 #include "Scenery/Primitive/Disc.h"
 #include "Scenery/Primitive/BiConvexLensHexBound.h"

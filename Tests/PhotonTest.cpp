@@ -3,13 +3,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Core/function/function.h"
-#include "Core/Photon.h"
-#include "Core/PhotonAndFrame.h"
-#include "Core/Photons.h"
-#include "Core/PhysicalConstants.h"
-#include "Core/random/random.h"
-#include "Core/SurfaceEntity.h"
+#include "Core/mctracer.h"
 #include "Scenery/Primitive/Plane.h"
 #include "Scenery/Primitive/RectangularBox.h"
 #include "gtest/gtest.h"

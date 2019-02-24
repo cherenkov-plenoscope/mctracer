@@ -1,7 +1,6 @@
 // Copyright 2016 Sebastian A. Mueller
 #include "Plenoscope/NightSkyBackground/Injector.h"
 #include <limits>
-#include "Tools/Tools.h"
 #include "Core/Histogram1.h"
 #include "Core/SimulationTruth.h"
 #include "Core/numeric.h"

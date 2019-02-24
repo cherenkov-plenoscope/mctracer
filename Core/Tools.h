@@ -1,9 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef TOOLS_TOOLS_H_
-#define TOOLS_TOOLS_H_
-
-#include <string>
-#include <vector>
+#ifndef CORE_TOOLS_H_
+#define CORE_TOOLS_H_
 
 namespace relleums {
 
@@ -15,4 +12,4 @@ double get_solid_angle_for_opening_angle(const double theta);
 
 }  // namespace relleums
 
-#endif  // TOOLS_TOOLS_H_
+#endif  // CORE_TOOLS_H_

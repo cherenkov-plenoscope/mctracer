@@ -7,6 +7,8 @@
 #include <iostream>
 #include "Core/Ray.h"
 #include "Core/Intersection.h"
+#include "Core/Tools.h"
+#include "Core/txt.h"
 using std::string;
 using std::stringstream;
 using std::vector;

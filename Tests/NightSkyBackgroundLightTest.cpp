@@ -2,6 +2,7 @@
 #include "gtest/gtest.h"
 #include "Plenoscope/LightFieldSensor/Config.h"
 #include "Plenoscope/NightSkyBackground/NightSkyBackground.h"
+#include "Core/mctracer.h"
 #include "Tools/AsciiIo.h"
 
 using namespace relleums;

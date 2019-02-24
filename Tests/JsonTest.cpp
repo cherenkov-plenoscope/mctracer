@@ -2,6 +2,7 @@
 #include "gtest/gtest.h"
 #include "nlohmann_json.hpp"
 #include "json.h"
+#include "Core/txt.h"
 #include "Scenery/Scenery.h"
 #include "Scenery/Primitive/Primitive.h"
 //#include "Visual/Config.h"

@@ -1,7 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Visual/CameraDevice.h"
 #include <exception>
-#include "Tools/Tools.h"
 #include "Core/mctracer.h"
 
 namespace relleums {

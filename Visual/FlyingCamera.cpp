@@ -8,6 +8,7 @@
 #include "Core/RayAndFrame.h"
 #include "Core/Intersection.h"
 #include "Visual/PortablePixMap.h"
+#include "Core/txt.h"
 #include "Core/welcome_screen.h"
 
 using std::cout;

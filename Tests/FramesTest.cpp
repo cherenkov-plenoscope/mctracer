@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <math.h>
 #include "gtest/gtest.h"
-#include "Core/Frames.h"
+#include "Core/mctracer.h"
 #include "Scenery/Primitive/Sphere.h"
 using std::string;
 using std::stringstream;

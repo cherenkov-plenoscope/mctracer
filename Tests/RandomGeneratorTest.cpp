@@ -1,10 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <array>
 #include "gtest/gtest.h"
-#include "Core/random/random.h"
-#include "Core/Histogram1.h"
-#include "Tools/Tools.h"
-#include "Core/numeric.h"
+#include "Core/mctracer.h"
 using std::array;
 using std::vector;
 using namespace relleums;
