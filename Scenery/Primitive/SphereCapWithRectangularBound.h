@@ -4,9 +4,9 @@
 
 #include <vector>
 #include <string>
-#include "Scenery/Geometry/SphericalCapRayIntersectionEquation.h"
-#include "Scenery/Geometry/RectangularPrismZ.h"
-#include "Scenery/Geometry/SurfaceWithOuterPrismBound.h"
+#include "Scenery/geometry/SphericalCapRayIntersectionEquation.h"
+#include "Scenery/geometry/RectangularPrismZ.h"
+#include "Scenery/geometry/SurfaceWithOuterPrismBound.h"
 
 namespace relleums {
 

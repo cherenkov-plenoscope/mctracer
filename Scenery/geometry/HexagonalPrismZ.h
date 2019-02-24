@@ -2,7 +2,7 @@
 #ifndef SCENERY_GEOMETRY_HEXAGONALPRISMZ_H_
 #define SCENERY_GEOMETRY_HEXAGONALPRISMZ_H_
 
-#include "Scenery/Geometry/PrismZ.h"
+#include "Scenery/geometry/PrismZ.h"
 
 namespace relleums {
 

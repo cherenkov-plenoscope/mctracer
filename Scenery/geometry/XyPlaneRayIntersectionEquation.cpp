@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
+#include "Scenery/geometry/XyPlaneRayIntersectionEquation.h"
 
 namespace relleums {
 

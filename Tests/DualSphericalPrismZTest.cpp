@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "Scenery/Geometry/DualSphericalPrismZ.h"
+#include "Scenery/geometry/DualSphericalPrismZ.h"
 
 using namespace relleums;
 

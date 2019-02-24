@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <math.h>
 #include "gtest/gtest.h"
-#include "Scenery/Geometry/HexagonalPrismZ.h"
+#include "Scenery/geometry/HexagonalPrismZ.h"
 
 using namespace relleums;
 

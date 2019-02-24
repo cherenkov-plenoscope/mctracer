@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Geometry/ThinLensEquation.h"
+#include "Scenery/geometry/ThinLensEquation.h"
 
 namespace relleums {
 namespace ThinLensEquation {

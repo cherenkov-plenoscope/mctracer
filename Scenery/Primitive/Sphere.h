@@ -7,7 +7,7 @@
 #include <stdexcept>
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
-#include "Scenery/Geometry/QuadraticEquation.h"
+#include "Scenery/geometry/QuadraticEquation.h"
 
 namespace relleums {
 

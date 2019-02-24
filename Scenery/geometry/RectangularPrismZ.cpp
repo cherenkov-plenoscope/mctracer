@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Geometry/RectangularPrismZ.h"
+#include "Scenery/geometry/RectangularPrismZ.h"
 #include <math.h>
 #include <string>
 #include <sstream>

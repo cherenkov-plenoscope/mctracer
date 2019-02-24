@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Geometry/HexGridFlower.h"
+#include "Scenery/geometry/HexGridFlower.h"
 #include <math.h>
 #include "Core/tools.h"
 

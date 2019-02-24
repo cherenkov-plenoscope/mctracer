@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Geometry/lens_maker.h"
+#include "Scenery/geometry/lens_maker.h"
 #include <math.h>
 #include <sstream>
 

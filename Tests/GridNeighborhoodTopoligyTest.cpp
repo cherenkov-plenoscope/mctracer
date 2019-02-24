@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "Scenery/Geometry/HexGridAnnulus.h"
-#include "Scenery/Geometry/GridNeighborhoodTopoligy.h"
+#include "Scenery/geometry/HexGridAnnulus.h"
+#include "Scenery/geometry/GridNeighborhoodTopoligy.h"
 using namespace relleums;
 
 class GridNeighborhoodTopoligyTest : public ::testing::Test {};

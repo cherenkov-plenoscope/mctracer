@@ -2,7 +2,7 @@
 #include "Plenoscope/LightFieldSensor/Factory.h"
 #include <math.h>
 #include <vector>
-#include "Scenery/Geometry/HexGridAnnulus.h"
+#include "Scenery/geometry/HexGridAnnulus.h"
 #include "Scenery/Primitive/HexPlane.h"
 #include "Scenery/Primitive/Annulus.h"
 #include "Scenery/Primitive/Disc.h"

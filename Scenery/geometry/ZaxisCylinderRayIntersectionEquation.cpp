@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Geometry/ZaxisCylinderRayIntersectionEquation.h"
+#include "Scenery/geometry/ZaxisCylinderRayIntersectionEquation.h"
 
 namespace relleums {
 

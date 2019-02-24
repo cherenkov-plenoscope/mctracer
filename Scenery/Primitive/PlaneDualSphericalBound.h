@@ -6,8 +6,8 @@
 #include <string>
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
-#include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
-#include "Scenery/Geometry/DualSphericalPrismZ.h"
+#include "Scenery/geometry/XyPlaneRayIntersectionEquation.h"
+#include "Scenery/geometry/DualSphericalPrismZ.h"
 
 namespace relleums {
 

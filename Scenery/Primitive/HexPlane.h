@@ -5,8 +5,8 @@
 #include <vector>
 #include <string>
 #include "Core/SurfaceEntity.h"
-#include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
-#include "Scenery/Geometry/HexagonalPrismZ.h"
+#include "Scenery/geometry/XyPlaneRayIntersectionEquation.h"
+#include "Scenery/geometry/HexagonalPrismZ.h"
 
 namespace relleums {
 

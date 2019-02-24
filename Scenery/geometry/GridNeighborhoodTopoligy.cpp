@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Geometry/GridNeighborhoodTopoligy.h"
+#include "Scenery/geometry/GridNeighborhoodTopoligy.h"
 #include <algorithm>
 
 namespace relleums {

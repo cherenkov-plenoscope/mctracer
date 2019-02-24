@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Geometry/EllipticalCapRayIntersectionEquation.h"
+#include "Scenery/geometry/EllipticalCapRayIntersectionEquation.h"
 #include <math.h>
 
 namespace relleums {

@@ -1,5 +1,5 @@
 #include "Scenery/SegmentedReflector/Geometry.h"
-#include "Scenery/Geometry/HexGridAnnulus.h"
+#include "Scenery/geometry/HexGridAnnulus.h"
 #include <iomanip>
 #include "Core/mctracer.h"
 #include "Core/HomTra3.h"

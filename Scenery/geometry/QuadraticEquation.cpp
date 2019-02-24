@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Geometry/QuadraticEquation.h"
+#include "Scenery/geometry/QuadraticEquation.h"
 #include <math.h>
 
 namespace relleums {

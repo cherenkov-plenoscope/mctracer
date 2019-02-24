@@ -4,9 +4,9 @@
 
 #include <vector>
 #include <string>
-#include "Scenery/Geometry/EllipticalCapRayIntersectionEquation.h"
-#include "Scenery/Geometry/HexagonalPrismZ.h"
-#include "Scenery/Geometry/SurfaceWithOuterPrismBound.h"
+#include "Scenery/geometry/EllipticalCapRayIntersectionEquation.h"
+#include "Scenery/geometry/HexagonalPrismZ.h"
+#include "Scenery/geometry/SurfaceWithOuterPrismBound.h"
 
 namespace relleums {
 

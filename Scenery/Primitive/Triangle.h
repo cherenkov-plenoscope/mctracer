@@ -7,7 +7,7 @@
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
 #include "Core/Vec2.h"
-#include "Scenery/Geometry/XyPlaneRayIntersectionEquation.h"
+#include "Scenery/geometry/XyPlaneRayIntersectionEquation.h"
 
 namespace relleums {
 

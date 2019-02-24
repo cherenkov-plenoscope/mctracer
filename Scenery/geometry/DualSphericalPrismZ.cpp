@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Geometry/DualSphericalPrismZ.h"
+#include "Scenery/geometry/DualSphericalPrismZ.h"
 #include <math.h>
 
 namespace relleums {

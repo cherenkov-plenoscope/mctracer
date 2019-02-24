@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Geometry/SphericalCapRayIntersectionEquation.h"
+#include "Scenery/geometry/SphericalCapRayIntersectionEquation.h"
 
 namespace relleums {
 

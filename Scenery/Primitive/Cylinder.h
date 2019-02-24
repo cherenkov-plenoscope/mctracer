@@ -6,7 +6,7 @@
 #include <string>
 #include "Core/SurfaceEntity.h"
 #include "Core/Intersection.h"
-#include "Scenery/Geometry/ZaxisCylinderRayIntersectionEquation.h"
+#include "Scenery/geometry/ZaxisCylinderRayIntersectionEquation.h"
 
 namespace relleums {
 

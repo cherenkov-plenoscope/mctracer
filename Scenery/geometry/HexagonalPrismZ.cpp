@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Geometry/HexagonalPrismZ.h"
+#include "Scenery/geometry/HexagonalPrismZ.h"
 #include <math.h>
 #include <sstream>
 

@@ -5,7 +5,7 @@
 #include "Scenery/Primitive/BiConvexLens.h"
 #include "Scenery/Primitive/Disc.h"
 #include "Scenery/Primitive/BiConvexLensHexBound.h"
-#include "Scenery/Geometry/lens_maker.h"
+#include "Scenery/geometry/lens_maker.h"
 #include "sensor/PhotonSensor.h"
 
 using namespace relleums;
