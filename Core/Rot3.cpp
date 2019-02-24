@@ -1,6 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <math.h>
-#include <iostream>
 #include <sstream>
 #include <exception>
 #include "Core/Rot3.h"
