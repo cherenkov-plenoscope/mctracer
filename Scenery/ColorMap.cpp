@@ -1,6 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Scenery/ColorMap.h"
-#include <utility>
 #include <sstream>
 using std::stringstream;
 using std::string;
