@@ -1,8 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Scenery/SensorMap.h"
-#include <utility>
 #include <sstream>
-#include <algorithm>
 using std::stringstream;
 using std::string;
 using std::vector;
