@@ -3,7 +3,7 @@
 #include <string>
 #include "gtest/gtest.h"
 #include "Core/mctracer.h"
-#include "Visual/FlyingCamera.h"
+#include "visual/FlyingCamera.h"
 using std::string;
 using std::vector;
 using namespace relleums;

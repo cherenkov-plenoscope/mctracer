@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Visual/CameraRay.h"
+#include "visual/CameraRay.h"
 #include <sstream>
 #include "Core/RayAndFrame.h"
 #include "Core/Intersection.h"

@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Visual/PinHoleCamera.h"
+#include "visual/PinHoleCamera.h"
 #include <exception>
 #include "Tracer.h"
 #include "Core/random/random.h"

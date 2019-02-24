@@ -8,7 +8,7 @@
 #include "Core/Frame.h"
 #include "Core/Photons.h"
 #include "Core/PropagationConfig.h"
-#include "Visual/Config.h"
+#include "visual/Config.h"
 #include "niels_lohmann_json.hpp"
 
 namespace relleums {

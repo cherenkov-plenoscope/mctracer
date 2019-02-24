@@ -1,6 +1,6 @@
 // Copyright 2018 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "Visual/Image.h"
+#include "visual/Image.h"
 
 using namespace relleums;
 

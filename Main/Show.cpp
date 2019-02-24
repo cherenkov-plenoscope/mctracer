@@ -1,7 +1,7 @@
 #include "DocOpt/docopt.h"
 #include "json.h"
 #include "Tools/PathTools.h"
-#include "Visual/FlyingCamera.h"
+#include "visual/FlyingCamera.h"
 #include "Core/scenery/Scenery.h"
 using std::string;
 using std::cout;

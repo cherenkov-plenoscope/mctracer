@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include "gtest/gtest.h"
-#include "Visual/PortablePixMap.h"
+#include "visual/PortablePixMap.h"
 
 using namespace relleums;
 

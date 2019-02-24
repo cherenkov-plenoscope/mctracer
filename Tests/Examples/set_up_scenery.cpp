@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 #include "Core/mctracer.h"
-#include "Visual/FlyingCamera.h"
+#include "visual/FlyingCamera.h"
 #include "Tools/AsciiIo.h"
 
 using namespace relleums;

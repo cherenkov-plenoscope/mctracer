@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Visual/Config.h"
+#include "visual/Config.h"
 
 namespace relleums {
 namespace visual {

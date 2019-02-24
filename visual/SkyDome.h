@@ -3,7 +3,7 @@
 #define VISUAL_SKYDOME_H_
 
 #include <string>
-#include "Visual/Image.h"
+#include "visual/Image.h"
 #include "Core/Vec3.h"
 
 namespace relleums {

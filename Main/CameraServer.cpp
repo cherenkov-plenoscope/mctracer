@@ -1,8 +1,8 @@
 // Copyright 2018 Sebastian A. Mueller
 #include <stdint.h>
 #include "DocOpt/docopt.h"
-#include "Visual/FlyingCamera.h"
-#include "Visual/PortablePixMap.h"
+#include "visual/FlyingCamera.h"
+#include "visual/PortablePixMap.h"
 #include "Core/scenery/Scenery.h"
 #include "Tools/PathTools.h"
 #include "Core/mctracer.h"

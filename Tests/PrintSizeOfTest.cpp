@@ -3,7 +3,7 @@
 #include <string>
 #include "gtest/gtest.h"
 #include "Core/mctracer.h"
-#include "Visual/CameraRay.h"
+#include "visual/CameraRay.h"
 #include "signal_processing/signal_processing.h"
 using std::cout;
 using std::string;

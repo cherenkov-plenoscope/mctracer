@@ -1,10 +1,10 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Visual/ApertureCamera.h"
+#include "visual/ApertureCamera.h"
 #include <vector>
 #include <exception>
 #include <future>
 #include <thread>
-#include "Visual/Tracer.h"
+#include "visual/Tracer.h"
 #include "Core/random/random.h"
 #include "Core/vitaliy_vitsentiy_thread_pool.h"
 using std::string;

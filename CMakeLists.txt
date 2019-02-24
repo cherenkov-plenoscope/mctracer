@@ -34,7 +34,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake-mod
 set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/json.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/eventio.cpp)
-add_subdirectory("${PROJECT_SOURCE_DIR}/Visual")
+add_subdirectory("${PROJECT_SOURCE_DIR}/visual")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Core")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Corsika")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Plenoscope")

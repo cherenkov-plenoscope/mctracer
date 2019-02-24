@@ -4,7 +4,7 @@
 
 #include <fstream>
 #include <string>
-#include "Visual/Image.h"
+#include "visual/Image.h"
 
 namespace relleums {
 namespace visual {

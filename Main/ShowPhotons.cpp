@@ -3,7 +3,7 @@
 #include "eventio.h"
 #include "Corsika/corsika.h"
 #include "Corsika/PhotonFactory.h"
-#include "Visual/FlyingCamera.h"
+#include "visual/FlyingCamera.h"
 #include "Tools/PathTools.h"
 #include "json.h"
 using std::string;
