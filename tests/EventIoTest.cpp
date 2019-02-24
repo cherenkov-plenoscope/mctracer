@@ -56,7 +56,7 @@ TEST_F(EventIoTest, make_runheader) {
     array<float, 273> my_run_header =
         eventio::make_corsika_273float_sub_block_form_stream(sout);
 
-    EXPECT_EQ(Corsika::str2float("RUNH"), my_run_header.at(0));
+    EXPECT_EQ(corsika::str2float("RUNH"), my_run_header.at(0));
 }
 
 TEST_F(EventIoTest, EventIoFile_telescope_dat__check_tel_pos) {
@@ -77,21 +77,21 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__mmcs_run_header) {
     eventio::Run my_run("telescope.dat");
     EXPECT_NEAR(
         7.,
-        Corsika::RunHeader::run_number(my_run.header.raw), 1e-6);
+        corsika::RunHeader::run_number(my_run.header.raw), 1e-6);
     EXPECT_NEAR(
         -2.7,
-        Corsika::RunHeader::slope_of_energy_spektrum(my_run.header.raw), 1e-6);
+        corsika::RunHeader::slope_of_energy_spektrum(my_run.header.raw), 1e-6);
     EXPECT_NEAR(
         1000.,
-        Corsika::RunHeader::energy_range_start(my_run.header.raw), 1e-6);
+        corsika::RunHeader::energy_range_start(my_run.header.raw), 1e-6);
     EXPECT_NEAR(
         50000.,
-        Corsika::RunHeader::energy_range_end(my_run.header.raw), 1e-6);
+        corsika::RunHeader::energy_range_end(my_run.header.raw), 1e-6);
     EXPECT_EQ(1u,
-        Corsika::RunHeader::number_of_observation_levels(my_run.header.raw));
+        corsika::RunHeader::number_of_observation_levels(my_run.header.raw));
     EXPECT_NEAR(
         220000.,
-        Corsika::RunHeader::observation_level_at(my_run.header.raw, 0),
+        corsika::RunHeader::observation_level_at(my_run.header.raw, 0),
         1e-6);
 }
 
@@ -112,9 +112,9 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__event_header) {
     EXPECT_NEAR(-6589.96044922, event.header.telescope_offsets[0].yoff, 1e-6);
 
     array<float, 273> h = event.header.raw;
-    EXPECT_NEAR(1., Corsika::EventHeader::event_number(h), 1e-6);
-    EXPECT_NEAR(1., Corsika::EventHeader::particle_id(h), 1e-6);
-    EXPECT_NEAR(2745.3125, Corsika::EventHeader::total_energy_in_GeV(h), 1e-6);
+    EXPECT_NEAR(1., corsika::EventHeader::event_number(h), 1e-6);
+    EXPECT_NEAR(1., corsika::EventHeader::particle_id(h), 1e-6);
+    EXPECT_NEAR(2745.3125, corsika::EventHeader::total_energy_in_GeV(h), 1e-6);
 }
 
 TEST_F(EventIoTest, EventIoFile_telescope_dat__photon_bundle_size) {

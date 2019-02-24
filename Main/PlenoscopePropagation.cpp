@@ -301,9 +301,9 @@ plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
 
         cout << "event " << event_counter << ", ";
         cout << "PRMPAR ";
-        cout << Corsika::EventHeader::particle_id(event.header.raw) << ", ";
+        cout << corsika::EventHeader::particle_id(event.header.raw) << ", ";
         cout << "E ";
-        cout << Corsika::EventHeader::total_energy_in_GeV(event.header.raw);
+        cout << corsika::EventHeader::total_energy_in_GeV(event.header.raw);
         cout << " GeV\n";
         event_counter++;
     }

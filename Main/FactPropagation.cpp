@@ -410,9 +410,9 @@ int main(int argc, char* argv[]) {
         phs_event.descriptor.pass_version = ps::PASS_VERSION;
         phs_event.descriptor.event_type = ps::SIMULATION_EVENT_TYPE_KEY;
 
-        phs_event.id.run = Corsika::RunHeader::run_number(
+        phs_event.id.run = corsika::RunHeader::run_number(
             corsika_run.header.raw);
-        phs_event.id.event = Corsika::EventHeader::event_number(
+        phs_event.id.event = corsika::EventHeader::event_number(
             event.header.raw);
         phs_event.id.reuse = 0u;
 
@@ -427,17 +427,17 @@ int main(int argc, char* argv[]) {
 
         cout << "event " << event_counter << ", ";
         cout << "PRMPAR ";
-        cout << Corsika::EventHeader::particle_id(event.header.raw) << ", ";
+        cout << corsika::EventHeader::particle_id(event.header.raw) << ", ";
         cout << "E ";
-        cout << Corsika::EventHeader::total_energy_in_GeV(event.header.raw);
+        cout << corsika::EventHeader::total_energy_in_GeV(event.header.raw);
         cout << " GeV\n";
         event_counter++;
     }
     fout.close();
 
     array<float, 273> run_end;
-    run_end[0] = Corsika::str2float("RUNE");
-    run_end[1] = Corsika::RunHeader::run_number(corsika_run.header.raw);
+    run_end[0] = corsika::str2float("RUNE");
+    run_end[1] = corsika::RunHeader::run_number(corsika_run.header.raw);
     run_end[2] = static_cast<float>(event_counter);
     append_header_block(run_end, fch);
 

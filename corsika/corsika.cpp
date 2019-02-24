@@ -6,7 +6,7 @@ using std::string;
 using std::vector;
 using std::array;
 
-namespace Corsika {
+namespace corsika {
 
 namespace EventHeader {
 
@@ -125,7 +125,7 @@ float observation_level_at(const array<float, 273> &rh, const unsigned int i) {
 float str2float(const string word) {
     if (word.size() != 4) {
         stringstream info;
-        info << "Corsika::" << __func__ << "()\n";
+        info << "corsika::" << __func__ << "()\n";
         info << "Expected word size: 4 chars, but actual: ";
         info << word.size() << " chars.\n";
         info << "word: '" << word << "'.\n";
@@ -147,4 +147,4 @@ string float2str(const float word_in_float) {
     return word;
 }
 
-}  // namespace Corsika
+}  // namespace corsika

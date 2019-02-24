@@ -274,7 +274,7 @@ int main(int argc, char* argv[]) {
             i < run_header.size();
             i++
         ) {run_header[i] = 0.0f;}
-        run_header[0] = Corsika::str2float("RUNH");
+        run_header[0] = corsika::str2float("RUNH");
         run_header[1] = 1.0f;  // run-number
         run_header[2] = 20180101.0f;  // date
         run_header[3] = -1.0f;  // program version
@@ -289,7 +289,7 @@ int main(int argc, char* argv[]) {
             i < evt_header.size();
             i++
         ) {evt_header[i] = 0.0f;}
-        evt_header[0] = Corsika::str2float("EVTH");
+        evt_header[0] = corsika::str2float("EVTH");
         evt_header[1] = static_cast<float>(event_counter + 1);  // evt-number
         evt_header[2] = -1.0f;  // particle id
         evt_header[3] = -1.0f;  // energy

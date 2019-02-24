@@ -227,7 +227,7 @@ array<float, 273> Geometry::get_info_header()const {
     array<float, 273> header;
     for (unsigned int i = 0; i < header.size(); i++) header[i]=0.0;
 
-    header[  1-1] = Corsika::str2float("PLGH");
+    header[  1-1] = corsika::str2float("PLGH");
 
     header[ 11-1] = config.sensor_plane2imaging_system.get_rot_x().x;
     header[ 12-1] = config.sensor_plane2imaging_system.get_rot_x().y;

@@ -82,8 +82,8 @@ int main(int argc, char* argv[]) {
         eventio::Event event = corsika_run.next_event();
 
         // point the telescope into shower direction
-        // double az = Corsika::EventHeader::azimuth(event.header.raw);
-        // double zd = Corsika::EventHeader::zenith(event.header.raw);
+        // double az = corsika::EventHeader::azimuth(event.header.raw);
+        // double zd = corsika::EventHeader::zenith(event.header.raw);
 
         unsigned int id = 0;
         for(array<float, 8> corsika_photon : event.photons) {

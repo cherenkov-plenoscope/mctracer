@@ -6,7 +6,7 @@ namespace plenoscope {
 
 EventHeader::EventHeader() {
     for (unsigned int i = 0; i < raw.size(); i++) raw[i]=0.0;
-    raw[  1-1] = Corsika::str2float("PEVT");
+    raw[  1-1] = corsika::str2float("PEVT");
 }
 
 void EventHeader::set_event_type(const float event_type) {

@@ -8,7 +8,7 @@
 #include <cstring>
 #include <array>
 
-namespace Corsika {
+namespace corsika {
 
 namespace EventHeader {
 
@@ -39,6 +39,6 @@ float observation_level_at(
 float str2float(const std::string word);
 std::string float2str(const float word_in_float);
 
-}  // namespace Corsika
+}  // namespace corsika
 
 #endif  // MCTRACER_CORSIKA_TOOLS_H_
