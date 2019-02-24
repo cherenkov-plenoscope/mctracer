@@ -5,13 +5,13 @@
 #include <vector>
 #include <string>
 #include "plenoscope/PlenoscopeInScenery.h"
-#include "plenoscope/Calibration/Config.h"
-#include "plenoscope/Calibration/CalibrationPhotonResult.h"
-#include "plenoscope/Calibration/LixelStatisticsFiller.h"
+#include "plenoscope/calibration/Config.h"
+#include "plenoscope/calibration/CalibrationPhotonResult.h"
+#include "plenoscope/calibration/LixelStatisticsFiller.h"
 #include "Core/mctracer.h"
 
 namespace plenoscope {
-namespace Calibration {
+namespace calibration {
 
 struct Calibrator {
     const Config config;
@@ -35,7 +35,7 @@ void run_calibration(
     const std::string &path,
     relleums::random::Generator *prng);
 
-}  // namespace Calibration
+}  // namespace calibration
 }  // namespace plenoscope
 
 #endif  // PLENOSCOPE_CALIBRATION_CALIBRATOR_H_

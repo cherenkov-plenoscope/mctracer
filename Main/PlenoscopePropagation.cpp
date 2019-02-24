@@ -123,8 +123,8 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // load light field calibration result
-    vector<plenoscope::Calibration::LixelStatistic> optics_calibration_result =
-        plenoscope::Calibration::read(lixel_calib_path.path);
+    vector<plenoscope::calibration::LixelStatistic> optics_calibration_result =
+        plenoscope::calibration::read(lixel_calib_path.path);
 
     // assert number os sub_pixel matches simulated plenoscope
     if (light_field_channels->size() != optics_calibration_result.size()) {

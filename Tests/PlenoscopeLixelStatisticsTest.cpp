@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "plenoscope/Calibration/LixelStatistics.h"
+#include "plenoscope/calibration/LixelStatistics.h"
 using std::vector;
 using std::string;
 using namespace relleums;
@@ -8,7 +8,7 @@ using namespace relleums;
 class PlenoscopeLixelStatisticsTest : public ::testing::Test {};
 
 TEST_F(PlenoscopeLixelStatisticsTest, default_ctor) {
-    plenoscope::Calibration::LixelStatistic stat;
+    plenoscope::calibration::LixelStatistic stat;
 
     EXPECT_EQ(stat.efficiency, 0.0);
     EXPECT_EQ(stat.efficiency_std, 0.0);
@@ -26,10 +26,10 @@ TEST_F(PlenoscopeLixelStatisticsTest, default_ctor) {
 
 TEST_F(PlenoscopeLixelStatisticsTest, write_and_read_binary) {
     const unsigned int number_of_lixels = 1337;
-    vector<plenoscope::Calibration::LixelStatistic> lixel_stats;
+    vector<plenoscope::calibration::LixelStatistic> lixel_stats;
 
     for (unsigned int i = 0; i < number_of_lixels; i++) {
-        plenoscope::Calibration::LixelStatistic stat;
+        plenoscope::calibration::LixelStatistic stat;
         stat.efficiency =       i*1.000;
         stat.efficiency_std =   i*1.001;
         stat.cx_mean =          i*1.002;
@@ -46,10 +46,10 @@ TEST_F(PlenoscopeLixelStatisticsTest, write_and_read_binary) {
     }
 
     const string path = "InOut/my_stats.LixelStatistics.bin";
-    plenoscope::Calibration::write(lixel_stats, path);
+    plenoscope::calibration::write(lixel_stats, path);
 
-    vector<plenoscope::Calibration::LixelStatistic> lixel_stats_in =
-        plenoscope::Calibration::read(path);
+    vector<plenoscope::calibration::LixelStatistic> lixel_stats_in =
+        plenoscope::calibration::read(path);
 
     EXPECT_EQ(lixel_stats_in.size(), number_of_lixels);
 
@@ -71,10 +71,10 @@ TEST_F(PlenoscopeLixelStatisticsTest, write_and_read_binary) {
 
 TEST_F(PlenoscopeLixelStatisticsTest, read_non_existing_binary_file) {
     EXPECT_THROW(
-        plenoscope::Calibration::read("InOut/non_existing_file.bin"),
+        plenoscope::calibration::read("InOut/non_existing_file.bin"),
         std::runtime_error);
 }
 
 TEST_F(PlenoscopeLixelStatisticsTest, size_is_just_a_plain_struct) {
-    EXPECT_EQ(sizeof(plenoscope::Calibration::LixelStatistic), 12u*4u);
+    EXPECT_EQ(sizeof(plenoscope::calibration::LixelStatistic), 12u*4u);
 }

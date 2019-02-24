@@ -3,7 +3,7 @@
 #include <iostream>
 #include "docopt/docopt.h"
 #include "Tools/FileTools.h"
-#include "plenoscope/Calibration/Calibrator.h"
+#include "plenoscope/calibration/Calibrator.h"
 #include "plenoscope/json_to_plenoscope.h"
 #include "Tools/HeaderBlock.h"
 #include "Core/scenery/Scenery.h"
@@ -107,19 +107,19 @@ int main(int argc, char* argv[]) {
             join(out_path.path, "info.md"));
 
         // CALIBRATION CONFIG
-        plenoscope::Calibration::Config calib_config;
+        plenoscope::calibration::Config calib_config;
         calib_config.number_of_blocks = number_mega_photons;
         calib_config.photons_per_block = static_cast<int>(1e6);
 
         // RUN PLENOSCOPE CALIBRATION
-        plenoscope::Calibration::Calibrator calibrator(
+        plenoscope::calibration::Calibrator calibrator(
             calib_config,
             pis,
             &scenery.root);
 
         random::Mt19937 prng(0);
 
-        plenoscope::Calibration::run_calibration(
+        plenoscope::calibration::run_calibration(
             calibrator,
             join(out_path.path, "lixel_statistics.bin"),
             &prng);

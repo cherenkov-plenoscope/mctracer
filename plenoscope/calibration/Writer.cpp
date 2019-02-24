@@ -1,9 +1,9 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "plenoscope/Calibration/Writer.h"
+#include "plenoscope/calibration/Writer.h"
 #include <sstream>
 
 namespace plenoscope {
-namespace Calibration {
+namespace calibration {
 
 Writer::Writer(const std::string npath): path(npath) {
     clear_file();
@@ -49,5 +49,5 @@ void Writer::clear_file() {
     file.close();
 }
 
-}  // namespace Calibration
+}  // namespace calibration
 }  // namespace plenoscope

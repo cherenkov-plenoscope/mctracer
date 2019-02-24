@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "plenoscope/Calibration/LixelStatistics.h"
+#include "plenoscope/calibration/LixelStatistics.h"
 #include <sstream>
 #include <fstream>
 #include "Tools/FileTools.h"
@@ -7,7 +7,7 @@ using std::vector;
 using std::string;
 
 namespace plenoscope {
-namespace Calibration {
+namespace calibration {
 
 LixelStatistic::LixelStatistic():
     efficiency(0.0), efficiency_std(0.0),
@@ -56,5 +56,5 @@ vector<LixelStatistic> read(const string &path) {
     return lixel_statistics;
 }
 
-}  // namespace Calibration
+}  // namespace calibration
 }  // namespace plenoscope

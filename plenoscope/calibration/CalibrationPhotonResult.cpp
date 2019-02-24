@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "plenoscope/Calibration/CalibrationPhotonResult.h"
+#include "plenoscope/calibration/CalibrationPhotonResult.h"
 
 namespace plenoscope {
 

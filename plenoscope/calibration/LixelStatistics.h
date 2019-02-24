@@ -4,13 +4,13 @@
 
 #include <string>
 #include <vector>
-#include "plenoscope/Calibration/CalibrationPhotonResult.h"
-#include "plenoscope/Calibration/Config.h"
+#include "plenoscope/calibration/CalibrationPhotonResult.h"
+#include "plenoscope/calibration/Config.h"
 #include "plenoscope/LightFieldSensor/Geometry.h"
-#include "plenoscope/Calibration/OnlineLixelStatistics.h"
+#include "plenoscope/calibration/OnlineLixelStatistics.h"
 
 namespace plenoscope {
-namespace Calibration {
+namespace calibration {
 
 //--lixel_statistics_s--
 struct LixelStatistic {
@@ -29,7 +29,7 @@ void write(
     const std::string &path);
 std::vector<LixelStatistic> read(const std::string &path);
 
-}  // namespace Calibration
+}  // namespace calibration
 }  // namespace plenoscope
 
 #endif  // PLENOSCOPE_CALIBRATION_LIXELSTATISTICS_H_

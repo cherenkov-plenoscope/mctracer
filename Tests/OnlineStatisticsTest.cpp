@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "gtest/gtest.h"
-#include "plenoscope/Calibration/OnlineStatistics.h"
+#include "plenoscope/calibration/OnlineStatistics.h"
 #include "Core/random/random.h"
 #include "Core/numeric.h"
 using std::vector;

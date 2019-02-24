@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "plenoscope/Calibration/Calibrator.h"
+#include "plenoscope/calibration/Calibrator.h"
 #include <future>
 #include <thread>
 #include <iomanip>
@@ -7,7 +7,7 @@
 #include <random>
 #include <iostream>
 #include "Core/mctracer.h"
-#include "plenoscope/Calibration/Writer.h"
+#include "plenoscope/calibration/Writer.h"
 #include "plenoscope/night_sky_background/NightSkyBackground.h"
 #include "Tools/FileTools.h"
 #include "Tools/HeaderBlock.h"
@@ -16,7 +16,7 @@ using std::cout;
 using namespace relleums;
 
 namespace plenoscope {
-namespace Calibration {
+namespace calibration {
 
 Calibrator::Calibrator(
     const Config _config,
@@ -267,5 +267,5 @@ lixel_statistics_filler(
     &_calib_config)
 */
 
-}  // namespace Calibration
+}  // namespace calibration
 }  // namespace plenoscope

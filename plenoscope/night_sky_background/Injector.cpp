@@ -13,7 +13,7 @@ namespace night_sky_background {
 void inject_nsb_into_photon_pipeline(
     vector<vector<signal_processing::PipelinePhoton>> *photon_pipelines,
     const double nsb_exposure_time,
-    const vector<plenoscope::Calibration::LixelStatistic> *lixel_statistics,
+    const vector<plenoscope::calibration::LixelStatistic> *lixel_statistics,
     const Light *nsb,
     random::Generator* prng
 ) {

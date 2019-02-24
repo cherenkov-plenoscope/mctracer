@@ -5,10 +5,10 @@
 #include <vector>
 #include <string>
 #include <fstream>
-#include "plenoscope/Calibration/Calibrator.h"
+#include "plenoscope/calibration/Calibrator.h"
 
 namespace plenoscope {
-namespace Calibration {
+namespace calibration {
 
 class Writer {
     const std::string path;
@@ -24,7 +24,7 @@ class Writer {
     void assert_file_is_open();
 };
 
-}  // namespace Calibration
+}  // namespace calibration
 }  // namespace plenoscope
 
 #endif  // PLENOSCOPE_CALIBRATION_WRITER_H_

@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 namespace plenoscope {
-namespace Calibration {
+namespace calibration {
 
 struct Config {
     uint32_t number_of_blocks;
@@ -13,7 +13,7 @@ struct Config {
     Config();
 };
 
-}  // namespace Calibration
+}  // namespace calibration
 }  // namespace plenoscope
 
 #endif  // MCTRACER_PLENOSCOPE_CALIBRATION_CONFIG_H_

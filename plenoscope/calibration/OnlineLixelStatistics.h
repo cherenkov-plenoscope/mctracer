@@ -5,7 +5,7 @@
 #include "./OnlineStatistics.h"
 
 namespace plenoscope {
-namespace Calibration {
+namespace calibration {
 
 struct OnlineLixelStatistics {
     unsigned int count;
@@ -17,7 +17,7 @@ struct OnlineLixelStatistics {
     OnlineLixelStatistics();
 };
 
-}  // namespace Calibration
+}  // namespace calibration
 }  // namespace plenoscope
 
 #endif  // MCTRACER_PLENOSCOPE_CALIBRATION_ONLINELIXELSTATISTICS_H_

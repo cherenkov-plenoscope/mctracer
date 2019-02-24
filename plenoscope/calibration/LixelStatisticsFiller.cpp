@@ -1,10 +1,10 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "plenoscope/Calibration/LixelStatisticsFiller.h"
+#include "plenoscope/calibration/LixelStatisticsFiller.h"
 #include <math.h>
 using std::vector;
 
 namespace plenoscope {
-namespace Calibration {
+namespace calibration {
 
 LixelStatisticsFiller::LixelStatisticsFiller(
     const LightFieldSensor::Geometry *geometry,
@@ -77,5 +77,5 @@ vector<LixelStatistic> LixelStatisticsFiller::get_lixel_statistics()const {
     return lixel_statistics;
 }
 
-}  // namespace Calibration
+}  // namespace calibration
 }  // namespace plenoscope
