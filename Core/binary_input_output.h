@@ -6,7 +6,7 @@
 #include <fstream>
 
 namespace relleums {
-namespace bio {
+namespace binio {
 
 void append_float32(const float &v, std::ostream &fout);
 float read_float32(std::istream &fin);
@@ -26,7 +26,7 @@ uint16_t read_uint16(std::istream &fin);
 double read_float64(std::istream &fin);
 uint64_t read_uint64(std::istream &fin);
 
-}  // namespace bio
+}  // namespace binio
 }  // namespace relleums
 
 #endif  // CORE_BINARY_INPUT_OUTPUT_H_

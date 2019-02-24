@@ -30,7 +30,7 @@ void BinaryReader::read_header() {
 }
 
 void BinaryReader::read_total_number_of_facets() {
-    total_number_of_facets = bio::read_uint32(fin);
+    total_number_of_facets = binio::read_uint32(fin);
 }
 
 string BinaryReader::get_report()const {
@@ -112,7 +112,7 @@ Facet BinaryReader::read_and_create_next_facet() {
         TRIANGLE_SIZE_BYTES);
 
     // 2byte short
-    uint16_t attribute_byte_count = bio::read_uint16(fin);
+    uint16_t attribute_byte_count = binio::read_uint16(fin);
     check_attribute_byte_count_is_zero(attribute_byte_count);
 
     Vec3 normal(
