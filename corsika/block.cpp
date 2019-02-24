@@ -1,13 +1,13 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Tools/HeaderBlock.h"
+#include "corsika/block.h"
 #include <fstream>
 #include <sstream>
 using std::string;
 using std::vector;
 using std::array;
 
-namespace relleums {
-namespace HeaderBlock {
+namespace corsika {
+namespace block {
 
 void write(array<float, 273> block, const string &path) {
     vector<array<float, 273>> blocks;
@@ -56,5 +56,5 @@ vector<array<float, 273>> read(const string &path) {
     return blocks;
 }
 
-}  // namespace HeaderBlock
-}  // namespace relleums
+}  // namespace block
+}  // namespace corsika

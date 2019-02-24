@@ -2,6 +2,5 @@ set(SOURCE
     ${SOURCE}
     ${CMAKE_CURRENT_SOURCE_DIR}/FileTools.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/AsciiIo.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/HeaderBlock.cpp
     PARENT_SCOPE
 )

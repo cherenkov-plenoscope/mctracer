@@ -6,6 +6,7 @@
 #include "eventio.h"
 #include "corsika/corsika.h"
 #include "corsika/PhotonFactory.h"
+#include "corsika/block.h"
 #include "signal_processing/signal_processing.h"
 #include "plenoscope/night_sky_background/Light.h"
 #include "plenoscope/EventHeader.h"
@@ -13,8 +14,6 @@
 #include "plenoscope/night_sky_background/Injector.h"
 #include "plenoscope/json_to_plenoscope.h"
 #include "signal_processing/signal_processing.h"
-#include "Tools/HeaderBlock.h"
-#include "Core/scenery/Scenery.h"
 namespace fs = std::experimental::filesystem;
 namespace sp = signal_processing;
 using std::string;
@@ -266,7 +265,7 @@ int main(int argc, char* argv[]) {
 plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
         event_header.set_plenoscope_geometry(
             pis->light_field_sensor_geometry.config);
-        HeaderBlock::write(
+        corsika::block::write(
             event_header.raw,
             join(event_output_path.path, "event_header.bin"));
 
@@ -275,16 +274,16 @@ plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
         Path event_mc_truth_path = join(
             event_output_path.path, "simulation_truth");
         fs::create_directory(event_mc_truth_path.path);
-        HeaderBlock::write(
+        corsika::block::write(
             corsika_run.header.raw,
             join(event_mc_truth_path.path, "corsika_run_header.bin"));
-        HeaderBlock::write(
+        corsika::block::write(
             event.header.raw,
             join(event_mc_truth_path.path, "corsika_event_header.bin"));
 
         plenoscope::SimulationTruthHeader sim_truth_header;
         sim_truth_header.set_random_number_seed_of_run(prng.seed());
-        HeaderBlock::write(
+        corsika::block::write(
             sim_truth_header.raw,
             join(event_mc_truth_path.path, "mctracer_event_header.bin"));
 

@@ -5,8 +5,7 @@
 #include "Tools/FileTools.h"
 #include "plenoscope/calibration/Calibrator.h"
 #include "plenoscope/json_to_plenoscope.h"
-#include "Tools/HeaderBlock.h"
-#include "Core/scenery/Scenery.h"
+#include "corsika/block.h"
 #include "Core/mctracer.h"
 namespace fs = std::experimental::filesystem;
 using std::string;
@@ -96,7 +95,7 @@ int main(int argc, char* argv[]) {
                 "There is more than one plenoscope in the scenery");
         plenoscope::PlenoscopeInScenery* pis = &scenery.plenoscopes.at(0);
 
-        HeaderBlock::write(
+        corsika::block::write(
             pis->light_field_sensor_geometry.get_info_header(),
             join(out_path.path, "light_field_sensor_geometry.header.bin"));
 

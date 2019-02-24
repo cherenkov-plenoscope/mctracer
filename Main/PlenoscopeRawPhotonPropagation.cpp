@@ -6,15 +6,13 @@
 #include "eventio.h"
 #include "corsika/corsika.h"
 #include "corsika/PhotonFactory.h"
-#include "Core/Histogram1.h"
+#include "corsika/block.h"
 #include "plenoscope/night_sky_background/Light.h"
 #include "plenoscope/EventHeader.h"
 #include "plenoscope/SimulationTruthHeader.h"
 #include "plenoscope/night_sky_background/Injector.h"
 #include "plenoscope/json_to_plenoscope.h"
 #include "signal_processing/signal_processing.h"
-#include "Tools/HeaderBlock.h"
-#include "Core/scenery/Scenery.h"
 #include "PhotonsReader/PhotonsReader.h"
 namespace fs = std::experimental::filesystem;
 namespace sp = signal_processing;
@@ -259,7 +257,7 @@ int main(int argc, char* argv[]) {
             plenoscope::TriggerType::EXTERNAL_RANDOM_TRIGGER);
         event_header.set_plenoscope_geometry(
             pis->light_field_sensor_geometry.config);
-        HeaderBlock::write(
+        corsika::block::write(
             event_header.raw,
             join(event_output_path.path, "event_header.bin"));
 
@@ -280,7 +278,7 @@ int main(int argc, char* argv[]) {
         run_header[3] = -1.0f;  // program version
         run_header[4] = 1.0f;  // number observation-levels
         run_header[5] = 5e3f;  // height observation-levels
-        HeaderBlock::write(
+        corsika::block::write(
             run_header,
             join(event_mc_truth_path.path, "corsika_run_header.bin"));
         std::array<float, 273> evt_header;
@@ -300,12 +298,12 @@ int main(int argc, char* argv[]) {
         evt_header[46-1] = run_header[3];  // program version
         evt_header[47-1] = run_header[4];  // number observation-levels
         evt_header[48-1] = run_header[5];  // height observation-levels
-        HeaderBlock::write(
+        corsika::block::write(
             evt_header,
             join(event_mc_truth_path.path, "corsika_event_header.bin"));
         plenoscope::SimulationTruthHeader sim_truth_header;
         sim_truth_header.set_random_number_seed_of_run(prng.seed());
-        HeaderBlock::write(
+        corsika::block::write(
             sim_truth_header.raw,
             join(event_mc_truth_path.path, "mctracer_event_header.bin"));
 

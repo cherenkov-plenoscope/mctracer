@@ -5,7 +5,7 @@
 #include <iostream>
 #include "docopt/docopt.h"
 #include "eventio.h"
-#include "Tools/HeaderBlock.h"
+#include "corsika/block.h"
 #include "Core/mctracer.h"
 
 namespace fs = std::experimental::filesystem;
@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
 
     eventio::Run corsika_run(input_path.path);
 
-    mct::HeaderBlock::write(
+    corsika::block::write(
       corsika_run.header.raw,
       mct::ospath::join(out_path.path, "corsika_run_header.bin"));
 
@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) {
 
       fs::create_directory(event_path.path);
 
-      mct::HeaderBlock::write(
+      corsika::block::write(
         event.header.raw,
         mct::ospath::join(event_path.path, "corsika_event_header.bin"));
 
