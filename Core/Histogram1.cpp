@@ -3,10 +3,10 @@
 #include <sstream>
 #include "Core/Histogram1.h"
 
-namespace relleums {
-
 using std::string;
 using std::vector;
+
+namespace relleums {
 
 Histogram1::Histogram1(
     const vector<double> &samples,

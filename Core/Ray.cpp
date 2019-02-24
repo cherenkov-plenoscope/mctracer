@@ -4,10 +4,10 @@
 #include <vector>
 #include "Core/Ray.h"
 
-namespace relleums {
-
 using std::string;
 using std::stringstream;
+
+namespace relleums {
 
 Ray::Ray() {}
 

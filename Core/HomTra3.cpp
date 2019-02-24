@@ -4,10 +4,10 @@
 #include <iomanip>
 #include "Core/HomTra3.h"
 
-namespace relleums {
-
 using std::stringstream;
 using std::string;
+
+namespace relleums {
 
 // homogenous Transformation, component adresses:
 // [ 0,0    0,1     0,2     0,3 ]
