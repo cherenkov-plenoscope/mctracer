@@ -1,6 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <limits>
-#include <algorithm>
 #include "Core/DistanceMeter.h"
 #include "Core/RayAndFrame.h"
 
