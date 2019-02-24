@@ -9,7 +9,7 @@ namespace relleums {
 class PrismZ {
  public:
     virtual bool is_inside(const Vec3* vec)const = 0;
-    virtual double get_area()const {return 0.0;}
+    virtual double get_area()const;
 };
 
 }  // namespace relleums
