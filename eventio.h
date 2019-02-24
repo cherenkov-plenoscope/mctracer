@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 #include <array>
-#include <iostream>
 #include <fstream>
 
 namespace eventio {

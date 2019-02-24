@@ -3,7 +3,6 @@
 #include <sstream>
 #include "eventio.h"
 
-using std::cout;
 using std::endl;
 using std::string;
 using std::stringstream;

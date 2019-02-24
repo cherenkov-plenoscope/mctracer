@@ -2,6 +2,7 @@
 #include <experimental/filesystem>
 #include <fstream>
 #include <sstream>
+#include <iostream>
 #include "DocOpt/docopt.h"
 #include "eventio.h"
 #include "Tools/PathTools.h"
