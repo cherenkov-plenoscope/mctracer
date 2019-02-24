@@ -32,7 +32,7 @@
 
 #include "function/function.h"
 #include "random/random.h"
-#include "scenery/all_scenery.h"
+#include "scenery/scenery.h"
 #include "sensor/sensor.h"
 #include "visual/visual.h"
 
