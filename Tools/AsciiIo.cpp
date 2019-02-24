@@ -62,11 +62,11 @@ void write_table_to_file(
 
 string get_table_print(const vector<vector<double>> &table) {
     stringstream out;
-    out.precision(precision);
+    out.precision(FLOAT_PRECISION);
 
     for (unsigned int row = 0; row < table.size(); row++) {
         for (unsigned int col = 0; col < table.at(row).size() - 1; col++) {
-            out << table[row][col] << delimiter;
+            out << table[row][col] << DELIMITER;
         }
         out << table[row][table.at(row).size()-1];
 
@@ -90,7 +90,7 @@ void TableReader::fill_matrix_from_text() {
         row = txt::strip_whitespaces(row);
         current_row++;
         if (row.length()!= 0)
-            if (*row.begin() != comment_escape)
+            if (*row.begin() != COMMENT_ESCAPE)
                 table.push_back(text_row_2_numeric_row(row));
     }
 }
@@ -99,7 +99,7 @@ vector<double> TableReader::text_row_2_numeric_row(const string &row) {
     const vector<string> tokens_in_row =
         txt::tokenize_text_using_either_one_of_delimiters(
             row,
-            delimiters_for_reading);
+            DELIMITERS_FOR_READING);
 
     vector<double> numeric_row;
 

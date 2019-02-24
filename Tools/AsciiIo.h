@@ -26,10 +26,10 @@ void write_table_to_file_with_header(
     const std::string &path,
     const std::string &header);
 
-const char delimiter = '\t';
-const char delimiters_for_reading[] = "\t" " ";
-const char comment_escape = '#';
-const int precision = 10;
+const char DELIMITER = '\t';
+const char DELIMITERS_FOR_READING[] = "\t" " ";
+const char COMMENT_ESCAPE = '#';
+const int FLOAT_PRECISION = 10;
 
 std::string get_table_print(const std::vector<std::vector<double>> &table);
 
