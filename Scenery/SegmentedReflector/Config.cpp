@@ -1,5 +1,4 @@
 #include "Scenery/SegmentedReflector/Config.h"
-#include "Tools/AsciiIo.h"
 
 namespace relleums {
 namespace SegmentedReflector {
