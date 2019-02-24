@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "plenoscope/light_field_sensor/Config.h"
 #include "Core/mctracer.h"
-#include "Corsika/corsika.h"
+#include "corsika/corsika.h"
 
 using std::array;
 using namespace relleums;

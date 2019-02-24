@@ -9,7 +9,7 @@
 #include "Core/mctracer.h"
 #include "Tools/FileTools.h"
 #include "Core/scenery/geometry/lens_maker.h"
-#include "Corsika/corsika.h"
+#include "corsika/corsika.h"
 using std::vector;
 using std::array;
 using std::string;

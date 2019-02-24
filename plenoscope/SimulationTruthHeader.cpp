@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "plenoscope/SimulationTruthHeader.h"
 #include <sstream>
-#include "Corsika/corsika.h"
+#include "corsika/corsika.h"
 
 namespace plenoscope {
 

@@ -5,8 +5,8 @@
 #include "Main/photon_stream.h"
 #include "Core/mctracer.h"
 #include "eventio.h"
-#include "Corsika/corsika.h"
-#include "Corsika/PhotonFactory.h"
+#include "corsika/corsika.h"
+#include "corsika/PhotonFactory.h"
 #include "Core/scenery/SegmentedReflector/SegmentedReflector.h"
 #include "signal_processing/signal_processing.h"
 namespace fs = std::experimental::filesystem;

@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <numeric>
 #include "gtest/gtest.h"
-#include "Corsika/PhotonFactory.h"
+#include "corsika/PhotonFactory.h"
 #include "eventio.h"
 #include "Core/mctracer.h"
 using std::vector;

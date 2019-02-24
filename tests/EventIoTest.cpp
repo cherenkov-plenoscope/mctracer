@@ -2,8 +2,8 @@
 #include <algorithm>
 #include "gtest/gtest.h"
 #include "eventio.h"
-#include "Corsika/corsika.h"
-#include "Corsika/PhotonFactory.h"
+#include "corsika/corsika.h"
+#include "corsika/PhotonFactory.h"
 using std::string;
 using std::vector;
 using std::array;

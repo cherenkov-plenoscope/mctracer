@@ -1,8 +1,8 @@
 #include "docopt/docopt.h"
 #include "Core/mctracer.h"
 #include "eventio.h"
-#include "Corsika/corsika.h"
-#include "Corsika/PhotonFactory.h"
+#include "corsika/corsika.h"
+#include "corsika/PhotonFactory.h"
 #include "FlyingCamera.h"
 #include "json.h"
 using std::string;
