@@ -4,7 +4,6 @@
 #include "Corsika/corsika.h"
 #include "Corsika/PhotonFactory.h"
 #include "FlyingCamera.h"
-#include "Tools/PathTools.h"
 #include "json.h"
 using std::string;
 using std::cout;
@@ -49,9 +48,9 @@ int main(int argc, char* argv[]) {
         true,        // show help if requested
         "mct 0.1");  // version string
 
-    path::Path scenery_path = path::Path(
+    ospath::Path scenery_path = ospath::Path(
         args.find("--scenery")->second.asString());
-    path::Path photon_path = path::Path(
+    ospath::Path photon_path = ospath::Path(
         args.find("--input")->second.asString());
 
     visual::Config visual_config;

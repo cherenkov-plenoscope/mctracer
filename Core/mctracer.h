@@ -29,6 +29,7 @@
 #include "txt.h"
 #include "binio.h"
 #include "tools.h"
+#include "ospath.h"
 
 #include "function/function.h"
 #include "random/random.h"

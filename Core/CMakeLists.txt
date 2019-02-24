@@ -31,5 +31,6 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/txt.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/binio.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tools.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ospath.cpp
     PARENT_SCOPE
 )

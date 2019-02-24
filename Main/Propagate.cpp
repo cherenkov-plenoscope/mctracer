@@ -3,13 +3,12 @@
 #include "Core/mctracer.h"
 #include "Tools/AsciiIo.h"
 #include "json.h"
-#include "Tools/PathTools.h"
 #include "PhotonsReader/PhotonsReader.h"
 using std::string;
 using std::cout;
 using std::vector;
 using namespace relleums;
-using path::Path;
+using ospath::Path;
 
 static const char USAGE[] =
 R"(Photon propagation

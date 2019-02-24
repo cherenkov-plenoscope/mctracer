@@ -5,7 +5,7 @@
 #include <string>
 
 namespace relleums {
-namespace path {
+namespace ospath {
 // Inspired by python os.path.
 
 std::string join(std::string path1, std::string path2);
@@ -20,7 +20,7 @@ struct Path {
     Path();
 };
 
-}  // namespace path
+}  // namespace ospath
 }  // namespace relleums
 
 #endif  // TOOLS_PATHTOOLS_H_

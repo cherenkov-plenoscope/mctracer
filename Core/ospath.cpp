@@ -1,11 +1,11 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Tools/PathTools.h"
+#include "Core/ospath.h"
 #include <sstream>
 #include "Core/txt.h"
 using std::string;
 
 namespace relleums {
-namespace path {
+namespace ospath {
 
     string join(string path1, string path2) {
         std::stringstream out;
@@ -49,5 +49,5 @@ namespace path {
         *this = Path("");
     }
 
-}  // namespace path
+}  // namespace ospath
 }  // namespace relleums

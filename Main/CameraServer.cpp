@@ -3,7 +3,6 @@
 #include <iostream>
 #include "DocOpt/docopt.h"
 #include "Core/mctracer.h"
-#include "Tools/PathTools.h"
 #include "./json.h"
 using std::string;
 using std::cout;
@@ -69,7 +68,7 @@ int main(int argc, char* argv[]) {
             true,        // show help if requested
             "mctCameraServer 0.1");  // version string
 
-        path::Path scenery_path = path::Path(
+        ospath::Path scenery_path = ospath::Path(
             args.find("--scenery")->second.asString());
 
         Scenery scenery;

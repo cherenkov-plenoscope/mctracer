@@ -7,7 +7,6 @@
 #include "eventio.h"
 #include "Corsika/corsika.h"
 #include "Corsika/PhotonFactory.h"
-#include "Tools/PathTools.h"
 #include "Core/scenery/SegmentedReflector/SegmentedReflector.h"
 #include "signal_processing/signal_processing.h"
 namespace fs = std::experimental::filesystem;
@@ -267,8 +266,8 @@ int main(int argc, char* argv[]) {
         true,        // show help if requested
         "mct 0.0");  // version string
 
-    path::Path out_path = path::Path(args.find("--output")->second.asString());
-    path::Path input_path = path::Path(args.find("--input")->second.asString());
+    ospath::Path out_path = ospath::Path(args.find("--output")->second.asString());
+    ospath::Path input_path = ospath::Path(args.find("--input")->second.asString());
 
     //--------------------------------------------------------------------------
     //  111

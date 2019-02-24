@@ -13,7 +13,6 @@
 #include "Plenoscope/NightSkyBackground/Injector.h"
 #include "Plenoscope/json_to_plenoscope.h"
 #include "signal_processing/signal_processing.h"
-#include "Tools/PathTools.h"
 #include "Tools/HeaderBlock.h"
 #include "Core/scenery/Scenery.h"
 namespace fs = std::experimental::filesystem;
@@ -23,8 +22,8 @@ using std::vector;
 using std::array;
 using std::cout;
 using namespace relleums;
-using path::join;
-using path::Path;
+using ospath::join;
+using ospath::Path;
 
 static const char USAGE[] =
 R"(Plenoscope air showher propagation

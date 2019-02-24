@@ -1,7 +1,6 @@
 #include <iostream>
 #include "DocOpt/docopt.h"
-#include "Tools/PathTools.h"
-#include "Core/scenery/stereo_litography.h"
+#include "Core/mctracer.h"
 using std::string;
 using std::cout;
 using std::vector;
@@ -33,9 +32,9 @@ int main(int argc, char* argv[]) {
         "mct 0.0"
     );  // version string
 
-    const path::Path input_path = path::Path(
+    const ospath::Path input_path = ospath::Path(
         args.find("--input")->second.asString());
-    const path::Path output_path = path::Path(
+    const ospath::Path output_path = ospath::Path(
         args.find("--output")->second.asString());
 
     const double scale = txt::to_double(

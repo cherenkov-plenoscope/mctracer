@@ -4,7 +4,6 @@
 #include <sstream>
 #include "niels_lohmann_json.hpp"
 #include "Core/mctracer.h"
-#include "Tools/PathTools.h"
 #include "Core/scenery/SegmentedReflector/SegmentedReflector.h"
 namespace nl = nlohmann;
 using std::string;
@@ -277,7 +276,7 @@ void append_to_frame_in_scenery(
     Scenery* scenery,
     const string &path
 ) {
-    path::Path json_path(path);
+    ospath::Path json_path(path);
     scenery->current_working_directory = json_path.dirname;
     append_to_frame_in_scenery(mother, scenery, load(path));
 }
@@ -316,7 +315,7 @@ Frame* add_StereoLitography(
     set_frame(object, o);
     set_surface(object, scenery, o);
     const double scale = o.f8("scale");
-    const string stl_path = path::join(
+    const string stl_path = ospath::join(
         scenery->current_working_directory, o.st("path"));
     stereo_litography::add_stl_to_and_inherit_surface_from_surfac_entity(
         stl_path, object, scale);
@@ -493,9 +492,9 @@ visual::Config to_visual_config(
     if (image_path.empty()) {
         cfg.sky_dome = visual::SkyDome(skyj.color("color"));
     } else {
-        path::Path jsonpath = path::Path(path);
+        ospath::Path jsonpath = ospath::Path(path);
         cfg.sky_dome = visual::SkyDome(
-            path::join(jsonpath.dirname, image_path));
+            ospath::join(jsonpath.dirname, image_path));
         cfg.sky_dome.set_background_color(skyj.color("color"));
     }
     return cfg;

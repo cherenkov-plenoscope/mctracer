@@ -3,7 +3,6 @@
 #include <iostream>
 #include "DocOpt/docopt.h"
 #include "Tools/FileTools.h"
-#include "Tools/PathTools.h"
 #include "Plenoscope/Calibration/Calibrator.h"
 #include "Plenoscope/json_to_plenoscope.h"
 #include "Tools/HeaderBlock.h"
@@ -14,8 +13,8 @@ using std::string;
 using std::cout;
 using std::stringstream;
 using namespace relleums;
-using path::Path;
-using path::join;
+using ospath::Path;
+using ospath::join;
 
 
 static const char USAGE[] =
