@@ -1,9 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <math.h>
 #include <sstream>
-#include <iostream>
 #include <vector>
-#include <algorithm>
 #include "Core/Ray.h"
 
 namespace relleums {
