@@ -1,8 +1,9 @@
 #include "DocOpt/docopt.h"
+#include "Core/mctracer.h"
 #include "json.h"
 #include "Tools/PathTools.h"
-#include "visual/FlyingCamera.h"
-#include "Core/scenery/Scenery.h"
+#include "FlyingCamera.h"
+
 using std::string;
 using std::cout;
 namespace mct = relleums;

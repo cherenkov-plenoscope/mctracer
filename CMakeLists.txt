@@ -33,7 +33,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake-mod
 # The Source
 set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/json.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/eventio.cpp)
+	${CMAKE_CURRENT_SOURCE_DIR}/eventio.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/FlyingCamera.cpp)
 add_subdirectory("${PROJECT_SOURCE_DIR}/visual")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Core")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Corsika")

@@ -4,10 +4,8 @@
 
 #include <cv.h>
 #include <string>
-#include "ApertureCamera.h"
-#include "PinHoleCamera.h"
-#include "camera_operator/camera_operator.h"
-#include "Config.h"
+#include "Core/mctracer.h"
+#include "visual/all_visual.h"
 #include "Tools/Time.h"
 
 namespace relleums {

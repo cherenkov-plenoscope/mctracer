@@ -1,6 +1,5 @@
 #include "gtest/gtest.h"
 #include "Core/mctracer.h"
-#include "visual/FlyingCamera.h"
 #include "Tools/AsciiIo.h"
 
 using namespace relleums;
@@ -54,7 +53,7 @@ TEST_F(SetUpScenery, create_scenery) {
 
     /*@//free like up to $\infty$@*/
 
-    visual::Config visual_config;
+    //visual::Config visual_config;
     //visual::FlyingCamera cam(&world, &visual_config);
     //--end_set_up_scene_in_source--
 }

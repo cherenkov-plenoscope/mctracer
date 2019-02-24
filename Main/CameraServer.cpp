@@ -1,11 +1,12 @@
 // Copyright 2018 Sebastian A. Mueller
 #include <stdint.h>
+#include <iostream>
 #include "DocOpt/docopt.h"
-#include "visual/FlyingCamera.h"
 #include "visual/PortablePixMap.h"
 #include "Core/scenery/Scenery.h"
 #include "Tools/PathTools.h"
 #include "Core/mctracer.h"
+#include "visual/all_visual.h"
 #include "./json.h"
 using std::string;
 using std::cout;

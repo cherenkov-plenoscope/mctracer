@@ -1,15 +1,10 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "visual/FlyingCamera.h"
+#include "FlyingCamera.h"
 #include <cv.h>
 #include <highgui.h>
 #include <sstream>
 #include <fstream>
 #include <opencv2/opencv.hpp>
-#include "Core/RayAndFrame.h"
-#include "Core/Intersection.h"
-#include "visual/PortablePixMap.h"
-#include "Core/txt.h"
-#include "Core/welcome_screen.h"
 
 using std::cout;
 using std::stringstream;

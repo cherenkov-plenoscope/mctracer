@@ -3,7 +3,6 @@
 #include <string>
 #include "gtest/gtest.h"
 #include "Core/mctracer.h"
-#include "visual/FlyingCamera.h"
 using std::string;
 using std::vector;
 using namespace relleums;
@@ -38,7 +37,4 @@ TEST_F(OwnerShipTest, own) {
     ground->set_outer_color(&COLOR_GRASS_GREEN);
 
     tree.init_tree_based_on_mother_child_relations();
-
-    // PropagationConfig set;
-    // FlyingCamera fly(&tree, &set);
 }
