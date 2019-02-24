@@ -13,7 +13,7 @@
 #include "Core/SurfaceEntity.h"
 #include "Scenery/Primitive/Primitive.h"
 #include "Core/PropagationEnvironment.h"
-#include "Tools/StringTools.h"
+#include "Core/mctracer.h"
 #include "sensor/PhotonSensor.h"
 #include "signal_processing/signal_processing.h"
 using std::cout;

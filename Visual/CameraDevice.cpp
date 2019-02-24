@@ -2,7 +2,7 @@
 #include "Visual/CameraDevice.h"
 #include <exception>
 #include "Tools/Tools.h"
-#include "Tools/StringTools.h"
+#include "Core/mctracer.h"
 
 namespace relleums {
 namespace visual {

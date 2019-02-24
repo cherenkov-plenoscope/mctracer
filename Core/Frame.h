@@ -12,7 +12,7 @@ class Intersection;
 #include "Core/Vec3.h"
 #include "Core/Rot3.h"
 #include "Core/HomTra3.h"
-#include "Tools/StringTools.h"
+#include "Core/StringTools.h"
 #include "Tools/Tools.h"
 
 namespace relleums {

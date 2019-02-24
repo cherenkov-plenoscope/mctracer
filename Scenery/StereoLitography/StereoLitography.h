@@ -8,7 +8,7 @@
 #include <fstream>
 #include "Tools/Tools.h"
 #include "Tools/FileTools.h"
-#include "Tools/StringTools.h"
+#include "Core/mctracer.h"
 #include "Core/Frame.h"
 #include "Core/SurfaceEntity.h"
 

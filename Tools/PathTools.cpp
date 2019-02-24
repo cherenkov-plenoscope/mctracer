@@ -1,6 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "Tools/PathTools.h"
 #include <sstream>
+#include "Core/StringTools.h"
 using std::string;
 
 namespace relleums {

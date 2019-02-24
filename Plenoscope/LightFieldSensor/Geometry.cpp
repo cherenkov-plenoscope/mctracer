@@ -6,7 +6,7 @@
 #include "Scenery/Geometry/GridNeighborhoodTopoligy.h"
 #include "Scenery/Geometry/HexGridFlower.h"
 #include "Tools/AsciiIo.h"
-#include "Tools/StringTools.h"
+#include "Core/mctracer.h"
 #include "Tools/FileTools.h"
 #include "Scenery/Geometry/LensMaker/LensMaker.h"
 #include "Corsika/corsika.h"

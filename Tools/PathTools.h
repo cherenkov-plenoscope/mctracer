@@ -3,7 +3,6 @@
 #define TOOLS_PATHTOOLS_H_
 
 #include <string>
-#include "StringTools.h"
 
 namespace relleums {
 namespace path {
