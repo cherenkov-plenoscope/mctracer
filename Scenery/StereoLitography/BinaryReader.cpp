@@ -2,7 +2,7 @@
 #include "StereoLitography.h"
 #include <math.h>
 #include <sstream>
-#include "Core/binary_input_output.h"
+#include "Core/binio.h"
 #include "Scenery/Primitive/Triangle.h"
 using std::string;
 using std::vector;

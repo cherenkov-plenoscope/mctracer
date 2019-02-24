@@ -26,6 +26,6 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/welcome_screen.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/numeric.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/txt.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/binary_input_output.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/binio.cpp
     PARENT_SCOPE
 )

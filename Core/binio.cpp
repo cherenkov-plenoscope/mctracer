@@ -1,5 +1,5 @@
 // Copyright 2017 Sebastian A. Mueller
-#include "Core/binary_input_output.h"
+#include "Core/binio.h"
 
 namespace relleums {
 namespace binio {

@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 #include "Core/txt.h"
-#include "Core/binary_input_output.h"
+#include "Core/binio.h"
 
 namespace relleums {
 namespace visual {

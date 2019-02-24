@@ -4,7 +4,7 @@
 #include <sstream>
 #include <fstream>
 #include "signal_processing/pulse_extraction.h"
-#include "Core/binary_input_output.h"
+#include "Core/binio.h"
 using std::vector;
 using std::string;
 using namespace relleums;
