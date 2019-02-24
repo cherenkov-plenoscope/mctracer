@@ -3,7 +3,7 @@
 #define SCENERY_GEOMETRY_LENSMAKER_LENSMAKER_H_
 
 namespace relleums {
-namespace LensMaker {
+namespace lens_maker {
 
 struct Config {
     double focal_length;
@@ -26,7 +26,7 @@ double get_expected_focal_length_for_R_t_n(
     const double t,
     const double n);
 
-}  // namespace LensMaker
+}  // namespace lens_maker
 }  // namespace relleums
 
 #endif  // SCENERY_GEOMETRY_LENSMAKER_LENSMAKER_H_

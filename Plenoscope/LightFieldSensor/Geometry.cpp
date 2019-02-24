@@ -8,7 +8,7 @@
 #include "Tools/AsciiIo.h"
 #include "Core/mctracer.h"
 #include "Tools/FileTools.h"
-#include "Scenery/Geometry/LensMaker.h"
+#include "Scenery/Geometry/lens_maker.h"
 #include "Corsika/corsika.h"
 using std::vector;
 using std::array;
@@ -76,13 +76,13 @@ void Geometry::set_up_lixel_grid() {
 
 void Geometry::set_up_pixel_lens_geometry() {
     pixel_lens_mean_refrac = function::mean(*config.lens_refraction, 137);
-    LensMaker::Config lmcfg;
+    lens_maker::Config lmcfg;
     lmcfg.focal_length = pixel_lens_focal_length();
     lmcfg.aperture_radius = pixel_lens_outer_aperture_radius();
     lmcfg.refractive_index = pixel_lens_mean_refrac;
     double lens_maker_correction = 1.20;
     pixel_lens_curv_radius = lens_maker_correction*
-        LensMaker::get_curvature_radius(lmcfg);
+        lens_maker::get_curvature_radius(lmcfg);
 }
 
 double Geometry::max_outer_sensor_radius()const {

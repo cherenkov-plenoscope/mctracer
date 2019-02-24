@@ -5,7 +5,7 @@
 #include "Scenery/Primitive/BiConvexLens.h"
 #include "Scenery/Primitive/Disc.h"
 #include "Scenery/Primitive/BiConvexLensHexBound.h"
-#include "Scenery/Geometry/LensMaker.h"
+#include "Scenery/Geometry/lens_maker.h"
 #include "sensor/PhotonSensor.h"
 
 using namespace relleums;
@@ -19,7 +19,7 @@ class BiConvexLensTest : public ::testing::Test {
     PropagationEnvironment lens_test_bench_environment;
     sensor::Sensors sensor_list;
     sensor::Sensor *sensor;
-    LensMaker::Config cfg;
+    lens_maker::Config cfg;
 
     BiConvexLensTest() {
         set_up_settings();
@@ -62,7 +62,7 @@ class BiConvexLensTest : public ::testing::Test {
         lens->set_inner_color(lens_color);
         lens->set_inner_refraction(refraction_vs_wavelength);
         lens->set_curvature_radius_and_aperture_radius(
-            LensMaker::get_curvature_radius(cfg),
+            lens_maker::get_curvature_radius(cfg),
             cfg.aperture_radius);
         //-------------------------
         Disc* image_sensor = test_bench.append<Disc>();

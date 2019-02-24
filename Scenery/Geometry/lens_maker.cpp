@@ -1,10 +1,10 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Scenery/Geometry/LensMaker.h"
+#include "Scenery/Geometry/lens_maker.h"
 #include <math.h>
 #include <sstream>
 
 namespace relleums {
-namespace LensMaker {
+namespace lens_maker {
 
 Config::Config() {
     focal_length = 1.0;
@@ -53,7 +53,7 @@ void abort_if_too_many_iterations(
     const unsigned int max_iterations = 1000;
     if (iteration_conter > max_iterations) {
         std::stringstream info;
-        info << "LensMaker::" << __func__ << "()\n";
+        info << "lens_maker::" << __func__ << "()\n";
         info << "Exceeded max number of " << max_iterations;
         info << " iterations. ";
         info << "Can not reach best curvature radius.\n";
@@ -71,5 +71,5 @@ void abort_if_too_many_iterations(
 }
 
 
-}  // namespace LensMaker
+}  // namespace lens_maker
 }  // namespace relleums

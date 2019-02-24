@@ -5,43 +5,43 @@
 #include "Core/mctracer.h"
 #include "Scenery/Primitive/BiConvexLensHexBound.h"
 #include "Scenery/Primitive/Disc.h"
-#include "Scenery/Geometry/LensMaker.h"
+#include "Scenery/Geometry/lens_maker.h"
 #include "sensor/PhotonSensor.h"
 using std::vector;
 using namespace relleums;
 
-class LensMakerTest : public ::testing::Test {};
+class lens_makerTest : public ::testing::Test {};
 
-TEST_F(LensMakerTest, check_sebastians_paper_and_pen_calculation) {
+TEST_F(lens_makerTest, check_sebastians_paper_and_pen_calculation) {
     double expected_curvature_radius = 0.125;;
-    LensMaker::Config cfg;
+    lens_maker::Config cfg;
     cfg.focal_length = 0.1335;
     cfg.aperture_radius = 0.071;
     cfg.refractive_index = 1.49;
     EXPECT_NEAR(
         expected_curvature_radius,
-        LensMaker::get_curvature_radius(cfg),
+        lens_maker::get_curvature_radius(cfg),
         expected_curvature_radius*3e-2);
 }
 
-TEST_F(LensMakerTest, lens_thicknes) {
+TEST_F(lens_makerTest, lens_thicknes) {
     double expected_curvature_radius = 0.125;
     double expected_thickness = 0.0445;
-    LensMaker::Config cfg;
+    lens_maker::Config cfg;
     cfg.focal_length = 0.1335;
     cfg.aperture_radius = 0.071;
     cfg.refractive_index = 1.49;
     EXPECT_NEAR(
         expected_thickness,
-        LensMaker::get_lens_thickness_for_R_r(
+        lens_maker::get_lens_thickness_for_R_r(
             expected_curvature_radius,
             cfg.aperture_radius),
         expected_thickness*3e-2);
 }
 
-TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
-    // Hello LensMaker,
-    LensMaker::Config cfg;
+TEST_F(lens_makerTest, check_lensmaker_on_optical_table_with_lens) {
+    // Hello lens_maker,
+    lens_maker::Config cfg;
     // we want a lens with
     cfg.focal_length = 1.0;  // 0.1335;
     // made out of pmma plastic with
@@ -51,7 +51,7 @@ TEST_F(LensMakerTest, check_lensmaker_on_optical_table_with_lens) {
     // please tell us the needed curvature radius.
 
     double lens_curvature_radius =
-        LensMaker::get_curvature_radius(cfg);
+        lens_maker::get_curvature_radius(cfg);
 
     // ok lets test it...
     const Color* lens_col = &COLOR_GRAY;
