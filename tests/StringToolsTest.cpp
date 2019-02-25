@@ -172,29 +172,16 @@ TEST_F(StringToolsTest, fill_with_whitespaces_until_column) {
 
 TEST_F(StringToolsTest, strip_leading_and_tailing_whitespaces) {
     std::string no_whitespaces = "no_whitespaces";
-    EXPECT_TRUE(
-    txt::is_equal(
-        no_whitespaces,
-        txt::strip_whitespaces(no_whitespaces)));
+    EXPECT_TRUE(txt::is_equal(no_whitespaces, txt::strip_whitespaces(no_whitespaces)));
     std::string whitespaces_in_between = "whitespaces in between";
-    EXPECT_TRUE(
-        txt::is_equal(
-            whitespaces_in_between,
-            txt::strip_whitespaces(whitespaces_in_between)));
+    EXPECT_TRUE(txt::is_equal(whitespaces_in_between, txt::strip_whitespaces(whitespaces_in_between)));
     std::string leading_whitespaces = "    leading_whitespaces";
-    EXPECT_TRUE(
-        txt::is_equal(
-            "leading_whitespaces",
-            txt::strip_whitespaces(leading_whitespaces)));
+    EXPECT_TRUE(txt::is_equal("leading_whitespaces", txt::strip_whitespaces(leading_whitespaces)));
     std::string trailing_ws = "trailing_ws  ";
-    EXPECT_TRUE(
-        txt::is_equal(
-            "trailing_ws",
-            txt::strip_whitespaces(trailing_ws)));
+    EXPECT_TRUE(txt::is_equal("trailing_ws", txt::strip_whitespaces(trailing_ws)));
 }
 
 TEST_F(StringToolsTest, to_double) {
-    EXPECT_NO_THROW(
     EXPECT_EQ(42.1337, txt::to_double("42.1337"));
     EXPECT_EQ(1337, txt::to_double("1337"));
     EXPECT_EQ(1u, txt::to_double("1"));
@@ -203,78 +190,40 @@ TEST_F(StringToolsTest, to_double) {
     EXPECT_EQ(1.337, txt::to_double(" 1.337"));
     EXPECT_EQ(.1, txt::to_double(" .1"));
     EXPECT_EQ(1.337e42, txt::to_double("1.337e42"));
-    EXPECT_EQ(1.337E42, txt::to_double("1.337E42")));
-    EXPECT_THROW(
-        EXPECT_NE(42.1337, txt::to_double("42p1337")),
-        std::invalid_argument);
-    EXPECT_THROW(
-        EXPECT_NE(1337, txt::to_double("1337 ")),
-        std::invalid_argument);
-    EXPECT_THROW(
-        EXPECT_NE(1u, txt::to_double("")),
-        std::invalid_argument);
-    EXPECT_THROW(
-        EXPECT_NE(.1442, txt::to_double(".1 442")),
-        std::invalid_argument);
+    EXPECT_EQ(1.337E42, txt::to_double("1.337E42"));
+    EXPECT_THROW(EXPECT_NE(42.1337, txt::to_double("42p1337")), std::invalid_argument);
+    EXPECT_THROW(EXPECT_NE(1337, txt::to_double("1337 ")), std::invalid_argument);
+    EXPECT_THROW(EXPECT_NE(1u, txt::to_double("")), std::invalid_argument);
+    EXPECT_THROW(EXPECT_NE(.1442, txt::to_double(".1 442")), std::invalid_argument);
 }
 
 TEST_F(StringToolsTest, to_bool) {
-    EXPECT_NO_THROW(
-        EXPECT_TRUE(txt::to_bool("true"));
-        EXPECT_TRUE(txt::to_bool("TRUE"));
-        EXPECT_FALSE(txt::to_bool("false"));
-        EXPECT_FALSE(txt::to_bool("FALSE")));
-    EXPECT_THROW(
-        EXPECT_NE(true, txt::to_bool(" true")),
-        std::invalid_argument);
-    EXPECT_THROW(
-        EXPECT_NE(true, txt::to_bool("true ")),
-        std::invalid_argument);
-    EXPECT_THROW(
-        EXPECT_NE(true, txt::to_bool("wahr")),
-        std::invalid_argument);
-    EXPECT_THROW(
-        EXPECT_NE(true, txt::to_bool("Troe")),
-        std::invalid_argument);
-    EXPECT_THROW(
-        EXPECT_NE(true, txt::to_bool("yes")),
-        std::invalid_argument);
-    EXPECT_THROW(
-        EXPECT_NE(true, txt::to_bool("no")),
-        std::invalid_argument);
-    EXPECT_THROW(
-        EXPECT_NE(true, txt::to_bool("0")),
-        std::invalid_argument);
-    EXPECT_THROW(
-        EXPECT_NE(true, txt::to_bool("")),
-        std::invalid_argument);
+    EXPECT_TRUE(txt::to_bool("true"));
+    EXPECT_TRUE(txt::to_bool("TRUE"));
+    EXPECT_FALSE(txt::to_bool("false"));
+    EXPECT_FALSE(txt::to_bool("FALSE"));
+    EXPECT_THROW(EXPECT_NE(true, txt::to_bool(" true")), std::invalid_argument);
+    EXPECT_THROW(EXPECT_NE(true, txt::to_bool("true ")), std::invalid_argument);
+    EXPECT_THROW(EXPECT_NE(true, txt::to_bool("wahr")), std::invalid_argument);
+    EXPECT_THROW(EXPECT_NE(true, txt::to_bool("Troe")), std::invalid_argument);
+    EXPECT_THROW(EXPECT_NE(true, txt::to_bool("yes")), std::invalid_argument);
+    EXPECT_THROW(EXPECT_NE(true, txt::to_bool("no")), std::invalid_argument);
+    EXPECT_THROW(EXPECT_NE(true, txt::to_bool("0")), std::invalid_argument);
+    EXPECT_THROW(EXPECT_NE(true, txt::to_bool("")), std::invalid_argument);
 }
 
 TEST_F(StringToolsTest, to_int) {
-    EXPECT_NO_THROW(
-        EXPECT_EQ(1, txt::to_int("1"));
-        EXPECT_EQ(12, txt::to_int("12"));
-        EXPECT_EQ(1337, txt::to_int("1337"));
-        EXPECT_EQ(42, txt::to_int(" 42"));
-        EXPECT_EQ(123456789, txt::to_int("123456789")));
-    EXPECT_THROW(
-        EXPECT_NE(1, txt::to_int("1 ")),
-        std::invalid_argument);
-    EXPECT_THROW(
-        EXPECT_NE(1, txt::to_int("")),
-        std::invalid_argument);
-    EXPECT_THROW(
-        EXPECT_NE(123456, txt::to_int("123 456")),
-        std::invalid_argument);
-    EXPECT_THROW(
-        EXPECT_NE(12.344, txt::to_int("12.344")),
-        std::invalid_argument);
-    EXPECT_THROW(
-        EXPECT_NE(1, txt::to_int("no")),
-        std::invalid_argument);
-    EXPECT_THROW(
-        EXPECT_NE(6.6, txt::to_int("6p6")),
-        std::invalid_argument);
+    EXPECT_EQ(1, txt::to_int("1"));
+    EXPECT_EQ(12, txt::to_int("12"));
+    EXPECT_EQ(1337, txt::to_int("1337"));
+    EXPECT_EQ(42, txt::to_int(" 42"));
+    EXPECT_EQ(123456789, txt::to_int("123456789"));
+    EXPECT_THROW(EXPECT_NE(1, txt::to_int("1 ")), std::invalid_argument);
+    EXPECT_THROW(EXPECT_NE(1, txt::to_int("")), std::invalid_argument);
+    EXPECT_THROW(EXPECT_NE(123456, txt::to_int("123 456")), std::invalid_argument);
+    EXPECT_THROW(EXPECT_NE(12.344, txt::to_int("12.344")), std::invalid_argument);
+    EXPECT_THROW(EXPECT_NE(1, txt::to_int("no")), std::invalid_argument);
+    EXPECT_THROW(EXPECT_NE(6.6, txt::to_int("6p6")), std::invalid_argument);
 }
 
 TEST_F(StringToolsTest, to_Vec3) {
@@ -293,39 +242,16 @@ TEST_F(StringToolsTest, to_Vec3) {
     EXPECT_EQ(Vec3(1.2, 3.4, 5.6), txt::to_Vec3("[1.2,3.4 , 5.6]"));
     EXPECT_EQ(Vec3(1.2, 3.4, 5.6), txt::to_Vec3("[1.2,3.4, 5.6 ]"));
     EXPECT_EQ(Vec3(1.2, 3.4, 5.6), txt::to_Vec3("[1.2,3.4 , 5.6]"));
-    EXPECT_EQ(
-        Vec3(1.2, 3.4, 5.6), txt::to_Vec3("[ 1.2 , 3.4 , 5.6 ]"));
-    EXPECT_THROW(
-        txt::to_Vec3("1,2,3]"),
-        std::invalid_argument);
-    EXPECT_THROW(
-        txt::to_Vec3("[1,2,3"),
-        std::invalid_argument);
-    EXPECT_THROW(
-        txt::to_Vec3("1,2,3"),
-        std::invalid_argument);
-    EXPECT_THROW(
-        txt::to_Vec3("[1,2]"),
-        std::invalid_argument);
-    EXPECT_THROW(
-        txt::to_Vec3("[1 2,3]"),
-        std::invalid_argument);
-    EXPECT_THROW(
-        txt::to_Vec3("[1 2 3]"),
-        std::invalid_argument);
-    EXPECT_THROW(
-        txt::to_Vec3("[1,2 3]"),
-        std::invalid_argument);
-    EXPECT_THROW(
-        txt::to_Vec3("[1,,3]"),
-        std::invalid_argument);
-    EXPECT_THROW(
-        txt::to_Vec3("[,,]"),
-        std::invalid_argument);
-    EXPECT_THROW(
-        txt::to_Vec3("[1,,]"),
-        std::invalid_argument);
-    EXPECT_THROW(
-        txt::to_Vec3("[,2,]"),
-        std::invalid_argument);
+    EXPECT_EQ(Vec3(1.2, 3.4, 5.6), txt::to_Vec3("[ 1.2 , 3.4 , 5.6 ]"));
+    EXPECT_THROW(txt::to_Vec3("1,2,3]"), std::invalid_argument);
+    EXPECT_THROW(txt::to_Vec3("[1,2,3"), std::invalid_argument);
+    EXPECT_THROW(txt::to_Vec3("1,2,3"), std::invalid_argument);
+    EXPECT_THROW(txt::to_Vec3("[1,2]"), std::invalid_argument);
+    EXPECT_THROW(txt::to_Vec3("[1 2,3]"), std::invalid_argument);
+    EXPECT_THROW(txt::to_Vec3("[1 2 3]"), std::invalid_argument);
+    EXPECT_THROW(txt::to_Vec3("[1,2 3]"), std::invalid_argument);
+    EXPECT_THROW(txt::to_Vec3("[1,,3]"), std::invalid_argument);
+    EXPECT_THROW(txt::to_Vec3("[,,]"), std::invalid_argument);
+    EXPECT_THROW(txt::to_Vec3("[1,,]"), std::invalid_argument);
+    EXPECT_THROW(txt::to_Vec3("[,2,]"), std::invalid_argument);
 }

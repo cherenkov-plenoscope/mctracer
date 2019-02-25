@@ -59,9 +59,7 @@ TEST_F(PulseExtractionTest, truncate_invalid_arrival_times) {
             number_invalid_photons++;
     }
 
-    EXPECT_EQ(
-        number_invalid_photons,
-        2000 - signal_processing::NUMBER_TIME_SLICES);
+    EXPECT_EQ(number_invalid_photons, 2000 - signal_processing::NUMBER_TIME_SLICES);
 
     vector<vector<signal_processing::ExtractedPulse>> raw =
         signal_processing::extract_pulses(
@@ -82,9 +80,7 @@ TEST_F(PulseExtractionTest, truncate_invalid_arrival_times) {
         }
     }
 
-    EXPECT_EQ(
-        number_of_passing_photons,
-        signal_processing::NUMBER_TIME_SLICES);
+    EXPECT_EQ(number_of_passing_photons, signal_processing::NUMBER_TIME_SLICES);
 }
 
 TEST_F(PulseExtractionTest, arrival_time_std) {
@@ -122,12 +118,6 @@ TEST_F(PulseExtractionTest, arrival_time_std) {
         reconstructed_arrival_times.push_back(
             pulse.arrival_time_slice * time_slice_duration);
 
-    EXPECT_NEAR(
-        arrival_time_std,
-        numeric::stddev(reconstructed_arrival_times),
-        1e-10);
-    EXPECT_NEAR(
-        true_arrival_time,
-        numeric::mean(reconstructed_arrival_times),
-        1e-10);
+    EXPECT_NEAR(arrival_time_std, numeric::stddev(reconstructed_arrival_times), 1e-10);
+    EXPECT_NEAR(true_arrival_time, numeric::mean(reconstructed_arrival_times), 1e-10);
 }

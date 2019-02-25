@@ -22,12 +22,8 @@ TEST_F(PhotonTest, creation) {
 }
 
 TEST_F(PhotonTest, reject_negative_wavelength) {
-    EXPECT_THROW(
-        Photon pho(VEC3_ORIGIN, VEC3_UNIT_X, 0.0),
-        std::invalid_argument);
-    EXPECT_THROW(
-        Photon pho(VEC3_ORIGIN, VEC3_UNIT_X, -1.0),
-        std::invalid_argument);
+    EXPECT_THROW(Photon pho(VEC3_ORIGIN, VEC3_UNIT_X, 0.0), std::invalid_argument);
+    EXPECT_THROW(Photon pho(VEC3_ORIGIN, VEC3_UNIT_X, -1.0), std::invalid_argument);
 }
 
 TEST_F(PhotonTest, PropagationSimpleGeometry) {
@@ -87,12 +83,8 @@ TEST_F(PhotonTest, PropagationSimpleGeometry) {
     for (int i = 0; i < 1; i++) {
         Photon P(Support, direction, wavelength);
         PhotonAndFrame::Propagator(&P, environment);
-        EXPECT_EQ(
-            number_of_bounces*1.0-0.5,
-            P.get_accumulative_distance());
-        EXPECT_EQ(
-            num_of_total_interactions,
-            P.get_number_of_interactions_so_far());
+        EXPECT_EQ(number_of_bounces*1.0-0.5, P.get_accumulative_distance());
+        EXPECT_EQ(num_of_total_interactions, P.get_number_of_interactions_so_far());
     }
 }
 
@@ -186,10 +178,7 @@ TEST_F(PhotonTest, Reflections) {
     const double ph_reached_sensor =
         absorber_sensor.photon_arrival_history.size();
     const double ph_emitted = photons.size();
-    EXPECT_NEAR(
-        reflection_coefficient,
-        ph_reached_sensor/ph_emitted,
-        2e-2);
+    EXPECT_NEAR(reflection_coefficient, ph_reached_sensor/ph_emitted, 2e-2);
 }
 
 TEST_F(PhotonTest, Refraction) {
@@ -251,16 +240,9 @@ TEST_F(PhotonTest, Refraction) {
         &photons, &world, &setup, &prng);
     sensors.assign_photons(&photons);
     // 5% fresnell reflection
-    EXPECT_NEAR(
-        0.95,
-        static_cast<double>(absorber_sensor.photon_arrival_history.size())/
-        static_cast<double>(num_phot),
-        2e-2);
+    EXPECT_NEAR(0.95, static_cast<double>(absorber_sensor.photon_arrival_history.size())/static_cast<double>(num_phot), 2e-2);
     const double travel_time = (2.0 + 1.33*1.0)/VACUUM_SPPED_OF_LIGHT;
-    EXPECT_NEAR(
-        travel_time,
-        sensor::arrival_time_mean(absorber_sensor.photon_arrival_history),
-        1e-10);
+    EXPECT_NEAR(travel_time, sensor::arrival_time_mean(absorber_sensor.photon_arrival_history), 1e-10);
 }
 
 TEST_F(PhotonTest, absorbtion_in_medium) {
@@ -328,9 +310,5 @@ TEST_F(PhotonTest, absorbtion_in_medium) {
     Photons::propagate_photons_in_scenery_with_settings(
         &photons, &world, &setup, &prng);
     sensors.assign_photons(&photons);
-    EXPECT_NEAR(
-        0.367,
-        static_cast<double>(collector_sensor.photon_arrival_history.size())/
-        static_cast<double>(num_phot),
-        2e-2);
+    EXPECT_NEAR(0.367, static_cast<double>(collector_sensor.photon_arrival_history.size())/static_cast<double>(num_phot), 2e-2);
 }

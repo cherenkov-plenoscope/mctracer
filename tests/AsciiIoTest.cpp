@@ -9,11 +9,7 @@ using namespace relleums;
 class AsciiIoTest : public ::testing::Test {};
 
 TEST_F(AsciiIoTest, read_non_existing_file) {
-    EXPECT_THROW(
-        std::vector<std::vector<double>> table =
-            tsvio::gen_table_from_file(
-                "non_existing_path/non_existing_file.csv"),
-            std::runtime_error);
+    EXPECT_THROW(std::vector<std::vector<double>> table = tsvio::gen_table_from_file("non_existing_path/non_existing_file.csv"), std::runtime_error);
 }
 
 TEST_F(AsciiIoTest, read_empty_file) {

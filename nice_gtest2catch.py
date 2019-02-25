@@ -2,7 +2,7 @@ import sys
 import re
 import os
 
-testCaseRegex = re.compile (r'TEST\s*\((\w+),\s*(\w+)\)')
+testCaseRegex = re.compile (r'TEST_F\s*\((\w+),\s*(\w+)\)')
 expectRegex = re.compile (r'EXPECT_(\w+)\s*\((.*)\);')
 assertRegex = re.compile (r'ASSERT_(\w+)\s*\((.*)\);')
 leadingWhitespaceRegex = re.compile(r'^(\s*)')
@@ -86,19 +86,19 @@ def ProcessCheck (match, prefix, line):
             'NEAR' : '=='}
 
     if match [0] == 'TRUE':
-        return prefix + (' ({});\n'.format (match [1]))
+        return prefix + ('({});\n'.format (match [1]))
     elif match [0] == 'FALSE':
-        return prefix + (' (!{});\n'.format (match [1]))
+        return prefix + ('(!{});\n'.format (match [1]))
     elif match [0] in basicComparisonOps:
         expected, actual = SplitCheck (match [1])
         # LE/LT/GT/GE are turned around as EXPECT_LE(a, b) means a <= b, but we
         # want this to become b >= a
         op = basicComparisonOps [match[0]]
-        return prefix + ' ({} {} {});\n'.format (actual, op, expected)
+        return prefix + '({} {} {});\n'.format (actual, op, expected)
     elif match [0] in floatComparisonOps:
         expected, actual = SplitCheck (match [1])
         op = floatComparisonOps [match [0]]
-        return prefix + ' ({} {} Approx ({}));\n'.format (actual, op, expected)
+        return prefix + '({} {} Approx ({}));\n'.format (actual, op, expected)
     elif match [0] == 'THROW':
         expected, exception = SplitCheck (match [1])
         return prefix + '_THROWS_AS ({}, {});\n'.format (expected, exception)
@@ -117,7 +117,7 @@ def ProcessLine (line):
 
     if match:
         g = match.groups ()
-        return ws + ('TEST_CASE("{}: {}", "{}")\n'.format (g[0], g[1], module))
+        return ws + ('TEST_CASE("{}: {}", "{}")'.format (g[0], g[1], module)) + ' {\n'
 
     match = expectRegex.search (line)
     if match:
@@ -139,4 +139,4 @@ if __name__ == '__main__':
                 p = os.path.join (root, f)
                 lines = open (p, 'r').readlines ()
                 output = map (ProcessLine, lines)
-                open (p+'.port.cpp', 'w').write (''.join (output))
+                open (p+'.catch2.cpp', 'w').write (''.join (output))

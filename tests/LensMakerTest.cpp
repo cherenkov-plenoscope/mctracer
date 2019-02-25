@@ -14,10 +14,7 @@ TEST_F(lens_makerTest, check_sebastians_paper_and_pen_calculation) {
     cfg.focal_length = 0.1335;
     cfg.aperture_radius = 0.071;
     cfg.refractive_index = 1.49;
-    EXPECT_NEAR(
-        expected_curvature_radius,
-        lens_maker::get_curvature_radius(cfg),
-        expected_curvature_radius*3e-2);
+    EXPECT_NEAR(expected_curvature_radius, lens_maker::get_curvature_radius(cfg), expected_curvature_radius*3e-2);
 }
 
 TEST_F(lens_makerTest, lens_thicknes) {
@@ -27,12 +24,7 @@ TEST_F(lens_makerTest, lens_thicknes) {
     cfg.focal_length = 0.1335;
     cfg.aperture_radius = 0.071;
     cfg.refractive_index = 1.49;
-    EXPECT_NEAR(
-        expected_thickness,
-        lens_maker::get_lens_thickness_for_R_r(
-            expected_curvature_radius,
-            cfg.aperture_radius),
-        expected_thickness*3e-2);
+    EXPECT_NEAR(expected_thickness, lens_maker::get_lens_thickness_for_R_r(expected_curvature_radius, cfg.aperture_radius), expected_thickness*3e-2);
 }
 
 TEST_F(lens_makerTest, check_lensmaker_on_optical_table_with_lens) {
@@ -135,10 +127,7 @@ TEST_F(lens_makerTest, check_lensmaker_on_optical_table_with_lens) {
     // sigma_psf_vs_image_sensor_distance
     // image_sensor_distances
     EXPECT_NEAR(0.0, min_sigma_psf, 1e-3);
-    EXPECT_NEAR(
-        cfg.focal_length,
-        image_sensor_distances.at(min_sigma_psf_pos),
-        cfg.focal_length*1e-4);
+    EXPECT_NEAR(cfg.focal_length, image_sensor_distances.at(min_sigma_psf_pos), cfg.focal_length*1e-4);
     // std::cout << "smallest psf sigma of "<<min_sigma_psf*1e3<<"mm at d=";
     // std::cout << image_sensor_distances.at(min_sigma_psf_pos)*1e3<<"mm\n";
 }

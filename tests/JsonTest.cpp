@@ -60,9 +60,7 @@ TEST_F(JsonTest, object_wrapper_bad_vec3) {
 TEST_F(JsonTest, empty_path) {
     const std::string path = "";
     mct::Scenery s;
-    EXPECT_THROW(
-        mct::json::append_to_frame_in_scenery(&s.root, &s, path),
-        std::runtime_error);
+    EXPECT_THROW(mct::json::append_to_frame_in_scenery(&s.root, &s, path), std::runtime_error);
 }
 
 TEST_F(JsonTest, mini_scenery_with_stl) {

@@ -16,24 +16,15 @@ TEST_F(FrameTest, assert_name_is_valid) {
     Frame Peter;
     EXPECT_NO_THROW(Peter.set_name_pos_rot("A_nice_name", pos, rot));
 
-    EXPECT_THROW(
-        Peter.set_name_pos_rot("I feel like using whitespaces", pos, rot),
-        std::invalid_argument);
+    EXPECT_THROW(Peter.set_name_pos_rot("I feel like using whitespaces", pos, rot), std::invalid_argument);
 
-    EXPECT_THROW(
-        Peter.set_name_pos_rot("I\tfeel\rlike\tusing\nwhitespaces", pos, rot),
-        std::invalid_argument);
+    EXPECT_THROW(Peter.set_name_pos_rot("I\tfeel\rlike\tusing\nwhitespaces", pos, rot), std::invalid_argument);
 
     EXPECT_THROW(Peter.set_name_pos_rot("", pos, rot), std::invalid_argument);
 
-    EXPECT_THROW(
-        Peter.set_name_pos_rot(
-            "I/feel/like/using/the/delimiter/symbol", pos, rot),
-        std::invalid_argument);
+    EXPECT_THROW(Peter.set_name_pos_rot("I/feel/like/using/the/delimiter/symbol", pos, rot), std::invalid_argument);
 
-    EXPECT_THROW(
-        Peter.set_name_pos_rot(" ", pos, rot),
-        std::invalid_argument);
+    EXPECT_THROW(Peter.set_name_pos_rot(" ", pos, rot), std::invalid_argument);
 }
 
 TEST_F(FrameTest, duplicate_name_of_children_frames) {
@@ -46,9 +37,7 @@ TEST_F(FrameTest, duplicate_name_of_children_frames) {
     Frame* Klaus2 = Peter.append<Frame>();
     Klaus2->set_name_pos_rot("klaus", VEC3_ORIGIN, ROT3_UNITY);
 
-    EXPECT_THROW(
-        Peter.assert_no_children_duplicate_names(),
-        std::invalid_argument);
+    EXPECT_THROW(Peter.assert_no_children_duplicate_names(), std::invalid_argument);
 }
 
 TEST_F(FrameTest, set_frame) {
@@ -192,9 +181,7 @@ TEST_F(FrameTest, removing_a_non_existing_cild) {
     Frame another_tree;
     tree.set_name_pos_rot("another_tree", VEC3_ORIGIN, ROT3_UNITY);
 
-    EXPECT_THROW(
-        tree.erase(&another_tree),
-        std::out_of_range);
+    EXPECT_THROW(tree.erase(&another_tree), std::out_of_range);
 }
 
 TEST_F(FrameTest, removing_a_cild) {

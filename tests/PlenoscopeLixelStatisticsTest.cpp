@@ -70,9 +70,7 @@ TEST_F(PlenoscopeLixelStatisticsTest, write_and_read_binary) {
 }
 
 TEST_F(PlenoscopeLixelStatisticsTest, read_non_existing_binary_file) {
-    EXPECT_THROW(
-        plenoscope::calibration::read("InOut/non_existing_file.bin"),
-        std::runtime_error);
+    EXPECT_THROW(plenoscope::calibration::read("InOut/non_existing_file.bin"), std::runtime_error);
 }
 
 TEST_F(PlenoscopeLixelStatisticsTest, size_is_just_a_plain_struct) {

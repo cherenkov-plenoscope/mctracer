@@ -35,9 +35,7 @@ TEST_F(EventIoTest,  EventIoHeader_fails_wrong_sync_marker) {
     sout.seekp(2);
     sout.put(0x00);
     sout.seekp(0);
-    EXPECT_THROW(
-        eventio::Header my_header(sout),
-        eventio::NoSyncFoundException);
+    EXPECT_THROW(eventio::Header my_header(sout), eventio::NoSyncFoundException);
 }
 
 TEST_F(EventIoTest, EventIoHeader_fails_empty_file) {
@@ -75,24 +73,12 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__check_input_card) {
 
 TEST_F(EventIoTest, EventIoFile_telescope_dat__mmcs_run_header) {
     eventio::Run my_run("telescope.dat");
-    EXPECT_NEAR(
-        7.,
-        corsika::RunHeader::run_number(my_run.header.raw), 1e-6);
-    EXPECT_NEAR(
-        -2.7,
-        corsika::RunHeader::slope_of_energy_spektrum(my_run.header.raw), 1e-6);
-    EXPECT_NEAR(
-        1000.,
-        corsika::RunHeader::energy_range_start(my_run.header.raw), 1e-6);
-    EXPECT_NEAR(
-        50000.,
-        corsika::RunHeader::energy_range_end(my_run.header.raw), 1e-6);
-    EXPECT_EQ(1u,
-        corsika::RunHeader::number_of_observation_levels(my_run.header.raw));
-    EXPECT_NEAR(
-        220000.,
-        corsika::RunHeader::observation_level_at(my_run.header.raw, 0),
-        1e-6);
+    EXPECT_NEAR(7., corsika::RunHeader::run_number(my_run.header.raw), 1e-6);
+    EXPECT_NEAR(-2.7, corsika::RunHeader::slope_of_energy_spektrum(my_run.header.raw), 1e-6);
+    EXPECT_NEAR(1000., corsika::RunHeader::energy_range_start(my_run.header.raw), 1e-6);
+    EXPECT_NEAR(50000., corsika::RunHeader::energy_range_end(my_run.header.raw), 1e-6);
+    EXPECT_EQ(1u, corsika::RunHeader::number_of_observation_levels(my_run.header.raw));
+    EXPECT_NEAR(220000., corsika::RunHeader::observation_level_at(my_run.header.raw, 0), 1e-6);
 }
 
 TEST_F(EventIoTest, EventIoFile_telescope_dat__next_call) {

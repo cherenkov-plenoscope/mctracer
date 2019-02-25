@@ -48,14 +48,10 @@ TEST_F(HomTra3Test, translation_without_rotation) {
     frame1_to_frame2.set_transformation(rotation, translation);
     Vec3 my_vector_in_frame1(3.141, 4.2, 0.0);
     Vec3 my_vector_in_frame2(3.141, 4.2, 133.7);
-    EXPECT_EQ(
-        my_vector_in_frame2,
-        frame1_to_frame2.get_transformed_position(my_vector_in_frame1));
+    EXPECT_EQ(my_vector_in_frame2, frame1_to_frame2.get_transformed_position(my_vector_in_frame1));
     // and also the other/inverse way round
     HomTra3 frame2_to_frame1 = frame1_to_frame2.inverse();
-    EXPECT_EQ(
-        my_vector_in_frame1,
-        frame2_to_frame1.get_transformed_position(my_vector_in_frame2));
+    EXPECT_EQ(my_vector_in_frame1, frame2_to_frame1.get_transformed_position(my_vector_in_frame2));
 }
 
 TEST_F(HomTra3Test, trans_pos_forth_and_back_only_translation_component_set) {

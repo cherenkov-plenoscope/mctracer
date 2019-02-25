@@ -80,8 +80,6 @@ TEST_F(ParallelPropagationTest, propagate_once) {
 	// --------------------------------------------
 
 	for (uint64_t i = 0; i < final_interactions_run_1.size(); ++i) {
-		EXPECT_EQ(
-			final_interactions_run_1[i],
-			final_interactions_run_2[i]);
+		EXPECT_EQ(final_interactions_run_1[i], final_interactions_run_2[i]);
 	}
 }

@@ -21,9 +21,7 @@ TEST_F(SensorStorageTest, default_constructor_and_access_not_existing_frame) {
     dog.set_name_pos_rot("dog", VEC3_ORIGIN, ROT3_UNITY);
 
     // access invalid frame
-    EXPECT_THROW(
-        sens.at_frame(&dog),
-        pse::Sensors::NoSuchFrame);
+    EXPECT_THROW(sens.at_frame(&dog), pse::Sensors::NoSuchFrame);
 }
 
 // VECTOR OF SENSORS CONSTRUCTOR
@@ -52,9 +50,7 @@ TEST_F(SensorStorageTest, empty_Sensors_access_invalid_frame) {
     EXPECT_EQ(0u, sens.size());
 
     // access invalid frame
-    EXPECT_THROW(
-        sens.at_frame(&dog),
-        pse::Sensors::NoSuchFrame);
+    EXPECT_THROW(sens.at_frame(&dog), pse::Sensors::NoSuchFrame);
 }
 
 TEST_F(SensorStorageTest, not_take_over_sensors_from_vector) {
@@ -134,9 +130,7 @@ TEST_F(SensorStorageTest, assert_no_duplicate_frames) {
     EXPECT_EQ(2u, my_sensors.size());
 
     // Preparing for access
-    EXPECT_THROW(
-        pse::Sensors sens(my_sensors),
-        pse::Sensors::DuplicateFrame);
+    EXPECT_THROW(pse::Sensors sens(my_sensors), pse::Sensors::DuplicateFrame);
 }
 
 TEST_F(SensorStorageTest, access_non_existing_frame) {
@@ -174,7 +168,5 @@ TEST_F(SensorStorageTest, access_non_existing_frame) {
     EXPECT_EQ(&on_car, sens.at_frame(&car));
 
     // access invalid frame
-    EXPECT_THROW(
-        sens.at_frame(&dog),
-        pse::Sensors::NoSuchFrame);
+    EXPECT_THROW(sens.at_frame(&dog), pse::Sensors::NoSuchFrame);
 }

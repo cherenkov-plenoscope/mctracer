@@ -24,9 +24,7 @@ TEST_F(FunctionMapTest, add_func_and_check_it_is_in) {
 TEST_F(FunctionMapTest, add_func_and_add_it_again) {
     FunctionMap my_funcs;
     my_funcs.add("f_vs_x", function::Func1({{0, 0}, {1, 0}}));
-    EXPECT_THROW(
-        my_funcs.add("f_vs_x", function::Func1()),
-        FunctionMap::KeyAlreadyInUse);
+    EXPECT_THROW(my_funcs.add("f_vs_x", function::Func1()), FunctionMap::KeyAlreadyInUse);
 }
 
 TEST_F(FunctionMapTest, add_func_and_get_it_again) {

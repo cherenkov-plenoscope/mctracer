@@ -96,11 +96,7 @@ TEST_F(BiConvexLensTest, send_photon_frontal_into_lens) {
             number_of_photons_reaching_sensor_disc++;
     }
 
-    EXPECT_NEAR(
-        0.97,
-        static_cast<double>(number_of_photons_reaching_sensor_disc)/
-            static_cast<double>(total_propagations),
-        5.0e-2);
+    EXPECT_NEAR(0.97, static_cast<double>(number_of_photons_reaching_sensor_disc)/static_cast<double>(total_propagations), 5.0e-2);
 }
 //----------------------------------------------------------------------
 TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
@@ -130,16 +126,9 @@ TEST_F(BiConvexLensTest, send_photons_frontal_into_lens_with_offset) {
     sensor_list.clear_history();
     sensor_list.assign_photons(&photons);
 
-    EXPECT_NEAR(
-        1.5e-3,
-        sensor::point_spread_std_dev(sensor->photon_arrival_history),
-        1e-3);
+    EXPECT_NEAR(1.5e-3, sensor::point_spread_std_dev(sensor->photon_arrival_history), 1e-3);
 
-    EXPECT_NEAR(
-        1.0,
-        static_cast<double>(sensor->photon_arrival_history.size())/
-            static_cast<double>(number_of_photons_emitted),
-        10e-2);
+    EXPECT_NEAR(1.0, static_cast<double>(sensor->photon_arrival_history.size())/static_cast<double>(number_of_photons_emitted), 10e-2);
 
     /*FlyingCamera free(
         lens_test_bench_environment.root_frame,

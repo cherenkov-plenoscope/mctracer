@@ -30,9 +30,7 @@ TEST_F(FresnelRefractionAndReflectionTest, flat_incident) {
   double incident_to_normal = incident.angle_in_between(normal);
   double outgoing_to_normal = asin(sin(incident_to_normal)* n_from/n_going_to);
 
-  EXPECT_EQ(
-    outgoing_to_normal,
-    fresnel.get_refrac_dir_in_object_system().angle_in_between(normal*-1.0));
+  EXPECT_EQ(outgoing_to_normal, fresnel.get_refrac_dir_in_object_system().angle_in_between(normal*-1.0));
 }
 
 TEST_F(FresnelRefractionAndReflectionTest, orthogonal_incident_same_index) {

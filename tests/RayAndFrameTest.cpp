@@ -43,8 +43,7 @@ TEST_F(RayAndFrameBoundingSphereTest, support_outside_bounding_sphere) {
     sphere.set_radius(1.0);
 
     Ray ray(Vec3(2.0, 0.0, 0.0), VEC3_UNIT_X);
-    EXPECT_FALSE(
-        raf::ray_support_inside_frames_bounding_sphere(&ray, &sphere));
+    EXPECT_FALSE(raf::ray_support_inside_frames_bounding_sphere(&ray, &sphere));
 }
 
 TEST_F(RayAndFrameBoundingSphereTest, frontal_hit) {
@@ -60,8 +59,7 @@ TEST_F(RayAndFrameBoundingSphereTest, frontal_hit) {
     sphere.set_radius(1.0);
 
     Ray ray(Vec3(-2.0, 0.0, 0.0), VEC3_UNIT_X);
-    EXPECT_TRUE(
-        raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
+    EXPECT_TRUE(raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
 }
 
 TEST_F(RayAndFrameBoundingSphereTest, no_hit) {
@@ -77,8 +75,7 @@ TEST_F(RayAndFrameBoundingSphereTest, no_hit) {
     sphere.set_radius(1.0);
 
     Ray ray(Vec3(+2.0, 0.0, 0.0), VEC3_UNIT_X);
-    EXPECT_FALSE(
-        raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
+    EXPECT_FALSE(raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
 }
 
 TEST_F(RayAndFrameBoundingSphereTest, hit_inside_bounding_sphere) {
@@ -94,8 +91,7 @@ TEST_F(RayAndFrameBoundingSphereTest, hit_inside_bounding_sphere) {
     sphere.set_radius(1.0);
 
     Ray ray(VEC3_ORIGIN, VEC3_UNIT_X);
-    EXPECT_TRUE(
-        raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
+    EXPECT_TRUE(raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
 }
 
 TEST_F(RayAndFrameBoundingSphereTest, frontal_hits) {
@@ -119,14 +115,9 @@ TEST_F(RayAndFrameBoundingSphereTest, frontal_hits) {
     for (double y = -2.0; y < 2.0; y+=0.002) {
         Ray ray(Vec3(-5.0, y, 0.0), VEC3_UNIT_X);
         if (fabs(y) > sphere_radius)
-            EXPECT_FALSE(raf::ray_has_intersection_with_bounding_sphere_of(
-                &ray,
-                &sphere));
+            EXPECT_FALSE(raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
         else
-            EXPECT_TRUE(
-                raf::ray_has_intersection_with_bounding_sphere_of(
-                    &ray,
-                    &sphere));
+            EXPECT_TRUE(raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
     }
 }
 

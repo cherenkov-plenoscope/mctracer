@@ -25,9 +25,7 @@ TEST_F(ColorMapTest, add_color_and_check_it_is_in) {
 TEST_F(ColorMapTest, add_color_and_add_it_again) {
     ColorMap my_colors;
     my_colors.add("red", Color(255, 0, 0));
-    EXPECT_THROW(
-        my_colors.add("red", Color(128, 0, 0)),
-        ColorMap::KeyAlreadyInUse);
+    EXPECT_THROW(my_colors.add("red", Color(128, 0, 0)), ColorMap::KeyAlreadyInUse);
 }
 
 TEST_F(ColorMapTest, add_color_and_get_it_again) {

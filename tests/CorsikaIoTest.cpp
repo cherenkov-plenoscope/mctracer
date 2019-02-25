@@ -8,9 +8,7 @@ using namespace relleums;
 class Corsika_io : public ::testing::Test {};
 
 TEST_F(Corsika_io, word_size_is_too_large) {
-    EXPECT_THROW(
-        corsika::str2float("Hans Peter"),
-        std::invalid_argument);
+    EXPECT_THROW(corsika::str2float("Hans Peter"), std::invalid_argument);
 }
 
 TEST_F(Corsika_io, 4char_word_forth_and_back) {

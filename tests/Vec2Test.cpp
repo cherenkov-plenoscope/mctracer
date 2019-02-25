@@ -162,9 +162,7 @@ TEST_F(Vec2Test, angle_in_between) {
     Vec2 b = VEC2_UNIT_X;
 
     EXPECT_EQ(0.0, a.angle_in_between(b));
-    EXPECT_EQ(
-        b.angle_in_between(a),
-        a.angle_in_between(b));
+    EXPECT_EQ(b.angle_in_between(a), a.angle_in_between(b));
 
     Vec2 c = VEC2_UNIT_X*5.0;
     EXPECT_NE(1.0, c.norm());
@@ -173,9 +171,7 @@ TEST_F(Vec2Test, angle_in_between) {
     EXPECT_NE(1.0, d.norm());
 
     EXPECT_EQ(0.0, d.angle_in_between(c));
-    EXPECT_EQ(
-        c.angle_in_between(d),
-        d.angle_in_between(c));
+    EXPECT_EQ(c.angle_in_between(d), d.angle_in_between(c));
 
     Vec2 foo = VEC2_UNIT_X*5.0 + VEC2_UNIT_Y*5.0;
     EXPECT_NE(1.0, c.norm());
@@ -183,7 +179,7 @@ TEST_F(Vec2Test, angle_in_between) {
     Vec2 bar = VEC2_UNIT_X*5.0;
     EXPECT_NE(1.0, d.norm());
 
-    EXPECT_NEAR(deg2rad(45.0) , foo.angle_in_between(bar), 1e-5);
+    EXPECT_NEAR(deg2rad(45.0), foo.angle_in_between(bar), 1e-5);
 }
 
 TEST_F(Vec2Test, quadrant_encoding) {

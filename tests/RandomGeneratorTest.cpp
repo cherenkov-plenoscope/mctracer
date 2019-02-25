@@ -123,10 +123,7 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
         if (max_f < ys[i])
             max_f = ys[i];
     for (unsigned int i = 0; i < bin_edges.size()-1; i++)
-        EXPECT_NEAR(
-            f.evaluate(bin_edges[i])/f_integral,
-            drawn_f_normalized[i],
-            max_f*1e-2);
+        EXPECT_NEAR(f.evaluate(bin_edges[i])/f_integral, drawn_f_normalized[i], max_f*1e-2);
 }
 
 TEST_F(RandomGeneratorTest, draw_from_poisson_distribution) {

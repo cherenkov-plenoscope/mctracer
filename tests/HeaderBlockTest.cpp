@@ -41,9 +41,7 @@ TEST_F(HeaderBlockTest, write_and_read_several_binary_blocks) {
 }
 
 TEST_F(HeaderBlockTest, read_non_existing_file) {
-    EXPECT_THROW(
-        corsika::block::read("InOut/non_existing_file.bin"),
-        std::runtime_error);
+    EXPECT_THROW(corsika::block::read("InOut/non_existing_file.bin"), std::runtime_error);
 }
 
 TEST_F(HeaderBlockTest, write_and_read_empty_file) {

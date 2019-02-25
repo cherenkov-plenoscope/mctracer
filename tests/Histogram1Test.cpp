@@ -15,9 +15,7 @@ TEST_F(Histogram1Test, empty_bin_edges) {
     vector<double> samples;
     for (unsigned int i = 0; i < 42*1337; i++)
         samples.push_back(prng.uniform());
-    EXPECT_THROW(
-        Histogram1 histo(samples, bins_edges),
-        std::invalid_argument);
+    EXPECT_THROW(Histogram1 histo(samples, bins_edges), std::invalid_argument);
 }
 
 TEST_F(Histogram1Test, init) {
@@ -146,9 +144,7 @@ TEST_F(Histogram1Test, arg_max) {
 TEST_F(Histogram1Test, arg_max_empty) {
     vector<double> bins_edges;
     vector<double> samples;
-    EXPECT_THROW(
-        Histogram1 histo(samples, bins_edges),
-        std::invalid_argument);
+    EXPECT_THROW(Histogram1 histo(samples, bins_edges), std::invalid_argument);
 }
 
 TEST_F(Histogram1Test, arg_max_empty_sample) {
@@ -161,9 +157,7 @@ TEST_F(Histogram1Test, arg_max_empty_sample) {
 TEST_F(Histogram1Test, arg_max_empty_edges) {
     vector<double> bins_edges;
     vector<double> samples = {0.1, 0.2, 0.5};
-    EXPECT_THROW(
-        Histogram1 histo(samples, bins_edges),
-        std::invalid_argument);
+    EXPECT_THROW(Histogram1 histo(samples, bins_edges), std::invalid_argument);
 }
 
 TEST_F(Histogram1Test, mode_empty_sample) {

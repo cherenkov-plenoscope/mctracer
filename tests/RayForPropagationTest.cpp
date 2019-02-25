@@ -39,7 +39,5 @@ TEST_F(RayForPropagationTest, distance_passed_after_creation) {
 
 TEST_F(RayForPropagationTest, default_simulation_truth_id) {
     RayForPropagation prop_ray(support, direction);
-    EXPECT_EQ(
-        SimulationTruth::MCTRACER_DEFAULT,
-        prop_ray.get_simulation_truth_id());
+    EXPECT_EQ(SimulationTruth::MCTRACER_DEFAULT, prop_ray.get_simulation_truth_id());
 }

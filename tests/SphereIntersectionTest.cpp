@@ -66,9 +66,7 @@ TEST_F(SphereIntersectionTest, frontal) {
     "The photon was shot from 5m away from the spheres center. The sphere has "
     "radius 1m. So there are 5-1=4m to traverse. ";
 
-    EXPECT_EQ(
-        VEC3_UNIT_X*(-1),
-        P.get_intersection_at(1).surface_normal_in_object_frame());
+    EXPECT_EQ(VEC3_UNIT_X*(-1), P.get_intersection_at(1).surface_normal_in_object_frame());
 }
 
 TEST_F(SphereIntersectionTest, emmitting_close_above_surface_tangential) {
@@ -94,11 +92,7 @@ TEST_F(SphereIntersectionTest, tangential_intersection) {
     PhotonAndFrame::Propagator(&P, sphere_test_environment);
     ASSERT_EQ(2u, P.get_number_of_interactions_so_far() );
     Vec3 normal = VEC3_UNIT_Z;
-    EXPECT_NEAR(
-        0.0,
-        normal.distance_to(
-            P.get_intersection_at(1).surface_normal_in_object_frame()),
-        1e-12);
+    EXPECT_NEAR(0.0, normal.distance_to(P.get_intersection_at(1).surface_normal_in_object_frame()), 1e-12);
 }
 
 // NEW INTERSECTION METHOD
@@ -110,12 +104,8 @@ TEST_F(SphereIntersectionTest, ray_frontal_intersection) {
 
   ASSERT_FALSE(intersections.empty());
   EXPECT_EQ(intersections.front().get_object(), MySphere);
-  EXPECT_EQ(
-    Vec3(0.0, 0.0, -1.0),
-    intersections.front().position_in_object_frame());
-  EXPECT_EQ(
-    Vec3(0.0, 0.0, -1.0),
-    intersections.front().surface_normal_in_object_frame());
+  EXPECT_EQ(Vec3(0.0, 0.0, -1.0), intersections.front().position_in_object_frame());
+  EXPECT_EQ(Vec3(0.0, 0.0, -1.0), intersections.front().surface_normal_in_object_frame());
 }
 
 TEST_F(SphereIntersectionTest, ray_intersection_but_no_causal_intersection) {
@@ -142,12 +132,8 @@ TEST_F(SphereIntersectionTest, ray_starts_inside_sphere) {
 
   ASSERT_FALSE(intersections.empty());
   EXPECT_EQ(intersections.front().get_object(), MySphere);
-  EXPECT_EQ(
-    Vec3(0.0, 0.0, +1.0),
-    intersections.front().position_in_object_frame());
-  EXPECT_EQ(
-    Vec3(0.0, 0.0, +1.0),
-    intersections.front().surface_normal_in_object_frame());
+  EXPECT_EQ(Vec3(0.0, 0.0, +1.0), intersections.front().position_in_object_frame());
+  EXPECT_EQ(Vec3(0.0, 0.0, +1.0), intersections.front().surface_normal_in_object_frame());
 }
 
 TEST_F(SphereIntersectionTest, ray_tangents_sphere) {
@@ -157,10 +143,6 @@ TEST_F(SphereIntersectionTest, ray_tangents_sphere) {
 
   ASSERT_FALSE(intersections.empty());
   EXPECT_EQ(intersections.front().get_object(), MySphere);
-  EXPECT_EQ(
-    Vec3(1.0, 0.0, 0.0),
-    intersections.front().position_in_object_frame());
-  EXPECT_EQ(
-    Vec3(1.0, 0.0, 0.0),
-    intersections.front().surface_normal_in_object_frame());
+  EXPECT_EQ(Vec3(1.0, 0.0, 0.0), intersections.front().position_in_object_frame());
+  EXPECT_EQ(Vec3(1.0, 0.0, 0.0), intersections.front().surface_normal_in_object_frame());
 }

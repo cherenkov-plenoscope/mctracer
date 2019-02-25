@@ -33,16 +33,10 @@ TEST_F(PhotoElectricConverterTest, config_defaults) {
     EXPECT_EQ(0.0, config.probability_for_second_puls);
 
     for (double wavelength = 200e-9; wavelength < 1200e-9; wavelength+=10e-9)
-        EXPECT_EQ(
-            0.0,
-            config.quantum_efficiency_vs_wavelength->evaluate(wavelength));
+        EXPECT_EQ(0.0, config.quantum_efficiency_vs_wavelength->evaluate(wavelength));
 
-    EXPECT_THROW(
-        config.quantum_efficiency_vs_wavelength->evaluate(1200e-9),
-        std::out_of_range);
-    EXPECT_THROW(
-        config.quantum_efficiency_vs_wavelength->evaluate(199e-9),
-        std::out_of_range);
+    EXPECT_THROW(config.quantum_efficiency_vs_wavelength->evaluate(1200e-9), std::out_of_range);
+    EXPECT_THROW(config.quantum_efficiency_vs_wavelength->evaluate(199e-9), std::out_of_range);
 }
 
 TEST_F(PhotoElectricConverterTest, empty_input_yields_empty_output) {
@@ -98,9 +92,7 @@ TEST_F(PhotoElectricConverterTest, input_pulses_pass_qunatum_eff_is_one) {
 
     ASSERT_EQ(1337u, result.size());
     for (unsigned int i = 0; i < result.size(); i++) {
-        EXPECT_EQ(
-            photon_pipeline.at(i).arrival_time,
-            result.at(i).arrival_time);
+        EXPECT_EQ(photon_pipeline.at(i).arrival_time, result.at(i).arrival_time);
     }
 }
 

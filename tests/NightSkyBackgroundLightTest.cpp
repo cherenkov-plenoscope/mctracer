@@ -31,13 +31,8 @@ TEST_F(NightSkyBackgroundLightTest, init) {
         &geometry,
         &nsb_flux_vs_wavelength);
 
-    EXPECT_EQ(
-        nsb.fov_radius,
-        0.5*deg2rad(6.5)*plenoscope::night_sky_background::FOV_RADIUS_OVERHEAD);
-
-    EXPECT_EQ(
-        nsb.aperture_radius,
-        25*plenoscope::night_sky_background::APERTURE_RADIUS_OVERHEAD);
+    EXPECT_EQ(nsb.fov_radius, 0.5*deg2rad(6.5)*plenoscope::night_sky_background::FOV_RADIUS_OVERHEAD);
+    EXPECT_EQ(nsb.aperture_radius, 25*plenoscope::night_sky_background::APERTURE_RADIUS_OVERHEAD);
 
     std::cout << nsb.str() << "\n";
 }

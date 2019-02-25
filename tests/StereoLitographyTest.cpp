@@ -9,15 +9,11 @@ namespace stl = stereo_litography;
 class StereoLitographyTest : public ::testing::Test {};
 
 TEST_F(StereoLitographyTest, open_non_existing_file) {
-    EXPECT_THROW(
-        stl::BinaryReader hans("not_existing_file"),
-        stl::BinaryReader::CanNotReadFile);
+    EXPECT_THROW(stl::BinaryReader hans("not_existing_file"),  stl::BinaryReader::CanNotReadFile);
 }
 
 TEST_F(StereoLitographyTest, ascii_format) {
-    EXPECT_THROW(
-        stl::BinaryReader stl("test_scenery/ascii_format.stl"),
-        stl::BinaryReader::CanNotReadAscii);
+    EXPECT_THROW(stl::BinaryReader stl("test_scenery/ascii_format.stl"), stl::BinaryReader::CanNotReadAscii);
 }
 
 TEST_F(StereoLitographyTest, open_valid_file) {
@@ -80,9 +76,7 @@ TEST_F(StereoLitographyTest, scaling) {
         &obj_scaled,
         scaleing);
 
-    EXPECT_EQ(
-        scaleing*obj_normal.get_bounding_sphere_radius(),
-        obj_scaled.get_bounding_sphere_radius());
+    EXPECT_EQ(scaleing*obj_normal.get_bounding_sphere_radius(), obj_scaled.get_bounding_sphere_radius());
 }
 
 TEST_F(StereoLitographyTest, write_and_read_simple_stl) {

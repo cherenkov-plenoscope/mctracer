@@ -48,22 +48,14 @@ void expect_eq(
     bool simulation_truth_eq = true
 ) {
     EXPECT_EQ(A.time_slice_duration, B.time_slice_duration);
-    ASSERT_EQ(
-        A.photon_stream.size(),
-        B.photon_stream.size());
+    ASSERT_EQ(A.photon_stream.size(),B.photon_stream.size());
     for (unsigned int c = 0; c < A.photon_stream.size(); c++) {
-        ASSERT_EQ(
-            A.photon_stream.at(c).size(),
-            B.photon_stream.at(c).size());
+        ASSERT_EQ(A.photon_stream.at(c).size(), B.photon_stream.at(c).size());
         for (unsigned int p = 0; p < A.photon_stream.at(c).size(); p++) {
-            EXPECT_EQ(
-                A.photon_stream.at(c).at(p).arrival_time_slice,
-                B.photon_stream.at(c).at(p).arrival_time_slice);
+            EXPECT_EQ(A.photon_stream.at(c).at(p).arrival_time_slice, B.photon_stream.at(c).at(p).arrival_time_slice);
 
             if (simulation_truth_eq) {
-                EXPECT_EQ(
-                    A.photon_stream.at(c).at(p).simulation_truth_id,
-                    B.photon_stream.at(c).at(p).simulation_truth_id);
+                EXPECT_EQ(A.photon_stream.at(c).at(p).simulation_truth_id, B.photon_stream.at(c).at(p).simulation_truth_id);
             }
         }
     }
@@ -121,20 +113,11 @@ TEST_F(PhotonStreamTest, arrival_slices_must_not_be_NEXT_CHANNEL_MARKER) {
             simulation_truth_id));
     channels.push_back(channel);
 
-    EXPECT_THROW(
-        PhotonStream::write(
-            channels,
-            0.5e-9,
-            "InOut/must_not_be_written.phs"),
-            std::runtime_error);
+    EXPECT_THROW(PhotonStream::write(channels, 0.5e-9, "InOut/must_not_be_written.phs"), std::runtime_error);
 
     channels.at(0).at(0).arrival_time_slice = 254;
 
-    EXPECT_NO_THROW(
-        PhotonStream::write(
-            channels,
-            0.5e-9,
-            "InOut/shall_be_written.phs"));
+    EXPECT_NO_THROW(PhotonStream::write(channels, 0.5e-9, "InOut/shall_be_written.phs"));
 }
 
 TEST_F(PhotonStreamTest, write_and_read_back_full_single_pulse_event) {
