@@ -1,41 +1,41 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/mctracer.h"
 
 using namespace relleums;
 namespace pse = sensor;
 
-class SensorStorageTest : public ::testing::Test {};
 
-TEST_F(SensorStorageTest, default_constructor_yields_empty_Sensors) {
+
+TEST_CASE("SensorStorageTest: default_constructor_yields_empty_Sensors", "[mctracer]") {
     pse::Sensors sens;
-    EXPECT_EQ(0u, sens.size());
+    CHECK(sens.size() == 0u);
 }
 
-TEST_F(SensorStorageTest, default_constructor_and_access_not_existing_frame) {
+TEST_CASE("SensorStorageTest: default_constructor_and_access_not_existing_frame", "[mctracer]") {
     pse::Sensors sens;
-    EXPECT_EQ(0u, sens.size());
+    CHECK(sens.size() == 0u);
 
     // a frame which is not assigned to a sensor
     Frame dog;
     dog.set_name_pos_rot("dog", VEC3_ORIGIN, ROT3_UNITY);
 
     // access invalid frame
-    EXPECT_THROW(sens.at_frame(&dog), pse::Sensors::NoSuchFrame);
+    CHECK_THROWS_AS(sens.at_frame(&dog), pse::Sensors::NoSuchFrame);
 }
 
 // VECTOR OF SENSORS CONSTRUCTOR
 
-TEST_F(SensorStorageTest, empty_vector_of_sensors_must_yield_empty_Sensors) {
+TEST_CASE("SensorStorageTest: empty_vector_of_sensors_must_yield_empty_Sensors", "[mctracer]") {
     // Collecting
     std::vector<pse::Sensor*> my_sensors;
-    EXPECT_EQ(0u, my_sensors.size());
+    CHECK(my_sensors.size() == 0u);
 
     pse::Sensors sens(my_sensors);
-    EXPECT_EQ(0u, sens.size());
+    CHECK(sens.size() == 0u);
 }
 
-TEST_F(SensorStorageTest, empty_Sensors_access_invalid_frame) {
+TEST_CASE("SensorStorageTest: empty_Sensors_access_invalid_frame", "[mctracer]") {
     // Creation
     // a frame which is not assigned to a sensor
     Frame dog;
@@ -43,17 +43,17 @@ TEST_F(SensorStorageTest, empty_Sensors_access_invalid_frame) {
 
     // Collecting
     std::vector<pse::Sensor*> my_sensors;
-    EXPECT_EQ(0u, my_sensors.size());
+    CHECK(my_sensors.size() == 0u);
 
     // Preparing for access
     pse::Sensors sens(my_sensors);
-    EXPECT_EQ(0u, sens.size());
+    CHECK(sens.size() == 0u);
 
     // access invalid frame
-    EXPECT_THROW(sens.at_frame(&dog), pse::Sensors::NoSuchFrame);
+    CHECK_THROWS_AS(sens.at_frame(&dog), pse::Sensors::NoSuchFrame);
 }
 
-TEST_F(SensorStorageTest, not_take_over_sensors_from_vector) {
+TEST_CASE("SensorStorageTest: not_take_over_sensors_from_vector", "[mctracer]") {
     // Creation
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);
@@ -72,17 +72,17 @@ TEST_F(SensorStorageTest, not_take_over_sensors_from_vector) {
     my_sensors.push_back(&on_tree);
     my_sensors.push_back(&on_house);
     my_sensors.push_back(&on_car);
-    EXPECT_EQ(3u, my_sensors.size());
+    CHECK(my_sensors.size() == 3u);
 
     // Taking over the sensors
     pse::Sensors sens(my_sensors);
-    EXPECT_EQ(3u, sens.size());
-    EXPECT_EQ(3u, my_sensors.size());
+    CHECK(sens.size() == 3u);
+    CHECK(my_sensors.size() == 3u);
 }
 
 // USAGE
 
-TEST_F(SensorStorageTest, access_sensors_by_frame) {
+TEST_CASE("SensorStorageTest: access_sensors_by_frame", "[mctracer]") {
     // Creation
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);
@@ -101,19 +101,19 @@ TEST_F(SensorStorageTest, access_sensors_by_frame) {
     my_sensors.push_back(&on_tree);
     my_sensors.push_back(&on_house);
     my_sensors.push_back(&on_car);
-    EXPECT_EQ(3u, my_sensors.size());
+    CHECK(my_sensors.size() == 3u);
 
     // Preparing for access
     pse::Sensors sens(my_sensors);
-    EXPECT_EQ(3u, sens.size());
+    CHECK(sens.size() == 3u);
 
     // access
-    EXPECT_EQ(&on_tree, sens.at_frame(&tree));
-    EXPECT_EQ(&on_house, sens.at_frame(&house));
-    EXPECT_EQ(&on_car, sens.at_frame(&car));
+    CHECK(sens.at_frame(&tree) == &on_tree);
+    CHECK(sens.at_frame(&house) == &on_house);
+    CHECK(sens.at_frame(&car) == &on_car);
 }
 
-TEST_F(SensorStorageTest, assert_no_duplicate_frames) {
+TEST_CASE("SensorStorageTest: assert_no_duplicate_frames", "[mctracer]") {
     // Creation
     // 1st sensor
     Frame tree;
@@ -127,13 +127,13 @@ TEST_F(SensorStorageTest, assert_no_duplicate_frames) {
     std::vector<pse::Sensor*> my_sensors;
     my_sensors.push_back(&on_tree);
     my_sensors.push_back(&on_tree2);
-    EXPECT_EQ(2u, my_sensors.size());
+    CHECK(my_sensors.size() == 2u);
 
     // Preparing for access
-    EXPECT_THROW(pse::Sensors sens(my_sensors), pse::Sensors::DuplicateFrame);
+    CHECK_THROWS_AS(pse::Sensors(my_sensors), pse::Sensors::DuplicateFrame);
 }
 
-TEST_F(SensorStorageTest, access_non_existing_frame) {
+TEST_CASE("SensorStorageTest: access_non_existing_frame", "[mctracer]") {
     // Creation
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);
@@ -156,17 +156,17 @@ TEST_F(SensorStorageTest, access_non_existing_frame) {
     my_sensors.push_back(&on_tree);
     my_sensors.push_back(&on_house);
     my_sensors.push_back(&on_car);
-    EXPECT_EQ(3u, my_sensors.size());
+    CHECK(my_sensors.size() == 3u);
 
     // Preparing for access
     pse::Sensors sens(my_sensors);
-    EXPECT_EQ(3u, sens.size());
+    CHECK(sens.size() == 3u);
 
     // access valid frames
-    EXPECT_EQ(&on_tree, sens.at_frame(&tree));
-    EXPECT_EQ(&on_house, sens.at_frame(&house));
-    EXPECT_EQ(&on_car, sens.at_frame(&car));
+    CHECK(sens.at_frame(&tree) == &on_tree);
+    CHECK(sens.at_frame(&house) == &on_house);
+    CHECK(sens.at_frame(&car) == &on_car);
 
     // access invalid frame
-    EXPECT_THROW(sens.at_frame(&dog), pse::Sensors::NoSuchFrame);
+    CHECK_THROWS_AS(sens.at_frame(&dog), pse::Sensors::NoSuchFrame);
 }

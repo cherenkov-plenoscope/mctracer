@@ -1,6 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller, Dominik Neise
 #include <algorithm>
-#include "gtest/gtest.h"
+#include <sstream>
+#include "catch.hpp"
 #include "eventio.h"
 #include "corsika/corsika.h"
 #include "corsika/PhotonFactory.h"
@@ -8,23 +9,23 @@ using std::string;
 using std::vector;
 using std::array;
 
-class EventIoTest : public ::testing::Test {};
 
-TEST_F(EventIoTest, EventIoHeader_works) {
+
+TEST_CASE("EventIoTest: EventIoHeader_works", "[mctracer]") {
     std::ifstream fake_file;
     fake_file.open("telescope.dat");
     eventio::Header my_header(fake_file);
-    EXPECT_TRUE(my_header.is_sync);
-    EXPECT_EQ(1200, my_header.type);
-    EXPECT_EQ(0, my_header.version);
-    EXPECT_FALSE(my_header.user);
-    EXPECT_FALSE(my_header.extended);
-    EXPECT_FALSE(my_header.only_sub_objects);
-    EXPECT_EQ(1096u, my_header.length);
-    EXPECT_EQ(7, my_header.id);
+    CHECK(my_header.is_sync);
+    CHECK(my_header.type == 1200);
+    CHECK(my_header.version == 0);
+    CHECK(!my_header.user);
+    CHECK(!my_header.extended);
+    CHECK(!my_header.only_sub_objects);
+    CHECK(my_header.length == 1096u);
+    CHECK(my_header.id == 7);
 }
 
-TEST_F(EventIoTest,  EventIoHeader_fails_wrong_sync_marker) {
+TEST_CASE("EventIoTest: EventIoHeader_fails_wrong_sync_marker", "[mctracer]") {
     std::ifstream fin("telescope.dat");
     std::stringstream sout;
     std::copy_n(
@@ -35,15 +36,15 @@ TEST_F(EventIoTest,  EventIoHeader_fails_wrong_sync_marker) {
     sout.seekp(2);
     sout.put(0x00);
     sout.seekp(0);
-    EXPECT_THROW(eventio::Header my_header(sout), eventio::NoSyncFoundException);
+    CHECK_THROWS_AS(eventio::Header(sout), eventio::NoSyncFoundException);
 }
 
-TEST_F(EventIoTest, EventIoHeader_fails_empty_file) {
+TEST_CASE("EventIoTest: EventIoHeader_fails_empty_file", "[mctracer]") {
     std::stringstream fake_file;
-    EXPECT_THROW(eventio::Header my_header(fake_file), std::runtime_error);
+    CHECK_THROWS_AS(eventio::Header(fake_file), std::runtime_error);
 }
 
-TEST_F(EventIoTest, make_runheader) {
+TEST_CASE("EventIoTest: make_runheader", "[mctracer]") {
     std::ifstream fin("telescope.dat");
     std::stringstream sout;
 
@@ -54,70 +55,70 @@ TEST_F(EventIoTest, make_runheader) {
     array<float, 273> my_run_header =
         eventio::make_corsika_273float_sub_block_form_stream(sout);
 
-    EXPECT_EQ(corsika::str2float("RUNH"), my_run_header.at(0));
+    CHECK(my_run_header.at(0) == corsika::str2float("RUNH"));
 }
 
-TEST_F(EventIoTest, EventIoFile_telescope_dat__check_tel_pos) {
+TEST_CASE("EventIoTest: EventIoFile_telescope_dat__check_tel_pos", "[mctracer]") {
     eventio::Run my_run("telescope.dat");
-    EXPECT_EQ(1u, my_run.header.tel_pos.size());
-    EXPECT_EQ(0., my_run.header.tel_pos[0].x);
-    EXPECT_EQ(0., my_run.header.tel_pos[0].y);
-    EXPECT_EQ(500., my_run.header.tel_pos[0].z);
-    EXPECT_EQ(500., my_run.header.tel_pos[0].r);
+    CHECK(my_run.header.tel_pos.size() == 1u);
+    CHECK(my_run.header.tel_pos[0].x == 0.);
+    CHECK(my_run.header.tel_pos[0].y == 0.);
+    CHECK(my_run.header.tel_pos[0].z == 500.);
+    CHECK(my_run.header.tel_pos[0].r == 500.);
 }
 
-TEST_F(EventIoTest, EventIoFile_telescope_dat__check_input_card) {
+TEST_CASE("EventIoTest: EventIoFile_telescope_dat__check_input_card", "[mctracer]") {
     eventio::Run my_run("telescope.dat");
-    EXPECT_EQ(' ', my_run.header.input_card[100]);
+    CHECK(my_run.header.input_card[100] == ' ');
 }
 
-TEST_F(EventIoTest, EventIoFile_telescope_dat__mmcs_run_header) {
+TEST_CASE("EventIoTest: EventIoFile_telescope_dat__mmcs_run_header", "[mctracer]") {
     eventio::Run my_run("telescope.dat");
-    EXPECT_NEAR(7., corsika::RunHeader::run_number(my_run.header.raw), 1e-6);
-    EXPECT_NEAR(-2.7, corsika::RunHeader::slope_of_energy_spektrum(my_run.header.raw), 1e-6);
-    EXPECT_NEAR(1000., corsika::RunHeader::energy_range_start(my_run.header.raw), 1e-6);
-    EXPECT_NEAR(50000., corsika::RunHeader::energy_range_end(my_run.header.raw), 1e-6);
-    EXPECT_EQ(1u, corsika::RunHeader::number_of_observation_levels(my_run.header.raw));
-    EXPECT_NEAR(220000., corsika::RunHeader::observation_level_at(my_run.header.raw, 0), 1e-6);
+    CHECK(7. == Approx(corsika::RunHeader::run_number(my_run.header.raw)).margin(1e-6));
+    CHECK(-2.7 == Approx(corsika::RunHeader::slope_of_energy_spektrum(my_run.header.raw)).margin(1e-6));
+    CHECK(1000. == Approx(corsika::RunHeader::energy_range_start(my_run.header.raw)).margin(1e-6));
+    CHECK(50000. == Approx(corsika::RunHeader::energy_range_end(my_run.header.raw)).margin(1e-6));
+    CHECK(corsika::RunHeader::number_of_observation_levels(my_run.header.raw) == 1u);
+    CHECK(220000. == Approx(corsika::RunHeader::observation_level_at(my_run.header.raw, 0)).margin(1e-6));
 }
 
-TEST_F(EventIoTest, EventIoFile_telescope_dat__next_call) {
-    eventio::Run my_run("telescope.dat");
-    eventio::Event event = my_run.next_event();
-}
-
-TEST_F(EventIoTest, EventIoFile_telescope_dat__event_header) {
+TEST_CASE("EventIoTest: EventIoFile_telescope_dat__next_call", "[mctracer]") {
     eventio::Run my_run("telescope.dat");
     eventio::Event event = my_run.next_event();
+}
 
-    EXPECT_EQ(1u, event.header.telescope_offsets.size());
-    EXPECT_NEAR(379489.3125, event.header.telescope_offsets[0].toff, 1e-6);
+TEST_CASE("EventIoTest: EventIoFile_telescope_dat__event_header", "[mctracer]") {
+    eventio::Run my_run("telescope.dat");
+    eventio::Event event = my_run.next_event();
+
+    CHECK(event.header.telescope_offsets.size() == 1u);
+    CHECK(379489.3125 == Approx(event.header.telescope_offsets[0].toff).margin(1e-6));
     // std::cout << my_run.current_event_header.telescope_offsets[0].str();
     // std::cout << std::endl;
-    EXPECT_NEAR(-0., event.header.telescope_offsets[0].xoff, 1e-6);
-    EXPECT_NEAR(-6589.96044922, event.header.telescope_offsets[0].yoff, 1e-6);
+    CHECK(-0. == Approx(event.header.telescope_offsets[0].xoff).margin(1e-6));
+    CHECK(-6589.96044922 == Approx(event.header.telescope_offsets[0].yoff).margin(1e-6));
 
     array<float, 273> h = event.header.raw;
-    EXPECT_NEAR(1., corsika::EventHeader::event_number(h), 1e-6);
-    EXPECT_NEAR(1., corsika::EventHeader::particle_id(h), 1e-6);
-    EXPECT_NEAR(2745.3125, corsika::EventHeader::total_energy_in_GeV(h), 1e-6);
+    CHECK(1. == Approx(corsika::EventHeader::event_number(h)).margin(1e-6));
+    CHECK(1. == Approx(corsika::EventHeader::particle_id(h)).margin(1e-6));
+    CHECK(2745.3125 == Approx(corsika::EventHeader::total_energy_in_GeV(h)).margin(1e-6));
 }
 
-TEST_F(EventIoTest, EventIoFile_telescope_dat__photon_bundle_size) {
+TEST_CASE("EventIoTest: EventIoFile_telescope_dat__photon_bundle_size", "[mctracer]") {
     eventio::Run my_run("telescope.dat");
     eventio::Event event = my_run.next_event();
-    EXPECT_EQ(42629u, event.photons.size());
+    CHECK(event.photons.size() == 42629u);
 
     for (size_t i = 0; i < event.photons.size(); i++) {
         std::array<float, 8> photon_bunch = event.photons[i];
-        EXPECT_EQ(8u, photon_bunch.size());
+        CHECK(photon_bunch.size() == 8u);
     }
 }
 
-TEST_F(EventIoTest, EventIoFile_telescope_dat__photon_bundle_values) {
+TEST_CASE("EventIoTest: EventIoFile_telescope_dat__photon_bundle_values", "[mctracer]") {
     eventio::Run my_run("telescope.dat");
     eventio::Event event = my_run.next_event();
-    EXPECT_EQ(42629u, event.photons.size());
+    CHECK(event.photons.size() == 42629u);
 
     float some_photon_bundles[5][8] = {
         {
@@ -174,19 +175,19 @@ TEST_F(EventIoTest, EventIoFile_telescope_dat__photon_bundle_values) {
 
     for (int j = 2; j < 5; j++) {
         std::array<float, 8> photon_bunch = event.photons[j];
-        EXPECT_FLOAT_EQ(some_photon_bundles[j][0], photon_bunch[0]);
-        EXPECT_FLOAT_EQ(some_photon_bundles[j][1], photon_bunch[1]);
-        EXPECT_FLOAT_EQ(some_photon_bundles[j][2], photon_bunch[2]);
-        EXPECT_FLOAT_EQ(some_photon_bundles[j][3], photon_bunch[3]);
-        EXPECT_FLOAT_EQ(some_photon_bundles[j][4], photon_bunch[4]);
-        EXPECT_NEAR(some_photon_bundles[j][5], photon_bunch[5], 10);
+        CHECK(photon_bunch[0] == Approx(some_photon_bundles[j][0]));
+        CHECK(photon_bunch[1] == Approx(some_photon_bundles[j][1]));
+        CHECK(photon_bunch[2] == Approx(some_photon_bundles[j][2]));
+        CHECK(photon_bunch[3] == Approx(some_photon_bundles[j][3]));
+        CHECK(photon_bunch[4] == Approx(some_photon_bundles[j][4]));
+        CHECK(some_photon_bundles[j][5] == Approx(photon_bunch[5]).margin(10));
         // the height can sometimes be way off!
-        EXPECT_FLOAT_EQ(some_photon_bundles[j][6], photon_bunch[6]);
-        EXPECT_FLOAT_EQ(some_photon_bundles[j][7], photon_bunch[7]);
+        CHECK(photon_bunch[6] == Approx(some_photon_bundles[j][6]));
+        CHECK(photon_bunch[7] == Approx(some_photon_bundles[j][7]));
     }
 }
 
-TEST_F(EventIoTest, EventIoFile_telescope_dat_run_time) {
+TEST_CASE("EventIoTest: EventIoFile_telescope_dat_run_time", "[mctracer]") {
     eventio::Run my_run("telescope.dat");
 
     while (my_run.has_still_events_left()) {

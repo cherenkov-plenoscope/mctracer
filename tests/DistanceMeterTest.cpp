@@ -1,28 +1,28 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/DistanceMeter.h"
 #include "Core/Ray.h"
 #include "Core/scenery/primitive/Sphere.h"
 
 using namespace relleums;
 
-class DistanceMeterTest : public ::testing::Test {};
 
-TEST_F(DistanceMeterTest, is_facing) {
+
+TEST_CASE("DistanceMeterTest: is_facing", "[mctracer]") {
     Sphere sphere = Sphere("sphere_1", Vec3(0, 0, 0), Rot3(0, 0, 0));
     sphere.set_radius(0.5);
     Ray ray = Ray(Vec3(0, 0, -1), Vec3(0, 0, 1));
     DistanceMeter dist_meter = DistanceMeter(&ray, &sphere);
 
-    EXPECT_TRUE(dist_meter.faces_an_object);
-    EXPECT_TRUE(dist_meter.distance_to_closest_object == 0.5);
+    CHECK(dist_meter.faces_an_object);
+    CHECK(dist_meter.distance_to_closest_object == 0.5);
 }
 
-TEST_F(DistanceMeterTest, is_not_facing) {
+TEST_CASE("DistanceMeterTest: is_not_facing", "[mctracer]") {
     Sphere sphere = Sphere("sphere_1", Vec3(0, 0, 0), Rot3(0, 0, 0));
     sphere.set_radius(0.5);
     Ray ray = Ray(Vec3(0, 0, +1), Vec3(0, 0, 1));
     DistanceMeter dist_meter = DistanceMeter(&ray, &sphere);
 
-    EXPECT_FALSE(dist_meter.faces_an_object);
+    CHECK(!dist_meter.faces_an_object);
 }

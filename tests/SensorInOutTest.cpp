@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <vector>
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/mctracer.h"
 
 using namespace relleums;
@@ -9,9 +9,9 @@ using sensor::PhotonArrival;
 using sensor::write_arrival_information_to_file;
 using sensor::read_arrival_information_from_file;
 
-class SensorInOutTest : public ::testing::Test {};
 
-TEST_F(SensorInOutTest, write_and_read) {
+
+TEST_CASE("SensorInOutTest: write_and_read", "[mctracer]") {
     vector<PhotonArrival> arrivals_1;
     const unsigned int number_of_arrivals = 1337*42;
     random::Mt19937 prng(0);
@@ -26,7 +26,7 @@ TEST_F(SensorInOutTest, write_and_read) {
         arrival.theta_y = prng.uniform();
         arrivals_1.push_back(arrival);
     }
-    EXPECT_EQ(arrivals_1.size(), number_of_arrivals);
+    CHECK(number_of_arrivals == arrivals_1.size());
 
     // write to disk
     std::ofstream out;
@@ -42,16 +42,16 @@ TEST_F(SensorInOutTest, write_and_read) {
         number_of_arrivals);
     in.close();
 
-    ASSERT_EQ(arrivals_1.size(), arrivals_2.size());
+    REQUIRE(arrivals_2.size() == arrivals_1.size());
     for (unsigned int i = 0; i < number_of_arrivals; i++) {
         PhotonArrival ar1 = arrivals_1.at(i);
         PhotonArrival ar2 = arrivals_2.at(i);
-        EXPECT_NEAR(ar1.simulation_truth_id, ar2.simulation_truth_id, 1e-5);
-        EXPECT_NEAR(ar1.wavelength, ar2.wavelength, 1e-5);
-        EXPECT_NEAR(ar1.arrival_time, ar2.arrival_time, 1e-5);
-        EXPECT_NEAR(ar1.x_intersect, ar2.x_intersect, 1e-5);
-        EXPECT_NEAR(ar1.y_intersect, ar2.y_intersect, 1e-5);
-        EXPECT_NEAR(ar1.theta_x, ar2.theta_x, 1e-5);
-        EXPECT_NEAR(ar1.theta_y, ar2.theta_y, 1e-5);
+        CHECK(ar1.simulation_truth_id == Approx(ar2.simulation_truth_id).margin(1e-5));
+        CHECK(ar1.wavelength == Approx(ar2.wavelength).margin(1e-5));
+        CHECK(ar1.arrival_time == Approx(ar2.arrival_time).margin(1e-5));
+        CHECK(ar1.x_intersect == Approx(ar2.x_intersect).margin(1e-5));
+        CHECK(ar1.y_intersect == Approx(ar2.y_intersect).margin(1e-5));
+        CHECK(ar1.theta_x == Approx(ar2.theta_x).margin(1e-5));
+        CHECK(ar1.theta_y == Approx(ar2.theta_y).margin(1e-5));
     }
 }

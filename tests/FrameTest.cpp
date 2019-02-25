@@ -1,33 +1,33 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <array>
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/mctracer.h"
 using std::string;
 using std::stringstream;
 using std::vector;
 using namespace relleums;
 
-class FrameTest : public ::testing::Test {};
 
-TEST_F(FrameTest, assert_name_is_valid) {
+
+TEST_CASE("FrameTest: assert_name_is_valid", "[mctracer]") {
     Vec3 pos = VEC3_ORIGIN;
     Rot3 rot = ROT3_UNITY;
 
     Frame Peter;
-    EXPECT_NO_THROW(Peter.set_name_pos_rot("A_nice_name", pos, rot));
+    CHECK_NOTHROW(Peter.set_name_pos_rot("A_nice_name", pos, rot));
 
-    EXPECT_THROW(Peter.set_name_pos_rot("I feel like using whitespaces", pos, rot), std::invalid_argument);
+    CHECK_THROWS_AS(Peter.set_name_pos_rot("I feel like using whitespaces", pos, rot), std::invalid_argument);
 
-    EXPECT_THROW(Peter.set_name_pos_rot("I\tfeel\rlike\tusing\nwhitespaces", pos, rot), std::invalid_argument);
+    CHECK_THROWS_AS(Peter.set_name_pos_rot("I\tfeel\rlike\tusing\nwhitespaces", pos, rot), std::invalid_argument);
 
-    EXPECT_THROW(Peter.set_name_pos_rot("", pos, rot), std::invalid_argument);
+    CHECK_THROWS_AS(Peter.set_name_pos_rot("", pos, rot), std::invalid_argument);
 
-    EXPECT_THROW(Peter.set_name_pos_rot("I/feel/like/using/the/delimiter/symbol", pos, rot), std::invalid_argument);
+    CHECK_THROWS_AS(Peter.set_name_pos_rot("I/feel/like/using/the/delimiter/symbol", pos, rot), std::invalid_argument);
 
-    EXPECT_THROW(Peter.set_name_pos_rot(" ", pos, rot), std::invalid_argument);
+    CHECK_THROWS_AS(Peter.set_name_pos_rot(" ", pos, rot), std::invalid_argument);
 }
 
-TEST_F(FrameTest, duplicate_name_of_children_frames) {
+TEST_CASE("FrameTest: duplicate_name_of_children_frames", "[mctracer]") {
     Frame Peter;
     Peter.set_name_pos_rot("peter", VEC3_ORIGIN, ROT3_UNITY);
 
@@ -37,26 +37,26 @@ TEST_F(FrameTest, duplicate_name_of_children_frames) {
     Frame* Klaus2 = Peter.append<Frame>();
     Klaus2->set_name_pos_rot("klaus", VEC3_ORIGIN, ROT3_UNITY);
 
-    EXPECT_THROW(Peter.assert_no_children_duplicate_names(), std::invalid_argument);
+    CHECK_THROWS_AS(Peter.assert_no_children_duplicate_names(), std::invalid_argument);
 }
 
-TEST_F(FrameTest, set_frame) {
+TEST_CASE("FrameTest: set_frame", "[mctracer]") {
     Vec3 pos(1.3, 3.7, 4.2);
     Rot3 rot(3.1, 4.1, 7.7);
 
     Frame Peter;
     Peter.set_name_pos_rot("A_nice_name", pos, rot);
 
-    EXPECT_TRUE(pos == Peter.get_position_in_mother());
-    EXPECT_TRUE(rot == Peter.get_rotation_in_mother());
+    CHECK(pos == Peter.get_position_in_mother());
+    CHECK(rot == Peter.get_rotation_in_mother());
 
     HomTra3 T_frame2mother;
     T_frame2mother.set_transformation(rot, pos);
 
-    EXPECT_EQ(T_frame2mother, *Peter.frame2mother());
+    CHECK(*Peter.frame2mother() == T_frame2mother);
 }
 
-TEST_F(FrameTest, re_set_frame) {
+TEST_CASE("FrameTest: re_set_frame", "[mctracer]") {
     Vec3 pos(1.3, 3.7, 4.2);
     Rot3 rot(3.1, 4.1, 7.7);
 
@@ -65,21 +65,21 @@ TEST_F(FrameTest, re_set_frame) {
     Frame* hans = peter.append<Frame>();
     hans->set_name_pos_rot("child_of_peter", Vec3(1.0, 2.0, 3.0), ROT3_UNITY);
 
-    EXPECT_EQ(1u, peter.get_children()->size());
-    EXPECT_TRUE(pos == peter.get_position_in_mother());
-    EXPECT_TRUE(rot == peter.get_rotation_in_mother());
+    CHECK(peter.get_children()->size() == 1u);
+    CHECK(pos == peter.get_position_in_mother());
+    CHECK(rot == peter.get_rotation_in_mother());
 
     peter.set_name_pos_rot(
         "another_name",
         Vec3(1.0, 2.0, 3.0),
         Rot3(0.1, 0.2, 0.3));
 
-    EXPECT_EQ(1u, peter.get_children()->size());
-    EXPECT_TRUE(Vec3(1.0, 2.0, 3.0) == peter.get_position_in_mother());
-    EXPECT_TRUE(Rot3(0.1, 0.2, 0.3) == peter.get_rotation_in_mother());
+    CHECK(peter.get_children()->size() == 1u);
+    CHECK(Vec3(1.0, 2.0, 3.0) == peter.get_position_in_mother());
+    CHECK(Rot3(0.1, 0.2, 0.3) == peter.get_rotation_in_mother());
 }
 
-TEST_F(FrameTest, root_of_world_on_complete_tree) {
+TEST_CASE("FrameTest: root_of_world_on_complete_tree", "[mctracer]") {
     // -----define frames
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);
@@ -108,22 +108,22 @@ TEST_F(FrameTest, root_of_world_on_complete_tree) {
     tree.init_tree_based_on_mother_child_relations();
 
     // -----test
-    EXPECT_EQ(&tree, tree.get_root());
-    EXPECT_EQ(&tree, leaf1->get_root());
-    EXPECT_EQ(&tree, leaf2->get_root());
-    EXPECT_EQ(&tree, branch->get_root());
-    EXPECT_EQ(&tree, leaf1_on_branch->get_root());
-    EXPECT_EQ(&tree, leaf2_on_branch->get_root());
+    CHECK(tree.get_root() == &tree);
+    CHECK(leaf1->get_root() == &tree);
+    CHECK(leaf2->get_root() == &tree);
+    CHECK(branch->get_root() == &tree);
+    CHECK(leaf1_on_branch->get_root() == &tree);
+    CHECK(leaf2_on_branch->get_root() == &tree);
 }
 
-TEST_F(FrameTest, root_frame_default) {
+TEST_CASE("FrameTest: root_frame_default", "[mctracer]") {
     // A single frame with no relations set (post initialized) is its own root.
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);
-    EXPECT_EQ(&tree, tree.get_root());
+    CHECK(tree.get_root() == &tree);
 }
 
-TEST_F(FrameTest, cluster_frames_during_tree_initializing) {
+TEST_CASE("FrameTest: cluster_frames_during_tree_initializing", "[mctracer]") {
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);
     double qube_edge = 10.0;
@@ -143,14 +143,14 @@ TEST_F(FrameTest, cluster_frames_during_tree_initializing) {
         }
     }
 
-    EXPECT_EQ(count, tree.get_children()->size());
+    CHECK(tree.get_children()->size() == count);
     tree.init_tree_based_on_mother_child_relations();
 
-    EXPECT_TRUE(count > tree.get_children()->size());
-    EXPECT_TRUE(FRAME_MAX_NUMBER_CHILDREN >= tree.get_children()->size());
+    CHECK(count > tree.get_children()->size());
+    CHECK(FRAME_MAX_NUMBER_CHILDREN >= tree.get_children()->size());
 }
 
-TEST_F(FrameTest, clustering_frames_which_are_stucked_close_together) {
+TEST_CASE("FrameTest: clustering_frames_which_are_stucked_close_together", "[mctracer]") {
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);
     const unsigned int number_facets = 100;
@@ -165,26 +165,26 @@ TEST_F(FrameTest, clustering_frames_which_are_stucked_close_together) {
         facet->set_curvature_radius_and_x_y_width(34.0, 1.0, 1.0);
     }
 
-    EXPECT_EQ(number_facets, tree.get_children()->size());
+    CHECK(tree.get_children()->size() == number_facets);
     tree.init_tree_based_on_mother_child_relations();
 
     // The clustering will not help (reduce the number of children)
     // because all the geometry is stucked on top of each other.
-    EXPECT_EQ(number_facets, tree.get_children()->size());
+    CHECK(tree.get_children()->size() == number_facets);
 }
 #include "Core/RayAndFrame.h"
 
-TEST_F(FrameTest, removing_a_non_existing_cild) {
+TEST_CASE("FrameTest: removing_a_non_existing_cild", "[mctracer]") {
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);
 
     Frame another_tree;
     tree.set_name_pos_rot("another_tree", VEC3_ORIGIN, ROT3_UNITY);
 
-    EXPECT_THROW(tree.erase(&another_tree), std::out_of_range);
+    CHECK_THROWS_AS(tree.erase(&another_tree), std::out_of_range);
 }
 
-TEST_F(FrameTest, removing_a_cild) {
+TEST_CASE("FrameTest: removing_a_cild", "[mctracer]") {
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);
 
@@ -211,17 +211,17 @@ TEST_F(FrameTest, removing_a_cild) {
     ground->set_radius(3.0);
     ground->set_outer_color(&COLOR_GRASS_GREEN);
 
-    EXPECT_EQ(tree.get_bounding_sphere_radius(), 0.0);
-    EXPECT_EQ(pole->get_bounding_sphere_radius(), 0.0);
+    CHECK(0.0 == tree.get_bounding_sphere_radius());
+    CHECK(0.0 == pole->get_bounding_sphere_radius());
 
     tree.init_tree_based_on_mother_child_relations();
 
-    EXPECT_GT(tree.get_bounding_sphere_radius(), 0.0);
-    EXPECT_GT(pole->get_bounding_sphere_radius(), 0.0);
+    CHECK(0.0 < tree.get_bounding_sphere_radius());
+    CHECK(0.0 < pole->get_bounding_sphere_radius());
 
     Ray ray(Vec3(0, -5, -1.8), Vec3(0, 1, 0));
     Intersection isec = RayAndFrame::first_intersection(&ray, &tree);
-    EXPECT_FALSE(isec.does_intersect());
+    CHECK(!isec.does_intersect());
 
     // Append a temporary frame
     Frame* temp = tree.append<Frame>();
@@ -235,13 +235,13 @@ TEST_F(FrameTest, removing_a_cild) {
     tree.init_tree_based_on_mother_child_relations();
 
     isec = RayAndFrame::first_intersection(&ray, &tree);
-    ASSERT_TRUE(isec.does_intersect());
-    EXPECT_EQ(isec.get_object(), tball);
+    REQUIRE(isec.does_intersect());
+    CHECK(tball == isec.get_object());
 
     // Erase temporary frame
     tree.erase(temp);
     tree.init_tree_based_on_mother_child_relations();
 
     isec = RayAndFrame::first_intersection(&ray, &tree);
-    EXPECT_FALSE(isec.does_intersect());
+    CHECK(!isec.does_intersect());
 }

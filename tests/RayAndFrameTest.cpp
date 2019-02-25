@@ -1,20 +1,20 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <math.h>
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/RayAndFrame.h"
 #include "Core/scenery/primitive/Sphere.h"
 using namespace relleums;
 namespace raf = RayAndFrame;
 
-class RayAndFrameBoundingSphereTest : public ::testing::Test {};
 
-TEST_F(RayAndFrameBoundingSphereTest, frame_has_bounding_sphere) {
+
+TEST_CASE("RayAndFrameBoundingSphereTest: frame_has_bounding_sphere", "[mctracer]") {
     Sphere sphere("sphere", VEC3_ORIGIN, ROT3_UNITY);
     sphere.set_radius(1.0);
-    EXPECT_EQ(1.0, sphere.get_bounding_sphere_radius());
+    CHECK(sphere.get_bounding_sphere_radius() == 1.0);
 }
 
-TEST_F(RayAndFrameBoundingSphereTest, support_inside_bounding_sphere) {
+TEST_CASE("RayAndFrameBoundingSphereTest: support_inside_bounding_sphere", "[mctracer]") {
     //                 __-----__
     //                /         \                                             //
     //              /             \                                           //
@@ -27,10 +27,10 @@ TEST_F(RayAndFrameBoundingSphereTest, support_inside_bounding_sphere) {
     sphere.set_radius(1.0);
 
     Ray ray(VEC3_ORIGIN, VEC3_UNIT_X);
-    EXPECT_TRUE(raf::ray_support_inside_frames_bounding_sphere(&ray, &sphere));
+    CHECK(raf::ray_support_inside_frames_bounding_sphere(&ray, &sphere));
 }
 
-TEST_F(RayAndFrameBoundingSphereTest, support_outside_bounding_sphere) {
+TEST_CASE("RayAndFrameBoundingSphereTest: support_outside_bounding_sphere", "[mctracer]") {
     //                 __-----__
     //                /         \                                             //
     //              /             \                                           //
@@ -43,10 +43,10 @@ TEST_F(RayAndFrameBoundingSphereTest, support_outside_bounding_sphere) {
     sphere.set_radius(1.0);
 
     Ray ray(Vec3(2.0, 0.0, 0.0), VEC3_UNIT_X);
-    EXPECT_FALSE(raf::ray_support_inside_frames_bounding_sphere(&ray, &sphere));
+    CHECK(!raf::ray_support_inside_frames_bounding_sphere(&ray, &sphere));
 }
 
-TEST_F(RayAndFrameBoundingSphereTest, frontal_hit) {
+TEST_CASE("RayAndFrameBoundingSphereTest: frontal_hit", "[mctracer]") {
     //                 __-----__
     //                /         \                                             //
     //              /             \                                           //
@@ -59,10 +59,10 @@ TEST_F(RayAndFrameBoundingSphereTest, frontal_hit) {
     sphere.set_radius(1.0);
 
     Ray ray(Vec3(-2.0, 0.0, 0.0), VEC3_UNIT_X);
-    EXPECT_TRUE(raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
+    CHECK(raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
 }
 
-TEST_F(RayAndFrameBoundingSphereTest, no_hit) {
+TEST_CASE("RayAndFrameBoundingSphereTest: no_hit", "[mctracer]") {
     //                 __-----__
     //                /         \                                             //
     //              /             \                                           //
@@ -75,10 +75,10 @@ TEST_F(RayAndFrameBoundingSphereTest, no_hit) {
     sphere.set_radius(1.0);
 
     Ray ray(Vec3(+2.0, 0.0, 0.0), VEC3_UNIT_X);
-    EXPECT_FALSE(raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
+    CHECK(!raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
 }
 
-TEST_F(RayAndFrameBoundingSphereTest, hit_inside_bounding_sphere) {
+TEST_CASE("RayAndFrameBoundingSphereTest: hit_inside_bounding_sphere", "[mctracer]") {
     //                 __-----__
     //                /         \                                             //
     //              /             \                                           //
@@ -91,10 +91,10 @@ TEST_F(RayAndFrameBoundingSphereTest, hit_inside_bounding_sphere) {
     sphere.set_radius(1.0);
 
     Ray ray(VEC3_ORIGIN, VEC3_UNIT_X);
-    EXPECT_TRUE(raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
+    CHECK(raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
 }
 
-TEST_F(RayAndFrameBoundingSphereTest, frontal_hits) {
+TEST_CASE("RayAndFrameBoundingSphereTest: frontal_hits", "[mctracer]") {
     //    _________\                                                          //
     // (-5,+2.0,0) /
     //    .           __-----__
@@ -115,15 +115,15 @@ TEST_F(RayAndFrameBoundingSphereTest, frontal_hits) {
     for (double y = -2.0; y < 2.0; y+=0.002) {
         Ray ray(Vec3(-5.0, y, 0.0), VEC3_UNIT_X);
         if (fabs(y) > sphere_radius)
-            EXPECT_FALSE(raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
+            CHECK(!raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
         else
-            EXPECT_TRUE(raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
+            CHECK(raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
     }
 }
 
-class RayAndFrameTest : public ::testing::Test {};
 
-TEST_F(RayAndFrameTest, transform_into_unit_frame) {
+
+TEST_CASE("RayAndFrameTest: transform_into_unit_frame", "[mctracer]") {
     Frame frame;
     frame.set_name_pos_rot("frame", VEC3_ORIGIN, ROT3_UNITY);
     frame.init_tree_based_on_mother_child_relations();
@@ -134,11 +134,11 @@ TEST_F(RayAndFrameTest, transform_into_unit_frame) {
         &ray,
         &frame);
 
-    EXPECT_EQ(ray_t.support(), VEC3_ORIGIN);
-    EXPECT_EQ(ray_t.direction(), VEC3_UNIT_Z);
+    CHECK(VEC3_ORIGIN == ray_t.support());
+    CHECK(VEC3_UNIT_Z == ray_t.direction());
 }
 
-TEST_F(RayAndFrameTest, transform_into_translated_frame) {
+TEST_CASE("RayAndFrameTest: transform_into_translated_frame", "[mctracer]") {
     Frame frame;
     frame.set_name_pos_rot("frame", Vec3(0.0, 0.0, 13.37), ROT3_UNITY);
     frame.init_tree_based_on_mother_child_relations();
@@ -149,11 +149,11 @@ TEST_F(RayAndFrameTest, transform_into_translated_frame) {
         &ray,
         &frame);
 
-    EXPECT_EQ(ray_t.support(), Vec3(0.0, 4.2, -13.37));
-    EXPECT_EQ(ray_t.direction(), VEC3_UNIT_Z);
+    CHECK(Vec3(0.0, 4.2, -13.37) == ray_t.support());
+    CHECK(VEC3_UNIT_Z == ray_t.direction());
 }
 
-TEST_F(RayAndFrameTest, transform_ray_in_z_into_frame_rotated_in_z) {
+TEST_CASE("RayAndFrameTest: transform_ray_in_z_into_frame_rotated_in_z", "[mctracer]") {
     Frame frame;
     frame.set_name_pos_rot("frame", VEC3_ORIGIN, Rot3(0.0, 0.0, 0.5*M_PI));
     frame.init_tree_based_on_mother_child_relations();
@@ -164,11 +164,11 @@ TEST_F(RayAndFrameTest, transform_ray_in_z_into_frame_rotated_in_z) {
         &ray,
         &frame);
 
-    EXPECT_EQ(ray_t.support(), VEC3_ORIGIN);
-    EXPECT_EQ(ray_t.direction(), VEC3_UNIT_Z);
+    CHECK(VEC3_ORIGIN == ray_t.support());
+    CHECK(VEC3_UNIT_Z == ray_t.direction());
 }
 
-TEST_F(RayAndFrameTest, transform_ray_into_rotated_frame) {
+TEST_CASE("RayAndFrameTest: transform_ray_into_rotated_frame", "[mctracer]") {
     Frame frame;
     frame.set_name_pos_rot("frame", VEC3_ORIGIN, Rot3(0.0, 0.0, 0.5*M_PI));
     frame.init_tree_based_on_mother_child_relations();
@@ -179,11 +179,11 @@ TEST_F(RayAndFrameTest, transform_ray_into_rotated_frame) {
         &ray,
         &frame);
 
-    EXPECT_EQ(ray_t.support(), VEC3_ORIGIN);
-    EXPECT_EQ(ray_t.direction(), VEC3_UNIT_Y);
+    CHECK(VEC3_ORIGIN == ray_t.support());
+    CHECK(VEC3_UNIT_Y == ray_t.direction());
 }
 
-TEST_F(RayAndFrameTest, causal_intersection) {
+TEST_CASE("RayAndFrameTest: causal_intersection", "[mctracer]") {
     Frame spheres_in_a_row;
     spheres_in_a_row.set_name_pos_rot("spheres", VEC3_ORIGIN, ROT3_UNITY);
 

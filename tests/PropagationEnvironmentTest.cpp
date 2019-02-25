@@ -1,14 +1,14 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/PropagationEnvironment.h"
 
 using namespace relleums;
 
-class PropagationEnvironmentTest : public ::testing::Test {};
 
-TEST_F(PropagationEnvironmentTest, default_instance) {
+
+TEST_CASE("PropagationEnvironmentTest: default_instance", "[mctracer]") {
     PropagationEnvironment env;
-    EXPECT_EQ(&VOID_FRAME, env.root_frame);
-    EXPECT_EQ(&DEFAULT_PROPAGATIONCONFIG, env.config);
-    EXPECT_EQ(&random::VOID_PRNG, env.prng);
+    CHECK(env.root_frame == &VOID_FRAME);
+    CHECK(env.config == &DEFAULT_PROPAGATIONCONFIG);
+    CHECK(env.prng == &random::VOID_PRNG);
 }

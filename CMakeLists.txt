@@ -101,16 +101,6 @@ target_link_libraries(mctPlenoscopeRawPhotonPropagation mct)
 target_link_libraries(mctPlenoscopeRawPhotonPropagation stdc++fs)
 target_link_libraries(mctPlenoscopeRawPhotonPropagation docopt)
 
-#---------------------------------
-# unit test exe
-add_subdirectory("${PROJECT_SOURCE_DIR}/tests/gtest-1.7.0")
-include_directories("${PROJECT_SOURCE_DIR}/tests/gtest-1.7.0/include")
-add_subdirectory("${PROJECT_SOURCE_DIR}/tests")
-
-add_executable(mctTest ./tests/test.cpp ${TEST_SOURCE})
-target_link_libraries(mctTest gtest gtest_main)
-target_link_libraries(mctTest mct)
-
 #---------
 # STL scaling
 add_executable(mctScaleStl main/ScaleStl.cpp)
@@ -124,7 +114,11 @@ target_link_libraries(mctFactPropagation mct)
 target_link_libraries(mctFactPropagation stdc++fs)
 target_link_libraries(mctFactPropagation docopt)
 
-#------------------------
-# catch header-only test
-add_executable(mctCatch ./Core/test/test.cpp)
-target_link_libraries(mctCatch mct)
+
+#---------------------------------
+# unit test exe
+add_subdirectory("${PROJECT_SOURCE_DIR}/tests")
+
+add_executable(mctTest ./tests/test.cpp ${TEST_SOURCE})
+target_link_libraries(mctTest gtest gtest_main)
+target_link_libraries(mctTest mct)

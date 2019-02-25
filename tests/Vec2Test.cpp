@@ -1,76 +1,76 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <cmath>
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/mctracer.h"
 
 using namespace relleums;
 
-class Vec2Test : public ::testing::Test {};
 
-TEST_F(Vec2Test, NullVector) {
+
+TEST_CASE("Vec2Test: NullVector", "[mctracer]") {
     Vec2 a = VEC2_ORIGIN;
-    EXPECT_EQ(0.0, a.x);
-    EXPECT_EQ(0.0, a.y);
-    EXPECT_EQ(0.0, a.norm());
+    CHECK(a.x == 0.0);
+    CHECK(a.y == 0.0);
+    CHECK(a.norm() == 0.0);
 }
 
-TEST_F(Vec2Test, UnitVectors) {
+TEST_CASE("Vec2Test: UnitVectors", "[mctracer]") {
     Vec2 a;
     a = VEC2_UNIT_X;
-    EXPECT_EQ(1.0, a.x);
-    EXPECT_EQ(0.0, a.y);
-    EXPECT_EQ(1.0, a.norm());
+    CHECK(a.x == 1.0);
+    CHECK(a.y == 0.0);
+    CHECK(a.norm() == 1.0);
     a = VEC2_UNIT_Y;
-    EXPECT_EQ(0.0, a.x);
-    EXPECT_EQ(1.0, a.y);
-    EXPECT_EQ(1.0, a.norm());
+    CHECK(a.x == 0.0);
+    CHECK(a.y == 1.0);
+    CHECK(a.norm() == 1.0);
 }
 
-TEST_F(Vec2Test, ConstructorAndGetter) {
+TEST_CASE("Vec2Test: ConstructorAndGetter", "[mctracer]") {
     double x, y;
     for (x = -2.0; x > 2.0; x = x+.25) {
         for (y = -2.0; y > 2.0; y = y+.25) {
             Vec2 v(x, y);
-            EXPECT_EQ(x, v.x);
-            EXPECT_EQ(y, v.y);
+            CHECK(v.x == x);
+            CHECK(v.y == y);
         }
     }
 }
 
-TEST_F(Vec2Test, SetterAndGetter) {
+TEST_CASE("Vec2Test: SetterAndGetter", "[mctracer]") {
     double x, y;
     for (x = -2.0; x > 2.0; x = x+.25) {
         for (y = -2.0; y > 2.0; y = y+.25) {
             Vec2 v;
             v.set(x, y);
-            EXPECT_EQ(x, v.x);
-            EXPECT_EQ(y, v.y);
+            CHECK(v.x == x);
+            CHECK(v.y == y);
         }
     }
 }
 
-TEST_F(Vec2Test, EuclideanNorm) {
+TEST_CASE("Vec2Test: EuclideanNorm", "[mctracer]") {
     double x, y;
     for (x = -2.0; x > 2.0; x = x+.25) {
         for (y = -2.0; y > 2.0; y = y+.25) {
             Vec2 v(x, y);
-            EXPECT_EQ(sqrt(x*x+y*y), v.norm());
+            CHECK(v.norm() == sqrt(x*x+y*y));
         }
     }
     Vec2 v;
     v.set(1.0, 0.0);
-    EXPECT_EQ(1.0, v.norm());
+    CHECK(v.norm() == 1.0);
     v.set(0.0, 1.0);
-    EXPECT_EQ(1.0, v.norm());}
+    CHECK(v.norm() == 1.0);
 
-TEST_F(Vec2Test, Scalar_Product_unit_vectors) {
+TEST_CASE("Vec2Test: Scalar_Product_unit_vectors", "[mctracer]") {
     const Vec2 x = VEC2_UNIT_X;
     const Vec2 y = VEC2_UNIT_Y;
-    EXPECT_EQ(0.0, x*y);
-    EXPECT_EQ(1.0, x*x);
+    CHECK(x*y == 0.0);
+    CHECK(x*x == 1.0);
 }
 
-TEST_F(Vec2Test, Scalar_Product) {
+TEST_CASE("Vec2Test: Scalar_Product", "[mctracer]") {
     double x1, x2, y1, y2;
     for (x1 = -2.0; x1 > 2.0; x1 = x1+.25) {
         for (y1 = -2.0; y1 > 2.0; y1 = y1+.25) {
@@ -78,111 +78,111 @@ TEST_F(Vec2Test, Scalar_Product) {
                 for (y2 = -2.0; y2 > 2.0; y2 = y2+.25) {
                     const Vec2 v1(x1, y1);
                     const Vec2 v2(x2, y2);
-                    EXPECT_EQ(x1*x2 + y1*y2, v1*v2);
+                    CHECK(v1*v2 == x1*x2 + y1*y2);
                 }
             }
         }
     }
 }
 
-TEST_F(Vec2Test, ScalarMultiplication) {
+TEST_CASE("Vec2Test: ScalarMultiplication", "[mctracer]") {
     double x, y, f;
     for (x = -2.0; x > 2.0; x = x+.25) {
         for (y = -2.0; y > 2.0; y = y+.25) {
             Vec2 a(x, y);
             for (f = -2.0; f > 2.0; f = f+.25) {
-                EXPECT_EQ(x*f, (a*f).x);
-                EXPECT_EQ(y*f, (a*f).y);
+                CHECK((a*f).x == x*f);
+                CHECK((a*f).y == y*f);
             }
         }
     }
 }
 
-TEST_F(Vec2Test, ScalarDiviation) {
+TEST_CASE("Vec2Test: ScalarDiviation", "[mctracer]") {
     double x, y, f;
     for (x = -2.0; x > 2.0; x = x+.25) {
         for (y = -2.0; y > 2.0; y = y+.25) {
             Vec2 a(x, y);
             for (f = -2.0; f > 2.0; f = f+.25) {
-                EXPECT_EQ(x/f, (a/f).x);
-                EXPECT_EQ(y/f, (a/f).y);
+                CHECK((a/f).x == x/f);
+                CHECK((a/f).y == y/f);
             }
         }
     }
 }
 
-TEST_F(Vec2Test, distance_unit_x_to_unit_y) {
+TEST_CASE("Vec2Test: distance_unit_x_to_unit_y", "[mctracer]") {
     Vec2 a = VEC2_UNIT_X;
     Vec2 b = VEC2_UNIT_Y;
-    EXPECT_EQ(sqrt(2.0), a.distance_to(b));
+    CHECK(a.distance_to(b) == sqrt(2.0));
 }
 
-TEST_F(Vec2Test, distance_to_itself) {
+TEST_CASE("Vec2Test: distance_to_itself", "[mctracer]") {
     Vec2 a(1.3, 3.7);
-    EXPECT_EQ(0.0, a.distance_to(a));
+    CHECK(a.distance_to(a) == 0.0);
 }
 
-TEST_F(Vec2Test, Operator_equals_expect_true) {
+TEST_CASE("Vec2Test: Operator_equals_expect_true", "[mctracer]") {
     Vec2 a(1.3, 4.2);
     Vec2 b(1.3, 4.2+1e-20);
-    EXPECT_EQ(a, b);
-    EXPECT_TRUE(a == b);
-    EXPECT_FALSE(a != b);
+    CHECK(b == a);
+    CHECK(a == b);
+    CHECK(!a != b);
 }
 
-TEST_F(Vec2Test, Operator_equals_expect_false) {
+TEST_CASE("Vec2Test: Operator_equals_expect_false", "[mctracer]") {
     Vec2 a(1.3, 4.2);
     Vec2 b(1.3, 4.2 + 2e-7);
-    EXPECT_NE(a, b);
-    EXPECT_TRUE(a != b);
-    EXPECT_FALSE(a == b);
+    CHECK(b != a);
+    CHECK(a != b);
+    CHECK(!a == b);
 }
 
-TEST_F(Vec2Test, normalize) {
+TEST_CASE("Vec2Test: normalize", "[mctracer]") {
     Vec2 a(1.0, 2.0);
-    EXPECT_NE(1.0, a.norm());
+    CHECK(a.norm() != 1.0);
     a.normalize();
-    EXPECT_NEAR(1.0, a.norm(), 1e-9);
+    CHECK(1.0 == Approx(a.norm()).margin(1e-9));
 
     a = a*2.0;
-    EXPECT_NE(1.0, a.norm());
+    CHECK(a.norm() != 1.0);
 
     a.normalize();
-    EXPECT_EQ(1.0, a.norm());
+    CHECK(a.norm() == 1.0);
 
     a = VEC2_ORIGIN;
-    EXPECT_NE(1.0, a.norm());
+    CHECK(a.norm() != 1.0);
 
     a.normalize();
-    EXPECT_EQ(std::isnan(a.norm()), 1);
+    CHECK(1 == std::isnan(a.norm()));
 }
 
-TEST_F(Vec2Test, angle_in_between) {
+TEST_CASE("Vec2Test: angle_in_between", "[mctracer]") {
     Vec2 a = VEC2_UNIT_X;
     Vec2 b = VEC2_UNIT_X;
 
-    EXPECT_EQ(0.0, a.angle_in_between(b));
-    EXPECT_EQ(b.angle_in_between(a), a.angle_in_between(b));
+    CHECK(a.angle_in_between(b) == 0.0);
+    CHECK(a.angle_in_between(b) == b.angle_in_between(a));
 
     Vec2 c = VEC2_UNIT_X*5.0;
-    EXPECT_NE(1.0, c.norm());
+    CHECK(c.norm() != 1.0);
 
     Vec2 d = VEC2_UNIT_X*5.0;
-    EXPECT_NE(1.0, d.norm());
+    CHECK(d.norm() != 1.0);
 
-    EXPECT_EQ(0.0, d.angle_in_between(c));
-    EXPECT_EQ(c.angle_in_between(d), d.angle_in_between(c));
+    CHECK(d.angle_in_between(c) == 0.0);
+    CHECK(d.angle_in_between(c) == c.angle_in_between(d));
 
     Vec2 foo = VEC2_UNIT_X*5.0 + VEC2_UNIT_Y*5.0;
-    EXPECT_NE(1.0, c.norm());
+    CHECK(c.norm() != 1.0);
 
     Vec2 bar = VEC2_UNIT_X*5.0;
-    EXPECT_NE(1.0, d.norm());
+    CHECK(d.norm() != 1.0);
 
-    EXPECT_NEAR(deg2rad(45.0), foo.angle_in_between(bar), 1e-5);
+    CHECK(deg2rad(45.0) == Approx(foo.angle_in_between(bar)).margin(1e-5));
 }
 
-TEST_F(Vec2Test, quadrant_encoding) {
+TEST_CASE("Vec2Test: quadrant_encoding", "[mctracer]") {
     // x y sector
     // - -   0
     // - +   1
@@ -194,23 +194,23 @@ TEST_F(Vec2Test, quadrant_encoding) {
     double n = -1.0;
 
     a.set(n, n);
-    EXPECT_EQ(0u, a.get_quadrant());
+    CHECK(a.get_quadrant() == 0u);
 
     a.set(n, p);
-    EXPECT_EQ(1u, a.get_quadrant());
+    CHECK(a.get_quadrant() == 1u);
 
     a.set(p, n);
-    EXPECT_EQ(2u, a.get_quadrant());
+    CHECK(a.get_quadrant() == 2u);
 
     a.set(p, p);
-    EXPECT_EQ(3u, a.get_quadrant());
+    CHECK(a.get_quadrant() == 3u);
 
     a.set(0.0, 0.0);
-    EXPECT_EQ(0u, a.get_quadrant());
+    CHECK(a.get_quadrant() == 0u);
     a.set(0.0, p);
-    EXPECT_EQ(1u, a.get_quadrant());
+    CHECK(a.get_quadrant() == 1u);
     a.set(p, 0.0);
-    EXPECT_EQ(2u, a.get_quadrant());
+    CHECK(a.get_quadrant() == 2u);
     a.set(p, p);
-    EXPECT_EQ(3u, a.get_quadrant());
+    CHECK(a.get_quadrant() == 3u);
 }

@@ -1,12 +1,12 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <vector>
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "signal_processing/PhotoElectricConverter.h"
 #include "Core/Histogram1.h"
 using std::vector;
 using namespace relleums;
 
-class PhotoElectricConverterTest : public ::testing::Test {};
+
 
 vector<signal_processing::PipelinePhoton> equi_distant_photons(
     const unsigned int n
@@ -27,19 +27,19 @@ vector<signal_processing::PipelinePhoton> equi_distant_photons(
 }
 
 
-TEST_F(PhotoElectricConverterTest, config_defaults) {
+TEST_CASE("PhotoElectricConverterTest: config_defaults", "[mctracer]") {
     signal_processing::PhotoElectricConverter::Config config;
-    EXPECT_EQ(0.0, config.dark_rate);
-    EXPECT_EQ(0.0, config.probability_for_second_puls);
+    CHECK(config.dark_rate == 0.0);
+    CHECK(config.probability_for_second_puls == 0.0);
 
     for (double wavelength = 200e-9; wavelength < 1200e-9; wavelength+=10e-9)
-        EXPECT_EQ(0.0, config.quantum_efficiency_vs_wavelength->evaluate(wavelength));
+        CHECK(config.quantum_efficiency_vs_wavelength->evaluate(wavelength) == 0.0);
 
-    EXPECT_THROW(config.quantum_efficiency_vs_wavelength->evaluate(1200e-9), std::out_of_range);
-    EXPECT_THROW(config.quantum_efficiency_vs_wavelength->evaluate(199e-9), std::out_of_range);
+    CHECK_THROWS_AS(config.quantum_efficiency_vs_wavelength->evaluate(1200e-9), std::out_of_range);
+    CHECK_THROWS_AS(config.quantum_efficiency_vs_wavelength->evaluate(199e-9), std::out_of_range);
 }
 
-TEST_F(PhotoElectricConverterTest, empty_input_yields_empty_output) {
+TEST_CASE("PhotoElectricConverterTest: empty_input_yields_empty_output", "[mctracer]") {
     signal_processing::PhotoElectricConverter::Config config;
     signal_processing::PhotoElectricConverter::Converter conv(&config);
 
@@ -52,10 +52,10 @@ TEST_F(PhotoElectricConverterTest, empty_input_yields_empty_output) {
             exposure_time,
             &prng);
 
-    EXPECT_EQ(0u, result.size());
+    CHECK(result.size() == 0u);
 }
 
-TEST_F(PhotoElectricConverterTest, input_pulses_absorbed_zero_qunatum_eff) {
+TEST_CASE("PhotoElectricConverterTest: input_pulses_absorbed_zero_qunatum_eff", "[mctracer]") {
     signal_processing::PhotoElectricConverter::Config config;
     signal_processing::PhotoElectricConverter::Converter conv(&config);
 
@@ -70,10 +70,10 @@ TEST_F(PhotoElectricConverterTest, input_pulses_absorbed_zero_qunatum_eff) {
             exposure_time,
             &prng);
 
-    EXPECT_EQ(0u, result.size());
+    CHECK(result.size() == 0u);
 }
 
-TEST_F(PhotoElectricConverterTest, input_pulses_pass_qunatum_eff_is_one) {
+TEST_CASE("PhotoElectricConverterTest: input_pulses_pass_qunatum_eff_is_one", "[mctracer]") {
     signal_processing::PhotoElectricConverter::Config config;
     function::Func1 qeff({{200e-9, 1.0}, {1200e-9, 1.0}});
     config.quantum_efficiency_vs_wavelength = &qeff;
@@ -90,13 +90,13 @@ TEST_F(PhotoElectricConverterTest, input_pulses_pass_qunatum_eff_is_one) {
             exposure_time,
             &prng);
 
-    ASSERT_EQ(1337u, result.size());
+    REQUIRE(result.size() == 1337u);
     for (unsigned int i = 0; i < result.size(); i++) {
-        EXPECT_EQ(photon_pipeline.at(i).arrival_time, result.at(i).arrival_time);
+        CHECK(result.at(i).arrival_time == photon_pipeline.at(i).arrival_time);
     }
 }
 
-TEST_F(PhotoElectricConverterTest, dark_rate_on_empty_photon_pipe) {
+TEST_CASE("PhotoElectricConverterTest: dark_rate_on_empty_photon_pipe", "[mctracer]") {
     signal_processing::PhotoElectricConverter::Config config;
     config.dark_rate = 100e6;
     signal_processing::PhotoElectricConverter::Converter conv(&config);
@@ -111,10 +111,10 @@ TEST_F(PhotoElectricConverterTest, dark_rate_on_empty_photon_pipe) {
             exposure_time,
             &prng);
 
-    EXPECT_NEAR(100u, result.size(), 3);
+    CHECK(100u == Approx(result.size()).margin(3));
 }
 
-TEST_F(PhotoElectricConverterTest, triangle_qeff) {
+TEST_CASE("PhotoElectricConverterTest: triangle_qeff", "[mctracer]") {
     // Qeff [1]                                            //
     //                                                     //
     // _1.0_|                                              //
@@ -162,7 +162,7 @@ TEST_F(PhotoElectricConverterTest, triangle_qeff) {
             exposure_time,
             &prng);
 
-    EXPECT_NEAR(n/2, result.size(), static_cast<double>(n));
+    CHECK(n/2 == Approx(result.size()).margin(static_cast<double>(n)));
 
     vector<double> survived_arrival_times;
     // We created a correlation between wavelength and arrival
@@ -186,14 +186,14 @@ TEST_F(PhotoElectricConverterTest, triangle_qeff) {
             1000*1000
         });
 
-    EXPECT_NEAR(10*1000u, hist.bins.at(0), 58);
-    EXPECT_NEAR(30*1000u, hist.bins.at(1), 253);
-    EXPECT_NEAR(50*1000u, hist.bins.at(2), 119);
-    EXPECT_NEAR(70*1000u, hist.bins.at(3), 39);
-    EXPECT_NEAR(90*1000u, hist.bins.at(4), 54);
-    EXPECT_NEAR(90*1000u, hist.bins.at(5), 228);
-    EXPECT_NEAR(70*1000u, hist.bins.at(6), 71);
-    EXPECT_NEAR(50*1000u, hist.bins.at(7), 194);
-    EXPECT_NEAR(30*1000u, hist.bins.at(8), 37);
-    EXPECT_NEAR(10*1000u, hist.bins.at(9), 25);
+    CHECK(10*1000u == Approx(hist.bins.at(0)).margin(58));
+    CHECK(30*1000u == Approx(hist.bins.at(1)).margin(253));
+    CHECK(50*1000u == Approx(hist.bins.at(2)).margin(119));
+    CHECK(70*1000u == Approx(hist.bins.at(3)).margin(39));
+    CHECK(90*1000u == Approx(hist.bins.at(4)).margin(54));
+    CHECK(90*1000u == Approx(hist.bins.at(5)).margin(228));
+    CHECK(70*1000u == Approx(hist.bins.at(6)).margin(71));
+    CHECK(50*1000u == Approx(hist.bins.at(7)).margin(194));
+    CHECK(30*1000u == Approx(hist.bins.at(8)).margin(37));
+    CHECK(10*1000u == Approx(hist.bins.at(9)).margin(25));
 }

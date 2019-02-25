@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/scenery/primitive/Disc.h"
 #include "Core/Photons.h"
 #include "Core/scenery/Scenery.h"
@@ -9,16 +9,16 @@ using std::string;
 using std::stringstream;
 using std::vector;
 
-class ParallelPropagationTest : public ::testing::Test {};
 
-TEST_F(ParallelPropagationTest, propagate_once) {
+
+TEST_CASE("ParallelPropagationTest: propagate_once", "[mctracer]") {
 	const uint64_t num_photons = 1000;
 	random::Mt19937 prng(0u);
 	vector<Photon> photons1 = Photons::Source::parallel_towards_z_from_xy_disc(
 		1.0,
 		num_photons,
 		&prng);
-	ASSERT_EQ(num_photons, photons1.size());
+	REQUIRE(photons1.size() == num_photons);
 
 	Scenery scenery;
 	scenery.colors.add("red", Color(255, 0, 0));
@@ -73,13 +73,13 @@ TEST_F(ParallelPropagationTest, propagate_once) {
 		final_interactions_run_2[i] = photons2[i].get_final_interaction_type();
 	}
 
-	ASSERT_EQ(photons1.size(), photons2.size());
-	ASSERT_EQ(final_interactions_run_1.size(), final_interactions_run_2.size());
+	REQUIRE(photons2.size() == photons1.size());
+	REQUIRE(final_interactions_run_2.size() == final_interactions_run_1.size());
 
 	// Must yield same interactions for all photons
 	// --------------------------------------------
 
 	for (uint64_t i = 0; i < final_interactions_run_1.size(); ++i) {
-		EXPECT_EQ(final_interactions_run_1[i], final_interactions_run_2[i]);
+		CHECK(final_interactions_run_2[i] == final_interactions_run_1[i]);
 	}
 }

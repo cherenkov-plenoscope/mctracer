@@ -1,40 +1,40 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/scenery/ColorMap.h"
 
 using namespace relleums;
 
-class ColorMapTest : public ::testing::Test {};
 
-TEST_F(ColorMapTest, init_empty) {
+
+TEST_CASE("ColorMapTest: init_empty", "[mctracer]") {
     ColorMap my_colors;
-    EXPECT_FALSE(my_colors.has("red"));
+    CHECK(!my_colors.has("red"));
 }
 
-TEST_F(ColorMapTest, get_not_existing_color) {
+TEST_CASE("ColorMapTest: get_not_existing_color", "[mctracer]") {
     ColorMap my_colors;
-    EXPECT_THROW(my_colors.get("red"), ColorMap::NoSuchKey);
+    CHECK_THROWS_AS(my_colors.get("red"), ColorMap::NoSuchKey);
 }
 
-TEST_F(ColorMapTest, add_color_and_check_it_is_in) {
-    ColorMap my_colors;
-    my_colors.add("red", Color(255, 0, 0));
-    EXPECT_TRUE(my_colors.has("red"));
-}
-
-TEST_F(ColorMapTest, add_color_and_add_it_again) {
+TEST_CASE("ColorMapTest: add_color_and_check_it_is_in", "[mctracer]") {
     ColorMap my_colors;
     my_colors.add("red", Color(255, 0, 0));
-    EXPECT_THROW(my_colors.add("red", Color(128, 0, 0)), ColorMap::KeyAlreadyInUse);
+    CHECK(my_colors.has("red"));
 }
 
-TEST_F(ColorMapTest, add_color_and_get_it_again) {
+TEST_CASE("ColorMapTest: add_color_and_add_it_again", "[mctracer]") {
+    ColorMap my_colors;
+    my_colors.add("red", Color(255, 0, 0));
+    CHECK_THROWS_AS(my_colors.add("red", Color(128, 0, 0)), ColorMap::KeyAlreadyInUse);
+}
+
+TEST_CASE("ColorMapTest: add_color_and_get_it_again", "[mctracer]") {
     ColorMap my_colors;
     Color novel_red =  Color(255, 0, 0);
     my_colors.add("red", novel_red);
     const Color* my_red = my_colors.get("red");
-    EXPECT_EQ(my_red->r, novel_red.r);
-    EXPECT_EQ(my_red->g, novel_red.g);
-    EXPECT_EQ(my_red->b, novel_red.b);
+    CHECK(novel_red.r == my_red->r);
+    CHECK(novel_red.g == my_red->g);
+    CHECK(novel_red.b == my_red->b);
 }
 

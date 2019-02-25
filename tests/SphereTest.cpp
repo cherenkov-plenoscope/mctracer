@@ -1,26 +1,22 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/scenery/primitive/Sphere.h"
 
 using namespace relleums;
 
-class SphereTest : public ::testing::Test {};
 
-TEST_F(SphereTest, set_positiv_radius) {
+
+TEST_CASE("SphereTest: set_positiv_radius", "[mctracer]") {
   Sphere N;
-  EXPECT_NO_THROW(N.set_radius(1.0));
+  CHECK_NOTHROW(N.set_radius(1.0));
 }
 
-TEST_F(SphereTest, set_negativ_radius) {
+TEST_CASE("SphereTest: set_negativ_radius", "[mctracer]") {
   Sphere N;
-  EXPECT_THROW(N.set_radius(-1.0), Sphere::BadRadius) <<
-  "Spheres must not have negative radius";
+  CHECK_THROWS_AS(N.set_radius(-1.0), Sphere::BadRadius);
 }
 
-TEST_F(SphereTest, set_zero_radius) {
+TEST_CASE("SphereTest: set_zero_radius", "[mctracer]") {
   Sphere N;
-  EXPECT_THROW(N.set_radius(0.0), Sphere::BadRadius) <<
-  "Spheres with zero radius are not allowed! "
-  "Imagine setting up such a sphere and wondering why there are never "
-  "intersections althoug no other errors occured.";
+  CHECK_THROWS_AS(N.set_radius(0.0), Sphere::BadRadius);
 }

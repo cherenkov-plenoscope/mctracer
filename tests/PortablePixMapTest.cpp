@@ -1,14 +1,14 @@
 // Copyright 2018 Sebastian A. Mueller
 #include <iostream>
 #include <sstream>
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/mctracer.h"
 
 using namespace relleums;
 
-class PortablePixMapTest : public ::testing::Test {};
 
-TEST_F(PortablePixMapTest, write_and_read) {
+
+TEST_CASE("PortablePixMapTest: write_and_read", "[mctracer]") {
     visual::Image img(16, 9);
 
     for (unsigned int c = 0; c < img.number_cols; c++) {
@@ -31,8 +31,8 @@ TEST_F(PortablePixMapTest, write_and_read) {
     visual::Image img_back = visual::ppm::read_image_from_path(
         "InOut/image_16x9_rgb.ppm");
 
-    ASSERT_EQ(img.number_cols, img_back.number_cols);
-    ASSERT_EQ(img.number_rows, img_back.number_rows);
+    REQUIRE(img_back.number_cols == img.number_cols);
+    REQUIRE(img_back.number_rows == img.number_rows);
 
     for (unsigned int c = 0; c < img.number_cols; c++) {
         for (unsigned int r = 0; r < img.number_rows; r++) {

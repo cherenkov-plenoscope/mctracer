@@ -1,35 +1,35 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/Color.h"
 
 using namespace relleums;
 
-class ColorTest : public ::testing::Test {};
 
-TEST_F(ColorTest, default_ctor) {
+
+TEST_CASE("ColorTest: default_ctor", "[mctracer]") {
     Color c;
-    EXPECT_EQ(c.r, 0);
-    EXPECT_EQ(c.g, 0);
-    EXPECT_EQ(c.b, 0);
+    CHECK(0 == c.r);
+    CHECK(0 == c.g);
+    CHECK(0 == c.b);
 }
 
-TEST_F(ColorTest, reflection_mix) {
+TEST_CASE("ColorTest: reflection_mix", "[mctracer]") {
     Color base(0, 0, 0);
     Color green(0, 100, 0);
     const double reflectivity = 0.5;
     base.reflection_mix(green, reflectivity);
-    EXPECT_EQ(base.r, 0);
-    EXPECT_EQ(base.g, 50);
-    EXPECT_EQ(base.b, 0);
+    CHECK(0 == base.r);
+    CHECK(50 == base.g);
+    CHECK(0 == base.b);
 }
 
-TEST_F(ColorTest, ctor_mix) {
+TEST_CASE("ColorTest: ctor_mix", "[mctracer]") {
     std::vector<Color> rainbow;
     rainbow.push_back(Color(100, 0, 0));
     rainbow.push_back(Color(0, 100, 0));
     rainbow.push_back(Color(0, 0, 100));
     Color mix = Color(rainbow);
-    EXPECT_NEAR(mix.r, 33, 1);
-    EXPECT_NEAR(mix.g, 33, 1);
-    EXPECT_NEAR(mix.b, 33, 1);
+    CHECK(mix.r == Approx(33).margin(1));
+    CHECK(mix.g == Approx(33).margin(1));
+    CHECK(mix.b == Approx(33).margin(1));
 }

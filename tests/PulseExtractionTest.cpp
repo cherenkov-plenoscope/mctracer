@@ -1,6 +1,6 @@
 // Copyright 2017 Sebastian A. Mueller
 #include <stdint.h>
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "signal_processing/signal_processing.h"
 #include "Core/random/random.h"
 #include "Core/SimulationTruth.h"
@@ -9,9 +9,9 @@ using std::vector;
 using std::string;
 using namespace relleums;
 
-class PulseExtractionTest : public ::testing::Test {};
 
-TEST_F(PulseExtractionTest, arrival_time_slices_below_next_channel_marker) {
+
+TEST_CASE("PulseExtractionTest: arrival_time_slices_below_next_channel_marker", "[mctracer]") {
     const float time_slice_duration = .5e-9;
     vector<vector<signal_processing::ExtractedPulse>> response;
     vector<signal_processing::ExtractedPulse> read_out_channel;
@@ -30,10 +30,10 @@ TEST_F(PulseExtractionTest, arrival_time_slices_below_next_channel_marker) {
     signal_processing::PhotonStream::Stream response_back =
         signal_processing::PhotonStream::read(path);
 
-    EXPECT_EQ(response.size(), response_back.photon_stream.size());
+    CHECK(response_back.photon_stream.size() == response.size());
 }
 
-TEST_F(PulseExtractionTest, truncate_invalid_arrival_times) {
+TEST_CASE("PulseExtractionTest: truncate_invalid_arrival_times", "[mctracer]") {
     random::Mt19937 prng(0);
     const double time_slice_duration = .5e-9;
     const double arrival_time_std = 0.0;
@@ -59,7 +59,7 @@ TEST_F(PulseExtractionTest, truncate_invalid_arrival_times) {
             number_invalid_photons++;
     }
 
-    EXPECT_EQ(number_invalid_photons, 2000 - signal_processing::NUMBER_TIME_SLICES);
+    CHECK(2000 - signal_processing::NUMBER_TIME_SLICES == number_invalid_photons);
 
     vector<vector<signal_processing::ExtractedPulse>> raw =
         signal_processing::extract_pulses(
@@ -68,22 +68,22 @@ TEST_F(PulseExtractionTest, truncate_invalid_arrival_times) {
             arrival_time_std,
             &prng);
 
-    ASSERT_EQ(response.size(), raw.size());
-    ASSERT_EQ(response.size(), 1u);
-    EXPECT_FALSE(response.at(0).size() == raw.at(0).size());
+    REQUIRE(raw.size() == response.size());
+    REQUIRE(1u == response.size());
+    CHECK(!response.at(0).size() == raw.at(0).size());
 
     int number_of_passing_photons = 0;
     for (uint32_t ch = 0; ch < raw.size(); ch++) {
         for (uint32_t ph = 0; ph < raw.at(ch).size(); ph++) {
             number_of_passing_photons++;
-            ASSERT_LT(raw.at(ch).at(ph).arrival_time_slice, 255);
+            REQUIRE(255 > raw.at(ch).at(ph).arrival_time_slice);
         }
     }
 
-    EXPECT_EQ(number_of_passing_photons, signal_processing::NUMBER_TIME_SLICES);
+    CHECK(signal_processing::NUMBER_TIME_SLICES == number_of_passing_photons);
 }
 
-TEST_F(PulseExtractionTest, arrival_time_std) {
+TEST_CASE("PulseExtractionTest: arrival_time_std", "[mctracer]") {
     random::Mt19937 prng(0);
     const double time_slice_duration = .5e-9;
     const double arrival_time_std = 5e-9;
@@ -103,8 +103,8 @@ TEST_F(PulseExtractionTest, arrival_time_std) {
     for (signal_processing::ElectricPulse &pulse : response.at(0))
         true_arrival_times.push_back(pulse.arrival_time);
 
-    EXPECT_NEAR(0.0, numeric::stddev(true_arrival_times), 1e-1);
-    EXPECT_NEAR(true_arrival_time, numeric::mean(true_arrival_times), 1e-1);
+    CHECK(0.0 == Approx(numeric::stddev(true_arrival_times)).margin(1e-1));
+    CHECK(true_arrival_time == Approx(numeric::mean(true_arrival_times)).margin(1e-1));
 
     vector<vector<signal_processing::ExtractedPulse>> raw =
         signal_processing::extract_pulses(
@@ -118,6 +118,6 @@ TEST_F(PulseExtractionTest, arrival_time_std) {
         reconstructed_arrival_times.push_back(
             pulse.arrival_time_slice * time_slice_duration);
 
-    EXPECT_NEAR(arrival_time_std, numeric::stddev(reconstructed_arrival_times), 1e-10);
-    EXPECT_NEAR(true_arrival_time, numeric::mean(reconstructed_arrival_times), 1e-10);
+    CHECK(arrival_time_std == Approx(numeric::stddev(reconstructed_arrival_times)).margin(1e-10));
+    CHECK(true_arrival_time == Approx(numeric::mean(reconstructed_arrival_times)).margin(1e-10));
 }

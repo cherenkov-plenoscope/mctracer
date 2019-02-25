@@ -1,11 +1,11 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/mctracer.h"
 using namespace relleums;
 
-class ApertureCameraTest : public ::testing::Test {};
 
-TEST_F(ApertureCameraTest, set_up) {
+
+TEST_CASE("ApertureCameraTest: set_up", "[mctracer]") {
   visual::ApertureCamera Mamiya645("Mamiya645", 640, 480);
   Mamiya645.set_fStop_sesnorWidth(2.3, 6e-2);
   Mamiya645.set_FoV_in_rad(deg2rad(45.0));

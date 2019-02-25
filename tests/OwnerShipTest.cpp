@@ -1,15 +1,15 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <vector>
 #include <string>
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/mctracer.h"
 using std::string;
 using std::vector;
 using namespace relleums;
 
-class OwnerShipTest : public ::testing::Test {};
 
-TEST_F(OwnerShipTest, own) {
+
+TEST_CASE("OwnerShipTest: own", "[mctracer]") {
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);
 

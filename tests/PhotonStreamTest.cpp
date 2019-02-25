@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <stdint.h>
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "signal_processing/signal_processing.h"
 #include "Core/random/random.h"
 #include "Core/SimulationTruth.h"
@@ -47,15 +47,15 @@ void expect_eq(
     const PhotonStream::Stream &B,
     bool simulation_truth_eq = true
 ) {
-    EXPECT_EQ(A.time_slice_duration, B.time_slice_duration);
-    ASSERT_EQ(A.photon_stream.size(),B.photon_stream.size());
+    CHECK(B.time_slice_duration == A.time_slice_duration);
+    REQUIRE(B.photon_stream.size() == A.photon_stream.size());
     for (unsigned int c = 0; c < A.photon_stream.size(); c++) {
-        ASSERT_EQ(A.photon_stream.at(c).size(), B.photon_stream.at(c).size());
+        REQUIRE(B.photon_stream.at(c).size() == A.photon_stream.at(c).size());
         for (unsigned int p = 0; p < A.photon_stream.at(c).size(); p++) {
-            EXPECT_EQ(A.photon_stream.at(c).at(p).arrival_time_slice, B.photon_stream.at(c).at(p).arrival_time_slice);
+            CHECK(B.photon_stream.at(c).at(p).arrival_time_slice == A.photon_stream.at(c).at(p).arrival_time_slice);
 
             if (simulation_truth_eq) {
-                EXPECT_EQ(A.photon_stream.at(c).at(p).simulation_truth_id, B.photon_stream.at(c).at(p).simulation_truth_id);
+                CHECK(B.photon_stream.at(c).at(p).simulation_truth_id == A.photon_stream.at(c).at(p).simulation_truth_id);
             }
         }
     }
@@ -101,9 +101,9 @@ void write_and_read_back(
     expect_eq(stream, ps_with_truth);
 }
 
-class PhotonStreamTest : public ::testing::Test {};
 
-TEST_F(PhotonStreamTest, arrival_slices_must_not_be_NEXT_CHANNEL_MARKER) {
+
+TEST_CASE("PhotonStreamTest: arrival_slices_must_not_be_NEXT_CHANNEL_MARKER", "[mctracer]") {
     vector<vector<ExtractedPulse>> channels;
     vector<ExtractedPulse> channel;
     const int32_t simulation_truth_id = 1337;
@@ -113,14 +113,14 @@ TEST_F(PhotonStreamTest, arrival_slices_must_not_be_NEXT_CHANNEL_MARKER) {
             simulation_truth_id));
     channels.push_back(channel);
 
-    EXPECT_THROW(PhotonStream::write(channels, 0.5e-9, "InOut/must_not_be_written.phs"), std::runtime_error);
+    CHECK_THROWS_AS(PhotonStream::write(channels, 0.5e-9, "InOut/must_not_be_written.phs"), std::runtime_error);
 
     channels.at(0).at(0).arrival_time_slice = 254;
 
-    EXPECT_NO_THROW(PhotonStream::write(channels, 0.5e-9, "InOut/shall_be_written.phs"));
+    CHECK_NOTHROW(PhotonStream::write(channels, 0.5e-9, "InOut/shall_be_written.phs"));
 }
 
-TEST_F(PhotonStreamTest, write_and_read_back_full_single_pulse_event) {
+TEST_CASE("PhotonStreamTest: write_and_read_back_full_single_pulse_event", "[mctracer]") {
     const unsigned int number_of_channels = 1337;
     const float time_slice_duration = 0.5e-9;
     const float single_pulse_rate = 50e6;
@@ -135,7 +135,7 @@ TEST_F(PhotonStreamTest, write_and_read_back_full_single_pulse_event) {
         seed);
 }
 
-TEST_F(PhotonStreamTest, zero_channels) {
+TEST_CASE("PhotonStreamTest: zero_channels", "[mctracer]") {
     const unsigned int number_of_channels = 0;
     const float time_slice_duration = 0.5e-9;
     const float single_pulse_rate = 50e6;
@@ -150,7 +150,7 @@ TEST_F(PhotonStreamTest, zero_channels) {
         seed);
 }
 
-TEST_F(PhotonStreamTest, empty_channels) {
+TEST_CASE("PhotonStreamTest: empty_channels", "[mctracer]") {
     const unsigned int number_of_channels = 1337;
     const float time_slice_duration = 0.5e-9;
     const float single_pulse_rate = 0.0;

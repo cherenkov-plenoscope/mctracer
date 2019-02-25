@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "niels_lohmann_json.hpp"
 #include "json.h"
 #include "Core/mctracer.h"
@@ -8,62 +8,62 @@ namespace mct = relleums;
 using std::string;
 using mct::txt::is_equal;
 
-class JsonTest : public ::testing::Test {};
 
-TEST_F(JsonTest, nlohmann_getter) {
+
+TEST_CASE("JsonTest: nlohmann_getter", "[mctracer]") {
     nl::json j = R"({"f8": -0.898})"_json;
-    EXPECT_EQ(j["f8"].get<double>(), -0.898);
-    EXPECT_EQ(j["f8"].get<int64_t>(), 0);
-    EXPECT_THROW(j["f8"].get<std::string>(), std::exception);
-    EXPECT_EQ(j.size(), 1u);
+    CHECK(-0.898 == j["f8"].get<double>());
+    CHECK(0 == j["f8"].get<int64_t>());
+    CHECK_THROWS_AS(j["f8"].get<std::string>(), std::exception);
+    CHECK(1u == j.size());
 }
 
-TEST_F(JsonTest, object_wrapper_simple) {
+TEST_CASE("JsonTest: object_wrapper_simple", "[mctracer]") {
     nl::json j = R"({"f8": -0.898})"_json;
     mct::json::Object obj(j);
-    EXPECT_EQ(obj.f8("f8"), -0.898);
+    CHECK(-0.898 == obj.f8("f8"));
 }
 
-TEST_F(JsonTest, object_wrapper_multiple_objects) {
+TEST_CASE("JsonTest: object_wrapper_multiple_objects", "[mctracer]") {
     nl::json j = R"({"f8": -0.898, "hans": {"A":1, "B":2}})"_json;
     mct::json::Object obj(j);
-    EXPECT_EQ(obj.f8("f8"), -0.898);
-    EXPECT_EQ(obj.obj("hans").i8("A"), 1);
-    EXPECT_EQ(obj.obj("hans").i8("B"), 2);
+    CHECK(-0.898 == obj.f8("f8"));
+    CHECK(1 == obj.obj("hans").i8("A"));
+    CHECK(2 == obj.obj("hans").i8("B"));
 }
 
-TEST_F(JsonTest, object_wrapper_lists) {
+TEST_CASE("JsonTest: object_wrapper_lists", "[mctracer]") {
     nl::json j = R"({"f8": -0.898, "peter": [1, 2, 3]})"_json;
     mct::json::Object obj(j);
-    EXPECT_EQ(obj.f8("f8"), -0.898);
-    EXPECT_THROW(obj.obj("peter").i8("A"), mct::json::MissingKey);
-    EXPECT_EQ(obj.obj("peter").size(), 3u);
-    EXPECT_EQ(obj.obj("peter").i8(0), 1);
-    EXPECT_EQ(obj.obj("peter").i8(1), 2);
-    EXPECT_EQ(obj.obj("peter").i8(2), 3);
-    EXPECT_THROW(obj.obj("peter").i8(3), mct::json::ListTooShort);
+    CHECK(-0.898 == obj.f8("f8"));
+    CHECK_THROWS_AS(obj.obj("peter").i8("A"), mct::json::MissingKey);
+    CHECK(3u == obj.obj("peter").size());
+    CHECK(1 == obj.obj("peter").i8(0));
+    CHECK(2 == obj.obj("peter").i8(1));
+    CHECK(3 == obj.obj("peter").i8(2));
+    CHECK_THROWS_AS(obj.obj("peter").i8(3), mct::json::ListTooShort);
 }
 
-TEST_F(JsonTest, object_wrapper_vec3) {
+TEST_CASE("JsonTest: object_wrapper_vec3", "[mctracer]") {
     nl::json j = R"({"f8": -0.898, "peter": [1, 2, 3]})"_json;
     mct::json::Object obj(j);
-    EXPECT_EQ(obj.f8("f8"), -0.898);
-    EXPECT_EQ(obj.vec3("peter"), mct::Vec3(1, 2, 3));
+    CHECK(-0.898 == obj.f8("f8"));
+    CHECK(mct::Vec3(1, 2, 3) == obj.vec3("peter"));
 }
 
-TEST_F(JsonTest, object_wrapper_bad_vec3) {
+TEST_CASE("JsonTest: object_wrapper_bad_vec3", "[mctracer]") {
     nl::json j = R"({"peter": [1, 2]})"_json;
     mct::json::Object obj(j);
-    EXPECT_THROW(obj.vec3("peter"), mct::json::BadTriple);
+    CHECK_THROWS_AS(obj.vec3("peter"), mct::json::BadTriple);
 }
 
-TEST_F(JsonTest, empty_path) {
+TEST_CASE("JsonTest: empty_path", "[mctracer]") {
     const std::string path = "";
     mct::Scenery s;
-    EXPECT_THROW(mct::json::append_to_frame_in_scenery(&s.root, &s, path), std::runtime_error);
+    CHECK_THROWS_AS(mct::json::append_to_frame_in_scenery(&s.root, &s, path), std::runtime_error);
 }
 
-TEST_F(JsonTest, mini_scenery_with_stl) {
+TEST_CASE("JsonTest: mini_scenery_with_stl", "[mctracer]") {
     const std::string path =  "json/mini_scenery.json";
     mct::Scenery s;
     mct::json::append_to_frame_in_scenery(&s.root, &s, path);
@@ -72,28 +72,28 @@ TEST_F(JsonTest, mini_scenery_with_stl) {
     //visual::FlyingCamera(&s.root, &cfg);
 }
 
-TEST_F(JsonTest, valid_color) {
+TEST_CASE("JsonTest: valid_color", "[mctracer]") {
   auto j = R"({"red": [255, 0, 0]})"_json;
   mct::json::Object o(j);
   mct::Color c = o.color("red");
-  EXPECT_EQ(c.r, 255);
-  EXPECT_EQ(c.g, 0);
-  EXPECT_EQ(c.b, 0);
+  CHECK(255 == c.r);
+  CHECK(0 == c.g);
+  CHECK(0 == c.b);
 }
 
-TEST_F(JsonTest, color_rg_no_b) {
+TEST_CASE("JsonTest: color_rg_no_b", "[mctracer]") {
   auto j = R"({"red": [255, 0]})"_json;
   mct::json::Object o(j);
-  EXPECT_THROW(o.color("red"), mct::json::BadTriple);
+  CHECK_THROWS_AS(o.color("red"), mct::json::BadTriple);
 }
 
-TEST_F(JsonTest, color_no_array_but_string) {
+TEST_CASE("JsonTest: color_no_array_but_string", "[mctracer]") {
   auto j = R"({"red": "woot"})"_json;
   mct::json::Object o(j);
-  EXPECT_THROW(o.color("red"), mct::json::BadTriple);
+  CHECK_THROWS_AS(o.color("red"), mct::json::BadTriple);
 }
 
-TEST_F(JsonTest, fine_colors) {
+TEST_CASE("JsonTest: fine_colors", "[mctracer]") {
     auto j = R"(
     {
       "colors": [
@@ -106,23 +106,23 @@ TEST_F(JsonTest, fine_colors) {
     mct::ColorMap cmap;
     mct::json::assert_key(j, "colors");
     mct::json::add_colors(&cmap, j["colors"]);
-    EXPECT_TRUE(cmap.has("red"));
-    EXPECT_EQ(*cmap.get("red"), mct::Color(255, 0, 0));
-    EXPECT_TRUE(cmap.has("green"));
-    EXPECT_EQ(*cmap.get("green"), mct::Color(0, 255, 0));
-    EXPECT_TRUE(cmap.has("blue"));
-    EXPECT_EQ(*cmap.get("blue"), mct::Color(0, 0, 255));
+    CHECK(cmap.has("red"));
+    CHECK(mct::Color(255, 0, 0) == *cmap.get("red"));
+    CHECK(cmap.has("green"));
+    CHECK(mct::Color(0, 255, 0) == *cmap.get("green"));
+    CHECK(cmap.has("blue"));
+    CHECK(mct::Color(0, 0, 255) == *cmap.get("blue"));
 }
 
-TEST_F(JsonTest, empty_colors) {
+TEST_CASE("JsonTest: empty_colors", "[mctracer]") {
     nl::json j = R"({"colors": {}})"_json;
     mct::ColorMap cmap;
     mct::json::assert_key(j, "colors");
     mct::json::add_colors(&cmap, j["colors"]);
-    EXPECT_EQ(cmap.colors.size(), 0u);
+    CHECK(0u == cmap.colors.size());
 }
 
-TEST_F(JsonTest, parse_mini_scenery) {
+TEST_CASE("JsonTest: parse_mini_scenery", "[mctracer]") {
     auto jscenery = R"(
     { "functions":[
         { "name":"leaf_reflection",
@@ -180,22 +180,22 @@ TEST_F(JsonTest, parse_mini_scenery) {
     mct::Scenery s;
     mct::json::append_to_frame_in_scenery(&s.root, &s, o);
 
-    EXPECT_EQ(s.root.get_name(), "root");
-    EXPECT_TRUE(s.root.has_children());
+    CHECK("root" == s.root.get_name());
+    CHECK(s.root.has_children());
 
-    EXPECT_TRUE(s.functions.has("leaf_reflection"));
-    EXPECT_TRUE(s.functions.has("pole_dull"));
+    CHECK(s.functions.has("leaf_reflection"));
+    CHECK(s.functions.has("pole_dull"));
 
-    EXPECT_TRUE(s.colors.has("grass_green"));
-    EXPECT_TRUE(s.colors.has("leaf_green"));
-    EXPECT_TRUE(s.colors.has("orange"));
+    CHECK(s.colors.has("grass_green"));
+    CHECK(s.colors.has("leaf_green"));
+    CHECK(s.colors.has("orange"));
 
     const std::vector<mct::Frame*>* children = s.root.get_children();
-    ASSERT_EQ(children->size(), 1u);
-    EXPECT_EQ(children->at(0)->get_name(), "tree");
+    REQUIRE(1u == children->size());
+    CHECK("tree" == children->at(0)->get_name());
 }
 
-TEST_F(JsonTest, linear_interpolation_function) {
+TEST_CASE("JsonTest: linear_interpolation_function", "[mctracer]") {
     auto j = R"(
     [
       {
@@ -213,23 +213,23 @@ TEST_F(JsonTest, linear_interpolation_function) {
     )"_json;
 
     mct::json::Object o(j);
-    EXPECT_TRUE(o.size() == 1);
+    CHECK(o.size() == 1);
     const mct::json::Object &fo = o.obj(0);
-    EXPECT_TRUE(fo.key("name"));
-    EXPECT_TRUE(fo.key("argument_versus_value"));
+    CHECK(fo.key("name"));
+    CHECK(fo.key("argument_versus_value"));
 
     mct::FunctionMap functions;
     mct::json::add_functions(&functions, o);
-    EXPECT_TRUE(functions.has("foo"));
-    EXPECT_TRUE(functions.get("foo")->limits.upper == 5);
-    EXPECT_TRUE(functions.get("foo")->limits.lower == 0);
-    EXPECT_NEAR(functions.get("foo")->evaluate(0.0), 5.0, 1e-9);
-    EXPECT_NEAR(functions.get("foo")->evaluate(0.5), 4.5, 1e-9);
-    EXPECT_NEAR(functions.get("foo")->evaluate(1.0), 4.0, 1e-9);
-    EXPECT_NEAR(functions.get("foo")->evaluate(4.999), 0.0, 2e-3);
+    CHECK(functions.has("foo"));
+    CHECK(functions.get("foo")->limits.upper == 5);
+    CHECK(functions.get("foo")->limits.lower == 0);
+    CHECK(functions.get("foo")->evaluate(0.0) == Approx(5.0).margin(1e-9));
+    CHECK(functions.get("foo")->evaluate(0.5) == Approx(4.5).margin(1e-9));
+    CHECK(functions.get("foo")->evaluate(1.0) == Approx(4.0).margin(1e-9));
+    CHECK(functions.get("foo")->evaluate(4.999) == Approx(0.0).margin(2e-3));
 }
 
-TEST_F(JsonTest, Annulus) {
+TEST_CASE("JsonTest: Annulus", "[mctracer]") {
     auto j = R"(
     {
       "type": "Annulus",
@@ -245,13 +245,13 @@ TEST_F(JsonTest, Annulus) {
     mct::json::Object o(j);
     mct::Scenery s;
     mct::Frame* a = mct::json::add_Annulus(&s.root, &s, o);
-    EXPECT_EQ(a->get_name(), "ring");
-    EXPECT_EQ(a->get_position_in_mother(), mct::Vec3(0, 0, 3));
-    EXPECT_EQ(a->get_rotation_in_mother(), mct::Rot3(0, 1, 0));
-    EXPECT_EQ(a->get_children()->size(), 0u);
+    CHECK("ring" == a->get_name());
+    CHECK(mct::Vec3(0, 0, 3) == a->get_position_in_mother());
+    CHECK(mct::Rot3(0, 1, 0) == a->get_rotation_in_mother());
+    CHECK(0u == a->get_children()->size());
 }
 
-TEST_F(JsonTest, Cylinder_with_rot_and_pos) {
+TEST_CASE("JsonTest: Cylinder_with_rot_and_pos", "[mctracer]") {
     auto j = R"(
     {
       "type": "Cylinder",
@@ -267,13 +267,13 @@ TEST_F(JsonTest, Cylinder_with_rot_and_pos) {
     mct::json::Object o(j);
     mct::Scenery s;
     mct::Frame* a = mct::json::add_Cylinder(&s.root, &s, o);
-    EXPECT_EQ(a->get_name(), "cyl");
-    EXPECT_EQ(a->get_position_in_mother(), mct::Vec3(0, 0, 3));
-    EXPECT_EQ(a->get_rotation_in_mother(), mct::Rot3(0, 1, 0));
-    EXPECT_EQ(a->get_children()->size(), 0u);
+    CHECK("cyl" == a->get_name());
+    CHECK(mct::Vec3(0, 0, 3) == a->get_position_in_mother());
+    CHECK(mct::Rot3(0, 1, 0) == a->get_rotation_in_mother());
+    CHECK(0u == a->get_children()->size());
 }
 
-TEST_F(JsonTest, Cylinder_with_start_pos_and_end_pos) {
+TEST_CASE("JsonTest: Cylinder_with_start_pos_and_end_pos", "[mctracer]") {
     auto j = R"(
     {
       "type": "Cylinder",
@@ -288,11 +288,11 @@ TEST_F(JsonTest, Cylinder_with_start_pos_and_end_pos) {
     mct::json::Object o(j);
     mct::Scenery s;
     mct::Frame* a = mct::json::add_Cylinder(&s.root, &s, o);
-    EXPECT_EQ(a->get_name(), "cyl");
-    EXPECT_EQ(a->get_children()->size(), 0u);
+    CHECK("cyl" == a->get_name());
+    CHECK(0u == a->get_children()->size());
 }
 
-TEST_F(JsonTest, Triangle) {
+TEST_CASE("JsonTest: Triangle", "[mctracer]") {
     auto j = R"(
     {
       "type": "Triangle",
@@ -307,11 +307,11 @@ TEST_F(JsonTest, Triangle) {
     mct::json::Object o(j);
     mct::Scenery s;
     mct::Frame* a = mct::json::add_Triangle(&s.root, &s, o);
-    EXPECT_EQ(a->get_name(), "tri");
-    EXPECT_EQ(a->get_children()->size(), 0u);
+    CHECK("tri" == a->get_name());
+    CHECK(0u == a->get_children()->size());
 }
 
-TEST_F(JsonTest, Disc) {
+TEST_CASE("JsonTest: Disc", "[mctracer]") {
     auto j = R"(
     {
       "type": "Disc",
@@ -326,11 +326,11 @@ TEST_F(JsonTest, Disc) {
     mct::Scenery s;
     mct::json::Object o(j);
     mct::Frame* a = mct::json::add_Disc(&s.root, &s, o);
-    EXPECT_EQ(a->get_name(), "didi");
-    EXPECT_EQ(a->get_children()->size(), 0u);
+    CHECK("didi" == a->get_name());
+    CHECK(0u == a->get_children()->size());
 }
 
-TEST_F(JsonTest, What_is_key) {
+TEST_CASE("JsonTest: What_is_key", "[mctracer]") {
     auto j = R"(
     {
       "key": {
@@ -340,10 +340,10 @@ TEST_F(JsonTest, What_is_key) {
     }
     )"_json;
     j["key"]["val1"].get<double>();
-    EXPECT_EQ(j["key"]["val1"], 1);
+    CHECK(1 == j["key"]["val1"]);
 }
 
-TEST_F(JsonTest, PropagationConfig) {
+TEST_CASE("JsonTest: PropagationConfig", "[mctracer]") {
     auto j = R"(
     {
       "max_number_of_interactions_per_photon": 1337,
@@ -352,11 +352,11 @@ TEST_F(JsonTest, PropagationConfig) {
     )"_json;
     mct::json::Object o(j);
     mct::PropagationConfig cfg = mct::json::to_PropagationConfig(o);
-    EXPECT_EQ(cfg.max_number_of_interactions_per_photon, 1337u);
-    EXPECT_TRUE(cfg.use_multithread_when_possible);
+    CHECK(1337u == cfg.max_number_of_interactions_per_photon);
+    CHECK(cfg.use_multithread_when_possible);
 }
 
-TEST_F(JsonTest, PointSource) {
+TEST_CASE("JsonTest: PointSource", "[mctracer]") {
   auto j = R"(
   {
     "point_source": {
@@ -369,19 +369,19 @@ TEST_F(JsonTest, PointSource) {
   )"_json;
   mct::json::Object o(j);
   std::vector<mct::Photon> phs = mct::json::to_photons(o);
-  EXPECT_EQ(phs.size(), 137u);
+  CHECK(137u == phs.size());
   for (const mct::Photon &ph: phs) {
-    EXPECT_EQ(ph.support().x, 0.0);
-    EXPECT_EQ(ph.support().y, 2.0);
-    EXPECT_EQ(ph.support().z, 0.0);
+    CHECK(0.0 == ph.support().x);
+    CHECK(2.0 == ph.support().y);
+    CHECK(0.0 == ph.support().z);
 
-    EXPECT_NEAR(ph.direction().x, 0.0, 0.1);
-    EXPECT_NEAR(ph.direction().y, 0.0, 0.1);
-    EXPECT_NEAR(ph.direction().z, 1.0, 0.1);
+    CHECK(ph.direction().x == Approx(0.0).margin(0.1));
+    CHECK(ph.direction().y == Approx(0.0).margin(0.1));
+    CHECK(ph.direction().z == Approx(1.0).margin(0.1));
   }
 }
 
-TEST_F(JsonTest, PointSource_rotated) {
+TEST_CASE("JsonTest: PointSource_rotated", "[mctracer]") {
   auto j = R"(
   {
     "point_source": {
@@ -394,19 +394,19 @@ TEST_F(JsonTest, PointSource_rotated) {
   )"_json;
   mct::json::Object o(j);
   std::vector<mct::Photon> phs = mct::json::to_photons(o);
-  EXPECT_EQ(phs.size(), 13u);
+  CHECK(13u == phs.size());
   for (const mct::Photon &ph: phs) {
-    EXPECT_EQ(ph.support().x, 0.0);
-    EXPECT_EQ(ph.support().y, 2.0);
-    EXPECT_EQ(ph.support().z, 0.0);
+    CHECK(0.0 == ph.support().x);
+    CHECK(2.0 == ph.support().y);
+    CHECK(0.0 == ph.support().z);
 
-    EXPECT_NEAR(ph.direction().x, -1.0, 0.1);
-    EXPECT_NEAR(ph.direction().y, 0.0, 0.1);
-    EXPECT_NEAR(ph.direction().z, 0.0, 0.1);
+    CHECK(ph.direction().x == Approx(-1.0).margin(0.1));
+    CHECK(ph.direction().y == Approx(0.0).margin(0.1));
+    CHECK(ph.direction().z == Approx(0.0).margin(0.1));
   }
 }
 
-TEST_F(JsonTest, ParallelDisc_rotated) {
+TEST_CASE("JsonTest: ParallelDisc_rotated", "[mctracer]") {
   auto j = R"(
   {
     "parallel_disc": {
@@ -419,15 +419,15 @@ TEST_F(JsonTest, ParallelDisc_rotated) {
   )"_json;
   mct::json::Object o(j);
   std::vector<mct::Photon> phs = mct::json::to_photons(o);
-  EXPECT_EQ(phs.size(), 13u);
+  CHECK(13u == phs.size());
   for (const mct::Photon &ph: phs) {
-    EXPECT_NEAR(ph.direction().x, -1.0, 0.1);
-    EXPECT_NEAR(ph.direction().y, 0.0, 0.1);
-    EXPECT_NEAR(ph.direction().z, 0.0, 0.1);
+    CHECK(ph.direction().x == Approx(-1.0).margin(0.1));
+    CHECK(ph.direction().y == Approx(0.0).margin(0.1));
+    CHECK(ph.direction().z == Approx(0.0).margin(0.1));
   }
 }
 
-TEST_F(JsonTest, visual_config) {
+TEST_CASE("JsonTest: visual_config", "[mctracer]") {
   auto j = R"(
   {
     "max_interaction_depth": 41,
@@ -458,22 +458,22 @@ TEST_F(JsonTest, visual_config) {
   )"_json;
   mct::json::Object o(j);
   mct::visual::Config cfg = mct::json::to_visual_config(o, "./");
-  EXPECT_TRUE(cfg.max_interaction_depth == 41u);
-  EXPECT_TRUE(cfg.preview.rows == 256u);
-  EXPECT_TRUE(cfg.preview.cols == 144u);
-  EXPECT_TRUE(cfg.preview.scale == 5u);
-  EXPECT_TRUE(cfg.snapshot.cols == 1280u);
-  EXPECT_TRUE(cfg.snapshot.rows == 720u);
-  EXPECT_TRUE(cfg.snapshot.noise_level == 25u);
-  EXPECT_TRUE(cfg.snapshot.focal_length_over_aperture_diameter == 0.95);
-  EXPECT_TRUE(cfg.snapshot.image_sensor_size_along_a_row == 0.07);
-  EXPECT_TRUE(cfg.global_illumination.on);
+  CHECK(cfg.max_interaction_depth == 41u);
+  CHECK(cfg.preview.rows == 256u);
+  CHECK(cfg.preview.cols == 144u);
+  CHECK(cfg.preview.scale == 5u);
+  CHECK(cfg.snapshot.cols == 1280u);
+  CHECK(cfg.snapshot.rows == 720u);
+  CHECK(cfg.snapshot.noise_level == 25u);
+  CHECK(cfg.snapshot.focal_length_over_aperture_diameter == 0.95);
+  CHECK(cfg.snapshot.image_sensor_size_along_a_row == 0.07);
+  CHECK(cfg.global_illumination.on);
   EXPECT_TRUE(cfg.global_illumination.incoming_direction ==
     mct::Vec3(.2, .3, 1.));
-  EXPECT_TRUE(cfg.photon_trajectories.radius == 0.15);
+  CHECK(cfg.photon_trajectories.radius == 0.15);
 }
 
-TEST_F(JsonTest, linear_interpolation_function2) {
+TEST_CASE("JsonTest: linear_interpolation_function2", "[mctracer]") {
   auto j = R"(
   {
     "argument_versus_value": [
@@ -487,17 +487,17 @@ TEST_F(JsonTest, linear_interpolation_function2) {
   mct::json::Object o(j);
   std::vector<std::vector<double>> f = mct::json::json_to_vec_of_vecs(
     o.obj("argument_versus_value"));
-  ASSERT_EQ(f.size(), 4u);
-  ASSERT_EQ(f.at(0).size(), 2u);
-  EXPECT_EQ(f.at(0).at(0), 266e-9);
-  EXPECT_EQ(f.at(0).at(1), 0.03);
-  ASSERT_EQ(f.at(1).size(), 2u);
-  EXPECT_EQ(f.at(1).at(0), 277e-9);
-  EXPECT_EQ(f.at(1).at(1), 0.1);
-  ASSERT_EQ(f.at(2).size(), 2u);
-  EXPECT_EQ(f.at(2).at(0), 283e-9);
-  EXPECT_EQ(f.at(2).at(1), 0.2);
-  ASSERT_EQ(f.at(3).size(), 2u);
-  EXPECT_EQ(f.at(3).at(0), 300e-9);
-  EXPECT_EQ(f.at(3).at(1), 0.254);
+  REQUIRE(4u == f.size());
+  REQUIRE(2u == f.at(0).size());
+  CHECK(266e-9 == f.at(0).at(0));
+  CHECK(0.03 == f.at(0).at(1));
+  REQUIRE(2u == f.at(1).size());
+  CHECK(277e-9 == f.at(1).at(0));
+  CHECK(0.1 == f.at(1).at(1));
+  REQUIRE(2u == f.at(2).size());
+  CHECK(283e-9 == f.at(2).at(0));
+  CHECK(0.2 == f.at(2).at(1));
+  REQUIRE(2u == f.at(3).size());
+  CHECK(300e-9 == f.at(3).at(0));
+  CHECK(0.254 == f.at(3).at(1));
 }

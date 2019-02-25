@@ -1,100 +1,95 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/mctracer.h"
 
 using namespace relleums;
 
-class camera_operatorTest : public ::testing::Test {
- protected:
-    visual::PinHoleCamera *cam;
+struct camera_operator_Test {
+    visual::PinHoleCamera cam;
     double initial_FoV_in_rad;
 
-    camera_operatorTest() {}
-
-    virtual ~camera_operatorTest() {}
-
-    virtual void SetUp() {
-        // Code here will be called immediately after the constructor (right
-        // before each test).
-        Vec3 pos(0.0, 0.0, 0.0);
-        Rot3 rot(0.0, 0.0, 0.0);
+    camera_operator_Test(): cam(visual::PinHoleCamera("my_cam", 640, 480)) {
         initial_FoV_in_rad = deg2rad(120.0);
-
-        cam = new visual::PinHoleCamera("my_cam", 640, 480);
-        cam->update_position_and_orientation(pos, rot);
-        cam->set_FoV_in_rad(initial_FoV_in_rad);
+        cam.update_position_and_orientation(Vec3(0, 0, 0), Rot3(0, 0, 0));
+        cam.set_FoV_in_rad(initial_FoV_in_rad);
     }
-
-    virtual void TearDown() {}
 };
 
-TEST_F(camera_operatorTest, creation) {
-    EXPECT_EQ(initial_FoV_in_rad, cam->get_FoV_in_rad());
-    visual::camera_operator::FieldOfView FoVCamMan(cam);
-    EXPECT_NE(FoVCamMan.default_fov, initial_FoV_in_rad);
-    EXPECT_EQ(FoVCamMan.default_fov, cam->get_FoV_in_rad());
+TEST_CASE("camera_operatorTest: creation", "[mctracer]") {
+    camera_operator_Test ct;
+    CHECK(ct.cam.get_FoV_in_rad() == ct.initial_FoV_in_rad);
+    visual::camera_operator::FieldOfView FoVCamMan(&ct.cam);
+    CHECK(ct.initial_FoV_in_rad != FoVCamMan.default_fov);
+    CHECK(ct.cam.get_FoV_in_rad() == FoVCamMan.default_fov);
 }
 
-TEST_F(camera_operatorTest, increase_FoV) {
-    visual::camera_operator::FieldOfView FoVCamMan(cam);
+TEST_CASE("camera_operatorTest: increase_FoV", "[mctracer]") {
+    camera_operator_Test ct;
+    visual::camera_operator::FieldOfView FoVCamMan(&ct.cam);
     for (int i = 0; i < 250; i++)
         FoVCamMan.increase_when_possible();
-    EXPECT_TRUE(cam->get_FoV_in_rad() > deg2rad(160.0));
-    EXPECT_TRUE(cam->get_FoV_in_rad() < deg2rad(180.0));
+    CHECK(ct.cam.get_FoV_in_rad() > deg2rad(160.0));
+    CHECK(ct.cam.get_FoV_in_rad() < deg2rad(180.0));
 }
 
-TEST_F(camera_operatorTest, decrease_FoV) {
-    visual::camera_operator::FieldOfView FoVCamMan(cam);
+TEST_CASE("camera_operatorTest: decrease_FoV", "[mctracer]") {
+    camera_operator_Test ct;
+    visual::camera_operator::FieldOfView FoVCamMan(&ct.cam);
     for (int i = 0; i < 250; i++)
         FoVCamMan.decrease_when_possible();
-    EXPECT_TRUE(cam->get_FoV_in_rad() > deg2rad(0.0));
-    EXPECT_TRUE(cam->get_FoV_in_rad() < deg2rad(0.003));
+    CHECK(ct.cam.get_FoV_in_rad() > deg2rad(0.0));
+    CHECK(ct.cam.get_FoV_in_rad() < deg2rad(0.003));
 }
 
-TEST_F(camera_operatorTest, default_FoV) {
-    visual::camera_operator::FieldOfView FoVCamMan(cam);
+TEST_CASE("camera_operatorTest: default_FoV", "[mctracer]") {
+    camera_operator_Test ct;
+    visual::camera_operator::FieldOfView FoVCamMan(&ct.cam);
     FoVCamMan.increase_when_possible();
-    EXPECT_NE(FoVCamMan.default_fov, cam->get_FoV_in_rad());
+    CHECK(ct.cam.get_FoV_in_rad() != FoVCamMan.default_fov);
     FoVCamMan.set_default();
-    EXPECT_EQ(FoVCamMan.default_fov, cam->get_FoV_in_rad());
+    CHECK(ct.cam.get_FoV_in_rad() == FoVCamMan.default_fov);
 }
 
-TEST_F(camera_operatorTest, increase_and_decrease_FoV) {
-    visual::camera_operator::FieldOfView FoVCamMan(cam);
+TEST_CASE("camera_operatorTest: increase_and_decrease_FoV", "[mctracer]") {
+    camera_operator_Test ct;
+    visual::camera_operator::FieldOfView FoVCamMan(&ct.cam);
     FoVCamMan.verbose = false;
     for (int i = 0; i < 250; i++)
         FoVCamMan.decrease_when_possible();
-    EXPECT_TRUE(cam->get_FoV_in_rad() > deg2rad(0.0));
-    EXPECT_TRUE(cam->get_FoV_in_rad() < deg2rad(0.003));
+    CHECK(ct.cam.get_FoV_in_rad() > deg2rad(0.0));
+    CHECK(ct.cam.get_FoV_in_rad() < deg2rad(0.003));
     for (int i = 0; i < 250; i++)
         FoVCamMan.increase_when_possible();
-    EXPECT_TRUE(cam->get_FoV_in_rad() > deg2rad(160.0));
-    EXPECT_TRUE(cam->get_FoV_in_rad() < deg2rad(180.0));
+    CHECK(ct.cam.get_FoV_in_rad() > deg2rad(160.0));
+    CHECK(ct.cam.get_FoV_in_rad() < deg2rad(180.0));
 }
 
-TEST_F(camera_operatorTest, default_rotation) {
+TEST_CASE("camera_operatorTest: default_rotation", "[mctracer]") {
+    camera_operator_Test ct;
     Rot3 non_default_rotation(1.2, 3.4, 5.6);
     Rot3 looking_in_pos_x_dir(0.0, deg2rad(-90.0), 0.0);
-    cam->update_orientation(non_default_rotation);
-    visual::camera_operator::Rotation rot_operator(cam);
+    ct.cam.update_orientation(non_default_rotation);
+    visual::camera_operator::Rotation rot_operator(&ct.cam);
     rot_operator.set_default_rotation(looking_in_pos_x_dir);
-    EXPECT_EQ(looking_in_pos_x_dir, cam->get_rotation_in_world());
+    CHECK(ct.cam.get_rotation_in_world() == looking_in_pos_x_dir);
 }
 
-TEST_F(camera_operatorTest, look_up) {
-    visual::camera_operator::Rotation rot_operator(cam);
+TEST_CASE("camera_operatorTest: look_up", "[mctracer]") {
+    camera_operator_Test ct;
+    visual::camera_operator::Rotation rot_operator(&ct.cam);
     rot_operator.set_default_rotation(Rot3(0.0, deg2rad(-90.0), 0.0));
     for (int i = 0; i < 50; i++)
         rot_operator.look_further_up_when_possible();
-    EXPECT_GT(deg2rad(0.1), cam->get_rotation_in_world().get_rot_y());
-    EXPECT_LT(deg2rad(-0.1), cam->get_rotation_in_world().get_rot_y());
+    CHECK(ct.cam.get_rotation_in_world().get_rot_y() < deg2rad(0.1));
+    CHECK(ct.cam.get_rotation_in_world().get_rot_y() > deg2rad(-0.1));
 }
 
-TEST_F(camera_operatorTest, look_down) {
-    visual::camera_operator::Rotation rot_operator(cam);
+TEST_CASE("camera_operatorTest: look_down", "[mctracer]") {
+    camera_operator_Test ct;
+    visual::camera_operator::Rotation rot_operator(&ct.cam);
     rot_operator.set_default_rotation(Rot3(0.0, deg2rad(-90.0), 0.0));
     for (int i = 0; i < 50; i++)
         rot_operator.look_further_down_when_possible();
-    EXPECT_GT(deg2rad(-179.9), cam->get_rotation_in_world().get_rot_y());
-    EXPECT_LT(deg2rad(-180.1), cam->get_rotation_in_world().get_rot_y());
+    CHECK(ct.cam.get_rotation_in_world().get_rot_y() < deg2rad(-179.9));
+    CHECK(ct.cam.get_rotation_in_world().get_rot_y() > deg2rad(-180.1));
 }

@@ -1,12 +1,12 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <math.h>
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/FresnelRefractionAndReflection.h"
 using namespace relleums;
 
-class FresnelRefractionAndReflectionTest : public ::testing::Test {};
 
-TEST_F(FresnelRefractionAndReflectionTest, orthogonal_incident) {
+
+TEST_CASE("FresnelRefractionAndReflectionTest: orthogonal_incident", "[mctracer]") {
   double n_from = 1.0;
   double n_going_to = 1.33;
 
@@ -14,12 +14,12 @@ TEST_F(FresnelRefractionAndReflectionTest, orthogonal_incident) {
   Vec3 normal(0.0, 0.0, 1.0); normal.normalize();
   FresnelRefractionAndReflection fresnel(incident, normal, n_from, n_going_to);
 
-  EXPECT_TRUE(0.0 < fresnel.reflection_propability() &&
-              0.05 > fresnel.reflection_propability());
-  EXPECT_EQ(incident, fresnel.get_refrac_dir_in_object_system());
+  CHECK(0.0 < fresnel.reflection_propability());
+  CHECK(0.05 > fresnel.reflection_propability());
+  CHECK(fresnel.get_refrac_dir_in_object_system() == incident);
 }
 
-TEST_F(FresnelRefractionAndReflectionTest, flat_incident) {
+TEST_CASE("FresnelRefractionAndReflectionTest: flat_incident", "[mctracer]") {
   double n_from = 1.0;
   double n_going_to = 1.33;
 
@@ -30,10 +30,10 @@ TEST_F(FresnelRefractionAndReflectionTest, flat_incident) {
   double incident_to_normal = incident.angle_in_between(normal);
   double outgoing_to_normal = asin(sin(incident_to_normal)* n_from/n_going_to);
 
-  EXPECT_EQ(outgoing_to_normal, fresnel.get_refrac_dir_in_object_system().angle_in_between(normal*-1.0));
+  CHECK(fresnel.get_refrac_dir_in_object_system().angle_in_between(normal*-1.0) == outgoing_to_normal);
 }
 
-TEST_F(FresnelRefractionAndReflectionTest, orthogonal_incident_same_index) {
+TEST_CASE("FresnelRefractionAndReflectionTest: orthogonal_incident_same_index", "[mctracer]") {
   double n_from = 1.0;
   double n_going_to = n_from;
 
@@ -41,11 +41,11 @@ TEST_F(FresnelRefractionAndReflectionTest, orthogonal_incident_same_index) {
   Vec3 normal(0.0, 0.0, 1.0); normal.normalize();
   FresnelRefractionAndReflection fresnel(incident, normal, n_from, n_going_to);
 
-  EXPECT_TRUE(0.0 == fresnel.reflection_propability());
-  EXPECT_EQ(incident, fresnel.get_refrac_dir_in_object_system());
+  CHECK(0.0 == fresnel.reflection_propability());
+  CHECK(fresnel.get_refrac_dir_in_object_system() == incident);
 }
 
-TEST_F(FresnelRefractionAndReflectionTest, flat_incident_same_index) {
+TEST_CASE("FresnelRefractionAndReflectionTest: flat_incident_same_index", "[mctracer]") {
   double n_from = 1.0;
   double n_going_to = n_from;
 
@@ -53,5 +53,5 @@ TEST_F(FresnelRefractionAndReflectionTest, flat_incident_same_index) {
   Vec3 normal(0.0, 0.0, 1.0); normal.normalize();
   FresnelRefractionAndReflection fresnel(incident, normal, n_from, n_going_to);
 
-  EXPECT_EQ(incident, fresnel.get_refrac_dir_in_object_system());
+  CHECK(fresnel.get_refrac_dir_in_object_system() == incident);
 }

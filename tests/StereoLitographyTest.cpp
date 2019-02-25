@@ -1,35 +1,35 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/Vec3.h"
 #include "Core/scenery/stereo_litography.h"
 
 using namespace relleums;
 namespace stl = stereo_litography;
 
-class StereoLitographyTest : public ::testing::Test {};
 
-TEST_F(StereoLitographyTest, open_non_existing_file) {
-    EXPECT_THROW(stl::BinaryReader hans("not_existing_file"),  stl::BinaryReader::CanNotReadFile);
+
+TEST_CASE("StereoLitographyTest: open_non_existing_file", "[mctracer]") {
+    CHECK_THROWS_AS(stl::BinaryReader hans("not_existing_file"), stl::BinaryReader::CanNotReadFile);
 }
 
-TEST_F(StereoLitographyTest, ascii_format) {
-    EXPECT_THROW(stl::BinaryReader stl("test_scenery/ascii_format.stl"), stl::BinaryReader::CanNotReadAscii);
+TEST_CASE("StereoLitographyTest: ascii_format", "[mctracer]") {
+    CHECK_THROWS_AS(stl::BinaryReader stl("test_scenery/ascii_format.stl"), stl::BinaryReader::CanNotReadAscii);
 }
 
-TEST_F(StereoLitographyTest, open_valid_file) {
+TEST_CASE("StereoLitographyTest: open_valid_file", "[mctracer]") {
     stl::BinaryReader stl("test_scenery/LCCone-simple_parab.stl");
-    EXPECT_EQ(3692u, stl.get_facets().size());
+    CHECK(stl.get_facets().size() == 3692u);
 }
 
-TEST_F(StereoLitographyTest, write_and_read_stl_with_zero_triangles) {
+TEST_CASE("StereoLitographyTest: write_and_read_stl_with_zero_triangles", "[mctracer]") {
     std::string filename = "test_scenery/single_triangle.stl";
     stl::BinaryWriter stlwr;
     stlwr.write_to_file(filename);
     stl::BinaryReader stl(filename);
-    EXPECT_EQ(0u,  stl.get_facets().size());
+    CHECK(stl.get_facets().size() == 0u);
 }
 
-TEST_F(StereoLitographyTest, write_and_read_1000_triangle) {
+TEST_CASE("StereoLitographyTest: write_and_read_1000_triangle", "[mctracer]") {
     unsigned int number_of_triangles = 1000;
     std::vector<stl::Facet> facets;
 
@@ -53,17 +53,17 @@ TEST_F(StereoLitographyTest, write_and_read_1000_triangle) {
     stl::BinaryReader reder(filename);
 
     std::vector<stl::Facet> facets_from_file = reder.get_facets();
-    ASSERT_EQ(facets.size(), facets_from_file.size());
+    REQUIRE(facets_from_file.size() == facets.size());
 
     for (unsigned int i = 0; i < facets.size(); i++) {
-        EXPECT_EQ(facets.at(i).n, facets_from_file.at(i).n);
-        EXPECT_EQ(facets.at(i).a, facets_from_file.at(i).a);
-        EXPECT_EQ(facets.at(i).b, facets_from_file.at(i).b);
-        EXPECT_EQ(facets.at(i).c, facets_from_file.at(i).c);
+        CHECK(facets_from_file.at(i).n == facets.at(i).n);
+        CHECK(facets_from_file.at(i).a == facets.at(i).a);
+        CHECK(facets_from_file.at(i).b == facets.at(i).b);
+        CHECK(facets_from_file.at(i).c == facets.at(i).c);
     }
 }
 
-TEST_F(StereoLitographyTest, scaling) {
+TEST_CASE("StereoLitographyTest: scaling", "[mctracer]") {
     const double scaleing = 42.1337;
     Frame obj_normal;
     obj_normal.set_name_pos_rot("normal", VEC3_ORIGIN, ROT3_UNITY);
@@ -76,10 +76,10 @@ TEST_F(StereoLitographyTest, scaling) {
         &obj_scaled,
         scaleing);
 
-    EXPECT_EQ(scaleing*obj_normal.get_bounding_sphere_radius(), obj_scaled.get_bounding_sphere_radius());
+    CHECK(obj_scaled.get_bounding_sphere_radius() == scaleing*obj_normal.get_bounding_sphere_radius());
 }
 
-TEST_F(StereoLitographyTest, write_and_read_simple_stl) {
+TEST_CASE("StereoLitographyTest: write_and_read_simple_stl", "[mctracer]") {
     std::string filename = "test_scenery/single_triangle.stl";
     stl::BinaryWriter stlwr;
 
@@ -92,5 +92,5 @@ TEST_F(StereoLitographyTest, write_and_read_simple_stl) {
     stlwr.write_to_file(filename);
 
     stl::BinaryReader stl(filename);
-    EXPECT_EQ(1u, stl.get_facets().size());
+    CHECK(stl.get_facets().size() == 1u);
 }

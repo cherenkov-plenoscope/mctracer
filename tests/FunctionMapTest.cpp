@@ -1,37 +1,37 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/scenery/FunctionMap.h"
 using namespace relleums;
 
-class FunctionMapTest : public ::testing::Test {};
 
-TEST_F(FunctionMapTest, init_empty) {
+
+TEST_CASE("FunctionMapTest: init_empty", "[mctracer]") {
     FunctionMap my_funcs;
-    EXPECT_FALSE(my_funcs.has("mirror_reflectivity_vs_wavelength"));
+    CHECK(!my_funcs.has("mirror_reflectivity_vs_wavelength"));
 }
 
-TEST_F(FunctionMapTest, get_not_existing_color) {
+TEST_CASE("FunctionMapTest: get_not_existing_color", "[mctracer]") {
     FunctionMap my_funcs;
-    EXPECT_THROW(my_funcs.get("f(x)"), FunctionMap::NoSuchKey);
+    CHECK_THROWS_AS(my_funcs.get("f(x)"), FunctionMap::NoSuchKey);
 }
 
-TEST_F(FunctionMapTest, add_func_and_check_it_is_in) {
+TEST_CASE("FunctionMapTest: add_func_and_check_it_is_in", "[mctracer]") {
     FunctionMap my_funcs;
     my_funcs.add("red", function::Func1({{0, 0}, {1, 0}}));
-    EXPECT_TRUE(my_funcs.has("red"));
+    CHECK(my_funcs.has("red"));
 }
 
-TEST_F(FunctionMapTest, add_func_and_add_it_again) {
+TEST_CASE("FunctionMapTest: add_func_and_add_it_again", "[mctracer]") {
     FunctionMap my_funcs;
     my_funcs.add("f_vs_x", function::Func1({{0, 0}, {1, 0}}));
-    EXPECT_THROW(my_funcs.add("f_vs_x", function::Func1()), FunctionMap::KeyAlreadyInUse);
+    CHECK_THROWS_AS(my_funcs.add("f_vs_x", function::Func1()), FunctionMap::KeyAlreadyInUse);
 }
 
-TEST_F(FunctionMapTest, add_func_and_get_it_again) {
+TEST_CASE("FunctionMapTest: add_func_and_get_it_again", "[mctracer]") {
     FunctionMap my_funcs;
     my_funcs.add("f_vs_x", function::Func1({{0, 0}, {1, 0}}));
     const function::Func1* function = my_funcs.get("f_vs_x");
-    EXPECT_EQ(function->limits.lower, 0);
-    EXPECT_EQ(function->limits.upper, 1);
+    CHECK(0 == function->limits.lower);
+    CHECK(1 == function->limits.upper);
 }
 

@@ -1,12 +1,12 @@
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/mctracer.h"
 #include "Tools/AsciiIo.h"
 
 using namespace relleums;
 
-class SetUpScenery : public ::testing::Test {};
+
 //------------------------------------------------------------------------------
-TEST_F(SetUpScenery, create_scenery) {
+TEST_CASE("SetUpScenery: create_scenery", "[mctracer]") {
     //--set_up_scene_in_source--
     /*@Declare the geometry@*/
 

@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "plenoscope/light_field_sensor/Config.h"
 #include "plenoscope/night_sky_background/NightSkyBackground.h"
 #include "Core/mctracer.h"
@@ -7,9 +7,9 @@
 
 using namespace relleums;
 
-class NightSkyBackgroundLightTest : public ::testing::Test {};
 
-TEST_F(NightSkyBackgroundLightTest, init) {
+
+TEST_CASE("NightSkyBackgroundLightTest: init", "[mctracer]") {
     // SET UP TELESCOPE
     plenoscope::light_field_sensor::Config config;
 
@@ -31,8 +31,8 @@ TEST_F(NightSkyBackgroundLightTest, init) {
         &geometry,
         &nsb_flux_vs_wavelength);
 
-    EXPECT_EQ(nsb.fov_radius, 0.5*deg2rad(6.5)*plenoscope::night_sky_background::FOV_RADIUS_OVERHEAD);
-    EXPECT_EQ(nsb.aperture_radius, 25*plenoscope::night_sky_background::APERTURE_RADIUS_OVERHEAD);
+    CHECK(0.5*deg2rad(6.5)*plenoscope::night_sky_background::FOV_RADIUS_OVERHEAD == nsb.fov_radius);
+    CHECK(25*plenoscope::night_sky_background::APERTURE_RADIUS_OVERHEAD == nsb.aperture_radius);
 
     std::cout << nsb.str() << "\n";
 }

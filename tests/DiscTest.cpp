@@ -1,17 +1,18 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/scenery/primitive/Disc.h"
 
 using namespace relleums;
 
-class DiscTest : public ::testing::Test {};
 
-TEST_F(DiscTest, set_Disc) {
+
+TEST_CASE("DiscTest: set_Disc", "[mctracer]") {
     Disc D;
     D.set_radius(42.0);
-    EXPECT_EQ(42.0, D.get_bounding_sphere_radius());
+    CHECK(D.get_bounding_sphere_radius() == 42.0);
 }
 
-TEST_F(DiscTest, set_Disc_negative_radius) {
-    EXPECT_THROW(Disc D; D.set_radius(-42.0), std::invalid_argument);
+TEST_CASE("DiscTest: set_Disc_negative_radius", "[mctracer]") {
+	Disc D;
+    CHECK_THROWS_AS(D.set_radius(-42.0), std::invalid_argument);
 }

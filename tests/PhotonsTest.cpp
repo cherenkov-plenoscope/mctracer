@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <math.h>
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Tools/AsciiIo.h"
 #include "Core/Photons.h"
 using std::stringstream;
@@ -8,9 +8,9 @@ using std::string;
 using std::vector;
 using namespace relleums;
 
-class PhotonsTest : public ::testing::Test {};
 
-TEST_F(PhotonsTest, raw_row2photon) {
+
+TEST_CASE("PhotonsTest: raw_row2photon", "[mctracer]") {
     Vec3 dir(66.6, 57.8, 99.9);
     dir.normalize();
 
@@ -21,17 +21,17 @@ TEST_F(PhotonsTest, raw_row2photon) {
 
     Photon ph = Photons::raw_row2photon(raw_row);
 
-    EXPECT_EQ(ph.get_simulation_truth_id(), raw_row[0]);
-    EXPECT_EQ(ph.support().x, raw_row[1]);
-    EXPECT_EQ(ph.support().y, raw_row[2]);
-    EXPECT_EQ(ph.support().z, raw_row[3]);
-    EXPECT_NEAR(ph.direction().x, raw_row[4], 1e-9);
-    EXPECT_NEAR(ph.direction().y, raw_row[5], 1e-9);
-    EXPECT_NEAR(ph.direction().z, raw_row[6], 1e-9);
-    EXPECT_EQ(ph.get_wavelength(), raw_row[7]);
+    CHECK(raw_row[0] == ph.get_simulation_truth_id());
+    CHECK(raw_row[1] == ph.support().x);
+    CHECK(raw_row[2] == ph.support().y);
+    CHECK(raw_row[3] == ph.support().z);
+    CHECK(ph.direction().x == Approx(raw_row[4]).margin(1e-9));
+    CHECK(ph.direction().y == Approx(raw_row[5]).margin(1e-9));
+    CHECK(ph.direction().z == Approx(raw_row[6]).margin(1e-9));
+    CHECK(raw_row[7] == ph.get_wavelength());
 }
 
-TEST_F(PhotonsTest, photon2raw_row) {
+TEST_CASE("PhotonsTest: photon2raw_row", "[mctracer]") {
     Vec3 sup(13.0, 37.0, 42.0);
     Vec3 dir(66.6, 57.8, 99.9);
     unsigned int id = 1337;
@@ -42,19 +42,19 @@ TEST_F(PhotonsTest, photon2raw_row) {
 
     vector<double> raw_row = Photons::photon2raw_row(&ph);
 
-    ASSERT_EQ(8u, raw_row.size());
+    REQUIRE(raw_row.size() == 8u);
 
-    EXPECT_EQ(ph.get_simulation_truth_id(), raw_row[0]);
-    EXPECT_EQ(ph.support().x, raw_row[1]);
-    EXPECT_EQ(ph.support().y, raw_row[2]);
-    EXPECT_EQ(ph.support().z, raw_row[3]);
-    EXPECT_NEAR(ph.direction().x, raw_row[4], 1e-9);
-    EXPECT_NEAR(ph.direction().y, raw_row[5], 1e-9);
-    EXPECT_NEAR(ph.direction().z, raw_row[6], 1e-9);
-    EXPECT_EQ(ph.get_wavelength(), raw_row[7]);
+    CHECK(raw_row[0] == ph.get_simulation_truth_id());
+    CHECK(raw_row[1] == ph.support().x);
+    CHECK(raw_row[2] == ph.support().y);
+    CHECK(raw_row[3] == ph.support().z);
+    CHECK(ph.direction().x == Approx(raw_row[4]).margin(1e-9));
+    CHECK(ph.direction().y == Approx(raw_row[5]).margin(1e-9));
+    CHECK(ph.direction().z == Approx(raw_row[6]).margin(1e-9));
+    CHECK(raw_row[7] == ph.get_wavelength());
 }
 
-TEST_F(PhotonsTest, bunch2raw_matrix2bunch) {
+TEST_CASE("PhotonsTest: bunch2raw_matrix2bunch", "[mctracer]") {
     const unsigned int number_of_photons = 1e3;
     vector<Photon> photon_bunch;
     random::Mt19937 prng(random::ZERO_SEED);
@@ -72,29 +72,29 @@ TEST_F(PhotonsTest, bunch2raw_matrix2bunch) {
     std::vector<std::vector<double>> raw_matrix =
         Photons::photons2raw_matrix(&photon_bunch);
 
-    ASSERT_EQ(number_of_photons, raw_matrix.size());
+    REQUIRE(raw_matrix.size() == number_of_photons);
 
     std::vector<Photon> photon_bunch2 =
         Photons::raw_matrix2photons(raw_matrix);
 
-    ASSERT_EQ(number_of_photons, photon_bunch2.size());
+    REQUIRE(photon_bunch2.size() == number_of_photons);
 
     for (unsigned int n = 0; n < number_of_photons; n++) {
         Photon ph1 = photon_bunch.at(n);
         Photon ph2 = photon_bunch2.at(n);
 
-        EXPECT_EQ(ph2.get_simulation_truth_id(), ph1.get_simulation_truth_id());
-        EXPECT_EQ(ph2.support().x, ph1.support().x);
-        EXPECT_EQ(ph2.support().y, ph1.support().y);
-        EXPECT_EQ(ph2.support().z, ph1.support().z);
-        EXPECT_NEAR(ph2.direction().x, ph1.direction().x, 1e-9);
-        EXPECT_NEAR(ph2.direction().y, ph1.direction().y, 1e-9);
-        EXPECT_NEAR(ph2.direction().z, ph1.direction().z, 1e-9);
-        EXPECT_EQ(ph2.get_wavelength(), ph1.get_wavelength());
+        CHECK(ph1.get_simulation_truth_id() == ph2.get_simulation_truth_id());
+        CHECK(ph1.support().x == ph2.support().x);
+        CHECK(ph1.support().y == ph2.support().y);
+        CHECK(ph1.support().z == ph2.support().z);
+        CHECK(ph2.direction().x == Approx(ph1.direction().x).margin(1e-9));
+        CHECK(ph2.direction().y == Approx(ph1.direction().y).margin(1e-9));
+        CHECK(ph2.direction().z == Approx(ph1.direction().z).margin(1e-9));
+        CHECK(ph1.get_wavelength() == ph2.get_wavelength());
     }
 }
 
-TEST_F(PhotonsTest, bunch2raw_matrix2file) {
+TEST_CASE("PhotonsTest: bunch2raw_matrix2file", "[mctracer]") {
     const unsigned int number_of_photons = 1e3;
     std::vector<Photon> photon_bunch1;
     random::Mt19937 prng(random::ZERO_SEED);
@@ -120,19 +120,19 @@ TEST_F(PhotonsTest, bunch2raw_matrix2file) {
         tsvio::gen_table_from_file(
             "numeric_table_IO/my_big_photon_list.txt"));
 
-    ASSERT_EQ(number_of_photons, photon_bunch2.size());
+    REQUIRE(photon_bunch2.size() == number_of_photons);
 
     for (unsigned int n = 0; n < number_of_photons; n++) {
         Photon ph1 = photon_bunch1.at(n);
         Photon ph2 = photon_bunch2.at(n);
 
-        EXPECT_EQ(ph2.get_simulation_truth_id(), ph1.get_simulation_truth_id());
-        EXPECT_NEAR(ph2.support().x, ph1.support().x, 1e-9);
-        EXPECT_NEAR(ph2.support().y, ph1.support().y, 1e-9);
-        EXPECT_NEAR(ph2.support().z, ph1.support().z, 1e-9);
-        EXPECT_NEAR(ph2.direction().x, ph1.direction().x, 1e-9);
-        EXPECT_NEAR(ph2.direction().y, ph1.direction().y, 1e-9);
-        EXPECT_NEAR(ph2.direction().z, ph1.direction().z, 1e-9);
-        EXPECT_NEAR(ph2.get_wavelength(), ph1.get_wavelength(), 1e-9);
+        CHECK(ph1.get_simulation_truth_id() == ph2.get_simulation_truth_id());
+        CHECK(ph2.support().x == Approx(ph1.support().x).margin(1e-9));
+        CHECK(ph2.support().y == Approx(ph1.support().y).margin(1e-9));
+        CHECK(ph2.support().z == Approx(ph1.support().z).margin(1e-9));
+        CHECK(ph2.direction().x == Approx(ph1.direction().x).margin(1e-9));
+        CHECK(ph2.direction().y == Approx(ph1.direction().y).margin(1e-9));
+        CHECK(ph2.direction().z == Approx(ph1.direction().z).margin(1e-9));
+        CHECK(ph2.get_wavelength() == Approx(ph1.get_wavelength()).margin(1e-9));
     }
 }

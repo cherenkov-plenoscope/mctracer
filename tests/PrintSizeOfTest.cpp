@@ -1,7 +1,7 @@
 // Copyright 2015 Sebastian A. Mueller
 #include <sstream>
 #include <string>
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/mctracer.h"
 #include "signal_processing/signal_processing.h"
 using std::cout;
@@ -14,9 +14,9 @@ void print_size(const string &name, T s) {
     cout << sizeof(s) << '\n';
 }
 
-class SizeOfTest : public ::testing::Test {};
 
-TEST_F(SizeOfTest, sizes_of_mct) {
+
+TEST_CASE("SizeOfTest: sizes_of_mct", "[mctracer]") {
     cout << "Size in bytes\n";
     cout << "--------------------------------------------" << "\n";
 

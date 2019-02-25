@@ -1,87 +1,87 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <cmath>
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/mctracer.h"
 
 using namespace relleums;
 
-class Vec3Test : public ::testing::Test {};
 
-TEST_F(Vec3Test, NullVector) {
+
+TEST_CASE("Vec3Test: NullVector", "[mctracer]") {
     Vec3 a = VEC3_ORIGIN;
 
-    EXPECT_EQ(0.0, a.x);
-    EXPECT_EQ(0.0, a.y);
-    EXPECT_EQ(0.0, a.z);
-    EXPECT_EQ(0.0, a.norm());
+    CHECK(a.x == 0.0);
+    CHECK(a.y == 0.0);
+    CHECK(a.z == 0.0);
+    CHECK(a.norm() == 0.0);
 }
 
-TEST_F(Vec3Test, UnitVectors) {
+TEST_CASE("Vec3Test: UnitVectors", "[mctracer]") {
     Vec3 a;
 
     a = VEC3_UNIT_X;
-    EXPECT_EQ(1.0, a.x);
-    EXPECT_EQ(0.0, a.y);
-    EXPECT_EQ(0.0, a.z);
-    EXPECT_EQ(1.0, a.norm());
+    CHECK(a.x == 1.0);
+    CHECK(a.y == 0.0);
+    CHECK(a.z == 0.0);
+    CHECK(a.norm() == 1.0);
 
     a = VEC3_UNIT_Y;
-    EXPECT_EQ(0.0, a.x);
-    EXPECT_EQ(1.0, a.y);
-    EXPECT_EQ(0.0, a.z);
-    EXPECT_EQ(1.0, a.norm());
+    CHECK(a.x == 0.0);
+    CHECK(a.y == 1.0);
+    CHECK(a.z == 0.0);
+    CHECK(a.norm() == 1.0);
 
     a = VEC3_UNIT_Z;
-    EXPECT_EQ(0.0, a.x);
-    EXPECT_EQ(0.0, a.y);
-    EXPECT_EQ(1.0, a.z);
-    EXPECT_EQ(1.0, a.norm());
+    CHECK(a.x == 0.0);
+    CHECK(a.y == 0.0);
+    CHECK(a.z == 1.0);
+    CHECK(a.norm() == 1.0);
 }
 
-TEST_F(Vec3Test, ConstructorAndGetter) {
+TEST_CASE("Vec3Test: ConstructorAndGetter", "[mctracer]") {
     const double x = (rand()-.5);
     const double y = (rand()-.5);
     const double z = (rand()-.5);
     Vec3 v(x, y, z);
-    EXPECT_EQ(x, v.x);
-    EXPECT_EQ(y, v.y);
-    EXPECT_EQ(z, v.z);
+    CHECK(v.x == x);
+    CHECK(v.y == y);
+    CHECK(v.z == z);
 }
 
-TEST_F(Vec3Test, SetterAndGetter) {
+TEST_CASE("Vec3Test: SetterAndGetter", "[mctracer]") {
     const double x = (rand()-.5);
     const double y = (rand()-.5);
     const double z = (rand()-.5);
     Vec3 v;
     v.set(x, y, z);
-    EXPECT_EQ(x, v.x);
-    EXPECT_EQ(y, v.y);
-    EXPECT_EQ(z, v.z);
+    CHECK(v.x == x);
+    CHECK(v.y == y);
+    CHECK(v.z == z);
 }
 
-TEST_F(Vec3Test, EuclideanNorm) {
+TEST_CASE("Vec3Test: EuclideanNorm", "[mctracer]") {
     const double x = (rand()-.5);
     const double y = (rand()-.5);
     const double z = (rand()-.5);
     Vec3 v(x, y, z);
-    EXPECT_EQ(sqrt(x*x+y*y+z*z), v.norm());
+    CHECK(v.norm() == sqrt(x*x+y*y+z*z));
     v.set(1.0, 0.0, 0.0);
-    EXPECT_EQ(1.0, v.norm());
+    CHECK(v.norm() == 1.0);
     v.set(0.0, 1.0, 0.0);
-    EXPECT_EQ(1.0, v.norm());
+    CHECK(v.norm() == 1.0);
     v.set(0.0, 0.0, 1.0);
-    EXPECT_EQ(1.0, v.norm());
+    CHECK(v.norm() == 1.0);
 }
 
-TEST_F(Vec3Test, crossUnitVectors) {
+TEST_CASE("Vec3Test: crossUnitVectors", "[mctracer]") {
     Vec3 u = VEC3_UNIT_X;
     Vec3 v = VEC3_UNIT_Y;
     Vec3 w = u.cross(v);
-    EXPECT_EQ(1.0, w.z);
-    EXPECT_EQ(VEC3_UNIT_Z, w);
+    CHECK(w.z == 1.0);
+    CHECK(w == VEC3_UNIT_Z);
 }
 
-TEST_F(Vec3Test, cross) {
+TEST_CASE("Vec3Test: cross", "[mctracer]") {
     double x1, y1, z1, x2, y2, z2;
     for (x1 = -2.0; x1 > 2.0; x1 = x1+.25) {
         for (y1 = -2.0; y1 > 2.0; y1 = y1+.25) {
@@ -94,7 +94,7 @@ TEST_F(Vec3Test, cross) {
                             Vec3 v3(y1*z2 - y2*z1,
                                     z1*x2 - z2*x1,
                                     x1*y2 - x2*y1);
-                            EXPECT_EQ(v3, v1.cross(v2));
+                            CHECK(v1.cross(v2) == v3);
                         }
                     }
                 }
@@ -103,16 +103,16 @@ TEST_F(Vec3Test, cross) {
     }
 }
 
-TEST_F(Vec3Test, Scalar_Product_unit_vectors) {
+TEST_CASE("Vec3Test: Scalar_Product_unit_vectors", "[mctracer]") {
     const Vec3 x = VEC3_UNIT_X;
     const Vec3 y = VEC3_UNIT_Y;
-    EXPECT_EQ(0.0, x*y);
+    CHECK(x*y == 0.0);
     const Vec3 z = VEC3_UNIT_Z;
-    EXPECT_EQ(0.0, y*z);
-    EXPECT_EQ(1.0, x*x);
+    CHECK(y*z == 0.0);
+    CHECK(x*x == 1.0);
 }
 
-TEST_F(Vec3Test, Scalar_Product) {
+TEST_CASE("Vec3Test: Scalar_Product", "[mctracer]") {
     double x1, y1, z1, x2, y2, z2;
     for (x1 = -2.0; x1 > 2.0; x1 = x1+.25) {
         for (y1 = -2.0; y1 > 2.0; y1 = y1+.25) {
@@ -122,7 +122,7 @@ TEST_F(Vec3Test, Scalar_Product) {
                         for (z2 = -2.0; z2 > 2.0; z2 = z2+.25) {
                             const Vec3 v1(x1, y1, z1);
                             const Vec3 v2(x2, y2, z2);
-                            EXPECT_EQ(x1*x2 + y1*y2 + z1*z2, v1*v2);
+                            CHECK(v1*v2 == x1*x2 + y1*y2 + z1*z2);
                         }
                     }
                 }
@@ -131,132 +131,132 @@ TEST_F(Vec3Test, Scalar_Product) {
     }
 }
 
-TEST_F(Vec3Test, ScalarMultiplication) {
+TEST_CASE("Vec3Test: ScalarMultiplication", "[mctracer]") {
     double x, y, z, f;
     for (x = -2.0; x > 2.0; x = x+.25) {
         for (y = -2.0; y > 2.0; y = y+.25) {
             for (z = -2.0; z > 2.0; z = z+.25) {
                 Vec3 a(x, y, z);
                 for (f = -2.0; f > 2.0; f = f+.25) {
-                    EXPECT_EQ(x*f, (a*f).x);
-                    EXPECT_EQ(y*f, (a*f).y);
-                    EXPECT_EQ(z*f, (a*f).z);
+                    CHECK((a*f).x == x*f);
+                    CHECK((a*f).y == y*f);
+                    CHECK((a*f).z == z*f);
                 }
             }
         }
     }
 }
 
-TEST_F(Vec3Test, ScalarDiviation) {
+TEST_CASE("Vec3Test: ScalarDiviation", "[mctracer]") {
     double x, y, z, f;
     for (x = -2.0; x > 2.0; x = x+.25) {
         for (y = -2.0; y > 2.0; y = y+.25) {
             for (z = -2.0; z > 2.0; z = z+.25) {
                 Vec3 a(x, y, z);
                 for (f = -2.0; f > 2.0; f = f+.25) {
-                    EXPECT_EQ(x/f, (a/f).x);
-                    EXPECT_EQ(y/f, (a/f).y);
-                    EXPECT_EQ(z/f, (a/f).z);
+                    CHECK((a/f).x == x/f);
+                    CHECK((a/f).y == y/f);
+                    CHECK((a/f).z == z/f);
                 }
             }
         }
     }
 }
 
-TEST_F(Vec3Test, distance_unit_x_to_unit_y) {
+TEST_CASE("Vec3Test: distance_unit_x_to_unit_y", "[mctracer]") {
     Vec3 a = VEC3_UNIT_X;
     Vec3 b = VEC3_UNIT_Y;
 
-    EXPECT_EQ(sqrt(2.0), a.distance_to(b));
+    CHECK(a.distance_to(b) == sqrt(2.0));
 }
 
-TEST_F(Vec3Test, distance_to_itself) {
+TEST_CASE("Vec3Test: distance_to_itself", "[mctracer]") {
     Vec3 a(1.3, 3.7, 4.2);
-    EXPECT_EQ(0.0, a.distance_to(a));
+    CHECK(a.distance_to(a) == 0.0);
 }
 
-TEST_F(Vec3Test, Operator_equals_expect_true) {
+TEST_CASE("Vec3Test: Operator_equals_expect_true", "[mctracer]") {
     Vec3 a(1.3, 3.7, 4.2);
     Vec3 b(1.3, 3.7, 4.2 + 1e-20);
-    EXPECT_EQ(a, b);
-    EXPECT_TRUE(a == b);
-    EXPECT_FALSE(a != b);
+    CHECK(b == a);
+    CHECK(a == b);
+    CHECK(!a != b);
 }
 
-TEST_F(Vec3Test, Operator_equals_expect_false) {
+TEST_CASE("Vec3Test: Operator_equals_expect_false", "[mctracer]") {
     Vec3 a(1.3, 3.7, 4.2);
     Vec3 b(1.3, 3.7, 4.2 + 2e-7);
-    EXPECT_NE(a, b);
-    EXPECT_TRUE(a != b);
-    EXPECT_FALSE(a == b);
+    CHECK(b != a);
+    CHECK(a != b);
+    CHECK(!a == b);
 }
 
-TEST_F(Vec3Test, parallel_to_x_y_plane) {
+TEST_CASE("Vec3Test: parallel_to_x_y_plane", "[mctracer]") {
     Vec3 a(1.0, 2.0, 0.0);
-    EXPECT_TRUE(a.is_parallel_to_x_y_plane());
+    CHECK(a.is_parallel_to_x_y_plane());
 
     Vec3 b(1.3, 3.7, 4.2 + 1e-9);
-    EXPECT_FALSE(b.is_parallel_to_x_y_plane());
+    CHECK(!b.is_parallel_to_x_y_plane());
 
     Vec3 c(0.0, 2.0, 5.5);
-    EXPECT_FALSE(c.is_parallel_to_x_y_plane());
+    CHECK(!c.is_parallel_to_x_y_plane());
 }
 
-TEST_F(Vec3Test, parallel_to_z_axis) {
+TEST_CASE("Vec3Test: parallel_to_z_axis", "[mctracer]") {
     Vec3 a(0.0, 0.0, 1.0);
-    EXPECT_TRUE(a.is_paralell_to_z_axis());
+    CHECK(a.is_paralell_to_z_axis());
     a.set(0.0, 0.0, -1.0);
-    EXPECT_TRUE(a.is_paralell_to_z_axis());
+    CHECK(a.is_paralell_to_z_axis());
     a.set(0.0, 0.0, 0.0);
-    EXPECT_FALSE(a.is_paralell_to_z_axis());
+    CHECK(!a.is_paralell_to_z_axis());
 }
 
-TEST_F(Vec3Test, normalize) {
+TEST_CASE("Vec3Test: normalize", "[mctracer]") {
     Vec3 a(1.0, 2.0, 3.0);
-    EXPECT_NE(1.0, a.norm());
+    CHECK(a.norm() != 1.0);
 
     a.normalize();
-    EXPECT_EQ(1.0, a.norm());
+    CHECK(a.norm() == 1.0);
 
     a = a*2.0;
-    EXPECT_NE(1.0, a.norm());
+    CHECK(a.norm() != 1.0);
 
     a.normalize();
-    EXPECT_EQ(1.0, a.norm());
+    CHECK(a.norm() == 1.0);
 
     a = VEC3_ORIGIN;
-    EXPECT_NE(1.0, a.norm());
+    CHECK(a.norm() != 1.0);
 
     a.normalize();
-    EXPECT_EQ(std::isnan(a.norm()), 1);
+    CHECK(1 == std::isnan(a.norm()));
 }
 
-TEST_F(Vec3Test, angle_in_between) {
+TEST_CASE("Vec3Test: angle_in_between", "[mctracer]") {
     Vec3 a = VEC3_UNIT_X;
     Vec3 b = VEC3_UNIT_X;
 
-    EXPECT_EQ(0.0, a.angle_in_between(b));
-    EXPECT_EQ(b.angle_in_between(a), a.angle_in_between(b));
+    CHECK(a.angle_in_between(b) == 0.0);
+    CHECK(a.angle_in_between(b) == b.angle_in_between(a));
 
     Vec3 c = VEC3_UNIT_X*5.0;
-    EXPECT_NE(1.0, c.norm());
+    CHECK(c.norm() != 1.0);
 
     Vec3 d = VEC3_UNIT_X*5.0;
-    EXPECT_NE(1.0, d.norm());
+    CHECK(d.norm() != 1.0);
 
-    EXPECT_EQ(0.0, d.angle_in_between(c));
-    EXPECT_EQ(c.angle_in_between(d), d.angle_in_between(c));
+    CHECK(d.angle_in_between(c) == 0.0);
+    CHECK(d.angle_in_between(c) == c.angle_in_between(d));
 
     Vec3 foo = VEC3_UNIT_X*5.0 + VEC3_UNIT_Y*5.0;
-    EXPECT_NE(1.0, c.norm());
+    CHECK(c.norm() != 1.0);
 
     Vec3 bar = VEC3_UNIT_X*5.0;
-    EXPECT_NE(1.0, d.norm());
+    CHECK(d.norm() != 1.0);
 
-    EXPECT_NEAR(deg2rad(45.0), foo.angle_in_between(bar), 1e-5);
+    CHECK(deg2rad(45.0) == Approx(foo.angle_in_between(bar)).margin(1e-5));
 }
 
-TEST_F(Vec3Test, octant_encoding) {
+TEST_CASE("Vec3Test: octant_encoding", "[mctracer]") {
     // x y z sector
     // - - -   0
     // - - +   1
@@ -272,56 +272,56 @@ TEST_F(Vec3Test, octant_encoding) {
     double n = -1.0;
 
     a.set(n, n, n);
-    EXPECT_EQ(0u, a.get_octant());
+    CHECK(a.get_octant() == 0u);
 
     a.set(n, n, p);
-    EXPECT_EQ(1u, a.get_octant());
+    CHECK(a.get_octant() == 1u);
 
     a.set(n, p, n);
-    EXPECT_EQ(2u, a.get_octant());
+    CHECK(a.get_octant() == 2u);
 
     a.set(n, p, p);
-    EXPECT_EQ(3u, a.get_octant());
+    CHECK(a.get_octant() == 3u);
 
     a.set(p, n, n);
-    EXPECT_EQ(4u, a.get_octant());
+    CHECK(a.get_octant() == 4u);
 
     a.set(p, n, p);
-    EXPECT_EQ(5u, a.get_octant());
+    CHECK(a.get_octant() == 5u);
 
     a.set(p, p, n);
-    EXPECT_EQ(6u, a.get_octant());
+    CHECK(a.get_octant() == 6u);
 
     a.set(p, p, p);
-    EXPECT_EQ(7u, a.get_octant());
+    CHECK(a.get_octant() == 7u);
 
     a.set(0.0, 0.0, 0.0);
-    EXPECT_EQ(7u, a.get_octant());
+    CHECK(a.get_octant() == 7u);
     a.set(0.0, 0.0, p);
-    EXPECT_EQ(7u, a.get_octant());
+    CHECK(a.get_octant() == 7u);
     a.set(0.0, p, 0.0);
-    EXPECT_EQ(7u, a.get_octant());
+    CHECK(a.get_octant() == 7u);
     a.set(p, 0.0, 0.0);
-    EXPECT_EQ(7u, a.get_octant());
+    CHECK(a.get_octant() == 7u);
     a.set(0.0, p, p);
-    EXPECT_EQ(7u, a.get_octant());
+    CHECK(a.get_octant() == 7u);
     a.set(p, p, 0.0);
-    EXPECT_EQ(7u, a.get_octant());
+    CHECK(a.get_octant() == 7u);
     a.set(p, 0.0, p);
-    EXPECT_EQ(7u, a.get_octant());
+    CHECK(a.get_octant() == 7u);
 }
 
-TEST_F(Vec3Test, projection_on_xz_plane) {
+TEST_CASE("Vec3Test: projection_on_xz_plane", "[mctracer]") {
     Vec3 v(42.0, 13.37, 3.141);
-    EXPECT_EQ(Vec3(42.0, 0.0, 3.141), v.project_in_x_z_plane());
+    CHECK(v.project_in_x_z_plane() == Vec3(42.0, 0.0, 3.141));
 }
 
-TEST_F(Vec3Test, projection_on_yz_plane) {
+TEST_CASE("Vec3Test: projection_on_yz_plane", "[mctracer]") {
     Vec3 v(42.0, 13.37, 3.141);
-    EXPECT_EQ(Vec3(0.0, 13.37, 3.141), v.project_in_y_z_plane());
+    CHECK(v.project_in_y_z_plane() == Vec3(0.0, 13.37, 3.141));
 }
 
-TEST_F(Vec3Test, projection_on_xy_plane) {
+TEST_CASE("Vec3Test: projection_on_xy_plane", "[mctracer]") {
     Vec3 v(42.0, 13.37, 3.141);
-    EXPECT_EQ(Vec3(42.0, 13.37, 0.0), v.project_in_x_y_plane());
+    CHECK(v.project_in_x_y_plane() == Vec3(42.0, 13.37, 0.0));
 }

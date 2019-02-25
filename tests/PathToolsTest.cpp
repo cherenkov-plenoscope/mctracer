@@ -1,132 +1,132 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/mctracer.h"
 using std::string;
 using namespace relleums;
 
-class PathToolsTest : public ::testing::Test {};
 
-TEST_F(PathToolsTest, empty) {
+
+TEST_CASE("PathToolsTest: empty", "[mctracer]") {
     ospath::Path path;
-    EXPECT_EQ("", path.path);
-    EXPECT_EQ("", path.dirname);
-    EXPECT_EQ("", path.basename_wo_extension);
-    EXPECT_EQ("", path.extension);
-    EXPECT_EQ("", path.basename);
+    CHECK(path.path == "");
+    CHECK(path.dirname == "");
+    CHECK(path.basename_wo_extension == "");
+    CHECK(path.extension == "");
+    CHECK(path.basename == "");
 }
 
-TEST_F(PathToolsTest, complete_path) {
+TEST_CASE("PathToolsTest: complete_path", "[mctracer]") {
     const string full_path = "la/li/lu/blub.xml";
     ospath::Path path(full_path);
-    EXPECT_EQ("la/li/lu/blub.xml", path.path);
-    EXPECT_EQ("la/li/lu", path.dirname);
-    EXPECT_EQ("blub", path.basename_wo_extension);
-    EXPECT_EQ("xml", path.extension);
-    EXPECT_EQ("blub.xml", path.basename);
+    CHECK(path.path == "la/li/lu/blub.xml");
+    CHECK(path.dirname == "la/li/lu");
+    CHECK(path.basename_wo_extension == "blub");
+    CHECK(path.extension == "xml");
+    CHECK(path.basename == "blub.xml");
 }
 
-TEST_F(PathToolsTest, only_filename_and_extension) {
+TEST_CASE("PathToolsTest: only_filename_and_extension", "[mctracer]") {
     const string full_path = "blub.xml";
     ospath::Path path(full_path);
-    EXPECT_EQ("blub.xml", path.path);
-    EXPECT_EQ("", path.dirname);
-    EXPECT_EQ("blub", path.basename_wo_extension);
-    EXPECT_EQ("xml", path.extension);
-    EXPECT_EQ("blub.xml", path.basename);
+    CHECK(path.path == "blub.xml");
+    CHECK(path.dirname == "");
+    CHECK(path.basename_wo_extension == "blub");
+    CHECK(path.extension == "xml");
+    CHECK(path.basename == "blub.xml");
 }
 
-TEST_F(PathToolsTest, point_delimiter_filename_and_extension) {
+TEST_CASE("PathToolsTest: point_delimiter_filename_and_extension", "[mctracer]") {
     const string full_path = "./blub.xml";
     ospath::Path path(full_path);
-    EXPECT_EQ("./blub.xml", path.path);
-    EXPECT_EQ(".", path.dirname);
-    EXPECT_EQ("blub", path.basename_wo_extension);
-    EXPECT_EQ("xml", path.extension);
-    EXPECT_EQ("blub.xml", path.basename);
+    CHECK(path.path == "./blub.xml");
+    CHECK(path.dirname == ".");
+    CHECK(path.basename_wo_extension == "blub");
+    CHECK(path.extension == "xml");
+    CHECK(path.basename == "blub.xml");
 }
 
-TEST_F(PathToolsTest, filename_without_extension) {
+TEST_CASE("PathToolsTest: filename_without_extension", "[mctracer]") {
     const string full_path = "la/li/lu/blub";
     ospath::Path path(full_path);
-    EXPECT_EQ("la/li/lu/blub", path.path);
-    EXPECT_EQ("la/li/lu", path.dirname);
-    EXPECT_EQ("blub", path.basename_wo_extension);
-    EXPECT_EQ("", path.extension);
-    EXPECT_EQ("blub", path.basename);
+    CHECK(path.path == "la/li/lu/blub");
+    CHECK(path.dirname == "la/li/lu");
+    CHECK(path.basename_wo_extension == "blub");
+    CHECK(path.extension == "");
+    CHECK(path.basename == "blub");
 }
 
-TEST_F(PathToolsTest, double_dot_path_filename) {
+TEST_CASE("PathToolsTest: double_dot_path_filename", "[mctracer]") {
     const string full_path = "../la/li/lu/blub";
     ospath::Path path(full_path);
-    EXPECT_EQ("../la/li/lu/blub", path.path);
-    EXPECT_EQ("../la/li/lu", path.dirname);
-    EXPECT_EQ("blub", path.basename_wo_extension);
-    EXPECT_EQ("", path.extension);
-    EXPECT_EQ("blub", path.basename);
+    CHECK(path.path == "../la/li/lu/blub");
+    CHECK(path.dirname == "../la/li/lu");
+    CHECK(path.basename_wo_extension == "blub");
+    CHECK(path.extension == "");
+    CHECK(path.basename == "blub");
 }
 
-TEST_F(PathToolsTest, double_dot_path_filename_extension) {
+TEST_CASE("PathToolsTest: double_dot_path_filename_extension", "[mctracer]") {
     const string full_path = "../la/li/lu/blub.xml";
     ospath::Path path(full_path);
-    EXPECT_EQ("../la/li/lu/blub.xml", path.path);
-    EXPECT_EQ("../la/li/lu", path.dirname);
-    EXPECT_EQ("blub", path.basename_wo_extension);
-    EXPECT_EQ("xml", path.extension);
-    EXPECT_EQ("blub.xml", path.basename);
+    CHECK(path.path == "../la/li/lu/blub.xml");
+    CHECK(path.dirname == "../la/li/lu");
+    CHECK(path.basename_wo_extension == "blub");
+    CHECK(path.extension == "xml");
+    CHECK(path.basename == "blub.xml");
 }
 
-TEST_F(PathToolsTest, multiplep_double_dot_path_filename_extension) {
+TEST_CASE("PathToolsTest: multiplep_double_dot_path_filename_extension", "[mctracer]") {
     const string full_path = "../la/li/../lu/blub.xml";
     ospath::Path path(full_path);
-    EXPECT_EQ("../la/li/../lu/blub.xml", path.path);
-    EXPECT_EQ("../la/li/../lu", path.dirname);
-    EXPECT_EQ("blub", path.basename_wo_extension);
-    EXPECT_EQ("xml", path.extension);
-    EXPECT_EQ("blub.xml", path.basename);
+    CHECK(path.path == "../la/li/../lu/blub.xml");
+    CHECK(path.dirname == "../la/li/../lu");
+    CHECK(path.basename_wo_extension == "blub");
+    CHECK(path.extension == "xml");
+    CHECK(path.basename == "blub.xml");
 }
 
-TEST_F(PathToolsTest, double_dots_in_middle_filename_extension) {
+TEST_CASE("PathToolsTest: double_dots_in_middle_filename_extension", "[mctracer]") {
     const string full_path = "../la/li/../lu/blub.xml";
     ospath::Path path(full_path);
-    EXPECT_EQ("../la/li/../lu/blub.xml", path.path);
-    EXPECT_EQ("../la/li/../lu", path.dirname);
-    EXPECT_EQ("blub", path.basename_wo_extension);
-    EXPECT_EQ("xml", path.extension);
-    EXPECT_EQ("blub.xml", path.basename);
+    CHECK(path.path == "../la/li/../lu/blub.xml");
+    CHECK(path.dirname == "../la/li/../lu");
+    CHECK(path.basename_wo_extension == "blub");
+    CHECK(path.extension == "xml");
+    CHECK(path.basename == "blub.xml");
 }
 
-TEST_F(PathToolsTest, join_no_delimiter) {
+TEST_CASE("PathToolsTest: join_no_delimiter", "[mctracer]") {
     string p1 = "/home/hans";
     string p2 = "file.txt";
-    EXPECT_EQ("/home/hans/file.txt", ospath::join(p1, p2));
+    CHECK(ospath::join(p1, p2) == "/home/hans/file.txt");
 }
 
-TEST_F(PathToolsTest, join_delimiter_only_first) {
+TEST_CASE("PathToolsTest: join_delimiter_only_first", "[mctracer]") {
     string p1 = "/home/hans/";
     string p2 = "file.txt";
-    EXPECT_EQ("/home/hans/file.txt", ospath::join(p1, p2));
+    CHECK(ospath::join(p1, p2) == "/home/hans/file.txt");
 }
 
-TEST_F(PathToolsTest, join_delimiter_only_last) {
+TEST_CASE("PathToolsTest: join_delimiter_only_last", "[mctracer]") {
     string p1 = "/home/hans";
     string p2 = "/file.txt";
-    EXPECT_EQ("/home/hans/file.txt", ospath::join(p1, p2));
+    CHECK(ospath::join(p1, p2) == "/home/hans/file.txt");
 }
 
-TEST_F(PathToolsTest, join_delimiter_both) {
+TEST_CASE("PathToolsTest: join_delimiter_both", "[mctracer]") {
     string p1 = "/home/hans/";
     string p2 = "/file.txt";
-    EXPECT_EQ("/home/hans/file.txt", ospath::join(p1, p2));
+    CHECK(ospath::join(p1, p2) == "/home/hans/file.txt");
 }
 
-TEST_F(PathToolsTest, join_first_path_empty) {
+TEST_CASE("PathToolsTest: join_first_path_empty", "[mctracer]") {
     string p1 = "";
     string p2 = "file.txt";
-    EXPECT_EQ("file.txt", ospath::join(p1, p2));
+    CHECK(ospath::join(p1, p2) == "file.txt");
 }
 
-TEST_F(PathToolsTest, join_second_path_empty) {
+TEST_CASE("PathToolsTest: join_second_path_empty", "[mctracer]") {
     string p1 = "hans";
     string p2 = "";
-    EXPECT_EQ("hans/", ospath::join(p1, p2));
+    CHECK(ospath::join(p1, p2) == "hans/");
 }

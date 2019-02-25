@@ -2,6 +2,8 @@ import sys
 import re
 import os
 
+includeRegEx = re.compile(r'#include\s*"gtest/gtest.h"')
+testClassRegex = re.compile(r'class\s+\w+\s*:\s*public\s*::testing::Test\s*{};')
 testCaseRegex = re.compile (r'TEST_F\s*\((\w+),\s*(\w+)\)')
 expectRegex = re.compile (r'EXPECT_(\w+)\s*\((.*)\);')
 assertRegex = re.compile (r'ASSERT_(\w+)\s*\((.*)\);')
@@ -9,20 +11,20 @@ leadingWhitespaceRegex = re.compile(r'^(\s*)')
 
 module = "[unknown]"
 
-def SplitCheck (check):
-    def IsShiftOrComparison (c, i, check):
-        if c in {'<', '>'}:
-            # we can be the second or first character
-            # look ahead first, could be = as well there
-            if (i+1) < len (check):
-                if check [i+1] in {'<', '>', '='}:
-                    return True
-            # look behind, this is only needed for >> and <<
-            if i > 0:
-                if check [i-1] == c:
-                    return True
-        return False
+def IsShiftOrComparison (c, i, check):
+    if c in {'<', '>'}:
+        # we can be the second or first character
+        # look ahead first, could be = as well there
+        if (i+1) < len (check):
+            if check [i+1] in {'<', '>', '='}:
+                return True
+        # look behind, this is only needed for >> and <<
+        if i > 0:
+            if check [i-1] == c:
+                return True
+    return False
 
+def SplitCheck (check):
     # we start from the left, increment when we see anything of {, <, (,
     # decrement if we see }, >, ), and if we're at level 0 and see a , -- we
     # split at that location
@@ -70,6 +72,62 @@ def SplitCheck (check):
     else:
         return '/* GTEST-CATCH FIXME */' + check, ''
 
+def SplitCheckNear (check):
+    num_commas = 0
+    first_comma = -1
+    second_comma = -1
+    # we start from the left, increment when we see anything of {, <, (,
+    # decrement if we see }, >, ), and if we're at level 0 and see a , -- we
+    # split at that location
+    nesting = 0
+    inString = False
+    for i,c in enumerate (check):
+        # Handle strings - we ignore everything inside quotes, but we still need
+        # to check for escaped quotes
+        # This handles "\"" and also correctly ignores "\\"
+        if c == '"':
+            if not inString:
+                inString = True
+            else:
+                # escaped quote inside a string - ignore
+                if i > 0 and check [i-1] == '\\':
+                    # Check again if the backslash was escaped
+                    if i > 1 and check [i-2] != '\\':
+                        inString = False
+                    else:
+                        continue
+                inString = False
+            continue
+
+        if inString:
+            continue
+
+        # Next problem case are shift and comparison operators, we might have
+        # <=, <<, >=, >>, <, >. Unfortunately, we have no hope in figuring out
+        # whether something like a<b,c> means a<b and c or a<b,c> with b,c being
+        # template parameters. Thus, we're only going to handle the simple cases
+        # for now, which are <=, <<, >=, >>
+
+        if IsShiftOrComparison (c, i, check):
+            continue
+
+        if c in {'{', '<', '('}:
+            nesting += 1
+        elif c in {'}', '>', ')'}:
+            nesting -= 1
+        elif c == ',':
+            if nesting > 0:
+                continue
+            else:
+                num_commas += 1
+                if num_commas == 1:
+                    first_comma = i
+                if num_commas == 2:
+                    second_comma = i
+                    return check [first_comma+1:second_comma].strip (), check [:first_comma].strip (), check [second_comma+1:].strip()
+    else:
+        return '/* GTEST-CATCH FIXME */' + check, ''
+
 def ProcessCheck (match, prefix, line):
     basicComparisonOps = {
             'EQ' : '==',
@@ -82,7 +140,8 @@ def ProcessCheck (match, prefix, line):
             'FLOAT_EQ' : '==',
             'FLOAT_NE' : '!=',
             'DOUBLE_EQ' : '==',
-            'DOUBLE_NE' : '!=',
+            'DOUBLE_NE' : '!='}
+    nearComparisonOps = {
             'NEAR' : '=='}
 
     if match [0] == 'TRUE':
@@ -98,15 +157,21 @@ def ProcessCheck (match, prefix, line):
     elif match [0] in floatComparisonOps:
         expected, actual = SplitCheck (match [1])
         op = floatComparisonOps [match [0]]
-        return prefix + '({} {} Approx ({}));\n'.format (actual, op, expected)
+        return prefix + '({} {} Approx({}));\n'.format (actual, op, expected)
+
+    elif match [0] in nearComparisonOps:
+        expected, actual, margin = SplitCheckNear (match [1])
+        op = nearComparisonOps [match [0]]
+        return prefix + '({} {} Approx({}).margin({}));\n'.format (actual, op, expected, margin)
+
     elif match [0] == 'THROW':
         expected, exception = SplitCheck (match [1])
-        return prefix + '_THROWS_AS ({}, {});\n'.format (expected, exception)
+        return prefix + '_THROWS_AS({}, {});\n'.format (expected, exception)
     elif match [0] == 'NO_THROW':
-        return prefix + '_NOTHROW ({});\n'.format (match [1])
+        return prefix + '_NOTHROW({});\n'.format (match [1])
     elif match [0] == 'STREQ':
         expected, actual = SplitCheck (match [1])
-        return prefix + '_THAT ({}, Catch::Equals ({}));\n'.format (actual, expected)
+        return prefix + '_THAT({}, Catch::Equals ({}));\n'.format (actual, expected)
     else:
         raise Exception ('Unknown match: "{}"'.format (line))
 
@@ -129,6 +194,16 @@ def ProcessLine (line):
         g = match.groups ()
         return ProcessCheck (g, ws + 'REQUIRE', line)
 
+    match = testClassRegex.search (line)
+    if match:
+        g = match.groups ()
+        return '\n'
+
+    match = includeRegEx.search (line)
+    if match:
+        g = match.groups ()
+        return '#include "catch.hpp"\n'
+
     return line
 
 if __name__ == '__main__':
@@ -139,4 +214,4 @@ if __name__ == '__main__':
                 p = os.path.join (root, f)
                 lines = open (p, 'r').readlines ()
                 output = map (ProcessLine, lines)
-                open (p+'.catch2.cpp', 'w').write (''.join (output))
+                open (p, 'w').write (''.join (output))

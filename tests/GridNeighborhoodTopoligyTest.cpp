@@ -1,12 +1,12 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/scenery/geometry/HexGridAnnulus.h"
 #include "Core/scenery/geometry/GridNeighborhoodTopoligy.h"
 using namespace relleums;
 
-class GridNeighborhoodTopoligyTest : public ::testing::Test {};
 
-TEST_F(GridNeighborhoodTopoligyTest, init) {
+
+TEST_CASE("GridNeighborhoodTopoligyTest: init", "[mctracer]") {
     double outer_R = 1.0;
     double spacing = 0.2;
 

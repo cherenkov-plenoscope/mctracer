@@ -1,45 +1,45 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <array>
-#include "gtest/gtest.h"
+#include "catch.hpp"
 #include "Core/mctracer.h"
 using std::array;
 using std::vector;
 using namespace relleums;
 
-class RandomGeneratorTest : public ::testing::Test {};
 
-TEST_F(RandomGeneratorTest, fake_constant) {
+
+TEST_CASE("RandomGeneratorTest: fake_constant", "[mctracer]") {
     for (double i = 0.0; i < 100.0; i++) {
         random::FakeConstant prng(i);
         for (int j = 0; j < 10; j++)
-            EXPECT_EQ(i, prng.uniform());
+            CHECK(prng.uniform() == i);
     }
 }
 
-TEST_F(RandomGeneratorTest, Mt19937_init_and_get_seed) {
+TEST_CASE("RandomGeneratorTest: Mt19937_init_and_get_seed", "[mctracer]") {
     for (unsigned int i = 0; i < 100; i++) {
         random::Mt19937 prng(i);
-        EXPECT_EQ(i, prng.seed());
+        CHECK(prng.seed() == i);
     }
 }
 
-TEST_F(RandomGeneratorTest, Mt19937_set_and_get_seed) {
+TEST_CASE("RandomGeneratorTest: Mt19937_set_and_get_seed", "[mctracer]") {
     random::Mt19937 prng;
     for (unsigned int i = 0; i < 100; i++) {
         prng.set_seed(i);
-        EXPECT_EQ(i, prng.seed());
+        CHECK(prng.seed() == i);
     }
 }
 
-TEST_F(RandomGeneratorTest, uniform_0_to_1_stddev) {
+TEST_CASE("RandomGeneratorTest: uniform_0_to_1_stddev", "[mctracer]") {
     random::Mt19937 prng(0);
     vector<double> samples;
     for (unsigned int i = 0; i < 42*1337; i++)
         samples.push_back(prng.uniform());
-    EXPECT_NEAR(1.0/sqrt(12.0), numeric::stddev(samples), 1e-3);
+    CHECK(1.0/sqrt(12.0) == Approx(numeric::stddev(samples)).margin(1e-3));
 }
 
-TEST_F(RandomGeneratorTest, generator_point_on_disc) {
+TEST_CASE("RandomGeneratorTest: generator_point_on_disc", "[mctracer]") {
     random::Mt19937 prng(0);
     unsigned int n_points = 1e6;
     double disc_radius = 1.337;
@@ -51,9 +51,9 @@ TEST_F(RandomGeneratorTest, generator_point_on_disc) {
     for (Vec3 p : points)
         sum = sum + p;
     Vec3 mean = sum*(1.0/static_cast<double>(points.size()));
-    EXPECT_NEAR(0.0, mean.x, 1e-2);
-    EXPECT_NEAR(0.0, mean.y, 1e-2);
-    EXPECT_EQ(0.0, sum.z);
+    CHECK(0.0 == Approx(mean.x).margin(1e-2));
+    CHECK(0.0 == Approx(mean.y).margin(1e-2));
+    CHECK(sum.z == 0.0);
     // distibution is evenly spread
     vector<double> counts_in_evaluation_bins;
     double evaluation_disc_radius = disc_radius/5.0;
@@ -73,11 +73,11 @@ TEST_F(RandomGeneratorTest, generator_point_on_disc) {
     }
     double mean_count = numeric::mean(counts_in_evaluation_bins);
     double stddev_count = numeric::stddev(counts_in_evaluation_bins);
-    EXPECT_TRUE(stddev_count/mean_count < 1e-2);
+    CHECK(stddev_count/mean_count < 1e-2);
     // std::cout << mean_count << " pm " << stddev_count << "\n";
 }
 
-TEST_F(RandomGeneratorTest, draw_from_distribution) {
+TEST_CASE("RandomGeneratorTest: draw_from_distribution", "[mctracer]") {
     // -------------------
     // create distributions
     function::Func1 f(function::polynom3(0, 1, 0, 0, 0.0, 1.0, 4096));
@@ -123,37 +123,37 @@ TEST_F(RandomGeneratorTest, draw_from_distribution) {
         if (max_f < ys[i])
             max_f = ys[i];
     for (unsigned int i = 0; i < bin_edges.size()-1; i++)
-        EXPECT_NEAR(f.evaluate(bin_edges[i])/f_integral, drawn_f_normalized[i], max_f*1e-2);
+        CHECK(f.evaluate(bin_edges[i])/f_integral == Approx(drawn_f_normalized[i]).margin(max_f*1e-2));
 }
 
-TEST_F(RandomGeneratorTest, draw_from_poisson_distribution) {
+TEST_CASE("RandomGeneratorTest: draw_from_poisson_distribution", "[mctracer]") {
     random::Mt19937 prng(0);
     double sum = 0.0;
     const double rate = 1e6;
     for (unsigned int i = 0; i< rate; i++)
         sum += prng.expovariate(rate);
-    EXPECT_NEAR(1.0, sum, 1e-3);
+    CHECK(1.0 == Approx(sum).margin(1e-3));
 }
 
-TEST_F(RandomGeneratorTest, conventional_disc_1M_draws) {
+TEST_CASE("RandomGeneratorTest: conventional_disc_1M_draws", "[mctracer]") {
     const double r = 2.23;
     random::Mt19937 prng(0);
     for (unsigned int i = 0; i < (unsigned int)(1e5); i++) {
         Vec3 p = prng.get_point_on_xy_disc_within_radius_slow(r);
-        EXPECT_TRUE(r*r >= p*p);
+        CHECK(r*r >= p*p);
     }
 }
 
-TEST_F(RandomGeneratorTest, rejection_sampling_disc_1M_draws) {
+TEST_CASE("RandomGeneratorTest: rejection_sampling_disc_1M_draws", "[mctracer]") {
     const double r = 2.23;
     random::Mt19937 prng(0);
     for (unsigned int i = 0; i < (unsigned int)(1e5); i++) {
         Vec3 p = prng.get_point_on_xy_disc_within_radius(r);
-        EXPECT_TRUE(r*r >= p*p);
+        CHECK(r*r >= p*p);
     }
 }
 
-TEST_F(RandomGeneratorTest, full_sphere) {
+TEST_CASE("RandomGeneratorTest: full_sphere", "[mctracer]") {
     unsigned int n = static_cast<unsigned int>(1e6);
     random::Mt19937 prng(0);
     random::ZenithDistancePicker zd_picker(0, M_PI);
@@ -164,12 +164,12 @@ TEST_F(RandomGeneratorTest, full_sphere) {
             random::draw_point_on_sphere(&prng, zd_picker, az_picker);
     }
     mean_position = mean_position/static_cast<double>(n);
-    EXPECT_NEAR(mean_position.x, 0.0, 1e-3);
-    EXPECT_NEAR(mean_position.y, 0.0, 1e-3);
-    EXPECT_NEAR(mean_position.z, 0.0, 1e-3);
+    CHECK(mean_position.x == Approx(0.0).margin(1e-3));
+    CHECK(mean_position.y == Approx(0.0).margin(1e-3));
+    CHECK(mean_position.z == Approx(0.0).margin(1e-3));
 }
 
-TEST_F(RandomGeneratorTest, octo_sphere) {
+TEST_CASE("RandomGeneratorTest: octo_sphere", "[mctracer]") {
     unsigned int n = static_cast<unsigned int>(1e6);
     random::Mt19937 prng(0);
     random::ZenithDistancePicker zd_picker(0, M_PI/2);
@@ -180,12 +180,12 @@ TEST_F(RandomGeneratorTest, octo_sphere) {
             random::draw_point_on_sphere(&prng, zd_picker, az_picker);
     }
     mean_position = mean_position/static_cast<double>(n);
-    EXPECT_NEAR(mean_position.x, 0.5, 1e-3);
-    EXPECT_NEAR(mean_position.y, 0.5, 1e-3);
-    EXPECT_NEAR(mean_position.z, 0.5, 1e-3);
+    CHECK(mean_position.x == Approx(0.5).margin(1e-3));
+    CHECK(mean_position.y == Approx(0.5).margin(1e-3));
+    CHECK(mean_position.z == Approx(0.5).margin(1e-3));
 }
 
-TEST_F(RandomGeneratorTest, octo_sphere_minus_z) {
+TEST_CASE("RandomGeneratorTest: octo_sphere_minus_z", "[mctracer]") {
     unsigned int n = static_cast<unsigned int>(1e3);
     random::Mt19937 prng(0);
     random::ZenithDistancePicker zd_picker(M_PI/2, M_PI);
@@ -196,12 +196,12 @@ TEST_F(RandomGeneratorTest, octo_sphere_minus_z) {
             random::draw_point_on_sphere(&prng, zd_picker, az_picker);
     }
     mean_position = mean_position/static_cast<double>(n);
-    EXPECT_NEAR(mean_position.x, 0.5, 2e-2);
-    EXPECT_NEAR(mean_position.y, 0.5, 2e-2);
-    EXPECT_NEAR(mean_position.z, -0.5, 2e-2);
+    CHECK(mean_position.x == Approx(0.5).margin(2e-2));
+    CHECK(mean_position.y == Approx(0.5).margin(2e-2));
+    CHECK(mean_position.z == Approx(-0.5).margin(2e-2));
 }
 
-TEST_F(RandomGeneratorTest, normal_distribution) {
+TEST_CASE("RandomGeneratorTest: normal_distribution", "[mctracer]") {
     const vector<double> means = {-1.9, -.3, 0.0, 4.6};
     const vector<double> stds = {0.2, 0.7, 1.0, 2.3};
     for (double mean: means) {
@@ -210,8 +210,8 @@ TEST_F(RandomGeneratorTest, normal_distribution) {
             vector<double> samples;
             for (unsigned int i = 0; i < 10*1000; i++)
                 samples.push_back(prng.normal(mean, std));
-            EXPECT_NEAR(std, numeric::stddev(samples), 1e-1);
-            EXPECT_NEAR(mean, numeric::mean(samples), 1e-1);
+            CHECK(std == Approx(numeric::stddev(samples)).margin(1e-1));
+            CHECK(mean == Approx(numeric::mean(samples)).margin(1e-1));
         }
     }
 }
