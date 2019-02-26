@@ -6,7 +6,7 @@ head = "// Copyright 2018 Sebastian A. Mueller\n"
 
 
 def inside_namespace(txt):
-	start_first_namespace = txt.find("{", txt.find('namespace relleums')) + 1
+	start_first_namespace = txt.find("{", txt.find('namespace merlict')) + 1
 	if start_first_namespace == 0:
 		return ""
 	pos = start_first_namespace
@@ -37,7 +37,7 @@ def inside_namespace(txt):
 
 	rest_of_txt = txt[end_namespace:]
 
-	if rest_of_txt.find("namespace relleums") == -1:
+	if rest_of_txt.find("namespace merlict") == -1:
 	 	return in_first_namespace
 	else:
 		return in_first_namespace + "\n" + inside_namespace(rest_of_txt)

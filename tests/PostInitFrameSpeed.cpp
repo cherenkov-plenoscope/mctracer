@@ -3,7 +3,7 @@
 #include "merlict/scenery/segmented_imaging_reflector/segmented_imaging_reflector.h"
 #include "merlict/merlict.h"
 
-using namespace relleums;
+using namespace merlict;
 
 TEST_CASE("PostInitFrameSpeed: post_init_based_on_mother", "[mctracer]") {
     PropagationConfig settings;

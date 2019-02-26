@@ -10,7 +10,7 @@ vector<ExtractedPulse> extract_pulses(
     const vector<ElectricPulse> &electric_pulses,
     const double time_slice_duration,
     const double arrival_time_std,
-    relleums::random::Generator* prng
+    merlict::random::Generator* prng
 ) {
     vector<ExtractedPulse> channel;
     channel.reserve(electric_pulses.size());
@@ -34,7 +34,7 @@ vector<vector<ExtractedPulse>> extract_pulses(
     const vector<vector<ElectricPulse>> &electric_pulses,
     const double time_slice_duration,
     const double arrival_time_std,
-    relleums::random::Generator* prng
+    merlict::random::Generator* prng
 ) {
     vector<vector<ExtractedPulse>> channels;
     channels.reserve(electric_pulses.size());

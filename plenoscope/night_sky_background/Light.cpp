@@ -5,7 +5,7 @@
 #include "merlict/tools.h"
 #include "NightSkyBackground.h"
 
-using namespace relleums;
+using namespace merlict;
 
 namespace plenoscope {
 namespace night_sky_background {

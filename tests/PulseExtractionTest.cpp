@@ -7,7 +7,7 @@
 #include "merlict/numeric.h"
 using std::vector;
 using std::string;
-using namespace relleums;
+using namespace merlict;
 
 
 

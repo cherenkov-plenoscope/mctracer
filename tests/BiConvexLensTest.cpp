@@ -5,7 +5,7 @@
 #include <iostream>
 #include "viewer/FlyingCamera.h"
 
-using namespace relleums;
+using namespace merlict;
 using std::vector;
 
 struct BiConvexLensTest {

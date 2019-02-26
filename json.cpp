@@ -7,7 +7,7 @@
 #include "merlict/scenery/segmented_imaging_reflector/segmented_imaging_reflector.h"
 namespace nl = nlohmann;
 using std::string;
-using relleums::txt::is_equal;
+using merlict::txt::is_equal;
 
 namespace merlict {
 namespace json {

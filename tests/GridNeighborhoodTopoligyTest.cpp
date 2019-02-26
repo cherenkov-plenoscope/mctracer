@@ -2,7 +2,7 @@
 #include "catch.hpp"
 #include "merlict/scenery/geometry/HexGridAnnulus.h"
 #include "merlict/scenery/geometry/GridNeighborhoodTopoligy.h"
-using namespace relleums;
+using namespace merlict;
 
 
 

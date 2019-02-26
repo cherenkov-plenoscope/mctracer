@@ -9,7 +9,7 @@
 #include "merlict/merlict.h"
 
 namespace fs = std::experimental::filesystem;
-namespace mct = relleums;
+namespace mct = merlict;
 
 static const char USAGE[] =
 R"(EventIO converter

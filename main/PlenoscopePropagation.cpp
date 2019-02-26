@@ -20,7 +20,7 @@ using std::string;
 using std::vector;
 using std::array;
 using std::cout;
-using namespace relleums;
+using namespace merlict;
 using ospath::join;
 using ospath::Path;
 

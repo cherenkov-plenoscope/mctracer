@@ -7,7 +7,7 @@ using std::vector;
 namespace signal_processing {
 
 PipelinePhoton::PipelinePhoton():
-    simulation_truth_id(relleums::SimulationTruth::MCTRACER_DEFAULT) {
+    simulation_truth_id(merlict::SimulationTruth::MCTRACER_DEFAULT) {
     arrival_time = 0.0;
     wavelength = 0.0;
 }
@@ -23,7 +23,7 @@ PipelinePhoton::PipelinePhoton(
 {}
 
 vector<vector<PipelinePhoton>> get_photon_pipelines(
-    const relleums::sensor::Sensors* sensors
+    const merlict::sensor::Sensors* sensors
 ) {
     vector<vector<PipelinePhoton>> photon_pipelines;
     const unsigned int number_sensors = sensors->size();

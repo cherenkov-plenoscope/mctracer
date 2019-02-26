@@ -2,7 +2,7 @@
 #include "catch.hpp"
 #include "merlict/scenery/primitive/Sphere.h"
 
-using namespace relleums;
+using namespace merlict;
 
 
 

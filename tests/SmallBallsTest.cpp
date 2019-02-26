@@ -3,7 +3,7 @@
 #include <math.h>
 #include "merlict/small_ball.h"
 
-using namespace relleums;
+using namespace merlict;
 
 
 

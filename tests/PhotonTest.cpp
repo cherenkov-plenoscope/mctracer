@@ -6,7 +6,7 @@
 #include "merlict/merlict.h"
 #include "catch.hpp"
 using std::vector;
-using namespace relleums;
+using namespace merlict;
 
 
 

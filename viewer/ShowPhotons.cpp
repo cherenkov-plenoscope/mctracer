@@ -9,7 +9,7 @@ using std::string;
 using std::cout;
 using std::array;
 using std::vector;
-using namespace relleums;
+using namespace merlict;
 
 string help_text() {
     std::stringstream out; 

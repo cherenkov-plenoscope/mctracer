@@ -2,7 +2,7 @@
 #include "catch.hpp"
 #include "merlict/Color.h"
 
-using namespace relleums;
+using namespace merlict;
 
 
 

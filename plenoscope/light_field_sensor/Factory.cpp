@@ -6,7 +6,7 @@
 
 using std::vector;
 using std::string;
-using namespace relleums;
+using namespace merlict;
 
 
 namespace plenoscope {

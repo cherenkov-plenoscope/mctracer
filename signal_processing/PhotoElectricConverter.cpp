@@ -3,7 +3,7 @@
 #include <sstream>
 #include "merlict/merlict.h"
 using std::vector;
-using namespace relleums;
+using namespace merlict;
 
 namespace signal_processing {
 namespace PhotoElectricConverter {

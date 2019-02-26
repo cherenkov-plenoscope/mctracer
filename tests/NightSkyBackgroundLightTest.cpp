@@ -5,7 +5,7 @@
 #include "merlict/merlict.h"
 #include "Tools/AsciiIo.h"
 
-using namespace relleums;
+using namespace merlict;
 
 
 

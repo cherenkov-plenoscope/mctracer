@@ -11,8 +11,8 @@ namespace plenoscope {
 namespace night_sky_background {
 
 struct Light {
-    const relleums::function::Func1* flux_vs_wavelength;
-    relleums::random::SamplesFromDistribution wavelength_probability;
+    const merlict::function::Func1* flux_vs_wavelength;
+    merlict::random::SamplesFromDistribution wavelength_probability;
     double rate;
     double fov_radius;
     double fov_solid_angle;
@@ -21,7 +21,7 @@ struct Light {
     const light_field_sensor::Geometry *sensor_geometry;
     Light(
         const light_field_sensor::Geometry *_sensor_geometry,
-        const relleums::function::Func1* flux_vs_wavelength);
+        const merlict::function::Func1* flux_vs_wavelength);
     std::string str()const;
 };
 

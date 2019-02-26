@@ -4,7 +4,7 @@
 #include "json.h"
 #include "merlict/merlict.h"
 namespace nl = nlohmann;
-namespace mct = relleums;
+namespace mct = merlict;
 using std::string;
 using mct::txt::is_equal;
 

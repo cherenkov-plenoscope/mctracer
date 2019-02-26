@@ -5,7 +5,7 @@
 #include "merlict/tools.h"
 #include "merlict/numeric.h"
 using std::vector;
-using namespace relleums;
+using namespace merlict;
 
 
 

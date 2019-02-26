@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
 #include "merlict/scenery/FunctionMap.h"
-using namespace relleums;
+using namespace merlict;
 
 
 

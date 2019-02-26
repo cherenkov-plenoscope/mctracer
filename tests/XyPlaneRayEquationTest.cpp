@@ -4,7 +4,7 @@
 #include "merlict/scenery/geometry/XyPlaneRayIntersectionEquation.h"
 #include "merlict/Ray.h"
 
-using namespace relleums;
+using namespace merlict;
 
 
 

@@ -3,7 +3,7 @@
 #include "catch.hpp"
 #include "merlict/Rot3.h"
 
-using namespace relleums;
+using namespace merlict;
 
 
 

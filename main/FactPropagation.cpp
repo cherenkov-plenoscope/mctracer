@@ -11,7 +11,7 @@
 #include "signal_processing/signal_processing.h"
 namespace fs = std::experimental::filesystem;
 namespace ps = photon_stream;
-namespace re = relleums;
+namespace re = merlict;
 namespace sp = signal_processing;
 using std::string;
 using std::vector;

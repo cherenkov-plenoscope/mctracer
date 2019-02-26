@@ -7,7 +7,7 @@
 using std::vector;
 using std::string;
 using namespace signal_processing;
-using namespace relleums;
+using namespace merlict;
 
 vector<vector<ExtractedPulse>> create_photon_stream(
     const unsigned int number_of_channels,

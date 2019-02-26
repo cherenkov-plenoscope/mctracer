@@ -4,7 +4,7 @@
 #include "corsika/corsika.h"
 
 using std::array;
-using namespace relleums;
+using namespace merlict;
 
 namespace plenoscope {
 namespace light_field_sensor {

@@ -7,7 +7,7 @@
 using std::string;
 using std::cout;
 using std::vector;
-using namespace relleums;
+using namespace merlict;
 using ospath::Path;
 
 static const char USAGE[] =

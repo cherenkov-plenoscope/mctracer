@@ -193,12 +193,12 @@ TEST_CASE("EventIoTest: EventIoFile_telescope_dat_run_time", "[mctracer]") {
     while (my_run.has_still_events_left()) {
         eventio::Event event = my_run.next_event();
 
-        relleums::random::Mt19937 prng;
+        merlict::random::Mt19937 prng;
 
-        vector<relleums::Photon> photons;
+        vector<merlict::Photon> photons;
         unsigned int id = 0;
         for (array<float, 8> corsika_photon : event.photons) {
-            relleums::EventIoPhotonFactory cpf(corsika_photon, id++, &prng);
+            merlict::EventIoPhotonFactory cpf(corsika_photon, id++, &prng);
 
             if (cpf.passed_atmosphere()) {
                 photons.push_back(cpf.get_photon());

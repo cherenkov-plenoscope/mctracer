@@ -3,7 +3,7 @@
 #include "plenoscope/calibration/LixelStatistics.h"
 using std::vector;
 using std::string;
-using namespace relleums;
+using namespace merlict;
 
 
 

@@ -12,13 +12,13 @@ namespace signal_processing {
 namespace PhotoElectricConverter {
 
 struct Config {
-    const relleums::function::Func1* quantum_efficiency_vs_wavelength;
+    const merlict::function::Func1* quantum_efficiency_vs_wavelength;
     double dark_rate;
     double probability_for_second_puls;
     Config();
 };
 
-static const relleums::function::Func1 zero_efficiency(
+static const merlict::function::Func1 zero_efficiency(
     {
         {200e-9, 0},
         {1200e-9, 0}
@@ -32,15 +32,15 @@ class Converter {
     std::vector<ElectricPulse> get_pulse_pipeline_for_photon_pipeline(
         const std::vector<PipelinePhoton> &photon_pipeline,
         const double exposure_time,
-        relleums::random::Generator* prng);
+        merlict::random::Generator* prng);
     void add_pulse(
         const ElectricPulse &pulse,
         std::vector<ElectricPulse> *electric_pipeline,
-        relleums::random::Generator* prng)const;
+        merlict::random::Generator* prng)const;
     void add_accidental_pulse(
         std::vector<ElectricPulse> *electric_pipeline,
         const double exposure_time,
-        relleums::random::Generator* prng)const;
+        merlict::random::Generator* prng)const;
 };
 
 }  // namespace PhotoElectricConverter

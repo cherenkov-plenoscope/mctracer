@@ -2,7 +2,7 @@
 #include "catch.hpp"
 #include "merlict/scenery/primitive/Disc.h"
 
-using namespace relleums;
+using namespace merlict;
 
 
 

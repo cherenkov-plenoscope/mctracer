@@ -3,7 +3,7 @@
 #include "catch.hpp"
 #include "merlict/scenery/geometry/HexagonalPrismZ.h"
 
-using namespace relleums;
+using namespace merlict;
 
 
 

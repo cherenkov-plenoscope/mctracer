@@ -2,7 +2,7 @@
 #include "catch.hpp"
 #include "merlict/scenery/geometry/ZaxisCylinderRayIntersectionEquation.h"
 
-using namespace relleums;
+using namespace merlict;
 
 
 

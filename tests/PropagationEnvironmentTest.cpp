@@ -2,7 +2,7 @@
 #include "catch.hpp"
 #include "merlict/PropagationEnvironment.h"
 
-using namespace relleums;
+using namespace merlict;
 
 
 

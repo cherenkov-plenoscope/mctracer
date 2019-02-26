@@ -5,7 +5,7 @@
 #include "merlict/numeric.h"
 using std::vector;
 using namespace plenoscope;
-using namespace relleums;
+using namespace merlict;
 
 
 

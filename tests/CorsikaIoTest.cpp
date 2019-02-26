@@ -3,7 +3,7 @@
 #include "corsika/corsika.h"
 #include "merlict/random/random.h"
 using std::string;
-using namespace relleums;
+using namespace merlict;
 
 
 

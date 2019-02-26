@@ -10,7 +10,7 @@ namespace plenoscope {
 namespace light_field_sensor {
 
 struct Config {
-    relleums::HomTra3 sensor_plane2imaging_system;
+    merlict::HomTra3 sensor_plane2imaging_system;
     // The imaging system's expected properties as focal length and max
     // outer aperture radius do not neccessarily match the dimensions
     // of the actual imaging system which will be used.
@@ -25,21 +25,21 @@ struct Config {
     double pixel_FoV_hex_flat2flat;
     double housing_overhead;
     unsigned int number_of_paxel_on_pixel_diagonal;
-    const relleums::function::Func1* lens_refraction;
-    const relleums::function::Func1* lens_absorbtion;
-    const relleums::function::Func1* bin_reflection;
+    const merlict::function::Func1* lens_refraction;
+    const merlict::function::Func1* lens_absorbtion;
+    const merlict::function::Func1* bin_reflection;
     Config();
 
     std::array<float, 273> get_sensor_plane2imaging_system_header()const;
 };
 
-static const relleums::function::Func1 pmma_refraction(
+static const merlict::function::Func1 pmma_refraction(
     {
         {200e-9, 1.49},
         {1200e-9, 1.49}
     });
 
-static const relleums::function::Func1 perfect_transparency(
+static const merlict::function::Func1 perfect_transparency(
     {
         {200e-9, std::numeric_limits<double>::infinity()},
         {1200e-9, std::numeric_limits<double>::infinity()}

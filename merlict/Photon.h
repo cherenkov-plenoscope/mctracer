@@ -8,7 +8,7 @@ namespace PhotonAndFrame {
 class Propagator;
 
 } // PhotonAndFrame
-} // namespace relleums
+} // namespace merlict
 
 #include <string>
 #include "merlict/RayForPropagation.h"

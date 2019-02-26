@@ -7,7 +7,7 @@
 #include "merlict/merlict.h"
 using std::vector;
 using std::string;
-using namespace relleums;
+using namespace merlict;
 
 namespace signal_processing {
 namespace PhotonStream {

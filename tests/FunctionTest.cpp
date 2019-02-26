@@ -2,7 +2,7 @@
 #include <math.h>
 #include "catch.hpp"
 #include "merlict/function/function.h"
-using namespace relleums;
+using namespace merlict;
 
 
 

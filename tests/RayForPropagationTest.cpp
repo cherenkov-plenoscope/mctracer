@@ -3,7 +3,7 @@
 #include "merlict/RayForPropagation.h"
 #include "merlict/SimulationTruth.h"
 
-using namespace relleums;
+using namespace merlict;
 
 TEST_CASE("RayForPropagationTest: Constructor_using_vectors", "[mctracer]") {
     Vec3 support(0.0, 0.0, 1.0);

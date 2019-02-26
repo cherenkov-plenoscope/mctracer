@@ -7,7 +7,7 @@ using std::array;
 namespace merlict {
 
 //------------------------------------------------------------------------------
-relleums::EventIoWrapper::EventIoWrapper(const string _path): 
+merlict::EventIoWrapper::EventIoWrapper(const string _path): 
 	BasicWrapper(_path),
 	corsika_run(_path) {}
 //------------------------------------------------------------------------------

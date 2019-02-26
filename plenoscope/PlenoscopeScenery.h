@@ -10,7 +10,7 @@ namespace plenoscope {
 
 struct PlenoscopeInScenery;
 
-struct PlenoscopeScenery: relleums::Scenery {
+struct PlenoscopeScenery: merlict::Scenery {
 	std::vector<PlenoscopeInScenery> plenoscopes;
 };
 

@@ -14,7 +14,7 @@ using std::vector;
 using std::array;
 using std::string;
 using std::stringstream;
-using namespace relleums;
+using namespace merlict;
 
 namespace plenoscope {
 namespace light_field_sensor {

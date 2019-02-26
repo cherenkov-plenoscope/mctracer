@@ -13,8 +13,8 @@ struct PlenoscopeInScenery {
         light_field_sensor_geometry(config)
     {};
 
-    relleums::Frame* frame;
-    relleums::sensor::Sensors* light_field_channels;
+    merlict::Frame* frame;
+    merlict::sensor::Sensors* light_field_channels;
     light_field_sensor::Geometry light_field_sensor_geometry;
 };
 

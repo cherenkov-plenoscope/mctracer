@@ -13,7 +13,7 @@
 #include "corsika/block.h"
 using std::vector;
 using std::cout;
-using namespace relleums;
+using namespace merlict;
 
 namespace plenoscope {
 namespace calibration {
@@ -117,7 +117,7 @@ void fill_another_block(
     }
 
     uint64_t num_threads = std::thread::hardware_concurrency();
-    relleums::ctpl::thread_pool pool(num_threads);
+    merlict::ctpl::thread_pool pool(num_threads);
     std::vector<std::future<CalibrationPhotonResult>> futs(
         photon_results.size());
     for (uint64_t i = 0; i < futs.size(); ++i) {

@@ -2,7 +2,7 @@
 #include "catch.hpp"
 #include "merlict/merlict.h"
 
-using namespace relleums;
+using namespace merlict;
 
 struct camera_operator_Test {
     visual::PinHoleCamera cam;

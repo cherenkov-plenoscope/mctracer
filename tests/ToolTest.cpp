@@ -3,7 +3,7 @@
 #include "catch.hpp"
 #include "merlict/tools.h"
 #include "Tools/FileTools.h"
-using namespace relleums;
+using namespace merlict;
 
 
 

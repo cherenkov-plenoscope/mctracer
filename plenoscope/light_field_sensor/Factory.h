@@ -11,28 +11,28 @@ namespace plenoscope {
 namespace light_field_sensor {
 
 class Factory {
-    relleums::sensor::Sensors *sub_pixel_sensors;
+    merlict::sensor::Sensors *sub_pixel_sensors;
  public:
     const Geometry* geometry;
-    relleums::Scenery* scenery;
+    merlict::Scenery* scenery;
     explicit Factory(const Geometry* geo);
     void add_light_field_sensor_to_frame_in_scenery(
-        relleums::Frame* frame,
-        relleums::Scenery* scenery);
+        merlict::Frame* frame,
+        merlict::Scenery* scenery);
     void add_demonstration_light_field_sensor_to_frame_in_scenery(
-        relleums::Frame *frame,
-        relleums::Scenery* scenery);
-    relleums::sensor::Sensors* get_sub_pixels()const;
+        merlict::Frame *frame,
+        merlict::Scenery* scenery);
+    merlict::sensor::Sensors* get_sub_pixels()const;
  private:
-    void add_lens_array(relleums::Frame* frame);
-    void add_light_field_sensor_frontplate(relleums::Frame* frame);
-    void add_image_sensor_housing(relleums::Frame* frame);
-    void add_pixel_bin_array(relleums::Frame* frame);
+    void add_lens_array(merlict::Frame* frame);
+    void add_light_field_sensor_frontplate(merlict::Frame* frame);
+    void add_image_sensor_housing(merlict::Frame* frame);
+    void add_pixel_bin_array(merlict::Frame* frame);
     void add_pixel_bin_with_name_at_pos(
-        relleums::Frame* frame,
+        merlict::Frame* frame,
         const std::string name,
-        const relleums::Vec3 pos);
-    void add_lixel_sensor_plane(relleums::Frame* frame);
+        const merlict::Vec3 pos);
+    void add_lixel_sensor_plane(merlict::Frame* frame);
 };
 
 }  // namespace light_field_sensor

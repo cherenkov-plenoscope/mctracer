@@ -5,7 +5,7 @@
 #include "merlict/SimulationTruth.h"
 #include "merlict/numeric.h"
 using std::vector;
-using namespace relleums;
+using namespace merlict;
 
 namespace plenoscope {
 namespace night_sky_background {

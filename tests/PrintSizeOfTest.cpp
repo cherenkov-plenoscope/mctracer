@@ -6,7 +6,7 @@
 #include "signal_processing/signal_processing.h"
 using std::cout;
 using std::string;
-using namespace relleums;
+using namespace merlict;
 
 template<typename T>
 void print_size(const string &name, T s) {

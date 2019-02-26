@@ -11,7 +11,7 @@
 #include "merlict/test/catch.hpp"
 #include "merlict/merlict.h"
 
-namespace re = relleums;
+namespace re = merlict;
 
 TEST_CASE("default_ctor", "Color") {
     re::Color c;

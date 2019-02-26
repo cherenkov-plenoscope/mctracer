@@ -3,7 +3,7 @@
 #include "merlict/Vec3.h"
 #include "merlict/scenery/stereo_litography.h"
 
-using namespace relleums;
+using namespace merlict;
 namespace stl = stereo_litography;
 
 

@@ -4,7 +4,7 @@
 #include "signal_processing/PhotoElectricConverter.h"
 #include "merlict/Histogram1.h"
 using std::vector;
-using namespace relleums;
+using namespace merlict;
 
 
 

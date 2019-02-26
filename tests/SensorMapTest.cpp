@@ -3,7 +3,7 @@
 #include "merlict/scenery/SensorMap.h"
 using std::string;
 using std::vector;
-using namespace relleums;
+using namespace merlict;
 
 
 

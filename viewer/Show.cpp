@@ -5,7 +5,7 @@
 
 using std::string;
 using std::cout;
-namespace mct = relleums;
+namespace mct = merlict;
 
 static const char USAGE[] =
 R"(Show a scenery

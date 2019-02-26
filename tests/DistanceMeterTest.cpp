@@ -4,7 +4,7 @@
 #include "merlict/Ray.h"
 #include "merlict/scenery/primitive/Sphere.h"
 
-using namespace relleums;
+using namespace merlict;
 
 
 

@@ -4,7 +4,7 @@
 #include "merlict/Photons.h"
 #include "merlict/scenery/Scenery.h"
 
-using namespace relleums;
+using namespace merlict;
 using std::string;
 using std::stringstream;
 using std::vector;

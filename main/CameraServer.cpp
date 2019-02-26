@@ -6,7 +6,7 @@
 #include "./json.h"
 using std::string;
 using std::cout;
-using namespace relleums;
+using namespace merlict;
 
 static const char USAGE[] =
 R"(Show a scenery

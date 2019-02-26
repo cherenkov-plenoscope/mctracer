@@ -3,7 +3,7 @@
 #include "catch.hpp"
 #include "merlict/merlict.h"
 
-using namespace relleums;
+using namespace merlict;
 using std::vector;
 using sensor::PhotonArrival;
 using sensor::write_arrival_information_to_file;

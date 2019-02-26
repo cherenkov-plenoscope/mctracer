@@ -4,7 +4,7 @@
 using std::string;
 using std::cout;
 using std::vector;
-using namespace relleums;
+using namespace merlict;
 
 static const char USAGE[] =
 R"(Scale up or down the geometry of a STL CAD file.

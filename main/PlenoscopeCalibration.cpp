@@ -11,7 +11,7 @@ namespace fs = std::experimental::filesystem;
 using std::string;
 using std::cout;
 using std::stringstream;
-using namespace relleums;
+using namespace merlict;
 using ospath::Path;
 using ospath::join;
 
