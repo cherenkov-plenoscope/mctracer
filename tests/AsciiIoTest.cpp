@@ -14,13 +14,13 @@ TEST_CASE("AsciiIoTest: read_non_existing_file", "[mctracer]") {
 
 TEST_CASE("AsciiIoTest: read_empty_file", "[mctracer]") {
     std::vector<std::vector<double>> table =
-        tsvio::gen_table_from_file("numeric_table_IO/empty.csv");
+        tsvio::gen_table_from_file("tsvio/empty.csv");
     CHECK(table.size() == 0u);
 }
 
 TEST_CASE("AsciiIoTest: read_valid_file_table_only", "[mctracer]") {
     std::vector<std::vector<double>> table =
-        tsvio::gen_table_from_file("numeric_table_IO/matrix_4col_3row.csv");
+        tsvio::gen_table_from_file("tsvio/matrix_4col_3row.csv");
 
     // wavelength, mean_free_path, absorbtion_coeff, wuff
     // 123.4, 100.0, 0.99, 133.7
@@ -54,7 +54,7 @@ TEST_CASE("AsciiIoTest: read_valid_file_table_only", "[mctracer]") {
 TEST_CASE("AsciiIoTest: write_table", "[mctracer]") {
     const unsigned int rows = 100;
     const unsigned int cols = 10;
-    std::string path = "numeric_table_IO/written_table.csv";
+    std::string path = "tsvio/written_table.csv";
 
     std::vector<std::vector<double>> table(rows);
 

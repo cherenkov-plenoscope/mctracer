@@ -76,7 +76,7 @@ TEST_CASE("Func1Test: access_at_highest_argument", "[mctracer]") {
 
 TEST_CASE("Func1Test: generate_from_from_file", "[mctracer]") {
     Func1Test ft;
-    std::string path = "numeric_table_IO/tim_sinus.csv";
+    std::string path = "tsvio/tim_sinus.csv";
     tsvio::write_table_to_file(ft.table, path);
 
     function::Func1 f(tsvio::gen_table_from_file(path));

@@ -113,12 +113,12 @@ TEST_CASE("PhotonsTest: bunch2raw_matrix2file", "[mctracer]") {
     // write to text file
     tsvio::write_table_to_file(
         Photons::photons2raw_matrix(&photon_bunch1),
-        "numeric_table_IO/my_big_photon_list.txt");
+        "tsvio/my_big_photon_list.txt");
 
     // read back again from text file
     std::vector<Photon> photon_bunch2 = Photons::raw_matrix2photons(
         tsvio::gen_table_from_file(
-            "numeric_table_IO/my_big_photon_list.txt"));
+            "tsvio/my_big_photon_list.txt"));
 
     REQUIRE(photon_bunch2.size() == number_of_photons);
 
