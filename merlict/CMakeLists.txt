@@ -26,7 +26,6 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/Histogram1.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/small_ball.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/welcome_screen.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/numeric.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/txt.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/binio.cpp

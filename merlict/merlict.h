@@ -24,7 +24,6 @@
 #include "Histogram1.h"
 #include "DistanceMeter.h"
 #include "small_ball.h"
-#include "welcome_screen.h"
 #include "numeric.h"
 #include "txt.h"
 #include "binio.h"
