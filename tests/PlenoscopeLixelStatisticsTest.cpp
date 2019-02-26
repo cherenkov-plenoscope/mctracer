@@ -7,7 +7,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("PlenoscopeLixelStatisticsTest: default_ctor", "[mctracer]") {
+TEST_CASE("PlenoscopeLixelStatisticsTest: default_ctor", "[merlict]") {
     plenoscope::calibration::LixelStatistic stat;
 
     CHECK(0.0 == stat.efficiency);
@@ -24,7 +24,7 @@ TEST_CASE("PlenoscopeLixelStatisticsTest: default_ctor", "[mctracer]") {
     CHECK(0.0 == stat.time_delay_std);
 }
 
-TEST_CASE("PlenoscopeLixelStatisticsTest: write_and_read_binary", "[mctracer]") {
+TEST_CASE("PlenoscopeLixelStatisticsTest: write_and_read_binary", "[merlict]") {
     const unsigned int number_of_lixels = 1337;
     vector<plenoscope::calibration::LixelStatistic> lixel_stats;
 
@@ -69,10 +69,10 @@ TEST_CASE("PlenoscopeLixelStatisticsTest: write_and_read_binary", "[mctracer]") 
     }
 }
 
-TEST_CASE("PlenoscopeLixelStatisticsTest: read_non_existing_binary_file", "[mctracer]") {
+TEST_CASE("PlenoscopeLixelStatisticsTest: read_non_existing_binary_file", "[merlict]") {
     CHECK_THROWS_AS(plenoscope::calibration::read("InOut/non_existing_file.bin"), std::runtime_error);
 }
 
-TEST_CASE("PlenoscopeLixelStatisticsTest: size_is_just_a_plain_struct", "[mctracer]") {
+TEST_CASE("PlenoscopeLixelStatisticsTest: size_is_just_a_plain_struct", "[merlict]") {
     CHECK(12u*4u == sizeof(plenoscope::calibration::LixelStatistic));
 }

@@ -8,7 +8,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("RandomGeneratorTest: fake_constant", "[mctracer]") {
+TEST_CASE("RandomGeneratorTest: fake_constant", "[merlict]") {
     for (double i = 0.0; i < 100.0; i++) {
         random::FakeConstant prng(i);
         for (int j = 0; j < 10; j++)
@@ -16,14 +16,14 @@ TEST_CASE("RandomGeneratorTest: fake_constant", "[mctracer]") {
     }
 }
 
-TEST_CASE("RandomGeneratorTest: Mt19937_init_and_get_seed", "[mctracer]") {
+TEST_CASE("RandomGeneratorTest: Mt19937_init_and_get_seed", "[merlict]") {
     for (unsigned int i = 0; i < 100; i++) {
         random::Mt19937 prng(i);
         CHECK(prng.seed() == i);
     }
 }
 
-TEST_CASE("RandomGeneratorTest: Mt19937_set_and_get_seed", "[mctracer]") {
+TEST_CASE("RandomGeneratorTest: Mt19937_set_and_get_seed", "[merlict]") {
     random::Mt19937 prng;
     for (unsigned int i = 0; i < 100; i++) {
         prng.set_seed(i);
@@ -31,7 +31,7 @@ TEST_CASE("RandomGeneratorTest: Mt19937_set_and_get_seed", "[mctracer]") {
     }
 }
 
-TEST_CASE("RandomGeneratorTest: uniform_0_to_1_stddev", "[mctracer]") {
+TEST_CASE("RandomGeneratorTest: uniform_0_to_1_stddev", "[merlict]") {
     random::Mt19937 prng(0);
     vector<double> samples;
     for (unsigned int i = 0; i < 42*1337; i++)
@@ -39,7 +39,7 @@ TEST_CASE("RandomGeneratorTest: uniform_0_to_1_stddev", "[mctracer]") {
     CHECK(1.0/sqrt(12.0) == Approx(numeric::stddev(samples)).margin(1e-3));
 }
 
-TEST_CASE("RandomGeneratorTest: generator_point_on_disc", "[mctracer]") {
+TEST_CASE("RandomGeneratorTest: generator_point_on_disc", "[merlict]") {
     random::Mt19937 prng(0);
     unsigned int n_points = 1e6;
     double disc_radius = 1.337;
@@ -77,7 +77,7 @@ TEST_CASE("RandomGeneratorTest: generator_point_on_disc", "[mctracer]") {
     // std::cout << mean_count << " pm " << stddev_count << "\n";
 }
 
-TEST_CASE("RandomGeneratorTest: draw_from_distribution", "[mctracer]") {
+TEST_CASE("RandomGeneratorTest: draw_from_distribution", "[merlict]") {
     // -------------------
     // create distributions
     function::Func1 f(function::polynom3(0, 1, 0, 0, 0.0, 1.0, 4096));
@@ -126,7 +126,7 @@ TEST_CASE("RandomGeneratorTest: draw_from_distribution", "[mctracer]") {
         CHECK(f.evaluate(bin_edges[i])/f_integral == Approx(drawn_f_normalized[i]).margin(max_f*1e-2));
 }
 
-TEST_CASE("RandomGeneratorTest: draw_from_poisson_distribution", "[mctracer]") {
+TEST_CASE("RandomGeneratorTest: draw_from_poisson_distribution", "[merlict]") {
     random::Mt19937 prng(0);
     double sum = 0.0;
     const double rate = 1e6;
@@ -135,7 +135,7 @@ TEST_CASE("RandomGeneratorTest: draw_from_poisson_distribution", "[mctracer]") {
     CHECK(1.0 == Approx(sum).margin(1e-3));
 }
 
-TEST_CASE("RandomGeneratorTest: conventional_disc_1M_draws", "[mctracer]") {
+TEST_CASE("RandomGeneratorTest: conventional_disc_1M_draws", "[merlict]") {
     const double r = 2.23;
     random::Mt19937 prng(0);
     for (unsigned int i = 0; i < (unsigned int)(1e5); i++) {
@@ -144,7 +144,7 @@ TEST_CASE("RandomGeneratorTest: conventional_disc_1M_draws", "[mctracer]") {
     }
 }
 
-TEST_CASE("RandomGeneratorTest: rejection_sampling_disc_1M_draws", "[mctracer]") {
+TEST_CASE("RandomGeneratorTest: rejection_sampling_disc_1M_draws", "[merlict]") {
     const double r = 2.23;
     random::Mt19937 prng(0);
     for (unsigned int i = 0; i < (unsigned int)(1e5); i++) {
@@ -153,7 +153,7 @@ TEST_CASE("RandomGeneratorTest: rejection_sampling_disc_1M_draws", "[mctracer]")
     }
 }
 
-TEST_CASE("RandomGeneratorTest: full_sphere", "[mctracer]") {
+TEST_CASE("RandomGeneratorTest: full_sphere", "[merlict]") {
     unsigned int n = static_cast<unsigned int>(1e6);
     random::Mt19937 prng(0);
     random::ZenithDistancePicker zd_picker(0, M_PI);
@@ -169,7 +169,7 @@ TEST_CASE("RandomGeneratorTest: full_sphere", "[mctracer]") {
     CHECK(mean_position.z == Approx(0.0).margin(1e-3));
 }
 
-TEST_CASE("RandomGeneratorTest: octo_sphere", "[mctracer]") {
+TEST_CASE("RandomGeneratorTest: octo_sphere", "[merlict]") {
     unsigned int n = static_cast<unsigned int>(1e6);
     random::Mt19937 prng(0);
     random::ZenithDistancePicker zd_picker(0, M_PI/2);
@@ -185,7 +185,7 @@ TEST_CASE("RandomGeneratorTest: octo_sphere", "[mctracer]") {
     CHECK(mean_position.z == Approx(0.5).margin(1e-3));
 }
 
-TEST_CASE("RandomGeneratorTest: octo_sphere_minus_z", "[mctracer]") {
+TEST_CASE("RandomGeneratorTest: octo_sphere_minus_z", "[merlict]") {
     unsigned int n = static_cast<unsigned int>(1e3);
     random::Mt19937 prng(0);
     random::ZenithDistancePicker zd_picker(M_PI/2, M_PI);
@@ -201,7 +201,7 @@ TEST_CASE("RandomGeneratorTest: octo_sphere_minus_z", "[mctracer]") {
     CHECK(mean_position.z == Approx(-0.5).margin(2e-2));
 }
 
-TEST_CASE("RandomGeneratorTest: normal_distribution", "[mctracer]") {
+TEST_CASE("RandomGeneratorTest: normal_distribution", "[merlict]") {
     const vector<double> means = {-1.9, -.3, 0.0, 4.6};
     const vector<double> stds = {0.2, 0.7, 1.0, 2.3};
     for (double mean: means) {

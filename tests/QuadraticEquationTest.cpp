@@ -6,7 +6,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("QuadraticEquationTest: no_valid_solution", "[mctracer]") {
+TEST_CASE("QuadraticEquationTest: no_valid_solution", "[merlict]") {
   // ax^2 + bx + c = 0
   double b_over_a = 1.0;
   double c_over_a = 1.0;
@@ -15,7 +15,7 @@ TEST_CASE("QuadraticEquationTest: no_valid_solution", "[mctracer]") {
   CHECK(!eq.has_valid_solutions());
 }
 
-TEST_CASE("QuadraticEquationTest: one_valid_solution", "[mctracer]") {
+TEST_CASE("QuadraticEquationTest: one_valid_solution", "[merlict]") {
   // ax^2 + bx + c = 0
   double b_over_a = 0.0;
   double c_over_a = 0.0;
@@ -26,7 +26,7 @@ TEST_CASE("QuadraticEquationTest: one_valid_solution", "[mctracer]") {
   CHECK(eq.plus_solution() == 0.0);
 }
 
-TEST_CASE("QuadraticEquationTest: two_valid_solutions", "[mctracer]") {
+TEST_CASE("QuadraticEquationTest: two_valid_solutions", "[merlict]") {
   // ax^2 + bx + c = 0
   double b_over_a = 0.0;
   double c_over_a = -1.0;
@@ -37,7 +37,7 @@ TEST_CASE("QuadraticEquationTest: two_valid_solutions", "[mctracer]") {
   CHECK(eq.plus_solution() == +1.0);
 }
 
-TEST_CASE("QuadraticEquationTest: vaious_combinations", "[mctracer]") {
+TEST_CASE("QuadraticEquationTest: vaious_combinations", "[merlict]") {
   // ax^2 + bx + c = 0
 
   for (double a = -5.0; a < 5.0; a = a+.25) {

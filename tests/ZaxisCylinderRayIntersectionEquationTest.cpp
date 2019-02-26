@@ -6,7 +6,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("ZaxisCylinderRayIntersectionEquationTest: start_inside_run_in_z_no_hit", "[mctracer]") {
+TEST_CASE("ZaxisCylinderRayIntersectionEquationTest: start_inside_run_in_z_no_hit", "[merlict]") {
   Ray ray(VEC3_ORIGIN, VEC3_ORIGIN);
 
   ZaxisCylinderRayIntersectionEquation eq(1.0, &ray);
@@ -15,7 +15,7 @@ TEST_CASE("ZaxisCylinderRayIntersectionEquationTest: start_inside_run_in_z_no_hi
   CHECK(!eq.has_causal_solution());
 }
 
-TEST_CASE("ZaxisCylinderRayIntersectionEquationTest: start_inside_and_hit", "[mctracer]") {
+TEST_CASE("ZaxisCylinderRayIntersectionEquationTest: start_inside_and_hit", "[merlict]") {
   Ray ray(VEC3_ORIGIN, Vec3(1.0, 0.0, 0.0));
   ZaxisCylinderRayIntersectionEquation eq(1.0, &ray);
 
@@ -26,7 +26,7 @@ TEST_CASE("ZaxisCylinderRayIntersectionEquationTest: start_inside_and_hit", "[mc
   CHECK(eq.get_ray_parameter_for_intersection() == 1.0);
 }
 
-TEST_CASE("ZaxisCylinderRayIntersectionEquationTest: start_outside_and_hit", "[mctracer]") {
+TEST_CASE("ZaxisCylinderRayIntersectionEquationTest: start_outside_and_hit", "[merlict]") {
   Ray ray(Vec3(-2.0, 0.0, 0.0), Vec3(1.0, 0.0, 0.0));
   ZaxisCylinderRayIntersectionEquation eq(1.0, &ray);
 

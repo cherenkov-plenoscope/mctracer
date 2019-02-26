@@ -7,12 +7,12 @@ namespace pse = sensor;
 
 
 
-TEST_CASE("SensorStorageTest: default_constructor_yields_empty_Sensors", "[mctracer]") {
+TEST_CASE("SensorStorageTest: default_constructor_yields_empty_Sensors", "[merlict]") {
     pse::Sensors sens;
     CHECK(sens.size() == 0u);
 }
 
-TEST_CASE("SensorStorageTest: default_constructor_and_access_not_existing_frame", "[mctracer]") {
+TEST_CASE("SensorStorageTest: default_constructor_and_access_not_existing_frame", "[merlict]") {
     pse::Sensors sens;
     CHECK(sens.size() == 0u);
 
@@ -26,7 +26,7 @@ TEST_CASE("SensorStorageTest: default_constructor_and_access_not_existing_frame"
 
 // VECTOR OF SENSORS CONSTRUCTOR
 
-TEST_CASE("SensorStorageTest: empty_vector_of_sensors_must_yield_empty_Sensors", "[mctracer]") {
+TEST_CASE("SensorStorageTest: empty_vector_of_sensors_must_yield_empty_Sensors", "[merlict]") {
     // Collecting
     std::vector<pse::Sensor*> my_sensors;
     CHECK(my_sensors.size() == 0u);
@@ -35,7 +35,7 @@ TEST_CASE("SensorStorageTest: empty_vector_of_sensors_must_yield_empty_Sensors",
     CHECK(sens.size() == 0u);
 }
 
-TEST_CASE("SensorStorageTest: empty_Sensors_access_invalid_frame", "[mctracer]") {
+TEST_CASE("SensorStorageTest: empty_Sensors_access_invalid_frame", "[merlict]") {
     // Creation
     // a frame which is not assigned to a sensor
     Frame dog;
@@ -53,7 +53,7 @@ TEST_CASE("SensorStorageTest: empty_Sensors_access_invalid_frame", "[mctracer]")
     CHECK_THROWS_AS(sens.at_frame(&dog), pse::Sensors::NoSuchFrame);
 }
 
-TEST_CASE("SensorStorageTest: not_take_over_sensors_from_vector", "[mctracer]") {
+TEST_CASE("SensorStorageTest: not_take_over_sensors_from_vector", "[merlict]") {
     // Creation
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);
@@ -82,7 +82,7 @@ TEST_CASE("SensorStorageTest: not_take_over_sensors_from_vector", "[mctracer]") 
 
 // USAGE
 
-TEST_CASE("SensorStorageTest: access_sensors_by_frame", "[mctracer]") {
+TEST_CASE("SensorStorageTest: access_sensors_by_frame", "[merlict]") {
     // Creation
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);
@@ -113,7 +113,7 @@ TEST_CASE("SensorStorageTest: access_sensors_by_frame", "[mctracer]") {
     CHECK(sens.at_frame(&car) == &on_car);
 }
 
-TEST_CASE("SensorStorageTest: assert_no_duplicate_frames", "[mctracer]") {
+TEST_CASE("SensorStorageTest: assert_no_duplicate_frames", "[merlict]") {
     // Creation
     // 1st sensor
     Frame tree;
@@ -133,7 +133,7 @@ TEST_CASE("SensorStorageTest: assert_no_duplicate_frames", "[mctracer]") {
     CHECK_THROWS_AS(pse::Sensors(my_sensors), pse::Sensors::DuplicateFrame);
 }
 
-TEST_CASE("SensorStorageTest: access_non_existing_frame", "[mctracer]") {
+TEST_CASE("SensorStorageTest: access_non_existing_frame", "[merlict]") {
     // Creation
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);

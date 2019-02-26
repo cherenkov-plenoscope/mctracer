@@ -9,7 +9,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("NightSkyBackgroundLightTest: init", "[mctracer]") {
+TEST_CASE("NightSkyBackgroundLightTest: init", "[merlict]") {
     // SET UP TELESCOPE
     plenoscope::light_field_sensor::Config config;
 

@@ -6,7 +6,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("FresnelRefractionAndReflectionTest: orthogonal_incident", "[mctracer]") {
+TEST_CASE("FresnelRefractionAndReflectionTest: orthogonal_incident", "[merlict]") {
   double n_from = 1.0;
   double n_going_to = 1.33;
 
@@ -19,7 +19,7 @@ TEST_CASE("FresnelRefractionAndReflectionTest: orthogonal_incident", "[mctracer]
   CHECK(fresnel.get_refrac_dir_in_object_system() == incident);
 }
 
-TEST_CASE("FresnelRefractionAndReflectionTest: flat_incident", "[mctracer]") {
+TEST_CASE("FresnelRefractionAndReflectionTest: flat_incident", "[merlict]") {
   double n_from = 1.0;
   double n_going_to = 1.33;
 
@@ -33,7 +33,7 @@ TEST_CASE("FresnelRefractionAndReflectionTest: flat_incident", "[mctracer]") {
   CHECK(fresnel.get_refrac_dir_in_object_system().angle_in_between(normal*-1.0) == outgoing_to_normal);
 }
 
-TEST_CASE("FresnelRefractionAndReflectionTest: orthogonal_incident_same_index", "[mctracer]") {
+TEST_CASE("FresnelRefractionAndReflectionTest: orthogonal_incident_same_index", "[merlict]") {
   double n_from = 1.0;
   double n_going_to = n_from;
 
@@ -45,7 +45,7 @@ TEST_CASE("FresnelRefractionAndReflectionTest: orthogonal_incident_same_index", 
   CHECK(fresnel.get_refrac_dir_in_object_system() == incident);
 }
 
-TEST_CASE("FresnelRefractionAndReflectionTest: flat_incident_same_index", "[mctracer]") {
+TEST_CASE("FresnelRefractionAndReflectionTest: flat_incident_same_index", "[merlict]") {
   double n_from = 1.0;
   double n_going_to = n_from;
 

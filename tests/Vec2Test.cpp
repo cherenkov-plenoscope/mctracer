@@ -7,14 +7,14 @@ using namespace merlict;
 
 
 
-TEST_CASE("Vec2Test: NullVector", "[mctracer]") {
+TEST_CASE("Vec2Test: NullVector", "[merlict]") {
     Vec2 a = VEC2_ORIGIN;
     CHECK(a.x == 0.0);
     CHECK(a.y == 0.0);
     CHECK(a.norm() == 0.0);
 }
 
-TEST_CASE("Vec2Test: UnitVectors", "[mctracer]") {
+TEST_CASE("Vec2Test: UnitVectors", "[merlict]") {
     Vec2 a;
     a = VEC2_UNIT_X;
     CHECK(a.x == 1.0);
@@ -26,7 +26,7 @@ TEST_CASE("Vec2Test: UnitVectors", "[mctracer]") {
     CHECK(a.norm() == 1.0);
 }
 
-TEST_CASE("Vec2Test: ConstructorAndGetter", "[mctracer]") {
+TEST_CASE("Vec2Test: ConstructorAndGetter", "[merlict]") {
     double x, y;
     for (x = -2.0; x > 2.0; x = x+.25) {
         for (y = -2.0; y > 2.0; y = y+.25) {
@@ -37,7 +37,7 @@ TEST_CASE("Vec2Test: ConstructorAndGetter", "[mctracer]") {
     }
 }
 
-TEST_CASE("Vec2Test: SetterAndGetter", "[mctracer]") {
+TEST_CASE("Vec2Test: SetterAndGetter", "[merlict]") {
     double x, y;
     for (x = -2.0; x > 2.0; x = x+.25) {
         for (y = -2.0; y > 2.0; y = y+.25) {
@@ -49,7 +49,7 @@ TEST_CASE("Vec2Test: SetterAndGetter", "[mctracer]") {
     }
 }
 
-TEST_CASE("Vec2Test: EuclideanNorm", "[mctracer]") {
+TEST_CASE("Vec2Test: EuclideanNorm", "[merlict]") {
     double x, y;
     for (x = -2.0; x > 2.0; x = x+.25) {
         for (y = -2.0; y > 2.0; y = y+.25) {
@@ -64,14 +64,14 @@ TEST_CASE("Vec2Test: EuclideanNorm", "[mctracer]") {
     CHECK(v.norm() == 1.0);
 }
 
-TEST_CASE("Vec2Test: Scalar_Product_unit_vectors", "[mctracer]") {
+TEST_CASE("Vec2Test: Scalar_Product_unit_vectors", "[merlict]") {
     const Vec2 x = VEC2_UNIT_X;
     const Vec2 y = VEC2_UNIT_Y;
     CHECK(x*y == 0.0);
     CHECK(x*x == 1.0);
 }
 
-TEST_CASE("Vec2Test: Scalar_Product", "[mctracer]") {
+TEST_CASE("Vec2Test: Scalar_Product", "[merlict]") {
     double x1, x2, y1, y2;
     for (x1 = -2.0; x1 > 2.0; x1 = x1+.25) {
         for (y1 = -2.0; y1 > 2.0; y1 = y1+.25) {
@@ -86,7 +86,7 @@ TEST_CASE("Vec2Test: Scalar_Product", "[mctracer]") {
     }
 }
 
-TEST_CASE("Vec2Test: ScalarMultiplication", "[mctracer]") {
+TEST_CASE("Vec2Test: ScalarMultiplication", "[merlict]") {
     double x, y, f;
     for (x = -2.0; x > 2.0; x = x+.25) {
         for (y = -2.0; y > 2.0; y = y+.25) {
@@ -99,7 +99,7 @@ TEST_CASE("Vec2Test: ScalarMultiplication", "[mctracer]") {
     }
 }
 
-TEST_CASE("Vec2Test: ScalarDiviation", "[mctracer]") {
+TEST_CASE("Vec2Test: ScalarDiviation", "[merlict]") {
     double x, y, f;
     for (x = -2.0; x > 2.0; x = x+.25) {
         for (y = -2.0; y > 2.0; y = y+.25) {
@@ -112,18 +112,18 @@ TEST_CASE("Vec2Test: ScalarDiviation", "[mctracer]") {
     }
 }
 
-TEST_CASE("Vec2Test: distance_unit_x_to_unit_y", "[mctracer]") {
+TEST_CASE("Vec2Test: distance_unit_x_to_unit_y", "[merlict]") {
     Vec2 a = VEC2_UNIT_X;
     Vec2 b = VEC2_UNIT_Y;
     CHECK(a.distance_to(b) == sqrt(2.0));
 }
 
-TEST_CASE("Vec2Test: distance_to_itself", "[mctracer]") {
+TEST_CASE("Vec2Test: distance_to_itself", "[merlict]") {
     Vec2 a(1.3, 3.7);
     CHECK(a.distance_to(a) == 0.0);
 }
 
-TEST_CASE("Vec2Test: Operator_equals_expect_true", "[mctracer]") {
+TEST_CASE("Vec2Test: Operator_equals_expect_true", "[merlict]") {
     Vec2 a(1.3, 4.2);
     Vec2 b(1.3, 4.2+1e-20);
     CHECK(b == a);
@@ -131,7 +131,7 @@ TEST_CASE("Vec2Test: Operator_equals_expect_true", "[mctracer]") {
     CHECK_FALSE(a != b);
 }
 
-TEST_CASE("Vec2Test: Operator_equals_expect_false", "[mctracer]") {
+TEST_CASE("Vec2Test: Operator_equals_expect_false", "[merlict]") {
     Vec2 a(1.3, 4.2);
     Vec2 b(1.3, 4.2 + 2e-7);
     CHECK(b != a);
@@ -139,7 +139,7 @@ TEST_CASE("Vec2Test: Operator_equals_expect_false", "[mctracer]") {
     CHECK_FALSE(a == b);
 }
 
-TEST_CASE("Vec2Test: normalize", "[mctracer]") {
+TEST_CASE("Vec2Test: normalize", "[merlict]") {
     Vec2 a(1.0, 2.0);
     CHECK(a.norm() != 1.0);
     a.normalize();
@@ -158,7 +158,7 @@ TEST_CASE("Vec2Test: normalize", "[mctracer]") {
     CHECK(1 == std::isnan(a.norm()));
 }
 
-TEST_CASE("Vec2Test: angle_in_between", "[mctracer]") {
+TEST_CASE("Vec2Test: angle_in_between", "[merlict]") {
     Vec2 a = VEC2_UNIT_X;
     Vec2 b = VEC2_UNIT_X;
 
@@ -183,7 +183,7 @@ TEST_CASE("Vec2Test: angle_in_between", "[mctracer]") {
     CHECK(deg2rad(45.0) == Approx(foo.angle_in_between(bar)).margin(1e-5));
 }
 
-TEST_CASE("Vec2Test: quadrant_encoding", "[mctracer]") {
+TEST_CASE("Vec2Test: quadrant_encoding", "[merlict]") {
     // x y sector
     // - -   0
     // - +   1

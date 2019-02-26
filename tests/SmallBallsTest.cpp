@@ -7,11 +7,11 @@ using namespace merlict;
 
 
 
-TEST_CASE("SmallBallTest: ctor_Ball", "[mctracer]") {
+TEST_CASE("SmallBallTest: ctor_Ball", "[merlict]") {
     Ball b;
 }
 
-TEST_CASE("SmallBallTest: radius_to_enclose_ball", "[mctracer]") {
+TEST_CASE("SmallBallTest: radius_to_enclose_ball", "[merlict]") {
     Ball a;
     a.center = Vec3(0,0,0);
     a.radius = 1.0;
@@ -26,7 +26,7 @@ TEST_CASE("SmallBallTest: radius_to_enclose_ball", "[mctracer]") {
     CHECK(3.0 == radius_to_enclose_ball(Vec3(0,0,0), a));
 }
 
-TEST_CASE("SmallBallTest: idx_ball_largest_enclosing_radius", "[mctracer]") {
+TEST_CASE("SmallBallTest: idx_ball_largest_enclosing_radius", "[merlict]") {
     Ball a;
     a.center = Vec3(0,0,0);
     a.radius = 1.0;
@@ -47,7 +47,7 @@ TEST_CASE("SmallBallTest: idx_ball_largest_enclosing_radius", "[mctracer]") {
     CHECK(1u == idx_ball_largest_enclosing_radius(balls, Vec3(0,0,0)));
 }
 
-TEST_CASE("SmallBallTest: balls", "[mctracer]") {
+TEST_CASE("SmallBallTest: balls", "[merlict]") {
     Ball a;
     a.center = Vec3(0,0,0);
     a.radius = 1.0;
@@ -67,7 +67,7 @@ TEST_CASE("SmallBallTest: balls", "[mctracer]") {
     CHECK(c.radius == Approx(1.5).margin(1e-2));
 }
 
-TEST_CASE("SmallBallTest: balls2", "[mctracer]") {
+TEST_CASE("SmallBallTest: balls2", "[merlict]") {
     Ball a;
     a.center = Vec3(0,0,0);
     a.radius = 1.0;

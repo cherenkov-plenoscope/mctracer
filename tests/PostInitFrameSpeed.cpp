@@ -5,7 +5,7 @@
 
 using namespace merlict;
 
-TEST_CASE("PostInitFrameSpeed: post_init_based_on_mother", "[mctracer]") {
+TEST_CASE("PostInitFrameSpeed: post_init_based_on_mother", "[merlict]") {
     PropagationConfig settings;
     double Zd_Rad = 45.0;
     double Az_Rad = 75.0;

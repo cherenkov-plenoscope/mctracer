@@ -11,7 +11,7 @@ using std::vector;
 
 
 
-TEST_CASE("ParallelPropagationTest: propagate_once", "[mctracer]") {
+TEST_CASE("ParallelPropagationTest: propagate_once", "[merlict]") {
 	const uint64_t num_photons = 1000;
 	random::Mt19937 prng(0u);
 	vector<Photon> photons1 = Photons::Source::parallel_towards_z_from_xy_disc(

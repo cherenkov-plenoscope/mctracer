@@ -31,7 +31,7 @@ struct PlaneIntersectionTest {
     }
 };
 
-TEST_CASE("PlaneIntersectionTest: frontal", "[mctracer]") {
+TEST_CASE("PlaneIntersectionTest: frontal", "[merlict]") {
     PlaneIntersectionTest pt;
     Ray ray(Vec3(0.0, 0.0, -1.0), Vec3(0.0, 0.0, 1.0));
     const Intersection intersec = RayAndFrame::first_intersection(
@@ -44,7 +44,7 @@ TEST_CASE("PlaneIntersectionTest: frontal", "[mctracer]") {
     CHECK(intersec.surface_normal_in_object_frame() == Vec3(0.0, 0.0, 1.0));
 }
 
-TEST_CASE("PlaneIntersectionTest: frontal_lateral_offset_alwas_intersection", "[mctracer]") {
+TEST_CASE("PlaneIntersectionTest: frontal_lateral_offset_alwas_intersection", "[merlict]") {
     PlaneIntersectionTest pt;
     for (int x_offset = -10; x_offset < 10; x_offset++) {
         for (int y_offset = -10; y_offset < 10; y_offset++) {
@@ -64,7 +64,7 @@ TEST_CASE("PlaneIntersectionTest: frontal_lateral_offset_alwas_intersection", "[
     }
 }
 
-TEST_CASE("PlaneIntersectionTest: close_miss_x", "[mctracer]") {
+TEST_CASE("PlaneIntersectionTest: close_miss_x", "[merlict]") {
     PlaneIntersectionTest pt;
     Ray ray(Vec3(pt.x_width/2.0+0.01, 0.0, -1.0), Vec3(0.0, 0.0, 1.0));
     const Intersection intersec = RayAndFrame::first_intersection(
@@ -73,7 +73,7 @@ TEST_CASE("PlaneIntersectionTest: close_miss_x", "[mctracer]") {
     CHECK(!intersec.does_intersect());
 }
 
-TEST_CASE("PlaneIntersectionTest: close_miss_y", "[mctracer]") {
+TEST_CASE("PlaneIntersectionTest: close_miss_y", "[merlict]") {
     PlaneIntersectionTest pt;
     Ray ray(Vec3(0.0, pt.y_width/2.0+0.01, -1.0), Vec3(0.0, 0.0, 1.0));
     const Intersection intersec = RayAndFrame::first_intersection(
@@ -82,7 +82,7 @@ TEST_CASE("PlaneIntersectionTest: close_miss_y", "[mctracer]") {
     CHECK(!intersec.does_intersect());
 }
 
-TEST_CASE("PlaneIntersectionTest: move_plane_up", "[mctracer]") {
+TEST_CASE("PlaneIntersectionTest: move_plane_up", "[merlict]") {
     PlaneIntersectionTest pt;
 
     Plane* plane2 = pt.scenery.root.append<Plane>();

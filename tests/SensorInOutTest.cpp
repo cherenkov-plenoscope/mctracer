@@ -11,7 +11,7 @@ using sensor::read_arrival_information_from_file;
 
 
 
-TEST_CASE("SensorInOutTest: write_and_read", "[mctracer]") {
+TEST_CASE("SensorInOutTest: write_and_read", "[merlict]") {
     vector<PhotonArrival> arrivals_1;
     const unsigned int number_of_arrivals = 1337*42;
     random::Mt19937 prng(0);

@@ -9,7 +9,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("FrameTest: assert_name_is_valid", "[mctracer]") {
+TEST_CASE("FrameTest: assert_name_is_valid", "[merlict]") {
     Vec3 pos = VEC3_ORIGIN;
     Rot3 rot = ROT3_UNITY;
 
@@ -27,7 +27,7 @@ TEST_CASE("FrameTest: assert_name_is_valid", "[mctracer]") {
     CHECK_THROWS_AS(Peter.set_name_pos_rot(" ", pos, rot), std::invalid_argument);
 }
 
-TEST_CASE("FrameTest: duplicate_name_of_children_frames", "[mctracer]") {
+TEST_CASE("FrameTest: duplicate_name_of_children_frames", "[merlict]") {
     Frame Peter;
     Peter.set_name_pos_rot("peter", VEC3_ORIGIN, ROT3_UNITY);
 
@@ -40,7 +40,7 @@ TEST_CASE("FrameTest: duplicate_name_of_children_frames", "[mctracer]") {
     CHECK_THROWS_AS(Peter.assert_no_children_duplicate_names(), std::invalid_argument);
 }
 
-TEST_CASE("FrameTest: set_frame", "[mctracer]") {
+TEST_CASE("FrameTest: set_frame", "[merlict]") {
     Vec3 pos(1.3, 3.7, 4.2);
     Rot3 rot(3.1, 4.1, 7.7);
 
@@ -56,7 +56,7 @@ TEST_CASE("FrameTest: set_frame", "[mctracer]") {
     CHECK(*Peter.frame2mother() == T_frame2mother);
 }
 
-TEST_CASE("FrameTest: re_set_frame", "[mctracer]") {
+TEST_CASE("FrameTest: re_set_frame", "[merlict]") {
     Vec3 pos(1.3, 3.7, 4.2);
     Rot3 rot(3.1, 4.1, 7.7);
 
@@ -79,7 +79,7 @@ TEST_CASE("FrameTest: re_set_frame", "[mctracer]") {
     CHECK(Rot3(0.1, 0.2, 0.3) == peter.get_rotation_in_mother());
 }
 
-TEST_CASE("FrameTest: root_of_world_on_complete_tree", "[mctracer]") {
+TEST_CASE("FrameTest: root_of_world_on_complete_tree", "[merlict]") {
     // -----define frames
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);
@@ -116,14 +116,14 @@ TEST_CASE("FrameTest: root_of_world_on_complete_tree", "[mctracer]") {
     CHECK(leaf2_on_branch->get_root() == &tree);
 }
 
-TEST_CASE("FrameTest: root_frame_default", "[mctracer]") {
+TEST_CASE("FrameTest: root_frame_default", "[merlict]") {
     // A single frame with no relations set (post initialized) is its own root.
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);
     CHECK(tree.get_root() == &tree);
 }
 
-TEST_CASE("FrameTest: cluster_frames_during_tree_initializing", "[mctracer]") {
+TEST_CASE("FrameTest: cluster_frames_during_tree_initializing", "[merlict]") {
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);
     double qube_edge = 10.0;
@@ -150,7 +150,7 @@ TEST_CASE("FrameTest: cluster_frames_during_tree_initializing", "[mctracer]") {
     CHECK(FRAME_MAX_NUMBER_CHILDREN >= tree.get_children()->size());
 }
 
-TEST_CASE("FrameTest: clustering_frames_which_are_stucked_close_together", "[mctracer]") {
+TEST_CASE("FrameTest: clustering_frames_which_are_stucked_close_together", "[merlict]") {
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);
     const unsigned int number_facets = 100;
@@ -174,7 +174,7 @@ TEST_CASE("FrameTest: clustering_frames_which_are_stucked_close_together", "[mct
 }
 #include "merlict/RayAndFrame.h"
 
-TEST_CASE("FrameTest: removing_a_non_existing_cild", "[mctracer]") {
+TEST_CASE("FrameTest: removing_a_non_existing_cild", "[merlict]") {
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);
 
@@ -184,7 +184,7 @@ TEST_CASE("FrameTest: removing_a_non_existing_cild", "[mctracer]") {
     CHECK_THROWS_AS(tree.erase(&another_tree), std::out_of_range);
 }
 
-TEST_CASE("FrameTest: removing_a_cild", "[mctracer]") {
+TEST_CASE("FrameTest: removing_a_cild", "[merlict]") {
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);
 

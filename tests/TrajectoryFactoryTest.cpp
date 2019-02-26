@@ -4,7 +4,7 @@
 
 
 //------------------------------------------------------------------------------
-TEST_CASE("TrajectoryFactoryTest: constructor_using_RayForPropagation", "[mctracer]") {
+TEST_CASE("TrajectoryFactoryTest: constructor_using_RayForPropagation", "[merlict]") {
   RayForPropagation ray(Vec3::ORIGIN, Vec3(0.0, 0.0, 1.0));
 
   TrajectoryFactory tra_fac(&ray);

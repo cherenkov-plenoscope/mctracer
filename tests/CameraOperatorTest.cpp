@@ -15,7 +15,7 @@ struct camera_operator_Test {
     }
 };
 
-TEST_CASE("camera_operatorTest: creation", "[mctracer]") {
+TEST_CASE("camera_operatorTest: creation", "[merlict]") {
     camera_operator_Test ct;
     CHECK(ct.cam.get_FoV_in_rad() == ct.initial_FoV_in_rad);
     visual::camera_operator::FieldOfView FoVCamMan(&ct.cam);
@@ -23,7 +23,7 @@ TEST_CASE("camera_operatorTest: creation", "[mctracer]") {
     CHECK(ct.cam.get_FoV_in_rad() == FoVCamMan.default_fov);
 }
 
-TEST_CASE("camera_operatorTest: increase_FoV", "[mctracer]") {
+TEST_CASE("camera_operatorTest: increase_FoV", "[merlict]") {
     camera_operator_Test ct;
     visual::camera_operator::FieldOfView FoVCamMan(&ct.cam);
     for (int i = 0; i < 250; i++)
@@ -32,7 +32,7 @@ TEST_CASE("camera_operatorTest: increase_FoV", "[mctracer]") {
     CHECK(ct.cam.get_FoV_in_rad() < deg2rad(180.0));
 }
 
-TEST_CASE("camera_operatorTest: decrease_FoV", "[mctracer]") {
+TEST_CASE("camera_operatorTest: decrease_FoV", "[merlict]") {
     camera_operator_Test ct;
     visual::camera_operator::FieldOfView FoVCamMan(&ct.cam);
     for (int i = 0; i < 250; i++)
@@ -41,7 +41,7 @@ TEST_CASE("camera_operatorTest: decrease_FoV", "[mctracer]") {
     CHECK(ct.cam.get_FoV_in_rad() < deg2rad(0.003));
 }
 
-TEST_CASE("camera_operatorTest: default_FoV", "[mctracer]") {
+TEST_CASE("camera_operatorTest: default_FoV", "[merlict]") {
     camera_operator_Test ct;
     visual::camera_operator::FieldOfView FoVCamMan(&ct.cam);
     FoVCamMan.increase_when_possible();
@@ -50,7 +50,7 @@ TEST_CASE("camera_operatorTest: default_FoV", "[mctracer]") {
     CHECK(ct.cam.get_FoV_in_rad() == FoVCamMan.default_fov);
 }
 
-TEST_CASE("camera_operatorTest: increase_and_decrease_FoV", "[mctracer]") {
+TEST_CASE("camera_operatorTest: increase_and_decrease_FoV", "[merlict]") {
     camera_operator_Test ct;
     visual::camera_operator::FieldOfView FoVCamMan(&ct.cam);
     FoVCamMan.verbose = false;
@@ -64,7 +64,7 @@ TEST_CASE("camera_operatorTest: increase_and_decrease_FoV", "[mctracer]") {
     CHECK(ct.cam.get_FoV_in_rad() < deg2rad(180.0));
 }
 
-TEST_CASE("camera_operatorTest: default_rotation", "[mctracer]") {
+TEST_CASE("camera_operatorTest: default_rotation", "[merlict]") {
     camera_operator_Test ct;
     Rot3 non_default_rotation(1.2, 3.4, 5.6);
     Rot3 looking_in_pos_x_dir(0.0, deg2rad(-90.0), 0.0);
@@ -74,7 +74,7 @@ TEST_CASE("camera_operatorTest: default_rotation", "[mctracer]") {
     CHECK(ct.cam.get_rotation_in_world() == looking_in_pos_x_dir);
 }
 
-TEST_CASE("camera_operatorTest: look_up", "[mctracer]") {
+TEST_CASE("camera_operatorTest: look_up", "[merlict]") {
     camera_operator_Test ct;
     visual::camera_operator::Rotation rot_operator(&ct.cam);
     rot_operator.set_default_rotation(Rot3(0.0, deg2rad(-90.0), 0.0));
@@ -84,7 +84,7 @@ TEST_CASE("camera_operatorTest: look_up", "[mctracer]") {
     CHECK(ct.cam.get_rotation_in_world().get_rot_y() > deg2rad(-0.1));
 }
 
-TEST_CASE("camera_operatorTest: look_down", "[mctracer]") {
+TEST_CASE("camera_operatorTest: look_down", "[merlict]") {
     camera_operator_Test ct;
     visual::camera_operator::Rotation rot_operator(&ct.cam);
     rot_operator.set_default_rotation(Rot3(0.0, deg2rad(-90.0), 0.0));

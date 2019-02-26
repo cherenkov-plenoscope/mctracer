@@ -86,7 +86,7 @@ struct BiConvexLensTest {
     }
 };
 
-TEST_CASE("BiConvexLensTest: send_photon_frontal_into_lens", "[mctracer]") {
+TEST_CASE("BiConvexLensTest: send_photon_frontal_into_lens", "[merlict]") {
     BiConvexLensTest lt;
     unsigned int total_propagations = 1e4;
     unsigned int number_of_photons_reaching_sensor_disc = 0;
@@ -102,7 +102,7 @@ TEST_CASE("BiConvexLensTest: send_photon_frontal_into_lens", "[mctracer]") {
     CHECK(0.97 == Approx(static_cast<double>(number_of_photons_reaching_sensor_disc)/static_cast<double>(total_propagations)).margin(5.0e-2));
 }
 
-TEST_CASE("BiConvexLensTest: send_photons_frontal_into_lens_with_offset", "[mctracer]") {
+TEST_CASE("BiConvexLensTest: send_photons_frontal_into_lens_with_offset", "[merlict]") {
     BiConvexLensTest lt;
 
     // light source

@@ -6,14 +6,14 @@ using namespace merlict;
 
 
 
-TEST_CASE("ColorTest: default_ctor", "[mctracer]") {
+TEST_CASE("ColorTest: default_ctor", "[merlict]") {
     Color c;
     CHECK(0 == c.r);
     CHECK(0 == c.g);
     CHECK(0 == c.b);
 }
 
-TEST_CASE("ColorTest: reflection_mix", "[mctracer]") {
+TEST_CASE("ColorTest: reflection_mix", "[merlict]") {
     Color base(0, 0, 0);
     Color green(0, 100, 0);
     const double reflectivity = 0.5;
@@ -23,7 +23,7 @@ TEST_CASE("ColorTest: reflection_mix", "[mctracer]") {
     CHECK(0 == base.b);
 }
 
-TEST_CASE("ColorTest: ctor_mix", "[mctracer]") {
+TEST_CASE("ColorTest: ctor_mix", "[merlict]") {
     std::vector<Color> rainbow;
     rainbow.push_back(Color(100, 0, 0));
     rainbow.push_back(Color(0, 100, 0));

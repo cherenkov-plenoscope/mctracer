@@ -7,17 +7,17 @@ using namespace merlict;
 
 
 
-TEST_CASE("HexagonalPrismZTest: throw_when_negativ_radius", "[mctracer]") {
+TEST_CASE("HexagonalPrismZTest: throw_when_negativ_radius", "[merlict]") {
     HexagonalPrismZ hexBound;
     CHECK_THROWS_AS(hexBound.set_outer_radius(-55.0), std::invalid_argument);
 }
 
-TEST_CASE("HexagonalPrismZTest: throw_when_zero_radius", "[mctracer]") {
+TEST_CASE("HexagonalPrismZTest: throw_when_zero_radius", "[merlict]") {
     HexagonalPrismZ hexBound;
     CHECK_THROWS_AS(hexBound.set_outer_radius(0.0), std::invalid_argument);
 }
 
-TEST_CASE("HexagonalPrismZTest: is_inside", "[mctracer]") {
+TEST_CASE("HexagonalPrismZTest: is_inside", "[merlict]") {
     double outer_radius = 1.0;
     double inner_radius = outer_radius * cos(M_PI/6.0);
 

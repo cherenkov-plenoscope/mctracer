@@ -6,7 +6,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("PropagationEnvironmentTest: default_instance", "[mctracer]") {
+TEST_CASE("PropagationEnvironmentTest: default_instance", "[merlict]") {
     PropagationEnvironment env;
     CHECK(env.root_frame == &VOID_FRAME);
     CHECK(env.config == &DEFAULT_PROPAGATIONCONFIG);

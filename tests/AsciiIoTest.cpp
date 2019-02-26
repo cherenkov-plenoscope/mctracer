@@ -8,17 +8,17 @@ using namespace merlict;
 
 
 
-TEST_CASE("AsciiIoTest: read_non_existing_file", "[mctracer]") {
+TEST_CASE("AsciiIoTest: read_non_existing_file", "[merlict]") {
     CHECK_THROWS_AS(tsvio::gen_table_from_file("non_existing_path/non_existing_file.csv"), std::runtime_error);
 }
 
-TEST_CASE("AsciiIoTest: read_empty_file", "[mctracer]") {
+TEST_CASE("AsciiIoTest: read_empty_file", "[merlict]") {
     std::vector<std::vector<double>> table =
         tsvio::gen_table_from_file("tsvio/empty.csv");
     CHECK(table.size() == 0u);
 }
 
-TEST_CASE("AsciiIoTest: read_valid_file_table_only", "[mctracer]") {
+TEST_CASE("AsciiIoTest: read_valid_file_table_only", "[merlict]") {
     std::vector<std::vector<double>> table =
         tsvio::gen_table_from_file("tsvio/matrix_4col_3row.csv");
 
@@ -51,7 +51,7 @@ TEST_CASE("AsciiIoTest: read_valid_file_table_only", "[mctracer]") {
     CHECK(table[2][3] == 1.337);
 }
 
-TEST_CASE("AsciiIoTest: write_table", "[mctracer]") {
+TEST_CASE("AsciiIoTest: write_table", "[merlict]") {
     const unsigned int rows = 100;
     const unsigned int cols = 10;
     std::string path = "tsvio/written_table.csv";
@@ -89,7 +89,7 @@ TEST_CASE("AsciiIoTest: write_table", "[mctracer]") {
     }
 }
 
-TEST_CASE("AsciiIoTest: table_from_string_extra_new_line_in_the_end", "[mctracer]") {
+TEST_CASE("AsciiIoTest: table_from_string_extra_new_line_in_the_end", "[merlict]") {
     string text =   "266e-9\t0.03\n"
                     "277e-9\t0.1\n"
                     "283e-9\t0.2\n"
@@ -116,7 +116,7 @@ TEST_CASE("AsciiIoTest: table_from_string_extra_new_line_in_the_end", "[mctracer
     CHECK(0.254 == table.at(3).at(1));
 }
 
-TEST_CASE("AsciiIoTest: table_from_string_", "[mctracer]") {
+TEST_CASE("AsciiIoTest: table_from_string_", "[merlict]") {
     string text =   "266e-9\t0.03\n"
                     " 277e-9 0.1\n"
                     "  283e-9  0.2\n"

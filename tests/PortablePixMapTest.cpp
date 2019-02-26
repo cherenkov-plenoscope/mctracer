@@ -8,7 +8,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("PortablePixMapTest: write_and_read", "[mctracer]") {
+TEST_CASE("PortablePixMapTest: write_and_read", "[merlict]") {
     visual::Image img(16, 9);
 
     for (unsigned int c = 0; c < img.number_cols; c++) {

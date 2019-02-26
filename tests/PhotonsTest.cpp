@@ -10,7 +10,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("PhotonsTest: raw_row2photon", "[mctracer]") {
+TEST_CASE("PhotonsTest: raw_row2photon", "[merlict]") {
     Vec3 dir(66.6, 57.8, 99.9);
     dir.normalize();
 
@@ -31,7 +31,7 @@ TEST_CASE("PhotonsTest: raw_row2photon", "[mctracer]") {
     CHECK(raw_row[7] == ph.get_wavelength());
 }
 
-TEST_CASE("PhotonsTest: photon2raw_row", "[mctracer]") {
+TEST_CASE("PhotonsTest: photon2raw_row", "[merlict]") {
     Vec3 sup(13.0, 37.0, 42.0);
     Vec3 dir(66.6, 57.8, 99.9);
     unsigned int id = 1337;
@@ -54,7 +54,7 @@ TEST_CASE("PhotonsTest: photon2raw_row", "[mctracer]") {
     CHECK(raw_row[7] == ph.get_wavelength());
 }
 
-TEST_CASE("PhotonsTest: bunch2raw_matrix2bunch", "[mctracer]") {
+TEST_CASE("PhotonsTest: bunch2raw_matrix2bunch", "[merlict]") {
     const unsigned int number_of_photons = 1e3;
     vector<Photon> photon_bunch;
     random::Mt19937 prng(random::ZERO_SEED);
@@ -94,7 +94,7 @@ TEST_CASE("PhotonsTest: bunch2raw_matrix2bunch", "[mctracer]") {
     }
 }
 
-TEST_CASE("PhotonsTest: bunch2raw_matrix2file", "[mctracer]") {
+TEST_CASE("PhotonsTest: bunch2raw_matrix2file", "[merlict]") {
     const unsigned int number_of_photons = 1e3;
     std::vector<Photon> photon_bunch1;
     random::Mt19937 prng(random::ZERO_SEED);

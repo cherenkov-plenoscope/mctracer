@@ -103,7 +103,7 @@ void write_and_read_back(
 
 
 
-TEST_CASE("PhotonStreamTest: arrival_slices_must_not_be_NEXT_CHANNEL_MARKER", "[mctracer]") {
+TEST_CASE("PhotonStreamTest: arrival_slices_must_not_be_NEXT_CHANNEL_MARKER", "[merlict]") {
     vector<vector<ExtractedPulse>> channels;
     vector<ExtractedPulse> channel;
     const int32_t simulation_truth_id = 1337;
@@ -120,7 +120,7 @@ TEST_CASE("PhotonStreamTest: arrival_slices_must_not_be_NEXT_CHANNEL_MARKER", "[
     CHECK_NOTHROW(PhotonStream::write(channels, 0.5e-9, "InOut/shall_be_written.phs"));
 }
 
-TEST_CASE("PhotonStreamTest: write_and_read_back_full_single_pulse_event", "[mctracer]") {
+TEST_CASE("PhotonStreamTest: write_and_read_back_full_single_pulse_event", "[merlict]") {
     const unsigned int number_of_channels = 1337;
     const float time_slice_duration = 0.5e-9;
     const float single_pulse_rate = 50e6;
@@ -135,7 +135,7 @@ TEST_CASE("PhotonStreamTest: write_and_read_back_full_single_pulse_event", "[mct
         seed);
 }
 
-TEST_CASE("PhotonStreamTest: zero_channels", "[mctracer]") {
+TEST_CASE("PhotonStreamTest: zero_channels", "[merlict]") {
     const unsigned int number_of_channels = 0;
     const float time_slice_duration = 0.5e-9;
     const float single_pulse_rate = 50e6;
@@ -150,7 +150,7 @@ TEST_CASE("PhotonStreamTest: zero_channels", "[mctracer]") {
         seed);
 }
 
-TEST_CASE("PhotonStreamTest: empty_channels", "[mctracer]") {
+TEST_CASE("PhotonStreamTest: empty_channels", "[merlict]") {
     const unsigned int number_of_channels = 1337;
     const float time_slice_duration = 0.5e-9;
     const float single_pulse_rate = 0.0;

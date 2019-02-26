@@ -6,19 +6,19 @@ using namespace merlict;
 
 
 
-TEST_CASE("ThinLensEquationTest: obj_dist_large_vs_focal_dist", "[mctracer]") {
+TEST_CASE("ThinLensEquationTest: obj_dist_large_vs_focal_dist", "[merlict]") {
     double o = 1.0e9;
     double f = 0.1337;
     CHECK(f == Approx(ThinLensEquation::get_image_dist_given_focal_and_object_dist(f, o)).margin(1e-9));
 }
 
-TEST_CASE("ThinLensEquationTest: fact_set_up_checked_by_hand", "[mctracer]") {
+TEST_CASE("ThinLensEquationTest: fact_set_up_checked_by_hand", "[merlict]") {
     double o = 10.0e3;
     double f = 4.889;
     CHECK(f + 2.391401256e-3 == Approx(ThinLensEquation::get_image_dist_given_focal_and_object_dist(f, o)).margin(1e-6));
 }
 
-TEST_CASE("ThinLensEquationTest: two_f_cross_check", "[mctracer]") {
+TEST_CASE("ThinLensEquationTest: two_f_cross_check", "[merlict]") {
     double f = 4.889;
     double o = 2.0*f;
     double i = 2.0*f;

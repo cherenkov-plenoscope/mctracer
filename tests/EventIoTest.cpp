@@ -11,7 +11,7 @@ using std::array;
 
 
 
-TEST_CASE("EventIoTest: EventIoHeader_works", "[mctracer]") {
+TEST_CASE("EventIoTest: EventIoHeader_works", "[merlict]") {
     std::ifstream fake_file;
     fake_file.open("telescope.dat");
     eventio::Header my_header(fake_file);
@@ -25,7 +25,7 @@ TEST_CASE("EventIoTest: EventIoHeader_works", "[mctracer]") {
     CHECK(my_header.id == 7);
 }
 
-TEST_CASE("EventIoTest: EventIoHeader_fails_wrong_sync_marker", "[mctracer]") {
+TEST_CASE("EventIoTest: EventIoHeader_fails_wrong_sync_marker", "[merlict]") {
     std::ifstream fin("telescope.dat");
     std::stringstream sout;
     std::copy_n(
@@ -39,12 +39,12 @@ TEST_CASE("EventIoTest: EventIoHeader_fails_wrong_sync_marker", "[mctracer]") {
     CHECK_THROWS_AS(eventio::Header(sout), eventio::NoSyncFoundException);
 }
 
-TEST_CASE("EventIoTest: EventIoHeader_fails_empty_file", "[mctracer]") {
+TEST_CASE("EventIoTest: EventIoHeader_fails_empty_file", "[merlict]") {
     std::stringstream fake_file;
     CHECK_THROWS_AS(eventio::Header(fake_file), std::runtime_error);
 }
 
-TEST_CASE("EventIoTest: make_runheader", "[mctracer]") {
+TEST_CASE("EventIoTest: make_runheader", "[merlict]") {
     std::ifstream fin("telescope.dat");
     std::stringstream sout;
 
@@ -58,7 +58,7 @@ TEST_CASE("EventIoTest: make_runheader", "[mctracer]") {
     CHECK(my_run_header.at(0) == corsika::str2float("RUNH"));
 }
 
-TEST_CASE("EventIoTest: EventIoFile_telescope_dat__check_tel_pos", "[mctracer]") {
+TEST_CASE("EventIoTest: EventIoFile_telescope_dat__check_tel_pos", "[merlict]") {
     eventio::Run my_run("telescope.dat");
     CHECK(my_run.header.tel_pos.size() == 1u);
     CHECK(my_run.header.tel_pos[0].x == 0.);
@@ -67,12 +67,12 @@ TEST_CASE("EventIoTest: EventIoFile_telescope_dat__check_tel_pos", "[mctracer]")
     CHECK(my_run.header.tel_pos[0].r == 500.);
 }
 
-TEST_CASE("EventIoTest: EventIoFile_telescope_dat__check_input_card", "[mctracer]") {
+TEST_CASE("EventIoTest: EventIoFile_telescope_dat__check_input_card", "[merlict]") {
     eventio::Run my_run("telescope.dat");
     CHECK(my_run.header.input_card[100] == ' ');
 }
 
-TEST_CASE("EventIoTest: EventIoFile_telescope_dat__mmcs_run_header", "[mctracer]") {
+TEST_CASE("EventIoTest: EventIoFile_telescope_dat__mmcs_run_header", "[merlict]") {
     eventio::Run my_run("telescope.dat");
     CHECK(7. == Approx(corsika::RunHeader::run_number(my_run.header.raw)).margin(1e-6));
     CHECK(-2.7 == Approx(corsika::RunHeader::slope_of_energy_spektrum(my_run.header.raw)).margin(1e-6));
@@ -82,12 +82,12 @@ TEST_CASE("EventIoTest: EventIoFile_telescope_dat__mmcs_run_header", "[mctracer]
     CHECK(220000. == Approx(corsika::RunHeader::observation_level_at(my_run.header.raw, 0)).margin(1e-6));
 }
 
-TEST_CASE("EventIoTest: EventIoFile_telescope_dat__next_call", "[mctracer]") {
+TEST_CASE("EventIoTest: EventIoFile_telescope_dat__next_call", "[merlict]") {
     eventio::Run my_run("telescope.dat");
     eventio::Event event = my_run.next_event();
 }
 
-TEST_CASE("EventIoTest: EventIoFile_telescope_dat__event_header", "[mctracer]") {
+TEST_CASE("EventIoTest: EventIoFile_telescope_dat__event_header", "[merlict]") {
     eventio::Run my_run("telescope.dat");
     eventio::Event event = my_run.next_event();
 
@@ -104,7 +104,7 @@ TEST_CASE("EventIoTest: EventIoFile_telescope_dat__event_header", "[mctracer]") 
     CHECK(2745.3125 == Approx(corsika::EventHeader::total_energy_in_GeV(h)).margin(1e-6));
 }
 
-TEST_CASE("EventIoTest: EventIoFile_telescope_dat__photon_bundle_size", "[mctracer]") {
+TEST_CASE("EventIoTest: EventIoFile_telescope_dat__photon_bundle_size", "[merlict]") {
     eventio::Run my_run("telescope.dat");
     eventio::Event event = my_run.next_event();
     CHECK(event.photons.size() == 42629u);
@@ -115,7 +115,7 @@ TEST_CASE("EventIoTest: EventIoFile_telescope_dat__photon_bundle_size", "[mctrac
     }
 }
 
-TEST_CASE("EventIoTest: EventIoFile_telescope_dat__photon_bundle_values", "[mctracer]") {
+TEST_CASE("EventIoTest: EventIoFile_telescope_dat__photon_bundle_values", "[merlict]") {
     eventio::Run my_run("telescope.dat");
     eventio::Event event = my_run.next_event();
     CHECK(event.photons.size() == 42629u);
@@ -187,7 +187,7 @@ TEST_CASE("EventIoTest: EventIoFile_telescope_dat__photon_bundle_values", "[mctr
     }
 }
 
-TEST_CASE("EventIoTest: EventIoFile_telescope_dat_run_time", "[mctracer]") {
+TEST_CASE("EventIoTest: EventIoFile_telescope_dat_run_time", "[merlict]") {
     eventio::Run my_run("telescope.dat");
 
     while (my_run.has_still_events_left()) {

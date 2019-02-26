@@ -7,7 +7,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("Vec3Test: NullVector", "[mctracer]") {
+TEST_CASE("Vec3Test: NullVector", "[merlict]") {
     Vec3 a = VEC3_ORIGIN;
 
     CHECK(a.x == 0.0);
@@ -16,7 +16,7 @@ TEST_CASE("Vec3Test: NullVector", "[mctracer]") {
     CHECK(a.norm() == 0.0);
 }
 
-TEST_CASE("Vec3Test: UnitVectors", "[mctracer]") {
+TEST_CASE("Vec3Test: UnitVectors", "[merlict]") {
     Vec3 a;
 
     a = VEC3_UNIT_X;
@@ -38,7 +38,7 @@ TEST_CASE("Vec3Test: UnitVectors", "[mctracer]") {
     CHECK(a.norm() == 1.0);
 }
 
-TEST_CASE("Vec3Test: ConstructorAndGetter", "[mctracer]") {
+TEST_CASE("Vec3Test: ConstructorAndGetter", "[merlict]") {
     const double x = (rand()-.5);
     const double y = (rand()-.5);
     const double z = (rand()-.5);
@@ -48,7 +48,7 @@ TEST_CASE("Vec3Test: ConstructorAndGetter", "[mctracer]") {
     CHECK(v.z == z);
 }
 
-TEST_CASE("Vec3Test: SetterAndGetter", "[mctracer]") {
+TEST_CASE("Vec3Test: SetterAndGetter", "[merlict]") {
     const double x = (rand()-.5);
     const double y = (rand()-.5);
     const double z = (rand()-.5);
@@ -59,7 +59,7 @@ TEST_CASE("Vec3Test: SetterAndGetter", "[mctracer]") {
     CHECK(v.z == z);
 }
 
-TEST_CASE("Vec3Test: EuclideanNorm", "[mctracer]") {
+TEST_CASE("Vec3Test: EuclideanNorm", "[merlict]") {
     const double x = (rand()-.5);
     const double y = (rand()-.5);
     const double z = (rand()-.5);
@@ -73,7 +73,7 @@ TEST_CASE("Vec3Test: EuclideanNorm", "[mctracer]") {
     CHECK(v.norm() == 1.0);
 }
 
-TEST_CASE("Vec3Test: crossUnitVectors", "[mctracer]") {
+TEST_CASE("Vec3Test: crossUnitVectors", "[merlict]") {
     Vec3 u = VEC3_UNIT_X;
     Vec3 v = VEC3_UNIT_Y;
     Vec3 w = u.cross(v);
@@ -81,7 +81,7 @@ TEST_CASE("Vec3Test: crossUnitVectors", "[mctracer]") {
     CHECK(w == VEC3_UNIT_Z);
 }
 
-TEST_CASE("Vec3Test: cross", "[mctracer]") {
+TEST_CASE("Vec3Test: cross", "[merlict]") {
     double x1, y1, z1, x2, y2, z2;
     for (x1 = -2.0; x1 > 2.0; x1 = x1+.25) {
         for (y1 = -2.0; y1 > 2.0; y1 = y1+.25) {
@@ -103,7 +103,7 @@ TEST_CASE("Vec3Test: cross", "[mctracer]") {
     }
 }
 
-TEST_CASE("Vec3Test: Scalar_Product_unit_vectors", "[mctracer]") {
+TEST_CASE("Vec3Test: Scalar_Product_unit_vectors", "[merlict]") {
     const Vec3 x = VEC3_UNIT_X;
     const Vec3 y = VEC3_UNIT_Y;
     CHECK(x*y == 0.0);
@@ -112,7 +112,7 @@ TEST_CASE("Vec3Test: Scalar_Product_unit_vectors", "[mctracer]") {
     CHECK(x*x == 1.0);
 }
 
-TEST_CASE("Vec3Test: Scalar_Product", "[mctracer]") {
+TEST_CASE("Vec3Test: Scalar_Product", "[merlict]") {
     double x1, y1, z1, x2, y2, z2;
     for (x1 = -2.0; x1 > 2.0; x1 = x1+.25) {
         for (y1 = -2.0; y1 > 2.0; y1 = y1+.25) {
@@ -131,7 +131,7 @@ TEST_CASE("Vec3Test: Scalar_Product", "[mctracer]") {
     }
 }
 
-TEST_CASE("Vec3Test: ScalarMultiplication", "[mctracer]") {
+TEST_CASE("Vec3Test: ScalarMultiplication", "[merlict]") {
     double x, y, z, f;
     for (x = -2.0; x > 2.0; x = x+.25) {
         for (y = -2.0; y > 2.0; y = y+.25) {
@@ -147,7 +147,7 @@ TEST_CASE("Vec3Test: ScalarMultiplication", "[mctracer]") {
     }
 }
 
-TEST_CASE("Vec3Test: ScalarDiviation", "[mctracer]") {
+TEST_CASE("Vec3Test: ScalarDiviation", "[merlict]") {
     double x, y, z, f;
     for (x = -2.0; x > 2.0; x = x+.25) {
         for (y = -2.0; y > 2.0; y = y+.25) {
@@ -163,19 +163,19 @@ TEST_CASE("Vec3Test: ScalarDiviation", "[mctracer]") {
     }
 }
 
-TEST_CASE("Vec3Test: distance_unit_x_to_unit_y", "[mctracer]") {
+TEST_CASE("Vec3Test: distance_unit_x_to_unit_y", "[merlict]") {
     Vec3 a = VEC3_UNIT_X;
     Vec3 b = VEC3_UNIT_Y;
 
     CHECK(a.distance_to(b) == sqrt(2.0));
 }
 
-TEST_CASE("Vec3Test: distance_to_itself", "[mctracer]") {
+TEST_CASE("Vec3Test: distance_to_itself", "[merlict]") {
     Vec3 a(1.3, 3.7, 4.2);
     CHECK(a.distance_to(a) == 0.0);
 }
 
-TEST_CASE("Vec3Test: Operator_equals_expect_true", "[mctracer]") {
+TEST_CASE("Vec3Test: Operator_equals_expect_true", "[merlict]") {
     Vec3 a(1.3, 3.7, 4.2);
     Vec3 b(1.3, 3.7, 4.2 + 1e-20);
     CHECK(b == a);
@@ -183,7 +183,7 @@ TEST_CASE("Vec3Test: Operator_equals_expect_true", "[mctracer]") {
     CHECK_FALSE(a != b);
 }
 
-TEST_CASE("Vec3Test: Operator_equals_expect_false", "[mctracer]") {
+TEST_CASE("Vec3Test: Operator_equals_expect_false", "[merlict]") {
     Vec3 a(1.3, 3.7, 4.2);
     Vec3 b(1.3, 3.7, 4.2 + 2e-7);
     CHECK(b != a);
@@ -191,7 +191,7 @@ TEST_CASE("Vec3Test: Operator_equals_expect_false", "[mctracer]") {
     CHECK_FALSE(a == b);
 }
 
-TEST_CASE("Vec3Test: parallel_to_x_y_plane", "[mctracer]") {
+TEST_CASE("Vec3Test: parallel_to_x_y_plane", "[merlict]") {
     Vec3 a(1.0, 2.0, 0.0);
     CHECK(a.is_parallel_to_x_y_plane());
 
@@ -202,7 +202,7 @@ TEST_CASE("Vec3Test: parallel_to_x_y_plane", "[mctracer]") {
     CHECK_FALSE(c.is_parallel_to_x_y_plane());
 }
 
-TEST_CASE("Vec3Test: parallel_to_z_axis", "[mctracer]") {
+TEST_CASE("Vec3Test: parallel_to_z_axis", "[merlict]") {
     Vec3 a(0.0, 0.0, 1.0);
     CHECK(a.is_paralell_to_z_axis());
     a.set(0.0, 0.0, -1.0);
@@ -211,7 +211,7 @@ TEST_CASE("Vec3Test: parallel_to_z_axis", "[mctracer]") {
     CHECK_FALSE(a.is_paralell_to_z_axis());
 }
 
-TEST_CASE("Vec3Test: normalize", "[mctracer]") {
+TEST_CASE("Vec3Test: normalize", "[merlict]") {
     Vec3 a(1.0, 2.0, 3.0);
     CHECK(a.norm() != 1.0);
 
@@ -231,7 +231,7 @@ TEST_CASE("Vec3Test: normalize", "[mctracer]") {
     CHECK(1 == std::isnan(a.norm()));
 }
 
-TEST_CASE("Vec3Test: angle_in_between", "[mctracer]") {
+TEST_CASE("Vec3Test: angle_in_between", "[merlict]") {
     Vec3 a = VEC3_UNIT_X;
     Vec3 b = VEC3_UNIT_X;
 
@@ -256,7 +256,7 @@ TEST_CASE("Vec3Test: angle_in_between", "[mctracer]") {
     CHECK(deg2rad(45.0) == Approx(foo.angle_in_between(bar)).margin(1e-5));
 }
 
-TEST_CASE("Vec3Test: octant_encoding", "[mctracer]") {
+TEST_CASE("Vec3Test: octant_encoding", "[merlict]") {
     // x y z sector
     // - - -   0
     // - - +   1
@@ -311,17 +311,17 @@ TEST_CASE("Vec3Test: octant_encoding", "[mctracer]") {
     CHECK(a.get_octant() == 7u);
 }
 
-TEST_CASE("Vec3Test: projection_on_xz_plane", "[mctracer]") {
+TEST_CASE("Vec3Test: projection_on_xz_plane", "[merlict]") {
     Vec3 v(42.0, 13.37, 3.141);
     CHECK(v.project_in_x_z_plane() == Vec3(42.0, 0.0, 3.141));
 }
 
-TEST_CASE("Vec3Test: projection_on_yz_plane", "[mctracer]") {
+TEST_CASE("Vec3Test: projection_on_yz_plane", "[merlict]") {
     Vec3 v(42.0, 13.37, 3.141);
     CHECK(v.project_in_y_z_plane() == Vec3(0.0, 13.37, 3.141));
 }
 
-TEST_CASE("Vec3Test: projection_on_xy_plane", "[mctracer]") {
+TEST_CASE("Vec3Test: projection_on_xy_plane", "[merlict]") {
     Vec3 v(42.0, 13.37, 3.141);
     CHECK(v.project_in_x_y_plane() == Vec3(42.0, 13.37, 0.0));
 }

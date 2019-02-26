@@ -7,14 +7,14 @@ using namespace merlict;
 
 
 
-TEST_CASE("SensorAssignmentTest: empty_sensors_init", "[mctracer]") {
+TEST_CASE("SensorAssignmentTest: empty_sensors_init", "[merlict]") {
     vector<sensor::Sensor*> empty_sensors;
 
     sensor::Sensors sens(empty_sensors);
     CHECK(sens.size() == 0u);
 }
 
-TEST_CASE("SensorAssignmentTest: empty_sensor_list_find_sensor_init", "[mctracer]") {
+TEST_CASE("SensorAssignmentTest: empty_sensor_list_find_sensor_init", "[merlict]") {
     vector<sensor::Sensor*> empty_sensors;
     sensor::Sensors sens(empty_sensors);
 
@@ -25,7 +25,7 @@ TEST_CASE("SensorAssignmentTest: empty_sensor_list_find_sensor_init", "[mctracer
     CHECK(!finder.is_absorbed_by_known_sensor);
 }
 
-TEST_CASE("SensorAssignmentTest: single_sensor_find", "[mctracer]") {
+TEST_CASE("SensorAssignmentTest: single_sensor_find", "[merlict]") {
     Frame car;
     car.set_name_pos_rot("car", VEC3_ORIGIN, ROT3_UNITY);
     sensor::Sensor on_car(0u, &car);
@@ -47,7 +47,7 @@ TEST_CASE("SensorAssignmentTest: single_sensor_find", "[mctracer]") {
     CHECK(&on_car == finder2.final_sensor);
 }
 
-TEST_CASE("SensorAssignmentTest: many_sensor_find", "[mctracer]") {
+TEST_CASE("SensorAssignmentTest: many_sensor_find", "[merlict]") {
     // Creation
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);
@@ -88,7 +88,7 @@ TEST_CASE("SensorAssignmentTest: many_sensor_find", "[mctracer]") {
     CHECK(&on_tree == find_tree.final_sensor);
 }
 
-TEST_CASE("SensorAssignmentTest: sort_sensors_by_brame", "[mctracer]") {
+TEST_CASE("SensorAssignmentTest: sort_sensors_by_brame", "[merlict]") {
     unsigned int n = 1000;
     vector<sensor::Sensor> sensors;
     Frame root;

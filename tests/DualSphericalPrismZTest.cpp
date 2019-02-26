@@ -6,7 +6,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("DualSphericalPrismZTest: is_inside", "[mctracer]") {
+TEST_CASE("DualSphericalPrismZTest: is_inside", "[merlict]") {
     DualSphericalPrismZ bound;
     bound.set_x_hight_and_y_width(1.0, 2.0);
     Vec3 v(0.0, 0.0, 0.0);
@@ -25,7 +25,7 @@ TEST_CASE("DualSphericalPrismZTest: is_inside", "[mctracer]") {
     CHECK(bound.is_inside(&v));
 }
 
-TEST_CASE("DualSphericalPrismZTest: is_outside", "[mctracer]") {
+TEST_CASE("DualSphericalPrismZTest: is_outside", "[merlict]") {
     DualSphericalPrismZ bound;
     bound.set_x_hight_and_y_width(1.0, 2.0);
     Vec3 v;

@@ -8,7 +8,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("lens_makerTest: check_sebastians_paper_and_pen_calculation", "[mctracer]") {
+TEST_CASE("lens_makerTest: check_sebastians_paper_and_pen_calculation", "[merlict]") {
     double expected_curvature_radius = 0.125;;
     lens_maker::Config cfg;
     cfg.focal_length = 0.1335;
@@ -17,7 +17,7 @@ TEST_CASE("lens_makerTest: check_sebastians_paper_and_pen_calculation", "[mctrac
     CHECK(expected_curvature_radius == Approx(lens_maker::get_curvature_radius(cfg)).margin(expected_curvature_radius*3e-2));
 }
 
-TEST_CASE("lens_makerTest: lens_thicknes", "[mctracer]") {
+TEST_CASE("lens_makerTest: lens_thicknes", "[merlict]") {
     double expected_curvature_radius = 0.125;
     double expected_thickness = 0.0445;
     lens_maker::Config cfg;
@@ -27,7 +27,7 @@ TEST_CASE("lens_makerTest: lens_thicknes", "[mctracer]") {
     CHECK(expected_thickness == Approx(lens_maker::get_lens_thickness_for_R_r(expected_curvature_radius, cfg.aperture_radius)).margin(expected_thickness*3e-2));
 }
 
-TEST_CASE("lens_makerTest: check_lensmaker_on_optical_table_with_lens", "[mctracer]") {
+TEST_CASE("lens_makerTest: check_lensmaker_on_optical_table_with_lens", "[merlict]") {
     // Hello lens_maker,
     lens_maker::Config cfg;
     // we want a lens with

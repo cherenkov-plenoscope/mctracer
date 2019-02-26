@@ -10,7 +10,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("PhotonTest: creation", "[mctracer]") {
+TEST_CASE("PhotonTest: creation", "[merlict]") {
     double wavelength = 433e-9;
     Photon pho(VEC3_ORIGIN, VEC3_UNIT_Z*1.337, wavelength);
     CHECK(pho.direction() == VEC3_UNIT_Z);
@@ -21,12 +21,12 @@ TEST_CASE("PhotonTest: creation", "[mctracer]") {
     CHECK(pho.get_number_of_interactions_so_far() == 1u);
 }
 
-TEST_CASE("PhotonTest: reject_negative_wavelength", "[mctracer]") {
+TEST_CASE("PhotonTest: reject_negative_wavelength", "[merlict]") {
     CHECK_THROWS_AS(Photon(VEC3_ORIGIN, VEC3_UNIT_X, 0.0), std::invalid_argument);
     CHECK_THROWS_AS(Photon(VEC3_ORIGIN, VEC3_UNIT_X, -1.0), std::invalid_argument);
 }
 
-TEST_CASE("PhotonTest: PropagationSimpleGeometry", "[mctracer]") {
+TEST_CASE("PhotonTest: PropagationSimpleGeometry", "[merlict]") {
     PropagationConfig setup;
     setup.use_multithread_when_possible = false;
     int number_of_bounces = 42;
@@ -88,7 +88,7 @@ TEST_CASE("PhotonTest: PropagationSimpleGeometry", "[mctracer]") {
     }
 }
 
-TEST_CASE("PhotonTest: Reflections", "[mctracer]") {
+TEST_CASE("PhotonTest: Reflections", "[merlict]") {
     /* This test is about the propagation process
                                  \ mirror pos(0,0,0)
     Light Source ->------>------>-\
@@ -181,7 +181,7 @@ TEST_CASE("PhotonTest: Reflections", "[mctracer]") {
     CHECK(reflection_coefficient == Approx(ph_reached_sensor/ph_emitted).margin(2e-2));
 }
 
-TEST_CASE("PhotonTest: Refraction", "[mctracer]") {
+TEST_CASE("PhotonTest: Refraction", "[merlict]") {
     PropagationConfig setup;
     setup.use_multithread_when_possible = false;
     // create a test setup with two planes and high refractive index in between
@@ -245,7 +245,7 @@ TEST_CASE("PhotonTest: Refraction", "[mctracer]") {
     CHECK(travel_time == Approx(sensor::arrival_time_mean(absorber_sensor.photon_arrival_history)).margin(1e-10));
 }
 
-TEST_CASE("PhotonTest: absorbtion_in_medium", "[mctracer]") {
+TEST_CASE("PhotonTest: absorbtion_in_medium", "[merlict]") {
     PropagationConfig setup;
     setup.use_multithread_when_possible = false;
     // create a test setup with two planes and high refractive index in between

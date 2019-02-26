@@ -6,7 +6,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("ImageTest: striding_order", "[mctracer]") {
+TEST_CASE("ImageTest: striding_order", "[merlict]") {
     visual::Image image(192, 108);
     unsigned int idx = 0;
     for (unsigned int col = 0; col < image.number_cols; col++) {

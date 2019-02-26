@@ -9,7 +9,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("OnlineStatisticsTest: few_samples", "[mctracer]") {
+TEST_CASE("OnlineStatisticsTest: few_samples", "[merlict]") {
     vector<double> vals = {1.0};
     OnlineStatistics ov;
     for (unsigned int i = 0; i < vals.size(); i++)
@@ -20,7 +20,7 @@ TEST_CASE("OnlineStatisticsTest: few_samples", "[mctracer]") {
     CHECK(ov.stddev() != ov.stddev());
 }
 
-TEST_CASE("OnlineStatisticsTest: online_variance", "[mctracer]") {
+TEST_CASE("OnlineStatisticsTest: online_variance", "[merlict]") {
     vector<double> vals;
     random::Mt19937 prng(0);
     OnlineStatistics ov;
@@ -35,7 +35,7 @@ TEST_CASE("OnlineStatisticsTest: online_variance", "[mctracer]") {
     CHECK(1000000 == ov.number_of_samples());
 }
 
-TEST_CASE("OnlineStatisticsTest: online_variance_simple_numbers", "[mctracer]") {
+TEST_CASE("OnlineStatisticsTest: online_variance_simple_numbers", "[merlict]") {
     vector<double> vals = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
     OnlineStatistics ov;
     for (unsigned int i = 0; i < vals.size(); i++)
@@ -46,7 +46,7 @@ TEST_CASE("OnlineStatisticsTest: online_variance_simple_numbers", "[mctracer]") 
     CHECK(7 == ov.number_of_samples());
 }
 
-TEST_CASE("OnlineStatisticsTest: sum", "[mctracer]") {
+TEST_CASE("OnlineStatisticsTest: sum", "[merlict]") {
     vector<double> vals = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
     OnlineStatistics ov;
     for (unsigned int i = 0; i < vals.size(); i++)
@@ -54,7 +54,7 @@ TEST_CASE("OnlineStatisticsTest: sum", "[mctracer]") {
     CHECK(21.0 == ov.sum());
 }
 
-TEST_CASE("OnlineStatisticsTest: mean", "[mctracer]") {
+TEST_CASE("OnlineStatisticsTest: mean", "[merlict]") {
     vector<double> vals = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
     OnlineStatistics ov;
     for (unsigned int i = 0; i < vals.size(); i++)

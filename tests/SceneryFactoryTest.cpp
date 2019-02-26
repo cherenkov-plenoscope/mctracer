@@ -6,7 +6,7 @@
 /*
 
 
-TEST_CASE("SceneryFactoryTest: call_SceneryFactory", "[mctracer]") {
+TEST_CASE("SceneryFactoryTest: call_SceneryFactory", "[merlict]") {
     Scenery scenery;
     Xml::SceneryFactory xml2frame("test_scenery/tree_epoch_20160320.xml");
     xml2frame.append_to_frame_in_scenery(&scenery.root, &scenery);
@@ -15,13 +15,13 @@ TEST_CASE("SceneryFactoryTest: call_SceneryFactory", "[mctracer]") {
     // FlyingCamera free(xml2frame.scenery, &settings);
 }
 
-TEST_CASE("SceneryFactoryTest: author_and_comment", "[mctracer]") {
+TEST_CASE("SceneryFactoryTest: author_and_comment", "[merlict]") {
     Xml::SceneryFactory xml2frame("test_scenery/tree_epoch_20160320.xml");
     CHECK("Sebastian" == xml2frame.author);
     CHECK("First novel xml format." == xml2frame.comment);
 }
 
-TEST_CASE("SceneryFactoryTest: no_author_and_no_comment", "[mctracer]") {
+TEST_CASE("SceneryFactoryTest: no_author_and_no_comment", "[merlict]") {
     Xml::SceneryFactory xml2frame(
         "test_scenery/tree_epoch_20160320_no_author_no_comment.xml");
     CHECK(xml2frame.author.empty());

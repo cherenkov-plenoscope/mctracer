@@ -8,7 +8,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("DistanceMeterTest: is_facing", "[mctracer]") {
+TEST_CASE("DistanceMeterTest: is_facing", "[merlict]") {
     Sphere sphere = Sphere("sphere_1", Vec3(0, 0, 0), Rot3(0, 0, 0));
     sphere.set_radius(0.5);
     Ray ray = Ray(Vec3(0, 0, -1), Vec3(0, 0, 1));
@@ -18,7 +18,7 @@ TEST_CASE("DistanceMeterTest: is_facing", "[mctracer]") {
     CHECK(dist_meter.distance_to_closest_object == 0.5);
 }
 
-TEST_CASE("DistanceMeterTest: is_not_facing", "[mctracer]") {
+TEST_CASE("DistanceMeterTest: is_not_facing", "[merlict]") {
     Sphere sphere = Sphere("sphere_1", Vec3(0, 0, 0), Rot3(0, 0, 0));
     sphere.set_radius(0.5);
     Ray ray = Ray(Vec3(0, 0, +1), Vec3(0, 0, 1));

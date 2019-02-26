@@ -16,7 +16,7 @@ void print_size(const string &name, T s) {
 
 
 
-TEST_CASE("SizeOfTest: sizes_of_mct", "[mctracer]") {
+TEST_CASE("SizeOfTest: sizes_of_mct", "[merlict]") {
     cout << "Size in bytes\n";
     cout << "--------------------------------------------" << "\n";
 

@@ -10,19 +10,19 @@ using namespace merlict;
 
 
 
-TEST_CASE("FramesTest: too_close_together_no_frame", "[mctracer]") {
+TEST_CASE("FramesTest: too_close_together_no_frame", "[merlict]") {
     vector<Frame*> vf;
     CHECK(!Frames::positions_in_mother_are_too_close_together(vf));
 }
 
-TEST_CASE("FramesTest: too_close_together_one_frame", "[mctracer]") {
+TEST_CASE("FramesTest: too_close_together_one_frame", "[merlict]") {
     Frame root;
     root.set_name_pos_rot("root", VEC3_ORIGIN, ROT3_UNITY);
     vector<Frame*> vf; vf.push_back(&root);
     CHECK(!Frames::positions_in_mother_are_too_close_together(vf));
 }
 
-TEST_CASE("FramesTest: too_close_together_true", "[mctracer]") {
+TEST_CASE("FramesTest: too_close_together_true", "[merlict]") {
     Frame f1;
     f1.set_name_pos_rot("f1", VEC3_ORIGIN, ROT3_UNITY);
 
@@ -33,7 +33,7 @@ TEST_CASE("FramesTest: too_close_together_true", "[mctracer]") {
     CHECK(Frames::positions_in_mother_are_too_close_together(vf));
 }
 
-TEST_CASE("FramesTest: too_close_together_false", "[mctracer]") {
+TEST_CASE("FramesTest: too_close_together_false", "[merlict]") {
     Frame f1;
     f1.set_name_pos_rot("f1", VEC3_ORIGIN, ROT3_UNITY);
 
@@ -47,24 +47,24 @@ TEST_CASE("FramesTest: too_close_together_false", "[mctracer]") {
     CHECK(!Frames::positions_in_mother_are_too_close_together(vf));
 }
 
-TEST_CASE("FramesTest: mean_no_frame", "[mctracer]") {
+TEST_CASE("FramesTest: mean_no_frame", "[merlict]") {
     vector<Frame*> vf;
     CHECK_THROWS_AS(Frames::mean_of_positions_in_mother(vf), std::invalid_argument);
 }
 
-TEST_CASE("FramesTest: optimal_bounding_sphere_pos_no_frame", "[mctracer]") {
+TEST_CASE("FramesTest: optimal_bounding_sphere_pos_no_frame", "[merlict]") {
     vector<Frame*> vf;
     CHECK_THROWS_AS(Frames::dumb_bounding_sphere_center(vf), std::invalid_argument);
 }
 
-TEST_CASE("FramesTest: optimal_bounding_sphere_pos_one_frame", "[mctracer]") {
+TEST_CASE("FramesTest: optimal_bounding_sphere_pos_one_frame", "[merlict]") {
     Frame root;
     root.set_name_pos_rot("root", VEC3_UNIT_X, ROT3_UNITY);
     vector<Frame*> vf; vf.push_back(&root);
     CHECK(VEC3_UNIT_X == Frames::dumb_bounding_sphere_center(vf));
 }
 
-TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_frames_symetric", "[mctracer]") {
+TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_frames_symetric", "[merlict]") {
     vector<Frame*> vf;
     Frame f1;
     f1.set_name_pos_rot("f1", Vec3(0, 0, 0), ROT3_UNITY);
@@ -84,7 +84,7 @@ TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_frames_symetric", "[mctr
     CHECK(Frames::dumb_bounding_sphere_center(vf) == Vec3(2, 0, 0));
 }
 
-TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_spheres_symetric", "[mctracer]") {
+TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_spheres_symetric", "[merlict]") {
     vector<Frame*> vf;
     Sphere f1;
     f1.set_name_pos_rot("f1", Vec3(0, 0, 0), ROT3_UNITY); f1.set_radius(1.0);
@@ -104,7 +104,7 @@ TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_spheres_symetric", "[mct
     CHECK(Frames::dumb_bounding_sphere_center(vf) == Vec3(2, 0, 0));
 }
 
-TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_spheres_asymetric", "[mctracer]") {
+TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_spheres_asymetric", "[merlict]") {
     vector<Frame*> vf;
     Sphere f1;
     f1.set_name_pos_rot("f1", Vec3(0, 0, 0), ROT3_UNITY);
@@ -124,7 +124,7 @@ TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_spheres_asymetric", "[mc
     CHECK(Frames::dumb_bounding_sphere_center(vf) == Vec3(4, 0, 0));
 }
 
-TEST_CASE("FramesTest: not_optimal_in_symetric_case", "[mctracer]") {
+TEST_CASE("FramesTest: not_optimal_in_symetric_case", "[merlict]") {
     vector<Frame*> vf;
     Sphere f1;
     f1.set_name_pos_rot(

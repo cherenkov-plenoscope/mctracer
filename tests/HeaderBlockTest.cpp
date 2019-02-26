@@ -7,7 +7,7 @@ using std::array;
 
 
 
-TEST_CASE("HeaderBlockTest: write_and_read_binary_block", "[mctracer]") {
+TEST_CASE("HeaderBlockTest: write_and_read_binary_block", "[merlict]") {
     array<float, 273> block;
     for (unsigned int i = 0; i < 273; i++)
         block.at(i) = i*1.01;
@@ -19,7 +19,7 @@ TEST_CASE("HeaderBlockTest: write_and_read_binary_block", "[mctracer]") {
         CHECK(blocks_in.at(0).at(i) == Approx(i*1.01).margin(1e-4));
 }
 
-TEST_CASE("HeaderBlockTest: write_and_read_several_binary_blocks", "[mctracer]") {
+TEST_CASE("HeaderBlockTest: write_and_read_several_binary_blocks", "[merlict]") {
     vector<array<float, 273>> blocks;
     const unsigned int number_blocks = 11;
     for (unsigned int j = 0; j < number_blocks; j++) {
@@ -40,11 +40,11 @@ TEST_CASE("HeaderBlockTest: write_and_read_several_binary_blocks", "[mctracer]")
     }
 }
 
-TEST_CASE("HeaderBlockTest: read_non_existing_file", "[mctracer]") {
+TEST_CASE("HeaderBlockTest: read_non_existing_file", "[merlict]") {
     CHECK_THROWS_AS(corsika::block::read("InOut/non_existing_file.bin"), std::runtime_error);
 }
 
-TEST_CASE("HeaderBlockTest: write_and_read_empty_file", "[mctracer]") {
+TEST_CASE("HeaderBlockTest: write_and_read_empty_file", "[merlict]") {
     vector<array<float, 273>> blocks;
     const string path = "InOut/header_block.bin";
     corsika::block::write(blocks, path);

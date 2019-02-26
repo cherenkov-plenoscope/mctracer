@@ -8,20 +8,20 @@ namespace stl = stereo_litography;
 
 
 
-TEST_CASE("StereoLitographyTest: open_non_existing_file", "[mctracer]") {
+TEST_CASE("StereoLitographyTest: open_non_existing_file", "[merlict]") {
     CHECK_THROWS_AS(stl::BinaryReader("not_existing_file"), stl::BinaryReader::CanNotReadFile);
 }
 
-TEST_CASE("StereoLitographyTest: ascii_format", "[mctracer]") {
+TEST_CASE("StereoLitographyTest: ascii_format", "[merlict]") {
     CHECK_THROWS_AS(stl::BinaryReader("test_scenery/ascii_format.stl"), stl::BinaryReader::CanNotReadAscii);
 }
 
-TEST_CASE("StereoLitographyTest: open_valid_file", "[mctracer]") {
+TEST_CASE("StereoLitographyTest: open_valid_file", "[merlict]") {
     stl::BinaryReader stl("test_scenery/LCCone-simple_parab.stl");
     CHECK(stl.get_facets().size() == 3692u);
 }
 
-TEST_CASE("StereoLitographyTest: write_and_read_stl_with_zero_triangles", "[mctracer]") {
+TEST_CASE("StereoLitographyTest: write_and_read_stl_with_zero_triangles", "[merlict]") {
     std::string filename = "test_scenery/single_triangle.stl";
     stl::BinaryWriter stlwr;
     stlwr.write_to_file(filename);
@@ -29,7 +29,7 @@ TEST_CASE("StereoLitographyTest: write_and_read_stl_with_zero_triangles", "[mctr
     CHECK(stl.get_facets().size() == 0u);
 }
 
-TEST_CASE("StereoLitographyTest: write_and_read_1000_triangle", "[mctracer]") {
+TEST_CASE("StereoLitographyTest: write_and_read_1000_triangle", "[merlict]") {
     unsigned int number_of_triangles = 1000;
     std::vector<stl::Facet> facets;
 
@@ -63,7 +63,7 @@ TEST_CASE("StereoLitographyTest: write_and_read_1000_triangle", "[mctracer]") {
     }
 }
 
-TEST_CASE("StereoLitographyTest: scaling", "[mctracer]") {
+TEST_CASE("StereoLitographyTest: scaling", "[merlict]") {
     const double scaleing = 42.1337;
     Frame obj_normal;
     obj_normal.set_name_pos_rot("normal", VEC3_ORIGIN, ROT3_UNITY);
@@ -79,7 +79,7 @@ TEST_CASE("StereoLitographyTest: scaling", "[mctracer]") {
     CHECK(obj_scaled.get_bounding_sphere_radius() == scaleing*obj_normal.get_bounding_sphere_radius());
 }
 
-TEST_CASE("StereoLitographyTest: write_and_read_simple_stl", "[mctracer]") {
+TEST_CASE("StereoLitographyTest: write_and_read_simple_stl", "[merlict]") {
     std::string filename = "test_scenery/single_triangle.stl";
     stl::BinaryWriter stlwr;
 

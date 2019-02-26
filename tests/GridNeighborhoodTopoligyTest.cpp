@@ -6,7 +6,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("GridNeighborhoodTopoligyTest: init", "[mctracer]") {
+TEST_CASE("GridNeighborhoodTopoligyTest: init", "[merlict]") {
     double outer_R = 1.0;
     double spacing = 0.2;
 

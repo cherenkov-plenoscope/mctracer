@@ -9,7 +9,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("OwnerShipTest: own", "[mctracer]") {
+TEST_CASE("OwnerShipTest: own", "[merlict]") {
     Frame tree;
     tree.set_name_pos_rot("tree", VEC3_ORIGIN, ROT3_UNITY);
 

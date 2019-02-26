@@ -9,7 +9,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("EventIoPhotonFactoryTest: intersection_point_on_ground", "[mctracer]") {
+TEST_CASE("EventIoPhotonFactoryTest: intersection_point_on_ground", "[merlict]") {
     // compare the input ground intersection point with the actual intersection
     // point of the mctracer photons when they are absorbed on the ground.
     random::Mt19937 prng(0);
@@ -73,7 +73,7 @@ TEST_CASE("EventIoPhotonFactoryTest: intersection_point_on_ground", "[mctracer]"
     }
 }
 
-TEST_CASE("EventIoPhotonFactoryTest: wavelength_sign", "[mctracer]") {
+TEST_CASE("EventIoPhotonFactoryTest: wavelength_sign", "[merlict]") {
     random::FakeConstant prng(0.0);
     for (int l = 1; l < 1337; l++) {
         const float sign = (l%2 == 0) ? +1.0: -1.0;
@@ -90,7 +90,7 @@ TEST_CASE("EventIoPhotonFactoryTest: wavelength_sign", "[mctracer]") {
     }
 }
 
-TEST_CASE("EventIoPhotonFactoryTest: convert_photons", "[mctracer]") {
+TEST_CASE("EventIoPhotonFactoryTest: convert_photons", "[merlict]") {
     const std::array<float, 8> corsika_photon =
         {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.999, 433};
     //   x    y    xcos ycos time  zem  weight lambda
@@ -113,7 +113,7 @@ TEST_CASE("EventIoPhotonFactoryTest: convert_photons", "[mctracer]") {
     CHECK(1e3 == Approx(ph.support().z).margin(1e-9));
 }
 
-TEST_CASE("EventIoPhotonFactoryTest: execute_atmospheric_absorption", "[mctracer]") {
+TEST_CASE("EventIoPhotonFactoryTest: execute_atmospheric_absorption", "[merlict]") {
     // In Corsika photons can have a 'weight' to represent a bunch of photons.
     // This was introduced in Corsika to save computations and disk space.
     // Corsika does not recomend to have weights above 5.
@@ -151,7 +151,7 @@ TEST_CASE("EventIoPhotonFactoryTest: execute_atmospheric_absorption", "[mctracer
     CHECK(0.5 == Approx(passed_ratio).margin(1e-2));
 }
 
-TEST_CASE("EventIoPhotonFactoryTest: mctracer_rejects_photon_weight_below_0", "[mctracer]") {
+TEST_CASE("EventIoPhotonFactoryTest: mctracer_rejects_photon_weight_below_0", "[merlict]") {
     const unsigned int id = 1337;
     random::Mt19937 prng(random::ZERO_SEED);
     const std::array<float, 8> corsika_photon =
@@ -160,7 +160,7 @@ TEST_CASE("EventIoPhotonFactoryTest: mctracer_rejects_photon_weight_below_0", "[
     CHECK_THROWS_AS(EventIoPhotonFactory(corsika_photon, id, &prng), EventIoPhotonFactory::BadPhotonWeight);
 }
 
-TEST_CASE("EventIoPhotonFactoryTest: mctracer_accepts_photon_weight_equal_1", "[mctracer]") {
+TEST_CASE("EventIoPhotonFactoryTest: mctracer_accepts_photon_weight_equal_1", "[merlict]") {
     const unsigned int id = 1337;
     random::Mt19937 prng(random::ZERO_SEED);
     const std::array<float, 8> corsika_photon =
@@ -169,7 +169,7 @@ TEST_CASE("EventIoPhotonFactoryTest: mctracer_accepts_photon_weight_equal_1", "[
     CHECK_NOTHROW(EventIoPhotonFactory(corsika_photon, id, &prng));
 }
 
-TEST_CASE("EventIoPhotonFactoryTest: mctracer_rejects_photon_weight_above_1", "[mctracer]") {
+TEST_CASE("EventIoPhotonFactoryTest: mctracer_rejects_photon_weight_above_1", "[merlict]") {
     const unsigned int id = 1337;
     random::Mt19937 prng(random::ZERO_SEED);
     const std::array<float, 8> corsika_photon =
@@ -178,7 +178,7 @@ TEST_CASE("EventIoPhotonFactoryTest: mctracer_rejects_photon_weight_above_1", "[
     CHECK_THROWS_AS(EventIoPhotonFactory(corsika_photon, id, &prng), EventIoPhotonFactory::BadPhotonWeight);
 }
 
-TEST_CASE("EventIoPhotonFactoryTest: mctracer_accepts_photon_weight_equal_0", "[mctracer]") {
+TEST_CASE("EventIoPhotonFactoryTest: mctracer_accepts_photon_weight_equal_0", "[merlict]") {
     const unsigned int id = 1337;
     random::Mt19937 prng(random::ZERO_SEED);
     const std::array<float, 8> corsika_photon =
@@ -186,7 +186,7 @@ TEST_CASE("EventIoPhotonFactoryTest: mctracer_accepts_photon_weight_equal_0", "[
     CHECK_NOTHROW(EventIoPhotonFactory(corsika_photon, id, &prng));
 }
 
-TEST_CASE("EventIoPhotonFactoryTest: mctracer_accepts_photon_weight_btw_0_and_1", "[mctracer]") {
+TEST_CASE("EventIoPhotonFactoryTest: mctracer_accepts_photon_weight_btw_0_and_1", "[merlict]") {
     const unsigned int id = 1337;
     random::Mt19937 prng(random::ZERO_SEED);
     const std::array<float, 8>  corsika_photon =
@@ -194,7 +194,7 @@ TEST_CASE("EventIoPhotonFactoryTest: mctracer_accepts_photon_weight_btw_0_and_1"
     CHECK_NOTHROW(EventIoPhotonFactory(corsika_photon, id, &prng));
 }
 
-TEST_CASE("EventIoPhotonFactoryTest: zero_weight_is_passed_on_zero_from_prng", "[mctracer]") {
+TEST_CASE("EventIoPhotonFactoryTest: zero_weight_is_passed_on_zero_from_prng", "[merlict]") {
     const std::array<float, 8>  corsika_photon =
     {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.0, 433};
     const unsigned int id = 1337;
@@ -203,7 +203,7 @@ TEST_CASE("EventIoPhotonFactoryTest: zero_weight_is_passed_on_zero_from_prng", "
     CHECK(cpf.passed_atmosphere());
 }
 
-TEST_CASE("EventIoPhotonFactoryTest: relative_arrival_time_on_ground", "[mctracer]") {
+TEST_CASE("EventIoPhotonFactoryTest: relative_arrival_time_on_ground", "[merlict]") {
     float arrival_time_on_dround_in_ns = 1.0;
     const std::array<float, 8>  corsika_photon =
     {1.2, 3.4, 0.0, 0.0, arrival_time_on_dround_in_ns, 1e5, 0.4455, 433};
@@ -213,7 +213,7 @@ TEST_CASE("EventIoPhotonFactoryTest: relative_arrival_time_on_ground", "[mctrace
     CHECK(cpf.relative_arrival_time_on_ground() == arrival_time_on_dround_in_ns*1e-9);
 }
 
-TEST_CASE("EventIoPhotonFactoryTest: correct_rel_time_when_intersecting_ground", "[mctracer]") {
+TEST_CASE("EventIoPhotonFactoryTest: correct_rel_time_when_intersecting_ground", "[merlict]") {
     eventio::Run corsika_file("telescope.dat");
     while (corsika_file.has_still_events_left()) {
         /*

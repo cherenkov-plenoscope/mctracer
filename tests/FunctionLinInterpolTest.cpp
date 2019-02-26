@@ -40,7 +40,7 @@ struct Func1Test {
     }
 };
 
-TEST_CASE("Func1Test: check_setup", "[mctracer]") {
+TEST_CASE("Func1Test: check_setup", "[merlict]") {
     Func1Test ft;
     REQUIRE(ft.table.size() == ft.table_size);
     REQUIRE(ft.table_with_duplicate_argument.size() == ft.table_size);
@@ -50,7 +50,7 @@ TEST_CASE("Func1Test: check_setup", "[mctracer]") {
     }
 }
 
-TEST_CASE("Func1Test: construct_using_matrix_of_vectors", "[mctracer]") {
+TEST_CASE("Func1Test: construct_using_matrix_of_vectors", "[merlict]") {
     Func1Test ft;
     function::Func1 f(ft.table);
     for (unsigned int i = 0; i < ft.table.size()-1; i++) {
@@ -60,21 +60,21 @@ TEST_CASE("Func1Test: construct_using_matrix_of_vectors", "[mctracer]") {
     }
 }
 
-TEST_CASE("Func1Test: access_below_lowest_argument", "[mctracer]") {
+TEST_CASE("Func1Test: access_below_lowest_argument", "[merlict]") {
     Func1Test ft;
     function::Func1 f(ft.table);
     double arg_below_definition = ft.table.at(0).at(0) - 1e-9;
     CHECK_THROWS_AS(f.evaluate(arg_below_definition), std::out_of_range);
 }
 
-TEST_CASE("Func1Test: access_at_highest_argument", "[mctracer]") {
+TEST_CASE("Func1Test: access_at_highest_argument", "[merlict]") {
     Func1Test ft;
     function::Func1 f(ft.table);
     double upper_limit = ft.table.back().at(0);
     CHECK_THROWS_AS(f.evaluate(upper_limit), std::out_of_range);
 }
 
-TEST_CASE("Func1Test: generate_from_from_file", "[mctracer]") {
+TEST_CASE("Func1Test: generate_from_from_file", "[merlict]") {
     Func1Test ft;
     std::string path = "tsvio/tim_sinus.csv";
     tsvio::write_table_to_file(ft.table, path);
@@ -90,7 +90,7 @@ TEST_CASE("Func1Test: generate_from_from_file", "[mctracer]") {
     }
 }
 
-TEST_CASE("Func1Test: linear_interpolation", "[mctracer]") {
+TEST_CASE("Func1Test: linear_interpolation", "[merlict]") {
     std::vector<std::vector<double>> two_entry_table = {
         {0.0, 0.0},
         {1.0, 1.0}
@@ -114,7 +114,7 @@ TEST_CASE("Func1Test: linear_interpolation", "[mctracer]") {
     }
 }
 
-TEST_CASE("Func1Test: empty_table_for_Func1", "[mctracer]") {
+TEST_CASE("Func1Test: empty_table_for_Func1", "[merlict]") {
     std::vector<std::vector<double>> empty_table;
     CHECK(empty_table.size() == 0u);
     CHECK_THROWS_AS(function::Func1(empty_table), std::invalid_argument);
@@ -122,7 +122,7 @@ TEST_CASE("Func1Test: empty_table_for_Func1", "[mctracer]") {
     // zero.
 }
 
-TEST_CASE("Func1Test: max_value", "[mctracer]") {
+TEST_CASE("Func1Test: max_value", "[merlict]") {
     for (double amp = 0.0; amp < 1.337*4.2; amp = amp+1e-2) {
         std::vector<std::vector<double>> table;
         for (double x = 0; x < 1.0; x = x+1e-2) {

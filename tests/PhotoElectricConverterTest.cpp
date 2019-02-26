@@ -27,7 +27,7 @@ vector<signal_processing::PipelinePhoton> equi_distant_photons(
 }
 
 
-TEST_CASE("PhotoElectricConverterTest: config_defaults", "[mctracer]") {
+TEST_CASE("PhotoElectricConverterTest: config_defaults", "[merlict]") {
     signal_processing::PhotoElectricConverter::Config config;
     CHECK(config.dark_rate == 0.0);
     CHECK(config.probability_for_second_puls == 0.0);
@@ -39,7 +39,7 @@ TEST_CASE("PhotoElectricConverterTest: config_defaults", "[mctracer]") {
     CHECK_THROWS_AS(config.quantum_efficiency_vs_wavelength->evaluate(199e-9), std::out_of_range);
 }
 
-TEST_CASE("PhotoElectricConverterTest: empty_input_yields_empty_output", "[mctracer]") {
+TEST_CASE("PhotoElectricConverterTest: empty_input_yields_empty_output", "[merlict]") {
     signal_processing::PhotoElectricConverter::Config config;
     signal_processing::PhotoElectricConverter::Converter conv(&config);
 
@@ -55,7 +55,7 @@ TEST_CASE("PhotoElectricConverterTest: empty_input_yields_empty_output", "[mctra
     CHECK(result.size() == 0u);
 }
 
-TEST_CASE("PhotoElectricConverterTest: input_pulses_absorbed_zero_qunatum_eff", "[mctracer]") {
+TEST_CASE("PhotoElectricConverterTest: input_pulses_absorbed_zero_qunatum_eff", "[merlict]") {
     signal_processing::PhotoElectricConverter::Config config;
     signal_processing::PhotoElectricConverter::Converter conv(&config);
 
@@ -73,7 +73,7 @@ TEST_CASE("PhotoElectricConverterTest: input_pulses_absorbed_zero_qunatum_eff", 
     CHECK(result.size() == 0u);
 }
 
-TEST_CASE("PhotoElectricConverterTest: input_pulses_pass_qunatum_eff_is_one", "[mctracer]") {
+TEST_CASE("PhotoElectricConverterTest: input_pulses_pass_qunatum_eff_is_one", "[merlict]") {
     signal_processing::PhotoElectricConverter::Config config;
     function::Func1 qeff({{200e-9, 1.0}, {1200e-9, 1.0}});
     config.quantum_efficiency_vs_wavelength = &qeff;
@@ -96,7 +96,7 @@ TEST_CASE("PhotoElectricConverterTest: input_pulses_pass_qunatum_eff_is_one", "[
     }
 }
 
-TEST_CASE("PhotoElectricConverterTest: dark_rate_on_empty_photon_pipe", "[mctracer]") {
+TEST_CASE("PhotoElectricConverterTest: dark_rate_on_empty_photon_pipe", "[merlict]") {
     signal_processing::PhotoElectricConverter::Config config;
     config.dark_rate = 100e6;
     signal_processing::PhotoElectricConverter::Converter conv(&config);
@@ -114,7 +114,7 @@ TEST_CASE("PhotoElectricConverterTest: dark_rate_on_empty_photon_pipe", "[mctrac
     CHECK(100u == Approx(result.size()).margin(3));
 }
 
-TEST_CASE("PhotoElectricConverterTest: triangle_qeff", "[mctracer]") {
+TEST_CASE("PhotoElectricConverterTest: triangle_qeff", "[merlict]") {
     // Qeff [1]                                            //
     //                                                     //
     // _1.0_|                                              //

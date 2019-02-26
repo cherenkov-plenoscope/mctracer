@@ -10,7 +10,7 @@ using mct::txt::is_equal;
 
 
 
-TEST_CASE("JsonTest: nlohmann_getter", "[mctracer]") {
+TEST_CASE("JsonTest: nlohmann_getter", "[merlict]") {
     nl::json j = R"({"f8": -0.898})"_json;
     CHECK(-0.898 == j["f8"].get<double>());
     CHECK(0 == j["f8"].get<int64_t>());
@@ -18,13 +18,13 @@ TEST_CASE("JsonTest: nlohmann_getter", "[mctracer]") {
     CHECK(1u == j.size());
 }
 
-TEST_CASE("JsonTest: object_wrapper_simple", "[mctracer]") {
+TEST_CASE("JsonTest: object_wrapper_simple", "[merlict]") {
     nl::json j = R"({"f8": -0.898})"_json;
     mct::json::Object obj(j);
     CHECK(-0.898 == obj.f8("f8"));
 }
 
-TEST_CASE("JsonTest: object_wrapper_multiple_objects", "[mctracer]") {
+TEST_CASE("JsonTest: object_wrapper_multiple_objects", "[merlict]") {
     nl::json j = R"({"f8": -0.898, "hans": {"A":1, "B":2}})"_json;
     mct::json::Object obj(j);
     CHECK(-0.898 == obj.f8("f8"));
@@ -32,7 +32,7 @@ TEST_CASE("JsonTest: object_wrapper_multiple_objects", "[mctracer]") {
     CHECK(2 == obj.obj("hans").i8("B"));
 }
 
-TEST_CASE("JsonTest: object_wrapper_lists", "[mctracer]") {
+TEST_CASE("JsonTest: object_wrapper_lists", "[merlict]") {
     nl::json j = R"({"f8": -0.898, "peter": [1, 2, 3]})"_json;
     mct::json::Object obj(j);
     CHECK(-0.898 == obj.f8("f8"));
@@ -44,26 +44,26 @@ TEST_CASE("JsonTest: object_wrapper_lists", "[mctracer]") {
     CHECK_THROWS_AS(obj.obj("peter").i8(3), mct::json::ListTooShort);
 }
 
-TEST_CASE("JsonTest: object_wrapper_vec3", "[mctracer]") {
+TEST_CASE("JsonTest: object_wrapper_vec3", "[merlict]") {
     nl::json j = R"({"f8": -0.898, "peter": [1, 2, 3]})"_json;
     mct::json::Object obj(j);
     CHECK(-0.898 == obj.f8("f8"));
     CHECK(mct::Vec3(1, 2, 3) == obj.vec3("peter"));
 }
 
-TEST_CASE("JsonTest: object_wrapper_bad_vec3", "[mctracer]") {
+TEST_CASE("JsonTest: object_wrapper_bad_vec3", "[merlict]") {
     nl::json j = R"({"peter": [1, 2]})"_json;
     mct::json::Object obj(j);
     CHECK_THROWS_AS(obj.vec3("peter"), mct::json::BadTriple);
 }
 
-TEST_CASE("JsonTest: empty_path", "[mctracer]") {
+TEST_CASE("JsonTest: empty_path", "[merlict]") {
     const std::string path = "";
     mct::Scenery s;
     CHECK_THROWS_AS(mct::json::append_to_frame_in_scenery(&s.root, &s, path), std::runtime_error);
 }
 
-TEST_CASE("JsonTest: mini_scenery_with_stl", "[mctracer]") {
+TEST_CASE("JsonTest: mini_scenery_with_stl", "[merlict]") {
     const std::string path =  "json/mini_scenery.json";
     mct::Scenery s;
     mct::json::append_to_frame_in_scenery(&s.root, &s, path);
@@ -72,7 +72,7 @@ TEST_CASE("JsonTest: mini_scenery_with_stl", "[mctracer]") {
     //visual::FlyingCamera(&s.root, &cfg);
 }
 
-TEST_CASE("JsonTest: valid_color", "[mctracer]") {
+TEST_CASE("JsonTest: valid_color", "[merlict]") {
   auto j = R"({"red": [255, 0, 0]})"_json;
   mct::json::Object o(j);
   mct::Color c = o.color("red");
@@ -81,19 +81,19 @@ TEST_CASE("JsonTest: valid_color", "[mctracer]") {
   CHECK(0 == c.b);
 }
 
-TEST_CASE("JsonTest: color_rg_no_b", "[mctracer]") {
+TEST_CASE("JsonTest: color_rg_no_b", "[merlict]") {
   auto j = R"({"red": [255, 0]})"_json;
   mct::json::Object o(j);
   CHECK_THROWS_AS(o.color("red"), mct::json::BadTriple);
 }
 
-TEST_CASE("JsonTest: color_no_array_but_string", "[mctracer]") {
+TEST_CASE("JsonTest: color_no_array_but_string", "[merlict]") {
   auto j = R"({"red": "woot"})"_json;
   mct::json::Object o(j);
   CHECK_THROWS_AS(o.color("red"), mct::json::BadTriple);
 }
 
-TEST_CASE("JsonTest: fine_colors", "[mctracer]") {
+TEST_CASE("JsonTest: fine_colors", "[merlict]") {
     auto j = R"(
     {
       "colors": [
@@ -114,7 +114,7 @@ TEST_CASE("JsonTest: fine_colors", "[mctracer]") {
     CHECK(mct::Color(0, 0, 255) == *cmap.get("blue"));
 }
 
-TEST_CASE("JsonTest: empty_colors", "[mctracer]") {
+TEST_CASE("JsonTest: empty_colors", "[merlict]") {
     nl::json j = R"({"colors": {}})"_json;
     mct::ColorMap cmap;
     mct::json::assert_key(j, "colors");
@@ -122,7 +122,7 @@ TEST_CASE("JsonTest: empty_colors", "[mctracer]") {
     CHECK(0u == cmap.colors.size());
 }
 
-TEST_CASE("JsonTest: parse_mini_scenery", "[mctracer]") {
+TEST_CASE("JsonTest: parse_mini_scenery", "[merlict]") {
     auto jscenery = R"(
     { "functions":[
         { "name":"leaf_reflection",
@@ -195,7 +195,7 @@ TEST_CASE("JsonTest: parse_mini_scenery", "[mctracer]") {
     CHECK("tree" == children->at(0)->get_name());
 }
 
-TEST_CASE("JsonTest: linear_interpolation_function", "[mctracer]") {
+TEST_CASE("JsonTest: linear_interpolation_function", "[merlict]") {
     auto j = R"(
     [
       {
@@ -229,7 +229,7 @@ TEST_CASE("JsonTest: linear_interpolation_function", "[mctracer]") {
     CHECK(functions.get("foo")->evaluate(4.999) == Approx(0.0).margin(2e-3));
 }
 
-TEST_CASE("JsonTest: Annulus", "[mctracer]") {
+TEST_CASE("JsonTest: Annulus", "[merlict]") {
     auto j = R"(
     {
       "type": "Annulus",
@@ -251,7 +251,7 @@ TEST_CASE("JsonTest: Annulus", "[mctracer]") {
     CHECK(0u == a->get_children()->size());
 }
 
-TEST_CASE("JsonTest: Cylinder_with_rot_and_pos", "[mctracer]") {
+TEST_CASE("JsonTest: Cylinder_with_rot_and_pos", "[merlict]") {
     auto j = R"(
     {
       "type": "Cylinder",
@@ -273,7 +273,7 @@ TEST_CASE("JsonTest: Cylinder_with_rot_and_pos", "[mctracer]") {
     CHECK(0u == a->get_children()->size());
 }
 
-TEST_CASE("JsonTest: Cylinder_with_start_pos_and_end_pos", "[mctracer]") {
+TEST_CASE("JsonTest: Cylinder_with_start_pos_and_end_pos", "[merlict]") {
     auto j = R"(
     {
       "type": "Cylinder",
@@ -292,7 +292,7 @@ TEST_CASE("JsonTest: Cylinder_with_start_pos_and_end_pos", "[mctracer]") {
     CHECK(0u == a->get_children()->size());
 }
 
-TEST_CASE("JsonTest: Triangle", "[mctracer]") {
+TEST_CASE("JsonTest: Triangle", "[merlict]") {
     auto j = R"(
     {
       "type": "Triangle",
@@ -311,7 +311,7 @@ TEST_CASE("JsonTest: Triangle", "[mctracer]") {
     CHECK(0u == a->get_children()->size());
 }
 
-TEST_CASE("JsonTest: Disc", "[mctracer]") {
+TEST_CASE("JsonTest: Disc", "[merlict]") {
     auto j = R"(
     {
       "type": "Disc",
@@ -330,7 +330,7 @@ TEST_CASE("JsonTest: Disc", "[mctracer]") {
     CHECK(0u == a->get_children()->size());
 }
 
-TEST_CASE("JsonTest: What_is_key", "[mctracer]") {
+TEST_CASE("JsonTest: What_is_key", "[merlict]") {
     auto j = R"(
     {
       "key": {
@@ -343,7 +343,7 @@ TEST_CASE("JsonTest: What_is_key", "[mctracer]") {
     CHECK(1 == j["key"]["val1"]);
 }
 
-TEST_CASE("JsonTest: PropagationConfig", "[mctracer]") {
+TEST_CASE("JsonTest: PropagationConfig", "[merlict]") {
     auto j = R"(
     {
       "max_number_of_interactions_per_photon": 1337,
@@ -356,7 +356,7 @@ TEST_CASE("JsonTest: PropagationConfig", "[mctracer]") {
     CHECK(cfg.use_multithread_when_possible);
 }
 
-TEST_CASE("JsonTest: PointSource", "[mctracer]") {
+TEST_CASE("JsonTest: PointSource", "[merlict]") {
   auto j = R"(
   {
     "point_source": {
@@ -381,7 +381,7 @@ TEST_CASE("JsonTest: PointSource", "[mctracer]") {
   }
 }
 
-TEST_CASE("JsonTest: PointSource_rotated", "[mctracer]") {
+TEST_CASE("JsonTest: PointSource_rotated", "[merlict]") {
   auto j = R"(
   {
     "point_source": {
@@ -406,7 +406,7 @@ TEST_CASE("JsonTest: PointSource_rotated", "[mctracer]") {
   }
 }
 
-TEST_CASE("JsonTest: ParallelDisc_rotated", "[mctracer]") {
+TEST_CASE("JsonTest: ParallelDisc_rotated", "[merlict]") {
   auto j = R"(
   {
     "parallel_disc": {
@@ -427,7 +427,7 @@ TEST_CASE("JsonTest: ParallelDisc_rotated", "[mctracer]") {
   }
 }
 
-TEST_CASE("JsonTest: visual_config", "[mctracer]") {
+TEST_CASE("JsonTest: visual_config", "[merlict]") {
   auto j = R"(
   {
     "max_interaction_depth": 41,
@@ -472,7 +472,7 @@ TEST_CASE("JsonTest: visual_config", "[mctracer]") {
   CHECK(cfg.photon_trajectories.radius == 0.15);
 }
 
-TEST_CASE("JsonTest: linear_interpolation_function2", "[mctracer]") {
+TEST_CASE("JsonTest: linear_interpolation_function2", "[merlict]") {
   auto j = R"(
   {
     "argument_versus_value": [

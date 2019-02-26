@@ -7,41 +7,41 @@ using namespace merlict;
 
 
 // Limits
-TEST_CASE("FunctionTest: causal_limits_correct", "[mctracer]") {
+TEST_CASE("FunctionTest: causal_limits_correct", "[merlict]") {
     CHECK_NOTHROW(function::Limits(0.0, 1.0));
 }
 
-TEST_CASE("FunctionTest: causal_limits_false", "[mctracer]") {
+TEST_CASE("FunctionTest: causal_limits_false", "[merlict]") {
     CHECK_THROWS_AS(function::Limits(0.0, -1.0), std::logic_error);
 }
 
-TEST_CASE("FunctionTest: causal_limits_lower_included", "[mctracer]") {
+TEST_CASE("FunctionTest: causal_limits_lower_included", "[merlict]") {
     function::Limits l(0.0, 1.0);
     CHECK_NOTHROW(l.assert_contains(0.0));
 }
 
-TEST_CASE("FunctionTest: causal_limits_upper_excluded", "[mctracer]") {
+TEST_CASE("FunctionTest: causal_limits_upper_excluded", "[merlict]") {
     function::Limits l(0.0, 1.0);
     CHECK_THROWS_AS(l.assert_contains(1.0), std::out_of_range);
 }
 
-TEST_CASE("FunctionTest: causal_limits_above_upper", "[mctracer]") {
+TEST_CASE("FunctionTest: causal_limits_above_upper", "[merlict]") {
     function::Limits l(0.0, 1.0);
     CHECK_THROWS_AS(l.assert_contains(1.1), std::out_of_range);
 }
 
-TEST_CASE("FunctionTest: causal_limits_below_lower", "[mctracer]") {
+TEST_CASE("FunctionTest: causal_limits_below_lower", "[merlict]") {
     function::Limits l(0.0, 1.0);
     CHECK_THROWS_AS(l.assert_contains(-0.1), std::out_of_range);
 }
 
-TEST_CASE("FunctionTest: check_limits", "[mctracer]") {
+TEST_CASE("FunctionTest: check_limits", "[merlict]") {
     function::Limits l(4.2, 133.7);
     CHECK(l.lower == 4.2);
     CHECK(l.upper == 133.7);
 }
 
-TEST_CASE("FunctionTest: default_limits", "[mctracer]") {
+TEST_CASE("FunctionTest: default_limits", "[merlict]") {
     function::Limits l;
     CHECK(l.lower == 0.0);
     CHECK(l.upper == 0.0);
@@ -50,24 +50,24 @@ TEST_CASE("FunctionTest: default_limits", "[mctracer]") {
     CHECK_THROWS_AS(l.assert_contains(+0.1), std::out_of_range);
 }
 
-TEST_CASE("FunctionTest: limit_default_range", "[mctracer]") {
+TEST_CASE("FunctionTest: limit_default_range", "[merlict]") {
     function::Limits l;
     CHECK(l.range() == 0.0);
 }
 
-TEST_CASE("FunctionTest: limit_range", "[mctracer]") {
+TEST_CASE("FunctionTest: limit_range", "[merlict]") {
     function::Limits l(0.0, 1.0);
     CHECK(l.range() == 1.0);
 }
 
-TEST_CASE("FunctionTest: polynom3_size", "[mctracer]") {
+TEST_CASE("FunctionTest: polynom3_size", "[merlict]") {
     const uint64_t num_samples = 137;
     std::vector<std::vector<double>> f = function::polynom3(
         0, 0, 1, 0, -1, 1, num_samples);
     REQUIRE(num_samples == f.size());
 }
 
-TEST_CASE("FunctionTest: polynom3_limits", "[mctracer]") {
+TEST_CASE("FunctionTest: polynom3_limits", "[merlict]") {
     const uint64_t num_samples = 137;
     std::vector<std::vector<double>> f = function::polynom3(
         0, 0, 1, 0, -1, 1, num_samples);
@@ -79,7 +79,7 @@ TEST_CASE("FunctionTest: polynom3_limits", "[mctracer]") {
 }
 
 // Sampling
-TEST_CASE("FunctionTest: sampling_table_size", "[mctracer]") {
+TEST_CASE("FunctionTest: sampling_table_size", "[merlict]") {
     function::Func1 f(
         function::polynom3(0, 0, 1, 0, -4.2, 1.337, 4096)); // f(x) = x
     std::vector<std::vector<double>> sample_xy = function::sample(f, 1000);
@@ -88,7 +88,7 @@ TEST_CASE("FunctionTest: sampling_table_size", "[mctracer]") {
         REQUIRE(sample_xy.at(i).size() == 2u);
 }
 
-TEST_CASE("FunctionTest: sampling_table_x_values", "[mctracer]") {
+TEST_CASE("FunctionTest: sampling_table_x_values", "[merlict]") {
     const unsigned int samples = 10;
     function::Func1 f(
         function::polynom3(0, 1, 0, 0, -4.2, 1.337, 4096)); // f(x) = x^2
@@ -103,7 +103,7 @@ TEST_CASE("FunctionTest: sampling_table_x_values", "[mctracer]") {
     }
 }
 
-TEST_CASE("FunctionTest: sampling_table_y_values", "[mctracer]") {
+TEST_CASE("FunctionTest: sampling_table_y_values", "[merlict]") {
     const unsigned int samples = 10;
     function::Func1 f(
         function::polynom3(0, 1, 0, 0, -4.2, 1.337, 4096)); // f(x) = x^2
@@ -117,7 +117,7 @@ TEST_CASE("FunctionTest: sampling_table_y_values", "[mctracer]") {
     }
 }
 
-TEST_CASE("FunctionTest: numerical_integration_const", "[mctracer]") {
+TEST_CASE("FunctionTest: numerical_integration_const", "[merlict]") {
     // f(x) = 1
     // F(x) = x
     function::Func1 f(
@@ -133,7 +133,7 @@ TEST_CASE("FunctionTest: numerical_integration_const", "[mctracer]") {
     CHECK(1.0 == Approx(F.evaluate(1.0-1e-6)).margin(1e-3));
 }
 
-TEST_CASE("FunctionTest: numerical_integration_linear", "[mctracer]") {
+TEST_CASE("FunctionTest: numerical_integration_linear", "[merlict]") {
     // f(x) = x
     // F(x) = 1/2 x^2
     function::Func1 f(
@@ -149,7 +149,7 @@ TEST_CASE("FunctionTest: numerical_integration_linear", "[mctracer]") {
     CHECK(0.5 == Approx(F.evaluate(1.0-1e-6)).margin(1e-3));
 }
 
-TEST_CASE("FunctionTest: numerical_inverse_limits", "[mctracer]") {
+TEST_CASE("FunctionTest: numerical_inverse_limits", "[merlict]") {
     // f(x) = 2x [0, 1)
     // f_inv(x) = 1/2x [0, 2)
     function::Func1 f(
@@ -159,7 +159,7 @@ TEST_CASE("FunctionTest: numerical_inverse_limits", "[mctracer]") {
     CHECK(2.0 == Approx(f_inv.limits.upper).margin(1e-6));
 }
 
-TEST_CASE("FunctionTest: numerical_inverse_linear", "[mctracer]") {
+TEST_CASE("FunctionTest: numerical_inverse_linear", "[merlict]") {
     // f(x) = x
     // f_inv(x) = x
     function::Func1 f(
@@ -175,7 +175,7 @@ TEST_CASE("FunctionTest: numerical_inverse_linear", "[mctracer]") {
     CHECK(1.0 == Approx(f_inv.evaluate(1.0-1e-6)).margin(1e-3));
 }
 
-TEST_CASE("FunctionTest: numerical_inverse_quadratic", "[mctracer]") {
+TEST_CASE("FunctionTest: numerical_inverse_quadratic", "[merlict]") {
     // f(x) = x^2
     // f_inv(x) = sqrt(x)
     function::Func1 f(
@@ -193,7 +193,7 @@ TEST_CASE("FunctionTest: numerical_inverse_quadratic", "[mctracer]") {
     CHECK(1.0 == Approx(f_inv.evaluate(1.0-1e-6)).margin(1e-3));
 }
 
-TEST_CASE("FunctionTest: numerical_derivative_of_constant_function", "[mctracer]") {
+TEST_CASE("FunctionTest: numerical_derivative_of_constant_function", "[merlict]") {
     // f(x) = 1
     // f'(x) = 0
     function::Func1 f(
@@ -205,7 +205,7 @@ TEST_CASE("FunctionTest: numerical_derivative_of_constant_function", "[mctracer]
         CHECK(0.0 == Approx(f_prime.evaluate(x)).margin(1e-3));
 }
 
-TEST_CASE("FunctionTest: numerical_derivative_of_linear_function", "[mctracer]") {
+TEST_CASE("FunctionTest: numerical_derivative_of_linear_function", "[merlict]") {
     // f(x) = x + 1
     // f'(x) = 1
     function::Func1 f(
@@ -217,7 +217,7 @@ TEST_CASE("FunctionTest: numerical_derivative_of_linear_function", "[mctracer]")
         CHECK(1.0 == Approx(f_prime.evaluate(x)).margin(1e-3));
 }
 
-TEST_CASE("FunctionTest: numerical_derivative_of_quadratic_function", "[mctracer]") {
+TEST_CASE("FunctionTest: numerical_derivative_of_quadratic_function", "[merlict]") {
     // f(x) = x^2
     // f'(x) = 2*x
     function::Func1 f(
@@ -229,7 +229,7 @@ TEST_CASE("FunctionTest: numerical_derivative_of_quadratic_function", "[mctracer
         CHECK(2.0*x == Approx(f_prime.evaluate(x)).margin(1e-3));
 }
 
-TEST_CASE("FunctionTest: numerical_sign_flip_of_value_of_constant_function", "[mctracer]") {
+TEST_CASE("FunctionTest: numerical_sign_flip_of_value_of_constant_function", "[merlict]") {
     // f(x) = 0
     // sign flip -> no
     function::Func1 f(
@@ -237,21 +237,21 @@ TEST_CASE("FunctionTest: numerical_sign_flip_of_value_of_constant_function", "[m
     CHECK(!function::value_flips_sign(f));
 }
 
-TEST_CASE("FunctionTest: numerical_sign_flip_of_value_of_linear_function", "[mctracer]") {
+TEST_CASE("FunctionTest: numerical_sign_flip_of_value_of_linear_function", "[merlict]") {
     // f(x) = x [-1, 1)
     // sign flip -> yes
     function::Func1 f(function::polynom3(0, 0, 1, 0, -1, 1, 4096));
     CHECK(function::value_flips_sign(f));
 }
 
-TEST_CASE("FunctionTest: numerical_sign_flip_of_value_of_quadratic_function", "[mctracer]") {
+TEST_CASE("FunctionTest: numerical_sign_flip_of_value_of_quadratic_function", "[merlict]") {
     // f(x) = x^2 - 1 [-1, 1)
     // sign flip -> yes
     function::Func1 f(function::polynom3(0, 1, 0, -1, -1, 1, 4096));
     CHECK(function::value_flips_sign(f));
 }
 
-TEST_CASE("FunctionTest: numerical_sign_flip_of_value_of_quadratic_function_no", "[mctracer]") {
+TEST_CASE("FunctionTest: numerical_sign_flip_of_value_of_quadratic_function_no", "[merlict]") {
     // f(x) = x^2 [0, 1)
     // sign flip -> no
     function::Func1 f(function::polynom3(0, 1, 0, 0, 0, 1, 4096));
@@ -259,7 +259,7 @@ TEST_CASE("FunctionTest: numerical_sign_flip_of_value_of_quadratic_function_no",
 }
 
 
-TEST_CASE("FunctionTest: mean", "[mctracer]") {
+TEST_CASE("FunctionTest: mean", "[merlict]") {
     // f(x) = x [0, 1)
     // sign flip -> no
     function::Func1 f(function::polynom3(0, 0, 1, 0, 0, 1, 4096));

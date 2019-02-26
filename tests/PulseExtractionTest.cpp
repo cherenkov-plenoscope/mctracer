@@ -11,7 +11,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("PulseExtractionTest: arrival_time_slices_below_next_channel_marker", "[mctracer]") {
+TEST_CASE("PulseExtractionTest: arrival_time_slices_below_next_channel_marker", "[merlict]") {
     const float time_slice_duration = .5e-9;
     vector<vector<signal_processing::ExtractedPulse>> response;
     vector<signal_processing::ExtractedPulse> read_out_channel;
@@ -33,7 +33,7 @@ TEST_CASE("PulseExtractionTest: arrival_time_slices_below_next_channel_marker", 
     CHECK(response_back.photon_stream.size() == response.size());
 }
 
-TEST_CASE("PulseExtractionTest: truncate_invalid_arrival_times", "[mctracer]") {
+TEST_CASE("PulseExtractionTest: truncate_invalid_arrival_times", "[merlict]") {
     random::Mt19937 prng(0);
     const double time_slice_duration = .5e-9;
     const double arrival_time_std = 0.0;
@@ -83,7 +83,7 @@ TEST_CASE("PulseExtractionTest: truncate_invalid_arrival_times", "[mctracer]") {
     CHECK(signal_processing::NUMBER_TIME_SLICES == number_of_passing_photons);
 }
 
-TEST_CASE("PulseExtractionTest: arrival_time_std", "[mctracer]") {
+TEST_CASE("PulseExtractionTest: arrival_time_std", "[merlict]") {
     random::Mt19937 prng(0);
     const double time_slice_duration = .5e-9;
     const double arrival_time_std = 5e-9;

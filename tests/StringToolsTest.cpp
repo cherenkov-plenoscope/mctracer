@@ -7,7 +7,7 @@ using std::vector;
 
 
 
-TEST_CASE("StringToolsTest: tokenize_text_several_delimiters", "[mctracer]") {
+TEST_CASE("StringToolsTest: tokenize_text_several_delimiters", "[merlict]") {
     string text = "hans klaus\tpeter";
     vector<string> tokens =
         txt::tokenize_text_using_either_one_of_delimiters(text, " \t");
@@ -27,14 +27,14 @@ TEST_CASE("StringToolsTest: tokenize_text_several_delimiters", "[mctracer]") {
     CHECK(tokens.at(1) == "peter");
 }
 
-TEST_CASE("StringToolsTest: tokenize_epmty_text", "[mctracer]") {
+TEST_CASE("StringToolsTest: tokenize_epmty_text", "[merlict]") {
     string text = "";
     vector<string> tokens =
         txt::tokenize_text_using_either_one_of_delimiters(text, " \t");
     CHECK(tokens.size() == 0u);
 }
 
-TEST_CASE("StringToolsTest: tokenize_text_delimiter_in_the_end", "[mctracer]") {
+TEST_CASE("StringToolsTest: tokenize_text_delimiter_in_the_end", "[merlict]") {
     string text = "hans peter ";
     vector<string> tokens =
         txt::tokenize_text_using_either_one_of_delimiters(text, " \t");
@@ -43,7 +43,7 @@ TEST_CASE("StringToolsTest: tokenize_text_delimiter_in_the_end", "[mctracer]") {
     CHECK(tokens.at(1) == "peter");
 }
 
-TEST_CASE("StringToolsTest: tokenize_text_several_same_delimiters", "[mctracer]") {
+TEST_CASE("StringToolsTest: tokenize_text_several_same_delimiters", "[merlict]") {
     string text = "hans   peter";
     vector<string> tokens =
         txt::tokenize_text_using_either_one_of_delimiters(text, " \t");
@@ -52,7 +52,7 @@ TEST_CASE("StringToolsTest: tokenize_text_several_same_delimiters", "[mctracer]"
     CHECK(tokens.at(1) == "peter");
 }
 
-TEST_CASE("StringToolsTest: tokenize_text_several_different_delimiters", "[mctracer]") {
+TEST_CASE("StringToolsTest: tokenize_text_several_different_delimiters", "[merlict]") {
     string text = "hans \t peter";
     vector<string> tokens =
         txt::tokenize_text_using_either_one_of_delimiters(text, " \t");
@@ -61,7 +61,7 @@ TEST_CASE("StringToolsTest: tokenize_text_several_different_delimiters", "[mctra
     CHECK(tokens.at(1) == "peter");
 }
 
-TEST_CASE("StringToolsTest: is_ending", "[mctracer]") {
+TEST_CASE("StringToolsTest: is_ending", "[merlict]") {
     CHECK(txt::is_ending("hans.xml", ".xml"));
     CHECK(!txt::is_ending("hans.xml", ".XML"));
     CHECK(!txt::is_ending("blabla_text_bla", ".xml"));
@@ -75,7 +75,7 @@ TEST_CASE("StringToolsTest: is_ending", "[mctracer]") {
     CHECK(txt::is_ending("abc\n", "\n"));
 }
 
-TEST_CASE("StringToolsTest: is_equal", "[mctracer]") {
+TEST_CASE("StringToolsTest: is_equal", "[merlict]") {
     CHECK(txt::is_equal("", ""));
     CHECK(!txt::is_equal("a", "b"));
     CHECK(txt::is_equal("a", "a"));
@@ -88,7 +88,7 @@ TEST_CASE("StringToolsTest: is_equal", "[mctracer]") {
     CHECK(!txt::is_equal(" Auto", "Auto"));
 }
 
-TEST_CASE("StringToolsTest: cut_leading_token", "[mctracer]") {
+TEST_CASE("StringToolsTest: cut_leading_token", "[merlict]") {
     string names = "Hans,Peter,Klaus";
     string first_name =
     txt::cut_leading_token_infront_of_delimiter(&names, ',');
@@ -125,7 +125,7 @@ TEST_CASE("StringToolsTest: cut_leading_token", "[mctracer]") {
     CHECK(names == "Peter,Klaus");
 }
 
-TEST_CASE("StringToolsTest: contains_char", "[mctracer]") {
+TEST_CASE("StringToolsTest: contains_char", "[merlict]") {
     string text = "Hans Peter is an awesome engineer who build AMS!";
     CHECK(txt::string_contains_char(text, 'H'));
     CHECK(txt::string_contains_char(text, 'A'));
@@ -135,7 +135,7 @@ TEST_CASE("StringToolsTest: contains_char", "[mctracer]") {
     CHECK(!txt::string_contains_char(text, '*'));
 }
 
-TEST_CASE("StringToolsTest: place_infront_of_each_line", "[mctracer]") {
+TEST_CASE("StringToolsTest: place_infront_of_each_line", "[merlict]") {
     std::stringstream out;
     out << "Dear Customer,\n";
     out << "\n";
@@ -155,7 +155,7 @@ TEST_CASE("StringToolsTest: place_infront_of_each_line", "[mctracer]") {
     CHECK(txt::is_equal(expected_out.str(), result));
 }
 
-TEST_CASE("StringToolsTest: fill_with_whitespaces_until_column", "[mctracer]") {
+TEST_CASE("StringToolsTest: fill_with_whitespaces_until_column", "[merlict]") {
     std::string hi = "hallo world";
     std::string ho =
         txt::fill_up_text_with_whitespaces_until_column(hi, 80);
@@ -170,7 +170,7 @@ TEST_CASE("StringToolsTest: fill_with_whitespaces_until_column", "[mctracer]") {
     CHECK(strfull.length() == (19u*3u));
 }
 
-TEST_CASE("StringToolsTest: strip_leading_and_tailing_whitespaces", "[mctracer]") {
+TEST_CASE("StringToolsTest: strip_leading_and_tailing_whitespaces", "[merlict]") {
     std::string no_whitespaces = "no_whitespaces";
     CHECK(txt::is_equal(no_whitespaces, txt::strip_whitespaces(no_whitespaces)));
     std::string whitespaces_in_between = "whitespaces in between";
@@ -181,7 +181,7 @@ TEST_CASE("StringToolsTest: strip_leading_and_tailing_whitespaces", "[mctracer]"
     CHECK(txt::is_equal("trailing_ws", txt::strip_whitespaces(trailing_ws)));
 }
 
-TEST_CASE("StringToolsTest: to_double", "[mctracer]") {
+TEST_CASE("StringToolsTest: to_double", "[merlict]") {
     CHECK(txt::to_double("42.1337") == 42.1337);
     CHECK(txt::to_double("1337") == 1337);
     CHECK(txt::to_double("1") == 1u);
@@ -197,7 +197,7 @@ TEST_CASE("StringToolsTest: to_double", "[mctracer]") {
     CHECK_THROWS_AS(txt::to_double(".1 442"), std::invalid_argument);
 }
 
-TEST_CASE("StringToolsTest: to_bool", "[mctracer]") {
+TEST_CASE("StringToolsTest: to_bool", "[merlict]") {
     CHECK(txt::to_bool("true"));
     CHECK(txt::to_bool("TRUE"));
     CHECK(!txt::to_bool("false"));
@@ -212,7 +212,7 @@ TEST_CASE("StringToolsTest: to_bool", "[mctracer]") {
     CHECK_THROWS_AS(txt::to_bool(""), std::invalid_argument);
 }
 
-TEST_CASE("StringToolsTest: to_int", "[mctracer]") {
+TEST_CASE("StringToolsTest: to_int", "[merlict]") {
     CHECK(txt::to_int("1") == 1);
     CHECK(txt::to_int("12") == 12);
     CHECK(txt::to_int("1337") == 1337);
@@ -226,7 +226,7 @@ TEST_CASE("StringToolsTest: to_int", "[mctracer]") {
     CHECK_THROWS_AS(txt::to_int("6p6"), std::invalid_argument);
 }
 
-TEST_CASE("StringToolsTest: to_Vec3", "[mctracer]") {
+TEST_CASE("StringToolsTest: to_Vec3", "[merlict]") {
     CHECK(txt::to_Vec3("[1,2,3]") == Vec3(1, 2, 3));
     CHECK(txt::to_Vec3("[1.2,3.4,5.6]") == Vec3(1.2, 3.4, 5.6));
     CHECK(txt::to_Vec3("[ 1.2,3.4,5.6]") == Vec3(1.2, 3.4, 5.6));

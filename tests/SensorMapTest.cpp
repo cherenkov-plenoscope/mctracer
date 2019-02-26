@@ -7,14 +7,14 @@ using namespace merlict;
 
 
 
-TEST_CASE("SensorMapTest: init_one", "[mctracer]") {
+TEST_CASE("SensorMapTest: init_one", "[merlict]") {
     SensorMap smap;
     Frame hans;
     smap.add(0u, &hans);
     CHECK(1u == smap.sensors.size());
 }
 
-TEST_CASE("SensorMapTest: init_two", "[mctracer]") {
+TEST_CASE("SensorMapTest: init_two", "[merlict]") {
     SensorMap smap;
     Frame hans;
     smap.add(0u, &hans);
@@ -22,13 +22,13 @@ TEST_CASE("SensorMapTest: init_two", "[mctracer]") {
     CHECK(2u == smap.sensors.size());
 }
 
-TEST_CASE("SensorMapTest: add_zeroth_with_id_uneq_zero", "[mctracer]") {
+TEST_CASE("SensorMapTest: add_zeroth_with_id_uneq_zero", "[merlict]") {
     SensorMap smap;
     Frame hans;
     CHECK_THROWS_AS(smap.add(1u, &hans), std::invalid_argument);
 }
 
-TEST_CASE("SensorMapTest: add_first_with_id_uneq_one", "[mctracer]") {
+TEST_CASE("SensorMapTest: add_first_with_id_uneq_one", "[merlict]") {
     SensorMap smap;
     Frame hans;
     smap.add(0u, &hans);

@@ -8,13 +8,13 @@ namespace raf = RayAndFrame;
 
 
 
-TEST_CASE("RayAndFrameBoundingSphereTest: frame_has_bounding_sphere", "[mctracer]") {
+TEST_CASE("RayAndFrameBoundingSphereTest: frame_has_bounding_sphere", "[merlict]") {
     Sphere sphere("sphere", VEC3_ORIGIN, ROT3_UNITY);
     sphere.set_radius(1.0);
     CHECK(sphere.get_bounding_sphere_radius() == 1.0);
 }
 
-TEST_CASE("RayAndFrameBoundingSphereTest: support_inside_bounding_sphere", "[mctracer]") {
+TEST_CASE("RayAndFrameBoundingSphereTest: support_inside_bounding_sphere", "[merlict]") {
     //                 __-----__
     //                /         \                                             //
     //              /             \                                           //
@@ -30,7 +30,7 @@ TEST_CASE("RayAndFrameBoundingSphereTest: support_inside_bounding_sphere", "[mct
     CHECK(raf::ray_support_inside_frames_bounding_sphere(&ray, &sphere));
 }
 
-TEST_CASE("RayAndFrameBoundingSphereTest: support_outside_bounding_sphere", "[mctracer]") {
+TEST_CASE("RayAndFrameBoundingSphereTest: support_outside_bounding_sphere", "[merlict]") {
     //                 __-----__
     //                /         \                                             //
     //              /             \                                           //
@@ -46,7 +46,7 @@ TEST_CASE("RayAndFrameBoundingSphereTest: support_outside_bounding_sphere", "[mc
     CHECK(!raf::ray_support_inside_frames_bounding_sphere(&ray, &sphere));
 }
 
-TEST_CASE("RayAndFrameBoundingSphereTest: frontal_hit", "[mctracer]") {
+TEST_CASE("RayAndFrameBoundingSphereTest: frontal_hit", "[merlict]") {
     //                 __-----__
     //                /         \                                             //
     //              /             \                                           //
@@ -62,7 +62,7 @@ TEST_CASE("RayAndFrameBoundingSphereTest: frontal_hit", "[mctracer]") {
     CHECK(raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
 }
 
-TEST_CASE("RayAndFrameBoundingSphereTest: no_hit", "[mctracer]") {
+TEST_CASE("RayAndFrameBoundingSphereTest: no_hit", "[merlict]") {
     //                 __-----__
     //                /         \                                             //
     //              /             \                                           //
@@ -78,7 +78,7 @@ TEST_CASE("RayAndFrameBoundingSphereTest: no_hit", "[mctracer]") {
     CHECK(!raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
 }
 
-TEST_CASE("RayAndFrameBoundingSphereTest: hit_inside_bounding_sphere", "[mctracer]") {
+TEST_CASE("RayAndFrameBoundingSphereTest: hit_inside_bounding_sphere", "[merlict]") {
     //                 __-----__
     //                /         \                                             //
     //              /             \                                           //
@@ -94,7 +94,7 @@ TEST_CASE("RayAndFrameBoundingSphereTest: hit_inside_bounding_sphere", "[mctrace
     CHECK(raf::ray_has_intersection_with_bounding_sphere_of(&ray, &sphere));
 }
 
-TEST_CASE("RayAndFrameBoundingSphereTest: frontal_hits", "[mctracer]") {
+TEST_CASE("RayAndFrameBoundingSphereTest: frontal_hits", "[merlict]") {
     //    _________\                                                          //
     // (-5,+2.0,0) /
     //    .           __-----__
@@ -123,7 +123,7 @@ TEST_CASE("RayAndFrameBoundingSphereTest: frontal_hits", "[mctracer]") {
 
 
 
-TEST_CASE("RayAndFrameTest: transform_into_unit_frame", "[mctracer]") {
+TEST_CASE("RayAndFrameTest: transform_into_unit_frame", "[merlict]") {
     Frame frame;
     frame.set_name_pos_rot("frame", VEC3_ORIGIN, ROT3_UNITY);
     frame.init_tree_based_on_mother_child_relations();
@@ -138,7 +138,7 @@ TEST_CASE("RayAndFrameTest: transform_into_unit_frame", "[mctracer]") {
     CHECK(VEC3_UNIT_Z == ray_t.direction());
 }
 
-TEST_CASE("RayAndFrameTest: transform_into_translated_frame", "[mctracer]") {
+TEST_CASE("RayAndFrameTest: transform_into_translated_frame", "[merlict]") {
     Frame frame;
     frame.set_name_pos_rot("frame", Vec3(0.0, 0.0, 13.37), ROT3_UNITY);
     frame.init_tree_based_on_mother_child_relations();
@@ -153,7 +153,7 @@ TEST_CASE("RayAndFrameTest: transform_into_translated_frame", "[mctracer]") {
     CHECK(VEC3_UNIT_Z == ray_t.direction());
 }
 
-TEST_CASE("RayAndFrameTest: transform_ray_in_z_into_frame_rotated_in_z", "[mctracer]") {
+TEST_CASE("RayAndFrameTest: transform_ray_in_z_into_frame_rotated_in_z", "[merlict]") {
     Frame frame;
     frame.set_name_pos_rot("frame", VEC3_ORIGIN, Rot3(0.0, 0.0, 0.5*M_PI));
     frame.init_tree_based_on_mother_child_relations();
@@ -168,7 +168,7 @@ TEST_CASE("RayAndFrameTest: transform_ray_in_z_into_frame_rotated_in_z", "[mctra
     CHECK(VEC3_UNIT_Z == ray_t.direction());
 }
 
-TEST_CASE("RayAndFrameTest: transform_ray_into_rotated_frame", "[mctracer]") {
+TEST_CASE("RayAndFrameTest: transform_ray_into_rotated_frame", "[merlict]") {
     Frame frame;
     frame.set_name_pos_rot("frame", VEC3_ORIGIN, Rot3(0.0, 0.0, 0.5*M_PI));
     frame.init_tree_based_on_mother_child_relations();
@@ -183,7 +183,7 @@ TEST_CASE("RayAndFrameTest: transform_ray_into_rotated_frame", "[mctracer]") {
     CHECK(VEC3_UNIT_Y == ray_t.direction());
 }
 
-TEST_CASE("RayAndFrameTest: causal_intersection", "[mctracer]") {
+TEST_CASE("RayAndFrameTest: causal_intersection", "[merlict]") {
     Frame spheres_in_a_row;
     spheres_in_a_row.set_name_pos_rot("spheres", VEC3_ORIGIN, ROT3_UNITY);
 

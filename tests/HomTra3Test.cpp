@@ -7,7 +7,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("HomTra3Test: default_is_unit_trafo", "[mctracer]") {
+TEST_CASE("HomTra3Test: default_is_unit_trafo", "[merlict]") {
     HomTra3 trafo;
     HomTra3 unit_frafo;
     unit_frafo.set_transformation(
@@ -17,13 +17,13 @@ TEST_CASE("HomTra3Test: default_is_unit_trafo", "[mctracer]") {
     CHECK(trafo == unit_frafo);
 }
 
-TEST_CASE("HomTra3Test: unit_trafo_has_no_translation", "[mctracer]") {
+TEST_CASE("HomTra3Test: unit_trafo_has_no_translation", "[merlict]") {
     HomTra3 trafo;
     // translation should be zero
     CHECK(trafo.get_translation() == VEC3_ORIGIN);
 }
 
-TEST_CASE("HomTra3Test: unit_trafo_has_no_rotation", "[mctracer]") {
+TEST_CASE("HomTra3Test: unit_trafo_has_no_rotation", "[merlict]") {
     HomTra3 trafo;
     // and rotation should be unity as well
     Vec3 unit_x(1.0, 0.0, 0.0);
@@ -34,14 +34,14 @@ TEST_CASE("HomTra3Test: unit_trafo_has_no_rotation", "[mctracer]") {
     CHECK(trafo.get_transformed_orientation(unit_z) == unit_z);
 }
 
-TEST_CASE("HomTra3Test: unit_trafo_is_its_own_inverse", "[mctracer]") {
+TEST_CASE("HomTra3Test: unit_trafo_is_its_own_inverse", "[merlict]") {
     HomTra3 trafo;
     HomTra3 inverse_trafo = trafo;
     inverse_trafo.inverse();
     CHECK(trafo == inverse_trafo);
 }
 
-TEST_CASE("HomTra3Test: translation_without_rotation", "[mctracer]") {
+TEST_CASE("HomTra3Test: translation_without_rotation", "[merlict]") {
     Vec3 translation(0.0, 0.0, 133.7);
     Rot3 rotation(0.0, 0.0, 0.0);
     HomTra3 frame1_to_frame2;
@@ -54,7 +54,7 @@ TEST_CASE("HomTra3Test: translation_without_rotation", "[mctracer]") {
     CHECK(frame2_to_frame1.get_transformed_position(my_vector_in_frame2) == my_vector_in_frame1);
 }
 
-TEST_CASE("HomTra3Test: trans_pos_forth_and_back_only_translation_component_set", "[mctracer]") {
+TEST_CASE("HomTra3Test: trans_pos_forth_and_back_only_translation_component_set", "[merlict]") {
     Vec3 t(0.0, 0.0, 133.7);
     Rot3 r(0.0, 0.0, 0.0);
     HomTra3 homtra;
@@ -70,7 +70,7 @@ TEST_CASE("HomTra3Test: trans_pos_forth_and_back_only_translation_component_set"
     CHECK(ux_original.z == ux_back.z);
 }
 
-TEST_CASE("HomTra3Test: transform_position_forth_and_back_full_set", "[mctracer]") {
+TEST_CASE("HomTra3Test: transform_position_forth_and_back_full_set", "[merlict]") {
     Vec3 t(0.0, 0.0, 133.7);
     Rot3 r(0.0, M_PI, 0.0);
     HomTra3 homtra;
@@ -86,7 +86,7 @@ TEST_CASE("HomTra3Test: transform_position_forth_and_back_full_set", "[mctracer]
     CHECK(ux_original.z == ux_back.z);
 }
 
-TEST_CASE("HomTra3Test: trans_orientation_forth_and_back_only_rot_component_set", "[mctracer]") {
+TEST_CASE("HomTra3Test: trans_orientation_forth_and_back_only_rot_component_set", "[merlict]") {
     Vec3 t(0.0, 0.0, 0.0);
     Rot3 r(0.0, M_PI, 0.0);
     HomTra3 homtra;

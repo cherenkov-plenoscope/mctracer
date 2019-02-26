@@ -33,7 +33,7 @@ struct SphereIntersectionTest {
     }
 };
 
-TEST_CASE("SphereIntersectionTest: frontal", "[mctracer]") {
+TEST_CASE("SphereIntersectionTest: frontal", "[merlict]") {
     SphereIntersectionTest st;
     double x_pos = -5.0;
     Vec3 support(x_pos, 0.0, 0.0);
@@ -47,7 +47,7 @@ TEST_CASE("SphereIntersectionTest: frontal", "[mctracer]") {
     CHECK(P.get_intersection_at(1).surface_normal_in_object_frame() == VEC3_UNIT_X*(-1));
 }
 
-TEST_CASE("SphereIntersectionTest: emmitting_close_above_surface_tangential", "[mctracer]") {
+TEST_CASE("SphereIntersectionTest: emmitting_close_above_surface_tangential", "[merlict]") {
     SphereIntersectionTest st;
     Vec3 support(0.0, 0.0, 1.0+1e-9);
     Vec3 direction(1.0, 0.0, 0.0);
@@ -56,7 +56,7 @@ TEST_CASE("SphereIntersectionTest: emmitting_close_above_surface_tangential", "[
     REQUIRE(P.get_final_interaction_type() == absorption_in_void);
 }
 
-TEST_CASE("SphereIntersectionTest: emmitting_close_above_surface_straigtht_away", "[mctracer]") {
+TEST_CASE("SphereIntersectionTest: emmitting_close_above_surface_straigtht_away", "[merlict]") {
     SphereIntersectionTest st;
     Vec3 support(0.0, 0.0, 1.0+1e-9);
     Vec3 direction(0.0, 0.0, 1.0);
@@ -65,7 +65,7 @@ TEST_CASE("SphereIntersectionTest: emmitting_close_above_surface_straigtht_away"
     REQUIRE(P.get_final_interaction_type() == absorption_in_void);
 }
 
-TEST_CASE("SphereIntersectionTest: tangential_intersection", "[mctracer]") {
+TEST_CASE("SphereIntersectionTest: tangential_intersection", "[merlict]") {
     SphereIntersectionTest st;
     Vec3 support(-5.0, 0.0, 1.0);
     Vec3 direction(1.0, 0.0, 0.0);
@@ -76,7 +76,7 @@ TEST_CASE("SphereIntersectionTest: tangential_intersection", "[mctracer]") {
     CHECK(0.0 == Approx(normal.distance_to(P.get_intersection_at(1).surface_normal_in_object_frame())).margin(1e-12));
 }
 
-TEST_CASE("SphereIntersectionTest: ray_frontal_intersection", "[mctracer]") {
+TEST_CASE("SphereIntersectionTest: ray_frontal_intersection", "[merlict]") {
     SphereIntersectionTest st;
     Ray ray_with_intersection(Vec3(0.0, 0.0, -2.0), Vec3(0.0, 0.0, 1.0));
     vector<Intersection> intersections;
@@ -88,7 +88,7 @@ TEST_CASE("SphereIntersectionTest: ray_frontal_intersection", "[mctracer]") {
     CHECK(intersections.front().surface_normal_in_object_frame() == Vec3(0.0, 0.0, -1.0));
 }
 
-TEST_CASE("SphereIntersectionTest: ray_intersection_but_no_causal_intersection", "[mctracer]") {
+TEST_CASE("SphereIntersectionTest: ray_intersection_but_no_causal_intersection", "[merlict]") {
     SphereIntersectionTest st;
     Ray ray_without_intersection(Vec3(0.0, 0.0, +2.0), Vec3(0.0, 0.0, 1.0));
     vector<Intersection> intersections;
@@ -98,7 +98,7 @@ TEST_CASE("SphereIntersectionTest: ray_intersection_but_no_causal_intersection",
     CHECK(intersections.empty());
 }
 
-TEST_CASE("SphereIntersectionTest: ray_completely_outside_of_sphere", "[mctracer]") {
+TEST_CASE("SphereIntersectionTest: ray_completely_outside_of_sphere", "[merlict]") {
     SphereIntersectionTest st;
     Ray ray_outside(Vec3(5.0, 0.0, 0.0), Vec3(0.0, 0.0, 1.0));
     vector<Intersection> intersections;
@@ -107,7 +107,7 @@ TEST_CASE("SphereIntersectionTest: ray_completely_outside_of_sphere", "[mctracer
     CHECK(intersections.empty());
 }
 
-TEST_CASE("SphereIntersectionTest: ray_starts_inside_sphere", "[mctracer]") {
+TEST_CASE("SphereIntersectionTest: ray_starts_inside_sphere", "[merlict]") {
     SphereIntersectionTest st;
     Ray ray_inside(VEC3_ORIGIN, Vec3(0.0, 0.0, 1.0));
     vector<Intersection> intersections;
@@ -119,7 +119,7 @@ TEST_CASE("SphereIntersectionTest: ray_starts_inside_sphere", "[mctracer]") {
     CHECK(intersections.front().surface_normal_in_object_frame() == Vec3(0.0, 0.0, +1.0));
 }
 
-TEST_CASE("SphereIntersectionTest: ray_tangents_sphere", "[mctracer]") {
+TEST_CASE("SphereIntersectionTest: ray_tangents_sphere", "[merlict]") {
     SphereIntersectionTest st;
     Ray ray_inside(Vec3(1.0, 0.0, -2.0), Vec3(0.0, 0.0, 1.0));
     vector<Intersection> intersections;

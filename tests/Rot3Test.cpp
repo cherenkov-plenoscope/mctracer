@@ -7,7 +7,7 @@ using namespace merlict;
 
 
 
-TEST_CASE("Rot3Test: ctor_xyz_mode", "[mctracer]") {
+TEST_CASE("Rot3Test: ctor_xyz_mode", "[merlict]") {
   const double x = -3.141;
   const double y = 2.0;
   const double z = 1.0;
@@ -18,7 +18,7 @@ TEST_CASE("Rot3Test: ctor_xyz_mode", "[mctracer]") {
   CHECK(r.uses_xyz_angels());
 }
 
-TEST_CASE("Rot3Test: ctor_axis_mode", "[mctracer]") {
+TEST_CASE("Rot3Test: ctor_axis_mode", "[merlict]") {
   Vec3 v(0.0, 0.0, 1.0);
   double angle = 1.52;
   Rot3 p(v, angle);
@@ -29,7 +29,7 @@ TEST_CASE("Rot3Test: ctor_axis_mode", "[mctracer]") {
   CHECK(!p.uses_xyz_angels());
 }
 
-TEST_CASE("Rot3Test: set_xyz_mode", "[mctracer]") {
+TEST_CASE("Rot3Test: set_xyz_mode", "[merlict]") {
   const double x = -3.141;
   const double y = -2.0;
   const double z = 1.0000;
@@ -40,7 +40,7 @@ TEST_CASE("Rot3Test: set_xyz_mode", "[mctracer]") {
   CHECK(r.uses_xyz_angels());
 }
 
-TEST_CASE("Rot3Test: set_axis_mode", "[mctracer]") {
+TEST_CASE("Rot3Test: set_axis_mode", "[merlict]") {
   Vec3 v(0.0, 0.0, 1.0);
   double  angle = 1.52;
   Rot3 p; p.set(v, angle);
@@ -51,7 +51,7 @@ TEST_CASE("Rot3Test: set_axis_mode", "[mctracer]") {
   CHECK(!p.uses_xyz_angels());
 }
 
-TEST_CASE("Rot3Test: SineAndCosineWhenSetXYZ", "[mctracer]") {
+TEST_CASE("Rot3Test: SineAndCosineWhenSetXYZ", "[merlict]") {
   const double x = -3.141;
   const double y = -2.0;
   const double z = 1.0000;
@@ -64,7 +64,7 @@ TEST_CASE("Rot3Test: SineAndCosineWhenSetXYZ", "[mctracer]") {
   CHECK(r.cosRz() == cos(z));
 }
 
-TEST_CASE("Rot3Test: zoro_rot_angle", "[mctracer]") {
+TEST_CASE("Rot3Test: zoro_rot_angle", "[merlict]") {
   Rot3 r(VEC3_ORIGIN, 0.0);
   CHECK(r == ROT3_UNITY);
   Rot3 s(VEC3_UNIT_Z, 0.0);
