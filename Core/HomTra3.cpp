@@ -2,7 +2,7 @@
 #include <math.h>
 #include <sstream>
 #include <iomanip>
-#include "Core/HomTra3.h"
+#include "merlict/HomTra3.h"
 
 using std::stringstream;
 using std::string;

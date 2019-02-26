@@ -2,7 +2,7 @@
 #include <vector>
 #include "catch.hpp"
 #include "signal_processing/PhotoElectricConverter.h"
-#include "Core/Histogram1.h"
+#include "merlict/Histogram1.h"
 using std::vector;
 using namespace relleums;
 

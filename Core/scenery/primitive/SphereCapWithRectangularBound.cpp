@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/primitive/SphereCapWithRectangularBound.h"
+#include "merlict/scenery/primitive/SphereCapWithRectangularBound.h"
 #include <sstream>
 #include <math.h>
 using std::string;

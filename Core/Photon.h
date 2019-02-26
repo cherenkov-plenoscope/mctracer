@@ -11,7 +11,7 @@ class Propagator;
 } // namespace relleums
 
 #include <string>
-#include "Core/RayForPropagation.h"
+#include "merlict/RayForPropagation.h"
 #include "FresnelRefractionAndReflection.h"
 
 namespace relleums {

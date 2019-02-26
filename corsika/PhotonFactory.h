@@ -3,8 +3,8 @@
 #define CORSIKA_PHOTONFACTORY_H_
 
 #include <array>
-#include "Core/Photon.h"
-#include "Core/random/random.h"
+#include "merlict/Photon.h"
+#include "merlict/random/random.h"
 
 namespace relleums {
 

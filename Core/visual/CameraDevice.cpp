@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/visual/CameraDevice.h"
+#include "merlict/visual/CameraDevice.h"
 #include <exception>
-#include "Core/mctracer.h"
+#include "merlict/mctracer.h"
 
 namespace relleums {
 namespace visual {

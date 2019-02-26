@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/PropagationConfig.h"
+#include "merlict/PropagationConfig.h"
 
 namespace relleums {
 

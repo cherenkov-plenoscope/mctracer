@@ -1,8 +1,8 @@
 // Copyright 2016 Sebastian A. Mueller
 #include "plenoscope/night_sky_background/Light.h"
 #include <sstream>
-#include "Core/PhysicalConstants.h"
-#include "Core/tools.h"
+#include "merlict/PhysicalConstants.h"
+#include "merlict/tools.h"
 #include "NightSkyBackground.h"
 
 using namespace relleums;

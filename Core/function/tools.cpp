@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/function/function.h"
+#include "merlict/function/function.h"
 #include <math.h>
 #include <vector>
 using std::vector;

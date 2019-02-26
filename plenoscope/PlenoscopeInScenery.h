@@ -3,7 +3,7 @@
 #define PLENOSCOPE_PLENOSCOPEINSCENERY_H_
 
 #include "plenoscope/light_field_sensor/LightFieldSensor.h"
-#include "Core/mctracer.h"
+#include "merlict/mctracer.h"
 
 namespace plenoscope {
 

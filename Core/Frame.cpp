@@ -1,14 +1,14 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/Frame.h"
+#include "merlict/Frame.h"
 #include "Frames.h"
 #include <set>
 #include <exception>
 #include <sstream>
 #include <iostream>
-#include "Core/Ray.h"
-#include "Core/Intersection.h"
-#include "Core/tools.h"
-#include "Core/txt.h"
+#include "merlict/Ray.h"
+#include "merlict/Intersection.h"
+#include "merlict/tools.h"
+#include "merlict/txt.h"
 using std::string;
 using std::stringstream;
 using std::vector;

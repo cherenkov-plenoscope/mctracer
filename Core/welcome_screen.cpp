@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/welcome_screen.h"
+#include "merlict/welcome_screen.h"
 #include <sstream>
 
 namespace relleums {

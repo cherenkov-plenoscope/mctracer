@@ -2,7 +2,7 @@
 #ifndef VISUAL_CAMERAOPERATOR_VERBOSITY_H_
 #define VISUAL_CAMERAOPERATOR_VERBOSITY_H_
 
-#include "Core/visual/CameraDevice.h"
+#include "merlict/visual/CameraDevice.h"
 
 namespace relleums {
 namespace visual {

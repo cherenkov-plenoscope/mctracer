@@ -2,7 +2,7 @@
 #include "plenoscope/light_field_sensor/Factory.h"
 #include <math.h>
 #include <vector>
-#include "Core/mctracer.h"
+#include "merlict/mctracer.h"
 
 using std::vector;
 using std::string;

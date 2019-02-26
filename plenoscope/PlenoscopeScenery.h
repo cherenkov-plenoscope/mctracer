@@ -3,7 +3,7 @@
 #define PLENOSCOPE_PLENOSCOPESCENERY_H_
 
 #include <vector>
-#include "Core/mctracer.h"
+#include "merlict/mctracer.h"
 #include "plenoscope/PlenoscopeInScenery.h"
 
 namespace plenoscope {

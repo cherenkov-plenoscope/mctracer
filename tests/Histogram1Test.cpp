@@ -1,9 +1,9 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "Core/Histogram1.h"
-#include "Core/random/random.h"
-#include "Core/tools.h"
-#include "Core/numeric.h"
+#include "merlict/Histogram1.h"
+#include "merlict/random/random.h"
+#include "merlict/tools.h"
+#include "merlict/numeric.h"
 using std::vector;
 using namespace relleums;
 

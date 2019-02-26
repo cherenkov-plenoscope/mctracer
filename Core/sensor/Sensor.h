@@ -4,7 +4,7 @@
 
 #include <vector>
 #include <string>
-#include "Core/Photon.h"
+#include "merlict/Photon.h"
 #include "PhotonArrival.h"
 
 namespace relleums {

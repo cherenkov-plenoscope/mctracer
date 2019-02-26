@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/geometry/SurfaceWithOuterPrismBound.h"
+#include "merlict/scenery/geometry/SurfaceWithOuterPrismBound.h"
 using std::vector;
 
 namespace relleums {

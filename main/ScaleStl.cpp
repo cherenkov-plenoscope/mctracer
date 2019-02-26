@@ -1,6 +1,6 @@
 #include <iostream>
 #include "docopt/docopt.h"
-#include "Core/mctracer.h"
+#include "merlict/mctracer.h"
 using std::string;
 using std::cout;
 using std::vector;

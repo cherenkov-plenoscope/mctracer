@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "Core/scenery/segmented_imaging_reflector/segmented_imaging_reflector.h"
-#include "Core/mctracer.h"
+#include "merlict/scenery/segmented_imaging_reflector/segmented_imaging_reflector.h"
+#include "merlict/mctracer.h"
 
 using namespace relleums;
 

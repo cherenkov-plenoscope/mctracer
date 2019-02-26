@@ -2,8 +2,8 @@
 #ifndef CORE_SCENERY_SEGMENTED_IMAGING_REFLECTOR_CONFIG_H_
 #define CORE_SCENERY_SEGMENTED_IMAGING_REFLECTOR_CONFIG_H_
 
-#include "Core/Color.h"
-#include "Core/function/function.h"
+#include "merlict/Color.h"
+#include "merlict/function/function.h"
 
 namespace relleums {
 namespace segmented_imaging_reflector {

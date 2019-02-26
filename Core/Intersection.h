@@ -5,8 +5,8 @@
 namespace relleums {class Ray;}
 
 #include <string>
-#include "Core/Vec3.h"
-#include "Core/SurfaceEntity.h"
+#include "merlict/Vec3.h"
+#include "merlict/SurfaceEntity.h"
 
 namespace relleums {
 

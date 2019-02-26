@@ -2,7 +2,7 @@
 #include <math.h>
 #include <sstream>
 #include <exception>
-#include "Core/Rot3.h"
+#include "merlict/Rot3.h"
 
 namespace relleums {
 

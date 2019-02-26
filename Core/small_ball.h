@@ -17,7 +17,7 @@
 #define CORE_SMALL_BALL_H_
 
 #include <vector>
-#include "Core/Vec3.h"
+#include "merlict/Vec3.h"
 
 namespace relleums {
 

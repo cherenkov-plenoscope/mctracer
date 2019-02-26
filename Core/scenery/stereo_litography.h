@@ -5,9 +5,9 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include "Core/mctracer.h"
-#include "Core/Frame.h"
-#include "Core/SurfaceEntity.h"
+#include "merlict/mctracer.h"
+#include "merlict/Frame.h"
+#include "merlict/SurfaceEntity.h"
 
 namespace relleums {
 namespace stereo_litography {

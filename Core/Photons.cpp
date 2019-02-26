@@ -1,10 +1,10 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/Photons.h"
+#include "merlict/Photons.h"
 #include <sstream>
 #include <future>
 #include <thread>
-#include "Core/vitaliy_vitsentiy_thread_pool.h"
-#include "Core/PhotonAndFrame.h"
+#include "merlict/vitaliy_vitsentiy_thread_pool.h"
+#include "merlict/PhotonAndFrame.h"
 using std::string;
 using std::stringstream;
 using std::vector;

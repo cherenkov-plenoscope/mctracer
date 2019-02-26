@@ -8,8 +8,8 @@
 
 //=================================
 // included dependencies
-#include "Core/Photons.h"
-#include "Core/random/random.h"
+#include "merlict/Photons.h"
+#include "merlict/random/random.h"
 #include <vector>
 #include <string>
 

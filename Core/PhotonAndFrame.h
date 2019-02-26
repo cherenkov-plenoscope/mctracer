@@ -2,10 +2,10 @@
 #ifndef CORE_PHOTONANDFRAME_H_
 #define CORE_PHOTONANDFRAME_H_
 
-#include "Core/Photon.h"
-#include "Core/Frame.h"
-#include "Core/RayAndFrame.h"
-#include "Core/PropagationEnvironment.h"
+#include "merlict/Photon.h"
+#include "merlict/Frame.h"
+#include "merlict/RayAndFrame.h"
+#include "merlict/PropagationEnvironment.h"
 
 namespace relleums {
 namespace PhotonAndFrame {

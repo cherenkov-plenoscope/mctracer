@@ -4,9 +4,9 @@
 #include <stdexcept>
 #include <vector>
 #include <string>
-#include "Core/SurfaceEntity.h"
-#include "Core/Intersection.h"
-#include "Core/scenery/geometry/ZaxisCylinderRayIntersectionEquation.h"
+#include "merlict/SurfaceEntity.h"
+#include "merlict/Intersection.h"
+#include "merlict/scenery/geometry/ZaxisCylinderRayIntersectionEquation.h"
 
 namespace relleums {
 

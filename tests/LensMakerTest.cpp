@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <vector>
 #include "catch.hpp"
-#include "Core/mctracer.h"
+#include "merlict/mctracer.h"
 using std::vector;
 using namespace relleums;
 

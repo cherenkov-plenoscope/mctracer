@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/geometry/DualSphericalPrismZ.h"
+#include "merlict/scenery/geometry/DualSphericalPrismZ.h"
 #include <math.h>
 
 namespace relleums {

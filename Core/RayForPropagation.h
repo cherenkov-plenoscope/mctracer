@@ -5,9 +5,9 @@
 #include <vector>
 #include <stdint.h>
 #include <string>
-#include "Core/Ray.h"
-#include "Core/Intersection.h"
-#include "Core/SurfaceEntity.h"
+#include "merlict/Ray.h"
+#include "merlict/Intersection.h"
+#include "merlict/SurfaceEntity.h"
 
 namespace relleums {
 

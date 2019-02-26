@@ -2,7 +2,7 @@
 #ifndef SCENERY_GEOMETRY_XYPLANERAYINTERSECTIONEQUATION_H_
 #define SCENERY_GEOMETRY_XYPLANERAYINTERSECTIONEQUATION_H_
 
-#include "Core/Ray.h"
+#include "merlict/Ray.h"
 
 namespace relleums {
 

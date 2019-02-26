@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/primitive/SphereCapWithHexagonalBound.h"
+#include "merlict/scenery/primitive/SphereCapWithHexagonalBound.h"
 #include <math.h>
 #include <sstream>
 using std::string;

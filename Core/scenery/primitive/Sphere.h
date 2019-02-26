@@ -5,9 +5,9 @@
 #include <string>
 #include <vector>
 #include <stdexcept>
-#include "Core/SurfaceEntity.h"
-#include "Core/Intersection.h"
-#include "Core/scenery/geometry/QuadraticEquation.h"
+#include "merlict/SurfaceEntity.h"
+#include "merlict/Intersection.h"
+#include "merlict/scenery/geometry/QuadraticEquation.h"
 
 namespace relleums {
 

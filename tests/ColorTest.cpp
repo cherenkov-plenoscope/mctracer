@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "Core/Color.h"
+#include "merlict/Color.h"
 
 using namespace relleums;
 

@@ -3,10 +3,10 @@
 #define SCENERY_TRAJECTORYFACTORY_H_
 
 #include <string>
-#include "Core/RayForPropagation.h"
-#include "Core/SurfaceEntity.h"
-#include "Core/scenery/primitive/Cylinder.h"
-#include "Core/scenery/primitive/Sphere.h"
+#include "merlict/RayForPropagation.h"
+#include "merlict/SurfaceEntity.h"
+#include "merlict/scenery/primitive/Cylinder.h"
+#include "merlict/scenery/primitive/Sphere.h"
 
 namespace relleums {
 

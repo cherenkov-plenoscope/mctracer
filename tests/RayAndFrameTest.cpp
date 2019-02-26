@@ -1,8 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <math.h>
 #include "catch.hpp"
-#include "Core/RayAndFrame.h"
-#include "Core/scenery/primitive/Sphere.h"
+#include "merlict/RayAndFrame.h"
+#include "merlict/scenery/primitive/Sphere.h"
 using namespace relleums;
 namespace raf = RayAndFrame;
 

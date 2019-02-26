@@ -5,7 +5,7 @@
 #include "ColorMap.h"
 #include "FunctionMap.h"
 #include "SensorMap.h"
-#include "Core/Frame.h"
+#include "merlict/Frame.h"
 
 namespace relleums {
 

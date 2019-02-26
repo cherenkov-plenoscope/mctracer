@@ -1,8 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "Core/DistanceMeter.h"
-#include "Core/Ray.h"
-#include "Core/scenery/primitive/Sphere.h"
+#include "merlict/DistanceMeter.h"
+#include "merlict/Ray.h"
+#include "merlict/scenery/primitive/Sphere.h"
 
 using namespace relleums;
 

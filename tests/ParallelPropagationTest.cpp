@@ -1,8 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "Core/scenery/primitive/Disc.h"
-#include "Core/Photons.h"
-#include "Core/scenery/Scenery.h"
+#include "merlict/scenery/primitive/Disc.h"
+#include "merlict/Photons.h"
+#include "merlict/scenery/Scenery.h"
 
 using namespace relleums;
 using std::string;

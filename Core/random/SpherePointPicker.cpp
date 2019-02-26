@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/random/SpherePointPicker.h"
+#include "merlict/random/SpherePointPicker.h"
 #include <math.h>
 
 namespace relleums {

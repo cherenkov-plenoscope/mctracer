@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/RayForPropagation.h"
+#include "merlict/RayForPropagation.h"
 #include <sstream>
-#include "Core/SimulationTruth.h"
+#include "merlict/SimulationTruth.h"
 
 using std::stringstream;
 using std::vector;

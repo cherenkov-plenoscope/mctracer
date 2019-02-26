@@ -6,7 +6,7 @@
 #include "docopt/docopt.h"
 #include "eventio.h"
 #include "corsika/block.h"
-#include "Core/mctracer.h"
+#include "merlict/mctracer.h"
 
 namespace fs = std::experimental::filesystem;
 namespace mct = relleums;

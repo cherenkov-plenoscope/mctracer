@@ -1,9 +1,9 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/visual/PinHoleCamera.h"
+#include "merlict/visual/PinHoleCamera.h"
 #include <exception>
 #include "Tracer.h"
-#include "Core/random/random.h"
-#include "Core/vitaliy_vitsentiy_thread_pool.h"
+#include "merlict/random/random.h"
+#include "merlict/vitaliy_vitsentiy_thread_pool.h"
 
 namespace relleums {
 namespace visual {

@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/sensor/inout.h"
+#include "merlict/sensor/inout.h"
 #include <array>
 using std::array;
 using std::vector;

@@ -1,8 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <sstream>
-#include "Core/Photon.h"
-#include "Core/PhysicalConstants.h"
-#include "Core/RayAndFrame.h"
+#include "merlict/Photon.h"
+#include "merlict/PhysicalConstants.h"
+#include "merlict/RayAndFrame.h"
 
 namespace relleums {
 

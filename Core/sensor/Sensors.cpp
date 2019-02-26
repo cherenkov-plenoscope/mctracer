@@ -1,8 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/sensor/Sensors.h"
+#include "merlict/sensor/Sensors.h"
 #include <algorithm>
 #include <sstream>
-#include "Core/sensor/FindSensorByFrame.h"
+#include "merlict/sensor/FindSensorByFrame.h"
 using std::vector;
 
 namespace relleums {

@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "Core/scenery/geometry/QuadraticEquation.h"
+#include "merlict/scenery/geometry/QuadraticEquation.h"
 
 using namespace relleums;
 

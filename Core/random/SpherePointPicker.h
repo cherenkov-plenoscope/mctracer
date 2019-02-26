@@ -2,7 +2,7 @@
 #ifndef CORE_RANDOM_SPHEREPOINTPICKER_H_
 #define CORE_RANDOM_SPHEREPOINTPICKER_H_
 
-#include "Core/Vec3.h"
+#include "merlict/Vec3.h"
 #include "Generator.h"
 
 namespace relleums {

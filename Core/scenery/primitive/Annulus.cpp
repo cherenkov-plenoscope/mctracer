@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/primitive/Annulus.h"
+#include "merlict/scenery/primitive/Annulus.h"
 #include <math.h>
 #include <sstream>
 using std::string;

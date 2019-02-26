@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <math.h>
 #include "catch.hpp"
-#include "Core/Rot3.h"
+#include "merlict/Rot3.h"
 
 using namespace relleums;
 

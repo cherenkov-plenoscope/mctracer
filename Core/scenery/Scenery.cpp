@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/Scenery.h"
+#include "merlict/scenery/Scenery.h"
 
 namespace relleums {
 

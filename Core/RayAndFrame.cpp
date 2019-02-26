@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/RayAndFrame.h"
+#include "merlict/RayAndFrame.h"
 #include <algorithm>
 using std::vector;
 

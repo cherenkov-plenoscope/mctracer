@@ -3,8 +3,8 @@
 #define SCENERY_GEOMETRY_SURFACEWITHOUTERPRISMBOUND_H_
 
 #include <vector>
-#include "Core/SurfaceEntity.h"
-#include "Core/Intersection.h"
+#include "merlict/SurfaceEntity.h"
+#include "merlict/Intersection.h"
 #include "TwoSolutionSurfaceRayEquation.h"
 #include "PrismZ.h"
 

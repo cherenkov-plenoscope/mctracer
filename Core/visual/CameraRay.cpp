@@ -1,8 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/visual/CameraRay.h"
+#include "merlict/visual/CameraRay.h"
 #include <sstream>
-#include "Core/RayAndFrame.h"
-#include "Core/Intersection.h"
+#include "merlict/RayAndFrame.h"
+#include "merlict/Intersection.h"
 
 namespace relleums {
 namespace visual {

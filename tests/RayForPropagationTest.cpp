@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "Core/RayForPropagation.h"
-#include "Core/SimulationTruth.h"
+#include "merlict/RayForPropagation.h"
+#include "merlict/SimulationTruth.h"
 
 using namespace relleums;
 

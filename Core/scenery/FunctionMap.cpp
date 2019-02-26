@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/FunctionMap.h"
+#include "merlict/scenery/FunctionMap.h"
 #include <sstream>
 using std::string;
 using std::map;

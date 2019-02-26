@@ -1,8 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "Core/scenery/geometry/HexagonalPrismZ.h"
-#include "Core/scenery/geometry/XyPlaneRayIntersectionEquation.h"
-#include "Core/Ray.h"
+#include "merlict/scenery/geometry/HexagonalPrismZ.h"
+#include "merlict/scenery/geometry/XyPlaneRayIntersectionEquation.h"
+#include "merlict/Ray.h"
 
 using namespace relleums;
 

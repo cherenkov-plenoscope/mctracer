@@ -4,8 +4,8 @@
 
 #include <vector>
 #include <stdexcept>
-#include "Core/sensor/Sensor.h"
-#include "Core/Photon.h"
+#include "merlict/sensor/Sensor.h"
+#include "merlict/Photon.h"
 
 namespace relleums {
 namespace sensor {

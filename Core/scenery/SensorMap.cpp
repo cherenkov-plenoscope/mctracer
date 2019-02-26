@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/SensorMap.h"
+#include "merlict/scenery/SensorMap.h"
 #include <sstream>
 using std::stringstream;
 using std::string;

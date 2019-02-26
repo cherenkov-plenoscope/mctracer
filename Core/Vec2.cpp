@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/Vec2.h"
+#include "merlict/Vec2.h"
 #include <math.h>
 #include <sstream>
 

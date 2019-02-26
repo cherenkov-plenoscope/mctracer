@@ -6,8 +6,8 @@ namespace relleums {class Frame;}
 namespace relleums {class Intersection;}
 
 #include <string>
-#include "Core/Ray.h"
-#include "Core/Color.h"
+#include "merlict/Ray.h"
+#include "merlict/Color.h"
 #include "Config.h"
 
 namespace relleums {

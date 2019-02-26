@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
 //#include "Xml/Factory/SceneryFactory.h"
-//#include "Core/scenery/Scenery.h"
+//#include "merlict/scenery/Scenery.h"
 
 /*
 

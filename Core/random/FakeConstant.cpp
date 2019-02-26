@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/random/FakeConstant.h"
+#include "merlict/random/FakeConstant.h"
 #include "random.h"
 
 namespace relleums {

@@ -3,10 +3,10 @@
 #define CORE_RAYANDFRAME_H_
 
 #include <vector>
-#include "Core/Frame.h"
-#include "Core/Ray.h"
-#include "Core/SurfaceEntity.h"
-#include "Core/Intersection.h"
+#include "merlict/Frame.h"
+#include "merlict/Ray.h"
+#include "merlict/SurfaceEntity.h"
+#include "merlict/Intersection.h"
 
 namespace relleums {
 namespace RayAndFrame {

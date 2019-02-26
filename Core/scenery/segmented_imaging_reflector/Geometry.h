@@ -4,9 +4,9 @@
 
 #include <vector>
 #include <string>
-#include "Core/scenery/segmented_imaging_reflector/Config.h"
-#include "Core/Vec3.h"
-#include "Core/Rot3.h"
+#include "merlict/scenery/segmented_imaging_reflector/Config.h"
+#include "merlict/Vec3.h"
+#include "merlict/Rot3.h"
 
 namespace relleums {
 namespace segmented_imaging_reflector {

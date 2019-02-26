@@ -1,12 +1,12 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/visual/ApertureCamera.h"
+#include "merlict/visual/ApertureCamera.h"
 #include <vector>
 #include <exception>
 #include <future>
 #include <thread>
-#include "Core/visual/Tracer.h"
-#include "Core/random/random.h"
-#include "Core/vitaliy_vitsentiy_thread_pool.h"
+#include "merlict/visual/Tracer.h"
+#include "merlict/random/random.h"
+#include "merlict/vitaliy_vitsentiy_thread_pool.h"
 using std::string;
 using std::stringstream;
 

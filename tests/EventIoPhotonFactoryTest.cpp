@@ -3,7 +3,7 @@
 #include "catch.hpp"
 #include "corsika/PhotonFactory.h"
 #include "eventio.h"
-#include "Core/mctracer.h"
+#include "merlict/mctracer.h"
 using std::vector;
 using namespace relleums;
 

@@ -3,7 +3,7 @@
 #define PLENOSCOPE_LIGHTFIELDSENSOR_FACTORY_H_
 
 #include <string>
-#include "Core/mctracer.h"
+#include "merlict/mctracer.h"
 #include "plenoscope/light_field_sensor/Geometry.h"
 #include "plenoscope/PlenoscopeScenery.h"
 

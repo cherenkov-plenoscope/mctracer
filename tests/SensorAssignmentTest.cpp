@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "Core/mctracer.h"
+#include "merlict/mctracer.h"
 using std::vector;
 
 using namespace relleums;

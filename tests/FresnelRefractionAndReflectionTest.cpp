@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <math.h>
 #include "catch.hpp"
-#include "Core/FresnelRefractionAndReflection.h"
+#include "merlict/FresnelRefractionAndReflection.h"
 using namespace relleums;
 
 

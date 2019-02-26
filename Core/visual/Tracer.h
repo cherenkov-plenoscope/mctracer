@@ -4,12 +4,12 @@
 
 #include "CameraRay.h"
 #include "Config.h"
-#include "Core/random/random.h"
-#include "Core/Photon.h"
-#include "Core/Frame.h"
-#include "Core/Color.h"
-#include "Core/RayAndFrame.h"
-#include "Core/PropagationEnvironment.h"
+#include "merlict/random/random.h"
+#include "merlict/Photon.h"
+#include "merlict/Frame.h"
+#include "merlict/Color.h"
+#include "merlict/RayAndFrame.h"
+#include "merlict/PropagationEnvironment.h"
 
 namespace relleums {
 namespace visual {

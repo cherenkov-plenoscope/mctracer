@@ -3,8 +3,8 @@
 #define CORE_RAY_H_
 
 #include <string>
-#include "Core/Vec3.h"
-#include "Core/HomTra3.h"
+#include "merlict/Vec3.h"
+#include "merlict/HomTra3.h"
 
 namespace relleums {
 

@@ -1,9 +1,9 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/primitive/Sphere.h"
+#include "merlict/scenery/primitive/Sphere.h"
 #include <math.h>
 #include <sstream>
-#include "Core/Ray.h"
-#include "Core/Intersection.h"
+#include "merlict/Ray.h"
+#include "merlict/Intersection.h"
 
 using std::string;
 using std::stringstream;

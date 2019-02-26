@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/primitive/BiConvexLensHexBound.h"
+#include "merlict/scenery/primitive/BiConvexLensHexBound.h"
 #include <math.h>
 
 namespace relleums {

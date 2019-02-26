@@ -2,8 +2,8 @@
 #ifndef CORE_DISTANCEMETER_H_
 #define CORE_DISTANCEMETER_H_
 
-#include "Core/Ray.h"
-#include "Core/Frame.h"
+#include "merlict/Ray.h"
+#include "merlict/Frame.h"
 
 namespace relleums {
 

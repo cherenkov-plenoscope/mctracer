@@ -2,7 +2,7 @@
 #include <math.h>
 #include "catch.hpp"
 #include "Tools/AsciiIo.h"
-#include "Core/Photons.h"
+#include "merlict/Photons.h"
 using std::stringstream;
 using std::string;
 using std::vector;

@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "Core/scenery/geometry/DualSphericalPrismZ.h"
+#include "merlict/scenery/geometry/DualSphericalPrismZ.h"
 
 using namespace relleums;
 

@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <cmath>
 #include "catch.hpp"
-#include "Core/tools.h"
+#include "merlict/tools.h"
 #include "Tools/FileTools.h"
 using namespace relleums;
 

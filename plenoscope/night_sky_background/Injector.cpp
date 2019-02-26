@@ -1,9 +1,9 @@
 // Copyright 2016 Sebastian A. Mueller
 #include "plenoscope/night_sky_background/Injector.h"
 #include <limits>
-#include "Core/Histogram1.h"
-#include "Core/SimulationTruth.h"
-#include "Core/numeric.h"
+#include "merlict/Histogram1.h"
+#include "merlict/SimulationTruth.h"
+#include "merlict/numeric.h"
 using std::vector;
 using namespace relleums;
 

@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/ColorMap.h"
+#include "merlict/scenery/ColorMap.h"
 #include <sstream>
 using std::stringstream;
 using std::string;

@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "Core/scenery/geometry/HexGridAnnulus.h"
-#include "Core/scenery/geometry/GridNeighborhoodTopoligy.h"
+#include "merlict/scenery/geometry/HexGridAnnulus.h"
+#include "merlict/scenery/geometry/GridNeighborhoodTopoligy.h"
 using namespace relleums;
 
 

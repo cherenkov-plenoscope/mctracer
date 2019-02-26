@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "corsika/PhotonFactory.h"
 #include <sstream>
-#include "Core/PhysicalConstants.h"
+#include "merlict/PhysicalConstants.h"
 using std::stringstream;
 using std::vector;
 using std::array;

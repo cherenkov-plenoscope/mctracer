@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/random/Mt19937.h"
+#include "merlict/random/Mt19937.h"
 #include "random.h"
 
 namespace relleums {

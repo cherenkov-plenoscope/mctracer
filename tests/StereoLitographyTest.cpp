@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "Core/Vec3.h"
-#include "Core/scenery/stereo_litography.h"
+#include "merlict/Vec3.h"
+#include "merlict/scenery/stereo_litography.h"
 
 using namespace relleums;
 namespace stl = stereo_litography;

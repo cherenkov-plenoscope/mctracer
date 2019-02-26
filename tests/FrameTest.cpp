@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <array>
 #include "catch.hpp"
-#include "Core/mctracer.h"
+#include "merlict/mctracer.h"
 using std::string;
 using std::stringstream;
 using std::vector;
@@ -172,7 +172,7 @@ TEST_CASE("FrameTest: clustering_frames_which_are_stucked_close_together", "[mct
     // because all the geometry is stucked on top of each other.
     CHECK(tree.get_children()->size() == number_facets);
 }
-#include "Core/RayAndFrame.h"
+#include "merlict/RayAndFrame.h"
 
 TEST_CASE("FrameTest: removing_a_non_existing_cild", "[mctracer]") {
     Frame tree;

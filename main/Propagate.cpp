@@ -1,6 +1,6 @@
 #include <iostream>
 #include "docopt/docopt.h"
-#include "Core/mctracer.h"
+#include "merlict/mctracer.h"
 #include "Tools/AsciiIo.h"
 #include "json.h"
 #include "try_to_read/PhotonsReader.h"

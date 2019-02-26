@@ -3,8 +3,8 @@
 #define CORE_SCENERY_SEGMENTED_IMAGING_REFLECTOR_FACTORY_H_
 
 #include <vector>
-#include "Core/scenery/segmented_imaging_reflector/Geometry.h"
-#include "Core/SurfaceEntity.h"
+#include "merlict/scenery/segmented_imaging_reflector/Geometry.h"
+#include "merlict/SurfaceEntity.h"
 
 namespace relleums {
 namespace segmented_imaging_reflector {

@@ -4,7 +4,7 @@
 
 #include <array>
 #include <limits>
-#include "Core/mctracer.h"
+#include "merlict/mctracer.h"
 
 namespace plenoscope {
 namespace light_field_sensor {

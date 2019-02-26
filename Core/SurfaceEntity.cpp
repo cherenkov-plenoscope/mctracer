@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/SurfaceEntity.h"
+#include "merlict/SurfaceEntity.h"
 #include <limits>
 #include <sstream>
 

@@ -1,8 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/primitive/HexPlane.h"
+#include "merlict/scenery/primitive/HexPlane.h"
 #include <sstream>
-#include "Core/Ray.h"
-#include "Core/Intersection.h"
+#include "merlict/Ray.h"
+#include "merlict/Intersection.h"
 
 using std::vector;
 using std::string;

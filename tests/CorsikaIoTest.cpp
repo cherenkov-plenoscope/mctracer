@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
 #include "corsika/corsika.h"
-#include "Core/random/random.h"
+#include "merlict/random/random.h"
 using std::string;
 using namespace relleums;
 

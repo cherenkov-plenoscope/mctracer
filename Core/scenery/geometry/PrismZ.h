@@ -2,7 +2,7 @@
 #ifndef SCENERY_GEOMETRY_PRISMZ_H_
 #define SCENERY_GEOMETRY_PRISMZ_H_
 
-#include "Core/Vec3.h"
+#include "merlict/Vec3.h"
 
 namespace relleums {
 

@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/TrajectoryFactory.h"
+#include "merlict/scenery/TrajectoryFactory.h"
 #include <sstream>
 using std::string;
 

@@ -2,7 +2,7 @@
 #ifndef SCENERY_GEOMETRY_ZAXISCYLINDERRAYINTERSECTIONEQUATION_H_
 #define SCENERY_GEOMETRY_ZAXISCYLINDERRAYINTERSECTIONEQUATION_H_
 
-#include "Core/Ray.h"
+#include "merlict/Ray.h"
 #include "QuadraticEquation.h"
 
 namespace relleums {

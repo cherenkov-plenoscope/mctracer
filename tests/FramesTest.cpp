@@ -1,8 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <math.h>
 #include "catch.hpp"
-#include "Core/mctracer.h"
-#include "Core/scenery/primitive/Sphere.h"
+#include "merlict/mctracer.h"
+#include "merlict/scenery/primitive/Sphere.h"
 using std::string;
 using std::stringstream;
 using std::vector;

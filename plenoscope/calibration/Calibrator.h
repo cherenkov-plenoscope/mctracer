@@ -8,7 +8,7 @@
 #include "plenoscope/calibration/Config.h"
 #include "plenoscope/calibration/CalibrationPhotonResult.h"
 #include "plenoscope/calibration/LixelStatisticsFiller.h"
-#include "Core/mctracer.h"
+#include "merlict/mctracer.h"
 
 namespace plenoscope {
 namespace calibration {

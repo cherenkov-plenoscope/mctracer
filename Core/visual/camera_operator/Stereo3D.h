@@ -5,7 +5,7 @@
 namespace relleums {class Frame;}
 
 #include <string>
-#include "Core/DistanceMeter.h"
+#include "merlict/DistanceMeter.h"
 #include "Verbosity.h"
 
 namespace relleums {

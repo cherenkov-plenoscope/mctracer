@@ -1,9 +1,9 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/function/Func1.h"
+#include "merlict/function/Func1.h"
 #include <sstream>
 #include <algorithm>
-#include "Core/txt.h"
-#include "Core/function/tools.h"
+#include "merlict/txt.h"
+#include "merlict/function/tools.h"
 using std::vector;
 using std::string;
 

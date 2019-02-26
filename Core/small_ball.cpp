@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/small_ball.h"
+#include "merlict/small_ball.h"
 #include <math.h>
 
 namespace relleums {

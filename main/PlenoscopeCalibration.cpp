@@ -6,7 +6,7 @@
 #include "plenoscope/calibration/Calibrator.h"
 #include "plenoscope/json_to_plenoscope.h"
 #include "corsika/block.h"
-#include "Core/mctracer.h"
+#include "merlict/mctracer.h"
 namespace fs = std::experimental::filesystem;
 using std::string;
 using std::cout;

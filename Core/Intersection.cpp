@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/Intersection.h"
+#include "merlict/Intersection.h"
 #include <sstream>
 #include <limits>
 
@@ -80,7 +80,7 @@ Vec3 Intersection::reflection_direction_in_root_frame(Vec3 in_dir_world)const {
     return object->frame2world()->get_transformed_orientation(in_dir_obj);
 }
 
-#include "Core/Ray.h"
+#include "merlict/Ray.h"
 
 double Intersection::facing_reflection_propability(
     const double wavelength

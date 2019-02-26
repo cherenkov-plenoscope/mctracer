@@ -2,7 +2,7 @@
 #include <math.h>
 #include <sstream>
 #include <vector>
-#include "Core/Ray.h"
+#include "merlict/Ray.h"
 
 using std::string;
 using std::stringstream;

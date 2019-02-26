@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-/*#include "Core/scenery/TrajectoryFactory.h"
+/*#include "merlict/scenery/TrajectoryFactory.h"
 
 
 //------------------------------------------------------------------------------

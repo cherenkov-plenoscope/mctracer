@@ -2,7 +2,7 @@
 #include <sstream>
 #include <string>
 #include "catch.hpp"
-#include "Core/mctracer.h"
+#include "merlict/mctracer.h"
 #include "signal_processing/signal_processing.h"
 using std::cout;
 using std::string;

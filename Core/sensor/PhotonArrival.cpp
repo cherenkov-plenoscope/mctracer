@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/sensor/PhotonArrival.h"
+#include "merlict/sensor/PhotonArrival.h"
 
 namespace relleums {
 namespace sensor {

@@ -4,7 +4,7 @@
 
 #include <string>
 #include <vector>
-#include "Core/Vec3.h"
+#include "merlict/Vec3.h"
 
 namespace relleums {
 

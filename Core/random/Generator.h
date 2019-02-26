@@ -3,7 +3,7 @@
 #define CORE_RANDOM_GENERATOR_H_
 
 #include <stdint.h>
-#include "Core/Vec3.h"
+#include "merlict/Vec3.h"
 
 namespace relleums {
 namespace random {

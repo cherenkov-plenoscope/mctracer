@@ -1,8 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/Frames.h"
+#include "merlict/Frames.h"
 #include <math.h>
 #include <sstream>
-#include "Core/small_ball.h"
+#include "merlict/small_ball.h"
 using std::stringstream;
 using std::vector;
 

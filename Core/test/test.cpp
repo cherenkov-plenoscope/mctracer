@@ -8,8 +8,8 @@
 #include <sstream>
 #include <exception>
 #include <algorithm>
-#include "Core/test/catch.hpp"
-#include "Core/mctracer.h"
+#include "merlict/test/catch.hpp"
+#include "merlict/mctracer.h"
 
 namespace re = relleums;
 

@@ -3,9 +3,9 @@
 #define CORE_SURFACEENTITY_H_
 
 #include <string>
-#include "Core/Frame.h"
+#include "merlict/Frame.h"
 #include "Color.h"
-#include "Core/function/function.h"
+#include "merlict/function/function.h"
 
 namespace relleums {
 

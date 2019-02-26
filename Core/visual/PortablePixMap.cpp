@@ -1,10 +1,10 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/visual/PortablePixMap.h"
+#include "merlict/visual/PortablePixMap.h"
 #include <stdint.h>
 #include <string>
 #include <sstream>
-#include "Core/txt.h"
-#include "Core/binio.h"
+#include "merlict/txt.h"
+#include "merlict/binio.h"
 
 namespace relleums {
 namespace visual {

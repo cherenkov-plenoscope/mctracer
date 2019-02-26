@@ -3,7 +3,7 @@
 #define CORE_ROT3_H_
 
 #include <string>
-#include "Core/Vec3.h"
+#include "merlict/Vec3.h"
 
 namespace relleums {
 // Tait–Bryan angles with an extrinsic coordinate frame fasion

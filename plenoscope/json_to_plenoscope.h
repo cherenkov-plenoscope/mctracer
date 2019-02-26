@@ -4,7 +4,7 @@
 
 #include "plenoscope/PlenoscopeScenery.h"
 #include "./json.h"
-#include "Core/mctracer.h"
+#include "merlict/mctracer.h"
 
 namespace plenoscope {
 namespace json {

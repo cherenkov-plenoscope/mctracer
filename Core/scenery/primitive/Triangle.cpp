@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/primitive/Triangle.h"
+#include "merlict/scenery/primitive/Triangle.h"
 #include <algorithm>
 #include <sstream>
 using std::string;
@@ -103,8 +103,8 @@ bool Triangle::is_inside_triangle(const Vec3 &intersec_vec)const {
     return ((bA == bB) && (bB == bC));
 }
 
-#include "Core/Ray.h"
-#include "Core/Intersection.h"
+#include "merlict/Ray.h"
+#include "merlict/Intersection.h"
 
 void Triangle::calculate_intersection_with(
     const Ray* ray,

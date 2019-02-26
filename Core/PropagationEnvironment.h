@@ -2,9 +2,9 @@
 #ifndef CORE_PROPAGATIONENVIRONMENT_H_
 #define CORE_PROPAGATIONENVIRONMENT_H_
 
-#include "Core/Frame.h"
-#include "Core/PropagationConfig.h"
-#include "Core/random/random.h"
+#include "merlict/Frame.h"
+#include "merlict/PropagationConfig.h"
+#include "merlict/random/random.h"
 
 namespace relleums {
 

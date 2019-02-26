@@ -5,7 +5,7 @@
 #include <string>
 #include <map>
 #include "ResourceMap.h"
-#include "Core/function/function.h"
+#include "merlict/function/function.h"
 
 namespace relleums {
 

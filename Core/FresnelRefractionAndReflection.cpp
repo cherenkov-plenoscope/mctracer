@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/FresnelRefractionAndReflection.h"
+#include "merlict/FresnelRefractionAndReflection.h"
 #include <math.h>
 
 namespace relleums {

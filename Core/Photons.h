@@ -4,8 +4,8 @@
 
 #include <vector>
 #include <string>
-#include "Core/Photon.h"
-#include "Core/PropagationEnvironment.h"
+#include "merlict/Photon.h"
+#include "merlict/PropagationEnvironment.h"
 
 namespace relleums {
 namespace Photons {

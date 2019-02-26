@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/Color.h"
+#include "merlict/Color.h"
 #include <math.h>
 #include <sstream>
 #include <exception>

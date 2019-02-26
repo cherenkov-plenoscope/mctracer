@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/segmented_imaging_reflector/Factory.h"
-#include "Core/scenery/primitive/SphereCapWithHexagonalBound.h"
+#include "merlict/scenery/segmented_imaging_reflector/Factory.h"
+#include "merlict/scenery/primitive/SphereCapWithHexagonalBound.h"
 using std::vector;
 using std::string;
 

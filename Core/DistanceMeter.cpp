@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <limits>
-#include "Core/DistanceMeter.h"
-#include "Core/RayAndFrame.h"
+#include "merlict/DistanceMeter.h"
+#include "merlict/RayAndFrame.h"
 
 namespace relleums {
 

@@ -5,7 +5,7 @@
 #include <string>
 #include <map>
 #include "ResourceMap.h"
-#include "Core/Color.h"
+#include "merlict/Color.h"
 
 namespace relleums {
 

@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "plenoscope/light_field_sensor/Config.h"
-#include "Core/mctracer.h"
+#include "merlict/mctracer.h"
 #include "corsika/corsika.h"
 
 using std::array;

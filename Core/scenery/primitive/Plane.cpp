@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/primitive/Plane.h"
+#include "merlict/scenery/primitive/Plane.h"
 #include <math.h>
 #include <sstream>
 using std::string;
@@ -36,8 +36,8 @@ string Plane::str()const {
     return out.str();
 }
 
-#include "Core/Ray.h"
-#include "Core/Intersection.h"
+#include "merlict/Ray.h"
+#include "merlict/Intersection.h"
 
 void Plane::calculate_intersection_with(
     const Ray* ray,

@@ -5,9 +5,9 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include "Core/Rot3.h"
-#include "Core/Vec3.h"
-#include "Core/HomTra3.h"
+#include "merlict/Rot3.h"
+#include "merlict/Vec3.h"
+#include "merlict/HomTra3.h"
 #include "CameraRay.h"
 #include "Image.h"
 

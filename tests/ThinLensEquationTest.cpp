@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "Core/scenery/geometry/ThinLensEquation.h"
+#include "merlict/scenery/geometry/ThinLensEquation.h"
 
 using namespace relleums;
 

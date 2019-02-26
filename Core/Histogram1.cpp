@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <algorithm>
 #include <sstream>
-#include "Core/Histogram1.h"
+#include "merlict/Histogram1.h"
 
 using std::string;
 using std::vector;

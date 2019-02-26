@@ -3,7 +3,7 @@
 #define SCENERY_GEOMETRY_DUALSPHERICALPRISMZ_H_
 
 #include "PrismZ.h"
-#include "Core/Vec2.h"
+#include "merlict/Vec2.h"
 
 namespace relleums {
 

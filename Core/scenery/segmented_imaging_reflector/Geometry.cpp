@@ -1,11 +1,11 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/segmented_imaging_reflector/Geometry.h"
+#include "merlict/scenery/segmented_imaging_reflector/Geometry.h"
 #include <math.h>
 #include <sstream>
 #include <iomanip>
-#include "Core/scenery/geometry/HexGridAnnulus.h"
-#include "Core/mctracer.h"
-#include "Core/HomTra3.h"
+#include "merlict/scenery/geometry/HexGridAnnulus.h"
+#include "merlict/mctracer.h"
+#include "merlict/HomTra3.h"
 
 using std::vector;
 using std::string;

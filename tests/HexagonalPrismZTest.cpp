@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <math.h>
 #include "catch.hpp"
-#include "Core/scenery/geometry/HexagonalPrismZ.h"
+#include "merlict/scenery/geometry/HexagonalPrismZ.h"
 
 using namespace relleums;
 

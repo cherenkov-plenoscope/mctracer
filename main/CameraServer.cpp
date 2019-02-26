@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <iostream>
 #include "docopt/docopt.h"
-#include "Core/mctracer.h"
+#include "merlict/mctracer.h"
 #include "./json.h"
 using std::string;
 using std::cout;

@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/sensor/FindSensorByFrame.h"
+#include "merlict/sensor/FindSensorByFrame.h"
 #include <algorithm>
 using std::vector;
 

@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/geometry/HexGridAnnulus.h"
+#include "merlict/scenery/geometry/HexGridAnnulus.h"
 #include <math.h>
 #include <sstream>
 

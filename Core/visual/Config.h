@@ -2,9 +2,9 @@
 #ifndef VISUAL_CONFIG_H_
 #define VISUAL_CONFIG_H_
 
-#include "Core/Color.h"
+#include "merlict/Color.h"
 #include "SkyDome.h"
-#include "Core/Vec3.h"
+#include "merlict/Vec3.h"
 
 namespace relleums {
 namespace visual {

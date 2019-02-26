@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/primitive/PlaneDualSphericalBound.h"
+#include "merlict/scenery/primitive/PlaneDualSphericalBound.h"
 #include <sstream>
 using std::string;
 using std::vector;
@@ -32,8 +32,8 @@ std::string PlaneDualSphericalBound::str()const {
     return out.str();
 }
 
-#include "Core/Ray.h"
-#include "Core/Intersection.h"
+#include "merlict/Ray.h"
+#include "merlict/Intersection.h"
 
 void PlaneDualSphericalBound::calculate_intersection_with(
     const Ray* ray,

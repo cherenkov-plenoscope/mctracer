@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/visual/Config.h"
+#include "merlict/visual/Config.h"
 
 namespace relleums {
 namespace visual {

@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "Core/scenery/SensorMap.h"
+#include "merlict/scenery/SensorMap.h"
 using std::string;
 using std::vector;
 using namespace relleums;

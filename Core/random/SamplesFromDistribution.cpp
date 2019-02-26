@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/random/SamplesFromDistribution.h"
+#include "merlict/random/SamplesFromDistribution.h"
 
 namespace relleums {
 namespace random {

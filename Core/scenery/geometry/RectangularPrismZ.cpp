@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/geometry/RectangularPrismZ.h"
+#include "merlict/scenery/geometry/RectangularPrismZ.h"
 #include <math.h>
 #include <string>
 #include <sstream>

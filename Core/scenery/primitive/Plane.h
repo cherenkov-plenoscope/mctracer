@@ -4,10 +4,10 @@
 
 #include <string>
 #include <vector>
-#include "Core/SurfaceEntity.h"
-#include "Core/Intersection.h"
-#include "Core/scenery/geometry/XyPlaneRayIntersectionEquation.h"
-#include "Core/scenery/geometry/RectangularPrismZ.h"
+#include "merlict/SurfaceEntity.h"
+#include "merlict/Intersection.h"
+#include "merlict/scenery/geometry/XyPlaneRayIntersectionEquation.h"
+#include "merlict/scenery/geometry/RectangularPrismZ.h"
 
 namespace relleums {
 

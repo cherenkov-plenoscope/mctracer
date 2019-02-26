@@ -1,7 +1,7 @@
 // Copyright 2018 Sebastian A. Mueller
 #include "catch.hpp"
 #include <math.h>
-#include "Core/small_ball.h"
+#include "merlict/small_ball.h"
 
 using namespace relleums;
 

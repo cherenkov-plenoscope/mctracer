@@ -3,11 +3,11 @@
 #include <algorithm>
 #include "docopt/docopt.h"
 #include "main/photon_stream.h"
-#include "Core/mctracer.h"
+#include "merlict/mctracer.h"
 #include "eventio.h"
 #include "corsika/corsika.h"
 #include "corsika/PhotonFactory.h"
-#include "Core/scenery/segmented_imaging_reflector/segmented_imaging_reflector.h"
+#include "merlict/scenery/segmented_imaging_reflector/segmented_imaging_reflector.h"
 #include "signal_processing/signal_processing.h"
 namespace fs = std::experimental::filesystem;
 namespace ps = photon_stream;

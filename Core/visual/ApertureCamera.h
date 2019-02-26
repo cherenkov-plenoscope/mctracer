@@ -6,10 +6,10 @@ namespace relleums {class Frame;}
 
 #include <string>
 #include <vector>
-#include "Core/DistanceMeter.h"
+#include "merlict/DistanceMeter.h"
 #include "PixelCoordinate.h"
 #include "CameraDevice.h"
-#include "Core/random/random.h"
+#include "merlict/random/random.h"
 
 namespace relleums {
 namespace visual {

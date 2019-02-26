@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/ospath.h"
+#include "merlict/ospath.h"
 #include <sstream>
-#include "Core/txt.h"
+#include "merlict/txt.h"
 using std::string;
 
 namespace relleums {

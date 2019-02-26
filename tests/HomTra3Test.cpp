@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <math.h>
 #include "catch.hpp"
-#include "Core/HomTra3.h"
+#include "merlict/HomTra3.h"
 
 using namespace relleums;
 

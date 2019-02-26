@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/geometry/PrismZ.h"
+#include "merlict/scenery/geometry/PrismZ.h"
 
 namespace relleums {
 

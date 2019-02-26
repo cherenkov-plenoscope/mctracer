@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/geometry/HexagonalPrismZ.h"
+#include "merlict/scenery/geometry/HexagonalPrismZ.h"
 #include <math.h>
 #include <sstream>
 

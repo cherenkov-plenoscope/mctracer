@@ -3,8 +3,8 @@
 #include <fstream>
 #include <sstream>
 #include "niels_lohmann_json.hpp"
-#include "Core/mctracer.h"
-#include "Core/scenery/segmented_imaging_reflector/segmented_imaging_reflector.h"
+#include "merlict/mctracer.h"
+#include "merlict/scenery/segmented_imaging_reflector/segmented_imaging_reflector.h"
 namespace nl = nlohmann;
 using std::string;
 using relleums::txt::is_equal;

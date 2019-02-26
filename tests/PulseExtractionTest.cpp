@@ -2,9 +2,9 @@
 #include <stdint.h>
 #include "catch.hpp"
 #include "signal_processing/signal_processing.h"
-#include "Core/random/random.h"
-#include "Core/SimulationTruth.h"
-#include "Core/numeric.h"
+#include "merlict/random/random.h"
+#include "merlict/SimulationTruth.h"
+#include "merlict/numeric.h"
 using std::vector;
 using std::string;
 using namespace relleums;

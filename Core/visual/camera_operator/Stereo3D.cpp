@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/visual/camera_operator/Stereo3D.h"
+#include "merlict/visual/camera_operator/Stereo3D.h"
 
 namespace relleums {
 namespace visual {

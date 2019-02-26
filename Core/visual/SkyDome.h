@@ -3,8 +3,8 @@
 #define VISUAL_SKYDOME_H_
 
 #include <string>
-#include "Core/visual/Image.h"
-#include "Core/Vec3.h"
+#include "merlict/visual/Image.h"
+#include "merlict/Vec3.h"
 
 namespace relleums {
 namespace visual {

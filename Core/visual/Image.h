@@ -4,7 +4,7 @@
 
 #include <string>
 #include <vector>
-#include "Core/Color.h"
+#include "merlict/Color.h"
 #include "PixelCoordinate.h"
 
 namespace relleums {

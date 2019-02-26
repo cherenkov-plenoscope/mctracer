@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Core/scenery/geometry/CylinderPrismZ.h"
+#include "merlict/scenery/geometry/CylinderPrismZ.h"
 #include <math.h>
 #include <sstream>
 
