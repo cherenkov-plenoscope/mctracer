@@ -100,12 +100,6 @@ target_link_libraries(mctPlenoscopeRawPhotonPropagation mct)
 target_link_libraries(mctPlenoscopeRawPhotonPropagation stdc++fs)
 target_link_libraries(mctPlenoscopeRawPhotonPropagation docopt)
 
-#---------
-# STL scaling
-add_executable(mctScaleStl main/ScaleStl.cpp)
-target_link_libraries(mctScaleStl mct)
-target_link_libraries(mctScaleStl docopt)
-
 #------------------------
 # FACT propagation
 add_executable(mctFactPropagation ./main/FactPropagation.cpp)
