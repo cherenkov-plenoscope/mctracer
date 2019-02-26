@@ -450,13 +450,12 @@ Frame* add_SegmentedReflector(
     cfg.min_inner_aperture_radius = o.f8("min_inner_aperture_radius");
     cfg.facet_inner_hex_radius = o.f8("facet_inner_hex_radius");
     cfg.gap_between_facets = o.f8("gap_between_facets");
-    cfg.reflectivity = scenery->functions.get(
-        o.obj("surface").st("outer_reflection"));
 
     segmented_imaging_reflector::Factory refl_fab(cfg);
-    Frame* reflector = mother->append<Frame>();
+    SurfaceEntity* reflector = mother->append<SurfaceEntity>();
     set_frame(reflector, o);
-    refl_fab.add_reflector_mirror_facets_to_frame(reflector);
+    set_surface(reflector, scenery, o);
+    refl_fab.add_to_SurfaceEntity(reflector);
     return reflector;
 }
 

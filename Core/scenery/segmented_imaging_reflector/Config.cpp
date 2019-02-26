@@ -11,11 +11,7 @@ Config::Config():
     max_outer_aperture_radius(2.1),
     min_inner_aperture_radius(0.2),
     facet_inner_hex_radius(0.30),
-    gap_between_facets(0.01),
-
-    mirror_color(&COLOR_WHITE),
-    inner_mirror_color(&COLOR_DARK_GRAY),
-    reflectivity(&perfect_reflectivity)
+    gap_between_facets(0.01)
 {}
 
 }  // namespace segmented_imaging_reflector

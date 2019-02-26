@@ -287,6 +287,7 @@ int main(int argc, char* argv[]) {
     scenery.colors.add("mirror_color", re::Color(128, 128, 128));
     scenery.colors.add("inner_mirror_color", re::Color(255, 255, 255));
     scenery.colors.add("pixel_red", re::Color(255, 0, 0));
+    scenery.colors.add("black", re::Color(0, 0, 0));
 
     re::segmented_imaging_reflector::Config r_cfg;
     r_cfg.focal_length = 4.889;
@@ -295,13 +296,15 @@ int main(int argc, char* argv[]) {
     r_cfg.min_inner_aperture_radius = 0.25;
     r_cfg.facet_inner_hex_radius = 0.3;
     r_cfg.gap_between_facets = 0.01;
-    r_cfg.mirror_color = scenery.colors.get("mirror_color");
-    r_cfg.inner_mirror_color = scenery.colors.get("inner_mirror_color");
-    r_cfg.reflectivity = scenery.functions.get("mirror_reflectivity");
 
-    re::segmented_imaging_reflector::Factory r_factory(r_cfg);
-    r_factory.add_reflector_mirror_facets_to_frame(
-        &scenery.root);
+    re::SurfaceEntity* reflector = scenery.root.append<re::SurfaceEntity>();
+    reflector->set_name_pos_rot("reflector", re::Vec3(0, 0, 0), re::Rot3(0, 0, 0));
+    reflector->set_inner_color(scenery.colors.get("mirror_color"));
+    reflector->set_outer_color(scenery.colors.get("black"));
+    reflector->set_inner_reflection(scenery.functions.get("mirror_reflectivity"));
+
+    re::segmented_imaging_reflector::Factory refl_fab(r_cfg);
+    refl_fab.add_to_SurfaceEntity(reflector);
 
     re::Frame* camera = scenery.root.append<re::Frame>();
     camera->set_name_pos_rot("camera", re::Vec3(0, 0, 4.889), re::ROT3_UNITY);

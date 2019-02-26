@@ -6,10 +6,6 @@
 using namespace relleums;
 
 TEST_CASE("PostInitFrameSpeed: post_init_based_on_mother", "[mctracer]") {
-
-
-    Frame world;
-    Frame* reflector;
     PropagationConfig settings;
     double Zd_Rad = 45.0;
     double Az_Rad = 75.0;
@@ -17,7 +13,12 @@ TEST_CASE("PostInitFrameSpeed: post_init_based_on_mother", "[mctracer]") {
     Rot3 new_rot(0.0, Zd_Rad, deg2rad(180.0) - Az_Rad);
 
     Scenery scenery;
-    reflector = scenery.root.append<Frame>();
+    scenery.functions.add(
+        "mirror_reflectivity",
+        function::Func1({{200e-9, 1}, {1200e-9, 1}}));
+    scenery.colors.add("mirror_color", Color(128, 128, 128));
+    scenery.colors.add("inner_mirror_color", Color(255, 255, 255));
+    SurfaceEntity* reflector = scenery.root.append<SurfaceEntity>();
     reflector->set_name_pos_rot("reflector", VEC3_ORIGIN, ROT3_UNITY);
 
     segmented_imaging_reflector::Config cfg;
@@ -29,7 +30,7 @@ TEST_CASE("PostInitFrameSpeed: post_init_based_on_mother", "[mctracer]") {
     cfg.facet_inner_hex_radius = 0.01;
 
     segmented_imaging_reflector::Factory factory(cfg);
-    factory.add_reflector_mirror_facets_to_frame(reflector);
+    factory.add_to_SurfaceEntity(reflector);
 
     scenery.root.init_tree_based_on_mother_child_relations();
 
