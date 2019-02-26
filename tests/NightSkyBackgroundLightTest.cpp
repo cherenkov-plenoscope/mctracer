@@ -3,7 +3,6 @@
 #include "plenoscope/light_field_sensor/Config.h"
 #include "plenoscope/night_sky_background/NightSkyBackground.h"
 #include "merlict/merlict.h"
-#include "Tools/AsciiIo.h"
 
 using namespace merlict;
 

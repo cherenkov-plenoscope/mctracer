@@ -1,7 +1,6 @@
 #include <iostream>
 #include "docopt/docopt.h"
 #include "merlict/merlict.h"
-#include "Tools/AsciiIo.h"
 #include "json.h"
 #include "try_to_read/PhotonsReader.h"
 using std::string;

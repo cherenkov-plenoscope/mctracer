@@ -1,9 +1,10 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "Tools/AsciiIo.h"
+#include "merlict/tsvio.h"
 #include <math.h>
 #include <sstream>
 #include <string>
-#include "merlict/merlict.h"
+#include "merlict/txt.h"
+#include "merlict/tools.h"
 using std::stringstream;
 using std::string;
 using std::vector;

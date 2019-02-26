@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "Tools/AsciiIo.h"
+#include "merlict/merlict.h"
 using std::stringstream;
 using std::string;
 using std::vector;

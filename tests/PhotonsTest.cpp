@@ -1,13 +1,11 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <math.h>
 #include "catch.hpp"
-#include "Tools/AsciiIo.h"
-#include "merlict/Photons.h"
+#include "merlict/merlict.h"
 using std::stringstream;
 using std::string;
 using std::vector;
 using namespace merlict;
-
 
 
 TEST_CASE("PhotonsTest: raw_row2photon", "[merlict]") {
@@ -111,13 +109,13 @@ TEST_CASE("PhotonsTest: bunch2raw_matrix2file", "[merlict]") {
     }
 
     // write to text file
-    tsvio::write_table_to_file(
+    merlict::tsvio::write_table_to_file(
         Photons::photons2raw_matrix(&photon_bunch1),
         "tsvio/my_big_photon_list.txt");
 
     // read back again from text file
     std::vector<Photon> photon_bunch2 = Photons::raw_matrix2photons(
-        tsvio::gen_table_from_file(
+        merlict::tsvio::gen_table_from_file(
             "tsvio/my_big_photon_list.txt"));
 
     REQUIRE(photon_bunch2.size() == number_of_photons);
