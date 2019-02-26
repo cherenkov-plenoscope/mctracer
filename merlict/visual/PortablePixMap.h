@@ -6,7 +6,7 @@
 #include <string>
 #include "merlict/visual/Image.h"
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 namespace ppm {
 

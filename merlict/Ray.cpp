@@ -7,7 +7,7 @@
 using std::string;
 using std::stringstream;
 
-namespace relleums {
+namespace merlict {
 
 Ray::Ray() {}
 

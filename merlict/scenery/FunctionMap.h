@@ -7,7 +7,7 @@
 #include "ResourceMap.h"
 #include "merlict/function/function.h"
 
-namespace relleums {
+namespace merlict {
 
 struct FunctionMap: public ResourceMap {
     std::map<std::string, function::Func1> functions;

@@ -9,7 +9,7 @@
 #include "merlict/Intersection.h"
 #include "merlict/SurfaceEntity.h"
 
-namespace relleums {
+namespace merlict {
 
 enum Interaction {
     production,

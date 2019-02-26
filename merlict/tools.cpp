@@ -2,7 +2,7 @@
 #include "merlict/tools.h"
 #include <cmath>
 
-namespace relleums {
+namespace merlict {
 
 double deg2rad(double angle_in_Deg) {
     return (M_PI*angle_in_Deg)/180.0;

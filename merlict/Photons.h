@@ -7,7 +7,7 @@
 #include "merlict/Photon.h"
 #include "merlict/PropagationEnvironment.h"
 
-namespace relleums {
+namespace merlict {
 namespace Photons {
 
 void propagate_photons_in_scenery_with_settings(

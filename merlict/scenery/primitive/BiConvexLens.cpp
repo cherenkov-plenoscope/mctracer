@@ -2,7 +2,7 @@
 #include "merlict/scenery/primitive/BiConvexLens.h"
 #include <math.h>
 
-namespace relleums {
+namespace merlict {
 
 void BiConvexLens::set_curvature_radius_and_aperture_radius(
     const double curvature_radius,

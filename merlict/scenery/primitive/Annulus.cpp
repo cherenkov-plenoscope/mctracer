@@ -6,7 +6,7 @@ using std::string;
 using std::stringstream;
 using std::vector;
 
-namespace relleums {
+namespace merlict {
 
 void Annulus::set_outer_inner_radius(
         const double outer_radius,

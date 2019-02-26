@@ -9,7 +9,7 @@ using std::string;
 using std::stringstream;
 using std::vector;
 
-namespace relleums {
+namespace merlict {
 namespace Photons {
 
 void propagate_photons_in_scenery_with_settings(

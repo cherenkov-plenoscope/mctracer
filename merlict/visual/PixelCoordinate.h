@@ -4,7 +4,7 @@
 
 #include <vector>
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 
 struct PixelCoordinate{

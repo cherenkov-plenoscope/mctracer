@@ -6,7 +6,7 @@
 using std::stringstream;
 using std::vector;
 
-namespace relleums {
+namespace merlict {
 namespace Frames {
 
 Vec3 small_ball_nielsen_nock(const vector<Frame*> &frames) {

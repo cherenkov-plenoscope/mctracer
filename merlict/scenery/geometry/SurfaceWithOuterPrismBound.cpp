@@ -2,7 +2,7 @@
 #include "merlict/scenery/geometry/SurfaceWithOuterPrismBound.h"
 using std::vector;
 
-namespace relleums {
+namespace merlict {
 
 void SurfaceWithOuterPrismBound::add_causeal_intersection(
         const TwoSolutionSurfaceRayEquation* eq,

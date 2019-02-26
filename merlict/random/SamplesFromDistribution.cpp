@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/random/SamplesFromDistribution.h"
 
-namespace relleums {
+namespace merlict {
 namespace random {
 
 SamplesFromDistribution::SamplesFromDistribution(

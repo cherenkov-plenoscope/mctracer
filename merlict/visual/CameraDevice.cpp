@@ -3,7 +3,7 @@
 #include <exception>
 #include "merlict/mctracer.h"
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 
 CameraDevice::CameraDevice(

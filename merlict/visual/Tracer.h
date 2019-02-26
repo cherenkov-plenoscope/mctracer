@@ -11,7 +11,7 @@
 #include "merlict/RayAndFrame.h"
 #include "merlict/PropagationEnvironment.h"
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 
 class Tracer {

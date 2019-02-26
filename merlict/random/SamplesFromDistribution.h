@@ -5,7 +5,7 @@
 #include "random.h"
 #include "merlict/function/function.h"
 
-namespace relleums {
+namespace merlict {
 namespace random {
 
 class SamplesFromDistribution {

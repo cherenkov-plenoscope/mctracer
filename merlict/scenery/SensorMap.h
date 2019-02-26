@@ -8,7 +8,7 @@
 #include "ResourceMap.h"
 #include "merlict/sensor/Sensor.h"
 
-namespace relleums {
+namespace merlict {
 
 struct SensorMap: public ResourceMap {
 	std::vector<sensor::Sensor*> sensors;

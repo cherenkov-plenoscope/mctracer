@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include <fstream>
 
-namespace relleums {
+namespace merlict {
 namespace binio {
 
 void append_float32(const float &v, std::ostream &fout);

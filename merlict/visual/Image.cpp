@@ -4,7 +4,7 @@
 #include <vector>
 #include "merlict/visual/PortablePixMap.h"
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 
 Image::Image(unsigned int _number_cols, unsigned int _number_rows):

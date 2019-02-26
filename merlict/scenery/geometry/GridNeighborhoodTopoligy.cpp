@@ -2,7 +2,7 @@
 #include "merlict/scenery/geometry/GridNeighborhoodTopoligy.h"
 #include <algorithm>
 
-namespace relleums {
+namespace merlict {
 
 GridNeighborhoodTopoligy::GridNeighborhoodTopoligy(
     const std::vector<Vec3> *grid,

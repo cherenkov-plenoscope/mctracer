@@ -5,7 +5,7 @@ using std::string;
 using std::vector;
 using std::stringstream;
 
-namespace relleums {
+namespace merlict {
 
 void PlaneDualSphericalBound::set_x_hight_and_y_width(
     const double x_width,

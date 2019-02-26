@@ -8,7 +8,7 @@
 #include "merlict/Intersection.h"
 #include "merlict/scenery/geometry/ZaxisCylinderRayIntersectionEquation.h"
 
-namespace relleums {
+namespace merlict {
 
 class Cylinder :public SurfaceEntity {
  protected:

@@ -5,7 +5,7 @@
 #include "merlict/Vec3.h"
 #include "Generator.h"
 
-namespace relleums {
+namespace merlict {
 namespace random {
 
 struct ZenithDistancePicker {

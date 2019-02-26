@@ -3,7 +3,7 @@
 #include <sstream>
 using std::string;
 
-namespace relleums {
+namespace merlict {
 
 TrajectoryFactory::TrajectoryFactory(const RayForPropagation* _ray):
     ray(_ray),

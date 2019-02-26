@@ -7,7 +7,7 @@
 #include "merlict/mctracer.h"
 #include "niels_lohmann_json.hpp"
 
-namespace relleums {
+namespace merlict {
 namespace json {
 
 void assert_key(const nlohmann::json &j, const std::string &key);

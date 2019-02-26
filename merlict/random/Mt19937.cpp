@@ -2,7 +2,7 @@
 #include "merlict/random/Mt19937.h"
 #include "random.h"
 
-namespace relleums {
+namespace merlict {
 namespace random {
 
 Mt19937::Mt19937(const uint64_t seed) {

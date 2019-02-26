@@ -6,7 +6,7 @@
 #include "merlict/visual/Image.h"
 #include "merlict/Vec3.h"
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 
 class SkyDome {

@@ -4,7 +4,7 @@
 #include "merlict/PhysicalConstants.h"
 #include "merlict/RayAndFrame.h"
 
-namespace relleums {
+namespace merlict {
 
 Photon::Photon(
     const Vec3 support,

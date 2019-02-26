@@ -6,7 +6,7 @@
 using std::string;
 using std::vector;
 
-namespace relleums {
+namespace merlict {
 
 Histogram1::Histogram1(
     const vector<double> &samples,

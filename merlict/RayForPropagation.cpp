@@ -7,7 +7,7 @@ using std::stringstream;
 using std::vector;
 using std::string;
 
-namespace relleums {
+namespace merlict {
 
 RayForPropagation::RayForPropagation(
     const Vec3 support,

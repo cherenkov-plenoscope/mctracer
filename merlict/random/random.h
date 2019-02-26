@@ -8,7 +8,7 @@
 #include "SamplesFromDistribution.h"
 #include "SpherePointPicker.h"
 
-namespace relleums {
+namespace merlict {
 namespace random {
 
 static const unsigned int ZERO_SEED = 0;

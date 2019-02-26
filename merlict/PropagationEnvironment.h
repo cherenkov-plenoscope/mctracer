@@ -6,7 +6,7 @@
 #include "merlict/PropagationConfig.h"
 #include "merlict/random/random.h"
 
-namespace relleums {
+namespace merlict {
 
 struct PropagationEnvironment {
     const Frame* root_frame = &VOID_FRAME;

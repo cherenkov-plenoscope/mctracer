@@ -5,7 +5,7 @@
 using std::vector;
 using std::string;
 
-namespace relleums {
+namespace merlict {
 namespace sensor {
 
 double arrival_time_mean(const vector<PhotonArrival>& arrivals) {

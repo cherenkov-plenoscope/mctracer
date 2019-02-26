@@ -2,7 +2,7 @@
 #include "merlict/FresnelRefractionAndReflection.h"
 #include <math.h>
 
-namespace relleums {
+namespace merlict {
 
 FresnelRefractionAndReflection::FresnelRefractionAndReflection(
     const Vec3 &_incident_obj_sys,

@@ -7,7 +7,7 @@
 #include "ResourceMap.h"
 #include "merlict/Color.h"
 
-namespace relleums {
+namespace merlict {
 
 struct ColorMap: public ResourceMap {
     std::map<std::string, Color> colors;

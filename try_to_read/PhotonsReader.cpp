@@ -7,7 +7,7 @@
 using std::string;
 using std::vector;
 
-namespace relleums {
+namespace merlict {
 
 PhotonsReader::PhotonsReader(const string path) {
     std::stringstream out;

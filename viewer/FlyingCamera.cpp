@@ -10,7 +10,7 @@ using std::cout;
 using std::stringstream;
 using std::string;
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 
 static const unsigned int SPACE_KEY = 32;

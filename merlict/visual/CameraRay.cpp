@@ -4,7 +4,7 @@
 #include "merlict/RayAndFrame.h"
 #include "merlict/Intersection.h"
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 
 CameraRay::CameraRay() {}

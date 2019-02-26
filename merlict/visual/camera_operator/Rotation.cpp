@@ -4,7 +4,7 @@
 #include "merlict/tools.h"
 using std::cout;
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 namespace camera_operator {
 

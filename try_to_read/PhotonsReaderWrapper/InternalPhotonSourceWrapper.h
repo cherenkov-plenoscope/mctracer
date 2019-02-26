@@ -6,7 +6,7 @@
 #include <vector>
 #include <string>
 
-namespace relleums {
+namespace merlict {
 
 class InternalPhotonSourceWrapper: public BasicWrapper {
     bool the_single_event_was_already_read;

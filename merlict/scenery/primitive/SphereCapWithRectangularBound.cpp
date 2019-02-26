@@ -6,7 +6,7 @@ using std::string;
 using std::vector;
 using std::stringstream;
 
-namespace relleums {
+namespace merlict {
 
 void SphereCapWithRectangularBound::set_curvature_radius_and_x_y_width(
     const double _curvature_radius,

@@ -5,7 +5,7 @@
 using std::vector;
 using std::string;
 
-namespace relleums {
+namespace merlict {
 namespace sensor {
 
 Sensor::Sensor(unsigned int _id, const Frame* _frame):

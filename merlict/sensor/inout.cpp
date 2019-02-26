@@ -4,7 +4,7 @@
 using std::array;
 using std::vector;
 
-namespace relleums {
+namespace merlict {
 namespace sensor {
 
 void write_arrival_information_to_file(

@@ -8,7 +8,7 @@
 #include "merlict/scenery/geometry/HexagonalPrismZ.h"
 #include "merlict/scenery/geometry/SurfaceWithOuterPrismBound.h"
 
-namespace relleums {
+namespace merlict {
 
 class SphereCapWithHexagonalBound :public SurfaceWithOuterPrismBound {
  protected:

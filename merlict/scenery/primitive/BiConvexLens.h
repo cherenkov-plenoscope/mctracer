@@ -4,7 +4,7 @@
 
 #include "SphereCapWithCylinderBound.h"
 
-namespace relleums {
+namespace merlict {
 
 class BiConvexLens :public SurfaceEntity {
  public:

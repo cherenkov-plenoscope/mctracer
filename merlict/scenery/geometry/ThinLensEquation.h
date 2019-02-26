@@ -2,7 +2,7 @@
 #ifndef SCENERY_GEOMETRY_THINLENSEQUATION_H_
 #define SCENERY_GEOMETRY_THINLENSEQUATION_H_
 
-namespace relleums {
+namespace merlict {
 namespace ThinLensEquation {
 
 // The thin lens equation

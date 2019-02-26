@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/scenery/geometry/XyPlaneRayIntersectionEquation.h"
 
-namespace relleums {
+namespace merlict {
 
 XyPlaneRayIntersectionEquation::XyPlaneRayIntersectionEquation(const Ray* ray) {
     // calculate intersection of  ray: g := sup+v*dir

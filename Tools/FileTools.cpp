@@ -3,7 +3,7 @@
 #include <sstream>
 #include <fstream>
 
-namespace relleums {
+namespace merlict {
 
 void FileTools::write_text_to_file(
     const std::string &text,

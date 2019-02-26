@@ -6,7 +6,7 @@
 #include <vector>
 #include "merlict/sensor/PhotonArrival.h"
 
-namespace relleums {
+namespace merlict {
 namespace sensor {
 
 void write_arrival_information_to_file(

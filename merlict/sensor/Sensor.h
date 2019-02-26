@@ -7,7 +7,7 @@
 #include "merlict/Photon.h"
 #include "PhotonArrival.h"
 
-namespace relleums {
+namespace merlict {
 namespace sensor {
 
 struct Sensor {

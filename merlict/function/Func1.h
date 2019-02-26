@@ -6,7 +6,7 @@
 #include <string>
 #include "Limits.h"
 
-namespace relleums {
+namespace merlict {
 namespace function {
 
 struct Point {

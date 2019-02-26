@@ -2,7 +2,7 @@
 #ifndef CORE_SIMULATIONTRUTH_H_
 #define CORE_SIMULATIONTRUTH_H_
 
-namespace relleums {
+namespace merlict {
 namespace SimulationTruth {
     static const int MCTRACER_DEFAULT = -1;
     static const int NIGHT_SKY_BACKGROUND = -100;

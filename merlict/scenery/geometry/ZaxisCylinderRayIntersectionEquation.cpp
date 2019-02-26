@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/scenery/geometry/ZaxisCylinderRayIntersectionEquation.h"
 
-namespace relleums {
+namespace merlict {
 
 ZaxisCylinderRayIntersectionEquation::ZaxisCylinderRayIntersectionEquation(
     const double radius,

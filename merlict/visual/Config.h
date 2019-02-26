@@ -6,7 +6,7 @@
 #include "SkyDome.h"
 #include "merlict/Vec3.h"
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 
 struct Config {

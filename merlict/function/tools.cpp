@@ -4,7 +4,7 @@
 #include <vector>
 using std::vector;
 
-namespace relleums {
+namespace merlict {
 namespace function {
 
 double increment_for_steps(const Limits &l, const uint64_t num_samples) {

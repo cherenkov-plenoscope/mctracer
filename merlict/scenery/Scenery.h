@@ -7,7 +7,7 @@
 #include "SensorMap.h"
 #include "merlict/Frame.h"
 
-namespace relleums {
+namespace merlict {
 
 struct Scenery {
     Frame root;

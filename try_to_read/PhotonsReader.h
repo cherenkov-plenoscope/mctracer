@@ -13,7 +13,7 @@
 // Monte Carlo truth aswell, you can not use this reader, but the specific
 // reader, which is just wrapped here, itself.
 
-namespace relleums {
+namespace merlict {
 
 class PhotonsReader {
     BasicWrapper *photons_from_file;

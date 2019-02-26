@@ -5,7 +5,7 @@ using std::stringstream;
 using std::string;
 using std::map;
 
-namespace relleums {
+namespace merlict {
 
 bool ColorMap::has(const string key)const {
     return colors.find(key) != colors.end();

@@ -5,7 +5,7 @@
 #include <string>
 #include "Verbosity.h"
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 namespace camera_operator {
 

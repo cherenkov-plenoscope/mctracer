@@ -5,7 +5,7 @@
 using std::string;
 using std::vector;
 
-namespace relleums {
+namespace merlict {
 namespace stereo_litography {
 
 void add_stl_to_and_inherit_surface_from_surfac_entity(

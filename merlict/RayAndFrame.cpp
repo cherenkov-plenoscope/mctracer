@@ -3,7 +3,7 @@
 #include <algorithm>
 using std::vector;
 
-namespace relleums {
+namespace merlict {
 namespace RayAndFrame {
 
 bool ray_support_inside_frames_bounding_sphere(

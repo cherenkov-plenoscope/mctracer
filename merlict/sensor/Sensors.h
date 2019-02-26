@@ -7,7 +7,7 @@
 #include "merlict/sensor/Sensor.h"
 #include "merlict/Photon.h"
 
-namespace relleums {
+namespace merlict {
 namespace sensor {
 
 std::vector<Sensor*> sort_by_frame(const std::vector<Sensor*>* by_occurence);

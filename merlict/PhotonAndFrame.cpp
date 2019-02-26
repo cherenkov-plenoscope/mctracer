@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/PhotonAndFrame.h"
 
-namespace relleums {
+namespace merlict {
 namespace PhotonAndFrame {
 
 Propagator::Propagator(

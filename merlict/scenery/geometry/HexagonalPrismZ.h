@@ -4,7 +4,7 @@
 
 #include "merlict/scenery/geometry/PrismZ.h"
 
-namespace relleums {
+namespace merlict {
 
 class HexagonalPrismZ :public PrismZ {
  private:

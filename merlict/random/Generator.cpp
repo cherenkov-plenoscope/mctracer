@@ -2,7 +2,7 @@
 #include "merlict/random/Generator.h"
 #include <math.h>
 
-namespace relleums {
+namespace merlict {
 namespace random {
 
 uint64_t Generator::seed()const {

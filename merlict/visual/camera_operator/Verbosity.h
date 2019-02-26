@@ -4,7 +4,7 @@
 
 #include "merlict/visual/CameraDevice.h"
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 namespace camera_operator {
 

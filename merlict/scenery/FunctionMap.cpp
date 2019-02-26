@@ -5,7 +5,7 @@ using std::string;
 using std::map;
 using std::stringstream;
 
-namespace relleums {
+namespace merlict {
 
 bool FunctionMap::has(const string key)const {
     return functions.find(key) != functions.end();

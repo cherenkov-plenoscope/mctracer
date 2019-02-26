@@ -1,7 +1,7 @@
 // Copyright 2017 Sebastian A. Mueller
 #include "merlict/binio.h"
 
-namespace relleums {
+namespace merlict {
 namespace binio {
 
 void append_float32(const float &v, std::ostream &fout) {

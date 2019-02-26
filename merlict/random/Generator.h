@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include "merlict/Vec3.h"
 
-namespace relleums {
+namespace merlict {
 namespace random {
 
 class Generator {

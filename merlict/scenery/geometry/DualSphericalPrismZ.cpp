@@ -2,7 +2,7 @@
 #include "merlict/scenery/geometry/DualSphericalPrismZ.h"
 #include <math.h>
 
-namespace relleums {
+namespace merlict {
 
 void DualSphericalPrismZ::set_x_hight_and_y_width(
     const double hight,

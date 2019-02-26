@@ -2,7 +2,7 @@
 #ifndef CORE_PHOTON_H_
 #define CORE_PHOTON_H_
 
-namespace relleums {
+namespace merlict {
 namespace PhotonAndFrame {
 
 class Propagator;
@@ -14,7 +14,7 @@ class Propagator;
 #include "merlict/RayForPropagation.h"
 #include "FresnelRefractionAndReflection.h"
 
-namespace relleums {
+namespace merlict {
 
 class Photon :public RayForPropagation{
     friend class PhotonAndFrame::Propagator;

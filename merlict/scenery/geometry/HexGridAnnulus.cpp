@@ -3,7 +3,7 @@
 #include <math.h>
 #include <sstream>
 
-namespace relleums {
+namespace merlict {
 
 HexGridAnnulus::HexGridAnnulus(
     const double outer_radius,

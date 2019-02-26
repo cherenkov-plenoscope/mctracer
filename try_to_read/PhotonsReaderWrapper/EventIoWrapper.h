@@ -13,7 +13,7 @@
 #include <vector>
 #include <string>
 
-namespace relleums {
+namespace merlict {
 //=================================
 class EventIoWrapper: public BasicWrapper {
 

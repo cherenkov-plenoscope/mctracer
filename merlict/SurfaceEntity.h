@@ -7,7 +7,7 @@
 #include "Color.h"
 #include "merlict/function/function.h"
 
-namespace relleums {
+namespace merlict {
 
 class SurfaceEntity :public Frame {
     const Frame* allowed_frame_to_propagate_to = &VOID_FRAME;

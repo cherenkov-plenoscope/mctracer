@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/scenery/geometry/SphericalCapRayIntersectionEquation.h"
 
-namespace relleums {
+namespace merlict {
 
 SphericalCapRayIntersectionEquation::SphericalCapRayIntersectionEquation(
     const double _radius,

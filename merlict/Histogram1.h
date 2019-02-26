@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 
-namespace relleums {
+namespace merlict {
 
 class Histogram1 {
     std::vector<double> bin_edges;

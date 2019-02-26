@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/scenery/segmented_imaging_reflector/Config.h"
 
-namespace relleums {
+namespace merlict {
 namespace segmented_imaging_reflector {
 
 Config::Config():

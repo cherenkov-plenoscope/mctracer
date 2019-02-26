@@ -5,7 +5,7 @@
 #include <vector>
 #include "merlict/sensor/Sensor.h"
 
-namespace relleums {
+namespace merlict {
 namespace sensor {
 
 struct FindSensorByFrame {

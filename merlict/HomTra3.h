@@ -6,7 +6,7 @@
 #include "merlict/Vec3.h"
 #include "merlict/Rot3.h"
 
-namespace relleums {
+namespace merlict {
 
 // The concept of Homogeneous Transformations is taken from the text book
 //

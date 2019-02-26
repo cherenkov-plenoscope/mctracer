@@ -4,7 +4,7 @@
 
 #include "TwoSolutionSurfaceRayEquation.h"
 
-namespace relleums {
+namespace merlict {
 
 class EllipticalCapRayIntersectionEquation :
     public TwoSolutionSurfaceRayEquation {

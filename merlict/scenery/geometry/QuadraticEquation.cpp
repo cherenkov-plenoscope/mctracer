@@ -2,7 +2,7 @@
 #include "merlict/scenery/geometry/QuadraticEquation.h"
 #include <math.h>
 
-namespace relleums {
+namespace merlict {
 
 // y = a*x^2 + b*x + c
 // p = b/a

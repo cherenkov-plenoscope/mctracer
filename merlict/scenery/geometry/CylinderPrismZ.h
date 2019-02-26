@@ -4,7 +4,7 @@
 
 #include "PrismZ.h"
 
-namespace relleums {
+namespace merlict {
 
 class CylinderPrismZ :public PrismZ {
  protected:

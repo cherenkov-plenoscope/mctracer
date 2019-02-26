@@ -8,7 +8,7 @@ using std::stringstream;
 using std::string;
 using std::vector;
 
-namespace relleums {
+namespace merlict {
 namespace tsvio {
 
 vector<vector<double>> gen_table_from_file(const string &path) {

@@ -5,7 +5,7 @@
 #include <string>
 #include "PrismZ.h"
 
-namespace relleums {
+namespace merlict {
 
 class RectangularPrismZ :public PrismZ {
  private:

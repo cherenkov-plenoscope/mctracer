@@ -13,7 +13,7 @@
 #include <vector>
 #include <string>
 
-namespace relleums {
+namespace merlict {
 //=================================
 // pure virtual
 // serves only as API template for the other actual wrappers

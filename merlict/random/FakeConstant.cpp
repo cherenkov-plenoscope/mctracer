@@ -2,7 +2,7 @@
 #include "merlict/random/FakeConstant.h"
 #include "random.h"
 
-namespace relleums {
+namespace merlict {
 namespace random {
 
 FakeConstant::FakeConstant(const double _constant) {

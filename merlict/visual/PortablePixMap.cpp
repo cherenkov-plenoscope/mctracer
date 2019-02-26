@@ -6,7 +6,7 @@
 #include "merlict/txt.h"
 #include "merlict/binio.h"
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 namespace ppm {
 

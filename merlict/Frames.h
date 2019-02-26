@@ -5,7 +5,7 @@
 #include <vector>
 #include "merlict/Frame.h"
 
-namespace relleums {
+namespace merlict {
 namespace Frames {
 
 double spread_of_frame_position_in_mother(const std::vector<Frame*> &frames);

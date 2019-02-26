@@ -4,7 +4,7 @@
 #include "merlict/txt.h"
 using std::string;
 
-namespace relleums {
+namespace merlict {
 namespace ospath {
 
     string join(string path1, string path2) {

@@ -2,15 +2,15 @@
 #ifndef VISUAL_CAMERARAY_H_
 #define VISUAL_CAMERARAY_H_
 
-namespace relleums {class Frame;}
-namespace relleums {class Intersection;}
+namespace merlict {class Frame;}
+namespace merlict {class Intersection;}
 
 #include <string>
 #include "merlict/Ray.h"
 #include "merlict/Color.h"
 #include "Config.h"
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 
 class CameraRay :public Ray {

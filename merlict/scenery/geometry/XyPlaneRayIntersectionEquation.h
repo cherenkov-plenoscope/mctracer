@@ -4,7 +4,7 @@
 
 #include "merlict/Ray.h"
 
-namespace relleums {
+namespace merlict {
 
 class XyPlaneRayIntersectionEquation {
     double ray_parameter_v;

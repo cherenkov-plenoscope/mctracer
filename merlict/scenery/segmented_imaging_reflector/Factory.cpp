@@ -4,7 +4,7 @@
 using std::vector;
 using std::string;
 
-namespace relleums {
+namespace merlict {
 namespace segmented_imaging_reflector {
 
 Factory::Factory(const Config ncfg):

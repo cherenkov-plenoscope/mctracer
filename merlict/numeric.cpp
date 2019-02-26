@@ -3,7 +3,7 @@
 #include <math.h>
 using std::vector;
 
-namespace relleums {
+namespace merlict {
 namespace numeric {
 
 double mean(const vector<double> &vec) {

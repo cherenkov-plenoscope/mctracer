@@ -2,13 +2,13 @@
 #ifndef CORE_INTERSECTION_H_
 #define CORE_INTERSECTION_H_
 
-namespace relleums {class Ray;}
+namespace merlict {class Ray;}
 
 #include <string>
 #include "merlict/Vec3.h"
 #include "merlict/SurfaceEntity.h"
 
-namespace relleums {
+namespace merlict {
 
 class Intersection {
  protected:

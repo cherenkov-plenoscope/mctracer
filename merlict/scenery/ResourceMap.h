@@ -2,7 +2,7 @@
 #ifndef SCENERY_RESOURCEMAP_H_
 #define SCENERY_RESOURCEMAP_H_
 
-namespace relleums {
+namespace merlict {
 
 struct ResourceMap {
     struct NoSuchKey: public std::out_of_range {

@@ -6,7 +6,7 @@ using std::string;
 using std::stringstream;
 using std::vector;
 
-namespace relleums {
+namespace merlict {
 
 void Triangle::set_corners_in_xy_plane(
     const double Ax, const double Ay,

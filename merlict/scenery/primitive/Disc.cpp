@@ -6,7 +6,7 @@ using std::string;
 using std::vector;
 using std::stringstream;
 
-namespace relleums {
+namespace merlict {
 
 void Disc::set_radius(const double radius) {
     cylinder_bounds.set_radius(radius);

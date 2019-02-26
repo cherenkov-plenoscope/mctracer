@@ -2,7 +2,7 @@
 #ifndef VISUAL_APERTURECAMERA_H_
 #define VISUAL_APERTURECAMERA_H_
 
-namespace relleums {class Frame;}
+namespace merlict {class Frame;}
 
 #include <string>
 #include <vector>
@@ -11,7 +11,7 @@ namespace relleums {class Frame;}
 #include "CameraDevice.h"
 #include "merlict/random/random.h"
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 
 class ApertureCamera :public CameraDevice{

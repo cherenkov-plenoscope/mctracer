@@ -2,7 +2,7 @@
 #ifndef CORE_PHYSICALCONSTANTS_H_
 #define CORE_PHYSICALCONSTANTS_H_
 
-namespace relleums {
+namespace merlict {
 
 const double VACUUM_SPPED_OF_LIGHT = 299792458.0;
 

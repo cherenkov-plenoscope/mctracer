@@ -14,7 +14,7 @@
 
 //=================================
 
-namespace relleums {
+namespace merlict {
 
 class AsciiIoWrapper: public BasicWrapper {
 

@@ -3,7 +3,7 @@
 #include <math.h>
 #include "merlict/tools.h"
 
-namespace relleums {
+namespace merlict {
 
 HexGridFlower::HexGridFlower(
     const double outer_hex_grid_radius,

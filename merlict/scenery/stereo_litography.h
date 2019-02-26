@@ -9,7 +9,7 @@
 #include "merlict/Frame.h"
 #include "merlict/SurfaceEntity.h"
 
-namespace relleums {
+namespace merlict {
 namespace stereo_litography {
 
 /*

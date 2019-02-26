@@ -7,7 +7,7 @@
 #include "merlict/Vec3.h"
 #include "HexagonalPrismZ.h"
 
-namespace relleums {
+namespace merlict {
 
 class HexGridFlower{
     Vec3 unit_hex_a;

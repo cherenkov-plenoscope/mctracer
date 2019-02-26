@@ -4,7 +4,7 @@
 
 #include "Plane.h"
 
-namespace relleums {
+namespace merlict {
 
 class RectangularBox :public SurfaceEntity {
  public:

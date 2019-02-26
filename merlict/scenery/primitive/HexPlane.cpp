@@ -8,7 +8,7 @@ using std::vector;
 using std::string;
 using std::stringstream;
 
-namespace relleums {
+namespace merlict {
 
 void HexPlane::set_outer_hex_radius(const double outer_hex_radius) {
     hex_bounds.set_outer_radius(outer_hex_radius);

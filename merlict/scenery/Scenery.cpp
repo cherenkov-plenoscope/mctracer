@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/scenery/Scenery.h"
 
-namespace relleums {
+namespace merlict {
 
 Scenery Scenery::void_scenery = Scenery();
 

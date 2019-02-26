@@ -6,7 +6,7 @@ using std::string;
 using std::stringstream;
 using std::vector;
 
-namespace relleums {
+namespace merlict {
 
 void EllipticalCapWithHexagonalBound::
     set_focalLength_radiiRatio_hexAngel_hexRadius(

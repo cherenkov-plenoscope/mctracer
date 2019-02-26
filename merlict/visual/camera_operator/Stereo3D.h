@@ -2,13 +2,13 @@
 #ifndef VISUAL_CAMERAOPERATOR_STEREO3D_H_
 #define VISUAL_CAMERAOPERATOR_STEREO3D_H_
 
-namespace relleums {class Frame;}
+namespace merlict {class Frame;}
 
 #include <string>
 #include "merlict/DistanceMeter.h"
 #include "Verbosity.h"
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 namespace camera_operator {
 

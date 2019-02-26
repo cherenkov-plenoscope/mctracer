@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/visual/camera_operator/FieldOfView.h"
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 namespace camera_operator {
 

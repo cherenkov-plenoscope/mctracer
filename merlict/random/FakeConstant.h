@@ -4,7 +4,7 @@
 
 #include "Generator.h"
 
-namespace relleums {
+namespace merlict {
 namespace random {
 
 class FakeConstant : public Generator{

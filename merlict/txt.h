@@ -6,7 +6,7 @@
 #include <vector>
 #include "merlict/Vec3.h"
 
-namespace relleums {
+namespace merlict {
 namespace txt {
 
 bool is_equal(const std::string text_A, const std::string text_B);

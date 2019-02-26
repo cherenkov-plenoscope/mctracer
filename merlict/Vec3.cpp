@@ -3,7 +3,7 @@
 #include <math.h>
 #include <sstream>
 
-namespace relleums {
+namespace merlict {
 
 Vec3::Vec3() {}
 

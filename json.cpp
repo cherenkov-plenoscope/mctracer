@@ -9,7 +9,7 @@ namespace nl = nlohmann;
 using std::string;
 using relleums::txt::is_equal;
 
-namespace relleums {
+namespace merlict {
 namespace json {
 
 void assert_key(const nl::json &j, const string &key) {

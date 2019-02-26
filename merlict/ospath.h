@@ -4,7 +4,7 @@
 
 #include <string>
 
-namespace relleums {
+namespace merlict {
 namespace ospath {
 // Inspired by python os.path.
 

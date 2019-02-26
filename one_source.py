@@ -191,7 +191,7 @@ with open(out_header, 'wt') as fout:
 	for header_include in header_includes:
 		fout.write(header_include + '\n')
 	fout.write("\n")
-	fout.write("namespace relleums {\n")
+	fout.write("namespace merlict {\n")
 	for header in headers:
 		print(header)
 		with open(header, 'rt') as fin:
@@ -210,7 +210,7 @@ with open(out_source, 'wt') as fout:
 	for source_using in source_usings:
 		fout.write(source_using + '\n')
 	fout.write("\n")
-	fout.write("namespace relleums {\n")
+	fout.write("namespace merlict {\n")
 
 	for source in sources:
 		print(source)

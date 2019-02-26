@@ -8,7 +8,7 @@
 #include "merlict/scenery/primitive/Cylinder.h"
 #include "merlict/scenery/primitive/Sphere.h"
 
-namespace relleums {
+namespace merlict {
 
 class TrajectoryFactory {
     // Spectate the propagation history of a photon.

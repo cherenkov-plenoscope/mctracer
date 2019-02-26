@@ -6,7 +6,7 @@ using std::stringstream;
 using std::vector;
 using std::array;
 
-namespace relleums {
+namespace merlict {
 
 EventIoPhotonFactory::EventIoPhotonFactory(
     const array<float, 8> &_corsika_photon,

@@ -4,7 +4,7 @@
 using std::string;
 using std::vector;
 
-namespace relleums {
+namespace merlict {
 //------------------------------------------------------------------------------
 AsciiIoWrapper::AsciiIoWrapper(const string _path): 
 	BasicWrapper(_path)

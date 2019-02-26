@@ -5,7 +5,7 @@
 #include "merlict/Ray.h"
 #include "QuadraticEquation.h"
 
-namespace relleums {
+namespace merlict {
 
 class TwoSolutionSurfaceRayEquation {
  public:

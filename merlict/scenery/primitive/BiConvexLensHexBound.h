@@ -5,7 +5,7 @@
 #include "merlict/scenery/primitive/SphereCapWithHexagonalBound.h"
 #include "merlict/scenery/primitive/PlaneDualSphericalBound.h"
 
-namespace relleums {
+namespace merlict {
 
 class BiConvexLensHexBound :public SurfaceEntity{
  public:

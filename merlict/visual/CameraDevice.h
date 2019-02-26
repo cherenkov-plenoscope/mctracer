@@ -11,7 +11,7 @@
 #include "CameraRay.h"
 #include "Image.h"
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 
 class CameraDevice{

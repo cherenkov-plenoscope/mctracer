@@ -2,12 +2,12 @@
 #ifndef VISUAL_PINHOLECAMERA_H_
 #define VISUAL_PINHOLECAMERA_H_
 
-namespace relleums {class Frame;}
+namespace merlict {class Frame;}
 
 #include <string>
 #include "CameraDevice.h"
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 
 class PinHoleCamera:public CameraDevice{

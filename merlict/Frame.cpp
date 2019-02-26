@@ -13,7 +13,7 @@ using std::string;
 using std::stringstream;
 using std::vector;
 
-namespace relleums {
+namespace merlict {
 
 Frame::Frame():
     bounding_sphere_radius(0.0),

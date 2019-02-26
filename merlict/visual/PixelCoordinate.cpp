@@ -2,7 +2,7 @@
 #include "merlict/visual/PixelCoordinate.h"
 #include <vector>
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 
 std::vector<PixelCoordinate> pixel_coordinates(

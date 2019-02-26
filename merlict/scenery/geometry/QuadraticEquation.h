@@ -2,7 +2,7 @@
 #ifndef SCENERY_GEOMETRY_QUADRATICEQUATION_H_
 #define SCENERY_GEOMETRY_QUADRATICEQUATION_H_
 
-namespace relleums {
+namespace merlict {
 
 class QuadraticEquation{
     // f(x) = ax^2 + bx + c

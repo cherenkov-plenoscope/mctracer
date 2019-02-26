@@ -6,7 +6,7 @@
 #include "merlict/scenery/segmented_imaging_reflector/Geometry.h"
 #include "merlict/SurfaceEntity.h"
 
-namespace relleums {
+namespace merlict {
 namespace segmented_imaging_reflector {
 
 class Factory {

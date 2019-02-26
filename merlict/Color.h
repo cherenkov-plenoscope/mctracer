@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-namespace relleums {
+namespace merlict {
 
 struct Color {
     float r, g, b;

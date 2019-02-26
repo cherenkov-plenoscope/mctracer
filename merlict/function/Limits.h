@@ -4,7 +4,7 @@
 
 #include <string>
 
-namespace relleums {
+namespace merlict {
 namespace function {
 
 struct Limits{

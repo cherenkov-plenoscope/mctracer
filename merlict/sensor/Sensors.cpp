@@ -5,7 +5,7 @@
 #include "merlict/sensor/FindSensorByFrame.h"
 using std::vector;
 
-namespace relleums {
+namespace merlict {
 namespace sensor {
 
 vector<Sensor*> sort_by_frame(const vector<Sensor*>* by_occurence) {

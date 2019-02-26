@@ -5,7 +5,7 @@
 #include "Color.h"
 #include "Vec3.h"
 
-namespace relleums {
+namespace merlict {
 
 struct PropagationConfig {
     unsigned int max_number_of_interactions_per_photon;

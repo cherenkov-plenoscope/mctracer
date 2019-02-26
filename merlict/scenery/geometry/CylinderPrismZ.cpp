@@ -3,7 +3,7 @@
 #include <math.h>
 #include <sstream>
 
-namespace relleums {
+namespace merlict {
 
 void CylinderPrismZ::set_radius(const double radius) {
     assert_radius_is_positiv(radius);

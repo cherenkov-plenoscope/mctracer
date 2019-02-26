@@ -10,7 +10,7 @@
 using std::string;
 using std::stringstream;
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 
 void ApertureCamera::set_fStop_sesnorWidth(

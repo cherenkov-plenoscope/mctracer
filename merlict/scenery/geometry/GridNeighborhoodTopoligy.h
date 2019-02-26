@@ -7,7 +7,7 @@
 #include "merlict/Vec3.h"
 #include "HexagonalPrismZ.h"
 
-namespace relleums {
+namespace merlict {
 
 class GridNeighborhoodTopoligy{
     const std::vector<Vec3> *grid;

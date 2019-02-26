@@ -2,7 +2,7 @@
 #include "merlict/welcome_screen.h"
 #include <sstream>
 
-namespace relleums {
+namespace merlict {
 
 std::string welcome_screen() {
     std::stringstream out;

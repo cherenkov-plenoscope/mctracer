@@ -6,7 +6,7 @@ using std::string;
 using std::vector;
 using std::stringstream;
 
-namespace relleums {
+namespace merlict {
 
 Plane::Plane() {}
 

@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/visual/Tracer.h"
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 
 const double Tracer::wavelength = 533e-9;

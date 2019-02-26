@@ -5,7 +5,7 @@
 #include "PrismZ.h"
 #include "merlict/Vec2.h"
 
-namespace relleums {
+namespace merlict {
 
 class DualSphericalPrismZ :public PrismZ {
  private:

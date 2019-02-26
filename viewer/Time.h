@@ -5,7 +5,7 @@
 #include <ctime>
 #include <string>
 
-namespace relleums {
+namespace merlict {
 namespace Time {
 
 class Stamp {

@@ -37,7 +37,7 @@
 // where id is the index of the thread that runs the functor
 // ret is some return type
 
-namespace relleums {
+namespace merlict {
 namespace ctpl {
 
     namespace detail {

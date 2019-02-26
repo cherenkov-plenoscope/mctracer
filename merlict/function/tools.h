@@ -6,7 +6,7 @@
 #include <vector>
 #include "function.h"
 
-namespace relleums {
+namespace merlict {
 namespace function {
 
 static const unsigned int DEFAULT_STEPS = 4096;

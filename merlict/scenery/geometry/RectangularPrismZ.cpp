@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 
-namespace relleums {
+namespace merlict {
 
 void RectangularPrismZ::set_x_y_width(
     const double x_width,

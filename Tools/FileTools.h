@@ -4,7 +4,7 @@
 
 #include <string>
 
-namespace relleums {
+namespace merlict {
 namespace FileTools {
 
 void write_text_to_file(

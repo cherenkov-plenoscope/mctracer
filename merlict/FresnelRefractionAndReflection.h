@@ -4,7 +4,7 @@
 
 #include "merlict/Vec3.h"
 
-namespace relleums {
+namespace merlict {
 
 class FresnelRefractionAndReflection{
  protected:

@@ -4,7 +4,7 @@
 
 #include <vector>
 
-namespace relleums {
+namespace merlict {
 namespace numeric {
 
 double mean(const std::vector<double> &vec);

@@ -3,7 +3,7 @@
 #include <sstream>
 #include <limits>
 
-namespace relleums {
+namespace merlict {
 
 Intersection::Intersection() {
     object = &SurfaceEntity::VOID_SURFACE_ENTITY;

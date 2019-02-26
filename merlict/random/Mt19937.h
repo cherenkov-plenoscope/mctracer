@@ -5,7 +5,7 @@
 #include "Generator.h"
 #include <random>
 
-namespace relleums {
+namespace merlict {
 namespace random {
 
 class Mt19937 : public Generator{

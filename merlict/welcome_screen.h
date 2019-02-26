@@ -4,7 +4,7 @@
 
 #include <string>
 
-namespace relleums {
+namespace merlict {
 
 std::string welcome_screen();
 

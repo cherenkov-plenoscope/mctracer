@@ -4,7 +4,7 @@
 #include <iomanip>
 using std::string;
 
-namespace relleums {
+namespace merlict {
 namespace Time {
 
     Stamp::Stamp() {

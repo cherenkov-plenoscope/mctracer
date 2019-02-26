@@ -3,7 +3,7 @@
 #include "merlict/DistanceMeter.h"
 #include "merlict/RayAndFrame.h"
 
-namespace relleums {
+namespace merlict {
 
 DistanceMeter::DistanceMeter(const Ray* ray, const Frame* world) {
     faces_an_object = false;

@@ -2,7 +2,7 @@
 #ifndef CORE_FRAME_H_
 #define CORE_FRAME_H_
 
-namespace relleums {
+namespace merlict {
 class Ray;
 class Intersection;
 }  // namespace relleums
@@ -13,7 +13,7 @@ class Intersection;
 #include "merlict/Rot3.h"
 #include "merlict/HomTra3.h"
 
-namespace relleums {
+namespace merlict {
 
 const char FRAME_PATH_DELIMITER = '/';
 const unsigned int FRAME_MAX_NUMBER_CHILDREN = 16;

@@ -5,7 +5,7 @@
 #include "merlict/Ray.h"
 #include "merlict/Frame.h"
 
-namespace relleums {
+namespace merlict {
 
 struct DistanceMeter {
     DistanceMeter(const Ray* ray, const Frame* world);

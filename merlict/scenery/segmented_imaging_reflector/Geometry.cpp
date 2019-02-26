@@ -11,7 +11,7 @@ using std::vector;
 using std::string;
 using std::stringstream;
 
-namespace relleums {
+namespace merlict {
 namespace segmented_imaging_reflector {
 
 Geometry::Geometry(const Config config): cfg(config) {

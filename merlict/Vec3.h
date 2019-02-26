@@ -4,7 +4,7 @@
 
 #include <string>
 
-namespace relleums {
+namespace merlict {
 
 struct Vec3 {
     double x;

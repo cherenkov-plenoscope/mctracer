@@ -9,7 +9,7 @@
 #include "merlict/Vec2.h"
 #include "merlict/scenery/geometry/XyPlaneRayIntersectionEquation.h"
 
-namespace relleums {
+namespace merlict {
 
 class Triangle  :public SurfaceEntity{
     Vec2 A;

@@ -6,7 +6,7 @@
 #include "merlict/Vec3.h"
 #include "merlict/HomTra3.h"
 
-namespace relleums {
+namespace merlict {
 
 class Ray {
  protected:

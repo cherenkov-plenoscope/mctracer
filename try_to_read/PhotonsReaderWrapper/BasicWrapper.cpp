@@ -1,7 +1,7 @@
 #include "BasicWrapper.h"
 using std::string;
 //------------------------------------------------------------------------------
-namespace relleums {
+namespace merlict {
 
 BasicWrapper::BasicWrapper(const string _path): path(_path) {}
 

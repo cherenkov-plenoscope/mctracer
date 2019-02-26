@@ -7,7 +7,7 @@
 #include "merlict/mctracer.h"
 #include "viewer/Time.h"
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 
 class FlyingCamera {

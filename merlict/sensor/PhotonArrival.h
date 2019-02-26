@@ -4,7 +4,7 @@
 
 #include <stdint.h>
 
-namespace relleums {
+namespace merlict {
 namespace sensor {
 
 struct PhotonArrival {

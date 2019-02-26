@@ -6,7 +6,7 @@
 #include <string>
 #include "merlict/sensor/PhotonArrival.h"
 
-namespace relleums {
+namespace merlict {
 namespace sensor {
 
 double x_mean(const std::vector<PhotonArrival>& arrivals);

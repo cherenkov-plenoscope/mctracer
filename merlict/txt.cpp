@@ -7,7 +7,7 @@ using std::string;
 using std::stringstream;
 using std::vector;
 
-namespace relleums {
+namespace merlict {
 namespace txt {
 
 bool is_equal(const string text_A, const string text_B) {

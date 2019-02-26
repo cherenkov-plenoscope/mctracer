@@ -2,7 +2,7 @@
 #include "merlict/random/SpherePointPicker.h"
 #include <math.h>
 
-namespace relleums {
+namespace merlict {
 namespace random {
 
 ZenithDistancePicker::ZenithDistancePicker(

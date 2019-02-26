@@ -9,7 +9,7 @@
 #include "merlict/Intersection.h"
 #include "merlict/scenery/geometry/QuadraticEquation.h"
 
-namespace relleums {
+namespace merlict {
 
 class Sphere :public SurfaceEntity {
  protected:

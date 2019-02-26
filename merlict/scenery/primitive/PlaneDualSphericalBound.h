@@ -9,7 +9,7 @@
 #include "merlict/scenery/geometry/XyPlaneRayIntersectionEquation.h"
 #include "merlict/scenery/geometry/DualSphericalPrismZ.h"
 
-namespace relleums {
+namespace merlict {
 
 class PlaneDualSphericalBound :public SurfaceEntity{
  protected:

@@ -4,7 +4,7 @@ using std::string;
 using std::vector;
 using std::array;
 
-namespace relleums {
+namespace merlict {
 
 //------------------------------------------------------------------------------
 relleums::EventIoWrapper::EventIoWrapper(const string _path): 

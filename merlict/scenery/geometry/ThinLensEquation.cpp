@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/scenery/geometry/ThinLensEquation.h"
 
-namespace relleums {
+namespace merlict {
 namespace ThinLensEquation {
 
 double get_image_dist_given_focal_and_object_dist(double f, double o) {

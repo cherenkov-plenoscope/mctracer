@@ -2,7 +2,7 @@
 #include "merlict/small_ball.h"
 #include <math.h>
 
-namespace relleums {
+namespace merlict {
 
 double radius_to_enclose_ball(Vec3 center, Ball ball) {
     Vec3 d = center - ball.center;

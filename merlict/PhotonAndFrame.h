@@ -7,7 +7,7 @@
 #include "merlict/RayAndFrame.h"
 #include "merlict/PropagationEnvironment.h"
 
-namespace relleums {
+namespace merlict {
 namespace PhotonAndFrame {
 
 class Propagator {

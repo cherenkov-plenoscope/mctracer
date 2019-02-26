@@ -6,7 +6,7 @@
 #include "merlict/Photon.h"
 #include "merlict/random/random.h"
 
-namespace relleums {
+namespace merlict {
 
 class EventIoPhotonFactory {
     bool _passed_atmosphere = false;

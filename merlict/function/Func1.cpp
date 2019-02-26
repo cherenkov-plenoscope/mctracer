@@ -7,7 +7,7 @@
 using std::vector;
 using std::string;
 
-namespace relleums {
+namespace merlict {
 namespace function {
 
 bool Point::operator()(const Point &l, const Point &r) {

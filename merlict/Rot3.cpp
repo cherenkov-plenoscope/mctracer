@@ -4,7 +4,7 @@
 #include <exception>
 #include "merlict/Rot3.h"
 
-namespace relleums {
+namespace merlict {
 
 Rot3::Rot3() {}
 

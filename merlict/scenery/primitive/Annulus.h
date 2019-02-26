@@ -9,7 +9,7 @@
 #include "merlict/scenery/geometry/XyPlaneRayIntersectionEquation.h"
 #include "merlict/scenery/geometry/CylinderPrismZ.h"
 
-namespace relleums {
+namespace merlict {
 
 class Annulus :public SurfaceEntity{
  protected:

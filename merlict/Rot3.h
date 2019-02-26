@@ -5,7 +5,7 @@
 #include <string>
 #include "merlict/Vec3.h"
 
-namespace relleums {
+namespace merlict {
 // Tait–Bryan angles with an extrinsic coordinate frame fasion
 
 class Rot3 {

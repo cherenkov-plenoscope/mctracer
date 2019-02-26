@@ -5,7 +5,7 @@
 #include "merlict/random/random.h"
 #include "merlict/vitaliy_vitsentiy_thread_pool.h"
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 
 void PinHoleCamera::update_position_and_orientation(

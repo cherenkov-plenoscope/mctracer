@@ -8,7 +8,7 @@
 #include <sstream>
 #include "Tools/FileTools.h"
 
-namespace relleums {
+namespace merlict {
 namespace tsvio {
 
 std::vector<std::vector<double>> gen_table_from_file(

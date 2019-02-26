@@ -3,7 +3,7 @@
 #include <math.h>
 #include <sstream>
 
-namespace relleums {
+namespace merlict {
 
 const Vec3 HexagonalPrismZ::UNIT_U = VEC3_UNIT_Y;
 const Vec3 HexagonalPrismZ::UNIT_V =

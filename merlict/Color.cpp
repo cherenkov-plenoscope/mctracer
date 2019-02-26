@@ -4,7 +4,7 @@
 #include <sstream>
 #include <exception>
 
-namespace relleums {
+namespace merlict {
 
 Color::Color(const std::vector<Color> &colors) {
     float _r = 0.0;

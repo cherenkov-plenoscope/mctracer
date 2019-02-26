@@ -6,7 +6,7 @@
 #include <vector>
 #include "merlict/Vec3.h"
 
-namespace relleums {
+namespace merlict {
 
 class HexGridAnnulus{
     Vec3 unit_hex_a;

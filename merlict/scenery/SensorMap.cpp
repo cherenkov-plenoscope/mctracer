@@ -6,7 +6,7 @@ using std::string;
 using std::vector;
 using std::map;
 
-namespace relleums {
+namespace merlict {
 
 void SensorMap::add(const uint64_t key, const Frame* frame) {
     if (key == sensors.size()) {

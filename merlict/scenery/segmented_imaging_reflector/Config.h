@@ -5,7 +5,7 @@
 #include "merlict/Color.h"
 #include "merlict/function/function.h"
 
-namespace relleums {
+namespace merlict {
 namespace segmented_imaging_reflector {
 
 struct Config {

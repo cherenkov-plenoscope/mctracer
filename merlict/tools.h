@@ -2,7 +2,7 @@
 #ifndef CORE_TOOLS_H_
 #define CORE_TOOLS_H_
 
-namespace relleums {
+namespace merlict {
 
 double deg2rad(double angle_in_Deg);
 double rad2deg(double angle_in_Rad);

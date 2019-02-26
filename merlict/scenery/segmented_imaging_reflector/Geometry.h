@@ -8,7 +8,7 @@
 #include "merlict/Vec3.h"
 #include "merlict/Rot3.h"
 
-namespace relleums {
+namespace merlict {
 namespace segmented_imaging_reflector {
 
 class Geometry {

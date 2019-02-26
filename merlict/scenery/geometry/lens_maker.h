@@ -2,7 +2,7 @@
 #ifndef SCENERY_GEOMETRY_LENSMAKER_LENSMAKER_H_
 #define SCENERY_GEOMETRY_LENSMAKER_LENSMAKER_H_
 
-namespace relleums {
+namespace merlict {
 namespace lens_maker {
 
 struct Config {

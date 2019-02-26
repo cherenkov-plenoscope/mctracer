@@ -2,7 +2,7 @@
 #include "merlict/scenery/primitive/RectangularBox.h"
 #include <math.h>
 
-namespace relleums {
+namespace merlict {
 
 void RectangularBox::set_xyz_width(
     const double x_width,

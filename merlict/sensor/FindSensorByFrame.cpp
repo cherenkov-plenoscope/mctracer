@@ -3,7 +3,7 @@
 #include <algorithm>
 using std::vector;
 
-namespace relleums {
+namespace merlict {
 namespace sensor {
 
 FindSensorByFrame::FindSensorByFrame(

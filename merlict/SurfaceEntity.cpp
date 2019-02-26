@@ -3,7 +3,7 @@
 #include <limits>
 #include <sstream>
 
-namespace relleums {
+namespace merlict {
 
 const SurfaceEntity SurfaceEntity::VOID_SURFACE_ENTITY;
 const SurfaceEntity SurfaceEntity::PHOTON_SOURCE;

@@ -8,7 +8,7 @@
 #include "TwoSolutionSurfaceRayEquation.h"
 #include "PrismZ.h"
 
-namespace relleums {
+namespace merlict {
 
 class SurfaceWithOuterPrismBound :public SurfaceEntity{
  protected:

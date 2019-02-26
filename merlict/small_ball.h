@@ -19,7 +19,7 @@
 #include <vector>
 #include "merlict/Vec3.h"
 
-namespace relleums {
+namespace merlict {
 
 struct Ball {
     Vec3 center;

@@ -3,7 +3,7 @@
 #include <math.h>
 #include <sstream>
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 
 SkyDome::SkyDome(const std::string _filename):

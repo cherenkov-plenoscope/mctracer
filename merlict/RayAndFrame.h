@@ -8,7 +8,7 @@
 #include "merlict/SurfaceEntity.h"
 #include "merlict/Intersection.h"
 
-namespace relleums {
+namespace merlict {
 namespace RayAndFrame {
 // Frame's bounding sphere
 

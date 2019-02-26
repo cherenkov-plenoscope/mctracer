@@ -2,7 +2,7 @@
 #include "merlict/scenery/geometry/EllipticalCapRayIntersectionEquation.h"
 #include <math.h>
 
-namespace relleums {
+namespace merlict {
 
 EllipticalCapRayIntersectionEquation::EllipticalCapRayIntersectionEquation(
     const double _A, const double _B,  const double _C,

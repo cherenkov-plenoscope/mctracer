@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/visual/Config.h"
 
-namespace relleums {
+namespace merlict {
 namespace visual {
 
 Config::Config():sky_dome(COLOR_SKY_BLUE) {

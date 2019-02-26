@@ -4,7 +4,7 @@
 #include <exception>
 using std::string;
 
-namespace relleums {
+namespace merlict {
 namespace function {
 
 void Limits::assert_causal()const {
