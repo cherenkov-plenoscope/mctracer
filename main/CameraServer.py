@@ -58,17 +58,17 @@ def cam_command(
 
 """
 call = [path_exe, '--scenery', scenery_path, '--config', visual_path]
-mctracer = sp.Popen(call, stdin=sp.PIPE, stdout=sp.PIPE)
+merlict = sp.Popen(call, stdin=sp.PIPE, stdout=sp.PIPE)
 outdir = 'fly4'
 os.makedirs(outdir, exist_ok=True)
 
 for i, y in enumerate(np.linspace(-10, -1, 100)):
-    w = mctracer.stdin.write(
+    w = merlict.stdin.write(
         cam_command(
             position=[0, 0, y],
             orientation=[0, np.deg2rad(-90), 0],
             object_distance=np.abs(y)))
-    w = mctracer.stdin.flush()
-    img = read_ppm_image(mctracer.stdout)
+    w = merlict.stdin.flush()
+    img = read_ppm_image(merlict.stdout)
     io.imsave(os.path.join(outdir, '{:06d}.tiff'.format(i)), img)
 """
