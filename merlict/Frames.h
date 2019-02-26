@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_FRAMES_H_
-#define CORE_FRAMES_H_
+#ifndef MERLICT_FRAMES_H_
+#define MERLICT_FRAMES_H_
 
 #include <vector>
 #include "merlict/Frame.h"
@@ -20,4 +20,4 @@ double bounding_sphere_radius(
 }  // namespace Frames
 }  // namespace merlict
 
-#endif  // CORE_FRAMES_H_
+#endif  // MERLICT_FRAMES_H_

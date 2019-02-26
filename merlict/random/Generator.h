@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_RANDOM_GENERATOR_H_
-#define CORE_RANDOM_GENERATOR_H_
+#ifndef MERLICT_RANDOM_GENERATOR_H_
+#define MERLICT_RANDOM_GENERATOR_H_
 
 #include <stdint.h>
 #include "merlict/Vec3.h"
@@ -26,4 +26,4 @@ class Generator {
 }  // namespace random
 }  // namespace merlict
 
-#endif  // CORE_RANDOM_GENERATOR_H_
+#endif  // MERLICT_RANDOM_GENERATOR_H_

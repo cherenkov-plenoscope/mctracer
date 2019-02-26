@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_FUNCTION_FUNC1_H_
-#define CORE_FUNCTION_FUNC1_H_
+#ifndef MERLICT_FUNCTION_FUNC1_H_
+#define MERLICT_FUNCTION_FUNC1_H_
 
 #include <vector>
 #include <string>
@@ -45,4 +45,4 @@ struct Func1 {
 }  // namespace function
 }  // namespace merlict
 
-#endif  // CORE_FUNCTION_FUNC1_H_
+#endif  // MERLICT_FUNCTION_FUNC1_H_

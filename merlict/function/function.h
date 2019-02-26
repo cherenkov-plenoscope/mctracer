@@ -1,9 +1,9 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_FUNCTION_FUNCTION_H_
-#define CORE_FUNCTION_FUNCTION_H_
+#ifndef MERLICT_FUNCTION_FUNCTION_H_
+#define MERLICT_FUNCTION_FUNCTION_H_
 
 #include "Limits.h"
 #include "Func1.h"
 #include "tools.h"
 
-#endif  // CORE_FUNCTION_FUNCTION_H_
+#endif  // MERLICT_FUNCTION_FUNCTION_H_

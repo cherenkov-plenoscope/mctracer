@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_RAY_H_
-#define CORE_RAY_H_
+#ifndef MERLICT_RAY_H_
+#define MERLICT_RAY_H_
 
 #include <string>
 #include "merlict/Vec3.h"
@@ -29,4 +29,4 @@ class Ray {
 
 }  // namespace merlict
 
-#endif  // CORE_RAY_H_
+#endif  // MERLICT_RAY_H_

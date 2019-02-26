@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_SCENERY_SEGMENTED_IMAGING_REFLECTOR_FACTORY_H_
-#define CORE_SCENERY_SEGMENTED_IMAGING_REFLECTOR_FACTORY_H_
+#ifndef MERLICT_SCENERY_SEGMENTED_IMAGING_REFLECTOR_FACTORY_H_
+#define MERLICT_SCENERY_SEGMENTED_IMAGING_REFLECTOR_FACTORY_H_
 
 #include <vector>
 #include "merlict/scenery/segmented_imaging_reflector/Geometry.h"
@@ -21,4 +21,4 @@ class Factory {
 }  // namespace segmented_imaging_reflector
 }  // namespace merlict
 
-#endif  // CORE_SCENERY_SEGMENTED_IMAGING_REFLECTOR_FACTORY_H_
+#endif  // MERLICT_SCENERY_SEGMENTED_IMAGING_REFLECTOR_FACTORY_H_

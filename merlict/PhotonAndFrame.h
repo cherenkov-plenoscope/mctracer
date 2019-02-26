@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_PHOTONANDFRAME_H_
-#define CORE_PHOTONANDFRAME_H_
+#ifndef MERLICT_PHOTONANDFRAME_H_
+#define MERLICT_PHOTONANDFRAME_H_
 
 #include "merlict/Photon.h"
 #include "merlict/Frame.h"
@@ -38,4 +38,4 @@ class Propagator {
 }  // namespace PhotonAndFrame
 }  // namespace merlict
 
-#endif  // CORE_PHOTONANDFRAME_H_
+#endif  // MERLICT_PHOTONANDFRAME_H_

@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_PROPAGATIONCONFIG_H_
-#define CORE_PROPAGATIONCONFIG_H_
+#ifndef MERLICT_PROPAGATIONCONFIG_H_
+#define MERLICT_PROPAGATIONCONFIG_H_
 
 #include "Color.h"
 #include "Vec3.h"
@@ -17,4 +17,4 @@ const PropagationConfig DEFAULT_PROPAGATIONCONFIG;
 
 }  // namespace merlict
 
-#endif  // CORE_PROPAGATIONCONFIG_H_
+#endif  // MERLICT_PROPAGATIONCONFIG_H_

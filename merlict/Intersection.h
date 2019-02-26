@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_INTERSECTION_H_
-#define CORE_INTERSECTION_H_
+#ifndef MERLICT_INTERSECTION_H_
+#define MERLICT_INTERSECTION_H_
 
 namespace merlict {class Ray;}
 
@@ -54,4 +54,4 @@ class Intersection {
 
 }  // namespace merlict
 
-#endif  // CORE_INTERSECTION_H_
+#endif  // MERLICT_INTERSECTION_H_

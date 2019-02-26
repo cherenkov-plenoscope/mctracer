@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_RAYFORPROPAGATION_H_
-#define CORE_RAYFORPROPAGATION_H_
+#ifndef MERLICT_RAYFORPROPAGATION_H_
+#define MERLICT_RAYFORPROPAGATION_H_
 
 #include <vector>
 #include <stdint.h>
@@ -66,4 +66,4 @@ class RayForPropagation :public Ray{
 
 }  // namespace merlict
 
-#endif  // CORE_RAYFORPROPAGATION_H_
+#endif  // MERLICT_RAYFORPROPAGATION_H_

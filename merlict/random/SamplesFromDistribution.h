@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_RANDOM_SAMPLESFROMDISTRIBUTION_H_
-#define CORE_RANDOM_SAMPLESFROMDISTRIBUTION_H_
+#ifndef MERLICT_RANDOM_SAMPLESFROMDISTRIBUTION_H_
+#define MERLICT_RANDOM_SAMPLESFROMDISTRIBUTION_H_
 
 #include "random.h"
 #include "merlict/function/function.h"
@@ -23,4 +23,4 @@ class SamplesFromDistribution {
 }  // namespace random
 }  // namespace merlict
 
-#endif  // CORE_RANDOM_SAMPLESFROMDISTRIBUTION_H_
+#endif  // MERLICT_RANDOM_SAMPLESFROMDISTRIBUTION_H_

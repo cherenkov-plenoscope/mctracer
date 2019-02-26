@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_VEC3_H_
-#define CORE_VEC3_H_
+#ifndef MERLICT_VEC3_H_
+#define MERLICT_VEC3_H_
 
 #include <string>
 
@@ -47,4 +47,4 @@ const double MAX_DEVIATION_EQUAL_VEC3_SQUARE = 1e-14;
 
 }  // namespace merlict
 
-#endif  // CORE_VEC3_H_
+#endif  // MERLICT_VEC3_H_

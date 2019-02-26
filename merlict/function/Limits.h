@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_FUNCTION_LIMITS_H_
-#define CORE_FUNCTION_LIMITS_H_
+#ifndef MERLICT_FUNCTION_LIMITS_H_
+#define MERLICT_FUNCTION_LIMITS_H_
 
 #include <string>
 
@@ -21,4 +21,4 @@ struct Limits{
 }  // namespace function
 }  // namespace merlict
 
-#endif  // CORE_FUNCTION_LIMITS_H_
+#endif  // MERLICT_FUNCTION_LIMITS_H_

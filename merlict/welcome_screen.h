@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_WELCOME_SCREEN_H_
-#define CORE_WELCOME_SCREEN_H_
+#ifndef MERLICT_WELCOME_SCREEN_H_
+#define MERLICT_WELCOME_SCREEN_H_
 
 #include <string>
 
@@ -10,4 +10,4 @@ std::string welcome_screen();
 
 }  // namespace merlict
 
-#endif  // CORE_WELCOME_SCREEN_H_
+#endif  // MERLICT_WELCOME_SCREEN_H_

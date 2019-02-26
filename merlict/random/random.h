@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_RANDOM_RANDOM_H_
-#define CORE_RANDOM_RANDOM_H_
+#ifndef MERLICT_RANDOM_RANDOM_H_
+#define MERLICT_RANDOM_RANDOM_H_
 
 #include "Generator.h"
 #include "Mt19937.h"
@@ -17,4 +17,4 @@ static Mt19937 VOID_PRNG = Mt19937(ZERO_SEED);
 }  // namespace random
 }  // namespace merlict
 
-#endif  // CORE_RANDOM_RANDOM_H_
+#endif  // MERLICT_RANDOM_RANDOM_H_

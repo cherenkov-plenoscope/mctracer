@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_FRAME_H_
-#define CORE_FRAME_H_
+#ifndef MERLICT_FRAME_H_
+#define MERLICT_FRAME_H_
 
 namespace merlict {
 class Ray;
@@ -89,4 +89,4 @@ const Frame VOID_FRAME;
 
 }  // namespace merlict
 
-#endif  // CORE_FRAME_H_
+#endif  // MERLICT_FRAME_H_

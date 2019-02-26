@@ -1,6 +1,6 @@
 // Copyright 2015 Sebastian A. Mueller
-#ifndef CORE_MCTRACER_H_
-#define CORE_MCTRACER_H_
+#ifndef MERLICT_MERLICT_H_
+#define MERLICT_MERLICT_H_
 
 #include "PhysicalConstants.h"
 #include "Vec2.h"
@@ -39,4 +39,4 @@
 
 #include "vitaliy_vitsentiy_thread_pool.h"
 
-#endif  // CORE_MCTRACER_H_
+#endif  // MERLICT_MERLICT_H_

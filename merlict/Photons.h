@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_PHOTONS_H_
-#define CORE_PHOTONS_H_
+#ifndef MERLICT_PHOTONS_H_
+#define MERLICT_PHOTONS_H_
 
 #include <vector>
 #include <string>
@@ -63,4 +63,4 @@ void transform_all_photons_multi_thread(
 }  // namespace Photons
 }  // namespace merlict
 
-#endif  // CORE_PHOTONS_H_
+#endif  // MERLICT_PHOTONS_H_

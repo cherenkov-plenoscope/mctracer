@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_SCENERY_SEGMENTED_IMAGING_REFLECTOR_CONFIG_H_
-#define CORE_SCENERY_SEGMENTED_IMAGING_REFLECTOR_CONFIG_H_
+#ifndef MERLICT_SCENERY_SEGMENTED_IMAGING_REFLECTOR_CONFIG_H_
+#define MERLICT_SCENERY_SEGMENTED_IMAGING_REFLECTOR_CONFIG_H_
 
 #include "merlict/Color.h"
 #include "merlict/function/function.h"
@@ -21,4 +21,4 @@ struct Config {
 }  // namespace segmented_imaging_reflector
 }  // namespace merlict
 
-#endif  // CORE_SCENERY_SEGMENTED_IMAGING_REFLECTOR_CONFIG_H_
+#endif  // MERLICT_SCENERY_SEGMENTED_IMAGING_REFLECTOR_CONFIG_H_

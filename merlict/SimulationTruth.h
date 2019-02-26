@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_SIMULATIONTRUTH_H_
-#define CORE_SIMULATIONTRUTH_H_
+#ifndef MERLICT_SIMULATIONTRUTH_H_
+#define MERLICT_SIMULATIONTRUTH_H_
 
 namespace merlict {
 namespace SimulationTruth {
@@ -11,4 +11,4 @@ namespace SimulationTruth {
 }  // namespace SimulationTruth
 }  // namespace merlict
 
-#endif  // CORE_SIMULATIONTRUTH_H_
+#endif  // MERLICT_SIMULATIONTRUTH_H_

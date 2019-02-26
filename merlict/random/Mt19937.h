@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_RANDOM_MT19937_H_
-#define CORE_RANDOM_MT19937_H_
+#ifndef MERLICT_RANDOM_MT19937_H_
+#define MERLICT_RANDOM_MT19937_H_
 
 #include "Generator.h"
 #include <random>
@@ -28,4 +28,4 @@ class Mt19937 : public Generator{
 }  // namespace random
 }  // namespace merlict
 
-#endif  // CORE_RANDOM_MT19937_H_
+#endif  // MERLICT_RANDOM_MT19937_H_

@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_HOMTRA3_H_
-#define CORE_HOMTRA3_H_
+#ifndef MERLICT_HOMTRA3_H_
+#define MERLICT_HOMTRA3_H_
 
 #include <string>
 #include "merlict/Vec3.h"
@@ -67,4 +67,4 @@ class HomTra3 {
 
 }  // namespace merlict
 
-#endif  // CORE_HOMTRA3_H_
+#endif  // MERLICT_HOMTRA3_H_

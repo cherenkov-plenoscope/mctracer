@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_PHOTON_H_
-#define CORE_PHOTON_H_
+#ifndef MERLICT_PHOTON_H_
+#define MERLICT_PHOTON_H_
 
 namespace merlict {
 namespace PhotonAndFrame {
@@ -39,4 +39,4 @@ class Photon :public RayForPropagation{
 
 }  // namespace merlict
 
-#endif  // CORE_PHOTON_H_
+#endif  // MERLICT_PHOTON_H_

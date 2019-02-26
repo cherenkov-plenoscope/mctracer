@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_SURFACEENTITY_H_
-#define CORE_SURFACEENTITY_H_
+#ifndef MERLICT_SURFACEENTITY_H_
+#define MERLICT_SURFACEENTITY_H_
 
 #include <string>
 #include "merlict/Frame.h"
@@ -66,4 +66,4 @@ class SurfaceEntity :public Frame {
 
 }  // namespace merlict
 
-#endif  // CORE_SURFACEENTITY_H_
+#endif  // MERLICT_SURFACEENTITY_H_

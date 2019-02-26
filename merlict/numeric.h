@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_NUMERIC_H_
-#define CORE_NUMERIC_H_
+#ifndef MERLICT_NUMERIC_H_
+#define MERLICT_NUMERIC_H_
 
 #include <vector>
 
@@ -14,4 +14,4 @@ std::vector<double> linspace(double begin, double end, unsigned int steps);
 }  // namespace numeric
 }  // namespace merlict
 
-#endif  // CORE_NUMERIC_H_
+#endif  // MERLICT_NUMERIC_H_

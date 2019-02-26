@@ -1,6 +1,6 @@
 // Copyright 2017 Sebastian A. Mueller
-#ifndef CORE_BINIO_H_
-#define CORE_BINIO_H_
+#ifndef MERLICT_BINIO_H_
+#define MERLICT_BINIO_H_
 
 #include <stdint.h>
 #include <fstream>
@@ -29,4 +29,4 @@ uint64_t read_uint64(std::istream &fin);
 }  // namespace binio
 }  // namespace merlict
 
-#endif  // CORE_BINIO_H_
+#endif  // MERLICT_BINIO_H_

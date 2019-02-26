@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_DISTANCEMETER_H_
-#define CORE_DISTANCEMETER_H_
+#ifndef MERLICT_DISTANCEMETER_H_
+#define MERLICT_DISTANCEMETER_H_
 
 #include "merlict/Ray.h"
 #include "merlict/Frame.h"
@@ -15,4 +15,4 @@ struct DistanceMeter {
 
 }  // namespace merlict
 
-#endif  // CORE_DISTANCEMETER_H_
+#endif  // MERLICT_DISTANCEMETER_H_

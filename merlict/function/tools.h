@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_FUNCTION_TOOLS_H_
-#define CORE_FUNCTION_TOOLS_H_
+#ifndef MERLICT_FUNCTION_TOOLS_H_
+#define MERLICT_FUNCTION_TOOLS_H_
 
 #include <stdint.h>
 #include <vector>
@@ -52,4 +52,4 @@ std::vector<std::vector<double>> polynom3(
 }  // namespace function
 }  // namespace merlict
 
-#endif  // CORE_FUNCTION_TOOLS_H_
+#endif  // MERLICT_FUNCTION_TOOLS_H_

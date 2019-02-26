@@ -13,8 +13,8 @@
 //   publisher={World Scientific}
 // }
 
-#ifndef CORE_SMALL_BALL_H_
-#define CORE_SMALL_BALL_H_
+#ifndef MERLICT_SMALL_BALL_H_
+#define MERLICT_SMALL_BALL_H_
 
 #include <vector>
 #include "merlict/Vec3.h"
@@ -41,4 +41,4 @@ Ball many_iterations(const std::vector<Ball> &balls);
 
 }  // namespace merlict
 
-#endif  // CORE_SMALL_BALL_H_
+#endif  // MERLICT_SMALL_BALL_H_

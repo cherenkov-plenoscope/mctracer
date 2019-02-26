@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_COLOR_H_
-#define CORE_COLOR_H_
+#ifndef MERLICT_COLOR_H_
+#define MERLICT_COLOR_H_
 
 #include <string>
 #include <vector>
@@ -30,4 +30,4 @@ const Color COLOR_GRASS_GREEN = Color(22, 91, 49);
 
 }  // namespace merlict
 
-#endif  // CORE_COLOR_H_
+#endif  // MERLICT_COLOR_H_

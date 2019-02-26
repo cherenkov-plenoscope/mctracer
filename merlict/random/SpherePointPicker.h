@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_RANDOM_SPHEREPOINTPICKER_H_
-#define CORE_RANDOM_SPHEREPOINTPICKER_H_
+#ifndef MERLICT_RANDOM_SPHEREPOINTPICKER_H_
+#define MERLICT_RANDOM_SPHEREPOINTPICKER_H_
 
 #include "merlict/Vec3.h"
 #include "Generator.h"
@@ -32,4 +32,4 @@ Vec3 draw_point_on_sphere(
 }  // namespace random
 }  // namespace merlict
 
-#endif  // CORE_RANDOM_SPHEREPOINTPICKER_H_
+#endif  // MERLICT_RANDOM_SPHEREPOINTPICKER_H_

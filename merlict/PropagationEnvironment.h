@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_PROPAGATIONENVIRONMENT_H_
-#define CORE_PROPAGATIONENVIRONMENT_H_
+#ifndef MERLICT_PROPAGATIONENVIRONMENT_H_
+#define MERLICT_PROPAGATIONENVIRONMENT_H_
 
 #include "merlict/Frame.h"
 #include "merlict/PropagationConfig.h"
@@ -16,4 +16,4 @@ struct PropagationEnvironment {
 
 }  // namespace merlict
 
-#endif  // CORE_PROPAGATIONENVIRONMENT_H_
+#endif  // MERLICT_PROPAGATIONENVIRONMENT_H_

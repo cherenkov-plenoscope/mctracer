@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_TOOLS_H_
-#define CORE_TOOLS_H_
+#ifndef MERLICT_TOOLS_H_
+#define MERLICT_TOOLS_H_
 
 namespace merlict {
 
@@ -12,4 +12,4 @@ double get_solid_angle_for_opening_angle(const double theta);
 
 }  // namespace merlict
 
-#endif  // CORE_TOOLS_H_
+#endif  // MERLICT_TOOLS_H_

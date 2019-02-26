@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_ROT3_H_
-#define CORE_ROT3_H_
+#ifndef MERLICT_ROT3_H_
+#define MERLICT_ROT3_H_
 
 #include <string>
 #include "merlict/Vec3.h"
@@ -42,4 +42,4 @@ const Rot3 ROT3_UNITY = Rot3(0.0, 0.0, 0.0);
 
 }  // namespace merlict
 
-#endif  // CORE_ROT3_H_
+#endif  // MERLICT_ROT3_H_

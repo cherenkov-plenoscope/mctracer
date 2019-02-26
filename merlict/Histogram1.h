@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_HISTOGRAM1D_H_
-#define CORE_HISTOGRAM1D_H_
+#ifndef MERLICT_HISTOGRAM1D_H_
+#define MERLICT_HISTOGRAM1D_H_
 
 #include <vector>
 #include <string>
@@ -29,4 +29,4 @@ class Histogram1 {
 
 }  // namespace merlict
 
-#endif  // CORE_HISTOGRAM1D_H_
+#endif  // MERLICT_HISTOGRAM1D_H_

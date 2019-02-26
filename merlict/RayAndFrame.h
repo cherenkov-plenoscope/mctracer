@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef CORE_RAYANDFRAME_H_
-#define CORE_RAYANDFRAME_H_
+#ifndef MERLICT_RAYANDFRAME_H_
+#define MERLICT_RAYANDFRAME_H_
 
 #include <vector>
 #include "merlict/Frame.h"
@@ -43,4 +43,4 @@ struct CausalIntersection {
 }  // namespace RayAndFrame
 }  // namespace merlict
 
-#endif  // CORE_RAYANDFRAME_H_
+#endif  // MERLICT_RAYANDFRAME_H_
