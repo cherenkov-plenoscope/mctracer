@@ -5,7 +5,7 @@
 namespace signal_processing {
 
 ExtractedPulse::ExtractedPulse():
-    simulation_truth_id(merlict::SimulationTruth::MCTRACER_DEFAULT)
+    simulation_truth_id(merlict::SimulationTruth::DEFAULT)
 {}
 
 ExtractedPulse::ExtractedPulse(

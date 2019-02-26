@@ -4,7 +4,7 @@
 
 namespace merlict {
 namespace SimulationTruth {
-    static const int MCTRACER_DEFAULT = -1;
+    static const int DEFAULT = -1;
     static const int NIGHT_SKY_BACKGROUND = -100;
     static const int PHOTO_ELECTRIC_CONVERTER_ACCIDENTAL = - 201;
     static const int PHOTO_ELECTRIC_CONVERTER_CROSSTALK = - 202;

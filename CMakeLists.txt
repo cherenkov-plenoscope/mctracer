@@ -1,7 +1,7 @@
 # Copyright 2011-2018 Sebastian A. Mueller
 cmake_minimum_required(VERSION 2.8)
 set (CMAKE_CXX_FLAGS "-std=c++1z -Wall -Wextra -pedantic -O1 -g -I")
-project(mctracer)
+project(merlict)
 
 #--------------------------------
 # Assert compiler supports C++ 11
@@ -43,7 +43,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/signal_processing")
 add_subdirectory("${PROJECT_SOURCE_DIR}/docopt")
 add_subdirectory("${PROJECT_SOURCE_DIR}/viewer")
 #-------------------------------
-# mctracer library
+# merlict library
 add_library(mct SHARED ${SOURCE})
 include_directories(/usr/include)
 include_directories(/usr/local/include)

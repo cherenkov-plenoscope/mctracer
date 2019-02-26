@@ -7,7 +7,7 @@ using std::vector;
 namespace signal_processing {
 
 PipelinePhoton::PipelinePhoton():
-    simulation_truth_id(merlict::SimulationTruth::MCTRACER_DEFAULT) {
+    simulation_truth_id(merlict::SimulationTruth::DEFAULT) {
     arrival_time = 0.0;
     wavelength = 0.0;
 }
