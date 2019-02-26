@@ -6,7 +6,7 @@
 #include <vector>
 #include "signal_processing/ElectricPulse.h"
 #include "signal_processing/ExtractedPulse.h"
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 
 namespace signal_processing {
 

@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "signal_processing/PhotoElectricConverter.h"
 #include <sstream>
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 using std::vector;
 using namespace relleums;
 

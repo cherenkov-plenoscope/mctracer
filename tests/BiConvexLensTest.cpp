@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <vector>
 #include "catch.hpp"
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 #include <iostream>
 #include "viewer/FlyingCamera.h"
 

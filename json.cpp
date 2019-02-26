@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include "niels_lohmann_json.hpp"
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 #include "merlict/scenery/segmented_imaging_reflector/segmented_imaging_reflector.h"
 namespace nl = nlohmann;
 using std::string;

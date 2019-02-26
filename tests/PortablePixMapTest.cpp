@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include "catch.hpp"
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 
 using namespace relleums;
 

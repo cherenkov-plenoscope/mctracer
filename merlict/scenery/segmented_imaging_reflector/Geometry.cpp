@@ -4,7 +4,7 @@
 #include <sstream>
 #include <iomanip>
 #include "merlict/scenery/geometry/HexGridAnnulus.h"
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 #include "merlict/HomTra3.h"
 
 using std::vector;

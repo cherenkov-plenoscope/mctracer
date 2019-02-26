@@ -1,5 +1,5 @@
 #include "docopt/docopt.h"
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 #include "json.h"
 #include "FlyingCamera.h"
 

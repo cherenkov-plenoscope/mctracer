@@ -4,7 +4,7 @@
 
 #include <stdint.h>
 #include <vector>
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 
 namespace signal_processing {
 

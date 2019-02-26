@@ -3,7 +3,7 @@
 #include <math.h>
 #include <sstream>
 #include <string>
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 using std::stringstream;
 using std::string;
 using std::vector;

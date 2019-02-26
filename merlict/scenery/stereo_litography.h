@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 #include "merlict/Frame.h"
 #include "merlict/SurfaceEntity.h"
 

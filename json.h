@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 #include "niels_lohmann_json.hpp"
 
 namespace merlict {

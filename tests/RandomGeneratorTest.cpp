@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <array>
 #include "catch.hpp"
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 using std::array;
 using std::vector;
 using namespace relleums;

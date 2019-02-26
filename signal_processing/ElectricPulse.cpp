@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "signal_processing/ElectricPulse.h"
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 
 namespace signal_processing {
 

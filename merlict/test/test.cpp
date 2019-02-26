@@ -9,7 +9,7 @@
 #include <exception>
 #include <algorithm>
 #include "merlict/test/catch.hpp"
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 
 namespace re = relleums;
 

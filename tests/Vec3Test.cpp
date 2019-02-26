@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <cmath>
 #include "catch.hpp"
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 
 using namespace relleums;
 

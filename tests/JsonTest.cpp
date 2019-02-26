@@ -2,7 +2,7 @@
 #include "catch.hpp"
 #include "niels_lohmann_json.hpp"
 #include "json.h"
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 namespace nl = nlohmann;
 namespace mct = relleums;
 using std::string;

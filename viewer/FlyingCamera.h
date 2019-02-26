@@ -4,7 +4,7 @@
 
 #include <cv.h>
 #include <string>
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 #include "viewer/Time.h"
 
 namespace merlict {

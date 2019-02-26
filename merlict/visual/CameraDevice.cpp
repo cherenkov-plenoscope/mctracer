@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/visual/CameraDevice.h"
 #include <exception>
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 
 namespace merlict {
 namespace visual {

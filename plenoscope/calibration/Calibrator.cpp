@@ -6,7 +6,7 @@
 #include <sstream>
 #include <random>
 #include <iostream>
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 #include "plenoscope/calibration/Writer.h"
 #include "plenoscope/night_sky_background/NightSkyBackground.h"
 #include "Tools/FileTools.h"

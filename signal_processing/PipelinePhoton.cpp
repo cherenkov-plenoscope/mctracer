@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "signal_processing/PipelinePhoton.h"
 #include <algorithm>
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 using std::vector;
 
 namespace signal_processing {

@@ -1,5 +1,5 @@
 #include "docopt/docopt.h"
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 #include "eventio.h"
 #include "corsika/corsika.h"
 #include "corsika/PhotonFactory.h"

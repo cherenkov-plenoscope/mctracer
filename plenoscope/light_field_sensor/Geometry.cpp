@@ -6,7 +6,7 @@
 #include "merlict/scenery/geometry/GridNeighborhoodTopoligy.h"
 #include "merlict/scenery/geometry/HexGridFlower.h"
 #include "Tools/AsciiIo.h"
-#include "merlict/mctracer.h"
+#include "merlict/merlict.h"
 #include "Tools/FileTools.h"
 #include "merlict/scenery/geometry/lens_maker.h"
 #include "corsika/corsika.h"
