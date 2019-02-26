@@ -2,29 +2,28 @@
 #include <vector>
 #include "catch.hpp"
 #include "Core/mctracer.h"
+#include <iostream>
+#include "viewer/FlyingCamera.h"
 
 using namespace relleums;
 using std::vector;
 
 struct BiConvexLensTest {
     Scenery scenery;
-    Frame test_bench;
     PropagationConfig settings;
     random::Mt19937 prng;
-    PropagationEnvironment lens_test_bench_environment;
+    PropagationEnvironment env;
     sensor::Sensors sensor_list;
-    sensor::Sensor *sensor;
-    lens_maker::Config cfg;
 
     BiConvexLensTest() {
         set_up_settings();
         set_up_test_bench();
 
-        prng.set_seed(random::ZERO_SEED);
+        prng.set_seed(0u);
 
-        lens_test_bench_environment.root_frame = &test_bench;
-        lens_test_bench_environment.config = &settings;
-        lens_test_bench_environment.prng = &prng;
+        env.root_frame = &scenery.root;
+        env.config = &settings;
+        env.prng = &prng;
     }
 
     void set_up_settings() {
@@ -38,6 +37,7 @@ struct BiConvexLensTest {
             VEC3_ORIGIN,
             ROT3_UNITY);
 
+        lens_maker::Config cfg;
         cfg.focal_length = 1.0;
         cfg.aperture_radius = 0.125;
         cfg.refractive_index = 1.49;
@@ -79,18 +79,21 @@ struct BiConvexLensTest {
         sensor_list.init(scenery.sensors.sensors);
         //-------------------------
 
-        test_bench->init_tree_based_on_mother_child_relations();
+        scenery.root.init_tree_based_on_mother_child_relations();
+
+        //visual::Config cfg;
+        //visual::FlyingCamera(&scenery.root, &cfg);
     }
 };
-//----------------------------------------------------------------------
+
 TEST_CASE("BiConvexLensTest: send_photon_frontal_into_lens", "[mctracer]") {
     BiConvexLensTest lt;
     unsigned int total_propagations = 1e4;
     unsigned int number_of_photons_reaching_sensor_disc = 0;
     for (unsigned int i = 0; i < total_propagations; i++) {
         Photon blue_photon(Vec3(0.0, 0.0, 1.0), Vec3(0.0, 0.0, -1.0), 433e-9);
-        PhotonAndFrame::Propagator(&blue_photon, lt.lens_test_bench_environment);
-        // blue_photon.propagate_in(lens_test_bench_environment);
+        PhotonAndFrame::Propagator(&blue_photon, lt.env);
+        // blue_photon.propagate_in(env);
 
         if (2.0 == blue_photon.get_accumulative_distance())
             number_of_photons_reaching_sensor_disc++;
@@ -98,9 +101,10 @@ TEST_CASE("BiConvexLensTest: send_photon_frontal_into_lens", "[mctracer]") {
 
     CHECK(0.97 == Approx(static_cast<double>(number_of_photons_reaching_sensor_disc)/static_cast<double>(total_propagations)).margin(5.0e-2));
 }
-//----------------------------------------------------------------------
+
 TEST_CASE("BiConvexLensTest: send_photons_frontal_into_lens_with_offset", "[mctracer]") {
     BiConvexLensTest lt;
+
     // light source
     unsigned int number_of_photons_emitted = 1e4;
     random::Mt19937 prng(0);
@@ -119,20 +123,24 @@ TEST_CASE("BiConvexLensTest: send_photons_frontal_into_lens_with_offset", "[mctr
     // photon propagation
     Photons::propagate_photons_in_scenery_with_settings(
         &photons,
-        lt.lens_test_bench_environment.root_frame,
-        lt.lens_test_bench_environment.config,
+        lt.env.root_frame,
+        lt.env.config,
         &prng);
 
     // detect photons in sensors
     lt.sensor_list.clear_history();
     lt.sensor_list.assign_photons(&photons);
 
-    CHECK(1.5e-3 == Approx(sensor::point_spread_std_dev(lt.sensor->photon_arrival_history)).margin(1e-3));
+    REQUIRE(lt.sensor_list.by_frame.size() == 1);
 
-    CHECK(1.0 == Approx(static_cast<double>(lt.sensor->photon_arrival_history.size())/static_cast<double>(number_of_photons_emitted)).margin(10e-2));
+    sensor::Sensor* sen = lt.sensor_list.at(0);
+
+    CHECK(1.5e-3 == Approx(sensor::point_spread_std_dev(sen->photon_arrival_history)).margin(1e-3));
+
+    CHECK(1.0 == Approx(static_cast<double>(sen->photon_arrival_history.size())/static_cast<double>(number_of_photons_emitted)).margin(10e-2));
 
     /*FlyingCamera free(
-        lens_test_bench_environment.root_frame,
-        lens_test_bench_environment.config
+        env.root_frame,
+        env.config
     );*/
 }

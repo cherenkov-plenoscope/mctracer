@@ -2,8 +2,7 @@
 #include "catch.hpp"
 //#include "Xml/Factory/SceneryFactory.h"
 //#include "Core/scenery/Scenery.h"
-using std::cout;
-using std::string;
+
 /*
 
 

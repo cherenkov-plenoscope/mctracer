@@ -15,7 +15,7 @@ TEST_CASE("Histogram1Test: empty_bin_edges", "[mctracer]") {
     vector<double> samples;
     for (unsigned int i = 0; i < 42*1337; i++)
         samples.push_back(prng.uniform());
-    CHECK_THROWS_AS(Histogram1 histo(samples, bins_edges), std::invalid_argument);
+    CHECK_THROWS_AS(Histogram1(samples, bins_edges), std::invalid_argument);
 }
 
 TEST_CASE("Histogram1Test: init", "[mctracer]") {
@@ -144,7 +144,7 @@ TEST_CASE("Histogram1Test: arg_max", "[mctracer]") {
 TEST_CASE("Histogram1Test: arg_max_empty", "[mctracer]") {
     vector<double> bins_edges;
     vector<double> samples;
-    CHECK_THROWS_AS(Histogram1 histo(samples, bins_edges), std::invalid_argument);
+    CHECK_THROWS_AS(Histogram1(samples, bins_edges), std::invalid_argument);
 }
 
 TEST_CASE("Histogram1Test: arg_max_empty_sample", "[mctracer]") {
@@ -157,7 +157,7 @@ TEST_CASE("Histogram1Test: arg_max_empty_sample", "[mctracer]") {
 TEST_CASE("Histogram1Test: arg_max_empty_edges", "[mctracer]") {
     vector<double> bins_edges;
     vector<double> samples = {0.1, 0.2, 0.5};
-    CHECK_THROWS_AS(Histogram1 histo(samples, bins_edges), std::invalid_argument);
+    CHECK_THROWS_AS(Histogram1(samples, bins_edges), std::invalid_argument);
 }
 
 TEST_CASE("Histogram1Test: mode_empty_sample", "[mctracer]") {

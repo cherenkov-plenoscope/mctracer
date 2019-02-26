@@ -1,3 +1,14 @@
 // Copyright 2014 Sebastian A. Mueller
+
+#define CATCH_CONFIG_RUNNER
 #include "catch.hpp"
-#define CATCH_CONFIG_MAIN
+
+int main( int argc, char* argv[] ) {
+  // global setup...
+
+  int result = Catch::Session().run( argc, argv );
+
+  // global clean-up...
+
+  return result;
+}

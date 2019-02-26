@@ -62,6 +62,7 @@ TEST_CASE("Vec2Test: EuclideanNorm", "[mctracer]") {
     CHECK(v.norm() == 1.0);
     v.set(0.0, 1.0);
     CHECK(v.norm() == 1.0);
+}
 
 TEST_CASE("Vec2Test: Scalar_Product_unit_vectors", "[mctracer]") {
     const Vec2 x = VEC2_UNIT_X;
@@ -127,7 +128,7 @@ TEST_CASE("Vec2Test: Operator_equals_expect_true", "[mctracer]") {
     Vec2 b(1.3, 4.2+1e-20);
     CHECK(b == a);
     CHECK(a == b);
-    CHECK(!a != b);
+    CHECK_FALSE(a != b);
 }
 
 TEST_CASE("Vec2Test: Operator_equals_expect_false", "[mctracer]") {
@@ -135,7 +136,7 @@ TEST_CASE("Vec2Test: Operator_equals_expect_false", "[mctracer]") {
     Vec2 b(1.3, 4.2 + 2e-7);
     CHECK(b != a);
     CHECK(a != b);
-    CHECK(!a == b);
+    CHECK_FALSE(a == b);
 }
 
 TEST_CASE("Vec2Test: normalize", "[mctracer]") {

@@ -70,7 +70,7 @@ TEST_CASE("PulseExtractionTest: truncate_invalid_arrival_times", "[mctracer]") {
 
     REQUIRE(raw.size() == response.size());
     REQUIRE(1u == response.size());
-    CHECK(!response.at(0).size() == raw.at(0).size());
+    CHECK_FALSE(response.at(0).size() == raw.at(0).size());
 
     int number_of_passing_photons = 0;
     for (uint32_t ch = 0; ch < raw.size(); ch++) {

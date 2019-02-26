@@ -25,12 +25,12 @@ TEST_CASE("SensorMapTest: init_two", "[mctracer]") {
 TEST_CASE("SensorMapTest: add_zeroth_with_id_uneq_zero", "[mctracer]") {
     SensorMap smap;
     Frame hans;
-    CHECK_THROWS_AS(smap.add(1u, &hans);, std::invalid_argument);
+    CHECK_THROWS_AS(smap.add(1u, &hans), std::invalid_argument);
 }
 
 TEST_CASE("SensorMapTest: add_first_with_id_uneq_one", "[mctracer]") {
     SensorMap smap;
     Frame hans;
     smap.add(0u, &hans);
-    CHECK_THROWS_AS(smap.add(2u, &hans);, std::invalid_argument);
+    CHECK_THROWS_AS(smap.add(2u, &hans), std::invalid_argument);
 }

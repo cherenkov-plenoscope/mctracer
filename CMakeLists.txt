@@ -114,11 +114,8 @@ target_link_libraries(mctFactPropagation mct)
 target_link_libraries(mctFactPropagation stdc++fs)
 target_link_libraries(mctFactPropagation docopt)
 
-
 #---------------------------------
 # unit test exe
 add_subdirectory("${PROJECT_SOURCE_DIR}/tests")
-
 add_executable(mctTest ./tests/test.cpp ${TEST_SOURCE})
-target_link_libraries(mctTest gtest gtest_main)
 target_link_libraries(mctTest mct)

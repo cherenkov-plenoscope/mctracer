@@ -36,15 +36,9 @@ TEST_CASE("PortablePixMapTest: write_and_read", "[mctracer]") {
 
     for (unsigned int c = 0; c < img.number_cols; c++) {
         for (unsigned int r = 0; r < img.number_rows; r++) {
-            ASSERT_EQ(
-                img.at_col_row(c, r).r,
-                img_back.at_col_row(c, r).r);
-            ASSERT_EQ(
-                img.at_col_row(c, r).g,
-                img_back.at_col_row(c, r).g);
-            ASSERT_EQ(
-                img.at_col_row(c, r).b,
-                img_back.at_col_row(c, r).b);
+            REQUIRE(img.at_col_row(c, r).r == img_back.at_col_row(c, r).r);
+            REQUIRE(img.at_col_row(c, r).g == img_back.at_col_row(c, r).g);
+            REQUIRE(img.at_col_row(c, r).b == img_back.at_col_row(c, r).b);
         }
     }
 }

@@ -9,11 +9,11 @@ namespace stl = stereo_litography;
 
 
 TEST_CASE("StereoLitographyTest: open_non_existing_file", "[mctracer]") {
-    CHECK_THROWS_AS(stl::BinaryReader hans("not_existing_file"), stl::BinaryReader::CanNotReadFile);
+    CHECK_THROWS_AS(stl::BinaryReader("not_existing_file"), stl::BinaryReader::CanNotReadFile);
 }
 
 TEST_CASE("StereoLitographyTest: ascii_format", "[mctracer]") {
-    CHECK_THROWS_AS(stl::BinaryReader stl("test_scenery/ascii_format.stl"), stl::BinaryReader::CanNotReadAscii);
+    CHECK_THROWS_AS(stl::BinaryReader("test_scenery/ascii_format.stl"), stl::BinaryReader::CanNotReadAscii);
 }
 
 TEST_CASE("StereoLitographyTest: open_valid_file", "[mctracer]") {

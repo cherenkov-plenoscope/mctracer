@@ -9,12 +9,12 @@ using namespace relleums;
 
 TEST_CASE("HexagonalPrismZTest: throw_when_negativ_radius", "[mctracer]") {
     HexagonalPrismZ hexBound;
-    CHECK_THROWS_AS({ hexBound.set_outer_radius(-55.0);}, std::invalid_argument);
+    CHECK_THROWS_AS(hexBound.set_outer_radius(-55.0), std::invalid_argument);
 }
 
 TEST_CASE("HexagonalPrismZTest: throw_when_zero_radius", "[mctracer]") {
     HexagonalPrismZ hexBound;
-    CHECK_THROWS_AS({ hexBound.set_outer_radius(0.0);}, std::invalid_argument);
+    CHECK_THROWS_AS(hexBound.set_outer_radius(0.0), std::invalid_argument);
 }
 
 TEST_CASE("HexagonalPrismZTest: is_inside", "[mctracer]") {

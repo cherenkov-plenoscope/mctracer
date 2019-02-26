@@ -468,8 +468,7 @@ TEST_CASE("JsonTest: visual_config", "[mctracer]") {
   CHECK(cfg.snapshot.focal_length_over_aperture_diameter == 0.95);
   CHECK(cfg.snapshot.image_sensor_size_along_a_row == 0.07);
   CHECK(cfg.global_illumination.on);
-  EXPECT_TRUE(cfg.global_illumination.incoming_direction ==
-    mct::Vec3(.2, .3, 1.));
+  CHECK(cfg.global_illumination.incoming_direction == mct::Vec3(.2, .3, 1.));
   CHECK(cfg.photon_trajectories.radius == 0.15);
 }
 

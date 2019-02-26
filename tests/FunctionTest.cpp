@@ -8,11 +8,11 @@ using namespace relleums;
 
 // Limits
 TEST_CASE("FunctionTest: causal_limits_correct", "[mctracer]") {
-    CHECK_NOTHROW(function::Limits l(0.0, 1.0));
+    CHECK_NOTHROW(function::Limits(0.0, 1.0));
 }
 
 TEST_CASE("FunctionTest: causal_limits_false", "[mctracer]") {
-    CHECK_THROWS_AS(function::Limits l(0.0, -1.0), std::logic_error);
+    CHECK_THROWS_AS(function::Limits(0.0, -1.0), std::logic_error);
 }
 
 TEST_CASE("FunctionTest: causal_limits_lower_included", "[mctracer]") {

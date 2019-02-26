@@ -180,7 +180,7 @@ TEST_CASE("Vec3Test: Operator_equals_expect_true", "[mctracer]") {
     Vec3 b(1.3, 3.7, 4.2 + 1e-20);
     CHECK(b == a);
     CHECK(a == b);
-    CHECK(!a != b);
+    CHECK_FALSE(a != b);
 }
 
 TEST_CASE("Vec3Test: Operator_equals_expect_false", "[mctracer]") {
@@ -188,7 +188,7 @@ TEST_CASE("Vec3Test: Operator_equals_expect_false", "[mctracer]") {
     Vec3 b(1.3, 3.7, 4.2 + 2e-7);
     CHECK(b != a);
     CHECK(a != b);
-    CHECK(!a == b);
+    CHECK_FALSE(a == b);
 }
 
 TEST_CASE("Vec3Test: parallel_to_x_y_plane", "[mctracer]") {
@@ -196,10 +196,10 @@ TEST_CASE("Vec3Test: parallel_to_x_y_plane", "[mctracer]") {
     CHECK(a.is_parallel_to_x_y_plane());
 
     Vec3 b(1.3, 3.7, 4.2 + 1e-9);
-    CHECK(!b.is_parallel_to_x_y_plane());
+    CHECK_FALSE(b.is_parallel_to_x_y_plane());
 
     Vec3 c(0.0, 2.0, 5.5);
-    CHECK(!c.is_parallel_to_x_y_plane());
+    CHECK_FALSE(c.is_parallel_to_x_y_plane());
 }
 
 TEST_CASE("Vec3Test: parallel_to_z_axis", "[mctracer]") {
@@ -208,7 +208,7 @@ TEST_CASE("Vec3Test: parallel_to_z_axis", "[mctracer]") {
     a.set(0.0, 0.0, -1.0);
     CHECK(a.is_paralell_to_z_axis());
     a.set(0.0, 0.0, 0.0);
-    CHECK(!a.is_paralell_to_z_axis());
+    CHECK_FALSE(a.is_paralell_to_z_axis());
 }
 
 TEST_CASE("Vec3Test: normalize", "[mctracer]") {

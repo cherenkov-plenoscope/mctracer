@@ -17,14 +17,14 @@ TEST_CASE("XyPlaneRayEquationTest: frontal_hit", "[mctracer]") {
 
     REQUIRE(eq.has_solution());
     CHECK(eq.get_ray_parameter_for_intersection() == sup_z);
-    CHECK( == /* GTEST-CATCH FIXME */sup_z < 0.0, eq.has_causal_solution());
+    CHECK(eq.has_causal_solution());
   }
 }
 
 TEST_CASE("XyPlaneRayEquationTest: no_hit_at_all", "[mctracer]") {
   Ray ray(Vec3(0.0, 0.0, 1.0), Vec3(1.0, 0.0, 0.0));
   XyPlaneRayIntersectionEquation eq(&ray);
-  CHECK(!eq.has_solution());
+  CHECK_FALSE(eq.has_solution());
 }
 
 TEST_CASE("XyPlaneRayEquationTest: always_ez_normal_vector", "[mctracer]") {
