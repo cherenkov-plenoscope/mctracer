@@ -6,7 +6,7 @@
 #include "./json.h"
 using std::string;
 using std::cout;
-using namespace merlict;
+namespace ml = merlict;
 
 static const char USAGE[] =
 R"(Show a scenery
@@ -27,8 +27,8 @@ const uint64_t MAGIC_INSTRUCTION_SYNC = 645;
 
 struct ApertureCameraInstructions {
     uint64_t magic_sync;
-    Vec3 position;
-    Rot3 orientation;
+    ml::Vec3 position;
+    ml::Rot3 orientation;
     double object_distance;
     double sensor_size_along_columns;
     double field_of_view_along_columns;
@@ -40,23 +40,23 @@ struct ApertureCameraInstructions {
 
 ApertureCameraInstructions read_from_stream(std::istream &fin) {
     ApertureCameraInstructions inst;
-    inst.magic_sync = binio::read_uint64(fin);
+    inst.magic_sync = ml::binio::read_uint64(fin);
     double x, y, z;
-    x = binio::read_float64(fin);
-    y = binio::read_float64(fin);
-    z = binio::read_float64(fin);
-    inst.position = Vec3(x, y, z);
-    x = binio::read_float64(fin);
-    y = binio::read_float64(fin);
-    z = binio::read_float64(fin);
-    inst.orientation = Rot3(x, y, z);
-    inst.object_distance = binio::read_float64(fin);
-    inst.sensor_size_along_columns = binio::read_float64(fin);
-    inst.field_of_view_along_columns = binio::read_float64(fin);
-    inst.focal_length_over_aperture_diameter = binio::read_float64(fin);
-    inst.number_columns = binio::read_uint64(fin);
-    inst.number_rows = binio::read_uint64(fin);
-    inst.noise_level = binio::read_uint64(fin);
+    x = ml::binio::read_float64(fin);
+    y = ml::binio::read_float64(fin);
+    z = ml::binio::read_float64(fin);
+    inst.position = ml::Vec3(x, y, z);
+    x = ml::binio::read_float64(fin);
+    y = ml::binio::read_float64(fin);
+    z = ml::binio::read_float64(fin);
+    inst.orientation = ml::Rot3(x, y, z);
+    inst.object_distance = ml::binio::read_float64(fin);
+    inst.sensor_size_along_columns = ml::binio::read_float64(fin);
+    inst.field_of_view_along_columns = ml::binio::read_float64(fin);
+    inst.focal_length_over_aperture_diameter = ml::binio::read_float64(fin);
+    inst.number_columns = ml::binio::read_uint64(fin);
+    inst.number_rows = ml::binio::read_uint64(fin);
+    inst.noise_level = ml::binio::read_uint64(fin);
     return inst;
 }
 
@@ -68,18 +68,18 @@ int main(int argc, char* argv[]) {
             true,        // show help if requested
             "mctCameraServer 0.1");  // version string
 
-        ospath::Path scenery_path = ospath::Path(
+        ml::ospath::Path scenery_path(
             args.find("--scenery")->second.asString());
 
-        Scenery scenery;
-        json::append_to_frame_in_scenery(
+        ml::Scenery scenery;
+        ml::json::append_to_frame_in_scenery(
             &scenery.root,
             &scenery,
             scenery_path.path);
 
-        visual::Config visual_config;
+        ml::visual::Config visual_config;
         if (args.find("--config")->second) {
-            visual_config = json::load_visual_config(
+            visual_config = ml::json::load_visual_config(
                 args.find("--config")->second.asString());
         }
         scenery.root.init_tree_based_on_mother_child_relations();
@@ -89,11 +89,11 @@ int main(int argc, char* argv[]) {
             if (ins.magic_sync != MAGIC_INSTRUCTION_SYNC)
                 break;
 
-            visual::Image image = visual::Image(
+            ml::visual::Image image(
                 ins.number_columns,
                 ins.number_rows);
 
-            visual::ApertureCamera cam(
+            ml::visual::ApertureCamera cam(
                 "camera",
                 ins.number_columns,
                 ins.number_rows);
@@ -107,7 +107,7 @@ int main(int argc, char* argv[]) {
             cam.set_focus_to(ins.object_distance);
             visual_config.snapshot.noise_level = ins.noise_level;
             cam.acquire_image(&scenery.root, &visual_config, &image);
-            visual::ppm::append_image_to_file(image, std::cout);
+            ml::visual::ppm::append_image_to_file(image, std::cout);
         }
     }catch(std::exception &error) {
         std::cerr << error.what();

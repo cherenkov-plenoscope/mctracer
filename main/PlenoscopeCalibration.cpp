@@ -10,9 +10,7 @@ namespace fs = std::experimental::filesystem;
 using std::string;
 using std::cout;
 using std::stringstream;
-using namespace merlict;
-using ospath::Path;
-using ospath::join;
+namespace ml = merlict;
 
 
 static const char USAGE[] =
@@ -43,7 +41,7 @@ int main(int argc, char* argv[]) {
 
         int number_mega_photons = 0;
         try {
-            number_mega_photons = txt::to_int(
+            number_mega_photons = ml::txt::to_int(
                 args.find("--number_mega_photons")->second.asString());
         } catch (std::invalid_argument &error) {
             stringstream info;
@@ -63,20 +61,22 @@ int main(int argc, char* argv[]) {
             throw std::invalid_argument(info.str());
         }
 
-        Path out_path = Path(args.find("--output")->second.asString());
-        Path scenery_path = Path(args.find("--scenery")->second.asString());
+        ml::ospath::Path out_path(args.find("--output")->second.asString());
+        ml::ospath::Path scenery_path(args.find("--scenery")->second.asString());
 
         // 1) create output directory
         fs::create_directory(out_path.path);
         // 2) copy input into output directory
-        Path input_copy_path = join(out_path.path, "input");
+        ml::ospath::Path input_copy_path = ml::ospath::join(out_path.path, "input");
         fs::create_directory(input_copy_path.path);
         fs::copy(
             scenery_path.path,
-            join(input_copy_path.path, "scenery"));
+            ml::ospath::join(input_copy_path.path, "scenery"));
         // 3) use the copied input files
-        scenery_path = join(input_copy_path.path, "scenery");
-        Path scenery_file_path = join(scenery_path.path, "scenery.json");
+        scenery_path = ml::ospath::join(input_copy_path.path, "scenery");
+        ml::ospath::Path scenery_file_path = ml::ospath::join(
+            scenery_path.path,
+            "scenery.json");
 
         // SET UP SCENERY
         plenoscope::PlenoscopeScenery scenery;
@@ -96,13 +96,13 @@ int main(int argc, char* argv[]) {
 
         corsika::block::write(
             pis->light_field_sensor_geometry.get_info_header(),
-            join(out_path.path, "light_field_sensor_geometry.header.bin"));
+            ml::ospath::join(out_path.path, "light_field_sensor_geometry.header.bin"));
 
         pis->light_field_sensor_geometry.write_lixel_positions(
-            join(out_path.path, "lixel_positions.bin"));
+            ml::ospath::join(out_path.path, "lixel_positions.bin"));
 
         pis->light_field_sensor_geometry.write_info_header(
-            join(out_path.path, "info.md"));
+            ml::ospath::join(out_path.path, "info.md"));
 
         // CALIBRATION CONFIG
         plenoscope::calibration::Config calib_config;
@@ -115,11 +115,11 @@ int main(int argc, char* argv[]) {
             pis,
             &scenery.root);
 
-        random::Mt19937 prng(0);
+        ml::random::Mt19937 prng(0);
 
         plenoscope::calibration::run_calibration(
             calibrator,
-            join(out_path.path, "lixel_statistics.bin"),
+            ml::ospath::join(out_path.path, "lixel_statistics.bin"),
             &prng);
 
     } catch (std::exception &error) {
