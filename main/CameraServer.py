@@ -4,10 +4,6 @@ import numpy as np
 from io import BytesIO
 from skimage import io
 
-path_exe = '/home/sebastian/raytracing/build/mctCameraServer'
-visual_path = '/home/sebastian/raytracing/mctracer/Main/Examples/Show/visual.xml'
-scenery_path = '/home/sebastian/raytracing/mctracer/Main/Examples/Show/fact.xml'
-
 
 def read_ppm_image(fstream):
     magic = fstream.readline()
@@ -60,7 +56,7 @@ def cam_command(
     fout.seek(0)
     return fout.read()
 
-
+"""
 call = [path_exe, '--scenery', scenery_path, '--config', visual_path]
 mctracer = sp.Popen(call, stdin=sp.PIPE, stdout=sp.PIPE)
 outdir = 'fly4'
@@ -75,3 +71,4 @@ for i, y in enumerate(np.linspace(-10, -1, 100)):
     w = mctracer.stdin.flush()
     img = read_ppm_image(mctracer.stdout)
     io.imsave(os.path.join(outdir, '{:06d}.tiff'.format(i)), img)
+"""
