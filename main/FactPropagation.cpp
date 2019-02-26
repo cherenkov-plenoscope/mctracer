@@ -7,7 +7,7 @@
 #include "eventio.h"
 #include "corsika/corsika.h"
 #include "corsika/PhotonFactory.h"
-#include "Core/scenery/SegmentedReflector/SegmentedReflector.h"
+#include "Core/scenery/segmented_imaging_reflector/segmented_imaging_reflector.h"
 #include "signal_processing/signal_processing.h"
 namespace fs = std::experimental::filesystem;
 namespace ps = photon_stream;
@@ -288,7 +288,7 @@ int main(int argc, char* argv[]) {
     scenery.colors.add("inner_mirror_color", re::Color(255, 255, 255));
     scenery.colors.add("pixel_red", re::Color(255, 0, 0));
 
-    re::SegmentedReflector::Config r_cfg;
+    re::segmented_imaging_reflector::Config r_cfg;
     r_cfg.focal_length = 4.889;
     r_cfg.DaviesCotton_over_parabolic_mixing_factor = 0.5;
     r_cfg.max_outer_aperture_radius = 2.1;
@@ -299,7 +299,7 @@ int main(int argc, char* argv[]) {
     r_cfg.inner_mirror_color = scenery.colors.get("inner_mirror_color");
     r_cfg.reflectivity = scenery.functions.get("mirror_reflectivity");
 
-    re::SegmentedReflector::Factory r_factory(r_cfg);
+    re::segmented_imaging_reflector::Factory r_factory(r_cfg);
     r_factory.add_reflector_mirror_facets_to_frame(
         &scenery.root);
 

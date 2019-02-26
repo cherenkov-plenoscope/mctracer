@@ -4,7 +4,7 @@
 #include <sstream>
 #include "niels_lohmann_json.hpp"
 #include "Core/mctracer.h"
-#include "Core/scenery/SegmentedReflector/SegmentedReflector.h"
+#include "Core/scenery/segmented_imaging_reflector/segmented_imaging_reflector.h"
 namespace nl = nlohmann;
 using std::string;
 using relleums::txt::is_equal;
@@ -442,7 +442,7 @@ Frame* add_SegmentedReflector(
     Scenery *scenery,
     const Object &o
 ) {
-    SegmentedReflector::Config cfg;
+    segmented_imaging_reflector::Config cfg;
     cfg.focal_length = o.f8("focal_length");
     cfg.DaviesCotton_over_parabolic_mixing_factor =
         o.f8("DaviesCotton_over_parabolic_mixing_factor");
@@ -453,7 +453,7 @@ Frame* add_SegmentedReflector(
     cfg.reflectivity = scenery->functions.get(
         o.obj("surface").st("outer_reflection"));
 
-    SegmentedReflector::Factory refl_fab(cfg);
+    segmented_imaging_reflector::Factory refl_fab(cfg);
     Frame* reflector = mother->append<Frame>();
     set_frame(reflector, o);
     refl_fab.add_reflector_mirror_facets_to_frame(reflector);

@@ -12,7 +12,7 @@
 #include "Core/function/function.h"
 
 namespace relleums {
-namespace SegmentedReflector {
+namespace segmented_imaging_reflector {
 
 	struct Config {
 
@@ -41,6 +41,6 @@ namespace SegmentedReflector {
 			{200e-9, 1},
 			{1200e-9, 1}
 		});
-} // SegmentedReflector
+} // segmented_imaging_reflector
 }  // namespace relleums
 #endif // __SegmentedReflectorConfig_H_INCLUDED__ 

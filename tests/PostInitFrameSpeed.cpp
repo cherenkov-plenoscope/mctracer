@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "Core/scenery/SegmentedReflector/SegmentedReflector.h"
+#include "Core/scenery/segmented_imaging_reflector/segmented_imaging_reflector.h"
 #include "Core/mctracer.h"
 
 using namespace relleums;
@@ -20,7 +20,7 @@ TEST_CASE("PostInitFrameSpeed: post_init_based_on_mother", "[mctracer]") {
     reflector = scenery.root.append<Frame>();
     reflector->set_name_pos_rot("reflector", VEC3_ORIGIN, ROT3_UNITY);
 
-    SegmentedReflector::Config cfg;
+    segmented_imaging_reflector::Config cfg;
     cfg.focal_length = 1e6;
     cfg.DaviesCotton_over_parabolic_mixing_factor = 0.0;
     cfg.gap_between_facets = 0.00001;
@@ -28,7 +28,7 @@ TEST_CASE("PostInitFrameSpeed: post_init_based_on_mother", "[mctracer]") {
     cfg.min_inner_aperture_radius = 0.0;
     cfg.facet_inner_hex_radius = 0.01;
 
-    SegmentedReflector::Factory factory(cfg);
+    segmented_imaging_reflector::Factory factory(cfg);
     factory.add_reflector_mirror_facets_to_frame(reflector);
 
     scenery.root.init_tree_based_on_mother_child_relations();

@@ -8,12 +8,12 @@
 
 //=================================
 // included dependencies
-#include "Core/scenery/SegmentedReflector/Config.h"
+#include "Core/scenery/segmented_imaging_reflector/Config.h"
 #include "Core/Vec3.h"
 #include "Core/Rot3.h"
 
 namespace relleums {
-namespace SegmentedReflector {
+namespace segmented_imaging_reflector {
 
 	class Geometry {
 
@@ -64,7 +64,7 @@ namespace SegmentedReflector {
 		void move_all_facets_in_z(const double movement);
 	};
 
-}  // SegmentedReflector
+}  // segmented_imaging_reflector
 }  // namespace relleums
 
 #endif // __SegmentedReflectorGeometry_H_INCLUDED__ 

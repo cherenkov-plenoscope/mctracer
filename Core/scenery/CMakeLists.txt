@@ -1,4 +1,4 @@
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/SegmentedReflector")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/segmented_imaging_reflector")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/primitive")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/geometry")
 set(SOURCE

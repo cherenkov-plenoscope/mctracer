@@ -1,7 +1,7 @@
-#include "Core/scenery/SegmentedReflector/Config.h"
+#include "Core/scenery/segmented_imaging_reflector/Config.h"
 
 namespace relleums {
-namespace SegmentedReflector {
+namespace segmented_imaging_reflector {
 
 	Config::Config(): 
 		// Default is HEGRA CT3 aka FACT
@@ -16,5 +16,5 @@ namespace SegmentedReflector {
 		inner_mirror_color(&COLOR_DARK_GRAY),
 		reflectivity(&perfect_reflectivity)
 	{}
-} // SegmentedReflector
+}  // segmented_imaging_reflector
 }  // namespace relleums

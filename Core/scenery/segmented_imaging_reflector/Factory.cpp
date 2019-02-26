@@ -1,10 +1,10 @@
-#include "Core/scenery/SegmentedReflector/Factory.h"
+#include "Core/scenery/segmented_imaging_reflector/Factory.h"
 #include "Core/scenery/primitive/SphereCapWithHexagonalBound.h"
 using std::vector;
 using std::string;
 
 namespace relleums {
-namespace SegmentedReflector {
+namespace segmented_imaging_reflector {
 
 	Factory::Factory(const Config ncfg): 
 		cfg(ncfg),
@@ -35,5 +35,5 @@ namespace SegmentedReflector {
 			);		
 		}
 	}
-}  // SegmentedReflector
+}  // segmented_imaging_reflector
 }  // namespace relleums

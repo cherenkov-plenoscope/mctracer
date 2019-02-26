@@ -1,4 +1,4 @@
-#include "Core/scenery/SegmentedReflector/Geometry.h"
+#include "Core/scenery/segmented_imaging_reflector/Geometry.h"
 #include "Core/scenery/geometry/HexGridAnnulus.h"
 #include <iomanip>
 #include "Core/mctracer.h"
@@ -10,7 +10,7 @@ using std::string;
 using std::stringstream;
 
 namespace relleums {
-namespace SegmentedReflector {
+namespace segmented_imaging_reflector {
 
 	Geometry::Geometry(const Config config): cfg(config) {
 		init_focal_point();
@@ -285,5 +285,5 @@ namespace SegmentedReflector {
 		return out.str();
 	}
 
-}  // SegmentedReflector
+}  // segmented_imaging_reflector
 }  // namespace relleums

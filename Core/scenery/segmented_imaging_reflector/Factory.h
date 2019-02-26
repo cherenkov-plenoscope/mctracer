@@ -8,11 +8,11 @@
 
 //=================================
 // included dependencies
-#include "Core/scenery/SegmentedReflector/Geometry.h"
+#include "Core/scenery/segmented_imaging_reflector/Geometry.h"
 #include "Core/Frame.h"
 
 namespace relleums {
-namespace SegmentedReflector {
+namespace segmented_imaging_reflector {
 
 class Factory {
 
@@ -25,7 +25,7 @@ class Factory {
 	void add_reflector_mirror_facets_to_frame(Frame* reflector);
 };
 
-}  // SegmentedReflector
+}  // segmented_imaging_reflector
 }  // namespace relleums
 
 #endif // __SegmentedReflectorFactory_H_INCLUDED__ 
