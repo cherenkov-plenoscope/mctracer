@@ -1,9 +1,13 @@
 import numpy as np
 import os
 import glob
+import pyfiglet
 
 head = "// Copyright 2018 Sebastian A. Mueller\n"
-
+merlict_head_tmp = pyfiglet.Figlet("larry3d").renderText("merlict")
+merlict_head = ""
+for line in merlict_head_tmp.splitlines():
+	merlict_head += "//  " + line + "\n"
 
 def inside_namespace(txt):
 	start_first_namespace = txt.find("{", txt.find('namespace merlict')) + 1
