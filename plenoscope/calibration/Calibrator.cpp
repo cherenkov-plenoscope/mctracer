@@ -9,7 +9,6 @@
 #include "merlict/merlict.h"
 #include "plenoscope/calibration/Writer.h"
 #include "plenoscope/night_sky_background/NightSkyBackground.h"
-#include "Tools/FileTools.h"
 #include "corsika/block.h"
 using std::vector;
 using std::cout;

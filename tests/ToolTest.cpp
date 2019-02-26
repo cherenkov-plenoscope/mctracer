@@ -2,9 +2,7 @@
 #include <cmath>
 #include "catch.hpp"
 #include "merlict/tools.h"
-#include "Tools/FileTools.h"
 using namespace merlict;
-
 
 
 TEST_CASE("Tools: deg2rad_rad2deg", "[merlict]") {

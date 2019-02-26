@@ -2,7 +2,6 @@
 #include "plenoscope/calibration/LixelStatistics.h"
 #include <sstream>
 #include <fstream>
-#include "Tools/FileTools.h"
 using std::vector;
 using std::string;
 

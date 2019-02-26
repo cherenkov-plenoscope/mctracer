@@ -1,6 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/tools.h"
 #include <cmath>
+#include <sstream>
+#include <fstream>
 
 namespace merlict {
 
@@ -44,6 +46,21 @@ double get_solid_angle_for_opening_angle(const double theta) {
     //
     double h = (1.0 - cos(theta));
     return 2.0*M_PI*h;
+}
+
+void write_text_to_file(
+    const std::string &text,
+    const std::string &path
+) {
+    std::ofstream text_file(path.c_str());
+    if (text_file.is_open()) {
+        text_file << text;
+        text_file.close();
+    } else {
+        std::stringstream info;
+        info << "Unable to write text to file: '" << path << "'.";
+        throw std::runtime_error(info.str());
+    }
 }
 
 }  // namespace merlict

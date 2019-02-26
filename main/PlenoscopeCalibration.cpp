@@ -2,7 +2,6 @@
 #include <experimental/filesystem>
 #include <iostream>
 #include "docopt/docopt.h"
-#include "Tools/FileTools.h"
 #include "plenoscope/calibration/Calibrator.h"
 #include "plenoscope/json_to_plenoscope.h"
 #include "corsika/block.h"

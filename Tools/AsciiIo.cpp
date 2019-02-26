@@ -50,14 +50,14 @@ void write_table_to_file_with_header(
     out << txt::place_first_infront_of_each_new_line_of_second(
             "# ", header);
     out << get_table_print(table);
-    FileTools::write_text_to_file(out.str(), path);
+    write_text_to_file(out.str(), path);
 }
 
 void write_table_to_file(
     vector<vector<double>> table,
     const string &path
 ) {
-    FileTools::write_text_to_file(get_table_print(table), path);
+    write_text_to_file(get_table_print(table), path);
 }
 
 string get_table_print(const vector<vector<double>> &table) {

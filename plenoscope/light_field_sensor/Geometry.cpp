@@ -7,7 +7,6 @@
 #include "merlict/scenery/geometry/HexGridFlower.h"
 #include "Tools/AsciiIo.h"
 #include "merlict/merlict.h"
-#include "Tools/FileTools.h"
 #include "merlict/scenery/geometry/lens_maker.h"
 #include "corsika/corsika.h"
 using std::vector;
@@ -277,7 +276,7 @@ array<float, 273> Geometry::get_info_header()const {
 }
 
 void Geometry::write_info_header(const string &path)const {
-    FileTools::write_text_to_file(str(), path);
+    merlict::write_text_to_file(str(), path);
 }
 
 string Geometry::str()const {
