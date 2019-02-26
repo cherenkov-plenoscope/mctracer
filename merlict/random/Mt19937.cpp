@@ -12,7 +12,7 @@ Mt19937::Mt19937(const uint64_t seed) {
 
 Mt19937::Mt19937() {
     init_inverse_maximum();
-    set_seed(random::ZERO_SEED);
+    set_seed(0u);
 }
 
 double Mt19937::uniform() {

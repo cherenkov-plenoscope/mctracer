@@ -55,7 +55,7 @@ TEST_CASE("PhotonsTest: photon2raw_row", "[merlict]") {
 TEST_CASE("PhotonsTest: bunch2raw_matrix2bunch", "[merlict]") {
     const unsigned int number_of_photons = 1e3;
     vector<Photon> photon_bunch;
-    random::Mt19937 prng(random::ZERO_SEED);
+    random::Mt19937 prng(0u);
     for (unsigned int n = 0; n < number_of_photons; n++) {
         Vec3 sup(prng.uniform(), prng.uniform(), prng.uniform());
         Vec3 dir(prng.uniform(), prng.uniform(), prng.uniform());
@@ -95,7 +95,7 @@ TEST_CASE("PhotonsTest: bunch2raw_matrix2bunch", "[merlict]") {
 TEST_CASE("PhotonsTest: bunch2raw_matrix2file", "[merlict]") {
     const unsigned int number_of_photons = 1e3;
     std::vector<Photon> photon_bunch1;
-    random::Mt19937 prng(random::ZERO_SEED);
+    random::Mt19937 prng(0u);
     for (unsigned int n = 0; n < number_of_photons; n++) {
         Vec3 sup(prng.uniform(), prng.uniform(), prng.uniform());
         Vec3 dir(prng.uniform(), prng.uniform(), prng.uniform());

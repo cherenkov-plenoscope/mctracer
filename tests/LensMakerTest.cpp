@@ -49,7 +49,7 @@ TEST_CASE("lens_makerTest: check_lensmaker_on_optical_table_with_lens", "[merlic
             {200e-9, cfg.refractive_index},
             {1200e-9, cfg.refractive_index}
         });
-    random::Mt19937 prng(random::ZERO_SEED);
+    random::Mt19937 prng(0u);
     unsigned int number_of_photons_per_run = 1000;
     vector<double> sigma_psf_vs_image_sensor_distance;
     vector<double> image_sensor_distances;

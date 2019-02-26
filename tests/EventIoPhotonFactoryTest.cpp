@@ -130,7 +130,7 @@ TEST_CASE("EventIoPhotonFactoryTest: execute_atmospheric_absorption", "[merlict]
     double passed = 0;
     double total = 1e5;
 
-    random::Mt19937 prng(random::ZERO_SEED);
+    random::Mt19937 prng(0u);
 
     for (double i = 0; i < total-1; i++) {
         float weight = i/total;  // from 0.0 to 1.0
@@ -153,7 +153,7 @@ TEST_CASE("EventIoPhotonFactoryTest: execute_atmospheric_absorption", "[merlict]
 
 TEST_CASE("EventIoPhotonFactoryTest: merlict_rejects_photon_weight_below_0", "[merlict]") {
     const unsigned int id = 1337;
-    random::Mt19937 prng(random::ZERO_SEED);
+    random::Mt19937 prng(0u);
     const std::array<float, 8> corsika_photon =
         {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, -0.1, 433};
 
@@ -162,7 +162,7 @@ TEST_CASE("EventIoPhotonFactoryTest: merlict_rejects_photon_weight_below_0", "[m
 
 TEST_CASE("EventIoPhotonFactoryTest: merlict_accepts_photon_weight_equal_1", "[merlict]") {
     const unsigned int id = 1337;
-    random::Mt19937 prng(random::ZERO_SEED);
+    random::Mt19937 prng(0u);
     const std::array<float, 8> corsika_photon =
         {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 1.0, 433};
 
@@ -171,7 +171,7 @@ TEST_CASE("EventIoPhotonFactoryTest: merlict_accepts_photon_weight_equal_1", "[m
 
 TEST_CASE("EventIoPhotonFactoryTest: merlict_rejects_photon_weight_above_1", "[merlict]") {
     const unsigned int id = 1337;
-    random::Mt19937 prng(random::ZERO_SEED);
+    random::Mt19937 prng(0u);
     const std::array<float, 8> corsika_photon =
         {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 1.1, 433};
 
@@ -180,7 +180,7 @@ TEST_CASE("EventIoPhotonFactoryTest: merlict_rejects_photon_weight_above_1", "[m
 
 TEST_CASE("EventIoPhotonFactoryTest: merlict_accepts_photon_weight_equal_0", "[merlict]") {
     const unsigned int id = 1337;
-    random::Mt19937 prng(random::ZERO_SEED);
+    random::Mt19937 prng(0u);
     const std::array<float, 8> corsika_photon =
         {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.0, 433};
     CHECK_NOTHROW(EventIoPhotonFactory(corsika_photon, id, &prng));
@@ -188,7 +188,7 @@ TEST_CASE("EventIoPhotonFactoryTest: merlict_accepts_photon_weight_equal_0", "[m
 
 TEST_CASE("EventIoPhotonFactoryTest: merlict_accepts_photon_weight_btw_0_and_1", "[merlict]") {
     const unsigned int id = 1337;
-    random::Mt19937 prng(random::ZERO_SEED);
+    random::Mt19937 prng(0u);
     const std::array<float, 8>  corsika_photon =
         {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.4455, 433};
     CHECK_NOTHROW(EventIoPhotonFactory(corsika_photon, id, &prng));
@@ -228,7 +228,7 @@ TEST_CASE("EventIoPhotonFactoryTest: correct_rel_time_when_intersecting_ground",
 
         vector<Photon> photons;
 
-        random::Mt19937 prng(random::ZERO_SEED);
+        random::Mt19937 prng(0u);
 
         for (unsigned int id = 0; id < event.photons.size(); id++) {
             EventIoPhotonFactory factory(

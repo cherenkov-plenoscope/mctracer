@@ -73,7 +73,7 @@ TEST_CASE("PhotonTest: PropagationSimpleGeometry", "[merlict]") {
     Vec3 Support(0.0, 0.0, 0.5);
     Vec3 direction(0.0, 0.0, 1.0);
     double wavelength = 433e-9;
-    random::Mt19937 prng(random::ZERO_SEED);
+    random::Mt19937 prng(0u);
     PropagationEnvironment environment;
     environment.root_frame = &world;
     environment.config = &setup;
@@ -162,7 +162,7 @@ TEST_CASE("PhotonTest: Reflections", "[merlict]") {
     // traveling to the upper mirror
     Vec3 Support(-2.0, 0.0, 0.0);
     Vec3 direction = VEC3_UNIT_X;
-    random::Mt19937 prng(random::ZERO_SEED);
+    random::Mt19937 prng(0u);
     vector<Photon> photons;
     double num_phot = 1e4;
     for (int i = 1; i <= num_phot; i++) {
@@ -228,7 +228,7 @@ TEST_CASE("PhotonTest: Refraction", "[merlict]") {
 
     // -----------send Photon----------------------
     double wavelength = 433.0e-9;
-    random::Mt19937 prng(random::ZERO_SEED);
+    random::Mt19937 prng(0u);
     vector<Photon> photons;
     double num_phot = 1e4;
     for (int i = 1; i <= num_phot; i++) {
@@ -299,7 +299,7 @@ TEST_CASE("PhotonTest: absorbtion_in_medium", "[merlict]") {
 
     // -----------send Photons----------------------
     double wavelength = 433.0e-9;
-    random::Mt19937 prng(random::ZERO_SEED);
+    random::Mt19937 prng(0u);
     std::vector<Photon> photons;
     double num_phot = 1e4;
     for (int i = 1; i <= num_phot; i++) {

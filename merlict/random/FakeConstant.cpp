@@ -7,7 +7,7 @@ namespace random {
 
 FakeConstant::FakeConstant(const double _constant) {
     constant = _constant;
-    seed_ = ZERO_SEED;
+    seed_ = 0u;
 }
 
 double FakeConstant::uniform() {
