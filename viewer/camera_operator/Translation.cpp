@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "merlict/visual/camera_operator/Translation.h"
+#include "viewer/camera_operator/Translation.h"
 
 namespace merlict {
 namespace visual {

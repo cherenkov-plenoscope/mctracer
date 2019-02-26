@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <math.h>
-#include "merlict/visual/camera_operator/Rotation.h"
+#include "viewer/camera_operator/Rotation.h"
 #include "merlict/tools.h"
 using std::cout;
 

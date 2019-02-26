@@ -2,7 +2,7 @@
 #ifndef VISUAL_CAMERAOPERATOR_FIELDOFVIEW_H_
 #define VISUAL_CAMERAOPERATOR_FIELDOFVIEW_H_
 
-#include "merlict/tools.h"
+#include "merlict/merlict.h"
 #include "Verbosity.h"
 
 namespace merlict {

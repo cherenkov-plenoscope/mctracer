@@ -13,6 +13,4 @@
 #include "SkyDome.h"
 #include "Tracer.h"
 
-#include "camera_operator/camera_operator.h"
-
 #endif  // VISUAL_ALL_VISUAL_H_

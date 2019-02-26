@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "merlict/visual/camera_operator/FieldOfView.h"
+#include "viewer/camera_operator/FieldOfView.h"
 
 namespace merlict {
 namespace visual {
