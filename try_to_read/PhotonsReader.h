@@ -7,7 +7,7 @@
 #include "PhotonsReaderWrapper/BasicWrapper.h"
 
 // read in photons from any file
-// All known formats of the mctracer will try to read in the file.
+// All known formats of the merlict will try to read in the file.
 // Only the raw photon information is provided here.
 // When reading e.g. Air shower cherenkov photons, and one wants to access the
 // Monte Carlo truth aswell, you can not use this reader, but the specific

@@ -11,7 +11,7 @@ using namespace merlict;
 
 TEST_CASE("EventIoPhotonFactoryTest: intersection_point_on_ground", "[merlict]") {
     // compare the input ground intersection point with the actual intersection
-    // point of the mctracer photons when they are absorbed on the ground.
+    // point of the merlict photons when they are absorbed on the ground.
     random::Mt19937 prng(0);
 
     for (float x = -1e4; x < 1e4; x = x+1495.0) {
@@ -30,7 +30,7 @@ TEST_CASE("EventIoPhotonFactoryTest: intersection_point_on_ground", "[merlict]")
                     vector<Photon> photons;
                     photons.push_back(cpf.get_photon());
 
-                    // propagate mctracer photons down to ground
+                    // propagate merlict photons down to ground
                     Frame world;
                     world.set_name_pos_rot("world", VEC3_ORIGIN, ROT3_UNITY);
 
@@ -122,8 +122,8 @@ TEST_CASE("EventIoPhotonFactoryTest: execute_atmospheric_absorption", "[merlict]
     // in the Corsika output is 1.0.
     // A weight below 1.0 means, that the photon passed Corsika's atmosphere
     // simulation with a probability of this weigth.
-    // In mctracer we collapse this photons probability when the photon
-    // is created in mctracer. This is why the EventIoPhotonFactory is
+    // In merlict we collapse this photons probability when the photon
+    // is created in merlict. This is why the EventIoPhotonFactory is
     // given a PseudoRandomNumberGenerator.
 
     double absorbed = 0;
@@ -151,7 +151,7 @@ TEST_CASE("EventIoPhotonFactoryTest: execute_atmospheric_absorption", "[merlict]
     CHECK(0.5 == Approx(passed_ratio).margin(1e-2));
 }
 
-TEST_CASE("EventIoPhotonFactoryTest: mctracer_rejects_photon_weight_below_0", "[merlict]") {
+TEST_CASE("EventIoPhotonFactoryTest: merlict_rejects_photon_weight_below_0", "[merlict]") {
     const unsigned int id = 1337;
     random::Mt19937 prng(random::ZERO_SEED);
     const std::array<float, 8> corsika_photon =
@@ -160,7 +160,7 @@ TEST_CASE("EventIoPhotonFactoryTest: mctracer_rejects_photon_weight_below_0", "[
     CHECK_THROWS_AS(EventIoPhotonFactory(corsika_photon, id, &prng), EventIoPhotonFactory::BadPhotonWeight);
 }
 
-TEST_CASE("EventIoPhotonFactoryTest: mctracer_accepts_photon_weight_equal_1", "[merlict]") {
+TEST_CASE("EventIoPhotonFactoryTest: merlict_accepts_photon_weight_equal_1", "[merlict]") {
     const unsigned int id = 1337;
     random::Mt19937 prng(random::ZERO_SEED);
     const std::array<float, 8> corsika_photon =
@@ -169,7 +169,7 @@ TEST_CASE("EventIoPhotonFactoryTest: mctracer_accepts_photon_weight_equal_1", "[
     CHECK_NOTHROW(EventIoPhotonFactory(corsika_photon, id, &prng));
 }
 
-TEST_CASE("EventIoPhotonFactoryTest: mctracer_rejects_photon_weight_above_1", "[merlict]") {
+TEST_CASE("EventIoPhotonFactoryTest: merlict_rejects_photon_weight_above_1", "[merlict]") {
     const unsigned int id = 1337;
     random::Mt19937 prng(random::ZERO_SEED);
     const std::array<float, 8> corsika_photon =
@@ -178,7 +178,7 @@ TEST_CASE("EventIoPhotonFactoryTest: mctracer_rejects_photon_weight_above_1", "[
     CHECK_THROWS_AS(EventIoPhotonFactory(corsika_photon, id, &prng), EventIoPhotonFactory::BadPhotonWeight);
 }
 
-TEST_CASE("EventIoPhotonFactoryTest: mctracer_accepts_photon_weight_equal_0", "[merlict]") {
+TEST_CASE("EventIoPhotonFactoryTest: merlict_accepts_photon_weight_equal_0", "[merlict]") {
     const unsigned int id = 1337;
     random::Mt19937 prng(random::ZERO_SEED);
     const std::array<float, 8> corsika_photon =
@@ -186,7 +186,7 @@ TEST_CASE("EventIoPhotonFactoryTest: mctracer_accepts_photon_weight_equal_0", "[
     CHECK_NOTHROW(EventIoPhotonFactory(corsika_photon, id, &prng));
 }
 
-TEST_CASE("EventIoPhotonFactoryTest: mctracer_accepts_photon_weight_btw_0_and_1", "[merlict]") {
+TEST_CASE("EventIoPhotonFactoryTest: merlict_accepts_photon_weight_btw_0_and_1", "[merlict]") {
     const unsigned int id = 1337;
     random::Mt19937 prng(random::ZERO_SEED);
     const std::array<float, 8>  corsika_photon =
@@ -219,7 +219,7 @@ TEST_CASE("EventIoPhotonFactoryTest: correct_rel_time_when_intersecting_ground",
         /*
         read in a corsika eventio event. we remember the relative arrival
         times in the eventio file 'relative_arrival_times_in_corsika_file' and
-        compare these to the actual arrival times of the mctracer 
+        compare these to the actual arrival times of the merlict 
         photons on ground.
         */
         eventio::Event event = corsika_file.next_event();
@@ -240,7 +240,7 @@ TEST_CASE("EventIoPhotonFactoryTest: correct_rel_time_when_intersecting_ground",
             photons.push_back(factory.get_photon());
         }
 
-        // propagate mctracer photons down to ground
+        // propagate merlict photons down to ground
         Frame world;
         world.set_name_pos_rot("world", VEC3_ORIGIN, ROT3_UNITY);
 
@@ -296,7 +296,7 @@ TEST_CASE("EventIoPhotonFactoryTest: correct_rel_time_when_intersecting_ground",
 
         // for each photon we compare the relative arrival
         // time written in the in the eventio file with the actual arrival time
-        // of the mctracer photon which ran down to the ground.
+        // of the merlict photon which ran down to the ground.
         for (
             unsigned int i = 0;
             i < sensor.photon_arrival_history.size();

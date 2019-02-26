@@ -49,7 +49,7 @@ Vec3 EventIoPhotonFactory::intersection_with_xy_floor_plane()const {
 
 double EventIoPhotonFactory::production_distance_offset()const {
     // an arbitrary offset distance for the photons to travel until they
-    // reach the ground. If set to zero 0.0, the distance for a mctracer photon
+    // reach the ground. If set to zero 0.0, the distance for a merlict photon
     // to travel is only defined by the relative_arrival_time_on_ground().
     // Ensure this offset is at least as big as your detector system on ground.
     return 1e3;

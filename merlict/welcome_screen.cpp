@@ -9,7 +9,7 @@ std::string welcome_screen() {
     //               1         2         3         4         5         6
     //      123456789012345678901234567890123456789012345678901234567890
     out << "                                                            \n";
-    out << "                         mctracer                           \n";
+    out << "                          merlict                           \n";
     out << "                                                            \n";
     out << "         propagating photons in complex sceneries           \n";
     out << "                   Astro particle physics                   \n";
