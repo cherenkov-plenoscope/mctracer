@@ -45,6 +45,6 @@ const Vec3 VEC3_UNIT_Y = Vec3(0.0, 1.0, 0.0);
 const Vec3 VEC3_UNIT_Z = Vec3(0.0, 0.0, 1.0);
 const double MAX_DEVIATION_EQUAL_VEC3_SQUARE = 1e-14;
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_VEC3_H_

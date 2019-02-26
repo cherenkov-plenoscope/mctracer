@@ -36,6 +36,6 @@ class Propagator {
 };
 
 }  // namespace PhotonAndFrame
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_PHOTONANDFRAME_H_

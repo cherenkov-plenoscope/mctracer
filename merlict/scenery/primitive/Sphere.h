@@ -44,6 +44,6 @@ class Sphere :public SurfaceEntity {
     };
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_PRIMITIVE_SPHERE_H_

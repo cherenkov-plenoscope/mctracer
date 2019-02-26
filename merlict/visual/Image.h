@@ -56,6 +56,6 @@ void fabs_difference(const Image &a, const Image &b, Image* out);
 void scale_up(const Image &in, const unsigned int scale, Image* out);
 
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // VISUAL_IMAGE_H_

@@ -150,4 +150,4 @@ Ray CameraDevice::get_optical_axis_in_world()const {
 }
 
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict

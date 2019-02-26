@@ -70,4 +70,4 @@ double BiConvexLensHexBound::height_of_a_cap_given_curv_radius_and_outer_radius(
         sqrt(curvature_radius*curvature_radius - outer_radius*outer_radius);
 }
 
-}  // namespace relleums
+}  // namespace merlict

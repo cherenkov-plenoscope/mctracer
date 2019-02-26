@@ -29,6 +29,6 @@ class ZaxisCylinderRayIntersectionEquation {
     void choose_plus_solution();
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_GEOMETRY_ZAXISCYLINDERRAYINTERSECTIONEQUATION_H_

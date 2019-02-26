@@ -21,6 +21,6 @@ struct Scenery {
     static Scenery void_scenery;
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_SCENERY_H_

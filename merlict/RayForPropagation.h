@@ -64,6 +64,6 @@ class RayForPropagation :public Ray{
     std::string get_type_print(const Interaction type)const;
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_RAYFORPROPAGATION_H_

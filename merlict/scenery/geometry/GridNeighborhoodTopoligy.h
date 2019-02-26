@@ -26,6 +26,6 @@ class GridNeighborhoodTopoligy{
     unsigned int get_candidate_hig_x(const double x);
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_GEOMETRY_GRIDNEIGHBORHOODTOPOLIGY_H_

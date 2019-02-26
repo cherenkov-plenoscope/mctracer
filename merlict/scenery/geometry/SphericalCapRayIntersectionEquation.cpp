@@ -58,4 +58,4 @@ Vec3 SphericalCapRayIntersectionEquation::
     return normal;
 }
 
-}  // namespace relleums
+}  // namespace merlict

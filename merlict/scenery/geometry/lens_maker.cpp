@@ -72,4 +72,4 @@ void abort_if_too_many_iterations(
 
 
 }  // namespace lens_maker
-}  // namespace relleums
+}  // namespace merlict

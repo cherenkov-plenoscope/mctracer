@@ -178,4 +178,4 @@ void CausalIntersection::calculate_closest_intersection() {
 }
 
 }  // namespace RayAndFrame
-}  // namespace relleums
+}  // namespace merlict

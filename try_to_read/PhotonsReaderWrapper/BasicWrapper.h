@@ -28,6 +28,6 @@ public:
 	virtual std::vector<Photon> next(random::Generator* prng)=0;
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif // __PhotonsReaderBasicWrapper_H_INCLUDED__ 

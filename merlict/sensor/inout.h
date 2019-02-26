@@ -18,6 +18,6 @@ std::vector<PhotonArrival> read_arrival_information_from_file(
     const unsigned int number_of_arrivals);
 
 }  // namespace sensor
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // PHOTONSENSOR_INOUT_H_

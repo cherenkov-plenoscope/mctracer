@@ -24,6 +24,6 @@ class HexPlane :public SurfaceEntity{
     void post_initialize_radius_of_enclosing_sphere();
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_PRIMITIVE_HEXPLANE_H_

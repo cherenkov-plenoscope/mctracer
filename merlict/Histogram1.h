@@ -27,6 +27,6 @@ class Histogram1 {
     void fill_in(const double sample);
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_HISTOGRAM1D_H_

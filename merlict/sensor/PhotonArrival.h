@@ -28,6 +28,6 @@ struct PhotonArrival {
 };
 
 }  // namespace sensor
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // PHOTONSENSOR_PHOTONARRIVAL_H_

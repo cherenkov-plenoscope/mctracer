@@ -50,6 +50,6 @@ std::vector<std::vector<double>> polynom3(
 );
 
 }  // namespace function
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_FUNCTION_TOOLS_H_

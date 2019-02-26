@@ -12,6 +12,6 @@ void write_text_to_file(
     const std::string &path);
 
 }  // namespace FileTools
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // MCTRACER_TOOLS_FILETOOLS_H_

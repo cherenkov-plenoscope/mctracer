@@ -14,6 +14,6 @@ struct PropagationEnvironment {
     random::Generator* prng = &random::VOID_PRNG;
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_PROPAGATIONENVIRONMENT_H_

@@ -45,6 +45,6 @@ class Rotation: public Verbosity {
 
 }  // namespace camera_operator
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // VISUAL_CAMERAOPERATOR_ROTATION_H_

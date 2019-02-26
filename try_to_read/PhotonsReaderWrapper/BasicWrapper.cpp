@@ -5,4 +5,4 @@ namespace merlict {
 
 BasicWrapper::BasicWrapper(const string _path): path(_path) {}
 
-}  // namespace relleums
+}  // namespace merlict

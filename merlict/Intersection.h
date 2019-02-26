@@ -52,6 +52,6 @@ class Intersection {
     static bool compare(const Intersection &one, const Intersection &two);
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_INTERSECTION_H_

@@ -73,6 +73,6 @@ class FlyingCamera {
 };
 
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // VISUAL_FLYINGCAMERA_H_

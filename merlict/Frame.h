@@ -5,7 +5,7 @@
 namespace merlict {
 class Ray;
 class Intersection;
-}  // namespace relleums
+}  // namespace merlict
 
 #include <string>
 #include <vector>
@@ -87,6 +87,6 @@ class Frame {
 
 const Frame VOID_FRAME;
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_FRAME_H_

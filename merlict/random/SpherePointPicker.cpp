@@ -43,4 +43,4 @@ Vec3 draw_point_on_sphere(
 }
 
 }  // namespace random
-}  // namespace relleums
+}  // namespace merlict

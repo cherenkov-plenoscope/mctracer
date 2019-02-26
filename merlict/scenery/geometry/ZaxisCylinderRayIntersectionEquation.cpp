@@ -84,4 +84,4 @@ bool ZaxisCylinderRayIntersectionEquation::has_solution()const {
     return has_intersection;
 }
 
-}  // namespace relleums
+}  // namespace merlict

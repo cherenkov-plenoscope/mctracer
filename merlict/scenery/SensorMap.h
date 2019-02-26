@@ -16,6 +16,6 @@ struct SensorMap: public ResourceMap {
     ~SensorMap();
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_DETECTORMAP_H_

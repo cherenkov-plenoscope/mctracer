@@ -15,6 +15,6 @@ struct PropagationConfig {
 
 const PropagationConfig DEFAULT_PROPAGATIONCONFIG;
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_PROPAGATIONCONFIG_H_

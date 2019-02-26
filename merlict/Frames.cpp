@@ -203,4 +203,4 @@ double bounding_sphere_radius(const vector<Frame*> &frames, const Vec3 center) {
 }
 
 }  // namespace Frames
-}  // namespace relleums
+}  // namespace merlict

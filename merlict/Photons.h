@@ -61,6 +61,6 @@ void transform_all_photons_multi_thread(
 );
 
 }  // namespace Photons
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_PHOTONS_H_

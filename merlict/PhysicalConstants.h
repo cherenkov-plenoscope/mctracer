@@ -6,6 +6,6 @@ namespace merlict {
 
 const double VACUUM_SPPED_OF_LIGHT = 299792458.0;
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_PHYSICALCONSTANTS_H_

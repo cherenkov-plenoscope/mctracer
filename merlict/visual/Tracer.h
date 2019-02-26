@@ -48,6 +48,6 @@ class Tracer {
 };
 
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // VISUAL_TRACER_H_

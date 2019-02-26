@@ -46,4 +46,4 @@ bool Color::operator != (const Color& eq)const {
     return r != eq.r || g != eq.g || b != eq.b;
 }
 
-}  // namespace relleums
+}  // namespace merlict

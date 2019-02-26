@@ -46,4 +46,4 @@ double get_solid_angle_for_opening_angle(const double theta) {
     return 2.0*M_PI*h;
 }
 
-}  // namespace relleums
+}  // namespace merlict

@@ -26,6 +26,6 @@ class Mt19937 : public Generator{
 };
 
 }  // namespace random
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_RANDOM_MT19937_H_

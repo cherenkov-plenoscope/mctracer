@@ -28,6 +28,6 @@ class Stamp {
 };
 
 }  // namespace Time
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // TOOLS_TIME_H_

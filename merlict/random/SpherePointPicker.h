@@ -30,6 +30,6 @@ Vec3 draw_point_on_sphere(
     const UniformPicker& azimuth);
 
 }  // namespace random
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_RANDOM_SPHEREPOINTPICKER_H_

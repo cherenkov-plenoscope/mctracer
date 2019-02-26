@@ -169,6 +169,6 @@ std::vector<Photon> load_photons(const std::string &path);
 std::vector<Photon> to_photons(const Object &o);
 
 }  // namespace json
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // JSON_H_

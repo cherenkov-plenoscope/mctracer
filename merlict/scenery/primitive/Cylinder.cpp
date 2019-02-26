@@ -151,4 +151,4 @@ Vec3 Cylinder::get_surface_normal_for_intersection_vec(const Vec3* vec)const {
     return surface_normal / surface_normal.norm();
 }
 
-}  // namespace relleums
+}  // namespace merlict

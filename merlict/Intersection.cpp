@@ -164,4 +164,4 @@ bool Intersection::compare(const Intersection &one, const Intersection &two) {
     return  one.distance_to_ray_support() < two.distance_to_ray_support();
 }
 
-}  // namespace relleums
+}  // namespace merlict

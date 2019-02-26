@@ -41,6 +41,6 @@ struct CausalIntersection {
 };
 
 }  // namespace RayAndFrame
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_RAYANDFRAME_H_

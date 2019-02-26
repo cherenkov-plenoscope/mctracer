@@ -27,6 +27,6 @@ double read_float64(std::istream &fin);
 uint64_t read_uint64(std::istream &fin);
 
 }  // namespace binio
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_BINIO_H_

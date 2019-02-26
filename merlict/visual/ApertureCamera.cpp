@@ -328,4 +328,4 @@ std::vector<Color> ApertureCamera::acquire_pixels(
 }
 
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict

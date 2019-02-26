@@ -98,4 +98,4 @@ Vec3 EllipticalCapRayIntersectionEquation::
     return surface_normal/surface_normal.norm();
 }
 
-}  // namespace relleums
+}  // namespace merlict

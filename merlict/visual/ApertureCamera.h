@@ -68,6 +68,6 @@ class ApertureCamera :public CameraDevice{
 };
 
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // VISUAL_APERTURECAMERA_H_

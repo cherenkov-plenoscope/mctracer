@@ -138,4 +138,4 @@ void Stereo3D::use_same_stereo_offset_as(
 
 }  // namespace camera_operator
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict

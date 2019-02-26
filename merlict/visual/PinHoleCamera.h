@@ -40,6 +40,6 @@ class PinHoleCamera:public CameraDevice{
 };
 
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // VISUAL_PINHOLECAMERA_H_

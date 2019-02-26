@@ -18,6 +18,6 @@ class BiConvexLensHexBound :public SurfaceEntity{
         const double curvature_radius, const double outer_radius)const;
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_PRIMITIVE_BICONVEXLENSHEXBOUND_H_

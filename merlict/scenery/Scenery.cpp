@@ -10,4 +10,4 @@ Scenery::Scenery() {
     current_working_directory = ".";
 }
 
-}  // namespace relleums
+}  // namespace merlict

@@ -19,6 +19,6 @@ class FakeConstant : public Generator{
 };
 
 }  // namespace random
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_RANDOM_FAKECONSTANT_H_

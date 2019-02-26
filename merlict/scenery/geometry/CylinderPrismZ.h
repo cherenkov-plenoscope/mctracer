@@ -20,6 +20,6 @@ class CylinderPrismZ :public PrismZ {
     void assert_radius_is_positiv(const double radius)const;
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_GEOMETRY_CYLINDERPRISMZ_H_

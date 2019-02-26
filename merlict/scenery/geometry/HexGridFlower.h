@@ -28,6 +28,6 @@ class HexGridFlower{
     void init_grid();
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_GEOMETRY_HEXGRIDFLOWER_H_

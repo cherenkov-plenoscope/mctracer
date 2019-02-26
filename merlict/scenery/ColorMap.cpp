@@ -39,4 +39,4 @@ void ColorMap::assert_not_in_use_yet(const string key) {
     }
 }
 
-}  // namespace relleums
+}  // namespace merlict

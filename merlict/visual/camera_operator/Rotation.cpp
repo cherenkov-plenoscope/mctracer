@@ -140,4 +140,4 @@ Rot3 Rotation::get_R_World2Camera()const {
 
 }  // namespace camera_operator
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict

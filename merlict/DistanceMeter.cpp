@@ -17,4 +17,4 @@ DistanceMeter::DistanceMeter(const Ray* ray, const Frame* world) {
     }
 }
 
-}  // namespace relleums
+}  // namespace merlict

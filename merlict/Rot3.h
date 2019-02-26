@@ -40,6 +40,6 @@ class Rot3 {
 
 const Rot3 ROT3_UNITY = Rot3(0.0, 0.0, 0.0);
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_ROT3_H_

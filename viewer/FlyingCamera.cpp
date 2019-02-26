@@ -378,4 +378,4 @@ void FlyingCamera::continue_with_new_scenery_and_visual_config(
 }
 
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict

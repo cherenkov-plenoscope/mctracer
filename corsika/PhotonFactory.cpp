@@ -150,4 +150,4 @@ void EventIoPhotonFactory::assert_photon_weight_is_between_zero_and_one()const {
     }
 }
 
-}  // namespace relleums
+}  // namespace merlict

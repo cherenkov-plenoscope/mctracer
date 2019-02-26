@@ -28,6 +28,6 @@ class DualSphericalPrismZ :public PrismZ {
     bool is_inside(const Vec3* vec)const;
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_GEOMETRY_DUALSPHERICALPRISMZ_H_

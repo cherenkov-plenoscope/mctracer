@@ -14,6 +14,6 @@ struct ResourceMap {
     };
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_RESOURCEMAP_H_

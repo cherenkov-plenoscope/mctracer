@@ -21,6 +21,6 @@ class SamplesFromDistribution {
 };
 
 }  // namespace random
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_RANDOM_SAMPLESFROMDISTRIBUTION_H_

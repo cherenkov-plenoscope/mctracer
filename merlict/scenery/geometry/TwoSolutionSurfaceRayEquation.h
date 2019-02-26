@@ -16,6 +16,6 @@ class TwoSolutionSurfaceRayEquation {
         const Vec3* intersec)const = 0;
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_GEOMETRY_TWOSOLUTIONSURFACERAYEQUATION_H_

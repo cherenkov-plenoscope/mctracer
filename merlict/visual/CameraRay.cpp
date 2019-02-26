@@ -20,4 +20,4 @@ std::string CameraRay::str()const {
 }
 
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict

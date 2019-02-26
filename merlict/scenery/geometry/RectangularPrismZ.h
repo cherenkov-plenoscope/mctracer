@@ -28,6 +28,6 @@ class RectangularPrismZ :public PrismZ {
     void set_rectangle_y_width(const double y_width);
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_GEOMETRY_RECTANGULARPRISMZ_H_

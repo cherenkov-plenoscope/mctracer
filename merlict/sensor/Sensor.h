@@ -24,6 +24,6 @@ struct Sensor {
 };
 
 }  // namespace sensor
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // PHOTONSENSOR_SENSOR_H_

@@ -69,4 +69,4 @@ void SurfaceWithOuterPrismBound::add_causeal_intersection(
     }
 }
 
-}  // namespace relleums
+}  // namespace merlict

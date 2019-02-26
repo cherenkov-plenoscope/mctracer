@@ -29,4 +29,4 @@ double QuadraticEquation::plus_solution() {
     return -p_over_2 + squareroot;
 }
 
-}  // namespace relleums
+}  // namespace merlict

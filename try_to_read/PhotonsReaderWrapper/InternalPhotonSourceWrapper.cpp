@@ -22,4 +22,4 @@ vector<Photon> InternalPhotonSourceWrapper::next(random::Generator* prng) {
     return photons;
 }
 
-}  // namespace relleums
+}  // namespace merlict

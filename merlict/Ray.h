@@ -27,6 +27,6 @@ class Ray {
     double closest_distance_to_point(const Vec3 &point)const;
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_RAY_H_

@@ -66,4 +66,4 @@ double HexagonalPrismZ::get_outer_radius()const {
     return outer_radius;
 }
 
-}  // namespace relleums
+}  // namespace merlict

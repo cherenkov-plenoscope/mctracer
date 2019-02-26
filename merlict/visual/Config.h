@@ -39,6 +39,6 @@ struct Config {
 };
 
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // VISUAL_CONFIG_H_

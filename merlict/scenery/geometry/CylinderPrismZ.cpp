@@ -32,4 +32,4 @@ double CylinderPrismZ::get_area()const {
     return radius_square*M_PI;
 }
 
-}  // namespace relleums
+}  // namespace merlict

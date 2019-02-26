@@ -28,4 +28,4 @@ SensorMap::~SensorMap() {
         delete sens;
 }
 
-}  // namespace relleums
+}  // namespace merlict

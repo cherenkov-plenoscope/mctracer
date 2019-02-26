@@ -68,4 +68,4 @@ unsigned int GridNeighborhoodTopoligy::get_candidate_hig_x(const double x) {
     return (it - idx_x.begin());
 }
 
-}  // namespace relleums
+}  // namespace merlict

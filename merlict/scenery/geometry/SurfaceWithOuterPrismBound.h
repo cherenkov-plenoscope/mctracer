@@ -19,6 +19,6 @@ class SurfaceWithOuterPrismBound :public SurfaceEntity{
         std::vector<Intersection> *intersections)const;
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_GEOMETRY_SURFACEWITHOUTERPRISMBOUND_H_

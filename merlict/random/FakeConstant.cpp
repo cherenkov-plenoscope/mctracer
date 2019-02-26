@@ -25,4 +25,4 @@ uint64_t FakeConstant::create_seed() {
 }
 
 }  // namespace random
-}  // namespace relleums
+}  // namespace merlict

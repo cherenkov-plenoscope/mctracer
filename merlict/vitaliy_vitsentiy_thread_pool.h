@@ -247,6 +247,6 @@ namespace ctpl {
     };
 
 }
-}  // namespace relleums
+}  // namespace merlict
 
 #endif // __ctpl_stl_thread_pool_H__

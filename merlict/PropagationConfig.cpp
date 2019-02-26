@@ -8,4 +8,4 @@ PropagationConfig::PropagationConfig() {
     max_number_of_interactions_per_photon = 5;
 }
 
-}  // namespace relleums
+}  // namespace merlict

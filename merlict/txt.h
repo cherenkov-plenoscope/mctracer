@@ -44,6 +44,6 @@ int to_int(std::string text_to_parse);
 Vec3 to_Vec3(const std::string original_text);
 
 }  // namespace txt
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // TOOLS_STRINGTOOLS_H_

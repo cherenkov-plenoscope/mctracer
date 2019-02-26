@@ -23,6 +23,6 @@ class HexagonalPrismZ :public PrismZ {
     void assert_outer_radius_positive(const double outer_radius)const;
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_GEOMETRY_HEXAGONALPRISMZ_H_

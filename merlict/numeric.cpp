@@ -31,4 +31,4 @@ vector<double> linspace(double begin, double end, unsigned int steps) {
 }
 
 }  // namespace numeric
-}  // namespace relleums
+}  // namespace merlict

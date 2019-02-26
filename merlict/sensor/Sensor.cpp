@@ -35,4 +35,4 @@ void Sensor::assign_photon(const Photon* photon) {
 }
 
 }  // namespace sensor
-}  // namespace relleums
+}  // namespace merlict

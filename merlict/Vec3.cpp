@@ -182,4 +182,4 @@ Vec3 Vec3::project_in_x_y_plane()const {
     return Vec3(x, y, 0.0);
 }
 
-}  // namespace relleums
+}  // namespace merlict

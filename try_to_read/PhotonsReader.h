@@ -24,6 +24,6 @@ class PhotonsReader {
     std::vector<Photon> next(random::Generator* prng);
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // PHOTONSREADER_PHOTONSREADER_H_

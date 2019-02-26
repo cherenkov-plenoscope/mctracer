@@ -64,6 +64,6 @@ class SurfaceEntity :public Frame {
     void init_surface_defaults();
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_SURFACEENTITY_H_

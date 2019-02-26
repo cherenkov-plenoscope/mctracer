@@ -60,4 +60,4 @@ double Photon::get_time_of_flight()const {
     return time_of_flight;
 }
 
-}  // namespace relleums
+}  // namespace merlict

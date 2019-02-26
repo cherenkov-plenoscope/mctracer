@@ -128,4 +128,4 @@ std::vector<std::vector<double>> polynom3(
 }
 
 }  // namespace function
-}  // namespace relleums
+}  // namespace merlict

@@ -15,4 +15,4 @@ Config::Config():
 {}
 
 }  // namespace segmented_imaging_reflector
-}  // namespace relleums
+}  // namespace merlict

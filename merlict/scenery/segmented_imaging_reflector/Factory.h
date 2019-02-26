@@ -19,6 +19,6 @@ class Factory {
 };
 
 }  // namespace segmented_imaging_reflector
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_SCENERY_SEGMENTED_IMAGING_REFLECTOR_FACTORY_H_

@@ -39,6 +39,6 @@ void one_iteration(
 
 Ball many_iterations(const std::vector<Ball> &balls);
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_SMALL_BALL_H_

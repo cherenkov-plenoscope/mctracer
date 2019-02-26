@@ -39,4 +39,4 @@ Vec3 XyPlaneRayIntersectionEquation::get_plane_normal_vector()const {
     return Vec3(0.0, 0.0, 1.0);
 }
 
-}  // namespace relleums
+}  // namespace merlict

@@ -22,4 +22,4 @@ std::vector<PixelCoordinate> pixel_coordinates(
 }
 
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict

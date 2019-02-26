@@ -106,4 +106,4 @@ void Sphere::calculate_intersection_with(
     }
 }
 
-}  // namespace relleums
+}  // namespace merlict

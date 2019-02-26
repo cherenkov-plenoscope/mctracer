@@ -20,6 +20,6 @@ std::vector<std::vector<double>> history_to_table(
 std::string arrival_table_header();
 
 }  // namespace sensor
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // PHOTONSENSOR_PHOTONARRIVALS_H_

@@ -7,4 +7,4 @@ double PrismZ::get_area()const {
 	return 0.0;
 }
 
-}  // namespace relleums
+}  // namespace merlict

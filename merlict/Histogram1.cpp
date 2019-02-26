@@ -75,4 +75,4 @@ void Histogram1::assert_at_least_two_bin_edges()const {
     }
 }
 
-}  // namespace relleums
+}  // namespace merlict

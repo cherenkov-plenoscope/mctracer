@@ -24,4 +24,4 @@ Config::Config():sky_dome(COLOR_SKY_BLUE) {
 }
 
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict

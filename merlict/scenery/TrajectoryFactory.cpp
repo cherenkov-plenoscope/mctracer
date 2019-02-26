@@ -85,4 +85,4 @@ std::string TrajectoryFactory::get_intersection_point_name_of_part(
     return name.str();
 }
 
-}  // namespace relleums
+}  // namespace merlict

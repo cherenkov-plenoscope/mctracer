@@ -21,6 +21,6 @@ class QuadraticEquation{
     double plus_solution();
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_GEOMETRY_QUADRATICEQUATION_H_

@@ -32,6 +32,6 @@ class HexGridAnnulus{
         const double spacing);
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_GEOMETRY_HEXGRIDANNULUS_H_

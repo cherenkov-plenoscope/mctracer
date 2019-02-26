@@ -145,4 +145,4 @@ void PinHoleCamera::acquire_image(
 }
 
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict

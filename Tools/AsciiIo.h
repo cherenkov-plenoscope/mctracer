@@ -51,6 +51,6 @@ class TableReader {
 };
 
 }  // namespace tsvio
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // TOOLS_ASCIIIO_H_

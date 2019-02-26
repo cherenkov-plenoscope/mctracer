@@ -15,6 +15,6 @@ static const unsigned int ZERO_SEED = 0;
 static Mt19937 VOID_PRNG = Mt19937(ZERO_SEED);
 
 }  // namespace random
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_RANDOM_RANDOM_H_

@@ -9,6 +9,6 @@ namespace SimulationTruth {
     static const int PHOTO_ELECTRIC_CONVERTER_ACCIDENTAL = - 201;
     static const int PHOTO_ELECTRIC_CONVERTER_CROSSTALK = - 202;
 }  // namespace SimulationTruth
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_SIMULATIONTRUTH_H_

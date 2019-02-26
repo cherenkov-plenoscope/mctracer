@@ -143,6 +143,6 @@ class BinaryReader :public BinaryIo {
 };
 
 }  // namespace stereo_litography
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_STEREOLITOGRAPHY_STEREOLITOGRAPHY_H_

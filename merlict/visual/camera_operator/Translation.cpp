@@ -88,4 +88,4 @@ void Translation::move_to(const Vec3 pos) {
 
 }  // namespace camera_operator
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict

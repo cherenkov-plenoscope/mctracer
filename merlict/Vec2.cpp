@@ -90,4 +90,4 @@ unsigned int Vec2::get_quadrant()const {
     return 2*sx + 1*sy;
 }
 
-}  // namespace relleums
+}  // namespace merlict

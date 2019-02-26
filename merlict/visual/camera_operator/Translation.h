@@ -33,6 +33,6 @@ class Translation: public Verbosity {
 
 }  // namespace camera_operator
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // VISUAL_CAMERAOPERATOR_TRANSLATION_H_

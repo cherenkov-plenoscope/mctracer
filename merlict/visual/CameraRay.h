@@ -23,6 +23,6 @@ class CameraRay :public Ray {
 };
 
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // VISUAL_CAMERARAY_H_

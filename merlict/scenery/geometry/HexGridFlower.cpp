@@ -54,4 +54,4 @@ double HexGridFlower::get_facet_spacing()const {
     return facet_spacing;
 }
 
-}  // namespace relleums
+}  // namespace merlict

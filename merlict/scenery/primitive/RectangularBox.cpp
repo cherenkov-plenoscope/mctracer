@@ -53,4 +53,4 @@ void RectangularBox::set_xyz_width(
     walls[5]->take_boundary_layer_properties_from(this);
 }
 
-}  // namespace relleums
+}  // namespace merlict

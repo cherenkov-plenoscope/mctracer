@@ -13,6 +13,6 @@ struct DistanceMeter {
     double distance_to_closest_object;
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_DISTANCEMETER_H_

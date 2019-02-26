@@ -39,4 +39,4 @@ double Generator::expovariate(const double rate) {
 }
 
 }  // namespace random
-}  // namespace relleums
+}  // namespace merlict

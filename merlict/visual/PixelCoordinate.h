@@ -17,6 +17,6 @@ std::vector<PixelCoordinate> pixel_coordinates(
     const unsigned int rows);
 
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // VISUAL_PIXELCOORDINATE_H_

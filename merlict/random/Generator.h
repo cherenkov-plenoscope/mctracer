@@ -24,6 +24,6 @@ class Generator {
 };
 
 }  // namespace random
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_RANDOM_GENERATOR_H_

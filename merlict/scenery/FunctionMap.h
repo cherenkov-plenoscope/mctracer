@@ -18,6 +18,6 @@ struct FunctionMap: public ResourceMap {
     void assert_not_in_use_yet(const std::string key);
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_FUNCTIONMAP_H_

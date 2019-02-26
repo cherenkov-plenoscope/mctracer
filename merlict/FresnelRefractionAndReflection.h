@@ -29,6 +29,6 @@ class FresnelRefractionAndReflection{
     double reflection_propability()const;
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_FRESNELREFRACTIONANDREFLECTION_H_

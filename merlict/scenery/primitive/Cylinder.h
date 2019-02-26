@@ -56,6 +56,6 @@ class Cylinder :public SurfaceEntity {
     };
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_PRIMITIVE_CYLINDER_H_

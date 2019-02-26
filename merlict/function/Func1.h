@@ -43,6 +43,6 @@ struct Func1 {
 };
 
 }  // namespace function
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_FUNCTION_FUNC1_H_

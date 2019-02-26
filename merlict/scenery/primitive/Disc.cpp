@@ -51,4 +51,4 @@ void Disc::calculate_intersection_with(
     }
 }
 
-}  // namespace relleums
+}  // namespace merlict

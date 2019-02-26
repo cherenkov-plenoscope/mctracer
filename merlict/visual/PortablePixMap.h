@@ -18,6 +18,6 @@ Image read_image_from_path(const std::string path);
 
 }  // namespace ppm
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // VISUAL_PORTABLEPIXMAP_H_

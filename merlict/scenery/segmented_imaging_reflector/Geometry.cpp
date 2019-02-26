@@ -263,4 +263,4 @@ string Geometry::facet_positions_and_normals_to_text()const {
 }
 
 }  // namespace segmented_imaging_reflector
-}  // namespace relleums
+}  // namespace merlict

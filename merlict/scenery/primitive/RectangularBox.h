@@ -14,6 +14,6 @@ class RectangularBox :public SurfaceEntity {
         const double z_width);
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_PRIMITIVE_RECTANGULARBOX_H_

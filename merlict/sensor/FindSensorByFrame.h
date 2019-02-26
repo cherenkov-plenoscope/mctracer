@@ -18,6 +18,6 @@ struct FindSensorByFrame {
 };
 
 }  // namespace sensor
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // PHOTONSENSOR_FINDSENSORBYFRAME_H_

@@ -49,6 +49,6 @@ class Sensors {
 };
 
 }  // namespace sensor
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // PHOTONSENSOR_SENSORS_H_

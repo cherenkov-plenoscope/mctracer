@@ -52,4 +52,4 @@ vector<PhotonArrival> read_arrival_information_from_file(
 }
 
 }  // namespace sensor
-}  // namespace relleums
+}  // namespace merlict

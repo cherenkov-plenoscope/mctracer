@@ -49,4 +49,4 @@ Ball many_iterations(const std::vector<Ball> &balls) {
     return approximate;
 }
 
-}  // namespace relleums
+}  // namespace merlict

@@ -48,4 +48,4 @@ vector<Photon> PhotonsReader::next(random::Generator* prng) {
     return photons_from_file->next(prng);
 }
 
-}  // namespace relleums
+}  // namespace merlict

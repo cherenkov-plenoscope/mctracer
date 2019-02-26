@@ -67,4 +67,4 @@ uint64_t read_uint64(std::istream &fin) {
 }
 
 }  // namespace binio
-}  // namespace relleums
+}  // namespace merlict

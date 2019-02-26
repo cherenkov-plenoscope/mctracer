@@ -37,6 +37,6 @@ class Photon :public RayForPropagation{
     void assert_wavelength_is_positive()const;
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_PHOTON_H_

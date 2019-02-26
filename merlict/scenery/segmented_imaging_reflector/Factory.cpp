@@ -29,4 +29,4 @@ void Factory::add_to_SurfaceEntity(SurfaceEntity* reflector) {
 }
 
 }  // namespace segmented_imaging_reflector
-}  // namespace relleums
+}  // namespace merlict

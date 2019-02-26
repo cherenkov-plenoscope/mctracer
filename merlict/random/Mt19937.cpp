@@ -38,4 +38,4 @@ double Mt19937::normal(const double mean, const double std_dev) {
 }
 
 }  // namespace random
-}  // namespace relleums
+}  // namespace merlict

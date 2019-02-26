@@ -37,4 +37,4 @@ double FresnelRefractionAndReflection::reflection_propability()const {
     return (rOrth*rOrth + rPar*rPar) / 2.0;
 }
 
-}  // namespace relleums
+}  // namespace merlict

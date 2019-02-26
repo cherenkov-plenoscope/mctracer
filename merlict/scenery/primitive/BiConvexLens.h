@@ -17,6 +17,6 @@ class BiConvexLens :public SurfaceEntity {
         const double curvature_radius, const double aperture_radius)const;
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_PRIMITIVE_BICONVEXLENS_H_

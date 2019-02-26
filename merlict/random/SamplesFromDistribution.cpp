@@ -31,4 +31,4 @@ double SamplesFromDistribution::get_total_integral_of_distribution()const {
 }
 
 }  // namespace random
-}  // namespace relleums
+}  // namespace merlict

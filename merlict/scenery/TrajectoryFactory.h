@@ -41,6 +41,6 @@ class TrajectoryFactory {
         const unsigned int part_index)const;
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_TRAJECTORYFACTORY_H_

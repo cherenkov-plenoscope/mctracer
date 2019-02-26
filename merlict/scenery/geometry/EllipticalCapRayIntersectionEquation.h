@@ -29,6 +29,6 @@ class EllipticalCapRayIntersectionEquation :
         const Vec3* intersec)const;
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_GEOMETRY_ELLIPTICALCAPRAYINTERSECTIONEQUATION_H_

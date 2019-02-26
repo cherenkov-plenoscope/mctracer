@@ -17,6 +17,6 @@ class InternalPhotonSourceWrapper: public BasicWrapper {
     std::vector<Photon> next(random::Generator* prng);
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // PHOTONSREADER_PHOTONSREADERWRAPPER_INTERNALPHOTONSOURCEWRAPPER_H_

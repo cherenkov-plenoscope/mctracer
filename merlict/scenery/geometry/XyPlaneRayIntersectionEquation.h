@@ -18,6 +18,6 @@ class XyPlaneRayIntersectionEquation {
     Vec3 get_plane_normal_vector()const;
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_GEOMETRY_XYPLANERAYINTERSECTIONEQUATION_H_

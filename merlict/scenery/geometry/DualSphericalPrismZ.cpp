@@ -47,4 +47,4 @@ double DualSphericalPrismZ::get_area()const {
         (opening_angle_of_circle - sin(opening_angle_of_circle));
 }
 
-}  // namespace relleums
+}  // namespace merlict

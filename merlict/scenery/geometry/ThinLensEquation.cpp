@@ -35,4 +35,4 @@ double get_focal_dist_given_object_and_image_dist(double o, double i) {
 }
 
 }  // namespace ThinLensEquation
-}  // namespace relleums
+}  // namespace merlict

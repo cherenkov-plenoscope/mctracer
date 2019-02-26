@@ -198,7 +198,7 @@ with open(out_header, 'wt') as fout:
 			h_txt = fin.read()
 		fout.write(inside_namespace(h_txt))
 		fout.write("\n"*2)
-	fout.write("}  // namespace relleums\n")
+	fout.write("}  // namespace merlict\n")
 
 
 with open(out_source, 'wt') as fout:
@@ -218,6 +218,6 @@ with open(out_source, 'wt') as fout:
 			h_txt = fin.read()
 		fout.write(without_include_lines(inside_namespace(h_txt)))
 		fout.write("\n"*2)
-	fout.write("}  // namespace relleums\n")
+	fout.write("}  // namespace merlict\n")
 
 # g++ docopt/docopt.cpp lict_prop.cpp -o prop -std=gnu++11

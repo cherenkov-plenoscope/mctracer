@@ -73,4 +73,4 @@ double Ray::closest_distance_to_point(const Vec3 &point)const {
     return shortest_connection.norm();
 }
 
-}  // namespace relleums
+}  // namespace merlict

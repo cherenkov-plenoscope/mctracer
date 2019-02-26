@@ -43,6 +43,6 @@ class Triangle  :public SurfaceEntity{
     bool is_inside_triangle(const Vec3 &intersec_vec)const;
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_PRIMITIVE_TRIANGLE_H_

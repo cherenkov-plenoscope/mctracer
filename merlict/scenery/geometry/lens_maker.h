@@ -27,6 +27,6 @@ double get_expected_focal_length_for_R_t_n(
     const double n);
 
 }  // namespace lens_maker
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_GEOMETRY_LENSMAKER_LENSMAKER_H_

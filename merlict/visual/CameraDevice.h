@@ -63,6 +63,6 @@ class CameraDevice{
 };
 
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // VISUAL_CAMERADEVICE_H_

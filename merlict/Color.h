@@ -28,6 +28,6 @@ const Color COLOR_GREEN = Color(0, 255, 0);
 const Color COLOR_BLUE = Color(0, 0, 255);
 const Color COLOR_GRASS_GREEN = Color(22, 91, 49);
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_COLOR_H_

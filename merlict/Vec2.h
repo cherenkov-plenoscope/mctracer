@@ -35,6 +35,6 @@ const Vec2 VEC2_UNIT_X = Vec2(1.0, 0.0);
 const Vec2 VEC2_UNIT_Y = Vec2(0.0, 1.0);
 const double MAX_DEVIATION_EQUAL_VEC2 = 1e-7;
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_VEC2_H_

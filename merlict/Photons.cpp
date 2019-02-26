@@ -195,4 +195,4 @@ void transform_all_photons(const HomTra3 Trafo, vector<Photon> *photons) {
 }
 
 }  // namespace Photons
-}  // namespace relleums
+}  // namespace merlict

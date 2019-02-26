@@ -60,6 +60,6 @@ class Stereo3D: public Verbosity {
 
 }  // namespace camera_operator
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // VISUAL_CAMERAOPERATOR_STEREO3D_H_

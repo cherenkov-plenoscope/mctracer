@@ -28,6 +28,6 @@ class PlaneDualSphericalBound :public SurfaceEntity{
     void post_initialize_radius_of_enclosing_sphere();
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_PRIMITIVE_PLANEDUALSPHERICALBOUND_H_

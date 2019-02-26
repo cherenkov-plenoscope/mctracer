@@ -83,4 +83,4 @@ double SkyDome::get_azimuth_angle_of(const Vec3 dir)const {
 }
 
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict

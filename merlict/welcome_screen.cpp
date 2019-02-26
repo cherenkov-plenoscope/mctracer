@@ -20,4 +20,4 @@ std::string welcome_screen() {
     return out.str();
 }
 
-}  // namespace relleums
+}  // namespace merlict

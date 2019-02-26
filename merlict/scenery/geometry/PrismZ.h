@@ -12,6 +12,6 @@ class PrismZ {
     virtual double get_area()const;
 };
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // SCENERY_GEOMETRY_PRISMZ_H_

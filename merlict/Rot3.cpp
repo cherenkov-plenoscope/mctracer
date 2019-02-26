@@ -89,4 +89,4 @@ bool Rot3::operator == (const Rot3& eqRot)const {
     return Rx == eqRot.Rx && Ry == eqRot.Ry && Rz == eqRot.Rz;
 }
 
-}  // namespace relleums
+}  // namespace merlict

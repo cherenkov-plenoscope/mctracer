@@ -10,6 +10,6 @@ bool is_odd(const int n);
 bool is_even(const int n);
 double get_solid_angle_for_opening_angle(const double theta);
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_TOOLS_H_

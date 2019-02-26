@@ -21,6 +21,6 @@ struct Path {
 };
 
 }  // namespace ospath
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // TOOLS_PATHTOOLS_H_

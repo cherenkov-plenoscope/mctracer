@@ -50,4 +50,4 @@ double RectangularPrismZ::get_half_y_width()const {
     return half_y_width;
 }
 
-}  // namespace relleums
+}  // namespace merlict

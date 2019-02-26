@@ -8,6 +8,6 @@ namespace merlict {
 
 std::string welcome_screen();
 
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_WELCOME_SCREEN_H_

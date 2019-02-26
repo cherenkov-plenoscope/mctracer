@@ -18,6 +18,6 @@ double bounding_sphere_radius(
     const std::vector<Frame*> &frames, const Vec3 center);
 
 }  // namespace Frames
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // CORE_FRAMES_H_

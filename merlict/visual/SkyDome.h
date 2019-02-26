@@ -33,6 +33,6 @@ class SkyDome {
 };
 
 }  // namespace visual
-}  // namespace relleums
+}  // namespace merlict
 
 #endif  // VISUAL_SKYDOME_H_

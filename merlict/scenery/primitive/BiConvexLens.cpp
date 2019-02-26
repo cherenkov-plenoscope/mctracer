@@ -43,4 +43,4 @@ double BiConvexLens::height_of_a_cap_given_curv_radius_and_aperture_radius(
             aperture_radius*aperture_radius);
 }
 
-}  // namespace relleums
+}  // namespace merlict
