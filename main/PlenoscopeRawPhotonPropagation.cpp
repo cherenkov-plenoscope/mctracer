@@ -16,13 +16,11 @@
 #include "try_to_read/PhotonsReader.h"
 namespace fs = std::experimental::filesystem;
 namespace sp = signal_processing;
+namespace ml = merlict;
 using std::string;
 using std::vector;
 using std::array;
 using std::cout;
-using namespace merlict;
-using ospath::join;
-using ospath::Path;
 
 static const char USAGE[] =
 R"(Plenoscope raw photon propagation
@@ -51,35 +49,38 @@ int main(int argc, char* argv[]) {
         true,        // show help if requested
         "0.0.1");    // version string
 
-    Path lixel_calib_path = Path(args.find("--lixel")->second.asString());
-    Path config_path = Path(args.find("--config")->second.asString());
-    Path input_path = Path(args.find("--input")->second.asString());
-    Path output_path = Path(args.find("--output")->second.asString());
+    ml::ospath::Path lixel_calib_path(args.find("--lixel")->second.asString());
+    ml::ospath::Path config_path(args.find("--config")->second.asString());
+    ml::ospath::Path input_path(args.find("--input")->second.asString());
+    ml::ospath::Path output_path(args.find("--output")->second.asString());
     const bool export_all_simulation_truth =
         args.find("--all_truth")->second.asBool();
 
     // 1) create output directory
     fs::create_directory(output_path.path);
     // 2) copy input into output directory
-    Path input_copy_path = join(output_path.path, "input");
+    ml::ospath::Path input_copy_path = ml::ospath::join(
+        output_path.path,
+        "input");
     fs::create_directory(input_copy_path.path);
     fs::copy(
         config_path.path,
-        join(input_copy_path.path, "propagation_config.json"));
+        ml::ospath::join(input_copy_path.path, "propagation_config.json"));
     fs::create_hard_link(
         input_path.path,
-        join(input_copy_path.path, input_path.basename));
+        ml::ospath::join(input_copy_path.path, input_path.basename));
     fs::copy(
         lixel_calib_path.path,
-        join(input_copy_path.path, "plenoscope"), fs::copy_options::recursive);
+        ml::ospath::join(input_copy_path.path, "plenoscope"),
+        fs::copy_options::recursive);
 
-    config_path = join(input_copy_path.path, "propagation_config.json");
-    lixel_calib_path = join(
-        join(input_copy_path.path, "plenoscope"),
+    config_path = ml::ospath::join(input_copy_path.path, "propagation_config.json");
+    lixel_calib_path = ml::ospath::join(
+        ml::ospath::join(input_copy_path.path, "plenoscope"),
         "lixel_statistics.bin");
-    input_path = join(input_copy_path.path, input_path.basename);
-    Path scenery_path = join(
-        join(input_copy_path.path, "plenoscope"),
+    input_path = ml::ospath::join(input_copy_path.path, input_path.basename);
+    ml::ospath::Path scenery_path = ml::ospath::join(
+        ml::ospath::join(input_copy_path.path, "plenoscope"),
         "input/scenery/scenery.json");
 
 
@@ -94,13 +95,13 @@ int main(int argc, char* argv[]) {
     // 111111 11
     //--------------------------------------------------------------------------
     // BASIC SETTINGS
-    PropagationConfig settings;
+    ml::PropagationConfig settings;
     settings.max_number_of_interactions_per_photon = 10;
     settings.use_multithread_when_possible = false;
 
     //--------------------------------------------------------------------------
     // INIT PRNG
-    random::Mt19937 prng;
+    ml::random::Mt19937 prng;
     if (args.find("--random_seed")->second)
         prng.set_seed(args.find("--random_seed")->second.asLong());
 
@@ -120,7 +121,7 @@ int main(int argc, char* argv[]) {
             "There is more then one plenoscope in the scenery");
     plenoscope::PlenoscopeInScenery* pis = &scenery.plenoscopes.at(0);
 
-    sensor::Sensors* light_field_channels = pis->light_field_channels;
+    ml::sensor::Sensors* light_field_channels = pis->light_field_channels;
 
     //--------------------------------------------------------------------------
     // load light field calibration result
@@ -140,12 +141,12 @@ int main(int argc, char* argv[]) {
         throw std::invalid_argument(info.str());
     }
 
-    json::Object plcfg = json::load(config_path.path);
+    ml::json::Object plcfg = ml::json::load(config_path.path);
     //--------------------------------------------------------------------------
     // INIT NIGHT SKY BACKGROUND
-    json::Object nsb_obj = plcfg.obj("night_sky_background_ligth");
-    const function::Func1 nsb_flux_vs_wavelength =
-        json::json_to_linear_interpol_function(
+    ml::json::Object nsb_obj = plcfg.obj("night_sky_background_ligth");
+    const ml::function::Func1 nsb_flux_vs_wavelength =
+        ml::json::json_to_linear_interpol_function(
             nsb_obj.obj("flux_vs_wavelength"));
 
     plenoscope::night_sky_background::Light nsb(
@@ -155,9 +156,9 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // SET UP PhotoElectricConverter
-    json::Object pec_obj = plcfg.obj("photo_electric_converter");
-    const function::Func1 quantum_efficiency_vs_wavelength =
-        json::json_to_linear_interpol_function(
+    ml::json::Object pec_obj = plcfg.obj("photo_electric_converter");
+    const ml::function::Func1 quantum_efficiency_vs_wavelength =
+        ml::json::json_to_linear_interpol_function(
             pec_obj.obj("quantum_efficiency_vs_wavelength"));
 
     sp::PhotoElectricConverter::Config converter_config;
@@ -172,7 +173,7 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // SET SINGLE PULSE OUTPUT
-    json::Object phs_obj = plcfg.obj("photo_electric_converter");
+    ml::json::Object phs_obj = plcfg.obj("photo_electric_converter");
     const double time_slice_duration = phs_obj.f8("time_slice_duration");
     const double arrival_time_std = phs_obj.f8(
         "single_photon_arrival_time_resolution");
@@ -187,16 +188,16 @@ int main(int argc, char* argv[]) {
     // 222222 22
     //--------------------------------------------------------------------------
     // open raw photon file
-    PhotonsReader photon_file(input_path.path);
+    ml::PhotonsReader photon_file(input_path.path);
 
     //--------------------------------------------------------------------------
     // propagate photons
     unsigned int event_counter = 1;
     while (photon_file.has_still_photons_left()) {
-        vector<Photon> photons;
+        vector<ml::Photon> photons;
         photons = photon_file.next(&prng);
 
-        Photons::propagate_photons_in_scenery_with_settings(
+        ml::Photons::propagate_photons_in_scenery_with_settings(
             &photons, &scenery.root, &settings, &prng);
 
         light_field_channels->clear_history();
@@ -241,15 +242,17 @@ int main(int argc, char* argv[]) {
 
         //-------------
         // export event
-        Path event_output_path = join(
-            output_path.path, std::to_string(event_counter));
+        ml::ospath::Path event_output_path = ml::ospath::join(
+            output_path.path,
+            std::to_string(event_counter));
         fs::create_directory(event_output_path.path);
 
         sp::PhotonStream::write(
             record.photon_stream,
             record.time_slice_duration,
-            join(
-                event_output_path.path, "raw_light_field_sensor_response.phs"));
+            ml::ospath::join(
+                event_output_path.path,
+                "raw_light_field_sensor_response.phs"));
 
         plenoscope::EventHeader event_header;
         event_header.set_event_type(plenoscope::EventTypes::SIMULATION);
@@ -259,12 +262,15 @@ int main(int argc, char* argv[]) {
             pis->light_field_sensor_geometry.config);
         corsika::block::write(
             event_header.raw,
-            join(event_output_path.path, "event_header.bin"));
+            ml::ospath::join(
+                event_output_path.path,
+                "event_header.bin"));
 
         //-------------
         // export Simulation Truth
-        Path event_mc_truth_path = join(
-            event_output_path.path, "simulation_truth");
+        ml::ospath::Path event_mc_truth_path = ml::ospath::join(
+            event_output_path.path,
+            "simulation_truth");
         fs::create_directory(event_mc_truth_path.path);
         std::array<float, 273> run_header;
         for (
@@ -280,7 +286,9 @@ int main(int argc, char* argv[]) {
         run_header[5] = 5e3f;  // height observation-levels
         corsika::block::write(
             run_header,
-            join(event_mc_truth_path.path, "corsika_run_header.bin"));
+            ml::ospath::join(
+                event_mc_truth_path.path,
+                "corsika_run_header.bin"));
         std::array<float, 273> evt_header;
         for (
             unsigned int i = 0;
@@ -300,17 +308,21 @@ int main(int argc, char* argv[]) {
         evt_header[48-1] = run_header[5];  // height observation-levels
         corsika::block::write(
             evt_header,
-            join(event_mc_truth_path.path, "corsika_event_header.bin"));
+            ml::ospath::join(event_mc_truth_path.path, "corsika_event_header.bin"));
         plenoscope::SimulationTruthHeader sim_truth_header;
         sim_truth_header.set_random_number_seed_of_run(prng.seed());
         corsika::block::write(
             sim_truth_header.raw,
-            join(event_mc_truth_path.path, "mctracer_event_header.bin"));
+            ml::ospath::join(
+                event_mc_truth_path.path,
+                "mctracer_event_header.bin"));
 
         if (export_all_simulation_truth) {
             sp::PhotonStream::write_simulation_truth(
                 record.photon_stream,
-                join(event_mc_truth_path.path, "detector_pulse_origins.bin"));
+                ml::ospath::join(
+                    event_mc_truth_path.path,
+                    "detector_pulse_origins.bin"));
 
             std::vector<std::array<float, 8>> raw_photons;
             for (unsigned int p = 0; p < photons.size(); p++) {
@@ -336,10 +348,10 @@ int main(int argc, char* argv[]) {
 
             eventio::write_photon_bunches_to_path(
                 raw_photons,
-                join(event_mc_truth_path.path,
+                ml::ospath::join(
+                    event_mc_truth_path.path,
                     "air_shower_photon_bunches.bin"));
         }
-
 
         event_counter++;
     }

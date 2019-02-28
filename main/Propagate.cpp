@@ -3,11 +3,11 @@
 #include "merlict/merlict.h"
 #include "json.h"
 #include "try_to_read/PhotonsReader.h"
+namespace ml = merlict;
 using std::string;
 using std::cout;
 using std::vector;
-using namespace merlict;
-using ospath::Path;
+
 
 static const char USAGE[] =
 R"(Photon propagation
@@ -37,42 +37,42 @@ int main(int argc, char* argv[]) {
         true,        // show help if requested
         "mct 0.1");  // version string
 
-    Path out_path = Path(args.find("--output")->second.asString());
-    Path scenery_path = Path(args.find("--scenery")->second.asString());
-    Path photon_path = Path(args.find("--input")->second.asString());
-    Path config_path = Path(args.find("--config")->second.asString());
+    ml::ospath::Path out_path(args.find("--output")->second.asString());
+    ml::ospath::Path scenery_path(args.find("--scenery")->second.asString());
+    ml::ospath::Path photon_path(args.find("--input")->second.asString());
+    ml::ospath::Path config_path(args.find("--config")->second.asString());
     const bool export_binary = args.find("--binary")->second.asBool();
 
     // BASIC SETTINGS
-    PropagationConfig settings = json::load_PropagationConfig(
+    ml::PropagationConfig settings = ml::json::load_PropagationConfig(
         config_path.path);
 
     // Random
-    random::Mt19937 prng;
+    ml::random::Mt19937 prng;
     if(args.find("--random_seed")->second)
         prng.set_seed(args.find("--random_seed")->second.asLong());
 
     // scenery
-    Scenery scenery;
-    json::append_to_frame_in_scenery(
+    ml::Scenery scenery;
+    ml::json::append_to_frame_in_scenery(
         &scenery.root,
         &scenery,
         scenery_path.path);
     scenery.root.init_tree_based_on_mother_child_relations();
 
     // sensors in scenery
-    sensor::Sensors sensors(scenery.sensors.sensors);
+    ml::sensor::Sensors sensors(scenery.sensors.sensors);
 
     // photon source
-    PhotonsReader photon_file(photon_path.path);
+    ml::PhotonsReader photon_file(photon_path.path);
 
     unsigned int event_counter = 1;
     while (photon_file.has_still_photons_left()) {
-        vector<Photon> photons;
+        vector<ml::Photon> photons;
         photons = photon_file.next(&prng);
 
         // photon propagation
-        Photons::propagate_photons_in_scenery_with_settings(
+        ml::Photons::propagate_photons_in_scenery_with_settings(
             &photons,
             &scenery.root,
             &settings,
@@ -90,7 +90,7 @@ int main(int argc, char* argv[]) {
             if (export_binary) {
                 std::ofstream out;
                 out.open(outname.str(), std::ios::out | std::ios::binary);
-                sensor::write_arrival_information_to_file(
+                ml::sensor::write_arrival_information_to_file(
                     &(sensors.at(i)->photon_arrival_history),
                     &out);
                 out.close();
@@ -102,10 +102,10 @@ int main(int argc, char* argv[]) {
                 header << ", ID: " << i << "\n";
                 header << "photons: " << photon_path.path << "\n";
                 header << "-------------\n";
-                header << sensor::arrival_table_header();
+                header << ml::sensor::arrival_table_header();
 
-                tsvio::write_table_to_file_with_header(
-                    sensor::history_to_table(
+                ml::tsvio::write_table_to_file_with_header(
+                    ml::sensor::history_to_table(
                         sensors.at(i)->photon_arrival_history),
                     outname.str(),
                     header.str()

@@ -10,9 +10,9 @@
 #include "plenoscope/calibration/Writer.h"
 #include "plenoscope/night_sky_background/NightSkyBackground.h"
 #include "corsika/block.h"
+namespace ml = merlict;
 using std::vector;
 using std::cout;
-using namespace merlict;
 
 namespace plenoscope {
 namespace calibration {
@@ -20,7 +20,7 @@ namespace calibration {
 Calibrator::Calibrator(
     const Config _config,
     const PlenoscopeInScenery *_plenoscope,
-    const Frame* _world):
+    const ml::Frame* _world):
         config(_config),
         plenoscope(_plenoscope),
         world(_world),
@@ -35,13 +35,16 @@ Calibrator::Calibrator(
         ) {}
 
 
-Photon create_photon(Vec3 support_on_aperture, Vec3 incident_direction) {
-    const Ray back_running_ray(support_on_aperture, incident_direction);
+ml::Photon create_photon(
+    ml::Vec3 support_on_aperture,
+    ml::Vec3 incident_direction
+) {
+    const ml::Ray back_running_ray(support_on_aperture, incident_direction);
 
-    const Vec3 creation_position = back_running_ray.position_at(
+    const ml::Vec3 creation_position = back_running_ray.position_at(
         DISTANCE_TO_APERTURE_PLANE);
 
-    return Photon(creation_position, incident_direction*(-1.0), WAVELENGTH);
+    return ml::Photon(creation_position, incident_direction*(-1.0), WAVELENGTH);
 }
 
 
@@ -49,30 +52,30 @@ CalibrationPhotonResult one_photon(
     int id,
     const uint64_t seed,
     const Calibrator &cal,
-    const random::ZenithDistancePicker &zenith_picker,
-    const random::UniformPicker &azimuth_picker)
+    const ml::random::ZenithDistancePicker &zenith_picker,
+    const ml::random::UniformPicker &azimuth_picker)
 {
     (void)id;
-    random::Mt19937 prng(seed);
+    ml::random::Mt19937 prng(seed);
 
     // create photon
-    const Vec3 support_on_aperture = prng.get_point_on_xy_disc_within_radius(
+    const ml::Vec3 support_on_aperture = prng.get_point_on_xy_disc_within_radius(
         cal.MAX_APERTURE_PLANE_RADIUS);
 
-    const Vec3 incident_direction = random::draw_point_on_sphere(
+    const ml::Vec3 incident_direction = ml::random::draw_point_on_sphere(
         &prng,
         zenith_picker,
         azimuth_picker);
 
-    Photon ph = create_photon(support_on_aperture, incident_direction);
+    ml::Photon ph = create_photon(support_on_aperture, incident_direction);
 
     // propagate photon
-    PropagationEnvironment env;
+    ml::PropagationEnvironment env;
     env.root_frame = cal.world;
     env.prng = &prng;
-    PhotonAndFrame::Propagator(&ph, env);
+    ml::PhotonAndFrame::Propagator(&ph, env);
 
-    sensor::FindSensorByFrame sensor_finder(
+    ml::sensor::FindSensorByFrame sensor_finder(
         ph.get_final_intersection().get_object(),
         &cal.plenoscope->light_field_channels->by_frame);
 
@@ -98,15 +101,15 @@ CalibrationPhotonResult one_photon(
 void fill_another_block(
     const Calibrator &cal,
     LixelStatisticsFiller *lixel_statistics_filler,
-    random::Generator *prng)
+    ml::random::Generator *prng)
 {
     std::vector<CalibrationPhotonResult> photon_results(
         cal.config.photons_per_block);
 
-    const random::ZenithDistancePicker zenith_picker(
+    const ml::random::ZenithDistancePicker zenith_picker(
         0.0,
         cal.MAX_INCIDENT_ANGLE);
-    const random::UniformPicker azimuth_picker(
+    const ml::random::UniformPicker azimuth_picker(
         0.0,
         2*M_PI);
 
@@ -138,7 +141,7 @@ void fill_another_block(
 void run_calibration(
     const Calibrator &cal,
     const std::string &path,
-    random::Generator *prng
+    ml::random::Generator *prng
 ) {
     LixelStatisticsFiller lixel_statistics_filler(
         &cal.plenoscope->light_field_sensor_geometry,

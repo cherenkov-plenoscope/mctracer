@@ -8,11 +8,11 @@
 #include "merlict/scenery/geometry/HexGridFlower.h"
 #include "merlict/scenery/geometry/lens_maker.h"
 #include "corsika/corsika.h"
+namespace ml = merlict;
 using std::vector;
 using std::array;
 using std::string;
 using std::stringstream;
-using namespace merlict;
 
 namespace plenoscope {
 namespace light_field_sensor {
@@ -27,20 +27,20 @@ Geometry::Geometry(const Config ncfg):
 }
 
 void Geometry::set_up_pixel_grid() {
-    HexGridAnnulus pixgrid(
+    ml::HexGridAnnulus pixgrid(
         max_outer_sensor_radius() - pixel_lens_outer_aperture_radius(),
         pixel_spacing());
 
     pixel_grid = pixgrid.get_grid();
 
-    GridNeighborhoodTopoligy topology(
+    ml::GridNeighborhoodTopoligy topology(
         &pixel_grid,
         1.1*pixel_spacing());
     pixel_neighborhood = topology.get_neighbor_relations();
 }
 
 void Geometry::set_up_paxel_per_pixel_template_grid() {
-    HexGridFlower paxel_template_grid_generator(
+    ml::HexGridFlower paxel_template_grid_generator(
         pixel_lens_outer_aperture_radius(),
         config.number_of_paxel_on_pixel_diagonal);
 
@@ -48,7 +48,7 @@ void Geometry::set_up_paxel_per_pixel_template_grid() {
         paxel_template_grid_generator.get_facet_spacing();
     paxel_per_pixel_template_grid = paxel_template_grid_generator.get_grid();
 
-    GridNeighborhoodTopoligy topology(
+    ml::GridNeighborhoodTopoligy topology(
         &paxel_per_pixel_template_grid,
         1.1*lixel_hex_flat2flat_diameter);
     paxel_neighborhood = topology.get_neighbor_relations();
@@ -58,7 +58,7 @@ void Geometry::set_up_paxel_grid_centers_of_pixels() {
     paxel_grid_centers_of_pixels.reserve(pixel_grid.size());
     const double r = 1.0 + pixel_plane_to_paxel_plane_distance()/
         config.expected_imaging_system_focal_length;
-    for (Vec3 pixel_pos : pixel_grid)
+    for (ml::Vec3 pixel_pos : pixel_grid)
         paxel_grid_centers_of_pixels.push_back(
             pixel_pos*r);
 }
@@ -67,20 +67,20 @@ void Geometry::set_up_lixel_grid() {
     lixel_grid.reserve(
         paxel_grid_centers_of_pixels.size()*
         paxel_per_pixel_template_grid.size());
-    for (Vec3 flower_pos : paxel_grid_centers_of_pixels)
-        for (Vec3 paxel_pos : paxel_per_pixel_template_grid)
+    for (ml::Vec3 flower_pos : paxel_grid_centers_of_pixels)
+        for (ml::Vec3 paxel_pos : paxel_per_pixel_template_grid)
             lixel_grid.push_back(flower_pos + paxel_pos);
 }
 
 void Geometry::set_up_pixel_lens_geometry() {
-    pixel_lens_mean_refrac = function::mean(*config.lens_refraction, 137);
-    lens_maker::Config lmcfg;
+    pixel_lens_mean_refrac = ml::function::mean(*config.lens_refraction, 137);
+    ml::lens_maker::Config lmcfg;
     lmcfg.focal_length = pixel_lens_focal_length();
     lmcfg.aperture_radius = pixel_lens_outer_aperture_radius();
     lmcfg.refractive_index = pixel_lens_mean_refrac;
     double lens_maker_correction = 1.20;
     pixel_lens_curv_radius = lens_maker_correction*
-        lens_maker::get_curvature_radius(lmcfg);
+        ml::lens_maker::get_curvature_radius(lmcfg);
 }
 
 double Geometry::max_outer_sensor_radius()const {
@@ -144,7 +144,7 @@ double Geometry::outer_sensor_housing_radius()const {
     return max_outer_sensor_radius()*config.housing_overhead;
 }
 
-std::vector<Vec3> Geometry::pixel_positions()const {
+std::vector<ml::Vec3> Geometry::pixel_positions()const {
     return pixel_grid;
 }
 
@@ -152,7 +152,7 @@ vector<vector<unsigned int>> Geometry::pixel_neighbor_relations()const {
     return pixel_neighborhood;
 }
 
-const std::vector<Vec3>& Geometry::lixel_positions()const {
+const std::vector<ml::Vec3>& Geometry::lixel_positions()const {
     return lixel_grid;
 }
 
@@ -160,7 +160,7 @@ vector<vector<unsigned int>> Geometry::paxel_neighbor_relations()const {
     return paxel_neighborhood;
 }
 
-std::vector<Vec3> Geometry::paxel_grid_center_positions()const {
+std::vector<ml::Vec3> Geometry::paxel_grid_center_positions()const {
     return paxel_grid_centers_of_pixels;
 }
 
@@ -211,7 +211,7 @@ void Geometry::write_lixel_positions(const string &path)const {
         throw std::runtime_error(info.str());
     }
 
-    for (Vec3 pos : lixel_grid) {
+    for (ml::Vec3 pos : lixel_grid) {
         const float x = pos.x;
         const float y = pos.y;
         file.write((char*)&x, sizeof(float));
@@ -282,7 +282,7 @@ string Geometry::str()const {
     stringstream tab;
     tab << "__Light_Field_Sensor__\n";
     tab << " Field of View................. ";
-    tab << rad2deg(config.max_FoV_diameter) << "deg\n";
+    tab << ml::rad2deg(config.max_FoV_diameter) << "deg\n";
     tab << " Field of View solid angle..... ";
     tab << field_of_view_solid_angle() << "sr\n";
     tab << " Max sensor radius............. ";
@@ -296,7 +296,7 @@ string Geometry::str()const {
     tab << "\n";
     tab << "__Pixel_Lens__\n";
     tab << " FoV hex flat2flat....... ";
-    tab << rad2deg(pixel_FoV_hex_flat2flat()) << "deg\n";
+    tab << ml::rad2deg(pixel_FoV_hex_flat2flat()) << "deg\n";
     tab << " Spacing................. " << pixel_spacing() << "m\n";
     tab << " Inner aperture radius... ";
     tab << pixel_lens_inner_aperture_radius() << "m\n";
@@ -319,12 +319,13 @@ string Geometry::str()const {
     tab << "\n";
     tab << "__Concentrator_Bin__\n";
     tab << " Bin_hight........... " << bin_hight() << "m\n";
-    tab << " Reflectivity........ " << function::mean(*config.bin_reflection, 137) << "\n";
+    tab << " Reflectivity........ " << ml::function::mean(
+        *config.bin_reflection, 137) << "\n";
     return tab.str();
 }
 
 double Geometry::field_of_view_solid_angle()const {
-    return get_solid_angle_for_opening_angle(max_FoV_radius());
+    return ml::get_solid_angle_for_opening_angle(max_FoV_radius());
 }
 
 }  // namespace light_field_sensor

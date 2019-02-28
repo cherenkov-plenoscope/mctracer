@@ -5,22 +5,11 @@
 #include "corsika/PhotonFactory.h"
 #include "FlyingCamera.h"
 #include "json.h"
+namespace ml = merlict;
 using std::string;
 using std::cout;
 using std::array;
 using std::vector;
-using namespace merlict;
-
-string help_text() {
-    std::stringstream out; 
-    out << "  Explore air shower event photons in a scenery in 1st person.\n";
-    out << "  Objects, declared telescopes in the scenery, will be pointed\n";
-    out << "  towards the source of the air shower event\n";
-    out << "  --scenery, -s  path of scenery\n";
-    out << "  --photons, -p  path of photons\n";
-    out << "  --visual_config, -v  [optional]\n";
-    return out.str();
-}
 
 static const char USAGE[] =
 R"(Show a scenery with photons
@@ -48,31 +37,29 @@ int main(int argc, char* argv[]) {
         true,        // show help if requested
         "mct 0.1");  // version string
 
-    ospath::Path scenery_path = ospath::Path(
-        args.find("--scenery")->second.asString());
-    ospath::Path photon_path = ospath::Path(
-        args.find("--input")->second.asString());
+    ml::ospath::Path scenery_path(args.find("--scenery")->second.asString());
+    ml::ospath::Path photon_path(args.find("--input")->second.asString());
 
-    visual::Config visual_config;
+    ml::visual::Config visual_config;
     if (args.find("--config")->second) {
-      visual_config = json::load_visual_config(
+      visual_config = ml::json::load_visual_config(
         args.find("--config")->second.asString());}
 
-    PropagationConfig settings;
+    ml::PropagationConfig settings;
 
-    random::Mt19937 prng;
+    ml::random::Mt19937 prng;
     if(args.find("--random_seed")->second)
         prng.set_seed(args.find("--random_seed")->second.asLong());
 
-    Scenery scenery;
-    json::append_to_frame_in_scenery(
+    ml::Scenery scenery;
+    ml::json::append_to_frame_in_scenery(
       &scenery.root, &scenery, scenery_path.path);
 
     scenery.root.init_tree_based_on_mother_child_relations();
 
     eventio::Run corsika_run(photon_path.path);
 
-    visual::FlyingCamera free_orb(&scenery.root, &visual_config);
+    ml::visual::FlyingCamera free_orb(&scenery.root, &visual_config);
 
     unsigned int event_counter = 0;
     while(corsika_run.has_still_events_left()) {
@@ -87,18 +74,18 @@ int main(int argc, char* argv[]) {
 
         unsigned int id = 0;
         for(array<float, 8> corsika_photon : event.photons) {
-            vector<Photon> photons;
-            EventIoPhotonFactory cpf(corsika_photon, id++, &prng);
+            vector<ml::Photon> photons;
+            ml::EventIoPhotonFactory cpf(corsika_photon, id++, &prng);
 
             if(cpf.passed_atmosphere()) {
                 photons.push_back(cpf.get_photon());
 
                 // propagate the cherenkov photons in the scenery
-                Photons::propagate_photons_in_scenery_with_settings(
+                ml::Photons::propagate_photons_in_scenery_with_settings(
                     &photons, &scenery.root, &settings, &prng);
 
-                for(const Photon &ph: photons) {
-                    TrajectoryFactory traj(&ph);
+                for(const ml::Photon &ph: photons) {
+                    ml::TrajectoryFactory traj(&ph);
                     traj.set_trajectory_radius(
                         visual_config.photon_trajectories.radius);
                     traj.append_trajectory_to(&scenery.root);

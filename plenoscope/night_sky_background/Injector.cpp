@@ -2,8 +2,8 @@
 #include "plenoscope/night_sky_background/Injector.h"
 #include <limits>
 #include "merlict/merlict.h"
+namespace ml = merlict;
 using std::vector;
-using namespace merlict;
 
 namespace plenoscope {
 namespace night_sky_background {
@@ -13,7 +13,7 @@ void inject_nsb_into_photon_pipeline(
     const double nsb_exposure_time,
     const vector<plenoscope::calibration::LixelStatistic> *lixel_statistics,
     const Light *nsb,
-    random::Generator* prng
+    ml::random::Generator* prng
 ) {
     if (photon_pipelines->size() == 0)
         return;
@@ -51,11 +51,11 @@ void inject_nsb_into_photon_pipeline(
         mode_of_cherenkov_arrival_times = 0.0;
     } else {
         const unsigned int bin_edge_count = 2u + sqrt(number_cherenkov_photons);
-        vector<double> arrival_time_bin_edges = numeric::linspace(
+        vector<double> arrival_time_bin_edges = ml::numeric::linspace(
             min_crk_arrival_time,
             max_crk_arrival_time,
             bin_edge_count);
-        Histogram1 arrival_time_histo(arrival_times, arrival_time_bin_edges);
+        ml::Histogram1 arrival_time_histo(arrival_times, arrival_time_bin_edges);
         mode_of_cherenkov_arrival_times = arrival_time_histo.mode();
     }
 
