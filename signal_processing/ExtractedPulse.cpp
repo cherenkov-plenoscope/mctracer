@@ -1,11 +1,11 @@
 // Copyright 2017 Sebastian A. Mueller
 #include "signal_processing/ExtractedPulse.h"
-#include "merlict/merlict.h"
+#include "signal_processing/simulation_truth.h"
 
 namespace signal_processing {
 
 ExtractedPulse::ExtractedPulse():
-    simulation_truth_id(merlict::SimulationTruth::DEFAULT)
+    simulation_truth_id(DEFAULT_SIMULATION_TRUTH)
 {}
 
 ExtractedPulse::ExtractedPulse(

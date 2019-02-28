@@ -1,13 +1,13 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "signal_processing/PipelinePhoton.h"
 #include <algorithm>
-#include "merlict/merlict.h"
+#include "signal_processing/simulation_truth.h"
 using std::vector;
 
 namespace signal_processing {
 
 PipelinePhoton::PipelinePhoton():
-    simulation_truth_id(merlict::SimulationTruth::DEFAULT) {
+    simulation_truth_id(DEFAULT_SIMULATION_TRUTH) {
     arrival_time = 0.0;
     wavelength = 0.0;
 }

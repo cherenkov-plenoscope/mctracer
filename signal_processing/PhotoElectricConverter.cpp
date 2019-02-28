@@ -1,4 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
+#include "signal_processing/simulation_truth.h"
 #include "signal_processing/PhotoElectricConverter.h"
 #include <sstream>
 #include "merlict/merlict.h"
@@ -58,7 +59,7 @@ void Converter::add_pulse(
     if (config->probability_for_second_puls >= prng->uniform()) {
         const ElectricPulse crosstalk_pulse(
             pulse.arrival_time,
-            SimulationTruth::PHOTO_ELECTRIC_CONVERTER_CROSSTALK);
+            signal_processing::PHOTO_ELECTRIC_CONVERTER_CROSSTALK);
         add_pulse(crosstalk_pulse, electric_pipeline, prng);
     }
 }
@@ -74,7 +75,7 @@ void Converter::add_accidental_pulse(
 
         const ElectricPulse accidental_pulse(
             relative_arrival_times_sum,
-            SimulationTruth::PHOTO_ELECTRIC_CONVERTER_ACCIDENTAL);
+            signal_processing::PHOTO_ELECTRIC_CONVERTER_ACCIDENTAL);
 
         add_pulse(
             accidental_pulse,

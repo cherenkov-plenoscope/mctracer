@@ -3,12 +3,9 @@
 #define MERLICT_SIMULATIONTRUTH_H_
 
 namespace merlict {
-namespace SimulationTruth {
-    const int DEFAULT = -1;
-    const int NIGHT_SKY_BACKGROUND = -100;
-    const int PHOTO_ELECTRIC_CONVERTER_ACCIDENTAL = - 201;
-    const int PHOTO_ELECTRIC_CONVERTER_CROSSTALK = - 202;
-}  // namespace SimulationTruth
+
+const int DEFAULT_SIMULATION_TRUTH = -1;
+
 }  // namespace merlict
 
 #endif  // MERLICT_SIMULATIONTRUTH_H_

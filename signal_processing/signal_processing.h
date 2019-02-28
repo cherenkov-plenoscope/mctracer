@@ -2,6 +2,7 @@
 #ifndef SIGNAL_PROCESSING_SIGNAL_PROCESSING_H_
 #define SIGNAL_PROCESSING_SIGNAL_PROCESSING_H_
 
+#include "simulation_truth.h"
 #include "PipelinePhoton.h"
 #include "PhotonStream.h"
 #include "ElectricPulse.h"

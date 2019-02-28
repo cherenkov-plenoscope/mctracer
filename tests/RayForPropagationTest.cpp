@@ -36,5 +36,5 @@ TEST_CASE("RayForPropagationTest: default_simulation_truth_id", "[merlict]") {
     Vec3 support(0.0, 0.0, 1.0);
     Vec3 direction(0.0, 0.0, 1.0);
     RayForPropagation prop_ray(support, direction);
-    CHECK(prop_ray.get_simulation_truth_id() == SimulationTruth::DEFAULT);
+    CHECK(prop_ray.get_simulation_truth_id() == DEFAULT_SIMULATION_TRUTH);
 }

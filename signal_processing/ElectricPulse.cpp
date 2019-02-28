@@ -1,11 +1,11 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "signal_processing/ElectricPulse.h"
-#include "merlict/merlict.h"
+#include "signal_processing/simulation_truth.h"
 
 namespace signal_processing {
 
 ElectricPulse::ElectricPulse():
-    simulation_truth_id(merlict::SimulationTruth::DEFAULT)
+    simulation_truth_id(DEFAULT_SIMULATION_TRUTH)
 {}
 
 ElectricPulse::ElectricPulse(

@@ -87,7 +87,7 @@ void inject_nsb_into_photon_pipeline(
             signal_processing::PipelinePhoton nsb_ph(
                 nsb_arrival_time,
                 nsb->wavelength_probability.draw(prng->uniform()),
-                SimulationTruth::NIGHT_SKY_BACKGROUND);
+                signal_processing::NIGHT_SKY_BACKGROUND);
             photon_pipelines->at(i).push_back(nsb_ph);
         }
 
