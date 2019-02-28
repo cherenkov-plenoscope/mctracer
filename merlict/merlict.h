@@ -20,7 +20,7 @@
 #include "Photons.h"
 #include "FresnelRefractionAndReflection.h"
 #include "Color.h"
-#include "SimulationTruth.h"
+#include "simulation_truth.h"
 #include "Histogram1.h"
 #include "DistanceMeter.h"
 #include "small_ball.h"

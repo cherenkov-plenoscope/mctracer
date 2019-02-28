@@ -3,7 +3,7 @@
 #include "catch.hpp"
 #include "signal_processing/signal_processing.h"
 #include "merlict/random/random.h"
-#include "merlict/SimulationTruth.h"
+#include "merlict/simulation_truth.h"
 #include "merlict/numeric.h"
 using std::vector;
 using std::string;

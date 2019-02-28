@@ -1,7 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "merlict/RayForPropagation.h"
-#include "merlict/SimulationTruth.h"
+#include "merlict/merlict.h"
 
 using namespace merlict;
 

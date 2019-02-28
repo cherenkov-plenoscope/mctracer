@@ -1,9 +1,7 @@
 // Copyright 2016 Sebastian A. Mueller
 #include "plenoscope/night_sky_background/Injector.h"
 #include <limits>
-#include "merlict/Histogram1.h"
-#include "merlict/SimulationTruth.h"
-#include "merlict/numeric.h"
+#include "merlict/merlict.h"
 using std::vector;
 using namespace merlict;
 
