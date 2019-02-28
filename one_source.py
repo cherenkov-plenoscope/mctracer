@@ -130,8 +130,8 @@ for pri_q in pri_queu:
 	go_first[pri_q] = s
 	s += 1
 
-out_header = 'lict.h'
-out_source = 'lict.cpp'
+out_header = 'merlict.h'
+out_source = 'merlict.cpp'
 
 headers = []
 header_includes = []
