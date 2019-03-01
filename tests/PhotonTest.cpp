@@ -6,7 +6,6 @@
 #include "merlict/merlict.h"
 #include "catch.hpp"
 namespace ml = merlict;
-using std::vector;
 
 
 TEST_CASE("PhotonTest: creation", "[merlict]") {
@@ -161,7 +160,7 @@ TEST_CASE("PhotonTest: Reflections", "[merlict]") {
     ml::Vec3 Support(-2.0, 0.0, 0.0);
     ml::Vec3 direction = ml::VEC3_UNIT_X;
     ml::random::Mt19937 prng(0u);
-    vector<ml::Photon> photons;
+    std::vector<ml::Photon> photons;
     double num_phot = 1e4;
     for (int i = 1; i <= num_phot; i++) {
         // wavelength form 1nm to 1000nm
@@ -227,7 +226,7 @@ TEST_CASE("PhotonTest: Refraction", "[merlict]") {
     // -----------send Photon----------------------
     double wavelength = 433.0e-9;
     ml::random::Mt19937 prng(0u);
-    vector<ml::Photon> photons;
+    std::vector<ml::Photon> photons;
     double num_phot = 1e4;
     for (int i = 1; i <= num_phot; i++) {
         ml::Photon P(ml::VEC3_ORIGIN, ml::VEC3_UNIT_Z, wavelength);

@@ -5,10 +5,6 @@
 #include "eventio.h"
 #include "corsika/corsika.h"
 #include "corsika/PhotonFactory.h"
-using std::string;
-using std::vector;
-using std::array;
-
 
 
 TEST_CASE("EventIoTest: EventIoHeader_works", "[merlict]") {
@@ -52,7 +48,7 @@ TEST_CASE("EventIoTest: make_runheader", "[merlict]") {
     for (size_t i = 0; i < 16; i++) foo++;
 
     std::copy_n(foo, 100, std::ostreambuf_iterator<char>(sout));
-    array<float, 273> my_run_header =
+    std::array<float, 273> my_run_header =
         eventio::make_corsika_273float_sub_block_form_stream(sout);
 
     CHECK(my_run_header.at(0) == corsika::str2float("RUNH"));
@@ -98,7 +94,7 @@ TEST_CASE("EventIoTest: EventIoFile_telescope_dat__event_header", "[merlict]") {
     CHECK(-0. == Approx(event.header.telescope_offsets[0].xoff).margin(1e-6));
     CHECK(-6589.96044922 == Approx(event.header.telescope_offsets[0].yoff).margin(1e-6));
 
-    array<float, 273> h = event.header.raw;
+    std::array<float, 273> h = event.header.raw;
     CHECK(1. == Approx(corsika::EventHeader::event_number(h)).margin(1e-6));
     CHECK(1. == Approx(corsika::EventHeader::particle_id(h)).margin(1e-6));
     CHECK(2745.3125 == Approx(corsika::EventHeader::total_energy_in_GeV(h)).margin(1e-6));
@@ -195,9 +191,9 @@ TEST_CASE("EventIoTest: EventIoFile_telescope_dat_run_time", "[merlict]") {
 
         merlict::random::Mt19937 prng;
 
-        vector<merlict::Photon> photons;
+        std::vector<merlict::Photon> photons;
         unsigned int id = 0;
-        for (array<float, 8> corsika_photon : event.photons) {
+        for (std::array<float, 8> corsika_photon : event.photons) {
             merlict::EventIoPhotonFactory cpf(corsika_photon, id++, &prng);
 
             if (cpf.passed_atmosphere()) {

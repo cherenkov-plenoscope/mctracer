@@ -3,8 +3,6 @@
 #include "catch.hpp"
 #include "merlict/merlict.h"
 namespace ml = merlict;
-using std::array;
-using std::vector;
 
 
 TEST_CASE("RandomGeneratorTest: fake_constant", "[merlict]") {
@@ -32,7 +30,7 @@ TEST_CASE("RandomGeneratorTest: Mt19937_set_and_get_seed", "[merlict]") {
 
 TEST_CASE("RandomGeneratorTest: uniform_0_to_1_stddev", "[merlict]") {
     ml::random::Mt19937 prng(0);
-    vector<double> samples;
+    std::vector<double> samples;
     for (unsigned int i = 0; i < 42*1337; i++)
         samples.push_back(prng.uniform());
     CHECK(1.0/sqrt(12.0) == Approx(ml::numeric::stddev(samples)).margin(1e-3));
@@ -42,7 +40,7 @@ TEST_CASE("RandomGeneratorTest: generator_point_on_disc", "[merlict]") {
     ml::random::Mt19937 prng(0);
     unsigned int n_points = 1e6;
     double disc_radius = 1.337;
-    vector<ml::Vec3> points;
+    std::vector<ml::Vec3> points;
     for (unsigned int i = 0; i < n_points; i++)
         points.push_back(prng.get_point_on_xy_disc_within_radius(disc_radius));
     // mean position
@@ -54,7 +52,7 @@ TEST_CASE("RandomGeneratorTest: generator_point_on_disc", "[merlict]") {
     CHECK(0.0 == Approx(mean.y).margin(1e-2));
     CHECK(sum.z == 0.0);
     // distibution is evenly spread
-    vector<double> counts_in_evaluation_bins;
+    std::vector<double> counts_in_evaluation_bins;
     double evaluation_disc_radius = disc_radius/5.0;
     for (
         double r = evaluation_disc_radius;
@@ -85,14 +83,14 @@ TEST_CASE("RandomGeneratorTest: draw_from_distribution", "[merlict]") {
     ml::random::Mt19937 prng(0);
     ml::random::SamplesFromDistribution sfd(&f);
     unsigned int n_samples = 1e6;
-    vector<double> samples;
+    std::vector<double> samples;
     for (unsigned int i = 0; i < n_samples; i++)
         samples.push_back(sfd.draw(prng.uniform()));
     // -------------------
     // fill samples drawn from distribution into histogram
     unsigned int bin_count = static_cast<unsigned int>(
         pow(static_cast<double>(n_samples), 1.0/3.0));
-    vector<double> bin_edges = ml::numeric::linspace(
+    std::vector<double> bin_edges = ml::numeric::linspace(
         f.limits.lower,
         f.limits.upper,
         bin_count);
@@ -106,14 +104,14 @@ TEST_CASE("RandomGeneratorTest: draw_from_distribution", "[merlict]") {
         drawn_f_integral = drawn_f_integral + histo.bins[i];
         f_integral = f_integral + f.evaluate(bin_edges[i]);
     }
-    vector<double> drawn_f_normalized;
+    std::vector<double> drawn_f_normalized;
     for (unsigned int i = 0; i < histo.bins.size(); i++)
         drawn_f_normalized.push_back(
             static_cast<double>(histo.bins[i])/
             static_cast<double>(drawn_f_integral));
     // -------------------
     // compare initial distribution and samples drawn from distribution
-    vector<double> ys = ml::numeric::linspace(
+    std::vector<double> ys = ml::numeric::linspace(
         f.limits.lower,
         f.limits.upper,
         sqrt(n_samples));
@@ -201,12 +199,12 @@ TEST_CASE("RandomGeneratorTest: octo_sphere_minus_z", "[merlict]") {
 }
 
 TEST_CASE("RandomGeneratorTest: normal_distribution", "[merlict]") {
-    const vector<double> means = {-1.9, -.3, 0.0, 4.6};
-    const vector<double> stds = {0.2, 0.7, 1.0, 2.3};
+    const std::vector<double> means = {-1.9, -.3, 0.0, 4.6};
+    const std::vector<double> stds = {0.2, 0.7, 1.0, 2.3};
     for (double mean: means) {
         for (double std: stds) {
             ml::random::Mt19937 prng(0);
-            vector<double> samples;
+            std::vector<double> samples;
             for (unsigned int i = 0; i < 10*1000; i++)
                 samples.push_back(prng.normal(mean, std));
             CHECK(std == Approx(ml::numeric::stddev(samples)).margin(1e-1));

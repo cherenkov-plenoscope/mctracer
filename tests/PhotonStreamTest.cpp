@@ -6,12 +6,9 @@
 #include "merlict/simulation_truth.h"
 namespace ml = merlict;
 namespace sp = signal_processing;
-using std::vector;
-using std::string;
 
 
-
-vector<vector<sp::ExtractedPulse>> create_photon_stream(
+std::vector<std::vector<sp::ExtractedPulse>> create_photon_stream(
     const unsigned int number_of_channels,
     const float single_pulse_rate,
     const float exposure_time,
@@ -20,9 +17,9 @@ vector<vector<sp::ExtractedPulse>> create_photon_stream(
 
     ml::random::Mt19937 prng(seed);
 
-    vector<vector<sp::ExtractedPulse>> photon_stream;
+    std::vector<std::vector<sp::ExtractedPulse>> photon_stream;
     for (unsigned int i = 0; i < number_of_channels; i++) {
-        vector<sp::ExtractedPulse> pulses_in_channel;
+        std::vector<sp::ExtractedPulse> pulses_in_channel;
         float t = 0.0;
         while (true) {
             const float t_next = prng.expovariate(single_pulse_rate);
@@ -79,13 +76,13 @@ void write_and_read_back(
             seed);
     stream.time_slice_duration = time_slice_duration;
 
-    const string path = "InOut/photon_stream.bin";
+    const std::string path = "InOut/photon_stream.bin";
     sp::PhotonStream::write(
         stream.photon_stream,
         time_slice_duration,
         path);
 
-    const string truth_path = "InOut/photon_stream_truth.bin";
+    const std::string truth_path = "InOut/photon_stream_truth.bin";
     sp::PhotonStream::write_simulation_truth(
         stream.photon_stream,
         truth_path);
@@ -106,8 +103,8 @@ void write_and_read_back(
 
 
 TEST_CASE("PhotonStreamTest: arrival_slices_must_not_be_NEXT_CHANNEL_MARKER", "[merlict]") {
-    vector<vector<sp::ExtractedPulse>> channels;
-    vector<sp::ExtractedPulse> channel;
+    std::vector<std::vector<sp::ExtractedPulse>> channels;
+    std::vector<sp::ExtractedPulse> channel;
     const int32_t simulation_truth_id = 1337;
     channel.emplace_back(
         sp::ExtractedPulse(

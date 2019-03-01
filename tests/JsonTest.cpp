@@ -5,9 +5,6 @@
 #include "merlict/merlict.h"
 namespace nl = nlohmann;
 namespace mct = merlict;
-using std::string;
-using mct::txt::is_equal;
-
 
 
 TEST_CASE("JsonTest: nlohmann_getter", "[merlict]") {

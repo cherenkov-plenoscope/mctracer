@@ -4,7 +4,6 @@
 #include "catch.hpp"
 #include "merlict/merlict.h"
 namespace ml = merlict;
-using std::vector;
 
 
 TEST_CASE("lens_makerTest: check_sebastians_paper_and_pen_calculation", "[merlict]") {
@@ -49,8 +48,8 @@ TEST_CASE("lens_makerTest: check_lensmaker_on_optical_table_with_lens", "[merlic
         });
     ml::random::Mt19937 prng(0u);
     unsigned int number_of_photons_per_run = 1000;
-    vector<double> sigma_psf_vs_image_sensor_distance;
-    vector<double> image_sensor_distances;
+    std::vector<double> sigma_psf_vs_image_sensor_distance;
+    std::vector<double> image_sensor_distances;
     for (
         double offset = -cfg.focal_length*0.3;
         offset < cfg.focal_length*0.3;
@@ -79,12 +78,12 @@ TEST_CASE("lens_makerTest: check_lensmaker_on_optical_table_with_lens", "[merlic
         sensor_disc->set_inner_color(sensor_disc_col);
         sensor_disc->set_radius(cfg.aperture_radius*0.85);
         ml::sensor::Sensor sensor(0, sensor_disc);
-        vector<ml::sensor::Sensor*> sensor_vec = {&sensor};
+        std::vector<ml::sensor::Sensor*> sensor_vec = {&sensor};
         ml::sensor::Sensors sensor_list(sensor_vec);
         optical_table.init_tree_based_on_mother_child_relations();
 
         // light source
-        vector<ml::Photon> photons =
+        std::vector<ml::Photon> photons =
             ml::Photons::Source::parallel_towards_z_from_xy_disc(
                 cfg.aperture_radius*0.85,  // 0.85 inner hex radius
                 number_of_photons_per_run,

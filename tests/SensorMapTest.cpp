@@ -2,8 +2,6 @@
 #include "catch.hpp"
 #include "merlict/scenery/SensorMap.h"
 namespace ml = merlict;
-using std::string;
-using std::vector;
 
 
 TEST_CASE("SensorMapTest: init_one", "[merlict]") {

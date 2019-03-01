@@ -6,21 +6,19 @@
 #include "merlict/simulation_truth.h"
 #include "merlict/numeric.h"
 namespace ml = merlict;
-using std::vector;
-using std::string;
 
 
 TEST_CASE("PulseExtractionTest: arrival_time_slices_below_next_channel_marker", "[merlict]") {
     const float time_slice_duration = .5e-9;
-    vector<vector<signal_processing::ExtractedPulse>> response;
-    vector<signal_processing::ExtractedPulse> read_out_channel;
+    std::vector<std::vector<signal_processing::ExtractedPulse>> response;
+    std::vector<signal_processing::ExtractedPulse> read_out_channel;
     signal_processing::ExtractedPulse pulse;
     pulse.arrival_time_slice = 254u;
     pulse.simulation_truth_id = 0;
     read_out_channel.push_back(pulse);
     response.push_back(read_out_channel);
 
-    const string path = "InOut/photon_stream.bin";
+    const std::string path = "InOut/photon_stream.bin";
     signal_processing::PhotonStream::write(
         response,
         time_slice_duration,
@@ -37,8 +35,8 @@ TEST_CASE("PulseExtractionTest: truncate_invalid_arrival_times", "[merlict]") {
     const double time_slice_duration = .5e-9;
     const double arrival_time_std = 0.0;
 
-    vector<vector<signal_processing::ElectricPulse>> response;
-    vector<signal_processing::ElectricPulse> read_out_channel;
+    std::vector<std::vector<signal_processing::ElectricPulse>> response;
+    std::vector<signal_processing::ElectricPulse> read_out_channel;
     for (int i = -1000; i < 1000; i++) {
         signal_processing::ElectricPulse pulse;
         pulse.arrival_time = time_slice_duration*i;
@@ -60,7 +58,7 @@ TEST_CASE("PulseExtractionTest: truncate_invalid_arrival_times", "[merlict]") {
 
     CHECK(2000 - signal_processing::NUMBER_TIME_SLICES == number_invalid_photons);
 
-    vector<vector<signal_processing::ExtractedPulse>> raw =
+    std::vector<std::vector<signal_processing::ExtractedPulse>> raw =
         signal_processing::extract_pulses(
             response,
             time_slice_duration,
@@ -88,8 +86,8 @@ TEST_CASE("PulseExtractionTest: arrival_time_std", "[merlict]") {
     const double arrival_time_std = 5e-9;
     const double true_arrival_time = 25e-9;
 
-    vector<vector<signal_processing::ElectricPulse>> response;
-    vector<signal_processing::ElectricPulse> read_out_channel;
+    std::vector<std::vector<signal_processing::ElectricPulse>> response;
+    std::vector<signal_processing::ElectricPulse> read_out_channel;
     for (int i = 0; i < 10*1000; i++) {
         signal_processing::ElectricPulse pulse;
         pulse.arrival_time = true_arrival_time;
@@ -98,21 +96,21 @@ TEST_CASE("PulseExtractionTest: arrival_time_std", "[merlict]") {
     }
     response.push_back(read_out_channel);
 
-    vector<double> true_arrival_times;
+    std::vector<double> true_arrival_times;
     for (signal_processing::ElectricPulse &pulse : response.at(0))
         true_arrival_times.push_back(pulse.arrival_time);
 
     CHECK(0.0 == Approx(ml::numeric::stddev(true_arrival_times)).margin(1e-1));
     CHECK(true_arrival_time == Approx(ml::numeric::mean(true_arrival_times)).margin(1e-1));
 
-    vector<vector<signal_processing::ExtractedPulse>> raw =
+    std::vector<std::vector<signal_processing::ExtractedPulse>> raw =
         signal_processing::extract_pulses(
             response,
             time_slice_duration,
             arrival_time_std,
             &prng);
 
-    vector<double> reconstructed_arrival_times;
+    std::vector<double> reconstructed_arrival_times;
     for (signal_processing::ExtractedPulse &pulse : raw.at(0))
         reconstructed_arrival_times.push_back(
             pulse.arrival_time_slice * time_slice_duration);

@@ -3,9 +3,6 @@
 #include "catch.hpp"
 #include "merlict/merlict.h"
 namespace ml = merlict;
-using std::string;
-using std::stringstream;
-using std::vector;
 
 
 TEST_CASE("FrameTest: assert_name_is_valid", "[merlict]") {
@@ -134,7 +131,7 @@ TEST_CASE("FrameTest: cluster_frames_during_tree_initializing", "[merlict]") {
         for (double y = 0.0; y < qube_edge; y++) {
             for (double z = 0.0; z < qube_edge; z++) {
                 ml::Vec3 pos(x, y, z);
-                stringstream name;
+                std::stringstream name;
                 name << "sub_sphere_" << x << "_" << y << "_" << z;
                 ml::Sphere* sphere = tree.append<ml::Sphere>();
                 sphere->set_name_pos_rot(name.str(), pos, ml::ROT3_UNITY);

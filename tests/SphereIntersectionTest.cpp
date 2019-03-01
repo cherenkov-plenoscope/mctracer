@@ -78,7 +78,7 @@ TEST_CASE("SphereIntersectionTest: tangential_intersection", "[merlict]") {
 TEST_CASE("SphereIntersectionTest: ray_frontal_intersection", "[merlict]") {
     SphereIntersectionTest st;
     ml::Ray ray_with_intersection(ml::Vec3(0, 0, -2), ml::Vec3(0, 0, 1));
-    vector<ml::Intersection> intersections;
+    std::vector<ml::Intersection> intersections;
     st.my_sphere->calculate_intersection_with(&ray_with_intersection, &intersections);
 
     REQUIRE(!intersections.empty());
@@ -90,7 +90,7 @@ TEST_CASE("SphereIntersectionTest: ray_frontal_intersection", "[merlict]") {
 TEST_CASE("SphereIntersectionTest: ray_intersection_but_no_causal_intersection", "[merlict]") {
     SphereIntersectionTest st;
     ml::Ray ray_without_intersection(ml::Vec3(0, 0, +2), ml::Vec3(0, 0, 1));
-    vector<ml::Intersection> intersections;
+    std::vector<ml::Intersection> intersections;
     st.my_sphere->calculate_intersection_with(
     &ray_without_intersection,
     &intersections);
@@ -100,7 +100,7 @@ TEST_CASE("SphereIntersectionTest: ray_intersection_but_no_causal_intersection",
 TEST_CASE("SphereIntersectionTest: ray_completely_outside_of_sphere", "[merlict]") {
     SphereIntersectionTest st;
     ml::Ray ray_outside(ml::Vec3(5, 0, 0), ml::Vec3(0, 0, 1));
-    vector<ml::Intersection> intersections;
+    std::vector<ml::Intersection> intersections;
     st.my_sphere->calculate_intersection_with(&ray_outside, &intersections);
 
     CHECK(intersections.empty());
@@ -109,7 +109,7 @@ TEST_CASE("SphereIntersectionTest: ray_completely_outside_of_sphere", "[merlict]
 TEST_CASE("SphereIntersectionTest: ray_starts_inside_sphere", "[merlict]") {
     SphereIntersectionTest st;
     ml::Ray ray_inside(ml::VEC3_ORIGIN, ml::Vec3(0, 0, 1));
-    vector<ml::Intersection> intersections;
+    std::vector<ml::Intersection> intersections;
     st.my_sphere->calculate_intersection_with(&ray_inside, &intersections);
 
     REQUIRE(!intersections.empty());
@@ -121,7 +121,7 @@ TEST_CASE("SphereIntersectionTest: ray_starts_inside_sphere", "[merlict]") {
 TEST_CASE("SphereIntersectionTest: ray_tangents_sphere", "[merlict]") {
     SphereIntersectionTest st;
     ml::Ray ray_inside(ml::Vec3(1, 0, -2), ml::Vec3(0, 0, 1));
-    vector<ml::Intersection> intersections;
+    std::vector<ml::Intersection> intersections;
     st.my_sphere->calculate_intersection_with(&ray_inside, &intersections);
 
     REQUIRE(!intersections.empty());

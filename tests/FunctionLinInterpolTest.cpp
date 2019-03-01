@@ -4,9 +4,6 @@
 #include "merlict/function/function.h"
 #include "merlict/tsvio.h"
 namespace ml = merlict;
-using std::stringstream;
-using std::string;
-using std::vector;
 
 
 struct Func1Test {

@@ -4,15 +4,12 @@
 #include "merlict/Photons.h"
 #include "merlict/scenery/Scenery.h"
 namespace ml = merlict;
-using std::string;
-using std::stringstream;
-using std::vector;
 
 
 TEST_CASE("ParallelPropagationTest: propagate_once", "[merlict]") {
 	const uint64_t num_photons = 1000;
 	ml::random::Mt19937 prng(0u);
-	vector<ml::Photon> photons1 =
+	std::vector<ml::Photon> photons1 =
 		ml::Photons::Source::parallel_towards_z_from_xy_disc(
 			1.0,
 			num_photons,
@@ -47,7 +44,7 @@ TEST_CASE("ParallelPropagationTest: propagate_once", "[merlict]") {
 		&cfg,
 		&prng);
 
-	vector<ml::Interaction> final_interactions_run_1(num_photons);
+	std::vector<ml::Interaction> final_interactions_run_1(num_photons);
 	for (uint64_t i = 0; i < photons1.size(); ++i) {
 		final_interactions_run_1[i] = photons1[i].get_final_interaction_type();
 	}
@@ -56,7 +53,7 @@ TEST_CASE("ParallelPropagationTest: propagate_once", "[merlict]") {
 	// ------------------------
 
 	prng.set_seed(0u);
-	vector<ml::Photon> photons2 =
+	std::vector<ml::Photon> photons2 =
 		ml::Photons::Source::parallel_towards_z_from_xy_disc(
 			1.0,
 			num_photons,
@@ -68,7 +65,7 @@ TEST_CASE("ParallelPropagationTest: propagate_once", "[merlict]") {
 		&cfg,
 		&prng);
 
-	vector<ml::Interaction> final_interactions_run_2(num_photons);
+	std::vector<ml::Interaction> final_interactions_run_2(num_photons);
 	for (uint64_t i = 0; i < photons2.size(); ++i) {
 		final_interactions_run_2[i] = photons2[i].get_final_interaction_type();
 	}

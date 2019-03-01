@@ -4,13 +4,12 @@
 #include "signal_processing/PhotoElectricConverter.h"
 #include "merlict/Histogram1.h"
 namespace ml = merlict;
-using std::vector;
 
 
-vector<signal_processing::PipelinePhoton> equi_distant_photons(
+std::vector<signal_processing::PipelinePhoton> equi_distant_photons(
     const unsigned int n
 ) {
-    vector<signal_processing::PipelinePhoton> photon_pipeline;
+    std::vector<signal_processing::PipelinePhoton> photon_pipeline;
     for (unsigned int i = 0; i < n; i++) {
         const double arrival_time = static_cast<double>(i)*1e-9;
         const double wavelength = 433e-9;
@@ -42,10 +41,10 @@ TEST_CASE("PhotoElectricConverterTest: empty_input_yields_empty_output", "[merli
     signal_processing::PhotoElectricConverter::Config config;
     signal_processing::PhotoElectricConverter::Converter conv(&config);
 
-    vector<signal_processing::PipelinePhoton> photon_pipeline;
+    std::vector<signal_processing::PipelinePhoton> photon_pipeline;
     double exposure_time = 1.0;
     ml::random::Mt19937 prng(0);
-    vector<signal_processing::ElectricPulse> result = conv.
+    std::vector<signal_processing::ElectricPulse> result = conv.
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
             exposure_time,
@@ -58,12 +57,12 @@ TEST_CASE("PhotoElectricConverterTest: input_pulses_absorbed_zero_qunatum_eff", 
     signal_processing::PhotoElectricConverter::Config config;
     signal_processing::PhotoElectricConverter::Converter conv(&config);
 
-    vector<signal_processing::PipelinePhoton> photon_pipeline =
+    std::vector<signal_processing::PipelinePhoton> photon_pipeline =
         equi_distant_photons(1337u);
 
     double exposure_time = 1337e-9;
     ml::random::Mt19937 prng(0);
-    vector<signal_processing::ElectricPulse> result = conv.
+    std::vector<signal_processing::ElectricPulse> result = conv.
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
             exposure_time,
@@ -78,12 +77,12 @@ TEST_CASE("PhotoElectricConverterTest: input_pulses_pass_qunatum_eff_is_one", "[
     config.quantum_efficiency_vs_wavelength = &qeff;
     signal_processing::PhotoElectricConverter::Converter conv(&config);
 
-    vector<signal_processing::PipelinePhoton> photon_pipeline =
+    std::vector<signal_processing::PipelinePhoton> photon_pipeline =
         equi_distant_photons(1337u);
 
     double exposure_time = 1337e-9;
     ml::random::Mt19937 prng(0);
-    vector<signal_processing::ElectricPulse> result = conv.
+    std::vector<signal_processing::ElectricPulse> result = conv.
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
             exposure_time,
@@ -100,11 +99,11 @@ TEST_CASE("PhotoElectricConverterTest: dark_rate_on_empty_photon_pipe", "[merlic
     config.dark_rate = 100e6;
     signal_processing::PhotoElectricConverter::Converter conv(&config);
 
-    vector<signal_processing::PipelinePhoton> photon_pipeline;
+    std::vector<signal_processing::PipelinePhoton> photon_pipeline;
 
     double exposure_time = 1e-6;
     ml::random::Mt19937 prng(0);
-    vector<signal_processing::ElectricPulse> result = conv.
+    std::vector<signal_processing::ElectricPulse> result = conv.
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
             exposure_time,
@@ -132,14 +131,14 @@ TEST_CASE("PhotoElectricConverterTest: triangle_qeff", "[merlict]") {
     //        200e-9    700e-9     1200e-9 [nm] wavelength //
 
     signal_processing::PhotoElectricConverter::Config config;
-    vector<vector<double>> raw_qeff {{  200e-9, 0.0},
+    std::vector<std::vector<double>> raw_qeff {{  200e-9, 0.0},
                                      {  700e-9, 1.0},
                                      { 1200e-9, 0.0}};
     ml::function::Func1 qeff(raw_qeff);
     config.quantum_efficiency_vs_wavelength = &qeff;
     signal_processing::PhotoElectricConverter::Converter conv(&config);
 
-    vector<signal_processing::PipelinePhoton> photon_pipeline;
+    std::vector<signal_processing::PipelinePhoton> photon_pipeline;
     const unsigned int n = 1000*1000;
     for (unsigned int i = 0; i < n; i++) {
         const double arrival_time = static_cast<double>(i);
@@ -155,7 +154,7 @@ TEST_CASE("PhotoElectricConverterTest: triangle_qeff", "[merlict]") {
 
     double exposure_time = 1.0;
     ml::random::Mt19937 prng(0);
-    vector<signal_processing::ElectricPulse> result = conv.
+    std::vector<signal_processing::ElectricPulse> result = conv.
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
             exposure_time,
@@ -163,7 +162,7 @@ TEST_CASE("PhotoElectricConverterTest: triangle_qeff", "[merlict]") {
 
     CHECK(n/2 == Approx(result.size()).margin(static_cast<double>(n)));
 
-    vector<double> survived_arrival_times;
+    std::vector<double> survived_arrival_times;
     // We created a correlation between wavelength and arrival
     // time in this case on purpose.
     for (const signal_processing::ElectricPulse pulse : result)

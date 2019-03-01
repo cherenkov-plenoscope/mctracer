@@ -3,11 +3,10 @@
 #include "catch.hpp"
 #include "merlict/merlict.h"
 namespace ml = merlict;
-using std::vector;
 
 
 TEST_CASE("SensorInOutTest: write_and_read", "[merlict]") {
-    vector<ml::sensor::PhotonArrival> arrivals_1;
+    std::vector<ml::sensor::PhotonArrival> arrivals_1;
     const unsigned int number_of_arrivals = 1337*42;
     ml::random::Mt19937 prng(0);
     for (unsigned int i = 0; i < number_of_arrivals; i++) {
@@ -32,7 +31,7 @@ TEST_CASE("SensorInOutTest: write_and_read", "[merlict]") {
     // read in again
     std::ifstream in;
     in.open("InOut/arrival_information.bin", std::ios::in | std::ios::binary);
-    vector<ml::sensor::PhotonArrival> arrivals_2 =
+    std::vector<ml::sensor::PhotonArrival> arrivals_2 =
         ml::sensor::read_arrival_information_from_file(
             &in,
             number_of_arrivals);

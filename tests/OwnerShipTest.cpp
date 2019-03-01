@@ -4,8 +4,6 @@
 #include "catch.hpp"
 #include "merlict/merlict.h"
 namespace ml = merlict;
-using std::string;
-using std::vector;
 
 
 TEST_CASE("OwnerShipTest: own", "[merlict]") {

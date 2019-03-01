@@ -1,8 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
 #include "plenoscope/calibration/LixelStatistics.h"
-using std::vector;
-using std::string;
 
 
 TEST_CASE("PlenoscopeLixelStatisticsTest: default_ctor", "[merlict]") {
@@ -24,7 +22,7 @@ TEST_CASE("PlenoscopeLixelStatisticsTest: default_ctor", "[merlict]") {
 
 TEST_CASE("PlenoscopeLixelStatisticsTest: write_and_read_binary", "[merlict]") {
     const unsigned int number_of_lixels = 1337;
-    vector<plenoscope::calibration::LixelStatistic> lixel_stats;
+    std::vector<plenoscope::calibration::LixelStatistic> lixel_stats;
 
     for (unsigned int i = 0; i < number_of_lixels; i++) {
         plenoscope::calibration::LixelStatistic stat;
@@ -43,10 +41,10 @@ TEST_CASE("PlenoscopeLixelStatisticsTest: write_and_read_binary", "[merlict]") {
         lixel_stats.push_back(stat);
     }
 
-    const string path = "InOut/my_stats.LixelStatistics.bin";
+    const std::string path = "InOut/my_stats.LixelStatistics.bin";
     plenoscope::calibration::write(lixel_stats, path);
 
-    vector<plenoscope::calibration::LixelStatistic> lixel_stats_in =
+    std::vector<plenoscope::calibration::LixelStatistic> lixel_stats_in =
         plenoscope::calibration::read(path);
 
     CHECK(number_of_lixels == lixel_stats_in.size());

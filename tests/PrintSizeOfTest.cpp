@@ -5,21 +5,18 @@
 #include "merlict/merlict.h"
 #include "signal_processing/signal_processing.h"
 namespace ml = merlict;
-using std::cout;
-using std::string;
 
 
 template<typename T>
-void print_size(const string &name, T s) {
-    cout << ml::txt::fill_up_text_with_whitespaces_until_column(name, 36);
-    cout << sizeof(s) << '\n';
+void print_size(const std::string &name, T s) {
+    std::cout << ml::txt::fill_up_text_with_whitespaces_until_column(name, 36);
+    std::cout << sizeof(s) << '\n';
 }
 
 
-
 TEST_CASE("SizeOfTest: sizes_of_mct", "[merlict]") {
-    cout << "Size in bytes\n";
-    cout << "--------------------------------------------" << "\n";
+    std::cout << "Size in bytes\n";
+    std::cout << "--------------------------------------------" << "\n";
 
     ml::Color col(123, 65, 12);
     print_size("Color", col);
@@ -35,7 +32,7 @@ TEST_CASE("SizeOfTest: sizes_of_mct", "[merlict]") {
 
     ml::HomTra3 h;
     print_size("HomTra3", h);
-    cout << "--------------------------------------------" << "\n";
+    std::cout << "--------------------------------------------" << "\n";
 
     ml::Ray ray(ml::VEC3_ORIGIN, ml::VEC3_UNIT_Z);
     print_size("Ray", ray);
@@ -48,14 +45,14 @@ TEST_CASE("SizeOfTest: sizes_of_mct", "[merlict]") {
 
     ml::Photon ph(ml::VEC3_ORIGIN, ml::VEC3_UNIT_Z, 433e-9);
     print_size("Photon", ph);
-    cout << "--------------------------------------------" << "\n";
+    std::cout << "--------------------------------------------" << "\n";
 
     ml::Intersection is;
     print_size("Intersection", is);
 
     ml::PropagationEnvironment environment;
     print_size("PropagationEnvironment", environment);
-    cout << "--------------------------------------------" << "\n";
+    std::cout << "--------------------------------------------" << "\n";
 
     ml::Frame tree;
     tree.set_name_pos_rot("0123456789", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
@@ -103,7 +100,7 @@ TEST_CASE("SizeOfTest: sizes_of_mct", "[merlict]") {
 
     ml::Triangle triangle;
     print_size("Triangle", triangle);
-    cout << "--------------------------------------------" << "\n";
+    std::cout << "--------------------------------------------" << "\n";
 
     ml::sensor::PhotonArrival arr_info;
     print_size("PhotonArrival", arr_info);
@@ -117,7 +114,7 @@ TEST_CASE("SizeOfTest: sizes_of_mct", "[merlict]") {
 
     ml::sensor::FindSensorByFrame finder(&tree, &sensors.by_frame);
     print_size("FindSensorByFrame", finder);
-    cout << "--------------------------------------------" << "\n";
+    std::cout << "--------------------------------------------" << "\n";
 
     signal_processing::PipelinePhoton pipe_ph;
     print_size("PipelinePhoton", pipe_ph);

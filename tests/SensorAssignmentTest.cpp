@@ -1,19 +1,18 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
 #include "merlict/merlict.h"
-using std::vector;
 namespace ml = merlict;
 
 
 TEST_CASE("SensorAssignmentTest: empty_sensors_init", "[merlict]") {
-    vector<ml::sensor::Sensor*> empty_sensors;
+    std::vector<ml::sensor::Sensor*> empty_sensors;
 
     ml::sensor::Sensors sens(empty_sensors);
     CHECK(sens.size() == 0u);
 }
 
 TEST_CASE("SensorAssignmentTest: empty_sensor_list_find_sensor_init", "[merlict]") {
-    vector<ml::sensor::Sensor*> empty_sensors;
+    std::vector<ml::sensor::Sensor*> empty_sensors;
     ml::sensor::Sensors sens(empty_sensors);
 
     ml::Frame car;
@@ -28,7 +27,7 @@ TEST_CASE("SensorAssignmentTest: single_sensor_find", "[merlict]") {
     car.set_name_pos_rot("car", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
     ml::sensor::Sensor on_car(0u, &car);
 
-    vector<ml::sensor::Sensor*> raw_sensors;
+    std::vector<ml::sensor::Sensor*> raw_sensors;
     raw_sensors.push_back(&on_car);
     ml::sensor::Sensors sensors(raw_sensors);
     CHECK(sensors.size() == 1u);
@@ -60,7 +59,7 @@ TEST_CASE("SensorAssignmentTest: many_sensor_find", "[merlict]") {
     ml::sensor::Sensor on_car(2u, &car);
 
     // Collecting
-    vector<ml::sensor::Sensor*> raw_sensors;
+    std::vector<ml::sensor::Sensor*> raw_sensors;
     raw_sensors.push_back(&on_tree);
     raw_sensors.push_back(&on_house);
     raw_sensors.push_back(&on_car);
@@ -88,7 +87,7 @@ TEST_CASE("SensorAssignmentTest: many_sensor_find", "[merlict]") {
 
 TEST_CASE("SensorAssignmentTest: sort_sensors_by_brame", "[merlict]") {
     unsigned int n = 1000;
-    vector<ml::sensor::Sensor> sensors;
+    std::vector<ml::sensor::Sensor> sensors;
     ml::Frame root;
     root.set_name_pos_rot("root", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
     for (unsigned int i = 0; i < n; i++) {
@@ -100,11 +99,11 @@ TEST_CASE("SensorAssignmentTest: sort_sensors_by_brame", "[merlict]") {
         sensors.push_back(ml::sensor::Sensor(i, child));
     }
     // Collecting
-    vector<ml::sensor::Sensor*> raw_sensors;
+    std::vector<ml::sensor::Sensor*> raw_sensors;
     for (unsigned int i = 0; i < sensors.size(); i++) {
         raw_sensors.push_back(&sensors.at(i));
     }
-    vector<ml::sensor::Sensor*> by_frame = sort_by_frame(&raw_sensors);
+    std::vector<ml::sensor::Sensor*> by_frame = sort_by_frame(&raw_sensors);
     for (unsigned int i = 0; i < by_frame.size()-1; i ++) {
         CHECK(by_frame.at(i)->frame < by_frame.at(i+1)->frame);
     }

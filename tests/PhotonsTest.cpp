@@ -3,16 +3,13 @@
 #include "catch.hpp"
 #include "merlict/merlict.h"
 namespace ml = merlict;
-using std::stringstream;
-using std::string;
-using std::vector;
 
 
 TEST_CASE("PhotonsTest: raw_row2photon", "[merlict]") {
     ml::Vec3 dir(66.6, 57.8, 99.9);
     dir.normalize();
 
-    vector<double> raw_row = {
+    std::vector<double> raw_row = {
     // id    sx    sy    sz    dx     dy     dz     wavelength
         0.0, 13.0, 37.0, 42.0, dir.x, dir.y, dir.z, 433.5
     };
@@ -38,7 +35,7 @@ TEST_CASE("PhotonsTest: photon2raw_row", "[merlict]") {
     ml::Photon ph(sup, dir, wavelength);
     ph.set_simulation_truth_id(id);
 
-    vector<double> raw_row = ml::Photons::photon2raw_row(&ph);
+    std::vector<double> raw_row = ml::Photons::photon2raw_row(&ph);
 
     REQUIRE(raw_row.size() == 8u);
 
@@ -54,7 +51,7 @@ TEST_CASE("PhotonsTest: photon2raw_row", "[merlict]") {
 
 TEST_CASE("PhotonsTest: bunch2raw_matrix2bunch", "[merlict]") {
     const unsigned int number_of_photons = 1e3;
-    vector<ml::Photon> photon_bunch;
+    std::vector<ml::Photon> photon_bunch;
     ml::random::Mt19937 prng(0u);
     for (unsigned int n = 0; n < number_of_photons; n++) {
         ml::Vec3 sup(prng.uniform(), prng.uniform(), prng.uniform());

@@ -5,11 +5,10 @@
 #include "merlict/numeric.h"
 namespace ml = merlict;
 namespace pl = plenoscope;
-using std::vector;
 
 
 TEST_CASE("OnlineStatisticsTest: few_samples", "[merlict]") {
-    vector<double> vals = {1.0};
+    std::vector<double> vals = {1.0};
     pl::OnlineStatistics ov;
     for (unsigned int i = 0; i < vals.size(); i++)
         ov.add(vals.at(i));
@@ -20,7 +19,7 @@ TEST_CASE("OnlineStatisticsTest: few_samples", "[merlict]") {
 }
 
 TEST_CASE("OnlineStatisticsTest: online_variance", "[merlict]") {
-    vector<double> vals;
+    std::vector<double> vals;
     ml::random::Mt19937 prng(0);
     pl::OnlineStatistics ov;
     for (unsigned int i = 0; i < 1000000; i++) {
@@ -35,7 +34,7 @@ TEST_CASE("OnlineStatisticsTest: online_variance", "[merlict]") {
 }
 
 TEST_CASE("OnlineStatisticsTest: online_variance_simple_numbers", "[merlict]") {
-    vector<double> vals = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
+    std::vector<double> vals = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
     pl::OnlineStatistics ov;
     for (unsigned int i = 0; i < vals.size(); i++)
         ov.add(vals.at(i));
@@ -46,7 +45,7 @@ TEST_CASE("OnlineStatisticsTest: online_variance_simple_numbers", "[merlict]") {
 }
 
 TEST_CASE("OnlineStatisticsTest: sum", "[merlict]") {
-    vector<double> vals = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
+    std::vector<double> vals = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
     pl::OnlineStatistics ov;
     for (unsigned int i = 0; i < vals.size(); i++)
         ov.add(vals.at(i));
@@ -54,7 +53,7 @@ TEST_CASE("OnlineStatisticsTest: sum", "[merlict]") {
 }
 
 TEST_CASE("OnlineStatisticsTest: mean", "[merlict]") {
-    vector<double> vals = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
+    std::vector<double> vals = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0};
     pl::OnlineStatistics ov;
     for (unsigned int i = 0; i < vals.size(); i++)
         ov.add(vals.at(i));
