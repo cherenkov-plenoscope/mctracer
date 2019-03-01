@@ -2,20 +2,21 @@
 #include "corsika/block.h"
 #include <fstream>
 #include <sstream>
-using std::string;
-using std::vector;
-using std::array;
+
 
 namespace corsika {
 namespace block {
 
-void write(array<float, 273> block, const string &path) {
-    vector<array<float, 273>> blocks;
+void write(std::array<float, 273> block, const std::string &path) {
+    std::vector<std::array<float, 273>> blocks;
     blocks.push_back(block);
     write(blocks, path);
 }
 
-void write(vector<array<float, 273>> blocks, const string &path) {
+void write(
+    std::vector<std::array<float, 273>> blocks,
+    const std::string &path
+) {
     std::ofstream file;
     file.open(path, std::ios::out | std::ios::binary);
     if (!file.is_open()) {
@@ -25,15 +26,15 @@ void write(vector<array<float, 273>> blocks, const string &path) {
         throw std::runtime_error(info.str());
     }
 
-    for (const array<float, 273> &block : blocks)
+    for (const std::array<float, 273> &block : blocks)
         file.write(
             reinterpret_cast<const char*>(&block),
-            sizeof(array<float, 273>));
+            sizeof(std::array<float, 273>));
 
     file.close();
 }
 
-vector<array<float, 273>> read(const string &path) {
+std::vector<std::array<float, 273>> read(const std::string &path) {
     std::ifstream file;
     file.open(path, std::ios::binary);
     if (!file.is_open()) {
@@ -43,10 +44,12 @@ vector<array<float, 273>> read(const string &path) {
         throw std::runtime_error(info.str());
     }
 
-    vector<array<float, 273>> blocks;
+    std::vector<std::array<float, 273>> blocks;
     while (true) {
-        array<float, 273> block;
-        file.read(reinterpret_cast<char*>(&block), sizeof(array<float, 273>));
+        std::array<float, 273> block;
+        file.read(
+            reinterpret_cast<char*>(&block),
+            sizeof(std::array<float, 273>));
         if (!file.eof())
             blocks.push_back(block);
         else

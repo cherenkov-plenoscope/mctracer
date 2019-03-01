@@ -1,17 +1,13 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "corsika/corsika.h"
 #include <sstream>
-using std::stringstream;
-using std::string;
-using std::vector;
-using std::array;
+
 
 namespace corsika {
-
 namespace EventHeader {
 
-string get_print(const array<float, 273> &eh) {
-  stringstream out;
+std::string get_print(const std::array<float, 273> &eh) {
+  std::stringstream out;
   out << "------------------------------------------------------------\n";
   out << "  1 " << float2str(eh[1-1]) << "\n";
   out << "  2 " << "event number " << eh[2-1] << "\n";
@@ -66,22 +62,22 @@ string get_print(const array<float, 273> &eh) {
 return out.str();
 }
 
-float event_number(const array<float, 273> &eh) {
+float event_number(const std::array<float, 273> &eh) {
     return eh.at(1);
 }
-float particle_id(const array<float, 273> &eh) {
+float particle_id(const std::array<float, 273> &eh) {
     return eh.at(2);
 }
-float total_energy_in_GeV(const array<float, 273> &eh) {
+float total_energy_in_GeV(const std::array<float, 273> &eh) {
     return eh.at(3);
 }
-float zenith(const array<float, 273> &eh) {
+float zenith(const std::array<float, 273> &eh) {
     return eh.at(10);
 }
-float azimuth(const array<float, 273> &eh) {
+float azimuth(const std::array<float, 273> &eh) {
     return eh.at(11);
 }
-float first_interaction_height_in_cm(const array<float, 273> &eh) {
+float first_interaction_height_in_cm(const std::array<float, 273> &eh) {
     return eh.at(7-1);
 }
 
@@ -89,8 +85,8 @@ float first_interaction_height_in_cm(const array<float, 273> &eh) {
 
 namespace RunHeader {
 
-string get_print(const array<float, 273> &rh) {
-    stringstream out;
+std::string get_print(const std::array<float, 273> &rh) {
+    std::stringstream out;
     out << "------------------------------------------------------------\n";
     out << "  1 " << float2str(rh[1-1]) << "\n";
     out << "  2 " << "run number " << rh[2-1] << "\n";
@@ -101,30 +97,33 @@ string get_print(const array<float, 273> &rh) {
     return out.str();
 }
 
-float run_number(const array<float, 273> &rh) {
+float run_number(const std::array<float, 273> &rh) {
     return rh.at(1);
 }
-float slope_of_energy_spektrum(const array<float, 273> &rh) {
+float slope_of_energy_spektrum(const std::array<float, 273> &rh) {
     return rh.at(15);
 }
-float energy_range_start(const array<float, 273> &rh) {
+float energy_range_start(const std::array<float, 273> &rh) {
     return rh.at(16);
 }
-float energy_range_end(const array<float, 273> &rh) {
+float energy_range_end(const std::array<float, 273> &rh) {
     return rh.at(17);
 }
-float number_of_observation_levels(const array<float, 273> &rh) {
+float number_of_observation_levels(const std::array<float, 273> &rh) {
     return rh.at(4);
 }
-float observation_level_at(const array<float, 273> &rh, const unsigned int i) {
+float observation_level_at(
+  const std::array<float, 273> &rh,
+  const unsigned int i
+) {
     return rh.at(5+i);
 }
 
 }  // namespace RunHeader
 
-float str2float(const string word) {
+float str2float(const std::string word) {
     if (word.size() != 4) {
-        stringstream info;
+        std::stringstream info;
         info << "corsika::" << __func__ << "()\n";
         info << "Expected word size: 4 chars, but actual: ";
         info << word.size() << " chars.\n";
@@ -138,10 +137,10 @@ float str2float(const string word) {
     return f;
 }
 
-string float2str(const float word_in_float) {
+std::string float2str(const float word_in_float) {
     char word_array[4];
     memcpy(&word_array, &word_in_float, sizeof(word_array));
-    string word;
+    std::string word;
     for (unsigned int i = 0; i < 4; i++)
         word += word_array[i];
     return word;

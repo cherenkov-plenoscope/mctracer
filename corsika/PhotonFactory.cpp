@@ -2,14 +2,12 @@
 #include "corsika/PhotonFactory.h"
 #include <sstream>
 #include "merlict/PhysicalConstants.h"
-using std::stringstream;
-using std::vector;
-using std::array;
+
 
 namespace merlict {
 
 EventIoPhotonFactory::EventIoPhotonFactory(
-    const array<float, 8> &_corsika_photon,
+    const std::array<float, 8> &_corsika_photon,
     const unsigned int _id,
     random::Generator *prng
 ):
@@ -19,7 +17,9 @@ EventIoPhotonFactory::EventIoPhotonFactory(
     check_once_if_passed_atmosphere(prng);
 }
 
-void EventIoPhotonFactory::check_once_if_passed_atmosphere(random::Generator *prng) {
+void EventIoPhotonFactory::check_once_if_passed_atmosphere(
+    random::Generator *prng
+) {
     _passed_atmosphere = prng->uniform() <= photon_survival_probability();
 }
 
@@ -142,7 +142,7 @@ void EventIoPhotonFactory::assert_photon_weight_is_between_zero_and_one()const {
     if (photon_survival_probability() < 0.0 ||
         photon_survival_probability() > 1.0
     ) {
-        stringstream info;
+        std::stringstream info;
         info << __FILE__ << " " << __LINE__ << "\n";
         info << "Expected photon weight w: 0.0 >= w >= 1.0, but actual ";
         info << "it is: " << photon_survival_probability() << "\n";
