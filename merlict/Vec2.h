@@ -30,9 +30,9 @@ struct Vec2 {
     std::string str()const;
 };
 
-const Vec2 VEC2_ORIGIN = Vec2(0.0, 0.0);
-const Vec2 VEC2_UNIT_X = Vec2(1.0, 0.0);
-const Vec2 VEC2_UNIT_Y = Vec2(0.0, 1.0);
+const Vec2 VEC2_ORIGIN = Vec2(0., 0.);
+const Vec2 VEC2_UNIT_X = Vec2(1., 0.);
+const Vec2 VEC2_UNIT_Y = Vec2(0., 1.);
 const double MAX_DEVIATION_EQUAL_VEC2 = 1e-7;
 
 }  // namespace merlict
