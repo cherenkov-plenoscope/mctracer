@@ -2,9 +2,7 @@
 #include "merlict/scenery/primitive/SphereCapWithRectangularBound.h"
 #include <sstream>
 #include <math.h>
-using std::string;
-using std::vector;
-using std::stringstream;
+
 
 namespace merlict {
 
@@ -44,7 +42,7 @@ std::string SphereCapWithRectangularBound::str()const {
 
 void SphereCapWithRectangularBound::calculate_intersection_with(
     const Ray* ray,
-    vector<Intersection> *intersections
+    std::vector<Intersection> *intersections
 )const {
     SphericalCapRayIntersectionEquation sphereCapRayEq(curvature_radius, ray);
     if (sphereCapRayEq.has_solutions()) {

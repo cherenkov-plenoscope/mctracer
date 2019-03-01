@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/scenery/geometry/SurfaceWithOuterPrismBound.h"
-using std::vector;
+
 
 namespace merlict {
 
@@ -8,7 +8,7 @@ void SurfaceWithOuterPrismBound::add_causeal_intersection(
         const TwoSolutionSurfaceRayEquation* eq,
         const PrismZ* outer_bound,
         const Ray *ray,
-        vector<Intersection> *intersections
+        std::vector<Intersection> *intersections
 )const {
     const Vec3 plus_intersec = ray->position_at(eq->get_plus_solution());
     const Vec3 minus_intersec = ray->position_at(eq->get_minus_solution());

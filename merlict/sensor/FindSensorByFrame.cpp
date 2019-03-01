@@ -1,16 +1,16 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/sensor/FindSensorByFrame.h"
 #include <algorithm>
-using std::vector;
+
 
 namespace merlict {
 namespace sensor {
 
 FindSensorByFrame::FindSensorByFrame(
     const Frame* final_frame,
-    const vector<Sensor*>* sensors_by_frame
+    const std::vector<Sensor*>* sensors_by_frame
 ) {
-    vector<sensor::Sensor*>::const_iterator it = std::upper_bound(
+    std::vector<sensor::Sensor*>::const_iterator it = std::upper_bound(
         sensors_by_frame->begin(),
         sensors_by_frame->end(),
         final_frame,

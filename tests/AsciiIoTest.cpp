@@ -2,9 +2,6 @@
 #include "catch.hpp"
 #include "merlict/merlict.h"
 namespace ml = merlict;
-using std::stringstream;
-using std::string;
-using std::vector;
 
 
 TEST_CASE("AsciiIoTest: read_non_existing_file", "[merlict]") {
@@ -89,12 +86,13 @@ TEST_CASE("AsciiIoTest: write_table", "[merlict]") {
 }
 
 TEST_CASE("AsciiIoTest: table_from_string_extra_new_line_in_the_end", "[merlict]") {
-    string text =   "266e-9\t0.03\n"
+    std::string text =   "266e-9\t0.03\n"
                     "277e-9\t0.1\n"
                     "283e-9\t0.2\n"
                     "300e-9\t0.254\n";
 
-    vector<vector<double>> table = ml::tsvio::gen_table_from_string(text);
+    std::vector<std::vector<double>> table = ml::tsvio::gen_table_from_string(
+        text);
 
     REQUIRE(4u == table.size());
     REQUIRE(2u == table.at(0).size());
@@ -116,12 +114,13 @@ TEST_CASE("AsciiIoTest: table_from_string_extra_new_line_in_the_end", "[merlict]
 }
 
 TEST_CASE("AsciiIoTest: table_from_string_", "[merlict]") {
-    string text =   "266e-9\t0.03\n"
+    std::string text =   "266e-9\t0.03\n"
                     " 277e-9 0.1\n"
                     "  283e-9  0.2\n"
                     "  \t 300e-9 \t 0.254 ";
 
-    vector<vector<double>> table = ml::tsvio::gen_table_from_string(text);
+    std::vector<std::vector<double>> table = ml::tsvio::gen_table_from_string(
+        text);
 
     REQUIRE(4u == table.size());
     REQUIRE(2u == table.at(0).size());

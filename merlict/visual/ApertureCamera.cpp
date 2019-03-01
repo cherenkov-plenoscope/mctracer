@@ -7,8 +7,7 @@
 #include "merlict/visual/Tracer.h"
 #include "merlict/random/random.h"
 #include "merlict/vitaliy_vitsentiy_thread_pool.h"
-using std::string;
-using std::stringstream;
+
 
 namespace merlict {
 namespace visual {
@@ -27,7 +26,7 @@ void ApertureCamera::set_fStop_sesnorWidth(
 
 void ApertureCamera::set_F_stop_number(const double new_FStopNumber) {
     if (new_FStopNumber <= 0.0) {
-        stringstream info;
+        std::stringstream info;
         info << "Expected F-Stop number to be greater zero, but actual it is ";
         info << new_FStopNumber << ".";
         throw std::invalid_argument(info.str());
@@ -37,7 +36,7 @@ void ApertureCamera::set_F_stop_number(const double new_FStopNumber) {
 
 void ApertureCamera::set_sensor_size_using_width(const double width_in_m) {
     if (width_in_m <= 0.0) {
-        stringstream info;
+        std::stringstream info;
         info << "Expected image sensor width to be greater zero, ";
         info << "but actual it is ";
         info << width_in_m << ".";
@@ -61,7 +60,7 @@ void ApertureCamera::set_default_object_distance() {
 
 void ApertureCamera::set_object_distance(const double ObjectDistance_in_m) {
     if (ObjectDistance_in_m <= 0.0) {
-        stringstream info;
+        std::stringstream info;
         info << "Expected object distance to focus on to be ";
         info << "greater zero, but actual it is ";
         info << ObjectDistance_in_m << ".";

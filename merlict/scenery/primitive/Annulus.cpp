@@ -2,9 +2,7 @@
 #include "merlict/scenery/primitive/Annulus.h"
 #include <math.h>
 #include <sstream>
-using std::string;
-using std::stringstream;
-using std::vector;
+
 
 namespace merlict {
 
@@ -21,8 +19,8 @@ void Annulus::post_initialize_radius_of_enclosing_sphere() {
     bounding_sphere_radius = outer_bound.get_radius();
 }
 
-string Annulus::str()const {
-    stringstream out;
+std::string Annulus::str()const {
+    std::stringstream out;
     out << SurfaceEntity::str();
     out << "Annulus:\n";
     out << "| Ri: " << inner_bound.get_radius() << "m, ";
@@ -39,7 +37,7 @@ double Annulus::get_area()const {
 
 void Annulus::calculate_intersection_with(
     const Ray* ray,
-    vector<Intersection> *intersections
+    std::vector<Intersection> *intersections
 )const {
     XyPlaneRayIntersectionEquation xyPlaneRayEquation(ray);
     if (xyPlaneRayEquation.has_causal_solution()) {

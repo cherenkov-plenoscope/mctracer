@@ -2,7 +2,7 @@
 #include "signal_processing/PipelinePhoton.h"
 #include <algorithm>
 #include "signal_processing/simulation_truth.h"
-using std::vector;
+
 
 namespace signal_processing {
 
@@ -22,16 +22,16 @@ PipelinePhoton::PipelinePhoton(
     simulation_truth_id(_simulation_truth_id)
 {}
 
-vector<vector<PipelinePhoton>> get_photon_pipelines(
+std::vector<std::vector<PipelinePhoton>> get_photon_pipelines(
     const merlict::sensor::Sensors* sensors
 ) {
-    vector<vector<PipelinePhoton>> photon_pipelines;
+    std::vector<std::vector<PipelinePhoton>> photon_pipelines;
     const unsigned int number_sensors = sensors->size();
     photon_pipelines.reserve(number_sensors);
 
     // for each sensor
     for (unsigned int i = 0; i < number_sensors; i++) {
-        vector<PipelinePhoton> photon_pipeline;
+        std::vector<PipelinePhoton> photon_pipeline;
         const unsigned int number_photons =
             sensors->by_occurence[i]->photon_arrival_history.size();
         photon_pipeline.reserve(number_photons);
@@ -56,7 +56,7 @@ vector<vector<PipelinePhoton>> get_photon_pipelines(
     return photon_pipelines;
 }
 
-void sort_photon_pipelines_arrival_time(vector<PipelinePhoton>* pipeline) {
+void sort_photon_pipelines_arrival_time(std::vector<PipelinePhoton>* pipeline) {
     std::sort(
         pipeline->begin(),
         pipeline->end(),

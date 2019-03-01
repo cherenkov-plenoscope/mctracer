@@ -17,10 +17,7 @@
 namespace fs = std::experimental::filesystem;
 namespace sp = signal_processing;
 namespace ml = merlict;
-using std::string;
-using std::vector;
-using std::array;
-using std::cout;
+
 
 static const char USAGE[] =
 R"(Plenoscope raw photon propagation
@@ -125,8 +122,9 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // load light field calibration result
-    vector<plenoscope::calibration::LixelStatistic> optics_calibration_result =
-        plenoscope::calibration::read(lixel_calib_path.path);
+    std::vector<plenoscope::calibration::LixelStatistic>
+        optics_calibration_result =
+            plenoscope::calibration::read(lixel_calib_path.path);
 
     // assert number os sub_pixel matches simulated plenoscope
     if (light_field_channels->size() != optics_calibration_result.size()) {
@@ -194,7 +192,7 @@ int main(int argc, char* argv[]) {
     // propagate photons
     unsigned int event_counter = 1;
     while (photon_file.has_still_photons_left()) {
-        vector<ml::Photon> photons;
+        std::vector<ml::Photon> photons;
         photons = photon_file.next(&prng);
 
         ml::Photons::propagate_photons_in_scenery_with_settings(
@@ -203,7 +201,7 @@ int main(int argc, char* argv[]) {
         light_field_channels->clear_history();
         light_field_channels->assign_photons(&photons);
 
-        vector<vector<sp::PipelinePhoton>> photon_pipelines =
+        std::vector<std::vector<sp::PipelinePhoton>> photon_pipelines =
             sp::get_photon_pipelines(light_field_channels);
 
         //-----------------------------
@@ -217,10 +215,10 @@ int main(int argc, char* argv[]) {
 
         //--------------------------
         // Photo Electric conversion
-        vector<vector<sp::ElectricPulse>> electric_pipelines;
+        std::vector<std::vector<sp::ElectricPulse>> electric_pipelines;
         electric_pipelines.reserve(photon_pipelines.size());
         for (
-            vector<sp::PipelinePhoton> ph_pipe :
+            std::vector<sp::PipelinePhoton> ph_pipe :
             photon_pipelines
         ) {
             electric_pipelines.push_back(

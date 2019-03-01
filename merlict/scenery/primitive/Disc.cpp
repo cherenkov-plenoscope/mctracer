@@ -2,9 +2,7 @@
 #include "merlict/scenery/primitive/Disc.h"
 #include <math.h>
 #include <sstream>
-using std::string;
-using std::vector;
-using std::stringstream;
+
 
 namespace merlict {
 
@@ -17,8 +15,8 @@ void Disc::post_initialize_radius_of_enclosing_sphere() {
     bounding_sphere_radius = cylinder_bounds.get_radius();
 }
 
-string Disc::str()const {
-    stringstream out;
+std::string Disc::str()const {
+    std::stringstream out;
     out << SurfaceEntity::str();
     out << "disc:\n";
     out << "| radius: " << cylinder_bounds.get_radius() << "m\n";
@@ -32,7 +30,7 @@ double Disc::get_area()const {
 
 void Disc::calculate_intersection_with(
     const Ray* ray,
-    vector<Intersection> *intersections
+    std::vector<Intersection> *intersections
 )const {
     XyPlaneRayIntersectionEquation xyPlaneRayEquation(ray);
     if (xyPlaneRayEquation.has_causal_solution()) {

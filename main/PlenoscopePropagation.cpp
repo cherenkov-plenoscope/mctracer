@@ -17,10 +17,7 @@
 namespace fs = std::experimental::filesystem;
 namespace sp = signal_processing;
 namespace ml = merlict;
-using std::string;
-using std::vector;
-using std::array;
-using std::cout;
+
 
 static const char USAGE[] =
 R"(Plenoscope air showher propagation
@@ -125,8 +122,9 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // load light field calibration result
-    vector<plenoscope::calibration::LixelStatistic> optics_calibration_result =
-        plenoscope::calibration::read(lixel_calib_path.path);
+    std::vector<plenoscope::calibration::LixelStatistic>
+        optics_calibration_result =
+            plenoscope::calibration::read(lixel_calib_path.path);
 
     // assert number os sub_pixel matches simulated plenoscope
     if (light_field_channels->size() != optics_calibration_result.size()) {
@@ -198,10 +196,10 @@ int main(int argc, char* argv[]) {
         // Cherenkov photons
         eventio::Event event = corsika_run.next_event();
 
-        vector<ml::Photon> photons;
+        std::vector<ml::Photon> photons;
         unsigned int photon_id = 0;
 
-        for (const array<float, 8> &corsika_photon : event.photons) {
+        for (const std::array<float, 8> &corsika_photon : event.photons) {
             ml::EventIoPhotonFactory cpf(corsika_photon, photon_id++, &prng);
             if (cpf.passed_atmosphere())
                 photons.push_back(cpf.get_photon());
@@ -213,7 +211,7 @@ int main(int argc, char* argv[]) {
         light_field_channels->clear_history();
         light_field_channels->assign_photons(&photons);
 
-        vector<vector<sp::PipelinePhoton>> photon_pipelines =
+        std::vector<std::vector<sp::PipelinePhoton>> photon_pipelines =
             sp::get_photon_pipelines(light_field_channels);
 
         //-----------------------------
@@ -227,10 +225,10 @@ int main(int argc, char* argv[]) {
 
         //--------------------------
         // Photo Electric conversion
-        vector<vector<sp::ElectricPulse>> electric_pipelines;
+        std::vector<std::vector<sp::ElectricPulse>> electric_pipelines;
         electric_pipelines.reserve(photon_pipelines.size());
         for (
-            vector<sp::PipelinePhoton> ph_pipe :
+            std::vector<sp::PipelinePhoton> ph_pipe :
             photon_pipelines
         ) {
             electric_pipelines.push_back(
@@ -313,12 +311,12 @@ plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
                     "air_shower_photon_bunches.bin"));
         }
 
-        cout << "event " << event_counter << ", ";
-        cout << "PRMPAR ";
-        cout << corsika::EventHeader::particle_id(event.header.raw) << ", ";
-        cout << "E ";
-        cout << corsika::EventHeader::total_energy_in_GeV(event.header.raw);
-        cout << " GeV\n";
+        std::cout << "event " << event_counter << ", ";
+        std::cout << "PRMPAR ";
+        std::cout << corsika::EventHeader::particle_id(event.header.raw) << ", ";
+        std::cout << "E ";
+        std::cout << corsika::EventHeader::total_energy_in_GeV(event.header.raw);
+        std::cout << " GeV\n";
         event_counter++;
     }
     } catch (std::exception &error) {

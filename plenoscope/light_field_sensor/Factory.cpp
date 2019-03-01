@@ -4,8 +4,6 @@
 #include <vector>
 #include "merlict/merlict.h"
 namespace ml = merlict;
-using std::vector;
-using std::string;
 
 
 namespace plenoscope {
@@ -22,7 +20,7 @@ void Factory::add_lens_array(ml::Frame* frame) {
 
     ml::Frame* lens_array = frame->append<ml::Frame>();
     lens_array->set_name_pos_rot("lens_array", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
-    vector<ml::Vec3> pixel_positions = geometry->pixel_positions();
+    std::vector<ml::Vec3> pixel_positions = geometry->pixel_positions();
 
     for (unsigned int i = 0; i < pixel_positions.size(); i++) {
         ml::BiConvexLensHexBound* lens =
@@ -47,7 +45,8 @@ void Factory::add_pixel_bin_array(ml::Frame* frame) {
         ml::Vec3(0.0, 0.0, geometry->pixel_plane_to_paxel_plane_distance()),
         ml::ROT3_UNITY);
 
-    vector<ml::Vec3> flower_positions = geometry->paxel_grid_center_positions();
+    std::vector<ml::Vec3> flower_positions =
+        geometry->paxel_grid_center_positions();
     scenery->colors.add("bin_wall_green", ml::COLOR_GREEN);
 
     for (unsigned int i = 0; i < flower_positions.size(); i++) {
@@ -60,7 +59,7 @@ void Factory::add_pixel_bin_array(ml::Frame* frame) {
 
 void Factory::add_pixel_bin_with_name_at_pos(
     ml::Frame* frame,
-    const string name,
+    const std::string name,
     const ml::Vec3 pos
 ) {
     const ml::Color* green = scenery->colors.get("bin_wall_green");
@@ -99,7 +98,7 @@ void Factory::add_light_field_sensor_frontplate(ml::Frame* frame) {
         geometry->pixel_lens_outer_aperture_radius(),
         geometry->pixel_spacing());
 
-    vector<ml::Vec3> face_plate_positions = face_plate_grid.get_grid();
+    std::vector<ml::Vec3> face_plate_positions = face_plate_grid.get_grid();
     ml::Frame* face_plate = frame->append<ml::Frame>();
     face_plate->set_name_pos_rot("face_plate", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
@@ -135,9 +134,9 @@ void Factory::add_lixel_sensor_plane(ml::Frame* frame) {
         ml::Vec3(0.0, 0.0, geometry->pixel_plane_to_paxel_plane_distance()),
         ml::ROT3_UNITY);
 
-    const vector<ml::Vec3> &lixel_positions = geometry->lixel_positions();
+    const std::vector<ml::Vec3> &lixel_positions = geometry->lixel_positions();
 
-    vector<ml::sensor::Sensor*> sub_pixels;
+    std::vector<ml::sensor::Sensor*> sub_pixels;
     sub_pixels.reserve(lixel_positions.size());
 
     for (unsigned int i = 0; i < lixel_positions.size(); i++) {
@@ -252,10 +251,10 @@ void Factory::add_demonstration_light_field_sensor_to_frame_in_scenery(
         ml::Vec3(0.0, 0.0, geometry->pixel_plane_to_paxel_plane_distance()),
         ml::ROT3_UNITY);
 
-    const vector<ml::Vec3> lixel_positions =
+    const std::vector<ml::Vec3> lixel_positions =
         geometry->paxel_per_pixel_template_grid;
 
-    vector<ml::sensor::Sensor*> sub_pixels;
+    std::vector<ml::sensor::Sensor*> sub_pixels;
     sub_pixels.reserve(geometry->paxel_per_pixel_template_grid.size());
 
     for (unsigned int i = 0; i < lixel_positions.size(); i++) {

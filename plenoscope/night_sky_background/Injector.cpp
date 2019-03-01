@@ -3,15 +3,15 @@
 #include <limits>
 #include "merlict/merlict.h"
 namespace ml = merlict;
-using std::vector;
+
 
 namespace plenoscope {
 namespace night_sky_background {
 
 void inject_nsb_into_photon_pipeline(
-    vector<vector<signal_processing::PipelinePhoton>> *photon_pipelines,
+    std::vector<std::vector<signal_processing::PipelinePhoton>> *photon_pipelines,
     const double nsb_exposure_time,
-    const vector<plenoscope::calibration::LixelStatistic> *lixel_statistics,
+    const std::vector<calibration::LixelStatistic> *lixel_statistics,
     const Light *nsb,
     ml::random::Generator* prng
 ) {
@@ -21,7 +21,7 @@ void inject_nsb_into_photon_pipeline(
     // FIND MIN MAX ARRIVAL TIMES OF CHERENKOV PHOTONS
 
     unsigned int number_cherenkov_photons = 0;
-    vector<double> arrival_times;
+    std::vector<double> arrival_times;
     double min_crk_arrival_time = std::numeric_limits<double>::max();
     double max_crk_arrival_time = std::numeric_limits<double>::min();
 
@@ -51,7 +51,7 @@ void inject_nsb_into_photon_pipeline(
         mode_of_cherenkov_arrival_times = 0.0;
     } else {
         const unsigned int bin_edge_count = 2u + sqrt(number_cherenkov_photons);
-        vector<double> arrival_time_bin_edges = ml::numeric::linspace(
+        std::vector<double> arrival_time_bin_edges = ml::numeric::linspace(
             min_crk_arrival_time,
             max_crk_arrival_time,
             bin_edge_count);
@@ -71,7 +71,7 @@ void inject_nsb_into_photon_pipeline(
             lixel_statistics->at(i).efficiency/
             nsb->sensor_geometry->number_of_lixel();
 
-        vector<double> nsb_arrival_times;
+        std::vector<double> nsb_arrival_times;
         double relative_arrival_times_sum = prng->expovariate(lixel_nsb_rate);
         while (relative_arrival_times_sum < nsb_exposure_time) {
             const double time_until_next_photon =

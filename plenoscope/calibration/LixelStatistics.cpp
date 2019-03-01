@@ -2,8 +2,7 @@
 #include "plenoscope/calibration/LixelStatistics.h"
 #include <sstream>
 #include <fstream>
-using std::vector;
-using std::string;
+
 
 namespace plenoscope {
 namespace calibration {
@@ -17,7 +16,10 @@ LixelStatistic::LixelStatistic():
     time_delay_mean(0.0), time_delay_std(0.0)
 {}
 
-void write(const vector<LixelStatistic> &lixel_statistics, const string &path) {
+void write(
+    const std::vector<LixelStatistic> &lixel_statistics,
+    const std::string &path
+) {
     std::ofstream file;
     file.open(path, std::ios::out | std::ios::binary);
     if (!file.is_open()) {
@@ -32,7 +34,7 @@ void write(const vector<LixelStatistic> &lixel_statistics, const string &path) {
     file.close();
 }
 
-vector<LixelStatistic> read(const string &path) {
+std::vector<LixelStatistic> read(const std::string &path) {
     std::ifstream file;
     file.open(path, std::ios::binary);
     if (!file.is_open()) {
@@ -42,7 +44,7 @@ vector<LixelStatistic> read(const string &path) {
         throw std::runtime_error(info.str());
     }
 
-    vector<LixelStatistic> lixel_statistics;
+    std::vector<LixelStatistic> lixel_statistics;
     while (true) {
         LixelStatistic lixel;
         file.read((char*)&lixel, sizeof(LixelStatistic));

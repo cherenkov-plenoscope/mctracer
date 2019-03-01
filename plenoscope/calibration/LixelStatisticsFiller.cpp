@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "plenoscope/calibration/LixelStatisticsFiller.h"
 #include <math.h>
-using std::vector;
+
 
 namespace plenoscope {
 namespace calibration {
@@ -20,7 +20,7 @@ LixelStatisticsFiller::LixelStatisticsFiller(
 }
 
 void LixelStatisticsFiller::fill_in_block(
-    const vector<CalibrationPhotonResult> &calib_block
+    const std::vector<CalibrationPhotonResult> &calib_block
 ) {
     for (CalibrationPhotonResult result : calib_block) {
         if (result.reached_sensor == true) {
@@ -51,10 +51,10 @@ double LixelStatisticsFiller::min_arrival_time_mean()const {
     return minimal_time_mean;
 }
 
-vector<LixelStatistic> LixelStatisticsFiller::get_lixel_statistics()const {
+std::vector<LixelStatistic> LixelStatisticsFiller::get_lixel_statistics()const {
     const double minimal_arrival_time = min_arrival_time_mean();
 
-    vector<LixelStatistic> lixel_statistics;
+    std::vector<LixelStatistic> lixel_statistics;
     lixel_statistics.reserve(lixel_stats.size());
 
     for (const OnlineLixelStatistics &lixel : lixel_stats) {

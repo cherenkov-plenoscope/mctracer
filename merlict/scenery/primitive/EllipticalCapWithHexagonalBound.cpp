@@ -2,9 +2,7 @@
 #include "merlict/scenery/primitive/EllipticalCapWithHexagonalBound.h"
 #include <math.h>
 #include <sstream>
-using std::string;
-using std::stringstream;
-using std::vector;
+
 
 namespace merlict {
 
@@ -67,7 +65,7 @@ std::string EllipticalCapWithHexagonalBound::str()const {
 
 void EllipticalCapWithHexagonalBound::calculate_intersection_with(
     const Ray* ray,
-    vector<Intersection> *intersections
+    std::vector<Intersection> *intersections
 )const {
     EllipticalCapRayIntersectionEquation ellipCapRayEq(
         X_curvature_radius, Y_curvature_radius, Z_curvature_radius,

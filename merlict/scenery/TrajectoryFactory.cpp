@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/scenery/TrajectoryFactory.h"
 #include <sstream>
-using std::string;
+
 
 namespace merlict {
 

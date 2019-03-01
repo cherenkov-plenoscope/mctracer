@@ -2,34 +2,33 @@
 #include "merlict/sensor/PhotonArrivals.h"
 #include <math.h>
 #include <sstream>
-using std::vector;
-using std::string;
+
 
 namespace merlict {
 namespace sensor {
 
-double arrival_time_mean(const vector<PhotonArrival>& arrivals) {
+double arrival_time_mean(const std::vector<PhotonArrival>& arrivals) {
     double t = 0.0;
     for (PhotonArrival ph : arrivals)
         t += ph.arrival_time;
     return t/arrivals.size();
 }
 
-double x_mean(const vector<PhotonArrival>& arrivals) {
+double x_mean(const std::vector<PhotonArrival>& arrivals) {
     double xm = 0.0;
     for (PhotonArrival ph : arrivals)
         xm += ph.x_intersect;
     return xm/arrivals.size();
 }
 
-double y_mean(const vector<PhotonArrival>& arrivals) {
+double y_mean(const std::vector<PhotonArrival>& arrivals) {
     double ym = 0.0;
     for (PhotonArrival ph : arrivals)
         ym += ph.y_intersect;
     return ym/arrivals.size();
 }
 
-double x_std_dev(const vector<PhotonArrival>& arrivals) {
+double x_std_dev(const std::vector<PhotonArrival>& arrivals) {
     double xm = x_mean(arrivals);
     double sx = 0.0;
     for (PhotonArrival ph : arrivals)
@@ -37,7 +36,7 @@ double x_std_dev(const vector<PhotonArrival>& arrivals) {
     return sqrt(sx/arrivals.size());
 }
 
-double y_std_dev(const vector<PhotonArrival>& arrivals) {
+double y_std_dev(const std::vector<PhotonArrival>& arrivals) {
     double ym = y_mean(arrivals);
     double sy = 0.0;
     for (PhotonArrival ph : arrivals)
@@ -45,16 +44,16 @@ double y_std_dev(const vector<PhotonArrival>& arrivals) {
     return sqrt(sy/arrivals.size());
 }
 
-double point_spread_std_dev(const vector<PhotonArrival>& arrivals) {
+double point_spread_std_dev(const std::vector<PhotonArrival>& arrivals) {
     return hypot(x_std_dev(arrivals), y_std_dev(arrivals));
 }
 
-vector<vector<double>> history_to_table(
-    const vector<PhotonArrival>& arrivals
+std::vector<std::vector<double>> history_to_table(
+    const std::vector<PhotonArrival>& arrivals
 ) {
-    vector<vector<double>> output_table;
+    std::vector<std::vector<double>> output_table;
     for (PhotonArrival ph : arrivals) {
-        vector<double> output_row;
+        std::vector<double> output_row;
         output_row.push_back(ph.x_intersect);
         output_row.push_back(ph.y_intersect);
         output_row.push_back(ph.theta_x);
@@ -67,7 +66,7 @@ vector<vector<double>> history_to_table(
     return output_table;
 }
 
-string arrival_table_header() {
+std::string arrival_table_header() {
     std::stringstream header;
     header << "x intersection [m]\n";
     header << "y intersection [m]\n";

@@ -4,7 +4,7 @@
 #include <sstream>
 #include "merlict/merlict.h"
 namespace ml = merlict;
-using std::vector;
+
 
 namespace signal_processing {
 namespace PhotoElectricConverter {
@@ -28,12 +28,12 @@ Converter::Converter(const Config* config) {
     }
 }
 
-vector<ElectricPulse> Converter::get_pulse_pipeline_for_photon_pipeline(
-    const vector<PipelinePhoton> &photon_pipeline,
+std::vector<ElectricPulse> Converter::get_pulse_pipeline_for_photon_pipeline(
+    const std::vector<PipelinePhoton> &photon_pipeline,
     const double exposure_time,
     ml::random::Generator* prng
 ) {
-    vector<ElectricPulse> electric_pipeline;
+    std::vector<ElectricPulse> electric_pipeline;
     for (const PipelinePhoton &ph : photon_pipeline) {
         if (
             config->quantum_efficiency_vs_wavelength->evaluate(ph.wavelength) >=
@@ -51,7 +51,7 @@ vector<ElectricPulse> Converter::get_pulse_pipeline_for_photon_pipeline(
 
 void Converter::add_pulse(
     const ElectricPulse &pulse,
-    vector<ElectricPulse> *electric_pipeline,
+    std::vector<ElectricPulse> *electric_pipeline,
     ml::random::Generator* prng
 )const {
     electric_pipeline->push_back(pulse);
@@ -65,7 +65,7 @@ void Converter::add_pulse(
 }
 
 void Converter::add_accidental_pulse(
-    vector<ElectricPulse> *electric_pipeline,
+    std::vector<ElectricPulse> *electric_pipeline,
     const double exposure_time,
     ml::random::Generator* prng
 )const {

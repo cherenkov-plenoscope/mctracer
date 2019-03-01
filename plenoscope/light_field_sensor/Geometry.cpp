@@ -9,10 +9,7 @@
 #include "merlict/scenery/geometry/lens_maker.h"
 #include "corsika/corsika.h"
 namespace ml = merlict;
-using std::vector;
-using std::array;
-using std::string;
-using std::stringstream;
+
 
 namespace plenoscope {
 namespace light_field_sensor {
@@ -148,7 +145,8 @@ std::vector<ml::Vec3> Geometry::pixel_positions()const {
     return pixel_grid;
 }
 
-vector<vector<unsigned int>> Geometry::pixel_neighbor_relations()const {
+std::vector<std::vector<unsigned int>>
+Geometry::pixel_neighbor_relations()const {
     return pixel_neighborhood;
 }
 
@@ -156,7 +154,7 @@ const std::vector<ml::Vec3>& Geometry::lixel_positions()const {
     return lixel_grid;
 }
 
-vector<vector<unsigned int>> Geometry::paxel_neighbor_relations()const {
+std::vector<std::vector<unsigned int>> Geometry::paxel_neighbor_relations()const {
     return paxel_neighborhood;
 }
 
@@ -200,7 +198,7 @@ double Geometry::expected_imaging_system_max_aperture_radius()const {
     return config.expected_imaging_system_max_aperture_radius;
 }
 
-void Geometry::write_lixel_positions(const string &path)const {
+void Geometry::write_lixel_positions(const std::string &path)const {
     std::ofstream file;
     file.open(path, std::ios::out | std::ios::binary);
     if (!file.is_open()) {
@@ -221,8 +219,8 @@ void Geometry::write_lixel_positions(const string &path)const {
     file.close();
 }
 
-array<float, 273> Geometry::get_info_header()const {
-    array<float, 273> header;
+std::array<float, 273> Geometry::get_info_header()const {
+    std::array<float, 273> header;
     for (unsigned int i = 0; i < header.size(); i++) header[i]=0.0;
 
     header[  1-1] = corsika::str2float("PLGH");
@@ -274,12 +272,12 @@ array<float, 273> Geometry::get_info_header()const {
     return header;
 }
 
-void Geometry::write_info_header(const string &path)const {
+void Geometry::write_info_header(const std::string &path)const {
     merlict::write_text_to_file(str(), path);
 }
 
-string Geometry::str()const {
-    stringstream tab;
+std::string Geometry::str()const {
+    std::stringstream tab;
     tab << "__Light_Field_Sensor__\n";
     tab << " Field of View................. ";
     tab << ml::rad2deg(config.max_FoV_diameter) << "deg\n";

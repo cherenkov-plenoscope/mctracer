@@ -5,7 +5,6 @@
 #include "eventio.h"
 #include "merlict/merlict.h"
 namespace ml = merlict;
-using std::vector;
 
 
 TEST_CASE("EventIoPhotonFactoryTest: intersection_point_on_ground", "[merlict]") {
@@ -29,7 +28,7 @@ TEST_CASE("EventIoPhotonFactoryTest: intersection_point_on_ground", "[merlict]")
                         id,
                         &fake_prng);
 
-                    vector<ml::Photon> photons;
+                    std::vector<ml::Photon> photons;
                     photons.push_back(cpf.get_photon());
 
                     // propagate merlict photons down to ground
@@ -51,7 +50,7 @@ TEST_CASE("EventIoPhotonFactoryTest: intersection_point_on_ground", "[merlict]")
                     ground->set_radius(1e3);
 
                     ml::sensor::Sensor sensor(ground_sensor_id, ground);
-                    vector<ml::sensor::Sensor*> sensor_vec = {&sensor};
+                    std::vector<ml::sensor::Sensor*> sensor_vec = {&sensor};
                     ml::sensor::Sensors sensor_list(sensor_vec);
 
                     world.init_tree_based_on_mother_child_relations();
@@ -229,9 +228,9 @@ TEST_CASE("EventIoPhotonFactoryTest: correct_rel_time_when_intersecting_ground",
         */
         eventio::Event event = corsika_file.next_event();
 
-        vector<float> relative_arrival_times_in_corsika_file;
+        std::vector<float> relative_arrival_times_in_corsika_file;
 
-        vector<ml::Photon> photons;
+        std::vector<ml::Photon> photons;
 
         ml::random::Mt19937 prng(0u);
 

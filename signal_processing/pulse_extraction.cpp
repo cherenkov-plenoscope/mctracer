@@ -2,17 +2,17 @@
 #include <math.h>
 #include "signal_processing/pulse_extraction.h"
 #include "merlict/merlict.h"
-using std::vector;
+
 
 namespace signal_processing {
 
-vector<ExtractedPulse> extract_pulses(
-    const vector<ElectricPulse> &electric_pulses,
+std::vector<ExtractedPulse> extract_pulses(
+    const std::vector<ElectricPulse> &electric_pulses,
     const double time_slice_duration,
     const double arrival_time_std,
     merlict::random::Generator* prng
 ) {
-    vector<ExtractedPulse> channel;
+    std::vector<ExtractedPulse> channel;
     channel.reserve(electric_pulses.size());
     for (uint32_t p = 0; p < electric_pulses.size(); p++) {
         const double true_arrival_time = electric_pulses.at(p).arrival_time;
@@ -30,13 +30,13 @@ vector<ExtractedPulse> extract_pulses(
     return channel;
 }
 
-vector<vector<ExtractedPulse>> extract_pulses(
-    const vector<vector<ElectricPulse>> &electric_pulses,
+std::vector<std::vector<ExtractedPulse>> extract_pulses(
+    const std::vector<std::vector<ElectricPulse>> &electric_pulses,
     const double time_slice_duration,
     const double arrival_time_std,
     merlict::random::Generator* prng
 ) {
-    vector<vector<ExtractedPulse>> channels;
+    std::vector<std::vector<ExtractedPulse>> channels;
     channels.reserve(electric_pulses.size());
     for (uint32_t channel = 0; channel < electric_pulses.size(); channel++) {
         channels.emplace_back(

@@ -2,8 +2,7 @@
 #include "merlict/sensor/Sensor.h"
 #include <math.h>
 #include <sstream>
-using std::vector;
-using std::string;
+
 
 namespace merlict {
 namespace sensor {

@@ -1,8 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/scenery/segmented_imaging_reflector/Factory.h"
 #include "merlict/scenery/primitive/SphereCapWithHexagonalBound.h"
-using std::vector;
-using std::string;
+
 
 namespace merlict {
 namespace segmented_imaging_reflector {
@@ -13,7 +12,7 @@ Factory::Factory(const Config ncfg):
 {}
 
 void Factory::add_to_SurfaceEntity(SurfaceEntity* reflector) {
-    vector<Vec3> facet_positions = geometry.facet_positions();
+    std::vector<Vec3> facet_positions = geometry.facet_positions();
     for (unsigned int i = 0; i < facet_positions.size(); i++) {
         SphereCapWithHexagonalBound* facet =
             reflector->append<SphereCapWithHexagonalBound>();

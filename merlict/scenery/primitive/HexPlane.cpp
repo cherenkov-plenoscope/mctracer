@@ -4,9 +4,6 @@
 #include "merlict/Ray.h"
 #include "merlict/Intersection.h"
 
-using std::vector;
-using std::string;
-using std::stringstream;
 
 namespace merlict {
 
@@ -19,8 +16,8 @@ void HexPlane::post_initialize_radius_of_enclosing_sphere() {
     bounding_sphere_radius = hex_bounds.get_outer_radius();
 }
 
-string HexPlane::str()const {
-    stringstream out;
+std::string HexPlane::str()const {
+    std::stringstream out;
     out << SurfaceEntity::str();
     out << "hexagonal plane:\n";
     out << "| outer radius: " << hex_bounds.get_outer_radius() << "m\n";
@@ -30,7 +27,7 @@ string HexPlane::str()const {
 
 void HexPlane::calculate_intersection_with(
     const Ray* ray,
-    vector<Intersection> *intersections
+    std::vector<Intersection> *intersections
 )const {
     XyPlaneRayIntersectionEquation xyPlaneRayEquation(ray);
     if (xyPlaneRayEquation.has_causal_solution()) {

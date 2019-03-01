@@ -2,9 +2,7 @@
 #include "merlict/scenery/primitive/SphereCapWithCylinderBound.h"
 #include <math.h>
 #include <sstream>
-using std::string;
-using std::vector;
-using std::stringstream;
+
 
 namespace merlict {
 
@@ -49,7 +47,7 @@ std::string SphereCapWithCylinderBound::str()const {
 
 void SphereCapWithCylinderBound::calculate_intersection_with(
     const Ray* ray,
-    vector<Intersection> *intersections
+    std::vector<Intersection> *intersections
 )const {
     SphericalCapRayIntersectionEquation sphereCapRayEq(curvature_radius, ray);
     if (sphereCapRayEq.has_solutions()) {

@@ -1,9 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/scenery/primitive/PlaneDualSphericalBound.h"
 #include <sstream>
-using std::string;
-using std::vector;
-using std::stringstream;
+
 
 namespace merlict {
 
@@ -37,7 +35,7 @@ std::string PlaneDualSphericalBound::str()const {
 
 void PlaneDualSphericalBound::calculate_intersection_with(
     const Ray* ray,
-    vector<Intersection> *intersections
+    std::vector<Intersection> *intersections
 )const {
     XyPlaneRayIntersectionEquation xyPlaneRayEquation(ray);
     if (xyPlaneRayEquation.has_causal_solution()) {

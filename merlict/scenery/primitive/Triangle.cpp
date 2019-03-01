@@ -2,9 +2,7 @@
 #include "merlict/scenery/primitive/Triangle.h"
 #include <algorithm>
 #include <sstream>
-using std::string;
-using std::stringstream;
-using std::vector;
+
 
 namespace merlict {
 
@@ -108,7 +106,7 @@ bool Triangle::is_inside_triangle(const Vec3 &intersec_vec)const {
 
 void Triangle::calculate_intersection_with(
     const Ray* ray,
-    vector<Intersection> *intersections
+    std::vector<Intersection> *intersections
 )const {
     XyPlaneRayIntersectionEquation xyPlaneRayEquation(ray);
     if (xyPlaneRayEquation.has_causal_solution()) {

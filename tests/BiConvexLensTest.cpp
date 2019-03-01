@@ -5,7 +5,6 @@
 #include <iostream>
 #include "viewer/FlyingCamera.h"
 namespace ml = merlict;
-using std::vector;
 
 
 struct BiConvexLensTest {
@@ -111,7 +110,7 @@ TEST_CASE("BiConvexLensTest: send_photons_frontal_into_lens_with_offset", "[merl
     // light source
     unsigned int number_of_photons_emitted = 1e4;
     ml::random::Mt19937 prng(0);
-    vector<ml::Photon> photons =
+    std::vector<ml::Photon> photons =
         ml::Photons::Source::parallel_towards_z_from_xy_disc(
             0.125,
             number_of_photons_emitted,

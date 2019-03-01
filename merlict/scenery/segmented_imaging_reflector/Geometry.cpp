@@ -7,9 +7,6 @@
 #include "merlict/merlict.h"
 #include "merlict/HomTra3.h"
 
-using std::vector;
-using std::string;
-using std::stringstream;
 
 namespace merlict {
 namespace segmented_imaging_reflector {
@@ -62,7 +59,7 @@ void Geometry::abort_if_too_many_iterations(
     const unsigned int iteration_conter
 ) {
     if (iteration_conter > 100) {
-        stringstream info;
+        std::stringstream info;
         info << __FILE__ << ", " << __LINE__<< "\n";
         info << "Exceeded max number of 100 iterations. ";
         info << "Can not reach best reflector z position. ";
@@ -154,7 +151,7 @@ Vec3 Geometry::focal_point()const {
     return _focal_point;
 }
 
-vector<Vec3> Geometry::facet_positions()const {
+std::vector<Vec3> Geometry::facet_positions()const {
     return _facet_positions;
 }
 
@@ -204,11 +201,11 @@ double Geometry::thickness_of_dish()const {
     return z_pos_given_dist_to_optical_axis(max_outer_aperture_radius());
 }
 
-string Geometry::str()const {
-    stringstream out;
+std::string Geometry::str()const {
+    std::stringstream out;
     out << std::setprecision(4);
     out << "Segmented_Reflector__\n";
-    stringstream tab;
+    std::stringstream tab;
     tab << "focal length................... " << focal_length() << "m\n";
     tab << "focal point.................... " << focal_point().str() << "\n";
     tab << "max outer aperture diameter.... ";
@@ -239,8 +236,8 @@ string Geometry::str()const {
     return out.str();
 }
 
-string Geometry::facet_positions_and_normals_to_text()const {
-    stringstream out;
+std::string Geometry::facet_positions_and_normals_to_text()const {
+    std::stringstream out;
     out << "x[m] " << "y[m] " << "z[m] " << "nx[1] " << "ny[1] " << "nz[1]\n";
     for (unsigned int i = 0; i < _facet_positions.size(); i++) {
         HomTra3 trafo;

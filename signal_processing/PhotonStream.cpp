@@ -6,8 +6,7 @@
 #include "signal_processing/pulse_extraction.h"
 #include "merlict/merlict.h"
 namespace ml = merlict;
-using std::vector;
-using std::string;
+
 
 namespace signal_processing {
 namespace PhotonStream {
@@ -17,9 +16,9 @@ Stream::Stream() {
 }
 
 void write(
-    const vector<vector<ExtractedPulse>> &channels,
+    const std::vector<std::vector<ExtractedPulse>> &channels,
     const float time_slice_duration,
-    const string path
+    const std::string path
 ) {
     const uint32_t number_channels = channels.size();
     const uint32_t number_symbols = number_symbols_to_represent(channels);
@@ -64,8 +63,8 @@ void write(
 }
 
 void write_simulation_truth(
-    const vector<vector<ExtractedPulse>> &channels,
-    const string path
+    const std::vector<std::vector<ExtractedPulse>> &channels,
+    const std::string path
 ) {
     std::ofstream file;
     file.open(path, std::ios::binary);
@@ -87,7 +86,7 @@ void write_simulation_truth(
     file.close();
 }
 
-Stream read(const string path) {
+Stream read(const std::string path) {
     Stream stream;
 
     std::ifstream file;
@@ -112,7 +111,7 @@ Stream read(const string path) {
     uint32_t number_symbols = ml::binio::read_uint32(file);
 
     if (number_symbols > 0) {
-        vector<ExtractedPulse> first_channel;
+        std::vector<ExtractedPulse> first_channel;
         stream.photon_stream.push_back(first_channel);
     }
 
@@ -122,7 +121,7 @@ Stream read(const string path) {
         if (symbol == NEXT_CHANNEL_MARKER) {
             channel++;
             if (i < number_symbols) {
-                vector<ExtractedPulse> next_channel;
+                std::vector<ExtractedPulse> next_channel;
                 stream.photon_stream.push_back(next_channel);
             }
         } else {
@@ -137,7 +136,10 @@ Stream read(const string path) {
     return stream;
 }
 
-Stream read_with_simulation_truth(const string path, const string truth_path) {
+Stream read_with_simulation_truth(
+    const std::string path,
+    const std::string truth_path
+) {
     Stream stream = read(path);
 
     std::ifstream file;
@@ -168,7 +170,7 @@ Stream read_with_simulation_truth(const string path, const string truth_path) {
 }
 
 uint64_t number_pulses(
-    const vector<vector<ExtractedPulse>> &raw
+    const std::vector<std::vector<ExtractedPulse>> &raw
 ) {
     uint64_t number_pulses = 0;
     for (uint64_t channel = 0; channel < raw.size(); channel++)
@@ -177,7 +179,7 @@ uint64_t number_pulses(
 }
 
 uint64_t number_symbols_to_represent(
-    const vector<vector<ExtractedPulse>> &raw
+    const std::vector<std::vector<ExtractedPulse>> &raw
 ) {
     uint64_t number_pulses_plus_number_channels =
         number_pulses(raw) + raw.size();

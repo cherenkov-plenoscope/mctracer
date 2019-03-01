@@ -5,20 +5,17 @@
 #include "merlict/Ray.h"
 #include "merlict/Intersection.h"
 
-using std::string;
-using std::stringstream;
-using std::vector;
 
 namespace merlict {
 
 Sphere::Sphere() {}
 
-Sphere::Sphere(const string name, const Vec3 pos, const Rot3 rot):
+Sphere::Sphere(const std::string name, const Vec3 pos, const Rot3 rot):
     SurfaceEntity(name, pos, rot) {}
 
 void Sphere::set_radius(double new_radius) {
     if (new_radius <= 0.0) {
-        stringstream info;
+        std::stringstream info;
         info << "Expected sphere radius to be greater 0.0, but actual ";
         info << "r = " << new_radius << "m.";
         throw BadRadius(info.str());
@@ -27,8 +24,8 @@ void Sphere::set_radius(double new_radius) {
     bounding_sphere_radius = new_radius;
 }
 
-string Sphere::str()const {
-    stringstream out;
+std::string Sphere::str()const {
+    std::stringstream out;
     out << SurfaceEntity::str();
     out << "sphere:\n";
     out << "| radius: " << radius << "m\n";
@@ -76,7 +73,7 @@ QuadraticEquation Sphere::
 void Sphere::add_sphere_intersection_for_ray_parameter(
     const Ray* ray,
     const double ray_parameter,
-    vector<Intersection> *intersections
+    std::vector<Intersection> *intersections
 )const {
     Vec3 intersection_point = ray->position_at(ray_parameter);
     Vec3 surface_normal = intersection_point/intersection_point.norm();
@@ -92,7 +89,7 @@ void Sphere::add_sphere_intersection_for_ray_parameter(
 
 void Sphere::calculate_intersection_with(
     const Ray* ray,
-    vector<Intersection> *intersections
+    std::vector<Intersection> *intersections
 )const {
     QuadraticEquation rayParamEqForIntersections =
         get_ray_parameter_equation_for_intersections_with_sphere(ray);

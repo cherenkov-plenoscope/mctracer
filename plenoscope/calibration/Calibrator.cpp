@@ -11,8 +11,7 @@
 #include "plenoscope/night_sky_background/NightSkyBackground.h"
 #include "corsika/block.h"
 namespace ml = merlict;
-using std::vector;
-using std::cout;
+
 
 namespace plenoscope {
 namespace calibration {
@@ -147,17 +146,17 @@ void run_calibration(
         &cal.plenoscope->light_field_sensor_geometry,
         &cal.config);
 
-    cout << "Plenoscope Calibrator: propagating ";
-    cout << double(cal.num_photons)/1.0e6 << "e6 photons\n";
+    std::cout << "Plenoscope Calibrator: propagating ";
+    std::cout << double(cal.num_photons)/1.0e6 << "e6 photons\n";
 
     for (uint64_t block = 0; block < cal.config.number_of_blocks; block++) {
-        cout << block + 1 << " of " << cal.config.number_of_blocks << "\n";
+        std::cout << block + 1 << " of " << cal.config.number_of_blocks << "\n";
         fill_another_block(
             cal,
             &lixel_statistics_filler,
             prng);
     }
-    vector<LixelStatistic> lixel_statistics =
+    std::vector<LixelStatistic> lixel_statistics =
         lixel_statistics_filler.get_lixel_statistics();
     write(lixel_statistics, path);
 }

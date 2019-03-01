@@ -2,15 +2,13 @@
 #include "merlict/scenery/primitive/Plane.h"
 #include <math.h>
 #include <sstream>
-using std::string;
-using std::vector;
-using std::stringstream;
+
 
 namespace merlict {
 
 Plane::Plane() {}
 
-Plane::Plane(const string name, const Vec3 pos, const Rot3 rot):
+Plane::Plane(const std::string name, const Vec3 pos, const Rot3 rot):
     SurfaceEntity(name, pos, rot) {}
 
 void Plane::set_x_y_width(const double x_width, const double y_width) {
@@ -24,8 +22,8 @@ void Plane::post_initialize_radius_of_enclosing_sphere() {
         RectBounds.get_half_y_width());
 }
 
-string Plane::str()const {
-    stringstream out;
+std::string Plane::str()const {
+    std::stringstream out;
     out << SurfaceEntity::str();
     out << "plane:\n";
     out << "| x width: " << 2.0*RectBounds.get_half_x_width() << "m\n";
@@ -41,7 +39,7 @@ string Plane::str()const {
 
 void Plane::calculate_intersection_with(
     const Ray* ray,
-    vector<Intersection> *intersections
+    std::vector<Intersection> *intersections
 )const {
     XyPlaneRayIntersectionEquation xyPlaneRayEquation(ray);
     if (xyPlaneRayEquation.has_causal_solution()) {

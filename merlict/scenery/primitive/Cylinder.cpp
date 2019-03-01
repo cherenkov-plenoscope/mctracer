@@ -2,16 +2,14 @@
 #include "merlict/scenery/primitive/Cylinder.h"
 #include <math.h>
 #include <sstream>
-using std::string;
-using std::stringstream;
-using std::vector;
+
 
 namespace merlict {
 
 Cylinder::Cylinder() {}
 
 Cylinder::Cylinder(
-    const string name,
+    const std::string name,
     const Vec3 pos,
     const Rot3 rot
 ): SurfaceEntity(name, pos, rot) {}
@@ -58,7 +56,7 @@ void Cylinder::assert_start_and_end_point_are_distinct(
     const Vec3 start_pos, const Vec3 end_pos
 )const {
     if (start_pos == end_pos) {
-        stringstream info;
+        std::stringstream info;
         info << "Cylinder::" << __func__ << "()\n";
         info << "The start and end point of a cylinder must not be the same!\n";
         info << "Start: " << start_pos.str();
@@ -85,7 +83,7 @@ void Cylinder::set_cylinder_length(const double Length) {
     if (Length > 0.0) {
         this->Length = Length;
     } else {
-        stringstream info;
+        std::stringstream info;
         info << "Cylinder::set_cylinder\n";
         info << "The length of a cylinder must be larger than 0.0m !\n";
         info << "Expected: >0.0, but actual: " << Length << "\n";
@@ -97,7 +95,7 @@ void Cylinder::set_cylinder_radius(const double Radius) {
     if (Radius > 0.0) {
         this->Radius = Radius;
     } else {
-        stringstream info;
+        std::stringstream info;
         info << "Cylinder::" << __func__ << "()\n";
         info << "The radius of a cylinder must be larger than 0.0m !\n";
         info << "Expected: >0.0, but actual: " << Radius << "\n";
@@ -110,8 +108,8 @@ void Cylinder::post_initialize_radius_of_enclosing_sphere() {
     bounding_sphere_radius = hypot(half_the_cylinder_length, Radius);
 }
 
-string Cylinder::str()const {
-    stringstream out;
+std::string Cylinder::str()const {
+    std::stringstream out;
     out << SurfaceEntity::str();
     out << "cylinder:\n";
     out << "| radius: " << Radius << "m\n";
@@ -122,7 +120,7 @@ string Cylinder::str()const {
 
 void Cylinder::calculate_intersection_with(
     const Ray* ray,
-    vector<Intersection> *intersections
+    std::vector<Intersection> *intersections
 )const {
     ZaxisCylinderRayIntersectionEquation cylRayEquation(Radius, ray);
     if (cylRayEquation.has_causal_solution()) {

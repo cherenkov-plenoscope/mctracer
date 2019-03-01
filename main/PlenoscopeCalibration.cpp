@@ -7,9 +7,6 @@
 #include "corsika/block.h"
 #include "merlict/merlict.h"
 namespace fs = std::experimental::filesystem;
-using std::string;
-using std::cout;
-using std::stringstream;
 namespace ml = merlict;
 
 
@@ -44,7 +41,7 @@ int main(int argc, char* argv[]) {
             number_mega_photons = ml::txt::to_int(
                 args.find("--number_mega_photons")->second.asString());
         } catch (std::invalid_argument &error) {
-            stringstream info;
+            std::stringstream info;
             info << __FILE__ << ", " << __LINE__ << "\n";
             info << "Expected ";
             info << "'--number_mega_photons', '-n' to be an integer number, ";
@@ -54,7 +51,7 @@ int main(int argc, char* argv[]) {
         }
 
         if (number_mega_photons <= 0.0) {
-            stringstream info;
+            std::stringstream info;
             info << __FILE__ << ", " << __LINE__ << "\n";
             info << "Expected '--number_mega_photons', ";
             info << "'-n' to be >= 0, but actual: " << number_mega_photons;

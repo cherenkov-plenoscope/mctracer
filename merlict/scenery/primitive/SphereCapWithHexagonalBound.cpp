@@ -2,9 +2,7 @@
 #include "merlict/scenery/primitive/SphereCapWithHexagonalBound.h"
 #include <math.h>
 #include <sstream>
-using std::string;
-using std::vector;
-using std::stringstream;
+
 
 namespace merlict {
 
@@ -54,7 +52,7 @@ std::string SphereCapWithHexagonalBound::str()const {
 
 void SphereCapWithHexagonalBound::calculate_intersection_with(
     const Ray* ray,
-    vector<Intersection> *intersections
+    std::vector<Intersection> *intersections
 )const {
     SphericalCapRayIntersectionEquation sphereCapRayEq(curvature_radius, ray);
     if (sphereCapRayEq.has_solutions()) {

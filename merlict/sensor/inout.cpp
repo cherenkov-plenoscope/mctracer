@@ -1,18 +1,17 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/sensor/inout.h"
 #include <array>
-using std::array;
-using std::vector;
+
 
 namespace merlict {
 namespace sensor {
 
 void write_arrival_information_to_file(
-    const vector<PhotonArrival>* arrival_table,
+    const std::vector<PhotonArrival>* arrival_table,
     std::ofstream *file
 ) {
     for (unsigned int i = 0; i < arrival_table->size(); i++) {
-        array<float, 7> out;
+        std::array<float, 7> out;
         out[0] = static_cast<float>(arrival_table->at(i).simulation_truth_id);
         out[1] = static_cast<float>(arrival_table->at(i).wavelength);
         out[2] = static_cast<float>(arrival_table->at(i).arrival_time);
@@ -26,15 +25,15 @@ void write_arrival_information_to_file(
     }
 }
 
-vector<PhotonArrival> read_arrival_information_from_file(
+std::vector<PhotonArrival> read_arrival_information_from_file(
     std::ifstream *file,
     const unsigned int number_of_arrivals
 ) {
-    vector<PhotonArrival> arrivals;
+    std::vector<PhotonArrival> arrivals;
     arrivals.reserve(number_of_arrivals);
 
     for (unsigned int i = 0; i < number_of_arrivals; i++) {
-        array<float, 7> block;
+        std::array<float, 7> block;
         file->read(
             reinterpret_cast<char*>(block.data()),
             block.size()*sizeof(float));

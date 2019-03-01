@@ -3,13 +3,13 @@
 #include <algorithm>
 #include <sstream>
 #include "merlict/sensor/FindSensorByFrame.h"
-using std::vector;
+
 
 namespace merlict {
 namespace sensor {
 
-vector<Sensor*> sort_by_frame(const vector<Sensor*>* by_occurence) {
-    vector<Sensor*> by_frame(by_occurence->begin(), by_occurence->end());
+std::vector<Sensor*> sort_by_frame(const std::vector<Sensor*>* by_occurence) {
+    std::vector<Sensor*> by_frame(by_occurence->begin(), by_occurence->end());
     std::sort(
         by_frame.begin(),
         by_frame.end(),
@@ -19,7 +19,7 @@ vector<Sensor*> sort_by_frame(const vector<Sensor*>* by_occurence) {
 
 void assign_photon_to_sensors(
     const Photon* photon,
-    vector<Sensor*>* sensors_by_frame
+    std::vector<Sensor*>* sensors_by_frame
 ) {
     FindSensorByFrame finder(
         photon->get_final_intersection().get_object(),
@@ -29,8 +29,8 @@ void assign_photon_to_sensors(
 }
 
 void assign_photons_to_sensors(
-    const vector<Photon>* photons,
-    vector<Sensor*>* sensors_by_frame
+    const std::vector<Photon>* photons,
+    std::vector<Sensor*>* sensors_by_frame
 ) {
     for (const Photon &photon : *photons)
         assign_photon_to_sensors(&photon, sensors_by_frame);
@@ -38,11 +38,11 @@ void assign_photons_to_sensors(
 
 Sensors::Sensors() {}
 
-Sensors::Sensors(const vector<Sensor*> &sensors) {
+Sensors::Sensors(const std::vector<Sensor*> &sensors) {
     init(sensors);
 }
 
-void Sensors::init(const vector<Sensor*> &sensors) {
+void Sensors::init(const std::vector<Sensor*> &sensors) {
     by_occurence.clear();
     by_frame.clear();
     by_occurence = sensors;
@@ -76,7 +76,7 @@ void Sensors::assign_photon(const Photon* photon) {
     assign_photon_to_sensors(photon, &by_frame);
 }
 
-void Sensors::assign_photons(const vector<Photon>* photons) {
+void Sensors::assign_photons(const std::vector<Photon>* photons) {
     assign_photons_to_sensors(photons, &by_frame);
 }
 

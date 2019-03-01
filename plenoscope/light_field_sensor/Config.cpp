@@ -3,7 +3,7 @@
 #include "merlict/merlict.h"
 #include "corsika/corsika.h"
 namespace ml = merlict;
-using std::array;
+
 
 namespace plenoscope {
 namespace light_field_sensor {
@@ -20,8 +20,8 @@ Config::Config() {
     bin_reflection = ml::SurfaceEntity::DEFAULT_REFLECTION;
 }
 
-array<float, 273> Config::get_sensor_plane2imaging_system_header()const {
-    array<float, 273> header;
+std::array<float, 273> Config::get_sensor_plane2imaging_system_header()const {
+    std::array<float, 273> header;
     for (unsigned int i = 0; i < header.size(); i++) header[i] = 0.0;
 
     header[  1-1] = corsika::str2float("S2IS");
