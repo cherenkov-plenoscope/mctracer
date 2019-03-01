@@ -9,8 +9,6 @@
 #include "merlict/Intersection.h"
 #include "merlict/tools.h"
 #include "merlict/txt.h"
-using std::string;
-using std::stringstream;
 using std::vector;
 
 namespace merlict {
@@ -33,7 +31,7 @@ HomTra3 Frame::calculate_frame2world()const {
 }
 
 void Frame::set_name_pos_rot(
-    const string name,
+    const std::string name,
     const Vec3 pos,
     const Rot3 rot
 ) {
@@ -46,15 +44,15 @@ void Frame::set_name_pos_rot(
     T_frame2mother.set_transformation(rot_in_mother, pos_in_mother);
 }
 
-void Frame::set_name(const string name) {
+void Frame::set_name(const std::string name) {
     assert_name_is_valid(name);
     this->name = name;
     this->name.shrink_to_fit();
 }
 
-void Frame::assert_name_is_valid(const string name_to_check)const {
+void Frame::assert_name_is_valid(const std::string name_to_check)const {
     if (name_to_check.empty()) {
-        stringstream info;
+        std::stringstream info;
         info << "Expected name of frame not to be empty, ";
         info << "but actually it is empty.";
         throw std::invalid_argument(info.str());
@@ -63,7 +61,7 @@ void Frame::assert_name_is_valid(const string name_to_check)const {
     unsigned int char_pos = 0;
     for (auto single_character : name_to_check) {
         if (isspace(single_character)) {
-            stringstream info;
+            std::stringstream info;
             info << "Expected name of frame '" << name_to_check << "'' ";
             info << "to have no whitespaces, but actual the char at pos ";
             info << char_pos << " is a whitespace: '";
@@ -82,8 +80,8 @@ void Frame::assert_name_is_valid(const string name_to_check)const {
     }
 }
 
-string Frame::str()const {
-    stringstream out;
+std::string Frame::str()const {
+    std::stringstream out;
     out << "frame: " << name << "\n";
     out << "| pos in mother: " << pos_in_mother.str() << "\n";
     out << "| rot in mother: " << rot_in_mother.str() << "\n";
@@ -93,8 +91,8 @@ string Frame::str()const {
     return out.str();
 }
 
-string Frame::get_tree_print()const {
-    stringstream out;
+std::string Frame::get_tree_print()const {
+    std::stringstream out;
     out << name << ", pos " << pos_in_mother.str() << ", r ";
     out << bounding_sphere_radius << "m\n";
 
@@ -116,7 +114,7 @@ void Frame::erase(const Frame* child_rm) {
         }
     }
     if (!found) {
-        stringstream info;
+        std::stringstream info;
         info << "Expected frame '" << name << "'' ";
         info << "to have child '" << child_rm->name;
         info << "', but actual there is no such child.";
@@ -163,7 +161,7 @@ const Frame* Frame::get_root()const {
     return root_frame;
 }
 
-string Frame::get_path_in_tree_of_frames()const {
+std::string Frame::get_path_in_tree_of_frames()const {
     // The delimiter sign is '/' as for directorys on
     // unix systems.
     // eg. City/Street14/house18/roof/chimney/chimney_wall_2
@@ -183,7 +181,7 @@ bool Frame::has_children()const {
 
 void Frame::calculate_intersection_with(
     const Ray* ray,
-    vector<Intersection> *intersections
+    std::vector<Intersection> *intersections
 )const {
     (void)*ray;
     (void)*intersections;
@@ -191,7 +189,7 @@ void Frame::calculate_intersection_with(
 
 void Frame::cluster_children() {
     if (children.size() > FRAME_MAX_NUMBER_CHILDREN) {
-        vector<Frame*> oct_tree[8];
+        std::vector<Frame*> oct_tree[8];
 
         // assign children temporarly to octtree
         for (Frame* child : children) {
@@ -257,7 +255,7 @@ void Frame::cluster_children() {
 }
 
 void Frame::warn_about_close_frames()const {
-    stringstream out;
+    std::stringstream out;
     out << "___Warning___\n";
     out << __FILE__ << " " << __func__ << "(frame) " << __LINE__ << "\n";
     out << "The children of the frame '" << name;
@@ -269,7 +267,7 @@ void Frame::warn_about_close_frames()const {
 }
 
 void Frame::warn_small_child(const Frame* frame)const {
-    stringstream out;
+    std::stringstream out;
     out << "___Warning___\n";
     out << __FILE__ << " " << __func__ << "(frame) " << __LINE__ << "\n";
     out << "Frame: " << frame->name << " is neglected. ";
@@ -278,7 +276,7 @@ void Frame::warn_small_child(const Frame* frame)const {
     std::cerr << out.str();
 }
 
-string Frame::get_name()const {
+std::string Frame::get_name()const {
     return name;
 }
 
@@ -306,7 +304,7 @@ const HomTra3* Frame::frame2world()const {
     return &T_frame2world;
 }
 
-const vector<Frame*>* Frame::get_children()const {
+const std::vector<Frame*>* Frame::get_children()const {
     return &children;
 }
 
@@ -318,12 +316,12 @@ void Frame::update_rotation(const Rot3 rot) {
 
 void Frame::assert_no_children_duplicate_names()const {
     // this also checks for duplicate frames
-    std::set<string> unique_set;
+    std::set<std::string> unique_set;
 
     for (Frame* child : children) {
         auto ret = unique_set.insert(child->get_name());
         if (ret.second == false) {
-            stringstream info;
+            std::stringstream info;
             info << __FILE__ << ", " << __LINE__ << "\n";
             info << "The frame '" << get_name();
             info << "' has a duplicate child name '";
