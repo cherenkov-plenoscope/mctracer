@@ -3,17 +3,15 @@
 #include "merlict/scenery/geometry/HexagonalPrismZ.h"
 #include "merlict/scenery/geometry/XyPlaneRayIntersectionEquation.h"
 #include "merlict/Ray.h"
-
-using namespace merlict;
-
+namespace ml = merlict;
 
 
 TEST_CASE("XyPlaneRayEquationTest: frontal_hit", "[merlict]") {
   for (unsigned int i = -100; i < 100; i++) {
     double sup_z = static_cast<double>(i)*1.337;
-    Ray ray(Vec3(0.0, 0.0, sup_z), Vec3(0.0, 0.0, 1.0));
+    ml::Ray ray(ml::Vec3(0, 0, sup_z), ml::Vec3(0, 0, 1));
 
-    XyPlaneRayIntersectionEquation eq(&ray);
+    ml::XyPlaneRayIntersectionEquation eq(&ray);
 
     REQUIRE(eq.has_solution());
     CHECK(eq.get_ray_parameter_for_intersection() == sup_z);
@@ -22,13 +20,13 @@ TEST_CASE("XyPlaneRayEquationTest: frontal_hit", "[merlict]") {
 }
 
 TEST_CASE("XyPlaneRayEquationTest: no_hit_at_all", "[merlict]") {
-  Ray ray(Vec3(0.0, 0.0, 1.0), Vec3(1.0, 0.0, 0.0));
-  XyPlaneRayIntersectionEquation eq(&ray);
+  ml::Ray ray(ml::Vec3(0, 0, 1), ml::Vec3(1, 0, 0));
+  ml::XyPlaneRayIntersectionEquation eq(&ray);
   CHECK_FALSE(eq.has_solution());
 }
 
 TEST_CASE("XyPlaneRayEquationTest: always_ez_normal_vector", "[merlict]") {
-  Ray ray(Vec3(0.0, 0.0, 1.0), Vec3(1.0, 0.0, 0.0));
-  XyPlaneRayIntersectionEquation eq(&ray);
-  CHECK(eq.get_plane_normal_vector() == VEC3_UNIT_Z);
+  ml::Ray ray(ml::Vec3(0, 0, 1), ml::Vec3(1, 0, 0));
+  ml::XyPlaneRayIntersectionEquation eq(&ray);
+  CHECK(eq.get_plane_normal_vector() == ml::VEC3_UNIT_Z);
 }

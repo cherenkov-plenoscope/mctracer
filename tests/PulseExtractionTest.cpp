@@ -5,10 +5,9 @@
 #include "merlict/random/random.h"
 #include "merlict/simulation_truth.h"
 #include "merlict/numeric.h"
+namespace ml = merlict;
 using std::vector;
 using std::string;
-using namespace merlict;
-
 
 
 TEST_CASE("PulseExtractionTest: arrival_time_slices_below_next_channel_marker", "[merlict]") {
@@ -34,7 +33,7 @@ TEST_CASE("PulseExtractionTest: arrival_time_slices_below_next_channel_marker", 
 }
 
 TEST_CASE("PulseExtractionTest: truncate_invalid_arrival_times", "[merlict]") {
-    random::Mt19937 prng(0);
+    ml::random::Mt19937 prng(0);
     const double time_slice_duration = .5e-9;
     const double arrival_time_std = 0.0;
 
@@ -84,7 +83,7 @@ TEST_CASE("PulseExtractionTest: truncate_invalid_arrival_times", "[merlict]") {
 }
 
 TEST_CASE("PulseExtractionTest: arrival_time_std", "[merlict]") {
-    random::Mt19937 prng(0);
+    ml::random::Mt19937 prng(0);
     const double time_slice_duration = .5e-9;
     const double arrival_time_std = 5e-9;
     const double true_arrival_time = 25e-9;
@@ -103,8 +102,8 @@ TEST_CASE("PulseExtractionTest: arrival_time_std", "[merlict]") {
     for (signal_processing::ElectricPulse &pulse : response.at(0))
         true_arrival_times.push_back(pulse.arrival_time);
 
-    CHECK(0.0 == Approx(numeric::stddev(true_arrival_times)).margin(1e-1));
-    CHECK(true_arrival_time == Approx(numeric::mean(true_arrival_times)).margin(1e-1));
+    CHECK(0.0 == Approx(ml::numeric::stddev(true_arrival_times)).margin(1e-1));
+    CHECK(true_arrival_time == Approx(ml::numeric::mean(true_arrival_times)).margin(1e-1));
 
     vector<vector<signal_processing::ExtractedPulse>> raw =
         signal_processing::extract_pulses(
@@ -118,6 +117,6 @@ TEST_CASE("PulseExtractionTest: arrival_time_std", "[merlict]") {
         reconstructed_arrival_times.push_back(
             pulse.arrival_time_slice * time_slice_duration);
 
-    CHECK(arrival_time_std == Approx(numeric::stddev(reconstructed_arrival_times)).margin(1e-10));
-    CHECK(true_arrival_time == Approx(numeric::mean(reconstructed_arrival_times)).margin(1e-10));
+    CHECK(arrival_time_std == Approx(ml::numeric::stddev(reconstructed_arrival_times)).margin(1e-10));
+    CHECK(true_arrival_time == Approx(ml::numeric::mean(reconstructed_arrival_times)).margin(1e-10));
 }

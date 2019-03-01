@@ -3,36 +3,35 @@
 #include "merlict/scenery/primitive/Disc.h"
 #include "merlict/Photons.h"
 #include "merlict/scenery/Scenery.h"
-
-using namespace merlict;
+namespace ml = merlict;
 using std::string;
 using std::stringstream;
 using std::vector;
 
 
-
 TEST_CASE("ParallelPropagationTest: propagate_once", "[merlict]") {
 	const uint64_t num_photons = 1000;
-	random::Mt19937 prng(0u);
-	vector<Photon> photons1 = Photons::Source::parallel_towards_z_from_xy_disc(
-		1.0,
-		num_photons,
-		&prng);
+	ml::random::Mt19937 prng(0u);
+	vector<ml::Photon> photons1 =
+		ml::Photons::Source::parallel_towards_z_from_xy_disc(
+			1.0,
+			num_photons,
+			&prng);
 	REQUIRE(photons1.size() == num_photons);
 
-	Scenery scenery;
-	scenery.colors.add("red", Color(255, 0, 0));
+	ml::Scenery scenery;
+	scenery.colors.add("red", ml::Color(255, 0, 0));
 	scenery.functions.add(
 		"fifty_fifty",
-		function::Func1({
+		ml::function::Func1({
 			{200e-9, 0.5},
 			{1200e-9, 0.5}
 		}));
-	Disc* disc = scenery.root.append<Disc>();
+	ml::Disc* disc = scenery.root.append<ml::Disc>();
  	disc->set_name_pos_rot(
         "red_disc",
-        Vec3(0, 0, 1),
-        Rot3(0, 0, 0));
+        ml::Vec3(0, 0, 1),
+        ml::Rot3(0, 0, 0));
     disc->set_outer_color(scenery.colors.get("red"));
     disc->set_inner_color(scenery.colors.get("red"));
     disc->set_inner_reflection(scenery.functions.get("fifty_fifty"));
@@ -40,15 +39,15 @@ TEST_CASE("ParallelPropagationTest: propagate_once", "[merlict]") {
     disc->set_radius(5.0);
     scenery.root.init_tree_based_on_mother_child_relations();
 
-	PropagationConfig cfg;
+	ml::PropagationConfig cfg;
 
-	Photons::propagate_photons_multi_thread(
+	ml::Photons::propagate_photons_multi_thread(
 		&photons1,
 		&scenery.root,
 		&cfg,
 		&prng);
 
-	vector<Interaction> final_interactions_run_1(num_photons);
+	vector<ml::Interaction> final_interactions_run_1(num_photons);
 	for (uint64_t i = 0; i < photons1.size(); ++i) {
 		final_interactions_run_1[i] = photons1[i].get_final_interaction_type();
 	}
@@ -57,18 +56,19 @@ TEST_CASE("ParallelPropagationTest: propagate_once", "[merlict]") {
 	// ------------------------
 
 	prng.set_seed(0u);
-	vector<Photon> photons2 = Photons::Source::parallel_towards_z_from_xy_disc(
-		1.0,
-		num_photons,
-		&prng);
+	vector<ml::Photon> photons2 =
+		ml::Photons::Source::parallel_towards_z_from_xy_disc(
+			1.0,
+			num_photons,
+			&prng);
 
-	Photons::propagate_photons_multi_thread(
+	ml::Photons::propagate_photons_multi_thread(
 		&photons2,
 		&scenery.root,
 		&cfg,
 		&prng);
 
-	vector<Interaction> final_interactions_run_2(num_photons);
+	vector<ml::Interaction> final_interactions_run_2(num_photons);
 	for (uint64_t i = 0; i < photons2.size(); ++i) {
 		final_interactions_run_2[i] = photons2[i].get_final_interaction_type();
 	}

@@ -1,21 +1,19 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
 #include "merlict/Color.h"
-
-using namespace merlict;
-
+namespace ml = merlict;
 
 
 TEST_CASE("ColorTest: default_ctor", "[merlict]") {
-    Color c;
+    ml::Color c;
     CHECK(0 == c.r);
     CHECK(0 == c.g);
     CHECK(0 == c.b);
 }
 
 TEST_CASE("ColorTest: reflection_mix", "[merlict]") {
-    Color base(0, 0, 0);
-    Color green(0, 100, 0);
+    ml::Color base(0, 0, 0);
+    ml::Color green(0, 100, 0);
     const double reflectivity = 0.5;
     base.reflection_mix(green, reflectivity);
     CHECK(0 == base.r);
@@ -24,11 +22,11 @@ TEST_CASE("ColorTest: reflection_mix", "[merlict]") {
 }
 
 TEST_CASE("ColorTest: ctor_mix", "[merlict]") {
-    std::vector<Color> rainbow;
-    rainbow.push_back(Color(100, 0, 0));
-    rainbow.push_back(Color(0, 100, 0));
-    rainbow.push_back(Color(0, 0, 100));
-    Color mix = Color(rainbow);
+    std::vector<ml::Color> rainbow;
+    rainbow.push_back(ml::Color(100, 0, 0));
+    rainbow.push_back(ml::Color(0, 100, 0));
+    rainbow.push_back(ml::Color(0, 0, 100));
+    ml::Color mix(rainbow);
     CHECK(mix.r == Approx(33).margin(1));
     CHECK(mix.g == Approx(33).margin(1));
     CHECK(mix.b == Approx(33).margin(1));

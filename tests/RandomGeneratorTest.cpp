@@ -2,15 +2,14 @@
 #include <array>
 #include "catch.hpp"
 #include "merlict/merlict.h"
+namespace ml = merlict;
 using std::array;
 using std::vector;
-using namespace merlict;
-
 
 
 TEST_CASE("RandomGeneratorTest: fake_constant", "[merlict]") {
     for (double i = 0.0; i < 100.0; i++) {
-        random::FakeConstant prng(i);
+        ml::random::FakeConstant prng(i);
         for (int j = 0; j < 10; j++)
             CHECK(prng.uniform() == i);
     }
@@ -18,13 +17,13 @@ TEST_CASE("RandomGeneratorTest: fake_constant", "[merlict]") {
 
 TEST_CASE("RandomGeneratorTest: Mt19937_init_and_get_seed", "[merlict]") {
     for (unsigned int i = 0; i < 100; i++) {
-        random::Mt19937 prng(i);
+        ml::random::Mt19937 prng(i);
         CHECK(prng.seed() == i);
     }
 }
 
 TEST_CASE("RandomGeneratorTest: Mt19937_set_and_get_seed", "[merlict]") {
-    random::Mt19937 prng;
+    ml::random::Mt19937 prng;
     for (unsigned int i = 0; i < 100; i++) {
         prng.set_seed(i);
         CHECK(prng.seed() == i);
@@ -32,25 +31,25 @@ TEST_CASE("RandomGeneratorTest: Mt19937_set_and_get_seed", "[merlict]") {
 }
 
 TEST_CASE("RandomGeneratorTest: uniform_0_to_1_stddev", "[merlict]") {
-    random::Mt19937 prng(0);
+    ml::random::Mt19937 prng(0);
     vector<double> samples;
     for (unsigned int i = 0; i < 42*1337; i++)
         samples.push_back(prng.uniform());
-    CHECK(1.0/sqrt(12.0) == Approx(numeric::stddev(samples)).margin(1e-3));
+    CHECK(1.0/sqrt(12.0) == Approx(ml::numeric::stddev(samples)).margin(1e-3));
 }
 
 TEST_CASE("RandomGeneratorTest: generator_point_on_disc", "[merlict]") {
-    random::Mt19937 prng(0);
+    ml::random::Mt19937 prng(0);
     unsigned int n_points = 1e6;
     double disc_radius = 1.337;
-    vector<Vec3> points;
+    vector<ml::Vec3> points;
     for (unsigned int i = 0; i < n_points; i++)
         points.push_back(prng.get_point_on_xy_disc_within_radius(disc_radius));
     // mean position
-    Vec3 sum = VEC3_ORIGIN;
-    for (Vec3 p : points)
+    ml::Vec3 sum = ml::VEC3_ORIGIN;
+    for (ml::Vec3 p : points)
         sum = sum + p;
-    Vec3 mean = sum*(1.0/static_cast<double>(points.size()));
+    ml::Vec3 mean = sum*(1.0/static_cast<double>(points.size()));
     CHECK(0.0 == Approx(mean.x).margin(1e-2));
     CHECK(0.0 == Approx(mean.y).margin(1e-2));
     CHECK(sum.z == 0.0);
@@ -64,15 +63,15 @@ TEST_CASE("RandomGeneratorTest: generator_point_on_disc", "[merlict]") {
     ) {
         for (double phi = 0; phi < 2.0*M_PI; phi = phi+M_PI/3.0) {
             double counts_in_evaluation_bin = 0;
-            Vec3 eval_disc_pos(r*cos(phi), r*sin(phi), 0.0);
-            for (Vec3 p : points)
+            ml::Vec3 eval_disc_pos(r*cos(phi), r*sin(phi), 0.0);
+            for (ml::Vec3 p : points)
                 if (eval_disc_pos.distance_to(p) <= evaluation_disc_radius)
                     counts_in_evaluation_bin++;
             counts_in_evaluation_bins.push_back(counts_in_evaluation_bin);
         }
     }
-    double mean_count = numeric::mean(counts_in_evaluation_bins);
-    double stddev_count = numeric::stddev(counts_in_evaluation_bins);
+    double mean_count = ml::numeric::mean(counts_in_evaluation_bins);
+    double stddev_count = ml::numeric::stddev(counts_in_evaluation_bins);
     CHECK(stddev_count/mean_count < 1e-2);
     // std::cout << mean_count << " pm " << stddev_count << "\n";
 }
@@ -80,11 +79,11 @@ TEST_CASE("RandomGeneratorTest: generator_point_on_disc", "[merlict]") {
 TEST_CASE("RandomGeneratorTest: draw_from_distribution", "[merlict]") {
     // -------------------
     // create distributions
-    function::Func1 f(function::polynom3(0, 1, 0, 0, 0.0, 1.0, 4096));
+    ml::function::Func1 f(ml::function::polynom3(0, 1, 0, 0, 0.0, 1.0, 4096));
     // -------------------
     // sample from distribution
-    random::Mt19937 prng(0);
-    random::SamplesFromDistribution sfd(&f);
+    ml::random::Mt19937 prng(0);
+    ml::random::SamplesFromDistribution sfd(&f);
     unsigned int n_samples = 1e6;
     vector<double> samples;
     for (unsigned int i = 0; i < n_samples; i++)
@@ -93,11 +92,11 @@ TEST_CASE("RandomGeneratorTest: draw_from_distribution", "[merlict]") {
     // fill samples drawn from distribution into histogram
     unsigned int bin_count = static_cast<unsigned int>(
         pow(static_cast<double>(n_samples), 1.0/3.0));
-    vector<double> bin_edges = numeric::linspace(
+    vector<double> bin_edges = ml::numeric::linspace(
         f.limits.lower,
         f.limits.upper,
         bin_count);
-    Histogram1 histo(samples, bin_edges);
+    ml::Histogram1 histo(samples, bin_edges);
     // std::cout << histo;
     // -------------------
     // normalize histogram
@@ -114,7 +113,7 @@ TEST_CASE("RandomGeneratorTest: draw_from_distribution", "[merlict]") {
             static_cast<double>(drawn_f_integral));
     // -------------------
     // compare initial distribution and samples drawn from distribution
-    vector<double> ys = numeric::linspace(
+    vector<double> ys = ml::numeric::linspace(
         f.limits.lower,
         f.limits.upper,
         sqrt(n_samples));
@@ -127,7 +126,7 @@ TEST_CASE("RandomGeneratorTest: draw_from_distribution", "[merlict]") {
 }
 
 TEST_CASE("RandomGeneratorTest: draw_from_poisson_distribution", "[merlict]") {
-    random::Mt19937 prng(0);
+    ml::random::Mt19937 prng(0);
     double sum = 0.0;
     const double rate = 1e6;
     for (unsigned int i = 0; i< rate; i++)
@@ -137,31 +136,31 @@ TEST_CASE("RandomGeneratorTest: draw_from_poisson_distribution", "[merlict]") {
 
 TEST_CASE("RandomGeneratorTest: conventional_disc_1M_draws", "[merlict]") {
     const double r = 2.23;
-    random::Mt19937 prng(0);
+    ml::random::Mt19937 prng(0);
     for (unsigned int i = 0; i < (unsigned int)(1e5); i++) {
-        Vec3 p = prng.get_point_on_xy_disc_within_radius_slow(r);
+        ml::Vec3 p = prng.get_point_on_xy_disc_within_radius_slow(r);
         CHECK(r*r >= p*p);
     }
 }
 
 TEST_CASE("RandomGeneratorTest: rejection_sampling_disc_1M_draws", "[merlict]") {
     const double r = 2.23;
-    random::Mt19937 prng(0);
+    ml::random::Mt19937 prng(0);
     for (unsigned int i = 0; i < (unsigned int)(1e5); i++) {
-        Vec3 p = prng.get_point_on_xy_disc_within_radius(r);
+        ml::Vec3 p = prng.get_point_on_xy_disc_within_radius(r);
         CHECK(r*r >= p*p);
     }
 }
 
 TEST_CASE("RandomGeneratorTest: full_sphere", "[merlict]") {
     unsigned int n = static_cast<unsigned int>(1e6);
-    random::Mt19937 prng(0);
-    random::ZenithDistancePicker zd_picker(0, M_PI);
-    random::UniformPicker az_picker(0, 2*M_PI);
-    Vec3 mean_position = VEC3_ORIGIN;
+    ml::random::Mt19937 prng(0);
+    ml::random::ZenithDistancePicker zd_picker(0, M_PI);
+    ml::random::UniformPicker az_picker(0, 2*M_PI);
+    ml::Vec3 mean_position = ml::VEC3_ORIGIN;
     for (unsigned int i = 0; i < n; i++) {
         mean_position = mean_position +
-            random::draw_point_on_sphere(&prng, zd_picker, az_picker);
+            ml::random::draw_point_on_sphere(&prng, zd_picker, az_picker);
     }
     mean_position = mean_position/static_cast<double>(n);
     CHECK(mean_position.x == Approx(0.0).margin(1e-3));
@@ -171,13 +170,13 @@ TEST_CASE("RandomGeneratorTest: full_sphere", "[merlict]") {
 
 TEST_CASE("RandomGeneratorTest: octo_sphere", "[merlict]") {
     unsigned int n = static_cast<unsigned int>(1e6);
-    random::Mt19937 prng(0);
-    random::ZenithDistancePicker zd_picker(0, M_PI/2);
-    random::UniformPicker az_picker(0, M_PI/2);
-    Vec3 mean_position = VEC3_ORIGIN;
+    ml::random::Mt19937 prng(0);
+    ml::random::ZenithDistancePicker zd_picker(0, M_PI/2);
+    ml::random::UniformPicker az_picker(0, M_PI/2);
+    ml::Vec3 mean_position = ml::VEC3_ORIGIN;
     for (unsigned int i = 0; i < n; i++) {
         mean_position = mean_position +
-            random::draw_point_on_sphere(&prng, zd_picker, az_picker);
+            ml::random::draw_point_on_sphere(&prng, zd_picker, az_picker);
     }
     mean_position = mean_position/static_cast<double>(n);
     CHECK(mean_position.x == Approx(0.5).margin(1e-3));
@@ -187,13 +186,13 @@ TEST_CASE("RandomGeneratorTest: octo_sphere", "[merlict]") {
 
 TEST_CASE("RandomGeneratorTest: octo_sphere_minus_z", "[merlict]") {
     unsigned int n = static_cast<unsigned int>(1e3);
-    random::Mt19937 prng(0);
-    random::ZenithDistancePicker zd_picker(M_PI/2, M_PI);
-    random::UniformPicker az_picker(0, M_PI/2);
-    Vec3 mean_position = VEC3_ORIGIN;
+    ml::random::Mt19937 prng(0);
+    ml::random::ZenithDistancePicker zd_picker(M_PI/2, M_PI);
+    ml::random::UniformPicker az_picker(0, M_PI/2);
+    ml::Vec3 mean_position = ml::VEC3_ORIGIN;
     for (unsigned int i = 0; i < n; i++) {
         mean_position = mean_position +
-            random::draw_point_on_sphere(&prng, zd_picker, az_picker);
+            ml::random::draw_point_on_sphere(&prng, zd_picker, az_picker);
     }
     mean_position = mean_position/static_cast<double>(n);
     CHECK(mean_position.x == Approx(0.5).margin(2e-2));
@@ -206,12 +205,12 @@ TEST_CASE("RandomGeneratorTest: normal_distribution", "[merlict]") {
     const vector<double> stds = {0.2, 0.7, 1.0, 2.3};
     for (double mean: means) {
         for (double std: stds) {
-            random::Mt19937 prng(0);
+            ml::random::Mt19937 prng(0);
             vector<double> samples;
             for (unsigned int i = 0; i < 10*1000; i++)
                 samples.push_back(prng.normal(mean, std));
-            CHECK(std == Approx(numeric::stddev(samples)).margin(1e-1));
-            CHECK(mean == Approx(numeric::mean(samples)).margin(1e-1));
+            CHECK(std == Approx(ml::numeric::stddev(samples)).margin(1e-1));
+            CHECK(mean == Approx(ml::numeric::mean(samples)).margin(1e-1));
         }
     }
 }

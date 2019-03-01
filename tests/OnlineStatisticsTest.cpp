@@ -3,9 +3,9 @@
 #include "plenoscope/calibration/OnlineStatistics.h"
 #include "merlict/random/random.h"
 #include "merlict/numeric.h"
+namespace ml = merlict;
 using std::vector;
 using namespace plenoscope;
-using namespace merlict;
 
 
 
@@ -22,7 +22,7 @@ TEST_CASE("OnlineStatisticsTest: few_samples", "[merlict]") {
 
 TEST_CASE("OnlineStatisticsTest: online_variance", "[merlict]") {
     vector<double> vals;
-    random::Mt19937 prng(0);
+    ml::random::Mt19937 prng(0);
     OnlineStatistics ov;
     for (unsigned int i = 0; i < 1000000; i++) {
         const double r = prng.uniform();
@@ -30,7 +30,7 @@ TEST_CASE("OnlineStatisticsTest: online_variance", "[merlict]") {
         ov.add(r);
     }
     double stddev_using_online = ov.stddev();
-    double stddev_using_classic = numeric::stddev(vals);
+    double stddev_using_classic = ml::numeric::stddev(vals);
     CHECK(stddev_using_online == Approx(stddev_using_classic).margin(1e-6));
     CHECK(1000000 == ov.number_of_samples());
 }
@@ -41,7 +41,7 @@ TEST_CASE("OnlineStatisticsTest: online_variance_simple_numbers", "[merlict]") {
     for (unsigned int i = 0; i < vals.size(); i++)
         ov.add(vals.at(i));
     double stddev_using_online = ov.stddev();
-    double stddev_using_classic = numeric::stddev(vals);
+    double stddev_using_classic = ml::numeric::stddev(vals);
     CHECK(stddev_using_online == Approx(stddev_using_classic).margin(1e-6));
     CHECK(7 == ov.number_of_samples());
 }

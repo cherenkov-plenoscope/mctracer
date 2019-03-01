@@ -1,26 +1,25 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
 #include "merlict/merlict.h"
+namespace ml = merlict;
 using std::stringstream;
 using std::string;
 using std::vector;
-using namespace merlict;
-
 
 
 TEST_CASE("AsciiIoTest: read_non_existing_file", "[merlict]") {
-    CHECK_THROWS_AS(tsvio::gen_table_from_file("non_existing_path/non_existing_file.csv"), std::runtime_error);
+    CHECK_THROWS_AS(ml::tsvio::gen_table_from_file("non_existing_path/non_existing_file.csv"), std::runtime_error);
 }
 
 TEST_CASE("AsciiIoTest: read_empty_file", "[merlict]") {
     std::vector<std::vector<double>> table =
-        tsvio::gen_table_from_file("tsvio/empty.csv");
+        ml::tsvio::gen_table_from_file("tsvio/empty.csv");
     CHECK(table.size() == 0u);
 }
 
 TEST_CASE("AsciiIoTest: read_valid_file_table_only", "[merlict]") {
     std::vector<std::vector<double>> table =
-        tsvio::gen_table_from_file("tsvio/matrix_4col_3row.csv");
+        ml::tsvio::gen_table_from_file("tsvio/matrix_4col_3row.csv");
 
     // wavelength, mean_free_path, absorbtion_coeff, wuff
     // 123.4, 100.0, 0.99, 133.7
@@ -69,14 +68,14 @@ TEST_CASE("AsciiIoTest: write_table", "[merlict]") {
         table[row] = single_row;
     }
 
-    tsvio::write_table_to_file(table, path);
+    ml::tsvio::write_table_to_file(table, path);
 
     //----------------
     // read in again
     //----------------
 
     std::vector<std::vector<double>> table_in =
-        tsvio::gen_table_from_file(path);
+        ml::tsvio::gen_table_from_file(path);
 
     // check column names
     REQUIRE(table_in.size() == rows);
@@ -95,7 +94,7 @@ TEST_CASE("AsciiIoTest: table_from_string_extra_new_line_in_the_end", "[merlict]
                     "283e-9\t0.2\n"
                     "300e-9\t0.254\n";
 
-    vector<vector<double>> table = tsvio::gen_table_from_string(text);
+    vector<vector<double>> table = ml::tsvio::gen_table_from_string(text);
 
     REQUIRE(4u == table.size());
     REQUIRE(2u == table.at(0).size());
@@ -122,7 +121,7 @@ TEST_CASE("AsciiIoTest: table_from_string_", "[merlict]") {
                     "  283e-9  0.2\n"
                     "  \t 300e-9 \t 0.254 ";
 
-    vector<vector<double>> table = tsvio::gen_table_from_string(text);
+    vector<vector<double>> table = ml::tsvio::gen_table_from_string(text);
 
     REQUIRE(4u == table.size());
     REQUIRE(2u == table.at(0).size());

@@ -2,19 +2,18 @@
 #include "catch.hpp"
 #include "merlict/scenery/geometry/HexGridAnnulus.h"
 #include "merlict/scenery/geometry/GridNeighborhoodTopoligy.h"
-using namespace merlict;
-
+namespace ml = merlict;
 
 
 TEST_CASE("GridNeighborhoodTopoligyTest: init", "[merlict]") {
     double outer_R = 1.0;
     double spacing = 0.2;
 
-    HexGridAnnulus grid_gen(outer_R, spacing);
+    ml::HexGridAnnulus grid_gen(outer_R, spacing);
 
-    std::vector<Vec3> grid = grid_gen.get_grid();
+    std::vector<ml::Vec3> grid = grid_gen.get_grid();
 
-    GridNeighborhoodTopoligy topo(&grid, spacing*1.1);
+    ml::GridNeighborhoodTopoligy topo(&grid, spacing*1.1);
 
     std::vector<std::vector<unsigned int>> neighbors =
         topo.get_neighbor_relations();

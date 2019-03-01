@@ -4,10 +4,11 @@
 #include "signal_processing/signal_processing.h"
 #include "merlict/random/random.h"
 #include "merlict/simulation_truth.h"
+namespace ml = merlict;
 using std::vector;
 using std::string;
 using namespace signal_processing;
-using namespace merlict;
+
 
 vector<vector<ExtractedPulse>> create_photon_stream(
     const unsigned int number_of_channels,
@@ -16,7 +17,7 @@ vector<vector<ExtractedPulse>> create_photon_stream(
     const float time_slice_duration,
     const unsigned int seed) {
 
-    random::Mt19937 prng(seed);
+    ml::random::Mt19937 prng(seed);
 
     vector<vector<ExtractedPulse>> photon_stream;
     for (unsigned int i = 0; i < number_of_channels; i++) {

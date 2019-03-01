@@ -3,9 +3,8 @@
 #include "catch.hpp"
 #include "signal_processing/PhotoElectricConverter.h"
 #include "merlict/Histogram1.h"
+namespace ml = merlict;
 using std::vector;
-using namespace merlict;
-
 
 
 vector<signal_processing::PipelinePhoton> equi_distant_photons(
@@ -45,7 +44,7 @@ TEST_CASE("PhotoElectricConverterTest: empty_input_yields_empty_output", "[merli
 
     vector<signal_processing::PipelinePhoton> photon_pipeline;
     double exposure_time = 1.0;
-    random::Mt19937 prng(0);
+    ml::random::Mt19937 prng(0);
     vector<signal_processing::ElectricPulse> result = conv.
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
@@ -63,7 +62,7 @@ TEST_CASE("PhotoElectricConverterTest: input_pulses_absorbed_zero_qunatum_eff", 
         equi_distant_photons(1337u);
 
     double exposure_time = 1337e-9;
-    random::Mt19937 prng(0);
+    ml::random::Mt19937 prng(0);
     vector<signal_processing::ElectricPulse> result = conv.
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
@@ -75,7 +74,7 @@ TEST_CASE("PhotoElectricConverterTest: input_pulses_absorbed_zero_qunatum_eff", 
 
 TEST_CASE("PhotoElectricConverterTest: input_pulses_pass_qunatum_eff_is_one", "[merlict]") {
     signal_processing::PhotoElectricConverter::Config config;
-    function::Func1 qeff({{200e-9, 1.0}, {1200e-9, 1.0}});
+    ml::function::Func1 qeff({{200e-9, 1.0}, {1200e-9, 1.0}});
     config.quantum_efficiency_vs_wavelength = &qeff;
     signal_processing::PhotoElectricConverter::Converter conv(&config);
 
@@ -83,7 +82,7 @@ TEST_CASE("PhotoElectricConverterTest: input_pulses_pass_qunatum_eff_is_one", "[
         equi_distant_photons(1337u);
 
     double exposure_time = 1337e-9;
-    random::Mt19937 prng(0);
+    ml::random::Mt19937 prng(0);
     vector<signal_processing::ElectricPulse> result = conv.
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
@@ -104,7 +103,7 @@ TEST_CASE("PhotoElectricConverterTest: dark_rate_on_empty_photon_pipe", "[merlic
     vector<signal_processing::PipelinePhoton> photon_pipeline;
 
     double exposure_time = 1e-6;
-    random::Mt19937 prng(0);
+    ml::random::Mt19937 prng(0);
     vector<signal_processing::ElectricPulse> result = conv.
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
@@ -136,7 +135,7 @@ TEST_CASE("PhotoElectricConverterTest: triangle_qeff", "[merlict]") {
     vector<vector<double>> raw_qeff {{  200e-9, 0.0},
                                      {  700e-9, 1.0},
                                      { 1200e-9, 0.0}};
-    function::Func1 qeff(raw_qeff);
+    ml::function::Func1 qeff(raw_qeff);
     config.quantum_efficiency_vs_wavelength = &qeff;
     signal_processing::PhotoElectricConverter::Converter conv(&config);
 
@@ -155,7 +154,7 @@ TEST_CASE("PhotoElectricConverterTest: triangle_qeff", "[merlict]") {
     }
 
     double exposure_time = 1.0;
-    random::Mt19937 prng(0);
+    ml::random::Mt19937 prng(0);
     vector<signal_processing::ElectricPulse> result = conv.
         get_pulse_pipeline_for_photon_pipeline(
             photon_pipeline,
@@ -170,7 +169,7 @@ TEST_CASE("PhotoElectricConverterTest: triangle_qeff", "[merlict]") {
     for (const signal_processing::ElectricPulse pulse : result)
         survived_arrival_times.push_back(pulse.arrival_time);
 
-    Histogram1 hist(
+    ml::Histogram1 hist(
         survived_arrival_times,
         {
             0,

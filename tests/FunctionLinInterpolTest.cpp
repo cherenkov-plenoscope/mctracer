@@ -3,10 +3,11 @@
 #include "catch.hpp"
 #include "merlict/function/function.h"
 #include "merlict/tsvio.h"
+namespace ml = merlict;
 using std::stringstream;
 using std::string;
 using std::vector;
-using namespace merlict;
+
 
 struct Func1Test {
     const unsigned int table_size = 100;
@@ -52,7 +53,7 @@ TEST_CASE("Func1Test: check_setup", "[merlict]") {
 
 TEST_CASE("Func1Test: construct_using_matrix_of_vectors", "[merlict]") {
     Func1Test ft;
-    function::Func1 f(ft.table);
+    ml::function::Func1 f(ft.table);
     for (unsigned int i = 0; i < ft.table.size()-1; i++) {
         double argument = ft.table.at(i).at(0);
         double value = ft.table.at(i).at(1);
@@ -62,14 +63,14 @@ TEST_CASE("Func1Test: construct_using_matrix_of_vectors", "[merlict]") {
 
 TEST_CASE("Func1Test: access_below_lowest_argument", "[merlict]") {
     Func1Test ft;
-    function::Func1 f(ft.table);
+    ml::function::Func1 f(ft.table);
     double arg_below_definition = ft.table.at(0).at(0) - 1e-9;
     CHECK_THROWS_AS(f.evaluate(arg_below_definition), std::out_of_range);
 }
 
 TEST_CASE("Func1Test: access_at_highest_argument", "[merlict]") {
     Func1Test ft;
-    function::Func1 f(ft.table);
+    ml::function::Func1 f(ft.table);
     double upper_limit = ft.table.back().at(0);
     CHECK_THROWS_AS(f.evaluate(upper_limit), std::out_of_range);
 }
@@ -77,9 +78,9 @@ TEST_CASE("Func1Test: access_at_highest_argument", "[merlict]") {
 TEST_CASE("Func1Test: generate_from_from_file", "[merlict]") {
     Func1Test ft;
     std::string path = "tsvio/tim_sinus.csv";
-    tsvio::write_table_to_file(ft.table, path);
+    ml::tsvio::write_table_to_file(ft.table, path);
 
-    function::Func1 f(tsvio::gen_table_from_file(path));
+    ml::function::Func1 f(ml::tsvio::gen_table_from_file(path));
 
     // precision loss in ascii files, cant access boundarys sharp,
     // start in row 1 and stop one row before end.
@@ -104,7 +105,7 @@ TEST_CASE("Func1Test: linear_interpolation", "[merlict]") {
     //    |/____.___
     //   0      1
 
-    function::Func1 f(two_entry_table);
+    ml::function::Func1 f(two_entry_table);
 
     for (double x = -0.1; x < 1.1; x = x+0.011) {
         if (x >= 0.0 && x < 1.0)
@@ -117,7 +118,7 @@ TEST_CASE("Func1Test: linear_interpolation", "[merlict]") {
 TEST_CASE("Func1Test: empty_table_for_Func1", "[merlict]") {
     std::vector<std::vector<double>> empty_table;
     CHECK(empty_table.size() == 0u);
-    CHECK_THROWS_AS(function::Func1(empty_table), std::invalid_argument);
+    CHECK_THROWS_AS(ml::function::Func1(empty_table), std::invalid_argument);
     // It must throw anyhow when it is first used because its limit's range is
     // zero.
 }
@@ -129,7 +130,7 @@ TEST_CASE("Func1Test: max_value", "[merlict]") {
             double y = amp*sin(x*2.0*M_PI);
             table.push_back({x, y});
         }
-        function::Func1 f(table);
+        ml::function::Func1 f(table);
         CHECK(amp == Approx(f.max()).margin(1e-6));
         CHECK(-amp == Approx(f.min()).margin(1e-6));
     }

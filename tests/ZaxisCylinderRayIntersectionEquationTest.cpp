@@ -1,23 +1,21 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
 #include "merlict/scenery/geometry/ZaxisCylinderRayIntersectionEquation.h"
-
-using namespace merlict;
-
+namespace ml = merlict;
 
 
 TEST_CASE("ZaxisCylinderRayIntersectionEquationTest: start_inside_run_in_z_no_hit", "[merlict]") {
-  Ray ray(VEC3_ORIGIN, VEC3_ORIGIN);
+  ml::Ray ray(ml::VEC3_ORIGIN, ml::VEC3_ORIGIN);
 
-  ZaxisCylinderRayIntersectionEquation eq(1.0, &ray);
+  ml::ZaxisCylinderRayIntersectionEquation eq(1.0, &ray);
 
   CHECK(!eq.has_solution());
   CHECK(!eq.has_causal_solution());
 }
 
 TEST_CASE("ZaxisCylinderRayIntersectionEquationTest: start_inside_and_hit", "[merlict]") {
-  Ray ray(VEC3_ORIGIN, Vec3(1.0, 0.0, 0.0));
-  ZaxisCylinderRayIntersectionEquation eq(1.0, &ray);
+  ml::Ray ray(ml::VEC3_ORIGIN, ml::Vec3(1, 0, 0));
+  ml::ZaxisCylinderRayIntersectionEquation eq(1.0, &ray);
 
   CHECK(eq.has_solution());
   CHECK(eq.one_intersec_behind_and_one_in_front_ray_sup());
@@ -27,8 +25,8 @@ TEST_CASE("ZaxisCylinderRayIntersectionEquationTest: start_inside_and_hit", "[me
 }
 
 TEST_CASE("ZaxisCylinderRayIntersectionEquationTest: start_outside_and_hit", "[merlict]") {
-  Ray ray(Vec3(-2.0, 0.0, 0.0), Vec3(1.0, 0.0, 0.0));
-  ZaxisCylinderRayIntersectionEquation eq(1.0, &ray);
+  ml::Ray ray(ml::Vec3(-2, 0, 0), ml::Vec3(1, 0, 0));
+  ml::ZaxisCylinderRayIntersectionEquation eq(1.0, &ray);
 
   CHECK(eq.has_solution());
   CHECK(eq.both_intersects_in_front_ray_sup());

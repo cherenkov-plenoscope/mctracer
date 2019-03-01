@@ -3,32 +3,30 @@
 #include <sstream>
 #include "catch.hpp"
 #include "merlict/merlict.h"
-
-using namespace merlict;
-
+namespace ml = merlict;
 
 
 TEST_CASE("PortablePixMapTest: write_and_read", "[merlict]") {
-    visual::Image img(16, 9);
+    ml::visual::Image img(16, 9);
 
     for (unsigned int c = 0; c < img.number_cols; c++) {
         for (unsigned int r = 0; r < img.number_rows; r++) {
             if (c == 8) {
-                img.set_col_row(c, r, Color(255, 0, 0));
+                img.set_col_row(c, r, ml::Color(255, 0, 0));
             } else {
                 if (r == 4) {
-                    img.set_col_row(c, r, Color(0, 255, 0));
+                    img.set_col_row(c, r, ml::Color(0, 255, 0));
                 } else {
-                    img.set_col_row(c, r, Color(0, 0, 255));
+                    img.set_col_row(c, r, ml::Color(0, 0, 255));
                 }
             }
         }
     }
-    visual::ppm::write_image_to_path(
+    ml::visual::ppm::write_image_to_path(
         img,
         "InOut/image_16x9_rgb.ppm");
 
-    visual::Image img_back = visual::ppm::read_image_from_path(
+    ml::visual::Image img_back = ml::visual::ppm::read_image_from_path(
         "InOut/image_16x9_rgb.ppm");
 
     REQUIRE(img_back.number_cols == img.number_cols);

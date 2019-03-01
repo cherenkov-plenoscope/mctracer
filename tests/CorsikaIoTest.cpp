@@ -2,9 +2,8 @@
 #include "catch.hpp"
 #include "corsika/corsika.h"
 #include "merlict/random/random.h"
+namespace ml = merlict;
 using std::string;
-using namespace merlict;
-
 
 
 TEST_CASE("Corsika_io: word_size_is_too_large", "[merlict]") {
@@ -18,7 +17,7 @@ TEST_CASE("Corsika_io: 4char_word_forth_and_back", "[merlict]") {
 }
 
 TEST_CASE("Corsika_io: four_char_word_forth_and_back", "[merlict]") {
-    random::Mt19937 prng(0);
+    ml::random::Mt19937 prng(0);
     for (unsigned int i = 0; i < 1e4; i++) {
         float num = static_cast<float>(prng.uniform());
         string word = corsika::float2str(num);

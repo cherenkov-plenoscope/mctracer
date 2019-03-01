@@ -4,15 +4,14 @@
 #include "corsika/PhotonFactory.h"
 #include "eventio.h"
 #include "merlict/merlict.h"
+namespace ml = merlict;
 using std::vector;
-using namespace merlict;
-
 
 
 TEST_CASE("EventIoPhotonFactoryTest: intersection_point_on_ground", "[merlict]") {
     // compare the input ground intersection point with the actual intersection
     // point of the merlict photons when they are absorbed on the ground.
-    random::Mt19937 prng(0);
+    ml::random::Mt19937 prng(0);
 
     for (float x = -1e4; x < 1e4; x = x+1495.0) {
         for (float y = -1e4; y < 1e4; y = y+1495.0) {
@@ -23,40 +22,46 @@ TEST_CASE("EventIoPhotonFactoryTest: intersection_point_on_ground", "[merlict]")
                     //   x    y    xcos ycos time  zem  weight lambda
                     //   cm   cm   1    1    ns    cm   1      nm
                     const unsigned int id = 1337;
-                    random::FakeConstant fake_prng(0.0);
+                    ml::random::FakeConstant fake_prng(0.0);
 
-                    EventIoPhotonFactory cpf(corsika_photon, id, &fake_prng);
+                    ml::EventIoPhotonFactory cpf(
+                        corsika_photon,
+                        id,
+                        &fake_prng);
 
-                    vector<Photon> photons;
+                    vector<ml::Photon> photons;
                     photons.push_back(cpf.get_photon());
 
                     // propagate merlict photons down to ground
-                    Frame world;
-                    world.set_name_pos_rot("world", VEC3_ORIGIN, ROT3_UNITY);
+                    ml::Frame world;
+                    world.set_name_pos_rot(
+                        "world",
+                        ml::VEC3_ORIGIN,
+                        ml::ROT3_UNITY);
 
-                    Disc* ground = world.append<Disc>();
+                    ml::Disc* ground = world.append<ml::Disc>();
                     ground->set_name_pos_rot(
                         "ground",
-                        VEC3_ORIGIN,
-                        ROT3_UNITY);
-                    const Color* ground_color = &COLOR_GRAY;
+                        ml::VEC3_ORIGIN,
+                        ml::ROT3_UNITY);
+                    const ml::Color* ground_color = &ml::COLOR_GRAY;
                     const unsigned int ground_sensor_id = 0;
                     ground->set_outer_color(ground_color);
                     ground->set_inner_color(ground_color);
                     ground->set_radius(1e3);
 
-                    sensor::Sensor sensor(ground_sensor_id, ground);
-                    vector<sensor::Sensor*> sensor_vec = {&sensor};
-                    sensor::Sensors sensor_list(sensor_vec);
+                    ml::sensor::Sensor sensor(ground_sensor_id, ground);
+                    vector<ml::sensor::Sensor*> sensor_vec = {&sensor};
+                    ml::sensor::Sensors sensor_list(sensor_vec);
 
                     world.init_tree_based_on_mother_child_relations();
 
                     // propagation settings
-                    PropagationConfig settings;
+                    ml::PropagationConfig settings;
                     settings.use_multithread_when_possible = false;
 
                     // photon propagation down to the ground
-                    Photons::propagate_photons_in_scenery_with_settings(
+                    ml::Photons::propagate_photons_in_scenery_with_settings(
                         &photons, &world, &settings, &prng);
 
                     // detect photons in ground sensor
@@ -74,7 +79,7 @@ TEST_CASE("EventIoPhotonFactoryTest: intersection_point_on_ground", "[merlict]")
 }
 
 TEST_CASE("EventIoPhotonFactoryTest: wavelength_sign", "[merlict]") {
-    random::FakeConstant prng(0.0);
+    ml::random::FakeConstant prng(0.0);
     for (int l = 1; l < 1337; l++) {
         const float sign = (l%2 == 0) ? +1.0: -1.0;
         const float lambda = static_cast<float>(l)*sign;
@@ -84,7 +89,7 @@ TEST_CASE("EventIoPhotonFactoryTest: wavelength_sign", "[merlict]") {
         //   cm   cm   1    1    ns    cm   1      nm
 
         const int id = 1337;
-        EventIoPhotonFactory cpf(corsika_photon, id, &prng);
+        ml::EventIoPhotonFactory cpf(corsika_photon, id, &prng);
         REQUIRE(fabs(lambda) == Approx(cpf.wavelength()*1e9).margin(1e-2));
         REQUIRE(cpf.wavelength() > 0.0);
     }
@@ -97,12 +102,12 @@ TEST_CASE("EventIoPhotonFactoryTest: convert_photons", "[merlict]") {
     //   cm   cm   1    1    ns    cm   1    nm
 
     const int id = 1337;
-    random::FakeConstant prng(0.0);
+    ml::random::FakeConstant prng(0.0);
 
-    EventIoPhotonFactory cpf(corsika_photon, id, &prng);
+    ml::EventIoPhotonFactory cpf(corsika_photon, id, &prng);
 
     REQUIRE(cpf.passed_atmosphere());
-    Photon ph = cpf.get_photon();
+    ml::Photon ph = cpf.get_photon();
 
     CHECK(ph.get_simulation_truth_id() == id);
     CHECK(433e-9 == Approx(ph.get_wavelength()).margin(1e-9));
@@ -130,7 +135,7 @@ TEST_CASE("EventIoPhotonFactoryTest: execute_atmospheric_absorption", "[merlict]
     double passed = 0;
     double total = 1e5;
 
-    random::Mt19937 prng(0u);
+    ml::random::Mt19937 prng(0u);
 
     for (double i = 0; i < total-1; i++) {
         float weight = i/total;  // from 0.0 to 1.0
@@ -139,7 +144,7 @@ TEST_CASE("EventIoPhotonFactoryTest: execute_atmospheric_absorption", "[merlict]
         //   x    y    xcos ycos time  zem  weight lambda
         //   cm   cm   1    1    ns    cm   1    nm
 
-        EventIoPhotonFactory cpf(corsika_photon, 1337, &prng);
+        ml::EventIoPhotonFactory cpf(corsika_photon, 1337, &prng);
 
         if (cpf.passed_atmosphere())
             passed++;
@@ -153,53 +158,53 @@ TEST_CASE("EventIoPhotonFactoryTest: execute_atmospheric_absorption", "[merlict]
 
 TEST_CASE("EventIoPhotonFactoryTest: merlict_rejects_photon_weight_below_0", "[merlict]") {
     const unsigned int id = 1337;
-    random::Mt19937 prng(0u);
+    ml::random::Mt19937 prng(0u);
     const std::array<float, 8> corsika_photon =
         {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, -0.1, 433};
 
-    CHECK_THROWS_AS(EventIoPhotonFactory(corsika_photon, id, &prng), EventIoPhotonFactory::BadPhotonWeight);
+    CHECK_THROWS_AS(ml::EventIoPhotonFactory(corsika_photon, id, &prng), ml::EventIoPhotonFactory::BadPhotonWeight);
 }
 
 TEST_CASE("EventIoPhotonFactoryTest: merlict_accepts_photon_weight_equal_1", "[merlict]") {
     const unsigned int id = 1337;
-    random::Mt19937 prng(0u);
+    ml::random::Mt19937 prng(0u);
     const std::array<float, 8> corsika_photon =
         {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 1.0, 433};
 
-    CHECK_NOTHROW(EventIoPhotonFactory(corsika_photon, id, &prng));
+    CHECK_NOTHROW(ml::EventIoPhotonFactory(corsika_photon, id, &prng));
 }
 
 TEST_CASE("EventIoPhotonFactoryTest: merlict_rejects_photon_weight_above_1", "[merlict]") {
     const unsigned int id = 1337;
-    random::Mt19937 prng(0u);
+    ml::random::Mt19937 prng(0u);
     const std::array<float, 8> corsika_photon =
         {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 1.1, 433};
 
-    CHECK_THROWS_AS(EventIoPhotonFactory(corsika_photon, id, &prng), EventIoPhotonFactory::BadPhotonWeight);
+    CHECK_THROWS_AS(ml::EventIoPhotonFactory(corsika_photon, id, &prng), ml::EventIoPhotonFactory::BadPhotonWeight);
 }
 
 TEST_CASE("EventIoPhotonFactoryTest: merlict_accepts_photon_weight_equal_0", "[merlict]") {
     const unsigned int id = 1337;
-    random::Mt19937 prng(0u);
+    ml::random::Mt19937 prng(0u);
     const std::array<float, 8> corsika_photon =
         {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.0, 433};
-    CHECK_NOTHROW(EventIoPhotonFactory(corsika_photon, id, &prng));
+    CHECK_NOTHROW(ml::EventIoPhotonFactory(corsika_photon, id, &prng));
 }
 
 TEST_CASE("EventIoPhotonFactoryTest: merlict_accepts_photon_weight_btw_0_and_1", "[merlict]") {
     const unsigned int id = 1337;
-    random::Mt19937 prng(0u);
+    ml::random::Mt19937 prng(0u);
     const std::array<float, 8>  corsika_photon =
         {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.4455, 433};
-    CHECK_NOTHROW(EventIoPhotonFactory(corsika_photon, id, &prng));
+    CHECK_NOTHROW(ml::EventIoPhotonFactory(corsika_photon, id, &prng));
 }
 
 TEST_CASE("EventIoPhotonFactoryTest: zero_weight_is_passed_on_zero_from_prng", "[merlict]") {
     const std::array<float, 8>  corsika_photon =
     {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 0.0, 433};
     const unsigned int id = 1337;
-    random::FakeConstant prng(0.0);
-    EventIoPhotonFactory cpf(corsika_photon, id, &prng);
+    ml::random::FakeConstant prng(0.0);
+    ml::EventIoPhotonFactory cpf(corsika_photon, id, &prng);
     CHECK(cpf.passed_atmosphere());
 }
 
@@ -208,8 +213,8 @@ TEST_CASE("EventIoPhotonFactoryTest: relative_arrival_time_on_ground", "[merlict
     const std::array<float, 8>  corsika_photon =
     {1.2, 3.4, 0.0, 0.0, arrival_time_on_dround_in_ns, 1e5, 0.4455, 433};
     const unsigned int id = 1337;
-    random::FakeConstant prng(0.0);
-    EventIoPhotonFactory cpf(corsika_photon, id, &prng);
+    ml::random::FakeConstant prng(0.0);
+    ml::EventIoPhotonFactory cpf(corsika_photon, id, &prng);
     CHECK(cpf.relative_arrival_time_on_ground() == arrival_time_on_dround_in_ns*1e-9);
 }
 
@@ -226,12 +231,12 @@ TEST_CASE("EventIoPhotonFactoryTest: correct_rel_time_when_intersecting_ground",
 
         vector<float> relative_arrival_times_in_corsika_file;
 
-        vector<Photon> photons;
+        vector<ml::Photon> photons;
 
-        random::Mt19937 prng(0u);
+        ml::random::Mt19937 prng(0u);
 
         for (unsigned int id = 0; id < event.photons.size(); id++) {
-            EventIoPhotonFactory factory(
+            ml::EventIoPhotonFactory factory(
                 event.photons.at(id),
                 id,
                 &prng);
@@ -241,36 +246,36 @@ TEST_CASE("EventIoPhotonFactoryTest: correct_rel_time_when_intersecting_ground",
         }
 
         // propagate merlict photons down to ground
-        Frame world;
-        world.set_name_pos_rot("world", VEC3_ORIGIN, ROT3_UNITY);
+        ml::Frame world;
+        world.set_name_pos_rot("world", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
-        Disc* ground = world.append<Disc>();
-        ground->set_name_pos_rot("ground", VEC3_ORIGIN, ROT3_UNITY);
-        const Color* ground_color = &COLOR_GRAY;
+        ml::Disc* ground = world.append<ml::Disc>();
+        ground->set_name_pos_rot("ground", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
+        const ml::Color* ground_color = &ml::COLOR_GRAY;
         const unsigned int ground_sensor_id = 0;
         ground->set_outer_color(ground_color);
         ground->set_inner_color(ground_color);
         ground->set_radius(1e7);
 
-        sensor::Sensor sensor(ground_sensor_id, ground);
-        std::vector<sensor::Sensor*> sensor_vec = {&sensor};
-        sensor::Sensors sensor_list(sensor_vec);
+        ml::sensor::Sensor sensor(ground_sensor_id, ground);
+        std::vector<ml::sensor::Sensor*> sensor_vec = {&sensor};
+        ml::sensor::Sensors sensor_list(sensor_vec);
 
         world.init_tree_based_on_mother_child_relations();
 
         // propagation settings
-        PropagationConfig settings;
+        ml::PropagationConfig settings;
         settings.use_multithread_when_possible = false;
 
         // photon propagation
-        Photons::propagate_photons_in_scenery_with_settings(
+        ml::Photons::propagate_photons_in_scenery_with_settings(
             &photons, &world, &settings, &prng);
 
         // detect photons in sensors
         sensor_list.clear_history();
         sensor_list.assign_photons(&photons);
 
-        double mean_arrival_time = sensor::arrival_time_mean(
+        double mean_arrival_time = ml::sensor::arrival_time_mean(
             sensor.photon_arrival_history);
 
         for (

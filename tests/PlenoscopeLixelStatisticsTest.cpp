@@ -3,8 +3,6 @@
 #include "plenoscope/calibration/LixelStatistics.h"
 using std::vector;
 using std::string;
-using namespace merlict;
-
 
 
 TEST_CASE("PlenoscopeLixelStatisticsTest: default_ctor", "[merlict]") {

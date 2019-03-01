@@ -2,18 +2,16 @@
 #include <math.h>
 #include "catch.hpp"
 #include "merlict/scenery/geometry/HexagonalPrismZ.h"
-
-using namespace merlict;
-
+namespace ml = merlict;
 
 
 TEST_CASE("HexagonalPrismZTest: throw_when_negativ_radius", "[merlict]") {
-    HexagonalPrismZ hexBound;
+    ml::HexagonalPrismZ hexBound;
     CHECK_THROWS_AS(hexBound.set_outer_radius(-55.0), std::invalid_argument);
 }
 
 TEST_CASE("HexagonalPrismZTest: throw_when_zero_radius", "[merlict]") {
-    HexagonalPrismZ hexBound;
+    ml::HexagonalPrismZ hexBound;
     CHECK_THROWS_AS(hexBound.set_outer_radius(0.0), std::invalid_argument);
 }
 
@@ -21,10 +19,10 @@ TEST_CASE("HexagonalPrismZTest: is_inside", "[merlict]") {
     double outer_radius = 1.0;
     double inner_radius = outer_radius * cos(M_PI/6.0);
 
-    HexagonalPrismZ hexBound;
+    ml::HexagonalPrismZ hexBound;
     hexBound.set_outer_radius(1.0);
 
-    Vec3 vec(0.0, 0.0, 0.0);
+    ml::Vec3 vec(0.0, 0.0, 0.0);
     CHECK(hexBound.is_inside(&vec));
 
     vec.set(0.0, inner_radius-0.01, 0.0);

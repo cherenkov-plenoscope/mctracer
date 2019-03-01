@@ -3,152 +3,161 @@
 #include "catch.hpp"
 #include "merlict/merlict.h"
 #include "merlict/scenery/primitive/Sphere.h"
+namespace ml = merlict;
 using std::string;
 using std::stringstream;
 using std::vector;
-using namespace merlict;
-
 
 
 TEST_CASE("FramesTest: too_close_together_no_frame", "[merlict]") {
-    vector<Frame*> vf;
-    CHECK(!Frames::positions_in_mother_are_too_close_together(vf));
+    vector<ml::Frame*> vf;
+    CHECK(!ml::Frames::positions_in_mother_are_too_close_together(vf));
 }
 
 TEST_CASE("FramesTest: too_close_together_one_frame", "[merlict]") {
-    Frame root;
-    root.set_name_pos_rot("root", VEC3_ORIGIN, ROT3_UNITY);
-    vector<Frame*> vf; vf.push_back(&root);
-    CHECK(!Frames::positions_in_mother_are_too_close_together(vf));
+    ml::Frame root;
+    root.set_name_pos_rot("root", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
+    vector<ml::Frame*> vf; vf.push_back(&root);
+    CHECK(!ml::Frames::positions_in_mother_are_too_close_together(vf));
 }
 
 TEST_CASE("FramesTest: too_close_together_true", "[merlict]") {
-    Frame f1;
-    f1.set_name_pos_rot("f1", VEC3_ORIGIN, ROT3_UNITY);
+    ml::Frame f1;
+    f1.set_name_pos_rot("f1", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
-    Frame f2;
-    f2.set_name_pos_rot("f2", VEC3_ORIGIN, ROT3_UNITY);
+    ml::Frame f2;
+    f2.set_name_pos_rot("f2", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
-    vector<Frame*> vf; vf.push_back(&f1); vf.push_back(&f2);
-    CHECK(Frames::positions_in_mother_are_too_close_together(vf));
+    vector<ml::Frame*> vf; vf.push_back(&f1); vf.push_back(&f2);
+    CHECK(ml::Frames::positions_in_mother_are_too_close_together(vf));
 }
 
 TEST_CASE("FramesTest: too_close_together_false", "[merlict]") {
-    Frame f1;
-    f1.set_name_pos_rot("f1", VEC3_ORIGIN, ROT3_UNITY);
+    ml::Frame f1;
+    f1.set_name_pos_rot("f1", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
-    Frame f2;
+    ml::Frame f2;
     f2.set_name_pos_rot(
         "f2",
-        Vec3(0, 0, 10.0*FRAME_MIN_STRUCTURE_SIZE),
-        ROT3_UNITY);
+        ml::Vec3(0, 0, 10.0*ml::FRAME_MIN_STRUCTURE_SIZE),
+        ml::ROT3_UNITY);
 
-    vector<Frame*> vf; vf.push_back(&f1); vf.push_back(&f2);
-    CHECK(!Frames::positions_in_mother_are_too_close_together(vf));
+    vector<ml::Frame*> vf; vf.push_back(&f1); vf.push_back(&f2);
+    CHECK(!ml::Frames::positions_in_mother_are_too_close_together(vf));
 }
 
 TEST_CASE("FramesTest: mean_no_frame", "[merlict]") {
-    vector<Frame*> vf;
-    CHECK_THROWS_AS(Frames::mean_of_positions_in_mother(vf), std::invalid_argument);
+    vector<ml::Frame*> vf;
+    CHECK_THROWS_AS(ml::Frames::mean_of_positions_in_mother(vf), std::invalid_argument);
 }
 
 TEST_CASE("FramesTest: optimal_bounding_sphere_pos_no_frame", "[merlict]") {
-    vector<Frame*> vf;
-    CHECK_THROWS_AS(Frames::dumb_bounding_sphere_center(vf), std::invalid_argument);
+    vector<ml::Frame*> vf;
+    CHECK_THROWS_AS(ml::Frames::dumb_bounding_sphere_center(vf), std::invalid_argument);
 }
 
 TEST_CASE("FramesTest: optimal_bounding_sphere_pos_one_frame", "[merlict]") {
-    Frame root;
-    root.set_name_pos_rot("root", VEC3_UNIT_X, ROT3_UNITY);
-    vector<Frame*> vf; vf.push_back(&root);
-    CHECK(VEC3_UNIT_X == Frames::dumb_bounding_sphere_center(vf));
+    ml::Frame root;
+    root.set_name_pos_rot("root", ml::VEC3_UNIT_X, ml::ROT3_UNITY);
+    vector<ml::Frame*> vf; vf.push_back(&root);
+    CHECK(ml::VEC3_UNIT_X == ml::Frames::dumb_bounding_sphere_center(vf));
 }
 
 TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_frames_symetric", "[merlict]") {
-    vector<Frame*> vf;
-    Frame f1;
-    f1.set_name_pos_rot("f1", Vec3(0, 0, 0), ROT3_UNITY);
+    vector<ml::Frame*> vf;
+    ml::Frame f1;
+    f1.set_name_pos_rot("f1", ml::Vec3(0, 0, 0), ml::ROT3_UNITY);
     vf.push_back(&f1);
-    Frame f2;
-    f2.set_name_pos_rot("f2", Vec3(1, 0, 0), ROT3_UNITY);
+    ml::Frame f2;
+    f2.set_name_pos_rot("f2", ml::Vec3(1, 0, 0), ml::ROT3_UNITY);
     vf.push_back(&f2);
-    Frame f3;
-    f3.set_name_pos_rot("f3", Vec3(2, 0, 0), ROT3_UNITY);
+    ml::Frame f3;
+    f3.set_name_pos_rot("f3", ml::Vec3(2, 0, 0), ml::ROT3_UNITY);
     vf.push_back(&f3);
-    Frame f4;
-    f4.set_name_pos_rot("f4", Vec3(3, 0, 0), ROT3_UNITY);
+    ml::Frame f4;
+    f4.set_name_pos_rot("f4", ml::Vec3(3, 0, 0), ml::ROT3_UNITY);
     vf.push_back(&f4);
-    Frame f5;
-    f5.set_name_pos_rot("f5", Vec3(4, 0, 0), ROT3_UNITY);
+    ml::Frame f5;
+    f5.set_name_pos_rot("f5", ml::Vec3(4, 0, 0), ml::ROT3_UNITY);
     vf.push_back(&f5);
-    CHECK(Frames::dumb_bounding_sphere_center(vf) == Vec3(2, 0, 0));
+    CHECK(ml::Frames::dumb_bounding_sphere_center(vf) == ml::Vec3(2, 0, 0));
 }
 
 TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_spheres_symetric", "[merlict]") {
-    vector<Frame*> vf;
-    Sphere f1;
-    f1.set_name_pos_rot("f1", Vec3(0, 0, 0), ROT3_UNITY); f1.set_radius(1.0);
+    vector<ml::Frame*> vf;
+    ml::Sphere f1;
+    f1.set_name_pos_rot("f1", ml::Vec3(0, 0, 0), ml::ROT3_UNITY);
+    f1.set_radius(1.0);
     vf.push_back(&f1);
-    Sphere f2;
-    f2.set_name_pos_rot("f2", Vec3(1, 0, 0), ROT3_UNITY); f2.set_radius(1.0);
+    ml::Sphere f2;
+    f2.set_name_pos_rot("f2", ml::Vec3(1, 0, 0), ml::ROT3_UNITY);
+    f2.set_radius(1.0);
     vf.push_back(&f2);
-    Sphere f3;
-    f3.set_name_pos_rot("f3", Vec3(2, 0, 0), ROT3_UNITY); f3.set_radius(1.0);
+    ml::Sphere f3;
+    f3.set_name_pos_rot("f3", ml::Vec3(2, 0, 0), ml::ROT3_UNITY);
+    f3.set_radius(1.0);
     vf.push_back(&f3);
-    Sphere f4;
-    f4.set_name_pos_rot("f4", Vec3(3, 0, 0), ROT3_UNITY); f4.set_radius(1.0);
+    ml::Sphere f4;
+    f4.set_name_pos_rot("f4", ml::Vec3(3, 0, 0), ml::ROT3_UNITY);
+    f4.set_radius(1.0);
     vf.push_back(&f4);
-    Sphere f5;
-    f5.set_name_pos_rot("f5", Vec3(4, 0, 0), ROT3_UNITY); f5.set_radius(1.0);
+    ml::Sphere f5;
+    f5.set_name_pos_rot("f5", ml::Vec3(4, 0, 0), ml::ROT3_UNITY);
+    f5.set_radius(1.0);
     vf.push_back(&f5);
-    CHECK(Frames::dumb_bounding_sphere_center(vf) == Vec3(2, 0, 0));
+    CHECK(ml::Frames::dumb_bounding_sphere_center(vf) == ml::Vec3(2, 0, 0));
 }
 
 TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_spheres_asymetric", "[merlict]") {
-    vector<Frame*> vf;
-    Sphere f1;
-    f1.set_name_pos_rot("f1", Vec3(0, 0, 0), ROT3_UNITY);
-    f1.set_radius(1.0); vf.push_back(&f1);
-    Sphere f2;
-    f2.set_name_pos_rot("f2", Vec3(1, 0, 0), ROT3_UNITY);
-    f2.set_radius(1.0); vf.push_back(&f2);
-    Sphere f3;
-    f3.set_name_pos_rot("f3", Vec3(2, 0, 0), ROT3_UNITY);
-    f3.set_radius(1.0); vf.push_back(&f3);
-    Sphere f4;
-    f4.set_name_pos_rot("f4", Vec3(3, 0, 0), ROT3_UNITY);
-    f4.set_radius(1.0); vf.push_back(&f4);
-    Sphere f5;
-    f5.set_name_pos_rot("f5", Vec3(4, 0, 0), ROT3_UNITY);
-    f5.set_radius(5.0); vf.push_back(&f5);
-    CHECK(Frames::dumb_bounding_sphere_center(vf) == Vec3(4, 0, 0));
+    vector<ml::Frame*> vf;
+    ml::Sphere f1;
+    f1.set_name_pos_rot("f1", ml::Vec3(0, 0, 0), ml::ROT3_UNITY);
+    f1.set_radius(1.0);
+    vf.push_back(&f1);
+    ml::Sphere f2;
+    f2.set_name_pos_rot("f2", ml::Vec3(1, 0, 0), ml::ROT3_UNITY);
+    f2.set_radius(1.0);
+    vf.push_back(&f2);
+    ml::Sphere f3;
+    f3.set_name_pos_rot("f3", ml::Vec3(2, 0, 0), ml::ROT3_UNITY);
+    f3.set_radius(1.0);
+    vf.push_back(&f3);
+    ml::Sphere f4;
+    f4.set_name_pos_rot("f4", ml::Vec3(3, 0, 0), ml::ROT3_UNITY);
+    f4.set_radius(1.0);
+    vf.push_back(&f4);
+    ml::Sphere f5;
+    f5.set_name_pos_rot("f5", ml::Vec3(4, 0, 0), ml::ROT3_UNITY);
+    f5.set_radius(5.0);
+    vf.push_back(&f5);
+    CHECK(ml::Frames::dumb_bounding_sphere_center(vf) == ml::Vec3(4, 0, 0));
 }
 
 TEST_CASE("FramesTest: not_optimal_in_symetric_case", "[merlict]") {
-    vector<Frame*> vf;
-    Sphere f1;
+    vector<ml::Frame*> vf;
+    ml::Sphere f1;
     f1.set_name_pos_rot(
         "f1",
-        Vec3(cos(deg2rad(0.0)), sin(deg2rad(0.0)), 0),
-        ROT3_UNITY);
+        ml::Vec3(cos(ml::deg2rad(0.0)), sin(ml::deg2rad(0.0)), 0),
+        ml::ROT3_UNITY);
     f1.set_radius(0.5); vf.push_back(&f1);
 
-    Sphere f2;
+    ml::Sphere f2;
     f2.set_name_pos_rot(
         "f2",
-        Vec3(cos(deg2rad(120.0)), sin(deg2rad(120.0)), 0),
-        ROT3_UNITY);
+        ml::Vec3(cos(ml::deg2rad(120.0)), sin(ml::deg2rad(120.0)), 0),
+        ml::ROT3_UNITY);
     f2.set_radius(0.5); vf.push_back(&f2);
 
-    Sphere f3;
+    ml::Sphere f3;
     f3.set_name_pos_rot(
         "f3",
-        Vec3(cos(deg2rad(240.0)), sin(deg2rad(240.0)), 0),
-        ROT3_UNITY);
+        ml::Vec3(cos(ml::deg2rad(240.0)), sin(ml::deg2rad(240.0)), 0),
+        ml::ROT3_UNITY);
     f3.set_radius(0.5); vf.push_back(&f3);
 
-    const Vec3 center = Frames::dumb_bounding_sphere_center(vf);
-    const double radius = Frames::bounding_sphere_radius(vf, center);
+    const ml::Vec3 center = ml::Frames::dumb_bounding_sphere_center(vf);
+    const double radius = ml::Frames::bounding_sphere_radius(vf, center);
 
     const double expected_enclosing_radius_for_three_balls = 1.5;
     CHECK(radius > expected_enclosing_radius_for_three_balls);

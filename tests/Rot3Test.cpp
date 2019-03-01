@@ -2,16 +2,14 @@
 #include <math.h>
 #include "catch.hpp"
 #include "merlict/Rot3.h"
-
-using namespace merlict;
-
+namespace ml = merlict;
 
 
 TEST_CASE("Rot3Test: ctor_xyz_mode", "[merlict]") {
   const double x = -3.141;
   const double y = 2.0;
   const double z = 1.0;
-  Rot3 r(x, y, z);
+  ml::Rot3 r(x, y, z);
   CHECK(r.get_rot_x() == x);
   CHECK(r.get_rot_y() == y);
   CHECK(r.get_rot_z() == z);
@@ -19,9 +17,9 @@ TEST_CASE("Rot3Test: ctor_xyz_mode", "[merlict]") {
 }
 
 TEST_CASE("Rot3Test: ctor_axis_mode", "[merlict]") {
-  Vec3 v(0.0, 0.0, 1.0);
+  ml::Vec3 v(0.0, 0.0, 1.0);
   double angle = 1.52;
-  Rot3 p(v, angle);
+  ml::Rot3 p(v, angle);
   CHECK(p.get_rot_angle_in_rad() == angle);
   CHECK((p.get_rot_axis()).x == v.x);
   CHECK((p.get_rot_axis()).y == v.y);
@@ -33,7 +31,7 @@ TEST_CASE("Rot3Test: set_xyz_mode", "[merlict]") {
   const double x = -3.141;
   const double y = -2.0;
   const double z = 1.0000;
-  Rot3 r; r.set(x, y, z);
+  ml::Rot3 r; r.set(x, y, z);
   CHECK(r.get_rot_x() == x);
   CHECK(r.get_rot_y() == y);
   CHECK(r.get_rot_z() == z);
@@ -41,9 +39,9 @@ TEST_CASE("Rot3Test: set_xyz_mode", "[merlict]") {
 }
 
 TEST_CASE("Rot3Test: set_axis_mode", "[merlict]") {
-  Vec3 v(0.0, 0.0, 1.0);
+  ml::Vec3 v(0.0, 0.0, 1.0);
   double  angle = 1.52;
-  Rot3 p; p.set(v, angle);
+  ml::Rot3 p; p.set(v, angle);
   CHECK(p.get_rot_angle_in_rad() == angle);
   CHECK((p.get_rot_axis()).x == v.x);
   CHECK((p.get_rot_axis()).y == v.y);
@@ -55,7 +53,7 @@ TEST_CASE("Rot3Test: SineAndCosineWhenSetXYZ", "[merlict]") {
   const double x = -3.141;
   const double y = -2.0;
   const double z = 1.0000;
-  Rot3 r(x, y, z);
+  ml::Rot3 r(x, y, z);
   CHECK(r.sinRx() == sin(x));
   CHECK(r.sinRy() == sin(y));
   CHECK(r.sinRz() == sin(z));
@@ -65,10 +63,10 @@ TEST_CASE("Rot3Test: SineAndCosineWhenSetXYZ", "[merlict]") {
 }
 
 TEST_CASE("Rot3Test: zoro_rot_angle", "[merlict]") {
-  Rot3 r(VEC3_ORIGIN, 0.0);
-  CHECK(r == ROT3_UNITY);
-  Rot3 s(VEC3_UNIT_Z, 0.0);
-  CHECK(s == ROT3_UNITY);
-  Rot3 t(VEC3_UNIT_Y, 0.0);
-  CHECK(t == ROT3_UNITY);
+  ml::Rot3 r(ml::VEC3_ORIGIN, 0.0);
+  CHECK(r == ml::ROT3_UNITY);
+  ml::Rot3 s(ml::VEC3_UNIT_Z, 0.0);
+  CHECK(s == ml::ROT3_UNITY);
+  ml::Rot3 t(ml::VEC3_UNIT_Y, 0.0);
+  CHECK(t == ml::ROT3_UNITY);
 }
