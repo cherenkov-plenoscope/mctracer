@@ -5,12 +5,13 @@
 #include "merlict/random/random.h"
 #include "merlict/simulation_truth.h"
 namespace ml = merlict;
+namespace sp = signal_processing;
 using std::vector;
 using std::string;
-using namespace signal_processing;
 
 
-vector<vector<ExtractedPulse>> create_photon_stream(
+
+vector<vector<sp::ExtractedPulse>> create_photon_stream(
     const unsigned int number_of_channels,
     const float single_pulse_rate,
     const float exposure_time,
@@ -19,9 +20,9 @@ vector<vector<ExtractedPulse>> create_photon_stream(
 
     ml::random::Mt19937 prng(seed);
 
-    vector<vector<ExtractedPulse>> photon_stream;
+    vector<vector<sp::ExtractedPulse>> photon_stream;
     for (unsigned int i = 0; i < number_of_channels; i++) {
-        vector<ExtractedPulse> pulses_in_channel;
+        vector<sp::ExtractedPulse> pulses_in_channel;
         float t = 0.0;
         while (true) {
             const float t_next = prng.expovariate(single_pulse_rate);
@@ -29,7 +30,7 @@ vector<vector<ExtractedPulse>> create_photon_stream(
                 break;
             } else {
                 t += t_next;
-                ExtractedPulse pulse;
+                sp::ExtractedPulse pulse;
                 pulse.arrival_time_slice = static_cast<int32_t>(
                     floor(t/time_slice_duration));
                 pulse.simulation_truth_id = static_cast<int32_t>(
@@ -44,8 +45,8 @@ vector<vector<ExtractedPulse>> create_photon_stream(
 }
 
 void expect_eq(
-    const PhotonStream::Stream &A,
-    const PhotonStream::Stream &B,
+    const sp::PhotonStream::Stream &A,
+    const sp::PhotonStream::Stream &B,
     bool simulation_truth_eq = true
 ) {
     CHECK(B.time_slice_duration == A.time_slice_duration);
@@ -69,7 +70,7 @@ void write_and_read_back(
     const float exposure_time,
     const unsigned int seed
 ) {
-    PhotonStream::Stream stream;
+    sp::PhotonStream::Stream stream;
     stream.photon_stream = create_photon_stream(
             number_of_channels,
             single_pulse_rate,
@@ -79,23 +80,23 @@ void write_and_read_back(
     stream.time_slice_duration = time_slice_duration;
 
     const string path = "InOut/photon_stream.bin";
-    PhotonStream::write(
+    sp::PhotonStream::write(
         stream.photon_stream,
         time_slice_duration,
         path);
 
     const string truth_path = "InOut/photon_stream_truth.bin";
-    PhotonStream::write_simulation_truth(
+    sp::PhotonStream::write_simulation_truth(
         stream.photon_stream,
         truth_path);
 
-    PhotonStream::Stream ps_without_truth =
-        PhotonStream::read(path);
+    sp::PhotonStream::Stream ps_without_truth =
+        sp::PhotonStream::read(path);
 
     expect_eq(stream, ps_without_truth, false);
 
-    PhotonStream::Stream ps_with_truth =
-        PhotonStream::read_with_simulation_truth(
+    sp::PhotonStream::Stream ps_with_truth =
+        sp::PhotonStream::read_with_simulation_truth(
             path,
             truth_path);
 
@@ -105,20 +106,20 @@ void write_and_read_back(
 
 
 TEST_CASE("PhotonStreamTest: arrival_slices_must_not_be_NEXT_CHANNEL_MARKER", "[merlict]") {
-    vector<vector<ExtractedPulse>> channels;
-    vector<ExtractedPulse> channel;
+    vector<vector<sp::ExtractedPulse>> channels;
+    vector<sp::ExtractedPulse> channel;
     const int32_t simulation_truth_id = 1337;
     channel.emplace_back(
-        ExtractedPulse(
-            PhotonStream::NEXT_CHANNEL_MARKER,
+        sp::ExtractedPulse(
+            sp::PhotonStream::NEXT_CHANNEL_MARKER,
             simulation_truth_id));
     channels.push_back(channel);
 
-    CHECK_THROWS_AS(PhotonStream::write(channels, 0.5e-9, "InOut/must_not_be_written.phs"), std::runtime_error);
+    CHECK_THROWS_AS(sp::PhotonStream::write(channels, 0.5e-9, "InOut/must_not_be_written.phs"), std::runtime_error);
 
     channels.at(0).at(0).arrival_time_slice = 254;
 
-    CHECK_NOTHROW(PhotonStream::write(channels, 0.5e-9, "InOut/shall_be_written.phs"));
+    CHECK_NOTHROW(sp::PhotonStream::write(channels, 0.5e-9, "InOut/shall_be_written.phs"));
 }
 
 TEST_CASE("PhotonStreamTest: write_and_read_back_full_single_pulse_event", "[merlict]") {
