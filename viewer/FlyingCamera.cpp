@@ -6,9 +6,6 @@
 #include <fstream>
 #include <opencv2/opencv.hpp>
 
-using std::cout;
-using std::stringstream;
-using std::string;
 
 namespace merlict {
 namespace visual {
@@ -172,7 +169,7 @@ void FlyingCamera::enter_interactive_display() {
             }
             break;
             case 'p': {
-                cout << world->get_tree_print() << "\n";
+                std::cout << world->get_tree_print() << "\n";
                 key_stroke_requires_image_update = false;
             }
             break;
@@ -213,7 +210,7 @@ void FlyingCamera::destroy_display() {
 }
 
 void FlyingCamera::update_display() {
-    cout << "Full resolution image "
+    std::cout << "Full resolution image "
     << camera.number_cols <<"x"
     << camera.number_rows <<", "
     << camera.number_cols*camera.number_rows/1e6
@@ -249,12 +246,12 @@ void FlyingCamera::mouse_button_event(
 
 void FlyingCamera::toggle_stereo3D() {
     stereo3D = !stereo3D;
-    cout << "Stereo 3D : " << (stereo3D ? "On" : "Off") << "\n";
+    std::cout << "Stereo 3D : " << (stereo3D ? "On" : "Off") << "\n";
 }
 
-string FlyingCamera::get_snapshot_filename() {
+std::string FlyingCamera::get_snapshot_filename() {
     snapshot_counter++;
-    stringstream filename;
+    std::stringstream filename;
     filename << time_stamp.yyyy() << time_stamp.mm() << time_stamp.dd() << "_";
     filename << time_stamp.HH() << time_stamp.MM() << time_stamp.SS();
     filename << "_" << snapshot_counter << ".ppm";
@@ -285,7 +282,7 @@ void FlyingCamera::aquire_image_focused_on_pixel_col_row(int col, int row) {
         object_distance_to_focus_on = 9e99;  // a very large distance
     ApertureCamera apcam = get_aperture_camera_based_on_camera();
     apcam.set_focus_to(object_distance_to_focus_on);
-    cout << apcam.str();
+    std::cout << apcam.str();
     Image apcam_img = Image(apcam.number_cols, apcam.number_rows);
     acquire_image_with_camera(&apcam, &apcam_img);
     ppm::write_image_to_path(apcam_img, get_snapshot_filename());
@@ -307,7 +304,7 @@ void FlyingCamera::print_ray_for_pixel_col_row(int col, int row) {
         &probing_ray,
         world);
     clear_screen();
-    stringstream out;
+    std::stringstream out;
     //      0        1         2         3         4         5         6
     //      123456789012345678901234567890123456789012345678901234567890
 
@@ -321,13 +318,13 @@ void FlyingCamera::print_ray_for_pixel_col_row(int col, int row) {
     else
         out << "| No intersection with any object.\n";
     out << "|___________________________________________________________\n";
-    cout << out.str();
+    std::cout << out.str();
 }
 
-string FlyingCamera::get_intersection_info_print(
+std::string FlyingCamera::get_intersection_info_print(
     const Intersection intersec
 )const {
-    stringstream out;
+    std::stringstream out;
     out << "| Object: ";
     out << intersec.get_object()->get_path_in_tree_of_frames() << "\n";
     out << "| Distance to first intersection: ";
@@ -355,7 +352,7 @@ string FlyingCamera::get_intersection_info_print(
 
 void FlyingCamera::print_help()const {
     clear_screen();
-    stringstream out;
+    std::stringstream out;
 
 //  0         1         2         3         4         5         6         7
 //   12345678901234567890123456789012345678901234567890123456789012345678901234
@@ -381,7 +378,7 @@ void FlyingCamera::print_help()const {
     "[  space key  ] full resolution.\n"
     "[ left mouse  ] click image for additional information.\n"
     "[ right mouse ] click image for manual focus with snapshot.\n\n";
-    cout << out.str();
+    std::cout << out.str();
 }
 
 void FlyingCamera::continue_with_new_scenery_and_visual_config(

@@ -6,10 +6,7 @@
 #include "FlyingCamera.h"
 #include "json.h"
 namespace ml = merlict;
-using std::string;
-using std::cout;
-using std::array;
-using std::vector;
+
 
 static const char USAGE[] =
 R"(Show a scenery with photons
@@ -73,8 +70,8 @@ int main(int argc, char* argv[]) {
         // double zd = corsika::EventHeader::zenith(event.header.raw);
 
         unsigned int id = 0;
-        for(array<float, 8> corsika_photon : event.photons) {
-            vector<ml::Photon> photons;
+        for(std::array<float, 8> corsika_photon : event.photons) {
+            std::vector<ml::Photon> photons;
             ml::EventIoPhotonFactory cpf(corsika_photon, id++, &prng);
 
             if(cpf.passed_atmosphere()) {

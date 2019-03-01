@@ -2,19 +2,18 @@
 #include "merlict/scenery/stereo_litography.h"
 #include "merlict/scenery/primitive/Triangle.h"
 #include <sstream>
-using std::string;
-using std::vector;
+
 
 namespace merlict {
 namespace stereo_litography {
 
 void add_stl_to_and_inherit_surface_from_surfac_entity(
-    const string path,
+    const std::string path,
     SurfaceEntity* proto,
     const double scale
 ) {
     BinaryReader reader(path);
-    vector<Facet> facets = reader.get_facets();
+    std::vector<Facet> facets = reader.get_facets();
     unsigned int facet_count = 0;
     for (Facet facet : facets) {
         Triangle* tri = proto->append<Triangle>();
@@ -31,9 +30,13 @@ void add_stl_to_and_inherit_surface_from_surfac_entity(
     }
 }
 
-void add_stl_to_frame(const string path, Frame* proto, const double scale) {
+void add_stl_to_frame(
+    const std::string path,
+    Frame* proto,
+    const double scale
+) {
     BinaryReader reader(path);
-    vector<Facet> facets = reader.get_facets();
+    std::vector<Facet> facets = reader.get_facets();
     unsigned int facet_count = 0;
     for (Facet facet : facets) {
         Triangle* tri = proto->append<Triangle>();
@@ -62,7 +65,7 @@ void BinaryWriter::add_facet_normal_and_three_vertices(
     facets.push_back(facet);
 }
 
-void BinaryWriter::add_facets(const vector<Facet> additional_facets) {
+void BinaryWriter::add_facets(const std::vector<Facet> additional_facets) {
     for (Facet additional_facet : additional_facets)
         facets.push_back(additional_facet);
 }
@@ -82,7 +85,7 @@ void BinaryWriter::assert_normal_is_actually_normalized(const Vec3 normal) {
     }
 }
 
-void BinaryWriter::write_to_file(const string _filename) {
+void BinaryWriter::write_to_file(const std::string _filename) {
     filename = _filename;
     fout.open(filename, std::ios::out | std::ios::binary);
     assert_file_is_open();
@@ -141,7 +144,7 @@ void BinaryWriter::assert_file_is_open()const {
 
 
 
-BinaryReader::BinaryReader(const string _filename):
+BinaryReader::BinaryReader(const std::string _filename):
     filename(_filename) {
     start();
 }
@@ -164,7 +167,7 @@ void BinaryReader::read_total_number_of_facets() {
     total_number_of_facets = binio::read_uint32(fin);
 }
 
-string BinaryReader::get_report()const {
+std::string BinaryReader::get_report()const {
     std::stringstream info, out;
     info << __FILE__ << " " << __LINE__ << "\n";
     info << "BinaryReader: in file '" << filename << "'\n";
@@ -206,20 +209,20 @@ void BinaryReader::assert_file_is_open()const {
     }
 }
 
-vector<float> BinaryReader::read_floats(const unsigned int n) {
-    vector<float> block(n);
+std::vector<float> BinaryReader::read_floats(const unsigned int n) {
+    std::vector<float> block(n);
     fin.read(reinterpret_cast<char*>(block.data()), block.size()*sizeof(float));
     return block;
 }
 
-string BinaryReader::read_chars(const unsigned int n) {
-    vector<char> block(n);
+std::string BinaryReader::read_chars(const unsigned int n) {
+    std::vector<char> block(n);
     fin.read(block.data(), block.size()*sizeof(char));
-    string str(block.begin(), block.end());
+    std::string str(block.begin(), block.end());
     return str;;
 }
 
-string BinaryReader::str()const {
+std::string BinaryReader::str()const {
     std::stringstream out;
     out << "BinaryReader(" << filename << ")\n";
     out << "header:\n";
@@ -239,7 +242,7 @@ Facet BinaryReader::read_and_create_next_facet() {
     current_triangle_number++;
 
     // 12 floats
-    vector<float> normal_and_3_vertexes = read_floats(
+    std::vector<float> normal_and_3_vertexes = read_floats(
         TRIANGLE_SIZE_BYTES);
 
     // 2byte short
@@ -270,7 +273,7 @@ Facet BinaryReader::read_and_create_next_facet() {
     return facet;
 }
 
-vector<Facet> BinaryReader::get_facets()const {
+std::vector<Facet> BinaryReader::get_facets()const {
     return facets;
 }
 
@@ -306,7 +309,7 @@ bool BinaryReader::stl_header_implies_ascii_format()const {
     return txt::is_equal("solid", stl_header.substr(0, 5));
 }
 
-string BinaryReader::get_header()const {
+std::string BinaryReader::get_header()const {
     return stl_header;
 }
 

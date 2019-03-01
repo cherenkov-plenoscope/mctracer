@@ -2,7 +2,7 @@
 #include <math.h>
 #include "viewer/camera_operator/Rotation.h"
 #include "merlict/tools.h"
-using std::cout;
+
 
 namespace merlict {
 namespace visual {
@@ -82,8 +82,8 @@ void Rotation::decrease_rot_y() {
 void
 Rotation::print_when_verbose_camera_rotation_for_y_axis_manipulation()const {
     if (verbose) {
-        cout << camera->name << " rot y: ";
-        cout << rad2deg(RotWorld2CameraY_in_rad) << "DEG\n";
+        std::cout << camera->name << " rot y: ";
+        std::cout << rad2deg(RotWorld2CameraY_in_rad) << "DEG\n";
     }
 }
 
@@ -91,8 +91,8 @@ void Rotation::print_when_verbose_camera_can_not_look_further(
     const std::string dir
 )const {
     if (verbose) {
-        cout << camera->name << " can not look further " << dir << ", ";
-        cout << " rot y: " << rad2deg(RotWorld2CameraY_in_rad) << "DEG\n";
+        std::cout << camera->name << " can not look further " << dir << ", ";
+        std::cout << " rot y: " << rad2deg(RotWorld2CameraY_in_rad) << "DEG\n";
     }
 }
 
@@ -121,8 +121,8 @@ void Rotation::decrease_rot_z() {
 void
 Rotation::print_when_verbose_camera_rotation_for_z_axis_manipulation()const {
     if (verbose) {
-        cout << camera->name << " rot z: ";
-        cout << rad2deg(RotWorld2CameraZ_in_rad) << "DEG\n";
+        std::cout << camera->name << " rot z: ";
+        std::cout << rad2deg(RotWorld2CameraZ_in_rad) << "DEG\n";
     }
 }
 

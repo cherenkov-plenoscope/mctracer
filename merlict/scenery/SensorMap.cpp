@@ -1,10 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/scenery/SensorMap.h"
 #include <sstream>
-using std::stringstream;
-using std::string;
-using std::vector;
-using std::map;
+
 
 namespace merlict {
 

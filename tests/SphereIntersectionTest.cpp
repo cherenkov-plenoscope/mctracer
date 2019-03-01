@@ -2,7 +2,6 @@
 #include "catch.hpp"
 #include "merlict/merlict.h"
 namespace ml = merlict;
-using std::vector;
 
 
 struct SphereIntersectionTest {

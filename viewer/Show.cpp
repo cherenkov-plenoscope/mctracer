@@ -2,10 +2,8 @@
 #include "merlict/merlict.h"
 #include "json.h"
 #include "FlyingCamera.h"
-
-using std::string;
-using std::cout;
 namespace mct = merlict;
+
 
 static const char USAGE[] =
 R"(Show a scenery

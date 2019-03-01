@@ -4,9 +4,8 @@
 #include "docopt/docopt.h"
 #include "merlict/merlict.h"
 #include "./json.h"
-using std::string;
-using std::cout;
 namespace ml = merlict;
+
 
 static const char USAGE[] =
 R"(Show a scenery

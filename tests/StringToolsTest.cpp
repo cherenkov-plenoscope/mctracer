@@ -2,14 +2,11 @@
 #include "catch.hpp"
 #include "merlict/merlict.h"
 namespace ml = merlict;
-using std::string;
-using std::vector;
-
 
 
 TEST_CASE("StringToolsTest: tokenize_text_several_delimiters", "[merlict]") {
-    string text = "hans klaus\tpeter";
-    vector<string> tokens =
+    std::string text = "hans klaus\tpeter";
+    std::vector<std::string> tokens =
         ml::txt::tokenize_text_using_either_one_of_delimiters(text, " \t");
     REQUIRE(tokens.size() == 3u);
     CHECK(tokens.at(0) == "hans");
@@ -28,15 +25,15 @@ TEST_CASE("StringToolsTest: tokenize_text_several_delimiters", "[merlict]") {
 }
 
 TEST_CASE("StringToolsTest: tokenize_epmty_text", "[merlict]") {
-    string text = "";
-    vector<string> tokens =
+    std::string text = "";
+    std::vector<std::string> tokens =
         ml::txt::tokenize_text_using_either_one_of_delimiters(text, " \t");
     CHECK(tokens.size() == 0u);
 }
 
 TEST_CASE("StringToolsTest: tokenize_text_delimiter_in_the_end", "[merlict]") {
-    string text = "hans peter ";
-    vector<string> tokens =
+    std::string text = "hans peter ";
+    std::vector<std::string> tokens =
         ml::txt::tokenize_text_using_either_one_of_delimiters(text, " \t");
     REQUIRE(tokens.size() == 2u);
     CHECK(tokens.at(0) == "hans");
@@ -44,8 +41,8 @@ TEST_CASE("StringToolsTest: tokenize_text_delimiter_in_the_end", "[merlict]") {
 }
 
 TEST_CASE("StringToolsTest: tokenize_text_several_same_delimiters", "[merlict]") {
-    string text = "hans   peter";
-    vector<string> tokens =
+    std::string text = "hans   peter";
+    std::vector<std::string> tokens =
         ml::txt::tokenize_text_using_either_one_of_delimiters(text, " \t");
     REQUIRE(tokens.size() == 2u);
     CHECK(tokens.at(0) == "hans");
@@ -53,8 +50,8 @@ TEST_CASE("StringToolsTest: tokenize_text_several_same_delimiters", "[merlict]")
 }
 
 TEST_CASE("StringToolsTest: tokenize_text_several_different_delimiters", "[merlict]") {
-    string text = "hans \t peter";
-    vector<string> tokens =
+    std::string text = "hans \t peter";
+    std::vector<std::string> tokens =
         ml::txt::tokenize_text_using_either_one_of_delimiters(text, " \t");
     REQUIRE(tokens.size() == 2u);
     CHECK(tokens.at(0) == "hans");
@@ -89,8 +86,8 @@ TEST_CASE("StringToolsTest: is_equal", "[merlict]") {
 }
 
 TEST_CASE("StringToolsTest: cut_leading_token", "[merlict]") {
-    string names = "Hans,Peter,Klaus";
-    string first_name =
+    std::string names = "Hans,Peter,Klaus";
+    std::string first_name =
     ml::txt::cut_leading_token_infront_of_delimiter(&names, ',');
 
     CHECK(first_name == "Hans");
@@ -126,7 +123,7 @@ TEST_CASE("StringToolsTest: cut_leading_token", "[merlict]") {
 }
 
 TEST_CASE("StringToolsTest: contains_char", "[merlict]") {
-    string text = "Hans Peter is an awesome engineer who build AMS!";
+    std::string text = "Hans Peter is an awesome engineer who build AMS!";
     CHECK(ml::txt::string_contains_char(text, 'H'));
     CHECK(ml::txt::string_contains_char(text, 'A'));
     CHECK(ml::txt::string_contains_char(text, 'w'));

@@ -4,12 +4,11 @@
 #include "PhotonsReaderWrapper/EventIoWrapper.h"
 #include "PhotonsReaderWrapper/AsciiIoWrapper.h"
 #include "PhotonsReaderWrapper/InternalPhotonSourceWrapper.h"
-using std::string;
-using std::vector;
+
 
 namespace merlict {
 
-PhotonsReader::PhotonsReader(const string path) {
+PhotonsReader::PhotonsReader(const std::string path) {
     std::stringstream out;
 
     try {
@@ -44,7 +43,7 @@ bool PhotonsReader::has_still_photons_left()const {
     return photons_from_file->has_still_photons_left();
 }
 
-vector<Photon> PhotonsReader::next(random::Generator* prng) {
+std::vector<Photon> PhotonsReader::next(random::Generator* prng) {
     return photons_from_file->next(prng);
 }
 

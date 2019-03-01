@@ -2,7 +2,7 @@
 #include "viewer/Time.h"
 #include <sstream>
 #include <iomanip>
-using std::string;
+
 
 namespace merlict {
 namespace Time {
@@ -16,7 +16,7 @@ namespace Time {
         now = localtime(&initialization_time);
     }
 
-    string Stamp::str()const {
+    std::string Stamp::str()const {
         std::stringstream out;
         out << "time stamp: ";
         out << yyyy() << "." << mm() << "." << dd() << " ";
@@ -24,31 +24,31 @@ namespace Time {
         return out.str();
     }
 
-    string Stamp::yyyy()const {
+    std::string Stamp::yyyy()const {
         return zero_padding(now->tm_year+1900, 4);
     }
 
-    string Stamp::mm()const {
+    std::string Stamp::mm()const {
         return zero_padding(now->tm_mon+1, 2);
     }
 
-    string Stamp::dd()const {
+    std::string Stamp::dd()const {
         return zero_padding(now->tm_mday, 2);
     }
 
-    string Stamp::HH()const {
+    std::string Stamp::HH()const {
         return zero_padding(now->tm_hour, 2);
     }
 
-    string Stamp::MM()const {
+    std::string Stamp::MM()const {
         return zero_padding(now->tm_min, 2);
     }
 
-    string Stamp::SS()const {
+    std::string Stamp::SS()const {
         return zero_padding(now->tm_sec, 2);
     }
 
-    string Stamp::zero_padding(
+    std::string Stamp::zero_padding(
         const unsigned int value, const unsigned int width)const {
         std::stringstream out;
         out << std::setfill('0') << std::setw(width) << value;

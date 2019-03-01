@@ -1,38 +1,36 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/scenery/ColorMap.h"
 #include <sstream>
-using std::stringstream;
-using std::string;
-using std::map;
+
 
 namespace merlict {
 
-bool ColorMap::has(const string key)const {
+bool ColorMap::has(const std::string key)const {
     return colors.find(key) != colors.end();
 }
 
-Color* ColorMap::get(const string key) {
+Color* ColorMap::get(const std::string key) {
     assert_has(key);
     return &colors.find(key)->second;
 }
 
-void ColorMap::add(const string key, const Color color) {
+void ColorMap::add(const std::string key, const Color color) {
     assert_not_in_use_yet(key);
-    colors.insert(std::pair<string, Color>(key, color));
+    colors.insert(std::pair<std::string, Color>(key, color));
 }
 
-void ColorMap::assert_has(const string key)const {
+void ColorMap::assert_has(const std::string key)const {
     if (!has(key)) {
-        stringstream info;
+        std::stringstream info;
         info << "ColorMap " << __FILE__ << ", " << __LINE__ << "\n";
         info << "There is no color called '" << key << "'. \n";
         throw NoSuchKey(info.str());
     }
 }
 
-void ColorMap::assert_not_in_use_yet(const string key) {
+void ColorMap::assert_not_in_use_yet(const std::string key) {
     if (has(key)) {
-        stringstream info;
+        std::stringstream info;
         info << "ColorMap " << __FILE__ << ", " << __LINE__ << "\n";
         info << "The key '" << key << "' is already in use.\n";
         throw KeyAlreadyInUse(info.str());
