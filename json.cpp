@@ -6,13 +6,12 @@
 #include "merlict/merlict.h"
 #include "merlict/scenery/segmented_imaging_reflector/segmented_imaging_reflector.h"
 namespace nl = nlohmann;
-using std::string;
-using merlict::txt::is_equal;
+
 
 namespace merlict {
 namespace json {
 
-void assert_key(const nl::json &j, const string &key) {
+void assert_key(const nl::json &j, const std::string &key) {
     if (!has(j, key)) {
         std::stringstream info;
         info << "Expected key: '" << key << "' in " << j << "\n";
@@ -130,7 +129,7 @@ std::string Object::str()const {
     out << j;
     return out.str();}
 
-Object load(const string &path) {
+Object load(const std::string &path) {
     std::ifstream fin(path.c_str());
     if (fin.is_open()) {
         nl::json content;
@@ -145,8 +144,8 @@ Object load(const string &path) {
     }
 }
 
-std::map<string, json_to_frame> basic_scenery() {
-    std::map<string, json_to_frame> mymap;
+std::map<std::string, json_to_frame> basic_scenery() {
+    std::map<std::string, json_to_frame> mymap;
     mymap["Frame"] = add_Frame;
     mymap["Sphere"] = add_Sphere;
     mymap["Annulus"] = add_Annulus;
@@ -163,11 +162,11 @@ std::map<string, json_to_frame> basic_scenery() {
     return mymap;
 }
 
-bool has_key(std::map<string, json_to_frame> m, const string &key) {
+bool has_key(std::map<std::string, json_to_frame> m, const std::string &key) {
     return m.find(key) != m.end();
 }
 
-void assert_has_key(std::map<string, json_to_frame> m, const string &key) {
+void assert_has_key(std::map<std::string, json_to_frame> m, const std::string &key) {
     if (!has_key(m, key)) {
         std::stringstream info;
         info << "There is no json-to-frame called '" << key << "'. \n";
@@ -175,13 +174,13 @@ void assert_has_key(std::map<string, json_to_frame> m, const string &key) {
     }
 }
 
-json_to_frame get(std::map<string, json_to_frame> m, const string &key) {
+json_to_frame get(std::map<std::string, json_to_frame> m, const std::string &key) {
     assert_has_key(m, key);
     return m.find(key)->second;
 }
 
 void set_frame(Frame *f, const Object &o) {
-    string name = o.st("name");
+    std::string name = o.st("name");
     Vec3 pos = o.vec3("pos");
     Rot3 rot;
     if (o.key("rot")) {
@@ -216,11 +215,11 @@ void set_surface(SurfaceEntity *s, Scenery *scenery, const Object &o) {
 }
 
 void make_children(Frame* mother, Scenery* scenery, const Object &o) {
-    std::map<string, json_to_frame> j2s = basic_scenery();
+    std::map<std::string, json_to_frame> j2s = basic_scenery();
     const uint64_t num_children = o.size();
     for (uint64_t cidx = 0; cidx < num_children; cidx++) {
         const Object &jchild = o.obj(cidx);
-        string type = jchild.st("type");
+        std::string type = jchild.st("type");
         if (has_key(j2s, type)) {
             json_to_frame us = get(j2s, type);
             make_children(
@@ -259,7 +258,7 @@ void add_functions(FunctionMap* functions, const Object &o) {
     const uint64_t num_functions = o.size();
     for (uint64_t fidx = 0; fidx < num_functions; fidx++) {
         const Object &jfun = o.obj(fidx);
-        string name = jfun.st("name");
+        std::string name = jfun.st("name");
         const Object &avsv = jfun.obj("argument_versus_value");
         functions->add(name, function::Func1(json_to_vec_of_vecs(avsv)));
     }
@@ -274,7 +273,7 @@ function::Func1 json_to_linear_interpol_function(const Object &avsv) {
 void append_to_frame_in_scenery(
     Frame* mother,
     Scenery* scenery,
-    const string &path
+    const std::string &path
 ) {
     ospath::Path json_path(path);
     scenery->current_working_directory = json_path.dirname;
@@ -315,7 +314,7 @@ Frame* add_StereoLitography(
     set_frame(object, o);
     set_surface(object, scenery, o);
     const double scale = o.f8("scale");
-    const string stl_path = ospath::join(
+    const std::string stl_path = ospath::join(
         scenery->current_working_directory, o.st("path"));
     stereo_litography::add_stl_to_and_inherit_surface_from_surfac_entity(
         stl_path, object, scale);
@@ -486,7 +485,7 @@ visual::Config to_visual_config(
     cfg.photon_trajectories.radius = o.obj("photon_trajectories").f8("radius");
 
     const Object &skyj = o.obj("sky_dome");
-    string image_path = skyj.st("path");
+    std::string image_path = skyj.st("path");
 
     if (image_path.empty()) {
         cfg.sky_dome = visual::SkyDome(skyj.color("color"));
