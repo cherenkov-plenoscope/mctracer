@@ -2,7 +2,7 @@
 #include "merlict/function/function.h"
 #include <sstream>
 #include <exception>
-using std::string;
+
 
 namespace merlict {
 namespace function {
@@ -45,7 +45,7 @@ void Limits::assert_contains(const double x)const {
     }
 }
 
-string Limits::str()const {
+std::string Limits::str()const {
     std::stringstream out;
     out << "[" << lower << ", " << upper << ")";
     return out.str();

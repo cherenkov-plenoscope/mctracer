@@ -4,8 +4,6 @@
 #include <vector>
 #include "merlict/Ray.h"
 
-using std::string;
-using std::stringstream;
 
 namespace merlict {
 
@@ -21,8 +19,8 @@ void Ray::set_support_and_direction(const Vec3 support, const Vec3 direction) {
     direction_.normalize();
 }
 
-string Ray::str()const {
-    stringstream out;
+std::string Ray::str()const {
+    std::stringstream out;
     out << "support: " << support_.str() << ", direction: " << direction_.str();
     return out.str();
 }

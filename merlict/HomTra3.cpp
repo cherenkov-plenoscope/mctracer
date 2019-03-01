@@ -4,8 +4,6 @@
 #include <iomanip>
 #include "merlict/HomTra3.h"
 
-using std::stringstream;
-using std::string;
 
 namespace merlict {
 
@@ -225,8 +223,8 @@ Vec3 HomTra3::get_rot_x()const { return Vec3(T[0][0], T[1][0], T[2][0]); }
 Vec3 HomTra3::get_rot_y()const { return Vec3(T[0][1], T[1][1], T[2][1]); }
 Vec3 HomTra3::get_rot_z()const { return Vec3(T[0][2], T[1][2], T[2][2]); }
 
-string HomTra3::str()const {
-    stringstream out;
+std::string HomTra3::str()const {
+    std::stringstream out;
     out << std::setprecision(3);
     out << get_single_row_print(0);
     out << get_single_row_print(1);
@@ -235,8 +233,8 @@ string HomTra3::str()const {
     return  out.str();
 }
 
-string HomTra3::get_single_row_print(const unsigned int r)const {
-    stringstream out;
+std::string HomTra3::get_single_row_print(const unsigned int r)const {
+    std::stringstream out;
     out << std::setprecision(3) << "[  ";
     out << T[r][0] << " \t" << T[r][1] << " \t" << T[r][2] << " \t" << T[r][3];
     out <<"  ]\n";

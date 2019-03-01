@@ -3,15 +3,14 @@
 #include <math.h>
 #include <sstream>
 #include "merlict/small_ball.h"
-using std::stringstream;
-using std::vector;
+
 
 namespace merlict {
 namespace Frames {
 
-Vec3 small_ball_nielsen_nock(const vector<Frame*> &frames) {
+Vec3 small_ball_nielsen_nock(const std::vector<Frame*> &frames) {
     if (frames.size() < 1) {
-        stringstream info;
+        std::stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
         info << "Expected at least 1 frame to calculate ";
         info << "center position of frames, ";
@@ -35,7 +34,7 @@ Vec3 small_ball_nielsen_nock(const vector<Frame*> &frames) {
     return r.center;
 }
 
-Vec3 bounding_sphere_center(const vector<Frame*> &frames) {
+Vec3 bounding_sphere_center(const std::vector<Frame*> &frames) {
     // this can be optimized using Fischer's thesis on spheres enclosing spheres
 
     Vec3 center = mean_of_positions_in_mother(frames);
@@ -50,9 +49,9 @@ Vec3 bounding_sphere_center(const vector<Frame*> &frames) {
     return center;
 }
 
-Vec3 dumb_bounding_sphere_center(const vector<Frame*> &frames) {
+Vec3 dumb_bounding_sphere_center(const std::vector<Frame*> &frames) {
     if (frames.size() < 1) {
-        stringstream info;
+        std::stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
         info << "Expected at least 1 frame to calculate ";
         info << "center position of frames, ";
@@ -92,9 +91,9 @@ Vec3 dumb_bounding_sphere_center(const vector<Frame*> &frames) {
         dir*(0.5*maximum - start_frame->get_bounding_sphere_radius());
 }
 
-Vec3 mean_of_positions_in_mother(const vector<Frame*> &frames) {
+Vec3 mean_of_positions_in_mother(const std::vector<Frame*> &frames) {
     if (frames.size() < 1) {
-        stringstream info;
+        std::stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
         info << "Expected at leas 1 frame to calculate ";
         info << "mean position of frames, ";
@@ -110,7 +109,9 @@ Vec3 mean_of_positions_in_mother(const vector<Frame*> &frames) {
     return sum_pos/frames.size();
 }
 
-bool positions_in_mother_are_too_close_together(const vector<Frame*> &frames) {
+bool positions_in_mother_are_too_close_together(
+    const std::vector<Frame*> &frames
+) {
     if (frames.size() < 2)
         return false;
     else
@@ -118,7 +119,7 @@ bool positions_in_mother_are_too_close_together(const vector<Frame*> &frames) {
             FRAME_MIN_STRUCTURE_SIZE;
 }
 
-double spread_of_frame_position_in_mother(const vector<Frame*> &frames) {
+double spread_of_frame_position_in_mother(const std::vector<Frame*> &frames) {
     if (frames.size() < 2)
         return 0.0;
 
@@ -134,7 +135,10 @@ double spread_of_frame_position_in_mother(const vector<Frame*> &frames) {
     return sqrt(u.norm());
 }
 
-double bounding_sphere_radius(const vector<Frame*> &frames, const Vec3 center) {
+double bounding_sphere_radius(
+    const std::vector<Frame*> &frames,
+    const Vec3 center
+) {
     // Case: The new child is not enclosed by the previous sphere of this frame
     //-------             _______________                                     //
     //               ____/               \____                                //

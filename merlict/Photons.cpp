@@ -5,15 +5,13 @@
 #include <thread>
 #include "merlict/vitaliy_vitsentiy_thread_pool.h"
 #include "merlict/PhotonAndFrame.h"
-using std::string;
-using std::stringstream;
-using std::vector;
+
 
 namespace merlict {
 namespace Photons {
 
 void propagate_photons_in_scenery_with_settings(
-    vector<Photon> *photons,
+    std::vector<Photon> *photons,
     const Frame* world,
     const PropagationConfig* settings,
     random::Generator* prng
@@ -25,7 +23,7 @@ void propagate_photons_in_scenery_with_settings(
 }
 
 void propagate_photons(
-    vector<Photon> *photons,
+    std::vector<Photon> *photons,
     const Frame* world,
     const PropagationConfig* settings,
     random::Generator* prng
@@ -56,7 +54,7 @@ void propagate_one_photon(
 }
 
 void propagate_photons_multi_thread(
-    vector<Photon> *photons,
+    std::vector<Photon> *photons,
     const Frame* world,
     const PropagationConfig* settings,
     random::Generator* prng
@@ -86,22 +84,26 @@ void propagate_photons_multi_thread(
 
 // In Out to raw matrix/table -> AsciiIO can read/write this to text files
 
-vector<Photon> raw_matrix2photons(vector<vector<double>> raw_matrix) {
-    vector<Photon> photons;
-    for (vector<double> raw_row : raw_matrix)
+std::vector<Photon> raw_matrix2photons(
+    std::vector<std::vector<double>> raw_matrix
+) {
+    std::vector<Photon> photons;
+    for (std::vector<double> raw_row : raw_matrix)
         photons.push_back(raw_row2photon(raw_row));
     return photons;
 }
 
-vector<vector<double>> photons2raw_matrix(vector<Photon> *photons) {
-    vector<vector<double>> raw_matrix;
+std::vector<std::vector<double>> photons2raw_matrix(
+    std::vector<Photon> *photons
+) {
+    std::vector<std::vector<double>> raw_matrix;
     for (Photon &ph : *photons)
         raw_matrix.push_back(photon2raw_row(&ph));
     return raw_matrix;
 }
 
-vector<double> photon2raw_row(Photon* ph) {
-    vector<double> raw_row;
+std::vector<double> photon2raw_row(Photon* ph) {
+    std::vector<double> raw_row;
     raw_row.reserve(8);
 
     raw_row.push_back(static_cast<double>(ph->get_simulation_truth_id()));
@@ -119,7 +121,7 @@ vector<double> photon2raw_row(Photon* ph) {
     return raw_row;
 }
 
-Photon raw_row2photon(vector<double> &raw_row) {
+Photon raw_row2photon(std::vector<double> &raw_row) {
     assert_raw_row_size_matches_photon(raw_row);
     const double id = raw_row[0];
     const Vec3 support(raw_row[1], raw_row[2], raw_row[3]);
@@ -131,9 +133,9 @@ Photon raw_row2photon(vector<double> &raw_row) {
     return ph;
 }
 
-void assert_raw_row_size_matches_photon(vector<double> &raw_row) {
+void assert_raw_row_size_matches_photon(std::vector<double> &raw_row) {
     if (raw_row.size() != 8) {
-        stringstream out;
+        std::stringstream out;
         out << "PhotonBunch, raw row of doubles to photon.\n";
         out << "Expected row to have exactly 8 columns, but actual it has ";
         out << raw_row.size() << " columns.\n";
@@ -143,12 +145,12 @@ void assert_raw_row_size_matches_photon(vector<double> &raw_row) {
 
 namespace Source {
 
-vector<Photon> point_like_towards_z_opening_angle_num_photons(
+std::vector<Photon> point_like_towards_z_opening_angle_num_photons(
     const double opening_angle,
     const unsigned int number_of_photons,
     random::Generator* prng
 ) {
-    vector<Photon> photons;
+    std::vector<Photon> photons;
     photons.reserve(number_of_photons);
     const Vec3 support = VEC3_ORIGIN;
 
@@ -166,12 +168,12 @@ vector<Photon> point_like_towards_z_opening_angle_num_photons(
     return photons;
 }
 
-vector<Photon> parallel_towards_z_from_xy_disc(
+std::vector<Photon> parallel_towards_z_from_xy_disc(
     const double disc_radius,
     const unsigned int number_of_photons,
     random::Generator* prng
 ) {
-    vector<Photon> photons;
+    std::vector<Photon> photons;
     photons.reserve(number_of_photons);
     const Vec3 direction = VEC3_UNIT_Z;
 
@@ -189,7 +191,7 @@ vector<Photon> parallel_towards_z_from_xy_disc(
 
 // transformations, move and rotate photons
 
-void transform_all_photons(const HomTra3 Trafo, vector<Photon> *photons) {
+void transform_all_photons(const HomTra3 Trafo, std::vector<Photon> *photons) {
     for (size_t i = 0; i < photons->size(); i++)
         photons->at(i).transform(&Trafo);
 }

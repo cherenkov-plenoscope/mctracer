@@ -2,12 +2,12 @@
 #include "merlict/ospath.h"
 #include <sstream>
 #include "merlict/txt.h"
-using std::string;
+
 
 namespace merlict {
 namespace ospath {
 
-    string join(string path1, string path2) {
+    std::string join(std::string path1, std::string path2) {
         std::stringstream out;
         if (txt::is_ending(path1, "/"))
             out << path1;
@@ -21,7 +21,7 @@ namespace ospath {
         return out.str();
     }
 
-    Path::Path(const string full_path) {
+    Path::Path(const std::string full_path) {
         path = full_path;
         int last_dot_in_path = full_path.find_last_of(".");
         int last_delimiter_in_path = full_path.find_last_of("/\\");

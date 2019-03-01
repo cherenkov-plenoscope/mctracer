@@ -3,14 +3,12 @@
 #include <sstream>
 #include "merlict/Histogram1.h"
 
-using std::string;
-using std::vector;
 
 namespace merlict {
 
 Histogram1::Histogram1(
-    const vector<double> &samples,
-    const vector<double> &_bin_edges
+    const std::vector<double> &samples,
+    const std::vector<double> &_bin_edges
 ):bin_edges(_bin_edges) {
     assert_at_least_two_bin_edges();
     std::sort(bin_edges.begin(), bin_edges.end());
@@ -28,7 +26,7 @@ void Histogram1::init_bins_to_zero() {
 }
 
 void Histogram1::fill_in(const double sample) {
-    vector<double>::const_iterator up_bin_edge = std::upper_bound(
+    std::vector<double>::const_iterator up_bin_edge = std::upper_bound(
         bin_edges.begin(),
         bin_edges.end(),
         sample);

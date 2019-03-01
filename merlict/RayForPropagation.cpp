@@ -3,9 +3,6 @@
 #include <sstream>
 #include "merlict/simulation_truth.h"
 
-using std::stringstream;
-using std::vector;
-using std::string;
 
 namespace merlict {
 
@@ -39,8 +36,8 @@ int32_t RayForPropagation::get_simulation_truth_id()const {
     return simulation_truth_id;
 }
 
-string RayForPropagation::str()const {
-    stringstream out;
+std::string RayForPropagation::str()const {
+    std::stringstream out;
     out << Ray::str() << ", ";
     out << "ID: " << simulation_truth_id << ", Interactions: ";
     out << get_number_of_interactions_so_far() << "\n";
@@ -48,8 +45,8 @@ string RayForPropagation::str()const {
     return out.str();
 }
 
-string RayForPropagation::get_history_print()const {
-    stringstream out;
+std::string RayForPropagation::get_history_print()const {
+    std::stringstream out;
     int index = 0;
     for (Interaction type : interaction_history) {
         out << ++index << ") " << get_type_print(type) << " in ";
@@ -97,7 +94,7 @@ const Intersection& RayForPropagation::get_intersection_at(
     return intersection_history.at(index);
 }
 
-string RayForPropagation::get_type_print(const Interaction type)const {
+std::string RayForPropagation::get_type_print(const Interaction type)const {
     switch (type) {
         case production: return "production"; break;
         case absorption_in_void: return "absorption_in_void"; break;

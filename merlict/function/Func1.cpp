@@ -4,8 +4,7 @@
 #include <algorithm>
 #include "merlict/txt.h"
 #include "merlict/function/tools.h"
-using std::vector;
-using std::string;
+
 
 namespace merlict {
 namespace function {
@@ -16,11 +15,11 @@ bool Point::operator()(const Point &l, const Point &r) {
 
 Func1::Func1() {}
 
-Func1::Func1(const vector<vector<double>>& xy) {
+Func1::Func1(const std::vector<std::vector<double>>& xy) {
     init(xy);
 }
 
-void Func1::init(const vector<vector<double>>& xy) {
+void Func1::init(const std::vector<std::vector<double>>& xy) {
     func.reserve(xy.size());
 
     for (unsigned int i = 0; i < xy.size(); i++) {
@@ -41,7 +40,7 @@ void Func1::init(const vector<vector<double>>& xy) {
 }
 
 double Func1::slope_in_table_in_row(
-    const vector<vector<double>> &xy,
+    const std::vector<std::vector<double>> &xy,
     const unsigned int row
 )const {
         if (row != xy.size()-1)
@@ -51,7 +50,7 @@ double Func1::slope_in_table_in_row(
 }
 
 void Func1::assert_table_two_columns(
-    const vector<vector<double>> &xy_table,
+    const std::vector<std::vector<double>> &xy_table,
     const unsigned int row
 )const {
     if (xy_table.at(row).size() != 2) {
@@ -66,19 +65,19 @@ void Func1::assert_table_two_columns(
 
 double Func1::evaluate(const double x)const {
     limits.assert_contains(x);
-    vector<Point>::const_iterator upper = get_upper_bound(x);
+    std::vector<Point>::const_iterator upper = get_upper_bound(x);
     assert_upper_bound_and_argument_in_range(upper, x);
     return interpolate_linear(*(upper-1), x);
 }
 
-vector<Point>::const_iterator Func1::get_upper_bound(
+std::vector<Point>::const_iterator Func1::get_upper_bound(
     double arg
 )const {
     return std::upper_bound(func.begin(), func.end(), arg, comp_upp);
 }
 
 void Func1::assert_upper_bound_and_argument_in_range(
-    const vector<Point>::const_iterator it,
+    const std::vector<Point>::const_iterator it,
     const double arg
 )const {
     if (
@@ -134,7 +133,7 @@ bool Func1::comp_upp(const double x, const Point P) {
     return P.x > x;
 }
 
-string Func1::exception_header()const {
+std::string Func1::exception_header()const {
     return "LinInterpol:\n";
 }
 
@@ -159,12 +158,12 @@ double Func1::min()const {
     return min_y;
 }
 
-string Func1::str()const {
+std::string Func1::str()const {
     std::stringstream out;
     out.precision(2);
     out << limits.str() << " ";
-    vector<vector<double>> table = sample(*this, 3);
-    for (vector<double> xy : table) {
+    std::vector<std::vector<double>> table = sample(*this, 3);
+    for (std::vector<double> xy : table) {
         out << "f(" << xy.at(0) << ")=" << xy.at(1) <<", ";
     }
     return out.str();

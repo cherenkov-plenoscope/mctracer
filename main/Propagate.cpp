@@ -4,9 +4,6 @@
 #include "json.h"
 #include "try_to_read/PhotonsReader.h"
 namespace ml = merlict;
-using std::string;
-using std::cout;
-using std::vector;
 
 
 static const char USAGE[] =
@@ -68,7 +65,7 @@ int main(int argc, char* argv[]) {
 
     unsigned int event_counter = 1;
     while (photon_file.has_still_photons_left()) {
-        vector<ml::Photon> photons;
+        std::vector<ml::Photon> photons;
         photons = photon_file.next(&prng);
 
         // photon propagation
