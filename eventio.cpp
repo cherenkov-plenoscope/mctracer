@@ -3,17 +3,10 @@
 #include <sstream>
 #include "eventio.h"
 
-using std::endl;
-using std::string;
-using std::stringstream;
-using std::vector;
-using std::array;
-using std::istream;
-using std::ifstream;
 
 namespace eventio {
 
-Header::Header(istream& f, bool top_level) {
+Header::Header(std::istream& f, bool top_level) {
     size_t _start_pos = f.tellg();
     FirstFour first_four;
     if (top_level) {
@@ -27,11 +20,11 @@ Header::Header(istream& f, bool top_level) {
     }
 
     if (!is_sync) {
-        stringstream out;
+        std::stringstream out;
         out << "In File/Function/Line:" << __FILE__;
-        out << " / " << __func__ << " / " << __LINE__ << endl;
+        out << " / " << __func__ << " / " << __LINE__ << std::endl;
         out << "Header 'sync' field not correct: " << std::hex;
-        out << first_four.sync << endl;
+        out << first_four.sync << std::endl;
         out << "f.tell(): " << _start_pos << "\n";
         f.seekg(_start_pos, f.beg);
         throw NoSyncFoundException(out.str());
@@ -86,62 +79,62 @@ Header::LengthInfo::LengthInfo(int32_t _length) {
     length = _length &  0x3fffffff;
 }
 
-string Header::str() {
-    stringstream out;
-    out << "HEADER" << endl;
-    out << "------" << endl;
-    out << "bool is_sync " << is_sync << endl;
-    out << "int32_t type " << type << endl;
-    out << "int32_t version " << version << endl;
-    out << "bool user " << user << endl;
-    out << "bool extended " << extended << endl;
-    out << "bool only_sub_objects " << only_sub_objects << endl;
-    out << "int64_t length " << length << endl;
-    out << "int32_t id " << id << endl;
+std::string Header::str() {
+    std::stringstream out;
+    out << "HEADER" << std::endl;
+    out << "------" << std::endl;
+    out << "bool is_sync " << is_sync << std::endl;
+    out << "int32_t type " << type << std::endl;
+    out << "int32_t version " << version << std::endl;
+    out << "bool user " << user << std::endl;
+    out << "bool extended " << extended << std::endl;
+    out << "bool only_sub_objects " << only_sub_objects << std::endl;
+    out << "int64_t length " << length << std::endl;
+    out << "int32_t id " << id << std::endl;
     return out.str();
 }
 
-array<float, 273> make_corsika_273float_sub_block_form_stream(istream& f) {
+std::array<float, 273> make_corsika_273float_sub_block_form_stream(std::istream& f) {
     // read the first integer to get the size
     int32_t n;
     f.read((char*)&n, sizeof(n));
     if (n != 273) {
-        stringstream info;
+        std::stringstream info;
         info << __FILE__ << " " << __LINE__ <<"\n";
         info << __func__ << "()\n";
         info << "Expected first int32 to be 273 but actual it is " << n << "\n";
         throw std::runtime_error(info.str());
     }
     // read the sub_block from file.
-    array<float, 273> block;
+    std::array<float, 273> block;
     f.read((char*)block.data(), block.size()*sizeof(float));
     return block;
 }
 
-array<float, 273> make_run_end_from_stream(istream& f) {
+std::array<float, 273> make_run_end_from_stream(std::istream& f) {
     // read the first integer to get the size
     int32_t n;
     f.read((char*)&n, sizeof(n));
     if (n != 3) {
-        stringstream out;
-        out << "In File:" << __FILE__ << endl;
-        out << "in function:" << __func__ << endl;
-        out << "Line:" << __LINE__ << endl;
-        out << "First integer was not 273 but n=" << n << endl;
+        std::stringstream out;
+        out << "In File:" << __FILE__ << std::endl;
+        out << "in function:" << __func__ << std::endl;
+        out << "Line:" << __LINE__ << std::endl;
+        out << "First integer was not 273 but n=" << n << std::endl;
         throw std::runtime_error(out.str());
     }
     // read the sub_block from file.
-    array<float, 273> block;
+    std::array<float, 273> block;
     f.read((char*)block.data(), block.size()*sizeof(float));
     return block;
 }
 
-string make_input_card_from_stream(istream& f, const Header& head) {
-    vector<char> input_card(head.length+1);
+std::string make_input_card_from_stream(std::istream& f, const Header& head) {
+    std::vector<char> input_card(head.length+1);
     f.read(input_card.data(), head.length);
     input_card[head.length] = 0;
 
-    string input_card_text;
+    std::string input_card_text;
 
     for (size_t i = 0; i < head.length; i++)
         input_card_text.push_back(input_card[i]);
@@ -149,22 +142,22 @@ string make_input_card_from_stream(istream& f, const Header& head) {
     return input_card_text;
 }
 
-vector<TelPos> make_telescope_positions(istream& f, const Header& head) {
+std::vector<TelPos> make_telescope_positions(std::istream& f, const Header& head) {
     int32_t ntel;
     f.read((char*)&ntel, sizeof(ntel));
 
     int number_of_following_arrays = int((head.length - 4) / ntel /4);
 
     if (number_of_following_arrays != 4) {
-        stringstream out;
-        out << "In File:" << __FILE__ << endl;
-        out << "in function:" << __func__ << endl;
-        out << "Line:" << __LINE__ << endl;
+        std::stringstream out;
+        out << "In File:" << __FILE__ << std::endl;
+        out << "in function:" << __func__ << std::endl;
+        out << "Line:" << __LINE__ << std::endl;
         out << " number_of_following_arrays is:";
-        out <<  number_of_following_arrays << endl;
+        out <<  number_of_following_arrays << std::endl;
         throw std::runtime_error(out.str());
     }
-    vector<TelPos> telescope_positions(ntel);
+    std::vector<TelPos> telescope_positions(ntel);
 
     f.read(
         (char*)telescope_positions.data(),
@@ -173,19 +166,19 @@ vector<TelPos> make_telescope_positions(istream& f, const Header& head) {
     return telescope_positions;
 }
 
-string TelOffset::str()const {
-    stringstream out;
+std::string TelOffset::str()const {
+    std::stringstream out;
     out << "TelOffset\n";
     out << "---------\n";
-    out << "toff " << toff << endl;
-    out << "xoff " << xoff << endl;
-    out << "yoff " << yoff << endl;
-    out << "weight " << weight << endl;
+    out << "toff " << toff << std::endl;
+    out << "xoff " << xoff << std::endl;
+    out << "yoff " << yoff << std::endl;
+    out << "weight " << weight << std::endl;
     return out.str();
 }
 
-vector<TelOffset> make_telescope_offsets_from_stream(
-    istream& f,
+std::vector<TelOffset> make_telescope_offsets_from_stream(
+    std::istream& f,
     const Header& head
 ) {
     int length_first_two = 4 + 4;
@@ -195,10 +188,10 @@ vector<TelOffset> make_telescope_offsets_from_stream(
     float toff;
     f.read((char*)&toff, sizeof(toff));
 
-    vector<float> xoff(narray);
-    vector<float> yoff(narray);
-    vector<float> weight(narray, 1.0);  // we initialize
-    vector<TelOffset> telescope_offsets(narray);
+    std::vector<float> xoff(narray);
+    std::vector<float> yoff(narray);
+    std::vector<float> weight(narray, 1.0);  // we initialize
+    std::vector<TelOffset> telescope_offsets(narray);
 
     f.read((char*)xoff.data(), xoff.size()*sizeof(float));
     f.read((char*)yoff.data(), yoff.size()*sizeof(float));
@@ -207,19 +200,19 @@ vector<TelOffset> make_telescope_offsets_from_stream(
         (head.length - length_first_two) / narray /4);
     switch (number_of_following_arrays) {
         case 2:
-            // do nothing, we already read the 2 arrays xoff and yoff.
+            // do nothing, we already read the 2 std::arrays xoff and yoff.
             break;
         case 3:
             f.read((char*)weight.data(), weight.size()*sizeof(float));
             break;
         default:
-            stringstream out;
-            out << "In File:" << __FILE__ << endl;
-            out << "in function:" << __func__ << endl;
-            out << "Line:" << __LINE__ << endl;
+            std::stringstream out;
+            out << "In File:" << __FILE__ << std::endl;
+            out << "in function:" << __func__ << std::endl;
+            out << "Line:" << __LINE__ << std::endl;
             out << "number_of_following_arrays is ";
-            out << number_of_following_arrays << endl;
-            out << "but only 2 or 3 are allowed." << endl;
+            out << number_of_following_arrays << std::endl;
+            out << "but only 2 or 3 are allowed." << std::endl;
             throw std::runtime_error(out.str());
     }
 
@@ -236,13 +229,13 @@ vector<TelOffset> make_telescope_offsets_from_stream(
     return telescope_offsets;
 }
 
-vector<array<float, 8>> make_photons_from_stream(istream& f) {
+std::vector<std::array<float, 8>> make_photons_from_stream(std::istream& f) {
     Header subhead(f, false);
     if (subhead.type != 1205) {
         int header_length = subhead.extended ? 4 : 3;
         f.seekg(header_length*-4, f.cur);
         // TODO(dneise): put useful text.
-        stringstream info;
+        std::stringstream info;
         info << __FILE__ << " " << __LINE__ <<"\n";
         throw WrongTypeException(info.str());
     }
@@ -253,10 +246,10 @@ vector<array<float, 8>> make_photons_from_stream(istream& f) {
     const bool is_compact = bool(subhead.version/1000 == 1);
     const int element_size = is_compact? 2 : 4;
 
-    vector<char> buff(b_head.n_bunches*8*element_size);
+    std::vector<char> buff(b_head.n_bunches*8*element_size);
     f.read(buff.data(), b_head.n_bunches*8*element_size);
 
-    vector<array<float, 8>> bunches(b_head.n_bunches);
+    std::vector<std::array<float, 8>> bunches(b_head.n_bunches);
 
     if (is_compact) {
         for (size_t row = 0; row < bunches.size(); row++)
@@ -289,11 +282,11 @@ bool Run::has_still_events_left()const {
     return !this->run_end_found;
 }
 
-Run::Run(string path): run_end_found(false) {
+Run::Run(std::string path): run_end_found(false) {
     this->path = path;
     f.open(path);
     if (!f.is_open()) {
-        stringstream info;
+        std::stringstream info;
         info << __FILE__ " " << __LINE__ << "\n";
         info << "Can not open file: " << path << "\n";
         throw std::runtime_error(info.str());
@@ -342,7 +335,7 @@ Header Run::__get_header(int expect_type) {
         int header_length = header.extended ? 5 : 4;
         this->f.seekg(header_length*-4, this->f.cur);
         // TODO(dneise): put useful text.
-        stringstream info;
+        std::stringstream info;
         info << __FILE__ << " " << __LINE__ <<"\n";
         info << __func__ << "()\n";
         info << "while reading file: " << path << "\n";
@@ -364,7 +357,7 @@ Event Run::next_event() {
     return event;
 }
 
-vector<array<float, 8>> Run::_next() {
+std::vector<std::array<float, 8>> Run::_next() {
     bool something_found = false;
     while (!this->run_end_found) {
         something_found = false;
@@ -410,13 +403,13 @@ vector<array<float, 8>> Run::_next() {
         }
     }
 
-    vector<array<float, 8>> dummy;
+    std::vector<std::array<float, 8>> dummy;
     return dummy;
 }
 
 void write_photon_bunches_to_path(
-    const vector<array<float, 8>> &photons,
-    const string &path
+    const std::vector<std::array<float, 8>> &photons,
+    const std::string &path
 ) {
     std::ofstream file;
     file.open(path, std::ios::out | std::ios::binary);
@@ -428,8 +421,8 @@ void write_photon_bunches_to_path(
         throw std::runtime_error(info.str());
     }
 
-    for (const array<float, 8> &photon : photons)
-        file.write((char*)&photon, sizeof(array<float, 8>));
+    for (const std::array<float, 8> &photon : photons)
+        file.write((char*)&photon, sizeof(std::array<float, 8>));
     file.close();
 }
 
