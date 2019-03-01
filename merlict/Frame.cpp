@@ -9,7 +9,7 @@
 #include "merlict/Intersection.h"
 #include "merlict/tools.h"
 #include "merlict/txt.h"
-using std::vector;
+
 
 namespace merlict {
 
