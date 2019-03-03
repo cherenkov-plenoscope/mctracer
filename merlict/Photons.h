@@ -10,7 +10,7 @@
 namespace merlict {
 namespace Photons {
 
-void propagate_photons_in_scenery_with_settings(
+void propagate_photons_in_frame_with_config(
     std::vector<Photon> *photons,
     const Frame *world,
     const PropagationConfig *settings,

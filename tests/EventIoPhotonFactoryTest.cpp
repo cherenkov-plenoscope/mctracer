@@ -59,7 +59,7 @@ TEST_CASE("EventIoPhotonFactoryTest: intersection_point_on_ground", "[merlict]")
                     ml::PropagationConfig settings;
 
                     // photon propagation down to the ground
-                    ml::Photons::propagate_photons_in_scenery_with_settings(
+                    ml::Photons::propagate_photons_in_frame_with_config(
                         &photons, &world, &settings, &prng);
 
                     // detect photons in ground sensor
@@ -265,7 +265,7 @@ TEST_CASE("EventIoPhotonFactoryTest: correct_rel_time_when_intersecting_ground",
         ml::PropagationConfig settings;
 
         // photon propagation
-        ml::Photons::propagate_photons_in_scenery_with_settings(
+        ml::Photons::propagate_photons_in_frame_with_config(
             &photons, &world, &settings, &prng);
 
         // detect photons in sensors

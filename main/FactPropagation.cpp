@@ -343,7 +343,7 @@ int main(int argc, char* argv[]) {
     // Visual::FlyingCamera free(&scenery.root, &visual_config);
 
     // -------------------------------------------------------------------------
-    re::PropagationConfig settings;
+    re::PropagationConfig prop_cfg;
     re::random::Mt19937 prng;
     if (args.find("--random_seed")->second)
         prng.set_seed(args.find("--random_seed")->second.asLong());
@@ -387,8 +387,8 @@ int main(int argc, char* argv[]) {
                 photons.push_back(cpf.get_photon());
         }
 
-        re::Photons::propagate_photons_in_scenery_with_settings(
-            &photons, &scenery.root, &settings, &prng);
+        re::Photons::propagate_photons_in_frame_with_config(
+            &photons, &scenery.root, &prop_cfg, &prng);
 
         pixels.clear_history();
         pixels.assign_photons(&photons);

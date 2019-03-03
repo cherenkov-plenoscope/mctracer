@@ -124,7 +124,7 @@ TEST_CASE("BiConvexLensTest: send_photons_frontal_into_lens_with_offset", "[merl
     ml::Photons::transform_all_photons(Trafo, &photons);
 
     // photon propagation
-    ml::Photons::propagate_photons_in_scenery_with_settings(
+    ml::Photons::propagate_photons_in_frame_with_config(
         &photons,
         lt.env.root_frame,
         lt.env.config,

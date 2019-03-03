@@ -167,7 +167,7 @@ TEST_CASE("PhotonTest: Reflections", "[merlict]") {
         P.set_simulation_truth_id(i);
         photons.push_back(P);
     }
-    ml::Photons::propagate_photons_in_scenery_with_settings(
+    ml::Photons::propagate_photons_in_frame_with_config(
         &photons, &world, &setup, &prng);
     sensors.assign_photons(&photons);
     const double ph_reached_sensor =
@@ -230,7 +230,7 @@ TEST_CASE("PhotonTest: Refraction", "[merlict]") {
         P.set_simulation_truth_id(i);
         photons.push_back(P);
     }
-    ml::Photons::propagate_photons_in_scenery_with_settings(
+    ml::Photons::propagate_photons_in_frame_with_config(
         &photons, &world, &setup, &prng);
     sensors.assign_photons(&photons);
     // 5% fresnell reflection
@@ -300,7 +300,7 @@ TEST_CASE("PhotonTest: absorbtion_in_medium", "[merlict]") {
         P.set_simulation_truth_id(i);
         photons.push_back(P);
     }
-    ml::Photons::propagate_photons_in_scenery_with_settings(
+    ml::Photons::propagate_photons_in_frame_with_config(
         &photons, &world, &setup, &prng);
     sensors.assign_photons(&photons);
     CHECK(0.367 == Approx(static_cast<double>(collector_sensor.photon_arrival_history.size())/static_cast<double>(num_phot)).margin(2e-2));

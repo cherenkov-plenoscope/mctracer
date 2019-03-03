@@ -78,7 +78,7 @@ int main(int argc, char* argv[]) {
                 photons.push_back(cpf.get_photon());
 
                 // propagate the cherenkov photons in the scenery
-                ml::Photons::propagate_photons_in_scenery_with_settings(
+                ml::Photons::propagate_photons_in_frame_with_config(
                     &photons, &scenery.root, &settings, &prng);
 
                 for(const ml::Photon &ph: photons) {

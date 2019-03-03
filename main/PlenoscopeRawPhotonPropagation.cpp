@@ -194,7 +194,7 @@ int main(int argc, char* argv[]) {
         std::vector<ml::Photon> photons;
         photons = photon_file.next(&prng);
 
-        ml::Photons::propagate_photons_in_scenery_with_settings(
+        ml::Photons::propagate_photons_in_frame_with_config(
             &photons, &scenery.root, &settings, &prng);
 
         light_field_channels->clear_history();

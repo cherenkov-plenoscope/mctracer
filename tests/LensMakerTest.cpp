@@ -98,7 +98,7 @@ TEST_CASE("lens_makerTest: check_lensmaker_on_optical_table_with_lens", "[merlic
         ml::PropagationConfig settings;
 
         // photon propagation
-        ml::Photons::propagate_photons_in_scenery_with_settings(
+        ml::Photons::propagate_photons_in_frame_with_config(
             &photons, &optical_table, &settings, &prng);
 
         // detect photons in sensors
