@@ -169,7 +169,7 @@ void FlyingCamera::enter_interactive_display() {
             }
             break;
             case 'p': {
-                std::cout << world->get_tree_print() << "\n";
+                std::cout << world->tree_str() << "\n";
                 key_stroke_requires_image_update = false;
             }
             break;

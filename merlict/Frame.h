@@ -57,7 +57,7 @@ class Frame {
     bool has_children()const;
     void assert_no_children_duplicate_names()const;
     virtual std::string str()const;
-    std::string get_tree_print()const;
+    std::string tree_str()const;
     // DO
     template<class ProtoFrame>
     ProtoFrame* add() {

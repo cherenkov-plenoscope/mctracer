@@ -91,7 +91,7 @@ std::string Frame::str()const {
     return out.str();
 }
 
-std::string Frame::get_tree_print()const {
+std::string Frame::tree_str()const {
     std::stringstream out;
     out << name << ", pos " << pos_in_mother.str() << ", r ";
     out << bounding_sphere_radius << "m\n";
@@ -99,7 +99,7 @@ std::string Frame::get_tree_print()const {
     for (Frame* child : children)
         out << txt::place_first_infront_of_each_new_line_of_second(
             "| ",
-            child->get_tree_print());
+            child->tree_str());
 
     return out.str();
 }
