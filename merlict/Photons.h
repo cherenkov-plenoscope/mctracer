@@ -16,12 +16,6 @@ void propagate_photons_in_scenery_with_settings(
     const PropagationConfig *settings,
     random::Generator* prng);
 
-void propagate_photons(
-    std::vector<Photon> *photons,
-    const Frame* world,
-    const PropagationConfig* settings,
-    random::Generator* prng);
-
 void propagate_photons_multi_thread(
     std::vector<Photon> *photons,
     const Frame* world,

@@ -343,14 +343,12 @@ TEST_CASE("JsonTest: What_is_key", "[merlict]") {
 TEST_CASE("JsonTest: PropagationConfig", "[merlict]") {
     auto j = R"(
     {
-      "max_num_interactions_per_photon": 1337,
-      "use_multithread_when_possible": true
+      "max_num_interactions_per_photon": 1337
     }
     )"_json;
     mct::json::Object o(j);
     mct::PropagationConfig cfg = mct::json::to_PropagationConfig(o);
     CHECK(1337u == cfg.max_num_interactions_per_photon);
-    CHECK(cfg.use_multithread_when_possible);
 }
 
 TEST_CASE("JsonTest: PointSource", "[merlict]") {

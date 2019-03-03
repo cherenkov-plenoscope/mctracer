@@ -96,7 +96,6 @@ TEST_CASE("lens_makerTest: check_lensmaker_on_optical_table_with_lens", "[merlic
 
         // propagation settings
         ml::PropagationConfig settings;
-        settings.use_multithread_when_possible = false;
 
         // photon propagation
         ml::Photons::propagate_photons_in_scenery_with_settings(

@@ -26,7 +26,6 @@ TEST_CASE("PhotonTest: reject_negative_wavelength", "[merlict]") {
 
 TEST_CASE("PhotonTest: PropagationSimpleGeometry", "[merlict]") {
     ml::PropagationConfig setup;
-    setup.use_multithread_when_possible = false;
     int num_bounces = 42;
     setup.max_num_interactions_per_photon = num_bounces;
     // create a test setup with two mirrors bouncing the photon
@@ -106,7 +105,6 @@ TEST_CASE("PhotonTest: Reflections", "[merlict]") {
 
     */
     ml::PropagationConfig setup;
-    setup.use_multithread_when_possible = false;
     // create a test setup with two mirrors bouncing the photon
     ml::Frame world;
     world.set_name_pos_rot("world", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
@@ -180,7 +178,6 @@ TEST_CASE("PhotonTest: Reflections", "[merlict]") {
 
 TEST_CASE("PhotonTest: Refraction", "[merlict]") {
     ml::PropagationConfig setup;
-    setup.use_multithread_when_possible = false;
     // create a test setup with two planes and high refractive index in between
     ml::Frame world;
     world.set_name_pos_rot("world", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
@@ -244,7 +241,6 @@ TEST_CASE("PhotonTest: Refraction", "[merlict]") {
 
 TEST_CASE("PhotonTest: absorbtion_in_medium", "[merlict]") {
     ml::PropagationConfig setup;
-    setup.use_multithread_when_possible = false;
     // create a test setup with two planes and high refractive index in between
     ml::Frame world;
     world.set_name_pos_rot("world", ml::VEC3_ORIGIN, ml::ROT3_UNITY);

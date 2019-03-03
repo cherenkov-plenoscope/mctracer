@@ -16,18 +16,6 @@ void propagate_photons_in_scenery_with_settings(
     const PropagationConfig* settings,
     random::Generator* prng
 ) {
-    if (settings->use_multithread_when_possible)
-        propagate_photons_multi_thread(photons, world, settings, prng);
-    else
-        propagate_photons(photons, world, settings, prng);
-}
-
-void propagate_photons(
-    std::vector<Photon> *photons,
-    const Frame* world,
-    const PropagationConfig* settings,
-    random::Generator* prng
-) {
     PropagationEnvironment env;
     env.root_frame = world;
     env.config = settings;

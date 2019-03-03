@@ -94,7 +94,6 @@ int main(int argc, char* argv[]) {
     // BASIC SETTINGS
     ml::PropagationConfig settings;
     settings.max_num_interactions_per_photon = 10;
-    settings.use_multithread_when_possible = false;
 
     //--------------------------------------------------------------------------
     // INIT PRNG

@@ -57,7 +57,6 @@ TEST_CASE("EventIoPhotonFactoryTest: intersection_point_on_ground", "[merlict]")
 
                     // propagation settings
                     ml::PropagationConfig settings;
-                    settings.use_multithread_when_possible = false;
 
                     // photon propagation down to the ground
                     ml::Photons::propagate_photons_in_scenery_with_settings(
@@ -264,7 +263,6 @@ TEST_CASE("EventIoPhotonFactoryTest: correct_rel_time_when_intersecting_ground",
 
         // propagation settings
         ml::PropagationConfig settings;
-        settings.use_multithread_when_possible = false;
 
         // photon propagation
         ml::Photons::propagate_photons_in_scenery_with_settings(
