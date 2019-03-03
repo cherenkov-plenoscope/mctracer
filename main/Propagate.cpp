@@ -95,7 +95,7 @@ int main(int argc, char* argv[]) {
                 std::stringstream header;
                 header << "scenery: " << scenery_path.path << "\n";
                 header << "sensor:  ";
-                header << sensors.at(i)->frame->get_path_in_tree_of_frames();
+                header << sensors.at(i)->frame->path_in_tree();
                 header << ", ID: " << i << "\n";
                 header << "photons: " << photon_path.path << "\n";
                 header << "-------------\n";

@@ -193,7 +193,7 @@ std::string SurfaceEntity::str()const {
 
     if (has_restrictions_on_frames_to_propagate_to())
         out << " inner frame: " << allowed_frame_to_propagate_to->
-            get_path_in_tree_of_frames() << "\n";
+            path_in_tree() << "\n";
 
     return out.str();
 }

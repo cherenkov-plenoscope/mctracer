@@ -44,7 +44,7 @@ class Frame {
         const Rot3 rot);
     // GET
     std::string get_name()const;
-    std::string get_path_in_tree_of_frames()const;
+    std::string path_in_tree()const;
     Vec3 position_in_mother()const;
     Rot3 rotation_in_mother()const;
     Vec3 position_in_world()const;

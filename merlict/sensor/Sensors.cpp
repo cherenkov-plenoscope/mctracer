@@ -64,7 +64,7 @@ Sensor* Sensors::at_frame(const Frame* frame) {
         std::stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
         info << "There is no sensor for a frame called '";
-        info << frame->get_path_in_tree_of_frames();
+        info << frame->path_in_tree();
         info << "', '" << frame->get_name();
         info << "' in the list of " << by_frame.size() << " sensors.";
         throw NoSuchFrame(info.str());
@@ -92,7 +92,7 @@ void Sensors::assert_no_two_sensors_have_same_frame()const {
             info << __FILE__ << ", " << __LINE__ << "\n";
             info << "The sensors at " << i << " and " << i-1 << " share the ";
             info << "same frame '";
-            info << by_frame.at(i)->frame->get_path_in_tree_of_frames();
+            info << by_frame.at(i)->frame->path_in_tree();
             info << "'\n";
             throw DuplicateFrame(info.str());
         }

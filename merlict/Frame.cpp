@@ -161,12 +161,12 @@ const Frame* Frame::get_root()const {
     return root_frame;
 }
 
-std::string Frame::get_path_in_tree_of_frames()const {
+std::string Frame::path_in_tree()const {
     // The delimiter sign is '/' as for directorys on
     // unix systems.
     // eg. City/Street14/house18/roof/chimney/chimney_wall_2
     if (has_mother())
-        return mother->get_path_in_tree_of_frames() + FRAME_PATH_DELIMITER + name;
+        return mother->path_in_tree() + FRAME_PATH_DELIMITER + name;
     else
         return "";
 }
