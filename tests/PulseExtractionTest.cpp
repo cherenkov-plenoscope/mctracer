@@ -45,7 +45,7 @@ TEST_CASE("PulseExtractionTest: truncate_invalid_arrival_times", "[merlict]") {
     }
     response.push_back(read_out_channel);
 
-    int number_invalid_photons = 0;
+    int num_invalid_photons = 0;
     for (uint32_t p = 0; p < response.at(0).size(); p++) {
         int32_t slice = round(
             response.at(0).at(p).arrival_time/time_slice_duration);
@@ -53,10 +53,10 @@ TEST_CASE("PulseExtractionTest: truncate_invalid_arrival_times", "[merlict]") {
             slice < 0 ||
             slice >= signal_processing::NUMBER_TIME_SLICES
         )
-            number_invalid_photons++;
+            num_invalid_photons++;
     }
 
-    CHECK(2000 - signal_processing::NUMBER_TIME_SLICES == number_invalid_photons);
+    CHECK(2000 - signal_processing::NUMBER_TIME_SLICES == num_invalid_photons);
 
     std::vector<std::vector<signal_processing::ExtractedPulse>> raw =
         signal_processing::extract_pulses(
@@ -69,15 +69,15 @@ TEST_CASE("PulseExtractionTest: truncate_invalid_arrival_times", "[merlict]") {
     REQUIRE(1u == response.size());
     CHECK_FALSE(response.at(0).size() == raw.at(0).size());
 
-    int number_of_passing_photons = 0;
+    int num_passing_photons = 0;
     for (uint32_t ch = 0; ch < raw.size(); ch++) {
         for (uint32_t ph = 0; ph < raw.at(ch).size(); ph++) {
-            number_of_passing_photons++;
+            num_passing_photons++;
             REQUIRE(255 > raw.at(ch).at(ph).arrival_time_slice);
         }
     }
 
-    CHECK(signal_processing::NUMBER_TIME_SLICES == number_of_passing_photons);
+    CHECK(signal_processing::NUMBER_TIME_SLICES == num_passing_photons);
 }
 
 TEST_CASE("PulseExtractionTest: arrival_time_std", "[merlict]") {

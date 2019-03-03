@@ -113,7 +113,7 @@ double to_double(std::string text_to_parse) {
         throw std::invalid_argument(info.str());
     }
     char *e;
-    double number_parsed_in = std::strtod(text_to_parse.c_str(), &e);
+    double num_parsed_in = std::strtod(text_to_parse.c_str(), &e);
     if (*e != 0) {
         std::stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
@@ -121,7 +121,7 @@ double to_double(std::string text_to_parse) {
         info << "Can not parse '" << text_to_parse << "' to double.";
         throw std::invalid_argument(info.str());
     }
-    return number_parsed_in;
+    return num_parsed_in;
 }
 
 bool to_bool(std::string text_to_parse) {
@@ -158,7 +158,7 @@ int to_int(std::string text_to_parse) {
     }
     const int dezimal_base = 10;
     char *e;
-    int number_parsed_in = std::strtol(
+    int num_parsed_in = std::strtol(
         text_to_parse.c_str(),
         &e, dezimal_base);
     if (*e != 0) {
@@ -168,7 +168,7 @@ int to_int(std::string text_to_parse) {
         info << "Can not parse '" << text_to_parse << "' to int.";
         throw std::invalid_argument(info.str());
     }
-    return number_parsed_in;
+    return num_parsed_in;
 }
 
 Vec3 to_Vec3(const std::string original_text) {

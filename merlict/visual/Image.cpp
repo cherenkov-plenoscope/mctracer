@@ -7,10 +7,10 @@
 namespace merlict {
 namespace visual {
 
-Image::Image(unsigned int _number_cols, unsigned int _number_rows):
-    number_cols(_number_cols),
-    number_rows(_number_rows),
-    raw(std::vector<Color>(number_cols*number_rows)) {}
+Image::Image(unsigned int _num_cols, unsigned int _num_rows):
+    num_cols(_num_cols),
+    num_rows(_num_rows),
+    raw(std::vector<Color>(num_cols*num_rows)) {}
 
 Image::Image(const std::string path) {
     *this = ppm::read_image_from_path(path);
@@ -25,7 +25,7 @@ void Image::set_col_row(unsigned int col, unsigned int row, Color c) {
 }
 
 unsigned int Image::_idx(unsigned int col, unsigned int row)const {
-    return col*number_rows + row;
+    return col*num_rows + row;
 }
 
 void truncate_to_255(Image* image) {
@@ -37,8 +37,8 @@ void truncate_to_255(Image* image) {
 }
 
 void sobel_operator(const Image &image, Image* out) {
-    for (unsigned int col = 1; col < image.number_cols - 1; col++) {
-        for (unsigned int row = 1; row < image.number_rows - 1; row++) {
+    for (unsigned int col = 1; col < image.num_cols - 1; col++) {
+        for (unsigned int row = 1; row < image.num_rows - 1; row++) {
             const unsigned int idx_cm1_rp1 = image._idx(col - 1, row + 1);
             const unsigned int idx_cm1_rp0 = image._idx(col - 1, row    );
             const unsigned int idx_cm1_rm1 = image._idx(col - 1, row - 1);
@@ -140,8 +140,8 @@ void luminance_threshold_dilatation(
     const float threshold,
     Image* out
 ) {
-    const int rows = image.number_rows;
-    const int cols = image.number_cols;
+    const int rows = image.num_rows;
+    const int cols = image.num_cols;
     for (int col = 0; col < cols; col++) {
         for (int row = 0; row < rows; row++) {
             const unsigned int idx = image._idx(col, row);
@@ -189,8 +189,8 @@ std::vector<PixelCoordinate> pixel_coordinates_above_threshold(
     const double threshold
 ) {
     std::vector<PixelCoordinate> coordinates;
-    for (unsigned int row = 0; row < image.number_rows; row++) {
-        for (unsigned int col = 0; col < image.number_cols; col++) {
+    for (unsigned int row = 0; row < image.num_rows; row++) {
+        for (unsigned int col = 0; col < image.num_cols; col++) {
             double lum = 0.0;
             Color c = image.at_col_row(col, row);
             lum = c.r + c.g + c.b;
@@ -214,8 +214,8 @@ void fabs_difference(const Image &a, const Image &b, Image* out) {
 }
 
 void scale_up(const Image &in, const unsigned int scale, Image* out) {
-    for (unsigned int row = 0; row < in.number_rows; row++) {
-        for (unsigned int col = 0; col < in.number_cols; col++) {
+    for (unsigned int row = 0; row < in.num_rows; row++) {
+        for (unsigned int col = 0; col < in.num_cols; col++) {
             const unsigned int idx = in._idx(col, row);
             for (unsigned int srow = 0; srow < scale; srow++) {
                 for (unsigned int scol = 0; scol < scale; scol++) {
@@ -236,8 +236,8 @@ void merge_left_and_right_image_to_anaglyph_3DStereo(
     const Image &right,
     Image* stereo_image
 ) {
-    for (unsigned int row = 0; row < left.number_rows; row++) {
-        for (unsigned int col = 0; col < left.number_cols; col++) {
+    for (unsigned int row = 0; row < left.num_rows; row++) {
+        for (unsigned int col = 0; col < left.num_cols; col++) {
             const Color cl = left.at_col_row(col, row);
             const double lum_left = (cl.r + cl.g + cl.b)/3;
             const Color cr = right.at_col_row(col, row);

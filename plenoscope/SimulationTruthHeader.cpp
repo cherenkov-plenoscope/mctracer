@@ -10,7 +10,7 @@ SimulationTruthHeader::SimulationTruthHeader() {
     raw[  1-1] = corsika::str2float("MTST");
 }
 
-void SimulationTruthHeader::set_random_number_seed_of_run(const uint32_t seed) {
+void SimulationTruthHeader::set_random_seed_of_run(const uint32_t seed) {
     float f;
     memcpy(&f, &seed, sizeof f);
     raw[  1-1] = f;

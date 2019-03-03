@@ -14,7 +14,7 @@ TEST_CASE("NightSkyBackgroundLightTest: init", "[merlict]") {
     config.expected_imaging_system_max_aperture_radius = 25.0;
     config.max_FoV_diameter = ml::deg2rad(6.5);
     config.pixel_FoV_hex_flat2flat = ml::deg2rad(0.1);
-    config.number_of_paxel_on_pixel_diagonal = 13;
+    config.num_paxel_on_pixel_diagonal = 13;
     config.housing_overhead = 1.2;
     config.lens_refraction = &plenoscope::light_field_sensor::pmma_refraction;
 

@@ -15,7 +15,7 @@ void write_arrival_information_to_file(
 
 std::vector<PhotonArrival> read_arrival_information_from_file(
     std::ifstream *file,
-    const unsigned int number_of_arrivals);
+    const unsigned int num_arrivals);
 
 }  // namespace sensor
 }  // namespace merlict

@@ -8,7 +8,7 @@ namespace plenoscope {
 namespace calibration {
 
 struct Config {
-    uint32_t number_of_blocks;
+    uint32_t num_blocks;
     uint32_t photons_per_block;
     Config();
 };

@@ -55,7 +55,7 @@ void PinHoleCamera::update_principal_point_for_current_FoV() {
     */
     // distance
     dist_camera_support_to_principal_point =
-        ((number_cols/2.0)/tan(field_of_view/2.0));
+        ((num_cols/2.0)/tan(field_of_view/2.0));
 
     // principal point
     principal_point =
@@ -90,8 +90,8 @@ Vec3 PinHoleCamera::get_direction_of_ray_for_pixel(
 Vec3 PinHoleCamera::get_intersection_of_ray_on_image_sensor_for_pixel(
     const int row, const int col
 )const {
-    const int vert_position_on_image_sensor = row - number_rows/2;
-    const int hori_position_on_image_sensor = col - number_cols/2;
+    const int vert_position_on_image_sensor = row - num_rows/2;
+    const int hori_position_on_image_sensor = col - num_cols/2;
 
     return principal_point +
         SensorDirectionVert * vert_position_on_image_sensor +
@@ -107,8 +107,8 @@ Color do_one_pixel(
     const PinHoleCamera* cam
 ) {
     (void)id;
-    const unsigned int row = pixel / cam->number_cols;
-    const unsigned int col = pixel % cam->number_cols;
+    const unsigned int row = pixel / cam->num_cols;
+    const unsigned int col = pixel % cam->num_cols;
     CameraRay cam_ray = cam->get_ray_for_pixel_in_row_and_col(row, col);
     Tracer tracer(&cam_ray, world, visual_config, prng);
     return tracer.color;
@@ -120,14 +120,14 @@ void PinHoleCamera::acquire_image(
     Image* image
 ) {
     assert_resolution(image);
-    const unsigned int number_pixel = number_cols*number_rows;
+    const unsigned int num_pixel = num_cols*num_rows;
 
     uint64_t num_threads = std::thread::hardware_concurrency();
     ctpl::thread_pool pool(num_threads);
     random::Mt19937 prng;
-    std::vector<std::future<Color>> results(number_pixel);
+    std::vector<std::future<Color>> results(num_pixel);
 
-    for (uint64_t i = 0; i < number_pixel; ++i) {
+    for (uint64_t i = 0; i < num_pixel; ++i) {
         results[i] = pool.push(
             do_one_pixel,
             world,
@@ -137,9 +137,9 @@ void PinHoleCamera::acquire_image(
             this);
     }
 
-    for (uint64_t i = 0; i < number_pixel; i ++) {
-        const unsigned int row = i / number_cols;
-        const unsigned int col = i % number_cols;
+    for (uint64_t i = 0; i < num_pixel; i ++) {
+        const unsigned int row = i / num_cols;
+        const unsigned int col = i % num_cols;
         image->set_col_row(col, row, results[i].get());
     }
 }

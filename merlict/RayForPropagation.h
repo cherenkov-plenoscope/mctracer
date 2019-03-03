@@ -51,7 +51,7 @@ class RayForPropagation :public Ray{
         const Interaction type);
     std::string str()const;
     double get_accumulative_distance()const;
-    unsigned int get_number_of_interactions_so_far()const;
+    unsigned int get_num_interactions_so_far()const;
     const Intersection& get_intersection_at(const unsigned int index)const;
     Interaction get_final_interaction_type()const;
     const Intersection& get_final_intersection()const;

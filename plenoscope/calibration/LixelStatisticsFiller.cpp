@@ -13,10 +13,10 @@ LixelStatisticsFiller::LixelStatisticsFiller(
     calib_config(_calib_config),
     sensor_geometry(geometry),
     photons_emitted_per_lixel(
-        static_cast<double>(_calib_config->number_of_blocks)*
+        static_cast<double>(_calib_config->num_blocks)*
         static_cast<double>(_calib_config->photons_per_block)/
-        static_cast<double>(geometry->number_of_lixel())) {
-    lixel_stats.resize(sensor_geometry->number_of_lixel());
+        static_cast<double>(geometry->num_lixel())) {
+    lixel_stats.resize(sensor_geometry->num_lixel());
 }
 
 void LixelStatisticsFiller::fill_in_block(

@@ -26,18 +26,18 @@ std::vector<std::vector<PipelinePhoton>> get_photon_pipelines(
     const merlict::sensor::Sensors* sensors
 ) {
     std::vector<std::vector<PipelinePhoton>> photon_pipelines;
-    const unsigned int number_sensors = sensors->size();
-    photon_pipelines.reserve(number_sensors);
+    const unsigned int num_sensors = sensors->size();
+    photon_pipelines.reserve(num_sensors);
 
     // for each sensor
-    for (unsigned int i = 0; i < number_sensors; i++) {
+    for (unsigned int i = 0; i < num_sensors; i++) {
         std::vector<PipelinePhoton> photon_pipeline;
-        const unsigned int number_photons =
+        const unsigned int num_photons =
             sensors->by_occurence[i]->photon_arrival_history.size();
-        photon_pipeline.reserve(number_photons);
+        photon_pipeline.reserve(num_photons);
 
         // for each photon
-        for (unsigned int j = 0; j < number_photons; j++) {
+        for (unsigned int j = 0; j < num_photons; j++) {
             PipelinePhoton ph(
                 sensors->by_occurence[i]->photon_arrival_history[j].
                     arrival_time,

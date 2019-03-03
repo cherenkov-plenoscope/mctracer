@@ -27,12 +27,12 @@ void write_arrival_information_to_file(
 
 std::vector<PhotonArrival> read_arrival_information_from_file(
     std::ifstream *file,
-    const unsigned int number_of_arrivals
+    const unsigned int num_arrivals
 ) {
     std::vector<PhotonArrival> arrivals;
-    arrivals.reserve(number_of_arrivals);
+    arrivals.reserve(num_arrivals);
 
-    for (unsigned int i = 0; i < number_of_arrivals; i++) {
+    for (unsigned int i = 0; i < num_arrivals; i++) {
         std::array<float, 7> block;
         file->read(
             reinterpret_cast<char*>(block.data()),

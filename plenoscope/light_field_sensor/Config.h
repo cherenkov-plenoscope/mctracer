@@ -24,7 +24,7 @@ struct Config {
     double max_FoV_diameter;
     double pixel_FoV_hex_flat2flat;
     double housing_overhead;
-    unsigned int number_of_paxel_on_pixel_diagonal;
+    unsigned int num_paxel_on_pixel_diagonal;
     const merlict::function::Func1* lens_refraction;
     const merlict::function::Func1* lens_absorbtion;
     const merlict::function::Func1* bin_reflection;

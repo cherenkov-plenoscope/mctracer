@@ -97,7 +97,7 @@ class BinaryWriter :public BinaryIo {
     void assert_file_is_open()const;
     void assert_normal_is_actually_normalized(const Vec3 normal);
     void write_stl_header();
-    void write_number_of_facets(const uint32_t i);
+    void write_num_facets(const uint32_t i);
     void write_attribute_count(const uint16_t i);
     void write_vector(const Vec3 &vec);
     void write_facets();
@@ -114,7 +114,7 @@ class BinaryReader :public BinaryIo {
     std::string stl_header;
     std::vector<Facet> facets;
     unsigned int current_triangle_number = 0;
-    uint32_t total_number_of_facets;
+    uint32_t total_num_facets;
     // keep track of facets with bad "attribute byte count"
     std::vector<unsigned int> facets_with_bad_attribute_count;
 
@@ -123,12 +123,12 @@ class BinaryReader :public BinaryIo {
     std::vector<Facet> get_facets()const;
     std::string str()const;
     std::string get_header()const;
-    unsigned int get_number_of_facets()const;
+    unsigned int get_num_facets()const;
     std::string get_report()const;
 
  private:
     void read_header();
-    void read_total_number_of_facets();
+    void read_total_num_facets();
     void start();
     Facet read_and_create_next_facet();
     bool stl_header_implies_ascii_format()const;

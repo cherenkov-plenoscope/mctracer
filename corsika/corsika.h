@@ -29,7 +29,7 @@ float run_number(const std::array<float, 273> &rh);
 float slope_of_energy_spektrum(const std::array<float, 273> &rh);
 float energy_range_start(const std::array<float, 273> &rh);
 float energy_range_end(const std::array<float, 273> &rh);
-float number_of_observation_levels(const std::array<float, 273> &rh);
+float num_observation_levels(const std::array<float, 273> &rh);
 float observation_level_at(
     const std::array<float, 273> &rh,
     const unsigned int i);

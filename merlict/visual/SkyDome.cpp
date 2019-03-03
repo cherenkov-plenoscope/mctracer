@@ -11,8 +11,8 @@ SkyDome::SkyDome(const std::string _filename):
     has_texture = true;
     filename = _filename;
 
-    central_row = sky.number_rows/2;
-    central_col = sky.number_cols/2;
+    central_row = sky.num_rows/2;
+    central_col = sky.num_cols/2;
     zenith_to_horizon_radius =
         central_row < central_col ? central_row : central_col;
 
@@ -62,7 +62,7 @@ Color SkyDome::sky_dome_color_for(const Vec3 dir)const {
 std::string SkyDome::str()const {
     std::stringstream out;
     out << "SkyDome ";
-    out << sky.number_cols << "x" << sky.number_rows;
+    out << sky.num_cols << "x" << sky.num_rows;
     if (has_texture) {
         out << ", " << filename << ", ";
         out << "central pixel (" << central_col << "," << central_row << "), ";

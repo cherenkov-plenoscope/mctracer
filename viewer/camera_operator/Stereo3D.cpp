@@ -9,12 +9,12 @@ Stereo3D::Stereo3D(CameraDevice* camera_to_work_with):
     camera(camera_to_work_with),
     left_image(
         Image(
-            camera->number_cols,
-            camera->number_rows)),
+            camera->num_cols,
+            camera->num_rows)),
     right_image(
         Image(
-            camera->number_cols,
-            camera->number_rows)) {}
+            camera->num_cols,
+            camera->num_rows)) {}
 
 void Stereo3D::aquire_stereo_image(
     const Frame* world,

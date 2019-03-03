@@ -151,9 +151,9 @@ TEST_CASE("FrameTest: cluster_frames_during_tree_initializing", "[merlict]") {
 TEST_CASE("FrameTest: clustering_frames_which_are_stucked_close_together", "[merlict]") {
     ml::Frame tree;
     tree.set_name_pos_rot("tree", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
-    const unsigned int number_facets = 100;
+    const unsigned int num_facets = 100;
 
-    for (unsigned int i = 0; i < number_facets; i++) {
+    for (unsigned int i = 0; i < num_facets; i++) {
         ml::SphereCapWithRectangularBound* facet =
             tree.append<ml::SphereCapWithRectangularBound>();
         facet->set_name_pos_rot(
@@ -163,12 +163,12 @@ TEST_CASE("FrameTest: clustering_frames_which_are_stucked_close_together", "[mer
         facet->set_curvature_radius_and_x_y_width(34.0, 1.0, 1.0);
     }
 
-    CHECK(tree.get_children()->size() == number_facets);
+    CHECK(tree.get_children()->size() == num_facets);
     tree.init_tree_based_on_mother_child_relations();
 
     // The clustering will not help (reduce the number of children)
     // because all the geometry is stucked on top of each other.
-    CHECK(tree.get_children()->size() == number_facets);
+    CHECK(tree.get_children()->size() == num_facets);
 }
 #include "merlict/RayAndFrame.h"
 

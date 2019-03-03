@@ -50,10 +50,10 @@ TEST_CASE("PhotonsTest: photon2raw_row", "[merlict]") {
 }
 
 TEST_CASE("PhotonsTest: bunch2raw_matrix2bunch", "[merlict]") {
-    const unsigned int number_of_photons = 1e3;
+    const unsigned int num_photons = 1e3;
     std::vector<ml::Photon> photon_bunch;
     ml::random::Mt19937 prng(0u);
-    for (unsigned int n = 0; n < number_of_photons; n++) {
+    for (unsigned int n = 0; n < num_photons; n++) {
         ml::Vec3 sup(prng.uniform(), prng.uniform(), prng.uniform());
         ml::Vec3 dir(prng.uniform(), prng.uniform(), prng.uniform());
         unsigned int id =  static_cast<int>(prng.uniform());
@@ -67,14 +67,14 @@ TEST_CASE("PhotonsTest: bunch2raw_matrix2bunch", "[merlict]") {
     std::vector<std::vector<double>> raw_matrix =
         ml::Photons::photons2raw_matrix(&photon_bunch);
 
-    REQUIRE(raw_matrix.size() == number_of_photons);
+    REQUIRE(raw_matrix.size() == num_photons);
 
     std::vector<ml::Photon> photon_bunch2 =
         ml::Photons::raw_matrix2photons(raw_matrix);
 
-    REQUIRE(photon_bunch2.size() == number_of_photons);
+    REQUIRE(photon_bunch2.size() == num_photons);
 
-    for (unsigned int n = 0; n < number_of_photons; n++) {
+    for (unsigned int n = 0; n < num_photons; n++) {
         ml::Photon ph1 = photon_bunch.at(n);
         ml::Photon ph2 = photon_bunch2.at(n);
 
@@ -90,13 +90,13 @@ TEST_CASE("PhotonsTest: bunch2raw_matrix2bunch", "[merlict]") {
 }
 
 TEST_CASE("PhotonsTest: bunch2raw_matrix2file", "[merlict]") {
-    const unsigned int number_of_photons = 1e3;
+    const unsigned int num_photons = 1e3;
     std::vector<ml::Photon> photon_bunch1;
     ml::random::Mt19937 prng(0u);
-    for (unsigned int n = 0; n < number_of_photons; n++) {
+    for (unsigned int n = 0; n < num_photons; n++) {
         ml::Vec3 sup(prng.uniform(), prng.uniform(), prng.uniform());
         ml::Vec3 dir(prng.uniform(), prng.uniform(), prng.uniform());
-        unsigned int id = static_cast<int>(prng.uniform()*number_of_photons);
+        unsigned int id = static_cast<int>(prng.uniform()*num_photons);
         double wavelength = prng.uniform();
 
         ml::Photon ph(sup, dir, wavelength);
@@ -115,9 +115,9 @@ TEST_CASE("PhotonsTest: bunch2raw_matrix2file", "[merlict]") {
         ml::tsvio::gen_table_from_file(
             "tsvio/my_big_photon_list.txt"));
 
-    REQUIRE(photon_bunch2.size() == number_of_photons);
+    REQUIRE(photon_bunch2.size() == num_photons);
 
-    for (unsigned int n = 0; n < number_of_photons; n++) {
+    for (unsigned int n = 0; n < num_photons; n++) {
         ml::Photon ph1 = photon_bunch1.at(n);
         ml::Photon ph2 = photon_bunch2.at(n);
 

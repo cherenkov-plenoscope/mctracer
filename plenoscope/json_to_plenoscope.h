@@ -24,8 +24,8 @@ merlict::Frame* add_light_field_sensor(
         o.f8("expected_imaging_system_aperture_radius");
     config.max_FoV_diameter = merlict::deg2rad(o.f8("max_FoV_diameter_deg"));
     config.pixel_FoV_hex_flat2flat = merlict::deg2rad(o.f8("hex_pixel_FoV_flat2flat_deg"));
-    config.number_of_paxel_on_pixel_diagonal =
-        o.u8("number_of_paxel_on_pixel_diagonal");
+    config.num_paxel_on_pixel_diagonal =
+        o.u8("num_paxel_on_pixel_diagonal");
     config.housing_overhead = o.f8("housing_overhead");
     config.lens_refraction = scenery->functions.get(
             o.st("lens_refraction_vs_wavelength"));
@@ -59,8 +59,8 @@ merlict::Frame* add_light_field_sensor_demonstration(
         o.f8("expected_imaging_system_aperture_radius");
     config.max_FoV_diameter = merlict::deg2rad(o.f8("max_FoV_diameter_deg"));
     config.pixel_FoV_hex_flat2flat = merlict::deg2rad(o.f8("hex_pixel_FoV_flat2flat_deg"));
-    config.number_of_paxel_on_pixel_diagonal =
-        o.u8("number_of_paxel_on_pixel_diagonal");
+    config.num_paxel_on_pixel_diagonal =
+        o.u8("num_paxel_on_pixel_diagonal");
     config.housing_overhead = o.f8("housing_overhead");
     config.lens_refraction = scenery->functions.get(
             o.st("lens_refraction_vs_wavelength"));

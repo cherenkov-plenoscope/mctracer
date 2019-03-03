@@ -38,7 +38,7 @@ void EventHeader::set_plenoscope_geometry(const light_field_sensor::Config &cfg)
     raw[ 24-1] = cfg.expected_imaging_system_max_aperture_radius;
     raw[ 25-1] = cfg.max_FoV_diameter;
     raw[ 26-1] = cfg.pixel_FoV_hex_flat2flat;
-    raw[ 27-1] = cfg.number_of_paxel_on_pixel_diagonal;
+    raw[ 27-1] = cfg.num_paxel_on_pixel_diagonal;
     raw[ 28-1] = cfg.housing_overhead;
 }
 

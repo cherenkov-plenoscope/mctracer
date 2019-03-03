@@ -48,8 +48,8 @@ Vec3 cin_Vec3() {
 }
 
 void image_to_opencv_image(const Image& image, cv::Mat* out) {
-    for (unsigned int col = 0; col < image.number_cols; col++) {
-        for (unsigned int row = 0; row < image.number_rows; row++) {
+    for (unsigned int col = 0; col < image.num_cols; col++) {
+        for (unsigned int row = 0; row < image.num_rows; row++) {
             const unsigned idx = image._idx(col, row);
             cv::Vec3b intensity;
             intensity.val[0] = image.raw.at(idx).b;
@@ -211,9 +211,9 @@ void FlyingCamera::destroy_display() {
 
 void FlyingCamera::update_display() {
     std::cout << "Full resolution image "
-    << camera.number_cols <<"x"
-    << camera.number_rows <<", "
-    << camera.number_cols*camera.number_rows/1e6
+    << camera.num_cols <<"x"
+    << camera.num_rows <<", "
+    << camera.num_cols*camera.num_rows/1e6
     << " MPixel\n";
     acquire_image_with_camera(&camera, &image);
     image_to_opencv_image(image, &display_image);
@@ -283,7 +283,7 @@ void FlyingCamera::aquire_image_focused_on_pixel_col_row(int col, int row) {
     ApertureCamera apcam = get_aperture_camera_based_on_camera();
     apcam.set_focus_to(object_distance_to_focus_on);
     std::cout << apcam.str();
-    Image apcam_img = Image(apcam.number_cols, apcam.number_rows);
+    Image apcam_img = Image(apcam.num_cols, apcam.num_rows);
     acquire_image_with_camera(&apcam, &apcam_img);
     ppm::write_image_to_path(apcam_img, get_snapshot_filename());
 }

@@ -39,7 +39,7 @@ void Geometry::set_up_pixel_grid() {
 void Geometry::set_up_paxel_per_pixel_template_grid() {
     ml::HexGridFlower paxel_template_grid_generator(
         pixel_lens_outer_aperture_radius(),
-        config.number_of_paxel_on_pixel_diagonal);
+        config.num_paxel_on_pixel_diagonal);
 
     lixel_hex_flat2flat_diameter =
         paxel_template_grid_generator.get_facet_spacing();
@@ -88,7 +88,7 @@ double Geometry::max_FoV_radius()const {
     return config.max_FoV_diameter/2.0;
 }
 
-unsigned int Geometry::number_of_pixels()const {
+unsigned int Geometry::num_pixels()const {
     return pixel_grid.size();
 }
 
@@ -166,7 +166,7 @@ double Geometry::lixel_z_orientation()const {
     return 1.0/6.0*M_PI;
 }
 
-double Geometry::number_of_paxel_per_pixel()const {
+double Geometry::num_paxel_per_pixel()const {
     return paxel_per_pixel_template_grid.size();
 }
 
@@ -182,7 +182,7 @@ double Geometry::lixel_spacing()const {
     return lixel_hex_flat2flat_diameter;
 }
 
-unsigned int Geometry::number_of_lixel()const {
+unsigned int Geometry::num_lixel()const {
     return lixel_grid.size();
 }
 
@@ -245,11 +245,11 @@ std::array<float, 273> Geometry::get_info_header()const {
     header[ 24-1] = config.expected_imaging_system_max_aperture_radius;
     header[ 25-1] = config.max_FoV_diameter;
     header[ 26-1] = config.pixel_FoV_hex_flat2flat;
-    header[ 27-1] = config.number_of_paxel_on_pixel_diagonal;
+    header[ 27-1] = config.num_paxel_on_pixel_diagonal;
     header[ 28-1] = config.housing_overhead;
 
-    header[101-1] = number_of_pixels();
-    header[102-1] = number_of_paxel_per_pixel();
+    header[101-1] = num_pixels();
+    header[102-1] = num_paxel_per_pixel();
 
     header[103-1] = lixel_outer_radius();
     header[104-1] = lixel_spacing();
@@ -286,9 +286,9 @@ std::string Geometry::str()const {
     tab << " Max sensor radius............. ";
     tab << max_outer_sensor_radius() << "m\n";
     tab << " Number of pixels.............. ";
-    tab << number_of_pixels() << "\n";
+    tab << num_pixels() << "\n";
     tab << " Number of paxels in pixel..... ";
-    tab << number_of_paxel_per_pixel() << "\n";
+    tab << num_paxel_per_pixel() << "\n";
     tab << " Number of lixel............... ";
     tab << lixel_grid.size() << "\n";
     tab << "\n";

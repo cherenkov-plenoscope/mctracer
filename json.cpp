@@ -506,8 +506,8 @@ PropagationConfig to_PropagationConfig(const Object &o) {
     PropagationConfig cfg;
     cfg.use_multithread_when_possible =
         o.b1("use_multithread_when_possible");
-    cfg.max_number_of_interactions_per_photon =
-        o.u8("max_number_of_interactions_per_photon");
+    cfg.max_num_interactions_per_photon =
+        o.u8("max_num_interactions_per_photon");
     return cfg;
 }
 

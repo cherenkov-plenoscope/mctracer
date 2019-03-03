@@ -46,11 +46,11 @@ class Geometry {
     double pixel_FoV_hex_flat2flat()const;
     double pixel_plane_to_paxel_plane_distance()const;
     double aperture_image_radius_on_paxel_plane()const;
-    unsigned int number_of_pixels()const;
+    unsigned int num_pixels()const;
     double outer_sensor_housing_radius()const;
     std::vector<merlict::Vec3> pixel_positions()const;
     std::vector<std::vector<unsigned int>>  pixel_neighbor_relations()const;
-    double number_of_paxel_per_pixel()const;
+    double num_paxel_per_pixel()const;
     double lixel_outer_radius()const;
     double lixel_inner_radius()const;
     double lixel_spacing()const;
@@ -58,7 +58,7 @@ class Geometry {
     const std::vector<merlict::Vec3>& lixel_positions()const;
     std::vector<std::vector<unsigned int>>  paxel_neighbor_relations()const;
     std::vector<merlict::Vec3> paxel_grid_center_positions()const;
-    unsigned int number_of_lixel()const;
+    unsigned int num_lixel()const;
     void write_lixel_positions(const std::string &path)const;
     void write_info_header(const std::string &path)const;
     double bin_hight()const;

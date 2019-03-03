@@ -16,7 +16,7 @@ TEST_CASE("PhotonTest: creation", "[merlict]") {
     CHECK(pho.direction().norm() == 1.0);
     CHECK(pho.get_wavelength() == wavelength);
     // creation is an interaction
-    CHECK(pho.get_number_of_interactions_so_far() == 1u);
+    CHECK(pho.get_num_interactions_so_far() == 1u);
 }
 
 TEST_CASE("PhotonTest: reject_negative_wavelength", "[merlict]") {
@@ -27,8 +27,8 @@ TEST_CASE("PhotonTest: reject_negative_wavelength", "[merlict]") {
 TEST_CASE("PhotonTest: PropagationSimpleGeometry", "[merlict]") {
     ml::PropagationConfig setup;
     setup.use_multithread_when_possible = false;
-    int number_of_bounces = 42;
-    setup.max_number_of_interactions_per_photon = number_of_bounces;
+    int num_bounces = 42;
+    setup.max_num_interactions_per_photon = num_bounces;
     // create a test setup with two mirrors bouncing the photon
     ml::Frame world;
     world.set_name_pos_rot("world", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
@@ -77,12 +77,12 @@ TEST_CASE("PhotonTest: PropagationSimpleGeometry", "[merlict]") {
     environment.config = &setup;
     environment.prng = &prng;
     // creation is 1 interaction itself
-    const unsigned int num_of_total_interactions = number_of_bounces + 1;
+    const unsigned int num_of_total_interactions = num_bounces + 1;
     for (int i = 0; i < 1; i++) {
         ml::Photon P(Support, direction, wavelength);
         ml::PhotonAndFrame::Propagator(&P, environment);
-        CHECK(P.get_accumulative_distance() == number_of_bounces*1.0-0.5);
-        CHECK(P.get_number_of_interactions_so_far() == num_of_total_interactions);
+        CHECK(P.get_accumulative_distance() == num_bounces*1.0-0.5);
+        CHECK(P.get_num_interactions_so_far() == num_of_total_interactions);
     }
 }
 

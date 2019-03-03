@@ -17,8 +17,8 @@ void Propagator::propagate() {
 }
 
 bool Propagator::limit_of_interactions_is_not_reached_yet()const {
-    return ph->get_number_of_interactions_so_far() <=
-        env.config->max_number_of_interactions_per_photon;
+    return ph->get_num_interactions_so_far() <=
+        env.config->max_num_interactions_per_photon;
 }
 
 void Propagator::work_on_first_causal_intersection() {

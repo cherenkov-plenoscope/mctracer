@@ -23,7 +23,7 @@ Calibrator::Calibrator(
         config(_config),
         plenoscope(_plenoscope),
         world(_world),
-        num_photons(config.photons_per_block*config.number_of_blocks),
+        num_photons(config.photons_per_block*config.num_blocks),
         MAX_APERTURE_PLANE_RADIUS(
             night_sky_background::APERTURE_RADIUS_OVERHEAD*
             plenoscope->light_field_sensor_geometry.
@@ -149,8 +149,8 @@ void run_calibration(
     std::cout << "Plenoscope Calibrator: propagating ";
     std::cout << double(cal.num_photons)/1.0e6 << "e6 photons\n";
 
-    for (uint64_t block = 0; block < cal.config.number_of_blocks; block++) {
-        std::cout << block + 1 << " of " << cal.config.number_of_blocks << "\n";
+    for (uint64_t block = 0; block < cal.config.num_blocks; block++) {
+        std::cout << block + 1 << " of " << cal.config.num_blocks << "\n";
         fill_another_block(
             cal,
             &lixel_statistics_filler,
@@ -229,8 +229,8 @@ void Calibrator::run_calibration() {
     cout << "Plenoscope Calibrator: propagating ";
     cout << double(num_photons)/1.0e6 << "e6 photons\n";
     photon_results.resize(config.photons_per_block);
-    for (unsigned int j = 0; j < config.number_of_blocks; j++) {
-        cout << j+1 << " of " << config.number_of_blocks << "\n";
+    for (unsigned int j = 0; j < config.num_blocks; j++) {
+        cout << j+1 << " of " << config.num_blocks << "\n";
         fill_calibration_block_to_table();
         lixel_statistics_filler.fill_in_block(photon_results);
     }

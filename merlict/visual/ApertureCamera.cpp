@@ -43,15 +43,15 @@ void ApertureCamera::set_sensor_size_using_width(const double width_in_m) {
         throw std::invalid_argument(info.str());
     }
     const double width_to_height_ratio =
-        static_cast<double>(number_cols)/
-        static_cast<double>(number_rows);
+        static_cast<double>(num_cols)/
+        static_cast<double>(num_rows);
     sensor_width_in_m = width_in_m;
     sensor_height_in_m = sensor_width_in_m / width_to_height_ratio;
 }
 
 void ApertureCamera::update_sensor_pixel_pitch() {
     PixelPitch_in_m = sensor_width_in_m/
-        static_cast<double>(number_cols);
+        static_cast<double>(num_cols);
 }
 
 void ApertureCamera::set_default_object_distance() {
@@ -130,8 +130,8 @@ Vec3 ApertureCamera::get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(
     const unsigned int col,
     random::Mt19937 *prng
 )const {
-    const int x_pos_on_sensor_in_pixel =  row - number_rows/2;
-    const int y_pos_on_sensor_in_pixel =  col - number_cols/2;
+    const int x_pos_on_sensor_in_pixel =  row - num_rows/2;
+    const int y_pos_on_sensor_in_pixel =  col - num_cols/2;
 
     const double image_size_x = x_pos_on_sensor_in_pixel * PixelPitch_in_m;
     const double image_size_y = y_pos_on_sensor_in_pixel * PixelPitch_in_m;
@@ -187,9 +187,9 @@ void ApertureCamera::acquire_image(
 ) {
     assert_resolution(image);
 
-    const unsigned int rows = number_rows;
-    const unsigned int cols = number_cols;
-    const unsigned int number_pixel = rows*cols;
+    const unsigned int rows = num_rows;
+    const unsigned int cols = num_cols;
+    const unsigned int num_pixel = rows*cols;
 
     Image sum_image(cols, rows);
     Image exposure_image(cols, rows);
@@ -231,11 +231,11 @@ void ApertureCamera::acquire_image(
         std::vector<PixelCoordinate> pix_to_do =
             pixel_coordinates_above_threshold(to_do_image, 128.);
 
-        if (pix_to_do.size() <= number_pixel/100)
+        if (pix_to_do.size() <= num_pixel/100)
             break;
 
         std::vector<PixelCoordinate> pix_to_do_actually = pix_to_do;
-        while (pix_to_do_actually.size() < number_pixel/2) {
+        while (pix_to_do_actually.size() < num_pixel/2) {
             pix_to_do_actually.insert(
                 pix_to_do_actually.end(),
                 pix_to_do.begin(),

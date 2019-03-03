@@ -90,7 +90,7 @@ void BinaryWriter::write_to_file(const std::string _filename) {
     fout.open(filename, std::ios::out | std::ios::binary);
     assert_file_is_open();
     write_stl_header();
-    write_number_of_facets(facets.size());
+    write_num_facets(facets.size());
     write_facets();
     fout.close();
 }
@@ -128,7 +128,7 @@ void BinaryWriter::write_stl_header() {
     fout.write(reinterpret_cast<const char*>(&text), 80*sizeof(char));
 }
 
-void BinaryWriter::write_number_of_facets(const uint32_t i) {
+void BinaryWriter::write_num_facets(const uint32_t i) {
     fout.write(reinterpret_cast<const char*>(&i), 1*sizeof(uint32_t));
 }
 
@@ -153,7 +153,7 @@ void BinaryReader::start() {
     fin.open(filename, std::ios::binary);
         assert_file_is_open();
         read_header();
-        read_total_number_of_facets();
+        read_total_num_facets();
         read_facets();
     fin.close();
 }
@@ -163,8 +163,8 @@ void BinaryReader::read_header() {
     assert_is_no_ascii_format();
 }
 
-void BinaryReader::read_total_number_of_facets() {
-    total_number_of_facets = binio::read_uint32(fin);
+void BinaryReader::read_total_num_facets() {
+    total_num_facets = binio::read_uint32(fin);
 }
 
 std::string BinaryReader::get_report()const {
@@ -175,7 +175,7 @@ std::string BinaryReader::get_report()const {
     if (facets_with_bad_attribute_count.size() > 0) {
         info << "The attribute_byte_count is not zero in ";
         info << facets_with_bad_attribute_count.size() << " of ";
-        info << total_number_of_facets <<" facets\n";
+        info << total_num_facets <<" facets\n";
         info << "I do not know what attribute_byte_count means but\n";
         info << "the STL standart says it should be zero for each triangle.\n";
     } else {
@@ -229,12 +229,12 @@ std::string BinaryReader::str()const {
     out << txt::place_first_infront_of_each_new_line_of_second(
         "  ",
         stl_header);
-    out << "number of facets: " << total_number_of_facets << "\n";
+    out << "number of facets: " << total_num_facets << "\n";
     return out.str();
 }
 
 void BinaryReader::read_facets() {
-    for (uint32_t i = 0; i < total_number_of_facets; i++)
+    for (uint32_t i = 0; i < total_num_facets; i++)
         facets.push_back(read_and_create_next_facet());
 }
 
@@ -292,7 +292,7 @@ void BinaryReader::assert_normal_is_actually_normalized(const Vec3 normal) {
         info << __FILE__ << " " << __LINE__ << "\n";
         info << "BinaryReader: in file '" << filename << "', triangle number ";
         info << current_triangle_number << " of ";
-        info << total_number_of_facets << "\n";
+        info << total_num_facets << "\n";
         info << "The normal vector " << normal.str();
         info << " is not exactly normalized.\n";
         info << "STL header:\n";
@@ -301,7 +301,7 @@ void BinaryReader::assert_normal_is_actually_normalized(const Vec3 normal) {
     }
 }
 
-unsigned int BinaryReader::get_number_of_facets()const {
+unsigned int BinaryReader::get_num_facets()const {
     return current_triangle_number;
 }
 

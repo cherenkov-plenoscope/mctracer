@@ -12,7 +12,7 @@ class Histogram1 {
 
  public:
     std::vector<unsigned int> bins;
-    unsigned int number_of_samples = 0;
+    unsigned int num_samples = 0;
     unsigned int underflow_bin = 0;
     unsigned int overflow_bin = 0;
     Histogram1(

@@ -13,7 +13,7 @@ TEST_CASE("OnlineStatisticsTest: few_samples", "[merlict]") {
     for (unsigned int i = 0; i < vals.size(); i++)
         ov.add(vals.at(i));
     CHECK(1.0 == ov.mean());
-    CHECK(1 == ov.number_of_samples());
+    CHECK(1 == ov.num_samples());
     CHECK(ov.variance() != ov.variance());
     CHECK(ov.stddev() != ov.stddev());
 }
@@ -30,7 +30,7 @@ TEST_CASE("OnlineStatisticsTest: online_variance", "[merlict]") {
     double stddev_using_online = ov.stddev();
     double stddev_using_classic = ml::numeric::stddev(vals);
     CHECK(stddev_using_online == Approx(stddev_using_classic).margin(1e-6));
-    CHECK(1000000 == ov.number_of_samples());
+    CHECK(1000000 == ov.num_samples());
 }
 
 TEST_CASE("OnlineStatisticsTest: online_variance_simple_numbers", "[merlict]") {
@@ -41,7 +41,7 @@ TEST_CASE("OnlineStatisticsTest: online_variance_simple_numbers", "[merlict]") {
     double stddev_using_online = ov.stddev();
     double stddev_using_classic = ml::numeric::stddev(vals);
     CHECK(stddev_using_online == Approx(stddev_using_classic).margin(1e-6));
-    CHECK(7 == ov.number_of_samples());
+    CHECK(7 == ov.num_samples());
 }
 
 TEST_CASE("OnlineStatisticsTest: sum", "[merlict]") {

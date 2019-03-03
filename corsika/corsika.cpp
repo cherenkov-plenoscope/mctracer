@@ -109,7 +109,7 @@ float energy_range_start(const std::array<float, 273> &rh) {
 float energy_range_end(const std::array<float, 273> &rh) {
     return rh.at(17);
 }
-float number_of_observation_levels(const std::array<float, 273> &rh) {
+float num_observation_levels(const std::array<float, 273> &rh) {
     return rh.at(4);
 }
 float observation_level_at(

@@ -74,7 +74,7 @@ TEST_CASE("EventIoTest: EventIoFile_telescope_dat__mmcs_run_header", "[merlict]"
     CHECK(-2.7 == Approx(corsika::RunHeader::slope_of_energy_spektrum(my_run.header.raw)).margin(1e-6));
     CHECK(1000. == Approx(corsika::RunHeader::energy_range_start(my_run.header.raw)).margin(1e-6));
     CHECK(50000. == Approx(corsika::RunHeader::energy_range_end(my_run.header.raw)).margin(1e-6));
-    CHECK(corsika::RunHeader::number_of_observation_levels(my_run.header.raw) == 1u);
+    CHECK(corsika::RunHeader::num_observation_levels(my_run.header.raw) == 1u);
     CHECK(220000. == Approx(corsika::RunHeader::observation_level_at(my_run.header.raw, 0)).margin(1e-6));
 }
 

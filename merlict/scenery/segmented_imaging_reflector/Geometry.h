@@ -44,7 +44,7 @@ class Geometry {
     double effective_area()const;
     double effective_radius()const;
     double facet_area()const;
-    double number_of_facets()const;
+    double num_facets()const;
     double average_image_distances_of_facets()const;
     std::string str()const;
     std::string facet_positions_and_normals_to_text()const;

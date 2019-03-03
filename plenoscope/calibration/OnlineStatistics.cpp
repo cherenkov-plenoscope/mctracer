@@ -29,7 +29,7 @@ double OnlineStatistics::variance()const {
     else
         return m2/n_samples;
 
-    // In wikipedia it is: m2/(number_of_samples - 1.0).
+    // In wikipedia it is: m2/(num_samples - 1.0).
     // We remove the substraction of 1.0, since it does not fit to the classic
     // stddev algorithms.
 }
@@ -46,7 +46,7 @@ double OnlineStatistics::sum()const {
     return _sum;
 }
 
-double OnlineStatistics::number_of_samples()const {
+double OnlineStatistics::num_samples()const {
     return n_samples;
 }
 

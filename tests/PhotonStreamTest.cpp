@@ -9,7 +9,7 @@ namespace sp = signal_processing;
 
 
 std::vector<std::vector<sp::ExtractedPulse>> create_photon_stream(
-    const unsigned int number_of_channels,
+    const unsigned int num_channels,
     const float single_pulse_rate,
     const float exposure_time,
     const float time_slice_duration,
@@ -18,7 +18,7 @@ std::vector<std::vector<sp::ExtractedPulse>> create_photon_stream(
     ml::random::Mt19937 prng(seed);
 
     std::vector<std::vector<sp::ExtractedPulse>> photon_stream;
-    for (unsigned int i = 0; i < number_of_channels; i++) {
+    for (unsigned int i = 0; i < num_channels; i++) {
         std::vector<sp::ExtractedPulse> pulses_in_channel;
         float t = 0.0;
         while (true) {
@@ -61,7 +61,7 @@ void expect_eq(
 }
 
 void write_and_read_back(
-    const unsigned int number_of_channels,
+    const unsigned int num_channels,
     const float time_slice_duration,
     const float single_pulse_rate,
     const float exposure_time,
@@ -69,7 +69,7 @@ void write_and_read_back(
 ) {
     sp::PhotonStream::Stream stream;
     stream.photon_stream = create_photon_stream(
-            number_of_channels,
+            num_channels,
             single_pulse_rate,
             exposure_time,
             time_slice_duration,
@@ -120,14 +120,14 @@ TEST_CASE("PhotonStreamTest: arrival_slices_must_not_be_NEXT_CHANNEL_MARKER", "[
 }
 
 TEST_CASE("PhotonStreamTest: write_and_read_back_full_single_pulse_event", "[merlict]") {
-    const unsigned int number_of_channels = 1337;
+    const unsigned int num_channels = 1337;
     const float time_slice_duration = 0.5e-9;
     const float single_pulse_rate = 50e6;
     const float exposure_time = 127.0e-9;
     const unsigned int seed = 0;
 
     write_and_read_back(
-        number_of_channels,
+        num_channels,
         time_slice_duration,
         single_pulse_rate,
         exposure_time,
@@ -135,14 +135,14 @@ TEST_CASE("PhotonStreamTest: write_and_read_back_full_single_pulse_event", "[mer
 }
 
 TEST_CASE("PhotonStreamTest: zero_channels", "[merlict]") {
-    const unsigned int number_of_channels = 0;
+    const unsigned int num_channels = 0;
     const float time_slice_duration = 0.5e-9;
     const float single_pulse_rate = 50e6;
     const float exposure_time = 127.0e-9;
     const unsigned int seed = 0;
 
     write_and_read_back(
-        number_of_channels,
+        num_channels,
         time_slice_duration,
         single_pulse_rate,
         exposure_time,
@@ -150,14 +150,14 @@ TEST_CASE("PhotonStreamTest: zero_channels", "[merlict]") {
 }
 
 TEST_CASE("PhotonStreamTest: empty_channels", "[merlict]") {
-    const unsigned int number_of_channels = 1337;
+    const unsigned int num_channels = 1337;
     const float time_slice_duration = 0.5e-9;
     const float single_pulse_rate = 0.0;
     const float exposure_time = 127.0e-9;
     const unsigned int seed = 0;
 
     write_and_read_back(
-        number_of_channels,
+        num_channels,
         time_slice_duration,
         single_pulse_rate,
         exposure_time,

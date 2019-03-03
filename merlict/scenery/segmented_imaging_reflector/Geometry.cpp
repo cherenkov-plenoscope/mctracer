@@ -73,7 +73,7 @@ double Geometry::average_image_distances_of_facets()const {
         sum_of_image_distances = sum_of_image_distances +
             (facet_pos - focal_point()).norm();
 
-    return sum_of_image_distances/number_of_facets();
+    return sum_of_image_distances/num_facets();
 }
 
 void Geometry::move_all_facets_in_z(const double movement) {
@@ -182,7 +182,7 @@ double Geometry::naive_area()const {
 }
 
 double Geometry::effective_area()const {
-    return number_of_facets()*facet_area();
+    return num_facets()*facet_area();
 }
 
 double Geometry::effective_radius()const {
@@ -193,7 +193,7 @@ double Geometry::facet_area()const {
     return facet_inner_hex_radius()*facet_inner_hex_radius()*6.0/sqrt(3.0);
 }
 
-double Geometry::number_of_facets()const {
+double Geometry::num_facets()const {
     return _facet_positions.size();
 }
 
@@ -221,7 +221,7 @@ std::string Geometry::str()const {
     tab << "effective area................. " << effective_area() << "m^2\n";
     tab << "effective diameter............. ";
     tab << 2.0*effective_radius() << "m\n";
-    tab << "number of facets............... " << number_of_facets() << "\n";
+    tab << "number of facets............... " << num_facets() << "\n";
     tab << "facet area..................... " << facet_area() << "m^2\n";
     tab << "facet inner radius............. ";
     tab << facet_inner_hex_radius() << "m\n";

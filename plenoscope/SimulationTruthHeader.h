@@ -10,7 +10,7 @@ namespace plenoscope {
 struct SimulationTruthHeader {
     std::array<float, 273> raw;
     SimulationTruthHeader();
-    void set_random_number_seed_of_run(const uint32_t seed);
+    void set_random_seed_of_run(const uint32_t seed);
 };
 
 }  // namespace plenoscope

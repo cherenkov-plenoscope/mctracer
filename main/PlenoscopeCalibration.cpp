@@ -20,7 +20,7 @@ R"(Plenoscope light field calibration
 
     Options:
       -s --scenery=SCENERY_PATH                     Scenery directory path.
-      -n --number_mega_photons=NUMBER_MEGA_PHOTONS  Number count [Mega Photons]
+      -n --num_mega_photons=NUMBER_MEGA_PHOTONS  Number count [Mega Photons]
                                                     of calibration photons to be
                                                     emitted.
       -o --output=OUTPUT_PATH                       Output path.
@@ -36,25 +36,25 @@ int main(int argc, char* argv[]) {
             true,        // show help if requested
             "mct 0.1");  // version string
 
-        int number_mega_photons = 0;
+        int num_mega_photons = 0;
         try {
-            number_mega_photons = ml::txt::to_int(
-                args.find("--number_mega_photons")->second.asString());
+            num_mega_photons = ml::txt::to_int(
+                args.find("--num_mega_photons")->second.asString());
         } catch (std::invalid_argument &error) {
             std::stringstream info;
             info << __FILE__ << ", " << __LINE__ << "\n";
             info << "Expected ";
-            info << "'--number_mega_photons', '-n' to be an integer number, ";
-            info << "but actual: " << args.find("--number_mega_photons"
+            info << "'--num_mega_photons', '-n' to be an integer number, ";
+            info << "but actual: " << args.find("--num_mega_photons"
                 )->second.asString();
             throw std::invalid_argument(info.str());
         }
 
-        if (number_mega_photons <= 0.0) {
+        if (num_mega_photons <= 0.0) {
             std::stringstream info;
             info << __FILE__ << ", " << __LINE__ << "\n";
-            info << "Expected '--number_mega_photons', ";
-            info << "'-n' to be >= 0, but actual: " << number_mega_photons;
+            info << "Expected '--num_mega_photons', ";
+            info << "'-n' to be >= 0, but actual: " << num_mega_photons;
             throw std::invalid_argument(info.str());
         }
 
@@ -103,7 +103,7 @@ int main(int argc, char* argv[]) {
 
         // CALIBRATION CONFIG
         plenoscope::calibration::Config calib_config;
-        calib_config.number_of_blocks = number_mega_photons;
+        calib_config.num_blocks = num_mega_photons;
         calib_config.photons_per_block = static_cast<int>(1e6);
 
         // RUN PLENOSCOPE CALIBRATION

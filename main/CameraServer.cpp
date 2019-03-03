@@ -32,8 +32,8 @@ struct ApertureCameraInstructions {
     double sensor_size_along_columns;
     double field_of_view_along_columns;
     double focal_length_over_aperture_diameter;
-    uint64_t number_columns;
-    uint64_t number_rows;
+    uint64_t num_columns;
+    uint64_t num_rows;
     uint64_t noise_level;
 };
 
@@ -53,8 +53,8 @@ ApertureCameraInstructions read_from_stream(std::istream &fin) {
     inst.sensor_size_along_columns = ml::binio::read_float64(fin);
     inst.field_of_view_along_columns = ml::binio::read_float64(fin);
     inst.focal_length_over_aperture_diameter = ml::binio::read_float64(fin);
-    inst.number_columns = ml::binio::read_uint64(fin);
-    inst.number_rows = ml::binio::read_uint64(fin);
+    inst.num_columns = ml::binio::read_uint64(fin);
+    inst.num_rows = ml::binio::read_uint64(fin);
     inst.noise_level = ml::binio::read_uint64(fin);
     return inst;
 }
@@ -89,13 +89,13 @@ int main(int argc, char* argv[]) {
                 break;
 
             ml::visual::Image image(
-                ins.number_columns,
-                ins.number_rows);
+                ins.num_columns,
+                ins.num_rows);
 
             ml::visual::ApertureCamera cam(
                 "camera",
-                ins.number_columns,
-                ins.number_rows);
+                ins.num_columns,
+                ins.num_rows);
             cam.set_fStop_sesnorWidth(
                 ins.focal_length_over_aperture_diameter,
                 ins.sensor_size_along_columns);

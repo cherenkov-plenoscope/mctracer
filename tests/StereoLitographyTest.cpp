@@ -27,12 +27,12 @@ TEST_CASE("StereoLitographyTest: write_and_read_stl_with_zero_triangles", "[merl
 }
 
 TEST_CASE("StereoLitographyTest: write_and_read_1000_triangle", "[merlict]") {
-    unsigned int number_of_triangles = 1000;
+    unsigned int num_triangles = 1000;
     std::vector<ml::stereo_litography::Facet> facets;
 
-    for (unsigned int i = 0; i < number_of_triangles; i++) {
+    for (unsigned int i = 0; i < num_triangles; i++) {
         double offset = static_cast<double>(i)/
-            static_cast<double>(number_of_triangles);
+            static_cast<double>(num_triangles);
         ml::stereo_litography::Facet facet = {
             ml::Vec3(0.0, 0.0, 1.0),
             ml::Vec3(0.0, 0.0, 0.0),

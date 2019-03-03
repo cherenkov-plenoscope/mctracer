@@ -14,12 +14,12 @@ void append_image_to_file(const Image &img, std::ostream &fout) {
     std::stringstream head;
     head << "P6\n";
     head << "# CREATOR: MCTRACER\n";
-    head << int(img.number_cols) << " ";
-    head << int(img.number_rows) << "\n";
+    head << int(img.num_cols) << " ";
+    head << int(img.num_rows) << "\n";
     head << "255\n";
     fout << head.str();
-    for (unsigned int row = 0; row < img.number_rows; row++) {
-        for (unsigned int col = 0; col < img.number_cols; col++) {
+    for (unsigned int row = 0; row < img.num_rows; row++) {
+        for (unsigned int col = 0; col < img.num_cols; col++) {
             const Color c = img.at_col_row(col, row);
             binio::append_uint8(c.r, fout);
             binio::append_uint8(c.g, fout);
@@ -45,23 +45,23 @@ Image read_image_from_file(std::istream &fin) {
         throw std::runtime_error(info.str());
     }
 
-    const int number_columns = txt::to_int(
+    const int num_columns = txt::to_int(
         txt::cut_leading_token_infront_of_delimiter(&resolution, ' '));
-    if (number_columns < 0) {
+    if (num_columns < 0) {
         std::stringstream info;
         info << "PortablePixMap::" << __func__ << "()\n";
-        info << "Expected number_columns >= 0, but actually it is '";
-        info << number_columns << "'\n";
+        info << "Expected num_columns >= 0, but actually it is '";
+        info << num_columns << "'\n";
         throw std::runtime_error(info.str());
     }
 
-    const int number_rows = txt::to_int(
+    const int num_rows = txt::to_int(
         txt::cut_leading_token_infront_of_delimiter(&resolution, ' '));
-    if (number_rows < 0) {
+    if (num_rows < 0) {
         std::stringstream info;
         info << "PortablePixMap::" << __func__ << "()\n";
-        info << "Expected number_rows >= 0, but actually it is '";
-        info << number_rows << "'\n";
+        info << "Expected num_rows >= 0, but actually it is '";
+        info << num_rows << "'\n";
         throw std::runtime_error(info.str());
     }
 
@@ -76,9 +76,9 @@ Image read_image_from_file(std::istream &fin) {
         throw std::runtime_error(info.str());
     }
 
-    Image img(number_columns, number_rows);
-    for (unsigned int row = 0; row < img.number_rows; row++) {
-        for (unsigned int col = 0; col < img.number_cols; col++) {
+    Image img(num_columns, num_rows);
+    for (unsigned int row = 0; row < img.num_rows; row++) {
+        for (unsigned int col = 0; col < img.num_cols; col++) {
             const float r = binio::read_uint8(fin);
             const float g = binio::read_uint8(fin);
             const float b = binio::read_uint8(fin);

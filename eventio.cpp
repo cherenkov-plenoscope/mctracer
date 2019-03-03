@@ -146,15 +146,15 @@ std::vector<TelPos> make_telescope_positions(std::istream& f, const Header& head
     int32_t ntel;
     f.read((char*)&ntel, sizeof(ntel));
 
-    int number_of_following_arrays = int((head.length - 4) / ntel /4);
+    int num_following_arrays = int((head.length - 4) / ntel /4);
 
-    if (number_of_following_arrays != 4) {
+    if (num_following_arrays != 4) {
         std::stringstream out;
         out << "In File:" << __FILE__ << std::endl;
         out << "in function:" << __func__ << std::endl;
         out << "Line:" << __LINE__ << std::endl;
-        out << " number_of_following_arrays is:";
-        out <<  number_of_following_arrays << std::endl;
+        out << " num_following_arrays is:";
+        out <<  num_following_arrays << std::endl;
         throw std::runtime_error(out.str());
     }
     std::vector<TelPos> telescope_positions(ntel);
@@ -196,9 +196,9 @@ std::vector<TelOffset> make_telescope_offsets_from_stream(
     f.read((char*)xoff.data(), xoff.size()*sizeof(float));
     f.read((char*)yoff.data(), yoff.size()*sizeof(float));
 
-    int number_of_following_arrays = int(
+    int num_following_arrays = int(
         (head.length - length_first_two) / narray /4);
-    switch (number_of_following_arrays) {
+    switch (num_following_arrays) {
         case 2:
             // do nothing, we already read the 2 std::arrays xoff and yoff.
             break;
@@ -210,8 +210,8 @@ std::vector<TelOffset> make_telescope_offsets_from_stream(
             out << "In File:" << __FILE__ << std::endl;
             out << "in function:" << __func__ << std::endl;
             out << "Line:" << __LINE__ << std::endl;
-            out << "number_of_following_arrays is ";
-            out << number_of_following_arrays << std::endl;
+            out << "num_following_arrays is ";
+            out << num_following_arrays << std::endl;
             out << "but only 2 or 3 are allowed." << std::endl;
             throw std::runtime_error(out.str());
     }

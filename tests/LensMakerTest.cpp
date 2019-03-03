@@ -47,7 +47,7 @@ TEST_CASE("lens_makerTest: check_lensmaker_on_optical_table_with_lens", "[merlic
             {1200e-9, cfg.refractive_index}
         });
     ml::random::Mt19937 prng(0u);
-    unsigned int number_of_photons_per_run = 1000;
+    unsigned int num_photons_per_run = 1000;
     std::vector<double> sigma_psf_vs_image_sensor_distance;
     std::vector<double> image_sensor_distances;
     for (
@@ -86,7 +86,7 @@ TEST_CASE("lens_makerTest: check_lensmaker_on_optical_table_with_lens", "[merlic
         std::vector<ml::Photon> photons =
             ml::Photons::Source::parallel_towards_z_from_xy_disc(
                 cfg.aperture_radius*0.85,  // 0.85 inner hex radius
-                number_of_photons_per_run,
+                num_photons_per_run,
                 &prng);
         ml::HomTra3 Trafo;
         Trafo.set_transformation(

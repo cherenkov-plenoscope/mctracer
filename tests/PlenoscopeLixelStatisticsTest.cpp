@@ -21,10 +21,10 @@ TEST_CASE("PlenoscopeLixelStatisticsTest: default_ctor", "[merlict]") {
 }
 
 TEST_CASE("PlenoscopeLixelStatisticsTest: write_and_read_binary", "[merlict]") {
-    const unsigned int number_of_lixels = 1337;
+    const unsigned int num_lixels = 1337;
     std::vector<plenoscope::calibration::LixelStatistic> lixel_stats;
 
-    for (unsigned int i = 0; i < number_of_lixels; i++) {
+    for (unsigned int i = 0; i < num_lixels; i++) {
         plenoscope::calibration::LixelStatistic stat;
         stat.efficiency =       i*1.000;
         stat.efficiency_std =   i*1.001;
@@ -47,9 +47,9 @@ TEST_CASE("PlenoscopeLixelStatisticsTest: write_and_read_binary", "[merlict]") {
     std::vector<plenoscope::calibration::LixelStatistic> lixel_stats_in =
         plenoscope::calibration::read(path);
 
-    CHECK(number_of_lixels == lixel_stats_in.size());
+    CHECK(num_lixels == lixel_stats_in.size());
 
-    for (unsigned int i = 0; i < number_of_lixels; i++) {
+    for (unsigned int i = 0; i < num_lixels; i++) {
         CHECK(lixel_stats_in.at(i).efficiency == Approx(i*1.000).margin(1e-4));
         CHECK(lixel_stats_in.at(i).efficiency_std == Approx(i*1.001).margin(1e-4));
         CHECK(lixel_stats_in.at(i).cx_mean == Approx(i*1.002).margin(1e-4));

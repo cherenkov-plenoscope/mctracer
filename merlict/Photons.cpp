@@ -147,16 +147,16 @@ namespace Source {
 
 std::vector<Photon> point_like_towards_z_opening_angle_num_photons(
     const double opening_angle,
-    const unsigned int number_of_photons,
+    const unsigned int num_photons,
     random::Generator* prng
 ) {
     std::vector<Photon> photons;
-    photons.reserve(number_of_photons);
+    photons.reserve(num_photons);
     const Vec3 support = VEC3_ORIGIN;
 
     random::ZenithDistancePicker zenith_picker(0.0, opening_angle);
     random::UniformPicker azimuth_picker(0.0, 2*M_PI);
-    for (unsigned int i = 0; i < number_of_photons; i++) {
+    for (unsigned int i = 0; i < num_photons; i++) {
         Vec3 direction = random::draw_point_on_sphere(
             prng,
             zenith_picker,
@@ -170,14 +170,14 @@ std::vector<Photon> point_like_towards_z_opening_angle_num_photons(
 
 std::vector<Photon> parallel_towards_z_from_xy_disc(
     const double disc_radius,
-    const unsigned int number_of_photons,
+    const unsigned int num_photons,
     random::Generator* prng
 ) {
     std::vector<Photon> photons;
-    photons.reserve(number_of_photons);
+    photons.reserve(num_photons);
     const Vec3 direction = VEC3_UNIT_Z;
 
-    for (unsigned int i = 0; i < number_of_photons; i++) {
+    for (unsigned int i = 0; i < num_photons; i++) {
         Vec3 support = prng->get_point_on_xy_disc_within_radius(
             disc_radius);
         Photon ph(support, direction, 433e-9);

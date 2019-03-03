@@ -19,7 +19,7 @@ class OnlineStatistics {
     double stddev()const;
     double mean()const;
     double sum()const;
-    double number_of_samples()const;
+    double num_samples()const;
 };
 
 }  // namespace plenoscope

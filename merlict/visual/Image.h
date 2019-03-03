@@ -12,10 +12,10 @@ namespace visual {
 
 struct Image {
     // For fast striding: Use cols in outer loop and rows in inner loop.
-    unsigned int number_cols;
-    unsigned int number_rows;
+    unsigned int num_cols;
+    unsigned int num_rows;
     std::vector<Color> raw;
-    Image(unsigned int _number_cols, unsigned int _number_rows);
+    Image(unsigned int _num_cols, unsigned int _num_rows);
     explicit Image(const std::string path);
     Color at_col_row(unsigned int col, unsigned int row)const;
     void set_col_row(unsigned int col, unsigned int row, Color c);

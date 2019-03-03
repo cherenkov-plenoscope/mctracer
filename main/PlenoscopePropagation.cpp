@@ -93,7 +93,7 @@ int main(int argc, char* argv[]) {
     //--------------------------------------------------------------------------
     // BASIC SETTINGS
     ml::PropagationConfig settings;
-    settings.max_number_of_interactions_per_photon = 10;
+    settings.max_num_interactions_per_photon = 10;
     settings.use_multithread_when_possible = false;
 
     //--------------------------------------------------------------------------
@@ -290,7 +290,7 @@ plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
                 "corsika_event_header.bin"));
 
         plenoscope::SimulationTruthHeader sim_truth_header;
-        sim_truth_header.set_random_number_seed_of_run(prng.seed());
+        sim_truth_header.set_random_seed_of_run(prng.seed());
         corsika::block::write(
             sim_truth_header.raw,
             ml::ospath::join(

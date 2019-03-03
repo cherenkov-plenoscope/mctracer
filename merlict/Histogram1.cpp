@@ -15,7 +15,7 @@ Histogram1::Histogram1(
     init_bins_to_zero();
     for (double sample : samples)
         fill_in(sample);
-    number_of_samples = samples.size();
+    num_samples = samples.size();
 }
 
 void Histogram1::init_bins_to_zero() {

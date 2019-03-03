@@ -20,7 +20,7 @@ void inject_nsb_into_photon_pipeline(
 
     // FIND MIN MAX ARRIVAL TIMES OF CHERENKOV PHOTONS
 
-    unsigned int number_cherenkov_photons = 0;
+    unsigned int num_cherenkov_photons = 0;
     std::vector<double> arrival_times;
     double min_crk_arrival_time = std::numeric_limits<double>::max();
     double max_crk_arrival_time = std::numeric_limits<double>::min();
@@ -37,7 +37,7 @@ void inject_nsb_into_photon_pipeline(
             )
                 max_crk_arrival_time =
                     photon_pipelines->at(i).back().arrival_time;
-            number_cherenkov_photons += photon_pipelines->at(i).size();
+            num_cherenkov_photons += photon_pipelines->at(i).size();
         }
         for (signal_processing::PipelinePhoton ph : photon_pipelines->at(i))
             arrival_times.push_back(ph.arrival_time);
@@ -47,10 +47,10 @@ void inject_nsb_into_photon_pipeline(
 
     double mode_of_cherenkov_arrival_times;
 
-    if (number_cherenkov_photons == 0) {
+    if (num_cherenkov_photons == 0) {
         mode_of_cherenkov_arrival_times = 0.0;
     } else {
-        const unsigned int bin_edge_count = 2u + sqrt(number_cherenkov_photons);
+        const unsigned int bin_edge_count = 2u + sqrt(num_cherenkov_photons);
         std::vector<double> arrival_time_bin_edges = ml::numeric::linspace(
             min_crk_arrival_time,
             max_crk_arrival_time,
@@ -69,7 +69,7 @@ void inject_nsb_into_photon_pipeline(
         const double lixel_nsb_rate =
             nsb->rate*
             lixel_statistics->at(i).efficiency/
-            nsb->sensor_geometry->number_of_lixel();
+            nsb->sensor_geometry->num_lixel();
 
         std::vector<double> nsb_arrival_times;
         double relative_arrival_times_sum = prng->expovariate(lixel_nsb_rate);

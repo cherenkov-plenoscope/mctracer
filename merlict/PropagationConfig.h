@@ -8,7 +8,7 @@
 namespace merlict {
 
 struct PropagationConfig {
-    unsigned int max_number_of_interactions_per_photon;
+    unsigned int max_num_interactions_per_photon;
     bool use_multithread_when_possible;
     PropagationConfig();
 };

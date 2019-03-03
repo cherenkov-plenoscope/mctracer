@@ -26,7 +26,7 @@ struct BiConvexLensTest {
     }
 
     void set_up_settings() {
-        settings.max_number_of_interactions_per_photon = 5;
+        settings.max_num_interactions_per_photon = 5;
     }
 
     void set_up_test_bench() {
@@ -88,7 +88,7 @@ struct BiConvexLensTest {
 TEST_CASE("BiConvexLensTest: send_photon_frontal_into_lens", "[merlict]") {
     BiConvexLensTest lt;
     unsigned int total_propagations = 1e4;
-    unsigned int number_of_photons_reaching_sensor_disc = 0;
+    unsigned int num_photons_reaching_sensor_disc = 0;
     for (unsigned int i = 0; i < total_propagations; i++) {
         ml::Photon blue_photon(
             ml::Vec3(0.0, 0.0, 1.0),
@@ -98,22 +98,22 @@ TEST_CASE("BiConvexLensTest: send_photon_frontal_into_lens", "[merlict]") {
         // blue_photon.propagate_in(env);
 
         if (2.0 == blue_photon.get_accumulative_distance())
-            number_of_photons_reaching_sensor_disc++;
+            num_photons_reaching_sensor_disc++;
     }
 
-    CHECK(0.97 == Approx(static_cast<double>(number_of_photons_reaching_sensor_disc)/static_cast<double>(total_propagations)).margin(5.0e-2));
+    CHECK(0.97 == Approx(static_cast<double>(num_photons_reaching_sensor_disc)/static_cast<double>(total_propagations)).margin(5.0e-2));
 }
 
 TEST_CASE("BiConvexLensTest: send_photons_frontal_into_lens_with_offset", "[merlict]") {
     BiConvexLensTest lt;
 
     // light source
-    unsigned int number_of_photons_emitted = 1e4;
+    unsigned int num_photons_emitted = 1e4;
     ml::random::Mt19937 prng(0);
     std::vector<ml::Photon> photons =
         ml::Photons::Source::parallel_towards_z_from_xy_disc(
             0.125,
-            number_of_photons_emitted,
+            num_photons_emitted,
             &prng);
 
     ml::HomTra3 Trafo;
@@ -140,7 +140,7 @@ TEST_CASE("BiConvexLensTest: send_photons_frontal_into_lens_with_offset", "[merl
 
     CHECK(1.5e-3 == Approx(ml::sensor::point_spread_std_dev(sen->photon_arrival_history)).margin(1e-3));
 
-    CHECK(1.0 == Approx(static_cast<double>(sen->photon_arrival_history.size())/static_cast<double>(number_of_photons_emitted)).margin(10e-2));
+    CHECK(1.0 == Approx(static_cast<double>(sen->photon_arrival_history.size())/static_cast<double>(num_photons_emitted)).margin(10e-2));
 
     /*FlyingCamera free(
         env.root_frame,

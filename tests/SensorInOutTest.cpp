@@ -7,9 +7,9 @@ namespace ml = merlict;
 
 TEST_CASE("SensorInOutTest: write_and_read", "[merlict]") {
     std::vector<ml::sensor::PhotonArrival> arrivals_1;
-    const unsigned int number_of_arrivals = 1337*42;
+    const unsigned int num_arrivals = 1337*42;
     ml::random::Mt19937 prng(0);
-    for (unsigned int i = 0; i < number_of_arrivals; i++) {
+    for (unsigned int i = 0; i < num_arrivals; i++) {
         ml::sensor::PhotonArrival arrival;
         arrival.simulation_truth_id = prng.uniform();
         arrival.wavelength = prng.uniform();
@@ -20,7 +20,7 @@ TEST_CASE("SensorInOutTest: write_and_read", "[merlict]") {
         arrival.theta_y = prng.uniform();
         arrivals_1.push_back(arrival);
     }
-    CHECK(number_of_arrivals == arrivals_1.size());
+    CHECK(num_arrivals == arrivals_1.size());
 
     // write to disk
     std::ofstream out;
@@ -34,11 +34,11 @@ TEST_CASE("SensorInOutTest: write_and_read", "[merlict]") {
     std::vector<ml::sensor::PhotonArrival> arrivals_2 =
         ml::sensor::read_arrival_information_from_file(
             &in,
-            number_of_arrivals);
+            num_arrivals);
     in.close();
 
     REQUIRE(arrivals_2.size() == arrivals_1.size());
-    for (unsigned int i = 0; i < number_of_arrivals; i++) {
+    for (unsigned int i = 0; i < num_arrivals; i++) {
         ml::sensor::PhotonArrival ar1 = arrivals_1.at(i);
         ml::sensor::PhotonArrival ar2 = arrivals_2.at(i);
         CHECK(ar1.simulation_truth_id == Approx(ar2.simulation_truth_id).margin(1e-5));

@@ -8,12 +8,12 @@ namespace visual {
 
 CameraDevice::CameraDevice(
     const std::string _name,
-    const unsigned int _number_cols,
-    const unsigned int _number_rows
+    const unsigned int _num_cols,
+    const unsigned int _num_rows
 ):
     name(_name),
-    number_cols(_number_cols),
-    number_rows(_number_rows) {}
+    num_cols(_num_cols),
+    num_rows(_num_rows) {}
 
 void CameraDevice::update_position(const Vec3 _position) {
     update_position_and_orientation(_position, rotation);
@@ -82,9 +82,9 @@ std::string CameraDevice::get_camera_print()const {
     out << pointing.str() << "\n";
     out << "| field of view: " << rad2deg(field_of_view) <<" deg\n";
     out << "| resolution: cols x rows : ";
-    out << number_cols << "x";
-    out << number_rows <<" pixels";
-    out << " / " << (number_cols*number_rows)/1e6 << " M pixels\n";
+    out << num_cols << "x";
+    out << num_rows <<" pixels";
+    out << " / " << (num_cols*num_rows)/1e6 << " M pixels\n";
     return out.str();
 }
 
@@ -119,16 +119,16 @@ void CameraDevice::assert_field_of_view_is_valid(
 
 void CameraDevice::assert_resolution(Image* image)const {
     if (
-        image->number_cols != number_cols ||
-        image->number_rows != number_rows
+        image->num_cols != num_cols ||
+        image->num_rows != num_rows
     ) {
         std::stringstream info;
         info << "CameraDevice::" << __func__ << "()\n";
         info << "Expected resolution of image to be ";
-        info << number_cols << "x";
-        info << number_rows << ", but actual it is: ";
-        info << image->number_cols << "x";
-        info << image->number_rows << ".\n";
+        info << num_cols << "x";
+        info << num_rows << ", but actual it is: ";
+        info << image->num_cols << "x";
+        info << image->num_rows << ".\n";
         throw std::runtime_error(info.str());
     }
 }
