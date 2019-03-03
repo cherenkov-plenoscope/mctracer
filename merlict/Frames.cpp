@@ -19,12 +19,12 @@ Vec3 small_ball_nielsen_nock(const std::vector<Frame*> &frames) {
     }
 
     if (frames.size() == 1)
-        return frames.at(0)->get_position_in_mother();
+        return frames.at(0)->position_in_mother();
 
     std::vector<Ball> balls;
     for (unsigned int i = 0; i < frames.size(); i++) {
         Ball b;
-        b.center = frames.at(i)->get_position_in_mother();
+        b.center = frames.at(i)->position_in_mother();
         b.radius = frames.at(i)->get_bounding_sphere_radius();
         balls.push_back(b);
     }
@@ -60,7 +60,7 @@ Vec3 dumb_bounding_sphere_center(const std::vector<Frame*> &frames) {
     }
 
     if (frames.size() == 1)
-        return frames.at(0)->get_position_in_mother();
+        return frames.at(0)->position_in_mother();
 
     const Frame* start_frame = &VOID_FRAME;
     const Frame* end_frame = &VOID_FRAME;
@@ -69,8 +69,8 @@ Vec3 dumb_bounding_sphere_center(const std::vector<Frame*> &frames) {
         for (unsigned int j = i; j < frames.size(); j++) {
             if (i != j) {
                 double dist = (
-                        frames[i]->get_position_in_mother() -
-                        frames[j]->get_position_in_mother()).norm() +
+                        frames[i]->position_in_mother() -
+                        frames[j]->position_in_mother()).norm() +
                     frames[i]->get_bounding_sphere_radius() +
                     frames[j]->get_bounding_sphere_radius();
 
@@ -83,11 +83,11 @@ Vec3 dumb_bounding_sphere_center(const std::vector<Frame*> &frames) {
         }
     }
 
-    Vec3 dir = end_frame->get_position_in_mother() -
-        start_frame->get_position_in_mother();
+    Vec3 dir = end_frame->position_in_mother() -
+        start_frame->position_in_mother();
 
     dir = dir/dir.norm();
-    return start_frame->get_position_in_mother() +
+    return start_frame->position_in_mother() +
         dir*(0.5*maximum - start_frame->get_bounding_sphere_radius());
 }
 
@@ -104,7 +104,7 @@ Vec3 mean_of_positions_in_mother(const std::vector<Frame*> &frames) {
     Vec3 sum_pos = VEC3_ORIGIN;
 
     for (Frame* frame : frames)
-        sum_pos = sum_pos + frame->get_position_in_mother();
+        sum_pos = sum_pos + frame->position_in_mother();
 
     return sum_pos/frames.size();
 }
@@ -127,7 +127,7 @@ double spread_of_frame_position_in_mother(const std::vector<Frame*> &frames) {
 
     Vec3 u = VEC3_ORIGIN;
     for (Frame* frame : frames) {
-        const Vec3 r =  frame->get_position_in_mother() - mean_pos_in_mother;
+        const Vec3 r =  frame->position_in_mother() - mean_pos_in_mother;
         u = u + Vec3(r.x*r.x, r.y*r.y, r.z*r.z);
     }
 
@@ -196,7 +196,7 @@ double bounding_sphere_radius(
     double radius = 0.0;
     for (const Frame* child : frames) {
         const double radius_needed_for_child =
-            (center - child->get_position_in_mother()).norm() +
+            (center - child->position_in_mother()).norm() +
             child->get_bounding_sphere_radius();
 
         if (radius_needed_for_child > radius)

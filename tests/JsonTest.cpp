@@ -243,8 +243,8 @@ TEST_CASE("JsonTest: Annulus", "[merlict]") {
     mct::Scenery s;
     mct::Frame* a = mct::json::add_Annulus(&s.root, &s, o);
     CHECK("ring" == a->get_name());
-    CHECK(mct::Vec3(0, 0, 3) == a->get_position_in_mother());
-    CHECK(mct::Rot3(0, 1, 0) == a->get_rotation_in_mother());
+    CHECK(mct::Vec3(0, 0, 3) == a->position_in_mother());
+    CHECK(mct::Rot3(0, 1, 0) == a->rotation_in_mother());
     CHECK(0u == a->get_children()->size());
 }
 
@@ -265,8 +265,8 @@ TEST_CASE("JsonTest: Cylinder_with_rot_and_pos", "[merlict]") {
     mct::Scenery s;
     mct::Frame* a = mct::json::add_Cylinder(&s.root, &s, o);
     CHECK("cyl" == a->get_name());
-    CHECK(mct::Vec3(0, 0, 3) == a->get_position_in_mother());
-    CHECK(mct::Rot3(0, 1, 0) == a->get_rotation_in_mother());
+    CHECK(mct::Vec3(0, 0, 3) == a->position_in_mother());
+    CHECK(mct::Rot3(0, 1, 0) == a->rotation_in_mother());
     CHECK(0u == a->get_children()->size());
 }
 

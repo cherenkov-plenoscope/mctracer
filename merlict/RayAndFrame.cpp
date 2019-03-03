@@ -10,7 +10,7 @@ bool ray_support_inside_frames_bounding_sphere(
     const Ray* ray,
     const Frame *frame
 ) {
-    return (frame->get_position_in_world() - ray->support()).
+    return (frame->position_in_world() - ray->support()).
         norm_is_less_equal_than(frame->get_bounding_sphere_radius());
 }
 
@@ -20,10 +20,10 @@ bool ray_has_intersection_with_bounding_sphere_of(
 ) {
     const double alpha =
         ray->parameter_for_closest_distance_to_point(
-            frame->get_position_in_world());
+            frame->position_in_world());
 
     const Vec3 q = ray->position_at(alpha);
-    const Vec3 shortest_connection = frame->get_position_in_world() - q;
+    const Vec3 shortest_connection = frame->position_in_world() - q;
     const double dist_square = shortest_connection*shortest_connection;
 
     if (

@@ -86,7 +86,7 @@ std::string Frame::str()const {
     out << "| pos in mother: " << pos_in_mother.str() << "\n";
     out << "| rot in mother: " << rot_in_mother.str() << "\n";
     out << "| pos in world:  ";
-    out << (has_mother()? get_position_in_world().str(): "root") << "\n";
+    out << (has_mother()? position_in_world().str(): "root") << "\n";
     out << "| bounding radius: " << bounding_sphere_radius << "m\n";
     return out.str();
 }
@@ -280,15 +280,15 @@ std::string Frame::get_name()const {
     return name;
 }
 
-Vec3 Frame::get_position_in_mother()const {
+Vec3 Frame::position_in_mother()const {
     return pos_in_mother;
 }
 
-Rot3 Frame::get_rotation_in_mother()const {
+Rot3 Frame::rotation_in_mother()const {
     return rot_in_mother;
 }
 
-Vec3 Frame::get_position_in_world()const {
+Vec3 Frame::position_in_world()const {
     return T_frame2world.get_translation();
 }
 

@@ -43,8 +43,8 @@ TEST_CASE("FrameTest: set_frame", "[merlict]") {
     ml::Frame Peter;
     Peter.set_name_pos_rot("A_nice_name", pos, rot);
 
-    CHECK(pos == Peter.get_position_in_mother());
-    CHECK(rot == Peter.get_rotation_in_mother());
+    CHECK(pos == Peter.position_in_mother());
+    CHECK(rot == Peter.rotation_in_mother());
 
     ml::HomTra3 T_frame2mother;
     T_frame2mother.set_transformation(rot, pos);
@@ -65,8 +65,8 @@ TEST_CASE("FrameTest: re_set_frame", "[merlict]") {
         ml::ROT3_UNITY);
 
     CHECK(peter.get_children()->size() == 1u);
-    CHECK(pos == peter.get_position_in_mother());
-    CHECK(rot == peter.get_rotation_in_mother());
+    CHECK(pos == peter.position_in_mother());
+    CHECK(rot == peter.rotation_in_mother());
 
     peter.set_name_pos_rot(
         "another_name",
@@ -74,8 +74,8 @@ TEST_CASE("FrameTest: re_set_frame", "[merlict]") {
         ml::Rot3(0.1, 0.2, 0.3));
 
     CHECK(peter.get_children()->size() == 1u);
-    CHECK(ml::Vec3(1.0, 2.0, 3.0) == peter.get_position_in_mother());
-    CHECK(ml::Rot3(0.1, 0.2, 0.3) == peter.get_rotation_in_mother());
+    CHECK(ml::Vec3(1.0, 2.0, 3.0) == peter.position_in_mother());
+    CHECK(ml::Rot3(0.1, 0.2, 0.3) == peter.rotation_in_mother());
 }
 
 TEST_CASE("FrameTest: root_of_world_on_complete_tree", "[merlict]") {

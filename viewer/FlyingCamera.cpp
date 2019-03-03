@@ -223,7 +223,7 @@ void FlyingCamera::update_display() {
 void FlyingCamera::update_display_preview() {
     camera_preview.set_FoV_in_rad(camera.get_FoV_in_rad());
     camera_preview.update_position_and_orientation(
-        camera.get_position_in_world(),
+        camera.position_in_world(),
         camera.get_rotation_in_world());
     acquire_image_with_camera(&camera_preview, &image_preview);
     scale_up(image_preview, visual_config->preview.scale, &image);
@@ -267,7 +267,7 @@ ApertureCamera FlyingCamera::get_aperture_camera_based_on_camera()const {
         visual_config->snapshot.image_sensor_size_along_a_row);
     apcam.set_FoV_in_rad(camera.get_FoV_in_rad());
     apcam.update_position_and_orientation(
-        camera.get_position_in_world(),
+        camera.position_in_world(),
         camera.get_rotation_in_world());
     return apcam;
 }

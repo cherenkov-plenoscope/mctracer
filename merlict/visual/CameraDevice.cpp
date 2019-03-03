@@ -133,7 +133,7 @@ void CameraDevice::assert_resolution(Image* image)const {
     }
 }
 
-Vec3 CameraDevice::get_position_in_world()const {
+Vec3 CameraDevice::position_in_world()const {
     return position;
 }
 
