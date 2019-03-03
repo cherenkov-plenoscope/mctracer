@@ -32,9 +32,4 @@ TEST_CASE("PostInitFrameSpeed: post_init_based_on_mother", "[merlict]") {
     factory.add_to_SurfaceEntity(reflector);
 
     scenery.root.init_tree_based_on_mother_child_relations();
-
-    for (int i = 0; i < 1e3; i++) {
-        ml::Rot3 rot(0.0, 0.0, static_cast<double>(i)/1.0e6);
-        reflector->update_rotation(rot);
-    }
 }

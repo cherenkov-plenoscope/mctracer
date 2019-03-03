@@ -42,7 +42,6 @@ class Frame {
         const std::string name,
         const Vec3 pos,
         const Rot3 rot);
-    void update_rotation(const Rot3 rot);
     // GET
     std::string get_name()const;
     std::string get_path_in_tree_of_frames()const;

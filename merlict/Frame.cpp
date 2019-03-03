@@ -308,12 +308,6 @@ const std::vector<Frame*>* Frame::get_children()const {
     return &children;
 }
 
-void Frame::update_rotation(const Rot3 rot) {
-    rot_in_mother = rot;
-    T_frame2mother.set_transformation(rot_in_mother, pos_in_mother);
-    init_frame2world();
-}
-
 void Frame::assert_no_children_duplicate_names()const {
     // this also checks for duplicate frames
     std::set<std::string> unique_set;
