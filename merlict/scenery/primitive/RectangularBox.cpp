@@ -11,7 +11,7 @@ void RectangularBox::set_xyz_width(
 ) {
     Plane* walls[6];
     for (unsigned int c = 0; c < 6; c++)
-        walls[c] = append<Plane>();
+        walls[c] = add<Plane>();
 
     // along z axis
     Vec3 z_off = Vec3(0.0, 0.0, 0.5*z_width);

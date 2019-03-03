@@ -185,19 +185,19 @@ TEST_CASE("RayAndFrameTest: causal_intersection", "[merlict]") {
     ml::Frame spheres_in_a_row;
     spheres_in_a_row.set_name_pos_rot("spheres", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
-    ml::Sphere* s0 = spheres_in_a_row.append<ml::Sphere>();
+    ml::Sphere* s0 = spheres_in_a_row.add<ml::Sphere>();
     s0->set_name_pos_rot("s0", ml::Vec3(0.0, 0.0, 0.0), ml::ROT3_UNITY);
     s0->set_radius(1.0);
-    ml::Sphere* s1 = spheres_in_a_row.append<ml::Sphere>();
+    ml::Sphere* s1 = spheres_in_a_row.add<ml::Sphere>();
     s1->set_name_pos_rot("s1", ml::Vec3(0.0, 3.0, 0.0), ml::ROT3_UNITY);
     s1->set_radius(1.0);
-    ml::Sphere* s2 = spheres_in_a_row.append<ml::Sphere>();
+    ml::Sphere* s2 = spheres_in_a_row.add<ml::Sphere>();
     s2->set_name_pos_rot("s2", ml::Vec3(0.0, 6.0, 0.0), ml::ROT3_UNITY);
     s2->set_radius(1.0);
-    ml::Sphere* s3 = spheres_in_a_row.append<ml::Sphere>();
+    ml::Sphere* s3 = spheres_in_a_row.add<ml::Sphere>();
     s3->set_name_pos_rot("s3", ml::Vec3(0.0, 9.0, 0.0), ml::ROT3_UNITY);
     s3->set_radius(1.0);
-    ml::Sphere* s4 = spheres_in_a_row.append<ml::Sphere>();
+    ml::Sphere* s4 = spheres_in_a_row.add<ml::Sphere>();
     s4->set_name_pos_rot("s4", ml::Vec3(0.0, 12.0, 0.0), ml::ROT3_UNITY);
     s4->set_radius(1.0);
 

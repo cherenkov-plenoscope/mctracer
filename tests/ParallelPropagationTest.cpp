@@ -24,7 +24,7 @@ TEST_CASE("ParallelPropagationTest: propagate_once", "[merlict]") {
 			{200e-9, 0.5},
 			{1200e-9, 0.5}
 		}));
-	ml::Disc* disc = scenery.root.append<ml::Disc>();
+	ml::Disc* disc = scenery.root.add<ml::Disc>();
  	disc->set_name_pos_rot(
         "red_disc",
         ml::Vec3(0, 0, 1),

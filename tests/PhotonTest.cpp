@@ -31,7 +31,7 @@ TEST_CASE("PhotonTest: PropagationSimpleGeometry", "[merlict]") {
     // create a test setup with two mirrors bouncing the photon
     ml::Frame world;
     world.set_name_pos_rot("world", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
-    ml::Frame* optical_table = world.append<ml::Plane>();
+    ml::Frame* optical_table = world.add<ml::Plane>();
     optical_table->set_name_pos_rot("optical_table", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
     ml::function::Func1 refl(
         {
@@ -42,7 +42,7 @@ TEST_CASE("PhotonTest: PropagationSimpleGeometry", "[merlict]") {
     ml::Color colo(200, 128, 128);
 
     // ------------mirror 1----------------
-    ml::Plane* mirror1 = optical_table->append<ml::Plane>();
+    ml::Plane* mirror1 = optical_table->add<ml::Plane>();
     mirror1->set_name_pos_rot("mirror_1", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
     mirror1->set_outer_color(&colo);
     mirror1->set_inner_color(&colo);
@@ -51,7 +51,7 @@ TEST_CASE("PhotonTest: PropagationSimpleGeometry", "[merlict]") {
     mirror1->set_x_y_width(1.0, 1.0);
 
     // ------------mirror 2----------------
-    ml::Plane* mirror2 = optical_table->append<ml::Plane>();
+    ml::Plane* mirror2 = optical_table->add<ml::Plane>();
     mirror2->set_name_pos_rot("mirror_2", ml::Vec3(0.0, 0.0, 1.0), ml::ROT3_UNITY);
     mirror2->set_outer_color(&colo);
     mirror2->set_inner_color(&colo);
@@ -108,7 +108,7 @@ TEST_CASE("PhotonTest: Reflections", "[merlict]") {
     // create a test setup with two mirrors bouncing the photon
     ml::Frame world;
     world.set_name_pos_rot("world", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
-    ml::Frame* optical_table = world.append<ml::Plane>();
+    ml::Frame* optical_table = world.add<ml::Plane>();
     optical_table->set_name_pos_rot("optical_table", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
     // ------------mirror----------------
@@ -120,7 +120,7 @@ TEST_CASE("PhotonTest: Reflections", "[merlict]") {
         });
 
     ml::Color mirror_color(200, 64, 64);
-    ml::Plane* mirror = optical_table->append<ml::Plane>();
+    ml::Plane* mirror = optical_table->add<ml::Plane>();
     mirror->set_name_pos_rot(
         "mirror",
         ml::VEC3_ORIGIN,
@@ -133,7 +133,7 @@ TEST_CASE("PhotonTest: Reflections", "[merlict]") {
 
     // ------------absorber----------------
     ml::Color absorber_color(50, 50, 50);
-    ml::Plane* absorber = optical_table->append<ml::Plane>();
+    ml::Plane* absorber = optical_table->add<ml::Plane>();
     absorber->set_name_pos_rot(
         "absorber",
         ml::Vec3(0, 2, 0),
@@ -189,7 +189,7 @@ TEST_CASE("PhotonTest: Refraction", "[merlict]") {
 
     // ------------ box ---------------
     ml::Color entrance_surface_color(200, 64, 64);
-    ml::RectangularBox* box = world.append<ml::RectangularBox>();
+    ml::RectangularBox* box = world.add<ml::RectangularBox>();
     box->set_name_pos_rot(
         "box",
         ml::Vec3(0.0, 0.0, 1.0),
@@ -201,7 +201,7 @@ TEST_CASE("PhotonTest: Refraction", "[merlict]") {
 
     // ------------absorber----------------
     ml::Color absorber_color(50, 50, 50);
-    ml::Plane* absorber = world.append<ml::Plane>();
+    ml::Plane* absorber = world.add<ml::Plane>();
     absorber->set_name_pos_rot(
         "absorber",
         ml::Vec3(0.0, 0.0, 3.0),
@@ -258,7 +258,7 @@ TEST_CASE("PhotonTest: absorbtion_in_medium", "[merlict]") {
 
     // ------------ box ---------------
     ml::Color entrance_surface_color(200, 64, 64);
-    ml::RectangularBox* box = world.append<ml::RectangularBox>();
+    ml::RectangularBox* box = world.add<ml::RectangularBox>();
     box->set_name_pos_rot(
         "box",
         ml::Vec3(0.0, 0.0, 1.0),
@@ -271,7 +271,7 @@ TEST_CASE("PhotonTest: absorbtion_in_medium", "[merlict]") {
 
     // ------------collector----------------
     ml::Color absorber_color(50, 50, 50);
-    ml::Plane* collector = world.append<ml::Plane>();
+    ml::Plane* collector = world.add<ml::Plane>();
     collector->set_name_pos_rot(
         "collector",
         ml::Vec3(0.0, 0.0, 3.0),

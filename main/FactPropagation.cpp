@@ -297,7 +297,7 @@ int main(int argc, char* argv[]) {
     r_cfg.facet_inner_hex_radius = 0.3;
     r_cfg.gap_between_facets = 0.01;
 
-    re::SurfaceEntity* reflector = scenery.root.append<re::SurfaceEntity>();
+    re::SurfaceEntity* reflector = scenery.root.add<re::SurfaceEntity>();
     reflector->set_name_pos_rot("reflector", re::Vec3(0, 0, 0), re::Rot3(0, 0, 0));
     reflector->set_inner_color(scenery.colors.get("mirror_color"));
     reflector->set_outer_color(scenery.colors.get("black"));
@@ -306,9 +306,9 @@ int main(int argc, char* argv[]) {
     re::segmented_imaging_reflector::Factory refl_fab(r_cfg);
     refl_fab.add_to_SurfaceEntity(reflector);
 
-    re::Frame* camera = scenery.root.append<re::Frame>();
+    re::Frame* camera = scenery.root.add<re::Frame>();
     camera->set_name_pos_rot("camera", re::Vec3(0, 0, 4.889), re::ROT3_UNITY);
-    re::Disc* shield = camera->append<re::Disc>();
+    re::Disc* shield = camera->add<re::Disc>();
     shield->set_name_pos_rot("shield", re::Vec3(0, 0, 0.001), re::ROT3_UNITY);
     shield->set_radius(0.33);
 
@@ -324,7 +324,7 @@ int main(int argc, char* argv[]) {
         double x = pixel_x[chid]/1e3;
         double y = pixel_y[chid]/1e3;
 
-        re::HexPlane* pixel_aperture = camera->append<re::HexPlane>();
+        re::HexPlane* pixel_aperture = camera->add<re::HexPlane>();
         pixel_aperture->set_name_pos_rot(
             "pixel_"+std::to_string(chid),
             re::Vec3(x, y, 0),

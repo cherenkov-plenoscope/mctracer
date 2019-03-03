@@ -9,9 +9,9 @@ void BiConvexLensHexBound::set_curvature_radius_and_outer_hex_radius(
     const double outer_aperture_radius
 ) {
     SphereCapWithHexagonalBound* front_cap =
-        append<SphereCapWithHexagonalBound>();
+        add<SphereCapWithHexagonalBound>();
     SphereCapWithHexagonalBound* rear_cap =
-        append<SphereCapWithHexagonalBound>();
+        add<SphereCapWithHexagonalBound>();
 
     double cap_hight = height_of_a_cap_given_curv_radius_and_outer_radius(
             curvature_radius,
@@ -49,7 +49,7 @@ void BiConvexLensHexBound::set_curvature_radius_and_outer_hex_radius(
     PlaneDualSphericalBound* walls[6];
     for (unsigned int i = 0; i < 6; i++) {
         const double phi = static_cast<double>(i)*1.0/3.0*M_PI;
-        walls[i] = append<PlaneDualSphericalBound>();
+        walls[i] = add<PlaneDualSphericalBound>();
         walls[i]->set_name_pos_rot(
             "wall_" + std::to_string(i),
             Vec3(

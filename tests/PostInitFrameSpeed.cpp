@@ -17,7 +17,7 @@ TEST_CASE("PostInitFrameSpeed: post_init_based_on_mother", "[merlict]") {
         ml::function::Func1({{200e-9, 1}, {1200e-9, 1}}));
     scenery.colors.add("mirror_color", ml::Color(128, 128, 128));
     scenery.colors.add("inner_mirror_color", ml::Color(255, 255, 255));
-    ml::SurfaceEntity* reflector = scenery.root.append<ml::SurfaceEntity>();
+    ml::SurfaceEntity* reflector = scenery.root.add<ml::SurfaceEntity>();
     reflector->set_name_pos_rot("reflector", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
     ml::segmented_imaging_reflector::Config cfg;

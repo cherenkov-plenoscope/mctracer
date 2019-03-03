@@ -221,7 +221,7 @@ void Frame::cluster_children() {
                     Vec3 octant_center = Frames::bounding_sphere_center(
                         oct_tree[sector]);
 
-                    Frame* octant = append<Frame>();
+                    Frame* octant = add<Frame>();
                     octant->set_name_pos_rot(
                         "oct_"+std::to_string(sector),
                         octant_center,

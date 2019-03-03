@@ -15,7 +15,7 @@ void Factory::add_to_SurfaceEntity(SurfaceEntity* reflector) {
     std::vector<Vec3> facet_positions = geometry.facet_positions();
     for (unsigned int i = 0; i < facet_positions.size(); i++) {
         SphereCapWithHexagonalBound* facet =
-            reflector->append<SphereCapWithHexagonalBound>();
+            reflector->add<SphereCapWithHexagonalBound>();
         facet->set_name_pos_rot(
             "mirror_facet_" + std::to_string(i),
             facet_positions.at(i),

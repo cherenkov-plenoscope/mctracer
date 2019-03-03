@@ -27,10 +27,10 @@ TEST_CASE("FrameTest: duplicate_name_of_children_frames", "[merlict]") {
     ml::Frame Peter;
     Peter.set_name_pos_rot("peter", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
-    ml::Frame* Klaus1 = Peter.append<ml::Frame>();
+    ml::Frame* Klaus1 = Peter.add<ml::Frame>();
     Klaus1->set_name_pos_rot("klaus", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
-    ml::Frame* Klaus2 = Peter.append<ml::Frame>();
+    ml::Frame* Klaus2 = Peter.add<ml::Frame>();
     Klaus2->set_name_pos_rot("klaus", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
     CHECK_THROWS_AS(Peter.assert_no_children_duplicate_names(), std::invalid_argument);
@@ -58,7 +58,7 @@ TEST_CASE("FrameTest: re_set_frame", "[merlict]") {
 
     ml::Frame peter;
     peter.set_name_pos_rot("a_name", pos, rot);
-    ml::Frame* hans = peter.append<ml::Frame>();
+    ml::Frame* hans = peter.add<ml::Frame>();
     hans->set_name_pos_rot(
         "child_of_peter",
         ml::Vec3(1.0, 2.0, 3.0),
@@ -82,21 +82,21 @@ TEST_CASE("FrameTest: root_of_world_on_complete_tree", "[merlict]") {
     ml::Frame tree;
     tree.set_name_pos_rot("tree", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
-    ml::Frame* leaf1 = tree.append<ml::Frame>();
+    ml::Frame* leaf1 = tree.add<ml::Frame>();
     leaf1->set_name_pos_rot("leaf1", ml::Vec3(1, 0, 0), ml::ROT3_UNITY);
 
-    ml::Frame* leaf2 = tree.append<ml::Frame>();
+    ml::Frame* leaf2 = tree.add<ml::Frame>();
     leaf2->set_name_pos_rot("leaf2", ml::Vec3(-1, 0, 0), ml::ROT3_UNITY);
 
-    ml::Frame* branch = tree.append<ml::Frame>();
+    ml::Frame* branch = tree.add<ml::Frame>();
     branch->set_name_pos_rot("branch", ml::Vec3(0, 0, 1), ml::ROT3_UNITY);
 
-    ml::Frame* leaf1_on_branch = branch->append<ml::Frame>();
+    ml::Frame* leaf1_on_branch = branch->add<ml::Frame>();
     leaf1_on_branch->set_name_pos_rot(
         "leaf1_on_branch",
         ml::Vec3(1, 0, 0),
         ml::ROT3_UNITY);
-    ml::Frame* leaf2_on_branch = branch->append<ml::Frame>();
+    ml::Frame* leaf2_on_branch = branch->add<ml::Frame>();
     leaf2_on_branch->set_name_pos_rot(
         "leaf2_on_branch",
         ml::Vec3(0, 1, 0),
@@ -133,7 +133,7 @@ TEST_CASE("FrameTest: cluster_frames_during_tree_initializing", "[merlict]") {
                 ml::Vec3 pos(x, y, z);
                 std::stringstream name;
                 name << "sub_sphere_" << x << "_" << y << "_" << z;
-                ml::Sphere* sphere = tree.append<ml::Sphere>();
+                ml::Sphere* sphere = tree.add<ml::Sphere>();
                 sphere->set_name_pos_rot(name.str(), pos, ml::ROT3_UNITY);
                 sphere->set_radius(0.5);
                 count++;
@@ -155,7 +155,7 @@ TEST_CASE("FrameTest: clustering_frames_which_are_stucked_close_together", "[mer
 
     for (unsigned int i = 0; i < num_facets; i++) {
         ml::SphereCapWithRectangularBound* facet =
-            tree.append<ml::SphereCapWithRectangularBound>();
+            tree.add<ml::SphereCapWithRectangularBound>();
         facet->set_name_pos_rot(
             "facet"+std::to_string(i),
             ml::VEC3_ORIGIN,
@@ -186,25 +186,25 @@ TEST_CASE("FrameTest: removing_a_cild", "[merlict]") {
     ml::Frame tree;
     tree.set_name_pos_rot("tree", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
-    ml::Sphere* sphere = tree.append<ml::Sphere>();
+    ml::Sphere* sphere = tree.add<ml::Sphere>();
     sphere->set_name_pos_rot("leaf_ball", ml::Vec3(0, 0, 1.8), ml::ROT3_UNITY);
     sphere->set_radius(1);
     sphere->set_outer_color(&ml::COLOR_GREEN);
 
-    ml::Frame* pole = tree.append<ml::Frame>();
+    ml::Frame* pole = tree.add<ml::Frame>();
     pole->set_name_pos_rot("pole", ml::Vec3(0, 0, 0.5), ml::ROT3_UNITY);
 
-    ml::Cylinder* pole1 = pole->append<ml::Cylinder>();
+    ml::Cylinder* pole1 = pole->add<ml::Cylinder>();
     pole1->set_name_pos_rot("pole1", ml::Vec3(0, 0, 0), ml::ROT3_UNITY);
     pole1->set_radius_and_length(0.25, 1.0);
     pole1->set_outer_color(&ml::COLOR_RED);
 
-    ml::Cylinder* fork = pole->append<ml::Cylinder>();
+    ml::Cylinder* fork = pole->add<ml::Cylinder>();
     fork->set_name_pos_rot("fork", ml::Vec3(0, 0, 0), ml::ROT3_UNITY);
     fork->set_cylinder(0.1, ml::VEC3_ORIGIN, ml::Vec3(0, 0.5, 0.5));
     fork->set_outer_color(&ml::COLOR_RED);
 
-    ml::Disc* ground = tree.append<ml::Disc>();
+    ml::Disc* ground = tree.add<ml::Disc>();
     ground->set_name_pos_rot("ground", ml::Vec3(0, 0, 0), ml::ROT3_UNITY);
     ground->set_radius(3.0);
     ground->set_outer_color(&ml::COLOR_GRASS_GREEN);
@@ -222,10 +222,10 @@ TEST_CASE("FrameTest: removing_a_cild", "[merlict]") {
     CHECK(!isec.does_intersect());
 
     // Append a temporary frame
-    ml::Frame* temp = tree.append<ml::Frame>();
+    ml::Frame* temp = tree.add<ml::Frame>();
     tree.set_name_pos_rot("temp", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
-    ml::Sphere* tball = temp->append<ml::Sphere>();
+    ml::Sphere* tball = temp->add<ml::Sphere>();
     tball->set_name_pos_rot("tball", ml::Vec3(0, 0, -1.8), ml::ROT3_UNITY);
     tball->set_radius(1);
     tball->set_outer_color(&ml::COLOR_GREEN);

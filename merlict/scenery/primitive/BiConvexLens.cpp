@@ -9,9 +9,9 @@ void BiConvexLens::set_curvature_radius_and_aperture_radius(
     const double aperture_radius
 ) {
     SphereCapWithCylinderBound* front_cap =
-        append<SphereCapWithCylinderBound>();
+        add<SphereCapWithCylinderBound>();
     SphereCapWithCylinderBound* rear_cap =
-        append<SphereCapWithCylinderBound>();
+        add<SphereCapWithCylinderBound>();
     double cap_hight = height_of_a_cap_given_curv_radius_and_aperture_radius(
             curvature_radius,
             aperture_radius);

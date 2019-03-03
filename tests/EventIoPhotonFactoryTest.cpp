@@ -38,7 +38,7 @@ TEST_CASE("EventIoPhotonFactoryTest: intersection_point_on_ground", "[merlict]")
                         ml::VEC3_ORIGIN,
                         ml::ROT3_UNITY);
 
-                    ml::Disc* ground = world.append<ml::Disc>();
+                    ml::Disc* ground = world.add<ml::Disc>();
                     ground->set_name_pos_rot(
                         "ground",
                         ml::VEC3_ORIGIN,
@@ -247,7 +247,7 @@ TEST_CASE("EventIoPhotonFactoryTest: correct_rel_time_when_intersecting_ground",
         ml::Frame world;
         world.set_name_pos_rot("world", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
-        ml::Disc* ground = world.append<ml::Disc>();
+        ml::Disc* ground = world.add<ml::Disc>();
         ground->set_name_pos_rot("ground", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
         const ml::Color* ground_color = &ml::COLOR_GRAY;
         const unsigned int ground_sensor_id = 0;

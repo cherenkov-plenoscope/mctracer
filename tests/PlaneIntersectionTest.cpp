@@ -21,7 +21,7 @@ struct PlaneIntersectionTest {
                 {1200e-9, 1.0}
             }));
 
-        plane = scenery.root.append<ml::Plane>();
+        plane = scenery.root.add<ml::Plane>();
         plane->set_name_pos_rot("plane", ml::Vec3(0, 0, 0), ml::Rot3(0, 0, 0));
         plane->set_outer_reflection(scenery.functions.get("refl_vs_wavl"));
         plane->set_inner_reflection(scenery.functions.get("refl_vs_wavl"));
@@ -85,7 +85,7 @@ TEST_CASE("PlaneIntersectionTest: close_miss_y", "[merlict]") {
 TEST_CASE("PlaneIntersectionTest: move_plane_up", "[merlict]") {
     PlaneIntersectionTest pt;
 
-    ml::Plane* plane2 = pt.scenery.root.append<ml::Plane>();
+    ml::Plane* plane2 = pt.scenery.root.add<ml::Plane>();
     plane2->set_name_pos_rot("plane2", ml::Vec3(0, 0, 1), ml::Rot3(0, 0, 0));
     plane2->set_outer_reflection(pt.scenery.functions.get("refl_vs_wavl"));
     plane2->set_inner_reflection(pt.scenery.functions.get("refl_vs_wavl"));

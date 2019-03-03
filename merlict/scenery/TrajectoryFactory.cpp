@@ -14,7 +14,7 @@ void TrajectoryFactory::set_trajectory_radius(const double radius) {
 }
 
 void TrajectoryFactory::append_trajectory_to(Frame* root_frame) {
-    trajectory = root_frame->append<Frame>();
+    trajectory = root_frame->add<Frame>();
     trajectory->set_name_pos_rot(
         "trajectory_" + std::to_string(ray->simulation_truth_id),
         VEC3_ORIGIN,
@@ -26,7 +26,7 @@ void TrajectoryFactory::append_trajectory_to(Frame* root_frame) {
         i++
     ) {
         if (is_not_the_last_intersection(i)) {
-            Cylinder* ray_trajectory = trajectory->append<Cylinder>();
+            Cylinder* ray_trajectory = trajectory->add<Cylinder>();
             ray_trajectory->set_name_pos_rot(
                 get_trajectory_of_part_index(i),
                 VEC3_ORIGIN,
@@ -41,7 +41,7 @@ void TrajectoryFactory::append_trajectory_to(Frame* root_frame) {
             ray_trajectory->set_inner_color(&COLOR_RED);
         }
 
-        Sphere* intersection_indicator = trajectory->append<Sphere>();
+        Sphere* intersection_indicator = trajectory->add<Sphere>();
         intersection_indicator->set_name_pos_rot(
             get_intersection_point_name_of_part(i),
             ray->intersection_history.at(i).

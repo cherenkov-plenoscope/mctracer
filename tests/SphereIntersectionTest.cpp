@@ -18,7 +18,7 @@ struct SphereIntersectionTest {
         scenery.colors.add("col", ml::Color(200, 128, 128));
 
         radius = 1;
-        my_sphere = scenery.root.append<ml::Sphere>();
+        my_sphere = scenery.root.add<ml::Sphere>();
         my_sphere->set_name_pos_rot("my_sphere", ml::Vec3(0, 0, 0), ml::Rot3(0, 0, 0));
         my_sphere->set_inner_color(scenery.colors.get("col"));
         my_sphere->set_outer_color(scenery.colors.get("col"));

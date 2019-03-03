@@ -292,13 +292,13 @@ void append_to_frame_in_scenery(
 
 Frame* add_Frame(Frame* mother, Scenery *scenery, const Object &o) {
     (void)scenery;
-    Frame* frame = mother->append<Frame>();
+    Frame* frame = mother->add<Frame>();
     set_frame(frame, o);
     return frame;
 }
 
 Frame* add_Sphere(Frame* mother, Scenery *scenery, const Object &o) {
-    Sphere* sphere = mother->append<Sphere>();
+    Sphere* sphere = mother->add<Sphere>();
     set_frame(sphere, o);
     sphere->set_radius(o.f8("radius"));
     set_surface(sphere, scenery, o);
@@ -310,7 +310,7 @@ Frame* add_StereoLitography(
     Scenery *scenery,
     const Object &o
 ) {
-    SurfaceEntity* object = mother->append<SurfaceEntity>();
+    SurfaceEntity* object = mother->add<SurfaceEntity>();
     set_frame(object, o);
     set_surface(object, scenery, o);
     const double scale = o.f8("scale");
@@ -322,7 +322,7 @@ Frame* add_StereoLitography(
 }
 
 Frame* add_Annulus(Frame* mother, Scenery *scenery, const Object &o) {
-    Annulus* annulus = mother->append<Annulus>();
+    Annulus* annulus = mother->add<Annulus>();
     set_frame(annulus, o);
     annulus->set_outer_inner_radius(
         o.f8("outer_radius"),
@@ -332,7 +332,7 @@ Frame* add_Annulus(Frame* mother, Scenery *scenery, const Object &o) {
 }
 
 Frame* add_Cylinder(Frame* mother, Scenery *scenery, const Object &o) {
-    Cylinder* c = mother->append<Cylinder>();
+    Cylinder* c = mother->add<Cylinder>();
     if (o.key("rot")) {
         set_frame(c, o);
         c->set_radius_and_length(
@@ -357,7 +357,7 @@ Frame* add_Cylinder(Frame* mother, Scenery *scenery, const Object &o) {
 }
 
 Frame* add_Triangle(Frame* mother, Scenery *scenery, const Object &o) {
-    Triangle* tri = mother->append<Triangle>();
+    Triangle* tri = mother->add<Triangle>();
     set_frame(tri, o);
     tri->set_corners_in_xy_plane(
         o.f8("Ax"), o.f8("Ay"),
@@ -368,7 +368,7 @@ Frame* add_Triangle(Frame* mother, Scenery *scenery, const Object &o) {
 }
 
 Frame* add_Disc(Frame* mother, Scenery *scenery, const Object &o) {
-    Disc* disc = mother->append<Disc>();
+    Disc* disc = mother->add<Disc>();
     set_frame(disc, o);
     disc->set_radius(o.f8("radius"));
     set_surface(disc, scenery, o);
@@ -376,7 +376,7 @@ Frame* add_Disc(Frame* mother, Scenery *scenery, const Object &o) {
 }
 
 Frame* add_Plane(Frame* mother, Scenery *scenery, const Object &o) {
-    Plane* plane = mother->append<Plane>();
+    Plane* plane = mother->add<Plane>();
     set_frame(plane, o);
     plane->set_x_y_width(o.f8("x_width"), o.f8("y_width"));
     set_surface(plane, scenery, o);
@@ -384,7 +384,7 @@ Frame* add_Plane(Frame* mother, Scenery *scenery, const Object &o) {
 }
 
 Frame* add_HexPlane(Frame* mother, Scenery *scenery, const Object &o) {
-    HexPlane* plane = mother->append<HexPlane>();
+    HexPlane* plane = mother->add<HexPlane>();
     set_frame(plane, o);
     plane->set_outer_hex_radius(o.f8("outer_radius"));
     set_surface(plane, scenery, o);
@@ -396,7 +396,7 @@ Frame* add_BiConvexLensHex(
     Scenery *scenery,
     const Object &o
 ) {
-    BiConvexLensHexBound* lens = mother->append<BiConvexLensHexBound>();
+    BiConvexLensHexBound* lens = mother->add<BiConvexLensHexBound>();
     set_frame(lens, o);
     lens->set_curvature_radius_and_outer_hex_radius(
         o.f8("curvature_radius"),
@@ -411,7 +411,7 @@ Frame* add_SphereCapWithHexagonalBound(
     const Object &o
 ) {
     SphereCapWithHexagonalBound* cap =
-        mother->append<SphereCapWithHexagonalBound>();
+        mother->add<SphereCapWithHexagonalBound>();
     set_frame(cap, o);
     cap->set_curvature_radius_and_outer_hex_radius(
         o.f8("curvature_radius"),
@@ -426,7 +426,7 @@ Frame* add_SphereCapWithRectangularBound(
     const Object &o
 ) {
     SphereCapWithRectangularBound* cap =
-        mother->append<SphereCapWithRectangularBound>();
+        mother->add<SphereCapWithRectangularBound>();
     set_frame(cap, o);
     cap->set_curvature_radius_and_x_y_width(
         o.f8("curvature_radius"),
@@ -451,7 +451,7 @@ Frame* add_SegmentedReflector(
     cfg.gap_between_facets = o.f8("gap_between_facets");
 
     segmented_imaging_reflector::Factory refl_fab(cfg);
-    SurfaceEntity* reflector = mother->append<SurfaceEntity>();
+    SurfaceEntity* reflector = mother->add<SurfaceEntity>();
     set_frame(reflector, o);
     set_surface(reflector, scenery, o);
     refl_fab.add_to_SurfaceEntity(reflector);

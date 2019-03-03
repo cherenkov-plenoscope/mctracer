@@ -60,7 +60,7 @@ class Frame {
     std::string get_tree_print()const;
     // DO
     template<class ProtoFrame>
-    ProtoFrame* append() {
+    ProtoFrame* add() {
         ProtoFrame* child = new ProtoFrame;
         children.push_back(child);
         child->mother = this;

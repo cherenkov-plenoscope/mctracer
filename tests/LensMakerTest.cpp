@@ -61,7 +61,7 @@ TEST_CASE("lens_makerTest: check_lensmaker_on_optical_table_with_lens", "[merlic
         ml::Frame optical_table;
         optical_table.set_name_pos_rot("table", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
         ml::BiConvexLensHexBound* lens =
-            optical_table.append<ml::BiConvexLensHexBound>();
+            optical_table.add<ml::BiConvexLensHexBound>();
         lens->set_name_pos_rot("lens", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
         lens->set_outer_color(lens_col);
         lens->set_inner_color(lens_col);
@@ -69,7 +69,7 @@ TEST_CASE("lens_makerTest: check_lensmaker_on_optical_table_with_lens", "[merlic
         lens->set_curvature_radius_and_outer_hex_radius(
             lens_curvature_radius,
             cfg.aperture_radius);
-        ml::Disc* sensor_disc = optical_table.append<ml::Disc>();
+        ml::Disc* sensor_disc = optical_table.add<ml::Disc>();
         sensor_disc->set_name_pos_rot(
             "sensor_disc",
             ml::Vec3(0.0, 0.0, -image_sensor_disc_distance),

@@ -18,13 +18,13 @@ void Factory::add_lens_array(ml::Frame* frame) {
     scenery->colors.add("lens_white", ml::COLOR_WHITE);
     const ml::Color* white = scenery->colors.get("lens_white");
 
-    ml::Frame* lens_array = frame->append<ml::Frame>();
+    ml::Frame* lens_array = frame->add<ml::Frame>();
     lens_array->set_name_pos_rot("lens_array", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
     std::vector<ml::Vec3> pixel_positions = geometry->pixel_positions();
 
     for (unsigned int i = 0; i < pixel_positions.size(); i++) {
         ml::BiConvexLensHexBound* lens =
-            lens_array->append<ml::BiConvexLensHexBound>();
+            lens_array->add<ml::BiConvexLensHexBound>();
         lens->set_name_pos_rot(
             "lens_" + std::to_string(i),
             pixel_positions.at(i),
@@ -39,7 +39,7 @@ void Factory::add_lens_array(ml::Frame* frame) {
 }
 
 void Factory::add_pixel_bin_array(ml::Frame* frame) {
-    ml::Frame* bin_array = frame->append<ml::Frame>();
+    ml::Frame* bin_array = frame->add<ml::Frame>();
     bin_array->set_name_pos_rot(
         "bin_array",
         ml::Vec3(0.0, 0.0, geometry->pixel_plane_to_paxel_plane_distance()),
@@ -64,7 +64,7 @@ void Factory::add_pixel_bin_with_name_at_pos(
 ) {
     const ml::Color* green = scenery->colors.get("bin_wall_green");
 
-    ml::Frame* bin = frame->append<ml::Frame>();
+    ml::Frame* bin = frame->add<ml::Frame>();
     bin->set_name_pos_rot(name, pos, ml::ROT3_UNITY);
 
     const double R = geometry->pixel_lens_inner_aperture_radius();
@@ -72,7 +72,7 @@ void Factory::add_pixel_bin_with_name_at_pos(
 
     for (unsigned int i = 0; i < 6; i++) {
         const double phi = static_cast<double>(i)*1.0/3.0*M_PI;
-        ml::Plane* binwall = bin->append<ml::Plane>();
+        ml::Plane* binwall = bin->add<ml::Plane>();
         binwall->set_name_pos_rot(
             name + "_" + std::to_string(i),
             ml::Vec3(R*sin(phi), R*cos(phi), -0.5*hight),
@@ -99,11 +99,11 @@ void Factory::add_light_field_sensor_frontplate(ml::Frame* frame) {
         geometry->pixel_spacing());
 
     std::vector<ml::Vec3> face_plate_positions = face_plate_grid.get_grid();
-    ml::Frame* face_plate = frame->append<ml::Frame>();
+    ml::Frame* face_plate = frame->add<ml::Frame>();
     face_plate->set_name_pos_rot("face_plate", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
     for (unsigned int i = 0; i < face_plate_positions.size(); i++) {
-        ml::HexPlane* face = face_plate->append<ml::HexPlane>();
+        ml::HexPlane* face = face_plate->add<ml::HexPlane>();
         face->set_name_pos_rot(
             "face_"+std::to_string(i),
             face_plate_positions.at(i),
@@ -114,7 +114,7 @@ void Factory::add_light_field_sensor_frontplate(ml::Frame* frame) {
             geometry->pixel_lens_outer_aperture_radius());
     }
 
-    ml::Annulus* outer_front_ring = face_plate->append<ml::Annulus>();
+    ml::Annulus* outer_front_ring = face_plate->add<ml::Annulus>();
     outer_front_ring->set_name_pos_rot(
         "outer_front_ring", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
     outer_front_ring->set_outer_color(gray);
@@ -128,7 +128,7 @@ void Factory::add_lixel_sensor_plane(ml::Frame* frame) {
     scenery->colors.add("light_field_sensor_cell_red", ml::COLOR_RED);
     const ml::Color* red = scenery->colors.get("light_field_sensor_cell_red");
 
-    ml::Frame* sub_pixel_array = frame->append<ml::Frame>();
+    ml::Frame* sub_pixel_array = frame->add<ml::Frame>();
     sub_pixel_array->set_name_pos_rot(
         "lixel_array",
         ml::Vec3(0.0, 0.0, geometry->pixel_plane_to_paxel_plane_distance()),
@@ -140,7 +140,7 @@ void Factory::add_lixel_sensor_plane(ml::Frame* frame) {
     sub_pixels.reserve(lixel_positions.size());
 
     for (unsigned int i = 0; i < lixel_positions.size(); i++) {
-        ml::HexPlane* subpix = sub_pixel_array->append<ml::HexPlane>();
+        ml::HexPlane* subpix = sub_pixel_array->add<ml::HexPlane>();
         subpix->set_name_pos_rot(
             "lixel_" + std::to_string(i),
             lixel_positions.at(i),
@@ -161,11 +161,11 @@ void Factory::add_lixel_sensor_plane(ml::Frame* frame) {
 void Factory::add_image_sensor_housing(ml::Frame *frame) {
     double housing_height = .67*geometry->outer_sensor_housing_radius();
 
-    ml::Frame* sensor_housing = frame->append<ml::Frame>();
+    ml::Frame* sensor_housing = frame->add<ml::Frame>();
     sensor_housing->set_name_pos_rot(
         "sensor_housing", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
-    ml::Disc* sensor_housing_top = sensor_housing->append<ml::Disc>();
+    ml::Disc* sensor_housing_top = sensor_housing->add<ml::Disc>();
     sensor_housing_top->set_name_pos_rot(
         "top",
         ml::Vec3(0.0, 0.0, housing_height),
@@ -175,7 +175,7 @@ void Factory::add_image_sensor_housing(ml::Frame *frame) {
     sensor_housing_top->set_radius(geometry->outer_sensor_housing_radius());
 
     ml::Cylinder* sensor_housing_cylinder =
-        sensor_housing->append<ml::Cylinder>();
+        sensor_housing->add<ml::Cylinder>();
     sensor_housing_cylinder->set_name_pos_rot(
         "cylinder",
         ml::VEC3_ORIGIN,
@@ -194,7 +194,7 @@ void Factory::add_light_field_sensor_to_frame_in_scenery(
 ) {
     this->scenery = scenery;
 
-    ml::Frame* light_field_sensor_front = frame->append<ml::Frame>();
+    ml::Frame* light_field_sensor_front = frame->add<ml::Frame>();
     light_field_sensor_front->set_name_pos_rot(
         "front",
         ml::VEC3_ORIGIN,
@@ -218,7 +218,7 @@ void Factory::add_demonstration_light_field_sensor_to_frame_in_scenery(
     scenery->colors.add("lens_white", ml::COLOR_WHITE);
     const ml::Color* white = scenery->colors.get("lens_white");
 
-    ml::BiConvexLensHexBound* lens = frame->append<ml::BiConvexLensHexBound>();
+    ml::BiConvexLensHexBound* lens = frame->add<ml::BiConvexLensHexBound>();
     lens->set_name_pos_rot("lens_0", ml::Vec3(0.0, 0.0, 0.0), ml::ROT3_UNITY);
     lens->set_outer_color(white);
     lens->set_inner_color(white);
@@ -228,7 +228,7 @@ void Factory::add_demonstration_light_field_sensor_to_frame_in_scenery(
         geometry->pixel_lens_outer_aperture_radius());
 
     // Add bin walls
-    ml::Frame* bin_array = frame->append<ml::Frame>();
+    ml::Frame* bin_array = frame->add<ml::Frame>();
     bin_array->set_name_pos_rot(
         "bin_array",
         ml::Vec3(0.0, 0.0, geometry->pixel_plane_to_paxel_plane_distance()),
@@ -245,7 +245,7 @@ void Factory::add_demonstration_light_field_sensor_to_frame_in_scenery(
     scenery->colors.add("light_field_sensor_cell_red", ml::COLOR_RED);
     const ml::Color* red = scenery->colors.get("light_field_sensor_cell_red");
 
-    ml::Frame* sub_pixel_array = frame->append<ml::Frame>();
+    ml::Frame* sub_pixel_array = frame->add<ml::Frame>();
     sub_pixel_array->set_name_pos_rot(
         "lixel_array",
         ml::Vec3(0.0, 0.0, geometry->pixel_plane_to_paxel_plane_distance()),
@@ -258,7 +258,7 @@ void Factory::add_demonstration_light_field_sensor_to_frame_in_scenery(
     sub_pixels.reserve(geometry->paxel_per_pixel_template_grid.size());
 
     for (unsigned int i = 0; i < lixel_positions.size(); i++) {
-        ml::HexPlane* subpix = sub_pixel_array->append<ml::HexPlane>();
+        ml::HexPlane* subpix = sub_pixel_array->add<ml::HexPlane>();
         subpix->set_name_pos_rot(
             "lixel_" + std::to_string(i),
             lixel_positions.at(i),

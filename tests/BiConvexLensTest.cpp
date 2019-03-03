@@ -30,7 +30,7 @@ struct BiConvexLensTest {
     }
 
     void set_up_test_bench() {
-        ml::Frame* test_bench = scenery.root.append<ml::Frame>();
+        ml::Frame* test_bench = scenery.root.add<ml::Frame>();
         test_bench->set_name_pos_rot(
             "BiConvexLens_test_world",
             ml::VEC3_ORIGIN,
@@ -41,7 +41,7 @@ struct BiConvexLensTest {
         cfg.aperture_radius = 0.125;
         cfg.refractive_index = 1.49;
 
-        ml::BiConvexLens* lens = test_bench->append<ml::BiConvexLens>();
+        ml::BiConvexLens* lens = test_bench->add<ml::BiConvexLens>();
         lens->set_name_pos_rot(
             "little_lens",
             ml::VEC3_ORIGIN,
@@ -63,7 +63,7 @@ struct BiConvexLensTest {
             ml::lens_maker::get_curvature_radius(cfg),
             cfg.aperture_radius);
         //-------------------------
-        ml::Disc* image_sensor = test_bench->append<ml::Disc>();
+        ml::Disc* image_sensor = test_bench->add<ml::Disc>();
         image_sensor->set_name_pos_rot(
             "sensor_disc",
             ml::Vec3(0.0, 0.0, -1.0),

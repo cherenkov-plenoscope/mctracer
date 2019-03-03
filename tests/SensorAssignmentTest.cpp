@@ -91,7 +91,7 @@ TEST_CASE("SensorAssignmentTest: sort_sensors_by_brame", "[merlict]") {
     ml::Frame root;
     root.set_name_pos_rot("root", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
     for (unsigned int i = 0; i < n; i++) {
-        ml::Frame* child = root.append<ml::Frame>();
+        ml::Frame* child = root.add<ml::Frame>();
         child->set_name_pos_rot(
             "child"+std::to_string(i),
             ml::VEC3_ORIGIN,

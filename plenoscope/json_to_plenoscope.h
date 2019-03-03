@@ -14,7 +14,7 @@ merlict::Frame* add_light_field_sensor(
     PlenoscopeScenery* scenery,
     const merlict::json::Object &o
 ) {
-    merlict::Frame* light_field_sensor = mother->append<merlict::Frame>();
+    merlict::Frame* light_field_sensor = mother->add<merlict::Frame>();
     merlict::json::set_frame(light_field_sensor, o);
     light_field_sensor::Config config;
     config.sensor_plane2imaging_system = *light_field_sensor->frame2mother();
@@ -49,7 +49,7 @@ merlict::Frame* add_light_field_sensor_demonstration(
     PlenoscopeScenery* scenery,
     const merlict::json::Object &o
 ) {
-    merlict::Frame* light_field_sensor = mother->append<merlict::Frame>();
+    merlict::Frame* light_field_sensor = mother->add<merlict::Frame>();
     merlict::json::set_frame(light_field_sensor, o);
     light_field_sensor::Config config;
     config.sensor_plane2imaging_system = *light_field_sensor->frame2mother();
