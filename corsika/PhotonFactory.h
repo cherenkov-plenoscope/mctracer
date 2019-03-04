@@ -23,7 +23,7 @@ class EventIoPhotonFactory {
         random::Generator *prng);
     bool passed_atmosphere()const;
     Photon get_photon();
-    Vec3 causal_get_direction()const;
+    Vec3 direction_of_motion()const;
     Vec3 intersection_with_xy_floor_plane()const;
     double ray_parameter_for_production_point()const;
     double x_pos_on_xy_plane()const;

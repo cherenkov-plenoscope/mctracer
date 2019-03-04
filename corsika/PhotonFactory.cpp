@@ -28,7 +28,7 @@ bool EventIoPhotonFactory::passed_atmosphere()const {
 }
 
 Photon EventIoPhotonFactory::get_photon() {
-    Vec3 causal_dir = causal_get_direction();
+    Vec3 causal_dir = direction_of_motion();
 
     Ray ray_running_upwards_from_ground_to_pos_of_production(
         intersection_with_xy_floor_plane(),
@@ -68,7 +68,7 @@ double EventIoPhotonFactory::y_pos_on_xy_plane()const {
     return corsika_photon[1]*1e-2;
 }
 
-Vec3 EventIoPhotonFactory::causal_get_direction()const {
+Vec3 EventIoPhotonFactory::direction_of_motion()const {
     // KIT-CORSIKA coordinate-system
     //
     //                   /\ z-axis                                            //
