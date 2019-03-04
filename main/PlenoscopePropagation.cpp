@@ -201,7 +201,7 @@ int main(int argc, char* argv[]) {
         for (const std::array<float, 8> &corsika_photon : event.photons) {
             ml::EventIoPhotonFactory cpf(corsika_photon, photon_id++, &prng);
             if (cpf.passed_atmosphere())
-                photons.push_back(cpf.get_photon());
+                photons.push_back(cpf.make_photon());
         }
 
         ml::Photons::propagate_photons_in_frame_with_config(

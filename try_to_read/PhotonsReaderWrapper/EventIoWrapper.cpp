@@ -19,7 +19,7 @@ std::vector<Photon> EventIoWrapper::next(random::Generator* prng) {
     for(std::array<float, 8> corsika_photon: event.photons) {
         EventIoPhotonFactory cpf(corsika_photon, photon_id++, prng);
         if(cpf.passed_atmosphere())
-            photons.push_back(cpf.get_photon());
+            photons.push_back(cpf.make_photon());
     }
     return photons;
 }

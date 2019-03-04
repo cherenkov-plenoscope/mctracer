@@ -27,7 +27,7 @@ bool EventIoPhotonFactory::passed_atmosphere()const {
     return _passed_atmosphere;
 }
 
-Photon EventIoPhotonFactory::get_photon() {
+Photon EventIoPhotonFactory::make_photon() {
     Vec3 causal_dir = direction_of_motion();
 
     Ray ray_running_upwards_from_ground_to_pos_of_production(

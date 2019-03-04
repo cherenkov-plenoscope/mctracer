@@ -29,7 +29,7 @@ TEST_CASE("EventIoPhotonFactoryTest: intersection_point_on_ground", "[merlict]")
                         &fake_prng);
 
                     std::vector<ml::Photon> photons;
-                    photons.push_back(cpf.get_photon());
+                    photons.push_back(cpf.make_photon());
 
                     // propagate merlict photons down to ground
                     ml::Frame world;
@@ -105,7 +105,7 @@ TEST_CASE("EventIoPhotonFactoryTest: convert_photons", "[merlict]") {
     ml::EventIoPhotonFactory cpf(corsika_photon, id, &prng);
 
     REQUIRE(cpf.passed_atmosphere());
-    ml::Photon ph = cpf.get_photon();
+    ml::Photon ph = cpf.make_photon();
 
     CHECK(ph.get_simulation_truth_id() == id);
     CHECK(433e-9 == Approx(ph.get_wavelength()).margin(1e-9));
@@ -240,7 +240,7 @@ TEST_CASE("EventIoPhotonFactoryTest: correct_rel_time_when_intersecting_ground",
                 &prng);
             relative_arrival_times_in_corsika_file.push_back(
                 factory.relative_arrival_time_on_ground());
-            photons.push_back(factory.get_photon());
+            photons.push_back(factory.make_photon());
         }
 
         // propagate merlict photons down to ground

@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
             ml::EventIoPhotonFactory cpf(corsika_photon, id++, &prng);
 
             if(cpf.passed_atmosphere()) {
-                photons.push_back(cpf.get_photon());
+                photons.push_back(cpf.make_photon());
 
                 // propagate the cherenkov photons in the scenery
                 ml::Photons::propagate_photons_in_frame_with_config(
