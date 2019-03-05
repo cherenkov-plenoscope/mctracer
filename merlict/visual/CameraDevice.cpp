@@ -15,9 +15,10 @@ CameraDevice::CameraDevice(
     num_cols(_num_cols),
     num_rows(_num_rows) {}
 
-void CameraDevice::set_position_and_orientation(
+void CameraDevice::set_pos_rot_fov(
     const Vec3 position,
-    const Rot3 rotation
+    const Rot3 rotation,
+    const double field_of_view
 ) {
     __position = position;
     __rotation = rotation;
@@ -26,6 +27,9 @@ void CameraDevice::set_position_and_orientation(
     __optical_axis.set_support_and_direction(
         __position,
         __camera2root.get_transformed_orientation(VEC3_UNIT_Z));
+
+    assert_field_of_view_is_valid(field_of_view);
+    __field_of_view = field_of_view;
 }
 
 HomTra3 CameraDevice::camera2root()const {return __camera2root;}
@@ -55,11 +59,6 @@ std::string CameraDevice::camera_str()const {
 
 std::string CameraDevice::str()const {
     return camera_str();
-}
-
-void CameraDevice::set_field_of_view(const double field_of_view) {
-    assert_field_of_view_is_valid(field_of_view);
-    __field_of_view = field_of_view;
 }
 
 void CameraDevice::assert_field_of_view_is_valid(

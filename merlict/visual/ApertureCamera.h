@@ -17,8 +17,11 @@ namespace visual {
 class ApertureCamera :public CameraDevice{
  public:
     using CameraDevice::CameraDevice;
+    void set_pos_rot_fov(
+        const Vec3 position,
+        const Rot3 rotation,
+        const double field_of_view);
     void set_focus_to(const double ObjectDistance_in_m);
-    void set_field_of_view(const double field_of_view);
     void set_fStop_sesnorWidth(
         const double new_FStopNumber,
         const double new_SensorSizeX);

@@ -26,11 +26,20 @@ void Stereo3D::aquire_stereo_image(
     left_camera_pos = initial_camera_pos - offset_to_the_right();
     right_camera_pos = initial_camera_pos + offset_to_the_right();
 
-    camera->set_position_and_orientation(left_camera_pos, camera->rotation());
+    camera->set_pos_rot_fov(
+        left_camera_pos,
+        camera->rotation(),
+        camera->field_of_view());
     camera->acquire_image(world, visual_config, &left_image);
-    camera->set_position_and_orientation(right_camera_pos, camera->rotation());
+    camera->set_pos_rot_fov(
+        right_camera_pos,
+        camera->rotation(),
+        camera->field_of_view());
     camera->acquire_image(world, visual_config, &right_image);
-    camera->set_position_and_orientation(initial_camera_pos, camera->rotation());
+    camera->set_pos_rot_fov(
+        initial_camera_pos,
+        camera->rotation(),
+        camera->field_of_view());
     merge_left_and_right_image_to_anaglyph_3DStereo(
         left_image,
         right_image,

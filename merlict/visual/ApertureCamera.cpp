@@ -77,20 +77,20 @@ void ApertureCamera::update_sensor_distance_given_focal_and_object_distance() {
     SensorDistance_in_m = 1.0/(1.0/FocalLength_in_m - 1.0/ObjectDistance_in_m);
 }
 
-void ApertureCamera::set_focus_to(const double ObjectDistance_in_m) {
-    set_object_distance(ObjectDistance_in_m);
+void ApertureCamera::set_pos_rot_fov(
+    const Vec3 position,
+    const Rot3 rotation,
+    const double field_of_view
+) {
+    CameraDevice::set_pos_rot_fov(position, rotation, field_of_view);
+
+    FocalLength_in_m = (sensor_width_in_m/2.0)/tan(__field_of_view/2.0);
+    update_aperture_radius();
     update_sensor_distance_given_focal_and_object_distance();
 }
 
-void ApertureCamera::set_field_of_view(const double field_of_view) {
-    assert_field_of_view_is_valid(field_of_view);
-    __field_of_view = field_of_view;
-    update_focal_length();
-}
-
-void ApertureCamera::update_focal_length() {
-    FocalLength_in_m = (sensor_width_in_m/2.0)/tan(__field_of_view/2.0);
-    update_aperture_radius();
+void ApertureCamera::set_focus_to(const double ObjectDistance_in_m) {
+    set_object_distance(ObjectDistance_in_m);
     update_sensor_distance_given_focal_and_object_distance();
 }
 

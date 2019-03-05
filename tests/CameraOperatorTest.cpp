@@ -10,10 +10,10 @@ struct camera_operator_Test {
 
     camera_operator_Test(): cam(ml::visual::PinHoleCamera("my_cam", 640, 480)) {
         initial_FoV_in_rad = ml::deg2rad(120.0);
-        cam.set_position_and_orientation(
+        cam.set_pos_rot_fov(
             ml::Vec3(0, 0, 0),
-            ml::Rot3(0, 0, 0));
-        cam.set_field_of_view(initial_FoV_in_rad);
+            ml::Rot3(0, 0, 0),
+            initial_FoV_in_rad);
     }
 };
 
@@ -70,9 +70,10 @@ TEST_CASE("camera_operatorTest: default_rotation", "[merlict]") {
     camera_operator_Test ct;
     ml::Rot3 non_default_rotation(1.2, 3.4, 5.6);
     ml::Rot3 looking_in_pos_x_dir(0.0, ml::deg2rad(-90.0), 0.0);
-    ct.cam.set_position_and_orientation(
+    ct.cam.set_pos_rot_fov(
         ct.cam.position(),
-        non_default_rotation);
+        non_default_rotation,
+        ct.cam.field_of_view());
     ml::visual::camera_operator::Rotation rot_operator(&ct.cam);
     rot_operator.set_default_rotation(looking_in_pos_x_dir);
     CHECK(ct.cam.rotation() == looking_in_pos_x_dir);

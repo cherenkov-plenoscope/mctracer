@@ -221,10 +221,10 @@ void FlyingCamera::update_display() {
 }
 
 void FlyingCamera::update_display_preview() {
-    camera_preview.set_field_of_view(camera.field_of_view());
-    camera_preview.set_position_and_orientation(
+    camera_preview.set_pos_rot_fov(
         camera.position(),
-        camera.rotation());
+        camera.rotation(),
+        camera.field_of_view());
     acquire_image_with_camera(&camera_preview, &image_preview);
     scale_up(image_preview, visual_config->preview.scale, &image);
     image_to_opencv_image(image, &display_image);
@@ -265,10 +265,10 @@ ApertureCamera FlyingCamera::get_aperture_camera_based_on_camera()const {
     apcam.set_fStop_sesnorWidth(
         visual_config->snapshot.focal_length_over_aperture_diameter,
         visual_config->snapshot.image_sensor_size_along_a_row);
-    apcam.set_field_of_view(camera.field_of_view());
-    apcam.set_position_and_orientation(
+    apcam.set_pos_rot_fov(
         camera.position(),
-        camera.rotation());
+        camera.rotation(),
+        camera.field_of_view());
     return apcam;
 }
 

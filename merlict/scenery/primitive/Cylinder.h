@@ -35,7 +35,7 @@ class Cylinder :public SurfaceEntity {
     void post_initialize_radius_of_enclosing_sphere();
     void assert_start_and_end_point_are_distinct(
         const Vec3 start_pos, const Vec3 end_pos)const;
-    void set_position_and_orientation(
+    void set_pos_rot_fov(
         const Vec3 start_pos,
         const Vec3 end_pos);
     bool is_in_cylinders_z_bounds(const Vec3* vec)const;

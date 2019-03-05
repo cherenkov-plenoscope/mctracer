@@ -21,11 +21,11 @@ void Cylinder::set_cylinder(
 ) {
     set_cylinder_radius(radius);
     set_cylinder_length(start_pos, end_pos);
-    set_position_and_orientation(start_pos, end_pos);
+    set_pos_rot_fov(start_pos, end_pos);
     post_initialize_radius_of_enclosing_sphere();
 }
 
-void Cylinder::set_position_and_orientation(
+void Cylinder::set_pos_rot_fov(
     const Vec3 start_pos,
     const Vec3 end_pos
 ) {

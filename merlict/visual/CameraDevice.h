@@ -40,10 +40,10 @@ class CameraDevice{
         const Frame* world,
         const Config* visual_config,
         Image* image) = 0;
-    virtual void set_position_and_orientation(
+    virtual void set_pos_rot_fov(
         const Vec3 position,
-        const Rot3 rotation);
-    virtual void set_field_of_view(const double field_of_view);
+        const Rot3 rotation,
+        const double field_of_view);
     Vec3 direction_to_the_right()const;
     std::string str()const;
     void assert_resolution(Image* image)const;

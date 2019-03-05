@@ -8,26 +8,20 @@
 namespace merlict {
 namespace visual {
 
-void PinHoleCamera::set_position_and_orientation(
+void PinHoleCamera::set_pos_rot_fov(
     const Vec3 cam_pos_in_world,
-    const Rot3 cam_rot_in_world
+    const Rot3 cam_rot_in_world,
+    const double field_of_view
 ) {
-    CameraDevice::set_position_and_orientation(
+    CameraDevice::set_pos_rot_fov(
         cam_pos_in_world,
-        cam_rot_in_world);
-    update_principal_point_for_current_FoV();
+        cam_rot_in_world,
+        field_of_view);
+
     // calculate sensor vectors
     SensorDirectionHori = __camera2root.get_transformed_orientation(VEC3_UNIT_Y);
     SensorDirectionVert = __camera2root.get_transformed_orientation(VEC3_UNIT_X);
-}
 
-void PinHoleCamera::set_field_of_view(const double field_of_view) {
-    assert_field_of_view_is_valid(field_of_view);
-    __field_of_view = field_of_view;
-    update_principal_point_for_current_FoV();
-}
-
-void PinHoleCamera::update_principal_point_for_current_FoV() {
     /*
      calculate principal point (intersection of optical axis and
      image sensor plane)
