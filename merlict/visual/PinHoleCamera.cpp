@@ -8,11 +8,11 @@
 namespace merlict {
 namespace visual {
 
-void PinHoleCamera::update_position_and_orientation(
+void PinHoleCamera::set_position_and_orientation(
     const Vec3 cam_pos_in_world,
     const Rot3 cam_rot_in_world
 ) {
-    CameraDevice::update_position_and_orientation(
+    CameraDevice::set_position_and_orientation(
         cam_pos_in_world,
         cam_rot_in_world);
     update_principal_point_for_current_FoV();

@@ -40,9 +40,9 @@ class CameraDevice{
         const Frame* world,
         const Config* visual_config,
         Image* image) = 0;
-    virtual void update_position(const Vec3 position);
-    virtual void update_orientation(const Rot3 rotation);
-    virtual void update_position_and_orientation(
+    virtual void set_position(const Vec3 position);
+    virtual void set_orientation(const Rot3 rotation);
+    virtual void set_position_and_orientation(
         const Vec3 position,
         const Rot3 rotation);
     virtual void set_field_of_view(const double field_of_view);

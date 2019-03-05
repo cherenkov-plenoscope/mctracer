@@ -15,15 +15,15 @@ CameraDevice::CameraDevice(
     num_cols(_num_cols),
     num_rows(_num_rows) {}
 
-void CameraDevice::update_position(const Vec3 position) {
-    update_position_and_orientation(position, __rotation);
+void CameraDevice::set_position(const Vec3 position) {
+    set_position_and_orientation(position, __rotation);
 }
 
-void CameraDevice::update_orientation(const Rot3 rotation) {
-    update_position_and_orientation(__position, rotation);
+void CameraDevice::set_orientation(const Rot3 rotation) {
+    set_position_and_orientation(__position, rotation);
 }
 
-void CameraDevice::update_position_and_orientation(
+void CameraDevice::set_position_and_orientation(
     const Vec3 position,
     const Rot3 rotation
 ) {

@@ -10,5 +10,5 @@ TEST_CASE("ApertureCameraTest: set_up", "[merlict]") {
   Mamiya645.set_field_of_view(ml::deg2rad(45.0));
   ml::Vec3 pos(0.0, 0.0, -5.0);
   ml::Rot3 rot(0.0, 0.0, 0.0);
-  Mamiya645.update_position_and_orientation(pos, rot);
+  Mamiya645.set_position_and_orientation(pos, rot);
 }

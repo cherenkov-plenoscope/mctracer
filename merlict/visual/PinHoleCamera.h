@@ -13,7 +13,7 @@ namespace visual {
 class PinHoleCamera:public CameraDevice{
  public:
     using CameraDevice::CameraDevice;
-    void update_position_and_orientation(
+    void set_position_and_orientation(
         const Vec3 cam_pos_in_world,
         const Rot3 cam_rot_in_world);
     void print()const;

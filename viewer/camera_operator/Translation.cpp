@@ -10,30 +10,30 @@ Translation::Translation(CameraDevice* camera_to_work_with) {
 }
 
 void Translation::set_default_position() {
-    camera->update_position(default_position);
+    camera->set_position(default_position);
 }
 
 void Translation::set_default_position(const Vec3 default_pos) {
     default_position = default_pos;
-    camera->update_position(default_position);
+    camera->set_position(default_position);
 }
 
 void Translation::move_forward() {
-    camera->update_position(
+    camera->set_position(
         camera->position() +
         camera->optical_axis().direction()*translation_increment());
     if (verbose) print_camera_moved_in_direction("forward");
 }
 
 void Translation::move_back() {
-    camera->update_position(
+    camera->set_position(
         camera->position() -
         camera->optical_axis().direction()*translation_increment());
     if (verbose) print_camera_moved_in_direction("back");
 }
 
 void Translation::move_left() {
-    camera->update_position(
+    camera->set_position(
         camera->position() -
         camera->direction_to_the_right()*
             translation_increment());
@@ -41,7 +41,7 @@ void Translation::move_left() {
 }
 
 void Translation::move_right() {
-    camera->update_position(
+    camera->set_position(
         camera->position() +
         camera->direction_to_the_right()*
             translation_increment());
@@ -58,26 +58,26 @@ void Translation::print_camera_moved_in_direction(const std::string dir)const {
 }
 
 void Translation::move_right(const double step_in_m) {
-    camera->update_position(
+    camera->set_position(
         camera->position() +
         camera->direction_to_the_right()*step_in_m);
     if (verbose) print_camera_moved_in_direction("right");
 }
 
 void Translation::move_up() {
-    camera->update_position(
+    camera->set_position(
         camera->position() + VEC3_UNIT_Z*translation_increment());
     if (verbose) print_camera_moved_in_direction("up");
 }
 
 void Translation::move_down() {
-    camera->update_position(
+    camera->set_position(
         camera->position() - VEC3_UNIT_Z*translation_increment());
     if (verbose) print_camera_moved_in_direction("up");
 }
 
 void Translation::move_to(const Vec3 pos) {
-    camera->update_position(pos);
+    camera->set_position(pos);
     if (verbose) {
         std::cout << camera->name << " move to: ";
         std::cout << camera->position().str() << "\n";

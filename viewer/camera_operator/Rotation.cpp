@@ -48,7 +48,7 @@ void Rotation::increment_rot_y() {
 
 void Rotation::update_R_World2Camera() {
     R_World2Camera.set(0.0, RotWorld2CameraY_in_rad, RotWorld2CameraZ_in_rad);
-    camera->update_orientation(R_World2Camera);
+    camera->set_orientation(R_World2Camera);
 }
 
 void Rotation::look_further_down_when_possible() {

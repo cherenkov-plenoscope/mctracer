@@ -100,7 +100,7 @@ int main(int argc, char* argv[]) {
                 ins.focal_length_over_aperture_diameter,
                 ins.sensor_size_along_columns);
             cam.set_field_of_view(ins.field_of_view_along_columns);
-            cam.update_position_and_orientation(
+            cam.set_position_and_orientation(
                 ins.position,
                 ins.orientation);
             cam.set_focus_to(ins.object_distance);
