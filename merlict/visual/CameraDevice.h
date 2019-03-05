@@ -14,7 +14,24 @@
 namespace merlict {
 namespace visual {
 
-struct CameraDevice{
+class CameraDevice{
+ public:
+    const std::string name;
+    const unsigned int num_cols;
+    const unsigned int num_rows;
+ protected:
+    HomTra3 __camera2root;
+    Vec3 __position;
+    Rot3 __rotation;
+    CameraRay __optical_axis;
+    double __field_of_view;
+
+ public:
+    HomTra3 camera2root()const;
+    Vec3 position()const;
+    Rot3 rotation()const;
+    CameraRay optical_axis()const;
+    double field_of_view()const;
     CameraDevice(
         const std::string name,
         const unsigned int num_cols,
@@ -29,20 +46,9 @@ struct CameraDevice{
         const Vec3 position,
         const Rot3 rotation);
     virtual void set_field_of_view(const double field_of_view);
-    double get_FoV_in_rad()const;
     Vec3 direction_to_the_right()const;
     std::string str()const;
     void assert_resolution(Image* image)const;
-
-    const std::string name;
-    const unsigned int num_cols;
-    const unsigned int num_rows;
-
-    HomTra3 camera2root;
-    Vec3 position;
-    Rot3 rotation;
-    CameraRay optical_axis;
-    double field_of_view;
     std::string camera_str()const;
     void assert_field_of_view_is_valid(const double field_of_view)const;
     void update_optical_axis_and_orientation();

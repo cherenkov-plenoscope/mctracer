@@ -21,7 +21,7 @@ void Stereo3D::aquire_stereo_image(
     const Config* visual_config,
     Image* stereo_image
 ) {
-    initial_camera_pos = camera->position;
+    initial_camera_pos = camera->position();
 
     left_camera_pos = initial_camera_pos - offset_to_the_right();
     right_camera_pos = initial_camera_pos + offset_to_the_right();

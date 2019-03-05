@@ -84,12 +84,12 @@ void ApertureCamera::set_focus_to(const double ObjectDistance_in_m) {
 
 void ApertureCamera::set_field_of_view(const double field_of_view) {
     assert_field_of_view_is_valid(field_of_view);
-    this -> field_of_view = field_of_view;
+    __field_of_view = field_of_view;
     update_focal_length();
 }
 
 void ApertureCamera::update_focal_length() {
-    FocalLength_in_m = (sensor_width_in_m/2.0)/tan(field_of_view/2.0);
+    FocalLength_in_m = (sensor_width_in_m/2.0)/tan(__field_of_view/2.0);
     update_aperture_radius();
     update_sensor_distance_given_focal_and_object_distance();
 }
@@ -170,14 +170,14 @@ CameraRay ApertureCamera::get_ray_for_pixel_in_row_and_col(
 Vec3 ApertureCamera::camera_ray_support_vector_in_world_frame(
     const Vec3 &cam_ray_support_in_cam_frame
 )const {
-    return position + camera2root.get_transformed_orientation(
+    return __position + __camera2root.get_transformed_orientation(
         cam_ray_support_in_cam_frame);
 }
 
 Vec3 ApertureCamera::camera_ray_direction_vector_in_world_frame(
     const Vec3 &cam_ray_direction
 )const {
-    return camera2root.get_transformed_orientation(cam_ray_direction);
+    return __camera2root.get_transformed_orientation(cam_ray_direction);
 }
 
 void ApertureCamera::acquire_image(

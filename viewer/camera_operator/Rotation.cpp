@@ -131,7 +131,7 @@ void Rotation::assert_RotWorld2CameraZ_is_not_overtwisting() {
 }
 
 double Rotation::rotation_increment()const {
-    return camera->get_FoV_in_rad()/25.0;
+    return camera->field_of_view()/25.0;
 }
 
 Rot3 Rotation::get_R_World2Camera()const {

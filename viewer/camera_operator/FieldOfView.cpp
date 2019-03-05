@@ -29,27 +29,27 @@ void FieldOfView::decrease_when_possible() {
 }
 
 bool FieldOfView::below_max_when_increased()const {
-    return camera->get_FoV_in_rad()*rate < max_fov;
+    return camera->field_of_view()*rate < max_fov;
 }
 
 bool FieldOfView::above_min_when_decreased()const {
-    return camera->get_FoV_in_rad()/rate > min_fov;
+    return camera->field_of_view()/rate > min_fov;
 }
 
 void FieldOfView::increase() {
-    camera->set_field_of_view(camera->get_FoV_in_rad()*rate);
+    camera->set_field_of_view(camera->field_of_view()*rate);
     print_manipulation_when_verbose();
 }
 
 void FieldOfView::decrease() {
-    camera->set_field_of_view(camera->get_FoV_in_rad()/rate);
+    camera->set_field_of_view(camera->field_of_view()/rate);
     print_manipulation_when_verbose();
 }
 
 void FieldOfView::print_manipulation_when_verbose()const {
     if (verbose) {
         print_prefix();
-        std::cout << rad2deg(camera->get_FoV_in_rad()) << " DEG\n";
+        std::cout << rad2deg(camera->field_of_view()) << " DEG\n";
     }
 }
 

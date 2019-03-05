@@ -17,13 +17,13 @@ void PinHoleCamera::update_position_and_orientation(
         cam_rot_in_world);
     update_principal_point_for_current_FoV();
     // calculate sensor vectors
-    SensorDirectionHori = camera2root.get_transformed_orientation(VEC3_UNIT_Y);
-    SensorDirectionVert = camera2root.get_transformed_orientation(VEC3_UNIT_X);
+    SensorDirectionHori = __camera2root.get_transformed_orientation(VEC3_UNIT_Y);
+    SensorDirectionVert = __camera2root.get_transformed_orientation(VEC3_UNIT_X);
 }
 
 void PinHoleCamera::set_field_of_view(const double field_of_view) {
     assert_field_of_view_is_valid(field_of_view);
-    this->field_of_view = field_of_view;
+    __field_of_view = field_of_view;
     update_principal_point_for_current_FoV();
 }
 
@@ -56,11 +56,11 @@ void PinHoleCamera::update_principal_point_for_current_FoV() {
     */
     // distance
     dist_camera_support_to_principal_point =
-        ((num_cols/2.0)/tan(field_of_view/2.0));
+        ((num_cols/2.0)/tan(__field_of_view/2.0));
 
     // principal point
     principal_point =
-        optical_axis.direction()*
+        __optical_axis.direction()*
         dist_camera_support_to_principal_point;
 }
 
@@ -80,7 +80,7 @@ CameraRay PinHoleCamera::get_ray_for_pixel_in_row_and_col(
     const int row, const int col
 )const {
     return CameraRay(
-        position, get_direction_of_ray_for_pixel(row, col));
+        __position, get_direction_of_ray_for_pixel(row, col));
 }
 
 Vec3 PinHoleCamera::get_direction_of_ray_for_pixel(

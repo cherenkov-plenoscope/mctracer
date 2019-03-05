@@ -15,28 +15,34 @@ CameraDevice::CameraDevice(
     num_cols(_num_cols),
     num_rows(_num_rows) {}
 
-void CameraDevice::update_position(const Vec3 _position) {
-    update_position_and_orientation(_position, rotation);
+void CameraDevice::update_position(const Vec3 position) {
+    update_position_and_orientation(position, __rotation);
 }
 
-void CameraDevice::update_orientation(const Rot3 _rotation) {
-    update_position_and_orientation(position, _rotation);
+void CameraDevice::update_orientation(const Rot3 rotation) {
+    update_position_and_orientation(__position, rotation);
 }
 
 void CameraDevice::update_position_and_orientation(
-    const Vec3 _position,
-    const Rot3 _rotation
+    const Vec3 position,
+    const Rot3 rotation
 ) {
-    position = _position;
-    rotation = _rotation;
-    camera2root.set_transformation(rotation, position);
+    __position = position;
+    __rotation = rotation;
+    __camera2root.set_transformation(rotation, position);
     update_optical_axis_and_orientation();
 }
 
+HomTra3 CameraDevice::camera2root()const {return __camera2root;}
+Vec3 CameraDevice::position()const {return __position;}
+Rot3 CameraDevice::rotation()const {return __rotation;}
+CameraRay CameraDevice::optical_axis()const {return __optical_axis;}
+double CameraDevice::field_of_view()const {return __field_of_view;}
+
 void CameraDevice::update_optical_axis_and_orientation() {
-    optical_axis.set_support_and_direction(
-        position,
-        camera2root.get_transformed_orientation(VEC3_UNIT_Z));
+    __optical_axis.set_support_and_direction(
+        __position,
+        __camera2root.get_transformed_orientation(VEC3_UNIT_Z));
 }
 
 std::string CameraDevice::camera_str()const {
@@ -45,12 +51,12 @@ std::string CameraDevice::camera_str()const {
     out << "| T_" << name << "2world:\n";
     out << txt::place_first_infront_of_each_new_line_of_second(
         "| ",
-        camera2root.str());
+        __camera2root.str());
     out << "| camera position          : ";
-    out << position.str() << "\n";
+    out << __position.str() << "\n";
     out << "| direction of optical axis: ";
-    out << optical_axis.direction().str() << "\n";
-    out << "| field of view: " << rad2deg(field_of_view) <<" deg\n";
+    out << __optical_axis.direction().str() << "\n";
+    out << "| field of view: " << rad2deg(__field_of_view) <<" deg\n";
     out << "| resolution: cols x rows : ";
     out << num_cols << "x";
     out << num_rows <<" pixels";
@@ -64,11 +70,7 @@ std::string CameraDevice::str()const {
 
 void CameraDevice::set_field_of_view(const double field_of_view) {
     assert_field_of_view_is_valid(field_of_view);
-    this->field_of_view = field_of_view;
-}
-
-double CameraDevice::get_FoV_in_rad()const {
-    return field_of_view;
+    __field_of_view = field_of_view;
 }
 
 void CameraDevice::assert_field_of_view_is_valid(
@@ -100,7 +102,7 @@ void CameraDevice::assert_resolution(Image* image)const {
 }
 
 Vec3 CameraDevice::direction_to_the_right()const {
-    return VEC3_UNIT_Z.cross(optical_axis.direction());
+    return VEC3_UNIT_Z.cross(__optical_axis.direction());
 }
 
 }  // namespace visual
