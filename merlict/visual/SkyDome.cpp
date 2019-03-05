@@ -6,16 +6,13 @@
 namespace merlict {
 namespace visual {
 
-SkyDome::SkyDome(const std::string _filename):
-    sky(Image(_filename)) {
+SkyDome::SkyDome(const Image _sky):
+    sky(_sky) {
     has_texture = true;
-    filename = _filename;
-
     central_row = sky.num_rows/2;
     central_col = sky.num_cols/2;
     zenith_to_horizon_radius =
         central_row < central_col ? central_row : central_col;
-
     background_color = COLOR_BLACK;
 }
 
@@ -64,7 +61,6 @@ std::string SkyDome::str()const {
     out << "SkyDome ";
     out << sky.num_cols << "x" << sky.num_rows;
     if (has_texture) {
-        out << ", " << filename << ", ";
         out << "central pixel (" << central_col << "," << central_row << "), ";
         out << "zenith to horizon " << zenith_to_horizon_radius << "pixels ";
     } else {

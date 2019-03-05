@@ -11,7 +11,6 @@ namespace visual {
 
 class SkyDome {
     bool has_texture;
-    std::string filename;
     Image sky;
     unsigned int central_row;
     unsigned int central_col;
@@ -21,7 +20,7 @@ class SkyDome {
  public:
     SkyDome();
     explicit SkyDome(const Color color);
-    explicit SkyDome(const std::string _filename);
+    explicit SkyDome(const Image sky);
     void set_background_color(const Color background_color);
     Color get_color_for_direction(const Vec3 dir)const;
     std::string str()const;
