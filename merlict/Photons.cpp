@@ -131,7 +131,7 @@ void assert_raw_row_size_matches_photon(std::vector<double> &raw_row) {
     }
 }
 
-namespace Source {
+namespace photon_source {
 
 std::vector<Photon> point_like_towards_z_opening_angle_num_photons(
     const double opening_angle,
@@ -175,7 +175,7 @@ std::vector<Photon> parallel_towards_z_from_xy_disc(
     return photons;
 }
 
-}  // namespace Source
+}  // namespace photon_source
 
 // transformations, move and rotate photons
 

@@ -10,7 +10,7 @@ TEST_CASE("ParallelPropagationTest: propagate_once", "[merlict]") {
 	const uint64_t num_photons = 1000;
 	ml::random::Mt19937 prng(0u);
 	std::vector<ml::Photon> photons1 =
-		ml::Photons::Source::parallel_towards_z_from_xy_disc(
+		ml::Photons::photon_source::parallel_towards_z_from_xy_disc(
 			1.0,
 			num_photons,
 			&prng);
@@ -54,7 +54,7 @@ TEST_CASE("ParallelPropagationTest: propagate_once", "[merlict]") {
 
 	prng.set_seed(0u);
 	std::vector<ml::Photon> photons2 =
-		ml::Photons::Source::parallel_towards_z_from_xy_disc(
+		ml::Photons::photon_source::parallel_towards_z_from_xy_disc(
 			1.0,
 			num_photons,
 			&prng);

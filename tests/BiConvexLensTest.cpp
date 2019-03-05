@@ -111,7 +111,7 @@ TEST_CASE("BiConvexLensTest: send_photons_frontal_into_lens_with_offset", "[merl
     unsigned int num_photons_emitted = 1e4;
     ml::random::Mt19937 prng(0);
     std::vector<ml::Photon> photons =
-        ml::Photons::Source::parallel_towards_z_from_xy_disc(
+        ml::Photons::photon_source::parallel_towards_z_from_xy_disc(
             0.125,
             num_photons_emitted,
             &prng);

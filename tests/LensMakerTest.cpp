@@ -84,7 +84,7 @@ TEST_CASE("lens_makerTest: check_lensmaker_on_optical_table_with_lens", "[merlic
 
         // light source
         std::vector<ml::Photon> photons =
-            ml::Photons::Source::parallel_towards_z_from_xy_disc(
+            ml::Photons::photon_source::parallel_towards_z_from_xy_disc(
                 cfg.aperture_radius*0.85,  // 0.85 inner hex radius
                 num_photons_per_run,
                 &prng);
