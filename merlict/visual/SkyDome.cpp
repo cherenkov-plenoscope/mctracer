@@ -30,7 +30,7 @@ void SkyDome::set_background_color(const Color background_color) {
     this->background_color = background_color;
 }
 
-Color SkyDome::get_color_for_direction(Vec3 dir)const {
+Color SkyDome::color_for_direction(const Vec3 &dir)const {
     if (has_texture) {
         if (dir.z < 0.0)
             return background_color;
@@ -41,9 +41,9 @@ Color SkyDome::get_color_for_direction(Vec3 dir)const {
     }
 }
 
-Color SkyDome::sky_dome_color_for(const Vec3 dir)const {
-    const double zd = get_zenith_distance_of(dir);
-    const double az = get_azimuth_angle_of(dir);
+Color SkyDome::sky_dome_color_for(const Vec3 &dir)const {
+    const double zd = zenith_distance_of_direction(dir);
+    const double az = azimuth_angle_for_direction(dir);
 
     const double zd_in_pix = zd*(2.0/M_PI)*zenith_to_horizon_radius;
 
@@ -70,11 +70,11 @@ std::string SkyDome::str()const {
     return out.str();
 }
 
-double SkyDome::get_zenith_distance_of(const Vec3 dir)const {
+double SkyDome::zenith_distance_of_direction(const Vec3 &dir)const {
     return VEC3_UNIT_Z.angle_in_between(dir);
 }
 
-double SkyDome::get_azimuth_angle_of(const Vec3 dir)const {
+double SkyDome::azimuth_angle_for_direction(const Vec3 &dir)const {
     return atan2(dir.y, dir.x);
 }
 

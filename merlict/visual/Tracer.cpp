@@ -89,7 +89,7 @@ void Tracer::trace_back_beyond_boundary_layer(
 }
 
 void Tracer::trace_back_to_sky_dome() {
-    color = config->sky_dome.get_color_for_direction(cray->direction());
+    color = config->sky_dome.color_for_direction(cray->direction());
 }
 
 Color Tracer::shadow_of_sky_light()const {
