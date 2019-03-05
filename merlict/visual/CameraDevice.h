@@ -37,7 +37,6 @@ struct CameraDevice{
     Vec3 direction_to_the_right_of_the_camera()const;
     Ray get_optical_axis_in_world()const;
     std::string str()const;
-    Rot3 get_rotation_in_world()const;
     Vec3 get_image_upwards_direction_in_world_frame()const;
     void assert_resolution(Image* image)const;
 

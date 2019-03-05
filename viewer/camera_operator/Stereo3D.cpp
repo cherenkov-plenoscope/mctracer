@@ -50,7 +50,7 @@ void Stereo3D::remember_initial_camera_config() {
 
 void Stereo3D::remember_initial_camera_position_and_rotation() {
     initial_camera_pos = camera->position;
-    initial_camera_rotation = camera->get_rotation_in_world();
+    initial_camera_rotation = camera->rotation;
 }
 
 void Stereo3D::set_positions_for_left_and_right_stereo_config() {
