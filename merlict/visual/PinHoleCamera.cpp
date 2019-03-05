@@ -59,7 +59,8 @@ void PinHoleCamera::update_principal_point_for_current_FoV() {
 
     // principal point
     principal_point =
-        pointing*dist_camera_support_to_principal_point;
+        optical_axis.direction()*
+        dist_camera_support_to_principal_point;
 }
 
 std::string PinHoleCamera::get_pin_hole_cam_print()const {

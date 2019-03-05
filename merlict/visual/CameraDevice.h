@@ -51,7 +51,6 @@ class CameraDevice{
     HomTra3 camera2root;
     Vec3 position;
     Rot3 rotation;
-    Vec3 pointing;
     CameraRay optical_axis;
     double field_of_view;
     void set_position_and_orientation(

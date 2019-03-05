@@ -41,9 +41,9 @@ void CameraDevice::set_position_and_orientation(
 }
 
 void CameraDevice::update_optical_axis_and_orientation() {
-    pointing =
-        camera2root.get_transformed_orientation(VEC3_UNIT_Z);
-    optical_axis.set_support_and_direction(position, pointing);
+    optical_axis.set_support_and_direction(
+        position,
+        camera2root.get_transformed_orientation(VEC3_UNIT_Z));
 }
 
 void CameraDevice::set_pointing_direction(
@@ -79,7 +79,7 @@ std::string CameraDevice::get_camera_print()const {
     out << "| camera position          : ";
     out << position.str() << "\n";
     out << "| direction of optical axis: ";
-    out << pointing.str() << "\n";
+    out << optical_axis.direction().str() << "\n";
     out << "| field of view: " << rad2deg(field_of_view) <<" deg\n";
     out << "| resolution: cols x rows : ";
     out << num_cols << "x";
@@ -89,7 +89,7 @@ std::string CameraDevice::get_camera_print()const {
 }
 
 Vec3 CameraDevice::get_normalized_pointing_get_direction()const {
-    return pointing/pointing.norm();
+    return optical_axis.direction();
 }
 
 std::string CameraDevice::str()const {
