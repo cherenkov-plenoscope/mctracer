@@ -49,7 +49,6 @@ class CameraDevice{
     void assert_resolution(Image* image)const;
     std::string camera_str()const;
     void assert_field_of_view_is_valid(const double field_of_view)const;
-    void update_optical_axis_and_orientation();
 };
 
 }  // namespace visual

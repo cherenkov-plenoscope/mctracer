@@ -22,7 +22,10 @@ void CameraDevice::set_position_and_orientation(
     __position = position;
     __rotation = rotation;
     __camera2root.set_transformation(rotation, position);
-    update_optical_axis_and_orientation();
+
+    __optical_axis.set_support_and_direction(
+        __position,
+        __camera2root.get_transformed_orientation(VEC3_UNIT_Z));
 }
 
 HomTra3 CameraDevice::camera2root()const {return __camera2root;}
@@ -30,12 +33,6 @@ Vec3 CameraDevice::position()const {return __position;}
 Rot3 CameraDevice::rotation()const {return __rotation;}
 CameraRay CameraDevice::optical_axis()const {return __optical_axis;}
 double CameraDevice::field_of_view()const {return __field_of_view;}
-
-void CameraDevice::update_optical_axis_and_orientation() {
-    __optical_axis.set_support_and_direction(
-        __position,
-        __camera2root.get_transformed_orientation(VEC3_UNIT_Z));
-}
 
 std::string CameraDevice::camera_str()const {
     std::stringstream out;
