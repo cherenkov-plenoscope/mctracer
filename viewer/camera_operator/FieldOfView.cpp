@@ -11,7 +11,7 @@ FieldOfView::FieldOfView(CameraDevice* _camera) {
 }
 
 void FieldOfView::set_default() {
-    camera->set_FoV_in_rad(default_fov);
+    camera->set_field_of_view(default_fov);
 }
 
 void FieldOfView::increase_when_possible() {
@@ -37,12 +37,12 @@ bool FieldOfView::above_min_when_decreased()const {
 }
 
 void FieldOfView::increase() {
-    camera->set_FoV_in_rad(camera->get_FoV_in_rad()*rate);
+    camera->set_field_of_view(camera->get_FoV_in_rad()*rate);
     print_manipulation_when_verbose();
 }
 
 void FieldOfView::decrease() {
-    camera->set_FoV_in_rad(camera->get_FoV_in_rad()/rate);
+    camera->set_field_of_view(camera->get_FoV_in_rad()/rate);
     print_manipulation_when_verbose();
 }
 

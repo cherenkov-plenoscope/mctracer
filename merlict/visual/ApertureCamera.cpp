@@ -82,7 +82,7 @@ void ApertureCamera::set_focus_to(const double ObjectDistance_in_m) {
     update_sensor_distance_given_focal_and_object_distance();
 }
 
-void ApertureCamera::set_FoV_in_rad(const double field_of_view) {
+void ApertureCamera::set_field_of_view(const double field_of_view) {
     assert_field_of_view_is_valid(field_of_view);
     this -> field_of_view = field_of_view;
     update_focal_length();

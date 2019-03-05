@@ -20,7 +20,7 @@ void PinHoleCamera::update_position_and_orientation(
     SensorDirectionVert = camera2root.get_transformed_orientation(VEC3_UNIT_X);
 }
 
-void PinHoleCamera::set_FoV_in_rad(const double field_of_view) {
+void PinHoleCamera::set_field_of_view(const double field_of_view) {
     assert_field_of_view_is_valid(field_of_view);
     this->field_of_view = field_of_view;
     update_principal_point_for_current_FoV();

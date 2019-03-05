@@ -99,7 +99,7 @@ int main(int argc, char* argv[]) {
             cam.set_fStop_sesnorWidth(
                 ins.focal_length_over_aperture_diameter,
                 ins.sensor_size_along_columns);
-            cam.set_FoV_in_rad(ins.field_of_view_along_columns);
+            cam.set_field_of_view(ins.field_of_view_along_columns);
             cam.update_position_and_orientation(
                 ins.position,
                 ins.orientation);

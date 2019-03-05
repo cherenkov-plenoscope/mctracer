@@ -13,7 +13,7 @@ struct camera_operator_Test {
         cam.update_position_and_orientation(
             ml::Vec3(0, 0, 0),
             ml::Rot3(0, 0, 0));
-        cam.set_FoV_in_rad(initial_FoV_in_rad);
+        cam.set_field_of_view(initial_FoV_in_rad);
     }
 };
 

@@ -21,7 +21,7 @@ class PinHoleCamera:public CameraDevice{
         const Frame* world,
         const Config* visual_config,
         Image* image);
-    void set_FoV_in_rad(const double field_of_view);
+    void set_field_of_view(const double field_of_view);
     CameraRay get_ray_for_pixel_in_row_and_col(
         const int row, const int col)const;
 

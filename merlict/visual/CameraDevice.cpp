@@ -92,9 +92,9 @@ std::string CameraDevice::str()const {
     return get_camera_print();
 }
 
-void CameraDevice::set_FoV_in_rad(const double field_of_view) {
+void CameraDevice::set_field_of_view(const double field_of_view) {
     assert_field_of_view_is_valid(field_of_view);
-    this -> field_of_view = field_of_view;
+    this->field_of_view = field_of_view;
 }
 
 double CameraDevice::get_FoV_in_rad()const {

@@ -18,7 +18,7 @@ class ApertureCamera :public CameraDevice{
  public:
     using CameraDevice::CameraDevice;
     void set_focus_to(const double ObjectDistance_in_m);
-    void set_FoV_in_rad(const double field_of_view);
+    void set_field_of_view(const double field_of_view);
     void set_fStop_sesnorWidth(
         const double new_FStopNumber,
         const double new_SensorSizeX);

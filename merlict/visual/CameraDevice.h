@@ -31,7 +31,7 @@ struct CameraDevice{
     void set_pointing_direction(
         Vec3 camera_pointing_direction_in_World,
         Vec3 camera_image_upwards_image_dir_in_world);
-    virtual void set_FoV_in_rad(const double field_of_view);
+    virtual void set_field_of_view(const double field_of_view);
     double get_FoV_in_rad()const;
     Vec3 direction_to_the_right_of_the_camera()const;
     std::string str()const;
