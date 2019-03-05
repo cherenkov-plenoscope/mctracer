@@ -6,7 +6,7 @@
 namespace merlict {
 namespace visual {
 
-SkyDome::SkyDome(const Image _sky):
+SkyDome::SkyDome(const Image &_sky):
     sky(_sky) {
     has_texture = true;
     central_row = sky.num_rows/2;
@@ -16,7 +16,7 @@ SkyDome::SkyDome(const Image _sky):
     background_color = COLOR_BLACK;
 }
 
-SkyDome::SkyDome(const Color color): sky(Image(0, 0)) {
+SkyDome::SkyDome(const Color &color): sky(Image(0, 0)) {
     has_texture = false;
     background_color = color;
 }
@@ -26,7 +26,7 @@ SkyDome::SkyDome(): sky(Image(0, 0)) {
     background_color = COLOR_SKY_BLUE;
 }
 
-void SkyDome::set_background_color(const Color background_color) {
+void SkyDome::set_background_color(const Color &background_color) {
     this->background_color = background_color;
 }
 
