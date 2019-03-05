@@ -48,7 +48,9 @@ std::vector<Photon> point_like_towards_z_opening_angle_num_photons(
 
 }  // namespace Source
 
-void transform_all_photons(const HomTra3 Trafo, std::vector<Photon> *photons);
+void apply_transformation_to_photons(
+    const HomTra3 Trafo,
+    std::vector<Photon> *photons);
 
 }  // namespace Photons
 }  // namespace merlict

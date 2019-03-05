@@ -179,7 +179,10 @@ std::vector<Photon> parallel_towards_z_from_xy_disc(
 
 // transformations, move and rotate photons
 
-void transform_all_photons(const HomTra3 Trafo, std::vector<Photon> *photons) {
+void apply_transformation_to_photons(
+    const HomTra3 Trafo,
+    std::vector<Photon> *photons
+) {
     for (size_t i = 0; i < photons->size(); i++)
         photons->at(i).transform(&Trafo);
 }

@@ -92,7 +92,7 @@ TEST_CASE("lens_makerTest: check_lensmaker_on_optical_table_with_lens", "[merlic
         Trafo.set_transformation(
             ml::Rot3(0.0, -ml::deg2rad(180.0), 0.0),
             ml::Vec3(0.0, 0.0, 2.0));
-        ml::Photons::transform_all_photons(Trafo, &photons);
+        ml::Photons::apply_transformation_to_photons(Trafo, &photons);
 
         // propagation settings
         ml::PropagationConfig settings;
