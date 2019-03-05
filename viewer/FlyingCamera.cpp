@@ -262,9 +262,10 @@ ApertureCamera FlyingCamera::get_aperture_camera_based_on_camera()const {
     ApertureCamera apcam("Imax70mm",
         visual_config->snapshot.cols,
         visual_config->snapshot.rows);
-    apcam.set_fStop_sesnorWidth(
+    apcam.set_fstop_sensorwidth_focus(
         visual_config->snapshot.focal_length_over_aperture_diameter,
-        visual_config->snapshot.image_sensor_size_along_a_row);
+        visual_config->snapshot.image_sensor_size_along_a_row,
+        999.9);
     apcam.set_pos_rot_fov(
         camera.position(),
         camera.rotation(),
@@ -281,7 +282,10 @@ void FlyingCamera::aquire_image_focused_on_pixel_col_row(int col, int row) {
     else
         object_distance_to_focus_on = 9e99;  // a very large distance
     ApertureCamera apcam = get_aperture_camera_based_on_camera();
-    apcam.set_focus_to(object_distance_to_focus_on);
+    apcam.set_fstop_sensorwidth_focus(
+        apcam.f_stop_number(),
+        apcam.sensor_width(),
+        object_distance_to_focus_on);
     std::cout << apcam.str();
     Image apcam_img = Image(apcam.num_cols, apcam.num_rows);
     acquire_image_with_camera(&apcam, &apcam_img);

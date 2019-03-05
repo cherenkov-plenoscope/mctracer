@@ -96,14 +96,14 @@ int main(int argc, char* argv[]) {
                 "camera",
                 ins.num_columns,
                 ins.num_rows);
-            cam.set_fStop_sesnorWidth(
+            cam.set_fstop_sensorwidth_focus(
                 ins.focal_length_over_aperture_diameter,
-                ins.sensor_size_along_columns);
+                ins.sensor_size_along_columns,
+                ins.object_distance);
             cam.set_pos_rot_fov(
                 ins.position,
                 ins.orientation,
                 ins.field_of_view_along_columns);
-            cam.set_focus_to(ins.object_distance);
             visual_config.snapshot.noise_level = ins.noise_level;
             cam.acquire_image(&scenery.root, &visual_config, &image);
             ml::visual::ppm::append_image_to_file(image, std::cout);

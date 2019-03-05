@@ -21,10 +21,10 @@ class ApertureCamera :public CameraDevice{
         const Vec3 position,
         const Rot3 rotation,
         const double field_of_view);
-    void set_focus_to(const double ObjectDistance_in_m);
-    void set_fStop_sesnorWidth(
-        const double new_FStopNumber,
-        const double new_SensorSizeX);
+    void set_fstop_sensorwidth_focus(
+        const double new_f_stop_number,
+        const double new_sensor_width,
+        const double new_object_distance);
     CameraRay get_ray_for_pixel_in_row_and_col(
         const unsigned int row,
         const unsigned int col,
@@ -34,35 +34,33 @@ class ApertureCamera :public CameraDevice{
         const Config* visual_config,
         Image* image);
     std::string str()const;
+    double f_stop_number()const;
+    double sensor_width()const;
+    double object_distance()const;
 
  private:
-    double FStopNumber;
-    double ApertureRadius_in_m;
-    double FocalLength_in_m;
-    double ObjectDistance_in_m;
-    double SensorDistance_in_m;
-    double sensor_width_in_m;
-    double sensor_height_in_m;
-    double PixelPitch_in_m;
-    const double default_object_distance_in_m = 25.0;
-    void set_F_stop_number(const double new_FStopNumber);
-    void set_sensor_size_using_width(const double sensor_width_in_m);
-    void update_sensor_pixel_pitch();
-    void update_sensor_distance_given_focal_and_object_distance();
-    void set_object_distance(const double ObjectDistance_in_m);
-    Vec3 get_random_point_on_bounded_aperture_plane(random::Mt19937 *prng)const;
-    Vec3 get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(
+    double _f_stop_number;
+    double _aperture_radius;
+    double _focal_length;
+    double _object_distance;
+    double _sensor_distance;
+    double _sensor_width;
+    double _sensor_height;
+    double _pixel_pitch;
+    void assert_f_stop_number(const double f_stop_number);
+    void assert_sensor_width(const double sensor_width);
+    void assert_object_distance(const double object_distance);
+    void init_sensor_distance();
+    Vec3 random_position_on_aperture_disc(random::Mt19937 *prng)const;
+    Vec3 intersection_position_on_object_plane_for_row_col(
         const unsigned int row,
         const unsigned int col,
         random::Mt19937 *prng)const;
-    Vec3 camera_ray_support_vector_in_world_frame(
+    Vec3 ray_support_in_root(
         const Vec3 &cam_ray_support_in_cam_frame)const;
-    Vec3 camera_ray_direction_vector_in_world_frame(
+    Vec3 ray_direction_in_root(
         const Vec3 &cam_ray_direction)const;
-    double get_object_size_for_image_size(const double image_size_in_m)const;
-    void update_focal_length();
-    void update_aperture_radius();
-    void set_default_object_distance();
+    double object_size_for_image_size(const double image_size_in_m)const;
     std::string get_aperture_camera_print()const;
     std::vector<Color> acquire_pixels(
         const Frame* world,

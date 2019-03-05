@@ -5,6 +5,7 @@
 #include <future>
 #include <thread>
 #include "merlict/visual/Tracer.h"
+#include "merlict/tools.h"
 #include "merlict/random/random.h"
 #include "merlict/vitaliy_vitsentiy_thread_pool.h"
 
@@ -12,69 +13,62 @@
 namespace merlict {
 namespace visual {
 
-void ApertureCamera::set_fStop_sesnorWidth(
-    const double new_FStopNumber,
-    const double new_SensorSizeX
+double ApertureCamera::f_stop_number()const {return _f_stop_number;}
+
+double ApertureCamera::sensor_width()const {return _sensor_width;}
+
+double ApertureCamera::object_distance()const {return _object_distance;}
+
+void ApertureCamera::set_fstop_sensorwidth_focus(
+    const double f_stop_number,
+    const double sensor_width,
+    const double object_distance
 ) {
-    set_F_stop_number(new_FStopNumber);
-    set_sensor_size_using_width(new_SensorSizeX);
-    update_sensor_pixel_pitch();
+    assert_f_stop_number(f_stop_number);
+    _f_stop_number = f_stop_number;
 
-    set_default_object_distance();
-    update_sensor_distance_given_focal_and_object_distance();
-}
-
-void ApertureCamera::set_F_stop_number(const double new_FStopNumber) {
-    if (new_FStopNumber <= 0.0) {
-        std::stringstream info;
-        info << "Expected F-Stop number to be greater zero, but actual it is ";
-        info << new_FStopNumber << ".";
-        throw std::invalid_argument(info.str());
-    }
-    FStopNumber = new_FStopNumber;
-}
-
-void ApertureCamera::set_sensor_size_using_width(const double width_in_m) {
-    if (width_in_m <= 0.0) {
-        std::stringstream info;
-        info << "Expected image sensor width to be greater zero, ";
-        info << "but actual it is ";
-        info << width_in_m << ".";
-        throw std::invalid_argument(info.str());
-    }
+    assert_sensor_width(sensor_width);
     const double width_to_height_ratio =
         static_cast<double>(num_cols)/
         static_cast<double>(num_rows);
-    sensor_width_in_m = width_in_m;
-    sensor_height_in_m = sensor_width_in_m / width_to_height_ratio;
+    _sensor_width = sensor_width;
+    _sensor_height = _sensor_width / width_to_height_ratio;
+
+    _pixel_pitch = _sensor_width/static_cast<double>(num_cols);
+
+    assert_object_distance(object_distance);
+    _object_distance = object_distance;
+
+    init_sensor_distance();
 }
 
-void ApertureCamera::update_sensor_pixel_pitch() {
-    PixelPitch_in_m = sensor_width_in_m/
-        static_cast<double>(num_cols);
+void ApertureCamera::assert_f_stop_number(const double new_f_stop_number) {
+    if (new_f_stop_number <= 0.0) {
+        std::stringstream info;
+        info << "Expected F-Stop number to be greater zero, but actual it is ";
+        info << new_f_stop_number << ".";
+        throw std::invalid_argument(info.str());
+    }
 }
 
-void ApertureCamera::set_default_object_distance() {
-    set_object_distance(default_object_distance_in_m);
+void ApertureCamera::assert_sensor_width(const double width) {
+    if (width <= 0.0) {
+        std::stringstream info;
+        info << "Expected image sensor width to be greater zero, ";
+        info << "but actual it is ";
+        info << width << ".";
+        throw std::invalid_argument(info.str());
+    }
 }
 
-void ApertureCamera::set_object_distance(const double ObjectDistance_in_m) {
-    if (ObjectDistance_in_m <= 0.0) {
+void ApertureCamera::assert_object_distance(const double new_object_distance) {
+    if (new_object_distance <= 0.0) {
         std::stringstream info;
         info << "Expected object distance to focus on to be ";
         info << "greater zero, but actual it is ";
-        info << ObjectDistance_in_m << ".";
+        info << new_object_distance << ".";
         throw std::invalid_argument(info.str());
     }
-    this->ObjectDistance_in_m = ObjectDistance_in_m;
-}
-
-void ApertureCamera::update_sensor_distance_given_focal_and_object_distance() {
-    // 1/f = 1/b + 1/g
-    // f = FocalLength_in_m
-    // b = SensorDistance_in_m
-    // g = ObjectDistance_in_m
-    SensorDistance_in_m = 1.0/(1.0/FocalLength_in_m - 1.0/ObjectDistance_in_m);
 }
 
 void ApertureCamera::set_pos_rot_fov(
@@ -84,31 +78,31 @@ void ApertureCamera::set_pos_rot_fov(
 ) {
     CameraDevice::set_pos_rot_fov(position, rotation, field_of_view);
 
-    FocalLength_in_m = (sensor_width_in_m/2.0)/tan(__field_of_view/2.0);
-    update_aperture_radius();
-    update_sensor_distance_given_focal_and_object_distance();
+    _focal_length = (_sensor_width/2.0)/tan(__field_of_view/2.0);
+    _aperture_radius = _focal_length/(2.0*_f_stop_number);
+
+    init_sensor_distance();
 }
 
-void ApertureCamera::set_focus_to(const double ObjectDistance_in_m) {
-    set_object_distance(ObjectDistance_in_m);
-    update_sensor_distance_given_focal_and_object_distance();
-}
-
-void ApertureCamera::update_aperture_radius() {
-    ApertureRadius_in_m = FocalLength_in_m/(2.0*FStopNumber);
+void ApertureCamera::init_sensor_distance() {
+    // 1/f = 1/b + 1/g
+    // f = focal_length
+    // b = sensor_distance
+    // g = object_distance
+    _sensor_distance = 1.0/(1.0/_focal_length - 1.0/_object_distance);
 }
 
 std::string ApertureCamera::get_aperture_camera_print()const {
     std::stringstream out;
-    out << "| Focal ratio      : " << FStopNumber << "\n";
-    out << "| Focal length     : " << FocalLength_in_m*1e3 << " mm\n";
-    out << "| Aperture diameter: " << ApertureRadius_in_m*2e3 << " mm\n";
+    out << "| Focal ratio      : " << _f_stop_number << "\n";
+    out << "| Focal length     : " << _focal_length*1e3 << " mm\n";
+    out << "| Aperture diameter: " << _aperture_radius*2e3 << " mm\n";
     out << "| Sensor size      : ";
-    out << 1e3*sensor_width_in_m << " x ";
-    out << 1e3*sensor_height_in_m << " mm^2\n";
-    out << "| Pixel pitch      : " << PixelPitch_in_m*1e6 << " um\n";
-    out << "| Object distance  : " << ObjectDistance_in_m << " m\n";
-    out << "| Sensor distance  : " << SensorDistance_in_m*1e3 << " mm\n";
+    out << 1e3*_sensor_width << " x ";
+    out << 1e3*_sensor_height << " mm^2\n";
+    out << "| Pixel pitch      : " << _pixel_pitch*1e6 << " um\n";
+    out << "| Object distance  : " << _object_distance << " m\n";
+    out << "| Sensor distance  : " << _sensor_distance*1e3 << " mm\n";
     return out.str();
 }
 
@@ -118,14 +112,14 @@ std::string ApertureCamera::str()const {
     return out.str();
 }
 
-Vec3 ApertureCamera::get_random_point_on_bounded_aperture_plane(
+Vec3 ApertureCamera::random_position_on_aperture_disc(
     random::Mt19937 *prng
 )const {
-    Vec3 ap = prng->get_point_on_xy_disc_within_radius(ApertureRadius_in_m);
-    return Vec3(ap.x, ap.y, SensorDistance_in_m);
+    Vec3 ap = prng->get_point_on_xy_disc_within_radius(_aperture_radius);
+    return Vec3(ap.x, ap.y, _sensor_distance);
 }
 
-Vec3 ApertureCamera::get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(
+Vec3 ApertureCamera::intersection_position_on_object_plane_for_row_col(
     const unsigned int row,
     const unsigned int col,
     random::Mt19937 *prng
@@ -133,22 +127,22 @@ Vec3 ApertureCamera::get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(
     const int x_pos_on_sensor_in_pixel =  row - num_rows/2;
     const int y_pos_on_sensor_in_pixel =  col - num_cols/2;
 
-    const double image_size_x = x_pos_on_sensor_in_pixel * PixelPitch_in_m;
-    const double image_size_y = y_pos_on_sensor_in_pixel * PixelPitch_in_m;
+    const double image_size_x = x_pos_on_sensor_in_pixel * _pixel_pitch;
+    const double image_size_y = y_pos_on_sensor_in_pixel * _pixel_pitch;
 
-    const double sensor_extension_x = (prng->uniform() - .5) * PixelPitch_in_m;
-    const double sensor_extension_y = (prng->uniform() - .5) * PixelPitch_in_m;
+    const double sensor_extension_x = (prng->uniform() - .5) * _pixel_pitch;
+    const double sensor_extension_y = (prng->uniform() - .5) * _pixel_pitch;
 
     return Vec3(
-        get_object_size_for_image_size(image_size_x + sensor_extension_x),
-        get_object_size_for_image_size(image_size_y + sensor_extension_y),
-        ObjectDistance_in_m);
+        object_size_for_image_size(image_size_x + sensor_extension_x),
+        object_size_for_image_size(image_size_y + sensor_extension_y),
+        _object_distance);
 }
 
-double ApertureCamera::get_object_size_for_image_size(
+double ApertureCamera::object_size_for_image_size(
     const double image_size_in_m
 )const {
-    return image_size_in_m * ObjectDistance_in_m / SensorDistance_in_m;
+    return image_size_in_m * _object_distance / _sensor_distance;
 }
 
 CameraRay ApertureCamera::get_ray_for_pixel_in_row_and_col(
@@ -156,25 +150,25 @@ CameraRay ApertureCamera::get_ray_for_pixel_in_row_and_col(
     const unsigned int col,
     random::Mt19937 *prng
 )const {
-    const Vec3 support_vec_in_cam_frame =
-        get_random_point_on_bounded_aperture_plane(prng);
+    const Vec3 support_in_cam_frame =
+        random_position_on_aperture_disc(prng);
     const Vec3 obj_plane_intersec_in_cam_frame =
-        get_intersec_of_cam_ray_for_pix_row_col_with_obj_plane(row, col, prng);
-    const Vec3 direction_vec_in_cam_frame =
-        obj_plane_intersec_in_cam_frame - support_vec_in_cam_frame;
+        intersection_position_on_object_plane_for_row_col(row, col, prng);
+    const Vec3 direction_in_cam_frame =
+        obj_plane_intersec_in_cam_frame - support_in_cam_frame;
     return CameraRay(
-        camera_ray_support_vector_in_world_frame(support_vec_in_cam_frame),
-        camera_ray_direction_vector_in_world_frame(direction_vec_in_cam_frame));
+        ray_support_in_root(support_in_cam_frame),
+        ray_direction_in_root(direction_in_cam_frame));
 }
 
-Vec3 ApertureCamera::camera_ray_support_vector_in_world_frame(
+Vec3 ApertureCamera::ray_support_in_root(
     const Vec3 &cam_ray_support_in_cam_frame
 )const {
     return __position + __camera2root.get_transformed_orientation(
         cam_ray_support_in_cam_frame);
 }
 
-Vec3 ApertureCamera::camera_ray_direction_vector_in_world_frame(
+Vec3 ApertureCamera::ray_direction_in_root(
     const Vec3 &cam_ray_direction
 )const {
     return __camera2root.get_transformed_orientation(cam_ray_direction);
