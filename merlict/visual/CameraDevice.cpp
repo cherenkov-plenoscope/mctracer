@@ -46,7 +46,7 @@ void CameraDevice::update_optical_axis_and_orientation() {
         camera2root.get_transformed_orientation(VEC3_UNIT_Z));
 }
 
-std::string CameraDevice::get_camera_print()const {
+std::string CameraDevice::camera_str()const {
     std::stringstream out;
     out << " _camera:_" << name << "________________\n";
     out << "| T_" << name << "2world:\n";
@@ -66,7 +66,7 @@ std::string CameraDevice::get_camera_print()const {
 }
 
 std::string CameraDevice::str()const {
-    return get_camera_print();
+    return camera_str();
 }
 
 void CameraDevice::set_field_of_view(const double field_of_view) {

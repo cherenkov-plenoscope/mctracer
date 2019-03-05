@@ -46,7 +46,7 @@ struct CameraDevice{
     void set_position_and_orientation(
         const Vec3 position,
         const Rot3 rotation);
-    std::string get_camera_print()const;
+    std::string camera_str()const;
     void assert_field_of_view_is_valid(const double field_of_view)const;
     void update_optical_axis_and_orientation();
 };

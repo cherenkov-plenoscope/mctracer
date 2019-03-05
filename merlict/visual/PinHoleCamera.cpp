@@ -65,7 +65,7 @@ void PinHoleCamera::update_principal_point_for_current_FoV() {
 
 std::string PinHoleCamera::get_pin_hole_cam_print()const {
     std::stringstream out;
-    out << get_camera_print();
+    out << camera_str();
     out << "| distance camera support to principal point: ";
     out << dist_camera_support_to_principal_point << "m\n";
     return out.str();
