@@ -9,18 +9,18 @@ namespace merlict {
 namespace visual {
 
 void PinHoleCamera::set_pos_rot_fov(
-    const Vec3 cam_pos_in_world,
-    const Rot3 cam_rot_in_world,
+    const Vec3 position,
+    const Rot3 rotation,
     const double field_of_view
 ) {
     CameraDevice::set_pos_rot_fov(
-        cam_pos_in_world,
-        cam_rot_in_world,
+        position,
+        rotation,
         field_of_view);
 
     // calculate sensor vectors
-    SensorDirectionHori = __camera2root.get_transformed_orientation(VEC3_UNIT_Y);
-    SensorDirectionVert = __camera2root.get_transformed_orientation(VEC3_UNIT_X);
+    sensor_col = __camera2root.get_transformed_orientation(VEC3_UNIT_Y);
+    sensor_row = __camera2root.get_transformed_orientation(VEC3_UNIT_X);
 
     /*
      calculate principal point (intersection of optical axis and
@@ -37,7 +37,7 @@ void PinHoleCamera::set_pos_rot_fov(
                  /fov/2|  |
                 /______|  |
                /       |   \
-              /        |   /dist_camera_support_to_principal_point
+              /        |   /distance_to_principal_point
              /         |  |
             /          |  |
            /       ____|  |
@@ -48,50 +48,44 @@ void PinHoleCamera::set_pos_rot_fov(
                \/
               row/2
     */
-    // distance
-    dist_camera_support_to_principal_point =
-        ((num_cols/2.0)/tan(__field_of_view/2.0));
 
-    // principal point
-    principal_point =
-        __optical_axis.direction()*
-        dist_camera_support_to_principal_point;
+    distance_to_principal_point = ((num_cols/2.0)/tan(__field_of_view/2.0));
+    principal_point = __optical_axis.direction()*distance_to_principal_point;
 }
 
-std::string PinHoleCamera::get_pin_hole_cam_print()const {
+std::string PinHoleCamera::pin_hole_camera_str()const {
     std::stringstream out;
     out << camera_str();
-    out << "| distance camera support to principal point: ";
-    out << dist_camera_support_to_principal_point << "m\n";
+    out << "| distance to principal point: ";
+    out << distance_to_principal_point << "m\n";
     return out.str();
 }
 
-void PinHoleCamera::print()const {
-    std::cout << get_pin_hole_cam_print();
-}
-
 CameraRay PinHoleCamera::get_ray_for_pixel_in_row_and_col(
-    const int row, const int col
+    const int row,
+    const int col
 )const {
     return CameraRay(
         __position, get_direction_of_ray_for_pixel(row, col));
 }
 
 Vec3 PinHoleCamera::get_direction_of_ray_for_pixel(
-    const int row, const int col
+    const int row,
+    const int col
 )const {
     return get_intersection_of_ray_on_image_sensor_for_pixel(row, col);
 }
 
 Vec3 PinHoleCamera::get_intersection_of_ray_on_image_sensor_for_pixel(
-    const int row, const int col
+    const int row,
+    const int col
 )const {
-    const int vert_position_on_image_sensor = row - num_rows/2;
-    const int hori_position_on_image_sensor = col - num_cols/2;
+    const int row_idx_on_sensor = row - num_rows/2;
+    const int col_idx_on_sensor = col - num_cols/2;
 
     return principal_point +
-        SensorDirectionVert * vert_position_on_image_sensor +
-        SensorDirectionHori * hori_position_on_image_sensor;
+        sensor_row * row_idx_on_sensor +
+        sensor_col * col_idx_on_sensor;
 }
 
 Color do_one_pixel(
