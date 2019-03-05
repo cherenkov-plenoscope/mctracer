@@ -12,8 +12,9 @@ void PinHoleCamera::update_position_and_orientation(
     const Vec3 cam_pos_in_world,
     const Rot3 cam_rot_in_world
 ) {
-    set_position_and_orientation(cam_pos_in_world, cam_rot_in_world);
-    update_optical_axis_and_orientation();
+    CameraDevice::update_position_and_orientation(
+        cam_pos_in_world,
+        cam_rot_in_world);
     update_principal_point_for_current_FoV();
     // calculate sensor vectors
     SensorDirectionHori = camera2root.get_transformed_orientation(VEC3_UNIT_Y);

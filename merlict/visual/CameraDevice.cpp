@@ -27,17 +27,10 @@ void CameraDevice::update_position_and_orientation(
     const Vec3 _position,
     const Rot3 _rotation
 ) {
-    set_position_and_orientation(_position, _rotation);
-    update_optical_axis_and_orientation();
-}
-
-void CameraDevice::set_position_and_orientation(
-    const Vec3 _position,
-    const Rot3 _rotation
-) {
-    this->position = _position;
-    this->rotation = _rotation;
+    position = _position;
+    rotation = _rotation;
     camera2root.set_transformation(rotation, position);
+    update_optical_axis_and_orientation();
 }
 
 void CameraDevice::update_optical_axis_and_orientation() {
