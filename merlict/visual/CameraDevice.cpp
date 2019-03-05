@@ -46,11 +46,6 @@ void CameraDevice::update_optical_axis_and_orientation() {
         camera2root.get_transformed_orientation(VEC3_UNIT_Z));
 }
 
-
-Vec3 CameraDevice::get_image_upwards_direction_in_world_frame()const {
-    return camera2root.get_transformed_orientation(VEC3_UNIT_Y);
-}
-
 std::string CameraDevice::get_camera_print()const {
     std::stringstream out;
     out << " _camera:_" << name << "________________\n";
@@ -111,7 +106,7 @@ void CameraDevice::assert_resolution(Image* image)const {
     }
 }
 
-Vec3 CameraDevice::direction_to_the_right_of_the_camera()const {
+Vec3 CameraDevice::direction_to_the_right()const {
     return VEC3_UNIT_Z.cross(optical_axis.direction());
 }
 

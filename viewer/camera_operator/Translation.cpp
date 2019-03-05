@@ -35,7 +35,7 @@ void Translation::move_back() {
 void Translation::move_left() {
     camera->update_position(
         camera->position -
-        camera->direction_to_the_right_of_the_camera()*
+        camera->direction_to_the_right()*
             translation_increment());
     if (verbose) print_camera_moved_in_direction("left");
 }
@@ -43,7 +43,7 @@ void Translation::move_left() {
 void Translation::move_right() {
     camera->update_position(
         camera->position +
-        camera->direction_to_the_right_of_the_camera()*
+        camera->direction_to_the_right()*
             translation_increment());
     if (verbose) print_camera_moved_in_direction("right");
 }
@@ -60,7 +60,7 @@ void Translation::print_camera_moved_in_direction(const std::string dir)const {
 void Translation::move_right(const double step_in_m) {
     camera->update_position(
         camera->position +
-        camera->direction_to_the_right_of_the_camera()*step_in_m);
+        camera->direction_to_the_right()*step_in_m);
     if (verbose) print_camera_moved_in_direction("right");
 }
 

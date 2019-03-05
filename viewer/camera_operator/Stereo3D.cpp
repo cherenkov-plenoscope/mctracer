@@ -38,7 +38,7 @@ void Stereo3D::aquire_stereo_image(
 }
 
 Vec3 Stereo3D::offset_to_the_right()const {
-    return camera->direction_to_the_right_of_the_camera()*
+    return camera->direction_to_the_right()*
         stereo_offset_in_m/2.0;
 }
 

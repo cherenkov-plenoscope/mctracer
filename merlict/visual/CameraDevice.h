@@ -30,9 +30,8 @@ struct CameraDevice{
         const Rot3 rotation);
     virtual void set_field_of_view(const double field_of_view);
     double get_FoV_in_rad()const;
-    Vec3 direction_to_the_right_of_the_camera()const;
+    Vec3 direction_to_the_right()const;
     std::string str()const;
-    Vec3 get_image_upwards_direction_in_world_frame()const;
     void assert_resolution(Image* image)const;
 
     const std::string name;
