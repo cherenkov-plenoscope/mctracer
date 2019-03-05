@@ -515,13 +515,13 @@ void transform_photons(const Object &o, std::vector<Photon> *photons) {
     Rot3 rot = o.rot3("rot");
     HomTra3 Trafo;
     Trafo.set_transformation(rot, pos);
-    Photons::apply_transformation_to_photons(Trafo, photons);
+    apply_transformation_to_photons(Trafo, photons);
 }
 
 std::vector<Photon> to_parallel_disc(const Object &o) {
     random::Mt19937 prng(0);
     std::vector<Photon> photons =
-        Photons::photon_source::parallel_towards_z_from_xy_disc(
+        photon_source::parallel_towards_z_from_xy_disc(
             o.f8("disc_radius"),
             o.u8("num_photons"),
             &prng);
@@ -531,7 +531,7 @@ std::vector<Photon> to_parallel_disc(const Object &o) {
 std::vector<Photon> to_pointsource(const Object &o) {
     random::Mt19937 prng(0);
     std::vector<Photon> photons =
-        Photons::photon_source::point_like_towards_z_opening_angle_num_photons(
+        photon_source::point_like_towards_z_opening_angle_num_photons(
             o.f8("opening_angle"),
             o.u8("num_photons"),
             &prng);

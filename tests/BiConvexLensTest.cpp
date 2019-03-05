@@ -111,7 +111,7 @@ TEST_CASE("BiConvexLensTest: send_photons_frontal_into_lens_with_offset", "[merl
     unsigned int num_photons_emitted = 1e4;
     ml::random::Mt19937 prng(0);
     std::vector<ml::Photon> photons =
-        ml::Photons::photon_source::parallel_towards_z_from_xy_disc(
+        ml::photon_source::parallel_towards_z_from_xy_disc(
             0.125,
             num_photons_emitted,
             &prng);
@@ -121,10 +121,10 @@ TEST_CASE("BiConvexLensTest: send_photons_frontal_into_lens_with_offset", "[merl
         ml::Rot3(0.0, -ml::deg2rad(180.0), 0.0),
         ml::Vec3(0.0, 0.0, 1.0));
 
-    ml::Photons::apply_transformation_to_photons(Trafo, &photons);
+    ml::apply_transformation_to_photons(Trafo, &photons);
 
     // photon propagation
-    ml::Photons::propagate_photons_in_frame_with_config(
+    ml::propagate_photons_in_frame_with_config(
         &photons,
         lt.env.root_frame,
         lt.env.config,

@@ -14,7 +14,7 @@ TEST_CASE("PhotonsTest: raw_row2photon", "[merlict]") {
         0.0, 13.0, 37.0, 42.0, dir.x, dir.y, dir.z, 433.5
     };
 
-    ml::Photon ph = ml::Photons::raw_row2photon(raw_row);
+    ml::Photon ph = ml::raw_row2photon(raw_row);
 
     CHECK(raw_row[0] == ph.get_simulation_truth_id());
     CHECK(raw_row[1] == ph.support().x);
@@ -35,7 +35,7 @@ TEST_CASE("PhotonsTest: photon2raw_row", "[merlict]") {
     ml::Photon ph(sup, dir, wavelength);
     ph.set_simulation_truth_id(id);
 
-    std::vector<double> raw_row = ml::Photons::photon2raw_row(&ph);
+    std::vector<double> raw_row = ml::photon2raw_row(&ph);
 
     REQUIRE(raw_row.size() == 8u);
 
@@ -65,12 +65,12 @@ TEST_CASE("PhotonsTest: bunch2raw_matrix2bunch", "[merlict]") {
     }
 
     std::vector<std::vector<double>> raw_matrix =
-        ml::Photons::photons2raw_matrix(&photon_bunch);
+        ml::photons2raw_matrix(&photon_bunch);
 
     REQUIRE(raw_matrix.size() == num_photons);
 
     std::vector<ml::Photon> photon_bunch2 =
-        ml::Photons::raw_matrix2photons(raw_matrix);
+        ml::raw_matrix2photons(raw_matrix);
 
     REQUIRE(photon_bunch2.size() == num_photons);
 
@@ -107,11 +107,11 @@ TEST_CASE("PhotonsTest: bunch2raw_matrix2file", "[merlict]") {
 
     // write to text file
     ml::tsvio::write_table_to_file(
-        ml::Photons::photons2raw_matrix(&photon_bunch1),
+        ml::photons2raw_matrix(&photon_bunch1),
         "tsvio/my_big_photon_list.txt");
 
     // read back again from text file
-    std::vector<ml::Photon> photon_bunch2 = ml::Photons::raw_matrix2photons(
+    std::vector<ml::Photon> photon_bunch2 = ml::raw_matrix2photons(
         ml::tsvio::gen_table_from_file(
             "tsvio/my_big_photon_list.txt"));
 

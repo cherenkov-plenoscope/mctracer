@@ -84,7 +84,7 @@ TEST_CASE("lens_makerTest: check_lensmaker_on_optical_table_with_lens", "[merlic
 
         // light source
         std::vector<ml::Photon> photons =
-            ml::Photons::photon_source::parallel_towards_z_from_xy_disc(
+            ml::photon_source::parallel_towards_z_from_xy_disc(
                 cfg.aperture_radius*0.85,  // 0.85 inner hex radius
                 num_photons_per_run,
                 &prng);
@@ -92,13 +92,13 @@ TEST_CASE("lens_makerTest: check_lensmaker_on_optical_table_with_lens", "[merlic
         Trafo.set_transformation(
             ml::Rot3(0.0, -ml::deg2rad(180.0), 0.0),
             ml::Vec3(0.0, 0.0, 2.0));
-        ml::Photons::apply_transformation_to_photons(Trafo, &photons);
+        ml::apply_transformation_to_photons(Trafo, &photons);
 
         // propagation settings
         ml::PropagationConfig settings;
 
         // photon propagation
-        ml::Photons::propagate_photons_in_frame_with_config(
+        ml::propagate_photons_in_frame_with_config(
             &photons, &optical_table, &settings, &prng);
 
         // detect photons in sensors

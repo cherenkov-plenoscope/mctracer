@@ -204,7 +204,7 @@ int main(int argc, char* argv[]) {
                 photons.push_back(cpf.make_photon());
         }
 
-        ml::Photons::propagate_photons_in_frame_with_config(
+        ml::propagate_photons_in_frame_with_config(
             &photons, &scenery.root, &settings, &prng);
 
         light_field_channels->clear_history();

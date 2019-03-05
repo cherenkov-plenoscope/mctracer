@@ -8,7 +8,6 @@
 #include "merlict/PropagationEnvironment.h"
 
 namespace merlict {
-namespace Photons {
 
 void propagate_photons_in_frame_with_config(
     std::vector<Photon> *photons,
@@ -52,7 +51,6 @@ std::vector<Photon> point_like_towards_z_opening_angle_num_photons(
 
 }  // namespace photon_source
 
-}  // namespace Photons
 }  // namespace merlict
 
 #endif  // MERLICT_PHOTONS_H_

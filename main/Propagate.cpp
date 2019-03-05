@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
         photons = photon_file.next(&prng);
 
         // photon propagation
-        ml::Photons::propagate_photons_in_frame_with_config(
+        ml::propagate_photons_in_frame_with_config(
             &photons,
             &scenery.root,
             &settings,

@@ -8,7 +8,6 @@
 
 
 namespace merlict {
-namespace Photons {
 
 void propagate_photons_in_frame_with_config(
     std::vector<Photon> *photons,
@@ -187,5 +186,4 @@ void apply_transformation_to_photons(
         photons->at(i).transform(&Trafo);
 }
 
-}  // namespace Photons
 }  // namespace merlict

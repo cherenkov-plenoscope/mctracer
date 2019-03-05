@@ -387,7 +387,7 @@ int main(int argc, char* argv[]) {
                 photons.push_back(cpf.make_photon());
         }
 
-        re::Photons::propagate_photons_in_frame_with_config(
+        re::propagate_photons_in_frame_with_config(
             &photons, &scenery.root, &prop_cfg, &prng);
 
         pixels.clear_history();
