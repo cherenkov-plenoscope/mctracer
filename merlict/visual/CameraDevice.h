@@ -35,7 +35,6 @@ struct CameraDevice{
     double get_FoV_in_rad()const;
     Vec3 get_normalized_pointing_get_direction()const;
     Vec3 direction_to_the_right_of_the_camera()const;
-    Ray get_optical_axis_in_world()const;
     std::string str()const;
     Vec3 get_image_upwards_direction_in_world_frame()const;
     void assert_resolution(Image* image)const;
