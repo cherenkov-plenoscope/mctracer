@@ -46,24 +46,6 @@ void CameraDevice::update_optical_axis_and_orientation() {
         camera2root.get_transformed_orientation(VEC3_UNIT_Z));
 }
 
-void CameraDevice::set_pointing_direction(
-    Vec3 camera_pointing_direction_in_World,
-    Vec3 camera_image_upwards_image_dir_in_world
-) {
-    camera_pointing_direction_in_World.normalize();
-    // image orientation is defined by x,y.
-    // camera y is supposed to point "upwards" in world system
-    Vec3 cam_z_axis_in_world = camera_pointing_direction_in_World;
-    Vec3 cam_y_axis_in_world = camera_image_upwards_image_dir_in_world;
-    Vec3 cam_x_axis_in_world =
-        cam_y_axis_in_world.cross(cam_z_axis_in_world);
-    camera2root.set_transformation(
-        cam_x_axis_in_world,
-        cam_y_axis_in_world,
-        cam_z_axis_in_world,
-        position);
-    update_optical_axis_and_orientation();
-}
 
 Vec3 CameraDevice::get_image_upwards_direction_in_world_frame()const {
     return camera2root.get_transformed_orientation(VEC3_UNIT_Y);
