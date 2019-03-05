@@ -33,7 +33,6 @@ struct CameraDevice{
         Vec3 camera_image_upwards_image_dir_in_world);
     virtual void set_FoV_in_rad(const double field_of_view);
     double get_FoV_in_rad()const;
-    Vec3 get_normalized_pointing_get_direction()const;
     Vec3 direction_to_the_right_of_the_camera()const;
     std::string str()const;
     Vec3 get_image_upwards_direction_in_world_frame()const;

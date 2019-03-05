@@ -21,16 +21,14 @@ void Translation::set_default_position(const Vec3 default_pos) {
 void Translation::move_forward() {
     camera->update_position(
         camera->position +
-        camera->get_normalized_pointing_get_direction()*
-            translation_increment());
+        camera->optical_axis.direction()*translation_increment());
     if (verbose) print_camera_moved_in_direction("forward");
 }
 
 void Translation::move_back() {
     camera->update_position(
         camera->position -
-        camera->get_normalized_pointing_get_direction()*
-            translation_increment());
+        camera->optical_axis.direction()*translation_increment());
     if (verbose) print_camera_moved_in_direction("back");
 }
 

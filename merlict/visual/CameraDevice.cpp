@@ -88,10 +88,6 @@ std::string CameraDevice::get_camera_print()const {
     return out.str();
 }
 
-Vec3 CameraDevice::get_normalized_pointing_get_direction()const {
-    return optical_axis.direction();
-}
-
 std::string CameraDevice::str()const {
     return get_camera_print();
 }
@@ -134,7 +130,7 @@ void CameraDevice::assert_resolution(Image* image)const {
 }
 
 Vec3 CameraDevice::direction_to_the_right_of_the_camera()const {
-    return VEC3_UNIT_Z.cross(get_normalized_pointing_get_direction());
+    return VEC3_UNIT_Z.cross(optical_axis.direction());
 }
 
 }  // namespace visual
