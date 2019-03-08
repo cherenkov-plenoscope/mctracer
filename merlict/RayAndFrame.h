@@ -30,8 +30,8 @@ Intersection first_intersection(
 
 struct CausalIntersection {
     const Ray* ray;
-    static thread_local std::vector<const Frame*> candidate_objects;
-    static thread_local std::vector<Intersection> candidate_intersections;
+    std::vector<const Frame*> candidate_objects;
+    std::vector<Intersection> candidate_intersections;
     Intersection closest_intersection;
     CausalIntersection(const Ray* _ray, const Frame* frame);
  private:

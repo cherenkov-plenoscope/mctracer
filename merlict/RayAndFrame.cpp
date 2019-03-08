@@ -116,11 +116,6 @@ Ray get_ray_transformed_in_object_system_of_frame(
     return ray_in_object_system_of_frame;
 }
 
-thread_local std::vector<const Frame*>
-    CausalIntersection::candidate_objects;
-thread_local std::vector<Intersection>
-    CausalIntersection::candidate_intersections;
-
 Intersection first_intersection(const Ray* ray, const Frame* frame) {
     CausalIntersection intersect_calculator(ray, frame);
     return intersect_calculator.closest_intersection;
