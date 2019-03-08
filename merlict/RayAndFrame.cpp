@@ -107,7 +107,7 @@ bool ray_has_intersection_with_bounding_sphere_of(
     }
 }
 
-Ray get_ray_transformed_in_object_system_of_frame(
+Ray ray_with_respect_to_frame(
     const Ray* ray,
     const Frame* frame
 ) {
@@ -149,7 +149,7 @@ void CausalIntersection::find_intersection_candidates_in_tree_of_frames(
 void CausalIntersection::find_intersections_in_candidate_objects() {
     for (const Frame* object : candidate_objects) {
         Ray ray_in_object_system =
-            get_ray_transformed_in_object_system_of_frame(
+            ray_with_respect_to_frame(
                 ray,
                 object);
 

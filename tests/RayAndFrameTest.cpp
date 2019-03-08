@@ -128,7 +128,7 @@ TEST_CASE("RayAndFrameTest: transform_into_unit_frame", "[merlict]") {
 
     ml::Ray ray(ml::VEC3_ORIGIN, ml::VEC3_UNIT_Z);
 
-    ml::Ray ray_t = ml::RayAndFrame::get_ray_transformed_in_object_system_of_frame(
+    ml::Ray ray_t = ml::RayAndFrame::ray_with_respect_to_frame(
         &ray,
         &frame);
 
@@ -143,7 +143,7 @@ TEST_CASE("RayAndFrameTest: transform_into_translated_frame", "[merlict]") {
 
     ml::Ray ray(ml::Vec3(0.0, 4.2, 0.0), ml::VEC3_UNIT_Z);
 
-    ml::Ray ray_t = ml::RayAndFrame::get_ray_transformed_in_object_system_of_frame(
+    ml::Ray ray_t = ml::RayAndFrame::ray_with_respect_to_frame(
         &ray,
         &frame);
 
@@ -158,7 +158,7 @@ TEST_CASE("RayAndFrameTest: transform_ray_in_z_into_frame_rotated_in_z", "[merli
 
     ml::Ray ray(ml::VEC3_ORIGIN, ml::VEC3_UNIT_Z);
 
-    ml::Ray ray_t = ml::RayAndFrame::get_ray_transformed_in_object_system_of_frame(
+    ml::Ray ray_t = ml::RayAndFrame::ray_with_respect_to_frame(
         &ray,
         &frame);
 
@@ -173,7 +173,7 @@ TEST_CASE("RayAndFrameTest: transform_ray_into_rotated_frame", "[merlict]") {
 
     ml::Ray ray(ml::VEC3_ORIGIN, ml::VEC3_UNIT_X);
 
-    ml::Ray ray_t = ml::RayAndFrame::get_ray_transformed_in_object_system_of_frame(
+    ml::Ray ray_t = ml::RayAndFrame::ray_with_respect_to_frame(
         &ray,
         &frame);
 

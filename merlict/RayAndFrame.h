@@ -20,7 +20,7 @@ bool ray_has_intersection_with_bounding_sphere_of(
     const Ray* ray,
     const Frame* frame);
 
-Ray get_ray_transformed_in_object_system_of_frame(
+Ray ray_with_respect_to_frame(
     const Ray* ray,
     const Frame* frame);
 
