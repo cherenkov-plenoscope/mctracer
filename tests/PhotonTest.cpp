@@ -79,7 +79,7 @@ TEST_CASE("PhotonTest: PropagationSimpleGeometry", "[merlict]") {
     const unsigned int num_of_total_interactions = num_bounces + 1;
     for (int i = 0; i < 1; i++) {
         ml::Photon P(Support, direction, wavelength);
-        ml::PhotonAndFrame::Propagator(&P, environment);
+        ml::Propagator(&P, environment);
         CHECK(P.get_accumulative_distance() == num_bounces*1.0-0.5);
         CHECK(P.get_num_interactions_so_far() == num_of_total_interactions);
     }

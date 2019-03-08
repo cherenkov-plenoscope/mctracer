@@ -2,13 +2,7 @@
 #ifndef MERLICT_PHOTON_H_
 #define MERLICT_PHOTON_H_
 
-namespace merlict {
-namespace PhotonAndFrame {
-
-class Propagator;
-
-} // PhotonAndFrame
-} // namespace merlict
+namespace merlict {class Propagator;}
 
 #include <string>
 #include "merlict/RayForPropagation.h"
@@ -17,7 +11,7 @@ class Propagator;
 namespace merlict {
 
 class Photon :public RayForPropagation{
-    friend class PhotonAndFrame::Propagator;
+    friend class Propagator;
  protected:
     double wavelength;
 

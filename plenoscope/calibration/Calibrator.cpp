@@ -72,7 +72,7 @@ CalibrationPhotonResult one_photon(
     ml::PropagationEnvironment env;
     env.root_frame = cal.world;
     env.prng = &prng;
-    ml::PhotonAndFrame::Propagator(&ph, env);
+    ml::Propagator(&ph, env);
 
     ml::sensor::FindSensorByFrame sensor_finder(
         ph.get_final_intersection().get_object(),
@@ -196,7 +196,7 @@ void Calibrator::fill_calibration_block_to_table() {
         PropagationEnvironment my_env;
         my_env.root_frame = scenery;
         my_env.prng = &thread_local_prng;
-        PhotonAndFrame::Propagator(&ph, my_env);
+        Propagator(&ph, my_env);
 
         sensor::FindSensorByFrame sensor_finder(
             ph.get_final_intersection().get_object(),

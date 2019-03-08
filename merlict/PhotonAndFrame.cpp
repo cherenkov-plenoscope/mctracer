@@ -2,7 +2,6 @@
 #include "merlict/PhotonAndFrame.h"
 
 namespace merlict {
-namespace PhotonAndFrame {
 
 Propagator::Propagator(
     Photon* photon,
@@ -128,5 +127,4 @@ void Propagator::get_absorbed_on_surface() {
         absorption_on_surface);
 }
 
-}  // namespace PhotonAndFrame
 }  // namespace merlict

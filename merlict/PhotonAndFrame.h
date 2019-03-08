@@ -8,7 +8,6 @@
 #include "merlict/PropagationEnvironment.h"
 
 namespace merlict {
-namespace PhotonAndFrame {
 
 class Propagator {
  public:
@@ -35,7 +34,6 @@ class Propagator {
     void get_absorbed_on_surface();
 };
 
-}  // namespace PhotonAndFrame
 }  // namespace merlict
 
 #endif  // MERLICT_PHOTONANDFRAME_H_

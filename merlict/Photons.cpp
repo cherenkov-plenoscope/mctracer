@@ -21,7 +21,7 @@ void propagate_photons_in_frame_with_config(
     env.prng = prng;
 
     for (unsigned int i = 0; i < photons->size(); i++)
-        PhotonAndFrame::Propagator(&photons->at(i), env);
+        Propagator(&photons->at(i), env);
 }
 
 void propagate_one_photon(
@@ -37,7 +37,7 @@ void propagate_one_photon(
     env.root_frame = world;
     env.config = settings;
     env.prng = &prng;
-    PhotonAndFrame::Propagator(photon, env);
+    Propagator(photon, env);
 }
 
 void propagate_photons_multi_thread(

@@ -38,7 +38,7 @@ TEST_CASE("SphereIntersectionTest: frontal", "[merlict]") {
     ml::Vec3 support(x_pos, 0, 0);
     ml::Vec3 direction(1, 0, 0);
     ml::Photon P(support , direction, st.wavelength);
-    ml::PhotonAndFrame::Propagator(&P, st.env);
+    ml::Propagator(&P, st.env);
 
     REQUIRE(2u == P.get_num_interactions_so_far());
     REQUIRE(-st.radius-x_pos == P.get_accumulative_distance());
@@ -51,7 +51,7 @@ TEST_CASE("SphereIntersectionTest: emmitting_close_above_surface_tangential", "[
     ml::Vec3 support(0, 0, 1+1e-9);
     ml::Vec3 direction(1, 0, 0);
     ml::Photon P(support, direction, st.wavelength);
-    ml::PhotonAndFrame::Propagator(&P, st.env);
+    ml::Propagator(&P, st.env);
     REQUIRE(P.get_final_interaction_type() == ml::absorption_in_void);
 }
 
@@ -60,7 +60,7 @@ TEST_CASE("SphereIntersectionTest: emmitting_close_above_surface_straigtht_away"
     ml::Vec3 support(0, 0, 1+1e-9);
     ml::Vec3 direction(0, 0, 1);
     ml::Photon P(support, direction, st.wavelength);
-    ml::PhotonAndFrame::Propagator(&P, st.env);
+    ml::Propagator(&P, st.env);
     REQUIRE(P.get_final_interaction_type() == ml::absorption_in_void);
 }
 
@@ -69,7 +69,7 @@ TEST_CASE("SphereIntersectionTest: tangential_intersection", "[merlict]") {
     ml::Vec3 support(-5, 0, 1);
     ml::Vec3 direction(1, 0, 0);
     ml::Photon P(support, direction, st.wavelength);
-    ml::PhotonAndFrame::Propagator(&P, st.env);
+    ml::Propagator(&P, st.env);
     REQUIRE(P.get_num_interactions_so_far() == 2u);
     ml::Vec3 normal = ml::VEC3_UNIT_Z;
     CHECK(0 == Approx(normal.distance_to(P.get_intersection_at(1).surface_normal_in_object_frame())).margin(1e-12));
