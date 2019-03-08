@@ -162,16 +162,16 @@ CameraRay ApertureCamera::get_ray_for_pixel_in_row_and_col(
 }
 
 Vec3 ApertureCamera::ray_support_in_root(
-    const Vec3 &cam_ray_support_in_cam_frame
+    const Vec3 &support_in_cam_frame
 )const {
     return __position + __camera2root.get_transformed_orientation(
-        cam_ray_support_in_cam_frame);
+        support_in_cam_frame);
 }
 
 Vec3 ApertureCamera::ray_direction_in_root(
-    const Vec3 &cam_ray_direction
+    const Vec3 &direction_in_cam_frame
 )const {
-    return __camera2root.get_transformed_orientation(cam_ray_direction);
+    return __camera2root.get_transformed_orientation(direction_in_cam_frame);
 }
 
 void ApertureCamera::acquire_image(

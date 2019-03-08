@@ -56,11 +56,9 @@ class ApertureCamera :public CameraDevice{
         const unsigned int row,
         const unsigned int col,
         random::Mt19937 *prng)const;
-    Vec3 ray_support_in_root(
-        const Vec3 &cam_ray_support_in_cam_frame)const;
-    Vec3 ray_direction_in_root(
-        const Vec3 &cam_ray_direction)const;
-    double object_size_for_image_size(const double image_size_in_m)const;
+    Vec3 ray_support_in_root(const Vec3 &support)const;
+    Vec3 ray_direction_in_root(const Vec3 &direction)const;
+    double object_size_for_image_size(const double image_size)const;
     std::string get_aperture_camera_print()const;
     std::vector<Color> acquire_pixels(
         const Frame* world,
