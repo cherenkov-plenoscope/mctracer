@@ -289,7 +289,7 @@ Rot3 Frame::rotation_in_mother()const {
 }
 
 Vec3 Frame::position_in_world()const {
-    return T_frame2world.get_translation();
+    return T_frame2world.translation();
 }
 
 double Frame::get_bounding_sphere_radius()const {

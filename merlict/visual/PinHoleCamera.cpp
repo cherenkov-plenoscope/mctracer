@@ -19,8 +19,8 @@ void PinHoleCamera::set_pos_rot_fov(
         field_of_view);
 
     // calculate sensor vectors
-    sensor_col = __camera2root.get_transformed_orientation(VEC3_UNIT_Y);
-    sensor_row = __camera2root.get_transformed_orientation(VEC3_UNIT_X);
+    sensor_col = __camera2root.orientation(VEC3_UNIT_Y);
+    sensor_row = __camera2root.orientation(VEC3_UNIT_X);
 
     /*
      calculate principal point (intersection of optical axis and

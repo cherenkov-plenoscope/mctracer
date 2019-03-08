@@ -244,7 +244,7 @@ std::string Geometry::facet_positions_and_normals_to_text()const {
         trafo.set_transformation(_facet_orientations[i], VEC3_ORIGIN);
 
         Vec3 pos = _facet_positions[i];
-        Vec3 normal = trafo.get_transformed_orientation(VEC3_UNIT_Z);
+        Vec3 normal = trafo.orientation(VEC3_UNIT_Z);
 
         out << std::fixed << std::setprecision(4);
         out << pos.x << " ";

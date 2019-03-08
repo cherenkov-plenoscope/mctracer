@@ -75,7 +75,7 @@ void Propagator::reach_boundary_layer() {
 void Propagator::fresnel_refraction_and_reflection() {
     FresnelRefractionAndReflection fresnel(
         isec.object2root()->
-            get_transformed_orientation_inverse(ph->direction()),
+            orientation_inverse(ph->direction()),
         isec.surface_normal_of_facing_surface_in_object_frame(),
         isec.refractive_index_coming_from(ph->wavelength),
         isec.refractive_index_going_to(ph->wavelength));
@@ -115,7 +115,7 @@ void Propagator::propagate_on_after_boundary_layer(
 
     ph->set_support_and_direction(
         isec.position_in_root_frame(),
-        isec.object2root()->get_transformed_orientation(
+        isec.object2root()->orientation(
             fresnel.get_refrac_dir_in_object_system()));
 
     propagate();

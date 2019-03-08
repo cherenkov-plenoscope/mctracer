@@ -26,9 +26,9 @@ class Rot3 {
     double get_rot_angle_in_rad()const;
     bool uses_xyz_angels()const;
     std::string str()const;
-    double get_rot_x()const;
-    double get_rot_y()const;
-    double get_rot_z()const;
+    double rot_x()const;
+    double rot_y()const;
+    double rot_z()const;
     double cosRx()const;
     double cosRy()const;
     double cosRz()const;

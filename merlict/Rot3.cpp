@@ -74,9 +74,9 @@ std::string Rot3::str()const {
     return out.str();
 }
 
-double Rot3::get_rot_x()const {return Rx;}
-double Rot3::get_rot_y()const {return Ry;}
-double Rot3::get_rot_z()const {return Rz;}
+double Rot3::rot_x()const {return Rx;}
+double Rot3::rot_y()const {return Ry;}
+double Rot3::rot_z()const {return Rz;}
 
 double Rot3::cosRx() const {return cos(Rx);}
 double Rot3::cosRy() const {return cos(Ry);}

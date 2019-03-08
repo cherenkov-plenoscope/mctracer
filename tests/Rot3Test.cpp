@@ -10,9 +10,9 @@ TEST_CASE("Rot3Test: ctor_xyz_mode", "[merlict]") {
   const double y = 2.0;
   const double z = 1.0;
   ml::Rot3 r(x, y, z);
-  CHECK(r.get_rot_x() == x);
-  CHECK(r.get_rot_y() == y);
-  CHECK(r.get_rot_z() == z);
+  CHECK(r.rot_x() == x);
+  CHECK(r.rot_y() == y);
+  CHECK(r.rot_z() == z);
   CHECK(r.uses_xyz_angels());
 }
 
@@ -32,9 +32,9 @@ TEST_CASE("Rot3Test: set_xyz_mode", "[merlict]") {
   const double y = -2.0;
   const double z = 1.0000;
   ml::Rot3 r; r.set(x, y, z);
-  CHECK(r.get_rot_x() == x);
-  CHECK(r.get_rot_y() == y);
-  CHECK(r.get_rot_z() == z);
+  CHECK(r.rot_x() == x);
+  CHECK(r.rot_y() == y);
+  CHECK(r.rot_z() == z);
   CHECK(r.uses_xyz_angels());
 }
 

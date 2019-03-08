@@ -27,21 +27,21 @@ std::array<float, 273> Config::get_sensor_plane2imaging_system_header()const {
     header[  1-1] = corsika::str2float("S2IS");
     header[  2-1] = 1.0;  // simulation = 1, observation = 0
 
-    header[ 11-1] = sensor_plane2imaging_system.get_rot_x().x;
-    header[ 12-1] = sensor_plane2imaging_system.get_rot_x().y;
-    header[ 13-1] = sensor_plane2imaging_system.get_rot_x().z;
+    header[ 11-1] = sensor_plane2imaging_system.rot_x().x;
+    header[ 12-1] = sensor_plane2imaging_system.rot_x().y;
+    header[ 13-1] = sensor_plane2imaging_system.rot_x().z;
 
-    header[ 14-1] = sensor_plane2imaging_system.get_rot_y().x;
-    header[ 15-1] = sensor_plane2imaging_system.get_rot_y().y;
-    header[ 16-1] = sensor_plane2imaging_system.get_rot_y().z;
+    header[ 14-1] = sensor_plane2imaging_system.rot_y().x;
+    header[ 15-1] = sensor_plane2imaging_system.rot_y().y;
+    header[ 16-1] = sensor_plane2imaging_system.rot_y().z;
 
-    header[ 17-1] = sensor_plane2imaging_system.get_rot_z().x;
-    header[ 18-1] = sensor_plane2imaging_system.get_rot_z().y;
-    header[ 19-1] = sensor_plane2imaging_system.get_rot_z().z;
+    header[ 17-1] = sensor_plane2imaging_system.rot_z().x;
+    header[ 18-1] = sensor_plane2imaging_system.rot_z().y;
+    header[ 19-1] = sensor_plane2imaging_system.rot_z().z;
 
-    header[ 20-1] = sensor_plane2imaging_system.get_translation().x;
-    header[ 21-1] = sensor_plane2imaging_system.get_translation().y;
-    header[ 22-1] = sensor_plane2imaging_system.get_translation().z;
+    header[ 20-1] = sensor_plane2imaging_system.translation().x;
+    header[ 21-1] = sensor_plane2imaging_system.translation().y;
+    header[ 22-1] = sensor_plane2imaging_system.translation().z;
 
     return header;
 }

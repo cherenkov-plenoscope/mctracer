@@ -85,8 +85,8 @@ TEST_CASE("camera_operatorTest: look_up", "[merlict]") {
     rot_operator.set_default_rotation(ml::Rot3(0.0, ml::deg2rad(-90.0), 0.0));
     for (int i = 0; i < 50; i++)
         rot_operator.look_further_up_when_possible();
-    CHECK(ct.cam.rotation().get_rot_y() < ml::deg2rad(0.1));
-    CHECK(ct.cam.rotation().get_rot_y() > ml::deg2rad(-0.1));
+    CHECK(ct.cam.rotation().rot_y() < ml::deg2rad(0.1));
+    CHECK(ct.cam.rotation().rot_y() > ml::deg2rad(-0.1));
 }
 
 TEST_CASE("camera_operatorTest: look_down", "[merlict]") {
@@ -95,6 +95,6 @@ TEST_CASE("camera_operatorTest: look_down", "[merlict]") {
     rot_operator.set_default_rotation(ml::Rot3(0.0, ml::deg2rad(-90.0), 0.0));
     for (int i = 0; i < 50; i++)
         rot_operator.look_further_down_when_possible();
-    CHECK(ct.cam.rotation().get_rot_y() < ml::deg2rad(-179.9));
-    CHECK(ct.cam.rotation().get_rot_y() > ml::deg2rad(-180.1));
+    CHECK(ct.cam.rotation().rot_y() < ml::deg2rad(-179.9));
+    CHECK(ct.cam.rotation().rot_y() > ml::deg2rad(-180.1));
 }

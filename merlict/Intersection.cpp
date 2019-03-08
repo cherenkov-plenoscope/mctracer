@@ -44,7 +44,7 @@ Vec3 Intersection::position_in_object_frame()const {
 
 Vec3 Intersection::position_in_root_frame()const {
     return object->
-        frame2world()->get_transformed_position(position);
+        frame2world()->position(position);
 }
 
 Vec3 Intersection::surface_normal_in_object_frame()const {
@@ -53,7 +53,7 @@ Vec3 Intersection::surface_normal_in_object_frame()const {
 
 Vec3 Intersection::surface_normal_in_root_frame()const {
     return object->frame2world()->
-        get_transformed_orientation(surface_normal);
+        orientation(surface_normal);
 }
 
 double Intersection::distance_to_ray_support()const {
@@ -75,9 +75,9 @@ std::string Intersection::str()const {
 
 Vec3 Intersection::reflection_direction_in_root_frame(Vec3 in_dir_world)const {
     Vec3 in_dir_obj = object->frame2world()->
-        get_transformed_orientation_inverse(in_dir_world);
+        orientation_inverse(in_dir_world);
     surface_normal.mirror(&in_dir_obj);
-    return object->frame2world()->get_transformed_orientation(in_dir_obj);
+    return object->frame2world()->orientation(in_dir_obj);
 }
 
 #include "merlict/Ray.h"

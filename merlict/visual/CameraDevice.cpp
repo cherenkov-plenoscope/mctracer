@@ -26,7 +26,7 @@ void CameraDevice::set_pos_rot_fov(
 
     __optical_axis.set_support_and_direction(
         __position,
-        __camera2root.get_transformed_orientation(VEC3_UNIT_Z));
+        __camera2root.orientation(VEC3_UNIT_Z));
 
     assert_field_of_view_is_valid(field_of_view);
     __field_of_view = field_of_view;

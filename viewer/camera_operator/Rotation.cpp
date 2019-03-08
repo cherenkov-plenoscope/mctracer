@@ -13,8 +13,8 @@ Rotation::Rotation(CameraDevice* camera_to_work_with) {
 }
 
 void Rotation::set_default_rotation(const Rot3 rot) {
-    RotWorld2CameraY_in_rad = rot.get_rot_y();
-    RotWorld2CameraZ_in_rad = rot.get_rot_z();
+    RotWorld2CameraY_in_rad = rot.rot_y();
+    RotWorld2CameraZ_in_rad = rot.rot_z();
     update_R_World2Camera();
 }
 
