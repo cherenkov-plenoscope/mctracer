@@ -148,11 +148,7 @@ void CausalIntersection::find_intersection_candidates_in_tree_of_frames(
 
 void CausalIntersection::find_intersections_in_candidate_objects() {
     for (const Frame* object : candidate_objects) {
-        Ray ray_in_object_system =
-            ray_with_respect_to_frame(
-                ray,
-                object);
-
+        Ray ray_in_object_system = ray_with_respect_to_frame(ray, object);
         object->calculate_intersection_with(
             &ray_in_object_system,
             &candidate_intersections);
