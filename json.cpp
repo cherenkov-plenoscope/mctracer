@@ -491,7 +491,7 @@ visual::Config to_visual_config(
         cfg.sky_dome = visual::SkyDome(skyj.color("color"));
     } else {
         ospath::Path jsonpath = ospath::Path(path);
-        visual::Image sky = visual::ppm::read_image_from_path(
+        visual::Image sky = visual::read_image_from_path(
             ospath::join(jsonpath.dirname, image_path));
         cfg.sky_dome = visual::SkyDome(sky);
         cfg.sky_dome.set_background_color(skyj.color("color"));

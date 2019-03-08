@@ -289,7 +289,7 @@ void FlyingCamera::aquire_image_focused_on_pixel_col_row(int col, int row) {
     std::cout << apcam.str();
     Image apcam_img = Image(apcam.num_cols, apcam.num_rows);
     acquire_image_with_camera(&apcam, &apcam_img);
-    ppm::write_image_to_path(apcam_img, get_snapshot_filename());
+    write_image_to_path(apcam_img, get_snapshot_filename());
 }
 
 void FlyingCamera::acquire_image_with_camera(CameraDevice* cam, Image* img) {

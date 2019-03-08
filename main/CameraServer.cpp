@@ -106,7 +106,7 @@ int main(int argc, char* argv[]) {
                 ins.field_of_view_along_columns);
             visual_config.snapshot.noise_level = ins.noise_level;
             cam.acquire_image(&scenery.root, &visual_config, &image);
-            ml::visual::ppm::append_image_to_file(image, std::cout);
+            ml::visual::append_image_to_file(image, std::cout);
         }
     }catch(std::exception &error) {
         std::cerr << error.what();

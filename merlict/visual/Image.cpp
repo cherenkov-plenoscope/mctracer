@@ -13,7 +13,7 @@ Image::Image(unsigned int _num_cols, unsigned int _num_rows):
     raw(std::vector<Color>(num_cols*num_rows)) {}
 
 Image::Image(const std::string path) {
-    *this = ppm::read_image_from_path(path);
+    *this = read_image_from_path(path);
 }
 
 Color Image::at_col_row(unsigned int col, unsigned int row)const {

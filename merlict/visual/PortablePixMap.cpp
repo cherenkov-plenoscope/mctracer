@@ -8,7 +8,6 @@
 
 namespace merlict {
 namespace visual {
-namespace ppm {
 
 void append_image_to_file(const Image &img, std::ostream &fout) {
     std::stringstream head;
@@ -119,6 +118,5 @@ Image read_image_from_path(const std::string path) {
     }
 }
 
-}  // namespace ppm
 }  // namespace visual
 }  // namespace merlict
