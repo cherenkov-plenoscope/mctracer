@@ -226,14 +226,14 @@ Vec3 HomTra3::rot_z()const { return Vec3(T[0][2], T[1][2], T[2][2]); }
 std::string HomTra3::str()const {
     std::stringstream out;
     out << std::setprecision(3);
-    out << get_single_row_print(0);
-    out << get_single_row_print(1);
-    out << get_single_row_print(2);
+    out << single_row_str(0);
+    out << single_row_str(1);
+    out << single_row_str(2);
     out << "[  0\t0\t0\t1 ]\n";
     return  out.str();
 }
 
-std::string HomTra3::get_single_row_print(const unsigned int r)const {
+std::string HomTra3::single_row_str(const unsigned int r)const {
     std::stringstream out;
     out << std::setprecision(3) << "[  ";
     out << T[r][0] << " \t" << T[r][1] << " \t" << T[r][2] << " \t" << T[r][3];

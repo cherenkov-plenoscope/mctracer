@@ -51,7 +51,7 @@ class HomTra3 {
     std::string str()const;
 
  private:
-    std::string get_single_row_print(const unsigned int c)const;
+    std::string single_row_str(const unsigned int c)const;
     void set_rotation_component_based_on_xyz_angles(const Rot3 R);
     void set_rotation_component_based_on_rot_axis(const Rot3 R);
     void set_translation_component(const Vec3 &t);
