@@ -339,7 +339,7 @@ int main(int argc, char* argv[]) {
                 raw_photon[5] = 1e2*photons.at(p).support().z;
                 // production height
                 raw_photon[6] = 1.0f;  // survival probability
-                raw_photon[7] = 1e9*photons.at(p).get_wavelength();
+                raw_photon[7] = 1e9*photons.at(p).wavelength;
                 raw_photons.push_back(raw_photon);
             }
 

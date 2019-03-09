@@ -16,7 +16,7 @@ void Sensor::assign_photon(const Photon* photon) {
         // id
         photon->simulation_truth_id,
         // wavelength
-        photon->get_wavelength(),
+        photon->wavelength,
         // arrival_time
         photon->time_of_flight(),
         // x

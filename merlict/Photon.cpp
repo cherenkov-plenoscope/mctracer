@@ -27,10 +27,6 @@ void Photon::assert_wavelength_is_positive()const {
     }
 }
 
-double Photon::get_wavelength()const {
-    return wavelength;
-}
-
 std::string Photon::str()const {
     std::stringstream out;
     out << RayForPropagation::str();

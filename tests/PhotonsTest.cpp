@@ -23,7 +23,7 @@ TEST_CASE("PhotonsTest: raw_row2photon", "[merlict]") {
     CHECK(ph.direction().x == Approx(raw_row[4]).margin(1e-9));
     CHECK(ph.direction().y == Approx(raw_row[5]).margin(1e-9));
     CHECK(ph.direction().z == Approx(raw_row[6]).margin(1e-9));
-    CHECK(raw_row[7] == ph.get_wavelength());
+    CHECK(raw_row[7] == ph.wavelength);
 }
 
 TEST_CASE("PhotonsTest: photon2raw_row", "[merlict]") {
@@ -46,7 +46,7 @@ TEST_CASE("PhotonsTest: photon2raw_row", "[merlict]") {
     CHECK(ph.direction().x == Approx(raw_row[4]).margin(1e-9));
     CHECK(ph.direction().y == Approx(raw_row[5]).margin(1e-9));
     CHECK(ph.direction().z == Approx(raw_row[6]).margin(1e-9));
-    CHECK(raw_row[7] == ph.get_wavelength());
+    CHECK(raw_row[7] == ph.wavelength);
 }
 
 TEST_CASE("PhotonsTest: bunch2raw_matrix2bunch", "[merlict]") {
@@ -85,7 +85,7 @@ TEST_CASE("PhotonsTest: bunch2raw_matrix2bunch", "[merlict]") {
         CHECK(ph2.direction().x == Approx(ph1.direction().x).margin(1e-9));
         CHECK(ph2.direction().y == Approx(ph1.direction().y).margin(1e-9));
         CHECK(ph2.direction().z == Approx(ph1.direction().z).margin(1e-9));
-        CHECK(ph1.get_wavelength() == ph2.get_wavelength());
+        CHECK(ph1.wavelength == ph2.wavelength);
     }
 }
 
@@ -128,6 +128,6 @@ TEST_CASE("PhotonsTest: bunch2raw_matrix2file", "[merlict]") {
         CHECK(ph2.direction().x == Approx(ph1.direction().x).margin(1e-9));
         CHECK(ph2.direction().y == Approx(ph1.direction().y).margin(1e-9));
         CHECK(ph2.direction().z == Approx(ph1.direction().z).margin(1e-9));
-        CHECK(ph2.get_wavelength() == Approx(ph1.get_wavelength()).margin(1e-9));
+        CHECK(ph2.wavelength == Approx(ph1.wavelength).margin(1e-9));
     }
 }

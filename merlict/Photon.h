@@ -19,7 +19,6 @@ class Photon :public RayForPropagation{
         const Vec3 support,
         const Vec3 direction,
         const double wavelength);
-    double get_wavelength()const;
     std::string str()const;
     double time_of_flight()const;
 

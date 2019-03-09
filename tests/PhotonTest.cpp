@@ -14,7 +14,7 @@ TEST_CASE("PhotonTest: creation", "[merlict]") {
     CHECK(pho.direction() == ml::VEC3_UNIT_Z);
     CHECK(pho.support() == ml::VEC3_ORIGIN);
     CHECK(pho.direction().norm() == 1.0);
-    CHECK(pho.get_wavelength() == wavelength);
+    CHECK(pho.wavelength == wavelength);
     // creation is an interaction
     CHECK(pho.num_interactions() == 1u);
 }

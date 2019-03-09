@@ -103,7 +103,7 @@ std::vector<double> photon2raw_row(Photon* ph) {
     raw_row.push_back(ph->direction().y);
     raw_row.push_back(ph->direction().z);
 
-    raw_row.push_back(ph->get_wavelength());
+    raw_row.push_back(ph->wavelength);
 
     return raw_row;
 }
