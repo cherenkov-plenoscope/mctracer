@@ -194,7 +194,7 @@ void Frame::cluster_children() {
         // assign children temporarly to octtree
         for (Frame* child : children) {
             child->mother = child->mother;
-            oct_tree[child->pos_in_mother.get_octant()].push_back(child);
+            oct_tree[child->pos_in_mother.octant()].push_back(child);
         }
         children.clear();
 

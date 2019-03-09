@@ -153,7 +153,7 @@ bool Vec3::norm_is_less_equal_than(const double length_to_compare)const {
     return (*this)*(*this) <= length_to_compare*length_to_compare;
 }
 
-unsigned int Vec3::get_octant()const {
+unsigned int Vec3::octant()const {
     // encodes the octant sectors where the vector is pointing to
     // x y z sector
     // - - -   0

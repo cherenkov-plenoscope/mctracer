@@ -270,43 +270,43 @@ TEST_CASE("Vec3Test: octant_encoding", "[merlict]") {
     double n = -1.0;
 
     a.set(n, n, n);
-    CHECK(a.get_octant() == 0u);
+    CHECK(a.octant() == 0u);
 
     a.set(n, n, p);
-    CHECK(a.get_octant() == 1u);
+    CHECK(a.octant() == 1u);
 
     a.set(n, p, n);
-    CHECK(a.get_octant() == 2u);
+    CHECK(a.octant() == 2u);
 
     a.set(n, p, p);
-    CHECK(a.get_octant() == 3u);
+    CHECK(a.octant() == 3u);
 
     a.set(p, n, n);
-    CHECK(a.get_octant() == 4u);
+    CHECK(a.octant() == 4u);
 
     a.set(p, n, p);
-    CHECK(a.get_octant() == 5u);
+    CHECK(a.octant() == 5u);
 
     a.set(p, p, n);
-    CHECK(a.get_octant() == 6u);
+    CHECK(a.octant() == 6u);
 
     a.set(p, p, p);
-    CHECK(a.get_octant() == 7u);
+    CHECK(a.octant() == 7u);
 
     a.set(0.0, 0.0, 0.0);
-    CHECK(a.get_octant() == 7u);
+    CHECK(a.octant() == 7u);
     a.set(0.0, 0.0, p);
-    CHECK(a.get_octant() == 7u);
+    CHECK(a.octant() == 7u);
     a.set(0.0, p, 0.0);
-    CHECK(a.get_octant() == 7u);
+    CHECK(a.octant() == 7u);
     a.set(p, 0.0, 0.0);
-    CHECK(a.get_octant() == 7u);
+    CHECK(a.octant() == 7u);
     a.set(0.0, p, p);
-    CHECK(a.get_octant() == 7u);
+    CHECK(a.octant() == 7u);
     a.set(p, p, 0.0);
-    CHECK(a.get_octant() == 7u);
+    CHECK(a.octant() == 7u);
     a.set(p, 0.0, p);
-    CHECK(a.get_octant() == 7u);
+    CHECK(a.octant() == 7u);
 }
 
 TEST_CASE("Vec3Test: projection_on_xz_plane", "[merlict]") {

@@ -14,7 +14,7 @@ struct Vec3 {
     Vec3();
     Vec3(const double x, const double y, const double z);
     void set(const double x, const double y, const double z);
-    unsigned int get_octant()const;
+    unsigned int octant()const;
     Vec3 project_in_x_z_plane()const;
     Vec3 project_in_y_z_plane()const;
     Vec3 project_in_x_y_plane()const;
