@@ -25,7 +25,7 @@ class Photon :public RayForPropagation{
     double time_of_flight()const;
 
  private:
-    double get_time_to_pass_distance_in_refractive_index(
+    double time_to_travel_distance_in_refractive_index(
         const double distance_in_medium,
         const double refractive_index_in_medium)const;
     void assert_wavelength_is_positive()const;

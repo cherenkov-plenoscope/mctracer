@@ -38,7 +38,7 @@ std::string Photon::str()const {
     return out.str();
 }
 
-double Photon::get_time_to_pass_distance_in_refractive_index(
+double Photon::time_to_travel_distance_in_refractive_index(
     const double distance_in_medium,
     const double refractive_index_in_medium
 )const {
@@ -52,7 +52,7 @@ double Photon::time_of_flight()const {
     unsigned int i = 0;
     for (const Intersection &intersec : intersection_history) {
         if (i != 0)
-            time_of_flight += get_time_to_pass_distance_in_refractive_index(
+            time_of_flight += time_to_travel_distance_in_refractive_index(
                 intersec.distance_to_ray_support(),
                 intersec.refractive_index_coming_from(wavelength));
         i++;
