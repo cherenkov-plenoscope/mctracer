@@ -1,9 +1,9 @@
 #include "docopt/docopt.h"
 #include "merlict/merlict.h"
 #include "merlict_json/json.h"
+#include "plenoscope/json_to_plenoscope.h"
 #include "FlyingCamera.h"
 namespace mct = merlict;
-
 
 static const char USAGE[] =
 R"(Show a scenery
@@ -31,9 +31,9 @@ int main(int argc, char* argv[]) {
     mct::ospath::Path scenery_path = mct::ospath::Path(
       args.find("--scenery")->second.asString());
 
-    mct::Scenery scenery;
+    plenoscope::PlenoscopeScenery scenery;
 
-    mct::json::append_to_frame_in_scenery(
+    plenoscope::json::append_to_frame_in_scenery(
       &scenery.root, &scenery, scenery_path.path);
 
     mct::visual::Config visual_config;

@@ -10,11 +10,10 @@ namespace plenoscope {
 namespace light_field_sensor {
 
 Factory::Factory(const Geometry* geo):
-    geometry(geo),
-    scenery(&ml::Scenery::void_scenery)
+    geometry(geo)
 {}
 
-void Factory::add_lens_array(ml::Frame* frame) {
+void Factory::add_lens_array(ml::Frame* frame, ml::Scenery* scenery) {
     scenery->colors.add("lens_white", ml::COLOR_WHITE);
     const ml::Color* white = scenery->colors.get("lens_white");
 
@@ -38,7 +37,7 @@ void Factory::add_lens_array(ml::Frame* frame) {
     }
 }
 
-void Factory::add_pixel_bin_array(ml::Frame* frame) {
+void Factory::add_pixel_bin_array(ml::Frame* frame, ml::Scenery* scenery) {
     ml::Frame* bin_array = frame->add<ml::Frame>();
     bin_array->set_name_pos_rot(
         "bin_array",
@@ -52,6 +51,7 @@ void Factory::add_pixel_bin_array(ml::Frame* frame) {
     for (unsigned int i = 0; i < flower_positions.size(); i++) {
         add_pixel_bin_with_name_at_pos(
             bin_array,
+            scenery,
             "bin_" + std::to_string(i),
             flower_positions.at(i));
     }
@@ -59,6 +59,7 @@ void Factory::add_pixel_bin_array(ml::Frame* frame) {
 
 void Factory::add_pixel_bin_with_name_at_pos(
     ml::Frame* frame,
+    ml::Scenery* scenery,
     const std::string name,
     const ml::Vec3 pos
 ) {
@@ -86,7 +87,10 @@ void Factory::add_pixel_bin_with_name_at_pos(
     }
 }
 
-void Factory::add_light_field_sensor_frontplate(ml::Frame* frame) {
+void Factory::add_light_field_sensor_frontplate(
+    ml::Frame* frame,
+    ml::Scenery* scenery
+) {
     scenery->colors.add("light_field_sensor_housing_gray", ml::COLOR_GRAY);
     const ml::Color* gray = scenery->colors.get(
         "light_field_sensor_housing_gray");
@@ -124,7 +128,7 @@ void Factory::add_light_field_sensor_frontplate(ml::Frame* frame) {
         geometry->max_outer_sensor_radius());
 }
 
-void Factory::add_lixel_sensor_plane(ml::Frame* frame) {
+void Factory::add_lixel_sensor_plane(ml::Frame* frame, ml::Scenery* scenery) {
     scenery->colors.add("light_field_sensor_cell_red", ml::COLOR_RED);
     const ml::Color* red = scenery->colors.get("light_field_sensor_cell_red");
 
@@ -158,20 +162,22 @@ void Factory::add_lixel_sensor_plane(ml::Frame* frame) {
     sub_pixel_sensors = new ml::sensor::Sensors(sub_pixels);
 }
 
-void Factory::add_image_sensor_housing(ml::Frame *frame) {
+void Factory::add_image_sensor_housing(ml::Frame *frame, ml::Scenery* scenery) {
     double housing_height = .67*geometry->outer_sensor_housing_radius();
 
     ml::Frame* sensor_housing = frame->add<ml::Frame>();
     sensor_housing->set_name_pos_rot(
         "sensor_housing", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
+    scenery->colors.add("housing_gray", ml::COLOR_GRAY);
+
     ml::Disc* sensor_housing_top = sensor_housing->add<ml::Disc>();
     sensor_housing_top->set_name_pos_rot(
         "top",
         ml::Vec3(0.0, 0.0, housing_height),
         ml::ROT3_UNITY);
-    sensor_housing_top->set_outer_color(&ml::COLOR_GRAY);
-    sensor_housing_top->set_inner_color(&ml::COLOR_GRAY);
+    sensor_housing_top->set_outer_color(scenery->colors.get("housing_gray"));
+    sensor_housing_top->set_inner_color(scenery->colors.get("housing_gray"));
     sensor_housing_top->set_radius(geometry->outer_sensor_housing_radius());
 
     ml::Cylinder* sensor_housing_cylinder =
@@ -180,8 +186,10 @@ void Factory::add_image_sensor_housing(ml::Frame *frame) {
         "cylinder",
         ml::VEC3_ORIGIN,
         ml::ROT3_UNITY);
-    sensor_housing_cylinder->set_outer_color(&ml::COLOR_GRAY);
-    sensor_housing_cylinder->set_inner_color(&ml::COLOR_GRAY);
+    sensor_housing_cylinder->set_outer_color(
+        scenery->colors.get("housing_gray"));
+    sensor_housing_cylinder->set_inner_color(
+        scenery->colors.get("housing_gray"));
     sensor_housing_cylinder->set_cylinder(
         geometry->outer_sensor_housing_radius(),
         ml::Vec3(0.0, 0.0, 0.0),
@@ -192,28 +200,24 @@ void Factory::add_light_field_sensor_to_frame_in_scenery(
     ml::Frame *frame,
     ml::Scenery* scenery
 ) {
-    this->scenery = scenery;
-
     ml::Frame* light_field_sensor_front = frame->add<ml::Frame>();
     light_field_sensor_front->set_name_pos_rot(
         "front",
         ml::VEC3_ORIGIN,
         ml::ROT3_UNITY);
 
-    add_lens_array(light_field_sensor_front);
-    add_light_field_sensor_frontplate(light_field_sensor_front);
+    add_lens_array(light_field_sensor_front, scenery);
+    add_light_field_sensor_frontplate(light_field_sensor_front, scenery);
 
-    add_image_sensor_housing(frame);
-    add_pixel_bin_array(frame);
-    add_lixel_sensor_plane(frame);
+    add_image_sensor_housing(frame, scenery);
+    add_pixel_bin_array(frame, scenery);
+    add_lixel_sensor_plane(frame, scenery);
 }
 
 void Factory::add_demonstration_light_field_sensor_to_frame_in_scenery(
     ml::Frame *frame,
     ml::Scenery* scenery
 ) {
-    this->scenery = scenery;
-
     // Add lens
     scenery->colors.add("lens_white", ml::COLOR_WHITE);
     const ml::Color* white = scenery->colors.get("lens_white");
@@ -238,6 +242,7 @@ void Factory::add_demonstration_light_field_sensor_to_frame_in_scenery(
 
     add_pixel_bin_with_name_at_pos(
         bin_array,
+        scenery,
         "bin_0",
         ml::Vec3(0.0, 0.0, 0.0));
 

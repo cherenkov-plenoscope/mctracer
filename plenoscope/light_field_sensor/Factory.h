@@ -14,7 +14,6 @@ class Factory {
     merlict::sensor::Sensors *sub_pixel_sensors;
  public:
     const Geometry* geometry;
-    merlict::Scenery* scenery;
     explicit Factory(const Geometry* geo);
     void add_light_field_sensor_to_frame_in_scenery(
         merlict::Frame* frame,
@@ -24,15 +23,26 @@ class Factory {
         merlict::Scenery* scenery);
     merlict::sensor::Sensors* get_sub_pixels()const;
  private:
-    void add_lens_array(merlict::Frame* frame);
-    void add_light_field_sensor_frontplate(merlict::Frame* frame);
-    void add_image_sensor_housing(merlict::Frame* frame);
-    void add_pixel_bin_array(merlict::Frame* frame);
+    void add_lens_array(
+        merlict::Frame* frame,
+        merlict::Scenery* scenery);
+    void add_light_field_sensor_frontplate(
+        merlict::Frame* frame,
+        merlict::Scenery* scenery);
+    void add_image_sensor_housing(
+        merlict::Frame* frame,
+        merlict::Scenery* scenery);
+    void add_pixel_bin_array(
+        merlict::Frame* frame,
+        merlict::Scenery* scenery);
     void add_pixel_bin_with_name_at_pos(
         merlict::Frame* frame,
+        merlict::Scenery* scenery,
         const std::string name,
         const merlict::Vec3 pos);
-    void add_lixel_sensor_plane(merlict::Frame* frame);
+    void add_lixel_sensor_plane(
+        merlict::Frame* frame,
+        merlict::Scenery* scenery);
 };
 
 }  // namespace light_field_sensor

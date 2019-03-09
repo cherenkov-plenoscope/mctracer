@@ -33,7 +33,7 @@
           "children": []
         },
         {
-          "type": "light_field_sensor",
+          "type": "LightFieldSensor",
           "name": "light_field_sensor",
           "pos": [0, 0, 106.5],
           "rot": [0, 0, 0],

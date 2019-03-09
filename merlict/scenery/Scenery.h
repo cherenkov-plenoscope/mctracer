@@ -18,7 +18,6 @@ struct Scenery {
     std::string current_working_directory;
 
     Scenery();
-    static Scenery void_scenery;
 };
 
 }  // namespace merlict
