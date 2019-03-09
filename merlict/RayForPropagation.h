@@ -27,6 +27,8 @@ enum Interaction {
     scattering
 };
 
+std::string interaction_str(Interaction type);
+
 class RayForPropagation :public Ray{
     friend class TrajectoryFactory;
 
@@ -58,8 +60,7 @@ class RayForPropagation :public Ray{
 
  protected:
     void push_back_production_of_ray();
-    std::string get_history_print()const;
-    std::string get_type_print(const Interaction type)const;
+    std::string history_str()const;
 };
 
 }  // namespace merlict

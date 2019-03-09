@@ -6,6 +6,27 @@
 
 namespace merlict {
 
+std::string interaction_str(Interaction type) {
+    switch (type) {
+        case production: return "production"; break;
+        case absorption_in_void: return "absorption_in_void"; break;
+
+        case absorption_in_medium: return "absorption_in_medium"; break;
+        case absorption_on_surface: return "absorption_on_surface"; break;
+
+        case reflection_on_surface: return "reflection_on_surface"; break;
+        case fresnel_reflection_on_surface:
+            return "fresnel_reflection_on_surface"; break;
+
+        case refraction_to_outside: return "refraction_to_outside"; break;
+        case refraction_to_inside: return "refraction_to_inside"; break;
+
+        case scattering: return "scattering"; break;
+        default: return "unknown_interaction"; break;
+    }
+}
+
+
 RayForPropagation::RayForPropagation(
     const Vec3 support,
     const Vec3 direction
@@ -33,15 +54,15 @@ std::string RayForPropagation::str()const {
     out << Ray::str() << ", ";
     out << "ID: " << simulation_truth_id << ", Interactions: ";
     out << num_interactions() << "\n";
-    out << get_history_print();
+    out << history_str();
     return out.str();
 }
 
-std::string RayForPropagation::get_history_print()const {
+std::string RayForPropagation::history_str()const {
     std::stringstream out;
     int index = 0;
     for (Interaction type : interaction_history) {
-        out << ++index << ") " << get_type_print(type) << " in ";
+        out << ++index << ") " << interaction_str(type) << " in ";
         out << intersection_history.at(index-1).get_object()->get_name();
         out << " " << intersection_history.at(index-1).
             position_in_root_frame().str();
@@ -84,26 +105,6 @@ const Intersection& RayForPropagation::get_intersection_at(
     const unsigned int index
 )const {
     return intersection_history.at(index);
-}
-
-std::string RayForPropagation::get_type_print(const Interaction type)const {
-    switch (type) {
-        case production: return "production"; break;
-        case absorption_in_void: return "absorption_in_void"; break;
-
-        case absorption_in_medium: return "absorption_in_medium"; break;
-        case absorption_on_surface: return "absorption_on_surface"; break;
-
-        case reflection_on_surface: return "reflection_on_surface"; break;
-        case fresnel_reflection_on_surface:
-            return "fresnel_reflection_on_surface"; break;
-
-        case refraction_to_outside: return "refraction_to_outside"; break;
-        case refraction_to_inside: return "refraction_to_inside"; break;
-
-        case scattering: return "scattering"; break;
-        default: return "unknown_interaction"; break;
-    }
 }
 
 const Intersection& RayForPropagation::get_final_intersection()const {

@@ -81,7 +81,7 @@ std::string TrajectoryFactory::get_intersection_point_name_of_part(
 )const {
     std::stringstream name;
     name << "ID_" << ray->simulation_truth_id << "_";
-    name << ray->get_type_print(ray->interaction_history.at(part_index));
+    name << interaction_str(ray->interaction_history.at(part_index));
     return name.str();
 }
 
