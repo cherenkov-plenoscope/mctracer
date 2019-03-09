@@ -54,7 +54,6 @@ class SurfaceEntity :public Frame {
     bool boundary_layer_is_transparent()const;
     bool has_restrictions_on_frames_to_propagate_to()const;
     std::string str()const;
-    static const function::Limits DEFAULT_WAVELENGTH_RANGE;
     static const function::Func1* DEFAULT_REFLECTION;
     static const function::Func1* DEFAULT_REFRACTION;
     static const function::Func1* DEFAULT_ABSORPTION;
