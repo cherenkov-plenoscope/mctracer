@@ -27,10 +27,10 @@ void Sensor::assign_photon(const Photon* photon) {
             position_in_object_frame().y,
         // tx
         -1.0*photon->
-            get_final_intersection_incident_vector_in_object_frame().x,
+            final_intersection_incident_direction_wrt_frame().x,
         // ty
         -1.0*photon->
-            get_final_intersection_incident_vector_in_object_frame().y);
+            final_intersection_incident_direction_wrt_frame().y);
 }
 
 }  // namespace sensor

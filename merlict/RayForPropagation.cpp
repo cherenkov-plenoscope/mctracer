@@ -112,7 +112,7 @@ const Intersection& RayForPropagation::final_intersection()const {
 }
 
 Vec3 RayForPropagation::
-get_final_intersection_incident_vector_in_object_frame()const {
+final_intersection_incident_direction_wrt_frame()const {
     if (intersection_history.size() == 1) {
         // only production
         return VEC3_ORIGIN;

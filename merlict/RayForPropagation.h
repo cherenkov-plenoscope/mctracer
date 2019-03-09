@@ -56,7 +56,7 @@ class RayForPropagation :public Ray{
     Interaction final_interaction()const;
     const Intersection& final_intersection()const;
     virtual double time_of_flight()const;
-    Vec3 get_final_intersection_incident_vector_in_object_frame()const;
+    Vec3 final_intersection_incident_direction_wrt_frame()const;
 
  protected:
     void push_back_production();
