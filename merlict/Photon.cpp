@@ -36,10 +36,9 @@ std::string Photon::str()const {
 
 double Photon::time_to_travel_distance_in_refractive_index(
     const double distance_in_medium,
-    const double refractive_index_in_medium
+    const double refractive_index
 )const {
-    return refractive_index_in_medium *
-        distance_in_medium / VACUUM_SPPED_OF_LIGHT;
+    return refractive_index*distance_in_medium/VACUUM_SPPED_OF_LIGHT;
 }
 
 double Photon::time_of_flight()const {
