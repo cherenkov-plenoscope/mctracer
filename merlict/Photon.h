@@ -24,7 +24,6 @@ class Photon :public RayForPropagation{
     std::string str()const;
     double time_of_flight()const;
 
- private:
     double time_to_travel_distance_in_refractive_index(
         const double distance_in_medium,
         const double refractive_index)const;
