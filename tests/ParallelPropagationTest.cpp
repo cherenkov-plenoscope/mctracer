@@ -46,7 +46,7 @@ TEST_CASE("ParallelPropagationTest: propagate_once", "[merlict]") {
 
 	std::vector<ml::Interaction> final_interactions_run_1(num_photons);
 	for (uint64_t i = 0; i < photons1.size(); ++i) {
-		final_interactions_run_1[i] = photons1[i].get_final_interaction_type();
+		final_interactions_run_1[i] = photons1[i].final_interaction();
 	}
 
 	// Now again with same SEED
@@ -67,7 +67,7 @@ TEST_CASE("ParallelPropagationTest: propagate_once", "[merlict]") {
 
 	std::vector<ml::Interaction> final_interactions_run_2(num_photons);
 	for (uint64_t i = 0; i < photons2.size(); ++i) {
-		final_interactions_run_2[i] = photons2[i].get_final_interaction_type();
+		final_interactions_run_2[i] = photons2[i].final_interaction();
 	}
 
 	REQUIRE(photons2.size() == photons1.size());

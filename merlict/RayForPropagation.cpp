@@ -139,7 +139,7 @@ double RayForPropagation::time_of_flight()const {
     return 0.0;
 }
 
-Interaction RayForPropagation::get_final_interaction_type()const {
+Interaction RayForPropagation::final_interaction()const {
     return interaction_history.back();
 }
 
