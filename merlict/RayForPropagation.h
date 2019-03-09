@@ -59,7 +59,7 @@ class RayForPropagation :public Ray{
     Vec3 get_final_intersection_incident_vector_in_object_frame()const;
 
  protected:
-    void push_back_production_of_ray();
+    void push_back_production();
     std::string history_str()const;
 };
 

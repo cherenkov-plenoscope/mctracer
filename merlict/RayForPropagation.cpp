@@ -33,10 +33,10 @@ RayForPropagation::RayForPropagation(
 ):
     simulation_truth_id(DEFAULT_SIMULATION_TRUTH) {
     set_support_and_direction(support, direction);
-    push_back_production_of_ray();
+    push_back_production();
 }
 
-void RayForPropagation::push_back_production_of_ray() {
+void RayForPropagation::push_back_production() {
     Intersection production_intersection(
         &SurfaceEntity::PHOTON_SOURCE,
         support_,
