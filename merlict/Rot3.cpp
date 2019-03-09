@@ -8,16 +8,15 @@ namespace merlict {
 
 Rot3::Rot3() {}
 
-Rot3::Rot3(double Phi, double The, double Psi) {
-    set(Phi, The, Psi);
+Rot3::Rot3(double rot_x, double rot_y, double rot_z) {
+    set(rot_x, rot_y, rot_z);
 }
 
-void Rot3::set(double Phi, double The, double Psi) {
-    flag_rot_angles_xyz = true;
-
-    Rx = Phi;
-    Ry = The;
-    Rz = Psi;
+void Rot3::set(double rot_x, double rot_y, double rot_z) {
+    _uses_xyz_angels = true;
+    Rx = rot_x;
+    Ry = rot_y;
+    Rz = rot_z;
 }
 
 Rot3::Rot3(
@@ -34,43 +33,44 @@ void Rot3::set(
     if (new_rot_angle == 0.0) {
         set(0.0, 0.0, 0.0);
     } else {
-        flag_rot_angles_xyz = false;
+        _uses_xyz_angels = false;
         _rot_axis = new_rot_axis/new_rot_axis.norm();
         _rot_angle = new_rot_angle;
     }
 }
 
 Vec3 Rot3::rot_axis()const {
-    if (flag_rot_angles_xyz == true)
+    if (_uses_xyz_angels == true) {
         throw std::runtime_error(
             "Rot3::rot_axis():\n"
-            "rot_axis was not set! Returning default ez.\n");
-    else
+            "rot_axis was not set!\n");
+    } else {
         return _rot_axis;
+    }
 }
 
 double Rot3::rot_angle()const {
-    if (flag_rot_angles_xyz == true)
+    if (_uses_xyz_angels == true) {
         throw std::runtime_error(
             "Rot3::rot_angle():\n"
-            "rot_angle_in_rad was not set!");
-    else
+            "rot_angle was not set!\n");
+    } else {
         return _rot_angle;
+    }
 }
 
 bool Rot3::uses_xyz_angels()const {
-    return flag_rot_angles_xyz;
+    return _uses_xyz_angels;
 }
 
 std::string Rot3::str()const {
     std::stringstream out;
-
-    if (flag_rot_angles_xyz == true)
+    if (_uses_xyz_angels == true) {
         out << "(" << Rx << " " << Ry << " " << Rz << ")rad";
-    else
+    } else {
         out << "rot-axis: " << _rot_axis.str() << ", rot-angle: "
             << _rot_angle << "rad";
-
+    }
     return out.str();
 }
 

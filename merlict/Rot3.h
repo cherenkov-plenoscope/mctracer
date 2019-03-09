@@ -14,14 +14,14 @@ class Rot3 {
     double Rz;
     double _rot_angle;
     Vec3 _rot_axis;
-    bool flag_rot_angles_xyz;
+    bool _uses_xyz_angels;
 
  public:
     Rot3();
-    Rot3(double Phi, double The, double Psi);
-    Rot3(const Vec3 new_rot_axis, const double new_rot_angle_on_rad);
-    void set(double Phi, double The, double Psi);
-    void set(const Vec3 new_rot_axis, const double new_rot_angle_on_rad);
+    Rot3(double rot_x, double rot_y, double rot_z);
+    Rot3(const Vec3 rot_axis, const double rot_angle);
+    void set(double rot_x, double rot_y, double rot_z);
+    void set(const Vec3 rot_axis, const double rot_angle);
     Vec3 rot_axis()const;
     double rot_angle()const;
     bool uses_xyz_angels()const;
@@ -38,7 +38,7 @@ class Rot3 {
     bool operator == (const Rot3& eqRot)const;
 };
 
-const Rot3 ROT3_UNITY = Rot3(0.0, 0.0, 0.0);
+const Rot3 ROT3_UNITY = Rot3(0., 0., 0.);
 
 }  // namespace merlict
 
