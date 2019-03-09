@@ -104,17 +104,17 @@ void Vec3::mirror(Vec3* ray)const {
     // dir_of_ray_to_be_reflected is overwritten with the reflected ray.
 
     ray->set(   // X
-                (1.0 - 2.0*x*x) * ray->x +
-                     - 2.0*x*y  * ray->y +
-                     - 2.0*x*z  * ray->z,
+                (1. - 2.*x*x) * ray->x +
+                    - 2.*x*y  * ray->y +
+                    - 2.*x*z  * ray->z,
                 // Y
-                     - 2.0*x*y  * ray->x +
-                (1.0 - 2.0*y*y) * ray->y +
-                     - 2.0*y*z  * ray->z,
+                    - 2.*x*y  * ray->x +
+                (1. - 2.*y*y) * ray->y +
+                    - 2.*y*z  * ray->z,
                 // Z
-                     - 2.0*x*z  * ray->x +
-                     - 2.0*y*z  * ray->y +
-                (1.0 - 2.0*z*z) * ray->z);
+                    - 2.*x*z  * ray->x +
+                    - 2.*y*z  * ray->y +
+                (1. - 2.*z*z) * ray->z);
 }
 
 double Vec3::angle_in_between(const Vec3& that)const {
@@ -141,11 +141,11 @@ double Vec3::distance_to(const Vec3 &v)const {
 }
 
 bool Vec3::is_paralell_to_z_axis()const {
-    return x == 0.0 && y == 0.0 && fabs(z) > 0.0;
+    return x == 0. && y == 0. && fabs(z) > 0.;
 }
 
 bool Vec3::is_parallel_to_x_y_plane()const {
-    return z == 0.0 && ( x != 0.0 || y != 0.0 );
+    return z == 0. && ( x != 0. || y != 0. );
 }
 
 bool Vec3::norm_is_less_equal_than(const double length_to_compare)const {
@@ -164,22 +164,22 @@ unsigned int Vec3::octant()const {
     // + - +   5
     // + + -   6
     // + + +   7
-    const bool sx = x >= 0.0;
-    const bool sy = y >= 0.0;
-    const bool sz = z >= 0.0;
+    const bool sx = x >= 0.;
+    const bool sy = y >= 0.;
+    const bool sz = z >= 0.;
     return 4*sx + 2*sy + 1*sz;
 }
 
 Vec3 Vec3::project_in_x_z_plane()const {
-    return Vec3(x, 0.0, z);
+    return Vec3(x, 0., z);
 }
 
 Vec3 Vec3::project_in_y_z_plane()const {
-    return Vec3(0.0, y, z);
+    return Vec3(0., y, z);
 }
 
 Vec3 Vec3::project_in_x_y_plane()const {
-    return Vec3(x, y, 0.0);
+    return Vec3(x, y, 0.);
 }
 
 }  // namespace merlict

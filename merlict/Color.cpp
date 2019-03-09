@@ -7,16 +7,16 @@
 namespace merlict {
 
 Color::Color(const std::vector<Color> &colors) {
-    float _r = 0.0;
-    float _g = 0.0;
-    float _b = 0.0;
+    float _r = 0.;
+    float _g = 0.;
+    float _b = 0.;
 
     for (Color c : colors) {
         _r += c.r;
         _g += c.g;
         _b += c.b;
     }
-    const float weight = 1.0/colors.size();
+    const float weight = 1./colors.size();
 
     r = _r*weight;
     g = _g*weight;
@@ -33,9 +33,9 @@ std::string Color::str()const {
 }
 
 void Color::reflection_mix(const Color &c, const double refl) {
-    r = (1.0 - refl)*r + refl*c.r;
-    g = (1.0 - refl)*g + refl*c.g;
-    b = (1.0 - refl)*b + refl*c.b;
+    r = (1. - refl)*r + refl*c.r;
+    g = (1. - refl)*g + refl*c.g;
+    b = (1. - refl)*b + refl*c.b;
 }
 
 bool Color::operator == (const Color& eq)const {
