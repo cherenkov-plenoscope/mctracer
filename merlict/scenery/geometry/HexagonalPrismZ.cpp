@@ -5,22 +5,6 @@
 
 namespace merlict {
 
-const Vec3 HexagonalPrismZ::UNIT_U = VEC3_UNIT_Y;
-const Vec3 HexagonalPrismZ::UNIT_V =
-    Vec3(1.0, 0.0, 0.0) * +sin(2.0/3.0*M_PI) +
-    Vec3(0.0, 1.0, 0.0) * cos(2.0/3.0*M_PI);
-const Vec3 HexagonalPrismZ::UNIT_W =
-    Vec3(1.0, 0.0, 0.0) * -sin(2.0/3.0*M_PI) +
-    Vec3(0.0, 1.0, 0.0) * cos(2.0/3.0*M_PI);
-
-//            /|\ Y-axis                                                  //
-//             |                                                          //
-//          ___|___                                                       //
-//  X-axis /   |   \                                                      //
-//  /_____/____|    \                                                     //
-//  \     \         /                                                     //
-//         \_______/                                                      //
-
 void HexagonalPrismZ::set_outer_radius(const double outer_radius) {
     assert_outer_radius_positive(outer_radius);
     inner_radius = outer_radius * cos(M_PI/6.0);
@@ -28,9 +12,9 @@ void HexagonalPrismZ::set_outer_radius(const double outer_radius) {
 }
 
 bool HexagonalPrismZ::is_inside(const Vec3* vec)const {
-    const double projection_onto_UNIT_U = UNIT_U * *vec;
-    const double projection_onto_UNIT_V = UNIT_V * *vec;
-    const double projection_onto_UNIT_W = UNIT_W * *vec;
+    const double projection_onto_UNIT_U = VEC3_UNIT_U * *vec;
+    const double projection_onto_UNIT_V = VEC3_UNIT_V * *vec;
+    const double projection_onto_UNIT_W = VEC3_UNIT_W * *vec;
     return (
         projection_onto_UNIT_U < inner_radius
         &&
