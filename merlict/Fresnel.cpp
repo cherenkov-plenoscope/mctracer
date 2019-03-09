@@ -1,10 +1,10 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "merlict/FresnelRefractionAndReflection.h"
+#include "merlict/Fresnel.h"
 #include <math.h>
 
 namespace merlict {
 
-FresnelRefractionAndReflection::FresnelRefractionAndReflection(
+Fresnel::Fresnel(
     const Vec3 &_incident_obj_sys,
     const Vec3 &_normal_obj_sys,
     const double _n_from,
@@ -19,16 +19,16 @@ FresnelRefractionAndReflection::FresnelRefractionAndReflection(
     cosT = sqrt(1.0 - sinT2);
 }
 
-Vec3 FresnelRefractionAndReflection::get_reflec_dir_in_object_system()const {
+Vec3 Fresnel::get_reflec_dir_in_object_system()const {
     return incident_obj_sys + normal_obj_sys*cosI*2.0;
 }
 
-Vec3 FresnelRefractionAndReflection::get_refrac_dir_in_object_system()const {
+Vec3 Fresnel::get_refrac_dir_in_object_system()const {
     return incident_obj_sys*n_from_over_n_to +
         normal_obj_sys*(n_from_over_n_to*cosI - cosT);
 }
 
-double FresnelRefractionAndReflection::reflection_propability()const {
+double Fresnel::reflection_propability()const {
     if (sinT2 > 1.0)
         return 1.0;  // total internal reflection
 

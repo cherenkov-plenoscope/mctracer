@@ -18,7 +18,7 @@
 #include "Photon.h"
 #include "PhotonAndFrame.h"
 #include "Photons.h"
-#include "FresnelRefractionAndReflection.h"
+#include "Fresnel.h"
 #include "Color.h"
 #include "simulation_truth.h"
 #include "Histogram1.h"

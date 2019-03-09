@@ -28,9 +28,9 @@ class Propagator {
     void reach_boundary_layer();
     void fresnel_refraction_and_reflection();
     void pass_the_boundary_layer(
-        const FresnelRefractionAndReflection &fresnel);
+        const Fresnel &fresnel);
     void propagate_on_after_boundary_layer(
-        const FresnelRefractionAndReflection &fresnel);
+        const Fresnel &fresnel);
     void get_absorbed_on_surface();
 };
 

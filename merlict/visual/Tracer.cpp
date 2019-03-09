@@ -50,7 +50,7 @@ void Tracer::trace_back_to_boundary_layer() {
 }
 
 void Tracer::trace_back_to_fresnel_interaction() {
-    FresnelRefractionAndReflection fresnel(
+    Fresnel fresnel(
         isec.object2root()->
             orientation_inverse(cray->direction()),
         isec.surface_normal_of_facing_surface_in_object_frame(),
@@ -71,7 +71,7 @@ void Tracer::trace_back_to_surface() {
 }
 
 void Tracer::trace_back_beyond_boundary_layer(
-    const FresnelRefractionAndReflection &fresnel
+    const Fresnel &fresnel
 ) {
     if (isec.get_object()->has_restrictions_on_frames_to_propagate_to() &&
         !isec.going_to_default_refractive_index()

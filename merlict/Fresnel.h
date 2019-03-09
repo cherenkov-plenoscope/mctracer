@@ -6,7 +6,8 @@
 
 namespace merlict {
 
-class FresnelRefractionAndReflection{
+class Fresnel{
+    // Refraction and reflection
  protected:
     const Vec3 incident_obj_sys;
     const Vec3 normal_obj_sys;
@@ -19,7 +20,7 @@ class FresnelRefractionAndReflection{
     double cosT;
 
  public:
-    FresnelRefractionAndReflection(
+    Fresnel(
         const Vec3 &incident_obj_sys,
         const Vec3 &normal_obj_sys,
         double n_from,

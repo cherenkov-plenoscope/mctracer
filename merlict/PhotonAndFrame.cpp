@@ -73,7 +73,7 @@ void Propagator::reach_boundary_layer() {
 }
 
 void Propagator::fresnel_refraction_and_reflection() {
-    FresnelRefractionAndReflection fresnel(
+    Fresnel fresnel(
         isec.object2root()->
             orientation_inverse(ph->direction()),
         isec.surface_normal_of_facing_surface_in_object_frame(),
@@ -87,7 +87,7 @@ void Propagator::fresnel_refraction_and_reflection() {
 }
 
 void Propagator::pass_the_boundary_layer(
-    const FresnelRefractionAndReflection &fresnel
+    const Fresnel &fresnel
 ) {
     if (isec.from_outside_to_inside())
         ph->push_back_intersection_and_interaction(
@@ -102,7 +102,7 @@ void Propagator::pass_the_boundary_layer(
 }
 
 void Propagator::propagate_on_after_boundary_layer(
-    const FresnelRefractionAndReflection &fresnel
+    const Fresnel &fresnel
 ) {
     if (isec.get_object()->has_restrictions_on_frames_to_propagate_to() &&
         !isec.going_to_default_refractive_index()

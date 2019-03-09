@@ -20,7 +20,7 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/Photon.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PhotonAndFrame.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Photons.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/FresnelRefractionAndReflection.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Fresnel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Histogram1.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeter.cpp

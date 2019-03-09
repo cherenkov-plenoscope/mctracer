@@ -6,7 +6,7 @@ namespace merlict {class Propagator;}
 
 #include <string>
 #include "merlict/RayForPropagation.h"
-#include "FresnelRefractionAndReflection.h"
+#include "Fresnel.h"
 
 namespace merlict {
 
