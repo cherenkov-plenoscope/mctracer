@@ -43,7 +43,7 @@ TEST_CASE("SphereIntersectionTest: frontal", "[merlict]") {
     REQUIRE(2u == P.num_interactions());
     REQUIRE(-st.radius-x_pos == P.accumulated_distance());
 
-    CHECK(P.get_intersection_at(1).surface_normal_in_object_frame() == ml::VEC3_UNIT_X*(-1));
+    CHECK(P.intersection_at(1).surface_normal_in_object_frame() == ml::VEC3_UNIT_X*(-1));
 }
 
 TEST_CASE("SphereIntersectionTest: emmitting_close_above_surface_tangential", "[merlict]") {
@@ -72,7 +72,7 @@ TEST_CASE("SphereIntersectionTest: tangential_intersection", "[merlict]") {
     ml::Propagator(&P, st.env);
     REQUIRE(P.num_interactions() == 2u);
     ml::Vec3 normal = ml::VEC3_UNIT_Z;
-    CHECK(0 == Approx(normal.distance_to(P.get_intersection_at(1).surface_normal_in_object_frame())).margin(1e-12));
+    CHECK(0 == Approx(normal.distance_to(P.intersection_at(1).surface_normal_in_object_frame())).margin(1e-12));
 }
 
 TEST_CASE("SphereIntersectionTest: ray_frontal_intersection", "[merlict]") {

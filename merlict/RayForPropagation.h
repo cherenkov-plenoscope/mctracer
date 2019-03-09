@@ -52,7 +52,7 @@ class RayForPropagation :public Ray{
     std::string str()const;
     double accumulated_distance()const;
     unsigned int num_interactions()const;
-    const Intersection& get_intersection_at(const unsigned int index)const;
+    const Intersection& intersection_at(const unsigned int index)const;
     Interaction final_interaction()const;
     const Intersection& final_intersection()const;
     virtual double time_of_flight()const;

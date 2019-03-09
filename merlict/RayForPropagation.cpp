@@ -101,7 +101,7 @@ unsigned int RayForPropagation::num_interactions()const {
     return (unsigned int)(intersection_history.size());
 }
 
-const Intersection& RayForPropagation::get_intersection_at(
+const Intersection& RayForPropagation::intersection_at(
     const unsigned int index
 )const {
     return intersection_history.at(index);
