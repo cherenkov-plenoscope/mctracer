@@ -18,7 +18,7 @@ void Sensor::assign_photon(const Photon* photon) {
         // wavelength
         photon->get_wavelength(),
         // arrival_time
-        photon->get_time_of_flight(),
+        photon->time_of_flight(),
         // x
         photon->get_final_intersection().
             position_in_object_frame().x,

@@ -134,7 +134,7 @@ get_final_intersection_incident_vector_in_object_frame()const {
     }
 }
 
-double RayForPropagation::get_time_of_flight()const {
+double RayForPropagation::time_of_flight()const {
     return 0.0;
 }
 

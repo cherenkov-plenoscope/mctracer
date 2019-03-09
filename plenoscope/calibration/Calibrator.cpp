@@ -87,7 +87,7 @@ CalibrationPhotonResult one_photon(
         result.y_pos_on_principal_aperture = support_on_aperture.y;
         result.x_tilt_vs_optical_axis = incident_direction.x;
         result.y_tilt_vs_optical_axis = incident_direction.y;
-        result.relative_time_of_flight = ph.get_time_of_flight();
+        result.relative_time_of_flight = ph.time_of_flight();
         return result;
     } else {
         CalibrationPhotonResult result;
@@ -215,7 +215,7 @@ void Calibrator::fill_calibration_block_to_table() {
                 direction_on_principal_aperture.x;
             result.y_tilt_vs_optical_axis =
                 direction_on_principal_aperture.y;
-            result.relative_time_of_flight = ph.get_time_of_flight();
+            result.relative_time_of_flight = ph.time_of_flight();
             photon_results[i] = result;
         } else {
             CalibrationPhotonResult result;
