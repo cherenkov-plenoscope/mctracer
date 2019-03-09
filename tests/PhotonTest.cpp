@@ -164,7 +164,7 @@ TEST_CASE("PhotonTest: Reflections", "[merlict]") {
         // wavelength form 1nm to 1000nm
         double wavelength = static_cast<double>(i)/num_phot*100e-9+250e-9;
         ml::Photon P(Support, direction, wavelength);
-        P.set_simulation_truth_id(i);
+        P.simulation_truth_id = i;
         photons.push_back(P);
     }
     ml::propagate_photons_in_frame_with_config(
@@ -227,7 +227,7 @@ TEST_CASE("PhotonTest: Refraction", "[merlict]") {
     double num_phot = 1e4;
     for (int i = 1; i <= num_phot; i++) {
         ml::Photon P(ml::VEC3_ORIGIN, ml::VEC3_UNIT_Z, wavelength);
-        P.set_simulation_truth_id(i);
+        P.simulation_truth_id = i;
         photons.push_back(P);
     }
     ml::propagate_photons_in_frame_with_config(
@@ -297,7 +297,7 @@ TEST_CASE("PhotonTest: absorbtion_in_medium", "[merlict]") {
     double num_phot = 1e4;
     for (int i = 1; i <= num_phot; i++) {
         ml::Photon P(ml::VEC3_ORIGIN, ml::VEC3_UNIT_Z, wavelength);
-        P.set_simulation_truth_id(i);
+        P.simulation_truth_id = i;
         photons.push_back(P);
     }
     ml::propagate_photons_in_frame_with_config(

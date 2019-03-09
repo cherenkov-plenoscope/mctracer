@@ -107,7 +107,7 @@ TEST_CASE("EventIoPhotonFactoryTest: convert_photons", "[merlict]") {
     REQUIRE(cpf.passed_atmosphere());
     ml::Photon ph = cpf.make_photon();
 
-    CHECK(ph.get_simulation_truth_id() == id);
+    CHECK(ph.simulation_truth_id == id);
     CHECK(433e-9 == Approx(ph.get_wavelength()).margin(1e-9));
 
     // since the x,y angles are zero, the support vector can be tested

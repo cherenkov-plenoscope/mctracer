@@ -34,6 +34,7 @@ class RayForPropagation :public Ray{
     std::vector<Intersection> intersection_history;
     std::vector<Interaction> interaction_history;
 
+ public:
     int32_t simulation_truth_id;
     // The sumilation truth identifier is a encoding additional information of
     // the photon.
@@ -42,10 +43,7 @@ class RayForPropagation :public Ray{
     // encodes the index of the input photons e.g. out of a CORSIKA Cherenkov
     // photon file
 
- public:
     RayForPropagation(const Vec3 support, const Vec3 direction);
-    void set_simulation_truth_id(const int32_t id);
-    int32_t get_simulation_truth_id()const;
     void push_back_intersection_and_type_to_propagation_history(
         const Intersection& interact,
         const Interaction type);

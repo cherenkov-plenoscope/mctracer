@@ -16,7 +16,7 @@ TEST_CASE("PhotonsTest: raw_row2photon", "[merlict]") {
 
     ml::Photon ph = ml::raw_row2photon(raw_row);
 
-    CHECK(raw_row[0] == ph.get_simulation_truth_id());
+    CHECK(raw_row[0] == ph.simulation_truth_id);
     CHECK(raw_row[1] == ph.support().x);
     CHECK(raw_row[2] == ph.support().y);
     CHECK(raw_row[3] == ph.support().z);
@@ -33,13 +33,13 @@ TEST_CASE("PhotonsTest: photon2raw_row", "[merlict]") {
     double wavelength = 433.5;
 
     ml::Photon ph(sup, dir, wavelength);
-    ph.set_simulation_truth_id(id);
+    ph.simulation_truth_id = id;
 
     std::vector<double> raw_row = ml::photon2raw_row(&ph);
 
     REQUIRE(raw_row.size() == 8u);
 
-    CHECK(raw_row[0] == ph.get_simulation_truth_id());
+    CHECK(raw_row[0] == ph.simulation_truth_id);
     CHECK(raw_row[1] == ph.support().x);
     CHECK(raw_row[2] == ph.support().y);
     CHECK(raw_row[3] == ph.support().z);
@@ -60,7 +60,7 @@ TEST_CASE("PhotonsTest: bunch2raw_matrix2bunch", "[merlict]") {
         double wavelength = prng.uniform();
 
         ml::Photon ph(sup, dir, wavelength);
-        ph.set_simulation_truth_id(id);
+        ph.simulation_truth_id = id;
         photon_bunch.push_back(ph);
     }
 
@@ -78,7 +78,7 @@ TEST_CASE("PhotonsTest: bunch2raw_matrix2bunch", "[merlict]") {
         ml::Photon ph1 = photon_bunch.at(n);
         ml::Photon ph2 = photon_bunch2.at(n);
 
-        CHECK(ph1.get_simulation_truth_id() == ph2.get_simulation_truth_id());
+        CHECK(ph1.simulation_truth_id == ph2.simulation_truth_id);
         CHECK(ph1.support().x == ph2.support().x);
         CHECK(ph1.support().y == ph2.support().y);
         CHECK(ph1.support().z == ph2.support().z);
@@ -100,7 +100,7 @@ TEST_CASE("PhotonsTest: bunch2raw_matrix2file", "[merlict]") {
         double wavelength = prng.uniform();
 
         ml::Photon ph(sup, dir, wavelength);
-        ph.set_simulation_truth_id(id);
+        ph.simulation_truth_id = id;
 
         photon_bunch1.push_back(ph);
     }
@@ -121,7 +121,7 @@ TEST_CASE("PhotonsTest: bunch2raw_matrix2file", "[merlict]") {
         ml::Photon ph1 = photon_bunch1.at(n);
         ml::Photon ph2 = photon_bunch2.at(n);
 
-        CHECK(ph1.get_simulation_truth_id() == ph2.get_simulation_truth_id());
+        CHECK(ph1.simulation_truth_id == ph2.simulation_truth_id);
         CHECK(ph2.support().x == Approx(ph1.support().x).margin(1e-9));
         CHECK(ph2.support().y == Approx(ph1.support().y).margin(1e-9));
         CHECK(ph2.support().z == Approx(ph1.support().z).margin(1e-9));

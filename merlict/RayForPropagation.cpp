@@ -28,14 +28,6 @@ void RayForPropagation::push_back_production_of_ray() {
         production);
 }
 
-void RayForPropagation::set_simulation_truth_id(const int32_t id) {
-    simulation_truth_id = id;
-}
-
-int32_t RayForPropagation::get_simulation_truth_id()const {
-    return simulation_truth_id;
-}
-
 std::string RayForPropagation::str()const {
     std::stringstream out;
     out << Ray::str() << ", ";

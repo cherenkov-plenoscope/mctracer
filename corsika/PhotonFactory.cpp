@@ -39,7 +39,7 @@ Photon EventIoPhotonFactory::make_photon() {
         position_at(ray_parameter_for_production_point());
 
     Photon cherenkov_photon(causal_support, causal_dir, wavelength());
-    cherenkov_photon.set_simulation_truth_id(id);
+    cherenkov_photon.simulation_truth_id = id;
     return cherenkov_photon;
 }
 

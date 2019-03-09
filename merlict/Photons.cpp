@@ -93,7 +93,7 @@ std::vector<double> photon2raw_row(Photon* ph) {
     std::vector<double> raw_row;
     raw_row.reserve(8);
 
-    raw_row.push_back(static_cast<double>(ph->get_simulation_truth_id()));
+    raw_row.push_back(static_cast<double>(ph->simulation_truth_id));
 
     raw_row.push_back(ph->support().x);
     raw_row.push_back(ph->support().y);
@@ -116,7 +116,7 @@ Photon raw_row2photon(std::vector<double> &raw_row) {
     const double wavelength = raw_row[7];
 
     Photon ph = Photon(support, direction, wavelength);
-    ph.set_simulation_truth_id(id);
+    ph.simulation_truth_id = id;
     return ph;
 }
 
@@ -149,7 +149,7 @@ std::vector<Photon> point_like_towards_z_opening_angle_num_photons(
             zenith_picker,
             azimuth_picker);
         Photon ph = Photon(support, direction, 433e-9);
-        ph.set_simulation_truth_id(i);
+        ph.simulation_truth_id = i;
         photons.push_back(ph);
     }
     return photons;
@@ -168,7 +168,7 @@ std::vector<Photon> parallel_towards_z_from_xy_disc(
         Vec3 support = prng->get_point_on_xy_disc_within_radius(
             disc_radius);
         Photon ph(support, direction, 433e-9);
-        ph.set_simulation_truth_id(i);
+        ph.simulation_truth_id = i;
         photons.push_back(ph);
     }
     return photons;

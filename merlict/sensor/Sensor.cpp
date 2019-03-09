@@ -14,7 +14,7 @@ Sensor::Sensor(unsigned int _id, const Frame* _frame):
 void Sensor::assign_photon(const Photon* photon) {
     photon_arrival_history.emplace_back(  // PhotonArrival
         // id
-        photon->get_simulation_truth_id(),
+        photon->simulation_truth_id,
         // wavelength
         photon->get_wavelength(),
         // arrival_time

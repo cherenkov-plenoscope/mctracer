@@ -8,13 +8,13 @@ TEST_CASE("RayForPropagationTest: Constructor_using_vectors", "[merlict]") {
     ml::Vec3 support(0.0, 0.0, 1.0);
     ml::Vec3 direction(0.0, 0.0, 1.0);
     ml::RayForPropagation prop_ray(support, direction);
-    prop_ray.set_simulation_truth_id(1337);
+    prop_ray.simulation_truth_id = 1337;
 
     CHECK(prop_ray.support() == support);
     CHECK(prop_ray.direction() == direction);
     CHECK(prop_ray.get_num_interactions_so_far() == 1u);
     // creation itselt
-    CHECK(prop_ray.get_simulation_truth_id() == 1337);
+    CHECK(prop_ray.simulation_truth_id == 1337);
 }
 
 TEST_CASE("RayForPropagationTest: direction_normalized", "[merlict]") {
@@ -35,5 +35,5 @@ TEST_CASE("RayForPropagationTest: default_simulation_truth_id", "[merlict]") {
     ml::Vec3 support(0.0, 0.0, 1.0);
     ml::Vec3 direction(0.0, 0.0, 1.0);
     ml::RayForPropagation prop_ray(support, direction);
-    CHECK(prop_ray.get_simulation_truth_id() == ml::DEFAULT_SIMULATION_TRUTH);
+    CHECK(prop_ray.simulation_truth_id == ml::DEFAULT_SIMULATION_TRUTH);
 }
