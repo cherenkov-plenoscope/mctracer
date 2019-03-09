@@ -20,17 +20,13 @@ void Sensor::assign_photon(const Photon* photon) {
         // arrival_time
         photon->time_of_flight(),
         // x
-        photon->final_intersection().
-            position_in_object_frame().x,
+        photon->final_intersection().position_in_object_frame().x,
         // y
-        photon->final_intersection().
-            position_in_object_frame().y,
+        photon->final_intersection().position_in_object_frame().y,
         // tx
-        -1.0*photon->
-            final_intersection_incident_direction_wrt_frame().x,
+        -1.0*photon->final_intersection_incident_direction_wrt_frame().x,
         // ty
-        -1.0*photon->
-            final_intersection_incident_direction_wrt_frame().y);
+        -1.0*photon->final_intersection_incident_direction_wrt_frame().y);
 }
 
 }  // namespace sensor
