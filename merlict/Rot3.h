@@ -12,8 +12,8 @@ class Rot3 {
     double Rx;
     double Ry;
     double Rz;
-    double rot_angle_in_rad;
-    Vec3 rot_axis;
+    double _rot_angle;
+    Vec3 _rot_axis;
     bool flag_rot_angles_xyz;
 
  public:
@@ -22,7 +22,7 @@ class Rot3 {
     Rot3(const Vec3 new_rot_axis, const double new_rot_angle_on_rad);
     void set(double Phi, double The, double Psi);
     void set(const Vec3 new_rot_axis, const double new_rot_angle_on_rad);
-    Vec3 get_rot_axis()const;
+    Vec3 rot_axis()const;
     double rot_angle()const;
     bool uses_xyz_angels()const;
     std::string str()const;

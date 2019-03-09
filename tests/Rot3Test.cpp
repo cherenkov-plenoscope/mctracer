@@ -21,9 +21,9 @@ TEST_CASE("Rot3Test: ctor_axis_mode", "[merlict]") {
   double angle = 1.52;
   ml::Rot3 p(v, angle);
   CHECK(p.rot_angle() == angle);
-  CHECK((p.get_rot_axis()).x == v.x);
-  CHECK((p.get_rot_axis()).y == v.y);
-  CHECK((p.get_rot_axis()).z == v.z);
+  CHECK((p.rot_axis()).x == v.x);
+  CHECK((p.rot_axis()).y == v.y);
+  CHECK((p.rot_axis()).z == v.z);
   CHECK(!p.uses_xyz_angels());
 }
 
@@ -43,9 +43,9 @@ TEST_CASE("Rot3Test: set_axis_mode", "[merlict]") {
   double  angle = 1.52;
   ml::Rot3 p; p.set(v, angle);
   CHECK(p.rot_angle() == angle);
-  CHECK((p.get_rot_axis()).x == v.x);
-  CHECK((p.get_rot_axis()).y == v.y);
-  CHECK((p.get_rot_axis()).z == v.z);
+  CHECK((p.rot_axis()).x == v.x);
+  CHECK((p.rot_axis()).y == v.y);
+  CHECK((p.rot_axis()).z == v.z);
   CHECK(!p.uses_xyz_angels());
 }
 

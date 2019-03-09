@@ -66,7 +66,7 @@ void HomTra3::set_translation_component(const Vec3 &t) {
 
 void HomTra3::set_rotation_component_based_on_rot_axis(const Rot3 R) {
     // ensure rot_axis is a unit vector
-    Vec3 rot_axis = R.get_rot_axis();
+    Vec3 rot_axis = R.rot_axis();
     rot_axis = rot_axis/rot_axis.norm();
 
     const double rx = rot_axis.x;
