@@ -67,7 +67,7 @@ void RayForPropagation::push_back_intersection_and_type_to_propagation_history(
     interaction_history.push_back(type);
 }
 
-double RayForPropagation::get_accumulative_distance()const {
+double RayForPropagation::accumulated_distance()const {
     double accumulative_distance = 0.0;
 
     for (const Intersection &intersection : intersection_history)

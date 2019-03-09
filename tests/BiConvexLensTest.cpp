@@ -97,7 +97,7 @@ TEST_CASE("BiConvexLensTest: send_photon_frontal_into_lens", "[merlict]") {
         ml::Propagator(&blue_photon, lt.env);
         // blue_photon.propagate_in(env);
 
-        if (2.0 == blue_photon.get_accumulative_distance())
+        if (2.0 == blue_photon.accumulated_distance())
             num_photons_reaching_sensor_disc++;
     }
 

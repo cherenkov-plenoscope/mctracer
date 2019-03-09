@@ -41,7 +41,7 @@ TEST_CASE("SphereIntersectionTest: frontal", "[merlict]") {
     ml::Propagator(&P, st.env);
 
     REQUIRE(2u == P.get_num_interactions_so_far());
-    REQUIRE(-st.radius-x_pos == P.get_accumulative_distance());
+    REQUIRE(-st.radius-x_pos == P.accumulated_distance());
 
     CHECK(P.get_intersection_at(1).surface_normal_in_object_frame() == ml::VEC3_UNIT_X*(-1));
 }

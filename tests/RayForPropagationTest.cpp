@@ -28,7 +28,7 @@ TEST_CASE("RayForPropagationTest: distance_passed_after_creation", "[merlict]") 
     ml::Vec3 support(0.0, 0.0, 1.0);
     ml::Vec3 direction(0.0, 0.0, 1.0);
     ml::RayForPropagation prop_ray(support, direction);
-    CHECK(prop_ray.get_accumulative_distance() == 0.0);
+    CHECK(prop_ray.accumulated_distance() == 0.0);
 }
 
 TEST_CASE("RayForPropagationTest: default_simulation_truth_id", "[merlict]") {
