@@ -107,7 +107,7 @@ const Intersection& RayForPropagation::get_intersection_at(
     return intersection_history.at(index);
 }
 
-const Intersection& RayForPropagation::get_final_intersection()const {
+const Intersection& RayForPropagation::final_intersection()const {
     return intersection_history.back();
 }
 

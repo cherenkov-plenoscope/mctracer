@@ -20,10 +20,10 @@ void Sensor::assign_photon(const Photon* photon) {
         // arrival_time
         photon->time_of_flight(),
         // x
-        photon->get_final_intersection().
+        photon->final_intersection().
             position_in_object_frame().x,
         // y
-        photon->get_final_intersection().
+        photon->final_intersection().
             position_in_object_frame().y,
         // tx
         -1.0*photon->

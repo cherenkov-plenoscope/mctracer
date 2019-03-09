@@ -22,7 +22,7 @@ void assign_photon_to_sensors(
     std::vector<Sensor*>* sensors_by_frame
 ) {
     FindSensorByFrame finder(
-        photon->get_final_intersection().get_object(),
+        photon->final_intersection().get_object(),
         sensors_by_frame);
     if (finder.is_absorbed_by_known_sensor)
         finder.final_sensor->assign_photon(photon);

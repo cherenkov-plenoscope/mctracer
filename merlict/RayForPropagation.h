@@ -54,7 +54,7 @@ class RayForPropagation :public Ray{
     unsigned int num_interactions()const;
     const Intersection& get_intersection_at(const unsigned int index)const;
     Interaction final_interaction()const;
-    const Intersection& get_final_intersection()const;
+    const Intersection& final_intersection()const;
     virtual double time_of_flight()const;
     Vec3 get_final_intersection_incident_vector_in_object_frame()const;
 
