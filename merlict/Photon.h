@@ -12,10 +12,9 @@ namespace merlict {
 
 class Photon :public RayForPropagation{
     friend class Propagator;
- protected:
-    double wavelength;
 
  public:
+    double wavelength;
     Photon(
         const Vec3 support,
         const Vec3 direction,
