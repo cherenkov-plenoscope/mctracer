@@ -20,7 +20,7 @@ Tracer::Tracer(
 }
 
 void Tracer::trace_back() {
-    isec = RayAndFrame::first_intersection(cray, scenery);
+    isec = RayAndFrame::rays_first_intersection_with_frame(cray, scenery);
 
     if (isec.does_intersect())
         trace_back_to_object_interaction();
@@ -120,7 +120,7 @@ bool Tracer::surface_iluminated_by_global_light_source()const {
         config->global_illumination.incoming_direction);
 
     const Intersection intersec_light_source =
-        RayAndFrame::first_intersection(&ray_to_source, scenery);
+        RayAndFrame::rays_first_intersection_with_frame(&ray_to_source, scenery);
 
     double p = isec.surface_normal_in_root_frame()*
         config->global_illumination.incoming_direction;

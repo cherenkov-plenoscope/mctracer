@@ -24,7 +24,7 @@ Ray ray_with_respect_to_frame(
     const Ray* ray,
     const Frame* frame);
 
-Intersection first_intersection(
+Intersection rays_first_intersection_with_frame(
     const Ray* ray,
     const Frame* frame);
 

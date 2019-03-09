@@ -34,7 +34,7 @@ struct PlaneIntersectionTest {
 TEST_CASE("PlaneIntersectionTest: frontal", "[merlict]") {
     PlaneIntersectionTest pt;
     ml::Ray ray(ml::Vec3(0.0, 0.0, -1.0), ml::Vec3(0.0, 0.0, 1.0));
-    const ml::Intersection intersec = ml::RayAndFrame::first_intersection(
+    const ml::Intersection intersec = ml::RayAndFrame::rays_first_intersection_with_frame(
         &ray,
         &pt.scenery.root);
 
@@ -52,7 +52,7 @@ TEST_CASE("PlaneIntersectionTest: frontal_lateral_offset_alwas_intersection", "[
             double y_support = static_cast<double>(y_offset)*0.01;
 
             ml::Ray ray(ml::Vec3(x_support, y_support, -1), ml::Vec3(0, 0, 1));
-            const ml::Intersection intersec = ml::RayAndFrame::first_intersection(
+            const ml::Intersection intersec = ml::RayAndFrame::rays_first_intersection_with_frame(
                 &ray,
                 &pt.scenery.root);
 
@@ -67,7 +67,7 @@ TEST_CASE("PlaneIntersectionTest: frontal_lateral_offset_alwas_intersection", "[
 TEST_CASE("PlaneIntersectionTest: close_miss_x", "[merlict]") {
     PlaneIntersectionTest pt;
     ml::Ray ray(ml::Vec3(pt.x_width/2.0+0.01, 0, -1), ml::Vec3(0, 0, 1));
-    const ml::Intersection intersec = ml::RayAndFrame::first_intersection(
+    const ml::Intersection intersec = ml::RayAndFrame::rays_first_intersection_with_frame(
         &ray,
         &pt.scenery.root);
     CHECK(!intersec.does_intersect());
@@ -76,7 +76,7 @@ TEST_CASE("PlaneIntersectionTest: close_miss_x", "[merlict]") {
 TEST_CASE("PlaneIntersectionTest: close_miss_y", "[merlict]") {
     PlaneIntersectionTest pt;
     ml::Ray ray(ml::Vec3(0, pt.y_width/2.0+0.01, -1), ml::Vec3(0, 0, 1));
-    const ml::Intersection intersec = ml::RayAndFrame::first_intersection(
+    const ml::Intersection intersec = ml::RayAndFrame::rays_first_intersection_with_frame(
         &ray,
         &pt.scenery.root);
     CHECK(!intersec.does_intersect());
@@ -94,7 +94,7 @@ TEST_CASE("PlaneIntersectionTest: move_plane_up", "[merlict]") {
     pt.scenery.root.init_tree_based_on_mother_child_relations();
 
     ml::Ray ray(ml::Vec3(0, 0, -1), ml::Vec3(0, 0, 1));
-    const ml::Intersection intersec = ml::RayAndFrame::first_intersection(
+    const ml::Intersection intersec = ml::RayAndFrame::rays_first_intersection_with_frame(
         &ray,
         &pt.scenery.root);
     CHECK(intersec.does_intersect());

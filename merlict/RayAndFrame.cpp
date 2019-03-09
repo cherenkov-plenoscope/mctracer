@@ -116,7 +116,7 @@ Ray ray_with_respect_to_frame(
     return ray_in_object_system_of_frame;
 }
 
-Intersection first_intersection(const Ray* ray, const Frame* frame) {
+Intersection rays_first_intersection_with_frame(const Ray* ray, const Frame* frame) {
     CausalIntersection intersect_calculator(ray, frame);
     return intersect_calculator.closest_intersection;
 }
