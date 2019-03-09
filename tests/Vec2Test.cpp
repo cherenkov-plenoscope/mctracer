@@ -180,36 +180,3 @@ TEST_CASE("Vec2Test: angle_in_between", "[merlict]") {
 
     CHECK(ml::deg2rad(45.0) == Approx(foo.angle_in_between(bar)).margin(1e-5));
 }
-
-TEST_CASE("Vec2Test: quadrant_encoding", "[merlict]") {
-    // x y sector
-    // - -   0
-    // - +   1
-    // + -   2
-    // + +   3
-    ml::Vec2 a;
-
-    double p = +1.0;
-    double n = -1.0;
-
-    a.set(n, n);
-    CHECK(a.get_quadrant() == 0u);
-
-    a.set(n, p);
-    CHECK(a.get_quadrant() == 1u);
-
-    a.set(p, n);
-    CHECK(a.get_quadrant() == 2u);
-
-    a.set(p, p);
-    CHECK(a.get_quadrant() == 3u);
-
-    a.set(0.0, 0.0);
-    CHECK(a.get_quadrant() == 0u);
-    a.set(0.0, p);
-    CHECK(a.get_quadrant() == 1u);
-    a.set(p, 0.0);
-    CHECK(a.get_quadrant() == 2u);
-    a.set(p, p);
-    CHECK(a.get_quadrant() == 3u);
-}

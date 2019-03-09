@@ -13,7 +13,6 @@ struct Vec2 {
     Vec2();
     Vec2(const double x, const double y);
     void set(const double x, const double y);
-    unsigned int get_quadrant()const;
     double norm()const;
     void normalize();
     double angle_in_between(const Vec2& vec)const;

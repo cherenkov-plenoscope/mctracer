@@ -78,16 +78,4 @@ bool Vec2::norm_is_less_equal_than(const double length_to_compare)const {
     return (*this)*(*this) <= length_to_compare*length_to_compare;
 }
 
-unsigned int Vec2::get_quadrant()const {
-    // encodes the octant sectors where the vector is pointing to
-    // x y sector
-    // - -   0
-    // - +   1
-    // + -   2
-    // + +   3
-    const bool sx = x > 0.0;
-    const bool sy = y > 0.0;
-    return 2*sx + 1*sy;
-}
-
 }  // namespace merlict
