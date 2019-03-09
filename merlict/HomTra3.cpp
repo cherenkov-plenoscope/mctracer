@@ -73,8 +73,8 @@ void HomTra3::set_rotation_component_based_on_rot_axis(const Rot3 R) {
     const double ry = rot_axis.y;
     const double rz = rot_axis.z;
 
-    const double sinR = sin(R.get_rot_angle_in_rad());
-    const double cosR = cos(R.get_rot_angle_in_rad());
+    const double sinR = sin(R.rot_angle());
+    const double cosR = cos(R.rot_angle());
 
     // first row
     T[0][0] = cosR +  rx*rx*(1.0-cosR);

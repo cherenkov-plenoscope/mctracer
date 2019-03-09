@@ -49,10 +49,10 @@ Vec3 Rot3::get_rot_axis()const {
         return rot_axis;
 }
 
-double Rot3::get_rot_angle_in_rad()const {
+double Rot3::rot_angle()const {
     if (flag_rot_angles_xyz == true)
         throw std::runtime_error(
-            "Rot3::get_rot_angle_in_rad():\n"
+            "Rot3::rot_angle():\n"
             "rot_angle_in_rad was not set!");
     else
         return rot_angle_in_rad;

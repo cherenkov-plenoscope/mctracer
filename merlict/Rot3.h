@@ -23,7 +23,7 @@ class Rot3 {
     void set(double Phi, double The, double Psi);
     void set(const Vec3 new_rot_axis, const double new_rot_angle_on_rad);
     Vec3 get_rot_axis()const;
-    double get_rot_angle_in_rad()const;
+    double rot_angle()const;
     bool uses_xyz_angels()const;
     std::string str()const;
     double rot_x()const;
