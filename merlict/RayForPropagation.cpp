@@ -8,20 +8,20 @@ namespace merlict {
 
 std::string interaction_str(Interaction type) {
     switch (type) {
-        case production: return "production"; break;
-        case absorption_in_void: return "absorption_in_void"; break;
+        case PRODUCTION: return "production"; break;
+        case ABSORPTION_IN_VOID: return "absorption_in_void"; break;
 
-        case absorption_in_medium: return "absorption_in_medium"; break;
-        case absorption_on_surface: return "absorption_on_surface"; break;
+        case ABSORPTION_IN_MEDIUM: return "absorption_in_medium"; break;
+        case ABSORPTION_ON_SURFACE: return "absorption_on_surface"; break;
 
-        case reflection_on_surface: return "reflection_on_surface"; break;
-        case fresnel_reflection_on_surface:
+        case REFLECTION_ON_SURFACE: return "reflection_on_surface"; break;
+        case FRESNEL_REFLECTION_ON_SURFACE:
             return "fresnel_reflection_on_surface"; break;
 
-        case refraction_to_outside: return "refraction_to_outside"; break;
-        case refraction_to_inside: return "refraction_to_inside"; break;
+        case REFRACTION_TO_OUTSIDE: return "refraction_to_outside"; break;
+        case REFRACTION_TO_INSIDE: return "refraction_to_inside"; break;
 
-        case scattering: return "scattering"; break;
+        case SCATTERING: return "scattering"; break;
         default: return "unknown_interaction"; break;
     }
 }
@@ -46,7 +46,7 @@ void RayForPropagation::push_back_production() {
 
     push_back_intersection_and_interaction(
         production_intersection,
-        production);
+        PRODUCTION);
 }
 
 std::string RayForPropagation::str()const {

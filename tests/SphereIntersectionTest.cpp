@@ -52,7 +52,7 @@ TEST_CASE("SphereIntersectionTest: emmitting_close_above_surface_tangential", "[
     ml::Vec3 direction(1, 0, 0);
     ml::Photon P(support, direction, st.wavelength);
     ml::Propagator(&P, st.env);
-    REQUIRE(P.final_interaction() == ml::absorption_in_void);
+    REQUIRE(P.final_interaction() == ml::ABSORPTION_IN_VOID);
 }
 
 TEST_CASE("SphereIntersectionTest: emmitting_close_above_surface_straigtht_away", "[merlict]") {
@@ -61,7 +61,7 @@ TEST_CASE("SphereIntersectionTest: emmitting_close_above_surface_straigtht_away"
     ml::Vec3 direction(0, 0, 1);
     ml::Photon P(support, direction, st.wavelength);
     ml::Propagator(&P, st.env);
-    REQUIRE(P.final_interaction() == ml::absorption_in_void);
+    REQUIRE(P.final_interaction() == ml::ABSORPTION_IN_VOID);
 }
 
 TEST_CASE("SphereIntersectionTest: tangential_intersection", "[merlict]") {

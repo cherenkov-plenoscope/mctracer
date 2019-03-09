@@ -50,7 +50,7 @@ void TrajectoryFactory::append_trajectory_to(Frame* root_frame) {
 
         intersection_indicator->set_radius(radius_of_trajectory*2.0);
 
-        if (ray->interaction_history.at(i) == absorption_in_void)
+        if (ray->interaction_history.at(i) == ABSORPTION_IN_VOID)
             intersection_indicator->set_outer_color(&COLOR_DARK_GRAY);
         else
             intersection_indicator->set_outer_color(&COLOR_GREEN);

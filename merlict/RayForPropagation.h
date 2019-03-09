@@ -12,19 +12,19 @@
 namespace merlict {
 
 enum Interaction {
-    production,
-    absorption_in_void,
+    PRODUCTION,
+    ABSORPTION_IN_VOID,
 
-    absorption_in_medium,
-    absorption_on_surface,
+    ABSORPTION_IN_MEDIUM,
+    ABSORPTION_ON_SURFACE,
 
-    fresnel_reflection_on_surface,
-    reflection_on_surface,
+    FRESNEL_REFLECTION_ON_SURFACE,
+    REFLECTION_ON_SURFACE,
 
-    refraction_to_outside,
-    refraction_to_inside,
+    REFRACTION_TO_OUTSIDE,
+    REFRACTION_TO_INSIDE,
 
-    scattering
+    SCATTERING
 };
 
 std::string interaction_str(Interaction type);

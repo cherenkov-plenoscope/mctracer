@@ -42,7 +42,7 @@ void Propagator::interact_with_object() {
         isec.facing_reflection_propability(ph->wavelength) >=
         env.prng->uniform()
     )
-        reflect_on_surface_and_propagate_on(reflection_on_surface);
+        reflect_on_surface_and_propagate_on(REFLECTION_ON_SURFACE);
     else
         reach_boundary_layer();
 }
@@ -50,7 +50,7 @@ void Propagator::interact_with_object() {
 void Propagator::get_absorbed_in_void_space() {
     ph->push_back_intersection_and_interaction(
         isec,
-        absorption_in_void);
+        ABSORPTION_IN_VOID);
 }
 
 void Propagator::reflect_on_surface_and_propagate_on(const Interaction type) {
@@ -81,7 +81,7 @@ void Propagator::fresnel_refraction_and_reflection() {
         isec.refractive_index_going_to(ph->wavelength));
 
     if (fresnel.reflection_propability() > env.prng->uniform())
-        reflect_on_surface_and_propagate_on(fresnel_reflection_on_surface);
+        reflect_on_surface_and_propagate_on(FRESNEL_REFLECTION_ON_SURFACE);
     else
         pass_the_boundary_layer(fresnel);
 }
@@ -92,11 +92,11 @@ void Propagator::pass_the_boundary_layer(
     if (isec.from_outside_to_inside())
         ph->push_back_intersection_and_interaction(
             isec,
-            refraction_to_inside);
+            REFRACTION_TO_INSIDE);
     else
         ph->push_back_intersection_and_interaction(
             isec,
-            refraction_to_outside);
+            REFRACTION_TO_OUTSIDE);
 
     propagate_on_after_boundary_layer(fresnel);
 }
@@ -124,7 +124,7 @@ void Propagator::propagate_on_after_boundary_layer(
 void Propagator::get_absorbed_on_surface() {
     ph->push_back_intersection_and_interaction(
         isec,
-        absorption_on_surface);
+        ABSORPTION_ON_SURFACE);
 }
 
 }  // namespace merlict
