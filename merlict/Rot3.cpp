@@ -18,17 +18,11 @@ void Rot3::set(double rot_x, double rot_y, double rot_z) {
     Rz = rot_z;
 }
 
-Rot3::Rot3(
-    const Vec3 new_rot_axis,
-    const double new_rot_angle
-) {
+Rot3::Rot3(const Vec3 new_rot_axis, const double new_rot_angle) {
     set(new_rot_axis, new_rot_angle);
 }
 
-void Rot3::set(
-    const Vec3 new_rot_axis,
-    const double new_rot_angle
-) {
+void Rot3::set(const Vec3 new_rot_axis, const double new_rot_angle) {
     if (new_rot_angle == 0.0) {
         set(0.0, 0.0, 0.0);
     } else {
