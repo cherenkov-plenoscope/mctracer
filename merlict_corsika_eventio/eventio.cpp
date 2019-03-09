@@ -1,7 +1,7 @@
 // Copyright 2016 Sebastian A. Mueller, Dominik Neise
 #include <cmath>
 #include <sstream>
-#include "eventio.h"
+#include "merlict_corsika_eventio/eventio.h"
 
 
 namespace eventio {

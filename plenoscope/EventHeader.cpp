@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "plenoscope/EventHeader.h"
-#include "corsika/corsika.h"
+#include "merlict_corsika_eventio/corsika.h"
 
 namespace plenoscope {
 

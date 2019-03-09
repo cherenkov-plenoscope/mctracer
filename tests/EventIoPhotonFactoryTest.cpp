@@ -1,8 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <numeric>
 #include "catch.hpp"
-#include "corsika/PhotonFactory.h"
-#include "eventio.h"
+#include "merlict_corsika_eventio/PhotonFactory.h"
+#include "merlict_corsika_eventio/eventio.h"
 #include "merlict/merlict.h"
 namespace ml = merlict;
 

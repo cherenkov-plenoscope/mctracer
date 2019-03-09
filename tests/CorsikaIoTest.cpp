@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "corsika/corsika.h"
+#include "merlict_corsika_eventio/corsika.h"
 #include "merlict/random/random.h"
 namespace ml = merlict;
 

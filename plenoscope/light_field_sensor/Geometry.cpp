@@ -7,7 +7,7 @@
 #include "merlict/scenery/geometry/GridNeighborhoodTopoligy.h"
 #include "merlict/scenery/geometry/HexGridFlower.h"
 #include "merlict/scenery/geometry/lens_maker.h"
-#include "corsika/corsika.h"
+#include "merlict_corsika_eventio/corsika.h"
 namespace ml = merlict;
 
 

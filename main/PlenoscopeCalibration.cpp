@@ -4,7 +4,7 @@
 #include "docopt/docopt.h"
 #include "plenoscope/calibration/Calibrator.h"
 #include "plenoscope/json_to_plenoscope.h"
-#include "corsika/block.h"
+#include "merlict_corsika_eventio/block.h"
 #include "merlict/merlict.h"
 namespace fs = std::experimental::filesystem;
 namespace ml = merlict;

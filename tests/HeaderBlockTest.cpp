@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "corsika/block.h"
+#include "merlict_corsika_eventio/block.h"
 
 
 TEST_CASE("HeaderBlockTest: write_and_read_binary_block", "[merlict]") {

@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "corsika/corsika.h"
+#include "merlict_corsika_eventio/corsika.h"
 #include <sstream>
 
 

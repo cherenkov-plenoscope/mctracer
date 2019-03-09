@@ -1,5 +1,5 @@
 #include "EventIoWrapper.h"
-#include "corsika/PhotonFactory.h"
+#include "merlict_corsika_eventio/PhotonFactory.h"
 
 
 namespace merlict {

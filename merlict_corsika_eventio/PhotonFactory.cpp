@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "corsika/PhotonFactory.h"
+#include "merlict_corsika_eventio/PhotonFactory.h"
 #include <sstream>
 #include "merlict/PhysicalConstants.h"
 

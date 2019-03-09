@@ -9,7 +9,7 @@
 //=================================
 // included dependencies
 #include "BasicWrapper.h"
-#include "eventio.h"
+#include "merlict_corsika_eventio/eventio.h"
 #include <vector>
 #include <string>
 

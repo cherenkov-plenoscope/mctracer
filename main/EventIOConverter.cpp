@@ -4,8 +4,8 @@
 #include <sstream>
 #include <iostream>
 #include "docopt/docopt.h"
-#include "eventio.h"
-#include "corsika/block.h"
+#include "merlict_corsika_eventio/eventio.h"
+#include "merlict_corsika_eventio/block.h"
 #include "merlict/merlict.h"
 
 namespace fs = std::experimental::filesystem;
