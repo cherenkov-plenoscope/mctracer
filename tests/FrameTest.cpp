@@ -106,19 +106,19 @@ TEST_CASE("FrameTest: root_of_world_on_complete_tree", "[merlict]") {
     tree.init_tree_based_on_mother_child_relations();
 
     // -----test
-    CHECK(tree.get_root() == &tree);
-    CHECK(leaf1->get_root() == &tree);
-    CHECK(leaf2->get_root() == &tree);
-    CHECK(branch->get_root() == &tree);
-    CHECK(leaf1_on_branch->get_root() == &tree);
-    CHECK(leaf2_on_branch->get_root() == &tree);
+    CHECK(tree.root() == &tree);
+    CHECK(leaf1->root() == &tree);
+    CHECK(leaf2->root() == &tree);
+    CHECK(branch->root() == &tree);
+    CHECK(leaf1_on_branch->root() == &tree);
+    CHECK(leaf2_on_branch->root() == &tree);
 }
 
 TEST_CASE("FrameTest: root_frame_default", "[merlict]") {
     // A single frame with no relations set (post initialized) is its own root.
     ml::Frame tree;
     tree.set_name_pos_rot("tree", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
-    CHECK(tree.get_root() == &tree);
+    CHECK(tree.root() == &tree);
 }
 
 TEST_CASE("FrameTest: cluster_frames_during_tree_initializing", "[merlict]") {

@@ -52,7 +52,7 @@ class Frame {
     const HomTra3* frame2mother()const;
     const HomTra3* frame2world()const;
     const std::vector<Frame*>* get_children()const;
-    const Frame* get_root()const;
+    const Frame* root()const;
     bool has_mother()const;
     bool has_children()const;
     void assert_no_children_duplicate_names()const;

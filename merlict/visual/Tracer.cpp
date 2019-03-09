@@ -78,7 +78,7 @@ void Tracer::trace_back_beyond_boundary_layer(
     )
         scenery = isec.get_object()->get_allowed_frame_to_propagate_to();
     else
-        scenery = isec.get_object()->get_root();
+        scenery = isec.get_object()->root();
 
     cray->set_support_and_direction(
         isec.position_in_root_frame(),

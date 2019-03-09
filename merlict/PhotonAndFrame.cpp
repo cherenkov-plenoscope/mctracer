@@ -111,7 +111,7 @@ void Propagator::propagate_on_after_boundary_layer(
             isec.get_object()->get_allowed_frame_to_propagate_to();
     else
         env.root_frame =
-            isec.get_object()->get_root();
+            isec.get_object()->root();
 
     ph->set_support_and_direction(
         isec.position_in_root_frame(),

@@ -149,7 +149,7 @@ void Frame::update_bounding_sphere() {
 void Frame::init_root() {
     // Run from top to bottom through the tree.
     if (has_mother())
-        root_frame = mother->get_root();
+        root_frame = mother->root();
     else
         root_frame = this;
 
@@ -157,7 +157,7 @@ void Frame::init_root() {
         child->init_root();
 }
 
-const Frame* Frame::get_root()const {
+const Frame* Frame::root()const {
     return root_frame;
 }
 
