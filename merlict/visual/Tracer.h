@@ -38,8 +38,7 @@ class Tracer {
     void trace_back_to_boundary_layer();
     void trace_back_to_fresnel_interaction();
     void trace_back_to_surface();
-    void trace_back_beyond_boundary_layer(
-        const Fresnel &fresnel);
+    void trace_back_beyond_boundary_layer(const Fresnel &fresnel);
     void trace_back_to_sky_dome();
     bool surface_iluminated_by_global_light_source()const;
     bool surface_normal_is_facing_observer(

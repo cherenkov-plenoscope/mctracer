@@ -27,10 +27,8 @@ class Propagator {
     void reflect_on_surface_and_propagate_on(const Interaction type);
     void reach_boundary_layer();
     void fresnel_refraction_and_reflection();
-    void pass_the_boundary_layer(
-        const Fresnel &fresnel);
-    void propagate_on_after_boundary_layer(
-        const Fresnel &fresnel);
+    void pass_the_boundary_layer(const Fresnel &fresnel);
+    void propagate_on_after_boundary_layer(const Fresnel &fresnel);
     void get_absorbed_on_surface();
 };
 

@@ -86,9 +86,7 @@ void Propagator::fresnel_refraction_and_reflection() {
         pass_the_boundary_layer(fresnel);
 }
 
-void Propagator::pass_the_boundary_layer(
-    const Fresnel &fresnel
-) {
+void Propagator::pass_the_boundary_layer(const Fresnel &fresnel) {
     if (isec.from_outside_to_inside())
         ph->push_back_intersection_and_interaction(
             isec,
@@ -101,9 +99,7 @@ void Propagator::pass_the_boundary_layer(
     propagate_on_after_boundary_layer(fresnel);
 }
 
-void Propagator::propagate_on_after_boundary_layer(
-    const Fresnel &fresnel
-) {
+void Propagator::propagate_on_after_boundary_layer(const Fresnel &fresnel) {
     if (isec.get_object()->has_restrictions_on_frames_to_propagate_to() &&
         !isec.going_to_default_refractive_index()
     )
