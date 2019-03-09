@@ -9,8 +9,8 @@
 #include <array>
 
 namespace corsika {
-
-namespace EventHeader {
+namespace header {
+namespace event {
 
 std::string get_print(const std::array<float, 273> &rh);
 float event_number(const std::array<float, 273> &eh);
@@ -20,9 +20,9 @@ float zenith(const std::array<float, 273> &eh);
 float azimuth(const std::array<float, 273> &eh);
 float first_interaction_height_in_cm(const std::array<float, 273> &eh);
 
-}  // namespace EventHeader
+}  // namespace event
 
-namespace RunHeader {
+namespace run {
 
 std::string get_print(const std::array<float, 273> &rh);
 float run_number(const std::array<float, 273> &rh);
@@ -34,7 +34,8 @@ float observation_level_at(
     const std::array<float, 273> &rh,
     const unsigned int i);
 
-}  // namespace RunHeader
+}  // namespace run
+}  // namespace header
 
 float str2float(const std::string word);
 std::string float2str(const float word_in_float);

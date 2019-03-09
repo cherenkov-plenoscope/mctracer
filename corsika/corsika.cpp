@@ -4,7 +4,8 @@
 
 
 namespace corsika {
-namespace EventHeader {
+namespace header {
+namespace event {
 
 std::string get_print(const std::array<float, 273> &eh) {
   std::stringstream out;
@@ -81,9 +82,9 @@ float first_interaction_height_in_cm(const std::array<float, 273> &eh) {
     return eh.at(7-1);
 }
 
-}  // namespace EventHeader
+}  // namespace event
 
-namespace RunHeader {
+namespace run {
 
 std::string get_print(const std::array<float, 273> &rh) {
     std::stringstream out;
@@ -119,7 +120,8 @@ float observation_level_at(
     return rh.at(5+i);
 }
 
-}  // namespace RunHeader
+}  // namespace run
+}  // namespace header
 
 float str2float(const std::string word) {
     if (word.size() != 4) {

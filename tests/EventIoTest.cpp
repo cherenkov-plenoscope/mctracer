@@ -70,12 +70,12 @@ TEST_CASE("EventIoTest: EventIoFile_telescope_dat__check_input_card", "[merlict]
 
 TEST_CASE("EventIoTest: EventIoFile_telescope_dat__mmcs_run_header", "[merlict]") {
     eventio::Run my_run("telescope.dat");
-    CHECK(7. == Approx(corsika::RunHeader::run_number(my_run.header.raw)).margin(1e-6));
-    CHECK(-2.7 == Approx(corsika::RunHeader::slope_of_energy_spektrum(my_run.header.raw)).margin(1e-6));
-    CHECK(1000. == Approx(corsika::RunHeader::energy_range_start(my_run.header.raw)).margin(1e-6));
-    CHECK(50000. == Approx(corsika::RunHeader::energy_range_end(my_run.header.raw)).margin(1e-6));
-    CHECK(corsika::RunHeader::num_observation_levels(my_run.header.raw) == 1u);
-    CHECK(220000. == Approx(corsika::RunHeader::observation_level_at(my_run.header.raw, 0)).margin(1e-6));
+    CHECK(7. == Approx(corsika::header::run::run_number(my_run.header.raw)).margin(1e-6));
+    CHECK(-2.7 == Approx(corsika::header::run::slope_of_energy_spektrum(my_run.header.raw)).margin(1e-6));
+    CHECK(1000. == Approx(corsika::header::run::energy_range_start(my_run.header.raw)).margin(1e-6));
+    CHECK(50000. == Approx(corsika::header::run::energy_range_end(my_run.header.raw)).margin(1e-6));
+    CHECK(corsika::header::run::num_observation_levels(my_run.header.raw) == 1u);
+    CHECK(220000. == Approx(corsika::header::run::observation_level_at(my_run.header.raw, 0)).margin(1e-6));
 }
 
 TEST_CASE("EventIoTest: EventIoFile_telescope_dat__next_call", "[merlict]") {
@@ -95,9 +95,9 @@ TEST_CASE("EventIoTest: EventIoFile_telescope_dat__event_header", "[merlict]") {
     CHECK(-6589.96044922 == Approx(event.header.telescope_offsets[0].yoff).margin(1e-6));
 
     std::array<float, 273> h = event.header.raw;
-    CHECK(1. == Approx(corsika::EventHeader::event_number(h)).margin(1e-6));
-    CHECK(1. == Approx(corsika::EventHeader::particle_id(h)).margin(1e-6));
-    CHECK(2745.3125 == Approx(corsika::EventHeader::total_energy_in_GeV(h)).margin(1e-6));
+    CHECK(1. == Approx(corsika::header::event::event_number(h)).margin(1e-6));
+    CHECK(1. == Approx(corsika::header::event::particle_id(h)).margin(1e-6));
+    CHECK(2745.3125 == Approx(corsika::header::event::total_energy_in_GeV(h)).margin(1e-6));
 }
 
 TEST_CASE("EventIoTest: EventIoFile_telescope_dat__photon_bundle_size", "[merlict]") {
