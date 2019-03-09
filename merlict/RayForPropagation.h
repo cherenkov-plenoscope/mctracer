@@ -46,7 +46,7 @@ class RayForPropagation :public Ray{
     // photon file
 
     RayForPropagation(const Vec3 support, const Vec3 direction);
-    void push_back_intersection_and_type_to_propagation_history(
+    void push_back_intersection_and_interaction(
         const Intersection& interact,
         const Interaction type);
     std::string str()const;

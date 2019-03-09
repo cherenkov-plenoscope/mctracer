@@ -48,7 +48,7 @@ void Propagator::interact_with_object() {
 }
 
 void Propagator::get_absorbed_in_void_space() {
-    ph->push_back_intersection_and_type_to_propagation_history(
+    ph->push_back_intersection_and_interaction(
         isec,
         absorption_in_void);
 }
@@ -58,7 +58,7 @@ void Propagator::reflect_on_surface_and_propagate_on(const Interaction type) {
         isec.position_in_root_frame(),
         isec.reflection_direction_in_root_frame(ph->direction()));
 
-    ph->push_back_intersection_and_type_to_propagation_history(
+    ph->push_back_intersection_and_interaction(
         isec,
         type);
 
@@ -90,11 +90,11 @@ void Propagator::pass_the_boundary_layer(
     const FresnelRefractionAndReflection &fresnel
 ) {
     if (isec.from_outside_to_inside())
-        ph->push_back_intersection_and_type_to_propagation_history(
+        ph->push_back_intersection_and_interaction(
             isec,
             refraction_to_inside);
     else
-        ph->push_back_intersection_and_type_to_propagation_history(
+        ph->push_back_intersection_and_interaction(
             isec,
             refraction_to_outside);
 
@@ -122,7 +122,7 @@ void Propagator::propagate_on_after_boundary_layer(
 }
 
 void Propagator::get_absorbed_on_surface() {
-    ph->push_back_intersection_and_type_to_propagation_history(
+    ph->push_back_intersection_and_interaction(
         isec,
         absorption_on_surface);
 }

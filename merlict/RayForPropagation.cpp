@@ -44,7 +44,7 @@ void RayForPropagation::push_back_production() {
         0.0,
         direction_);
 
-    push_back_intersection_and_type_to_propagation_history(
+    push_back_intersection_and_interaction(
         production_intersection,
         production);
 }
@@ -80,7 +80,7 @@ std::string RayForPropagation::history_str()const {
     return out.str();
 }
 
-void RayForPropagation::push_back_intersection_and_type_to_propagation_history(
+void RayForPropagation::push_back_intersection_and_interaction(
     const Intersection &interact,
     const Interaction type
 ) {
