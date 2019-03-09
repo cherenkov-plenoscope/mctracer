@@ -14,6 +14,8 @@
 namespace merlict {
 namespace visual {
 
+const double WAVELENGTH = 533e-9;
+
 class Tracer {
  public:
     random::Mt19937* prng;
@@ -24,8 +26,6 @@ class Tracer {
     CameraRay* cray;
     Intersection isec;
     Color color;
-
-    static const double wavelength;
 
     Tracer(
         CameraRay* cray,

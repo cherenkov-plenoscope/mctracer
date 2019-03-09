@@ -4,7 +4,6 @@
 namespace merlict {
 namespace visual {
 
-const double Tracer::wavelength = 533e-9;
 
 Tracer::Tracer(
     CameraRay* _cray,
@@ -29,7 +28,7 @@ void Tracer::trace_back() {
 }
 
 void Tracer::trace_back_to_object_interaction() {
-    if (isec.facing_reflection_propability(wavelength) >= prng->uniform())
+    if (isec.facing_reflection_propability(WAVELENGTH) >= prng->uniform())
         trace_back_after_reflection();
     else
         trace_back_to_boundary_layer();
@@ -54,8 +53,8 @@ void Tracer::trace_back_to_fresnel_interaction() {
         isec.object2root()->
             orientation_inverse(cray->direction()),
         isec.surface_normal_of_facing_surface_in_object_frame(),
-        isec.refractive_index_coming_from(wavelength),
-        isec.refractive_index_going_to(wavelength));
+        isec.refractive_index_coming_from(WAVELENGTH),
+        isec.refractive_index_going_to(WAVELENGTH));
 
     if (fresnel.reflection_propability() > prng->uniform())
         trace_back_after_reflection();
