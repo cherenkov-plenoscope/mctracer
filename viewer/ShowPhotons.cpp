@@ -4,7 +4,7 @@
 #include "merlict_corsika_eventio/corsika.h"
 #include "merlict_corsika_eventio/PhotonFactory.h"
 #include "FlyingCamera.h"
-#include "json.h"
+#include "merlict_json/json.h"
 namespace ml = merlict;
 
 

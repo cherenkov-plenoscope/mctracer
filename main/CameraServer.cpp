@@ -3,7 +3,7 @@
 #include <iostream>
 #include "docopt/docopt.h"
 #include "merlict/merlict.h"
-#include "./json.h"
+#include "merlict_json/json.h"
 namespace ml = merlict;
 
 

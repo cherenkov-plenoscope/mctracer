@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "InternalPhotonSourceWrapper.h"
-#include "json.h"
+#include "merlict_json/json.h"
 
 
 namespace merlict {

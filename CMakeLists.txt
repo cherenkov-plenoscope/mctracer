@@ -31,10 +31,9 @@ INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
 #-----------
 # The Source
-set(SOURCE
-	${CMAKE_CURRENT_SOURCE_DIR}/json.cpp)
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_corsika_eventio")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_json")
 add_subdirectory("${PROJECT_SOURCE_DIR}/plenoscope")
 add_subdirectory("${PROJECT_SOURCE_DIR}/try_to_read")
 add_subdirectory("${PROJECT_SOURCE_DIR}/signal_processing")

@@ -1,7 +1,7 @@
 #include <iostream>
 #include "docopt/docopt.h"
 #include "merlict/merlict.h"
-#include "json.h"
+#include "merlict_json/json.h"
 #include "try_to_read/PhotonsReader.h"
 namespace ml = merlict;
 

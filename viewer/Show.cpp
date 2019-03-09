@@ -1,6 +1,6 @@
 #include "docopt/docopt.h"
 #include "merlict/merlict.h"
-#include "json.h"
+#include "merlict_json/json.h"
 #include "FlyingCamera.h"
 namespace mct = merlict;
 

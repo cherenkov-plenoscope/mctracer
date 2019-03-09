@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "niels_lohmann_json.hpp"
-#include "json.h"
+#include "merlict_json/niels_lohmann_json.hpp"
+#include "merlict_json/json.h"
 #include "merlict/merlict.h"
 namespace nl = nlohmann;
 namespace mct = merlict;

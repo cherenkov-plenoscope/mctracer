@@ -3,7 +3,7 @@
 #define PLENOSCOPE_JSON_TO_PLENOSCOPE_H_
 
 #include "plenoscope/PlenoscopeScenery.h"
-#include "./json.h"
+#include "merlict_json/json.h"
 #include "merlict/merlict.h"
 
 namespace plenoscope {
