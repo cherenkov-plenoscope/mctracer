@@ -4,7 +4,6 @@
 
 
 namespace merlict {
-namespace RayAndFrame {
 
 bool ray_support_inside_frames_bounding_sphere(
     const Ray* ray,
@@ -170,5 +169,4 @@ void CausalIntersection::calculate_closest_intersection() {
             Intersection::compare);
 }
 
-}  // namespace RayAndFrame
 }  // namespace merlict

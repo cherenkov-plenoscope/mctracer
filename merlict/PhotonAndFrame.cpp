@@ -21,7 +21,7 @@ bool Propagator::limit_of_interactions_is_not_reached_yet()const {
 }
 
 void Propagator::work_on_first_causal_intersection() {
-    isec = RayAndFrame::rays_first_intersection_with_frame(ph, env.root_frame);
+    isec = rays_first_intersection_with_frame(ph, env.root_frame);
 
     if (isec.does_intersect() && !absorbed_in_medium_before_reaching_surface())
         interact_with_object();

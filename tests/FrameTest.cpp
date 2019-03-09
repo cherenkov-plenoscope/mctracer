@@ -218,7 +218,7 @@ TEST_CASE("FrameTest: removing_a_cild", "[merlict]") {
     CHECK(0.0 < pole->get_bounding_sphere_radius());
 
     ml::Ray ray(ml::Vec3(0, -5, -1.8), ml::Vec3(0, 1, 0));
-    ml::Intersection isec = ml::RayAndFrame::rays_first_intersection_with_frame(&ray, &tree);
+    ml::Intersection isec = ml::rays_first_intersection_with_frame(&ray, &tree);
     CHECK(!isec.does_intersect());
 
     // Append a temporary frame
@@ -232,7 +232,7 @@ TEST_CASE("FrameTest: removing_a_cild", "[merlict]") {
 
     tree.init_tree_based_on_mother_child_relations();
 
-    isec = ml::RayAndFrame::rays_first_intersection_with_frame(&ray, &tree);
+    isec = ml::rays_first_intersection_with_frame(&ray, &tree);
     REQUIRE(isec.does_intersect());
     CHECK(tball == isec.get_object());
 
@@ -240,6 +240,6 @@ TEST_CASE("FrameTest: removing_a_cild", "[merlict]") {
     tree.erase(temp);
     tree.init_tree_based_on_mother_child_relations();
 
-    isec = ml::RayAndFrame::rays_first_intersection_with_frame(&ray, &tree);
+    isec = ml::rays_first_intersection_with_frame(&ray, &tree);
     CHECK(!isec.does_intersect());
 }

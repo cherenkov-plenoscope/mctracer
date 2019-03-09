@@ -9,8 +9,6 @@
 #include "merlict/Intersection.h"
 
 namespace merlict {
-namespace RayAndFrame {
-// Frame's bounding sphere
 
 bool ray_support_inside_frames_bounding_sphere(
     const Ray* ray,
@@ -40,7 +38,6 @@ struct CausalIntersection {
     void calculate_closest_intersection();
 };
 
-}  // namespace RayAndFrame
 }  // namespace merlict
 
 #endif  // MERLICT_RAYANDFRAME_H_

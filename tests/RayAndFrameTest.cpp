@@ -25,7 +25,7 @@ TEST_CASE("RayAndFrameBoundingSphereTest: support_inside_bounding_sphere", "[mer
     sphere.set_radius(1.0);
 
     ml::Ray ray(ml::VEC3_ORIGIN, ml::VEC3_UNIT_X);
-    CHECK(ml::RayAndFrame::ray_support_inside_frames_bounding_sphere(&ray, &sphere));
+    CHECK(ml::ray_support_inside_frames_bounding_sphere(&ray, &sphere));
 }
 
 TEST_CASE("RayAndFrameBoundingSphereTest: support_outside_bounding_sphere", "[merlict]") {
@@ -41,7 +41,7 @@ TEST_CASE("RayAndFrameBoundingSphereTest: support_outside_bounding_sphere", "[me
     sphere.set_radius(1.0);
 
     ml::Ray ray(ml::Vec3(2.0, 0.0, 0.0), ml::VEC3_UNIT_X);
-    CHECK(!ml::RayAndFrame::ray_support_inside_frames_bounding_sphere(&ray, &sphere));
+    CHECK(!ml::ray_support_inside_frames_bounding_sphere(&ray, &sphere));
 }
 
 TEST_CASE("RayAndFrameBoundingSphereTest: frontal_hit", "[merlict]") {
@@ -57,7 +57,7 @@ TEST_CASE("RayAndFrameBoundingSphereTest: frontal_hit", "[merlict]") {
     sphere.set_radius(1.0);
 
     ml::Ray ray(ml::Vec3(-2.0, 0.0, 0.0), ml::VEC3_UNIT_X);
-    CHECK(ml::RayAndFrame::ray_intersects_frames_bounding_sphere(&ray, &sphere));
+    CHECK(ml::ray_intersects_frames_bounding_sphere(&ray, &sphere));
 }
 
 TEST_CASE("RayAndFrameBoundingSphereTest: no_hit", "[merlict]") {
@@ -73,7 +73,7 @@ TEST_CASE("RayAndFrameBoundingSphereTest: no_hit", "[merlict]") {
     sphere.set_radius(1.0);
 
     ml::Ray ray(ml::Vec3(+2.0, 0.0, 0.0), ml::VEC3_UNIT_X);
-    CHECK(!ml::RayAndFrame::ray_intersects_frames_bounding_sphere(&ray, &sphere));
+    CHECK(!ml::ray_intersects_frames_bounding_sphere(&ray, &sphere));
 }
 
 TEST_CASE("RayAndFrameBoundingSphereTest: hit_inside_bounding_sphere", "[merlict]") {
@@ -89,7 +89,7 @@ TEST_CASE("RayAndFrameBoundingSphereTest: hit_inside_bounding_sphere", "[merlict
     sphere.set_radius(1.0);
 
     ml::Ray ray(ml::VEC3_ORIGIN, ml::VEC3_UNIT_X);
-    CHECK(ml::RayAndFrame::ray_intersects_frames_bounding_sphere(&ray, &sphere));
+    CHECK(ml::ray_intersects_frames_bounding_sphere(&ray, &sphere));
 }
 
 TEST_CASE("RayAndFrameBoundingSphereTest: frontal_hits", "[merlict]") {
@@ -113,9 +113,9 @@ TEST_CASE("RayAndFrameBoundingSphereTest: frontal_hits", "[merlict]") {
     for (double y = -2.0; y < 2.0; y+=0.002) {
         ml::Ray ray(ml::Vec3(-5.0, y, 0.0), ml::VEC3_UNIT_X);
         if (fabs(y) > sphere_radius)
-            CHECK(!ml::RayAndFrame::ray_intersects_frames_bounding_sphere(&ray, &sphere));
+            CHECK(!ml::ray_intersects_frames_bounding_sphere(&ray, &sphere));
         else
-            CHECK(ml::RayAndFrame::ray_intersects_frames_bounding_sphere(&ray, &sphere));
+            CHECK(ml::ray_intersects_frames_bounding_sphere(&ray, &sphere));
     }
 }
 
@@ -128,7 +128,7 @@ TEST_CASE("RayAndFrameTest: transform_into_unit_frame", "[merlict]") {
 
     ml::Ray ray(ml::VEC3_ORIGIN, ml::VEC3_UNIT_Z);
 
-    ml::Ray ray_t = ml::RayAndFrame::ray_with_respect_to_frame(
+    ml::Ray ray_t = ml::ray_with_respect_to_frame(
         &ray,
         &frame);
 
@@ -143,7 +143,7 @@ TEST_CASE("RayAndFrameTest: transform_into_translated_frame", "[merlict]") {
 
     ml::Ray ray(ml::Vec3(0.0, 4.2, 0.0), ml::VEC3_UNIT_Z);
 
-    ml::Ray ray_t = ml::RayAndFrame::ray_with_respect_to_frame(
+    ml::Ray ray_t = ml::ray_with_respect_to_frame(
         &ray,
         &frame);
 
@@ -158,7 +158,7 @@ TEST_CASE("RayAndFrameTest: transform_ray_in_z_into_frame_rotated_in_z", "[merli
 
     ml::Ray ray(ml::VEC3_ORIGIN, ml::VEC3_UNIT_Z);
 
-    ml::Ray ray_t = ml::RayAndFrame::ray_with_respect_to_frame(
+    ml::Ray ray_t = ml::ray_with_respect_to_frame(
         &ray,
         &frame);
 
@@ -173,7 +173,7 @@ TEST_CASE("RayAndFrameTest: transform_ray_into_rotated_frame", "[merlict]") {
 
     ml::Ray ray(ml::VEC3_ORIGIN, ml::VEC3_UNIT_X);
 
-    ml::Ray ray_t = ml::RayAndFrame::ray_with_respect_to_frame(
+    ml::Ray ray_t = ml::ray_with_respect_to_frame(
         &ray,
         &frame);
 

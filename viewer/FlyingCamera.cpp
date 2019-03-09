@@ -304,7 +304,7 @@ void FlyingCamera::acquire_image_with_camera(CameraDevice* cam, Image* img) {
 
 void FlyingCamera::print_ray_for_pixel_col_row(int col, int row) {
     Ray probing_ray = camera.get_ray_for_pixel_in_row_and_col(row, col);
-    Intersection intersec = RayAndFrame::rays_first_intersection_with_frame(
+    Intersection intersec = rays_first_intersection_with_frame(
         &probing_ray,
         world);
     clear_screen();
