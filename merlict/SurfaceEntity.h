@@ -10,7 +10,7 @@
 namespace merlict {
 
 class SurfaceEntity :public Frame {
-    const Frame* allowed_frame_to_propagate_to = &VOID_FRAME;
+    const Frame* _allowed_frame_to_propagate_to = &VOID_FRAME;
     bool _boundary_layer_is_transparent;
     const Color* outer_color;
     const Color* inner_color;
@@ -50,7 +50,7 @@ class SurfaceEntity :public Frame {
     const function::Func1* get_inner_refraction_()const;
     const function::Func1* get_outer_absorption_()const;
     const function::Func1* get_inner_absorption_()const;
-    const Frame* get_allowed_frame_to_propagate_to()const;
+    const Frame* allowed_frame_to_propagate_to()const;
     bool boundary_layer_is_transparent()const;
     bool has_restrictions_on_frames_to_propagate_to()const;
     std::string str()const;

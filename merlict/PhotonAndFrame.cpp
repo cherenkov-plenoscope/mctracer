@@ -104,7 +104,7 @@ void Propagator::propagate_on_after_boundary_layer(const Fresnel &fresnel) {
         !isec.going_to_default_refractive_index()
     )
         env.root_frame =
-            isec.get_object()->get_allowed_frame_to_propagate_to();
+            isec.get_object()->allowed_frame_to_propagate_to();
     else
         env.root_frame =
             isec.get_object()->root();

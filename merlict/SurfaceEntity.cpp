@@ -109,18 +109,16 @@ void SurfaceEntity::set_inner_absorption(const function::Func1* absorp) {
     inner_absorption_vs_wavelength = absorp;
 }
 
-void SurfaceEntity::set_allowed_frames_to_propagate_to(
-    const Frame* allowed_frame_to_propagate_to
-) {
-    this->allowed_frame_to_propagate_to = allowed_frame_to_propagate_to;
+void SurfaceEntity::set_allowed_frames_to_propagate_to(const Frame* frame) {
+   _allowed_frame_to_propagate_to = frame;
 }
 
 bool SurfaceEntity::has_restrictions_on_frames_to_propagate_to()const {
-    return allowed_frame_to_propagate_to != &VOID_FRAME;
+    return _allowed_frame_to_propagate_to != &VOID_FRAME;
 }
 
-const Frame* SurfaceEntity::get_allowed_frame_to_propagate_to()const {
-    return allowed_frame_to_propagate_to;
+const Frame* SurfaceEntity::allowed_frame_to_propagate_to()const {
+    return _allowed_frame_to_propagate_to;
 }
 
 void SurfaceEntity::set_outer_color(const Color* color) {
@@ -192,7 +190,7 @@ std::string SurfaceEntity::str()const {
         out << "opaque" << "\n";
 
     if (has_restrictions_on_frames_to_propagate_to())
-        out << " inner frame: " << allowed_frame_to_propagate_to->
+        out << " inner frame: " << _allowed_frame_to_propagate_to->
             path_in_tree() << "\n";
 
     return out.str();
