@@ -91,12 +91,12 @@ void HomTra3::set_rotation_component_based_on_rot_axis(const Rot3 R) {
 }
 
 void HomTra3::set_rotation_component_based_on_xyz_angles(const Rot3 R) {
-    const double cosRx = R.cosRx();
-    const double cosRy = R.cosRy();
-    const double cosRz = R.cosRz();
-    const double sinRx = R.sinRx();
-    const double sinRy = R.sinRy();
-    const double sinRz = R.sinRz();
+    const double cosRx = cos(R.rot_x());
+    const double cosRy = cos(R.rot_y());
+    const double cosRz = cos(R.rot_z());
+    const double sinRx = sin(R.rot_x());
+    const double sinRy = sin(R.rot_y());
+    const double sinRz = sin(R.rot_z());
     // first row
     T[0][0] = cosRy*cosRz;
     T[0][1] = cosRx*sinRz + sinRx*sinRy*cosRz;

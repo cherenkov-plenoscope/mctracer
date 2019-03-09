@@ -29,12 +29,6 @@ class Rot3 {
     double rot_x()const;
     double rot_y()const;
     double rot_z()const;
-    double cosRx()const;
-    double cosRy()const;
-    double cosRz()const;
-    double sinRx()const;
-    double sinRy()const;
-    double sinRz()const;
     bool operator == (const Rot3& eqRot)const;
 };
 

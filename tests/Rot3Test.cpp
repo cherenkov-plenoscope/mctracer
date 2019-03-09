@@ -49,19 +49,6 @@ TEST_CASE("Rot3Test: set_axis_mode", "[merlict]") {
   CHECK(!p.uses_xyz_angels());
 }
 
-TEST_CASE("Rot3Test: SineAndCosineWhenSetXYZ", "[merlict]") {
-  const double x = -3.141;
-  const double y = -2.0;
-  const double z = 1.0000;
-  ml::Rot3 r(x, y, z);
-  CHECK(r.sinRx() == sin(x));
-  CHECK(r.sinRy() == sin(y));
-  CHECK(r.sinRz() == sin(z));
-  CHECK(r.cosRx() == cos(x));
-  CHECK(r.cosRy() == cos(y));
-  CHECK(r.cosRz() == cos(z));
-}
-
 TEST_CASE("Rot3Test: zoro_rot_angle", "[merlict]") {
   ml::Rot3 r(ml::VEC3_ORIGIN, 0.0);
   CHECK(r == ml::ROT3_UNITY);

@@ -1,8 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
-#include <math.h>
+#include "merlict/Rot3.h"
 #include <sstream>
 #include <exception>
-#include "merlict/Rot3.h"
 
 namespace merlict {
 
@@ -75,15 +74,10 @@ std::string Rot3::str()const {
 }
 
 double Rot3::rot_x()const {return Rx;}
-double Rot3::rot_y()const {return Ry;}
-double Rot3::rot_z()const {return Rz;}
 
-double Rot3::cosRx() const {return cos(Rx);}
-double Rot3::cosRy() const {return cos(Ry);}
-double Rot3::cosRz() const {return cos(Rz);}
-double Rot3::sinRx() const {return sin(Rx);}
-double Rot3::sinRy() const {return sin(Ry);}
-double Rot3::sinRz() const {return sin(Rz);}
+double Rot3::rot_y()const {return Ry;}
+
+double Rot3::rot_z()const {return Rz;}
 
 bool Rot3::operator == (const Rot3& eqRot)const {
     return Rx == eqRot.Rx && Ry == eqRot.Ry && Rz == eqRot.Rz;
