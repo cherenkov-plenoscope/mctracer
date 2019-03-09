@@ -16,7 +16,7 @@ TEST_CASE("PhotonTest: creation", "[merlict]") {
     CHECK(pho.direction().norm() == 1.0);
     CHECK(pho.get_wavelength() == wavelength);
     // creation is an interaction
-    CHECK(pho.get_num_interactions_so_far() == 1u);
+    CHECK(pho.num_interactions() == 1u);
 }
 
 TEST_CASE("PhotonTest: reject_negative_wavelength", "[merlict]") {
@@ -81,7 +81,7 @@ TEST_CASE("PhotonTest: PropagationSimpleGeometry", "[merlict]") {
         ml::Photon P(Support, direction, wavelength);
         ml::Propagator(&P, environment);
         CHECK(P.accumulated_distance() == num_bounces*1.0-0.5);
-        CHECK(P.get_num_interactions_so_far() == num_of_total_interactions);
+        CHECK(P.num_interactions() == num_of_total_interactions);
     }
 }
 

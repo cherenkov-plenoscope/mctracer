@@ -12,7 +12,7 @@ TEST_CASE("RayForPropagationTest: Constructor_using_vectors", "[merlict]") {
 
     CHECK(prop_ray.support() == support);
     CHECK(prop_ray.direction() == direction);
-    CHECK(prop_ray.get_num_interactions_so_far() == 1u);
+    CHECK(prop_ray.num_interactions() == 1u);
     // creation itselt
     CHECK(prop_ray.simulation_truth_id == 1337);
 }

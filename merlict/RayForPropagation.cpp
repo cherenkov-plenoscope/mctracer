@@ -32,7 +32,7 @@ std::string RayForPropagation::str()const {
     std::stringstream out;
     out << Ray::str() << ", ";
     out << "ID: " << simulation_truth_id << ", Interactions: ";
-    out << get_num_interactions_so_far() << "\n";
+    out << num_interactions() << "\n";
     out << get_history_print();
     return out.str();
 }
@@ -76,7 +76,7 @@ double RayForPropagation::accumulated_distance()const {
     return accumulative_distance;
 }
 
-unsigned int RayForPropagation::get_num_interactions_so_far()const {
+unsigned int RayForPropagation::num_interactions()const {
     return (unsigned int)(intersection_history.size());
 }
 

@@ -40,7 +40,7 @@ TEST_CASE("SphereIntersectionTest: frontal", "[merlict]") {
     ml::Photon P(support , direction, st.wavelength);
     ml::Propagator(&P, st.env);
 
-    REQUIRE(2u == P.get_num_interactions_so_far());
+    REQUIRE(2u == P.num_interactions());
     REQUIRE(-st.radius-x_pos == P.accumulated_distance());
 
     CHECK(P.get_intersection_at(1).surface_normal_in_object_frame() == ml::VEC3_UNIT_X*(-1));
@@ -70,7 +70,7 @@ TEST_CASE("SphereIntersectionTest: tangential_intersection", "[merlict]") {
     ml::Vec3 direction(1, 0, 0);
     ml::Photon P(support, direction, st.wavelength);
     ml::Propagator(&P, st.env);
-    REQUIRE(P.get_num_interactions_so_far() == 2u);
+    REQUIRE(P.num_interactions() == 2u);
     ml::Vec3 normal = ml::VEC3_UNIT_Z;
     CHECK(0 == Approx(normal.distance_to(P.get_intersection_at(1).surface_normal_in_object_frame())).margin(1e-12));
 }

@@ -22,7 +22,7 @@ void TrajectoryFactory::append_trajectory_to(Frame* root_frame) {
 
     for (
         unsigned int i = 0;
-        i < ray->get_num_interactions_so_far();
+        i < ray->num_interactions();
         i++
     ) {
         if (is_not_the_last_intersection(i)) {
@@ -64,7 +64,7 @@ void TrajectoryFactory::erase_trajectory_from(Frame* root_frame) {
 bool TrajectoryFactory::is_not_the_last_intersection(
     const unsigned int part_index
 )const {
-    return part_index < ray->get_num_interactions_so_far() - 1;
+    return part_index < ray->num_interactions() - 1;
 }
 
 std::string TrajectoryFactory::get_trajectory_of_part_index(

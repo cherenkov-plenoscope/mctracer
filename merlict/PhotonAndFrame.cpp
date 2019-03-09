@@ -16,7 +16,7 @@ void Propagator::propagate() {
 }
 
 bool Propagator::limit_of_interactions_is_not_reached_yet()const {
-    return ph->get_num_interactions_so_far() <=
+    return ph->num_interactions() <=
         env.config->max_num_interactions_per_photon;
 }
 
