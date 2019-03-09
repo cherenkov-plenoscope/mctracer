@@ -16,7 +16,7 @@ bool ray_support_inside_frames_bounding_sphere(
     const Ray* ray,
     const Frame *frame);
 
-bool ray_has_intersection_with_bounding_sphere_of(
+bool ray_intersects_frames_bounding_sphere(
     const Ray* ray,
     const Frame* frame);
 

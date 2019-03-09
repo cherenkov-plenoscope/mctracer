@@ -14,7 +14,7 @@ bool ray_support_inside_frames_bounding_sphere(
         norm_is_less_equal_than(frame->get_bounding_sphere_radius());
 }
 
-bool ray_has_intersection_with_bounding_sphere_of(
+bool ray_intersects_frames_bounding_sphere(
     const Ray* ray,
     const Frame *frame
 ) {
@@ -135,7 +135,7 @@ CausalIntersection::CausalIntersection(
 void CausalIntersection::find_intersection_candidates_in_tree_of_frames(
     const Frame* frame
 ) {
-    if (ray_has_intersection_with_bounding_sphere_of(ray, frame)) {
+    if (ray_intersects_frames_bounding_sphere(ray, frame)) {
         if (frame->has_children()) {
             for (unsigned int i = 0; i < frame->get_children()->size(); i++)
                 find_intersection_candidates_in_tree_of_frames(
