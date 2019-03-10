@@ -17,8 +17,7 @@ class Intersection {
     const SurfaceEntity* object;
     double distance_of_ray;
     bool _from_outside_to_inside;
-    bool ray_is_running_from_outside_to_inside(
-        const Vec3& incident_in_obj_sys)const;
+    bool ray_runs_from_outside_to_inside(const Vec3& incident_in_obj_sys)const;
 
  public:
     Intersection();

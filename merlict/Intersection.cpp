@@ -27,7 +27,7 @@ Intersection::Intersection(
     object(intersectiong_object),
     distance_of_ray(distance_of_ray_support_to_intersection),
     _from_outside_to_inside(
-        ray_is_running_from_outside_to_inside(incident_in_obj_sys))
+        ray_runs_from_outside_to_inside(incident_in_obj_sys))
 {}
 
 bool Intersection::does_intersect()const {
@@ -132,7 +132,7 @@ const Color Intersection::facing_color()const {
         *object->get_inner_color();
 }
 
-bool Intersection::ray_is_running_from_outside_to_inside(
+bool Intersection::ray_runs_from_outside_to_inside(
     const Vec3& incident_in_obj_sys
 )const {
     double projection_of_incident_onto_normal =
