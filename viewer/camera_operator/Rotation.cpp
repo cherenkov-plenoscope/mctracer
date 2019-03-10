@@ -38,7 +38,7 @@ void Rotation::look_further_up() {
 }
 
 void Rotation::look_straight_up() {
-    RotWorld2CameraY_in_rad = 0.0;
+    RotWorld2CameraY_in_rad = 0.;
     update_R_World2Camera();
 }
 
@@ -47,7 +47,7 @@ void Rotation::increment_rot_y() {
 }
 
 void Rotation::update_R_World2Camera() {
-    R_World2Camera.set(0.0, RotWorld2CameraY_in_rad, RotWorld2CameraZ_in_rad);
+    R_World2Camera.set(0., RotWorld2CameraY_in_rad, RotWorld2CameraZ_in_rad);
     camera->set_pos_rot_fov(
         camera->position(),
         R_World2Camera,
@@ -130,11 +130,11 @@ Rotation::print_when_verbose_camera_rotation_for_z_axis_manipulation()const {
 }
 
 void Rotation::assert_RotWorld2CameraZ_is_not_overtwisting() {
-    RotWorld2CameraZ_in_rad = fmod(RotWorld2CameraZ_in_rad, (2.0*M_PI));
+    RotWorld2CameraZ_in_rad = fmod(RotWorld2CameraZ_in_rad, (2.*M_PI));
 }
 
 double Rotation::rotation_increment()const {
-    return camera->field_of_view()/25.0;
+    return camera->field_of_view()/25.;
 }
 
 Rot3 Rotation::get_R_World2Camera()const {
