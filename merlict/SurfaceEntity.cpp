@@ -57,7 +57,7 @@ void SurfaceEntity::init_surface_defaults() {
     inner_absorption_vs_wavelength = DEFAULT_ABSORPTION;
 }
 
-const function::Func1* SurfaceEntity::get_outer_reflection_()const {
+const function::Func1* SurfaceEntity::outer_reflection()const {
     return outer_reflection_vs_wavelength;
 }
 
@@ -146,7 +146,7 @@ void SurfaceEntity::take_boundary_layer_properties_from(
 ) {
     set_outer_color(proto->get_outer_color());
     set_inner_color(proto->get_inner_color());
-    set_outer_reflection(proto->get_outer_reflection_());
+    set_outer_reflection(proto->outer_reflection());
     set_inner_reflection(proto->get_inner_reflection_());
     set_outer_refraction(proto->get_outer_refraction_());
     set_inner_refraction(proto->get_inner_refraction_());
@@ -160,7 +160,7 @@ void SurfaceEntity::take_boundary_layer_properties_but_inside_out_from(
     set_outer_color(proto->get_inner_color());
     set_inner_color(proto->get_outer_color());
     set_outer_reflection(proto->get_inner_reflection_());
-    set_inner_reflection(proto->get_outer_reflection_());
+    set_inner_reflection(proto->outer_reflection());
     set_outer_refraction(proto->get_inner_refraction_());
     set_inner_refraction(proto->get_outer_refraction_());
     set_outer_absorption(proto->get_inner_absorption_());

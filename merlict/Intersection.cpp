@@ -86,7 +86,7 @@ double Intersection::facing_reflection_propability(
     const double wavelength
 )const {
     return _from_outside_to_inside ?
-    object->get_outer_reflection_()->evaluate(wavelength):
+    object->outer_reflection()->evaluate(wavelength):
     object->get_inner_reflection_()->evaluate(wavelength);
 }
 

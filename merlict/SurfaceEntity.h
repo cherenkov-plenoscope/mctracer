@@ -44,7 +44,7 @@ class SurfaceEntity :public Frame {
         const SurfaceEntity* proto);
     const Color* get_outer_color()const;
     const Color* get_inner_color()const;
-    const function::Func1* get_outer_reflection_()const;
+    const function::Func1* outer_reflection()const;
     const function::Func1* get_inner_reflection_()const;
     const function::Func1* get_outer_refraction_()const;
     const function::Func1* get_inner_refraction_()const;
