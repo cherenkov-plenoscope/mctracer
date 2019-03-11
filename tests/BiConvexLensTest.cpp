@@ -56,8 +56,8 @@ struct BiConvexLensTest {
                     {1200e-9, 1.49}
                 }));
 
-        lens->set_outer_color(scenery.colors.get("lens_color"));
-        lens->set_inner_color(scenery.colors.get("lens_color"));
+        lens->outer_color = scenery.colors.get("lens_color");
+        lens->inner_color = scenery.colors.get("lens_color");
         lens->set_inner_refraction(scenery.functions.get("refraction_vs_wavelength"));
         lens->set_curvature_radius_and_aperture_radius(
             ml::lens_maker::get_curvature_radius(cfg),
@@ -70,8 +70,8 @@ struct BiConvexLensTest {
             ml::ROT3_UNITY);
 
         scenery.colors.add("sensor_color", ml::Color(128, 255, 128));
-        image_sensor->set_outer_color(scenery.colors.get("sensor_color"));
-        image_sensor->set_inner_color(scenery.colors.get("sensor_color"));
+        image_sensor->outer_color = scenery.colors.get("sensor_color");
+        image_sensor->inner_color = scenery.colors.get("sensor_color");
         image_sensor->set_radius(cfg.aperture_radius);
 
         scenery.sensors.add(0, image_sensor);

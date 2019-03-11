@@ -49,8 +49,8 @@ void add_stl_to_frame(
             facet.a*scale,
             facet.b*scale,
             facet.c*scale);
-        tri->set_outer_color(&COLOR_GRAY);
-        tri->set_inner_color(&COLOR_DARK_GRAY);
+        tri->outer_color = &COLOR_GRAY;
+        tri->inner_color = &COLOR_DARK_GRAY;
     }
 }
 

@@ -121,22 +121,6 @@ const Frame* SurfaceEntity::allowed_frame_to_propagate_to()const {
     return _allowed_frame_to_propagate_to;
 }
 
-void SurfaceEntity::set_outer_color(const Color* color) {
-    outer_color = color;
-}
-
-void SurfaceEntity::set_inner_color(const Color* color) {
-    inner_color = color;
-}
-
-const Color* SurfaceEntity::get_outer_color()const {
-    return outer_color;
-}
-
-const Color* SurfaceEntity::get_inner_color()const {
-    return inner_color;
-}
-
 bool SurfaceEntity::boundary_layer_is_transparent()const {
     return _boundary_layer_is_transparent;
 }
@@ -144,8 +128,8 @@ bool SurfaceEntity::boundary_layer_is_transparent()const {
 void SurfaceEntity::take_boundary_layer_properties_from(
     const SurfaceEntity* proto
 ) {
-    set_outer_color(proto->get_outer_color());
-    set_inner_color(proto->get_inner_color());
+    outer_color = proto->outer_color;
+    inner_color = proto->inner_color;
     set_outer_reflection(proto->outer_reflection());
     set_inner_reflection(proto->inner_reflection());
     set_outer_refraction(proto->outer_refraction());
@@ -157,8 +141,8 @@ void SurfaceEntity::take_boundary_layer_properties_from(
 void SurfaceEntity::take_boundary_layer_properties_but_inside_out_from(
     const SurfaceEntity* proto
 ) {
-    set_outer_color(proto->get_inner_color());
-    set_inner_color(proto->get_outer_color());
+    outer_color = proto->inner_color;
+    inner_color = proto->outer_color;
     set_outer_reflection(proto->inner_reflection());
     set_inner_reflection(proto->outer_reflection());
     set_outer_refraction(proto->inner_refraction());

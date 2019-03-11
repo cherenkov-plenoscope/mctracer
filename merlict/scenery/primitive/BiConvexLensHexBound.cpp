@@ -58,8 +58,8 @@ void BiConvexLensHexBound::set_curvature_radius_and_outer_hex_radius(
                 0.0),
             Rot3(M_PI*0.5, M_PI*0.5, phi));
         walls[i]->set_x_hight_and_y_width(hight, outer_aperture_radius);
-        walls[i]->set_outer_color(&COLOR_GREEN);
-        walls[i]->set_inner_color(&COLOR_GREEN);
+        walls[i]->outer_color = &COLOR_GREEN;
+        walls[i]->inner_color = &COLOR_GREEN;
     }
 }
 

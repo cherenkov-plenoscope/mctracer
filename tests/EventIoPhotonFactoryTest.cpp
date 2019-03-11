@@ -32,35 +32,30 @@ TEST_CASE("EventIoPhotonFactoryTest: intersection_point_on_ground", "[merlict]")
                     photons.push_back(cpf.make_photon());
 
                     // propagate merlict photons down to ground
-                    ml::Frame world;
-                    world.set_name_pos_rot(
-                        "world",
-                        ml::VEC3_ORIGIN,
-                        ml::ROT3_UNITY);
-
-                    ml::Disc* ground = world.add<ml::Disc>();
+                    ml::Scenery scenery;
+                    ml::Disc* ground = scenery.root.add<ml::Disc>();
                     ground->set_name_pos_rot(
                         "ground",
                         ml::VEC3_ORIGIN,
                         ml::ROT3_UNITY);
-                    const ml::Color* ground_color = &ml::COLOR_GRAY;
+                    scenery.colors.add("ground_color", ml::COLOR_GRAY);
                     const unsigned int ground_sensor_id = 0;
-                    ground->set_outer_color(ground_color);
-                    ground->set_inner_color(ground_color);
+                    ground->outer_color = scenery.colors.get("ground_color");
+                    ground->inner_color = scenery.colors.get("ground_color");
                     ground->set_radius(1e3);
 
                     ml::sensor::Sensor sensor(ground_sensor_id, ground);
                     std::vector<ml::sensor::Sensor*> sensor_vec = {&sensor};
                     ml::sensor::Sensors sensor_list(sensor_vec);
 
-                    world.init_tree_based_on_mother_child_relations();
+                    scenery.root.init_tree_based_on_mother_child_relations();
 
                     // propagation settings
                     ml::PropagationConfig settings;
 
                     // photon propagation down to the ground
                     ml::propagate_photons_in_frame_with_config(
-                        &photons, &world, &settings, &prng);
+                        &photons, &scenery.root, &settings, &prng);
 
                     // detect photons in ground sensor
                     sensor_list.clear_history();
@@ -244,29 +239,27 @@ TEST_CASE("EventIoPhotonFactoryTest: correct_rel_time_when_intersecting_ground",
         }
 
         // propagate merlict photons down to ground
-        ml::Frame world;
-        world.set_name_pos_rot("world", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
-
-        ml::Disc* ground = world.add<ml::Disc>();
+        ml::Scenery scenery;
+        ml::Disc* ground = scenery.root.add<ml::Disc>();
         ground->set_name_pos_rot("ground", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
-        const ml::Color* ground_color = &ml::COLOR_GRAY;
+        scenery.colors.add("ground_color", ml::COLOR_GRAY);
         const unsigned int ground_sensor_id = 0;
-        ground->set_outer_color(ground_color);
-        ground->set_inner_color(ground_color);
+        ground->outer_color = scenery.colors.get("ground_color");
+        ground->inner_color = scenery.colors.get("ground_color");
         ground->set_radius(1e7);
 
         ml::sensor::Sensor sensor(ground_sensor_id, ground);
         std::vector<ml::sensor::Sensor*> sensor_vec = {&sensor};
         ml::sensor::Sensors sensor_list(sensor_vec);
 
-        world.init_tree_based_on_mother_child_relations();
+        scenery.root.init_tree_based_on_mother_child_relations();
 
         // propagation settings
         ml::PropagationConfig settings;
 
         // photon propagation
         ml::propagate_photons_in_frame_with_config(
-            &photons, &world, &settings, &prng);
+            &photons, &scenery.root, &settings, &prng);
 
         // detect photons in sensors
         sensor_list.clear_history();

@@ -12,8 +12,6 @@ namespace merlict {
 class SurfaceEntity :public Frame {
     const Frame* _allowed_frame_to_propagate_to = &VOID_FRAME;
     bool _boundary_layer_is_transparent;
-    const Color* outer_color;
-    const Color* inner_color;
     const function::Func1* outer_reflection_vs_wavelength;
     const function::Func1* inner_reflection_vs_wavelength;
     const function::Func1* outer_refraction_vs_wavelength;
@@ -30,8 +28,10 @@ class SurfaceEntity :public Frame {
         const std::string new_name,
         const Vec3 new_pos,
         const Rot3 new_rot);
-    void set_outer_color(const Color* color);
-    void set_inner_color(const Color* color);
+
+    const Color* outer_color;
+    const Color* inner_color;
+
     void set_outer_reflection(const function::Func1* refl);
     void set_inner_reflection(const function::Func1* refl);
     void set_outer_refraction(const function::Func1* refrac);
@@ -42,8 +42,6 @@ class SurfaceEntity :public Frame {
     void take_boundary_layer_properties_from(const SurfaceEntity* proto);
     void take_boundary_layer_properties_but_inside_out_from(
         const SurfaceEntity* proto);
-    const Color* get_outer_color()const;
-    const Color* get_inner_color()const;
     const function::Func1* outer_reflection()const;
     const function::Func1* inner_reflection()const;
     const function::Func1* outer_refraction()const;

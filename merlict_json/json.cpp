@@ -195,11 +195,9 @@ void set_frame(Frame *f, const Object &o) {
 void set_surface(SurfaceEntity *s, Scenery *scenery, const Object &o) {
     const Object &su = o.obj("surface");
     if (su.key("inner_color"))
-        s->set_inner_color(
-            scenery->colors.get(su.st("inner_color")));
+        s->inner_color = scenery->colors.get(su.st("inner_color"));
     if (su.key("outer_color"))
-        s->set_outer_color(
-            scenery->colors.get(su.st("outer_color")));
+        s->outer_color = scenery->colors.get(su.st("outer_color"));
     if (su.key("inner_reflection"))
         s->set_inner_reflection(
             scenery->functions.get(su.st("inner_reflection")));

@@ -299,8 +299,8 @@ int main(int argc, char* argv[]) {
 
     re::SurfaceEntity* reflector = scenery.root.add<re::SurfaceEntity>();
     reflector->set_name_pos_rot("reflector", re::Vec3(0, 0, 0), re::Rot3(0, 0, 0));
-    reflector->set_inner_color(scenery.colors.get("mirror_color"));
-    reflector->set_outer_color(scenery.colors.get("black"));
+    reflector->inner_color = scenery.colors.get("mirror_color");
+    reflector->outer_color = scenery.colors.get("black");
     reflector->set_inner_reflection(scenery.functions.get("mirror_reflectivity"));
 
     re::segmented_imaging_reflector::Factory refl_fab(r_cfg);
@@ -330,8 +330,8 @@ int main(int argc, char* argv[]) {
             re::Vec3(x, y, 0),
             re::Rot3(0, 0, re::deg2rad(30)));
         pixel_aperture->set_outer_hex_radius(0.00495);
-        pixel_aperture->set_inner_color(scenery.colors.get("pixel_red"));
-        pixel_aperture->set_outer_color(scenery.colors.get("pixel_red"));
+        pixel_aperture->inner_color = scenery.colors.get("pixel_red");
+        pixel_aperture->outer_color = scenery.colors.get("pixel_red");
 
         scenery.sensors.add(chid, pixel_aperture);
     }

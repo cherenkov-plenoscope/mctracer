@@ -20,8 +20,8 @@ struct SphereIntersectionTest {
         radius = 1;
         my_sphere = scenery.root.add<ml::Sphere>();
         my_sphere->set_name_pos_rot("my_sphere", ml::Vec3(0, 0, 0), ml::Rot3(0, 0, 0));
-        my_sphere->set_inner_color(scenery.colors.get("col"));
-        my_sphere->set_outer_color(scenery.colors.get("col"));
+        my_sphere->inner_color = scenery.colors.get("col");
+        my_sphere->outer_color = scenery.colors.get("col");
         my_sphere->set_radius(radius);
 
         scenery.root.init_tree_based_on_mother_child_relations();

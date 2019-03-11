@@ -127,9 +127,7 @@ bool Intersection::boundary_layer_is_transparent()const {
 }
 
 const Color Intersection::facing_color()const {
-    return _from_outside_to_inside ?
-        *object->get_outer_color():
-        *object->get_inner_color();
+    return _from_outside_to_inside ? *object->outer_color: *object->inner_color;
 }
 
 bool Intersection::ray_runs_from_outside_to_inside(

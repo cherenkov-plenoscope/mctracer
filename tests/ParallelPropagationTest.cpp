@@ -29,8 +29,8 @@ TEST_CASE("ParallelPropagationTest: propagate_once", "[merlict]") {
         "red_disc",
         ml::Vec3(0, 0, 1),
         ml::Rot3(0, 0, 0));
-    disc->set_outer_color(scenery.colors.get("red"));
-    disc->set_inner_color(scenery.colors.get("red"));
+    disc->outer_color = scenery.colors.get("red");
+    disc->inner_color = scenery.colors.get("red");
     disc->set_inner_reflection(scenery.functions.get("fifty_fifty"));
     disc->set_outer_reflection(scenery.functions.get("fifty_fifty"));
     disc->set_radius(5.0);

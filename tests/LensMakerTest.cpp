@@ -39,8 +39,6 @@ TEST_CASE("lens_makerTest: check_lensmaker_on_optical_table_with_lens", "[merlic
     double lens_curvature_radius = ml::lens_maker::get_curvature_radius(cfg);
 
     // ok lets test it...
-    const ml::Color* lens_col = &ml::COLOR_GRAY;
-    const ml::Color* sensor_disc_col = &ml::COLOR_DARK_GRAY;
     const ml::function::Func1 refraction_vs_wavelength(
         {
             {200e-9, cfg.refractive_index},
@@ -58,29 +56,38 @@ TEST_CASE("lens_makerTest: check_lensmaker_on_optical_table_with_lens", "[merlic
         double image_sensor_disc_distance = cfg.focal_length + offset;
 
         // geometry
-        ml::Frame optical_table;
-        optical_table.set_name_pos_rot("table", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
+        ml::Scenery scenery;
+        scenery.colors.add("lens_col", ml::COLOR_GRAY);
+        scenery.colors.add("sensor_disc_col", ml::COLOR_DARK_GRAY);
+        scenery.functions.add(
+            "refraction_vs_wavelength",
+            ml::function::Func1(
+                {
+                    {200e-9, cfg.refractive_index},
+                    {1200e-9, cfg.refractive_index}
+                }));
         ml::BiConvexLensHexBound* lens =
-            optical_table.add<ml::BiConvexLensHexBound>();
+            scenery.root.add<ml::BiConvexLensHexBound>();
         lens->set_name_pos_rot("lens", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
-        lens->set_outer_color(lens_col);
-        lens->set_inner_color(lens_col);
-        lens->set_inner_refraction(&refraction_vs_wavelength);
+        lens->outer_color = scenery.colors.get("lens_col");
+        lens->inner_color = scenery.colors.get("lens_col");
+        lens->set_inner_refraction(
+            scenery.functions.get("refraction_vs_wavelength"));
         lens->set_curvature_radius_and_outer_hex_radius(
             lens_curvature_radius,
             cfg.aperture_radius);
-        ml::Disc* sensor_disc = optical_table.add<ml::Disc>();
+        ml::Disc* sensor_disc = scenery.root.add<ml::Disc>();
         sensor_disc->set_name_pos_rot(
             "sensor_disc",
             ml::Vec3(0.0, 0.0, -image_sensor_disc_distance),
             ml::ROT3_UNITY);
-        sensor_disc->set_outer_color(sensor_disc_col);
-        sensor_disc->set_inner_color(sensor_disc_col);
+        sensor_disc->outer_color = scenery.colors.get("sensor_disc_col");
+        sensor_disc->inner_color = scenery.colors.get("sensor_disc_col");
         sensor_disc->set_radius(cfg.aperture_radius*0.85);
         ml::sensor::Sensor sensor(0, sensor_disc);
         std::vector<ml::sensor::Sensor*> sensor_vec = {&sensor};
         ml::sensor::Sensors sensor_list(sensor_vec);
-        optical_table.init_tree_based_on_mother_child_relations();
+        scenery.root.init_tree_based_on_mother_child_relations();
 
         // light source
         std::vector<ml::Photon> photons =
@@ -99,7 +106,7 @@ TEST_CASE("lens_makerTest: check_lensmaker_on_optical_table_with_lens", "[merlic
 
         // photon propagation
         ml::propagate_photons_in_frame_with_config(
-            &photons, &optical_table, &settings, &prng);
+            &photons, &scenery.root, &settings, &prng);
 
         // detect photons in sensors
         sensor_list.clear_history();
