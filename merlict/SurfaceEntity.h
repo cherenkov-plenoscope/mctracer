@@ -45,11 +45,11 @@ class SurfaceEntity :public Frame {
     const Color* get_outer_color()const;
     const Color* get_inner_color()const;
     const function::Func1* outer_reflection()const;
-    const function::Func1* get_inner_reflection_()const;
-    const function::Func1* get_outer_refraction_()const;
-    const function::Func1* get_inner_refraction_()const;
-    const function::Func1* get_outer_absorption_()const;
-    const function::Func1* get_inner_absorption_()const;
+    const function::Func1* inner_reflection()const;
+    const function::Func1* outer_refraction()const;
+    const function::Func1* inner_refraction()const;
+    const function::Func1* outer_absorption()const;
+    const function::Func1* inner_absorption()const;
     const Frame* allowed_frame_to_propagate_to()const;
     bool boundary_layer_is_transparent()const;
     bool has_restrictions_on_frames_to_propagate_to()const;

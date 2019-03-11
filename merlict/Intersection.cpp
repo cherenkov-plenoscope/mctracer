@@ -87,39 +87,39 @@ double Intersection::facing_reflection_propability(
 )const {
     return _from_outside_to_inside ?
     object->outer_reflection()->evaluate(wavelength):
-    object->get_inner_reflection_()->evaluate(wavelength);
+    object->inner_reflection()->evaluate(wavelength);
 }
 
 double Intersection::refractive_index_going_to(const double wavelength)const {
     return _from_outside_to_inside ?
-    object->get_inner_refraction_()->evaluate(wavelength):
-    object->get_outer_refraction_()->evaluate(wavelength);
+    object->inner_refraction()->evaluate(wavelength):
+    object->outer_refraction()->evaluate(wavelength);
 }
 
 bool Intersection::going_to_default_refractive_index()const {
     return _from_outside_to_inside ?
-    object->get_inner_refraction_() == SurfaceEntity::DEFAULT_REFRACTION:
-    object->get_outer_refraction_() == SurfaceEntity::DEFAULT_REFRACTION;
+    object->inner_refraction() == SurfaceEntity::DEFAULT_REFRACTION:
+    object->outer_refraction() == SurfaceEntity::DEFAULT_REFRACTION;
 }
 
 double Intersection::refractive_index_coming_from(
     const double wavelength
 )const {
     return _from_outside_to_inside ?
-    object->get_outer_refraction_()->evaluate(wavelength):
-    object->get_inner_refraction_()->evaluate(wavelength);
+    object->outer_refraction()->evaluate(wavelength):
+    object->inner_refraction()->evaluate(wavelength);
 }
 
 double Intersection::half_way_depth_coming_from(const double wavelength)const {
     return _from_outside_to_inside ?
-    object->get_outer_absorption_()->evaluate(wavelength):
-    object->get_inner_absorption_()->evaluate(wavelength);
+    object->outer_absorption()->evaluate(wavelength):
+    object->inner_absorption()->evaluate(wavelength);
 }
 
 double Intersection::half_way_depth_going_to(const double wavelength)const {
     return _from_outside_to_inside ?
-    object->get_inner_absorption_()->evaluate(wavelength):
-    object->get_outer_absorption_()->evaluate(wavelength);
+    object->inner_absorption()->evaluate(wavelength):
+    object->outer_absorption()->evaluate(wavelength);
 }
 
 bool Intersection::boundary_layer_is_transparent()const {
