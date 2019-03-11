@@ -58,7 +58,7 @@ struct BiConvexLensTest {
 
         lens->outer_color = scenery.colors.get("lens_color");
         lens->inner_color = scenery.colors.get("lens_color");
-        lens->set_inner_refraction(scenery.functions.get("refraction_vs_wavelength"));
+        lens->inner_refraction = scenery.functions.get("refraction_vs_wavelength");
         lens->set_curvature_radius_and_aperture_radius(
             ml::lens_maker::get_curvature_radius(cfg),
             cfg.aperture_radius);

@@ -44,15 +44,15 @@ TEST_CASE("PhotonTest: PropagationSimpleGeometry", "[merlict]") {
     // ------------mirror 1----------------
     ml::Plane* mirror1 = optical_table->add<ml::Plane>();
     mirror1->set_name_pos_rot("mirror_1", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
-    mirror1->set_outer_reflection(scenery.functions.get("refl1"));
-    mirror1->set_inner_reflection(scenery.functions.get("refl1"));
+    mirror1->outer_reflection = scenery.functions.get("refl1");
+    mirror1->inner_reflection = scenery.functions.get("refl1");
     mirror1->set_x_y_width(1.0, 1.0);
 
     // ------------mirror 2----------------
     ml::Plane* mirror2 = optical_table->add<ml::Plane>();
     mirror2->set_name_pos_rot("mirror_2", ml::Vec3(0.0, 0.0, 1.0), ml::ROT3_UNITY);
-    mirror2->set_outer_reflection(scenery.functions.get("refl1"));
-    mirror2->set_inner_reflection(scenery.functions.get("refl1"));
+    mirror2->outer_reflection = scenery.functions.get("refl1");
+    mirror2->inner_reflection = scenery.functions.get("refl1");
     mirror2->set_x_y_width(1.0, 1.0);
 
     // ---post initialize the world to calculate all bounding spheres---
@@ -125,8 +125,8 @@ TEST_CASE("PhotonTest: Reflections", "[merlict]") {
         ml::Rot3(0, ml::deg2rad(90), ml::deg2rad(45)));
     mirror->outer_color = scenery.colors.get("mirror_color");
     mirror->inner_color = scenery.colors.get("mirror_color");
-    mirror->set_outer_reflection(scenery.functions.get("mirror_reflection"));
-    mirror->set_inner_reflection(scenery.functions.get("mirror_reflection"));
+    mirror->outer_reflection = scenery.functions.get("mirror_reflection");
+    mirror->inner_reflection = scenery.functions.get("mirror_reflection");
     mirror->set_x_y_width(1.0, 1.0);
 
     // ------------absorber----------------
@@ -193,7 +193,7 @@ TEST_CASE("PhotonTest: Refraction", "[merlict]") {
         ml::Rot3(0.0, 0.0, 0.0));
     box->outer_color = scenery.colors.get("entrance_surface_color");
     box->inner_color = scenery.colors.get("entrance_surface_color");
-    box->set_inner_refraction(scenery.functions.get("water_refraction"));
+    box->inner_refraction = scenery.functions.get("water_refraction");
     box->set_xyz_width(1.0, 1.0, 1.0);
 
     // ------------absorber----------------
@@ -260,8 +260,8 @@ TEST_CASE("PhotonTest: absorbtion_in_medium", "[merlict]") {
         ml::Rot3(0.0, 0.0, 0.0));
     box->outer_color = scenery.colors.get("entrance_surface_color");
     box->inner_color = scenery.colors.get("entrance_surface_color");
-    box->set_inner_absorption(scenery.functions.get("free_half_path"));
-    box->set_inner_refraction(scenery.functions.get("water_refraction"));
+    box->inner_absorption = scenery.functions.get("free_half_path");
+    box->inner_refraction = scenery.functions.get("water_refraction");
     box->set_xyz_width(1.0, 1.0, 1.0);
 
     // ------------collector----------------

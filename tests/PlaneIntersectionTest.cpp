@@ -23,8 +23,8 @@ struct PlaneIntersectionTest {
 
         plane = scenery.root.add<ml::Plane>();
         plane->set_name_pos_rot("plane", ml::Vec3(0, 0, 0), ml::Rot3(0, 0, 0));
-        plane->set_outer_reflection(scenery.functions.get("refl_vs_wavl"));
-        plane->set_inner_reflection(scenery.functions.get("refl_vs_wavl"));
+        plane->outer_reflection = scenery.functions.get("refl_vs_wavl");
+        plane->inner_reflection = scenery.functions.get("refl_vs_wavl");
         plane->set_x_y_width(x_width, y_width);
 
         scenery.root.init_tree_based_on_mother_child_relations();
@@ -87,8 +87,8 @@ TEST_CASE("PlaneIntersectionTest: move_plane_up", "[merlict]") {
 
     ml::Plane* plane2 = pt.scenery.root.add<ml::Plane>();
     plane2->set_name_pos_rot("plane2", ml::Vec3(0, 0, 1), ml::Rot3(0, 0, 0));
-    plane2->set_outer_reflection(pt.scenery.functions.get("refl_vs_wavl"));
-    plane2->set_inner_reflection(pt.scenery.functions.get("refl_vs_wavl"));
+    plane2->outer_reflection = pt.scenery.functions.get("refl_vs_wavl");
+    plane2->inner_reflection = pt.scenery.functions.get("refl_vs_wavl");
     plane2->set_x_y_width(pt.x_width, pt.y_width);
 
     pt.scenery.root.init_tree_based_on_mother_child_relations();

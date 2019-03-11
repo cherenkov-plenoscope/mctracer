@@ -45,62 +45,14 @@ void SurfaceEntity::init_surface_defaults() {
     outer_color = DEFAULT_COLOR;
     inner_color = DEFAULT_COLOR;
 
-    outer_reflection_vs_wavelength = DEFAULT_REFLECTION;
-    inner_reflection_vs_wavelength = DEFAULT_REFLECTION;
+    outer_reflection = DEFAULT_REFLECTION;
+    inner_reflection = DEFAULT_REFLECTION;
 
-    outer_refraction_vs_wavelength = DEFAULT_REFRACTION;
-    inner_refraction_vs_wavelength = DEFAULT_REFRACTION;
+    outer_refraction = DEFAULT_REFRACTION;
+    inner_refraction = DEFAULT_REFRACTION;
 
-    outer_absorption_vs_wavelength = DEFAULT_ABSORPTION;
-    inner_absorption_vs_wavelength = DEFAULT_ABSORPTION;
-}
-
-const function::Func1* SurfaceEntity::outer_reflection()const {
-    return outer_reflection_vs_wavelength;
-}
-
-const function::Func1* SurfaceEntity::inner_reflection()const {
-    return inner_reflection_vs_wavelength;
-}
-
-const function::Func1* SurfaceEntity::outer_refraction()const {
-    return outer_refraction_vs_wavelength;
-}
-
-const function::Func1* SurfaceEntity::inner_refraction()const {
-    return inner_refraction_vs_wavelength;
-}
-
-const function::Func1* SurfaceEntity::outer_absorption()const {
-    return outer_absorption_vs_wavelength;
-}
-
-const function::Func1* SurfaceEntity::inner_absorption()const {
-    return inner_absorption_vs_wavelength;
-}
-
-void SurfaceEntity::set_outer_reflection(const function::Func1* reflec) {
-    outer_reflection_vs_wavelength = reflec;
-}
-
-void SurfaceEntity::set_inner_reflection(const function::Func1* reflec) {
-    inner_reflection_vs_wavelength = reflec;
-}
-
-void SurfaceEntity::set_outer_refraction(const function::Func1* refrac) {
-    outer_refraction_vs_wavelength = refrac;
-}
-
-void SurfaceEntity::set_inner_refraction(const function::Func1* refrac) {
-    inner_refraction_vs_wavelength = refrac;
-}
-
-void SurfaceEntity::set_outer_absorption(const function::Func1* absorp) {
-    outer_absorption_vs_wavelength = absorp;
-}
-
-void SurfaceEntity::set_inner_absorption(const function::Func1* absorp) {
-    inner_absorption_vs_wavelength = absorp;
+    outer_absorption = DEFAULT_ABSORPTION;
+    inner_absorption = DEFAULT_ABSORPTION;
 }
 
 void SurfaceEntity::set_allowed_frames_to_propagate_to(const Frame* frame) {
@@ -117,8 +69,8 @@ const Frame* SurfaceEntity::allowed_frame_to_propagate_to()const {
 
 bool SurfaceEntity::boundary_layer_is_transparent()const {
     if (
-        outer_refraction_vs_wavelength != DEFAULT_REFRACTION ||
-        inner_refraction_vs_wavelength != DEFAULT_REFRACTION)
+        outer_refraction != DEFAULT_REFRACTION ||
+        inner_refraction != DEFAULT_REFRACTION)
         return true;
     else
         return false;
@@ -129,12 +81,12 @@ void SurfaceEntity::take_boundary_layer_properties_from(
 ) {
     outer_color = proto->outer_color;
     inner_color = proto->inner_color;
-    set_outer_reflection(proto->outer_reflection());
-    set_inner_reflection(proto->inner_reflection());
-    set_outer_refraction(proto->outer_refraction());
-    set_inner_refraction(proto->inner_refraction());
-    set_outer_absorption(proto->outer_absorption());
-    set_inner_absorption(proto->inner_absorption());
+    outer_reflection = proto->outer_reflection;
+    inner_reflection = proto->inner_reflection;
+    outer_refraction = proto->outer_refraction;
+    inner_refraction = proto->inner_refraction;
+    outer_absorption = proto->outer_absorption;
+    inner_absorption = proto->inner_absorption;
 }
 
 void SurfaceEntity::take_boundary_layer_properties_but_inside_out_from(
@@ -142,12 +94,12 @@ void SurfaceEntity::take_boundary_layer_properties_but_inside_out_from(
 ) {
     outer_color = proto->inner_color;
     inner_color = proto->outer_color;
-    set_outer_reflection(proto->inner_reflection());
-    set_inner_reflection(proto->outer_reflection());
-    set_outer_refraction(proto->inner_refraction());
-    set_inner_refraction(proto->outer_refraction());
-    set_outer_absorption(proto->inner_absorption());
-    set_inner_absorption(proto->outer_absorption());
+    outer_reflection = proto->inner_reflection;
+    inner_reflection = proto->outer_reflection;
+    outer_refraction = proto->inner_refraction;
+    inner_refraction = proto->outer_refraction;
+    outer_absorption = proto->inner_absorption;
+    inner_absorption = proto->outer_absorption;
 }
 
 std::string SurfaceEntity::str()const {
@@ -156,15 +108,15 @@ std::string SurfaceEntity::str()const {
 
     out << " inner surface:\n";
     out << "| color : " << inner_color->str() << "\n";
-    out << "| reflec: " << inner_reflection_vs_wavelength->str() << "\n";
-    out << "| refrac: " << inner_refraction_vs_wavelength->str() << "\n";
-    out << "| absorp: " << inner_absorption_vs_wavelength->str() << "\n";
+    out << "| reflec: " << inner_reflection->str() << "\n";
+    out << "| refrac: " << inner_refraction->str() << "\n";
+    out << "| absorp: " << inner_absorption->str() << "\n";
 
     out << " outer surface:\n";
     out << "| color : " << outer_color->str() << "\n";
-    out << "| reflec: " << outer_reflection_vs_wavelength->str() << "\n";
-    out << "| refrac: " << outer_refraction_vs_wavelength->str() << "\n";
-    out << "| absorp: " << inner_absorption_vs_wavelength->str() << "\n";
+    out << "| reflec: " << outer_reflection->str() << "\n";
+    out << "| refrac: " << outer_refraction->str() << "\n";
+    out << "| absorp: " << inner_absorption->str() << "\n";
 
     out << " boundary layer: ";
     if (boundary_layer_is_transparent())

@@ -199,17 +199,13 @@ void set_surface(SurfaceEntity *s, Scenery *scenery, const Object &o) {
     if (su.key("outer_color"))
         s->outer_color = scenery->colors.get(su.st("outer_color"));
     if (su.key("inner_reflection"))
-        s->set_inner_reflection(
-            scenery->functions.get(su.st("inner_reflection")));
+        s->inner_reflection = scenery->functions.get(su.st("inner_reflection"));
     if (su.key("outer_reflection"))
-        s->set_outer_reflection(
-            scenery->functions.get(su.st("outer_reflection")));
+        s->outer_reflection = scenery->functions.get(su.st("outer_reflection"));
     if (su.key("inner_refraction"))
-        s->set_inner_refraction(
-            scenery->functions.get(su.st("inner_refraction")));
+        s->inner_refraction = scenery->functions.get(su.st("inner_refraction"));
     if (su.key("outer_refraction"))
-        s->set_outer_refraction(
-            scenery->functions.get(su.st("outer_refraction")));
+        s->outer_refraction = scenery->functions.get(su.st("outer_refraction"));
 }
 
 void make_children(Frame* mother, Scenery* scenery, const Object &o) {

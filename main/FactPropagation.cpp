@@ -301,7 +301,7 @@ int main(int argc, char* argv[]) {
     reflector->set_name_pos_rot("reflector", re::Vec3(0, 0, 0), re::Rot3(0, 0, 0));
     reflector->inner_color = scenery.colors.get("mirror_color");
     reflector->outer_color = scenery.colors.get("black");
-    reflector->set_inner_reflection(scenery.functions.get("mirror_reflectivity"));
+    reflector->inner_reflection = scenery.functions.get("mirror_reflectivity");
 
     re::segmented_imaging_reflector::Factory refl_fab(r_cfg);
     refl_fab.add_to_SurfaceEntity(reflector);

@@ -11,13 +11,6 @@ namespace merlict {
 
 class SurfaceEntity :public Frame {
     const Frame* _allowed_frame_to_propagate_to = &VOID_FRAME;
-    const function::Func1* outer_reflection_vs_wavelength;
-    const function::Func1* inner_reflection_vs_wavelength;
-    const function::Func1* outer_refraction_vs_wavelength;
-    const function::Func1* inner_refraction_vs_wavelength;
-    const function::Func1* outer_absorption_vs_wavelength;
-    const function::Func1* inner_absorption_vs_wavelength;
-
  public:
     static const SurfaceEntity VOID_SURFACE_ENTITY;
     static const SurfaceEntity PHOTON_SOURCE;
@@ -30,23 +23,17 @@ class SurfaceEntity :public Frame {
 
     const Color* outer_color;
     const Color* inner_color;
+    const function::Func1* outer_reflection;
+    const function::Func1* inner_reflection;
+    const function::Func1* outer_refraction;
+    const function::Func1* inner_refraction;
+    const function::Func1* outer_absorption;
+    const function::Func1* inner_absorption;
 
-    void set_outer_reflection(const function::Func1* refl);
-    void set_inner_reflection(const function::Func1* refl);
-    void set_outer_refraction(const function::Func1* refrac);
-    void set_inner_refraction(const function::Func1* refrac);
-    void set_outer_absorption(const function::Func1* absorp);
-    void set_inner_absorption(const function::Func1* absorp);
     void set_allowed_frames_to_propagate_to(const Frame* frame);
     void take_boundary_layer_properties_from(const SurfaceEntity* proto);
     void take_boundary_layer_properties_but_inside_out_from(
         const SurfaceEntity* proto);
-    const function::Func1* outer_reflection()const;
-    const function::Func1* inner_reflection()const;
-    const function::Func1* outer_refraction()const;
-    const function::Func1* inner_refraction()const;
-    const function::Func1* outer_absorption()const;
-    const function::Func1* inner_absorption()const;
     const Frame* allowed_frame_to_propagate_to()const;
     bool boundary_layer_is_transparent()const;
     bool has_restrictions_on_frames_to_propagate_to()const;

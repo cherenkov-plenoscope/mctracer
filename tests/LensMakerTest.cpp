@@ -71,8 +71,8 @@ TEST_CASE("lens_makerTest: check_lensmaker_on_optical_table_with_lens", "[merlic
         lens->set_name_pos_rot("lens", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
         lens->outer_color = scenery.colors.get("lens_col");
         lens->inner_color = scenery.colors.get("lens_col");
-        lens->set_inner_refraction(
-            scenery.functions.get("refraction_vs_wavelength"));
+        lens->inner_refraction =
+            scenery.functions.get("refraction_vs_wavelength");
         lens->set_curvature_radius_and_outer_hex_radius(
             lens_curvature_radius,
             cfg.aperture_radius);

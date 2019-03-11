@@ -29,7 +29,7 @@ void Factory::add_lens_array(ml::Frame* frame, ml::Scenery* scenery) {
             ml::ROT3_UNITY);
         lens->outer_color = scenery->colors.get("lens_white");
         lens->inner_color = scenery->colors.get("lens_white");
-        lens->set_inner_refraction(geometry->config.lens_refraction);
+        lens->inner_refraction = geometry->config.lens_refraction;
         lens->set_curvature_radius_and_outer_hex_radius(
             geometry->pixel_lens_curvature_radius(),
             geometry->pixel_lens_outer_aperture_radius());
@@ -80,7 +80,7 @@ void Factory::add_pixel_bin_with_name_at_pos(
             hight);
         binwall->outer_color = scenery->colors.get("bin_wall_green");
         binwall->inner_color = scenery->colors.get("bin_wall_green");
-        binwall->set_outer_reflection(geometry->config.bin_reflection);
+        binwall->outer_reflection = geometry->config.bin_reflection;
     }
 }
 
@@ -217,7 +217,7 @@ void Factory::add_demonstration_light_field_sensor_to_frame_in_scenery(
     lens->set_name_pos_rot("lens_0", ml::Vec3(0.0, 0.0, 0.0), ml::ROT3_UNITY);
     lens->outer_color = scenery->colors.get("lens_white");
     lens->inner_color = scenery->colors.get("lens_white");
-    lens->set_inner_refraction(geometry->config.lens_refraction);
+    lens->inner_refraction = geometry->config.lens_refraction;
     lens->set_curvature_radius_and_outer_hex_radius(
         geometry->pixel_lens_curvature_radius(),
         geometry->pixel_lens_outer_aperture_radius());
