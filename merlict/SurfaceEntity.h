@@ -31,9 +31,8 @@ class SurfaceEntity :public Frame {
     const function::Func1* inner_absorption;
 
     void set_allowed_frames_to_propagate_to(const Frame* frame);
-    void take_boundary_layer_properties_from(const SurfaceEntity* proto);
-    void take_boundary_layer_properties_but_inside_out_from(
-        const SurfaceEntity* proto);
+    void adopt_surface(const SurfaceEntity* proto);
+    void adopt_surface_inside_out(const SurfaceEntity* proto);
     const Frame* allowed_frame_to_propagate_to()const;
     bool boundary_layer_is_transparent()const;
     bool has_restrictions_on_frames_to_propagate_to()const;

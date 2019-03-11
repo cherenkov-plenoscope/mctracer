@@ -26,7 +26,7 @@ void add_stl_to_and_inherit_surface_from_surfac_entity(
             facet.a*scale,
             facet.b*scale,
             facet.c*scale);
-        tri->take_boundary_layer_properties_from(proto);
+        tri->adopt_surface(proto);
     }
 }
 

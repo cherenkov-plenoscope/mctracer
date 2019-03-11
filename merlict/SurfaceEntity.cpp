@@ -76,7 +76,7 @@ bool SurfaceEntity::boundary_layer_is_transparent()const {
         return false;
 }
 
-void SurfaceEntity::take_boundary_layer_properties_from(
+void SurfaceEntity::adopt_surface(
     const SurfaceEntity* proto
 ) {
     outer_color = proto->outer_color;
@@ -89,7 +89,7 @@ void SurfaceEntity::take_boundary_layer_properties_from(
     inner_absorption = proto->inner_absorption;
 }
 
-void SurfaceEntity::take_boundary_layer_properties_but_inside_out_from(
+void SurfaceEntity::adopt_surface_inside_out(
     const SurfaceEntity* proto
 ) {
     outer_color = proto->inner_color;

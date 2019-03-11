@@ -21,7 +21,7 @@ void BiConvexLensHexBound::set_curvature_radius_and_outer_hex_radius(
         "front_cap",
         Vec3(0.0, 0.0, -cap_hight),
         ROT3_UNITY);
-    front_cap->take_boundary_layer_properties_but_inside_out_from(this);
+    front_cap->adopt_surface_inside_out(this);
     front_cap->set_curvature_radius_and_outer_hex_radius(
         curvature_radius, outer_aperture_radius);
     front_cap->set_allowed_frames_to_propagate_to(this);
@@ -30,7 +30,7 @@ void BiConvexLensHexBound::set_curvature_radius_and_outer_hex_radius(
         "rear_cap",
         Vec3(0.0, 0.0, cap_hight),
         Rot3(M_PI, 0.0, 0.0));
-    rear_cap->take_boundary_layer_properties_but_inside_out_from(this);
+    rear_cap->adopt_surface_inside_out(this);
     rear_cap->set_curvature_radius_and_outer_hex_radius(
         curvature_radius, outer_aperture_radius);
     rear_cap->set_allowed_frames_to_propagate_to(this);

@@ -23,7 +23,7 @@ void Factory::add_to_SurfaceEntity(SurfaceEntity* reflector) {
         facet->set_curvature_radius_and_outer_hex_radius(
             geometry.focal_length()*2.0,
             geometry.facet_outer_hex_radius());
-        facet->take_boundary_layer_properties_from(reflector);
+        facet->adopt_surface(reflector);
     }
 }
 
