@@ -11,7 +11,6 @@ namespace merlict {
 
 class SurfaceEntity :public Frame {
     const Frame* _allowed_frame_to_propagate_to = &VOID_FRAME;
-    bool _boundary_layer_is_transparent;
     const function::Func1* outer_reflection_vs_wavelength;
     const function::Func1* inner_reflection_vs_wavelength;
     const function::Func1* outer_refraction_vs_wavelength;

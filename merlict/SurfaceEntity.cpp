@@ -42,8 +42,6 @@ SurfaceEntity::SurfaceEntity(
 }
 
 void SurfaceEntity::init_surface_defaults() {
-    _boundary_layer_is_transparent = false;
-
     outer_color = DEFAULT_COLOR;
     inner_color = DEFAULT_COLOR;
 
@@ -91,14 +89,10 @@ void SurfaceEntity::set_inner_reflection(const function::Func1* reflec) {
 
 void SurfaceEntity::set_outer_refraction(const function::Func1* refrac) {
     outer_refraction_vs_wavelength = refrac;
-    if (outer_refraction_vs_wavelength != DEFAULT_REFRACTION)
-        _boundary_layer_is_transparent = true;
 }
 
 void SurfaceEntity::set_inner_refraction(const function::Func1* refrac) {
     inner_refraction_vs_wavelength = refrac;
-    if (inner_refraction_vs_wavelength != DEFAULT_REFRACTION)
-        _boundary_layer_is_transparent = true;
 }
 
 void SurfaceEntity::set_outer_absorption(const function::Func1* absorp) {
@@ -122,7 +116,12 @@ const Frame* SurfaceEntity::allowed_frame_to_propagate_to()const {
 }
 
 bool SurfaceEntity::boundary_layer_is_transparent()const {
-    return _boundary_layer_is_transparent;
+    if (
+        outer_refraction_vs_wavelength != DEFAULT_REFRACTION ||
+        inner_refraction_vs_wavelength != DEFAULT_REFRACTION)
+        return true;
+    else
+        return false;
 }
 
 void SurfaceEntity::take_boundary_layer_properties_from(
@@ -168,7 +167,7 @@ std::string SurfaceEntity::str()const {
     out << "| absorp: " << inner_absorption_vs_wavelength->str() << "\n";
 
     out << " boundary layer: ";
-    if (_boundary_layer_is_transparent)
+    if (boundary_layer_is_transparent())
         out << "transparent" << "\n";
     else
         out << "opaque" << "\n";
