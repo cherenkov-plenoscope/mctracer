@@ -11,5 +11,6 @@
 
 #include "geometry/geometry.h"
 #include "primitive/primitive.h"
+#include "segmented_imaging_reflector/segmented_imaging_reflector.h"
 
 #endif  // SCENERY_ALL_SCENERY_H_

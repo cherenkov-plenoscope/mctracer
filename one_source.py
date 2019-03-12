@@ -79,6 +79,7 @@ dirs = [
 	"merlict/scenery",
 	"merlict/scenery/geometry",
 	"merlict/scenery/primitive",
+	"merlict/scenery/segmented_imaging_reflector",
 	"merlict/visual",
 	"merlict/visual/camera_operator",
 ]
