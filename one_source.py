@@ -7,7 +7,7 @@ import pyfiglet
 merlict_head_tmp = pyfiglet.Figlet("larry3d").renderText("merlict")
 merlict_head = "// Copyright 2018 Sebastian A. Mueller\n"
 for line in merlict_head_tmp.splitlines():
-	merlict_head += "//  " + line + "  //\n"
+	merlict_head += "//  " + " "*10 + line + "  " + " "*10 +"//\n"
 
 def inside_namespace(txt):
 	start_first_namespace = txt.find("{", txt.find('namespace merlict')) + 1
@@ -118,6 +118,73 @@ pri_queu = [
 	"FunctionMap",
 ]
 
+test_sources = [
+    #"tests/PrintSizeOfTest.cpp",
+	#"tests/ImageTest.cpp",
+	"tests/ColorTest.cpp",
+    #"tests/ApertureCameraTest.cpp",
+    "tests/PhotonsTest.cpp",
+    "tests/AsciiIoTest.cpp",
+    "tests/PhotonTest.cpp",
+    "tests/BiConvexLensTest.cpp",
+    "tests/PlaneIntersectionTest.cpp",
+    "tests/PostInitFrameSpeed.cpp",
+    #"tests/CameraOperatorTest.cpp",
+    "tests/PropagationEnvironmentTest.cpp",
+    "tests/QuadraticEquationTest.cpp",
+    "tests/DiscTest.cpp",
+    "tests/RandomGeneratorTest.cpp",
+    "tests/DualSphericalPrismZTest.cpp",
+    #"tests/EventIoPhotonFactoryTest.cpp",
+    #"tests/EventIoTest.cpp",
+    "tests/RayForPropagationTest.cpp",
+    "tests/RayTest.cpp",
+    "tests/RayAndFrameTest.cpp",
+    "tests/Rot3Test.cpp",
+    "tests/SensorStorageTest.cpp",
+    "tests/SensorAssignmentTest.cpp",
+    "tests/SensorInOutTest.cpp",
+    "tests/FrameTest.cpp",
+    "tests/FramesTest.cpp",
+    "tests/FresnelRefractionAndReflectionTest.cpp",
+    "tests/SphereIntersectionTest.cpp",
+    "tests/SphereTest.cpp",
+    "tests/FunctionLinInterpolTest.cpp",
+    "tests/StringToolsTest.cpp",
+    "tests/FunctionTest.cpp",
+    "tests/GridNeighborhoodTopoligyTest.cpp",
+    "tests/HexagonalPrismZTest.cpp",
+    "tests/HexGridAnnulusTest.cpp",
+    "tests/ThinLensEquationTest.cpp",
+    "tests/Histogram1Test.cpp",
+    "tests/HomTra3Test.cpp",
+    "tests/ToolTest.cpp",
+    "tests/StereoLitographyTest.cpp",
+    "tests/LensMakerTest.cpp",
+    "tests/Vec2Test.cpp",
+    "tests/Vec3Test.cpp",
+    #"tests/NightSkyBackgroundLightTest.cpp",
+    "tests/XyPlaneRayEquationTest.cpp",
+    "tests/PathToolsTest.cpp",
+    "tests/ZaxisCylinderRayIntersectionEquationTest.cpp",
+    #"tests/CorsikaIoTest.cpp",
+    "tests/SmallBallsTest.cpp",
+    #"tests/OnlineStatisticsTest.cpp",
+    #"tests/PlenoscopeLixelStatisticsTest.cpp",
+    #"tests/HeaderBlockTest.cpp",
+    "tests/OwnerShipTest.cpp",
+    "tests/ColorMapTest.cpp",
+    "tests/FunctionMapTest.cpp",
+    "tests/SensorMapTest.cpp",
+    #"tests/PhotoElectricConverterTest.cpp",
+    #"tests/PhotonStreamTest.cpp",
+    "tests/DistanceMeterTest.cpp",
+    #"tests/PortablePixMapTest.cpp",
+    #"tests/PulseExtractionTest.cpp",
+    "tests/ParallelPropagationTest.cpp",
+    #"tests/JsonTest.cpp",
+]
+
 s = 0
 go_first = {}
 for pri_q in pri_queu:
@@ -126,6 +193,7 @@ for pri_q in pri_queu:
 
 out_path_h = os.path.join('merlict.h')
 out_path_cpp = os.path.join('merlict.cpp')
+out_path_test = os.path.join('merlict_test.cpp')
 
 headers = []
 header_includes = []
@@ -229,6 +297,48 @@ with open(out_path_cpp, 'wt') as fout:
 		fout.write("\n")
 
 	fout.write("}  // namespace merlict\n")
+	fout.write("\n")
+
+
+
+# TEST
+# ----
+tests = []
+test_includes = []
+
+for header in headers:
+	potentiual_source_path = os.path.splitext(header)[0]+'.cpp'
+	if os.path.exists(potentiual_source_path):
+		sources.append(potentiual_source_path)
+
+
+for test_source in test_sources:
+	with open(test_source, 'rt') as fin:
+		txt = fin.read()
+	incs = all_includes(txt)
+	for inc in incs:
+		test_includes.append(inc)
+
+test_includes = list(set(test_includes))
+
+with open(out_path_test, 'wt') as fout:
+	fout.write(merlict_head)
+	fout.write("\n")
+	fout.write("#define CATCH_CONFIG_MAIN\n")
+	fout.write("\n")
+	fout.write('#include "merlict.h"\n')
+	fout.write('#include "tests/catch.hpp"\n')
+	for test_include in test_includes:
+		fout.write(test_include + '\n')
+	fout.write("\n")
+
+	for test_source in test_sources:
+		print(test_source)
+		with open(test_source, 'rt') as fin:
+			h_txt = fin.read()
+		fout.write(without_include_lines(h_txt))
+		fout.write("\n")
+
 	fout.write("\n")
 
 
