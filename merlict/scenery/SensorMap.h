@@ -11,7 +11,7 @@
 namespace merlict {
 
 struct SensorMap: public ResourceMap {
-	std::vector<sensor::Sensor*> sensors;
+    std::vector<sensor::Sensor*> sensors;
     void add(const uint64_t key, const Frame* frame);
     ~SensorMap();
 };
