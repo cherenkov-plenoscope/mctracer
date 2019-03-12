@@ -2,12 +2,14 @@ import numpy as np
 import os
 import glob
 import pyfiglet
+import re
 
-head = "// Copyright 2018 Sebastian A. Mueller\n"
+MemberFunctionRegex = re.compile(r'^(\w+)\s+(\w+)::(\w+)\(')
+
 merlict_head_tmp = pyfiglet.Figlet("larry3d").renderText("merlict")
-merlict_head = ""
+merlict_head = "// Copyright 2018 Sebastian A. Mueller\n"
 for line in merlict_head_tmp.splitlines():
-	merlict_head += "//  " + line + "\n"
+	merlict_head += "//  " + line + "  //\n"
 
 def inside_namespace(txt):
 	start_first_namespace = txt.find("{", txt.find('namespace merlict')) + 1
@@ -80,8 +82,6 @@ dirs = [
 	"merlict/scenery/geometry",
 	"merlict/scenery/primitive",
 	"merlict/scenery/segmented_imaging_reflector",
-	"merlict/visual",
-	"merlict/visual/camera_operator",
 ]
 
 s = 0
@@ -119,13 +119,6 @@ pri_queu = [
 	"ColorMap",
 	"SensorMap",
 	"FunctionMap",
-	"visual/PixelCoordinate",
-	"visual/Image",
-	"visual/SkyDome",
-	"visual/Config",
-	"visual/CameraRay",
-	"visual/CameraDevice",
-	"visual/camera_operator/Verbosity",
 ]
 
 s = 0
@@ -134,7 +127,8 @@ for pri_q in pri_queu:
 	go_first[pri_q] = s
 	s += 1
 
-out_path = os.path.join('merlict.h')
+out_path_h = os.path.join('merlict.h')
+out_path_cpp = os.path.join('merlict.cpp')
 
 headers = []
 header_includes = []
@@ -194,16 +188,16 @@ source_usings = list(set(source_usings))
 
 combined_includes = list(set(source_includes + header_includes))
 
-with open(out_path, 'wt') as fout:
-	fout.write(head)
+with open(out_path_h, 'wt') as fout:
+	fout.write(merlict_head)
 	fout.write("\n")
 
-	fout.write("#ifndef MERLICT_HPP_\n")
-	fout.write("#define MERLICT_HPP_\n")
+	fout.write("#ifndef MERLICT_H_\n")
+	fout.write("#define MERLICT_H_\n")
 	fout.write("\n")
 
-	for combined_include in combined_includes:
-		fout.write(combined_include + '\n')
+	for header_include in header_includes:
+		fout.write(header_include + '\n')
 	fout.write("\n")
 
 	fout.write("namespace merlict {\n")
@@ -215,6 +209,23 @@ with open(out_path, 'wt') as fout:
 		fout.write(inside_namespace(h_txt))
 		fout.write("\n")
 
+	fout.write("}  // namespace merlict\n")
+	fout.write("\n")
+
+	fout.write("#endif  // MERLICT_H_\n")
+
+
+with open(out_path_cpp, 'wt') as fout:
+	fout.write(merlict_head)
+	fout.write("\n")
+
+	fout.write('#include "merlict.h"\n')
+	for source_include in source_includes:
+		fout.write(source_include + '\n')
+	fout.write("\n")
+
+	fout.write("namespace merlict {\n")
+
 	for source in sources:
 		print(source)
 		with open(source, 'rt') as fin:
@@ -225,6 +236,5 @@ with open(out_path, 'wt') as fout:
 	fout.write("}  // namespace merlict\n")
 	fout.write("\n")
 
-	fout.write("#endif  // MERLICT_HPP_\n")
 
 # g++ docopt/docopt.cpp lict_prop.cpp -o prop -std=gnu++11
