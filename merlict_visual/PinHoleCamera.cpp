@@ -88,7 +88,7 @@ Vec3 PinHoleCamera::get_intersection_of_ray_on_image_sensor_for_pixel(
         sensor_col * col_idx_on_sensor;
 }
 
-Color do_one_pixel(
+Color __do_one_pixel(
     int id,
     const Frame* world,
     const Config* visual_config,
@@ -119,7 +119,7 @@ void PinHoleCamera::acquire_image(
 
     for (uint64_t i = 0; i < num_pixel; ++i) {
         results[i] = pool.push(
-            do_one_pixel,
+            __do_one_pixel,
             world,
             visual_config,
             &prng,

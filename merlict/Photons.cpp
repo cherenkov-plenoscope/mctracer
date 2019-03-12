@@ -24,7 +24,7 @@ void propagate_photons_in_frame_with_config(
         Propagator(&photons->at(i), env);
 }
 
-void propagate_one_photon(
+void __propagate_one_photon(
     int id,
     const Frame* world,
     const PropagationConfig* settings,
@@ -57,7 +57,7 @@ void propagate_photons_multi_thread(
 
     for (uint64_t i = 0; i < photons->size(); ++i) {
         results[i] = pool.push(
-            propagate_one_photon,
+            __propagate_one_photon,
             world,
             settings,
             prng_seeds[i],

@@ -279,7 +279,7 @@ void ApertureCamera::acquire_image(
     }
 }
 
-Color do_one_ray(
+Color __do_one_ray(
     int id,
     const Frame* world,
     const Config* visual_config,
@@ -308,7 +308,7 @@ std::vector<Color> ApertureCamera::acquire_pixels(
 
     for (uint64_t j = 0; j < pixels.size(); ++j) {
         results[j] = pool.push(
-            do_one_ray,
+            __do_one_ray,
             world,
             visual_config,
             &prng,
