@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "plenoscope/SimulationTruthHeader.h"
 #include <sstream>
-#include "merlict_corsika_eventio/corsika.h"
+#include "merlict_corsika/corsika.h"
 
 namespace plenoscope {
 

@@ -1,8 +1,8 @@
 #include "docopt/docopt.h"
 #include "merlict/merlict.h"
-#include "merlict_corsika_eventio/eventio.h"
-#include "merlict_corsika_eventio/corsika.h"
-#include "merlict_corsika_eventio/PhotonFactory.h"
+#include "merlict_corsika/eventio.h"
+#include "merlict_corsika/corsika.h"
+#include "merlict_corsika/PhotonFactory.h"
 #include "FlyingCamera.h"
 #include "merlict_json/json.h"
 namespace ml = merlict;

@@ -9,7 +9,7 @@
 #include "merlict/merlict.h"
 #include "plenoscope/calibration/Writer.h"
 #include "plenoscope/night_sky_background/NightSkyBackground.h"
-#include "merlict_corsika_eventio/block.h"
+#include "merlict_corsika/block.h"
 namespace ml = merlict;
 
 

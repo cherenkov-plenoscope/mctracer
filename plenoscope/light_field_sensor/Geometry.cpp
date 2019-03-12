@@ -3,7 +3,7 @@
 #include <math.h>
 #include <sstream>
 #include "merlict/merlict.h"
-#include "merlict_corsika_eventio/corsika.h"
+#include "merlict_corsika/corsika.h"
 namespace ml = merlict;
 
 

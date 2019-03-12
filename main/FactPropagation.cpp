@@ -4,9 +4,9 @@
 #include "docopt/docopt.h"
 #include "main/photon_stream.h"
 #include "merlict/merlict.h"
-#include "merlict_corsika_eventio/eventio.h"
-#include "merlict_corsika_eventio/corsika.h"
-#include "merlict_corsika_eventio/PhotonFactory.h"
+#include "merlict_corsika/eventio.h"
+#include "merlict_corsika/corsika.h"
+#include "merlict_corsika/PhotonFactory.h"
 #include "merlict/scenery/segmented_imaging_reflector/segmented_imaging_reflector.h"
 #include "signal_processing/signal_processing.h"
 namespace fs = std::experimental::filesystem;

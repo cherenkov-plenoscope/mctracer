@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 #include "BasicWrapper.h"
-#include "merlict_corsika_eventio/eventio.h"
+#include "merlict_corsika/eventio.h"
 
 namespace merlict {
 

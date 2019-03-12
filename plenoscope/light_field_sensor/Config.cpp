@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "plenoscope/light_field_sensor/Config.h"
 #include "merlict/merlict.h"
-#include "merlict_corsika_eventio/corsika.h"
+#include "merlict_corsika/corsika.h"
 namespace ml = merlict;
 
 

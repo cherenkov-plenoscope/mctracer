@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "merlict_corsika_eventio/block.h"
+#include "merlict_corsika/block.h"
 #include <fstream>
 #include <sstream>
 

@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "EventIoWrapper.h"
-#include "merlict_corsika_eventio/PhotonFactory.h"
+#include "merlict_corsika/PhotonFactory.h"
 
 namespace merlict {
 

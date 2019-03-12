@@ -2,9 +2,9 @@
 #include <algorithm>
 #include <sstream>
 #include "catch.hpp"
-#include "merlict_corsika_eventio/eventio.h"
-#include "merlict_corsika_eventio/corsika.h"
-#include "merlict_corsika_eventio/PhotonFactory.h"
+#include "merlict_corsika/eventio.h"
+#include "merlict_corsika/corsika.h"
+#include "merlict_corsika/PhotonFactory.h"
 
 
 TEST_CASE("EventIoTest: EventIoHeader_works", "[merlict]") {
