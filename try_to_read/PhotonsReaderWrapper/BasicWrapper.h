@@ -4,8 +4,7 @@
 
 #include <vector>
 #include <string>
-#include "merlict/Photons.h"
-#include "merlict/random/random.h"
+#include "merlict/merlict.h"
 
 namespace merlict {
 

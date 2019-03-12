@@ -6,7 +6,7 @@
 #include <vector>
 #include <string>
 #include "plenoscope/light_field_sensor/Config.h"
-#include "merlict/Vec3.h"
+#include "merlict/merlict.h"
 
 namespace plenoscope {
 namespace light_field_sensor {

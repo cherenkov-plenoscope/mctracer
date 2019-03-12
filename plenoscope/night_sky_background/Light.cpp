@@ -1,8 +1,6 @@
 // Copyright 2016 Sebastian A. Mueller
 #include "plenoscope/night_sky_background/Light.h"
 #include <sstream>
-#include "merlict/PhysicalConstants.h"
-#include "merlict/tools.h"
 #include "NightSkyBackground.h"
 namespace ml = merlict;
 

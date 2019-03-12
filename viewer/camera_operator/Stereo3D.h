@@ -5,7 +5,6 @@
 namespace merlict {class Frame;}
 
 #include <string>
-#include "merlict/DistanceMeter.h"
 #include "Verbosity.h"
 
 namespace merlict {

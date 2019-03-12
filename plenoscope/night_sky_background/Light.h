@@ -4,8 +4,7 @@
 
 #include <string>
 #include "plenoscope/light_field_sensor/Geometry.h"
-#include "merlict/random/random.h"
-#include "merlict/function/function.h"
+#include "merlict/merlict.h"
 
 namespace plenoscope {
 namespace night_sky_background {

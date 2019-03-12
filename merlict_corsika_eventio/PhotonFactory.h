@@ -3,8 +3,7 @@
 #define CORSIKA_PHOTONFACTORY_H_
 
 #include <array>
-#include "merlict/Photon.h"
-#include "merlict/random/random.h"
+#include "merlict/merlict.h"
 
 namespace merlict {
 

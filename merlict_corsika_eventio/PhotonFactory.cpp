@@ -1,7 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict_corsika_eventio/PhotonFactory.h"
 #include <sstream>
-#include "merlict/PhysicalConstants.h"
 
 
 namespace merlict {
