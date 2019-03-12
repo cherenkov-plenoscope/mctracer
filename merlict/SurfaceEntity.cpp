@@ -5,7 +5,7 @@
 
 namespace merlict {
 
-const SurfaceEntity SurfaceEntity::VOID_SURFACE_ENTITY;
+const SurfaceEntity VOID_SURFACE_ENTITY = SurfaceEntity();
 
 const function::Func1* SurfaceEntity::DEFAULT_REFLECTION = new function::Func1(
     {

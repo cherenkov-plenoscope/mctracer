@@ -6,7 +6,7 @@
 namespace merlict {
 
 Intersection::Intersection() {
-    object = &SurfaceEntity::VOID_SURFACE_ENTITY;
+    object = &VOID_SURFACE_ENTITY;
     position = Vec3(
         std::numeric_limits<double>::infinity(),
         std::numeric_limits<double>::infinity(),
@@ -31,7 +31,7 @@ Intersection::Intersection(
 {}
 
 bool Intersection::does_intersect()const {
-    return object != &SurfaceEntity::VOID_SURFACE_ENTITY;
+    return object != &VOID_SURFACE_ENTITY;
 }
 
 const SurfaceEntity * Intersection::get_object()const {

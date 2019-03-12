@@ -157,7 +157,7 @@ void CausalIntersection::find_intersections_in_candidate_objects() {
 void CausalIntersection::calculate_closest_intersection() {
     if (candidate_intersections.size() == 0)
         closest_intersection = Intersection(
-            &SurfaceEntity::VOID_SURFACE_ENTITY,
+            &VOID_SURFACE_ENTITY,
             ray->position_at(1e4),
             ray->direction(),
             1e4,

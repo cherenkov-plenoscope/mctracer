@@ -12,8 +12,6 @@ namespace merlict {
 class SurfaceEntity :public Frame {
     const Frame* _allowed_frame_to_propagate_to = &VOID_FRAME;
  public:
-    static const SurfaceEntity VOID_SURFACE_ENTITY;
-
     SurfaceEntity();
     SurfaceEntity(
         const std::string new_name,
@@ -45,6 +43,7 @@ class SurfaceEntity :public Frame {
 };
 
 const SurfaceEntity SURFACE_PHOTON_SOURCE;
+extern const SurfaceEntity VOID_SURFACE_ENTITY;
 
 }  // namespace merlict
 
