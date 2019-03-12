@@ -7,6 +7,7 @@
 #include "merlict_visual/Tracer.h"
 #include "merlict/tools.h"
 #include "merlict/random/random.h"
+#include "merlict/scenery/geometry/thin_lens.h"
 #include "merlict/vitaliy_vitsentiy_thread_pool.h"
 
 
@@ -89,7 +90,9 @@ void ApertureCamera::init_sensor_distance() {
     // f = focal_length
     // b = sensor_distance
     // g = object_distance
-    _sensor_distance = 1.0/(1.0/_focal_length - 1.0/_object_distance);
+    _sensor_distance = thin_lens::image_dist_given_focal_and_object_dist(
+        _focal_length,
+        _object_distance);
 }
 
 std::string ApertureCamera::get_aperture_camera_print()const {
