@@ -12,5 +12,5 @@
 #include "SurfaceWithOuterPrismBound.h"
 #include "ZaxisCylinderRayIntersectionEquation.h"
 #include "GridNeighborhoodTopoligy.h"
-#include "ThinLensEquation.h"
+#include "thin_lens.h"
 #include "lens_maker.h"

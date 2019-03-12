@@ -1,9 +1,9 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef SCENERY_GEOMETRY_THINLENSEQUATION_H_
-#define SCENERY_GEOMETRY_THINLENSEQUATION_H_
+#ifndef SCENERY_GEOMETRY_THIN_LENS_H_
+#define SCENERY_GEOMETRY_THIN_LENS_H_
 
 namespace merlict {
-namespace ThinLensEquation {
+namespace thin_lens {
 
 // The thin lens equation
 //
@@ -19,7 +19,7 @@ double get_image_dist_given_focal_and_object_dist(double f, double o);
 double get_object_dist_given_focal_and_image_dist(double f, double i);
 double get_focal_dist_given_object_and_image_dist(double o, double i);
 
-}  // namespace ThinLensEquation
+}  // namespace thin_lens
 }  // namespace merlict
 
-#endif  // SCENERY_GEOMETRY_THINLENSEQUATION_H_
+#endif  // SCENERY_GEOMETRY_THIN_LENS_H_

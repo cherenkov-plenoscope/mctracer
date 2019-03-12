@@ -15,6 +15,6 @@ set(SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/SurfaceWithOuterPrismBound.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ZaxisCylinderRayIntersectionEquation.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/GridNeighborhoodTopoligy.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ThinLensEquation.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/thin_lens.cpp
     PARENT_SCOPE
 )
