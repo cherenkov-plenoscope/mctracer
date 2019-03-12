@@ -4,7 +4,7 @@
 
 #include <fstream>
 #include <string>
-#include "merlict/visual/Image.h"
+#include "merlict_visual/Image.h"
 
 namespace merlict {
 namespace visual {

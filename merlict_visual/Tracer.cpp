@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "merlict/visual/Tracer.h"
+#include "merlict_visual/Tracer.h"
 
 namespace merlict {
 namespace visual {

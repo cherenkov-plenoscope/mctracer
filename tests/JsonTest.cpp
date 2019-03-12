@@ -3,6 +3,7 @@
 #include "merlict_json/niels_lohmann_json.hpp"
 #include "merlict_json/json.h"
 #include "merlict/merlict.h"
+#include "merlict_visual/visual.h"
 namespace nl = nlohmann;
 namespace mct = merlict;
 

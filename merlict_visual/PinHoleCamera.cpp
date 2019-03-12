@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "merlict/visual/PinHoleCamera.h"
+#include "merlict_visual/PinHoleCamera.h"
 #include <exception>
 #include "Tracer.h"
 #include "merlict/random/random.h"

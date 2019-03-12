@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "merlict/visual/CameraRay.h"
+#include "merlict_visual/CameraRay.h"
 #include <sstream>
 #include "merlict/RayAndFrame.h"
 #include "merlict/Intersection.h"

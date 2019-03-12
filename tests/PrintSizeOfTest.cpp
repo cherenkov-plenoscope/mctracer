@@ -3,6 +3,7 @@
 #include <string>
 #include "catch.hpp"
 #include "merlict/merlict.h"
+#include "merlict_visual/visual.h"
 #include "signal_processing/signal_processing.h"
 namespace ml = merlict;
 

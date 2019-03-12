@@ -1,10 +1,10 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "merlict/visual/ApertureCamera.h"
+#include "merlict_visual/ApertureCamera.h"
 #include <vector>
 #include <exception>
 #include <future>
 #include <thread>
-#include "merlict/visual/Tracer.h"
+#include "merlict_visual/Tracer.h"
 #include "merlict/tools.h"
 #include "merlict/random/random.h"
 #include "merlict/vitaliy_vitsentiy_thread_pool.h"

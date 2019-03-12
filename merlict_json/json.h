@@ -5,6 +5,7 @@
 #include <sstream>
 #include <vector>
 #include "merlict/merlict.h"
+#include "merlict_visual/visual.h"
 #include "niels_lohmann_json.hpp"
 
 namespace merlict {

@@ -1,5 +1,5 @@
 // Copyright 2016 Sebastian A. Mueller, Max L. Ahnen
-#include "merlict/visual/SkyDome.h"
+#include "merlict_visual/SkyDome.h"
 #include <math.h>
 #include <sstream>
 

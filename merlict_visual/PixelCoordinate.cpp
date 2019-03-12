@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "merlict/visual/PixelCoordinate.h"
+#include "merlict_visual/PixelCoordinate.h"
 #include <vector>
 
 namespace merlict {

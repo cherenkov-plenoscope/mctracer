@@ -3,7 +3,7 @@
 #define VISUAL_SKYDOME_H_
 
 #include <string>
-#include "merlict/visual/Image.h"
+#include "merlict_visual/Image.h"
 #include "merlict/Vec3.h"
 
 namespace merlict {

@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "merlict/visual/CameraDevice.h"
+#include "merlict_visual/CameraDevice.h"
 #include <exception>
 #include "merlict/merlict.h"
 

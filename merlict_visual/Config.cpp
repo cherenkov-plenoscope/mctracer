@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "merlict/visual/Config.h"
+#include "merlict_visual/Config.h"
 
 namespace merlict {
 namespace visual {

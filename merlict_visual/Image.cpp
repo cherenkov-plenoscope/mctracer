@@ -1,8 +1,8 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "merlict/visual/Image.h"
+#include "merlict_visual/Image.h"
 #include <math.h>
 #include <vector>
-#include "merlict/visual/PortablePixMap.h"
+#include "merlict_visual/PortablePixMap.h"
 
 namespace merlict {
 namespace visual {

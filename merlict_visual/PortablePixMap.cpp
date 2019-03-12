@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "merlict/visual/PortablePixMap.h"
+#include "merlict_visual/PortablePixMap.h"
 #include <stdint.h>
 #include <string>
 #include <sstream>

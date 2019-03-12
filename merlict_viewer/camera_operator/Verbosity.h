@@ -3,6 +3,7 @@
 #define VISUAL_CAMERAOPERATOR_VERBOSITY_H_
 
 #include "merlict/merlict.h"
+#include "merlict_visual/visual.h"
 
 namespace merlict {
 namespace visual {

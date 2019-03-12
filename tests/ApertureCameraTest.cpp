@@ -1,6 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
 #include "merlict/merlict.h"
+#include "merlict_visual/visual.h"
 namespace ml = merlict;
 
 
