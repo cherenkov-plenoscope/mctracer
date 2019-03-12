@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "viewer/Time.h"
+#include "merlict_viewer/Time.h"
 #include <sstream>
 #include <iomanip>
 

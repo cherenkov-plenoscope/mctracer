@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "catch.hpp"
-#include "viewer/camera_operator/camera_operator.h"
+#include "merlict_viewer/camera_operator/camera_operator.h"
 namespace ml = merlict;
 
 

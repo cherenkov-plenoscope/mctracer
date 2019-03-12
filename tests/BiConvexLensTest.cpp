@@ -3,7 +3,7 @@
 #include "catch.hpp"
 #include "merlict/merlict.h"
 #include <iostream>
-#include "viewer/FlyingCamera.h"
+#include "merlict_viewer/FlyingCamera.h"
 namespace ml = merlict;
 
 

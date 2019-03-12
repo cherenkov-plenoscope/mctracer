@@ -38,7 +38,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/plenoscope")
 add_subdirectory("${PROJECT_SOURCE_DIR}/try_to_read")
 add_subdirectory("${PROJECT_SOURCE_DIR}/signal_processing")
 add_subdirectory("${PROJECT_SOURCE_DIR}/docopt")
-add_subdirectory("${PROJECT_SOURCE_DIR}/viewer")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_viewer")
 #-------------------------------
 # merlict library
 add_library(mct SHARED ${SOURCE})
@@ -48,7 +48,7 @@ target_link_libraries(mct ${OpenCV_LIBS})
 
 #---------
 # Show exe
-add_executable(mctShow viewer/Show.cpp)
+add_executable(mctShow merlict_viewer/Show.cpp)
 target_link_libraries(mctShow mct)
 target_link_libraries(mctShow docopt)
 
@@ -66,7 +66,7 @@ target_link_libraries(mctPropagate docopt)
 
 #----------------
 # ShowPhotons exe
-add_executable(mctShowPhotons viewer/ShowPhotons.cpp)
+add_executable(mctShowPhotons merlict_viewer/ShowPhotons.cpp)
 target_link_libraries(mctShowPhotons mct)
 target_link_libraries(mctShowPhotons docopt)
 

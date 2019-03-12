@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "viewer/camera_operator/Stereo3D.h"
+#include "merlict_viewer/camera_operator/Stereo3D.h"
 
 namespace merlict {
 namespace visual {

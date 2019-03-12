@@ -5,8 +5,8 @@
 #include <cv.h>
 #include <string>
 #include "merlict/merlict.h"
-#include "viewer/Time.h"
-#include "viewer/camera_operator/camera_operator.h"
+#include "merlict_viewer/Time.h"
+#include "merlict_viewer/camera_operator/camera_operator.h"
 
 namespace merlict {
 namespace visual {
