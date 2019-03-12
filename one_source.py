@@ -2,9 +2,7 @@ import numpy as np
 import os
 import glob
 import pyfiglet
-import re
 
-MemberFunctionRegex = re.compile(r'^(\w+)\s+(\w+)::(\w+)\(')
 
 merlict_head_tmp = pyfiglet.Figlet("larry3d").renderText("merlict")
 merlict_head = "// Copyright 2018 Sebastian A. Mueller\n"
@@ -84,7 +82,6 @@ dirs = [
 	"merlict/scenery/segmented_imaging_reflector",
 ]
 
-s = 0
 pri_queu = [
 	"Vec2",
 	"Vec3",
@@ -185,8 +182,6 @@ for source in sources:
 
 source_includes = list(set(source_includes))
 source_usings = list(set(source_usings))
-
-combined_includes = list(set(source_includes + header_includes))
 
 with open(out_path_h, 'wt') as fout:
 	fout.write(merlict_head)
