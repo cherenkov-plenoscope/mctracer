@@ -4,7 +4,7 @@
 namespace merlict {
 namespace thin_lens {
 
-double get_image_dist_given_focal_and_object_dist(double f, double o) {
+double image_dist_given_focal_and_object_dist(double f, double o) {
     //           1
     //  i = -----------
     //        1     1
@@ -14,7 +14,7 @@ double get_image_dist_given_focal_and_object_dist(double f, double o) {
     return 1.0/(1.0/f - 1.0/o);
 }
 
-double get_object_dist_given_focal_and_image_dist(double f, double i) {
+double object_dist_given_focal_and_image_dist(double f, double i) {
     //           1
     //  o = -----------
     //        1     1
@@ -24,7 +24,7 @@ double get_object_dist_given_focal_and_image_dist(double f, double i) {
     return 1.0/(1.0/f - 1.0/i);
 }
 
-double get_focal_dist_given_object_and_image_dist(double o, double i) {
+double focal_dist_given_object_and_image_dist(double o, double i) {
     //           1
     //  f = -----------
     //        1     1
