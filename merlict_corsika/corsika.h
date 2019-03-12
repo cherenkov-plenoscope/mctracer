@@ -12,7 +12,6 @@ namespace corsika {
 namespace header {
 namespace event {
 
-std::string get_print(const std::array<float, 273> &rh);
 float event_number(const std::array<float, 273> &eh);
 float particle_id(const std::array<float, 273> &eh);
 float total_energy_in_GeV(const std::array<float, 273> &eh);
@@ -24,7 +23,6 @@ float first_interaction_height_in_cm(const std::array<float, 273> &eh);
 
 namespace run {
 
-std::string get_print(const std::array<float, 273> &rh);
 float run_number(const std::array<float, 273> &rh);
 float slope_of_energy_spektrum(const std::array<float, 273> &rh);
 float energy_range_start(const std::array<float, 273> &rh);
