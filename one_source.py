@@ -130,8 +130,7 @@ for pri_q in pri_queu:
 	go_first[pri_q] = s
 	s += 1
 
-out_header = 'merlict.h'
-out_source = 'merlict.cpp'
+out_path = os.path.join('merlict.h')
 
 headers = []
 header_includes = []
@@ -189,39 +188,39 @@ for source in sources:
 source_includes = list(set(source_includes))
 source_usings = list(set(source_usings))
 
+combined_includes = list(set(source_includes + header_includes))
 
-with open(out_header, 'wt') as fout:
+with open(out_path, 'wt') as fout:
 	fout.write(head)
-	for header_include in header_includes:
-		fout.write(header_include + '\n')
 	fout.write("\n")
+
+	fout.write("#ifndef MERLICT_HPP_\n")
+	fout.write("#define MERLICT_HPP_\n")
+	fout.write("\n")
+
+	for combined_include in combined_includes:
+		fout.write(combined_include + '\n')
+	fout.write("\n")
+
 	fout.write("namespace merlict {\n")
+
 	for header in headers:
 		print(header)
 		with open(header, 'rt') as fin:
 			h_txt = fin.read()
 		fout.write(inside_namespace(h_txt))
-		fout.write("\n"*2)
-	fout.write("}  // namespace merlict\n")
-
-
-with open(out_source, 'wt') as fout:
-	fout.write(head)
-	fout.write('#include "' + out_header + '"\n')
-	for source_include in source_includes:
-		fout.write(source_include + '\n')
-	fout.write("\n")
-	for source_using in source_usings:
-		fout.write(source_using + '\n')
-	fout.write("\n")
-	fout.write("namespace merlict {\n")
+		fout.write("\n")
 
 	for source in sources:
 		print(source)
 		with open(source, 'rt') as fin:
 			h_txt = fin.read()
 		fout.write(without_include_lines(inside_namespace(h_txt)))
-		fout.write("\n"*2)
+		fout.write("\n")
+
 	fout.write("}  // namespace merlict\n")
+	fout.write("\n")
+
+	fout.write("#endif  // MERLICT_HPP_\n")
 
 # g++ docopt/docopt.cpp lict_prop.cpp -o prop -std=gnu++11
