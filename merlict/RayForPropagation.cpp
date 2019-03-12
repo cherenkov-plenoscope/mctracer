@@ -38,7 +38,7 @@ RayForPropagation::RayForPropagation(
 
 void RayForPropagation::push_back_production() {
     Intersection production_intersection(
-        &SurfaceEntity::PHOTON_SOURCE,
+        &SURFACE_PHOTON_SOURCE,
         support_,
         direction_,  // set normal of production obj to direction of ray
         0.0,

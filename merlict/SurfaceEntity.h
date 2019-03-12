@@ -13,7 +13,6 @@ class SurfaceEntity :public Frame {
     const Frame* _allowed_frame_to_propagate_to = &VOID_FRAME;
  public:
     static const SurfaceEntity VOID_SURFACE_ENTITY;
-    static const SurfaceEntity PHOTON_SOURCE;
 
     SurfaceEntity();
     SurfaceEntity(
@@ -45,6 +44,8 @@ class SurfaceEntity :public Frame {
  private:
     void init_surface_defaults();
 };
+
+const SurfaceEntity SURFACE_PHOTON_SOURCE;
 
 }  // namespace merlict
 

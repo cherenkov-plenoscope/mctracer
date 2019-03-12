@@ -6,7 +6,6 @@
 namespace merlict {
 
 const SurfaceEntity SurfaceEntity::VOID_SURFACE_ENTITY;
-const SurfaceEntity SurfaceEntity::PHOTON_SOURCE;
 
 const Color* SurfaceEntity::DEFAULT_COLOR = &COLOR_DARK_GRAY;
 
