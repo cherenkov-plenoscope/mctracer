@@ -16,7 +16,9 @@ namespace thin_lens {
 // o: object distance
 
 double get_image_dist_given_focal_and_object_dist(double f, double o);
+
 double get_object_dist_given_focal_and_image_dist(double f, double i);
+
 double get_focal_dist_given_object_and_image_dist(double o, double i);
 
 }  // namespace thin_lens
