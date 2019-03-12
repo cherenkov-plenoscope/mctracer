@@ -7,8 +7,6 @@ namespace merlict {
 
 const SurfaceEntity SurfaceEntity::VOID_SURFACE_ENTITY;
 
-const Color* SurfaceEntity::DEFAULT_COLOR = &COLOR_DARK_GRAY;
-
 const function::Func1* SurfaceEntity::DEFAULT_REFLECTION = new function::Func1(
     {
         {200e-9, 0},
@@ -41,8 +39,8 @@ SurfaceEntity::SurfaceEntity(
 }
 
 void SurfaceEntity::init_surface_defaults() {
-    outer_color = DEFAULT_COLOR;
-    inner_color = DEFAULT_COLOR;
+    outer_color = &COLOR_DARK_GRAY;
+    inner_color = &COLOR_DARK_GRAY;
 
     outer_reflection = DEFAULT_REFLECTION;
     inner_reflection = DEFAULT_REFLECTION;

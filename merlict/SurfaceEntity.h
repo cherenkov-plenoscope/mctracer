@@ -39,7 +39,6 @@ class SurfaceEntity :public Frame {
     static const function::Func1* DEFAULT_REFLECTION;
     static const function::Func1* DEFAULT_REFRACTION;
     static const function::Func1* DEFAULT_ABSORPTION;
-    static const Color* DEFAULT_COLOR;
 
  private:
     void init_surface_defaults();
