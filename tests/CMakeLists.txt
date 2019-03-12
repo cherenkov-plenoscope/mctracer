@@ -39,7 +39,6 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/Histogram1Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/HomTra3Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ToolTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/TrajectoryFactoryTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/StereoLitographyTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/LensMakerTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Vec2Test.cpp
