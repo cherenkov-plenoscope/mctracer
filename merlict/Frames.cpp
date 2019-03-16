@@ -6,7 +6,7 @@
 
 
 namespace merlict {
-namespace Frames {
+namespace bound {
 
 Vec3 small_ball_nielsen_nock(const std::vector<Frame*> &frames) {
     if (frames.size() < 1) {
@@ -205,5 +205,5 @@ double bounding_sphere_radius(
     return radius;
 }
 
-}  // namespace Frames
+}  // namespace bound
 }  // namespace merlict

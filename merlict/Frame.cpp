@@ -143,7 +143,7 @@ void Frame::update_bounding_sphere() {
         child->update_bounding_sphere();
     if (has_children())
         bounding_sphere_radius =
-            Frames::bounding_sphere_radius(children, VEC3_ORIGIN);
+            bound::bounding_sphere_radius(children, VEC3_ORIGIN);
 }
 
 void Frame::init_root() {
@@ -199,7 +199,7 @@ void Frame::cluster_children() {
         children.clear();
 
         for (unsigned int sector=0; sector < 8; sector++) {
-            if (Frames::positions_in_mother_too_close(
+            if (bound::positions_in_mother_too_close(
                     oct_tree[sector])
             ) {
                 warn_about_close_frames();
@@ -218,7 +218,7 @@ void Frame::cluster_children() {
                     oct_tree[sector].at(0)->mother = this;
                     this->children.push_back(oct_tree[sector].at(0));
                 } else if (oct_tree[sector].size() > 1) {
-                    Vec3 octant_center = Frames::bounding_sphere_center(
+                    Vec3 octant_center = bound::bounding_sphere_center(
                         oct_tree[sector]);
 
                     Frame* octant = add<Frame>();
