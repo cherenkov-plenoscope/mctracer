@@ -50,14 +50,14 @@ TEST_CASE("FramesTest: mean_no_frame", "[merlict]") {
 
 TEST_CASE("FramesTest: optimal_bounding_sphere_pos_no_frame", "[merlict]") {
     std::vector<ml::Frame*> vf;
-    CHECK_THROWS_AS(ml::Frames::dumb_bounding_sphere_center(vf), std::invalid_argument);
+    CHECK_THROWS_AS(ml::Frames::bounding_sphere_center_alternative(vf), std::invalid_argument);
 }
 
 TEST_CASE("FramesTest: optimal_bounding_sphere_pos_one_frame", "[merlict]") {
     ml::Frame root;
     root.set_name_pos_rot("root", ml::VEC3_UNIT_X, ml::ROT3_UNITY);
     std::vector<ml::Frame*> vf; vf.push_back(&root);
-    CHECK(ml::VEC3_UNIT_X == ml::Frames::dumb_bounding_sphere_center(vf));
+    CHECK(ml::VEC3_UNIT_X == ml::Frames::bounding_sphere_center_alternative(vf));
 }
 
 TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_frames_symetric", "[merlict]") {
@@ -77,7 +77,7 @@ TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_frames_symetric", "[merl
     ml::Frame f5;
     f5.set_name_pos_rot("f5", ml::Vec3(4, 0, 0), ml::ROT3_UNITY);
     vf.push_back(&f5);
-    CHECK(ml::Frames::dumb_bounding_sphere_center(vf) == ml::Vec3(2, 0, 0));
+    CHECK(ml::Frames::bounding_sphere_center_alternative(vf) == ml::Vec3(2, 0, 0));
 }
 
 TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_spheres_symetric", "[merlict]") {
@@ -102,7 +102,7 @@ TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_spheres_symetric", "[mer
     f5.set_name_pos_rot("f5", ml::Vec3(4, 0, 0), ml::ROT3_UNITY);
     f5.set_radius(1.0);
     vf.push_back(&f5);
-    CHECK(ml::Frames::dumb_bounding_sphere_center(vf) == ml::Vec3(2, 0, 0));
+    CHECK(ml::Frames::bounding_sphere_center_alternative(vf) == ml::Vec3(2, 0, 0));
 }
 
 TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_spheres_asymetric", "[merlict]") {
@@ -127,7 +127,7 @@ TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_spheres_asymetric", "[me
     f5.set_name_pos_rot("f5", ml::Vec3(4, 0, 0), ml::ROT3_UNITY);
     f5.set_radius(5.0);
     vf.push_back(&f5);
-    CHECK(ml::Frames::dumb_bounding_sphere_center(vf) == ml::Vec3(4, 0, 0));
+    CHECK(ml::Frames::bounding_sphere_center_alternative(vf) == ml::Vec3(4, 0, 0));
 }
 
 TEST_CASE("FramesTest: not_optimal_in_symetric_case", "[merlict]") {
@@ -153,7 +153,7 @@ TEST_CASE("FramesTest: not_optimal_in_symetric_case", "[merlict]") {
         ml::ROT3_UNITY);
     f3.set_radius(0.5); vf.push_back(&f3);
 
-    const ml::Vec3 center = ml::Frames::dumb_bounding_sphere_center(vf);
+    const ml::Vec3 center = ml::Frames::bounding_sphere_center_alternative(vf);
     const double radius = ml::Frames::bounding_sphere_radius(vf, center);
 
     const double expected_enclosing_radius_for_three_balls = 1.5;

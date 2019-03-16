@@ -10,7 +10,7 @@ namespace Frames {
 
 double position_spread_in_mother(const std::vector<Frame*> &frames);
 Vec3 bounding_sphere_center(const std::vector<Frame*> &frames);
-Vec3 dumb_bounding_sphere_center(const std::vector<Frame*> &frames);
+Vec3 bounding_sphere_center_alternative(const std::vector<Frame*> &frames);
 Vec3 position_mean_in_mother(const std::vector<Frame*> &frames);
 bool positions_in_mother_too_close(
     const std::vector<Frame*> &frames);

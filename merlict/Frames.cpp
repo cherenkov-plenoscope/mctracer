@@ -40,7 +40,7 @@ Vec3 bounding_sphere_center(const std::vector<Frame*> &frames) {
     Vec3 center = position_mean_in_mother(frames);
 
     if (frames.size() < FRAME_MAX_NUMBER_CHILDREN) {
-        const Vec3 alternative = dumb_bounding_sphere_center(frames);
+        const Vec3 alternative = bounding_sphere_center_alternative(frames);
         const double m_radius = bounding_sphere_radius(frames, center);
         const double alt_radius = bounding_sphere_radius(frames, alternative);
         if (m_radius > alt_radius)
@@ -49,7 +49,7 @@ Vec3 bounding_sphere_center(const std::vector<Frame*> &frames) {
     return center;
 }
 
-Vec3 dumb_bounding_sphere_center(const std::vector<Frame*> &frames) {
+Vec3 bounding_sphere_center_alternative(const std::vector<Frame*> &frames) {
     if (frames.size() < 1) {
         std::stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
