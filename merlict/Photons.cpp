@@ -40,7 +40,7 @@ void __propagate_one_photon(
     Propagator(photon, env);
 }
 
-void propagate_photons_multi_thread(
+void propagate_photons_in_frame_with_config_multi_thread(
     std::vector<Photon> *photons,
     const Frame* world,
     const PropagationConfig* settings,

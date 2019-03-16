@@ -38,7 +38,7 @@ TEST_CASE("ParallelPropagationTest: propagate_once", "[merlict]") {
 
 	ml::PropagationConfig cfg;
 
-	ml::propagate_photons_multi_thread(
+	ml::propagate_photons_in_frame_with_config_multi_thread(
 		&photons1,
 		&scenery.root,
 		&cfg,
@@ -59,7 +59,7 @@ TEST_CASE("ParallelPropagationTest: propagate_once", "[merlict]") {
 			num_photons,
 			&prng);
 
-	ml::propagate_photons_multi_thread(
+	ml::propagate_photons_in_frame_with_config_multi_thread(
 		&photons2,
 		&scenery.root,
 		&cfg,
