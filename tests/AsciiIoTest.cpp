@@ -5,18 +5,18 @@ namespace ml = merlict;
 
 
 TEST_CASE("AsciiIoTest: read_non_existing_file", "[merlict]") {
-    CHECK_THROWS_AS(ml::tsvio::gen_table_from_file("non_existing_path/non_existing_file.csv"), std::runtime_error);
+    CHECK_THROWS_AS(ml::tsvio::gen_table_from_file("resources/tsv/non_existing_file.csv"), std::runtime_error);
 }
 
 TEST_CASE("AsciiIoTest: read_empty_file", "[merlict]") {
     std::vector<std::vector<double>> table =
-        ml::tsvio::gen_table_from_file("tsvio/empty.csv");
+        ml::tsvio::gen_table_from_file("resources/tsv/empty.csv");
     CHECK(table.size() == 0u);
 }
 
 TEST_CASE("AsciiIoTest: read_valid_file_table_only", "[merlict]") {
     std::vector<std::vector<double>> table =
-        ml::tsvio::gen_table_from_file("tsvio/matrix_4col_3row.csv");
+        ml::tsvio::gen_table_from_file("resources/tsv/matrix_4col_3row.csv");
 
     // wavelength, mean_free_path, absorbtion_coeff, wuff
     // 123.4, 100.0, 0.99, 133.7
@@ -50,7 +50,7 @@ TEST_CASE("AsciiIoTest: read_valid_file_table_only", "[merlict]") {
 TEST_CASE("AsciiIoTest: write_table", "[merlict]") {
     const unsigned int rows = 100;
     const unsigned int cols = 10;
-    std::string path = "tsvio/written_table.csv";
+    std::string path = "resources/tsv/written_table.csv";
 
     std::vector<std::vector<double>> table(rows);
 
