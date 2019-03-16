@@ -3,6 +3,7 @@
 #include <math.h>
 
 namespace merlict {
+namespace bound {
 
 double radius_to_enclose_ball(Vec3 center, Ball ball) {
     Vec3 d = center - ball.center;
@@ -49,4 +50,5 @@ Ball many_iterations(const std::vector<Ball> &balls) {
     return approximate;
 }
 
+}  // namespace bound
 }  // namespace merlict

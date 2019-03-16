@@ -20,6 +20,7 @@
 #include "merlict/Vec3.h"
 
 namespace merlict {
+namespace bound {
 
 struct Ball {
     Vec3 center;
@@ -39,6 +40,7 @@ void one_iteration(
 
 Ball many_iterations(const std::vector<Ball> &balls);
 
+}  // namespace bound
 }  // namespace merlict
 
 #endif  // MERLICT_SMALL_BALL_H_
