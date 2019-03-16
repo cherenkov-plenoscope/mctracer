@@ -37,7 +37,7 @@ Vec3 small_ball_nielsen_nock(const std::vector<Frame*> &frames) {
 Vec3 bounding_sphere_center(const std::vector<Frame*> &frames) {
     // this can be optimized using Fischer's thesis on spheres enclosing spheres
 
-    Vec3 center = mean_position_in_mother(frames);
+    Vec3 center = position_mean_in_mother(frames);
 
     if (frames.size() < FRAME_MAX_NUMBER_CHILDREN) {
         const Vec3 alternative = dumb_bounding_sphere_center(frames);
@@ -91,7 +91,7 @@ Vec3 dumb_bounding_sphere_center(const std::vector<Frame*> &frames) {
         dir*(0.5*maximum - start_frame->get_bounding_sphere_radius());
 }
 
-Vec3 mean_position_in_mother(const std::vector<Frame*> &frames) {
+Vec3 position_mean_in_mother(const std::vector<Frame*> &frames) {
     if (frames.size() < 1) {
         std::stringstream info;
         info << __FILE__ << ", " << __LINE__ << "\n";
@@ -109,21 +109,11 @@ Vec3 mean_position_in_mother(const std::vector<Frame*> &frames) {
     return sum_pos/frames.size();
 }
 
-bool positions_in_mother_are_too_close_together(
-    const std::vector<Frame*> &frames
-) {
-    if (frames.size() < 2)
-        return false;
-    else
-        return spread_of_frame_position_in_mother(frames) <
-            FRAME_MIN_STRUCTURE_SIZE;
-}
-
-double spread_of_frame_position_in_mother(const std::vector<Frame*> &frames) {
+double position_spread_in_mother(const std::vector<Frame*> &frames) {
     if (frames.size() < 2)
         return 0.0;
 
-    const Vec3 mean_pos_in_mother = mean_position_in_mother(frames);
+    const Vec3 mean_pos_in_mother = position_mean_in_mother(frames);
 
     Vec3 u(0., 0., 0.);
     for (Frame* frame : frames) {
@@ -133,6 +123,15 @@ double spread_of_frame_position_in_mother(const std::vector<Frame*> &frames) {
 
     u = u/frames.size();
     return sqrt(u.norm());
+}
+
+bool positions_in_mother_too_close(
+    const std::vector<Frame*> &frames
+) {
+    if (frames.size() < 2)
+        return false;
+    else
+        return position_spread_in_mother(frames) < FRAME_MIN_STRUCTURE_SIZE;
 }
 
 double bounding_sphere_radius(

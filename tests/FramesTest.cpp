@@ -8,14 +8,14 @@ namespace ml = merlict;
 
 TEST_CASE("FramesTest: too_close_together_no_frame", "[merlict]") {
     std::vector<ml::Frame*> vf;
-    CHECK(!ml::Frames::positions_in_mother_are_too_close_together(vf));
+    CHECK(!ml::Frames::positions_in_mother_too_close(vf));
 }
 
 TEST_CASE("FramesTest: too_close_together_one_frame", "[merlict]") {
     ml::Frame root;
     root.set_name_pos_rot("root", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
     std::vector<ml::Frame*> vf; vf.push_back(&root);
-    CHECK(!ml::Frames::positions_in_mother_are_too_close_together(vf));
+    CHECK(!ml::Frames::positions_in_mother_too_close(vf));
 }
 
 TEST_CASE("FramesTest: too_close_together_true", "[merlict]") {
@@ -26,7 +26,7 @@ TEST_CASE("FramesTest: too_close_together_true", "[merlict]") {
     f2.set_name_pos_rot("f2", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
     std::vector<ml::Frame*> vf; vf.push_back(&f1); vf.push_back(&f2);
-    CHECK(ml::Frames::positions_in_mother_are_too_close_together(vf));
+    CHECK(ml::Frames::positions_in_mother_too_close(vf));
 }
 
 TEST_CASE("FramesTest: too_close_together_false", "[merlict]") {
@@ -40,12 +40,12 @@ TEST_CASE("FramesTest: too_close_together_false", "[merlict]") {
         ml::ROT3_UNITY);
 
     std::vector<ml::Frame*> vf; vf.push_back(&f1); vf.push_back(&f2);
-    CHECK(!ml::Frames::positions_in_mother_are_too_close_together(vf));
+    CHECK(!ml::Frames::positions_in_mother_too_close(vf));
 }
 
 TEST_CASE("FramesTest: mean_no_frame", "[merlict]") {
     std::vector<ml::Frame*> vf;
-    CHECK_THROWS_AS(ml::Frames::mean_position_in_mother(vf), std::invalid_argument);
+    CHECK_THROWS_AS(ml::Frames::position_mean_in_mother(vf), std::invalid_argument);
 }
 
 TEST_CASE("FramesTest: optimal_bounding_sphere_pos_no_frame", "[merlict]") {

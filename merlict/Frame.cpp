@@ -199,7 +199,7 @@ void Frame::cluster_children() {
         children.clear();
 
         for (unsigned int sector=0; sector < 8; sector++) {
-            if (Frames::positions_in_mother_are_too_close_together(
+            if (Frames::positions_in_mother_too_close(
                     oct_tree[sector])
             ) {
                 warn_about_close_frames();

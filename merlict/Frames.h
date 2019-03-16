@@ -8,11 +8,11 @@
 namespace merlict {
 namespace Frames {
 
-double spread_of_frame_position_in_mother(const std::vector<Frame*> &frames);
+double position_spread_in_mother(const std::vector<Frame*> &frames);
 Vec3 bounding_sphere_center(const std::vector<Frame*> &frames);
 Vec3 dumb_bounding_sphere_center(const std::vector<Frame*> &frames);
-Vec3 mean_position_in_mother(const std::vector<Frame*> &frames);
-bool positions_in_mother_are_too_close_together(
+Vec3 position_mean_in_mother(const std::vector<Frame*> &frames);
+bool positions_in_mother_too_close(
     const std::vector<Frame*> &frames);
 double bounding_sphere_radius(
     const std::vector<Frame*> &frames, const Vec3 center);
