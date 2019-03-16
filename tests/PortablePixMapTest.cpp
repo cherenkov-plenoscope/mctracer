@@ -25,10 +25,10 @@ TEST_CASE("PortablePixMapTest: write_and_read", "[merlict]") {
     }
     ml::visual::write_image_to_path(
         img,
-        "InOut/image_16x9_rgb.ppm");
+        "resources/image_16x9_rgb.ppm");
 
     ml::visual::Image img_back = ml::visual::read_image_from_path(
-        "InOut/image_16x9_rgb.ppm");
+        "resources/image_16x9_rgb.ppm");
 
     REQUIRE(img_back.num_cols == img.num_cols);
     REQUIRE(img_back.num_rows == img.num_rows);

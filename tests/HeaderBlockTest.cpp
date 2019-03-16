@@ -7,7 +7,7 @@ TEST_CASE("HeaderBlockTest: write_and_read_binary_block", "[merlict]") {
     std::array<float, 273> block;
     for (unsigned int i = 0; i < 273; i++)
         block.at(i) = i*1.01;
-    const std::string path = "InOut/header_block.bin";
+    const std::string path = "resources/header_block.bin";
     corsika::block::write(block, path);
     std::vector<std::array<float, 273>> blocks_in = corsika::block::read(path);
     REQUIRE(1u == blocks_in.size());
@@ -25,7 +25,7 @@ TEST_CASE("HeaderBlockTest: write_and_read_several_binary_blocks", "[merlict]") 
             blocks.at(j).at(i) = (i+1)*(j+1)*1.01;
         }
     }
-    const std::string path = "InOut/header_block.bin";
+    const std::string path = "resources/header_block.bin";
     corsika::block::write(blocks, path);
     std::vector<std::array<float, 273>> blocks_in = corsika::block::read(path);
     REQUIRE(num_blocks == blocks_in.size());
@@ -37,12 +37,12 @@ TEST_CASE("HeaderBlockTest: write_and_read_several_binary_blocks", "[merlict]") 
 }
 
 TEST_CASE("HeaderBlockTest: read_non_existing_file", "[merlict]") {
-    CHECK_THROWS_AS(corsika::block::read("InOut/non_existing_file.bin"), std::runtime_error);
+    CHECK_THROWS_AS(corsika::block::read("resources/non_existing_file.bin"), std::runtime_error);
 }
 
 TEST_CASE("HeaderBlockTest: write_and_read_empty_file", "[merlict]") {
     std::vector<std::array<float, 273>> blocks;
-    const std::string path = "InOut/header_block.bin";
+    const std::string path = "resources/header_block.bin";
     corsika::block::write(blocks, path);
     std::vector<std::array<float, 273>> blocks_in = corsika::block::read(path);
     CHECK(0u == blocks_in.size());

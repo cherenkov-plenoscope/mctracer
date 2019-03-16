@@ -24,13 +24,13 @@ TEST_CASE("SensorInOutTest: write_and_read", "[merlict]") {
 
     // write to disk
     std::ofstream out;
-    out.open("InOut/arrival_information.bin", std::ios::out | std::ios::binary);
+    out.open("resources/arrival_information.bin", std::ios::out | std::ios::binary);
     ml::sensor::write_arrival_information_to_file(&arrivals_1, &out);
     out.close();
 
     // read in again
     std::ifstream in;
-    in.open("InOut/arrival_information.bin", std::ios::in | std::ios::binary);
+    in.open("resources/arrival_information.bin", std::ios::in | std::ios::binary);
     std::vector<ml::sensor::PhotonArrival> arrivals_2 =
         ml::sensor::read_arrival_information_from_file(
             &in,
