@@ -45,7 +45,7 @@ TEST_CASE("FramesTest: too_close_together_false", "[merlict]") {
 
 TEST_CASE("FramesTest: mean_no_frame", "[merlict]") {
     std::vector<ml::Frame*> vf;
-    CHECK_THROWS_AS(ml::Frames::mean_of_positions_in_mother(vf), std::invalid_argument);
+    CHECK_THROWS_AS(ml::Frames::mean_position_in_mother(vf), std::invalid_argument);
 }
 
 TEST_CASE("FramesTest: optimal_bounding_sphere_pos_no_frame", "[merlict]") {
