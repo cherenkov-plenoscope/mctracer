@@ -7,7 +7,7 @@
 namespace ml = merlict;
 
 
-TEST_CASE("ParallelPropagationTest: propagate_once", "[merlict]") {
+TEST_CASE("MultiThreadPropagationTest: propagate_once", "[merlict]") {
 	const uint64_t num_photons = 1000;
 	ml::random::Mt19937 prng(0u);
 	std::vector<ml::Photon> photons1 =

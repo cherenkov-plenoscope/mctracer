@@ -181,7 +181,7 @@ test_sources = [
     "tests/DistanceMeterTest.cpp",
     #"tests/PortablePixMapTest.cpp",
     #"tests/PulseExtractionTest.cpp",
-    "tests/ParallelPropagationTest.cpp",
+    #"tests/MultiThreadPropagationTest.cpp",
     #"tests/JsonTest.cpp",
 ]
 
