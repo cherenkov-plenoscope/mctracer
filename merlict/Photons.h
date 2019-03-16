@@ -15,12 +15,6 @@ void propagate_photons_in_frame_with_config(
     const PropagationConfig *settings,
     random::Generator* prng);
 
-void propagate_photons_in_frame_with_config_multi_thread(
-    std::vector<Photon> *photons,
-    const Frame* world,
-    const PropagationConfig* settings,
-    random::Generator* prng);
-
 std::vector<Photon> raw_matrix2photons(
     std::vector<std::vector<double>> raw_matrix);
 

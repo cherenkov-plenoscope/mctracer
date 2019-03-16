@@ -36,6 +36,4 @@
 #include "scenery/scenery.h"
 #include "sensor/sensor.h"
 
-#include "vitaliy_vitsentiy_thread_pool.h"
-
 #endif  // MERLICT_MERLICT_H_

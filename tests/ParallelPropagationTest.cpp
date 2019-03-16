@@ -3,6 +3,7 @@
 #include "merlict/scenery/primitive/Disc.h"
 #include "merlict/Photons.h"
 #include "merlict/scenery/Scenery.h"
+#include "merlict_multi_thread/merlict_multi_thread.h"
 namespace ml = merlict;
 
 

@@ -8,7 +8,7 @@
 #include "merlict/tools.h"
 #include "merlict/random/random.h"
 #include "merlict/scenery/geometry/thin_lens.h"
-#include "merlict/vitaliy_vitsentiy_thread_pool.h"
+#include "merlict_multi_thread/vitaliy_vitsentiy_thread_pool.h"
 
 
 namespace merlict {

@@ -3,7 +3,7 @@
 #include <exception>
 #include "Tracer.h"
 #include "merlict/random/random.h"
-#include "merlict/vitaliy_vitsentiy_thread_pool.h"
+#include "merlict_multi_thread/vitaliy_vitsentiy_thread_pool.h"
 
 namespace merlict {
 namespace visual {
