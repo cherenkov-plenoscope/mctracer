@@ -121,7 +121,8 @@ TEST_CASE("BiConvexLensTest: send_photons_frontal_into_lens_with_offset", "[merl
         ml::Rot3(0.0, -ml::deg2rad(180.0), 0.0),
         ml::Vec3(0.0, 0.0, 1.0));
 
-    ml::apply_transformation_to_photons(Trafo, &photons);
+    for (size_t i = 0; i < photons.size(); i++)
+        photons.at(i).transform(&Trafo);
 
     // photon propagation
     ml::propagate_photons_in_frame_with_config(

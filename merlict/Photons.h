@@ -21,10 +21,6 @@ void propagate_photons_in_frame_with_config_multi_thread(
     const PropagationConfig* settings,
     random::Generator* prng);
 
-void apply_transformation_to_photons(
-    const HomTra3 Trafo,
-    std::vector<Photon> *photons);
-
 std::vector<Photon> raw_matrix2photons(
     std::vector<std::vector<double>> raw_matrix);
 

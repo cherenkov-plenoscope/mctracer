@@ -175,15 +175,4 @@ std::vector<Photon> parallel_towards_z_from_xy_disc(
 }
 
 }  // namespace photon_source
-
-// transformations, move and rotate photons
-
-void apply_transformation_to_photons(
-    const HomTra3 Trafo,
-    std::vector<Photon> *photons
-) {
-    for (size_t i = 0; i < photons->size(); i++)
-        photons->at(i).transform(&Trafo);
-}
-
 }  // namespace merlict

@@ -507,7 +507,8 @@ void transform_photons(const Object &o, std::vector<Photon> *photons) {
     Rot3 rot = o.rot3("rot");
     HomTra3 Trafo;
     Trafo.set_transformation(rot, pos);
-    apply_transformation_to_photons(Trafo, photons);
+    for (size_t i = 0; i < photons->size(); i++)
+        photons->at(i).transform(&Trafo);
 }
 
 std::vector<Photon> to_parallel_disc(const Object &o) {
