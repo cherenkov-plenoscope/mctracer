@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_SIGNALPROCESSING_PIPELINEPHOTON_H_
-#define MCTRACER_SIGNALPROCESSING_PIPELINEPHOTON_H_
+#ifndef SIGNALPROCESSING_PIPELINEPHOTON_H_
+#define SIGNALPROCESSING_PIPELINEPHOTON_H_
 
 #include <stdint.h>
 #include <vector>
@@ -27,4 +27,4 @@ void sort_photon_pipelines_arrival_time(
 
 }  // namespace signal_processing
 
-#endif  // MCTRACER_SIGNALPROCESSING_PIPELINEPHOTON_H_
+#endif  // SIGNALPROCESSING_PIPELINEPHOTON_H_

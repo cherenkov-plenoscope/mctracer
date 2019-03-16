@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_SIGNALPROCESSING_ELECTRICPULSE_H_
-#define MCTRACER_SIGNALPROCESSING_ELECTRICPULSE_H_
+#ifndef SIGNALPROCESSING_ELECTRICPULSE_H_
+#define SIGNALPROCESSING_ELECTRICPULSE_H_
 
 #include <stdint.h>
 
@@ -17,4 +17,4 @@ struct ElectricPulse {
 
 }  // namespace signal_processing
 
-#endif  // MCTRACER_SIGNALPROCESSING_ELECTRICPULSE_H_
+#endif  // SIGNALPROCESSING_ELECTRICPULSE_H_

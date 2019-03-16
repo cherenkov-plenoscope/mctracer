@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef MCTRACER_SIGNALPROCESSING_PHOTOELECTRICCONVERTER_H_
-#define MCTRACER_SIGNALPROCESSING_PHOTOELECTRICCONVERTER_H_
+#ifndef SIGNALPROCESSING_PHOTOELECTRICCONVERTER_H_
+#define SIGNALPROCESSING_PHOTOELECTRICCONVERTER_H_
 
 #include <vector>
 #include "merlict/merlict.h"
@@ -46,4 +46,4 @@ class Converter {
 }  // namespace PhotoElectricConverter
 }  // namespace signal_processing
 
-#endif  // MCTRACER_SIGNALPROCESSING_PHOTOELECTRICCONVERTER_H_
+#endif  // SIGNALPROCESSING_PHOTOELECTRICCONVERTER_H_
