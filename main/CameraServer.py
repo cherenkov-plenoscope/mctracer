@@ -11,28 +11,40 @@ def read_ppm_image(fstream):
     assert magic[1] == 54
     comment = fstream.readline()
     image_size = fstream.readline()
-    number_columns, number_rows = image_size.decode().split()
-    number_columns = int(number_columns)
-    number_rows = int(number_rows)
+    num_columns, num_rows = image_size.decode().split()
+    num_columns = int(num_columns)
+    num_rows = int(num_rows)
     max_color = int(fstream.readline().decode())
     assert max_color == 255
-    count = number_columns*number_rows*3
+    count = num_columns*num_rows*3
     raw = np.fromstring(fstream.read(count), dtype=np.uint8)
-    img = raw.reshape((number_rows, number_columns, 3))
+    img = raw.reshape((num_rows, num_columns, 3))
     return img
 
 
-def cam_command(
+def camera_command(
     position=[0, 0, 2],
     orientation=[0, 0, 0],
     object_distance=10,
     sensor_size=0.06,
     field_of_view=np.deg2rad(45),
     f_stop=0.95,
-    number_columns=512,
-    number_rows=288,
+    num_columns=512,
+    num_rows=288,
     noise_level=25
 ):
+    """
+    Returns a binary command-string to be fed into merlict's cmaera-server via
+    std-in.
+
+    Parameters
+    ----------
+
+        noise_level             From 0 (no noise) to 255 (strong noise).
+                                Lower noise_levels give better looking images
+                                but take longer to be computed. Strong
+                                noise_levels are fast to compute.
+    """
     fout = BytesIO()
     fout.write(np.uint64(645).tobytes())  # MAGIC
 
@@ -49,8 +61,8 @@ def cam_command(
     fout.write(np.float64(field_of_view).tobytes())  # fov
     fout.write(np.float64(f_stop).tobytes())  # f-stop
 
-    fout.write(np.uint64(number_columns).tobytes())
-    fout.write(np.uint64(number_rows).tobytes())
+    fout.write(np.uint64(num_columns).tobytes())
+    fout.write(np.uint64(num_rows).tobytes())
     fout.write(np.uint64(noise_level).tobytes())
 
     fout.seek(0)
@@ -64,7 +76,7 @@ os.makedirs(outdir, exist_ok=True)
 
 for i, y in enumerate(np.linspace(-10, -1, 100)):
     w = merlict.stdin.write(
-        cam_command(
+        camera_command(
             position=[0, 0, y],
             orientation=[0, np.deg2rad(-90), 0],
             object_distance=np.abs(y)))
