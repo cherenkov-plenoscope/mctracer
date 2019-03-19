@@ -237,7 +237,7 @@ TEST_CASE("FrameTest: removing_a_cild", "[merlict]") {
 
     isec = ml::rays_first_intersection_with_frame(&ray, &scenery.root);
     REQUIRE(isec.does_intersect());
-    CHECK(tball == isec.get_object());
+    CHECK(tball == isec.object());
 
     // Erase temporary frame
     scenery.root.erase(temp);

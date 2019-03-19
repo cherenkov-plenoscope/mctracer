@@ -76,7 +76,7 @@ CalibrationPhotonResult one_photon(
     ml::Propagator(&ph, env);
 
     ml::sensor::FindSensorByFrame sensor_finder(
-        ph.final_intersection().get_object(),
+        ph.final_intersection().object(),
         &cal.plenoscope->light_field_channels->by_frame);
 
     if (sensor_finder.is_absorbed_by_known_sensor) {
@@ -200,7 +200,7 @@ void Calibrator::fill_calibration_block_to_table() {
         Propagator(&ph, my_env);
 
         sensor::FindSensorByFrame sensor_finder(
-            ph.final_intersection().get_object(),
+            ph.final_intersection().object(),
             &plenoscope->light_field_channels->by_frame);
 
         if (sensor_finder.is_absorbed_by_known_sensor) {

@@ -330,7 +330,7 @@ std::string FlyingCamera::get_intersection_info_print(
 )const {
     std::stringstream out;
     out << "| Object: ";
-    out << intersec.get_object()->path_in_tree() << "\n";
+    out << intersec.object()->path_in_tree() << "\n";
     out << "| Distance to first intersection: ";
     out << intersec.distance_to_ray_support() << "m\n";
     out << "|\n";
@@ -350,7 +350,7 @@ std::string FlyingCamera::get_intersection_info_print(
     out << "|\n";
     out << txt::place_first_infront_of_each_new_line_of_second(
         "| ",
-        intersec.get_object()->str());
+        intersec.object()->str());
     return out.str();
 }
 

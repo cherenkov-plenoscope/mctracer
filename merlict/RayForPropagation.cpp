@@ -63,7 +63,7 @@ std::string RayForPropagation::history_str()const {
     int index = 0;
     for (Interaction type : interaction_history) {
         out << ++index << ") " << interaction_str(type) << " in ";
-        out << intersection_history.at(index-1).get_object()->get_name();
+        out << intersection_history.at(index-1).object()->get_name();
         out << " " << intersection_history.at(index-1).
             position_in_root_frame().str();
         out << ", dist to prev.:";

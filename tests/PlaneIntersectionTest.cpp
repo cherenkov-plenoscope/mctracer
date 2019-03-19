@@ -39,7 +39,7 @@ TEST_CASE("PlaneIntersectionTest: frontal", "[merlict]") {
         &pt.scenery.root);
 
     REQUIRE(intersec.does_intersect());
-    CHECK(intersec.get_object() == pt.plane);
+    CHECK(intersec.object() == pt.plane);
     CHECK(intersec.position_in_object_frame() == ml::VEC3_ORIGIN);
     CHECK(intersec.surface_normal_in_object_frame() == ml::Vec3(0, 0, 1));
 }
@@ -57,7 +57,7 @@ TEST_CASE("PlaneIntersectionTest: frontal_lateral_offset_alwas_intersection", "[
                 &pt.scenery.root);
 
             REQUIRE(intersec.does_intersect());
-            CHECK(intersec.get_object() == pt.plane);
+            CHECK(intersec.object() == pt.plane);
             CHECK(intersec.position_in_object_frame() == ml::Vec3(x_support, y_support, 0));
             CHECK(intersec.surface_normal_in_object_frame() == ml::Vec3(0, 0, 1));
         }

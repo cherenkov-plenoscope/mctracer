@@ -6,7 +6,7 @@
 namespace merlict {
 
 Intersection::Intersection() {
-    object = &VOID_SURFACE_ENTITY;
+    __object = &VOID_SURFACE_ENTITY;
     position = Vec3(
         std::numeric_limits<double>::infinity(),
         std::numeric_limits<double>::infinity(),
@@ -24,18 +24,18 @@ Intersection::Intersection(
 ):
     position(_position),
     surface_normal(_surface_normal),
-    object(intersectiong_object),
+    __object(intersectiong_object),
     distance_of_ray(distance_of_ray_support_to_intersection),
     _from_outside_to_inside(
         ray_runs_from_outside_to_inside(incident_in_obj_sys))
 {}
 
 bool Intersection::does_intersect()const {
-    return object != &VOID_SURFACE_ENTITY;
+    return __object != &VOID_SURFACE_ENTITY;
 }
 
-const SurfaceEntity * Intersection::get_object()const {
-    return object;
+const SurfaceEntity * Intersection::object()const {
+    return __object;
 }
 
 Vec3 Intersection::position_in_object_frame()const {
@@ -43,7 +43,7 @@ Vec3 Intersection::position_in_object_frame()const {
 }
 
 Vec3 Intersection::position_in_root_frame()const {
-    return object->frame2world()->position(position);
+    return __object->frame2world()->position(position);
 }
 
 Vec3 Intersection::surface_normal_in_object_frame()const {
@@ -51,7 +51,7 @@ Vec3 Intersection::surface_normal_in_object_frame()const {
 }
 
 Vec3 Intersection::surface_normal_in_root_frame()const {
-    return object->frame2world()->orientation(surface_normal);
+    return __object->frame2world()->orientation(surface_normal);
 }
 
 double Intersection::distance_to_ray_support()const {
@@ -61,20 +61,21 @@ double Intersection::distance_to_ray_support()const {
 std::string Intersection::str()const {
     std::stringstream out;
     if (does_intersect()) {
-        out << object->get_name() << " in ";
+        out << __object->get_name() << " in ";
         out << position_in_root_frame().str() << " after ";
         out << distance_to_ray_support() << "m";
     } else {
-        out << "no intersection with any object";
+        out << "no intersection with any __object";
     }
     out << "\n";
     return out.str();
 }
 
 Vec3 Intersection::reflection_direction_in_root_frame(Vec3 in_dir_world)const {
-    Vec3 in_dir_obj = object->frame2world()->orientation_inverse(in_dir_world);
+    Vec3 in_dir_obj = __object->frame2world()->
+        orientation_inverse(in_dir_world);
     surface_normal.mirror(&in_dir_obj);
-    return object->frame2world()->orientation(in_dir_obj);
+    return __object->frame2world()->orientation(in_dir_obj);
 }
 
 #include "merlict/Ray.h"
@@ -83,48 +84,50 @@ double Intersection::facing_reflection_propability(
     const double wavelength
 )const {
     return _from_outside_to_inside ?
-    object->outer_reflection->evaluate(wavelength):
-    object->inner_reflection->evaluate(wavelength);
+        __object->outer_reflection->evaluate(wavelength):
+        __object->inner_reflection->evaluate(wavelength);
 }
 
 double Intersection::refractive_index_going_to(const double wavelength)const {
     return _from_outside_to_inside ?
-    object->inner_refraction->evaluate(wavelength):
-    object->outer_refraction->evaluate(wavelength);
+        __object->inner_refraction->evaluate(wavelength):
+        __object->outer_refraction->evaluate(wavelength);
 }
 
 bool Intersection::going_to_default_refractive_index()const {
     return _from_outside_to_inside ?
-    object->inner_refraction == SurfaceEntity::DEFAULT_REFRACTION:
-    object->outer_refraction == SurfaceEntity::DEFAULT_REFRACTION;
+        __object->inner_refraction == SurfaceEntity::DEFAULT_REFRACTION:
+        __object->outer_refraction == SurfaceEntity::DEFAULT_REFRACTION;
 }
 
 double Intersection::refractive_index_coming_from(
     const double wavelength
 )const {
     return _from_outside_to_inside ?
-    object->outer_refraction->evaluate(wavelength):
-    object->inner_refraction->evaluate(wavelength);
+        __object->outer_refraction->evaluate(wavelength):
+        __object->inner_refraction->evaluate(wavelength);
 }
 
 double Intersection::half_way_depth_coming_from(const double wavelength)const {
     return _from_outside_to_inside ?
-    object->outer_absorption->evaluate(wavelength):
-    object->inner_absorption->evaluate(wavelength);
+        __object->outer_absorption->evaluate(wavelength):
+        __object->inner_absorption->evaluate(wavelength);
 }
 
 double Intersection::half_way_depth_going_to(const double wavelength)const {
     return _from_outside_to_inside ?
-    object->inner_absorption->evaluate(wavelength):
-    object->outer_absorption->evaluate(wavelength);
+        __object->inner_absorption->evaluate(wavelength):
+        __object->outer_absorption->evaluate(wavelength);
 }
 
 bool Intersection::boundary_layer_is_transparent()const {
-    return object->boundary_layer_is_transparent();
+    return __object->boundary_layer_is_transparent();
 }
 
 const Color Intersection::facing_color()const {
-    return _from_outside_to_inside ? *object->outer_color: *object->inner_color;
+    return _from_outside_to_inside ?
+        *__object->outer_color :
+        *__object->inner_color;
 }
 
 bool Intersection::ray_runs_from_outside_to_inside(
@@ -144,15 +147,15 @@ Vec3 Intersection::surface_normal_of_facing_surface_in_object_frame()const {
 }
 
 const HomTra3* Intersection::object2root()const {
-    return object->frame2world();
+    return __object->frame2world();
 }
 
 bool Intersection::operator<(const Intersection& other)const {
-    return (this->distance_to_ray_support() < other.distance_to_ray_support());
+    return this->distance_to_ray_support() < other.distance_to_ray_support();
 }
 
 bool Intersection::compare(const Intersection &one, const Intersection &two) {
-    return  one.distance_to_ray_support() < two.distance_to_ray_support();
+    return one.distance_to_ray_support() < two.distance_to_ray_support();
 }
 
 }  // namespace merlict

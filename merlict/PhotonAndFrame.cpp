@@ -100,14 +100,14 @@ void Propagator::pass_the_boundary_layer(const Fresnel &fresnel) {
 }
 
 void Propagator::propagate_on_after_boundary_layer(const Fresnel &fresnel) {
-    if (isec.get_object()->has_restrictions_on_frames_to_propagate_to() &&
+    if (isec.object()->has_restrictions_on_frames_to_propagate_to() &&
         !isec.going_to_default_refractive_index()
     )
         env.root_frame =
-            isec.get_object()->allowed_frame_to_propagate_to();
+            isec.object()->allowed_frame_to_propagate_to();
     else
         env.root_frame =
-            isec.get_object()->root();
+            isec.object()->root();
 
     ph->set_support_and_direction(
         isec.position_in_root_frame(),

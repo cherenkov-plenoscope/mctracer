@@ -72,12 +72,12 @@ void Tracer::trace_back_to_surface() {
 void Tracer::trace_back_beyond_boundary_layer(
     const Fresnel &fresnel
 ) {
-    if (isec.get_object()->has_restrictions_on_frames_to_propagate_to() &&
+    if (isec.object()->has_restrictions_on_frames_to_propagate_to() &&
         !isec.going_to_default_refractive_index()
     )
-        scenery = isec.get_object()->allowed_frame_to_propagate_to();
+        scenery = isec.object()->allowed_frame_to_propagate_to();
     else
-        scenery = isec.get_object()->root();
+        scenery = isec.object()->root();
 
     cray->set_support_and_direction(
         isec.position_in_root_frame(),

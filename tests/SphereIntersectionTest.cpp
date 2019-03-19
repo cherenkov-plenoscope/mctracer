@@ -82,7 +82,7 @@ TEST_CASE("SphereIntersectionTest: ray_frontal_intersection", "[merlict]") {
     st.my_sphere->calculate_intersection_with(&ray_with_intersection, &intersections);
 
     REQUIRE(!intersections.empty());
-    CHECK(st.my_sphere == intersections.front().get_object());
+    CHECK(st.my_sphere == intersections.front().object());
     CHECK(intersections.front().position_in_object_frame() == ml::Vec3(0, 0, -1));
     CHECK(intersections.front().surface_normal_in_object_frame() == ml::Vec3(0, 0, -1));
 }
@@ -113,7 +113,7 @@ TEST_CASE("SphereIntersectionTest: ray_starts_inside_sphere", "[merlict]") {
     st.my_sphere->calculate_intersection_with(&ray_inside, &intersections);
 
     REQUIRE(!intersections.empty());
-    CHECK(st.my_sphere == intersections.front().get_object());
+    CHECK(st.my_sphere == intersections.front().object());
     CHECK(intersections.front().position_in_object_frame() == ml::Vec3(0, 0, +1));
     CHECK(intersections.front().surface_normal_in_object_frame() == ml::Vec3(0, 0, +1));
 }
@@ -125,7 +125,7 @@ TEST_CASE("SphereIntersectionTest: ray_tangents_sphere", "[merlict]") {
     st.my_sphere->calculate_intersection_with(&ray_inside, &intersections);
 
     REQUIRE(!intersections.empty());
-    CHECK(st.my_sphere == intersections.front().get_object());
+    CHECK(st.my_sphere == intersections.front().object());
     CHECK(intersections.front().position_in_object_frame() == ml::Vec3(1, 0, 0));
     CHECK(intersections.front().surface_normal_in_object_frame() == ml::Vec3(1, 0, 0));
 }
