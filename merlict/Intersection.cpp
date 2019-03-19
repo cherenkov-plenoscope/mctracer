@@ -43,8 +43,7 @@ Vec3 Intersection::position_in_object_frame()const {
 }
 
 Vec3 Intersection::position_in_root_frame()const {
-    return object->
-        frame2world()->position(position);
+    return object->frame2world()->position(position);
 }
 
 Vec3 Intersection::surface_normal_in_object_frame()const {
@@ -52,8 +51,7 @@ Vec3 Intersection::surface_normal_in_object_frame()const {
 }
 
 Vec3 Intersection::surface_normal_in_root_frame()const {
-    return object->frame2world()->
-        orientation(surface_normal);
+    return object->frame2world()->orientation(surface_normal);
 }
 
 double Intersection::distance_to_ray_support()const {
@@ -74,8 +72,7 @@ std::string Intersection::str()const {
 }
 
 Vec3 Intersection::reflection_direction_in_root_frame(Vec3 in_dir_world)const {
-    Vec3 in_dir_obj = object->frame2world()->
-        orientation_inverse(in_dir_world);
+    Vec3 in_dir_obj = object->frame2world()->orientation_inverse(in_dir_world);
     surface_normal.mirror(&in_dir_obj);
     return object->frame2world()->orientation(in_dir_obj);
 }
@@ -143,9 +140,7 @@ bool Intersection::from_outside_to_inside()const {
 }
 
 Vec3 Intersection::surface_normal_of_facing_surface_in_object_frame()const {
-    return _from_outside_to_inside ?
-    surface_normal:
-    surface_normal*-1.0;
+    return _from_outside_to_inside ? surface_normal : surface_normal*-1.0;
 }
 
 const HomTra3* Intersection::object2root()const {
@@ -153,9 +148,7 @@ const HomTra3* Intersection::object2root()const {
 }
 
 bool Intersection::operator<(const Intersection& other)const {
-    return (
-        this->distance_to_ray_support() <
-        other.distance_to_ray_support());
+    return (this->distance_to_ray_support() < other.distance_to_ray_support());
 }
 
 bool Intersection::compare(const Intersection &one, const Intersection &two) {
