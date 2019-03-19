@@ -26,7 +26,7 @@ Intersection::Intersection(
     surface_normal(_surface_normal),
     __object(intersectiong_object),
     distance_of_ray(distance_of_ray_support_to_intersection),
-    _from_outside_to_inside(
+    __from_outside_to_inside(
         ray_runs_from_outside_to_inside(incident_in_obj_sys))
 {}
 
@@ -83,19 +83,19 @@ Vec3 Intersection::reflection_direction_in_root_frame(Vec3 in_dir_world)const {
 double Intersection::facing_reflection_propability(
     const double wavelength
 )const {
-    return _from_outside_to_inside ?
+    return __from_outside_to_inside ?
         __object->outer_reflection->evaluate(wavelength):
         __object->inner_reflection->evaluate(wavelength);
 }
 
 double Intersection::refractive_index_going_to(const double wavelength)const {
-    return _from_outside_to_inside ?
+    return __from_outside_to_inside ?
         __object->inner_refraction->evaluate(wavelength):
         __object->outer_refraction->evaluate(wavelength);
 }
 
 bool Intersection::going_to_default_refractive_index()const {
-    return _from_outside_to_inside ?
+    return __from_outside_to_inside ?
         __object->inner_refraction == SurfaceEntity::DEFAULT_REFRACTION:
         __object->outer_refraction == SurfaceEntity::DEFAULT_REFRACTION;
 }
@@ -103,19 +103,19 @@ bool Intersection::going_to_default_refractive_index()const {
 double Intersection::refractive_index_coming_from(
     const double wavelength
 )const {
-    return _from_outside_to_inside ?
+    return __from_outside_to_inside ?
         __object->outer_refraction->evaluate(wavelength):
         __object->inner_refraction->evaluate(wavelength);
 }
 
 double Intersection::half_way_depth_coming_from(const double wavelength)const {
-    return _from_outside_to_inside ?
+    return __from_outside_to_inside ?
         __object->outer_absorption->evaluate(wavelength):
         __object->inner_absorption->evaluate(wavelength);
 }
 
 double Intersection::half_way_depth_going_to(const double wavelength)const {
-    return _from_outside_to_inside ?
+    return __from_outside_to_inside ?
         __object->inner_absorption->evaluate(wavelength):
         __object->outer_absorption->evaluate(wavelength);
 }
@@ -125,7 +125,7 @@ bool Intersection::boundary_layer_is_transparent()const {
 }
 
 const Color Intersection::facing_color()const {
-    return _from_outside_to_inside ?
+    return __from_outside_to_inside ?
         *__object->outer_color :
         *__object->inner_color;
 }
@@ -139,11 +139,11 @@ bool Intersection::ray_runs_from_outside_to_inside(
 }
 
 bool Intersection::from_outside_to_inside()const {
-    return _from_outside_to_inside;
+    return __from_outside_to_inside;
 }
 
 Vec3 Intersection::surface_normal_of_facing_surface_in_object_frame()const {
-    return _from_outside_to_inside ? surface_normal : surface_normal*-1.0;
+    return __from_outside_to_inside ? surface_normal : surface_normal*-1.0;
 }
 
 const HomTra3* Intersection::object2root()const {
