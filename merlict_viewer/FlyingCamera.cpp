@@ -194,7 +194,8 @@ void FlyingCamera::enter_interactive_display() {
                 key_stroke_requires_image_update = false;
                 break;
             default:
-                std::cout << "Key Press unknown: " << user_input_key << std::endl;
+                std::cout << "Key Press unknown: ";
+                std::cout << user_input_key << std::endl;
                 key_stroke_requires_image_update = false;
         }
     }
