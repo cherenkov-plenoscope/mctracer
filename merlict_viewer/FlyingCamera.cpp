@@ -201,7 +201,11 @@ void FlyingCamera::enter_interactive_display() {
 }
 
 int FlyingCamera::wait_for_user_key_stroke() {
-    return cvWaitKey(0) & 0xff;
+    int key = cvWaitKey(0);
+    if (key == -1) {
+        return key;
+    }
+    return key & 255;
 }
 
 bool FlyingCamera::time_to_print_help() {
