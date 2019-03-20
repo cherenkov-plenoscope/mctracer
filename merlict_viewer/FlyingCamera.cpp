@@ -204,8 +204,9 @@ int FlyingCamera::wait_for_user_key_stroke() {
     int key = cvWaitKey(0);
     if (key == -1) {
         return key;
+    } else {
+        return key & 255;
     }
-    return key & 255;
 }
 
 bool FlyingCamera::time_to_print_help() {
