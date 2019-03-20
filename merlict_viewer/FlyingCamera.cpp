@@ -131,60 +131,77 @@ void FlyingCamera::enter_interactive_display() {
         user_input_key = wait_for_user_key_stroke();
 
         switch (user_input_key) {
-            case 't': toggle_stereo3D();
-            break;
-            case 'w': translation_operator.move_forward();
-            break;
-            case 's': translation_operator.move_back();
-            break;
-            case 'a': translation_operator.move_left();
-            break;
-            case 'd': translation_operator.move_right();
-            break;
-            case 'q': translation_operator.move_up();
-            break;
-            case 'e': translation_operator.move_down();
-            break;
-            case 'n': fov_operator.increase_when_possible();
-            break;
-            case 'm': fov_operator.decrease_when_possible();
-            break;
-            case 'i': rotation_operator.look_further_up_when_possible();
-            break;
-            case 'k': rotation_operator.look_further_down_when_possible();
-            break;
-            case 'j': rotation_operator.look_left();
-            break;
-            case 'l': rotation_operator.look_right();
-            break;
-            case 'x': stereo_operator.increase_stereo_offset();
-            break;
-            case 'y': stereo_operator.decrease_stereo_offset();
-            break;
-            case 'g': translation_operator.move_to(cin_Vec3());
-            break;
-            case SPACE_KEY: {
+            case ESCAPE_KEY:
+                break;
+            case 't':
+                toggle_stereo3D();
+                break;
+            case 'w':
+                translation_operator.move_forward();
+                break;
+            case 's':
+                translation_operator.move_back();
+                break;
+            case 'a':
+                translation_operator.move_left();
+                break;
+            case 'd':
+                translation_operator.move_right();
+                break;
+            case 'q':
+                translation_operator.move_up();
+                break;
+            case 'e':
+                translation_operator.move_down();
+                break;
+            case 'n':
+                fov_operator.increase_when_possible();
+                break;
+            case 'm':
+                fov_operator.decrease_when_possible();
+                break;
+            case 'i':
+                rotation_operator.look_further_up_when_possible();
+                break;
+            case 'k':
+                rotation_operator.look_further_down_when_possible();
+                break;
+            case 'j':
+                rotation_operator.look_left();
+                break;
+            case 'l':
+                rotation_operator.look_right();
+                break;
+            case 'x':
+                stereo_operator.increase_stereo_offset();
+                break;
+            case 'y':
+                stereo_operator.decrease_stereo_offset();
+                break;
+            case 'g':
+                translation_operator.move_to(cin_Vec3());
+                break;
+            case SPACE_KEY:
                 update_display();
                 key_stroke_requires_image_update = false;
-            }
-            break;
-            case 'p': {
+                break;
+            case 'p':
                 std::cout << world->tree_str() << "\n";
                 key_stroke_requires_image_update = false;
-            }
-            break;
-            case 'h': {
+                break;
+            case 'h':
                 print_help();
                 key_stroke_requires_image_update = false;
-            };
-            break;
-            default: key_stroke_requires_image_update = false;
+                break;
+            default:
+                std::cout << "Key Press unknown: " << user_input_key << std::endl;
+                key_stroke_requires_image_update = false;
         }
     }
 }
 
 int FlyingCamera::wait_for_user_key_stroke() {
-    return cvWaitKey(0);
+    return cvWaitKey(0) & 0xff;
 }
 
 bool FlyingCamera::time_to_print_help() {
