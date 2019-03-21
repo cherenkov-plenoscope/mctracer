@@ -53,7 +53,7 @@ void SurfaceEntity::init_surface_defaults() {
 }
 
 void SurfaceEntity::set_allowed_frames_to_propagate_to(const Frame* frame) {
-   _allowed_frame_to_propagate_to = frame;
+    _allowed_frame_to_propagate_to = frame;
 }
 
 bool SurfaceEntity::has_restrictions_on_frames_to_propagate_to()const {
