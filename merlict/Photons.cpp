@@ -1,8 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/Photons.h"
 #include <sstream>
-#include <future>
-#include <thread>
 #include "merlict/PhotonAndFrame.h"
 
 
