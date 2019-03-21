@@ -2,7 +2,6 @@ set(SOURCE
    	${SOURCE}
 	${CMAKE_CURRENT_SOURCE_DIR}/corsika.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PhotonFactory.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/block.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/eventio.cpp
    	PARENT_SCOPE
 )

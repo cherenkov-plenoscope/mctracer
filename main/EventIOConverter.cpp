@@ -5,7 +5,7 @@
 #include <iostream>
 #include "docopt/docopt.h"
 #include "merlict_corsika/eventio.h"
-#include "merlict_corsika/block.h"
+#include "merlict_corsika/corsika.h"
 #include "merlict/merlict.h"
 
 namespace fs = std::experimental::filesystem;
@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
 
     eventio::Run corsika_run(input_path.path);
 
-    corsika::block::write(
+    corsika::write_273_f4_to_path(
       corsika_run.header.raw,
       mct::ospath::join(out_path.path, "corsika_run_header.bin"));
 
@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) {
 
       fs::create_directory(event_path.path);
 
-      corsika::block::write(
+      corsika::write_273_f4_to_path(
         event.header.raw,
         mct::ospath::join(event_path.path, "corsika_event_header.bin"));
 

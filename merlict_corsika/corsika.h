@@ -9,6 +9,18 @@
 #include <array>
 
 namespace corsika {
+
+void write_273_f4_to_path(
+    std::array<float, 273> block,
+    const std::string &path);
+
+void write_273_f4_to_path(
+    std::vector<std::array<float, 273>> blocks,
+    const std::string &path);
+
+std::vector<std::array<float, 273>> read_273_f4_from_path(
+    const std::string &path);
+
 namespace header {
 namespace event {
 

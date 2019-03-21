@@ -6,7 +6,6 @@
 #include "merlict_corsika/eventio.h"
 #include "merlict_corsika/corsika.h"
 #include "merlict_corsika/PhotonFactory.h"
-#include "merlict_corsika/block.h"
 #include "plenoscope/night_sky_background/Light.h"
 #include "plenoscope/EventHeader.h"
 #include "plenoscope/SimulationTruthHeader.h"
@@ -257,7 +256,7 @@ int main(int argc, char* argv[]) {
             plenoscope::TriggerType::EXTERNAL_RANDOM_TRIGGER);
         event_header.set_plenoscope_geometry(
             pis->light_field_sensor_geometry.config);
-        corsika::block::write(
+        corsika::write_273_f4_to_path(
             event_header.raw,
             ml::ospath::join(
                 event_output_path.path,
@@ -281,7 +280,7 @@ int main(int argc, char* argv[]) {
         run_header[3] = -1.0f;  // program version
         run_header[4] = 1.0f;  // number observation-levels
         run_header[5] = 5e3f;  // height observation-levels
-        corsika::block::write(
+        corsika::write_273_f4_to_path(
             run_header,
             ml::ospath::join(
                 event_mc_truth_path.path,
@@ -303,12 +302,12 @@ int main(int argc, char* argv[]) {
         evt_header[46-1] = run_header[3];  // program version
         evt_header[47-1] = run_header[4];  // number observation-levels
         evt_header[48-1] = run_header[5];  // height observation-levels
-        corsika::block::write(
+        corsika::write_273_f4_to_path(
             evt_header,
             ml::ospath::join(event_mc_truth_path.path, "corsika_event_header.bin"));
         plenoscope::SimulationTruthHeader sim_truth_header;
         sim_truth_header.set_random_seed_of_run(prng.seed());
-        corsika::block::write(
+        corsika::write_273_f4_to_path(
             sim_truth_header.raw,
             ml::ospath::join(
                 event_mc_truth_path.path,

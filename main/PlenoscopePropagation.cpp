@@ -6,7 +6,6 @@
 #include "merlict_corsika/eventio.h"
 #include "merlict_corsika/corsika.h"
 #include "merlict_corsika/PhotonFactory.h"
-#include "merlict_corsika/block.h"
 #include "signal_processing/signal_processing.h"
 #include "plenoscope/night_sky_background/Light.h"
 #include "plenoscope/EventHeader.h"
@@ -267,7 +266,7 @@ int main(int argc, char* argv[]) {
 plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
         event_header.set_plenoscope_geometry(
             pis->light_field_sensor_geometry.config);
-        corsika::block::write(
+        corsika::write_273_f4_to_path(
             event_header.raw,
             ml::ospath::join(event_output_path.path, "event_header.bin"));
 
@@ -277,12 +276,12 @@ plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
             event_output_path.path,
             "simulation_truth");
         fs::create_directory(event_mc_truth_path.path);
-        corsika::block::write(
+        corsika::write_273_f4_to_path(
             corsika_run.header.raw,
             ml::ospath::join(
                 event_mc_truth_path.path,
                 "corsika_run_header.bin"));
-        corsika::block::write(
+        corsika::write_273_f4_to_path(
             event.header.raw,
             ml::ospath::join(
                 event_mc_truth_path.path,
@@ -290,7 +289,7 @@ plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
 
         plenoscope::SimulationTruthHeader sim_truth_header;
         sim_truth_header.set_random_seed_of_run(prng.seed());
-        corsika::block::write(
+        corsika::write_273_f4_to_path(
             sim_truth_header.raw,
             ml::ospath::join(
                 event_mc_truth_path.path,

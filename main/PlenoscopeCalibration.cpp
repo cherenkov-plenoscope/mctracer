@@ -4,7 +4,7 @@
 #include "docopt/docopt.h"
 #include "plenoscope/calibration/Calibrator.h"
 #include "plenoscope/json_to_plenoscope.h"
-#include "merlict_corsika/block.h"
+#include "merlict_corsika/corsika.h"
 #include "merlict/merlict.h"
 namespace fs = std::experimental::filesystem;
 namespace ml = merlict;
@@ -91,7 +91,7 @@ int main(int argc, char* argv[]) {
                 "There is more than one plenoscope in the scenery");
         plenoscope::PlenoscopeInScenery* pis = &scenery.plenoscopes.at(0);
 
-        corsika::block::write(
+        corsika::write_273_f4_to_path(
             pis->light_field_sensor_geometry.get_info_header(),
             ml::ospath::join(out_path.path, "light_field_sensor_geometry.header.bin"));
 
