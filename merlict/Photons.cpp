@@ -34,31 +34,31 @@ std::vector<std::vector<double>> photons2raw_matrix(
     std::vector<Photon> *photons
 ) {
     std::vector<std::vector<double>> raw_matrix;
-    for (Photon &ph : *photons)
-        raw_matrix.push_back(photon2raw_row(&ph));
+    for (const Photon &ph : *photons)
+        raw_matrix.push_back(photon2raw_row(ph));
     return raw_matrix;
 }
 
-std::vector<double> photon2raw_row(Photon* ph) {
+std::vector<double> photon2raw_row(const Photon& ph) {
     std::vector<double> raw_row;
     raw_row.reserve(8);
 
-    raw_row.push_back(static_cast<double>(ph->simulation_truth_id));
+    raw_row.push_back(static_cast<double>(ph.simulation_truth_id));
 
-    raw_row.push_back(ph->support().x);
-    raw_row.push_back(ph->support().y);
-    raw_row.push_back(ph->support().z);
+    raw_row.push_back(ph.support().x);
+    raw_row.push_back(ph.support().y);
+    raw_row.push_back(ph.support().z);
 
-    raw_row.push_back(ph->direction().x);
-    raw_row.push_back(ph->direction().y);
-    raw_row.push_back(ph->direction().z);
+    raw_row.push_back(ph.direction().x);
+    raw_row.push_back(ph.direction().y);
+    raw_row.push_back(ph.direction().z);
 
-    raw_row.push_back(ph->wavelength);
+    raw_row.push_back(ph.wavelength);
 
     return raw_row;
 }
 
-Photon raw_row2photon(std::vector<double> &raw_row) {
+Photon raw_row2photon(const std::vector<double> &raw_row) {
     assert_raw_row_size_matches_photon(raw_row);
     const double id = raw_row[0];
     const Vec3 support(raw_row[1], raw_row[2], raw_row[3]);
@@ -70,7 +70,7 @@ Photon raw_row2photon(std::vector<double> &raw_row) {
     return ph;
 }
 
-void assert_raw_row_size_matches_photon(std::vector<double> &raw_row) {
+void assert_raw_row_size_matches_photon(const std::vector<double> &raw_row) {
     if (raw_row.size() != 8) {
         std::stringstream out;
         out << "PhotonBunch, raw row of doubles to photon.\n";

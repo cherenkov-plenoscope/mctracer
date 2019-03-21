@@ -21,11 +21,11 @@ std::vector<Photon> raw_matrix2photons(
 std::vector<std::vector<double>> photons2raw_matrix(
     std::vector<Photon> *photons);
 
-std::vector<double> photon2raw_row(Photon* ph);
+std::vector<double> photon2raw_row(const Photon& ph);
 
-Photon raw_row2photon(std::vector<double> &raw_row);
+Photon raw_row2photon(const std::vector<double> &raw_row);
 
-void assert_raw_row_size_matches_photon(std::vector<double> &raw_row);
+void assert_raw_row_size_matches_photon(const std::vector<double> &raw_row);
 
 namespace photon_source {
 

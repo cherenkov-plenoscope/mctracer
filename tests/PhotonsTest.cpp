@@ -35,7 +35,7 @@ TEST_CASE("PhotonsTest: photon2raw_row", "[merlict]") {
     ml::Photon ph(sup, dir, wavelength);
     ph.simulation_truth_id = id;
 
-    std::vector<double> raw_row = ml::photon2raw_row(&ph);
+    std::vector<double> raw_row = ml::photon2raw_row(ph);
 
     REQUIRE(raw_row.size() == 8u);
 
