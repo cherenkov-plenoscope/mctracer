@@ -2,6 +2,7 @@
 #include "merlict_corsika/corsika.h"
 #include <fstream>
 #include <sstream>
+#include <cstring>
 
 
 namespace corsika {

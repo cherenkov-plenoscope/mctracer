@@ -2,6 +2,7 @@
 #include "plenoscope/SimulationTruthHeader.h"
 #include <sstream>
 #include "merlict_corsika/corsika.h"
+#include <cstring>
 
 namespace plenoscope {
 
