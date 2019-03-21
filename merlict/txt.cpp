@@ -124,31 +124,6 @@ double to_double(std::string text_to_parse) {
     return num_parsed_in;
 }
 
-bool to_bool(std::string text_to_parse) {
-    if (text_to_parse.compare("") == 0) {
-        std::stringstream info;
-        info << __FILE__ << ", " << __LINE__ << "\n";
-        info << "txt::to_bool: String is empty.";
-        throw std::invalid_argument(info.str());
-    }
-    std::transform(
-        text_to_parse.begin(),
-        text_to_parse.end(),
-        text_to_parse.begin(),
-        ::tolower);
-    if (txt::is_equal(text_to_parse, "true")) {
-        return true;
-    } else if (txt::is_equal(text_to_parse, "false")) {
-            return false;
-    } else {
-        std::stringstream info;
-        info << __FILE__ << ", " << __LINE__ << "\n";
-        info << "txt::to_bool: Can not parse: ";
-        info << "'" << text_to_parse << " to bool";
-        throw std::invalid_argument(info.str());
-    }
-}
-
 int to_int(std::string text_to_parse) {
     if (text_to_parse.compare("") == 0) {
         std::stringstream info;

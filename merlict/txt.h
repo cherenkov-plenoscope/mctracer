@@ -37,8 +37,6 @@ std::string fill_up_text_with_whitespaces_until_column(
 
 double to_double(std::string text_to_parse);
 
-bool to_bool(std::string text_to_parse);
-
 int to_int(std::string text_to_parse);
 
 Vec3 to_Vec3(const std::string original_text);

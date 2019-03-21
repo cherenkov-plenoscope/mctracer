@@ -194,21 +194,6 @@ TEST_CASE("StringToolsTest: to_double", "[merlict]") {
     CHECK_THROWS_AS(ml::txt::to_double(".1 442"), std::invalid_argument);
 }
 
-TEST_CASE("StringToolsTest: to_bool", "[merlict]") {
-    CHECK(ml::txt::to_bool("true"));
-    CHECK(ml::txt::to_bool("TRUE"));
-    CHECK(!ml::txt::to_bool("false"));
-    CHECK(!ml::txt::to_bool("FALSE"));
-    CHECK_THROWS_AS(ml::txt::to_bool(" true"), std::invalid_argument);
-    CHECK_THROWS_AS(ml::txt::to_bool("true "), std::invalid_argument);
-    CHECK_THROWS_AS(ml::txt::to_bool("wahr"), std::invalid_argument);
-    CHECK_THROWS_AS(ml::txt::to_bool("Troe"), std::invalid_argument);
-    CHECK_THROWS_AS(ml::txt::to_bool("yes"), std::invalid_argument);
-    CHECK_THROWS_AS(ml::txt::to_bool("no"), std::invalid_argument);
-    CHECK_THROWS_AS(ml::txt::to_bool("0"), std::invalid_argument);
-    CHECK_THROWS_AS(ml::txt::to_bool(""), std::invalid_argument);
-}
-
 TEST_CASE("StringToolsTest: to_int", "[merlict]") {
     CHECK(ml::txt::to_int("1") == 1);
     CHECK(ml::txt::to_int("12") == 12);
