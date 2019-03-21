@@ -94,7 +94,9 @@ std::string Header::str() {
     return out.str();
 }
 
-std::array<float, 273> make_corsika_273float_sub_block_form_stream(std::istream& f) {
+std::array<float, 273> make_corsika_273float_sub_block_form_stream(
+    std::istream& f
+) {
     // read the first integer to get the size
     int32_t n;
     f.read((char*)&n, sizeof(n));
@@ -142,7 +144,10 @@ std::string make_input_card_from_stream(std::istream& f, const Header& head) {
     return input_card_text;
 }
 
-std::vector<TelPos> make_telescope_positions(std::istream& f, const Header& head) {
+std::vector<TelPos> make_telescope_positions(
+    std::istream& f,
+    const Header& head
+) {
     int32_t ntel;
     f.read((char*)&ntel, sizeof(ntel));
 
