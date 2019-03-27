@@ -110,6 +110,7 @@ target_link_libraries(mctFactPropagation docopt)
 # unit test exe
 add_subdirectory("${PROJECT_SOURCE_DIR}/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_corsika/tests")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_visual/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/plenoscope/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/signal_processing/tests")
 add_executable(
@@ -118,5 +119,6 @@ add_executable(
 	${TEST_SOURCE}
 	${TEST_SOURCE_PLENOSCOPE}
 	${TEST_SOURCE_SIGNAL_PROCESSING}
-	${TEST_SOURCE_MERLICT_CORSIKA})
+	${TEST_SOURCE_MERLICT_CORSIKA}
+	${TEST_SOURCE_MERLICT_VISUAL})
 target_link_libraries(mctTest mct)

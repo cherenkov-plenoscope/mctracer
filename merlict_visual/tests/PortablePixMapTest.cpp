@@ -1,7 +1,7 @@
 // Copyright 2018 Sebastian A. Mueller
 #include <iostream>
 #include <sstream>
-#include "catch.hpp"
+#include "tests/catch.hpp"
 #include "merlict/merlict.h"
 #include "merlict_visual/visual.h"
 namespace ml = merlict;

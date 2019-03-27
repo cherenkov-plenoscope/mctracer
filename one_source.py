@@ -120,9 +120,7 @@ pri_queu = [
 
 test_sources = [
     #"tests/PrintSizeOfTest.cpp",
-    #"tests/ImageTest.cpp",
     "tests/ColorTest.cpp",
-    #"tests/ApertureCameraTest.cpp",
     "tests/PhotonsTest.cpp",
     "tests/AsciiIoTest.cpp",
     "tests/PhotonTest.cpp",
@@ -169,11 +167,7 @@ test_sources = [
     "tests/ColorMapTest.cpp",
     "tests/FunctionMapTest.cpp",
     "tests/SensorMapTest.cpp",
-    #"tests/PhotoElectricConverterTest.cpp",
-    #"tests/PhotonStreamTest.cpp",
     "tests/DistanceMeterTest.cpp",
-    #"tests/PortablePixMapTest.cpp",
-    #"tests/PulseExtractionTest.cpp",
     #"tests/MultiThreadPropagationTest.cpp",
     #"tests/JsonTest.cpp",
 ]

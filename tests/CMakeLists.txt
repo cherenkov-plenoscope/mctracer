@@ -1,8 +1,6 @@
 set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/PrintSizeOfTest.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ImageTest.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ColorTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/ApertureCameraTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PhotonsTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/AsciiIoTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PhotonTest.cpp
@@ -50,7 +48,6 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/FunctionMapTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SensorMapTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeterTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/PortablePixMapTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MultiThreadPropagationTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/JsonTest.cpp
     PARENT_SCOPE
