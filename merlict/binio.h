@@ -6,7 +6,6 @@
 #include <fstream>
 
 namespace merlict {
-namespace binio {
 
 void append_float32(const float &v, std::ostream &fout);
 float read_float32(std::istream &fin);
@@ -26,7 +25,6 @@ uint16_t read_uint16(std::istream &fin);
 double read_float64(std::istream &fin);
 uint64_t read_uint64(std::istream &fin);
 
-}  // namespace binio
 }  // namespace merlict
 
 #endif  // MERLICT_BINIO_H_

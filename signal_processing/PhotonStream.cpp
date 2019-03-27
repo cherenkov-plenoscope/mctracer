@@ -34,10 +34,10 @@ void write(
 
     // PhotonStream Header 16 byte
     // -------------------
-    ml::binio::append_float32(time_slice_duration, file);
-    ml::binio::append_uint32(num_channels, file);
-    ml::binio::append_uint32(NUMBER_TIME_SLICES, file);
-    ml::binio::append_uint32(num_symbols, file);
+    ml::append_float32(time_slice_duration, file);
+    ml::append_uint32(num_channels, file);
+    ml::append_uint32(NUMBER_TIME_SLICES, file);
+    ml::append_uint32(num_symbols, file);
 
     // Pulses
     // ------
@@ -53,10 +53,10 @@ void write(
                 info << "NEXT_CHANNEL_MARKER\n";
                 throw std::runtime_error(info.str());
             }
-            ml::binio::append_uint8(channels.at(ch).at(pu).arrival_time_slice, file);
+            ml::append_uint8(channels.at(ch).at(pu).arrival_time_slice, file);
         }
         if (ch < num_channels-1)
-            ml::binio::append_uint8(NEXT_CHANNEL_MARKER, file);
+            ml::append_uint8(NEXT_CHANNEL_MARKER, file);
     }
 
     file.close();
@@ -77,7 +77,7 @@ void write_simulation_truth(
 
     for (uint32_t ch = 0; ch < channels.size(); ch++) {
         for (uint32_t pu = 0; pu < channels.at(ch).size(); pu++) {
-            ml::binio::append_int32(
+            ml::append_int32(
                 channels.at(ch).at(pu).simulation_truth_id,
                 file);
         }
@@ -98,9 +98,9 @@ Stream read(const std::string path) {
         info << "PhotonStream: Unable to open file: '" << path << "'\n";
         throw std::runtime_error(info.str());}
 
-    stream.time_slice_duration = ml::binio::read_float32(file);
-    ml::binio::read_uint32(file);
-    uint32_t num_time_slices = ml::binio::read_uint32(file);
+    stream.time_slice_duration = ml::read_float32(file);
+    ml::read_uint32(file);
+    uint32_t num_time_slices = ml::read_uint32(file);
     if (num_time_slices != NUMBER_TIME_SLICES) {
         std::stringstream info;
         info << "PhotonStream::read(" << path << ")\n";
@@ -108,7 +108,7 @@ Stream read(const std::string path) {
         info << ", but actual it is " << num_time_slices << "\n";
         throw std::runtime_error(info.str());
     }
-    uint32_t num_symbols = ml::binio::read_uint32(file);
+    uint32_t num_symbols = ml::read_uint32(file);
 
     if (num_symbols > 0) {
         std::vector<ExtractedPulse> first_channel;
@@ -117,7 +117,7 @@ Stream read(const std::string path) {
 
     uint32_t channel = 0;
     for (uint32_t i = 0; i < num_symbols; i++) {
-        uint8_t symbol = ml::binio::read_uint8(file);
+        uint8_t symbol = ml::read_uint8(file);
         if (symbol == NEXT_CHANNEL_MARKER) {
             channel++;
             if (i < num_symbols) {
@@ -161,7 +161,7 @@ Stream read_with_simulation_truth(
             pulse++
         ) {
             stream.photon_stream.at(channel).at(pulse).simulation_truth_id =
-                ml::binio::read_int32(file);
+                ml::read_int32(file);
         }
     }
 

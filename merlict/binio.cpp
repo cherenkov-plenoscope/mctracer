@@ -2,7 +2,6 @@
 #include "merlict/binio.h"
 
 namespace merlict {
-namespace binio {
 
 void append_float32(const float &v, std::ostream &fout) {
     fout.write(reinterpret_cast<const char*>(&v), sizeof(v));
@@ -66,5 +65,4 @@ uint64_t read_uint64(std::istream &fin) {
     return v;
 }
 
-}  // namespace binio
 }  // namespace merlict

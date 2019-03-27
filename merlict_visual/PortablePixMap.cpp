@@ -20,9 +20,9 @@ void append_image_to_file(const Image &img, std::ostream &fout) {
     for (unsigned int row = 0; row < img.num_rows; row++) {
         for (unsigned int col = 0; col < img.num_cols; col++) {
             const Color c = img.at_col_row(col, row);
-            binio::append_uint8(c.r, fout);
-            binio::append_uint8(c.g, fout);
-            binio::append_uint8(c.b, fout);
+            append_uint8(c.r, fout);
+            append_uint8(c.g, fout);
+            append_uint8(c.b, fout);
         }
     }
     return;
@@ -78,9 +78,9 @@ Image read_image_from_file(std::istream &fin) {
     Image img(num_columns, num_rows);
     for (unsigned int row = 0; row < img.num_rows; row++) {
         for (unsigned int col = 0; col < img.num_cols; col++) {
-            const float r = binio::read_uint8(fin);
-            const float g = binio::read_uint8(fin);
-            const float b = binio::read_uint8(fin);
+            const float r = read_uint8(fin);
+            const float g = read_uint8(fin);
+            const float b = read_uint8(fin);
             img.set_col_row(col, row, Color(r, g, b));
         }
     }

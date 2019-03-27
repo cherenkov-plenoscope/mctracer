@@ -39,23 +39,23 @@ struct ApertureCameraInstructions {
 
 ApertureCameraInstructions read_from_stream(std::istream &fin) {
     ApertureCameraInstructions inst;
-    inst.magic_sync = ml::binio::read_uint64(fin);
+    inst.magic_sync = ml::read_uint64(fin);
     double x, y, z;
-    x = ml::binio::read_float64(fin);
-    y = ml::binio::read_float64(fin);
-    z = ml::binio::read_float64(fin);
+    x = ml::read_float64(fin);
+    y = ml::read_float64(fin);
+    z = ml::read_float64(fin);
     inst.position = ml::Vec3(x, y, z);
-    x = ml::binio::read_float64(fin);
-    y = ml::binio::read_float64(fin);
-    z = ml::binio::read_float64(fin);
+    x = ml::read_float64(fin);
+    y = ml::read_float64(fin);
+    z = ml::read_float64(fin);
     inst.orientation = ml::Rot3(x, y, z);
-    inst.object_distance = ml::binio::read_float64(fin);
-    inst.sensor_size_along_columns = ml::binio::read_float64(fin);
-    inst.field_of_view_along_columns = ml::binio::read_float64(fin);
-    inst.focal_length_over_aperture_diameter = ml::binio::read_float64(fin);
-    inst.num_columns = ml::binio::read_uint64(fin);
-    inst.num_rows = ml::binio::read_uint64(fin);
-    inst.noise_level = ml::binio::read_uint64(fin);
+    inst.object_distance = ml::read_float64(fin);
+    inst.sensor_size_along_columns = ml::read_float64(fin);
+    inst.field_of_view_along_columns = ml::read_float64(fin);
+    inst.focal_length_over_aperture_diameter = ml::read_float64(fin);
+    inst.num_columns = ml::read_uint64(fin);
+    inst.num_rows = ml::read_uint64(fin);
+    inst.noise_level = ml::read_uint64(fin);
     return inst;
 }
 
