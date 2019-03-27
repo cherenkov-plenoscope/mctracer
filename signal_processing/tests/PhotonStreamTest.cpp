@@ -76,13 +76,15 @@ void write_and_read_back(
             seed);
     stream.time_slice_duration = time_slice_duration;
 
-    const std::string path = "resources/photon_stream.bin";
+    const std::string path =
+        "signal_processing/tests/resources/photon_stream.bin";
     sp::PhotonStream::write(
         stream.photon_stream,
         time_slice_duration,
         path);
 
-    const std::string truth_path = "resources/photon_stream_truth.bin";
+    const std::string truth_path =
+        "signal_processing/tests/resources/photon_stream_truth.bin";
     sp::PhotonStream::write_simulation_truth(
         stream.photon_stream,
         truth_path);
@@ -112,11 +114,11 @@ TEST_CASE("PhotonStreamTest: arrival_slices_must_not_be_NEXT_CHANNEL_MARKER", "[
             simulation_truth_id));
     channels.push_back(channel);
 
-    CHECK_THROWS_AS(sp::PhotonStream::write(channels, 0.5e-9, "resources/must_not_be_written.phs"), std::runtime_error);
+    CHECK_THROWS_AS(sp::PhotonStream::write(channels, 0.5e-9, "signal_processing/tests/resources/must_not_be_written.phs"), std::runtime_error);
 
     channels.at(0).at(0).arrival_time_slice = 254;
 
-    CHECK_NOTHROW(sp::PhotonStream::write(channels, 0.5e-9, "resources/shall_be_written.phs"));
+    CHECK_NOTHROW(sp::PhotonStream::write(channels, 0.5e-9, "signal_processing/tests/resources/shall_be_written.phs"));
 }
 
 TEST_CASE("PhotonStreamTest: write_and_read_back_full_single_pulse_event", "[merlict]") {

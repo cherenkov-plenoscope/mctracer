@@ -18,7 +18,7 @@ TEST_CASE("PulseExtractionTest: arrival_time_slices_below_next_channel_marker", 
     read_out_channel.push_back(pulse);
     response.push_back(read_out_channel);
 
-    const std::string path = "resources/photon_stream.bin";
+    const std::string path = "signal_processing/tests/resources/photon_stream.bin";
     signal_processing::PhotonStream::write(
         response,
         time_slice_duration,

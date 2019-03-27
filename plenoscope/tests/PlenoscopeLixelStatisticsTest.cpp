@@ -41,7 +41,11 @@ TEST_CASE("PlenoscopeLixelStatisticsTest: write_and_read_binary", "[merlict]") {
         lixel_stats.push_back(stat);
     }
 
-    const std::string path = "resources/my_stats.LixelStatistics.bin";
+    const std::string path =
+        "plenoscope/"
+        "tests/"
+        "resources/"
+        "my_stats.LixelStatistics.bin";
     plenoscope::calibration::write(lixel_stats, path);
 
     std::vector<plenoscope::calibration::LixelStatistic> lixel_stats_in =
@@ -66,7 +70,12 @@ TEST_CASE("PlenoscopeLixelStatisticsTest: write_and_read_binary", "[merlict]") {
 }
 
 TEST_CASE("PlenoscopeLixelStatisticsTest: read_non_existing_binary_file", "[merlict]") {
-    CHECK_THROWS_AS(plenoscope::calibration::read("resources/non_existing_file.bin"), std::runtime_error);
+    const std::string path =
+        "plenoscope/"
+        "tests/"
+        "resources/"
+        "non_existing_file.bin";
+    CHECK_THROWS_AS(plenoscope::calibration::read(path), std::runtime_error);
 }
 
 TEST_CASE("PlenoscopeLixelStatisticsTest: size_is_just_a_plain_struct", "[merlict]") {

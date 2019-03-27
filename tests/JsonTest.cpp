@@ -62,7 +62,7 @@ TEST_CASE("JsonTest: empty_path", "[merlict]") {
 }
 
 TEST_CASE("JsonTest: mini_scenery_with_stl", "[merlict]") {
-    const std::string path =  "resources/scenery/mini_scenery.json";
+    const std::string path =  "tests/resources/scenery/mini_scenery.json";
     mct::Scenery s;
     mct::json::append_to_frame_in_scenery(&s.root, &s, path);
     s.root.init_tree_based_on_mother_child_relations();

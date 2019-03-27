@@ -108,12 +108,12 @@ TEST_CASE("PhotonsTest: bunch2raw_matrix2file", "[merlict]") {
     // write to text file
     ml::tsvio::write_table_to_file(
         ml::photons2raw_matrix(&photon_bunch1),
-        "resources/tsv/my_big_photon_list.txt");
+        "tests/resources/tsv/my_big_photon_list.txt");
 
     // read back again from text file
     std::vector<ml::Photon> photon_bunch2 = ml::raw_matrix2photons(
         ml::tsvio::gen_table_from_file(
-            "resources/tsv/my_big_photon_list.txt"));
+            "tests/resources/tsv/my_big_photon_list.txt"));
 
     REQUIRE(photon_bunch2.size() == num_photons);
 

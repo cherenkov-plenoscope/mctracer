@@ -10,16 +10,17 @@ TEST_CASE("StereoLitographyTest: open_non_existing_file", "[merlict]") {
 }
 
 TEST_CASE("StereoLitographyTest: ascii_format", "[merlict]") {
-    CHECK_THROWS_AS(ml::stereo_litography::BinaryReader("resources/scenery/ascii_format.stl"), ml::stereo_litography::BinaryReader::CanNotReadAscii);
+    CHECK_THROWS_AS(ml::stereo_litography::BinaryReader("tests/resources/scenery/ascii_format.stl"), ml::stereo_litography::BinaryReader::CanNotReadAscii);
 }
 
 TEST_CASE("StereoLitographyTest: open_valid_file", "[merlict]") {
-    ml::stereo_litography::BinaryReader stl_reader("resources/scenery/LCCone-simple_parab.stl");
+    ml::stereo_litography::BinaryReader stl_reader(
+        "tests/resources/scenery/LCCone-simple_parab.stl");
     CHECK(stl_reader.get_facets().size() == 3692u);
 }
 
 TEST_CASE("StereoLitographyTest: write_and_read_stl_with_zero_triangles", "[merlict]") {
-    std::string filename = "resources/scenery/single_triangle.stl";
+    std::string filename = "tests/resources/scenery/single_triangle.stl";
     ml::stereo_litography::BinaryWriter stlwr;
     stlwr.write_to_file(filename);
     ml::stereo_litography::BinaryReader stl_reader(filename);
@@ -42,7 +43,7 @@ TEST_CASE("StereoLitographyTest: write_and_read_1000_triangle", "[merlict]") {
         facets.push_back(facet);
     }
 
-    std::string filename = "resources/scenery/single_triangle.stl";
+    std::string filename = "tests/resources/scenery/single_triangle.stl";
     ml::stereo_litography::BinaryWriter writer;
     writer.add_facets(facets);
     writer.write_to_file(filename);
@@ -64,12 +65,14 @@ TEST_CASE("StereoLitographyTest: scaling", "[merlict]") {
     const double scaleing = 42.1337;
     ml::Frame obj_normal;
     obj_normal.set_name_pos_rot("normal", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
-    ml::stereo_litography::add_stl_to_frame("resources/scenery/LCCone-simple_parab.stl", &obj_normal);
+    ml::stereo_litography::add_stl_to_frame(
+        "tests/resources/scenery/LCCone-simple_parab.stl",
+        &obj_normal);
 
     ml::Frame obj_scaled;
     obj_scaled.set_name_pos_rot("scaled", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
     ml::stereo_litography::add_stl_to_frame(
-        "resources/scenery/LCCone-simple_parab.stl",
+        "tests/resources/scenery/LCCone-simple_parab.stl",
         &obj_scaled,
         scaleing);
 
@@ -77,7 +80,7 @@ TEST_CASE("StereoLitographyTest: scaling", "[merlict]") {
 }
 
 TEST_CASE("StereoLitographyTest: write_and_read_simple_stl", "[merlict]") {
-    std::string filename = "resources/scenery/single_triangle.stl";
+    std::string filename = "tests/resources/scenery/single_triangle.stl";
     ml::stereo_litography::BinaryWriter stlwr;
 
     ml::Vec3 n(0.0, 0.0, 1.0);

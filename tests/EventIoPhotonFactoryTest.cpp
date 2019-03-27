@@ -212,7 +212,7 @@ TEST_CASE("EventIoPhotonFactoryTest: relative_arrival_time_on_ground", "[merlict
 }
 
 TEST_CASE("EventIoPhotonFactoryTest: correct_rel_time_when_intersecting_ground", "[merlict]") {
-    eventio::Run corsika_file("telescope.dat");
+    eventio::Run corsika_file("tests/resources/telescope.dat");
     while (corsika_file.has_still_events_left()) {
         /*
         read in a corsika eventio event. we remember the relative arrival

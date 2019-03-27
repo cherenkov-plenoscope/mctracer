@@ -23,6 +23,9 @@ TEST_CASE("NightSkyBackgroundLightTest: init", "[merlict]") {
 
     ml::function::Func1 nsb_flux_vs_wavelength(
         ml::tsvio::gen_table_from_file(
+            "plenoscope/"
+            "tests/"
+            "resources/"
             "night_sky_background_flux_vs_wavelength_la_palma.txt"));
 
     plenoscope::night_sky_background::Light nsb(
