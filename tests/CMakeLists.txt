@@ -15,8 +15,6 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/DiscTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/RandomGeneratorTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/DualSphericalPrismZTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/EventIoPhotonFactoryTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/EventIoTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/RayForPropagationTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/RayTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/RayAndFrameTest.cpp
@@ -46,9 +44,7 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/XyPlaneRayEquationTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PathToolsTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ZaxisCylinderRayIntersectionEquationTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/CorsikaIoTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SmallBallsTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/HeaderBlockTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/OwnerShipTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ColorMapTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FunctionMapTest.cpp

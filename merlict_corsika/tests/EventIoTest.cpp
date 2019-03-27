@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller, Dominik Neise
 #include <algorithm>
 #include <sstream>
-#include "catch.hpp"
+#include "tests/catch.hpp"
 #include "merlict_corsika/eventio.h"
 #include "merlict_corsika/corsika.h"
 #include "merlict_corsika/PhotonFactory.h"
@@ -9,7 +9,7 @@
 
 TEST_CASE("EventIoTest: EventIoHeader_works", "[merlict]") {
     std::ifstream fake_file;
-    fake_file.open("tests/resources/telescope.dat");
+    fake_file.open("merlict_corsika/tests/resources/telescope.dat");
     eventio::Header my_header(fake_file);
     CHECK(my_header.is_sync);
     CHECK(my_header.type == 1200);
@@ -22,7 +22,7 @@ TEST_CASE("EventIoTest: EventIoHeader_works", "[merlict]") {
 }
 
 TEST_CASE("EventIoTest: EventIoHeader_fails_wrong_sync_marker", "[merlict]") {
-    std::ifstream fin("tests/resources/telescope.dat");
+    std::ifstream fin("merlict_corsika/tests/resources/telescope.dat");
     std::stringstream sout;
     std::copy_n(
         std::istreambuf_iterator<char>(fin),
@@ -41,7 +41,7 @@ TEST_CASE("EventIoTest: EventIoHeader_fails_empty_file", "[merlict]") {
 }
 
 TEST_CASE("EventIoTest: make_runheader", "[merlict]") {
-    std::ifstream fin("tests/resources/telescope.dat");
+    std::ifstream fin("merlict_corsika/tests/resources/telescope.dat");
     std::stringstream sout;
 
     auto foo = std::istreambuf_iterator<char>(fin);
@@ -55,7 +55,7 @@ TEST_CASE("EventIoTest: make_runheader", "[merlict]") {
 }
 
 TEST_CASE("EventIoTest: EventIoFile_telescope_dat__check_tel_pos", "[merlict]") {
-    eventio::Run my_run("tests/resources/telescope.dat");
+    eventio::Run my_run("merlict_corsika/tests/resources/telescope.dat");
     CHECK(my_run.header.tel_pos.size() == 1u);
     CHECK(my_run.header.tel_pos[0].x == 0.);
     CHECK(my_run.header.tel_pos[0].y == 0.);
@@ -64,12 +64,12 @@ TEST_CASE("EventIoTest: EventIoFile_telescope_dat__check_tel_pos", "[merlict]") 
 }
 
 TEST_CASE("EventIoTest: EventIoFile_telescope_dat__check_input_card", "[merlict]") {
-    eventio::Run my_run("tests/resources/telescope.dat");
+    eventio::Run my_run("merlict_corsika/tests/resources/telescope.dat");
     CHECK(my_run.header.input_card[100] == ' ');
 }
 
 TEST_CASE("EventIoTest: EventIoFile_telescope_dat__mmcs_run_header", "[merlict]") {
-    eventio::Run my_run("tests/resources/telescope.dat");
+    eventio::Run my_run("merlict_corsika/tests/resources/telescope.dat");
     CHECK(7. == Approx(corsika::header::run::run_number(my_run.header.raw)).margin(1e-6));
     CHECK(-2.7 == Approx(corsika::header::run::slope_of_energy_spektrum(my_run.header.raw)).margin(1e-6));
     CHECK(1000. == Approx(corsika::header::run::energy_range_start(my_run.header.raw)).margin(1e-6));
@@ -79,12 +79,12 @@ TEST_CASE("EventIoTest: EventIoFile_telescope_dat__mmcs_run_header", "[merlict]"
 }
 
 TEST_CASE("EventIoTest: EventIoFile_telescope_dat__next_call", "[merlict]") {
-    eventio::Run my_run("tests/resources/telescope.dat");
+    eventio::Run my_run("merlict_corsika/tests/resources/telescope.dat");
     eventio::Event event = my_run.next_event();
 }
 
 TEST_CASE("EventIoTest: EventIoFile_telescope_dat__event_header", "[merlict]") {
-    eventio::Run my_run("tests/resources/telescope.dat");
+    eventio::Run my_run("merlict_corsika/tests/resources/telescope.dat");
     eventio::Event event = my_run.next_event();
 
     CHECK(event.header.telescope_offsets.size() == 1u);
@@ -101,7 +101,7 @@ TEST_CASE("EventIoTest: EventIoFile_telescope_dat__event_header", "[merlict]") {
 }
 
 TEST_CASE("EventIoTest: EventIoFile_telescope_dat__photon_bundle_size", "[merlict]") {
-    eventio::Run my_run("tests/resources/telescope.dat");
+    eventio::Run my_run("merlict_corsika/tests/resources/telescope.dat");
     eventio::Event event = my_run.next_event();
     CHECK(event.photons.size() == 42629u);
 
@@ -112,7 +112,7 @@ TEST_CASE("EventIoTest: EventIoFile_telescope_dat__photon_bundle_size", "[merlic
 }
 
 TEST_CASE("EventIoTest: EventIoFile_telescope_dat__photon_bundle_values", "[merlict]") {
-    eventio::Run my_run("tests/resources/telescope.dat");
+    eventio::Run my_run("merlict_corsika/tests/resources/telescope.dat");
     eventio::Event event = my_run.next_event();
     CHECK(event.photons.size() == 42629u);
 
@@ -184,7 +184,7 @@ TEST_CASE("EventIoTest: EventIoFile_telescope_dat__photon_bundle_values", "[merl
 }
 
 TEST_CASE("EventIoTest: EventIoFile_telescope_dat_run_time", "[merlict]") {
-    eventio::Run my_run("tests/resources/telescope.dat");
+    eventio::Run my_run("merlict_corsika/tests/resources/telescope.dat");
 
     while (my_run.has_still_events_left()) {
         eventio::Event event = my_run.next_event();
