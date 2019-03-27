@@ -1,0 +1,7 @@
+set(TEST_SOURCE_MERLICT_CORSIKA
+    ${CMAKE_CURRENT_SOURCE_DIR}/EventIoPhotonFactoryTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/EventIoTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/CorsikaIoTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/HeaderBlockTest.cpp
+    PARENT_SCOPE
+)
