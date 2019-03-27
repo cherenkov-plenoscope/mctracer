@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "catch.hpp"
+#include "tests/catch.hpp"
 #include <iostream>
 #include "plenoscope/light_field_sensor/Config.h"
 #include "plenoscope/night_sky_background/NightSkyBackground.h"

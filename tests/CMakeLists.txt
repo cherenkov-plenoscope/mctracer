@@ -43,14 +43,11 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/LensMakerTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Vec2Test.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Vec3Test.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/NightSkyBackgroundLightTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/XyPlaneRayEquationTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PathToolsTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ZaxisCylinderRayIntersectionEquationTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/CorsikaIoTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SmallBallsTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/OnlineStatisticsTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/PlenoscopeLixelStatisticsTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/HeaderBlockTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/OwnerShipTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ColorMapTest.cpp

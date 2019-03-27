@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "catch.hpp"
+#include "tests/catch.hpp"
 #include "plenoscope/calibration/LixelStatistics.h"
 
 
