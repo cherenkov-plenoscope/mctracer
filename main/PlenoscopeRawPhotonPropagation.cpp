@@ -12,7 +12,6 @@
 #include "plenoscope/night_sky_background/Injector.h"
 #include "plenoscope/json_to_plenoscope.h"
 #include "signal_processing/signal_processing.h"
-#include "try_to_read/PhotonsReader.h"
 namespace fs = std::experimental::filesystem;
 namespace sp = signal_processing;
 namespace ml = merlict;
@@ -184,172 +183,167 @@ int main(int argc, char* argv[]) {
     // 222222 22
     //--------------------------------------------------------------------------
     // open raw photon file
-    ml::PhotonsReader photon_file(input_path.path);
+    std::vector<ml::Photon> photons = ml::raw_matrix2photons(
+        ml::tsvio::gen_table_from_file(input_path.path));
 
     //--------------------------------------------------------------------------
     // propagate photons
-    unsigned int event_counter = 1;
-    while (photon_file.has_still_photons_left()) {
-        std::vector<ml::Photon> photons;
-        photons = photon_file.next(&prng);
+    const unsigned int event_counter = 1;
 
-        ml::propagate_photons_in_frame_with_config(
-            &photons, &scenery.root, &settings, &prng);
+    ml::propagate_photons_in_frame_with_config(
+        &photons, &scenery.root, &settings, &prng);
 
-        light_field_channels->clear_history();
-        light_field_channels->assign_photons(&photons);
+    light_field_channels->clear_history();
+    light_field_channels->assign_photons(&photons);
 
-        std::vector<std::vector<sp::PipelinePhoton>> photon_pipelines =
-            sp::get_photon_pipelines(light_field_channels);
+    std::vector<std::vector<sp::PipelinePhoton>> photon_pipelines =
+        sp::get_photon_pipelines(light_field_channels);
 
-        //-----------------------------
-        // Night Sky Background photons
-        plenoscope::night_sky_background::inject_nsb_into_photon_pipeline(
-            &photon_pipelines,
-            nsb_exposure_time,
-            &optics_calibration_result,
-            &nsb,
-            &prng);
+    //-----------------------------
+    // Night Sky Background photons
+    plenoscope::night_sky_background::inject_nsb_into_photon_pipeline(
+        &photon_pipelines,
+        nsb_exposure_time,
+        &optics_calibration_result,
+        &nsb,
+        &prng);
 
-        //--------------------------
-        // Photo Electric conversion
-        std::vector<std::vector<sp::ElectricPulse>> electric_pipelines;
-        electric_pipelines.reserve(photon_pipelines.size());
-        for (
-            std::vector<sp::PipelinePhoton> ph_pipe :
-            photon_pipelines
-        ) {
-            electric_pipelines.push_back(
-                sipm_converter.get_pulse_pipeline_for_photon_pipeline(
-                    ph_pipe,
-                    nsb_exposure_time,
-                    &prng));
-        }
+    //--------------------------
+    // Photo Electric conversion
+    std::vector<std::vector<sp::ElectricPulse>> electric_pipelines;
+    electric_pipelines.reserve(photon_pipelines.size());
+    for (
+        std::vector<sp::PipelinePhoton> ph_pipe :
+        photon_pipelines
+    ) {
+        electric_pipelines.push_back(
+            sipm_converter.get_pulse_pipeline_for_photon_pipeline(
+                ph_pipe,
+                nsb_exposure_time,
+                &prng));
+    }
 
-        //-------------------------
-        // Single-photon-extraction
-        sp::PhotonStream::Stream record;
-        record.time_slice_duration = time_slice_duration;
-        record.photon_stream = sp::extract_pulses(
-            electric_pipelines,
-            time_slice_duration,
-            arrival_time_std,
-            &prng);
+    //-------------------------
+    // Single-photon-extraction
+    sp::PhotonStream::Stream record;
+    record.time_slice_duration = time_slice_duration;
+    record.photon_stream = sp::extract_pulses(
+        electric_pipelines,
+        time_slice_duration,
+        arrival_time_std,
+        &prng);
 
-        //-------------
-        // export event
-        ml::ospath::Path event_output_path = ml::ospath::join(
-            output_path.path,
-            std::to_string(event_counter));
-        fs::create_directory(event_output_path.path);
+    //-------------
+    // export event
+    ml::ospath::Path event_output_path = ml::ospath::join(
+        output_path.path,
+        std::to_string(event_counter));
+    fs::create_directory(event_output_path.path);
 
-        sp::PhotonStream::write(
-            record.photon_stream,
-            record.time_slice_duration,
-            ml::ospath::join(
-                event_output_path.path,
-                "raw_light_field_sensor_response.phs"));
-
-        plenoscope::EventHeader event_header;
-        event_header.set_event_type(plenoscope::EventTypes::SIMULATION);
-        event_header.set_trigger_type(
-            plenoscope::TriggerType::EXTERNAL_RANDOM_TRIGGER);
-        event_header.set_plenoscope_geometry(
-            pis->light_field_sensor_geometry.config);
-        corsika::write_273_f4_to_path(
-            event_header.raw,
-            ml::ospath::join(
-                event_output_path.path,
-                "event_header.bin"));
-
-        //-------------
-        // export Simulation Truth
-        ml::ospath::Path event_mc_truth_path = ml::ospath::join(
+    sp::PhotonStream::write(
+        record.photon_stream,
+        record.time_slice_duration,
+        ml::ospath::join(
             event_output_path.path,
-            "simulation_truth");
-        fs::create_directory(event_mc_truth_path.path);
-        std::array<float, 273> run_header;
-        for (
-            unsigned int i = 0;
-            i < run_header.size();
-            i++
-        ) {run_header[i] = 0.0f;}
-        run_header[0] = corsika::str2float("RUNH");
-        run_header[1] = 1.0f;  // run-number
-        run_header[2] = 20180101.0f;  // date
-        run_header[3] = -1.0f;  // program version
-        run_header[4] = 1.0f;  // number observation-levels
-        run_header[5] = 5e3f;  // height observation-levels
-        corsika::write_273_f4_to_path(
-            run_header,
+            "raw_light_field_sensor_response.phs"));
+
+    plenoscope::EventHeader event_header;
+    event_header.set_event_type(plenoscope::EventTypes::SIMULATION);
+    event_header.set_trigger_type(
+        plenoscope::TriggerType::EXTERNAL_RANDOM_TRIGGER);
+    event_header.set_plenoscope_geometry(
+        pis->light_field_sensor_geometry.config);
+    corsika::write_273_f4_to_path(
+        event_header.raw,
+        ml::ospath::join(
+            event_output_path.path,
+            "event_header.bin"));
+
+    //-------------
+    // export Simulation Truth
+    ml::ospath::Path event_mc_truth_path = ml::ospath::join(
+        event_output_path.path,
+        "simulation_truth");
+    fs::create_directory(event_mc_truth_path.path);
+    std::array<float, 273> run_header;
+    for (
+        unsigned int i = 0;
+        i < run_header.size();
+        i++
+    ) {run_header[i] = 0.0f;}
+    run_header[0] = corsika::str2float("RUNH");
+    run_header[1] = 1.0f;  // run-number
+    run_header[2] = 20180101.0f;  // date
+    run_header[3] = -1.0f;  // program version
+    run_header[4] = 1.0f;  // number observation-levels
+    run_header[5] = 5e3f;  // height observation-levels
+    corsika::write_273_f4_to_path(
+        run_header,
+        ml::ospath::join(
+            event_mc_truth_path.path,
+            "corsika_run_header.bin"));
+    std::array<float, 273> evt_header;
+    for (
+        unsigned int i = 0;
+        i < evt_header.size();
+        i++
+    ) {evt_header[i] = 0.0f;}
+    evt_header[0] = corsika::str2float("EVTH");
+    evt_header[1] = static_cast<float>(event_counter + 1);  // evt-number
+    evt_header[2] = -1.0f;  // particle id
+    evt_header[3] = -1.0f;  // energy
+    evt_header[4] = 1.0f;  // number observation-levels
+    evt_header[5] = 5e3f;  // height observation-levels
+    evt_header[44-1] = run_header[1];  // run-number
+    evt_header[45-1] = run_header[2];  // date
+    evt_header[46-1] = run_header[3];  // program version
+    evt_header[47-1] = run_header[4];  // number observation-levels
+    evt_header[48-1] = run_header[5];  // height observation-levels
+    corsika::write_273_f4_to_path(
+        evt_header,
+        ml::ospath::join(event_mc_truth_path.path, "corsika_event_header.bin"));
+    plenoscope::SimulationTruthHeader sim_truth_header;
+    sim_truth_header.set_random_seed_of_run(prng.seed());
+    corsika::write_273_f4_to_path(
+        sim_truth_header.raw,
+        ml::ospath::join(
+            event_mc_truth_path.path,
+            "mctracer_event_header.bin"));
+
+    if (export_all_simulation_truth) {
+        sp::PhotonStream::write_simulation_truth(
+            record.photon_stream,
             ml::ospath::join(
                 event_mc_truth_path.path,
-                "corsika_run_header.bin"));
-        std::array<float, 273> evt_header;
-        for (
-            unsigned int i = 0;
-            i < evt_header.size();
-            i++
-        ) {evt_header[i] = 0.0f;}
-        evt_header[0] = corsika::str2float("EVTH");
-        evt_header[1] = static_cast<float>(event_counter + 1);  // evt-number
-        evt_header[2] = -1.0f;  // particle id
-        evt_header[3] = -1.0f;  // energy
-        evt_header[4] = 1.0f;  // number observation-levels
-        evt_header[5] = 5e3f;  // height observation-levels
-        evt_header[44-1] = run_header[1];  // run-number
-        evt_header[45-1] = run_header[2];  // date
-        evt_header[46-1] = run_header[3];  // program version
-        evt_header[47-1] = run_header[4];  // number observation-levels
-        evt_header[48-1] = run_header[5];  // height observation-levels
-        corsika::write_273_f4_to_path(
-            evt_header,
-            ml::ospath::join(event_mc_truth_path.path, "corsika_event_header.bin"));
-        plenoscope::SimulationTruthHeader sim_truth_header;
-        sim_truth_header.set_random_seed_of_run(prng.seed());
-        corsika::write_273_f4_to_path(
-            sim_truth_header.raw,
-            ml::ospath::join(
-                event_mc_truth_path.path,
-                "mctracer_event_header.bin"));
+                "detector_pulse_origins.bin"));
 
-        if (export_all_simulation_truth) {
-            sp::PhotonStream::write_simulation_truth(
-                record.photon_stream,
-                ml::ospath::join(
-                    event_mc_truth_path.path,
-                    "detector_pulse_origins.bin"));
+        std::vector<std::array<float, 8>> raw_photons;
+        for (unsigned int p = 0; p < photons.size(); p++) {
+            const double lambda =
+                photons.at(p).support().z/photons.at(p).direction().z;
 
-            std::vector<std::array<float, 8>> raw_photons;
-            for (unsigned int p = 0; p < photons.size(); p++) {
-                const double lambda =
-                    photons.at(p).support().z/photons.at(p).direction().z;
-
-                std::array<float, 8> raw_photon;
-                raw_photon[0] = 1e2*(
-                    photons.at(p).support().x +
-                    lambda*photons.at(p).direction().x);  // x
-                raw_photon[1] = 1e2*(
-                    photons.at(p).support().y +
-                    lambda*photons.at(p).direction().y);  // y
-                raw_photon[2] = photons.at(p).direction().x;  // cx
-                raw_photon[3] = photons.at(p).direction().y;  // cy
-                raw_photon[4] = 0.0f;  // relative arrival-time on ground
-                raw_photon[5] = 1e2*photons.at(p).support().z;
-                // production height
-                raw_photon[6] = 1.0f;  // survival probability
-                raw_photon[7] = 1e9*photons.at(p).wavelength;
-                raw_photons.push_back(raw_photon);
-            }
-
-            eventio::write_photon_bunches_to_path(
-                raw_photons,
-                ml::ospath::join(
-                    event_mc_truth_path.path,
-                    "air_shower_photon_bunches.bin"));
+            std::array<float, 8> raw_photon;
+            raw_photon[0] = 1e2*(
+                photons.at(p).support().x +
+                lambda*photons.at(p).direction().x);  // x
+            raw_photon[1] = 1e2*(
+                photons.at(p).support().y +
+                lambda*photons.at(p).direction().y);  // y
+            raw_photon[2] = photons.at(p).direction().x;  // cx
+            raw_photon[3] = photons.at(p).direction().y;  // cy
+            raw_photon[4] = 0.0f;  // relative arrival-time on ground
+            raw_photon[5] = 1e2*photons.at(p).support().z;
+            // production height
+            raw_photon[6] = 1.0f;  // survival probability
+            raw_photon[7] = 1e9*photons.at(p).wavelength;
+            raw_photons.push_back(raw_photon);
         }
 
-        event_counter++;
+        eventio::write_photon_bunches_to_path(
+            raw_photons,
+            ml::ospath::join(
+                event_mc_truth_path.path,
+                "air_shower_photon_bunches.bin"));
     }
     } catch (std::exception &error) {
         std::cerr << error.what();

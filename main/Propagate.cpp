@@ -2,7 +2,6 @@
 #include "docopt/docopt.h"
 #include "merlict/merlict.h"
 #include "merlict_json/json.h"
-#include "try_to_read/PhotonsReader.h"
 namespace ml = merlict;
 
 
@@ -61,55 +60,50 @@ int main(int argc, char* argv[]) {
     ml::sensor::Sensors sensors(scenery.sensors.sensors);
 
     // photon source
-    ml::PhotonsReader photon_file(photon_path.path);
+    std::vector<ml::Photon> photons = ml::raw_matrix2photons(
+        ml::tsvio::gen_table_from_file(photon_path.path));
+    const unsigned int event_counter = 1;
 
-    unsigned int event_counter = 1;
-    while (photon_file.has_still_photons_left()) {
-        std::vector<ml::Photon> photons;
-        photons = photon_file.next(&prng);
+    // photon propagation
+    ml::propagate_photons_in_frame_with_config(
+        &photons,
+        &scenery.root,
+        &settings,
+        &prng);
 
-        // photon propagation
-        ml::propagate_photons_in_frame_with_config(
-            &photons,
-            &scenery.root,
-            &settings,
-            &prng);
+    // detect photons in sensors
+    sensors.clear_history();
+    sensors.assign_photons(&photons);
 
-        // detect photons in sensors
-        sensors.clear_history();
-        sensors.assign_photons(&photons);
+    // write each sensors to file
+    for (unsigned int i = 0; i < sensors.size(); i++) {
+        std::stringstream outname;
+        outname << out_path.path << event_counter << "_" << i;
 
-        // write each sensors to file
-        for (unsigned int i = 0; i < sensors.size(); i++) {
-            std::stringstream outname;
-            outname << out_path.path << event_counter << "_" << i;
+        if (export_binary) {
+            std::ofstream out;
+            out.open(outname.str(), std::ios::out | std::ios::binary);
+            ml::sensor::write_arrival_information_to_file(
+                &(sensors.at(i)->photon_arrival_history),
+                &out);
+            out.close();
+        } else {
+            std::stringstream header;
+            header << "scenery: " << scenery_path.path << "\n";
+            header << "sensor:  ";
+            header << sensors.at(i)->frame->path_in_tree();
+            header << ", ID: " << i << "\n";
+            header << "photons: " << photon_path.path << "\n";
+            header << "-------------\n";
+            header << ml::sensor::arrival_table_header();
 
-            if (export_binary) {
-                std::ofstream out;
-                out.open(outname.str(), std::ios::out | std::ios::binary);
-                ml::sensor::write_arrival_information_to_file(
-                    &(sensors.at(i)->photon_arrival_history),
-                    &out);
-                out.close();
-            } else {
-                std::stringstream header;
-                header << "scenery: " << scenery_path.path << "\n";
-                header << "sensor:  ";
-                header << sensors.at(i)->frame->path_in_tree();
-                header << ", ID: " << i << "\n";
-                header << "photons: " << photon_path.path << "\n";
-                header << "-------------\n";
-                header << ml::sensor::arrival_table_header();
-
-                ml::tsvio::write_table_to_file_with_header(
-                    ml::sensor::history_to_table(
-                        sensors.at(i)->photon_arrival_history),
-                    outname.str(),
-                    header.str()
-                );
-            }
+            ml::tsvio::write_table_to_file_with_header(
+                ml::sensor::history_to_table(
+                    sensors.at(i)->photon_arrival_history),
+                outname.str(),
+                header.str()
+            );
         }
-        event_counter++;
     }
 
     } catch (std::exception &error) {
