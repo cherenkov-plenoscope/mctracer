@@ -40,7 +40,7 @@ void Stereo3D::aquire_stereo_image(
         initial_camera_pos,
         camera->rotation(),
         camera->field_of_view());
-    merge_left_and_right_image_to_anaglyph_3DStereo(
+    merge_left_and_right_into_anaglyph_stereo(
         left_image,
         right_image,
         stereo_image);

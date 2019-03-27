@@ -231,7 +231,7 @@ void scale_up(const Image &in, const unsigned int scale, Image* out) {
     }
 }
 
-void merge_left_and_right_image_to_anaglyph_3DStereo(
+void merge_left_and_right_into_anaglyph_stereo(
     const Image &left,
     const Image &right,
     Image* stereo_image
