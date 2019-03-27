@@ -1,0 +1,1 @@
+This file exists to enforce git to create the resource directory.
