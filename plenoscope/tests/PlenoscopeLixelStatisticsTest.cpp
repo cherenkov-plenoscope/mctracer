@@ -45,7 +45,7 @@ TEST_CASE("PlenoscopeLixelStatisticsTest: write_and_read_binary", "[merlict]") {
         "plenoscope/"
         "tests/"
         "resources/"
-        "my_stats.LixelStatistics.bin";
+        "my_stats.LixelStatistics.bin.tmp";
     plenoscope::calibration::write(lixel_stats, path);
 
     std::vector<plenoscope::calibration::LixelStatistic> lixel_stats_in =
