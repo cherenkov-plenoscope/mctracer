@@ -11,7 +11,7 @@ TEST_CASE("HeaderBlockTest: write_and_read_binary_block", "[merlict]") {
         "merlict_corsika/"
         "tests/"
         "resources/"
-        "header_block.bin";
+        "header_block.bin.tmp";
     corsika::write_273_f4_to_path(block, path);
     std::vector<std::array<float, 273>> blocks_in =
         corsika::read_273_f4_from_path(path);
@@ -34,7 +34,7 @@ TEST_CASE("HeaderBlockTest: write_and_read_several_binary_blocks", "[merlict]") 
         "merlict_corsika/"
         "tests/"
         "resources/"
-        "header_block.bin";
+        "header_block.bin.tmp";
     corsika::write_273_f4_to_path(blocks, path);
     std::vector<std::array<float, 273>> blocks_in =
         corsika::read_273_f4_from_path(path);
@@ -63,7 +63,7 @@ TEST_CASE("HeaderBlockTest: write_and_read_empty_file", "[merlict]") {
         "merlict_corsika/"
         "tests/"
         "resources/"
-        "header_block.bin";
+        "header_block.bin.tmp";
     corsika::write_273_f4_to_path(blocks, path);
     std::vector<std::array<float, 273>> blocks_in =
         corsika::read_273_f4_from_path(path);
