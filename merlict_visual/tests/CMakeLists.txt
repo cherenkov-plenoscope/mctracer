@@ -1,0 +1,6 @@
+set(TEST_SOURCE_MERLICT_VISUAL
+    ${CMAKE_CURRENT_SOURCE_DIR}/ImageTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ApertureCameraTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PortablePixMapTest.cpp
+    PARENT_SCOPE
+)

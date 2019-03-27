@@ -23,12 +23,15 @@ TEST_CASE("PortablePixMapTest: write_and_read", "[merlict]") {
             }
         }
     }
-    ml::visual::write_image_to_path(
-        img,
-        "tests/resources/image_16x9_rgb.ppm");
 
-    ml::visual::Image img_back = ml::visual::read_image_from_path(
-        "tests/resources/image_16x9_rgb.ppm");
+    std::string path =
+        "merlict_visual/"
+        "tests/"
+        "resources/"
+        "image_16x9_rgb.ppm.tmp";
+    ml::visual::write_image_to_path(img, path);
+
+    ml::visual::Image img_back = ml::visual::read_image_from_path(path);
 
     REQUIRE(img_back.num_cols == img.num_cols);
     REQUIRE(img_back.num_rows == img.num_rows);
