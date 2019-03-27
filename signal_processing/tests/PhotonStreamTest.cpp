@@ -131,7 +131,7 @@ TEST_CASE("PhotonStreamTest: arrival_slices_must_not_be_NEXT_CHANNEL_MARKER", "[
             "signal_processing/"
             "tests/"
             "resources/"
-            "must_not_be_written.phs.tmp"),
+            "must_throw_when_written.phs.tmp"),
         std::runtime_error);
 
     channels.at(0).at(0).arrival_time_slice = 254;
@@ -143,7 +143,7 @@ TEST_CASE("PhotonStreamTest: arrival_slices_must_not_be_NEXT_CHANNEL_MARKER", "[
             "signal_processing/"
             "tests/"
             "resources/"
-            "shall_be_written.phs.tmp"));
+            "shall_not_throw_when_written.phs.tmp"));
 }
 
 TEST_CASE("PhotonStreamTest: write_and_read_back_full_single_pulse_event", "[merlict]") {
