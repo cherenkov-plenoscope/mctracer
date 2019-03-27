@@ -110,9 +110,11 @@ target_link_libraries(mctFactPropagation docopt)
 # unit test exe
 add_subdirectory("${PROJECT_SOURCE_DIR}/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/plenoscope/tests")
+add_subdirectory("${PROJECT_SOURCE_DIR}/signal_processing/tests")
 add_executable(
 	mctTest
 	./tests/test.cpp
 	${TEST_SOURCE}
-	${TEST_SOURCE_PLENOSCOPE})
+	${TEST_SOURCE_PLENOSCOPE}
+	${TEST_SOURCE_SIGNAL_PROCESSING})
 target_link_libraries(mctTest mct)

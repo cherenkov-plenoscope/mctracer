@@ -53,11 +53,8 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/ColorMapTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/FunctionMapTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/SensorMapTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/PhotoElectricConverterTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/PhotonStreamTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeterTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PortablePixMapTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/PulseExtractionTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MultiThreadPropagationTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/JsonTest.cpp
     PARENT_SCOPE
