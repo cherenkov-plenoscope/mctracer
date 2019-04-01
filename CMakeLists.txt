@@ -113,6 +113,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_corsika/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_visual/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_json/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_multi_thread/tests")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_viewer/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/plenoscope/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/signal_processing/tests")
 add_executable(
@@ -124,5 +125,6 @@ add_executable(
     ${TEST_SOURCE_MERLICT_CORSIKA}
     ${TEST_SOURCE_MERLICT_VISUAL}
     ${TEST_SOURCE_MERLICT_JSON}
-    ${TEST_SOURCE_MERLICT_MULTI_THREAD})
+    ${TEST_SOURCE_MERLICT_MULTI_THREAD}
+    ${TEST_SOURCE_MERLICT_VIEWER})
 target_link_libraries(mctTest mct)

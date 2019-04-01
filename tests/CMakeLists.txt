@@ -7,7 +7,6 @@ set(TEST_SOURCE
     ${CMAKE_CURRENT_SOURCE_DIR}/BiConvexLensTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PlaneIntersectionTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PostInitFrameSpeed.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/CameraOperatorTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PropagationEnvironmentTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/QuadraticEquationTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/DiscTest.cpp
