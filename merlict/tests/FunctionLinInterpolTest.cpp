@@ -74,7 +74,7 @@ TEST_CASE("Func1Test: access_at_highest_argument", "[merlict]") {
 
 TEST_CASE("Func1Test: generate_from_from_file", "[merlict]") {
     Func1Test ft;
-    std::string path = "tests/resources/tsv/tim_sinus.csv";
+    std::string path = "merlict/tests/resources/tsv/tim_sinus.csv";
     ml::tsvio::write_table_to_file(ft.table, path);
 
     ml::function::Func1 f(ml::tsvio::gen_table_from_file(path));

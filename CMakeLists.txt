@@ -108,23 +108,25 @@ target_link_libraries(mctFactPropagation docopt)
 
 #---------------------------------
 # unit test exe
-add_subdirectory("${PROJECT_SOURCE_DIR}/tests")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_corsika/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_visual/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_json/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_multi_thread/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_viewer/tests")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/plenoscope/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/signal_processing/tests")
 add_executable(
     mctTest
-    ./tests/test.cpp
-    ${TEST_SOURCE}
+    merlict/tests/test.cpp
     ${TEST_SOURCE_PLENOSCOPE}
     ${TEST_SOURCE_SIGNAL_PROCESSING}
+    ${TEST_SOURCE_MERLICT}
     ${TEST_SOURCE_MERLICT_CORSIKA}
     ${TEST_SOURCE_MERLICT_VISUAL}
     ${TEST_SOURCE_MERLICT_JSON}
     ${TEST_SOURCE_MERLICT_MULTI_THREAD}
-    ${TEST_SOURCE_MERLICT_VIEWER})
+    ${TEST_SOURCE_MERLICT_VIEWER}
+    ${TEST_SOURCE_MERLICT_INTEGRATION})
 target_link_libraries(mctTest mct)

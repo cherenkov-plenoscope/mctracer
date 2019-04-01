@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller, Dominik Neise
 #include <algorithm>
 #include <sstream>
-#include "tests/catch.hpp"
+#include "merlict/tests/catch.hpp"
 #include "merlict_corsika/eventio.h"
 #include "merlict_corsika/corsika.h"
 #include "merlict_corsika/PhotonFactory.h"

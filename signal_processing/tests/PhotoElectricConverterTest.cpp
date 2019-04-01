@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <vector>
-#include "tests/catch.hpp"
+#include "merlict/tests/catch.hpp"
 #include "signal_processing/PhotoElectricConverter.h"
 #include "merlict/Histogram1.h"
 namespace ml = merlict;

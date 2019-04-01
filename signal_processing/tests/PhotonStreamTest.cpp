@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <stdint.h>
-#include "tests/catch.hpp"
+#include "merlict/tests/catch.hpp"
 #include "signal_processing/signal_processing.h"
 #include "merlict/random/random.h"
 #include "merlict/simulation_truth.h"

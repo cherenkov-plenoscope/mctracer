@@ -1,7 +1,7 @@
 // Copyright 2015 Sebastian A. Mueller
 #include <sstream>
 #include <string>
-#include "catch.hpp"
+#include "merlict/tests/catch.hpp"
 #include "merlict/merlict.h"
 #include "merlict_visual/visual.h"
 #include "signal_processing/signal_processing.h"

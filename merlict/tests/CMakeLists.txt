@@ -1,5 +1,4 @@
-set(TEST_SOURCE
-    ${CMAKE_CURRENT_SOURCE_DIR}/PrintSizeOfTest.cpp
+set(TEST_SOURCE_MERLICT
     ${CMAKE_CURRENT_SOURCE_DIR}/ColorTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/PhotonsTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/AsciiIoTest.cpp

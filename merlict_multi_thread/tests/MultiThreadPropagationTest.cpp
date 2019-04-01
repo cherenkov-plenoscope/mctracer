@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "tests/catch.hpp"
+#include "merlict/tests/catch.hpp"
 #include "merlict/scenery/primitive/Disc.h"
 #include "merlict/Photons.h"
 #include "merlict/scenery/Scenery.h"

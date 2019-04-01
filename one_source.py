@@ -311,7 +311,7 @@ with open(out_path_test, 'wt') as fout:
     fout.write("#define CATCH_CONFIG_MAIN\n")
     fout.write("\n")
     fout.write('#include "merlict.h"\n')
-    fout.write('#include "tests/catch.hpp"\n')
+    fout.write('#include "merlict/tests/catch.hpp"\n')
     for test_include in test_includes:
         fout.write(test_include + '\n')
     fout.write("\n")

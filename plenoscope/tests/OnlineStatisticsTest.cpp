@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "tests/catch.hpp"
+#include "merlict/tests/catch.hpp"
 #include "plenoscope/calibration/OnlineStatistics.h"
 #include "merlict/random/random.h"
 #include "merlict/numeric.h"
