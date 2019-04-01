@@ -1,5 +1,5 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "catch.hpp"
+#include "tests/catch.hpp"
 #include "merlict_json/niels_lohmann_json.hpp"
 #include "merlict_json/json.h"
 #include "merlict/merlict.h"
