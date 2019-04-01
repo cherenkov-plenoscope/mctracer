@@ -127,7 +127,6 @@ test_sources = [
     "tests/BiConvexLensTest.cpp",
     "tests/PlaneIntersectionTest.cpp",
     "tests/PostInitFrameSpeed.cpp",
-    #"tests/CameraOperatorTest.cpp",
     "tests/PropagationEnvironmentTest.cpp",
     "tests/QuadraticEquationTest.cpp",
     "tests/DiscTest.cpp",
@@ -168,7 +167,6 @@ test_sources = [
     "tests/FunctionMapTest.cpp",
     "tests/SensorMapTest.cpp",
     "tests/DistanceMeterTest.cpp",
-    #"tests/MultiThreadPropagationTest.cpp",
 ]
 
 s = 0
