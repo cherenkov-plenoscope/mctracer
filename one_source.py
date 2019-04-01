@@ -169,7 +169,6 @@ test_sources = [
     "tests/SensorMapTest.cpp",
     "tests/DistanceMeterTest.cpp",
     #"tests/MultiThreadPropagationTest.cpp",
-    #"tests/JsonTest.cpp",
 ]
 
 s = 0
