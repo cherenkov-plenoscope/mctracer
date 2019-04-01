@@ -21,7 +21,7 @@ endif()
 #-------------------
 # External libraries
 
-# 	OpenCV
+#   OpenCV
 find_package(OpenCV)
 include_directories(${OpenCV_INCLUDE_DIRS})
 link_directories(${OpenCV_LIB_DIR})
@@ -115,12 +115,12 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_json/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/plenoscope/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/signal_processing/tests")
 add_executable(
-	mctTest
-	./tests/test.cpp
-	${TEST_SOURCE}
-	${TEST_SOURCE_PLENOSCOPE}
-	${TEST_SOURCE_SIGNAL_PROCESSING}
-	${TEST_SOURCE_MERLICT_CORSIKA}
-	${TEST_SOURCE_MERLICT_VISUAL}
-	${TEST_SOURCE_MERLICT_JSON})
+    mctTest
+    ./tests/test.cpp
+    ${TEST_SOURCE}
+    ${TEST_SOURCE_PLENOSCOPE}
+    ${TEST_SOURCE_SIGNAL_PROCESSING}
+    ${TEST_SOURCE_MERLICT_CORSIKA}
+    ${TEST_SOURCE_MERLICT_VISUAL}
+    ${TEST_SOURCE_MERLICT_JSON})
 target_link_libraries(mctTest mct)
