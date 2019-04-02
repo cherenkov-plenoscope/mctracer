@@ -1,0 +1,61 @@
+{
+  "functions":[
+    { "name":"leaf_reflection",
+      "argument_versus_value":[
+        [200e-9, 0.5],
+        [1200e-9, 0.5]]},
+    { "name":"pole_dull",
+      "argument_versus_value":[
+        [200e-9, 0.0],
+        [1200e-9, 0.0]]}
+  ],
+  "colors":[
+    {"name":"grass_green", "rgb":[22, 91, 49]},
+    {"name":"orange", "rgb":[255, 91, 49]},
+    {"name":"leaf_green", "rgb":[22, 200, 49]},
+    {"name":"wood_brown", "rgb":[200, 200, 0]}
+  ],
+  "children": [
+    {
+      "type": "Frame",
+      "name": "tree",
+      "pos": [5, 5, -2],
+      "rot": [0, 0, 0],
+      "children": [
+        {
+          "type": "Sphere",
+          "name": "leaf_ball",
+          "pos": [0, 0, 3],
+          "rot": [0, 0, 0],
+          "radius": 1.5,
+          "surface": {
+            "outer_color": "leaf_green",
+            "inner_color": "leaf_green"},
+          "children": []
+        },
+        {
+          "type": "Cylinder",
+          "name": "pole",
+          "radius": 0.25,
+          "start_pos": [0, 0, 0],
+          "end_pos": [0, 0, 1.5],
+          "surface": {
+            "outer_color": "wood_brown",
+            "inner_color": "wood_brown"},
+          "children": []
+        }
+      ]
+    },
+    {
+      "type": "StereoLitography",
+      "name": "two_axis_joint",
+      "pos": [10, 10, -1],
+      "rot": [0, 0, 0],
+      "scale": 0.15,
+      "path": "two_axis_joint.stl",
+      "surface": {
+        "outer_color": "orange"},
+      "children": []
+    }
+  ]
+}

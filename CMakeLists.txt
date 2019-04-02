@@ -1,16 +1,18 @@
 # Copyright 2011-2018 Sebastian A. Mueller
 cmake_minimum_required(VERSION 2.8)
-set (CMAKE_CXX_FLAGS "-std=c++1z -Wall -Wextra -pedantic -O1 -g -I")
-project(mctracer)
+set (CMAKE_CXX_FLAGS "-std=c++1z -pthread -Wall -Wextra -pedantic -O1 -g -I")
+project(merlict)
 
-#--------------------------------
 # Assert compiler supports C++ 11
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
 if(COMPILER_SUPPORTS_CXX11)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 else()
-    message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
+    message(
+        STATUS
+        "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support.
+        Please use a different C++ compiler.")
 endif()
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -18,130 +20,115 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     message(FATAL_ERROR "Insufficient gcc version, need at least gcc 5")
   endif()
 endif()
-#-------------------
-# External libraries
-# 	OpenMP
-find_package(OpenMP)
-if(OPENMP_FOUND)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
-endif()
 
-# 	OpenCV
+# OpenCV
 find_package(OpenCV)
 include_directories(${OpenCV_INCLUDE_DIRS})
 link_directories(${OpenCV_LIB_DIR})
-#-------------------------------------------------------------------------------
-# Cmake
+
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
-#-----------
-# The Source
-add_subdirectory("${PROJECT_SOURCE_DIR}/Visual")
-add_subdirectory("${PROJECT_SOURCE_DIR}/Core")
-add_subdirectory("${PROJECT_SOURCE_DIR}/Corsika")
-add_subdirectory("${PROJECT_SOURCE_DIR}/Scenery")
-add_subdirectory("${PROJECT_SOURCE_DIR}/Plenoscope")
-add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonSensor")
-add_subdirectory("${PROJECT_SOURCE_DIR}/Tools")
-add_subdirectory("${PROJECT_SOURCE_DIR}/Xml")
-add_subdirectory("${PROJECT_SOURCE_DIR}/PhotonsReader")
-add_subdirectory("${PROJECT_SOURCE_DIR}/SignalProcessing")
-add_subdirectory("${PROJECT_SOURCE_DIR}/DocOpt")
-#-------------------------------
-# mctracer library
-add_library(mct SHARED ${SOURCE})
+set(
+    CMAKE_MODULE_PATH
+    ${CMAKE_MODULE_PATH}
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
+
+# source
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_corsika")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_json")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_visual")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_multi_thread")
+add_subdirectory("${PROJECT_SOURCE_DIR}/plenoscope")
+add_subdirectory("${PROJECT_SOURCE_DIR}/signal_processing")
+add_subdirectory("${PROJECT_SOURCE_DIR}/docopt")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_viewer")
+
+# merlict library
+add_library(lib_merlict_dev SHARED ${SOURCE})
 include_directories(/usr/include)
 include_directories(/usr/local/include)
-target_link_libraries(mct ${OpenCV_LIBS})
+target_link_libraries(lib_merlict_dev ${OpenCV_LIBS})
 
-#---------
-# Show exe
-add_executable(mctShow Main/Show.cpp)
-target_link_libraries(mctShow mct)
-target_link_libraries(mctShow docopt)
+#apps
+add_executable(
+    merlict-show
+    merlict_viewer/apps/show.cpp)
+target_link_libraries(merlict-show lib_merlict_dev)
+target_link_libraries(merlict-show docopt)
 
-#---------
-# CameraServer exe
-add_executable(mctCameraServer Main/CameraServer.cpp)
-target_link_libraries(mctCameraServer mct)
-target_link_libraries(mctCameraServer docopt)
+add_executable(
+    merlict-cameraserver
+    merlict_visual/apps/camera_server.cpp)
+target_link_libraries(merlict-cameraserver lib_merlict_dev)
+target_link_libraries(merlict-cameraserver docopt)
 
-#---------------
-# Propagate exe
-add_executable(mctPropagate Main/Propagate.cpp)
-target_link_libraries(mctPropagate mct)
-target_link_libraries(mctPropagate docopt)
+add_executable(
+    merlict-propagate
+    merlict_tests/apps/propagate.cpp)
+target_link_libraries(merlict-propagate lib_merlict_dev)
+target_link_libraries(merlict-propagate docopt)
 
-#----------------
-# ShowPhotons exe
-add_executable(mctShowPhotons Main/ShowPhotons.cpp)
-target_link_libraries(mctShowPhotons mct)
-target_link_libraries(mctShowPhotons docopt)
+add_executable(
+    merlict-show-photons
+    merlict_viewer/apps/show_photons.cpp)
+target_link_libraries(merlict-show-photons lib_merlict_dev)
+target_link_libraries(merlict-show-photons docopt)
 
-#------------------------
-# light field calibration
-add_executable(mctPlenoscopeCalibration Main/PlenoscopeCalibration.cpp)
-target_link_libraries(mctPlenoscopeCalibration mct)
-target_link_libraries(mctPlenoscopeCalibration stdc++fs)
-target_link_libraries(mctPlenoscopeCalibration docopt)
+add_executable(
+    merlict-plenoscope-calibration
+    plenoscope/apps/plenoscope_calibration.cpp)
+target_link_libraries(merlict-plenoscope-calibration lib_merlict_dev)
+target_link_libraries(merlict-plenoscope-calibration stdc++fs)
+target_link_libraries(merlict-plenoscope-calibration docopt)
 
-#------------------------
-# EventIOConverter
-add_executable(mctEventIOConverter Main/EventIOConverter.cpp)
-target_link_libraries(mctEventIOConverter mct)
-target_link_libraries(mctEventIOConverter stdc++fs)
-target_link_libraries(mctEventIOConverter docopt)
+add_executable(
+    merlict-eventio-converter
+    merlict_corsika/apps/eventio_converter.cpp)
+target_link_libraries(merlict-eventio-converter lib_merlict_dev)
+target_link_libraries(merlict-eventio-converter stdc++fs)
+target_link_libraries(merlict-eventio-converter docopt)
 
-#------------------------
-# light field propagation
-add_executable(mctPlenoscopePropagation Main/PlenoscopePropagation.cpp)
-target_link_libraries(mctPlenoscopePropagation mct)
-target_link_libraries(mctPlenoscopePropagation stdc++fs)
-target_link_libraries(mctPlenoscopePropagation docopt)
+add_executable(
+    merlict-plenoscope-propagation
+    plenoscope/apps/plenoscope_propagation.cpp)
+target_link_libraries(merlict-plenoscope-propagation lib_merlict_dev)
+target_link_libraries(merlict-plenoscope-propagation stdc++fs)
+target_link_libraries(merlict-plenoscope-propagation docopt)
 
-#------------------------
-# light field nsb only propagation
-add_executable(mctPlenoscopeNsbOnlyPropagation Main/PlenoscopeNsbOnlyPropagation.cpp)
-target_link_libraries(mctPlenoscopeNsbOnlyPropagation mct)
-target_link_libraries(mctPlenoscopeNsbOnlyPropagation stdc++fs)
-target_link_libraries(mctPlenoscopeNsbOnlyPropagation docopt)
+add_executable(
+    merlict-plenoscope-raw-photon-propagation
+    plenoscope/apps/plenoscope_raw_photon_propagation.cpp)
+target_link_libraries(merlict-plenoscope-raw-photon-propagation lib_merlict_dev)
+target_link_libraries(merlict-plenoscope-raw-photon-propagation stdc++fs)
+target_link_libraries(merlict-plenoscope-raw-photon-propagation docopt)
 
-#------------------------
-# light field raw photon propagation
-add_executable(mctPlenoscopeRawPhotonPropagation Main/PlenoscopeRawPhotonPropagation.cpp)
-target_link_libraries(mctPlenoscopeRawPhotonPropagation mct)
-target_link_libraries(mctPlenoscopeRawPhotonPropagation stdc++fs)
-target_link_libraries(mctPlenoscopeRawPhotonPropagation docopt)
+add_executable(
+    merlict-fact
+    merlict_fact/apps/fact_propagation.cpp)
+target_link_libraries(merlict-fact lib_merlict_dev)
+target_link_libraries(merlict-fact stdc++fs)
+target_link_libraries(merlict-fact docopt)
 
-#---------------------------------
-# unit test exe
-add_subdirectory("${PROJECT_SOURCE_DIR}/Tests/gtest-1.7.0")
-include_directories("${PROJECT_SOURCE_DIR}/Tests/gtest-1.7.0/include")
-add_subdirectory("${PROJECT_SOURCE_DIR}/Tests")
-
-add_executable(mctTest ./Tests/test.cpp ${TEST_SOURCE})
-target_link_libraries(mctTest gtest gtest_main)
-target_link_libraries(mctTest mct)
-
-#---------
-# STL scaling
-add_executable(mctScaleStl Main/ScaleStl.cpp)
-target_link_libraries(mctScaleStl mct)
-target_link_libraries(mctScaleStl docopt)
-
-#---------------------------------
-# Benchmark
-add_subdirectory("${PROJECT_SOURCE_DIR}/Benchmarks")
-
-add_executable(mctBenchMark ./Benchmarks/benchmark.cpp ${TEST_BENCHMARK})
-target_link_libraries(mctBenchMark gtest gtest_main)
-target_link_libraries(mctBenchMark mct)
-
-
-#------------------------
-# FACT propagation
-add_executable(mctFactPropagation ./Main/FactPropagation.cpp)
-target_link_libraries(mctFactPropagation mct)
-target_link_libraries(mctFactPropagation stdc++fs)
-target_link_libraries(mctFactPropagation docopt)
+# tests
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict/tests")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_corsika/tests")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_visual/tests")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_json/tests")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_multi_thread/tests")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_viewer/tests")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_tests")
+add_subdirectory("${PROJECT_SOURCE_DIR}/plenoscope/tests")
+add_subdirectory("${PROJECT_SOURCE_DIR}/signal_processing/tests")
+add_executable(
+    merlict-test
+    merlict/tests/test.cpp
+    ${TEST_SOURCE_PLENOSCOPE}
+    ${TEST_SOURCE_SIGNAL_PROCESSING}
+    ${TEST_SOURCE_MERLICT}
+    ${TEST_SOURCE_MERLICT_CORSIKA}
+    ${TEST_SOURCE_MERLICT_VISUAL}
+    ${TEST_SOURCE_MERLICT_JSON}
+    ${TEST_SOURCE_MERLICT_MULTI_THREAD}
+    ${TEST_SOURCE_MERLICT_VIEWER}
+    ${TEST_SOURCE_MERLICT_INTEGRATION})
+target_link_libraries(merlict-test lib_merlict_dev)

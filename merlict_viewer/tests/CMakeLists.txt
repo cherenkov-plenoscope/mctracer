@@ -1,0 +1,5 @@
+set(TEST_SOURCE_MERLICT_VIEWER
+    ${SOURCE}
+    ${CMAKE_CURRENT_SOURCE_DIR}/CameraOperatorTest.cpp
+    PARENT_SCOPE
+)

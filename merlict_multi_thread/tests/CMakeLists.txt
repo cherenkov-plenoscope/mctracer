@@ -1,0 +1,5 @@
+set(TEST_SOURCE_MERLICT_MULTI_THREAD
+    ${SOURCE}
+    ${CMAKE_CURRENT_SOURCE_DIR}/MultiThreadPropagationTest.cpp
+    PARENT_SCOPE
+)

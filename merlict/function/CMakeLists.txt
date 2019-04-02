@@ -1,0 +1,7 @@
+set(SOURCE
+    ${SOURCE}
+	${CMAKE_CURRENT_SOURCE_DIR}/Limits.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Func1.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/tools.cpp
+    PARENT_SCOPE
+)

@@ -1,4 +1,4 @@
-# mctracer
+# merlict
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
@@ -35,7 +35,7 @@ This ensures that CMakeLists.txt finds the correct version of OpenCV.
 
 ### make
 ```
-git clone https://github.com/TheBigLebowSky/mctracer.git
+git clone https://github.com/cherenkov-plenoscope/mctracer.git
 mkdir build
 ```
 The /build directory is best located side by side to the /mctracer directory.
@@ -49,13 +49,13 @@ make
 ## run mctracer
 The mctracer has several executeables. To interacively explore a scenery use mctShow.
 ```bash
-mctShow --scenery fact.xml
+mctShow --scenery fact.json
 ```
 
 ## Unit Tests
 Run the unit tests in the mctracer/Tests directory to ensure your build is fine.
 
 ```bash
-cd mctracer/Tests
+cd mctracer/tests
 ../../build/mctTest
 ```

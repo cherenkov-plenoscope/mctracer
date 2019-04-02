@@ -1,0 +1,6 @@
+{
+	"parallel_disc": {
+	  	"disc_radius": 2.5,
+	  	"num_photons": 13},
+	"pos": [0, 0, 0],
+	"rot": [0, 1.5705, 0]}

@@ -1,4 +1,0 @@
-set(TEST_BENCHMARK
-    ${CMAKE_CURRENT_SOURCE_DIR}/PrintSizeOfTest.cpp
-    PARENT_SCOPE
-)

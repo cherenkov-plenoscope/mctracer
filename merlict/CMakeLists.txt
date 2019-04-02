@@ -1,0 +1,34 @@
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/function")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/random")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/scenery")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/sensor")
+set(SOURCE
+    ${SOURCE}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Vec2.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Vec3.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Rot3.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/HomTra3.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Intersection.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Frame.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Frames.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/SurfaceEntity.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Ray.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/RayAndFrame.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/RayForPropagation.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PropagationConfig.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Photon.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/PhotonAndFrame.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Photons.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Fresnel.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Color.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Histogram1.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/DistanceMeter.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/small_ball.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/numeric.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/txt.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/binio.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tools.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ospath.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tsvio.cpp
+    PARENT_SCOPE
+)

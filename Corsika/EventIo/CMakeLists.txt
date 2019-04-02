@@ -1,7 +1,0 @@
-set(SOURCE
-   	${SOURCE}
-	${CMAKE_CURRENT_SOURCE_DIR}/EventIo.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Export.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/PhotonFactory.cpp
-   	PARENT_SCOPE
-)
