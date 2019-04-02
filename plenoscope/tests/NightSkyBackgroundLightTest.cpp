@@ -35,5 +35,10 @@ TEST_CASE("NightSkyBackgroundLightTest: init", "[merlict]") {
     CHECK(0.5*ml::deg2rad(6.5)*plenoscope::night_sky_background::FOV_RADIUS_OVERHEAD == nsb.fov_radius);
     CHECK(25*plenoscope::night_sky_background::APERTURE_RADIUS_OVERHEAD == nsb.aperture_radius);
 
-    std::cout << nsb.str() << "\n";
+    ml::write_text_to_file(
+        nsb.str(),
+        "plenoscope/"
+        "tests/"
+        "resources/"
+        "night_sky_background_table.txt.tmp");
 }
