@@ -44,68 +44,68 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/docopt")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_viewer")
 
 # merlict library
-add_library(mct SHARED ${SOURCE})
+add_library(lib_merlict_dev SHARED ${SOURCE})
 include_directories(/usr/include)
 include_directories(/usr/local/include)
-target_link_libraries(mct ${OpenCV_LIBS})
+target_link_libraries(lib_merlict_dev ${OpenCV_LIBS})
 
 #apps
 add_executable(
     mctShow
     merlict_viewer/Show.cpp)
-target_link_libraries(mctShow mct)
+target_link_libraries(mctShow lib_merlict_dev)
 target_link_libraries(mctShow docopt)
 
 add_executable(
     mctCameraServer
     merlict_visual/apps/CameraServer.cpp)
-target_link_libraries(mctCameraServer mct)
+target_link_libraries(mctCameraServer lib_merlict_dev)
 target_link_libraries(mctCameraServer docopt)
 
 add_executable(
     mctPropagate
     merlict_tests/apps/Propagate.cpp)
-target_link_libraries(mctPropagate mct)
+target_link_libraries(mctPropagate lib_merlict_dev)
 target_link_libraries(mctPropagate docopt)
 
 add_executable(
     mctShowPhotons
     merlict_viewer/ShowPhotons.cpp)
-target_link_libraries(mctShowPhotons mct)
+target_link_libraries(mctShowPhotons lib_merlict_dev)
 target_link_libraries(mctShowPhotons docopt)
 
 add_executable(
     mctPlenoscopeCalibration
     plenoscope/apps/PlenoscopeCalibration.cpp)
-target_link_libraries(mctPlenoscopeCalibration mct)
+target_link_libraries(mctPlenoscopeCalibration lib_merlict_dev)
 target_link_libraries(mctPlenoscopeCalibration stdc++fs)
 target_link_libraries(mctPlenoscopeCalibration docopt)
 
 add_executable(
     mctEventIOConverter
     merlict_corsika/apps/EventIOConverter.cpp)
-target_link_libraries(mctEventIOConverter mct)
+target_link_libraries(mctEventIOConverter lib_merlict_dev)
 target_link_libraries(mctEventIOConverter stdc++fs)
 target_link_libraries(mctEventIOConverter docopt)
 
 add_executable(
     mctPlenoscopePropagation
     plenoscope/apps/PlenoscopePropagation.cpp)
-target_link_libraries(mctPlenoscopePropagation mct)
+target_link_libraries(mctPlenoscopePropagation lib_merlict_dev)
 target_link_libraries(mctPlenoscopePropagation stdc++fs)
 target_link_libraries(mctPlenoscopePropagation docopt)
 
 add_executable(
     mctPlenoscopeRawPhotonPropagation
     plenoscope/apps/PlenoscopeRawPhotonPropagation.cpp)
-target_link_libraries(mctPlenoscopeRawPhotonPropagation mct)
+target_link_libraries(mctPlenoscopeRawPhotonPropagation lib_merlict_dev)
 target_link_libraries(mctPlenoscopeRawPhotonPropagation stdc++fs)
 target_link_libraries(mctPlenoscopeRawPhotonPropagation docopt)
 
 add_executable(
     mctFactPropagation
     merlict_fact/apps/FactPropagation.cpp)
-target_link_libraries(mctFactPropagation mct)
+target_link_libraries(mctFactPropagation lib_merlict_dev)
 target_link_libraries(mctFactPropagation stdc++fs)
 target_link_libraries(mctFactPropagation docopt)
 
@@ -131,4 +131,4 @@ add_executable(
     ${TEST_SOURCE_MERLICT_MULTI_THREAD}
     ${TEST_SOURCE_MERLICT_VIEWER}
     ${TEST_SOURCE_MERLICT_INTEGRATION})
-target_link_libraries(mctTest mct)
+target_link_libraries(mctTest lib_merlict_dev)
