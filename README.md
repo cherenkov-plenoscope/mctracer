@@ -1,9 +1,11 @@
-# merlict-development
+# merlict-development-kit
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 scientific photon propagation and ray tracing in complex sceneries
 ![img](Readme/fact_and_spider_web.jpg)
+
+In this development-kit, all the sub-projects of the merlict-raytracer are build and tested together.
 
 ### dependencies
 * git
