@@ -55,7 +55,7 @@ target_link_libraries(mctShow docopt)
 
 #---------
 # CameraServer exe
-add_executable(mctCameraServer main/CameraServer.cpp)
+add_executable(mctCameraServer merlict_visual/apps/CameraServer.cpp)
 target_link_libraries(mctCameraServer mct)
 target_link_libraries(mctCameraServer docopt)
 
