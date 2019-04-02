@@ -30,7 +30,7 @@ The mctracer has several executeables. To interacively explore a scenery use mct
 merlict-show --scenery fact.json
 ```
 
-## Unit Tests
+## test
 Run the unit tests in the mctracer/Tests directory to ensure your build is fine.
 
 ```bash
