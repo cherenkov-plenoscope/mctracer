@@ -2,7 +2,7 @@
 #include "merlict/merlict.h"
 #include "merlict_json/json.h"
 #include "plenoscope/json_to_plenoscope.h"
-#include "FlyingCamera.h"
+#include "merlict_viewer/FlyingCamera.h"
 namespace mct = merlict;
 
 static const char USAGE[] =

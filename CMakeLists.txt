@@ -52,59 +52,59 @@ target_link_libraries(lib_merlict_dev ${OpenCV_LIBS})
 #apps
 add_executable(
     merlict-show
-    merlict_viewer/Show.cpp)
+    merlict_viewer/apps/show.cpp)
 target_link_libraries(merlict-show lib_merlict_dev)
 target_link_libraries(merlict-show docopt)
 
 add_executable(
     merlict-cameraserver
-    merlict_visual/apps/CameraServer.cpp)
+    merlict_visual/apps/camera_server.cpp)
 target_link_libraries(merlict-cameraserver lib_merlict_dev)
 target_link_libraries(merlict-cameraserver docopt)
 
 add_executable(
     merlict-propagate
-    merlict_tests/apps/Propagate.cpp)
+    merlict_tests/apps/propagate.cpp)
 target_link_libraries(merlict-propagate lib_merlict_dev)
 target_link_libraries(merlict-propagate docopt)
 
 add_executable(
     merlict-show-photons
-    merlict_viewer/ShowPhotons.cpp)
+    merlict_viewer/apps/show_photons.cpp)
 target_link_libraries(merlict-show-photons lib_merlict_dev)
 target_link_libraries(merlict-show-photons docopt)
 
 add_executable(
     merlict-plenoscope-calibration
-    plenoscope/apps/PlenoscopeCalibration.cpp)
+    plenoscope/apps/plenoscope_calibration.cpp)
 target_link_libraries(merlict-plenoscope-calibration lib_merlict_dev)
 target_link_libraries(merlict-plenoscope-calibration stdc++fs)
 target_link_libraries(merlict-plenoscope-calibration docopt)
 
 add_executable(
     merlict-eventio-converter
-    merlict_corsika/apps/EventIOConverter.cpp)
+    merlict_corsika/apps/eventio_converter.cpp)
 target_link_libraries(merlict-eventio-converter lib_merlict_dev)
 target_link_libraries(merlict-eventio-converter stdc++fs)
 target_link_libraries(merlict-eventio-converter docopt)
 
 add_executable(
     merlict-plenoscope-propagation
-    plenoscope/apps/PlenoscopePropagation.cpp)
+    plenoscope/apps/plenoscope_propagation.cpp)
 target_link_libraries(merlict-plenoscope-propagation lib_merlict_dev)
 target_link_libraries(merlict-plenoscope-propagation stdc++fs)
 target_link_libraries(merlict-plenoscope-propagation docopt)
 
 add_executable(
     merlict-plenoscope-raw-photon-propagation
-    plenoscope/apps/PlenoscopeRawPhotonPropagation.cpp)
+    plenoscope/apps/plenoscope_raw_photon_propagation.cpp)
 target_link_libraries(merlict-plenoscope-raw-photon-propagation lib_merlict_dev)
 target_link_libraries(merlict-plenoscope-raw-photon-propagation stdc++fs)
 target_link_libraries(merlict-plenoscope-raw-photon-propagation docopt)
 
 add_executable(
     merlict-fact
-    merlict_fact/apps/FactPropagation.cpp)
+    merlict_fact/apps/fact_propagation.cpp)
 target_link_libraries(merlict-fact lib_merlict_dev)
 target_link_libraries(merlict-fact stdc++fs)
 target_link_libraries(merlict-fact docopt)
