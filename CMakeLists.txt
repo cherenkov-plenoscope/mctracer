@@ -80,7 +80,7 @@ target_link_libraries(mctPlenoscopeCalibration docopt)
 
 #------------------------
 # EventIOConverter
-add_executable(mctEventIOConverter main/EventIOConverter.cpp)
+add_executable(mctEventIOConverter merlict_corsika/apps/EventIOConverter.cpp)
 target_link_libraries(mctEventIOConverter mct)
 target_link_libraries(mctEventIOConverter stdc++fs)
 target_link_libraries(mctEventIOConverter docopt)
