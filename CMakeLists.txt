@@ -61,7 +61,7 @@ target_link_libraries(mctCameraServer docopt)
 
 #---------------
 # Propagate exe
-add_executable(mctPropagate main/Propagate.cpp)
+add_executable(mctPropagate merlict_tests/apps/Propagate.cpp)
 target_link_libraries(mctPropagate mct)
 target_link_libraries(mctPropagate docopt)
 
