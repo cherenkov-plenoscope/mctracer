@@ -73,7 +73,7 @@ target_link_libraries(mctShowPhotons docopt)
 
 #------------------------
 # light field calibration
-add_executable(mctPlenoscopeCalibration main/PlenoscopeCalibration.cpp)
+add_executable(mctPlenoscopeCalibration plenoscope/apps/PlenoscopeCalibration.cpp)
 target_link_libraries(mctPlenoscopeCalibration mct)
 target_link_libraries(mctPlenoscopeCalibration stdc++fs)
 target_link_libraries(mctPlenoscopeCalibration docopt)
@@ -87,14 +87,14 @@ target_link_libraries(mctEventIOConverter docopt)
 
 #------------------------
 # light field propagation
-add_executable(mctPlenoscopePropagation main/PlenoscopePropagation.cpp)
+add_executable(mctPlenoscopePropagation plenoscope/apps/PlenoscopePropagation.cpp)
 target_link_libraries(mctPlenoscopePropagation mct)
 target_link_libraries(mctPlenoscopePropagation stdc++fs)
 target_link_libraries(mctPlenoscopePropagation docopt)
 
 #------------------------
 # light field raw photon propagation
-add_executable(mctPlenoscopeRawPhotonPropagation main/PlenoscopeRawPhotonPropagation.cpp)
+add_executable(mctPlenoscopeRawPhotonPropagation plenoscope/apps/PlenoscopeRawPhotonPropagation.cpp)
 target_link_libraries(mctPlenoscopeRawPhotonPropagation mct)
 target_link_libraries(mctPlenoscopeRawPhotonPropagation stdc++fs)
 target_link_libraries(mctPlenoscopeRawPhotonPropagation docopt)
