@@ -101,7 +101,7 @@ target_link_libraries(mctPlenoscopeRawPhotonPropagation docopt)
 
 #------------------------
 # FACT propagation
-add_executable(mctFactPropagation ./main/FactPropagation.cpp)
+add_executable(mctFactPropagation merlict_fact/apps/FactPropagation.cpp)
 target_link_libraries(mctFactPropagation mct)
 target_link_libraries(mctFactPropagation stdc++fs)
 target_link_libraries(mctFactPropagation docopt)
