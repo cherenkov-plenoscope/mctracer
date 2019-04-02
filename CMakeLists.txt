@@ -51,63 +51,63 @@ target_link_libraries(lib_merlict_dev ${OpenCV_LIBS})
 
 #apps
 add_executable(
-    mctShow
+    merlict-show
     merlict_viewer/Show.cpp)
-target_link_libraries(mctShow lib_merlict_dev)
-target_link_libraries(mctShow docopt)
+target_link_libraries(merlict-show lib_merlict_dev)
+target_link_libraries(merlict-show docopt)
 
 add_executable(
-    mctCameraServer
+    merlict-cameraserver
     merlict_visual/apps/CameraServer.cpp)
-target_link_libraries(mctCameraServer lib_merlict_dev)
-target_link_libraries(mctCameraServer docopt)
+target_link_libraries(merlict-cameraserver lib_merlict_dev)
+target_link_libraries(merlict-cameraserver docopt)
 
 add_executable(
-    mctPropagate
+    merlict-propagate
     merlict_tests/apps/Propagate.cpp)
-target_link_libraries(mctPropagate lib_merlict_dev)
-target_link_libraries(mctPropagate docopt)
+target_link_libraries(merlict-propagate lib_merlict_dev)
+target_link_libraries(merlict-propagate docopt)
 
 add_executable(
-    mctShowPhotons
+    merlict-show-photons
     merlict_viewer/ShowPhotons.cpp)
-target_link_libraries(mctShowPhotons lib_merlict_dev)
-target_link_libraries(mctShowPhotons docopt)
+target_link_libraries(merlict-show-photons lib_merlict_dev)
+target_link_libraries(merlict-show-photons docopt)
 
 add_executable(
-    mctPlenoscopeCalibration
+    merlict-plenoscope-calibration
     plenoscope/apps/PlenoscopeCalibration.cpp)
-target_link_libraries(mctPlenoscopeCalibration lib_merlict_dev)
-target_link_libraries(mctPlenoscopeCalibration stdc++fs)
-target_link_libraries(mctPlenoscopeCalibration docopt)
+target_link_libraries(merlict-plenoscope-calibration lib_merlict_dev)
+target_link_libraries(merlict-plenoscope-calibration stdc++fs)
+target_link_libraries(merlict-plenoscope-calibration docopt)
 
 add_executable(
-    mctEventIOConverter
+    merlict-eventio-converter
     merlict_corsika/apps/EventIOConverter.cpp)
-target_link_libraries(mctEventIOConverter lib_merlict_dev)
-target_link_libraries(mctEventIOConverter stdc++fs)
-target_link_libraries(mctEventIOConverter docopt)
+target_link_libraries(merlict-eventio-converter lib_merlict_dev)
+target_link_libraries(merlict-eventio-converter stdc++fs)
+target_link_libraries(merlict-eventio-converter docopt)
 
 add_executable(
-    mctPlenoscopePropagation
+    merlict-plenoscope-propagation
     plenoscope/apps/PlenoscopePropagation.cpp)
-target_link_libraries(mctPlenoscopePropagation lib_merlict_dev)
-target_link_libraries(mctPlenoscopePropagation stdc++fs)
-target_link_libraries(mctPlenoscopePropagation docopt)
+target_link_libraries(merlict-plenoscope-propagation lib_merlict_dev)
+target_link_libraries(merlict-plenoscope-propagation stdc++fs)
+target_link_libraries(merlict-plenoscope-propagation docopt)
 
 add_executable(
-    mctPlenoscopeRawPhotonPropagation
+    merlict-plenoscope-raw-photon-propagation
     plenoscope/apps/PlenoscopeRawPhotonPropagation.cpp)
-target_link_libraries(mctPlenoscopeRawPhotonPropagation lib_merlict_dev)
-target_link_libraries(mctPlenoscopeRawPhotonPropagation stdc++fs)
-target_link_libraries(mctPlenoscopeRawPhotonPropagation docopt)
+target_link_libraries(merlict-plenoscope-raw-photon-propagation lib_merlict_dev)
+target_link_libraries(merlict-plenoscope-raw-photon-propagation stdc++fs)
+target_link_libraries(merlict-plenoscope-raw-photon-propagation docopt)
 
 add_executable(
-    mctFactPropagation
+    merlict-fact
     merlict_fact/apps/FactPropagation.cpp)
-target_link_libraries(mctFactPropagation lib_merlict_dev)
-target_link_libraries(mctFactPropagation stdc++fs)
-target_link_libraries(mctFactPropagation docopt)
+target_link_libraries(merlict-fact lib_merlict_dev)
+target_link_libraries(merlict-fact stdc++fs)
+target_link_libraries(merlict-fact docopt)
 
 # tests
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict/tests")
@@ -120,7 +120,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/plenoscope/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/signal_processing/tests")
 add_executable(
-    mctTest
+    merlict-test
     merlict/tests/test.cpp
     ${TEST_SOURCE_PLENOSCOPE}
     ${TEST_SOURCE_SIGNAL_PROCESSING}
@@ -131,4 +131,4 @@ add_executable(
     ${TEST_SOURCE_MERLICT_MULTI_THREAD}
     ${TEST_SOURCE_MERLICT_VIEWER}
     ${TEST_SOURCE_MERLICT_INTEGRATION})
-target_link_libraries(mctTest lib_merlict_dev)
+target_link_libraries(merlict-test lib_merlict_dev)
