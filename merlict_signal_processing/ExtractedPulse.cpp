@@ -1,6 +1,6 @@
 // Copyright 2017 Sebastian A. Mueller
-#include "signal_processing/ExtractedPulse.h"
-#include "signal_processing/simulation_truth.h"
+#include "merlict_signal_processing/ExtractedPulse.h"
+#include "merlict_signal_processing/simulation_truth.h"
 
 namespace signal_processing {
 

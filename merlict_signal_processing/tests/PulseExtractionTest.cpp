@@ -1,7 +1,7 @@
 // Copyright 2017 Sebastian A. Mueller
 #include <stdint.h>
 #include "merlict/tests/catch.hpp"
-#include "signal_processing/signal_processing.h"
+#include "merlict_signal_processing/signal_processing.h"
 #include "merlict/random/random.h"
 #include "merlict/simulation_truth.h"
 #include "merlict/numeric.h"
@@ -19,7 +19,7 @@ TEST_CASE("PulseExtractionTest: arrival_time_slices_below_next_channel_marker", 
     response.push_back(read_out_channel);
 
     const std::string path =
-        "signal_processing/"
+        "merlict_signal_processing/"
         "tests/"
         "resources/"
         "photon_stream.bin.tmp";

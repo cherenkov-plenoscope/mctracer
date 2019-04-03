@@ -1,6 +1,6 @@
 // Copyright 2017 Sebastian A. Mueller
 #include <math.h>
-#include "signal_processing/pulse_extraction.h"
+#include "merlict_signal_processing/pulse_extraction.h"
 #include "merlict/merlict.h"
 
 

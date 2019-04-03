@@ -8,7 +8,7 @@
 #include "merlict_corsika/corsika.h"
 #include "merlict_corsika/PhotonFactory.h"
 #include "merlict/scenery/segmented_imaging_reflector/segmented_imaging_reflector.h"
-#include "signal_processing/signal_processing.h"
+#include "merlict_signal_processing/signal_processing.h"
 namespace fs = std::experimental::filesystem;
 namespace ps = photon_stream;
 namespace re = merlict;

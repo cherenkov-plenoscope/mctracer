@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "signal_processing/PipelinePhoton.h"
+#include "merlict_signal_processing/PipelinePhoton.h"
 #include <algorithm>
-#include "signal_processing/simulation_truth.h"
+#include "merlict_signal_processing/simulation_truth.h"
 
 
 namespace signal_processing {

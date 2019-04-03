@@ -5,7 +5,7 @@
 #include <stdint.h>
 #include <vector>
 #include <string>
-#include "signal_processing/ExtractedPulse.h"
+#include "merlict_signal_processing/ExtractedPulse.h"
 
 namespace signal_processing {
 namespace PhotonStream {

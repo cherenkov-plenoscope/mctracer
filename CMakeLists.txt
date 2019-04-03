@@ -39,7 +39,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_json")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_visual")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_multi_thread")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_portal_plenoscope")
-add_subdirectory("${PROJECT_SOURCE_DIR}/signal_processing")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_signal_processing")
 add_subdirectory("${PROJECT_SOURCE_DIR}/docopt")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_viewer")
 
@@ -118,7 +118,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_multi_thread/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_viewer/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_portal_plenoscope/tests")
-add_subdirectory("${PROJECT_SOURCE_DIR}/signal_processing/tests")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_signal_processing/tests")
 add_executable(
     merlict-test
     merlict/tests/test.cpp

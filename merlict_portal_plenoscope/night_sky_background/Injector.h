@@ -4,7 +4,7 @@
 
 #include <vector>
 #include "merlict_portal_plenoscope/night_sky_background/Light.h"
-#include "signal_processing/signal_processing.h"
+#include "merlict_signal_processing/signal_processing.h"
 #include "merlict_portal_plenoscope/calibration/LixelStatistics.h"
 
 namespace plenoscope {

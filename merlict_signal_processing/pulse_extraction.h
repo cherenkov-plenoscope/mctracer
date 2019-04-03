@@ -4,8 +4,8 @@
 
 #include <stdint.h>
 #include <vector>
-#include "signal_processing/ElectricPulse.h"
-#include "signal_processing/ExtractedPulse.h"
+#include "merlict_signal_processing/ElectricPulse.h"
+#include "merlict_signal_processing/ExtractedPulse.h"
 #include "merlict/merlict.h"
 
 namespace signal_processing {

@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#include "signal_processing/simulation_truth.h"
-#include "signal_processing/PhotoElectricConverter.h"
+#include "merlict_signal_processing/simulation_truth.h"
+#include "merlict_signal_processing/PhotoElectricConverter.h"
 #include <sstream>
 #include "merlict/merlict.h"
 namespace ml = merlict;

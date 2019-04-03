@@ -1,9 +1,9 @@
 // Copyright 2016 Sebastian A. Mueller
-#include "signal_processing/PhotonStream.h"
+#include "merlict_signal_processing/PhotonStream.h"
 #include <math.h>
 #include <sstream>
 #include <fstream>
-#include "signal_processing/pulse_extraction.h"
+#include "merlict_signal_processing/pulse_extraction.h"
 #include "merlict/merlict.h"
 namespace ml = merlict;
 

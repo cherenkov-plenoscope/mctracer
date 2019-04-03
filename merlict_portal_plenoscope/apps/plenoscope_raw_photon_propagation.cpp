@@ -11,7 +11,7 @@
 #include "merlict_portal_plenoscope/SimulationTruthHeader.h"
 #include "merlict_portal_plenoscope/night_sky_background/Injector.h"
 #include "merlict_portal_plenoscope/json_to_plenoscope.h"
-#include "signal_processing/signal_processing.h"
+#include "merlict_signal_processing/signal_processing.h"
 namespace fs = std::experimental::filesystem;
 namespace sp = signal_processing;
 namespace ml = merlict;

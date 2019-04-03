@@ -1,7 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include <stdint.h>
 #include "merlict/tests/catch.hpp"
-#include "signal_processing/signal_processing.h"
+#include "merlict_signal_processing/signal_processing.h"
 #include "merlict/random/random.h"
 #include "merlict/simulation_truth.h"
 namespace ml = merlict;
@@ -81,7 +81,7 @@ void write_and_read_back(
     stream.time_slice_duration = time_slice_duration;
 
     const std::string path =
-        "signal_processing/"
+        "merlict_signal_processing/"
         "tests/"
         "resources/"
         "photon_stream.bin.tmp";
@@ -91,7 +91,7 @@ void write_and_read_back(
         path);
 
     const std::string truth_path =
-        "signal_processing/"
+        "merlict_signal_processing/"
         "tests/"
         "resources/"
         "photon_stream_truth.bin.tmp";
@@ -128,7 +128,7 @@ TEST_CASE("PhotonStreamTest: arrival_slices_must_not_be_NEXT_CHANNEL_MARKER", "[
         sp::PhotonStream::write(
             channels,
             0.5e-9,
-            "signal_processing/"
+            "merlict_signal_processing/"
             "tests/"
             "resources/"
             "must_throw_when_written.phs.tmp"),
@@ -140,7 +140,7 @@ TEST_CASE("PhotonStreamTest: arrival_slices_must_not_be_NEXT_CHANNEL_MARKER", "[
         sp::PhotonStream::write(
             channels,
             0.5e-9,
-            "signal_processing/"
+            "merlict_signal_processing/"
             "tests/"
             "resources/"
             "shall_not_throw_when_written.phs.tmp"));
