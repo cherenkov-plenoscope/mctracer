@@ -1,7 +1,7 @@
 #include "docopt/docopt.h"
 #include "merlict/merlict.h"
 #include "merlict_json/json.h"
-#include "plenoscope/json_to_plenoscope.h"
+#include "merlict_portal_plenoscope/json_to_plenoscope.h"
 #include "merlict_viewer/FlyingCamera.h"
 namespace mct = merlict;
 

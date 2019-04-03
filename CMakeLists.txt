@@ -38,7 +38,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_corsika")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_json")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_visual")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_multi_thread")
-add_subdirectory("${PROJECT_SOURCE_DIR}/plenoscope")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_portal_plenoscope")
 add_subdirectory("${PROJECT_SOURCE_DIR}/signal_processing")
 add_subdirectory("${PROJECT_SOURCE_DIR}/docopt")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_viewer")
@@ -76,7 +76,7 @@ target_link_libraries(merlict-show-photons docopt)
 
 add_executable(
     merlict-plenoscope-calibration
-    plenoscope/apps/plenoscope_calibration.cpp)
+    merlict_portal_plenoscope/apps/plenoscope_calibration.cpp)
 target_link_libraries(merlict-plenoscope-calibration lib_merlict_dev)
 target_link_libraries(merlict-plenoscope-calibration stdc++fs)
 target_link_libraries(merlict-plenoscope-calibration docopt)
@@ -90,14 +90,14 @@ target_link_libraries(merlict-eventio-converter docopt)
 
 add_executable(
     merlict-plenoscope-propagation
-    plenoscope/apps/plenoscope_propagation.cpp)
+    merlict_portal_plenoscope/apps/plenoscope_propagation.cpp)
 target_link_libraries(merlict-plenoscope-propagation lib_merlict_dev)
 target_link_libraries(merlict-plenoscope-propagation stdc++fs)
 target_link_libraries(merlict-plenoscope-propagation docopt)
 
 add_executable(
     merlict-plenoscope-raw-photon-propagation
-    plenoscope/apps/plenoscope_raw_photon_propagation.cpp)
+    merlict_portal_plenoscope/apps/plenoscope_raw_photon_propagation.cpp)
 target_link_libraries(merlict-plenoscope-raw-photon-propagation lib_merlict_dev)
 target_link_libraries(merlict-plenoscope-raw-photon-propagation stdc++fs)
 target_link_libraries(merlict-plenoscope-raw-photon-propagation docopt)
@@ -117,7 +117,7 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_json/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_multi_thread/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_viewer/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_tests")
-add_subdirectory("${PROJECT_SOURCE_DIR}/plenoscope/tests")
+add_subdirectory("${PROJECT_SOURCE_DIR}/merlict_portal_plenoscope/tests")
 add_subdirectory("${PROJECT_SOURCE_DIR}/signal_processing/tests")
 add_executable(
     merlict-test
