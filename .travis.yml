@@ -20,17 +20,11 @@ script:
     - mkdir build
     - cd build
 
-    - echo "int main() {return 0;}" > mini_main.cpp
-    - /usr/bin/g++ -o no_parameters mini_main.cpp
-    - ./no_parameters
-    - /usr/bin/g++ -std=c++17 -pthread -Wall -Wextra -pedantic -O1 -g -I -o many_parameters mini_main.cpp
-    - ./many_parameters
-
     - cmake ..
     - make
 
-    - cd ../merlict
-    - ../build/merlict-test
+    # - cd ../merlict
+    # - ../build/merlict-test
 
 
 
