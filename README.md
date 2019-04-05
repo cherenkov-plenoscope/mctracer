@@ -34,10 +34,10 @@ cd ../merlict_viewer/apps/examples
 ```
 
 ## test
-Run the unit tests in the merlict/Tests directory to ensure your build is fine.
+Run the unit tests in the `merlict_development_kit` directory to ensure your build is fine.
 
 
 ```bash
-cd merlict
-../build/merlict-test
+cd ..
+./build/merlict-test
 ```
