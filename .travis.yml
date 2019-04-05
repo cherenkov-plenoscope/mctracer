@@ -2,7 +2,7 @@ dist: xenial
 language: cpp
 
 compiler:
-  - g++
+    - g++
 
 before_install:
     # - sudo apt-get update
