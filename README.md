@@ -16,6 +16,7 @@ In this development-kit, all the sub-projects of the merlict-raytracer are build
 ### make
 ```
 git clone https://github.com/cherenkov-plenoscope/merlict_development_kit.git
+cd merlict_development_kit
 mkdir build
 ```
 The `/build` directory is best located side by side to the `/merlict` directory.
@@ -34,10 +35,8 @@ cd ../merlict_viewer/apps/examples
 ```
 
 ## test
-Run the unit tests in the merlict/Tests directory to ensure your build is fine.
-
+Run the unit tests in the merlict_development_kit base directory to ensure your build is fine.
 
 ```bash
-cd merlict
-../build/merlict-test
+./build/merlict-test
 ```

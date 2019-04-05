@@ -23,8 +23,8 @@ script:
     - cmake ..
     - make
 
-    # - cd ../merlict
-    # - ../build/merlict-test
+    - cd ..
+    - ./build/merlict-test
 
 
 
