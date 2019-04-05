@@ -9,7 +9,7 @@ In this development-kit, all the sub-projects of the merlict-raytracer are build
 
 ### dependencies
 * git
-* g++ >= 6
+* g++ >= 5.3
 * cmake
 * libopencv-dev >= 2.4.8
 
