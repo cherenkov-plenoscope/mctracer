@@ -1,6 +1,9 @@
 language: cpp
 compiler: gcc
 dist: xenial
+addons:
+  apt:
+    packages: lcov
 
 # C++ 17 install from:
 # https://github.com/richelbilderbeek/travis_gcc_cpp17/blob/master/.travis.yml
@@ -28,5 +31,8 @@ script:
     - ./build/merlict-test
 
 after_success:
-    - coveralls -r build/CMakeFiles/merlict-test.dir/ --gcov-options '\-lp'
-
+    - lcov --capture --directory . --output-file coverage.info
+    - lcov --remove coverage.info '/usr/*' --output-file coverage.info # filter system-files
+    - lcov --list coverage.info # debug info
+    # Uploading report to CodeCov
+    - bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
