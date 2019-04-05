@@ -15,27 +15,29 @@ In this development-kit, all the sub-projects of the merlict-raytracer are build
 
 ### make
 ```
-git clone https://github.com/cherenkov-plenoscope/mctracer.git
+git clone https://github.com/cherenkov-plenoscope/merlict_development_kit.git
 mkdir build
 ```
-The /build directory is best located side by side to the /mctracer directory.
+The `/build` directory is best located side by side to the `/merlict` directory.
 
 ```bash
 cd build
-cmake ../mctracer
-make
+cmake ..
+make -j 8
 ```
 
 ## run
-The mctracer has several executeables. To interacively explore a scenery use mctShow.
+merlict has several executeables. To interacively explore a scenery use `merlict-show`.
 ```bash
-merlict-show --scenery fact.json
+cd ../merlict_viewer/apps/examples
+../../../build/merlict-show --scenery fact.json
 ```
 
 ## test
-Run the unit tests in the mctracer/Tests directory to ensure your build is fine.
+Run the unit tests in the merlict/Tests directory to ensure your build is fine.
+
 
 ```bash
-cd mctracer
+cd merlict
 ../build/merlict-test
 ```
