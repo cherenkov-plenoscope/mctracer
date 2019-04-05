@@ -7,7 +7,7 @@ project(merlict)
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++17" COMPILER_SUPPORTS_CXX17)
 if(COMPILER_SUPPORTS_CXX17)
-    set(CMAKE_CXX_FLAGS "-std=c++17 -pthread -Wall -Wextra -pedantic -O1 -g -I")
+    set(CMAKE_CXX_FLAGS "-std=c++17 -pthread -Wall -Wextra -pedantic -I")
 else()
     message(
         STATUS
@@ -16,7 +16,11 @@ else()
 endif()
 
 if(USE_GCOV)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 --coverage")
+    message(STATUS "The compiler flags ${CMAKE_CXX_FLAGS} are set for coverage reports.")
+else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -march=native")
+    message(STATUS "The compiler flags ${CMAKE_CXX_FLAGS} are not set for coverage reports.")
 endif()
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
