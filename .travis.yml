@@ -13,6 +13,7 @@ install:
     - cmake ..
     - make
 
+
 script:
     - cd ../merlict
     - ../build/merlict-test
