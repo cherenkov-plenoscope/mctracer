@@ -53,7 +53,7 @@ sources into one header and one cpp file. It can be used like:
 
 ```bash
 cd <merlict-development-kit folder>
-python one_source
+./one_source.py
 ```
 
 It creates these 2 files `merlict.h` and `merlict.cpp` and in addition it creates
