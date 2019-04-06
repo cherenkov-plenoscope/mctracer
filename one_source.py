@@ -3,7 +3,7 @@
 import numpy as np
 import os
 import glob
-merlict_head = "// Copyright 2018 Sebastian A. Mueller\n"
+copyright_notice = "// Copyright 2018 Sebastian A. Mueller\n"
 
 
 def inside_namespace(txt):
@@ -13,9 +13,7 @@ def inside_namespace(txt):
     pos = start_first_namespace
     bracket_count = 1
 
-    # print("\n")
     while bracket_count > 0:
-        # print(pos, bracket_count)
         next_o = txt.find("{", pos)
         next_c = txt.find("}", pos)
         if next_o == -1:
@@ -143,7 +141,7 @@ def find_source_incl_and_usings(sources):
 
 def write_the_single_header_file(out_path_h, headers, header_includes):
     with open(out_path_h, 'wt') as fout:
-        fout.write(merlict_head)
+        fout.write(copyright_notice)
         fout.write("\n")
 
         fout.write("#ifndef MERLICT_H_\n")
@@ -157,10 +155,14 @@ def write_the_single_header_file(out_path_h, headers, header_includes):
         fout.write("namespace merlict {\n")
 
         for header in headers:
-            print(header)
             with open(header, 'rt') as fin:
                 h_txt = fin.read()
-            fout.write(inside_namespace(h_txt))
+            h_txt = (
+                f'// start:{header:-^65s}\n'
+                + inside_namespace(h_txt)
+                + f'// end:  {header:-^65s}\n'
+            )
+            fout.write(h_txt)
             fout.write("\n")
 
         fout.write("}  // namespace merlict\n")
@@ -171,7 +173,7 @@ def write_the_single_header_file(out_path_h, headers, header_includes):
 
 def write_the_single_cpp_file(out_path_cpp, sources, source_includes):
     with open(out_path_cpp, 'wt') as fout:
-        fout.write(merlict_head)
+        fout.write(copyright_notice)
         fout.write("\n")
 
         fout.write('#include "merlict.h"\n')
@@ -182,7 +184,6 @@ def write_the_single_cpp_file(out_path_cpp, sources, source_includes):
         fout.write("namespace merlict {\n")
 
         for source in sources:
-            print(source)
             with open(source, 'rt') as fin:
                 h_txt = fin.read()
             fout.write(without_include_lines(inside_namespace(h_txt)))
@@ -212,7 +213,7 @@ def do_something_with_tests(headers, sources, out_path_test):
     test_includes = list(set(test_includes))
 
     with open(out_path_test, 'wt') as fout:
-        fout.write(merlict_head)
+        fout.write(copyright_notice)
         fout.write("\n")
         fout.write("#define CATCH_CONFIG_MAIN\n")
         fout.write("\n")
@@ -223,7 +224,6 @@ def do_something_with_tests(headers, sources, out_path_test):
         fout.write("\n")
 
         for test_source in test_sources:
-            print(test_source)
             with open(test_source, 'rt') as fin:
                 h_txt = fin.read()
             fout.write(without_include_lines(h_txt))
@@ -278,6 +278,15 @@ pri_queu = [
     "ColorMap",
     "SensorMap",
     "FunctionMap",
+    'merlict/scenery/geometry/ZaxisCylinderRayIntersectionEquation.h',
+    'merlict/scenery/geometry/TwoSolutionSurfaceRayEquation.h',
+    'merlict/scenery/geometry/SurfaceWithOuterPrismBound.h',
+    'merlict/scenery/geometry/XyPlaneRayIntersectionEquation.h',
+    'merlict/scenery/geometry/SphericalCapRayIntersectionEquation.h',
+    'merlict/scenery/geometry/HexagonalPrismZ.h',
+    'merlict/scenery/geometry/HexGridFlower.h',
+    'merlict/scenery/geometry/EllipticalCapRayIntersectionEquation.h',
+    'merlict/scenery/geometry/HexGridAnnulus.h',
 ]
 
 test_sources = [
@@ -349,6 +358,7 @@ def main():
 
     headers = find_all_header_files_in_dirs(dirs)
     pri_heads = make_pri_heads(headers, go_first)
+
     headers = sort_headers_with_pri_heads(headers, pri_heads)
     sources = find_sources_from_headers(headers)
     header_includes = make_header_includes(headers)
