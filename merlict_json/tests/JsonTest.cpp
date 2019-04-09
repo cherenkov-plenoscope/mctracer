@@ -4,12 +4,12 @@
 #include "merlict_json/json.h"
 #include "merlict/merlict.h"
 #include "merlict_visual/visual.h"
-namespace nl = nlohmann;
+namespace nlo = nlohmann;
 namespace ml = merlict;
 
 
 TEST_CASE("JsonTest: nlohmann_getter", "[merlict]") {
-    nl::json j = R"({"f8": -0.898})"_json;
+    nlo::json j = R"({"f8": -0.898})"_json;
     CHECK(-0.898 == j["f8"].get<double>());
     CHECK(0 == j["f8"].get<int64_t>());
     CHECK_THROWS_AS(j["f8"].get<std::string>(), std::exception);
@@ -17,13 +17,13 @@ TEST_CASE("JsonTest: nlohmann_getter", "[merlict]") {
 }
 
 TEST_CASE("JsonTest: object_wrapper_simple", "[merlict]") {
-    nl::json j = R"({"f8": -0.898})"_json;
+    nlo::json j = R"({"f8": -0.898})"_json;
     ml::json::Object obj(j);
     CHECK(-0.898 == obj.f8("f8"));
 }
 
 TEST_CASE("JsonTest: object_wrapper_multiple_objects", "[merlict]") {
-    nl::json j = R"({"f8": -0.898, "hans": {"A":1, "B":2}})"_json;
+    nlo::json j = R"({"f8": -0.898, "hans": {"A":1, "B":2}})"_json;
     ml::json::Object obj(j);
     CHECK(-0.898 == obj.f8("f8"));
     CHECK(1 == obj.obj("hans").i8("A"));
@@ -31,7 +31,7 @@ TEST_CASE("JsonTest: object_wrapper_multiple_objects", "[merlict]") {
 }
 
 TEST_CASE("JsonTest: object_wrapper_lists", "[merlict]") {
-    nl::json j = R"({"f8": -0.898, "peter": [1, 2, 3]})"_json;
+    nlo::json j = R"({"f8": -0.898, "peter": [1, 2, 3]})"_json;
     ml::json::Object obj(j);
     CHECK(-0.898 == obj.f8("f8"));
     CHECK_THROWS_AS(obj.obj("peter").i8("A"), ml::json::MissingKey);
@@ -43,14 +43,14 @@ TEST_CASE("JsonTest: object_wrapper_lists", "[merlict]") {
 }
 
 TEST_CASE("JsonTest: object_wrapper_vec3", "[merlict]") {
-    nl::json j = R"({"f8": -0.898, "peter": [1, 2, 3]})"_json;
+    nlo::json j = R"({"f8": -0.898, "peter": [1, 2, 3]})"_json;
     ml::json::Object obj(j);
     CHECK(-0.898 == obj.f8("f8"));
     CHECK(ml::Vec3(1, 2, 3) == obj.vec3("peter"));
 }
 
 TEST_CASE("JsonTest: object_wrapper_bad_vec3", "[merlict]") {
-    nl::json j = R"({"peter": [1, 2]})"_json;
+    nlo::json j = R"({"peter": [1, 2]})"_json;
     ml::json::Object obj(j);
     CHECK_THROWS_AS(obj.vec3("peter"), ml::json::BadTriple);
 }
@@ -113,7 +113,7 @@ TEST_CASE("JsonTest: fine_colors", "[merlict]") {
 }
 
 TEST_CASE("JsonTest: empty_colors", "[merlict]") {
-    nl::json j = R"({"colors": {}})"_json;
+    nlo::json j = R"({"colors": {}})"_json;
     ml::ColorMap cmap;
     ml::json::assert_key(j, "colors");
     ml::json::add_colors(&cmap, j["colors"]);
