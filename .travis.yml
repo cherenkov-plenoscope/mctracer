@@ -17,14 +17,10 @@ before_install:
 install:
   - sudo apt-get install -qq libopencv-dev
 
-  - conda create --yes -n test python=3.7 nomkl pip numpy swig gxx_linux-64
+  - conda create --yes -n test python=3.7 nomkl pip numpy swig gxx_linux-64 pytest
   - source activate test
 
 script:
-  - env
-  - which gcc
-  - which g++
-  - g++ --version
   # avoid cmake & make for the momement, they slow down the test so much
   # - mkdir build
   # - cd build
@@ -35,7 +31,7 @@ script:
 
   # - echo "trying out one_source.py"
   - ./one_source.py
-  - g++ merlict_test.cpp merlict.cpp -o merlict_test -O1
+  - $GXX merlict_test.cpp merlict.cpp -o merlict_test -O1
   - ./merlict_test
 
   - swig -c++ -python -o merlict_wrap.cpp merlict.i
