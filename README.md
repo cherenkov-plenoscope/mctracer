@@ -42,6 +42,31 @@ cd ..
 ./build/merlict-test
 ```
 
+---
+
+# For Developers playing around with the single header + single source version.
+
+At the moment we are trying to improve the build system, trying to make
+merlict a header only library.
+
+At the moment there is a tool called `one_source.py` which can convert the current merlict
+sources into one header and one cpp file. It can be used like:
+
+```bash
+cd <merlict-development-kit folder>
+./one_source.py
+```
+
+It creates these 2 files `merlict.h` and `merlict.cpp` and in addition it creates
+a test file `merlict_test.cpp`, which can be used to test the project.
+
+You can build it like
+
+```bash
+g++ merlict_test.cpp merlict.cpp -o merlict_test
+./merlict_test
+```
+
 ## style
 - 80 columns limit
 - whitespaces instead of tabulators
