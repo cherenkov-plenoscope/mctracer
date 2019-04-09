@@ -23,7 +23,7 @@ The `/build` directory is best located side by side to the `/merlict` directory.
 ```bash
 cd build
 cmake ..
-make -j 8
+make
 ```
 
 ## run
