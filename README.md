@@ -1,4 +1,4 @@
-# merlict-development-kit [![Build Status](https://travis-ci.org/cherenkov-plenoscope/merlict_development_kit.svg?branch=master)](https://travis-ci.org/cherenkov-plenoscope/merlict_development_kit)
+# merlict-development-kit [![Build Status](https://travis-ci.org/cherenkov-plenoscope/merlict_development_kit.svg?branch=master)](https://travis-ci.org/cherenkov-plenoscope/merlict_development_kit) [![codecov](https://codecov.io/gh/cherenkov-plenoscope/merlict_development_kit/branch/master/graph/badge.svg)](https://codecov.io/gh/cherenkov-plenoscope/merlict_development_kit)
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
