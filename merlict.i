@@ -23,4 +23,5 @@ namespace std
   %template(VectorOfSensors) vector< merlict::sensor::Sensor* >;
   %template(VectorOfPhotons) vector< merlict::Photon >;
   %template(VectorOfPhotonArrivals) vector< merlict::sensor::PhotonArrival >;
+  %template(VectorOfColors) vector< merlict::Color >;
 }
