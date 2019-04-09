@@ -1,4 +1,6 @@
-language: cpp
+language: python
+python:
+    - 3.6
 compiler: gcc
 dist: xenial
 
@@ -15,6 +17,9 @@ install:
     # C++17
     - sudo apt-get install -qq g++-6
     - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
+
+    - pip install --upgrade pip setuptools wheel
+    - pip install --only-binary=numpy numpy
 
 script:
     - mkdir build
