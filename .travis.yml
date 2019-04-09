@@ -22,16 +22,15 @@ install:
     - pip install --only-binary=numpy numpy
 
 script:
-    - mkdir build
-    - cd build
+    # avoid cmake & make for the momement, they slow down the test so much
+    # - mkdir build
+    # - cd build
+    # - cmake ..
+    # - make
+    # - cd ..
+    # - ./build/merlict-test
 
-    - cmake ..
-    - make
-
-    - cd ..
-    - ./build/merlict-test
-
-    - echo "trying out one_source.py"
+    # - echo "trying out one_source.py"
     - ./one_source.py
     - g++ merlict_test.cpp merlict.cpp -o merlict_test -O1
     - ./merlict_test
