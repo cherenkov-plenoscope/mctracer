@@ -115,4 +115,3 @@ Depending on your python version the name might differ a bit.
 Now you can execute the python tests by simply typing
 
     pytest
-
