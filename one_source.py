@@ -157,12 +157,7 @@ def write_the_single_header_file(out_path_h, headers, header_includes):
         for header in headers:
             with open(header, 'rt') as fin:
                 h_txt = fin.read()
-            h_txt = (
-                f'// start:{header:-^65s}\n'
-                + inside_namespace(h_txt)
-                + f'// end:  {header:-^65s}\n'
-            )
-            fout.write(h_txt)
+            fout.write(inside_namespace(h_txt))
             fout.write("\n")
 
         fout.write("}  // namespace merlict\n")
