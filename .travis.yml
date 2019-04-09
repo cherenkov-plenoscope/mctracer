@@ -20,6 +20,7 @@ install:
 
     - pip install --upgrade pip setuptools wheel
     - pip install --only-binary=numpy numpy
+    - pip install swig
 
 script:
     # avoid cmake & make for the momement, they slow down the test so much
@@ -34,4 +35,9 @@ script:
     - ./one_source.py
     - g++ merlict_test.cpp merlict.cpp -o merlict_test -O1
     - ./merlict_test
+
+    - swig -c++ -python -o merlict_wrap.cpp merlict.i
+    - python setup.py build_ext --inplace
+    - pip install -e .
+    - pytest
 
