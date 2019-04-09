@@ -4,6 +4,7 @@
     #include "merlict.h"
 %}
 
+%include "stdint.i"
 %include "std_vector.i"
 %include "std_string.i"
 

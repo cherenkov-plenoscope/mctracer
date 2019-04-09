@@ -86,7 +86,7 @@ def test_PhotonTest_Reflections_merlict():
     for i in range(int(num_phot)):
         wavelength = i / num_phot * 100e-9 + 250e-9
         P = ml.Photon(support, direction, wavelength)
-        # P.simulation_truth_id = i  # raises TypeError
+        P.simulation_truth_id = i  # raises TypeError
         photons.push_back(P)
 
     ml.propagate_photons_in_frame_with_config(
