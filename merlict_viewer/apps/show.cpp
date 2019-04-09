@@ -9,9 +9,9 @@ static const char USAGE[] =
 R"(Show a scenery
 
   Usage:
-    mctShow --scenery=SCENERY_PATH [--config=CONFIG_PATH]
-    mctShow (-h | --help)
-    mctShow --version
+    show --scenery=SCENERY_PATH [--config=CONFIG_PATH]
+    show (-h | --help)
+    show --version
 
   Options:
     -s --scenery=SCENERY_PATH     Scenery file path.
@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
       USAGE,
       {argv + 1, argv + argc},
       true,        // show help if requested
-      "mct 0.1");  // version string
+      "0.1");  // version string
 
     ml::ospath::Path scenery_path = ml::ospath::Path(
       args.find("--scenery")->second.asString());

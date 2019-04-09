@@ -12,12 +12,14 @@ namespace fs = std::experimental::filesystem;
 namespace ml = merlict;
 
 static const char USAGE[] =
-R"(EventIO converter
+R"(eventio-converter
+Un-packs a CORSIKA eventio-file into its individual files such as run-header,
+event-header, and photon-bunches.
 
   Usage:
-    mctEventIOConverter -i=CORSIKA_PATH -o=OUTPUT_PATH
-    mctEventIOConverter (-h | --help)
-    mctEventIOConverter --version
+    eventio-converter -i=CORSIKA_PATH -o=OUTPUT_PATH
+    eventio-converter (-h | --help)
+    eventio-converter --version
 
   Options:
     -i --input=CORSIKA_PATH   EventIO CORSIKA run path.
@@ -32,7 +34,7 @@ int main(int argc, char* argv[]) {
       USAGE,
       { argv + 1, argv + argc },
       true,        // show help if requested
-      "mct 0.0");
+      "0.0");
 
     ml::ospath::Path input_path(args.find("--input")->second.asString());
     ml::ospath::Path out_path(args.find("--output")->second.asString());
