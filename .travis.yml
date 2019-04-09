@@ -17,7 +17,7 @@ before_install:
 install:
   - sudo apt-get install -qq libopencv-dev
 
-  - conda create --yes -n test python=3.7 pip numpy swig gxx_linux-64
+  - conda create --yes -n test python=3.7 nomkl pip numpy swig gxx_linux-64
   - source activate test
 
 script:
