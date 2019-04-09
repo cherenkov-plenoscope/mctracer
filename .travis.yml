@@ -1,4 +1,8 @@
 language: python
+dist: xenial
+addons:
+  apt:
+    packages: lcov
 
 
 before_install:

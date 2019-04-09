@@ -1,4 +1,4 @@
-# merlict-development-kit [![Build Status](https://travis-ci.org/cherenkov-plenoscope/merlict_development_kit.svg?branch=master)](https://travis-ci.org/cherenkov-plenoscope/merlict_development_kit)
+# merlict-development-kit [![Build Status](https://travis-ci.org/cherenkov-plenoscope/merlict_development_kit.svg?branch=master)](https://travis-ci.org/cherenkov-plenoscope/merlict_development_kit) [![codecov](https://codecov.io/gh/cherenkov-plenoscope/merlict_development_kit/branch/master/graph/badge.svg)](https://codecov.io/gh/cherenkov-plenoscope/merlict_development_kit)
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
@@ -115,3 +115,12 @@ Depending on your python version the name might differ a bit.
 Now you can execute the python tests by simply typing
 
     pytest
+
+---
+
+# style
+- 80 columns limit
+- whitespaces instead of tabulators
+- [cpplint](https://github.com/cpplint/cpplint) for C++
+- [google's C++ styleguide](https://google.github.io/styleguide/cppguide.html) for e.g. naming
+- [pycodestyle](https://pypi.org/project/pycodestyle/) for python
