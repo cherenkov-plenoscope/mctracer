@@ -1,4 +1,4 @@
-# merlict-development-kit
+# merlict-development-kit [![Build Status](https://travis-ci.org/cherenkov-plenoscope/merlict_development_kit.svg?branch=master)](https://travis-ci.org/cherenkov-plenoscope/merlict_development_kit)
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
@@ -9,37 +9,38 @@ In this development-kit, all the sub-projects of the merlict-raytracer are build
 
 ### dependencies
 * git
-* g++ >= 5.3
+* g++ >= 6
 * cmake
 * libopencv-dev >= 2.4.8
 
 ### make
 ```
-git clone https://github.com/cherenkov-plenoscope/mctracer.git
+git clone https://github.com/cherenkov-plenoscope/merlict_development_kit.git
 mkdir build
 ```
-The /build directory is best located side by side to the /mctracer directory.
+The `/build` directory is best located side by side to the `/merlict` directory.
 
 ```bash
 cd build
-cmake ../mctracer
+cmake ..
 make
 ```
 
 ## run
-The mctracer has several executeables. To interacively explore a scenery use mctShow.
+merlict has several executeables. To interacively explore a scenery use `merlict-show`.
 ```bash
-merlict-show --scenery fact.json
+cd ../merlict_viewer/apps/examples
+../../../build/merlict-show --scenery fact.json
 ```
 
 ## test
-Run the unit tests in the mctracer/Tests directory to ensure your build is fine.
+Run the unit tests in the `merlict_development_kit` directory to ensure your build is fine.
+
 
 ```bash
-cd mctracer
-../build/merlict-test
+cd ..
+./build/merlict-test
 ```
-
 
 ---
 
