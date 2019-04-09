@@ -17,6 +17,7 @@ install:
   - source activate test
 
 script:
+  - env
   - which gcc
   - which g++
   - g++ --version
