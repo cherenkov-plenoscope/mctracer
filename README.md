@@ -66,3 +66,10 @@ You can build it like
 g++ merlict_test.cpp merlict.cpp -o merlict_test
 ./merlict_test
 ```
+
+## style
+- 80 columns limit
+- whitespaces instead of tabulators
+- [cpplint](https://github.com/cpplint/cpplint) for C++
+- [google's C++ styleguide](https://google.github.io/styleguide/cppguide.html) for e.g. naming
+- [pycodestyle](https://pypi.org/project/pycodestyle/) for python
