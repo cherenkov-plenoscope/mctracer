@@ -37,4 +37,4 @@ script:
   - swig -c++ -python -o merlict_wrap.cpp merlict.i
   - python setup.py build_ext --inplace
   - pip install -e .
-  - pytest
+  - pytest -v
