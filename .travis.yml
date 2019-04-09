@@ -1,17 +1,9 @@
 language: python
 python:
     - 3.7
-compiler: gcc
-dist: xenial
 
-# C++ 17 install from:
-# https://github.com/richelbilderbeek/travis_gcc_cpp17/blob/master/.travis.yml
 
 before_install:
-  # C++17
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo apt-get update -qq
-
   - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
@@ -22,11 +14,8 @@ before_install:
 
 install:
   - sudo apt-get install -qq libopencv-dev
-  # C++17
-  - sudo apt-get install -qq g++-6
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
 
-  - conda create --yes -n test python=$TRAVIS_PYTHON_VERSION pip numpy swig
+  - conda create --yes -n test python=$TRAVIS_PYTHON_VERSION pip numpy swig gxx_linux-64
   - source activate test
 
 script:
