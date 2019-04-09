@@ -1,4 +1,6 @@
-language: cpp
+language: python
+python:
+    - 3.6
 compiler: gcc
 dist: xenial
 addons:
@@ -19,6 +21,9 @@ install:
     - sudo apt-get install -qq g++-6
     - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
 
+    - pip install --upgrade pip setuptools wheel
+    - pip install --only-binary=numpy numpy
+
 script:
     - mkdir build
     - cd build
@@ -29,11 +34,14 @@ script:
     - cd ..
     - ./build/merlict-test
 
+    - echo "trying out one_source.py"
+    - ./one_source.py
+    - g++ merlict_test.cpp merlict.cpp -o merlict_test -O1
+    - ./merlict_test
+
 after_success:
     - lcov --capture --directory . --output-file coverage.info
     - lcov --remove coverage.info '/usr/*' --output-file coverage.info # filter system-files
     - lcov --list coverage.info # debug info
     # Uploading report to CodeCov
     - bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
-
-
