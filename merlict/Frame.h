@@ -30,11 +30,11 @@ class Frame {
     double bounding_sphere_radius;
     HomTra3 T_frame2mother;
     HomTra3 T_frame2world;
-    std::vector<Frame*> children;
     Frame *mother;
     const Frame *root_frame;
 
  public:
+    std::vector<Frame*> children;
     // SET
     Frame();
     virtual ~Frame();
