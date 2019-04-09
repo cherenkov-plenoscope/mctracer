@@ -1,7 +1,28 @@
 import os.path
+import pytest
 from pytest import approx
 import merlict as ml
 from merlict import Photon  # class under test here
+
+
+def test_creation():
+    wavelength = 433e-9
+    pho = Photon(ml.VEC3_ORIGIN, ml.VEC3_UNIT_Z * 1.337, wavelength)
+
+    assert pho.direction() == ml.VEC3_UNIT_Z
+    assert pho.support() == ml.VEC3_ORIGIN
+    assert pho.direction().norm() == 1.0
+    assert pho.wavelength == wavelength
+    # creation is an interaction
+    assert pho.num_interactions() == 1
+
+
+@pytest.mark.skip
+def test_reject_negative_wavelenth__coredump():
+    # These two result in Core Dumps!!
+    # But they should raise an exception
+    Photon(ml.VEC3_ORIGIN, ml.VEC3_UNIT_X, 0.0)
+    Photon(ml.VEC3_ORIGIN, ml.VEC3_UNIT_X, -1.0)
 
 
 def test_raw_row2photon():
@@ -105,3 +126,6 @@ def test_bunch2raw_matrix2file(tmpdir):
         assert ph2.direction().y == approx(ph1.direction().y, 1e-9)
         assert ph2.direction().z == approx(ph1.direction().z, 1e-9)
         assert ph1.wavelength == approx(ph2.wavelength, 1e-9)
+
+
+
