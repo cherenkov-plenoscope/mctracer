@@ -33,6 +33,6 @@ script:
 
     - echo "trying out one_source.py"
     - ./one_source.py
-    - g++ merlict_test.cpp merlict.cpp -o merlict_test
+    - g++ merlict_test.cpp merlict.cpp -o merlict_test -O1
     - ./merlict_test
 
