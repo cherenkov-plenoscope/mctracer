@@ -19,6 +19,9 @@ install:
   - source activate test
 
 script:
+  - which gcc
+  - which g++
+  - g++ --version
   # avoid cmake & make for the momement, they slow down the test so much
   # - mkdir build
   # - cd build
