@@ -75,7 +75,6 @@ def test_PhotonTest_Reflections_merlict():
     ph_emitted = photons.size()
 
 
-    print(scenery.root.children)
     print(scenery.root.tree_str())
 
     print(
