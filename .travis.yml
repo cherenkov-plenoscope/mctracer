@@ -23,6 +23,8 @@ script:
   - echo "looking into opencv folder"
   - ls -R /usr/include/opencv
 
+  - ls -R /usr/include
+
   - echo 'cmake build'
   - mkdir build
   - cd build
