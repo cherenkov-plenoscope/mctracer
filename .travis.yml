@@ -29,6 +29,8 @@ script:
     - cd build
 
     - cmake -DUSE_COV=yes ..
+
+    - ls -R /usr/include/opencv
     - make VERBOSE=1
 
     - cd ..
