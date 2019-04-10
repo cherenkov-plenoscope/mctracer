@@ -21,15 +21,15 @@ install:
   - source activate test
 
 script:
-  # avoid cmake & make for the momement, they slow down the test so much
-  # - mkdir build
-  # - cd build
-  # - cmake ..
-  # - make
-  # - cd ..
-  # - ./build/merlict-test
+  - echo 'cmake build'
+  - mkdir build
+  - cd build
+  - cmake -DUSE_COV=yes ..
+  - make
+  - cd ..
+  - ./build/merlict-test
 
-  # - echo "trying out one_source.py"
+  - echo 'Test one_source build'
   - ./one_source.py
   - $GXX merlict_test.cpp merlict.cpp -o merlict_test -O1
   - ./merlict_test
@@ -38,3 +38,11 @@ script:
   - python setup.py build_ext --inplace
   - pip install -e .
   - pytest -v
+
+
+after_success:
+    - lcov --capture --directory . --output-file coverage.info
+    - lcov --remove coverage.info '/usr/*' --output-file coverage.info # filter system-files
+    - lcov --list coverage.info # debug info
+    # Uploading report to CodeCov
+    - bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
