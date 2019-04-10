@@ -214,8 +214,14 @@ void make_children(Frame* mother, Scenery* scenery, const Object &o) {
         std::string type = jchild.st("type");
         if (has_key(j2s, type)) {
             json_to_frame us = get(j2s, type);
+            Frame* child = us(mother, scenery, jchild);
+            if (jchild.key("sensor_id")) {
+                scenery->sensors.add(
+                    jchild.u8("sensor_id"),
+                    child);
+            }
             make_children(
-                us(mother, scenery, jchild),
+                child,
                 scenery,
                 jchild.obj("children"));
         }
