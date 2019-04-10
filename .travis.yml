@@ -21,6 +21,9 @@ install:
     - sudo apt-get install -qq g++-6
     - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
 
+    - sudo apt-get install -qq gcc-6
+    - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 90
+
     - pip install --upgrade pip setuptools wheel
     - pip install --only-binary=numpy numpy
 
