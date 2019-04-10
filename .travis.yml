@@ -15,12 +15,14 @@ before_install:
   - conda info -a
 
 install:
-  - sudo apt-get install -qq libopencv-dev
-
   - conda create --yes -n test python=3.7 nomkl pip numpy swig gxx_linux-64 pytest
   - source activate test
+  - sudo apt-get install -qq libopencv-dev
 
 script:
+  - echo "looking into opencv folder"
+  - ls -R /usr/include/opencv
+
   - echo 'cmake build'
   - mkdir build
   - cd build
