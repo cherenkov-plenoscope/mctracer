@@ -1,6 +1,6 @@
 // Copyright 2014 Sebastian A. Mueller
-#ifndef SCENERY_DETECTORMAP_H_
-#define SCENERY_DETECTORMAP_H_
+#ifndef MERLICT_SCENERY_SENSORMAP_H_
+#define MERLICT_SCENERY_SENSORMAP_H_
 
 #include <stdint.h>
 #include <map>
@@ -24,4 +24,4 @@ struct SensorMap: public ResourceMap {
 
 }  // namespace merlict
 
-#endif  // SCENERY_DETECTORMAP_H_
+#endif  // MERLICT_SCENERY_SENSORMAP_H_

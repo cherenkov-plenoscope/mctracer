@@ -1,6 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/scenery/SensorMap.h"
 #include <sstream>
+#include <utility>
 
 
 namespace merlict {
