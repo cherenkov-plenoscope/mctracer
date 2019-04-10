@@ -72,6 +72,15 @@ g++ merlict_test.cpp merlict.cpp -o merlict_test
 
 # Playing with Python
 
+## TLDR
+
+Do this:
+
+    ./one_source.py && swig -c++ -python -o merlict_wrap.cpp merlict.i && pip install -e .
+    pytest
+
+## Longer form
+
 For Python Wrapping, we started with the *two file version of merlict*, i.e.
 with `merlict.h` and `merlict.cpp`, this we assume this makes the build
 process of the wrapped python code simpler.
@@ -111,7 +120,12 @@ The result of this call is a file named like this:
 
 Depending on your python version the name might differ a bit.
 
-**Not yet working at all :-|**
+
+Now since we are sure, the build worked and we had no errors, we can install
+`merlict` with pip locally to play with it.
+
+    pip install -e .
+
 Now you can execute the python tests by simply typing
 
     pytest
