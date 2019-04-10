@@ -34,8 +34,8 @@ script:
     - cd ..
     - ./build/merlict-test
 
-    - echo "trying out one_source.py"
-    - ./one_source.py
+    - echo "trying out amalgamate.py"
+    - ./amalgamate.py
     - g++ merlict_test.cpp merlict.cpp -o merlict_test -O1
     - ./merlict_test
 
