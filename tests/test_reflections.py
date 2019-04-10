@@ -90,5 +90,5 @@ def test_PhotonTest_Reflections_merlict():
 
     assert reflection_coefficient == pytest.approx(
         ph_reached_sensor / ph_emitted,
-        rel=2e-3
+        abs=2e-2
     )
