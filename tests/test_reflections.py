@@ -74,9 +74,7 @@ def test_PhotonTest_Reflections_merlict():
     ph_reached_sensor = absorber_sensor.photon_arrival_history.size()
     ph_emitted = photons.size()
 
-
-    print(scenery.root.tree_str())
-
+    print("\n" + scenery.root.tree_str())
     print(
         'ph_reached_sensor = absorber_sensor.photon_arrival_history.size():\n',
         ph_reached_sensor
