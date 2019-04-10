@@ -3,13 +3,6 @@ import merlict as ml
 import pytest
 
 
-def add_plane(mother_frame):
-    plane = ml.Plane()
-    mother_frame.children.append(plane.this)
-    plane.mother = mother_frame.this
-    return plane
-
-
 def test_PhotonTest_Reflections_merlict():
     '''
     python version of this test case:
@@ -32,7 +25,7 @@ def test_PhotonTest_Reflections_merlict():
     )
     scenery.colors.add("mirror_color", ml.Color(200, 64, 64))
 
-    mirror = add_plane(scenery.root)
+    mirror = scenery.root.add_plane()
     mirror.outer_color = scenery.colors.get("mirror_color")
     mirror.inner_color = scenery.colors.get("mirror_color")
     mirror.outer_reflection = scenery.functions.get("mirror_reflection")
@@ -45,7 +38,7 @@ def test_PhotonTest_Reflections_merlict():
 
 
     scenery.colors.add("absorber_color", ml.Color(50, 50, 50))
-    absorber = add_plane(scenery.root)
+    absorber = scenery.root.add_plane()
     absorber.outer_color = scenery.colors.get("absorber_color")
     absorber.inner_color = scenery.colors.get("absorber_color")
     absorber.set_x_y_width(1.0, 1.0)
@@ -63,7 +56,7 @@ def test_PhotonTest_Reflections_merlict():
 
     support = ml.Vec3(-2.0, 0.0, 0.0)
     direction = ml.VEC3_UNIT_X
-    prng = ml.Mt19937()
+    prng = ml.Mt19937(0)
     photons = ml.VectorOfPhotons()
     num_phot = 1e4
     for i in range(int(num_phot)):
