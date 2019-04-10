@@ -396,10 +396,10 @@ Frame* add_BiConvexLensHex(
 ) {
     BiConvexLensHexBound* lens = mother->add<BiConvexLensHexBound>();
     set_frame(lens, o);
+    set_surface(lens, scenery, o);
     lens->set_curvature_radius_and_outer_hex_radius(
         o.f8("curvature_radius"),
         o.f8("outer_radius"));
-    set_surface(lens, scenery, o);
     return lens;
 }
 
