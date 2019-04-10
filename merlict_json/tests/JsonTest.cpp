@@ -496,3 +496,56 @@ TEST_CASE("JsonTest: linear_interpolation_function2", "[merlict]") {
   CHECK(300e-9 == f.at(3).at(0));
   CHECK(0.254 == f.at(3).at(1));
 }
+
+TEST_CASE("JsonTest: setting_sensors", "[merlict]") {
+    auto jscenery = R"(
+    { "functions":[],
+      "colors": [],
+      "children": [
+        {
+          "type": "Frame",
+          "name": "tree",
+          "pos": [5, 5, -2],
+          "rot": [0, 0, 0],
+          "children": [
+            {
+              "type": "Sphere",
+              "name": "leaf_ball",
+              "pos": [0, 0, 3],
+              "rot": [0, 0, 0],
+              "radius": 1.5,
+              "surface": {},
+              "children": [],
+              "sensor_id": 13
+            },
+            {
+              "type": "Cylinder",
+              "name": "pole",
+              "start_pos": [0, 0, 0],
+              "end_pos": [0, 0, 1.5],
+              "radius": 0.25,
+              "surface": {},
+              "children": [],
+              "sensor_id": 37
+            }
+          ]
+        }
+      ]
+    }
+    )"_json;
+
+    ml::json::Object o(jscenery);
+    ml::Scenery s;
+    ml::json::append_to_frame_in_scenery(&s.root, &s, o);
+
+    REQUIRE(s.sensors.sensors.size() == 2);
+    CHECK_THROWS_AS(s.sensors.get(0u), ml::ResourceMap::NoSuchKey);
+    CHECK(s.sensors.has(13u));
+    CHECK(s.sensors.has(37u));
+
+    CHECK(s.sensors.get(37u)->id == 37u);
+    CHECK(s.sensors.get(37u)->frame->get_name() == "pole");
+
+    CHECK(s.sensors.get(13u)->id == 13u);
+    CHECK(s.sensors.get(13u)->frame->get_name() == "leaf_ball");
+}
