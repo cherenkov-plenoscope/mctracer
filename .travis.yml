@@ -27,10 +27,11 @@ install:
 script:
     - mkdir build
     - cd build
+    - ls -R /usr/include/opencv
+    - ls -R /usr/local/include
 
     - cmake -DUSE_COV=yes ..
 
-    - ls -R /usr/include/opencv
     - make VERBOSE=1
 
     - cd ..
