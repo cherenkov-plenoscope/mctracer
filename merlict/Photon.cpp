@@ -6,7 +6,7 @@
 
 namespace merlict {
 
-Photon::Photon() {}
+Photon::Photon(): wavelength(0.) {}
 
 Photon::Photon(
     const Vec3 support,
