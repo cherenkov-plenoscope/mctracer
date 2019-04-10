@@ -1,47 +1,48 @@
+language: python
+python:
+    - 3.6
+compiler: gcc
 dist: xenial
-language: generic
 addons:
   apt:
     packages: lcov
 
-
+# C++ 17 install from:
+# https://github.com/richelbilderbeek/travis_gcc_cpp17/blob/master/.travis.yml
 before_install:
-  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh
-  - bash miniconda.sh -b -p $HOME/miniconda
-  - export PATH="$HOME/miniconda/bin:$PATH"
-  - hash -r
-  - conda config --set always_yes yes --set changeps1 no
-  - conda update -q conda  # get latest conda version
-  - conda info -a
+    # C++17
+    - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+    - sudo apt-get update -qq
 
 install:
-  - conda create --yes -n test python=3.7 nomkl pip numpy swig gxx_linux-64 pytest
-  - source activate test
-  - sudo apt-get install -qq libopencv-dev
+    - sudo apt-get install -qq libopencv-dev
+    - sudo apt-get install swig
+    # C++17
+    - sudo apt-get install -qq g++-6
+    - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
+
+    - pip install --upgrade pip setuptools wheel
+    - pip install --only-binary=numpy numpy
+
 
 script:
-  - echo "looking into opencv folder"
-  - ls -R /usr/include/opencv
+    - echo "cmake build"
+    - mkdir build
+    - cd build
+    - cmake -DUSE_COV=yes ..
+    - make
+    - cd ..
+    - ./build/merlict-test
 
-  - ls -R /usr/include
+    - echo "one_source.py build"
+    - ./one_source.py
+    - g++ merlict_test.cpp merlict.cpp -o merlict_test -O1
+    - ./merlict_test
 
-  - echo 'cmake build'
-  - mkdir build
-  - cd build
-  - cmake -DUSE_COV=yes ..
-  - make VERBOSE=1
-  - cd ..
-  - ./build/merlict-test
-
-  - echo 'Test one_source build'
-  - ./one_source.py
-  - $GXX merlict_test.cpp merlict.cpp -o merlict_test -O1
-  - ./merlict_test
-
-  - swig -c++ -python -o merlict_wrap.cpp merlict.i
-  - python setup.py build_ext --inplace
-  - pip install -e .
-  - pytest -v
+    - swig -c++ -python -o merlict_wrap.cpp merlict.i
+    - python setup.py build_ext --inplace
+    - pip install -e .
+    - pytest -v
 
 
 after_success:
@@ -50,3 +51,9 @@ after_success:
     - lcov --list coverage.info # debug info
     # Uploading report to CodeCov
     - bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
+
+
+
+
+
+
