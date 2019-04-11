@@ -2,6 +2,7 @@ import pytest
 import merlict as ml
 import math
 
+
 def test_too_close_together_no_frame():
     vf = ml.VectorOfFramePointers()
     assert not ml.positions_in_mother_too_close(vf)
@@ -78,7 +79,7 @@ def test_optimal_bounding_sphere_pos_many_frames_symetric():
     vf = ml.VectorOfFramePointers()
 
     # Python helper list to avoid `f` being garbage collected
-    l = []
+    avoid_garbage_collection_list = []
     for i in range(5):
 
         f = ml.Frame()
@@ -87,7 +88,7 @@ def test_optimal_bounding_sphere_pos_many_frames_symetric():
             ml.Vec3(i, 0, 0),
             ml.ROT3_UNITY
         )
-        l.append(f)
+        avoid_garbage_collection_list.append(f)
         vf.push_back(f)
 
     v = ml.bounding_sphere_center_alternative(vf)
@@ -100,7 +101,7 @@ def test_optimal_bounding_sphere_pos_many_frames_symetric():
 
 def test_optimal_bounding_sphere_pos_many_spheres_symetric():
     vf = ml.VectorOfFramePointers()
-    l = []
+    avoid_garbage_collection_list = []
     for i in range(5):
         s = ml.Sphere()
         s.set_name_pos_rot(
@@ -108,7 +109,7 @@ def test_optimal_bounding_sphere_pos_many_spheres_symetric():
             ml.Vec3(i, 0, 0),
             ml.ROT3_UNITY
         )
-        l.append(s)
+        avoid_garbage_collection_list.append(s)
         vf.push_back(s)
 
     v = ml.bounding_sphere_center_alternative(vf)
@@ -121,7 +122,7 @@ def test_optimal_bounding_sphere_pos_many_spheres_symetric():
 
 def test_optimal_bounding_sphere_pos_many_spheres_asymetric():
     vf = ml.VectorOfFramePointers()
-    l = []
+    avoid_garbage_collection_list = []
     radii = [1., 1., 1., 1., 5.]
     for i, radius in enumerate(radii):
         s = ml.Sphere()
@@ -131,7 +132,7 @@ def test_optimal_bounding_sphere_pos_many_spheres_asymetric():
             ml.ROT3_UNITY
         )
         s.set_radius(radius)
-        l.append(s)
+        avoid_garbage_collection_list.append(s)
         vf.push_back(s)
 
     v = ml.bounding_sphere_center_alternative(vf)
@@ -146,7 +147,7 @@ def test_not_optimal_in_symetric_case():
     vf = ml.VectorOfFramePointers()
 
     angles = [0., 120., 240.]
-    l = []
+    avoid_garbage_collection_list = []
     for i, angle in enumerate(angles):
 
         s = ml.Sphere()
@@ -160,7 +161,7 @@ def test_not_optimal_in_symetric_case():
             ml.ROT3_UNITY
         )
         s.set_radius(0.5)
-        l.append(s)
+        avoid_garbage_collection_list.append(s)
         vf.push_back(s)
 
     center = ml.bounding_sphere_center_alternative(vf)
