@@ -8,6 +8,7 @@ def test_PhotonTest_Reflections_merlict():
     python version of this test case:
     https://github.com/cherenkov-plenoscope/merlict_development_kit/blob/770cd2769c5a36585a498ec2ee1ae5eb2dd17cb9/merlict/tests/PhotonTest.cpp#L84
     '''
+    print(ml.VEC3_ORIGIN.str())
 
     prop_cfg = ml.PropagationConfig()
     scenery = ml.Scenery()

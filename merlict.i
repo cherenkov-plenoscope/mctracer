@@ -40,10 +40,7 @@ namespace merlict
     %template(add_sphere_cap_with_hexagonal_bound) Frame::add<SphereCapWithHexagonalBound>;
     %template(add_sphere_cap_with_cylinder_bound) Frame::add<SphereCapWithCylinderBound>;
     %template(add_cylinder) Frame::add<Cylinder>;
-    // the line below throws compiler error:
-    //    Disk was not declared in this scope.
-    //    Not sure why not ... for the moment .. no disks available
-    // %template(add_disk) Frame::add<Disk>;
+    %template(add_disc) Frame::add<Disc>;
 
     %template(add_bi_convex_lens) Frame::add<BiConvexLens>;
     %template(add_bi_convex_lens_hex_bound) Frame::add<BiConvexLensHexBound>;

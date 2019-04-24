@@ -4,6 +4,7 @@ from pytest import approx
 
 
 def test_default_ctor():
+    print('early:', ml.VEC3_ORIGIN.str())
     c = Color()
     assert c.r == 0
     assert c.g == 0
