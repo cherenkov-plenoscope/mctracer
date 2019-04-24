@@ -44,10 +44,6 @@ def make_environment_with_lens_for_test():
         ml.VEC3_ORIGIN,
         ml.ROT3_UNITY)
 
-    # color is not needed for ray tracing.
-    # it is only needed for displaying the scenery
-    scenery.colors.add("lens_color", ml.Color(255, 128, 128))
-
     scenery.functions.add(
         "refraction_vs_wavelength",
         ml.Func1(ml.VectorOfVectorOfDoubles([
@@ -55,11 +51,6 @@ def make_environment_with_lens_for_test():
             [1200e-9, cfg.refractive_index],
         ]))
     )
-
-    # these colors are again not needed for ray tracing, only in case the
-    # scenery is going to be displayed with a camera
-    lens.outer_color = scenery.colors.get("lens_color")
-    lens.inner_color = scenery.colors.get("lens_color")
 
     lens.inner_refraction = scenery.functions.get("refraction_vs_wavelength")
     lens.set_curvature_radius_and_aperture_radius(
@@ -74,9 +65,6 @@ def make_environment_with_lens_for_test():
         ml.Vec3(0.0, 0.0, -1.0),
         ml.ROT3_UNITY)
 
-    scenery.colors.add("sensor_color", ml.Color(128, 255, 128))
-    image_sensor.outer_color = scenery.colors.get("sensor_color")
-    image_sensor.inner_color = scenery.colors.get("sensor_color")
     image_sensor.set_radius(cfg.aperture_radius)
 
     scenery.sensors.add(0, image_sensor)
