@@ -7,7 +7,14 @@ def test_Constructor_using_vectors():
     dir = ml.Vec3(7.8, 9.0, 4.2)
     ray = ml.Ray(sup, dir)
     assert ray.support() == sup
-    assert ray.direction() == dir / dir.norm()
+    # not every SWIG version seems to wrap the "/" operator correctly
+    # so we divide every component indipendently
+    expected_direction = ml.Vec3(
+        dir.x / dir.norm(),
+        dir.y / dir.norm(),
+        dir.z / dir.norm(),
+    )
+    assert ray.direction() == expected_direction
     assert 1.0 == pytest.approx(ray.direction().norm(), abs=1e-6)
 
 
@@ -16,7 +23,16 @@ def test_position_on_ray():
     dir = ml.Vec3(7.0, 9.0, 4.0)
     ray = ml.Ray(sup, dir)
     alpha = 5.0
-    pos_on_ray = sup + dir / dir.norm() * alpha
+
+    # not every SWIG version seems to wrap the "/" operator correctly
+    # so we divide every component indipendently
+    normalized_dir_times_alpha = ml.Vec3(
+        dir.x / dir.norm() * alpha,
+        dir.y / dir.norm() * alpha,
+        dir.z / dir.norm() * alpha,
+    )
+
+    pos_on_ray = sup + normalized_dir_times_alpha
     assert 0.0 == pytest.approx(
         (pos_on_ray - ray.position_at(alpha)).norm(),
         abs=1e-6
