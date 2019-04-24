@@ -10,16 +10,13 @@ def make_environment_with_lens_for_test():
 
     prng = ml.Mt19937()
     prng.set_seed(0)   # this is the default and should be a ctor parameter
-    prng.this.disown()  #
     env.prng = prng
 
     settings = ml.PropagationConfig()
     settings.max_num_interactions_per_photon = 5
-    settings.this.disown()
     env.config = settings
 
     scenery = ml.Scenery()
-    scenery.this.disown()
 
     test_bench = scenery.root.add_frame()
     test_bench.set_name_pos_rot(
@@ -27,7 +24,6 @@ def make_environment_with_lens_for_test():
         ml.VEC3_ORIGIN,
         ml.ROT3_UNITY
     )
-    test_bench.this.disown()
 
     # this lens_maker_Config, is just a one-off class, used to
     # figure out numbers like, the radius of curvature from the focal length
@@ -38,7 +34,6 @@ def make_environment_with_lens_for_test():
     cfg.refractive_index = 1.49
 
     lens = test_bench.add_bi_convex_lens()
-    lens.this.disown()
     lens.set_name_pos_rot(
         "little_lens",
         ml.VEC3_ORIGIN,
@@ -59,7 +54,6 @@ def make_environment_with_lens_for_test():
     )
 
     image_sensor = test_bench.add_disc()
-    image_sensor.this.disown()
     image_sensor.set_name_pos_rot(
         "sensor_disc",
         ml.Vec3(0.0, 0.0, -1.0),
@@ -72,6 +66,10 @@ def make_environment_with_lens_for_test():
 
     scenery.root.init_tree_based_on_mother_child_relations()
 
+    # We hand over the scenery to the environment,
+    # so we have to give up ownership, to avoid the garbage collector
+    # from killing it.
+    scenery.this.disown()
     env.root_frame = scenery.root
 
     return env, sensor_list
