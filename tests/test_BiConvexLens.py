@@ -4,20 +4,22 @@ import merlict as ml
 
 
 def make_environment_with_lens_for_test():
-
-    scenery = ml.Scenery()
-    scenery.this.disown()
-
-    prng = ml.Mt19937()
-    prng.this.disown()
-
-    # is being returned
+    # env and sensor_list are being returned
     env = ml.PropagationEnvironment()
     sensor_list = ml.Sensors()
+
+    prng = ml.Mt19937()
+    prng.set_seed(0)   # this is the default and should be a ctor parameter
+    prng.this.disown()  #
+    env.prng = prng
 
     settings = ml.PropagationConfig()
     settings.max_num_interactions_per_photon = 5
     settings.this.disown()
+    env.config = settings
+
+    scenery = ml.Scenery()
+    scenery.this.disown()
 
     test_bench = scenery.root.add_frame()
     test_bench.set_name_pos_rot(
@@ -27,38 +29,43 @@ def make_environment_with_lens_for_test():
     )
     test_bench.this.disown()
 
+    # this lens_maker_Config, is just a one-off class, used to
+    # figure out numbers like, the radius of curvature from the focal length
+    # it can be garbage collected after this function is done
     cfg = ml.lens_maker_Config()
     cfg.focal_length = 1.0
     cfg.aperture_radius = 0.125
     cfg.refractive_index = 1.49
-    cfg.this.disown()
 
     lens = test_bench.add_bi_convex_lens()
+    lens.this.disown()
     lens.set_name_pos_rot(
         "little_lens",
         ml.VEC3_ORIGIN,
         ml.ROT3_UNITY)
 
+    # color is not needed for ray tracing.
+    # it is only needed for displaying the scenery
     scenery.colors.add("lens_color", ml.Color(255, 128, 128))
-
-    function_paramters = ml.VectorOfVectorOfDoubles([
-        [200e-9, cfg.refractive_index],
-        [1200e-9, cfg.refractive_index],
-    ])
 
     scenery.functions.add(
         "refraction_vs_wavelength",
-        ml.Func1(function_paramters)
+        ml.Func1(ml.VectorOfVectorOfDoubles([
+            [200e-9, cfg.refractive_index],
+            [1200e-9, cfg.refractive_index],
+        ]))
     )
 
+    # these colors are again not needed for ray tracing, only in case the
+    # scenery is going to be displayed with a camera
     lens.outer_color = scenery.colors.get("lens_color")
     lens.inner_color = scenery.colors.get("lens_color")
+
     lens.inner_refraction = scenery.functions.get("refraction_vs_wavelength")
     lens.set_curvature_radius_and_aperture_radius(
         ml.get_curvature_radius(cfg),
         cfg.aperture_radius
     )
-    lens.this.disown()
 
     image_sensor = test_bench.add_disc()
     image_sensor.this.disown()
@@ -77,11 +84,7 @@ def make_environment_with_lens_for_test():
 
     scenery.root.init_tree_based_on_mother_child_relations()
 
-    prng.set_seed(0)
-
     env.root_frame = scenery.root
-    env.config = settings
-    env.prng = prng
 
     return env, sensor_list
 
@@ -131,6 +134,12 @@ def test_send_photons_frontal_into_lens_with_offset():
 
     for i in range(len(photons)):
         photons[i].transform(trafo)
+
+    # Danger! this does not work, it does not transform the photons inside
+    # the Vector of photons ... it seems to only operate of copies
+    #
+    # for photon in photons:
+    #     photon.transform(trafo)
 
     ml.propagate_photons_in_frame_with_config(
         photons,
