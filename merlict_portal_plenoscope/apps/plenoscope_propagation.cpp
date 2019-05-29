@@ -169,7 +169,7 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // SET SINGLE PULSE OUTPUT
-    ml::json::Object phs_obj = plcfg.obj("photo_electric_converter");
+    ml::json::Object phs_obj = plcfg.obj("photon_stream");
     const double time_slice_duration = phs_obj.f8("time_slice_duration");
     const double arrival_time_std = phs_obj.f8(
         "single_photon_arrival_time_resolution");
