@@ -6,18 +6,18 @@ namespace ml = merlict;
 
 
 static const char USAGE[] =
-R"(Photon propagation
+R"(Photon-propagation
 
     Usage:
-      mctPropagate -s=SCENERY_PATH -c=CONFIG_PATH -i=INPUT_PATH -o=OUTPUT_PATH [-r=SEED] [-b]
-      mctPropagate (-h | --help)
-      mctPropagate --version
+      propagate -s=PATH -c=PATH -i=PATH -o=PATH [-r=SEED] [-b]
+      propagate (-h | --help)
+      propagate --version
 
     Options:
-      -s --scenery=SCENERY_PATH Scenery path.
-      -c --config=CONFIG_PATH   Config path to steer the simulation.
-      -i --input=INPUT_PATH     Photon path (e.g. a CORSIKA run).
-      -o --output=OUTPUT_PATH   Output path.
+      -s --scenery=PATH         Scenery path.
+      -c --config=PATH          Config path to steer the simulation.
+      -i --input=PATH           Photon path (e.g. a CORSIKA run).
+      -o --output=PATH          Output path.
       -r --random_seed=SEED     Seed for pseudo random number generator.
       -b --binary               Exports a binary float32 table for each sensor.
       -h --help                 Show this screen.
@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
         USAGE,
         { argv + 1, argv + argc },
         true,        // show help if requested
-        "mct 0.1");  // version string
+        "0.1");  // version string
 
     ml::ospath::Path out_path(args.find("--output")->second.asString());
     ml::ospath::Path scenery_path(args.find("--scenery")->second.asString());
