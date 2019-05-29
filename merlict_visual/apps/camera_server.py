@@ -17,7 +17,7 @@ def read_ppm_image(fstream):
     max_color = int(fstream.readline().decode())
     assert max_color == 255
     count = num_columns*num_rows*3
-    raw = np.fromstring(fstream.read(count), dtype=np.uint8)
+    raw = np.frombuffer(fstream.read(count), dtype=np.uint8)
     img = raw.reshape((num_rows, num_columns, 3))
     return img
 
