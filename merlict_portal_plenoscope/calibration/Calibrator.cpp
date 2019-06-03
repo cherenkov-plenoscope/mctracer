@@ -1,13 +1,13 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict_portal_plenoscope/calibration/Calibrator.h"
 #include <future>
+#include <fstream>
+#include <sstream>
 #include <thread>
 #include <iomanip>
-#include <sstream>
 #include <random>
 #include <iostream>
 #include "merlict/merlict.h"
-#include "merlict_portal_plenoscope/calibration/Writer.h"
 #include "merlict_portal_plenoscope/night_sky_background/NightSkyBackground.h"
 #include "merlict_multi_thread/vitaliy_vitsentiy_thread_pool.h"
 namespace ml = merlict;
@@ -143,8 +143,9 @@ void run_calibration(
     ml::random::Generator *prng
 ) {
     LixelStatisticsFiller lixel_statistics_filler(
-        &cal.plenoscope->light_field_sensor_geometry,
-        &cal.config);
+        cal.plenoscope->light_field_sensor_geometry.num_lixel(),
+        cal.config.num_blocks,
+        cal.config.photons_per_block);
 
     std::cout << "Plenoscope Calibrator: propagating ";
     std::cout << double(cal.num_photons)/1.0e6 << "e6 photons\n";
@@ -162,111 +163,42 @@ void run_calibration(
 }
 
 
-/*
-
-void Calibrator::fill_calibration_block_to_table() {
-    random::ZenithDistancePicker zenith_picker(
+void run_calibration_raw_output(
+    const Calibrator &cal,
+    const std::string &path,
+    merlict::random::Generator *prng
+) {
+    const ml::random::ZenithDistancePicker zenith_picker(
         0.0,
-        max_tilt_vs_optical_axis_to_throw_photons_in);
-    random::UniformPicker azimuth_picker(0.0, 2*M_PI);
+        cal.MAX_INCIDENT_ANGLE);
+    const ml::random::UniformPicker azimuth_picker(
+        0.0,
+        2*M_PI);
 
-    unsigned int i;
-    int HadCatch = 0;
-    std::random_device rd;
-    const uint32_t master_seed = rd();
+    std::ofstream fout;
+    fout.open(path, std::ios::out | std::ios::binary);
+    if (!fout.is_open()) {
+        std::stringstream info;
+        info << __FILE__ << " " << __LINE__ << "\n";
+        info << "Lightfield-Calibration: Unable to write to file: '";
+        info << path << "'\n";
+        throw std::runtime_error(info.str());
+    }
 
-
-    for (i = 0; i < config.photons_per_block; i++) {
-
-        // create photon
-        Vec3 pos_on_principal_aperture =
-            thread_local_prng.get_point_on_xy_disc_within_radius(
-                max_principal_aperture_radius_to_trow_photons_on);
-
-        Vec3 direction_on_principal_aperture = random::draw_point_on_sphere(
-            &thread_local_prng,
+    uint64_t photon_idx;
+    for (photon_idx = 0; photon_idx < cal.num_photons; photon_idx++) {
+        CalibrationPhotonResult res = one_photon(
+            photon_idx,
+            prng->create_seed(),
+            cal,
             zenith_picker,
             azimuth_picker);
 
-        Photon ph = get_photon_given_pos_and_angle_on_principal_aperture(
-            pos_on_principal_aperture,
-            direction_on_principal_aperture);
-
-        // propagate photon
-        PropagationEnvironment my_env;
-        my_env.root_frame = scenery;
-        my_env.prng = &thread_local_prng;
-        Propagator(&ph, my_env);
-
-        sensor::FindSensorByFrame sensor_finder(
-            ph.final_intersection().object(),
-            &plenoscope->light_field_channels->by_frame);
-
-        if (sensor_finder.is_absorbed_by_known_sensor) {
-            // remember photon
-            CalibrationPhotonResult result;
-            result.reached_sensor = true;
-            result.lixel_id = sensor_finder.final_sensor->id;
-            result.x_pos_on_principal_aperture =
-                pos_on_principal_aperture.x;
-            result.y_pos_on_principal_aperture =
-                pos_on_principal_aperture.y;
-            result.x_tilt_vs_optical_axis =
-                direction_on_principal_aperture.x;
-            result.y_tilt_vs_optical_axis =
-                direction_on_principal_aperture.y;
-            result.relative_time_of_flight = ph.time_of_flight();
-            photon_results[i] = result;
-        } else {
-            CalibrationPhotonResult result;
-            result.reached_sensor = false;
-            photon_results[i] = result;
-        }
-}
-
-
-void Calibrator::run_calibration() {
-    cout << "Plenoscope Calibrator: propagating ";
-    cout << double(num_photons)/1.0e6 << "e6 photons\n";
-    photon_results.resize(config.photons_per_block);
-    for (unsigned int j = 0; j < config.num_blocks; j++) {
-        cout << j+1 << " of " << config.num_blocks << "\n";
-        fill_calibration_block_to_table();
-        lixel_statistics_filler.fill_in_block(photon_results);
+        fout.write((char*)&res, sizeof(CalibrationPhotonResult));
     }
-}
 
-void Calibrator::write_lixel_statistics(const std::string &path)const {
-    vector<LixelStatistic> lixel_statistics =
-        lixel_statistics_filler.get_lixel_statistics();
-    write(lixel_statistics, path);
+    fout.close();
 }
-
-std::string Calibrator::str()const {
-    std::stringstream out;
-    out << "Light_Field_Calibration__\n";
-    std::stringstream tab;
-    tab << "number of photons........................ ";
-    tab << num_photons << "\n";
-    tab << "principal aperture illumunation radius... ";
-    tab << max_principal_aperture_radius_to_trow_photons_on << "m\n";
-    tab << "principal aperture illumunation angle.... ";
-    tab << rad2deg(max_tilt_vs_optical_axis_to_throw_photons_in) << "deg\n";
-    tab << "distance for photon to travel before\n";
-    tab << "reaching principal aperture plane........ ";
-    tab << distance_to_travel_before_intersecting_principal_aperture << "m\n";
-    tab << "photon wavelength........................ ";
-    tab << wavelenght << "m\n";
-    out << txt::place_first_infront_of_each_new_line_of_second(
-        "  ",
-        tab.str());
-    return out.str();
-}
-
-lixel_statistics_filler(
-    &plenoscope->light_field_sensor_geometry,
-    &_calib_config)
-*/
 
 }  // namespace calibration
 }  // namespace plenoscope

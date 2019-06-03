@@ -35,6 +35,11 @@ void run_calibration(
     const std::string &path,
     merlict::random::Generator *prng);
 
+void run_calibration_raw_output(
+    const Calibrator &cal,
+    const std::string &path,
+    merlict::random::Generator *prng);
+
 }  // namespace calibration
 }  // namespace plenoscope
 
