@@ -7,16 +7,14 @@ namespace plenoscope {
 namespace calibration {
 
 LixelStatisticsFiller::LixelStatisticsFiller(
-    const light_field_sensor::Geometry *geometry,
-    const Config *_calib_config
-):
-    calib_config(_calib_config),
-    sensor_geometry(geometry),
+    const uint64_t num_lixel,
+    const uint64_t num_blocks,
+    const uint64_t num_photons_per_block):
     photons_emitted_per_lixel(
-        static_cast<double>(_calib_config->num_blocks)*
-        static_cast<double>(_calib_config->photons_per_block)/
-        static_cast<double>(geometry->num_lixel())) {
-    lixel_stats.resize(sensor_geometry->num_lixel());
+        static_cast<double>(num_blocks)*
+        static_cast<double>(num_photons_per_block)/
+        static_cast<double>(num_lixel)) {
+    lixel_stats.resize(num_lixel);
 }
 
 void LixelStatisticsFiller::fill_in_block(
