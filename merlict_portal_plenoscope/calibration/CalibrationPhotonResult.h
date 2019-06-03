@@ -7,7 +7,7 @@
 namespace plenoscope {
 
 struct CalibrationPhotonResult {
-    bool reached_sensor;
+    uint32_t reached_sensor;
     uint32_t lixel_id;
     float x_pos_on_principal_aperture;
     float y_pos_on_principal_aperture;
