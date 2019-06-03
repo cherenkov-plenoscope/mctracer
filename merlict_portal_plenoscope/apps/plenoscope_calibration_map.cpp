@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
             throw std::invalid_argument(info.str());
         }
 
-        if (random_seed <= 0.0) {
+        if (random_seed < 0) {
             std::stringstream info;
             info << __FILE__ << ", " << __LINE__ << "\n";
             info << "Expected '--random_seed', ";
