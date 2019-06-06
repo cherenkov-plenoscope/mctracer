@@ -185,3 +185,23 @@ TEST_CASE("Histogram1Test: mode_back", "[merlict]") {
     ml::Histogram1 histo(samples, bins_edges);
     CHECK(5./6. == Approx(histo.mode()).margin(1e-6));
 }
+
+TEST_CASE("MedianTest: median", "[merlict]") {
+    std::vector<double> empty = {};
+    CHECK(std::isnan(ml::numeric::median(empty)));
+
+    std::vector<double> one = {7};
+    CHECK(7 == ml::numeric::median(one));
+
+    std::vector<double> numbers = {0., 1., 2.};
+    CHECK(1 == ml::numeric::median(numbers));
+
+    std::vector<double> numbers2 = {0., 1., 2., 3.};
+    CHECK(1.5 == ml::numeric::median(numbers2));
+
+    std::vector<double> numbers3 = {3., 1., 2., 0.};
+    CHECK(1.5 == ml::numeric::median(numbers3));
+
+    std::vector<double> numbers4 = {0., 0., 10., 10.};
+    CHECK(5. == ml::numeric::median(numbers4));
+}

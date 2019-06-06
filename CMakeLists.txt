@@ -120,6 +120,11 @@ target_link_libraries(merlict-eventio-converter stdc++fs)
 target_link_libraries(merlict-eventio-converter docopt)
 
 add_executable(
+    merlict-magnetic-field-explorer
+    merlict_corsika/apps/magnetic_field_explorer.cpp)
+target_link_libraries(merlict-magnetic-field-explorer lib_merlict_dev)
+
+add_executable(
     merlict-plenoscope-propagation
     merlict_portal_plenoscope/apps/plenoscope_propagation.cpp)
 target_link_libraries(merlict-plenoscope-propagation lib_merlict_dev)

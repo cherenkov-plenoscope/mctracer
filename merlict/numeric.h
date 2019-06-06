@@ -9,6 +9,7 @@ namespace numeric {
 
 double mean(const std::vector<double> &vec);
 double stddev(const std::vector<double> &vec);
+double median(std::vector<double> a);
 std::vector<double> linspace(double begin, double end, unsigned int steps);
 
 }  // namespace numeric
