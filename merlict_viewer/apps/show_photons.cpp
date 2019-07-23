@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
             std::vector<ml::Photon> photons;
             ml::EventIoPhotonFactory cpf(corsika_photon, id++, &prng);
 
-            if(cpf.passed_atmosphere()) {
+            while (cpf.has_still_photons_to_be_made()) {
                 photons.push_back(cpf.make_photon());
 
                 // propagate the cherenkov photons in the scenery

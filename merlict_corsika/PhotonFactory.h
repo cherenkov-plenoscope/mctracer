@@ -7,12 +7,12 @@
 
 namespace merlict {
 
-class EventIoPhotonFactory {
-    bool _passed_atmosphere = false;
+struct EventIoPhotonFactory {
     unsigned int id;
+    unsigned int num_photons;
+    unsigned int num_photons_made;
     std::array<float, 8> corsika_photon;
 
- public:
     class BadPhotonWeight : public std::runtime_error {
         using runtime_error::runtime_error;
     };
@@ -20,7 +20,7 @@ class EventIoPhotonFactory {
         const std::array<float, 8>& _corsika_photon,
         const unsigned int id,
         random::Generator *prng);
-    bool passed_atmosphere()const;
+    bool has_still_photons_to_be_made()const;
     Photon make_photon();
     Vec3 direction_of_motion()const;
     Vec3 intersection_with_xy_floor_plane()const;
@@ -31,12 +31,7 @@ class EventIoPhotonFactory {
     double wavelength()const;
     double production_distance_offset()const;
     double relative_arrival_time_on_ground()const;
-    float photon_survival_probability()const;
-
- private:
-    void check_once_if_passed_atmosphere(random::Generator *prng);
-    void assert_corsika_photon_has_correct_length()const;
-    void assert_photon_weight_is_between_zero_and_one()const;
+    void assert_bunch_weight(const double)const;
 };
 
 }  // namespace merlict
