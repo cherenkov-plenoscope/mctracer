@@ -79,7 +79,7 @@ void Sphere::add_sphere_intersection_for_ray_parameter(
     Vec3 surface_normal = intersection_point/intersection_point.norm();
     if (ray->support() != intersection_point) {
         intersections->emplace_back(
-            this,
+            std::static_pointer_cast<const SurfaceEntity>(this->shared_from_this()),
             intersection_point,
             surface_normal,
             ray_parameter,

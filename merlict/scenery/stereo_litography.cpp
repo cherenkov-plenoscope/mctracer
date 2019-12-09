@@ -9,14 +9,14 @@ namespace stereo_litography {
 
 void add_stl_to_and_inherit_surface_from_surfac_entity(
     const std::string path,
-    SurfaceEntity* proto,
+    std::shared_ptr<SurfaceEntity> proto,
     const double scale
 ) {
     BinaryReader reader(path);
     std::vector<Facet> facets = reader.get_facets();
     unsigned int facet_count = 0;
     for (Facet facet : facets) {
-        Triangle* tri = proto->add<Triangle>();
+        std::shared_ptr<Triangle> tri = proto->add<Triangle>();
         tri->set_name_pos_rot(
             "triangle_"+std::to_string(facet_count++),
             VEC3_ORIGIN,
@@ -39,7 +39,7 @@ void add_stl_to_frame(
     std::vector<Facet> facets = reader.get_facets();
     unsigned int facet_count = 0;
     for (Facet facet : facets) {
-        Triangle* tri = proto->add<Triangle>();
+        std::shared_ptr<Triangle> tri = proto->add<Triangle>();
         tri->set_name_pos_rot(
             "triangle_"+std::to_string(facet_count++),
             VEC3_ORIGIN,

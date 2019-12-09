@@ -129,7 +129,7 @@ void Cylinder::calculate_intersection_with(
         if (is_in_cylinders_z_bounds(&intersection_vector)) {
             if (ray->support() != intersection_vector) {
                 intersections->emplace_back(
-                    this,
+                    std::static_pointer_cast<const SurfaceEntity>(this->shared_from_this()),
                     intersection_vector,
                     get_surface_normal_for_intersection_vec(
                         &intersection_vector),

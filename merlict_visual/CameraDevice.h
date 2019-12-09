@@ -5,11 +5,13 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <memory>
 #include "merlict/Rot3.h"
 #include "merlict/Vec3.h"
 #include "merlict/HomTra3.h"
 #include "CameraRay.h"
 #include "Image.h"
+
 
 namespace merlict {
 namespace visual {
@@ -37,7 +39,7 @@ class CameraDevice{
         const unsigned int num_cols,
         const unsigned int num_rows);
     virtual void acquire_image(
-        const Frame* world,
+        std::shared_ptr<const Frame> world,
         const Config* visual_config,
         Image* image) = 0;
     virtual void set_pos_rot_fov(

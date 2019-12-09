@@ -15,7 +15,7 @@ class Factory {
     std::vector<std::shared_ptr<Frame>> facets;
  public:
     explicit Factory(const Config ncfg);
-    void add_to_SurfaceEntity(SurfaceEntity* reflector);
+    void add_to_SurfaceEntity(std::shared_ptr<SurfaceEntity> reflector);
 };
 
 }  // namespace segmented_imaging_reflector

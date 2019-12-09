@@ -5,7 +5,7 @@
 
 namespace merlict {
 
-const SurfaceEntity VOID_SURFACE_ENTITY = SurfaceEntity();
+
 
 const function::Func1* SurfaceEntity::DEFAULT_REFLECTION = new function::Func1(
     {
@@ -52,29 +52,24 @@ void SurfaceEntity::init_surface_defaults() {
     inner_absorption = DEFAULT_ABSORPTION;
 }
 
-void SurfaceEntity::set_allowed_frames_to_propagate_to(const std::shared_ptr<Frame> frame) {
+void SurfaceEntity::set_allowed_frames_to_propagate_to(std::shared_ptr<const Frame> frame) {
     _allowed_frame_to_propagate_to = frame;
 }
 
 bool SurfaceEntity::has_restrictions_on_frames_to_propagate_to() const {
-    return _allowed_frame_to_propagate_to != VOID_FRAME;
+    return _allowed_frame_to_propagate_to.get() != &VOID_FRAME;
 }
 
-const std::shared_ptr<Frame> SurfaceEntity::allowed_frame_to_propagate_to()const {
+std::shared_ptr<const Frame> SurfaceEntity::allowed_frame_to_propagate_to()const {
     return _allowed_frame_to_propagate_to;
 }
 
 bool SurfaceEntity::boundary_layer_is_transparent()const {
-    if (
-        outer_refraction != DEFAULT_REFRACTION ||
-        inner_refraction != DEFAULT_REFRACTION)
-        return true;
-    else
-        return false;
+    return (outer_refraction != DEFAULT_REFRACTION) || (inner_refraction != DEFAULT_REFRACTION);
 }
 
 void SurfaceEntity::adopt_surface(
-    const SurfaceEntity* proto
+    std::shared_ptr<const SurfaceEntity> proto
 ) {
     outer_color = proto->outer_color;
     inner_color = proto->inner_color;
@@ -87,7 +82,7 @@ void SurfaceEntity::adopt_surface(
 }
 
 void SurfaceEntity::adopt_surface_inside_out(
-    const SurfaceEntity* proto
+    std::shared_ptr<const SurfaceEntity> proto
 ) {
     outer_color = proto->inner_color;
     inner_color = proto->outer_color;

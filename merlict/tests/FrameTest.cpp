@@ -27,10 +27,10 @@ TEST_CASE("FrameTest: duplicate_name_of_children_frames", "[merlict]") {
     ml::Frame Peter;
     Peter.set_name_pos_rot("peter", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
-    ml::std::shared_ptr<Frame> Klaus1 = Peter.add<ml::Frame>();
+    std::shared_ptr<ml::Frame> Klaus1 = Peter.add<ml::Frame>();
     Klaus1->set_name_pos_rot("klaus", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
-    ml::std::shared_ptr<Frame> Klaus2 = Peter.add<ml::Frame>();
+    std::shared_ptr<ml::Frame> Klaus2 = Peter.add<ml::Frame>();
     Klaus2->set_name_pos_rot("klaus", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
     CHECK_THROWS_AS(Peter.assert_no_children_duplicate_names(), std::invalid_argument);
@@ -58,7 +58,7 @@ TEST_CASE("FrameTest: re_set_frame", "[merlict]") {
 
     ml::Frame peter;
     peter.set_name_pos_rot("a_name", pos, rot);
-    ml::std::shared_ptr<Frame> hans = peter.add<ml::Frame>();
+    std::shared_ptr<ml::Frame> hans = peter.add<ml::Frame>();
     hans->set_name_pos_rot(
         "child_of_peter",
         ml::Vec3(1.0, 2.0, 3.0),
@@ -82,21 +82,21 @@ TEST_CASE("FrameTest: root_of_world_on_complete_tree", "[merlict]") {
     ml::Frame tree;
     tree.set_name_pos_rot("tree", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
-    ml::std::shared_ptr<Frame> leaf1 = tree.add<ml::Frame>();
+    std::shared_ptr<ml::Frame> leaf1 = tree.add<ml::Frame>();
     leaf1->set_name_pos_rot("leaf1", ml::Vec3(1, 0, 0), ml::ROT3_UNITY);
 
-    ml::std::shared_ptr<Frame> leaf2 = tree.add<ml::Frame>();
+    std::shared_ptr<ml::Frame> leaf2 = tree.add<ml::Frame>();
     leaf2->set_name_pos_rot("leaf2", ml::Vec3(-1, 0, 0), ml::ROT3_UNITY);
 
-    ml::std::shared_ptr<Frame> branch = tree.add<ml::Frame>();
+    std::shared_ptr<ml::Frame> branch = tree.add<ml::Frame>();
     branch->set_name_pos_rot("branch", ml::Vec3(0, 0, 1), ml::ROT3_UNITY);
 
-    ml::std::shared_ptr<Frame> leaf1_on_branch = branch->add<ml::Frame>();
+    std::shared_ptr<ml::Frame> leaf1_on_branch = branch->add<ml::Frame>();
     leaf1_on_branch->set_name_pos_rot(
         "leaf1_on_branch",
         ml::Vec3(1, 0, 0),
         ml::ROT3_UNITY);
-    ml::std::shared_ptr<Frame> leaf2_on_branch = branch->add<ml::Frame>();
+    std::shared_ptr<ml::Frame> leaf2_on_branch = branch->add<ml::Frame>();
     leaf2_on_branch->set_name_pos_rot(
         "leaf2_on_branch",
         ml::Vec3(0, 1, 0),
@@ -192,7 +192,7 @@ TEST_CASE("FrameTest: removing_a_cild", "[merlict]") {
     sphere->set_radius(1);
     sphere->outer_color = scenery.colors.get("green");
 
-    ml::std::shared_ptr<Frame> pole = scenery.root.add<ml::Frame>();
+    std::shared_ptr<ml::Frame> pole = scenery.root.add<ml::Frame>();
     pole->set_name_pos_rot("pole", ml::Vec3(0, 0, 0.5), ml::ROT3_UNITY);
 
     ml::Cylinder* pole1 = pole->add<ml::Cylinder>();
@@ -225,7 +225,7 @@ TEST_CASE("FrameTest: removing_a_cild", "[merlict]") {
     CHECK(!isec.does_intersect());
 
     // Append a temporary frame
-    ml::std::shared_ptr<Frame> temp = scenery.root.add<ml::Frame>();
+    std::shared_ptr<ml::Frame> temp = scenery.root.add<ml::Frame>();
     scenery.root.set_name_pos_rot("temp", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
     ml::Sphere* tball = temp->add<ml::Sphere>();

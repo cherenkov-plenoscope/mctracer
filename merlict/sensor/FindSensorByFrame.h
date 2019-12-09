@@ -13,7 +13,7 @@ struct FindSensorByFrame {
     sensor::Sensor* final_sensor;
 
     FindSensorByFrame(
-        const std::shared_ptr<Frame> final_frame,
+        std::shared_ptr<const Frame> final_frame,
         const std::vector<sensor::Sensor*>* sensors_by_frame);
 };
 

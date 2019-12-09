@@ -36,7 +36,7 @@ assumed to be little-endian, although this is not stated in documentation.
 
 void add_stl_to_and_inherit_surface_from_surfac_entity(
     const std::string path,
-    SurfaceEntity* proto,
+    std::shared_ptr<SurfaceEntity> proto,
     const double scale = 1.0
 );
 

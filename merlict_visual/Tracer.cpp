@@ -7,7 +7,7 @@ namespace visual {
 
 Tracer::Tracer(
     CameraRay* _cray,
-    const Frame* _scenery,
+    std::shared_ptr<const Frame> _scenery,
     const Config* _config,
     random::Mt19937* _prng
 ):
@@ -77,7 +77,7 @@ void Tracer::trace_back_beyond_boundary_layer(
     )
         scenery = isec.object()->allowed_frame_to_propagate_to();
     else
-        scenery = isec.object()->root();
+        scenery = isec.object()->root().lock();
 
     cray->set_support_and_direction(
         isec.position_in_root_frame(),

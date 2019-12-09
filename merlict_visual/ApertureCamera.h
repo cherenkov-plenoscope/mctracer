@@ -30,7 +30,7 @@ class ApertureCamera :public CameraDevice{
         const unsigned int col,
         random::Mt19937 *prng)const;
     void acquire_image(
-        const Frame* world,
+        std::shared_ptr<const Frame> world,
         const Config* visual_config,
         Image* image);
     std::string str()const;
@@ -61,7 +61,7 @@ class ApertureCamera :public CameraDevice{
     double object_size_for_image_size(const double image_size)const;
     std::string get_aperture_camera_print()const;
     std::vector<Color> acquire_pixels(
-        const Frame* world,
+        std::shared_ptr<const Frame> world,
         const Config* visual_config,
         const std::vector<PixelCoordinate> pixels);
 };

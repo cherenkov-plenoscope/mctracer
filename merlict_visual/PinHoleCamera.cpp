@@ -90,7 +90,7 @@ Vec3 PinHoleCamera::get_intersection_of_ray_on_image_sensor_for_pixel(
 
 Color __do_one_pixel(
     int id,
-    const Frame* world,
+    std::shared_ptr<const Frame> world,
     const Config* visual_config,
     random::Mt19937 *prng,
     const unsigned int pixel,
@@ -105,7 +105,7 @@ Color __do_one_pixel(
 }
 
 void PinHoleCamera::acquire_image(
-    const Frame* world,
+    std::shared_ptr<const Frame> world,
     const Config* visual_config,
     Image* image
 ) {

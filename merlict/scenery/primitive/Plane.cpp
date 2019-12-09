@@ -48,7 +48,7 @@ void Plane::calculate_intersection_with(
         if (RectBounds.is_inside(&intersection_vector)) {
             if (ray->support() != intersection_vector) {
                 intersections->emplace_back(
-                    this,
+                    std::static_pointer_cast<const SurfaceEntity>(this->shared_from_this()),
                     intersection_vector,
                     xyPlaneRayEquation.get_plane_normal_vector(),
                     v,

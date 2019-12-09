@@ -6,7 +6,7 @@
 
 namespace merlict {
 
-class BiConvexLens :public SurfaceEntity {
+class BiConvexLens : public SurfaceEntity {
  public:
     void set_curvature_radius_and_aperture_radius(
         const double curvature_radius,

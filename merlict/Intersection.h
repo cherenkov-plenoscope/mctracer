@@ -14,7 +14,7 @@ class Intersection {
  protected:
     Vec3 position;
     Vec3 surface_normal;
-    const SurfaceEntity* __object;
+    std::shared_ptr<const SurfaceEntity> __object;
     double distance_of_ray;
     bool __from_outside_to_inside;
     bool ray_runs_from_outside_to_inside(const Vec3& incident_in_obj_sys)const;
@@ -22,13 +22,13 @@ class Intersection {
  public:
     Intersection();
     Intersection(
-        const SurfaceEntity* intersectiong_object,
+        std::shared_ptr<const SurfaceEntity> intersecting_object,
         const Vec3 position,
         const Vec3 surface_normal,
         const double distance_of_ray_support_to_intersection,
         const Vec3 incident_in_obj_sys);
     bool does_intersect()const;
-    const SurfaceEntity * object()const;
+    std::shared_ptr<const SurfaceEntity> object()const;
     Vec3 position_in_object_frame()const;
     Vec3 position_in_root_frame()const;
     Vec3 surface_normal_in_object_frame()const;

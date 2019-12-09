@@ -10,13 +10,13 @@
 namespace merlict {
 
 class SurfaceEntity :public Frame {
-    const std::shared_ptr<Frame> _allowed_frame_to_propagate_to = VOID_FRAME;
+    std::shared_ptr<const Frame> _allowed_frame_to_propagate_to = VOID_FRAME.shared_from_this();
  public:
     SurfaceEntity();
     SurfaceEntity(
-        const std::string new_name,
-        const Vec3 new_pos,
-        const Rot3 new_rot);
+        std::string new_name,
+        Vec3 new_pos,
+        Rot3 new_rot);
 
     const Color* outer_color;
     const Color* inner_color;
@@ -27,10 +27,10 @@ class SurfaceEntity :public Frame {
     const function::Func1* outer_absorption;
     const function::Func1* inner_absorption;
 
-    void set_allowed_frames_to_propagate_to(const std::shared_ptr<Frame> frame);
-    void adopt_surface(const SurfaceEntity* proto);
-    void adopt_surface_inside_out(const SurfaceEntity* proto);
-    const std::shared_ptr<Frame> allowed_frame_to_propagate_to()const;
+    void set_allowed_frames_to_propagate_to(std::shared_ptr<const Frame> frame);
+    void adopt_surface(std::shared_ptr<const SurfaceEntity> proto);
+    void adopt_surface_inside_out(std::shared_ptr<const SurfaceEntity> proto);
+    std::shared_ptr<const Frame> allowed_frame_to_propagate_to()const;
     bool boundary_layer_is_transparent()const;
     bool has_restrictions_on_frames_to_propagate_to()const;
     std::string str()const;
@@ -42,8 +42,9 @@ class SurfaceEntity :public Frame {
     void init_surface_defaults();
 };
 
+
+const SurfaceEntity VOID_SURFACE_ENTITY;
 const SurfaceEntity SURFACE_PHOTON_SOURCE;
-extern const SurfaceEntity VOID_SURFACE_ENTITY;
 
 }  // namespace merlict
 

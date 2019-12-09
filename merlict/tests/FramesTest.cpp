@@ -7,14 +7,14 @@ namespace ml = merlict;
 
 
 TEST_CASE("FramesTest: too_close_together_no_frame", "[merlict]") {
-    std::vector<ml::std::shared_ptr<Frame>> vf;
+    std::vector<std::shared_ptr<ml::Frame>> vf;
     CHECK(!ml::bound::positions_in_mother_too_close(vf));
 }
 
 TEST_CASE("FramesTest: too_close_together_one_frame", "[merlict]") {
     ml::Frame root;
     root.set_name_pos_rot("root", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
-    std::vector<ml::std::shared_ptr<Frame>> vf; vf.push_back(&root);
+    std::vector<std::shared_ptr<ml::Frame>> vf; vf.push_back(&root);
     CHECK(!ml::bound::positions_in_mother_too_close(vf));
 }
 
@@ -25,7 +25,7 @@ TEST_CASE("FramesTest: too_close_together_true", "[merlict]") {
     ml::Frame f2;
     f2.set_name_pos_rot("f2", ml::VEC3_ORIGIN, ml::ROT3_UNITY);
 
-    std::vector<ml::std::shared_ptr<Frame>> vf; vf.push_back(&f1); vf.push_back(&f2);
+    std::vector<std::shared_ptr<ml::Frame>> vf; vf.push_back(&f1); vf.push_back(&f2);
     CHECK(ml::bound::positions_in_mother_too_close(vf));
 }
 
@@ -39,29 +39,29 @@ TEST_CASE("FramesTest: too_close_together_false", "[merlict]") {
         ml::Vec3(0, 0, 10.0*ml::FRAME_MIN_STRUCTURE_SIZE),
         ml::ROT3_UNITY);
 
-    std::vector<ml::std::shared_ptr<Frame>> vf; vf.push_back(&f1); vf.push_back(&f2);
+    std::vector<std::shared_ptr<ml::Frame>> vf; vf.push_back(&f1); vf.push_back(&f2);
     CHECK(!ml::bound::positions_in_mother_too_close(vf));
 }
 
 TEST_CASE("FramesTest: mean_no_frame", "[merlict]") {
-    std::vector<ml::std::shared_ptr<Frame>> vf;
+    std::vector<std::shared_ptr<ml::Frame>> vf;
     CHECK_THROWS_AS(ml::bound::position_mean_in_mother(vf), std::invalid_argument);
 }
 
 TEST_CASE("FramesTest: optimal_bounding_sphere_pos_no_frame", "[merlict]") {
-    std::vector<ml::std::shared_ptr<Frame>> vf;
+    std::vector<std::shared_ptr<ml::Frame>> vf;
     CHECK_THROWS_AS(ml::bound::bounding_sphere_center_alternative(vf), std::invalid_argument);
 }
 
 TEST_CASE("FramesTest: optimal_bounding_sphere_pos_one_frame", "[merlict]") {
     ml::Frame root;
     root.set_name_pos_rot("root", ml::VEC3_UNIT_X, ml::ROT3_UNITY);
-    std::vector<ml::std::shared_ptr<Frame>> vf; vf.push_back(&root);
+    std::vector<std::shared_ptr<ml::Frame>> vf; vf.push_back(&root);
     CHECK(ml::VEC3_UNIT_X == ml::bound::bounding_sphere_center_alternative(vf));
 }
 
 TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_frames_symetric", "[merlict]") {
-    std::vector<ml::std::shared_ptr<Frame>> vf;
+    std::vector<std::shared_ptr<ml::Frame>> vf;
     ml::Frame f1;
     f1.set_name_pos_rot("f1", ml::Vec3(0, 0, 0), ml::ROT3_UNITY);
     vf.push_back(&f1);
@@ -81,7 +81,7 @@ TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_frames_symetric", "[merl
 }
 
 TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_spheres_symetric", "[merlict]") {
-    std::vector<ml::std::shared_ptr<Frame>> vf;
+    std::vector<std::shared_ptr<ml::Frame>> vf;
     ml::Sphere f1;
     f1.set_name_pos_rot("f1", ml::Vec3(0, 0, 0), ml::ROT3_UNITY);
     f1.set_radius(1.0);
@@ -106,7 +106,7 @@ TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_spheres_symetric", "[mer
 }
 
 TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_spheres_asymetric", "[merlict]") {
-    std::vector<ml::std::shared_ptr<Frame>> vf;
+    std::vector<std::shared_ptr<ml::Frame>> vf;
     ml::Sphere f1;
     f1.set_name_pos_rot("f1", ml::Vec3(0, 0, 0), ml::ROT3_UNITY);
     f1.set_radius(1.0);
@@ -131,7 +131,7 @@ TEST_CASE("FramesTest: optimal_bounding_sphere_pos_many_spheres_asymetric", "[me
 }
 
 TEST_CASE("FramesTest: not_optimal_in_symetric_case", "[merlict]") {
-    std::vector<ml::std::shared_ptr<Frame>> vf;
+    std::vector<std::shared_ptr<ml::Frame>> vf;
     ml::Sphere f1;
     f1.set_name_pos_rot(
         "f1",

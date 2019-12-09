@@ -14,7 +14,7 @@ struct SensorMap: public ResourceMap {
     std::map<uint64_t, sensor::Sensor*> sensor_map;
     std::vector<sensor::Sensor> sensors_storage;
     std::vector<sensor::Sensor*> sensors;
-    void add(const uint64_t key, const std::shared_ptr<Frame> frame);
+    void add(const uint64_t key, std::shared_ptr<const Frame> frame);
     bool has(const uint64_t key)const;
     sensor::Sensor* get(const uint64_t key);
     void assert_has(const uint64_t key)const;

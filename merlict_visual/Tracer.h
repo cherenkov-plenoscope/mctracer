@@ -20,7 +20,7 @@ class Tracer {
  public:
     random::Mt19937* prng;
 
-    const Frame* scenery;
+    std::shared_ptr<const Frame> scenery;
     const Config* config;
 
     CameraRay* cray;
@@ -29,7 +29,7 @@ class Tracer {
 
     Tracer(
         CameraRay* cray,
-        const Frame* scenery,
+        std::shared_ptr<const Frame> scenery,
         const Config* config,
         random::Mt19937* prng);
     void trace_back();

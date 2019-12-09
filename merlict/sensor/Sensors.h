@@ -30,7 +30,7 @@ class Sensors {
     void init(const std::vector<Sensor*> &sensors);
     unsigned int size()const;
     Sensor* at(const unsigned int pos);
-    Sensor* at_frame(const std::shared_ptr<Frame> frame);
+    Sensor* at_frame(std::shared_ptr<const Frame> frame);
     void assign_photon(const Photon* photon);
     void assign_photons(const std::vector<Photon> *photons);
     void clear_history();

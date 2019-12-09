@@ -11,10 +11,10 @@ Factory::Factory(const Config ncfg):
     geometry(ncfg)
 {}
 
-void Factory::add_to_SurfaceEntity(SurfaceEntity* reflector) {
+void Factory::add_to_SurfaceEntity(std::shared_ptr<SurfaceEntity> reflector) {
     std::vector<Vec3> facet_positions = geometry.facet_positions();
     for (unsigned int i = 0; i < facet_positions.size(); i++) {
-        SphereCapWithHexagonalBound* facet =
+        std::shared_ptr<SphereCapWithHexagonalBound> facet =
             reflector->add<SphereCapWithHexagonalBound>();
         facet->set_name_pos_rot(
             "mirror_facet_" + std::to_string(i),

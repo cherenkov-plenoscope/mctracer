@@ -61,7 +61,7 @@ void image_to_opencv_image(const Image& image, cv::Mat* out) {
 }
 
 FlyingCamera::FlyingCamera(
-    const Frame *_world,
+    std::shared_ptr<const Frame> _world,
     const Config *_visual_config
 ):
     display_name(
@@ -409,7 +409,7 @@ void FlyingCamera::print_help()const {
 }
 
 void FlyingCamera::continue_with_new_scenery_and_visual_config(
-    const Frame *world,
+    std::shared_ptr<const Frame> world,
     const Config *visual_config
 ) {
     this->world = world;

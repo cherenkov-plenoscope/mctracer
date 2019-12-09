@@ -206,7 +206,7 @@ void set_surface(SurfaceEntity *s, Scenery *scenery, const Object &o) {
         s->outer_refraction = scenery->functions.get(su.st("outer_refraction"));
 }
 
-void make_children(Frame* mother, Scenery* scenery, const Object &o) {
+void make_children(std::shared_ptr<Frame> mother, Scenery* scenery, const Object &o) {
     std::map<std::string, json_to_frame> j2s = basic_scenery();
     const uint64_t num_children = o.size();
     for (uint64_t cidx = 0; cidx < num_children; cidx++) {
@@ -214,7 +214,7 @@ void make_children(Frame* mother, Scenery* scenery, const Object &o) {
         std::string type = jchild.st("type");
         if (has_key(j2s, type)) {
             json_to_frame us = get(j2s, type);
-            Frame* child = us(mother, scenery, jchild);
+            std::shared_ptr<Frame> child = us(mother, scenery, jchild);
             if (jchild.key("sensor_id")) {
                 scenery->sensors.add(
                     jchild.u8("sensor_id"),
@@ -269,7 +269,7 @@ function::Func1 json_to_linear_interpol_function(const Object &avsv) {
 }
 
 void append_to_frame_in_scenery(
-    Frame* mother,
+    std::shared_ptr<Frame> mother,
     Scenery* scenery,
     const std::string &path
 ) {
@@ -279,7 +279,7 @@ void append_to_frame_in_scenery(
 }
 
 void append_to_frame_in_scenery(
-    Frame* mother,
+    std::shared_ptr<Frame> mother,
     Scenery* scenery,
     const Object &o
 ) {
@@ -288,27 +288,27 @@ void append_to_frame_in_scenery(
     make_children(mother, scenery, o.obj("children"));
 }
 
-Frame* add_Frame(Frame* mother, Scenery *scenery, const Object &o) {
+std::shared_ptr<Frame> add_Frame(std::shared_ptr<Frame> mother, Scenery *scenery, const Object &o) {
     (void)scenery;
-    Frame* frame = mother->add<Frame>();
+    std::shared_ptr<Frame> frame = mother->add<Frame>();
     set_frame(frame, o);
     return frame;
 }
 
-Frame* add_Sphere(Frame* mother, Scenery *scenery, const Object &o) {
-    Sphere* sphere = mother->add<Sphere>();
+std::shared_ptr<Frame> add_Sphere(std::shared_ptr<Frame> mother, Scenery *scenery, const Object &o) {
+    std::shared_ptr<Sphere> sphere = mother->add<Sphere>();
     set_frame(sphere, o);
     sphere->set_radius(o.f8("radius"));
     set_surface(sphere, scenery, o);
     return sphere;
 }
 
-Frame* add_StereoLitography(
-    Frame* mother,
+std::shared_ptr<Frame> add_StereoLitography(
+    std::shared_ptr<Frame> mother,
     Scenery *scenery,
     const Object &o
 ) {
-    SurfaceEntity* object = mother->add<SurfaceEntity>();
+    std::shared_ptr<SurfaceEntity> object = mother->add<SurfaceEntity>();
     set_frame(object, o);
     set_surface(object, scenery, o);
     const double scale = o.f8("scale");
@@ -319,8 +319,8 @@ Frame* add_StereoLitography(
     return object;
 }
 
-Frame* add_Annulus(Frame* mother, Scenery *scenery, const Object &o) {
-    Annulus* annulus = mother->add<Annulus>();
+std::shared_ptr<Frame> add_Annulus(std::shared_ptr<Frame> mother, Scenery *scenery, const Object &o) {
+    std::shared_ptr<Annulus> annulus = mother->add<Annulus>();
     set_frame(annulus, o);
     annulus->set_outer_inner_radius(
         o.f8("outer_radius"),
@@ -329,8 +329,8 @@ Frame* add_Annulus(Frame* mother, Scenery *scenery, const Object &o) {
     return annulus;
 }
 
-Frame* add_Cylinder(Frame* mother, Scenery *scenery, const Object &o) {
-    Cylinder* c = mother->add<Cylinder>();
+std::shared_ptr<Frame> add_Cylinder(std::shared_ptr<Frame> mother, Scenery *scenery, const Object &o) {
+    std::shared_ptr<Cylinder> c = mother->add<Cylinder>();
     if (o.key("rot")) {
         set_frame(c, o);
         c->set_radius_and_length(
@@ -354,8 +354,8 @@ Frame* add_Cylinder(Frame* mother, Scenery *scenery, const Object &o) {
     return c;
 }
 
-Frame* add_Triangle(Frame* mother, Scenery *scenery, const Object &o) {
-    Triangle* tri = mother->add<Triangle>();
+std::shared_ptr<Frame> add_Triangle(std::shared_ptr<Frame> mother, Scenery *scenery, const Object &o) {
+    std::shared_ptr<Triangle> tri = mother->add<Triangle>();
     set_frame(tri, o);
     tri->set_corners_in_xy_plane(
         o.f8("Ax"), o.f8("Ay"),
@@ -365,36 +365,36 @@ Frame* add_Triangle(Frame* mother, Scenery *scenery, const Object &o) {
     return tri;
 }
 
-Frame* add_Disc(Frame* mother, Scenery *scenery, const Object &o) {
-    Disc* disc = mother->add<Disc>();
+std::shared_ptr<Frame> add_Disc(std::shared_ptr<Frame> mother, Scenery *scenery, const Object &o) {
+    std::shared_ptr<Disc> disc = mother->add<Disc>();
     set_frame(disc, o);
     disc->set_radius(o.f8("radius"));
     set_surface(disc, scenery, o);
     return disc;
 }
 
-Frame* add_Plane(Frame* mother, Scenery *scenery, const Object &o) {
-    Plane* plane = mother->add<Plane>();
+std::shared_ptr<Frame> add_Plane(std::shared_ptr<Frame> mother, Scenery *scenery, const Object &o) {
+    std::shared_ptr<Plane> plane = mother->add<Plane>();
     set_frame(plane, o);
     plane->set_x_y_width(o.f8("x_width"), o.f8("y_width"));
     set_surface(plane, scenery, o);
     return plane;
 }
 
-Frame* add_HexPlane(Frame* mother, Scenery *scenery, const Object &o) {
-    HexPlane* plane = mother->add<HexPlane>();
+std::shared_ptr<Frame> add_HexPlane(std::shared_ptr<Frame> mother, Scenery *scenery, const Object &o) {
+    std::shared_ptr<HexPlane> plane = mother->add<HexPlane>();
     set_frame(plane, o);
     plane->set_outer_hex_radius(o.f8("outer_radius"));
     set_surface(plane, scenery, o);
     return plane;
 }
 
-Frame* add_BiConvexLensHex(
-    Frame* mother,
+std::shared_ptr<Frame> add_BiConvexLensHex(
+    std::shared_ptr<Frame> mother,
     Scenery *scenery,
     const Object &o
 ) {
-    BiConvexLensHexBound* lens = mother->add<BiConvexLensHexBound>();
+    std::shared_ptr<BiConvexLensHexBound> lens = mother->add<BiConvexLensHexBound>();
     set_frame(lens, o);
     set_surface(lens, scenery, o);
     lens->set_curvature_radius_and_outer_hex_radius(
@@ -403,12 +403,12 @@ Frame* add_BiConvexLensHex(
     return lens;
 }
 
-Frame* add_SphereCapWithHexagonalBound(
-    Frame* mother,
+std::shared_ptr<Frame> add_SphereCapWithHexagonalBound(
+    std::shared_ptr<Frame> mother,
     Scenery *scenery,
     const Object &o
 ) {
-    SphereCapWithHexagonalBound* cap =
+    std::shared_ptr<SphereCapWithHexagonalBound> cap =
         mother->add<SphereCapWithHexagonalBound>();
     set_frame(cap, o);
     cap->set_curvature_radius_and_outer_hex_radius(
@@ -418,12 +418,12 @@ Frame* add_SphereCapWithHexagonalBound(
     return cap;
 }
 
-Frame* add_SphereCapWithRectangularBound(
-    Frame* mother,
+std::shared_ptr<Frame> add_SphereCapWithRectangularBound(
+    std::shared_ptr<Frame> mother,
     Scenery *scenery,
     const Object &o
 ) {
-    SphereCapWithRectangularBound* cap =
+    std::shared_ptr<SphereCapWithRectangularBound> cap =
         mother->add<SphereCapWithRectangularBound>();
     set_frame(cap, o);
     cap->set_curvature_radius_and_x_y_width(
@@ -434,8 +434,8 @@ Frame* add_SphereCapWithRectangularBound(
     return cap;
 }
 
-Frame* add_SegmentedReflector(
-    Frame* mother,
+std::shared_ptr<Frame> add_SegmentedReflector(
+    std::shared_ptr<Frame> mother,
     Scenery *scenery,
     const Object &o
 ) {
@@ -449,7 +449,7 @@ Frame* add_SegmentedReflector(
     cfg.gap_between_facets = o.f8("gap_between_facets");
 
     segmented_imaging_reflector::Factory refl_fab(cfg);
-    SurfaceEntity* reflector = mother->add<SurfaceEntity>();
+    std::shared_ptr<SurfaceEntity> reflector = mother->add<SurfaceEntity>();
     set_frame(reflector, o);
     set_surface(reflector, scenery, o);
     refl_fab.add_to_SurfaceEntity(reflector);

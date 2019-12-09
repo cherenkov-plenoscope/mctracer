@@ -18,7 +18,7 @@ class PinHoleCamera:public CameraDevice{
         const Rot3 rotation,
         const double field_of_view);
     void acquire_image(
-        const Frame* world,
+        std::shared_ptr<const Frame> world,
         const Config* visual_config,
         Image* image);
     CameraRay get_ray_for_pixel_in_row_and_col(

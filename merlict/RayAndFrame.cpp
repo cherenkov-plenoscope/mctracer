@@ -108,7 +108,7 @@ bool ray_intersects_frames_bounding_sphere(
 
 Ray ray_with_respect_to_frame(
     const Ray* ray,
-    const std::shared_ptr<Frame> frame
+    std::shared_ptr<const Frame> frame
 ) {
     Ray ray_in_object_system_of_frame = *ray;
     ray_in_object_system_of_frame.transform_inverse(frame->frame2world());
@@ -117,7 +117,7 @@ Ray ray_with_respect_to_frame(
 
 Intersection rays_first_intersection_with_frame(
     const Ray* ray,
-    const std::shared_ptr<Frame> frame
+    std::shared_ptr<const Frame> frame
 ) {
     CausalIntersection intersect_calculator(ray, frame);
     return intersect_calculator.closest_intersection;
@@ -125,7 +125,7 @@ Intersection rays_first_intersection_with_frame(
 
 CausalIntersection::CausalIntersection(
     const Ray* _ray,
-    const std::shared_ptr<Frame> frame
+    std::shared_ptr<const Frame> frame
 ): ray(_ray) {
     candidate_objects.clear();
     candidate_intersections.clear();
@@ -135,7 +135,7 @@ CausalIntersection::CausalIntersection(
 }
 
 void CausalIntersection::find_intersection_candidates_in_tree_of_frames(
-    const std::shared_ptr<Frame> frame
+    std::shared_ptr<const Frame> frame
 ) {
     if (ray_intersects_frames_bounding_sphere(ray, frame)) {
         if (frame->has_children()) {
@@ -149,7 +149,7 @@ void CausalIntersection::find_intersection_candidates_in_tree_of_frames(
 }
 
 void CausalIntersection::find_intersections_in_candidate_objects() {
-    for (const std::shared_ptr<Frame> object : candidate_objects) {
+    for (std::shared_ptr<const Frame> object : candidate_objects) {
         Ray ray_in_object_system = ray_with_respect_to_frame(ray, object);
         object->calculate_intersection_with(
             &ray_in_object_system,
@@ -158,9 +158,9 @@ void CausalIntersection::find_intersections_in_candidate_objects() {
 }
 
 void CausalIntersection::calculate_closest_intersection() {
-    if (candidate_intersections.size() == 0)
+    if (candidate_intersections.empty())
         closest_intersection = Intersection(
-            &VOID_SURFACE_ENTITY,
+            std::static_pointer_cast<const SurfaceEntity>(VOID_SURFACE_ENTITY.shared_from_this()),
             ray->position_at(1e4),
             ray->direction(),
             1e4,

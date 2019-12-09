@@ -107,7 +107,7 @@ void Propagator::propagate_on_after_boundary_layer(const Fresnel &fresnel) {
             isec.object()->allowed_frame_to_propagate_to();
     else
         env.root_frame =
-            isec.object()->root();
+            isec.object()->root().lock();
 
     ph->set_support_and_direction(
         isec.position_in_root_frame(),

@@ -54,91 +54,91 @@ struct Object {
 
 Object load(const std::string &path);
 
-void set_frame(Frame *f, const Object &o);
-void set_surface(SurfaceEntity *s, Scenery *scenery, const Object &o);
-void make_children(Frame* mother, Scenery* scenery, const Object &o);
+void set_frame(std::shared_ptr<Frame> f, const Object &o);
+void set_surface(std::shared_ptr<SurfaceEntity> s, Scenery *scenery, const Object &o);
+void make_children(std::shared_ptr<Frame> mother, Scenery* scenery, const Object &o);
 void add_colors(ColorMap* colors, const Object &o);
 std::vector<std::vector<double>> json_to_vec_of_vecs(const Object &avsv);
 function::Func1 json_to_linear_interpol_function(const Object &avsv);
 void add_functions(FunctionMap* functions, const Object &o);
 
 void append_to_frame_in_scenery(
-    Frame* frame,
+    std::shared_ptr<Frame> frame,
     Scenery* scenery,
     const std::string &path);
 
 void append_to_frame_in_scenery(
-    Frame* mother,
+    std::shared_ptr<Frame> mother,
     Scenery* scenery,
     const Object &o);
 
-Frame* add_Frame(
-    Frame* mother,
+std::shared_ptr<Frame> add_Frame(
+    std::shared_ptr<Frame> mother,
     Scenery *scenery,
     const Object &o);
 
-Frame* add_Sphere(
-    Frame* mother,
+std::shared_ptr<Frame> add_Sphere(
+    std::shared_ptr<Frame> mother,
     Scenery *scenery,
     const Object &o);
 
-Frame* add_Annulus(
-    Frame* mother,
+std::shared_ptr<Frame> add_Annulus(
+    std::shared_ptr<Frame> mother,
     Scenery *scenery,
     const Object &o);
 
-Frame* add_Cylinder(
-    Frame* mother,
+std::shared_ptr<Frame> add_Cylinder(
+    std::shared_ptr<Frame> mother,
     Scenery *scenery,
     const Object &o);
 
-Frame* add_Triangle(
-    Frame* mother,
+std::shared_ptr<Frame> add_Triangle(
+    std::shared_ptr<Frame> mother,
     Scenery *scenery,
     const Object &o);
 
-Frame* add_Disc(
-    Frame* mother,
+std::shared_ptr<Frame> add_Disc(
+    std::shared_ptr<Frame> mother,
     Scenery *scenery,
     const Object &o);
 
-Frame* add_Plane(
-    Frame* mother,
+std::shared_ptr<Frame> add_Plane(
+    std::shared_ptr<Frame> mother,
     Scenery *scenery,
     const Object &o);
 
-Frame* add_HexPlane(
-    Frame* mother,
+std::shared_ptr<Frame> add_HexPlane(
+    std::shared_ptr<Frame> mother,
     Scenery *scenery,
     const Object &o);
 
-Frame* add_StereoLitography(
-    Frame* mother,
+std::shared_ptr<Frame> add_StereoLitography(
+    std::shared_ptr<Frame> mother,
     Scenery *scenery,
     const Object &o);
 
-Frame* add_BiConvexLensHex(
-    Frame* mother,
+std::shared_ptr<Frame> add_BiConvexLensHex(
+    std::shared_ptr<Frame> mother,
     Scenery *scenery,
     const Object &o);
 
-Frame* add_SphereCapWithHexagonalBound(
-    Frame* mother,
+std::shared_ptr<Frame> add_SphereCapWithHexagonalBound(
+    std::shared_ptr<Frame> mother,
     Scenery *scenery,
     const Object &o);
 
-Frame* add_SphereCapWithRectangularBound(
-    Frame* mother,
+std::shared_ptr<Frame> add_SphereCapWithRectangularBound(
+    std::shared_ptr<Frame> mother,
     Scenery *scenery,
     const Object &o);
 
-Frame* add_SegmentedReflector(
-    Frame* mother,
+std::shared_ptr<Frame> add_SegmentedReflector(
+    std::shared_ptr<Frame> mother,
     Scenery *scenery,
     const Object &o);
 
 
-typedef Frame* (*json_to_frame)(Frame*, Scenery*, const Object &);
+typedef std::shared_ptr<Frame> (*json_to_frame)(std::shared_ptr<Frame>, Scenery*, const Object &);
 
 std::map<std::string, json_to_frame> basic_scenery();
 

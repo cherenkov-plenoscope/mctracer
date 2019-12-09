@@ -193,7 +193,7 @@ TEST_CASE("JsonTest: parse_mini_scenery", "[merlict]") {
     CHECK(s.colors.has("leaf_green"));
     CHECK(s.colors.has("orange"));
 
-    const std::vector<ml::Frame*>* children = s.root.get_children();
+    const std::vector<std::shared_ptr<ml::Frame>>* children = s.root.get_children();
     REQUIRE(1u == children->size());
     CHECK("tree" == children->at(0)->get_name());
 }
@@ -247,7 +247,7 @@ TEST_CASE("JsonTest: Annulus", "[merlict]") {
     )"_json;
     ml::json::Object o(j);
     ml::Scenery s;
-    ml::Frame* a = ml::json::add_Annulus(&s.root, &s, o);
+    std::shared_ptr<ml::Frame> a = ml::json::add_Annulus(&s.root, &s, o);
     CHECK("ring" == a->get_name());
     CHECK(ml::Vec3(0, 0, 3) == a->position_in_mother());
     CHECK(ml::Rot3(0, 1, 0) == a->rotation_in_mother());
@@ -269,7 +269,7 @@ TEST_CASE("JsonTest: Cylinder_with_rot_and_pos", "[merlict]") {
     )"_json;
     ml::json::Object o(j);
     ml::Scenery s;
-    ml::Frame* a = ml::json::add_Cylinder(&s.root, &s, o);
+    std::shared_ptr<ml::Frame> a = ml::json::add_Cylinder(&s.root, &s, o);
     CHECK("cyl" == a->get_name());
     CHECK(ml::Vec3(0, 0, 3) == a->position_in_mother());
     CHECK(ml::Rot3(0, 1, 0) == a->rotation_in_mother());
@@ -290,7 +290,7 @@ TEST_CASE("JsonTest: Cylinder_with_start_pos_and_end_pos", "[merlict]") {
     )"_json;
     ml::json::Object o(j);
     ml::Scenery s;
-    ml::Frame* a = ml::json::add_Cylinder(&s.root, &s, o);
+    std::shared_ptr<ml::Frame> a = ml::json::add_Cylinder(&s.root, &s, o);
     CHECK("cyl" == a->get_name());
     CHECK(0u == a->get_children()->size());
 }
@@ -309,7 +309,7 @@ TEST_CASE("JsonTest: Triangle", "[merlict]") {
     )"_json;
     ml::json::Object o(j);
     ml::Scenery s;
-    ml::Frame* a = ml::json::add_Triangle(&s.root, &s, o);
+    std::shared_ptr<ml::Frame> a = ml::json::add_Triangle(&s.root, &s, o);
     CHECK("tri" == a->get_name());
     CHECK(0u == a->get_children()->size());
 }
@@ -328,7 +328,7 @@ TEST_CASE("JsonTest: Disc", "[merlict]") {
     )"_json;
     ml::Scenery s;
     ml::json::Object o(j);
-    ml::Frame* a = ml::json::add_Disc(&s.root, &s, o);
+    std::shared_ptr<ml::Frame> a = ml::json::add_Disc(&s.root, &s, o);
     CHECK("didi" == a->get_name());
     CHECK(0u == a->get_children()->size());
 }

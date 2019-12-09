@@ -59,7 +59,7 @@ void SurfaceWithOuterPrismBound::add_causeal_intersection(
 
         if (ray->support() != causal_intersec) {
             intersections->emplace_back(
-                this,
+                std::static_pointer_cast<const SurfaceEntity>(this->shared_from_this()),
                 causal_intersec,
                 eq->get_surface_normal_given_intersection_vector(
                     &causal_intersec),

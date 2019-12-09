@@ -26,7 +26,7 @@ void TrajectoryFactory::append_trajectory_to(std::shared_ptr<Frame> root_frame) 
         i++
     ) {
         if (is_not_the_last_intersection(i)) {
-            Cylinder* ray_trajectory = trajectory->add<Cylinder>();
+            std::shared_ptr <Cylinder> ray_trajectory = trajectory->add<Cylinder>();
             ray_trajectory->set_name_pos_rot(
                 get_trajectory_of_part_index(i),
                 VEC3_ORIGIN,
@@ -41,7 +41,7 @@ void TrajectoryFactory::append_trajectory_to(std::shared_ptr<Frame> root_frame) 
             ray_trajectory->inner_color = &COLOR_RED;
         }
 
-        Sphere* intersection_indicator = trajectory->add<Sphere>();
+        std::shared_ptr<Sphere> intersection_indicator = trajectory->add<Sphere>();
         intersection_indicator->set_name_pos_rot(
             get_intersection_point_name_of_part(i),
             ray->intersection_history.at(i).

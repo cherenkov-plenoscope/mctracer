@@ -11,7 +11,7 @@ namespace merlict {
 
 void propagate_photons_in_frame_with_config_multi_thread(
     std::vector<Photon> *photons,
-    const Frame* world,
+    std::shared_ptr<const Frame> world,
     const PropagationConfig* settings,
     random::Generator* prng);
 

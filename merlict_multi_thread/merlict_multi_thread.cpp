@@ -11,7 +11,7 @@ namespace merlict {
 
 void __propagate_one_photon(
     int id,
-    const Frame* world,
+    std::shared_ptr<const Frame> world,
     const PropagationConfig* settings,
     const uint64_t seed,
     Photon* photon
@@ -27,7 +27,7 @@ void __propagate_one_photon(
 
 void propagate_photons_in_frame_with_config_multi_thread(
     std::vector<Photon> *photons,
-    const Frame* world,
+    std::shared_ptr<const Frame> world,
     const PropagationConfig* settings,
     random::Generator* prng
 ) {

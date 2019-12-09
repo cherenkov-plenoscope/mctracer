@@ -30,7 +30,7 @@ struct BiConvexLensTest {
     }
 
     void set_up_test_bench() {
-        ml::std::shared_ptr<Frame> test_bench = scenery.root.add<ml::Frame>();
+        std::shared_ptr<ml::Frame> test_bench = scenery.root.add<ml::Frame>();
         test_bench->set_name_pos_rot(
             "BiConvexLens_test_world",
             ml::VEC3_ORIGIN,

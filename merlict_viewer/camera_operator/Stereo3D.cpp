@@ -17,7 +17,7 @@ Stereo3D::Stereo3D(CameraDevice* camera_to_work_with):
             camera->num_rows)) {}
 
 void Stereo3D::aquire_stereo_image(
-    const Frame* world,
+    std::shared_ptr<const Frame> world,
     const Config* visual_config,
     Image* stereo_image
 ) {

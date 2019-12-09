@@ -62,8 +62,8 @@ Vec3 bounding_sphere_center_alternative(const std::vector<std::shared_ptr<Frame>
     if (frames.size() == 1)
         return frames.at(0)->position_in_mother();
 
-    const std::shared_ptr<Frame> start_frame = VOID_FRAME;
-    const std::shared_ptr<Frame> end_frame = VOID_FRAME;
+    std::shared_ptr<const Frame> start_frame = VOID_FRAME.shared_from_this();
+    std::shared_ptr<const Frame> end_frame = VOID_FRAME.shared_from_this();
 
     double maximum = 0.0;
     for (unsigned int i = 0; i < frames.size(); i++) {
@@ -194,7 +194,7 @@ double bounding_sphere_radius(
     // new child.
 
     double radius = 0.0;
-    for (const std::shared_ptr<Frame> child : frames) {
+    for (std::shared_ptr<const Frame> child : frames) {
         const double radius_needed_for_child =
             (center - child->position_in_mother()).norm() +
             child->get_bounding_sphere_radius();

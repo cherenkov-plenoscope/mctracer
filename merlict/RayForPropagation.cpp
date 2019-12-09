@@ -38,7 +38,7 @@ RayForPropagation::RayForPropagation(
 
 void RayForPropagation::push_back_production() {
     Intersection production_intersection(
-        &SURFACE_PHOTON_SOURCE,
+        std::static_pointer_cast<const SurfaceEntity>(SURFACE_PHOTON_SOURCE.shared_from_this()),
         support_,
         direction_,  // set normal of production obj to direction of ray
         0.0,

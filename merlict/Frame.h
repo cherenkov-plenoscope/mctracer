@@ -20,7 +20,7 @@ const char FRAME_PATH_DELIMITER = '/';
 const unsigned int FRAME_MAX_NUMBER_CHILDREN = 16;
 const double FRAME_MIN_STRUCTURE_SIZE = 1e-6;
 
-class Frame {
+class Frame : public std::enable_shared_from_this<Frame> {
     // A frame defines the geometric relation to its mother frame and its
     // children frames. This way a tree structure of the scenery is created.
     // The root of this tree is often called 'world' or 'world frame' here.
@@ -32,8 +32,8 @@ class Frame {
     HomTra3 T_frame2mother;
     HomTra3 T_frame2world;
     std::vector<std::shared_ptr<Frame>> children;
-    std::weak_ptr<Frame> mother;
-    const std::weak_ptr<Frame> root_frame;
+    std::weak_ptr<const Frame> mother;
+    std::weak_ptr<const Frame> root_frame;
 
  public:
     // SET
@@ -53,7 +53,7 @@ class Frame {
     const HomTra3* frame2mother()const;
     const HomTra3* frame2world()const;
     const std::vector<std::shared_ptr<Frame>>* get_children()const;
-    const std::shared_ptr<Frame> root()const;
+    std::weak_ptr<const Frame> root()const;
     bool has_mother()const;
     bool has_children()const;
     void assert_no_children_duplicate_names()const;
@@ -64,10 +64,10 @@ class Frame {
     std::shared_ptr<ProtoFrame> add() {
         std::shared_ptr<ProtoFrame> child = std::make_shared<ProtoFrame>();
         children.push_back(child);
-        child->mother = this;
+        child->mother = this->shared_from_this();
         return child;
     }
-    void erase(const std::shared_ptr<Frame> child);
+    void erase(std::shared_ptr<const Frame> child);
     void init_tree_based_on_mother_child_relations();
     virtual void calculate_intersection_with(
         const Ray* ray,
@@ -78,14 +78,14 @@ class Frame {
     void init_frame2world();
     void init_root();
     void set_name(const std::string name);
-    void warn_small_child(const std::shared_ptr<Frame> frame)const;
+    void warn_small_child(std::shared_ptr<const Frame> frame)const;
     void warn_about_close_frames()const;
     void cluster_children();
     void assert_name_is_valid(const std::string name_to_check)const;
     void update_bounding_sphere();
 };
 
-const std::shared_ptr<Frame> VOID_FRAME = std::make_shared<Frame>();
+const Frame VOID_FRAME;
 
 }  // namespace merlict
 

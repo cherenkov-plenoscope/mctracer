@@ -15,17 +15,15 @@ namespace merlict {
 
 Frame::Frame():
     bounding_sphere_radius(0.0),
-    mother(this),
-    root_frame(this) {}
+    mother(this->shared_from_this()),
+    root_frame(this->shared_from_this()) {}
 
 Frame::~Frame() {
-    for (std::shared_ptr<Frame> child : children)
-        delete child;
 }
 
 HomTra3 Frame::calculate_frame2world()const {
     if (has_mother())
-        return mother->T_frame2world*T_frame2mother;
+        return mother.lock()->T_frame2world * T_frame2mother;
     else
         return T_frame2mother;
 }
@@ -104,11 +102,10 @@ std::string Frame::tree_str()const {
     return out.str();
 }
 
-void Frame::erase(const std::shared_ptr<Frame> child_rm) {
+void Frame::erase(std::shared_ptr<const Frame> child_rm) {
     bool found = false;
     for (unsigned int i=0; i < children.size(); i++) {
         if (children.at(i) == child_rm) {
-            delete children.at(i);
             children.erase(children.begin()+i);
             found = true;
         }
@@ -139,7 +136,7 @@ void Frame::init_frame2world() {
 
 void Frame::update_bounding_sphere() {
     // Run from bottom to the top through the tree.
-    for (Frame *child : children)
+    for (std::shared_ptr<Frame> child : children)
         child->update_bounding_sphere();
     if (has_children())
         bounding_sphere_radius =
@@ -149,15 +146,15 @@ void Frame::update_bounding_sphere() {
 void Frame::init_root() {
     // Run from top to bottom through the tree.
     if (has_mother())
-        root_frame = mother->root();
+        root_frame = mother.lock()->root();
     else
-        root_frame = this;
+        root_frame = this->shared_from_this();
 
     for (std::shared_ptr<Frame> child : children)
         child->init_root();
 }
 
-const std::shared_ptr<Frame> Frame::root()const {
+std::weak_ptr<const Frame> Frame::root()const {
     return root_frame;
 }
 
@@ -166,13 +163,13 @@ std::string Frame::path_in_tree()const {
     // unix systems.
     // eg. City/Street14/house18/roof/chimney/chimney_wall_2
     if (has_mother())
-        return mother->path_in_tree() + FRAME_PATH_DELIMITER + name;
+        return mother.lock()->path_in_tree() + FRAME_PATH_DELIMITER + name;
     else
         return "";
 }
 
 bool Frame::has_mother()const {
-    return mother != this;
+    return mother.lock() != this->shared_from_this();
 }
 
 bool Frame::has_children()const {
@@ -210,12 +207,12 @@ void Frame::cluster_children() {
                     )
                         warn_small_child(child);
 
-                    child->mother = this;
+                    child->mother = this->shared_from_this();
                     children.push_back(child);
                 }
             } else {
                 if (oct_tree[sector].size() == 1) {
-                    oct_tree[sector].at(0)->mother = this;
+                    oct_tree[sector].at(0)->mother = this->shared_from_this();
                     this->children.push_back(oct_tree[sector].at(0));
                 } else if (oct_tree[sector].size() > 1) {
                     Vec3 octant_center = bound::bounding_sphere_center(
@@ -266,7 +263,7 @@ void Frame::warn_about_close_frames()const {
     std::cerr << out.str();
 }
 
-void Frame::warn_small_child(const std::shared_ptr<Frame> frame)const {
+void Frame::warn_small_child(std::shared_ptr<const Frame> frame)const {
     std::stringstream out;
     out << "___Warning___\n";
     out << __FILE__ << " " << __func__ << "(frame) " << __LINE__ << "\n";

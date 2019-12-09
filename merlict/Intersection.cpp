@@ -6,7 +6,7 @@
 namespace merlict {
 
 Intersection::Intersection() {
-    __object = &VOID_SURFACE_ENTITY;
+    __object = std::static_pointer_cast<const SurfaceEntity>(VOID_SURFACE_ENTITY.shared_from_this());
     position = Vec3(
         std::numeric_limits<double>::infinity(),
         std::numeric_limits<double>::infinity(),
@@ -16,7 +16,7 @@ Intersection::Intersection() {
 }
 
 Intersection::Intersection(
-    const SurfaceEntity* intersectiong_object,
+    std::shared_ptr<const SurfaceEntity> intersectiong_object,
     const Vec3 _position,
     const Vec3 _surface_normal,
     const double distance_of_ray_support_to_intersection,
@@ -31,10 +31,10 @@ Intersection::Intersection(
 {}
 
 bool Intersection::does_intersect()const {
-    return __object != &VOID_SURFACE_ENTITY;
+    return __object.get() != &VOID_SURFACE_ENTITY;
 }
 
-const SurfaceEntity * Intersection::object()const {
+std::shared_ptr<const SurfaceEntity> Intersection::object()const {
     return __object;
 }
 

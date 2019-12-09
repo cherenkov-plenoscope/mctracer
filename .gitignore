@@ -2,3 +2,4 @@ merlict.cpp
 merlict.h
 merlict_test.cpp
 build/
+cmake-build-debug

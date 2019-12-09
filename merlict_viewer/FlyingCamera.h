@@ -23,16 +23,16 @@ class FlyingCamera {
 // Also 3D stereo images are possible
  public:
     FlyingCamera(
-        const Frame *world,
+        std::shared_ptr<const Frame> world,
         const Config *visual_config);
     void continue_with_new_scenery_and_visual_config(
-        const Frame *world,
+        std::shared_ptr<const Frame> world,
         const Config *visual_config);
     ~FlyingCamera();
 
  private:
     const std::string display_name;
-    const Frame *world;
+    std::shared_ptr<const Frame> world;
     const Config *visual_config;
     PinHoleCamera camera_preview;
     PinHoleCamera camera;

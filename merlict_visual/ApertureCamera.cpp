@@ -178,7 +178,7 @@ Vec3 ApertureCamera::ray_direction_in_root(
 }
 
 void ApertureCamera::acquire_image(
-    const Frame* world,
+    std::shared_ptr<const Frame> world,
     const Config* visual_config,
     Image* image
 ) {
@@ -281,7 +281,7 @@ void ApertureCamera::acquire_image(
 
 Color __do_one_ray(
     int id,
-    const Frame* world,
+    std::shared_ptr<const Frame> world,
     const Config* visual_config,
     random::Mt19937 *prng,
     const PixelCoordinate pixel,
@@ -296,7 +296,7 @@ Color __do_one_ray(
 }
 
 std::vector<Color> ApertureCamera::acquire_pixels(
-    const Frame* world,
+    std::shared_ptr<const Frame> world,
     const Config* visual_config,
     const std::vector<PixelCoordinate> pixels
 ) {

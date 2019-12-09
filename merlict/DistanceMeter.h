@@ -8,7 +8,7 @@
 namespace merlict {
 
 struct DistanceMeter {
-    DistanceMeter(const Ray* ray, const std::shared_ptr<Frame> world);
+    DistanceMeter(const Ray* ray, std::shared_ptr<const Frame> world);
     bool faces_an_object;
     double distance_to_closest_object;
 };
