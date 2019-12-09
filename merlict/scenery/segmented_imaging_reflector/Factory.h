@@ -12,7 +12,7 @@ namespace segmented_imaging_reflector {
 class Factory {
     const Config cfg;
     Geometry geometry;
-    std::vector<Frame*> facets;
+    std::vector<std::shared_ptr<Frame>> facets;
  public:
     explicit Factory(const Config ncfg);
     void add_to_SurfaceEntity(SurfaceEntity* reflector);

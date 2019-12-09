@@ -6,7 +6,7 @@
 
 namespace merlict {
 
-void SensorMap::add(const uint64_t key, const Frame* frame) {
+void SensorMap::add(const uint64_t key, const std::shared_ptr<Frame> frame) {
     assert_not_in_use_yet(key);
     sensor::Sensor* sens = new sensor::Sensor(key, frame);
     sensors.push_back(sens);

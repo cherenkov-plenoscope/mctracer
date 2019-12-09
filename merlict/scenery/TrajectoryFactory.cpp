@@ -13,7 +13,7 @@ void TrajectoryFactory::set_trajectory_radius(const double radius) {
     radius_of_trajectory = radius;
 }
 
-void TrajectoryFactory::append_trajectory_to(Frame* root_frame) {
+void TrajectoryFactory::append_trajectory_to(std::shared_ptr<Frame> root_frame) {
     trajectory = root_frame->add<Frame>();
     trajectory->set_name_pos_rot(
         "trajectory_" + std::to_string(ray->simulation_truth_id),
@@ -57,7 +57,7 @@ void TrajectoryFactory::append_trajectory_to(Frame* root_frame) {
     }
 }
 
-void TrajectoryFactory::erase_trajectory_from(Frame* root_frame) {
+void TrajectoryFactory::erase_trajectory_from(std::shared_ptr<Frame> root_frame) {
     root_frame->erase(trajectory);
 }
 

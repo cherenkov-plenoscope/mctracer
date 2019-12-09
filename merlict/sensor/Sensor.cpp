@@ -7,7 +7,7 @@
 namespace merlict {
 namespace sensor {
 
-Sensor::Sensor(unsigned int _id, const Frame* _frame):
+Sensor::Sensor(unsigned int _id, const std::shared_ptr<Frame> _frame):
     id(_id),
     frame(_frame) {}
 

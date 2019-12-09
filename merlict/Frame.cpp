@@ -19,7 +19,7 @@ Frame::Frame():
     root_frame(this) {}
 
 Frame::~Frame() {
-    for (Frame* child : children)
+    for (std::shared_ptr<Frame> child : children)
         delete child;
 }
 
@@ -96,7 +96,7 @@ std::string Frame::tree_str()const {
     out << name << ", pos " << pos_in_mother.str() << ", r ";
     out << bounding_sphere_radius << "m\n";
 
-    for (Frame* child : children)
+    for (std::shared_ptr<Frame> child : children)
         out << txt::place_first_infront_of_each_new_line_of_second(
             "| ",
             child->tree_str());
@@ -104,7 +104,7 @@ std::string Frame::tree_str()const {
     return out.str();
 }
 
-void Frame::erase(const Frame* child_rm) {
+void Frame::erase(const std::shared_ptr<Frame> child_rm) {
     bool found = false;
     for (unsigned int i=0; i < children.size(); i++) {
         if (children.at(i) == child_rm) {
@@ -133,7 +133,7 @@ void Frame::init_frame2world() {
     // Run from top to bottom through the tree.
     T_frame2world = calculate_frame2world();
 
-    for (Frame* child : children)
+    for (std::shared_ptr<Frame> child : children)
         child->init_frame2world();
 }
 
@@ -153,11 +153,11 @@ void Frame::init_root() {
     else
         root_frame = this;
 
-    for (Frame* child : children)
+    for (std::shared_ptr<Frame> child : children)
         child->init_root();
 }
 
-const Frame* Frame::root()const {
+const std::shared_ptr<Frame> Frame::root()const {
     return root_frame;
 }
 
@@ -189,10 +189,10 @@ void Frame::calculate_intersection_with(
 
 void Frame::cluster_children() {
     if (children.size() > FRAME_MAX_NUMBER_CHILDREN) {
-        std::vector<Frame*> oct_tree[8];
+        std::vector<std::shared_ptr<Frame>> oct_tree[8];
 
         // assign children temporarly to octtree
-        for (Frame* child : children) {
+        for (std::shared_ptr<Frame> child : children) {
             child->mother = child->mother;
             oct_tree[child->pos_in_mother.octant()].push_back(child);
         }
@@ -203,7 +203,7 @@ void Frame::cluster_children() {
                     oct_tree[sector])
             ) {
                 warn_about_close_frames();
-                for (Frame* child : oct_tree[sector]) {
+                for (std::shared_ptr<Frame> child : oct_tree[sector]) {
                     if (
                         child->get_bounding_sphere_radius() <
                         FRAME_MIN_STRUCTURE_SIZE
@@ -221,13 +221,13 @@ void Frame::cluster_children() {
                     Vec3 octant_center = bound::bounding_sphere_center(
                         oct_tree[sector]);
 
-                    Frame* octant = add<Frame>();
+                    std::shared_ptr<Frame> octant = add<Frame>();
                     octant->set_name_pos_rot(
                         "oct_"+std::to_string(sector),
                         octant_center,
                         ROT3_UNITY);
 
-                    for (Frame* sector_child : oct_tree[sector]) {
+                    for (std::shared_ptr<Frame> sector_child : oct_tree[sector]) {
                         if (
                             !sector_child->has_children() &&
                             sector_child->get_bounding_sphere_radius() <
@@ -250,7 +250,7 @@ void Frame::cluster_children() {
         }
     }
 
-    for (Frame* child : children)
+    for (std::shared_ptr<Frame> child : children)
         child->cluster_children();
 }
 
@@ -266,7 +266,7 @@ void Frame::warn_about_close_frames()const {
     std::cerr << out.str();
 }
 
-void Frame::warn_small_child(const Frame* frame)const {
+void Frame::warn_small_child(const std::shared_ptr<Frame> frame)const {
     std::stringstream out;
     out << "___Warning___\n";
     out << __FILE__ << " " << __func__ << "(frame) " << __LINE__ << "\n";
@@ -304,7 +304,7 @@ const HomTra3* Frame::frame2world()const {
     return &T_frame2world;
 }
 
-const std::vector<Frame*>* Frame::get_children()const {
+const std::vector<std::shared_ptr<Frame>>* Frame::get_children()const {
     return &children;
 }
 
@@ -312,7 +312,7 @@ void Frame::assert_no_children_duplicate_names()const {
     // this also checks for duplicate frames
     std::set<std::string> unique_set;
 
-    for (Frame* child : children) {
+    for (std::shared_ptr<Frame> child : children) {
         auto ret = unique_set.insert(child->get_name());
         if (ret.second == false) {
             std::stringstream info;
@@ -325,7 +325,7 @@ void Frame::assert_no_children_duplicate_names()const {
         }
     }
 
-    for (Frame* child : children)
+    for (std::shared_ptr<Frame> child : children)
         child->assert_no_children_duplicate_names();
 }
 

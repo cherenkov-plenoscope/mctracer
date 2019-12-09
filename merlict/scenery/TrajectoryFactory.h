@@ -20,17 +20,17 @@ class TrajectoryFactory {
     //    Single Photon* (Ray for Propagation)
     //
     // Output:
-    //    A Frame* representing the photons path of flight
+    //    A std::shared_ptr<Frame> representing the photons path of flight
     //
     const RayForPropagation* ray;
     double radius_of_trajectory;
-    Frame* trajectory;
+    std::shared_ptr<Frame> trajectory;
 
  public:
     explicit TrajectoryFactory(const RayForPropagation* ray);
     void set_trajectory_radius(const double radius);
-    void append_trajectory_to(Frame* root_frame);
-    void erase_trajectory_from(Frame* root_frame);
+    void append_trajectory_to(std::shared_ptr<Frame> root_frame);
+    void erase_trajectory_from(std::shared_ptr<Frame> root_frame);
 
  private:
     std::string get_trajectory_of_part_index(

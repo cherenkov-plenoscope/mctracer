@@ -9,9 +9,9 @@ void RectangularBox::set_xyz_width(
     const double y_width,
     const double z_width
 ) {
-    Plane* walls[6];
+	std::vector<std::shared_ptr<Plane>> walls(6);
     for (unsigned int c = 0; c < 6; c++)
-        walls[c] = add<Plane>();
+        walls.push_back(add<Plane>());
 
     // along z axis
     Vec3 z_off = Vec3(0.0, 0.0, 0.5*z_width);

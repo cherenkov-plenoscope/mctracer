@@ -10,7 +10,7 @@
 namespace merlict {
 
 class SurfaceEntity :public Frame {
-    const Frame* _allowed_frame_to_propagate_to = &VOID_FRAME;
+    const std::shared_ptr<Frame> _allowed_frame_to_propagate_to = VOID_FRAME;
  public:
     SurfaceEntity();
     SurfaceEntity(
@@ -27,10 +27,10 @@ class SurfaceEntity :public Frame {
     const function::Func1* outer_absorption;
     const function::Func1* inner_absorption;
 
-    void set_allowed_frames_to_propagate_to(const Frame* frame);
+    void set_allowed_frames_to_propagate_to(const std::shared_ptr<Frame> frame);
     void adopt_surface(const SurfaceEntity* proto);
     void adopt_surface_inside_out(const SurfaceEntity* proto);
-    const Frame* allowed_frame_to_propagate_to()const;
+    const std::shared_ptr<Frame> allowed_frame_to_propagate_to()const;
     bool boundary_layer_is_transparent()const;
     bool has_restrictions_on_frames_to_propagate_to()const;
     std::string str()const;

@@ -9,6 +9,7 @@ class Intersection;
 
 #include <string>
 #include <vector>
+#include <memory>
 #include "merlict/Vec3.h"
 #include "merlict/Rot3.h"
 #include "merlict/HomTra3.h"
@@ -30,9 +31,9 @@ class Frame {
     double bounding_sphere_radius;
     HomTra3 T_frame2mother;
     HomTra3 T_frame2world;
-    std::vector<Frame*> children;
-    Frame *mother;
-    const Frame *root_frame;
+    std::vector<std::shared_ptr<Frame>> children;
+    std::weak_ptr<Frame> mother;
+    const std::weak_ptr<Frame> root_frame;
 
  public:
     // SET
@@ -51,8 +52,8 @@ class Frame {
     double get_bounding_sphere_radius()const;
     const HomTra3* frame2mother()const;
     const HomTra3* frame2world()const;
-    const std::vector<Frame*>* get_children()const;
-    const Frame* root()const;
+    const std::vector<std::shared_ptr<Frame>>* get_children()const;
+    const std::shared_ptr<Frame> root()const;
     bool has_mother()const;
     bool has_children()const;
     void assert_no_children_duplicate_names()const;
@@ -60,13 +61,13 @@ class Frame {
     std::string tree_str()const;
     // DO
     template<class ProtoFrame>
-    ProtoFrame* add() {
-        ProtoFrame* child = new ProtoFrame;
+    std::shared_ptr<ProtoFrame> add() {
+        std::shared_ptr<ProtoFrame> child = std::make_shared<ProtoFrame>();
         children.push_back(child);
         child->mother = this;
         return child;
     }
-    void erase(const Frame* child);
+    void erase(const std::shared_ptr<Frame> child);
     void init_tree_based_on_mother_child_relations();
     virtual void calculate_intersection_with(
         const Ray* ray,
@@ -77,14 +78,14 @@ class Frame {
     void init_frame2world();
     void init_root();
     void set_name(const std::string name);
-    void warn_small_child(const Frame* frame)const;
+    void warn_small_child(const std::shared_ptr<Frame> frame)const;
     void warn_about_close_frames()const;
     void cluster_children();
     void assert_name_is_valid(const std::string name_to_check)const;
     void update_bounding_sphere();
 };
 
-const Frame VOID_FRAME;
+const std::shared_ptr<Frame> VOID_FRAME = std::make_shared<Frame>();
 
 }  // namespace merlict
 

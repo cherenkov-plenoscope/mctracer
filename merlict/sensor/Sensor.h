@@ -12,12 +12,12 @@ namespace sensor {
 
 struct Sensor {
     unsigned int id;
-    const Frame* frame;
+    const std::shared_ptr<Frame> frame;
     std::vector<PhotonArrival> photon_arrival_history;
-    Sensor(unsigned int id, const Frame* frame);
+    Sensor(unsigned int id, const std::shared_ptr<Frame> frame);
     void assign_photon(const Photon* photon);
     struct FrameSensorByFramePointerCompare {
-        bool operator()(const Frame* f, const Sensor* s) {
+        bool operator()(const std::shared_ptr<Frame> f, const Sensor* s) {
             return f < s->frame;
         }
     };

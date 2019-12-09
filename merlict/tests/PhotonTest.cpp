@@ -30,7 +30,7 @@ TEST_CASE("PhotonTest: PropagationSimpleGeometry", "[merlict]") {
     setup.max_num_interactions_per_photon = num_bounces;
     // create a test setup with two mirrors bouncing the photon
     ml::Scenery scenery;
-    ml::Frame* optical_table = scenery.root.add<ml::Plane>();
+    ml::std::shared_ptr<Frame> optical_table = scenery.root.add<ml::Plane>();
     optical_table->set_name_pos_rot(
         "optical_table",
         ml::VEC3_ORIGIN,
@@ -103,7 +103,7 @@ TEST_CASE("PhotonTest: Reflections", "[merlict]") {
     ml::PropagationConfig setup;
     // create a test setup with two mirrors bouncing the photon
     ml::Scenery scenery;
-    ml::Frame* optical_table = scenery.root.add<ml::Plane>();
+    ml::std::shared_ptr<Frame> optical_table = scenery.root.add<ml::Plane>();
     optical_table->set_name_pos_rot(
         "optical_table",
         ml::VEC3_ORIGIN,

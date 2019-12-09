@@ -58,7 +58,7 @@ Sensor* Sensors::at(const unsigned int pos) {
     return by_occurence.at(pos);
 }
 
-Sensor* Sensors::at_frame(const Frame* frame) {
+Sensor* Sensors::at_frame(const std::shared_ptr<Frame> frame) {
     FindSensorByFrame finder(frame, &by_frame);
     if (!finder.is_absorbed_by_known_sensor) {
         std::stringstream info;

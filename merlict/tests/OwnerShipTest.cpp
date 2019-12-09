@@ -17,7 +17,7 @@ TEST_CASE("OwnerShipTest: own", "[merlict]") {
     sphere->set_radius(1);
     sphere->outer_color = scenery.colors.get("green");
 
-    ml::Frame* pole = scenery.root.add<ml::Frame>();
+    ml::std::shared_ptr<Frame> pole = scenery.root.add<ml::Frame>();
     pole->set_name_pos_rot("pole", ml::Vec3(0, 0, 0.5), ml::ROT3_UNITY);
 
     ml::Cylinder* pole1 = pole->add<ml::Cylinder>();

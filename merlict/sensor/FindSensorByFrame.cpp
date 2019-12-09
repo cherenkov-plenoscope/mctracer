@@ -7,7 +7,7 @@ namespace merlict {
 namespace sensor {
 
 FindSensorByFrame::FindSensorByFrame(
-    const Frame* final_frame,
+    const std::shared_ptr<Frame> final_frame,
     const std::vector<Sensor*>* sensors_by_frame
 ) {
     std::vector<sensor::Sensor*>::const_iterator it = std::upper_bound(

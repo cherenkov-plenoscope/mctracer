@@ -9,7 +9,7 @@
 namespace merlict {
 
 struct PropagationEnvironment {
-    const Frame* root_frame = &VOID_FRAME;
+    const std::shared_ptr<Frame> root_frame = VOID_FRAME;
     const PropagationConfig* config = &DEFAULT_PROPAGATIONCONFIG;
     random::Generator* prng = &random::VOID_PRNG;
 };

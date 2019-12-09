@@ -52,15 +52,15 @@ void SurfaceEntity::init_surface_defaults() {
     inner_absorption = DEFAULT_ABSORPTION;
 }
 
-void SurfaceEntity::set_allowed_frames_to_propagate_to(const Frame* frame) {
+void SurfaceEntity::set_allowed_frames_to_propagate_to(const std::shared_ptr<Frame> frame) {
     _allowed_frame_to_propagate_to = frame;
 }
 
-bool SurfaceEntity::has_restrictions_on_frames_to_propagate_to()const {
-    return _allowed_frame_to_propagate_to != &VOID_FRAME;
+bool SurfaceEntity::has_restrictions_on_frames_to_propagate_to() const {
+    return _allowed_frame_to_propagate_to != VOID_FRAME;
 }
 
-const Frame* SurfaceEntity::allowed_frame_to_propagate_to()const {
+const std::shared_ptr<Frame> SurfaceEntity::allowed_frame_to_propagate_to()const {
     return _allowed_frame_to_propagate_to;
 }
 

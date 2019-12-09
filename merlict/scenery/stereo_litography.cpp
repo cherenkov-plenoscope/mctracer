@@ -32,7 +32,7 @@ void add_stl_to_and_inherit_surface_from_surfac_entity(
 
 void add_stl_to_frame(
     const std::string path,
-    Frame* proto,
+    std::shared_ptr<Frame> proto,
     const double scale
 ) {
     BinaryReader reader(path);

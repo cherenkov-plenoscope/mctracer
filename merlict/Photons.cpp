@@ -8,7 +8,7 @@ namespace merlict {
 
 void propagate_photons_in_frame_with_config(
     std::vector<Photon> *photons,
-    const Frame* world,
+    const std::shared_ptr<Frame> world,
     const PropagationConfig* settings,
     random::Generator* prng
 ) {
