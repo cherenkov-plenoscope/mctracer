@@ -4,6 +4,7 @@
 #include "docopt/docopt.h"
 #include "merlict/merlict.h"
 #include "merlict_corsika/eventio.h"
+#include "merlict_corsika/tario.h"
 #include "merlict_corsika/corsika.h"
 #include "merlict_corsika/PhotonFactory.h"
 #include "merlict_signal_processing/signal_processing.h"
@@ -184,7 +185,7 @@ int main(int argc, char* argv[]) {
     // 222222 22
     //--------------------------------------------------------------------------
     // open cherenkov photon file
-    eventio::Run corsika_run(input_path.path);
+    tario::Run corsika_run(input_path.path);
 
     //--------------------------------------------------------------------------
     // propagate each event
@@ -192,7 +193,7 @@ int main(int argc, char* argv[]) {
     while (corsika_run.has_still_events_left()) {
         //------------------
         // Cherenkov photons
-        eventio::Event event = corsika_run.next_event();
+        tario::Event event = corsika_run.next_event();
 
         std::vector<ml::Photon> photons;
         unsigned int photon_id = 0;
@@ -278,12 +279,12 @@ plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
             "simulation_truth");
         fs::create_directory(event_mc_truth_path.path);
         corsika::write_273_f4_to_path(
-            corsika_run.header.raw,
+            corsika_run.header,
             ml::ospath::join(
                 event_mc_truth_path.path,
                 "corsika_run_header.bin"));
         corsika::write_273_f4_to_path(
-            event.header.raw,
+            event.header,
             ml::ospath::join(
                 event_mc_truth_path.path,
                 "corsika_event_header.bin"));
@@ -312,9 +313,9 @@ plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
 
         std::cout << "event " << event_counter << ", ";
         std::cout << "PRMPAR ";
-        std::cout << corsika::header::event::particle_id(event.header.raw) << ", ";
+        std::cout << corsika::header::event::particle_id(event.header) << ", ";
         std::cout << "E ";
-        std::cout << corsika::header::event::total_energy_in_GeV(event.header.raw);
+        std::cout << corsika::header::event::total_energy_in_GeV(event.header);
         std::cout << " GeV\n";
         event_counter++;
     }
