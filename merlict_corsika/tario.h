@@ -12,13 +12,13 @@ namespace tario {
 
 struct Event {
     std::array<float, 273> header;
-    std::vector<std::array<float, 8>> photon_bunches;
+    std::vector<std::array<float, 8>> photons;
 };
 
 struct Run {
     std::string path;
     mtar_t tar;
-    std::array<float, 273> runh;
+    std::array<float, 273> header;
 
     mtar_header_t next_tar_header_evth;
     bool _has_still_events_left;

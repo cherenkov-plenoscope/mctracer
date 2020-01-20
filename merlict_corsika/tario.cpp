@@ -33,14 +33,14 @@ Run::Run(std::string path) {
         throw std::runtime_error(out.str());
     }
 
-    if (mtar_read_data(&tar, &this->runh, runh_header.size) != MTAR_ESUCCESS) {
+    if (mtar_read_data(&tar, &this->header, runh_header.size) != MTAR_ESUCCESS) {
         std::stringstream out;
         out << "Failed to read CORSIKA-run-header payload from TAR: '";
         out << this->path << "'\n";
         throw std::runtime_error(out.str());
     }
 
-    if (runh[0] != corsika::str2float("RUNH")) {
+    if (this->header[0] != corsika::str2float("RUNH")) {
         std::stringstream out;
         out << "Expected runh[0] == 'RUNH'. Path: ";
         out << this->path << "'\n";
@@ -190,10 +190,10 @@ Event Run::next_event() {
         throw std::runtime_error(out.str());
     }
 
-    event.photon_bunches.resize(num_bunches);
+    event.photons.resize(num_bunches);
     if (mtar_read_data(
             &tar,
-            event.photon_bunches.data(),
+            event.photons.data(),
             bunch_header.size) != MTAR_ESUCCESS
     ) {
         std::stringstream out;
