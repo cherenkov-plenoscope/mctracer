@@ -13,6 +13,7 @@ struct Config {
     double DaviesCotton_over_parabolic_mixing_factor;
     double max_outer_aperture_radius;
     double min_inner_aperture_radius;
+    int outer_aperture_shape_hex;
     double facet_inner_hex_radius;
     double gap_between_facets;
     Config();
