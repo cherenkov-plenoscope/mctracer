@@ -2,37 +2,37 @@
 #include <algorithm>
 #include <sstream>
 #include "merlict/tests/catch.hpp"
-#include "merlict_corsika/tario.h"
+#include "merlict_corsika/event_tape.h"
 #include "merlict_corsika/corsika.h"
 #include "merlict_corsika/PhotonFactory.h"
 
 
-TEST_CASE("TarIoTest: read one by one", "[merlict]") {
-    tario::Run run("merlict_corsika/tests/resources/corsika_primary_run.tar");
+TEST_CASE("EventTapeTest: read one by one", "[merlict]") {
+    event_tape::Run run("merlict_corsika/tests/resources/run_event_tape.tar");
     CHECK(run.header[0] == corsika::str2float("RUNH"));
     CHECK(run.has_still_events_left());
 
-    tario::Event first_evt = run.next_event();
+    event_tape::Event first_evt = run.next_event();
     CHECK(first_evt.header[0] == corsika::str2float("EVTH"));
     CHECK(run.has_still_events_left());
 
-    tario::Event second_evt = run.next_event();
+    event_tape::Event second_evt = run.next_event();
     CHECK(second_evt.header[0] == corsika::str2float("EVTH"));
     CHECK(run.has_still_events_left());
 
-    tario::Event third_evt = run.next_event();
+    event_tape::Event third_evt = run.next_event();
     CHECK(third_evt.header[0] == corsika::str2float("EVTH"));
     CHECK(!run.has_still_events_left());
 }
 
-TEST_CASE("TarIoTest: while loop", "[merlict]") {
+TEST_CASE("EventTapeTest: while loop", "[merlict]") {
     merlict::random::Mt19937 prng(0);
-    tario::Run run("merlict_corsika/tests/resources/corsika_primary_run.tar");
+    event_tape::Run run("merlict_corsika/tests/resources/run_event_tape.tar");
     CHECK(run.header[0] == corsika::str2float("RUNH"));
     CHECK(run.has_still_events_left());
 
     while (run.has_still_events_left()) {
-        tario::Event evt = run.next_event();
+        event_tape::Event evt = run.next_event();
         CHECK(evt.header[0] == corsika::str2float("EVTH"));
 
         std::vector<merlict::Photon> photons;

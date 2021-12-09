@@ -4,7 +4,7 @@
 #include "docopt/docopt.h"
 #include "merlict/merlict.h"
 #include "merlict_corsika/eventio.h"
-#include "merlict_corsika/tario.h"
+#include "merlict_corsika/event_tape.h"
 #include "merlict_corsika/corsika.h"
 #include "merlict_corsika/PhotonFactory.h"
 #include "merlict_signal_processing/signal_processing.h"
@@ -185,7 +185,7 @@ int main(int argc, char* argv[]) {
     // 222222 22
     //--------------------------------------------------------------------------
     // open cherenkov photon file
-    tario::Run corsika_run(input_path.path);
+    event_tape::Run corsika_run(input_path.path);
 
     //--------------------------------------------------------------------------
     // propagate each event
@@ -193,7 +193,7 @@ int main(int argc, char* argv[]) {
     while (corsika_run.has_still_events_left()) {
         //------------------
         // Cherenkov photons
-        tario::Event event = corsika_run.next_event();
+        event_tape::Event event = corsika_run.next_event();
 
         std::vector<ml::Photon> photons;
         unsigned int photon_id = 0;

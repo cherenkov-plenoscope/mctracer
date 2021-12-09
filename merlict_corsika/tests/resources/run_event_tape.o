@@ -132,9 +132,14 @@
    
 RUNNR 1
 EVTNR 1
-ERANGE 0.194007 0.271091
-OBSLEV 230000.000000
-MAGNET 12.500000 -25.900000
+PRMPAR 1
+ERANGE 2.500000E-01 5.000000E-01
+OBSLEV 2.300000E+05
+MAGNET 1.250000E+01 -2.590000E+01
+SEED 1 0 0
+SEED 2 0 0
+SEED 3 0 0
+SEED 4 0 0
 MAXPRT 1
 PAROUT F F
 ATMOSPHERE 10 T
@@ -144,8 +149,7 @@ CERSIZ 1.
 CERFIL F
 TSTART T
 NSHOW 3
-PRMFIL /tmp/corsika_primary_2wqxj_mi/primary_bytes.f8f8f8f8f8i4
-TELFIL /home/relleums/Desktop/work/corsika_primary_run.tar
+TELFIL /home/relleums/Desktop/starter_kit/merlict_development_kit/merlict_corsika/tests/resources/run_event_tape.tar
 EXIT
 
  END OF DATACARD INPUT
@@ -163,12 +167,7 @@ EXIT
 
  ========== START OF RUN =======================================================
 
- PRESENT TIME : 09.01.2020  12:23:33 UTC
-
- TOO FEW RANDOM SEEDS: NSEQ =           1
- AT MINIMUM TWO RANDOM SEEDS ARE NECESSARY
- USE THE DEFAULT SEED(S)
-
+ PRESENT TIME : 09.12.2021  11:12:11 UTC
  RANDOM NUMBER GENERATOR AT BEGIN OF RUN :
  SEQUENCE =  1  SEED =         1  CALLS =         0  BILLIONS =         0
  SEQUENCE =  2  SEED =         2  CALLS =         0  BILLIONS =         0
@@ -318,6 +317,13 @@ EXIT
 
  ========== SHOWER PARAMETERS ==================================================
  PRIMARY PARTICLE IDENTIFICATION IS            1
+ PRIMARY ENERGY IS TAKEN FROM SPECTRUM VIA MONTE CARLO
+      SLOPE OF PRIMARY SPECTRUM                =  0.0000E+00
+      LOWER LIMIT CUT-OFF FOR PRIMARY SPECTRUM =  2.5000E-01 GEV
+      UPPER LIMIT CUT-OFF FOR PRIMARY SPECTRUM =  5.0000E-01 GEV
+
+ HEIGHT OF FIRST INTERACTION IS CHOSEN RANDOMLY
+ TARGET OF FIRST INTERACTION IS AT RANDOM
  STARTING ALTITUDE AT     11751475.56 CM (=      0.00 G/CM**2)
                   WHICH IS AT TOP OF ATMOSPHERE
 
@@ -341,25 +347,17 @@ EXIT
 
  NUMBER OF SHOWERS TO GENERATE =           3
 
- -----------------------------------
- PRIMARY PARTICLE =    1.0000000000000000     
- PRIMARY ENERGY   =   0.23229001605602562       GEV
- PRIMARY THETAP   =    9.5881505416885893E-002  RAD
- PRIMARY PHIP     =   0.92209445692413627       RAD
- PRIMARY HEIGHT   =    11751475.555449843       CM
-                  =    0.0000000000000000       G/CM**2
- RANDOM ISEED(1,1)=         1001
- -----------------------------------
 
 
  ========== SHOWER NO          1 ===============================================
 
- PRESENT TIME : 09.01.2020  12:23:39 UTC
+ PRESENT TIME : 09.12.2021  11:12:17 UTC
  AND RANDOM NUMBER GENERATOR AT BEGIN OF EVENT :       1
- SEQUENCE =  1  SEED =      1001  CALLS =         0  BILLIONS =         0
- SEQUENCE =  2  SEED =      1002  CALLS =         0  BILLIONS =         0
- SEQUENCE =  3  SEED =      1003  CALLS =         0  BILLIONS =         0
- SEQUENCE =  4  SEED =      1004  CALLS =         0  BILLIONS =         0
+ SEQUENCE =  1  SEED =         1  CALLS =         0  BILLIONS =         0
+ SEQUENCE =  2  SEED =         2  CALLS =         0  BILLIONS =         0
+ SEQUENCE =  3  SEED =         3  CALLS =         0  BILLIONS =         0
+ SEQUENCE =  4  SEED =         4  CALLS =         0  BILLIONS =         0
+ PRIMARY ENERGY =   0.49679261362806226       GEV
 
  TRACKING STARTS AT MARGIN OF ATMOSPHERE
 
@@ -367,7 +365,7 @@ EXIT
 
                     TYPE       GAMMA    COSTHETA      PHIX      PHIY      HEIGHT      TIME       X-CM       Y-CM       GEN/CHI    ALEVEL E ON STACK
 
-  FIRST INTERACTION AT    27225.212500000001       M ALTITUDE
+  FIRST INTERACTION AT    16875.588749999999       M ALTITUDE
 
  NO MORE SECONDARIES FOUND ON STACK
            0 PARTICLES WRITTEN TO STACK
@@ -705,10 +703,10 @@ EXIT
 
  LEVEL  THICKNESS        HEIGHT     ELECT. NUMBER   PSEUDO-
   NO.     G/CM**2            CM                         AGE
-    1        100.      1671125.             0.456     1.739
-    2        200.      1251652.             0.100     1.999
-    3        300.       980553.             0.019     1.999
-    4        400.       773564.             0.003     1.999
+    1        100.      1671125.             0.527     1.655
+    2        200.      1251652.             0.123     1.999
+    3        300.       980553.             0.024     1.999
+    4        400.       773564.             0.004     1.999
     5        500.       604785.             0.001     1.999
     6        600.       460987.             0.000     1.999
     7        700.       335734.             0.000     1.999
@@ -750,46 +748,30 @@ EXIT
      11774.    0.00000E+00    0.00000E+00    0.00000E+00    0.00000E+00
      20000.    0.00000E+00    0.00000E+00    0.00000E+00    0.00000E+00
   
- CHERENKOV PH. FROM ELECTRONS =   1.5683938E+02  CHERENKOV PH. FROM HADRONS =   0.0000000E+00
+ CHERENKOV PH. FROM ELECTRONS =   1.1651585E+04  CHERENKOV PH. FROM HADRONS =   0.0000000E+00
 
    END OF SHOWER NO          1
- -----------------------------------
- PRIMARY PARTICLE =    1.0000000000000000     
- PRIMARY ENERGY   =   0.26319535314302689       GEV
- PRIMARY THETAP   =    7.5246882824245909E-002  RAD
- PRIMARY PHIP     =    2.1712220828951732       RAD
- PRIMARY HEIGHT   =    11751475.555449843       CM
-                  =    0.0000000000000000       G/CM**2
- RANDOM ISEED(1,1)=         1002
- -----------------------------------
- PRESENT TIME : 09.01.2020  12:23:39 UTC
+ PRESENT TIME : 09.12.2021  11:12:17 UTC
  AND RANDOM NUMBER GENERATOR AT BEGIN OF EVENT :       2
- SEQUENCE =  1  SEED =      1002  CALLS =         0  BILLIONS =         0
- SEQUENCE =  2  SEED =      1003  CALLS =         0  BILLIONS =         0
- SEQUENCE =  3  SEED =      1004  CALLS =         0  BILLIONS =         0
- SEQUENCE =  4  SEED =      1005  CALLS =         0  BILLIONS =         0
- -----------------------------------
- PRIMARY PARTICLE =    1.0000000000000000     
- PRIMARY ENERGY   =   0.20000762527853630       GEV
- PRIMARY THETAP   =   0.12803928564771788       RAD
- PRIMARY PHIP     =    2.6338768137490636       RAD
- PRIMARY HEIGHT   =    11751475.555449843       CM
-                  =    0.0000000000000000       G/CM**2
- RANDOM ISEED(1,1)=         1003
- -----------------------------------
- PRESENT TIME : 09.01.2020  12:23:39 UTC
+ SEQUENCE =  1  SEED =         1  CALLS =         1  BILLIONS =         0
+ SEQUENCE =  2  SEED =         2  CALLS =     11193  BILLIONS =         0
+ SEQUENCE =  3  SEED =         3  CALLS =     69308  BILLIONS =         0
+ SEQUENCE =  4  SEED =         4  CALLS =         0  BILLIONS =         0
+ PRIMARY ENERGY =   0.41846212221839441       GEV
+ PRESENT TIME : 09.12.2021  11:12:17 UTC
  AND RANDOM NUMBER GENERATOR AT BEGIN OF EVENT :       3
- SEQUENCE =  1  SEED =      1003  CALLS =         0  BILLIONS =         0
- SEQUENCE =  2  SEED =      1004  CALLS =         0  BILLIONS =         0
- SEQUENCE =  3  SEED =      1005  CALLS =         0  BILLIONS =         0
- SEQUENCE =  4  SEED =      1006  CALLS =         0  BILLIONS =         0
+ SEQUENCE =  1  SEED =         1  CALLS =         2  BILLIONS =         0
+ SEQUENCE =  2  SEED =         2  CALLS =     48042  BILLIONS =         0
+ SEQUENCE =  3  SEED =         3  CALLS =    104903  BILLIONS =         0
+ SEQUENCE =  4  SEED =         4  CALLS =         0  BILLIONS =         0
+ PRIMARY ENERGY =   0.27351327937306014       GEV
   
- PRESENT TIME : 09.01.2020  12:23:39 UTC
+ PRESENT TIME : 09.12.2021  11:12:17 UTC
  AND RANDOM NUMBER GENERATOR AT END OF EVENT :       3
- SEQUENCE =  1  SEED =      1003  CALLS =         0  BILLIONS =         0
- SEQUENCE =  2  SEED =      1004  CALLS =     17591  BILLIONS =         0
- SEQUENCE =  3  SEED =      1005  CALLS =      3927  BILLIONS =         0
- SEQUENCE =  4  SEED =      1006  CALLS =         0  BILLIONS =         0
+ SEQUENCE =  1  SEED =         1  CALLS =         3  BILLIONS =         0
+ SEQUENCE =  2  SEED =         2  CALLS =     56531  BILLIONS =         0
+ SEQUENCE =  3  SEED =         3  CALLS =    172325  BILLIONS =         0
+ SEQUENCE =  4  SEED =         4  CALLS =         0  BILLIONS =         0
 
 
  ========== RUN SUMMARY ========================================================
@@ -799,7 +781,7 @@ EXIT
  TIME PER EVENT             =           0.00 SEC
  TOTAL SPACE ON MPATAP USED =         5733 WORDS
  SPACE PER EVENT ON MPATAP  =         1911 WORDS
- AVERAGE HEIGHT OF 1ST INT. =     21.286 +-    11.085 G/CM**2
+ AVERAGE HEIGHT OF 1ST INT. =     98.336 +-    65.444 G/CM**2
 
 
 
@@ -983,14 +965,14 @@ EXIT
 
  LEVEL  THICKNESS   HEIGHT         <EL NR>        DEV<EL>   <LOG(EL NR)>  DEV<LOG(E)>   <PS-AGE>  DEV<AGE>
   NO.   (G/CM**2)     (M) 
-    1      100.   16711.25              0.             0.       -0.34676     0.07675       1.749     0.106
-    2      200.   12516.52              0.             0.       -1.00716     0.10642       1.999     0.000
-    3      300.    9805.53              0.             0.       -1.73442     0.12106       1.999     0.000
-    4      400.    7735.64              0.             0.       -2.48231     0.13030       1.999     0.000
-    5      500.    6047.85              0.             0.       -3.23918     0.13700       1.999     0.000
-    6      600.    4609.87              0.             0.       -4.00077     0.14231       1.999     0.000
-    7      700.    3357.34              0.             0.       -4.76511     0.14677       1.999     0.000
-    8      795.    2300.00              0.             0.       -5.49046     0.15049       1.999     0.000
+    1      100.   16711.25              0.             0.       -0.14984     0.14023       1.059     0.920
+    2      200.   12516.52              0.             0.       -0.63444     0.35766       1.864     0.234
+    3      300.    9805.53              0.             0.       -1.30949     0.40870       1.999     0.000
+    4      400.    7735.64              0.             0.       -2.03466     0.42420       1.999     0.000
+    5      500.    6047.85              0.             0.       -2.77832     0.43036       1.999     0.000
+    6      600.    4609.87              0.             0.       -3.53096     0.43298       1.999     0.000
+    7      700.    3357.34              0.             0.       -4.28867     0.43397       1.999     0.000
+    8      795.    2300.00              0.             0.       -5.00901     0.43410       1.999     0.000
 
  RADIAL BIN  DISTANCE(CM)  LOCAL AGE AT LEVEL NO.   1 AT HEIGHT:   230000. CM
          1           0.       0.000
@@ -1029,6 +1011,6 @@ EXIT
      20000.    0.00000E+00    0.00000E+00    0.00000E+00    0.00000E+00
   
   
- PRESENT TIME : 09.01.2020  12:23:39 UTC
+ PRESENT TIME : 09.12.2021  11:12:17 UTC
 
  ========== END OF RUN ================================================

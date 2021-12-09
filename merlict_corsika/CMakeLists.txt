@@ -3,7 +3,6 @@ set(SOURCE
 	${CMAKE_CURRENT_SOURCE_DIR}/corsika.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/PhotonFactory.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/eventio.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/tario.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/microtar.c
+	${CMAKE_CURRENT_SOURCE_DIR}/event_tape.cpp
    	PARENT_SCOPE
 )

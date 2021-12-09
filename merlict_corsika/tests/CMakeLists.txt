@@ -3,6 +3,6 @@ set(TEST_SOURCE_MERLICT_CORSIKA
     ${CMAKE_CURRENT_SOURCE_DIR}/EventIoTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/CorsikaIoTest.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/HeaderBlockTest.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/TarIoTest.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/EventTapeTest.cpp
     PARENT_SCOPE
 )

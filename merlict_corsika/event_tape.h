@@ -1,14 +1,18 @@
 // Copyright 2020 Sebastian A. Mueller
-#ifndef MERLICT_DEVELOPMENT_KIT_MERLICT_CORSIKA_TARIO_H_
-#define MERLICT_DEVELOPMENT_KIT_MERLICT_CORSIKA_TARIO_H_
+#ifndef MERLICT_DEVELOPMENT_KIT_MERLICT_CORSIKA_EVENT_TAPE_H_
+#define MERLICT_DEVELOPMENT_KIT_MERLICT_CORSIKA_EVENT_TAPE_H_
 
+#include <assert.h>
 #include <string>
 #include <vector>
 #include <array>
 #include <fstream>
-#include "merlict_corsika/microtar.h"
 
-namespace tario {
+extern "C" {
+#include "merlict_corsika/mli_corsika_EventTape_standalone.h"
+}
+
+namespace event_tape {
 
 struct Event {
     std::array<float, 273> header;
@@ -17,10 +21,10 @@ struct Event {
 
 struct Run {
     std::string path;
-    mtar_t tar;
+    struct mliEventTapeReader etr;
     std::array<float, 273> header;
 
-    mtar_header_t next_tar_header_evth;
+    std::array<float, 273> next_evth;
     bool _has_still_events_left;
 
     explicit Run(std::string path);
@@ -31,6 +35,6 @@ struct Run {
     void _try_read_next_evth();
 };
 
-}  // namespace tario
+}  // namespace event_tape
 
-#endif  // MERLICT_DEVELOPMENT_KIT_MERLICT_CORSIKA_TARIO_H_
+#endif  // MERLICT_DEVELOPMENT_KIT_MERLICT_CORSIKA_EVENT_TAPE_H_
