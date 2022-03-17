@@ -4,6 +4,7 @@
 #include "docopt/docopt.h"
 #include "merlict/merlict.h"
 #include "merlict_json/json.h"
+#include "merlict_portal_plenoscope/json_to_plenoscope.h"
 namespace ml = merlict;
 
 
@@ -70,8 +71,8 @@ int main(int argc, char* argv[]) {
         ml::ospath::Path scenery_path(
             args.find("--scenery")->second.asString());
 
-        ml::Scenery scenery;
-        ml::json::append_to_frame_in_scenery(
+        plenoscope::PlenoscopeScenery scenery;
+        plenoscope::json::append_to_frame_in_scenery(
             &scenery.root,
             &scenery,
             scenery_path.path);
