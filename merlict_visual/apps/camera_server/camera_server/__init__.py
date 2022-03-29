@@ -1,8 +1,9 @@
 import os
-import subprocess as sp
+import subprocess
 import numpy as np
-from io import BytesIO
+import io
 from skimage import io
+import tempfile
 
 
 def read_ppm_image(fstream):
@@ -45,7 +46,7 @@ def camera_command(
                                 but take longer to be computed. Strong
                                 noise_levels are fast to compute.
     """
-    fout = BytesIO()
+    fout = io.BytesIO()
     fout.write(np.uint64(645).tobytes())  # MAGIC
 
     fout.write(np.float64(position[0]).tobytes())  # position
@@ -68,19 +69,37 @@ def camera_command(
     fout.seek(0)
     return fout.read()
 
-"""
-call = [path_exe, '--scenery', scenery_path, '--config', visual_path]
-merlict = sp.Popen(call, stdin=sp.PIPE, stdout=sp.PIPE)
-outdir = 'fly4'
-os.makedirs(outdir, exist_ok=True)
 
-for i, y in enumerate(np.linspace(-10, -1, 100)):
-    w = merlict.stdin.write(
-        camera_command(
-            position=[0, 0, y],
-            orientation=[0, np.deg2rad(-90), 0],
-            object_distance=np.abs(y)))
-    w = merlict.stdin.flush()
-    img = read_ppm_image(merlict.stdout)
-    io.imsave(os.path.join(outdir, '{:06d}.tiff'.format(i)), img)
-"""
+class CameraServer:
+    def __init__(
+        self,
+        merlict_camera_server_path,
+        scenery_path,
+        visual_config_path,
+    ):
+        self.call = [
+            merlict_camera_server_path,
+            "--scenery",
+            scenery_path,
+            "--config",
+            visual_config_path,
+        ]
+        self.server = subprocess.Popen(
+            self.call,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+        )
+
+    def render_image(self, image_config):
+        _ = self.server.stdin.write(camera_command(**image_config))
+        _ = self.server.stdin.flush()
+        image = read_ppm_image(fstream=self.server.stdout)
+        return image
+
+    def render_image_and_write_to_tiff(self, image_config, path):
+        assert os.path.splitext(path) == ".tiff"
+        image = self.render_image(image_config=image_config)
+        skimage.io.imsave(path, image)
+
+    def __exit__(self):
+        self.server.kill()
