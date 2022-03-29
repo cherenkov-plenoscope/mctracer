@@ -17,7 +17,7 @@ def read_ppm_image(fstream):
     num_rows = int(num_rows)
     max_color = int(fstream.readline().decode())
     assert max_color == 255
-    count = num_columns*num_rows*3
+    count = num_columns * num_rows * 3
     raw = np.frombuffer(fstream.read(count), dtype=np.uint8)
     img = raw.reshape((num_rows, num_columns, 3))
     return img
@@ -32,7 +32,7 @@ def camera_command(
     f_stop=0.95,
     num_columns=512,
     num_rows=288,
-    noise_level=25
+    noise_level=25,
 ):
     """
     Returns a binary command-string to be fed into merlict's cmaera-server via
@@ -72,10 +72,7 @@ def camera_command(
 
 class CameraServer:
     def __init__(
-        self,
-        merlict_camera_server_path,
-        scenery_path,
-        visual_config_path,
+        self, merlict_camera_server_path, scenery_path, visual_config_path,
     ):
         self.call = [
             merlict_camera_server_path,
@@ -85,9 +82,7 @@ class CameraServer:
             visual_config_path,
         ]
         self.server = subprocess.Popen(
-            self.call,
-            stdin=subprocess.PIPE,
-            stdout=subprocess.PIPE,
+            self.call, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
         )
 
     def render_image(self, image_config):
