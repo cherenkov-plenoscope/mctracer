@@ -2,7 +2,8 @@ import os
 import subprocess
 import numpy as np
 import io
-from skimage import io
+import skimage
+from skimage import io as skimage_io
 import tempfile
 
 
@@ -92,9 +93,9 @@ class CameraServer:
         return image
 
     def render_image_and_write_to_tiff(self, image_config, path):
-        assert os.path.splitext(path) == ".tiff"
+        assert os.path.splitext(path)[1] == ".tiff"
         image = self.render_image(image_config=image_config)
         skimage.io.imsave(path, image)
 
     def __exit__(self):
-        self.server.kill()
+        self.server.terminate()
