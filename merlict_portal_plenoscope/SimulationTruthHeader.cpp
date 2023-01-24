@@ -9,13 +9,13 @@ namespace plenoscope {
 
 SimulationTruthHeader::SimulationTruthHeader() {
     for (unsigned int i = 0; i < raw.size(); i++) raw[i]=0.0;
-    raw[  1-1] = corsika::str2float("MTST");
+    raw[  1-1] = corsika::str2float("MERL");
 }
 
 void SimulationTruthHeader::set_random_seed_of_run(const uint32_t seed) {
     float f;
     memcpy(&f, &seed, sizeof f);
-    raw[  1-1] = f;
+    raw[  2-1] = f;
 }
 
 void SimulationTruthHeader::set_nsb_exposure_start_time(
