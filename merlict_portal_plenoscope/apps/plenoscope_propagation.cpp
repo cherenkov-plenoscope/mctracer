@@ -216,11 +216,13 @@ int main(int argc, char* argv[]) {
 
         //-----------------------------
         // Night Sky Background photons
+        double nsb_exposure_start_time = 0.0;
         plenoscope::night_sky_background::inject_nsb_into_photon_pipeline(
             &photon_pipelines,
             nsb_exposure_time,
             &optics_calibration_result,
             &nsb,
+            &nsb_exposure_start_time,
             &prng);
 
         //--------------------------
@@ -291,6 +293,7 @@ plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
 
         plenoscope::SimulationTruthHeader sim_truth_header;
         sim_truth_header.set_random_seed_of_run(prng.seed());
+        sim_truth_header.set_nsb_exposure_start_time(nsb_exposure_start_time);
         corsika::write_273_f4_to_path(
             sim_truth_header.raw,
             ml::ospath::join(

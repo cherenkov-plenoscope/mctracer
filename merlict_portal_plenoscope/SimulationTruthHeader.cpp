@@ -17,4 +17,9 @@ void SimulationTruthHeader::set_random_seed_of_run(const uint32_t seed) {
     raw[  1-1] = f;
 }
 
+void SimulationTruthHeader::set_nsb_exposure_start_time(const double nsb_exposure_start_time) {
+    // In nanoseconds.
+    raw[  10-1] = static_cast<float>(nsb_exposure_start_time * 1e9);
+}
+
 }  // namespace plenoscope
