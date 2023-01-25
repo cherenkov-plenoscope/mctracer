@@ -67,6 +67,9 @@ CalibrationPhotonResult one_photon(
         azimuth_picker);
 
     ml::Photon ph = create_photon(support_on_aperture, incident_direction);
+    const double TIME_OF_FLIGHT_TO_REACH_APERTURE_PLANE = (
+        DISTANCE_TO_APERTURE_PLANE / merlict::VACUUM_SPPED_OF_LIGHT
+    );
 
     // propagate photon
     ml::PropagationEnvironment env;
@@ -87,7 +90,9 @@ CalibrationPhotonResult one_photon(
         result.y_pos_on_principal_aperture = support_on_aperture.y;
         result.x_tilt_vs_optical_axis = incident_direction.x;
         result.y_tilt_vs_optical_axis = incident_direction.y;
-        result.relative_time_of_flight = ph.time_of_flight();
+        result.time_of_flight = (
+            ph.time_of_flight() - TIME_OF_FLIGHT_TO_REACH_APERTURE_PLANE
+        );
         return result;
     } else {
         CalibrationPhotonResult result;

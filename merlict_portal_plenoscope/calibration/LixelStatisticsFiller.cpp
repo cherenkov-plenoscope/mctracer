@@ -32,26 +32,12 @@ void LixelStatisticsFiller::fill_in_block(
             lixel_stats[result.lixel_id].y.add(
                 result.y_pos_on_principal_aperture);
             lixel_stats[result.lixel_id].timed_delay.add(
-                result.relative_time_of_flight);
+                result.time_of_flight);
         }
     }
 }
 
-double LixelStatisticsFiller::min_arrival_time_mean()const {
-    double minimal_time_mean = 0.0;
-    if (lixel_stats.size() > 0)
-        minimal_time_mean = lixel_stats.at(0).timed_delay.mean();
-    for (OnlineLixelStatistics lixel : lixel_stats) {
-        double this_pix_time = lixel.timed_delay.mean();
-        if (this_pix_time < minimal_time_mean)
-            minimal_time_mean = this_pix_time;
-    }
-    return minimal_time_mean;
-}
-
 std::vector<LixelStatistic> LixelStatisticsFiller::get_lixel_statistics()const {
-    const double minimal_arrival_time = min_arrival_time_mean();
-
     std::vector<LixelStatistic> lixel_statistics;
     lixel_statistics.reserve(lixel_stats.size());
 
@@ -68,7 +54,7 @@ std::vector<LixelStatistic> LixelStatisticsFiller::get_lixel_statistics()const {
         stat.x_std      = lixel.x.stddev();
         stat.y_mean     = lixel.y.mean();
         stat.y_std      = lixel.y.stddev();
-        stat.time_delay_mean  = lixel.timed_delay.mean() - minimal_arrival_time;
+        stat.time_delay_mean  = lixel.timed_delay.mean();
         stat.time_delay_std   = lixel.timed_delay.stddev();
         lixel_statistics.push_back(stat);
     }

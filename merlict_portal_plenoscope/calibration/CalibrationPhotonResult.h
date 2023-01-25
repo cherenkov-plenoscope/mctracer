@@ -13,7 +13,7 @@ struct CalibrationPhotonResult {
     float y_pos_on_principal_aperture;
     float x_tilt_vs_optical_axis;
     float y_tilt_vs_optical_axis;
-    float relative_time_of_flight;
+    float time_of_flight;
 
     CalibrationPhotonResult();
 };

@@ -22,8 +22,6 @@ class LixelStatisticsFiller {
         const uint64_t num_photons_per_block);
     std::vector<LixelStatistic> get_lixel_statistics()const;
     void fill_in_block(const std::vector<CalibrationPhotonResult> &calib_block);
- private:
-    double min_arrival_time_mean()const;
 };
 
 }  // namespace calibration
