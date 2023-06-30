@@ -17,6 +17,7 @@
 #define MERLICT_SMALL_BALL_H_
 
 #include <vector>
+#include <cstdint>
 #include "merlict/Vec3.h"
 
 namespace merlict {
