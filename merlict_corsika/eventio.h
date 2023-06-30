@@ -2,6 +2,7 @@
 #ifndef EVENTIO_H_
 #define EVENTIO_H_
 
+#include <cstdint>
 #include <string>
 #include <vector>
 #include <array>

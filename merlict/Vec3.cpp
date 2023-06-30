@@ -49,11 +49,6 @@ Vec3 Vec3::operator/(const double scalar)const {
     return Vec3(x/scalar, y/scalar, z/scalar);
 }
 
-void Vec3::operator=(const Vec3 eq) {
-    x = eq.x;
-    y = eq.y;
-    z = eq.z;
-}
 
 std::string Vec3::str()const {
     std::stringstream out;

@@ -28,7 +28,6 @@ struct Vec3 {
     Vec3 operator-(const Vec3 v)const;
     Vec3 operator+(const Vec3 v)const;
     Vec3 operator/(const double scalar)const;
-    void operator=(const Vec3 eq);
     bool operator == (const Vec3& eqVec)const;
     bool operator != (const Vec3& eqVec)const;
     double distance_to(const Vec3 &v)const;

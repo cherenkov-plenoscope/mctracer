@@ -44,7 +44,6 @@ class HomTra3 {
     Vec3 rot_x()const;
     Vec3 rot_y()const;
     Vec3 rot_z()const;
-    void operator= (HomTra3 G);
     HomTra3 operator* (const HomTra3 G)const;
     HomTra3 inverse()const;
     bool operator== (HomTra3 G)const;

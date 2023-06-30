@@ -1,10 +1,9 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "FlyingCamera.h"
-#include <cv.h>
-#include <highgui.h>
 #include <sstream>
 #include <fstream>
 #include <opencv2/opencv.hpp>
+#include <opencv2/highgui.hpp>
 
 
 namespace merlict {
@@ -202,7 +201,7 @@ void FlyingCamera::enter_interactive_display() {
 }
 
 int FlyingCamera::wait_for_user_key_stroke() {
-    int key = cvWaitKey(0);
+    int key = cv::waitKey(0);
     if (key == -1) {
         return key;
     } else {
@@ -220,7 +219,7 @@ bool FlyingCamera::time_to_print_help() {
 }
 
 void FlyingCamera::create_display() {
-    cv::namedWindow(display_name, CV_WINDOW_AUTOSIZE);
+    cv::namedWindow(display_name, cv::WINDOW_AUTOSIZE);
     FlyingCamera* p = this;
     cv::setMouseCallback(
         display_name.c_str(),

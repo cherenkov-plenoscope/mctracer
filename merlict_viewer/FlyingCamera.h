@@ -2,11 +2,11 @@
 #ifndef VISUAL_FLYINGCAMERA_H_
 #define VISUAL_FLYINGCAMERA_H_
 
-#include <cv.h>
 #include <string>
 #include "merlict/merlict.h"
 #include "merlict_viewer/Time.h"
 #include "merlict_viewer/camera_operator/camera_operator.h"
+#include <opencv2/opencv.hpp>
 
 namespace merlict {
 namespace visual {

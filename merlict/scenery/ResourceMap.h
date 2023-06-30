@@ -1,6 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #ifndef SCENERY_RESOURCEMAP_H_
 #define SCENERY_RESOURCEMAP_H_
+#include <stdexcept>
 
 namespace merlict {
 
