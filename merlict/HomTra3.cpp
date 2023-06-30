@@ -241,11 +241,6 @@ std::string HomTra3::single_row_str(const unsigned int r)const {
     return out.str();
 }
 
-void HomTra3::operator= (const HomTra3 G) {
-    for (unsigned int row = 0; row < 3; row++)
-        for (unsigned int col = 0; col < 4; col++)
-            T[row][col] = G.T[row][col];
-}
 
 HomTra3 HomTra3::operator* (const HomTra3 G)const {
   // Matrix multiplication

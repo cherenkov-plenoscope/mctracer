@@ -44,10 +44,6 @@ Vec2 Vec2::operator/(const double scalar)const {
     return Vec2(x/scalar, y/scalar);
 }
 
-void Vec2::operator=(const Vec2 eq) {
-    x = eq.x;
-    y = eq.y;
-}
 
 std::string Vec2::str()const {
     std::stringstream out;

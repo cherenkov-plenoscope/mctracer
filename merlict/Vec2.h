@@ -21,7 +21,6 @@ struct Vec2 {
     Vec2 operator-(const Vec2 v)const;
     Vec2 operator+(const Vec2 v)const;
     Vec2 operator/(const double scalar)const;
-    void operator=(const Vec2 eq);
     bool operator == (const Vec2& eq_v)const;
     bool operator != (const Vec2& eq_v)const;
     double distance_to(const Vec2 &v)const;
