@@ -37,7 +37,7 @@ TEST_CASE("FresnelTest: flat_incident", "[merlict]") {
   double incident_to_normal = incident.angle_in_between(normal);
   double outgoing_to_normal = asin(sin(incident_to_normal)* n_from/n_going_to);
 
-  CHECK(fresnel.get_refrac_dir_in_object_system().angle_in_between(normal*-1.0) == outgoing_to_normal);
+  CHECK(fresnel.get_refrac_dir_in_object_system().angle_in_between(normal*-1.0) == Approx(outgoing_to_normal));
 }
 
 TEST_CASE("FresnelTest: orthogonal_incident_same_index", "[merlict]") {
