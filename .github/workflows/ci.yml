@@ -23,7 +23,7 @@ jobs:
       - name: Build
         run: |
           cmake -S . -B build -DUSE_COV=yes
-          cmake --build build
+          cmake --build build -- -j2
 
       - name: Tests
         run: |
