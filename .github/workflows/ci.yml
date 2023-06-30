@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "**"
+  pull_request:
+
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libopencv-dev gcc gcc-g++ cmake 
+
+      - name: Build
+        run: |
+          cmake -S . -B build -DUSE_COV=yes
+          cmake --build build
+
+      - name: Tests
+        run: |
+          ./build/merlict-test
