@@ -158,7 +158,7 @@ TEST_CASE("EventIoPhotonFactoryTest: number_photons_made", "[merlict]") {
         CHECK(cpf.num_photons >= 15);
         CHECK(cpf.num_photons < 17);
 
-        int num_photons_made = 0;
+        unsigned int num_photons_made = 0;
         while (cpf.has_still_photons_to_be_made()) {
             ml::Photon ph = cpf.make_photon();
             num_photons_made ++;
