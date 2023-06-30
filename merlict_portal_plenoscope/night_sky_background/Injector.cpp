@@ -13,6 +13,7 @@ void inject_nsb_into_photon_pipeline(
     const double nsb_exposure_time,
     const std::vector<calibration::LixelStatistic> *lixel_statistics,
     const Light *nsb,
+    double *nsb_exposure_start_time,
     ml::random::Generator* prng
 ) {
     if (photon_pipelines->size() == 0)
@@ -61,7 +62,7 @@ void inject_nsb_into_photon_pipeline(
 
     // INIT START TIME OF NSB EXPOSURE
 
-    const double nsb_exposure_start_time =
+    const double NSB_EXPOSURE_START_TIME =
         mode_of_cherenkov_arrival_times - 0.5*nsb_exposure_time;
 
 
@@ -77,7 +78,7 @@ void inject_nsb_into_photon_pipeline(
             const double time_until_next_photon =
                 prng->expovariate(lixel_nsb_rate);
             nsb_arrival_times.push_back(
-                nsb_exposure_start_time + relative_arrival_times_sum);
+                NSB_EXPOSURE_START_TIME + relative_arrival_times_sum);
             relative_arrival_times_sum += time_until_next_photon;
         }
 
@@ -92,14 +93,16 @@ void inject_nsb_into_photon_pipeline(
         sort_photon_pipelines_arrival_time(&photon_pipelines->at(i));
     }
 
-    // SUBTRACT nsb_exposure_start_time
+    // SUBTRACT NSB_EXPOSURE_START_TIME
 
     for (unsigned int i = 0; i < photon_pipelines->size(); i++) {
         for (unsigned int p = 0; p < photon_pipelines->at(i).size(); p++) {
             photon_pipelines->at(i).at(p).arrival_time -=
-                nsb_exposure_start_time;
+                NSB_EXPOSURE_START_TIME;
         }
     }
+
+    (*nsb_exposure_start_time) = NSB_EXPOSURE_START_TIME;
 }
 
 }  // namespace night_sky_background

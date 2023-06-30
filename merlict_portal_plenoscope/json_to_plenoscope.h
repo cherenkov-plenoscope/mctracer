@@ -2,6 +2,8 @@
 #ifndef PLENOSCOPE_JSON_TO_PLENOSCOPE_H_
 #define PLENOSCOPE_JSON_TO_PLENOSCOPE_H_
 
+#include <map>
+#include <string>
 #include "merlict_portal_plenoscope/PlenoscopeScenery.h"
 #include "merlict_json/json.h"
 #include "merlict/merlict.h"
@@ -23,7 +25,8 @@ merlict::Frame* add_light_field_sensor(
     config.expected_imaging_system_max_aperture_radius =
         o.f8("expected_imaging_system_aperture_radius");
     config.max_FoV_diameter = merlict::deg2rad(o.f8("max_FoV_diameter_deg"));
-    config.pixel_FoV_hex_flat2flat = merlict::deg2rad(o.f8("hex_pixel_FoV_flat2flat_deg"));
+    config.pixel_FoV_hex_flat2flat = merlict::deg2rad(
+        o.f8("hex_pixel_FoV_flat2flat_deg"));
     config.num_paxel_on_pixel_diagonal =
         o.u8("num_paxel_on_pixel_diagonal");
     config.housing_overhead = o.f8("housing_overhead");
@@ -58,7 +61,8 @@ merlict::Frame* add_light_field_sensor_demonstration(
     config.expected_imaging_system_max_aperture_radius =
         o.f8("expected_imaging_system_aperture_radius");
     config.max_FoV_diameter = merlict::deg2rad(o.f8("max_FoV_diameter_deg"));
-    config.pixel_FoV_hex_flat2flat = merlict::deg2rad(o.f8("hex_pixel_FoV_flat2flat_deg"));
+    config.pixel_FoV_hex_flat2flat = merlict::deg2rad(
+        o.f8("hex_pixel_FoV_flat2flat_deg"));
     config.num_paxel_on_pixel_diagonal =
         o.u8("num_paxel_on_pixel_diagonal");
     config.housing_overhead = o.f8("housing_overhead");
@@ -84,7 +88,8 @@ void make_children(
     PlenoscopeScenery* scenery,
     const merlict::json::Object &o
 ) {
-    std::map<std::string, merlict::json::json_to_frame> j2s = merlict::json::basic_scenery();
+    std::map<std::string, merlict::json::json_to_frame> j2s =
+        merlict::json::basic_scenery();
     const uint64_t num_children = o.size();
     for (uint64_t cidx = 0; cidx < num_children; cidx++) {
         const merlict::json::Object &jchild = o.obj(cidx);
@@ -100,7 +105,9 @@ void make_children(
                 add_light_field_sensor(mother, scenery, jchild),
                 scenery,
                 jchild.obj("children"));
-        } else if (merlict::txt::is_equal(type, "LightFieldSensor_for_demonstration")) {
+        } else if (
+            merlict::txt::is_equal(type, "LightFieldSensor_for_demonstration")
+        ) {
             make_children(
                 add_light_field_sensor_demonstration(mother, scenery, jchild),
                 scenery,

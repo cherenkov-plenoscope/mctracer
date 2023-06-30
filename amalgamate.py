@@ -258,6 +258,7 @@ pri_queu = [
     "merlict/RayAndFrame",
     "merlict/RayForPropagation",
     "merlict/Photon.h",
+    "merlict/Fresnel.h",
     "merlict/PropagationConfig",
     "merlict/PropagationEnvironment",
     "merlict/FresnelRefractionAndReflection.h",

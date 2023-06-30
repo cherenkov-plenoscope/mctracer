@@ -20,6 +20,10 @@ void write_273_f4_to_path(
 std::vector<std::array<float, 273>> read_273_f4_from_path(
     const std::string &path);
 
+bool is_equal_273_f4(
+    const std::array<float, 273> a,
+    const std::array<float, 273> b);
+
 namespace header {
 namespace event {
 

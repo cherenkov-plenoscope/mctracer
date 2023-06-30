@@ -99,7 +99,7 @@ TEST_CASE("EventIoPhotonFactoryTest: convert_photons", "[merlict]") {
 
     ml::EventIoPhotonFactory cpf(corsika_photon, id, &prng);
 
-    REQUIRE(cpf.passed_atmosphere());
+    REQUIRE(cpf.has_still_photons_to_be_made());
     ml::Photon ph = cpf.make_photon();
 
     CHECK(ph.simulation_truth_id == id);
@@ -139,7 +139,7 @@ TEST_CASE("EventIoPhotonFactoryTest: execute_atmospheric_absorption", "[merlict]
 
         ml::EventIoPhotonFactory cpf(corsika_photon, 1337, &prng);
 
-        if (cpf.passed_atmosphere())
+        if (cpf.has_still_photons_to_be_made())
             passed++;
         else
             absorbed++;
@@ -147,6 +147,46 @@ TEST_CASE("EventIoPhotonFactoryTest: execute_atmospheric_absorption", "[merlict]
 
     double passed_ratio = passed/total;
     CHECK(0.5 == Approx(passed_ratio).margin(1e-2));
+}
+
+TEST_CASE("EventIoPhotonFactoryTest: number_photons_made", "[merlict]") {
+    ml::random::Mt19937 prng(0u);
+    for (int i = 0; i < 100; i++) {
+        const std::array<float, 8> corsika_photon =
+            {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 15.5, 433};
+        ml::EventIoPhotonFactory cpf(corsika_photon, 1337, &prng);
+        CHECK(cpf.num_photons >= 15);
+        CHECK(cpf.num_photons < 17);
+
+        int num_photons_made = 0;
+        while (cpf.has_still_photons_to_be_made()) {
+            ml::Photon ph = cpf.make_photon();
+            num_photons_made ++;
+            CHECK(ph.simulation_truth_id == 1337);
+        }
+        CHECK(num_photons_made == cpf.num_photons_made);
+        CHECK(num_photons_made <= cpf.num_photons);
+        CHECK(num_photons_made >= 15);
+    }
+}
+
+TEST_CASE("EventIoPhotonFactoryTest: weight < 0, only up to 1 photon", "[merlict]") {
+    ml::random::Mt19937 prng(0u);
+    int num_photons_total = 0;
+    for (int i = 0; i < 100; i++) {
+        const float weight = prng.uniform();
+        const std::array<float, 8> corsika_photon =
+            {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, weight, 433};
+        ml::EventIoPhotonFactory cpf(corsika_photon, 1337, &prng);
+        int num_photons_made_from_bunch = 0;
+        while (cpf.has_still_photons_to_be_made()) {
+            ml::Photon ph = cpf.make_photon();
+            num_photons_made_from_bunch ++;
+            num_photons_total ++;
+        }
+        CHECK(num_photons_made_from_bunch <= 1);
+    }
+    CHECK(50 == Approx(num_photons_total).margin(10));
 }
 
 TEST_CASE("EventIoPhotonFactoryTest: merlict_rejects_photon_weight_below_0", "[merlict]") {
@@ -171,7 +211,7 @@ TEST_CASE("EventIoPhotonFactoryTest: merlict_rejects_photon_weight_above_1", "[m
     const unsigned int id = 1337;
     ml::random::Mt19937 prng(0u);
     const std::array<float, 8> corsika_photon =
-        {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 1.1, 433};
+        {1.2, 3.4, 0.0, 0.0, 1e-9, 1e5, 16.1, 433};
 
     CHECK_THROWS_AS(ml::EventIoPhotonFactory(corsika_photon, id, &prng), ml::EventIoPhotonFactory::BadPhotonWeight);
 }
@@ -198,7 +238,7 @@ TEST_CASE("EventIoPhotonFactoryTest: zero_weight_is_passed_on_zero_from_prng", "
     const unsigned int id = 1337;
     ml::random::FakeConstant prng(0.0);
     ml::EventIoPhotonFactory cpf(corsika_photon, id, &prng);
-    CHECK(cpf.passed_atmosphere());
+    CHECK(cpf.has_still_photons_to_be_made());
 }
 
 TEST_CASE("EventIoPhotonFactoryTest: relative_arrival_time_on_ground", "[merlict]") {

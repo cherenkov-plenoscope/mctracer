@@ -445,6 +445,7 @@ Frame* add_SegmentedReflector(
         o.f8("DaviesCotton_over_parabolic_mixing_factor");
     cfg.max_outer_aperture_radius = o.f8("max_outer_aperture_radius");
     cfg.min_inner_aperture_radius = o.f8("min_inner_aperture_radius");
+    cfg.outer_aperture_shape_hex = o.b1("outer_aperture_shape_hex");
     cfg.facet_inner_hex_radius = o.f8("facet_inner_hex_radius");
     cfg.gap_between_facets = o.f8("gap_between_facets");
 

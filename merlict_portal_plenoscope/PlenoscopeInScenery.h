@@ -8,8 +8,7 @@
 namespace plenoscope {
 
 struct PlenoscopeInScenery {
-
-	PlenoscopeInScenery(const light_field_sensor::Config config):
+    explicit PlenoscopeInScenery(const light_field_sensor::Config config):
         light_field_sensor_geometry(config)
     {};
 

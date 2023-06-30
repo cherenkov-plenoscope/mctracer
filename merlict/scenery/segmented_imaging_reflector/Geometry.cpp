@@ -24,11 +24,56 @@ void Geometry::init_focal_point() {
 }
 
 void Geometry::init_facet_xy_positions() {
-    HexGridAnnulus hex_grid(
-        max_outer_aperture_radius() - facet_spacing()/2.0,
-        min_inner_aperture_radius() + facet_spacing()/2.0,
-        facet_spacing());
-    _facet_positions = hex_grid.get_grid();
+    const double MAX_OUTER_RADIUS_TO_PUT_FACET_CENTER =
+        max_outer_aperture_radius() - facet_spacing()/2.0;
+    const double MIN_INNER_RADIUS_TO_PUT_FACET_CENTER =
+        min_inner_aperture_radius() + facet_spacing()/2.0;
+
+    if (cfg.outer_aperture_shape_hex == 1) {
+        const Vec3 UNIT_HEX_B = VEC3_UNIT_Y*facet_spacing();
+        const Vec3 UNIT_HEX_A = (
+            VEC3_UNIT_Y*0.5 + VEC3_UNIT_X*sqrt(3.0)/2.0)*facet_spacing();
+
+        const Vec3 UNIT_U = VEC3_UNIT_X;
+        const Vec3 UNIT_V =
+            VEC3_UNIT_Y * +sin(2./3.*M_PI) +
+            VEC3_UNIT_X * cos(2./3.*M_PI);
+        const Vec3 UNIT_W =
+            VEC3_UNIT_Y * -sin(2./3.*M_PI) +
+            VEC3_UNIT_X * cos(2./3.*M_PI);
+
+        const double R = (sqrt(3.0)/2.0)*MAX_OUTER_RADIUS_TO_PUT_FACET_CENTER;
+        const int N = 2.0*ceil(max_outer_aperture_radius()/facet_spacing());
+
+        for (int a = -N; a <= N; a++) {
+            for (int b = -N; b <= N; b++) {
+                const Vec3 facet_center = UNIT_HEX_A*a + UNIT_HEX_B*b;
+
+                const double u = UNIT_U * facet_center;
+                const double v = UNIT_V * facet_center;
+                const double w = UNIT_W * facet_center;
+
+                bool inside_outer_hexagon = (
+                    u < R && u > -R &&
+                    v < R && v > -R &&
+                    w < R && w > -R);
+
+                bool outside_inner_disc = (
+                    hypot(facet_center.x, facet_center.y) >
+                    MIN_INNER_RADIUS_TO_PUT_FACET_CENTER);
+
+                if (inside_outer_hexagon && outside_inner_disc) {
+                    _facet_positions.push_back(facet_center);
+                }
+            }
+        }
+    } else {
+        HexGridAnnulus hex_grid(
+            MAX_OUTER_RADIUS_TO_PUT_FACET_CENTER,
+            MIN_INNER_RADIUS_TO_PUT_FACET_CENTER,
+            facet_spacing());
+        _facet_positions = hex_grid.get_grid();
+    }
 }
 
 void Geometry::init_facet_z_positions() {
