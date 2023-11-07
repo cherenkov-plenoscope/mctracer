@@ -11,7 +11,7 @@ namespace plenoscope {
 struct PlenoscopeInScenery;
 
 struct PlenoscopeScenery: merlict::Scenery {
-	std::vector<PlenoscopeInScenery> plenoscopes;
+    std::vector<PlenoscopeInScenery> plenoscopes;
 };
 
 }  // namespace plenoscope

@@ -196,8 +196,9 @@ TEST_CASE("EventIoTest: EventIoFile_telescope_dat_run_time", "[merlict]") {
         for (std::array<float, 8> corsika_photon : event.photons) {
             merlict::EventIoPhotonFactory cpf(corsika_photon, id++, &prng);
 
-            if (cpf.passed_atmosphere()) {
+            if (cpf.has_still_photons_to_be_made()) {
                 photons.push_back(cpf.make_photon());
+                CHECK(!cpf.has_still_photons_to_be_made());
             }
         }
     }

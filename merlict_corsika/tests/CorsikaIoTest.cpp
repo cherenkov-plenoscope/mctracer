@@ -24,3 +24,16 @@ TEST_CASE("Corsika_io: four_char_word_forth_and_back", "[merlict]") {
         CHECK(num_back == num);
     }
 }
+
+TEST_CASE("Corsika_io: header_equal", "[merlict]") {
+    std::array<float, 273> a;
+    std::array<float, 273> b;
+    CHECK(a.size() == b.size());
+    for (uint64_t i = 0; i < a.size(); i++) {
+        a[i] = static_cast<float>(i);
+        b[i] = a[i];
+    }
+    CHECK(corsika::is_equal_273_f4(a, b));
+    a[0] = -1.0;
+    CHECK(!corsika::is_equal_273_f4(a, b));
+}

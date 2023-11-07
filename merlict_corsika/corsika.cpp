@@ -64,6 +64,18 @@ std::vector<std::array<float, 273>> read_273_f4_from_path(
     return blocks;
 }
 
+bool is_equal_273_f4(
+    const std::array<float, 273> a,
+    const std::array<float, 273> b) {
+    for (uint64_t i = 0; i < a.size(); i++) {
+        if (a[i] != b[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
 namespace header {
 namespace event {
 

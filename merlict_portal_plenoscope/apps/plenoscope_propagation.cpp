@@ -4,6 +4,7 @@
 #include "docopt/docopt.h"
 #include "merlict/merlict.h"
 #include "merlict_corsika/eventio.h"
+#include "merlict_corsika/event_tape.h"
 #include "merlict_corsika/corsika.h"
 #include "merlict_corsika/PhotonFactory.h"
 #include "merlict_signal_processing/signal_processing.h"
@@ -169,7 +170,7 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // SET SINGLE PULSE OUTPUT
-    ml::json::Object phs_obj = plcfg.obj("photo_electric_converter");
+    ml::json::Object phs_obj = plcfg.obj("photon_stream");
     const double time_slice_duration = phs_obj.f8("time_slice_duration");
     const double arrival_time_std = phs_obj.f8(
         "single_photon_arrival_time_resolution");
@@ -184,7 +185,7 @@ int main(int argc, char* argv[]) {
     // 222222 22
     //--------------------------------------------------------------------------
     // open cherenkov photon file
-    eventio::Run corsika_run(input_path.path);
+    event_tape::Run corsika_run(input_path.path);
 
     //--------------------------------------------------------------------------
     // propagate each event
@@ -192,15 +193,16 @@ int main(int argc, char* argv[]) {
     while (corsika_run.has_still_events_left()) {
         //------------------
         // Cherenkov photons
-        eventio::Event event = corsika_run.next_event();
+        event_tape::Event event = corsika_run.next_event();
 
         std::vector<ml::Photon> photons;
         unsigned int photon_id = 0;
 
         for (const std::array<float, 8> &corsika_photon : event.photons) {
             ml::EventIoPhotonFactory cpf(corsika_photon, photon_id++, &prng);
-            if (cpf.passed_atmosphere())
+            while (cpf.has_still_photons_to_be_made()) {
                 photons.push_back(cpf.make_photon());
+            }
         }
 
         ml::propagate_photons_in_frame_with_config(
@@ -214,11 +216,13 @@ int main(int argc, char* argv[]) {
 
         //-----------------------------
         // Night Sky Background photons
+        double nsb_exposure_start_time = 0.0;
         plenoscope::night_sky_background::inject_nsb_into_photon_pipeline(
             &photon_pipelines,
             nsb_exposure_time,
             &optics_calibration_result,
             &nsb,
+            &nsb_exposure_start_time,
             &prng);
 
         //--------------------------
@@ -277,18 +281,19 @@ plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
             "simulation_truth");
         fs::create_directory(event_mc_truth_path.path);
         corsika::write_273_f4_to_path(
-            corsika_run.header.raw,
+            corsika_run.header,
             ml::ospath::join(
                 event_mc_truth_path.path,
                 "corsika_run_header.bin"));
         corsika::write_273_f4_to_path(
-            event.header.raw,
+            event.header,
             ml::ospath::join(
                 event_mc_truth_path.path,
                 "corsika_event_header.bin"));
 
         plenoscope::SimulationTruthHeader sim_truth_header;
         sim_truth_header.set_random_seed_of_run(prng.seed());
+        sim_truth_header.set_nsb_exposure_start_time(nsb_exposure_start_time);
         corsika::write_273_f4_to_path(
             sim_truth_header.raw,
             ml::ospath::join(
@@ -311,9 +316,9 @@ plenoscope::TriggerType::EXTERNAL_TRIGGER_BASED_ON_AIR_SHOWER_SIMULATION_TRUTH);
 
         std::cout << "event " << event_counter << ", ";
         std::cout << "PRMPAR ";
-        std::cout << corsika::header::event::particle_id(event.header.raw) << ", ";
+        std::cout << corsika::header::event::particle_id(event.header) << ", ";
         std::cout << "E ";
-        std::cout << corsika::header::event::total_energy_in_GeV(event.header.raw);
+        std::cout << corsika::header::event::total_energy_in_GeV(event.header);
         std::cout << " GeV\n";
         event_counter++;
     }

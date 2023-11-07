@@ -1,6 +1,7 @@
 // Copyright 2014 Sebastian A. Mueller
 #include "merlict/numeric.h"
 #include <math.h>
+#include <algorithm>
 
 
 namespace merlict {
@@ -17,6 +18,18 @@ double stddev(const std::vector<double> &vec) {
     double s = 0.0;
     for (double val : vec) s = s + (val - m)*(val - m);
     return sqrt(s/vec.size());
+}
+
+double median(std::vector<double> a) {
+    const size_t n = a.size();
+    if (n == 0) {
+        return std::numeric_limits<double>::quiet_NaN();
+    }
+    std::sort(a.begin(), a.end());
+    if (n % 2 != 0) {
+       return a.at(n/2);
+    }
+    return (a[(n-1)/2] + a[n/2])/2.0;
 }
 
 std::vector<double> linspace(double begin, double end, unsigned int steps) {

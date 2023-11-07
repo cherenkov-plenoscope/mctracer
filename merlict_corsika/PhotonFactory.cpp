@@ -11,19 +11,20 @@ EventIoPhotonFactory::EventIoPhotonFactory(
     random::Generator *prng
 ):
     id(_id),
+    num_photons(0),
+    num_photons_made(0),
     corsika_photon(_corsika_photon) {
-    assert_photon_weight_is_between_zero_and_one();
-    check_once_if_passed_atmosphere(prng);
+    const double bunch_weight = corsika_photon[6];
+    assert_bunch_weight(bunch_weight);
+    num_photons = static_cast<unsigned int>(floor(bunch_weight));
+    double remaining_bunch_weight = fmod(bunch_weight, 1.);
+    if (prng->uniform() <= remaining_bunch_weight) {
+        num_photons += 1;
+    }
 }
 
-void EventIoPhotonFactory::check_once_if_passed_atmosphere(
-    random::Generator *prng
-) {
-    _passed_atmosphere = prng->uniform() <= photon_survival_probability();
-}
-
-bool EventIoPhotonFactory::passed_atmosphere()const {
-    return _passed_atmosphere;
+bool EventIoPhotonFactory::has_still_photons_to_be_made()const {
+    return num_photons_made < num_photons;
 }
 
 Photon EventIoPhotonFactory::make_photon() {
@@ -39,6 +40,7 @@ Photon EventIoPhotonFactory::make_photon() {
 
     Photon cherenkov_photon(causal_support, causal_dir, wavelength());
     cherenkov_photon.simulation_truth_id = id;
+    num_photons_made += 1;
     return cherenkov_photon;
 }
 
@@ -129,22 +131,16 @@ double EventIoPhotonFactory::production_height()const {
     return corsika_photon[5]*1e-2;
 }
 
-float EventIoPhotonFactory::photon_survival_probability()const {
-    return corsika_photon[6];
-}
-
 double EventIoPhotonFactory::wavelength()const {
     return fabs(corsika_photon[7]*1e-9);
 }
 
-void EventIoPhotonFactory::assert_photon_weight_is_between_zero_and_one()const {
-    if (photon_survival_probability() < 0.0 ||
-        photon_survival_probability() > 1.0
-    ) {
+void EventIoPhotonFactory::assert_bunch_weight(const double bunch_weight)const {
+    if (bunch_weight < 0. || bunch_weight > 16.) {
         std::stringstream info;
         info << __FILE__ << " " << __LINE__ << "\n";
-        info << "Expected photon weight w: 0.0 >= w >= 1.0, but actual ";
-        info << "it is: " << photon_survival_probability() << "\n";
+        info << "Expected bunch-weight w: 0.0 >= w >= 16.0, but actual ";
+        info << "w is: " << bunch_weight << "\n";
         throw BadPhotonWeight(info.str());
     }
 }

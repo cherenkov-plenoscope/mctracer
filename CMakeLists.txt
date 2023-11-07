@@ -98,6 +98,21 @@ target_link_libraries(merlict-plenoscope-calibration stdc++fs)
 target_link_libraries(merlict-plenoscope-calibration docopt)
 
 add_executable(
+    merlict-plenoscope-calibration-map
+    merlict_portal_plenoscope/apps/plenoscope_calibration_map.cpp)
+target_link_libraries(merlict-plenoscope-calibration-map lib_merlict_dev)
+target_link_libraries(merlict-plenoscope-calibration-map stdc++fs)
+target_link_libraries(merlict-plenoscope-calibration-map docopt)
+
+add_executable(
+    merlict-plenoscope-calibration-reduce
+    merlict_portal_plenoscope/apps/plenoscope_calibration_reduce.cpp)
+target_link_libraries(merlict-plenoscope-calibration-reduce lib_merlict_dev)
+target_link_libraries(merlict-plenoscope-calibration-reduce stdc++fs)
+target_link_libraries(merlict-plenoscope-calibration-reduce docopt)
+
+
+add_executable(
     merlict-eventio-converter
     merlict_corsika/apps/eventio_converter.cpp)
 target_link_libraries(merlict-eventio-converter lib_merlict_dev)

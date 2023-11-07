@@ -1,8 +1,10 @@
 import os
-import subprocess as sp
+import subprocess
 import numpy as np
-from io import BytesIO
-from skimage import io
+import io
+import skimage
+from skimage import io as skimage_io
+import tempfile
 
 
 def read_ppm_image(fstream):
@@ -16,8 +18,8 @@ def read_ppm_image(fstream):
     num_rows = int(num_rows)
     max_color = int(fstream.readline().decode())
     assert max_color == 255
-    count = num_columns*num_rows*3
-    raw = np.fromstring(fstream.read(count), dtype=np.uint8)
+    count = num_columns * num_rows * 3
+    raw = np.frombuffer(fstream.read(count), dtype=np.uint8)
     img = raw.reshape((num_rows, num_columns, 3))
     return img
 
@@ -31,7 +33,7 @@ def camera_command(
     f_stop=0.95,
     num_columns=512,
     num_rows=288,
-    noise_level=25
+    noise_level=25,
 ):
     """
     Returns a binary command-string to be fed into merlict's cmaera-server via
@@ -45,7 +47,7 @@ def camera_command(
                                 but take longer to be computed. Strong
                                 noise_levels are fast to compute.
     """
-    fout = BytesIO()
+    fout = io.BytesIO()
     fout.write(np.uint64(645).tobytes())  # MAGIC
 
     fout.write(np.float64(position[0]).tobytes())  # position
@@ -68,19 +70,32 @@ def camera_command(
     fout.seek(0)
     return fout.read()
 
-"""
-call = [path_exe, '--scenery', scenery_path, '--config', visual_path]
-merlict = sp.Popen(call, stdin=sp.PIPE, stdout=sp.PIPE)
-outdir = 'fly4'
-os.makedirs(outdir, exist_ok=True)
 
-for i, y in enumerate(np.linspace(-10, -1, 100)):
-    w = merlict.stdin.write(
-        camera_command(
-            position=[0, 0, y],
-            orientation=[0, np.deg2rad(-90), 0],
-            object_distance=np.abs(y)))
-    w = merlict.stdin.flush()
-    img = read_ppm_image(merlict.stdout)
-    io.imsave(os.path.join(outdir, '{:06d}.tiff'.format(i)), img)
-"""
+class CameraServer:
+    def __init__(
+        self, merlict_camera_server_path, scenery_path, visual_config_path,
+    ):
+        self.call = [
+            merlict_camera_server_path,
+            "--scenery",
+            scenery_path,
+            "--config",
+            visual_config_path,
+        ]
+        self.server = subprocess.Popen(
+            self.call, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+        )
+
+    def render_image(self, image_config):
+        _ = self.server.stdin.write(camera_command(**image_config))
+        _ = self.server.stdin.flush()
+        image = read_ppm_image(fstream=self.server.stdout)
+        return image
+
+    def render_image_and_write_to_tiff(self, image_config, path):
+        assert os.path.splitext(path)[1] == ".tiff"
+        image = self.render_image(image_config=image_config)
+        skimage.io.imsave(path, image)
+
+    def __exit__(self):
+        self.server.terminate()

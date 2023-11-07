@@ -17,6 +17,7 @@ void inject_nsb_into_photon_pipeline(
     const std::vector<plenoscope::calibration::LixelStatistic> *
         lixel_statistics,
     const Light *nsb,
+    double *nsb_exposure_start_time,
     merlict::random::Generator* prng
 );
 
