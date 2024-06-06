@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
         USAGE,
         { argv + 1, argv + argc },
         true,        // show help if requested
-        "0.1");    // version string
+        "0.2");    // version string
 
     ml::ospath::Path lixel_calib_path(args.find("--lixel")->second.asString());
     ml::ospath::Path config_path(args.find("--config")->second.asString());
@@ -69,7 +69,8 @@ int main(int argc, char* argv[]) {
         ml::ospath::join(input_copy_path.path, "plenoscope"),
         fs::copy_options::recursive);
 
-    config_path = ml::ospath::join(input_copy_path.path, "propagation_config.json");
+    config_path = ml::ospath::join(
+        input_copy_path.path, "propagation_config.json");
     lixel_calib_path = ml::ospath::join(
         ml::ospath::join(input_copy_path.path, "plenoscope"),
         "lixel_statistics.bin");
@@ -119,19 +120,19 @@ int main(int argc, char* argv[]) {
 
     //--------------------------------------------------------------------------
     // load light field calibration result
-    std::vector<plenoscope::calibration::LixelStatistic>
-        optics_calibration_result =
-            plenoscope::calibration::read(lixel_calib_path.path);
+    std::vector<float> lixel_efficiencies =
+        plenoscope::calibration::read_efficiencies(lixel_calib_path.path);
+
 
     // assert number os sub_pixel matches simulated plenoscope
-    if (light_field_channels->size() != optics_calibration_result.size()) {
+    if (light_field_channels->size() != lixel_efficiencies.size()) {
         std::stringstream info;
         info << "The light field calibration results, read from file '";
         info << lixel_calib_path.path;
         info << "', do no not match the plenoscope simulated here.\n";
         info << "Expected number of light field channels: ";
         info << light_field_channels->size();
-        info << ", but actual: " << optics_calibration_result.size();
+        info << ", but actual: " << lixel_efficiencies.size();
         info << "\n";
         throw std::invalid_argument(info.str());
     }
@@ -205,7 +206,7 @@ int main(int argc, char* argv[]) {
     plenoscope::night_sky_background::inject_nsb_into_photon_pipeline(
         &photon_pipelines,
         nsb_exposure_time,
-        &optics_calibration_result,
+        &lixel_efficiencies,
         &nsb,
         &nsb_exposure_start_time,
         &prng);

@@ -9,9 +9,10 @@ namespace plenoscope {
 namespace night_sky_background {
 
 void inject_nsb_into_photon_pipeline(
-    std::vector<std::vector<signal_processing::PipelinePhoton>> *photon_pipelines,
+    std::vector<std::vector<signal_processing::PipelinePhoton>>
+        *photon_pipelines,
     const double nsb_exposure_time,
-    const std::vector<calibration::LixelStatistic> *lixel_statistics,
+    const std::vector<float> *lixel_efficiencies,
     const Light *nsb,
     double *nsb_exposure_start_time,
     ml::random::Generator* prng
@@ -56,7 +57,8 @@ void inject_nsb_into_photon_pipeline(
             min_crk_arrival_time,
             max_crk_arrival_time,
             bin_edge_count);
-        ml::Histogram1 arrival_time_histo(arrival_times, arrival_time_bin_edges);
+        ml::Histogram1 arrival_time_histo(
+            arrival_times, arrival_time_bin_edges);
         mode_of_cherenkov_arrival_times = arrival_time_histo.mode();
     }
 
@@ -69,8 +71,7 @@ void inject_nsb_into_photon_pipeline(
     for (unsigned int i = 0; i < photon_pipelines->size(); i++) {
         const double lixel_nsb_rate =
             nsb->rate*
-            lixel_statistics->at(i).efficiency/
-            nsb->sensor_geometry->num_lixel();
+            lixel_efficiencies->at(i)/nsb->sensor_geometry->num_lixel();
 
         std::vector<double> nsb_arrival_times;
         double relative_arrival_times_sum = prng->expovariate(lixel_nsb_rate);

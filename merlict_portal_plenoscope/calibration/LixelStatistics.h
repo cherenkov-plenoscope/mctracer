@@ -28,6 +28,7 @@ void write(
     const std::vector<LixelStatistic> &lixel_statistics,
     const std::string &path);
 std::vector<LixelStatistic> read(const std::string &path);
+std::vector<float> read_efficiencies(const std::string &path);
 
 }  // namespace calibration
 }  // namespace plenoscope

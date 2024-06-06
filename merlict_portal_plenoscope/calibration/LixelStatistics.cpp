@@ -57,5 +57,30 @@ std::vector<LixelStatistic> read(const std::string &path) {
     return lixel_statistics;
 }
 
+std::vector<float> read_efficiencies(const std::string &path) {
+    std::ifstream file;
+    file.open(path, std::ios::binary);
+    if (!file.is_open()) {
+        std::stringstream info;
+        info << __FILE__ << " " << __LINE__ << "\n";
+        info << "LixelStatistics: Unable to read file: '" << path << "'\n";
+        throw std::runtime_error(info.str());
+    }
+
+    std::vector<float> efficiencies;
+
+    while (true) {
+        LixelStatistic lixel;
+        file.read((char*)&lixel, sizeof(LixelStatistic));
+        if (!file.eof())
+            efficiencies.push_back(lixel.efficiency);
+        else
+            break;
+    }
+    file.close();
+
+    return efficiencies;
+}
+
 }  // namespace calibration
 }  // namespace plenoscope
